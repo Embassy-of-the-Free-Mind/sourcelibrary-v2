@@ -100,13 +100,12 @@ export default function SearchPage() {
   // Suggestions
   const [suggestion, setSuggestion] = useState<string | null>(null);
 
-  // AI-assisted search expansion
-  const [aiExpansion, setAiExpansion] = useState<{
-    loading: boolean;
-    terms: string[];
-    results: SearchResult[];
-    originalQuery: string;
-  } | null>(null);
+  // AI-assisted search — streaming narration + expanded terms
+  const [aiNarration, setAiNarration] = useState('');
+  const [aiTerms, setAiTerms] = useState<string[]>([]);
+  const [aiResults, setAiResults] = useState<SearchResult[]>([]);
+  const [aiStreaming, setAiStreaming] = useState(false);
+  const aiAbortRef = useRef<(() => void) | null>(null);
 
   // Load filter options + collections
   useEffect(() => {
@@ -138,6 +137,61 @@ export default function SearchPage() {
     })();
   }, []);
 
+  // AI-assisted search — start streaming immediately when user searches
+  const startAiStream = useCallback((q: string) => {
+    // Abort any existing stream
+    aiAbortRef.current?.();
+    setAiNarration('');
+    setAiTerms([]);
+    setAiResults([]);
+
+    if (!q || q.length < 3) return;
+    setAiStreaming(true);
+
+    let narrationAccum = '';
+    const abort = searchApi.aiExpandStream(
+      q,
+      (text) => {
+        narrationAccum += text;
+        setAiNarration(narrationAccum);
+      },
+      async (terms) => {
+        const originalLower = q.toLowerCase();
+        const newTerms = terms.filter(t => t.toLowerCase() !== originalLower);
+        setAiTerms(newTerms);
+
+        if (newTerms.length === 0) return;
+        // Search expanded terms in parallel
+        const termResults = await Promise.all(
+          newTerms.map(async (term) => {
+            try {
+              const res = await searchApi.search(term, { limit: 3, search_content: 'true' });
+              return res.results || [];
+            } catch { return []; }
+          })
+        );
+        // Deduplicate, excluding main results
+        const mainBookIds = new Set(bookResults.map(r => r.book_id));
+        const seen = new Set<string>();
+        const deduped: SearchResult[] = [];
+        for (const results of termResults) {
+          for (const r of results) {
+            if (mainBookIds.has(r.book_id)) continue;
+            const key = r.book_id + (r.type === 'page' ? `-p${r.page_number}` : '');
+            if (!seen.has(key)) {
+              seen.add(key);
+              deduped.push(r);
+            }
+          }
+        }
+        setAiResults(deduped.slice(0, 8));
+      },
+      () => setAiStreaming(false),
+    );
+    aiAbortRef.current = abort;
+  // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [bookResults]);
+
   const performSearch = useCallback(async (q: string, mode: ViewMode = viewMode, pageOffset = 0) => {
     if (!q || q.length < 2) {
       setBookResults([]); setBookTotal(0);
@@ -146,8 +200,7 @@ export default function SearchPage() {
       return;
     }
     setLoading(true);
-    setAiExpansion(null);
-    lastExpandedQuery.current = '';
+    startAiStream(q);
 
     try {
       if (mode === 'unified') {
@@ -206,6 +259,7 @@ export default function SearchPage() {
     } finally {
       setLoading(false);
     }
+  // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [viewMode, indexType, language, category, dateFrom, dateTo, hasDoi, hasTranslation, firstTranslation, library, sortBy]);
 
   const updateUrl = useCallback((q: string, mode: ViewMode, pageOffset = 0) => {
@@ -289,62 +343,6 @@ export default function SearchPage() {
     return () => { cancelled = true; };
   }, [noResults, query]);
 
-  // AI-assisted search expansion — fires after each search completes
-  // Use a ref to track the last query we expanded, to avoid re-triggering
-  const lastExpandedQuery = useRef('');
-  useEffect(() => {
-    if (loading || !query || query.length < 3) return;
-    if (lastExpandedQuery.current === query) return;
-    lastExpandedQuery.current = query;
-    let cancelled = false;
-
-    setAiExpansion({ loading: true, terms: [], results: [], originalQuery: query });
-    searchApi.aiExpand(query).then(async (data) => {
-      if (cancelled || !data.terms?.length) {
-        if (!cancelled) setAiExpansion(null);
-        return;
-      }
-      const originalLower = query.toLowerCase();
-      const newTerms = data.terms.filter(t => t.toLowerCase() !== originalLower);
-      if (newTerms.length === 0) { if (!cancelled) setAiExpansion(null); return; }
-
-      // Search each expanded term in parallel
-      const termResults = await Promise.all(
-        newTerms.map(async (term) => {
-          try {
-            const res = await searchApi.search(term, { limit: 3, search_content: 'true' });
-            return res.results || [];
-          } catch { return []; }
-        })
-      );
-      if (cancelled) return;
-      // Deduplicate, excluding books already in main results
-      const mainBookIds = new Set(bookResults.map(r => r.book_id));
-      const seen = new Set<string>();
-      const deduped: SearchResult[] = [];
-      for (const results of termResults) {
-        for (const r of results) {
-          if (mainBookIds.has(r.book_id)) continue;
-          const key = r.book_id + (r.type === 'page' ? `-p${r.page_number}` : '');
-          if (!seen.has(key)) {
-            seen.add(key);
-            deduped.push(r);
-          }
-        }
-      }
-      setAiExpansion({
-        loading: false,
-        terms: newTerms,
-        results: deduped.slice(0, 8),
-        originalQuery: query,
-      });
-    }).catch(() => {
-      if (!cancelled) setAiExpansion(null);
-    });
-
-    return () => { cancelled = true; };
-  // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [query, loading]);
 
   const handleQueryChange = (value: string) => {
     setQuery(value);
@@ -670,101 +668,95 @@ export default function SearchPage() {
           <div className="py-8"><BookLoader size="xs" /></div>
         )}
 
-        {/* No results + AI expansion */}
-        {noResults && (
-          <div className="py-16 max-w-2xl mx-auto">
-            {/* AI-expanded results */}
-            {aiExpansion?.loading && (
-              <div className="text-center mb-8">
-                <Loader2 className="w-5 h-5 text-accent-rust animate-spin mx-auto mb-2" />
-                <p className="text-sm text-muted">Searching with AI...</p>
-              </div>
-            )}
-
-            {aiExpansion && !aiExpansion.loading && aiExpansion.results.length > 0 && (
-              <div className="mb-10">
-                <div className="text-center mb-6">
-                  <p className="text-sm text-muted mb-1">
-                    No exact matches for &ldquo;{query}&rdquo;, but AI found related results:
-                  </p>
-                  <div className="flex flex-wrap justify-center gap-1.5 mt-2">
-                    {aiExpansion.terms.map(term => (
-                      <button
-                        key={term}
-                        onClick={() => { setQuery(term); setOffset(0); performSearch(term, viewMode, 0); updateUrl(term, viewMode, 0); }}
-                        className="px-2.5 py-1 bg-accent-rust/5 text-accent-rust text-xs rounded-full hover:bg-accent-rust/10 transition-colors"
-                      >
-                        {term}
-                      </button>
-                    ))}
-                  </div>
-                </div>
-                <div className="space-y-3">
-                  {aiExpansion.results.map(result => (
-                    <Link
-                      key={result.id}
-                      href={result.type === 'page' ? `/book/${result.slug || result.book_id}/page/${result.page_number}` : `/book/${result.slug || result.book_id}`}
-                      className="block p-4 bg-warm rounded-lg hover:bg-warm-hover transition-colors"
-                    >
-                      <div className="flex items-start gap-3">
-                        {result.thumbnail && (
-                          <Image src={result.thumbnail} alt="" width={40} height={56} className="rounded shadow-sm flex-shrink-0 object-cover" />
-                        )}
-                        <div className="min-w-0">
-                          <h3 className="font-serif font-medium text-primary text-sm leading-tight">
-                            {result.display_title || result.title}
-                          </h3>
-                          <p className="text-xs text-muted mt-0.5">
-                            {result.author}{result.published ? `, ${result.published}` : ''}
-                            {result.type === 'page' && result.page_number && <span className="ml-1">p. {result.page_number}</span>}
-                          </p>
-                          {result.snippet && (
-                            <p className="text-xs text-secondary mt-1 line-clamp-2">{result.snippet}</p>
-                          )}
-                        </div>
-                      </div>
-                    </Link>
-                  ))}
-                </div>
-              </div>
-            )}
-
-            {/* Standard no-results fallback (show when AI also found nothing) */}
-            {(!aiExpansion || (!aiExpansion.loading && aiExpansion.results.length === 0)) && (
-              <div className="text-center max-w-lg mx-auto">
-                <Search className="w-16 h-16 text-border-medium mx-auto mb-4" />
-                <h2 className="text-2xl font-serif font-medium text-primary mb-2">No results found</h2>
-                {suggestion && (
-                  <p className="text-secondary mb-6">
-                    Did you mean{' '}
-                    <button
-                      onClick={() => { setQuery(suggestion); setOffset(0); performSearch(suggestion, viewMode, 0); updateUrl(suggestion, viewMode, 0); }}
-                      className="font-semibold text-accent-rust hover:text-accent-rust/80 underline underline-offset-2"
-                    >{suggestion}</button>?
-                  </p>
-                )}
-                <p className="text-muted mb-6">
-                  The library focuses on Western esoteric tradition — alchemy, Hermetica, Kabbalah, natural philosophy, and early modern science.
-                </p>
-                <div className="flex flex-wrap justify-center gap-2">
-                  {['alchemy', 'Hermes', 'Paracelsus', 'Kabbalah', 'astrology', 'Ficino'].map(term => (
-                    <button
-                      key={term}
-                      onClick={() => { setQuery(term); setOffset(0); performSearch(term, viewMode, 0); updateUrl(term, viewMode, 0); }}
-                      className="px-3 py-1.5 bg-warm text-secondary text-sm rounded-full hover:bg-accent-rust/10 hover:text-accent-rust transition-colors"
-                    >
-                      {term}
-                    </button>
-                  ))}
+        {/* AI narration — streams while search loads */}
+        {query.length >= 3 && (aiStreaming || aiNarration) && (
+          <div className="mb-6 px-4 py-3 bg-warm rounded-lg border border-border-light">
+            <p className="text-sm text-secondary italic leading-relaxed"
+               dangerouslySetInnerHTML={{
+                 __html: aiNarration
+                   .replace(/\*([^*]+)\*/g, '<em>$1</em>')
+                   + (aiStreaming ? '<span class="inline-block w-1.5 h-4 bg-accent-rust/40 animate-pulse ml-0.5 align-text-bottom"></span>' : '')
+               }}
+            />
+            {aiTerms.length > 0 && (
+              <div className="flex flex-wrap gap-1.5 mt-2">
+                {aiTerms.map(term => (
                   <button
-                    onClick={() => { setQuery(''); setOffset(0); }}
-                    className="px-3 py-1.5 bg-warm text-secondary text-sm rounded-full hover:bg-accent-rust/10 hover:text-accent-rust transition-colors"
+                    key={term}
+                    onClick={() => { setQuery(term); setOffset(0); performSearch(term, viewMode, 0); updateUrl(term, viewMode, 0); }}
+                    className="px-2.5 py-1 bg-white/60 text-secondary text-xs rounded-full hover:bg-accent-rust/10 hover:text-accent-rust transition-colors"
                   >
-                    Browse all books
+                    {term}
                   </button>
-                </div>
+                ))}
               </div>
             )}
+          </div>
+        )}
+
+        {/* No results */}
+        {noResults && !aiStreaming && aiResults.length === 0 && (
+          <div className="text-center py-16 max-w-lg mx-auto">
+            <Search className="w-16 h-16 text-border-medium mx-auto mb-4" />
+            <h2 className="text-2xl font-serif font-medium text-primary mb-2">No results found</h2>
+            {suggestion && (
+              <p className="text-secondary mb-6">
+                Did you mean{' '}
+                <button
+                  onClick={() => { setQuery(suggestion); setOffset(0); performSearch(suggestion, viewMode, 0); updateUrl(suggestion, viewMode, 0); }}
+                  className="font-semibold text-accent-rust hover:text-accent-rust/80 underline underline-offset-2"
+                >{suggestion}</button>?
+              </p>
+            )}
+            <p className="text-muted mb-6">
+              The library focuses on Western esoteric tradition — alchemy, Hermetica, Kabbalah, natural philosophy, and early modern science.
+            </p>
+            <div className="flex flex-wrap justify-center gap-2">
+              {['alchemy', 'Hermes', 'Paracelsus', 'Kabbalah', 'astrology', 'Ficino'].map(term => (
+                <button
+                  key={term}
+                  onClick={() => { setQuery(term); setOffset(0); performSearch(term, viewMode, 0); updateUrl(term, viewMode, 0); }}
+                  className="px-3 py-1.5 bg-warm text-secondary text-sm rounded-full hover:bg-accent-rust/10 hover:text-accent-rust transition-colors"
+                >
+                  {term}
+                </button>
+              ))}
+              <button
+                onClick={() => { setQuery(''); setOffset(0); }}
+                className="px-3 py-1.5 bg-warm text-secondary text-sm rounded-full hover:bg-accent-rust/10 hover:text-accent-rust transition-colors"
+              >
+                Browse all books
+              </button>
+            </div>
+          </div>
+        )}
+
+        {/* AI-expanded results when no main results */}
+        {noResults && aiResults.length > 0 && (
+          <div className="space-y-3">
+            <p className="text-sm text-muted">Related results from AI-expanded search:</p>
+            {aiResults.map(result => (
+              <Link
+                key={result.id}
+                href={result.type === 'page' ? `/book/${result.slug || result.book_id}/page/${result.page_number}` : `/book/${result.slug || result.book_id}`}
+                className="flex items-start gap-3 p-4 bg-warm rounded-lg hover:bg-warm-hover transition-colors"
+              >
+                {result.thumbnail && (
+                  <Image src={result.thumbnail} alt="" width={40} height={56} className="rounded shadow-sm flex-shrink-0 object-cover" />
+                )}
+                <div className="min-w-0">
+                  <h3 className="font-serif font-medium text-primary text-sm leading-tight">
+                    {result.display_title || result.title}
+                  </h3>
+                  <p className="text-xs text-muted mt-0.5">
+                    {result.author}{result.published ? `, ${result.published}` : ''}
+                  </p>
+                  {result.snippet && (
+                    <p className="text-xs text-secondary mt-1 line-clamp-2">{result.snippet}</p>
+                  )}
+                </div>
+              </Link>
+            ))}
           </div>
         )}
 
@@ -894,24 +886,11 @@ export default function SearchPage() {
           </>
         )}
         {/* AI-expanded related results — shows for all searches with results */}
-        {!noResults && !loading && query.length >= 3 && aiExpansion && !aiExpansion.loading && aiExpansion.results.length > 0 && (
+        {!noResults && !loading && query.length >= 3 && !aiStreaming && aiResults.length > 0 && (
           <section className="mt-12 pt-8 border-t border-border-light">
-            <div className="mb-4">
-              <h2 className="text-sm font-medium text-muted uppercase tracking-wide">Related in the Library</h2>
-              <div className="flex flex-wrap gap-1.5 mt-2">
-                {aiExpansion.terms.map(term => (
-                  <button
-                    key={term}
-                    onClick={() => { setQuery(term); setOffset(0); performSearch(term, viewMode, 0); updateUrl(term, viewMode, 0); }}
-                    className="px-2.5 py-1 bg-warm text-secondary text-xs rounded-full hover:bg-accent-rust/10 hover:text-accent-rust transition-colors"
-                  >
-                    {term}
-                  </button>
-                ))}
-              </div>
-            </div>
+            <h2 className="text-sm font-medium text-muted uppercase tracking-wide mb-4">Related in the Library</h2>
             <div className="grid grid-cols-1 sm:grid-cols-2 gap-3">
-              {aiExpansion.results.map(result => (
+              {aiResults.map(result => (
                 <Link
                   key={result.id}
                   href={result.type === 'page' ? `/book/${result.slug || result.book_id}/page/${result.page_number}` : `/book/${result.slug || result.book_id}`}

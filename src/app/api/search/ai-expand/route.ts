@@ -1,111 +1,173 @@
-import { NextRequest, NextResponse } from 'next/server';
+import { NextRequest } from 'next/server';
 import { getGeminiClient } from '@/lib/gemini-client';
 
 export const preferredRegion = 'fra1';
 
-// Cache expansions in memory to avoid repeated AI calls for the same query
-const expansionCache = new Map<string, { terms: string[]; timestamp: number }>();
+// Cache full responses (narration + terms) to avoid repeated AI calls
+const responseCache = new Map<string, { narration: string; terms: string[]; timestamp: number }>();
 const CACHE_TTL = 30 * 60 * 1000; // 30 minutes
 
 /**
- * POST /api/search/ai-expand
- * Uses Gemini Flash to expand a search query into alternative terms
- * that are more likely to match the Source Library corpus.
+ * POST /api/search/ai-expand — Streaming SSE endpoint
  *
- * Returns: { original: string, terms: string[], note: string }
+ * Streams two types of events:
+ *   event: narration  — incremental text chunks describing the search context
+ *   event: terms      — JSON array of expanded search terms
+ *   event: done       — signals stream end
+ *
+ * Uses gemini-2.0-flash for fastest TTFB on streaming.
  */
 export async function POST(request: NextRequest) {
-  try {
-    const { query } = await request.json();
+  const { query } = await request.json().catch(() => ({ query: '' }));
 
-    if (!query || typeof query !== 'string' || query.trim().length < 2) {
-      return NextResponse.json({ original: query, terms: [], note: '' });
-    }
+  if (!query || typeof query !== 'string' || query.trim().length < 2) {
+    return new Response('data: {"event":"done"}\n\n', {
+      headers: { 'Content-Type': 'text/event-stream', 'Cache-Control': 'no-cache' },
+    });
+  }
 
-    const normalized = query.trim().toLowerCase();
+  const normalized = query.trim().toLowerCase();
 
-    // Check cache
-    const cached = expansionCache.get(normalized);
-    if (cached && Date.now() - cached.timestamp < CACHE_TTL) {
-      return NextResponse.json({
-        original: query,
-        terms: cached.terms,
-        note: 'AI-expanded search',
-      });
-    }
+  // Check cache — replay instantly as SSE
+  const cached = responseCache.get(normalized);
+  if (cached && Date.now() - cached.timestamp < CACHE_TTL) {
+    const lines = [
+      `event: narration\ndata: ${JSON.stringify(cached.narration)}\n`,
+      `event: terms\ndata: ${JSON.stringify(cached.terms)}\n`,
+      `event: done\ndata: {}\n`,
+    ].join('\n');
+    return new Response(lines, {
+      headers: { 'Content-Type': 'text/event-stream', 'Cache-Control': 'no-cache' },
+    });
+  }
 
-    const apiKey = process.env.GEMINI_API_KEY;
-    if (!apiKey) {
-      return NextResponse.json({ original: query, terms: [], note: '' });
-    }
+  const apiKey = process.env.GEMINI_API_KEY;
+  if (!apiKey) {
+    return new Response('event: done\ndata: {}\n\n', {
+      headers: { 'Content-Type': 'text/event-stream', 'Cache-Control': 'no-cache' },
+    });
+  }
 
-    const client = getGeminiClient();
-    const model = client.getGenerativeModel({ model: 'gemini-3.1-flash-lite-preview' });
+  const encoder = new TextEncoder();
+  const stream = new ReadableStream({
+    async start(controller) {
+      try {
+        const client = getGeminiClient();
+        const model = client.getGenerativeModel({ model: 'gemini-2.0-flash' });
 
-    const result = await model.generateContent({
-      contents: [{
-        role: 'user',
-        parts: [{
-          text: `You are a search assistant for Source Library, a digital library of Western esoteric tradition texts (alchemy, Hermetica, Kabbalah, Rosicrucianism, natural philosophy, early modern science). Texts are from the 15th-18th centuries, mostly in Latin, German, English, and French.
+        const result = await model.generateContentStream({
+          contents: [{
+            role: 'user',
+            parts: [{
+              text: `You are a search guide for Source Library, a digital library of Western esoteric texts (alchemy, Hermetica, Kabbalah, Rosicrucianism, natural philosophy, early modern science, 15th-18th century, Latin/German/English/French).
 
 A user searched for "${query}".
 
-Generate 3-5 related search terms that would help them explore further. Consider:
-- Latin equivalents (e.g., "philosopher's stone" → "lapis philosophorum")
-- Historical spellings (e.g., "kabbalah" → "cabala")
-- Author name variants (e.g., "Paracelsus" → "Theophrastus")
-- Key related authors, works, or concepts in the tradition
-- Broader or narrower terms
+Respond in TWO parts, separated by exactly "---TERMS---" on its own line:
 
-Return ONLY a JSON array of strings. Example: ["lapis philosophorum", "chrysopoeia", "Geber"]`
-        }]
-      }],
-      generationConfig: {
-        temperature: 0.5,
-        maxOutputTokens: 200,
-      },
-    });
+PART 1: Write 1-2 brief, scholarly sentences (max 40 words) contextualizing this search within the tradition. Use italics for Latin/foreign terms. Be specific and knowledgeable, not generic. Don't say "Source Library" or "our collection." Write as if you're a knowledgeable librarian whispering helpful context.
 
-    const text = result.response.text().trim();
+PART 2: After the ---TERMS--- separator, write ONLY a JSON array of 3-5 alternative search terms. Include Latin equivalents, historical spellings, key authors, or related concepts.
 
-    // Parse JSON array from response, handling markdown code blocks
-    let terms: string[] = [];
-    try {
-      const jsonStr = text.replace(/^```(?:json)?\s*/, '').replace(/\s*```$/, '');
-      const parsed = JSON.parse(jsonStr);
-      if (Array.isArray(parsed)) {
-        terms = parsed
-          .filter((t: unknown) => typeof t === 'string' && t.length >= 2)
-          .slice(0, 5);
+Example response:
+The *lapis philosophorum* was the supreme goal of chrysopoeia — the art of gold-making. Geber's *Summa Perfectionis* and Ripley's *Compound of Alchemy* are foundational texts.
+---TERMS---
+["lapis philosophorum", "chrysopoeia", "Geber", "George Ripley", "Summa Perfectionis"]`
+            }]
+          }],
+          generationConfig: {
+            temperature: 0.5,
+            maxOutputTokens: 300,
+          },
+        });
+
+        let fullText = '';
+        let sentTerms = false;
+
+        for await (const chunk of result.stream) {
+          const text = chunk.text();
+          if (!text) continue;
+
+          fullText += text;
+
+          // Check if we've hit the separator
+          if (fullText.includes('---TERMS---')) {
+            if (!sentTerms) {
+              const [narration, termsSection] = fullText.split('---TERMS---');
+              // Send final narration
+              controller.enqueue(encoder.encode(`event: narration\ndata: ${JSON.stringify(narration.trim())}\n\n`));
+
+              // Try to parse terms if the JSON is complete
+              const termsText = termsSection?.trim();
+              if (termsText) {
+                try {
+                  const jsonStr = termsText.replace(/^```(?:json)?\s*/, '').replace(/\s*```$/, '');
+                  const parsed = JSON.parse(jsonStr);
+                  if (Array.isArray(parsed)) {
+                    const terms = parsed.filter((t: unknown) => typeof t === 'string' && t.length >= 2).slice(0, 5);
+                    controller.enqueue(encoder.encode(`event: terms\ndata: ${JSON.stringify(terms)}\n\n`));
+                    sentTerms = true;
+
+                    // Cache the result
+                    responseCache.set(normalized, { narration: narration.trim(), terms, timestamp: Date.now() });
+                  }
+                } catch {
+                  // JSON not complete yet, will try again with more chunks
+                }
+              }
+            }
+          } else {
+            // Still in narration part — stream it
+            controller.enqueue(encoder.encode(`event: narration\ndata: ${JSON.stringify(text)}\n\n`));
+          }
+        }
+
+        // Final attempt to parse terms if not yet sent
+        if (!sentTerms && fullText.includes('---TERMS---')) {
+          const [narration, termsSection] = fullText.split('---TERMS---');
+          const termsText = termsSection?.trim();
+          if (termsText) {
+            try {
+              const jsonStr = termsText.replace(/^```(?:json)?\s*/, '').replace(/\s*```$/, '');
+              const parsed = JSON.parse(jsonStr);
+              if (Array.isArray(parsed)) {
+                const terms = parsed.filter((t: unknown) => typeof t === 'string' && t.length >= 2).slice(0, 5);
+                controller.enqueue(encoder.encode(`event: terms\ndata: ${JSON.stringify(terms)}\n\n`));
+                responseCache.set(normalized, { narration: narration.trim(), terms, timestamp: Date.now() });
+              }
+            } catch {
+              // Parse failed, send empty terms
+              controller.enqueue(encoder.encode(`event: terms\ndata: []\n\n`));
+            }
+          }
+        } else if (!sentTerms) {
+          // No separator found — model didn't follow format. Still try to extract terms.
+          controller.enqueue(encoder.encode(`event: terms\ndata: []\n\n`));
+        }
+
+        controller.enqueue(encoder.encode(`event: done\ndata: {}\n\n`));
+        controller.close();
+      } catch (error) {
+        console.error('AI expand stream error:', error);
+        controller.enqueue(encoder.encode(`event: done\ndata: {}\n\n`));
+        controller.close();
       }
-    } catch {
-      // If JSON parsing fails, try splitting by newlines/commas
-      terms = text
-        .replace(/[\[\]"]/g, '')
-        .split(/[,\n]/)
-        .map(t => t.trim())
-        .filter(t => t.length >= 2)
-        .slice(0, 5);
-    }
 
-    // Cache the result
-    expansionCache.set(normalized, { terms, timestamp: Date.now() });
-
-    // Evict old cache entries
-    if (expansionCache.size > 500) {
-      const now = Date.now();
-      for (const [key, val] of expansionCache) {
-        if (now - val.timestamp > CACHE_TTL) expansionCache.delete(key);
+      // Evict old cache entries
+      if (responseCache.size > 500) {
+        const now = Date.now();
+        for (const [key, val] of responseCache) {
+          if (now - val.timestamp > CACHE_TTL) responseCache.delete(key);
+        }
       }
-    }
+    },
+  });
 
-    return NextResponse.json({
-      original: query,
-      terms,
-      note: 'AI-expanded search',
-    });
-  } catch (error) {
-    console.error('AI expand error:', error);
-    return NextResponse.json({ original: '', terms: [], note: '' });
-  }
+  return new Response(stream, {
+    headers: {
+      'Content-Type': 'text/event-stream',
+      'Cache-Control': 'no-cache',
+      'Connection': 'keep-alive',
+    },
+  });
 }
