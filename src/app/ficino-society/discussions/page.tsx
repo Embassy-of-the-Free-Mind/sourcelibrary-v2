@@ -101,8 +101,13 @@ export default function DiscussionsPage() {
     );
   }
 
-  // Not a member
+  // Not a member — offer to join (free)
   if (error === 'membership') {
+    const handleJoinHere = async () => {
+      await fetch('/api/ficino/join', { method: 'POST' });
+      window.location.reload();
+    };
+
     return (
       <div className="min-h-screen bg-[#fdfcf9]">
         <div className="max-w-[580px] mx-auto px-6 py-24 text-center">
@@ -110,14 +115,15 @@ export default function DiscussionsPage() {
             The Correspondence
           </h1>
           <p className="text-[#444] font-body mb-8">
-            This space is for members of the Ficino Society.
+            Join the Ficino Society to participate in discussions.
+            It&apos;s free and open to everyone.
           </p>
-          <Link
-            href="/ficino-society"
+          <button
+            onClick={handleJoinHere}
             className="inline-block px-6 py-2.5 rounded text-white text-sm bg-[#9e4a3a] hover:brightness-110 transition-all"
           >
-            Learn about membership
-          </Link>
+            Join the Society
+          </button>
         </div>
       </div>
     );

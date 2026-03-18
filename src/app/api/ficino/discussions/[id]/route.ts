@@ -21,7 +21,7 @@ export async function GET(
     { projection: { membership: 1 } }
   );
 
-  if (!user?.membership?.active) {
+  if (!user?.membership?.joined && !user?.membership?.active) {
     return NextResponse.json({ error: 'Membership required' }, { status: 403 });
   }
 

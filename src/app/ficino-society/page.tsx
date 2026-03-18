@@ -4,7 +4,6 @@ import { Suspense, useState, useEffect } from 'react';
 import { useSession } from 'next-auth/react';
 import { useSearchParams } from 'next/navigation';
 import Link from 'next/link';
-import type { MembershipInfo } from '@/lib/membership';
 
 export default function FicinoSocietyPage() {
   return (
@@ -14,9 +13,6 @@ export default function FicinoSocietyPage() {
   );
 }
 
-// ---------------------------------------------------------------------------
-// Ornament
-// ---------------------------------------------------------------------------
 function Ornament() {
   return (
     <div className="flex items-center justify-center py-2" aria-hidden="true">
@@ -27,24 +23,31 @@ function Ornament() {
   );
 }
 
-// ---------------------------------------------------------------------------
-// Main
-// ---------------------------------------------------------------------------
+interface MembershipState {
+  active: boolean;
+  joined: boolean;
+  plan: string | null;
+  expiresAt: string | null;
+}
+
 function FicinoSocietyContent() {
   const { data: session, status, update: updateSession } = useSession();
   const searchParams = useSearchParams();
   const success = searchParams.get('success') === 'true';
   const returnUrl = searchParams.get('return');
-  const [membership, setMembership] = useState<MembershipInfo | null>(null);
-  const [loading, setLoading] = useState(false);
+  const [membership, setMembership] = useState<MembershipState | null>(null);
+  const [joining, setJoining] = useState(false);
+  const [contributing, setContributing] = useState(false);
   const [activating, setActivating] = useState(false);
 
+  // Fetch membership state
   useEffect(() => {
     if (session?.user && !success) {
       fetch('/api/membership').then(r => r.json()).then(setMembership);
     }
   }, [session, success]);
 
+  // After Stripe payment: poll until webhook fires
   useEffect(() => {
     if (!success || !session?.user) return;
     setActivating(true);
@@ -68,15 +71,27 @@ function FicinoSocietyContent() {
         await new Promise(r => setTimeout(r, 1500));
       }
       setActivating(false);
-      setMembership({ active: true, plan: 'ficino', expiresAt: null, stripeCustomerId: null });
+      setMembership({ active: true, joined: true, plan: 'ficino', expiresAt: null });
     };
 
     poll();
     return () => { cancelled = true; };
   }, [success, session, updateSession]);
 
+  // Join the Society (free)
   const handleJoin = async () => {
-    setLoading(true);
+    setJoining(true);
+    try {
+      await fetch('/api/ficino/join', { method: 'POST' });
+      await updateSession();
+      setMembership(prev => prev ? { ...prev, joined: true } : { joined: true, active: false, plan: null, expiresAt: null });
+    } catch { /* */ }
+    setJoining(false);
+  };
+
+  // Contribute financially (Stripe)
+  const handleContribute = async () => {
+    setContributing(true);
     try {
       const body = returnUrl ? JSON.stringify({ returnUrl }) : undefined;
       const res = await fetch('/api/stripe/checkout', {
@@ -88,15 +103,16 @@ function FicinoSocietyContent() {
         window.location.href = data.url;
       } else {
         alert(data.error || 'Something went wrong');
-        setLoading(false);
+        setContributing(false);
       }
     } catch {
       alert('Something went wrong');
-      setLoading(false);
+      setContributing(false);
     }
   };
 
-  const isMember = membership?.active || success;
+  const isMember = membership?.joined || membership?.active || false;
+  const isContributor = membership?.active || false;
 
   return (
     <div className="min-h-screen bg-[#fdfcf9]">
@@ -161,26 +177,24 @@ function FicinoSocietyContent() {
       </section>
 
       {/* ================================================================ */}
-      {/* SUCCESS / MEMBER STATE                                           */}
+      {/* SUCCESS STATE (after Stripe payment)                             */}
       {/* ================================================================ */}
       {success && (
         <section className="bg-[#1a1612] border-b border-[#c9a86c]/20">
           <div className="max-w-xl mx-auto px-6 py-12 text-center">
             {activating ? (
               <>
-                <p className="text-xl font-serif text-white/80" style={{ fontWeight: 400 }}>
-                  Activating your membership...
-                </p>
+                <p className="text-xl font-serif text-white/80" style={{ fontWeight: 400 }}>Processing...</p>
                 <p className="text-white/40 text-sm mt-2">This usually takes just a moment.</p>
               </>
             ) : (
               <>
                 <p className="text-xl font-serif text-white/80 mb-4" style={{ fontWeight: 400 }}>
-                  Welcome to the Ficino Society
+                  Thank you for your contribution
                 </p>
                 <p className="text-white/50 text-sm leading-relaxed mb-6">
-                  You&apos;re in. Visit the correspondence to introduce yourself,
-                  or head to the library to see what&apos;s been translated.
+                  Your support directly funds the translation of texts that have
+                  been unread for centuries. Thank you.
                 </p>
                 <div className="flex flex-col sm:flex-row gap-3 justify-center">
                   <Link
@@ -202,14 +216,15 @@ function FicinoSocietyContent() {
         </section>
       )}
 
+      {/* Member bar */}
       {isMember && !success && (
         <section className="bg-[#1a1612]">
-          <div className="max-w-xl mx-auto px-6 py-6 flex items-center justify-between">
+          <div className="max-w-xl mx-auto px-6 py-5 flex items-center justify-between">
             <p className="text-white/40 text-sm font-serif">
               Member
-              {membership?.expiresAt && (
+              {isContributor && membership?.expiresAt && (
                 <span className="text-white/20 ml-2">
-                  &middot; Renews {new Date(membership.expiresAt).toLocaleDateString('en-US', { month: 'long', year: 'numeric' })}
+                  &middot; Contributor &middot; Renews {new Date(membership.expiresAt).toLocaleDateString('en-US', { month: 'long', year: 'numeric' })}
                 </span>
               )}
             </p>
@@ -232,30 +247,28 @@ function FicinoSocietyContent() {
             <p>
               In 1462, Cosimo de&apos; Medici gave Marsilio Ficino a villa and
               a stack of Greek manuscripts, and asked him to translate them.
-              What followed was the recovery of an entire intellectual
-              tradition &mdash; Plato, the Hermetica, Plotinus &mdash; that had been
-              lost to the Latin West for a thousand years.
-            </p>
-            <p>
               But Ficino didn&apos;t work alone. He gathered a circle &mdash;
               philosophers, physicians, poets, patrons &mdash; who met at
               Careggi to read and discuss what he translated. They called it
-              the Platonic Academy. The translations were the output of a
-              community, not just a scholar.
+              the Platonic Academy.
             </p>
             <p>
               Source Library has digitized over five thousand rare texts in
               alchemy, Kabbalah, astrology, natural philosophy, and the
-              broader Western esoteric tradition. We are translating them
-              into English for the first time &mdash; many from books that
-              exist in only a handful of libraries worldwide.
+              broader Western esoteric tradition, and is translating them
+              into English for the first time. Many from books that exist
+              in only a handful of libraries worldwide.
             </p>
             <p>
-              The Ficino Society is a circle of people doing this work
-              together. Members read the new translations, discuss them,
-              and shape what we translate next. Every book, every page
-              remains free for anyone to read. The Society isn&apos;t about
-              access &mdash; it&apos;s about participation.
+              The Ficino Society is a circle of people who care about this
+              work. Members read the new translations together, discuss
+              them, suggest what to translate next, and &mdash; once a
+              year &mdash; gather in Amsterdam at the library where this
+              project began.
+            </p>
+            <p>
+              Joining is free. The Society is open to anyone drawn to
+              these traditions.
             </p>
           </div>
         </div>
@@ -296,41 +309,107 @@ function FicinoSocietyContent() {
       </section>
 
       {/* ================================================================ */}
-      {/* THE CIRCLE — what members do together                            */}
+      {/* WHAT THE SOCIETY DOES                                            */}
       {/* ================================================================ */}
       <section className="bg-[#fdfcf9]">
         <div className="max-w-[580px] mx-auto px-6 py-24 md:py-32">
           <Ornament />
           <h2
-            className="text-2xl md:text-3xl font-serif text-[#1a1612] mt-8 mb-10 text-center"
+            className="text-2xl md:text-3xl font-serif text-[#1a1612] mt-8 mb-12 text-center"
             style={{ fontWeight: 400 }}
           >
-            The circle
+            What we do together
           </h2>
 
-          <div className="space-y-7 text-[17px] md:text-[18px] leading-[1.85] text-[#333] font-body">
-            <p>
-              Members correspond with each other through a private
-              discussion space we call the Correspondence. Threads are
-              long-form and unhurried &mdash; more like an exchange of
-              letters than a group chat. People discuss newly translated
-              passages, share what they&apos;re reading, and suggest texts
-              they believe should be translated next.
-            </p>
-            <p>
-              Every quarter, we send a letter about what we&apos;ve
-              translated, what surprised us, and what&apos;s coming next.
-              Members write back. Sometimes those responses shape the
-              direction of the project.
-            </p>
-            <p>
-              Once a year, each member can dedicate a translation &mdash;
-              choose a book and put their name on it, permanently. Your
-              name in a book that didn&apos;t exist in English before.
-            </p>
+          <div className="space-y-10">
+            <div>
+              <h3 className="text-lg font-serif text-[#1a1612] mb-2" style={{ fontWeight: 500 }}>
+                The Correspondence
+              </h3>
+              <p className="text-[16px] leading-[1.8] text-[#444] font-body">
+                A private discussion space for members. Long-form, unhurried &mdash;
+                more like an exchange of letters than a group chat. People discuss
+                newly translated passages, share what they&apos;re reading, debate
+                interpretations, and suggest texts they believe should be
+                translated next.
+              </p>
+            </div>
+
+            <div>
+              <h3 className="text-lg font-serif text-[#1a1612] mb-2" style={{ fontWeight: 500 }}>
+                Reading groups
+              </h3>
+              <p className="text-[16px] leading-[1.8] text-[#444] font-body">
+                Each quarter, the Society reads a text together. Not a book club &mdash;
+                a study group. Members commit to reading a specific work over
+                several months, discussing it as they go. The translator sometimes
+                joins the conversation.
+              </p>
+            </div>
+
+            <div>
+              <h3 className="text-lg font-serif text-[#1a1612] mb-2" style={{ fontWeight: 500 }}>
+                The quarterly letter
+              </h3>
+              <p className="text-[16px] leading-[1.8] text-[#444] font-body">
+                Every three months, a letter about what we&apos;ve translated, what
+                surprised us, and what&apos;s coming next. Members write back.
+                Sometimes those responses shape the direction of the project.
+              </p>
+            </div>
+
+            <div>
+              <h3 className="text-lg font-serif text-[#1a1612] mb-2" style={{ fontWeight: 500 }}>
+                The annual gathering
+              </h3>
+              <p className="text-[16px] leading-[1.8] text-[#444] font-body">
+                Once a year, members gather in Amsterdam at the Embassy of the
+                Free Mind &mdash; the library where this project began. A day
+                of reading, discussion, and dinner. Not a conference. A meeting
+                of the circle.
+              </p>
+            </div>
           </div>
         </div>
       </section>
+
+      {/* ================================================================ */}
+      {/* JOIN — free, primary CTA                                         */}
+      {/* ================================================================ */}
+      {!isMember && (
+        <section id="join" className="bg-[#1a1612]">
+          <div className="max-w-[520px] mx-auto px-6 py-24 md:py-28 text-center">
+            <h2
+              className="text-3xl md:text-4xl font-serif text-white/90 mb-4"
+              style={{ fontWeight: 300 }}
+            >
+              Join the Ficino Society
+            </h2>
+            <p className="text-white/40 font-body text-base leading-relaxed max-w-md mx-auto mb-10">
+              Free and open to anyone drawn to these traditions.
+              Sign in to join the discussion, the reading groups,
+              and the quarterly letter.
+            </p>
+
+            {status === 'authenticated' ? (
+              <button
+                onClick={handleJoin}
+                disabled={joining}
+                className="px-10 py-3.5 rounded text-white text-[15px] font-sans tracking-wide transition-all hover:brightness-110 disabled:opacity-50 bg-[#9e4a3a]"
+              >
+                {joining ? 'Joining...' : 'Join the Society'}
+              </button>
+            ) : (
+              <Link
+                href={`/auth/signin?callbackUrl=${encodeURIComponent('/ficino-society')}`}
+                className="inline-block px-10 py-3.5 rounded text-white text-[15px] font-sans tracking-wide transition-all hover:brightness-110 bg-[#9e4a3a]"
+              >
+                Sign in to join
+              </Link>
+            )}
+          </div>
+        </section>
+      )}
 
       {/* ================================================================ */}
       {/* THE LIBRARY STAYS FREE                                           */}
@@ -343,63 +422,74 @@ function FicinoSocietyContent() {
           >
             The library stays free
           </h2>
-          <div className="space-y-5 text-[17px] md:text-[18px] leading-[1.85] text-[#333] font-body">
-            <p>
-              Every book, every translation, every page is free to read,
-              search, and cite. No account required, no paywalls, no
-              restrictions on scholarship. Membership sustains the work.
-              It does not gate the knowledge.
-            </p>
-          </div>
+          <p className="text-[17px] md:text-[18px] leading-[1.85] text-[#333] font-body">
+            Every book, every translation, every page is free to read,
+            search, and cite. No account required, no paywalls, no
+            restrictions on scholarship. The Society is about community,
+            not access. The knowledge belongs to everyone.
+          </p>
         </div>
       </section>
 
       {/* ================================================================ */}
-      {/* THE INVITATION                                                   */}
+      {/* CONTRIBUTE — optional financial support                          */}
       {/* ================================================================ */}
-      {!isMember && (
-        <section id="join" className="bg-[#1a1612]">
-          <div className="max-w-[520px] mx-auto px-6 py-24 md:py-32 text-center">
-            <Ornament />
-
-            <p className="mt-10 mb-2 text-white/50 font-body text-lg leading-relaxed">
-              If you&apos;d like to join the conversation
+      <section className="bg-[#fdfcf9]">
+        <div className="max-w-[580px] mx-auto px-6 py-24 md:py-28">
+          <Ornament />
+          <h2
+            className="text-2xl md:text-3xl font-serif text-[#1a1612] mt-8 mb-6 text-center"
+            style={{ fontWeight: 400 }}
+          >
+            Support the work
+          </h2>
+          <div className="space-y-5 text-[17px] md:text-[18px] leading-[1.85] text-[#333] font-body text-center max-w-md mx-auto">
+            <p>
+              The recommended contribution is $100 per year. That&apos;s roughly
+              the cost of translating twenty pages of sixteenth-century
+              Latin &mdash; one chapter of a book that may never have been
+              read in English before.
             </p>
-
-            <div className="mb-10">
-              <span className="text-4xl md:text-5xl font-serif text-white/80" style={{ fontWeight: 300 }}>
-                $100
-              </span>
-              <span className="text-base ml-2 text-white/25 font-body">per year</span>
-            </div>
-
-            {status === 'authenticated' ? (
-              <button
-                onClick={handleJoin}
-                disabled={loading}
-                className="px-10 py-3.5 rounded text-white text-[15px] font-sans tracking-wide transition-all hover:brightness-110 disabled:opacity-50 bg-[#9e4a3a]"
-              >
-                {loading ? 'Redirecting...' : 'Join the Ficino Society'}
-              </button>
-            ) : (
-              <Link
-                href={`/auth/signin?callbackUrl=${encodeURIComponent(`/ficino-society${returnUrl ? `?return=${encodeURIComponent(returnUrl)}` : ''}`)}`}
-                className="inline-block px-10 py-3.5 rounded text-white text-[15px] font-sans tracking-wide transition-all hover:brightness-110 bg-[#9e4a3a]"
-              >
-                Sign in to join
-              </Link>
-            )}
-
-            <p className="mt-8 text-[13px] text-white/20 leading-relaxed max-w-sm mx-auto font-body">
-              If the fee is a barrier, write to{' '}
-              <a href="mailto:hello@sourcelibrary.org" className="underline text-white/25 hover:text-white/40 transition-colors">
-                hello@sourcelibrary.org
-              </a>
-              . We&apos;ll find an amount that works. No questions asked.
+            <p>
+              Contributors can dedicate one translation per year &mdash;
+              choose a book and put your name on it, permanently.
             </p>
           </div>
-        </section>
-      )}
+
+          <div className="text-center mt-10">
+            {status === 'authenticated' ? (
+              <>
+                <button
+                  onClick={handleContribute}
+                  disabled={contributing || isContributor}
+                  className="px-10 py-3.5 rounded text-[15px] font-sans tracking-wide transition-all hover:brightness-110 disabled:opacity-50 border border-[#1a1612] text-[#1a1612] bg-transparent"
+                >
+                  {isContributor ? 'Thank you' : contributing ? 'Redirecting...' : 'Contribute $100 / year'}
+                </button>
+                {!isMember && (
+                  <p className="mt-4 text-[13px] text-[#8a8480] font-body">
+                    You can also <a href="#join" className="underline">join without contributing</a>.
+                  </p>
+                )}
+              </>
+            ) : (
+              <Link
+                href={`/auth/signin?callbackUrl=${encodeURIComponent('/ficino-society')}`}
+                className="inline-block px-10 py-3.5 rounded text-[15px] font-sans tracking-wide transition-all hover:brightness-110 border border-[#1a1612] text-[#1a1612]"
+              >
+                Sign in to contribute
+              </Link>
+            )}
+          </div>
+
+          <p className="mt-8 text-[13px] text-[#8a8480] leading-relaxed text-center font-body">
+            If you&apos;d like to contribute a different amount, write to{' '}
+            <a href="mailto:hello@sourcelibrary.org" className="underline hover:text-[#6b6560] transition-colors">
+              hello@sourcelibrary.org
+            </a>.
+          </p>
+        </div>
+      </section>
 
       {/* ================================================================ */}
       {/* FOOTER                                                           */}

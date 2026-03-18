@@ -18,7 +18,8 @@ export async function GET() {
     { projection: { membership: 1 } }
   );
 
-  if (!user?.membership?.active) {
+  // Check Society membership (free join), not financial contribution
+  if (!user?.membership?.joined && !user?.membership?.active) {
     return NextResponse.json({ error: 'Membership required' }, { status: 403 });
   }
 
@@ -57,7 +58,7 @@ export async function POST(request: NextRequest) {
     { projection: { membership: 1, name: 1 } }
   );
 
-  if (!user?.membership?.active) {
+  if (!user?.membership?.joined && !user?.membership?.active) {
     return NextResponse.json({ error: 'Membership required' }, { status: 403 });
   }
 
