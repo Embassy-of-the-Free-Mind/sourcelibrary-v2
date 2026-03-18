@@ -1,6 +1,6 @@
 'use client';
 
-import { Suspense, useState, useEffect, useRef } from 'react';
+import { Suspense, useState, useEffect } from 'react';
 import { useSession } from 'next-auth/react';
 import { useSearchParams } from 'next/navigation';
 import Link from 'next/link';
@@ -15,17 +15,15 @@ export default function FicinoSocietyPage() {
 }
 
 // ---------------------------------------------------------------------------
-// Logo SVG — concentric circles with flame
+// Ornamental divider — a small typographic flourish
 // ---------------------------------------------------------------------------
-function FicinoLogo({ className = 'w-10 h-10' }: { className?: string }) {
+function Ornament() {
   return (
-    <svg className={className} viewBox="0 0 48 48" fill="none" xmlns="http://www.w3.org/2000/svg">
-      <circle cx="24" cy="24" r="22" stroke="currentColor" strokeWidth="1" opacity="0.5" />
-      <circle cx="24" cy="24" r="16" stroke="currentColor" strokeWidth="1" opacity="0.7" />
-      <circle cx="24" cy="24" r="10" stroke="currentColor" strokeWidth="1.5" />
-      <path d="M24 32c-3 0-5-2.5-5-5.5 0-4 3-7 5-9 2 2 5 5 5 9 0 3-2 5.5-5 5.5z" fill="currentColor" opacity="0.9" />
-      <path d="M24 30c-1.5 0-2.5-1.2-2.5-2.8 0-2 1.5-3.5 2.5-4.5 1 1 2.5 2.5 2.5 4.5 0 1.6-1 2.8-2.5 2.8z" fill="#c9a86c" />
-    </svg>
+    <div className="flex items-center justify-center py-2" aria-hidden="true">
+      <span className="text-[#c9a86c]/40 text-lg tracking-[0.5em] font-serif select-none">
+        &middot;&nbsp;&middot;&nbsp;&middot;
+      </span>
+    </div>
   );
 }
 
@@ -40,15 +38,6 @@ function FicinoSocietyContent() {
   const [membership, setMembership] = useState<MembershipInfo | null>(null);
   const [loading, setLoading] = useState(false);
   const [activating, setActivating] = useState(false);
-  const [videoLoaded, setVideoLoaded] = useState(false);
-  const [showContent, setShowContent] = useState(false);
-  const hasRecorded = useRef(false);
-
-  // Show content after brief delay even without video
-  useEffect(() => {
-    const timer = setTimeout(() => setShowContent(true), 300);
-    return () => clearTimeout(timer);
-  }, []);
 
   // Normal membership check
   useEffect(() => {
@@ -112,169 +101,97 @@ function FicinoSocietyContent() {
     }
   };
 
-  const handleVideoLoad = () => {
-    if (!hasRecorded.current) hasRecorded.current = true;
-    setVideoLoaded(true);
-    setShowContent(true);
-  };
-
   const isMember = membership?.active || success;
 
   return (
-    <div className="min-h-screen bg-[#0a0908]">
+    <div className="min-h-screen bg-[#fdfcf9]">
+
       {/* ================================================================ */}
-      {/* HERO — full viewport with video background                       */}
+      {/* TITLE PAGE — like the opening page of a book                     */}
       {/* ================================================================ */}
-      <section className="relative min-h-screen w-full overflow-hidden">
-        {/* Loading state */}
-        {!showContent && (
-          <div className="absolute inset-0 z-50 flex items-center justify-center bg-[#0a0908]">
-            <FicinoLogo className="w-16 h-16 text-white/30 animate-pulse" />
+      <section className="min-h-screen flex flex-col justify-center items-center relative bg-[#0e0c0a]">
+        {/* Background: a single manuscript image, very muted */}
+        <div className="absolute inset-0 overflow-hidden">
+          <img
+            src="https://3kwioilsplnmnkv8.public.blob.vercel-storage.com/archived/69520c46ab34727b1f044141/99.jpg"
+            alt=""
+            className="w-full h-full object-cover opacity-[0.08]"
+          />
+        </div>
+
+        <div className="relative z-10 text-center px-6 max-w-2xl">
+          <p className="text-[#c9a86c]/60 text-[11px] tracking-[0.4em] uppercase mb-12 font-sans">
+            Est. MMXXV
+          </p>
+          <h1
+            className="text-5xl md:text-6xl lg:text-7xl text-white/90 mb-6 font-serif leading-[1.1]"
+            style={{ fontWeight: 300 }}
+          >
+            The Ficino<br />Society
+          </h1>
+          <p className="text-white/35 text-base md:text-lg font-body leading-relaxed max-w-md mx-auto">
+            Supporting the translation of the<br className="hidden md:inline" />
+            Western esoteric tradition
+          </p>
+
+          {/* Scroll hint */}
+          <div className="mt-20">
+            <a href="#letter" className="text-white/15 hover:text-white/30 transition-colors">
+              <svg className="w-5 h-5 mx-auto animate-bounce" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={1} d="M19 14l-7 7m0 0l-7-7m7 7V3" />
+              </svg>
+            </a>
           </div>
-        )}
+        </div>
 
-        {/* Poster image */}
-        <img
-          src="/hero-poster.jpg"
-          alt=""
-          className="absolute inset-0 w-full h-full object-cover z-0"
-          fetchPriority="high"
-          onLoad={() => setShowContent(true)}
-        />
-
-        {/* Video background */}
-        <video
-          autoPlay loop muted playsInline preload="auto"
-          onCanPlay={handleVideoLoad}
-          className={`absolute inset-0 w-full h-full object-cover z-0 transition-opacity duration-700 ${videoLoaded ? 'opacity-100' : 'opacity-0'}`}
-        >
-          <source src="https://cdn.prod.website-files.com/68d800cb1402171531a597f4/68d800cb1402171531a598cf_embassy-of-the-free-mind-montage-002-transcode.webm#t=3" type="video/webm" />
-          <source src="https://cdn.prod.website-files.com/68d800cb1402171531a597f4/68d800cb1402171531a598cf_embassy-of-the-free-mind-montage-002-transcode.mp4#t=3" type="video/mp4" />
-        </video>
-
-        {/* Dark overlay */}
-        <div className="absolute inset-0 bg-gradient-to-b from-black/60 via-black/30 to-black/80 z-[1]" />
-
-        {/* Header */}
-        <header className={`relative z-50 flex items-center justify-between px-6 md:px-12 py-6 transition-opacity duration-700 ${showContent ? 'opacity-100' : 'opacity-0'}`}>
-          <div className="flex items-center gap-3 text-white">
-            <FicinoLogo className="w-10 h-10 md:w-11 md:h-11" />
-            <div className="flex flex-col">
-              <span className="text-base md:text-lg tracking-wide font-light">The Ficino Society</span>
-              <span className="text-[10px] tracking-[0.2em] text-white/50 uppercase">Est. MMXXV</span>
-            </div>
-          </div>
-          <div className="flex items-center gap-2">
-            {status === 'authenticated' ? (
-              <Link href="/account" className="px-4 py-2 text-white/80 text-sm hover:text-white transition-colors">
-                Account
-              </Link>
-            ) : (
-              <Link href="/auth/signin" className="px-4 py-2 text-white/80 text-sm hover:text-white transition-colors">
-                Sign In
-              </Link>
-            )}
-          </div>
+        {/* Minimal header */}
+        <header className="absolute top-0 left-0 right-0 z-50 flex items-center justify-between px-6 md:px-12 py-6">
+          <span className="text-white/25 text-xs tracking-[0.15em] uppercase font-sans">
+            ficinosociety.org
+          </span>
+          {status === 'authenticated' ? (
+            <Link href="/account" className="text-white/25 text-xs tracking-wider uppercase hover:text-white/50 transition-colors font-sans">
+              Account
+            </Link>
+          ) : (
+            <Link href="/auth/signin" className="text-white/25 text-xs tracking-wider uppercase hover:text-white/50 transition-colors font-sans">
+              Sign In
+            </Link>
+          )}
         </header>
-
-        {/* Hero content */}
-        <div className={`relative z-10 min-h-[calc(100vh-88px)] flex items-center transition-opacity duration-700 ${showContent ? 'opacity-100' : 'opacity-0'}`}>
-          <div className="px-6 md:px-12 lg:px-20 max-w-4xl">
-            <p className="text-[#c9a86c] text-xs md:text-sm tracking-[0.25em] uppercase mb-8 font-sans">
-              Patron of the Western Esoteric Tradition
-            </p>
-
-            <h1
-              className="text-4xl md:text-5xl lg:text-6xl text-white mb-8 leading-[1.15] font-serif"
-              style={{ fontWeight: 400 }}
-            >
-              Five hundred years of lost knowledge,{' '}
-              <span className="text-[#c9a86c]">translated for the first time</span>
-            </h1>
-
-            <p className="text-lg md:text-xl text-white/75 leading-relaxed max-w-2xl mb-12 font-body">
-              Source Library is digitizing and translating thousands of rare texts in alchemy,
-              Kabbalah, astrology, and natural philosophy. The Ficino Society makes that possible.
-            </p>
-
-            {/* CTA in hero */}
-            {!isMember && (
-              <div className="flex flex-wrap items-center gap-4">
-                <a
-                  href="#join"
-                  className="px-8 py-4 bg-[#9e4a3a] hover:bg-[#b5564a] text-white rounded-lg text-base font-medium transition-colors font-sans"
-                >
-                  Become a Patron
-                </a>
-                <a
-                  href="#about"
-                  className="px-8 py-4 bg-white/10 hover:bg-white/15 backdrop-blur-sm text-white rounded-lg text-base font-medium transition-colors border border-white/15 font-sans"
-                >
-                  Learn More
-                </a>
-              </div>
-            )}
-
-            {/* Stats */}
-            <div className="flex flex-wrap gap-8 md:gap-14 mt-16 pt-8 border-t border-white/15">
-              <div>
-                <p className="text-3xl md:text-4xl text-white font-light font-serif">5,355</p>
-                <p className="text-[11px] text-white/50 uppercase tracking-wider mt-1 font-sans">Books Digitized</p>
-              </div>
-              <div>
-                <p className="text-3xl md:text-4xl text-white font-light font-serif">1,200+</p>
-                <p className="text-[11px] text-white/50 uppercase tracking-wider mt-1 font-sans">Texts Translated</p>
-              </div>
-              <div>
-                <p className="text-3xl md:text-4xl text-white font-light font-serif">100K+</p>
-                <p className="text-[11px] text-white/50 uppercase tracking-wider mt-1 font-sans">Pages Available</p>
-              </div>
-            </div>
-          </div>
-        </div>
-
-        {/* Scroll indicator */}
-        <div className="absolute bottom-8 left-1/2 -translate-x-1/2 z-20">
-          <a href="#about" className="flex flex-col items-center gap-2 text-white/40 hover:text-white/60 transition-colors">
-            <svg className="w-5 h-5 animate-bounce" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-              <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={1.5} d="M19 14l-7 7m0 0l-7-7m7 7V3" />
-            </svg>
-          </a>
-        </div>
       </section>
 
       {/* ================================================================ */}
-      {/* SUCCESS / MEMBER BANNER (if applicable)                          */}
+      {/* SUCCESS / MEMBER STATE                                           */}
       {/* ================================================================ */}
       {success && (
-        <section className="bg-[#1a1612] border-b border-[#c9a86c]/30">
-          <div className="max-w-2xl mx-auto px-6 py-12 text-center">
+        <section className="bg-[#1a1612] border-b border-[#c9a86c]/20">
+          <div className="max-w-xl mx-auto px-6 py-12 text-center">
             {activating ? (
               <>
-                <h2 className="text-2xl font-serif text-white mb-2" style={{ fontWeight: 400 }}>
+                <p className="text-xl font-serif text-white/80" style={{ fontWeight: 400 }}>
                   Activating your membership...
-                </h2>
-                <p className="text-white/60">This usually takes just a moment.</p>
+                </p>
+                <p className="text-white/40 text-sm mt-2">This usually takes just a moment.</p>
               </>
             ) : (
               <>
-                <h2 className="text-2xl font-serif text-white mb-3" style={{ fontWeight: 400 }}>
+                <p className="text-xl font-serif text-white/80 mb-4" style={{ fontWeight: 400 }}>
                   Welcome to the Ficino Society
-                </h2>
-                <p className="text-white/70 leading-relaxed mb-6">
-                  Your membership is active. You now have full access to high-resolution
-                  gallery downloads and the complete translated collection.
+                </p>
+                <p className="text-white/50 text-sm leading-relaxed mb-6">
+                  Your membership is active. Thank you for supporting this work.
                 </p>
                 <div className="flex flex-col sm:flex-row gap-3 justify-center">
                   <Link
                     href={returnUrl || '/gallery'}
-                    className="inline-block px-6 py-2.5 rounded-lg text-white font-medium transition-opacity hover:opacity-90 bg-[#9e4a3a]"
+                    className="inline-block px-5 py-2 rounded text-white/90 text-sm transition-opacity hover:opacity-80 bg-[#9e4a3a]"
                   >
-                    {returnUrl ? 'Continue where you left off' : 'Browse the gallery'}
+                    {returnUrl ? 'Continue where you left off' : 'Visit the library'}
                   </Link>
                   <Link
                     href="/account"
-                    className="inline-block px-6 py-2.5 rounded-lg font-medium transition-opacity hover:opacity-90 bg-white/10 text-white border border-white/15"
+                    className="inline-block px-5 py-2 rounded text-white/60 text-sm transition-opacity hover:opacity-80 border border-white/10"
                   >
                     Your account
                   </Link>
@@ -286,202 +203,188 @@ function FicinoSocietyContent() {
       )}
 
       {isMember && !success && (
-        <section className="bg-[#1a1612] border-b border-[#c9a86c]/30">
-          <div className="max-w-2xl mx-auto px-6 py-8 text-center">
-            <p className="text-white/80 font-serif text-lg">
+        <section className="bg-[#1a1612]">
+          <div className="max-w-xl mx-auto px-6 py-6 text-center">
+            <p className="text-white/50 text-sm font-serif">
               You are a member of the Ficino Society
+              {membership?.expiresAt && (
+                <span className="text-white/25 ml-2">
+                  &middot; Renews {new Date(membership.expiresAt).toLocaleDateString('en-US', { month: 'long', year: 'numeric' })}
+                </span>
+              )}
             </p>
-            {membership?.expiresAt && (
-              <p className="text-white/40 text-sm mt-1">
-                Renews {new Date(membership.expiresAt).toLocaleDateString('en-US', { month: 'long', day: 'numeric', year: 'numeric' })}
-              </p>
-            )}
           </div>
         </section>
       )}
 
       {/* ================================================================ */}
-      {/* THE STORY — Cosimo narrative                                     */}
+      {/* THE LETTER                                                       */}
       {/* ================================================================ */}
-      <section id="about" className="bg-[#fdfcf9]">
-        <div className="max-w-2xl mx-auto px-6 py-20 md:py-28">
-          <p className="text-[#9e4a3a] text-xs tracking-[0.25em] uppercase mb-8 font-sans">The Work</p>
-
-          <div className="space-y-6 text-[17px] leading-[1.8] text-[#444] font-body">
+      <section id="letter" className="bg-[#fdfcf9]">
+        <div className="max-w-[580px] mx-auto px-6 py-24 md:py-32">
+          <div className="space-y-7 text-[17px] md:text-[18px] leading-[1.85] text-[#333] font-body">
             <p>
-              In 1462, Cosimo de&apos; Medici gave Marsilio Ficino a villa and a stack of Greek manuscripts,
-              and asked him to translate them. What followed was the recovery of an entire intellectual
-              tradition &mdash; Plato, the Hermetica, Plotinus &mdash; that had been lost to the Latin West
-              for a thousand years. It changed everything.
+              In 1462, Cosimo de&apos; Medici gave Marsilio Ficino a villa and
+              a stack of Greek manuscripts, and asked him to translate them.
+              What followed was the recovery of an entire intellectual
+              tradition &mdash; Plato, the Hermetica, Plotinus &mdash; that had been
+              lost to the Latin West for a thousand years.
             </p>
             <p>
-              Source Library is doing something similar, at a different scale. We are digitizing
-              thousands of rare texts in alchemy, Kabbalah, astrology, natural philosophy, and the
-              Western esoteric tradition, and translating them into English for the first time &mdash;
-              many from books that exist in only a handful of libraries worldwide.
+              It changed everything. The Renaissance, in no small part,
+              began because one patron believed those texts mattered enough
+              to fund their translation.
             </p>
             <p>
-              The Ficino Society is for people who want this work to continue. Your membership
-              directly funds the digitization, translation, and preservation of these texts.
-              Everything in the library remains free to read. Your support makes that possible.
+              We are doing something similar. Source Library has digitized
+              over five thousand rare books in alchemy, Kabbalah, astrology,
+              natural philosophy, and the broader Western esoteric
+              tradition &mdash; and is translating them into English for the
+              first time. Many of these exist in only a handful of libraries
+              worldwide. Some have never been translated into any modern
+              language.
+            </p>
+            <p>
+              Every book, every translation, every page is free to read.
+              No paywall, no account required. The knowledge belongs to
+              everyone.
+            </p>
+            <p>
+              The Ficino Society is for people who want this work to
+              continue. Your support directly funds the digitization,
+              translation, and preservation of these texts. Nothing more
+              complicated than that.
             </p>
           </div>
         </div>
       </section>
 
       {/* ================================================================ */}
-      {/* WHAT MEMBERS GET                                                 */}
+      {/* A MANUSCRIPT IMAGE — full bleed, no text, just the work          */}
       {/* ================================================================ */}
-      <section className="bg-[#f5f0e8]">
-        <div className="max-w-2xl mx-auto px-6 py-20 md:py-24">
-          <p className="text-[#9e4a3a] text-xs tracking-[0.25em] uppercase mb-8 font-sans">Membership</p>
-          <h2 className="text-3xl md:text-4xl font-serif mb-12 text-[#1a1612]" style={{ fontWeight: 400 }}>
-            As a member
-          </h2>
-
-          <div className="space-y-8">
-            {[
-              {
-                title: 'Unlimited downloads',
-                desc: 'Every book as EPUB or plain text, every gallery image in full resolution. No per-item fees.',
-              },
-              {
-                title: 'MCP server and API',
-                desc: 'The API and MCP server are free for everyone. Your membership keeps them running.',
-              },
-              {
-                title: 'Your name on the members page',
-                desc: 'A public page listing the people who support this work. With an optional one-line bio, if you like.',
-              },
-              {
-                title: 'A quarterly letter',
-                desc: 'What we translated, what we discovered, what\u2019s coming next. Short, personal, from the team.',
-              },
-              {
-                title: 'Dedicate a translation',
-                desc: 'Choose a book and put your name on it \u2014 permanently. One dedication per year.',
-              },
-              {
-                title: 'Inner circle',
-                desc: 'As we build forums and discussion spaces, members will be the founding community.',
-              },
-            ].map((item) => (
-              <div key={item.title} className="flex gap-4">
-                <span className="mt-2.5 w-1.5 h-1.5 rounded-full flex-shrink-0 bg-[#9e4a3a]" />
-                <div>
-                  <span className="font-medium text-[#1a1612]">{item.title}</span>
-                  <p className="text-sm mt-1 text-[#444] leading-relaxed">{item.desc}</p>
-                </div>
-              </div>
-            ))}
+      <section className="bg-[#0e0c0a]">
+        <div className="max-w-5xl mx-auto">
+          <div className="grid grid-cols-1 md:grid-cols-3 gap-[1px]">
+            <div className="aspect-[3/4] overflow-hidden">
+              <img
+                src="https://3kwioilsplnmnkv8.public.blob.vercel-storage.com/archived/69520c46ab34727b1f044141/71.jpg"
+                alt="Alchemical emblem from Atalanta Fugiens by Michael Maier, 1617"
+                className="w-full h-full object-cover opacity-80"
+              />
+            </div>
+            <div className="aspect-[3/4] overflow-hidden">
+              <img
+                src="https://3kwioilsplnmnkv8.public.blob.vercel-storage.com/archived/69520c46ab34727b1f044141/43.jpg"
+                alt="Hermetic emblem from Atalanta Fugiens by Michael Maier, 1617"
+                className="w-full h-full object-cover opacity-80"
+              />
+            </div>
+            <div className="aspect-[3/4] overflow-hidden hidden md:block">
+              <img
+                src="https://3kwioilsplnmnkv8.public.blob.vercel-storage.com/archived/69520c46ab34727b1f044141/99.jpg"
+                alt="Geometric diagram from Atalanta Fugiens by Michael Maier, 1617"
+                className="w-full h-full object-cover opacity-80"
+              />
+            </div>
           </div>
-        </div>
-      </section>
-
-      {/* ================================================================ */}
-      {/* THE COMMITMENT                                                   */}
-      {/* ================================================================ */}
-      <section className="bg-[#fdfcf9]">
-        <div className="max-w-2xl mx-auto px-6 py-20 md:py-24">
-          <h2 className="text-3xl md:text-4xl font-serif mb-8 text-[#1a1612]" style={{ fontWeight: 400 }}>
-            The library stays free
-          </h2>
-          <div className="space-y-4 text-[17px] leading-[1.8] text-[#444] font-body">
-            <p>
-              Every book, every translation, every page is free to read, search, and cite.
-              No account required, no paywalls, no restrictions on scholarship.
-              Membership sustains the work. It does not gate the knowledge.
-            </p>
-          </div>
-          <p className="text-sm mt-6 text-[#6b6560] leading-relaxed">
-            If the membership fee is a barrier for you, write to{' '}
-            <a href="mailto:hello@sourcelibrary.org" className="underline hover:text-[#444] transition-colors">
-              hello@sourcelibrary.org
-            </a>
-            {' '}and we will find an amount that works. No questions, no proof required.
+          <p className="text-white/20 text-xs text-center py-4 font-sans tracking-wider">
+            Michael Maier, <em>Atalanta Fugiens</em>, 1617
           </p>
         </div>
       </section>
 
       {/* ================================================================ */}
-      {/* JOIN CTA                                                         */}
+      {/* WHAT YOUR SUPPORT MAKES POSSIBLE                                 */}
+      {/* ================================================================ */}
+      <section className="bg-[#fdfcf9]">
+        <div className="max-w-[580px] mx-auto px-6 py-24 md:py-32">
+          <Ornament />
+
+          <h2
+            className="text-2xl md:text-3xl font-serif text-[#1a1612] mt-8 mb-10 text-center"
+            style={{ fontWeight: 400 }}
+          >
+            What your support makes possible
+          </h2>
+
+          <div className="space-y-7 text-[17px] md:text-[18px] leading-[1.85] text-[#333] font-body">
+            <p>
+              A membership costs $100 per year. That&apos;s roughly the cost of
+              translating twenty pages of sixteenth-century Latin &mdash; one
+              chapter of a book that may not have been read in English
+              before.
+            </p>
+            <p>
+              As a member, you receive unlimited downloads of every book
+              and gallery image in the collection. You can dedicate one
+              translation per year &mdash; your name on the book, permanently.
+              You receive a quarterly letter about what we&apos;ve translated
+              and what&apos;s coming next. And your name appears on the
+              members page, if you choose.
+            </p>
+            <p>
+              But those are gestures of thanks, not the reason to join.
+              The reason is the work itself.
+            </p>
+          </div>
+        </div>
+      </section>
+
+      {/* ================================================================ */}
+      {/* THE INVITATION                                                   */}
       {/* ================================================================ */}
       {!isMember && (
         <section id="join" className="bg-[#1a1612]">
-          <div className="max-w-2xl mx-auto px-6 py-20 md:py-28 text-center">
-            <p className="text-[#c9a86c] text-xs tracking-[0.25em] uppercase mb-8 font-sans">Join</p>
-            <h2 className="text-3xl md:text-4xl font-serif text-white mb-4" style={{ fontWeight: 400 }}>
-              The Ficino Society
-            </h2>
-            <p className="text-white/60 mb-10 font-body text-lg leading-relaxed max-w-lg mx-auto">
-              Your membership funds the translation of texts that have been locked in Latin,
-              German, and Greek for centuries.
-            </p>
+          <div className="max-w-[520px] mx-auto px-6 py-24 md:py-32 text-center">
+            <Ornament />
 
-            <div className="mb-8">
-              <span className="text-4xl font-serif font-light text-white">$100</span>
-              <span className="text-lg ml-1 text-white/40">/ year</span>
+            <div className="mt-10 mb-10">
+              <span className="text-4xl md:text-5xl font-serif text-white/80" style={{ fontWeight: 300 }}>
+                $100
+              </span>
+              <span className="text-base ml-2 text-white/25 font-body">per year</span>
             </div>
 
             {status === 'authenticated' ? (
               <button
                 onClick={handleJoin}
                 disabled={loading}
-                className="px-12 py-4 rounded-lg text-white text-lg font-medium transition-all hover:brightness-110 disabled:opacity-50 bg-[#9e4a3a] font-sans"
+                className="px-10 py-3.5 rounded text-white text-[15px] font-sans tracking-wide transition-all hover:brightness-110 disabled:opacity-50 bg-[#9e4a3a]"
               >
-                {loading ? 'Redirecting to checkout...' : 'Become a Patron'}
+                {loading ? 'Redirecting...' : 'Support the work'}
               </button>
             ) : (
               <Link
                 href={`/auth/signin?callbackUrl=${encodeURIComponent(`/ficino-society${returnUrl ? `?return=${encodeURIComponent(returnUrl)}` : ''}`)}`}
-                className="inline-block px-12 py-4 rounded-lg text-white text-lg font-medium transition-all hover:brightness-110 bg-[#9e4a3a] font-sans"
+                className="inline-block px-10 py-3.5 rounded text-white text-[15px] font-sans tracking-wide transition-all hover:brightness-110 bg-[#9e4a3a]"
               >
                 Sign in to join
               </Link>
             )}
 
-            <p className="mt-6 text-sm text-white/30">
-              Billed annually. Cancel at any time from your account.
+            <p className="mt-8 text-[13px] text-white/20 leading-relaxed max-w-sm mx-auto font-body">
+              If the membership fee is a barrier, write to{' '}
+              <a href="mailto:hello@sourcelibrary.org" className="underline text-white/30 hover:text-white/40 transition-colors">
+                hello@sourcelibrary.org
+              </a>
+              {' '}and we&apos;ll find an amount that works.
+              No questions asked.
             </p>
           </div>
         </section>
       )}
 
       {/* ================================================================ */}
-      {/* FOOTER                                                           */}
+      {/* FOOTER — minimal                                                 */}
       {/* ================================================================ */}
-      <footer className="bg-[#0a0908] border-t border-white/5">
-        <div className="max-w-4xl mx-auto px-6 py-16">
-          {/* Partner logos */}
-          <div className="flex items-center justify-center gap-8 mb-12">
-            <img
-              src="https://cdn.prod.website-files.com/68d800cb1402171531a5981e/68e1613213023b8399f2c4c0_embassy%20of%20the%20free%20mind%20logo2.png"
-              alt="Embassy of the Free Mind"
-              className="h-10 md:h-14 w-auto object-contain opacity-40 hover:opacity-70 transition-opacity"
-            />
-            <img
-              src="https://cdn.prod.website-files.com/68d800cb1402171531a5981e/68d800cb1402171531a599ea_partners-unesco.avif"
-              alt="UNESCO Memory of the World"
-              className="h-14 md:h-18 w-auto object-contain opacity-40 hover:opacity-70 transition-opacity"
-            />
-          </div>
-
-          <div className="border-t border-white/5 pt-8">
-            <div className="flex flex-col md:flex-row justify-between items-center gap-4">
-              <div className="flex items-center gap-2 text-white/30">
-                <FicinoLogo className="w-5 h-5" />
-                <span className="text-xs font-sans">
-                  &copy; {new Date().getFullYear()} The Ficino Society
-                </span>
-              </div>
-              <div className="flex gap-6 text-xs text-white/30 font-sans">
-                <Link href="/ficino-society/members" className="hover:text-white/60 transition-colors">Members</Link>
-                <Link href="/about" className="hover:text-white/60 transition-colors">About</Link>
-                <a href="https://sourcelibrary.org" className="hover:text-white/60 transition-colors">Source Library</a>
-                <a href="mailto:hello@sourcelibrary.org" className="hover:text-white/60 transition-colors text-[#c9a86c]/60 hover:text-[#c9a86c]">
-                  Contact
-                </a>
-              </div>
+      <footer className="bg-[#0a0908] border-t border-white/[0.03]">
+        <div className="max-w-xl mx-auto px-6 py-12">
+          <div className="flex flex-col md:flex-row justify-between items-center gap-4 text-[11px] text-white/20 font-sans tracking-wider">
+            <span>&copy; {new Date().getFullYear()} The Ficino Society</span>
+            <div className="flex gap-6">
+              <Link href="/ficino-society/members" className="hover:text-white/40 transition-colors">Members</Link>
+              <a href="https://sourcelibrary.org" className="hover:text-white/40 transition-colors">Source Library</a>
+              <a href="mailto:hello@sourcelibrary.org" className="hover:text-white/40 transition-colors">Contact</a>
             </div>
           </div>
         </div>
