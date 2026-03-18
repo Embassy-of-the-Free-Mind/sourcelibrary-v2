@@ -469,8 +469,12 @@ export async function generateMetadata({ params }: PageProps): Promise<Metadata>
   // Cross-book citation_reference tags are rendered inline by BookInfo (inside Suspense)
   // to avoid blocking generateMetadata with a 3-4s entity query
 
-  // Don't index books with no OCR content — nothing meaningful for search engines
-  const shouldIndex = (book.pages_ocr ?? 0) > 0;
+  // Don't index books with no meaningful content for search engines:
+  // - No OCR at all, or
+  // - Very thin (1-3 OCR pages) with no translation
+  const pagesOcr = book.pages_ocr ?? 0;
+  const pagesTranslated = book.pages_translated ?? 0;
+  const shouldIndex = pagesOcr > 3 || (pagesOcr > 0 && pagesTranslated > 0);
 
   return {
     title: `${title} - Source Library`,
