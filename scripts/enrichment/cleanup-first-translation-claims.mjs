@@ -46,6 +46,7 @@ const MONGODB_URI = env.MONGODB_URI;
 const MONGODB_DB = env.MONGODB_DB || 'bookstore';
 const DRY_RUN = !process.argv.includes('--apply');
 const ALL_MODE = process.argv.includes('--all');
+const VISIBLE_MODE = process.argv.includes('--visible');
 const FORCE = process.argv.includes('--force');
 const SINGLE_BOOK = process.argv.find(a => a.startsWith('--book-id='))?.split('=')[1];
 
@@ -77,6 +78,15 @@ async function main() {
     // All non-English books — re-verify everything
     query = {
       language: { $nin: ['English', 'english', null, ''] },
+    };
+  } else if (VISIBLE_MODE) {
+    // Visible translated non-English books without Stage 2 verification
+    query = {
+      hidden: { $ne: true },
+      pages_count: { $gt: 0 },
+      pages_translated: { $gt: 0 },
+      language: { $nin: ['English', 'english', null, ''] },
+      'translation_verification.tools_called': { $exists: false },
     };
   } else if (ALL_MODE) {
     // All non-English books that don't yet have new-style verification

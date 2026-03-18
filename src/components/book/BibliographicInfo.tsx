@@ -305,13 +305,50 @@ export default function BibliographicInfo({ book, pagesCount }: BibliographicInf
                         </div>
                       ));
                   })()}
-                  {book.translation_verification.disposition === 'confirmed_first' && (
-                    <p className="text-stone-500 text-xs">
-                      No prior complete English translation found.{' '}
-                      <a href="/blog/first-translation-methodology" className="text-accent-gold hover:text-accent-gold/80 underline">
-                        How we verify this
-                      </a>
-                    </p>
+                  {['confirmed_first', 'first_complete_translation', 'first_modern_translation'].includes(book.translation_verification.disposition) && (
+                    <div className="text-stone-500 text-xs space-y-1">
+                      <p>
+                        {book.translation_verification.disposition === 'confirmed_first' && 'No prior complete English translation found.'}
+                        {book.translation_verification.disposition === 'first_complete_translation' && 'Only partial translations or excerpts exist — this is the first complete English translation.'}
+                        {book.translation_verification.disposition === 'first_modern_translation' && 'Only antiquated translations exist — this is the first modern English translation.'}
+                      </p>
+                      {book.translation_verification.tools_called && (
+                        <details className="cursor-pointer">
+                          <summary className="text-accent-gold hover:text-accent-gold/80 underline">
+                            Verification evidence
+                          </summary>
+                          <div className="mt-1.5 pl-2 border-l border-stone-700/50 space-y-1">
+                            <p className="text-stone-400">
+                              <span className="text-stone-500">Catalogs searched:</span>{' '}
+                              {book.translation_verification.tools_called
+                                .filter((t: string) => t !== 'make_determination')
+                                .map((t: string) => t.replace('search_', '').replace(/_/g, ' '))
+                                .join(', ')}
+                            </p>
+                            {book.translation_verification.reasoning && (
+                              <p className="text-stone-400">{book.translation_verification.reasoning}</p>
+                            )}
+                            {book.translation_verification.translations_found?.length > 0 && (
+                              <div>
+                                <span className="text-stone-500">Partial/related translations found:</span>
+                                {book.translation_verification.translations_found.map((t: Record<string, string>, i: number) => (
+                                  <p key={i} className="text-stone-400 pl-2">
+                                    {t.english_title}{t.translator ? `, trans. ${t.translator}` : ''}{t.pub_year ? ` (${t.pub_year})` : ''}
+                                    {t.url && (
+                                      <>{' '}<a href={t.url} target="_blank" rel="noopener noreferrer" className="text-accent-gold hover:text-accent-gold/80 underline">source</a></>
+                                    )}
+                                  </p>
+                                ))}
+                              </div>
+                            )}
+                            <p className="text-stone-600 text-[10px]">
+                              Verified {book.translation_verification.verified_at ? new Date(book.translation_verification.verified_at).toLocaleDateString('en-US', { year: 'numeric', month: 'short', day: 'numeric' }) : ''} via {book.translation_verification.model || 'AI'} &middot;{' '}
+                              <a href="/blog/first-translation-methodology" className="underline hover:text-stone-500">methodology</a>
+                            </p>
+                          </div>
+                        </details>
+                      )}
+                    </div>
                   )}
                 </div>
               </div>
