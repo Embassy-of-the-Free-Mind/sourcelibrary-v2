@@ -990,6 +990,19 @@ async function run() {
         if (remaining === 0) {
           if (!DRY_RUN) {
             await setPipelineStatus(db, book.id, 'archive_complete', { retry_count: 0 });
+
+            // Auto-unhide books that were hidden because they were unarchived
+            const bookDoc = await db.collection('books').findOne(
+              { id: book.id, hidden: true, hidden_reason: 'unarchived' },
+              { projection: { id: 1, title: 1 } }
+            );
+            if (bookDoc) {
+              await db.collection('books').updateOne(
+                { id: book.id },
+                { $set: { hidden: false, updated_at: new Date() }, $unset: { hidden_reason: '' } }
+              );
+              console.log(`    ✓ Auto-unhidden: ${bookDoc.title?.slice(0, 60)}`);
+            }
           }
           archiveCompleted++;
           log.archived++;

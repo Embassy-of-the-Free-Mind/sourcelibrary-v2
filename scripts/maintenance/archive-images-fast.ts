@@ -22,6 +22,7 @@
  *   npx tsx scripts/archive-images-fast.ts --days=7                 # books imported in last N days
  *   npx tsx scripts/archive-images-fast.ts --skip-thumbnails        # skip thumbnail generation
  *   npx tsx scripts/archive-images-fast.ts --no-bulk               # disable bulk PDF download
+ *   npx tsx scripts/archive-images-fast.ts --unarchived            # prioritize books hidden for 'unarchived'
  *
  * Bulk PDF mode (default when pdftoppm is available):
  *   Downloads 1 PDF per book instead of N individual IIIF image requests.
@@ -48,6 +49,7 @@ const DAYS = parseInt(process.argv.find(a => a.startsWith('--days='))?.split('='
 const SKIP_THUMBNAILS = process.argv.includes('--skip-thumbnails');
 const DOWNLOAD_TIMEOUT = parseInt(process.argv.find(a => a.startsWith('--timeout='))?.split('=')[1] || '30000', 10);
 const NO_BULK = process.argv.includes('--no-bulk');
+const UNARCHIVED_PRIORITY = process.argv.includes('--unarchived'); // Prioritize books hidden for 'unarchived'
 
 const MAX_RETRIES = 3; // Retry on 429/503
 
@@ -694,14 +696,18 @@ async function main() {
   await client.connect();
   const db = client.db('bookstore');
 
-  // If --recent or --days, resolve to book IDs first
+  // If --recent, --days, or --unarchived, resolve to book IDs first
   let bookIdFilter: string[] | null = null;
-  if (RECENT || DAYS) {
+  if (RECENT || DAYS || UNARCHIVED_PRIORITY) {
     const bookQuery: any = {};
     if (DAYS) {
       const cutoff = new Date();
       cutoff.setDate(cutoff.getDate() - DAYS);
       bookQuery.created_at = { $gte: cutoff };
+    }
+    if (UNARCHIVED_PRIORITY) {
+      bookQuery.hidden = true;
+      bookQuery.hidden_reason = 'unarchived';
     }
     const books = await db.collection('books')
       .find(bookQuery, { projection: { id: 1, title: 1 } })
