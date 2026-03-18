@@ -79,7 +79,7 @@ export default function FeaturedCollectionCarousel({ items }: FeaturedCollection
 
   return (
     <section className="bg-dark py-12 md:py-16 relative overflow-hidden">
-      <div className="px-6 md:px-12 max-w-7xl mx-auto">
+      <div className="px-6 md:px-12 max-w-7xl mx-auto overflow-hidden">
         <div className="flex items-center justify-between mb-6">
           <div className="flex items-center gap-3">
             <span className="text-xs uppercase tracking-[0.2em] text-white/40">Featured Collection</span>
@@ -143,7 +143,7 @@ export default function FeaturedCollectionCarousel({ items }: FeaturedCollection
 
           {/* Right: gallery images (preferred) or book thumbnails (fallback) */}
           {hasGallery ? (
-            <div className="lg:col-span-3 grid grid-cols-[3fr_2fr] gap-3 h-[420px]">
+            <div className="lg:col-span-3 min-w-0 grid grid-cols-[3fr_2fr] gap-3 h-[420px]">
               {/* Hero image — portrait/book-proportioned */}
               <Link
                 href={`/gallery/image/${galleryImages[0].id}`}
