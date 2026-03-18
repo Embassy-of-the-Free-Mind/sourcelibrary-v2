@@ -263,13 +263,14 @@ export interface Chapter {
 }
 
 // Translation verification from catalog search + LLM knowledge check
-export type TranslationDisposition = 'confirmed_first' | 'translation_found' | 'needs_review';
+export type TranslationDisposition = 'confirmed_first' | 'first_complete_translation' | 'first_modern_translation' | 'translation_found' | 'needs_review';
 
 export interface TranslationVerification {
   source: 'catalog_search';
   searched_at: Date;
   has_english_translation: boolean;
   translations?: TranslationEvidence[];
+  translations_found?: TranslationEvidence[];
   confidence?: 'high' | 'medium' | 'low';
   reasoning?: string;
   search_evidence?: {
@@ -283,6 +284,10 @@ export interface TranslationVerification {
   disposition_at?: Date;
   validated_translations?: TranslationEvidence[];  // Path A: catalog-verified
   llm_knowledge_translations?: TranslationEvidence[];  // Path B: LLM claims (may hallucinate)
+  // Verification metadata
+  tools_called?: string[];
+  verified_at?: Date;
+  model?: string;
 }
 
 export interface TranslationEvidence {
@@ -295,4 +300,5 @@ export interface TranslationEvidence {
   catalog_id?: string;
   validated?: boolean;
   notes?: string;
+  url?: string;
 }

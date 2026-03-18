@@ -328,10 +328,10 @@ export default function BibliographicInfo({ book, pagesCount }: BibliographicInf
                             {book.translation_verification.reasoning && (
                               <p className="text-stone-400">{book.translation_verification.reasoning}</p>
                             )}
-                            {book.translation_verification.translations_found?.length > 0 && (
+                            {(book.translation_verification.translations_found?.length ?? 0) > 0 && (
                               <div>
                                 <span className="text-stone-500">Partial/related translations found:</span>
-                                {book.translation_verification.translations_found.map((t: Record<string, string>, i: number) => (
+                                {book.translation_verification.translations_found!.map((t, i: number) => (
                                   <p key={i} className="text-stone-400 pl-2">
                                     {t.english_title}{t.translator ? `, trans. ${t.translator}` : ''}{t.pub_year ? ` (${t.pub_year})` : ''}
                                     {t.url && (
