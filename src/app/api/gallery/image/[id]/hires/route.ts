@@ -24,7 +24,8 @@ const HIRES_JPEG_QUALITY = 92;
 
 function upgradeIiifUrl(url: string, width: number): string {
   if (!url.includes('full/')) return url;
-  return url.replace(/\/full\/(full|max|\d+,)\//, `/full/${width},/`);
+  // Handle /full/1000,/ and /full/pct:50/ and /full/max/ styles
+  return url.replace(/\/full\/(full|max|\d+,|pct:\d+)\//, `/full/${width},/`);
 }
 
 function hiresStorageKey(bookId: string, pageId: string, detectionIndex: number): string {
@@ -82,13 +83,17 @@ export async function GET(
       }
     }
 
-    const sourceUrl = getPageImageUrl(page);
-    if (!sourceUrl) {
+    // For high-res: prefer original IIIF URLs (can request any resolution)
+    // over archived_photo (R2 copy at ~1000px). Reverse of normal priority.
+    const iiifUrl = page.photo_original || page.photo;
+    const isIiif = iiifUrl && (iiifUrl.includes('/full/') || iiifUrl.includes('/iiif/'));
+    const hiresSourceUrl = isIiif
+      ? upgradeIiifUrl(iiifUrl, HIRES_WIDTH)
+      : getPageImageUrl(page); // Fall back to best available (archived R2 copy)
+
+    if (!hiresSourceUrl) {
       return NextResponse.json({ error: 'No source image available' }, { status: 404 });
     }
-
-    // Upgrade IIIF URL to high resolution
-    const hiresSourceUrl = upgradeIiifUrl(sourceUrl, HIRES_WIDTH);
 
     // Fetch high-res source
     const rawBuffer = await images.fetchBuffer(hiresSourceUrl, { timeout: 60000 });
