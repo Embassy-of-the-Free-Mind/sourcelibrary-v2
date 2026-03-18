@@ -469,44 +469,50 @@ export default function ImageDetailPage({
 
   const [downloading, setDownloading] = useState(false);
 
+  const triggerDownload = async (fetchUrl: string, suffix?: string) => {
+    const res = await fetch(fetchUrl);
+    const blob = await res.blob();
+    const a = document.createElement('a');
+    a.href = URL.createObjectURL(blob);
+    const bookSlug = data!.book.title.replace(/[^a-z0-9]+/gi, '-').toLowerCase().slice(0, 40);
+    a.download = `source-library-${bookSlug}-p${data!.pageNumber}${suffix || ''}.jpg`;
+    a.click();
+    URL.revokeObjectURL(a.href);
+  };
+
   const downloadImage = async () => {
     if (!data || !imageId) return;
-    if (!canDownloadImage) {
-      purchaseImage();
-      return;
+    if (!canDownloadImage) { purchaseImage(); return; }
+
+    // Quick download: use existing extracted image
+    const sourceUrl = data.extractedUrl || data.highResUrl || data.imageUrl;
+    const isExternal = sourceUrl.startsWith('http') && !sourceUrl.includes('vercel-storage.com') && !sourceUrl.includes('sourcelibrary.org');
+    const fetchUrl = isExternal
+      ? `/api/image?url=${encodeURIComponent(sourceUrl)}&w=2000&q=90`
+      : sourceUrl;
+
+    try {
+      await triggerDownload(fetchUrl);
+      sendGAEvent({ action: 'gallery_download', label: imageId || undefined });
+    } catch {
+      window.open(sourceUrl, '_blank');
     }
+  };
+
+  const downloadHighRes = async () => {
+    if (!data || !imageId) return;
+    if (!canDownloadImage) { purchaseImage(); return; }
 
     setDownloading(true);
     try {
-      // Request high-res version (generated on-demand, cached in R2)
       const hiresRes = await fetch(`/api/gallery/image/${imageId}/hires`);
-      let fetchUrl: string;
-
-      if (hiresRes.ok) {
-        const { url } = await hiresRes.json();
-        fetchUrl = url;
-      } else {
-        // Fallback to existing extracted image
-        const sourceUrl = data.extractedUrl || data.highResUrl || data.imageUrl;
-        const isExternal = sourceUrl.startsWith('http') && !sourceUrl.includes('vercel-storage.com') && !sourceUrl.includes('sourcelibrary.org');
-        fetchUrl = isExternal
-          ? `/api/image?url=${encodeURIComponent(sourceUrl)}&w=2000&q=90`
-          : sourceUrl;
-      }
-
-      const res = await fetch(fetchUrl);
-      const blob = await res.blob();
-      const a = document.createElement('a');
-      a.href = URL.createObjectURL(blob);
-      const bookSlug = data.book.title.replace(/[^a-z0-9]+/gi, '-').toLowerCase().slice(0, 40);
-      a.download = `source-library-${bookSlug}-p${data.pageNumber}.jpg`;
-      a.click();
-      URL.revokeObjectURL(a.href);
-      sendGAEvent({ action: 'gallery_download', label: imageId || undefined });
+      if (!hiresRes.ok) throw new Error('High-res generation failed');
+      const { url } = await hiresRes.json();
+      await triggerDownload(url, '-hires');
+      sendGAEvent({ action: 'gallery_download_hires', label: imageId || undefined });
     } catch {
-      // Last resort: open in new tab
-      const sourceUrl = data.extractedUrl || data.highResUrl || data.imageUrl;
-      window.open(sourceUrl, '_blank');
+      // Fall back to standard download
+      await downloadImage();
     } finally {
       setDownloading(false);
     }
@@ -637,14 +643,10 @@ export default function ImageDetailPage({
               )}
               <button
                 onClick={downloadImage}
-                disabled={downloading}
-                className="p-1.5 rounded-lg hover:bg-white/10 transition-colors disabled:opacity-50"
-                title={downloading ? 'Generating high-res download...' : 'Download high-res image'}
+                className="p-1.5 rounded-lg hover:bg-white/10 transition-colors"
+                title="Download"
               >
-                {downloading
-                  ? <Loader2 className="w-4 h-4 text-stone-400 animate-spin" />
-                  : <Download className="w-4 h-4 text-stone-400" />
-                }
+                <Download className="w-4 h-4 text-stone-400" />
               </button>
             </div>
           </div>
@@ -904,10 +906,21 @@ export default function ImageDetailPage({
                     </button>
                     <button
                       onClick={downloadImage}
+                      className={`flex items-center gap-1.5 px-4 py-2 rounded-lg text-sm transition-colors ${
+                        canDownloadImage
+                          ? 'bg-stone-800 hover:bg-stone-700 text-white'
+                          : 'bg-stone-800 hover:bg-stone-700 text-stone-200'
+                      }`}
+                    >
+                      <Download className="w-4 h-4" />
+                      Download
+                    </button>
+                    <button
+                      onClick={downloadHighRes}
                       disabled={downloading}
                       className={`flex items-center gap-1.5 px-4 py-2 rounded-lg text-sm transition-colors disabled:opacity-50 ${
                         canDownloadImage
-                          ? 'bg-stone-800 hover:bg-stone-700 text-white'
+                          ? 'bg-amber-900/60 hover:bg-amber-800/60 text-amber-100'
                           : 'bg-stone-800 hover:bg-stone-700 text-stone-200'
                       }`}
                     >
@@ -915,7 +928,7 @@ export default function ImageDetailPage({
                         ? <Loader2 className="w-4 h-4 animate-spin" />
                         : <Download className="w-4 h-4" />
                       }
-                      {downloading ? 'Generating...' : 'Download'}
+                      {downloading ? 'Generating...' : 'Download High-Res'}
                     </button>
                   </div>
                 </div>
