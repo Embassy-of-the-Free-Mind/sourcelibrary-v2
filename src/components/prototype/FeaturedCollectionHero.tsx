@@ -107,7 +107,7 @@ export default function FeaturedCollectionCarousel({ items }: FeaturedCollection
         </div>
 
         <div
-          className="grid grid-cols-1 lg:grid-cols-5 gap-8 lg:gap-10 transition-opacity duration-250 ease-in-out"
+          className="grid grid-cols-1 lg:grid-cols-5 gap-8 lg:gap-10 transition-opacity duration-250 ease-in-out min-w-0"
           style={{ opacity: fading ? 0 : 1 }}
         >
           {/* Left: text + description */}
@@ -143,7 +143,7 @@ export default function FeaturedCollectionCarousel({ items }: FeaturedCollection
 
           {/* Right: gallery images (preferred) or book thumbnails (fallback) */}
           {hasGallery ? (
-            <div className="lg:col-span-3 min-w-0 grid grid-cols-[3fr_2fr] gap-3 h-[420px]">
+            <div className="lg:col-span-3 min-w-0 grid grid-cols-[3fr_2fr] gap-3 h-[340px] lg:h-[380px]">
               {/* Hero image — portrait/book-proportioned */}
               <Link
                 href={`/gallery/image/${galleryImages[0].id}`}
@@ -170,12 +170,12 @@ export default function FeaturedCollectionCarousel({ items }: FeaturedCollection
               </Link>
 
               {/* Side — 2 square images */}
-              <div className="flex flex-col gap-3">
+              <div className="flex flex-col gap-3 min-w-0">
                 {galleryImages.slice(1, 3).map((img) => (
                   <Link
                     key={img.id}
                     href={`/gallery/image/${img.id}`}
-                    className="relative flex-1 aspect-square rounded-lg overflow-hidden bg-white/5 border border-white/10 group min-h-0"
+                    className="relative flex-1 rounded-lg overflow-hidden bg-white/5 border border-white/10 group min-h-0"
                   >
                     <Image
                       src={img.image_url}
