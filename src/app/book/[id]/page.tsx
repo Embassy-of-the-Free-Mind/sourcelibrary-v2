@@ -875,8 +875,8 @@ async function BookInfo({ id }: { id: string }) {
         </div>
       </div>
 
-      {/* Gradient bridge from dark header to light content */}
-      <div className="h-6 bg-gradient-to-b from-stone-900 to-transparent" />
+      {/* Clean break between dark header and light content */}
+      <div className="h-px bg-stone-200" />
 
       {/* Book Summary */}
       {(() => {

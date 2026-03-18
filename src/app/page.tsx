@@ -761,7 +761,7 @@ export default async function HomePage() {
         </section>
 
         {/* Search — compact */}
-        <section className="bg-gradient-to-b from-[#1c1917] to-[#f6f3ee] py-12">
+        <section className="bg-[#f6f3ee] py-12">
           <div className="px-6 md:px-12 max-w-lg mx-auto">
             <form action="/search" method="get" className="relative">
               <svg className="absolute left-4 top-1/2 -translate-y-1/2 w-5 h-5 text-stone-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
