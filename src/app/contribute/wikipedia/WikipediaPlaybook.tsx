@@ -2,361 +2,19 @@
 
 import { useState } from 'react';
 
-// ── Data ──
+// ── Types ──
 
-const TALK_PAGE_POSTS: {
+export type TalkPagePost = {
   title: string;
   author: string;
   talkPageUrl: string;
   bookUrl: string;
-  year: number | string;
+  year: string | number;
   pages: number;
   pct: number;
   tier: 1 | 2 | 3;
   wikiText: string;
-}[] = [
-  {
-    title: 'De Revolutionibus',
-    author: 'Copernicus',
-    talkPageUrl: 'https://en.wikipedia.org/wiki/Talk:De_revolutionibus_orbium_coelestium',
-    bookUrl: 'https://sourcelibrary.org/book/de-revolutionibus-1543-first-edition-copernicus',
-    year: 1543,
-    pages: 426,
-    pct: 100,
-    tier: 1,
-    wikiText: `== External link suggestion: English translation at Source Library ==
-
-{{edit COI}} I'm affiliated with Source Library.
-
-* [https://sourcelibrary.org/book/de-revolutionibus-1543-first-edition-copernicus De Revolutionibus (1543 First Edition)] — page-by-page English translation of the complete 1543 first edition. 426 pages, 100% complete. Original Latin alongside translation. Free access, CC-BY-4.0.
-
-~~~~`,
-  },
-  {
-    title: 'Sidereus Nuncius',
-    author: 'Galileo',
-    talkPageUrl: 'https://en.wikipedia.org/wiki/Talk:Sidereus_Nuncius',
-    bookUrl: 'https://sourcelibrary.org/book/sidereus-nuncius-1610-venice-galilei',
-    year: 1610,
-    pages: 72,
-    pct: 100,
-    tier: 1,
-    wikiText: `== External link suggestion: English translation at Source Library ==
-
-{{edit COI}} I'm affiliated with Source Library.
-
-* [https://sourcelibrary.org/book/sidereus-nuncius-1610-venice-galilei Sidereus Nuncius (1610 Venice)] — page-by-page English translation of Galileo's 1610 text. 72 pages, 100% complete. Original Latin alongside translation. Free access, CC-BY-4.0.
-
-~~~~`,
-  },
-  {
-    title: 'Astronomia Nova',
-    author: 'Kepler',
-    talkPageUrl: 'https://en.wikipedia.org/wiki/Talk:Astronomia_nova',
-    bookUrl: 'https://sourcelibrary.org/book/kepler-astronomia-nova-1609-prague-kepler',
-    year: 1609,
-    pages: 388,
-    pct: 100,
-    tier: 1,
-    wikiText: `== External link suggestion: English translation at Source Library ==
-
-{{edit COI}} I'm affiliated with Source Library.
-
-* [https://sourcelibrary.org/book/kepler-astronomia-nova-1609-prague-kepler Astronomia Nova (1609 Prague)] — page-by-page English translation of Kepler's 1609 text. 388 pages, 100% complete. Original Latin alongside translation. Free access, CC-BY-4.0.
-
-~~~~`,
-  },
-  {
-    title: 'De Humani Corporis Fabrica',
-    author: 'Vesalius',
-    talkPageUrl: 'https://en.wikipedia.org/wiki/Talk:De_Humani_Corporis_Fabrica_Libri_Septem',
-    bookUrl: 'https://sourcelibrary.org/book/vesalius-de-humani-corporis-fabrica-1555-vesalius',
-    year: 1555,
-    pages: 863,
-    pct: 96,
-    tier: 1,
-    wikiText: `== External link suggestion: English translation at Source Library ==
-
-{{edit COI}} I'm affiliated with Source Library.
-
-* [https://sourcelibrary.org/book/vesalius-de-humani-corporis-fabrica-1555-vesalius De Humani Corporis Fabrica (1555)] — page-by-page English translation. 863 pages, 96% complete. Original Latin alongside translation. Free access, CC-BY-4.0.
-
-~~~~`,
-  },
-  {
-    title: "Euclid's Elements",
-    author: 'Euclid',
-    talkPageUrl: 'https://en.wikipedia.org/wiki/Talk:Euclid%27s_Elements',
-    bookUrl: 'https://sourcelibrary.org/book/elements-euclid',
-    year: 1482,
-    pages: 278,
-    pct: 100,
-    tier: 1,
-    wikiText: `== External link suggestion: English translation at Source Library ==
-
-{{edit COI}} I'm affiliated with Source Library.
-
-* [https://sourcelibrary.org/book/elements-euclid Elements (1482 edition)] — page-by-page English translation of the 1482 first printed edition. 278 pages, 100% complete. Original language alongside translation. Free access, CC-BY-4.0.
-
-~~~~`,
-  },
-  {
-    title: 'Three Books of Occult Philosophy',
-    author: 'Agrippa',
-    talkPageUrl: 'https://en.wikipedia.org/wiki/Talk:Three_Books_of_Occult_Philosophy',
-    bookUrl: 'https://sourcelibrary.org/book/three-books-of-occult-philosophy-nettesheim',
-    year: 1550,
-    pages: 626,
-    pct: 100,
-    tier: 1,
-    wikiText: `== External link suggestion: English translation at Source Library ==
-
-{{edit COI}} I'm affiliated with Source Library.
-
-* [https://sourcelibrary.org/book/three-books-of-occult-philosophy-nettesheim Three Books of Occult Philosophy (1550)] — page-by-page English translation. 626 pages, 100% complete. Original Latin alongside translation. Free access, CC-BY-4.0.
-
-~~~~`,
-  },
-  {
-    title: 'Monas Hieroglyphica',
-    author: 'John Dee',
-    talkPageUrl: 'https://en.wikipedia.org/wiki/Talk:Monas_Hieroglyphica',
-    bookUrl: 'https://sourcelibrary.org/book/the-hieroglyphic-monad-dee',
-    year: 1564,
-    pages: 61,
-    pct: 100,
-    tier: 1,
-    wikiText: `== External link suggestion: English translation at Source Library ==
-
-{{edit COI}} I'm affiliated with Source Library.
-
-* [https://sourcelibrary.org/book/the-hieroglyphic-monad-dee Monas Hieroglyphica (1564)] — page-by-page English translation of John Dee's 1564 text. 61 pages, 100% complete. Original Latin alongside translation. Free access, CC-BY-4.0.
-
-~~~~`,
-  },
-  {
-    title: 'De gli eroici furori',
-    author: 'Giordano Bruno',
-    talkPageUrl: 'https://en.wikipedia.org/wiki/Talk:De_gli_eroici_furori',
-    bookUrl: 'https://sourcelibrary.org/book/of-heroic-frenzies-bruno',
-    year: 1585,
-    pages: 294,
-    pct: 100,
-    tier: 1,
-    wikiText: `== External link suggestion: English translation at Source Library ==
-
-{{edit COI}} I'm affiliated with Source Library.
-
-* [https://sourcelibrary.org/book/of-heroic-frenzies-bruno De gli eroici furori (Of Heroic Frenzies, 1585)] — page-by-page English translation. 294 pages, 100% complete. Original Italian alongside translation. Free access, CC-BY-4.0.
-
-~~~~`,
-  },
-  {
-    title: 'Ars Magna Lucis et Umbrae',
-    author: 'Kircher',
-    talkPageUrl: 'https://en.wikipedia.org/wiki/Talk:Ars_Magna_Lucis_et_Umbrae',
-    bookUrl: 'https://sourcelibrary.org/book/the-great-art-of-light-and-shadow-kircher',
-    year: 1671,
-    pages: 760,
-    pct: 100,
-    tier: 2,
-    wikiText: `== External link suggestion: English translation at Source Library ==
-
-{{edit COI}} I'm affiliated with Source Library.
-
-* [https://sourcelibrary.org/book/the-great-art-of-light-and-shadow-kircher Ars Magna Lucis et Umbrae (1671)] — page-by-page English translation. 760 pages, 100% complete. Original Latin alongside translation. Free access, CC-BY-4.0.
-
-~~~~`,
-  },
-  {
-    title: 'Lives of the Eminent Philosophers',
-    author: 'Diogenes Laertius',
-    talkPageUrl: 'https://en.wikipedia.org/wiki/Talk:Lives_and_Opinions_of_Eminent_Philosophers',
-    bookUrl: 'https://sourcelibrary.org/book/lives-and-opinions-of-eminent-philosophers-laertius',
-    year: 1570,
-    pages: 555,
-    pct: 100,
-    tier: 2,
-    wikiText: `== External link suggestion: 1570 Latin edition translation at Source Library ==
-
-{{edit COI}} I'm affiliated with Source Library.
-
-* [https://sourcelibrary.org/book/lives-and-opinions-of-eminent-philosophers-laertius Lives and Opinions of Eminent Philosophers (1570 edition)] — page-by-page English translation of the 1570 Latin text. 555 pages, 100% complete. Original alongside translation. Free access, CC-BY-4.0.
-
-~~~~`,
-  },
-  {
-    title: 'Mysterium Cosmographicum',
-    author: 'Kepler',
-    talkPageUrl: 'https://en.wikipedia.org/wiki/Talk:Mysterium_Cosmographicum',
-    bookUrl: 'https://sourcelibrary.org/book/mysterium-cosmographicum-1596-first-edition-kepler',
-    year: 1596,
-    pages: 194,
-    pct: 100,
-    tier: 2,
-    wikiText: `== External link suggestion: English translation at Source Library ==
-
-{{edit COI}} I'm affiliated with Source Library.
-
-* [https://sourcelibrary.org/book/mysterium-cosmographicum-1596-first-edition-kepler Mysterium Cosmographicum (1596 First Edition)] — page-by-page English translation. 194 pages, 100% complete. Original Latin alongside translation. Free access, CC-BY-4.0.
-
-~~~~`,
-  },
-  {
-    title: 'Magia Naturalis',
-    author: 'Della Porta',
-    talkPageUrl: 'https://en.wikipedia.org/wiki/Talk:Magia_Naturalis',
-    bookUrl: 'https://sourcelibrary.org/book/magia-naturalis-libri-xx-1607-porta',
-    year: 1607,
-    pages: 714,
-    pct: 100,
-    tier: 2,
-    wikiText: `== External link suggestion: English translation at Source Library ==
-
-{{edit COI}} I'm affiliated with Source Library.
-
-* [https://sourcelibrary.org/book/magia-naturalis-libri-xx-1607-porta Magia Naturalis Libri XX (1607)] — page-by-page English translation. 714 pages, 100% complete. Original Latin alongside translation. Free access, CC-BY-4.0.
-
-~~~~`,
-  },
-  {
-    title: 'Orbis Sensualium Pictus',
-    author: 'Comenius',
-    talkPageUrl: 'https://en.wikipedia.org/wiki/Talk:Orbis_Pictus',
-    bookUrl: 'https://sourcelibrary.org/book/orbis-sensualium-pictus-1659-first-english-comenius',
-    year: 1659,
-    pages: 351,
-    pct: 99,
-    tier: 2,
-    wikiText: `== External link suggestion: English translation at Source Library ==
-
-{{edit COI}} I'm affiliated with Source Library.
-
-* [https://sourcelibrary.org/book/orbis-sensualium-pictus-1659-first-english-comenius Orbis Sensualium Pictus (1659 First English Edition)] — page-by-page scan with translation. 351 pages, 99% complete. Free access, CC-BY-4.0.
-
-~~~~`,
-  },
-  {
-    title: 'Arcana Coelestia',
-    author: 'Swedenborg',
-    talkPageUrl: 'https://en.wikipedia.org/wiki/Talk:Arcana_Coelestia',
-    bookUrl: 'https://sourcelibrary.org/book/arcana-coelestia-heavenly-arcana-swedenborg',
-    year: 1749,
-    pages: 587,
-    pct: 100,
-    tier: 2,
-    wikiText: `== External link suggestion: English translation at Source Library ==
-
-{{edit COI}} I'm affiliated with Source Library.
-
-* [https://sourcelibrary.org/book/arcana-coelestia-heavenly-arcana-swedenborg Arcana Coelestia (1749)] — page-by-page English translation. 587 pages, 100% complete. Original Latin alongside translation. Free access, CC-BY-4.0.
-
-~~~~`,
-  },
-  {
-    title: 'Emblemata',
-    author: 'Alciato',
-    talkPageUrl: 'https://en.wikipedia.org/wiki/Talk:Emblemata',
-    bookUrl: 'https://sourcelibrary.org/book/alciato-emblemata-1548-lyon-alciato',
-    year: 1548,
-    pages: 182,
-    pct: 100,
-    tier: 2,
-    wikiText: `== External link suggestion: English translation at Source Library ==
-
-{{edit COI}} I'm affiliated with Source Library.
-
-* [https://sourcelibrary.org/book/alciato-emblemata-1548-lyon-alciato Emblemata (1548 Lyon edition)] — page-by-page English translation with original woodcuts. 182 pages, 100% complete. Free access, CC-BY-4.0.
-
-~~~~`,
-  },
-  {
-    title: 'Corpus Hermeticum',
-    author: 'Hermes Trismegistus',
-    talkPageUrl: 'https://en.wikipedia.org/wiki/Talk:Corpus_Hermeticum',
-    bookUrl: 'https://sourcelibrary.org/book/pymander-de-potestate-et-sapientia-dei-hermes-trismegistus',
-    year: 1532,
-    pages: 336,
-    pct: 100,
-    tier: 3,
-    wikiText: `== External link suggestion: 1532 Latin edition at Source Library ==
-
-{{edit COI}} I'm affiliated with Source Library.
-
-* [https://sourcelibrary.org/book/pymander-de-potestate-et-sapientia-dei-hermes-trismegistus Pymander, de potestate et sapientia Dei (1532)] — page-by-page English translation of the 1532 Latin Corpus Hermeticum. 336 pages, 100% complete. Free access, CC-BY-4.0.
-
-~~~~`,
-  },
-  {
-    title: "Leonardo's Notebooks",
-    author: 'Leonardo da Vinci',
-    talkPageUrl: 'https://en.wikipedia.org/wiki/Talk:Leonardo_da_Vinci',
-    bookUrl: 'https://sourcelibrary.org/book/the-notebooks-of-leonardo-da-vinci-richter',
-    year: 1883,
-    pages: 1272,
-    pct: 100,
-    tier: 3,
-    wikiText: `== External link suggestion: Richter's Notebooks of Leonardo at Source Library ==
-
-{{edit COI}} I'm affiliated with Source Library.
-
-* [https://sourcelibrary.org/book/the-notebooks-of-leonardo-da-vinci-richter The Notebooks of Leonardo da Vinci (Richter, 1883)] — complete digitized edition of Jean Paul Richter's compilation. 1,272 pages, 100% complete. Free access, CC-BY-4.0.
-
-~~~~`,
-  },
-  {
-    title: 'Enneads (Ficino)',
-    author: 'Plotinus',
-    talkPageUrl: 'https://en.wikipedia.org/wiki/Talk:Enneads',
-    bookUrl: 'https://sourcelibrary.org/book/enneads-1580-basel-editio-princeps-plotinus-ficino',
-    year: 1580,
-    pages: 860,
-    pct: 100,
-    tier: 3,
-    wikiText: `== External link suggestion: 1580 Ficino translation at Source Library ==
-
-{{edit COI}} I'm affiliated with Source Library.
-
-* [https://sourcelibrary.org/book/enneads-1580-basel-editio-princeps-plotinus-ficino Plotini Enneades (1580 Basel)] — page-by-page English translation of Ficino's Latin Enneads. 860 pages, 100% complete. Original alongside translation. Free access, CC-BY-4.0.
-
-~~~~`,
-  },
-  {
-    title: 'Opera Omnia',
-    author: 'Pico della Mirandola',
-    talkPageUrl: 'https://en.wikipedia.org/wiki/Talk:Giovanni_Pico_della_Mirandola',
-    bookUrl: 'https://sourcelibrary.org/book/complete-works-1557-basel-edition-pico-della-mirandola',
-    year: 1557,
-    pages: 797,
-    pct: 100,
-    tier: 3,
-    wikiText: `== External link suggestion: 1557 Opera Omnia at Source Library ==
-
-{{edit COI}} I'm affiliated with Source Library.
-
-* [https://sourcelibrary.org/book/complete-works-1557-basel-edition-pico-della-mirandola Opera Omnia (1557 Basel edition)] — page-by-page English translation of Pico's complete works. 797 pages, 100% complete. Original Latin alongside translation. Free access, CC-BY-4.0.
-
-~~~~`,
-  },
-  {
-    title: 'Utriusque Cosmi Historia',
-    author: 'Robert Fludd',
-    talkPageUrl: 'https://en.wikipedia.org/wiki/Talk:Robert_Fludd',
-    bookUrl: 'https://sourcelibrary.org/book/history-of-both-worlds-macrocosm-fludd',
-    year: 1617,
-    pages: 1036,
-    pct: 100,
-    tier: 3,
-    wikiText: `== External link suggestion: Utriusque Cosmi Historia at Source Library ==
-
-{{edit COI}} I'm affiliated with Source Library.
-
-* [https://sourcelibrary.org/book/history-of-both-worlds-macrocosm-fludd Utriusque Cosmi Historia Vol. 1 (1617)] — page-by-page English translation with all illustrations. 1,036 pages, 100% complete. Original Latin alongside translation. Free access, CC-BY-4.0.
-* [https://sourcelibrary.org/book/history-of-both-worlds-microcosm-fludd Utriusque Cosmi Historia Vol. 2 (1619)] — 700 pages, 100% complete.
-
-~~~~`,
-  },
-];
+};
 
 // ── Components ──
 
@@ -369,7 +27,6 @@ function CopyButton({ text, label }: { text: string; label?: string }) {
       setCopied(true);
       setTimeout(() => setCopied(false), 2000);
     } catch {
-      // Fallback
       const ta = document.createElement('textarea');
       ta.value = text;
       document.body.appendChild(ta);
@@ -399,7 +56,7 @@ function TalkPageCard({
   post,
   index,
 }: {
-  post: (typeof TALK_PAGE_POSTS)[number];
+  post: TalkPagePost;
   index: number;
 }) {
   const [expanded, setExpanded] = useState(false);
@@ -421,7 +78,7 @@ function TalkPageCard({
             </span>
           </div>
           <div className="text-sm text-muted mt-0.5">
-            {post.pages} pages, {post.pct}% translated
+            {post.pages.toLocaleString()} pages, {post.pct}% translated
           </div>
         </div>
         <span
@@ -494,17 +151,17 @@ function TalkPageCard({
 
 // ── Main ──
 
-export function WikipediaPlaybook() {
-  const tier1 = TALK_PAGE_POSTS.filter((p) => p.tier === 1);
-  const tier2 = TALK_PAGE_POSTS.filter((p) => p.tier === 2);
-  const tier3 = TALK_PAGE_POSTS.filter((p) => p.tier === 3);
+export function WikipediaPlaybook({ posts }: { posts: TalkPagePost[] }) {
+  const tier1 = posts.filter((p) => p.tier === 1);
+  const tier2 = posts.filter((p) => p.tier === 2);
+  const tier3 = posts.filter((p) => p.tier === 3);
 
   return (
     <div className="space-y-10">
       {/* Intro */}
       <div className="prose-content max-w-none">
         <p className="text-xl text-secondary leading-relaxed">
-          Source Library has over 1,100 fully translated historical texts &mdash;
+          Source Library has thousands of translated historical texts —
           Copernicus, Galileo, Euclid, the Corpus Hermeticum, and more. Wikipedia
           readers should be able to find them. This page makes it easy to help.
         </p>
