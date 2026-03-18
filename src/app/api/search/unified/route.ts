@@ -111,6 +111,7 @@ async function searchBooks(db: any, query: string, queryRegex: RegExp, limit: nu
           { 'reading_summary.overview': queryRegex },
         ],
         hidden: { $ne: true },
+        pages_count: { $gt: 0 },
       })
       .project({ id: 1, title: 1, display_title: 1, author: 1, language: 1, published: 1, pages_count: 1, pages_translated: 1, pages_ocr: 1, thumbnail: 1, thumbnail_blob: 1 })
       .limit(limit)

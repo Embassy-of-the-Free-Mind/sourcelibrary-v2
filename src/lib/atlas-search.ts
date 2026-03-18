@@ -31,6 +31,9 @@ export function buildBookSearchStage(query: string, filters: BookSearchFilters =
     { equals: { path: 'hidden', value: true } },
   ];
 
+  // Exclude empty shell books (0 pages from failed imports)
+  filter.push({ range: { path: 'pages_count', gt: 0 } });
+
   if (filters.language) {
     filter.push({ equals: { path: 'language', value: filters.language } });
   }

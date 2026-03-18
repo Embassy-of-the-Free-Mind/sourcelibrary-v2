@@ -82,7 +82,7 @@ export async function GET(request: NextRequest) {
 
     // Helper: build common book-level filters (language, category, year, etc.)
     function buildBookFilters(): Record<string, unknown> {
-      const filters: Record<string, unknown> = { hidden: { $ne: true } };
+      const filters: Record<string, unknown> = { hidden: { $ne: true }, pages_count: { $gt: 0 } };
       if (language) filters.language = language;
       if (category) filters.categories = category;
       if (dateFrom || dateTo) {
@@ -279,6 +279,7 @@ export async function GET(request: NextRequest) {
         const book = bookMap.get(page.book_id as string);
         if (!book) continue;
         if ((book as any).hidden === true) continue;
+        if (!book.pages_count || book.pages_count === 0) continue;
         if (!pagesOnly && seenBooks.has(book.id)) continue;
 
         const translationText = page.translation?.data as string || '';
