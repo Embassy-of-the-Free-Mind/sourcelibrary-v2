@@ -5,6 +5,7 @@ import Link from 'next/link';
 import Image from 'next/image';
 import { BookOpen, ChevronLeft, ChevronRight, ArrowRight } from 'lucide-react';
 import { bookUrl } from '@/lib/slugify';
+import { bookTitle } from '@/lib/collections-utils';
 
 interface FeaturedBook {
   id: string;
@@ -41,11 +42,6 @@ interface FeaturedCollectionItem {
 
 interface FeaturedCollectionCarouselProps {
   items: FeaturedCollectionItem[];
-}
-
-function bookTitle(book: { display_title?: string; title: string }): string {
-  const dt = book.display_title;
-  return (dt && dt !== 'None') ? dt : book.title;
 }
 
 export default function FeaturedCollectionCarousel({ items }: FeaturedCollectionCarouselProps) {

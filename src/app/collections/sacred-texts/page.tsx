@@ -5,6 +5,7 @@ import { Metadata } from 'next';
 import { ArrowLeft } from 'lucide-react';
 import { getDb } from '@/lib/mongodb';
 import SignUpCTA from '@/components/auth/SignUpCTA';
+import { sanitizeThumbnail } from '@/lib/collections-utils';
 
 export const revalidate = 600;
 
@@ -33,18 +34,6 @@ interface TraditionCollection {
   scripture_count: number;
   order: number;
   hero_image: string | null;
-}
-
-function sanitizeThumbnail(url: string | undefined | null): string | undefined {
-  if (!url) return undefined;
-  if (url.startsWith('/api/image')) {
-    const match = url.match(/[?&]url=([^&]+)/);
-    if (match) return decodeURIComponent(match[1]);
-    return undefined;
-  }
-  if (url.startsWith('http://') || url.startsWith('https://')) return url;
-  if (url.startsWith('data:') || url.startsWith('/')) return url;
-  return undefined;
 }
 
 async function getTraditions(): Promise<{ traditions: TraditionCollection[]; totalBooks: number }> {

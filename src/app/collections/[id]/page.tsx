@@ -9,6 +9,7 @@ import CollectionSchema from '@/components/seo/CollectionSchema';
 import CollectionAllBooks from '@/components/collections/CollectionAllBooks';
 import SignUpCTA from '@/components/auth/SignUpCTA';
 import { bookUrl } from '@/lib/slugify';
+import { bookTitle, sanitizeThumbnail, withTimeout } from '@/lib/collections-utils';
 
 // ISR: rebuild at most every 10 minutes
 export const revalidate = 600;
@@ -62,11 +63,6 @@ export async function generateMetadata({ params }: Props): Promise<Metadata> {
 }
 
 // ---------- Helpers ----------
-
-function bookTitle(book: { display_title?: string; title: string }): string {
-  const dt = book.display_title;
-  return (dt && dt !== 'None') ? dt : book.title;
-}
 
 interface BookItem {
   id: string;
@@ -179,26 +175,6 @@ const COMPACT_LIMIT = 14;
 
 /** Sanitize thumbnail URLs: unwrap /api/image?url= wrappers, reject non-http URLs.
  *  The /api/image wrapper crashes Next.js Image during SSR. */
-function sanitizeThumbnail(url: string | undefined): string | undefined {
-  if (!url) return undefined;
-  // Unwrap /api/image?url=ENCODED proxy wrapper
-  if (url.startsWith('/api/image')) {
-    const match = url.match(/[?&]url=([^&]+)/);
-    if (match) return decodeURIComponent(match[1]);
-    return undefined;
-  }
-  // Only allow absolute http(s) URLs for Next.js Image
-  if (url.startsWith('http://') || url.startsWith('https://')) return url;
-  return undefined;
-}
-
-/** Race a promise against a timeout — returns fallback on timeout or error */
-function withTimeout<T>(promise: Promise<T>, ms: number, fallback: T): Promise<T> {
-  return Promise.race([
-    promise.catch(() => fallback),
-    new Promise<T>(resolve => setTimeout(() => resolve(fallback), ms)),
-  ]);
-}
 
 async function fetchCollectionData(id: string) {
   // Wrap getDb() in a timeout — when MongoDB Atlas is overloaded, the connection
