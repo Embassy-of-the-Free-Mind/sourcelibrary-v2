@@ -60,8 +60,9 @@ async function status() {
     }),
 
     // Translation throughput (last 1h from gemini_usage — faster than scanning pages)
+    // NOTE: Hetzner pipeline logs as 'translation', not 'translate'
     db.collection('gemini_usage').countDocuments({
-      type: 'translate',
+      type: { $in: ['translate', 'translation'] },
       status: 'success',
       timestamp: { $gte: new Date(Date.now() - 3600000) }
     }),

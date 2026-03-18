@@ -164,7 +164,7 @@ export const GET = withAuth(async () => {
       db.collection('gemini_usage').aggregate([
         {
           $match: {
-            type: 'translate',
+            type: { $in: ['translate', 'translation'] },
             status: 'success',
             timestamp: { $gte: new Date(Date.now() - 30 * 24 * 60 * 60 * 1000) },
           },
