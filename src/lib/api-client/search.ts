@@ -62,10 +62,76 @@ export const search = {
   },
 
   /**
-   * AI-powered query expansion for zero-result searches
+   * Get vocabulary for client-side autocomplete (aggressively cached)
    */
-  aiExpand: async (query: string): Promise<{ original: string; terms: string[]; note: string }> => {
-    return await apiClient.post('/api/search/ai-expand', { query });
+  vocabulary: async (): Promise<string[]> => {
+    return await apiClient.get('/api/search/vocabulary');
+  },
+
+  /**
+   * AI-powered streaming search expansion
+   * Streams narration text + search terms via SSE
+   */
+  aiExpandStream: (
+    query: string,
+    onNarration: (text: string) => void,
+    onTerms: (terms: string[]) => void,
+    onDone: () => void,
+  ): (() => void) => {
+    const controller = new AbortController();
+
+    (async () => {
+      try {
+        const res = await fetch('/api/search/ai-expand', {
+          method: 'POST',
+          headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify({ query }),
+          signal: controller.signal,
+        });
+        if (!res.ok || !res.body) { onDone(); return; }
+
+        const reader = res.body.getReader();
+        const decoder = new TextDecoder();
+        let buffer = '';
+
+        while (true) {
+          const { done, value } = await reader.read();
+          if (done) break;
+          buffer += decoder.decode(value, { stream: true });
+
+          // Parse SSE events from buffer
+          const lines = buffer.split('\n');
+          buffer = lines.pop() || ''; // keep incomplete line in buffer
+
+          let eventType = '';
+          for (const line of lines) {
+            if (line.startsWith('event: ')) {
+              eventType = line.slice(7).trim();
+            } else if (line.startsWith('data: ')) {
+              const data = line.slice(6);
+              try {
+                if (eventType === 'narration') {
+                  onNarration(JSON.parse(data));
+                } else if (eventType === 'terms') {
+                  onTerms(JSON.parse(data));
+                } else if (eventType === 'done') {
+                  onDone();
+                }
+              } catch { /* skip malformed data */ }
+              eventType = '';
+            }
+          }
+        }
+        onDone();
+      } catch (err) {
+        if ((err as Error).name !== 'AbortError') {
+          console.error('AI expand stream error:', err);
+        }
+        onDone();
+      }
+    })();
+
+    return () => controller.abort();
   },
 
   /**

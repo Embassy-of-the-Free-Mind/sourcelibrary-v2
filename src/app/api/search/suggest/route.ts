@@ -5,7 +5,7 @@ import { findSuggestions } from '@/lib/fuzzy';
 // In-memory vocabulary cache (refreshed every 10 minutes)
 let vocabularyCache: string[] | null = null;
 let cacheTimestamp = 0;
-const CACHE_TTL = 10 * 60 * 1000; // 10 minutes
+const CACHE_TTL = 60 * 60 * 1000; // 1 hour (vocabulary changes slowly)
 
 /**
  * Tokenize a phrase into individual words suitable for fuzzy matching.
