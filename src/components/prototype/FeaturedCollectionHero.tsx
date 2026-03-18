@@ -107,11 +107,11 @@ export default function FeaturedCollectionCarousel({ items }: FeaturedCollection
         </div>
 
         <div
-          className="grid grid-cols-1 lg:grid-cols-5 gap-8 lg:gap-10 transition-opacity duration-250 ease-in-out min-w-0"
+          className="flex flex-col lg:flex-row gap-8 lg:gap-10 transition-opacity duration-250 ease-in-out"
           style={{ opacity: fading ? 0 : 1 }}
         >
           {/* Left: text + description */}
-          <div className="lg:col-span-2 flex flex-col justify-center">
+          <div className="lg:w-2/5 flex flex-col justify-center shrink-0">
             <Link href={`/collections/${collection.slug}`} className="group">
               <h2 className="text-3xl md:text-4xl text-white mb-3 leading-tight font-display group-hover:text-accent-gold transition-colors">
                 {collection.name}
@@ -143,7 +143,7 @@ export default function FeaturedCollectionCarousel({ items }: FeaturedCollection
 
           {/* Right: gallery images (preferred) or book thumbnails (fallback) */}
           {hasGallery ? (
-            <div className="lg:col-span-3 min-w-0 grid grid-cols-[3fr_2fr] gap-3 h-[340px] lg:h-[380px]">
+            <div className="min-w-0 flex-1 grid grid-cols-[3fr_2fr] gap-3 h-[340px] lg:h-[380px]">
               {/* Hero image — portrait/book-proportioned */}
               <Link
                 href={`/gallery/image/${galleryImages[0].id}`}
@@ -195,7 +195,7 @@ export default function FeaturedCollectionCarousel({ items }: FeaturedCollection
               </div>
             </div>
           ) : books.length > 0 ? (
-            <div className="lg:col-span-3 grid grid-cols-4 sm:grid-cols-5 gap-3">
+            <div className="min-w-0 flex-1 grid grid-cols-4 sm:grid-cols-5 gap-3">
               {books.map((book) => {
                 const thumb = book.thumbnail || book.thumbnail_blob;
                 return (
