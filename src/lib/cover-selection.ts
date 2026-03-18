@@ -11,6 +11,7 @@
 import type { Db } from 'mongodb';
 import type { Book } from './types/book';
 import { getGeminiClient } from './gemini-client';
+import { getPageImageUrl } from './utils';
 import { images } from './api-client/images';
 import { logGeminiCall } from './gemini-logger';
 import { classifyError } from './errors';
@@ -109,7 +110,7 @@ export async function selectBestCover(
   const pageMap = new Map<number, { pageNumber: number; url: string }>();
 
   for (const page of pages) {
-    const imageUrl = page.cropped_photo || page.photo;
+    const imageUrl = getPageImageUrl(page);
     if (!imageUrl) continue;
 
     try {

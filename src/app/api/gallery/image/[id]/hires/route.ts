@@ -3,6 +3,7 @@ import { getDb } from '@/lib/mongodb';
 import sharp from 'sharp';
 import { storagePut } from '@/lib/storage';
 import { images } from '@/lib/api-client/images';
+import { getPageImageUrl } from '@/lib/utils';
 
 /**
  * GET /api/gallery/image/[id]/hires
@@ -81,8 +82,7 @@ export async function GET(
       }
     }
 
-    // Source image URL — same priority as extraction worker
-    const sourceUrl = page.cropped_photo || page.archived_photo || page.photo_original || page.photo;
+    const sourceUrl = getPageImageUrl(page);
     if (!sourceUrl) {
       return NextResponse.json({ error: 'No source image available' }, { status: 404 });
     }

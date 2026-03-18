@@ -93,7 +93,7 @@ export const POST = withAuth(async (request, session, context) => {
         batch.map(async (page) => {
           try {
             // Determine best source image
-            const imageUrl = getPageImageUrl(page as unknown as { photo: string; cropped_photo?: string; archived_photo?: string; photo_original?: string; crop?: unknown });
+            const imageUrl = getPageImageUrl(page);
             if (!imageUrl) {
               return {
                 pageId: page.id,

@@ -2,6 +2,7 @@ import { NextRequest, NextResponse } from 'next/server';
 import { getDb } from '@/lib/mongodb';
 import { generateGalleryImages } from '@/lib/gallery-image-gen';
 import { getSession } from '@/lib/auth-helpers';
+import { getPageImageUrl } from '@/lib/utils';
 
 /**
  * Upgrade IIIF image URLs to higher resolution
@@ -197,11 +198,7 @@ export async function GET(
       }
     }
 
-    // For bbox editing: MUST use the same source priority as the image extraction worker
-    // (cropped_photo first) so bbox coordinates are in the same coordinate space as the detection.
-    // archived_photo is the full unsplit spread; cropped_photo is the split single page.
-    // Using archived_photo here when cropped_photo exists causes a coordinate mismatch.
-    let imageUrl = pageData.cropped_photo || pageData.archived_photo || pageData.photo_original || pageData.photo;
+    let imageUrl = getPageImageUrl(pageData);
 
     // For the magnifier/high-res viewer: when a bbox exists, the high-res source MUST
     // be in the same coordinate space as the detection. If cropped_photo exists (split page),
@@ -427,9 +424,7 @@ export async function PATCH(
         const updatedPage = await db.collection('pages').findOne({ id: pageId });
         if (updatedPage) {
           const det = updatedPage.detected_images?.[detectionIndex];
-          // Use same priority as the image extraction worker (cropped_photo first)
-          // so bbox coordinates stay in the same coordinate space as the original detection.
-          const sourceUrl = updatedPage.cropped_photo || updatedPage.archived_photo || updatedPage.photo_original || updatedPage.photo;
+          const sourceUrl = getPageImageUrl(updatedPage);
           if (det?.bbox && sourceUrl) {
             const generated = await generateGalleryImages({
               sourceImageUrl: sourceUrl,
