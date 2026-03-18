@@ -172,8 +172,8 @@ export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
     ).toArray();
 
     const bookPages: MetadataRoute.Sitemap = books
-      // Exclude books with no OCR — no meaningful content for search engines
-      .filter((book) => book.pages_ocr > 0)
+      // Exclude books with no OCR or very thin content (1-3 OCR pages, no translation)
+      .filter((book) => book.pages_ocr > 0 && (book.pages_ocr > 3 || book.pages_translated > 0))
       .map((book) => {
         let lastModified: Date;
         try {
@@ -199,8 +199,10 @@ export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
       });
 
     // Encyclopedia entities — only substantial entries to focus crawl budget
+    // Raised threshold from 5→20 books: 7,780 entities at ≥5 overwhelmed crawl budget
+    // and most were too thin to index (just a name + book list)
     const entities = await db.collection('entities').find(
-      { book_count: { $gte: 5 }, description: { $exists: true, $ne: '' } },
+      { book_count: { $gte: 20 }, description: { $exists: true, $ne: '' } },
       { projection: { name: 1, updated_at: 1, book_count: 1 } }
     ).toArray();
 
@@ -221,9 +223,9 @@ export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
       };
     });
 
-    // Collections
+    // Collections — exclude hidden ones
     const collections = await db.collection('collections').find(
-      {},
+      { hidden: { $ne: true } },
       { projection: { slug: 1, updated_at: 1 } }
     ).toArray();
 

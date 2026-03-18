@@ -13,6 +13,11 @@ export const metadata: Metadata = {
     title: 'Curated Image Collections — Source Library',
     description: 'Thematic collections of illustrations from rare historical manuscripts.',
   },
+  twitter: {
+    card: 'summary_large_image',
+    title: 'Curated Image Collections — Source Library',
+    description: 'Thematic collections of illustrations from rare historical manuscripts.',
+  },
 };
 
 interface CollectionListItem {

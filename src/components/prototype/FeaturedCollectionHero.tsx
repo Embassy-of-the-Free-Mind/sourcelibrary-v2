@@ -1,6 +1,6 @@
 'use client';
 
-import { useState } from 'react';
+import { useState, useCallback, useRef } from 'react';
 import Link from 'next/link';
 import Image from 'next/image';
 import { BookOpen, ChevronLeft, ChevronRight, ArrowRight } from 'lucide-react';
@@ -50,20 +50,36 @@ function bookTitle(book: { display_title?: string; title: string }): string {
 
 export default function FeaturedCollectionCarousel({ items }: FeaturedCollectionCarouselProps) {
   const [index, setIndex] = useState(0);
+  const [fading, setFading] = useState(false);
+  const fadingRef = useRef(false);
+
+  const goTo = useCallback((nextIndex: number) => {
+    if (fadingRef.current) return;
+    fadingRef.current = true;
+    setFading(true);
+    setTimeout(() => {
+      setIndex(nextIndex);
+      // Brief delay so new images start loading before fade-in
+      setTimeout(() => {
+        setFading(false);
+        fadingRef.current = false;
+      }, 80);
+    }, 250);
+  }, []);
 
   if (items.length === 0) return null;
 
   const current = items[index];
   const { collection, books, galleryImages = [] } = current;
 
-  const prev = () => setIndex(i => i > 0 ? i - 1 : items.length - 1);
-  const next = () => setIndex(i => i < items.length - 1 ? i + 1 : 0);
+  const prev = () => goTo(index > 0 ? index - 1 : items.length - 1);
+  const next = () => goTo(index < items.length - 1 ? index + 1 : 0);
 
-  const hasGallery = galleryImages.length >= 3;
+  const hasGallery = galleryImages.length >= 2;
 
   return (
-    <section className="bg-dark py-12 md:py-16 relative">
-      <div className="px-6 md:px-12 max-w-7xl mx-auto">
+    <section className="bg-dark py-12 md:py-16 relative overflow-hidden">
+      <div className="px-6 md:px-12 max-w-7xl mx-auto overflow-hidden">
         <div className="flex items-center justify-between mb-6">
           <div className="flex items-center gap-3">
             <span className="text-xs uppercase tracking-[0.2em] text-white/40">Featured Collection</span>
@@ -90,9 +106,12 @@ export default function FeaturedCollectionCarousel({ items }: FeaturedCollection
           </div>
         </div>
 
-        <div className="grid grid-cols-1 lg:grid-cols-5 gap-8 lg:gap-10">
+        <div
+          className="flex flex-col lg:flex-row gap-8 lg:gap-10 transition-opacity duration-250 ease-in-out"
+          style={{ opacity: fading ? 0 : 1 }}
+        >
           {/* Left: text + description */}
-          <div className="lg:col-span-2 flex flex-col justify-center">
+          <div className="lg:w-2/5 flex flex-col justify-center shrink-0">
             <Link href={`/collections/${collection.slug}`} className="group">
               <h2 className="text-3xl md:text-4xl text-white mb-3 leading-tight font-display group-hover:text-accent-gold transition-colors">
                 {collection.name}
@@ -124,8 +143,8 @@ export default function FeaturedCollectionCarousel({ items }: FeaturedCollection
 
           {/* Right: gallery images (preferred) or book thumbnails (fallback) */}
           {hasGallery ? (
-            <div className="lg:col-span-3 grid grid-cols-[3fr_2fr] gap-3 h-[380px]">
-              {/* Hero image — largest, most striking */}
+            <div className="min-w-0 flex-1 grid grid-cols-[3fr_2fr] gap-3 h-[340px] lg:h-[380px]">
+              {/* Hero image — portrait/book-proportioned */}
               <Link
                 href={`/gallery/image/${galleryImages[0].id}`}
                 className="relative rounded-lg overflow-hidden bg-white/5 border border-white/10 group"
@@ -150,9 +169,9 @@ export default function FeaturedCollectionCarousel({ items }: FeaturedCollection
                 </div>
               </Link>
 
-              {/* Side stack — 2-3 smaller images */}
-              <div className="flex flex-col gap-3">
-                {galleryImages.slice(1, 4).map((img) => (
+              {/* Side — 2 square images */}
+              <div className="flex flex-col gap-3 min-w-0">
+                {galleryImages.slice(1, 3).map((img) => (
                   <Link
                     key={img.id}
                     href={`/gallery/image/${img.id}`}
@@ -176,7 +195,7 @@ export default function FeaturedCollectionCarousel({ items }: FeaturedCollection
               </div>
             </div>
           ) : books.length > 0 ? (
-            <div className="lg:col-span-3 grid grid-cols-4 sm:grid-cols-5 gap-3">
+            <div className="min-w-0 flex-1 grid grid-cols-4 sm:grid-cols-5 gap-3">
               {books.map((book) => {
                 const thumb = book.thumbnail || book.thumbnail_blob;
                 return (
@@ -216,7 +235,7 @@ export default function FeaturedCollectionCarousel({ items }: FeaturedCollection
           {items.map((_, i) => (
             <button
               key={i}
-              onClick={() => setIndex(i)}
+              onClick={() => goTo(i)}
               className={`w-2 h-2 rounded-full transition-colors ${i === index ? 'bg-accent-gold' : 'bg-white/20 hover:bg-white/40'}`}
               aria-label={`Go to collection ${i + 1}`}
             />

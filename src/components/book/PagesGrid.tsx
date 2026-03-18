@@ -35,7 +35,6 @@ interface PagesGridProps {
   draggedPageId: string | null;
   dragOverPageId: string | null;
   brightness?: number;
-  loadMoreRef: React.RefObject<HTMLDivElement | null>;
   onPageToggle: (pageId: string, index: number, event: React.MouseEvent) => void;
   onSetCover: (page: Page) => void;
   onDragStart: (pageId: string) => void;
@@ -58,7 +57,6 @@ export default function PagesGrid({
   draggedPageId,
   dragOverPageId,
   brightness,
-  loadMoreRef,
   onPageToggle,
   onSetCover,
   onDragStart,
@@ -210,9 +208,9 @@ export default function PagesGrid({
         </div>
       )}
 
-      {/* Load More - auto-loads when scrolled into view */}
+      {/* Load More */}
       {visibleCount < pages.length && (
-        <div ref={loadMoreRef} className="mt-6 text-center">
+        <div className="mt-6 text-center">
           <button
             onClick={onLoadMore}
             className="inline-flex items-center gap-2 px-6 py-2.5 bg-white border border-stone-300 text-stone-700 rounded-lg hover:bg-stone-50 hover:border-stone-400 transition-colors text-sm font-medium"

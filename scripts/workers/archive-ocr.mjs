@@ -5,15 +5,69 @@
 // Finds pages with OCR data but no archived_photo, downloads the source image,
 // uploads to R2, and updates MongoDB.
 //
+// Per-domain rate limiting based on robots.txt and library policies:
+//   IA: permissive (no crawl-delay)
+//   e-rara: 1s crawl-delay in robots.txt
+//   Vatican: 10s crawl-delay in robots.txt
+//   Gallica, Bodleian, Cambridge, HAB: conservative (no explicit policy)
+//   MDZ: open (no restrictions)
+//
 // Run: set -a; source .env.production.local; set +a; node scripts/workers/archive-ocr.mjs
 
 import { MongoClient } from 'mongodb';
 import { S3Client, PutObjectCommand } from '@aws-sdk/client-s3';
 
-const BATCH_SIZE = 10;
-const CONCURRENCY = 10;
-const DELAY_MS = 200;
-const MAX_PAGES = 500; // Cap per run to avoid runaway
+const MAX_PAGES = 2000;
+
+// Per-domain rate limits (requests per second) — be a good citizen
+const DOMAIN_RATE_LIMITS = {
+  'archive.org':              8,    // IA is permissive, no crawl-delay
+  'digitale-sammlungen.de':   4,    // MDZ: open robots.txt
+  'wellcomecollection.org':   3,    // No explicit policy
+  'digital.bodleian.ox.ac.uk':2,    // No explicit policy, conservative
+  'cudl.lib.cam.ac.uk':      2,    // No explicit policy, conservative
+  'diglib.hab.de':            2,    // No explicit policy, conservative
+  'gallica.bnf.fr':           2,    // 403'd robots.txt — be careful
+  'e-rara.ch':                1,    // robots.txt: 1s crawl-delay for allowed bots
+  'digi.vatlib.it':           0.1,  // robots.txt: 10s crawl-delay
+  _default:                   1,    // Unknown domains: 1 req/s
+};
+
+// Token bucket per domain
+const buckets = {};
+
+function getDomain(url) {
+  try {
+    const host = new URL(url).hostname;
+    for (const domain of Object.keys(DOMAIN_RATE_LIMITS)) {
+      if (domain !== '_default' && host.includes(domain)) return domain;
+    }
+  } catch {}
+  return '_default';
+}
+
+async function waitForToken(domain) {
+  const rate = DOMAIN_RATE_LIMITS[domain] || DOMAIN_RATE_LIMITS._default;
+  if (!buckets[domain]) {
+    buckets[domain] = { tokens: rate, lastRefill: Date.now(), rate };
+  }
+  const bucket = buckets[domain];
+
+  // Refill tokens based on elapsed time
+  const now = Date.now();
+  const elapsed = (now - bucket.lastRefill) / 1000;
+  bucket.tokens = Math.min(bucket.rate, bucket.tokens + elapsed * bucket.rate);
+  bucket.lastRefill = now;
+
+  if (bucket.tokens < 1) {
+    const waitMs = ((1 - bucket.tokens) / bucket.rate) * 1000;
+    await new Promise(r => setTimeout(r, waitMs));
+    bucket.tokens = 0;
+    bucket.lastRefill = Date.now();
+  } else {
+    bucket.tokens -= 1;
+  }
+}
 
 // R2 client
 const r2 = new S3Client({
@@ -54,6 +108,9 @@ async function uploadToR2(key, buffer, contentType) {
 
 async function archivePage(page, db) {
   const sourceUrl = page.photo;
+  const domain = getDomain(sourceUrl);
+  await waitForToken(domain);
+
   try {
     const { buffer, mimeType } = await downloadImage(sourceUrl);
     const key = `archived/${page.book_id}/${page.page_number}.jpg`;
@@ -71,9 +128,9 @@ async function archivePage(page, db) {
         }
       }
     );
-    return { ok: true, bytes: buffer.byteLength };
+    return { ok: true, bytes: buffer.byteLength, domain };
   } catch (err) {
-    return { ok: false, error: err.message };
+    return { ok: false, error: err.message, domain };
   }
 }
 
@@ -100,48 +157,67 @@ async function main() {
   }
 
   console.log(`[archive-ocr] ${totalNeeding} pages need archiving (processing up to ${MAX_PAGES})`);
+  console.log(`[archive-ocr] Per-domain rate limits: ${Object.entries(DOMAIN_RATE_LIMITS).filter(([k]) => k !== '_default').map(([k, v]) => `${k}:${v}/s`).join(', ')}`);
 
   let archived = 0;
   let failed = 0;
   let totalBytes = 0;
   let processed = 0;
+  const domainStats = {};
 
-  while (processed < MAX_PAGES) {
-    const pages = await db.collection('pages')
-      .find(query, { projection: { _id: 1, book_id: 1, page_number: 1, photo: 1 } })
-      .limit(CONCURRENCY)
-      .toArray();
+  // Group pages by domain and process each domain's pages concurrently
+  // but respect per-domain rate limits within each group
+  const pages = await db.collection('pages')
+    .find(query, { projection: { _id: 1, book_id: 1, page_number: 1, photo: 1 } })
+    .limit(MAX_PAGES)
+    .toArray();
 
-    if (pages.length === 0) break;
+  // Group by domain
+  const byDomain = {};
+  for (const page of pages) {
+    const domain = getDomain(page.photo);
+    if (!byDomain[domain]) byDomain[domain] = [];
+    byDomain[domain].push(page);
+  }
 
-    const results = await Promise.allSettled(
-      pages.map(p => archivePage(p, db))
-    );
+  console.log(`[archive-ocr] Domain breakdown: ${Object.entries(byDomain).map(([d, p]) => `${d}:${p.length}`).join(', ')}`);
 
-    for (const r of results) {
-      if (r.status === 'fulfilled' && r.value.ok) {
+  // Process all domains in parallel — each domain processes sequentially at its own rate
+  const domainWorkers = Object.entries(byDomain).map(async ([domain, domainPages]) => {
+    for (const page of domainPages) {
+      const result = await archivePage(page, db);
+      processed++;
+
+      if (!domainStats[domain]) domainStats[domain] = { ok: 0, fail: 0 };
+
+      if (result.ok) {
         archived++;
-        totalBytes += r.value.bytes;
+        totalBytes += result.bytes;
+        domainStats[domain].ok++;
       } else {
         failed++;
-        const err = r.status === 'fulfilled' ? r.value.error : r.reason?.message;
-        if (failed <= 10) console.error(`  FAIL: ${err}`);
+        domainStats[domain].fail++;
+        if (failed <= 10) console.error(`  FAIL [${domain}]: ${result.error}`);
+        // Circuit breaker: if 5 consecutive failures on a domain, skip it
+        if (domainStats[domain].fail >= 5 && domainStats[domain].ok === 0) {
+          console.warn(`  [${domain}] Circuit breaker: 5 failures with 0 successes, skipping domain`);
+          break;
+        }
+      }
+
+      if (processed % 100 === 0) {
+        const mb = (totalBytes / (1024 * 1024)).toFixed(1);
+        console.log(`  ${processed}/${pages.length} processed, ${archived} archived (${mb} MB), ${failed} failed`);
       }
     }
+  });
 
-    processed += pages.length;
-
-    if (processed % 50 === 0) {
-      const mb = (totalBytes / (1024 * 1024)).toFixed(1);
-      console.log(`  ${processed} processed, ${archived} archived (${mb} MB), ${failed} failed`);
-    }
-
-    await new Promise(r => setTimeout(r, DELAY_MS));
-  }
+  await Promise.all(domainWorkers);
 
   const duration = ((Date.now() - start) / 1000).toFixed(1);
   const mb = (totalBytes / (1024 * 1024)).toFixed(1);
   console.log(`[archive-ocr] Done in ${duration}s: ${archived} archived (${mb} MB), ${failed} failed, ${totalNeeding - processed} remaining`);
+  console.log(`[archive-ocr] Per-domain: ${Object.entries(domainStats).map(([d, s]) => `${d}:${s.ok}ok/${s.fail}fail`).join(', ')}`);
 
   // Log to cron_runs for monitoring
   await db.collection('cron_runs').insertOne({
@@ -151,7 +227,7 @@ async function main() {
     finished_at: new Date(),
     duration_ms: Date.now() - start,
     status: failed === 0 ? 'success' : 'partial',
-    actions: { archived, failed, bytes: totalBytes, remaining: totalNeeding - processed },
+    actions: { archived, failed, bytes: totalBytes, remaining: totalNeeding - processed, domainStats },
   });
 
   await client.close();

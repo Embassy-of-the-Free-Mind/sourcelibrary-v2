@@ -59,7 +59,7 @@ async function getAuthorBooks(authorName: string): Promise<Book[]> {
                     { $ne: ['$$page.translation.data', null] },
                     { $gt: [{ $strLenCP: { $ifNull: ['$$page.translation.data', ''] } }, 50] }
                   ]},
-                  { $in: [{ $ifNull: ['$$page.page_type', ''] }, ['blank', 'illustration', 'map', 'frontispiece', 'diagram']] }
+                  { $eq: [{ $ifNull: ['$$page.page_type', ''] }, 'blank'] }
                 ]
               }
             }
@@ -92,6 +92,11 @@ export async function generateMetadata({ params }: AuthorPageProps): Promise<Met
     title: `${authorName} — Source Library`,
     description: `Browse works by ${authorName} in Source Library's collection of rare historical texts, digitized and translated with AI.`,
     openGraph: {
+      title: `${authorName} — Source Library`,
+      description: `Works by ${authorName} in Source Library`,
+    },
+    twitter: {
+      card: 'summary_large_image',
       title: `${authorName} — Source Library`,
       description: `Works by ${authorName} in Source Library`,
     },

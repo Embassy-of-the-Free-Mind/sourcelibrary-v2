@@ -75,10 +75,13 @@
   --color-status-warning: #d97706;
   --color-status-info: #2563eb;
 
-  /* Container widths */
-  --container-narrow: 680px;
-  --container-medium: 900px;
-  --container-wide: 1200px;
+  /* Container widths — max 3 sizes site-wide (see #232)
+     Wide: browse, collections, multi-column layouts
+     Standard: most content pages, book detail
+     Narrow: focused reading, forms, text-heavy pages */
+  --container-narrow: 672px;   /* ≈ max-w-2xl */
+  --container-standard: 1024px; /* ≈ max-w-5xl */
+  --container-wide: 1280px;    /* ≈ max-w-7xl */
 }
 
 /* Base styles */

@@ -21,30 +21,37 @@ export function normalizeText(text: string): string {
     .trim();
 }
 
-/**
- * Get the best available image URL for a page.
- * Priority: cropped_photo > archived_photo > photo_original > photo
- */
-/** Check if a string is a usable HTTP(S) image URL (not a failure marker) */
-function isUsableImageUrl(url: string | undefined | null): url is string {
+/** Check if a string is a usable HTTP(S) image URL (not a failure marker like "failed:HTTP 404") */
+export function isUsableImageUrl(url: string | undefined | null): url is string {
   return !!url && (url.startsWith('http://') || url.startsWith('https://'));
 }
 
-export function getPageImageUrl(page: {
-  cropped_photo?: string;
-  archived_photo?: string;
-  photo_original?: string;
-  photo: string;
-  crop?: unknown;
-}): string {
-  // If page has crop data, prefer cropped_photo
-  if (page.crop && isUsableImageUrl(page.cropped_photo)) {
-    return page.cropped_photo;
-  }
-  // Prefer archived copy over live IA URL (skip "failed:*" markers)
-  if (isUsableImageUrl(page.archived_photo)) {
-    return page.archived_photo;
-  }
-  // Fall back to original URLs
-  return page.photo_original || page.photo;
+export function isArchiveFailed(photo: string | undefined | null): boolean {
+  return typeof photo === 'string' && photo.startsWith('failed:');
+}
+
+/**
+ * Get the best available image URL for a page.
+ *
+ * Priority: cropped_photo > archived_photo > photo_original > photo
+ *
+ * IMPORTANT: cropped_photo is the single-page crop from a split two-page spread.
+ * When it exists, bounding boxes (from image extraction) are in its coordinate space.
+ * Using archived_photo (the full spread) with those bbox coordinates causes misalignment.
+ * This function is the single source of truth for image source selection — all code paths
+ * that select a page image URL should use this instead of inlining the priority logic.
+ *
+ * If archived_photo starts with "failed:" (a marker from failed archiving attempts),
+ * the original source URLs are assumed dead and skipped.
+ */
+// eslint-disable-next-line @typescript-eslint/no-explicit-any
+export function getPageImageUrl(page: Record<string, any>): string | null {
+  if (isUsableImageUrl(page.cropped_photo)) return page.cropped_photo;
+  if (isUsableImageUrl(page.archived_photo)) return page.archived_photo;
+  // If archiving was attempted and failed ("failed:HTTP 404" etc), the source URL is dead.
+  // Don't try photo/photo_original — archiving already proved those URLs don't work.
+  if (isArchiveFailed(page.archived_photo)) return null;
+  if (isUsableImageUrl(page.photo_original)) return page.photo_original;
+  if (isUsableImageUrl(page.photo)) return page.photo;
+  return null;
 }

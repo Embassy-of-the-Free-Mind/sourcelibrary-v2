@@ -46,6 +46,7 @@ const MONGODB_URI = env.MONGODB_URI;
 const MONGODB_DB = env.MONGODB_DB || 'bookstore';
 const DRY_RUN = !process.argv.includes('--apply');
 const ALL_MODE = process.argv.includes('--all');
+const VISIBLE_MODE = process.argv.includes('--visible');
 const FORCE = process.argv.includes('--force');
 const SINGLE_BOOK = process.argv.find(a => a.startsWith('--book-id='))?.split('=')[1];
 
@@ -66,6 +67,7 @@ async function main() {
   await client.connect();
   const db = client.db(MONGODB_DB);
 
+  const startMs = Date.now();
   console.log(`Mode: ${DRY_RUN ? 'DRY RUN (use --apply to make changes)' : 'APPLY'}`);
 
   // Find candidates
@@ -76,6 +78,15 @@ async function main() {
     // All non-English books — re-verify everything
     query = {
       language: { $nin: ['English', 'english', null, ''] },
+    };
+  } else if (VISIBLE_MODE) {
+    // Visible translated non-English books without Stage 2 verification
+    query = {
+      hidden: { $ne: true },
+      pages_count: { $gt: 0 },
+      pages_translated: { $gt: 0 },
+      language: { $nin: ['English', 'english', null, ''] },
+      'translation_verification.tools_called': { $exists: false },
     };
   } else if (ALL_MODE) {
     // All non-English books that don't yet have new-style verification
@@ -130,82 +141,63 @@ async function main() {
     process.exit(1);
   }
 
-  for (let i = 0; i < candidates.length; i++) {
-    const book = candidates[i];
-    const label = `[${i + 1}/${candidates.length}]`;
+  const CONCURRENCY = parseInt(process.argv.find(a => a.startsWith('--concurrency='))?.split('=')[1] || '3');
+  console.log(`Concurrency: ${CONCURRENCY}`);
+
+  async function processBook(book, idx) {
+    const label = `[${idx + 1}/${candidates.length}]`;
     const title = book.display_title || book.title;
 
-    process.stdout.write(`${label} ${title}... `);
+    try {
+      const result = await verifyFirstTranslation(db, book.id, { dryRun: DRY_RUN, force: FORCE });
+      if (result.success && result.verification) {
+        const v = result.verification;
+        const dispKey = v.disposition === 'translation_found' || v.disposition === 'translation_exists' ? 'exists' :
+              v.disposition === 'first_complete_translation' ? 'first_complete' :
+              v.disposition === 'first_modern_translation' ? 'first_modern' :
+              v.disposition === 'needs_review' ? 'needs_review' : 'first';
+        stats[dispKey]++;
 
-    if (DRY_RUN) {
-      // In dry-run, still run verification but don't persist
-      try {
-        const result = await verifyFirstTranslation(db, book.id, { dryRun: true, force: FORCE });
-        if (result.success && result.verification) {
-          const v = result.verification;
-          const dispKey = v.disposition === 'translation_found' || v.disposition === 'translation_exists' ? 'exists' :
-                v.disposition === 'first_complete_translation' ? 'first_complete' :
-                v.disposition === 'first_modern_translation' ? 'first_modern' :
-                v.disposition === 'needs_review' ? 'needs_review' : 'first';
-          stats[dispKey]++;
+        const wasFirst = book.is_first_translation;
+        const isNowFirst = ['confirmed_first', 'first_complete_translation', 'first_modern_translation'].includes(v.disposition);
+        const wouldChange = wasFirst && v.disposition === 'translation_found';
+        const newDiscovery = !wasFirst && isNowFirst;
+        const marker = wouldChange ? ' ** MISMATCH **' : newDiscovery ? ' ** NEW **' : '';
+        console.log(`${label} ${title} → ${v.disposition} (${v.confidence || 'n/a'})${marker}`);
 
-          const wouldChange = book.is_first_translation && v.disposition === 'translation_found';
-          const marker = wouldChange ? ' ** MISMATCH **' : '';
-          console.log(`${v.disposition} (${v.confidence || 'n/a'})${marker}`);
-
-          if (wouldChange) {
-            mismatches.push({
-              id: book.id,
-              title,
-              author: book.author,
-              disposition: v.disposition,
-              confidence: v.confidence,
-              reasoning: v.reasoning,
-              translations_found: v.translations_found,
-            });
-          }
-        } else {
-          stats.errors++;
-          console.log(`ERROR: ${result.error}`);
+        if (wouldChange) {
+          mismatches.push({
+            id: book.id, title, author: book.author,
+            disposition: v.disposition, confidence: v.confidence,
+            reasoning: v.reasoning, translations_found: v.translations_found,
+          });
         }
-      } catch (err) {
-        stats.errors++;
-        console.log(`ERROR: ${err.message}`);
-      }
-    } else {
-      // Apply mode — verification function persists results
-      try {
-        const result = await verifyFirstTranslation(db, book.id, { force: FORCE });
-        if (result.success && result.verification) {
-          const v = result.verification;
-          const dispKey = v.disposition === 'translation_found' || v.disposition === 'translation_exists' ? 'exists' :
-                v.disposition === 'first_complete_translation' ? 'first_complete' :
-                v.disposition === 'first_modern_translation' ? 'first_modern' :
-                v.disposition === 'needs_review' ? 'needs_review' : 'first';
-          stats[dispKey]++;
-
-          const wasFirst = book.is_first_translation;
-          const isNowFirst = v.disposition === 'first_translation' || v.disposition === 'first_full_translation';
-          const newDiscovery = !wasFirst && isNowFirst;
-          const lostStatus = wasFirst && v.disposition === 'translation_exists';
-          const marker = newDiscovery ? ' ** NEW **' : lostStatus ? ' ** MISMATCH **' : '';
-          console.log(`${v.disposition} (${v.confidence || 'n/a'})${marker}`);
-
-          if (newDiscovery) {
-            newFirstTranslations.push({ id: book.id, title, author: book.author });
-          }
-        } else {
-          stats.errors++;
-          console.log(`ERROR: ${result.error}`);
+        if (newDiscovery && !DRY_RUN) {
+          newFirstTranslations.push({ id: book.id, title, author: book.author });
         }
-      } catch (err) {
+      } else {
         stats.errors++;
-        console.log(`ERROR: ${err.message}`);
+        console.log(`${label} ${title} → ERROR: ${result.error}`);
       }
+    } catch (err) {
+      stats.errors++;
+      console.log(`${label} ${title} → ERROR: ${err.message}`);
     }
+  }
 
-    // Rate limit: ~1 request/sec to avoid Gemini rate limits
-    await new Promise(r => setTimeout(r, 1000));
+  // Process in parallel batches
+  for (let i = 0; i < candidates.length; i += CONCURRENCY) {
+    const batch = candidates.slice(i, i + CONCURRENCY);
+    await Promise.all(batch.map((book, j) => processBook(book, i + j)));
+
+    // Progress summary every 100 books
+    const done = Math.min(i + CONCURRENCY, candidates.length);
+    if (done % 100 < CONCURRENCY) {
+      const elapsed = (Date.now() - startMs) / 1000;
+      const rate = done / elapsed;
+      const eta = Math.round((candidates.length - done) / rate / 60);
+      console.log(`\n── Progress: ${done}/${candidates.length} (${(done/candidates.length*100).toFixed(1)}%) | ${rate.toFixed(1)}/sec | ETA: ${eta}min ──\n`);
+    }
   }
 
   console.log('\n── Summary ──');

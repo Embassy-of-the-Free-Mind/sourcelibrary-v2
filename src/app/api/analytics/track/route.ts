@@ -43,11 +43,11 @@ export async function POST(request: NextRequest) {
     // Race all DB work against a short timeout
     const dbWork = (async () => {
       const db = await getDb();
-      const now = Date.now();
+      const now = new Date();
 
       // For reads, use atomic upsert to prevent race condition duplicates
       if (event === 'book_read' || event === 'page_read') {
-        const oneHourAgo = now - 60 * 60 * 1000;
+        const oneHourAgo = new Date(now.getTime() - 60 * 60 * 1000);
         const dedupeQuery: Record<string, unknown> = {
           event,
           book_id,

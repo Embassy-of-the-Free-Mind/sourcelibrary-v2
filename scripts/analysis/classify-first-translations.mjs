@@ -19,7 +19,7 @@ const limit = parseInt(args.find(a => a.startsWith('--limit='))?.split('=')[1] |
 const offset = parseInt(args.find(a => a.startsWith('--offset='))?.split('=')[1] || '0');
 const skipExisting = !args.includes('--force');
 
-const GEMINI_MODEL = 'gemini-2.5-flash';
+const GEMINI_MODEL = 'gemini-3-flash-preview';
 const API_KEY = process.env.GEMINI_API_KEY_TIER3 || process.env.GEMINI_API_KEY;
 
 const CLASSIFICATION_PROMPT = `You are a scholarly bibliographer specializing in the history of English translations of European, Middle Eastern, and Asian texts.
@@ -97,11 +97,12 @@ async function main() {
   await client.connect();
   const db = client.db('bookstore');
 
-  // Get candidate books
+  // Get candidate books — all non-English books without is_first_translation set
+  const pipelineOnly = args.includes('--pipeline');
   const query = {
-    hidden: { $ne: true },
     language: { $nin: ['English', 'english', 'Unknown', null] },
-    pages_translated: { $gt: 0 }
+    is_first_translation: { $exists: false },
+    ...(pipelineOnly ? { 'pipeline_auto.status': { $exists: true } } : {}),
   };
 
   let books = await db.collection('books').find(query, {
@@ -199,6 +200,24 @@ async function main() {
 
     if (ops.length > 0) {
       await collection.bulkWrite(ops);
+
+      // Also set is_first_translation on the books collection
+      const bookOps = [];
+      for (const result of results) {
+        const bookIdx = (result.book_index || result.bookIndex || 0) - 1;
+        const book = batch[bookIdx];
+        if (!book) continue;
+        const isFirst = result.classification === 'never_translated';
+        bookOps.push({
+          updateOne: {
+            filter: { id: book.id },
+            update: { $set: { is_first_translation: isFirst } },
+          }
+        });
+      }
+      if (bookOps.length > 0) {
+        await db.collection('books').bulkWrite(bookOps);
+      }
     }
 
     console.log(`  Saved ${ops.length} results. Running totals: ${JSON.stringify(stats)}`);

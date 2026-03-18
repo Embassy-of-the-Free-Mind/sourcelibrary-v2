@@ -165,7 +165,7 @@ export async function GET(request: NextRequest) {
           const concurrentChunk = chunk.slice(k, k + IMAGE_CONCURRENCY);
           const results = await Promise.allSettled(
             concurrentChunk.map(async (page) => {
-              const imageUrl = getPageImageUrl(page as unknown as Parameters<typeof getPageImageUrl>[0]);
+              const imageUrl = getPageImageUrl(page);
               if (!imageUrl) return null;
               const result = await images.fetchBase64(imageUrl, { includeMimeType: true });
               const imageData = typeof result === 'string'

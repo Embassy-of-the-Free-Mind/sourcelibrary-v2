@@ -15,9 +15,13 @@ export async function GET(request: NextRequest) {
     const { searchParams } = new URL(request.url);
     const type = searchParams.get('type'); // 'category' | 'curated' | null (all)
     const includeUnpublished = searchParams.get('unpublished') === 'true';
+    const includeChildren = searchParams.get('includeChildren') === 'true';
 
     const db = await getDb();
-    const filter: Record<string, unknown> = { parent: { $exists: false } };
+    const filter: Record<string, unknown> = {};
+    if (!includeChildren) {
+      filter.parent = { $exists: false };
+    }
 
     if (type) {
       filter.type = type;

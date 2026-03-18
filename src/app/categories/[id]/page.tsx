@@ -65,7 +65,7 @@ async function getCategoryBooks(id: string): Promise<Book[]> {
                     { $ne: ['$$page.translation.data', null] },
                     { $gt: [{ $strLenCP: { $ifNull: ['$$page.translation.data', ''] } }, 50] }
                   ]},
-                  { $in: [{ $ifNull: ['$$page.page_type', ''] }, ['blank', 'illustration', 'map', 'frontispiece', 'diagram']] }
+                  { $eq: [{ $ifNull: ['$$page.page_type', ''] }, 'blank'] }
                 ]
               }
             }
@@ -99,6 +99,11 @@ export async function generateMetadata({ params }: CategoryPageProps): Promise<M
     title: `${category.name} — Source Library`,
     description: `Browse ${category.description.toLowerCase()} in Source Library's collection of rare historical texts, digitized and translated with AI.`,
     openGraph: {
+      title: `${category.name} — Source Library`,
+      description: category.description,
+    },
+    twitter: {
+      card: 'summary_large_image',
       title: `${category.name} — Source Library`,
       description: category.description,
     },

@@ -83,7 +83,7 @@ export default async function DatasetPage() {
           subtitle="Page-aligned parallel text for historical languages. OCR, English translation, and scholarly metadata — ready for training."
         />
       }
-      maxWidth="medium"
+      maxWidth="standard"
       bg="bg-[#faf9f7]"
     >
       {/* ── Opening statement ── */}

@@ -59,7 +59,7 @@ if (!process.env.AWS_SECRET_ACCESS_KEY && process.env.AWS_SECRET_ACCESS_KEY_SOUR
   process.env.AWS_SECRET_ACCESS_KEY = process.env.AWS_SECRET_ACCESS_KEY_SOURCELIBRARY;
 }
 
-const SKIP_PAGE_TYPES = ['blank', 'illustration', 'map', 'frontispiece', 'diagram'];
+const SKIP_PAGE_TYPES = ['blank'];
 const AWS_REGION = process.env.AWS_REGION || 'eu-central-1';
 const QUEUE_URL = process.env.SQS_PAGE_TRANSLATION_QUEUE_URL;
 const DEFAULT_MODEL = 'gemini-3-flash-preview';

@@ -323,10 +323,10 @@ async function getCollectionShowcase() {
   return JSON.parse(JSON.stringify(items));
 }
 
-async function getBookCounts(): Promise<{ totalBooks: number; translatedCount: number; firstTranslationCount: number }> {
+async function getBookCounts(): Promise<{ totalBooks: number; translatedToEnglish: number; firstTranslationCount: number }> {
   // Hardcoded to avoid a 22s full-collection aggregation that was timing out the homepage.
   // TODO: replace with a cached/indexed query. Actual counts as of 2026-03-17 (post-curation).
-  return { totalBooks: 4469, translatedCount: 4469, firstTranslationCount: 1977 };
+  return { totalBooks: 4469, translatedToEnglish: 3746, firstTranslationCount: 1977 };
 }
 
 // ---------- Hardcoded fallback data (DB resilience) ----------
@@ -446,7 +446,7 @@ export default async function HomePage() {
   return (
     <SocietyGate>
       <div className="min-h-screen">
-        <HomePageSchema books={discoverBooks} bookCount={counts.totalBooks} translatedCount={counts.translatedCount} />
+        <HomePageSchema books={discoverBooks} bookCount={counts.totalBooks} translatedCount={counts.translatedToEnglish} />
 
         {/* Video Hero — same as current homepage */}
         <HeroSection />
@@ -460,7 +460,7 @@ export default async function HomePage() {
                   Collections
                 </h2>
                 <p className="text-muted mt-2">
-                  {counts.translatedCount.toLocaleString('en-US')} books translated &middot; {counts.firstTranslationCount.toLocaleString('en-US')} translated for the first time
+                  {counts.totalBooks.toLocaleString('en-US')} books &middot; {counts.translatedToEnglish.toLocaleString('en-US')} translated to English &middot; {counts.firstTranslationCount.toLocaleString('en-US')} for the first time
                 </p>
               </div>
               <Link
@@ -544,6 +544,15 @@ export default async function HomePage() {
         {/* From the Collection — image-heavy gallery showcase */}
         <FromTheCollection items={showcase} />
 
+        {/* Gallery attribution — connects beauty to community */}
+        <div className="bg-warm px-6 md:px-12 pb-8 -mt-1">
+          <p className="text-center text-xs text-stone-400">
+            From the collections of Source Library, preserved and translated with support from{' '}
+            <Link href="/ficino-society/members" className="hover:text-stone-600 transition-colors underline decoration-stone-300">
+              Ficino Society members
+            </Link>
+          </p>
+        </div>
         {/* Discover Section */}
         <section className="bg-white py-16 md:py-24">
           <div className="px-6 md:px-12 max-w-7xl mx-auto">
@@ -649,7 +658,7 @@ export default async function HomePage() {
               <p>
                 The Source Library uses scholarship and AI systems to recover this knowledge and make it
                 accessible to all. We are building the world&apos;s largest open-access collection of translated
-                primary sources&mdash;so that scholars, seekers, and AI systems can draw on the full depth of
+                primary sources, so that scholars, seekers, and AI systems can draw on the full depth of
                 the human intellectual tradition. This work is sustained by the people who use and value it.
               </p>
               <p className="text-gray-500 text-base">
@@ -688,7 +697,7 @@ export default async function HomePage() {
                 </h3>
                 <p className="leading-relaxed mb-6" style={{ color: '#a09a90' }}>
                   Cosimo de&apos; Medici funded Ficino&apos;s translations and ignited the Renaissance.
-                  Members of the Ficino Society continue that tradition&mdash;funding the digitization
+                  Members of the Ficino Society continue that tradition: funding the digitization
                   and translation of ancient texts, with early access to new translations
                   and their name on a book of their choosing.
                 </p>
@@ -751,7 +760,7 @@ export default async function HomePage() {
         </section>
 
         {/* Search — compact */}
-        <section className="bg-gradient-to-b from-[#1c1917] to-[#f6f3ee] py-12">
+        <section className="bg-[#f6f3ee] py-12">
           <div className="px-6 md:px-12 max-w-lg mx-auto">
             <form action="/search" method="get" className="relative">
               <svg className="absolute left-4 top-1/2 -translate-y-1/2 w-5 h-5 text-stone-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
@@ -784,7 +793,7 @@ export default async function HomePage() {
                   </p>
                   <p className="text-stone-600 text-base leading-relaxed">
                     Ficino translated the complete works of Plato, Plotinus, Proclus, Iamblichus, and the
-                    Hermetic writings into Latin&mdash;making them accessible to all of Europe for the first
+                    Hermetic writings into Latin, making them accessible to all of Europe for the first
                     time. His work ignited the Renaissance recovery of Neoplatonism, Hermeticism, and
                     the <em>prisca theologia</em>: the belief in an ancient wisdom tradition uniting all
                     seekers of truth.

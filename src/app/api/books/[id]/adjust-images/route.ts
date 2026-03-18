@@ -5,6 +5,7 @@ import { images } from '@/lib/api-client/images';
 import { adjustBrightness, compress_photo } from '@/lib/image-manipulation';
 import { logAuditEvent } from '@/lib/audit-logger';
 import { withAuth } from '@/lib/auth-helpers';
+import { getPageImageUrl } from '@/lib/utils';
 
 export const maxDuration = 300;
 
@@ -58,8 +59,7 @@ export const POST = withAuth(async (request, session, context) => {
 
       const batchResults = await Promise.all(
         batch.map(async (page) => {
-          // Image fallback chain: archived_photo > photo_original > photo
-          const sourceUrl = (page.archived_photo && page.archived_photo.startsWith('http')) ? page.archived_photo : (page.photo_original || page.photo);
+          const sourceUrl = getPageImageUrl(page);
           if (!sourceUrl) {
             return { pageId: page.id, pageNumber: page.page_number, success: false, error: 'No image URL' };
           }

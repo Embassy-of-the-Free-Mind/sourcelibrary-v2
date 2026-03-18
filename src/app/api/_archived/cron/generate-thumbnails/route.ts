@@ -82,7 +82,7 @@ export async function POST(request: NextRequest) {
         const results = await Promise.all(
           batch.map(async (page) => {
             try {
-              const imageUrl = getPageImageUrl(page as unknown as Parameters<typeof getPageImageUrl>[0]);
+              const imageUrl = getPageImageUrl(page);
               if (!imageUrl) return false;
 
               let buffer: Buffer;

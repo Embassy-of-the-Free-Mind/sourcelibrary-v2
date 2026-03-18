@@ -14,6 +14,7 @@
 
 import { ImageResponse } from 'next/og';
 import { getDb } from '@/lib/mongodb';
+import { getPageImageUrl } from '@/lib/utils';
 
 export const alt = 'Image from Source Library';
 export const size = {
@@ -29,6 +30,7 @@ interface PageWithBook {
   photo: string;
   photo_original?: string;
   cropped_photo?: string;
+  archived_photo?: string;
   detected_images?: Array<{
     description: string;
     type?: string;
@@ -39,6 +41,7 @@ interface PageWithBook {
     display_title?: string;
     author?: string;
   };
+  [key: string]: unknown;
 }
 
 interface Detection {
@@ -113,7 +116,7 @@ export default async function Image({ params }: { params: Promise<{ id: string }
   }
 
   const { page, detection } = data;
-  let imageUrl = page.cropped_photo || page.photo_original || page.photo;
+  let imageUrl = getPageImageUrl(page);
   const description = detection.description || '';
 
   // Upgrade IIIF URLs to higher resolution for sharper OG images
@@ -121,20 +124,14 @@ export default async function Image({ params }: { params: Promise<{ id: string }
     imageUrl = imageUrl.replace(/\/full\/\d+,\//, '/full/2000,/');
   }
 
-  // Prefer pre-generated extracted_url, fall back to on-the-fly crop
-  let displayUrl = imageUrl;
+  // Use pre-extracted URL when available. Avoid /api/crop-image — it's
+  // unreliable during OG generation and produces garbled social previews.
+  // Fall back to the full page image (uncropped) rather than risk a bad crop.
+  let displayUrl: string | null;
   if (detection.extracted_url) {
     displayUrl = detection.extracted_url;
-  } else if (detection.bbox && imageUrl) {
-    const params = new URLSearchParams({
-      url: imageUrl,
-      x: String(detection.bbox.x),
-      y: String(detection.bbox.y),
-      w: String(detection.bbox.width),
-      h: String(detection.bbox.height),
-    });
-    if (detection.rotation) params.set('rotation', String(detection.rotation));
-    displayUrl = `https://sourcelibrary.org/api/crop-image?${params}`;
+  } else {
+    displayUrl = imageUrl;
   }
 
   return new ImageResponse(

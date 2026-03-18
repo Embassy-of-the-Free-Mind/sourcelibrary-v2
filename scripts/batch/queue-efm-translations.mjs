@@ -18,7 +18,7 @@ import { SQSClient, SendMessageBatchCommand } from '@aws-sdk/client-sqs';
 import { nanoid } from 'nanoid';
 
 // --- Config ---
-const SKIP_PAGE_TYPES = ['blank', 'illustration', 'map', 'frontispiece', 'diagram'];
+const SKIP_PAGE_TYPES = ['blank'];
 const DEFAULT_MODEL = 'gemini-3-flash-preview';
 
 // --- Parse args ---

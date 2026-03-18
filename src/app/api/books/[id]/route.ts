@@ -261,10 +261,12 @@ export const PATCH = withAuth(async (request, session, context) => {
       }
     }
 
-    // Revalidate book page cache when thumbnail or visible metadata changes
+    // Revalidate caches when visible metadata changes
     const bookSlug = book.slug || bookId;
     if (changedFields.some(f => ['thumbnail', 'thumbnail_blob', 'title', 'display_title', 'author'].includes(f))) {
       revalidatePath(`/book/${bookSlug}`);
+      // Thumbnail/title changes affect listing pages (home, collections, search)
+      revalidatePath('/', 'layout');
     }
 
     return NextResponse.json({ success: true, updated: Object.keys(updates) });

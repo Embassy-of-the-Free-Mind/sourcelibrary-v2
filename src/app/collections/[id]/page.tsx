@@ -50,6 +50,11 @@ export async function generateMetadata({ params }: Props): Promise<Metadata> {
         description,
         type: 'website',
       },
+      twitter: {
+        card: 'summary_large_image',
+        title: `${collection.name} - Source Library`,
+        description,
+      },
     };
   } catch {
     return { title: 'Collection - Source Library' };

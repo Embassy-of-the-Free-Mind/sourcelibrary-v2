@@ -210,8 +210,8 @@ export default function BetaLandingPage() {
             <p
               className="text-lg md:text-xl text-white/70 leading-relaxed max-w-2xl mb-10 font-body"
             >
-              Source Library uses AI to translate thousands of rare historical texts —
-              early science, philosophy, medicine, alchemy, theology — into modern English.
+              Source Library uses AI to translate thousands of rare historical texts
+              in early science, philosophy, medicine, alchemy, and theology into modern English.
               Over 4,000 books. 1.6 million pages. 120 books free and open.
               Register for free to access the full collection.
             </p>
@@ -258,7 +258,7 @@ export default function BetaLandingPage() {
             <p
               className="text-lg text-white/50 max-w-2xl mx-auto font-body"
             >
-              Robert Fludd&apos;s <em>Utriusque Cosmi Historia</em> (1617) — a lavishly illustrated
+              Robert Fludd&apos;s <em>Utriusque Cosmi Historia</em> (1617), a lavishly illustrated
               theory of the universe as a musical instrument. No complete English translation
               has ever been published.
             </p>
@@ -310,7 +310,7 @@ export default function BetaLandingPage() {
             <p
               className="text-lg text-stone-600 max-w-2xl mx-auto font-body"
             >
-              Emblems, engravings, diagrams, and woodcuts — identified by AI,
+              Emblems, engravings, diagrams, and woodcuts, identified by AI,
               described with museum-quality metadata, and searchable.
             </p>
           </div>
@@ -391,7 +391,7 @@ export default function BetaLandingPage() {
             className="text-lg text-white/50 mb-10 max-w-xl mx-auto font-body"
           >
             Source Library opens February 22, 2026.
-            120 books are completely open — no account needed.
+            120 books are completely open, no account needed.
             Register for free to unlock the full collection of over 4,000 texts.
             No payment required, ever.
           </p>

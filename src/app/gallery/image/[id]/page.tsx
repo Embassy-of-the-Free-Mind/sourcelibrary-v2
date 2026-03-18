@@ -25,7 +25,8 @@ import {
   X,
   ChevronLeft,
   ChevronRight,
-  Download
+  Download,
+  Loader2
 } from 'lucide-react';
 import ImageWithMagnifier from '@/components/ui/ImageWithMagnifier';
 import LikeButton from '@/components/ui/LikeButton';
@@ -466,14 +467,24 @@ export default function ImageDetailPage({
     }
   };
 
+  const [downloading, setDownloading] = useState(false);
+
+  const triggerDownload = async (fetchUrl: string, suffix?: string) => {
+    const res = await fetch(fetchUrl);
+    const blob = await res.blob();
+    const a = document.createElement('a');
+    a.href = URL.createObjectURL(blob);
+    const bookSlug = data!.book.title.replace(/[^a-z0-9]+/gi, '-').toLowerCase().slice(0, 40);
+    a.download = `source-library-${bookSlug}-p${data!.pageNumber}${suffix || ''}.jpg`;
+    a.click();
+    URL.revokeObjectURL(a.href);
+  };
+
   const downloadImage = async () => {
-    if (!data) return;
-    if (!canDownloadImage) {
-      purchaseImage();
-      return;
-    }
-    // Prefer pre-extracted image (Vercel Blob, no CORS issues).
-    // Fall back to proxying external images through our /api/image route to avoid CORS blocks.
+    if (!data || !imageId) return;
+    if (!canDownloadImage) { purchaseImage(); return; }
+
+    // Quick download: use existing extracted image
     const sourceUrl = data.extractedUrl || data.highResUrl || data.imageUrl;
     const isExternal = sourceUrl.startsWith('http') && !sourceUrl.includes('vercel-storage.com') && !sourceUrl.includes('sourcelibrary.org');
     const fetchUrl = isExternal
@@ -481,18 +492,29 @@ export default function ImageDetailPage({
       : sourceUrl;
 
     try {
-      const res = await fetch(fetchUrl);
-      const blob = await res.blob();
-      const a = document.createElement('a');
-      a.href = URL.createObjectURL(blob);
-      const bookSlug = data.book.title.replace(/[^a-z0-9]+/gi, '-').toLowerCase().slice(0, 40);
-      a.download = `source-library-${bookSlug}-p${data.pageNumber}.jpg`;
-      a.click();
-      URL.revokeObjectURL(a.href);
+      await triggerDownload(fetchUrl);
       sendGAEvent({ action: 'gallery_download', label: imageId || undefined });
     } catch {
-      // Last resort: open in new tab
       window.open(sourceUrl, '_blank');
+    }
+  };
+
+  const downloadHighRes = async () => {
+    if (!data || !imageId) return;
+    if (!canDownloadImage) { purchaseImage(); return; }
+
+    setDownloading(true);
+    try {
+      const hiresRes = await fetch(`/api/gallery/image/${imageId}/hires`);
+      if (!hiresRes.ok) throw new Error('High-res generation failed');
+      const { url } = await hiresRes.json();
+      await triggerDownload(url, '-hires');
+      sendGAEvent({ action: 'gallery_download_hires', label: imageId || undefined });
+    } catch {
+      // Fall back to standard download
+      await downloadImage();
+    } finally {
+      setDownloading(false);
     }
   };
 
@@ -892,6 +914,21 @@ export default function ImageDetailPage({
                     >
                       <Download className="w-4 h-4" />
                       Download
+                    </button>
+                    <button
+                      onClick={downloadHighRes}
+                      disabled={downloading}
+                      className={`flex items-center gap-1.5 px-4 py-2 rounded-lg text-sm transition-colors disabled:opacity-50 ${
+                        canDownloadImage
+                          ? 'bg-amber-900/60 hover:bg-amber-800/60 text-amber-100'
+                          : 'bg-stone-800 hover:bg-stone-700 text-stone-200'
+                      }`}
+                    >
+                      {downloading
+                        ? <Loader2 className="w-4 h-4 animate-spin" />
+                        : <Download className="w-4 h-4" />
+                      }
+                      {downloading ? 'Generating...' : 'Download High-Res'}
                     </button>
                   </div>
                 </div>

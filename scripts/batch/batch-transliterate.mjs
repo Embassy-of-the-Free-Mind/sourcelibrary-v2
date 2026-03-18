@@ -55,7 +55,7 @@ const NON_LATIN_LANGUAGES = [
 ];
 
 // Page types to skip
-const SKIP_PAGE_TYPES = ['blank', 'illustration', 'map', 'frontispiece', 'diagram'];
+const SKIP_PAGE_TYPES = ['blank'];
 
 function languageToScript(language) {
   if (!language) return 'Unknown';

@@ -16,7 +16,7 @@ export function ContentHeader({ title, subtitle, children, image, imageAlt }: Co
   return (
     <>
       <header className="bg-cream border-b border-border-light">
-        <div className="max-w-5xl mx-auto px-6 py-4">
+        <div className="max-w-[var(--container-standard)] mx-auto px-6 py-4">
           <Link
             href="/"
             className="inline-flex items-center gap-3 text-primary hover:text-secondary transition-colors"
@@ -49,7 +49,7 @@ export function ContentHeader({ title, subtitle, children, image, imageAlt }: Co
         ) : (
           <div className="absolute inset-0 bg-gradient-to-b from-[#2a1f17] to-[#1a1612]" />
         )}
-        <div className="relative max-w-5xl mx-auto px-6">
+        <div className="relative max-w-[var(--container-standard)] mx-auto px-6">
           <h1 className="font-serif text-4xl md:text-5xl tracking-tight mb-4">{title}</h1>
           {subtitle && (
             <p className="text-lg md:text-xl text-stone-300 max-w-2xl font-body leading-relaxed">{subtitle}</p>
@@ -101,8 +101,12 @@ interface ContentPageLayoutProps {
   children: ReactNode;
   /** Additional classes on <main> */
   className?: string;
-  /** Max-width variant — defaults to 5xl for hero pages */
-  maxWidth?: 'narrow' | 'medium' | 'wide';
+  /** Max-width variant (see globals.css --container-* vars, issue #232)
+   *  narrow: 672px — focused reading, forms
+   *  standard: 1024px — most content pages (default)
+   *  wide: 1280px — browse, multi-column
+   */
+  maxWidth?: 'narrow' | 'standard' | 'wide';
   /** Background color — defaults to stone-50 */
   bg?: string;
 }
@@ -111,7 +115,7 @@ export default function ContentPageLayout({
   header,
   children,
   className = '',
-  maxWidth = 'medium',
+  maxWidth = 'standard',
   bg = 'bg-stone-50',
 }: ContentPageLayoutProps) {
   const widthClass =
@@ -119,7 +123,7 @@ export default function ContentPageLayout({
       ? 'max-w-[var(--container-narrow)]'
       : maxWidth === 'wide'
         ? 'max-w-[var(--container-wide)]'
-        : 'max-w-5xl'; // medium ≈ 900-1024
+        : 'max-w-[var(--container-standard)]';
 
   return (
     <div className={`min-h-screen ${bg}`}>

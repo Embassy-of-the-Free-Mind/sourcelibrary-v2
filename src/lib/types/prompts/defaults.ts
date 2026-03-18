@@ -2,7 +2,7 @@ import { ProcessingPrompts } from "./core";
 import type { DetectedImage } from "../page";
 
 // Bump this when DEFAULT_PROMPTS change. Stored on every page record for audit trail.
-export const PROMPT_VERSION = 'v5.2026-02';
+export const PROMPT_VERSION = 'v5.1.2026-03';
 
 const VALID_PAGE_TYPES = new Set([
   'title-page', 'frontispiece', 'dedication', 'preface', 'toc', 'index',
@@ -12,7 +12,7 @@ const VALID_PAGE_TYPES = new Set([
 
 // Page types that should be skipped during translation — no meaningful text content
 export const SKIP_TRANSLATION_PAGE_TYPES = [
-  'blank', 'illustration', 'map', 'frontispiece', 'diagram', 'digitizer-insert',
+  'blank',
 ];
 
 // Page types hidden from the reader navigation (still accessible via direct URL)
@@ -223,10 +223,11 @@ If text-only page, omit the <detected-images> block.`,
 - Code blocks or backticks - this is prose
 
 **IMPORTANT - Translate ALL languages to English:**
-The source text may contain phrases in multiple languages (Latin, Greek, Hebrew, etc.). You MUST translate EVERYTHING to English:
+The source text may contain phrases in multiple languages (Latin, Greek, Hebrew, Sanskrit, Arabic, etc.). You MUST translate EVERYTHING to English:
 - Latin quotes embedded in German → translate to English
-- Greek phrases → translate to English
-- Hebrew or Aramaic terms → translate to English
+- Greek, Hebrew, Aramaic phrases → translate to English
+- Sanskrit, Prakrit, Pali, Arabic text → translate to English
+- Text in non-Latin scripts (Devanagari, Chinese, Arabic, etc.) → provide English translation immediately after
 - ANY non-English text → translate to English
 Use <note>original: "..."</note> to preserve important original phrases for scholars, but the main text must be fully readable in English without knowing other languages.
 
@@ -314,12 +315,12 @@ export const ENGLISH_MODERNIZATION_PROMPT = `You are modernizing Early Modern En
 - Latin, Greek, or other foreign phrases — translate to English with <note>original: "..."</note>
 
 **IMPORTANT - Translate ALL embedded foreign languages to English:**
-Early Modern English texts frequently contain Latin, Greek, Hebrew, and other languages inline. You MUST translate EVERYTHING to English:
-- Latin quotes and phrases → translate to English
-- Greek phrases → translate to English
-- Hebrew or Aramaic terms → translate to English
+The text may contain passages in other languages — Latin, Greek, Hebrew, Sanskrit, Prakrit, Arabic, Chinese, or any other language. You MUST translate ALL non-English text to English:
+- Latin, Greek, Hebrew, Arabic quotes → translate to English
+- Sanskrit, Prakrit, Pali verses → translate to English
+- Text in non-Latin scripts (Devanagari, Chinese, Arabic, etc.) → provide English translation immediately after
 - ANY non-English text → translate to English
-Use <note>original: "..."</note> to preserve important original phrases for scholars, but the main text must be fully readable in English without knowing other languages.
+Use <note>original: "..."</note> to preserve important original phrases for scholars, but the main text must be fully readable in English without knowing any other language. If the text already contains an English translation alongside the original, keep both — but ensure the English version is prominent and the original is in a <note>.
 
 **Do NOT use:**
 - Code blocks or backticks — this is prose
@@ -328,7 +329,7 @@ Use <note>original: "..."</note> to preserve important original phrases for scho
 1. Start with <meta>...</meta> if noting continuity with previous page (hidden from readers).
 2. Mirror the source layout — headings, paragraphs, tables, centered text.
 3. Modernize ALL text including <margin>, <insert>, <gloss> — keep the XML tags.
-4. Translate any Latin/Greek/Hebrew phrases to English, noting originals when significant.
+4. Translate any non-English phrases to English, noting originals when significant.
 5. Add <note>...</note> inline to explain historical references or difficult phrases.
 6. Style: warm museum label — explain rather than assume knowledge.
 7. Preserve the voice and spirit of the original.

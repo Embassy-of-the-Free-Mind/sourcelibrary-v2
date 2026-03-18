@@ -66,6 +66,11 @@ export async function generateMetadata({ params }: Props): Promise<Metadata> {
       title: `${value.label} — ${facet.label} | Source Library`,
       description: `Browse Source Library books tagged "${value.label}" in the ${facet.label} facet. ${value.differentia}`,
       alternates: { canonical: `/topics/${slug}` },
+      twitter: {
+        card: 'summary_large_image',
+        title: `${value.label} — ${facet.label} | Source Library`,
+        description: `Browse Source Library books tagged "${value.label}" in the ${facet.label} facet.`,
+      },
     };
   }
 
@@ -82,6 +87,11 @@ export async function generateMetadata({ params }: Props): Promise<Metadata> {
     title: `${match._id} | Source Library`,
     description: `Browse books in the ${match._id} topic on Source Library.`,
     alternates: { canonical: `/topics/${slug}` },
+    twitter: {
+      card: 'summary_large_image',
+      title: `${match._id} | Source Library`,
+      description: `Browse books in the ${match._id} topic on Source Library.`,
+    },
   };
 }
 

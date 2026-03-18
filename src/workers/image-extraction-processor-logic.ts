@@ -24,35 +24,7 @@ import { sendWriteResult } from '@/lib/sqs-client';
  * 5. Send everything to write queue
  */
 
-/** Check if a string is a usable HTTP(S) image URL (not a failure marker like "failed:HTTP 404") */
-function isUsableImageUrl(url: string | undefined | null): url is string {
-  return !!url && (url.startsWith('http://') || url.startsWith('https://'));
-}
-
-function isArchiveFailed(photo: string | undefined | null): boolean {
-  return typeof photo === 'string' && photo.startsWith('failed:');
-}
-
-/**
- * Get page image URL with priority fallbacks:
- * 1. cropped_photo (result of split detection, most refined)
- * 2. archived_photo (Vercel Blob cached version, fast & reliable)
- * 3. photo (main image URL)
- * 4. photo_original (original before any processing)
- *
- * Skips "failed:*" archived_photo markers from failed archiving attempts.
- */
-function getPageImageUrl(page: Page): string | null {
-  if (isUsableImageUrl(page.cropped_photo)) return page.cropped_photo;
-  if (isUsableImageUrl(page.archived_photo)) return page.archived_photo;
-  // If archiving was attempted and failed ("failed:HTTP 404" etc), the source URL is dead.
-  // Don't try photo/photo_original — archiving already proved those URLs don't work.
-  if (!isArchiveFailed(page.archived_photo)) {
-    if (isUsableImageUrl(page.photo)) return page.photo;
-    if (isUsableImageUrl(page.photo_original)) return page.photo_original;
-  }
-  return null;
-}
+import { getPageImageUrl, isArchiveFailed } from '@/lib/utils';
 
 /**
  * Build a GeminiUsagePayload for the write queue.
