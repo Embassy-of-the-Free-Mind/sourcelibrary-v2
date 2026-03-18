@@ -35,24 +35,11 @@ export default function BookPagesSection({ bookId, bookTitle, pages: initialPage
   const [showPromptSettings, setShowPromptSettings] = useState(false);
   const [overwriteMode, setOverwriteMode] = useState(false); // Force re-process pages that already have data
   const [visibleCount, setVisibleCount] = useState(PAGES_PER_LOAD); // Pagination
-  const loadMoreRef = useRef<HTMLDivElement>(null);
 
-  // Auto-load more pages when scrolling near the bottom
-  useEffect(() => {
-    if (!loadMoreRef.current || visibleCount >= pages.length) return;
-
-    const observer = new IntersectionObserver(
-      ([entry]) => {
-        if (entry.isIntersecting) {
-          setVisibleCount(prev => Math.min(prev + PAGES_PER_LOAD, pages.length));
-        }
-      },
-      { rootMargin: '200px' } // Load 200px before visible
-    );
-
-    observer.observe(loadMoreRef.current);
-    return () => observer.disconnect();
-  }, [visibleCount, pages.length]);
+  // Load more pages manually via button click (no auto-scroll)
+  const handleLoadMore = useCallback(() => {
+    setVisibleCount(prev => Math.min(prev + PAGES_PER_LOAD, pages.length));
+  }, [pages.length]);
 
   // Reorder mode state
   const [draggedPageId, setDraggedPageId] = useState<string | null>(null);
@@ -609,13 +596,12 @@ export default function BookPagesSection({ bookId, bookTitle, pages: initialPage
         draggedPageId={draggedPageId}
         dragOverPageId={dragOverPageId}
         brightness={brightness}
-        loadMoreRef={loadMoreRef}
         onPageToggle={togglePage}
         onSetCover={setCoverImage}
         onDragStart={handleDragStart}
         onDragOver={handleDragOver}
         onDragEnd={handleDragEnd}
-        onLoadMore={() => setVisibleCount(prev => Math.min(prev + PAGES_PER_LOAD, pages.length))}
+        onLoadMore={handleLoadMore}
         getImageUrl={getImageUrl}
       />
     </div>
