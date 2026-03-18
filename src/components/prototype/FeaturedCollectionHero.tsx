@@ -143,7 +143,7 @@ export default function FeaturedCollectionCarousel({ items }: FeaturedCollection
 
           {/* Right: gallery images (preferred) or book thumbnails (fallback) */}
           {hasGallery ? (
-            <div className="min-w-0 flex-1 grid grid-cols-[3fr_2fr] gap-3 h-[340px] lg:h-[380px]">
+            <div className="min-w-0 flex-1 grid grid-cols-[3fr_2fr] gap-3 h-[260px] lg:h-[300px]">
               {/* Hero image — portrait/book-proportioned */}
               <Link
                 href={`/gallery/image/${galleryImages[0].id}`}
