@@ -148,6 +148,14 @@ export default function UserMenu({ variant = 'default' }: UserMenuProps) {
                 >
                   Duplicates
                 </Link>
+                <Link
+                  href="/feedback"
+                  className="block px-4 py-2 text-sm hover:opacity-70 transition-opacity"
+                  style={{ color: 'var(--text-primary)' }}
+                  onClick={() => setIsOpen(false)}
+                >
+                  Feedback
+                </Link>
               </>
             )}
             <button
