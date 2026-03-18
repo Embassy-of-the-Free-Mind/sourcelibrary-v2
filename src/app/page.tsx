@@ -659,7 +659,7 @@ export default async function HomePage() {
               <p>
                 The Source Library uses scholarship and AI systems to recover this knowledge and make it
                 accessible to all. We are building the world&apos;s largest open-access collection of translated
-                primary sources&mdash;so that scholars, seekers, and AI systems can draw on the full depth of
+                primary sources, so that scholars, seekers, and AI systems can draw on the full depth of
                 the human intellectual tradition. This work is sustained by the people who use and value it.
               </p>
               <p className="text-gray-500 text-base">
@@ -698,7 +698,7 @@ export default async function HomePage() {
                 </h3>
                 <p className="leading-relaxed mb-6" style={{ color: '#a09a90' }}>
                   Cosimo de&apos; Medici funded Ficino&apos;s translations and ignited the Renaissance.
-                  Members of the Ficino Society continue that tradition&mdash;funding the digitization
+                  Members of the Ficino Society continue that tradition: funding the digitization
                   and translation of ancient texts, with early access to new translations
                   and their name on a book of their choosing.
                 </p>
@@ -794,7 +794,7 @@ export default async function HomePage() {
                   </p>
                   <p className="text-stone-600 text-base leading-relaxed">
                     Ficino translated the complete works of Plato, Plotinus, Proclus, Iamblichus, and the
-                    Hermetic writings into Latin&mdash;making them accessible to all of Europe for the first
+                    Hermetic writings into Latin, making them accessible to all of Europe for the first
                     time. His work ignited the Renaissance recovery of Neoplatonism, Hermeticism, and
                     the <em>prisca theologia</em>: the belief in an ancient wisdom tradition uniting all
                     seekers of truth.

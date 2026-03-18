@@ -175,14 +175,14 @@ function FicinoSocietyContent() {
             <p>
               In 1462, Cosimo de&apos; Medici gave Marsilio Ficino a villa and a stack of Greek manuscripts,
               and asked him to translate them. What followed was the recovery of an entire intellectual
-              tradition — Plato, the Hermetica, Plotinus — that had been lost to the Latin West for a thousand years.
+              tradition (Plato, the Hermetica, Plotinus) that had been lost to the Latin West for a thousand years.
               It changed everything.
             </p>
             <p>
               Source Library is doing something similar, at a different scale.
               We are digitizing thousands of rare texts in alchemy, Kabbalah, astrology,
               natural philosophy, and the Western esoteric tradition, and translating them into
-              English for the first time — many from books that exist in only a handful of libraries worldwide.
+              English for the first time, many from books that exist in only a handful of libraries worldwide.
             </p>
             <p>
               The Ficino Society is for people who want this work to continue.
@@ -229,7 +229,7 @@ function FicinoSocietyContent() {
             The library stays free
           </h2>
           <p className="leading-relaxed mb-4" style={{ color: 'var(--text-secondary)' }}>
-            Every book, every translation, every page — free to read, search, and cite.
+            Every book, every translation, every page is free to read, search, and cite.
             No account required, no paywalls, no restrictions on scholarship.
             Membership sustains the work. It does not gate the knowledge.
           </p>

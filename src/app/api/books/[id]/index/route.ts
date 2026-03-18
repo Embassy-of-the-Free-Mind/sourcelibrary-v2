@@ -654,6 +654,12 @@ ${quotesText}
 ## Your Task
 Synthesize the above into compelling summaries that make readers WANT to explore this text.
 
+**Writing style:**
+- Write like a knowledgeable human, not an AI. Be direct and concrete.
+- AVOID em-dashes (—). Use commas, colons, semicolons, or separate sentences instead.
+- AVOID filler phrases like "delves into", "rich tapestry", "fascinating exploration", "sheds light on", "offers a window into".
+- Prefer short, clear sentences over long compound ones.
+
 1. **BRIEF** (2-3 punchy sentences):
    - Hook the reader - what's compelling about this text?
    - What questions does it tackle? What will readers discover?
