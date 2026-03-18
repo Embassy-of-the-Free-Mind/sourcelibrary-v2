@@ -50,6 +50,7 @@ const SKIP_THUMBNAILS = process.argv.includes('--skip-thumbnails');
 const DOWNLOAD_TIMEOUT = parseInt(process.argv.find(a => a.startsWith('--timeout='))?.split('=')[1] || '30000', 10);
 const NO_BULK = process.argv.includes('--no-bulk');
 const UNARCHIVED_PRIORITY = process.argv.includes('--unarchived'); // Prioritize books hidden for 'unarchived'
+const EXCLUDE_SOURCE = process.argv.find(a => a.startsWith('--exclude-source='))?.split('=')[1]; // e.g. --exclude-source=erara
 
 const MAX_RETRIES = 3; // Retry on 429/503
 
@@ -737,6 +738,18 @@ async function main() {
       { photo: { $regex: pattern } },
       { photo_original: { $regex: pattern } },
     ];
+  }
+
+  // Exclude source filter (e.g. --exclude-source=erara to skip e-rara pages)
+  if (EXCLUDE_SOURCE) {
+    const pattern = SOURCE_PATTERNS[EXCLUDE_SOURCE];
+    if (!pattern) {
+      console.error(`Unknown source: ${EXCLUDE_SOURCE}. Valid: ${Object.keys(SOURCE_PATTERNS).join(', ')}`);
+      process.exit(1);
+    }
+    query.photo = { ...(query.photo || {}), $not: pattern };
+    query.photo_original = { $not: pattern };
+    console.log(`  Excluding source: ${EXCLUDE_SOURCE}`);
   }
 
   if (BOOK_ID) query.book_id = BOOK_ID;
