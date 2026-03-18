@@ -47,7 +47,7 @@ async function getCollection(slug: string) {
     return {
       title: collection.title as string,
       description: collection.description as string,
-      imageCount: imageIds.length,
+      imageCount: items.length,
       items,
     };
   } catch {
