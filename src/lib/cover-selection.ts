@@ -172,6 +172,7 @@ CRITERIA (in priority order):
    - Tables of contents or indices
    - Pages with modern stamps/labels
    - Severely damaged or illegible pages
+   - **Digitizer insert pages** — pages added by Internet Archive, Google Books, or other digitizers (credit pages, "Digitized by Google" notices, barcodes, scan sheets). These are often dark/black with logos and are NOT part of the original book.
 
 RESPONSE FORMAT:
 Return ONLY a JSON object with this exact structure:
