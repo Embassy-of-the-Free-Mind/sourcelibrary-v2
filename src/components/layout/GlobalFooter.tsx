@@ -1,6 +1,7 @@
 'use client';
 
 import { useEffect, useState } from 'react';
+import { usePathname } from 'next/navigation';
 import Link from 'next/link';
 import Image from 'next/image';
 import FeedbackWidget from '@/components/feedback/FeedbackWidget';
@@ -51,6 +52,7 @@ const PARTNERS = [
 ];
 
 export default function GlobalFooter() {
+  const pathname = usePathname();
   const [hasFavorites, setHasFavorites] = useState(false);
 
   useEffect(() => {
@@ -61,6 +63,9 @@ export default function GlobalFooter() {
       }
     } catch { /* ignore */ }
   }, []);
+
+  // Ficino Society pages have their own footer
+  if (pathname?.startsWith('/ficino-society')) return null;
 
   return (
     <>
