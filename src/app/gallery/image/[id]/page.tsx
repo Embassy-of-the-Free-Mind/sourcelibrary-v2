@@ -25,7 +25,8 @@ import {
   X,
   ChevronLeft,
   ChevronRight,
-  Download
+  Download,
+  Loader2
 } from 'lucide-react';
 import ImageWithMagnifier from '@/components/ui/ImageWithMagnifier';
 import LikeButton from '@/components/ui/LikeButton';
@@ -466,21 +467,33 @@ export default function ImageDetailPage({
     }
   };
 
+  const [downloading, setDownloading] = useState(false);
+
   const downloadImage = async () => {
-    if (!data) return;
+    if (!data || !imageId) return;
     if (!canDownloadImage) {
       purchaseImage();
       return;
     }
-    // Prefer pre-extracted image (Vercel Blob, no CORS issues).
-    // Fall back to proxying external images through our /api/image route to avoid CORS blocks.
-    const sourceUrl = data.extractedUrl || data.highResUrl || data.imageUrl;
-    const isExternal = sourceUrl.startsWith('http') && !sourceUrl.includes('vercel-storage.com') && !sourceUrl.includes('sourcelibrary.org');
-    const fetchUrl = isExternal
-      ? `/api/image?url=${encodeURIComponent(sourceUrl)}&w=2000&q=90`
-      : sourceUrl;
 
+    setDownloading(true);
     try {
+      // Request high-res version (generated on-demand, cached in R2)
+      const hiresRes = await fetch(`/api/gallery/image/${imageId}/hires`);
+      let fetchUrl: string;
+
+      if (hiresRes.ok) {
+        const { url } = await hiresRes.json();
+        fetchUrl = url;
+      } else {
+        // Fallback to existing extracted image
+        const sourceUrl = data.extractedUrl || data.highResUrl || data.imageUrl;
+        const isExternal = sourceUrl.startsWith('http') && !sourceUrl.includes('vercel-storage.com') && !sourceUrl.includes('sourcelibrary.org');
+        fetchUrl = isExternal
+          ? `/api/image?url=${encodeURIComponent(sourceUrl)}&w=2000&q=90`
+          : sourceUrl;
+      }
+
       const res = await fetch(fetchUrl);
       const blob = await res.blob();
       const a = document.createElement('a');
@@ -492,7 +505,10 @@ export default function ImageDetailPage({
       sendGAEvent({ action: 'gallery_download', label: imageId || undefined });
     } catch {
       // Last resort: open in new tab
+      const sourceUrl = data.extractedUrl || data.highResUrl || data.imageUrl;
       window.open(sourceUrl, '_blank');
+    } finally {
+      setDownloading(false);
     }
   };
 
@@ -621,10 +637,14 @@ export default function ImageDetailPage({
               )}
               <button
                 onClick={downloadImage}
-                className="p-1.5 rounded-lg hover:bg-white/10 transition-colors"
-                title="Download"
+                disabled={downloading}
+                className="p-1.5 rounded-lg hover:bg-white/10 transition-colors disabled:opacity-50"
+                title={downloading ? 'Generating high-res download...' : 'Download high-res image'}
               >
-                <Download className="w-4 h-4 text-stone-400" />
+                {downloading
+                  ? <Loader2 className="w-4 h-4 text-stone-400 animate-spin" />
+                  : <Download className="w-4 h-4 text-stone-400" />
+                }
               </button>
             </div>
           </div>
@@ -884,14 +904,18 @@ export default function ImageDetailPage({
                     </button>
                     <button
                       onClick={downloadImage}
-                      className={`flex items-center gap-1.5 px-4 py-2 rounded-lg text-sm transition-colors ${
+                      disabled={downloading}
+                      className={`flex items-center gap-1.5 px-4 py-2 rounded-lg text-sm transition-colors disabled:opacity-50 ${
                         canDownloadImage
                           ? 'bg-stone-800 hover:bg-stone-700 text-white'
                           : 'bg-stone-800 hover:bg-stone-700 text-stone-200'
                       }`}
                     >
-                      <Download className="w-4 h-4" />
-                      Download
+                      {downloading
+                        ? <Loader2 className="w-4 h-4 animate-spin" />
+                        : <Download className="w-4 h-4" />
+                      }
+                      {downloading ? 'Generating...' : 'Download'}
                     </button>
                   </div>
                 </div>

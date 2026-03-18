@@ -256,6 +256,7 @@ export async function GET(
       highResUrl: highResUrl, // For magnifier/high-resolution viewing
       extractedUrl: detection.extracted_url ?? null,
       thumbnailUrl: detection.thumbnail_url ?? null,
+      hiresUrl: detection.hires_url ?? null, // Cached high-res download (4000px crop in R2)
       cropUrl, // On-the-fly crop fallback (always works even if Blob is stale/broken)
       rotation: detection.rotation ?? 0,
 
