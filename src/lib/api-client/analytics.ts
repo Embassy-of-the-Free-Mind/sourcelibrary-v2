@@ -9,6 +9,7 @@ import type {
   PipelineData,
   SearchAnalyticsData,
   TrafficData,
+  CanonData,
 } from './types/analytics';
 
 /**
@@ -92,6 +93,13 @@ export const analytics = {
     if (params?.search) sp.set('search', params.search);
     const qs = sp.toString();
     return await apiClient.get(`/api/admin/processing-overview${qs ? `?${qs}` : ''}`, { timeout: 60000 });
+  },
+
+  /**
+   * Get canon metrics (mission-critical: readable books, first translations, coverage)
+   */
+  canon: async (): Promise<CanonData> => {
+    return await apiClient.get('/api/analytics/canon', { timeout: 60000 });
   },
 
   /**
