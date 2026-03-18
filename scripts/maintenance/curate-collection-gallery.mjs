@@ -34,6 +34,9 @@ async function main() {
   const collections = await db.collection('collections').find({}).toArray();
   console.log(`Processing ${collections.length} collections...`);
 
+  // Track images used as hero (position 0) across all collections to prevent duplicates
+  const usedHeroImageIds = new Set();
+
   for (const col of collections) {
     const slug = col.slug;
 
@@ -112,10 +115,13 @@ async function main() {
     scored.sort((a, b) => b.score - a.score);
 
     // Pick top images, max 1 per book for diversity
+    // Hero image (position 0) must not duplicate another collection's hero
     const picked = [];
     const seenBooks = new Set();
     for (const { img, imageId, likes } of scored) {
       if (seenBooks.has(img.book_id)) continue;
+      // Skip images already used as hero in another collection
+      if (picked.length === 0 && usedHeroImageIds.has(imageId)) continue;
       seenBooks.add(img.book_id);
       picked.push({
         id: imageId,
@@ -129,6 +135,11 @@ async function main() {
         liked: likes > 0,
       });
       if (picked.length >= IMAGES_PER_COLLECTION) break;
+    }
+
+    // Track the hero image to prevent cross-collection duplicates
+    if (picked.length > 0) {
+      usedHeroImageIds.add(picked[0].id);
     }
 
     // Store on collection document
