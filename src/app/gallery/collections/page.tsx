@@ -151,7 +151,7 @@ export default async function CollectionsPage() {
                     <ImageIcon className="w-12 h-12" />
                   </div>
                 )}
-                <div className="absolute inset-0 bg-gradient-to-t from-black/80 via-black/20 to-transparent" />
+                <div className="absolute inset-0 bg-gradient-to-t from-[rgba(26,22,18,0.85)] via-[rgba(26,22,18,0.35)] to-transparent" />
                 <div className="absolute bottom-0 left-0 right-0 p-4">
                   <h3 className="font-serif text-lg text-white group-hover:text-accent-gold transition-colors">
                     {collection.title}

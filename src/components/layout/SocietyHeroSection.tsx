@@ -60,7 +60,7 @@ export default function SocietyHeroSection() {
       </video>
 
       {/* Darker overlay for Society - more mysterious */}
-      <div className="absolute inset-0 bg-gradient-to-b from-black/50 via-black/40 to-black/70 z-0" />
+      <div className="absolute inset-0 bg-gradient-to-b from-black/70 via-black/40 to-black/70 z-0" />
 
       {/* Header */}
       <header className="relative z-50 flex items-center justify-between px-6 md:px-12 py-4">
@@ -102,7 +102,7 @@ export default function SocietyHeroSection() {
 
       {/* Hero Content */}
       <div className="relative z-10 min-h-[calc(100vh-80px)] flex items-center">
-        <div className="px-6 md:px-12 max-w-4xl">
+        <div className="px-6 md:px-12 max-w-5xl">
           {/* Small eyebrow */}
           <p
             className="text-accent-gold/90 text-sm md:text-base tracking-widest uppercase mb-6 font-sans"

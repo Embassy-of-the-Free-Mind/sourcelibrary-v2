@@ -362,7 +362,7 @@ export default function FavoritesPage() {
                   </div>
 
                   {/* Gradient overlay */}
-                  <div className="absolute inset-0 bg-gradient-to-t from-[rgba(26,22,18,0.92)] via-[rgba(26,22,18,0.35)] to-transparent pointer-events-none" />
+                  <div className="absolute inset-0 bg-gradient-to-t from-[rgba(26,22,18,0.85)] via-[rgba(26,22,18,0.35)] to-transparent pointer-events-none" />
 
                   {/* Content */}
                   <div className="absolute inset-0 flex flex-col justify-end p-5 sm:p-6">
@@ -466,7 +466,7 @@ export default function FavoritesPage() {
                   sizes="(max-width: 640px) 50vw, 33vw"
                   priority={i < 6}
                 />
-                <div className="absolute inset-0 bg-gradient-to-t from-[rgba(26,22,18,0.88)] via-[rgba(26,22,18,0.15)] to-transparent opacity-80 group-hover:opacity-100 transition-opacity" />
+                <div className="absolute inset-0 bg-gradient-to-t from-[rgba(26,22,18,0.85)] via-[rgba(26,22,18,0.35)] to-transparent opacity-80 group-hover:opacity-100 transition-opacity" />
                 <div className="absolute inset-0 flex flex-col justify-end p-4">
                   <div className="flex items-center gap-2 mb-1.5">
                     <span className="px-2 py-0.5 text-[10px] text-white/70 bg-white/15 backdrop-blur-sm rounded-full capitalize">

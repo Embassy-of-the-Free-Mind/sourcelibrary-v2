@@ -123,7 +123,7 @@ export default function SocietyLandingPage() {
                     alt={item.title}
                     className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500"
                   />
-                  <div className="absolute inset-0 bg-gradient-to-t from-black/80 via-black/30 to-transparent" />
+                  <div className="absolute inset-0 bg-gradient-to-t from-[rgba(26,22,18,0.85)] via-[rgba(26,22,18,0.35)] to-transparent" />
                 </div>
                 <div className="absolute bottom-0 left-0 right-0 p-4">
                   <h3
@@ -269,7 +269,7 @@ export default function SocietyLandingPage() {
 
       {/* The Pass System */}
       <section className="py-20 md:py-28 bg-gradient-to-b from-stone-50 to-white">
-        <div className="px-6 md:px-12 max-w-4xl mx-auto text-center">
+        <div className="px-6 md:px-12 max-w-5xl mx-auto text-center">
           <p
             className="text-accent-rust text-sm tracking-widest uppercase mb-4 font-sans"
           >
@@ -338,7 +338,7 @@ export default function SocietyLandingPage() {
 
       {/* Final CTA */}
       <section className="py-20 md:py-28 bg-stone-900">
-        <div className="px-6 md:px-12 max-w-3xl mx-auto text-center">
+        <div className="px-6 md:px-12 max-w-2xl mx-auto text-center">
           <h2
             className="text-3xl md:text-4xl text-white mb-6"
             style={{ fontWeight: 400 }}
@@ -370,7 +370,7 @@ export default function SocietyLandingPage() {
 
       {/* Footer */}
       <footer className="py-16 bg-stone-950 text-white/60">
-        <div className="px-6 md:px-12 max-w-6xl mx-auto">
+        <div className="px-6 md:px-12 max-w-7xl mx-auto">
           {/* Partner Logos */}
           <div className="flex items-center justify-center gap-8 mb-12">
             <img

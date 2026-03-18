@@ -209,9 +209,9 @@ export default async function LibraryDetailPage({ params, searchParams }: Props)
     <div className="min-h-screen bg-cream">
       {/* Hero Section */}
       <div className="relative bg-dark overflow-hidden">
-        <div className="absolute inset-0 bg-gradient-to-b from-dark/60 via-dark/80 to-dark" />
+        <div className="absolute inset-0 bg-gradient-to-b from-black/70 via-black/40 to-transparent" />
 
-        <div className="relative max-w-6xl mx-auto px-6 pt-8 pb-12 sm:pb-16">
+        <div className="relative max-w-7xl mx-auto px-6 pt-8 pb-12 sm:pb-16">
           <Link
             href="/libraries"
             className="inline-flex items-center gap-2 text-sm text-white/50 hover:text-white/80 transition-colors mb-8"
@@ -255,7 +255,7 @@ export default async function LibraryDetailPage({ params, searchParams }: Props)
       {/* Gallery Grid */}
       {galleryImages.length > 0 && (
         <div className="bg-warm border-b border-border-light">
-          <div className="max-w-6xl mx-auto px-6 py-6">
+          <div className="max-w-7xl mx-auto px-6 py-6">
             <h2
               className="text-xl sm:text-2xl text-primary mb-4 font-display"
             >
@@ -303,7 +303,7 @@ export default async function LibraryDetailPage({ params, searchParams }: Props)
       {/* Contributing Libraries (for IA and similar aggregators) */}
       {contributingLibraries.length > 0 && (
         <div className="bg-warm border-b border-border-light">
-          <div className="max-w-6xl mx-auto px-6 py-6">
+          <div className="max-w-7xl mx-auto px-6 py-6">
             <div className="flex items-center gap-2 mb-4">
               <Library className="w-5 h-5 text-accent-rust" />
               <h2
@@ -330,7 +330,7 @@ export default async function LibraryDetailPage({ params, searchParams }: Props)
         </div>
       )}
 
-      <div className="max-w-6xl mx-auto px-6 py-10">
+      <div className="max-w-7xl mx-auto px-6 py-10">
         {/* All Books Header */}
         <div className="flex flex-wrap items-end justify-between gap-4 mb-6">
           <div>

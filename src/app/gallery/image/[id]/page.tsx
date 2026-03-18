@@ -743,7 +743,7 @@ export default function ImageDetailPage({
           )}
 
           {/* Title + attribution overlay at bottom of image */}
-          <div className="absolute bottom-0 left-0 right-0 z-20 px-5 pb-5 pt-24 bg-gradient-to-t from-black via-black/80 via-30% to-transparent">
+          <div className="absolute bottom-0 left-0 right-0 z-20 px-5 pb-5 pt-24 bg-gradient-to-t from-black/70 via-black/40 to-transparent">
             <h1 className="text-xl sm:text-2xl md:text-3xl font-serif text-white leading-snug line-clamp-2">{data.description}</h1>
             <p className="text-base sm:text-lg text-white/60 mt-1.5">
               {data.book.title}{data.book.author ? ` \u2014 ${data.book.author}` : ''}{data.book.year ? ` (${data.book.year})` : ''} \u00b7 p.{data.pageNumber}
@@ -754,7 +754,7 @@ export default function ImageDetailPage({
 
       {/* Details below the fold - always visible, scroll to see */}
       <div className="bg-stone-900 border-t border-white/10">
-        <div className="max-w-4xl mx-auto px-5 sm:px-8 py-8 sm:py-10">
+        <div className="max-w-5xl mx-auto px-5 sm:px-8 py-8 sm:py-10">
             <div className="grid md:grid-cols-3 gap-8">
               {/* Left column: description + metadata */}
               <div className="md:col-span-2 space-y-6">

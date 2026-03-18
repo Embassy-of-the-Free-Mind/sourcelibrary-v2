@@ -497,7 +497,7 @@ export default async function HomePage() {
                   ) : (
                     <div className="absolute inset-0 bg-gradient-to-br from-accent-rust/10 to-accent-gold/10" />
                   )}
-                  <div className="absolute inset-0 bg-gradient-to-t from-black/80 via-black/20 to-transparent" />
+                  <div className="absolute inset-0 bg-gradient-to-t from-[rgba(26,22,18,0.85)] via-[rgba(26,22,18,0.35)] to-transparent" />
                   <div className="absolute bottom-0 left-0 right-0 p-4">
                     <p className="text-white/50 text-xs mb-1 hidden sm:block">
                       {col.book_count} books
@@ -680,7 +680,7 @@ export default async function HomePage() {
 
         {/* Be part of this */}
         <section className="py-20 md:py-28" style={{ background: 'var(--bg-dark)' }}>
-          <div className="px-6 md:px-12 max-w-4xl mx-auto">
+          <div className="px-6 md:px-12 max-w-5xl mx-auto">
             <div className="text-center mb-12">
               <p
                 className="text-sm uppercase tracking-[0.2em] mb-6"
@@ -786,7 +786,7 @@ export default async function HomePage() {
         {/* Footer */}
         <footer className="bg-gradient-to-b from-[#f6f3ee] to-[#f3ede6] py-16 md:py-24">
           <div className="px-6 md:px-12 max-w-5xl mx-auto">
-            <div className="max-w-4xl border-t border-stone-300 pt-10 mt-8">
+            <div className="max-w-5xl border-t border-stone-300 pt-10 mt-8">
               <p className="text-sm uppercase tracking-[0.2em] text-stone-500 mb-6">
                 In the spirit of
               </p>

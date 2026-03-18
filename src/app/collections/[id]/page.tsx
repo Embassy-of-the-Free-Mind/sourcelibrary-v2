@@ -474,9 +474,9 @@ export default async function CollectionDetailPage({ params }: Props) {
           </div>
         )}
 
-        <div className="absolute inset-0 bg-gradient-to-b from-dark/60 via-dark/80 to-dark" />
+        <div className="absolute inset-0 bg-gradient-to-b from-black/70 via-black/40 to-transparent" />
 
-        <div className="relative max-w-6xl mx-auto px-6 pt-8 pb-12 sm:pb-16">
+        <div className="relative max-w-7xl mx-auto px-6 pt-8 pb-12 sm:pb-16">
           <Link
             href={parentCollection ? `/collections/${parentCollection.slug}` : '/#library'}
             className="inline-flex items-center gap-2 text-sm text-white/50 hover:text-white/80 transition-colors mb-8"
@@ -511,7 +511,7 @@ export default async function CollectionDetailPage({ params }: Props) {
 
       {/* Overview: description + gallery grid */}
       <div className="bg-warm border-b border-border-light">
-        <div className="max-w-6xl mx-auto px-6 py-8">
+        <div className="max-w-7xl mx-auto px-6 py-8">
           <h2 className="text-2xl sm:text-3xl text-primary mb-5 font-display">
             Overview
           </h2>
@@ -576,7 +576,7 @@ export default async function CollectionDetailPage({ params }: Props) {
         </div>
       </div>
 
-      <div className="max-w-6xl mx-auto px-6 py-10">
+      <div className="max-w-7xl mx-auto px-6 py-10">
 
         {/* Curated Highlights — 3-tier display */}
         {hasCuratedHighlights && (

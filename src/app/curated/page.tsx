@@ -94,7 +94,7 @@ function PublishedCard({ col }: { col: CuratedCollection }) {
       ) : (
         <div className="absolute inset-0 bg-warm" />
       )}
-      <div className="absolute inset-0 bg-gradient-to-t from-black/85 via-black/40 to-transparent" />
+      <div className="absolute inset-0 bg-gradient-to-t from-[rgba(26,22,18,0.85)] via-[rgba(26,22,18,0.35)] to-transparent" />
       <div className="absolute inset-0 flex flex-col justify-end p-5 sm:p-6">
         <h2 className="font-serif text-xl sm:text-2xl text-white font-semibold leading-tight mb-1.5 group-hover:text-accent-gold transition-colors">
           {col.name}
@@ -142,7 +142,7 @@ export default async function CuratedCollectionsPage() {
     <div className="min-h-screen bg-cream">
       {/* Hero */}
       <div className="bg-warm border-b border-border-light">
-        <div className="max-w-6xl mx-auto px-6 pt-8 pb-10 sm:pb-12">
+        <div className="max-w-7xl mx-auto px-6 pt-8 pb-10 sm:pb-12">
           <Link
             href="/#library"
             className="inline-flex items-center gap-2 text-sm text-muted hover:text-primary transition-colors mb-8"
@@ -162,7 +162,7 @@ export default async function CuratedCollectionsPage() {
       </div>
 
       {/* Published collections */}
-      <div className="max-w-6xl mx-auto px-6 py-10">
+      <div className="max-w-7xl mx-auto px-6 py-10">
         {published.length > 0 && (
           <div className="mb-14">
             <div className="grid gap-6 grid-cols-1 sm:grid-cols-2">

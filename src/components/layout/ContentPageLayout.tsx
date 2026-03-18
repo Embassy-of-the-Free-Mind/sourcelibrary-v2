@@ -27,7 +27,7 @@ export function ContentHeader({ title, subtitle, children, image, imageAlt }: Co
               alt={imageAlt || ''}
               className="absolute inset-0 w-full h-full object-cover"
             />
-            <div className="absolute inset-0 bg-gradient-to-t from-[rgba(26,22,18,0.88)] via-[rgba(26,22,18,0.5)] to-[rgba(26,22,18,0.25)]" />
+            <div className="absolute inset-0 bg-gradient-to-t from-[rgba(26,22,18,0.85)] via-[rgba(26,22,18,0.35)] to-transparent" />
           </>
         ) : (
           <div className="absolute inset-0 bg-gradient-to-b from-[#2a1f17] to-[#1a1612]" />

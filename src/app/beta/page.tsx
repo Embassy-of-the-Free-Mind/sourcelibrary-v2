@@ -161,7 +161,7 @@ export default function BetaLandingPage() {
             <source src="https://cdn.prod.website-files.com/68d800cb1402171531a597f4/68d800cb1402171531a598cf_embassy-of-the-free-mind-montage-002-transcode.mp4" type="video/mp4" />
           </video>
         )}
-        <div className="absolute inset-0 bg-gradient-to-b from-black/60 via-black/40 to-black/80" />
+        <div className="absolute inset-0 bg-gradient-to-b from-black/70 via-black/40 to-black/70" />
 
         {/* Header */}
         <header className="relative z-10 flex items-center justify-between px-6 md:px-12 py-6">
@@ -194,7 +194,7 @@ export default function BetaLandingPage() {
 
         {/* Hero content */}
         <div className="relative z-10 flex-1 flex items-center">
-          <div className="px-6 md:px-12 w-full max-w-4xl">
+          <div className="px-6 md:px-12 w-full max-w-5xl">
             <p
               className="text-accent-gold/80 text-lg md:text-xl mb-6 font-body"
             >
@@ -265,7 +265,7 @@ export default function BetaLandingPage() {
           </div>
 
           {/* Reader screenshot */}
-          <div className="max-w-6xl mx-auto">
+          <div className="max-w-7xl mx-auto">
             <a
               href="https://sourcelibrary.org/book/6952dac677f38f6761bc683a?page=87"
               target="_blank"
@@ -351,7 +351,7 @@ export default function BetaLandingPage() {
       {/* STATS                                        */}
       {/* ============================================ */}
       <section className="py-16 md:py-20 bg-stone-900">
-        <div className="px-6 md:px-12 max-w-6xl mx-auto">
+        <div className="px-6 md:px-12 max-w-7xl mx-auto">
           <div className="grid grid-cols-2 md:grid-cols-5 gap-8 text-center">
             {[
               { number: '4,400+', label: 'Rare books' },
@@ -380,7 +380,7 @@ export default function BetaLandingPage() {
       {/* CTA                                          */}
       {/* ============================================ */}
       <section id="signup" className="py-20 md:py-28 bg-gradient-to-b from-stone-900 to-stone-950">
-        <div className="px-6 md:px-12 max-w-3xl mx-auto text-center">
+        <div className="px-6 md:px-12 max-w-2xl mx-auto text-center">
           <h2
             className="text-3xl md:text-4xl text-white mb-6"
             style={{ fontWeight: 400 }}
@@ -414,7 +414,7 @@ export default function BetaLandingPage() {
 
       {/* Footer */}
       <footer className="py-12 bg-stone-950">
-        <div className="px-6 md:px-12 max-w-6xl mx-auto">
+        <div className="px-6 md:px-12 max-w-7xl mx-auto">
           <div className="border-t border-white/10 pt-8 flex flex-col md:flex-row justify-between items-center gap-4">
             <p className="text-white/30 text-sm font-sans">
               &copy; {new Date().getFullYear()} Source Library

@@ -97,7 +97,7 @@ export default function FeaturedCollectionCarousel({ items }: FeaturedCollection
 
   return (
     <section className="bg-dark py-12 md:py-16 relative overflow-hidden">
-      <div className="px-6 md:px-12 max-w-6xl mx-auto overflow-hidden">
+      <div className="px-6 md:px-12 max-w-7xl mx-auto overflow-hidden">
         <div className="flex items-center justify-between mb-6">
           <div className="flex items-center gap-3">
             <span className="text-xs uppercase tracking-[0.2em] text-white/40">Featured Collection</span>
@@ -175,7 +175,7 @@ export default function FeaturedCollectionCarousel({ items }: FeaturedCollection
                   className="object-contain group-hover:scale-[1.03] transition-transform duration-500"
                   sizes="(min-width: 1024px) 560px, 400px"
                 />
-                <div className="absolute bottom-0 inset-x-0 bg-gradient-to-t from-black/80 via-black/30 to-transparent p-3">
+                <div className="absolute bottom-0 inset-x-0 bg-gradient-to-t from-[rgba(26,22,18,0.85)] via-[rgba(26,22,18,0.35)] to-transparent p-3">
                   {heroGallery?.type && (
                     <span className="text-[10px] uppercase tracking-wider text-white/50 mb-0.5 block">
                       {heroGallery.type}

@@ -399,7 +399,7 @@ export default function BookLibrary({ initialBooks, totalBooks, languages, colle
                       ) : (
                         <div className="absolute inset-0 bg-warm" />
                       )}
-                      <div className="absolute inset-0 bg-gradient-to-t from-[rgba(26,22,18,0.92)] via-[rgba(26,22,18,0.4)] to-transparent" />
+                      <div className="absolute inset-0 bg-gradient-to-t from-[rgba(26,22,18,0.85)] via-[rgba(26,22,18,0.35)] to-transparent" />
                       <div className="absolute inset-0 flex flex-col justify-end p-5 sm:p-6">
                         <div className="flex items-center gap-2 mb-2">
                           <span className="px-2.5 py-0.5 text-xs text-white/80 bg-white/15 backdrop-blur-sm rounded-full">

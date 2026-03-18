@@ -87,7 +87,7 @@ function CollectionCard({ col }: { col: CollectionDoc }) {
       ) : (
         <div className="absolute inset-0 bg-warm" />
       )}
-      <div className="absolute inset-0 bg-gradient-to-t from-black/80 via-black/20 to-transparent" />
+      <div className="absolute inset-0 bg-gradient-to-t from-[rgba(26,22,18,0.85)] via-[rgba(26,22,18,0.35)] to-transparent" />
       <div className="absolute inset-0 flex flex-col justify-end p-3 sm:p-4">
         <p className="text-white/50 text-xs mb-1 hidden sm:block">
           {col.book_count > 0 ? `${col.book_count.toLocaleString()} books` : ''}

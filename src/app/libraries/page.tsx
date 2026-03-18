@@ -184,7 +184,7 @@ export default async function LibrariesPage() {
               )}
 
               {/* Gradient overlay */}
-              <div className="absolute inset-0 bg-gradient-to-t from-[rgba(26,22,18,0.92)] via-[rgba(26,22,18,0.4)] to-transparent" />
+              <div className="absolute inset-0 bg-gradient-to-t from-[rgba(26,22,18,0.85)] via-[rgba(26,22,18,0.35)] to-transparent" />
 
               {/* Content */}
               <div className="absolute inset-0 flex flex-col justify-end p-5 sm:p-6">
