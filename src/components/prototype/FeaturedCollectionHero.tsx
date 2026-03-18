@@ -74,9 +74,11 @@ export default function FeaturedCollectionCarousel({ items }: FeaturedCollection
   const prev = () => goTo(index > 0 ? index - 1 : items.length - 1);
   const next = () => goTo(index < items.length - 1 ? index + 1 : 0);
 
-  // Use first book's thumbnail as the hero page image
+  // Use first book's full-res archived page as the hero image (not the low-res thumbnail)
   const heroBook = books.find(b => b.thumbnail || b.thumbnail_blob);
-  const heroThumb = heroBook ? (heroBook.thumbnail_blob || heroBook.thumbnail) : collection.hero_image;
+  const heroThumbRaw = heroBook ? (heroBook.thumbnail_blob || heroBook.thumbnail) : collection.hero_image;
+  // Swap /thumbnails/ → /archived/ for full-resolution page image
+  const heroThumb = heroThumbRaw?.replace('/thumbnails/', '/archived/') || heroThumbRaw;
   // Remaining books for the title list (skip the hero book)
   const listBooks = heroBook ? books.filter(b => b.id !== heroBook.id) : books;
 
@@ -148,15 +150,15 @@ export default function FeaturedCollectionCarousel({ items }: FeaturedCollection
             <div className="hidden lg:block">
               <Link
                 href={heroBook ? bookUrl(heroBook) : `/collections/${collection.slug}`}
-                className="group block relative w-[220px] h-[340px] rounded-lg overflow-hidden bg-white/5 border border-white/10 shadow-2xl"
+                className="group block relative w-[260px] h-[400px] rounded-lg overflow-hidden bg-white/5 border border-white/10 shadow-2xl"
               >
                 <Image
                   src={heroThumb}
                   alt={heroBook ? bookTitle(heroBook) : collection.name}
                   fill
-                  quality={90}
-                  className="object-cover group-hover:scale-[1.03] transition-transform duration-500"
-                  sizes="220px"
+                  unoptimized
+                  className="object-contain group-hover:scale-[1.03] transition-transform duration-500"
+                  sizes="(min-width: 1024px) 520px, 400px"
                 />
                 <div className="absolute bottom-0 inset-x-0 bg-gradient-to-t from-black/70 via-black/20 to-transparent p-3">
                   <p className="text-xs text-white/80 line-clamp-2 leading-snug">
@@ -174,7 +176,7 @@ export default function FeaturedCollectionCarousel({ items }: FeaturedCollection
 
           {/* Right: book title list */}
           {listBooks.length > 0 ? (
-            <div className="min-w-0 flex flex-col gap-0.5 justify-center max-h-[340px] overflow-hidden">
+            <div className="min-w-0 flex flex-col gap-0.5 justify-center max-h-[400px] overflow-hidden">
               <p className="text-[10px] uppercase tracking-[0.15em] text-white/30 mb-2">In this collection</p>
               {listBooks.slice(0, 8).map((book) => {
                 const thumb = book.thumbnail_blob || book.thumbnail;
