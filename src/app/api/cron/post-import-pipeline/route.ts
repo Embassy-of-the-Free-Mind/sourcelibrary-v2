@@ -292,7 +292,7 @@ async function upgradeThumbnailFromGallery(
 
   // Candidates: gallery images + title pages (title pages may not have gallery entries)
   const galleryImages = await db.collection('gallery_images').find(
-    { book_id: bookId, gallery_quality: { $gte: 0.4 } },
+    { book_id: bookId, gallery_quality: { $gte: 0.8 } },
     {
       projection: {
         page_id: 1, page_number: 1, gallery_quality: 1, type: 1,
