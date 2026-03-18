@@ -203,6 +203,26 @@ export function proxy(request: NextRequest) {
   const isSociety = SOCIETY_DOMAINS.some(domain => host.includes(domain)) ||
     request.nextUrl.searchParams.get('society') === 'true'; // Dev override via ?society=true
 
+  // --- Ficino Society domain routing ---
+  if (isSociety) {
+    // Root → main ficino society page
+    if (pathname === '/') {
+      const url = request.nextUrl.clone();
+      url.pathname = '/ficino-society';
+      return NextResponse.rewrite(url);
+    }
+
+    // Clean society paths: /discussions → /ficino-society/discussions, /members → /ficino-society/members
+    const societyPaths = ['/discussions', '/members'];
+    for (const p of societyPaths) {
+      if (pathname === p || pathname.startsWith(p + '/')) {
+        const url = request.nextUrl.clone();
+        url.pathname = '/ficino-society' + pathname;
+        return NextResponse.rewrite(url);
+      }
+    }
+  }
+
   // Clone the request headers and add our custom header
   const requestHeaders = new Headers(request.headers);
   requestHeaders.set('x-site-mode', isSociety ? 'society' : 'library');

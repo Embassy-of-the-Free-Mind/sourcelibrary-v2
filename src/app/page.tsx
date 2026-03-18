@@ -6,7 +6,6 @@ import HomePageSchema from '@/components/seo/HomePageSchema';
 import FeaturedCollectionCarousel from '@/components/prototype/FeaturedCollectionHero';
 import FromTheCollection from '@/components/prototype/FromTheCollection';
 import BookCard from '@/components/book/BookCard';
-import SocietyGate from '@/components/layout/SocietyGate';
 import SignUpCTA from '@/components/auth/SignUpCTA';
 import Image from 'next/image';
 import Link from 'next/link';
@@ -444,7 +443,7 @@ export default async function HomePage() {
   ]);
 
   return (
-    <SocietyGate>
+    <>
       <div className="min-h-screen">
         <HomePageSchema books={discoverBooks} bookCount={counts.totalBooks} translatedCount={counts.translatedToEnglish} />
 
@@ -831,6 +830,6 @@ export default async function HomePage() {
           </div>
         </footer>
       </div>
-    </SocietyGate>
+    </>
   );
 }
