@@ -27,6 +27,11 @@ export async function generateMetadata({ params }: PageProps): Promise<Metadata>
       title: `${collection.title} — Source Library Gallery`,
       description: collection.description as string,
     },
+    twitter: {
+      card: 'summary_large_image',
+      title: `${collection.title} — Source Library Gallery`,
+      description: collection.description as string,
+    },
   };
 }
 

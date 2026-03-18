@@ -102,6 +102,11 @@ export async function generateMetadata({ params }: CategoryPageProps): Promise<M
       title: `${category.name} — Source Library`,
       description: category.description,
     },
+    twitter: {
+      card: 'summary_large_image',
+      title: `${category.name} — Source Library`,
+      description: category.description,
+    },
   };
 }
 

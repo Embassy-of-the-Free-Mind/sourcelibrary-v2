@@ -9,23 +9,21 @@ export const size = {
 };
 export const contentType = 'image/png';
 
+/**
+ * Fetch high-quality gallery images that have pre-extracted URLs.
+ * Never use /api/crop-image here — it's unreliable during OG generation
+ * and produces garbled previews on social platforms.
+ */
 async function getFeaturedImages(): Promise<string[]> {
   try {
     const db = await getDb();
     const results = await db.collection('pages').aggregate([
       {
         $match: {
-          'detected_images.0': { $exists: true },
-          $or: [
-            { cropped_photo: { $exists: true, $ne: '' } },
-            { photo_original: { $exists: true, $ne: '' } },
-            { photo: { $exists: true, $ne: '' } },
-          ],
-          detected_images: {
+          'detected_images': {
             $elemMatch: {
-              bbox: { $exists: true },
-              detection_source: { $in: ['vision_model', 'manual'] },
-              gallery_quality: { $gte: 0.8 },
+              extracted_url: { $exists: true, $ne: '' },
+              gallery_quality: { $gte: 0.85 },
             },
           },
         },
@@ -33,37 +31,21 @@ async function getFeaturedImages(): Promise<string[]> {
       { $unwind: '$detected_images' },
       {
         $match: {
-          'detected_images.bbox': { $exists: true },
-          'detected_images.gallery_quality': { $gte: 0.8 },
+          'detected_images.extracted_url': { $exists: true, $ne: '' },
+          'detected_images.gallery_quality': { $gte: 0.85 },
         },
       },
       { $sort: { 'detected_images.gallery_quality': -1 } },
-      { $limit: 5 },
+      { $limit: 3 },
       {
         $project: {
-          imageUrl: { $ifNull: ['$cropped_photo', { $ifNull: ['$photo_original', '$photo'] }] },
-          bbox: '$detected_images.bbox',
+          _id: 0,
+          url: '$detected_images.extracted_url',
         },
       },
     ]).toArray();
 
-    return results.map((r) => {
-      let url = r.imageUrl as string;
-      if (url?.includes('/full/')) {
-        url = url.replace(/\/full\/\d+,\//, '/full/800,/');
-      }
-      if (r.bbox) {
-        const params = new URLSearchParams({
-          url,
-          x: String(r.bbox.x),
-          y: String(r.bbox.y),
-          w: String(r.bbox.width),
-          h: String(r.bbox.height),
-        });
-        return `https://sourcelibrary.org/api/crop-image?${params}`;
-      }
-      return url;
-    });
+    return results.map((r) => r.url as string).filter(Boolean);
   } catch {
     return [];
   }
@@ -83,8 +65,9 @@ export default async function Image() {
           flexDirection: 'column',
           alignItems: 'center',
           justifyContent: 'center',
-          padding: '60px',
+          padding: '40px 60px',
           position: 'relative',
+          fontFamily: 'Georgia, serif',
         }}
       >
         {/* Decorative border */}
@@ -101,12 +84,12 @@ export default async function Image() {
           }}
         />
 
-        {/* Grid of featured images */}
+        {/* Featured images — 3 large images instead of 5 tiny ones */}
         <div
           style={{
             display: 'flex',
-            gap: 16,
-            marginBottom: 40,
+            gap: 20,
+            marginBottom: 36,
           }}
         >
           {images.length > 0
@@ -114,14 +97,16 @@ export default async function Image() {
                 <div
                   key={i}
                   style={{
-                    width: 100,
-                    height: 100,
+                    width: 180,
+                    height: 220,
                     borderRadius: 8,
                     border: '1px solid rgba(201, 168, 108, 0.3)',
                     overflow: 'hidden',
                     display: 'flex',
+                    background: 'rgba(0,0,0,0.3)',
                   }}
                 >
+                  {/* eslint-disable-next-line @next/next/no-img-element */}
                   <img
                     src={url}
                     alt=""
@@ -133,13 +118,13 @@ export default async function Image() {
                   />
                 </div>
               ))
-            : [1, 2, 3, 4, 5].map((i) => (
+            : [1, 2, 3].map((i) => (
                 <div
                   key={i}
                   style={{
-                    width: 100,
-                    height: 100,
-                    background: `rgba(201, 168, 108, ${0.08 + i * 0.04})`,
+                    width: 180,
+                    height: 220,
+                    background: `rgba(201, 168, 108, ${0.06 + i * 0.04})`,
                     borderRadius: 8,
                     border: '1px solid rgba(201, 168, 108, 0.2)',
                     display: 'flex',
@@ -154,7 +139,6 @@ export default async function Image() {
             fontSize: 52,
             fontWeight: 400,
             color: '#fdfcf9',
-            fontFamily: 'Georgia, serif',
             fontStyle: 'italic',
             letterSpacing: '-0.02em',
             marginBottom: 16,
@@ -169,7 +153,6 @@ export default async function Image() {
           style={{
             fontSize: 22,
             color: '#c9a86c',
-            fontFamily: 'Georgia, serif',
             textAlign: 'center',
             maxWidth: 700,
             lineHeight: 1.4,

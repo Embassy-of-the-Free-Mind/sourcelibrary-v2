@@ -12,6 +12,12 @@ export const metadata: Metadata = {
     siteName: 'Source Library',
     type: 'website',
   },
+  twitter: {
+    card: 'summary_large_image',
+    title: 'Explore — Source Library',
+    description:
+      'Interactive visualizations of people, places, and concepts from 1,200+ digitized historical texts.',
+  },
 };
 
 export default function ExploreLayout({ children }: { children: React.ReactNode }) {

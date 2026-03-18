@@ -95,6 +95,11 @@ export async function generateMetadata({ params }: AuthorPageProps): Promise<Met
       title: `${authorName} — Source Library`,
       description: `Works by ${authorName} in Source Library`,
     },
+    twitter: {
+      card: 'summary_large_image',
+      title: `${authorName} — Source Library`,
+      description: `Works by ${authorName} in Source Library`,
+    },
   };
 }
 
