@@ -39,10 +39,13 @@ export default async function PageEditorPage({ params }: PageProps) {
       .find({ book_id: currentPage.book_id as string })
       .project({ _id: 0, id: 1, page_number: 1, split_from: 1, page_type: 1 })
       .sort({ page_number: 1 })
-      .maxTimeMS(8000)
+      .maxTimeMS(15000)
       .toArray()
       .then(pages => pages.filter(p => p.page_type !== 'digitizer-insert'))
-      .catch(() => [{ id: pageId, page_number: currentPage.page_number }]),
+      .catch((err) => {
+        console.error(`[page-nav] Failed to load page list for book ${currentPage.book_id}:`, err.message);
+        return [{ id: pageId, page_number: currentPage.page_number }];
+      }),
   ]);
 
   if (!bookResult) {
