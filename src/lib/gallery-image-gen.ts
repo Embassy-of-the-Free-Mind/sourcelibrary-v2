@@ -23,6 +23,8 @@ interface GenerateGalleryImagesInput {
 interface GenerateGalleryImagesResult {
   extractedUrl: string;   // Full-size cropped+rotated JPEG
   thumbnailUrl: string;   // 300px thumbnail JPEG
+  extractedWidth: number; // Pixel width of extracted image
+  extractedHeight: number; // Pixel height of extracted image
 }
 
 /**
@@ -101,6 +103,11 @@ export async function generateGalleryImages(
     .jpeg({ quality: 85, progressive: true })
     .toBuffer();
 
+  // Get pixel dimensions of the extracted crop
+  const extractedMeta = await sharp(extractedBuffer).metadata();
+  const extractedWidth = extractedMeta.width || 0;
+  const extractedHeight = extractedMeta.height || 0;
+
   // Generate 300px thumbnail (JPEG 70)
   const thumbnailBuffer = await sharp(extractedBuffer)
     .resize(300, null, { fit: 'inside', withoutEnlargement: true })
@@ -127,5 +134,7 @@ export async function generateGalleryImages(
   return {
     extractedUrl: extractedBlob.url + cacheBust,
     thumbnailUrl: thumbnailBlob.url + cacheBust,
+    extractedWidth,
+    extractedHeight,
   };
 }

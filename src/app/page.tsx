@@ -262,10 +262,9 @@ async function getCollectionShowcase() {
       $match: {
         gallery_quality: { $gte: 0.85 },
         museum_description: { $exists: true, $ne: '' },
-        $or: [
-          { thumbnail_url: { $type: 'string', $gt: '' } },
-          { extracted_url: { $type: 'string', $gt: '' } },
-        ],
+        extracted_url: { $type: 'string', $gt: '' },
+        // Filter out low-resolution images that would look pixelated at display size
+        extracted_width: { $gte: 400 },
         book_hidden: { $ne: true },
       },
     },

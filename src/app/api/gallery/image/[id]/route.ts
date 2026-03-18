@@ -441,6 +441,8 @@ export async function PATCH(
                 $set: {
                   [`detected_images.${detectionIndex}.extracted_url`]: generated.extractedUrl,
                   [`detected_images.${detectionIndex}.thumbnail_url`]: generated.thumbnailUrl,
+                  [`detected_images.${detectionIndex}.extracted_width`]: generated.extractedWidth,
+                  [`detected_images.${detectionIndex}.extracted_height`]: generated.extractedHeight,
                 }
               }
             );
@@ -450,6 +452,8 @@ export async function PATCH(
               const gallerySync: Record<string, unknown> = {
                 extracted_url: generated.extractedUrl,
                 thumbnail_url: generated.thumbnailUrl,
+                extracted_width: generated.extractedWidth,
+                extracted_height: generated.extractedHeight,
                 updated_at: new Date(),
               };
               if (typeof body.galleryQuality === 'number') gallerySync.gallery_quality = Math.max(0, Math.min(1, body.galleryQuality));

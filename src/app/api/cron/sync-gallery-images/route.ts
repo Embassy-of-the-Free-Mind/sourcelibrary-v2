@@ -88,6 +88,8 @@ export async function GET(request: NextRequest) {
           image_url: { $ifNull: ['$cropped_photo', { $ifNull: ['$archived_photo', { $ifNull: ['$photo_original', '$photo'] }] }] },
           thumbnail_url: '$detected_images.thumbnail_url',
           extracted_url: '$detected_images.extracted_url',
+          extracted_width: '$detected_images.extracted_width',
+          extracted_height: '$detected_images.extracted_height',
           description: { $ifNull: ['$detected_images.description', ''] },
           type: '$detected_images.type',
           bbox: '$detected_images.bbox',
