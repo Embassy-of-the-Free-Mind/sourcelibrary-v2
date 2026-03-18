@@ -62,6 +62,13 @@ export const search = {
   },
 
   /**
+   * AI-powered query expansion for zero-result searches
+   */
+  aiExpand: async (query: string): Promise<{ original: string; terms: string[]; note: string }> => {
+    return await apiClient.post('/api/search/ai-expand', { query });
+  },
+
+  /**
    * Browse books (no query required) via /api/books/library
    */
   browse: async (params?: {
