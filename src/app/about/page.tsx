@@ -22,7 +22,7 @@ export default function AboutPage() {
     >
       <div className="prose-content max-w-none">
         <p className="text-xl text-secondary leading-relaxed mb-8">
-          Based at the Embassy of the Free Mind in Amsterdam, home to the Bibliotheca Philosophica Hermetica—recognized by UNESCO&apos;s Memory of the World Register—this collection contains rare works on Hermetic philosophy, alchemy, Neoplatonist mystical literature, Rosicrucianism, Freemasonry, and the Kabbalah.
+          Based at the Embassy of the Free Mind in Amsterdam, home to the Bibliotheca Philosophica Hermetica (recognized by UNESCO&apos;s Memory of the World Register), this collection contains rare works on Hermetic philosophy, alchemy, Neoplatonist mystical literature, Rosicrucianism, Freemasonry, and the Kabbalah.
         </p>
 
         <p className="text-xl text-secondary leading-relaxed mb-12">
@@ -73,7 +73,7 @@ export default function AboutPage() {
             </h3>
             <p className="text-muted text-sm mb-3">1389–1464 · Florence</p>
             <p className="text-secondary text-sm leading-relaxed">
-              In 1460, when a Greek manuscript of the <em>Corpus Hermeticum</em> arrived in Florence, Cosimo ordered its translation before even Plato—sensing that Hermes Trismegistus held the key to ancient wisdom. He founded the Platonic Academy in his villa at Careggi, creating the first institution dedicated to freely sharing philosophical knowledge since antiquity.
+              In 1460, when a Greek manuscript of the <em>Corpus Hermeticum</em> arrived in Florence, Cosimo ordered its translation before even Plato, sensing that Hermes Trismegistus held the key to ancient wisdom. He founded the Platonic Academy in his villa at Careggi, creating the first institution dedicated to freely sharing philosophical knowledge since antiquity.
             </p>
           </div>
           <div>
@@ -82,7 +82,7 @@ export default function AboutPage() {
             </h3>
             <p className="text-muted text-sm mb-3">1433–1499 · Philosopher & Translator</p>
             <p className="text-secondary text-sm leading-relaxed">
-              Ficino translated the complete works of Plato, Plotinus, Proclus, Iamblichus, and the Hermetic writings into Latin—making them accessible to all of Europe for the first time. His work ignited the Renaissance recovery of Neoplatonism, Hermeticism, and the <em>prisca theologia</em>: the belief in an ancient wisdom tradition uniting all seekers of truth.
+              Ficino translated the complete works of Plato, Plotinus, Proclus, Iamblichus, and the Hermetic writings into Latin, making them accessible to all of Europe for the first time. His work ignited the Renaissance recovery of Neoplatonism, Hermeticism, and the <em>prisca theologia</em>: the belief in an ancient wisdom tradition uniting all seekers of truth.
             </p>
           </div>
         </div>

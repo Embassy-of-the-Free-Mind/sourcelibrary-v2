@@ -265,8 +265,8 @@ export default function UploadPage() {
             <div className="bg-accent-gold/8 border border-accent-gold/20 rounded-xl p-4 text-sm text-accent-gold-dark">
               <p className="font-medium mb-1">Two ways to add a book:</p>
               <ol className="list-decimal list-inside space-y-1 text-accent-rust">
-                <li><strong>Search catalogs</strong> — Find the book in Internet Archive or BPH to pre-fill metadata</li>
-                <li><strong>Enter manually</strong> — Skip the search and fill in the form below</li>
+                <li><strong>Search catalogs</strong>: Find the book in Internet Archive or BPH to pre-fill metadata</li>
+                <li><strong>Enter manually</strong>: Skip the search and fill in the form below</li>
               </ol>
             </div>
 

@@ -113,7 +113,12 @@ Collection stats:
 INSTRUCTIONS:
 Write a newsletter digest email. Be warm, knowledgeable, and concise. Write like a librarian who loves these texts, not a marketer. No hype, no exclamation marks.
 
-For each new book, write a 1-sentence description that captures why it's interesting — what's in it, why it matters, what a reader will find. Don't just repeat the title.
+For each new book, write a 1-sentence description that captures why it's interesting: what's in it, why it matters, what a reader will find. Don't just repeat the title.
+
+STYLE RULES:
+- Never use em-dashes (—). Use commas, colons, semicolons, or separate sentences.
+- Never use: "delves into", "rich tapestry", "fascinating exploration", "comprehensive", "intricate", "nuanced", "multifaceted", "sheds light on", "offers a window into".
+- Short, direct sentences. Scholarly but accessible.
 
 OUTPUT FORMAT (JSON only, no markdown):
 {

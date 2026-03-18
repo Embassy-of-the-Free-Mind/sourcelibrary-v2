@@ -27,7 +27,7 @@ const VIZ_CARDS = [
   {
     href: '/explore/timeline',
     title: 'Timeline',
-    description: 'Lifespans of historical figures — who was alive when, and how intellectual movements clustered.',
+    description: 'Lifespans of historical figures: who was alive when, and how intellectual movements clustered.',
     statKey: 'with_dates' as const,
     statLabel: 'dated figures',
     icon: (
@@ -45,7 +45,7 @@ const VIZ_CARDS = [
   {
     href: '/explore/network',
     title: 'Network',
-    description: 'How entities connect through shared books — revealing intellectual clusters and bridging figures.',
+    description: 'How entities connect through shared books, revealing intellectual clusters and bridging figures.',
     statKey: 'entities' as const,
     statLabel: 'connected entities',
     icon: (

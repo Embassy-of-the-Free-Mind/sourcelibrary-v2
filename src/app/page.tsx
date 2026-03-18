@@ -398,7 +398,7 @@ const BLOG_POSTS = [
   {
     slug: 'philosophers-stone',
     title: "What Is the Philosopher's Stone? Eight Answers from the Primary Sources",
-    subtitle: 'An allegorical emblem sequence, a universal salt, a red powder found in a bishop\'s tomb — eight primary sources, eight different answers.',
+    subtitle: 'An allegorical emblem sequence, a universal salt, a red powder found in a bishop\'s tomb. Eight primary sources, eight different answers.',
     date: '27 February 2026',
     readTime: '20 min read',
     tag: 'Deep dive',
@@ -418,7 +418,7 @@ const BLOG_POSTS = [
   {
     slug: 'first-translations',
     title: 'Over 500 First English Translations',
-    subtitle: 'Alchemical lab manuals, radical theology, women alchemists, Sanskrit astrology manuscripts — all previously inaccessible in English.',
+    subtitle: 'Alchemical lab manuals, radical theology, women alchemists, Sanskrit astrology manuscripts, all previously inaccessible in English.',
     date: '20 February 2026',
     readTime: '14 min read',
     tag: 'Collection',

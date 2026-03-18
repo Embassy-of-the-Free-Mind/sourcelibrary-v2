@@ -6,7 +6,7 @@ import { getDb } from '@/lib/mongodb';
 export const metadata: Metadata = {
   title: 'How Processing Works | Source Library',
   description:
-    'From scanned page images to searchable, translated text — how Source Library transforms rare historical books using AI.',
+    'From scanned page images to searchable, translated text: how Source Library transforms rare historical books using AI.',
   alternates: { canonical: '/about/processing' },
 };
 
@@ -169,7 +169,7 @@ export default async function ProcessingPage() {
       header={
         <ContentHeader
           title="How We Process Books"
-          subtitle="From scanned page images to searchable, translated text — every step is automated, auditable, and open."
+          subtitle="From scanned page images to searchable, translated text. Every step is automated, auditable, and open."
         />
       }
       bg="bg-cream"
@@ -177,7 +177,7 @@ export default async function ProcessingPage() {
       <div className="prose-content max-w-none">
         <p className="text-xl text-secondary leading-relaxed mb-12">
           Every book in Source Library passes through an automated pipeline that reads, translates,
-          and enriches historical texts. The original source material is always preserved — AI
+          and enriches historical texts. The original source material is always preserved. AI
           processing adds layers of accessibility on top, never replacing what came before.
         </p>
 
@@ -271,7 +271,7 @@ export default async function ProcessingPage() {
 
         <p className="text-secondary mb-8">
           Every step in the pipeline is logged, versioned, and auditable. We treat these texts as
-          cultural heritage — processing should be transparent, not a black box.
+          cultural heritage. Processing should be transparent, not a black box.
         </p>
 
         <div className="grid md:grid-cols-2 gap-6 mb-16">
@@ -293,7 +293,7 @@ export default async function ProcessingPage() {
           />
           <QualityCard
             title="Language-specific prompts"
-            description="Latin, German (Fraktur), and standard OCR each use specialized prompts tuned for their specific challenges — abbreviation expansion, blackletter character sets, and period-appropriate conventions."
+            description="Latin, German (Fraktur), and standard OCR each use specialized prompts tuned for their specific challenges: abbreviation expansion, blackletter character sets, and period-appropriate conventions."
           />
           <QualityCard
             title="Open standards"

@@ -105,7 +105,7 @@ export default function SocietyLandingPage() {
             <p
               className="text-lg text-stone-600 max-w-2xl mx-auto font-body"
             >
-              From the Hermetic corpus to Renaissance alchemical manuscripts—works that
+              From the Hermetic corpus to Renaissance alchemical manuscripts, works that
               shaped Western esotericism, now accessible in English.
             </p>
           </div>
@@ -284,7 +284,7 @@ export default function SocietyLandingPage() {
           <p
             className="text-lg text-stone-600 mb-12 max-w-2xl mx-auto font-body"
           >
-            When you join as a Member, you receive a pass—a key to give to someone you
+            When you join as a Member, you receive a pass: a key to give to someone you
             believe should be here. Knowledge spreads through relationship, not broadcast.
             This is how these traditions have always moved.
           </p>
@@ -388,7 +388,7 @@ export default function SocietyLandingPage() {
           <div className="border-t border-white/10 pt-8">
             <div className="flex flex-col md:flex-row justify-between items-center gap-4">
               <p className="text-sm font-sans">
-                &copy; {new Date().getFullYear()} The Ficino Society — A project of the Ancient Wisdom Trust
+                &copy; {new Date().getFullYear()} The Ficino Society, a project of the Ancient Wisdom Trust
               </p>
               <div className="flex gap-6 text-sm font-sans">
                 <Link href="/about" className="hover:text-white transition-colors">About</Link>

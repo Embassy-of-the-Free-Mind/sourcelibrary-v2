@@ -9,7 +9,7 @@ export const dynamic = 'force-dynamic';
 
 export const metadata: Metadata = {
   title: 'Timeline | Source Library',
-  description: 'Browse thousands of historical texts chronologically — from antiquity through the early modern period. See what was published when and explore by decade.',
+  description: 'Browse thousands of historical texts chronologically, from antiquity through the early modern period. See what was published when and explore by decade.',
   alternates: { canonical: '/timeline' },
 };
 

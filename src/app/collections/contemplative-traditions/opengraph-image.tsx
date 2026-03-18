@@ -89,7 +89,7 @@ export default async function Image() {
             display: 'flex',
           }}
         >
-          40 primary sources in their original languages — from a 975 AD Chinese sutra to Rumi in Persian
+          40 primary sources in their original languages, from a 975 AD Chinese sutra to Rumi in Persian
         </div>
 
         {/* Tradition pills */}

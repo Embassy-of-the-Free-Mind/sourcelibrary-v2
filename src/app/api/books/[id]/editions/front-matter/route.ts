@@ -183,10 +183,13 @@ This is a new English translation produced by Source Library using AI (large lan
 Rules:
 - Write in clear, scholarly prose for educated general readers
 - Use ## markdown headings
-- Do NOT use vague praise like "groundbreaking," "seminal," "masterpiece," or "profoundly influential" — let specific facts speak
+- NEVER use em-dashes (—). Use commas, colons, semicolons, or separate sentences.
+- Do NOT use vague praise like "groundbreaking," "seminal," "masterpiece," or "profoundly influential." Let specific facts speak.
+- Do NOT use AI-isms: "delves into," "rich tapestry," "fascinating exploration," "comprehensive," "intricate," "nuanced," "multifaceted," "sheds light on," "offers a window into."
+- Prefer short, direct sentences over long compound ones.
 - Do NOT fabricate biographical details, publication histories, or scholarly reception you are not confident about
 - Do NOT claim human editorial review occurred
-- Do NOT include any preamble — start directly with the first heading
+- Do NOT include any preamble. Start directly with the first heading.
 - If you include a claim about historical influence or reception, it should be something a scholar could verify`;
 
   const result = await model.generateContent(prompt);
@@ -240,7 +243,9 @@ async function generateMethodology(
 **Rules:**
 - Do NOT add steps or processes that aren't listed above
 - Do NOT claim human review, editorial boards, or quality assurance processes
-- Do NOT pad with filler — short and honest is better than long and vague
+- Do NOT pad with filler. Short and honest is better than long and vague.
+- NEVER use em-dashes (—). Use commas, colons, semicolons, or separate sentences.
+- Avoid AI-isms: "delves into", "comprehensive", "intricate", "nuanced", "multifaceted".
 - Use ## markdown headings
 - Start directly with the first heading`;
 

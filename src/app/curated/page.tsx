@@ -10,12 +10,12 @@ export const revalidate = 600;
 export const metadata: Metadata = {
   title: 'Curated Collections | Source Library',
   description:
-    'Thematic exhibitions across the library — stories that cut across traditions and centuries.',
+    'Thematic exhibitions across the library, stories that cut across traditions and centuries.',
   alternates: { canonical: '/curated' },
   openGraph: {
     title: 'Curated Collections | Source Library',
     description:
-      'Thematic exhibitions across the library — stories that cut across traditions and centuries.',
+      'Thematic exhibitions across the library, stories that cut across traditions and centuries.',
     type: 'website',
   },
 };
@@ -155,7 +155,7 @@ export default async function CuratedCollectionsPage() {
             Curated Collections
           </h1>
           <p className="text-lg sm:text-xl text-secondary max-w-3xl leading-relaxed">
-            Thematic exhibitions across the library — stories that cut across
+            Thematic exhibitions across the library, stories that cut across
             traditions and centuries.
           </p>
         </div>

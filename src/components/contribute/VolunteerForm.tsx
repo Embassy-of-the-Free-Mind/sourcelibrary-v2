@@ -59,7 +59,7 @@ export default function VolunteerForm() {
       <div className="bg-green-50 border border-green-200 rounded-xl p-8 text-center">
         <h3 className="text-xl font-semibold text-green-900 mb-2">Thank you!</h3>
         <p className="text-green-700">
-          We&apos;ll be in touch soon. In the meantime, feel free to open any book and start reading — every correction and annotation helps.
+          We&apos;ll be in touch soon. In the meantime, feel free to open any book and start reading. Every correction and annotation helps.
         </p>
       </div>
     );

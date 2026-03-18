@@ -140,7 +140,7 @@ Output as JSON:
   "people": ["Person Name 1", "Person Name 2"],
   "places": ["Place Name 1", "Place Name 2"],
   "concepts": ["Key concept 1", "Technical term 2"],
-  "summary": "2-3 sentence summary of what these pages cover and their key arguments."
+  "summary": "2-3 sentence summary of what these pages cover and their key arguments. No em-dashes. No filler like 'delves into' or 'rich tapestry'. Short, direct sentences."
 }
 
 CRITICAL for quotes:
@@ -656,9 +656,10 @@ Synthesize the above into compelling summaries that make readers WANT to explore
 
 **Writing style:**
 - Write like a knowledgeable human, not an AI. Be direct and concrete.
-- AVOID em-dashes (—). Use commas, colons, semicolons, or separate sentences instead.
-- AVOID filler phrases like "delves into", "rich tapestry", "fascinating exploration", "sheds light on", "offers a window into".
+- NEVER use em-dashes (—). Use commas, colons, semicolons, or separate sentences instead.
+- NEVER use these AI-isms: "delves into", "rich tapestry", "fascinating exploration", "sheds light on", "offers a window into", "comprehensive", "intricate", "nuanced", "multifaceted", "groundbreaking", "seminal".
 - Prefer short, clear sentences over long compound ones.
+- Scholarly but accessible. Say what the text does, not how impressive it is.
 
 1. **BRIEF** (2-3 punchy sentences):
    - Hook the reader - what's compelling about this text?

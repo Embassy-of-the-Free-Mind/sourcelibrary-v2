@@ -170,7 +170,7 @@ export default function DownloadButton({ bookId, bookTitle, hasTranslations, has
                 disabled={purchasing}
                 className="w-full py-2.5 bg-stone-900 hover:bg-stone-800 text-white rounded-lg text-sm font-medium transition-colors disabled:opacity-50"
               >
-                {purchasing ? 'Redirecting...' : 'Download this book — $5'}
+                {purchasing ? 'Redirecting...' : 'Download this book ($5)'}
               </button>
               <p className="mt-2 text-xs text-stone-400 text-center">
                 All formats included

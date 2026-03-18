@@ -113,7 +113,7 @@ Based on this text and metadata, classify the book. Respond with JSON only — n
   "categories": ["<1-4 subject tags from EXACTLY this list: ${CATEGORIES.join(', ')}>"],
   "estimated_year": "<best estimate of publication year as a number, e.g. 1617. null if truly impossible to determine>",
   "estimated_century": "<e.g. '17th century' or '15th-16th century' — fallback if exact year unclear>",
-  "description": "<1-2 sentence scholarly description of what this book appears to be about>",
+  "description": "<1-2 sentence scholarly description of what this book is about. No em-dashes. No filler like 'delves into', 'rich tapestry', 'fascinating exploration', 'comprehensive', 'intricate', 'nuanced'. Short, direct sentences.>",
   "display_title": "<A clear, natural English title for this book. Must be ENTIRELY in English — no foreign words. See display_title rules below.>",
   "confidence": "<high, medium, or low — how confident are you in this classification>",
   "subject_keywords": ["<3-5 subject keywords for discovery>"],

@@ -309,8 +309,8 @@ export default function BibliographicInfo({ book, pagesCount }: BibliographicInf
                     <div className="text-stone-500 text-xs space-y-1">
                       <p>
                         {book.translation_verification.disposition === 'confirmed_first' && 'No prior complete English translation found.'}
-                        {book.translation_verification.disposition === 'first_complete_translation' && 'Only partial translations or excerpts exist — this is the first complete English translation.'}
-                        {book.translation_verification.disposition === 'first_modern_translation' && 'Only antiquated translations exist — this is the first modern English translation.'}
+                        {book.translation_verification.disposition === 'first_complete_translation' && 'Only partial translations or excerpts exist. This is the first complete English translation.'}
+                        {book.translation_verification.disposition === 'first_modern_translation' && 'Only antiquated translations exist. This is the first modern English translation.'}
                       </p>
                       {book.translation_verification.tools_called && (
                         <details className="cursor-pointer">

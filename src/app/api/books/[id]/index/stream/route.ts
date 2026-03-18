@@ -76,7 +76,7 @@ Extract as JSON:
   "people": ["Name1"],
   "places": ["Place1"],
   "concepts": ["concept1"],
-  "summary": "2-3 sentences on key content"
+  "summary": "2-3 sentences on key content. No em-dashes. No filler like 'delves into' or 'rich tapestry'. Short, direct sentences."
 }
 
 For quotes: Copy EXACT text, find striking/memorable passages, 3-5 per batch.`;

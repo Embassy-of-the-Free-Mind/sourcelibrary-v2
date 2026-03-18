@@ -212,7 +212,7 @@ export default function ProcessPage() {
                 Help bring a book to life
               </h2>
               <p className="text-lg leading-relaxed" style={{ color: 'var(--text-secondary)' }}>
-                You&apos;ll use your own Google Gemini API key to process pages. The key is free to get and never leaves your browser. You set the budget — we handle the rest.
+                You&apos;ll use your own Google Gemini API key to process pages. The key is free to get and never leaves your browser. You set the budget; we handle the rest.
               </p>
             </div>
 
@@ -251,7 +251,7 @@ export default function ProcessPage() {
               <div className="space-y-3 text-sm" style={{ color: 'var(--text-secondary)' }}>
                 <div className="flex items-start gap-3">
                   <span className="flex-shrink-0 w-6 h-6 rounded-full flex items-center justify-center text-xs font-medium" style={{ background: 'var(--bg-warm)', color: 'var(--text-muted)' }}>1</span>
-                  <span>Get a free Gemini API key from <a href="https://aistudio.google.com/apikey" target="_blank" rel="noopener noreferrer" className="underline" style={{ color: 'var(--accent-sage)' }}>Google AI Studio <ExternalLink className="w-3 h-3 inline" /></a> — takes 30 seconds</span>
+                  <span>Get a free Gemini API key from <a href="https://aistudio.google.com/apikey" target="_blank" rel="noopener noreferrer" className="underline" style={{ color: 'var(--accent-sage)' }}>Google AI Studio <ExternalLink className="w-3 h-3 inline" /></a> (takes 30 seconds)</span>
                 </div>
                 <div className="flex items-start gap-3">
                   <span className="flex-shrink-0 w-6 h-6 rounded-full flex items-center justify-center text-xs font-medium" style={{ background: 'var(--bg-warm)', color: 'var(--text-muted)' }}>2</span>
@@ -259,7 +259,7 @@ export default function ProcessPage() {
                 </div>
                 <div className="flex items-start gap-3">
                   <span className="flex-shrink-0 w-6 h-6 rounded-full flex items-center justify-center text-xs font-medium" style={{ background: 'var(--bg-warm)', color: 'var(--text-muted)' }}>3</span>
-                  <span>Watch pages process in real time — your API key is discarded the moment processing stops</span>
+                  <span>Watch pages process in real time. Your API key is discarded the moment processing stops</span>
                 </div>
                 <div className="flex items-start gap-3">
                   <span className="flex-shrink-0 w-6 h-6 rounded-full flex items-center justify-center text-xs font-medium" style={{ background: 'var(--bg-warm)', color: 'var(--text-muted)' }}>4</span>

@@ -161,7 +161,7 @@ export function WikipediaPlaybook({ posts }: { posts: TalkPagePost[] }) {
       {/* Intro */}
       <div className="prose-content max-w-none">
         <p className="text-xl text-secondary leading-relaxed">
-          Source Library has thousands of translated historical texts —
+          Source Library has thousands of translated historical texts:
           Copernicus, Galileo, Euclid, the Corpus Hermeticum, and more. Wikipedia
           readers should be able to find them. This page makes it easy to help.
         </p>

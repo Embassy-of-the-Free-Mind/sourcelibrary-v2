@@ -9,7 +9,7 @@ export const revalidate = 600;
 export const metadata: Metadata = {
   title: 'The Contemplative Traditions - Source Library',
   description:
-    'Primary sources from five contemplative traditions — Taoism, Sufism, Zen Buddhism, Advaita Vedanta, and depth psychology — in their original languages alongside English translations.',
+    'Primary sources from five contemplative traditions (Taoism, Sufism, Zen Buddhism, Advaita Vedanta, and depth psychology) in their original languages alongside English translations.',
   openGraph: {
     title: 'The Contemplative Traditions',
     description:
@@ -270,7 +270,7 @@ export default async function ContemplativeTraditionsPage() {
             The Contemplative<br />Traditions
           </h1>
           <p className="text-lg text-stone-300 max-w-2xl leading-relaxed mb-10">
-            Primary sources from five wisdom traditions — in their original
+            Primary sources from five wisdom traditions, in their original
             languages alongside English translations. From a 975&nbsp;AD Chinese
             woodblock sutra to Jung in the original German.
           </p>
@@ -325,7 +325,7 @@ export default async function ContemplativeTraditionsPage() {
               975 AD
             </p>
             <p className="text-stone-800 font-medium text-sm leading-relaxed">
-              A Song dynasty woodblock Dharani Sutra — one of the earliest
+              A Song dynasty woodblock Dharani Sutra, one of the earliest
               surviving examples of printed Buddhist scripture in the world.
             </p>
           </div>
@@ -335,7 +335,7 @@ export default async function ContemplativeTraditionsPage() {
             </p>
             <p className="text-stone-800 font-medium text-sm leading-relaxed">
               A manuscript of three Ghazali treatises copied just four years
-              after the philosopher&apos;s death — among the closest witnesses to
+              after the philosopher&apos;s death, among the closest witnesses to
               his original text.
             </p>
           </div>

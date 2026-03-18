@@ -17,19 +17,19 @@ export async function generateMetadata({ params }: PageProps): Promise<Metadata>
   const collection = await db.collection('gallery_collections').findOne({ slug });
 
   if (!collection) {
-    return { title: 'Collection Not Found — Source Library' };
+    return { title: 'Collection Not Found | Source Library' };
   }
 
   return {
-    title: `${collection.title} — Gallery — Source Library`,
+    title: `${collection.title} | Gallery | Source Library`,
     description: collection.description as string,
     openGraph: {
-      title: `${collection.title} — Source Library Gallery`,
+      title: `${collection.title} | Source Library Gallery`,
       description: collection.description as string,
     },
     twitter: {
       card: 'summary_large_image',
-      title: `${collection.title} — Source Library Gallery`,
+      title: `${collection.title} | Source Library Gallery`,
       description: collection.description as string,
     },
   };

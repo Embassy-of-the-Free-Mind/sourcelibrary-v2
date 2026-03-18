@@ -248,6 +248,11 @@ If the OCR contains <image-desc>...</image-desc>, translate the description and 
 8. Wrap ALL image/illustration descriptions in <note>...</note> — readers can toggle these off.
 9. END with <summary>...</summary> and <keywords>...</keywords> for indexing.
 
+**Writing style for summaries and notes:**
+- Never use em-dashes (—). Use commas, colons, semicolons, or separate sentences.
+- Avoid: "delves into", "rich tapestry", "fascinating exploration", "sheds light on", "comprehensive", "intricate", "nuanced", "multifaceted", "offers a window into".
+- Use short, direct sentences. Scholarly but accessible.
+
 **Source language:** {source_language}
 **Target language:** {target_language}
 
@@ -255,7 +260,7 @@ If the OCR contains <image-desc>...</image-desc>, translate the description and 
 [translated text]
 
 <summary>1-2 sentence summary of this page's main content and significance</summary>
-<keywords>key concepts, names, themes in English — for indexing</keywords>`,
+<keywords>key concepts, names, themes in English, for indexing</keywords>`,
 
   summary: `Summarize the contents of this page for a general, non-specialist reader.
 
@@ -336,8 +341,13 @@ Use <note>original: "..."</note> to preserve important original phrases for scho
 7. Preserve the voice and spirit of the original.
 8. END with <summary>...</summary> and <keywords>...</keywords> for indexing.
 
+**Writing style for summaries and notes:**
+- Never use em-dashes (—). Use commas, colons, semicolons, or separate sentences.
+- Avoid: "delves into", "rich tapestry", "fascinating exploration", "sheds light on", "comprehensive", "intricate", "nuanced", "multifaceted", "offers a window into".
+- Use short, direct sentences. Scholarly but accessible.
+
 **Final output format:**
 [modernized text]
 
 <summary>1-2 sentence summary of this page's main content and significance</summary>
-<keywords>key concepts, names, themes — for indexing</keywords>`;
+<keywords>key concepts, names, themes, for indexing</keywords>`;

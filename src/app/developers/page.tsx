@@ -435,7 +435,7 @@ source-library search "alchemy" --json | jq .results`}
             <h2 className="text-2xl font-semibold text-primary group-hover:text-accent-rust transition-colors">Pipeline Architecture</h2>
           </div>
           <p className="text-secondary max-w-2xl">
-            How 4,800+ books flow through 10 processing stages — Lambda workers, SQS queues, Gemini AI,
+            How 4,800+ books flow through 10 processing stages: Lambda workers, SQS queues, Gemini AI,
             backpressure controls, and safety mechanisms. Live pipeline counts, infrastructure diagrams, and cost breakdowns.
           </p>
         </Link>

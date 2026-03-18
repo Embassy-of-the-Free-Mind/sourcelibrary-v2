@@ -26,18 +26,18 @@ export default function StandardsPage() {
         <p className="text-xl text-secondary leading-relaxed mb-12">
           Source Library is built on the principle that knowledge infrastructure should outlast any single platform.
           We use the same open standards trusted by the world&apos;s great libraries and archives, ensuring that
-          every text we digitize remains accessible, citable, and interoperable — regardless of what happens to us.
+          every text we digitize remains accessible, citable, and interoperable, regardless of what happens to us.
         </p>
 
         {/* IIIF */}
         <h2 className="text-2xl md:text-3xl text-primary mt-16 mb-4">
-          IIIF — The Language of Digital Libraries
+          IIIF: The Language of Digital Libraries
         </h2>
 
         <p className="text-secondary mb-6">
           The <a href="https://iiif.io/api/presentation/3.0/" target="_blank" rel="noopener noreferrer">International Image Interoperability Framework</a> is
           the standard that connects digital libraries worldwide. Every book in Source Library publishes a
-          IIIF Presentation 3.0 manifest — a structured description of the book&apos;s pages, images, metadata,
+          IIIF Presentation 3.0 manifest, a structured description of the book&apos;s pages, images, metadata,
           and text layers that any compatible viewer can load directly.
         </p>
 
@@ -45,7 +45,7 @@ export default function StandardsPage() {
           This means our books can be opened in <a href="https://projectmirador.org/" target="_blank" rel="noopener noreferrer">Mirador</a>,
           Universal Viewer, or any IIIF-compatible application without any special integration.
           Researchers can compare our manuscripts side-by-side with holdings from the British Library,
-          the BnF, or the Bavarian State Library — all speaking the same language.
+          the BnF, or the Bavarian State Library, all speaking the same language.
         </p>
 
         <div className="bg-warm rounded-xl border border-border-light p-6 mb-6">
@@ -53,7 +53,7 @@ export default function StandardsPage() {
           <div className="grid md:grid-cols-2 gap-4">
             <div>
               <p className="text-primary font-medium mb-1">Page images</p>
-              <p className="text-secondary text-[15px]">Images from Internet Archive, Gallica, BSB, e-rara, and Wellcome — archived for long-term availability</p>
+              <p className="text-secondary text-[15px]">Images from Internet Archive, Gallica, BSB, e-rara, and Wellcome, archived for long-term availability</p>
             </div>
             <div>
               <p className="text-primary font-medium mb-1">Text annotations</p>
@@ -80,15 +80,15 @@ export default function StandardsPage() {
         </h2>
 
         <p className="text-secondary mb-6">
-          OCR transcriptions and English translations are not stored as opaque blobs — they&apos;re published as <a href="https://www.w3.org/TR/annotation-model/" target="_blank" rel="noopener noreferrer">W3C Web Annotations</a> that
+          OCR transcriptions and English translations are not stored as opaque blobs. They&apos;re published as <a href="https://www.w3.org/TR/annotation-model/" target="_blank" rel="noopener noreferrer">W3C Web Annotations</a> that
           link text to the specific page image it was derived from. Each annotation carries a BCP 47 language
-          tag — <em>la</em> for Latin, <em>de</em> for German, <em>en</em> for English — making the content
+          tag (<em>la</em> for Latin, <em>de</em> for German, <em>en</em> for English), making the content
           machine-readable and linguistically explicit.
         </p>
 
         <p className="text-secondary mb-16">
           Because annotations are referenced from the manifest rather than inlined, even a 900-page book
-          loads instantly — text is fetched only for the pages being viewed.
+          loads instantly. Text is fetched only for the pages being viewed.
         </p>
 
         {/* Dublin Core */}
@@ -119,7 +119,7 @@ export default function StandardsPage() {
         <p className="text-secondary mb-6">
           Image rights are expressed as machine-readable <a href="https://spdx.org/licenses/" target="_blank" rel="noopener noreferrer">SPDX identifiers</a>,
           mapped to Creative Commons and RightsStatements.org URIs in IIIF manifests.
-          Most of our collection is public domain or CC0 — free to use without restriction.
+          Most of our collection is public domain or CC0, free to use without restriction.
         </p>
 
         <div className="bg-warm rounded-xl border border-border-light overflow-hidden mb-16">
@@ -159,7 +159,7 @@ export default function StandardsPage() {
         <p className="text-secondary mb-6">
           Published scholarly editions receive Digital Object Identifiers through <a href="https://zenodo.org/" target="_blank" rel="noopener noreferrer">Zenodo</a>,
           enabling permanent citation. A DOI means the edition can be referenced in footnotes, indexed by
-          Google Scholar, and discovered through library catalogs — anchoring digital editions in the
+          Google Scholar, and discovered through library catalogs, anchoring digital editions in the
           infrastructure of academic scholarship.
         </p>
 

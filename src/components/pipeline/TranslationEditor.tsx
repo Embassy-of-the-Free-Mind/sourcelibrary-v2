@@ -2068,11 +2068,11 @@ export default function TranslationEditor({
                 <ol className="space-y-3 text-base" style={{ color: 'var(--text-secondary)' }}>
                   <li className="flex gap-3">
                     <span className="font-bold" style={{ color: 'var(--accent-sage)' }}>1.</span>
-                    <span><strong>Transcription</strong> — The AI reads the manuscript image and produces the original {book.language || 'text'}, preserving special characters and formatting.</span>
+                    <span><strong>Transcription</strong>: The AI reads the manuscript image and produces the original {book.language || 'text'}, preserving special characters and formatting.</span>
                   </li>
                   <li className="flex gap-3">
                     <span className="font-bold" style={{ color: 'var(--accent-rust)' }}>2.</span>
-                    <span><strong>Translation</strong> — The transcribed text is translated into clear, readable English while maintaining the meaning and style of the original.</span>
+                    <span><strong>Translation</strong>: The transcribed text is translated into clear, readable English while maintaining the meaning and style of the original.</span>
                   </li>
                 </ol>
               </div>
@@ -2085,15 +2085,15 @@ export default function TranslationEditor({
                 <ul className="space-y-2 text-sm" style={{ color: 'var(--text-secondary)' }}>
                   <li className="flex gap-2">
                     <span style={{ color: 'var(--accent-rust)' }}>•</span>
-                    <span><strong>Review translations</strong> — Switch to Edit mode to correct any errors in the transcription or translation.</span>
+                    <span><strong>Review translations</strong>: Switch to Edit mode to correct any errors in the transcription or translation.</span>
                   </li>
                   <li className="flex gap-2">
                     <span style={{ color: 'var(--accent-rust)' }}>•</span>
-                    <span><strong>Improve prompts</strong> — Use the Settings to refine the AI prompts for better results.</span>
+                    <span><strong>Improve prompts</strong>: Use the Settings to refine the AI prompts for better results.</span>
                   </li>
                   <li className="flex gap-2">
                     <span style={{ color: 'var(--accent-rust)' }}>•</span>
-                    <span><strong>Share knowledge</strong> — Your corrections help improve future translations.</span>
+                    <span><strong>Share knowledge</strong>: Your corrections help improve future translations.</span>
                   </li>
                 </ul>
               </div>

@@ -291,7 +291,9 @@ REQUIREMENTS:
 3. Each variation should feel authentic to its target community
 4. Reference specific visual elements from the image
 5. NO generic phrases: "Check out", "Amazing", "Incredible", "You won't believe"
-6. NO explaining the whole image—create curiosity, not a caption
+6. NO explaining the whole image. Create curiosity, not a caption.
+7. NO em-dashes (—). Use commas, colons, or periods instead.
+8. NO AI-isms: "delves into", "rich tapestry", "fascinating", "comprehensive", "nuanced"
 
 HASHTAG POOL (choose 2-4 per tweet):
 ${[...allHashtags].join(', ')}

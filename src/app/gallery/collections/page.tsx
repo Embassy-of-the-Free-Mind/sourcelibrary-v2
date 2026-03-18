@@ -7,15 +7,15 @@ import { getDb } from '@/lib/mongodb';
 export const dynamic = 'force-dynamic';
 
 export const metadata: Metadata = {
-  title: 'Curated Collections — Gallery — Source Library',
-  description: 'Thematic collections of illustrations from rare alchemical, Hermetic, and philosophical manuscripts — woodcuts, engravings, emblems, and diagrams spanning five centuries.',
+  title: 'Curated Collections | Gallery | Source Library',
+  description: 'Thematic collections of illustrations from rare alchemical, Hermetic, and philosophical manuscripts: woodcuts, engravings, emblems, and diagrams spanning five centuries.',
   openGraph: {
-    title: 'Curated Image Collections — Source Library',
+    title: 'Curated Image Collections | Source Library',
     description: 'Thematic collections of illustrations from rare historical manuscripts.',
   },
   twitter: {
     card: 'summary_large_image',
-    title: 'Curated Image Collections — Source Library',
+    title: 'Curated Image Collections | Source Library',
     description: 'Thematic collections of illustrations from rare historical manuscripts.',
   },
 };
