@@ -505,7 +505,10 @@ export async function generateMetadata({ params }: PageProps): Promise<Metadata>
   };
 }
 
-async function getBook(id: string): Promise<{ book: Book; pages: Page[]; totalBooks: number; galleryImageCount: number; matchedBySlug: boolean } | null> {
+interface GalleryImagePreview { id: string; extracted_url?: string; thumbnail_url?: string; image_url?: string; description?: string; type?: string; page_number?: number; gallery_quality?: number }
+interface BookCollectionPreview { slug: string; name: string; subtitle?: string; color?: string; book_count?: number; featured_images?: Array<{ extracted_url?: string; thumbnail_url?: string; image_url?: string }> }
+
+async function getBook(id: string): Promise<{ book: Book; pages: Page[]; totalBooks: number; galleryImageCount: number; galleryImages: GalleryImagePreview[]; bookCollections: BookCollectionPreview[]; matchedBySlug: boolean } | null> {
   // Timeout on getDb() — when MongoDB Atlas is overloaded, the connection
   // itself can hang for 60+ seconds. Better to fail fast.
   const dbPromise = getDb();
@@ -541,7 +544,7 @@ async function getBook(id: string): Promise<{ book: Book; pages: Page[]; totalBo
   // Inclusion projection — only fetch fields the book detail UI actually uses
   // Status dots need .updated_at; image count needs array length via .type
   // All queries have maxTimeMS to fail fast during DB degradation
-  const [pagesRaw, totalBooks, galleryImageCount] = await Promise.all([
+  const [pagesRaw, totalBooks, galleryImageCount, galleryImagesRaw, bookCollectionsRaw] = await Promise.all([
     db.collection('pages')
       .find({ book_id: bookId, page_type: { $ne: 'digitizer-insert' } }, {
         projection: {
@@ -569,13 +572,36 @@ async function getBook(id: string): Promise<{ book: Book; pages: Page[]; totalBo
     db.collection('gallery_images').countDocuments(
       { book_id: bookId, gallery_quality: { $gte: 0.7 }, book_hidden: { $ne: true } },
     ).catch(() => 0),
+    // Top 8 gallery images for preview row
+    db.collection('gallery_images')
+      .find(
+        { book_id: bookId, gallery_quality: { $gte: 0.7 }, book_hidden: { $ne: true } },
+        { projection: { _id: 0, id: 1, extracted_url: 1, thumbnail_url: 1, image_url: 1, description: 1, type: 1, page_number: 1, gallery_quality: 1 }, maxTimeMS: 5000 },
+      )
+      .sort({ gallery_quality: -1 })
+      .limit(8)
+      .toArray()
+      .catch(() => []),
+    // Collections this book belongs to
+    book.collections?.length
+      ? db.collection('collections')
+          .find(
+            { slug: { $in: book.collections }, hidden: { $ne: true } },
+            { projection: { _id: 0, slug: 1, name: 1, subtitle: 1, color: 1, book_count: 1, featured_images: 1 }, maxTimeMS: 5000 },
+          )
+          .sort({ order: 1 })
+          .toArray()
+          .catch(() => [])
+      : Promise.resolve([]),
   ]);
 
   // Serialize MongoDB objects to plain JavaScript objects
   const serializedBook = JSON.parse(JSON.stringify(book));
   const serializedPages = JSON.parse(JSON.stringify(pagesRaw));
+  const galleryImages = JSON.parse(JSON.stringify(galleryImagesRaw)) as GalleryImagePreview[];
+  const bookCollections = JSON.parse(JSON.stringify(bookCollectionsRaw)) as BookCollectionPreview[];
 
-  return { book: serializedBook as Book, pages: serializedPages as Page[], totalBooks, galleryImageCount, matchedBySlug };
+  return { book: serializedBook as Book, pages: serializedPages as Page[], totalBooks, galleryImageCount, galleryImages, bookCollections, matchedBySlug };
 }
 
 // Skeleton for book info while loading
@@ -638,7 +664,7 @@ async function BookInfo({ id }: { id: string }) {
     notFound();
   }
 
-  const { book, pages, totalBooks, galleryImageCount } = data;
+  const { book, pages, totalBooks, galleryImageCount, galleryImages, bookCollections } = data;
 
   // Empty shell books (0 pages from failed imports) should 404
   if (!book.pages_count || book.pages_count === 0) {
@@ -956,6 +982,79 @@ async function BookInfo({ id }: { id: string }) {
                 />
               );
             })()}
+
+            {/* Gallery Images Preview */}
+            {galleryImages.length > 0 && (
+              <div className="card p-6 mt-6">
+                <div className="flex items-center justify-between mb-4">
+                  <h2 className="text-lg font-semibold" style={{ color: 'var(--text-primary)' }}>
+                    Illustrations
+                    <span className="text-sm font-normal text-stone-400 ml-2">{galleryImageCount}</span>
+                  </h2>
+                  <Link
+                    href={`/gallery?bookId=${book.id}`}
+                    className="text-sm text-accent-rust hover:text-accent-gold-dark transition-colors"
+                  >
+                    View All &rarr;
+                  </Link>
+                </div>
+                <div className="flex gap-3 overflow-x-auto pb-2 -mx-1 px-1 scrollbar-thin">
+                  {galleryImages.map((img) => {
+                    const src = img.extracted_url || img.thumbnail_url || img.image_url;
+                    if (!src) return null;
+                    return (
+                      <Link
+                        key={img.id}
+                        href={`/gallery/image/${img.id}`}
+                        className="flex-shrink-0 group"
+                      >
+                        <div className="w-28 h-28 sm:w-36 sm:h-36 rounded-lg overflow-hidden bg-stone-100 border border-stone-200 group-hover:border-accent-rust/40 transition-colors">
+                          <img
+                            src={src}
+                            alt={img.description || 'Illustration'}
+                            className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-300"
+                            loading="lazy"
+                          />
+                        </div>
+                        {img.type && (
+                          <p className="text-[10px] text-stone-400 mt-1 text-center truncate w-28 sm:w-36">{img.type}</p>
+                        )}
+                      </Link>
+                    );
+                  })}
+                </div>
+              </div>
+            )}
+
+            {/* Collections This Book Belongs To */}
+            {bookCollections.length > 0 && (
+              <div className="card p-6 mt-6">
+                <h2 className="text-lg font-semibold mb-4" style={{ color: 'var(--text-primary)' }}>Collections</h2>
+                <div className="flex flex-wrap gap-3">
+                  {bookCollections.map((col) => {
+                    const colorMap: Record<string, string> = {
+                      rust: 'bg-accent-rust/8 text-accent-rust border-accent-rust/20 hover:bg-accent-rust/15',
+                      sage: 'bg-accent-sage/8 text-accent-sage border-accent-sage/20 hover:bg-accent-sage/15',
+                      violet: 'bg-accent-violet/8 text-accent-violet border-accent-violet/20 hover:bg-accent-violet/15',
+                      gold: 'bg-accent-gold/8 text-accent-gold-dark border-accent-gold/20 hover:bg-accent-gold/15',
+                    };
+                    const colorClasses = colorMap[col.color || 'rust'] || colorMap.rust;
+                    return (
+                      <Link
+                        key={col.slug}
+                        href={`/collections/${col.slug}`}
+                        className={`inline-flex items-center gap-2 px-4 py-2.5 rounded-xl border transition-colors ${colorClasses}`}
+                      >
+                        <span className="font-medium text-sm">{col.name}</span>
+                        {col.book_count && (
+                          <span className="text-xs opacity-60">{col.book_count} books</span>
+                        )}
+                      </Link>
+                    );
+                  })}
+                </div>
+              </div>
+            )}
 
             {/* Related Books — deferred into its own Suspense to avoid blocking page render */}
             <Suspense fallback={null}>
