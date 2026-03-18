@@ -5,7 +5,7 @@ import Link from 'next/link';
 import { signIn, useSession } from 'next-auth/react';
 import { recordLoadingMetric } from '@/lib/analytics';
 import UnifiedSearch from '@/components/search/UnifiedSearch';
-import UserMenu from '@/components/layout/UserMenu';
+import SiteHeader from '@/components/layout/SiteHeader';
 
 function HeroSignUp() {
   const [email, setEmail] = useState('');
@@ -121,28 +121,13 @@ export default function HeroSection() {
 
       <div className="absolute inset-0 bg-black/40 z-0" />
 
-      {/* Header */}
-      <header className="relative z-50 flex items-center justify-between px-6 md:px-12 py-4">
-        <Link href="/" className="text-white flex items-center gap-3" aria-label="Source Library home">
-          <svg className="w-10 h-10 md:w-12 md:h-12" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
-            <circle cx="12" cy="12" r="10" stroke="white" strokeWidth="1" />
-            <circle cx="12" cy="12" r="7" stroke="white" strokeWidth="1" />
-            <circle cx="12" cy="12" r="4" stroke="white" strokeWidth="1" />
-          </svg>
-          <span className="text-xl md:text-2xl uppercase tracking-wider text-white">
-            <span className="font-semibold text-white">Source</span>
-            <span className="font-light text-white">Library</span>
-            <sup className="text-[0.6em] font-light tracking-normal normal-case ml-1 opacity-80 relative -top-[0.5em]">Beta</sup>
-          </span>
-        </Link>
-        <UserMenu variant="hero" />
-      </header>
+      <SiteHeader variant="transparent" />
 
       {/* Hero Content */}
       <div className="relative z-10 h-full flex items-center">
-        <div className="px-6 md:px-12 w-full max-w-4xl">
+        <div className="px-6 md:px-12 w-full max-w-[var(--container-wide)] mx-auto">
           <h1
-            className="text-4xl md:text-5xl lg:text-6xl text-white mb-6 leading-tight tracking-wide font-display text-balance"
+            className="text-4xl md:text-5xl lg:text-6xl text-white mb-6 leading-tight tracking-wide font-display text-balance max-w-4xl"
           >
             A New Renaissance of Ancient Wisdom
           </h1>

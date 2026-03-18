@@ -12,7 +12,7 @@ import LikeButton from '@/components/ui/LikeButton';
 import { useIdentity } from '@/hooks/useIdentity';
 import { BookLoader } from '@/components/ui/BookLoader';
 import FeaturedCollections from '@/components/gallery/FeaturedCollections';
-import UserMenu from '@/components/layout/UserMenu';
+import SiteHeader from '@/components/layout/SiteHeader';
 import { LIBRARY_PARTNERS, getPartnerByProvider } from '@/lib/library-partners';
 import {
   gallery,
@@ -250,29 +250,11 @@ export default function GalleryClient({ initialData, initialCollections, bookCol
 
   return (
     <>
-      {/* Header */}
-      <header className="bg-stone-900 text-white py-3 sticky top-0 z-20">
-        <div className="px-4 sm:px-6 lg:px-8 flex items-center justify-between">
-          <div className="flex items-center gap-3">
-            <Link href="/" className="flex items-center gap-3 hover:opacity-80 transition-opacity" aria-label="Source Library home">
-              <svg className="w-8 h-8" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
-                <circle cx="12" cy="12" r="10" stroke="white" strokeWidth="1" />
-                <circle cx="12" cy="12" r="7" stroke="white" strokeWidth="1" />
-                <circle cx="12" cy="12" r="4" stroke="white" strokeWidth="1" />
-              </svg>
-              <span className="text-lg uppercase tracking-wider hidden sm:inline">
-                <span className="font-semibold">Source</span>
-                <span className="font-light">Library</span>
-              </span>
-            </Link>
-            <span className="text-stone-600 hidden sm:inline">/</span>
-            <Link href="/gallery" className="hover:opacity-80 transition-opacity">
-              <span className="text-base font-serif">Image Gallery</span>
-            </Link>
-          </div>
-          <UserMenu variant="hero" />
-        </div>
-      </header>
+      <SiteHeader
+        variant="dark"
+        sticky
+        breadcrumbs={[{ label: 'Image Gallery', href: '/gallery' }]}
+      />
 
       <div className="px-4 sm:px-6 lg:px-8 py-6">
         {/* Search & Filter Bar */}

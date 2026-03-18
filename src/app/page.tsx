@@ -87,9 +87,9 @@ async function getFeaturedCollections() {
   // Fetch highlighted books by ID (these are curated, high-quality picks)
   const highlightedBooks = allHighlightedIds.length > 0
     ? await db.collection('books').aggregate([
-      { $match: { $or: [{ id: { $in: allHighlightedIds } }, { _id: { $in: allHighlightedIds } }], hidden: { $ne: true }, pages_count: { $gt: 0 }, pages_translated: { $gt: 0 } } },
-      { $project: bookProjection },
-    ], { maxTimeMS: 8000 }).toArray()
+        { $match: { $or: [{ id: { $in: allHighlightedIds } }, { _id: { $in: allHighlightedIds } }], hidden: { $ne: true }, pages_count: { $gt: 0 }, pages_translated: { $gt: 0 } } },
+        { $project: bookProjection },
+      ], { maxTimeMS: 8000 }).toArray()
     : [];
 
   // Index highlighted books by their ID for fast lookup
@@ -134,6 +134,9 @@ async function getFeaturedCollections() {
   // ---------- Gallery images: read pre-curated data from collection docs ----------
   // Curated by scripts/maintenance/curate-collection-gallery.mjs — no heavy joins needed.
 
+  // Deduplicate books across featured collections so each collection shows unique books
+  const usedBookIds = new Set<string>();
+
   const results = collections.map((collection) => {
     const images = collection.featured_images || [];
     const hero = images.find(
@@ -141,7 +144,10 @@ async function getFeaturedCollections() {
     );
     const heroUrl = typeof hero === 'string' ? hero : ((hero as Record<string, unknown>)?.extracted_url || (hero as Record<string, unknown>)?.image_url || (hero as Record<string, unknown>)?.thumbnail_url || null) as string | null;
 
-    const books = (booksBySlug.get(collection.slug as string) || []).map(({ collections: _c, ...rest }) => rest);
+    const allBooks = (booksBySlug.get(collection.slug as string) || []).map(({ collections: _c, ...rest }) => rest);
+    // Filter out books already claimed by a previous featured collection
+    const books = allBooks.filter(b => !usedBookIds.has(b.id));
+    books.forEach(b => usedBookIds.add(b.id));
 
     // Fall back to hardcoded hero image if DB doesn't have featured_images
     const fallbackHero = FALLBACK_COLLECTIONS.find(f => f.slug === collection.slug)?.hero_image;
@@ -453,7 +459,7 @@ export default async function HomePage() {
 
         {/* Collections Grid */}
         <section id="library" className="bg-gradient-to-b from-[#f6f3ee] to-[#f3ede6] py-16 md:py-24">
-          <div className="px-6 md:px-12 max-w-7xl mx-auto">
+          <div className="px-6 md:px-12 max-w-[var(--container-wide)] mx-auto">
             <div className="flex items-baseline justify-between mb-8">
               <div>
                 <h2 className="text-3xl md:text-4xl text-primary font-display">
@@ -553,9 +559,10 @@ export default async function HomePage() {
             </Link>
           </p>
         </div>
+
         {/* Discover Section */}
         <section className="bg-white py-16 md:py-24">
-          <div className="px-6 md:px-12 max-w-7xl mx-auto">
+          <div className="px-6 md:px-12 max-w-[var(--container-wide)] mx-auto">
             <h2 className="text-3xl md:text-4xl text-primary mb-3 font-display">
               Discover
             </h2>
@@ -582,7 +589,7 @@ export default async function HomePage() {
 
         {/* Blog Section */}
         <section className="bg-gradient-to-b from-[#f6f3ee] to-[#f3ede6] py-16 md:py-24">
-          <div className="px-6 md:px-12 max-w-7xl mx-auto">
+          <div className="px-6 md:px-12 max-w-[var(--container-wide)] mx-auto">
             <div className="flex items-baseline justify-between mb-10">
               <div>
                 <h2 className="text-3xl md:text-4xl text-primary font-display">

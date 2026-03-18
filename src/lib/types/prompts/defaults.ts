@@ -149,7 +149,8 @@ export const DEFAULT_PROMPTS: ProcessingPrompts = {
 
 **Metadata tags (hidden from readers):**
 - <language>X</language> — the detected language of this page (REQUIRED — always identify the language, e.g. Latin, German, French, English)
-- <page-type>X</page-type> — classify this page (REQUIRED). One of: title-page, frontispiece, dedication, preface, toc, index, errata, colophon, appendix, blank, illustration, diagram, map, text
+- <page-type>X</page-type> — classify this page (REQUIRED). One of: title-page, frontispiece, dedication, preface, toc, index, errata, colophon, appendix, blank, illustration, diagram, map, text, digitizer-insert
+  - Use "digitizer-insert" for pages added by the digitizer (NOT part of the original book): Internet Archive credit pages, Google Books inserts, "Digitized by Google" pages, library barcode/scan sheets, digital watermark pages
 - <columns>N</columns> — number of text columns on this page (omit for single-column pages, include for 2+ columns)
 - <page-num>N</page-num> — visible page/folio numbers (NOT in body text)
 - <header>X</header> — running headers/chapter titles at top of page (NEVER duplicate as heading in body)

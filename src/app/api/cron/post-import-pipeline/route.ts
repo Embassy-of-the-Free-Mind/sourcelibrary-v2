@@ -107,7 +107,7 @@ async function setPipelineStatus(
 function isExLibrisPage(ocrData?: string): boolean {
   if (!ocrData) return false;
   const start = ocrData.substring(0, 1000);
-  return /ex[\s\-.]?libris|bookplate|library\s+stamp|philosophia\s+hermetica|bibliotheca\s+philosophica|google\s+logo|digitized\s+by\s+google|bookplate.*pasted/i.test(start);
+  return /ex[\s\-.]?libris|bookplate|library\s+stamp|philosophia\s+hermetica|bibliotheca\s+philosophica|google\s+logo|digitized\s+by\s+google|bookplate.*pasted|internet\s+archive|digitization\s+credit|inserted\s+by\s+the\s+internet/i.test(start);
 }
 
 /**
@@ -292,7 +292,7 @@ async function upgradeThumbnailFromGallery(
 
   // Candidates: gallery images + title pages (title pages may not have gallery entries)
   const galleryImages = await db.collection('gallery_images').find(
-    { book_id: bookId, gallery_quality: { $gte: 0.4 } },
+    { book_id: bookId, gallery_quality: { $gte: 0.8 } },
     {
       projection: {
         page_id: 1, page_number: 1, gallery_quality: 1, type: 1,

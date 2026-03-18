@@ -1,7 +1,8 @@
 import Link from 'next/link';
 import { ReactNode } from 'react';
+import SiteHeader from './SiteHeader';
 
-/* ── Hero header: logo bar + dark gradient hero ── */
+/* ── Hero header: site header + dark gradient hero ── */
 
 interface ContentHeaderProps {
   title: string;
@@ -15,25 +16,7 @@ interface ContentHeaderProps {
 export function ContentHeader({ title, subtitle, children, image, imageAlt }: ContentHeaderProps) {
   return (
     <>
-      <header className="bg-cream border-b border-border-light">
-        <div className="max-w-[var(--container-standard)] mx-auto px-6 py-4">
-          <Link
-            href="/"
-            className="inline-flex items-center gap-3 text-primary hover:text-secondary transition-colors"
-            aria-label="Source Library home"
-          >
-            <svg className="w-10 h-10 md:w-12 md:h-12" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
-              <circle cx="12" cy="12" r="10" stroke="currentColor" strokeWidth="1" />
-              <circle cx="12" cy="12" r="7" stroke="currentColor" strokeWidth="1" />
-              <circle cx="12" cy="12" r="4" stroke="currentColor" strokeWidth="1" />
-            </svg>
-            <span className="text-xl md:text-2xl uppercase tracking-wider">
-              <span className="font-semibold">Source</span>
-              <span className="font-light">Library</span>
-            </span>
-          </Link>
-        </div>
-      </header>
+      <SiteHeader variant="light" />
 
       <div className="relative overflow-hidden text-white py-16 md:py-20">
         {image ? (
