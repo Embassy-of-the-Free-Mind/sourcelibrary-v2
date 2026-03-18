@@ -48,26 +48,34 @@ export async function GET(request: NextRequest) {
     }
   }
 
-  // If counts mode, return aggregated facet counts
+  // If counts mode, return aggregated facet counts — single $facet pipeline (7 queries → 1)
   if (countsOnly) {
-    const counts: Record<string, Record<string, number>> = {};
+    const facetStages = Object.fromEntries(
+      facetIds.map(facetId => [
+        facetId,
+        [
+          { $unwind: `$faceted_tags.${facetId}` },
+          { $group: { _id: `$faceted_tags.${facetId}`, count: { $sum: 1 } } },
+          { $sort: { count: -1 } },
+        ],
+      ])
+    );
 
+    const [result] = await db.collection('books').aggregate([
+      { $match: query },
+      { $facet: { _total: [{ $count: 'n' }], ...facetStages } },
+    ]).toArray();
+
+    const counts: Record<string, Record<string, number>> = {};
     for (const facetId of facetIds) {
-      const pipeline = [
-        { $match: query },
-        { $unwind: `$faceted_tags.${facetId}` },
-        { $group: { _id: `$faceted_tags.${facetId}`, count: { $sum: 1 } } },
-        { $sort: { count: -1 } },
-      ];
-      const results = await db.collection('books').aggregate(pipeline).toArray();
       counts[facetId] = {};
-      for (const r of results) {
-        counts[facetId][r._id as string] = r.count;
+      for (const r of (result[facetId] as { _id: string; count: number }[])) {
+        counts[facetId][r._id] = r.count;
       }
     }
 
     return NextResponse.json({
-      total: await db.collection('books').countDocuments(query),
+      total: (result._total as { n: number }[])[0]?.n ?? 0,
       activeFilters,
       counts,
       vocabulary: FACETS.map(f => ({

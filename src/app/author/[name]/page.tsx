@@ -1,7 +1,7 @@
 import { Metadata } from 'next';
 import Link from 'next/link';
 import Image from 'next/image';
-import { ArrowLeft, BookOpen, Book as BookIcon } from 'lucide-react';
+import { ArrowLeft, Book as BookIcon } from 'lucide-react';
 import { getDb } from '@/lib/mongodb';
 import { notFound } from 'next/navigation';
 import { bookUrl } from '@/lib/slugify';
@@ -39,8 +39,11 @@ async function getAuthorBooks(authorName: string): Promise<Book[]> {
     {
       $lookup: {
         from: 'pages',
-        localField: 'id',
-        foreignField: 'book_id',
+        let: { book_id: '$id' },
+        pipeline: [
+          { $match: { $expr: { $eq: ['$book_id', '$$book_id'] } } },
+          { $project: { _id: 0, page_type: 1, translation: 1 } },
+        ],
         as: 'pages_array'
       }
     },

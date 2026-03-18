@@ -26,9 +26,14 @@ async function getVocabulary(): Promise<string[]> {
 
   const db = await getDb();
 
-  // Fetch book titles and authors (~1200 books)
+  // Single query: titles/authors + index terms in one round trip.
+  // Projection covers both use cases; books without an index simply
+  // have no `index` field and are skipped in the index-terms loop.
   const books = await db.collection('books')
-    .find({}, { projection: { title: 1, display_title: 1, author: 1 } })
+    .find(
+      { hidden: { $ne: true } },
+      { projection: { title: 1, display_title: 1, author: 1, 'index.concepts': 1, 'index.people': 1, 'index.places': 1, 'index.keyTerms': 1 } }
+    )
     .toArray();
 
   const terms = new Set<string>();
@@ -47,17 +52,8 @@ async function getVocabulary(): Promise<string[]> {
         }
       }
     }
-  }
 
-  // Fetch index terms from books with generated indexes
-  const indexedBooks = await db.collection('books')
-    .find(
-      { 'index.generatedAt': { $exists: true } },
-      { projection: { 'index.concepts': 1, 'index.people': 1, 'index.places': 1, 'index.keyTerms': 1 } }
-    )
-    .toArray();
-
-  for (const book of indexedBooks) {
+    // Index terms (only present on books with a generated index)
     const idx = book.index;
     if (!idx) continue;
 

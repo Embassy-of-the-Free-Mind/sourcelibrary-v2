@@ -1,5 +1,6 @@
 import { NextRequest, NextResponse } from 'next/server';
 import { getDb } from '@/lib/mongodb';
+import { buildBookSearchStage } from '@/lib/atlas-search';
 
 export const dynamic = 'force-dynamic';
 
@@ -9,32 +10,6 @@ const DEFAULT_LIMIT = 100;
 // Cache for the default (unfiltered, first page) library request
 let defaultViewCache: { data: string; timestamp: number } | null = null;
 const DEFAULT_CACHE_TTL = 60_000; // 1 minute
-
-// LRU cache for diacritics regex patterns (avoids rebuilding on every search)
-const diacriticCache = new Map<string, string>();
-const DIACRITICS_CACHE_MAX = 200;
-
-function buildDiacriticPattern(search: string): string {
-  const cached = diacriticCache.get(search);
-  if (cached) return cached;
-
-  const escaped = search.replace(/[.*+?^${}()|[\]\\]/g, '\\$&');
-  const pattern = escaped.replace(/[a-zA-Z]/g, (ch) => {
-    const map: Record<string, string> = {
-      a: '[aàáâãäåæ]', e: '[eèéêë]', i: '[iìíîï]', o: '[oòóôõöø]',
-      u: '[uùúûü]', n: '[nñ]', c: '[cç]', y: '[yýÿ]', s: '[sß]',
-    };
-    return map[ch.toLowerCase()] || ch;
-  });
-
-  // Evict oldest entry if cache is full
-  if (diacriticCache.size >= DIACRITICS_CACHE_MAX) {
-    const first = diacriticCache.keys().next().value;
-    if (first) diacriticCache.delete(first);
-  }
-  diacriticCache.set(search, pattern);
-  return pattern;
-}
 
 type SortOption = 'recent-translation' | 'recent' | 'title-asc' | 'title-desc';
 
@@ -81,47 +56,32 @@ export async function GET(request: NextRequest) {
 
     const db = await getDb();
 
-    // Build match conditions
-    const matchConditions: Record<string, unknown>[] = [
-      { hidden: { $ne: true } },
-    ];
+    // When a search term is present, use Atlas Search ($search must be first stage).
+    // Language, category, firstTranslation are pushed as Atlas Search filters.
+    // Collection is not in the search index so it stays as a post-$search $match.
+    // When no search term, use a standard $match (cheaper for unfiltered browsing).
+    let pipelineStart: Record<string, unknown>[];
 
     if (search.trim()) {
-      // Build diacritic-insensitive regex: "bohme" matches "Böhme"
-      const searchRegex = { $regex: buildDiacriticPattern(search), $options: 'i' };
-      matchConditions.push({
-        $or: [
-          { title: searchRegex },
-          { display_title: searchRegex },
-          { author: searchRegex },
-          { language: searchRegex },
-          { categories: searchRegex },
-        ],
-      });
+      pipelineStart = [
+        buildBookSearchStage(search, {
+          language: language || undefined,
+          category: category || undefined,
+          isFirstTranslation: firstTranslation || undefined,
+        }),
+        ...(collection ? [{ $match: { collections: collection } }] : []),
+      ];
+    } else {
+      const matchConditions: Record<string, unknown>[] = [{ hidden: { $ne: true } }];
+      if (language) matchConditions.push({ language });
+      if (category) matchConditions.push({ categories: category });
+      if (collection) matchConditions.push({ collections: collection });
+      if (firstTranslation) matchConditions.push({ is_first_translation: true });
+      pipelineStart = [{ $match: { $and: matchConditions } }];
     }
-
-    if (language) {
-      matchConditions.push({ language });
-    }
-
-    if (category) {
-      matchConditions.push({ categories: category });
-    }
-
-    if (collection) {
-      matchConditions.push({ collections: collection });
-    }
-
-    if (firstTranslation) {
-      matchConditions.push({ is_first_translation: true });
-    }
-
-    const matchStage = matchConditions.length > 0
-      ? [{ $match: { $and: matchConditions } }]
-      : [];
 
     const pipeline = [
-      ...matchStage,
+      ...pipelineStart,
       {
         $addFields: {
           id: { $ifNull: ['$id', { $toString: '$_id' }] },

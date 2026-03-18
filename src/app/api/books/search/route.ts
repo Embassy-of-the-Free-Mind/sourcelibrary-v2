@@ -1,10 +1,6 @@
 import { NextRequest, NextResponse } from 'next/server';
 import { getDb } from '@/lib/mongodb';
-
-// Escape special regex characters to prevent ReDoS
-function escapeRegex(str: string): string {
-  return str.replace(/[.*+?^${}()|[\]\\]/g, '\\$&');
-}
+import { buildBookSearchStage } from '@/lib/atlas-search';
 
 export async function GET(request: NextRequest) {
   const { searchParams } = new URL(request.url);
@@ -16,7 +12,6 @@ export async function GET(request: NextRequest) {
     return NextResponse.json({ error: 'Missing query parameter' }, { status: 400 });
   }
 
-  // Prevent regex DoS with very long queries
   if (query.length > 100) {
     return NextResponse.json({ error: 'Query too long (max 100 chars)' }, { status: 400 });
   }
@@ -24,34 +19,37 @@ export async function GET(request: NextRequest) {
   try {
     const db = await getDb();
 
-    const safeQuery = escapeRegex(query);
-    const filter = {
-      $or: [
-        { title: { $regex: safeQuery, $options: 'i' } },
-        { display_title: { $regex: safeQuery, $options: 'i' } },
-        { author: { $regex: safeQuery, $options: 'i' } }
-      ]
-    };
+    const [result] = await db.collection('books').aggregate([
+      buildBookSearchStage(query),
+      {
+        $facet: {
+          results: [
+            { $skip: skip },
+            { $limit: limit },
+            { $project: { _id: 1, id: 1, title: 1, display_title: 1, author: 1 } },
+          ],
+          total: [{ $count: 'n' }],
+        },
+      },
+    ]).toArray();
 
-    const [books, total] = await Promise.all([
-      db.collection('books').find(filter).skip(skip).limit(limit).toArray(),
-      db.collection('books').countDocuments(filter)
-    ]);
+    const books = result?.results ?? [];
+    const total = result?.total[0]?.n ?? 0;
 
     return NextResponse.json({
-      results: books.map(b => ({
+      results: books.map((b: { id?: string; _id: { toString(): string }; title: string; display_title?: string; author?: string }) => ({
         id: b.id || b._id.toString(),
         _id: b._id.toString(),
         title: b.title,
         display_title: b.display_title,
-        author: b.author
+        author: b.author,
       })),
       pagination: {
         total,
         limit,
         skip,
-        hasMore: skip + books.length < total
-      }
+        hasMore: skip + books.length < total,
+      },
     });
   } catch (error) {
     console.error('Search error:', error);

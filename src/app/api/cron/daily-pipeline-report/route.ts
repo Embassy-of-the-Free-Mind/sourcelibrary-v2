@@ -29,27 +29,29 @@ export async function GET() {
 
     const vis = { hidden: { $ne: true } };
 
-    // ── Collection state (from book-level caches) ──
-    const [
-      totalBooks,
-      ocrComplete,
-      ocrPartial,
-      translationComplete,
-      translationPartial,
-      firstTranslations,
-    ] = await Promise.all([
-      books.countDocuments(vis),
-      books.countDocuments({ ...vis, pages_ocr: { $gt: 0 }, $expr: { $gte: ['$pages_ocr', '$pages_count'] } }),
-      books.countDocuments({ ...vis, pages_ocr: { $gt: 0 }, $expr: { $lt: ['$pages_ocr', '$pages_count'] } }),
-      books.countDocuments({ ...vis, pages_translated: { $gt: 0 }, $expr: { $gte: ['$pages_translated', '$pages_count'] } }),
-      books.countDocuments({ ...vis, pages_translated: { $gt: 0 }, $expr: { $lt: ['$pages_translated', '$pages_count'] } }),
-      books.countDocuments({ ...vis, is_first_translation: true }),
-    ]);
-
-    const [pageSums] = await books.aggregate([
+    // ── Collection state (from book-level caches) — single pass ──
+    const [collectionState] = await books.aggregate([
       { $match: vis },
-      { $group: { _id: null, total: { $sum: '$pages_count' }, ocr: { $sum: '$pages_ocr' }, translated: { $sum: '$pages_translated' } } },
+      { $group: {
+        _id: null,
+        totalBooks:          { $sum: 1 },
+        ocrComplete:         { $sum: { $cond: [{ $and: [{ $gt: ['$pages_ocr', 0] }, { $gte: ['$pages_ocr', '$pages_count'] }] }, 1, 0] } },
+        ocrPartial:          { $sum: { $cond: [{ $and: [{ $gt: ['$pages_ocr', 0] }, { $lt:  ['$pages_ocr', '$pages_count'] }] }, 1, 0] } },
+        translationComplete: { $sum: { $cond: [{ $and: [{ $gt: ['$pages_translated', 0] }, { $gte: ['$pages_translated', '$pages_count'] }] }, 1, 0] } },
+        translationPartial:  { $sum: { $cond: [{ $and: [{ $gt: ['$pages_translated', 0] }, { $lt:  ['$pages_translated', '$pages_count'] }] }, 1, 0] } },
+        firstTranslations:   { $sum: { $cond: [{ $eq: ['$is_first_translation', true] }, 1, 0] } },
+        totalPages:          { $sum: '$pages_count' },
+        ocrPages:            { $sum: '$pages_ocr' },
+        translatedPages:     { $sum: '$pages_translated' },
+      } },
     ]).toArray();
+
+    const totalBooks          = collectionState?.totalBooks          ?? 0;
+    const ocrComplete         = collectionState?.ocrComplete         ?? 0;
+    const ocrPartial          = collectionState?.ocrPartial          ?? 0;
+    const translationComplete = collectionState?.translationComplete ?? 0;
+    const translationPartial  = collectionState?.translationPartial  ?? 0;
+    const firstTranslations   = collectionState?.firstTranslations   ?? 0;
 
     // ── Pipeline status distribution ──
     const pipelineStatuses = await books.aggregate([
@@ -135,9 +137,9 @@ export async function GET() {
       },
 
       pages: {
-        total: pageSums?.total || 0,
-        ocr_done: pageSums?.ocr || 0,
-        translated: pageSums?.translated || 0,
+        total: collectionState?.totalPages || 0,
+        ocr_done: collectionState?.ocrPages || 0,
+        translated: collectionState?.translatedPages || 0,
       },
 
       pipeline_statuses: Object.fromEntries(pipelineStatuses.map(s => [s._id, s.count])),
