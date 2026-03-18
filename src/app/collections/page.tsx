@@ -2,6 +2,7 @@ import { getDb } from '@/lib/mongodb';
 import Link from 'next/link';
 import Image from 'next/image';
 import ContentPageLayout, { ContentHeader } from '@/components/layout/ContentPageLayout';
+import { sortCollections } from '@/lib/collections-utils';
 import type { Metadata } from 'next';
 
 export const dynamic = 'force-dynamic';
@@ -36,17 +37,6 @@ interface CollectionDoc {
   languages: { lang: string; count: number }[];
 }
 
-const PINNED_SLUGS = ['natural-philosophy', 'classical-philosophy', 'renaissance-philosophy', 'sacred-texts'];
-
-function shuffle<T>(arr: T[]): T[] {
-  const a = [...arr];
-  for (let i = a.length - 1; i > 0; i--) {
-    const j = Math.floor(Math.random() * (i + 1));
-    [a[i], a[j]] = [a[j], a[i]];
-  }
-  return a;
-}
-
 async function fetchCollections(): Promise<CollectionDoc[]> {
   const db = await getDb();
   const docs = await db.collection('collections').find({
@@ -56,11 +46,7 @@ async function fetchCollections(): Promise<CollectionDoc[]> {
   }).toArray();
   const all = docs.map(({ _id, ...rest }) => rest) as unknown as CollectionDoc[];
 
-  // Pin + shuffle categories
-  const pinned = PINNED_SLUGS.map(s => all.find(c => c.slug === s)).filter(Boolean) as CollectionDoc[];
-  const rest = all.filter(c => !PINNED_SLUGS.includes(c.slug));
-
-  return [...pinned, ...shuffle(rest)];
+  return sortCollections(all);
 }
 
 function CollectionCard({ col }: { col: CollectionDoc }) {

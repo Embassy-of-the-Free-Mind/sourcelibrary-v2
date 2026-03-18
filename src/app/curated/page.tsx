@@ -3,6 +3,7 @@ import Link from 'next/link';
 import Image from 'next/image';
 import { ArrowLeft } from 'lucide-react';
 import SignUpCTA from '@/components/auth/SignUpCTA';
+import { sanitizeThumbnail } from '@/lib/collections-utils';
 import type { Metadata } from 'next';
 
 export const revalidate = 600;
@@ -38,18 +39,6 @@ interface CuratedCollection {
   published: boolean;
   book_count: number;
   featured_images?: FeaturedImage[];
-}
-
-/** Sanitize thumbnail URLs: unwrap /api/image?url= wrappers, reject non-http URLs. */
-function sanitizeThumbnail(url: string | undefined): string | undefined {
-  if (!url) return undefined;
-  if (url.startsWith('/api/image')) {
-    const match = url.match(/[?&]url=([^&]+)/);
-    if (match) return decodeURIComponent(match[1]);
-    return undefined;
-  }
-  if (url.startsWith('http://') || url.startsWith('https://')) return url;
-  return undefined;
 }
 
 function getHeroImage(col: CuratedCollection): string | undefined {

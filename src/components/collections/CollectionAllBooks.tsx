@@ -4,6 +4,7 @@ import { useState, useCallback, useRef } from 'react';
 import { ArrowRight, Search, X } from 'lucide-react';
 import { useDebouncedCallback } from 'use-debounce';
 import CollectionBookCard from '@/components/CollectionBookCard';
+import { bookTitle } from '@/lib/collections-utils';
 
 const PER_PAGE = 60;
 
@@ -31,11 +32,6 @@ interface CollectionAllBooksProps {
   compactBooks: BookItem[];
   total: number;
   languages: { lang: string; count: number }[];
-}
-
-function bookTitle(book: { display_title?: string; title: string }): string {
-  const dt = book.display_title;
-  return (dt && dt !== 'None') ? dt : book.title;
 }
 
 export default function CollectionAllBooks({

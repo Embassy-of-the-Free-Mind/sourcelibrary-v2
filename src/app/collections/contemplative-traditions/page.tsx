@@ -3,6 +3,7 @@ import Link from 'next/link';
 import Image from 'next/image';
 import { ArrowLeft, BookOpen } from 'lucide-react';
 import { getDb } from '@/lib/mongodb';
+import { sanitizeThumbnail } from '@/lib/collections-utils';
 
 export const revalidate = 600;
 
@@ -124,18 +125,6 @@ async function getTraditions(): Promise<{ traditions: TraditionCollection[]; tot
     })) as TraditionCollection[],
     totalBooks,
   };
-}
-
-function sanitizeThumbnail(url: string | undefined | null): string | undefined {
-  if (!url) return undefined;
-  if (url.startsWith('/api/image')) {
-    const match = url.match(/[?&]url=([^&]+)/);
-    if (match) return decodeURIComponent(match[1]);
-    return undefined;
-  }
-  if (url.startsWith('http://') || url.startsWith('https://')) return url;
-  if (url.startsWith('data:') || url.startsWith('/')) return url;
-  return undefined;
 }
 
 /* ── Components ── */

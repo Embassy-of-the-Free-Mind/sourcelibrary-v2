@@ -7,6 +7,7 @@ import { notFound } from 'next/navigation';
 import { getPartnerBySlug, getAllPartnerSlugs } from '@/lib/library-partners';
 import CollectionBookCard from '@/components/CollectionBookCard';
 import CollectionFilters from '@/components/collections/CollectionFilters';
+import { bookTitle } from '@/lib/collections-utils';
 
 const PER_PAGE = 60;
 
@@ -46,11 +47,6 @@ export async function generateMetadata({ params }: Props): Promise<Metadata> {
 }
 
 // ---------- Helpers ----------
-
-function bookTitle(book: { display_title?: string; title: string }): string {
-  const dt = book.display_title;
-  return (dt && dt !== 'None') ? dt : book.title;
-}
 
 interface BookItem {
   id: string;
