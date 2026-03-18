@@ -69,20 +69,14 @@ export default function FeaturedCollectionCarousel({ items }: FeaturedCollection
   if (items.length === 0) return null;
 
   const current = items[index];
-  const { collection, books } = current;
+  const { collection, books, galleryImages = [] } = current;
 
   const prev = () => goTo(index > 0 ? index - 1 : items.length - 1);
   const next = () => goTo(index < items.length - 1 ? index + 1 : 0);
 
-  // Use first book's full-res archived page as the hero image (not the low-res thumbnail)
-  const heroBook = books.find(b => b.thumbnail || b.thumbnail_blob);
-  const heroThumbRaw = heroBook ? (heroBook.thumbnail_blob || heroBook.thumbnail) : collection.hero_image;
-  // Swap /thumbnails/ → /archived/ for full-resolution page image (only for Vercel Blob thumbnail URLs)
-  const heroThumb = (heroThumbRaw && heroThumbRaw.includes('vercel-storage.com/thumbnails/'))
-    ? heroThumbRaw.replace('/thumbnails/', '/archived/')
-    : heroThumbRaw;
-  // Remaining books for the title list (skip the hero book)
-  const listBooks = heroBook ? books.filter(b => b.id !== heroBook.id) : books;
+  // Hero: prefer a gallery image (illustration/engraving), fall back to book thumbnail
+  const heroGallery = galleryImages[0] || null;
+  const heroImageUrl = heroGallery?.image_url || collection.hero_image;
 
   return (
     <section className="bg-dark py-12 md:py-16 relative overflow-hidden">
@@ -147,40 +141,42 @@ export default function FeaturedCollectionCarousel({ items }: FeaturedCollection
             </div>
           </div>
 
-          {/* Center: tall book-page hero image */}
-          {heroThumb ? (
+          {/* Center: gallery illustration as tall hero image */}
+          {heroImageUrl ? (
             <div className="hidden lg:block">
               <Link
-                href={heroBook ? bookUrl(heroBook) : `/collections/${collection.slug}`}
-                className="group block relative w-[260px] h-[400px] rounded-lg overflow-hidden bg-white/5 border border-white/10 shadow-2xl"
+                href={heroGallery
+                  ? (heroGallery.book_slug ? `/book/${heroGallery.book_slug}` : `/gallery/image/${heroGallery.id}`)
+                  : `/collections/${collection.slug}`}
+                className="group block relative w-[280px] h-[420px] rounded-lg overflow-hidden bg-white/5 border border-white/10 shadow-2xl"
               >
                 <Image
-                  src={heroThumb}
-                  alt={heroBook ? bookTitle(heroBook) : collection.name}
+                  src={heroImageUrl}
+                  alt={heroGallery?.museum_description || collection.name}
                   fill
-                  unoptimized
+                  quality={90}
                   className="object-contain group-hover:scale-[1.03] transition-transform duration-500"
-                  sizes="(min-width: 1024px) 520px, 400px"
+                  sizes="(min-width: 1024px) 560px, 400px"
                 />
-                <div className="absolute bottom-0 inset-x-0 bg-gradient-to-t from-black/70 via-black/20 to-transparent p-3">
-                  <p className="text-xs text-white/80 line-clamp-2 leading-snug">
-                    {heroBook ? bookTitle(heroBook) : ''}
-                  </p>
-                  {heroBook?.author && (
-                    <p className="text-[10px] text-white/50 mt-0.5 line-clamp-1">
-                      {heroBook.author}
-                    </p>
+                <div className="absolute bottom-0 inset-x-0 bg-gradient-to-t from-black/80 via-black/30 to-transparent p-3">
+                  {heroGallery?.type && (
+                    <span className="text-[10px] uppercase tracking-wider text-white/50 mb-0.5 block">
+                      {heroGallery.type}
+                    </span>
                   )}
+                  <p className="text-xs text-white/80 line-clamp-2 leading-snug">
+                    {heroGallery?.book_title || ''}
+                  </p>
                 </div>
               </Link>
             </div>
           ) : null}
 
           {/* Right: book title list */}
-          {listBooks.length > 0 ? (
-            <div className="min-w-0 flex flex-col gap-0.5 justify-center max-h-[400px] overflow-hidden">
+          {books.length > 0 ? (
+            <div className="min-w-0 flex flex-col gap-0.5 justify-center max-h-[420px] overflow-hidden">
               <p className="text-[10px] uppercase tracking-[0.15em] text-white/30 mb-2">In this collection</p>
-              {listBooks.slice(0, 8).map((book) => {
+              {books.slice(0, 9).map((book) => {
                 const thumb = book.thumbnail_blob || book.thumbnail;
                 return (
                   <Link
@@ -216,7 +212,7 @@ export default function FeaturedCollectionCarousel({ items }: FeaturedCollection
                   </Link>
                 );
               })}
-              {books.length > 9 && (
+              {collection.book_count > 9 && (
                 <Link
                   href={`/collections/${collection.slug}`}
                   className="text-xs text-white/30 hover:text-white/50 transition-colors mt-1 pl-1.5"
@@ -228,37 +224,41 @@ export default function FeaturedCollectionCarousel({ items }: FeaturedCollection
           ) : null}
         </div>
 
-        {/* Mobile: show hero image + book grid for small screens */}
-        {books.length > 0 && (
-          <div
-            className="lg:hidden mt-6 transition-opacity duration-250 ease-in-out"
-            style={{ opacity: fading ? 0 : 1 }}
-          >
-            <div className="flex gap-4">
-              {/* Mobile hero book */}
-              {heroThumb && heroBook && (
-                <Link
-                  href={bookUrl(heroBook)}
-                  className="group flex-shrink-0"
-                >
-                  <div className="w-[140px] h-[210px] relative rounded-lg overflow-hidden bg-white/5 border border-white/10 shadow-lg">
-                    <Image
-                      src={heroThumb}
-                      alt={bookTitle(heroBook)}
-                      fill
-                      quality={85}
-                      className="object-cover"
-                      sizes="140px"
-                    />
-                  </div>
-                  <p className="text-xs text-white/50 mt-1.5 line-clamp-2 w-[140px] leading-tight">
-                    {bookTitle(heroBook)}
+        {/* Mobile layout */}
+        <div
+          className="lg:hidden mt-6 transition-opacity duration-250 ease-in-out"
+          style={{ opacity: fading ? 0 : 1 }}
+        >
+          <div className="flex gap-4">
+            {/* Mobile hero — gallery image */}
+            {heroImageUrl && (
+              <Link
+                href={heroGallery
+                  ? (heroGallery.book_slug ? `/book/${heroGallery.book_slug}` : `/gallery/image/${heroGallery.id}`)
+                  : `/collections/${collection.slug}`}
+                className="group flex-shrink-0"
+              >
+                <div className="w-[150px] h-[225px] relative rounded-lg overflow-hidden bg-white/5 border border-white/10 shadow-lg">
+                  <Image
+                    src={heroImageUrl}
+                    alt={heroGallery?.museum_description || collection.name}
+                    fill
+                    quality={85}
+                    className="object-contain"
+                    sizes="150px"
+                  />
+                </div>
+                {heroGallery?.book_title && (
+                  <p className="text-xs text-white/50 mt-1.5 line-clamp-2 w-[150px] leading-tight">
+                    {heroGallery.book_title}
                   </p>
-                </Link>
-              )}
-              {/* Mobile book list */}
+                )}
+              </Link>
+            )}
+            {/* Mobile book list */}
+            {books.length > 0 && (
               <div className="flex-1 min-w-0 flex flex-col gap-1">
-                {listBooks.slice(0, 5).map((book) => (
+                {books.slice(0, 5).map((book) => (
                   <Link
                     key={book.id}
                     href={bookUrl(book)}
@@ -285,9 +285,9 @@ export default function FeaturedCollectionCarousel({ items }: FeaturedCollection
                   </Link>
                 ))}
               </div>
-            </div>
+            )}
           </div>
-        )}
+        </div>
 
         {/* Dots */}
         <div className="flex justify-center gap-2 mt-8">
