@@ -18,6 +18,7 @@ interface CollectionBook {
   pages_ocr?: number;
   pages_translated?: number;
   thumbnail?: string;
+  thumbnail_blob?: string;
   language?: string;
   has_doi?: boolean;
   is_first_translation?: boolean;
@@ -33,8 +34,12 @@ interface CollectionBookCardProps {
 export default function CollectionBookCard({ book, priority = false }: CollectionBookCardProps) {
   const [imageLoaded, setImageLoaded] = useState(false);
   const [imageError, setImageError] = useState(false);
+  const [useFallback, setUseFallback] = useState(false);
 
   const pageCount = book.pages_count || book.pages || 0;
+  const fallbackUrl = book.thumbnail_blob && book.thumbnail_blob !== book.thumbnail
+    ? book.thumbnail_blob : null;
+  const thumbnailUrl = useFallback && fallbackUrl ? fallbackUrl : book.thumbnail;
 
   return (
     <Link
@@ -45,13 +50,13 @@ export default function CollectionBookCard({ book, priority = false }: Collectio
         {/* Book Poster with Shimmer Loading */}
         <div className="relative aspect-[3/4] bg-warm overflow-hidden">
           {/* Shimmer placeholder - only for images, shows until loaded */}
-          {!imageLoaded && !imageError && book.thumbnail && (
+          {!imageLoaded && !imageError && thumbnailUrl && (
             <div className="absolute inset-0 bg-gradient-to-r from-border-light via-warm to-border-light bg-[length:200%_100%] animate-shimmer" />
           )}
 
-          {book.thumbnail && !imageError ? (
+          {thumbnailUrl && !imageError ? (
             <Image
-              src={book.thumbnail}
+              src={thumbnailUrl}
               alt={book.title}
               fill
               quality={85}
@@ -61,7 +66,13 @@ export default function CollectionBookCard({ book, priority = false }: Collectio
               )}
               sizes="(max-width: 768px) 50vw, (max-width: 1024px) 33vw, 25vw"
               onLoad={() => setImageLoaded(true)}
-              onError={() => setImageError(true)}
+              onError={() => {
+                if (!useFallback && fallbackUrl) {
+                  setUseFallback(true);
+                } else {
+                  setImageError(true);
+                }
+              }}
               priority={priority}
               loading={priority ? 'eager' : 'lazy'}
             />

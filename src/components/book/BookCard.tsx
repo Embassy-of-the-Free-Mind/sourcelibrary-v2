@@ -16,6 +16,7 @@ interface BookCardProps {
 export default function BookCard({ book, priority = false }: BookCardProps) {
   const [imageLoaded, setImageLoaded] = useState(false);
   const [imageError, setImageError] = useState(false);
+  const [useFallback, setUseFallback] = useState(false);
   const [mousePos, setMousePos] = useState({ x: 0, y: 0 });
   const [showTooltip, setShowTooltip] = useState(false);
   const loadStartTime = useRef<number | null>(null);
@@ -35,9 +36,11 @@ export default function BookCard({ book, priority = false }: BookCardProps) {
     };
   }, []);
 
-  // Prefer full-res thumbnail (archived_photo or IIIF) over 150px thumbnail_blob
-  // Next.js Image optimization handles resizing, caching, and format conversion
-  const thumbnailUrl = book.thumbnail || book.thumbnail_blob;
+  // Prefer full-res thumbnail over 150px thumbnail_blob, with fallback on error
+  const primaryUrl = book.thumbnail || book.thumbnail_blob;
+  const fallbackUrl = book.thumbnail && book.thumbnail_blob && book.thumbnail !== book.thumbnail_blob
+    ? book.thumbnail_blob : null;
+  const thumbnailUrl = useFallback && fallbackUrl ? fallbackUrl : primaryUrl;
 
   // Determine image source type for analytics
   const getImageSource = (): 'blob' | 'ia' | 'local' | 'other' => {
@@ -126,7 +129,13 @@ export default function BookCard({ book, priority = false }: BookCardProps) {
               className="object-cover group-hover:scale-105 transition-transform duration-300"
               sizes="(max-width: 640px) 50vw, (max-width: 1024px) 33vw, 25vw"
               onLoad={handleImageLoad}
-              onError={() => setImageError(true)}
+              onError={() => {
+                if (!useFallback && fallbackUrl) {
+                  setUseFallback(true);
+                } else {
+                  setImageError(true);
+                }
+              }}
               priority={priority}
               loading={priority ? 'eager' : 'lazy'}
             />
