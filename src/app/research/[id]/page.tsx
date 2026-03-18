@@ -63,7 +63,7 @@ export default async function ResearchSessionPage({ params }: PageProps) {
   });
 
   return (
-    <ContentPageLayout maxWidth="medium">
+    <ContentPageLayout maxWidth="standard">
       <SubPageHeader
         title={s.title}
         subtitle={dateStr}
