@@ -78,7 +78,7 @@ export default function FeaturedCollectionCarousel({ items }: FeaturedCollection
   const hasGallery = galleryImages.length >= 2;
 
   return (
-    <section className="bg-dark py-12 md:py-16 relative">
+    <section className="bg-dark py-12 md:py-16 relative overflow-hidden">
       <div className="px-6 md:px-12 max-w-7xl mx-auto">
         <div className="flex items-center justify-between mb-6">
           <div className="flex items-center gap-3">

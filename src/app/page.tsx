@@ -545,10 +545,10 @@ export default async function HomePage() {
         <FromTheCollection items={showcase} />
 
         {/* Gallery attribution — connects beauty to community */}
-        <div className="bg-stone-900 px-6 md:px-12 pb-8 -mt-1">
-          <p className="text-center text-xs" style={{ color: 'rgba(255,255,255,0.25)' }}>
+        <div className="bg-warm px-6 md:px-12 pb-8 -mt-1">
+          <p className="text-center text-xs text-stone-400">
             From the collections of Source Library, preserved and translated with support from{' '}
-            <Link href="/ficino-society/members" className="hover:text-white/40 transition-colors underline decoration-white/10">
+            <Link href="/ficino-society/members" className="hover:text-stone-600 transition-colors underline decoration-stone-300">
               Ficino Society members
             </Link>
           </p>
