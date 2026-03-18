@@ -77,8 +77,10 @@ export default function FeaturedCollectionCarousel({ items }: FeaturedCollection
   // Use first book's full-res archived page as the hero image (not the low-res thumbnail)
   const heroBook = books.find(b => b.thumbnail || b.thumbnail_blob);
   const heroThumbRaw = heroBook ? (heroBook.thumbnail_blob || heroBook.thumbnail) : collection.hero_image;
-  // Swap /thumbnails/ → /archived/ for full-resolution page image
-  const heroThumb = heroThumbRaw?.replace('/thumbnails/', '/archived/') || heroThumbRaw;
+  // Swap /thumbnails/ → /archived/ for full-resolution page image (only for Vercel Blob thumbnail URLs)
+  const heroThumb = (heroThumbRaw && heroThumbRaw.includes('vercel-storage.com/thumbnails/'))
+    ? heroThumbRaw.replace('/thumbnails/', '/archived/')
+    : heroThumbRaw;
   // Remaining books for the title list (skip the hero book)
   const listBooks = heroBook ? books.filter(b => b.id !== heroBook.id) : books;
 
