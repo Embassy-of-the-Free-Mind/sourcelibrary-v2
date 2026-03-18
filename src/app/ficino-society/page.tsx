@@ -15,7 +15,7 @@ export default function FicinoSocietyPage() {
 }
 
 // ---------------------------------------------------------------------------
-// Ornamental divider — a small typographic flourish
+// Ornament
 // ---------------------------------------------------------------------------
 function Ornament() {
   return (
@@ -28,7 +28,7 @@ function Ornament() {
 }
 
 // ---------------------------------------------------------------------------
-// Main content
+// Main
 // ---------------------------------------------------------------------------
 function FicinoSocietyContent() {
   const { data: session, status, update: updateSession } = useSession();
@@ -39,24 +39,21 @@ function FicinoSocietyContent() {
   const [loading, setLoading] = useState(false);
   const [activating, setActivating] = useState(false);
 
-  // Normal membership check
   useEffect(() => {
     if (session?.user && !success) {
       fetch('/api/membership').then(r => r.json()).then(setMembership);
     }
   }, [session, success]);
 
-  // After payment: poll until webhook activates membership
   useEffect(() => {
     if (!success || !session?.user) return;
     setActivating(true);
 
     let cancelled = false;
     let attempts = 0;
-    const maxAttempts = 20;
 
     const poll = async () => {
-      while (!cancelled && attempts < maxAttempts) {
+      while (!cancelled && attempts < 20) {
         attempts++;
         try {
           const res = await fetch('/api/membership');
@@ -67,9 +64,7 @@ function FicinoSocietyContent() {
             await updateSession();
             return;
           }
-        } catch {
-          // Retry on failure
-        }
+        } catch { /* retry */ }
         await new Promise(r => setTimeout(r, 1500));
       }
       setActivating(false);
@@ -107,20 +102,19 @@ function FicinoSocietyContent() {
     <div className="min-h-screen bg-[#fdfcf9]">
 
       {/* ================================================================ */}
-      {/* TITLE PAGE — like the opening page of a book                     */}
+      {/* TITLE PAGE                                                       */}
       {/* ================================================================ */}
       <section className="min-h-screen flex flex-col justify-center items-center relative bg-[#0e0c0a]">
-        {/* Background: a single manuscript image, very muted */}
         <div className="absolute inset-0 overflow-hidden">
           <img
             src="https://3kwioilsplnmnkv8.public.blob.vercel-storage.com/archived/69520c46ab34727b1f044141/99.jpg"
             alt=""
-            className="w-full h-full object-cover opacity-[0.08]"
+            className="w-full h-full object-cover opacity-[0.07]"
           />
         </div>
 
         <div className="relative z-10 text-center px-6 max-w-2xl">
-          <p className="text-[#c9a86c]/60 text-[11px] tracking-[0.4em] uppercase mb-12 font-sans">
+          <p className="text-[#c9a86c]/50 text-[11px] tracking-[0.4em] uppercase mb-12 font-sans">
             Est. MMXXV
           </p>
           <h1
@@ -129,12 +123,11 @@ function FicinoSocietyContent() {
           >
             The Ficino<br />Society
           </h1>
-          <p className="text-white/35 text-base md:text-lg font-body leading-relaxed max-w-md mx-auto">
-            Supporting the translation of the<br className="hidden md:inline" />
-            Western esoteric tradition
+          <p className="text-white/30 text-base md:text-lg font-body leading-relaxed max-w-md mx-auto">
+            A circle of scholars and readers translating<br className="hidden md:inline" />
+            the Western esoteric tradition
           </p>
 
-          {/* Scroll hint */}
           <div className="mt-20">
             <a href="#letter" className="text-white/15 hover:text-white/30 transition-colors">
               <svg className="w-5 h-5 mx-auto animate-bounce" fill="none" stroke="currentColor" viewBox="0 0 24 24">
@@ -144,20 +137,26 @@ function FicinoSocietyContent() {
           </div>
         </div>
 
-        {/* Minimal header */}
         <header className="absolute top-0 left-0 right-0 z-50 flex items-center justify-between px-6 md:px-12 py-6">
-          <span className="text-white/25 text-xs tracking-[0.15em] uppercase font-sans">
+          <span className="text-white/20 text-xs tracking-[0.15em] uppercase font-sans">
             ficinosociety.org
           </span>
-          {status === 'authenticated' ? (
-            <Link href="/account" className="text-white/25 text-xs tracking-wider uppercase hover:text-white/50 transition-colors font-sans">
-              Account
-            </Link>
-          ) : (
-            <Link href="/auth/signin" className="text-white/25 text-xs tracking-wider uppercase hover:text-white/50 transition-colors font-sans">
-              Sign In
-            </Link>
-          )}
+          <div className="flex items-center gap-4">
+            {isMember && (
+              <Link href="/ficino-society/discussions" className="text-white/20 text-xs tracking-wider uppercase hover:text-white/50 transition-colors font-sans">
+                Discussions
+              </Link>
+            )}
+            {status === 'authenticated' ? (
+              <Link href="/account" className="text-white/20 text-xs tracking-wider uppercase hover:text-white/50 transition-colors font-sans">
+                Account
+              </Link>
+            ) : (
+              <Link href="/auth/signin" className="text-white/20 text-xs tracking-wider uppercase hover:text-white/50 transition-colors font-sans">
+                Sign In
+              </Link>
+            )}
+          </div>
         </header>
       </section>
 
@@ -180,20 +179,21 @@ function FicinoSocietyContent() {
                   Welcome to the Ficino Society
                 </p>
                 <p className="text-white/50 text-sm leading-relaxed mb-6">
-                  Your membership is active. Thank you for supporting this work.
+                  You&apos;re in. Visit the correspondence to introduce yourself,
+                  or head to the library to see what&apos;s been translated.
                 </p>
                 <div className="flex flex-col sm:flex-row gap-3 justify-center">
                   <Link
-                    href={returnUrl || '/gallery'}
-                    className="inline-block px-5 py-2 rounded text-white/90 text-sm transition-opacity hover:opacity-80 bg-[#9e4a3a]"
+                    href="/ficino-society/discussions"
+                    className="inline-block px-5 py-2 rounded text-white/90 text-sm bg-[#9e4a3a] transition-opacity hover:opacity-90"
                   >
-                    {returnUrl ? 'Continue where you left off' : 'Visit the library'}
+                    The Correspondence
                   </Link>
                   <Link
-                    href="/account"
-                    className="inline-block px-5 py-2 rounded text-white/60 text-sm transition-opacity hover:opacity-80 border border-white/10"
+                    href={returnUrl || '/'}
+                    className="inline-block px-5 py-2 rounded text-white/60 text-sm border border-white/10 transition-opacity hover:opacity-80"
                   >
-                    Your account
+                    Visit the library
                   </Link>
                 </div>
               </>
@@ -204,15 +204,21 @@ function FicinoSocietyContent() {
 
       {isMember && !success && (
         <section className="bg-[#1a1612]">
-          <div className="max-w-xl mx-auto px-6 py-6 text-center">
-            <p className="text-white/50 text-sm font-serif">
-              You are a member of the Ficino Society
+          <div className="max-w-xl mx-auto px-6 py-6 flex items-center justify-between">
+            <p className="text-white/40 text-sm font-serif">
+              Member
               {membership?.expiresAt && (
-                <span className="text-white/25 ml-2">
+                <span className="text-white/20 ml-2">
                   &middot; Renews {new Date(membership.expiresAt).toLocaleDateString('en-US', { month: 'long', year: 'numeric' })}
                 </span>
               )}
             </p>
+            <Link
+              href="/ficino-society/discussions"
+              className="text-[#c9a86c]/50 text-xs tracking-wider uppercase hover:text-[#c9a86c]/80 transition-colors font-sans"
+            >
+              The Correspondence
+            </Link>
           </div>
         </section>
       )}
@@ -231,36 +237,32 @@ function FicinoSocietyContent() {
               lost to the Latin West for a thousand years.
             </p>
             <p>
-              It changed everything. The Renaissance, in no small part,
-              began because one patron believed those texts mattered enough
-              to fund their translation.
+              But Ficino didn&apos;t work alone. He gathered a circle &mdash;
+              philosophers, physicians, poets, patrons &mdash; who met at
+              Careggi to read and discuss what he translated. They called it
+              the Platonic Academy. The translations were the output of a
+              community, not just a scholar.
             </p>
             <p>
-              We are doing something similar. Source Library has digitized
-              over five thousand rare books in alchemy, Kabbalah, astrology,
-              natural philosophy, and the broader Western esoteric
-              tradition &mdash; and is translating them into English for the
-              first time. Many of these exist in only a handful of libraries
-              worldwide. Some have never been translated into any modern
-              language.
+              Source Library has digitized over five thousand rare texts in
+              alchemy, Kabbalah, astrology, natural philosophy, and the
+              broader Western esoteric tradition. We are translating them
+              into English for the first time &mdash; many from books that
+              exist in only a handful of libraries worldwide.
             </p>
             <p>
-              Every book, every translation, every page is free to read.
-              No paywall, no account required. The knowledge belongs to
-              everyone.
-            </p>
-            <p>
-              The Ficino Society is for people who want this work to
-              continue. Your support directly funds the digitization,
-              translation, and preservation of these texts. Nothing more
-              complicated than that.
+              The Ficino Society is a circle of people doing this work
+              together. Members read the new translations, discuss them,
+              and shape what we translate next. Every book, every page
+              remains free for anyone to read. The Society isn&apos;t about
+              access &mdash; it&apos;s about participation.
             </p>
           </div>
         </div>
       </section>
 
       {/* ================================================================ */}
-      {/* A MANUSCRIPT IMAGE — full bleed, no text, just the work          */}
+      {/* MANUSCRIPT IMAGES                                                */}
       {/* ================================================================ */}
       <section className="bg-[#0e0c0a]">
         <div className="max-w-5xl mx-auto">
@@ -268,63 +270,85 @@ function FicinoSocietyContent() {
             <div className="aspect-[3/4] overflow-hidden">
               <img
                 src="https://3kwioilsplnmnkv8.public.blob.vercel-storage.com/archived/69520c46ab34727b1f044141/71.jpg"
-                alt="Alchemical emblem from Atalanta Fugiens by Michael Maier, 1617"
+                alt="Alchemical emblem from Atalanta Fugiens, 1617"
                 className="w-full h-full object-cover opacity-80"
               />
             </div>
             <div className="aspect-[3/4] overflow-hidden">
               <img
                 src="https://3kwioilsplnmnkv8.public.blob.vercel-storage.com/archived/69520c46ab34727b1f044141/43.jpg"
-                alt="Hermetic emblem from Atalanta Fugiens by Michael Maier, 1617"
+                alt="Hermetic emblem from Atalanta Fugiens, 1617"
                 className="w-full h-full object-cover opacity-80"
               />
             </div>
             <div className="aspect-[3/4] overflow-hidden hidden md:block">
               <img
                 src="https://3kwioilsplnmnkv8.public.blob.vercel-storage.com/archived/69520c46ab34727b1f044141/99.jpg"
-                alt="Geometric diagram from Atalanta Fugiens by Michael Maier, 1617"
+                alt="Geometric diagram from Atalanta Fugiens, 1617"
                 className="w-full h-full object-cover opacity-80"
               />
             </div>
           </div>
-          <p className="text-white/20 text-xs text-center py-4 font-sans tracking-wider">
+          <p className="text-white/15 text-xs text-center py-4 font-sans tracking-wider">
             Michael Maier, <em>Atalanta Fugiens</em>, 1617
           </p>
         </div>
       </section>
 
       {/* ================================================================ */}
-      {/* WHAT YOUR SUPPORT MAKES POSSIBLE                                 */}
+      {/* THE CIRCLE — what members do together                            */}
       {/* ================================================================ */}
       <section className="bg-[#fdfcf9]">
         <div className="max-w-[580px] mx-auto px-6 py-24 md:py-32">
           <Ornament />
-
           <h2
             className="text-2xl md:text-3xl font-serif text-[#1a1612] mt-8 mb-10 text-center"
             style={{ fontWeight: 400 }}
           >
-            What your support makes possible
+            The circle
           </h2>
 
           <div className="space-y-7 text-[17px] md:text-[18px] leading-[1.85] text-[#333] font-body">
             <p>
-              A membership costs $100 per year. That&apos;s roughly the cost of
-              translating twenty pages of sixteenth-century Latin &mdash; one
-              chapter of a book that may not have been read in English
-              before.
+              Members correspond with each other through a private
+              discussion space we call the Correspondence. Threads are
+              long-form and unhurried &mdash; more like an exchange of
+              letters than a group chat. People discuss newly translated
+              passages, share what they&apos;re reading, and suggest texts
+              they believe should be translated next.
             </p>
             <p>
-              As a member, you receive unlimited downloads of every book
-              and gallery image in the collection. You can dedicate one
-              translation per year &mdash; your name on the book, permanently.
-              You receive a quarterly letter about what we&apos;ve translated
-              and what&apos;s coming next. And your name appears on the
-              members page, if you choose.
+              Every quarter, we send a letter about what we&apos;ve
+              translated, what surprised us, and what&apos;s coming next.
+              Members write back. Sometimes those responses shape the
+              direction of the project.
             </p>
             <p>
-              But those are gestures of thanks, not the reason to join.
-              The reason is the work itself.
+              Once a year, each member can dedicate a translation &mdash;
+              choose a book and put their name on it, permanently. Your
+              name in a book that didn&apos;t exist in English before.
+            </p>
+          </div>
+        </div>
+      </section>
+
+      {/* ================================================================ */}
+      {/* THE LIBRARY STAYS FREE                                           */}
+      {/* ================================================================ */}
+      <section className="bg-[#f5f0e8]">
+        <div className="max-w-[580px] mx-auto px-6 py-20 md:py-24">
+          <h2
+            className="text-2xl md:text-3xl font-serif text-[#1a1612] mb-8"
+            style={{ fontWeight: 400 }}
+          >
+            The library stays free
+          </h2>
+          <div className="space-y-5 text-[17px] md:text-[18px] leading-[1.85] text-[#333] font-body">
+            <p>
+              Every book, every translation, every page is free to read,
+              search, and cite. No account required, no paywalls, no
+              restrictions on scholarship. Membership sustains the work.
+              It does not gate the knowledge.
             </p>
           </div>
         </div>
@@ -338,7 +362,11 @@ function FicinoSocietyContent() {
           <div className="max-w-[520px] mx-auto px-6 py-24 md:py-32 text-center">
             <Ornament />
 
-            <div className="mt-10 mb-10">
+            <p className="mt-10 mb-2 text-white/50 font-body text-lg leading-relaxed">
+              If you&apos;d like to join the conversation
+            </p>
+
+            <div className="mb-10">
               <span className="text-4xl md:text-5xl font-serif text-white/80" style={{ fontWeight: 300 }}>
                 $100
               </span>
@@ -351,7 +379,7 @@ function FicinoSocietyContent() {
                 disabled={loading}
                 className="px-10 py-3.5 rounded text-white text-[15px] font-sans tracking-wide transition-all hover:brightness-110 disabled:opacity-50 bg-[#9e4a3a]"
               >
-                {loading ? 'Redirecting...' : 'Support the work'}
+                {loading ? 'Redirecting...' : 'Join the Ficino Society'}
               </button>
             ) : (
               <Link
@@ -363,19 +391,18 @@ function FicinoSocietyContent() {
             )}
 
             <p className="mt-8 text-[13px] text-white/20 leading-relaxed max-w-sm mx-auto font-body">
-              If the membership fee is a barrier, write to{' '}
-              <a href="mailto:hello@sourcelibrary.org" className="underline text-white/30 hover:text-white/40 transition-colors">
+              If the fee is a barrier, write to{' '}
+              <a href="mailto:hello@sourcelibrary.org" className="underline text-white/25 hover:text-white/40 transition-colors">
                 hello@sourcelibrary.org
               </a>
-              {' '}and we&apos;ll find an amount that works.
-              No questions asked.
+              . We&apos;ll find an amount that works. No questions asked.
             </p>
           </div>
         </section>
       )}
 
       {/* ================================================================ */}
-      {/* FOOTER — minimal                                                 */}
+      {/* FOOTER                                                           */}
       {/* ================================================================ */}
       <footer className="bg-[#0a0908] border-t border-white/[0.03]">
         <div className="max-w-xl mx-auto px-6 py-12">
@@ -383,6 +410,7 @@ function FicinoSocietyContent() {
             <span>&copy; {new Date().getFullYear()} The Ficino Society</span>
             <div className="flex gap-6">
               <Link href="/ficino-society/members" className="hover:text-white/40 transition-colors">Members</Link>
+              <Link href="/ficino-society/discussions" className="hover:text-white/40 transition-colors">Correspondence</Link>
               <a href="https://sourcelibrary.org" className="hover:text-white/40 transition-colors">Source Library</a>
               <a href="mailto:hello@sourcelibrary.org" className="hover:text-white/40 transition-colors">Contact</a>
             </div>
