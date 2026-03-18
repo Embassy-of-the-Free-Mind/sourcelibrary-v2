@@ -27,7 +27,7 @@ import CiteButton from '@/components/ui/CiteButton';
 import { AuthCheck } from '@/components/auth/AuthCheck';
 import SignUpCTA from '@/components/auth/SignUpCTA';
 import { authorUrl } from '@/lib/slugify';
-import UserMenu from '@/components/layout/UserMenu';
+import SiteHeader from '@/components/layout/SiteHeader';
 
 // ISR: rebuild at most every 2 minutes (requires no searchParams/headers() usage)
 export const revalidate = 3600;
@@ -998,22 +998,7 @@ export default async function BookDetailPage({ params }: PageProps) {
   return (
     <div className="min-h-screen bg-cream">
       {/* Header - renders immediately */}
-      <header className="bg-white border-b border-stone-200">
-        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-3 flex items-center justify-between">
-          <Link href="/" className="inline-flex items-center gap-2 text-stone-700 hover:text-stone-900 transition-colors" aria-label="Source Library home">
-            <svg className="w-8 h-8" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
-              <circle cx="12" cy="12" r="10" stroke="currentColor" strokeWidth="1" />
-              <circle cx="12" cy="12" r="7" stroke="currentColor" strokeWidth="1" />
-              <circle cx="12" cy="12" r="4" stroke="currentColor" strokeWidth="1" />
-            </svg>
-            <span className="text-lg uppercase tracking-wider">
-              <span className="font-semibold">Source</span>
-              <span className="font-light">Library</span>
-            </span>
-          </Link>
-          <UserMenu />
-        </div>
-      </header>
+      <SiteHeader variant="light" />
 
       {/* Book content streams in */}
       <Suspense fallback={

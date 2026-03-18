@@ -459,7 +459,7 @@ export default async function HomePage() {
 
         {/* Collections Grid */}
         <section id="library" className="bg-gradient-to-b from-[#f6f3ee] to-[#f3ede6] py-16 md:py-24">
-          <div className="px-6 md:px-12 max-w-7xl mx-auto">
+          <div className="px-6 md:px-12 max-w-[var(--container-wide)] mx-auto">
             <div className="flex items-baseline justify-between mb-8">
               <div>
                 <h2 className="text-3xl md:text-4xl text-primary font-display">
@@ -562,7 +562,7 @@ export default async function HomePage() {
 
         {/* Discover Section */}
         <section className="bg-white py-16 md:py-24">
-          <div className="px-6 md:px-12 max-w-7xl mx-auto">
+          <div className="px-6 md:px-12 max-w-[var(--container-wide)] mx-auto">
             <h2 className="text-3xl md:text-4xl text-primary mb-3 font-display">
               Discover
             </h2>
@@ -589,7 +589,7 @@ export default async function HomePage() {
 
         {/* Blog Section */}
         <section className="bg-gradient-to-b from-[#f6f3ee] to-[#f3ede6] py-16 md:py-24">
-          <div className="px-6 md:px-12 max-w-7xl mx-auto">
+          <div className="px-6 md:px-12 max-w-[var(--container-wide)] mx-auto">
             <div className="flex items-baseline justify-between mb-10">
               <div>
                 <h2 className="text-3xl md:text-4xl text-primary font-display">
