@@ -248,12 +248,20 @@ export interface SearchQuery {
   last_searched?: string;
 }
 
+export interface RecentSearch {
+  query: string;
+  results_count: number;
+  source: string;
+  timestamp: string;
+}
+
 export interface SearchAnalyticsData {
   totalSearches: number;
   topQueries: SearchQuery[];
   zeroResultQueries: SearchQuery[];
   searchesBySource: Array<{ source: string; count: number }>;
   searchesByDay?: Array<{ date: string; count: number; uniqueQueries?: number }>;
+  recentSearches?: RecentSearch[];
 }
 
 // --- Traffic ---

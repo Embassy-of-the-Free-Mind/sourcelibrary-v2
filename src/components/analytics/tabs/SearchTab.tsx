@@ -1,7 +1,7 @@
 'use client';
 
 import { useState, useEffect } from 'react';
-import { Search, BookOpen, AlertTriangle } from 'lucide-react';
+import { Search, BookOpen, AlertTriangle, Clock } from 'lucide-react';
 import { analytics } from '@/lib/api-client';
 import { BookLoader } from '@/components/ui/BookLoader';
 import type { SearchAnalyticsData } from '@/lib/api-client/types/analytics';
@@ -33,7 +33,18 @@ export default function SearchTab({ days }: SearchTabProps) {
     );
   }
 
-  const sourceLabels: Record<string, string> = { global: 'Full Search', unified: 'Quick Search', book_search: 'Within Book' };
+  const sourceLabels: Record<string, string> = { global: 'Full Search', unified: 'Quick Search', book_search: 'Within Book', index: 'Index Search' };
+
+  const formatTimeAgo = (timestamp: string) => {
+    const diff = Date.now() - new Date(timestamp).getTime();
+    const mins = Math.floor(diff / 60000);
+    if (mins < 1) return 'just now';
+    if (mins < 60) return `${mins}m ago`;
+    const hours = Math.floor(mins / 60);
+    if (hours < 24) return `${hours}h ago`;
+    const days = Math.floor(hours / 24);
+    return `${days}d ago`;
+  };
 
   return (
     <div className="space-y-8">
@@ -67,6 +78,32 @@ export default function SearchTab({ days }: SearchTabProps) {
           </div>
         </div>
       </div>
+
+      {/* Recent Searches */}
+      {searchData.recentSearches && searchData.recentSearches.length > 0 && (
+        <div className="p-6 rounded-xl" style={{ background: 'var(--bg-white)', border: '1px solid var(--border-light)' }}>
+          <h2 className="text-lg font-medium mb-4 flex items-center gap-2" style={{ color: 'var(--text-primary)' }}>
+            <Clock className="w-5 h-5" style={{ color: 'var(--accent-violet)' }} />
+            Recent Searches
+          </h2>
+          <div className="space-y-1">
+            {searchData.recentSearches.map((s, idx) => (
+              <div key={idx} className="flex items-center justify-between py-2 text-sm" style={{ borderBottom: idx < searchData.recentSearches!.length - 1 ? '1px solid var(--border-light)' : 'none' }}>
+                <div className="flex items-center gap-3 min-w-0 flex-1">
+                  <span className="font-medium truncate" style={{ color: 'var(--text-primary)' }}>{s.query}</span>
+                  <span className="text-xs px-2 py-0.5 rounded-full shrink-0" style={{ background: 'var(--bg-warm)', color: 'var(--text-muted)' }}>
+                    {s.results_count} results
+                  </span>
+                </div>
+                <div className="flex items-center gap-3 shrink-0 ml-3">
+                  <span className="text-xs" style={{ color: 'var(--text-muted)' }}>{sourceLabels[s.source] || s.source}</span>
+                  <span className="text-xs" style={{ color: 'var(--text-muted)' }}>{formatTimeAgo(s.timestamp)}</span>
+                </div>
+              </div>
+            ))}
+          </div>
+        </div>
+      )}
 
       {/* Daily Search Volume Chart */}
       {searchData.searchesByDay && searchData.searchesByDay.length > 0 && (

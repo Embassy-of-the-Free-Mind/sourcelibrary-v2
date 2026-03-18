@@ -19,6 +19,7 @@ export const GET = withAuth(async (request, session) => {
       searchesByDay,
       searchesBySource,
       totalSearches,
+      recentSearches,
     ] = await Promise.all([
       // Top queries by frequency
       db.collection('analytics_events').aggregate([
@@ -73,6 +74,13 @@ export const GET = withAuth(async (request, session) => {
 
       // Total count
       db.collection('analytics_events').countDocuments(match),
+
+      // Most recent individual searches
+      db.collection('analytics_events')
+        .find(match, { projection: { query: 1, results_count: 1, created_at: 1, 'filters.source': 1 } })
+        .sort({ created_at: -1 })
+        .limit(50)
+        .toArray(),
     ]);
 
     return NextResponse.json({
@@ -96,6 +104,12 @@ export const GET = withAuth(async (request, session) => {
       searchesBySource: searchesBySource.map(s => ({
         source: s._id,
         count: s.count,
+      })),
+      recentSearches: recentSearches.map(s => ({
+        query: s.query,
+        results_count: s.results_count,
+        source: s.filters?.source || 'global',
+        timestamp: s.created_at,
       })),
       query: { days },
     });
