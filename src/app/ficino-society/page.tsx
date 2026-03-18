@@ -84,9 +84,11 @@ function FicinoSocietyContent() {
     try {
       await fetch('/api/ficino/join', { method: 'POST' });
       await updateSession();
-      setMembership(prev => prev ? { ...prev, joined: true } : { joined: true, active: false, plan: null, expiresAt: null });
-    } catch { /* */ }
-    setJoining(false);
+      // Take them straight to the Correspondence
+      window.location.href = '/ficino-society/discussions';
+    } catch {
+      setJoining(false);
+    }
   };
 
   // Contribute financially (Stripe)

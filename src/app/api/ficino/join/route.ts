@@ -1,6 +1,7 @@
 import { NextResponse } from 'next/server';
 import { auth } from '@/lib/auth';
 import { getDb } from '@/lib/mongodb';
+import { sendSocietyWelcomeEmail } from '@/lib/membership-email';
 
 /**
  * POST /api/ficino/join — Join the Ficino Society (free)
@@ -16,23 +17,28 @@ export async function POST() {
   const db = await getDb();
   const now = new Date();
 
+  // Check if already joined
+  const user = await db.collection('users').findOne(
+    { _id: session.user.id as any },
+    { projection: { 'membership.joined': 1 } }
+  );
+
+  if (user?.membership?.joined) {
+    return NextResponse.json({ joined: true });
+  }
+
   await db.collection('users').updateOne(
     { _id: session.user.id as any },
     {
       $set: {
         'membership.joined': true,
-      },
-      $setOnInsert: {
         'membership.joinedAt': now,
       },
     },
   );
 
-  // Also set joinedAt if it doesn't exist yet
-  await db.collection('users').updateOne(
-    { _id: session.user.id as any, 'membership.joinedAt': { $exists: false } },
-    { $set: { 'membership.joinedAt': now } },
-  );
+  // Send welcome email (non-blocking)
+  sendSocietyWelcomeEmail(session.user.email, session.user.name || undefined).catch(() => {});
 
   return NextResponse.json({ joined: true });
 }
