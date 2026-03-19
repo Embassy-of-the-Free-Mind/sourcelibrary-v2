@@ -316,9 +316,19 @@ async function upgradeThumbnailFromGallery(
 
   const currentIsGood = currentPage?.page_type === 'frontispiece' || currentPage?.page_type === 'title-page';
 
+  // Detect if current cover is actively bad (blank, digitizer insert, etc.)
+  const ocrStart = (currentPage?.ocr?.data as string || '').slice(0, 300).trim();
+  const currentIsBad = !currentPage // thumbnail doesn't match any page
+    || currentPage?.page_type === 'blank'
+    || ocrStart.length < 20 // blank or near-blank
+    || /internet archive|google book|digitized by|library stamp|barcode/i.test(ocrStart);
+
+  // Lower quality threshold when current cover is bad — anything decent is an improvement
+  const galleryQualityThreshold = currentIsBad ? 0.5 : 0.8;
+
   // Candidates: gallery images + title pages (title pages may not have gallery entries)
   const galleryImages = await db.collection('gallery_images').find(
-    { book_id: bookId, gallery_quality: { $gte: 0.8 } },
+    { book_id: bookId, gallery_quality: { $gte: galleryQualityThreshold } },
     {
       projection: {
         page_id: 1, page_number: 1, gallery_quality: 1, type: 1,
@@ -367,7 +377,8 @@ async function upgradeThumbnailFromGallery(
   const best = candidates[0];
 
   // If current cover is already a frontispiece/title-page, require a high score to replace
-  const threshold = currentIsGood ? 0.75 : 0.5;
+  // If current cover is bad, accept anything reasonable
+  const threshold = currentIsGood ? 0.75 : currentIsBad ? 0.3 : 0.5;
   if (best.coverScore < threshold) return;
 
   // Don't replace a good early-page cover with a deep-page gallery pick
