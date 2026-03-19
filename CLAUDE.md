@@ -30,8 +30,14 @@
 - OCR/Translation: check batch-ocr and translate routes for current models
 - Reference: https://ai.google.dev/gemini-api/docs/models
 
+## System Map
+- **Interactive diagram:** https://sourcelibrary.org/admin/system-map — click any node for details, key files, collections, gotchas
+- **Markdown reference:** `.claude/docs/system-map.md` — full text version with file layout, collection inventory, dead code list
+- **Dead code cleanup:** GitHub issue #258 — 35 unused components, 2 duplicate functions, disabled cron routes
+
 ## Domain Context
 Detect the work domain from the user's prompt and load the right context automatically:
+- **System overview / "where does X live?":** read `.claude/docs/system-map.md`
 - **Pipeline/cron/Lambda/OCR/translation work:** read `memory/pipeline-ops.md` (or invoke `/pipeline-context` for full context)
 - **UI/frontend/navigation:** read `memory/ui-navigation.md` (or `/ui-context`)
 - **Data fixes/maintenance/stuck books:** read `memory/data-quality.md` (or `/maintenance`)
