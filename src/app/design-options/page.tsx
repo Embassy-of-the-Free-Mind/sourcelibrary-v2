@@ -3,6 +3,9 @@ import Link from 'next/link';
 import Image from 'next/image';
 import { BookOpen, ArrowRight, Sparkles, Library } from 'lucide-react';
 import { bookUrl } from '@/lib/slugify';
+import FeaturedCollectionCarousel from '@/components/prototype/FeaturedCollectionHero';
+import LayoutFeaturedCollections from '@/components/layout/FeaturedCollections';
+import CollectionsShowcase, { type CollectionSummary } from '@/components/home/CollectionsShowcase';
 
 export const revalidate = 300;
 export const maxDuration = 60;
@@ -162,10 +165,90 @@ async function getFeaturedCollection(): Promise<FeaturedCollectionItem | null> {
   };
 }
 
+async function getMultipleFeaturedCollections(): Promise<FeaturedCollectionItem[]> {
+  const db = await getDb();
+
+  const collections = await db
+    .collection('collections')
+    .aggregate([
+      {
+        $match: {
+          book_count: { $gte: 10 },
+          parent: { $exists: false },
+          type: { $ne: 'curated' },
+          hidden: { $ne: true },
+        },
+      },
+      { $sample: { size: 5 } },
+    ])
+    .toArray();
+
+  if (collections.length === 0) return [];
+
+  const bookProjection = {
+    _id: 0,
+    id: { $ifNull: ['$id', { $toString: '$_id' }] },
+    slug: 1, title: 1, display_title: 1, author: 1, thumbnail: 1, thumbnail_blob: 1,
+  };
+
+  const results: FeaturedCollectionItem[] = [];
+  for (const col of collections) {
+    // Get books for this collection
+    const colBooks = (await db.collection('books').aggregate([
+      { $match: { collections: col.slug, hidden: { $ne: true }, pages_count: { $gt: 0 }, pages_translated: { $gt: 0 }, thumbnail_blob: { $exists: true, $ne: null } } },
+      { $sort: { read_count: -1 } },
+      { $limit: 10 },
+      { $project: bookProjection },
+    ], { maxTimeMS: 8000 }).toArray()) as FeaturedBook[];
+
+    if (colBooks.length === 0) continue;
+
+    const images = col.featured_images || [];
+    const hero = images.find(
+      (img: unknown) => typeof img === 'string' || (img && typeof img === 'object' && ((img as Record<string, unknown>).extracted_url || (img as Record<string, unknown>).image_url))
+    );
+    const heroUrl = typeof hero === 'string' ? hero : (((hero as Record<string, unknown>)?.extracted_url || (hero as Record<string, unknown>)?.image_url || null) as string | null);
+
+    results.push({
+      collection: {
+        slug: col.slug as string,
+        name: col.name as string,
+        subtitle: (col.subtitle || '') as string,
+        description: (col.description || '') as string,
+        book_count: (col.book_count || 0) as number,
+        hero_image: heroUrl,
+      },
+      books: JSON.parse(JSON.stringify(colBooks)),
+    });
+  }
+  return results;
+}
+
+async function getCollectionSummaries(): Promise<CollectionSummary[]> {
+  const db = await getDb();
+  const docs = await db.collection('collections').find(
+    { parent: { $exists: false }, type: { $ne: 'curated' }, hidden: { $ne: true }, book_count: { $gte: 5 } },
+    { projection: { _id: 0, slug: 1, name: 1, subtitle: 1, book_count: 1, featured_images: 1, languages: 1 } }
+  ).limit(8).toArray();
+
+  return docs.map(doc => ({
+    slug: doc.slug,
+    name: doc.name,
+    subtitle: doc.subtitle || '',
+    book_count: doc.book_count || 0,
+    featured_images: doc.featured_images,
+    languages: doc.languages,
+  })) as CollectionSummary[];
+}
+
 // ---------- Page ----------
 
 export default async function DesignOptionsPage() {
-  const data = await getFeaturedCollection();
+  const [data, carouselItems, showcaseCollections] = await Promise.all([
+    getFeaturedCollection(),
+    getMultipleFeaturedCollections(),
+    getCollectionSummaries(),
+  ]);
 
   if (!data) {
     return (
@@ -195,7 +278,72 @@ export default async function DesignOptionsPage() {
         </div>
       </div>
 
-      {/* Option labels */}
+      {/* ═══════════════════════════════════════════════════════════════
+          EXISTING VERSIONS
+      ═══════════════════════════════════════════════════════════════ */}
+
+      <div className="max-w-7xl mx-auto px-6 md:px-12 mt-12 mb-6">
+        <div className="border-b-2 border-accent-rust/20 pb-2 mb-2">
+          <h2 className="text-xl font-display text-accent-rust uppercase tracking-wider">Existing Versions</h2>
+        </div>
+        <p className="text-sm text-muted">Currently built components, shown with real data.</p>
+      </div>
+
+      {/* Existing 1: FeaturedCollectionCarousel (current home page) */}
+      <div className="max-w-7xl mx-auto px-6 md:px-12">
+        <div className="mt-10 mb-6">
+          <span className="text-xs uppercase tracking-[0.2em] text-muted font-medium">Existing 1</span>
+          <h2 className="text-2xl font-display text-primary mt-1">Dark Carousel (current home page)</h2>
+          <p className="text-sm text-muted mt-1">
+            The current implementation. Dark background, text left + book thumbnail grid right,
+            carousel dots and arrows to flip between collections.
+          </p>
+        </div>
+      </div>
+      {carouselItems.length > 0 && <FeaturedCollectionCarousel items={carouselItems} />}
+
+      {/* Existing 2: Layout FeaturedCollections (file-based card grid) */}
+      <div className="max-w-7xl mx-auto px-6 md:px-12">
+        <div className="mt-16 mb-6">
+          <span className="text-xs uppercase tracking-[0.2em] text-muted font-medium">Existing 2</span>
+          <h2 className="text-2xl font-display text-primary mt-1">Category Card Grid</h2>
+          <p className="text-sm text-muted mt-1">
+            6 collections in a 3-col grid with category color-coding, theme pills, and date ranges.
+            No images — text-only cards. Rotates daily via seeded shuffle.
+          </p>
+        </div>
+      </div>
+      {/* @ts-expect-error — async server component */}
+      <LayoutFeaturedCollections />
+
+      {/* Existing 3: CollectionsShowcase (image-heavy two-tier) */}
+      <div className="max-w-7xl mx-auto px-6 md:px-12">
+        <div className="mt-16 mb-6">
+          <span className="text-xs uppercase tracking-[0.2em] text-muted font-medium">Existing 3</span>
+          <h2 className="text-2xl font-display text-primary mt-1">Image Showcase (two-tier)</h2>
+          <p className="text-sm text-muted mt-1">
+            Photo-heavy cards with gradient overlays. Top 6 large (2-col), rest smaller (3-col).
+            Used on the search/library page. Shows book count, languages, subtitle.
+          </p>
+        </div>
+        <div className="mb-16">
+          <CollectionsShowcase collections={showcaseCollections} />
+        </div>
+      </div>
+
+      {/* ═══════════════════════════════════════════════════════════════
+          NEW OPTIONS
+      ═══════════════════════════════════════════════════════════════ */}
+
+      <div className="max-w-7xl mx-auto px-6 md:px-12 mt-8 mb-6">
+        <div className="border-b-2 border-accent-rust/20 pb-2 mb-2">
+          <h2 className="text-xl font-display text-accent-rust uppercase tracking-wider">New Options</h2>
+        </div>
+        <p className="text-sm text-muted">
+          Three new approaches, all showing <strong>{collection.name}</strong>.
+        </p>
+      </div>
+
       <div className="max-w-7xl mx-auto px-6 md:px-12">
 
         {/* ═══════════════════════════════════════════════════════════════
