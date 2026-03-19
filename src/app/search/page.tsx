@@ -200,7 +200,6 @@ export default function SearchPage() {
       return;
     }
     setLoading(true);
-    startAiStream(q);
 
     try {
       if (mode === 'unified') {
@@ -290,10 +289,16 @@ export default function SearchPage() {
   }, 300);
 
   // Search on initial load (from URL params) and when filters/sort/mode change
+  const aiTriggeredForQuery = useRef('');
   useEffect(() => {
     if (query.length >= 2) {
       performSearch(query, viewMode, offset);
       updateUrl(query, viewMode, offset);
+      // Trigger AI stream once per distinct query (on page load / enter / filter change)
+      if (aiTriggeredForQuery.current !== query) {
+        aiTriggeredForQuery.current = query;
+        startAiStream(query);
+      }
     }
   // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [viewMode, indexType, language, category, dateFrom, dateTo, hasDoi, hasTranslation, firstTranslation, library, sortBy, offset, performSearch, updateUrl]);
@@ -349,7 +354,21 @@ export default function SearchPage() {
     if (value.length >= 2) {
       setOffset(0);
     }
+    // Clear AI state while typing — AI only fires on Enter
+    aiAbortRef.current?.();
+    setAiNarration('');
+    setAiTerms([]);
+    setAiResults([]);
+    setAiStreaming(false);
+    aiTriggeredForQuery.current = '';
     debouncedSearch(value);
+  };
+
+  const handleSearchSubmit = () => {
+    if (query.length >= 3) {
+      aiTriggeredForQuery.current = query;
+      startAiStream(query);
+    }
   };
 
   const drillInto = (mode: ViewMode) => {
@@ -402,6 +421,7 @@ export default function SearchPage() {
                 type="text"
                 value={query}
                 onChange={(e) => handleQueryChange(e.target.value)}
+                onKeyDown={(e) => { if (e.key === 'Enter') handleSearchSubmit(); }}
                 placeholder="Search books, concepts, people, images..."
                 className="w-full pl-12 pr-4 py-3 border border-border-medium rounded-xl bg-cream/50 focus:bg-white focus:outline-none focus:ring-2 focus:ring-accent-rust/30 focus:border-accent-rust/40 text-lg text-primary font-body"
                 autoFocus
