@@ -68,6 +68,7 @@ tmp_*
 _tmp-*
 scripts/_tmp-*
 scripts/output/
+/check-*.mjs
 
 # Experimental tools
 tools/
