@@ -33,9 +33,20 @@ interface CollectionData {
   hero_image: string | null;
 }
 
+interface GalleryImage {
+  id: string;
+  image_url: string;
+  type: string;
+  museum_description: string;
+  book_title: string;
+  book_id: string;
+  book_slug?: string;
+}
+
 interface FeaturedCollectionItem {
   collection: CollectionData;
   books: FeaturedBook[];
+  galleryImages?: GalleryImage[];
 }
 
 function bookTitle(book: { display_title?: string; title: string }): string {
