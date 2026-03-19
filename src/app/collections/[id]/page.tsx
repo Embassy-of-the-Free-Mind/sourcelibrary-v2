@@ -7,6 +7,7 @@ import { getDb } from '@/lib/mongodb';
 import { notFound } from 'next/navigation';
 import CollectionSchema from '@/components/seo/CollectionSchema';
 import CollectionAllBooks from '@/components/collections/CollectionAllBooks';
+import ExhibitionLayout from '@/components/collections/ExhibitionLayout';
 import SignUpCTA from '@/components/auth/SignUpCTA';
 import { bookUrl } from '@/lib/slugify';
 import { bookTitle, sanitizeThumbnail, withTimeout } from '@/lib/collections-utils';
@@ -335,6 +336,51 @@ async function fetchCollectionData(id: string) {
       };
     });
 
+  // Fetch curated exhibition data (if available)
+  const curationDraft = await withTimeout(
+    db.collection('curation_drafts').findOne(
+      { collection_slug: id, status: 'draft' },
+      { projection: { curation: 1 } },
+    ),
+    5000, null,
+  );
+
+  // Resolve book references in curation layout
+  let exhibitionBooks: BookItem[] = [];
+  if (curationDraft?.curation?.layout) {
+    const allBookIds = new Set<string>();
+    for (const block of curationDraft.curation.layout) {
+      if (block.component === 'sections') {
+        for (const s of block.sections || []) {
+          for (const b of s.books || []) allBookIds.add(b.id);
+        }
+      }
+      if (block.component === 'reading_paths') {
+        for (const p of block.paths || []) {
+          for (const step of p.steps || []) allBookIds.add(step.book_id);
+        }
+      }
+      if (block.component === 'key_figures') {
+        for (const f of block.figures || []) {
+          if (f.key_book_id) allBookIds.add(f.key_book_id);
+        }
+      }
+    }
+    if (allBookIds.size > 0) {
+      const exBooks = await withTimeout(
+        db.collection('books').find(
+          { id: { $in: [...allBookIds] }, status: { $ne: 'deleted' } },
+          { projection: { id: 1, slug: 1, title: 1, display_title: 1, author: 1, year: 1, thumbnail: 1, thumbnail_blob: 1, is_first_translation: 1 } },
+        ).toArray(),
+        8000, [],
+      );
+      exhibitionBooks = exBooks.map(b => ({
+        ...b,
+        thumbnail: sanitizeThumbnail(b.thumbnail as string) || sanitizeThumbnail(b.thumbnail_blob as string),
+      })) as unknown as BookItem[];
+    }
+  }
+
   return {
     // eslint-disable-next-line @typescript-eslint/no-explicit-any
     collection: collectionClean as any,
@@ -346,6 +392,8 @@ async function fetchCollectionData(id: string) {
     mentionedBooks: sanitizeBookThumbs(mentionedBooks) as unknown as BookItem[],
     parentCollection,
     galleryCollectionSlug,
+    exhibition: curationDraft?.curation || null,
+    exhibitionBooks,
   };
 }
 
@@ -373,7 +421,7 @@ export default async function CollectionDetailPage({ params }: Props) {
   }
   if (!data) notFound();
 
-  const { collection, books, highlights: curatedHighlightsData, galleryImages, total, mentionedBooks, parentCollection, galleryCollectionSlug } = data;
+  const { collection, books, highlights: curatedHighlightsData, galleryImages, total, mentionedBooks, parentCollection, galleryCollectionSlug, exhibition, exhibitionBooks } = data;
   const languages = (collection.languages || []).filter((l: { count: number }) => l.count > 2);
 
   // Group curated highlights by tier
@@ -485,21 +533,25 @@ export default async function CollectionDetailPage({ params }: Props) {
         </div>
       </div>
 
-      {/* Overview: description + gallery grid */}
+      {/* Overview: description + gallery grid (hidden when exhibition provides description) */}
       <div className="bg-warm border-b border-border-light">
         <div className="max-w-7xl mx-auto px-6 py-8">
-          <h2 className="text-2xl sm:text-3xl text-primary mb-5 font-display">
-            Overview
-          </h2>
+          {!exhibition?.layout && (
+            <>
+              <h2 className="text-2xl sm:text-3xl text-primary mb-5 font-display">
+                Overview
+              </h2>
 
-          {(collection.expanded_description || collection.description) && (
-            <div className="mb-8 max-w-5xl">
-              {(collection.expanded_description || collection.description)!.split('\n\n').map((para: string, i: number) => (
+              {(collection.expanded_description || collection.description) && (
+                <div className="mb-8 max-w-5xl">
+                  {(collection.expanded_description || collection.description)!.split('\n\n').map((para: string, i: number) => (
                 <p key={i} className="text-secondary text-xl leading-relaxed mb-5 last:mb-0 font-body">
                   {linkBookTitles(para, allBooksForLinking, explicitMentions)}
                 </p>
               ))}
             </div>
+          )}
+            </>
           )}
 
           {diverseGalleryImages.length > 0 && (
@@ -538,15 +590,13 @@ export default async function CollectionDetailPage({ params }: Props) {
                   </Link>
                 );
               })}
-              {galleryCollectionSlug && (
-                <Link
-                  href={`/gallery/collections/${galleryCollectionSlug}`}
-                  className="aspect-square rounded-lg border border-border-light bg-cream hover:bg-white hover:border-accent-rust/30 transition-all flex flex-col items-center justify-center gap-2 text-muted hover:text-accent-rust"
-                >
-                  <Images className="w-7 h-7" />
-                  <span className="text-xs font-medium">Browse gallery</span>
-                </Link>
-              )}
+              <Link
+                href={galleryCollectionSlug ? `/gallery/collections/${galleryCollectionSlug}` : `/gallery?collection=${id}`}
+                className="aspect-square rounded-lg border border-border-light bg-cream hover:bg-white hover:border-accent-rust/30 transition-all flex flex-col items-center justify-center gap-2 text-muted hover:text-accent-rust"
+              >
+                <Images className="w-7 h-7" />
+                <span className="text-xs font-medium">Browse gallery</span>
+              </Link>
             </div>
           )}
         </div>
@@ -554,8 +604,23 @@ export default async function CollectionDetailPage({ params }: Props) {
 
       <div className="max-w-7xl mx-auto px-6 py-10">
 
-        {/* Curated Highlights — 3-tier display */}
-        {hasCuratedHighlights && (
+        {/* Exhibition Layout — curated components */}
+        {exhibition?.layout && (
+          <div className="mb-12">
+            {exhibition.subtitle && (
+              <p className="text-lg text-muted italic mb-6 font-display">{exhibition.subtitle}</p>
+            )}
+            <ExhibitionLayout
+              layout={exhibition.layout}
+              books={exhibitionBooks as any[]}
+              images={galleryImages}
+              collectionSlug={id}
+            />
+          </div>
+        )}
+
+        {/* Curated Highlights — 3-tier display (hidden when exhibition present) */}
+        {hasCuratedHighlights && !exhibition?.layout && (
           <div className="mb-12">
             {/* Tier 1: Essential Reading */}
             {tier1.length > 0 && (
