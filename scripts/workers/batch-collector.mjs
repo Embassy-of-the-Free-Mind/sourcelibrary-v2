@@ -184,10 +184,14 @@ async function processOneJob(db, job) {
     // Build flat list of { pageId, text, usage }
     const pageResults = [];
 
+    let recitationCount = 0;
+
     if (isMultiPage && job.type === 'ocr') {
       for (const r of responses) {
         if (r.error) { failCount++; continue; }
-        const text = r.response?.candidates?.[0]?.content?.parts?.[0]?.text;
+        const candidate = r.response?.candidates?.[0];
+        if (candidate?.finishReason === 'RECITATION') { recitationCount++; failCount++; continue; }
+        const text = candidate?.content?.parts?.[0]?.text;
         if (!text) { failCount++; continue; }
         const usage = r.response?.usageMetadata;
         const parsed = parseMultiPageOcr(text);
@@ -200,10 +204,16 @@ async function processOneJob(db, job) {
         const r = responses[idx];
         const pageId = r.metadata?.key || (job.page_ids && job.page_ids[idx]);
         if (!pageId) { failCount++; continue; }
-        const text = r.response?.candidates?.[0]?.content?.parts?.[0]?.text;
+        const candidate = r.response?.candidates?.[0];
+        if (candidate?.finishReason === 'RECITATION') { recitationCount++; failCount++; continue; }
+        const text = candidate?.content?.parts?.[0]?.text;
         if (!text) { failCount++; continue; }
         pageResults.push({ pageId, text, usage: r.response?.usageMetadata });
       }
+    }
+
+    if (recitationCount > 0) {
+      console.log(`  RECITATION: ${recitationCount}/${responses.length} responses blocked (book: ${job.book_id})`);
     }
 
     // First pass: fix null ocr/translation subdocuments
@@ -283,18 +293,24 @@ async function processOneJob(db, job) {
       failCount += (bulkOps.length - bulkResult.matchedCount);
     }
 
-    // Update batch_jobs status
+    // Update batch_jobs status — mark as 'failed' if zero pages saved
+    const finalStatus = successCount > 0 ? 'saved' : 'failed';
+    const errorDetail = successCount === 0 && recitationCount > 0
+      ? `All ${recitationCount} pages blocked by RECITATION filter`
+      : successCount === 0 ? `All ${failCount} pages failed` : undefined;
+
     await db.collection('batch_jobs').updateOne(
       { _id: job._id },
       {
         $set: {
-          status: 'saved',
+          status: finalStatus,
           gemini_state: 'JOB_STATE_SUCCEEDED',
           completed_pages: successCount,
           failed_pages: failCount,
           results_collected: true,
           completed_at: now,
           updated_at: now,
+          ...(errorDetail && { error: errorDetail }),
         },
       }
     );
@@ -527,12 +543,17 @@ async function run() {
           ],
         },
         {
-          // Recovery: pick up "saved" jobs with 0 completed pages (metadata.key bug)
-          status: 'saved',
-          completed_pages: 0,
-          $or: [
-            { job_name: { $exists: true, $nin: [null, ''] } },
-            { gemini_job_name: { $exists: true, $nin: [null, ''] } },
+          // Recovery: pick up "saved" jobs with 0 completed AND 0 failed pages
+          // (metadata.key bug). Jobs with failed_pages > 0 already ran but all
+          // pages failed (e.g. RECITATION filter) — don't retry them endlessly.
+          $and: [
+            { status: 'saved' },
+            { completed_pages: 0 },
+            { $or: [{ failed_pages: 0 }, { failed_pages: { $exists: false } }] },
+            { $or: [
+              { job_name: { $exists: true, $nin: [null, ''] } },
+              { gemini_job_name: { $exists: true, $nin: [null, ''] } },
+            ]},
           ],
         },
       ],
