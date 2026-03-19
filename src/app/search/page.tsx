@@ -760,7 +760,7 @@ export default function SearchPage() {
               return (
                 <Link
                   key={result.id}
-                  href={result.type === 'page' ? `/book/${result.slug || result.book_id}/page/${result.page_number}` : `/book/${result.slug || result.book_id}`}
+                  href={result.type === 'page' ? `/book/${result.slug || result.book_id}/page-number/${result.page_number}` : `/book/${result.slug || result.book_id}`}
                   className="flex items-start gap-3 p-4 bg-warm rounded-lg hover:bg-warm-hover transition-colors"
                 >
                   {cover && (
@@ -918,7 +918,7 @@ export default function SearchPage() {
                 return (
                   <Link
                     key={result.id}
-                    href={result.type === 'page' ? `/book/${result.slug || result.book_id}/page/${result.page_number}` : `/book/${result.slug || result.book_id}`}
+                    href={result.type === 'page' ? `/book/${result.slug || result.book_id}/page-number/${result.page_number}` : `/book/${result.slug || result.book_id}`}
                     className="flex items-start gap-3 p-3 bg-warm rounded-lg hover:bg-warm-hover transition-colors"
                   >
                     {cover && (
@@ -956,7 +956,7 @@ function BookResultCard({ result, query }: { result: SearchResult; query: string
 
   return (
     <Link
-      href={result.type === 'page' ? `/book/${result.slug || result.book_id}/page/${result.page_number}` : `/book/${result.slug || result.book_id}`}
+      href={result.type === 'page' ? `/book/${result.slug || result.book_id}/page-number/${result.page_number}` : `/book/${result.slug || result.book_id}`}
       className="block bg-white rounded-xl border border-border-light p-4 hover:border-accent-rust/30 hover:shadow-md transition-all"
     >
       <div className="flex items-start gap-4">
