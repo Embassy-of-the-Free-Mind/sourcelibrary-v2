@@ -1,5 +1,6 @@
 'use client';
 
+import React from 'react';
 import Link from 'next/link';
 import Image from 'next/image';
 import { BookOpen, ArrowRight, Quote, Clock, Users, Sparkles } from 'lucide-react';
@@ -55,6 +56,65 @@ function bookTitle(book: BookRef): string {
 
 function imageUrl(img: GalleryImage): string {
   return img.extracted_url || img.thumbnail_url || img.image_url || '';
+}
+
+// ─── Helper: Link book titles in text ───────────────────────────
+
+/**
+ * Finds book titles in text and wraps them in links.
+ * Only matches display_title or title — never generic phrases.
+ * Titles must be >= 10 chars to avoid false positives.
+ */
+function linkBookNames(text: string, books: BookRef[]): React.ReactNode {
+  // Build title → book map, longest first to avoid partial matches
+  const titleMap: { title: string; book: BookRef }[] = [];
+  for (const book of books) {
+    const dt = book.display_title;
+    const t = book.title;
+    if (dt && dt !== 'None' && dt.length >= 10) titleMap.push({ title: dt, book });
+    if (t && t !== dt && t.length >= 10) titleMap.push({ title: t, book });
+  }
+  titleMap.sort((a, b) => b.title.length - a.title.length);
+
+  // Find matches
+  const matches: { start: number; end: number; book: BookRef }[] = [];
+  const used: [number, number][] = [];
+
+  for (const { title, book } of titleMap) {
+    const escaped = title.replace(/[.*+?^${}()|[\]\\]/g, '\\$&');
+    const regex = new RegExp(escaped, 'gi');
+    let match;
+    while ((match = regex.exec(text)) !== null) {
+      const start = match.index;
+      const end = start + match[0].length;
+      if (!used.some(([s, e]) => start < e && end > s)) {
+        matches.push({ start, end, book });
+        used.push([start, end]);
+      }
+    }
+  }
+
+  if (matches.length === 0) return text;
+  matches.sort((a, b) => a.start - b.start);
+
+  const parts: React.ReactNode[] = [];
+  let lastIdx = 0;
+  for (const m of matches) {
+    if (m.start > lastIdx) parts.push(text.slice(lastIdx, m.start));
+    parts.push(
+      <Link
+        key={`${m.book.id}-${m.start}`}
+        href={bookUrl({ id: m.book.id, slug: m.book.slug })}
+        className="text-accent-rust hover:underline"
+      >
+        {text.slice(m.start, m.end)}
+      </Link>
+    );
+    lastIdx = m.end;
+  }
+  if (lastIdx < text.length) parts.push(text.slice(lastIdx));
+
+  return <>{parts}</>;
 }
 
 // ─── Component: Hook ────────────────────────────────────────────
@@ -305,10 +365,10 @@ function TimelineBlock({ start_year, end_year, highlights }: {
 // ─── Component: Featured Image ──────────────────────────────────
 
 function FeaturedImageBlock({ image, caption }: {
-  image: GalleryImage;
+  image?: GalleryImage;
   caption: string;
 }) {
-  const src = imageUrl(image);
+  const src = image ? imageUrl(image) : '';
   if (!src) return null;
 
   return (
@@ -316,7 +376,7 @@ function FeaturedImageBlock({ image, caption }: {
       <div className="relative aspect-[16/9] sm:aspect-[2/1] bg-dark">
         <Image
           src={src}
-          alt={image.museum_description || caption}
+          alt={image?.museum_description || caption}
           fill
           className="object-contain"
           sizes="(min-width: 1024px) 900px, 100vw"
@@ -412,13 +472,15 @@ function CrossCollectionsBlock({ links }: {
 
 // ─── Component: Gallery Grid ────────────────────────────────────
 
-function GalleryGridBlock({ images, indices }: {
-  images: GalleryImage[];
-  indices: number[];
+function GalleryGridBlock({ embeddedImages, fallbackImages, indices }: {
+  embeddedImages?: GalleryImage[];
+  fallbackImages: GalleryImage[];
+  indices?: number[];
 }) {
-  const selected = indices
-    .map(i => images[i])
-    .filter(Boolean);
+  // Prefer embedded resolved images, fall back to index-based lookup
+  const selected = embeddedImages && embeddedImages.length > 0
+    ? embeddedImages
+    : (indices || []).map(i => fallbackImages[i]).filter(Boolean);
 
   if (selected.length === 0) return null;
 
@@ -478,16 +540,18 @@ export default function ExhibitionLayout({ layout, books, images, collectionSlug
           case 'timeline':
             return <TimelineBlock key={i} start_year={block.start_year} end_year={block.end_year} highlights={block.highlights} />;
 
-          case 'featured_image':
-            return images[block.image_index]
-              ? <FeaturedImageBlock key={i} image={images[block.image_index]} caption={block.caption} />
+          case 'featured_image': {
+            const featImg = block.image || (typeof block.image_index === 'number' ? images[block.image_index] : null);
+            return featImg
+              ? <FeaturedImageBlock key={i} image={featImg} caption={block.caption} />
               : null;
+          }
 
           case 'reading_paths':
             return <ReadingPathsBlock key={i} paths={block.paths} books={books} />;
 
           case 'gallery_grid':
-            return <GalleryGridBlock key={i} images={images} indices={block.image_indices || []} />;
+            return <GalleryGridBlock key={i} embeddedImages={block.images} fallbackImages={images} indices={block.image_indices} />;
 
           case 'cross_collections':
             return <CrossCollectionsBlock key={i} links={block.links} />;
@@ -497,7 +561,7 @@ export default function ExhibitionLayout({ layout, books, images, collectionSlug
               <div key={i} className="max-w-3xl">
                 {(block.paragraphs || []).map((p: string, pi: number) => (
                   <p key={pi} className="text-secondary text-lg leading-relaxed mb-4 last:mb-0 font-body">
-                    {p}
+                    {linkBookNames(p, books)}
                   </p>
                 ))}
               </div>
