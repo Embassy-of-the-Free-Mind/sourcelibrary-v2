@@ -735,28 +735,33 @@ export default function SearchPage() {
         {noResults && aiResults.length > 0 && (
           <div className="space-y-3">
             <p className="text-sm text-muted">Related results from AI-expanded search:</p>
-            {aiResults.map(result => (
-              <Link
-                key={result.id}
-                href={result.type === 'page' ? `/book/${result.slug || result.book_id}/page/${result.page_number}` : `/book/${result.slug || result.book_id}`}
-                className="flex items-start gap-3 p-4 bg-warm rounded-lg hover:bg-warm-hover transition-colors"
-              >
-                {result.thumbnail && (
-                  <Image src={result.thumbnail} alt="" width={40} height={56} className="rounded shadow-sm flex-shrink-0 object-cover" />
-                )}
-                <div className="min-w-0">
-                  <h3 className="font-serif font-medium text-primary text-sm leading-tight">
-                    {result.display_title || result.title}
-                  </h3>
-                  <p className="text-xs text-muted mt-0.5">
-                    {result.author}{result.published ? `, ${result.published}` : ''}
-                  </p>
-                  {result.snippet && (
-                    <p className="text-xs text-secondary mt-1 line-clamp-2">{result.snippet}</p>
+            {aiResults.map(result => {
+              const cover = result.thumbnail || (result as any).thumbnail_blob;
+              const text = result.snippet || result.summary;
+              return (
+                <Link
+                  key={result.id}
+                  href={result.type === 'page' ? `/book/${result.slug || result.book_id}/page/${result.page_number}` : `/book/${result.slug || result.book_id}`}
+                  className="flex items-start gap-3 p-4 bg-warm rounded-lg hover:bg-warm-hover transition-colors"
+                >
+                  {cover && (
+                    <Image src={cover} alt="" width={48} height={68} className="rounded shadow-sm flex-shrink-0 object-cover" />
                   )}
-                </div>
-              </Link>
-            ))}
+                  <div className="min-w-0">
+                    <h3 className="font-serif font-medium text-primary text-sm leading-tight">
+                      {result.display_title || result.title}
+                    </h3>
+                    <p className="text-xs text-muted mt-0.5">
+                      {result.author}{result.published ? `, ${result.published}` : ''}
+                      {result.type === 'page' && result.page_number && <span> &middot; p. {result.page_number}</span>}
+                    </p>
+                    {text && (
+                      <p className="text-xs text-secondary mt-1 line-clamp-2">{text}</p>
+                    )}
+                  </div>
+                </Link>
+              );
+            })}
           </div>
         )}
 
@@ -889,26 +894,34 @@ export default function SearchPage() {
         {!noResults && !loading && query.length >= 3 && !aiStreaming && aiResults.length > 0 && (
           <section className="mt-12 pt-8 border-t border-border-light">
             <h2 className="text-sm font-medium text-muted uppercase tracking-wide mb-4">Related in the Library</h2>
-            <div className="grid grid-cols-1 sm:grid-cols-2 gap-3">
-              {aiResults.map(result => (
-                <Link
-                  key={result.id}
-                  href={result.type === 'page' ? `/book/${result.slug || result.book_id}/page/${result.page_number}` : `/book/${result.slug || result.book_id}`}
-                  className="flex items-start gap-3 p-3 bg-warm rounded-lg hover:bg-warm-hover transition-colors"
-                >
-                  {result.thumbnail && (
-                    <Image src={result.thumbnail} alt="" width={36} height={50} className="rounded shadow-sm flex-shrink-0 object-cover" />
-                  )}
-                  <div className="min-w-0">
-                    <h3 className="font-serif font-medium text-primary text-sm leading-tight line-clamp-1">
-                      {result.display_title || result.title}
-                    </h3>
-                    <p className="text-xs text-muted mt-0.5">
-                      {result.author}{result.published ? `, ${result.published}` : ''}
-                    </p>
-                  </div>
-                </Link>
-              ))}
+            <div className="space-y-3">
+              {aiResults.map(result => {
+                const cover = result.thumbnail || (result as any).thumbnail_blob;
+                const text = result.snippet || result.summary;
+                return (
+                  <Link
+                    key={result.id}
+                    href={result.type === 'page' ? `/book/${result.slug || result.book_id}/page/${result.page_number}` : `/book/${result.slug || result.book_id}`}
+                    className="flex items-start gap-3 p-3 bg-warm rounded-lg hover:bg-warm-hover transition-colors"
+                  >
+                    {cover && (
+                      <Image src={cover} alt="" width={48} height={68} className="rounded shadow-sm flex-shrink-0 object-cover" />
+                    )}
+                    <div className="min-w-0 flex-1">
+                      <h3 className="font-serif font-medium text-primary text-sm leading-tight line-clamp-1">
+                        {result.display_title || result.title}
+                      </h3>
+                      <p className="text-xs text-muted mt-0.5">
+                        {result.author}{result.published ? `, ${result.published}` : ''}
+                        {result.type === 'page' && result.page_number && <span> &middot; p. {result.page_number}</span>}
+                      </p>
+                      {text && (
+                        <p className="text-xs text-secondary mt-1 line-clamp-2">{text}</p>
+                      )}
+                    </div>
+                  </Link>
+                );
+              })}
             </div>
           </section>
         )}
