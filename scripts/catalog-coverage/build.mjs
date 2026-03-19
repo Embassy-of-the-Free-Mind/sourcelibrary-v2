@@ -118,35 +118,42 @@ function titleWordOverlap(a, b) {
 // --- Phase 1: Load MongoDB lookups ---
 
 async function loadScanLookup(db) {
-  console.log('Loading IIIF scan candidates (streaming)...');
+  console.log('Loading IIIF scan candidates (paginated)...');
   const byAuthorDecade = new Map();
   const byUstcId = new Map();
   let total = 0, withUstc = 0;
 
-  const cursor = db.collection('import_candidates').find(
-    { status: { $in: ['discovered', 'imported'] } },
-    {
-      projection: { author: 1, title: 1, date_earliest: 1, date_latest: 1, source: 1, manifest_url: 1, book_id: 1, ustc_id: 1, status: 1 },
-      batchSize: 5000,
+  const col = db.collection('import_candidates');
+  const PAGE_SIZE = 10000;
+  let lastId = null;
+
+  while (true) {
+    const filter = { status: { $in: ['discovered', 'imported'] } };
+    if (lastId) filter._id = { $gt: lastId };
+
+    const batch = await col.find(filter, {
+      projection: { author: 1, title: 1, date_earliest: 1, source: 1, manifest_url: 1, ustc_id: 1, status: 1 },
+    }).sort({ _id: 1 }).limit(PAGE_SIZE).toArray();
+
+    if (batch.length === 0) break;
+
+    for (const c of batch) {
+      total++;
+      if (c.ustc_id) { byUstcId.set(c.ustc_id, c); withUstc++; }
+
+      const surname = extractSurname(c.author);
+      if (!surname || surname.length < 2) continue;
+      const decade = c.date_earliest ? Math.floor(c.date_earliest / 10) * 10 : null;
+      if (!decade) continue;
+
+      const slim = { _id: c._id, title: c.title, source: c.source, manifest_url: c.manifest_url, status: c.status };
+      const key = `${surname}:${decade}`;
+      if (!byAuthorDecade.has(key)) byAuthorDecade.set(key, []);
+      byAuthorDecade.get(key).push(slim);
     }
-  );
 
-  for await (const c of cursor) {
-    total++;
-    if (c.ustc_id) { byUstcId.set(c.ustc_id, c); withUstc++; }
-
-    const surname = extractSurname(c.author);
-    if (!surname || surname.length < 2) continue;
-    const decade = c.date_earliest ? Math.floor(c.date_earliest / 10) * 10 : null;
-    if (!decade) continue;
-
-    // Only keep minimal fields in memory
-    const slim = { _id: c._id, title: c.title, source: c.source, manifest_url: c.manifest_url, status: c.status };
-    const key = `${surname}:${decade}`;
-    if (!byAuthorDecade.has(key)) byAuthorDecade.set(key, []);
-    byAuthorDecade.get(key).push(slim);
-
-    if (total % 100000 === 0) process.stdout.write(`  ${total.toLocaleString()} loaded...\r`);
+    lastId = batch[batch.length - 1]._id;
+    process.stdout.write(`  ${total.toLocaleString()} loaded...\r`);
   }
 
   console.log(`  ${total.toLocaleString()} candidates loaded, ${byAuthorDecade.size.toLocaleString()} author-decade blocks, ${withUstc.toLocaleString()} with ustc_id`);
