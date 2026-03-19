@@ -5,7 +5,7 @@ import { toast } from 'sonner';
 import Link from 'next/link';
 import Image from 'next/image';
 import {
-  Search, Book, FileText, ExternalLink, Filter, X, Loader2,
+  Search, Book, ExternalLink, Filter, X, Loader2,
   Quote, User, MapPin, Lightbulb, BookOpen, Languages,
   ChevronLeft, ChevronRight, ArrowUpDown, ImageIcon, ChevronDown
 } from 'lucide-react';
@@ -814,10 +814,8 @@ export default function SearchPage() {
             {(bookTotal > 0 || indexTotal > 0) && (
               <section>
                 <div className="flex items-center justify-between mb-4">
-                  <h2 className="flex items-center gap-2 text-xl font-semibold text-primary">
-                    <Search className="w-6 h-6 text-accent-rust" />
-                    Results
-                    <span className="text-base font-normal text-muted">({bookTotal + indexTotal})</span>
+                  <h2 className="text-sm font-medium text-muted uppercase tracking-wide">
+                    {bookTotal + indexTotal} results
                   </h2>
                 </div>
 
@@ -953,24 +951,37 @@ export default function SearchPage() {
 // ==================== RESULT CARDS ====================
 
 function BookResultCard({ result, query }: { result: SearchResult; query: string }) {
+  const cover = result.thumbnail || (result as any).thumbnail_blob;
+  const text = result.snippet || result.summary;
+
   return (
     <Link
       href={result.type === 'page' ? `/book/${result.slug || result.book_id}/page/${result.page_number}` : `/book/${result.slug || result.book_id}`}
-      className="block bg-white rounded-xl border border-border-light p-5 hover:border-accent-rust/30 hover:shadow-md transition-all"
+      className="block bg-white rounded-xl border border-border-light p-4 hover:border-accent-rust/30 hover:shadow-md transition-all"
     >
       <div className="flex items-start gap-4">
-        <div className={`p-2.5 rounded-lg flex-shrink-0 ${result.type === 'book' ? 'bg-accent-rust/10' : 'bg-accent-sage/12'}`}>
-          {result.type === 'book' ? <Book className="w-5 h-5 text-accent-rust" /> : <FileText className="w-5 h-5 text-accent-sage-dark" />}
-        </div>
+        {cover ? (
+          <Image
+            src={cover}
+            alt=""
+            width={60}
+            height={84}
+            className="rounded shadow-sm flex-shrink-0 object-cover"
+          />
+        ) : (
+          <div className="w-[60px] h-[84px] rounded bg-warm flex items-center justify-center flex-shrink-0">
+            <Book className="w-6 h-6 text-border-medium" />
+          </div>
+        )}
         <div className="flex-1 min-w-0">
           <div className="flex items-start justify-between gap-3">
             <div className="min-w-0">
-              <h3 className="text-xl font-medium text-primary line-clamp-2 font-serif">
+              <h3 className="text-lg font-medium text-primary line-clamp-2 font-serif leading-snug">
                 <HighlightedText text={result.display_title || result.title} query={query} />
-                {result.type === 'page' && <span className="text-muted font-normal text-base ml-2">— Page {result.page_number}</span>}
+                {result.type === 'page' && <span className="text-muted font-normal text-sm ml-2">p. {result.page_number}</span>}
               </h3>
-              <p className="text-base text-secondary mt-1">
-                <HighlightedText text={result.author} query={query} /> · {result.published} · {result.language}
+              <p className="text-sm text-secondary mt-0.5">
+                <HighlightedText text={result.author} query={query} /> · {result.published}
               </p>
             </div>
             {result.has_doi && result.doi && (
@@ -980,13 +991,13 @@ function BookResultCard({ result, query }: { result: SearchResult; query: string
               </a>
             )}
           </div>
-          {result.snippet && (
-            <p className="mt-2 text-base text-secondary line-clamp-2 font-body leading-relaxed">
-              <HighlightedText text={result.snippet} query={query} />
+          {text && (
+            <p className="mt-1.5 text-sm text-secondary line-clamp-2 font-body leading-relaxed">
+              <HighlightedText text={text} query={query} />
             </p>
           )}
           {result.type === 'book' && result.page_count && (
-            <p className="mt-2 text-sm text-muted">
+            <p className="mt-1.5 text-xs text-muted">
               {result.page_count} pages{result.translated_count ? ` · ${result.translated_count} translated` : ''}
             </p>
           )}
@@ -997,7 +1008,6 @@ function BookResultCard({ result, query }: { result: SearchResult; query: string
 }
 
 function IndexResultCard({ result, query }: { result: IndexSearchResult; query: string }) {
-  const TypeIcon = INDEX_TYPES.find(t => t.value === result.type)?.icon || Search;
   const typeLabel = INDEX_TYPES.find(t => t.value === result.type)?.label || result.type;
   const isQuote = result.type === 'quote';
 
@@ -1009,37 +1019,30 @@ function IndexResultCard({ result, query }: { result: IndexSearchResult; query: 
         ? `/book/${result.book_slug || result.book_id}/guide?page=${result.pages[0]}`
         : `/book/${result.book_slug || result.book_id}`
       }
-      className="block bg-white rounded-xl border border-border-light p-5 hover:border-accent-violet/30 hover:shadow-md transition-all"
+      className="block bg-white rounded-xl border border-border-light p-4 hover:border-accent-violet/30 hover:shadow-md transition-all"
     >
-      <div className="flex items-start gap-3">
-        <div className={`p-2.5 rounded-lg flex-shrink-0 ${(SEARCH_TYPE_STYLES[result.type as SearchIndexType] ?? SEARCH_TYPE_STYLES.keyword).badge.split(' ')[0]}`}>
-          <TypeIcon className={`w-5 h-5 ${(SEARCH_TYPE_STYLES[result.type as SearchIndexType] ?? SEARCH_TYPE_STYLES.keyword).iconColor}`} />
-        </div>
-        <div className="flex-1 min-w-0">
-          <span className={`text-sm px-2.5 py-0.5 rounded-full ${(SEARCH_TYPE_STYLES[result.type as SearchIndexType] ?? SEARCH_TYPE_STYLES.keyword).badge}`}>{typeLabel}</span>
+      <div className="min-w-0">
+        <span className={`text-xs px-2 py-0.5 rounded-full ${(SEARCH_TYPE_STYLES[result.type as SearchIndexType] ?? SEARCH_TYPE_STYLES.keyword).badge}`}>{typeLabel}</span>
 
-          {isQuote ? (
-            <>
-              <blockquote className="font-serif text-xl text-primary italic border-l-2 border-accent-gold/40 pl-4 my-2">
-                &ldquo;<HighlightedText text={result.quote_text || ''} query={query} />&rdquo;
-              </blockquote>
-              {result.quote_significance && (
-                <p className="text-base text-secondary mt-1"><HighlightedText text={result.quote_significance} query={query} /></p>
-              )}
-            </>
-          ) : (
-            <h3 className="text-xl font-medium text-primary mt-1 font-serif"><HighlightedText text={result.term} query={query} /></h3>
-          )}
+        {isQuote ? (
+          <>
+            <blockquote className="font-serif text-lg text-primary italic border-l-2 border-accent-gold/40 pl-3 my-2">
+              &ldquo;<HighlightedText text={result.quote_text || ''} query={query} />&rdquo;
+            </blockquote>
+            {result.quote_significance && (
+              <p className="text-sm text-secondary mt-1"><HighlightedText text={result.quote_significance} query={query} /></p>
+            )}
+          </>
+        ) : (
+          <h3 className="text-lg font-medium text-primary mt-1 font-serif"><HighlightedText text={result.term} query={query} /></h3>
+        )}
 
-          <p className="text-base text-muted mt-2">
-            From: <span className="text-secondary">{result.book_title}</span> · {result.book_author}
-          </p>
+        <p className="text-sm text-muted mt-1.5">
+          {result.book_title} · {result.book_author}
           {result.pages && result.pages.length > 0 && (
-            <p className="text-sm text-muted mt-1">
-              Pages: {result.pages.slice(0, 5).join(', ')}{result.pages.length > 5 && ` +${result.pages.length - 5} more`}
-            </p>
+            <span className="ml-1">· p. {result.pages.slice(0, 3).join(', ')}{result.pages.length > 3 && ` +${result.pages.length - 3}`}</span>
           )}
-        </div>
+        </p>
       </div>
     </Link>
   );
