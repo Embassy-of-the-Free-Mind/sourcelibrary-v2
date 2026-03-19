@@ -15,7 +15,7 @@
  *   node scripts/catalog-coverage/build.mjs --dry-run
  */
 
-import { getScriptClient } from '../lib/mongo.mjs';
+import { MongoClient } from 'mongodb';
 
 const SUPABASE_URL = 'https://ykhxaecbbxaaqlujuzde.supabase.co';
 const SUPABASE_KEY = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6InlraHhhZWNiYnhhYXFsdWp1emRlIiwicm9sZSI6ImFub24iLCJpYXQiOjE3NjUwNjExMDEsImV4cCI6MjA4MDYzNzEwMX0.O2chfnHGQWLOaVSFQ-F6UJMlya9EzPbsUh848SEOPj4';
@@ -555,7 +555,17 @@ async function main() {
   console.log(`Language: ${LANG_FILTER || 'all'}`);
   console.log(`Dry run: ${DRY_RUN}\n`);
 
-  const { client, db } = await getScriptClient({ noTimeout: true, maxPoolSize: 3 });
+  const uri = process.env.MONGODB_URI;
+  if (!uri) { console.error('MONGODB_URI required'); process.exit(1); }
+  const client = new MongoClient(uri, {
+    maxPoolSize: 3,
+    serverSelectionTimeoutMS: 30_000,
+    connectTimeoutMS: 30_000,
+    socketTimeoutMS: 120_000,  // 2min — needed for streaming 664K candidates
+    maxIdleTimeMS: 120_000,
+  });
+  await client.connect();
+  const db = client.db('bookstore');
 
   try {
     // Phase 1: Load lookups
