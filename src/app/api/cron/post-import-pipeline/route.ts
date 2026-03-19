@@ -2070,11 +2070,35 @@ export async function GET(request: NextRequest) {
           ocr: { $sum: { $ifNull: ['$pages_ocr', 0] } },
           translated: { $sum: { $ifNull: ['$pages_translated', 0] } },
         }}],
+        canon: [
+          { $match: { hidden: { $ne: true } } },
+          { $group: {
+            _id: null,
+            visible_books: { $sum: 1 },
+            readable: { $sum: { $cond: [
+              { $and: [{ $gte: ['$pages_ocr', 1] }, { $gte: ['$pages_translated', { $multiply: ['$pages_ocr', 0.9] }] }] },
+              1, 0,
+            ] } },
+          }},
+        ],
+        first_translations: [
+          { $match: { is_first_translation: true } },
+          { $group: {
+            _id: null,
+            total: { $sum: 1 },
+            complete: { $sum: { $cond: [
+              { $and: [{ $gte: ['$pages_ocr', 10] }, { $gte: ['$pages_translated', { $multiply: ['$pages_ocr', 0.9] }] }] },
+              1, 0,
+            ] } },
+          }},
+        ],
       },
     }]).toArray();
 
     const counts = Object.fromEntries((facetResult?.funnel || []).map((s: any) => [s._id, s.count]));
     const totals = facetResult?.totals?.[0] || { books: 0, pages: 0, ocr: 0, translated: 0 };
+    const canon = facetResult?.canon?.[0] || { visible_books: 0, readable: 0 };
+    const ft = facetResult?.first_translations?.[0] || { total: 0, complete: 0 };
 
     // Active batch jobs count
     const activeBatch = await db.collection('batch_jobs').aggregate([
@@ -2090,6 +2114,8 @@ export async function GET(request: NextRequest) {
       funnel: counts,
       pages: { total: totals.pages, ocr: totals.ocr, translated: totals.translated },
       books: totals.books,
+      canon: { visible: canon.visible_books, readable: canon.readable },
+      first_translations: { total: ft.total, complete: ft.complete },
       active_batch: batchByType,
       cost_period: null, // filled by dashboard queries against gemini_usage
     }).catch(e => console.error('[pipeline-snapshot] write failed:', e));
