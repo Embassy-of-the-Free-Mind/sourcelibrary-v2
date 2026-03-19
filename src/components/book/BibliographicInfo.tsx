@@ -272,7 +272,9 @@ export default function BibliographicInfo({ book, pagesCount }: BibliographicInf
                   {book.translation_verification.disposition === 'translation_found' && (() => {
                     const translations = book.translation_verification!.validated_translations?.length
                       ? book.translation_verification!.validated_translations
-                      : book.translation_verification!.translations || [];
+                      : book.translation_verification!.translations_found?.length
+                        ? book.translation_verification!.translations_found
+                        : book.translation_verification!.translations || [];
                     return translations
                       .filter(t => t.english_title || t.translator)
                       .map((t, i) => (
@@ -291,7 +293,7 @@ export default function BibliographicInfo({ book, pagesCount }: BibliographicInf
                             {t.pub_year && <span className="text-stone-400"> ({t.pub_year})</span>}
                             {t.publisher && <span className="text-stone-500">, {t.publisher}</span>}
                           </div>
-                          {t.catalog_id && t.evidence_source && t.evidence_source !== 'llm_knowledge' && (
+                          {t.catalog_id && t.evidence_source && t.evidence_source !== 'llm_knowledge' ? (
                             <a
                               href={getCatalogUrl(t.evidence_source, t.catalog_id)}
                               target="_blank"
@@ -301,7 +303,17 @@ export default function BibliographicInfo({ book, pagesCount }: BibliographicInf
                               View on {getCatalogLabel(t.evidence_source)}
                               <ExternalLink className="w-3 h-3" />
                             </a>
-                          )}
+                          ) : t.url ? (
+                            <a
+                              href={t.url}
+                              target="_blank"
+                              rel="noopener noreferrer"
+                              className="text-accent-gold hover:text-accent-gold/80 text-xs inline-flex items-center gap-1 mt-0.5"
+                            >
+                              View source
+                              <ExternalLink className="w-3 h-3" />
+                            </a>
+                          ) : null}
                         </div>
                       ));
                   })()}
