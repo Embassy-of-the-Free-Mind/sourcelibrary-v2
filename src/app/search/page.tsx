@@ -165,7 +165,7 @@ export default function SearchPage() {
         const termResults = await Promise.all(
           newTerms.map(async (term) => {
             try {
-              const res = await searchApi.search(term, { limit: 3, search_content: 'true' });
+              const res = await searchApi.search(term, { limit: 3 });
               return res.results || [];
             } catch { return []; }
           })
