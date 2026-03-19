@@ -9,7 +9,7 @@ import CollectionsShowcase, { type CollectionSummary } from '@/components/home/C
 import FeaturedCollectionNoon from './FeaturedCollectionNoon';
 import FeaturedCollection4pm from './FeaturedCollection4pm';
 
-export const revalidate = 300;
+export const dynamic = 'force-dynamic';
 export const maxDuration = 60;
 
 // ---------- Data fetching (reuse home page pattern) ----------
