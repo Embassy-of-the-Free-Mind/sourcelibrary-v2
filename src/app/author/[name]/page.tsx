@@ -3,8 +3,8 @@ import Link from 'next/link';
 import Image from 'next/image';
 import { ArrowLeft, Book as BookIcon } from 'lucide-react';
 import { getDb } from '@/lib/mongodb';
-import { notFound } from 'next/navigation';
-import { bookUrl } from '@/lib/slugify';
+import { notFound, redirect } from 'next/navigation';
+import { bookUrl, authorSlug } from '@/lib/slugify';
 
 interface Book {
   id: string;
@@ -30,6 +30,16 @@ export async function generateStaticParams() {
 
 interface AuthorPageProps {
   params: Promise<{ name: string }>;
+}
+
+// eslint-disable-next-line @typescript-eslint/no-explicit-any
+async function resolveAuthorName(db: any, slug: string): Promise<string | null> {
+  const pattern = slug.split('-').map(s => s.replace(/[.*+?^${}()|[\]\\]/g, '\\$&')).join('[^a-z0-9]+');
+  const book = await db.collection('books').findOne(
+    { author: { $regex: new RegExp(`^${pattern}$`, 'i') }, hidden: { $ne: true } },
+    { projection: { author: 1 } }
+  );
+  return book?.author as string | null;
 }
 
 async function getAuthorBooks(authorName: string): Promise<Book[]> {
@@ -89,7 +99,10 @@ async function getAuthorBooks(authorName: string): Promise<Book[]> {
 
 export async function generateMetadata({ params }: AuthorPageProps): Promise<Metadata> {
   const { name } = await params;
-  const authorName = decodeURIComponent(name);
+  const decoded = decodeURIComponent(name);
+  const isOldFormat = decoded !== name;
+  const db = await getDb();
+  const authorName = isOldFormat ? decoded : (await resolveAuthorName(db, name) || name.replace(/-/g, ' '));
 
   return {
     title: `${authorName} — Source Library`,
@@ -108,9 +121,18 @@ export async function generateMetadata({ params }: AuthorPageProps): Promise<Met
 
 export default async function AuthorPage({ params }: AuthorPageProps) {
   const { name } = await params;
-  const authorName = decodeURIComponent(name);
-  const books = await getAuthorBooks(authorName);
+  const decoded = decodeURIComponent(name);
 
+  // Redirect old %20-style URLs to hyphenated slugs
+  if (decoded !== name) {
+    redirect(`/author/${authorSlug(decoded)}`);
+  }
+
+  const db = await getDb();
+  const authorName = await resolveAuthorName(db, name);
+  if (!authorName) notFound();
+
+  const books = await getAuthorBooks(authorName);
   if (books.length === 0) notFound();
 
   // Year range
@@ -122,7 +144,6 @@ export default async function AuthorPage({ params }: AuthorPageProps) {
     : null;
 
   // Check for encyclopedia entry
-  const db = await getDb();
   const entity = await db.collection('entities').findOne(
     { type: 'person', $or: [
       { name: { $regex: new RegExp(`^${authorName.replace(/[.*+?^${}()|[\]\\]/g, '\\$&')}$`, 'i') } },

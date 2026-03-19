@@ -6,7 +6,9 @@ export const contentType = OG_CONTENT_TYPE;
 
 export default async function Image({ params }: { params: Promise<{ name: string }> }) {
   const { name } = await params;
-  const authorName = decodeURIComponent(name);
+  const authorName = decodeURIComponent(name)
+    .replace(/-/g, ' ')
+    .replace(/\b\w/g, c => c.toUpperCase());
 
   return generateBrandedOGImage({
     title: authorName,
