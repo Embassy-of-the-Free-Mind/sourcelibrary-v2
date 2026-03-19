@@ -131,7 +131,17 @@ export function bookUrl(book: { slug?: string; id: string }): string {
  * Generate a URL for an author page.
  * Returns null for unknown/anonymous authors.
  */
+export function authorSlug(author: string): string {
+  return author
+    .normalize('NFD')
+    .replace(/[\u0300-\u036f]/g, '')
+    .toLowerCase()
+    .replace(/[^a-z0-9]+/g, '-')
+    .replace(/^-+|-+$/g, '')
+    .replace(/-{2,}/g, '-');
+}
+
 export function authorUrl(author: string): string | null {
   if (!author || author === 'Unknown' || author === 'Anonymous') return null;
-  return `/author/${encodeURIComponent(author)}`;
+  return `/author/${authorSlug(author)}`;
 }

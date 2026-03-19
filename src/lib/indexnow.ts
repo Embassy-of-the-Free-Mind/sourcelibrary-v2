@@ -63,7 +63,7 @@ export async function notifyIndexNow(urls: string[]): Promise<{ success: boolean
  */
 export async function notifyPageTranslation(bookId: string, pageNumber: number, slug?: string): Promise<void> {
   const bookPath = slug || bookId;
-  const url = `https://${INDEXNOW_HOST}/book/${bookPath}/page/${pageNumber}`;
+  const url = `https://${INDEXNOW_HOST}/book/${bookPath}/page-number/${pageNumber}`;
   await notifyIndexNow([url]);
 }
 
@@ -72,7 +72,7 @@ export async function notifyPageTranslation(bookId: string, pageNumber: number, 
  */
 export async function notifyBatchTranslation(bookId: string, pageNumbers: number[], slug?: string): Promise<void> {
   const bookPath = slug || bookId;
-  const urls = pageNumbers.map(p => `https://${INDEXNOW_HOST}/book/${bookPath}/page/${p}`);
+  const urls = pageNumbers.map(p => `https://${INDEXNOW_HOST}/book/${bookPath}/page-number/${p}`);
   // Also include the book page and read page
   urls.push(`https://${INDEXNOW_HOST}/book/${bookPath}`);
   urls.push(`https://${INDEXNOW_HOST}/book/${bookPath}/read`);
