@@ -161,30 +161,25 @@ export default function SearchPage() {
         setAiTerms(newTerms);
 
         if (newTerms.length === 0) return;
-        // Search expanded terms in parallel
-        const termResults = await Promise.all(
-          newTerms.map(async (term) => {
-            try {
-              const res = await searchApi.search(term, { limit: 3 });
-              return res.results || [];
-            } catch { return []; }
-          })
-        );
-        // Deduplicate, excluding main results
+        // Search expanded terms sequentially to avoid saturating the backend
         const mainBookIds = new Set(bookResults.map(r => r.book_id));
         const seen = new Set<string>();
         const deduped: SearchResult[] = [];
-        for (const results of termResults) {
-          for (const r of results) {
-            if (mainBookIds.has(r.book_id)) continue;
-            const key = r.book_id + (r.type === 'page' ? `-p${r.page_number}` : '');
-            if (!seen.has(key)) {
-              seen.add(key);
-              deduped.push(r);
+        for (const term of newTerms) {
+          try {
+            const res = await searchApi.search(term, { limit: 3 });
+            for (const r of (res.results || [])) {
+              if (mainBookIds.has(r.book_id)) continue;
+              const key = r.book_id + (r.type === 'page' ? `-p${r.page_number}` : '');
+              if (!seen.has(key)) {
+                seen.add(key);
+                deduped.push(r);
+              }
             }
-          }
+            // Update results incrementally as each term resolves
+            setAiResults([...deduped].slice(0, 8));
+          } catch { /* skip failed term */ }
         }
-        setAiResults(deduped.slice(0, 8));
       },
       () => setAiStreaming(false),
     );
