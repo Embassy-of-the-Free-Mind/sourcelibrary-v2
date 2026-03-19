@@ -1029,15 +1029,30 @@ async function run() {
       } else {
         const sqsClient = new SQSClient({ region: process.env.AWS_REGION || 'eu-central-1' });
 
-        // Find archive_complete books that haven't had preview OCR yet
+        // Find archive_complete books that haven't had preview OCR yet.
+        // Priority: confirmed first translations > non-English (likely first translations) > English
+        const ENGLISH_VARIANTS = ['english', 'eng', 'en'];
         const readyForPreview = await db.collection('books')
-          .find({
-            'pipeline_auto.status': 'archive_complete',
-            preview_ocr_queued_at: { $exists: false },
-          })
-          .sort({ is_first_translation: -1, hidden: 1 })
-          .project({ id: 1, title: 1, language: 1 })
-          .limit(PREVIEW_LIMIT)
+          .aggregate([
+            { $match: {
+              'pipeline_auto.status': 'archive_complete',
+              preview_ocr_queued_at: { $exists: false },
+            }},
+            { $addFields: {
+              _priority: {
+                $switch: {
+                  branches: [
+                    { case: { $eq: ['$is_first_translation', true] }, then: 0 },
+                    { case: { $in: [{ $toLower: { $ifNull: ['$language', ''] } }, ENGLISH_VARIANTS] }, then: 2 },
+                  ],
+                  default: 1,  // Non-English = likely first translation
+                },
+              },
+            }},
+            { $sort: { _priority: 1, hidden: 1 } },
+            { $project: { id: 1, title: 1, language: 1 } },
+            { $limit: PREVIEW_LIMIT },
+          ])
           .toArray();
 
         console.log(`  Books ready for preview: ${readyForPreview.length}`);
