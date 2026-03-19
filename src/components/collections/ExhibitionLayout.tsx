@@ -1,0 +1,497 @@
+'use client';
+
+import Link from 'next/link';
+import Image from 'next/image';
+import { BookOpen, ArrowRight, Quote, Clock, Users, Sparkles } from 'lucide-react';
+import { bookUrl } from '@/lib/slugify';
+
+// ─── Types ──────────────────────────────────────────────────────
+
+interface BookRef {
+  id: string;
+  slug?: string;
+  title: string;
+  display_title?: string;
+  author?: string;
+  year?: number;
+  thumbnail?: string;
+  is_first_translation?: boolean;
+}
+
+interface GalleryImage {
+  id: string;
+  book_id: string;
+  book_title: string;
+  type?: string;
+  museum_description?: string;
+  extracted_url?: string;
+  thumbnail_url?: string;
+  image_url?: string;
+}
+
+interface LayoutBlock {
+  component: string;
+  // eslint-disable-next-line @typescript-eslint/no-explicit-any
+  [key: string]: any;
+}
+
+interface ExhibitionLayoutProps {
+  layout: LayoutBlock[];
+  books: BookRef[];
+  images: GalleryImage[];
+  collectionSlug: string;
+}
+
+// ─── Helpers ────────────────────────────────────────────────────
+
+function findBook(books: BookRef[], id: string): BookRef | undefined {
+  return books.find(b => b.id === id);
+}
+
+function bookTitle(book: BookRef): string {
+  const dt = book.display_title;
+  return (dt && dt !== 'None') ? dt : book.title;
+}
+
+function imageUrl(img: GalleryImage): string {
+  return img.extracted_url || img.thumbnail_url || img.image_url || '';
+}
+
+// ─── Component: Hook ────────────────────────────────────────────
+
+function HookBlock({ text }: { text: string }) {
+  return (
+    <div className="bg-dark text-white px-6 py-8 sm:py-10 -mx-6 sm:-mx-8">
+      <div className="max-w-4xl mx-auto text-center">
+        <Sparkles className="w-5 h-5 text-accent-gold mx-auto mb-3 opacity-60" />
+        <p className="text-lg sm:text-xl md:text-2xl font-display leading-relaxed text-white/90">
+          {text}
+        </p>
+      </div>
+    </div>
+  );
+}
+
+// ─── Component: Stats ───────────────────────────────────────────
+
+function StatsBlock({ items }: { items: { value: string; label: string }[] }) {
+  return (
+    <div className="flex flex-wrap justify-center gap-8 sm:gap-12 py-6 border-y border-border-light">
+      {items.map((item, i) => (
+        <div key={i} className="text-center">
+          <div className="text-2xl sm:text-3xl font-display text-primary">{item.value}</div>
+          <div className="text-xs sm:text-sm text-muted mt-1">{item.label}</div>
+        </div>
+      ))}
+    </div>
+  );
+}
+
+// ─── Component: Sections ────────────────────────────────────────
+
+function SectionsBlock({ sections, books }: {
+  sections: {
+    title: string;
+    description: string;
+    period?: string;
+    books: { id: string; note: string }[];
+  }[];
+  books: BookRef[];
+}) {
+  return (
+    <div className="space-y-12">
+      {sections.map((section, si) => (
+        <div key={si}>
+          <div className="mb-6">
+            <div className="flex items-baseline gap-3 mb-2">
+              <h3 className="text-xl sm:text-2xl font-display text-primary">
+                {section.title}
+              </h3>
+              {section.period && (
+                <span className="text-sm text-muted whitespace-nowrap">{section.period}</span>
+              )}
+            </div>
+            <p className="text-secondary leading-relaxed max-w-3xl">{section.description}</p>
+          </div>
+
+          <div className="grid gap-4 grid-cols-1 sm:grid-cols-2">
+            {section.books.map((ref) => {
+              const book = findBook(books, ref.id);
+              if (!book) return null;
+              return (
+                <Link
+                  key={ref.id}
+                  href={bookUrl({ id: book.id, slug: book.slug })}
+                  className="group flex gap-4 p-4 rounded-xl bg-white border border-border-light hover:border-accent-rust/30 hover:shadow-md transition-all"
+                >
+                  <div className="w-16 sm:w-20 flex-shrink-0">
+                    <div className="aspect-[3/4] relative rounded-lg overflow-hidden bg-warm">
+                      {book.thumbnail ? (
+                        <Image
+                          src={book.thumbnail}
+                          alt={bookTitle(book)}
+                          fill
+                          className="object-cover group-hover:scale-105 transition-transform duration-300"
+                          sizes="80px"
+                        />
+                      ) : (
+                        <div className="absolute inset-0 flex items-center justify-center">
+                          <BookOpen className="w-6 h-6 text-muted" />
+                        </div>
+                      )}
+                    </div>
+                  </div>
+                  <div className="flex-1 min-w-0 py-0.5">
+                    <h4 className="font-semibold text-primary group-hover:text-accent-rust transition-colors line-clamp-2 leading-snug mb-1 font-display text-sm sm:text-base">
+                      {bookTitle(book)}
+                    </h4>
+                    <p className="text-xs text-muted mb-1.5">
+                      {book.author}{book.year ? `, ${book.year}` : ''}
+                      {book.is_first_translation && (
+                        <span className="ml-2 text-[10px] font-medium bg-accent-rust/10 text-accent-rust px-1.5 py-0.5 rounded">
+                          First Translation
+                        </span>
+                      )}
+                    </p>
+                    {ref.note && (
+                      <p className="text-xs sm:text-sm text-secondary leading-relaxed line-clamp-3">
+                        {ref.note}
+                      </p>
+                    )}
+                  </div>
+                </Link>
+              );
+            })}
+          </div>
+        </div>
+      ))}
+    </div>
+  );
+}
+
+// ─── Component: Key Figures ─────────────────────────────────────
+
+function KeyFiguresBlock({ figures, books }: {
+  figures: {
+    name: string;
+    dates?: string;
+    bio: string;
+    key_book_id?: string;
+  }[];
+  books: BookRef[];
+}) {
+  return (
+    <div>
+      <h3 className="text-xl sm:text-2xl font-display text-primary mb-6 flex items-center gap-2">
+        <Users className="w-5 h-5 text-muted" />
+        Key Figures
+      </h3>
+      <div className="grid gap-4 grid-cols-1 sm:grid-cols-2 lg:grid-cols-3">
+        {figures.map((fig, i) => {
+          const book = fig.key_book_id ? findBook(books, fig.key_book_id) : undefined;
+          return (
+            <div key={i} className="p-5 rounded-xl bg-white border border-border-light">
+              <div className="mb-2">
+                <h4 className="font-display text-lg text-primary">{fig.name}</h4>
+                {fig.dates && <p className="text-xs text-muted">{fig.dates}</p>}
+              </div>
+              <p className="text-sm text-secondary leading-relaxed mb-3">{fig.bio}</p>
+              {book && (
+                <Link
+                  href={bookUrl({ id: book.id, slug: book.slug })}
+                  className="text-xs text-accent-rust hover:underline flex items-center gap-1"
+                >
+                  <BookOpen className="w-3 h-3" />
+                  {bookTitle(book)}
+                </Link>
+              )}
+            </div>
+          );
+        })}
+      </div>
+    </div>
+  );
+}
+
+// ─── Component: Quotes ──────────────────────────────────────────
+
+function QuotesBlock({ quotes }: {
+  quotes: {
+    text: string;
+    author?: string;
+    book_title?: string;
+    book_id?: string;
+  }[];
+}) {
+  return (
+    <div className="space-y-6">
+      {quotes.map((q, i) => (
+        <blockquote
+          key={i}
+          className="relative pl-6 border-l-2 border-accent-gold/40 py-2"
+        >
+          <Quote className="absolute -left-3 -top-1 w-5 h-5 text-accent-gold/30 bg-cream" />
+          <p className="text-lg sm:text-xl font-display text-primary/80 leading-relaxed italic">
+            &ldquo;{q.text}&rdquo;
+          </p>
+          <footer className="mt-2 text-sm text-muted">
+            — {q.author}{q.book_title ? `, ${q.book_title}` : ''}
+          </footer>
+        </blockquote>
+      ))}
+    </div>
+  );
+}
+
+// ─── Component: Timeline ────────────────────────────────────────
+
+function TimelineBlock({ start_year, end_year, highlights }: {
+  start_year: number;
+  end_year: number;
+  highlights: { year: number; label: string; book_id?: string }[];
+}) {
+  const range = end_year - start_year;
+
+  return (
+    <div>
+      <h3 className="text-xl sm:text-2xl font-display text-primary mb-6 flex items-center gap-2">
+        <Clock className="w-5 h-5 text-muted" />
+        Timeline
+      </h3>
+      <div className="relative">
+        {/* Line */}
+        <div className="absolute left-3 top-0 bottom-0 w-px bg-border-light" />
+
+        <div className="space-y-6 pl-10">
+          {highlights.map((h, i) => {
+            const pct = ((h.year - start_year) / range) * 100;
+            return (
+              <div key={i} className="relative">
+                {/* Dot */}
+                <div
+                  className="absolute -left-[29px] w-2.5 h-2.5 rounded-full bg-accent-rust border-2 border-cream"
+                  style={{ top: '6px' }}
+                />
+                <div className="text-xs text-muted font-mono mb-0.5">{h.year}</div>
+                <p className="text-sm text-primary leading-snug">{h.label}</p>
+              </div>
+            );
+          })}
+        </div>
+      </div>
+    </div>
+  );
+}
+
+// ─── Component: Featured Image ──────────────────────────────────
+
+function FeaturedImageBlock({ image, caption }: {
+  image: GalleryImage;
+  caption: string;
+}) {
+  const src = imageUrl(image);
+  if (!src) return null;
+
+  return (
+    <figure className="rounded-xl overflow-hidden border border-border-light">
+      <div className="relative aspect-[16/9] sm:aspect-[2/1] bg-dark">
+        <Image
+          src={src}
+          alt={image.museum_description || caption}
+          fill
+          className="object-contain"
+          sizes="(min-width: 1024px) 900px, 100vw"
+        />
+      </div>
+      <figcaption className="px-4 py-3 text-sm text-secondary bg-white leading-relaxed">
+        {caption}
+      </figcaption>
+    </figure>
+  );
+}
+
+// ─── Component: Reading Paths ───────────────────────────────────
+
+function ReadingPathsBlock({ paths, books }: {
+  paths: {
+    audience: string;
+    description?: string;
+    steps: { book_id: string; instruction: string }[];
+  }[];
+  books: BookRef[];
+}) {
+  return (
+    <div>
+      <h3 className="text-xl sm:text-2xl font-display text-primary mb-6">
+        Where to Start
+      </h3>
+      <div className="grid gap-6 grid-cols-1 lg:grid-cols-2">
+        {paths.map((path, pi) => (
+          <div key={pi} className="p-5 rounded-xl bg-white border border-border-light">
+            <h4 className="font-display text-lg text-primary mb-1">{path.audience}</h4>
+            {path.description && (
+              <p className="text-sm text-muted mb-4">{path.description}</p>
+            )}
+            <ol className="space-y-3">
+              {path.steps.map((step, si) => {
+                const book = findBook(books, step.book_id);
+                if (!book) return null;
+                return (
+                  <li key={si} className="flex gap-3">
+                    <span className="flex-shrink-0 w-6 h-6 rounded-full bg-accent-rust/10 text-accent-rust text-xs font-medium flex items-center justify-center mt-0.5">
+                      {si + 1}
+                    </span>
+                    <div>
+                      <Link
+                        href={bookUrl({ id: book.id, slug: book.slug })}
+                        className="text-sm font-medium text-accent-rust hover:underline"
+                      >
+                        {bookTitle(book)}
+                      </Link>
+                      {step.instruction && (
+                        <p className="text-xs text-secondary mt-0.5 leading-relaxed">
+                          {step.instruction}
+                        </p>
+                      )}
+                    </div>
+                  </li>
+                );
+              })}
+            </ol>
+          </div>
+        ))}
+      </div>
+    </div>
+  );
+}
+
+// ─── Component: Cross-Collections ───────────────────────────────
+
+function CrossCollectionsBlock({ links }: {
+  links: { slug: string; why: string }[];
+}) {
+  return (
+    <div>
+      <h3 className="text-lg font-display text-primary mb-4">Related Collections</h3>
+      <div className="flex flex-wrap gap-3">
+        {links.map((link, i) => (
+          <Link
+            key={i}
+            href={`/collections/${link.slug}`}
+            className="group flex items-center gap-2 px-4 py-2.5 rounded-lg bg-white border border-border-light hover:border-accent-rust/30 hover:shadow-sm transition-all"
+          >
+            <span className="text-sm font-medium text-primary group-hover:text-accent-rust transition-colors capitalize">
+              {link.slug.replace(/-/g, ' ')}
+            </span>
+            <ArrowRight className="w-3.5 h-3.5 text-muted group-hover:text-accent-rust transition-colors" />
+          </Link>
+        ))}
+      </div>
+    </div>
+  );
+}
+
+// ─── Component: Gallery Grid ────────────────────────────────────
+
+function GalleryGridBlock({ images, indices }: {
+  images: GalleryImage[];
+  indices: number[];
+}) {
+  const selected = indices
+    .map(i => images[i])
+    .filter(Boolean);
+
+  if (selected.length === 0) return null;
+
+  return (
+    <div className="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-4 gap-3">
+      {selected.map((img) => {
+        const src = imageUrl(img);
+        if (!src) return null;
+        return (
+          <Link
+            key={img.id}
+            href={`/book/${img.book_id}`}
+            className="group relative aspect-square rounded-lg overflow-hidden border border-border-light hover:border-accent-rust/40 transition-all hover:shadow-md"
+            title={img.museum_description}
+          >
+            <Image
+              src={src}
+              alt={img.museum_description || img.book_title || 'Illustration'}
+              fill
+              className="object-cover group-hover:scale-105 transition-transform duration-300"
+              sizes="(min-width: 1024px) 200px, (min-width: 640px) 160px, 50vw"
+            />
+            {img.type && (
+              <span className="absolute bottom-1.5 left-1.5 text-[10px] bg-dark/70 text-white px-1.5 py-0.5 rounded capitalize">
+                {img.type}
+              </span>
+            )}
+          </Link>
+        );
+      })}
+    </div>
+  );
+}
+
+// ─── Layout Renderer ────────────────────────────────────────────
+
+export default function ExhibitionLayout({ layout, books, images, collectionSlug }: ExhibitionLayoutProps) {
+  return (
+    <div className="space-y-10">
+      {layout.map((block, i) => {
+        switch (block.component) {
+          case 'hook':
+            return <HookBlock key={i} text={block.text} />;
+
+          case 'stats':
+            return <StatsBlock key={i} items={block.items} />;
+
+          case 'sections':
+            return <SectionsBlock key={i} sections={block.sections} books={books} />;
+
+          case 'key_figures':
+            return <KeyFiguresBlock key={i} figures={block.figures} books={books} />;
+
+          case 'quotes':
+            return <QuotesBlock key={i} quotes={block.quotes} />;
+
+          case 'timeline':
+            return <TimelineBlock key={i} start_year={block.start_year} end_year={block.end_year} highlights={block.highlights} />;
+
+          case 'featured_image':
+            return images[block.image_index]
+              ? <FeaturedImageBlock key={i} image={images[block.image_index]} caption={block.caption} />
+              : null;
+
+          case 'reading_paths':
+            return <ReadingPathsBlock key={i} paths={block.paths} books={books} />;
+
+          case 'gallery_grid':
+            return <GalleryGridBlock key={i} images={images} indices={block.image_indices || []} />;
+
+          case 'cross_collections':
+            return <CrossCollectionsBlock key={i} links={block.links} />;
+
+          case 'description':
+            return (
+              <div key={i} className="max-w-3xl">
+                {(block.paragraphs || []).map((p: string, pi: number) => (
+                  <p key={pi} className="text-secondary text-lg leading-relaxed mb-4 last:mb-0 font-body">
+                    {p}
+                  </p>
+                ))}
+              </div>
+            );
+
+          case 'subcollections':
+            // Rendered by parent — just a flag
+            return null;
+
+          default:
+            return null;
+        }
+      })}
+    </div>
+  );
+}
