@@ -100,7 +100,7 @@ export default async function TimelinePage() {
       header={
         <ContentHeader
           title="Timeline"
-          subtitle={`${data.summary.total.toLocaleString()} books across ${Math.ceil((data.summary.yearRange.max - data.summary.yearRange.min) / 100)} centuries`}
+          subtitle={`${data.summary.total.toLocaleString()} texts from antiquity to the Enlightenment — browse the tradition by era`}
         />
       }
       maxWidth="wide"
