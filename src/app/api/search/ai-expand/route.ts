@@ -83,6 +83,7 @@ The *lapis philosophorum* was the supreme goal of chrysopoeia — the art of gol
 
         let fullText = '';
         let sentTerms = false;
+        let hitSeparator = false;
 
         for await (const chunk of result.stream) {
           const text = chunk.text();
@@ -90,34 +91,35 @@ The *lapis philosophorum* was the supreme goal of chrysopoeia — the art of gol
 
           fullText += text;
 
-          // Check if we've hit the separator
-          if (fullText.includes('---TERMS---')) {
-            if (!sentTerms) {
-              const [narration, termsSection] = fullText.split('---TERMS---');
-              // Send final narration
-              controller.enqueue(encoder.encode(`event: narration\ndata: ${JSON.stringify(narration.trim())}\n\n`));
-
-              // Try to parse terms if the JSON is complete
-              const termsText = termsSection?.trim();
-              if (termsText) {
-                try {
-                  const jsonStr = termsText.replace(/^```(?:json)?\s*/, '').replace(/\s*```$/, '');
-                  const parsed = JSON.parse(jsonStr);
-                  if (Array.isArray(parsed)) {
-                    const terms = parsed.filter((t: unknown) => typeof t === 'string' && t.length >= 2).slice(0, 5);
-                    controller.enqueue(encoder.encode(`event: terms\ndata: ${JSON.stringify(terms)}\n\n`));
-                    sentTerms = true;
-
-                    // Cache the result
-                    responseCache.set(normalized, { narration: narration.trim(), terms, timestamp: Date.now() });
-                  }
-                } catch {
-                  // JSON not complete yet, will try again with more chunks
+          // Check if we've just hit the separator
+          if (!hitSeparator && fullText.includes('---TERMS---')) {
+            hitSeparator = true;
+            // Send any trailing narration before the separator that wasn't sent yet
+            // (the chunk that contains "---TERMS---" may have narration text before it)
+            const separatorIdx = text.indexOf('---TERMS---');
+            if (separatorIdx > 0) {
+              controller.enqueue(encoder.encode(`event: narration\ndata: ${JSON.stringify(text.slice(0, separatorIdx))}\n\n`));
+            }
+          } else if (hitSeparator && !sentTerms) {
+            // Accumulating terms JSON — try to parse on each chunk
+            const [narration, termsSection] = fullText.split('---TERMS---');
+            const termsText = termsSection?.trim();
+            if (termsText) {
+              try {
+                const jsonStr = termsText.replace(/^```(?:json)?\s*/, '').replace(/\s*```$/, '');
+                const parsed = JSON.parse(jsonStr);
+                if (Array.isArray(parsed)) {
+                  const terms = parsed.filter((t: unknown) => typeof t === 'string' && t.length >= 2).slice(0, 5);
+                  controller.enqueue(encoder.encode(`event: terms\ndata: ${JSON.stringify(terms)}\n\n`));
+                  sentTerms = true;
+                  responseCache.set(normalized, { narration: narration.trim(), terms, timestamp: Date.now() });
                 }
+              } catch {
+                // JSON not complete yet
               }
             }
-          } else {
-            // Still in narration part — stream it
+          } else if (!hitSeparator) {
+            // Still in narration part — stream delta
             controller.enqueue(encoder.encode(`event: narration\ndata: ${JSON.stringify(text)}\n\n`));
           }
         }
