@@ -185,7 +185,7 @@ async function loadSourceLibraryLookup(db) {
   console.log('Loading Source Library books...');
   const books = await db.collection('books').find(
     { hidden: { $ne: true } },
-    { projection: { id: 1, ustc_id: 1, title: 1, author: 1, year_published: 1, pages_count: 1, pages_ocr: 1, pages_translated: 1, catalog_refs: 1 } }
+    { projection: { id: 1, ustc_id: 1, title: 1, author: 1, published: 1, pages_count: 1, pages_ocr: 1, pages_translated: 1, catalog_refs: 1 } }
   ).toArray();
 
   const byUstcId = new Map();
@@ -205,7 +205,7 @@ async function loadSourceLibraryLookup(db) {
   for (const b of books) {
     const surname = extractSurname(b.author);
     if (!surname || surname.length < 2) continue;
-    const year = b.year_published;
+    const year = parseInt(b.published);
     if (!year || year < 1400 || year > 1800) continue;
     const decade = Math.floor(year / 10) * 10;
     const key = `${surname}:${decade}`;
