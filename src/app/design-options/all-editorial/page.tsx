@@ -37,7 +37,7 @@ async function getAllCollectionsWithBooks(): Promise<CollectionWithBooks[]> {
 
   const collections = await db.collection('collections').find(
     { parent: { $exists: false }, type: { $ne: 'curated' }, hidden: { $ne: true }, book_count: { $gte: 5 } },
-    { projection: { slug: 1, name: 1, subtitle: 1, description: 1, book_count: 1, featured_images: 1, curated_gallery: 1 } }
+    { projection: { slug: 1, name: 1, subtitle: 1, description: 1, book_count: 1, featured_images: 1, curated_gallery: 1, highlighted_books: 1 } }
   ).sort({ book_count: -1 }).toArray();
 
   const bookProjection = {
@@ -46,34 +46,85 @@ async function getAllCollectionsWithBooks(): Promise<CollectionWithBooks[]> {
     slug: 1, title: 1, display_title: 1, author: 1, thumbnail: 1, thumbnail_blob: 1,
   };
 
+  // Track used hero image URLs to avoid duplicates across collections
+  const usedHeroUrls = new Set<string>();
+
+  // Collect all highlighted book IDs to batch-fetch
+  const allHighlightedIds: string[] = [];
+  const highlightedIdsBySlug = new Map<string, string[]>();
+  for (const col of collections) {
+    const ids = (col.highlighted_books || [])
+      .filter((b: { tier?: number }) => !b.tier || b.tier <= 2)
+      .slice(0, 8)
+      .map((b: { book_id: string }) => b.book_id);
+    highlightedIdsBySlug.set(col.slug as string, ids);
+    allHighlightedIds.push(...ids);
+  }
+
+  // Batch-fetch all highlighted books in one query
+  const highlightedBooks = allHighlightedIds.length > 0
+    ? await db.collection('books').aggregate([
+        { $match: { $or: [{ id: { $in: allHighlightedIds } }, { _id: { $in: allHighlightedIds } }], hidden: { $ne: true }, pages_count: { $gt: 0 }, pages_translated: { $gt: 0 } } },
+        { $project: bookProjection },
+      ], { maxTimeMS: 10000 }).toArray()
+    : [];
+  const highlightedById = new Map(highlightedBooks.map(b => [b.id, b]));
+
   const results: CollectionWithBooks[] = [];
 
   for (const col of collections) {
-    // Get the best gallery image as hero
+    // Pick a unique hero image — try each gallery image until we find one not yet used
     const gallery = col.curated_gallery || [];
-    const heroImg = gallery.find((img: Record<string, unknown>) => img && img.image_url);
-    const heroUrl = heroImg?.image_url as string | null || null;
+    const fi = col.featured_images || [];
+    let finalHero: string | null = null;
 
-    // Fallback to featured_images
-    let finalHero = heroUrl;
-    if (!finalHero) {
-      const fi = col.featured_images || [];
-      const fImg = fi.find((img: unknown) =>
-        typeof img === 'string' || (img && typeof img === 'object' && ((img as Record<string, unknown>).extracted_url || (img as Record<string, unknown>).image_url))
-      );
-      finalHero = typeof fImg === 'string' ? fImg : ((fImg as Record<string, unknown>)?.extracted_url || (fImg as Record<string, unknown>)?.image_url || null) as string | null;
+    // Try curated_gallery images first
+    for (const img of gallery) {
+      const url = img?.image_url as string;
+      if (url && !usedHeroUrls.has(url)) {
+        finalHero = url;
+        usedHeroUrls.add(url);
+        break;
+      }
     }
 
-    // Get books
-    const books = (await db.collection('books').aggregate([
-      { $match: { collections: col.slug, hidden: { $ne: true }, pages_count: { $gt: 0 }, pages_translated: { $gt: 0 }, thumbnail_blob: { $exists: true, $ne: null } } },
-      { $sort: { read_count: -1 } },
-      { $limit: 8 },
-      { $project: bookProjection },
-    ], { maxTimeMS: 5000 }).toArray()) as FeaturedBook[];
+    // Fallback to featured_images
+    if (!finalHero) {
+      for (const img of fi) {
+        const url = typeof img === 'string' ? img : ((img as Record<string, unknown>)?.extracted_url || (img as Record<string, unknown>)?.image_url) as string;
+        if (url && !usedHeroUrls.has(url)) {
+          finalHero = url;
+          usedHeroUrls.add(url);
+          break;
+        }
+      }
+    }
+
+    // Get books: prefer highlighted (curated) books, backfill with popular
+    const slug = col.slug as string;
+    const hIds = highlightedIdsBySlug.get(slug) || [];
+    const curatedBooks = hIds.map(id => highlightedById.get(id)).filter(Boolean) as FeaturedBook[];
+
+    let books = curatedBooks;
+    if (books.length < 8) {
+      const existingIds = new Set(books.map(b => b.id));
+      const backfill = (await db.collection('books').aggregate([
+        { $match: { collections: slug, hidden: { $ne: true }, pages_count: { $gt: 0 }, pages_translated: { $gt: 0 }, thumbnail_blob: { $exists: true, $ne: null } } },
+        { $sort: { read_count: -1 } },
+        { $limit: 16 },
+        { $project: bookProjection },
+      ], { maxTimeMS: 5000 }).toArray()) as FeaturedBook[];
+
+      for (const b of backfill) {
+        if (!existingIds.has(b.id) && books.length < 8) {
+          books.push(b);
+          existingIds.add(b.id);
+        }
+      }
+    }
 
     results.push({
-      slug: col.slug as string,
+      slug,
       name: col.name as string,
       subtitle: (col.subtitle || '') as string,
       description: (col.description || '') as string,
