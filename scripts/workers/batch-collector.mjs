@@ -341,6 +341,26 @@ async function processOneJob(db, job) {
     };
 
   } else if (state === 'JOB_STATE_PENDING' || state === 'JOB_STATE_RUNNING') {
+    // Check for stale jobs — if PENDING for >6 hours with no progress, cancel and let orchestrator retry
+    const STALE_HOURS = 6;
+    const jobAge = (Date.now() - new Date(job.created_at).getTime()) / 3600000;
+    if (state === 'JOB_STATE_PENDING' && jobAge > STALE_HOURS) {
+      console.log(`  Stale PENDING job (${jobAge.toFixed(1)}h old): ${job.job_name || job.gemini_job_name} — cancelling`);
+      if (!DRY_RUN) {
+        // Cancel the Gemini job
+        try {
+          const cancelUrl = `${GEMINI_API_BASE}/${job.job_name || job.gemini_job_name}:cancel?key=${ALL_KEYS[0]}`;
+          await fetch(cancelUrl, { method: 'POST' });
+        } catch (_) { /* best effort */ }
+
+        await db.collection('batch_jobs').updateOne(
+          { _id: job._id },
+          { $set: { status: 'failed', gemini_state: state, error: `Stale: PENDING for ${jobAge.toFixed(1)}h with no progress`, updated_at: new Date() } }
+        );
+      }
+      return { status: 'failed', state: 'STALE_PENDING', bookId: job.book_id, type: job.type };
+    }
+
     // Update status to reflect current state
     const newStatus = state === 'JOB_STATE_RUNNING' ? 'processing' : 'pending';
     if (job.status !== newStatus) {

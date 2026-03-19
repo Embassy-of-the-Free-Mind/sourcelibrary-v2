@@ -37,6 +37,17 @@ const SQS_IMAGE_EXTRACTION_QUEUE_URL = process.env.SQS_PAGE_IMAGE_EXTRACTION_QUE
 const GEMINI_API_BASE = 'https://generativelanguage.googleapis.com/v1beta';
 const OCR_MODEL = 'gemini-3-flash-preview';
 const OCR_PROMPT_VERSION = 'v5.2026-02';
+
+// Safety settings for batch OCR — BLOCK_NONE on all categories.
+// Without these, Gemini defaults to restrictive filtering which triggers
+// RECITATION on historical texts (400-year-old books flagged as "copyrighted").
+const BATCH_SAFETY_SETTINGS = [
+  { category: 'HARM_CATEGORY_HARASSMENT', threshold: 'BLOCK_NONE' },
+  { category: 'HARM_CATEGORY_HATE_SPEECH', threshold: 'BLOCK_NONE' },
+  { category: 'HARM_CATEGORY_SEXUALLY_EXPLICIT', threshold: 'BLOCK_NONE' },
+  { category: 'HARM_CATEGORY_DANGEROUS_CONTENT', threshold: 'BLOCK_NONE' },
+  { category: 'HARM_CATEGORY_CIVIC_INTEGRITY', threshold: 'BLOCK_NONE' },
+];
 const OCR_INLINE_BATCH_SIZE = 20;  // Pages per inline batch (base64 in body, ~20MB limit)
 const OCR_FILE_BATCH_SIZE = 150;   // Pages per file-based batch (JSONL uploaded to File API)
 const IMAGE_CONCURRENCY = 20;     // Parallel image downloads per book
@@ -763,6 +774,7 @@ async function submitOcrDirectly(db, book, { modelOverride } = {}) {
               { inlineData: { mimeType: item.image.mimeType, data: item.image.data } },
             ],
           }],
+          safetySettings: BATCH_SAFETY_SETTINGS,
           generationConfig: {
             temperature: 0.1,
             maxOutputTokens: 16384,
@@ -792,6 +804,7 @@ async function submitOcrDirectly(db, book, { modelOverride } = {}) {
               { inlineData: { mimeType: item.image.mimeType, data: item.image.data } },
             ],
           }],
+          safetySettings: BATCH_SAFETY_SETTINGS,
           generationConfig: {
             temperature: 0.1,
             maxOutputTokens: 16384,
