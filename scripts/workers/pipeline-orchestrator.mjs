@@ -1145,7 +1145,8 @@ async function run() {
     }
 
     // ── Phase 2: Submit OCR via Gemini Batch API (archive_complete -> ocr_submitted) ──
-    if (shouldRun(2)) {
+    // DISABLED: Batch API returning 0 pages — see #256. Using Phase 1.5 Lambda preview instead.
+    if (false && shouldRun(2)) {
       console.log('\n--- Phase 2: OCR submission ---');
 
       const activeBatchOcr = await db.collection('batch_jobs').countDocuments({
