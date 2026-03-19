@@ -285,7 +285,7 @@ export interface CanonData {
     readable_books: number;
     readable_percent: number;
     first_translations: number;
-    first_translations_complete: number;
+    first_translations_in_progress: number;
     first_translation_pages: number;
   };
   coverage: {
