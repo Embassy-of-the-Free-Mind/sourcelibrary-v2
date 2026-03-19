@@ -29,8 +29,11 @@ import SignUpCTA from '@/components/auth/SignUpCTA';
 import { authorUrl } from '@/lib/slugify';
 import SiteHeader from '@/components/layout/SiteHeader';
 
-// ISR: rebuild at most every 2 minutes (requires no searchParams/headers() usage)
+// ISR: rebuild at most every hour (requires no searchParams/headers() usage)
 export const revalidate = 3600;
+
+// Run SSR near the database to cut cross-region latency (~200ms RTT savings)
+export const preferredRegion = 'fra1';
 
 // Allow any [id] — paths not pre-generated will use ISR on first request
 export const dynamicParams = true;
@@ -42,20 +45,31 @@ interface PageProps {
   params: Promise<{ id: string }>;
 }
 
-// Lightweight book fetch for metadata (no pages, no heavy index)
-async function getBookForMetadata(id: string): Promise<Book | null> {
+// Cached book lookup — deduplicates between generateMetadata and BookInfo
+// within a single server render. Uses the broader projection from getBook
+// so the result is reusable by both code paths.
+const getCachedBookLookup = cache(async (id: string) => {
   const db = await Promise.race([
     getDb(),
-    new Promise<never>((_, reject) => setTimeout(() => reject(new Error('DB timeout')), 8000)),
+    new Promise<never>((_, reject) => setTimeout(() => reject(new Error('DB timeout')), 10000)),
   ]);
-  const result = await findBookByIdOrSlug(db, id, {
-    index: 0,
-    reading_summary: 0,
+  return findBookByIdOrSlug(db, id, {
     chapters: 0,
     reading_sections: 0,
     pipeline: 0,
     pipeline_auto: 0,
+    split_check: 0,
+    'index.sectionSummaries': 0,
+    'index.people': 0,
+    'index.places': 0,
+    'index.concepts': 0,
+    'index.keyTerms': 0,
   });
+});
+
+// Lightweight book fetch for metadata — reuses cached lookup
+async function getBookForMetadata(id: string): Promise<Book | null> {
+  const result = await getCachedBookLookup(id);
   return result ? (result.book as unknown as Book) : null;
 }
 
@@ -509,31 +523,11 @@ interface GalleryImagePreview { id: string; extracted_url?: string; thumbnail_ur
 interface BookCollectionPreview { slug: string; name: string; subtitle?: string; color?: string; book_count?: number; featured_images?: Array<{ extracted_url?: string; thumbnail_url?: string; image_url?: string }> }
 
 async function getBook(id: string): Promise<{ book: Book; pages: Page[]; totalBooks: number; galleryImageCount: number; galleryImages: GalleryImagePreview[]; bookCollections: BookCollectionPreview[]; matchedBySlug: boolean } | null> {
-  // Timeout on getDb() — when MongoDB Atlas is overloaded, the connection
-  // itself can hang for 60+ seconds. Better to fail fast.
-  const dbPromise = getDb();
-  const db = await Promise.race([
-    dbPromise,
-    new Promise<never>((_, reject) => setTimeout(() => reject(new Error('DB connection timeout (10s)')), 10000)),
+  // Reuse the cached book lookup (shared with generateMetadata — saves a full DB round trip)
+  const [result, db] = await Promise.all([
+    getCachedBookLookup(id),
+    getDb(),
   ]);
-
-  // Exclude heavy fields not used on the book detail page.
-  const bookProjection = {
-    chapters: 0,
-    reading_sections: 0,
-    pipeline: 0,
-    pipeline_auto: 0,
-    split_check: 0,
-    'index.sectionSummaries': 0,
-    // Legacy flat lists — no longer displayed
-    'index.people': 0,
-    'index.places': 0,
-    'index.concepts': 0,
-    'index.keyTerms': 0,
-    pages_ocr: 0,
-    translation_percent: 0,
-  };
-  const result = await findBookByIdOrSlug(db, id, bookProjection);
 
   if (!result) return null;
   const { book, matchedBySlug } = result;

@@ -29,29 +29,23 @@ export async function findBookByIdOrSlug(
 ): Promise<BookLookupResult | null> {
   const opts = projection ? { projection } : undefined;
 
-  // 1. Try slug first (most common for new URLs)
-  let book = await db.collection('books').findOne({ slug: idOrSlug }, opts);
-  if (book) {
-    return { book, matchedBySlug: true };
-  }
-
-  // 2. Try id field
-  book = await db.collection('books').findOne({ id: idOrSlug }, opts);
-  if (book) {
-    return { book, matchedBySlug: false };
-  }
-
-  // 3. Try _id as ObjectId
-  try {
-    if (ObjectId.isValid(idOrSlug)) {
-      book = await db.collection('books').findOne({ _id: new ObjectId(idOrSlug) }, opts);
-      if (book) {
-        return { book, matchedBySlug: false };
-      }
+  // Single $or query instead of sequential lookups — saves 1-2 round trips
+  // for id/ObjectId lookups (~200ms each with cross-region latency).
+  const orConditions: Document[] = [
+    { slug: idOrSlug },
+    { id: idOrSlug },
+  ];
+  if (ObjectId.isValid(idOrSlug)) {
+    try {
+      orConditions.push({ _id: new ObjectId(idOrSlug) });
+    } catch {
+      // Invalid ObjectId format — skip
     }
-  } catch {
-    // Invalid ObjectId format
   }
 
-  return null;
+  const book = await db.collection('books').findOne({ $or: orConditions }, opts);
+  if (!book) return null;
+
+  const matchedBySlug = book.slug === idOrSlug;
+  return { book, matchedBySlug };
 }
