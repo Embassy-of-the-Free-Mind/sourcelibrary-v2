@@ -31,6 +31,7 @@ const MONGODB_URI = process.env.MONGODB_URI;
 const CRON_SECRET = process.env.CRON_SECRET;
 const BASE_URL = process.env.NEXT_PUBLIC_URL || 'https://sourcelibrary.org';
 const SQS_TRANSLATION_QUEUE_URL = process.env.SQS_PAGE_TRANSLATION_QUEUE_URL;
+const SQS_OCR_QUEUE_URL = process.env.SQS_PAGE_OCR_QUEUE_URL;
 const SQS_IMAGE_EXTRACTION_QUEUE_URL = process.env.SQS_PAGE_IMAGE_EXTRACTION_QUEUE_URL;
 
 // Gemini Batch API config (for direct OCR submission, bypassing Vercel)
@@ -48,7 +49,7 @@ if (!CRON_SECRET) { console.error('CRON_SECRET not set'); process.exit(1); }
 const args = process.argv.slice(2);
 const DRY_RUN = args.includes('--dry-run');
 const phaseIdx = args.indexOf('--phase');
-const ONLY_PHASE = phaseIdx >= 0 ? parseInt(args[phaseIdx + 1], 10) : null;
+const ONLY_PHASE = phaseIdx >= 0 ? parseFloat(args[phaseIdx + 1]) : null;
 
 // Submission limits — much higher than the Vercel cron since we have no time budget
 const ENROLL_LIMIT = 100;
@@ -64,6 +65,8 @@ const FINALIZE_LIMIT = 200;
 const TRANSLITERATE_LIMIT = 10;  // Books per run (pages processed inline)
 const TRANSLITERATE_CONCURRENCY = 10;  // Parallel Gemini calls per book
 const MAX_ACTIVE_IMAGE_JOBS = 15;
+const PREVIEW_PAGE_COUNT = 25;
+const PREVIEW_LIMIT = 20; // Books per run to queue preview OCR
 const MAX_RETRIES = 3;
 const ENROLL_WINDOW_DAYS = 14;
 
@@ -690,7 +693,8 @@ async function getOcrPromptFromDb(db) {
  * This is a 7.5x improvement in quota efficiency vs the old 20-page-per-job approach.
  * A 300-page book now uses 2 batch jobs instead of 15.
  */
-async function submitOcrDirectly(db, book) {
+async function submitOcrDirectly(db, book, { modelOverride } = {}) {
+  const ocrModel = modelOverride || OCR_MODEL;
   // Guard: check for existing active batch_jobs for this book
   const activeBatchForBook = await db.collection('batch_jobs').countDocuments({
     book_id: book.id,
@@ -780,7 +784,7 @@ async function submitOcrDirectly(db, book) {
       console.log(`    Uploaded file: ${fileResult.name}`);
 
       // Create batch job from the uploaded file
-      batchJob = await createBatchJobFromFile(OCR_MODEL, fileResult.name, displayName, 0);
+      batchJob = await createBatchJobFromFile(ocrModel, fileResult.name, displayName, 0);
     } else {
       // Inline: small batch, embed base64 directly in request body
       const inlineRequests = chunk.map(item => ({
@@ -799,7 +803,7 @@ async function submitOcrDirectly(db, book) {
         },
         metadata: { key: item.pageId },
       }));
-      batchJob = await createBatchJobInline(OCR_MODEL, inlineRequests, displayName);
+      batchJob = await createBatchJobInline(ocrModel, inlineRequests, displayName);
     }
 
     if (!firstJobName) firstJobName = batchJob.name;
@@ -814,7 +818,7 @@ async function submitOcrDirectly(db, book) {
       page_ids: chunk.map(c => c.pageId),
       page_count: chunk.length,
       status: 'pending',
-      model: OCR_MODEL,
+      model: ocrModel,
       prompt_version: OCR_PROMPT_VERSION,
       submission_method: useFileBased ? 'file' : 'inline',
       force: false,
@@ -829,7 +833,7 @@ async function submitOcrDirectly(db, book) {
     await db.collection('gemini_usage').insertOne({
       type: 'ocr',
       mode: 'batch',
-      model: OCR_MODEL,
+      model: ocrModel,
       book_id: book.id,
       book_title: book.title,
       page_ids: chunk.map(c => c.pageId),
@@ -854,7 +858,7 @@ async function submitOcrDirectly(db, book) {
       child_job_ids: childJobIds,
       total_pages: totalSubmitted,
       status: 'pending',
-      model: OCR_MODEL,
+      model: ocrModel,
       prompt_version: OCR_PROMPT_VERSION,
       created_at: new Date(),
       updated_at: new Date(),
@@ -884,6 +888,7 @@ async function run() {
   const log = {
     enrolled: 0,
     archived: 0,
+    preview_queued: 0,
     ocr_submitted: 0,
     ocr_advanced: 0,
     metadata_enriched: 0,
@@ -1011,8 +1016,136 @@ async function run() {
       console.log(`  Archive completed: ${archiveCompleted}/${archivingBooks.length}`);
     }
 
+    // ── Phase 1.5: Preview OCR+Translation for first 25 pages via Lambda ──
+    // Sends first 25 pages to Lambda OCR queue for fast turnaround.
+    // When preview OCR completes, job-completion.ts on Vercel auto-triggers
+    // preview translation — giving readers content within minutes, not hours.
+    // Prioritizes first English translations.
+    if (shouldRun(1.5)) {
+      console.log('\n--- Phase 1.5: Preview OCR (first 25 pages via Lambda) ---');
+
+      if (!SQS_OCR_QUEUE_URL) {
+        console.log('  SKIP: SQS_PAGE_OCR_QUEUE_URL not configured');
+      } else {
+        const sqsClient = new SQSClient({ region: process.env.AWS_REGION || 'eu-central-1' });
+
+        // Find archive_complete books that haven't had preview OCR yet.
+        // Priority: confirmed first translations > non-English (likely first translations) > English
+        const ENGLISH_VARIANTS = ['english', 'eng', 'en'];
+        const readyForPreview = await db.collection('books')
+          .aggregate([
+            { $match: {
+              'pipeline_auto.status': 'archive_complete',
+              preview_ocr_queued_at: { $exists: false },
+            }},
+            { $addFields: {
+              _priority: {
+                $switch: {
+                  branches: [
+                    { case: { $eq: ['$is_first_translation', true] }, then: 0 },
+                    { case: { $in: [{ $toLower: { $ifNull: ['$language', ''] } }, ENGLISH_VARIANTS] }, then: 2 },
+                  ],
+                  default: 1,  // Non-English = likely first translation
+                },
+              },
+            }},
+            { $sort: { _priority: 1, hidden: 1 } },
+            { $project: { id: 1, title: 1, language: 1 } },
+            { $limit: PREVIEW_LIMIT },
+          ])
+          .toArray();
+
+        console.log(`  Books ready for preview: ${readyForPreview.length}`);
+
+        for (const book of readyForPreview) {
+          try {
+            const label = (book.title || '').substring(0, 50);
+
+            // Get first 25 pages with archived/cropped images only.
+            // Lambda can't reliably fetch from archive.org/gallica (rate limits, 403s).
+            const pages = await db.collection('pages')
+              .find({
+                book_id: book.id,
+                $or: [
+                  { cropped_photo: { $exists: true, $nin: [null, ''] } },
+                  { archived_photo: { $regex: /^https?:\/\// } },
+                ],
+                $or: [
+                  { 'ocr.data': { $exists: false } },
+                  { 'ocr.data': null },
+                  { 'ocr.data': '' },
+                ],
+              })
+              .sort({ page_number: 1 })
+              .limit(PREVIEW_PAGE_COUNT)
+              .project({ id: 1 })
+              .toArray();
+
+            if (pages.length === 0) {
+              console.log(`  No pages for preview: ${label}`);
+              continue;
+            }
+
+            if (DRY_RUN) {
+              console.log(`  Would queue preview: ${label} — ${pages.length} pages`);
+              continue;
+            }
+
+            const pageIds = pages.map(p => p.id);
+            const jobId = nanoid(12);
+
+            // Create job record with preview flag — triggers auto-translation on completion
+            await db.collection('jobs').insertOne({
+              id: jobId,
+              type: 'ocr',
+              book_id: book.id,
+              book_title: book.title,
+              status: 'pending',
+              progress: { total: pageIds.length, completed: 0, failed: 0 },
+              config: {
+                page_ids: pageIds,
+                preview: true,
+              },
+              initiated_by: 'pipeline_preview',
+              created_at: new Date(),
+              updated_at: new Date(),
+            });
+
+            // Flag book so we don't re-queue, and set active job for completion tracking
+            await db.collection('books').updateOne(
+              { id: book.id },
+              { $set: { preview_ocr_queued_at: new Date(), job: { type: 'realtime', job_id: jobId } } },
+            );
+
+            // Enqueue pages to Lambda OCR queue (standard, not FIFO)
+            for (let i = 0; i < pageIds.length; i += 10) {
+              const batch = pageIds.slice(i, i + 10);
+              const entries = batch.map((pageId, idx) => ({
+                Id: `msg-${idx}`,
+                MessageBody: JSON.stringify({ bookId: book.id, pageId, jobId }),
+              }));
+
+              await sqsClient.send(new SendMessageBatchCommand({
+                QueueUrl: SQS_OCR_QUEUE_URL,
+                Entries: entries,
+              }));
+            }
+
+            log.preview_queued++;
+            console.log(`  Preview queued: ${label} — ${pageIds.length} pages (job ${jobId})`);
+
+            await sleep(200);
+          } catch (err) {
+            log.errors.push(`Preview ${book.id}: ${err.message}`);
+          }
+        }
+        console.log(`  Preview OCR queued: ${log.preview_queued}`);
+      }
+    }
+
     // ── Phase 2: Submit OCR via Gemini Batch API (archive_complete -> ocr_submitted) ──
-    if (shouldRun(2)) {
+    // DISABLED: Batch API returning 0 pages — see #256. Using Phase 1.5 Lambda preview instead.
+    if (false && shouldRun(2)) {
       console.log('\n--- Phase 2: OCR submission ---');
 
       const activeBatchOcr = await db.collection('batch_jobs').countDocuments({
@@ -1026,7 +1159,7 @@ async function run() {
       const readyForOcr = ocrLimit > 0 ? await db.collection('books')
         .find({ 'pipeline_auto.status': 'archive_complete' })
         .sort({ hidden: 1 })
-        .project({ id: 1, title: 1, pages_count: 1, 'pipeline_auto.retry_count': 1 })
+        .project({ id: 1, title: 1, pages_count: 1, 'pipeline_auto.retry_count': 1, 'pipeline_auto.recitation_retry': 1 })
         .limit(ocrLimit)
         .toArray() : [];
 
@@ -1043,8 +1176,12 @@ async function run() {
           }
 
           // Direct OCR submission — downloads images on Hetzner, submits to Gemini Batch API
-          console.log(`  Submitting OCR: ${label}...`);
-          const result = await submitOcrDirectly(db, book);
+          // Use fallback model for RECITATION retries (gemini-3-flash-preview triggers it)
+          const isRecitationRetry = book.pipeline_auto?.recitation_retry === true;
+          const ocrOpts = isRecitationRetry ? { modelOverride: 'gemini-2.5-flash' } : {};
+          if (isRecitationRetry) console.log(`  RECITATION retry with gemini-2.5-flash: ${label}`);
+          else console.log(`  Submitting OCR: ${label}...`);
+          const result = await submitOcrDirectly(db, book, ocrOpts);
 
           if (result.alreadyDone) {
             await setPipelineStatus(db, book.id, 'ocr_complete');
@@ -1054,10 +1191,15 @@ async function run() {
             // Don't change state — active batch jobs exist, wait for them
             console.log(`  Skipped (active batch exists): ${label}`);
           } else {
-            await setPipelineStatus(db, book.id, 'ocr_submitted', {
-              ocr_job_name: result.jobName,
-              retry_count: 0,
-            });
+            const statusExtra = { ocr_job_name: result.jobName, retry_count: 0 };
+            await setPipelineStatus(db, book.id, 'ocr_submitted', statusExtra);
+            // Clear recitation_retry flag after successful resubmission
+            if (isRecitationRetry) {
+              await db.collection('books').updateOne(
+                { id: book.id },
+                { $unset: { 'pipeline_auto.recitation_retry': '' } }
+              );
+            }
             log.ocr_submitted++;
             console.log(`  OCR submitted: ${label} — ${result.submitted} pages in ${result.childCount} batches`);
           }
@@ -1110,14 +1252,14 @@ async function run() {
             book_id: book.id,
             type: 'ocr',
             $or: [{ job_name: jobName }, { gemini_job_name: jobName }],
-            status: { $in: ['completed', 'saved', 'completed_with_errors'] },
+            status: { $in: ['completed', 'saved', 'completed_with_errors', 'failed'] },
           });
           const parentJob = !batchJob
             ? await db.collection('batch_jobs').findOne({
                 book_id: book.id,
                 type: 'ocr',
                 child_job_ids: { $exists: true, $ne: [] },
-                status: { $in: ['completed', 'saved', 'completed_with_errors'] },
+                status: { $in: ['completed', 'saved', 'completed_with_errors', 'failed'] },
               })
             : null;
           if (batchJob || parentJob) isComplete = true;
@@ -1338,7 +1480,7 @@ async function run() {
 
         const readyForTranslate = await db.collection('books')
           .find({ 'pipeline_auto.status': { $in: ['metadata_enriched', 'ft_verified'] } })
-          .sort({ hidden: 1 })
+          .sort({ is_first_translation: -1, hidden: 1 })
           .project({ id: 1, title: 1, pages_count: 1, language: 1, 'pipeline_auto.retry_count': 1 })
           .limit(TRANSLATE_SUBMIT_LIMIT)
           .toArray();
@@ -1913,7 +2055,7 @@ async function run() {
 
     console.log(`\n=== ACTIONS (${(duration / 1000).toFixed(0)}s) ===`);
     console.log(`  Enrolled: ${log.enrolled} | Archived: ${log.archived}`);
-    console.log(`  OCR submitted: ${log.ocr_submitted} | OCR advanced: ${log.ocr_advanced}`);
+    console.log(`  Preview queued: ${log.preview_queued} | OCR submitted: ${log.ocr_submitted} | OCR advanced: ${log.ocr_advanced}`);
     console.log(`  Metadata: ${log.metadata_enriched} enriched, ${log.metadata_skipped} skipped`);
     console.log(`  Translate submitted: ${log.translate_submitted} | Translate advanced: ${log.translate_advanced}`);
     console.log(`  Enriched: ${log.enriched} | Chapters: ${log.chapters_extracted} (${log.chapters_skipped} skipped)`);
@@ -1973,7 +2115,7 @@ async function run() {
           },
           errors: log.errors.slice(0, 50).map(msg => ({ message: msg, timestamp: new Date() })),
           error_count: log.errors.length,
-          summary: `E:${log.enrolled} A:${log.archived} O:${log.ocr_submitted}/${log.ocr_advanced} M:${log.metadata_enriched} Tr:${log.transliterated}/${log.transliterate_pages}p T:${log.translate_submitted}/${log.translate_advanced} R:${log.enriched} C:${log.chapters_extracted} I:${log.images_submitted}/${log.images_advanced} F:${log.finalized}`,
+          summary: `E:${log.enrolled} A:${log.archived} P:${log.preview_queued} O:${log.ocr_submitted}/${log.ocr_advanced} M:${log.metadata_enriched} Tr:${log.transliterated}/${log.transliterate_pages}p T:${log.translate_submitted}/${log.translate_advanced} R:${log.enriched} C:${log.chapters_extracted} I:${log.images_submitted}/${log.images_advanced} F:${log.finalized}`,
         }),
       ]);
     }

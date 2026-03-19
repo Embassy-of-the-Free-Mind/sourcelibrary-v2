@@ -25,6 +25,55 @@ interface NavigableItem {
   id: string;
 }
 
+// Client-side LRU cache for unified search results
+const RESULT_CACHE_MAX = 50;
+const resultCache = new Map<string, UnifiedSearchResponse>();
+
+function getCachedResult(key: string): UnifiedSearchResponse | undefined {
+  const val = resultCache.get(key);
+  if (val) {
+    // Move to end (most recently used)
+    resultCache.delete(key);
+    resultCache.set(key, val);
+  }
+  return val;
+}
+
+function setCachedResult(key: string, value: UnifiedSearchResponse) {
+  resultCache.delete(key);
+  resultCache.set(key, value);
+  if (resultCache.size > RESULT_CACHE_MAX) {
+    // Delete oldest entry
+    const first = resultCache.keys().next().value;
+    if (first !== undefined) resultCache.delete(first);
+  }
+}
+
+// Vocabulary for ghost text autocomplete (loaded once on first focus)
+let vocabularyPromise: Promise<string[]> | null = null;
+let vocabularyCache: string[] | null = null;
+
+function loadVocabulary(): Promise<string[]> {
+  if (vocabularyCache) return Promise.resolve(vocabularyCache);
+  if (!vocabularyPromise) {
+    vocabularyPromise = searchApi.vocabulary()
+      .then(v => { vocabularyCache = v; return v; })
+      .catch(() => { vocabularyPromise = null; return []; });
+  }
+  return vocabularyPromise;
+}
+
+function findCompletion(input: string, vocab: string[]): string | null {
+  if (input.length < 2) return null;
+  const lower = input.toLowerCase();
+  for (const term of vocab) {
+    if (term.toLowerCase().startsWith(lower) && term.length > input.length) {
+      return term;
+    }
+  }
+  return null;
+}
+
 export default function UnifiedSearch() {
   const router = useRouter();
   const [query, setQuery] = useState('');
@@ -33,8 +82,15 @@ export default function UnifiedSearch() {
   const [isOpen, setIsOpen] = useState(false);
   const [activeIndex, setActiveIndex] = useState(-1);
   const [suggestion, setSuggestion] = useState<string | null>(null);
+  const [ghostText, setGhostText] = useState<string | null>(null);
   const containerRef = useRef<HTMLDivElement>(null);
   const inputRef = useRef<HTMLInputElement>(null);
+
+  // Preload vocabulary on first focus
+  const handleFocus = useCallback(() => {
+    loadVocabulary();
+    if (results) setIsOpen(true);
+  }, [results]);
 
   const performSearch = useCallback(async (searchQuery: string) => {
     if (!searchQuery || searchQuery.length < 2) {
@@ -43,11 +99,22 @@ export default function UnifiedSearch() {
       return;
     }
 
+    // Check client-side cache first
+    const cacheKey = searchQuery.toLowerCase().trim();
+    const cached = getCachedResult(cacheKey);
+    if (cached) {
+      setResults(cached);
+      setIsOpen(true);
+      setLoading(false);
+      return;
+    }
+
     setLoading(true);
     setIsOpen(true);
 
     try {
       const data = await searchApi.unified(searchQuery, { limit: 5 });
+      setCachedResult(cacheKey, data);
       setResults(data);
     } catch (error) {
       console.error('Search error:', error);
@@ -58,10 +125,19 @@ export default function UnifiedSearch() {
 
   const debouncedSearch = useDebouncedCallback(performSearch, 300);
 
-  const handleQueryChange = (value: string) => {
+  const handleQueryChange = useCallback((value: string) => {
     setQuery(value);
     debouncedSearch(value);
-  };
+
+    // Update ghost text from vocabulary
+    if (vocabularyCache) {
+      setGhostText(findCompletion(value, vocabularyCache));
+    } else {
+      loadVocabulary().then(vocab => {
+        setGhostText(findCompletion(value, vocab));
+      });
+    }
+  }, [debouncedSearch]);
 
   const clearSearch = () => {
     setQuery('');
@@ -138,6 +214,22 @@ export default function UnifiedSearch() {
   }, [results]);
 
   const handleKeyDown = (e: React.KeyboardEvent) => {
+    // Tab to accept ghost text completion
+    if (e.key === 'Tab' && ghostText && !isOpen) {
+      e.preventDefault();
+      setQuery(ghostText);
+      setGhostText(null);
+      debouncedSearch(ghostText);
+      return;
+    }
+    if (e.key === 'Tab' && ghostText && isOpen && activeIndex < 0) {
+      e.preventDefault();
+      setQuery(ghostText);
+      setGhostText(null);
+      debouncedSearch(ghostText);
+      return;
+    }
+
     if (e.key === 'Enter') {
       if (activeIndex >= 0 && activeIndex < navigableItems.length) {
         // Navigate to selected item
@@ -177,13 +269,23 @@ export default function UnifiedSearch() {
       {/* Search Input */}
       <div className="relative">
         <Search className="absolute left-4 top-1/2 -translate-y-1/2 w-5 h-5 text-stone-400" aria-hidden="true" />
+        {/* Ghost text overlay for autocomplete */}
+        {ghostText && query.length >= 2 && (
+          <div
+            className="absolute left-12 top-1/2 -translate-y-1/2 text-lg pointer-events-none select-none text-stone-300"
+            aria-hidden="true"
+          >
+            <span className="invisible">{query}</span>
+            <span>{ghostText.slice(query.length)}</span>
+          </div>
+        )}
         <input
           ref={inputRef}
           type="search"
           value={query}
           onChange={(e) => handleQueryChange(e.target.value)}
           onKeyDown={handleKeyDown}
-          onFocus={() => results && setIsOpen(true)}
+          onFocus={handleFocus}
           placeholder="Search books, concepts, people..."
           aria-label="Search the library"
           aria-expanded={isOpen}

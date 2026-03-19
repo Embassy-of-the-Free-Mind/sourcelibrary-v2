@@ -200,9 +200,16 @@ export const { handlers, signIn, signOut, auth } = NextAuth({
           const db = client.db(dbName);
           const dbUser = await db.collection('users').findOne(
             { _id: token.id as any },
-            { projection: { 'membership.active': 1, 'membership.plan': 1 } }
+            { projection: { 'membership.active': 1, 'membership.plan': 1, 'membership.joined': 1 } }
           );
-          token.membership = dbUser?.membership?.active ? (dbUser.membership.plan || 'ficino') : null;
+          // Financial contributors get 'ficino', free members get 'member', others null
+          if (dbUser?.membership?.active) {
+            token.membership = dbUser.membership.plan || 'ficino';
+          } else if (dbUser?.membership?.joined) {
+            token.membership = 'member';
+          } else {
+            token.membership = null;
+          }
         } catch {
           // Don't block auth if membership check fails
         }

@@ -65,6 +65,7 @@ export async function GET(request: NextRequest) {
           { $match: {
               'index.generatedAt': { $exists: true },
               hidden: { $ne: true },
+              pages_count: { $gt: 0 },
               $or: termTypes.map(t => ({ [`${t.field}.term`]: queryRegex }))
             }
           },
@@ -105,6 +106,7 @@ export async function GET(request: NextRequest) {
           { $match: {
               'index.generatedAt': { $exists: true },
               hidden: { $ne: true },
+              pages_count: { $gt: 0 },
               'index.sectionSummaries.quotes.text': queryRegex
             }
           },

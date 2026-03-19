@@ -1,0 +1,188 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Source Library — System Architecture</title>
+  <style>
+    * { margin: 0; padding: 0; box-sizing: border-box; }
+    body { background: #0d1117; color: #c9d1d9; font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif; }
+    header { padding: 24px 32px 16px; border-bottom: 1px solid #21262d; }
+    header h1 { font-size: 20px; font-weight: 600; color: #f0f6fc; }
+    header p { font-size: 13px; color: #8b949e; margin-top: 4px; }
+    .diagram-container {
+      display: flex; justify-content: center; align-items: flex-start;
+      padding: 32px; min-height: calc(100vh - 80px); overflow: auto;
+    }
+    .mermaid { max-width: 100%; }
+    .mermaid svg { max-width: 100%; height: auto; }
+    /* Make clickable nodes show pointer */
+    .mermaid .node { cursor: pointer; }
+    .mermaid .node:hover rect, .mermaid .node:hover polygon, .mermaid .node:hover circle {
+      filter: brightness(1.2);
+    }
+    .legend {
+      position: fixed; bottom: 16px; right: 16px;
+      background: #161b22; border: 1px solid #30363d; border-radius: 8px;
+      padding: 12px 16px; font-size: 12px; line-height: 1.8;
+    }
+    .legend-dot { display: inline-block; width: 10px; height: 10px; border-radius: 2px; margin-right: 6px; vertical-align: middle; }
+  </style>
+</head>
+<body>
+  <header>
+    <h1>Source Library — System Architecture</h1>
+    <p>Click any node to open its dashboard, console, or docs. Last audited 2026-03-19.</p>
+  </header>
+
+  <div class="diagram-container">
+    <pre class="mermaid">
+flowchart TB
+    subgraph Users["Users & Clients"]
+        Browser["Browser\nsourcelibrary.org"]
+        Claude["Claude Code\nMCP Server"]
+        Scripts["Scripts\n233 operational"]
+    end
+
+    subgraph Vercel["Vercel (sourcelibrary-v2)"]
+        Next["Next.js 16\n~160 pages | 316 API routes"]
+        subgraph Crons["4 Active Crons"]
+            Cron1["social-post\nevery 3h"]
+            Cron2["health-check\nhourly"]
+            Cron3["daily-report\n6 AM"]
+            Cron4["social-reset\ndaily"]
+        end
+    end
+
+    subgraph Hetzner["Hetzner cax31"]
+        Pipeline["post-import-pipeline\nevery 10min"]
+        Enrich["enrich-books\nevery 10min"]
+        Sync["sync-worker\nevery 2h"]
+    end
+
+    subgraph AWS["AWS eu-central-1"]
+        subgraph Queues["SQS Queues"]
+            SQS_OCR["pageOcr FIFO"]
+            SQS_Trans["pageTranslation FIFO"]
+            SQS_Img["pageImageExtraction"]
+            SQS_Write["writeResults"]
+        end
+        subgraph Lambdas["Lambda Workers"]
+            L_OCR["ocr-processor\n10 concurrent"]
+            L_Trans["translation-processor\n15 concurrent"]
+            L_Img["image-extraction\n10 concurrent"]
+            L_Write["write-processor\n50 concurrent"]
+        end
+    end
+
+    subgraph Storage["Storage & Data"]
+        MongoDB[("MongoDB Atlas\nbookstore · 57 collections")]
+        R2["Cloudflare R2\nimages.sourcelibrary.org"]
+    end
+
+    subgraph External["External Services"]
+        Gemini["Gemini AI\n10-key rotation"]
+        Archives["IIIF Archives\nIA · Gallica · Wellcome\nLOC · MDZ · e-Rara"]
+        Stripe["Stripe\nFicino Society"]
+        Twitter["Twitter/X\n@SourceLibrary_"]
+        Zenodo["Zenodo\nDOI minting"]
+    end
+
+    Browser --> Next
+    Claude --> Next
+    Scripts --> MongoDB
+
+    Next --> MongoDB
+    Next --> R2
+    Next --> Stripe
+    Next --> Zenodo
+
+    Cron1 --> Twitter
+    Cron2 --> MongoDB
+
+    Pipeline --> SQS_OCR
+    Pipeline --> SQS_Trans
+    Pipeline --> SQS_Img
+    Enrich --> Next
+    Sync --> MongoDB
+
+    SQS_OCR --> L_OCR
+    SQS_Trans --> L_Trans
+    SQS_Img --> L_Img
+
+    L_OCR --> Gemini
+    L_Trans --> Gemini
+    L_Img --> Gemini
+
+    L_OCR --> SQS_Write
+    L_Trans --> SQS_Write
+    L_Img --> SQS_Write
+    SQS_Write --> L_Write
+    L_Write --> MongoDB
+
+    Next -->|"import"| Archives
+
+    click Browser "https://sourcelibrary.org" _blank
+    click Next "https://sourcelibrary.org/admin/pipeline" _blank
+    click MongoDB "https://cloud.mongodb.com" _blank
+    click R2 "https://images.sourcelibrary.org" _blank
+    click Gemini "https://ai.google.dev/gemini-api/docs/models" _blank
+    click Archives "https://sourcelibrary.org/libraries" _blank
+    click Stripe "https://dashboard.stripe.com" _blank
+    click Twitter "https://x.com/SourceLibrary_" _blank
+    click Zenodo "https://zenodo.org" _blank
+    click Pipeline "https://sourcelibrary.org/admin/pipeline" _blank
+    click Enrich "https://sourcelibrary.org/admin/pipeline" _blank
+    click Cron2 "https://sourcelibrary.org/api/admin/health" _blank
+    click L_OCR "https://eu-central-1.console.aws.amazon.com/lambda/home?region=eu-central-1#/functions/sourcelibrary-ocr-processor" _blank
+    click L_Trans "https://eu-central-1.console.aws.amazon.com/lambda/home?region=eu-central-1#/functions/sourcelibrary-translation-processor" _blank
+    click L_Img "https://eu-central-1.console.aws.amazon.com/lambda/home?region=eu-central-1#/functions/sourcelibrary-image-extraction-processor" _blank
+    click L_Write "https://eu-central-1.console.aws.amazon.com/lambda/home?region=eu-central-1#/functions/sourcelibrary-write-processor" _blank
+    click SQS_OCR "https://eu-central-1.console.aws.amazon.com/sqs/v3/home?region=eu-central-1" _blank
+    click SQS_Trans "https://eu-central-1.console.aws.amazon.com/sqs/v3/home?region=eu-central-1" _blank
+    click SQS_Img "https://eu-central-1.console.aws.amazon.com/sqs/v3/home?region=eu-central-1" _blank
+    click SQS_Write "https://eu-central-1.console.aws.amazon.com/sqs/v3/home?region=eu-central-1" _blank
+
+    style MongoDB fill:#4db33d,color:#fff
+    style R2 fill:#f38020,color:#fff
+    style Gemini fill:#4285f4,color:#fff
+    style Next fill:#000,color:#fff
+    style Pipeline fill:#d63031,color:#fff
+    style Enrich fill:#d63031,color:#fff
+    style Sync fill:#d63031,color:#fff
+    style L_OCR fill:#6c5ce7,color:#fff
+    style L_Trans fill:#6c5ce7,color:#fff
+    style L_Img fill:#6c5ce7,color:#fff
+    style L_Write fill:#6c5ce7,color:#fff
+    style SQS_OCR fill:#2d3436,color:#dfe6e9
+    style SQS_Trans fill:#2d3436,color:#dfe6e9
+    style SQS_Img fill:#2d3436,color:#dfe6e9
+    style SQS_Write fill:#2d3436,color:#dfe6e9
+    </pre>
+  </div>
+
+  <div class="legend">
+    <div><span class="legend-dot" style="background:#000"></span> Vercel / Next.js</div>
+    <div><span class="legend-dot" style="background:#d63031"></span> Hetzner crons</div>
+    <div><span class="legend-dot" style="background:#6c5ce7"></span> Lambda workers</div>
+    <div><span class="legend-dot" style="background:#2d3436"></span> SQS queues</div>
+    <div><span class="legend-dot" style="background:#4db33d"></span> MongoDB Atlas</div>
+    <div><span class="legend-dot" style="background:#f38020"></span> Cloudflare R2</div>
+    <div><span class="legend-dot" style="background:#4285f4"></span> Gemini AI</div>
+  </div>
+
+  <script type="module">
+    import mermaid from 'https://cdn.jsdelivr.net/npm/mermaid@11/dist/mermaid.esm.min.mjs';
+    mermaid.initialize({
+      startOnLoad: true,
+      theme: 'dark',
+      securityLevel: 'loose',  // Required for click handlers to work
+      flowchart: {
+        useMaxWidth: false,
+        htmlLabels: true,
+        curve: 'basis'
+      }
+    });
+  </script>
+</body>
+</html>

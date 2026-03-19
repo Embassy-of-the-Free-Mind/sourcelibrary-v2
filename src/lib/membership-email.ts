@@ -1,7 +1,69 @@
 import { Resend } from 'resend';
 
 /**
- * Send a welcome email to a new Ficino Society member.
+ * Send a welcome email when someone joins the Ficino Society (free).
+ * Tone: welcome to the circle, here's where to go.
+ */
+export async function sendSocietyWelcomeEmail(email: string, name?: string): Promise<void> {
+  if (!process.env.RESEND_API_KEY) return;
+
+  const resend = new Resend(process.env.RESEND_API_KEY);
+  const firstName = name?.split(' ')[0] || '';
+  const greeting = firstName ? `Dear ${firstName},` : 'Dear friend,';
+
+  await resend.emails.send({
+    from: process.env.EMAIL_FROM || 'Source Library <noreply@sourcelibrary.org>',
+    to: email,
+    subject: 'Welcome to the Ficino Society',
+    html: `
+      <div style="font-family: Georgia, 'Times New Roman', serif; max-width: 520px; margin: 0 auto; padding: 40px 24px; color: #1a1612;">
+        <div style="text-align: center; margin-bottom: 32px;">
+          <h1 style="font-size: 24px; font-weight: 400; margin: 0; letter-spacing: -0.01em;">
+            The Ficino Society
+          </h1>
+        </div>
+
+        <div style="line-height: 1.8; font-size: 15px; color: #1a1612;">
+          <p>${greeting}</p>
+          <p>
+            Welcome to the circle. You've joined a community of scholars and readers
+            who are translating the Western esoteric tradition together.
+          </p>
+          <p>Here's where to start:</p>
+        </div>
+
+        <div style="background: #f5f0e8; border-radius: 8px; padding: 20px 24px; margin: 20px 0 28px; line-height: 1.8; font-size: 14px; color: #1a1612;">
+          <strong><a href="https://sourcelibrary.org/ficino-society/discussions" style="color: #9e4a3a; text-decoration: none;">The Correspondence</a></strong>
+          &mdash; introduce yourself and join the discussion.<br>
+          <strong><a href="https://sourcelibrary.org/ficino-society/members" style="color: #9e4a3a; text-decoration: none;">Members page</a></strong>
+          &mdash; set your name and bio from your
+          <a href="https://sourcelibrary.org/account" style="color: #9e4a3a; text-decoration: none;">account</a>.<br>
+          <strong><a href="https://sourcelibrary.org" style="color: #9e4a3a; text-decoration: none;">The library</a></strong>
+          &mdash; browse over 5,000 digitized texts, many newly translated.
+        </div>
+
+        <div style="line-height: 1.8; font-size: 15px; color: #1a1612;">
+          <p>
+            We'll write to you each quarter about what we've translated and what's
+            coming next. If you have thoughts about what we should translate,
+            post in the Correspondence or reply to this email.
+          </p>
+        </div>
+
+        <div style="margin-top: 36px; padding-top: 20px; border-top: 1px solid #e8e4dc; line-height: 1.7; font-size: 14px; color: #8a8480;">
+          <p style="margin: 0;">Welcome,</p>
+          <p style="margin: 4px 0 0; color: #1a1612;">The Source Library team</p>
+          <p style="margin: 16px 0 0; font-size: 12px;">
+            <a href="https://sourcelibrary.org" style="color: #8a8480;">sourcelibrary.org</a>
+          </p>
+        </div>
+      </div>
+    `,
+  });
+}
+
+/**
+ * Send a thank-you email to a new financial contributor.
  * Tone: a letter of welcome into a scholarly tradition, not a SaaS receipt.
  */
 export async function sendMembershipWelcomeEmail(email: string, name?: string): Promise<void> {

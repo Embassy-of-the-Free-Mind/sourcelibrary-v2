@@ -82,7 +82,7 @@ export async function GET(request: NextRequest) {
 
     // Helper: build common book-level filters (language, category, year, etc.)
     function buildBookFilters(): Record<string, unknown> {
-      const filters: Record<string, unknown> = { hidden: { $ne: true } };
+      const filters: Record<string, unknown> = { hidden: { $ne: true }, pages_count: { $gt: 0 } };
       if (language) filters.language = language;
       if (category) filters.categories = category;
       if (dateFrom || dateTo) {
@@ -164,7 +164,7 @@ export async function GET(request: NextRequest) {
           }
 
           // eslint-disable-next-line @typescript-eslint/no-explicit-any
-          const pipeline: any[] = [buildBookSearchStage(query, searchFilters)];
+          const pipeline: any[] = [buildBookSearchStage(query, searchFilters, { fuzzy: true })];
 
           // Post-filters for fields not in the Atlas Search index
           const postMatch: Record<string, unknown> = {};
@@ -279,6 +279,7 @@ export async function GET(request: NextRequest) {
         const book = bookMap.get(page.book_id as string);
         if (!book) continue;
         if ((book as any).hidden === true) continue;
+        if (!book.pages_count || book.pages_count === 0) continue;
         if (!pagesOnly && seenBooks.has(book.id)) continue;
 
         const translationText = page.translation?.data as string || '';
@@ -448,12 +449,21 @@ export async function GET(request: NextRequest) {
         has_translation: hasTranslation,
         book_id: bookId,
       },
+    }, {
+      headers: {
+        'Cache-Control': 'public, s-maxage=60, stale-while-revalidate=300',
+      },
     });
   } catch (error) {
     console.error('Search error:', error);
     return NextResponse.json({
       error: 'Search failed',
       message: error instanceof Error ? error.message : String(error),
-    }, { status: 500 });
+    }, {
+      status: 500,
+      headers: {
+        'Cache-Control': 'public, s-maxage=10, stale-while-revalidate=30',
+      },
+    });
   }
 }

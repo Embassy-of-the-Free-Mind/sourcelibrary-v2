@@ -11,6 +11,7 @@ export const metadata: Metadata = {
   },
 };
 
+export const dynamic = 'force-dynamic';
 // Revalidate every 24 hours — book stats change slowly
 export const revalidate = 86400;
 

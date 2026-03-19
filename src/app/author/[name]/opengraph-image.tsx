@@ -6,7 +6,6 @@ export const contentType = OG_CONTENT_TYPE;
 
 export default async function Image({ params }: { params: Promise<{ name: string }> }) {
   const { name } = await params;
-  // Convert slug back to display name (capitalize each word)
   const authorName = decodeURIComponent(name)
     .replace(/-/g, ' ')
     .replace(/\b\w/g, c => c.toUpperCase());

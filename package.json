@@ -30,6 +30,7 @@
     "@types/archiver": "^7.0.0",
     "@types/three": "^0.183.1",
     "@vercel/blob": "^2.0.0",
+    "@xyflow/react": "^12.10.1",
     "archiver": "^7.0.1",
     "axios": "^1.13.2",
     "botid": "^1.5.11",

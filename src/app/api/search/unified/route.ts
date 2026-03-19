@@ -2,6 +2,9 @@ import { NextRequest, NextResponse } from 'next/server';
 import { getDb } from '@/lib/mongodb';
 import { buildBookSearchStage } from '@/lib/atlas-search';
 
+const ENTITIES_SEARCH_INDEX = 'entities_search';
+const GALLERY_SEARCH_INDEX = 'gallery_search';
+
 export const preferredRegion = 'fra1';
 
 interface BookResult {
@@ -64,7 +67,7 @@ export async function GET(request: NextRequest) {
         console.error('Index search error:', err);
         return { results: [] as IndexResult[], total: 0 };
       }),
-      searchGallery(db, queryRegex, 3)
+      searchGallery(db, query, queryRegex, 3)
     ]);
 
     // Log search query (fire-and-forget)
@@ -83,6 +86,10 @@ export async function GET(request: NextRequest) {
       books: booksResult,
       index: indexResult,
       gallery: galleryResult
+    }, {
+      headers: {
+        'Cache-Control': 'public, s-maxage=60, stale-while-revalidate=300',
+      },
     });
   } catch (error) {
     console.error('Unified search error:', error);
@@ -94,9 +101,9 @@ async function searchBooks(db: any, query: string, queryRegex: RegExp, limit: nu
   let books;
 
   try {
-    // Use Atlas Search for fast, relevance-ranked search
+    // Use Atlas Search with autocomplete + fuzzy for instant prefix matching
     books = await db.collection('books').aggregate([
-      buildBookSearchStage(query),
+      buildBookSearchStage(query, {}, { autocomplete: true, fuzzy: true }),
       { $limit: limit },
       { $project: { id: 1, title: 1, display_title: 1, author: 1, language: 1, published: 1, pages_count: 1, pages_translated: 1, pages_ocr: 1, thumbnail: 1, thumbnail_blob: 1 } },
     ], { maxTimeMS: 5000 }).toArray();
@@ -111,6 +118,7 @@ async function searchBooks(db: any, query: string, queryRegex: RegExp, limit: nu
           { 'reading_summary.overview': queryRegex },
         ],
         hidden: { $ne: true },
+        pages_count: { $gt: 0 },
       })
       .project({ id: 1, title: 1, display_title: 1, author: 1, language: 1, published: 1, pages_count: 1, pages_translated: 1, pages_ocr: 1, thumbnail: 1, thumbnail_blob: 1 })
       .limit(limit)
@@ -134,23 +142,45 @@ async function searchBooks(db: any, query: string, queryRegex: RegExp, limit: nu
 }
 
 async function searchIndex(db: any, query: string, limit: number) {
-  // Query entities collection directly (indexed on name + aliases) instead of
-  // $concatArrays + $unwind on book index arrays
   const escapedQuery = query.replace(/[.*+?^${}()|[\]\\]/g, '\\$&');
   const queryRegex = new RegExp(escapedQuery, 'i');
 
-  const entities = await db.collection('entities')
-    .find({
-      $or: [
-        { name: queryRegex },
-        { aliases: queryRegex },
-      ],
-    })
-    .project({ name: 1, type: 1, books: 1 })
-    .sort({ book_count: -1 })
-    .limit(limit * 3) // fetch extra since we'll expand per-book
-    .maxTimeMS(5000)
-    .toArray();
+  let entities;
+  try {
+    // Use Atlas Search with autocomplete + fuzzy, boost by book_count for popularity
+    entities = await db.collection('entities').aggregate([
+      {
+        $search: {
+          index: ENTITIES_SEARCH_INDEX,
+          compound: {
+            should: [
+              { autocomplete: { query, path: 'name', score: { boost: { value: 3 } }, fuzzy: { maxEdits: 1, prefixLength: 2 } } },
+              { autocomplete: { query, path: 'aliases', fuzzy: { maxEdits: 1, prefixLength: 2 } } },
+            ],
+            minimumShouldMatch: 1,
+            // Boost score by book_count so popular entities rank higher
+            score: { boost: { path: 'book_count', undefined: 1 } },
+          },
+        },
+      },
+      { $limit: limit * 3 },
+      { $project: { name: 1, type: 1, books: 1 } },
+    ], { maxTimeMS: 5000 }).toArray();
+  } catch {
+    // Fallback to regex if Atlas Search index not ready
+    entities = await db.collection('entities')
+      .find({
+        $or: [
+          { name: queryRegex },
+          { aliases: queryRegex },
+        ],
+      })
+      .project({ name: 1, type: 1, books: 1 })
+      .sort({ book_count: -1 })
+      .limit(limit * 3)
+      .maxTimeMS(5000)
+      .toArray();
+  }
 
   // Expand each entity into per-book results (matching the IndexResult shape)
   const results: IndexResult[] = [];
@@ -210,26 +240,52 @@ async function searchIndex(db: any, query: string, limit: number) {
   return { results, total: results.length };
 }
 
-async function searchGallery(db: any, queryRegex: RegExp, limit: number): Promise<{ results: GalleryResult[]; total: number }> {
+async function searchGallery(db: any, query: string, queryRegex: RegExp, limit: number): Promise<{ results: GalleryResult[]; total: number }> {
   try {
-    // Use materialized gallery_images collection (indexed, much faster than scanning pages)
-    const images = await db.collection('gallery_images')
-      .find(
+    let images;
+    try {
+      // Use Atlas Search with autocomplete on description + fuzzy text on other fields
+      images = await db.collection('gallery_images').aggregate([
         {
-          gallery_quality: { $gte: 0.5 },
-          $or: [
-            { description: queryRegex },
-            { museum_description: queryRegex },
-            { 'metadata.subjects': queryRegex },
-            { 'metadata.figures': queryRegex },
-          ],
+          $search: {
+            index: GALLERY_SEARCH_INDEX,
+            compound: {
+              should: [
+                { autocomplete: { query, path: 'description', score: { boost: { value: 3 } }, fuzzy: { maxEdits: 1, prefixLength: 2 } } },
+                { text: { query, path: 'museum_description', score: { boost: { value: 2 } }, fuzzy: { maxEdits: 1, prefixLength: 2 } } },
+                { text: { query, path: 'metadata.subjects', fuzzy: { maxEdits: 1, prefixLength: 2 } } },
+                { text: { query, path: 'metadata.figures', fuzzy: { maxEdits: 1, prefixLength: 2 } } },
+              ],
+              minimumShouldMatch: 1,
+              filter: [
+                { range: { path: 'gallery_quality', gte: 0.5 } },
+              ],
+            },
+          },
         },
-        { projection: { page_id: 1, detection_index: 1, description: 1, type: 1, thumbnail_url: 1, extracted_url: 1, book_id: 1, book_title: 1, gallery_quality: 1 } }
-      )
-      .sort({ gallery_quality: -1 })
-      .limit(limit)
-      .maxTimeMS(3000)
-      .toArray();
+        { $limit: limit },
+        { $project: { page_id: 1, detection_index: 1, description: 1, type: 1, thumbnail_url: 1, extracted_url: 1, book_id: 1, book_title: 1, gallery_quality: 1 } },
+      ], { maxTimeMS: 3000 }).toArray();
+    } catch {
+      // Fallback to regex if Atlas Search index not ready
+      images = await db.collection('gallery_images')
+        .find(
+          {
+            gallery_quality: { $gte: 0.5 },
+            $or: [
+              { description: queryRegex },
+              { museum_description: queryRegex },
+              { 'metadata.subjects': queryRegex },
+              { 'metadata.figures': queryRegex },
+            ],
+          },
+          { projection: { page_id: 1, detection_index: 1, description: 1, type: 1, thumbnail_url: 1, extracted_url: 1, book_id: 1, book_title: 1, gallery_quality: 1 } }
+        )
+        .sort({ gallery_quality: -1 })
+        .limit(limit)
+        .maxTimeMS(3000)
+        .toArray();
+    }
 
     return {
       results: images.map((img: any) => ({

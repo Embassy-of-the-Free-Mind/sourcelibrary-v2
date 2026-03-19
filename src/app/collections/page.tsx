@@ -3,6 +3,7 @@ import Link from 'next/link';
 import Image from 'next/image';
 import ContentPageLayout, { ContentHeader } from '@/components/layout/ContentPageLayout';
 import { sortCollections } from '@/lib/collections-utils';
+import EraTimeline, { type DecadeBucket } from '@/components/collections/EraTimeline';
 import type { Metadata } from 'next';
 
 export const dynamic = 'force-dynamic';
@@ -35,18 +36,68 @@ interface CollectionDoc {
   published?: boolean;
   featured_images?: FeaturedImage[];
   languages: { lang: string; count: number }[];
+  children_count?: number;
 }
 
 async function fetchCollections(): Promise<CollectionDoc[]> {
   const db = await getDb();
-  const docs = await db.collection('collections').find({
-    parent: { $exists: false },
-    type: { $ne: 'curated' },
-    hidden: { $ne: true },
-  }).toArray();
-  const all = docs.map(({ _id, ...rest }) => rest) as unknown as CollectionDoc[];
+  const [docs, childCounts] = await Promise.all([
+    db.collection('collections').find({
+      parent: { $exists: false },
+      type: { $ne: 'curated' },
+      hidden: { $ne: true },
+    }).toArray(),
+    db.collection('collections').aggregate<{ _id: string; count: number }>([
+      { $match: { parent: { $exists: true }, hidden: { $ne: true } } },
+      { $group: { _id: '$parent', count: { $sum: 1 } } },
+    ]).toArray(),
+  ]);
+
+  const childCountMap = new Map(childCounts.map(c => [c._id, c.count]));
+  const all = docs.map(({ _id, ...rest }) => ({
+    ...rest,
+    children_count: childCountMap.get(rest.slug) || 0,
+  })) as unknown as CollectionDoc[];
 
   return sortCollections(all);
+}
+
+async function fetchTimelineDecades(): Promise<{ decades: DecadeBucket[]; total: number }> {
+  try {
+    const db = await getDb();
+    const pipeline = [
+      { $match: { year: { $exists: true, $ne: null }, hidden: { $ne: true } } },
+      { $project: { year: 1, language: { $ifNull: ['$language', 'Unknown'] } } },
+      {
+        $group: {
+          _id: {
+            decade: { $multiply: [{ $floor: { $divide: ['$year', 10] } }, 10] },
+            language: '$language',
+          },
+          count: { $sum: 1 },
+        },
+      },
+      { $sort: { '_id.decade': 1 as const, count: -1 as const } },
+      {
+        $group: {
+          _id: '$_id.decade',
+          count: { $sum: '$count' },
+          languages: { $push: { lang: '$_id.language', count: '$count' } },
+        },
+      },
+      { $sort: { _id: 1 as const } },
+    ];
+    const raw = await db.collection('books').aggregate(pipeline).toArray();
+    const decades: DecadeBucket[] = raw.map(d => ({
+      decade: d._id,
+      count: d.count,
+      languages: d.languages,
+    }));
+    const total = decades.reduce((sum, d) => sum + d.count, 0);
+    return { decades, total };
+  } catch {
+    return { decades: [], total: 0 };
+  }
 }
 
 function CollectionCard({ col }: { col: CollectionDoc }) {
@@ -77,6 +128,7 @@ function CollectionCard({ col }: { col: CollectionDoc }) {
       <div className="absolute inset-0 flex flex-col justify-end p-3 sm:p-4">
         <p className="text-white/50 text-xs mb-1 hidden sm:block">
           {col.book_count > 0 ? `${col.book_count.toLocaleString()} books` : ''}
+          {col.children_count ? ` · ${col.children_count} sub-collections` : ''}
         </p>
         <h2 className="font-serif text-sm sm:text-base lg:text-lg text-white font-semibold leading-tight line-clamp-2 group-hover:text-accent-gold transition-colors">
           {col.name}
@@ -89,7 +141,10 @@ function CollectionCard({ col }: { col: CollectionDoc }) {
 
 
 export default async function CollectionsPage() {
-  const categories = await fetchCollections();
+  const [categories, timeline] = await Promise.all([
+    fetchCollections(),
+    fetchTimelineDecades(),
+  ]);
   const totalBooks = categories.reduce((s, c) => s + c.book_count, 0);
 
   return (
@@ -116,6 +171,9 @@ export default async function CollectionsPage() {
           <CollectionCard key={col.slug} col={col} />
         ))}
       </div>
+
+      {/* Era timeline — full-bleed dark section */}
+      <EraTimeline decades={timeline.decades} total={timeline.total} />
     </ContentPageLayout>
   );
 }

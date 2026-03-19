@@ -3,11 +3,9 @@ import { Book } from '@/lib/types';
 import { type CollectionForGrid } from '@/components/book/BookLibrary';
 import HeroSection from '@/components/layout/HeroSection';
 import HomePageSchema from '@/components/seo/HomePageSchema';
-import FeaturedCollectionCarousel from '@/components/home/FeaturedCollectionHero';
-import FromTheCollection from '@/components/home/FromTheCollection';
-import { sortCollections, withTimeout } from '@/lib/collections-utils';
+import EditorialSpread from '@/components/prototype/EditorialSpread';
+import FromTheCollection from '@/components/prototype/FromTheCollection';
 import BookCard from '@/components/book/BookCard';
-import SocietyGate from '@/components/layout/SocietyGate';
 import SignUpCTA from '@/components/auth/SignUpCTA';
 import Image from 'next/image';
 import Link from 'next/link';
@@ -16,6 +14,20 @@ import Link from 'next/link';
 // Short revalidation so stale fallback data (from DB stress) doesn't persist long.
 export const revalidate = 300;
 export const maxDuration = 60;
+
+// ---------- Collection ordering (user-specified) ----------
+
+const PINNED_COLLECTION_SLUGS = ['natural-philosophy', 'classical-philosophy', 'renaissance-philosophy', 'sacred-texts'];
+
+function sortCollections<T extends { slug: string }>(collections: T[]): T[] {
+  const pinned = PINNED_COLLECTION_SLUGS.map(s => collections.find(c => c.slug === s)).filter(Boolean) as T[];
+  const rest = collections.filter(c => !PINNED_COLLECTION_SLUGS.includes(c.slug));
+  for (let i = rest.length - 1; i > 0; i--) {
+    const j = Math.floor(Math.random() * (i + 1));
+    [rest[i], rest[j]] = [rest[j], rest[i]];
+  }
+  return [...pinned, ...rest];
+}
 
 // ---------- Book projection shared across queries ----------
 
@@ -48,10 +60,10 @@ const BOOK_PROJECTION = {
 async function getFeaturedCollections() {
   const db = await getDb();
 
-  // Pick 5 random collections that have enough books
+  // Pick 1 random collection with enough books for the editorial spread
   const collections = await db.collection('collections').aggregate([
-    { $match: { book_count: { $gte: 5 }, parent: { $exists: false }, type: { $ne: 'curated' }, hidden: { $ne: true } } },
-    { $sample: { size: 5 } },
+    { $match: { book_count: { $gte: 10 }, parent: { $exists: false }, type: { $ne: 'curated' }, hidden: { $ne: true } } },
+    { $sample: { size: 1 } },
   ]).toArray();
 
   if (collections.length === 0) return [];
@@ -121,22 +133,24 @@ async function getFeaturedCollections() {
   // ---------- Gallery images: read pre-curated data from collection docs ----------
   // Curated by scripts/maintenance/curate-collection-gallery.mjs — no heavy joins needed.
 
-  // Deduplicate books across featured collections so each collection shows unique books
-  const usedBookIds = new Set<string>();
-
   const results = collections.map((collection) => {
-    const images = collection.featured_images || [];
-    const hero = images.find(
-      (img: unknown) => typeof img === 'string' || (img && typeof img === 'object' && ((img as Record<string, unknown>).extracted_url || (img as Record<string, unknown>).image_url || (img as Record<string, unknown>).thumbnail_url))
-    );
-    const heroUrl = typeof hero === 'string' ? hero : ((hero as Record<string, unknown>)?.extracted_url || (hero as Record<string, unknown>)?.image_url || (hero as Record<string, unknown>)?.thumbnail_url || null) as string | null;
+    // Prefer curated_gallery images (gallery illustrations) for full-bleed hero
+    const gallery = collection.curated_gallery || [];
+    const galleryHero = gallery.find((img: Record<string, unknown>) => img && img.image_url);
+    let heroUrl = (galleryHero?.image_url || null) as string | null;
 
-    const allBooks = (booksBySlug.get(collection.slug as string) || []).map(({ collections: _c, ...rest }) => rest);
-    // Filter out books already claimed by a previous featured collection
-    const books = allBooks.filter(b => !usedBookIds.has(b.id));
-    books.forEach(b => usedBookIds.add(b.id));
+    // Fall back to featured_images
+    if (!heroUrl) {
+      const images = collection.featured_images || [];
+      const hero = images.find(
+        (img: unknown) => typeof img === 'string' || (img && typeof img === 'object' && ((img as Record<string, unknown>).extracted_url || (img as Record<string, unknown>).image_url || (img as Record<string, unknown>).thumbnail_url))
+      );
+      heroUrl = typeof hero === 'string' ? hero : ((hero as Record<string, unknown>)?.extracted_url || (hero as Record<string, unknown>)?.image_url || (hero as Record<string, unknown>)?.thumbnail_url || null) as string | null;
+    }
 
-    // Fall back to hardcoded hero image if DB doesn't have featured_images
+    const books = (booksBySlug.get(collection.slug as string) || []).map(({ collections: _c, ...rest }) => rest);
+
+    // Fall back to hardcoded hero image if DB doesn't have images
     const fallbackHero = FALLBACK_COLLECTIONS.find(f => f.slug === collection.slug)?.hero_image;
     return {
       collection: {
@@ -148,7 +162,6 @@ async function getFeaturedCollections() {
         hero_image: (heroUrl || fallbackHero || null) as string | null,
       },
       books: JSON.parse(JSON.stringify(books)),
-      galleryImages: JSON.parse(JSON.stringify(collection.curated_gallery || [])),
     };
   });
 
@@ -262,9 +275,10 @@ async function getCollectionShowcase() {
       $match: {
         gallery_quality: { $gte: 0.85 },
         museum_description: { $exists: true, $ne: '' },
-        extracted_url: { $type: 'string', $gt: '' },
-        // Filter out low-resolution images that would look pixelated at display size
-        extracted_width: { $gte: 400 },
+        $or: [
+          { thumbnail_url: { $type: 'string', $gt: '' } },
+          { extracted_url: { $type: 'string', $gt: '' } },
+        ],
         book_hidden: { $ne: true },
       },
     },
@@ -384,7 +398,7 @@ const BLOG_POSTS = [
   {
     slug: 'philosophers-stone',
     title: "What Is the Philosopher's Stone? Eight Answers from the Primary Sources",
-    subtitle: 'An allegorical emblem sequence, a universal salt, a red powder found in a bishop\'s tomb. Eight primary sources, eight different answers.',
+    subtitle: 'An allegorical emblem sequence, a universal salt, a red powder found in a bishop\'s tomb — eight primary sources, eight different answers.',
     date: '27 February 2026',
     readTime: '20 min read',
     tag: 'Deep dive',
@@ -404,7 +418,7 @@ const BLOG_POSTS = [
   {
     slug: 'first-translations',
     title: 'Over 500 First English Translations',
-    subtitle: 'Alchemical lab manuals, radical theology, women alchemists, Sanskrit astrology manuscripts, all previously inaccessible in English.',
+    subtitle: 'Alchemical lab manuals, radical theology, women alchemists, Sanskrit astrology manuscripts — all previously inaccessible in English.',
     date: '20 February 2026',
     readTime: '14 min read',
     tag: 'Collection',
@@ -415,6 +429,16 @@ const BLOG_POSTS = [
 
 // ---------- Page ----------
 
+// Race a promise against a timeout, returning fallback on timeout OR error
+function withTimeout<T>(promise: Promise<T>, ms: number, fallback: T): Promise<T> {
+  return Promise.race([
+    promise.catch((err) => {
+      console.error('[Homepage] query failed:', err?.message || err);
+      return fallback;
+    }),
+    new Promise<T>(resolve => setTimeout(() => resolve(fallback), ms)),
+  ]);
+}
 
 export default async function HomePage() {
   const [featuredItems, discoverBooks, showcase, counts, collections] = await Promise.all([
@@ -426,7 +450,7 @@ export default async function HomePage() {
   ]);
 
   return (
-    <SocietyGate>
+    <>
       <div className="min-h-screen">
         <HomePageSchema books={discoverBooks} bookCount={counts.totalBooks} translatedCount={counts.translatedToEnglish} />
 
@@ -435,7 +459,7 @@ export default async function HomePage() {
 
         {/* Collections Grid */}
         <section id="library" className="bg-gradient-to-b from-[#f6f3ee] to-[#f3ede6] py-16 md:py-24">
-          <div className="px-6 md:px-12 max-w-[var(--container-wide)] mx-auto">
+          <div className="px-6 md:px-12 max-w-7xl mx-auto">
             <div className="flex items-baseline justify-between mb-8">
               <div>
                 <h2 className="text-3xl md:text-4xl text-primary font-display">
@@ -473,7 +497,7 @@ export default async function HomePage() {
                   ) : (
                     <div className="absolute inset-0 bg-gradient-to-br from-accent-rust/10 to-accent-gold/10" />
                   )}
-                  <div className="absolute inset-0 bg-gradient-to-t from-[rgba(26,22,18,0.85)] via-[rgba(26,22,18,0.35)] to-transparent" />
+                  <div className="absolute inset-0 bg-gradient-to-t from-black/80 via-black/20 to-transparent" />
                   <div className="absolute bottom-0 left-0 right-0 p-4">
                     <p className="text-white/50 text-xs mb-1 hidden sm:block">
                       {col.book_count} books
@@ -518,19 +542,22 @@ export default async function HomePage() {
           </div>
         </section>
 
-        {/* Featured Collection Carousel — flip through collections */}
+        {/* Featured Collection — editorial spread */}
         {featuredItems.length > 0 && (
-          <FeaturedCollectionCarousel items={featuredItems} />
+          <EditorialSpread
+            collection={featuredItems[0].collection}
+            books={featuredItems[0].books}
+          />
         )}
 
         {/* From the Collection — image-heavy gallery showcase */}
         <FromTheCollection items={showcase} />
 
         {/* Gallery attribution — connects beauty to community */}
-        <div className="bg-warm px-6 md:px-12 pb-8 -mt-1">
-          <p className="text-center text-xs text-stone-400">
+        <div className="bg-stone-900 px-6 md:px-12 pb-8 -mt-1">
+          <p className="text-center text-xs" style={{ color: 'rgba(255,255,255,0.25)' }}>
             From the collections of Source Library, preserved and translated with support from{' '}
-            <Link href="/ficino-society/members" className="hover:text-stone-600 transition-colors underline decoration-stone-300">
+            <Link href="/ficino-society/members" className="hover:text-white/40 transition-colors underline decoration-white/10">
               Ficino Society members
             </Link>
           </p>
@@ -538,7 +565,7 @@ export default async function HomePage() {
 
         {/* Discover Section */}
         <section className="bg-white py-16 md:py-24">
-          <div className="px-6 md:px-12 max-w-[var(--container-wide)] mx-auto">
+          <div className="px-6 md:px-12 max-w-7xl mx-auto">
             <h2 className="text-3xl md:text-4xl text-primary mb-3 font-display">
               Discover
             </h2>
@@ -565,7 +592,7 @@ export default async function HomePage() {
 
         {/* Blog Section */}
         <section className="bg-gradient-to-b from-[#f6f3ee] to-[#f3ede6] py-16 md:py-24">
-          <div className="px-6 md:px-12 max-w-[var(--container-wide)] mx-auto">
+          <div className="px-6 md:px-12 max-w-7xl mx-auto">
             <div className="flex items-baseline justify-between mb-10">
               <div>
                 <h2 className="text-3xl md:text-4xl text-primary font-display">
@@ -641,7 +668,7 @@ export default async function HomePage() {
               <p>
                 The Source Library uses scholarship and AI systems to recover this knowledge and make it
                 accessible to all. We are building the world&apos;s largest open-access collection of translated
-                primary sources, so that scholars, seekers, and AI systems can draw on the full depth of
+                primary sources&mdash;so that scholars, seekers, and AI systems can draw on the full depth of
                 the human intellectual tradition. This work is sustained by the people who use and value it.
               </p>
               <p className="text-gray-500 text-base">
@@ -656,7 +683,7 @@ export default async function HomePage() {
 
         {/* Be part of this */}
         <section className="py-20 md:py-28" style={{ background: 'var(--bg-dark)' }}>
-          <div className="px-6 md:px-12 max-w-5xl mx-auto">
+          <div className="px-6 md:px-12 max-w-4xl mx-auto">
             <div className="text-center mb-12">
               <p
                 className="text-sm uppercase tracking-[0.2em] mb-6"
@@ -680,7 +707,7 @@ export default async function HomePage() {
                 </h3>
                 <p className="leading-relaxed mb-6" style={{ color: '#a09a90' }}>
                   Cosimo de&apos; Medici funded Ficino&apos;s translations and ignited the Renaissance.
-                  Members of the Ficino Society continue that tradition: funding the digitization
+                  Members of the Ficino Society continue that tradition&mdash;funding the digitization
                   and translation of ancient texts, with early access to new translations
                   and their name on a book of their choosing.
                 </p>
@@ -762,7 +789,7 @@ export default async function HomePage() {
         {/* Footer */}
         <footer className="bg-gradient-to-b from-[#f6f3ee] to-[#f3ede6] py-16 md:py-24">
           <div className="px-6 md:px-12 max-w-5xl mx-auto">
-            <div className="max-w-5xl border-t border-stone-300 pt-10 mt-8">
+            <div className="max-w-4xl border-t border-stone-300 pt-10 mt-8">
               <p className="text-sm uppercase tracking-[0.2em] text-stone-500 mb-6">
                 In the spirit of
               </p>
@@ -776,7 +803,7 @@ export default async function HomePage() {
                   </p>
                   <p className="text-stone-600 text-base leading-relaxed">
                     Ficino translated the complete works of Plato, Plotinus, Proclus, Iamblichus, and the
-                    Hermetic writings into Latin, making them accessible to all of Europe for the first
+                    Hermetic writings into Latin&mdash;making them accessible to all of Europe for the first
                     time. His work ignited the Renaissance recovery of Neoplatonism, Hermeticism, and
                     the <em>prisca theologia</em>: the belief in an ancient wisdom tradition uniting all
                     seekers of truth.
@@ -813,6 +840,6 @@ export default async function HomePage() {
           </div>
         </footer>
       </div>
-    </SocietyGate>
+    </>
   );
 }

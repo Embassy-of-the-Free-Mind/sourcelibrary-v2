@@ -34,7 +34,6 @@ interface AuthorPageProps {
 
 // eslint-disable-next-line @typescript-eslint/no-explicit-any
 async function resolveAuthorName(db: any, slug: string): Promise<string | null> {
-  // Build a loose regex: hyphens match any non-alphanumeric run
   const pattern = slug.split('-').map(s => s.replace(/[.*+?^${}()|[\]\\]/g, '\\$&')).join('[^a-z0-9]+');
   const book = await db.collection('books').findOne(
     { author: { $regex: new RegExp(`^${pattern}$`, 'i') }, hidden: { $ne: true } },
@@ -101,7 +100,6 @@ async function getAuthorBooks(authorName: string): Promise<Book[]> {
 export async function generateMetadata({ params }: AuthorPageProps): Promise<Metadata> {
   const { name } = await params;
   const decoded = decodeURIComponent(name);
-  // Old-style %20 URL — use decoded name directly; new slug — resolve from DB
   const isOldFormat = decoded !== name;
   const db = await getDb();
   const authorName = isOldFormat ? decoded : (await resolveAuthorName(db, name) || name.replace(/-/g, ' '));

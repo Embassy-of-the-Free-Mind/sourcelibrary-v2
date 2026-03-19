@@ -32,9 +32,13 @@ export async function GET() {
       {
         $sort: { created_at: -1 }
       }
-    ]).toArray();
+    ], { maxTimeMS: 30000 }).toArray();
 
-    return NextResponse.json(books);
+    return NextResponse.json(books, {
+      headers: {
+        'Cache-Control': 'public, s-maxage=300, stale-while-revalidate=600',
+      },
+    });
   } catch (error) {
     console.error('Error fetching books:', error);
     return NextResponse.json({ error: 'Failed to fetch books' }, { status: 500 });

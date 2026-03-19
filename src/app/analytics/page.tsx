@@ -11,10 +11,12 @@ const LogsTab = dynamic(() => import('@/components/analytics/tabs/LogsTab'), { s
 const SearchTab = dynamic(() => import('@/components/analytics/tabs/SearchTab'), { ssr: false });
 const TrafficTab = dynamic(() => import('@/components/analytics/tabs/TrafficTab'), { ssr: false });
 const PipelineTab = dynamic(() => import('@/components/analytics/tabs/PipelineTab'), { ssr: false });
+const CanonTab = dynamic(() => import('@/components/analytics/tabs/CanonTab'), { ssr: false });
 
-type Tab = 'usage' | 'performance' | 'logs' | 'search' | 'traffic' | 'pipeline';
+type Tab = 'canon' | 'usage' | 'performance' | 'logs' | 'search' | 'traffic' | 'pipeline';
 
 const TABS: { key: Tab; label: string }[] = [
+  { key: 'canon', label: 'Canon' },
   { key: 'usage', label: 'Usage' },
   { key: 'performance', label: 'Performance' },
   { key: 'logs', label: 'Logs' },
@@ -24,7 +26,7 @@ const TABS: { key: Tab; label: string }[] = [
 ];
 
 export default function AnalyticsPage() {
-  const [activeTab, setActiveTab] = useState<Tab>('usage');
+  const [activeTab, setActiveTab] = useState<Tab>('canon');
   const [days, setDays] = useState(30);
   const [hours, setHours] = useState(24);
   const [pipelineHours, setPipelineHours] = useState(24);
@@ -122,6 +124,7 @@ export default function AnalyticsPage() {
       </header>
 
       <main className="max-w-7xl mx-auto px-6 py-8">
+        {activeTab === 'canon' && <CanonTab key={refreshKey} />}
         {activeTab === 'usage' && <UsageTab key={refreshKey} days={days} />}
         {activeTab === 'performance' && <PerformanceTab key={refreshKey} hours={hours} />}
         {activeTab === 'logs' && <LogsTab key={refreshKey} />}

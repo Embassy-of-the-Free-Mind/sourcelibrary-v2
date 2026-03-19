@@ -1,9 +1,12 @@
 # Claude Code Guidelines for Source Library
 
 ## Development Workflow — CRITICAL
-- **Work on the `dev/prototype` branch.** All changes go here, NOT on `main`.
-- **NEVER run `vercel --prod` from this branch.** The CLI deploys whatever is on disk — it ignores the Vercel production branch setting. This has caused accidental production deploys before. Use `vercel` (no `--prod`) for preview deploys only.
-- **Never push to main.** When work is ready, open a PR: `gh pr create --base main`.
+- **Feature branches off `main`.** One branch per feature/task: `feat/ai-search`, `fix/cover-thumbnails`, etc. No long-running dev branches.
+- **Create a branch at the start of each task:** `git checkout main && git pull && git checkout -b feat/description`
+- **PR when done:** `gh pr create --base main`. Keep PRs focused (5-15 commits). Small PRs merge fast.
+- **After merge, clean up:** `git checkout main && git pull && git branch -d feat/description`
+- **NEVER run `vercel --prod` from a feature branch.** The CLI deploys whatever is on disk — it ignores the Vercel production branch setting. Use `vercel` (no `--prod`) for preview deploys from branches.
+- **NEVER push directly to main.** All changes go through PRs.
 - **Preview URL:** Push the branch (`git push`) and Vercel auto-deploys a shareable preview. Use that for testing and sharing with the other dev.
 - The production site (sourcelibrary.org) stays untouched until a PR is reviewed and merged.
 

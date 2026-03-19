@@ -184,10 +184,14 @@ async function processOneJob(db, job) {
     // Build flat list of { pageId, text, usage }
     const pageResults = [];
 
+    let recitationCount = 0;
+
     if (isMultiPage && job.type === 'ocr') {
       for (const r of responses) {
         if (r.error) { failCount++; continue; }
-        const text = r.response?.candidates?.[0]?.content?.parts?.[0]?.text;
+        const candidate = r.response?.candidates?.[0];
+        if (candidate?.finishReason === 'RECITATION') { recitationCount++; failCount++; continue; }
+        const text = candidate?.content?.parts?.[0]?.text;
         if (!text) { failCount++; continue; }
         const usage = r.response?.usageMetadata;
         const parsed = parseMultiPageOcr(text);
@@ -200,10 +204,16 @@ async function processOneJob(db, job) {
         const r = responses[idx];
         const pageId = r.metadata?.key || (job.page_ids && job.page_ids[idx]);
         if (!pageId) { failCount++; continue; }
-        const text = r.response?.candidates?.[0]?.content?.parts?.[0]?.text;
+        const candidate = r.response?.candidates?.[0];
+        if (candidate?.finishReason === 'RECITATION') { recitationCount++; failCount++; continue; }
+        const text = candidate?.content?.parts?.[0]?.text;
         if (!text) { failCount++; continue; }
         pageResults.push({ pageId, text, usage: r.response?.usageMetadata });
       }
+    }
+
+    if (recitationCount > 0) {
+      console.log(`  RECITATION: ${recitationCount}/${responses.length} responses blocked (book: ${job.book_id})`);
     }
 
     // First pass: fix null ocr/translation subdocuments
@@ -283,18 +293,24 @@ async function processOneJob(db, job) {
       failCount += (bulkOps.length - bulkResult.matchedCount);
     }
 
-    // Update batch_jobs status
+    // Update batch_jobs status — mark as 'failed' if zero pages saved
+    const finalStatus = successCount > 0 ? 'saved' : 'failed';
+    const errorDetail = successCount === 0 && recitationCount > 0
+      ? `All ${recitationCount} pages blocked by RECITATION filter`
+      : successCount === 0 ? `All ${failCount} pages failed` : undefined;
+
     await db.collection('batch_jobs').updateOne(
       { _id: job._id },
       {
         $set: {
-          status: 'saved',
+          status: finalStatus,
           gemini_state: 'JOB_STATE_SUCCEEDED',
           completed_pages: successCount,
           failed_pages: failCount,
           results_collected: true,
           completed_at: now,
           updated_at: now,
+          ...(errorDetail && { error: errorDetail }),
         },
       }
     );
@@ -318,6 +334,7 @@ async function processOneJob(db, job) {
       status: 'collected',
       successCount,
       failCount,
+      recitationCount,
       bookId: job.book_id,
       parentJobId: job.parent_job_id,
       type: job.type,
@@ -527,12 +544,17 @@ async function run() {
           ],
         },
         {
-          // Recovery: pick up "saved" jobs with 0 completed pages (metadata.key bug)
-          status: 'saved',
-          completed_pages: 0,
-          $or: [
-            { job_name: { $exists: true, $nin: [null, ''] } },
-            { gemini_job_name: { $exists: true, $nin: [null, ''] } },
+          // Recovery: pick up "saved" jobs with 0 completed AND 0 failed pages
+          // (metadata.key bug). Jobs with failed_pages > 0 already ran but all
+          // pages failed (e.g. RECITATION filter) — don't retry them endlessly.
+          $and: [
+            { status: 'saved' },
+            { completed_pages: 0 },
+            { $or: [{ failed_pages: 0 }, { failed_pages: { $exists: false } }] },
+            { $or: [
+              { job_name: { $exists: true, $nin: [null, ''] } },
+              { gemini_job_name: { $exists: true, $nin: [null, ''] } },
+            ]},
           ],
         },
       ],
@@ -555,6 +577,7 @@ async function run() {
   const bookIdsToUpdate = new Set();
   const parentIdsToUpdate = new Set();
   const pipelineAdvances = []; // { bookId, type } pairs for pipeline status updates
+  const recitationBooks = new Set(); // books where ALL pages hit RECITATION — need Lambda retry
   const errorMessages = [];
 
   // Process in batches of CONCURRENCY
@@ -580,6 +603,10 @@ async function run() {
         if (val.bookId) {
           bookIdsToUpdate.add(val.bookId);
           pipelineAdvances.push({ bookId: val.bookId, type: val.type });
+          // Track books where all pages hit RECITATION — these need Lambda retry
+          if (val.successCount === 0 && val.recitationCount > 0) {
+            recitationBooks.add(val.bookId);
+          }
         }
         if (val.parentJobId) parentIdsToUpdate.add(val.parentJobId);
       } else if (val.status === 'pending') {
@@ -613,13 +640,38 @@ async function run() {
     catch (e) { console.error(`  Parent progress error ${parentId}: ${e.message}`); }
   }
 
-  // Deduplicate pipeline advances by bookId
+  // Deduplicate pipeline advances by bookId (skip RECITATION books — they get reset below)
   const seenBooks = new Set();
   for (const { bookId, type } of pipelineAdvances) {
-    if (!bookId || seenBooks.has(bookId)) continue;
+    if (!bookId || seenBooks.has(bookId) || recitationBooks.has(bookId)) continue;
     seenBooks.add(bookId);
     try { await advancePipelineStatus(db, bookId, type); }
     catch (e) { console.error(`  Pipeline advance error ${bookId}: ${e.message}`); }
+  }
+
+  // RECITATION recovery: mark affected books for retry with a different model.
+  // The batch API with gemini-3-flash-preview triggers RECITATION on some historical
+  // texts. Lambda workers have a fallback chain (2.5-flash → 2.0-flash → 1.5-flash).
+  // Reset to archive_complete with recitation_retry flag so the orchestrator can
+  // route these through Lambda or use a different batch model.
+  if (recitationBooks.size > 0) {
+    console.log(`\nRECITATION recovery: flagging ${recitationBooks.size} books for retry`);
+    for (const bookId of recitationBooks) {
+      try {
+        await db.collection('books').updateOne(
+          { id: bookId, 'pipeline_auto.status': { $in: ['ocr_submitted', 'ocr_complete'] } },
+          {
+            $set: {
+              'pipeline_auto.status': 'archive_complete',
+              'pipeline_auto.last_updated': new Date(),
+              'pipeline_auto.recitation_retry': true,
+              updated_at: new Date(),
+            },
+          }
+        );
+        console.log(`  Reset ${bookId} -> archive_complete (recitation_retry)`);
+      } catch (e) { console.error(`  RECITATION reset error ${bookId}: ${e.message}`); }
+    }
   }
 
   const totalElapsed = ((Date.now() - startTime) / 1000).toFixed(0);
@@ -629,6 +681,7 @@ async function run() {
   console.log(`Still pending: ${stillPending}`);
   console.log(`Errors: ${errors}`);
   console.log(`Books updated: ${bookIdsToUpdate.size}`);
+  if (recitationBooks.size > 0) console.log(`RECITATION resets: ${recitationBooks.size}`);
   console.log(`Total time: ${totalElapsed}s`);
 
   // Write cron_runs record for observability

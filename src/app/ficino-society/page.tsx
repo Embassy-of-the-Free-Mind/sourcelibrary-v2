@@ -4,7 +4,6 @@ import { Suspense, useState, useEffect } from 'react';
 import { useSession } from 'next-auth/react';
 import { useSearchParams } from 'next/navigation';
 import Link from 'next/link';
-import type { MembershipInfo } from '@/lib/membership';
 
 export default function FicinoSocietyPage() {
   return (
@@ -14,33 +13,36 @@ export default function FicinoSocietyPage() {
   );
 }
 
+interface MembershipState {
+  active: boolean;
+  joined: boolean;
+  plan: string | null;
+  expiresAt: string | null;
+}
+
 function FicinoSocietyContent() {
   const { data: session, status, update: updateSession } = useSession();
   const searchParams = useSearchParams();
   const success = searchParams.get('success') === 'true';
   const returnUrl = searchParams.get('return');
-  const [membership, setMembership] = useState<MembershipInfo | null>(null);
-  const [loading, setLoading] = useState(false);
+  const [membership, setMembership] = useState<MembershipState | null>(null);
+  const [joining, setJoining] = useState(false);
+  const [contributing, setContributing] = useState(false);
   const [activating, setActivating] = useState(false);
 
-  // Normal membership check
   useEffect(() => {
     if (session?.user && !success) {
       fetch('/api/membership').then(r => r.json()).then(setMembership);
     }
   }, [session, success]);
 
-  // After payment: poll until the webhook has activated membership, then refresh the session
   useEffect(() => {
     if (!success || !session?.user) return;
     setActivating(true);
-
     let cancelled = false;
     let attempts = 0;
-    const maxAttempts = 20; // 20 x 1.5s = 30s max wait
-
     const poll = async () => {
-      while (!cancelled && attempts < maxAttempts) {
+      while (!cancelled && attempts < 20) {
         attempts++;
         try {
           const res = await fetch('/api/membership');
@@ -48,26 +50,30 @@ function FicinoSocietyContent() {
           if (data.active) {
             setMembership(data);
             setActivating(false);
-            // Refresh the JWT so session.user.membership updates everywhere
             await updateSession();
             return;
           }
-        } catch {
-          // Retry on failure
-        }
+        } catch { /* retry */ }
         await new Promise(r => setTimeout(r, 1500));
       }
-      // Webhook hasn't fired yet — show success anyway, session will catch up on next sign-in
       setActivating(false);
-      setMembership({ active: true, plan: 'ficino', expiresAt: null, stripeCustomerId: null });
+      setMembership({ active: true, joined: true, plan: 'ficino', expiresAt: null });
     };
-
     poll();
     return () => { cancelled = true; };
   }, [success, session, updateSession]);
 
   const handleJoin = async () => {
-    setLoading(true);
+    setJoining(true);
+    try {
+      await fetch('/api/ficino/join', { method: 'POST' });
+      await updateSession();
+      window.location.href = '/ficino-society/discussions';
+    } catch { setJoining(false); }
+  };
+
+  const handleContribute = async () => {
+    setContributing(true);
     try {
       const body = returnUrl ? JSON.stringify({ returnUrl }) : undefined;
       const res = await fetch('/api/stripe/checkout', {
@@ -75,215 +81,200 @@ function FicinoSocietyContent() {
         ...(body && { headers: { 'Content-Type': 'application/json' }, body }),
       });
       const data = await res.json();
-      if (data.url) {
-        window.location.href = data.url;
-      } else {
-        alert(data.error || 'Something went wrong');
-        setLoading(false);
-      }
-    } catch {
-      alert('Something went wrong');
-      setLoading(false);
-    }
+      if (data.url) window.location.href = data.url;
+      else { alert(data.error || 'Something went wrong'); setContributing(false); }
+    } catch { alert('Something went wrong'); setContributing(false); }
   };
 
-  const isMember = membership?.active || success;
+  const isMember = membership?.joined || membership?.active || false;
+  const isContributor = membership?.active || false;
 
   return (
-    <div className="min-h-screen" style={{ background: 'var(--bg-cream)' }}>
-      <div className="max-w-2xl mx-auto px-4 py-16 md:py-24">
+    <div className="min-h-screen bg-[#fdfcf9]">
 
-        {/* Success state */}
-        {success && (
-          <div
-            className="rounded-xl p-8 mb-12 text-center"
-            style={{ background: 'var(--bg-warm)', border: `1px solid ${activating ? 'var(--border-light)' : 'var(--accent-sage)'}` }}
-          >
+      {/* TITLE */}
+      <section className="min-h-[85vh] flex flex-col justify-center items-center relative bg-[#0e0c0a]">
+        <div className="absolute inset-0 overflow-hidden">
+          <img src="https://3kwioilsplnmnkv8.public.blob.vercel-storage.com/archived/69520c46ab34727b1f044141/99.jpg" alt="" className="w-full h-full object-cover opacity-[0.07]" />
+        </div>
+        <div className="relative z-10 text-center px-6 max-w-2xl">
+          <h1 className="text-5xl md:text-6xl lg:text-7xl text-white/90 mb-6 font-serif leading-[1.1]" style={{ fontWeight: 300 }}>
+            The Ficino<br />Society
+          </h1>
+          <p className="text-white/30 text-base font-body max-w-sm mx-auto">
+            A community for the Western esoteric tradition
+          </p>
+          {!isMember && (
+            <div className="mt-12">
+              <a href="#join" className="px-8 py-3 rounded text-white/80 text-sm font-sans tracking-wide bg-[#9e4a3a] hover:brightness-110 transition-all">
+                Join free
+              </a>
+            </div>
+          )}
+        </div>
+        <header className="absolute top-0 left-0 right-0 z-50 flex items-center justify-between px-6 md:px-12 py-6">
+          <span className="text-white/20 text-xs tracking-[0.15em] uppercase font-sans">ficinosociety.org</span>
+          <div className="flex items-center gap-4">
+            {isMember && (
+              <Link href="/ficino-society/discussions" className="text-white/30 text-xs tracking-wider uppercase hover:text-white/50 transition-colors font-sans">
+                Forums
+              </Link>
+            )}
+            {status === 'authenticated' ? (
+              <Link href="/account" className="text-white/20 text-xs tracking-wider uppercase hover:text-white/50 transition-colors font-sans">Account</Link>
+            ) : (
+              <Link href="/auth/signin" className="text-white/20 text-xs tracking-wider uppercase hover:text-white/50 transition-colors font-sans">Sign In</Link>
+            )}
+          </div>
+        </header>
+      </section>
+
+      {/* SUCCESS */}
+      {success && (
+        <section className="bg-[#1a1612]">
+          <div className="max-w-xl mx-auto px-6 py-10 text-center">
             {activating ? (
-              <>
-                <h1 className="text-2xl font-serif font-medium mb-2" style={{ color: 'var(--text-primary)' }}>
-                  Activating your membership...
-                </h1>
-                <p style={{ color: 'var(--text-secondary)' }}>
-                  This usually takes just a moment.
-                </p>
-              </>
+              <p className="text-white/60 font-serif">Processing...</p>
             ) : (
               <>
-                <h1 className="text-2xl font-serif font-medium mb-3" style={{ color: 'var(--text-primary)' }}>
-                  Welcome to the Ficino Society
-                </h1>
-                <p className="leading-relaxed" style={{ color: 'var(--text-secondary)' }}>
-                  Your membership is active. You now have full access to high-resolution
-                  gallery downloads and the complete translated collection.
-                </p>
-                <div className="mt-6 flex flex-col sm:flex-row gap-3 justify-center">
-                  {returnUrl ? (
-                    <Link
-                      href={returnUrl}
-                      className="inline-block px-6 py-2.5 rounded-lg text-white font-medium transition-opacity hover:opacity-90"
-                      style={{ background: 'var(--accent-rust)' }}
-                    >
-                      Continue where you left off
-                    </Link>
-                  ) : (
-                    <Link
-                      href="/gallery"
-                      className="inline-block px-6 py-2.5 rounded-lg text-white font-medium transition-opacity hover:opacity-90"
-                      style={{ background: 'var(--accent-rust)' }}
-                    >
-                      Browse the gallery
-                    </Link>
-                  )}
-                  <Link
-                    href="/account"
-                    className="inline-block px-6 py-2.5 rounded-lg font-medium transition-opacity hover:opacity-90"
-                    style={{ background: 'white', color: 'var(--text-primary)', border: '1px solid var(--border-light)' }}
-                  >
-                    Your account
-                  </Link>
-                </div>
+                <p className="text-lg font-serif text-white/80 mb-4">Thank you for your contribution.</p>
+                <Link href="/ficino-society/discussions" className="text-[#c9a86c]/70 text-sm hover:text-[#c9a86c] transition-colors">
+                  Go to the forums &rarr;
+                </Link>
               </>
             )}
           </div>
-        )}
+        </section>
+      )}
 
-        {/* Already a member */}
-        {isMember && !success && (
-          <div
-            className="rounded-xl p-6 mb-12 text-center"
-            style={{ background: 'var(--bg-warm)', border: '1px solid var(--accent-sage)' }}
-          >
-            <h2 className="text-xl font-serif font-medium mb-2" style={{ color: 'var(--text-primary)' }}>
-              You are a member of the Ficino Society
-            </h2>
-            <p className="text-sm" style={{ color: 'var(--text-muted)' }}>
-              {membership?.expiresAt && `Renews ${new Date(membership.expiresAt).toLocaleDateString('en-US', { month: 'long', day: 'numeric', year: 'numeric' })}`}
-            </p>
+      {/* MEMBER BAR */}
+      {isMember && !success && (
+        <section className="bg-[#1a1612]">
+          <div className="max-w-xl mx-auto px-6 py-4 flex items-center justify-between">
+            <p className="text-white/30 text-sm font-sans">Member</p>
+            <Link href="/ficino-society/discussions" className="text-[#c9a86c]/50 text-xs tracking-wider uppercase hover:text-[#c9a86c]/80 transition-colors font-sans">
+              Forums
+            </Link>
           </div>
-        )}
+        </section>
+      )}
 
-        {/* Header — the pitch */}
-        <div className="mb-12">
-          <h1
-            className="text-4xl md:text-5xl font-serif font-medium mb-6 tracking-tight"
-            style={{ color: 'var(--text-primary)' }}
-          >
-            The Ficino Society
-          </h1>
-          <div className="space-y-4 text-[17px] leading-relaxed" style={{ color: 'var(--text-secondary)' }}>
+      {/* THE LETTER */}
+      <section id="letter" className="bg-[#fdfcf9]">
+        <div className="max-w-[560px] mx-auto px-6 py-20 md:py-28">
+          <div className="space-y-6 text-[17px] leading-[1.85] text-[#333] font-body">
             <p>
-              In 1462, Cosimo de&apos; Medici gave Marsilio Ficino a villa and a stack of Greek manuscripts,
-              and asked him to translate them. What followed was the recovery of an entire intellectual
-              tradition (Plato, the Hermetica, Plotinus) that had been lost to the Latin West for a thousand years.
-              It changed everything.
+              Source Library is digitizing and translating thousands of rare
+              texts in alchemy, Kabbalah, astrology, and natural philosophy &mdash;
+              many for the first time in any modern language. Everything is
+              free to read.
             </p>
             <p>
-              Source Library is doing something similar, at a different scale.
-              We are digitizing thousands of rare texts in alchemy, Kabbalah, astrology,
-              natural philosophy, and the Western esoteric tradition, and translating them into
-              English for the first time, many from books that exist in only a handful of libraries worldwide.
+              The Ficino Society is a community of people who care about
+              these traditions. We discuss the texts, read together, and
+              gather once a year in Amsterdam at the Embassy of the Free Mind.
             </p>
             <p>
-              The Ficino Society is for people who want this work to continue.
-              Your membership directly funds the digitization, translation, and preservation of these texts.
-              Everything in the library remains free to read. Your support makes that possible.
+              Joining is free.
             </p>
           </div>
         </div>
+      </section>
 
-        {/* What members get */}
-        <div
-          className="rounded-xl p-8 mb-8"
-          style={{ background: 'white', border: '1px solid var(--border-light)' }}
-        >
-          <h2 className="text-xl font-serif font-medium mb-6" style={{ color: 'var(--text-primary)' }}>
-            As a member
-          </h2>
-          <div className="space-y-5">
-            {[
-              { title: 'Unlimited downloads', desc: 'Every book as EPUB or plain text, every gallery image in full resolution. No per-item fees.' },
-              { title: 'MCP server and API', desc: 'The API and MCP server are free for everyone. Your membership keeps them running.' },
-              { title: 'Your name on the members page', desc: 'A public page listing the people who support this work. With an optional one-line bio, if you like.' },
-              { title: 'A quarterly letter', desc: 'What we translated, what we discovered, what\u2019s coming next. Short, personal, from the team.' },
-              { title: 'Dedicate a translation', desc: 'Choose a book and put your name on it \u2014 permanently. One dedication per year.' },
-              { title: 'Inner circle', desc: 'As we build forums and discussion spaces, members will be the founding community.' },
-            ].map((item) => (
-              <div key={item.title} className="flex gap-3">
-                <span className="mt-2 w-1.5 h-1.5 rounded-full flex-shrink-0" style={{ background: 'var(--accent-rust)' }} />
-                <div>
-                  <span className="font-medium" style={{ color: 'var(--text-primary)' }}>{item.title}</span>
-                  <p className="text-sm mt-0.5" style={{ color: 'var(--text-secondary)' }}>{item.desc}</p>
-                </div>
-              </div>
-            ))}
-          </div>
-        </div>
-
-        {/* The commitment */}
-        <div
-          className="rounded-xl p-8 mb-10"
-          style={{ background: 'white', border: '1px solid var(--border-light)' }}
-        >
-          <h2 className="text-xl font-serif font-medium mb-4" style={{ color: 'var(--text-primary)' }}>
-            The library stays free
-          </h2>
-          <p className="leading-relaxed mb-4" style={{ color: 'var(--text-secondary)' }}>
-            Every book, every translation, every page is free to read, search, and cite.
-            No account required, no paywalls, no restrictions on scholarship.
-            Membership sustains the work. It does not gate the knowledge.
-          </p>
-          <p className="text-sm leading-relaxed" style={{ color: 'var(--text-muted)' }}>
-            If the membership fee is a barrier for you, write to{' '}
-            <a href="mailto:hello@sourcelibrary.org" className="underline" style={{ color: 'var(--text-muted)' }}>
-              hello@sourcelibrary.org
-            </a>
-            {' '}and we will find an amount that works. No questions, no proof required.
-          </p>
-        </div>
-
-        {/* CTA */}
-        {!isMember && (
-          <div className="text-center py-4">
-            <div className="mb-6">
-              <span className="text-3xl font-serif font-medium" style={{ color: 'var(--text-primary)' }}>$100</span>
-              <span className="text-lg ml-1" style={{ color: 'var(--text-muted)' }}>/ year</span>
+      {/* IMAGES */}
+      <section className="bg-[#0e0c0a]">
+        <div className="max-w-5xl mx-auto">
+          <div className="grid grid-cols-2 md:grid-cols-3 gap-[1px]">
+            <div className="aspect-[3/4] overflow-hidden">
+              <img src="https://3kwioilsplnmnkv8.public.blob.vercel-storage.com/archived/69520c46ab34727b1f044141/71.jpg" alt="Atalanta Fugiens, 1617" className="w-full h-full object-cover opacity-80" />
             </div>
+            <div className="aspect-[3/4] overflow-hidden">
+              <img src="https://3kwioilsplnmnkv8.public.blob.vercel-storage.com/archived/69520c46ab34727b1f044141/43.jpg" alt="Atalanta Fugiens, 1617" className="w-full h-full object-cover opacity-80" />
+            </div>
+            <div className="aspect-[3/4] overflow-hidden hidden md:block">
+              <img src="https://3kwioilsplnmnkv8.public.blob.vercel-storage.com/archived/69520c46ab34727b1f044141/99.jpg" alt="Atalanta Fugiens, 1617" className="w-full h-full object-cover opacity-80" />
+            </div>
+          </div>
+        </div>
+      </section>
+
+      {/* JOIN */}
+      {!isMember && (
+        <section id="join" className="bg-[#1a1612]">
+          <div className="max-w-md mx-auto px-6 py-20 md:py-24 text-center">
+            <h2 className="text-2xl font-serif text-white/90 mb-3" style={{ fontWeight: 300 }}>
+              Join the Ficino Society
+            </h2>
+            <p className="text-white/35 text-sm font-body mb-8">
+              Free. Open to everyone.
+            </p>
             {status === 'authenticated' ? (
               <button
                 onClick={handleJoin}
-                disabled={loading}
-                className="inline-block px-10 py-3.5 rounded-lg text-white text-lg font-medium transition-opacity hover:opacity-90 disabled:opacity-50"
-                style={{ background: 'var(--accent-rust)' }}
+                disabled={joining}
+                className="px-10 py-3.5 rounded text-white text-[15px] font-sans tracking-wide transition-all hover:brightness-110 disabled:opacity-50 bg-[#9e4a3a]"
               >
-                {loading ? 'Redirecting to checkout...' : 'Join the Ficino Society'}
+                {joining ? 'Joining...' : 'Join'}
               </button>
             ) : (
               <Link
-                href={`/auth/signin?callbackUrl=${encodeURIComponent(`/ficino-society${returnUrl ? `?return=${encodeURIComponent(returnUrl)}` : ''}`)}`}
-                className="inline-block px-10 py-3.5 rounded-lg text-white text-lg font-medium transition-opacity hover:opacity-90"
-                style={{ background: 'var(--accent-rust)' }}
+                href={`/auth/signin?callbackUrl=${encodeURIComponent('/ficino-society')}`}
+                className="inline-block px-10 py-3.5 rounded text-white text-[15px] font-sans tracking-wide transition-all hover:brightness-110 bg-[#9e4a3a]"
               >
                 Sign in to join
               </Link>
             )}
-            <p className="mt-4 text-sm" style={{ color: 'var(--text-muted)' }}>
-              Billed annually. You can cancel at any time from your account.
-            </p>
           </div>
-        )}
+        </section>
+      )}
 
-        {/* Members link */}
-        <div className="text-center mt-12">
-          <Link
-            href="/ficino-society/members"
-            className="text-sm hover:opacity-70 transition-opacity"
-            style={{ color: 'var(--text-muted)' }}
-          >
-            View current members
-          </Link>
+      {/* SUPPORT */}
+      <section className="bg-[#fdfcf9]">
+        <div className="max-w-md mx-auto px-6 py-20 md:py-24 text-center">
+          <h2 className="text-xl font-serif text-[#1a1612] mb-4" style={{ fontWeight: 400 }}>
+            Support the work
+          </h2>
+          <p className="text-[15px] text-[#444] font-body leading-relaxed mb-8">
+            The recommended contribution is $100/year. This directly
+            funds the translation of texts that haven&apos;t been read
+            in centuries.
+          </p>
+          {status === 'authenticated' ? (
+            <button
+              onClick={handleContribute}
+              disabled={contributing || isContributor}
+              className="px-8 py-3 rounded text-sm font-sans tracking-wide transition-all hover:brightness-110 disabled:opacity-40 border border-[#1a1612]/20 text-[#1a1612] bg-transparent"
+            >
+              {isContributor ? 'Thank you' : contributing ? 'Redirecting...' : 'Contribute $100/year'}
+            </button>
+          ) : (
+            <Link
+              href={`/auth/signin?callbackUrl=${encodeURIComponent('/ficino-society')}`}
+              className="inline-block px-8 py-3 rounded text-sm font-sans tracking-wide border border-[#1a1612]/20 text-[#1a1612] hover:brightness-110 transition-all"
+            >
+              Sign in to contribute
+            </Link>
+          )}
+          <p className="mt-6 text-[12px] text-[#8a8480] font-body">
+            Any amount welcome &mdash;{' '}
+            <a href="mailto:hello@sourcelibrary.org" className="underline">hello@sourcelibrary.org</a>
+          </p>
         </div>
-      </div>
+      </section>
+
+      {/* FOOTER */}
+      <footer className="bg-[#0a0908] border-t border-white/[0.03]">
+        <div className="max-w-xl mx-auto px-6 py-10">
+          <div className="flex flex-col md:flex-row justify-between items-center gap-3 text-[11px] text-white/20 font-sans tracking-wider">
+            <span>&copy; {new Date().getFullYear()} The Ficino Society</span>
+            <div className="flex gap-6">
+              <Link href="/ficino-society/discussions" className="hover:text-white/40 transition-colors">Forums</Link>
+              <Link href="/ficino-society/members" className="hover:text-white/40 transition-colors">Members</Link>
+              <a href="https://sourcelibrary.org" className="hover:text-white/40 transition-colors">Source Library</a>
+            </div>
+          </div>
+        </div>
+      </footer>
     </div>
   );
 }

@@ -1,11 +1,11 @@
 'use client';
 
-import { useState, useEffect, useCallback } from 'react';
+import { useState, useEffect, useCallback, useRef } from 'react';
 import { toast } from 'sonner';
 import Link from 'next/link';
 import Image from 'next/image';
 import {
-  Search, Book, FileText, ExternalLink, Filter, X, Loader2,
+  Search, Book, ExternalLink, Filter, X, Loader2,
   Quote, User, MapPin, Lightbulb, BookOpen, Languages,
   ChevronLeft, ChevronRight, ArrowUpDown, ImageIcon, ChevronDown
 } from 'lucide-react';
@@ -100,6 +100,13 @@ export default function SearchPage() {
   // Suggestions
   const [suggestion, setSuggestion] = useState<string | null>(null);
 
+  // AI-assisted search — streaming narration + expanded terms
+  const [aiNarration, setAiNarration] = useState('');
+  const [aiTerms, setAiTerms] = useState<string[]>([]);
+  const [aiResults, setAiResults] = useState<SearchResult[]>([]);
+  const [aiStreaming, setAiStreaming] = useState(false);
+  const aiAbortRef = useRef<(() => void) | null>(null);
+
   // Load filter options + collections
   useEffect(() => {
     (async () => {
@@ -130,6 +137,56 @@ export default function SearchPage() {
     })();
   }, []);
 
+  // AI-assisted search — start streaming immediately when user searches
+  const startAiStream = useCallback((q: string) => {
+    // Abort any existing stream
+    aiAbortRef.current?.();
+    setAiNarration('');
+    setAiTerms([]);
+    setAiResults([]);
+
+    if (!q || q.length < 3) return;
+    setAiStreaming(true);
+
+    let narrationAccum = '';
+    const abort = searchApi.aiExpandStream(
+      q,
+      (text) => {
+        narrationAccum += text;
+        setAiNarration(narrationAccum);
+      },
+      async (terms) => {
+        const originalLower = q.toLowerCase();
+        const newTerms = terms.filter(t => t.toLowerCase() !== originalLower);
+        setAiTerms(newTerms);
+
+        if (newTerms.length === 0) return;
+        // Search expanded terms sequentially to avoid saturating the backend
+        const mainBookIds = new Set(bookResults.map(r => r.book_id));
+        const seen = new Set<string>();
+        const deduped: SearchResult[] = [];
+        for (const term of newTerms) {
+          try {
+            const res = await searchApi.search(term, { limit: 3 });
+            for (const r of (res.results || [])) {
+              if (mainBookIds.has(r.book_id)) continue;
+              const key = r.book_id + (r.type === 'page' ? `-p${r.page_number}` : '');
+              if (!seen.has(key)) {
+                seen.add(key);
+                deduped.push(r);
+              }
+            }
+            // Update results incrementally as each term resolves
+            setAiResults([...deduped].slice(0, 8));
+          } catch { /* skip failed term */ }
+        }
+      },
+      () => setAiStreaming(false),
+    );
+    aiAbortRef.current = abort;
+  // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [bookResults]);
+
   const performSearch = useCallback(async (q: string, mode: ViewMode = viewMode, pageOffset = 0) => {
     if (!q || q.length < 2) {
       setBookResults([]); setBookTotal(0);
@@ -153,17 +210,21 @@ export default function SearchPage() {
           first_translation: firstTranslation ? 'true' : undefined,
           library: library || undefined,
         };
-        const [bookData, indexData, imageData] = await Promise.all([
-          searchApi.search(q, { ...bookFilters, search_content: 'true' }),
-          searchApi.index(q, {}),
-          galleryApi.list({ query: q, limit: PREVIEW_IMAGES, minQuality: 0.85 }),
-        ]);
-        setBookResults(bookData.results || []);
-        setBookTotal(bookData.total || 0);
-        setIndexResults((indexData.results || []).slice(0, PREVIEW_INDEX));
-        setIndexTotal(indexData.total || 0);
-        setImageResults(imageData.items || []);
-        setImageTotal(imageData.total || 0);
+        // Fire all searches independently — results render as each resolves
+        const bookPromise = searchApi.search(q, { ...bookFilters, search_content: 'true' }).then(bookData => {
+          setBookResults(bookData.results || []);
+          setBookTotal(bookData.total || 0);
+          setLoading(false); // Show results as soon as books arrive
+        }).catch(() => {});
+        searchApi.index(q, {}).then(indexData => {
+          setIndexResults((indexData.results || []).slice(0, PREVIEW_INDEX));
+          setIndexTotal(indexData.total || 0);
+        }).catch(() => {});
+        galleryApi.list({ query: q, limit: PREVIEW_IMAGES, minQuality: 0.85 }).then(imageData => {
+          setImageResults(imageData.items || []);
+          setImageTotal(imageData.total || 0);
+        }).catch(() => {});
+        await bookPromise; // Wait for books before exiting (for loading state)
       } else if (mode === 'books') {
         const data = await searchApi.search(q, {
           language: language || undefined,
@@ -196,6 +257,7 @@ export default function SearchPage() {
     } finally {
       setLoading(false);
     }
+  // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [viewMode, indexType, language, category, dateFrom, dateTo, hasDoi, hasTranslation, firstTranslation, library, sortBy]);
 
   const updateUrl = useCallback((q: string, mode: ViewMode, pageOffset = 0) => {
@@ -226,10 +288,16 @@ export default function SearchPage() {
   }, 300);
 
   // Search on initial load (from URL params) and when filters/sort/mode change
+  const aiTriggeredForQuery = useRef('');
   useEffect(() => {
     if (query.length >= 2) {
       performSearch(query, viewMode, offset);
       updateUrl(query, viewMode, offset);
+      // Trigger AI stream once per distinct query (on page load / enter / filter change)
+      if (aiTriggeredForQuery.current !== query) {
+        aiTriggeredForQuery.current = query;
+        startAiStream(query);
+      }
     }
   // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [viewMode, indexType, language, category, dateFrom, dateTo, hasDoi, hasTranslation, firstTranslation, library, sortBy, offset, performSearch, updateUrl]);
@@ -279,12 +347,27 @@ export default function SearchPage() {
     return () => { cancelled = true; };
   }, [noResults, query]);
 
+
   const handleQueryChange = (value: string) => {
     setQuery(value);
     if (value.length >= 2) {
       setOffset(0);
     }
+    // Clear AI state while typing — AI only fires on Enter
+    aiAbortRef.current?.();
+    setAiNarration('');
+    setAiTerms([]);
+    setAiResults([]);
+    setAiStreaming(false);
+    aiTriggeredForQuery.current = '';
     debouncedSearch(value);
+  };
+
+  const handleSearchSubmit = () => {
+    if (query.length >= 3) {
+      aiTriggeredForQuery.current = query;
+      startAiStream(query);
+    }
   };
 
   const drillInto = (mode: ViewMode) => {
@@ -337,6 +420,7 @@ export default function SearchPage() {
                 type="text"
                 value={query}
                 onChange={(e) => handleQueryChange(e.target.value)}
+                onKeyDown={(e) => { if (e.key === 'Enter') handleSearchSubmit(); }}
                 placeholder="Search books, concepts, people, images..."
                 className="w-full pl-12 pr-4 py-3 border border-border-medium rounded-xl bg-cream/50 focus:bg-white focus:outline-none focus:ring-2 focus:ring-accent-rust/30 focus:border-accent-rust/40 text-lg text-primary font-body"
                 autoFocus
@@ -603,8 +687,34 @@ export default function SearchPage() {
           <div className="py-8"><BookLoader size="xs" /></div>
         )}
 
+        {/* AI narration — streams while search loads */}
+        {query.length >= 3 && (aiStreaming || aiNarration) && (
+          <div className="mb-6 px-4 py-3 bg-warm rounded-lg border border-border-light">
+            <p className="text-sm text-secondary italic leading-relaxed"
+               dangerouslySetInnerHTML={{
+                 __html: aiNarration
+                   .replace(/\*([^*]+)\*/g, '<em>$1</em>')
+                   + (aiStreaming ? '<span class="inline-block w-1.5 h-4 bg-accent-rust/40 animate-pulse ml-0.5 align-text-bottom"></span>' : '')
+               }}
+            />
+            {aiTerms.length > 0 && (
+              <div className="flex flex-wrap gap-1.5 mt-2">
+                {aiTerms.map(term => (
+                  <button
+                    key={term}
+                    onClick={() => { setQuery(term); setOffset(0); performSearch(term, viewMode, 0); updateUrl(term, viewMode, 0); }}
+                    className="px-2.5 py-1 bg-white/60 text-secondary text-xs rounded-full hover:bg-accent-rust/10 hover:text-accent-rust transition-colors"
+                  >
+                    {term}
+                  </button>
+                ))}
+              </div>
+            )}
+          </div>
+        )}
+
         {/* No results */}
-        {noResults && (
+        {noResults && !aiStreaming && aiResults.length === 0 && (
           <div className="text-center py-16 max-w-lg mx-auto">
             <Search className="w-16 h-16 text-border-medium mx-auto mb-4" />
             <h2 className="text-2xl font-serif font-medium text-primary mb-2">No results found</h2>
@@ -640,6 +750,40 @@ export default function SearchPage() {
           </div>
         )}
 
+        {/* AI-expanded results when no main results */}
+        {noResults && aiResults.length > 0 && (
+          <div className="space-y-3">
+            <p className="text-sm text-muted">Related results from AI-expanded search:</p>
+            {aiResults.map(result => {
+              const cover = result.thumbnail || (result as any).thumbnail_blob;
+              const text = result.snippet || result.summary;
+              return (
+                <Link
+                  key={result.id}
+                  href={result.type === 'page' ? `/book/${result.slug || result.book_id}/page-number/${result.page_number}` : `/book/${result.slug || result.book_id}`}
+                  className="flex items-start gap-3 p-4 bg-warm rounded-lg hover:bg-warm-hover transition-colors"
+                >
+                  {cover && (
+                    <Image src={cover} alt="" width={48} height={68} className="rounded shadow-sm flex-shrink-0 object-cover" />
+                  )}
+                  <div className="min-w-0">
+                    <h3 className="font-serif font-medium text-primary text-sm leading-tight">
+                      {result.display_title || result.title}
+                    </h3>
+                    <p className="text-xs text-muted mt-0.5">
+                      {result.author}{result.published ? `, ${result.published}` : ''}
+                      {result.type === 'page' && result.page_number && <span> &middot; p. {result.page_number}</span>}
+                    </p>
+                    {text && (
+                      <p className="text-xs text-secondary mt-1 line-clamp-2">{text}</p>
+                    )}
+                  </div>
+                </Link>
+              );
+            })}
+          </div>
+        )}
+
         {/* ==================== UNIFIED VIEW ==================== */}
         {viewMode === 'unified' && !loading && query.length >= 2 && totalResults > 0 && (
           <div className="space-y-10">
@@ -670,10 +814,8 @@ export default function SearchPage() {
             {(bookTotal > 0 || indexTotal > 0) && (
               <section>
                 <div className="flex items-center justify-between mb-4">
-                  <h2 className="flex items-center gap-2 text-xl font-semibold text-primary">
-                    <Search className="w-6 h-6 text-accent-rust" />
-                    Results
-                    <span className="text-base font-normal text-muted">({bookTotal + indexTotal})</span>
+                  <h2 className="text-sm font-medium text-muted uppercase tracking-wide">
+                    {bookTotal + indexTotal} results
                   </h2>
                 </div>
 
@@ -765,6 +907,41 @@ export default function SearchPage() {
             <Pagination total={imageTotal} offset={offset} setOffset={setOffset} loading={loading} />
           </>
         )}
+        {/* AI-expanded related results — shows for all searches with results */}
+        {!noResults && !loading && query.length >= 3 && !aiStreaming && aiResults.length > 0 && (
+          <section className="mt-12 pt-8 border-t border-border-light">
+            <h2 className="text-sm font-medium text-muted uppercase tracking-wide mb-4">Related in the Library</h2>
+            <div className="space-y-3">
+              {aiResults.map(result => {
+                const cover = result.thumbnail || (result as any).thumbnail_blob;
+                const text = result.snippet || result.summary;
+                return (
+                  <Link
+                    key={result.id}
+                    href={result.type === 'page' ? `/book/${result.slug || result.book_id}/page-number/${result.page_number}` : `/book/${result.slug || result.book_id}`}
+                    className="flex items-start gap-3 p-3 bg-warm rounded-lg hover:bg-warm-hover transition-colors"
+                  >
+                    {cover && (
+                      <Image src={cover} alt="" width={48} height={68} className="rounded shadow-sm flex-shrink-0 object-cover" />
+                    )}
+                    <div className="min-w-0 flex-1">
+                      <h3 className="font-serif font-medium text-primary text-sm leading-tight line-clamp-1">
+                        {result.display_title || result.title}
+                      </h3>
+                      <p className="text-xs text-muted mt-0.5">
+                        {result.author}{result.published ? `, ${result.published}` : ''}
+                        {result.type === 'page' && result.page_number && <span> &middot; p. {result.page_number}</span>}
+                      </p>
+                      {text && (
+                        <p className="text-xs text-secondary mt-1 line-clamp-2">{text}</p>
+                      )}
+                    </div>
+                  </Link>
+                );
+              })}
+            </div>
+          </section>
+        )}
       </main>
 
     </div>
@@ -774,24 +951,37 @@ export default function SearchPage() {
 // ==================== RESULT CARDS ====================
 
 function BookResultCard({ result, query }: { result: SearchResult; query: string }) {
+  const cover = result.thumbnail || (result as any).thumbnail_blob;
+  const text = result.snippet || result.summary;
+
   return (
     <Link
       href={result.type === 'page' ? `/book/${result.slug || result.book_id}/page-number/${result.page_number}` : `/book/${result.slug || result.book_id}`}
-      className="block bg-white rounded-xl border border-border-light p-5 hover:border-accent-rust/30 hover:shadow-md transition-all"
+      className="block bg-white rounded-xl border border-border-light p-4 hover:border-accent-rust/30 hover:shadow-md transition-all"
     >
       <div className="flex items-start gap-4">
-        <div className={`p-2.5 rounded-lg flex-shrink-0 ${result.type === 'book' ? 'bg-accent-rust/10' : 'bg-accent-sage/12'}`}>
-          {result.type === 'book' ? <Book className="w-5 h-5 text-accent-rust" /> : <FileText className="w-5 h-5 text-accent-sage-dark" />}
-        </div>
+        {cover ? (
+          <Image
+            src={cover}
+            alt=""
+            width={60}
+            height={84}
+            className="rounded shadow-sm flex-shrink-0 object-cover"
+          />
+        ) : (
+          <div className="w-[60px] h-[84px] rounded bg-warm flex items-center justify-center flex-shrink-0">
+            <Book className="w-6 h-6 text-border-medium" />
+          </div>
+        )}
         <div className="flex-1 min-w-0">
           <div className="flex items-start justify-between gap-3">
             <div className="min-w-0">
-              <h3 className="text-xl font-medium text-primary line-clamp-2 font-serif">
+              <h3 className="text-lg font-medium text-primary line-clamp-2 font-serif leading-snug">
                 <HighlightedText text={result.display_title || result.title} query={query} />
-                {result.type === 'page' && <span className="text-muted font-normal text-base ml-2">— Page {result.page_number}</span>}
+                {result.type === 'page' && <span className="text-muted font-normal text-sm ml-2">p. {result.page_number}</span>}
               </h3>
-              <p className="text-base text-secondary mt-1">
-                <HighlightedText text={result.author} query={query} /> · {result.published} · {result.language}
+              <p className="text-sm text-secondary mt-0.5">
+                <HighlightedText text={result.author} query={query} /> · {result.published}
               </p>
             </div>
             {result.has_doi && result.doi && (
@@ -801,13 +991,13 @@ function BookResultCard({ result, query }: { result: SearchResult; query: string
               </a>
             )}
           </div>
-          {result.snippet && (
-            <p className="mt-2 text-base text-secondary line-clamp-2 font-body leading-relaxed">
-              <HighlightedText text={result.snippet} query={query} />
+          {text && (
+            <p className="mt-1.5 text-sm text-secondary line-clamp-2 font-body leading-relaxed">
+              <HighlightedText text={text} query={query} />
             </p>
           )}
           {result.type === 'book' && result.page_count && (
-            <p className="mt-2 text-sm text-muted">
+            <p className="mt-1.5 text-xs text-muted">
               {result.page_count} pages{result.translated_count ? ` · ${result.translated_count} translated` : ''}
             </p>
           )}
@@ -818,7 +1008,6 @@ function BookResultCard({ result, query }: { result: SearchResult; query: string
 }
 
 function IndexResultCard({ result, query }: { result: IndexSearchResult; query: string }) {
-  const TypeIcon = INDEX_TYPES.find(t => t.value === result.type)?.icon || Search;
   const typeLabel = INDEX_TYPES.find(t => t.value === result.type)?.label || result.type;
   const isQuote = result.type === 'quote';
 
@@ -830,37 +1019,30 @@ function IndexResultCard({ result, query }: { result: IndexSearchResult; query: 
         ? `/book/${result.book_slug || result.book_id}/guide?page=${result.pages[0]}`
         : `/book/${result.book_slug || result.book_id}`
       }
-      className="block bg-white rounded-xl border border-border-light p-5 hover:border-accent-violet/30 hover:shadow-md transition-all"
+      className="block bg-white rounded-xl border border-border-light p-4 hover:border-accent-violet/30 hover:shadow-md transition-all"
     >
-      <div className="flex items-start gap-3">
-        <div className={`p-2.5 rounded-lg flex-shrink-0 ${(SEARCH_TYPE_STYLES[result.type as SearchIndexType] ?? SEARCH_TYPE_STYLES.keyword).badge.split(' ')[0]}`}>
-          <TypeIcon className={`w-5 h-5 ${(SEARCH_TYPE_STYLES[result.type as SearchIndexType] ?? SEARCH_TYPE_STYLES.keyword).iconColor}`} />
-        </div>
-        <div className="flex-1 min-w-0">
-          <span className={`text-sm px-2.5 py-0.5 rounded-full ${(SEARCH_TYPE_STYLES[result.type as SearchIndexType] ?? SEARCH_TYPE_STYLES.keyword).badge}`}>{typeLabel}</span>
+      <div className="min-w-0">
+        <span className={`text-xs px-2 py-0.5 rounded-full ${(SEARCH_TYPE_STYLES[result.type as SearchIndexType] ?? SEARCH_TYPE_STYLES.keyword).badge}`}>{typeLabel}</span>
 
-          {isQuote ? (
-            <>
-              <blockquote className="font-serif text-xl text-primary italic border-l-2 border-accent-gold/40 pl-4 my-2">
-                &ldquo;<HighlightedText text={result.quote_text || ''} query={query} />&rdquo;
-              </blockquote>
-              {result.quote_significance && (
-                <p className="text-base text-secondary mt-1"><HighlightedText text={result.quote_significance} query={query} /></p>
-              )}
-            </>
-          ) : (
-            <h3 className="text-xl font-medium text-primary mt-1 font-serif"><HighlightedText text={result.term} query={query} /></h3>
-          )}
+        {isQuote ? (
+          <>
+            <blockquote className="font-serif text-lg text-primary italic border-l-2 border-accent-gold/40 pl-3 my-2">
+              &ldquo;<HighlightedText text={result.quote_text || ''} query={query} />&rdquo;
+            </blockquote>
+            {result.quote_significance && (
+              <p className="text-sm text-secondary mt-1"><HighlightedText text={result.quote_significance} query={query} /></p>
+            )}
+          </>
+        ) : (
+          <h3 className="text-lg font-medium text-primary mt-1 font-serif"><HighlightedText text={result.term} query={query} /></h3>
+        )}
 
-          <p className="text-base text-muted mt-2">
-            From: <span className="text-secondary">{result.book_title}</span> · {result.book_author}
-          </p>
+        <p className="text-sm text-muted mt-1.5">
+          {result.book_title} · {result.book_author}
           {result.pages && result.pages.length > 0 && (
-            <p className="text-sm text-muted mt-1">
-              Pages: {result.pages.slice(0, 5).join(', ')}{result.pages.length > 5 && ` +${result.pages.length - 5} more`}
-            </p>
+            <span className="ml-1">· p. {result.pages.slice(0, 3).join(', ')}{result.pages.length > 3 && ` +${result.pages.length - 3}`}</span>
           )}
-        </div>
+        </p>
       </div>
     </Link>
   );

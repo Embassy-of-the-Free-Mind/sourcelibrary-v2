@@ -5,7 +5,6 @@ import Link from 'next/link';
 import Image from 'next/image';
 import { BookOpen, ChevronLeft, ChevronRight, ArrowRight } from 'lucide-react';
 import { bookUrl } from '@/lib/slugify';
-import { bookTitle } from '@/lib/collections-utils';
 
 interface FeaturedBook {
   id: string;
@@ -27,7 +26,7 @@ interface GalleryImage {
   book_slug?: string;
 }
 
-interface FeaturedCollectionItem {
+export interface FourPmFeaturedCollectionItem {
   collection: {
     slug: string;
     name: string;
@@ -40,11 +39,12 @@ interface FeaturedCollectionItem {
   galleryImages?: GalleryImage[];
 }
 
-interface FeaturedCollectionCarouselProps {
-  items: FeaturedCollectionItem[];
+function bookTitle(book: { display_title?: string; title: string }): string {
+  const dt = book.display_title;
+  return (dt && dt !== 'None') ? dt : book.title;
 }
 
-export default function FeaturedCollectionCarousel({ items }: FeaturedCollectionCarouselProps) {
+export default function FeaturedCollection4pm({ items }: { items: FourPmFeaturedCollectionItem[] }) {
   const [index, setIndex] = useState(0);
   const [fading, setFading] = useState(false);
   const fadingRef = useRef(false);
@@ -53,10 +53,8 @@ export default function FeaturedCollectionCarousel({ items }: FeaturedCollection
     if (fadingRef.current) return;
     fadingRef.current = true;
     setFading(true);
-    // Wait for full fade-out before swapping content
     setTimeout(() => {
       setIndex(nextIndex);
-      // Small delay for new images to start loading, then fade back in
       setTimeout(() => {
         setFading(false);
         fadingRef.current = false;
@@ -72,7 +70,6 @@ export default function FeaturedCollectionCarousel({ items }: FeaturedCollection
     goTo(index < items.length - 1 ? index + 1 : 0);
   }, [goTo, index, items.length]);
 
-  // Keyboard left/right arrow support
   useEffect(() => {
     const handleKeyDown = (e: KeyboardEvent) => {
       if (e.key === 'ArrowLeft') prev();
@@ -87,7 +84,6 @@ export default function FeaturedCollectionCarousel({ items }: FeaturedCollection
   const current = items[index];
   const { collection, books, galleryImages = [] } = current;
 
-  // Hero: prefer a gallery image (illustration/engraving), fall back to book thumbnail
   const heroGallery = galleryImages[0] || null;
   const heroImageUrl = heroGallery?.image_url || collection.hero_image;
 
@@ -199,13 +195,7 @@ export default function FeaturedCollectionCarousel({ items }: FeaturedCollection
                   >
                     <div className="w-7 h-9 flex-shrink-0 relative rounded overflow-hidden bg-white/5 border border-white/10">
                       {thumb ? (
-                        <Image
-                          src={thumb}
-                          alt=""
-                          fill
-                          className="object-cover"
-                          sizes="28px"
-                        />
+                        <Image src={thumb} alt="" fill className="object-cover" sizes="28px" />
                       ) : (
                         <div className="absolute inset-0 flex items-center justify-center">
                           <BookOpen className="w-3.5 h-3.5 text-white/20" />
@@ -235,71 +225,6 @@ export default function FeaturedCollectionCarousel({ items }: FeaturedCollection
               )}
             </div>
           ) : null}
-        </div>
-
-        {/* Mobile layout */}
-        <div
-          className="lg:hidden mt-6 transition-opacity duration-400 ease-in-out"
-          style={{ opacity: fading ? 0 : 1 }}
-        >
-          <div className="flex gap-4">
-            {/* Mobile hero — gallery image */}
-            {heroImageUrl && (
-              <Link
-                href={heroGallery
-                  ? (heroGallery.book_slug ? `/book/${heroGallery.book_slug}` : `/gallery/image/${heroGallery.id}`)
-                  : `/collections/${collection.slug}`}
-                className="group flex-shrink-0"
-              >
-                <div className="w-[150px] h-[225px] relative rounded-lg overflow-hidden bg-white/5 border border-white/10 shadow-lg">
-                  <Image
-                    src={heroImageUrl}
-                    alt={heroGallery?.museum_description || collection.name}
-                    fill
-                    quality={85}
-                    className="object-contain"
-                    sizes="150px"
-                  />
-                </div>
-                {heroGallery?.book_title && (
-                  <p className="text-xs text-white/50 mt-1.5 line-clamp-2 w-[150px] leading-tight">
-                    {heroGallery.book_title}
-                  </p>
-                )}
-              </Link>
-            )}
-            {/* Mobile book list */}
-            {books.length > 0 && (
-              <div className="flex-1 min-w-0 flex flex-col gap-1">
-                {books.slice(0, 5).map((book) => (
-                  <Link
-                    key={book.id}
-                    href={bookUrl(book)}
-                    className="group flex items-center gap-2.5 py-1"
-                  >
-                    <div className="w-6 h-8 flex-shrink-0 relative rounded overflow-hidden bg-white/5 border border-white/10">
-                      {(book.thumbnail_blob || book.thumbnail) ? (
-                        <Image
-                          src={(book.thumbnail_blob || book.thumbnail)!}
-                          alt=""
-                          fill
-                          className="object-cover"
-                          sizes="24px"
-                        />
-                      ) : (
-                        <div className="absolute inset-0 flex items-center justify-center">
-                          <BookOpen className="w-3 h-3 text-white/20" />
-                        </div>
-                      )}
-                    </div>
-                    <p className="text-sm text-white/60 group-hover:text-white/80 transition-colors line-clamp-1 leading-tight">
-                      {bookTitle(book)}
-                    </p>
-                  </Link>
-                ))}
-              </div>
-            )}
-          </div>
         </div>
 
         {/* Dots */}

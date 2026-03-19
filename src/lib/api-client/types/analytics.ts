@@ -276,4 +276,56 @@ export interface TrafficData {
   error?: string;
 }
 
+// --- Canon ---
+
+export interface CanonData {
+  canon: {
+    total_books: number;
+    total_pages: number;
+    readable_books: number;
+    readable_percent: number;
+    first_translations: number;
+    first_translations_complete: number;
+    first_translation_pages: number;
+  };
+  coverage: {
+    ocr_pages: number;
+    ocr_percent: number;
+    translated_pages: number;
+    translated_percent: number;
+  };
+  languages: Array<{
+    language: string;
+    books: number;
+    pages: number;
+    ocr: number;
+    translated: number;
+    readable: number;
+    coverage: number;
+  }>;
+  traditions: Array<{
+    collection: string;
+    books: number;
+    translated_pages: number;
+    readable: number;
+  }>;
+  recent_completions: Array<{
+    id: string;
+    title: string;
+    language: string;
+    pages: number;
+    translated: number;
+    completed: string;
+  }>;
+  economics: {
+    cost_per_page_30d: number;
+    total_cost_30d: number;
+    pages_translated_30d: number;
+  };
+  pipeline: {
+    processing: number;
+    queued: number;
+  };
+}
+
 // Note: JobLog is defined in ./jobs.ts to avoid duplication

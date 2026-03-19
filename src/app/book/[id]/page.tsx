@@ -1026,36 +1026,6 @@ async function BookInfo({ id }: { id: string }) {
               </div>
             )}
 
-            {/* Collections This Book Belongs To */}
-            {bookCollections.length > 0 && (
-              <div className="card p-6 mt-6">
-                <h2 className="text-lg font-semibold mb-4" style={{ color: 'var(--text-primary)' }}>Collections</h2>
-                <div className="flex flex-wrap gap-3">
-                  {bookCollections.map((col) => {
-                    const colorMap: Record<string, string> = {
-                      rust: 'bg-accent-rust/8 text-accent-rust border-accent-rust/20 hover:bg-accent-rust/15',
-                      sage: 'bg-accent-sage/8 text-accent-sage border-accent-sage/20 hover:bg-accent-sage/15',
-                      violet: 'bg-accent-violet/8 text-accent-violet border-accent-violet/20 hover:bg-accent-violet/15',
-                      gold: 'bg-accent-gold/8 text-accent-gold-dark border-accent-gold/20 hover:bg-accent-gold/15',
-                    };
-                    const colorClasses = colorMap[col.color || 'rust'] || colorMap.rust;
-                    return (
-                      <Link
-                        key={col.slug}
-                        href={`/collections/${col.slug}`}
-                        className={`inline-flex items-center gap-2 px-4 py-2.5 rounded-xl border transition-colors ${colorClasses}`}
-                      >
-                        <span className="font-medium text-sm">{col.name}</span>
-                        {col.book_count && (
-                          <span className="text-xs opacity-60">{col.book_count} books</span>
-                        )}
-                      </Link>
-                    );
-                  })}
-                </div>
-              </div>
-            )}
-
             {/* Related Books — deferred into its own Suspense to avoid blocking page render */}
             <Suspense fallback={null}>
               <RelatedBooksSection
