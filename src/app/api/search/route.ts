@@ -449,12 +449,21 @@ export async function GET(request: NextRequest) {
         has_translation: hasTranslation,
         book_id: bookId,
       },
+    }, {
+      headers: {
+        'Cache-Control': 'public, s-maxage=60, stale-while-revalidate=300',
+      },
     });
   } catch (error) {
     console.error('Search error:', error);
     return NextResponse.json({
       error: 'Search failed',
       message: error instanceof Error ? error.message : String(error),
-    }, { status: 500 });
+    }, {
+      status: 500,
+      headers: {
+        'Cache-Control': 'public, s-maxage=10, stale-while-revalidate=30',
+      },
+    });
   }
 }
