@@ -89,6 +89,8 @@ async function setPipelineStatus(
 
   // When images complete, gallery descriptions + quality scores are available — pick the best cover
   if (status === 'images_complete' && prevStatus !== 'images_complete') {
+    // Re-run page_type check first (detected_images may now be populated)
+    upgradeThumbnailFromPageType(db, bookId).catch(() => {});
     upgradeThumbnailFromGallery(db, bookId).catch(() => {}); // fire-and-forget
   }
 
@@ -230,7 +232,31 @@ async function upgradeThumbnailFromPageType(
     bestPage = illustrations.find(p => !isExLibrisPage(p.ocr?.data)) || null;
   }
 
-  // Priority 4: best gallery image by quality score (fallback for books without frontispiece/title-page)
+  // Priority 4: page with highest-quality detected image (from OCR image extraction)
+  // This catches books where page_type is null but detected_images has quality scores
+  if (!bestPage) {
+    const pagesWithImages = await db.collection('pages').find(
+      { book_id: bookId, 'detected_images.0': { $exists: true }, page_number: { $lte: 30 } },
+      { projection: { ...proj, detected_images: 1 } }
+    ).toArray();
+
+    let bestScore = 0;
+    for (const page of pagesWithImages) {
+      if (isExLibrisPage(page.ocr?.data)) continue;
+      for (const img of (page.detected_images || [])) {
+        if (isExLibrisGalleryImage(img)) continue;
+        const score = computeCoverScore({ ...img, page_number: page.page_number });
+        if (score > bestScore) {
+          bestScore = score;
+          bestPage = page;
+        }
+      }
+    }
+    // Require a minimum quality to avoid picking bad images
+    if (bestScore < 0.4) bestPage = null;
+  }
+
+  // Priority 5: best gallery_images collection entry (legacy fallback)
   if (!bestPage) {
     const galleryImage = await db.collection('gallery_images').findOne(
       { book_id: bookId, gallery_quality: { $gte: 0.7 } },
@@ -290,9 +316,19 @@ async function upgradeThumbnailFromGallery(
 
   const currentIsGood = currentPage?.page_type === 'frontispiece' || currentPage?.page_type === 'title-page';
 
+  // Detect if current cover is actively bad (blank, digitizer insert, etc.)
+  const ocrStart = (currentPage?.ocr?.data as string || '').slice(0, 300).trim();
+  const currentIsBad = !currentPage // thumbnail doesn't match any page
+    || currentPage?.page_type === 'blank'
+    || ocrStart.length < 20 // blank or near-blank
+    || /internet archive|google book|digitized by|library stamp|barcode/i.test(ocrStart);
+
+  // Lower quality threshold when current cover is bad — anything decent is an improvement
+  const galleryQualityThreshold = currentIsBad ? 0.5 : 0.8;
+
   // Candidates: gallery images + title pages (title pages may not have gallery entries)
   const galleryImages = await db.collection('gallery_images').find(
-    { book_id: bookId, gallery_quality: { $gte: 0.8 } },
+    { book_id: bookId, gallery_quality: { $gte: galleryQualityThreshold } },
     {
       projection: {
         page_id: 1, page_number: 1, gallery_quality: 1, type: 1,
@@ -341,7 +377,8 @@ async function upgradeThumbnailFromGallery(
   const best = candidates[0];
 
   // If current cover is already a frontispiece/title-page, require a high score to replace
-  const threshold = currentIsGood ? 0.75 : 0.5;
+  // If current cover is bad, accept anything reasonable
+  const threshold = currentIsGood ? 0.75 : currentIsBad ? 0.3 : 0.5;
   if (best.coverScore < threshold) return;
 
   // Don't replace a good early-page cover with a deep-page gallery pick
