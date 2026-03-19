@@ -37,18 +37,28 @@ Users ──> Vercel (Next.js 16) ──> MongoDB Atlas (bookstore)
 | **Zenodo** | DOI publishing | Scholarly editions |
 | **Twitter/X** | Social automation | 3h posting cron |
 
-## Data Pipeline Flow
+## Data Pipeline Flow (One Pipeline, Three Phases)
+
+The system has **one unified pipeline** with three parallel processing phases sharing a single `jobs` collection (discriminated by `type` field):
 
 ```
 Import (IA/Gallica/IIIF)
   └─> books + pages collections created
        └─> Hetzner cron (post-import-pipeline, every 10min)
-            ├─> SQS pageOcr queue ──> Lambda ocr-processor ──> Gemini ──> writeResults queue
-            ├─> SQS pageTranslation queue ──> Lambda translation-processor ──> Gemini ──> writeResults queue
-            └─> SQS pageImageExtraction queue ──> Lambda image-extraction-processor ──> Gemini ──> writeResults queue
+            ├─ Phase 1: OCR (parallel, batch-friendly)
+            │  SQS pageOcr ──> Lambda ocr-processor (×10) ──> Gemini ──> writeResults
+            │
+            ├─ Phase 2: Translation (FIFO sequential — needs cross-page context)
+            │  SQS pageTranslation ──> Lambda translation-processor (×15) ──> Gemini ──> writeResults
+            │  ⚠ Realtime API only. NEVER use Batch API for translation.
+            │
+            └─ Phase 3: Image Extraction (parallel)
+               SQS pageImageExtraction ──> Lambda image-extraction-processor (×10) ──> Gemini ──> writeResults
                                                                                           │
-                                                                          write-processor Lambda ──> MongoDB pages
+                                                                          write-processor Lambda (×50) ──> MongoDB pages
 ```
+
+Phases run concurrently with independent concurrency limits. Backpressure: `system_config.paused_phases` array.
 
 ## MongoDB Collections (57)
 
@@ -124,10 +134,13 @@ src/
 │   ├── collections/        # Collection browse & detail
 │   ├── gallery/            # Image gallery
 │   ├── admin/              # Admin dashboard pages
-│   ├── blog/               # 27 blog posts (static)
+│   ├── blog/               # 29 blog posts (hardcoded JSX, no CMS)
+│   ├── press/              # 6 press pages (hardcoded JSX)
 │   ├── research/           # Research tools (atlas, diffusion, timeline)
 │   ├── explore/            # Map & timeline visualizations
-│   └── ...                 # ~147 pages total
+│   ├── ficino-society/     # Membership, discussions
+│   ├── about/, support/, terms/, privacy/  # Static info pages
+│   └── ...                 # ~160 pages total
 │
 ├── components/             # 148 React components
 │   ├── book/               # Book detail, reader, processing
@@ -177,6 +190,26 @@ scripts/                    # 233 operational scripts
 ├── workers/                # sync-worker.mjs (Hetzner cron replacement)
 └── lib/                    # Shared script utilities
 ```
+
+## Pages Breakdown (~160 total)
+
+| Category | Count | Content Source | Examples |
+|----------|-------|---------------|----------|
+| Core library (dynamic) | ~40 | MongoDB + APIs | Book reader, search, collections, author pages |
+| Admin/ops dashboards | ~15 | MongoDB + APIs | Pipeline control, jobs, analytics, email, KDP |
+| Research/experiments | ~20 | MongoDB + APIs | OCR quality, concept diffusion, image atlas |
+| Blog posts | 29 | Hardcoded JSX (no CMS) | origin-story, progress-studies, hidden-engineers |
+| Press releases | 6 | Hardcoded JSX | alchemy, hermetic-tradition, kabbalah |
+| Auth/legal/info | ~10 | Static JSX | signin, terms, privacy, about, support |
+| Gallery | ~6 | MongoDB + APIs | Browse, collections, image viewer, curation |
+| Community | ~5 | MongoDB + APIs | Ficino Society, discussions, contribute |
+| Questionable/stubs | ~15 | Mixed | See below |
+
+### Pages to audit
+- `/testloader` — debug page, should not be public
+- `/scan/auto`, `/scan/opencv` — experimental scanning tools
+- `/fulldata` — bulk data export, should be admin-only
+- `/_archived/highlights` — deprecated, still accessible
 
 ## Key Architectural Patterns
 
