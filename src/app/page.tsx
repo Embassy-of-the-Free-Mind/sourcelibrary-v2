@@ -3,7 +3,7 @@ import { Book } from '@/lib/types';
 import { type CollectionForGrid } from '@/components/book/BookLibrary';
 import HeroSection from '@/components/layout/HeroSection';
 import HomePageSchema from '@/components/seo/HomePageSchema';
-import FeaturedCollectionCarousel from '@/components/prototype/FeaturedCollectionHero';
+import EditorialSpread from '@/components/prototype/EditorialSpread';
 import FromTheCollection from '@/components/prototype/FromTheCollection';
 import BookCard from '@/components/book/BookCard';
 import SignUpCTA from '@/components/auth/SignUpCTA';
@@ -60,10 +60,10 @@ const BOOK_PROJECTION = {
 async function getFeaturedCollections() {
   const db = await getDb();
 
-  // Pick 5 random collections that have enough books
+  // Pick 1 random collection with enough books for the editorial spread
   const collections = await db.collection('collections').aggregate([
-    { $match: { book_count: { $gte: 5 }, parent: { $exists: false }, type: { $ne: 'curated' }, hidden: { $ne: true } } },
-    { $sample: { size: 5 } },
+    { $match: { book_count: { $gte: 10 }, parent: { $exists: false }, type: { $ne: 'curated' }, hidden: { $ne: true } } },
+    { $sample: { size: 1 } },
   ]).toArray();
 
   if (collections.length === 0) return [];
@@ -134,15 +134,23 @@ async function getFeaturedCollections() {
   // Curated by scripts/maintenance/curate-collection-gallery.mjs — no heavy joins needed.
 
   const results = collections.map((collection) => {
-    const images = collection.featured_images || [];
-    const hero = images.find(
-      (img: unknown) => typeof img === 'string' || (img && typeof img === 'object' && ((img as Record<string, unknown>).extracted_url || (img as Record<string, unknown>).image_url || (img as Record<string, unknown>).thumbnail_url))
-    );
-    const heroUrl = typeof hero === 'string' ? hero : ((hero as Record<string, unknown>)?.extracted_url || (hero as Record<string, unknown>)?.image_url || (hero as Record<string, unknown>)?.thumbnail_url || null) as string | null;
+    // Prefer curated_gallery images (gallery illustrations) for full-bleed hero
+    const gallery = collection.curated_gallery || [];
+    const galleryHero = gallery.find((img: Record<string, unknown>) => img && img.image_url);
+    let heroUrl = (galleryHero?.image_url || null) as string | null;
+
+    // Fall back to featured_images
+    if (!heroUrl) {
+      const images = collection.featured_images || [];
+      const hero = images.find(
+        (img: unknown) => typeof img === 'string' || (img && typeof img === 'object' && ((img as Record<string, unknown>).extracted_url || (img as Record<string, unknown>).image_url || (img as Record<string, unknown>).thumbnail_url))
+      );
+      heroUrl = typeof hero === 'string' ? hero : ((hero as Record<string, unknown>)?.extracted_url || (hero as Record<string, unknown>)?.image_url || (hero as Record<string, unknown>)?.thumbnail_url || null) as string | null;
+    }
 
     const books = (booksBySlug.get(collection.slug as string) || []).map(({ collections: _c, ...rest }) => rest);
 
-    // Fall back to hardcoded hero image if DB doesn't have featured_images
+    // Fall back to hardcoded hero image if DB doesn't have images
     const fallbackHero = FALLBACK_COLLECTIONS.find(f => f.slug === collection.slug)?.hero_image;
     return {
       collection: {
@@ -154,7 +162,6 @@ async function getFeaturedCollections() {
         hero_image: (heroUrl || fallbackHero || null) as string | null,
       },
       books: JSON.parse(JSON.stringify(books)),
-      galleryImages: JSON.parse(JSON.stringify(collection.curated_gallery || [])),
     };
   });
 
@@ -535,9 +542,12 @@ export default async function HomePage() {
           </div>
         </section>
 
-        {/* Featured Collection Carousel — flip through collections */}
+        {/* Featured Collection — editorial spread */}
         {featuredItems.length > 0 && (
-          <FeaturedCollectionCarousel items={featuredItems} />
+          <EditorialSpread
+            collection={featuredItems[0].collection}
+            books={featuredItems[0].books}
+          />
         )}
 
         {/* From the Collection — image-heavy gallery showcase */}
