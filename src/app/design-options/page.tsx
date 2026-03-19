@@ -6,6 +6,8 @@ import { bookUrl } from '@/lib/slugify';
 import FeaturedCollectionCarousel from '@/components/prototype/FeaturedCollectionHero';
 import LayoutFeaturedCollections from '@/components/layout/FeaturedCollections';
 import CollectionsShowcase, { type CollectionSummary } from '@/components/home/CollectionsShowcase';
+import FeaturedCollectionNoon from './FeaturedCollectionNoon';
+import FeaturedCollection4pm from './FeaturedCollection4pm';
 
 export const revalidate = 300;
 export const maxDuration = 60;
@@ -219,6 +221,7 @@ async function getMultipleFeaturedCollections(): Promise<FeaturedCollectionItem[
         hero_image: heroUrl,
       },
       books: JSON.parse(JSON.stringify(colBooks)),
+      galleryImages: JSON.parse(JSON.stringify(col.curated_gallery || [])),
     });
   }
   return results;
@@ -329,6 +332,33 @@ export default async function DesignOptionsPage() {
           <CollectionsShowcase collections={showcaseCollections} />
         </div>
       </div>
+
+      {/* Existing 4: Noon version (gallery hero + 2 side squares) */}
+      <div className="max-w-7xl mx-auto px-6 md:px-12">
+        <div className="mt-16 mb-6">
+          <span className="text-xs uppercase tracking-[0.2em] text-muted font-medium">Existing 4 &mdash; Yesterday ~12:00</span>
+          <h2 className="text-2xl font-display text-primary mt-1">Gallery Hero + Side Squares</h2>
+          <p className="text-sm text-muted mt-1">
+            Gallery illustration as the main hero image (3fr) with two square gallery images stacked beside it (2fr).
+            Falls back to book thumbnail grid when no gallery images are available.
+            Fade transition between collections.
+          </p>
+        </div>
+      </div>
+      <FeaturedCollectionNoon items={carouselItems} />
+
+      {/* Existing 5: 4pm version (text | tall hero | book list) */}
+      <div className="max-w-7xl mx-auto px-6 md:px-12">
+        <div className="mt-16 mb-6">
+          <span className="text-xs uppercase tracking-[0.2em] text-muted font-medium">Existing 5 &mdash; Yesterday ~16:00</span>
+          <h2 className="text-2xl font-display text-primary mt-1">Three-Column: Text | Hero Illustration | Book List</h2>
+          <p className="text-sm text-muted mt-1">
+            Three-column layout: text description left, tall gallery illustration center (280x420, object-contain),
+            book title list with tiny thumbnails right. Keyboard arrow support. Most editorial of the existing versions.
+          </p>
+        </div>
+      </div>
+      <FeaturedCollection4pm items={carouselItems} />
 
       {/* ═══════════════════════════════════════════════════════════════
           NEW OPTIONS
