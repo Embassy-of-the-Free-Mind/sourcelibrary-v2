@@ -693,7 +693,8 @@ async function getOcrPromptFromDb(db) {
  * This is a 7.5x improvement in quota efficiency vs the old 20-page-per-job approach.
  * A 300-page book now uses 2 batch jobs instead of 15.
  */
-async function submitOcrDirectly(db, book) {
+async function submitOcrDirectly(db, book, { modelOverride } = {}) {
+  const ocrModel = modelOverride || OCR_MODEL;
   // Guard: check for existing active batch_jobs for this book
   const activeBatchForBook = await db.collection('batch_jobs').countDocuments({
     book_id: book.id,
@@ -783,7 +784,7 @@ async function submitOcrDirectly(db, book) {
       console.log(`    Uploaded file: ${fileResult.name}`);
 
       // Create batch job from the uploaded file
-      batchJob = await createBatchJobFromFile(OCR_MODEL, fileResult.name, displayName, 0);
+      batchJob = await createBatchJobFromFile(ocrModel, fileResult.name, displayName, 0);
     } else {
       // Inline: small batch, embed base64 directly in request body
       const inlineRequests = chunk.map(item => ({
@@ -802,7 +803,7 @@ async function submitOcrDirectly(db, book) {
         },
         metadata: { key: item.pageId },
       }));
-      batchJob = await createBatchJobInline(OCR_MODEL, inlineRequests, displayName);
+      batchJob = await createBatchJobInline(ocrModel, inlineRequests, displayName);
     }
 
     if (!firstJobName) firstJobName = batchJob.name;
@@ -817,7 +818,7 @@ async function submitOcrDirectly(db, book) {
       page_ids: chunk.map(c => c.pageId),
       page_count: chunk.length,
       status: 'pending',
-      model: OCR_MODEL,
+      model: ocrModel,
       prompt_version: OCR_PROMPT_VERSION,
       submission_method: useFileBased ? 'file' : 'inline',
       force: false,
@@ -832,7 +833,7 @@ async function submitOcrDirectly(db, book) {
     await db.collection('gemini_usage').insertOne({
       type: 'ocr',
       mode: 'batch',
-      model: OCR_MODEL,
+      model: ocrModel,
       book_id: book.id,
       book_title: book.title,
       page_ids: chunk.map(c => c.pageId),
@@ -857,7 +858,7 @@ async function submitOcrDirectly(db, book) {
       child_job_ids: childJobIds,
       total_pages: totalSubmitted,
       status: 'pending',
-      model: OCR_MODEL,
+      model: ocrModel,
       prompt_version: OCR_PROMPT_VERSION,
       created_at: new Date(),
       updated_at: new Date(),
@@ -1143,7 +1144,7 @@ async function run() {
       const readyForOcr = ocrLimit > 0 ? await db.collection('books')
         .find({ 'pipeline_auto.status': 'archive_complete' })
         .sort({ hidden: 1 })
-        .project({ id: 1, title: 1, pages_count: 1, 'pipeline_auto.retry_count': 1 })
+        .project({ id: 1, title: 1, pages_count: 1, 'pipeline_auto.retry_count': 1, 'pipeline_auto.recitation_retry': 1 })
         .limit(ocrLimit)
         .toArray() : [];
 
@@ -1160,8 +1161,12 @@ async function run() {
           }
 
           // Direct OCR submission — downloads images on Hetzner, submits to Gemini Batch API
-          console.log(`  Submitting OCR: ${label}...`);
-          const result = await submitOcrDirectly(db, book);
+          // Use fallback model for RECITATION retries (gemini-3-flash-preview triggers it)
+          const isRecitationRetry = book.pipeline_auto?.recitation_retry === true;
+          const ocrOpts = isRecitationRetry ? { modelOverride: 'gemini-2.5-flash' } : {};
+          if (isRecitationRetry) console.log(`  RECITATION retry with gemini-2.5-flash: ${label}`);
+          else console.log(`  Submitting OCR: ${label}...`);
+          const result = await submitOcrDirectly(db, book, ocrOpts);
 
           if (result.alreadyDone) {
             await setPipelineStatus(db, book.id, 'ocr_complete');
@@ -1171,10 +1176,15 @@ async function run() {
             // Don't change state — active batch jobs exist, wait for them
             console.log(`  Skipped (active batch exists): ${label}`);
           } else {
-            await setPipelineStatus(db, book.id, 'ocr_submitted', {
-              ocr_job_name: result.jobName,
-              retry_count: 0,
-            });
+            const statusExtra = { ocr_job_name: result.jobName, retry_count: 0 };
+            await setPipelineStatus(db, book.id, 'ocr_submitted', statusExtra);
+            // Clear recitation_retry flag after successful resubmission
+            if (isRecitationRetry) {
+              await db.collection('books').updateOne(
+                { id: book.id },
+                { $unset: { 'pipeline_auto.recitation_retry': '' } }
+              );
+            }
             log.ocr_submitted++;
             console.log(`  OCR submitted: ${label} — ${result.submitted} pages in ${result.childCount} batches`);
           }
@@ -1227,14 +1237,14 @@ async function run() {
             book_id: book.id,
             type: 'ocr',
             $or: [{ job_name: jobName }, { gemini_job_name: jobName }],
-            status: { $in: ['completed', 'saved', 'completed_with_errors'] },
+            status: { $in: ['completed', 'saved', 'completed_with_errors', 'failed'] },
           });
           const parentJob = !batchJob
             ? await db.collection('batch_jobs').findOne({
                 book_id: book.id,
                 type: 'ocr',
                 child_job_ids: { $exists: true, $ne: [] },
-                status: { $in: ['completed', 'saved', 'completed_with_errors'] },
+                status: { $in: ['completed', 'saved', 'completed_with_errors', 'failed'] },
               })
             : null;
           if (batchJob || parentJob) isComplete = true;

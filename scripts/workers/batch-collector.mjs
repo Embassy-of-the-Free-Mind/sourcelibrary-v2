@@ -334,6 +334,7 @@ async function processOneJob(db, job) {
       status: 'collected',
       successCount,
       failCount,
+      recitationCount,
       bookId: job.book_id,
       parentJobId: job.parent_job_id,
       type: job.type,
@@ -576,6 +577,7 @@ async function run() {
   const bookIdsToUpdate = new Set();
   const parentIdsToUpdate = new Set();
   const pipelineAdvances = []; // { bookId, type } pairs for pipeline status updates
+  const recitationBooks = new Set(); // books where ALL pages hit RECITATION — need Lambda retry
   const errorMessages = [];
 
   // Process in batches of CONCURRENCY
@@ -601,6 +603,10 @@ async function run() {
         if (val.bookId) {
           bookIdsToUpdate.add(val.bookId);
           pipelineAdvances.push({ bookId: val.bookId, type: val.type });
+          // Track books where all pages hit RECITATION — these need Lambda retry
+          if (val.successCount === 0 && val.recitationCount > 0) {
+            recitationBooks.add(val.bookId);
+          }
         }
         if (val.parentJobId) parentIdsToUpdate.add(val.parentJobId);
       } else if (val.status === 'pending') {
@@ -634,13 +640,38 @@ async function run() {
     catch (e) { console.error(`  Parent progress error ${parentId}: ${e.message}`); }
   }
 
-  // Deduplicate pipeline advances by bookId
+  // Deduplicate pipeline advances by bookId (skip RECITATION books — they get reset below)
   const seenBooks = new Set();
   for (const { bookId, type } of pipelineAdvances) {
-    if (!bookId || seenBooks.has(bookId)) continue;
+    if (!bookId || seenBooks.has(bookId) || recitationBooks.has(bookId)) continue;
     seenBooks.add(bookId);
     try { await advancePipelineStatus(db, bookId, type); }
     catch (e) { console.error(`  Pipeline advance error ${bookId}: ${e.message}`); }
+  }
+
+  // RECITATION recovery: mark affected books for retry with a different model.
+  // The batch API with gemini-3-flash-preview triggers RECITATION on some historical
+  // texts. Lambda workers have a fallback chain (2.5-flash → 2.0-flash → 1.5-flash).
+  // Reset to archive_complete with recitation_retry flag so the orchestrator can
+  // route these through Lambda or use a different batch model.
+  if (recitationBooks.size > 0) {
+    console.log(`\nRECITATION recovery: flagging ${recitationBooks.size} books for retry`);
+    for (const bookId of recitationBooks) {
+      try {
+        await db.collection('books').updateOne(
+          { id: bookId, 'pipeline_auto.status': { $in: ['ocr_submitted', 'ocr_complete'] } },
+          {
+            $set: {
+              'pipeline_auto.status': 'archive_complete',
+              'pipeline_auto.last_updated': new Date(),
+              'pipeline_auto.recitation_retry': true,
+              updated_at: new Date(),
+            },
+          }
+        );
+        console.log(`  Reset ${bookId} -> archive_complete (recitation_retry)`);
+      } catch (e) { console.error(`  RECITATION reset error ${bookId}: ${e.message}`); }
+    }
   }
 
   const totalElapsed = ((Date.now() - startTime) / 1000).toFixed(0);
@@ -650,6 +681,7 @@ async function run() {
   console.log(`Still pending: ${stillPending}`);
   console.log(`Errors: ${errors}`);
   console.log(`Books updated: ${bookIdsToUpdate.size}`);
+  if (recitationBooks.size > 0) console.log(`RECITATION resets: ${recitationBooks.size}`);
   console.log(`Total time: ${totalElapsed}s`);
 
   // Write cron_runs record for observability
