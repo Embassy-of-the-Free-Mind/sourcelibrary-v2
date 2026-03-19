@@ -147,7 +147,7 @@ async function searchIndex(db: any, query: string, limit: number) {
 
   let entities;
   try {
-    // Use Atlas Search with autocomplete + fuzzy for entity prefix matching
+    // Use Atlas Search with autocomplete + fuzzy, boost by book_count for popularity
     entities = await db.collection('entities').aggregate([
       {
         $search: {
@@ -158,10 +158,11 @@ async function searchIndex(db: any, query: string, limit: number) {
               { autocomplete: { query, path: 'aliases', fuzzy: { maxEdits: 1, prefixLength: 2 } } },
             ],
             minimumShouldMatch: 1,
+            // Boost score by book_count so popular entities rank higher
+            score: { boost: { path: 'book_count', undefined: 1 } },
           },
         },
       },
-      { $sort: { book_count: -1 } },
       { $limit: limit * 3 },
       { $project: { name: 1, type: 1, books: 1 } },
     ], { maxTimeMS: 5000 }).toArray();
