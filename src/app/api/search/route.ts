@@ -164,7 +164,7 @@ export async function GET(request: NextRequest) {
           }
 
           // eslint-disable-next-line @typescript-eslint/no-explicit-any
-          const pipeline: any[] = [buildBookSearchStage(query, searchFilters)];
+          const pipeline: any[] = [buildBookSearchStage(query, searchFilters, { fuzzy: true })];
 
           // Post-filters for fields not in the Atlas Search index
           const postMatch: Record<string, unknown> = {};

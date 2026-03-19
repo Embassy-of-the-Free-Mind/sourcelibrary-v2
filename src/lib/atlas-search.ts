@@ -13,18 +13,40 @@ export interface BookSearchFilters {
   hasTranslation?: boolean;
 }
 
+interface SearchOptions {
+  /** Use autocomplete for prefix matching (dropdown) vs text for full-word matching (search page) */
+  autocomplete?: boolean;
+  /** Enable fuzzy matching for typo tolerance */
+  fuzzy?: boolean;
+}
+
 /**
  * Build a $search aggregation stage for the books collection.
  * Searches title, display_title, author, reading_summary.overview with boosting.
  * Filters on indexed fields (hidden, language, categories, year, is_first_translation, pages_translated).
+ *
+ * Options:
+ * - autocomplete: use prefix matching (for dropdown typeahead)
+ * - fuzzy: tolerate typos (maxEdits: 1)
  */
-export function buildBookSearchStage(query: string, filters: BookSearchFilters = {}): Document {
-  const should: Document[] = [
-    { text: { query, path: 'title', score: { boost: { value: 10 } } } },
-    { text: { query, path: 'display_title', score: { boost: { value: 10 } } } },
-    { text: { query, path: 'author', score: { boost: { value: 5 } } } },
-    { text: { query, path: 'reading_summary.overview' } },
-  ];
+export function buildBookSearchStage(query: string, filters: BookSearchFilters = {}, options: SearchOptions = {}): Document {
+  const fuzzyOpt = options.fuzzy ? { fuzzy: { maxEdits: 1, prefixLength: 2 } } : {};
+
+  const should: Document[] = options.autocomplete
+    ? [
+        // Autocomplete for prefix matching on title/author
+        { autocomplete: { query, path: 'title', score: { boost: { value: 10 } }, ...fuzzyOpt } },
+        { autocomplete: { query, path: 'display_title', score: { boost: { value: 10 } }, ...fuzzyOpt } },
+        { autocomplete: { query, path: 'author', score: { boost: { value: 5 } }, ...fuzzyOpt } },
+        // Also include text match on overview (no autocomplete index on this field)
+        { text: { query, path: 'reading_summary.overview' } },
+      ]
+    : [
+        { text: { query, path: 'title', score: { boost: { value: 10 } }, ...fuzzyOpt } },
+        { text: { query, path: 'display_title', score: { boost: { value: 10 } }, ...fuzzyOpt } },
+        { text: { query, path: 'author', score: { boost: { value: 5 } }, ...fuzzyOpt } },
+        { text: { query, path: 'reading_summary.overview', ...fuzzyOpt } },
+      ];
 
   const filter: Document[] = [];
   const mustNot: Document[] = [

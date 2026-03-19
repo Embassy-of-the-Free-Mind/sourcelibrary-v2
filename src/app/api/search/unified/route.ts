@@ -101,9 +101,9 @@ async function searchBooks(db: any, query: string, queryRegex: RegExp, limit: nu
   let books;
 
   try {
-    // Use Atlas Search for fast, relevance-ranked search
+    // Use Atlas Search with autocomplete + fuzzy for instant prefix matching
     books = await db.collection('books').aggregate([
-      buildBookSearchStage(query),
+      buildBookSearchStage(query, {}, { autocomplete: true, fuzzy: true }),
       { $limit: limit },
       { $project: { id: 1, title: 1, display_title: 1, author: 1, language: 1, published: 1, pages_count: 1, pages_translated: 1, pages_ocr: 1, thumbnail: 1, thumbnail_blob: 1 } },
     ], { maxTimeMS: 5000 }).toArray();
@@ -147,15 +147,15 @@ async function searchIndex(db: any, query: string, limit: number) {
 
   let entities;
   try {
-    // Use Atlas Search for fast, relevance-ranked entity search
+    // Use Atlas Search with autocomplete + fuzzy for entity prefix matching
     entities = await db.collection('entities').aggregate([
       {
         $search: {
           index: ENTITIES_SEARCH_INDEX,
           compound: {
             should: [
-              { text: { query, path: 'name', score: { boost: { value: 3 } } } },
-              { text: { query, path: 'aliases' } },
+              { autocomplete: { query, path: 'name', score: { boost: { value: 3 } }, fuzzy: { maxEdits: 1, prefixLength: 2 } } },
+              { autocomplete: { query, path: 'aliases', fuzzy: { maxEdits: 1, prefixLength: 2 } } },
             ],
             minimumShouldMatch: 1,
           },
@@ -243,17 +243,17 @@ async function searchGallery(db: any, query: string, queryRegex: RegExp, limit: 
   try {
     let images;
     try {
-      // Use Atlas Search for fast, relevance-ranked gallery search
+      // Use Atlas Search with autocomplete on description + fuzzy text on other fields
       images = await db.collection('gallery_images').aggregate([
         {
           $search: {
             index: GALLERY_SEARCH_INDEX,
             compound: {
               should: [
-                { text: { query, path: 'description', score: { boost: { value: 3 } } } },
-                { text: { query, path: 'museum_description', score: { boost: { value: 2 } } } },
-                { text: { query, path: 'metadata.subjects' } },
-                { text: { query, path: 'metadata.figures' } },
+                { autocomplete: { query, path: 'description', score: { boost: { value: 3 } }, fuzzy: { maxEdits: 1, prefixLength: 2 } } },
+                { text: { query, path: 'museum_description', score: { boost: { value: 2 } }, fuzzy: { maxEdits: 1, prefixLength: 2 } } },
+                { text: { query, path: 'metadata.subjects', fuzzy: { maxEdits: 1, prefixLength: 2 } } },
+                { text: { query, path: 'metadata.figures', fuzzy: { maxEdits: 1, prefixLength: 2 } } },
               ],
               minimumShouldMatch: 1,
               filter: [
