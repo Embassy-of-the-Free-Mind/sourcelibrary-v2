@@ -1016,6 +1016,142 @@ async function run() {
       console.log(`  Archive completed: ${archiveCompleted}/${archivingBooks.length}`);
     }
 
+    // ── Phase 1.25: Split detection for spread scans ──
+    // Checks archive_complete books for two-page spreads (landscape aspect ratio).
+    // Calls the Vercel auto-split-ml API to split spreads into individual pages
+    // and generate cropped images. Must run BEFORE OCR to avoid OCR'ing full spreads.
+    // See: https://github.com/Embassy-of-the-Free-Mind/sourcelibrary-v2/issues/264
+    if (shouldRun(1.25)) {
+      console.log('\n--- Phase 1.25: Split detection (spread → individual pages) ---');
+
+      const SPLIT_LIMIT = 10; // Max books per cycle
+      const ASPECT_RATIO_THRESHOLD = 1.2; // Width/height > 1.2 = likely spread
+
+      // Find archive_complete books that haven't been split-checked yet
+      const candidates = await db.collection('books')
+        .find({
+          'pipeline_auto.status': 'archive_complete',
+          'pipeline_auto.split_checked': { $ne: true },
+          preview_ocr_queued_at: { $exists: false }, // Not yet in OCR
+        })
+        .sort({ hidden: 1 })
+        .project({ id: 1, title: 1, pages_count: 1 })
+        .limit(SPLIT_LIMIT)
+        .toArray();
+
+      console.log(`  Candidates for split check: ${candidates.length}`);
+
+      let splitChecked = 0;
+      let splitApplied = 0;
+
+      for (const book of candidates) {
+        try {
+          const label = (book.title || '').substring(0, 50);
+
+          // Sample first 3 pages to check aspect ratio
+          const samplePages = await db.collection('pages')
+            .find({ book_id: book.id, crop: { $exists: false } })
+            .sort({ page_number: 1 })
+            .limit(3)
+            .project({ id: 1, photo: 1, photo_original: 1, archived_photo: 1 })
+            .toArray();
+
+          if (samplePages.length === 0) {
+            // No pages without crop — already split or single-page
+            if (!DRY_RUN) {
+              await db.collection('books').updateOne(
+                { id: book.id },
+                { $set: { 'pipeline_auto.split_checked': true, 'pipeline_auto.last_updated': new Date() } }
+              );
+            }
+            splitChecked++;
+            continue;
+          }
+
+          // Check aspect ratio of first available image
+          let isSpread = false;
+          for (const page of samplePages) {
+            const imageUrl = page.archived_photo || page.photo_original || page.photo;
+            if (!imageUrl) continue;
+
+            try {
+              const res = await fetch(imageUrl, { method: 'HEAD', signal: AbortSignal.timeout(10000) });
+              // Can't get dimensions from HEAD. Download a small version and check.
+              const imgRes = await fetch(imageUrl, { signal: AbortSignal.timeout(15000) });
+              if (!imgRes.ok) continue;
+              const buffer = Buffer.from(await imgRes.arrayBuffer());
+              const sharp = (await import('sharp')).default;
+              const meta = await sharp(buffer).metadata();
+              if (meta.width && meta.height) {
+                const ratio = meta.width / meta.height;
+                console.log(`    ${label}: page ${page.id} aspect ratio = ${ratio.toFixed(2)}`);
+                if (ratio > ASPECT_RATIO_THRESHOLD) {
+                  isSpread = true;
+                }
+                break; // One sample is enough
+              }
+            } catch (err) {
+              console.log(`    ${label}: failed to check aspect ratio: ${err.message?.slice(0, 80)}`);
+            }
+          }
+
+          if (!isSpread) {
+            // Not a spread — mark as checked and move on
+            if (!DRY_RUN) {
+              await db.collection('books').updateOne(
+                { id: book.id },
+                { $set: { 'pipeline_auto.split_checked': true, 'pipeline_auto.last_updated': new Date() } }
+              );
+            }
+            console.log(`    ${label}: not a spread (portrait pages), skipping`);
+            splitChecked++;
+            continue;
+          }
+
+          // It's a spread — call Vercel auto-split-ml API
+          console.log(`    ${label}: SPREAD detected, running split detection...`);
+
+          if (DRY_RUN) {
+            console.log(`    Would split: ${label}`);
+            continue;
+          }
+
+          const splitRes = await fetch(`${BASE_URL}/api/books/${book.id}/auto-split-ml`, {
+            method: 'POST',
+            headers: {
+              'Authorization': `Bearer ${CRON_SECRET}`,
+              'Content-Type': 'application/json',
+            },
+            body: JSON.stringify({ limit: 200, dryRun: false }),
+            signal: AbortSignal.timeout(300000), // 5 min — splitting can be slow
+          });
+
+          if (!splitRes.ok) {
+            const errText = await splitRes.text();
+            console.log(`    ${label}: split API failed: ${splitRes.status} — ${errText.slice(0, 200)}`);
+            continue;
+          }
+
+          const splitResult = await splitRes.json();
+          console.log(`    ${label}: split ${splitResult.splitCount || 0} spreads → ${splitResult.totalPages || 0} pages`);
+
+          // Mark as split-checked
+          await db.collection('books').updateOne(
+            { id: book.id },
+            { $set: { 'pipeline_auto.split_checked': true, 'pipeline_auto.last_updated': new Date() } }
+          );
+
+          splitChecked++;
+          if (splitResult.splitCount > 0) splitApplied++;
+
+        } catch (err) {
+          console.log(`    ${book.title?.slice(0, 50)}: ERROR — ${err.message?.slice(0, 120)}`);
+        }
+      }
+
+      console.log(`  Split checked: ${splitChecked}, splits applied: ${splitApplied}`);
+    }
+
     // ── Phase 1.5: Preview OCR+Translation for first 25 pages via Lambda ──
     // Sends first 25 pages to Lambda OCR queue for fast turnaround.
     // When preview OCR completes, job-completion.ts on Vercel auto-triggers
@@ -1143,133 +1279,123 @@ async function run() {
       }
     }
 
-    // ── Phase 1.7: Preview Translation — dispatch translation for preview-OCR'd pages ──
-    // Finds books where preview OCR completed but no preview translation was queued.
-    // Bypasses the Writer Lambda auto-trigger (which needs redeployment).
+    // ── Phase 1.7: Preview Translation — translate preview-OCR'd pages inline via Vercel API ──
+    // Calls /api/process for each page. No SQS queue (222K backlog makes it useless for previews).
+    // ~25 pages × ~5s each = ~2 minutes per book. Processes up to 5 books per run.
     if (shouldRun(1.7)) {
-      console.log('\n--- Phase 1.7: Preview Translation (first 25 OCR\'d pages via Lambda) ---');
+      console.log('\n--- Phase 1.7: Preview Translation (inline via Vercel API) ---');
 
-      if (!SQS_TRANSLATION_QUEUE_URL) {
-        console.log('  SKIP: SQS_PAGE_TRANSLATION_QUEUE_URL not configured');
-      } else {
-        const sqsClient = new SQSClient({ region: process.env.AWS_REGION || 'eu-central-1' });
+      const PREVIEW_TRANSLATE_LIMIT = 5;
 
-        // Find books with completed preview OCR but no preview translation
-        const readyForPreviewTranslate = await db.collection('books')
-          .find({
-            preview_ocr_queued_at: { $exists: true },
-            preview_translate_queued_at: { $exists: false },
-            language: { $nin: ['English', 'english', 'eng', 'en', 'ENG'] },
-          })
-          .sort({ is_first_translation: -1 })
-          .project({ id: 1, title: 1, language: 1 })
-          .limit(PREVIEW_LIMIT)
-          .toArray();
+      const readyForPreviewTranslate = await db.collection('books')
+        .find({
+          preview_ocr_queued_at: { $exists: true },
+          preview_translate_queued_at: { $exists: false },
+          language: { $nin: ['English', 'english', 'eng', 'en', 'ENG'] },
+        })
+        .sort({ is_first_translation: -1 })
+        .project({ id: 1, title: 1, language: 1 })
+        .limit(PREVIEW_TRANSLATE_LIMIT)
+        .toArray();
 
-        console.log(`  Books ready for preview translation: ${readyForPreviewTranslate.length}`);
+      // Filter to books with completed preview OCR
+      const booksToTranslate = [];
+      for (const book of readyForPreviewTranslate) {
+        const ocrJob = await db.collection('jobs').findOne({
+          book_id: book.id, type: 'ocr', 'config.preview': true,
+          status: { $in: ['completed', 'completed_with_errors'] },
+        });
+        if (ocrJob) booksToTranslate.push(book);
+      }
 
-        for (const book of readyForPreviewTranslate) {
-          try {
-            const label = (book.title || '').substring(0, 50);
+      console.log(`  Books ready for preview translation: ${booksToTranslate.length}`);
 
-            // Check that the preview OCR job actually completed
-            const ocrJob = await db.collection('jobs').findOne({
+      for (const book of booksToTranslate) {
+        try {
+          const label = (book.title || '').substring(0, 50);
+
+          const pages = await db.collection('pages')
+            .find({
               book_id: book.id,
-              type: 'ocr',
-              'config.preview': true,
-              status: { $in: ['completed', 'completed_with_errors'] },
-            });
-            if (!ocrJob) {
-              // OCR still running — skip for now
-              continue;
-            }
+              'ocr.data': { $exists: true, $nin: [null, ''] },
+              page_type: { $nin: SKIP_TRANSLATION_PAGE_TYPES },
+              $or: [
+                { 'translation.data': { $exists: false } },
+                { 'translation.data': null },
+                { 'translation.data': '' },
+              ],
+            })
+            .sort({ page_number: 1 })
+            .limit(PREVIEW_PAGE_COUNT)
+            .project({ id: 1 })
+            .toArray();
 
-            // Find first 25 OCR'd pages that need translation
-            const pages = await db.collection('pages')
-              .find({
-                book_id: book.id,
-                'ocr.data': { $exists: true, $nin: [null, ''] },
-                page_type: { $nin: SKIP_TRANSLATION_PAGE_TYPES },
-                $or: [
-                  { 'translation.data': { $exists: false } },
-                  { 'translation.data': null },
-                  { 'translation.data': '' },
-                ],
-              })
-              .sort({ page_number: 1 })
-              .limit(PREVIEW_PAGE_COUNT)
-              .project({ id: 1 })
-              .toArray();
-
-            if (pages.length === 0) {
-              console.log(`  No pages need translation: ${label}`);
-              // Mark as done so we don't re-check
-              await db.collection('books').updateOne(
-                { id: book.id },
-                { $set: { preview_translate_queued_at: new Date() } },
-              );
-              continue;
-            }
-
-            if (DRY_RUN) {
-              console.log(`  Would queue preview translation: ${label} — ${pages.length} pages`);
-              continue;
-            }
-
-            const pageIds = pages.map(p => p.id);
-            const jobId = nanoid(12);
-
-            await db.collection('jobs').insertOne({
-              id: jobId,
-              type: 'translation',
-              book_id: book.id,
-              book_title: book.title,
-              status: 'pending',
-              progress: { total: pageIds.length, completed: 0, failed: 0 },
-              config: {
-                page_ids: pageIds,
-                preview: true,
-                model: 'gemini-3-flash-preview',
-                language: book.language || 'auto-detect',
-              },
-              initiated_by: 'pipeline_preview',
-              created_at: new Date(),
-              updated_at: new Date(),
-            });
-
+          if (pages.length === 0) {
             await db.collection('books').updateOne(
               { id: book.id },
-              { $set: { preview_translate_queued_at: new Date(), job: { type: 'realtime', job_id: jobId } } },
+              { $set: { preview_translate_queued_at: new Date() } },
             );
-
-            // Enqueue to SQS FIFO
-            for (let i = 0; i < pageIds.length; i += 10) {
-              const batch = pageIds.slice(i, i + 10);
-              const entries = batch.map((pageId, idx) => ({
-                Id: `msg-${idx}`,
-                MessageBody: JSON.stringify({ bookId: book.id, pageId, jobId }),
-                MessageGroupId: jobId,
-                MessageDeduplicationId: createHash('sha256')
-                  .update(`${book.id}:${pageId}:${jobId}`)
-                  .digest('hex').slice(0, 128),
-              }));
-
-              await sqsClient.send(new SendMessageBatchCommand({
-                QueueUrl: SQS_TRANSLATION_QUEUE_URL,
-                Entries: entries,
-              }));
-            }
-
-            log.preview_queued++;
-            console.log(`  Preview translation queued: ${label} — ${pageIds.length} pages (job ${jobId})`);
-
-            await sleep(200);
-          } catch (err) {
-            log.errors.push(`Preview translate ${book.id}: ${err.message}`);
+            console.log(`  Already translated: ${label}`);
+            continue;
           }
+
+          if (DRY_RUN) {
+            console.log(`  Would translate: ${label} — ${pages.length} pages`);
+            continue;
+          }
+
+          console.log(`  Translating: ${label} — ${pages.length} pages...`);
+          let pagesDone = 0;
+          let pagesErr = 0;
+
+          for (const page of pages) {
+            try {
+              const res = await fetch(`${BASE_URL}/api/process`, {
+                method: 'POST',
+                headers: headers(),
+                body: JSON.stringify({
+                  pageId: page.id,
+                  bookId: book.id,
+                  action: 'translate',
+                }),
+              });
+
+              if (res.ok) {
+                pagesDone++;
+              } else {
+                pagesErr++;
+                if (res.status === 429) {
+                  console.log('    Rate limited — waiting 10s...');
+                  await sleep(10000);
+                }
+              }
+              await sleep(500);
+            } catch (err) {
+              pagesErr++;
+            }
+          }
+
+          await db.collection('books').updateOne(
+            { id: book.id },
+            { $set: { preview_translate_queued_at: new Date(), updated_at: new Date() } },
+          );
+
+          const translatedCount = await db.collection('pages').countDocuments({
+            book_id: book.id,
+            'translation.data': { $exists: true, $nin: [null, ''] },
+          });
+          await db.collection('books').updateOne(
+            { id: book.id },
+            { $set: { pages_translated: translatedCount } },
+          );
+
+          log.preview_queued++;
+          console.log(`  Done: ${label} — ${pagesDone} ok, ${pagesErr} errors`);
+        } catch (err) {
+          log.errors.push(`Preview translate ${book.id}: ${err.message}`);
         }
-        console.log(`  Preview translations queued: ${log.preview_queued}`);
       }
+      console.log(`  Preview translations done: ${log.preview_queued}`);
     }
 
     // ── Phase 2: Submit OCR via Gemini Batch API (archive_complete -> ocr_submitted) ──
