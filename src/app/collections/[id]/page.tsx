@@ -596,21 +596,25 @@ export default async function CollectionDetailPage({ params }: Props) {
         </div>
       )}
 
-      {/* Overview: description + gallery grid */}
+      {/* Overview: description + gallery grid (hidden when exhibition provides its own description) */}
       <div className="bg-warm border-b border-border-light">
         <div className="max-w-7xl mx-auto px-6 py-8">
-          <h2 className="text-2xl sm:text-3xl text-primary mb-5 font-display">
-            Overview
-          </h2>
+          {!exhibition?.layout && (
+            <>
+              <h2 className="text-2xl sm:text-3xl text-primary mb-5 font-display">
+                Overview
+              </h2>
 
-          {(collection.expanded_description || collection.description) && (
-            <div className="mb-8 max-w-5xl">
-              {(collection.expanded_description || collection.description)!.split('\n\n').map((para: string, i: number) => (
-                <p key={i} className="text-secondary text-xl leading-relaxed mb-5 last:mb-0 font-body">
-                  {linkBookTitles(para, allBooksForLinking, explicitMentions)}
-                </p>
-              ))}
-            </div>
+              {(collection.expanded_description || collection.description) && (
+                <div className="mb-8 max-w-5xl">
+                  {(collection.expanded_description || collection.description)!.split('\n\n').map((para: string, i: number) => (
+                    <p key={i} className="text-secondary text-xl leading-relaxed mb-5 last:mb-0 font-body">
+                      {linkBookTitles(para, allBooksForLinking, explicitMentions)}
+                    </p>
+                  ))}
+                </div>
+              )}
+            </>
           )}
 
           {diverseGalleryImages.length > 0 && (

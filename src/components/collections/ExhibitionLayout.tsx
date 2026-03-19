@@ -215,30 +215,49 @@ function KeyFiguresBlock({ figures, books }: {
 
 // ─── Component: Quotes ──────────────────────────────────────────
 
-function QuotesBlock({ quotes }: {
+function QuotesBlock({ quotes, books }: {
   quotes: {
     text: string;
     author?: string;
     book_title?: string;
     book_id?: string;
+    page_number?: number;
+    verified?: boolean;
   }[];
+  books: BookRef[];
 }) {
   return (
     <div className="space-y-6">
-      {quotes.map((q, i) => (
-        <blockquote
-          key={i}
-          className="relative pl-6 border-l-2 border-accent-gold/40 py-2"
-        >
-          <Quote className="absolute -left-3 -top-1 w-5 h-5 text-accent-gold/30 bg-cream" />
-          <p className="text-lg sm:text-xl font-display text-primary/80 leading-relaxed italic">
-            &ldquo;{q.text}&rdquo;
-          </p>
-          <footer className="mt-2 text-sm text-muted">
-            — {q.author}{q.book_title ? `, ${q.book_title}` : ''}
-          </footer>
-        </blockquote>
-      ))}
+      {quotes.filter(q => q.verified !== false).map((q, i) => {
+        const book = q.book_id ? findBook(books, q.book_id) : undefined;
+        return (
+          <blockquote
+            key={i}
+            className="relative pl-6 border-l-2 border-accent-gold/40 py-2"
+          >
+            <Quote className="absolute -left-3 -top-1 w-5 h-5 text-accent-gold/30 bg-cream" />
+            <p className="text-lg sm:text-xl font-display text-primary/80 leading-relaxed italic">
+              &ldquo;{q.text}&rdquo;
+            </p>
+            <footer className="mt-2 text-sm text-muted">
+              — {q.author}
+              {book ? (
+                <Link
+                  href={q.page_number
+                    ? `${bookUrl({ id: book.id, slug: book.slug })}?page=${q.page_number}`
+                    : bookUrl({ id: book.id, slug: book.slug })}
+                  className="text-accent-rust hover:underline ml-1"
+                >
+                  {q.book_title || bookTitle(book)}
+                  {q.page_number ? `, p. ${q.page_number}` : ''}
+                </Link>
+              ) : (
+                q.book_title ? `, ${q.book_title}` : ''
+              )}
+            </footer>
+          </blockquote>
+        );
+      })}
     </div>
   );
 }
@@ -454,7 +473,7 @@ export default function ExhibitionLayout({ layout, books, images, collectionSlug
             return <KeyFiguresBlock key={i} figures={block.figures} books={books} />;
 
           case 'quotes':
-            return <QuotesBlock key={i} quotes={block.quotes} />;
+            return <QuotesBlock key={i} quotes={block.quotes} books={books} />;
 
           case 'timeline':
             return <TimelineBlock key={i} start_year={block.start_year} end_year={block.end_year} highlights={block.highlights} />;
