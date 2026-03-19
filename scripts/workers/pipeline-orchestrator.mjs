@@ -1061,21 +1061,20 @@ async function run() {
           try {
             const label = (book.title || '').substring(0, 50);
 
-            // Get first 25 pages with images
+            // Get first 25 pages with archived/cropped images only.
+            // Lambda can't reliably fetch from archive.org/gallica (rate limits, 403s).
             const pages = await db.collection('pages')
               .find({
                 book_id: book.id,
                 $or: [
-                  { photo: { $exists: true, $ne: null } },
-                  { photo_original: { $exists: true, $ne: null } },
+                  { cropped_photo: { $exists: true, $nin: [null, ''] } },
+                  { archived_photo: { $regex: /^https?:\/\// } },
                 ],
-                $and: [{
-                  $or: [
-                    { 'ocr.data': { $exists: false } },
-                    { 'ocr.data': null },
-                    { 'ocr.data': '' },
-                  ],
-                }],
+                $or: [
+                  { 'ocr.data': { $exists: false } },
+                  { 'ocr.data': null },
+                  { 'ocr.data': '' },
+                ],
               })
               .sort({ page_number: 1 })
               .limit(PREVIEW_PAGE_COUNT)
