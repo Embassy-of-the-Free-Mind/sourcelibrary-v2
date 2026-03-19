@@ -5,7 +5,7 @@ description: Quick canon + pipeline health check. Use when asked "how's it going
 
 # Quick Status Check
 
-Run a single MongoDB script that returns canon metrics and pipeline health in one shot. Use `set -a; source .env.production.local; set +a; node -e "..."` to run.
+Read the latest pipeline snapshot (written every 10 min by Hetzner cron) + 3 lightweight queries. Use `set -a; source .env.production.local; set +a; node -e "..."` to run.
 
 ## The Script
 
@@ -17,76 +17,40 @@ async function status() {
   await client.connect();
   const db = client.db('bookstore');
 
-  const [totals, readable, firstTranslations, jobs, paused, failed24h, recentTranslations] = await Promise.all([
-    // Totals from book-level caches (fast)
-    db.collection('books').aggregate([
-      { $match: { hidden: { $ne: true } } },
-      { $group: {
-        _id: null,
-        books: { $sum: 1 },
-        pages: { $sum: { $ifNull: ['$pages_count', 0] } },
-        ocr: { $sum: { $ifNull: ['$pages_ocr', 0] } },
-        translated: { $sum: { $ifNull: ['$pages_translated', 0] } },
-      }}
-    ]).toArray(),
-
-    // Readable books (>=90% translated)
-    db.collection('books').countDocuments({
-      hidden: { $ne: true },
-      pages_ocr: { $gte: 1 },
-      $expr: { $gte: ['$pages_translated', { $multiply: ['$pages_ocr', 0.9] }] },
-    }),
-
-    // First translations (verified flag from metadata enrichment)
-    db.collection('books').countDocuments({
-      hidden: { $ne: true },
-      is_first_translation: true,
-    }),
-
-    // Active jobs
+  // Read latest snapshot (instant) + 3 small indexed queries
+  const [snap, jobs, paused, failed24h] = await Promise.all([
+    db.collection('pipeline_snapshots').findOne({}, { sort: { timestamp: -1 } }),
     db.collection('jobs').aggregate([
       { $match: { status: { $in: ['processing', 'queued'] } } },
       { $group: { _id: '$status', count: { $sum: 1 } } }
     ]).toArray(),
-
-    // Pause status
     db.collection('system_config').findOne({ _id: 'processing_control' }),
-
-    // Failed jobs last 24h
     db.collection('jobs').countDocuments({
       status: 'failed',
       updated_at: { $gte: new Date(Date.now() - 86400000) }
     }),
-
-    // Translation throughput (last 1h from gemini_usage — faster than scanning pages)
-    // NOTE: Hetzner pipeline logs as 'translation', not 'translate'
-    db.collection('gemini_usage').countDocuments({
-      type: { $in: ['translate', 'translation'] },
-      status: 'success',
-      timestamp: { $gte: new Date(Date.now() - 3600000) }
-    }),
   ]);
 
-  const t = totals[0] || { books: 0, pages: 0, ocr: 0, translated: 0 };
-  const jobMap = Object.fromEntries(jobs.map(j => [j._id, j.count]));
+  if (!snap) { console.log('No pipeline snapshots found'); await client.close(); return; }
 
-  console.log('=== Source Library Status ===');
+  const p = snap.pages || {};
+  const c = snap.canon || {};
+  const ft = snap.first_translations || {};
+  const jobMap = Object.fromEntries(jobs.map(j => [j._id, j.count]));
+  const age = Math.round((Date.now() - new Date(snap.timestamp).getTime()) / 60000);
+
+  console.log('=== Source Library Status (' + age + 'min ago) ===');
   console.log('');
-  console.log('Canon:');
-  console.log(`  ${t.books.toLocaleString()} books | ${t.pages.toLocaleString()} pages`);
-  console.log(`  ${readable.toLocaleString()} readable (${(readable/t.books*100).toFixed(1)}%)`);
-  console.log(`  ${firstTranslations.toLocaleString()} first English translations`);
+  console.log('Canon: ' + (c.visible || '?') + ' books | ' + (c.readable || '?') + ' readable (' + (c.visible ? (c.readable/c.visible*100).toFixed(1) : '?') + '%)');
+  console.log('First Translations: ' + (ft.complete || '?') + '/' + (ft.total || '?') + ' complete');
   console.log('');
   console.log('Coverage:');
-  console.log(`  OCR: ${t.ocr.toLocaleString()} pages (${(t.ocr/t.pages*100).toFixed(1)}%)`);
-  console.log(`  Translated: ${t.translated.toLocaleString()} pages (${(t.translated/t.pages*100).toFixed(1)}%)`);
+  console.log('  OCR: ' + (p.ocr || 0).toLocaleString() + '/' + (p.total || 0).toLocaleString() + ' (' + (p.total ? (p.ocr/p.total*100).toFixed(1) : '0') + '%)');
+  console.log('  Translated: ' + (p.translated || 0).toLocaleString() + '/' + (p.total || 0).toLocaleString() + ' (' + (p.total ? (p.translated/p.total*100).toFixed(1) : '0') + '%)');
   console.log('');
-  console.log('Pipeline:');
-  console.log(`  Processing: ${jobMap.processing || 0} | Queued: ${jobMap.queued || 0}`);
-  console.log(`  Failed (24h): ${failed24h}`);
-  console.log(`  Translation rate: ~${recentTranslations}/hr`);
+  console.log('Pipeline: ' + (jobMap.processing || 0) + ' processing, ' + (jobMap.queued || 0) + ' queued, ' + failed24h + ' failed (24h)');
   if (paused?.paused) console.log('  *** PIPELINE PAUSED ***');
-  if (paused?.paused_phases?.length) console.log(`  Paused phases: ${paused.paused_phases.join(', ')}`);
+  if (paused?.paused_phases?.length) console.log('  Paused phases: ' + paused.paused_phases.join(', '));
 
   await client.close();
 }
@@ -94,22 +58,12 @@ async function status() {
 status().catch(e => { console.error(e.message); process.exit(1); });
 ```
 
+## Notes
+
+- Snapshot data is written by the `post-import-pipeline` cron every ~10 minutes. The `canon` and `first_translations` fields were added 2026-03-19.
+- If snapshots don't have `canon`/`first_translations` yet, fall back to showing `?`.
+- For live (non-cached) numbers or deeper investigation, use `/progress` instead.
+
 ## Output Format
 
-Present results as a concise status block:
-
-```
-Source Library Status
-
-Canon: 28,625 books | 8.8M pages
-  2,150 readable (7.5%) | 1,800 first English translations
-
-Coverage: OCR 15.4% | Translation 9.9%
-
-Pipeline: 103 processing, 102 queued, 0 failed (24h)
-  Translation rate: ~450/hr
-```
-
-Keep it tight. If something looks wrong (high failures, pipeline paused, zero throughput), call it out. Otherwise just report the numbers.
-
-For deeper investigation, use `/progress` instead.
+Present results as a concise status block. Show the snapshot age so it's clear this is cached data. Keep it tight.
