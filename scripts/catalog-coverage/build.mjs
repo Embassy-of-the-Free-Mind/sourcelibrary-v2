@@ -490,7 +490,23 @@ async function buildCoverage(db, scanLookup, translationLookup, slLookup) {
             upsert: true,
           }
         }));
-        await col.bulkWrite(ops, { ordered: false });
+        // Write in chunks of 500 with retry on timeout
+        for (let i = 0; i < ops.length; i += 500) {
+          const chunk = ops.slice(i, i + 500);
+          for (let attempt = 0; attempt < 3; attempt++) {
+            try {
+              await col.bulkWrite(chunk, { ordered: false });
+              break;
+            } catch (err) {
+              if (attempt < 2 && (err.message?.includes('timed out') || err.errorLabels?.has?.('RetryableWriteError'))) {
+                console.error(`\n  Write timeout, retry ${attempt + 1}/3...`);
+                await new Promise(r => setTimeout(r, 2000 * (attempt + 1)));
+              } else {
+                throw err;
+              }
+            }
+          }
+        }
       }
 
       if ((y - YEAR_MIN) % 25 === 0 || y + 5 > YEAR_MAX) {
