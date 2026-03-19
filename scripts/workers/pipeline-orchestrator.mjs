@@ -1143,6 +1143,135 @@ async function run() {
       }
     }
 
+    // ── Phase 1.7: Preview Translation — dispatch translation for preview-OCR'd pages ──
+    // Finds books where preview OCR completed but no preview translation was queued.
+    // Bypasses the Writer Lambda auto-trigger (which needs redeployment).
+    if (shouldRun(1.7)) {
+      console.log('\n--- Phase 1.7: Preview Translation (first 25 OCR\'d pages via Lambda) ---');
+
+      if (!SQS_TRANSLATION_QUEUE_URL) {
+        console.log('  SKIP: SQS_PAGE_TRANSLATION_QUEUE_URL not configured');
+      } else {
+        const sqsClient = new SQSClient({ region: process.env.AWS_REGION || 'eu-central-1' });
+
+        // Find books with completed preview OCR but no preview translation
+        const readyForPreviewTranslate = await db.collection('books')
+          .find({
+            preview_ocr_queued_at: { $exists: true },
+            preview_translate_queued_at: { $exists: false },
+            language: { $nin: ['English', 'english', 'eng', 'en', 'ENG'] },
+          })
+          .sort({ is_first_translation: -1 })
+          .project({ id: 1, title: 1, language: 1 })
+          .limit(PREVIEW_LIMIT)
+          .toArray();
+
+        console.log(`  Books ready for preview translation: ${readyForPreviewTranslate.length}`);
+
+        for (const book of readyForPreviewTranslate) {
+          try {
+            const label = (book.title || '').substring(0, 50);
+
+            // Check that the preview OCR job actually completed
+            const ocrJob = await db.collection('jobs').findOne({
+              book_id: book.id,
+              type: 'ocr',
+              'config.preview': true,
+              status: { $in: ['completed', 'completed_with_errors'] },
+            });
+            if (!ocrJob) {
+              // OCR still running — skip for now
+              continue;
+            }
+
+            // Find first 25 OCR'd pages that need translation
+            const pages = await db.collection('pages')
+              .find({
+                book_id: book.id,
+                'ocr.data': { $exists: true, $nin: [null, ''] },
+                page_type: { $nin: SKIP_TRANSLATION_PAGE_TYPES },
+                $or: [
+                  { 'translation.data': { $exists: false } },
+                  { 'translation.data': null },
+                  { 'translation.data': '' },
+                ],
+              })
+              .sort({ page_number: 1 })
+              .limit(PREVIEW_PAGE_COUNT)
+              .project({ id: 1 })
+              .toArray();
+
+            if (pages.length === 0) {
+              console.log(`  No pages need translation: ${label}`);
+              // Mark as done so we don't re-check
+              await db.collection('books').updateOne(
+                { id: book.id },
+                { $set: { preview_translate_queued_at: new Date() } },
+              );
+              continue;
+            }
+
+            if (DRY_RUN) {
+              console.log(`  Would queue preview translation: ${label} — ${pages.length} pages`);
+              continue;
+            }
+
+            const pageIds = pages.map(p => p.id);
+            const jobId = nanoid(12);
+
+            await db.collection('jobs').insertOne({
+              id: jobId,
+              type: 'translation',
+              book_id: book.id,
+              book_title: book.title,
+              status: 'pending',
+              progress: { total: pageIds.length, completed: 0, failed: 0 },
+              config: {
+                page_ids: pageIds,
+                preview: true,
+                model: 'gemini-3-flash-preview',
+                language: book.language || 'auto-detect',
+              },
+              initiated_by: 'pipeline_preview',
+              created_at: new Date(),
+              updated_at: new Date(),
+            });
+
+            await db.collection('books').updateOne(
+              { id: book.id },
+              { $set: { preview_translate_queued_at: new Date(), job: { type: 'realtime', job_id: jobId } } },
+            );
+
+            // Enqueue to SQS FIFO
+            for (let i = 0; i < pageIds.length; i += 10) {
+              const batch = pageIds.slice(i, i + 10);
+              const entries = batch.map((pageId, idx) => ({
+                Id: `msg-${idx}`,
+                MessageBody: JSON.stringify({ bookId: book.id, pageId, jobId }),
+                MessageGroupId: jobId,
+                MessageDeduplicationId: createHash('sha256')
+                  .update(`${book.id}:${pageId}:${jobId}`)
+                  .digest('hex').slice(0, 128),
+              }));
+
+              await sqsClient.send(new SendMessageBatchCommand({
+                QueueUrl: SQS_TRANSLATION_QUEUE_URL,
+                Entries: entries,
+              }));
+            }
+
+            log.preview_queued++;
+            console.log(`  Preview translation queued: ${label} — ${pageIds.length} pages (job ${jobId})`);
+
+            await sleep(200);
+          } catch (err) {
+            log.errors.push(`Preview translate ${book.id}: ${err.message}`);
+          }
+        }
+        console.log(`  Preview translations queued: ${log.preview_queued}`);
+      }
+    }
+
     // ── Phase 2: Submit OCR via Gemini Batch API (archive_complete -> ocr_submitted) ──
     // DISABLED: Batch API returning 0 pages — see #256. Using Phase 1.5 Lambda preview instead.
     if (false && shouldRun(2)) {
