@@ -235,12 +235,23 @@ function findScan(ustcEdition, scanLookup) {
     };
   }
 
-  // Blocking match: author surname + decade
+  // Blocking match: author surname + decade (check adjacent decades too)
   const surname = extractSurname(ustcEdition.author_1);
   if (!surname || !ustcEdition.year) return null;
 
   const decade = Math.floor(ustcEdition.year / 10) * 10;
-  const candidates = scanLookup.byAuthorDecade.get(`${surname}:${decade}`) || [];
+  // Try exact surname and Latin-stripped variant, across 3 decades
+  const surnameVariants = [surname];
+  const stripped = surname.replace(/(us|is|ius|inus)$/, '');
+  if (stripped !== surname && stripped.length >= 3) surnameVariants.push(stripped);
+
+  let candidates = [];
+  for (const s of surnameVariants) {
+    for (const d of [decade, decade - 10, decade + 10]) {
+      const found = scanLookup.byAuthorDecade.get(`${s}:${d}`);
+      if (found) candidates.push(...found);
+    }
+  }
 
   let bestMatch = null;
   let bestScore = 0;
@@ -423,7 +434,9 @@ async function buildCoverage(db, scanLookup, translationLookup, slLookup) {
       for (const edition of batch) {
         const surname = extractSurname(edition.author_1);
         const scan = findScan(edition, scanLookup);
-        const translation = findTranslation(edition, translationLookup);
+        // English editions are already in a modern language — skip translation matching
+        const lang = edition.language_1 || language;
+        const translation = lang === 'English' ? null : findTranslation(edition, translationLookup);
         const sl = findSourceLibrary(edition, slLookup);
 
         const doc = {
