@@ -118,35 +118,38 @@ function titleWordOverlap(a, b) {
 // --- Phase 1: Load MongoDB lookups ---
 
 async function loadScanLookup(db) {
-  console.log('Loading IIIF scan candidates...');
-  const candidates = await db.collection('import_candidates').find(
-    { status: { $in: ['discovered', 'imported'] } },
-    { projection: { author: 1, title: 1, date_earliest: 1, date_latest: 1, source: 1, manifest_url: 1, book_id: 1, ustc_id: 1, status: 1 } }
-  ).toArray();
-
-  // Index by author surname + decade for blocking
+  console.log('Loading IIIF scan candidates (streaming)...');
   const byAuthorDecade = new Map();
-  // Index by ustc_id for direct matches
   const byUstcId = new Map();
-  let withUstc = 0;
+  let total = 0, withUstc = 0;
 
-  for (const c of candidates) {
-    if (c.ustc_id) {
-      byUstcId.set(c.ustc_id, c);
-      withUstc++;
+  const cursor = db.collection('import_candidates').find(
+    { status: { $in: ['discovered', 'imported'] } },
+    {
+      projection: { author: 1, title: 1, date_earliest: 1, date_latest: 1, source: 1, manifest_url: 1, book_id: 1, ustc_id: 1, status: 1 },
+      batchSize: 5000,
     }
+  );
+
+  for await (const c of cursor) {
+    total++;
+    if (c.ustc_id) { byUstcId.set(c.ustc_id, c); withUstc++; }
 
     const surname = extractSurname(c.author);
     if (!surname || surname.length < 2) continue;
     const decade = c.date_earliest ? Math.floor(c.date_earliest / 10) * 10 : null;
     if (!decade) continue;
 
+    // Only keep minimal fields in memory
+    const slim = { _id: c._id, title: c.title, source: c.source, manifest_url: c.manifest_url, status: c.status };
     const key = `${surname}:${decade}`;
     if (!byAuthorDecade.has(key)) byAuthorDecade.set(key, []);
-    byAuthorDecade.get(key).push(c);
+    byAuthorDecade.get(key).push(slim);
+
+    if (total % 100000 === 0) process.stdout.write(`  ${total.toLocaleString()} loaded...\r`);
   }
 
-  console.log(`  ${candidates.length.toLocaleString()} candidates loaded, ${byAuthorDecade.size.toLocaleString()} author-decade blocks, ${withUstc.toLocaleString()} with ustc_id`);
+  console.log(`  ${total.toLocaleString()} candidates loaded, ${byAuthorDecade.size.toLocaleString()} author-decade blocks, ${withUstc.toLocaleString()} with ustc_id`);
   return { byAuthorDecade, byUstcId };
 }
 
