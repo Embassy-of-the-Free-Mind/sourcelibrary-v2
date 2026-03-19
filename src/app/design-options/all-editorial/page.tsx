@@ -1,4 +1,6 @@
 import { getDb } from '@/lib/mongodb';
+import { auth } from '@/lib/auth';
+import { redirect } from 'next/navigation';
 import Link from 'next/link';
 import Image from 'next/image';
 import { BookOpen, ArrowRight } from 'lucide-react';
@@ -138,6 +140,9 @@ async function getAllCollectionsWithBooks(): Promise<CollectionWithBooks[]> {
 }
 
 export default async function AllEditorialPage() {
+  const session = await auth();
+  if ((session?.user as any)?.role !== 'admin') redirect('/');
+
   const collections = await getAllCollectionsWithBooks();
 
   return (

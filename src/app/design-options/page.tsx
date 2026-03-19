@@ -1,4 +1,6 @@
 import { getDb } from '@/lib/mongodb';
+import { auth } from '@/lib/auth';
+import { redirect } from 'next/navigation';
 import Link from 'next/link';
 import Image from 'next/image';
 import { BookOpen, ArrowRight, Sparkles, Library } from 'lucide-react';
@@ -258,6 +260,9 @@ async function getCollectionSummaries(): Promise<CollectionSummary[]> {
 // ---------- Page ----------
 
 export default async function DesignOptionsPage() {
+  const session = await auth();
+  if ((session?.user as any)?.role !== 'admin') redirect('/');
+
   const [data, carouselItems, showcaseCollections] = await Promise.all([
     getFeaturedCollection(),
     getMultipleFeaturedCollections(),
