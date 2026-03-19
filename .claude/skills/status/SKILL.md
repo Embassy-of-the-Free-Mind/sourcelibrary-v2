@@ -37,12 +37,10 @@ async function status() {
       $expr: { $gte: ['$pages_translated', { $multiply: ['$pages_ocr', 0.9] }] },
     }),
 
-    // First translations (strict: non-English, non-bilingual, >=90% translated, >=10 pages)
+    // First translations (verified flag from metadata enrichment)
     db.collection('books').countDocuments({
       hidden: { $ne: true },
-      language: { $nin: ['English', 'english', null], $not: { $regex: /english/i } },
-      pages_ocr: { $gte: 10 },
-      $expr: { $gte: ['$pages_translated', { $multiply: ['$pages_ocr', 0.9] }] },
+      is_first_translation: true,
     }),
 
     // Active jobs

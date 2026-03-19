@@ -31,7 +31,6 @@ export const GET = withAuth(async () => {
       totals,
       readableBooks,
       firstTranslations,
-      inProgressTranslations,
       byLanguage,
       byCollection,
       recentlyCompleted,
@@ -59,34 +58,35 @@ export const GET = withAuth(async () => {
         $expr: { $gte: ['$pages_translated', { $multiply: ['$pages_ocr', 0.9] }] },
       }),
 
-      // 3. "First translations" — non-English, non-bilingual books, >=90% translated, >=10 OCR pages
-      // Strict definition: texts never before available in English, now substantially complete
+      // 3. "First translations" — uses verified is_first_translation flag from metadata enrichment
       db.collection('books').aggregate([
         {
           $match: {
             hidden: { $ne: true },
-            language: { $nin: ['English', 'english', null], $not: { $regex: /english/i } },
-            pages_ocr: { $gte: 10 },
-            $expr: { $gte: ['$pages_translated', { $multiply: ['$pages_ocr', 0.9] }] },
+            is_first_translation: true,
           },
         },
         {
           $group: {
             _id: null,
             count: { $sum: 1 },
+            complete: {
+              $sum: {
+                $cond: [
+                  {
+                    $and: [
+                      { $gte: ['$pages_ocr', 10] },
+                      { $gte: ['$pages_translated', { $multiply: ['$pages_ocr', 0.9] }] },
+                    ],
+                  },
+                  1, 0,
+                ],
+              },
+            },
             pages: { $sum: { $ifNull: ['$pages_translated', 0] } },
           },
         },
       ]).toArray(),
-
-      // 3b. In-progress first translations (non-English, some translation but not yet complete)
-      db.collection('books').countDocuments({
-        hidden: { $ne: true },
-        language: { $nin: ['English', 'english', null], $not: { $regex: /english/i } },
-        pages_translated: { $gte: 1 },
-        pages_ocr: { $gte: 10 },
-        $expr: { $lt: ['$pages_translated', { $multiply: ['$pages_ocr', 0.9] }] },
-      }),
 
       // 4. Breakdown by original language
       db.collection('books').aggregate([
@@ -194,7 +194,7 @@ export const GET = withAuth(async () => {
     ]);
 
     const t = totals[0] || { books: 0, pages: 0, pages_ocr: 0, pages_translated: 0 };
-    const ft = firstTranslations[0] || { count: 0, pages: 0 };
+    const ft = firstTranslations[0] || { count: 0, complete: 0, pages: 0 };
     const cost = costData[0] || { total_cost: 0, pages: 0 };
     const jobMap = Object.fromEntries(jobsActive.map((j: any) => [j._id, j.count]));
 
@@ -206,7 +206,7 @@ export const GET = withAuth(async () => {
         readable_books: readableBooks,
         readable_percent: t.books > 0 ? +(readableBooks / t.books * 100).toFixed(1) : 0,
         first_translations: ft.count,
-        first_translations_in_progress: inProgressTranslations as number,
+        first_translations_complete: ft.complete,
         first_translation_pages: ft.pages,
       },
 

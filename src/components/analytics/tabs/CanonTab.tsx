@@ -62,10 +62,10 @@ export default function CanonTab() {
           </div>
           <div>
             <div className="text-3xl font-bold" style={{ color: 'var(--accent-violet)' }}>
-              {formatNumber(canon.first_translations_in_progress)}
+              {formatNumber(canon.first_translations_complete)}
             </div>
             <div className="text-sm mt-1" style={{ color: 'var(--text-muted)' }}>
-              in progress
+              complete ({canon.first_translations - canon.first_translations_complete} in progress)
             </div>
           </div>
         </div>
