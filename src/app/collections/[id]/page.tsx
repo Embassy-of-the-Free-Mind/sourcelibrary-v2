@@ -653,15 +653,13 @@ export default async function CollectionDetailPage({ params }: Props) {
                   </Link>
                 );
               })}
-              {galleryCollectionSlug && (
-                <Link
-                  href={`/gallery/collections/${galleryCollectionSlug}`}
-                  className="aspect-square rounded-lg border border-border-light bg-cream hover:bg-white hover:border-accent-rust/30 transition-all flex flex-col items-center justify-center gap-2 text-muted hover:text-accent-rust"
-                >
-                  <Images className="w-7 h-7" />
-                  <span className="text-xs font-medium">Browse gallery</span>
-                </Link>
-              )}
+              <Link
+                href={galleryCollectionSlug ? `/gallery/collections/${galleryCollectionSlug}` : `/gallery?collection=${id}`}
+                className="aspect-square rounded-lg border border-border-light bg-cream hover:bg-white hover:border-accent-rust/30 transition-all flex flex-col items-center justify-center gap-2 text-muted hover:text-accent-rust"
+              >
+                <Images className="w-7 h-7" />
+                <span className="text-xs font-medium">Browse gallery</span>
+              </Link>
             </div>
           )}
         </div>
