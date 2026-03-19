@@ -210,17 +210,21 @@ export default function SearchPage() {
           first_translation: firstTranslation ? 'true' : undefined,
           library: library || undefined,
         };
-        const [bookData, indexData, imageData] = await Promise.all([
-          searchApi.search(q, { ...bookFilters, search_content: 'true' }),
-          searchApi.index(q, {}),
-          galleryApi.list({ query: q, limit: PREVIEW_IMAGES, minQuality: 0.85 }),
-        ]);
-        setBookResults(bookData.results || []);
-        setBookTotal(bookData.total || 0);
-        setIndexResults((indexData.results || []).slice(0, PREVIEW_INDEX));
-        setIndexTotal(indexData.total || 0);
-        setImageResults(imageData.items || []);
-        setImageTotal(imageData.total || 0);
+        // Fire all searches independently — results render as each resolves
+        const bookPromise = searchApi.search(q, { ...bookFilters, search_content: 'true' }).then(bookData => {
+          setBookResults(bookData.results || []);
+          setBookTotal(bookData.total || 0);
+          setLoading(false); // Show results as soon as books arrive
+        }).catch(() => {});
+        searchApi.index(q, {}).then(indexData => {
+          setIndexResults((indexData.results || []).slice(0, PREVIEW_INDEX));
+          setIndexTotal(indexData.total || 0);
+        }).catch(() => {});
+        galleryApi.list({ query: q, limit: PREVIEW_IMAGES, minQuality: 0.85 }).then(imageData => {
+          setImageResults(imageData.items || []);
+          setImageTotal(imageData.total || 0);
+        }).catch(() => {});
+        await bookPromise; // Wait for books before exiting (for loading state)
       } else if (mode === 'books') {
         const data = await searchApi.search(q, {
           language: language || undefined,
