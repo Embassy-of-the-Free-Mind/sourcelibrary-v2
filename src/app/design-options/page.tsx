@@ -313,7 +313,6 @@ export default async function DesignOptionsPage() {
           </p>
         </div>
       </div>
-      {/* @ts-expect-error — async server component */}
       <LayoutFeaturedCollections />
 
       {/* Existing 3: CollectionsShowcase (image-heavy two-tier) */}
