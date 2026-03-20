@@ -29,18 +29,19 @@ async function computeSnapshot(db: any) {
 
   const t = totals[0] || { pages: 0, pages_ocr: 0, pages_translated: 0 };
 
-  // Second batch: counts that use simple indexed filters
+  // Second batch: simple indexed counts
+  // NOTE: translation_percent is NOT stored on docs — must use $expr on pages_ocr/pages_translated
   const [
-    readable,
     firstTranslations,
     withSummary,
+    withIndex,
     withImages,
     tagged,
     jobsActive,
   ] = await Promise.all([
-    books.countDocuments({ ...notHidden, translation_percent: { $gte: 90 } }),
     books.countDocuments({ ...notHidden, is_first_translation: true }),
-    books.countDocuments({ ...notHidden, summary: { $exists: true, $nin: ['', null] } }),
+    books.countDocuments({ ...notHidden, summary: { $exists: true, $ne: null } }),
+    books.countDocuments({ ...notHidden, index_of_topics: { $exists: true, $ne: null } }),
     books.countDocuments({ ...notHidden, 'detected_images.0': { $exists: true } }),
     books.countDocuments({ ...notHidden, faceted_tags: { $exists: true, $ne: null } }),
     db.collection('jobs').aggregate([
@@ -49,15 +50,18 @@ async function computeSnapshot(db: any) {
     ], { maxTimeMS: 5000 }).toArray(),
   ]);
 
+  // Readable = >=90% of OCR'd pages translated (uses cached page counts)
+  const readable = await books.countDocuments({
+    ...notHidden,
+    pages_ocr: { $gte: 1 },
+    $expr: { $gte: ['$pages_translated', { $multiply: ['$pages_ocr', 0.9] }] },
+  });
+
   const firstTranslationsComplete = await books.countDocuments({
     ...notHidden,
     is_first_translation: true,
-    translation_percent: { $gte: 90 },
-  });
-
-  const withIndex = await books.countDocuments({
-    ...notHidden,
-    index_of_topics: { $exists: true, $nin: ['', null] },
+    pages_ocr: { $gte: 10 },
+    $expr: { $gte: ['$pages_translated', { $multiply: ['$pages_ocr', 0.9] }] },
   });
 
   // Cost query last (different collection, can be slow)
