@@ -51,7 +51,7 @@ interface PageProps {
 const getCachedBookLookup = cache(async (id: string) => {
   const db = await Promise.race([
     getDb(),
-    new Promise<never>((_, reject) => setTimeout(() => reject(new Error('DB timeout')), 10000)),
+    new Promise<never>((_, reject) => setTimeout(() => reject(new Error('DB timeout')), 5000)),
   ]);
   return findBookByIdOrSlug(db, id, {
     chapters: 0,
@@ -99,10 +99,21 @@ const UBIQUITOUS_ENTITIES = new Set([
 ]);
 
 const getRelatedBooks = cache(async (bookId: string, bookAuthor?: string): Promise<CitedBook[]> => {
+  // Hard 5s cap — related books are a nice-to-have, never worth blocking the page
+  return Promise.race([
+    getRelatedBooksInner(bookId, bookAuthor),
+    new Promise<CitedBook[]>((resolve) => setTimeout(() => {
+      console.warn(`[getRelatedBooks] Timed out after 5s for book ${bookId}`);
+      resolve([]);
+    }, 5000)),
+  ]);
+});
+
+async function getRelatedBooksInner(bookId: string, bookAuthor?: string): Promise<CitedBook[]> {
   try {
     const db = await Promise.race([
       getDb(),
-      new Promise<never>((_, reject) => setTimeout(() => reject(new Error('DB timeout')), 8000)),
+      new Promise<never>((_, reject) => setTimeout(() => reject(new Error('DB timeout')), 3000)),
     ]);
 
     // Step 1: Find person entities mentioned in THIS book.
@@ -110,7 +121,7 @@ const getRelatedBooks = cache(async (bookId: string, bookAuthor?: string): Promi
     // Avoids the slow $map over large books arrays (was 3s for well-connected books).
     const personEntities = await db.collection('entities').find(
       { type: 'person', 'books.book_id': bookId },
-      { projection: { name: 1, aliases: 1 } },
+      { projection: { name: 1, aliases: 1 }, maxTimeMS: 3000 },
     ).toArray();
 
     // Step 2: For each person entity, check if they authored OTHER books in our library.
@@ -149,7 +160,7 @@ const getRelatedBooks = cache(async (bookId: string, bookAuthor?: string): Promi
       };
       const candidateBooks = await db.collection('books').find(
         authorFilter,
-        { projection: { id: 1, author: 1 } },
+        { projection: { id: 1, author: 1 }, maxTimeMS: 3000 },
       ).toArray();
       // Verify word-boundary matches and map to entity names
       for (const doc of candidateBooks) {
@@ -169,7 +180,7 @@ const getRelatedBooks = cache(async (bookId: string, bookAuthor?: string): Promi
     if (directCitationBookIds.size > 0) {
       const bookDocs = await db.collection('books').find(
         { id: { $in: [...directCitationBookIds.keys()] }, hidden: { $ne: true } },
-        { projection: { id: 1, display_title: 1, title: 1, author: 1, published: 1, year: 1 } },
+        { projection: { id: 1, display_title: 1, title: 1, author: 1, published: 1, year: 1 }, maxTimeMS: 3000 },
       ).toArray();
       for (const doc of bookDocs) {
         directBooks.push({
@@ -237,7 +248,7 @@ const getRelatedBooks = cache(async (bookId: string, bookAuthor?: string): Promi
         }},
         { $unwind: { path: '$book_doc', preserveNullAndEmptyArrays: true } },
         { $match: { 'book_doc.hidden': { $ne: true } } },
-      ]).toArray();
+      ], { maxTimeMS: 4000 }).toArray();
 
       sharedBooks = sharedResults.map(r => ({
         id: r._id as string,
@@ -258,7 +269,7 @@ const getRelatedBooks = cache(async (bookId: string, bookAuthor?: string): Promi
     console.error('[getRelatedBooks] Error:', err);
     return [];
   }
-});
+}
 
 // Deferred related books section — runs expensive entity queries independently
 // so the main book content streams to the user immediately
@@ -273,12 +284,12 @@ async function RelatedBooksSection({ bookId, bookAuthor, bookLanguage, workId, b
 
   const [authorCount, workSiblings, entityRelatedBooks] = await Promise.all([
     bookAuthor && bookAuthor !== 'Unknown'
-      ? db.collection('books').countDocuments({ author: bookAuthor, id: { $ne: bookId } })
+      ? db.collection('books').countDocuments({ author: bookAuthor, id: { $ne: bookId } }, { maxTimeMS: 3000 })
       : Promise.resolve(0),
     workId
       ? db.collection('books').find(
         { work_id: workId, id: { $ne: bookId } },
-        { projection: { id: 1, title: 1, display_title: 1, language: 1, published: 1 } }
+        { projection: { id: 1, title: 1, display_title: 1, language: 1, published: 1 }, maxTimeMS: 3000 }
       ).sort({ published: 1 }).limit(20).toArray()
       : Promise.resolve([]),
     getRelatedBooks(bookId, bookAuthor),
@@ -558,13 +569,14 @@ async function getBook(id: string): Promise<{ book: Book; pages: Page[]; totalBo
           display_brightness: 1,
           page_type: 1,
         },
-        maxTimeMS: 8000,
+        maxTimeMS: 5000,
       })
       .sort({ page_number: 1 })
       .toArray(),
     db.collection('books').estimatedDocumentCount().catch(() => 1200),
     db.collection('gallery_images').countDocuments(
       { book_id: bookId, gallery_quality: { $gte: 0.7 }, book_hidden: { $ne: true } },
+      { maxTimeMS: 5000 },
     ).catch(() => 0),
     // Top 8 gallery images for preview row
     db.collection('gallery_images')
