@@ -17,7 +17,21 @@ export const revalidate = 600;
 export const dynamicParams = true;
 export const maxDuration = 60;
 export async function generateStaticParams() {
-  return []; // All paths generated on demand via ISR
+  // Pre-render top collections at build time so the first visitor never hits a cold cache
+  try {
+    const db = await Promise.race([
+      getDb(),
+      new Promise<never>((_, reject) => setTimeout(() => reject(new Error('timeout')), 5000)),
+    ]);
+    const collections = await db.collection('collections')
+      .find({ hidden: { $ne: true } }, { projection: { slug: 1 } })
+      .sort({ book_count: -1 })
+      .limit(30)
+      .toArray();
+    return collections.map(c => ({ id: c.slug }));
+  } catch {
+    return []; // Fallback: generate on demand
+  }
 }
 
 interface Props {
