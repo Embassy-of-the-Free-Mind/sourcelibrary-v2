@@ -52,10 +52,10 @@ interface SearchResult {
   year: number;
   language: string;
   place: string;
-  has_scan: boolean;
+  has_iiif_scan: boolean;
   scan_sources: string[];
   iiif_manifest_url: string | null;
-  has_published_translation: boolean;
+  has_english_translation: boolean;
   translation_sources: string[];
   in_source_library: boolean;
   source_library_id: string | null;
@@ -551,7 +551,7 @@ function SearchResultsTable({ results }: { results: SearchResult[] }) {
               <td className="text-center px-3 py-3 text-stone-600">{r.year || '?'}</td>
               <td className="text-center px-3 py-3 text-stone-600">{r.language}</td>
               <td className="text-center px-3 py-3">
-                {r.has_scan ? (
+                {r.has_iiif_scan ? (
                   r.iiif_manifest_url ? (
                     <a href={r.iiif_manifest_url} target="_blank" rel="noopener noreferrer"
                       className="inline-flex items-center gap-1 text-blue-600 hover:text-blue-800">
@@ -565,7 +565,7 @@ function SearchResultsTable({ results }: { results: SearchResult[] }) {
                 )}
               </td>
               <td className="text-center px-3 py-3">
-                {r.has_published_translation ? (
+                {r.has_english_translation ? (
                   <Languages className="w-4 h-4 text-green-500 mx-auto" />
                 ) : (
                   <span className="text-stone-300">—</span>

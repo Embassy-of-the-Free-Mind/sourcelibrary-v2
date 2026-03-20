@@ -91,39 +91,55 @@ async function handleSearch(db: any, params: URLSearchParams) {
   const skip = parseInt(params.get('skip') || '0');
 
   const filter: Record<string, any> = {};
+  let useTextScore = false;
   if (q) {
-    filter.$or = [
-      { title: { $regex: q, $options: 'i' } },
-      { author: { $regex: q, $options: 'i' } },
-    ];
+    // Try text index first (fast), fall back to author_surname index
+    filter.$text = { $search: q };
+    useTextScore = true;
   }
   if (language) filter.language = language;
-  if (hasScan === 'true') filter.has_scan = true;
-  if (hasScan === 'false') filter.has_scan = false;
-  if (hasTranslation === 'true') filter.has_published_translation = true;
-  if (hasTranslation === 'false') filter.has_published_translation = false;
+  if (hasScan === 'true') filter.has_iiif_scan = true;
+  if (hasScan === 'false') filter.has_iiif_scan = false;
+  if (hasTranslation === 'true') filter.has_english_translation = true;
+  if (hasTranslation === 'false') filter.has_english_translation = false;
   if (inSL === 'true') filter.in_source_library = true;
   if (yearMin) filter.year = { ...filter.year, $gte: parseInt(yearMin) };
   if (yearMax) filter.year = { ...filter.year, $lte: parseInt(yearMax) };
 
-  const [results, count] = await Promise.all([
-    col.find(filter)
-      .sort({ year: 1, author_surname: 1 })
-      .skip(skip)
-      .limit(limit)
-      .project({
-        ustc_id: 1, title: 1, author: 1, year: 1, language: 1, place: 1, format: 1,
-        has_scan: 1, scan_sources: 1, iiif_manifest_url: 1,
-        has_published_translation: 1, translation_sources: 1,
-        in_source_library: 1, source_library_id: 1,
-        ocr_status: 1, translation_status: 1, sl_translation_percent: 1,
-        work_cluster_id: 1,
-      })
-      .toArray(),
-    col.countDocuments(filter),
-  ]);
+  const projection: Record<string, number> = {
+    ustc_id: 1, title: 1, author: 1, year: 1, language: 1, place: 1, format: 1,
+    has_iiif_scan: 1, scan_sources: 1, iiif_manifest_url: 1,
+    has_english_translation: 1, translation_sources: 1,
+    in_source_library: 1, source_library_id: 1,
+    ocr_status: 1, translation_status: 1, sl_translation_percent: 1,
+    work_cluster_id: 1,
+  };
+  const sort: Record<string, any> = useTextScore
+    ? { score: { $meta: 'textScore' } }
+    : { year: 1, author_surname: 1 };
+  if (useTextScore) projection.score = { $meta: 'textScore' } as any;
 
-  return NextResponse.json({ results, total: count, limit, skip });
+  try {
+    const [results, count] = await Promise.all([
+      col.find(filter).sort(sort).skip(skip).limit(limit).project(projection).toArray(),
+      col.countDocuments(filter),
+    ]);
+    return NextResponse.json({ results, total: count, limit, skip });
+  } catch (err: any) {
+    // If text index doesn't exist, fall back to author_surname index
+    if (err?.codeName === 'IndexNotFound' || err?.code === 27) {
+      if (q) {
+        delete filter.$text;
+        filter.author_surname = q.toLowerCase().trim().split(/\s+/)[0];
+      }
+      const [results, count] = await Promise.all([
+        col.find(filter).sort({ year: 1, author_surname: 1 }).skip(skip).limit(limit).project(projection).toArray(),
+        col.countDocuments(filter),
+      ]);
+      return NextResponse.json({ results, total: count, limit, skip });
+    }
+    throw err;
+  }
 }
 
 async function handleTimeline(db: any, params: URLSearchParams) {
@@ -139,8 +155,8 @@ async function handleTimeline(db: any, params: URLSearchParams) {
       $group: {
         _id: { $subtract: ['$year', { $mod: ['$year', 10] }] },
         editions: { $sum: 1 },
-        with_scan: { $sum: { $cond: ['$has_scan', 1, 0] } },
-        with_translation: { $sum: { $cond: ['$has_published_translation', 1, 0] } },
+        with_scan: { $sum: { $cond: ['$has_iiif_scan', 1, 0] } },
+        with_translation: { $sum: { $cond: ['$has_english_translation', 1, 0] } },
         in_source_library: { $sum: { $cond: ['$in_source_library', 1, 0] } },
       }
     },
