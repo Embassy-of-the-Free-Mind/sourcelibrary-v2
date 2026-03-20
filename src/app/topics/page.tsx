@@ -120,11 +120,14 @@ export default async function TopicsPage() {
   const { groups, totalBooks } = await fetchFacetCounts();
 
   return (
-    <ContentPageLayout>
-      <ContentHeader
-        title="Browse the Library"
-        subtitle={`${totalBooks.toLocaleString()} books across six dimensions. Click any tag to explore, or combine tags to narrow your search.`}
-      />
+    <ContentPageLayout
+      header={
+        <ContentHeader
+          title="Browse the Library"
+          subtitle={`${totalBooks.toLocaleString()} books across six dimensions. Click any tag to explore, or combine tags to narrow your search.`}
+        />
+      }
+    >
 
       <div className="space-y-12">
         {groups.map((group) => (
