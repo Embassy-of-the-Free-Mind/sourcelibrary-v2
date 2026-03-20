@@ -177,12 +177,7 @@ async function getBookStats() {
     { projection: { pages_count: 1, pages_translated: 1 } }
   );
 
-  // Simple count — pages_translated > 0 is indexed and fast
-  const totalTranslated = await db.collection('books').countDocuments({
-    pages_translated: { $gt: 0 },
-  });
-
-  return { bySlug, fludd2, totalTranslated };
+  return { bySlug, fludd2 };
 }
 
 interface BookStats { pages_count: number; pages_translated: number; language?: string }
@@ -222,7 +217,7 @@ function buildWikiText(config: typeof FEATURED_BOOKS[number], book: BookStats, f
 }
 
 export default async function WikipediaContributePage() {
-  const { bySlug, fludd2, totalTranslated } = await getBookStats();
+  const { bySlug, fludd2 } = await getBookStats();
 
   const posts = FEATURED_BOOKS.map(config => {
     const book = bySlug.get(config.slug);
@@ -257,7 +252,7 @@ export default async function WikipediaContributePage() {
       header={
         <ContentHeader
           title="Wikipedia Contributions"
-          subtitle={`Help readers discover ${totalTranslated.toLocaleString()}+ translated historical texts`}
+          subtitle="Help readers discover thousands of translated historical texts"
         />
       }
       bg="bg-cream"
