@@ -6,7 +6,7 @@ import { sortCollections } from '@/lib/collections-utils';
 import EraTimeline, { type DecadeBucket } from '@/components/collections/EraTimeline';
 import type { Metadata } from 'next';
 
-export const dynamic = 'force-dynamic';
+export const revalidate = 3600; // ISR: rebuild every hour
 
 export const metadata: Metadata = {
   title: 'Collections | Source Library',
@@ -148,11 +148,14 @@ export default async function CollectionsPage() {
   const totalBooks = categories.reduce((s, c) => s + c.book_count, 0);
 
   return (
-    <ContentPageLayout>
-      <ContentHeader
-        title="Collections"
-        subtitle={`${totalBooks.toLocaleString()} books organized into ${categories.length} thematic collections spanning three millennia of human knowledge.`}
-      />
+    <ContentPageLayout
+      header={
+        <ContentHeader
+          title="Collections"
+          subtitle={`${totalBooks.toLocaleString()} books organized into ${categories.length} thematic collections spanning three millennia of human knowledge.`}
+        />
+      }
+    >
 
       {/* Link to curated exhibitions */}
       <div className="mb-8">

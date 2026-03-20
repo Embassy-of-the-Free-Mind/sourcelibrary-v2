@@ -115,11 +115,14 @@ export default async function TopicsPage() {
   const { topics, totalBooks } = await fetchTopics();
 
   return (
-    <ContentPageLayout>
-      <ContentHeader
-        title="Browse by Topic"
-        subtitle={`${totalBooks.toLocaleString()} books organized into ${topics.length} topics, discovered by clustering the library's keyword indexes.`}
-      />
+    <ContentPageLayout
+      header={
+        <ContentHeader
+          title="Browse by Topic"
+          subtitle={`${totalBooks.toLocaleString()} books organized into ${topics.length} topics, discovered by clustering the library's keyword indexes.`}
+        />
+      }
+    >
 
       <div className="grid gap-4 grid-cols-1 sm:grid-cols-2 lg:grid-cols-3">
         {topics.map((topic) => (
