@@ -181,7 +181,7 @@ async function fetchCollectionData(id: string) {
   // Wrap getDb() in a timeout — when MongoDB Atlas is overloaded, the connection
   // itself can hang for 60+ seconds. Better to fail fast and let ISR retry.
   const db = await withTimeout(getDb(), 10000, null as unknown as Awaited<ReturnType<typeof getDb>>);
-  if (!db) return null;
+  if (!db) throw new Error('DB connection timeout');
 
   const collection = await withTimeout(
     db.collection('collections').findOne({ slug: id }),
