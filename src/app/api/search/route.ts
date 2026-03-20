@@ -243,7 +243,17 @@ export async function GET(request: NextRequest) {
           return await db.collection('pages').aggregate([
             buildPageSearchStage(query, searchBookIds),
             { $limit: pageLimit },
-            { $project: { id: 1, page_number: 1, book_id: 1, 'translation.data': 1, 'ocr.data': 1 } },
+            {
+              $project: {
+                id: 1,
+                page_number: 1,
+                book_id: 1,
+                highlights: { $meta: 'searchHighlights' },
+                // Only fetch full text as fallback if highlights are empty
+                'translation.data': 1,
+                'ocr.data': 1,
+              },
+            },
           ], { maxTimeMS: 10000 }).toArray();
         } catch {
           // Fallback: skip page search if Atlas Search index unavailable
@@ -282,10 +292,24 @@ export async function GET(request: NextRequest) {
         if (!book.pages_count || book.pages_count === 0) continue;
         if (!pagesOnly && seenBooks.has(book.id)) continue;
 
-        const translationText = page.translation?.data as string || '';
-        const ocrText = page.ocr?.data as string || '';
-        const snippetSource = translationText ? translationText : ocrText;
-        const snippetType = translationText ? 'translation' : 'ocr';
+        // Prefer Atlas Search highlights (faster, more precise) over full-text extraction
+        let snippet = '';
+        let snippetType: 'translation' | 'ocr' = 'ocr';
+        const highlights = page.highlights as Array<{ path: string; texts: Array<{ value: string; type: string }> }> | undefined;
+        if (highlights && highlights.length > 0) {
+          // Prefer translation highlights over OCR
+          const translationHL = highlights.find(h => h.path === 'translation.data');
+          const hl = translationHL || highlights[0];
+          snippet = hl.texts.map(t => t.value).join('');
+          snippetType = hl.path === 'translation.data' ? 'translation' : 'ocr';
+        } else {
+          // Fallback to full text extraction
+          const translationText = page.translation?.data as string || '';
+          const ocrText = page.ocr?.data as string || '';
+          const snippetSource = translationText || ocrText;
+          snippetType = translationText ? 'translation' : 'ocr';
+          snippet = extractSnippet(snippetSource, query);
+        }
 
         results.push({
           id: `${book.id}-p${page.page_number}`,
@@ -304,7 +328,7 @@ export async function GET(request: NextRequest) {
           doi: book.doi,
           categories: book.categories,
           page_number: page.page_number as number,
-          snippet: extractSnippet(snippetSource, query),
+          snippet,
           snippet_type: snippetType,
           thumbnail: (book as any).thumbnail,
           thumbnail_blob: (book as any).thumbnail_blob,

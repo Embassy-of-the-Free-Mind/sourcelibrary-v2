@@ -118,6 +118,11 @@ export function buildPageSearchStage(query: string, bookIds?: string | string[])
         minimumShouldMatch: 1,
         ...(filter.length > 0 && { filter }),
       },
+      highlight: {
+        path: ['translation.data', 'ocr.data'],
+        maxCharsToExamine: 100000,
+        maxNumPassages: 2,
+      },
     },
   };
 }
