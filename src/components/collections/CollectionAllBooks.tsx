@@ -188,7 +188,7 @@ export default function CollectionAllBooks({
                 ? Math.round((book.pages_translated / book.pages_ocr) * 100)
                 : 0,
             }}
-            priority={!expanded && i < 10}
+            priority={!expanded && i < 4}
           />
         ))}
 
