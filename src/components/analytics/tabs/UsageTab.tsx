@@ -16,13 +16,22 @@ interface UsageTabProps {
 export default function UsageTab({ days }: UsageTabProps) {
   const [data, setData] = useState<UsageStats | null>(null);
   const [loading, setLoading] = useState(true);
+  const [slow, setSlow] = useState(false);
 
   useEffect(() => {
     setLoading(true);
-    analytics.usage(days).then(setData).finally(() => setLoading(false));
+    setSlow(false);
+    const timer = setTimeout(() => setSlow(true), 3000);
+    analytics.usage(days).then(setData).finally(() => { setLoading(false); clearTimeout(timer); });
+    return () => clearTimeout(timer);
   }, [days]);
 
-  if (loading) return <div className="py-12"><BookLoader size="xs" /></div>;
+  if (loading) return (
+    <div className="py-12 text-center">
+      <BookLoader size="xs" />
+      {slow && <p className="text-sm mt-4" style={{ color: 'var(--text-muted)' }}>Crunching cost and pipeline data...</p>}
+    </div>
+  );
   if (!data) return null;
 
   return (

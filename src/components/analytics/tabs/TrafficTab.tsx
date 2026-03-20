@@ -10,13 +10,22 @@ import { BarChart } from '../charts/BarChart';
 export default function TrafficTab() {
   const [data, setData] = useState<TrafficData | null>(null);
   const [loading, setLoading] = useState(true);
+  const [slow, setSlow] = useState(false);
 
   useEffect(() => {
     setLoading(true);
-    analytics.traffic().then(setData).finally(() => setLoading(false));
+    setSlow(false);
+    const timer = setTimeout(() => setSlow(true), 3000);
+    analytics.traffic().then(setData).finally(() => { setLoading(false); clearTimeout(timer); });
+    return () => clearTimeout(timer);
   }, []);
 
-  if (loading) return <div className="py-12"><BookLoader size="xs" /></div>;
+  if (loading) return (
+    <div className="py-12 text-center">
+      <BookLoader size="xs" />
+      {slow && <p className="text-sm mt-4" style={{ color: 'var(--text-muted)' }}>Aggregating 30 days of pageview data...</p>}
+    </div>
+  );
 
   if (!data) {
     return (

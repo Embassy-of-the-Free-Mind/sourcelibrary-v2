@@ -21,13 +21,22 @@ interface PipelineTabProps {
 export default function PipelineTab({ hours }: PipelineTabProps) {
   const [pipelineData, setPipelineData] = useState<PipelineData | null>(null);
   const [loading, setLoading] = useState(true);
+  const [slow, setSlow] = useState(false);
 
   useEffect(() => {
     setLoading(true);
-    analytics.pipeline(hours).then(setPipelineData).finally(() => setLoading(false));
+    setSlow(false);
+    const timer = setTimeout(() => setSlow(true), 3000);
+    analytics.pipeline(hours).then(setPipelineData).finally(() => { setLoading(false); clearTimeout(timer); });
+    return () => clearTimeout(timer);
   }, [hours]);
 
-  if (loading) return <div className="py-12"><BookLoader size="xs" /></div>;
+  if (loading) return (
+    <div className="py-12 text-center">
+      <BookLoader size="xs" />
+      {slow && <p className="text-sm mt-4" style={{ color: 'var(--text-muted)' }}>Loading pipeline snapshots and cron health...</p>}
+    </div>
+  );
 
   if (!pipelineData) {
     return (
