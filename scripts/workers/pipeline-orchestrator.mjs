@@ -51,28 +51,162 @@ const DRY_RUN = args.includes('--dry-run');
 const phaseIdx = args.indexOf('--phase');
 const ONLY_PHASE = phaseIdx >= 0 ? parseFloat(args[phaseIdx + 1]) : null;
 
-// Submission limits — much higher than the Vercel cron since we have no time budget
-const ENROLL_LIMIT = 100;
-const ARCHIVE_LIMIT = 500;
-const OCR_SUBMIT_LIMIT = 200;
+// Submission limits — defaults, may be reduced by DB health probe
+let ENROLL_LIMIT = 100;
+let ARCHIVE_LIMIT = 500;
+let OCR_SUBMIT_LIMIT = 200;
 const MAX_ACTIVE_BATCH_OCR = 500; // Gemini Batch API is resilient
-const METADATA_ENRICH_LIMIT = 50;
-const TRANSLATE_SUBMIT_LIMIT = 20;
-const MAX_INFLIGHT_TRANSLATIONS = 30; // Total books in translate_submitted — caps concurrent Lambda workers
-const ENRICH_LIMIT = 30;
-const CHAPTER_LIMIT = 50;
-const IMAGE_SUBMIT_LIMIT = 10;
-const FINALIZE_LIMIT = 200;
-const TRANSLITERATE_LIMIT = 10;  // Books per run (pages processed inline)
+let METADATA_ENRICH_LIMIT = 50;
+let TRANSLATE_SUBMIT_LIMIT = 20;
+let MAX_INFLIGHT_TRANSLATIONS = 30; // Total books in translate_submitted — caps concurrent Lambda workers
+let ENRICH_LIMIT = 30;
+let CHAPTER_LIMIT = 50;
+let IMAGE_SUBMIT_LIMIT = 10;
+let FINALIZE_LIMIT = 200;
+let TRANSLITERATE_LIMIT = 10;  // Books per run (pages processed inline)
 const TRANSLITERATE_CONCURRENCY = 10;  // Parallel Gemini calls per book
-const MAX_ACTIVE_IMAGE_JOBS = 15;
+let MAX_ACTIVE_IMAGE_JOBS = 15;
 const PREVIEW_PAGE_COUNT = 25;
-const PREVIEW_LIMIT = 20; // Books per run to queue preview OCR
+let PREVIEW_LIMIT = 20; // Books per run to queue preview OCR
 const MAX_RETRIES = 3;
 const ENROLL_WINDOW_DAYS = 14;
 
 // Delay between API calls (ms) to avoid overwhelming production
 const API_DELAY_MS = 500;
+
+// ── DB Health Probe (ported from src/lib/adaptive-limits.ts) ──
+// Probes DB latency and active job count before each run.
+// On degraded: halves all submission limits.
+// On critical: slams to minimums and cancels pending jobs.
+
+async function probeDbHealth(db) {
+  const t0 = Date.now();
+  let findMs = 0, countMs = 0, activeJobs = 0;
+
+  // Signal 1: Query latency — time a find + countDocuments on pages
+  try {
+    const sampleBook = await db.collection('books').findOne(
+      { 'pipeline_auto.status': { $exists: true } },
+      { projection: { id: 1 }, maxTimeMS: 3000 }
+    );
+    if (sampleBook) {
+      const t1 = Date.now();
+      await db.collection('pages').findOne(
+        { book_id: sampleBook.id, 'translation.data': { $exists: true } },
+        { projection: { id: 1 }, maxTimeMS: 3000 }
+      );
+      findMs = Date.now() - t1;
+
+      const t2 = Date.now();
+      await db.collection('pages').countDocuments(
+        { book_id: sampleBook.id, 'ocr.data': { $exists: true, $ne: '' } },
+        { maxTimeMS: 3000 }
+      );
+      countMs = Date.now() - t2;
+    }
+  } catch {
+    findMs = 3000; // treat timeout as worst-case
+    countMs = 3000;
+  }
+
+  // Signal 2: Active jobs
+  try {
+    activeJobs = await db.collection('jobs').countDocuments(
+      { status: 'processing' },
+      { maxTimeMS: 5000 }
+    );
+  } catch {
+    activeJobs = 999; // assume worst-case
+  }
+
+  // Grade
+  let grade = 'healthy';
+  if (findMs > 1000 || countMs > 1500 || activeJobs > 200) grade = 'critical';
+  else if (findMs > 300 || countMs > 500 || activeJobs > 100) grade = 'degraded';
+
+  const duration = Date.now() - t0;
+  console.log(`[health] grade=${grade} find=${findMs}ms count=${countMs}ms jobs=${activeJobs} (probed in ${duration}ms)`);
+
+  // Apply throttling
+  if (grade === 'critical') {
+    console.log('[health] CRITICAL — slamming all limits to minimums, cancelling pending jobs');
+    ENROLL_LIMIT = 5;
+    ARCHIVE_LIMIT = 10;
+    OCR_SUBMIT_LIMIT = 2;
+    METADATA_ENRICH_LIMIT = 2;
+    TRANSLATE_SUBMIT_LIMIT = 2;
+    MAX_INFLIGHT_TRANSLATIONS = 3;
+    ENRICH_LIMIT = 2;
+    CHAPTER_LIMIT = 2;
+    IMAGE_SUBMIT_LIMIT = 2;
+    FINALIZE_LIMIT = 10;
+    TRANSLITERATE_LIMIT = 2;
+    MAX_ACTIVE_IMAGE_JOBS = 3;
+    PREVIEW_LIMIT = 2;
+
+    // Cancel pending jobs to relieve pressure
+    try {
+      const result = await db.collection('jobs').updateMany(
+        { status: 'pending' },
+        {
+          $set: {
+            status: 'cancelled',
+            updated_at: new Date(),
+            cancelled_at: new Date(),
+            cancelled_by: 'adaptive-limits',
+          },
+        },
+      );
+      if (result.modifiedCount > 0) {
+        console.log(`[health] Cancelled ${result.modifiedCount} pending jobs`);
+        // Clear book.job references so books can be re-submitted later
+        await db.collection('books').updateMany(
+          { 'job.job_id': { $exists: true } },
+          { $unset: { job: '' }, $set: { updated_at: new Date() } },
+        );
+      }
+    } catch (e) {
+      console.error('[health] Failed to cancel pending jobs:', e.message);
+    }
+  } else if (grade === 'degraded') {
+    console.log('[health] DEGRADED — halving all submission limits');
+    ENROLL_LIMIT = Math.max(5, Math.floor(ENROLL_LIMIT / 2));
+    ARCHIVE_LIMIT = Math.max(10, Math.floor(ARCHIVE_LIMIT / 2));
+    OCR_SUBMIT_LIMIT = Math.max(5, Math.floor(OCR_SUBMIT_LIMIT / 2));
+    METADATA_ENRICH_LIMIT = Math.max(5, Math.floor(METADATA_ENRICH_LIMIT / 2));
+    TRANSLATE_SUBMIT_LIMIT = Math.max(2, Math.floor(TRANSLATE_SUBMIT_LIMIT / 2));
+    MAX_INFLIGHT_TRANSLATIONS = Math.max(5, Math.floor(MAX_INFLIGHT_TRANSLATIONS / 2));
+    ENRICH_LIMIT = Math.max(5, Math.floor(ENRICH_LIMIT / 2));
+    CHAPTER_LIMIT = Math.max(5, Math.floor(CHAPTER_LIMIT / 2));
+    IMAGE_SUBMIT_LIMIT = Math.max(2, Math.floor(IMAGE_SUBMIT_LIMIT / 2));
+    FINALIZE_LIMIT = Math.max(10, Math.floor(FINALIZE_LIMIT / 2));
+    TRANSLITERATE_LIMIT = Math.max(2, Math.floor(TRANSLITERATE_LIMIT / 2));
+    MAX_ACTIVE_IMAGE_JOBS = Math.max(3, Math.floor(MAX_ACTIVE_IMAGE_JOBS / 2));
+    PREVIEW_LIMIT = Math.max(2, Math.floor(PREVIEW_LIMIT / 2));
+  }
+
+  // Persist health state for admin dashboard visibility
+  try {
+    await db.collection('system_config').updateOne(
+      { _id: 'adaptive_limits' },
+      {
+        $set: {
+          'health.grade': grade,
+          'health.find_ms': findMs,
+          'health.count_ms': countMs,
+          'health.active_jobs': activeJobs,
+          'health.measured_at': new Date(),
+          'health.source': 'hetzner-orchestrator',
+          updated_at: new Date(),
+          updated_by: 'adaptive',
+        },
+      },
+      { upsert: true }
+    );
+  } catch { /* best effort */ }
+
+  return grade;
+}
 
 // Page types to skip for translation (mirrors defaults.ts)
 const SKIP_TRANSLATION_PAGE_TYPES = [
@@ -900,6 +1034,12 @@ async function run() {
     return;
   }
 
+  // DB health probe — adjusts submission limits based on Atlas load
+  const healthGrade = await probeDbHealth(db);
+  if (healthGrade === 'critical') {
+    console.log('[pipeline-orchestrator] DB critical — running with minimum limits. Will skip heavy phases.');
+  }
+
   const log = {
     enrolled: 0,
     archived: 0,
@@ -1217,14 +1357,16 @@ async function run() {
             const pages = await db.collection('pages')
               .find({
                 book_id: book.id,
-                $or: [
-                  { cropped_photo: { $exists: true, $nin: [null, ''] } },
-                  { archived_photo: { $regex: /^https?:\/\// } },
-                ],
-                $or: [
-                  { 'ocr.data': { $exists: false } },
-                  { 'ocr.data': null },
-                  { 'ocr.data': '' },
+                $and: [
+                  { $or: [
+                    { cropped_photo: { $exists: true, $nin: [null, ''] } },
+                    { archived_photo: { $regex: /^https?:\/\// } },
+                  ]},
+                  { $or: [
+                    { 'ocr.data': { $exists: false } },
+                    { 'ocr.data': null },
+                    { 'ocr.data': '' },
+                  ]},
                 ],
               })
               .sort({ page_number: 1 })
@@ -2302,21 +2444,27 @@ async function run() {
     const duration = Date.now() - startTime;
 
     // Pipeline funnel snapshot
-    const [facetResult] = await db.collection('books').aggregate([{
-      $facet: {
-        funnel: [
-          { $match: { 'pipeline_auto.status': { $exists: true } } },
-          { $group: { _id: '$pipeline_auto.status', count: { $sum: 1 } } },
-        ],
-        totals: [{ $group: {
-          _id: null,
-          books: { $sum: 1 },
-          pages: { $sum: { $ifNull: ['$pages_count', 0] } },
-          ocr: { $sum: { $ifNull: ['$pages_ocr', 0] } },
-          translated: { $sum: { $ifNull: ['$pages_translated', 0] } },
-        }}],
-      },
-    }]).toArray();
+    let facetResult;
+    try {
+      [facetResult] = await db.collection('books').aggregate([{
+        $facet: {
+          funnel: [
+            { $match: { 'pipeline_auto.status': { $exists: true } } },
+            { $group: { _id: '$pipeline_auto.status', count: { $sum: 1 } } },
+          ],
+          totals: [{ $group: {
+            _id: null,
+            books: { $sum: 1 },
+            pages: { $sum: { $ifNull: ['$pages_count', 0] } },
+            ocr: { $sum: { $ifNull: ['$pages_ocr', 0] } },
+            translated: { $sum: { $ifNull: ['$pages_translated', 0] } },
+          }}],
+        },
+      }], { maxTimeMS: 15000 }).toArray();
+    } catch {
+      console.log('  Summary facet timed out — skipping funnel snapshot');
+      facetResult = { funnel: [], totals: [{ books: 0, pages: 0, ocr: 0, translated: 0 }] };
+    }
 
     const counts = Object.fromEntries((facetResult?.funnel || []).map(s => [s._id, s.count]));
     const totals = facetResult?.totals?.[0] || { books: 0, pages: 0, ocr: 0, translated: 0 };
@@ -2390,7 +2538,8 @@ async function run() {
           },
           errors: log.errors.slice(0, 50).map(msg => ({ message: msg, timestamp: new Date() })),
           error_count: log.errors.length,
-          summary: `E:${log.enrolled} A:${log.archived} P:${log.preview_queued} O:${log.ocr_submitted}/${log.ocr_advanced} M:${log.metadata_enriched} Tr:${log.transliterated}/${log.transliterate_pages}p T:${log.translate_submitted}/${log.translate_advanced} R:${log.enriched} C:${log.chapters_extracted} I:${log.images_submitted}/${log.images_advanced} F:${log.finalized}`,
+          health_grade: healthGrade,
+          summary: `[${healthGrade}] E:${log.enrolled} A:${log.archived} P:${log.preview_queued} O:${log.ocr_submitted}/${log.ocr_advanced} M:${log.metadata_enriched} Tr:${log.transliterated}/${log.transliterate_pages}p T:${log.translate_submitted}/${log.translate_advanced} R:${log.enriched} C:${log.chapters_extracted} I:${log.images_submitted}/${log.images_advanced} F:${log.finalized}`,
         }),
       ]);
     }
