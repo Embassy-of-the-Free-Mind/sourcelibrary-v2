@@ -6,7 +6,8 @@ import ContentPageLayout, { ContentHeader } from '@/components/layout/ContentPag
 import { LIBRARY_PARTNERS, getPartnerByProvider } from '@/lib/library-partners';
 import type { Metadata } from 'next';
 
-export const revalidate = 3600;
+export const dynamic = 'force-dynamic';
+export const maxDuration = 30;
 
 export const metadata: Metadata = {
   title: 'Libraries | Source Library',
@@ -48,25 +49,27 @@ async function fetchProviderStats(): Promise<ProviderStats[]> {
         _id: '$image_source.provider',
         count: { $sum: 1 },
         languages: { $addToSet: '$language' },
-        bookIds: { $push: '$id' },
+        // Keep only 3 book IDs per provider for hero image lookup
+        sampleIds: { $push: '$id' },
       },
     },
     { $sort: { count: -1 as const } },
+    { $project: { count: 1, languages: 1, sampleIds: { $slice: ['$sampleIds', 3] } } },
   ];
 
   const results = await db.collection('books').aggregate(pipeline, { maxTimeMS: 10000 }).toArray();
 
-  // Fetch one hero gallery image per provider
-  const allBookIds = results.flatMap(r => (r.bookIds as string[]).slice(0, 50));
+  // Fetch one hero gallery image per provider (small $in query)
+  const allBookIds = results.flatMap(r => (r.sampleIds as string[]));
   const heroImages = allBookIds.length > 0
     ? await db.collection('gallery_images')
         .find({
           book_id: { $in: allBookIds },
           gallery_quality: { $gte: 0.7 },
           type: { $nin: ['decorative', 'symbol', 'musical_score'] },
-        })
+        }, { maxTimeMS: 5000 })
         .sort({ gallery_quality: -1 })
-        .limit(200)
+        .limit(30)
         .toArray()
         .catch(() => [])
     : [];
@@ -74,7 +77,7 @@ async function fetchProviderStats(): Promise<ProviderStats[]> {
   // Build a map: provider → best image URL
   const bookToProvider = new Map<string, string>();
   for (const r of results) {
-    for (const bid of (r.bookIds as string[]).slice(0, 50)) {
+    for (const bid of (r.sampleIds as string[])) {
       bookToProvider.set(bid, r._id as string);
     }
   }
@@ -131,8 +134,8 @@ async function fetchContributingLibraries(): Promise<ContributingLibrary[]> {
 
 export default async function LibrariesPage() {
   const [stats, contributingLibraries] = await Promise.all([
-    fetchProviderStats(),
-    fetchContributingLibraries(),
+    fetchProviderStats().catch((err) => { console.error('Libraries provider fetch failed:', err); return [] as ProviderStats[]; }),
+    fetchContributingLibraries().catch((err) => { console.error('Libraries contributing fetch failed:', err); return [] as ContributingLibrary[]; }),
   ]);
 
   const partners = stats

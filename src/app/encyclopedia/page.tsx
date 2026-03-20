@@ -62,7 +62,8 @@ async function getEntities(searchParams: SearchParams) {
 
   const [entities, total, stats, letterCounts] = await Promise.all([
     db.collection('entities')
-      .find(filter, { maxTimeMS: 10000 })
+      .find(filter)
+      .maxTimeMS(10000)
       .sort(sortMode === 'alpha' ? { name: 1 } : { book_count: -1, total_mentions: -1 })
       .skip(offset)
       .limit(PER_PAGE)

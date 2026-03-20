@@ -766,6 +766,13 @@ async function submitOcrDirectly(db, book, { modelOverride } = {}) {
               { inlineData: { mimeType: item.image.mimeType, data: item.image.data } },
             ],
           }],
+          safetySettings: [
+            { category: 'HARM_CATEGORY_HARASSMENT', threshold: 'BLOCK_NONE' },
+            { category: 'HARM_CATEGORY_HATE_SPEECH', threshold: 'BLOCK_NONE' },
+            { category: 'HARM_CATEGORY_SEXUALLY_EXPLICIT', threshold: 'BLOCK_NONE' },
+            { category: 'HARM_CATEGORY_DANGEROUS_CONTENT', threshold: 'BLOCK_NONE' },
+            { category: 'HARM_CATEGORY_CIVIC_INTEGRITY', threshold: 'BLOCK_NONE' },
+          ],
           generationConfig: {
             temperature: 0.1,
             maxOutputTokens: 16384,
@@ -795,6 +802,13 @@ async function submitOcrDirectly(db, book, { modelOverride } = {}) {
               { inlineData: { mimeType: item.image.mimeType, data: item.image.data } },
             ],
           }],
+          safetySettings: [
+            { category: 'HARM_CATEGORY_HARASSMENT', threshold: 'BLOCK_NONE' },
+            { category: 'HARM_CATEGORY_HATE_SPEECH', threshold: 'BLOCK_NONE' },
+            { category: 'HARM_CATEGORY_SEXUALLY_EXPLICIT', threshold: 'BLOCK_NONE' },
+            { category: 'HARM_CATEGORY_DANGEROUS_CONTENT', threshold: 'BLOCK_NONE' },
+            { category: 'HARM_CATEGORY_CIVIC_INTEGRITY', threshold: 'BLOCK_NONE' },
+          ],
           generationConfig: {
             temperature: 0.1,
             maxOutputTokens: 16384,
@@ -1389,8 +1403,8 @@ async function run() {
     }
 
     // ── Phase 2: Submit OCR via Gemini Batch API (archive_complete -> ocr_submitted) ──
-    // DISABLED: Batch API returning 0 pages — see #256. Using Phase 1.5 Lambda preview instead.
-    if (false && shouldRun(2)) {
+    // Re-enabled: RECITATION fix applied (BLOCK_NONE safety settings + model fallback). See #256.
+    if (shouldRun(2)) {
       console.log('\n--- Phase 2: OCR submission ---');
 
       const activeBatchOcr = await db.collection('batch_jobs').countDocuments({
