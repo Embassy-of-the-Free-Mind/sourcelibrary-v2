@@ -6,7 +6,8 @@ import ExploreNav from '@/components/explore/ExploreNav';
 import DataSources from '@/components/explore/DataSources';
 import { getDb } from '@/lib/mongodb';
 
-export const revalidate = 3600;
+export const dynamic = 'force-dynamic';
+export const maxDuration = 30;
 
 export const metadata: Metadata = {
   title: 'Explore — Source Library',
