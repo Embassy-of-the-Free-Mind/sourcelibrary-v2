@@ -57,7 +57,8 @@ const ARCHIVE_LIMIT = 500;
 const OCR_SUBMIT_LIMIT = 200;
 const MAX_ACTIVE_BATCH_OCR = 500; // Gemini Batch API is resilient
 const METADATA_ENRICH_LIMIT = 50;
-const TRANSLATE_SUBMIT_LIMIT = 100;
+const TRANSLATE_SUBMIT_LIMIT = 20;
+const MAX_INFLIGHT_TRANSLATIONS = 30; // Total books in translate_submitted — caps concurrent Lambda workers
 const ENRICH_LIMIT = 30;
 const CHAPTER_LIMIT = 50;
 const IMAGE_SUBMIT_LIMIT = 10;
@@ -1737,12 +1738,27 @@ async function run() {
       } else {
         const sqsClient = new SQSClient({ region: process.env.AWS_REGION || 'eu-central-1' });
 
-        const readyForTranslate = await db.collection('books')
+        // Pre-check: cap total in-flight translations to prevent Lambda pile-up.
+        // Each translate_submitted book becomes its own Lambda worker. Without this
+        // cap, every 5-min cycle stacks 20 more books on top of whatever's running,
+        // quickly exceeding Atlas's ~40 concurrent connection limit.
+        const inFlight = await db.collection('books').countDocuments({
+          'pipeline_auto.status': 'translate_submitted',
+        });
+        const headroom = MAX_INFLIGHT_TRANSLATIONS - inFlight;
+        const effectiveLimit = Math.max(0, Math.min(TRANSLATE_SUBMIT_LIMIT, headroom));
+        console.log(`  In-flight translations: ${inFlight}/${MAX_INFLIGHT_TRANSLATIONS} — dispatching up to ${effectiveLimit}`);
+
+        if (effectiveLimit === 0) {
+          console.log('  SKIP: at in-flight cap, waiting for existing translations to complete');
+        }
+
+        const readyForTranslate = effectiveLimit > 0 ? await db.collection('books')
           .find({ 'pipeline_auto.status': { $in: ['metadata_enriched', 'ft_verified'] } })
           .sort({ is_first_translation: -1, hidden: 1 })
           .project({ id: 1, title: 1, pages_count: 1, language: 1, 'pipeline_auto.retry_count': 1 })
-          .limit(TRANSLATE_SUBMIT_LIMIT)
-          .toArray();
+          .limit(effectiveLimit)
+          .toArray() : [];
 
         console.log(`  Books ready for translation: ${readyForTranslate.length}`);
 
