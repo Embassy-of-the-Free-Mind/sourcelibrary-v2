@@ -4,7 +4,7 @@ import { useState, useEffect, useCallback } from 'react';
 import Link from 'next/link';
 import {
   ChevronLeft, RefreshCw, BookOpen, Globe, Eye, Languages,
-  Search, Filter, ExternalLink, Library, BarChart3,
+  Search, ExternalLink, Library, Sparkles, ArrowRight,
 } from 'lucide-react';
 import { BookLoader } from '@/components/ui/BookLoader';
 
@@ -52,10 +52,14 @@ interface SearchResult {
   year: number;
   language: string;
   place: string;
+  format: string;
+  // Handle both old and new field names (pre/post rebuild)
   has_scan: boolean;
+  has_iiif_scan: boolean;
   scan_sources: string[];
   iiif_manifest_url: string | null;
   has_published_translation: boolean;
+  has_english_translation: boolean;
   translation_sources: string[];
   in_source_library: boolean;
   source_library_id: string | null;
@@ -75,6 +79,24 @@ interface WorksData {
   pct_translated: number;
 }
 
+// ─── Helpers ─────────────────────────────────────────────────────────────
+
+function iiifViewerUrl(manifestUrl: string): string {
+  return `https://uv-v4.netlify.app/#?manifest=${encodeURIComponent(manifestUrl)}`;
+}
+
+function ustcUrl(ustcId: number): string {
+  return `https://www.ustc.ac.uk/editions/${ustcId}`;
+}
+
+// Handle both old and new field names
+function resultHasScan(r: SearchResult): boolean {
+  return r.has_iiif_scan ?? r.has_scan ?? false;
+}
+function resultHasTranslation(r: SearchResult): boolean {
+  return r.has_english_translation ?? r.has_published_translation ?? false;
+}
+
 // ─── Component ───────────────────────────────────────────────────────────
 
 export default function CatalogCoveragePage() {
@@ -85,7 +107,7 @@ export default function CatalogCoveragePage() {
   const [searchTotal, setSearchTotal] = useState(0);
   const [loading, setLoading] = useState(true);
   const [searching, setSearching] = useState(false);
-  const [activeTab, setActiveTab] = useState<'overview' | 'search' | 'timeline'>('overview');
+  const [activeTab, setActiveTab] = useState<'overview' | 'gaps' | 'search' | 'timeline'>('overview');
 
   // Search state
   const [searchQuery, setSearchQuery] = useState('');
@@ -104,7 +126,6 @@ export default function CatalogCoveragePage() {
     } finally {
       setLoading(false);
     }
-    // Load works separately — it's a heavier query
     try {
       const worksRes = await fetch('/api/catalog/coverage?mode=works');
       if (worksRes.ok) setWorks(await worksRes.json());
@@ -124,15 +145,18 @@ export default function CatalogCoveragePage() {
     }
   }, []);
 
-  const doSearch = useCallback(async () => {
+  const doSearch = useCallback(async (overrides?: { scan?: string; translation?: string; language?: string }) => {
     setSearching(true);
     try {
       const params = new URLSearchParams();
       params.set('mode', 'search');
       if (searchQuery) params.set('q', searchQuery);
-      if (filterLanguage) params.set('language', filterLanguage);
-      if (filterHasScan) params.set('has_scan', filterHasScan);
-      if (filterHasTranslation) params.set('has_translation', filterHasTranslation);
+      const lang = overrides?.language ?? filterLanguage;
+      const scan = overrides?.scan ?? filterHasScan;
+      const trans = overrides?.translation ?? filterHasTranslation;
+      if (lang) params.set('language', lang);
+      if (scan) params.set('has_scan', scan);
+      if (trans) params.set('has_translation', trans);
       params.set('limit', '50');
 
       const res = await fetch(`/api/catalog/coverage?${params}`);
@@ -146,11 +170,26 @@ export default function CatalogCoveragePage() {
     }
   }, [searchQuery, filterLanguage, filterHasScan, filterHasTranslation]);
 
+  const browseGap = useCallback((scan: string, translation: string, language?: string) => {
+    setFilterHasScan(scan);
+    setFilterHasTranslation(translation);
+    setSearchQuery('');
+    if (language) setFilterLanguage(language);
+    setActiveTab('search');
+    setTimeout(() => doSearch({ scan, translation, language }), 0);
+  }, [doSearch]);
+
   useEffect(() => { loadSummary(); }, [loadSummary]);
 
   useEffect(() => {
     if (activeTab === 'timeline') loadTimeline(timelineLanguage);
   }, [activeTab, timelineLanguage, loadTimeline]);
+
+  useEffect(() => {
+    if (activeTab === 'gaps') {
+      doSearch({ scan: 'true', translation: 'false' });
+    }
+  }, [activeTab]); // eslint-disable-line react-hooks/exhaustive-deps
 
   if (loading) {
     return (
@@ -177,6 +216,7 @@ node scripts/catalog-coverage/build.mjs`}
   }
 
   const t = summary?.total;
+  const scannedNotTranslated = works?.works_scanned_not_translated ?? 0;
 
   return (
     <div className="min-h-screen bg-stone-50">
@@ -204,18 +244,18 @@ node scripts/catalog-coverage/build.mjs`}
       <div className="max-w-7xl mx-auto px-6 py-6">
         {/* Summary Cards */}
         {t && (
-          <div className="grid grid-cols-2 md:grid-cols-5 gap-4 mb-8">
+          <div className="grid grid-cols-2 md:grid-cols-5 gap-4 mb-6">
             <StatCard label="Total Editions" value={t.editions.toLocaleString()} icon={<BookOpen className="w-5 h-5" />} />
-            <StatCard label="Distinct Works" value={t.distinct_works.toLocaleString()} icon={<Library className="w-5 h-5" />} />
+            <StatCard label="Distinct Works" value={(works?.total_works ?? t.distinct_works).toLocaleString()} icon={<Library className="w-5 h-5" />} />
             <StatCard
-              label="With Scans"
+              label="With IIIF Scans"
               value={t.with_scan.toLocaleString()}
               sub={`${(t.with_scan / t.editions * 100).toFixed(1)}%`}
               icon={<Eye className="w-5 h-5" />}
               color="blue"
             />
             <StatCard
-              label="With Translation"
+              label="With Eng. Translation"
               value={t.with_translation.toLocaleString()}
               sub={`${(t.with_translation / t.editions * 100).toFixed(1)}%`}
               icon={<Languages className="w-5 h-5" />}
@@ -231,22 +271,39 @@ node scripts/catalog-coverage/build.mjs`}
           </div>
         )}
 
-        {/* Work-level stats */}
-        {works && works.total_works > 0 && (
-          <div className="bg-white rounded-xl border border-stone-200 p-5 mb-8">
-            <h2 className="text-sm font-semibold text-stone-600 uppercase tracking-wide mb-3">Work-Level Coverage</h2>
-            <div className="grid grid-cols-2 md:grid-cols-4 gap-4">
-              <MiniStat label="Scanned works" value={works.works_with_scan} total={works.total_works} />
-              <MiniStat label="Translated works" value={works.works_with_translation} total={works.total_works} />
-              <MiniStat label="Scanned, not translated" value={works.works_scanned_not_translated} total={works.total_works} color="amber" />
-              <MiniStat label="Neither scanned nor translated" value={works.works_neither} total={works.total_works} color="red" />
+        {/* Hero: The Opportunity */}
+        {works && scannedNotTranslated > 0 && (
+          <div className="bg-gradient-to-r from-amber-50 to-orange-50 border border-amber-200 rounded-xl p-6 mb-6">
+            <div className="flex items-start justify-between gap-4">
+              <div>
+                <div className="flex items-center gap-2 mb-2">
+                  <Sparkles className="w-5 h-5 text-amber-600" />
+                  <h2 className="text-lg font-semibold text-stone-800">The Opportunity</h2>
+                </div>
+                <p className="text-stone-600 mb-1">
+                  <span className="text-2xl font-bold text-amber-700">{scannedNotTranslated.toLocaleString()}</span> works
+                  have digital scans but no English translation.
+                </p>
+                <p className="text-sm text-stone-500">
+                  These books are digitized and waiting — they can be OCR&apos;d and translated today.
+                  {works.works_neither > 0 && (
+                    <> Another {works.works_neither.toLocaleString()} works have neither scan nor translation.</>
+                  )}
+                </p>
+              </div>
+              <button
+                onClick={() => browseGap('true', 'false')}
+                className="shrink-0 flex items-center gap-2 px-4 py-2.5 bg-amber-600 text-white rounded-lg text-sm font-medium hover:bg-amber-700 transition-colors"
+              >
+                Browse these books <ArrowRight className="w-4 h-4" />
+              </button>
             </div>
           </div>
         )}
 
         {/* Tabs */}
         <div className="flex gap-1 mb-6 bg-stone-100 rounded-lg p-1 w-fit">
-          {(['overview', 'timeline', 'search'] as const).map(tab => (
+          {(['overview', 'gaps', 'timeline', 'search'] as const).map(tab => (
             <button
               key={tab}
               onClick={() => setActiveTab(tab)}
@@ -256,14 +313,58 @@ node scripts/catalog-coverage/build.mjs`}
                   : 'text-stone-500 hover:text-stone-700'
               }`}
             >
-              {tab === 'overview' ? 'By Language' : tab === 'timeline' ? 'By Decade' : 'Search'}
+              {tab === 'overview' ? 'By Language' : tab === 'gaps' ? 'Actionable Gaps' : tab === 'timeline' ? 'By Decade' : 'Search'}
             </button>
           ))}
         </div>
 
         {/* Tab Content */}
         {activeTab === 'overview' && summary?.by_language && (
-          <LanguageTable data={summary.by_language} />
+          <LanguageTable data={summary.by_language} onLanguageClick={(lang) => browseGap('true', 'false', lang)} />
+        )}
+
+        {activeTab === 'gaps' && (
+          <div>
+            <div className="flex flex-wrap gap-2 mb-4">
+              <GapButton
+                label="Scanned, not translated"
+                count={works?.works_scanned_not_translated}
+                active={filterHasScan === 'true' && filterHasTranslation === 'false'}
+                onClick={() => { setFilterHasScan('true'); setFilterHasTranslation('false'); doSearch({ scan: 'true', translation: 'false' }); }}
+                color="amber"
+              />
+              <GapButton
+                label="Neither scanned nor translated"
+                count={works?.works_neither}
+                active={filterHasScan === 'false' && filterHasTranslation === 'false'}
+                onClick={() => { setFilterHasScan('false'); setFilterHasTranslation('false'); doSearch({ scan: 'false', translation: 'false' }); }}
+                color="red"
+              />
+              <GapButton
+                label="Scanned and translated"
+                count={works?.works_with_translation}
+                active={filterHasScan === 'true' && filterHasTranslation === 'true'}
+                onClick={() => { setFilterHasScan('true'); setFilterHasTranslation('true'); doSearch({ scan: 'true', translation: 'true' }); }}
+                color="green"
+              />
+            </div>
+
+            <div className="flex gap-2 mb-4">
+              <select value={filterLanguage} onChange={e => { setFilterLanguage(e.target.value); doSearch({ scan: filterHasScan, translation: filterHasTranslation, language: e.target.value }); }}
+                className="px-3 py-2 border border-stone-300 rounded-lg text-sm bg-white">
+                <option value="">All languages</option>
+                {summary?.by_language.map(l => (
+                  <option key={l.language} value={l.language}>{l.language}</option>
+                ))}
+              </select>
+            </div>
+
+            {searching && <div className="text-center py-8"><BookLoader /></div>}
+            {!searching && searchTotal > 0 && (
+              <p className="text-sm text-stone-500 mb-3">{searchTotal.toLocaleString()} editions match</p>
+            )}
+            {!searching && searchResults.length > 0 && <SearchResultsTable results={searchResults} />}
+          </div>
         )}
 
         {activeTab === 'timeline' && (
@@ -286,7 +387,6 @@ node scripts/catalog-coverage/build.mjs`}
 
         {activeTab === 'search' && (
           <div>
-            {/* Search controls */}
             <div className="flex flex-wrap gap-3 mb-4">
               <div className="flex-1 min-w-[200px]">
                 <div className="relative">
@@ -311,17 +411,17 @@ node scripts/catalog-coverage/build.mjs`}
               <select value={filterHasScan} onChange={e => setFilterHasScan(e.target.value)}
                 className="px-3 py-2 border border-stone-300 rounded-lg text-sm bg-white">
                 <option value="">Any scan status</option>
-                <option value="true">Has scan</option>
+                <option value="true">Has IIIF scan</option>
                 <option value="false">No scan</option>
               </select>
               <select value={filterHasTranslation} onChange={e => setFilterHasTranslation(e.target.value)}
                 className="px-3 py-2 border border-stone-300 rounded-lg text-sm bg-white">
                 <option value="">Any translation status</option>
-                <option value="true">Has translation</option>
-                <option value="false">No translation</option>
+                <option value="true">Has Eng. translation</option>
+                <option value="false">No Eng. translation</option>
               </select>
               <button
-                onClick={doSearch}
+                onClick={() => doSearch()}
                 disabled={searching}
                 className="px-4 py-2 bg-stone-800 text-white rounded-lg text-sm hover:bg-stone-700 disabled:opacity-50"
               >
@@ -357,11 +457,12 @@ node scripts/catalog-coverage/build.mjs`}
                 </p>
               </div>
               <div>
-                <h4 className="font-semibold text-stone-800 mb-1">Scan detection</h4>
+                <h4 className="font-semibold text-stone-800 mb-1">Scan detection (IIIF)</h4>
                 <p>
                   828K IIIF import candidates harvested from BSB Munich, e-rara, Gallica, and Biblissima
                   are matched to USTC editions by author surname + decade + title word overlap (threshold 0.4).
                   Latin suffixes (-us, -is, -ius) are stripped for cross-form matching. Adjacent decades checked.
+                  Each match links to a IIIF manifest URL for direct viewing.
                 </p>
               </div>
               <div>
@@ -370,7 +471,7 @@ node scripts/catalog-coverage/build.mjs`}
                   13,862 known English translations from UNESCO Index Translationum, Loeb Classical Library,
                   Penguin, Cambridge, HathiTrust, and others are matched at the author-surname level with
                   120+ Latin-to-English name aliases (e.g. Ficinus {'\u2192'} Ficino). English-language editions
-                  are excluded (already in a modern language).
+                  are excluded. Each match cites the source catalog.
                 </p>
               </div>
               <div>
@@ -422,27 +523,28 @@ function StatCard({ label, value, sub, icon, color }: {
   );
 }
 
-function MiniStat({ label, value, total, color }: {
-  label: string; value: number; total: number; color?: string;
+function GapButton({ label, count, active, onClick, color }: {
+  label: string; count?: number; active: boolean; onClick: () => void; color: string;
 }) {
-  const pct = total > 0 ? (value / total * 100) : 0;
-  const barColor = color === 'amber' ? 'bg-amber-500' : color === 'red' ? 'bg-red-400' : 'bg-blue-500';
+  const colors: Record<string, { active: string; inactive: string }> = {
+    amber: { active: 'bg-amber-100 border-amber-300 text-amber-800', inactive: 'bg-white border-stone-200 text-stone-600 hover:border-amber-200' },
+    red: { active: 'bg-red-100 border-red-300 text-red-800', inactive: 'bg-white border-stone-200 text-stone-600 hover:border-red-200' },
+    green: { active: 'bg-green-100 border-green-300 text-green-800', inactive: 'bg-white border-stone-200 text-stone-600 hover:border-green-200' },
+  };
+  const c = colors[color] || colors.amber;
 
   return (
-    <div>
-      <div className="text-sm text-stone-500 mb-1">{label}</div>
-      <div className="text-lg font-semibold text-stone-800">{value.toLocaleString()}</div>
-      <div className="flex items-center gap-2 mt-1">
-        <div className="flex-1 h-1.5 bg-stone-100 rounded-full overflow-hidden">
-          <div className={`h-full ${barColor} rounded-full`} style={{ width: `${Math.min(pct, 100)}%` }} />
-        </div>
-        <span className="text-xs text-stone-400">{pct.toFixed(1)}%</span>
-      </div>
-    </div>
+    <button
+      onClick={onClick}
+      className={`px-3 py-2 rounded-lg text-sm border transition-colors ${active ? c.active : c.inactive}`}
+    >
+      {label}
+      {count !== undefined && <span className="ml-1.5 font-semibold">{count.toLocaleString()}</span>}
+    </button>
   );
 }
 
-function LanguageTable({ data }: { data: LanguageStat[] }) {
+function LanguageTable({ data, onLanguageClick }: { data: LanguageStat[]; onLanguageClick: (lang: string) => void }) {
   return (
     <div className="bg-white rounded-xl border border-stone-200 overflow-hidden">
       <table className="w-full text-sm">
@@ -450,29 +552,46 @@ function LanguageTable({ data }: { data: LanguageStat[] }) {
           <tr className="bg-stone-50 border-b border-stone-200">
             <th className="text-left px-4 py-3 font-medium text-stone-600">Language</th>
             <th className="text-right px-4 py-3 font-medium text-stone-600">Editions</th>
-            <th className="text-right px-4 py-3 font-medium text-stone-600">Works</th>
-            <th className="text-right px-4 py-3 font-medium text-stone-600">Scanned</th>
-            <th className="text-right px-4 py-3 font-medium text-stone-600">Translated</th>
+            <th className="text-right px-4 py-3 font-medium text-stone-600">IIIF Scans</th>
+            <th className="text-right px-4 py-3 font-medium text-stone-600">Eng. Translations</th>
             <th className="text-right px-4 py-3 font-medium text-stone-600">In SL</th>
+            <th className="text-right px-4 py-3 font-medium text-stone-600 w-24">Actionable Gap</th>
           </tr>
         </thead>
         <tbody>
-          {data.map(l => (
-            <tr key={l.language} className="border-b border-stone-100 hover:bg-stone-50">
-              <td className="px-4 py-3 font-medium text-stone-800">{l.language}</td>
-              <td className="px-4 py-3 text-right text-stone-600">{l.editions.toLocaleString()}</td>
-              <td className="px-4 py-3 text-right text-stone-600">{l.distinct_works.toLocaleString()}</td>
-              <td className="px-4 py-3 text-right">
-                <span className="text-stone-800">{l.with_scan.toLocaleString()}</span>
-                <span className="text-stone-400 ml-1">({l.pct_scanned}%)</span>
-              </td>
-              <td className="px-4 py-3 text-right">
-                <span className="text-stone-800">{l.with_translation.toLocaleString()}</span>
-                <span className="text-stone-400 ml-1">({l.pct_translated}%)</span>
-              </td>
-              <td className="px-4 py-3 text-right text-stone-600">{l.in_source_library.toLocaleString()}</td>
-            </tr>
-          ))}
+          {data.map(l => {
+            const gap = Math.max(0, l.with_scan - l.with_translation);
+            const gapPct = l.editions > 0 ? (gap / l.editions * 100).toFixed(1) : '0';
+            return (
+              <tr key={l.language} className="border-b border-stone-100 hover:bg-stone-50">
+                <td className="px-4 py-3 font-medium text-stone-800">{l.language}</td>
+                <td className="px-4 py-3 text-right text-stone-600">{l.editions.toLocaleString()}</td>
+                <td className="px-4 py-3 text-right">
+                  <span className="text-stone-800">{l.with_scan.toLocaleString()}</span>
+                  <span className="text-stone-400 ml-1">({l.pct_scanned}%)</span>
+                </td>
+                <td className="px-4 py-3 text-right">
+                  <span className="text-stone-800">{l.with_translation.toLocaleString()}</span>
+                  <span className="text-stone-400 ml-1">({l.pct_translated}%)</span>
+                </td>
+                <td className="px-4 py-3 text-right text-stone-600">{l.in_source_library.toLocaleString()}</td>
+                <td className="px-4 py-3 text-right">
+                  {gap > 0 ? (
+                    <button
+                      onClick={() => onLanguageClick(l.language)}
+                      className="text-amber-600 hover:text-amber-800 font-medium"
+                      title={`${gap.toLocaleString()} scanned but untranslated — click to browse`}
+                    >
+                      {gap.toLocaleString()}
+                      <span className="text-amber-400 ml-1 text-xs">({gapPct}%)</span>
+                    </button>
+                  ) : (
+                    <span className="text-stone-300">{'\u2014'}</span>
+                  )}
+                </td>
+              </tr>
+            );
+          })}
         </tbody>
       </table>
     </div>
@@ -494,22 +613,18 @@ function TimelineChart({ data }: { data: TimelineDecade[] }) {
           <div key={d.decade} className="flex items-center gap-2 group">
             <div className="w-12 text-xs text-stone-400 text-right shrink-0">{d.decade}s</div>
             <div className="flex-1 relative h-6">
-              {/* Background: total editions */}
               <div
                 className="absolute inset-y-0 left-0 bg-stone-100 rounded"
                 style={{ width: `${(d.editions / maxEditions) * 100}%` }}
               />
-              {/* Scanned overlay */}
               <div
                 className="absolute inset-y-0 left-0 bg-blue-200 rounded"
                 style={{ width: `${(d.with_scan / maxEditions) * 100}%` }}
               />
-              {/* Translated overlay */}
               <div
                 className="absolute inset-y-0 left-0 bg-green-400 rounded"
                 style={{ width: `${(d.with_translation / maxEditions) * 100}%` }}
               />
-              {/* Hover tooltip */}
               <div className="absolute inset-0 flex items-center px-2 text-xs text-stone-600 opacity-0 group-hover:opacity-100 transition-opacity">
                 {d.editions.toLocaleString()} ed · {d.pct_scanned}% scanned · {d.pct_translated}% translated
               </div>
@@ -533,8 +648,8 @@ function SearchResultsTable({ results }: { results: SearchResult[] }) {
             <th className="text-left px-4 py-3 font-medium text-stone-600">Title / Author</th>
             <th className="text-center px-3 py-3 font-medium text-stone-600 w-16">Year</th>
             <th className="text-center px-3 py-3 font-medium text-stone-600 w-20">Lang</th>
-            <th className="text-center px-3 py-3 font-medium text-stone-600 w-16">Scan</th>
-            <th className="text-center px-3 py-3 font-medium text-stone-600 w-16">Trans.</th>
+            <th className="text-center px-3 py-3 font-medium text-stone-600 w-28">IIIF Scan</th>
+            <th className="text-center px-3 py-3 font-medium text-stone-600 w-28">Translation</th>
             <th className="text-center px-3 py-3 font-medium text-stone-600 w-16">SL</th>
           </tr>
         </thead>
@@ -545,30 +660,43 @@ function SearchResultsTable({ results }: { results: SearchResult[] }) {
                 <div className="font-medium text-stone-800 line-clamp-1">{r.title || 'Untitled'}</div>
                 <div className="text-xs text-stone-400 line-clamp-1">
                   {r.author || 'Unknown'} · {r.place || '?'}
-                  <span className="ml-2 text-stone-300">USTC {r.ustc_id}</span>
+                  <a href={ustcUrl(r.ustc_id)} target="_blank" rel="noopener noreferrer"
+                    className="ml-2 text-stone-300 hover:text-blue-500 inline-flex items-center gap-0.5">
+                    USTC {r.ustc_id} <ExternalLink className="w-3 h-3" />
+                  </a>
                 </div>
               </td>
               <td className="text-center px-3 py-3 text-stone-600">{r.year || '?'}</td>
               <td className="text-center px-3 py-3 text-stone-600">{r.language}</td>
               <td className="text-center px-3 py-3">
-                {r.has_scan ? (
+                {resultHasScan(r) ? (
                   r.iiif_manifest_url ? (
-                    <a href={r.iiif_manifest_url} target="_blank" rel="noopener noreferrer"
-                      className="inline-flex items-center gap-1 text-blue-600 hover:text-blue-800">
+                    <a href={iiifViewerUrl(r.iiif_manifest_url)} target="_blank" rel="noopener noreferrer"
+                      className="inline-flex items-center gap-1 text-blue-600 hover:text-blue-800"
+                      title={`View in IIIF viewer (${(r.scan_sources || []).join(', ')})`}>
                       <Eye className="w-4 h-4" />
+                      <span className="text-[10px]">{r.scan_sources?.[0] || 'view'}</span>
                     </a>
                   ) : (
-                    <Eye className="w-4 h-4 text-blue-400 mx-auto" />
+                    <span className="inline-flex items-center gap-1 text-blue-400"
+                      title={`Source: ${(r.scan_sources || []).join(', ')}`}>
+                      <Eye className="w-4 h-4" />
+                      <span className="text-[10px]">{r.scan_sources?.[0] || 'scan'}</span>
+                    </span>
                   )
                 ) : (
-                  <span className="text-stone-300">—</span>
+                  <span className="text-stone-300">{'\u2014'}</span>
                 )}
               </td>
               <td className="text-center px-3 py-3">
-                {r.has_published_translation ? (
-                  <Languages className="w-4 h-4 text-green-500 mx-auto" />
+                {resultHasTranslation(r) ? (
+                  <span className="inline-flex items-center gap-1 text-green-600"
+                    title={`Sources: ${(r.translation_sources || []).join(', ')}`}>
+                    <Languages className="w-4 h-4" />
+                    <span className="text-[10px]">{r.translation_sources?.[0] || 'yes'}</span>
+                  </span>
                 ) : (
-                  <span className="text-stone-300">—</span>
+                  <span className="text-stone-300">{'\u2014'}</span>
                 )}
               </td>
               <td className="text-center px-3 py-3">
@@ -578,7 +706,7 @@ function SearchResultsTable({ results }: { results: SearchResult[] }) {
                     <BookOpen className="w-4 h-4" />
                   </Link>
                 ) : (
-                  <span className="text-stone-300">—</span>
+                  <span className="text-stone-300">{'\u2014'}</span>
                 )}
               </td>
             </tr>
