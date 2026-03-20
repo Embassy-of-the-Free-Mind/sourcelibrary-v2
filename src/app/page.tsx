@@ -553,15 +553,6 @@ export default async function HomePage() {
         {/* From the Collection — image-heavy gallery showcase */}
         <FromTheCollection items={showcase} />
 
-        {/* Gallery attribution — connects beauty to community */}
-        <div className="bg-stone-900 px-6 md:px-12 pb-8 -mt-1">
-          <p className="text-center text-xs" style={{ color: 'rgba(255,255,255,0.25)' }}>
-            From the collections of Source Library, preserved and translated with support from{' '}
-            <Link href="/ficino-society/members" className="hover:text-white/40 transition-colors underline decoration-white/10">
-              Ficino Society members
-            </Link>
-          </p>
-        </div>
 
         {/* Discover Section */}
         <section className="bg-white py-16 md:py-24">
