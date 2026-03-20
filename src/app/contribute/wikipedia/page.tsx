@@ -177,11 +177,9 @@ async function getBookStats() {
     { projection: { pages_count: 1, pages_translated: 1 } }
   );
 
-  // Get total fully translated count — use $expr to avoid slow aggregation
+  // Simple count — pages_translated > 0 is indexed and fast
   const totalTranslated = await db.collection('books').countDocuments({
-    pages_count: { $gt: 0 },
     pages_translated: { $gt: 0 },
-    $expr: { $gte: ['$pages_translated', { $multiply: ['$pages_count', 0.95] }] },
   });
 
   return { bySlug, fludd2, totalTranslated };
