@@ -99,10 +99,10 @@ export async function GET() {
       ], { maxTimeMS: 10000 })
       .toArray();
 
-    // Check if pipeline cron is missing (runs hourly, should appear in 2h window)
-    const pipelineCron = recentCrons.find(c => c._id === 'post-import-pipeline');
+    // Check if pipeline cron is missing (runs every 5min on Hetzner, should appear in 2h window)
+    const pipelineCron = recentCrons.find(c => c._id === 'pipeline-orchestrator-worker');
     if (!pipelineCron) {
-      issues.push({ check: 'cron_missing', detail: 'post-import-pipeline has not run in 2 hours', severity: 'warning' });
+      issues.push({ check: 'cron_missing', detail: 'pipeline-orchestrator-worker has not run in 2 hours', severity: 'warning' });
     }
 
     // Check for high failure rate
