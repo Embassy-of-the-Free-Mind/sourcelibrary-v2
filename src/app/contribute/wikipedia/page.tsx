@@ -11,8 +11,8 @@ export const metadata: Metadata = {
   },
 };
 
-// Revalidate every 24 hours — book stats change slowly
-export const revalidate = 86400;
+// Dynamic — DB queries are too slow for build-time prerendering
+export const dynamic = 'force-dynamic';
 
 // Config: which books to feature and where to post
 const FEATURED_BOOKS: {
