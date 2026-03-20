@@ -11,7 +11,6 @@ export const metadata: Metadata = {
   },
 };
 
-export const dynamic = 'force-dynamic';
 // Revalidate every 24 hours — book stats change slowly
 export const revalidate = 86400;
 
@@ -167,7 +166,7 @@ async function getBookStats() {
 
   const books = await db.collection('books').find(
     { slug: { $in: slugs } },
-    { projection: { slug: 1, title: 1, author: 1, published: 1, pages_count: 1, pages_translated: 1, original_language: 1 } }
+    { projection: { slug: 1, title: 1, author: 1, published: 1, pages_count: 1, pages_translated: 1, language: 1 } }
   ).toArray();
 
   const bySlug = new Map(books.map(b => [b.slug, b]));
@@ -178,23 +177,22 @@ async function getBookStats() {
     { projection: { pages_count: 1, pages_translated: 1 } }
   );
 
-  // Get total fully translated count
-  const fullyTranslated = await db.collection('books').aggregate([
-    { $match: { pages_count: { $gt: 0 }, pages_translated: { $gt: 0 } } },
-    { $addFields: { pct: { $divide: ['$pages_translated', '$pages_count'] } } },
-    { $match: { pct: { $gte: 0.95 } } },
-    { $count: 'n' },
-  ]).toArray();
+  // Get total fully translated count — use $expr to avoid slow aggregation
+  const totalTranslated = await db.collection('books').countDocuments({
+    pages_count: { $gt: 0 },
+    pages_translated: { $gt: 0 },
+    $expr: { $gte: ['$pages_translated', { $multiply: ['$pages_count', 0.95] }] },
+  });
 
-  return { bySlug, fludd2, totalTranslated: fullyTranslated[0]?.n || 0 };
+  return { bySlug, fludd2, totalTranslated };
 }
 
-interface BookStats { pages_count: number; pages_translated: number; original_language?: string }
+interface BookStats { pages_count: number; pages_translated: number; language?: string }
 
 function buildWikiText(config: typeof FEATURED_BOOKS[number], book: BookStats, fludd2?: BookStats | null) {
   const bookUrl = `https://sourcelibrary.org/book/${config.slug}`;
   const pct = book.pages_count > 0 ? Math.round(book.pages_translated / book.pages_count * 100) : 0;
-  const lang = book.original_language || 'Latin';
+  const lang = book.language || 'Latin';
   const langNote = lang !== 'English' ? ` Original ${lang} alongside translation.` : '';
   const desc = config.wikiDesc
     ? `${config.wikiDesc}. ${book.pages_count.toLocaleString()} pages, ${pct}% complete.`
@@ -236,7 +234,7 @@ export default async function WikipediaContributePage() {
     const bookStats: BookStats = {
       pages_count: book.pages_count as number,
       pages_translated: book.pages_translated as number,
-      original_language: book.original_language as string | undefined,
+      language: book.language as string | undefined,
     };
     const f2Stats: BookStats | null = fludd2 ? {
       pages_count: fludd2.pages_count as number,
