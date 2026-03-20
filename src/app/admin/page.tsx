@@ -80,24 +80,43 @@ function ProgressBar({ percent, color }: { percent: number; color: string }) {
 export default function AdminDashboard() {
   const [data, setData] = useState<DashboardData | null>(null);
   const [loading, setLoading] = useState(true);
-  const [slow, setSlow] = useState(false);
+  const [computing, setComputing] = useState(false);
 
   useEffect(() => {
-    setSlow(false);
-    const timer = setTimeout(() => setSlow(true), 2000);
-    fetch('/api/admin/dashboard')
-      .then(r => r.json())
-      .then(setData)
-      .catch(() => {})
-      .finally(() => { setLoading(false); clearTimeout(timer); });
-    return () => clearTimeout(timer);
+    let cancelled = false;
+    async function load() {
+      try {
+        const r = await fetch('/api/admin/dashboard');
+        const json = await r.json();
+        if (cancelled) return;
+        if (json._computing) {
+          setComputing(true);
+          setLoading(false);
+          // Retry after 30s
+          setTimeout(() => { if (!cancelled) { setLoading(true); setComputing(false); load(); } }, 30000);
+          return;
+        }
+        setData(json);
+      } catch {}
+      if (!cancelled) setLoading(false);
+    }
+    load();
+    return () => { cancelled = true; };
   }, []);
+
+  if (computing) {
+    return (
+      <div style={{ padding: '60px 32px', textAlign: 'center', color: '#8b949e' }}>
+        <div>Computing dashboard snapshot...</div>
+        <div style={{ fontSize: 12, marginTop: 8 }}>This takes about a minute on first run. Will auto-refresh.</div>
+      </div>
+    );
+  }
 
   if (loading) {
     return (
       <div style={{ padding: '60px 32px', textAlign: 'center', color: '#8b949e' }}>
-        <div>Loading dashboard...</div>
-        {slow && <div style={{ fontSize: 12, marginTop: 8 }}>First load takes a few seconds while the cache warms up</div>}
+        Loading dashboard...
       </div>
     );
   }

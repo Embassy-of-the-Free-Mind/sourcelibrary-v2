@@ -142,16 +142,17 @@ export const GET = withAdminAuth(async () => {
     });
   }
 
-  // First ever load
-  const data = await computeSnapshot(db);
-  await config.updateOne(
-    { _id: 'dashboard_snapshot' as any },
-    { $set: { data, updated_at: new Date() } },
-    { upsert: true },
-  ).catch(() => {});
+  // No snapshot yet — kick off background compute, return 202
+  computeSnapshot(db).then(data => {
+    config.updateOne(
+      { _id: 'dashboard_snapshot' as any },
+      { $set: { data, updated_at: new Date() } },
+      { upsert: true },
+    );
+  }).catch(() => {});
 
-  return NextResponse.json({
-    ...data,
-    _snapshot: { updated_at: new Date(), stale: false },
-  });
+  return NextResponse.json(
+    { _computing: true, message: 'Dashboard snapshot is being computed. Refresh in a minute.' },
+    { status: 202 },
+  );
 });
