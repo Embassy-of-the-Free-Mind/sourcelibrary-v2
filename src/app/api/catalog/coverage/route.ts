@@ -162,45 +162,13 @@ async function handleTimeline(db: any, params: URLSearchParams) {
 }
 
 async function handleWorks(db: any, params: URLSearchParams) {
-  const col = db.collection('catalog_coverage');
-  const language = params.get('language');
-
-  const matchStage: Record<string, any> = {};
-  if (language) matchStage.language = language;
-
-  const works = await col.aggregate([
-    { $match: matchStage },
-    {
-      $group: {
-        _id: '$work_cluster_id',
-        any_scan: { $max: { $cond: ['$has_scan', 1, 0] } },
-        any_translation: { $max: { $cond: ['$has_published_translation', 1, 0] } },
-        any_sl: { $max: { $cond: ['$in_source_library', 1, 0] } },
-      }
-    },
-    {
-      $group: {
-        _id: null,
-        total_works: { $sum: 1 },
-        works_with_scan: { $sum: '$any_scan' },
-        works_with_translation: { $sum: '$any_translation' },
-        works_in_sl: { $sum: '$any_sl' },
-        works_scanned_not_translated: {
-          $sum: { $cond: [{ $and: [{ $eq: ['$any_scan', 1] }, { $eq: ['$any_translation', 0] }] }, 1, 0] }
-        },
-        works_neither: {
-          $sum: { $cond: [{ $and: [{ $eq: ['$any_scan', 0] }, { $eq: ['$any_translation', 0] }] }, 1, 0] }
-        },
-      }
-    },
-  ], { allowDiskUse: true }).toArray();
-
-  const result = works[0] || { total_works: 0, works_with_scan: 0, works_with_translation: 0, works_in_sl: 0, works_scanned_not_translated: 0, works_neither: 0 };
+  // Use pre-computed stats from build — live aggregation is too heavy for Vercel
+  const meta = await db.collection('catalog_coverage_meta').findOne({ _id: 'latest_build' });
+  const result = meta?.works || { total_works: 0, works_with_scan: 0, works_with_translation: 0, works_in_sl: 0, works_scanned_not_translated: 0, works_neither: 0 };
 
   return NextResponse.json({
-    language: language || 'all',
+    language: params.get('language') || 'all',
     ...result,
-    _id: undefined,
     pct_scanned: result.total_works > 0 ? +(result.works_with_scan / result.total_works * 100).toFixed(2) : 0,
     pct_translated: result.total_works > 0 ? +(result.works_with_translation / result.total_works * 100).toFixed(2) : 0,
   });

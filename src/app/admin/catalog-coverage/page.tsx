@@ -336,6 +336,63 @@ node scripts/catalog-coverage/build.mjs`}
             {searchResults.length > 0 && <SearchResultsTable results={searchResults} />}
           </div>
         )}
+
+        {/* Methodology */}
+        <details className="mt-8 bg-white rounded-xl border border-stone-200 overflow-hidden">
+          <summary className="px-5 py-4 cursor-pointer text-sm font-semibold text-stone-600 hover:bg-stone-50">
+            How this was constructed
+          </summary>
+          <div className="px-5 pb-5 text-sm text-stone-600 space-y-3 border-t border-stone-100 pt-4">
+            <p>
+              This coverage map joins four data sources to show, for every book printed between 1450 and 1700,
+              whether a digital scan exists and whether a modern translation exists.
+            </p>
+            <div className="grid md:grid-cols-2 gap-4">
+              <div>
+                <h4 className="font-semibold text-stone-800 mb-1">Base layer: USTC</h4>
+                <p>
+                  The Universal Short Title Catalogue (University of St Andrews) records every known edition
+                  printed in Europe before 1700. We query 1.6M records via the Supabase REST API, paginated
+                  by 5-year windows across 9 languages.
+                </p>
+              </div>
+              <div>
+                <h4 className="font-semibold text-stone-800 mb-1">Scan detection</h4>
+                <p>
+                  828K IIIF import candidates harvested from BSB Munich, e-rara, Gallica, and Biblissima
+                  are matched to USTC editions by author surname + decade + title word overlap (threshold 0.4).
+                  Latin suffixes (-us, -is, -ius) are stripped for cross-form matching. Adjacent decades checked.
+                </p>
+              </div>
+              <div>
+                <h4 className="font-semibold text-stone-800 mb-1">Translation detection</h4>
+                <p>
+                  13,862 known English translations from UNESCO Index Translationum, Loeb Classical Library,
+                  Penguin, Cambridge, HathiTrust, and others are matched at the author-surname level with
+                  120+ Latin-to-English name aliases (e.g. Ficinus {'\u2192'} Ficino). English-language editions
+                  are excluded (already in a modern language).
+                </p>
+              </div>
+              <div>
+                <h4 className="font-semibold text-stone-800 mb-1">Source Library matching</h4>
+                <p>
+                  Books in our collection are matched by USTC ID (where available) or by author + decade + title
+                  similarity, showing OCR and translation progress from our pipeline.
+                </p>
+              </div>
+            </div>
+            <div className="bg-stone-50 rounded-lg p-3 text-xs text-stone-500 space-y-1">
+              <p><strong>Caveats:</strong></p>
+              <ul className="list-disc list-inside space-y-0.5">
+                <li>Translation matching is at author level, not work level -- an author having any known translation flags all their editions</li>
+                <li>Distinct works are approximated by normalized title per author (first 6 words) -- title variants inflate the count</li>
+                <li>IIIF scan coverage is limited to the 4 sources harvested; EEBO, Google Books, and HathiTrust are not included</li>
+                <li>Translation catalog is English-only and not exhaustive -- French, German, and Italian translations are not tracked</li>
+                <li>USTC coverage for 1600-1700 is still being expanded by St Andrews</li>
+              </ul>
+            </div>
+          </div>
+        </details>
       </div>
     </div>
   );

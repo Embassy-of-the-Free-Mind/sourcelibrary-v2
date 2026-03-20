@@ -533,6 +533,40 @@ async function buildCoverage(db, scanLookup, translationLookup, slLookup) {
     totalInSL += langSL;
   }
 
+  // Compute work-level stats
+  let worksStats = null;
+  if (!DRY_RUN) {
+    console.log('\nComputing work-level stats...');
+    const worksResult = await col.aggregate([
+      {
+        $group: {
+          _id: '$work_cluster_id',
+          any_scan: { $max: { $cond: ['$has_scan', 1, 0] } },
+          any_translation: { $max: { $cond: ['$has_published_translation', 1, 0] } },
+          any_sl: { $max: { $cond: ['$in_source_library', 1, 0] } },
+        }
+      },
+      {
+        $group: {
+          _id: null,
+          total_works: { $sum: 1 },
+          works_with_scan: { $sum: '$any_scan' },
+          works_with_translation: { $sum: '$any_translation' },
+          works_in_sl: { $sum: '$any_sl' },
+          works_scanned_not_translated: {
+            $sum: { $cond: [{ $and: [{ $eq: ['$any_scan', 1] }, { $eq: ['$any_translation', 0] }] }, 1, 0] }
+          },
+          works_neither: {
+            $sum: { $cond: [{ $and: [{ $eq: ['$any_scan', 0] }, { $eq: ['$any_translation', 0] }] }, 1, 0] }
+          },
+        }
+      },
+    ], { allowDiskUse: true }).toArray();
+    worksStats = worksResult[0] || {};
+    delete worksStats._id;
+    console.log(`  ${worksStats.total_works?.toLocaleString()} distinct works, ${worksStats.works_with_scan?.toLocaleString()} scanned, ${worksStats.works_with_translation?.toLocaleString()} translated`);
+  }
+
   // Store build metadata
   if (!DRY_RUN) {
     await db.collection('catalog_coverage_meta').updateOne(
@@ -546,6 +580,7 @@ async function buildCoverage(db, scanLookup, translationLookup, slLookup) {
         total_with_translation: totalWithTranslation,
         total_in_source_library: totalInSL,
         stats,
+        works: worksStats,
       }},
       { upsert: true }
     );
