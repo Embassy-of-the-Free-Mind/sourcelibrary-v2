@@ -150,6 +150,13 @@ async function loadScanLookup(db) {
       const key = `${surname}:${decade}`;
       if (!byAuthorDecade.has(key)) byAuthorDecade.set(key, []);
       byAuthorDecade.get(key).push(slim);
+      // Also index Latin-stripped variant so ficinus→ficin matches ficino→ficin
+      const stripped = surname.replace(/(us|is|ius|inus)$/, '');
+      if (stripped !== surname && stripped.length >= 3) {
+        const strippedKey = `${stripped}:${decade}`;
+        if (!byAuthorDecade.has(strippedKey)) byAuthorDecade.set(strippedKey, []);
+        byAuthorDecade.get(strippedKey).push(slim);
+      }
     }
 
     lastId = batch[batch.length - 1]._id;
@@ -236,7 +243,7 @@ function findScan(ustcEdition, scanLookup) {
   if (scanLookup.byUstcId.has(ustcId)) {
     const c = scanLookup.byUstcId.get(ustcId);
     return {
-      has_scan: true,
+      has_iiif_scan: true,
       scan_sources: [c.source],
       iiif_manifest_url: c.manifest_url,
       import_candidate_id: c._id,
@@ -275,7 +282,7 @@ function findScan(ustcEdition, scanLookup) {
 
   if (bestMatch && bestScore >= 0.4) {
     return {
-      has_scan: true,
+      has_iiif_scan: true,
       scan_sources: [bestMatch.source],
       iiif_manifest_url: bestMatch.manifest_url,
       import_candidate_id: bestMatch._id,
@@ -313,7 +320,7 @@ function findTranslation(ustcEdition, translationLookup) {
   const sources = [...new Set(entries.map(e => e.source))];
   const works = [...new Set(entries.map(e => e.work).filter(w => w))];
   return {
-    has_published_translation: true,
+    has_english_translation: true,
     translation_sources: sources,
     translated_works_count: works.length,
   };
@@ -408,12 +415,13 @@ async function buildCoverage(db, scanLookup, translationLookup, slLookup) {
     console.log('\nCreating indexes...');
     await col.createIndex({ ustc_id: 1 }, { unique: true });
     await col.createIndex({ language: 1, year: 1 });
-    await col.createIndex({ has_scan: 1 });
-    await col.createIndex({ has_published_translation: 1 });
+    await col.createIndex({ has_iiif_scan: 1 });
+    await col.createIndex({ has_english_translation: 1 });
     await col.createIndex({ source_library_id: 1 }, { sparse: true });
     await col.createIndex({ author_surname: 1, year: 1 });
     await col.createIndex({ work_cluster_id: 1 });
-    await col.createIndex({ has_scan: 1, has_published_translation: 1, language: 1 });
+    await col.createIndex({ has_iiif_scan: 1, has_english_translation: 1, language: 1 });
+    await col.createIndex({ title: 'text', author: 'text' }, { name: 'text_search', default_language: 'none', language_override: 'text_search_lang' });
   }
 
   const languages = LANG_FILTER ? [LANG_FILTER] : ['Latin', 'German', 'French', 'Italian', 'Dutch', 'Spanish', 'Portuguese', 'English', 'Greek'];
@@ -462,14 +470,14 @@ async function buildCoverage(db, scanLookup, translationLookup, slLookup) {
           work_cluster_id: workClusterId(surname, edition.title),
 
           // Scan
-          has_scan: !!scan,
+          has_iiif_scan: !!scan,
           scan_sources: scan?.scan_sources || [],
           iiif_manifest_url: scan?.iiif_manifest_url || null,
           scan_match_method: scan?.match_method || null,
           scan_match_score: scan?.match_score || null,
 
           // Translation
-          has_published_translation: !!translation,
+          has_english_translation: !!translation,
           translation_sources: translation?.translation_sources || [],
 
           // Source Library
@@ -541,8 +549,8 @@ async function buildCoverage(db, scanLookup, translationLookup, slLookup) {
       {
         $group: {
           _id: '$work_cluster_id',
-          any_scan: { $max: { $cond: ['$has_scan', 1, 0] } },
-          any_translation: { $max: { $cond: ['$has_published_translation', 1, 0] } },
+          any_scan: { $max: { $cond: ['$has_iiif_scan', 1, 0] } },
+          any_translation: { $max: { $cond: ['$has_english_translation', 1, 0] } },
           any_sl: { $max: { $cond: ['$in_source_library', 1, 0] } },
         }
       },
