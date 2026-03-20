@@ -554,11 +554,20 @@ function SearchResultsTable({ results }: { results: SearchResult[] }) {
                 {r.has_iiif_scan ? (
                   r.iiif_manifest_url ? (
                     <a href={r.iiif_manifest_url} target="_blank" rel="noopener noreferrer"
-                      className="inline-flex items-center gap-1 text-blue-600 hover:text-blue-800">
+                      className="inline-flex items-center gap-1 text-blue-600 hover:text-blue-800"
+                      title={`IIIF manifest (${(r.scan_sources || []).join(', ')})`}>
                       <Eye className="w-4 h-4" />
+                      {r.scan_sources?.length > 0 && (
+                        <span className="text-[10px] hidden sm:inline">{r.scan_sources[0]}</span>
+                      )}
                     </a>
                   ) : (
-                    <Eye className="w-4 h-4 text-blue-400 mx-auto" />
+                    <span className="inline-flex items-center gap-1 text-blue-400" title={`Source: ${(r.scan_sources || []).join(', ')}`}>
+                      <Eye className="w-4 h-4" />
+                      {r.scan_sources?.length > 0 && (
+                        <span className="text-[10px] hidden sm:inline">{r.scan_sources[0]}</span>
+                      )}
+                    </span>
                   )
                 ) : (
                   <span className="text-stone-300">—</span>
@@ -566,7 +575,12 @@ function SearchResultsTable({ results }: { results: SearchResult[] }) {
               </td>
               <td className="text-center px-3 py-3">
                 {r.has_english_translation ? (
-                  <Languages className="w-4 h-4 text-green-500 mx-auto" />
+                  <span className="inline-flex items-center gap-1 text-green-600" title={`Sources: ${(r.translation_sources || []).join(', ')}`}>
+                    <Languages className="w-4 h-4" />
+                    {r.translation_sources?.length > 0 && (
+                      <span className="text-[10px] text-green-500 hidden sm:inline">{r.translation_sources[0]}</span>
+                    )}
+                  </span>
                 ) : (
                   <span className="text-stone-300">—</span>
                 )}
