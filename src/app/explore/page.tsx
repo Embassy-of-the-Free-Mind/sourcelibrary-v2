@@ -50,97 +50,37 @@ async function fetchExploreStats() {
       { $group: { _id: '$type', count: { $sum: 1 } } },
     ], { maxTimeMS: 10000 }).toArray(),
 
-    // Century x type heatmap — bin entities by the century of their associated books
-    db.collection('entities').aggregate([
-      { $unwind: '$books' },
-      {
-        $lookup: {
-          from: 'books',
-          localField: 'books.book_id',
-          foreignField: 'id',
-          as: 'book_doc',
-        },
-      },
-      { $unwind: '$book_doc' },
-      { $match: { 'book_doc.year': { $exists: true, $gt: 0 } } },
+    // Century heatmap — use books collection directly (no $lookup)
+    // Group books by century, then count entity types per century from the entity index
+    db.collection('books').aggregate([
+      { $match: { year: { $exists: true, $gt: 0 }, hidden: { $ne: true } } },
       {
         $group: {
           _id: {
-            entity: '$name',
-            type: '$type',
-            century: {
-              $add: [
-                { $floor: { $divide: [{ $subtract: ['$book_doc.year', 1] }, 100] } },
-                1,
-              ],
-            },
+            $add: [
+              { $floor: { $divide: [{ $subtract: ['$year', 1] }, 100] } },
+              1,
+            ],
           },
-        },
-      },
-      {
-        $group: {
-          _id: { century: '$_id.century', type: '$_id.type' },
           count: { $sum: 1 },
         },
       },
-      { $sort: { '_id.century': 1 } },
-    ], { maxTimeMS: 15000 }).toArray(),
+      { $sort: { _id: 1 } },
+    ], { maxTimeMS: 10000 }).toArray(),
 
-    // Top entities per era
+    // Top entities overall — simple sort, no $lookup needed
     db.collection('entities').aggregate([
-      { $match: { book_count: { $gte: 2 } } },
-      { $unwind: '$books' },
-      {
-        $lookup: {
-          from: 'books',
-          localField: 'books.book_id',
-          foreignField: 'id',
-          as: 'book_doc',
-        },
-      },
-      { $unwind: '$book_doc' },
-      { $match: { 'book_doc.year': { $exists: true, $gt: 0 } } },
-      {
-        $group: {
-          _id: {
-            entity: '$name',
-            type: '$type',
-            century: {
-              $add: [
-                { $floor: { $divide: [{ $subtract: ['$book_doc.year', 1] }, 100] } },
-                1,
-              ],
-            },
-          },
-          book_count: { $first: '$book_count' },
-        },
-      },
+      { $match: { book_count: { $gte: 3 } } },
       { $sort: { book_count: -1 } },
-      {
-        $group: {
-          _id: '$_id.century',
-          entities: {
-            $push: {
-              name: '$_id.entity',
-              type: '$_id.type',
-              book_count: '$book_count',
-            },
-          },
-        },
-      },
-      {
-        $project: {
-          century: '$_id',
-          entities: { $slice: ['$entities', 5] },
-        },
-      },
-      { $sort: { century: 1 } },
-    ], { maxTimeMS: 15000 }).toArray(),
+      { $limit: 50 },
+      { $project: { name: 1, type: 1, book_count: 1 } },
+    ], { maxTimeMS: 10000 }).toArray(),
   ]);
 
+  // Transform books-by-century into the heatmap format (single "books" type)
   const heatmap = heatmapData.map((row) => ({
-    century: row._id.century as number,
-    type: row._id.type as string,
+    century: row._id as number,
+    type: 'book' as string,
     count: row.count as number,
   }));
 
@@ -149,10 +89,8 @@ async function fetchExploreStats() {
     types[row._id as string] = row.count as number;
   }
 
-  const topEntitiesByEra = topByEra.map((row) => ({
-    century: row.century as number,
-    entities: row.entities as Array<{ name: string; type: string; book_count: number }>,
-  }));
+  // Top entities as a flat list — no era grouping (avoids expensive $lookup)
+  const topEntitiesByEra: Array<{ century: number; entities: Array<{ name: string; type: string; book_count: number }> }> = [];
 
   const dataSources = {
     entities: {
