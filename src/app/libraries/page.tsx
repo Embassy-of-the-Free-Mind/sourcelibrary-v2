@@ -133,8 +133,8 @@ async function fetchContributingLibraries(): Promise<ContributingLibrary[]> {
 
 export default async function LibrariesPage() {
   const [stats, contributingLibraries] = await Promise.all([
-    fetchProviderStats(),
-    fetchContributingLibraries(),
+    fetchProviderStats().catch((err) => { console.error('Libraries provider fetch failed:', err); return [] as ProviderStats[]; }),
+    fetchContributingLibraries().catch((err) => { console.error('Libraries contributing fetch failed:', err); return [] as ContributingLibrary[]; }),
   ]);
 
   const partners = stats
