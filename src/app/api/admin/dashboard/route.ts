@@ -116,43 +116,37 @@ async function computeSnapshot(db: any) {
   };
 }
 
+// GET: read-only — just returns the snapshot. Never computes inline.
+// Snapshot is refreshed by POST (called from cron or manually).
 export const GET = withAdminAuth(async () => {
   const db = await getDb();
-  const config = db.collection('system_config');
+  const snapshot = await db.collection('system_config').findOne({ _id: 'dashboard_snapshot' as any });
 
-  const snapshot = await config.findOne({ _id: 'dashboard_snapshot' as any });
-
-  if (snapshot?.data) {
-    const age = Date.now() - new Date(snapshot.updated_at).getTime();
-    const isStale = age > STALE_AFTER_MS;
-
-    if (isStale) {
-      computeSnapshot(db).then(data => {
-        config.updateOne(
-          { _id: 'dashboard_snapshot' as any },
-          { $set: { data, updated_at: new Date() } },
-          { upsert: true },
-        );
-      }).catch(() => {});
-    }
-
-    return NextResponse.json({
-      ...snapshot.data,
-      _snapshot: { updated_at: snapshot.updated_at, stale: isStale },
-    });
+  if (!snapshot?.data) {
+    return NextResponse.json(
+      { _computing: true, message: 'No snapshot yet. Hit the refresh button or wait for the next cron run.' },
+      { status: 202 },
+    );
   }
 
-  // No snapshot yet — kick off background compute, return 202
-  computeSnapshot(db).then(data => {
-    config.updateOne(
-      { _id: 'dashboard_snapshot' as any },
-      { $set: { data, updated_at: new Date() } },
-      { upsert: true },
-    );
-  }).catch(() => {});
+  const age = Date.now() - new Date(snapshot.updated_at).getTime();
+  return NextResponse.json({
+    ...snapshot.data,
+    _snapshot: {
+      updated_at: snapshot.updated_at,
+      stale: age > STALE_AFTER_MS,
+    },
+  });
+});
 
-  return NextResponse.json(
-    { _computing: true, message: 'Dashboard snapshot is being computed. Refresh in a minute.' },
-    { status: 202 },
+// POST: recompute snapshot. Called from cron or admin UI.
+export const POST = withAdminAuth(async () => {
+  const db = await getDb();
+  const data = await computeSnapshot(db);
+  await db.collection('system_config').updateOne(
+    { _id: 'dashboard_snapshot' as any },
+    { $set: { data, updated_at: new Date() } },
+    { upsert: true },
   );
+  return NextResponse.json({ ok: true, data });
 });
