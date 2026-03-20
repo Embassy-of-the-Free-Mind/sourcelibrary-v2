@@ -11,9 +11,8 @@ export const metadata: Metadata = {
   },
 };
 
+// Dynamic — DB queries are too slow for build-time prerendering
 export const dynamic = 'force-dynamic';
-// Revalidate every 24 hours — book stats change slowly
-export const revalidate = 86400;
 
 // Config: which books to feature and where to post
 const FEATURED_BOOKS: {
@@ -167,7 +166,7 @@ async function getBookStats() {
 
   const books = await db.collection('books').find(
     { slug: { $in: slugs } },
-    { projection: { slug: 1, title: 1, author: 1, published: 1, pages_count: 1, pages_translated: 1, original_language: 1 } }
+    { projection: { slug: 1, title: 1, author: 1, published: 1, pages_count: 1, pages_translated: 1, language: 1 } }
   ).toArray();
 
   const bySlug = new Map(books.map(b => [b.slug, b]));
@@ -178,23 +177,15 @@ async function getBookStats() {
     { projection: { pages_count: 1, pages_translated: 1 } }
   );
 
-  // Get total fully translated count
-  const fullyTranslated = await db.collection('books').aggregate([
-    { $match: { pages_count: { $gt: 0 }, pages_translated: { $gt: 0 } } },
-    { $addFields: { pct: { $divide: ['$pages_translated', '$pages_count'] } } },
-    { $match: { pct: { $gte: 0.95 } } },
-    { $count: 'n' },
-  ]).toArray();
-
-  return { bySlug, fludd2, totalTranslated: fullyTranslated[0]?.n || 0 };
+  return { bySlug, fludd2 };
 }
 
-interface BookStats { pages_count: number; pages_translated: number; original_language?: string }
+interface BookStats { pages_count: number; pages_translated: number; language?: string }
 
 function buildWikiText(config: typeof FEATURED_BOOKS[number], book: BookStats, fludd2?: BookStats | null) {
   const bookUrl = `https://sourcelibrary.org/book/${config.slug}`;
   const pct = book.pages_count > 0 ? Math.round(book.pages_translated / book.pages_count * 100) : 0;
-  const lang = book.original_language || 'Latin';
+  const lang = book.language || 'Latin';
   const langNote = lang !== 'English' ? ` Original ${lang} alongside translation.` : '';
   const desc = config.wikiDesc
     ? `${config.wikiDesc}. ${book.pages_count.toLocaleString()} pages, ${pct}% complete.`
@@ -226,7 +217,7 @@ function buildWikiText(config: typeof FEATURED_BOOKS[number], book: BookStats, f
 }
 
 export default async function WikipediaContributePage() {
-  const { bySlug, fludd2, totalTranslated } = await getBookStats();
+  const { bySlug, fludd2 } = await getBookStats();
 
   const posts = FEATURED_BOOKS.map(config => {
     const book = bySlug.get(config.slug);
@@ -236,7 +227,7 @@ export default async function WikipediaContributePage() {
     const bookStats: BookStats = {
       pages_count: book.pages_count as number,
       pages_translated: book.pages_translated as number,
-      original_language: book.original_language as string | undefined,
+      language: book.language as string | undefined,
     };
     const f2Stats: BookStats | null = fludd2 ? {
       pages_count: fludd2.pages_count as number,
@@ -261,7 +252,7 @@ export default async function WikipediaContributePage() {
       header={
         <ContentHeader
           title="Wikipedia Contributions"
-          subtitle={`Help readers discover ${totalTranslated.toLocaleString()}+ translated historical texts`}
+          subtitle="Help readers discover thousands of translated historical texts"
         />
       }
       bg="bg-cream"
