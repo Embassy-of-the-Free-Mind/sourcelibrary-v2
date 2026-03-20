@@ -85,6 +85,7 @@ export async function GET(request: NextRequest) {
         'digi.vatlib.it',              // Vatican
         'digital.bodleian.ox.ac.uk',   // Bodleian
         'iiif.bodleian.ox.ac.uk',
+        'digital.archives.go.jp',       // National Archives of Japan
       ];
       const urlObj = new URL(url);
       if (!allowedHosts.some(host => urlObj.hostname.endsWith(host))) {
