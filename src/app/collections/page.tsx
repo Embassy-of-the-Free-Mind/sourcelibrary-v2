@@ -87,7 +87,7 @@ async function fetchTimelineDecades(): Promise<{ decades: DecadeBucket[]; total:
       },
       { $sort: { _id: 1 as const } },
     ];
-    const raw = await db.collection('books').aggregate(pipeline).toArray();
+    const raw = await db.collection('books').aggregate(pipeline, { maxTimeMS: 5000 }).toArray();
     const decades: DecadeBucket[] = raw.map(d => ({
       decade: d._id,
       count: d.count,
