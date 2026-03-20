@@ -38,16 +38,48 @@ async function computeSnapshot(db: any) {
           },
         },
         with_summary: {
-          $sum: { $cond: [{ $gt: [{ $ifNull: ['$summary', null] }, null] }, 1, 0] },
+          $sum: {
+            $cond: [
+              { $and: [
+                { $ne: [{ $ifNull: ['$summary', ''] }, ''] },
+                { $ne: [{ $ifNull: ['$summary', null] }, null] },
+              ] },
+              1, 0,
+            ],
+          },
         },
         with_index: {
-          $sum: { $cond: [{ $gt: [{ $ifNull: ['$index_of_topics', null] }, null] }, 1, 0] },
+          $sum: {
+            $cond: [
+              { $and: [
+                { $ne: [{ $ifNull: ['$index_of_topics', ''] }, ''] },
+                { $ne: [{ $ifNull: ['$index_of_topics', null] }, null] },
+              ] },
+              1, 0,
+            ],
+          },
         },
         with_images: {
-          $sum: { $cond: [{ $gt: [{ $size: { $ifNull: ['$detected_images', []] } }, 0] }, 1, 0] },
+          $sum: {
+            $cond: [
+              { $and: [
+                { $isArray: '$detected_images' },
+                { $gt: [{ $size: '$detected_images' }, 0] },
+              ] },
+              1, 0,
+            ],
+          },
         },
         tagged: {
-          $sum: { $cond: [{ $gt: [{ $ifNull: ['$faceted_tags', null] }, null] }, 1, 0] },
+          $sum: {
+            $cond: [
+              { $and: [
+                { $ne: [{ $ifNull: ['$faceted_tags', null] }, null] },
+                { $ne: ['$faceted_tags', {}] },
+              ] },
+              1, 0,
+            ],
+          },
         },
       },
     },
