@@ -435,10 +435,10 @@ export default async function CollectionDetailPage({ params }: Props) {
   const { collection, books, highlights: curatedHighlightsData, galleryImages, total, mentionedBooks, parentCollection, galleryCollectionSlug, exhibition, exhibitionBooks, childCollections } = data;
   const languages = (collection.languages || []).filter((l: { count: number }) => l.count > 2);
 
-  // Group curated highlights by tier
-  const tier1 = curatedHighlightsData.filter((h: { tier: number }) => h.tier === 1);
-  const tier2 = curatedHighlightsData.filter((h: { tier: number }) => h.tier === 2);
-  const tier3 = curatedHighlightsData.filter((h: { tier: number }) => h.tier === 3);
+  // Group curated highlights by tier — cap each to avoid heavy pages crashing mobile Safari
+  const tier1 = curatedHighlightsData.filter((h: { tier: number }) => h.tier === 1).slice(0, 6);
+  const tier2 = curatedHighlightsData.filter((h: { tier: number }) => h.tier === 2).slice(0, 9);
+  const tier3 = curatedHighlightsData.filter((h: { tier: number }) => h.tier === 3).slice(0, 8);
   const hasCuratedHighlights = curatedHighlightsData.length > 0;
 
   // Build a diverse pool of ~50 top images (max 2 per book), then randomly pick 9 for display
@@ -639,6 +639,7 @@ export default async function CollectionDetailPage({ params }: Props) {
                         fill
                         className="object-cover group-hover:scale-105 transition-transform duration-300"
                         sizes="(min-width: 1024px) 200px, (min-width: 640px) 160px, 120px"
+                        unoptimized
                       />
                     ) : (
                       <div className="w-full h-full bg-cream flex items-center justify-center">
