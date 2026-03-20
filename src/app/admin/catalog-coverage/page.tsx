@@ -97,16 +97,19 @@ export default function CatalogCoveragePage() {
   const loadSummary = useCallback(async () => {
     setLoading(true);
     try {
-      const [sumRes, worksRes] = await Promise.all([
-        fetch('/api/catalog/coverage?mode=summary'),
-        fetch('/api/catalog/coverage?mode=works'),
-      ]);
+      const sumRes = await fetch('/api/catalog/coverage?mode=summary');
       setSummary(await sumRes.json());
-      setWorks(await worksRes.json());
     } catch (err) {
       console.error('Failed to load summary:', err);
     } finally {
       setLoading(false);
+    }
+    // Load works separately — it's a heavier query
+    try {
+      const worksRes = await fetch('/api/catalog/coverage?mode=works');
+      if (worksRes.ok) setWorks(await worksRes.json());
+    } catch (err) {
+      console.error('Failed to load works:', err);
     }
   }, []);
 

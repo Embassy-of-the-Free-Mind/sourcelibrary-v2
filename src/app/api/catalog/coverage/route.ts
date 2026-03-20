@@ -43,60 +43,38 @@ export async function GET(request: NextRequest) {
 }
 
 async function handleSummary(db: any) {
-  const col = db.collection('catalog_coverage');
-
-  // Check if collection exists / has data
-  const total = await col.estimatedDocumentCount();
-  if (total === 0) {
+  // Use pre-computed stats from the build script — fast, no aggregation needed
+  const meta = await db.collection('catalog_coverage_meta').findOne({ _id: 'latest_build' });
+  if (!meta) {
     return NextResponse.json({
       status: 'empty',
       message: 'catalog_coverage collection is empty. Run the build script first.',
     });
   }
 
-  // Aggregate by language
-  const byLanguage = await col.aggregate([
-    {
-      $group: {
-        _id: '$language',
-        editions: { $sum: 1 },
-        with_scan: { $sum: { $cond: ['$has_scan', 1, 0] } },
-        with_translation: { $sum: { $cond: ['$has_published_translation', 1, 0] } },
-        in_source_library: { $sum: { $cond: ['$in_source_library', 1, 0] } },
-        distinct_works: { $addToSet: '$work_cluster_id' },
-      }
-    },
-    { $addFields: { distinct_work_count: { $size: '$distinct_works' } } },
-    { $project: { distinct_works: 0 } },
-    { $sort: { editions: -1 } },
-  ]).toArray();
-
-  // Grand totals
-  const grandTotal = byLanguage.reduce((acc: { editions: number; with_scan: number; with_translation: number; in_source_library: number; distinct_works: number }, l: any) => ({
-    editions: acc.editions + l.editions,
-    with_scan: acc.with_scan + l.with_scan,
-    with_translation: acc.with_translation + l.with_translation,
-    in_source_library: acc.in_source_library + l.in_source_library,
-    distinct_works: acc.distinct_works + l.distinct_work_count,
-  }), { editions: 0, with_scan: 0, with_translation: 0, in_source_library: 0, distinct_works: 0 });
-
-  // Build metadata
-  const meta = await db.collection('catalog_coverage_meta').findOne({ _id: 'latest_build' });
+  const stats = meta.stats || {};
+  const languages = Object.entries(stats).map(([lang, s]: [string, any]) => ({
+    language: lang,
+    editions: s.editions || 0,
+    with_scan: s.scans || 0,
+    pct_scanned: s.editions > 0 ? +(s.scans / s.editions * 100).toFixed(1) : 0,
+    with_translation: s.translations || 0,
+    pct_translated: s.editions > 0 ? +(s.translations / s.editions * 100).toFixed(1) : 0,
+    in_source_library: s.inSL || 0,
+    distinct_works: 0, // computed by works endpoint
+  })).sort((a, b) => b.editions - a.editions);
 
   return NextResponse.json({
     status: 'ok',
-    built_at: meta?.built_at,
-    total: grandTotal,
-    by_language: byLanguage.map((l: any) => ({
-      language: l._id,
-      editions: l.editions,
-      with_scan: l.with_scan,
-      pct_scanned: l.editions > 0 ? +(l.with_scan / l.editions * 100).toFixed(1) : 0,
-      with_translation: l.with_translation,
-      pct_translated: l.editions > 0 ? +(l.with_translation / l.editions * 100).toFixed(1) : 0,
-      in_source_library: l.in_source_library,
-      distinct_works: l.distinct_work_count,
-    })),
+    built_at: meta.built_at,
+    total: {
+      editions: meta.total_editions || 0,
+      with_scan: meta.total_with_scan || 0,
+      with_translation: meta.total_with_translation || 0,
+      in_source_library: meta.total_in_source_library || 0,
+      distinct_works: 0,
+    },
+    by_language: languages,
   });
 }
 
@@ -195,14 +173,9 @@ async function handleWorks(db: any, params: URLSearchParams) {
     {
       $group: {
         _id: '$work_cluster_id',
-        editions: { $sum: 1 },
         any_scan: { $max: { $cond: ['$has_scan', 1, 0] } },
         any_translation: { $max: { $cond: ['$has_published_translation', 1, 0] } },
         any_sl: { $max: { $cond: ['$in_source_library', 1, 0] } },
-        sample_title: { $first: '$title' },
-        sample_author: { $first: '$author' },
-        year_min: { $min: '$year' },
-        year_max: { $max: '$year' },
       }
     },
     {
@@ -220,7 +193,7 @@ async function handleWorks(db: any, params: URLSearchParams) {
         },
       }
     },
-  ]).toArray();
+  ], { allowDiskUse: true }).toArray();
 
   const result = works[0] || { total_works: 0, works_with_scan: 0, works_with_translation: 0, works_in_sl: 0, works_scanned_not_translated: 0, works_neither: 0 };
 
