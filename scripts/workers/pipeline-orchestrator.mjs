@@ -873,7 +873,7 @@ async function submitOcrDirectly(db, book, { modelOverride } = {}) {
 
 async function run() {
   const startTime = Date.now();
-  const client = new MongoClient(MONGODB_URI, { maxPoolSize: 5, serverSelectionTimeoutMS: 10000 });
+  const client = new MongoClient(MONGODB_URI, { maxPoolSize: 5, serverSelectionTimeoutMS: 30000 });
   await client.connect();
   const db = client.db('bookstore');
 
@@ -1285,7 +1285,7 @@ async function run() {
     if (shouldRun(1.7)) {
       console.log('\n--- Phase 1.7: Preview Translation (inline via Vercel API) ---');
 
-      const PREVIEW_TRANSLATE_LIMIT = 5;
+      const PREVIEW_TRANSLATE_LIMIT = 50;
 
       const readyForPreviewTranslate = await db.collection('books')
         .find({
@@ -1298,19 +1298,9 @@ async function run() {
         .limit(PREVIEW_TRANSLATE_LIMIT)
         .toArray();
 
-      // Filter to books with completed preview OCR
-      const booksToTranslate = [];
+      console.log(`  Books ready for preview translation: ${readyForPreviewTranslate.length}`);
+
       for (const book of readyForPreviewTranslate) {
-        const ocrJob = await db.collection('jobs').findOne({
-          book_id: book.id, type: 'ocr', 'config.preview': true,
-          status: { $in: ['completed', 'completed_with_errors'] },
-        });
-        if (ocrJob) booksToTranslate.push(book);
-      }
-
-      console.log(`  Books ready for preview translation: ${booksToTranslate.length}`);
-
-      for (const book of booksToTranslate) {
         try {
           const label = (book.title || '').substring(0, 50);
 
