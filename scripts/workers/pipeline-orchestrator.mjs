@@ -1357,14 +1357,16 @@ async function run() {
             const pages = await db.collection('pages')
               .find({
                 book_id: book.id,
-                $or: [
-                  { cropped_photo: { $exists: true, $nin: [null, ''] } },
-                  { archived_photo: { $regex: /^https?:\/\// } },
-                ],
-                $or: [
-                  { 'ocr.data': { $exists: false } },
-                  { 'ocr.data': null },
-                  { 'ocr.data': '' },
+                $and: [
+                  { $or: [
+                    { cropped_photo: { $exists: true, $nin: [null, ''] } },
+                    { archived_photo: { $regex: /^https?:\/\// } },
+                  ]},
+                  { $or: [
+                    { 'ocr.data': { $exists: false } },
+                    { 'ocr.data': null },
+                    { 'ocr.data': '' },
+                  ]},
                 ],
               })
               .sort({ page_number: 1 })
