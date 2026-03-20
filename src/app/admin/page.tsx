@@ -32,6 +32,17 @@ interface DashboardData {
     total_cost_30d: number;
     pages_translated_30d: number;
   };
+  _snapshot?: {
+    updated_at: string;
+    stale: boolean;
+  };
+}
+
+function timeAgo(dateStr: string) {
+  const seconds = Math.floor((Date.now() - new Date(dateStr).getTime()) / 1000);
+  if (seconds < 60) return 'Updated just now';
+  if (seconds < 3600) return `Updated ${Math.floor(seconds / 60)}m ago`;
+  return `Updated ${Math.floor(seconds / 3600)}h ago`;
 }
 
 function fmt(n: number) {
@@ -103,13 +114,21 @@ export default function AdminDashboard() {
 
   return (
     <div style={{ padding: '24px 32px', maxWidth: 1200, color: '#c9d1d9' }}>
-      <div style={{ marginBottom: 24 }}>
-        <h1 style={{ fontSize: 22, fontWeight: 600, color: '#f0f6fc', marginBottom: 4 }}>
-          Dashboard
-        </h1>
-        <p style={{ fontSize: 13, color: '#8b949e' }}>
-          Source Library at a glance
-        </p>
+      <div style={{ marginBottom: 24, display: 'flex', justifyContent: 'space-between', alignItems: 'baseline' }}>
+        <div>
+          <h1 style={{ fontSize: 22, fontWeight: 600, color: '#f0f6fc', marginBottom: 4 }}>
+            Dashboard
+          </h1>
+          <p style={{ fontSize: 13, color: '#8b949e' }}>
+            Source Library at a glance
+          </p>
+        </div>
+        {data._snapshot?.updated_at && (
+          <div style={{ fontSize: 12, color: '#8b949e', textAlign: 'right' }}>
+            {timeAgo(data._snapshot.updated_at)}
+            {data._snapshot.stale && ' · refreshing...'}
+          </div>
+        )}
       </div>
 
       {/* Row 1: The Canon */}

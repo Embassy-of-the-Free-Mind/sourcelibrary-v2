@@ -4,20 +4,12 @@ import { withAdminAuth } from '@/lib/auth-helpers';
 
 export const maxDuration = 30;
 
-// In-memory cache (5 minutes)
-let cache: { data: unknown; ts: number } | null = null;
-const CACHE_TTL_MS = 5 * 60 * 1000;
+const STALE_AFTER_MS = 15 * 60 * 1000; // 15 minutes
 
-export const GET = withAdminAuth(async () => {
-  if (cache && Date.now() - cache.ts < CACHE_TTL_MS) {
-    return NextResponse.json(cache.data);
-  }
-
-  const db = await getDb();
+async function computeSnapshot(db: any) {
   const books = db.collection('books');
   const notHidden = { hidden: { $ne: true } };
 
-  // All lightweight queries in parallel — countDocuments + small aggregations
   const [
     totalBooks,
     totals,
@@ -32,8 +24,6 @@ export const GET = withAdminAuth(async () => {
     jobsActive,
   ] = await Promise.all([
     books.countDocuments(notHidden),
-
-    // Totals for pages — single group, uses cached book-level fields
     books.aggregate([
       { $match: notHidden },
       {
@@ -45,29 +35,22 @@ export const GET = withAdminAuth(async () => {
         },
       },
     ]).toArray(),
-
     books.countDocuments({
       ...notHidden,
       pages_ocr: { $gte: 1 },
       $expr: { $gte: ['$pages_translated', { $multiply: ['$pages_ocr', 0.9] }] },
     }),
-
     books.countDocuments({ ...notHidden, is_first_translation: true }),
-
     books.countDocuments({
       ...notHidden,
       is_first_translation: true,
       pages_ocr: { $gte: 10 },
       $expr: { $gte: ['$pages_translated', { $multiply: ['$pages_ocr', 0.9] }] },
     }),
-
-    // Enrichment — simple exists checks, much faster than $type/$isArray in aggregation
     books.countDocuments({ ...notHidden, summary: { $exists: true, $nin: ['', null] } }),
     books.countDocuments({ ...notHidden, index_of_topics: { $exists: true, $nin: ['', null] } }),
     books.countDocuments({ ...notHidden, 'detected_images.0': { $exists: true } }),
     books.countDocuments({ ...notHidden, faceted_tags: { $exists: true, $ne: null } }),
-
-    // Cost (gemini_usage collection)
     db.collection('gemini_usage').aggregate([
       {
         $match: {
@@ -84,8 +67,6 @@ export const GET = withAdminAuth(async () => {
         },
       },
     ]).toArray(),
-
-    // Jobs
     db.collection('jobs').aggregate([
       { $match: { status: { $in: ['processing', 'queued'] } } },
       { $group: { _id: '$status', count: { $sum: 1 } } },
@@ -96,7 +77,7 @@ export const GET = withAdminAuth(async () => {
   const cost = costData[0] || { total_cost: 0, pages: 0 };
   const jobMap = Object.fromEntries(jobsActive.map((j: any) => [j._id, j.count]));
 
-  const data = {
+  return {
     canon: {
       total_books: totalBooks,
       total_pages: t.pages,
@@ -127,7 +108,55 @@ export const GET = withAdminAuth(async () => {
       pages_translated_30d: cost.pages,
     },
   };
+}
 
-  cache = { data, ts: Date.now() };
-  return NextResponse.json(data);
+export const GET = withAdminAuth(async () => {
+  const db = await getDb();
+  const config = db.collection('system_config');
+
+  // Try to read cached snapshot
+  const snapshot = await config.findOne({ _id: 'dashboard_snapshot' as any });
+
+  if (snapshot?.data) {
+    const age = Date.now() - new Date(snapshot.updated_at).getTime();
+    const isStale = age > STALE_AFTER_MS;
+
+    // Return cached data immediately; recompute in background if stale
+    if (isStale) {
+      // Fire and forget — don't await
+      computeSnapshot(db).then(data => {
+        config.updateOne(
+          { _id: 'dashboard_snapshot' as any },
+          { $set: { data, updated_at: new Date() } },
+          { upsert: true },
+        );
+      }).catch(() => {});
+    }
+
+    return NextResponse.json({
+      ...snapshot.data,
+      _snapshot: {
+        updated_at: snapshot.updated_at,
+        stale: isStale,
+      },
+    });
+  }
+
+  // No snapshot yet — compute synchronously (first ever load)
+  const data = await computeSnapshot(db);
+
+  // Save snapshot
+  await config.updateOne(
+    { _id: 'dashboard_snapshot' as any },
+    { $set: { data, updated_at: new Date() } },
+    { upsert: true },
+  ).catch(() => {});
+
+  return NextResponse.json({
+    ...data,
+    _snapshot: {
+      updated_at: new Date(),
+      stale: false,
+    },
+  });
 });
