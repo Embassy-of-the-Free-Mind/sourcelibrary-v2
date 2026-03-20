@@ -6,6 +6,8 @@ import type { Sort } from 'mongodb';
 import { ENTITY_TYPE_STYLES, type EntityType } from '@/lib/style-constants';
 import EncyclopediaFilters from './EncyclopediaFilters';
 
+export const maxDuration = 30;
+
 const TYPE_ICONS = {
   person: User,
   place: MapPin,
@@ -60,7 +62,7 @@ async function getEntities(searchParams: SearchParams) {
 
   const [entities, total, stats, letterCounts] = await Promise.all([
     db.collection('entities')
-      .find(filter)
+      .find(filter, { maxTimeMS: 10000 })
       .sort(sortMode === 'alpha' ? { name: 1 } : { book_count: -1, total_mentions: -1 })
       .skip(offset)
       .limit(PER_PAGE)
@@ -74,13 +76,13 @@ async function getEntities(searchParams: SearchParams) {
     db.collection('entities').aggregate([
       { $match: { book_count: { $gte: minBooks }, ...(query ? { $or: [{ name: { $regex: query.replace(/[.*+?^${}()|[\]\\]/g, '\\$&'), $options: 'i' } }, { aliases: { $regex: query.replace(/[.*+?^${}()|[\]\\]/g, '\\$&'), $options: 'i' } }] } : {}), ...(letter && !query ? { name: { $regex: `^${letter}`, $options: 'i' } } : {}) } },
       { $group: { _id: '$type', count: { $sum: 1 } } },
-    ]).toArray(),
+    ], { maxTimeMS: 10000 }).toArray(),
     // Get letter distribution for the A-Z bar (without letter filter applied)
     db.collection('entities').aggregate([
       { $match: { book_count: { $gte: minBooks }, ...(type ? { type } : {}), ...(query ? { $or: [{ name: { $regex: query.replace(/[.*+?^${}()|[\]\\]/g, '\\$&'), $options: 'i' } }, { aliases: { $regex: query.replace(/[.*+?^${}()|[\]\\]/g, '\\$&'), $options: 'i' } }] } : {}) } },
       { $project: { firstLetter: { $toUpper: { $substrCP: ['$name', 0, 1] } } } },
       { $group: { _id: '$firstLetter', count: { $sum: 1 } } },
-    ]).toArray(),
+    ], { maxTimeMS: 10000 }).toArray(),
   ]);
 
   const statsByType = stats.reduce((acc: Record<string, number>, s) => {

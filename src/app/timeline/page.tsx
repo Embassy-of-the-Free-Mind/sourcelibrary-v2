@@ -5,7 +5,7 @@ import TimelineClient from './TimelineClient';
 import type { Metadata } from 'next';
 import type { TimelineOverview, DecadeBucket } from '@/lib/api-client/types/timeline';
 
-export const dynamic = 'force-dynamic';
+export const revalidate = 3600;
 
 export const metadata: Metadata = {
   title: 'Timeline | Source Library',
@@ -47,7 +47,7 @@ async function fetchTimelineData(): Promise<TimelineOverview> {
     ];
 
     const [rawDecades, languages] = await Promise.all([
-      db.collection('books').aggregate(pipeline).toArray(),
+      db.collection('books').aggregate(pipeline, { maxTimeMS: 10000 }).toArray(),
       db.collection('books').distinct('language', baseMatch),
     ]);
 
@@ -82,8 +82,8 @@ async function fetchTimelineData(): Promise<TimelineOverview> {
         collections: [],
       },
     };
-  } catch {
-    // DB unavailable (e.g. build time) — return empty data
+  } catch (err) {
+    console.error('Timeline data fetch failed:', err);
     return {
       decades: [],
       summary: { total: 0, yearRange: { min: 0, max: 0 }, topLanguages: [] },

@@ -6,7 +6,7 @@ import ContentPageLayout, { ContentHeader } from '@/components/layout/ContentPag
 import { LIBRARY_PARTNERS, getPartnerByProvider } from '@/lib/library-partners';
 import type { Metadata } from 'next';
 
-export const dynamic = 'force-dynamic';
+export const revalidate = 3600;
 
 export const metadata: Metadata = {
   title: 'Libraries | Source Library',
@@ -54,7 +54,7 @@ async function fetchProviderStats(): Promise<ProviderStats[]> {
     { $sort: { count: -1 as const } },
   ];
 
-  const results = await db.collection('books').aggregate(pipeline).toArray();
+  const results = await db.collection('books').aggregate(pipeline, { maxTimeMS: 10000 }).toArray();
 
   // Fetch one hero gallery image per provider
   const allBookIds = results.flatMap(r => (r.bookIds as string[]).slice(0, 50));
@@ -114,7 +114,7 @@ async function fetchContributingLibraries(): Promise<ContributingLibrary[]> {
       },
     },
     { $sort: { count: -1 as const } },
-  ]).toArray();
+  ], { maxTimeMS: 10000 }).toArray();
 
   // Filter out entries that duplicate a digital source name (e.g. "Internet Archive")
   const digitalNames = new Set(Object.values(LIBRARY_PARTNERS).map(p => p.name.toLowerCase()));

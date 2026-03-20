@@ -7,7 +7,7 @@ import ExploreNav from '@/components/explore/ExploreNav';
 import DataSources from '@/components/explore/DataSources';
 import { getDb } from '@/lib/mongodb';
 
-export const dynamic = 'force-dynamic';
+export const revalidate = 3600;
 
 export const metadata: Metadata = {
   title: 'Explore — Source Library',
@@ -48,7 +48,7 @@ async function fetchExploreStats() {
     db.collection('books').countDocuments({ hidden: { $ne: true }, pages_translated: { $gt: 0 } }),
     db.collection('entities').aggregate([
       { $group: { _id: '$type', count: { $sum: 1 } } },
-    ]).toArray(),
+    ], { maxTimeMS: 10000 }).toArray(),
 
     // Century x type heatmap — bin entities by the century of their associated books
     db.collection('entities').aggregate([
@@ -84,7 +84,7 @@ async function fetchExploreStats() {
         },
       },
       { $sort: { '_id.century': 1 } },
-    ]).toArray(),
+    ], { maxTimeMS: 15000 }).toArray(),
 
     // Top entities per era
     db.collection('entities').aggregate([
@@ -135,7 +135,7 @@ async function fetchExploreStats() {
         },
       },
       { $sort: { century: 1 } },
-    ]).toArray(),
+    ], { maxTimeMS: 15000 }).toArray(),
   ]);
 
   const heatmap = heatmapData.map((row) => ({
