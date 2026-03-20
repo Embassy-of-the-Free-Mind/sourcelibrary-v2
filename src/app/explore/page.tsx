@@ -23,34 +23,29 @@ async function fetchExploreStats() {
   try {
     const db = await getDb();
 
+    // Use estimatedDocumentCount (instant, uses collection metadata)
+    // and a single aggregation for all entity stats to avoid multiple slow scans
     const [
       totalEntities,
-      withDates,
-      withCoordinates,
-      withWikidata,
       totalBooks,
-      typeDistribution,
+      entityStats,
       heatmapData,
     ] = await Promise.all([
-      db.collection('entities').countDocuments(),
-      db.collection('entities').countDocuments({
-        $or: [
-          { wikidata_birth_date: { $exists: true, $ne: null } },
-          { wikidata_death_date: { $exists: true, $ne: null } },
-        ],
-      }),
-      db.collection('entities').countDocuments({
-        wikidata_coordinates: { $exists: true, $ne: null },
-      }),
-      db.collection('entities').countDocuments({
-        wikidata_id: { $exists: true, $ne: null },
-      }),
-      db.collection('books').countDocuments({ hidden: { $ne: true }, pages_translated: { $gt: 0 } }),
+      db.collection('entities').estimatedDocumentCount(),
+      db.collection('books').estimatedDocumentCount(),
+      // Single aggregation for type distribution + filtered counts
       db.collection('entities').aggregate([
-        { $group: { _id: '$type', count: { $sum: 1 } } },
-      ], { maxTimeMS: 10000 }).toArray(),
+        {
+          $facet: {
+            byType: [{ $group: { _id: '$type', count: { $sum: 1 } } }],
+            withDates: [{ $match: { $or: [{ wikidata_birth_date: { $exists: true, $ne: null } }, { wikidata_death_date: { $exists: true, $ne: null } }] } }, { $count: 'n' }],
+            withCoords: [{ $match: { wikidata_coordinates: { $exists: true, $ne: null } } }, { $count: 'n' }],
+            withWikidata: [{ $match: { wikidata_id: { $exists: true, $ne: null } } }, { $count: 'n' }],
+          },
+        },
+      ], { maxTimeMS: 25000 }).toArray(),
 
-      // Books by century — fast aggregation on books collection (no $lookup)
+      // Books by century — fast aggregation on books collection
       db.collection('books').aggregate([
         { $match: { year: { $exists: true, $gt: 0 }, hidden: { $ne: true } } },
         {
@@ -65,8 +60,14 @@ async function fetchExploreStats() {
           },
         },
         { $sort: { _id: 1 } },
-      ], { maxTimeMS: 10000 }).toArray(),
+      ], { maxTimeMS: 15000 }).toArray(),
     ]);
+
+    const facets = entityStats[0] || { byType: [], withDates: [], withCoords: [], withWikidata: [] };
+    const withDates = facets.withDates[0]?.n || 0;
+    const withCoordinates = facets.withCoords[0]?.n || 0;
+    const withWikidata = facets.withWikidata[0]?.n || 0;
+    const typeDistribution = facets.byType;
 
     const heatmap = heatmapData.map((row) => ({
       century: row._id as number,

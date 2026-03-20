@@ -36,6 +36,7 @@ interface SearchParams {
 }
 
 async function getEntities(searchParams: SearchParams) {
+  try {
   const db = await getDb();
 
   const type = searchParams.type && searchParams.type !== 'all' ? searchParams.type : null;
@@ -77,13 +78,13 @@ async function getEntities(searchParams: SearchParams) {
     db.collection('entities').aggregate([
       { $match: { book_count: { $gte: minBooks }, ...(query ? { $or: [{ name: { $regex: query.replace(/[.*+?^${}()|[\]\\]/g, '\\$&'), $options: 'i' } }, { aliases: { $regex: query.replace(/[.*+?^${}()|[\]\\]/g, '\\$&'), $options: 'i' } }] } : {}), ...(letter && !query ? { name: { $regex: `^${letter}`, $options: 'i' } } : {}) } },
       { $group: { _id: '$type', count: { $sum: 1 } } },
-    ], { maxTimeMS: 10000 }).toArray(),
+    ], { maxTimeMS: 20000 }).toArray(),
     // Get letter distribution for the A-Z bar (without letter filter applied)
     db.collection('entities').aggregate([
       { $match: { book_count: { $gte: minBooks }, ...(type ? { type } : {}), ...(query ? { $or: [{ name: { $regex: query.replace(/[.*+?^${}()|[\]\\]/g, '\\$&'), $options: 'i' } }, { aliases: { $regex: query.replace(/[.*+?^${}()|[\]\\]/g, '\\$&'), $options: 'i' } }] } : {}) } },
       { $project: { firstLetter: { $toUpper: { $substrCP: ['$name', 0, 1] } } } },
       { $group: { _id: '$firstLetter', count: { $sum: 1 } } },
-    ], { maxTimeMS: 10000 }).toArray(),
+    ], { maxTimeMS: 20000 }).toArray(),
   ]);
 
   const statsByType = stats.reduce((acc: Record<string, number>, s) => {
@@ -119,6 +120,17 @@ async function getEntities(searchParams: SearchParams) {
     },
     letterMap,
   };
+  } catch (err) {
+    console.error('Encyclopedia data fetch failed:', err);
+    return {
+      entities: [],
+      total: 0,
+      page: 1,
+      totalPages: 0,
+      stats: { total: 0, people: 0, places: 0, concepts: 0 },
+      letterMap: {},
+    };
+  }
 }
 
 export default async function EncyclopediaPage({
