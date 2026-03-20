@@ -14,87 +14,60 @@ export const GET = withAdminAuth(async () => {
   }
 
   const db = await getDb();
+  const books = db.collection('books');
+  const notHidden = { hidden: { $ne: true } };
 
-  // Single scan of books collection for all metrics
-  const [bookStats, costData, jobsActive] = await Promise.all([
-    db.collection('books').aggregate([
-      { $match: { hidden: { $ne: true } } },
+  // All lightweight queries in parallel — countDocuments + small aggregations
+  const [
+    totalBooks,
+    totals,
+    readable,
+    firstTranslations,
+    firstTranslationsComplete,
+    withSummary,
+    withIndex,
+    withImages,
+    tagged,
+    costData,
+    jobsActive,
+  ] = await Promise.all([
+    books.countDocuments(notHidden),
+
+    // Totals for pages — single group, uses cached book-level fields
+    books.aggregate([
+      { $match: notHidden },
       {
         $group: {
           _id: null,
-          books: { $sum: 1 },
           pages: { $sum: { $ifNull: ['$pages_count', 0] } },
           pages_ocr: { $sum: { $ifNull: ['$pages_ocr', 0] } },
           pages_translated: { $sum: { $ifNull: ['$pages_translated', 0] } },
-          readable: {
-            $sum: {
-              $cond: [
-                { $and: [
-                  { $gte: ['$pages_ocr', 1] },
-                  { $gte: ['$pages_translated', { $multiply: ['$pages_ocr', 0.9] }] },
-                ] },
-                1, 0,
-              ],
-            },
-          },
-          first_translations: {
-            $sum: { $cond: [{ $eq: ['$is_first_translation', true] }, 1, 0] },
-          },
-          first_translations_complete: {
-            $sum: {
-              $cond: [
-                { $and: [
-                  { $eq: ['$is_first_translation', true] },
-                  { $gte: ['$pages_ocr', 10] },
-                  { $gte: ['$pages_translated', { $multiply: ['$pages_ocr', 0.9] }] },
-                ] },
-                1, 0,
-              ],
-            },
-          },
-          with_summary: {
-            $sum: {
-              $cond: [
-                { $or: [
-                  { $and: [{ $eq: [{ $type: '$summary' }, 'string'] }, { $ne: ['$summary', ''] }] },
-                  { $ne: [{ $ifNull: ['$summary.data', ''] }, ''] },
-                ] },
-                1, 0,
-              ],
-            },
-          },
-          with_index: {
-            $sum: {
-              $cond: [
-                { $or: [
-                  { $and: [{ $eq: [{ $type: '$index_of_topics' }, 'string'] }, { $ne: ['$index_of_topics', ''] }] },
-                  { $ne: [{ $ifNull: ['$index_of_topics.data', ''] }, ''] },
-                ] },
-                1, 0,
-              ],
-            },
-          },
-          with_images: {
-            $sum: {
-              $cond: [
-                { $and: [{ $isArray: '$detected_images' }, { $gte: [{ $size: '$detected_images' }, 1] }] },
-                1, 0,
-              ],
-            },
-          },
-          tagged: {
-            $sum: {
-              $cond: [
-                { $and: [{ $ne: [{ $ifNull: ['$faceted_tags', null] }, null] }, { $ne: ['$faceted_tags', {}] }] },
-                1, 0,
-              ],
-            },
-          },
         },
       },
     ]).toArray(),
 
-    // Cost (different collection, must be separate)
+    books.countDocuments({
+      ...notHidden,
+      pages_ocr: { $gte: 1 },
+      $expr: { $gte: ['$pages_translated', { $multiply: ['$pages_ocr', 0.9] }] },
+    }),
+
+    books.countDocuments({ ...notHidden, is_first_translation: true }),
+
+    books.countDocuments({
+      ...notHidden,
+      is_first_translation: true,
+      pages_ocr: { $gte: 10 },
+      $expr: { $gte: ['$pages_translated', { $multiply: ['$pages_ocr', 0.9] }] },
+    }),
+
+    // Enrichment — simple exists checks, much faster than $type/$isArray in aggregation
+    books.countDocuments({ ...notHidden, summary: { $exists: true, $nin: ['', null] } }),
+    books.countDocuments({ ...notHidden, index_of_topics: { $exists: true, $nin: ['', null] } }),
+    books.countDocuments({ ...notHidden, 'detected_images.0': { $exists: true } }),
+    books.countDocuments({ ...notHidden, faceted_tags: { $exists: true, $ne: null } }),
+
+    // Cost (gemini_usage collection)
     db.collection('gemini_usage').aggregate([
       {
         $match: {
@@ -112,41 +85,37 @@ export const GET = withAdminAuth(async () => {
       },
     ]).toArray(),
 
-    // Jobs (different collection, must be separate)
+    // Jobs
     db.collection('jobs').aggregate([
       { $match: { status: { $in: ['processing', 'queued'] } } },
       { $group: { _id: '$status', count: { $sum: 1 } } },
     ]).toArray(),
   ]);
 
-  const b = bookStats[0] || {
-    books: 0, pages: 0, pages_ocr: 0, pages_translated: 0,
-    readable: 0, first_translations: 0, first_translations_complete: 0,
-    with_summary: 0, with_index: 0, with_images: 0, tagged: 0,
-  };
+  const t = totals[0] || { pages: 0, pages_ocr: 0, pages_translated: 0 };
   const cost = costData[0] || { total_cost: 0, pages: 0 };
   const jobMap = Object.fromEntries(jobsActive.map((j: any) => [j._id, j.count]));
 
   const data = {
     canon: {
-      total_books: b.books,
-      total_pages: b.pages,
-      readable_books: b.readable,
-      readable_percent: b.books > 0 ? +(b.readable / b.books * 100).toFixed(1) : 0,
-      first_translations: b.first_translations,
-      first_translations_complete: b.first_translations_complete,
+      total_books: totalBooks,
+      total_pages: t.pages,
+      readable_books: readable,
+      readable_percent: totalBooks > 0 ? +(readable / totalBooks * 100).toFixed(1) : 0,
+      first_translations: firstTranslations,
+      first_translations_complete: firstTranslationsComplete,
     },
     coverage: {
-      ocr_pages: b.pages_ocr,
-      ocr_percent: b.pages > 0 ? +(b.pages_ocr / b.pages * 100).toFixed(1) : 0,
-      translated_pages: b.pages_translated,
-      translated_percent: b.pages > 0 ? +(b.pages_translated / b.pages * 100).toFixed(1) : 0,
+      ocr_pages: t.pages_ocr,
+      ocr_percent: t.pages > 0 ? +(t.pages_ocr / t.pages * 100).toFixed(1) : 0,
+      translated_pages: t.pages_translated,
+      translated_percent: t.pages > 0 ? +(t.pages_translated / t.pages * 100).toFixed(1) : 0,
     },
     enrichment: {
-      with_summary: b.with_summary,
-      with_index: b.with_index,
-      with_images: b.with_images,
-      tagged: b.tagged,
+      with_summary: withSummary,
+      with_index: withIndex,
+      with_images: withImages,
+      tagged,
     },
     pipeline: {
       processing: jobMap.processing || 0,

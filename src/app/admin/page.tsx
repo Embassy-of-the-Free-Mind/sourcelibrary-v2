@@ -69,19 +69,24 @@ function ProgressBar({ percent, color }: { percent: number; color: string }) {
 export default function AdminDashboard() {
   const [data, setData] = useState<DashboardData | null>(null);
   const [loading, setLoading] = useState(true);
+  const [slow, setSlow] = useState(false);
 
   useEffect(() => {
+    setSlow(false);
+    const timer = setTimeout(() => setSlow(true), 2000);
     fetch('/api/admin/dashboard')
       .then(r => r.json())
       .then(setData)
       .catch(() => {})
-      .finally(() => setLoading(false));
+      .finally(() => { setLoading(false); clearTimeout(timer); });
+    return () => clearTimeout(timer);
   }, []);
 
   if (loading) {
     return (
       <div style={{ padding: '60px 32px', textAlign: 'center', color: '#8b949e' }}>
-        Loading dashboard...
+        <div>Loading dashboard...</div>
+        {slow && <div style={{ fontSize: 12, marginTop: 8 }}>First load takes a few seconds while the cache warms up</div>}
       </div>
     );
   }
