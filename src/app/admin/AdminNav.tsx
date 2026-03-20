@@ -7,10 +7,12 @@ import { useState, useRef, useEffect } from 'react';
 interface NavItem {
   href: string;
   label: string;
+  exact?: boolean;
   children?: { href: string; label: string }[];
 }
 
 const adminLinks: NavItem[] = [
+  { href: '/admin', label: 'Dashboard', exact: true },
   { href: '/admin/pipeline', label: 'Pipeline' },
   { href: '/admin/processing', label: 'Processing' },
   { href: '/admin/realtime', label: 'Realtime' },
@@ -28,6 +30,7 @@ const adminLinks: NavItem[] = [
   },
   { href: '/admin/kdp', label: 'Publishing' },
   { href: '/admin/members', label: 'Members' },
+  { href: '/analytics', label: 'Analytics' },
   { href: '/admin/errors', label: 'Errors' },
   { href: '/admin/system-map', label: 'System Map' },
 ];
@@ -47,10 +50,11 @@ export function AdminNav() {
     return () => document.removeEventListener('mousedown', handleClickOutside);
   }, []);
 
-  function isActive(href: string, children?: NavItem['children']) {
+  function isActive(href: string, children?: NavItem['children'], exact?: boolean) {
     if (children) {
       return children.some(c => pathname.startsWith(c.href));
     }
+    if (exact) return pathname === href;
     return pathname.startsWith(href);
   }
 
@@ -127,7 +131,7 @@ export function AdminNav() {
           );
         }
 
-        const active = isActive(link.href);
+        const active = isActive(link.href, undefined, link.exact);
         return (
           <Link key={link.href} href={link.href} style={linkStyle(active)}>
             {link.label}
