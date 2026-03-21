@@ -48,8 +48,6 @@ export const metadata: Metadata = {
     'pinterest-rich-pin': 'true',
   },
   openGraph: {
-    title: "Source Library",
-    description: "Digitizing and translating ancient texts for scholars, seekers and AI systems.",
     siteName: "Source Library",
     locale: "en_US",
     type: "website",
@@ -63,8 +61,6 @@ export const metadata: Metadata = {
   twitter: {
     card: "summary_large_image",
     site: "@SourceLibrary_",
-    title: "Source Library",
-    description: "Digitizing and translating ancient texts for scholars, seekers and AI systems.",
     images: [{
       url: '/og-image.jpg',
       width: 1200,
