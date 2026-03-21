@@ -184,7 +184,7 @@ function RelatedTexts({ texts }: { texts: typeof ARTWORKS['birth-of-venus']['rel
   );
 }
 
-function ArtworkCard({ artwork, id }: { artwork: typeof ARTWORKS['birth-of-venus']; id: string }) {
+function ArtworkCard({ artwork, id }: { artwork: (typeof ARTWORKS)[keyof typeof ARTWORKS]; id: string }) {
   return (
     <div id={id}>
       {/* Hero image */}
