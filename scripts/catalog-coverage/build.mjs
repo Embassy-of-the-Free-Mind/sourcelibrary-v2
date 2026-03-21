@@ -516,9 +516,10 @@ async function buildCoverage(db, scanLookup, translationLookup, slLookup) {
               await col.bulkWrite(chunk, { ordered: false });
               break;
             } catch (err) {
-              if (attempt < 2 && (err.message?.includes('timed out') || err.errorLabels?.has?.('RetryableWriteError'))) {
-                console.error(`\n  Write timeout, retry ${attempt + 1}/3...`);
-                await new Promise(r => setTimeout(r, 2000 * (attempt + 1)));
+              const msg = String(err.message || err);
+              if (attempt < 2 && (msg.includes('timed out') || msg.includes('ECONNRESET') || msg.includes('PoolCleared') || msg.includes('pool was cleared') || msg.includes('ENOTFOUND') || msg.includes('ResetPool'))) {
+                console.error(`\n  Write error, retry ${attempt + 1}/3: ${msg.slice(0, 100)}`);
+                await new Promise(r => setTimeout(r, 5000 * (attempt + 1)));
               } else {
                 throw err;
               }
