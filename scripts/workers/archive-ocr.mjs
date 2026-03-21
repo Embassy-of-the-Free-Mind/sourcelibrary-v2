@@ -81,7 +81,7 @@ const R2_PUBLIC_URL = process.env.R2_PUBLIC_URL || 'https://images.sourcelibrary
 
 async function downloadImage(url) {
   const controller = new AbortController();
-  const timeout = setTimeout(() => controller.abort(), 30_000);
+  const timeout = setTimeout(() => controller.abort(), 60_000); // 60s for full-res images
   try {
     const res = await fetch(url, { signal: controller.signal });
     if (!res.ok) throw new Error(`HTTP ${res.status}`);
@@ -104,13 +104,56 @@ async function uploadToR2(key, buffer, contentType) {
   return `${R2_PUBLIC_URL}/${key}`;
 }
 
+/**
+ * Upgrade a IIIF image URL to full resolution.
+ * Most sources store photo URLs at reduced resolution (pct:50, 1000px, etc.).
+ * For archival, we want the highest resolution available.
+ */
+function upgradeToFullRes(url) {
+  try {
+    // Internet Archive IIIF: .../full/pct:50/0/default.jpg -> .../full/full/0/default.jpg
+    if (url.includes('archive.org') && url.includes('/full/pct:')) {
+      return url.replace(/\/full\/pct:\d+\//, '/full/full/');
+    }
+    // MDZ (digitale-sammlungen): .../full/1000,/0/default.jpg -> .../full/full/0/default.jpg
+    if (url.includes('digitale-sammlungen') && url.match(/\/full\/\d+,\//)) {
+      return url.replace(/\/full\/\d+,\//, '/full/full/');
+    }
+    // Gallica IIIF: same pattern
+    if (url.includes('gallica') && url.match(/\/full\/\d+,?\d*\//)) {
+      return url.replace(/\/full\/\d+,?\d*\//, '/full/full/');
+    }
+    // Vatican IIIF
+    if (url.includes('digi.vatlib') && url.match(/\/full\/\d+,?\d*\//)) {
+      return url.replace(/\/full\/\d+,?\d*\//, '/full/full/');
+    }
+    // e-rara, Bodleian, Cambridge, HAB, Wellcome — all IIIF
+    if (url.match(/\/full\/(?:pct:\d+|\d+,?\d*)\/\d+\/default\./)) {
+      return url.replace(/\/full\/(?:pct:\d+|\d+,?\d*)\//, '/full/full/');
+    }
+  } catch {}
+  return url; // Return original if no upgrade pattern matches
+}
+
 async function archivePage(page, db) {
-  const sourceUrl = page.photo;
+  const originalUrl = page.photo;
+  const sourceUrl = upgradeToFullRes(originalUrl);
   const domain = getDomain(sourceUrl);
   await waitForToken(domain);
 
   try {
-    const { buffer, mimeType } = await downloadImage(sourceUrl);
+    // Try full-res first, fall back to original URL if it fails (some sources reject /full/full/)
+    let result;
+    try {
+      result = await downloadImage(sourceUrl);
+    } catch (err) {
+      if (sourceUrl !== originalUrl) {
+        result = await downloadImage(originalUrl);
+      } else {
+        throw err;
+      }
+    }
+    const { buffer, mimeType } = result;
     const key = `archived/${page.book_id}/${page.page_number}.jpg`;
     const url = await uploadToR2(key, buffer, mimeType);
 
@@ -121,6 +164,8 @@ async function archivePage(page, db) {
           archived_photo: url,
           'archive_metadata.archived_at': new Date(),
           'archive_metadata.source_url': sourceUrl,
+          'archive_metadata.original_url': originalUrl,
+          'archive_metadata.full_res': sourceUrl !== originalUrl,
           'archive_metadata.bytes': buffer.byteLength,
           updated_at: new Date(),
         }
