@@ -21,6 +21,7 @@ import EditionsPanel from '@/components/editions/EditionsPanel';
 import SchemaOrgMetadata from '@/components/seo/SchemaOrgMetadata';
 import CategoryPicker from '@/components/ui/CategoryPicker';
 import FeedbackWidget from '@/components/feedback/FeedbackWidget';
+import ExpandableGuide from '@/components/book/ExpandableGuide';
 import { linkEntities, buildEntityList } from '@/lib/link-entities';
 import { BookShare } from '@/components/ui/ShareButton';
 import LikeButton from '@/components/ui/LikeButton';
@@ -554,14 +555,7 @@ async function BookInfo({ id }: { id: string }) {
                     ))}
                   </div>
                   {hasTranslations && (
-                    <Link
-                      href={`/book/${book.id}/guide`}
-                      className="mt-4 inline-flex items-center gap-2 text-sm font-medium text-accent-rust hover:text-accent-gold-dark transition-colors group"
-                    >
-                      <BookText className="w-4 h-4" />
-                      Open the full Reading Guide: chapter-by-chapter summary, selected quotes and illustrations
-                      <span className="group-hover:translate-x-0.5 transition-transform">&rarr;</span>
-                    </Link>
+                    <ExpandableGuide bookId={book.id} />
                   )}
                 </>
               ) : hasTranslations ? (
