@@ -59,21 +59,21 @@ export default function ExpandableGuide({ bookId }: ExpandableGuideProps) {
     setExpanded(true);
 
     try {
-      // Fetch index (has detailed summary + sections) and illustrations in parallel
-      const [indexData, bookData, galleryData] = await Promise.all([
-        books.index.get(bookId),
-        books.get(bookId, { full: false }) as Promise<any>,
+      // Fetch book (with full index + pages) and illustrations in parallel
+      const [bookData, galleryData] = await Promise.all([
+        books.get(bookId, { full: true }) as Promise<any>,
         gallery.list({ bookId, limit: 50, minQuality: 0.75 }).catch(() => ({ items: [] })),
       ]);
 
-      if (indexData?.bookSummary?.detailed) {
-        setDetailedSummary(indexData.bookSummary.detailed);
-      } else if (indexData?.bookSummary?.abstract) {
-        setDetailedSummary(indexData.bookSummary.abstract);
+      const idx = bookData?.index;
+      if (idx?.bookSummary?.detailed) {
+        setDetailedSummary(idx.bookSummary.detailed);
+      } else if (idx?.bookSummary?.abstract) {
+        setDetailedSummary(idx.bookSummary.abstract);
       }
 
-      if (indexData?.sectionSummaries && Array.isArray(indexData.sectionSummaries)) {
-        setSections(indexData.sectionSummaries);
+      if (idx?.sectionSummaries && Array.isArray(idx.sectionSummaries)) {
+        setSections(idx.sectionSummaries);
       }
 
       // Get page list for section nav links
