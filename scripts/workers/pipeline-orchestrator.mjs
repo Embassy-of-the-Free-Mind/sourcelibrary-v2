@@ -1131,11 +1131,26 @@ async function run() {
       console.log('\n--- Phase 1: Archive check ---');
 
       // Move queued -> archiving
+      // Priority: confirmed first translations > non-English (likely first) > English
+      const ENGLISH_VARIANTS_P1 = ['english', 'eng', 'en'];
       const queuedBooks = await db.collection('books')
-        .find({ 'pipeline_auto.status': 'queued' })
-        .sort({ hidden: 1 })
-        .project({ id: 1 })
-        .limit(ARCHIVE_LIMIT)
+        .aggregate([
+          { $match: { 'pipeline_auto.status': 'queued' } },
+          { $addFields: {
+            _priority: {
+              $switch: {
+                branches: [
+                  { case: { $eq: ['$is_first_translation', true] }, then: 0 },
+                  { case: { $in: [{ $toLower: { $ifNull: ['$language', ''] } }, ENGLISH_VARIANTS_P1] }, then: 2 },
+                ],
+                default: 1,
+              },
+            },
+          }},
+          { $sort: { _priority: 1, hidden: 1 } },
+          { $project: { id: 1 } },
+          { $limit: ARCHIVE_LIMIT },
+        ])
         .toArray();
 
       if (!DRY_RUN) {
@@ -1147,11 +1162,25 @@ async function run() {
       console.log(`  Queued -> archiving: ${queuedBooks.length}`);
 
       // Check archiving books for completion
+      // Priority: confirmed first translations > non-English > English
       const archivingBooks = await db.collection('books')
-        .find({ 'pipeline_auto.status': 'archiving' })
-        .sort({ hidden: 1 })
-        .project({ id: 1 })
-        .limit(ARCHIVE_LIMIT)
+        .aggregate([
+          { $match: { 'pipeline_auto.status': 'archiving' } },
+          { $addFields: {
+            _priority: {
+              $switch: {
+                branches: [
+                  { case: { $eq: ['$is_first_translation', true] }, then: 0 },
+                  { case: { $in: [{ $toLower: { $ifNull: ['$language', ''] } }, ENGLISH_VARIANTS_P1] }, then: 2 },
+                ],
+                default: 1,
+              },
+            },
+          }},
+          { $sort: { _priority: 1, hidden: 1 } },
+          { $project: { id: 1 } },
+          { $limit: ARCHIVE_LIMIT },
+        ])
         .toArray();
 
       let archiveCompleted = 0;
@@ -1581,11 +1610,26 @@ async function run() {
 
       const ocrLimit = activeBatchOcr >= MAX_ACTIVE_BATCH_OCR ? 0 : OCR_SUBMIT_LIMIT;
 
+      // Priority: confirmed first translations > non-English > English
+      const ENGLISH_VARIANTS_P2 = ['english', 'eng', 'en'];
       const readyForOcr = ocrLimit > 0 ? await db.collection('books')
-        .find({ 'pipeline_auto.status': 'archive_complete' })
-        .sort({ hidden: 1 })
-        .project({ id: 1, title: 1, pages_count: 1, 'pipeline_auto.retry_count': 1, 'pipeline_auto.recitation_retry': 1 })
-        .limit(ocrLimit)
+        .aggregate([
+          { $match: { 'pipeline_auto.status': 'archive_complete' } },
+          { $addFields: {
+            _priority: {
+              $switch: {
+                branches: [
+                  { case: { $eq: ['$is_first_translation', true] }, then: 0 },
+                  { case: { $in: [{ $toLower: { $ifNull: ['$language', ''] } }, ENGLISH_VARIANTS_P2] }, then: 2 },
+                ],
+                default: 1,
+              },
+            },
+          }},
+          { $sort: { _priority: 1, hidden: 1 } },
+          { $project: { id: 1, title: 1, pages_count: 1, 'pipeline_auto.retry_count': 1, 'pipeline_auto.recitation_retry': 1 } },
+          { $limit: ocrLimit },
+        ])
         .toArray() : [];
 
       console.log(`  Books ready for OCR: ${readyForOcr.length}`);

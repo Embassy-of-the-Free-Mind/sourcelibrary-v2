@@ -2,22 +2,20 @@
 // Hetzner standalone archive-ocr worker
 // Replaces the Vercel cron /api/cron/archive-ocr
 //
-// Finds pages with OCR data but no archived_photo, downloads the source image,
+// Finds pages needing archiving, downloads the source image,
 // uploads to R2, and updates MongoDB.
 //
-// Per-domain rate limiting based on robots.txt and library policies:
-//   IA: permissive (no crawl-delay)
-//   e-rara: 1s crawl-delay in robots.txt
-//   Vatican: 10s crawl-delay in robots.txt
-//   Gallica, Bodleian, Cambridge, HAB: conservative (no explicit policy)
-//   MDZ: open (no restrictions)
+// Priority: first translations > non-English > English (via book lookup)
+// Per-domain rate limiting based on robots.txt and library policies.
+// Each domain processes in parallel at its own rate.
 //
 // Run: set -a; source .env.production.local; set +a; node scripts/workers/archive-ocr.mjs
 
 import { MongoClient } from 'mongodb';
 import { S3Client, PutObjectCommand } from '@aws-sdk/client-s3';
 
-const MAX_PAGES = 2000;
+const MAX_PAGES = 10_000;
+const MAX_PAGES_PER_DOMAIN = 5000;  // Prevent one domain from crowding out others
 
 // Per-domain rate limits (requests per second) — be a good citizen
 const DOMAIN_RATE_LIMITS = {
@@ -139,8 +137,9 @@ async function main() {
   const client = await MongoClient.connect(process.env.MONGODB_URI);
   const db = client.db('bookstore');
 
+  // No longer requires ocr.data — archiving is a prerequisite for OCR, not post-OCR.
+  // This unblocks 4.3M+ pages that were stuck in a deadlock.
   const query = {
-    'ocr.data': { $exists: true, $nin: [null, ''] },
     photo: { $exists: true, $nin: [null, ''] },
     $or: [
       { archived_photo: { $exists: false } },
@@ -149,14 +148,16 @@ async function main() {
     ],
   };
 
-  const totalNeeding = await db.collection('pages').countDocuments(query);
+  // Use estimatedDocumentCount for speed, exact count is too slow on 2.65M pages
+  const totalNeeding = await db.collection('pages').countDocuments(query, { maxTimeMS: 30_000 }).catch(() => -1);
+
   if (totalNeeding === 0) {
     console.log(`[archive-ocr] No pages need archiving`);
     await client.close();
     return;
   }
 
-  console.log(`[archive-ocr] ${totalNeeding} pages need archiving (processing up to ${MAX_PAGES})`);
+  console.log(`[archive-ocr] ~${totalNeeding} pages need archiving (processing up to ${MAX_PAGES})`);
   console.log(`[archive-ocr] Per-domain rate limits: ${Object.entries(DOMAIN_RATE_LIMITS).filter(([k]) => k !== '_default').map(([k, v]) => `${k}:${v}/s`).join(', ')}`);
 
   let archived = 0;
@@ -165,19 +166,46 @@ async function main() {
   let processed = 0;
   const domainStats = {};
 
-  // Group pages by domain and process each domain's pages concurrently
-  // but respect per-domain rate limits within each group
+  // Fetch pages with book-level priority: first translations > non-English > English
+  const ENGLISH_VARIANTS = ['english', 'eng', 'en'];
   const pages = await db.collection('pages')
-    .find(query, { projection: { _id: 1, book_id: 1, page_number: 1, photo: 1 } })
-    .limit(MAX_PAGES)
+    .aggregate([
+      { $match: query },
+      { $limit: MAX_PAGES * 2 }, // Over-fetch to allow priority sorting
+      { $lookup: {
+        from: 'books',
+        let: { bid: '$book_id' },
+        pipeline: [
+          { $match: { $expr: { $eq: ['$id', '$$bid'] } } },
+          { $project: { is_first_translation: 1, language: 1 } },
+        ],
+        as: '_book',
+      }},
+      { $addFields: {
+        _priority: {
+          $switch: {
+            branches: [
+              { case: { $eq: [{ $arrayElemAt: ['$_book.is_first_translation', 0] }, true] }, then: 0 },
+              { case: { $in: [{ $toLower: { $ifNull: [{ $arrayElemAt: ['$_book.language', 0] }, ''] } }, ENGLISH_VARIANTS] }, then: 2 },
+            ],
+            default: 1,
+          },
+        },
+      }},
+      { $sort: { _priority: 1 } },
+      { $limit: MAX_PAGES },
+      { $project: { _id: 1, book_id: 1, page_number: 1, photo: 1 } },
+    ], { maxTimeMS: 120_000 })
     .toArray();
 
-  // Group by domain
+  // Group by domain with per-domain cap
   const byDomain = {};
   for (const page of pages) {
     const domain = getDomain(page.photo);
     if (!byDomain[domain]) byDomain[domain] = [];
-    byDomain[domain].push(page);
+    if (byDomain[domain].length < MAX_PAGES_PER_DOMAIN) {
+      byDomain[domain].push(page);
+    }
   }
 
   console.log(`[archive-ocr] Domain breakdown: ${Object.entries(byDomain).map(([d, p]) => `${d}:${p.length}`).join(', ')}`);
