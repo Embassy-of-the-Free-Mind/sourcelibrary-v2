@@ -40,22 +40,27 @@ async function run() {
   const twoDaysAgo = new Date(now - 48 * 60 * 60 * 1000);
 
   // 1. Check OCR throughput
-  const pagesOcrd = await db.collection('pages').countDocuments({
-    'ocr.completed_at': { $gte: oneDayAgo },
+  // Use batch_jobs (indexed, fast) instead of scanning pages collection
+  const recentSavedJobs = await db.collection('batch_jobs').countDocuments({
+    type: 'ocr',
+    status: 'saved',
+    completed_at: { $gte: oneDayAgo },
   });
 
   const archiveComplete = await db.collection('books').countDocuments({
     'pipeline_auto.status': 'archive_complete',
   });
 
-  if (pagesOcrd === 0 && archiveComplete > 0) {
+  const pagesOcrd = recentSavedJobs > 0 ? '(jobs completed)' : 0;
+
+  if (recentSavedJobs === 0 && archiveComplete > 0) {
     alerts.push({
       level: 'critical',
       check: 'ocr_throughput',
-      message: `0 pages OCR'd in 24h but ${archiveComplete} books waiting. Pipeline may be broken.`,
+      message: `0 OCR jobs completed in 24h but ${archiveComplete} books waiting. Pipeline may be broken.`,
     });
   } else {
-    console.log(`[health] OCR throughput: ${pagesOcrd} pages in 24h, ${archiveComplete} books waiting`);
+    console.log(`[health] OCR throughput: ${recentSavedJobs} jobs completed in 24h, ${archiveComplete} books waiting`);
   }
 
   // 2. Check Gemini File API storage
