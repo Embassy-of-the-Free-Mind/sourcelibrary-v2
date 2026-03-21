@@ -25,6 +25,15 @@ interface BlogPost {
 
 const posts: BlogPost[] = [
   {
+    slug: 'translation-rate',
+    title: 'How Many Renaissance Books Get Translated Each Year?',
+    subtitle: 'We queried 13,862 records from the UNESCO Index Translationum and 11 other catalogs. The answer is smaller than anyone guesses.',
+    date: '21 March 2026',
+    readTime: '10 min read',
+    tag: 'Deep dive',
+    tagColor: 'bg-accent-rust/10 text-accent-rust',
+  },
+  {
     slug: 'visualizing-classification',
     title: 'Visualizing 20,000 Books Across Six Dimensions',
     subtitle: 'Four interactive D3 visualizations of our faceted classification: scatter plot, heatmap, Sankey flow, and chord diagram.',
