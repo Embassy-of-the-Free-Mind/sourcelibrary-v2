@@ -91,7 +91,6 @@ async function getAuthorBooks(authorName: string): Promise<Book[]> {
         }
       }
     },
-    { $match: { pages_translated: { $gt: 0 } } },
     { $project: { pages_array: 0, _id: 0 } },
     { $sort: { year: 1, title: 1 } }
   ]).toArray() as unknown as Book[];
