@@ -738,4 +738,29 @@ async function writeCronRun(db, startTime, actions, errorMessages) {
   } catch (_) { /* non-blocking */ }
 }
 
-run().catch(err => { console.error(err); process.exit(1); });
+// Clean up stale Gemini File API files to prevent 20GB quota exhaustion.
+async function cleanupStaleFiles() {
+  console.log("[batch-collector] Cleaning up stale Gemini files...");
+  let totalDeleted = 0;
+  for (let ki = 0; ki < ALL_KEYS.length; ki++) {
+    const apiKey = ALL_KEYS[ki];
+    try {
+      const res = await fetch("https://generativelanguage.googleapis.com/v1beta/files?key=" + apiKey + "&pageSize=100");
+      if (!res.ok) continue;
+      const data = await res.json();
+      const files = data.files || [];
+      const oneHourAgo = new Date(Date.now() - 60 * 60 * 1000);
+      for (const f of files) {
+        if (new Date(f.createTime) < oneHourAgo) {
+          try {
+            await fetch("https://generativelanguage.googleapis.com/v1beta/" + f.name + "?key=" + apiKey, { method: "DELETE" });
+            totalDeleted++;
+          } catch (cleanErr) { /* ignore */ }
+        }
+      }
+    } catch (listErr) { /* ignore */ }
+  }
+  if (totalDeleted > 0) console.log("[batch-collector] Deleted " + totalDeleted + " stale files");
+}
+
+run().then(() => cleanupStaleFiles()).catch(err => { console.error(err); process.exit(1); });
