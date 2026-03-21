@@ -920,13 +920,36 @@ async function submitOcrDirectly(db, book, { modelOverride } = {}) {
       const jsonlSizeMB = (Buffer.byteLength(jsonlContent) / 1024 / 1024).toFixed(1);
       console.log(`    JSONL size: ${jsonlSizeMB} MB for ${chunk.length} pages`);
 
-      // Upload JSONL to Gemini File API (use the first key that works)
-      const apiKey = getGeminiApiKey(0);
-      const fileResult = await uploadBatchFile(jsonlContent, displayName, apiKey);
-      console.log(`    Uploaded file: ${fileResult.name}`);
+      // Upload JSONL to Gemini File API — try all keys on quota exhaustion
+      let fileResult;
+      let uploadKeyIndex = -1;
+      for (let uki = 0; uki < GEMINI_BATCH_KEYS.length; uki++) {
+        const uploadKey = getGeminiApiKey(uki);
+        try {
+          fileResult = await uploadBatchFile(jsonlContent, displayName, uploadKey);
+          uploadKeyIndex = uki;
+          console.log(`    Uploaded file: ${fileResult.name} (key ${uki})`);
+          break;
+        } catch (uploadErr) {
+          if (uploadErr.message.includes('429') || uploadErr.message.includes('quota')) {
+            console.log(`    Upload key ${uki} quota exhausted, trying next...`);
+            continue;
+          }
+          throw uploadErr;
+        }
+      }
+      if (!fileResult) throw new Error('ALL_KEYS_QUOTA_EXHAUSTED');
 
-      // Create batch job from the uploaded file
-      batchJob = await createBatchJobFromFile(ocrModel, fileResult.name, displayName, 0);
+      // Create batch job from the uploaded file — must use same key that uploaded it
+      batchJob = await createBatchJobFromFile(ocrModel, fileResult.name, displayName, uploadKeyIndex);
+
+      // Clean up uploaded file immediately — Gemini copies it into the batch job,
+      // so the source file is no longer needed. Prevents hitting 20GB storage quota.
+      try {
+        await fetch(`https://generativelanguage.googleapis.com/v1beta/${fileResult.name}?key=${getGeminiApiKey(uploadKeyIndex)}`, { method: 'DELETE' });
+      } catch (cleanupErr) {
+        console.log(`    Warning: file cleanup failed: ${cleanupErr.message}`);
+      }
     } else {
       // Inline: small batch, embed base64 directly in request body
       const inlineRequests = chunk.map(item => ({
@@ -1621,6 +1644,7 @@ async function run() {
           } else {
             await setPipelineStatus(db, book.id, 'archive_complete', { retry_count: retries + 1 });
           }
+          console.log(`  ERROR OCR submit ${book.id}: ${msg}`);
           log.errors.push(`OCR submit ${book.id}: ${msg}`);
         }
       }
