@@ -1,6 +1,6 @@
 'use client';
 
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
 import Link from 'next/link';
 import Image from 'next/image';
 import { BookText, ChevronDown, ChevronUp, Loader2 } from 'lucide-react';
@@ -31,75 +31,50 @@ interface GalleryItem {
 
 interface ExpandableGuideProps {
   bookId: string;
+  /** Detailed summary text, passed from server — renders instantly on expand */
+  detailedSummary?: string;
 }
 
-export default function ExpandableGuide({ bookId }: ExpandableGuideProps) {
+export default function ExpandableGuide({ bookId, detailedSummary }: ExpandableGuideProps) {
   const [expanded, setExpanded] = useState(false);
-  const [loading, setLoading] = useState(false);
-  const [detailedSummary, setDetailedSummary] = useState<string | null>(null);
+  const [loadingExtras, setLoadingExtras] = useState(false);
   const [sections, setSections] = useState<SectionSummary[]>([]);
   const [illustrations, setIllustrations] = useState<GalleryItem[]>([]);
   const [showSections, setShowSections] = useState(true);
   const [showIllustrations, setShowIllustrations] = useState(true);
   const [pages, setPages] = useState<Array<{ id: string; page_number: number }>>([]);
+  const [extrasLoaded, setExtrasLoaded] = useState(false);
 
-  const expand = async () => {
-    if (expanded) {
-      setExpanded(false);
-      return;
-    }
+  // Lazy-load sections + illustrations when first expanded
+  useEffect(() => {
+    if (!expanded || extrasLoaded) return;
 
-    // Already loaded — just toggle
-    if (detailedSummary) {
-      setExpanded(true);
-      return;
-    }
-
-    setLoading(true);
-    setExpanded(true);
-
-    try {
-      // Fetch book (with full index + pages) and illustrations in parallel
-      const [bookData, galleryData] = await Promise.all([
-        books.get(bookId, { full: true }) as Promise<any>,
-        gallery.list({ bookId, limit: 50, minQuality: 0.75 }).catch(() => ({ items: [] })),
-      ]);
-
+    setLoadingExtras(true);
+    Promise.all([
+      books.get(bookId, { full: true }).catch(() => null) as Promise<any>,
+      gallery.list({ bookId, limit: 50, minQuality: 0.75 }).catch(() => ({ items: [] })),
+    ]).then(([bookData, galleryData]) => {
       const idx = bookData?.index;
-      if (idx?.bookSummary?.detailed) {
-        setDetailedSummary(idx.bookSummary.detailed);
-      } else if (idx?.bookSummary?.abstract) {
-        setDetailedSummary(idx.bookSummary.abstract);
-      }
-
       if (idx?.sectionSummaries && Array.isArray(idx.sectionSummaries)) {
         setSections(idx.sectionSummaries);
       }
-
-      // Get page list for section nav links
       if (bookData?.pages) {
         setPages(bookData.pages.map((p: any) => ({ id: p.id || p._id, page_number: p.page_number })));
       }
-
       setIllustrations(galleryData.items || []);
-    } catch (err) {
-      console.error('Failed to load guide:', err);
-    } finally {
-      setLoading(false);
-    }
-  };
+      setExtrasLoaded(true);
+    }).finally(() => setLoadingExtras(false));
+  }, [expanded, extrasLoaded, bookId]);
 
   return (
     <div className="mt-4">
       <button
-        onClick={expand}
+        onClick={() => setExpanded(!expanded)}
         className="inline-flex items-center gap-2 text-sm font-medium text-accent-rust hover:text-accent-gold-dark transition-colors group"
       >
         <BookText className="w-4 h-4" />
         {expanded ? 'Collapse Reading Guide' : 'Reading Guide: chapter-by-chapter summary, selected quotes and illustrations'}
-        {loading ? (
-          <Loader2 className="w-3.5 h-3.5 animate-spin" />
-        ) : expanded ? (
+        {expanded ? (
           <ChevronUp className="w-3.5 h-3.5" />
         ) : (
           <ChevronDown className="w-3.5 h-3.5" />
@@ -108,7 +83,7 @@ export default function ExpandableGuide({ bookId }: ExpandableGuideProps) {
 
       {expanded && (
         <div className="mt-5 space-y-6">
-          {/* Detailed Summary */}
+          {/* Detailed Summary — renders instantly from props */}
           {detailedSummary && (
             <div>
               <h3 className="text-base font-semibold mb-3" style={{ color: 'var(--text-primary)' }}>Overview</h3>
@@ -120,7 +95,7 @@ export default function ExpandableGuide({ bookId }: ExpandableGuideProps) {
             </div>
           )}
 
-          {/* Sections */}
+          {/* Sections — lazy-loaded */}
           {sections.length > 0 && (
             <div>
               <button
@@ -148,7 +123,7 @@ export default function ExpandableGuide({ bookId }: ExpandableGuideProps) {
             </div>
           )}
 
-          {/* Illustrations */}
+          {/* Illustrations — lazy-loaded */}
           {illustrations.length > 0 && (
             <div>
               <button
@@ -205,10 +180,10 @@ export default function ExpandableGuide({ bookId }: ExpandableGuideProps) {
             </div>
           )}
 
-          {loading && !detailedSummary && (
-            <div className="flex items-center gap-2 text-sm text-stone-400 py-4">
+          {loadingExtras && (
+            <div className="flex items-center gap-2 text-sm text-stone-400 py-2">
               <Loader2 className="w-4 h-4 animate-spin" />
-              Loading guide...
+              Loading sections & illustrations...
             </div>
           )}
         </div>
