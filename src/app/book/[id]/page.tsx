@@ -313,7 +313,8 @@ async function BookInfo({ id }: { id: string }) {
   // Image downloads restricted for non-commercial licensed sources (BSB, Bodleian, Vatican, etc.)
   const imgLicense = (book as any).image_source?.license || 'unknown';
   const imageRestricted = imgLicense === 'unknown' || /\bnc\b/i.test(imgLicense);
-  const indexBrief = (book as unknown as { index?: { bookSummary?: { brief?: string } } }).index?.bookSummary?.brief;
+  const bookSummaryObj = (book as unknown as { index?: { bookSummary?: { brief?: string; detailed?: string; abstract?: string } } }).index?.bookSummary;
+  const indexBrief = bookSummaryObj?.brief;
   const readingSummary = (book as unknown as { reading_summary?: { overview?: string } }).reading_summary?.overview;
   const summaryText = indexBrief || readingSummary || (typeof book.summary === 'string' ? book.summary : book.summary?.data);
   const hasSummary = !!summaryText;
@@ -555,7 +556,7 @@ async function BookInfo({ id }: { id: string }) {
                     ))}
                   </div>
                   {hasTranslations && (
-                    <ExpandableGuide bookId={book.id} />
+                    <ExpandableGuide bookId={book.id} detailedSummary={bookSummaryObj?.detailed || bookSummaryObj?.abstract} />
                   )}
                 </>
               ) : hasTranslations ? (
