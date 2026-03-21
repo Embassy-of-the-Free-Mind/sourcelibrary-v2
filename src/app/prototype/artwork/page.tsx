@@ -22,8 +22,8 @@ const ARTWORKS = {
     dimensions: '172.5 × 278.9 cm (67.9 × 109.6 in)',
     location: 'Galleria degli Uffizi, Florence',
     resourceType: 'painting' as const,
-    // Real Commons image — 30,000 × 18,840 px original
-    imageUrl: 'https://upload.wikimedia.org/wikipedia/commons/thumb/0/0b/Sandro_Botticelli_-_La_nascita_di_Venere_-_Google_Art_Project_-_edited.jpg/2560px-Sandro_Botticelli_-_La_nascita_di_Venere_-_Google_Art_Project_-_edited.jpg',
+    // From Commons (30,000 × 18,840 px original), hosted on R2
+    imageUrl: 'https://images.sourcelibrary.org/artwork-prototype/birth-of-venus.jpg',
     fullResUrl: 'https://commons.wikimedia.org/wiki/File:Sandro_Botticelli_-_La_nascita_di_Venere_-_Google_Art_Project_-_edited.jpg',
     license: 'Public Domain',
     wikidataId: 'Q81689',
@@ -51,8 +51,8 @@ The pose follows the classical *Venus Pudica* (modest Venus), known from ancient
     provenance: 'Commissioned by Lorenzo di Pierfrancesco de\' Medici for the Villa di Castello. Remained in the Medici family collection until 1815 when it entered the Uffizi.',
     views: [
       { type: 'primary', caption: 'Full painting' },
-      { type: 'detail', caption: 'Venus — face and hair', url: 'https://upload.wikimedia.org/wikipedia/commons/thumb/4/4f/Sandro_Botticelli_046.jpg/1024px-Sandro_Botticelli_046.jpg' },
-      { type: 'detail', caption: 'Zephyr and Chloris', url: 'https://upload.wikimedia.org/wikipedia/commons/thumb/c/c9/Sandro_Botticelli_-_Zephyr_and_Chloris_%28detail%29.jpg/1024px-Sandro_Botticelli_-_Zephyr_and_Chloris_%28detail%29.jpg' },
+      { type: 'detail', caption: 'Venus — face and hair', url: 'https://images.sourcelibrary.org/artwork-prototype/venus-detail-face.jpg' },
+      { type: 'detail', caption: 'Zephyr and Chloris', url: 'https://images.sourcelibrary.org/artwork-prototype/venus-detail-zephyr.jpg' },
     ],
   },
   'melencolia-i': {
@@ -65,7 +65,7 @@ The pose follows the classical *Venus Pudica* (modest Venus), known from ancient
     dimensions: '24.0 × 18.8 cm (9.4 × 7.4 in)',
     location: 'Multiple impressions worldwide',
     resourceType: 'print' as const,
-    imageUrl: 'https://upload.wikimedia.org/wikipedia/commons/thumb/1/18/D%C3%BCrer_Melencholia_I.jpg/1024px-D%C3%BCrer_Melencholia_I.jpg',
+    imageUrl: 'https://images.sourcelibrary.org/artwork-prototype/melencolia-i.jpg',
     fullResUrl: 'https://commons.wikimedia.org/wiki/File:D%C3%BCrer_Melencholia_I.jpg',
     license: 'Public Domain',
     wikidataId: 'Q132565',
