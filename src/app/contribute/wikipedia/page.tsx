@@ -9,6 +9,14 @@ export const metadata: Metadata = {
   alternates: {
     canonical: '/contribute/wikipedia',
   },
+  openGraph: {
+    title: 'Help Bring Historical Texts to Wikipedia',
+    description: 'Copy-paste Talk page posts to help Wikipedia readers discover thousands of translated primary sources — Copernicus, Galileo, Kepler, and more.',
+  },
+  twitter: {
+    title: 'Help Bring Historical Texts to Wikipedia',
+    description: 'Copy-paste Talk page posts to help Wikipedia readers discover thousands of translated primary sources — Copernicus, Galileo, Kepler, and more.',
+  },
 };
 
 // Dynamic — DB queries are too slow for build-time prerendering
