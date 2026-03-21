@@ -137,7 +137,7 @@ function extractJp2Zip(zipPath, destDir) {
 async function jp2ToJpeg(jp2Path) {
   // opj_decompress → BMP → sharp → JPEG
   // Sharp's libvips JP2 support is unreliable on some builds, so use opj_decompress
-  const bmpPath = jp2Path + '.out.bmp';
+  const bmpPath = jp2Path + '.out.tif';
   try {
     await execFileAsync('opj_decompress', ['-i', jp2Path, '-o', bmpPath, '-threads', 'ALL_CPUS'], { timeout: 120000 });
   } catch (err) {
