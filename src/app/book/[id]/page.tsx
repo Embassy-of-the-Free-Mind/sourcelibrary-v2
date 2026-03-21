@@ -20,6 +20,7 @@ import PublishEditionButton from '@/components/editions/PublishEditionButton';
 import EditionsPanel from '@/components/editions/EditionsPanel';
 import SchemaOrgMetadata from '@/components/seo/SchemaOrgMetadata';
 import CategoryPicker from '@/components/ui/CategoryPicker';
+import FeedbackWidget from '@/components/feedback/FeedbackWidget';
 import { linkEntities, buildEntityList } from '@/lib/link-entities';
 import { BookShare } from '@/components/ui/ShareButton';
 import LikeButton from '@/components/ui/LikeButton';
@@ -534,23 +535,7 @@ async function BookInfo({ id }: { id: string }) {
         return (
           <div className="max-w-5xl mx-auto px-4 sm:px-6 lg:px-8 py-6">
             <div className="card p-6">
-              <div className="flex items-center justify-between mb-4">
-                <h2 className="text-lg font-semibold" style={{ color: 'var(--text-primary)' }}>About This Book</h2>
-                {hasTranslations ? (
-                  <Link
-                    href={`/book/${book.id}/guide`}
-                    className="inline-flex items-center gap-2 px-3 py-1.5 text-sm text-accent-rust hover:text-accent-gold-dark hover:bg-accent-gold/8 rounded-lg transition-colors"
-                  >
-                    <BookText className="w-4 h-4" />
-                    {hasSummary ? 'Full Summary & Index' : 'Generate Summary'}
-                  </Link>
-                ) : (
-                  <span className="inline-flex items-center gap-2 px-3 py-1.5 text-sm text-stone-400 cursor-not-allowed" title="Translate pages first">
-                    <BookText className="w-4 h-4" />
-                    <span className="opacity-60">Generate Summary</span>
-                  </span>
-                )}
-              </div>
+              <h2 className="text-lg font-semibold mb-4" style={{ color: 'var(--text-primary)' }}>About This Book</h2>
 
               {/* Categories */}
               <div className="mb-4 pb-4 border-b border-stone-100">
@@ -560,20 +545,42 @@ async function BookInfo({ id }: { id: string }) {
                 />
               </div>
               {hasSummary ? (
-                <div className="prose-content max-w-none">
-                  {summaryText!.split('\n\n').map((paragraph: string, i: number) => (
-                    <p key={i} className="mb-4 last:mb-0">
-                      {linkEntities(paragraph, summaryEntities)}
-                    </p>
-                  ))}
-                </div>
+                <>
+                  <div className="prose-content max-w-none">
+                    {summaryText!.split('\n\n').map((paragraph: string, i: number) => (
+                      <p key={i} className="mb-4 last:mb-0">
+                        {linkEntities(paragraph, summaryEntities)}
+                      </p>
+                    ))}
+                  </div>
+                  {hasTranslations && (
+                    <Link
+                      href={`/book/${book.id}/guide`}
+                      className="mt-4 inline-flex items-center gap-2 text-sm font-medium text-accent-rust hover:text-accent-gold-dark transition-colors group"
+                    >
+                      <BookText className="w-4 h-4" />
+                      Open the full Reading Guide: chapter-by-chapter summary, selected quotes and illustrations
+                      <span className="group-hover:translate-x-0.5 transition-transform">&rarr;</span>
+                    </Link>
+                  )}
+                </>
               ) : hasTranslations ? (
                 <p className="text-stone-500 text-sm">
-                  No summary yet. Generate a summary to unlock the full book index.
+                  No summary yet.{' '}
+                  <FeedbackWidget
+                    className="text-accent-rust hover:text-accent-gold-dark transition-colors underline underline-offset-2"
+                    label="Request one"
+                    initialMessage={`I'd like a summary generated for: ${book.display_title || book.title}`}
+                  />
                 </p>
               ) : (
                 <p className="text-stone-500 text-sm">
-                  Translate pages to unlock summary generation.
+                  No translation yet.{' '}
+                  <FeedbackWidget
+                    className="text-accent-rust hover:text-accent-gold-dark transition-colors underline underline-offset-2"
+                    label="Request one"
+                    initialMessage={`I'd like this book translated: ${book.display_title || book.title}`}
+                  />
                 </p>
               )}
             </div>

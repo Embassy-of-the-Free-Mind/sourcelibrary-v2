@@ -2,7 +2,7 @@
 
 import { useState } from 'react';
 
-export default function FeedbackWidget({ className, style }: { className?: string; style?: React.CSSProperties }) {
+export default function FeedbackWidget({ className, style, initialMessage, label }: { className?: string; style?: React.CSSProperties; initialMessage?: string; label?: string }) {
   const [open, setOpen] = useState(false);
   const [message, setMessage] = useState('');
   const [name, setName] = useState('');
@@ -34,11 +34,11 @@ export default function FeedbackWidget({ className, style }: { className?: strin
   if (!open) {
     return (
       <button
-        onClick={() => setOpen(true)}
+        onClick={() => { if (initialMessage && !message) setMessage(initialMessage); setOpen(true); }}
         className={className || "text-accent-rust hover:text-accent-gold transition-colors"}
         style={style}
       >
-        Feedback
+        {label || 'Feedback'}
       </button>
     );
   }
