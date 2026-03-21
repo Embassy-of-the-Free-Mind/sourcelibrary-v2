@@ -150,8 +150,8 @@ async function loadScanLookup(db) {
       const key = `${surname}:${decade}`;
       if (!byAuthorDecade.has(key)) byAuthorDecade.set(key, []);
       byAuthorDecade.get(key).push(slim);
-      // Also index Latin-stripped variant so ficinus→ficin matches ficino→ficin
-      const stripped = surname.replace(/(us|is|ius|inus)$/, '');
+      // Also index Latin/Italian-stripped variant so ficinus→ficin matches ficino→ficin
+      const stripped = surname.replace(/(us|is|ius|inus|o)$/, '');
       if (stripped !== surname && stripped.length >= 3) {
         const strippedKey = `${stripped}:${decade}`;
         if (!byAuthorDecade.has(strippedKey)) byAuthorDecade.set(strippedKey, []);
@@ -257,9 +257,9 @@ function findScan(ustcEdition, scanLookup) {
   if (!surname || !ustcEdition.year) return null;
 
   const decade = Math.floor(ustcEdition.year / 10) * 10;
-  // Try exact surname and Latin-stripped variant, across 3 decades
+  // Try exact surname and Latin/Italian-stripped variants, across 3 decades
   const surnameVariants = [surname];
-  const stripped = surname.replace(/(us|is|ius|inus)$/, '');
+  const stripped = surname.replace(/(us|is|ius|inus|o)$/, '');
   if (stripped !== surname && stripped.length >= 3) surnameVariants.push(stripped);
 
   let candidates = [];
