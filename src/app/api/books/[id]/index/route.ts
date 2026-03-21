@@ -1086,18 +1086,12 @@ export async function GET(
       return NextResponse.json({ error: 'Book not found' }, { status: 404 });
     }
 
-    // Check if we have a cached index
+    // Return cached index if it exists — regeneration only via POST
     if (book.index && book.index.generatedAt) {
-      const indexAge = Date.now() - new Date(book.index.generatedAt).getTime();
-      const oneDay = 24 * 60 * 60 * 1000;
-
-      // Return cached if less than 1 day old
-      if (indexAge < oneDay) {
-        return NextResponse.json(book.index);
-      }
+      return NextResponse.json(book.index);
     }
 
-    // Generate fresh index
+    // No index exists yet — generate one
     const pages = await db.collection('pages')
       .find({ book_id: id })
       .sort({ page_number: 1 })
