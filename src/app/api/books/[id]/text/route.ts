@@ -1,6 +1,7 @@
 import { NextRequest, NextResponse } from 'next/server';
 import { getDb } from '@/lib/mongodb';
 import { ObjectId } from 'mongodb';
+import { isBot, isTrustedBot, isBotAccessible, botGateResponse } from '@/lib/bot-gate';
 
 export const maxDuration = 30;
 
@@ -53,6 +54,19 @@ export async function GET(
     }
 
     const resolvedBookId = book.id || bookId;
+
+    // Bot gating: non-trusted bots only get ~20% of books
+    if (isBot(request) && !isTrustedBot(request) && !isBotAccessible(resolvedBookId)) {
+      // Fetch summary for the gated response
+      const fullBook = await db.collection('books').findOne(
+        { id: resolvedBookId },
+        { projection: { reading_summary: 1, pages_count: 1 } }
+      );
+      return NextResponse.json(
+        botGateResponse({ ...book, ...fullBook, id: resolvedBookId }),
+        { status: 200, headers: { 'Cache-Control': 'public, max-age=3600' } }
+      );
+    }
 
     // Build page query
     const pageFilter: Record<string, unknown> = { book_id: resolvedBookId };
