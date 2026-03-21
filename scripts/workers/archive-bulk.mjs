@@ -19,6 +19,9 @@
 import { MongoClient } from 'mongodb';
 import sharp from 'sharp';
 import { execSync } from 'child_process';
+import { execFile as execFileCb } from 'child_process';
+import { promisify } from 'util';
+const execFileAsync = promisify(execFileCb);
 import * as fs from 'fs';
 import * as path from 'path';
 import * as os from 'os';
@@ -48,7 +51,9 @@ const R2_PUBLIC_URL = process.env.R2_PUBLIC_URL || 'https://images.sourcelibrary
 if (!MONGODB_URI) { console.error('Missing MONGODB_URI'); process.exit(1); }
 if (!R2_ACCOUNT_ID) { console.error('Missing R2_ACCOUNT_ID'); process.exit(1); }
 
-// sharp handles JP2 decoding via libvips — no external tools needed
+// Verify opj_decompress is available (sharp's libvips JP2 support is unreliable)
+try { execSync('which opj_decompress', { stdio: 'pipe' }); }
+catch { console.error('opj_decompress not found. Install: apt-get install libopenjp2-tools'); process.exit(1); }
 
 const USER_AGENT = 'SourceLibrary/1.0 (https://sourcelibrary.org; derek@ancientwisdomtrust.org)';
 
@@ -130,14 +135,22 @@ function extractJp2Zip(zipPath, destDir) {
 }
 
 async function jp2ToJpeg(jp2Path) {
-  // Use sharp directly — it has built-in JPEG2000 support via libvips
-  // No need for opj_decompress intermediate step
-  let sharpPipeline = sharp(jp2Path);
+  // opj_decompress → BMP → sharp → JPEG
+  // Sharp's libvips JP2 support is unreliable on some builds, so use opj_decompress
+  const bmpPath = jp2Path + '.out.bmp';
+  try {
+    await execFileAsync('opj_decompress', ['-i', jp2Path, '-o', bmpPath, '-threads', 'ALL_CPUS'], { timeout: 120000 });
+  } catch (err) {
+    if (!fs.existsSync(bmpPath)) throw new Error(`opj_decompress failed: ${err.stderr?.slice(0, 200) || err.message}`);
+  }
+  let sharpPipeline = sharp(bmpPath);
   const meta = await sharpPipeline.metadata();
   if (meta.width > MAX_DIMENSION || meta.height > MAX_DIMENSION) {
-    sharpPipeline = sharp(jp2Path).resize(MAX_DIMENSION, MAX_DIMENSION, { fit: 'inside', withoutEnlargement: true });
+    sharpPipeline = sharp(bmpPath).resize(MAX_DIMENSION, MAX_DIMENSION, { fit: 'inside', withoutEnlargement: true });
   }
-  return sharpPipeline.jpeg({ quality: JPEG_QUALITY }).toBuffer();
+  const jpegBuffer = await sharpPipeline.jpeg({ quality: JPEG_QUALITY }).toBuffer();
+  try { fs.unlinkSync(bmpPath); } catch {}
+  return jpegBuffer;
 }
 
 async function processBook(book, db) {
