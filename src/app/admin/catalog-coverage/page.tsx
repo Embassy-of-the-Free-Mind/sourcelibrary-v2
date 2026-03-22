@@ -73,6 +73,7 @@ interface WorksData {
   works_with_translation: number;
   works_in_sl: number;
   works_scanned_not_translated: number;
+  works_scanned_not_translated_non_english: number;
   works_neither: number;
   pct_scanned: number;
   pct_translated: number;
@@ -214,7 +215,7 @@ node scripts/catalog-coverage/build.mjs`}
   }
 
   const t = summary?.total;
-  const scannedNotTranslated = works?.works_scanned_not_translated ?? 0;
+  const scannedNotTranslated = works?.works_scanned_not_translated_non_english ?? works?.works_scanned_not_translated ?? 0;
 
   return (
     <div className="min-h-screen bg-[#fdfcf9]">
@@ -276,19 +277,20 @@ node scripts/catalog-coverage/build.mjs`}
             <h2 className="font-['Cormorant_Garamond'] text-xl font-semibold text-[#1a1612] mb-2">The Opportunity</h2>
             <p className="text-[#444]">
               <span className="font-['Cormorant_Garamond'] text-3xl font-semibold text-[#9e4a3a]">{scannedNotTranslated.toLocaleString()}</span>{' '}
-              works have been digitized but never translated into English.
+              non-English works have been digitized but never translated into English.
               They are waiting to be read.
             </p>
             {works.works_neither > 0 && (
               <p className="text-sm text-[#6b6560] mt-2">
-                Another {works.works_neither.toLocaleString()} works have neither been scanned nor translated.
+                Another {works.works_neither.toLocaleString()} works have not yet been digitized at all.
+                Knowing which of these to scan first is itself a form of scholarship.
               </p>
             )}
             <button
               onClick={() => browseGap('true', 'false')}
               className="mt-4 px-4 py-2 bg-[#9e4a3a] text-white rounded text-sm hover:bg-[#8a3f32] transition-colors"
             >
-              Browse these books &rarr;
+              Browse the untranslated &rarr;
             </button>
           </div>
         )}

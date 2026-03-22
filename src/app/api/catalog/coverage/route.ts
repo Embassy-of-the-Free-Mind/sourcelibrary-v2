@@ -183,7 +183,7 @@ async function handleTimeline(db: any, params: URLSearchParams) {
 async function handleWorks(db: any, params: URLSearchParams) {
   // Use pre-computed stats from build — live aggregation is too heavy for Vercel
   const meta = await db.collection('catalog_coverage_meta').findOne({ _id: 'latest_build' });
-  const result = meta?.works || { total_works: 0, works_with_scan: 0, works_with_translation: 0, works_in_sl: 0, works_scanned_not_translated: 0, works_neither: 0 };
+  const result = meta?.works || { total_works: 0, works_with_scan: 0, works_with_translation: 0, works_in_sl: 0, works_scanned_not_translated: 0, works_scanned_not_translated_non_english: 0, works_neither: 0 };
 
   return NextResponse.json({
     language: params.get('language') || 'all',
