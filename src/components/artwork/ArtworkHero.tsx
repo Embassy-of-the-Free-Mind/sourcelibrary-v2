@@ -18,6 +18,7 @@ export default function ArtworkHero({ imageUrl, title, fullResUrl, license, isLa
         <div className={`relative ${isLandscape ? 'aspect-[16/10]' : 'aspect-[3/4]'} mx-auto`}>
           <ImageWithMagnifier
             src={imageUrl}
+            thumbnail={imageUrl}
             alt={title}
             className="w-full h-full"
             magnifierSize={240}
