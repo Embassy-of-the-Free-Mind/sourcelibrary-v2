@@ -146,7 +146,8 @@ async function loadScanLookup(db) {
       const decade = c.date_earliest ? Math.floor(c.date_earliest / 10) * 10 : null;
       if (!decade) continue;
 
-      const slim = { _id: c._id, title: c.title, source: c.source, manifest_url: c.manifest_url, status: c.status };
+      const quality = c.scan_quality || (c.source === 'ia_microfilm' ? 'low' : ['bsb', 'erara'].includes(c.source) ? 'high' : 'medium');
+      const slim = { _id: c._id, title: c.title, source: c.source, manifest_url: c.manifest_url, status: c.status, scan_quality: quality };
       const key = `${surname}:${decade}`;
       if (!byAuthorDecade.has(key)) byAuthorDecade.set(key, []);
       byAuthorDecade.get(key).push(slim);
@@ -245,6 +246,7 @@ function findScan(ustcEdition, scanLookup) {
     return {
       has_iiif_scan: true,
       scan_sources: [c.source],
+      scan_quality: c.scan_quality || 'medium',
       iiif_manifest_url: c.manifest_url,
       import_candidate_id: c._id,
       imported_to_sl: c.status === 'imported',
@@ -270,13 +272,19 @@ function findScan(ustcEdition, scanLookup) {
     }
   }
 
+  // Score candidates and prefer higher quality when scores are close
+  const QUALITY_RANK = { high: 3, medium: 2, low: 1 };
   let bestMatch = null;
   let bestScore = 0;
+  let bestQuality = 0;
   for (const c of candidates) {
     const score = titleWordOverlap(ustcEdition.title, c.title);
-    if (score > bestScore) {
+    const qRank = QUALITY_RANK[c.scan_quality] || 1;
+    // Prefer higher score; break ties by quality
+    if (score > bestScore || (score === bestScore && qRank > bestQuality)) {
       bestScore = score;
       bestMatch = c;
+      bestQuality = qRank;
     }
   }
 
@@ -284,6 +292,7 @@ function findScan(ustcEdition, scanLookup) {
     return {
       has_iiif_scan: true,
       scan_sources: [bestMatch.source],
+      scan_quality: bestMatch.scan_quality || 'medium',
       iiif_manifest_url: bestMatch.manifest_url,
       import_candidate_id: bestMatch._id,
       imported_to_sl: bestMatch.status === 'imported',
@@ -436,6 +445,9 @@ async function buildCoverage(db, scanLookup, translationLookup, slLookup) {
   for (const language of languages) {
     let langEditions = 0;
     let langScans = 0;
+    let langScansHigh = 0;
+    let langScansMedium = 0;
+    let langScansLow = 0;
     let langTranslations = 0;
     let langSL = 0;
 
@@ -472,6 +484,7 @@ async function buildCoverage(db, scanLookup, translationLookup, slLookup) {
           // Scan
           has_iiif_scan: !!scan,
           scan_sources: scan?.scan_sources || [],
+          scan_quality: scan?.scan_quality || null,
           iiif_manifest_url: scan?.iiif_manifest_url || null,
           scan_match_method: scan?.match_method || null,
           scan_match_score: scan?.match_score || null,
@@ -492,7 +505,12 @@ async function buildCoverage(db, scanLookup, translationLookup, slLookup) {
         };
 
         docs.push(doc);
-        if (scan) langScans++;
+        if (scan) {
+          langScans++;
+          if (scan.scan_quality === 'high') langScansHigh++;
+          else if (scan.scan_quality === 'low') langScansLow++;
+          else langScansMedium++;
+        }
         if (translation) langTranslations++;
         if (sl) langSL++;
       }
@@ -535,7 +553,7 @@ async function buildCoverage(db, scanLookup, translationLookup, slLookup) {
 
     console.log(`\n  ${language}: ${langEditions.toLocaleString()} editions | ${langScans.toLocaleString()} scans (${(langEditions > 0 ? langScans / langEditions * 100 : 0).toFixed(1)}%) | ${langTranslations.toLocaleString()} with translations (${(langEditions > 0 ? langTranslations / langEditions * 100 : 0).toFixed(1)}%)`);
 
-    stats[language] = { editions: langEditions, scans: langScans, translations: langTranslations, inSL: langSL };
+    stats[language] = { editions: langEditions, scans: langScans, scansHigh: langScansHigh, scansMedium: langScansMedium, scansLow: langScansLow, translations: langTranslations, inSL: langSL };
     totalProcessed += langEditions;
     totalWithScan += langScans;
     totalWithTranslation += langTranslations;
