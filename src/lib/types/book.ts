@@ -22,6 +22,9 @@ export interface Book {
   slug?: string;              // SEO-friendly URL slug (e.g., "atalanta-fugiens-maier")
   tenant_id: string;
 
+  // Resource type — default is printed_book (all existing records)
+  resource_type?: 'printed_book' | 'manuscript' | 'painting' | 'drawing' | 'print' | 'fresco' | 'emblem' | 'map' | 'tablet' | 'object';
+
   // Title fields
   title: string;              // Original language title (USTC-aligned, fixed)
   display_title?: string;     // English title for display (editable)
@@ -74,6 +77,19 @@ export interface Book {
 
   // Internet Archive identifier (for reimport)
   ia_identifier?: string;
+
+  // Visual art fields (only used when resource_type is a visual type)
+  medium?: string;              // "Oil on canvas", "Engraving", "Fresco"
+  dimensions_display?: string;  // "172.5 × 278.9 cm"
+  current_location?: string;    // "Galleria degli Uffizi, Florence"
+  commons_title?: string;       // Wikimedia Commons file title
+  commons_url?: string;         // Link to Commons page
+  commons_full_url?: string;    // Direct link to full-res image
+  commons_width?: number;       // Original image width
+  commons_height?: number;      // Original image height
+  commons_license?: string;     // License from Commons
+  commons_description?: string; // Description from Commons metadata
+  commons_categories?: string[]; // Categories from Commons
 
   // Wikidata alignment (for Wikipedia/Wikidata outreach)
   wikidata_id?: string;           // Q item for the work (e.g., "Q457894")
