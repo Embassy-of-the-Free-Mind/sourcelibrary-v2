@@ -1,7 +1,6 @@
 'use client';
 
 import { useState, useRef, useEffect, useCallback } from 'react';
-import { X } from 'lucide-react';
 import FullscreenImageViewer from '@/components/reader/FullscreenImageViewer';
 
 interface ImageWithMagnifierProps {
@@ -19,7 +18,7 @@ interface ImageWithMagnifierProps {
 
 // Magnifier component for zooming into the source image
 // Desktop: hover to show magnifier lens, click HD button for fullscreen
-// Mobile/Touch: tap to open fullscreen viewer
+// Mobile/Touch: native browser pinch-zoom + tap to open fullscreen viewer
 export default function ImageWithMagnifier({
   src,
   thumbnail,
@@ -42,17 +41,6 @@ export default function ImageWithMagnifier({
   const [fullImageLoaded, setFullImageLoaded] = useState(false);
   const [isTouchDevice, setIsTouchDevice] = useState(false);
   const [showFullscreen, setShowFullscreen] = useState(false);
-  // Inline pinch-to-zoom state (mobile)
-  const [touchScale, setTouchScale] = useState(1);
-  const [touchPosition, setTouchPosition] = useState({ x: 0, y: 0 });
-  const [isTouchDragging, setIsTouchDragging] = useState(false);
-  const touchScaleRef = useRef(1);
-  const touchPositionRef = useRef({ x: 0, y: 0 });
-  const isDraggingRef = useRef(false);
-  const lastTouchDistance = useRef(0);
-  const lastTap = useRef(0);
-  const touchDragStart = useRef({ x: 0, y: 0 });
-  const touchPosStart = useRef({ x: 0, y: 0 });
   const containerRef = useRef<HTMLDivElement>(null);
   const imgRef = useRef<HTMLImageElement>(null);
 
@@ -158,143 +146,6 @@ export default function ImageWithMagnifier({
     };
   }, [isLoaded, getRenderedImageSize]);
 
-  // Keep refs in sync with state
-  useEffect(() => { touchScaleRef.current = touchScale; }, [touchScale]);
-  useEffect(() => { touchPositionRef.current = touchPosition; }, [touchPosition]);
-
-  // Reset zoom when src changes
-  useEffect(() => {
-    touchScaleRef.current = 1;
-    touchPositionRef.current = { x: 0, y: 0 };
-    setTouchScale(1);
-    setTouchPosition({ x: 0, y: 0 });
-  }, [src]);
-
-  // ── Inline pinch-to-zoom for mobile ────────────────────────────────────────
-  useEffect(() => {
-    const container = containerRef.current;
-    if (!container || !isTouchDevice) return;
-
-    const getTouchDist = (touches: TouchList) => {
-      const dx = touches[0].clientX - touches[1].clientX;
-      const dy = touches[0].clientY - touches[1].clientY;
-      return Math.sqrt(dx * dx + dy * dy);
-    };
-
-    const onTouchStart = (e: TouchEvent) => {
-      if (e.touches.length === 2) {
-        // Pinch start
-        e.preventDefault();
-        lastTouchDistance.current = getTouchDist(e.touches);
-      } else if (e.touches.length === 1 && touchScaleRef.current > 1) {
-        // Pan start (only when zoomed)
-        isDraggingRef.current = true;
-        setIsTouchDragging(true);
-        touchDragStart.current = { x: e.touches[0].clientX, y: e.touches[0].clientY };
-        touchPosStart.current = { ...touchPositionRef.current };
-      }
-    };
-
-    const onTouchMove = (e: TouchEvent) => {
-      if (e.touches.length === 2) {
-        e.preventDefault();
-        const newDist = getTouchDist(e.touches);
-        if (lastTouchDistance.current > 0) {
-          const newScale = Math.min(Math.max(touchScaleRef.current * (newDist / lastTouchDistance.current), 1), 4);
-          const rect = container.getBoundingClientRect();
-          const cx = (e.touches[0].clientX + e.touches[1].clientX) / 2 - rect.left - rect.width / 2;
-          const cy = (e.touches[0].clientY + e.touches[1].clientY) / 2 - rect.top - rect.height / 2;
-          const ratio = newScale / touchScaleRef.current;
-          const newPos = {
-            x: touchPositionRef.current.x - (cx - touchPositionRef.current.x) * (ratio - 1),
-            y: touchPositionRef.current.y - (cy - touchPositionRef.current.y) * (ratio - 1),
-          };
-          touchPositionRef.current = newPos;
-          touchScaleRef.current = newScale;
-          setTouchPosition(newPos);
-          setTouchScale(newScale);
-        }
-        lastTouchDistance.current = newDist;
-      } else if (e.touches.length === 1 && isDraggingRef.current && touchScaleRef.current > 1) {
-        e.preventDefault();
-        const newPos = {
-          x: touchPosStart.current.x + (e.touches[0].clientX - touchDragStart.current.x),
-          y: touchPosStart.current.y + (e.touches[0].clientY - touchDragStart.current.y),
-        };
-        touchPositionRef.current = newPos;
-        setTouchPosition(newPos);
-      }
-    };
-
-    const onTouchEnd = (e: TouchEvent) => {
-      lastTouchDistance.current = 0;
-      isDraggingRef.current = false;
-      setIsTouchDragging(false);
-
-      // Snap back if zoomed out (pinch back to ~1x)
-      if (touchScaleRef.current <= 1.05) {
-        touchScaleRef.current = 1;
-        touchPositionRef.current = { x: 0, y: 0 };
-        setTouchScale(1);
-        setTouchPosition({ x: 0, y: 0 });
-        return;
-      }
-
-      // Auto-exit zoom if user pans past the bottom edge of the zoomed image
-      // (natural "I'm done looking" gesture — swipe down past content)
-      if (touchScaleRef.current > 1) {
-        const rect = container.getBoundingClientRect();
-        const scaledHeight = rect.height * touchScaleRef.current;
-        const maxPanY = (scaledHeight - rect.height) / 2;
-        // If panned well past the bottom edge, exit zoom
-        if (touchPositionRef.current.y < -(maxPanY + 60)) {
-          touchScaleRef.current = 1;
-          touchPositionRef.current = { x: 0, y: 0 };
-          setTouchScale(1);
-          setTouchPosition({ x: 0, y: 0 });
-          return;
-        }
-      }
-
-      // Double-tap to zoom / reset
-      const now = Date.now();
-      const diff = now - lastTap.current;
-      if (diff < 300 && diff > 0 && e.changedTouches.length === 1) {
-        e.preventDefault();
-        if (touchScaleRef.current > 1) {
-          touchScaleRef.current = 1;
-          touchPositionRef.current = { x: 0, y: 0 };
-          setTouchScale(1);
-          setTouchPosition({ x: 0, y: 0 });
-        } else {
-          const touch = e.changedTouches[0];
-          const rect = container.getBoundingClientRect();
-          const newPos = {
-            x: -(touch.clientX - rect.left - rect.width / 2),
-            y: -(touch.clientY - rect.top - rect.height / 2),
-          };
-          touchScaleRef.current = 2.5;
-          touchPositionRef.current = newPos;
-          setTouchScale(2.5);
-          setTouchPosition(newPos);
-        }
-        lastTap.current = 0; // Prevent triple-tap firing again
-        return;
-      }
-      lastTap.current = now;
-    };
-
-    container.addEventListener('touchstart', onTouchStart, { passive: false });
-    container.addEventListener('touchmove', onTouchMove, { passive: false });
-    container.addEventListener('touchend', onTouchEnd, { passive: false });
-
-    return () => {
-      container.removeEventListener('touchstart', onTouchStart);
-      container.removeEventListener('touchmove', onTouchMove);
-      container.removeEventListener('touchend', onTouchEnd);
-    };
-  }, [isTouchDevice]);
-
   // Load full image only on first hover (lazy load for magnifier)
   const [hasHovered, setHasHovered] = useState(false);
 
@@ -357,16 +208,9 @@ export default function ImageWithMagnifier({
     }
   };
 
-  const resetZoom = useCallback(() => {
-    touchScaleRef.current = 1;
-    touchPositionRef.current = { x: 0, y: 0 };
-    setTouchScale(1);
-    setTouchPosition({ x: 0, y: 0 });
-  }, []);
-
-  // Tap/click to open fullscreen (skip when zoomed inline on mobile)
+  // Tap/click to open fullscreen
   const handleClick = () => {
-    if (isLoaded && touchScale <= 1) {
+    if (isLoaded) {
       setShowFullscreen(true);
     }
   };
@@ -375,12 +219,10 @@ export default function ImageWithMagnifier({
     <>
       <div
         ref={containerRef}
-        className={`relative ${className} ${isTouchDevice && touchScale > 1 ? 'overflow-hidden' : ''}`}
+        className={`relative ${className}`}
         onMouseMove={handleMouseMove}
         onMouseLeave={() => setShowMagnifier(false)}
         onClick={handleClick}
-        data-no-swipe={touchScale > 1 ? true : undefined}
-        style={isTouchDevice ? { touchAction: touchScale > 1 ? 'none' : 'pan-y' } : undefined}
       >
         {/* Loading skeleton */}
         {!isLoaded && (
@@ -395,12 +237,7 @@ export default function ImageWithMagnifier({
           src={displaySrc}
           alt={alt}
           loading="eager"
-          className={`w-full ${isTouchDragging ? '' : 'transition-opacity duration-300'} ${isLoaded ? 'opacity-100' : 'opacity-0'} ${isTouchDevice ? 'cursor-pointer' : 'cursor-crosshair'} ${scrollable ? '' : 'h-full object-contain'}`}
-          style={isTouchDevice && touchScale > 1 ? {
-            transform: `translate(${touchPosition.x}px, ${touchPosition.y}px) scale(${touchScale})`,
-            transition: isTouchDragging ? 'none' : 'transform 0.2s ease-out',
-            transformOrigin: 'center center',
-          } : undefined}
+          className={`w-full transition-opacity duration-300 ${isLoaded ? 'opacity-100' : 'opacity-0'} ${isTouchDevice ? 'cursor-pointer' : 'cursor-crosshair'} ${scrollable ? '' : 'h-full object-contain'}`}
           onLoad={() => {
             // Detect broken/tiny images (e.g. corrupt Blob uploads)
             // Real gallery crops are 300px+ wide; corrupt ones come through ≤150px
@@ -423,17 +260,6 @@ export default function ImageWithMagnifier({
             }
           }}
         />
-
-        {/* Mobile: zoom exit button */}
-        {isTouchDevice && touchScale > 1 && (
-          <button
-            onClick={(e) => { e.stopPropagation(); resetZoom(); }}
-            className="absolute top-2 right-2 z-10 bg-black/70 hover:bg-black/90 text-white rounded-full p-2 shadow-lg active:scale-95 transition-all"
-            aria-label="Exit zoom"
-          >
-            <X className="w-6 h-6" />
-          </button>
-        )}
 
         {/* Desktop: Magnifier lens - uses full resolution image */}
         {!isTouchDevice && showMagnifier && fullImageLoaded && (
