@@ -1,10 +1,10 @@
 import { Metadata } from 'next';
 import Link from 'next/link';
-import Image from 'next/image';
 import { notFound } from 'next/navigation';
 import SiteHeader from '@/components/layout/SiteHeader';
+import ArtworkHero from '@/components/artwork/ArtworkHero';
 import { ARTWORKS, ARTISTS, getArtworksByArtist, type Artwork, type IconographicElement, type RelatedText } from '@/lib/artwork-data';
-import { Calendar, MapPin, Ruler, Palette, ExternalLink, BookOpen, ZoomIn, Heart, Share2, Quote, ArrowLeft, ArrowRight } from 'lucide-react';
+import { Calendar, MapPin, Ruler, Palette, ExternalLink, BookOpen, Heart, Share2, Quote, ArrowLeft, ArrowRight } from 'lucide-react';
 
 interface PageProps {
   params: Promise<{ slug: string }>;
@@ -125,38 +125,14 @@ export default async function ArtworkPage({ params }: PageProps) {
         </div>
       </div>
 
-      {/* Hero image — the artwork IS the content */}
-      <div className="bg-stone-900">
-        <div className={`max-w-[var(--container-wide)] mx-auto ${isLandscape ? 'py-6 sm:py-10' : 'py-6 sm:py-10 max-w-3xl'}`}>
-          <div className={`relative ${isLandscape ? 'aspect-[16/10]' : 'aspect-[3/4]'} mx-auto`}>
-            <Image
-              src={artwork.imageUrl}
-              alt={artwork.title}
-              fill
-              className="object-contain"
-              sizes={isLandscape ? '100vw' : '(max-width: 768px) 100vw, 768px'}
-              priority
-            />
-          </div>
-        </div>
-        {/* Caption bar */}
-        <div className="border-t border-stone-800">
-          <div className="max-w-[var(--container-standard)] mx-auto px-6 md:px-12 py-3 flex items-center justify-between">
-            <p className="text-xs text-stone-500">
-              Image: Wikimedia Commons · {artwork.license}
-            </p>
-            <a
-              href={artwork.fullResUrl}
-              target="_blank"
-              rel="noopener noreferrer"
-              className="flex items-center gap-1.5 text-xs text-stone-400 hover:text-white transition-colors"
-            >
-              <ZoomIn className="w-3.5 h-3.5" />
-              Full resolution
-            </a>
-          </div>
-        </div>
-      </div>
+      {/* Hero image with magnifier — the artwork IS the content */}
+      <ArtworkHero
+        imageUrl={artwork.imageUrl}
+        title={artwork.title}
+        fullResUrl={artwork.fullResUrl}
+        license={artwork.license}
+        isLandscape={isLandscape}
+      />
 
       {/* Metadata header */}
       <div className="bg-gradient-to-b from-stone-800 to-stone-900 text-white">
