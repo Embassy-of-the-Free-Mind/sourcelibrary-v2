@@ -151,6 +151,13 @@ export interface Book {
   // Read analytics (maintained by analytics/track)
   read_count?: number;
 
+  // Pre-computed related books (backfilled from entity graph)
+  related_books?: {
+    direct: RelatedBook[];   // Books whose authors are mentioned as entities in this book
+    shared: RelatedBook[];   // Books sharing 5+ entity mentions
+    computed_at: Date;
+  };
+
   // Source work compositional timeline
   source_work_dates?: SourceWorkDateLayer[];
   source_work_dates_meta?: {
@@ -301,4 +308,16 @@ export interface TranslationEvidence {
   validated?: boolean;
   notes?: string;
   url?: string;
+}
+
+// Pre-computed related book entry
+export interface RelatedBook {
+  id: string;
+  slug?: string;
+  title: string;
+  author: string;
+  published?: string;
+  cited_as?: string;          // Entity name that triggered the direct citation
+  shared_entities?: number;   // Count of shared entities (for shared type)
+  shared_names?: string[];    // Top shared entity names
 }
