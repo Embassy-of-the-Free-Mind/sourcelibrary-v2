@@ -227,27 +227,44 @@ node scripts/catalog-coverage/build.mjs`}
       </div>
 
       <div className="max-w-5xl mx-auto px-6 py-8">
-        {/* Summary — large numerals */}
-        {t && (
-          <div className="grid grid-cols-2 md:grid-cols-4 gap-8 mb-10">
-            <div>
-              <div className="font-['Cormorant_Garamond'] text-4xl font-semibold text-[#1a1612]">{t.editions.toLocaleString()}</div>
-              <div className="text-sm text-[#6b6560] mt-1">editions catalogued</div>
+        {/* Summary — narrative flow */}
+        {t && (() => {
+          const nonEnglish = summary?.by_language.filter(l => l.language !== 'English').reduce((s, l) => s + l.editions, 0) ?? 0;
+          const engEditions = summary?.by_language.find(l => l.language === 'English')?.editions ?? 0;
+          const engScans = summary?.by_language.find(l => l.language === 'English')?.with_scan ?? 0;
+          const nonEngScans = t.with_scan - engScans;
+          const totalWorks = works?.total_works ?? t.distinct_works;
+          return (
+            <div className="mb-10 space-y-6">
+              <div className="grid grid-cols-2 md:grid-cols-4 gap-8">
+                <div>
+                  <div className="font-['Cormorant_Garamond'] text-4xl font-semibold text-[#1a1612]">{t.editions.toLocaleString()}</div>
+                  <div className="text-sm text-[#6b6560] mt-1">editions catalogued</div>
+                </div>
+                <div>
+                  <div className="font-['Cormorant_Garamond'] text-4xl font-semibold text-[#1a1612]">{nonEnglish.toLocaleString()}</div>
+                  <div className="text-sm text-[#6b6560] mt-1">non-English editions</div>
+                </div>
+                <div>
+                  <div className="font-['Cormorant_Garamond'] text-4xl font-semibold text-[#1a1612]">{totalWorks.toLocaleString()}</div>
+                  <div className="text-sm text-[#6b6560] mt-1">distinct works</div>
+                </div>
+                <div>
+                  <div className="font-['Cormorant_Garamond'] text-4xl font-semibold text-[#1a1612]">{t.with_scan.toLocaleString()}</div>
+                  <div className="text-sm text-[#6b6560] mt-1">with digital scans <span className="text-[#a09a92]">({pct(t.with_scan, t.editions)}%)</span></div>
+                </div>
+              </div>
+              <p className="text-[#444] max-w-3xl leading-relaxed">
+                Of these, <strong>{pct(t.with_translation, nonEnglish)}%</strong> of non-English editions have a known English translation.
+                Scan coverage is uneven: <strong>{pct(nonEngScans, nonEnglish)}%</strong> of continental editions
+                have been digitized via BSB, Gallica, e-rara, and Biblissima, while only{' '}
+                <strong>{pct(engScans, engEditions)}%</strong> of English editions appear{' '}
+                {'\u2014'} not because they haven&apos;t been scanned, but because EEBO, HathiTrust, and the
+                Bodleian are not yet in our harvest.
+              </p>
             </div>
-            <div>
-              <div className="font-['Cormorant_Garamond'] text-4xl font-semibold text-[#1a1612]">{(works?.total_works ?? t.distinct_works).toLocaleString()}</div>
-              <div className="text-sm text-[#6b6560] mt-1">distinct works</div>
-            </div>
-            <div>
-              <div className="font-['Cormorant_Garamond'] text-4xl font-semibold text-[#1a1612]">{t.with_scan.toLocaleString()}</div>
-              <div className="text-sm text-[#6b6560] mt-1">with digital scans <span className="text-[#a09a92]">({pct(t.with_scan, t.editions)}%)</span></div>
-            </div>
-            <div>
-              <div className="font-['Cormorant_Garamond'] text-4xl font-semibold text-[#1a1612]">{t.with_translation.toLocaleString()}</div>
-              <div className="text-sm text-[#6b6560] mt-1">with English translation <span className="text-[#a09a92]">({pct(t.with_translation, t.editions)}%)</span></div>
-            </div>
-          </div>
-        )}
+          );
+        })()}
 
         {/* The Opportunity */}
         {works && scannedNotTranslated > 0 && (
