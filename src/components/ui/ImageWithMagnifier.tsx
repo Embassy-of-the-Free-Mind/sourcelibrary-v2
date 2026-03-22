@@ -1,7 +1,7 @@
 'use client';
 
 import { useState, useRef, useEffect, useCallback } from 'react';
-import { X } from 'lucide-react';
+import { X, Search } from 'lucide-react';
 import FullscreenImageViewer from '@/components/reader/FullscreenImageViewer';
 
 interface ImageWithMagnifierProps {
@@ -433,6 +433,13 @@ export default function ImageWithMagnifier({
           >
             <X className="w-6 h-6" />
           </button>
+        )}
+
+        {/* Mobile: tap-to-zoom hint */}
+        {isTouchDevice && isLoaded && touchScale <= 1 && (
+          <div className="absolute bottom-3 right-3 z-10 bg-black/60 text-white rounded-full p-2 pointer-events-none shadow-lg">
+            <Search className="w-4 h-4" />
+          </div>
         )}
 
         {/* Desktop: Magnifier lens - uses full resolution image */}

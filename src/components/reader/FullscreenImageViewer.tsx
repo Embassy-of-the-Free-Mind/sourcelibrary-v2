@@ -18,6 +18,7 @@ export default function FullscreenImageViewer({ src, alt, isOpen, onClose }: Ful
   const [isLoaded, setIsLoaded] = useState(false);
   const [hasError, setHasError] = useState(false);
   const [isTouchDevice, setIsTouchDevice] = useState(false);
+  const [fitWidthScale, setFitWidthScale] = useState(1);
 
   const containerRef = useRef<HTMLDivElement>(null);
   const imageRef = useRef<HTMLImageElement>(null);
@@ -30,6 +31,7 @@ export default function FullscreenImageViewer({ src, alt, isOpen, onClose }: Ful
   const isDraggingRef = useRef(false);
   const lastTouchDistance = useRef(0);
   const lastTap = useRef(0);
+  const fitWidthScaleRef = useRef(1);
   const mouseDragStart = useRef({ x: 0, y: 0 });
   const mousePosStart = useRef({ x: 0, y: 0 });
   const touchDragStart = useRef({ x: 0, y: 0 });
@@ -37,6 +39,7 @@ export default function FullscreenImageViewer({ src, alt, isOpen, onClose }: Ful
 
   useEffect(() => { scaleRef.current = scale; }, [scale]);
   useEffect(() => { positionRef.current = position; }, [position]);
+  useEffect(() => { fitWidthScaleRef.current = fitWidthScale; }, [fitWidthScale]);
 
   // Detect touch device
   useEffect(() => {
@@ -54,8 +57,10 @@ export default function FullscreenImageViewer({ src, alt, isOpen, onClose }: Ful
       setPosition({ x: 0, y: 0 });
       setIsLoaded(false);
       setHasError(false);
+      setFitWidthScale(1);
       scaleRef.current = 1;
       positionRef.current = { x: 0, y: 0 };
+      fitWidthScaleRef.current = 1;
       document.body.style.overflow = 'hidden';
     } else {
       document.body.style.overflow = '';
@@ -137,26 +142,29 @@ export default function FullscreenImageViewer({ src, alt, isOpen, onClose }: Ful
         setPosition({ x: 0, y: 0 });
       }
 
-      // Double-tap to zoom
+      // Double-tap to zoom: cycle through fit-width → 3x → back to fit-width
       const now = Date.now();
       const diff = now - lastTap.current;
       if (diff < 300 && diff > 0 && e.changedTouches.length === 1) {
         e.preventDefault();
-        if (scaleRef.current > 1) {
-          scaleRef.current = 1;
+        const touch = e.changedTouches[0];
+        const rect = container.getBoundingClientRect();
+        if (scaleRef.current > 2.5) {
+          // Zoomed in deep — reset to fit-width
+          const fw = fitWidthScaleRef.current;
+          scaleRef.current = fw;
           positionRef.current = { x: 0, y: 0 };
-          setScale(1);
+          setScale(fw);
           setPosition({ x: 0, y: 0 });
         } else {
-          const touch = e.changedTouches[0];
-          const rect = container.getBoundingClientRect();
+          // At fit-width or lower — zoom to 3x at tap point
           const newPos = {
-            x: -(touch.clientX - rect.left - rect.width / 2),
-            y: -(touch.clientY - rect.top - rect.height / 2),
+            x: -(touch.clientX - rect.left - rect.width / 2) * 1.5,
+            y: -(touch.clientY - rect.top - rect.height / 2) * 1.5,
           };
-          scaleRef.current = 2;
+          scaleRef.current = 3;
           positionRef.current = newPos;
-          setScale(2);
+          setScale(3);
           setPosition(newPos);
         }
       }
@@ -217,15 +225,42 @@ export default function FullscreenImageViewer({ src, alt, isOpen, onClose }: Ful
     } else if (containerRef.current) {
       const rect = containerRef.current.getBoundingClientRect();
       const newPos = {
-        x: -(e.clientX - rect.left - rect.width / 2),
-        y: -(e.clientY - rect.top - rect.height / 2),
+        x: -(e.clientX - rect.left - rect.width / 2) * 1.5,
+        y: -(e.clientY - rect.top - rect.height / 2) * 1.5,
       };
-      scaleRef.current = 2;
+      scaleRef.current = 3;
       positionRef.current = newPos;
-      setScale(2);
+      setScale(3);
       setPosition(newPos);
     }
   }, []);
+
+  // ── Mouse wheel zoom ────────────────────────────────────────────────────
+  useEffect(() => {
+    const container = containerRef.current;
+    if (!container || !isOpen) return;
+
+    const onWheel = (e: WheelEvent) => {
+      e.preventDefault();
+      const delta = e.deltaY > 0 ? 0.9 : 1.1;
+      const newScale = Math.min(Math.max(scaleRef.current * delta, 1), 5);
+      const rect = container.getBoundingClientRect();
+      const cx = e.clientX - rect.left - rect.width / 2;
+      const cy = e.clientY - rect.top - rect.height / 2;
+      const ratio = newScale / scaleRef.current;
+      const newPos = {
+        x: positionRef.current.x - (cx - positionRef.current.x) * (ratio - 1),
+        y: positionRef.current.y - (cy - positionRef.current.y) * (ratio - 1),
+      };
+      positionRef.current = newPos;
+      scaleRef.current = newScale;
+      setPosition(newPos);
+      setScale(newScale);
+    };
+
+    container.addEventListener('wheel', onWheel, { passive: false });
+    return () => container.removeEventListener('wheel', onWheel);
+  }, [isOpen]);
 
   // ── Button controls ───────────────────────────────────────────────────────
 
@@ -342,7 +377,32 @@ export default function FullscreenImageViewer({ src, alt, isOpen, onClose }: Ful
               transition: isDragging ? 'none' : 'transform 0.2s ease-out',
               cursor: isDragging ? 'grabbing' : scale > 1 ? 'grab' : 'default',
             }}
-            onLoad={() => setIsLoaded(true)}
+            onLoad={() => {
+              setIsLoaded(true);
+              // On mobile, auto-zoom to fit width so text is readable
+              if (imageRef.current && containerRef.current) {
+                const img = imageRef.current;
+                const container = containerRef.current;
+                const containerWidth = container.clientWidth;
+                const containerHeight = container.clientHeight;
+                const imgAspect = img.naturalWidth / img.naturalHeight;
+                const containerAspect = containerWidth / containerHeight;
+                // Only fit-width if the image is taller than wide (portrait/manuscript pages)
+                // and if fit-width would actually zoom in (image is narrower than container at contain-scale)
+                if (imgAspect < containerAspect) {
+                  const containScale = containerHeight / img.naturalHeight;
+                  const fitW = containerWidth / (img.naturalWidth * containScale);
+                  if (fitW > 1.15) {
+                    setFitWidthScale(fitW);
+                    const isMobile = 'ontouchstart' in window || navigator.maxTouchPoints > 0 || window.matchMedia('(pointer: coarse)').matches;
+                    if (isMobile) {
+                      scaleRef.current = fitW;
+                      setScale(fitW);
+                    }
+                  }
+                }
+              }
+            }}
             onError={() => setHasError(true)}
             draggable={false}
           />
@@ -352,8 +412,8 @@ export default function FullscreenImageViewer({ src, alt, isOpen, onClose }: Ful
       {/* Hint */}
       <div className="px-4 py-2 text-center text-xs text-white/50 bg-black/50">
         {isTouchDevice
-          ? scale <= 1 ? 'Double-Tap to Zoom • Pinch to Zoom' : 'Drag to Pan • Double-Tap to Reset'
-          : scale <= 1 ? 'Double-Click to Zoom' : 'Drag to Pan • Double-Click to Reset'
+          ? scale <= 1.1 ? 'Pinch to Zoom • Double-Tap to Zoom In' : 'Drag to Pan • Double-Tap to Toggle Zoom'
+          : scale <= 1 ? 'Double-Click to Zoom • Scroll to Zoom' : 'Drag to Pan • Double-Click to Reset'
         }
       </div>
     </div>
