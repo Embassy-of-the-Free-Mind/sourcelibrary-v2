@@ -2,6 +2,7 @@
 
 export const BOOK = {
   id: '695203a5ab34727b1f041c53',
+  slug: 'the-hermetic-museum-various-sendivogius',
   title: 'The Hermetic Museum, Restored and Enlarged',
   language: 'Latin',
   year: 1678,
