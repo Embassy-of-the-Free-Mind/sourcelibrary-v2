@@ -21,9 +21,26 @@ import { MongoClient } from 'mongodb';
 const DRY_RUN = process.argv.includes('--dry-run');
 const COLLECTION_FILTER = process.argv.find(a => a.startsWith('--collection='))?.split('=')[1];
 
-const COLLECTIONS = COLLECTION_FILTER
-  ? [COLLECTION_FILTER]
-  : ['pub_early-english-books-1475-1640', 'pub_early-english-books-1641-1700'];
+// Split into year ranges to avoid IA's 10,000 result cap per query
+const QUERIES = COLLECTION_FILTER
+  ? [{ collection: COLLECTION_FILTER, yearFrom: 1400, yearTo: 1750 }]
+  : [
+    // 1475-1640 collection (~34K items)
+    { collection: 'pub_early-english-books-1475-1640', yearFrom: 1475, yearTo: 1540 },
+    { collection: 'pub_early-english-books-1475-1640', yearFrom: 1541, yearTo: 1580 },
+    { collection: 'pub_early-english-books-1475-1640', yearFrom: 1581, yearTo: 1610 },
+    { collection: 'pub_early-english-books-1475-1640', yearFrom: 1611, yearTo: 1625 },
+    { collection: 'pub_early-english-books-1475-1640', yearFrom: 1626, yearTo: 1640 },
+    { collection: 'pub_early-english-books-1475-1640' }, // no year field
+    // 1641-1700 collection (~71K items)
+    { collection: 'pub_early-english-books-1641-1700', yearFrom: 1641, yearTo: 1650 },
+    { collection: 'pub_early-english-books-1641-1700', yearFrom: 1651, yearTo: 1660 },
+    { collection: 'pub_early-english-books-1641-1700', yearFrom: 1661, yearTo: 1670 },
+    { collection: 'pub_early-english-books-1641-1700', yearFrom: 1671, yearTo: 1680 },
+    { collection: 'pub_early-english-books-1641-1700', yearFrom: 1681, yearTo: 1690 },
+    { collection: 'pub_early-english-books-1641-1700', yearFrom: 1691, yearTo: 1700 },
+    { collection: 'pub_early-english-books-1641-1700' }, // no year field
+  ];
 
 const IA_SEARCH_URL = 'https://archive.org/advancedsearch.php';
 const IA_IIIF_BASE = 'https://iiif.archive.org/iiif/3';
@@ -43,17 +60,16 @@ function cleanTitle(title) {
   return title?.replace(/[.:]+\s*\d{4}.*$/, '').replace(/\s+/g, ' ').trim() || title;
 }
 
-async function fetchPage(collection, page) {
-  const params = new URLSearchParams({
-    q: `collection:"${collection}"`,
-    'fl[]': ['identifier', 'title', 'creator', 'date', 'year', 'language', 'source'].join(','),
-    rows: String(PAGE_SIZE),
-    page: String(page),
-    output: 'json',
-    'sort[]': 'identifier asc',
-  });
-  // fl[] needs to be repeated for each field
-  const url = `${IA_SEARCH_URL}?q=collection%3A%22${encodeURIComponent(collection)}%22&fl%5B%5D=identifier&fl%5B%5D=title&fl%5B%5D=creator&fl%5B%5D=date&fl%5B%5D=year&fl%5B%5D=language&fl%5B%5D=source&rows=${PAGE_SIZE}&page=${page}&output=json&sort%5B%5D=identifier+asc`;
+async function fetchPage(collection, page, yearFrom, yearTo) {
+  let q = `collection:"${collection}"`;
+  if (yearFrom && yearTo) {
+    q += ` AND year:[${yearFrom} TO ${yearTo}]`;
+  } else if (!yearFrom && !yearTo) {
+    // Items with no year field
+    q += ` AND -year:[* TO *]`;
+  }
+  const qEnc = encodeURIComponent(q);
+  const url = `${IA_SEARCH_URL}?q=${qEnc}&fl%5B%5D=identifier&fl%5B%5D=title&fl%5B%5D=creator&fl%5B%5D=date&fl%5B%5D=year&fl%5B%5D=language&fl%5B%5D=source&rows=${PAGE_SIZE}&page=${page}&output=json&sort%5B%5D=identifier+asc`;
 
   const res = await fetch(url, { signal: AbortSignal.timeout(30000) });
   if (!res.ok) throw new Error(`IA search ${res.status}: ${await res.text()}`);
@@ -63,7 +79,7 @@ async function fetchPage(collection, page) {
 
 async function main() {
   console.log('=== Harvest IA Early English Books ===');
-  console.log(`Collections: ${COLLECTIONS.join(', ')}`);
+  console.log(`Queries: ${QUERIES.length} year-range splits`);
   console.log(`Dry run: ${DRY_RUN}\n`);
 
   let client;
@@ -80,13 +96,15 @@ async function main() {
   let totalInserted = 0;
   let totalSkipped = 0;
 
-  for (const collection of COLLECTIONS) {
-    console.log(`--- ${collection} ---`);
+  for (const query of QUERIES) {
+    const { collection, yearFrom, yearTo } = query;
+    const label = yearFrom ? `${collection} [${yearFrom}-${yearTo}]` : `${collection} [no year]`;
+    console.log(`--- ${label} ---`);
 
     // Get total count
-    const firstPage = await fetchPage(collection, 1);
+    const firstPage = await fetchPage(collection, 1, yearFrom, yearTo);
     const total = firstPage.numFound;
-    console.log(`  ${total.toLocaleString()} items total`);
+    console.log(`  ${total.toLocaleString()} items`);
 
     const totalPages = Math.ceil(total / PAGE_SIZE);
     let collectionInserted = 0;
@@ -95,11 +113,11 @@ async function main() {
     for (let page = 1; page <= totalPages; page++) {
       let response;
       try {
-        response = page === 1 ? firstPage : await fetchPage(collection, page);
+        response = page === 1 ? firstPage : await fetchPage(collection, page, yearFrom, yearTo);
       } catch (err) {
         console.error(`\n  Page ${page} fetch error: ${err.message}. Retrying in 10s...`);
         await new Promise(r => setTimeout(r, 10000));
-        try { response = await fetchPage(collection, page); }
+        try { response = await fetchPage(collection, page, yearFrom, yearTo); }
         catch { console.error(`  Page ${page} failed again, skipping.`); continue; }
       }
       const docs = response?.docs;
@@ -142,19 +160,19 @@ async function main() {
 
       if (!DRY_RUN && ops.length > 0) {
         // Write in chunks with retry
-        for (let i = 0; i < ops.length; i += 200) {
-          const chunk = ops.slice(i, i + 200);
-          for (let attempt = 0; attempt < 3; attempt++) {
+        for (let i = 0; i < ops.length; i += 50) {
+          const chunk = ops.slice(i, i + 50);
+          for (let attempt = 0; attempt < 5; attempt++) {
             try {
               const result = await db.collection('import_candidates').bulkWrite(chunk, { ordered: false });
               collectionInserted += result.upsertedCount;
               collectionSkipped += (chunk.length - result.upsertedCount);
               break;
             } catch (err) {
-              const msg = String(err.message || err);
-              if (attempt < 2 && (msg.includes('timed out') || msg.includes('ECONNRESET') || msg.includes('PoolCleared') || msg.includes('ENOTFOUND'))) {
-                console.error(`\n  Write error, retry ${attempt + 1}/3`);
-                await new Promise(r => setTimeout(r, 5000 * (attempt + 1)));
+              if (attempt < 4) {
+                const wait = 5000 * Math.pow(2, attempt); // 5s, 10s, 20s, 40s
+                console.error(`\n  Write error, retry ${attempt + 1}/5 (wait ${wait/1000}s): ${String(err.message || '').slice(0, 60)}`);
+                await new Promise(r => setTimeout(r, wait));
               } else {
                 throw err;
               }
@@ -171,7 +189,7 @@ async function main() {
       await new Promise(r => setTimeout(r, 500));
     }
 
-    console.log(`\n  ${collection}: ${collectionInserted.toLocaleString()} new, ${collectionSkipped.toLocaleString()} skipped`);
+    console.log(`\n  ${label}: ${collectionInserted.toLocaleString()} new, ${collectionSkipped.toLocaleString()} skipped`);
     totalInserted += collectionInserted;
     totalSkipped += collectionSkipped;
   }
