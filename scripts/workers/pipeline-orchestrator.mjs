@@ -1084,6 +1084,7 @@ async function run() {
     needs_attention: 0,
     stale_retried: 0,
     stale_failed: 0,
+    zombie_jobs_cancelled: 0,
     errors: [],
   };
 
@@ -1943,6 +1944,33 @@ async function run() {
     if (shouldRun(4)) {
       console.log('\n--- Phase 4: Dispatch translation to Lambda (SQS FIFO) ---');
 
+      // Zombie job reaper: cancel translation jobs stuck in processing with 0 progress for >2h.
+      // These are dead Lambda workers that will never complete, blocking the in-flight cap.
+      if (!DRY_RUN) {
+        const zombieThreshold = new Date(Date.now() - 2 * 60 * 60 * 1000);
+        const zombieJobs = await db.collection('jobs').find({
+          type: 'translation',
+          status: 'processing',
+          'progress.completed': 0,
+          created_at: { $lt: zombieThreshold },
+        }).project({ _id: 1, book_id: 1, book_title: 1 }).toArray();
+
+        if (zombieJobs.length > 0) {
+          const zombieBookIds = zombieJobs.map(j => j.book_id);
+          await db.collection('jobs').updateMany(
+            { _id: { $in: zombieJobs.map(j => j._id) } },
+            { $set: { status: 'failed', error: 'Auto-cancelled: stuck >2h with 0 progress', updated_at: new Date() } },
+          );
+          // Reset affected books so they can be re-dispatched
+          await db.collection('books').updateMany(
+            { id: { $in: zombieBookIds }, 'pipeline_auto.status': 'translate_submitted' },
+            { $set: { 'pipeline_auto.status': 'metadata_enriched', updated_at: new Date() }, $unset: { job: '' } },
+          );
+          log.zombie_jobs_cancelled += zombieJobs.length;
+          console.log(`  Zombie reaper: cancelled ${zombieJobs.length} stuck translation jobs, reset books to metadata_enriched`);
+        }
+      }
+
       if (!SQS_TRANSLATION_QUEUE_URL) {
         console.log('  SKIP: SQS_PAGE_TRANSLATION_QUEUE_URL not configured');
       } else {
@@ -2553,6 +2581,7 @@ async function run() {
     console.log(`  Images submitted: ${log.images_submitted} | Images advanced: ${log.images_advanced}`);
     console.log(`  Finalized: ${log.finalized} | Needs attention: ${log.needs_attention}`);
     console.log(`  Stale retried: ${log.stale_retried} | Stale failed: ${log.stale_failed}`);
+    if (log.zombie_jobs_cancelled > 0) console.log(`  Zombie jobs cancelled: ${log.zombie_jobs_cancelled}`);
     if (log.errors.length > 0) {
       console.log(`  Errors (${log.errors.length}):`);
       for (const err of log.errors.slice(0, 30)) {
@@ -2603,6 +2632,7 @@ async function run() {
             needs_attention: log.needs_attention,
             stale_retried: log.stale_retried,
             stale_failed: log.stale_failed,
+            zombie_jobs_cancelled: log.zombie_jobs_cancelled,
           },
           errors: log.errors.slice(0, 50).map(msg => ({ message: msg, timestamp: new Date() })),
           error_count: log.errors.length,
