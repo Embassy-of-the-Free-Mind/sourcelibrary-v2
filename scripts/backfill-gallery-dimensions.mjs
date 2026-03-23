@@ -100,17 +100,23 @@ async function main() {
         { $set: { extracted_width: width, extracted_height: height } }
       );
 
-      // Also update pages.detected_images
+      // Also update pages.detected_images — but only if a real detection exists at this index
       const detIdx = img.detection_index ?? 0;
-      await db.collection('pages').updateOne(
+      const page = await db.collection('pages').findOne(
         { id: img.page_id },
-        {
-          $set: {
-            [`detected_images.${detIdx}.extracted_width`]: width,
-            [`detected_images.${detIdx}.extracted_height`]: height,
-          }
-        }
+        { projection: { [`detected_images.${detIdx}.description`]: 1 } }
       );
+      if (page?.detected_images?.[detIdx]?.description) {
+        await db.collection('pages').updateOne(
+          { id: img.page_id },
+          {
+            $set: {
+              [`detected_images.${detIdx}.extracted_width`]: width,
+              [`detected_images.${detIdx}.extracted_height`]: height,
+            }
+          }
+        );
+      }
 
       return true;
     } catch (err) {

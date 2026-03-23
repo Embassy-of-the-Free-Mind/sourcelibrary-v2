@@ -143,16 +143,18 @@ async function processImageExtractionResult(db: Awaited<ReturnType<typeof getDb>
     const { detectedImages, promptVersion, galleryDocs } = message.data;
 
     // Save detected images to page
+    // Only overwrite if the new run found images — don't wipe existing OCR-detected images with an empty array
+    const imageSetFields: Record<string, unknown> = {
+      image_extraction_updated_at: new Date(),
+      image_extraction_prompt_version: promptVersion,
+      updated_at: new Date()
+    };
+    if (detectedImages && detectedImages.length > 0) {
+      imageSetFields.detected_images = detectedImages;
+    }
     await retryDbWrite(() => db.collection('pages').updateOne(
       { id: pageId },
-      {
-        $set: {
-          detected_images: detectedImages,
-          image_extraction_updated_at: new Date(),
-          image_extraction_prompt_version: promptVersion,
-          updated_at: new Date()
-        }
-      }
+      { $set: imageSetFields }
     ), `save image extraction for page ${pageId}`, 3, LOG_PREFIX);
 
     // Upsert gallery images (non-fatal — gallery is a cache)
