@@ -297,7 +297,11 @@ export default function UntranslatedRenaissancePage() {
           </p>
 
           <p className="text-secondary leading-relaxed mb-6 font-body">
-            And there is selection. The three major English-language translation series for pre-modern Latin &mdash; the Loeb Classical Library (~550 volumes since 1911), the I Tatti Renaissance Library (100 volumes since 2001), and the Dumbarton Oaks Medieval Library (~90 volumes since 2010) &mdash; together represent the institutional infrastructure of Latin-to-English translation. Roughly 740 volumes in a combined 115 years. At five volumes per year, which is the I Tatti pace, translating the remaining works would take tens of thousands of years. The selection necessarily reflects what scholars in each generation deemed important, fashionable, or commercially viable. Everything else waits.
+            And there is selection. The three major English-language translation series for pre-modern Latin &mdash; the Loeb Classical Library (~550 volumes since 1911), the I Tatti Renaissance Library (100 volumes since 2001), and the Dumbarton Oaks Medieval Library (~90 volumes since 2010) &mdash; together represent the institutional infrastructure of Latin-to-English translation. Roughly 740 volumes in a combined 115 years. The selection necessarily reflects what scholars in each generation deemed important, fashionable, or commercially viable. Everything else waits.
+          </p>
+
+          <p className="text-secondary leading-relaxed mb-6 font-body">
+            Put it in dollars and years. The USTC records approximately 362,000 distinct Latin works printed before 1700. Roughly 355,000 have no English translation. If you hired dedicated translators at $80,000 a year, each producing five books &mdash; a generous pace for texts requiring expertise in alchemical terminology, theological distinctions, or Renaissance medical Latin &mdash; the project would cost $5.7 billion and require 71,000 translator-years. A hundred translators working simultaneously would need 700 years. A thousand &mdash; a workforce that does not exist and cannot be trained, because the required specializations number in the hundreds &mdash; would still need 71 years. And that is Latin alone, one of seven major languages in the USTC.
           </p>
 
           <p className="text-secondary leading-relaxed font-body">
