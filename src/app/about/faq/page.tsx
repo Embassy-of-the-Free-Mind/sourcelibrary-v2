@@ -177,21 +177,34 @@ const faqs: FAQItem[] = [
     answer: (
       <>
         <p>
-          Source Library focuses on the Western esoteric, philosophical, and scientific
-          traditions from antiquity through the early modern period. Our core collections
-          include Hermetic philosophy, alchemy, Neoplatonism, Kabbalah, Rosicrucianism,
-          natural philosophy, and the classical and patristic literary traditions.
+          Source Library&apos;s curatorial vision grows from the Bibliotheca Philosophica
+          Hermetica at the Embassy of the Free Mind in Amsterdam &mdash; one of the
+          world&apos;s great collections of Western esoteric literature, recognized by
+          UNESCO&apos;s Memory of the World Register. Our core subject areas reflect that
+          heritage: Hermetic philosophy, alchemy, Neoplatonism, Kabbalah, Rosicrucianism,
+          astrology, and the broader currents of Renaissance and early modern thought.
         </p>
         <p>
-          We prioritize <strong>original language editions</strong> over modern
-          translations, and <strong>earliest available editions</strong> over later
-          reprints. A 1497 Ficino is better than a 1960 reprint. A Greek Patrologia
-          Graeca volume is better than a 19th-century English paraphrase.
+          But the tradition doesn&apos;t exist in isolation. To understand Ficino you need
+          Plato and Plotinus. To understand Paracelsus you need Galen and the Arabic
+          alchemists. To understand the Rosicrucian manifestos you need the Reformation
+          correspondence they emerged from. So the collection extends outward: classical
+          philosophy, patristic theology, Byzantine manuscript culture, the scientific
+          revolution, and the literary traditions of the Islamic world, India, and China.
         </p>
         <p>
-          We are actively expanding into Byzantine philosophy, Arabic and Persian
-          manuscripts, Chinese classics, and Indic traditions. If you know of texts
-          that should be included, we welcome suggestions.
+          Within that scope, we prioritize <strong>original language editions</strong> over
+          modern translations, and <strong>earliest available editions</strong> over later
+          reprints. A 1497 Ficino is better than a 1960 reprint. A Greek Patrologia Graeca
+          volume is better than a 19th-century English paraphrase.
+        </p>
+        <p>
+          Processing priority follows the same curatorial logic. Texts closest to the
+          EFM&apos;s core &mdash; Hermetica, alchemical treatises, Neoplatonist works &mdash;
+          are translated first. From there, the circle expands. We are not neutral
+          aggregators; we have a point of view about what matters and what connects to what.
+          That said, everything in the collection is freely available regardless of
+          processing status.
         </p>
       </>
     ),
