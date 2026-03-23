@@ -54,6 +54,7 @@ export const ARABIC_PROMPTS = {
 
 **Metadata tags (hidden from readers):**
 - <meta>X</meta> for page metadata (script style, vocalization level)
+- <page-type>X</page-type> — classify this page (REQUIRED). One of: title-page, frontispiece, dedication, preface, toc, index, errata, colophon, appendix, blank, illustration, diagram, map, text, digitizer-insert
 - <page-num>N</page-num> for page numbers
 - <header>X</header> for running headers
 - <vocab>X</vocab> for key terms for indexing
@@ -73,6 +74,16 @@ export const ARABIC_PROMPTS = {
 4. Flag all technical/magical vocabulary with <term>...</term>.
 5. Note Quranic quotations and hadith references.
 6. END with <vocab>...</vocab> listing key Arabic terms on this page.
+
+**IMAGE DETECTION:** If the page contains ANY illustrations, diagrams, talismans, magical squares, or decorative elements, add AFTER <vocab> at the very END:
+
+<detected-images>
+[{"description": "Brief description", "type": "emblem|woodcut|engraving|diagram|portrait|frontispiece|decorative|map", "bbox": {"x": 0.1, "y": 0.2, "width": 0.7, "height": 0.5}, "gallery_quality": 0.85, "museum_rationale": "Why museum-worthy or not"}]
+</detected-images>
+
+Bounding box (0.0-1.0): x=left edge, y=top edge. Measure PRECISELY to tightly enclose each illustration.
+Gallery quality: 0.9-1.0 museum-worthy, 0.7-0.9 high, 0.4-0.7 moderate, 0.0-0.4 low (ornaments, borders).
+If text-only page, omit the <detected-images> block.
 
 **Important:** This page may have been split from a two-page spread. Focus on the MAIN text block.
 
