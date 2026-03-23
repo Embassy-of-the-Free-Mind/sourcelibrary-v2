@@ -174,7 +174,7 @@ async function getFileInfo(titles) {
       action: 'query',
       titles: batch.join('|'),
       prop: 'imageinfo|categories',
-      iiprop: 'url|size|extmetadata|mime',
+      iiprop: 'url|size|extmetadata|mime|sha1|timestamp|user|mediatype',
       iiurlwidth: String(DISPLAY_WIDTH),
       cllimit: '50',
     });
@@ -191,11 +191,16 @@ async function getFileInfo(titles) {
 
       results.push({
         commonsTitle: page.title,
+        commonsPageUrl: info.descriptionurl || `https://commons.wikimedia.org/wiki/${encodeURIComponent(page.title)}`,
         thumbUrl: info.thumburl || info.url,
         fullUrl: info.url,
         width: info.width,
         height: info.height,
         mime: info.mime,
+        sha1: info.sha1 || '',
+        mediatype: info.mediatype || '',
+        uploadTimestamp: info.timestamp || '',
+        uploader: info.user || '',
         // Extracted metadata
         title: cleanHtml(ext.ObjectName?.value) || page.title.replace('File:', '').replace(/\.[^.]+$/, ''),
         description: cleanHtml(ext.ImageDescription?.value) || '',
@@ -203,7 +208,9 @@ async function getFileInfo(titles) {
         dateCreated: cleanHtml(ext.DateTimeOriginal?.value) || ext.DateTime?.value || '',
         medium: cleanHtml(ext.Medium?.value) || '',
         dimensions: cleanHtml(ext.Dimensions?.value) || '',
+        // Licensing (complete)
         license: ext.LicenseShortName?.value || 'Unknown',
+        licenseId: ext.License?.value || '',
         licenseUrl: ext.LicenseUrl?.value || '',
         usageTerms: ext.UsageTerms?.value || '',
         copyrighted: ext.Copyrighted?.value === 'True',
@@ -414,30 +421,48 @@ async function main() {
         created_at: new Date(),
         updated_at: new Date(),
         // Commons-specific metadata
+        // Harvest metadata
+        harvested_at: new Date(),
+        harvest_source: 'wikimedia_commons',
+        harvest_category: cat.category,
+
+        // Commons record (complete)
         commons_title: info.commonsTitle,
-        commons_url: `https://commons.wikimedia.org/wiki/${encodeURIComponent(info.commonsTitle)}`,
+        commons_url: info.commonsPageUrl,
         commons_full_url: info.fullUrl,
         commons_width: info.width,
         commons_height: info.height,
+        commons_sha1: info.sha1 || '',
+        commons_mediatype: info.mediatype || '',
+        commons_upload_date: info.uploadTimestamp || '',
+        commons_uploader: info.uploader || '',
+        commons_description: info.description?.slice(0, 2000) || '',
+        commons_categories: info.categories,
+
+        // Licensing (complete, matches book image_source pattern)
         commons_license: info.license,
+        commons_license_id: info.licenseId || '',
         commons_license_url: info.licenseUrl || '',
         commons_usage_terms: info.usageTerms || '',
         commons_copyrighted: info.copyrighted,
         commons_attribution_required: info.attributionRequired,
         commons_restrictions: info.restrictions || '',
         commons_credit: info.credit || '',
-        commons_assessment: info.assessment || '', // 'featured', 'quality'
-        commons_description: info.description?.slice(0, 2000) || '',
-        commons_categories: info.categories,
+        commons_assessment: info.assessment || '',
+
+        // image_source — matches book pattern for interoperability
         image_source: {
           provider: 'wikimedia_commons',
           provider_name: 'Wikimedia Commons',
-          source_url: `https://commons.wikimedia.org/wiki/${encodeURIComponent(info.commonsTitle)}`,
+          source_url: info.commonsPageUrl,
+          identifier: info.commonsTitle.replace('File:', ''),
           license: info.license === 'Public domain' ? 'CC0-1.0'
+            : info.licenseId === 'pd' ? 'CC0-1.0'
             : info.license?.toLowerCase().includes('cc-by-sa') ? 'CC-BY-SA-4.0'
             : info.license?.toLowerCase().includes('cc-by') ? 'CC-BY-4.0'
             : info.license || 'unknown',
           attribution: info.credit || info.artist || '',
+          access_date: new Date(),
         },
       };
 
