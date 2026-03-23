@@ -42,6 +42,7 @@ export default function ArtworkInfo({ book, collections }: ArtworkInfoProps) {
   const commonsHeight = (book as any).commons_height || 0;
   const isLandscape = commonsWidth > commonsHeight;
   const resourceType = book.resource_type || 'print';
+  const holdingMuseum = (book.image_source as any)?.contributing_library || '';
 
   return (
     <>
@@ -94,9 +95,10 @@ export default function ArtworkInfo({ book, collections }: ArtworkInfoProps) {
                     {dimensionsDisplay}
                   </div>
                 )}
-                {commonsWidth > 0 && (
-                  <div className="flex items-center gap-1.5 text-stone-500">
-                    {commonsWidth} x {commonsHeight} px
+                {holdingMuseum && (
+                  <div className="flex items-center gap-1.5">
+                    <MapPin className="w-4 h-4 text-stone-500" />
+                    {holdingMuseum}
                   </div>
                 )}
               </div>
@@ -168,14 +170,54 @@ export default function ArtworkInfo({ book, collections }: ArtworkInfoProps) {
           </div>
         )}
 
-        {/* Source attribution */}
+        {/* Provenance & Source */}
         <div className="card p-6">
-          <h2 className="text-lg font-display font-semibold mb-3" style={{ color: 'var(--text-primary)' }}>Source</h2>
-          <div className="text-sm space-y-1" style={{ color: 'var(--text-secondary)' }}>
-            <p>Image: <a href={commonsUrl} target="_blank" rel="noopener noreferrer" className="text-accent-rust hover:underline">Wikimedia Commons</a></p>
-            {commonsLicense && <p>License: {commonsLicense}</p>}
+          <h2 className="text-lg font-display font-semibold mb-4" style={{ color: 'var(--text-primary)' }}>Provenance &amp; Source</h2>
+          <div className="text-sm space-y-3" style={{ color: 'var(--text-secondary)' }}>
+            {/* Holding institution */}
+            {(book.image_source as any)?.contributing_library && (
+              <div>
+                <span className="text-xs uppercase tracking-wider font-medium" style={{ color: 'var(--text-muted)' }}>Holding Institution</span>
+                <p className="mt-0.5">{(book.image_source as any).contributing_library}</p>
+              </div>
+            )}
+
+            {/* Credit */}
+            {(book as any).commons_credit && (
+              <div>
+                <span className="text-xs uppercase tracking-wider font-medium" style={{ color: 'var(--text-muted)' }}>Credit</span>
+                <p className="mt-0.5">{(book as any).commons_credit}</p>
+              </div>
+            )}
+
+            {/* Digital source */}
+            <div>
+              <span className="text-xs uppercase tracking-wider font-medium" style={{ color: 'var(--text-muted)' }}>Digital Image</span>
+              <p className="mt-0.5">
+                <a href={commonsUrl} target="_blank" rel="noopener noreferrer" className="text-accent-rust hover:underline">Wikimedia Commons</a>
+                {commonsLicense && <span className="text-stone-400"> · {commonsLicense}</span>}
+              </p>
+            </div>
+
+            {/* License details */}
+            {(book as any).commons_usage_terms && (
+              <div>
+                <span className="text-xs uppercase tracking-wider font-medium" style={{ color: 'var(--text-muted)' }}>Usage Terms</span>
+                <p className="mt-0.5">{(book as any).commons_usage_terms}</p>
+              </div>
+            )}
+
+            {/* Harvest date */}
+            {(book as any).harvested_at && (
+              <div>
+                <span className="text-xs uppercase tracking-wider font-medium" style={{ color: 'var(--text-muted)' }}>Harvested</span>
+                <p className="mt-0.5">{new Date((book as any).harvested_at).toLocaleDateString('en-US', { year: 'numeric', month: 'long', day: 'numeric' })}</p>
+              </div>
+            )}
+
+            {/* Full resolution link */}
             {commonsFullUrl && (
-              <p>
+              <p className="pt-2">
                 <a href={commonsFullUrl} target="_blank" rel="noopener noreferrer" className="text-accent-rust hover:underline">
                   View full resolution original →
                 </a>
