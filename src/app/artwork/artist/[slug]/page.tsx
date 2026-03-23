@@ -2,158 +2,129 @@ import { Metadata } from 'next';
 import Link from 'next/link';
 import Image from 'next/image';
 import { notFound } from 'next/navigation';
+import { getDb } from '@/lib/mongodb';
 import SiteHeader from '@/components/layout/SiteHeader';
-import { ARTISTS, ARTWORKS, getArtworksByArtist, type Artwork } from '@/lib/artwork-data';
-import { ExternalLink, BookOpen } from 'lucide-react';
+import { sanitizeThumbnail } from '@/lib/collections-utils';
+
+export const revalidate = 3600;
+export const dynamicParams = true;
+export async function generateStaticParams() { return []; }
 
 interface PageProps {
   params: Promise<{ slug: string }>;
 }
 
-export async function generateStaticParams() {
-  return Object.keys(ARTISTS).map(slug => ({ slug }));
+async function getArtist(slug: string) {
+  const db = await getDb();
+
+  // slug is URL-encoded artist name
+  const artistName = decodeURIComponent(slug);
+
+  const artworks = await db.collection('books')
+    .find(
+      { author: artistName, resource_type: { $exists: true } },
+      { projection: {
+        slug: 1, title: 1, display_title: 1, author: 1, published: 1,
+        resource_type: 1, medium: 1, thumbnail: 1, thumbnail_blob: 1,
+        commons_width: 1, commons_height: 1,
+      }},
+    )
+    .sort({ published: 1 })
+    .toArray();
+
+  if (artworks.length === 0) return null;
+
+  return {
+    name: artistName,
+    artworks: JSON.parse(JSON.stringify(artworks)),
+  };
 }
 
 export async function generateMetadata({ params }: PageProps): Promise<Metadata> {
   const { slug } = await params;
-  const artist = ARTISTS[slug];
-  if (!artist) return { title: 'Not Found' };
+  const data = await getArtist(slug);
+  if (!data) return { title: 'Not Found' };
   return {
-    title: `${artist.name} — Source Library Visual Art`,
-    description: artist.bio.slice(0, 200),
+    title: `${data.name} — Source Library Visual Art`,
+    description: `${data.artworks.length} works by ${data.name} in Source Library.`,
   };
-}
-
-function WorkCard({ artwork }: { artwork: Artwork }) {
-  const isPortrait = artwork.aspectRatio < 1;
-  return (
-    <Link href={`/artwork/${artwork.slug}`} className="group block">
-      <div className={`relative overflow-hidden rounded-sm bg-stone-100 ${isPortrait ? 'aspect-[3/4]' : 'aspect-[4/3]'}`}>
-        <Image
-          src={artwork.imageUrl}
-          alt={artwork.title}
-          fill
-          className="object-cover group-hover:scale-[1.03] transition-transform duration-700 ease-out"
-          sizes="(max-width: 640px) 100vw, (max-width: 1024px) 50vw, 33vw"
-        />
-      </div>
-      <div className="mt-3">
-        <h3 className="font-display text-base font-semibold leading-tight group-hover:text-accent-rust transition-colors" style={{ color: 'var(--text-primary)' }}>
-          {artwork.title}
-        </h3>
-        <p className="text-sm mt-0.5" style={{ color: 'var(--text-muted)' }}>
-          {artwork.date}
-        </p>
-        <p className="text-xs mt-0.5" style={{ color: 'var(--text-muted)' }}>
-          {artwork.medium} · {artwork.location}
-        </p>
-      </div>
-    </Link>
-  );
 }
 
 export default async function ArtistPage({ params }: PageProps) {
   const { slug } = await params;
-  const artist = ARTISTS[slug];
-  if (!artist) notFound();
+  const data = await getArtist(slug);
+  if (!data) notFound();
 
-  const artworks = getArtworksByArtist(slug);
+  const { name, artworks } = data;
 
-  // Collect all unique related texts across this artist's works
-  const relatedBooks = new Map<string, { title: string; author: string; slug: string; count: number }>();
-  for (const artwork of artworks) {
-    for (const text of artwork.relatedTexts) {
-      if (text.hasTranslation && text.slug) {
-        const existing = relatedBooks.get(text.slug);
-        if (existing) {
-          existing.count++;
-        } else {
-          relatedBooks.set(text.slug, { title: text.title, author: text.author, slug: text.slug, count: 1 });
-        }
-      }
-    }
+  // Count by type
+  const typeCounts: Record<string, number> = {};
+  for (const a of artworks) {
+    const t = a.resource_type || 'unknown';
+    typeCounts[t] = (typeCounts[t] || 0) + 1;
   }
-  const sortedBooks = [...relatedBooks.values()].sort((a, b) => b.count - a.count);
 
   return (
     <div className="min-h-screen" style={{ background: 'var(--bg-cream)' }}>
       <SiteHeader variant="dark" />
 
-      {/* Hero with first artwork as background */}
+      {/* Hero */}
       <div className="relative bg-stone-900 text-white overflow-hidden">
-        {artworks[0] && (
+        {artworks[0]?.thumbnail_blob && sanitizeThumbnail(artworks[0].thumbnail_blob) && (
           <div className="absolute inset-0 opacity-[0.08]">
-            <Image src={artworks[0].imageUrl} alt="" fill className="object-cover" />
+            <Image src={sanitizeThumbnail(artworks[0].thumbnail_blob) as string} alt="" fill className="object-cover" />
           </div>
         )}
         <div className="relative max-w-[var(--container-standard)] mx-auto px-6 md:px-12 py-14 sm:py-20">
           <nav className="flex items-center gap-2 text-xs text-stone-500 mb-8">
             <Link href="/artwork" className="hover:text-stone-300 transition-colors">Visual Art</Link>
             <span>/</span>
-            <span className="text-stone-400">{artist.name}</span>
+            <span className="text-stone-400">{name}</span>
           </nav>
 
-          <h1 className="font-display text-4xl sm:text-5xl font-bold">{artist.name}</h1>
+          <h1 className="font-display text-4xl sm:text-5xl font-bold">{name}</h1>
           <div className="flex items-center gap-4 mt-3 text-sm text-stone-400">
-            <span>{artist.nationality}</span>
-            <span className="w-px h-4 bg-stone-700" />
-            <span>{artist.dates}</span>
-            <span className="w-px h-4 bg-stone-700" />
-            <span>{artworks.length} {artworks.length === 1 ? 'work' : 'works'}</span>
+            <span>{artworks.length} works</span>
+            {Object.entries(typeCounts).map(([type, count]) => (
+              <span key={type} className="flex items-center gap-1">
+                <span className="w-px h-4 bg-stone-700" />
+                {count} {type === 'painting' ? 'paintings' : type === 'print' ? 'prints' : type === 'drawing' ? 'drawings' : type === 'object' ? 'sculptures' : type}
+              </span>
+            ))}
           </div>
-
-          <div className="max-w-2xl mt-8">
-            <p className="text-stone-300 leading-relaxed font-serif">{artist.bio}</p>
-          </div>
-
-          <a
-            href={`https://www.wikidata.org/wiki/${artist.wikidata}`}
-            target="_blank"
-            rel="noopener noreferrer"
-            className="inline-flex items-center gap-1.5 mt-6 text-xs text-stone-500 hover:text-stone-300 transition-colors"
-          >
-            <ExternalLink className="w-3 h-3" />
-            Wikidata: {artist.wikidata}
-          </a>
         </div>
       </div>
 
       <div className="h-px bg-stone-200" />
 
-      {/* Related Source Library books */}
-      {sortedBooks.length > 0 && (
-        <div className="border-b" style={{ borderColor: 'var(--border-light)', background: 'var(--bg-warm)' }}>
-          <div className="max-w-[var(--container-standard)] mx-auto px-6 md:px-12 py-6">
-            <div className="flex items-center gap-2 mb-3">
-              <BookOpen className="w-4 h-4 text-accent-rust" />
-              <h2 className="text-sm font-semibold" style={{ color: 'var(--text-primary)' }}>Related texts in Source Library</h2>
-            </div>
-            <div className="flex flex-wrap gap-2">
-              {sortedBooks.map(book => (
-                <Link
-                  key={book.slug}
-                  href={`/book/${book.slug}`}
-                  className="inline-flex items-center gap-2 px-3 py-1.5 text-sm rounded-lg border hover:border-accent-rust/30 transition-colors"
-                  style={{ background: 'var(--bg-white)', borderColor: 'var(--border-light)', color: 'var(--text-primary)' }}
-                >
-                  <span className="font-medium">{book.title}</span>
-                  <span className="text-xs" style={{ color: 'var(--text-muted)' }}>{book.author}</span>
-                </Link>
-              ))}
-            </div>
-          </div>
-        </div>
-      )}
-
       {/* Works grid */}
       <div className="max-w-[var(--container-standard)] mx-auto px-6 md:px-12 py-12">
-        <h2 className="text-xl font-display font-semibold mb-8" style={{ color: 'var(--text-primary)' }}>
-          Works ({artworks.length})
-        </h2>
-        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-x-8 gap-y-10">
-          {artworks.map(artwork => (
-            <WorkCard key={artwork.slug} artwork={artwork} />
-          ))}
+        <div className="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-4 gap-x-6 gap-y-8">
+          {artworks.map((a: any) => {
+            const isPortrait = (a.commons_width || 1) < (a.commons_height || 1);
+            const thumb = sanitizeThumbnail(a.thumbnail || a.thumbnail_blob || '');
+            return (
+              <Link key={a.slug} href={`/artwork/${a.slug}`} className="group block">
+                <div className={`relative overflow-hidden rounded-sm bg-stone-100 ${isPortrait ? 'aspect-[3/4]' : 'aspect-[4/3]'}`}>
+                  {thumb && (
+                    <Image
+                      src={thumb}
+                      alt={a.display_title || a.title}
+                      fill
+                      className="object-cover group-hover:scale-[1.03] transition-transform duration-700 ease-out"
+                      sizes="(max-width: 640px) 50vw, (max-width: 1024px) 33vw, 25vw"
+                    />
+                  )}
+                </div>
+                <div className="mt-2">
+                  <h3 className="text-sm font-medium leading-tight line-clamp-2 group-hover:text-accent-rust transition-colors" style={{ color: 'var(--text-primary)' }}>
+                    {a.display_title || a.title}
+                  </h3>
+                  {a.published && <p className="text-xs mt-0.5" style={{ color: 'var(--text-muted)' }}>{a.published}</p>}
+                </div>
+              </Link>
+            );
+          })}
         </div>
       </div>
     </div>
