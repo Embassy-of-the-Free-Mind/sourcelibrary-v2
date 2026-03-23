@@ -855,7 +855,9 @@ export async function GET(request: NextRequest) {
                   book_id: book.id,
                   $or: [
                     { page_type: { $in: IMAGE_CANDIDATE_PAGE_TYPES } },
-                    // Include any page where OCR detected images (structured or prose)
+                    // OCR v8+: only extract pages with significant images
+                    { 'ocr.data': { $regex: 'significance="high"' } },
+                    // Pre-v8 OCR: any image tag triggers extraction
                     { 'ocr.data': { $regex: '<detected-images>' } },
                     { 'ocr.data': { $regex: '<image-desc>' } },
                   ],
