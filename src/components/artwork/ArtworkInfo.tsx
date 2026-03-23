@@ -74,7 +74,19 @@ export default function ArtworkInfo({ book, collections }: ArtworkInfoProps) {
               {book.display_title && book.title !== book.display_title && (
                 <p className="text-stone-400 italic mt-1 text-sm">{book.title}</p>
               )}
-              <p className="text-xl text-stone-300 mt-3">{book.author}</p>
+              <p className="text-xl text-stone-300 mt-3">
+                {book.author.split(/,\s*/).map((name, i, arr) => (
+                  <span key={name}>
+                    <Link
+                      href={`/artwork/artist/${name.trim().replace(/\s+/g, '-')}`}
+                      className="hover:text-white transition-colors"
+                    >
+                      {name.trim()}
+                    </Link>
+                    {i < arr.length - 1 && <span className="text-stone-500">, </span>}
+                  </span>
+                ))}
+              </p>
 
               <div className="flex flex-wrap items-center gap-x-5 gap-y-2 mt-5 text-sm text-stone-400">
                 {book.published && (
