@@ -21,8 +21,8 @@ import { GoogleGenerativeAI } from '@google/generative-ai';
 import { createHash } from 'crypto';
 
 // ── Config ──
-const CONCURRENCY = 10;          // Max books translating simultaneously
-const PAGES_PER_RUN = 2000;      // Global page cap per run (prevent runaway costs)
+const CONCURRENCY = 15;          // Max books translating simultaneously
+const PAGES_PER_RUN = 5000;      // Global page cap per run (prevent runaway costs)
 const MAX_CONSECUTIVE_ERRORS = 5; // Per-book error threshold before giving up
 const RATE_LIMIT_BACKOFF_MS = 15000;
 const MODEL = 'gemini-3-flash-preview';
@@ -96,6 +96,12 @@ function sanitizeTranslationTags(text) {
 // ── Content hash for provenance ──
 function contentHash(text) {
   return createHash('sha256').update(text || '').digest('hex').slice(0, 16);
+}
+
+// ── Cost calculation (Gemini Flash realtime pricing) ──
+function calculateCost(inputTokens, outputTokens) {
+  // gemini-3-flash-preview: $0.10/1M input, $0.40/1M output
+  return (inputTokens * 0.10 + outputTokens * 0.40) / 1_000_000;
 }
 
 // ── Translate a single page ──
@@ -183,6 +189,8 @@ async function processBook(db, book, job, globalCounter) {
   let failed = 0;
   let consecutiveErrors = 0;
   let prevTranslation = null;
+  let totalInputTokens = 0;
+  let totalOutputTokens = 0;
 
   // Get previous page's translation for context continuity
   if (pages[0].page_number > 1) {
@@ -240,6 +248,7 @@ async function processBook(db, book, job, globalCounter) {
       );
 
       // Log usage
+      const cost = calculateCost(result.inputTokens, result.outputTokens);
       await db.collection('gemini_usage').insertOne({
         type: 'translation',
         mode: 'realtime',
@@ -248,6 +257,7 @@ async function processBook(db, book, job, globalCounter) {
         page_ids: [page.id],
         input_tokens: result.inputTokens,
         output_tokens: result.outputTokens,
+        cost,
         status: 'success',
         duration_ms: result.durationMs,
         prompt_version: PROMPT_VERSION,
@@ -258,6 +268,8 @@ async function processBook(db, book, job, globalCounter) {
       translated++;
       globalCounter.count++;
       consecutiveErrors = 0;
+      totalInputTokens += result.inputTokens;
+      totalOutputTokens += result.outputTokens;
 
       // Update job progress every 10 pages
       if (translated % 10 === 0) {
@@ -327,7 +339,7 @@ async function processBook(db, book, job, globalCounter) {
     console.log(`  [${label}] Progress — ${translated} this run (${newCompleted}/${job.progress.total} total)`);
   }
 
-  return { translated, failed };
+  return { translated, failed, completed: isComplete ? 1 : 0, inputTokens: totalInputTokens, outputTokens: totalOutputTokens };
 }
 
 // ── Main ──
@@ -355,6 +367,12 @@ async function main() {
 
   if (books.length === 0) {
     console.log('[TRANSLATE] No books to translate');
+    await db.collection('cron_runs').insertOne({
+      cron: 'hetzner-translate-worker', timestamp: new Date(),
+      duration_ms: Date.now() - startTime, status: 'idle', failed: false,
+      pages_saved: 0, actions: { books_processed: 0 }, errors: [], error_count: 0,
+      summary: 'idle',
+    }).catch(() => {});
     await client.close();
     return;
   }
@@ -366,9 +384,10 @@ async function main() {
   const results = await Promise.all(
     books.map(async (book) => {
       const jobId = book.job?.job_id;
+      const zero = { translated: 0, failed: 0, completed: 0, inputTokens: 0, outputTokens: 0 };
       if (!jobId) {
         console.log(`  [${(book.title || '').substring(0, 40)}] No job_id, skipping`);
-        return { translated: 0, failed: 0 };
+        return zero;
       }
 
       const job = await db.collection('jobs').findOne({ id: jobId });
@@ -378,7 +397,7 @@ async function main() {
           { id: book.id },
           { $set: { 'pipeline_auto.status': 'metadata_enriched', updated_at: new Date() }, $unset: { job: '' } },
         );
-        return { translated: 0, failed: 0 };
+        return zero;
       }
 
       return processBook(db, book, job, globalCounter);
@@ -387,9 +406,42 @@ async function main() {
 
   const totalTranslated = results.reduce((s, r) => s + r.translated, 0);
   const totalFailed = results.reduce((s, r) => s + r.failed, 0);
-  const elapsed = ((Date.now() - startTime) / 1000).toFixed(1);
+  const totalCompleted = results.reduce((s, r) => s + r.completed, 0);
+  const totalInputTokens = results.reduce((s, r) => s + r.inputTokens, 0);
+  const totalOutputTokens = results.reduce((s, r) => s + r.outputTokens, 0);
+  const totalCost = calculateCost(totalInputTokens, totalOutputTokens);
+  const durationMs = Date.now() - startTime;
+  const elapsed = (durationMs / 1000).toFixed(1);
+  const rate = durationMs > 0 ? Math.round(totalTranslated / (durationMs / 3600000)) : 0;
 
-  console.log(`[TRANSLATE] Done — ${totalTranslated} translated, ${totalFailed} failed, ${elapsed}s elapsed`);
+  console.log(`[TRANSLATE] Done — ${totalTranslated} translated, ${totalFailed} failed, ${totalCompleted} books completed, ${elapsed}s, ~${rate}/hr, $${totalCost.toFixed(3)}`);
+
+  // Log to cron_runs for analytics Pipeline tab
+  try {
+    await db.collection('cron_runs').insertOne({
+      cron: 'hetzner-translate-worker',
+      timestamp: new Date(),
+      duration_ms: durationMs,
+      status: totalFailed > 0 ? 'completed_with_errors' : 'success',
+      failed: totalFailed > 0,
+      pages_saved: totalTranslated,
+      actions: {
+        books_processed: books.length,
+        pages_translated: totalTranslated,
+        pages_failed: totalFailed,
+        books_completed: totalCompleted,
+        input_tokens: totalInputTokens,
+        output_tokens: totalOutputTokens,
+        cost_usd: totalCost,
+        rate_per_hour: rate,
+      },
+      errors: [],
+      error_count: totalFailed,
+      summary: `T:${totalTranslated}p ${totalCompleted}b $${totalCost.toFixed(2)} ~${rate}/hr`,
+    });
+  } catch (logErr) {
+    console.error('[TRANSLATE] Failed to log cron_run:', logErr.message);
+  }
 
   await client.close();
 }
