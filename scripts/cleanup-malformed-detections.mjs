@@ -31,12 +31,26 @@ async function main() {
   const client = await MongoClient.connect(MONGODB_URI);
   const db = client.db('bookstore');
 
-  const query = { 'detected_images.0': { $exists: true } };
-  if (bookFilter) query.book_id = bookFilter;
+  // Strategy: use gallery_images (small, indexed) to find all books with images,
+  // then check each book's pages for malformed entries. Avoids full pages scan.
+  let bookIds;
+  if (bookFilter) {
+    bookIds = [bookFilter];
+  } else {
+    console.log('Finding books with gallery_images...');
+    const giBookIds = await db.collection('gallery_images').distinct('book_id');
+    bookIds = giBookIds;
+    console.log(`Found ${bookIds.length} books with gallery_images — checking each for malformed entries`);
+  }
 
-  const pages = await db.collection('pages').find(query, {
-    projection: { id: 1, book_id: 1, page_number: 1, detected_images: 1 }
-  }).toArray();
+  const pages = [];
+  for (const bid of bookIds) {
+    const bookPages = await db.collection('pages').find(
+      { book_id: bid, 'detected_images.0': { $exists: true } },
+      { projection: { id: 1, book_id: 1, page_number: 1, detected_images: 1 } }
+    ).toArray();
+    pages.push(...bookPages);
+  }
 
   let pagesScanned = 0, pagesFixed = 0, entriesRemoved = 0;
   const affectedBooks = new Set();
