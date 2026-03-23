@@ -292,7 +292,9 @@ async function BookInfo({ id }: { id: string }) {
   const { book, pages, totalBooks, galleryImageCount, galleryImages, bookCollections } = data;
 
   // Empty shell books (0 pages from failed imports) should 404
-  if (!book.pages_count || book.pages_count === 0) {
+  // But visual art (paintings, prints, etc.) legitimately has no page documents
+  const isVisualArt = book.resource_type && book.resource_type !== 'printed_book' && book.resource_type !== 'manuscript';
+  if (!isVisualArt && (!book.pages_count || book.pages_count === 0)) {
     notFound();
   }
 
