@@ -52,7 +52,6 @@ export const LATIN_PROMPTS = {
 **Metadata tags (hidden from readers):**
 - <meta>X</meta> for page metadata (image quality, script type)
 - <columns>N</columns> — number of text columns (omit for single-column, include for 2+)
-- <page-type>X</page-type> — classify this page (REQUIRED). One of: title-page, frontispiece, dedication, preface, toc, index, errata, colophon, appendix, blank, illustration, diagram, map, text, digitizer-insert
 - <page-num>N</page-num> or <folio>12r</folio> for visible page/folio numbers
 - <header>X</header> for running headers/page headings
 - <abbrev>X → expansion</abbrev> for abbreviation expansions (collected in metadata)
@@ -85,16 +84,6 @@ export const LATIN_PROMPTS = {
 6. Capture ALL text including margins and annotations.
 7. Describe any illustrations, diagrams, or charts with <image-desc>...</image-desc>.
 8. END with <vocab>...</vocab> listing key Latin terms, names, and concepts on this page.
-
-**IMAGE DETECTION:** If the page contains ANY illustrations, diagrams, emblems, woodcuts, engravings, or decorative elements, add AFTER <vocab> at the very END:
-
-<detected-images>
-[{"description": "Brief description", "type": "emblem|woodcut|engraving|diagram|portrait|frontispiece|decorative|map", "bbox": {"x": 0.1, "y": 0.2, "width": 0.7, "height": 0.5}, "gallery_quality": 0.85, "museum_rationale": "Why museum-worthy or not"}]
-</detected-images>
-
-Bounding box (0.0-1.0): x=left edge, y=top edge. Measure PRECISELY to tightly enclose each illustration.
-Gallery quality: 0.9-1.0 museum-worthy, 0.7-0.9 high, 0.4-0.7 moderate, 0.0-0.4 low (ornaments, borders).
-If text-only page, omit the <detected-images> block.
 
 **Column layout:** If the page has two (or more) text columns, transcribe the left column first, then insert <column-break/> on its own line, then transcribe the right column. Do NOT use <column-break/> for single-column pages.
 
