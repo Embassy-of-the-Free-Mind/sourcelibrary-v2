@@ -6,6 +6,7 @@ import Link from 'next/link';
 import { Book, Page, TranslationEdition } from '@/lib/types';
 import { findBookByIdOrSlug } from '@/lib/book-lookup';
 import { Calendar, Globe, FileText, BookText, BookMarked, Images } from 'lucide-react';
+import ArtworkInfo from '@/components/artwork/ArtworkInfo';
 import SearchPanel from '@/components/search/SearchPanel';
 import BookPagesSection from '@/components/book/BookPagesSection';
 import EarlyAccessGate from '@/components/book/EarlyAccessGate';
@@ -296,6 +297,16 @@ async function BookInfo({ id }: { id: string }) {
   const isVisualArt = book.resource_type && book.resource_type !== 'printed_book' && book.resource_type !== 'manuscript';
   if (!isVisualArt && (!book.pages_count || book.pages_count === 0)) {
     notFound();
+  }
+
+  // Visual art gets a dedicated layout — no OCR, no pages grid, no translation stats
+  if (isVisualArt) {
+    return (
+      <ArtworkInfo
+        book={book}
+        collections={bookCollections}
+      />
+    );
   }
 
   // Content gating handled client-side by useBetaGate hook in BookPagesSection
