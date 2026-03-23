@@ -79,6 +79,53 @@ const IMPORT_CATEGORIES = [
   { category: 'Paintings by Paolo Veronese', artist: 'Paolo Veronese', type: 'painting', recurse: true },
   { category: 'Paintings by Caravaggio', artist: 'Caravaggio', type: 'painting', recurse: true },
 
+  // Hieronymus Bosch — visionary/esoteric
+  { category: 'Hieronymus Bosch', artist: 'Hieronymus Bosch', type: 'painting', recurse: true },
+
+  // Rudolf II's court — the occult emperor
+  { category: 'Rudolf II, Holy Roman Emperor', artist: 'Various (Rudolf II court)', type: 'painting', recurse: true },
+  { category: 'Paintings by Giuseppe Arcimboldo', artist: 'Giuseppe Arcimboldo', type: 'painting', recurse: true },
+  { category: 'Paintings by Bartholomeus Spranger', artist: 'Bartholomeus Spranger', type: 'painting', recurse: true },
+  { category: 'Paintings by Hans von Aachen', artist: 'Hans von Aachen', type: 'painting', recurse: true },
+  { category: 'Joris Hoefnagel', artist: 'Joris Hoefnagel', type: 'drawing', recurse: true },
+  { category: 'Aegidius Sadeler', artist: 'Aegidius Sadeler', type: 'print', recurse: false },
+
+  // Hans Baldung Grien — witchcraft, alchemy
+  { category: 'Paintings by Hans Baldung', artist: 'Hans Baldung Grien', type: 'painting', recurse: true },
+
+  // Bruegel
+  { category: 'Paintings by Pieter Bruegel (I)', artist: 'Pieter Bruegel the Elder', type: 'painting', recurse: true },
+
+  // Albrecht Altdorfer — Danube school mystical landscapes
+  { category: 'Paintings by Albrecht Altdorfer', artist: 'Albrecht Altdorfer', type: 'painting', recurse: true },
+
+  // El Greco — mystical Neoplatonic
+  { category: 'Paintings by El Greco', artist: 'El Greco', type: 'painting', recurse: true },
+
+  // Teniers — alchemist genre paintings
+  { category: 'Alchemists by David Teniers the Younger', artist: 'David Teniers the Younger', type: 'painting', recurse: false },
+
+  // William Blake — visionary
+  { category: 'Art works by William Blake', artist: 'William Blake', type: 'print', recurse: true },
+
+  // Stradanus — Nova Reperta (discoveries/inventions)
+  { category: 'Nova Reperta', artist: 'Jan van der Straet (Stradanus)', type: 'print', recurse: true },
+  { category: 'Works after Jan van der Straet', artist: 'Jan van der Straet (Stradanus)', type: 'print', recurse: false },
+
+  // Historical figures — portraits and depictions
+  { category: 'John Dee', artist: 'Various', type: 'print', recurse: true },
+  { category: 'Edward Kelley', artist: 'Various', type: 'print', recurse: false },
+  { category: 'Paracelsus', artist: 'Various', type: 'print', recurse: true },
+
+  // Astronomical/cosmological objects
+  { category: 'Armillary spheres', artist: 'Various', type: 'object', recurse: false },
+  { category: 'Celestial globes', artist: 'Various', type: 'object', recurse: false },
+  { category: 'Zodiac in art', artist: 'Various', type: 'painting', recurse: false },
+
+  // Tarot
+  { category: 'Tarot cards', artist: 'Various', type: 'print', recurse: true },
+  { category: 'Visconti-Sforza tarot deck', artist: 'Bonifacio Bembo', type: 'painting', recurse: true },
+
   // Esoteric / Alchemical art
   { category: 'Atalanta Fugiens', artist: 'Michael Maier', type: 'print', recurse: false },
   { category: 'Splendor Solis', artist: 'Splendor Solis', type: 'print', recurse: true },
@@ -90,6 +137,10 @@ const IMPORT_CATEGORIES = [
   { category: 'Rosicrucianism', artist: 'Various', type: 'print', recurse: false },
   { category: 'Mantegna Tarocchi', artist: 'Unknown (Ferrara school)', type: 'print', recurse: true },
   { category: 'Danse Macabre (Holbein)', artist: 'Hans Holbein the Younger', type: 'print', recurse: true },
+
+  // Robert Fludd & Kircher
+  { category: 'Robert Fludd', artist: 'Robert Fludd', type: 'print', recurse: true },
+  { category: 'Books by Athanasius Kircher', artist: 'Athanasius Kircher', type: 'print', recurse: true },
 
   // Dürer master prints
   { category: 'Prints by Albrecht Dürer', artist: 'Albrecht Dürer', type: 'print', recurse: false },
