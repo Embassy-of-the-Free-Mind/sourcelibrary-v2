@@ -135,7 +135,7 @@ export default async function ArtworkLandingPage() {
             {artists.map(artist => (
               <Link
                 key={artist.name}
-                href={`/artwork/artist/${encodeURIComponent(artist.name)}`}
+                href={`/artwork/artist/${artist.name.replace(/\s+/g, '-')}`}
                 className="group flex items-center gap-3 p-3 rounded-lg border hover:border-accent-rust/30 transition-colors"
                 style={{ borderColor: 'var(--border-light)' }}
               >

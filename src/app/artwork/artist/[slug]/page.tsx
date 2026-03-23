@@ -17,12 +17,13 @@ interface PageProps {
 async function getArtist(slug: string) {
   const db = await getDb();
 
-  // slug is URL-encoded artist name
-  const artistName = decodeURIComponent(slug);
+  // Slug can be "Leonardo-da-Vinci" (dashes) or "Leonardo%20da%20Vinci" (encoded)
+  const artistName = decodeURIComponent(slug).replace(/-/g, ' ');
 
+  // Try exact match first, then case-insensitive regex for minor variations
   const artworks = await db.collection('books')
     .find(
-      { author: artistName, resource_type: { $exists: true } },
+      { author: { $regex: `^${artistName.replace(/[.*+?^${}()|[\]\\]/g, '\\$&')}$`, $options: 'i' }, resource_type: { $exists: true } },
       { projection: {
         slug: 1, title: 1, display_title: 1, author: 1, published: 1,
         resource_type: 1, medium: 1, thumbnail: 1, thumbnail_blob: 1,
