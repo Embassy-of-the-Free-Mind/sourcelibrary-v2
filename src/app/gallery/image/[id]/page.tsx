@@ -581,9 +581,9 @@ export default function ImageDetailPage({
   const hasNext = currentIndex < bookImages.length - 1;
 
   return (
-    <div className="bg-black text-white overflow-x-hidden">
+    <div className="bg-black text-white max-w-[100vw] overflow-x-hidden">
       {/* Image viewer - fills viewport */}
-      <div className="h-screen relative flex flex-col">
+      <div className="h-screen relative flex flex-col overflow-hidden">
         {/* Minimal header */}
         <header className="flex-shrink-0 z-40 bg-black/80 backdrop-blur-sm border-b border-white/10">
           <div className="px-4 py-2 flex items-center justify-between gap-2 min-w-0">
@@ -653,7 +653,7 @@ export default function ImageDetailPage({
         </header>
 
         {/* Image area - fills remaining viewport */}
-        <div className="flex-1 relative min-h-0">
+        <div className="flex-1 relative min-h-0 min-w-0 overflow-hidden">
           {/* The image */}
           <div
             className="w-full h-full relative"
@@ -753,11 +753,11 @@ export default function ImageDetailPage({
       </div>
 
       {/* Details below the fold - always visible, scroll to see */}
-      <div className="bg-stone-900 border-t border-white/10">
-        <div className="max-w-5xl mx-auto px-5 sm:px-8 py-8 sm:py-10">
+      <div className="bg-stone-900 border-t border-white/10 overflow-hidden">
+        <div className="max-w-5xl mx-auto px-5 sm:px-8 py-8 sm:py-10 overflow-hidden">
             <div className="grid md:grid-cols-3 gap-8">
               {/* Left column: description + metadata */}
-              <div className="md:col-span-2 space-y-6">
+              <div className="md:col-span-2 space-y-6 min-w-0">
                 {/* Title / Description */}
                 <div>
                   {isAdmin && editingTitle ? (
@@ -1070,7 +1070,7 @@ export default function ImageDetailPage({
               </div>
 
               {/* Right column: book card + more from book + similar */}
-              <div className="space-y-5">
+              <div className="space-y-5 min-w-0">
                 <div className="bg-stone-800 rounded-lg overflow-hidden">
                   <Link href={data.readUrl} className="block group">
                     {data.book.thumbnail && (
