@@ -25,12 +25,19 @@ function TypeBadge({ type }: { type: string }) {
   );
 }
 
+interface ArtworkNavItem {
+  slug: string;
+  title: string;
+}
+
 interface ArtworkInfoProps {
   book: Book;
   collections: Array<{ slug: string; name: string; subtitle?: string; color?: string }>;
+  prevWork?: ArtworkNavItem | null;
+  nextWork?: ArtworkNavItem | null;
 }
 
-export default function ArtworkInfo({ book, collections }: ArtworkInfoProps) {
+export default function ArtworkInfo({ book, collections, prevWork, nextWork }: ArtworkInfoProps) {
   const displayImage = (book as any).thumbnail_blob || book.thumbnail || '';
   const commonsUrl = (book as any).commons_url || '';
   const commonsFullUrl = (book as any).commons_full_url || '';
@@ -54,6 +61,8 @@ export default function ArtworkInfo({ book, collections }: ArtworkInfoProps) {
           fullResUrl={commonsUrl || commonsFullUrl}
           license={commonsLicense}
           isLandscape={isLandscape}
+          prevWork={prevWork}
+          nextWork={nextWork}
         />
       )}
 

@@ -25,16 +25,49 @@ async function getArtwork(slug: string) {
 
   // Get collections this artwork belongs to
   const collectionSlugs = (artwork.collections as string[]) || [];
-  const collections = collectionSlugs.length > 0
-    ? await db.collection('collections')
-        .find({ slug: { $in: collectionSlugs } })
-        .project({ _id: 0, slug: 1, name: 1, subtitle: 1, color: 1 })
-        .toArray()
-    : [];
+
+  // Get prev/next works by same artist (chronologically by published date, then title)
+  const [collections, prevWorkRaw, nextWorkRaw] = await Promise.all([
+    collectionSlugs.length > 0
+      ? db.collection('collections')
+          .find({ slug: { $in: collectionSlugs } })
+          .project({ _id: 0, slug: 1, name: 1, subtitle: 1, color: 1 })
+          .toArray()
+      : Promise.resolve([]),
+    // Previous: same artist, earlier in sort order
+    db.collection('books').findOne(
+      {
+        author: artwork.author,
+        resource_type: { $exists: true },
+        $or: [
+          { published: { $lt: artwork.published || '' } },
+          { published: artwork.published || '', title: { $lt: artwork.title } },
+        ],
+      },
+      { projection: { slug: 1, title: 1, display_title: 1 }, sort: { published: -1, title: -1 } }
+    ),
+    // Next: same artist, later in sort order
+    db.collection('books').findOne(
+      {
+        author: artwork.author,
+        resource_type: { $exists: true },
+        $or: [
+          { published: { $gt: artwork.published || '' } },
+          { published: artwork.published || '', title: { $gt: artwork.title } },
+        ],
+      },
+      { projection: { slug: 1, title: 1, display_title: 1 }, sort: { published: 1, title: 1 } }
+    ),
+  ]);
+
+  const prevWork = prevWorkRaw ? { slug: prevWorkRaw.slug, title: prevWorkRaw.display_title || prevWorkRaw.title } : null;
+  const nextWork = nextWorkRaw ? { slug: nextWorkRaw.slug, title: nextWorkRaw.display_title || nextWorkRaw.title } : null;
 
   return {
     artwork: JSON.parse(JSON.stringify(artwork)) as Book,
     collections: collections as { slug: string; name: string; subtitle?: string; color?: string }[],
+    prevWork,
+    nextWork,
   };
 }
 
@@ -61,7 +94,7 @@ export default async function ArtworkPage({ params }: PageProps) {
   return (
     <div className="min-h-screen" style={{ background: 'var(--bg-cream)' }}>
       <SiteHeader variant="dark" />
-      <ArtworkInfo book={data.artwork} collections={data.collections} />
+      <ArtworkInfo book={data.artwork} collections={data.collections} prevWork={data.prevWork} nextWork={data.nextWork} />
     </div>
   );
 }
