@@ -50,11 +50,12 @@ const LIBRARIES = {
     oaiUrl: 'http://oai.hab.de/',
     metadataPrefix: 'oai_dc',
     sets: null, // harvest all
-    iiifManifest: (id) => {
-      // HAB manifests use the record path, e.g. drucke/lp-10-1/start.htm → need to parse from identifier
-      return null; // Will be extracted from dc:identifier URLs
+    iiifManifest: (id) => null, // HAB IIIF not publicly documented — store viewer URL instead
+    viewerUrl: (id) => {
+      // OAI ID: oai:diglib.hab.de:ppn_XXXXXXX → viewer at diglib.hab.de
+      const ppn = id?.match(/ppn_(\w+)/)?.[1];
+      return ppn ? `http://diglib.hab.de/show_image.php?ppn=${ppn}` : null;
     },
-    viewerUrl: (id) => null,
     source: 'hab',
     scanQuality: 'high',
   },
@@ -124,15 +125,39 @@ function parseRecords(xml) {
     const identifiers = extractDcField(block, 'identifier');
     const types = extractDcField(block, 'type');
     const subjects = extractDcField(block, 'subject');
+    const publishers = extractDcField(block, 'publisher');
+    const coverages = extractDcField(block, 'coverage');
+    const rights = extractDcField(block, 'rights');
+    const formats = extractDcField(block, 'format');
 
     // Skip deleted records
     if (block.includes('status="deleted"')) continue;
 
-    // Extract year from dates
+    // Extract year from dates, or from title (Roman numerals), or from publisher
     let year = null;
     for (const d of dates) {
       const ym = d.match(/(\d{4})/);
       if (ym) { year = parseInt(ym[1]); break; }
+    }
+    // Try publisher string for year (e.g. "1690R" in fingerprint)
+    if (!year) {
+      for (const d of [...publishers, ...coverages]) {
+        const ym = d.match(/(\d{4})/);
+        if (ym) { year = parseInt(ym[1]); break; }
+      }
+    }
+
+    // Extract place from publisher (format: "Place : Printer")
+    let place = coverages[0] || '';
+    if (!place && publishers[0]?.includes(':')) {
+      place = publishers[0].split(':')[0].trim();
+    }
+
+    // Extract page count from format (e.g. "[7] Bl., 42 S." or "360 p.")
+    let pageCount = null;
+    for (const f of formats) {
+      const pages = f.match(/(\d+)\s*(?:S\.|p\.|pages|Bl\.)/);
+      if (pages) { pageCount = parseInt(pages[1]); break; }
     }
 
     // Find IIIF manifest or viewer URL from identifiers
@@ -140,7 +165,7 @@ function parseRecords(xml) {
     let viewerUrl = null;
     for (const url of identifiers) {
       if (url.includes('iiif') && url.includes('manifest')) manifestUrl = url;
-      else if (url.startsWith('http') && !manifestUrl) viewerUrl = url;
+      else if (url.startsWith('http')) { if (!viewerUrl) viewerUrl = url; }
     }
 
     records.push({
@@ -151,6 +176,11 @@ function parseRecords(xml) {
       language: languages[0] || '',
       type: types[0] || '',
       subjects,
+      publisher: publishers[0] || '',
+      place,
+      rights: rights[0] || '',
+      physicalFormat: formats.find(f => /^\[?\d|°/.test(f)) || '',
+      pageCount,
       manifestUrl,
       viewerUrl: viewerUrl || (identifiers.find(u => u.startsWith('http')) || null),
       allIdentifiers: identifiers.filter(u => u.startsWith('http')),
@@ -202,7 +232,7 @@ async function harvestOai(config) {
       const records = parseRecords(xml);
       totalFetched += records.length;
 
-      // Filter to pre-1700 if year is known
+      // Keep pre-1700, or records without a year (most early modern libraries' content is pre-1700)
       const earlyModern = records.filter(r => !r.year || (r.year >= 1400 && r.year <= 1750));
 
       for (const rec of earlyModern) {
@@ -309,10 +339,17 @@ async function main() {
               language: r.language || null,
               date_earliest: r.year,
               date_latest: r.year,
+              publisher: r.publisher || null,
+              place: r.place || null,
+              rights: r.rights || null,
+              physical_format: r.physicalFormat || null,
+              page_count: r.pageCount || null,
+              subjects: r.subjects || [],
               manifest_url: r.manifestUrl,
               viewer_url: r.viewerUrl,
               status: 'discovered',
               discovered_at: new Date(),
+              harvested_at: new Date(),
             },
           },
           upsert: true,
