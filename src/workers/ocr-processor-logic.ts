@@ -166,9 +166,13 @@ export async function processOcrPage(message: PageProcessingMessage): Promise<vo
 
   // Fetch prompt from DB (or hardcoded fallback). Custom prompt overrides DB.
   let promptText: string;
+  let promptId: string | undefined;
+  let promptHash: string | undefined;
   try {
     const promptResult = await getOcrPrompt(customPrompt ? { customText: customPrompt } : undefined);
     promptText = promptResult.text;
+    promptId = promptResult.reference.id;
+    promptHash = promptResult.reference.content_hash;
   } catch (promptErr) {
     console.error(`[OCR] Failed to fetch prompt from DB (non-fatal), using custom or will fail:`, promptErr);
     if (customPrompt) {
@@ -221,6 +225,8 @@ export async function processOcrPage(message: PageProcessingMessage): Promise<vo
         language: job.config.language || 'auto-detect',
         model: modelId,
         promptVersion: PROMPT_VERSION,
+        promptId,
+        promptHash,
         ...(pageType && { pageType }),
         ...(columns && { columns }),
         ...(scriptType && { scriptType }),
@@ -278,6 +284,8 @@ export async function processOcrPage(message: PageProcessingMessage): Promise<vo
               language: job.config.language || 'auto-detect',
               model: nextModel,
               promptVersion: PROMPT_VERSION,
+              promptId,
+              promptHash,
               ...(retryPageType && { pageType: retryPageType }),
               ...(retryColumns && { columns: retryColumns }),
               ...(retryImages.length > 0 && { detectedImages: retryImages }),
