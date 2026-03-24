@@ -1,6 +1,9 @@
 /** Stable production data used across tests. */
 
 export const BOOK = {
+  /** Slug-based URL — always use slugs, never hex IDs (see MEMORY.md) */
+  slug: 'the-hermetic-museum-various-sendivogius',
+  /** Hex ID kept for page URL construction */
   id: '695203a5ab34727b1f041c53',
   title: 'The Hermetic Museum, Restored and Enlarged',
   language: 'Latin',

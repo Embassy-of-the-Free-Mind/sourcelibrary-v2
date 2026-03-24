@@ -8,7 +8,7 @@ on:
       base_url:
         description: 'Base URL to test against'
         required: false
-        default: 'https://sourcelibrary.org'
+        default: 'https://sourcelibrary-v2.vercel.app'
 
 jobs:
   e2e:
@@ -34,7 +34,7 @@ jobs:
       - name: Run E2E tests
         run: npx playwright test
         env:
-          BASE_URL: ${{ inputs.base_url || 'https://sourcelibrary.org' }}
+          BASE_URL: ${{ inputs.base_url || 'https://sourcelibrary-v2.vercel.app' }}
 
       - name: Upload test report
         if: always()
@@ -53,12 +53,32 @@ jobs:
           retention-days: 7
 
       - name: Create GitHub issue on failure
-        if: failure()
+        if: failure() && github.event_name == 'schedule'
         uses: actions/github-script@v7
         with:
           script: |
             const runUrl = `${context.serverUrl}/${context.repo.owner}/${context.repo.repo}/actions/runs/${context.runId}`;
             const date = new Date().toISOString().split('T')[0];
+
+            // Don't create duplicate issues — check for an existing open one
+            const { data: existing } = await github.rest.issues.listForRepo({
+              owner: context.repo.owner,
+              repo: context.repo.repo,
+              labels: 'e2e-tests',
+              state: 'open',
+              per_page: 1,
+            });
+            if (existing.length > 0) {
+              // Add a comment to the existing issue instead
+              await github.rest.issues.createComment({
+                owner: context.repo.owner,
+                repo: context.repo.repo,
+                issue_number: existing[0].number,
+                body: `Still failing as of ${date}.\n**Run:** ${runUrl}`,
+              });
+              return;
+            }
+
             await github.rest.issues.create({
               owner: context.repo.owner,
               repo: context.repo.repo,
@@ -68,7 +88,7 @@ jobs:
                 ``,
                 `**Date:** ${date}`,
                 `**Run:** ${runUrl}`,
-                `**Base URL:** ${process.env.BASE_URL || 'https://sourcelibrary.org'}`,
+                `**Base URL:** ${process.env.BASE_URL || 'https://sourcelibrary-v2.vercel.app'}`,
                 ``,
                 `Download the \`playwright-report\` artifact from the run for details.`,
                 ``,
@@ -78,4 +98,4 @@ jobs:
               labels: ['bug', 'e2e-tests'],
             });
         env:
-          BASE_URL: ${{ inputs.base_url || 'https://sourcelibrary.org' }}
+          BASE_URL: ${{ inputs.base_url || 'https://sourcelibrary-v2.vercel.app' }}
