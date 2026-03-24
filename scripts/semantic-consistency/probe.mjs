@@ -24,7 +24,7 @@ import { GoogleGenerativeAI } from '@google/generative-ai';
 
 // ── Config ──────────────────────────────────────────────────────────────────
 const EMBEDDING_MODEL = 'gemini-embedding-001';
-const OCR_MODEL = 'gemini-2.5-flash-preview-05-20';
+const OCR_MODEL = 'gemini-3-flash-preview';
 const TEMPERATURES = [0, 0.3, 0.6];
 const BATCH_SIZE = 5; // embedding requests per batch (small to avoid timeouts)
 const OCR_CONCURRENCY = 3;
