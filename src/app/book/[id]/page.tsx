@@ -17,6 +17,7 @@ import BookAnalytics from '@/components/book/BookAnalytics';
 import CoverImagePicker from '@/components/book/CoverImagePicker';
 import DownloadButton from '@/components/ui/DownloadButton';
 import BibliographicInfo from '@/components/book/BibliographicInfo';
+import RelatedEditions from '@/components/book/RelatedEditions';
 import PublishEditionButton from '@/components/editions/PublishEditionButton';
 import EditionsPanel from '@/components/editions/EditionsPanel';
 import SchemaOrgMetadata from '@/components/seo/SchemaOrgMetadata';
@@ -574,6 +575,13 @@ async function BookInfo({ id }: { id: string }) {
 
               {/* Bibliographic Info */}
               <BibliographicInfo book={book} pagesCount={pages.length} />
+
+              {/* Related Editions (WEMI work_id linking) */}
+              {(book as unknown as { work_id?: string }).work_id && (
+                <Suspense fallback={null}>
+                  <RelatedEditions bookId={book.id} workId={(book as unknown as { work_id?: string }).work_id!} />
+                </Suspense>
+              )}
             </div>
           </div>
         </div>

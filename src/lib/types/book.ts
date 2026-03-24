@@ -34,6 +34,9 @@ export interface Book {
   language: string;           // Original language of the text
   published: string;          // Publication year
 
+  // WEMI work-level grouping — links different editions/manuscripts of the same work
+  work_id?: string;           // Canonical work slug (e.g., "zohar", "cicero-ad-atticum", "corpus-hermeticum")
+
   // USTC catalog fields
   ustc_id?: string;           // USTC catalog number (e.g., "2029384")
   place_published?: string;   // City of publication (e.g., "Hamburg")
