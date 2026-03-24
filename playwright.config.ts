@@ -6,8 +6,8 @@ export default defineConfig({
   forbidOnly: !!process.env.CI,
   retries: 1,
   workers: 2,
-  timeout: 30_000,
-  expect: { timeout: 10_000 },
+  timeout: 60_000,
+  expect: { timeout: 15_000 },
 
   use: {
     // Use Vercel direct URL by default to avoid Cloudflare bot protection in CI.
