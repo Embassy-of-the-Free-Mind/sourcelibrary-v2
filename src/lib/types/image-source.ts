@@ -1,19 +1,35 @@
 export type ImageSourceProvider =
-  | 'efm'  // Embassy of the Free Mind (Bibliotheca Philosophica Hermetica)
+  | 'efm'            // Embassy of the Free Mind (Bibliotheca Philosophica Hermetica)
   | 'internet_archive'
   | 'google_books'
   | 'hathi_trust'
   | 'biodiversity_heritage_library'
   | 'gallica'
-  | 'e_rara'
-  | 'mdz'  // Münchener DigitalisierungsZentrum
-  | 'bodleian'   // Bodleian Library, University of Oxford
-  | 'cambridge'  // Cambridge Digital Library (CUDL)
-  | 'hab'        // Herzog August Bibliothek Wolfenbüttel
-  | 'vatican'    // Biblioteca Apostolica Vaticana (DigiVatLib)
-  | 'europeana'  // Europeana aggregator
-  | 'iiif'       // Generic IIIF source
-  | 'wellcome'   // Wellcome Collection
+  | 'e_rara'         // Legacy — prefer 'e-rara'
+  | 'e-rara'         // e-rara (Swiss rare books)
+  | 'mdz'            // Münchener DigitalisierungsZentrum (Bavarian State Library)
+  | 'bodleian'       // Bodleian Library, University of Oxford
+  | 'cambridge'      // Cambridge Digital Library (CUDL)
+  | 'hab'            // Herzog August Bibliothek Wolfenbüttel
+  | 'vatican'        // Biblioteca Apostolica Vaticana (DigiVatLib)
+  | 'vatlib'         // Vatican Library (alternative endpoint)
+  | 'europeana'      // Europeana aggregator
+  | 'bl'             // British Library
+  | 'sbb'            // Staatsbibliothek zu Berlin
+  | 'onb'            // Austrian National Library (Österreichische Nationalbibliothek)
+  | 'loc'            // Library of Congress
+  | 'yale_beinecke'  // Yale Beinecke Rare Book & Manuscript Library
+  | 'harvard'        // Harvard University Library (Houghton)
+  | 'penn_colenda'   // University of Pennsylvania (Schoenberg Collection)
+  | 'huntington'     // The Huntington Library
+  | 'getty'          // Getty Research Institute
+  | 'kyoto_rmda'     // Kyoto University Rare Materials Digital Archive
+  | 'cmc_kloss'      // CMC Prins Frederik — Bibliotheca Klossiana
+  | 'etcsl'          // Electronic Text Corpus of Sumerian Literature
+  | 'cdli'           // Cuneiform Digital Library Initiative
+  | 'heidelberg'     // Heidelberg University Library
+  | 'iiif'           // Generic IIIF source
+  | 'wellcome'       // Wellcome Collection
   | 'library'
   | 'user_upload'
   | 'other';
