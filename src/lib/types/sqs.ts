@@ -82,6 +82,7 @@ export interface OcrWriteResult extends WriteResultBase {
     promptVersion: string;
     pageType?: string;
     columns?: number;
+    scriptType?: 'printed' | 'handwritten' | 'mixed';
     detectedImages?: unknown[];
   };
   geminiUsage?: GeminiUsagePayload;

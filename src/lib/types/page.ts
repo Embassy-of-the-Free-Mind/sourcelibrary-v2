@@ -34,6 +34,9 @@ export interface Page {
   // Page classification from OCR (title-page, frontispiece, toc, etc.)
   page_type?: string;
 
+  // Script type detected by OCR (printed, handwritten, mixed)
+  script_type?: 'printed' | 'handwritten' | 'mixed';
+
   // Number of text columns detected by OCR (2+ for multi-column pages)
   columns?: number;
 

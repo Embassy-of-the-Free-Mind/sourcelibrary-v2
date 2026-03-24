@@ -23,7 +23,7 @@ import type { PageProcessingMessage } from '@/lib/types/sqs';
 import type { OcrWriteResult, GeminiUsagePayload } from '@/lib/types/sqs';
 import { performOCRWithBuffer } from '@/lib/ai';
 import { DEFAULT_MODEL } from '@/lib/types/ai-models';
-import { PROMPT_VERSION, extractPageType, extractColumns, parseDetectedImages } from '@/lib/types/prompts/defaults';
+import { PROMPT_VERSION, extractPageType, extractColumns, extractScriptType, parseDetectedImages } from '@/lib/types/prompts/defaults';
 import { images } from '@/lib/api-client/images';
 import type { Page } from '@/lib/types/page';
 import { classifyError } from '@/lib/errors';
@@ -206,6 +206,7 @@ export async function processOcrPage(message: PageProcessingMessage): Promise<vo
     // Send result to write queue — Writer Lambda handles all DB writes
     const pageType = extractPageType(ocrResult.text);
     const columns = extractColumns(ocrResult.text);
+    const scriptType = extractScriptType(ocrResult.text);
     const detectedImages = parseDetectedImages(ocrResult.text);
     await sendWriteResult({
       type: 'ocr',
@@ -222,6 +223,7 @@ export async function processOcrPage(message: PageProcessingMessage): Promise<vo
         promptVersion: PROMPT_VERSION,
         ...(pageType && { pageType }),
         ...(columns && { columns }),
+        ...(scriptType && { scriptType }),
         ...(detectedImages.length > 0 && { detectedImages }),
       },
       geminiUsage: buildUsagePayload({
