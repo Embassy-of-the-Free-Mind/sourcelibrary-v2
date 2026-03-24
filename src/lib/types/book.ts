@@ -188,6 +188,9 @@ export interface Book {
   etcsl_id?: string;              // e.g. "1.1.1" (ETCSL composition number)
   cdli_witnesses?: CdliWitness[]; // Physical tablet witnesses from CDLI
 
+  // Pre-computed related books (backfilled by scripts/backfill-related-books.mjs)
+  related_books?: RelatedBooks;
+
   // Split detection for two-page spreads
   needs_splitting?: boolean | null;  // true = has spreads, false = single pages, null = ambiguous
   split_check?: {
@@ -267,6 +270,22 @@ export interface Chapter {
   pageNumber: number;
   level: number;  // 1 = top-level division, 2 = major chapter, 3 = sub-chapter
   confidence?: 'high' | 'medium' | 'low'; // AI's confidence in this chapter boundary
+}
+
+// Pre-computed related books stored on each book document
+export interface RelatedBookEntry {
+  id: string;
+  title: string;
+  author: string;
+  cited_as?: string;         // entity name that triggered the direct citation
+  shared_count?: number;     // number of shared entity mentions
+  shared_names?: string[];   // top shared entity names
+}
+
+export interface RelatedBooks {
+  direct: RelatedBookEntry[];   // books whose authors are mentioned as entities in this book
+  shared: RelatedBookEntry[];   // books sharing 5+ entity mentions
+  computed_at: Date;
 }
 
 // Translation verification from catalog search + LLM knowledge check
