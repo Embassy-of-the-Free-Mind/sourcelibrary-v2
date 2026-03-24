@@ -213,7 +213,7 @@ async function loadSourceLibraryLookup(db) {
     if (b.ustc_id) byUstcId.set(String(b.ustc_id), b);
     if (b.catalog_refs) {
       for (const ref of b.catalog_refs) {
-        if (ref.source === 'ustc') byCatalogRef.set(String(ref.record_id), b);
+        if (ref.source === 'ustc') byCatalogRef.set(String(ref.ustc_id || ref.record_id), b);
       }
     }
   }
@@ -422,15 +422,20 @@ async function buildCoverage(db, scanLookup, translationLookup, slLookup) {
   // Create indexes
   if (!DRY_RUN) {
     console.log('\nCreating indexes...');
-    await col.createIndex({ ustc_id: 1 }, { unique: true });
-    await col.createIndex({ language: 1, year: 1 });
-    await col.createIndex({ has_iiif_scan: 1 });
-    await col.createIndex({ has_english_translation: 1 });
-    await col.createIndex({ source_library_id: 1 }, { sparse: true });
-    await col.createIndex({ author_surname: 1, year: 1 });
-    await col.createIndex({ work_cluster_id: 1 });
-    await col.createIndex({ has_iiif_scan: 1, has_english_translation: 1, language: 1 });
-    await col.createIndex({ title: 'text', author: 'text' }, { name: 'text_search', default_language: 'none', language_override: 'text_search_lang' });
+    // Only create the indexes we actually need (see issue #332 for cleanup rationale)
+    const indexes = [
+      [{ ustc_id: 1 }, { unique: true }],
+      [{ language: 1, year: 1 }],
+      [{ source_library_id: 1 }, { sparse: true }],
+      [{ author_surname: 1, year: 1 }],
+      [{ work_cluster_id: 1 }],
+      [{ has_iiif_scan: 1, has_english_translation: 1, language: 1 }],
+      // Skipped: text_search (432MB, 60x slower than author_surname fallback)
+      // Skipped: has_iiif_scan_1, has_english_translation_1 (redundant with compound)
+    ];
+    for (const [key, opts] of indexes) {
+      try { await col.createIndex(key, opts || {}); } catch (e) { console.error(`  Index ${JSON.stringify(key)}: ${e.message.slice(0, 60)}`); }
+    }
   }
 
   const languages = LANG_FILTER ? [LANG_FILTER] : ['Latin', 'German', 'French', 'Italian', 'Dutch', 'Spanish', 'Portuguese', 'English', 'Greek'];
