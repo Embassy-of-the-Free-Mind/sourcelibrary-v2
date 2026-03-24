@@ -69,7 +69,7 @@ async function processOcrResult(db: Awaited<ReturnType<typeof getDb>>, message: 
     ), `record OCR failure for page ${pageId}`, 3, LOG_PREFIX);
   } else if (message.data) {
     // Save OCR result to page
-    const { text, language, model, promptVersion, pageType, columns, scriptType, detectedImages } = message.data;
+    const { text, language, model, promptVersion, promptId, promptHash, pageType, columns, scriptType, detectedImages } = message.data;
     await retryDbWrite(() => db.collection('pages').updateOne(
       { id: pageId },
       {
@@ -80,7 +80,9 @@ async function processOcrResult(db: Awaited<ReturnType<typeof getDb>>, message: 
             model,
             updated_at: new Date(),
             source: 'ai',
-            prompt_version: promptVersion
+            prompt_version: promptVersion,
+            ...(promptId && { prompt_id: promptId }),
+            ...(promptHash && { prompt_hash: promptHash }),
           },
           ...(pageType && { page_type: pageType }),
           ...(columns && { columns }),
