@@ -114,10 +114,11 @@ const COLLECTIONS = [
     slug: 'memento-mori',
     name: 'Memento Mori',
     subtitle: 'Remember that you will die',
-    description: `Holbein's Dance of Death — woodcuts showing Death claiming pope and peasant alike. The ever-present awareness of mortality that drove the search for the philosopher's stone, the elixir of life, the transmutation of the perishable into the eternal.\n\nThese images are the visual counterpart to the ars moriendi tradition and the alchemical quest for immortality.`,
+    description: `Holbein's Dance of Death — woodcuts showing Death claiming pope and peasant alike. Vanitas still lifes with skulls, hourglasses, and guttering candles. The ever-present awareness of mortality that drove the search for the philosopher's stone, the elixir of life, the transmutation of the perishable into the eternal.\n\nThese images are the visual counterpart to the ars moriendi tradition and the alchemical quest for immortality.`,
     color: '#3a3a3a',
     order: 12,
     artistMatch: ['Hans Holbein the Younger'],
+    titleMatch: /vanitas|memento|ars moriendi|death|danse macabre|totentanz/i,
   },
   {
     slug: 'portraits-tradition',
@@ -127,6 +128,62 @@ const COLLECTIONS = [
     color: '#6b5a4a',
     order: 13,
     categoryMatch: ['John Dee', 'Edward Kelley', 'Paracelsus'],
+  },
+  {
+    slug: 'classical-mysteries',
+    name: 'The Classical Mysteries',
+    subtitle: 'Orpheus, Psyche, and the gods of transformation',
+    description: `Orpheus descends to the underworld and returns — the original katabasis. Psyche's trials lead to union with Eros — the soul's journey to the divine, as Apuleius tells it. Circe transforms men with her pharmakeia. Prometheus steals fire from the gods.\n\nThese myths are not decorative — they are the narrative theology of the ancient mystery traditions. Every Renaissance Neoplatonist read them as allegories of spiritual transformation. Ficino translated the Orphic Hymns. Apuleius's Golden Ass encodes an Isiac initiation. The paintings here visualize the same philosophical arguments Source Library's texts make in words.`,
+    color: '#6a4e8a',
+    order: 14,
+    titleMatch: /orpheus|eurydice|psyche|cupid.*psyche|eros.*psyche|circe|prometheus|apollo.*daphne|narcissus|leda.*swan|europa|apuleius|golden ass|persephone|proserpina|hecate|cassandra|pythia|delphi|sibyl|oracle|bacchus|dionys/i,
+  },
+  {
+    slug: 'kabbalah-sacred-geometry',
+    name: 'Kabbalah & Sacred Geometry',
+    subtitle: 'The architecture of the invisible',
+    description: `The Tree of Life — ten sephirot mapped onto the body of God and the structure of creation. The vesica piscis, the ouroboros, the labyrinth. Diagrams that claim to show the hidden geometry of reality.\n\nThese images circulated alongside the Kabbalistic and Hermetic texts Source Library translates — visual arguments for a cosmos built on number, proportion, and sacred pattern.`,
+    color: '#2a4a6a',
+    order: 15,
+    titleMatch: /tree of life|sephir|kabbal|cabbal|ouroboros|vesica|sacred geometr|labyrinth|mandala/i,
+  },
+  {
+    slug: 'medieval-illuminations',
+    name: 'Medieval Illuminations',
+    subtitle: 'Cosmic visions from the manuscript tradition',
+    description: `Hildegard von Bingen's fiery cosmic egg. The Voynich manuscript's undeciphered botanical and astronomical diagrams. The Hortus Deliciarum's encyclopedic illustrations. The Liber Floridus's mappae mundi and cosmological wheels.\n\nBefore print, knowledge was transmitted through hand-painted manuscripts where image and text were inseparable. These illuminations are not illustrations — they are the arguments themselves, visual theology painted in gold leaf and lapis lazuli.`,
+    color: '#8a5a2a',
+    order: 16,
+    artistMatch: ['Hildegard von Bingen', 'Lambert of Saint-Omer', 'Herrad of Landsberg'],
+    titleMatch: /voynich|hortus deliciarum|liber floridus|mappae? mundi|bestiar|book of kells|scivias|ripley scroll/i,
+  },
+  {
+    slug: 'esoteric-engravers',
+    name: 'The Esoteric Engravers',
+    subtitle: 'Masters of the printed image',
+    description: `Matthäus Merian engraved the plates for Fludd's Utriusque Cosmi and Maier's Atalanta Fugiens — the two most important illustrated esoteric books of the 17th century. Wenzel Hollar documented everything from shells to cathedrals with exquisite precision. Jacques Callot's Temptation of St Anthony is a visionary fever dream in copper.\n\nThese engravers gave physical form to the ideas in the texts Source Library translates. Without Merian, Fludd's cosmology would have no image. Without Sadeler, Rudolf II's court would be invisible.`,
+    color: '#5a4a3a',
+    order: 17,
+    artistMatch: ['Matthäus Merian', 'Wenzel Hollar', 'Jacques Callot', 'Aegidius Sadeler'],
+  },
+  {
+    slug: 'art-of-altdorfer-baldung',
+    name: 'Witchcraft & the Uncanny',
+    subtitle: 'The dark side of the Renaissance',
+    description: `Hans Baldung Grien's witches fly and conjure. Altdorfer's forests glow with supernatural light. Grünewald's Isenheim Altarpiece shows Christ's body in extremis and the Resurrection as pure radiance.\n\nThese artists explored what lay outside the classical order — the nocturnal, the chthonic, the ecstatic. Their work is the visual equivalent of the magical and demonological texts in Source Library's collection.`,
+    color: '#3a4a3a',
+    order: 18,
+    artistMatch: ['Hans Baldung Grien', 'Albrecht Altdorfer', 'Matthias Grünewald'],
+    titleMatch: /witch|sabbath|isenheim|temptation/i,
+  },
+  {
+    slug: 'venetian-mystery',
+    name: 'The Venetian Mystery',
+    subtitle: 'Color, light, and enigma',
+    description: `Giorgione's Tempesta remains unexplained after five centuries. Titian's sacred and profane love invites Neoplatonic readings. Caravaggio's chiaroscuro makes divine intervention look like a streetlight.\n\nThe Venetian tradition privileged color over line, sensation over intellect — a different path to the same mysteries the Florentine Neoplatonists pursued through philosophy.`,
+    color: '#4a2a1a',
+    order: 19,
+    artistMatch: ['Giorgione', 'Caravaggio', 'Titian', 'Giovanni Bellini', 'Paolo Veronese'],
   },
 ];
 
@@ -151,6 +208,12 @@ async function main() {
     // Fallback: also match commons_categories
     if (col.categoryMatch?.length) {
       orConditions.push({ commons_categories: { $in: col.categoryMatch }, resource_type: { $exists: true } });
+    }
+    // Title/description regex match
+    if (col.titleMatch) {
+      orConditions.push({ title: { $regex: col.titleMatch }, resource_type: { $exists: true } });
+      orConditions.push({ commons_description: { $regex: col.titleMatch }, resource_type: { $exists: true } });
+      orConditions.push({ commons_title: { $regex: col.titleMatch }, resource_type: { $exists: true } });
     }
 
     const query = orConditions.length === 1 ? orConditions[0] : { $or: orConditions };
