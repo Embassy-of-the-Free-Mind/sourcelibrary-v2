@@ -158,6 +158,13 @@ async function loadScanLookup(db) {
         if (!byAuthorDecade.has(strippedKey)) byAuthorDecade.set(strippedKey, []);
         byAuthorDecade.get(strippedKey).push(slim);
       }
+      // Also index first word of multi-word surnames (e.g. "agrippa von nettesheim" → "agrippa")
+      const firstWord = surname.split(/\s+/)[0];
+      if (firstWord !== surname && firstWord.length >= 3) {
+        const fwKey = `${firstWord}:${decade}`;
+        if (!byAuthorDecade.has(fwKey)) byAuthorDecade.set(fwKey, []);
+        byAuthorDecade.get(fwKey).push(slim);
+      }
     }
 
     lastId = batch[batch.length - 1]._id;
@@ -263,6 +270,9 @@ function findScan(ustcEdition, scanLookup) {
   const surnameVariants = [surname];
   const stripped = surname.replace(/(us|is|ius|inus|o)$/, '');
   if (stripped !== surname && stripped.length >= 3) surnameVariants.push(stripped);
+  // First word of multi-word surnames (e.g. "agrippa von nettesheim" → "agrippa")
+  const firstWord = surname.split(/\s+/)[0];
+  if (firstWord !== surname && firstWord.length >= 3) surnameVariants.push(firstWord);
 
   let candidates = [];
   for (const s of surnameVariants) {
