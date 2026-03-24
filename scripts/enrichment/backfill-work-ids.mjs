@@ -213,7 +213,7 @@ function generateWorkId(author, title) {
   const titleSlug = titleWords.slice(0, 4).join('-');
 
   const slug = `${lastName}-${titleSlug}`
-    .replace(/[^a-z0-9-]/g, '')
+    .replace(/[^\p{L}\p{N}-]/gu, '')
     .replace(/-+/g, '-')
     .replace(/^-|-$/g, '')
     .substring(0, 60);
