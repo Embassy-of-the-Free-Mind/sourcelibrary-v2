@@ -7,12 +7,13 @@ import { SEARCH } from './fixtures';
 // 2. Read query from URL params
 // 3. Fetch filter options (languages, categories, collections)
 // 4. Call the search API
+// 5. AI streaming keeps a SSE connection open (so networkidle never fires)
 // This can take 30s+ on cold starts from GitHub Actions.
 const SEARCH_TIMEOUT = 45_000;
 
 test.describe('Search', () => {
   test('shows results for known query', async ({ page }) => {
-    await page.goto(`/search?q=${SEARCH.query}`, { waitUntil: 'networkidle' });
+    await page.goto(`/search?q=${SEARCH.query}`);
 
     // Wait for results to load (can be slow on cold starts)
     const resultLinks = page.locator('a[href*="/book/"]');
@@ -22,7 +23,7 @@ test.describe('Search', () => {
   });
 
   test('result cards link to books', async ({ page }) => {
-    await page.goto(`/search?q=${SEARCH.query}`, { waitUntil: 'networkidle' });
+    await page.goto(`/search?q=${SEARCH.query}`);
 
     // Wait for results to appear
     const firstResult = page.locator('a[href*="/book/"]').first();
@@ -33,7 +34,7 @@ test.describe('Search', () => {
   });
 
   test('mode tabs switch between Books and Index', async ({ page }) => {
-    await page.goto(`/search?q=${SEARCH.query}`, { waitUntil: 'networkidle' });
+    await page.goto(`/search?q=${SEARCH.query}`);
 
     // Wait for results heading to appear
     const resultsHeading = page.getByRole('heading', { name: /results/i });
