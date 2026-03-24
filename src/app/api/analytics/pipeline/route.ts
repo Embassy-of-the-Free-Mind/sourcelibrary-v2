@@ -88,6 +88,44 @@ export const GET = withAuth(async (request, session) => {
       ]).toArray(),
     ]);
 
+    // 6. Pipeline funnel (current book counts per status) + enrichment coverage
+    const [funnelResult, enrichmentResult, galleryCount] = await Promise.all([
+      db.collection('books').aggregate([
+        { $match: { 'pipeline_auto.status': { $exists: true } } },
+        { $group: { _id: '$pipeline_auto.status', count: { $sum: 1 } } },
+        { $sort: { count: -1 } },
+      ]).toArray(),
+
+      db.collection('books').aggregate([
+        { $match: { status: { $ne: 'deleted' }, pages_count: { $gt: 0 } } },
+        { $group: {
+          _id: null,
+          total: { $sum: 1 },
+          has_ocr: { $sum: { $cond: [{ $gt: ['$pages_ocr', 0] }, 1, 0] } },
+          has_translation: { $sum: { $cond: [{ $gt: ['$pages_translated', 0] }, 1, 0] } },
+          has_metadata: { $sum: { $cond: [{ $ifNull: ['$ai_metadata.enriched_at', false] }, 1, 0] } },
+          has_ft_verification: { $sum: { $cond: [{ $ifNull: ['$translation_verification.verified_at', false] }, 1, 0] } },
+          has_summary: { $sum: { $cond: [{ $ifNull: ['$index.generatedAt', false] }, 1, 0] } },
+          has_chapters: { $sum: { $cond: [{ $ifNull: ['$chapters', false] }, 1, 0] } },
+          has_collections: { $sum: { $cond: [{ $ifNull: ['$collection_scores', false] }, 1, 0] } },
+          has_quality_score: { $sum: { $cond: [{ $ifNull: ['$quality_score', false] }, 1, 0] } },
+          has_faceted_tags: { $sum: { $cond: [{ $ifNull: ['$faceted_tags', false] }, 1, 0] } },
+          has_author_entity: { $sum: { $cond: [{ $ifNull: ['$author_entity_id', false] }, 1, 0] } },
+          pipeline_complete: { $sum: { $cond: [{ $eq: ['$pipeline_auto.status', 'complete'] }, 1, 0] } },
+        }},
+      ]).toArray(),
+
+      db.collection('gallery_images').estimatedDocumentCount(),
+    ]);
+
+    const funnel = Object.fromEntries(funnelResult.map((f: any) => [f._id, f.count]));
+    const enrichment = enrichmentResult[0] || {};
+
+    // Image extraction: count books that have at least one page with detected_images
+    const booksWithImages = await db.collection('pages').distinct('book_id', {
+      'detected_images.0': { $exists: true },
+    });
+
     // Compute velocity from snapshots (deltas between consecutive points)
     const velocity = computeVelocity(snapshots);
 
@@ -131,6 +169,23 @@ export const GET = withAuth(async (request, session) => {
         reason: d.decision?.reason,
         data: d.decision?.data,
       })),
+      funnel,
+      enrichmentCoverage: {
+        total: enrichment.total || 0,
+        ocr: enrichment.has_ocr || 0,
+        translation: enrichment.has_translation || 0,
+        metadata: enrichment.has_metadata || 0,
+        ftVerification: enrichment.has_ft_verification || 0,
+        summary: enrichment.has_summary || 0,
+        chapters: enrichment.has_chapters || 0,
+        collections: enrichment.has_collections || 0,
+        qualityScore: enrichment.has_quality_score || 0,
+        facetedTags: enrichment.has_faceted_tags || 0,
+        authorEntity: enrichment.has_author_entity || 0,
+        imageExtraction: booksWithImages.length,
+        galleryImages: galleryCount,
+        pipelineComplete: enrichment.pipeline_complete || 0,
+      },
       query: { hours },
     };
 
