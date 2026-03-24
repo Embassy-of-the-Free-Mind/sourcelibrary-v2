@@ -312,16 +312,25 @@ function generateId() {
  *  - Returns { display, thumb } URLs on R2
  */
 async function uploadToR2(s3, imageUrl, key) {
-  const res = await fetch(imageUrl, { headers: { 'User-Agent': UA } });
+  const res = await fetch(imageUrl, {
+    headers: { 'User-Agent': UA },
+    signal: AbortSignal.timeout(60000),
+  });
   if (!res.ok) return null;
   const buffer = Buffer.from(await res.arrayBuffer());
 
-  // Upload display image (full resolution from Commons, up to 3840px)
+  // Resize to display size (cap at 3840px wide) and optimize JPEG
+  const displayBuffer = await sharp(buffer)
+    .resize({ width: DISPLAY_WIDTH, withoutEnlargement: true })
+    .jpeg({ quality: 85, mozjpeg: true })
+    .toBuffer();
+
   await s3.send(new PutObjectCommand({
     Bucket: process.env.R2_BUCKET_NAME,
     Key: key,
-    Body: buffer,
+    Body: displayBuffer,
     ContentType: 'image/jpeg',
+    CacheControl: 'public, max-age=31536000, immutable',
   }));
 
   // Generate and upload grid thumbnail (600px wide)
@@ -329,13 +338,14 @@ async function uploadToR2(s3, imageUrl, key) {
   try {
     const thumbBuffer = await sharp(buffer)
       .resize({ width: THUMB_WIDTH, withoutEnlargement: true })
-      .jpeg({ quality: 80 })
+      .jpeg({ quality: 80, mozjpeg: true })
       .toBuffer();
     await s3.send(new PutObjectCommand({
       Bucket: process.env.R2_BUCKET_NAME,
       Key: thumbKey,
       Body: thumbBuffer,
       ContentType: 'image/jpeg',
+      CacheControl: 'public, max-age=31536000, immutable',
     }));
   } catch (err) {
     // Non-fatal — some image formats may not resize cleanly
@@ -432,13 +442,14 @@ async function main() {
       }
 
       // Upload image to R2
-      // Upload: display (3840px) + thumbnail (600px) to R2
+      // Upload: display (3840px max) + thumbnail (600px) from original full-res
+      const imageSource = info.fullUrl || info.thumbUrl;
       let displayUrl = info.thumbUrl; // fallback: Commons thumb
       let gridThumbUrl = info.thumbUrl;
       if (s3 && !skipImages) {
         const r2Key = `${R2_PREFIX}/${slug}.jpg`;
         try {
-          const urls = await uploadToR2(s3, info.thumbUrl, r2Key);
+          const urls = await uploadToR2(s3, imageSource, r2Key);
           if (urls) {
             displayUrl = urls.display;
             gridThumbUrl = urls.thumb;

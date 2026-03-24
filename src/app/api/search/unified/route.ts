@@ -137,7 +137,7 @@ async function searchBooks(db: any, query: string, queryRegex: RegExp, limit: nu
         { aliases: queryRegex },
         { name: queryRegex },
       ],
-    }, { projection: { _id: 1 } }).catch(() => null);
+    }, { projection: { _id: 1 }, maxTimeMS: 2000 }).catch(() => null);
 
     if (entity) {
       const aliasBooks = await db.collection('books')
@@ -148,6 +148,7 @@ async function searchBooks(db: any, query: string, queryRegex: RegExp, limit: nu
         })
         .project({ id: 1, title: 1, display_title: 1, author: 1, language: 1, published: 1, pages_count: 1, pages_translated: 1, pages_ocr: 1, thumbnail: 1, thumbnail_blob: 1 })
         .limit(limit - books.length)
+        .maxTimeMS(3000)
         .toArray();
 
       for (const ab of aliasBooks) {
