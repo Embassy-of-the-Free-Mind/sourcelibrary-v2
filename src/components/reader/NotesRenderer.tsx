@@ -73,6 +73,10 @@ function extractMetadata(text: string): { cleanText: string; metadata: Extracted
   result = result.replace(/^(?:I have (?:translated|transcribed|completed)[^:]*:\s*\n*)/i, '');
   result = result.replace(/^(?:The following is[^:]*:\s*\n*)/i, '');
 
+  // Strip markdown-style page-type headings (AI sometimes writes "# ## Title Page" or "## Title Page")
+  // The page type is already captured via <page-type> tags; these are redundant display artifacts.
+  result = result.replace(/^#{1,3}\s*#{0,3}\s*(?:Title Page|Frontispiece|Colophon|Table of Contents|Index|Blank Page|Cover)\s*\n*/gim, '');
+
   // === XML syntax (new) ===
   // Extract language
   result = result.replace(/<(?:lang|language)>([\s\S]*?)<\/(?:lang|language)>/gi, (_, lang) => {
