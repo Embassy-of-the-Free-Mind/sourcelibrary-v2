@@ -27,6 +27,8 @@ export interface SemanticAlignmentResult {
   score: number;          // 0-1 cosine similarity
   embedding_model: string;
   scored_at: Date;
+  flagged?: boolean;      // below per-language threshold
+  ocr_warnings?: string[]; // parsed from <warning> tags in OCR output
 }
 
 export interface BookAlignmentSummary {
@@ -35,7 +37,8 @@ export interface BookAlignmentSummary {
   max_alignment: number;
   stddev: number;
   pages_scored: number;
-  pages_flagged: number;  // below threshold
+  pages_flagged: number;    // below per-language threshold
+  pages_with_warnings: number; // pages with OCR <warning> tags
   scored_at: Date;
 }
 
@@ -152,6 +155,19 @@ function getFlagThreshold(language?: string): number {
   return LANGUAGE_THRESHOLDS[language] ?? DEFAULT_THRESHOLD;
 }
 
+// ── OCR warning extraction ──────────────────────────────────────────────────
+
+/**
+ * Extract <warning> tags from OCR output.
+ * The OCR model flags quality issues inline — bleed-through, fading,
+ * cropped margins, blank pages, etc. ~4.5% of pages have these.
+ */
+function extractOcrWarnings(ocrData: string): string[] {
+  const matches = ocrData.match(/<warning>[\s\S]*?<\/warning>/g);
+  if (!matches) return [];
+  return matches.map(m => m.replace(/<\/?warning>/g, '').trim());
+}
+
 // ── Core scoring function ───────────────────────────────────────────────────
 
 /**
@@ -196,6 +212,7 @@ export async function scoreBookAlignment(
   const scores: number[] = [];
   const bulkOps = [];
   let flagged = 0;
+  let pagesWithWarnings = 0;
 
   for (let i = 0; i < pages.length; i++) {
     const ocrEmb = ocrEmbeddings[i];
@@ -206,12 +223,18 @@ export async function scoreBookAlignment(
     scores.push(score);
 
     const threshold = getFlagThreshold(pages[i].ocr?.language);
-    if (score < threshold) flagged++;
+    const isFlagged = score < threshold;
+    if (isFlagged) flagged++;
+
+    const ocrWarnings = extractOcrWarnings(pages[i].ocr.data);
+    if (ocrWarnings.length > 0) pagesWithWarnings++;
 
     const alignment: SemanticAlignmentResult = {
       score,
       embedding_model: EMBEDDING_MODEL,
       scored_at: new Date(),
+      flagged: isFlagged,
+      ...(ocrWarnings.length > 0 ? { ocr_warnings: ocrWarnings } : {}),
     };
 
     bulkOps.push({
@@ -242,6 +265,7 @@ export async function scoreBookAlignment(
     stddev: Math.sqrt(variance),
     pages_scored: scores.length,
     pages_flagged: flagged,
+    pages_with_warnings: pagesWithWarnings,
     scored_at: new Date(),
   };
 
