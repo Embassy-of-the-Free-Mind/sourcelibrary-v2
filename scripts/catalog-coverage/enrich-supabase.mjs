@@ -114,7 +114,7 @@ async function enrichFromMongo() {
       const chunk = batch.slice(i, i + PARALLEL);
       const results = await Promise.allSettled(chunk.map(async (item) => {
         const res = await fetch(
-          `${SUPABASE_URL}/rest/v1/ustc_editions?id=eq.${item.ustc_id}`,
+          `${SUPABASE_URL}/rest/v1/ustc_editions?sn=eq.${item.ustc_id}`,
           {
             method: 'PATCH',
             headers,
