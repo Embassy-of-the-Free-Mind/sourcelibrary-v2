@@ -59,6 +59,28 @@ function cosineSimilarity(a: number[], b: number[]): number {
   return dot / (Math.sqrt(normA) * Math.sqrt(normB));
 }
 
+// ── Text preprocessing ──────────────────────────────────────────────────────
+
+/**
+ * Strip XML/annotation tags from OCR and translation text before embedding.
+ * Tags like <meta>...</meta>, <language>Latin</language>, <header>...</header>
+ * are structural annotations that pollute the semantic signal.
+ * On the flagged Theatrum Chemicum page, 64% of text was tags — stripping
+ * them turned a false positive (0.68) into correct alignment.
+ */
+function stripAnnotations(text: string): string {
+  return text
+    // Remove full XML tag pairs and their content for meta/structural tags
+    .replace(/<(?:meta|language|page-type|page-num|header|sig|folio|warning)>[^]*?<\/(?:meta|language|page-type|page-num|header|sig|folio|warning)>/g, '')
+    // Remove self-closing and opening-only structural tags
+    .replace(/<\/?(?:meta|language|page-type|page-num|header|sig|folio|warning)>/g, '')
+    // Keep content-bearing tags (note, margin, gloss, term, etc.) but strip the tags themselves
+    .replace(/<\/?[a-z-]+>/g, '')
+    // Clean up whitespace
+    .replace(/\n{3,}/g, '\n\n')
+    .trim();
+}
+
 // ── Embedding ───────────────────────────────────────────────────────────────
 
 async function getEmbeddings(
@@ -138,12 +160,12 @@ export async function scoreBookAlignment(
     return { success: true, pagesScored: 0, pagesFlagged: 0 };
   }
 
-  // Embed all OCR texts
-  const ocrTexts = pages.map(p => p.ocr.data);
+  // Strip annotation tags before embedding — tags like <meta>, <language>, <header>
+  // are structural markup that pollutes the semantic signal (up to 65% of text).
+  const ocrTexts = pages.map(p => stripAnnotations(p.ocr.data));
   const ocrEmbeddings = await getEmbeddings(genai, ocrTexts);
 
-  // Embed all translations
-  const translationTexts = pages.map(p => p.translation.data);
+  const translationTexts = pages.map(p => stripAnnotations(p.translation.data));
   const translationEmbeddings = await getEmbeddings(genai, translationTexts);
 
   // Compute per-page scores and write to DB

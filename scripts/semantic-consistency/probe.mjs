@@ -62,6 +62,20 @@ function cosineSimilarity(a, b) {
   return dot / (Math.sqrt(normA) * Math.sqrt(normB));
 }
 
+/**
+ * Strip annotation/structural XML tags before embedding.
+ * Tags like <meta>...</meta>, <language>, <header> are structural markup
+ * that pollutes the semantic signal (up to 65% of text on some pages).
+ */
+function stripAnnotations(text) {
+  return text
+    .replace(/<(?:meta|language|page-type|page-num|header|sig|folio|warning)>[^]*?<\/(?:meta|language|page-type|page-num|header|sig|folio|warning)>/g, '')
+    .replace(/<\/?(?:meta|language|page-type|page-num|header|sig|folio|warning)>/g, '')
+    .replace(/<\/?[a-z-]+>/g, '')
+    .replace(/\n{3,}/g, '\n\n')
+    .trim();
+}
+
 function meanPairwiseCosine(vectors) {
   if (vectors.length < 2) return 1.0;
   let sum = 0, count = 0;
@@ -212,11 +226,11 @@ async function main() {
   // ── Phase 1: Cross-lingual alignment ──────────────────────────────────
   console.log('Phase 1: Cross-lingual alignment (source ↔ translation)');
   console.log('Embedding OCR texts...');
-  const ocrTexts = pages.map(p => p.ocr.data);
+  const ocrTexts = pages.map(p => stripAnnotations(p.ocr.data));
   const ocrEmbeddings = await embedTexts(ocrTexts);
 
   console.log('Embedding translations...');
-  const translationTexts = pages.map(p => p.translation.data);
+  const translationTexts = pages.map(p => stripAnnotations(p.translation.data));
   const translationEmbeddings = await embedTexts(translationTexts);
 
   // Compute per-page alignment scores
