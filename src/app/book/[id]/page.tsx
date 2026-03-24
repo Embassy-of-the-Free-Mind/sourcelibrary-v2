@@ -434,12 +434,49 @@ async function BookInfo({ id }: { id: string }) {
 
               {book.is_first_translation && (
                 <div className="mt-3">
-                  <Link
-                    href="/blog/first-translation-methodology"
-                    className="px-2.5 py-1 bg-accent-gold/20 text-accent-gold hover:bg-accent-gold/30 text-xs font-medium rounded-full border border-accent-gold/30 transition-colors"
-                  >
-                    First English Translation
-                  </Link>
+                  <details className="group">
+                    <summary className="inline-flex px-2.5 py-1 bg-accent-gold/20 text-accent-gold hover:bg-accent-gold/30 text-xs font-medium rounded-full border border-accent-gold/30 transition-colors cursor-pointer list-none [&::-webkit-details-marker]:hidden">
+                      First English Translation
+                    </summary>
+                    <div className="mt-2 p-3 bg-stone-800/50 rounded-lg border border-stone-700/50 text-xs space-y-2">
+                      <p className="text-stone-300">
+                        {book.translation_verification?.disposition === 'confirmed_first' && 'No prior complete English translation of this text has been found.'}
+                        {book.translation_verification?.disposition === 'first_complete_translation' && 'Only partial translations or excerpts exist. This is the first complete English translation.'}
+                        {book.translation_verification?.disposition === 'first_modern_translation' && 'Only antiquated translations exist. This is the first modern English translation.'}
+                        {!book.translation_verification?.disposition && 'This text has not previously been translated into English.'}
+                      </p>
+                      {book.translation_verification?.reasoning && (
+                        <p className="text-stone-400">{book.translation_verification.reasoning}</p>
+                      )}
+                      {(book.translation_verification?.translations_found?.length ?? 0) > 0 && (
+                        <div className="space-y-1">
+                          <span className="text-stone-500">Related translations found:</span>
+                          {book.translation_verification!.translations_found!.map((t, i: number) => (
+                            <p key={i} className="text-stone-400 pl-2">
+                              <span className="italic">{t.english_title}</span>
+                              {t.translator && t.translator !== 'unknown' && `, trans. ${t.translator}`}
+                              {t.pub_year && ` (${t.pub_year})`}
+                              {t.completeness && t.completeness !== 'unknown' && <span className="text-stone-500"> [{t.completeness}]</span>}
+                              {t.url && (
+                                <>{' '}<a href={t.url} target="_blank" rel="noopener noreferrer" className="text-accent-gold hover:text-accent-gold/80 underline">source</a></>
+                              )}
+                            </p>
+                          ))}
+                        </div>
+                      )}
+                      {book.translation_verification?.tools_called && (
+                        <p className="text-stone-600 text-[10px]">
+                          Verified {book.translation_verification.verified_at ? new Date(book.translation_verification.verified_at).toLocaleDateString('en-US', { year: 'numeric', month: 'short', day: 'numeric' }) : ''} via{' '}
+                          {book.translation_verification.tools_called
+                            .filter((t: string) => t !== 'make_determination')
+                            .map((t: string) => t.replace('search_', '').replace(/_/g, ' '))
+                            .join(', ')}
+                          {' '}&middot;{' '}
+                          <a href="/blog/first-translation-methodology" className="underline hover:text-stone-500">methodology</a>
+                        </p>
+                      )}
+                    </div>
+                  </details>
                 </div>
               )}
 

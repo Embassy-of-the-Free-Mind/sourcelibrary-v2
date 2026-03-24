@@ -269,7 +269,7 @@ export interface Chapter {
 export type TranslationDisposition = 'confirmed_first' | 'first_complete_translation' | 'first_modern_translation' | 'translation_found' | 'needs_review';
 
 export interface TranslationVerification {
-  source: 'catalog_search';
+  source: 'catalog_search' | 'catalog_and_llm' | string;
   searched_at: Date;
   has_english_translation: boolean;
   translations?: TranslationEvidence[];
