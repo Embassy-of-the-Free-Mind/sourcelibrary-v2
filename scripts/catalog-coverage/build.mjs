@@ -117,6 +117,61 @@ function titleWordOverlap(a, b) {
 
 // --- Phase 1: Load MongoDB lookups ---
 
+// Build bidirectional alias map from entity_aliases collection
+// Maps each surname variant → set of all other known surname variants for the same person
+async function loadAuthorAliasMap(db) {
+  const aliases = await db.collection('entity_aliases').find(
+    { type: 'person' },
+    { projection: { alias_lower: 1, canonical_name: 1 } }
+  ).toArray();
+
+  // Group aliases by canonical name
+  const byCanonical = new Map();
+  for (const a of aliases) {
+    const canonical = (a.canonical_name || '').toLowerCase().trim();
+    if (!canonical) continue;
+    if (!byCanonical.has(canonical)) byCanonical.set(canonical, new Set());
+    byCanonical.get(canonical).add(a.alias_lower);
+    // Also add the canonical name's surname
+    const canonSurname = extractSurname(canonical);
+    if (canonSurname) byCanonical.get(canonical).add(canonSurname);
+  }
+
+  // Build surname → all related surnames
+  const surnameAliases = new Map();
+  for (const [canonical, aliasSet] of byCanonical) {
+    // Extract surname from each alias
+    const surnames = new Set();
+    for (const alias of aliasSet) {
+      const s = extractSurname(alias);
+      if (s && s.length >= 3) surnames.add(s);
+    }
+    // Also add first-word variants
+    const expanded = new Set(surnames);
+    for (const s of surnames) {
+      const fw = s.split(/\s+/)[0];
+      if (fw !== s && fw.length >= 3) expanded.add(fw);
+    }
+    // Map each surname to all others
+    for (const s of expanded) {
+      if (!surnameAliases.has(s)) surnameAliases.set(s, new Set());
+      for (const other of expanded) surnameAliases.get(s).add(other);
+    }
+  }
+
+  // Also add LATIN_TO_ENGLISH entries
+  for (const [latin, englishForms] of Object.entries(LATIN_TO_ENGLISH)) {
+    const allForms = [latin, ...englishForms].map(f => f.toLowerCase().trim());
+    for (const f of allForms) {
+      if (!surnameAliases.has(f)) surnameAliases.set(f, new Set());
+      for (const other of allForms) surnameAliases.get(f).add(other);
+    }
+  }
+
+  console.log(`  ${aliases.length} entity aliases → ${surnameAliases.size} surname mappings`);
+  return surnameAliases;
+}
+
 async function loadScanLookup(db) {
   console.log('Loading IIIF scan candidates (paginated)...');
   const byAuthorDecade = new Map();
@@ -157,6 +212,13 @@ async function loadScanLookup(db) {
         const strippedKey = `${stripped}:${decade}`;
         if (!byAuthorDecade.has(strippedKey)) byAuthorDecade.set(strippedKey, []);
         byAuthorDecade.get(strippedKey).push(slim);
+      }
+      // Also index first word of multi-word surnames (e.g. "agrippa von nettesheim" → "agrippa")
+      const firstWord = surname.split(/\s+/)[0];
+      if (firstWord !== surname && firstWord.length >= 3) {
+        const fwKey = `${firstWord}:${decade}`;
+        if (!byAuthorDecade.has(fwKey)) byAuthorDecade.set(fwKey, []);
+        byAuthorDecade.get(fwKey).push(slim);
       }
     }
 
@@ -237,7 +299,7 @@ async function loadSourceLibraryLookup(db) {
 
 // --- Phase 2: Match functions ---
 
-function findScan(ustcEdition, scanLookup) {
+function findScan(ustcEdition, scanLookup, authorAliases) {
   const ustcId = ustcEdition.id;
 
   // Direct USTC ID match
@@ -260,9 +322,19 @@ function findScan(ustcEdition, scanLookup) {
 
   const decade = Math.floor(ustcEdition.year / 10) * 10;
   // Try exact surname and Latin/Italian-stripped variants, across 3 decades
-  const surnameVariants = [surname];
+  const surnameVariants = new Set([surname]);
   const stripped = surname.replace(/(us|is|ius|inus|o)$/, '');
-  if (stripped !== surname && stripped.length >= 3) surnameVariants.push(stripped);
+  if (stripped !== surname && stripped.length >= 3) surnameVariants.add(stripped);
+  // First word of multi-word surnames (e.g. "agrippa von nettesheim" → "agrippa")
+  const firstWord = surname.split(/\s+/)[0];
+  if (firstWord !== surname && firstWord.length >= 3) surnameVariants.add(firstWord);
+  // Entity aliases (e.g. "marsilius ficinus" → "ficino", "marsilio ficino")
+  if (authorAliases) {
+    for (const s of [...surnameVariants]) {
+      const aliases = authorAliases.get(s);
+      if (aliases) for (const a of aliases) surnameVariants.add(a);
+    }
+  }
 
   let candidates = [];
   for (const s of surnameVariants) {
@@ -416,7 +488,7 @@ async function fetchYearRange(language, yearStart, yearEnd) {
   return results;
 }
 
-async function buildCoverage(db, scanLookup, translationLookup, slLookup) {
+async function buildCoverage(db, scanLookup, translationLookup, slLookup, authorAliases) {
   const col = db.collection('catalog_coverage');
 
   // Create indexes
@@ -468,7 +540,7 @@ async function buildCoverage(db, scanLookup, translationLookup, slLookup) {
       const docs = [];
       for (const edition of batch) {
         const surname = extractSurname(edition.author_1);
-        const scan = findScan(edition, scanLookup);
+        const scan = findScan(edition, scanLookup, authorAliases);
         // English editions are already in a modern language — skip translation matching
         const lang = edition.language_1 || language;
         const translation = lang === 'English' ? null : findTranslation(edition, translationLookup);
@@ -643,13 +715,14 @@ async function main() {
 
   try {
     // Phase 1: Load lookups
+    const authorAliases = await loadAuthorAliasMap(db);
     const scanLookup = await loadScanLookup(db);
     const translationLookup = await loadTranslationLookup(db);
     const slLookup = await loadSourceLibraryLookup(db);
 
     // Phase 2: Build coverage
     const start = Date.now();
-    const results = await buildCoverage(db, scanLookup, translationLookup, slLookup);
+    const results = await buildCoverage(db, scanLookup, translationLookup, slLookup, authorAliases);
     const elapsed = ((Date.now() - start) / 1000).toFixed(0);
 
     // Summary

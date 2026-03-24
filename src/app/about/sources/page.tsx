@@ -5,7 +5,7 @@ import ContentPageLayout, { ContentHeader } from '@/components/layout/ContentPag
 export const metadata: Metadata = {
   title: 'Source Libraries — Source Library',
   description:
-    'The 40+ digital libraries, archives, and manuscript repositories that Source Library draws from, with IIIF status, collection highlights, and access notes.',
+    'The 50+ digital libraries, archives, and manuscript repositories that Source Library draws from, with IIIF status, collection highlights, and access notes.',
   alternates: { canonical: '/about/sources' },
 };
 
@@ -136,40 +136,6 @@ const sources: SourceLibrary[] = [
     highlights: 'Swiss rare books. Paracelsus, Gesner, early scientific printing. ~94K pre-1800.',
   },
   {
-    name: 'SLUB Dresden',
-    country: 'Germany',
-    iiif: 'OAI-PMH',
-    status: 'live',
-    holdings: '650K records (OAI-PMH)',
-    highlights: 'Saxon State Library. Music manuscripts, early modern prints. OAI-PMH bulk harvest active.',
-    notes: 'No IIIF or language in OAI-DC metadata. Would need METS format for richer data.',
-  },
-  {
-    name: 'Heidelberg University Library',
-    country: 'Germany',
-    iiif: 'v3',
-    status: 'live',
-    holdings: '67K records (OAI-PMH)',
-    highlights: 'Manuscripts and prints. All pre-1700 records have IIIF manifests. 16K early modern items catalogued.',
-  },
-  {
-    name: 'Göttingen SUB',
-    country: 'Germany',
-    iiif: 'OAI-PMH',
-    status: 'live',
-    holdings: '87K records (OAI-PMH)',
-    highlights: 'Mathematics, Orientalia, medieval manuscripts and fragments. Resolver URLs for viewer access.',
-    notes: 'No IIIF in OAI-DC metadata. ~40K pre-1700 items — highest yield of any new OAI source.',
-  },
-  {
-    name: 'Biblissima',
-    country: 'France',
-    iiif: 'Aggregator',
-    status: 'live',
-    holdings: '112K records',
-    highlights: 'IIIF aggregator for French libraries. BnF, Mazarine, municipal collections. Wikibase API.',
-  },
-  {
     name: 'Wellcome Collection',
     country: 'UK',
     route: '/api/import/wellcome',
@@ -269,13 +235,13 @@ const sources: SourceLibrary[] = [
     highlights: 'Core collection. Bibliotheca Philosophica Hermetica: Hermetica, alchemy, Kabbalah, Rosicrucianism.',
   },
   {
-    name: 'CMC Prins Frederik \u2014 Kloss Collection',
+    name: 'CMC Prins Frederik — Kloss Collection',
     country: 'Netherlands',
     route: '/api/import/pdf',
     iiif: 'PDF',
     status: 'live',
     holdings: '1,530 MSS catalogued',
-    highlights: 'Bibliotheca Klossiana: Masonic, Rosicrucian, esoteric manuscripts. Georg Kloss (1787\u20131854) collection. 16 imported so far.',
+    highlights: 'Bibliotheca Klossiana: Masonic, Rosicrucian, esoteric manuscripts. Georg Kloss (1787–1854) collection. 1,019 imported.',
   },
   {
     name: 'John Rylands Library, Manchester',
@@ -285,6 +251,51 @@ const sources: SourceLibrary[] = [
     status: 'live',
     holdings: '36 digital collections',
     highlights: 'Arabic, Persian, Syriac, Hebrew, Latin MSS. Magic & Macabre collection. Petrarch, Dante. Rylands Papyri.',
+  },
+  {
+    name: 'Google Books',
+    country: 'USA',
+    route: '/api/import/google-books',
+    iiif: 'IA mirror',
+    status: 'live',
+    holdings: 'Millions digitized',
+    highlights: 'Google Books content imported via Internet Archive mirrors. Major partner library scanning programs.',
+  },
+
+  // === OAI-PMH HARVEST SOURCES (via catalog coverage system) ===
+  {
+    name: 'SLUB Dresden',
+    country: 'Germany',
+    iiif: 'OAI-PMH',
+    status: 'live',
+    holdings: '650K records (OAI-PMH)',
+    highlights: 'Saxon State Library. Music manuscripts, early modern prints. OAI-PMH bulk harvest active.',
+    notes: 'No IIIF or language in OAI-DC metadata. Would need METS format for richer data.',
+  },
+  {
+    name: 'Heidelberg University Library',
+    country: 'Germany',
+    iiif: 'v3',
+    status: 'live',
+    holdings: '67K records (OAI-PMH)',
+    highlights: 'Manuscripts and prints. All pre-1700 records have IIIF manifests. 16K early modern items catalogued.',
+  },
+  {
+    name: 'Göttingen SUB',
+    country: 'Germany',
+    iiif: 'OAI-PMH',
+    status: 'live',
+    holdings: '87K records (OAI-PMH)',
+    highlights: 'Mathematics, Orientalia, medieval manuscripts and fragments. Resolver URLs for viewer access.',
+    notes: 'No IIIF in OAI-DC metadata. ~40K pre-1700 items — highest yield of any new OAI source.',
+  },
+  {
+    name: 'Biblissima',
+    country: 'France',
+    iiif: 'Aggregator',
+    status: 'live',
+    holdings: '112K records',
+    highlights: 'IIIF aggregator for French libraries. BnF, Mazarine, municipal collections. Wikibase API.',
   },
 
   // === NEEDS API KEY / REGISTRATION ===
@@ -332,6 +343,51 @@ const sources: SourceLibrary[] = [
     holdings: '~350,000 MSS',
     highlights: 'Ethiopian Ge\u2019ez manuscripts, Syriac, Arabic, Armenian from 500+ partner libraries worldwide.',
     notes: 'JSON metadata CC BY 4.0. Registration required. Contact help@vhmml.org for bulk access.',
+  },
+  {
+    name: 'Chester Beatty Library',
+    country: 'Ireland',
+    iiif: 'v2',
+    status: 'planned',
+    holdings: '~6,000 items',
+    highlights: 'Islamic illuminated MSS, Qur\u2019ans, East Asian scrolls, Egyptian papyri, Armenian and Syriac MSS.',
+    notes: 'Goobi viewer with OpenAPI. IIIF 2.1.1 confirmed. REST API at viewer.cbl.ie/viewer/api/v1/.',
+  },
+  {
+    name: 'Columbia University RBML',
+    country: 'USA',
+    iiif: 'v2',
+    status: 'planned',
+    holdings: '~500,000 items',
+    highlights: 'Hebrew MSS, cuneiform tablets, papyri, Burke Library (theology), Vietnamese texts.',
+    notes: 'IIIF image server confirmed. Manifest URL pattern needs browser verification.',
+  },
+  {
+    name: 'DREAMSEA (via HMML)',
+    country: 'Indonesia / SE Asia',
+    iiif: 'Likely (HMML)',
+    status: 'planned',
+    holdings: '16+ Indonesian sites',
+    highlights: 'SE Asian MSS: Javanese, Malay, Lontara, Khmer, Lao, Thai, Burmese scripts. Palm-leaf and paper.',
+    notes: 'Open access, purpose-built for endangered SE Asian MSS. Contact: dreamsea.mss@gmail.com',
+  },
+  {
+    name: 'NPM Taiwan',
+    country: 'Taiwan',
+    iiif: 'None',
+    status: 'planned',
+    holdings: '~700,000 items',
+    highlights: 'Chinese calligraphy, paintings, rare books, bronzes.',
+    notes: 'Open Data portal available since 2015 but download-only, no live API or IIIF.',
+  },
+  {
+    name: 'Waseda University',
+    country: 'Japan',
+    iiif: 'Unknown',
+    status: 'planned',
+    holdings: '~300,000 items',
+    highlights: 'Japanese classical texts, Chinese classics in Japanese editions (Kotenseki).',
+    notes: '404 on manifest patterns tried. Needs deeper investigation.',
   },
 
   // === INVESTIGATED — NOT VIABLE (yet) ===
@@ -434,7 +490,6 @@ const sources: SourceLibrary[] = [
     highlights: 'Gutenberg Bible, medieval MSS, illuminated books, Coptic bindings.',
     notes: 'Custom proprietary viewer. No IIIF found.',
   },
-
   {
     name: 'Warburg Institute',
     country: 'UK',
@@ -483,33 +538,6 @@ const sources: SourceLibrary[] = [
 
   // === SE ASIAN / GLOBAL ===
   {
-    name: 'Chester Beatty Library',
-    country: 'Ireland',
-    iiif: 'v2',
-    status: 'planned',
-    holdings: '~6,000 items',
-    highlights: 'Islamic illuminated MSS, Qur\u2019ans, East Asian scrolls, Egyptian papyri, Armenian and Syriac MSS.',
-    notes: 'Goobi viewer with OpenAPI. IIIF 2.1.1 confirmed. REST API at viewer.cbl.ie/viewer/api/v1/.',
-  },
-  {
-    name: 'Columbia University RBML',
-    country: 'USA',
-    iiif: 'v2',
-    status: 'planned',
-    holdings: '~500,000 items',
-    highlights: 'Hebrew MSS, cuneiform tablets, papyri, Burke Library (theology), Vietnamese texts.',
-    notes: 'IIIF image server confirmed. Manifest URL pattern needs browser verification.',
-  },
-  {
-    name: 'DREAMSEA (via HMML)',
-    country: 'Indonesia / SE Asia',
-    iiif: 'Likely (HMML)',
-    status: 'planned',
-    holdings: '16+ Indonesian sites',
-    highlights: 'SE Asian MSS: Javanese, Malay, Lontara, Khmer, Lao, Thai, Burmese scripts. Palm-leaf and paper.',
-    notes: 'Open access, purpose-built for endangered SE Asian MSS. Contact: dreamsea.mss@gmail.com',
-  },
-  {
     name: 'BL Endangered Archives',
     country: 'UK (global)',
     iiif: 'v3 (via BL)',
@@ -526,24 +554,6 @@ const sources: SourceLibrary[] = [
     holdings: 'Unknown',
     highlights: 'Naskah Nusantara: Javanese, Malay, Batak, Bugis manuscripts. Palm-leaf MSS.',
     notes: 'khastanah.perpusnas.go.id — connection refused during testing.',
-  },
-  {
-    name: 'NPM Taiwan',
-    country: 'Taiwan',
-    iiif: 'None',
-    status: 'planned',
-    holdings: '~700,000 items',
-    highlights: 'Chinese calligraphy, paintings, rare books, bronzes.',
-    notes: 'Open Data portal available since 2015 but download-only, no live API or IIIF.',
-  },
-  {
-    name: 'Waseda University',
-    country: 'Japan',
-    iiif: 'Unknown',
-    status: 'planned',
-    holdings: '~300,000 items',
-    highlights: 'Japanese classical texts, Chinese classics in Japanese editions (Kotenseki).',
-    notes: '404 on manifest patterns tried. Needs deeper investigation.',
   },
 ];
 

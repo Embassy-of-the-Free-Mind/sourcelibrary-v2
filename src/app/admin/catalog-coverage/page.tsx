@@ -52,12 +52,10 @@ interface SearchResult {
   language: string;
   place: string;
   format: string;
-  has_scan: boolean;
   has_iiif_scan: boolean;
   scan_sources: string[];
   scan_quality: string | null;
   iiif_manifest_url: string | null;
-  has_published_translation: boolean;
   has_english_translation: boolean;
   translation_sources: string[];
   in_source_library: boolean;
@@ -90,10 +88,10 @@ function ustcUrl(ustcId: number): string {
 }
 
 function resultHasScan(r: SearchResult): boolean {
-  return r.has_iiif_scan ?? r.has_scan ?? false;
+  return r.has_iiif_scan ?? false;
 }
 function resultHasTranslation(r: SearchResult): boolean {
-  return r.has_english_translation ?? r.has_published_translation ?? false;
+  return r.has_english_translation ?? false;
 }
 
 function pct(n: number, total: number): string {
