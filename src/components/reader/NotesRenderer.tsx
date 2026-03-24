@@ -44,6 +44,7 @@ interface ExtractedMetadata {
   folio?: string;
   signature?: string;       // [[signature: ...]] - printer's signature marks
   warning?: string;         // [[warning: ...]] - OCR quality issues
+  scriptType?: string;      // <script> - printed, handwritten, or mixed
   meta: string[];           // [[meta: ...]] entries
   abbreviations: string[];  // [[abbrev: ...]] entries
   vocabulary: string[];     // [[vocabulary: ...]] - key terms from OCR
@@ -100,6 +101,12 @@ function extractMetadata(text: string): { cleanText: string; metadata: Extracted
   // Extract signature marks
   result = result.replace(/<sig>([\s\S]*?)<\/sig>/gi, (_, sig) => {
     metadata.signature = sig.trim();
+    return '';
+  });
+
+  // Extract script type (printed/handwritten/mixed)
+  result = result.replace(/<script>([\s\S]*?)<\/script>/gi, (_, script) => {
+    metadata.scriptType = script.trim();
     return '';
   });
 
@@ -490,13 +497,23 @@ function MetadataPanel({ metadata }: { metadata: ExtractedMetadata }) {
   const [isOpen, setIsOpen] = useState(false);
 
   const hasMetadata = metadata.language || metadata.pageType || metadata.pageNumber || metadata.folio ||
-    metadata.signature || metadata.warning || metadata.meta.length > 0 || metadata.abbreviations.length > 0 ||
+    metadata.signature || metadata.warning || metadata.scriptType || metadata.meta.length > 0 || metadata.abbreviations.length > 0 ||
     metadata.vocabulary.length > 0 || metadata.summary || metadata.keywords.length > 0;
 
   if (!hasMetadata) return null;
 
   return (
     <div className="mb-4 border border-stone-200 rounded-lg overflow-hidden bg-stone-50/50">
+      {/* Handwritten manuscript notice */}
+      {metadata.scriptType && metadata.scriptType !== 'printed' && (
+        <div className="px-3 py-2 bg-amber-50 border-b border-amber-200 text-sm text-amber-800 flex items-start gap-2">
+          <span className="font-bold">✍</span>
+          <span>
+            <span className="font-medium">{metadata.scriptType === 'handwritten' ? 'Handwritten' : 'Mixed'} manuscript</span>
+            {' — transcription may contain uncertain readings'}
+          </span>
+        </div>
+      )}
       {/* Warning displayed prominently if present */}
       {metadata.warning && (
         <div className="px-3 py-2 bg-red-50 border-b border-red-200 text-sm text-red-800 flex items-start gap-2">
