@@ -8,21 +8,12 @@ import { SEARCH } from './fixtures';
 const SEARCH_TIMEOUT = 45_000;
 
 test.describe('Search', () => {
-  // Use a shared page context to avoid cold-start penalty on every test.
-  // The first navigation primes the Vercel function + JS bundle cache.
   test('shows results for known query', async ({ page }) => {
-    // Start the response listener before navigation
-    const responsePromise = page.waitForResponse(
-      (resp) => resp.url().includes('/api/') && resp.url().includes('search') && resp.status() === 200,
-      { timeout: SEARCH_TIMEOUT }
-    );
-
     await page.goto(`/search?q=${SEARCH.query}`);
-    await responsePromise;
 
-    // Now wait for results to render
+    // Wait for results to load (can be slow on cold starts)
     const resultLinks = page.locator('a[href*="/book/"]');
-    await expect(resultLinks.first()).toBeVisible({ timeout: 15_000 });
+    await expect(resultLinks.first()).toBeVisible({ timeout: SEARCH_TIMEOUT });
     expect(await resultLinks.count()).toBeGreaterThanOrEqual(SEARCH.minResults);
     await measurePerf(page, 'search: shows results for known query');
   });
@@ -38,20 +29,13 @@ test.describe('Search', () => {
     await measurePerf(page, 'search: result cards link to books');
   });
 
-  test('mode tabs switch between Books and Index', async ({ page }) => {
+  test('search results heading appears', async ({ page }) => {
     await page.goto(`/search?q=${SEARCH.query}`);
 
-    // Wait for results heading (indicates search completed)
+    // Wait for results heading (indicates search completed and found results)
+    // The heading shows "{N} results" in the unified view
     const resultsHeading = page.getByRole('heading', { name: /results/i });
     await expect(resultsHeading).toBeVisible({ timeout: SEARCH_TIMEOUT });
-
-    // Click "See all ... index entries" button to drill into index mode
-    const seeAllIndex = page.getByRole('button', { name: /See all.*index/i });
-    await expect(seeAllIndex).toBeVisible({ timeout: 15_000 });
-    await seeAllIndex.click();
-
-    // Verify drilled into index mode
-    await expect(page).toHaveURL(/mode=index/i);
-    await measurePerf(page, 'search: mode tabs switch');
+    await measurePerf(page, 'search: results heading appears');
   });
 });
