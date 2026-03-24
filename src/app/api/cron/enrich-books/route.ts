@@ -87,7 +87,6 @@ export async function GET(request: NextRequest) {
     classified_failed: 0,
     translit_books: 0,
     translit_pages: 0,
-    alignment_scored: 0,
     errors: [] as string[],
   };
 
@@ -146,7 +145,7 @@ export async function GET(request: NextRequest) {
           // Quality scoring — non-blocking, fast (~2s)
           try { await scoreBookQuality(db, book.id); } catch { /* non-critical */ }
 
-          // Semantic alignment scoring — non-blocking
+          // Semantic alignment — non-blocking, measures OCR↔translation faithfulness
           try { await scoreBookAlignment(db, book.id); } catch { /* non-critical */ }
 
           return book;
