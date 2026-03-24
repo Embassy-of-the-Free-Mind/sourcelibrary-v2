@@ -18,6 +18,7 @@ import CoverImagePicker from '@/components/book/CoverImagePicker';
 import DownloadButton from '@/components/ui/DownloadButton';
 import BibliographicInfo from '@/components/book/BibliographicInfo';
 import RelatedEditions from '@/components/book/RelatedEditions';
+import RelatedBooks from '@/components/book/RelatedBooks';
 import AuthorCrossReference from '@/components/book/AuthorCrossReference';
 import PublishEditionButton from '@/components/editions/PublishEditionButton';
 import EditionsPanel from '@/components/editions/EditionsPanel';
@@ -717,7 +718,10 @@ async function BookInfo({ id }: { id: string }) {
               </div>
             )}
 
-            {/* Related Books removed — will be pre-computed (see GitHub issue) */}
+            {/* Related Books — pre-computed, zero extra queries */}
+            {book.related_books && (book.related_books.direct?.length > 0 || book.related_books.shared?.length > 0) && (
+              <RelatedBooks relatedBooks={book.related_books} />
+            )}
           </div>
         );
       })()}
