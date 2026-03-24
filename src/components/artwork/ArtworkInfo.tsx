@@ -1,10 +1,12 @@
 import Link from 'next/link';
+import { Suspense } from 'react';
 import { Book } from '@/lib/types';
 import ArtworkHero from './ArtworkHero';
 import { Calendar, MapPin, Ruler, Palette, ExternalLink, Heart, Share2, Quote } from 'lucide-react';
 import LikeButton from '@/components/ui/LikeButton';
 import { BookShare } from '@/components/ui/ShareButton';
 import SiteHeader from '@/components/layout/SiteHeader';
+import AuthorCrossReference from '@/components/book/AuthorCrossReference';
 
 /** Medium labels for display */
 const TYPE_LABELS: Record<string, string> = {
@@ -190,6 +192,15 @@ export default function ArtworkInfo({ book, collections, prevWork, nextWork }: A
             </div>
           </div>
         )}
+
+        {/* Cross-reference: books by this author */}
+        <Suspense fallback={null}>
+          <AuthorCrossReference
+            author={book.author}
+            currentBookId={book.id}
+            context="artwork"
+          />
+        </Suspense>
 
         {/* Provenance & Source */}
         <div className="card p-6">

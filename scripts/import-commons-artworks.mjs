@@ -142,8 +142,10 @@ const IMPORT_CATEGORIES = [
   { category: 'Robert Fludd', artist: 'Robert Fludd', type: 'print', recurse: true },
   { category: 'Books by Athanasius Kircher', artist: 'Athanasius Kircher', type: 'print', recurse: true },
 
-  // Dürer master prints
-  { category: 'Prints by Albrecht Dürer', artist: 'Albrecht Dürer', type: 'print', recurse: false },
+  // Dürer — author-artist (9 books in library)
+  { category: 'Prints by Albrecht Dürer', artist: 'Albrecht Dürer', type: 'print', recurse: true },
+  { category: 'Paintings by Albrecht Dürer', artist: 'Albrecht Dürer', type: 'painting', recurse: true },
+  { category: 'Drawings by Albrecht Dürer', artist: 'Albrecht Dürer', type: 'drawing', recurse: true },
 ];
 
 // ─── Helpers ─────────────────────────────────────────────────────────────────
@@ -357,6 +359,8 @@ async function main() {
   const limit = limitIdx >= 0 ? parseInt(args[limitIdx + 1]) : Infinity;
   const catIdx = args.indexOf('--category');
   const singleCategory = catIdx >= 0 ? args[catIdx + 1] : null;
+  const artistIdx = args.indexOf('--artist');
+  const singleArtist = artistIdx >= 0 ? args[artistIdx + 1] : null;
 
   console.log(`Mode: ${dryRun ? 'DRY RUN' : 'LIVE'} | Images: ${skipImages ? 'SKIP' : 'UPLOAD'} | Limit: ${limit === Infinity ? 'none' : limit}`);
 
@@ -381,7 +385,7 @@ async function main() {
 
   // Determine which categories to import
   const categories = singleCategory
-    ? [{ category: singleCategory, artist: 'Unknown', type: 'print', recurse: false }]
+    ? [{ category: singleCategory, artist: singleArtist || 'Unknown', type: 'print', recurse: false }]
     : IMPORT_CATEGORIES;
 
   let totalImported = 0;

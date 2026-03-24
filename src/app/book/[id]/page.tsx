@@ -18,6 +18,7 @@ import CoverImagePicker from '@/components/book/CoverImagePicker';
 import DownloadButton from '@/components/ui/DownloadButton';
 import BibliographicInfo from '@/components/book/BibliographicInfo';
 import RelatedEditions from '@/components/book/RelatedEditions';
+import AuthorCrossReference from '@/components/book/AuthorCrossReference';
 import PublishEditionButton from '@/components/editions/PublishEditionButton';
 import EditionsPanel from '@/components/editions/EditionsPanel';
 import SchemaOrgMetadata from '@/components/seo/SchemaOrgMetadata';
@@ -582,6 +583,15 @@ async function BookInfo({ id }: { id: string }) {
                   <RelatedEditions bookId={book.id} workId={(book as unknown as { work_id?: string }).work_id!} />
                 </Suspense>
               )}
+
+              {/* Cross-reference: artworks by this author */}
+              <Suspense fallback={null}>
+                <AuthorCrossReference
+                  author={book.author}
+                  currentBookId={book.id}
+                  context="book"
+                />
+              </Suspense>
             </div>
           </div>
         </div>

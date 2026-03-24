@@ -14,9 +14,13 @@ export interface Entity {
   name: string;
   type: 'person' | 'place' | 'concept';
   aliases?: string[];
+  canonical_name?: string;    // Authorized form from VIAF/Wikidata
   description?: string;
   wikipedia_url?: string;
   wikidata_id?: string;
+  viaf_id?: string;           // Virtual International Authority File ID
+  lcnaf_id?: string;          // Library of Congress Name Authority File ID
+  gnd_id?: string;            // German National Library (DNB) authority ID
   wikidata_birth_date?: string;
   wikidata_death_date?: string;
   wikidata_coordinates?: { lat: number; lng: number };
@@ -56,8 +60,12 @@ export interface EntityResponse extends Entity {
 export interface EntityUpdateRequest {
   description?: string;
   aliases?: string[];
+  canonical_name?: string;
   wikipedia_url?: string;
   wikidata_id?: string;
+  viaf_id?: string;
+  lcnaf_id?: string;
+  gnd_id?: string;
   wikidata_birth_date?: string;
   wikidata_death_date?: string;
   wikidata_coordinates?: { lat: number; lng: number };
