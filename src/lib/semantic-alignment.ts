@@ -121,12 +121,36 @@ async function getEmbeddings(
   return results;
 }
 
-// ── Flag threshold ──────────────────────────────────────────────────────────
+// ── Flag thresholds (per-language) ──────────────────────────────────────────
 
-// Pages below this score get flagged for review.
-// Based on probe results: mean ~0.883, stddev ~0.036
-// Threshold at ~2σ below mean catches genuinely problematic pages.
-const FLAG_THRESHOLD = 0.82;
+// Based on language-specific probes (30 pages each, 2026-03-24):
+//   Latin:    mean=0.889, std=0.028 → threshold ~2σ below mean
+//   Greek:    mean=0.868, std=0.040
+//   German:   mean=0.877 (from mixed probe)
+//   French:   mean=0.882 (from mixed probe)
+//   Chinese:  mean=0.837, std=0.033 → systematically lower (embedding model gap)
+//   Armenian: mean=0.837, std=0.079 → very wide spread, bimodal
+const LANGUAGE_THRESHOLDS: Record<string, number> = {
+  'English': 0.90,
+  'Latin': 0.83,
+  'German': 0.83,
+  'French': 0.83,
+  'Dutch': 0.83,
+  'Italian': 0.83,
+  'Greek': 0.80,
+  'Hebrew': 0.83,
+  'Arabic': 0.83,
+  'Chinese': 0.76,
+  'Armenian': 0.75,
+  'Sanskrit': 0.80,
+  'Persian': 0.80,
+};
+const DEFAULT_THRESHOLD = 0.82;
+
+function getFlagThreshold(language?: string): number {
+  if (!language) return DEFAULT_THRESHOLD;
+  return LANGUAGE_THRESHOLDS[language] ?? DEFAULT_THRESHOLD;
+}
 
 // ── Core scoring function ───────────────────────────────────────────────────
 
@@ -153,7 +177,7 @@ export async function scoreBookAlignment(
       'ocr.data': { $exists: true, $ne: '' },
       'translation.data': { $exists: true, $ne: '' },
     },
-    { projection: { id: 1, 'ocr.data': 1, 'translation.data': 1 } }
+    { projection: { id: 1, 'ocr.data': 1, 'ocr.language': 1, 'translation.data': 1 } }
   ).toArray();
 
   if (pages.length === 0) {
@@ -181,7 +205,8 @@ export async function scoreBookAlignment(
     const score = cosineSimilarity(ocrEmb, transEmb);
     scores.push(score);
 
-    if (score < FLAG_THRESHOLD) flagged++;
+    const threshold = getFlagThreshold(pages[i].ocr?.language);
+    if (score < threshold) flagged++;
 
     const alignment: SemanticAlignmentResult = {
       score,
