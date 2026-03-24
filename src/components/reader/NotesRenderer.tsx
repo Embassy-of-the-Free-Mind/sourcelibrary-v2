@@ -822,6 +822,26 @@ export default function NotesRenderer({ text, className = '', showMetadata = tru
       dir={isRTL ? 'rtl' : 'ltr'}
       lang={langCode}
     >
+      {/* Warning banners — always shown even when full metadata panel is hidden */}
+      {!showMetadata && (metadata.scriptType && metadata.scriptType !== 'printed' || metadata.warning) && (
+        <div className="mb-3 rounded-lg overflow-hidden border border-stone-200">
+          {metadata.scriptType && metadata.scriptType !== 'printed' && (
+            <div className="px-3 py-2 bg-amber-50 border-b border-amber-200 text-sm text-amber-800 flex items-start gap-2">
+              <span className="font-bold flex-shrink-0">✍</span>
+              <span>
+                <span className="font-medium">{metadata.scriptType === 'handwritten' ? 'Handwritten' : 'Mixed'} manuscript</span>
+                {' — transcription may contain uncertain readings'}
+              </span>
+            </div>
+          )}
+          {metadata.warning && (
+            <div className="px-3 py-2 bg-red-50 text-sm text-red-800 flex items-start gap-2">
+              <span className="text-red-600 font-bold flex-shrink-0">⚠</span>
+              <span>{metadata.warning}</span>
+            </div>
+          )}
+        </div>
+      )}
       {/* Collapsible metadata panel - hidden when showMetadata is false */}
       {showMetadata ? <MetadataPanel metadata={metadata} /> : null}
 
