@@ -171,13 +171,6 @@ export interface Book {
   // Read analytics (maintained by analytics/track)
   read_count?: number;
 
-  // Pre-computed related books (backfilled from entity graph)
-  related_books?: {
-    direct: RelatedBook[];   // Books whose authors are mentioned as entities in this book
-    shared: RelatedBook[];   // Books sharing 5+ entity mentions
-    computed_at: Date;
-  };
-
   // Source work compositional timeline
   source_work_dates?: SourceWorkDateLayer[];
   source_work_dates_meta?: {
