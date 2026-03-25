@@ -683,9 +683,9 @@ function GalleryCard({ item }: { item: GalleryItem }) {
           <p className="text-sm text-white font-medium line-clamp-2 mb-0.5">
             {item.bookTitle}
           </p>
-          {(item.author || item.year) && (
+          {((item.author && item.author !== 'Various') || item.year) && (
             <p className="text-xs text-white/60 line-clamp-1">
-              {item.author}{item.author && item.year ? ', ' : ''}{item.year}
+              {item.author && item.author !== 'Various' ? item.author : ''}{item.author && item.author !== 'Various' && item.year ? ', ' : ''}{item.year}
             </p>
           )}
         </div>
