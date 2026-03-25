@@ -124,56 +124,24 @@ async function getAuthorBooks(authorName: string, entityId: string | null): Prom
     ? { author_entity_id: entityId, hidden: { $ne: true } }
     : { author: { $regex: new RegExp(`^${authorName.replace(/[.*+?^${}()|[\]\\]/g, '\\$&')}$`, 'i') }, hidden: { $ne: true } };
 
-  return db.collection('books').aggregate([
-    { $match: matchCondition },
-    {
-      $lookup: {
-        from: 'pages',
-        let: { book_id: '$id' },
-        pipeline: [
-          { $match: { $expr: { $eq: ['$book_id', '$$book_id'] } } },
-          { $project: { _id: 0, page_type: 1, translation: 1 } },
-        ],
-        as: 'pages_array'
-      }
-    },
-    {
-      $addFields: {
-        pages_count: { $size: '$pages_array' },
-        pages_translated: {
-          $size: {
-            $filter: {
-              input: '$pages_array',
-              as: 'page',
-              cond: {
-                $or: [
-                  { $and: [
-                    { $ne: ['$$page.translation', null] },
-                    { $ne: ['$$page.translation.data', null] },
-                    { $gt: [{ $strLenCP: { $ifNull: ['$$page.translation.data', ''] } }, 50] }
-                  ]},
-                  { $eq: [{ $ifNull: ['$$page.page_type', ''] }, 'blank'] }
-                ]
-              }
-            }
-          }
-        }
-      }
-    },
-    {
-      $addFields: {
-        translation_percent: {
-          $cond: {
-            if: { $gt: [{ $ifNull: ['$pages_ocr', 0] }, 0] },
-            then: { $round: [{ $multiply: [{ $divide: [{ $ifNull: ['$pages_translated', 0] }, { $ifNull: ['$pages_ocr', 0] }] }, 100] }] },
-            else: 0
-          }
-        }
-      }
-    },
-    { $project: { pages_array: 0, _id: 0 } },
-    { $sort: { year: 1, title: 1 } }
-  ]).toArray() as unknown as Book[];
+  // Use cached page counts from books collection (synced by cron) instead of $lookup
+  const books = await db.collection('books').find(matchCondition, {
+    projection: {
+      _id: 0, id: 1, slug: 1, title: 1, display_title: 1, author: 1,
+      language: 1, published: 1, thumbnail: 1,
+      pages_count: 1, pages_ocr: 1, pages_translated: 1, year: 1,
+      summary: 1,
+    }
+  }).sort({ year: 1, title: 1 }).toArray();
+
+  return books.map(b => ({
+    ...b,
+    pages_count: b.pages_count || 0,
+    pages_translated: b.pages_translated || 0,
+    translation_percent: b.pages_ocr > 0
+      ? Math.round((b.pages_translated || 0) / b.pages_ocr * 100)
+      : 0,
+  })) as unknown as Book[];
 }
 
 export async function generateMetadata({ params }: AuthorPageProps): Promise<Metadata> {
