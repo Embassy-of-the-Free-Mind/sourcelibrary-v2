@@ -14,6 +14,7 @@ type Status = 'live' | 'ready' | 'limited' | 'blocked' | 'planned';
 interface SourceLibrary {
   name: string;
   country: string;
+  url?: string;
   route?: string;
   iiif: string;
   status: Status;
@@ -35,6 +36,7 @@ const sources: SourceLibrary[] = [
   {
     name: 'Internet Archive',
     country: 'USA',
+    url: 'https://archive.org',
     route: '/api/import/ia',
     iiif: 'Custom API',
     status: 'live',
@@ -44,6 +46,7 @@ const sources: SourceLibrary[] = [
   {
     name: 'Gallica (BnF)',
     country: 'France',
+    url: 'https://gallica.bnf.fr',
     route: '/api/import/gallica',
     iiif: 'v2',
     status: 'limited',
@@ -54,6 +57,7 @@ const sources: SourceLibrary[] = [
   {
     name: 'Bodleian Library, Oxford',
     country: 'UK',
+    url: 'https://digital.bodleian.ox.ac.uk',
     route: '/api/import/bodleian',
     iiif: 'v2',
     status: 'live',
@@ -63,6 +67,7 @@ const sources: SourceLibrary[] = [
   {
     name: 'BSB Munich (MDZ)',
     country: 'Germany',
+    url: 'https://www.digitale-sammlungen.de',
     route: '/api/import/mdz',
     iiif: 'v2',
     status: 'live',
@@ -72,6 +77,7 @@ const sources: SourceLibrary[] = [
   {
     name: 'British Library',
     country: 'UK',
+    url: 'https://www.bl.uk/manuscripts',
     route: '/api/import/bl',
     iiif: 'v3',
     status: 'limited',
@@ -82,6 +88,7 @@ const sources: SourceLibrary[] = [
   {
     name: 'Vatican Apostolic Library',
     country: 'Vatican',
+    url: 'https://digi.vatlib.it',
     route: '/api/import/vatlib',
     iiif: 'v2',
     status: 'live',
@@ -92,6 +99,7 @@ const sources: SourceLibrary[] = [
   {
     name: 'Cambridge University Library',
     country: 'UK',
+    url: 'https://cudl.lib.cam.ac.uk',
     route: '/api/import/cambridge',
     iiif: 'v2',
     status: 'live',
@@ -101,6 +109,7 @@ const sources: SourceLibrary[] = [
   {
     name: 'Austrian National Library (ONB)',
     country: 'Austria',
+    url: 'https://www.onb.ac.at/en/digital-library',
     route: '/api/import/onb',
     iiif: 'v2',
     status: 'live',
@@ -110,6 +119,7 @@ const sources: SourceLibrary[] = [
   {
     name: 'HAB Wolfenbüttel',
     country: 'Germany',
+    url: 'https://diglib.hab.de',
     route: '/api/import/hab',
     iiif: 'None (OAI-PMH)',
     status: 'live',
@@ -120,6 +130,7 @@ const sources: SourceLibrary[] = [
   {
     name: 'Staatsbibliothek zu Berlin',
     country: 'Germany',
+    url: 'https://digital.staatsbibliothek-berlin.de',
     route: '/api/import/sbb',
     iiif: 'v2',
     status: 'live',
@@ -129,6 +140,7 @@ const sources: SourceLibrary[] = [
   {
     name: 'e-rara (Swiss libraries)',
     country: 'Switzerland',
+    url: 'https://www.e-rara.ch',
     route: '/api/import/e-rara',
     iiif: 'v2',
     status: 'live',
@@ -138,6 +150,7 @@ const sources: SourceLibrary[] = [
   {
     name: 'Wellcome Collection',
     country: 'UK',
+    url: 'https://wellcomecollection.org/collections',
     route: '/api/import/wellcome',
     iiif: 'v2',
     status: 'live',
@@ -147,6 +160,7 @@ const sources: SourceLibrary[] = [
   {
     name: 'Library of Congress',
     country: 'USA',
+    url: 'https://www.loc.gov/collections',
     route: '/api/import/loc',
     iiif: 'Custom API',
     status: 'live',
@@ -156,6 +170,7 @@ const sources: SourceLibrary[] = [
   {
     name: 'Europeana',
     country: 'EU',
+    url: 'https://www.europeana.eu',
     route: '/api/import/europeana',
     iiif: 'Aggregator',
     status: 'live',
@@ -165,6 +180,7 @@ const sources: SourceLibrary[] = [
   {
     name: 'Yale Beinecke Library',
     country: 'USA',
+    url: 'https://collections.library.yale.edu',
     route: '/api/import/yale',
     iiif: 'v3',
     status: 'live',
@@ -174,6 +190,7 @@ const sources: SourceLibrary[] = [
   {
     name: 'Harvard Houghton Library',
     country: 'USA',
+    url: 'https://curiosity.lib.harvard.edu',
     route: '/api/import/harvard',
     iiif: 'v2',
     status: 'live',
@@ -183,6 +200,7 @@ const sources: SourceLibrary[] = [
   {
     name: 'Penn Schoenberg Collection',
     country: 'USA',
+    url: 'https://openn.library.upenn.edu',
     route: '/api/import/penn',
     iiif: 'v2',
     status: 'live',
@@ -192,6 +210,7 @@ const sources: SourceLibrary[] = [
   {
     name: 'Huntington Library',
     country: 'USA',
+    url: 'https://hdl.huntington.org',
     route: '/api/import/huntington',
     iiif: 'v2',
     status: 'live',
@@ -201,6 +220,7 @@ const sources: SourceLibrary[] = [
   {
     name: 'Getty Research Institute',
     country: 'USA',
+    url: 'https://www.getty.edu/research',
     route: '/api/import/getty',
     iiif: 'v3',
     status: 'live',
@@ -210,6 +230,7 @@ const sources: SourceLibrary[] = [
   {
     name: 'Kyoto University RMDA',
     country: 'Japan',
+    url: 'https://rmda.kulib.kyoto-u.ac.jp',
     route: '/api/import/kyoto',
     iiif: 'v3',
     status: 'live',
@@ -219,6 +240,7 @@ const sources: SourceLibrary[] = [
   {
     name: 'NDL Japan',
     country: 'Japan',
+    url: 'https://dl.ndl.go.jp',
     route: '/api/import/iiif',
     iiif: 'v2',
     status: 'live',
@@ -228,6 +250,7 @@ const sources: SourceLibrary[] = [
   {
     name: 'Embassy of the Free Mind',
     country: 'Netherlands',
+    url: 'https://embassyofthefreemind.com',
     route: '/api/import/pdf',
     iiif: 'PDF',
     status: 'live',
@@ -237,6 +260,7 @@ const sources: SourceLibrary[] = [
   {
     name: 'CMC Prins Frederik — Kloss Collection',
     country: 'Netherlands',
+    url: 'https://www.cmcdenhaag.nl',
     route: '/api/import/pdf',
     iiif: 'PDF',
     status: 'live',
@@ -246,6 +270,7 @@ const sources: SourceLibrary[] = [
   {
     name: 'John Rylands Library, Manchester',
     country: 'UK',
+    url: 'https://www.digitalcollections.manchester.ac.uk',
     route: '/api/import/iiif',
     iiif: 'v2',
     status: 'live',
@@ -255,6 +280,7 @@ const sources: SourceLibrary[] = [
   {
     name: 'Google Books',
     country: 'USA',
+    url: 'https://books.google.com',
     route: '/api/import/google-books',
     iiif: 'IA mirror',
     status: 'live',
@@ -266,6 +292,7 @@ const sources: SourceLibrary[] = [
   {
     name: 'SLUB Dresden',
     country: 'Germany',
+    url: 'https://digital.slub-dresden.de',
     iiif: 'OAI-PMH',
     status: 'live',
     holdings: '650K records (OAI-PMH)',
@@ -275,6 +302,7 @@ const sources: SourceLibrary[] = [
   {
     name: 'Heidelberg University Library',
     country: 'Germany',
+    url: 'https://digi.ub.uni-heidelberg.de',
     iiif: 'v3',
     status: 'live',
     holdings: '67K records (OAI-PMH)',
@@ -283,6 +311,7 @@ const sources: SourceLibrary[] = [
   {
     name: 'Göttingen SUB',
     country: 'Germany',
+    url: 'https://gdz.sub.uni-goettingen.de',
     iiif: 'OAI-PMH',
     status: 'live',
     holdings: '87K records (OAI-PMH)',
@@ -292,6 +321,7 @@ const sources: SourceLibrary[] = [
   {
     name: 'Biblissima',
     country: 'France',
+    url: 'https://portail.biblissima.fr',
     iiif: 'Aggregator',
     status: 'live',
     holdings: '112K records',
@@ -302,6 +332,7 @@ const sources: SourceLibrary[] = [
   {
     name: 'National Library of Israel',
     country: 'Israel',
+    url: 'https://www.nli.org.il/en/digitized-collections',
     iiif: 'v2 (gated)',
     status: 'planned',
     holdings: '~5M items',
@@ -311,6 +342,7 @@ const sources: SourceLibrary[] = [
   {
     name: 'Korean National Library',
     country: 'South Korea',
+    url: 'https://www.nl.go.kr/EN',
     iiif: 'None',
     status: 'planned',
     holdings: '~11M items',
@@ -320,6 +352,7 @@ const sources: SourceLibrary[] = [
   {
     name: 'Trove (NLA Australia)',
     country: 'Australia',
+    url: 'https://trove.nla.gov.au',
     iiif: 'None',
     status: 'planned',
     holdings: '1,000+ partner institutions',
@@ -329,6 +362,7 @@ const sources: SourceLibrary[] = [
   {
     name: 'Jagiellonian Library, Krakow',
     country: 'Poland',
+    url: 'https://jbc.bj.uj.edu.pl',
     iiif: 'None (OAI-PMH)',
     status: 'planned',
     holdings: '~4M items',
@@ -338,6 +372,7 @@ const sources: SourceLibrary[] = [
   {
     name: 'VHMML (Hill Museum)',
     country: 'USA (global MSS)',
+    url: 'https://www.vhmml.org',
     iiif: 'v2 (gated)',
     status: 'planned',
     holdings: '~350,000 MSS',
@@ -347,6 +382,7 @@ const sources: SourceLibrary[] = [
   {
     name: 'Chester Beatty Library',
     country: 'Ireland',
+    url: 'https://viewer.cbl.ie',
     iiif: 'v2',
     status: 'planned',
     holdings: '~6,000 items',
@@ -356,6 +392,7 @@ const sources: SourceLibrary[] = [
   {
     name: 'Columbia University RBML',
     country: 'USA',
+    url: 'https://dlc.library.columbia.edu',
     iiif: 'v2',
     status: 'planned',
     holdings: '~500,000 items',
@@ -365,6 +402,7 @@ const sources: SourceLibrary[] = [
   {
     name: 'DREAMSEA (via HMML)',
     country: 'Indonesia / SE Asia',
+    url: 'https://dreamsea.co',
     iiif: 'Likely (HMML)',
     status: 'planned',
     holdings: '16+ Indonesian sites',
@@ -374,6 +412,7 @@ const sources: SourceLibrary[] = [
   {
     name: 'NPM Taiwan',
     country: 'Taiwan',
+    url: 'https://www.npm.gov.tw/en',
     iiif: 'None',
     status: 'planned',
     holdings: '~700,000 items',
@@ -383,6 +422,7 @@ const sources: SourceLibrary[] = [
   {
     name: 'Waseda University',
     country: 'Japan',
+    url: 'https://www.wul.waseda.ac.jp/kotenseki/index_en.html',
     iiif: 'Unknown',
     status: 'planned',
     holdings: '~300,000 items',
@@ -394,6 +434,7 @@ const sources: SourceLibrary[] = [
   {
     name: 'Marciana Library, Venice',
     country: 'Italy',
+    url: 'https://marciana.venezia.sbn.it',
     iiif: 'None',
     status: 'blocked',
     holdings: '~13,000 MSS',
@@ -403,6 +444,7 @@ const sources: SourceLibrary[] = [
   {
     name: 'Qatar Digital Library',
     country: 'Qatar',
+    url: 'https://www.qdl.qa',
     iiif: 'None (blocked)',
     status: 'blocked',
     holdings: '~25,000 items',
@@ -412,6 +454,7 @@ const sources: SourceLibrary[] = [
   {
     name: 'Leiden University',
     country: 'Netherlands',
+    url: 'https://digitalcollections.universiteitleiden.nl',
     iiif: 'Islandora',
     status: 'blocked',
     holdings: '~200,000 items',
@@ -421,6 +464,7 @@ const sources: SourceLibrary[] = [
   {
     name: 'BNE (Spain)',
     country: 'Spain',
+    url: 'https://www.bne.es/en/collections',
     iiif: 'Unknown',
     status: 'blocked',
     holdings: '~30M items',
@@ -430,6 +474,7 @@ const sources: SourceLibrary[] = [
   {
     name: 'National Library of China',
     country: 'China',
+    url: 'https://www.nlc.cn',
     iiif: 'None',
     status: 'blocked',
     holdings: '~37M items',
@@ -439,6 +484,7 @@ const sources: SourceLibrary[] = [
   {
     name: 'Russian National Library',
     country: 'Russia',
+    url: 'https://www.nlr.ru',
     iiif: 'None',
     status: 'blocked',
     holdings: '~36M items',
@@ -448,6 +494,7 @@ const sources: SourceLibrary[] = [
   {
     name: 'S\u00fcleymaniye Library, Istanbul',
     country: 'Turkey',
+    url: 'https://yazmalar.gov.tr',
     iiif: 'None',
     status: 'blocked',
     holdings: '~70,000 MSS',
@@ -457,6 +504,7 @@ const sources: SourceLibrary[] = [
   {
     name: 'Mount Athos',
     country: 'Greece',
+    url: 'https://www.mountathos.gr',
     iiif: 'None',
     status: 'blocked',
     holdings: '~45,000 MSS',
@@ -466,6 +514,7 @@ const sources: SourceLibrary[] = [
   {
     name: 'Royal Danish Library (KB)',
     country: 'Denmark',
+    url: 'https://www.kb.dk/en',
     iiif: 'None',
     status: 'blocked',
     holdings: '~30M items',
@@ -475,6 +524,7 @@ const sources: SourceLibrary[] = [
   {
     name: 'NYPL',
     country: 'USA',
+    url: 'https://digitalcollections.nypl.org',
     iiif: 'v2 (gated)',
     status: 'blocked',
     holdings: '~900,000 digitized',
@@ -484,6 +534,7 @@ const sources: SourceLibrary[] = [
   {
     name: 'Morgan Library',
     country: 'USA',
+    url: 'https://www.themorgan.org/collection',
     iiif: 'None',
     status: 'blocked',
     holdings: '~350,000 items',
@@ -493,6 +544,7 @@ const sources: SourceLibrary[] = [
   {
     name: 'Warburg Institute',
     country: 'UK',
+    url: 'https://warburg.sas.ac.uk',
     iiif: 'None',
     status: 'blocked',
     holdings: '~350,000 photos',
@@ -502,6 +554,7 @@ const sources: SourceLibrary[] = [
   {
     name: 'Princeton University Library',
     country: 'USA',
+    url: 'https://dpul.princeton.edu',
     iiif: 'v2 (gated)',
     status: 'blocked',
     holdings: '~7M items',
@@ -511,6 +564,7 @@ const sources: SourceLibrary[] = [
   {
     name: 'Folger Shakespeare Library',
     country: 'USA',
+    url: 'https://www.folger.edu/explore/digital-collections',
     iiif: 'v2 (gated)',
     status: 'blocked',
     holdings: '~260,000 items',
@@ -520,6 +574,7 @@ const sources: SourceLibrary[] = [
   {
     name: 'Trinity College Dublin',
     country: 'Ireland',
+    url: 'https://digitalcollections.tcd.ie',
     iiif: 'v2 (gated)',
     status: 'blocked',
     holdings: '~6M items',
@@ -529,6 +584,7 @@ const sources: SourceLibrary[] = [
   {
     name: 'National Library of Scotland',
     country: 'UK',
+    url: 'https://digital.nls.uk',
     iiif: 'None',
     status: 'blocked',
     holdings: '~24M items',
@@ -540,6 +596,7 @@ const sources: SourceLibrary[] = [
   {
     name: 'BL Endangered Archives',
     country: 'UK (global)',
+    url: 'https://eap.bl.uk',
     iiif: 'v3 (via BL)',
     status: 'limited',
     holdings: 'Hundreds of projects',
@@ -549,6 +606,7 @@ const sources: SourceLibrary[] = [
   {
     name: 'Perpustakaan Nasional RI',
     country: 'Indonesia',
+    url: 'https://khastanah.perpusnas.go.id',
     iiif: 'None',
     status: 'blocked',
     holdings: 'Unknown',
@@ -580,7 +638,18 @@ export default function SourcesPage() {
           {items.map((s, i) => (
             <tr key={i} className="border-b border-stone-200 align-top">
               <td className="py-2.5 pr-3 font-medium text-stone-900">
-                {s.name}
+                {s.url ? (
+                  <a
+                    href={s.url}
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    className="underline decoration-stone-300 hover:decoration-stone-600 hover:text-stone-700 transition-colors"
+                  >
+                    {s.name}
+                  </a>
+                ) : (
+                  s.name
+                )}
                 {s.route && (
                   <span className="block text-xs text-stone-400 font-mono mt-0.5">{s.route}</span>
                 )}
