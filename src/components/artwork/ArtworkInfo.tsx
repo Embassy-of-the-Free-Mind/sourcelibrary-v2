@@ -1,5 +1,4 @@
 import Link from 'next/link';
-import { Suspense } from 'react';
 import { Book } from '@/lib/types';
 import ArtworkHero from './ArtworkHero';
 import { Calendar, MapPin, Ruler, Palette, ExternalLink, Heart, Share2, Quote } from 'lucide-react';
@@ -193,14 +192,14 @@ export default function ArtworkInfo({ book, collections, prevWork, nextWork }: A
           </div>
         )}
 
-        {/* Cross-reference: books by this author */}
-        <Suspense fallback={null}>
+        {/* Cross-reference: books by this author (pre-computed) */}
+        {(book as any).author_cross_ref && (
           <AuthorCrossReference
             author={book.author}
-            currentBookId={book.id}
+            crossRef={(book as any).author_cross_ref}
             context="artwork"
           />
-        </Suspense>
+        )}
 
         {/* Provenance & Source */}
         <div className="card p-6">

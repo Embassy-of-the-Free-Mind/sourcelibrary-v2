@@ -593,14 +593,14 @@ async function BookInfo({ id }: { id: string }) {
                 </Suspense>
               )}
 
-              {/* Cross-reference: artworks by this author */}
-              <Suspense fallback={null}>
+              {/* Cross-reference: artworks by this author (pre-computed) */}
+              {(book as any).author_cross_ref && (
                 <AuthorCrossReference
                   author={book.author}
-                  currentBookId={book.id}
+                  crossRef={(book as any).author_cross_ref}
                   context="book"
                 />
-              </Suspense>
+              )}
             </div>
           </div>
         </div>

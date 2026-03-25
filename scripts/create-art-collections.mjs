@@ -118,7 +118,6 @@ const COLLECTIONS = [
     color: '#3a3a3a',
     order: 12,
     artistMatch: ['Hans Holbein the Younger'],
-    titleMatch: /vanitas|memento|ars moriendi|death|danse macabre|totentanz/i,
   },
   {
     slug: 'portraits-tradition',
@@ -136,7 +135,6 @@ const COLLECTIONS = [
     description: `Orpheus descends to the underworld and returns — the original katabasis. Psyche's trials lead to union with Eros — the soul's journey to the divine, as Apuleius tells it. Circe transforms men with her pharmakeia. Prometheus steals fire from the gods.\n\nThese myths are not decorative — they are the narrative theology of the ancient mystery traditions. Every Renaissance Neoplatonist read them as allegories of spiritual transformation. Ficino translated the Orphic Hymns. Apuleius's Golden Ass encodes an Isiac initiation. The paintings here visualize the same philosophical arguments Source Library's texts make in words.`,
     color: '#6a4e8a',
     order: 14,
-    titleMatch: /orpheus|eurydice|psyche|cupid.*psyche|eros.*psyche|circe|prometheus|apollo.*daphne|narcissus|leda.*swan|europa|apuleius|golden ass|persephone|proserpina|hecate|cassandra|pythia|delphi|sibyl|oracle|bacchus|dionys/i,
   },
   {
     slug: 'kabbalah-sacred-geometry',
@@ -145,7 +143,6 @@ const COLLECTIONS = [
     description: `The Tree of Life — ten sephirot mapped onto the body of God and the structure of creation. The vesica piscis, the ouroboros, the labyrinth. Diagrams that claim to show the hidden geometry of reality.\n\nThese images circulated alongside the Kabbalistic and Hermetic texts Source Library translates — visual arguments for a cosmos built on number, proportion, and sacred pattern.`,
     color: '#2a4a6a',
     order: 15,
-    titleMatch: /tree of life|sephir|kabbal|cabbal|ouroboros|vesica|sacred geometr|labyrinth|mandala/i,
   },
   {
     slug: 'medieval-illuminations',
@@ -155,7 +152,6 @@ const COLLECTIONS = [
     color: '#8a5a2a',
     order: 16,
     artistMatch: ['Hildegard von Bingen', 'Lambert of Saint-Omer', 'Herrad of Landsberg'],
-    titleMatch: /voynich|hortus deliciarum|liber floridus|mappae? mundi|bestiar|book of kells|scivias|ripley scroll/i,
   },
   {
     slug: 'esoteric-engravers',
@@ -174,7 +170,6 @@ const COLLECTIONS = [
     color: '#3a4a3a',
     order: 18,
     artistMatch: ['Hans Baldung Grien', 'Albrecht Altdorfer', 'Matthias Grünewald'],
-    titleMatch: /witch|sabbath|isenheim|temptation/i,
   },
   {
     slug: 'venetian-mystery',
@@ -209,12 +204,7 @@ async function main() {
     if (col.categoryMatch?.length) {
       orConditions.push({ commons_categories: { $in: col.categoryMatch }, resource_type: { $exists: true } });
     }
-    // Title/description regex match
-    if (col.titleMatch) {
-      orConditions.push({ title: { $regex: col.titleMatch }, resource_type: { $exists: true } });
-      orConditions.push({ commons_description: { $regex: col.titleMatch }, resource_type: { $exists: true } });
-      orConditions.push({ commons_title: { $regex: col.titleMatch }, resource_type: { $exists: true } });
-    }
+    // NOTE: Title/regex matching removed — use classify-artworks-gemini.mjs for collection assignment
 
     const query = orConditions.length === 1 ? orConditions[0] : { $or: orConditions };
     const matchingArtworks = await books.find(query, { projection: { id: 1, slug: 1, thumbnail: 1, thumbnail_blob: 1 } }).toArray();
