@@ -41,7 +41,10 @@ async function syncPageCounts(db) {
         pages_ocr: {
           $sum: {
             $cond: [
-              { $gt: [{ $strLenCP: { $ifNull: ['$ocr.data', ''] } }, 0] },
+              { $and: [
+                { $eq: [{ $type: '$ocr.data' }, 'string'] },
+                { $gt: [{ $strLenCP: '$ocr.data' }, 0] },
+              ] },
               1, 0,
             ],
           },
@@ -49,7 +52,14 @@ async function syncPageCounts(db) {
         pages_translated: {
           $sum: {
             $cond: [
-              { $gt: [{ $strLenCP: { $ifNull: ['$translation.data', ''] } }, 0] },
+              { $or: [
+                { $and: [
+                  { $eq: [{ $type: '$translation.data' }, 'string'] },
+                  { $gt: [{ $strLenCP: '$translation.data' }, 0] },
+                ] },
+                // Blank pages don't need translation — count as done
+                { $eq: [{ $ifNull: ['$page_type', ''] }, 'blank'] },
+              ] },
               1, 0,
             ],
           },
