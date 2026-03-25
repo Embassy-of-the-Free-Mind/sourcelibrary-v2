@@ -1,6 +1,12 @@
+import { createHash } from 'crypto';
 import { getDb } from './mongodb';
 import { DEFAULT_PROMPTS, ENGLISH_MODERNIZATION_PROMPT } from './types';
 import type { PromptType, PromptReference } from './types';
+
+/** Compute md5 hash of prompt content for provenance tracking */
+export function promptContentHash(content: string): string {
+  return createHash('md5').update(content).digest('hex');
+}
 
 /**
  * Result of looking up a prompt - includes both the text and a reference for storage
@@ -63,35 +69,41 @@ export async function getPrompt(
     }
 
     if (prompt) {
+      const content = prompt.content as string;
       return {
-        text: prompt.content as string,
+        text: content,
         reference: {
           id: prompt._id?.toString() || 'unknown',
           name: prompt.name as string,
           version: (prompt.version as number) || 1,
+          content_hash: (prompt.content_hash as string) || promptContentHash(content),
         },
       };
     }
 
     // Fallback to hardcoded defaults if no prompts in DB
     console.warn(`[prompts] No prompt found for type=${type}, using hardcoded default`);
+    const fallbackText = DEFAULT_PROMPTS[type];
     return {
-      text: DEFAULT_PROMPTS[type],
+      text: fallbackText,
       reference: {
         id: 'hardcoded',
         name: `Default ${type}`,
         version: 0,
+        content_hash: promptContentHash(fallbackText),
       },
     };
   } catch (error) {
     // On any DB error, fall back to hardcoded defaults
     console.error('[prompts] Error fetching prompt:', error);
+    const fallbackText = DEFAULT_PROMPTS[type];
     return {
-      text: DEFAULT_PROMPTS[type],
+      text: fallbackText,
       reference: {
         id: 'hardcoded',
         name: `Default ${type}`,
         version: 0,
+        content_hash: promptContentHash(fallbackText),
       },
     };
   }

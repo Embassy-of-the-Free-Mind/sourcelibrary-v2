@@ -445,7 +445,7 @@ function findSourceLibrary(ustcEdition, slLookup) {
 
 async function fetchUstcBatch(language, yearStart, yearEnd, offset, limit = 1000) {
   const url = new URL(`${SUPABASE_URL}/rest/v1/ustc_editions`);
-  url.searchParams.set('select', 'id,title,author_1,year,language_1,place,format,classification_1');
+  url.searchParams.set('select', 'id,sn,title,author_1,year,language_1,place,format,classification_1');
   if (language) url.searchParams.set('language_1', `eq.${language}`);
   url.searchParams.set('year', `gte.${yearStart}`);
   url.searchParams.set('and', `(year.lte.${yearEnd})`);
@@ -547,7 +547,7 @@ async function buildCoverage(db, scanLookup, translationLookup, slLookup, author
         const sl = findSourceLibrary(edition, slLookup);
 
         const doc = {
-          ustc_id: edition.id,
+          ustc_id: edition.sn,
           title: edition.title || '',
           author: edition.author_1 || '',
           author_surname: surname || '',

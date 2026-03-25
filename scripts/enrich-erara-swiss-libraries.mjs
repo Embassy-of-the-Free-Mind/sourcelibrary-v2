@@ -1,14 +1,10 @@
 #!/usr/bin/env node
 /**
- * Enrich e-rara books with metadata from IIIF manifests.
+ * Enrich e-rara books with specific Swiss holding library names.
+ * Fetches IIIF manifests one at a time (1 req/s) and extracts
+ * the library from logo.service.@id.
  *
- * Extracts from each manifest:
- * - contributing_library + shelfmark (from "Besitzende Institution")
- * - physical_description (from "Umfang")
- * - imprint (from "Impressum")
- * - DOI (from "DOI" metadata field)
- *
- * Runs at 1 req/s to respect e-rara rate limits.
+ * Designed to run from Hetzner (European server, ~5 hours for 17K books).
  *
  * Usage:
  *   node scripts/enrich-erara-swiss-libraries.mjs
@@ -18,7 +14,6 @@ import { MongoClient } from 'mongodb';
 
 const DRY_RUN = process.env.DRY_RUN === '1';
 
-// Fallback: logo URL → library name (for manifests missing "Besitzende Institution")
 const LOGO_MAP = {
   'http://www.ub.unibas.ch': 'Universitätsbibliothek Basel',
   'http://www.zb.uzh.ch': 'Zentralbibliothek Zürich',
@@ -39,27 +34,20 @@ const LOGO_MAP = {
   'http://www.ag.ch/kantonsbibliothek': 'Kantonsbibliothek Aargau',
 };
 
-function resolveLogoLibrary(logoUrl) {
+function resolveLibrary(logoUrl) {
   if (!logoUrl) return null;
+  // Direct match
   if (LOGO_MAP[logoUrl]) return LOGO_MAP[logoUrl];
+  // Hostname match
   try {
     const host = new URL(logoUrl.startsWith('http') ? logoUrl : `http://${logoUrl}`).hostname;
     for (const [pattern, name] of Object.entries(LOGO_MAP)) {
       try {
-        const ph = new URL(pattern.startsWith('http') ? pattern : `http://${pattern}`).hostname;
-        if (host === ph) return name;
+        const patternHost = new URL(pattern.startsWith('http') ? pattern : `http://${pattern}`).hostname;
+        if (host === patternHost) return name;
       } catch { /* skip */ }
     }
   } catch { /* skip */ }
-  return null;
-}
-
-function getMetadataValue(metadata, label) {
-  const entry = metadata?.find(m => m.label === label);
-  if (!entry) return null;
-  const val = entry.value;
-  if (typeof val === 'string') return val.trim();
-  if (typeof val === 'object' && val['@value']) return val['@value'].trim();
   return null;
 }
 
@@ -76,7 +64,8 @@ async function main() {
 
   console.log(`${DRY_RUN ? 'DRY RUN — ' : ''}${books.length} e-rara books to enrich`);
   const startTime = Date.now();
-  let updated = 0, failed = 0, noInstitution = 0;
+  let updated = 0, failed = 0, unmapped = 0;
+  const unmappedLogos = {};
 
   for (let i = 0; i < books.length; i++) {
     const book = books[i];
@@ -87,73 +76,66 @@ async function main() {
       });
 
       if (resp.status === 429 || resp.status === 503) {
-        console.log(`  [${i}] Rate limited (${resp.status}), waiting 60s...`);
-        await new Promise(r => setTimeout(r, 60000));
-        failed++;
+        // Rate limited — wait 30s and retry once
+        console.log(`  [${i}] Rate limited (${resp.status}), waiting 30s...`);
+        await new Promise(r => setTimeout(r, 30000));
+        const retry = await fetch(book.image_source.iiif_manifest, {
+          signal: AbortSignal.timeout(15000),
+          headers: { 'Accept': 'application/json' },
+        });
+        if (!retry.ok) { failed++; continue; }
+        const manifest = await retry.json();
+        const logoUrl = manifest?.logo?.service?.['@id'];
+        const library = resolveLibrary(logoUrl);
+        if (library && !DRY_RUN) {
+          await db.collection('books').updateOne({ _id: book._id }, { $set: { 'image_source.contributing_library': library } });
+          updated++;
+        } else if (!library) {
+          unmapped++;
+          if (logoUrl) unmappedLogos[logoUrl] = (unmappedLogos[logoUrl] || 0) + 1;
+        }
+        await new Promise(r => setTimeout(r, 2000));
         continue;
       }
 
       if (!resp.ok) { failed++; await new Promise(r => setTimeout(r, 1000)); continue; }
       const manifest = await resp.json();
-      const metadata = manifest.metadata || [];
+      const logoUrl = manifest?.logo?.service?.['@id'];
+      const library = resolveLibrary(logoUrl);
 
-      // Extract fields
-      const besitzende = getMetadataValue(metadata, 'Besitzende Institution');
-      const umfang = getMetadataValue(metadata, 'Umfang');
-      const impressum = getMetadataValue(metadata, 'Impressum');
-      const doi = getMetadataValue(metadata, 'DOI');
-
-      // Parse "Besitzende Institution" → library name + shelfmark
-      // Format: "ETH-Bibliothek Zürich, Rar 6998" or "Zentralbibliothek Zürich, 43.194,2 | G"
-      let library = null;
-      let shelfmark = null;
-      if (besitzende) {
-        const commaIdx = besitzende.indexOf(',');
-        if (commaIdx > 0) {
-          library = besitzende.substring(0, commaIdx).trim();
-          shelfmark = besitzende.substring(commaIdx + 1).trim();
-        } else {
-          library = besitzende.trim();
+      if (library) {
+        if (!DRY_RUN) {
+          await db.collection('books').updateOne({ _id: book._id }, { $set: { 'image_source.contributing_library': library } });
         }
+        updated++;
+      } else {
+        unmapped++;
+        if (logoUrl) unmappedLogos[logoUrl] = (unmappedLogos[logoUrl] || 0) + 1;
       }
-
-      // Fallback to logo if no "Besitzende Institution"
-      if (!library) {
-        const logoUrl = manifest?.logo?.service?.['@id'];
-        library = resolveLogoLibrary(logoUrl);
-        if (!library) noInstitution++;
-      }
-
-      // Build update
-      const $set = {};
-      if (library) $set['image_source.contributing_library'] = library;
-      if (shelfmark) $set['image_source.shelfmark'] = shelfmark;
-      if (umfang) $set['dublin_core.dc_format'] = umfang;
-      if (impressum && !$set['dublin_core.dc_publisher']) $set['dublin_core.dc_publisher'] = impressum;
-      if (doi && !doi.startsWith('http')) $set['image_source.doi'] = doi;
-
-      if (Object.keys($set).length > 0 && !DRY_RUN) {
-        await db.collection('books').updateOne({ _id: book._id }, { $set });
-      }
-      if (library) updated++;
-
     } catch {
       failed++;
     }
 
-    // Progress every 100
-    if ((i + 1) % 100 === 0) {
+    // Progress every 500
+    if ((i + 1) % 500 === 0) {
       const elapsed = ((Date.now() - startTime) / 1000 / 60).toFixed(1);
       const rate = ((i + 1) / ((Date.now() - startTime) / 1000)).toFixed(1);
-      console.log(`  ${i + 1}/${books.length} — ${updated} enriched, ${failed} failed, ${noInstitution} no institution — ${elapsed}min (${rate} req/s)`);
+      console.log(`  ${i + 1}/${books.length} — ${updated} updated, ${failed} failed, ${unmapped} unmapped — ${elapsed}min (${rate} req/s)`);
     }
 
     // 1 request per second
     await new Promise(r => setTimeout(r, 1000));
   }
 
+  if (Object.keys(unmappedLogos).length > 0) {
+    console.log('\nUnmapped logo URLs:');
+    for (const [url, count] of Object.entries(unmappedLogos).sort((a, b) => b[1] - a[1])) {
+      console.log(`  ${count}  ${url}`);
+    }
+  }
+
   const elapsed = ((Date.now() - startTime) / 1000 / 60).toFixed(1);
-  console.log(`\nDone in ${elapsed} minutes. Enriched: ${updated}, Failed: ${failed}, No institution: ${noInstitution}`);
+  console.log(`\nDone in ${elapsed} minutes. Updated: ${updated}, Failed: ${failed}, Unmapped: ${unmapped}`);
   await client.close();
 }
 
