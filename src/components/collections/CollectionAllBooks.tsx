@@ -32,6 +32,8 @@ interface CollectionAllBooksProps {
   compactBooks: BookItem[];
   total: number;
   languages: { lang: string; count: number }[];
+  /** 'visual_art' collections use "works" instead of "books" */
+  collectionType?: string;
 }
 
 export default function CollectionAllBooks({
@@ -39,7 +41,10 @@ export default function CollectionAllBooks({
   compactBooks,
   total,
   languages,
+  collectionType,
 }: CollectionAllBooksProps) {
+  const itemLabel = collectionType === 'visual_art' ? 'works' : 'books';
+  const itemLabelSingular = collectionType === 'visual_art' ? 'work' : 'book';
   const [expanded, setExpanded] = useState(false);
   const [books, setBooks] = useState<BookItem[]>([]);
   const [loading, setLoading] = useState(false);
@@ -109,10 +114,10 @@ export default function CollectionAllBooks({
       <div className="flex flex-wrap items-end justify-between gap-4 mb-6">
         <div>
           <h2 className="text-2xl sm:text-3xl text-primary font-display">
-            All Books
+            All {collectionType === 'visual_art' ? 'Works' : 'Books'}
           </h2>
           <p className="text-sm text-muted mt-1">
-            {(expanded ? fetchedTotal : total).toLocaleString()} books in this collection
+            {(expanded ? fetchedTotal : total).toLocaleString()} {itemLabel} in this collection
           </p>
         </div>
 
@@ -205,7 +210,7 @@ export default function CollectionAllBooks({
               <span className="text-sm font-medium text-primary group-hover:text-accent-rust transition-colors block">
                 See all {total.toLocaleString()}
               </span>
-              <span className="text-xs text-muted">books</span>
+              <span className="text-xs text-muted">{itemLabel}</span>
             </div>
           </button>
         )}

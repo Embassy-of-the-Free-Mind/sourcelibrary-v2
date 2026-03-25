@@ -12,6 +12,7 @@ import { createCronLogger } from '@/lib/cron-logger';
 import { logAuditEvent } from '@/lib/audit-logger';
 import { syncBookToGitHub } from '@/lib/git-sync';
 import { deduplicateOverlappingPages } from '@/lib/page-split/dedup-overlapping-pages';
+import { detectAndRemoveGhostPages } from '@/lib/page-split/detect-ghost-pages';
 import { getAdaptiveLimits } from '@/lib/adaptive-limits';
 
 export const maxDuration = 300;
@@ -689,6 +690,7 @@ export async function GET(request: NextRequest) {
     stale_retranslate: 0,
     thumbnails_fixed: 0,
     dedup_removed: 0,
+    ghost_removed: 0,
     errors: [] as string[],
   };
 
@@ -855,8 +857,11 @@ export async function GET(request: NextRequest) {
                   book_id: book.id,
                   $or: [
                     { page_type: { $in: IMAGE_CANDIDATE_PAGE_TYPES } },
-                    // Include pages without page_type (old OCR) that have detected-images tags
-                    { page_type: { $exists: false }, 'ocr.data': { $regex: '<detected-images>' } },
+                    // OCR v8+: only extract pages with significant images
+                    { 'ocr.data': { $regex: 'significance="high"' } },
+                    // Pre-v8 OCR: any image tag triggers extraction
+                    { 'ocr.data': { $regex: '<detected-images>' } },
+                    { 'ocr.data': { $regex: '<image-desc>' } },
                   ],
                 },
                 { projection: { id: 1 } }
@@ -1540,6 +1545,19 @@ export async function GET(request: NextRequest) {
             } catch (dedupErr) {
               // Non-blocking — don't fail the pipeline for dedup errors
               console.error(`[pipeline] Dedup failed for ${book.id}:`, dedupErr);
+            }
+
+            // Ghost page detection (non-blocking)
+            // IA manifests sometimes have trailing ghost canvases that OCR identically.
+            // Compares last 10 pages by Jaccard word similarity, trims if 3+ match >70%.
+            try {
+              const ghostResult = await detectAndRemoveGhostPages(db, book.id);
+              if (ghostResult && ghostResult.pagesRemoved > 0) {
+                log.ghost_removed = (log.ghost_removed || 0) + ghostResult.pagesRemoved;
+                logger.action('ghost_pages_removed', ghostResult.pagesRemoved);
+              }
+            } catch (ghostErr) {
+              console.error(`[pipeline] Ghost detection failed for ${book.id}:`, ghostErr);
             }
           }
         }

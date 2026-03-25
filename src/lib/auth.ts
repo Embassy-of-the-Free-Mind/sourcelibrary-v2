@@ -152,6 +152,18 @@ export const { handlers, signIn, signOut, auth } = NextAuth({
   },
   events: {
     async createUser({ user }) {
+      // Timestamp new users (MongoDBAdapter doesn't set createdAt)
+      try {
+        const client = await clientPromise;
+        const db = client.db(dbName);
+        await db.collection('users').updateOne(
+          { email: user.email },
+          { $set: { createdAt: new Date() } }
+        );
+      } catch (error) {
+        console.error('[auth] Failed to set createdAt:', error);
+      }
+
       // Auto-add new users to Resend audience + send welcome email
       if (user.email && process.env.RESEND_API_KEY) {
         try {

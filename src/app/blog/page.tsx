@@ -25,6 +25,17 @@ interface BlogPost {
 
 const posts: BlogPost[] = [
   {
+    slug: 'rashi-ocr',
+    title: 'The Rashi Problem: When AI OCR Hallucinates in Hebrew',
+    subtitle: 'Gemini reads Arabic, Sanskrit, and Chinese fine. On Rashi script it hallucinates — and our quality metrics gave it a passing grade.',
+    date: '24 March 2026',
+    readTime: '10 min read',
+    tag: 'Technical',
+    tagColor: 'bg-stone-100 text-stone-600',
+    image: 'https://images.sourcelibrary.org/archived/6990630be7b7642c081de08b/8.jpg',
+    imageAlt: 'Page from the Zohar, Cremona 1558 edition, showing dense Rashi script in Aramaic',
+  },
+  {
     slug: 'translation-rate',
     title: 'How Many Renaissance Books Get Translated Each Year?',
     subtitle: 'We queried 13,862 records from the UNESCO Index Translationum and 11 other catalogs. The answer is smaller than anyone guesses.',

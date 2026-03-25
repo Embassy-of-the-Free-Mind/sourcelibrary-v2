@@ -3,6 +3,7 @@ import { getDb } from '@/lib/mongodb';
 import { ObjectId } from 'mongodb';
 import type { Prompt } from '@/lib/types';
 import { withAuth } from '@/lib/auth-helpers';
+import { promptContentHash } from '@/lib/prompts';
 
 // Helper to extract variables from prompt text
 function extractVariables(text: string): string[] {
@@ -77,12 +78,14 @@ export const PATCH = withAuth(async (
       );
     }
 
-    // Create new version
+    // Create new version (prompts are immutable — always a new document)
+    const newContent = promptText || existingPrompt.content as string;
     const newPrompt = {
       name: existingPrompt.name as string,
       type: existingPrompt.type as string,
       version: newVersion,
-      content: promptText || existingPrompt.content as string,
+      content: newContent,
+      content_hash: promptContentHash(newContent),
       variables: promptText ? extractVariables(promptText) : existingPrompt.variables as string[],
       description: description || existingPrompt.description as string | undefined,
       is_default: setAsDefault ?? existingPrompt.is_default as boolean,

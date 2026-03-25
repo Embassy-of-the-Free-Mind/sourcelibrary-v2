@@ -448,6 +448,8 @@ export default async function CollectionDetailPage({ params }: Props) {
 
   const { collection, books, highlights: curatedHighlightsData, galleryImages, total, mentionedBooks, parentCollection, galleryCollectionSlug, exhibition, exhibitionBooks, childCollections } = data;
   const languages = (collection.languages || []).filter((l: { count: number }) => l.count > 2);
+  const isArtCollection = collection.collection_type === 'visual_art';
+  const itemLabel = isArtCollection ? 'works' : 'books';
 
   // Group curated highlights by tier — cap each to avoid heavy pages crashing mobile Safari
   const tier1 = curatedHighlightsData.filter((h: { tier: number }) => h.tier === 1).slice(0, 6);
@@ -547,7 +549,7 @@ export default async function CollectionDetailPage({ params }: Props) {
           )}
 
           <div className="flex flex-wrap items-center gap-4 text-sm text-white/50">
-            <span>{total.toLocaleString('en-US')} books</span>
+            <span>{total.toLocaleString('en-US')} {itemLabel}</span>
             {languages.length > 0 && (
               <>
                 <span className="w-px h-4 bg-white/20" />
@@ -595,7 +597,7 @@ export default async function CollectionDetailPage({ params }: Props) {
                     <div className="absolute inset-0 flex flex-col justify-end p-3 sm:p-4">
                       {child.book_count ? (
                         <p className="text-white/50 text-xs mb-1 hidden sm:block">
-                          {child.book_count.toLocaleString()} books
+                          {child.book_count.toLocaleString()} {itemLabel}
                         </p>
                       ) : null}
                       <h3 className="font-serif text-sm sm:text-base lg:text-lg text-white font-semibold leading-tight line-clamp-2 group-hover:text-accent-gold transition-colors">
@@ -863,6 +865,7 @@ export default async function CollectionDetailPage({ params }: Props) {
           compactBooks={books}
           total={total}
           languages={languages}
+          collectionType={collection.collection_type}
         />
       </div>
       <SignUpCTA />

@@ -80,7 +80,9 @@ export const POST = withAdminAuth(async (request, session) => {
         return (page.detected_images || [])
           .map((det: Record<string, unknown>, idx: number) => ({ det, idx }))
           .filter(({ det }: { det: Record<string, unknown> }) =>
-            det.bbox && !det.extracted_url &&
+            det && det.bbox && !det.extracted_url &&
+            // Guard: only process real detections (not null-padded or skeleton entries)
+            (det.description || det.detection_source) &&
             (minQuality <= 0 || (typeof det.gallery_quality === 'number' && det.gallery_quality >= minQuality))
           )
           .map(async ({ det, idx }: { det: Record<string, unknown>; idx: number }) => {
@@ -96,8 +98,13 @@ export const POST = withAdminAuth(async (request, session) => {
                 detectionIndex: idx,
               });
 
+              // Guard: only write if a real detection still exists at this index
+              // (prevents MongoDB from null-padding the array if it was modified)
               await db.collection('pages').updateOne(
-                { id: page.id },
+                {
+                  id: page.id,
+                  [`detected_images.${idx}.description`]: { $exists: true },
+                },
                 {
                   $set: {
                     [`detected_images.${idx}.extracted_url`]: result.extractedUrl,

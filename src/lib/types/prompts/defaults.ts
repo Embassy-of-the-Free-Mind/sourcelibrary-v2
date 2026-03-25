@@ -39,6 +39,15 @@ export function extractColumns(ocrText: string): number | undefined {
   return n > 1 ? n : undefined;
 }
 
+/** Extract <script>printed|handwritten|mixed</script> from OCR text. */
+export function extractScriptType(ocrText: string): 'printed' | 'handwritten' | 'mixed' | undefined {
+  const match = ocrText.match(/<script>([\s\S]*?)<\/script>/i);
+  if (!match) return undefined;
+  const type = match[1].trim().toLowerCase();
+  if (type === 'handwritten' || type === 'mixed' || type === 'printed') return type;
+  return undefined;
+}
+
 const VALID_IMAGE_TYPES = new Set([
   'woodcut', 'diagram', 'chart', 'illustration', 'symbol', 'table', 'map',
   'decorative', 'emblem', 'engraving', 'portrait', 'frontispiece', 'musical_score', 'unknown',
