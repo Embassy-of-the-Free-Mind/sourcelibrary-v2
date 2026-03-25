@@ -62,32 +62,28 @@ async function fetchInitialGalleryData(): Promise<GalleryResponse> {
       book_hidden: { $ne: true },
     };
 
-    // Read pre-computed filters from system_config (subjects/year aggs take 20-40s on Atlas)
-    let typesResult: { _id: string }[] = [];
-    let subjectsResult: { _id: string }[] = [];
-    let yearResult: { minYear: number | null; maxYear: number | null }[] = [];
-
-    const cachedFiltersDoc = await db.collection('system_config').findOne({ _id: 'gallery_filters' } as any);
-    if (cachedFiltersDoc?.data) {
-      typesResult = (cachedFiltersDoc.data.types || []).map((t: string) => ({ _id: t }));
-      subjectsResult = (cachedFiltersDoc.data.subjects || []).map((s: string) => ({ _id: s }));
-      yearResult = [cachedFiltersDoc.data.yearRange || { minYear: 1400, maxYear: 1900 }];
-    } else {
-      typesResult = await db.collection('gallery_images').aggregate([
-        { $group: { _id: '$type' } },
-        { $match: { _id: { $ne: null } } },
-        { $sort: { _id: 1 } },
-      ]).toArray() as { _id: string }[];
-      yearResult = [{ minYear: 1400, maxYear: 1900 }];
-    }
-
-    const [items, total] = await Promise.all([
+    // countDocuments takes 20s+ on Atlas — skip it for SSR, use estimatedDocumentCount
+    const [items, total, typesResult, subjectsResult, yearResult] = await Promise.all([
       db.collection('gallery_images')
         .find(filter, { projection: { _id: 0 } })
         .sort({ gallery_quality: -1, book_year: 1, book_id: 1, page_number: 1 })
         .limit(limit)
         .toArray(),
       db.collection('gallery_images').estimatedDocumentCount(),
+      db.collection('gallery_images').aggregate([
+        { $group: { _id: '$type' } },
+        { $match: { _id: { $ne: null } } },
+        { $sort: { _id: 1 } },
+      ]).toArray(),
+      db.collection('gallery_images').aggregate([
+        { $unwind: '$metadata.subjects' },
+        { $group: { _id: '$metadata.subjects' } },
+        { $sort: { _id: 1 } },
+        { $limit: 50 },
+      ]).toArray(),
+      db.collection('gallery_images').aggregate([
+        { $group: { _id: null, minYear: { $min: '$book_year' }, maxYear: { $max: '$book_year' } } },
+      ]).toArray(),
     ]);
 
     const mappedItems = items.map(doc => ({

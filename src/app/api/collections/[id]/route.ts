@@ -50,7 +50,6 @@ export async function GET(
         };
     if (language) filter.language = language;
     if (q) {
-      // Search title, author, display_title with case-insensitive regex
       const escaped = q.replace(/[.*+?^${}()|[\]\\]/g, '\\$&');
       filter.$or = [
         { title: { $regex: escaped, $options: 'i' } },
@@ -85,8 +84,6 @@ export async function GET(
       quality_score: 1,
     };
 
-    // Use cached book_count — sync-page-counts cron keeps this in sync.
-    // Only do a live count when user is filtering by search or language.
     const total = (q || language)
       ? await db.collection('books').countDocuments(filter)
       : (collection.book_count as number) || 0;
