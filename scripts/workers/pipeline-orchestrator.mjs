@@ -1985,12 +1985,13 @@ async function run() {
           console.log('  SKIP: at in-flight cap, waiting for existing translations to complete');
         }
 
-        const readyForTranslate = effectiveLimit > 0 ? await db.collection('books')
-          .find({ 'pipeline_auto.status': { $in: ['metadata_enriched', 'ft_verified'] } })
-          .sort({ is_first_translation: -1, hidden: 1 })
-          .project({ id: 1, title: 1, pages_count: 1, language: 1, 'pipeline_auto.retry_count': 1 })
-          .limit(effectiveLimit)
-          .toArray() : [];
+        const readyForTranslate = effectiveLimit > 0 ? await db.collection('books').aggregate([
+          { $match: { 'pipeline_auto.status': { $in: ['metadata_enriched', 'ft_verified'] } } },
+          { $addFields: { _latinFirst: { $cond: [{ $eq: ['$language', 'Latin'] }, 0, 1] } } },
+          { $sort: { _latinFirst: 1, is_first_translation: -1, hidden: 1 } },
+          { $project: { id: 1, title: 1, pages_count: 1, language: 1, 'pipeline_auto.retry_count': 1 } },
+          { $limit: effectiveLimit }
+        ]).toArray() : [];
 
         console.log(`  Books ready for translation: ${readyForTranslate.length}`);
 

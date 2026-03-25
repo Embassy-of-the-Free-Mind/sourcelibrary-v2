@@ -52,12 +52,11 @@ interface SearchResult {
   language: string;
   place: string;
   format: string;
-  has_scan: boolean;
   has_iiif_scan: boolean;
   scan_sources: string[];
   scan_quality: string | null;
   iiif_manifest_url: string | null;
-  has_published_translation: boolean;
+  viewer_url: string | null;
   has_english_translation: boolean;
   translation_sources: string[];
   in_source_library: boolean;
@@ -90,10 +89,10 @@ function ustcUrl(ustcId: number): string {
 }
 
 function resultHasScan(r: SearchResult): boolean {
-  return r.has_iiif_scan ?? r.has_scan ?? false;
+  return r.has_iiif_scan ?? false;
 }
 function resultHasTranslation(r: SearchResult): boolean {
-  return r.has_english_translation ?? r.has_published_translation ?? false;
+  return r.has_english_translation ?? false;
 }
 
 function pct(n: number, total: number): string {
@@ -585,6 +584,12 @@ function SearchResultsTable({ results }: { results: SearchResult[] }) {
                       <a href={iiifViewerUrl(r.iiif_manifest_url)} target="_blank" rel="noopener noreferrer"
                         className="text-[#9e4a3a] hover:underline text-xs"
                         title={`View scan (${(r.scan_sources || []).join(', ')})`}>
+                        {r.scan_sources?.[0] || 'view'}
+                      </a>
+                    ) : r.viewer_url ? (
+                      <a href={r.viewer_url} target="_blank" rel="noopener noreferrer"
+                        className="text-[#c9a86c] hover:underline text-xs"
+                        title={`View at source (${(r.scan_sources || []).join(', ')})`}>
                         {r.scan_sources?.[0] || 'view'}
                       </a>
                     ) : (

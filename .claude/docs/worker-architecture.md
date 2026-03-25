@@ -148,7 +148,7 @@ aws lambda update-function-code \
   --zip-file fileb://dist/packages/ocr-processor.zip
 
 aws lambda update-function-code \
-  --function-name sourcelibrary-write-processor \
+  --function-name sourcelibrary-db-write-processor \
   --zip-file fileb://dist/packages/write-processor.zip
 ```
 
@@ -168,7 +168,7 @@ aws sqs create-queue \
 
 # 2. Create Writer Lambda function
 aws lambda create-function \
-  --function-name sourcelibrary-write-processor \
+  --function-name sourcelibrary-db-write-processor \
   --runtime nodejs24.x \
   --handler write-processor.handler \
   --zip-file fileb://dist/packages/write-processor.zip \
@@ -181,7 +181,7 @@ aws lambda create-function \
 
 # 3. Add SQS event source mapping (batch size 10, 5s window)
 aws lambda create-event-source-mapping \
-  --function-name sourcelibrary-write-processor \
+  --function-name sourcelibrary-db-write-processor \
   --event-source-arn <WRITE_RESULTS_QUEUE_ARN> \
   --batch-size 10 \
   --maximum-batching-window-in-seconds 5 \

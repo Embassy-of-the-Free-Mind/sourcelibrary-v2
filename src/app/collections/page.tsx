@@ -37,6 +37,7 @@ interface CollectionDoc {
   featured_images?: FeaturedImage[];
   languages: { lang: string; count: number }[];
   children_count?: number;
+  collection_type?: string;
 }
 
 async function fetchCollections(): Promise<CollectionDoc[]> {
@@ -127,7 +128,7 @@ function CollectionCard({ col }: { col: CollectionDoc }) {
       <div className="absolute inset-0 bg-gradient-to-t from-[rgba(26,22,18,0.85)] via-[rgba(26,22,18,0.35)] to-transparent" />
       <div className="absolute inset-0 flex flex-col justify-end p-3 sm:p-4">
         <p className="text-white/50 text-xs mb-1 hidden sm:block">
-          {col.book_count > 0 ? `${col.book_count.toLocaleString()} books` : ''}
+          {col.book_count > 0 ? `${col.book_count.toLocaleString()} ${col.collection_type === 'visual_art' ? 'works' : 'books'}` : ''}
           {col.children_count ? ` · ${col.children_count} sub-collections` : ''}
         </p>
         <h2 className="font-serif text-sm sm:text-base lg:text-lg text-white font-semibold leading-tight line-clamp-2 group-hover:text-accent-gold transition-colors">

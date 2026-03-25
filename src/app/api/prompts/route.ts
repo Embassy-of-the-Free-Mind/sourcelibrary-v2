@@ -3,6 +3,7 @@ import { getDb } from '@/lib/mongodb';
 import { DEFAULT_PROMPTS, LATIN_PROMPTS, GERMAN_PROMPTS } from '@/lib/types';
 import type { Prompt, PromptType } from '@/lib/types';
 import { withAuth, getSession } from '@/lib/auth-helpers';
+import { promptContentHash } from '@/lib/prompts';
 
 // Helper to extract variables from prompt text
 function extractVariables(text: string): string[] {
@@ -118,6 +119,7 @@ export const POST = withAuth(async (request: NextRequest) => {
       type,
       version: newVersion,
       content: promptText,
+      content_hash: promptContentHash(promptText),
       variables,
       description: description || (latestVersion?.description as string | undefined),
       is_default: setAsDefault || false,
@@ -151,6 +153,7 @@ async function seedDefaultPrompts(db: Awaited<ReturnType<typeof getDb>>) {
       type: 'ocr' as const,
       version: 1,
       content: DEFAULT_PROMPTS.ocr,
+      content_hash: promptContentHash(DEFAULT_PROMPTS.ocr),
       variables: extractVariables(DEFAULT_PROMPTS.ocr),
       description: 'Default OCR prompt for manuscript transcription',
       is_default: true,
@@ -161,6 +164,7 @@ async function seedDefaultPrompts(db: Awaited<ReturnType<typeof getDb>>) {
       type: 'translation' as const,
       version: 1,
       content: DEFAULT_PROMPTS.translation,
+      content_hash: promptContentHash(DEFAULT_PROMPTS.translation),
       variables: extractVariables(DEFAULT_PROMPTS.translation),
       description: 'Default translation prompt for scholarly translation',
       is_default: true,
@@ -171,6 +175,7 @@ async function seedDefaultPrompts(db: Awaited<ReturnType<typeof getDb>>) {
       type: 'summary' as const,
       version: 1,
       content: DEFAULT_PROMPTS.summary,
+      content_hash: promptContentHash(DEFAULT_PROMPTS.summary),
       variables: extractVariables(DEFAULT_PROMPTS.summary),
       description: 'Default summary prompt',
       is_default: true,
@@ -182,6 +187,7 @@ async function seedDefaultPrompts(db: Awaited<ReturnType<typeof getDb>>) {
       type: 'ocr' as const,
       version: 1,
       content: LATIN_PROMPTS.ocr,
+      content_hash: promptContentHash(LATIN_PROMPTS.ocr),
       variables: extractVariables(LATIN_PROMPTS.ocr),
       description: 'OCR prompt optimized for Neo-Latin texts (1450-1700)',
       is_default: false,
@@ -192,6 +198,7 @@ async function seedDefaultPrompts(db: Awaited<ReturnType<typeof getDb>>) {
       type: 'translation' as const,
       version: 1,
       content: LATIN_PROMPTS.translation,
+      content_hash: promptContentHash(LATIN_PROMPTS.translation),
       variables: extractVariables(LATIN_PROMPTS.translation),
       description: 'Translation prompt for Neo-Latin scholarly texts',
       is_default: false,
@@ -203,6 +210,7 @@ async function seedDefaultPrompts(db: Awaited<ReturnType<typeof getDb>>) {
       type: 'ocr' as const,
       version: 1,
       content: GERMAN_PROMPTS.ocr,
+      content_hash: promptContentHash(GERMAN_PROMPTS.ocr),
       variables: extractVariables(GERMAN_PROMPTS.ocr),
       description: 'OCR prompt for Early Modern German/Fraktur texts',
       is_default: false,
@@ -213,6 +221,7 @@ async function seedDefaultPrompts(db: Awaited<ReturnType<typeof getDb>>) {
       type: 'translation' as const,
       version: 1,
       content: GERMAN_PROMPTS.translation,
+      content_hash: promptContentHash(GERMAN_PROMPTS.translation),
       variables: extractVariables(GERMAN_PROMPTS.translation),
       description: 'Translation prompt for Early Modern German texts',
       is_default: false,

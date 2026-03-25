@@ -4,6 +4,7 @@ export interface PromptReference {
   id: string;                   // Prompt document ID
   name: string;                 // Prompt name for quick reference
   version: number;              // Version number
+  content_hash?: string;        // md5 of prompt content — immutable even if DB record is lost
 }
 
 export interface ProcessingPrompts {
@@ -28,6 +29,7 @@ export interface Prompt {
   variables?: string[];                   // Variables used, e.g., ["language"]
   description?: string;                   // Human-readable description
   is_default?: boolean;                   // Is this the default prompt for this type?
+  content_hash?: string;                   // md5 of content — computed on creation, never changes
   created_at?: Date;
   updated_at?: Date;                      // Legacy field
   created_by?: string;                    // User who created this version
