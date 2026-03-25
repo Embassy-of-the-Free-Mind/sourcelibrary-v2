@@ -3,7 +3,7 @@
 import { useState, useEffect, useRef, useCallback, useMemo, memo } from 'react';
 import { toast } from 'sonner';
 import { Grid, type CellComponentProps } from 'react-window';
-import { Heart, ThumbsDown, Loader2, Check, Filter, X, ChevronLeft, ChevronRight, Info, Shuffle, Clock, Grid3X3, LayoutGrid, Square, BookOpen, RotateCcw, ExternalLink } from 'lucide-react';
+import { Heart, ThumbsDown, Loader2, Check, Filter, X, ChevronLeft, ChevronRight, Info, Shuffle, Clock, Grid3X3, LayoutGrid, Square, BookOpen, RotateCcw, ExternalLink, CalendarPlus } from 'lucide-react';
 import type { GalleryItem } from '@/lib/api-client/types/gallery';
 
 const VISITOR_ID_KEY = 'sl_visitor_id';
@@ -351,7 +351,7 @@ export default function CurateClient() {
   const [gridSize, setGridSize] = useState<'sm' | 'md' | 'lg'>('md');
 
   // Sort
-  const [sortMode, setSortMode] = useState<'default' | 'random' | 'likes' | 'time' | 'book'>('default');
+  const [sortMode, setSortMode] = useState<'default' | 'random' | 'likes' | 'time' | 'book' | 'recent'>('default');
   const [randomSeed, setRandomSeed] = useState(0);
 
   // Filters
@@ -782,6 +782,12 @@ export default function CurateClient() {
         if (cmp !== 0) return cmp;
         return (a.pageNumber || 0) - (b.pageNumber || 0);
       });
+    } else if (sortMode === 'recent') {
+      sorted.sort((a, b) => {
+        const aTime = a.firstSyncedAt ? new Date(a.firstSyncedAt).getTime() : 0;
+        const bTime = b.firstSyncedAt ? new Date(b.firstSyncedAt).getTime() : 0;
+        return bTime - aTime; // newest first
+      });
     }
     return sorted;
   }, [images, likedIds, downvotedIds, showLikedOnly, showDownvotedOnly, sortMode, randomSeed]);
@@ -963,6 +969,21 @@ export default function CurateClient() {
             >
               <BookOpen className="w-3.5 h-3.5" />
               By book
+            </button>
+
+            <button
+              onClick={() => setSortMode(s => s === 'recent' ? 'default' : 'recent')}
+              className={`
+                inline-flex items-center gap-1.5 px-3 py-1.5 rounded-md text-sm
+                border transition-colors
+                ${sortMode === 'recent'
+                  ? 'border-accent-rust/30 bg-accent-rust/5 text-accent-rust'
+                  : 'border-border-light text-text-secondary hover:border-border-medium'
+                }
+              `}
+            >
+              <CalendarPlus className="w-3.5 h-3.5" />
+              Recently added
             </button>
 
             {/* Reset sort */}

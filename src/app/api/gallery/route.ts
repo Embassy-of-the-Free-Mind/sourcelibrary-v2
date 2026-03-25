@@ -186,8 +186,8 @@ export async function GET(request: NextRequest) {
           rotation: doc.rotation, extractedUrl: doc.extracted_url,
           thumbnailUrl: doc.thumbnail_url, galleryQuality: doc.gallery_quality,
           confidence: doc.confidence, museumDescription: doc.museum_description,
-          metadata: doc.metadata, likeCount: likeData?.count ?? 0,
-          likedByVisitor: likeData?.liked ?? false,
+          metadata: doc.metadata, firstSyncedAt: doc.first_synced_at || doc.updated_at || null,
+          likeCount: likeData?.count ?? 0, likedByVisitor: likeData?.liked ?? false,
         };
       });
 
@@ -266,6 +266,7 @@ export async function GET(request: NextRequest) {
         confidence: doc.confidence,
         museumDescription: doc.museum_description,
         metadata: doc.metadata,
+        firstSyncedAt: doc.first_synced_at || doc.updated_at || null,
         likeCount: likeData?.count ?? 0,
         likedByVisitor: likeData?.liked ?? false,
       };

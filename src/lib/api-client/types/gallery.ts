@@ -38,6 +38,7 @@ export interface GalleryItem {
   metadata?: ImageMetadata;
   likeCount?: number;
   likedByVisitor?: boolean;
+  firstSyncedAt?: string;
 }
 
 export interface BookInfo {

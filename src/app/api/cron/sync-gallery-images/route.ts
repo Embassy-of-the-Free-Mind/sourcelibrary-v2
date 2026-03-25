@@ -106,6 +106,7 @@ export async function GET(request: NextRequest) {
           book_hidden: '$book.hidden',
           book_provider: '$book.image_source.provider',
           book_rank: 0, // placeholder, recomputed below
+          first_synced_at: new Date(),
           updated_at: new Date(),
         },
       },
@@ -119,11 +120,35 @@ export async function GET(request: NextRequest) {
       },
     ];
 
+    // Save existing first_synced_at values before deleting (so we can restore them)
+    const existingTimestamps = new Map<string, Date>();
+    const existingDocs = await db.collection('gallery_images')
+      .find({ page_id: { $in: pageIds } }, { projection: { id: 1, first_synced_at: 1 } })
+      .toArray();
+    for (const doc of existingDocs) {
+      if (doc.first_synced_at) existingTimestamps.set(doc.id as string, doc.first_synced_at as Date);
+    }
+
     // Delete old gallery_images for these pages first (handles removed images)
     await db.collection('gallery_images').deleteMany({ page_id: { $in: pageIds } });
 
     // Run the merge
     await db.collection('pages').aggregate(pipeline, { allowDiskUse: true }).toArray();
+
+    // Restore first_synced_at for existing images, set it for new ones
+    const allNewDocs = await db.collection('gallery_images')
+      .find({ page_id: { $in: pageIds } }, { projection: { id: 1 } })
+      .toArray();
+    if (allNewDocs.length > 0) {
+      const now = new Date();
+      const timestampOps = allNewDocs.map(doc => ({
+        updateOne: {
+          filter: { id: doc.id },
+          update: { $set: { first_synced_at: existingTimestamps.get(doc.id as string) || now } },
+        },
+      }));
+      await db.collection('gallery_images').bulkWrite(timestampOps);
+    }
 
     // Recompute book_rank for affected books
     for (const bookId of affectedBookIds) {
