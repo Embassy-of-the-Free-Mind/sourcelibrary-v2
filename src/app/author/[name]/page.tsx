@@ -53,83 +53,81 @@ interface AuthorPageProps {
  *   3. Otherwise fall back to raw author string matching
  */
 // eslint-disable-next-line @typescript-eslint/no-explicit-any
-async function resolveAuthor(db: any, slug: string): Promise<{
+/**
+ * Load author page data in a single pass.
+ * Queries system_config for a pre-built author slug→name map (built by sync-worker),
+ * then fetches books by exact author match (indexed) and entity by _id (indexed).
+ * Zero regex, zero collection scans.
+ */
+async function loadAuthorData(db: any, slug: string): Promise<{
   authorName: string;
   entity: AuthorEntity | null;
-  entityId: string | null;
+  books: Book[];
 } | null> {
-  // Fast path: get all distinct authors from indexed field, match slug in JS
-  const authors: string[] = await db.collection('books').distinct('author', {
-    hidden: { $ne: true },
-    author: { $exists: true, $ne: null },
-  });
-  const matchedAuthor = authors.find(a => authorSlug(a) === slug);
-
-  if (!matchedAuthor) return null;
-
-  // Look up entity for bio/dates (by _id, fast)
-  const book = await db.collection('books').findOne(
-    { author: matchedAuthor, hidden: { $ne: true } },
-    { projection: { author_entity_id: 1 } }
+  // Look up author slug→name from system_config cache
+  const config = await db.collection('system_config').findOne(
+    { _id: 'author_slugs' },
+    { projection: { slugs: 1 } }
   );
 
-  if (book?.author_entity_id) {
-    try {
-      const entity = await db.collection('entities').findOne(
-        { _id: new ObjectId(book.author_entity_id) },
-        { projection: { name: 1, canonical_name: 1, description: 1, viaf_id: 1, wikidata_id: 1, wikidata_birth_date: 1, wikidata_death_date: 1 } }
-      );
-      if (entity) {
-        return {
-          authorName: entity.canonical_name || entity.name,
-          entity: entity as AuthorEntity,
-          entityId: book.author_entity_id,
-        };
-      }
-    } catch {
-      // Invalid ObjectId — fall through
-    }
+  let authorName: string | undefined;
+  if (config?.slugs?.[slug]) {
+    authorName = config.slugs[slug];
+  } else {
+    // Fallback: title-case from slug (handles uncached authors until next sync)
+    const guess = slug.split('-').map((w: string) => w.charAt(0).toUpperCase() + w.slice(1)).join(' ');
+    // Verify this author exists with an exact match
+    const check = await db.collection('books').findOne(
+      { author: guess, hidden: { $ne: true } },
+      { projection: { _id: 1 } }
+    );
+    if (check) authorName = guess;
   }
 
-  return {
-    authorName: matchedAuthor,
-    entity: null,
-    entityId: null,
-  };
-}
+  if (!authorName) return null;
 
-/**
- * Get all books by an author.
- * When entityId is available, queries by author_entity_id (catches all name variants).
- * Falls back to regex matching on the raw author string.
- */
-async function getAuthorBooks(authorName: string, entityId: string | null): Promise<Book[]> {
-  const db = await getDb();
-
-  // Build match condition: prefer entity-based lookup
-  // eslint-disable-next-line @typescript-eslint/no-explicit-any
-  const matchCondition: any = entityId
-    ? { author_entity_id: entityId, hidden: { $ne: true } }
-    : { author: { $regex: new RegExp(`^${authorName.replace(/[.*+?^${}()|[\]\\]/g, '\\$&')}$`, 'i') }, hidden: { $ne: true } };
-
-  // Use cached page counts from books collection (synced by cron) instead of $lookup
-  const books = await db.collection('books').find(matchCondition, {
-    projection: {
-      _id: 0, id: 1, slug: 1, title: 1, display_title: 1, author: 1,
-      language: 1, published: 1, thumbnail: 1,
-      pages_count: 1, pages_ocr: 1, pages_translated: 1, year: 1,
-      summary: 1,
+  // Fetch books + entity in parallel
+  const booksPromise = db.collection('books').find(
+    { author: authorName, hidden: { $ne: true } },
+    {
+      projection: {
+        _id: 0, id: 1, slug: 1, title: 1, display_title: 1, author: 1,
+        author_entity_id: 1, language: 1, published: 1, thumbnail: 1,
+        pages_count: 1, pages_ocr: 1, pages_translated: 1, year: 1,
+        summary: 1,
+      }
     }
-  }).sort({ year: 1, title: 1 }).toArray();
+  ).sort({ year: 1, title: 1 }).toArray();
 
-  return books.map(b => ({
-    ...b,
-    pages_count: b.pages_count || 0,
-    pages_translated: b.pages_translated || 0,
-    translation_percent: b.pages_ocr > 0
-      ? Math.round((b.pages_translated || 0) / b.pages_ocr * 100)
-      : 0,
-  })) as unknown as Book[];
+  const books = await booksPromise;
+  if (books.length === 0) return null;
+
+  // Resolve entity from first book with author_entity_id
+  let entity: AuthorEntity | null = null;
+  const entityBookId = books.find((b: any) => b.author_entity_id)?.author_entity_id;
+  if (entityBookId) {
+    try {
+      entity = await db.collection('entities').findOne(
+        { _id: new ObjectId(entityBookId) },
+        { projection: { name: 1, canonical_name: 1, description: 1, viaf_id: 1, wikidata_id: 1, wikidata_birth_date: 1, wikidata_death_date: 1 } }
+      ) as AuthorEntity | null;
+    } catch { /* invalid ObjectId */ }
+  }
+
+  const displayName = entity?.canonical_name || entity?.name || authorName;
+
+  return {
+    authorName: displayName,
+    entity,
+    books: books.map((b: any) => ({
+      ...b,
+      pages_count: b.pages_count || 0,
+      pages_translated: b.pages_translated || 0,
+      translation_percent: b.pages_ocr > 0
+        ? Math.round((b.pages_translated || 0) / b.pages_ocr * 100)
+        : 0,
+    })),
+  };
 }
 
 export async function generateMetadata({ params }: AuthorPageProps): Promise<Metadata> {
@@ -166,12 +164,10 @@ export default async function AuthorPage({ params }: AuthorPageProps) {
   }
 
   const db = await getDb();
-  const resolved = await resolveAuthor(db, name);
-  if (!resolved) notFound();
+  const data = await loadAuthorData(db, name);
+  if (!data) notFound();
 
-  const { authorName, entity, entityId } = resolved;
-  const books = await getAuthorBooks(authorName, entityId);
-  if (books.length === 0) notFound();
+  const { authorName, entity, books } = data;
 
   // Year range
   const years = books.map(b => b.published).filter(Boolean).map(p => parseInt(p)).filter(y => !isNaN(y));
