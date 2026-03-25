@@ -2,7 +2,7 @@
 /* Critical fonts: UI + body text — swap to show content ASAP */
 @import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600&family=Newsreader:ital,opsz,wght@0,6..72,400;0,6..72,500;0,6..72,600;1,6..72,400;1,6..72,500&display=swap');
 /* Secondary fonts: headings + non-Latin scripts — optional to avoid layout shift */
-@import url('https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;500;600;700&family=Cormorant+Garamond:ital,wght@0,300;0,400;0,500;0,600;1,400;1,500&family=Noto+Sans+Arabic:wght@400;500;600&family=Noto+Sans+Hebrew:wght@400;500;600&family=Noto+Naskh+Arabic:wght@400;500;600;700&display=optional');
+@import url('https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;500;600;700&family=Cormorant+Garamond:ital,wght@0,300;0,400;0,500;0,600;1,400;1,500&family=Noto+Sans+Arabic:wght@400;500;600&family=Noto+Sans+Hebrew:wght@400;500;600&family=Noto+Naskh+Arabic:wght@400;500;600;700&family=Noto+Rashi+Hebrew:wght@400;500;600;700&display=optional');
 
 @import "tailwindcss";
 
@@ -506,6 +506,11 @@ mark {
 [lang="he"],
 [lang="arc"] {
   font-family: 'Noto Sans Hebrew', 'David', 'Times New Roman', serif;
+}
+
+/* Rashi script - semi-cursive Hebrew typeface used in Talmud, Zohar, rabbinic commentaries */
+.font-rashi {
+  font-family: 'Noto Rashi Hebrew', 'Noto Sans Hebrew', 'David', serif;
 }
 
 /* RTL prose styling for manuscripts */

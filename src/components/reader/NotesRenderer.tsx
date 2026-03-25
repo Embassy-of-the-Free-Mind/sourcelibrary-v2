@@ -818,7 +818,10 @@ export default function NotesRenderer({ text, className = '', showMetadata = tru
 
   // RTL-specific classes
   const rtlClasses = isRTL ? 'rtl' : '';
-  const fontClass = langCode === 'ar' ? 'font-arabic' : langCode === 'he' || langCode === 'arc' ? 'font-hebrew' : '';
+  const isRashi = metadata.scriptType?.toLowerCase().includes('rashi');
+  const fontClass = langCode === 'ar' ? 'font-arabic' :
+    isRashi ? 'font-rashi' :
+    langCode === 'he' || langCode === 'arc' ? 'font-hebrew' : '';
 
   return (
     <div
