@@ -1,0 +1,268 @@
+{
+  "timestamp": "2026-03-24T09:14:23.858Z",
+  "config": {
+    "limit": 200,
+    "threshold": 0.92,
+    "pagesPerBook": 3
+  },
+  "stats": {
+    "booksFingerprinted": 200,
+    "pairsFound": 11,
+    "clustersFound": 7
+  },
+  "clusters": [
+    {
+      "size": 3,
+      "existingWorkIds": [
+        "turba-philosophorum"
+      ],
+      "books": [
+        {
+          "bookId": "69751588a88d83c830d99e16",
+          "title": "The Art of Gold-making",
+          "author": "Morienus",
+          "year": 1593,
+          "language": "Latin",
+          "work_id": null
+        },
+        {
+          "bookId": "6975158ea88d83c830d99e3c",
+          "title": "Ancient Authors of the Gold-Making Art",
+          "author": "anonymous",
+          "year": 1572,
+          "language": "Latin",
+          "work_id": "turba-philosophorum"
+        },
+        {
+          "bookId": "c62120da-38f1-441a-9f1b-2e698c0c887c",
+          "title": "The Assembly of the Philosophers",
+          "author": "Various; ed. P. Perna",
+          "year": 1572,
+          "language": "Latin",
+          "work_id": "turba-philosophorum"
+        }
+      ]
+    },
+    {
+      "size": 3,
+      "existingWorkIds": [
+        "plotinus-enneads"
+      ],
+      "books": [
+        {
+          "bookId": "6984e84f9404d58b48aca521",
+          "title": "The Enneads",
+          "author": "Plotinus",
+          "year": 1580,
+          "language": "Latin",
+          "work_id": "plotinus-enneads"
+        },
+        {
+          "bookId": "6952c9ca77f38f6761bc3062",
+          "title": "The Enneads",
+          "author": "Plotinus | Ficino, Marsilio (trans.)",
+          "year": 1580,
+          "language": "Greek",
+          "work_id": "plotinus-enneads"
+        },
+        {
+          "bookId": "6952c9c777f38f6761bc2ffd",
+          "title": "Enneads (1580 Greek-Latin, Ficino trans.)",
+          "author": "Plotinus | Ficino, Marsilio (trans.)",
+          "year": 1580,
+          "language": "Latin",
+          "work_id": "plotinus-enneads"
+        }
+      ]
+    },
+    {
+      "size": 2,
+      "existingWorkIds": [],
+      "books": [
+        {
+          "bookId": "699068ea2e4efe9106769e41",
+          "title": "The Great Compendium of Astrology by Parashara, Latter Section",
+          "author": "Parashara; Khemraj ed.",
+          "year": 1926,
+          "language": "Sanskrit",
+          "work_id": null
+        },
+        {
+          "bookId": "69905f4440bc3a0478efb9b2",
+          "title": "The Great Compendium of Horoscopy",
+          "author": "Varahamihira",
+          "year": 966,
+          "language": "Sanskrit",
+          "work_id": null
+        }
+      ]
+    },
+    {
+      "size": 2,
+      "existingWorkIds": [],
+      "books": [
+        {
+          "bookId": "6952dac677f38f6761bc683a",
+          "title": "The History of the Two Worlds",
+          "author": "Robert Fludd",
+          "year": 1617,
+          "language": "Latin",
+          "work_id": null
+        },
+        {
+          "bookId": "69528662ab34727b1f04c6f8",
+          "title": "On the Harmony of the World",
+          "author": "Francesco Giorgi (Zorzi)",
+          "year": 1525,
+          "language": "Latin",
+          "work_id": null
+        }
+      ]
+    },
+    {
+      "size": 2,
+      "existingWorkIds": [],
+      "books": [
+        {
+          "bookId": "adefe2d5-88a7-4595-9885-903a93abee51",
+          "title": "The Complete Works of the Divine Plato",
+          "author": "Plato; trans. Marsilio Ficino",
+          "year": 1590,
+          "language": "Latin",
+          "work_id": null
+        },
+        {
+          "bookId": "694f397023a1d0c2ad1d8814",
+          "title": "The Complete Works of Plato Translated by Marsilio Ficino",
+          "author": "Plato; Ficino, Marsilio (translator)",
+          "year": 1518,
+          "language": "Latin",
+          "work_id": null
+        }
+      ]
+    },
+    {
+      "size": 2,
+      "existingWorkIds": [],
+      "books": [
+        {
+          "bookId": "6975158da88d83c830d99e38",
+          "title": "The Golden Fleece (Aureum Vellus)",
+          "author": "Trissmosin, Salomon",
+          "year": 1708,
+          "language": "German",
+          "work_id": null
+        },
+        {
+          "bookId": "69593045a41e40e9146a4cc2",
+          "title": "Aureum Vellus (Golden Treasure Chamber)",
+          "author": "Solomon Trismosin / Paracelsus",
+          "year": 1598,
+          "language": "Latin",
+          "work_id": null
+        }
+      ]
+    },
+    {
+      "size": 2,
+      "existingWorkIds": [],
+      "books": [
+        {
+          "bookId": "6952d05477f38f6761bc511e",
+          "title": "Royal Chemistry",
+          "author": "Croll, Oswald",
+          "year": 1609,
+          "language": "Latin",
+          "work_id": null
+        },
+        {
+          "bookId": "6952949cb184004c526a1ea2",
+          "title": "Forest of Forests",
+          "author": "Bacon, Francis",
+          "year": 1648,
+          "language": "Latin",
+          "work_id": null
+        }
+      ]
+    }
+  ],
+  "pairs": [
+    {
+      "bookA": "6952c9ca77f38f6761bc3062",
+      "titleA": "The Enneads",
+      "bookB": "6952c9c777f38f6761bc2ffd",
+      "titleB": "Enneads (1580 Greek-Latin, Ficino trans.)",
+      "similarity": 0.9922594649871143
+    },
+    {
+      "bookA": "6975158da88d83c830d99e38",
+      "titleA": "The Golden Fleece (Aureum Vellus)",
+      "bookB": "69593045a41e40e9146a4cc2",
+      "titleB": "Aureum Vellus (Golden Treasure Chamber)",
+      "similarity": 0.9875073002464941
+    },
+    {
+      "bookA": "69751588a88d83c830d99e16",
+      "titleA": "The Art of Gold-making",
+      "bookB": "6975158ea88d83c830d99e3c",
+      "titleB": "Ancient Authors of the Gold-Making Art",
+      "similarity": 0.9711234238136474
+    },
+    {
+      "bookA": "6984e84f9404d58b48aca521",
+      "titleA": "The Enneads",
+      "bookB": "6952c9c777f38f6761bc2ffd",
+      "titleB": "Enneads (1580 Greek-Latin, Ficino trans.)",
+      "similarity": 0.9667936636576624
+    },
+    {
+      "bookA": "69751588a88d83c830d99e16",
+      "titleA": "The Art of Gold-making",
+      "bookB": "c62120da-38f1-441a-9f1b-2e698c0c887c",
+      "titleB": "The Assembly of the Philosophers",
+      "similarity": 0.9647372021213307
+    },
+    {
+      "bookA": "6975158ea88d83c830d99e3c",
+      "titleA": "Ancient Authors of the Gold-Making Art",
+      "bookB": "c62120da-38f1-441a-9f1b-2e698c0c887c",
+      "titleB": "The Assembly of the Philosophers",
+      "similarity": 0.963457976229146
+    },
+    {
+      "bookA": "6984e84f9404d58b48aca521",
+      "titleA": "The Enneads",
+      "bookB": "6952c9ca77f38f6761bc3062",
+      "titleB": "The Enneads",
+      "similarity": 0.9625429567632896
+    },
+    {
+      "bookA": "adefe2d5-88a7-4595-9885-903a93abee51",
+      "titleA": "The Complete Works of the Divine Plato",
+      "bookB": "694f397023a1d0c2ad1d8814",
+      "titleB": "The Complete Works of Plato Translated by Marsilio Ficino",
+      "similarity": 0.9565139249000908
+    },
+    {
+      "bookA": "6952d05477f38f6761bc511e",
+      "titleA": "Royal Chemistry",
+      "bookB": "6952949cb184004c526a1ea2",
+      "titleB": "Forest of Forests",
+      "similarity": 0.947852133286161
+    },
+    {
+      "bookA": "6952dac677f38f6761bc683a",
+      "titleA": "The History of the Two Worlds",
+      "bookB": "69528662ab34727b1f04c6f8",
+      "titleB": "On the Harmony of the World",
+      "similarity": 0.9250118780242326
+    },
+    {
+      "bookA": "699068ea2e4efe9106769e41",
+      "titleA": "The Great Compendium of Astrology by Parashara, Latter Section",
+      "bookB": "69905f4440bc3a0478efb9b2",
+      "titleB": "The Great Compendium of Horoscopy",
+      "similarity": 0.9206961953753621
+    }
+  ]
+}

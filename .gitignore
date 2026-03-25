@@ -74,6 +74,9 @@ scripts/output/
 tools/
 .env*.local
 
+# MCP config (user-specific paths)
+.mcp.json
+
 # MCP server secrets and build
 mcp-server/.mcpregistry_*
 mcp-server/node_modules/
