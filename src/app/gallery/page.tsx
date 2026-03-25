@@ -62,13 +62,14 @@ async function fetchInitialGalleryData(): Promise<GalleryResponse> {
       book_hidden: { $ne: true },
     };
 
+    // countDocuments takes 20s+ on Atlas — skip it for SSR, use estimatedDocumentCount
     const [items, total, typesResult, subjectsResult, yearResult] = await Promise.all([
       db.collection('gallery_images')
         .find(filter, { projection: { _id: 0 } })
         .sort({ gallery_quality: -1, book_year: 1, book_id: 1, page_number: 1 })
         .limit(limit)
         .toArray(),
-      db.collection('gallery_images').countDocuments(filter),
+      db.collection('gallery_images').estimatedDocumentCount(),
       db.collection('gallery_images').aggregate([
         { $group: { _id: '$type' } },
         { $match: { _id: { $ne: null } } },

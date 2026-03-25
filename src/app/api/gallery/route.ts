@@ -153,24 +153,29 @@ export async function GET(request: NextRequest) {
       ? { _id: 0, score: { $meta: 'textScore' } }
       : { _id: 0 };
 
-    // Run query and count in parallel.
-    // Use estimatedDocumentCount when filter is broad (no book/type/collection filters)
-    // to avoid expensive collection scans on Atlas.
-    const isBroadFilter = !bookId && !collectionBookIds && !libraryBookIds && !imageType
-      && !subjectFilter && !figureFilter && !symbolFilter && !searchQuery
-      && yearStart === null && yearEnd === null;
+    // countDocuments with compound filters takes 20s+ on Atlas (no covering index).
+    // Strategy: run find first, then only count if we need pagination info.
+    // For first page with full results, total = offset + items.length (or +1 if full page).
+    const items = await db.collection('gallery_images')
+      .find(filter, { projection })
+      .sort(sortOrder)
+      .skip(offset)
+      .limit(limit + 1) // fetch one extra to know if there are more
+      .toArray();
 
-    const [items, total] = await Promise.all([
-      db.collection('gallery_images')
-        .find(filter, { projection })
-        .sort(sortOrder)
-        .skip(offset)
-        .limit(limit)
-        .toArray(),
-      isBroadFilter
-        ? db.collection('gallery_images').estimatedDocumentCount()
-        : db.collection('gallery_images').countDocuments(filter),
-    ]);
+    const hasMore = items.length > limit;
+    if (hasMore) items.pop(); // remove the extra probe item
+
+    // Avoid countDocuments entirely — derive total from what we know
+    let total: number;
+    if (!hasMore && offset === 0) {
+      total = items.length; // we have everything
+    } else if (!hasMore) {
+      total = offset + items.length; // last page
+    } else {
+      // There are more results — use estimated count as approximation
+      total = await db.collection('gallery_images').estimatedDocumentCount();
+    }
 
     // Fetch like counts (and visitor's liked status) for these images
     const visitorId = searchParams.get('visitor_id');
