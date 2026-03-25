@@ -290,11 +290,11 @@ export default function GalleryClient({ initialData, initialCollections, bookCol
         breadcrumbs={[{ label: 'Image Gallery', href: '/gallery' }]}
       />
 
-      <div className="px-4 sm:px-6 lg:px-8 py-6">
+      <div className="px-4 sm:px-6 lg:px-8 py-6 overflow-x-hidden">
         {/* Search & Filter Bar */}
-        <div className="flex flex-wrap items-center gap-3 mb-6">
+        <div className="flex flex-col sm:flex-row flex-wrap items-stretch sm:items-center gap-3 mb-6">
           {/* Image Search */}
-          <form onSubmit={handleImageSearch} className="flex-1 min-w-[200px] max-w-md relative">
+          <form onSubmit={handleImageSearch} className="flex-1 min-w-0 sm:min-w-[200px] max-w-md relative">
             <Search className="absolute left-3 top-1/2 -translate-y-1/2 w-4 h-4 text-stone-400" />
             <input
               type="text"
@@ -306,7 +306,7 @@ export default function GalleryClient({ initialData, initialCollections, bookCol
           </form>
 
           {/* Book Search */}
-          <div ref={bookSearchRef} className="relative min-w-[200px] max-w-sm flex-1">
+          <div ref={bookSearchRef} className="relative min-w-0 sm:min-w-[200px] max-w-sm flex-1">
             <BookOpen className="absolute left-3 top-1/2 -translate-y-1/2 w-4 h-4 text-stone-400" />
             <input
               type="text"
