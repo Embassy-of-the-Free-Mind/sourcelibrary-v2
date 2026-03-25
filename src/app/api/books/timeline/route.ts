@@ -67,7 +67,16 @@ export async function GET(request: NextRequest) {
       return NextResponse.json({ decade: decadeNum, books: mapped, total, offset });
     }
 
-    // Overview mode: decade buckets with language breakdown
+    // Overview mode — read pre-computed snapshot from system_config (live agg takes 30-80s)
+    const cached = await db.collection('system_config')
+      .findOne({ _id: 'timeline_overview' } as any)
+      .catch(() => null);
+
+    if (cached?.data) {
+      return NextResponse.json(cached.data);
+    }
+
+    // Fallback: compute live (will likely timeout on Atlas, but try)
     const pipeline = [
       { $match: baseMatch },
       {
@@ -80,9 +89,8 @@ export async function GET(request: NextRequest) {
       { $sort: { _id: 1 as const } },
     ];
 
-    const rawDecades = await db.collection('books').aggregate(pipeline, { maxTimeMS: 10000 }).toArray();
+    const rawDecades = await db.collection('books').aggregate(pipeline, { maxTimeMS: 15000 }).toArray();
 
-    // Build decade buckets with language breakdown
     const decades = rawDecades.map(d => {
       const langCounts: Record<string, number> = {};
       for (const lang of d.languages) {
@@ -92,11 +100,9 @@ export async function GET(request: NextRequest) {
       const languages = Object.entries(langCounts)
         .map(([lang, count]) => ({ lang, count }))
         .sort((a, b) => b.count - a.count);
-
       return { decade: d._id, count: d.count, languages };
     });
 
-    // Summary stats
     const total = decades.reduce((sum, d) => sum + d.count, 0);
     const allYears = decades.map(d => d.decade);
     const yearRange = {
@@ -104,7 +110,6 @@ export async function GET(request: NextRequest) {
       max: allYears.length ? allYears[allYears.length - 1] + 9 : 0,
     };
 
-    // Top languages across all decades
     const globalLangCounts: Record<string, number> = {};
     for (const d of decades) {
       for (const l of d.languages) {
@@ -115,29 +120,13 @@ export async function GET(request: NextRequest) {
       .map(([lang, count]) => ({ lang, count }))
       .sort((a, b) => b.count - a.count);
 
-    // Filter options — read from cache, fall back to computing from decade results
-    let languages: string[];
-    let collections: string[];
-
+    // Read filter options from cache
     const cachedFilters = await db.collection('system_config')
       .findOne({ _id: 'timeline_filters' } as any)
       .catch(() => null);
 
-    if (cachedFilters?.data) {
-      languages = cachedFilters.data.languages || [];
-      collections = cachedFilters.data.collections || [];
-    } else {
-      // Derive languages from the decade data we already computed (free)
-      const langSet = new Set<string>();
-      for (const d of rawDecades) {
-        for (const lang of d.languages) {
-          if (lang) langSet.add(lang);
-        }
-      }
-      languages = [...langSet];
-      // Collections require a separate query — skip if no cache to avoid timeout
-      collections = [];
-    }
+    const languages = cachedFilters?.data?.languages || [];
+    const collections = cachedFilters?.data?.collections || [];
 
     return NextResponse.json({
       decades,
