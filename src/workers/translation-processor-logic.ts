@@ -5,7 +5,7 @@ import { performTranslation } from '@/lib/ai';
 import { DEFAULT_MODEL, PROMPT_VERSION } from '@/lib/types';
 import { SKIP_TRANSLATION_PAGE_TYPES, extractPageType } from '@/lib/types/prompts/defaults';
 import { classifyError } from '@/lib/errors';
-import { extractTranslationMetadata } from '@/lib/translation-metadata';
+import { extractTranslationMetadata, propagateOcrWarnings } from '@/lib/translation-metadata';
 import { createRevision } from '@/lib/page-revisions';
 import { sendWriteResult } from '@/lib/sqs-client';
 import { retryDbWrite } from '@/lib/retry-utils';
@@ -198,9 +198,12 @@ export async function processTranslationPage(message: PageProcessingMessage) {
 
     const durationMs = Date.now() - startTime;
 
+    // Propagate OCR quality warnings to translation so readers see them on both sides
+    const finalTranslation = propagateOcrWarnings(page.ocr.data, translationResult.text);
+
     // DIRECT WRITE: Save translation to page — required for FIFO context chain.
     // The next page in the queue reads this translation for continuity.
-    const translationMeta = extractTranslationMetadata(translationResult.text);
+    const translationMeta = extractTranslationMetadata(finalTranslation);
     // Compute prompt hash from the actual prompt used (for provenance)
     const isEnglish = (job.config.language || 'Latin').toLowerCase() === 'english';
     const { ENGLISH_MODERNIZATION_PROMPT: engPrompt, DEFAULT_PROMPTS } = await import('@/lib/types');
@@ -211,8 +214,8 @@ export async function processTranslationPage(message: PageProcessingMessage) {
       {
         $set: {
           translation: {
-            data: translationResult.text,
-            content_hash: contentHash(translationResult.text),
+            data: finalTranslation,
+            content_hash: contentHash(finalTranslation),
             language: 'English',
             model: modelId,
             updated_at: new Date(),
