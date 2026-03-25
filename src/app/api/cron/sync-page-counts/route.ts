@@ -35,7 +35,10 @@ export async function GET(request: NextRequest) {
           pages_ocr: {
             $sum: {
               $cond: [
-                { $gt: [{ $strLenCP: { $ifNull: ['$ocr.data', ''] } }, 0] },
+                { $and: [
+                  { $eq: [{ $type: '$ocr.data' }, 'string'] },
+                  { $gt: [{ $strLenCP: '$ocr.data' }, 0] },
+                ] },
                 1, 0
               ]
             }
@@ -44,7 +47,10 @@ export async function GET(request: NextRequest) {
             $sum: {
               $cond: [
                 { $or: [
-                  { $gt: [{ $strLenCP: { $ifNull: ['$translation.data', ''] } }, 0] },
+                  { $and: [
+                    { $eq: [{ $type: '$translation.data' }, 'string'] },
+                    { $gt: [{ $strLenCP: '$translation.data' }, 0] },
+                  ] },
                   { $in: [{ $ifNull: ['$page_type', ''] }, SKIP_TRANSLATION_PAGE_TYPES] },
                 ] },
                 1, 0
