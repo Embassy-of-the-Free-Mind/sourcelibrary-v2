@@ -292,16 +292,21 @@ async function main() {
           continue;
         }
 
-        // Count
+        // Count domains (always written)
         for (const d of validated.knowledge_domain) {
           domainCounts[d] = (domainCounts[d] || 0) + 1;
         }
-        for (const t of validated.tradition) {
-          traditionCounts[t] = (traditionCounts[t] || 0) + 1;
+
+        // Only count tradition if it will actually be written (Phase 1 didn't set one)
+        const willWriteTradition = validated.tradition.length > 0 && !book.faceted_tags?.tradition?.length;
+        if (willWriteTradition) {
+          for (const t of validated.tradition) {
+            traditionCounts[t] = (traditionCounts[t] || 0) + 1;
+          }
         }
 
         stats.tagged++;
-        if (validated.tradition.length > 0) {
+        if (willWriteTradition) {
           stats.withTradition++;
         } else {
           stats.domainOnly++;
@@ -314,12 +319,9 @@ async function main() {
             'faceted_tags.tagged_at': new Date(),
           };
 
-          if (validated.tradition.length > 0) {
-            // Only write tradition if Gemini found one AND Phase 1 didn't already set it
-            if (!book.faceted_tags?.tradition?.length) {
-              update['faceted_tags.tradition'] = validated.tradition;
-              update['faceted_tags.tag_sources.tradition'] = 'gemini';
-            }
+          if (willWriteTradition) {
+            update['faceted_tags.tradition'] = validated.tradition;
+            update['faceted_tags.tag_sources.tradition'] = 'gemini';
           }
 
           await db.collection('books').updateOne(
