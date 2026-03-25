@@ -80,7 +80,7 @@ export async function GET(request: NextRequest) {
       { $sort: { _id: 1 as const } },
     ];
 
-    const rawDecades = await db.collection('books').aggregate(pipeline).toArray();
+    const rawDecades = await db.collection('books').aggregate(pipeline, { maxTimeMS: 10000 }).toArray();
 
     // Build decade buckets with language breakdown
     const decades = rawDecades.map(d => {
@@ -115,11 +115,29 @@ export async function GET(request: NextRequest) {
       .map(([lang, count]) => ({ lang, count }))
       .sort((a, b) => b.count - a.count);
 
-    // Filter options
-    const [languages, collections] = await Promise.all([
-      db.collection('books').distinct('language', { hidden: { $ne: true }, year: { $exists: true, $ne: null } }),
-      db.collection('books').distinct('categories', { hidden: { $ne: true }, year: { $exists: true, $ne: null } }),
-    ]);
+    // Filter options — read from cache, fall back to computing from decade results
+    let languages: string[];
+    let collections: string[];
+
+    const cachedFilters = await db.collection('system_config')
+      .findOne({ _id: 'timeline_filters' } as any)
+      .catch(() => null);
+
+    if (cachedFilters?.data) {
+      languages = cachedFilters.data.languages || [];
+      collections = cachedFilters.data.collections || [];
+    } else {
+      // Derive languages from the decade data we already computed (free)
+      const langSet = new Set<string>();
+      for (const d of rawDecades) {
+        for (const lang of d.languages) {
+          if (lang) langSet.add(lang);
+        }
+      }
+      languages = [...langSet];
+      // Collections require a separate query — skip if no cache to avoid timeout
+      collections = [];
+    }
 
     return NextResponse.json({
       decades,
