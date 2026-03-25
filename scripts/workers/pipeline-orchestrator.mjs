@@ -1971,15 +1971,9 @@ async function run() {
         }
       }
 
-      if (!SQS_TRANSLATION_QUEUE_URL) {
-        console.log('  SKIP: SQS_PAGE_TRANSLATION_QUEUE_URL not configured');
-      } else {
-        const sqsClient = new SQSClient({ region: process.env.AWS_REGION || 'eu-central-1' });
-
-        // Pre-check: cap total in-flight translations to prevent Lambda pile-up.
-        // Each translate_submitted book becomes its own Lambda worker. Without this
-        // cap, every 5-min cycle stacks 20 more books on top of whatever's running,
-        // quickly exceeding Atlas's ~40 concurrent connection limit.
+      // Phase 4 creates translation jobs. The Hetzner translate-worker.mjs picks them up.
+      // SQS/Lambda path is deprecated — translate-worker runs on Hetzner cron and calls Gemini directly.
+      {
         const inFlight = await db.collection('books').countDocuments({
           'pipeline_auto.status': 'translate_submitted',
         });
@@ -2031,11 +2025,11 @@ async function run() {
             const jobId = nanoid(12);
 
             if (DRY_RUN) {
-              console.log(`  Would dispatch: ${label} — ${pageIds.length} pages via Lambda`);
+              console.log(`  Would dispatch: ${label} — ${pageIds.length} pages`);
               continue;
             }
 
-            // Create job record
+            // Create job record — translate-worker.mjs picks this up
             await db.collection('jobs').insertOne({
               id: jobId,
               type: 'translation',
@@ -2055,30 +2049,8 @@ async function run() {
 
             await db.collection('books').updateOne(
               { id: book.id },
-              { $set: { job: { type: 'realtime', job_id: jobId } } },
+              { $set: { job: { type: 'hetzner-inline', job_id: jobId } } },
             );
-
-            // Enqueue pages to SQS FIFO in batches of 10
-            for (let i = 0; i < pageIds.length; i += 10) {
-              const batch = pageIds.slice(i, i + 10);
-              const entries = batch.map((pageId, idx) => ({
-                Id: `msg-${idx}`,
-                MessageBody: JSON.stringify({ bookId: book.id, pageId, jobId }),
-                MessageGroupId: jobId,
-                MessageDeduplicationId: createHash('sha256')
-                  .update(`${book.id}:${pageId}:${jobId}`)
-                  .digest('hex').slice(0, 128),
-              }));
-
-              const result = await sqsClient.send(new SendMessageBatchCommand({
-                QueueUrl: SQS_TRANSLATION_QUEUE_URL,
-                Entries: entries,
-              }));
-
-              if (result.Failed?.length) {
-                console.error(`    SQS batch failed: ${result.Failed.length} messages`);
-              }
-            }
 
             await setPipelineStatus(db, book.id, 'translate_submitted', {
               translate_job_id: jobId,
