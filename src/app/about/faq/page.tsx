@@ -103,10 +103,19 @@ const faqs: FAQItem[] = [
     answer: (
       <>
         <p>
-          We would love to. The problem is scale. Source Library contains over 5,000 books
+          We would love to. The problem is scale. Source Library contains thousands of books
           spanning 2,500 years, in Latin, Greek, Arabic, Hebrew, German, French, Dutch,
           Italian, and more. There are not enough translators alive to render this corpus
           into English at any price.
+        </p>
+        <p>
+          The economics are prohibitive. Professional scholarly translation from Latin, Greek,
+          or Arabic costs $0.20&ndash;$0.30 per word. An average book in the collection runs
+          50,000&ndash;80,000 words. Even for the 8,000+ books currently visible, that&apos;s
+          roughly <strong>$100&ndash;$200 million</strong> and over <strong>1,000 translator-years</strong> of
+          full-time work &mdash; assuming you could find enough specialists in medieval Latin
+          paleography, polytonic Greek, classical Arabic, and early modern German to even
+          attempt it. The global pool of such translators numbers in the hundreds.
         </p>
         <p>
           Many of these texts have <em>never</em> been translated into any modern language.
@@ -141,7 +150,7 @@ const faqs: FAQItem[] = [
           <li>Embassy of the Free Mind / Bibliotheca Philosophica Hermetica</li>
           <li>Cambridge University Library</li>
           <li>Library of Congress</li>
-          <li>And others &mdash; 14 import pipelines in total</li>
+          <li>And others &mdash; 24 import pipelines in total</li>
         </ul>
         <p>
           Each book&apos;s source is recorded with full provenance: the institution,
@@ -235,9 +244,9 @@ const faqs: FAQItem[] = [
     answer: (
       <>
         <p>
-          Source Library is a project of the Ancient Wisdom Trust, a non-profit working
-          in partnership with the Embassy of the Free Mind in Amsterdam. All texts,
-          translations, and tools are freely accessible. There are no paywalls.
+          Source Library is a non-profit project in partnership with the Embassy of the
+          Free Mind in Amsterdam. All texts, translations, and tools are freely accessible.
+          There are no paywalls.
         </p>
         <p>
           The project is funded by institutional support and individual contributions.
