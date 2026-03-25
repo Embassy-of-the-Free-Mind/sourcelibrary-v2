@@ -49,19 +49,24 @@ export default async function AuthorCrossReference({ author, currentBookId, cont
             resource_type: 1, thumbnail: 1, thumbnail_blob: 1,
             commons_width: 1, commons_height: 1,
           },
+          maxTimeMS: 3000,
         },
       )
       .sort({ published: 1 })
       .limit(12)
-      .toArray();
+      .toArray()
+      .catch((): never[] => []);
 
     if (artworks.length === 0) return null;
 
     const items = JSON.parse(JSON.stringify(artworks)) as CrossRefItem[];
-    const totalCount = await db.collection('books').countDocuments({
-      author: { $regex: `^${escaped}$`, $options: 'i' },
-      resource_type: { $in: VISUAL_TYPES },
-    });
+    const totalCount = await db.collection('books').countDocuments(
+      {
+        author: { $regex: `^${escaped}$`, $options: 'i' },
+        resource_type: { $in: VISUAL_TYPES },
+      },
+      { maxTimeMS: 3000 },
+    ).catch(() => artworks.length);
 
     return (
       <div className="card p-6 sm:p-8">
@@ -123,11 +128,13 @@ export default async function AuthorCrossReference({ author, currentBookId, cont
           language: 1, thumbnail: 1, thumbnail_blob: 1,
           pages_translated: 1,
         },
+        maxTimeMS: 3000,
       },
     )
     .sort({ published: 1 })
     .limit(8)
-    .toArray();
+    .toArray()
+    .catch((): never[] => []);
 
   // Also try "Surname, Firstname" format if author is "Firstname Surname"
   if (books.length === 0 && !author.includes(',')) {
@@ -149,11 +156,13 @@ export default async function AuthorCrossReference({ author, currentBookId, cont
               language: 1, thumbnail: 1, thumbnail_blob: 1,
               pages_translated: 1,
             },
+            maxTimeMS: 3000,
           },
         )
         .sort({ published: 1 })
         .limit(8)
-        .toArray();
+        .toArray()
+        .catch((): never[] => []);
 
       if (altBooks.length === 0) return null;
       const items = JSON.parse(JSON.stringify(altBooks)) as CrossRefItem[];

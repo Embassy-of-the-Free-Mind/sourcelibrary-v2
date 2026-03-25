@@ -63,11 +63,15 @@ export async function GET(
     }
 
     const bookId = (book.id || book._id?.toString()) as string;
-    const pages = await db.collection('pages')
+    const pageOffset = parseInt(searchParams.get('pageOffset') || '0');
+    const pageLimit = parseInt(searchParams.get('pageLimit') || '0'); // 0 = all (backwards-compat)
+    let cursor = db.collection('pages')
       .find({ book_id: bookId })
       .project(projection)
-      .sort({ page_number: 1 })
-      .toArray();
+      .sort({ page_number: 1 });
+    if (pageOffset > 0) cursor = cursor.skip(pageOffset);
+    if (pageLimit > 0) cursor = cursor.limit(pageLimit);
+    const pages = await cursor.toArray();
 
     const cacheControl = includeFull
       ? 'private, no-cache'
