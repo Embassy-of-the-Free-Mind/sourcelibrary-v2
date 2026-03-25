@@ -590,8 +590,8 @@ function CostToComplete({ summary, costStats }: { summary: UsageStats['summary']
 
 function CollectionBreakdown({ collectionStats }: { collectionStats: NonNullable<UsageStats['collectionStats']> }) {
   const colors = ['var(--accent-rust)', 'var(--accent-sage)', 'var(--accent-violet)', '#f59e0b', '#22c55e'];
-  const providerLabels: Record<string, string> = { internet_archive: 'Internet Archive', gallica: 'Gallica (BnF)', mdz: 'MDZ (Bavarian)', efm: 'EFM Manuscripts', iiif: 'IIIF Generic', vercel_blob: 'Vercel Blob' };
-  const providerColors: Record<string, string> = { internet_archive: '#f59e0b', gallica: '#3b82f6', mdz: '#22c55e', efm: 'var(--accent-violet)', iiif: 'var(--accent-rust)', vercel_blob: '#22c55e' };
+  const providerLabels: Record<string, string> = { internet_archive: 'Internet Archive', gallica: 'Gallica (BnF)', mdz: 'MDZ (Bavarian)', bph: 'BPH Manuscripts', iiif: 'IIIF Generic', vercel_blob: 'Vercel Blob' };
+  const providerColors: Record<string, string> = { internet_archive: '#f59e0b', gallica: '#3b82f6', mdz: '#22c55e', bph: 'var(--accent-violet)', iiif: 'var(--accent-rust)', vercel_blob: '#22c55e' };
 
   return (
     <div className="grid grid-cols-1 md:grid-cols-3 gap-6">

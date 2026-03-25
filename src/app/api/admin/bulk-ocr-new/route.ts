@@ -27,7 +27,7 @@ const IMAGE_CONCURRENCY = 10;
  * Query params:
  *   offset=N       Skip first N eligible books (for pagination)
  *   limit=N        Override BOOKS_PER_RUN
- *   provider=X     Filter books by provider (e.g., 'efm', 'ia')
+ *   provider=X     Filter books by provider (e.g., 'bph', 'ia')
  *   book_id=ID     Process a single book
  *   dry_run=true   Show what would be submitted
  *

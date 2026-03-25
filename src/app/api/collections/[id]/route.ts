@@ -9,7 +9,7 @@ export const maxDuration = 30;
  * Get collection metadata and its books with pagination/sorting.
  *
  * Query params:
- *   - sort: 'year_asc' (default), 'year_desc', 'title', 'recent'
+ *   - sort: 'year_asc' (default), 'year_desc', 'title', 'author', 'recent', 'popular', 'relevance'
  *   - language: filter by language
  *   - limit: max results (default 60, max 200)
  *   - offset: pagination offset
@@ -35,8 +35,10 @@ export async function GET(
       return NextResponse.json({ error: 'Collection not found' }, { status: 404 });
     }
 
-    // Build book filter — art collections bypass hidden/translation filters
+    // Art collections bypass hidden/translation filters since artworks are hidden: true
+    // and have no translated pages
     const isArtCollection = collection.collection_type === 'visual_art';
+
     const filter: Record<string, unknown> = isArtCollection
       ? { collections: id, resource_type: { $exists: true } }
       : {
@@ -48,7 +50,6 @@ export async function GET(
         };
     if (language) filter.language = language;
     if (q) {
-      // Search title, author, display_title with case-insensitive regex
       const escaped = q.replace(/[.*+?^${}()|[\]\\]/g, '\\$&');
       filter.$or = [
         { title: { $regex: escaped, $options: 'i' } },
@@ -57,7 +58,7 @@ export async function GET(
       ];
     }
 
-    // Sort
+    // Sort — use 'published' for date sorts (artworks don't have 'year')
     const sortMap: Record<string, Record<string, 1 | -1>> = {
       year_asc: { published: 1, title: 1 },
       year_desc: { published: -1, title: 1 },
@@ -83,8 +84,6 @@ export async function GET(
       quality_score: 1,
     };
 
-    // Use cached book_count — sync-page-counts cron keeps this in sync.
-    // Only do a live count when user is filtering by search or language.
     const total = (q || language)
       ? await db.collection('books').countDocuments(filter)
       : (collection.book_count as number) || 0;
@@ -96,7 +95,7 @@ export async function GET(
         .skip(offset)
         .limit(limit)
         .toArray(),
-      // Top 5 books: for art collections use the main filter; for book collections prefer translated
+      // Top 5: art collections use main filter; book collections prefer translated
       db.collection('books')
         .find(
           isArtCollection

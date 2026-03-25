@@ -268,33 +268,29 @@ async function getGalleryFilters(db: Awaited<ReturnType<typeof getDb>>) {
     return cachedFilters.data;
   }
 
-  const [typesResult, subjectsResult, yearResult] = await Promise.all([
-    db.collection('gallery_images').aggregate([
-      { $group: { _id: '$type' } },
-      { $match: { _id: { $ne: null } } },
-      { $sort: { _id: 1 } },
-    ]).toArray(),
-    db.collection('gallery_images').aggregate([
-      { $unwind: '$metadata.subjects' },
-      { $group: { _id: '$metadata.subjects' } },
-      { $sort: { _id: 1 } },
-      { $limit: 50 },
-    ]).toArray(),
-    db.collection('gallery_images').aggregate([
-      {
-        $group: {
-          _id: null,
-          minYear: { $min: '$book_year' },
-          maxYear: { $max: '$book_year' },
-        },
-      },
-    ]).toArray(),
-  ]);
+  // Read pre-computed filters from system_config (fast single-doc read).
+  // The subjects and year aggregations take 20-40s on Atlas — can't run inline.
+  try {
+    const cached = await db.collection('system_config').findOne({ _id: 'gallery_filters' } as any);
+    if (cached?.data) {
+      const data = cached.data as typeof cachedFilters extends null ? never : NonNullable<typeof cachedFilters>['data'];
+      cachedFilters = { data, timestamp: Date.now() };
+      return data;
+    }
+  } catch { /* fall through to compute */ }
+
+  // Fallback: compute only the fast aggregation (types). Skip subjects and year range
+  // which take 20-40s each and would timeout the request.
+  const typesResult = await db.collection('gallery_images').aggregate([
+    { $group: { _id: '$type' } },
+    { $match: { _id: { $ne: null } } },
+    { $sort: { _id: 1 } },
+  ]).toArray();
 
   const data = {
     types: typesResult.map(t => t._id as string).filter(Boolean),
-    subjects: subjectsResult.map(s => s._id as string).filter(Boolean),
-    yearRange: (yearResult[0] as { minYear: number | null; maxYear: number | null }) || { minYear: null, maxYear: null },
+    subjects: [] as string[],
+    yearRange: { minYear: 1400 as number | null, maxYear: 1900 as number | null },
   };
 
   cachedFilters = { data, timestamp: Date.now() };

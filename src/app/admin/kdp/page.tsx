@@ -35,7 +35,7 @@ interface KdpCandidate {
   kdp_score_breakdown: {
     quality: number;
     translation: number;
-    efm_relevance: number;
+    bph_relevance: number;
     engagement: number;
     apparatus: number;
     first_translation_bonus: number;
@@ -1323,7 +1323,7 @@ function ScoreBadge({ score, breakdown }: {
       className="inline-block tabular-nums font-medium text-sm cursor-help"
       style={{ color }}
       title={breakdown
-        ? `Quality: ${breakdown.quality}/30\nTranslation: ${breakdown.translation}/25\nEFM: ${breakdown.efm_relevance}/20\nEngagement: ${breakdown.engagement}/10\nApparatus: ${breakdown.apparatus}/10\nFirst trans: ${breakdown.first_translation_bonus}/5`
+        ? `Quality: ${breakdown.quality}/30\nTranslation: ${breakdown.translation}/25\nBPH: ${breakdown.bph_relevance}/20\nEngagement: ${breakdown.engagement}/10\nApparatus: ${breakdown.apparatus}/10\nFirst trans: ${breakdown.first_translation_bonus}/5`
         : 'Not scored yet'
       }
     >

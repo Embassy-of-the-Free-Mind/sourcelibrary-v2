@@ -64,11 +64,11 @@ export const LIBRARY_PARTNERS: Record<string, LibraryPartner> = {
     color: 'violet',
     heroImageOverride: 'https://3kwioilsplnmnkv8.public.blob.vercel-storage.com/archived/699065ad3dc2ed39a49f2387/77.jpg',
   },
-  'embassy-of-the-free-mind': {
-    slug: 'embassy-of-the-free-mind',
-    name: 'Embassy of the Free Mind',
-    shortName: 'EFM',
-    providerKey: 'efm',
+  'bibliotheca-philosophica-hermetica': {
+    slug: 'bibliotheca-philosophica-hermetica',
+    name: 'Bibliotheca Philosophica Hermetica',
+    shortName: 'BPH',
+    providerKey: 'bph',
     url: 'https://embassyofthefreemind.com',
     description: 'The Embassy of the Free Mind in Amsterdam houses the Bibliotheca Philosophica Hermetica, one of the world\'s foremost collections of Hermetic, alchemical, mystical, and esoteric texts from the Renaissance to the present day.',
     color: 'gold',
