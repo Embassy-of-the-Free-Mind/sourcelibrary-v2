@@ -111,7 +111,7 @@ async function handleSearch(db: any, params: URLSearchParams) {
 
   const projection: Record<string, number> = {
     ustc_id: 1, title: 1, author: 1, year: 1, language: 1, place: 1, format: 1,
-    has_iiif_scan: 1, scan_sources: 1, scan_quality: 1, iiif_manifest_url: 1,
+    has_iiif_scan: 1, scan_sources: 1, scan_quality: 1, iiif_manifest_url: 1, viewer_url: 1,
     has_english_translation: 1, translation_sources: 1,
     in_source_library: 1, source_library_id: 1,
     ocr_status: 1, translation_status: 1, sl_translation_percent: 1,

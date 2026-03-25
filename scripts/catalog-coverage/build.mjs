@@ -187,7 +187,7 @@ async function loadScanLookup(db) {
     if (lastId) filter._id = { $gt: lastId };
 
     const batch = await col.find(filter, {
-      projection: { author: 1, title: 1, date_earliest: 1, source: 1, manifest_url: 1, ustc_id: 1, status: 1 },
+      projection: { author: 1, title: 1, date_earliest: 1, source: 1, manifest_url: 1, viewer_url: 1, ustc_id: 1, status: 1 },
     }).sort({ _id: 1 }).limit(PAGE_SIZE).toArray();
 
     if (batch.length === 0) break;
@@ -202,7 +202,7 @@ async function loadScanLookup(db) {
       if (!decade) continue;
 
       const quality = c.scan_quality || (c.source === 'ia_microfilm' ? 'low' : ['bsb', 'erara'].includes(c.source) ? 'high' : 'medium');
-      const slim = { _id: c._id, title: c.title, source: c.source, manifest_url: c.manifest_url, status: c.status, scan_quality: quality };
+      const slim = { _id: c._id, title: c.title, source: c.source, manifest_url: c.manifest_url, viewer_url: c.viewer_url, status: c.status, scan_quality: quality };
       const key = `${surname}:${decade}`;
       if (!byAuthorDecade.has(key)) byAuthorDecade.set(key, []);
       byAuthorDecade.get(key).push(slim);
@@ -310,6 +310,7 @@ function findScan(ustcEdition, scanLookup, authorAliases) {
       scan_sources: [c.source],
       scan_quality: c.scan_quality || 'medium',
       iiif_manifest_url: c.manifest_url,
+      viewer_url: c.viewer_url,
       import_candidate_id: c._id,
       imported_to_sl: c.status === 'imported',
       match_method: 'ustc_id',
@@ -366,6 +367,7 @@ function findScan(ustcEdition, scanLookup, authorAliases) {
       scan_sources: [bestMatch.source],
       scan_quality: bestMatch.scan_quality || 'medium',
       iiif_manifest_url: bestMatch.manifest_url,
+      viewer_url: bestMatch.viewer_url,
       import_candidate_id: bestMatch._id,
       imported_to_sl: bestMatch.status === 'imported',
       match_method: 'title_similarity',
@@ -563,6 +565,7 @@ async function buildCoverage(db, scanLookup, translationLookup, slLookup, author
           scan_sources: scan?.scan_sources || [],
           scan_quality: scan?.scan_quality || null,
           iiif_manifest_url: scan?.iiif_manifest_url || null,
+          viewer_url: scan?.viewer_url || null,
           scan_match_method: scan?.match_method || null,
           scan_match_score: scan?.match_score || null,
 
