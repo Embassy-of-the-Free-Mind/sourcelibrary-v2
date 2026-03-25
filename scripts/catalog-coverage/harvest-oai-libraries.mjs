@@ -1,6 +1,16 @@
 #!/usr/bin/env node
 /**
- * Harvest early modern books from IIIF libraries via OAI-PMH.
+ * Harvest early modern books from IIIF libraries via OAI-PMH (METS format).
+ *
+ * Uses METS/MODS metadata for comprehensive extraction:
+ *   - Structured titles, subtitles
+ *   - Multiple authors with roles and dates
+ *   - Publisher, place, edition as separate fields
+ *   - IIIF manifests (dv:iiif or constructed from IDs)
+ *   - Viewer + reference URLs from dv:links
+ *   - PPN, URN, shelfmarks, VD16/VD17 numbers
+ *   - Physical description, classification, subjects
+ *   - File group info (image quality tiers)
  *
  * Libraries:
  *   - SBB Berlin (239K items, VD16/VD17 sets)
@@ -20,6 +30,7 @@
  */
 
 import { MongoClient } from 'mongodb';
+import { parseDateRange, normalizeLanguage } from '../iiif-discovery/lib/iiif-metadata.mjs';
 
 const DRY_RUN = process.argv.includes('--dry-run');
 const LIBRARY = process.argv.find(a => a.startsWith('--library='))?.split('=')[1];
@@ -34,15 +45,12 @@ const LIBRARIES = {
   sbb: {
     name: 'Staatsbibliothek zu Berlin',
     oaiUrl: 'https://oai.sbb.berlin/',
-    metadataPrefix: 'oai_dc',
+    metadataPrefix: 'mets',
     sets: ['vd16', 'vd17'],
-    iiifManifest: (id) => {
-      const ppn = id.replace('oai:digital.staatsbibliothek-berlin.de:', '');
-      return `https://content.staatsbibliothek-berlin.de/dc/${ppn}/manifest`;
-    },
-    viewerUrl: (id) => {
-      const ppn = id.replace('oai:digital.staatsbibliothek-berlin.de:', '');
-      return `https://digital.staatsbibliothek-berlin.de/werkansicht?PPN=${ppn}`;
+    // SBB embeds dv:iiif in METS; this is a fallback
+    iiifManifest: (oaiId) => {
+      const ppn = oaiId?.replace('oai:digital.staatsbibliothek-berlin.de:', '');
+      return ppn ? `https://content.staatsbibliothek-berlin.de/dc/${ppn}/manifest` : null;
     },
     source: 'sbb',
     scanQuality: 'high',
@@ -50,38 +58,30 @@ const LIBRARIES = {
   hab: {
     name: 'Herzog August Bibliothek Wolfenbüttel',
     oaiUrl: 'http://oai.hab.de/',
-    metadataPrefix: 'oai_dc',
+    metadataPrefix: 'mets',
     sets: null,
-    iiifManifest: (id) => null,
-    viewerUrl: (id) => {
-      const ppn = id?.match(/ppn_(\w+)/)?.[1];
-      return ppn ? `http://diglib.hab.de/?db=drucke&list=ppn&id=${ppn}` : null;
-    },
+    // HAB has no public IIIF; viewer URL comes from dv:presentation in METS
+    iiifManifest: () => null,
     source: 'hab',
     scanQuality: 'high',
   },
   slub: {
     name: 'SLUB Dresden',
     oaiUrl: 'https://digital.slub-dresden.de/oai/',
-    metadataPrefix: 'oai_dc',
+    metadataPrefix: 'mets',
     sets: null,
-    iiifManifest: (id) => null,
-    viewerUrl: (id) => null,
+    iiifManifest: () => null,
     source: 'slub',
     scanQuality: 'high',
   },
   heidelberg: {
     name: 'Heidelberg University Library',
     oaiUrl: 'https://digi.ub.uni-heidelberg.de/cgi-bin/digioai.cgi',
-    metadataPrefix: 'oai_dc',
+    metadataPrefix: 'mets',
     sets: null,
-    iiifManifest: (id) => {
-      const match = id.match(/oai:digi\.ub\.uni-heidelberg\.de:(\d+)/);
+    iiifManifest: (oaiId) => {
+      const match = oaiId?.match(/oai:digi\.ub\.uni-heidelberg\.de:(\d+)/);
       return match ? `https://digi.ub.uni-heidelberg.de/diglit/iiif3/${match[1]}/manifest.json` : null;
-    },
-    viewerUrl: (id) => {
-      const match = id.match(/oai:digi\.ub\.uni-heidelberg\.de:(\d+)/);
-      return match ? `https://digi.ub.uni-heidelberg.de/diglit/${match[1]}` : null;
     },
     source: 'heidelberg',
     scanQuality: 'high',
@@ -89,29 +89,99 @@ const LIBRARIES = {
   goettingen: {
     name: 'Göttingen State and University Library',
     oaiUrl: 'https://gdz.sub.uni-goettingen.de/oai2/',
-    metadataPrefix: 'oai_dc',
+    metadataPrefix: 'mets',
     sets: null,
-    iiifManifest: (id) => null,
-    viewerUrl: (id) => {
-      const match = id?.match(/oai:gdz\.sub\.uni-goettingen\.de:(.+)/);
-      return match ? `http://resolver.sub.uni-goettingen.de/purl?${match[1]}` : null;
+    iiifManifest: (oaiId) => {
+      const match = oaiId?.match(/oai:gdz\.sub\.uni-goettingen\.de:(.+)/);
+      return match ? `https://manifests.sub.uni-goettingen.de/iiif/presentation/${match[1]}/manifest` : null;
     },
     source: 'goettingen',
     scanQuality: 'high',
   },
 };
 
-// ─── OAI-PMH Parser ─────────────────────────────────────────────────────
+// ─── MODS/METS Parser ──────────────────────────────────────────────────
 
-function extractDcField(xml, field) {
-  const regex = new RegExp(`<dc:${field}>([^<]+)`, 'g');
+function extractField(xml, tagName) {
+  // Handle both namespaced and non-namespaced variants
+  const re = new RegExp(`<(?:mods:|mets:)?${tagName}[^>]*>([^<]+)`, 'i');
+  const m = xml.match(re);
+  return m ? m[1].trim() : null;
+}
+
+function extractAllFields(xml, tagName) {
+  const re = new RegExp(`<(?:mods:|mets:)?${tagName}[^>]*>([^<]+)`, 'gi');
   const values = [];
   let m;
-  while ((m = regex.exec(xml))) values.push(m[1].trim());
+  while ((m = re.exec(xml))) values.push(m[1].trim());
   return values;
 }
 
-function extractIdentifier(xml) {
+function extractFieldWithAttr(xml, tagName, attrName, attrValue) {
+  const re = new RegExp(`<(?:mods:|mets:)?${tagName}[^>]*${attrName}="${attrValue}"[^>]*>([^<]+)`, 'i');
+  const m = xml.match(re);
+  return m ? m[1].trim() : null;
+}
+
+function extractNameBlocks(xml) {
+  const re = /<(?:mods:)?name[^>]*>([\s\S]*?)<\/(?:mods:)?name>/gi;
+  const blocks = [];
+  let m;
+  while ((m = re.exec(xml))) blocks.push(m[1]);
+  return blocks;
+}
+
+function parseNameBlock(block) {
+  const displayForm = block.match(/<(?:mods:)?displayForm>([^<]+)/i)?.[1]?.trim();
+  const family = block.match(/<(?:mods:)?namePart[^>]*type="family"[^>]*>([^<]+)/i)?.[1]?.trim();
+  const given = block.match(/<(?:mods:)?namePart[^>]*type="given"[^>]*>([^<]+)/i)?.[1]?.trim();
+  const dates = block.match(/<(?:mods:)?namePart[^>]*type="date"[^>]*>([^<]+)/i)?.[1]?.trim();
+  const role = block.match(/<(?:mods:)?roleTerm[^>]*>([^<]+)/i)?.[1]?.trim();
+  const name = displayForm || (family && given ? `${family}, ${given}` : family || given || null);
+  return name ? { name, role: role || null, dates: dates || null } : null;
+}
+
+function parseIdentifiers(xml) {
+  const result = { ppn: null, urn: null, shelfmark: null, vd16: null, vd17: null, vd18: null, catalog_ids: {} };
+  const re = /<(?:mods:)?identifier[^>]*type="([^"]+)"[^>]*>([^<]+)/gi;
+  let m;
+  while ((m = re.exec(xml))) {
+    const type = m[1].toLowerCase().trim();
+    const value = m[2].trim();
+    if (type === 'ppn' || type === 'purl' || type === 'swb-ppn-digital') result.ppn = value;
+    else if (type === 'urn') result.urn = value;
+    else if (type === 'shelfmark' || type === 'shelf' || type === 'signatur') result.shelfmark = value;
+    else if (type === 'vd16') result.vd16 = value;
+    else if (type === 'vd17') result.vd17 = value;
+    else if (type === 'vd18') result.vd18 = value;
+    else if (type === 'kitodo' || type === 'rism' || type === 'isbn' || type === 'issn' || type === 'fingerprint') {
+      result.catalog_ids[type] = value;
+    }
+  }
+  // Also check recordIdentifier
+  const recId = xml.match(/<(?:mods:)?recordIdentifier[^>]*>([^<]+)/i)?.[1]?.trim();
+  if (recId && !result.ppn) result.ppn = recId;
+  return result;
+}
+
+function parseDvLinks(xml) {
+  const dvBlock = xml.match(/<dv:links>([\s\S]*?)<\/dv:links>/i)?.[1] || '';
+  return {
+    iiif: dvBlock.match(/<dv:iiif>([^<]+)/i)?.[1]?.trim() || null,
+    presentation: dvBlock.match(/<dv:presentation>([^<]+)/i)?.[1]?.trim() || null,
+    reference: dvBlock.match(/<dv:reference>([^<]+)/i)?.[1]?.trim() || null,
+  };
+}
+
+function parseFileGroups(xml) {
+  const re = /<(?:METS|mets):fileGrp[^>]*USE="([^"]+)"/gi;
+  const groups = [];
+  let m;
+  while ((m = re.exec(xml))) groups.push(m[1]);
+  return groups;
+}
+
+function extractOaiId(xml) {
   const m = xml.match(/<identifier>([^<]+)/);
   return m ? m[1].trim() : null;
 }
@@ -126,83 +196,118 @@ function extractTotalSize(xml) {
   return m ? parseInt(m[1]) : null;
 }
 
-function parseRecords(xml) {
+function parseMetsRecords(xml) {
   const records = [];
   const recordBlocks = xml.split(/<record\b[^>]*>/g).slice(1);
 
   for (const block of recordBlocks) {
-    const id = extractIdentifier(block);
-    const titles = extractDcField(block, 'title');
-    const creators = extractDcField(block, 'creator');
-    const dates = extractDcField(block, 'date');
-    const languages = extractDcField(block, 'language');
-    const identifiers = extractDcField(block, 'identifier');
-    const types = extractDcField(block, 'type');
-    const subjects = extractDcField(block, 'subject');
-    const publishers = extractDcField(block, 'publisher');
-    const coverages = extractDcField(block, 'coverage');
-    const rights = extractDcField(block, 'rights');
-    const formats = extractDcField(block, 'format');
-
     if (block.includes('status="deleted"')) continue;
+    const oaiId = extractOaiId(block);
+    if (!oaiId) continue;
 
-    let year = null;
-    for (const d of dates) {
-      const ym = d.match(/(\d{4})/);
-      if (ym) { year = parseInt(ym[1]); break; }
-    }
-    if (!year) {
-      for (const d of [...publishers, ...coverages]) {
-        const ym = d.match(/(\d{4})/);
-        if (ym) { year = parseInt(ym[1]); break; }
+    // Title
+    const title = extractField(block, 'title') || '';
+    const subtitle = extractField(block, 'subTitle') || null;
+
+    // Authors
+    const nameBlocks = extractNameBlocks(block);
+    const authors = nameBlocks.map(parseNameBlock).filter(Boolean);
+    const primaryAuthor = authors.find(a => a.role === 'aut') || authors[0] || null;
+    const additionalAuthors = authors.filter(a => a !== primaryAuthor);
+
+    // Language
+    const langTerms = extractAllFields(block, 'languageTerm');
+    const language = normalizeLanguage(langTerms[0]) || langTerms[0] || null;
+
+    // Dates
+    const dateIssuedStart = extractFieldWithAttr(block, 'dateIssued', 'point', 'start');
+    const dateIssuedEnd = extractFieldWithAttr(block, 'dateIssued', 'point', 'end');
+    const dateIssuedKey = extractFieldWithAttr(block, 'dateIssued', 'keyDate', 'yes');
+    const dateIssued = extractField(block, 'dateIssued');
+    const dateCreated = extractField(block, 'dateCreated');
+    const displayDate = block.match(/<(?:mods:)?displayDate>([^<]+)/i)?.[1]?.trim() || null;
+
+    let dateEarliest = null, dateLatest = null;
+    if (dateIssuedStart) {
+      const { earliest } = parseDateRange(dateIssuedStart);
+      dateEarliest = earliest;
+      if (dateIssuedEnd) {
+        const { latest } = parseDateRange(dateIssuedEnd);
+        dateLatest = latest;
+      } else {
+        dateLatest = dateEarliest;
       }
-    }
-    if (!year) {
-      for (const val of identifiers) {
-        if (val.startsWith('(fingerprint)')) {
-          const ym = val.match(/(\d{4})R?\s*$/);
-          if (ym) { year = parseInt(ym[1]); break; }
-        }
-      }
+    } else {
+      const dateStr = dateIssuedKey || dateIssued || dateCreated;
+      const { earliest, latest } = parseDateRange(dateStr);
+      dateEarliest = earliest;
+      dateLatest = latest;
     }
 
-    let place = coverages[0] || '';
-    if (!place && publishers[0]?.includes(':')) {
-      place = publishers[0].split(':')[0].trim();
-    }
+    // Publisher / Place / Edition
+    const publisher = extractField(block, 'publisher') || null;
+    const place = extractFieldWithAttr(block, 'placeTerm', 'type', 'text')
+      || extractField(block, 'placeTerm') || null;
+    const edition = extractField(block, 'edition') || null;
 
+    // Physical description
+    const extent = extractField(block, 'extent') || null;
+    const digitalOrigin = extractField(block, 'digitalOrigin') || null;
     let pageCount = null;
-    for (const f of formats) {
-      const pages = f.match(/(\d+)\s*(?:S\.|p\.|pages|Bl\.)/);
-      if (pages) { pageCount = parseInt(pages[1]); break; }
+    if (extent) {
+      const pages = extent.match(/(\d+)\s*(?:S\.|p\.|pages|Bl\.|fol\.|leaves|ff\.|sheets)/i);
+      if (pages) pageCount = parseInt(pages[1]);
     }
+    const physicalFormat = extractAllFields(block, 'extent').find(f => /^\[?\d|°/.test(f)) || null;
 
-    let manifestUrl = null;
-    let viewerUrl = null;
-    let urn = null;
-    for (const val of identifiers) {
-      if (val.includes('iiif') && val.includes('manifest')) manifestUrl = val;
-      else if (val.startsWith('http')) { if (!viewerUrl) viewerUrl = val; }
-      const urnMatch = val.match(/\b(urn:nbn:[^\s)]+)/);
-      if (urnMatch) urn = urnMatch[1];
+    // Subjects and classification
+    const subjects = extractAllFields(block, 'topic');
+    const classifications = extractAllFields(block, 'classification');
+
+    // Identifiers (PPN, URN, shelfmark, VD numbers, etc.)
+    const ids = parseIdentifiers(block);
+
+    // DFG Viewer links (viewer URL, reference URL, IIIF manifest)
+    const dvLinks = parseDvLinks(block);
+
+    // File groups (image quality tiers)
+    const fileGroups = parseFileGroups(block);
+
+    // Also check dc:identifier for URLs (some libraries put manifest URLs there)
+    const dcIdentifiers = extractAllFields(block, 'identifier');
+    let manifestFromDc = null;
+    let viewerFromDc = null;
+    for (const val of dcIdentifiers) {
+      if (val.includes('iiif') && val.includes('manifest') && !manifestFromDc) manifestFromDc = val;
+      else if (val.startsWith('http') && !viewerFromDc) viewerFromDc = val;
     }
 
     records.push({
-      oaiId: id,
-      title: titles[0] || '',
-      author: creators[0] || '',
-      year,
-      language: languages[0] || '',
-      type: types[0] || '',
-      subjects,
-      publisher: publishers[0] || '',
+      oaiId,
+      title,
+      subtitle,
+      author: primaryAuthor?.name || '',
+      authorDates: primaryAuthor?.dates || null,
+      additionalAuthors: additionalAuthors.length > 0 ? additionalAuthors : null,
+      language,
+      dateEarliest,
+      dateLatest,
+      displayDate,
+      publisher,
       place,
-      rights: rights[0] || '',
-      physicalFormat: formats.find(f => /^\[?\d|°/.test(f)) || '',
+      edition,
+      extent,
+      digitalOrigin,
+      physicalFormat,
       pageCount,
-      manifestUrl,
-      viewerUrl: viewerUrl || (identifiers.find(u => u.startsWith('http')) || null),
-      urn,
+      subjects,
+      classifications,
+      ids,
+      dvLinks,
+      fileGroups: fileGroups.length > 0 ? fileGroups : null,
+      manifestUrl: dvLinks.iiif || manifestFromDc || null,
+      viewerUrl: dvLinks.presentation || viewerFromDc || null,
+      referenceUrl: dvLinks.reference || null,
     });
   }
   return records;
@@ -212,7 +317,7 @@ function parseRecords(xml) {
 
 function extractSurname(author) {
   if (!author) return null;
-  const cleaned = author.replace(/&amp;/g, '&').replace(/<[^>]*>/g, '').trim();
+  const cleaned = author.replace(/&amp;/g, '&').replace(/&lt;/g, '<').replace(/&gt;/g, '>').replace(/<[^>]*>/g, '').trim();
   const comma = cleaned.indexOf(',');
   const name = comma > 0 ? cleaned.slice(0, comma) : cleaned.split(/\s+/)[0];
   return name.toLowerCase().replace(/[^a-z]/g, '') || null;
@@ -225,7 +330,9 @@ async function harvestOai(config, col) {
   let totalFetched = 0;
   let totalEarlyModern = 0;
   let totalInserted = 0;
+  let totalUpdated = 0;
   let totalSkipped = 0;
+  let totalWithManifest = 0;
 
   for (const set of sets) {
     console.log(`  Set: ${set || '(all)'}`);
@@ -245,7 +352,10 @@ async function harvestOai(config, col) {
       let xml;
       for (let attempt = 0; attempt < 5; attempt++) {
         try {
-          const res = await fetch(fetchUrl, { signal: AbortSignal.timeout(30000) });
+          const res = await fetch(fetchUrl, {
+            signal: AbortSignal.timeout(90000),
+            headers: { 'User-Agent': 'SourceLibrary-Harvester/2.0 (sourcelibrary.org)' },
+          });
           xml = await res.text();
           break;
         } catch (err) {
@@ -259,52 +369,72 @@ async function harvestOai(config, col) {
       }
 
       if (!setTotal) setTotal = extractTotalSize(xml);
-      const records = parseRecords(xml);
+      const records = parseMetsRecords(xml);
       totalFetched += records.length;
 
-      const earlyModern = records.filter(r => !r.year || (r.year >= 1400 && r.year <= 1750));
+      // Filter to early modern period
+      const earlyModern = records.filter(r => !r.dateEarliest || (r.dateEarliest >= 1400 && r.dateEarliest <= 1750));
 
+      // Apply library-specific IIIF manifest fallback
       for (const rec of earlyModern) {
-        if (!rec.manifestUrl && config.iiifManifest && rec.oaiId) {
+        if (!rec.manifestUrl && config.iiifManifest) {
           rec.manifestUrl = config.iiifManifest(rec.oaiId);
         }
-        if (!rec.viewerUrl && config.viewerUrl && rec.oaiId) {
-          rec.viewerUrl = config.viewerUrl(rec.oaiId);
-        }
+        if (rec.manifestUrl) totalWithManifest++;
       }
       totalEarlyModern += earlyModern.length;
 
-      // Store incrementally — each page written immediately
+      // Store incrementally
       if (!DRY_RUN && col && earlyModern.length > 0) {
         const ops = earlyModern.map(r => {
-          const doc = {
+          const setFields = {
             source: config.source,
             scan_quality: config.scanQuality,
-            oai_id: r.oaiId,
             title: r.title,
+            subtitle: r.subtitle,
             author: r.author,
             author_surname: extractSurname(r.author),
-            language: r.language || null,
-            date_earliest: r.year,
-            date_latest: r.year,
-            publisher: r.publisher || null,
-            place: r.place || null,
-            rights: r.rights || null,
-            physical_format: r.physicalFormat || null,
-            page_count: r.pageCount || null,
-            subjects: r.subjects || [],
+            additional_authors: r.additionalAuthors,
+            language: r.language,
+            date_earliest: r.dateEarliest,
+            date_latest: r.dateLatest,
+            display_date: r.displayDate,
+            publisher: r.publisher,
+            place: r.place,
+            edition: r.edition,
+            extent: r.extent,
+            digital_origin: r.digitalOrigin,
+            physical_format: r.physicalFormat,
+            page_count: r.pageCount,
+            subjects: r.subjects.length > 0 ? r.subjects : null,
+            classifications: r.classifications.length > 0 ? r.classifications : null,
             viewer_url: r.viewerUrl,
-            urn: r.urn || null,
-            status: 'discovered',
-            discovered_at: new Date(),
+            reference_url: r.referenceUrl,
+            urn: r.ids.urn,
+            ppn: r.ids.ppn,
+            shelfmark: r.ids.shelfmark,
+            vd16: r.ids.vd16,
+            vd17: r.ids.vd17,
+            vd18: r.ids.vd18,
+            catalog_ids: Object.keys(r.ids.catalog_ids).length > 0 ? r.ids.catalog_ids : null,
+            file_groups: r.fileGroups,
             harvested_at: new Date(),
+            harvest_format: 'mets',
           };
-          // Only include manifest_url if non-null (avoids sparse index issues)
-          if (r.manifestUrl) doc.manifest_url = r.manifestUrl;
+          // Only set manifest_url if non-null (sparse index)
+          if (r.manifestUrl) setFields.manifest_url = r.manifestUrl;
+
           return {
             updateOne: {
               filter: { oai_id: r.oaiId, source: config.source },
-              update: { $setOnInsert: doc },
+              update: {
+                $set: setFields,
+                $setOnInsert: {
+                  oai_id: r.oaiId,
+                  status: 'discovered',
+                  discovered_at: new Date(),
+                },
+              },
               upsert: true,
             },
           };
@@ -313,11 +443,12 @@ async function harvestOai(config, col) {
         try {
           const result = await col.bulkWrite(ops, { ordered: false });
           totalInserted += result.upsertedCount;
-          totalSkipped += (ops.length - result.upsertedCount);
+          totalUpdated += result.modifiedCount;
+          totalSkipped += (ops.length - result.upsertedCount - result.modifiedCount);
         } catch (err) {
           if (err.result) {
             totalInserted += err.result.upsertedCount || 0;
-            totalSkipped += (ops.length - (err.result.upsertedCount || 0));
+            totalUpdated += err.result.modifiedCount || 0;
           }
           const msg = String(err.message || err);
           if (!msg.includes('duplicate key')) {
@@ -326,20 +457,20 @@ async function harvestOai(config, col) {
         }
       }
 
-      process.stdout.write(`    Page ${pageNum}: ${totalFetched.toLocaleString()} fetched, ${totalEarlyModern.toLocaleString()} pre-1700${!DRY_RUN ? `, ${totalInserted.toLocaleString()} new` : ''}${setTotal ? ` / ${setTotal.toLocaleString()} total` : ''}\r`);
+      process.stdout.write(`    Page ${pageNum}: ${totalFetched.toLocaleString()} fetched, ${totalEarlyModern.toLocaleString()} pre-1700${!DRY_RUN ? `, ${totalInserted.toLocaleString()} new, ${totalUpdated.toLocaleString()} updated` : ''}, ${totalWithManifest.toLocaleString()} w/manifest${setTotal ? ` / ${setTotal.toLocaleString()} total` : ''}\r`);
 
       resumptionToken = extractResumptionToken(xml);
       if (!resumptionToken) break;
       if (LIMIT > 0 && totalEarlyModern >= LIMIT) break;
 
-      await new Promise(r => setTimeout(r, 500));
+      await new Promise(r => setTimeout(r, 1000));
     }
 
-    console.log(`    Set ${set || '(all)'}: ${totalFetched.toLocaleString()} fetched, ${totalEarlyModern.toLocaleString()} pre-1700`);
+    console.log(`\n    Set ${set || '(all)'}: ${totalFetched.toLocaleString()} fetched, ${totalEarlyModern.toLocaleString()} pre-1700`);
     if (LIMIT > 0 && totalEarlyModern >= LIMIT) break;
   }
 
-  return { totalFetched, totalEarlyModern, totalInserted, totalSkipped };
+  return { totalFetched, totalEarlyModern, totalInserted, totalUpdated, totalSkipped, totalWithManifest };
 }
 
 // ─── Main ─────────────────────────────────────────────────────────────────
@@ -351,24 +482,27 @@ async function main() {
     process.exit(1);
   }
 
-  console.log(`=== Harvesting ${config.name} ===`);
+  console.log(`=== Harvesting ${config.name} (METS) ===`);
   console.log(`Source: ${config.source}, Quality: ${config.scanQuality}`);
+  console.log(`Format: ${config.metadataPrefix}`);
   console.log(`Dry run: ${DRY_RUN}, Limit: ${LIMIT || 'none'}\n`);
 
   let client, col;
   if (!DRY_RUN) {
     const uri = process.env.MONGODB_URI;
     if (!uri) { console.error('MONGODB_URI required'); process.exit(1); }
-    client = new MongoClient(uri, { socketTimeoutMS: 60000, serverSelectionTimeoutMS: 15000 });
+    client = new MongoClient(uri, { socketTimeoutMS: 120000, serverSelectionTimeoutMS: 15000 });
     await client.connect();
     col = client.db('bookstore').collection('import_candidates');
   }
 
   const result = await harvestOai(config, col);
   console.log(`\nTotal: ${result.totalFetched.toLocaleString()} fetched, ${result.totalEarlyModern.toLocaleString()} pre-1700`);
+  console.log(`  With IIIF manifest: ${result.totalWithManifest.toLocaleString()}`);
   if (!DRY_RUN) {
-    console.log(`  Inserted: ${result.totalInserted.toLocaleString()}`);
-    console.log(`  Skipped (already existed): ${result.totalSkipped.toLocaleString()}`);
+    console.log(`  New: ${result.totalInserted.toLocaleString()}`);
+    console.log(`  Updated: ${result.totalUpdated.toLocaleString()}`);
+    console.log(`  Skipped (unchanged): ${result.totalSkipped.toLocaleString()}`);
   }
 
   if (!DRY_RUN && col) {
