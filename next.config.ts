@@ -103,6 +103,11 @@ const nextConfig: NextConfig = {
         destination: '/',
         permanent: true,
       },
+      {
+        source: '/libraries/embassy-of-the-free-mind',
+        destination: '/libraries/bibliotheca-philosophica-hermetica',
+        permanent: true,
+      },
     ];
   },
 };

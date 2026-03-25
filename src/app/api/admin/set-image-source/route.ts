@@ -268,13 +268,13 @@ export const PATCH = withAdminAuth(async (request, session) => {
             sourceUrl = `https://books.google.com/books?id=${identifier}`;
           }
         } else if (checkUrl.includes('s3.amazonaws.com') || checkUrl.includes('.s3.')) {
-          // S3 URLs are likely EFM scans
-          provider = 'efm';
-          providerName = 'Embassy of the Free Mind';
+          // S3 URLs are likely BPH scans
+          provider = 'bph';
+          providerName = 'Bibliotheca Philosophica Hermetica';
         } else if (checkUrl.startsWith('/Users/') || checkUrl.startsWith('/home/')) {
-          // Local file paths - likely EFM scans
-          provider = 'efm';
-          providerName = 'Embassy of the Free Mind';
+          // Local file paths - likely BPH scans
+          provider = 'bph';
+          providerName = 'Bibliotheca Philosophica Hermetica';
         } else if (book.ia_identifier) {
           // Has ia_identifier but thumbnail doesn't match
           provider = 'internet_archive';

@@ -1,5 +1,5 @@
 export type ImageSourceProvider =
-  | 'efm'            // Embassy of the Free Mind (Bibliotheca Philosophica Hermetica)
+  | 'bph'            // Bibliotheca Philosophica Hermetica (Embassy of the Free Mind)
   | 'internet_archive'
   | 'google_books'
   | 'hathi_trust'

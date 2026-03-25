@@ -13,7 +13,7 @@ export const maxDuration = 300;
  *
  * Query params:
  *   ?limit=100       - Max books to scan (default: all)
- *   ?provider=efm    - Filter by image source provider
+ *   ?provider=bph    - Filter by image source provider
  *   ?backfill=true   - Backfill prompt_version on pages that have it missing
  */
 export const GET = withAdminAuth(async (request, session) => {

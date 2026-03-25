@@ -5,7 +5,7 @@ import { Db } from 'mongodb';
 export interface KdpScoreBreakdown {
   quality: number;
   translation: number;
-  efm_relevance: number;
+  bph_relevance: number;
   engagement: number;
   apparatus: number;
   first_translation_bonus: number;
@@ -57,9 +57,9 @@ export interface KdpPublication {
   notes?: string;
 }
 
-// ─── EFM Collection Filter ──────────────────────────────────────────────
+// ─── BPH Collection Filter ──────────────────────────────────────────────
 // Only books from these collections are KDP candidates (Western esoteric tradition)
-export const EFM_COLLECTIONS = [
+export const BPH_COLLECTIONS = [
   'alchemy', 'astrology', 'hermetica', 'kabbalah', 'magic', 'mysticism',
   'natural-philosophy', 'renaissance-philosophy', 'secret-societies',
   'demonology', 'herbalism', 'medicine', 'classical-philosophy',
@@ -67,7 +67,7 @@ export const EFM_COLLECTIONS = [
   'music-harmony', 'sacred-texts', 'shwep',
 ];
 
-// Books in these collections are excluded even if they overlap with EFM
+// Books in these collections are excluded even if they overlap with BPH
 export const EXCLUDED_COLLECTIONS = ['chinese-classics', 'indic-traditions'];
 
 // ─── BISAC Category Mapping ──────────────────────────────────────────────
@@ -120,9 +120,9 @@ export function computeKdpScore(
   const translationPct = pagesOcr > 0 ? pagesTranslated / pagesOcr : 0;
   const translation = translationPct < 0.4 ? 0 : Math.round(translationPct * 25);
 
-  // 3. EFM relevance (0-20): entity centrality (per-entity book_count capped at 10)
+  // 3. BPH relevance (0-20): entity centrality (per-entity book_count capped at 10)
   // With capped centrality, p50≈500, p90≈2000 — divide by 100 for good 0-20 spread
-  const efm_relevance = Math.min(20, Math.round(entityCentrality / 100));
+  const bph_relevance = Math.min(20, Math.round(entityCentrality / 100));
 
   // 4. Engagement (0-10): log10(read_count + 1) * 4, capped
   const engagement = Math.min(10, Math.round(Math.log10((book.read_count || 0) + 1) * 4));
@@ -138,14 +138,15 @@ export function computeKdpScore(
   // 6. First translation bonus (0-5)
   const first_translation_bonus = book.is_first_translation ? 5 : 0;
 
-  const score = quality + translation + efm_relevance + engagement + apparatus + first_translation_bonus;
+  const score = quality + translation + bph_relevance + engagement + apparatus + first_translation_bonus;
+
 
   return {
     score: Math.min(100, score),
     breakdown: {
       quality,
       translation,
-      efm_relevance,
+      bph_relevance,
       engagement,
       apparatus,
       first_translation_bonus,
@@ -196,10 +197,10 @@ export async function scoreBooksKdp(
   if (options?.bookIds?.length) {
     filter.id = { $in: options.bookIds };
   } else {
-    // Default: pipeline complete EFM books with some translation
+    // Default: pipeline complete BPH books with some translation
     filter['pipeline_auto.status'] = 'complete';
     filter.pages_translated = { $gt: 0 };
-    filter.collections = { $in: EFM_COLLECTIONS, $nin: EXCLUDED_COLLECTIONS };
+    filter.collections = { $in: BPH_COLLECTIONS, $nin: EXCLUDED_COLLECTIONS };
   }
 
   type BookDoc = Record<string, unknown> & { id: string; title: string; display_title?: string };

@@ -31,7 +31,7 @@ function buildSortStage(sort: SortOption, collection?: string): { $sort: Record<
       if (collection) {
         return { $sort: { _collection_relevance: -1, has_translations: -1, title: 1 } as Record<string, 1 | -1> };
       }
-      return { $sort: { is_efm_translated: -1, quality_score: -1, has_translations: -1, last_translation_at: -1, last_processed: -1, title: 1 } as Record<string, 1 | -1> };
+      return { $sort: { is_bph_translated: -1, quality_score: -1, has_translations: -1, last_translation_at: -1, last_processed: -1, title: 1 } as Record<string, 1 | -1> };
   }
 }
 
@@ -121,11 +121,11 @@ export async function GET(request: NextRequest) {
             },
           },
           has_translations: { $cond: { if: { $gt: ['$last_translation_at', null] }, then: 1, else: 0 } },
-          is_efm_translated: {
+          is_bph_translated: {
             $cond: {
               if: {
                 $and: [
-                  { $eq: ['$image_source.provider', 'efm'] },
+                  { $eq: ['$image_source.provider', 'bph'] },
                   { $gt: ['$pages_count', 0] },
                   { $gte: [{ $multiply: [{ $divide: ['$pages_translated', { $max: ['$pages_count', 1] }] }, 100] }, 90] },
                 ],

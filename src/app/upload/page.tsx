@@ -85,7 +85,7 @@ export default function UploadPage() {
         ia_identifier: iaIdentifier || undefined,
         image_source: {
           provider: imageSourceProvider,
-          provider_name: imageSourceProvider === 'efm' ? 'Embassy of the Free Mind' :
+          provider_name: imageSourceProvider === 'bph' ? 'Bibliotheca Philosophica Hermetica' :
             imageSourceProvider === 'internet_archive' ? 'Internet Archive' :
               imageSourceProvider === 'google_books' ? 'Google Books' :
                 imageSourceProvider === 'hathi_trust' ? 'HathiTrust' :
@@ -149,7 +149,7 @@ export default function UploadPage() {
       setImageSourceProvider('internet_archive');
       setImageLicense('publicdomain'); // IA items are typically public domain
     } else if (item.source === 'bph') {
-      setImageSourceProvider('efm');
+      setImageSourceProvider('bph');
       setImageLicense('publicdomain');
     }
     setSearchResults([]);
@@ -517,7 +517,7 @@ export default function UploadPage() {
                         onChange={(e) => setImageSourceProvider(e.target.value as ImageSourceProvider)}
                         className="w-full px-4 py-2.5 border border-stone-300 rounded-lg focus:ring-2 focus-visible:ring-accent-rust/20 focus:border-accent-gold"
                       >
-                        <option value="efm">Embassy of the Free Mind (BPH)</option>
+                        <option value="bph">Bibliotheca Philosophica Hermetica (BPH)</option>
                         <option value="internet_archive">Internet Archive</option>
                         <option value="google_books">Google Books</option>
                         <option value="hathi_trust">HathiTrust</option>

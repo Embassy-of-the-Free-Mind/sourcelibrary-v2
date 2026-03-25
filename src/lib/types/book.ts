@@ -160,7 +160,7 @@ export interface Book {
 
   // Curation: hide from library, search, gallery, sitemap (still accessible via direct URL)
   hidden?: boolean;
-  hidden_reason?: string;  // 'efm_duplicate' | 'launch_curation' | 'quality'
+  hidden_reason?: string;  // 'bph_duplicate' | 'launch_curation' | 'quality'
 
   // Beta launch: featured books bypass the email gate
   featured?: boolean;
@@ -186,7 +186,7 @@ export interface Book {
   kdp_score_breakdown?: {
     quality: number;
     translation: number;
-    efm_relevance: number;
+    bph_relevance: number;
     engagement: number;
     apparatus: number;
     first_translation_bonus: number;
