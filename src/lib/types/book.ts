@@ -82,6 +82,19 @@ export interface Book {
   // Internet Archive identifier (for reimport)
   ia_identifier?: string;
 
+  // Visual art fields (only used when resource_type is a visual type)
+  medium?: string;              // "Oil on canvas", "Engraving", "Fresco"
+  dimensions_display?: string;  // "172.5 × 278.9 cm"
+  current_location?: string;    // "Galleria degli Uffizi, Florence"
+  commons_title?: string;       // Wikimedia Commons file title
+  commons_url?: string;         // Link to Commons page
+  commons_full_url?: string;    // Direct link to full-res image
+  commons_width?: number;       // Original image width
+  commons_height?: number;      // Original image height
+  commons_license?: string;     // License from Commons
+  commons_description?: string; // Description from Commons metadata
+  commons_categories?: string[]; // Categories from Commons
+
   // Wikidata alignment (for Wikipedia/Wikidata outreach)
   wikidata_id?: string;           // Q item for the work (e.g., "Q457894")
   wikidata_label?: string;        // Wikidata label for verification
