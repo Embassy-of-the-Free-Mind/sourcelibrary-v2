@@ -232,7 +232,7 @@ Pick 6-9 gallery images for the collection hero. Requirements:
 - Prefer emblems, engravings, diagrams, frontispieces
 - Avoid decorative borders or text-only pages
 
-If the collection doesn't have gallery images yet (books not processed), note this and skip — the `backfill-collection-images.mjs` script will populate them later when images are extracted.
+If the collection doesn't have gallery images yet (books not processed), note this and skip — gallery images populate automatically when the image extraction pipeline runs on collection books.
 
 ### Step 8: Push Everything
 
@@ -305,5 +305,5 @@ Match this level of richness for every collection.
 2. **Don't use book `_id` — use `id`.** The `book.id` field is what all lookups use. See memory: `lesson-id-vs-_id.md`.
 3. **Don't include untranslated books in highlighted_books** if there are enough translated ones. Untranslated books show as empty shells.
 4. **Don't write the description about Source Library** ("our collection includes..."). Write about the tradition/field itself. The collection IS the description.
-5. **Don't set featured_images manually unless necessary.** The `backfill-collection-images.mjs` script does this automatically with quality scoring. Only override if the automatic selection is poor.
+5. **Don't set featured_images manually unless necessary.** The image extraction pipeline does this automatically with quality scoring. Only override if the automatic selection is poor.
 6. **Don't forget to verify book IDs are real.** Always fetch book data before referencing IDs.

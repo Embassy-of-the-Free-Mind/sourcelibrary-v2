@@ -86,7 +86,7 @@ Autonomous book acquisition agent for Source Library, focused on Western esoteri
 | Image quality | 1x | Readable scans |
 | Research value | 1x | Citations, scholarly interest |
 
-## Import APIs (12 Sources)
+## Import APIs (24 Sources)
 
 Full API reference: `.claude/docs/import-apis.md`
 
@@ -212,13 +212,12 @@ curl -s "https://sourcelibrary.org/api/books" | jq '.[] | select(.author | conta
 ## Catalog Sources
 
 ### Primary Catalogs
-- **BPH Catalog**: `data/bph_catalog.csv` (28,814 entries)
+- **BPH Catalog**: Supabase `bph_works` table (27,879 entries)
   - Bibliotheca Philosophica Hermetica holdings
   - Strong in Hermetica, alchemy, Rosicrucianism
 
-- **IA Catalog**: `data/ia_catalog.csv` (9,000 entries)
-  - Internet Archive / McGill early printed books
-  - Strong in incunabula, 15th-16th century
+- **USTC / Import Candidates**: MongoDB `import_candidates` (1M+ IIIF scan records from 11 sources)
+  - Use `scripts/catalog-coverage/scan-library-catalog.mjs` to scan any catalog against USTC
 
 ### Discovery Methods
 - Archive.org advanced search by theme/author/date

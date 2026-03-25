@@ -59,30 +59,18 @@ curl -s "https://sourcelibrary.org/api/books" | jq '[.[] |
 
 ## Extract Images from a Book
 
-### Smart Extraction (Recommended)
+### Via Pipeline (Recommended)
 
-Uses OCR `<image-desc>` tags to find pages with images, ranks them with AI, and only extracts the best 15-20:
+Image extraction runs automatically as part of the pipeline (`images` phase). Books with OCR `<image-desc>` tags get processed by Lambda workers.
 
-```bash
-# Extract top 20 images from a book
-node scripts/smart-extract.mjs BOOK_ID --limit=20
-
-# Extract top 15 images
-node scripts/smart-extract.mjs BOOK_ID --limit=15
-```
-
-**How it works:**
-1. Finds pages with `<image-desc>` tags in OCR (from previous OCR pass)
-2. Uses AI to rank descriptions and pick the most interesting
-3. Only extracts those specific pages
-4. ~30 seconds for 20 images instead of scanning all pages
-
-### Full Extraction (All Pages)
-
-For comprehensive extraction of every page (slow, use sparingly):
+To manually trigger extraction for a specific book:
 
 ```bash
-node scripts/evaluate-extraction.mjs BOOK_ID --clear
+# Queue image extraction via API
+curl -X POST "https://sourcelibrary.org/api/books/BOOK_ID/pipeline" \
+  -H "Authorization: Bearer $CRON_SECRET" \
+  -H "Content-Type: application/json" \
+  -d '{"action": "extract_images"}'
 ```
 
 ### Via API (Individual Pages)
@@ -149,7 +137,7 @@ https://sourcelibrary.org/gallery?bookId=BOOK_ID
 
 ### Book Guide Page (high-quality images only)
 ```
-https://sourcelibrary.org/book/BOOK_ID/guide
+https://sourcelibrary.org/book/BOOK_SLUG
 ```
 
 ### Individual Image Detail
@@ -159,7 +147,7 @@ https://sourcelibrary.org/gallery/image/PAGE_ID:INDEX
 
 ## Cost Estimation
 
-Using Gemini 2.5 Flash:
+Using Gemini 3 Flash:
 
 | Metric | Cost |
 |--------|------|
