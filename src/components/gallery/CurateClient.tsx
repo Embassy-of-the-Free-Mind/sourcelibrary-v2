@@ -434,7 +434,6 @@ export default function CurateClient() {
         offset: newOffset.toString(),
         minQuality: minQuality.toString(),
         maxPerBook: '999',
-        shuffle: 'true',
       });
       if (filterType) params.append('type', filterType);
       if (filterCollection) params.append('collection', filterCollection);
@@ -442,10 +441,17 @@ export default function CurateClient() {
       const res = await fetch(`/api/gallery?${params}`, { signal: controller.signal });
       const data = await res.json();
 
+      // Shuffle client-side (server-side shuffle timeouts on Atlas with broad filters)
+      const items = data.items || [];
+      for (let i = items.length - 1; i > 0; i--) {
+        const j = Math.floor(Math.random() * (i + 1));
+        [items[i], items[j]] = [items[j], items[i]];
+      }
+
       if (reset) {
-        setImages(data.items || []);
+        setImages(items);
       } else {
-        setImages(prev => [...prev, ...(data.items || [])]);
+        setImages(prev => [...prev, ...items]);
       }
 
       setTotal(data.total || 0);
