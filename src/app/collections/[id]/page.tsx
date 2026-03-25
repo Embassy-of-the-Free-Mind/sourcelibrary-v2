@@ -203,18 +203,24 @@ async function fetchCollectionData(id: string) {
   );
   if (!collection) return null;
 
-  const filter: Record<string, unknown> = {
-    collections: id,
-    status: { $ne: 'deleted' },
-    hidden: { $ne: true },
-    pages_count: { $gt: 0 },
-    pages_translated: { $gt: 0 },
-  };
+  const isArtCollection = collection.collection_type === 'visual_art';
+
+  // Visual art collections bypass hidden/translation filters — artworks have no pages
+  const filter: Record<string, unknown> = isArtCollection
+    ? { collections: id, resource_type: { $exists: true } }
+    : {
+        collections: id,
+        status: { $ne: 'deleted' },
+        hidden: { $ne: true },
+        pages_count: { $gt: 0 },
+        pages_translated: { $gt: 0 },
+      };
 
   const projection = {
     _id: 0, id: 1, slug: 1, title: 1, display_title: 1, author: 1, year: 1,
     language: 1, pages_count: 1, pages_ocr: 1, pages_translated: 1,
     photo: 1, categories: 1, thumbnail: 1, thumbnail_blob: 1, published: 1, read_count: 1,
+    resource_type: 1, commons_width: 1, commons_height: 1,
   };
 
   // Extract curated highlights from collection document
