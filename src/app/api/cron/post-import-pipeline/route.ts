@@ -12,6 +12,7 @@ import { createCronLogger } from '@/lib/cron-logger';
 import { logAuditEvent } from '@/lib/audit-logger';
 import { syncBookToGitHub } from '@/lib/git-sync';
 import { deduplicateOverlappingPages } from '@/lib/page-split/dedup-overlapping-pages';
+import { detectAndRemoveGhostPages } from '@/lib/page-split/detect-ghost-pages';
 import { getAdaptiveLimits } from '@/lib/adaptive-limits';
 
 export const maxDuration = 300;
@@ -689,6 +690,7 @@ export async function GET(request: NextRequest) {
     stale_retranslate: 0,
     thumbnails_fixed: 0,
     dedup_removed: 0,
+    ghost_removed: 0,
     errors: [] as string[],
   };
 
@@ -1543,6 +1545,19 @@ export async function GET(request: NextRequest) {
             } catch (dedupErr) {
               // Non-blocking — don't fail the pipeline for dedup errors
               console.error(`[pipeline] Dedup failed for ${book.id}:`, dedupErr);
+            }
+
+            // Ghost page detection (non-blocking)
+            // IA manifests sometimes have trailing ghost canvases that OCR identically.
+            // Compares last 10 pages by Jaccard word similarity, trims if 3+ match >70%.
+            try {
+              const ghostResult = await detectAndRemoveGhostPages(db, book.id);
+              if (ghostResult && ghostResult.pagesRemoved > 0) {
+                log.ghost_removed = (log.ghost_removed || 0) + ghostResult.pagesRemoved;
+                logger.action('ghost_pages_removed', ghostResult.pagesRemoved);
+              }
+            } catch (ghostErr) {
+              console.error(`[pipeline] Ghost detection failed for ${book.id}:`, ghostErr);
             }
           }
         }
