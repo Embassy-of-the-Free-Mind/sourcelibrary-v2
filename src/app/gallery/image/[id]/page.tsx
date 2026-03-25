@@ -520,7 +520,8 @@ export default function ImageDetailPage({
 
   const shareToTwitter = () => {
     if (!data) return;
-    const text = `${data.description}\n\nFrom "${data.book.title}"${data.book.author ? ` by ${data.book.author}` : ''}${data.book.year ? ` (${data.book.year})` : ''}\n\n`;
+    const displayAuthor = data.book.author && data.book.author !== 'Various' ? data.book.author : '';
+    const text = `${data.description}\n\nFrom "${data.book.title}"${displayAuthor ? ` by ${displayAuthor}` : ''}${data.book.year ? ` (${data.book.year})` : ''}\n\n`;
     const url = window.location.href;
     window.open(
       `https://twitter.com/intent/tweet?text=${encodeURIComponent(text)}&url=${encodeURIComponent(url)}`,
@@ -546,7 +547,7 @@ export default function ImageDetailPage({
     try {
       await navigator.share({
         title: `${data.description} — Source Library`,
-        text: `From "${data.book.title}"${data.book.author ? ` by ${data.book.author}` : ''}`,
+        text: `From "${data.book.title}"${data.book.author && data.book.author !== 'Various' ? ` by ${data.book.author}` : ''}`,
         url,
       });
     } catch {
@@ -746,7 +747,7 @@ export default function ImageDetailPage({
           <div className="absolute bottom-0 left-0 right-0 z-20 px-5 pb-5 pt-24 bg-gradient-to-t from-black/70 via-black/40 to-transparent">
             <h1 className="text-xl sm:text-2xl md:text-3xl font-serif text-white leading-snug line-clamp-2">{data.description}</h1>
             <p className="text-base sm:text-lg text-white/60 mt-1.5">
-              {data.book.title}{data.book.author ? ` \u2014 ${data.book.author}` : ''}{data.book.year ? ` (${data.book.year})` : ''} \u00b7 p.{data.pageNumber}
+              {data.book.title}{data.book.author && data.book.author !== 'Various' ? ` \u2014 ${data.book.author}` : ''}{data.book.year ? ` (${data.book.year})` : ''} \u00b7 p.{data.pageNumber}
             </p>
           </div>
         </div>
@@ -1080,7 +1081,7 @@ export default function ImageDetailPage({
                     )}
                     <div className="p-5">
                       <p className="text-lg text-white font-medium group-hover:text-accent-gold transition-colors">{data.book.title}</p>
-                      {data.book.author && <p className="text-stone-400 text-base mt-1">{data.book.author}</p>}
+                      {data.book.author && data.book.author !== 'Various' && <p className="text-stone-400 text-base mt-1">{data.book.author}</p>}
                       {data.book.year && <p className="text-stone-500 text-base">{data.book.year}</p>}
                     </div>
                   </Link>

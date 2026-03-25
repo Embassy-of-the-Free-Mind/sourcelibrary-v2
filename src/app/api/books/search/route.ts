@@ -2,6 +2,10 @@ import { NextRequest, NextResponse } from 'next/server';
 import { getDb } from '@/lib/mongodb';
 import { buildBookSearchStage } from '@/lib/atlas-search';
 
+function escapeRegex(str: string): string {
+  return str.replace(/[.*+?^${}()|[\]\\]/g, '\\$&');
+}
+
 export async function GET(request: NextRequest) {
   const { searchParams } = new URL(request.url);
   const query = searchParams.get('q');
@@ -18,28 +22,53 @@ export async function GET(request: NextRequest) {
 
   try {
     const db = await getDb();
+    const projection = { _id: 1, id: 1, title: 1, display_title: 1, author: 1 };
 
-    const [result] = await db.collection('books').aggregate([
-      buildBookSearchStage(query),
-      {
-        $facet: {
-          results: [
-            { $skip: skip },
-            { $limit: limit },
-            { $project: { _id: 1, id: 1, title: 1, display_title: 1, author: 1 } },
-          ],
-          total: [{ $count: 'n' }],
+    let books: Record<string, unknown>[];
+    let total: number;
+
+    try {
+      // Atlas Search with timeout
+      const [result] = await db.collection('books').aggregate([
+        buildBookSearchStage(query),
+        {
+          $facet: {
+            results: [
+              { $skip: skip },
+              { $limit: limit },
+              { $project: projection },
+            ],
+            total: [{ $count: 'n' }],
+          },
         },
-      },
-    ]).toArray();
+      ], { maxTimeMS: 5000 }).toArray();
 
-    const books = result?.results ?? [];
-    const total = result?.total[0]?.n ?? 0;
+      books = result?.results ?? [];
+      total = result?.total[0]?.n ?? 0;
+    } catch {
+      // Fallback: regex search when Atlas Search is unavailable
+      const queryRegex = new RegExp(escapeRegex(query), 'i');
+      const filter = {
+        hidden: { $ne: true },
+        $or: [
+          { title: queryRegex },
+          { display_title: queryRegex },
+          { author: queryRegex },
+        ],
+      };
+      const [fallbackBooks, fallbackTotal] = await Promise.all([
+        db.collection('books').find(filter, { projection }).skip(skip).limit(limit).toArray(),
+        db.collection('books').countDocuments(filter),
+      ]);
+      books = fallbackBooks;
+      total = fallbackTotal;
+    }
 
     return NextResponse.json({
-      results: books.map((b: { id?: string; _id: { toString(): string }; title: string; display_title?: string; author?: string }) => ({
-        id: b.id || b._id.toString(),
-        _id: b._id.toString(),
+      // eslint-disable-next-line @typescript-eslint/no-explicit-any
+      results: books.map((b: any) => ({
+        id: b.id || b._id?.toString(),
+        _id: b._id?.toString(),
         title: b.title,
         display_title: b.display_title,
         author: b.author,
