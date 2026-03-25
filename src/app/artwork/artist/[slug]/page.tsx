@@ -78,7 +78,12 @@ async function getArtist(slug: string) {
 
 export async function generateMetadata({ params }: PageProps): Promise<Metadata> {
   const { slug } = await params;
-  const data = await getArtist(slug);
+  let data: Awaited<ReturnType<typeof getArtist>>;
+  try {
+    data = await getArtist(slug);
+  } catch {
+    return { title: 'Source Library', robots: { index: false, follow: false } };
+  }
   if (!data) return { title: 'Not Found' };
   return {
     title: `${data.name} — Source Library Visual Art`,

@@ -29,13 +29,18 @@ export async function generateMetadata({ params }: Props): Promise<Metadata> {
   const { code } = await params;
   const langName = decodeLanguageSlug(code);
 
-  const db = await getDb();
-  const count = await db.collection('books').countDocuments({
-    language: langName,
-    status: { $ne: 'deleted' },
-    hidden: { $ne: true },
-    pages_count: { $gt: 0 },
-  });
+  let count: number;
+  try {
+    const db = await getDb();
+    count = await db.collection('books').countDocuments({
+      language: langName,
+      status: { $ne: 'deleted' },
+      hidden: { $ne: true },
+      pages_count: { $gt: 0 },
+    });
+  } catch {
+    return { title: 'Source Library', robots: { index: false, follow: false } };
+  }
 
   if (count === 0) return { title: 'Language Not Found - Source Library' };
 

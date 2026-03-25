@@ -42,7 +42,12 @@ function workTitle(workId: string): string {
 
 export async function generateMetadata({ params }: PageProps): Promise<Metadata> {
   const { id } = await params;
-  const editions = await getWorkEditions(id);
+  let editions: Awaited<ReturnType<typeof getWorkEditions>>;
+  try {
+    editions = await getWorkEditions(id);
+  } catch {
+    return { title: 'Source Library', robots: { index: false, follow: false } };
+  }
   if (editions.length === 0) return { title: 'Work Not Found' };
 
   const title = workTitle(id);

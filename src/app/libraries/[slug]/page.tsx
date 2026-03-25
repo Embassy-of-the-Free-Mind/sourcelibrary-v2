@@ -26,7 +26,12 @@ export async function generateStaticParams() {
 
 export async function generateMetadata({ params }: Props): Promise<Metadata> {
   const { slug } = await params;
-  const partner = getPartnerBySlug(slug);
+  let partner: ReturnType<typeof getPartnerBySlug>;
+  try {
+    partner = getPartnerBySlug(slug);
+  } catch {
+    return { title: 'Source Library', robots: { index: false, follow: false } };
+  }
 
   if (!partner) {
     return { title: 'Library Not Found - Source Library' };
