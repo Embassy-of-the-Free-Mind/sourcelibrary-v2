@@ -58,35 +58,22 @@ async function resolveAuthor(db: any, slug: string): Promise<{
   entity: AuthorEntity | null;
   entityId: string | null;
 } | null> {
-  const pattern = slug.split('-').map(s => s.replace(/[.*+?^${}()|[\]\\]/g, '\\$&')).join('[^a-z0-9]+');
+  // Fast path: get all distinct authors from indexed field, match slug in JS
+  const authors: string[] = await db.collection('books').distinct('author', {
+    hidden: { $ne: true },
+    author: { $exists: true, $ne: null },
+  });
+  const matchedAuthor = authors.find(a => authorSlug(a) === slug);
+
+  if (!matchedAuthor) return null;
+
+  // Look up entity for bio/dates (by _id, fast)
   const book = await db.collection('books').findOne(
-    { author: { $regex: new RegExp(`^${pattern}$`, 'i') }, hidden: { $ne: true } },
-    { projection: { author: 1, author_entity_id: 1 } }
+    { author: matchedAuthor, hidden: { $ne: true } },
+    { projection: { author_entity_id: 1 } }
   );
 
-  if (!book) {
-    // Try matching against entity aliases/canonical names
-    const entity = await db.collection('entities').findOne({
-      type: 'person',
-      canonical_name: { $exists: true },
-      $or: [
-        { canonical_name: { $regex: new RegExp(`^${pattern}$`, 'i') } },
-        { aliases: { $regex: new RegExp(`^${pattern}$`, 'i') } },
-      ]
-    }, { projection: { name: 1, canonical_name: 1, description: 1, viaf_id: 1, wikidata_id: 1, wikidata_birth_date: 1, wikidata_death_date: 1 } });
-
-    if (entity) {
-      return {
-        authorName: entity.canonical_name || entity.name,
-        entity: entity as AuthorEntity,
-        entityId: entity._id.toString(),
-      };
-    }
-    return null;
-  }
-
-  // If book has entity link, use that for canonical name
-  if (book.author_entity_id) {
+  if (book?.author_entity_id) {
     try {
       const entity = await db.collection('entities').findOne(
         { _id: new ObjectId(book.author_entity_id) },
@@ -105,7 +92,7 @@ async function resolveAuthor(db: any, slug: string): Promise<{
   }
 
   return {
-    authorName: book.author as string,
+    authorName: matchedAuthor,
     entity: null,
     entityId: null,
   };
@@ -147,18 +134,12 @@ async function getAuthorBooks(authorName: string, entityId: string | null): Prom
 
 export async function generateMetadata({ params }: AuthorPageProps): Promise<Metadata> {
   const { name } = await params;
-  let authorName: string;
-  try {
-    const decoded = decodeURIComponent(name);
-    const isOldFormat = decoded !== name;
-    const db = await getDb();
-    const resolved = isOldFormat
-      ? { authorName: decoded, entity: null, entityId: null }
-      : await resolveAuthor(db, name);
-    authorName = resolved?.authorName || name.replace(/-/g, ' ');
-  } catch {
-    return { title: 'Source Library', robots: { index: false, follow: false } };
-  }
+  // Derive display name from slug — no DB call needed for metadata.
+  // The page component does the real resolve; metadata just needs a title.
+  const decoded = decodeURIComponent(name);
+  const authorName = decoded !== name
+    ? decoded
+    : name.split('-').map(w => w.charAt(0).toUpperCase() + w.slice(1)).join(' ');
 
   return {
     title: `${authorName} — Source Library`,
