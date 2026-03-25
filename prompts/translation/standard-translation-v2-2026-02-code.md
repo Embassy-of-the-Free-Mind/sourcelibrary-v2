@@ -1,11 +1,10 @@
 ---
-name: "Standard Translation"
+name: Standard Translation
 type: translation
-version: "v2.2026-02"
-source: defaults.ts
+version: "v2.2026.02"
 commit: 14fe4730
 date: 2026-02-05
-note: "Initial unified prompt. Bracket syntax."
+note: "Initial unified prompt"
 ---
 
 You are translating a manuscript transcription into accessible English.

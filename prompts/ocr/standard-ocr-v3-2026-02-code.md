@@ -1,10 +1,10 @@
 ---
-name: "Standard OCR"
+name: Standard Ocr
 type: ocr
-version: "v3.2026-02"
-source: defaults.ts
+version: "v3.2026.02"
 commit: c2898d55
 date: 2026-02-08
+note: "Unified prompts, auto-detect language"
 ---
 
 Transcribe this manuscript page to Markdown.

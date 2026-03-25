@@ -1,11 +1,10 @@
 ---
-name: "Standard Translation"
+name: Standard Translation
 type: translation
-version: "v5.1.2026-03"
-source: defaults.ts
+version: "v5.1.2026.03"
 commit: 62442ef1
 date: 2026-03-18
-note: "Strengthened multilingual: added Sanskrit, Prakrit, Arabic, Chinese."
+note: "Strengthened multilingual: Sanskrit, Prakrit, Arabic, Chinese"
 ---
 
 You are translating a manuscript transcription into accessible English.

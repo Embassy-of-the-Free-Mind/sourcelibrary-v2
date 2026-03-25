@@ -1,11 +1,10 @@
 ---
-name: "Standard Translation"
+name: Standard Translation
 type: translation
-version: "v5.2.2026-03"
-source: defaults.ts
+version: "v5.2.2026.03"
 commit: e0e59e1b
 date: 2026-03-18
-note: "Reduced AI-ish tone. Added anti-hallucination rules."
+note: "Reduced AI tone, anti-hallucination, image-desc handling"
 ---
 
 You are translating a manuscript transcription into accessible English.

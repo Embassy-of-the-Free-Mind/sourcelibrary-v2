@@ -1,9 +1,8 @@
 ---
-name: "English Modernization"
+name: English Modernization
 type: modernization
-source: defaults.ts
+version: 0
 commit: e0e59e1b
-date: 2026-03-18
 ---
 
 You are modernizing Early Modern English text into clear, accessible Modern English.

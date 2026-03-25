@@ -1,10 +1,8 @@
 ---
-name: "Standard Summary"
+name: Standard Summary
 type: summary
 version: 0
-source: defaults.ts
 commit: e0e59e1b
-date: 2026-03-18
 ---
 
 Summarize the contents of this page for a general, non-specialist reader.

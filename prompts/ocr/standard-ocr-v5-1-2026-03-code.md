@@ -1,10 +1,10 @@
 ---
-name: "Standard OCR"
+name: Standard Ocr
 type: ocr
-version: "v5.1.2026-03"
-source: defaults.ts
+version: "v5.1.2026.03"
 commit: 62442ef1
 date: 2026-03-18
+note: "Strengthened multilingual: Sanskrit, Prakrit, Arabic, Chinese"
 ---
 
 Transcribe this historical manuscript page to Markdown.

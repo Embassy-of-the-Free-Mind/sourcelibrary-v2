@@ -1,10 +1,10 @@
 ---
-name: "Standard OCR"
+name: Standard Ocr
 type: ocr
-version: "v4.2026-02"
-source: defaults.ts
+version: "v4.2026.02"
 commit: 104104b3
 date: 2026-02-15
+note: "Added column-break preservation"
 ---
 
 Transcribe this historical manuscript page to Markdown.

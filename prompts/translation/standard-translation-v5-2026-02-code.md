@@ -1,11 +1,10 @@
 ---
-name: "Standard Translation"
+name: Standard Translation
 type: translation
-version: "v5.2026-02"
-source: defaults.ts
+version: "v5.2026.02"
 commit: eba7de46
 date: 2026-02-20
-note: "Renamed <lang> to <language>. Skip blank pages."
+note: "Renamed lang to language, skip blanks"
 ---
 
 You are translating a manuscript transcription into accessible English.

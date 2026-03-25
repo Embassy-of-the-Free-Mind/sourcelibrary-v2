@@ -1,10 +1,10 @@
 ---
-name: "Standard OCR"
+name: Standard Ocr
 type: ocr
-version: "v5.2.2026-03"
-source: defaults.ts
+version: "v5.2.2026.03"
 commit: e0e59e1b
 date: 2026-03-18
+note: "Reduced AI tone, anti-hallucination, image-desc handling"
 ---
 
 Transcribe this historical manuscript page to Markdown.

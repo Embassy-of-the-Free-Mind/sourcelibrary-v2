@@ -1,11 +1,10 @@
 ---
-name: "Standard Translation"
+name: Standard Translation
 type: translation
-version: "v4.2026-02"
-source: defaults.ts
+version: "v4.2026.02"
 commit: 104104b3
 date: 2026-02-15
-note: "Added <column-break/> preservation."
+note: "Added column-break preservation"
 ---
 
 You are translating a manuscript transcription into accessible English.

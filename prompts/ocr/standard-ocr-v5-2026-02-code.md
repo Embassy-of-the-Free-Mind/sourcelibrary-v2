@@ -1,10 +1,10 @@
 ---
-name: "Standard OCR"
+name: Standard Ocr
 type: ocr
-version: "v5.2026-02"
-source: defaults.ts
+version: "v5.2026.02"
 commit: eba7de46
 date: 2026-02-20
+note: "Renamed lang to language, skip blanks"
 ---
 
 Transcribe this historical manuscript page to Markdown.

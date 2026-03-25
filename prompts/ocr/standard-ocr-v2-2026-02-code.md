@@ -1,10 +1,10 @@
 ---
-name: "Standard OCR"
+name: Standard Ocr
 type: ocr
-version: "v2.2026-02"
-source: defaults.ts
+version: "v2.2026.02"
 commit: 14fe4730
 date: 2026-02-05
+note: "Initial unified prompt"
 ---
 
 Transcribe this {language} manuscript page to Markdown.

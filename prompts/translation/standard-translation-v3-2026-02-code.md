@@ -1,11 +1,10 @@
 ---
-name: "Standard Translation"
+name: Standard Translation
 type: translation
-version: "v3.2026-02"
-source: defaults.ts
+version: "v3.2026.02"
 commit: c2898d55
 date: 2026-02-08
-note: "Unified prompts, auto-detect language."
+note: "Unified prompts, auto-detect language"
 ---
 
 You are translating a manuscript transcription into accessible English.

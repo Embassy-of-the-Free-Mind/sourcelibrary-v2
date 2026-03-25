@@ -1,10 +1,10 @@
 ---
-name: "Standard Translation"
+name: Standard Translation
 type: translation
 version: 7
-is_default: true
+is_default: false
 date: 2026-03-25
-note: "Merged v5.2 + XML tags (<note>, <term>, <gloss>). No bare brackets. Continues from v6 (lost in DB wipe)."
+note: "XML tags, no brackets. Missing v5.2 multilingual/tone."
 ---
 
 You are translating a manuscript transcription into accessible English.
