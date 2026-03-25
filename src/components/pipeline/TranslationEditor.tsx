@@ -1083,6 +1083,14 @@ export default function TranslationEditor({
           </div>
         </header>
 
+        {/* Rashi script quality warning */}
+        {(book as any).metadata?.scriptType?.toLowerCase().includes('rashi') && (
+          <div className="px-4 py-2 bg-amber-50 border-b border-amber-200 text-sm text-amber-800 flex items-center gap-2">
+            <span className="font-bold flex-shrink-0">⚠</span>
+            <span><span className="font-medium">Rashi script</span> — current AI models struggle with this typeface. OCR and translation quality is low.</span>
+          </div>
+        )}
+
         {/* Panel layout - dynamic based on visibility */}
         {(() => {
           const visibleCount = [showImagePanel, showOcrPanel, showTranslationPanel, showTransliterationPanel && hasTransliteration].filter(Boolean).length;
@@ -1753,6 +1761,14 @@ export default function TranslationEditor({
           </div>
         </div>
       </header>
+
+      {/* Rashi script quality warning */}
+      {(book as any).metadata?.scriptType?.toLowerCase().includes('rashi') && (
+        <div className="px-4 py-2 bg-amber-50 border-b border-amber-200 text-sm text-amber-800 flex items-center gap-2">
+          <span className="font-bold flex-shrink-0">⚠</span>
+          <span><span className="font-medium">Rashi script</span> — current AI models struggle with this typeface. OCR and translation quality is low.</span>
+        </div>
+      )}
 
       {/* Main Content - Panels toggle visibility, stacked on mobile, columns on desktop */}
       {/* On mobile: panels have min-height and container scrolls. On desktop: panels share space */}
