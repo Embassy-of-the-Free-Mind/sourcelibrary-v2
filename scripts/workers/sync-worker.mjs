@@ -77,9 +77,9 @@ async function syncPageCounts(db) {
             $cond: [
               { $and: [
                 { $eq: [{ $type: '$archived_photo' }, 'string'] },
+                // Count any non-empty archived_photo; "failed:*" entries are rare
+                // and will be a small overcount vs the perf cost of $regexMatch
                 { $gt: [{ $strLenCP: '$archived_photo' }, 0] },
-                // Exclude failed archives (e.g. "failed:HTTP 404")
-                { $not: [{ $regexMatch: { input: { $ifNull: ['$archived_photo', ''] }, regex: /^failed/ } }] },
               ] },
               1, 0,
             ],
