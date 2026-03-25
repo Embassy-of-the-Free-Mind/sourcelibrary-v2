@@ -33,8 +33,9 @@ interface AuthorEntity {
   wikidata_death_date?: string;
 }
 
-// ISR: rebuild at most every hour
-export const revalidate = 3600;
+// ISR: author pages are mostly static — revalidate weekly.
+// Use POST /api/admin/revalidate-authors to force refresh after changes.
+export const revalidate = 604800;
 export const dynamicParams = true;
 export async function generateStaticParams() {
   return []; // All paths generated on demand via ISR
