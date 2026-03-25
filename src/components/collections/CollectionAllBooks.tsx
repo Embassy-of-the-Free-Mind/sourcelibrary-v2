@@ -152,6 +152,7 @@ export default function CollectionAllBooks({
               <option value="year_asc">Oldest First</option>
               <option value="year_desc">Newest First</option>
               <option value="title">Title A-Z</option>
+              <option value="author">Artist A-Z</option>
               <option value="recent">Recently Added</option>
             </select>
             {languages.length > 0 && (
