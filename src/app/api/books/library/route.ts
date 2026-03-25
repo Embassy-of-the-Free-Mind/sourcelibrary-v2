@@ -113,8 +113,8 @@ export async function GET(request: NextRequest) {
               },
               else: {
                 $cond: {
-                  if: { $gt: ['$pages_ocr', 0] },
-                  then: { $round: [{ $multiply: [{ $divide: ['$pages_translated', '$pages_ocr'] }, 100] }] },
+                  if: { $gt: [{ $subtract: ['$pages_ocr', { $ifNull: ['$pages_blank', 0] }] }, 0] },
+                  then: { $round: [{ $multiply: [{ $divide: ['$pages_translated', { $subtract: ['$pages_ocr', { $ifNull: ['$pages_blank', 0] }] }] }, 100] }] },
                   else: 0,
                 },
               },

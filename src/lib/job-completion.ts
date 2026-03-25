@@ -87,11 +87,7 @@ function getCompletionQuery(bookId: string, targetPageIds: string[], jobType: Pa
     case 'ocr':
       return { ...baseFilter, 'ocr.data': { $exists: true, $nin: [null, ''] } };
     case 'translation':
-      // Count pages with translation data OR blank pages (which are skipped by the translator)
-      return { ...baseFilter, $or: [
-        { 'translation.data': { $exists: true, $nin: [null, ''] } },
-        { page_type: { $in: SKIP_TRANSLATION_PAGE_TYPES } },
-      ] };
+      return { ...baseFilter, 'translation.data': { $exists: true, $nin: [null, ''] } };
     case 'image_extraction':
       return { ...baseFilter, detected_images: { $exists: true } };
   }
@@ -170,26 +166,34 @@ async function handleJobCompletion(
     }
 
     case 'translation': {
-      // Update book's pages_translated count (includes skip types like blank/illustration)
+      // Update book's pages_translated + pages_blank counts
       const [translationAgg] = await pages.aggregate([
         { $match: { book_id: bookId } },
         { $group: {
           _id: null,
-          count: { $sum: {
+          translated: { $sum: {
             $cond: [
-              { $or: [
-                { $and: [
-                  { $eq: [{ $type: '$translation.data' }, 'string'] },
-                  { $gt: [{ $strLenCP: '$translation.data' }, 0] },
-                ] },
+              { $and: [
+                { $eq: [{ $type: '$translation.data' }, 'string'] },
+                { $gt: [{ $strLenCP: '$translation.data' }, 0] },
+              ] },
+              1, 0
+            ]
+          }},
+          blank: { $sum: {
+            $cond: [
+              { $and: [
                 { $in: [{ $ifNull: ['$page_type', ''] }, SKIP_TRANSLATION_PAGE_TYPES] },
+                { $eq: [{ $type: '$ocr.data' }, 'string'] },
+                { $gt: [{ $strLenCP: '$ocr.data' }, 0] },
               ] },
               1, 0
             ]
           }}
         }}
       ]).toArray();
-      const totalPagesWithTranslation = translationAgg?.count || 0;
+      const totalPagesWithTranslation = translationAgg?.translated || 0;
+      const totalPagesBlank = translationAgg?.blank || 0;
 
       // Mark enrichment stale if this book already has an index
       const bookDoc = await books.findOne(
@@ -203,6 +207,7 @@ async function handleJobCompletion(
         {
           $set: {
             pages_translated: totalPagesWithTranslation,
+            pages_blank: totalPagesBlank,
             last_translation_at: new Date(),
             ...enrichmentStale,
             updated_at: new Date()
@@ -211,7 +216,7 @@ async function handleJobCompletion(
         }
       );
 
-      console.log(`${logPrefix} Updated book ${bookId}: pages_translated = ${totalPagesWithTranslation}${enrichmentStale.enrichment_stale ? ', marked enrichment_stale' : ''}`);
+      console.log(`${logPrefix} Updated book ${bookId}: pages_translated = ${totalPagesWithTranslation}, pages_blank = ${totalPagesBlank}${enrichmentStale.enrichment_stale ? ', marked enrichment_stale' : ''}`);
       break;
     }
 

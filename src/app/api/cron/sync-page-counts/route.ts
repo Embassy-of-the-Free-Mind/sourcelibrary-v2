@@ -46,12 +46,22 @@ export async function GET(request: NextRequest) {
           pages_translated: {
             $sum: {
               $cond: [
-                { $or: [
-                  { $and: [
-                    { $eq: [{ $type: '$translation.data' }, 'string'] },
-                    { $gt: [{ $strLenCP: '$translation.data' }, 0] },
-                  ] },
+                { $and: [
+                  { $eq: [{ $type: '$translation.data' }, 'string'] },
+                  { $gt: [{ $strLenCP: '$translation.data' }, 0] },
+                ] },
+                1, 0
+              ]
+            }
+          },
+          // Blank pages with OCR — subtracted from denominator for translation_percent
+          pages_blank: {
+            $sum: {
+              $cond: [
+                { $and: [
                   { $in: [{ $ifNull: ['$page_type', ''] }, SKIP_TRANSLATION_PAGE_TYPES] },
+                  { $eq: [{ $type: '$ocr.data' }, 'string'] },
+                  { $gt: [{ $strLenCP: '$ocr.data' }, 0] },
                 ] },
                 1, 0
               ]
@@ -61,19 +71,20 @@ export async function GET(request: NextRequest) {
       }
     ]).toArray();
 
-    // Build a map: book_id -> { pages_count, pages_ocr, pages_translated }
-    const statsMap = new Map<string, { pages_count: number; pages_ocr: number; pages_translated: number }>();
+    // Build a map: book_id -> counts
+    const statsMap = new Map<string, { pages_count: number; pages_ocr: number; pages_translated: number; pages_blank: number }>();
     for (const stat of pageStats) {
       statsMap.set(stat._id, {
         pages_count: stat.pages_count,
         pages_ocr: stat.pages_ocr,
         pages_translated: stat.pages_translated,
+        pages_blank: stat.pages_blank,
       });
     }
 
     // Fetch all books' current cached values
     const books = await db.collection('books')
-      .find({}, { projection: { _id: 1, id: 1, pages_count: 1, pages_ocr: 1, pages_translated: 1 } })
+      .find({}, { projection: { _id: 1, id: 1, pages_count: 1, pages_ocr: 1, pages_translated: 1, pages_blank: 1 } })
       .toArray();
 
     // Build bulk updates for books with mismatched counts
@@ -82,17 +93,19 @@ export async function GET(request: NextRequest) {
 
     for (const book of books) {
       const bookId = book.id || book._id?.toString();
-      const actual = statsMap.get(bookId) || { pages_count: 0, pages_ocr: 0, pages_translated: 0 };
+      const actual = statsMap.get(bookId) || { pages_count: 0, pages_ocr: 0, pages_translated: 0, pages_blank: 0 };
       const current = {
         pages_count: book.pages_count || 0,
         pages_ocr: book.pages_ocr || 0,
         pages_translated: book.pages_translated || 0,
+        pages_blank: book.pages_blank || 0,
       };
 
       if (
         current.pages_count !== actual.pages_count ||
         current.pages_ocr !== actual.pages_ocr ||
-        current.pages_translated !== actual.pages_translated
+        current.pages_translated !== actual.pages_translated ||
+        current.pages_blank !== actual.pages_blank
       ) {
         mismatchCount++;
         bulkOps.push({
@@ -103,6 +116,7 @@ export async function GET(request: NextRequest) {
                 pages_count: actual.pages_count,
                 pages_ocr: actual.pages_ocr,
                 pages_translated: actual.pages_translated,
+                pages_blank: actual.pages_blank,
                 updated_at: new Date(),
               }
             }

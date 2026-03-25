@@ -1,6 +1,6 @@
 # Source Library System Map
 
-> Last audited: 2026-03-19. Use this as the primary navigation reference.
+> Last audited: 2026-03-25. Use this as the primary navigation reference.
 
 ## Architecture Overview
 
@@ -27,7 +27,7 @@ Users ──> Vercel (Next.js 16) ──> MongoDB Atlas (bookstore)
 | Service | Purpose | Key Config |
 |---------|---------|------------|
 | **Vercel** | Next.js hosting, 4 crons | Project: `sourcelibrary-v2` |
-| **MongoDB Atlas** | Primary database | DB: `bookstore`, ~5,355 books |
+| **MongoDB Atlas** | Primary database | DB: `bookstore`, ~38,195 books |
 | **AWS Lambda** (eu-central-1) | AI processing workers | 3 functions, SQS-triggered |
 | **AWS SQS** (eu-central-1) | Job queues (FIFO) | 4 queues: OCR, translation, images, write |
 | **Cloudflare R2** | Image/page storage | `images.sourcelibrary.org` |
@@ -60,7 +60,7 @@ Import (IA/Gallica/IIIF)
 
 Phases run concurrently with independent concurrency limits. Backpressure: `system_config.paused_phases` array.
 
-## MongoDB Collections (57)
+## MongoDB Collections (73)
 
 ### Core Data
 | Collection | Purpose | Key Fields |
@@ -118,13 +118,13 @@ Phases run concurrently with independent concurrency limits. Backpressure: `syst
 ```
 src/
 ├── app/                    # Next.js app router
-│   ├── api/                # 316 API routes (direct DB queries, no repository layer)
-│   │   ├── books/[id]/     # 50+ book operations
-│   │   ├── pages/[id]/     # 20+ page operations
-│   │   ├── import/         # 13 IIIF source importers
-│   │   ├── admin/          # 30+ admin endpoints
+│   ├── api/                # 325 API routes (direct DB queries, no repository layer)
+│   │   ├── books/[id]/     # 57 book operations
+│   │   ├── pages/[id]/     # 15 page operations
+│   │   ├── import/         # 26 IIIF source importers
+│   │   ├── admin/          # 46 admin endpoints
 │   │   ├── cron/           # 11 cron endpoints (4 active on Vercel)
-│   │   ├── gallery/        # 9 gallery endpoints
+│   │   ├── gallery/        # 7 gallery endpoints
 │   │   ├── search/         # 6 search endpoints
 │   │   ├── social/         # 11 social media endpoints
 │   │   ├── stripe/         # 4 payment endpoints
@@ -134,15 +134,15 @@ src/
 │   ├── collections/        # Collection browse & detail
 │   ├── gallery/            # Image gallery
 │   ├── admin/              # Admin dashboard pages
-│   ├── blog/               # 29 blog posts (hardcoded JSX, no CMS)
-│   ├── press/              # 6 press pages (hardcoded JSX)
+│   ├── blog/               # 31 blog posts (hardcoded JSX, no CMS)
+│   ├── press/              # 7 press pages (hardcoded JSX)
 │   ├── research/           # Research tools (atlas, diffusion, timeline)
 │   ├── explore/            # Map & timeline visualizations
 │   ├── ficino-society/     # Membership, discussions
 │   ├── about/, support/, terms/, privacy/  # Static info pages
 │   └── ...                 # ~160 pages total
 │
-├── components/             # 148 React components
+├── components/             # 148 React components (.tsx files)
 │   ├── book/               # Book detail, reader, processing
 │   ├── layout/             # GlobalHeader, GlobalFooter, FeaturedCollections
 │   ├── gallery/            # Gallery views
@@ -150,11 +150,11 @@ src/
 │   ├── search/             # Search results, filters
 │   ├── explore/            # Map, timeline
 │   ├── ui/                 # Primitives (Button, Dialog, Tabs, etc.)
-│   ├── camera/             # Mobile scanning (5 components, possibly unused)
-│   ├── rithmomachia/       # Game feature (8 components, possibly unused)
+│   ├── camera/             # Mobile scanning (6 components, possibly unused)
+│   ├── rithmomachia/       # Game feature (12 components, possibly unused)
 │   └── ...
 │
-├── lib/                    # 86 utility modules
+├── lib/                    # 200 utility modules
 │   ├── mongodb.ts          # DB connection (singleton, pool management)
 │   ├── ai.ts               # Core Gemini operations
 │   ├── gemini-client.ts    # API key rotation (10 keys)
@@ -167,8 +167,8 @@ src/
 │   ├── book-lookup.ts      # Book query helpers
 │   ├── import-utils.ts     # IIIF manifest parsing
 │   ├── page-revisions.ts   # createRevision() — MUST call before page writes
-│   ├── api-client/         # Frontend API wrappers (31 files)
-│   ├── types/              # TypeScript types (17 files)
+│   ├── api-client/         # Frontend API wrappers (61 files)
+│   ├── types/              # TypeScript types (25 files)
 │   └── ...
 │
 ├── workers/                # Lambda function source
@@ -177,29 +177,29 @@ src/
 │   ├── image-extraction-processor.ts + image-extraction-processor-logic.ts
 │   └── write-processor.ts + write-processor-logic.ts
 │
-└── hooks/                  # 9 React hooks
+└── hooks/                  # 8 React hooks
 
-scripts/                    # 233 operational scripts
-├── analysis/               # ~49 inspection/reporting scripts
+scripts/                    # 308 operational scripts
+├── analysis/               # ~51 inspection/reporting scripts
 ├── batch/                  # ~33 bulk processing scripts
-├── enrichment/             # ~38 metadata enrichment scripts
-├── maintenance/            # ~49 data fix scripts
-├── import/                 # ~12 bulk import scripts
-├── one-off/                # ~8 exploratory scripts
+├── enrichment/             # ~44 metadata enrichment scripts
+├── maintenance/            # ~56 data fix scripts
+├── import/                 # ~17 bulk import scripts
+├── one-off/                # ~7 exploratory scripts
 ├── aws-lambda/             # Lambda build/deploy
 ├── workers/                # sync-worker.mjs (Hetzner cron replacement)
 └── lib/                    # Shared script utilities
 ```
 
-## Pages Breakdown (~160 total)
+## Pages Breakdown (~170 total)
 
 | Category | Count | Content Source | Examples |
 |----------|-------|---------------|----------|
 | Core library (dynamic) | ~40 | MongoDB + APIs | Book reader, search, collections, author pages |
 | Admin/ops dashboards | ~15 | MongoDB + APIs | Pipeline control, jobs, analytics, email, KDP |
 | Research/experiments | ~20 | MongoDB + APIs | OCR quality, concept diffusion, image atlas |
-| Blog posts | 29 | Hardcoded JSX (no CMS) | origin-story, progress-studies, hidden-engineers |
-| Press releases | 6 | Hardcoded JSX | alchemy, hermetic-tradition, kabbalah |
+| Blog posts | 31 | Hardcoded JSX (no CMS) | origin-story, progress-studies, hidden-engineers |
+| Press releases | 7 | Hardcoded JSX | alchemy, hermetic-tradition, kabbalah |
 | Auth/legal/info | ~10 | Static JSX | signin, terms, privacy, about, support |
 | Gallery | ~6 | MongoDB + APIs | Browse, collections, image viewer, curation |
 | Community | ~5 | MongoDB + APIs | Ficino Society, discussions, contribute |
@@ -223,13 +223,12 @@ scripts/                    # 233 operational scripts
 
 ## Known Dead Code & Duplicates
 
-### Unused Components (35 total — safe to delete)
+### Unused Components (29 remaining — safe to delete)
+6 deleted since last audit: BetaGateModal, useBetaGate, QualityBadge, ReadingSidebar, PageThumbnail, Skeleton.
+
 | Component | Path | Notes |
 |-----------|------|-------|
 | `Footer.tsx` | `components/layout/` | Superseded by `GlobalFooter.tsx` |
-| `BetaGateModal.tsx` | `components/beta/` | Feature abandoned |
-| `useBetaGate.ts` | `hooks/` | Matches above |
-| `QualityBadge.tsx` | `components/scan/` | Never integrated |
 | `BookEditModal.tsx` | `components/book/` | Orphaned |
 | `BookPagesActions.tsx` | `components/book/` | Orphaned |
 | `BookPagesStats.tsx` | `components/book/` | Orphaned |
@@ -237,16 +236,13 @@ scripts/                    # 233 operational scripts
 | `PagesGrid.tsx` | `components/book/` | Orphaned |
 | `ProcessingPanel.tsx` | `components/book/` | Orphaned |
 | `ReorderModePanel.tsx` | `components/book/` | Orphaned |
-| Camera components (5) | `components/camera/` | Mobile scanning feature — verify if still wanted |
-| Rithmomachia components (8) | `components/rithmomachia/` | Game feature — verify if still wanted |
+| Camera components (6) | `components/camera/` | Mobile scanning feature — verify if still wanted |
+| Rithmomachia components (12) | `components/rithmomachia/` | Game feature — verify if still wanted |
 | `EntityMap.tsx` | `components/explore/` | Internal only |
 | `MapSidebar.tsx` | `components/explore/` | Internal only |
 | `PipelineStageCard.tsx` | `components/pipeline/` | Orphaned |
-| `ReadingSidebar.tsx` | `components/reader/` | Orphaned |
-| `PageThumbnail.tsx` | `components/reader/` | Only used by ReadingSidebar |
 | `PageTracker.tsx` | `components/reader/` | Imported but unused |
 | `SessionCard.tsx` | `components/research/` | Orphaned |
-| `Skeleton.tsx` | `components/ui/` | Exported but never imported |
 
 ### Duplicate Functions
 | Function | Location A | Location B | Action |
@@ -258,5 +254,5 @@ scripts/                    # 233 operational scripts
 7 cron API routes still exist in code but are removed from `vercel.json` (moved to Hetzner):
 `submit-batch-ocr`, `process-batches`, `sync-page-counts`, `sync-gallery-images`, `enrich-books`, `post-import-pipeline`, `archive-ocr`
 
-### Root tmp Scripts (42)
-All `_tmp-*` and `check-*.mjs` files at project root. Per convention, these should not be committed.
+### Root tmp Scripts (128)
+All `_tmp-*` files at project root. Per convention, these should not be committed.
