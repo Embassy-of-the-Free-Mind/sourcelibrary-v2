@@ -111,8 +111,8 @@ export async function GET(request: NextRequest) {
       book_hidden: { $ne: true },
     };
 
-    // Book diversity: limit to top N images per book (unless filtering by single book)
-    if (!bookId) {
+    // Book diversity: limit to top N images per book (unless filtering by single book or showing all)
+    if (!bookId && maxPerBook < 100) {
       filter.book_rank = { $lte: maxPerBook };
     }
 
@@ -144,17 +144,21 @@ export async function GET(request: NextRequest) {
       filter.$text = { $search: searchQuery };
     }
 
-    // When shuffling, use $sample aggregation for true randomness
+    // When shuffling, use random skip instead of $sample to avoid full collection scan.
+    // $sample after $match is O(N) on the match set; random skip uses the index.
     if (shuffle && !searchQuery) {
-      const pipeline: object[] = [
-        { $match: filter },
-        { $sample: { size: limit } },
-        { $project: { _id: 0 } },
-      ];
+      const totalEstimate = await db.collection('gallery_images').estimatedDocumentCount();
+      const maxSkip = Math.max(0, totalEstimate - limit);
+      const randomSkip = Math.floor(Math.random() * maxSkip);
 
       const [items, total] = await Promise.all([
-        db.collection('gallery_images').aggregate(pipeline).toArray(),
-        db.collection('gallery_images').countDocuments(filter),
+        db.collection('gallery_images')
+          .find(filter, { projection: { _id: 0 } })
+          .sort({ gallery_quality: -1 })
+          .skip(randomSkip)
+          .limit(limit)
+          .toArray(),
+        Promise.resolve(totalEstimate),
       ]);
 
       const visitorId = searchParams.get('visitor_id');
