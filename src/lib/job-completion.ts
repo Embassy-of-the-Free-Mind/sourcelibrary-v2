@@ -87,7 +87,11 @@ function getCompletionQuery(bookId: string, targetPageIds: string[], jobType: Pa
     case 'ocr':
       return { ...baseFilter, 'ocr.data': { $exists: true, $nin: [null, ''] } };
     case 'translation':
-      return { ...baseFilter, 'translation.data': { $exists: true, $nin: [null, ''] } };
+      // Count pages with translation data OR blank pages (which are skipped by the translator)
+      return { ...baseFilter, $or: [
+        { 'translation.data': { $exists: true, $nin: [null, ''] } },
+        { page_type: { $in: SKIP_TRANSLATION_PAGE_TYPES } },
+      ] };
     case 'image_extraction':
       return { ...baseFilter, detected_images: { $exists: true } };
   }
@@ -174,7 +178,10 @@ async function handleJobCompletion(
           count: { $sum: {
             $cond: [
               { $or: [
-                { $gt: [{ $strLenCP: { $ifNull: ['$translation.data', ''] } }, 0] },
+                { $and: [
+                  { $eq: [{ $type: '$translation.data' }, 'string'] },
+                  { $gt: [{ $strLenCP: '$translation.data' }, 0] },
+                ] },
                 { $in: [{ $ifNull: ['$page_type', ''] }, SKIP_TRANSLATION_PAGE_TYPES] },
               ] },
               1, 0
