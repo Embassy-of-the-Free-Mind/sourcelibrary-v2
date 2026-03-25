@@ -30,6 +30,8 @@ interface ArtistSummary {
 
 async function getData() {
   const db = await getDb();
+  // Set a 10s timeout on all queries to prevent page hang
+  const opts = { maxTimeMS: 10000 };
 
   const [collections, artistsRaw, totalCount] = await Promise.all([
     // Art collections (visible ones)
@@ -39,21 +41,21 @@ async function getData() {
       .project({ _id: 0, slug: 1, name: 1, subtitle: 1, color: 1, book_count: 1, featured_images: 1 })
       .toArray() as Promise<ArtCollection[]>,
 
-    // Top artists by count
+    // Top artists by count (artworks are hidden: true, so don't filter by hidden)
     db.collection('books').aggregate([
-      { $match: { resource_type: { $exists: true }, hidden: { $ne: true } } },
+      { $match: { resource_type: { $exists: true } } },
       { $group: {
         _id: '$author',
         count: { $sum: 1 },
-        sampleThumb: { $first: '$thumbnail' },
+        sampleThumb: { $first: '$thumbnail_blob' },
         sampleSlug: { $first: '$slug' },
       }},
       { $sort: { count: -1 } },
       { $limit: 20 },
     ]).toArray(),
 
-    // Total visible artworks
-    db.collection('books').countDocuments({ resource_type: { $exists: true }, hidden: { $ne: true } }),
+    // Total artworks
+    db.collection('books').countDocuments({ resource_type: { $exists: true } }),
   ]);
 
   const artists: ArtistSummary[] = artistsRaw.map(a => ({
