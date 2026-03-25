@@ -243,6 +243,42 @@ const SEED_COLLECTIONS: CollectionSeed[] = [
     featured: false,
     sort_order: 13,
   },
+  {
+    title: "Ficino's Florence",
+    description:
+      'Decorative initials, portraits, and woodcut ornaments from the printed works of Marsilio Ficino and his circle — the visual culture of Florentine Neoplatonism.',
+    slug: 'ficinos-florence',
+    anchorBooks: [
+      '694b3abfde93d1d4cec196fd', // Opera Omnia (53 imgs, avgQ 0.73)
+      '694f397023a1d0c2ad1d8814', // Plato translated by Ficino (50 imgs, avgQ 0.73)
+      '694f397b53410e29f94e13ea', // Platonic Theology (25 imgs, avgQ 0.77)
+      'adefe2d5-88a7-4595-9885-903a93abee51', // Plato Complete Works (10 imgs)
+      '6948856a2f9c70e60597cb30', // De Triplici Vita (7 imgs)
+      '695593437bd6d2cd1d61bda2', // Iamblichus De Mysteriis Ficino Ed (3 imgs)
+    ],
+    searchTerms: ['ficino'],
+    minQuality: 0.6,
+    maxPerBook: 60,
+    limit: 200,
+    featured: true,
+    sort_order: 14,
+  },
+  {
+    title: 'The Venetian Mystery',
+    description:
+      "Woodcuts and printer's marks from the great Venetian presses — Aldus Manutius, the De Gregoriis, and their contemporaries who made Venice the printing capital of Renaissance Europe.",
+    slug: 'venetian-mystery',
+    anchorBooks: [
+      '69528f16b184004c526a0c18', // De mulieribus claris Venice 1506 (128 imgs, avgQ 0.81)
+      '697a9dec450674d6671c315f', // Has Aldus Manutius printer's mark
+    ],
+    searchTerms: ['venetian', 'venice', 'aldus'],
+    minQuality: 0.5,
+    maxPerBook: 60,
+    limit: 200,
+    featured: true,
+    sort_order: 15,
+  },
 ];
 
 /**

@@ -49,7 +49,7 @@ async function getFeaturedCollections() {
 
   // Pick 1 random collection with enough books for the editorial spread
   const collections = await db.collection('collections').aggregate([
-    { $match: { book_count: { $gte: 10 }, parent: { $exists: false }, type: { $ne: 'curated' }, hidden: { $ne: true } } },
+    { $match: { book_count: { $gte: 10 }, parent: { $exists: false }, type: { $ne: 'curated' }, collection_type: { $ne: 'visual_art' }, hidden: { $ne: true } } },
     { $sample: { size: 1 } },
   ]).toArray();
 

@@ -46,6 +46,7 @@ async function fetchCollections(): Promise<CollectionDoc[]> {
     db.collection('collections').find({
       parent: { $exists: false },
       type: { $ne: 'curated' },
+      collection_type: { $ne: 'visual_art' },
       hidden: { $ne: true },
     }).toArray(),
     db.collection('collections').aggregate<{ _id: string; count: number }>([

@@ -42,3 +42,24 @@ export function extractTranslationMetadata(translationText: string): {
 
   return result;
 }
+
+/**
+ * Propagate <warning> tags from OCR data to translation text.
+ *
+ * OCR warns about quality issues (fading, damage, manuscript difficulty).
+ * Translation readers need the same warnings — many users only see the
+ * translation panel. This prepends any OCR warnings to the translation
+ * so the UI renders them identically on both sides.
+ *
+ * Idempotent: skips warnings already present in the translation text.
+ */
+export function propagateOcrWarnings(ocrData: string, translationText: string): string {
+  const warningMatches = ocrData.match(/<warning>[\s\S]*?<\/warning>/g);
+  if (!warningMatches || warningMatches.length === 0) return translationText;
+
+  // Only prepend warnings not already in the translation
+  const newWarnings = warningMatches.filter(w => !translationText.includes(w));
+  if (newWarnings.length === 0) return translationText;
+
+  return newWarnings.join('\n') + '\n' + translationText;
+}

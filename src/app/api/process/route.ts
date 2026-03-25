@@ -6,7 +6,7 @@ import { withAuth } from '@/lib/auth-helpers';
 import { createRevision } from '@/lib/page-revisions';
 import { logGeminiCall } from '@/lib/gemini-logger';
 import { DEFAULT_MODEL, PROMPT_VERSION, extractPageType, extractColumns } from '@/lib/types';
-import { extractTranslationMetadata } from '@/lib/translation-metadata';
+import { extractTranslationMetadata, propagateOcrWarnings } from '@/lib/translation-metadata';
 import { contentHash } from '@/lib/steganographia';
 import sharp from 'sharp';
 import { storagePut } from '@/lib/storage';
@@ -271,7 +271,8 @@ export const POST = withAuth(async (request: NextRequest) => {
         model,
         bookCtx
       );
-      results.translation = translationResult.text;
+      // Propagate OCR quality warnings to translation so readers see them on both sides
+      results.translation = propagateOcrWarnings(textToTranslate, translationResult.text);
       totalUsage.inputTokens += translationResult.usage.inputTokens;
       totalUsage.outputTokens += translationResult.usage.outputTokens;
       totalUsage.totalTokens += translationResult.usage.totalTokens;
