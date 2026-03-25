@@ -10,6 +10,7 @@ import { createRevision } from '@/lib/page-revisions';
 import { sendWriteResult } from '@/lib/sqs-client';
 import { retryDbWrite } from '@/lib/retry-utils';
 import { contentHash } from '@/lib/steganographia';
+import { promptContentHash } from '@/lib/prompts';
 
 /**
  * Translation Processor - processes one page at a time
@@ -200,6 +201,11 @@ export async function processTranslationPage(message: PageProcessingMessage) {
     // DIRECT WRITE: Save translation to page — required for FIFO context chain.
     // The next page in the queue reads this translation for continuity.
     const translationMeta = extractTranslationMetadata(translationResult.text);
+    // Compute prompt hash from the actual prompt used (for provenance)
+    const isEnglish = (job.config.language || 'Latin').toLowerCase() === 'english';
+    const { ENGLISH_MODERNIZATION_PROMPT: engPrompt, DEFAULT_PROMPTS } = await import('@/lib/types');
+    const effectivePrompt = customPrompt || (isEnglish ? engPrompt : DEFAULT_PROMPTS.translation);
+    const transPromptHash = promptContentHash(effectivePrompt);
     await retryDbWrite(() => pages.updateOne(
       { id: pageId },
       {
@@ -211,7 +217,8 @@ export async function processTranslationPage(message: PageProcessingMessage) {
             model: modelId,
             updated_at: new Date(),
             source: 'ai',
-            prompt_version: PROMPT_VERSION
+            prompt_version: PROMPT_VERSION,
+            prompt_hash: transPromptHash,
           },
           ...translationMeta,
           updated_at: new Date()

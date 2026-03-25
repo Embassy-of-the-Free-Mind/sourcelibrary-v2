@@ -2,7 +2,7 @@
 
 import { useState, useEffect } from 'react';
 import Link from 'next/link';
-import { Clock, AlertTriangle, XCircle, BarChart3 } from 'lucide-react';
+import { Clock, AlertTriangle, XCircle, BarChart3, Layers, Image } from 'lucide-react';
 import { analytics } from '@/lib/api-client';
 import { BookLoader } from '@/components/ui/BookLoader';
 import type { PipelineData } from '@/lib/api-client/types/analytics';
@@ -93,6 +93,126 @@ export default function PipelineTab({ hours }: PipelineTabProps) {
           </div>
         </div>
       </div>
+
+      {/* Pipeline Funnel */}
+      {pipelineData.funnel && Object.keys(pipelineData.funnel).length > 0 && (() => {
+        const statusOrder = [
+          'queued', 'archiving', 'archive_complete',
+          'ocr_submitted', 'ocr_complete',
+          'metadata_enriched', 'ft_verifying', 'ft_verified',
+          'translate_submitted', 'translate_complete',
+          'enriching', 'enriched', 'chapters', 'chapters_complete',
+          'images_submitted', 'images_complete',
+          'complete', 'needs_attention', 'failed',
+        ];
+        const sorted = statusOrder
+          .filter(s => pipelineData.funnel![s])
+          .map(s => ({ status: s, count: pipelineData.funnel![s] }));
+        // Add any statuses not in our known list
+        for (const [status, count] of Object.entries(pipelineData.funnel!)) {
+          if (!statusOrder.includes(status)) sorted.push({ status, count });
+        }
+        const maxCount = Math.max(...sorted.map(s => s.count));
+
+        const statusColors: Record<string, string> = {
+          queued: '#94a3b8', archiving: '#94a3b8', archive_complete: '#94a3b8',
+          ocr_submitted: '#3b82f6', ocr_complete: '#3b82f6',
+          metadata_enriched: '#8b5cf6', ft_verifying: '#8b5cf6', ft_verified: '#8b5cf6',
+          translate_submitted: '#f59e0b', translate_complete: '#f59e0b',
+          enriching: '#10b981', enriched: '#10b981',
+          chapters: '#06b6d4', chapters_complete: '#06b6d4',
+          images_submitted: '#ec4899', images_complete: '#ec4899',
+          complete: '#16a34a',
+          needs_attention: '#dc2626', failed: '#dc2626',
+        };
+
+        return (
+          <div className="p-6 rounded-xl" style={{ background: 'var(--bg-white)', border: '1px solid var(--border-light)' }}>
+            <h2 className="text-lg font-medium mb-4 flex items-center gap-2" style={{ color: 'var(--text-primary)' }}>
+              <Layers className="w-5 h-5" style={{ color: 'var(--accent-sage)' }} />
+              Pipeline Funnel
+            </h2>
+            <div className="space-y-1.5">
+              {sorted.map(({ status, count }) => (
+                <div key={status} className="flex items-center gap-3">
+                  <div className="w-40 text-xs font-medium truncate text-right" style={{ color: 'var(--text-muted)' }}>
+                    {status.replace(/_/g, ' ')}
+                  </div>
+                  <div className="flex-1 h-5 rounded-full overflow-hidden" style={{ background: 'var(--bg-warm)' }}>
+                    <div
+                      className="h-full rounded-full transition-all"
+                      style={{
+                        width: `${Math.max(1, (count / maxCount) * 100)}%`,
+                        background: statusColors[status] || '#6b7280',
+                        opacity: 0.8,
+                      }}
+                    />
+                  </div>
+                  <div className="w-16 text-xs font-bold text-right" style={{ color: 'var(--text-secondary)' }}>
+                    {count.toLocaleString()}
+                  </div>
+                </div>
+              ))}
+            </div>
+          </div>
+        );
+      })()}
+
+      {/* Enrichment Coverage */}
+      {pipelineData.enrichmentCoverage && (() => {
+        const cov = pipelineData.enrichmentCoverage;
+        const total = cov.total;
+        if (total === 0) return null;
+
+        const phases = [
+          { label: 'OCR', count: cov.ocr, color: '#3b82f6' },
+          { label: 'Translation', count: cov.translation, color: '#f59e0b' },
+          { label: 'Metadata Enrichment', count: cov.metadata, color: '#8b5cf6' },
+          { label: 'First-Translation Check', count: cov.ftVerification, color: '#a855f7' },
+          { label: 'Summary & Index', count: cov.summary, color: '#10b981' },
+          { label: 'Chapters', count: cov.chapters, color: '#06b6d4' },
+          { label: 'Collection Classification', count: cov.collections, color: '#0891b2' },
+          { label: 'Quality Score', count: cov.qualityScore, color: '#14b8a6' },
+          { label: 'Image Extraction', count: cov.imageExtraction, color: '#ec4899' },
+          { label: 'Faceted Tags', count: cov.facetedTags, color: '#f97316' },
+          { label: 'Author Entity Linking', count: cov.authorEntity, color: '#64748b' },
+          { label: 'Pipeline Complete', count: cov.pipelineComplete, color: '#16a34a' },
+        ];
+
+        return (
+          <div className="p-6 rounded-xl" style={{ background: 'var(--bg-white)', border: '1px solid var(--border-light)' }}>
+            <h2 className="text-lg font-medium mb-1 flex items-center gap-2" style={{ color: 'var(--text-primary)' }}>
+              <Image className="w-5 h-5" style={{ color: 'var(--accent-violet)' }} />
+              Enrichment Coverage
+            </h2>
+            <p className="text-xs mb-4" style={{ color: 'var(--text-muted)' }}>
+              {total.toLocaleString()} books with pages &middot; {cov.galleryImages.toLocaleString()} gallery images
+            </p>
+            <div className="space-y-2.5">
+              {phases.map(({ label, count, color }) => {
+                const pct = Math.round((count / total) * 100);
+                return (
+                  <div key={label} className="flex items-center gap-3">
+                    <div className="w-44 text-xs font-medium text-right" style={{ color: 'var(--text-muted)' }}>
+                      {label}
+                    </div>
+                    <div className="flex-1 h-5 rounded-full overflow-hidden relative" style={{ background: 'var(--bg-warm)' }}>
+                      <div
+                        className="h-full rounded-full transition-all"
+                        style={{ width: `${Math.max(1, pct)}%`, background: color, opacity: 0.75 }}
+                      />
+                    </div>
+                    <div className="w-24 text-xs text-right" style={{ color: 'var(--text-secondary)' }}>
+                      <span className="font-bold">{count.toLocaleString()}</span>
+                      <span className="ml-1" style={{ color: 'var(--text-muted)' }}>({pct}%)</span>
+                    </div>
+                  </div>
+                );
+              })}
+            </div>
+          </div>
+        );
+      })()}
 
       {/* OCR + Translation Velocity Chart */}
       {velocityChart && (

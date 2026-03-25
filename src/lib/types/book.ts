@@ -22,14 +22,21 @@ export interface Book {
   slug?: string;              // SEO-friendly URL slug (e.g., "atalanta-fugiens-maier")
   tenant_id: string;
 
+  // Resource type — visual art, manuscripts, etc. Absent = printed_book (default)
+  resource_type?: 'printed_book' | 'manuscript' | 'painting' | 'drawing' | 'print' | 'fresco' | 'emblem' | 'map' | 'tablet' | 'object';
+
   // Title fields
   title: string;              // Original language title (USTC-aligned, fixed)
   display_title?: string;     // English title for display (editable)
 
   // Author and publication
   author: string;
+  author_entity_id?: string;  // FK to entities collection — canonical author identity (VIAF/Wikidata linked)
   language: string;           // Original language of the text
   published: string;          // Publication year
+
+  // WEMI work-level grouping — links different editions/manuscripts of the same work
+  work_id?: string;           // Canonical work slug (e.g., "zohar", "cicero-ad-atticum", "corpus-hermeticum")
 
   // USTC catalog fields
   ustc_id?: string;           // USTC catalog number (e.g., "2029384")
@@ -188,6 +195,9 @@ export interface Book {
   etcsl_id?: string;              // e.g. "1.1.1" (ETCSL composition number)
   cdli_witnesses?: CdliWitness[]; // Physical tablet witnesses from CDLI
 
+  // Pre-computed related books (backfilled by scripts/backfill-related-books.mjs)
+  related_books?: RelatedBooks;
+
   // Split detection for two-page spreads
   needs_splitting?: boolean | null;  // true = has spreads, false = single pages, null = ambiguous
   split_check?: {
@@ -269,11 +279,27 @@ export interface Chapter {
   confidence?: 'high' | 'medium' | 'low'; // AI's confidence in this chapter boundary
 }
 
+// Pre-computed related books stored on each book document
+export interface RelatedBookEntry {
+  id: string;
+  title: string;
+  author: string;
+  cited_as?: string;         // entity name that triggered the direct citation
+  shared_count?: number;     // number of shared entity mentions
+  shared_names?: string[];   // top shared entity names
+}
+
+export interface RelatedBooks {
+  direct: RelatedBookEntry[];   // books whose authors are mentioned as entities in this book
+  shared: RelatedBookEntry[];   // books sharing 5+ entity mentions
+  computed_at: Date;
+}
+
 // Translation verification from catalog search + LLM knowledge check
 export type TranslationDisposition = 'confirmed_first' | 'first_complete_translation' | 'first_modern_translation' | 'translation_found' | 'needs_review';
 
 export interface TranslationVerification {
-  source: 'catalog_search';
+  source: 'catalog_search' | 'catalog_and_llm' | string;
   searched_at: Date;
   has_english_translation: boolean;
   translations?: TranslationEvidence[];

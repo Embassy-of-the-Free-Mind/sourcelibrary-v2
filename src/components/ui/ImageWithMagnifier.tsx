@@ -237,7 +237,7 @@ export default function ImageWithMagnifier({
           src={displaySrc}
           alt={alt}
           loading="eager"
-          className={`w-full transition-opacity duration-300 ${isLoaded ? 'opacity-100' : 'opacity-0'} ${isTouchDevice ? 'cursor-pointer' : 'cursor-crosshair'} ${scrollable ? '' : 'h-full object-contain'}`}
+          className={`w-full max-w-full transition-opacity duration-300 ${isLoaded ? 'opacity-100' : 'opacity-0'} ${isTouchDevice ? 'cursor-pointer' : 'cursor-crosshair'} ${scrollable ? '' : 'h-full object-contain'}`}
           onLoad={() => {
             // Detect broken/tiny images (e.g. corrupt Blob uploads)
             // Real gallery crops are 300px+ wide; corrupt ones come through ≤150px

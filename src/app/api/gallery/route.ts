@@ -71,6 +71,7 @@ export async function GET(request: NextRequest) {
     const yearEnd = searchParams.get('yearEnd') ? parseInt(searchParams.get('yearEnd')!) : null;
     const includeArchive = searchParams.get('includeArchive') === 'true';
     const maxPerBook = parseInt(searchParams.get('maxPerBook') || '3');
+    const shuffle = searchParams.get('shuffle') === 'true';
 
     // Quality thresholds
     let minQuality = 0.7; // default: gallery quality
@@ -141,6 +142,65 @@ export async function GET(request: NextRequest) {
       // Use $text index (covers description, book_title, book_author)
       // instead of 7-branch regex scan across 73k docs
       filter.$text = { $search: searchQuery };
+    }
+
+    // When shuffling, use $sample aggregation for true randomness
+    if (shuffle && !searchQuery) {
+      const pipeline: object[] = [
+        { $match: filter },
+        { $sample: { size: limit } },
+        { $project: { _id: 0 } },
+      ];
+
+      const [items, total] = await Promise.all([
+        db.collection('gallery_images').aggregate(pipeline).toArray(),
+        db.collection('gallery_images').countDocuments(filter),
+      ]);
+
+      const visitorId = searchParams.get('visitor_id');
+      const imageIds = items.map(doc => `${doc.page_id}-${doc.detection_index}`);
+      let likesMap: Record<string, { count: number; liked: boolean }> = {};
+      if (imageIds.length > 0) {
+        try {
+          const likeDocs = await db.collection('likes').aggregate([
+            { $match: { target_type: 'image', target_id: { $in: imageIds } } },
+            { $group: { _id: '$target_id', count: { $sum: 1 }, visitors: { $addToSet: '$visitor_id' } } },
+          ]).toArray();
+          for (const ld of likeDocs) {
+            likesMap[ld._id as string] = {
+              count: ld.count as number,
+              liked: visitorId ? (ld.visitors as string[]).includes(visitorId) : false,
+            };
+          }
+        } catch { /* Non-critical */ }
+      }
+
+      const mappedItems = items.map(doc => {
+        const likeKey = `${doc.page_id}-${doc.detection_index}`;
+        const likeData = likesMap[likeKey];
+        return {
+          pageId: doc.page_id, bookId: doc.book_id, pageNumber: doc.page_number,
+          detectionIndex: doc.detection_index, imageUrl: doc.image_url,
+          bookTitle: doc.book_title, author: doc.book_author, year: doc.book_year,
+          description: doc.description, type: doc.type, bbox: doc.bbox,
+          rotation: doc.rotation, extractedUrl: doc.extracted_url,
+          thumbnailUrl: doc.thumbnail_url, galleryQuality: doc.gallery_quality,
+          confidence: doc.confidence, museumDescription: doc.museum_description,
+          metadata: doc.metadata, likeCount: likeData?.count ?? 0,
+          likedByVisitor: likeData?.liked ?? false,
+        };
+      });
+
+      let filters = { types: [] as string[], subjects: [] as string[], yearRange: { minYear: null as number | null, maxYear: null as number | null } };
+      if (offset === 0) {
+        filters = await getGalleryFilters(db);
+      }
+
+      return NextResponse.json({
+        items: mappedItems, total, limit, offset, bookInfo: null, filters, shuffled: true,
+      }, {
+        headers: { 'Cache-Control': 'no-store' },
+      });
     }
 
     // When text searching, sort by relevance first, then quality

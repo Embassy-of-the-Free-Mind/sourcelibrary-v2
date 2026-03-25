@@ -581,12 +581,12 @@ export default function ImageDetailPage({
   const hasNext = currentIndex < bookImages.length - 1;
 
   return (
-    <div className="bg-black text-white">
+    <div className="bg-black text-white max-w-[100vw] overflow-x-hidden">
       {/* Image viewer - fills viewport */}
-      <div className="h-screen relative flex flex-col">
+      <div className="h-screen relative flex flex-col overflow-hidden">
         {/* Minimal header */}
         <header className="flex-shrink-0 z-40 bg-black/80 backdrop-blur-sm border-b border-white/10">
-          <div className="px-4 py-2 flex items-center justify-between">
+          <div className="px-4 py-2 flex items-center justify-between gap-2 min-w-0">
             <nav className="flex items-center gap-1.5 text-sm">
               <Link href="/" className="text-stone-500 hover:text-white transition-colors">Source Library</Link>
               <span className="text-stone-600">/</span>
@@ -600,9 +600,9 @@ export default function ImageDetailPage({
               </span>
             )}
 
-            <div className="flex items-center gap-1">
+            <div className="flex items-center gap-1 flex-shrink-0 overflow-x-auto">
               {imageId && (
-                <div className="p-1.5 rounded-lg hover:bg-white/10 transition-colors">
+                <div className="p-1.5 rounded-lg hover:bg-white/10 transition-colors flex-shrink-0">
                   <LikeButton
                     targetType="image"
                     targetId={imageId}
@@ -620,14 +620,14 @@ export default function ImageDetailPage({
               </button>
               <button
                 onClick={shareToPinterest}
-                className="p-1.5 rounded-lg hover:bg-white/10 transition-colors"
+                className="hidden sm:block p-1.5 rounded-lg hover:bg-white/10 transition-colors"
                 title="Pin on Pinterest"
               >
                 <svg className="w-4 h-4 text-stone-400" fill="currentColor" viewBox="0 0 24 24"><path d="M12 0C5.373 0 0 5.372 0 12c0 5.084 3.163 9.426 7.627 11.174-.105-.949-.2-2.405.042-3.441.218-.937 1.407-5.965 1.407-5.965s-.359-.719-.359-1.782c0-1.668.967-2.914 2.171-2.914 1.023 0 1.518.769 1.518 1.69 0 1.029-.655 2.568-.994 3.995-.283 1.194.599 2.169 1.777 2.169 2.133 0 3.772-2.249 3.772-5.495 0-2.873-2.064-4.882-5.012-4.882-3.414 0-5.418 2.561-5.418 5.207 0 1.031.397 2.138.893 2.738a.36.36 0 01.083.345l-.333 1.36c-.053.22-.174.267-.402.161-1.499-.698-2.436-2.889-2.436-4.649 0-3.785 2.75-7.262 7.929-7.262 4.163 0 7.398 2.967 7.398 6.931 0 4.136-2.607 7.464-6.227 7.464-1.216 0-2.359-.632-2.75-1.378l-.748 2.853c-.271 1.043-1.002 2.35-1.492 3.146C9.57 23.812 10.763 24 12 24c6.627 0 12-5.373 12-12 0-6.628-5.373-12-12-12z"/></svg>
               </button>
               <button
                 onClick={shareToTwitter}
-                className="p-1.5 rounded-lg hover:bg-white/10 transition-colors"
+                className="hidden sm:block p-1.5 rounded-lg hover:bg-white/10 transition-colors"
                 title="Share on X"
               >
                 <Share2 className="w-4 h-4 text-stone-400" />
@@ -653,7 +653,7 @@ export default function ImageDetailPage({
         </header>
 
         {/* Image area - fills remaining viewport */}
-        <div className="flex-1 relative min-h-0">
+        <div className="flex-1 relative min-h-0 min-w-0 overflow-hidden">
           {/* The image */}
           <div
             className="w-full h-full relative"
@@ -753,11 +753,11 @@ export default function ImageDetailPage({
       </div>
 
       {/* Details below the fold - always visible, scroll to see */}
-      <div className="bg-stone-900 border-t border-white/10">
-        <div className="max-w-5xl mx-auto px-5 sm:px-8 py-8 sm:py-10">
+      <div className="bg-stone-900 border-t border-white/10 overflow-hidden">
+        <div className="max-w-5xl mx-auto px-5 sm:px-8 py-8 sm:py-10 overflow-hidden">
             <div className="grid md:grid-cols-3 gap-8">
               {/* Left column: description + metadata */}
-              <div className="md:col-span-2 space-y-6">
+              <div className="md:col-span-2 space-y-6 min-w-0">
                 {/* Title / Description */}
                 <div>
                   {isAdmin && editingTitle ? (
@@ -888,7 +888,7 @@ export default function ImageDetailPage({
                 {/* Citation + Sharing */}
                 <div className="bg-stone-800 rounded-lg p-5">
                   <h3 className="text-base font-medium text-stone-300 mb-3">Cite this image</h3>
-                  <p className="text-stone-400 text-sm font-mono leading-relaxed bg-stone-900 rounded p-3">{data.citation}{'\n'}URL: {typeof window !== 'undefined' ? window.location.href : ''}</p>
+                  <p className="text-stone-400 text-sm font-mono leading-relaxed bg-stone-900 rounded p-3 break-all">{data.citation}{'\n'}URL: {typeof window !== 'undefined' ? window.location.href : ''}</p>
                   <div className="mt-4 flex flex-wrap items-center gap-2">
                     <button onClick={copyCitation} className="flex items-center gap-1.5 px-4 py-2 bg-stone-700 hover:bg-stone-600 rounded-lg text-sm text-stone-300 transition-colors">
                       <Copy className="w-4 h-4" />Copy citation
@@ -1070,7 +1070,7 @@ export default function ImageDetailPage({
               </div>
 
               {/* Right column: book card + more from book + similar */}
-              <div className="space-y-5">
+              <div className="space-y-5 min-w-0">
                 <div className="bg-stone-800 rounded-lg overflow-hidden">
                   <Link href={data.readUrl} className="block group">
                     {data.book.thumbnail && (

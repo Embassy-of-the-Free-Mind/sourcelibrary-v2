@@ -2,6 +2,7 @@ import { NextRequest, NextResponse } from 'next/server';
 import { getDb } from '@/lib/mongodb';
 import { DEFAULT_PROMPTS, LATIN_PROMPTS, GERMAN_PROMPTS } from '@/lib/types';
 import { withAdminAuth } from '@/lib/auth-helpers';
+import { promptContentHash } from '@/lib/prompts';
 
 /**
  * POST /api/admin/migrate-prompts
@@ -102,12 +103,13 @@ export const POST = withAdminAuth(async (request, session) => {
           continue; // Skip if content is identical
         }
 
-        // Create new version
+        // Create new version (immutable — never modify existing versions)
         await collection.insertOne({
           name: update.name,
           type: update.type,
           version: newVersion,
           content: update.content,
+          content_hash: promptContentHash(update.content),
           variables: extractVariables(update.content),
           description: update.description,
           is_default: latestVersion?.is_default || false,

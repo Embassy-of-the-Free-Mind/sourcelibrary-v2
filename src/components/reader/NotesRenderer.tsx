@@ -44,6 +44,7 @@ interface ExtractedMetadata {
   folio?: string;
   signature?: string;       // [[signature: ...]] - printer's signature marks
   warning?: string;         // [[warning: ...]] - OCR quality issues
+  scriptType?: string;      // <script> - printed, handwritten, or mixed
   meta: string[];           // [[meta: ...]] entries
   abbreviations: string[];  // [[abbrev: ...]] entries
   vocabulary: string[];     // [[vocabulary: ...]] - key terms from OCR
@@ -71,6 +72,10 @@ function extractMetadata(text: string): { cleanText: string; metadata: Extracted
   result = result.replace(/^(?:Below is (?:the |my )?(?:translation|transcription|OCR|summary)[^:]*:\s*\n*)/i, '');
   result = result.replace(/^(?:I have (?:translated|transcribed|completed)[^:]*:\s*\n*)/i, '');
   result = result.replace(/^(?:The following is[^:]*:\s*\n*)/i, '');
+
+  // Strip markdown-style page-type headings (AI sometimes writes "# ## Title Page" or "## Title Page")
+  // The page type is already captured via <page-type> tags; these are redundant display artifacts.
+  result = result.replace(/^#{1,3}\s*#{0,3}\s*(?:Title Page|Frontispiece|Colophon|Table of Contents|Index|Blank Page|Cover)\s*\n*/gim, '');
 
   // === XML syntax (new) ===
   // Extract language
@@ -100,6 +105,12 @@ function extractMetadata(text: string): { cleanText: string; metadata: Extracted
   // Extract signature marks
   result = result.replace(/<sig>([\s\S]*?)<\/sig>/gi, (_, sig) => {
     metadata.signature = sig.trim();
+    return '';
+  });
+
+  // Extract script type (printed/handwritten/mixed)
+  result = result.replace(/<script>([\s\S]*?)<\/script>/gi, (_, script) => {
+    metadata.scriptType = script.trim();
     return '';
   });
 
@@ -490,13 +501,23 @@ function MetadataPanel({ metadata }: { metadata: ExtractedMetadata }) {
   const [isOpen, setIsOpen] = useState(false);
 
   const hasMetadata = metadata.language || metadata.pageType || metadata.pageNumber || metadata.folio ||
-    metadata.signature || metadata.warning || metadata.meta.length > 0 || metadata.abbreviations.length > 0 ||
+    metadata.signature || metadata.warning || metadata.scriptType || metadata.meta.length > 0 || metadata.abbreviations.length > 0 ||
     metadata.vocabulary.length > 0 || metadata.summary || metadata.keywords.length > 0;
 
   if (!hasMetadata) return null;
 
   return (
     <div className="mb-4 border border-stone-200 rounded-lg overflow-hidden bg-stone-50/50">
+      {/* Handwritten manuscript notice */}
+      {metadata.scriptType && metadata.scriptType !== 'printed' && (
+        <div className="px-3 py-2 bg-amber-50 border-b border-amber-200 text-sm text-amber-800 flex items-start gap-2">
+          <span className="font-bold">✍</span>
+          <span>
+            <span className="font-medium">{metadata.scriptType === 'handwritten' ? 'Handwritten' : 'Mixed'} manuscript</span>
+            {' — transcription may contain uncertain readings'}
+          </span>
+        </div>
+      )}
       {/* Warning displayed prominently if present */}
       {metadata.warning && (
         <div className="px-3 py-2 bg-red-50 border-b border-red-200 text-sm text-red-800 flex items-start gap-2">
@@ -805,6 +826,26 @@ export default function NotesRenderer({ text, className = '', showMetadata = tru
       dir={isRTL ? 'rtl' : 'ltr'}
       lang={langCode}
     >
+      {/* Warning banners — always shown even when full metadata panel is hidden */}
+      {!showMetadata && (metadata.scriptType && metadata.scriptType !== 'printed' || metadata.warning) && (
+        <div className="mb-3 rounded-lg overflow-hidden border border-stone-200">
+          {metadata.scriptType && metadata.scriptType !== 'printed' && (
+            <div className="px-3 py-2 bg-amber-50 border-b border-amber-200 text-sm text-amber-800 flex items-start gap-2">
+              <span className="font-bold flex-shrink-0">✍</span>
+              <span>
+                <span className="font-medium">{metadata.scriptType === 'handwritten' ? 'Handwritten' : 'Mixed'} manuscript</span>
+                {' — transcription may contain uncertain readings'}
+              </span>
+            </div>
+          )}
+          {metadata.warning && (
+            <div className="px-3 py-2 bg-red-50 text-sm text-red-800 flex items-start gap-2">
+              <span className="text-red-600 font-bold flex-shrink-0">⚠</span>
+              <span>{metadata.warning}</span>
+            </div>
+          )}
+        </div>
+      )}
       {/* Collapsible metadata panel - hidden when showMetadata is false */}
       {showMetadata ? <MetadataPanel metadata={metadata} /> : null}
 

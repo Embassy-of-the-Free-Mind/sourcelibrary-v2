@@ -4,7 +4,7 @@ import { BOOK, PAGE } from './fixtures';
 
 test.describe('Page Reader', () => {
   test.beforeEach(async ({ page }) => {
-    await page.goto(`/book/${BOOK.id}/page/${PAGE.id}`);
+    await page.goto(`/book/${BOOK.slug}/page/${PAGE.id}`);
   });
 
   test.afterEach(async ({ page }, testInfo) => {

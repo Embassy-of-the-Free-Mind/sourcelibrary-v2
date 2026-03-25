@@ -6,6 +6,7 @@ import Link from 'next/link';
 import { Book, Page, TranslationEdition } from '@/lib/types';
 import { findBookByIdOrSlug } from '@/lib/book-lookup';
 import { Calendar, Globe, FileText, BookText, BookMarked, Images } from 'lucide-react';
+import ArtworkInfo from '@/components/artwork/ArtworkInfo';
 import SearchPanel from '@/components/search/SearchPanel';
 import BookPagesSection from '@/components/book/BookPagesSection';
 import EarlyAccessGate from '@/components/book/EarlyAccessGate';
@@ -16,6 +17,9 @@ import BookAnalytics from '@/components/book/BookAnalytics';
 import CoverImagePicker from '@/components/book/CoverImagePicker';
 import DownloadButton from '@/components/ui/DownloadButton';
 import BibliographicInfo from '@/components/book/BibliographicInfo';
+import RelatedEditions from '@/components/book/RelatedEditions';
+import RelatedBooks from '@/components/book/RelatedBooks';
+import AuthorCrossReference from '@/components/book/AuthorCrossReference';
 import PublishEditionButton from '@/components/editions/PublishEditionButton';
 import EditionsPanel from '@/components/editions/EditionsPanel';
 import SchemaOrgMetadata from '@/components/seo/SchemaOrgMetadata';
@@ -292,8 +296,20 @@ async function BookInfo({ id }: { id: string }) {
   const { book, pages, totalBooks, galleryImageCount, galleryImages, bookCollections } = data;
 
   // Empty shell books (0 pages from failed imports) should 404
-  if (!book.pages_count || book.pages_count === 0) {
+  // But visual art (paintings, prints, etc.) legitimately has no page documents
+  const isVisualArt = book.resource_type && book.resource_type !== 'printed_book' && book.resource_type !== 'manuscript';
+  if (!isVisualArt && (!book.pages_count || book.pages_count === 0)) {
     notFound();
+  }
+
+  // Visual art gets a dedicated layout — no OCR, no pages grid, no translation stats
+  if (isVisualArt) {
+    return (
+      <ArtworkInfo
+        book={book}
+        collections={bookCollections}
+      />
+    );
   }
 
   // Content gating handled client-side by useBetaGate hook in BookPagesSection
@@ -421,12 +437,49 @@ async function BookInfo({ id }: { id: string }) {
 
               {book.is_first_translation && (
                 <div className="mt-3">
-                  <Link
-                    href="/blog/first-translation-methodology"
-                    className="px-2.5 py-1 bg-accent-gold/20 text-accent-gold hover:bg-accent-gold/30 text-xs font-medium rounded-full border border-accent-gold/30 transition-colors"
-                  >
-                    First English Translation
-                  </Link>
+                  <details className="group">
+                    <summary className="inline-flex px-2.5 py-1 bg-accent-gold/20 text-accent-gold hover:bg-accent-gold/30 text-xs font-medium rounded-full border border-accent-gold/30 transition-colors cursor-pointer list-none [&::-webkit-details-marker]:hidden">
+                      First English Translation
+                    </summary>
+                    <div className="mt-2 p-3 bg-stone-800/50 rounded-lg border border-stone-700/50 text-xs space-y-2">
+                      <p className="text-stone-300">
+                        {book.translation_verification?.disposition === 'confirmed_first' && 'No prior complete English translation of this text has been found.'}
+                        {book.translation_verification?.disposition === 'first_complete_translation' && 'Only partial translations or excerpts exist. This is the first complete English translation.'}
+                        {book.translation_verification?.disposition === 'first_modern_translation' && 'Only antiquated translations exist. This is the first modern English translation.'}
+                        {!book.translation_verification?.disposition && 'This text has not previously been translated into English.'}
+                      </p>
+                      {book.translation_verification?.reasoning && (
+                        <p className="text-stone-400">{book.translation_verification.reasoning}</p>
+                      )}
+                      {(book.translation_verification?.translations_found?.length ?? 0) > 0 && (
+                        <div className="space-y-1">
+                          <span className="text-stone-500">Related translations found:</span>
+                          {book.translation_verification!.translations_found!.map((t, i: number) => (
+                            <p key={i} className="text-stone-400 pl-2">
+                              <span className="italic">{t.english_title}</span>
+                              {t.translator && t.translator !== 'unknown' && `, trans. ${t.translator}`}
+                              {t.pub_year && ` (${t.pub_year})`}
+                              {t.completeness && t.completeness !== 'unknown' && <span className="text-stone-500"> [{t.completeness}]</span>}
+                              {t.url && (
+                                <>{' '}<a href={t.url} target="_blank" rel="noopener noreferrer" className="text-accent-gold hover:text-accent-gold/80 underline">source</a></>
+                              )}
+                            </p>
+                          ))}
+                        </div>
+                      )}
+                      {book.translation_verification?.tools_called && (
+                        <p className="text-stone-600 text-[10px]">
+                          Verified {book.translation_verification.verified_at ? new Date(book.translation_verification.verified_at).toLocaleDateString('en-US', { year: 'numeric', month: 'short', day: 'numeric' }) : ''} via{' '}
+                          {book.translation_verification.tools_called
+                            .filter((t: string) => t !== 'make_determination')
+                            .map((t: string) => t.replace('search_', '').replace(/_/g, ' '))
+                            .join(', ')}
+                          {' '}&middot;{' '}
+                          <a href="/blog/first-translation-methodology" className="underline hover:text-stone-500">methodology</a>
+                        </p>
+                      )}
+                    </div>
+                  </details>
                 </div>
               )}
 
@@ -524,6 +577,22 @@ async function BookInfo({ id }: { id: string }) {
 
               {/* Bibliographic Info */}
               <BibliographicInfo book={book} pagesCount={pages.length} />
+
+              {/* Related Editions (WEMI work_id linking) */}
+              {(book as unknown as { work_id?: string }).work_id && (
+                <Suspense fallback={null}>
+                  <RelatedEditions bookId={book.id} workId={(book as unknown as { work_id?: string }).work_id!} />
+                </Suspense>
+              )}
+
+              {/* Cross-reference: artworks by this author */}
+              <Suspense fallback={null}>
+                <AuthorCrossReference
+                  author={book.author}
+                  currentBookId={book.id}
+                  context="book"
+                />
+              </Suspense>
             </div>
           </div>
         </div>
@@ -649,84 +718,10 @@ async function BookInfo({ id }: { id: string }) {
               </div>
             )}
 
-            {/* Related Books — pre-computed from entity graph */}
-            {book.related_books && (book.related_books.direct?.length > 0 || book.related_books.shared?.length > 0) && (() => {
-              const direct = book.related_books.direct || [];
-              const shared = book.related_books.shared || [];
-              const counts = [
-                direct.length > 0 ? `${direct.length} cited` : '',
-                shared.length > 0 ? `${shared.length} related` : '',
-              ].filter(Boolean).join(', ');
-
-              return (
-                <>
-                  {direct.map((rb) => (
-                    <meta
-                      key={`cite-ref-${rb.id}`}
-                      name="citation_reference"
-                      content={`citation_title=${rb.title}${rb.author && rb.author !== 'Unknown' ? `; citation_author=${rb.author}` : ''}${rb.published ? `; citation_publication_date=${rb.published}` : ''}`}
-                    />
-                  ))}
-                  <details className="card mt-6">
-                    <summary className="flex items-center justify-between p-6 cursor-pointer list-none [&::-webkit-details-marker]:hidden">
-                      <div className="flex items-center gap-3">
-                        <h2 className="text-lg font-semibold" style={{ color: 'var(--text-primary)' }}>Related Books</h2>
-                        {counts && <span className="text-xs text-stone-400">{counts}</span>}
-                      </div>
-                      <span className="text-sm text-accent-rust hover:text-accent-gold-dark">See All &rarr;</span>
-                    </summary>
-                    <div className="px-6 pb-6">
-                      {direct.length > 0 && (
-                        <div className="mb-4 pb-4 border-b border-stone-100">
-                          <p className="text-xs font-medium text-stone-500 uppercase tracking-wide mb-2">
-                            Cited authors in our library ({direct.length})
-                          </p>
-                          <div className="space-y-1.5">
-                            {direct.map((rb) => (
-                              <Link key={rb.id} href={`/book/${rb.slug || rb.id}`} className="flex items-center gap-2 px-3 py-2 text-sm rounded-lg hover:bg-stone-50 transition-colors group">
-                                <span className="text-stone-800 group-hover:text-accent-gold-dark transition-colors flex-1 min-w-0 truncate">{rb.title}</span>
-                                {rb.cited_as && <span className="text-xs text-accent-rust shrink-0">via {rb.cited_as}</span>}
-                              </Link>
-                            ))}
-                          </div>
-                        </div>
-                      )}
-                      {shared.length > 0 && (
-                        <div className="mb-4 pb-4 border-b border-stone-100">
-                          <p className="text-xs font-medium text-stone-500 uppercase tracking-wide mb-2">
-                            Related works ({shared.length})
-                          </p>
-                          <div className="space-y-1.5">
-                            {shared.map((rb) => (
-                              <Link key={rb.id} href={`/book/${rb.slug || rb.id}`} className="flex items-center gap-2 px-3 py-2 text-sm rounded-lg hover:bg-stone-50 transition-colors group">
-                                <span className="text-stone-800 group-hover:text-accent-gold-dark transition-colors flex-1 min-w-0 truncate">{rb.title}</span>
-                                {rb.author && rb.author !== 'Unknown' && <span className="text-xs text-stone-400 shrink-0 truncate max-w-[120px]">{rb.author}</span>}
-                                <span className="text-xs text-accent-sage shrink-0">
-                                  {rb.shared_names?.length ? rb.shared_names.join(', ') : `${rb.shared_entities} shared`}
-                                </span>
-                              </Link>
-                            ))}
-                          </div>
-                        </div>
-                      )}
-                      {/* Search pills */}
-                      <div className="flex flex-wrap gap-2">
-                        {authorUrl(book.author) && (
-                          <Link href={authorUrl(book.author)!} className="px-3 py-1.5 text-sm bg-stone-100 text-stone-700 rounded-full hover:bg-stone-200 transition-colors">
-                            More by {book.author}
-                          </Link>
-                        )}
-                        {book.language && book.language !== 'Unknown' && (
-                          <Link href={`/search?language=${encodeURIComponent(book.language)}`} className="px-3 py-1.5 text-sm bg-stone-100 text-stone-700 rounded-full hover:bg-stone-200 transition-colors">
-                            {book.language} texts
-                          </Link>
-                        )}
-                      </div>
-                    </div>
-                  </details>
-                </>
-              );
-            })()}
+            {/* Related Books — pre-computed, zero extra queries */}
+            {book.related_books && (book.related_books.direct?.length > 0 || book.related_books.shared?.length > 0) && (
+              <RelatedBooks relatedBooks={book.related_books} />
+            )}
           </div>
         );
       })()}

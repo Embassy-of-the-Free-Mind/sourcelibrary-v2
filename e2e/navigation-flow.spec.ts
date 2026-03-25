@@ -10,7 +10,7 @@ test.describe('Navigation Flow', () => {
     await measurePerf(page, 'nav-flow: homepage');
 
     // 2. Navigate to known featured book (instead of clicking random first book)
-    await page.goto(`/book/${BOOK.id}`);
+    await page.goto(`/book/${BOOK.slug}`);
 
     // 3. Verify book detail page
     await expect(page).toHaveURL(/\/book\//);

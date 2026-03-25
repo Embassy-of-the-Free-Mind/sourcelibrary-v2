@@ -49,15 +49,14 @@ export const prompts = {
   },
 
   /**
-   * Update a prompt
+   * Create a new version of a prompt (prompts are immutable — never edits in place).
+   * The PATCH endpoint creates a new version document, not an in-place update.
    */
   update: async (id: string, updates: PromptUpdateRequest): Promise<Prompt> => {
     return await apiClient.patch(`/api/prompts/${id}`, updates);
   },
 
-  /**
-   * Delete a prompt
-   */
+  /** @deprecated Prompts are immutable and cannot be deleted. This will return 405. */
   delete: async (id: string): Promise<{ success: boolean }> => {
     return await apiClient.delete(`/api/prompts/${id}`);
   },
