@@ -18,7 +18,9 @@ export async function GET(request: NextRequest) {
     const includeChildren = searchParams.get('includeChildren') === 'true';
 
     const db = await getDb();
-    const filter: Record<string, unknown> = {};
+    const filter: Record<string, unknown> = {
+      collection_type: { $ne: 'visual_art' },
+    };
     if (!includeChildren) {
       filter.parent = { $exists: false };
     }
