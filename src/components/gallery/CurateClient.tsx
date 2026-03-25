@@ -548,6 +548,8 @@ export default function CurateClient() {
       })
       .catch(() => {});
 
+    const isFirstRun = typeof window !== 'undefined' && localStorage.getItem(APPLIED_LIKES_KEY) === null;
+
     fetch(`/api/likes/mine?visitor_id=${visitorId}&type=image&limit=5000`)
       .then(res => res.json())
       .then(data => {
@@ -560,6 +562,11 @@ export default function CurateClient() {
           setLikedIds(serverLiked);
           for (const id of serverLiked) {
             setLikeInCache(`image:${id}`, true);
+          }
+          // First run: treat all existing server likes as already-applied
+          if (isFirstRun) {
+            setAppliedLikes(serverLiked);
+            saveAppliedLikesCache(serverLiked);
           }
         }
       })
