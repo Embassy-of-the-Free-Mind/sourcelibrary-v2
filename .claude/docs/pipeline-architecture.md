@@ -1,6 +1,8 @@
 # Source Library Pipeline Architecture
 
 > Authoritative reference as of March 18, 2026. Detailed enough for any developer (human or AI) to operate, debug, or migrate the pipeline.
+>
+> **See also:** `pipeline.md` for the full processing pipeline (states, crons, prompts, costs).
 
 ---
 

@@ -2,6 +2,8 @@
 
 Single source of truth for the full processing pipeline — from import to complete. Last updated: March 16, 2026.
 
+> **See also:** `pipeline-architecture.md` for Hetzner infrastructure, emergency controls, and operational details.
+
 ## End-to-End Overview
 
 ```
