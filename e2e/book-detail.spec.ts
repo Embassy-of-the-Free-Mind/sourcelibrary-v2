@@ -19,7 +19,7 @@ test.describe('Book Detail', () => {
   test('language metadata is visible', async ({ page }) => {
     // Wait for page to fully load beyond Suspense boundary
     await expect(page.getByRole('heading', { name: /The Hermetic Museum/i })).toBeVisible();
-    await expect(page.getByTestId('language-metadata')).toContainText(BOOK.language);
+    await expect(page.getByTestId('language-metadata').first()).toContainText(BOOK.language);
   });
 
   test('pages grid loads with links', async ({ page }) => {
