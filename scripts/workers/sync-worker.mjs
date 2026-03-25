@@ -283,6 +283,35 @@ async function syncGalleryImages(db) {
   return { synced: stalePages.length, books_updated: affectedBookIds.length, orphans_removed: orphansRemoved };
 }
 
+// ── Sync Author Slugs ──
+
+function authorSlugFn(author) {
+  return author.normalize('NFD').replace(/[\u0300-\u036f]/g, '').toLowerCase()
+    .replace(/[^a-z0-9]+/g, '-').replace(/^-+|-+$/g, '').replace(/-{2,}/g, '-');
+}
+
+async function syncAuthorSlugs(db) {
+  console.log('\n--- Sync Author Slugs ---');
+  const start = Date.now();
+  const authors = await db.collection('books').distinct('author', {
+    hidden: { $ne: true },
+    author: { $exists: true, $ne: null, $nin: ['Unknown', 'Anonymous', 'Various'] },
+  });
+  const slugs = {};
+  for (const a of authors) slugs[authorSlugFn(a)] = a;
+
+  if (!DRY_RUN) {
+    await db.collection('system_config').updateOne(
+      { _id: 'author_slugs' },
+      { $set: { slugs, updated_at: new Date(), count: Object.keys(slugs).length } },
+      { upsert: true }
+    );
+  }
+  const elapsed = ((Date.now() - start) / 1000).toFixed(1);
+  console.log(`  ${Object.keys(slugs).length} author slugs synced | ${elapsed}s`);
+  return { author_slugs: Object.keys(slugs).length };
+}
+
 // ── Main ──
 
 async function run() {
@@ -301,6 +330,9 @@ async function run() {
   if (!COUNTS_ONLY) {
     galleryResult = await syncGalleryImages(db);
   }
+
+  // Always sync author slugs (fast, no flag needed)
+  await syncAuthorSlugs(db);
 
   const duration = Date.now() - startTime;
 
