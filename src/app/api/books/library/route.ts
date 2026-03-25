@@ -11,7 +11,7 @@ const DEFAULT_LIMIT = 100;
 let defaultViewCache: { data: string; timestamp: number } | null = null;
 const DEFAULT_CACHE_TTL = 60_000; // 1 minute
 
-type SortOption = 'recent-translation' | 'recent' | 'title-asc' | 'title-desc';
+type SortOption = 'recent-translation' | 'recent' | 'title-asc' | 'title-desc' | 'date_asc' | 'date_desc';
 
 function buildSortStage(sort: SortOption, collection?: string): { $sort: Record<string, 1 | -1> } {
   switch (sort) {
@@ -21,6 +21,10 @@ function buildSortStage(sort: SortOption, collection?: string): { $sort: Record<
       return { $sort: { sort_title: 1 } as Record<string, 1 | -1> };
     case 'title-desc':
       return { $sort: { sort_title: -1 } as Record<string, 1 | -1> };
+    case 'date_asc':
+      return { $sort: { year: 1, title: 1 } as Record<string, 1 | -1> };
+    case 'date_desc':
+      return { $sort: { year: -1, title: 1 } as Record<string, 1 | -1> };
     case 'recent-translation':
     default:
       // When viewing a collection, sort by relevance score first

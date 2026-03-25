@@ -209,6 +209,7 @@ export default function SearchPage() {
           has_translation: hasTranslation ? 'true' : undefined,
           first_translation: firstTranslation ? 'true' : undefined,
           library: library || undefined,
+          sort: sortBy !== 'relevance' ? sortBy : undefined,
         };
         // Fire all searches independently — results render as each resolves
         const bookPromise = searchApi.search(q, { ...bookFilters, search_content: 'true' }).then(bookData => {
@@ -275,7 +276,7 @@ export default function SearchPage() {
     if (hasTranslation) params.set('has_translation', 'true');
     if (firstTranslation) params.set('first_translation', 'true');
     if (library) params.set('library', library);
-    if (q && mode === 'books' && sortBy !== 'relevance') params.set('sort', sortBy);
+    if (q && sortBy !== 'relevance') params.set('sort', sortBy);
     if (!q && browseSortBy !== 'recent-translation') params.set('sort', browseSortBy);
     if (pageOffset > 0) params.set('offset', pageOffset.toString());
     router.replace(`/search?${params.toString()}`, { scroll: false });
@@ -429,7 +430,7 @@ export default function SearchPage() {
                 <Loader2 className="absolute right-4 top-1/2 -translate-y-1/2 w-5 h-5 text-muted animate-spin" />
               )}
             </div>
-            {viewMode === 'books' && !isBrowseMode && (
+            {!isBrowseMode && (
               <div className="relative flex-shrink-0">
                 <ArrowUpDown className="absolute left-3 top-1/2 -translate-y-1/2 w-4 h-4 text-muted pointer-events-none" />
                 <select
@@ -454,6 +455,8 @@ export default function SearchPage() {
                 >
                   <option value="recent-translation">Recently translated</option>
                   <option value="recent">Recently added</option>
+                  <option value="date_desc">Oldest first</option>
+                  <option value="date_asc">Newest first</option>
                   <option value="title-asc">Title A-Z</option>
                   <option value="title-desc">Title Z-A</option>
                 </select>
@@ -518,8 +521,8 @@ export default function SearchPage() {
             </div>
           )}
 
-          {/* Search Options Accordion */}
-          <div className="mt-3">
+          {/* Filter toggle + count badge */}
+          <div className="mt-3 flex items-center gap-3">
             <button
               onClick={() => setShowFilters(!showFilters)}
               className="flex items-center gap-2 text-sm text-muted hover:text-secondary transition-colors"
@@ -529,8 +532,91 @@ export default function SearchPage() {
               Filters
               {hasActiveFilters && <span className="w-1.5 h-1.5 bg-accent-rust rounded-full" />}
             </button>
-            {showFilters && (
-              <div className="mt-3 p-4 bg-warm rounded-xl border border-border-light">
+          </div>
+
+          {/* Filter panel — inline on desktop, bottom sheet on mobile */}
+          {showFilters && (
+            <>
+              {/* Mobile: backdrop + bottom sheet */}
+              <div className="md:hidden fixed inset-0 bg-black/30 z-40" onClick={() => setShowFilters(false)} />
+              <div className="md:hidden fixed bottom-0 left-0 right-0 z-50 bg-white rounded-t-2xl shadow-2xl max-h-[70vh] overflow-y-auto animate-in slide-in-from-bottom duration-200">
+                <div className="sticky top-0 bg-white border-b border-border-light px-4 py-3 flex items-center justify-between">
+                  <span className="text-sm font-medium text-primary">Filters</span>
+                  <div className="flex items-center gap-3">
+                    {hasActiveFilters && (
+                      <button onClick={clearFilters} className="text-sm text-muted hover:text-primary flex items-center gap-1">
+                        <X className="w-3.5 h-3.5" /> Clear
+                      </button>
+                    )}
+                    <button onClick={() => setShowFilters(false)} className="text-sm font-medium text-accent-rust">
+                      Done
+                    </button>
+                  </div>
+                </div>
+                <div className="p-4 grid grid-cols-2 gap-4">
+                  <div>
+                    <label className="block text-sm text-secondary mb-1">Language</label>
+                    <select value={language} onChange={(e) => setLanguage(e.target.value)}
+                      className="w-full px-3 py-2 border border-border-medium rounded-lg bg-white text-sm focus:outline-none focus:ring-2 focus:ring-accent-rust/30">
+                      {languages.map((l) => <option key={l.value} value={l.value}>{l.label}</option>)}
+                    </select>
+                  </div>
+                  <div>
+                    <label className="block text-sm text-secondary mb-1">Subject</label>
+                    <select value={category} onChange={(e) => setCategory(e.target.value)}
+                      className="w-full px-3 py-2 border border-border-medium rounded-lg bg-white text-sm focus:outline-none focus:ring-2 focus:ring-accent-rust/30">
+                      {categories.map((c) => <option key={c.value} value={c.value}>{c.label}</option>)}
+                    </select>
+                  </div>
+                  <div>
+                    <label className="block text-sm text-secondary mb-1">Collection</label>
+                    <select value={collection} onChange={(e) => { setCollection(e.target.value); setOffset(0); }}
+                      className="w-full px-3 py-2 border border-border-medium rounded-lg bg-white text-sm focus:outline-none focus:ring-2 focus:ring-accent-rust/30">
+                      <option value="">All Collections</option>
+                      {collectionsList.map((c) => (
+                        <option key={c.slug} value={c.slug}>{c.name} ({c.book_count})</option>
+                      ))}
+                    </select>
+                  </div>
+                  <div>
+                    <label className="block text-sm text-secondary mb-1">Library</label>
+                    <select value={library} onChange={(e) => setLibrary(e.target.value)}
+                      className="w-full px-3 py-2 border border-border-medium rounded-lg bg-white text-sm focus:outline-none focus:ring-2 focus:ring-accent-rust/30">
+                      <option value="">All Libraries</option>
+                      {Object.values(LIBRARY_PARTNERS).map((p) => (
+                        <option key={p.providerKey} value={p.providerKey}>{p.name}</option>
+                      ))}
+                    </select>
+                  </div>
+                  <div>
+                    <label className="block text-sm text-secondary mb-1">Published after</label>
+                    <input type="text" value={dateFrom} onChange={(e) => setDateFrom(e.target.value)}
+                      placeholder="e.g., 1500" className="w-full px-3 py-2 border border-border-medium rounded-lg bg-white text-sm focus:outline-none focus:ring-2 focus:ring-accent-rust/30" />
+                  </div>
+                  <div>
+                    <label className="block text-sm text-secondary mb-1">Published before</label>
+                    <input type="text" value={dateTo} onChange={(e) => setDateTo(e.target.value)}
+                      placeholder="e.g., 1700" className="w-full px-3 py-2 border border-border-medium rounded-lg bg-white text-sm focus:outline-none focus:ring-2 focus:ring-accent-rust/30" />
+                  </div>
+                  <div className="col-span-2 flex flex-wrap gap-x-6 gap-y-2">
+                    <label className="flex items-center gap-2 text-sm text-secondary cursor-pointer">
+                      <input type="checkbox" checked={hasTranslation} onChange={(e) => setHasTranslation(e.target.checked)}
+                        className="rounded border-border-medium text-accent-rust focus:ring-accent-rust/30" /> Has translation
+                    </label>
+                    <label className="flex items-center gap-2 text-sm text-secondary cursor-pointer">
+                      <input type="checkbox" checked={firstTranslation} onChange={(e) => setFirstTranslation(e.target.checked)}
+                        className="rounded border-border-medium text-accent-gold focus:ring-accent-gold/30" /> First translation
+                    </label>
+                    <label className="flex items-center gap-2 text-sm text-secondary cursor-pointer">
+                      <input type="checkbox" checked={hasDoi} onChange={(e) => setHasDoi(e.target.checked)}
+                        className="rounded border-border-medium text-accent-rust focus:ring-accent-rust/30" /> Has DOI
+                    </label>
+                  </div>
+                </div>
+              </div>
+
+              {/* Desktop: inline panel (unchanged) */}
+              <div className="hidden md:block mt-3 p-4 bg-warm rounded-xl border border-border-light">
                 <div className="flex items-center justify-between mb-3">
                   {hasActiveFilters && (
                     <button onClick={clearFilters} className="text-sm text-muted hover:text-primary flex items-center gap-1 ml-auto">
@@ -538,7 +624,7 @@ export default function SearchPage() {
                     </button>
                   )}
                 </div>
-                <div className="grid grid-cols-2 md:grid-cols-3 gap-4">
+                <div className="grid grid-cols-3 gap-4">
                   <div>
                     <label className="block text-sm text-secondary mb-1">Language</label>
                     <select value={language} onChange={(e) => setLanguage(e.target.value)}
@@ -599,8 +685,8 @@ export default function SearchPage() {
                   </div>
                 </div>
               </div>
-            )}
-          </div>
+            </>
+          )}
         </div>
       </div>
 
