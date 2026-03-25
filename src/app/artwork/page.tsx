@@ -23,58 +23,27 @@ interface ArtCollection {
   featured_images?: { extracted_url?: string; thumbnail_url?: string; image_url?: string }[];
 }
 
-interface ArtistSummary {
-  name: string;
-  count: number;
-  sampleThumb?: string;
-  sampleSlug?: string;
-}
-
 async function getData() {
   const db = await getDb();
-  // Set a 10s timeout on all queries to prevent page hang
-  const opts = { maxTimeMS: 10000 };
 
-  const [collections, artistsRaw, totalCount] = await Promise.all([
-    // Art collections (visible ones)
-    db.collection('collections')
-      .find({ collection_type: 'visual_art', hidden: { $ne: true } })
-      .sort({ order: 1 })
-      .project({ _id: 0, slug: 1, name: 1, subtitle: 1, color: 1, book_count: 1, featured_images: 1 })
-      .toArray() as Promise<ArtCollection[]>,
+  // Only query the small collections table (19 docs) — fast and reliable.
+  // Skip the expensive books aggregation that was causing timeouts.
+  const collections = await db.collection('collections')
+    .find({ collection_type: 'visual_art', hidden: { $ne: true } })
+    .sort({ order: 1 })
+    .project({ _id: 0, slug: 1, name: 1, subtitle: 1, color: 1, book_count: 1, featured_images: 1 })
+    .toArray() as ArtCollection[];
 
-    // Top artists by count (artworks are hidden: true, so don't filter by hidden)
-    db.collection('books').aggregate([
-      { $match: { resource_type: { $exists: true } } },
-      { $group: {
-        _id: '$author',
-        count: { $sum: 1 },
-        sampleThumb: { $first: '$thumbnail_blob' },
-        sampleSlug: { $first: '$slug' },
-      }},
-      { $sort: { count: -1 } },
-      { $limit: 20 },
-    ]).toArray(),
+  const totalCount = collections.reduce((sum, c) => sum + (c.book_count || 0), 0);
 
-    // Total artworks
-    db.collection('books').countDocuments({ resource_type: { $exists: true } }),
-  ]);
-
-  const artists: ArtistSummary[] = artistsRaw.map(a => ({
-    name: a._id as string,
-    count: a.count as number,
-    sampleThumb: a.sampleThumb as string | undefined,
-    sampleSlug: a.sampleSlug as string | undefined,
-  }));
-
-  return { collections, artists, totalCount };
+  return { collections, totalCount };
 }
 
 export default async function ArtworkLandingPage() {
   const admin = await isAdmin();
   if (!admin) redirect('/');
 
-  const { collections, artists, totalCount } = await getData();
+  const { collections, totalCount } = await getData();
 
   return (
     <div className="min-h-screen" style={{ background: 'var(--bg-cream)' }}>
@@ -92,8 +61,6 @@ export default async function ArtworkLandingPage() {
           </p>
           <div className="flex items-center gap-6 mt-8 text-sm text-stone-500">
             <span>{totalCount.toLocaleString()} works</span>
-            <span className="w-px h-4 bg-stone-700" />
-            <span>{artists.length} artists</span>
             <span className="w-px h-4 bg-stone-700" />
             <span>{collections.length} collections</span>
           </div>
@@ -134,46 +101,11 @@ export default async function ArtworkLandingPage() {
         </div>
       )}
 
-      {/* Artists */}
-      {artists.length > 0 && (
-        <div className="max-w-[var(--container-standard)] mx-auto px-6 md:px-12 py-12">
-          <h2 className="text-2xl font-display font-semibold mb-8" style={{ color: 'var(--text-primary)' }}>Artists</h2>
-          <div className="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-4 gap-4">
-            {artists.map(artist => (
-              <Link
-                key={artist.name}
-                href={`/artwork/artist/${artist.name.replace(/\s+/g, '-')}`}
-                className="group flex items-center gap-3 p-3 rounded-lg border hover:border-accent-rust/30 transition-colors"
-                style={{ borderColor: 'var(--border-light)' }}
-              >
-                {artist.sampleThumb && sanitizeThumbnail(artist.sampleThumb) && (
-                  <div className="w-10 h-10 rounded-full overflow-hidden bg-stone-200 flex-shrink-0">
-                    <Image
-                      src={sanitizeThumbnail(artist.sampleThumb) as string}
-                      alt=""
-                      width={40}
-                      height={40}
-                      className="object-cover w-full h-full"
-                    />
-                  </div>
-                )}
-                <div className="min-w-0">
-                  <p className="text-sm font-medium truncate group-hover:text-accent-rust transition-colors" style={{ color: 'var(--text-primary)' }}>
-                    {artist.name}
-                  </p>
-                  <p className="text-xs" style={{ color: 'var(--text-muted)' }}>{artist.count} works</p>
-                </div>
-              </Link>
-            ))}
-          </div>
-        </div>
-      )}
-
       {/* Footer */}
       <div className="border-t" style={{ borderColor: 'var(--border-light)' }}>
         <div className="max-w-[var(--container-standard)] mx-auto px-6 md:px-12 py-8 text-center">
           <p className="text-sm" style={{ color: 'var(--text-muted)' }}>
-            Images from Wikimedia Commons. Public domain.
+            Images from Wikimedia Commons, the Met, and the Rijksmuseum. Public domain.
           </p>
         </div>
       </div>

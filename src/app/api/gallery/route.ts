@@ -71,8 +71,6 @@ export async function GET(request: NextRequest) {
     const yearEnd = searchParams.get('yearEnd') ? parseInt(searchParams.get('yearEnd')!) : null;
     const includeArchive = searchParams.get('includeArchive') === 'true';
     const maxPerBook = parseInt(searchParams.get('maxPerBook') || '3');
-    const shuffle = searchParams.get('shuffle') === 'true';
-
     // Quality thresholds
     let minQuality = 0.7; // default: gallery quality
     if (includeArchive) minQuality = 0.5;
@@ -144,68 +142,8 @@ export async function GET(request: NextRequest) {
       filter.$text = { $search: searchQuery };
     }
 
-    // When shuffling, use random skip instead of $sample to avoid full collection scan.
-    // $sample after $match is O(N) on the match set; random skip uses the index.
-    if (shuffle && !searchQuery) {
-      const totalEstimate = await db.collection('gallery_images').estimatedDocumentCount();
-      const maxSkip = Math.max(0, totalEstimate - limit);
-      const randomSkip = Math.floor(Math.random() * maxSkip);
-
-      const [items, total] = await Promise.all([
-        db.collection('gallery_images')
-          .find(filter, { projection: { _id: 0 } })
-          .sort({ gallery_quality: -1 })
-          .skip(randomSkip)
-          .limit(limit)
-          .toArray(),
-        Promise.resolve(totalEstimate),
-      ]);
-
-      const visitorId = searchParams.get('visitor_id');
-      const imageIds = items.map(doc => `${doc.page_id}-${doc.detection_index}`);
-      let likesMap: Record<string, { count: number; liked: boolean }> = {};
-      if (imageIds.length > 0) {
-        try {
-          const likeDocs = await db.collection('likes').aggregate([
-            { $match: { target_type: 'image', target_id: { $in: imageIds } } },
-            { $group: { _id: '$target_id', count: { $sum: 1 }, visitors: { $addToSet: '$visitor_id' } } },
-          ]).toArray();
-          for (const ld of likeDocs) {
-            likesMap[ld._id as string] = {
-              count: ld.count as number,
-              liked: visitorId ? (ld.visitors as string[]).includes(visitorId) : false,
-            };
-          }
-        } catch { /* Non-critical */ }
-      }
-
-      const mappedItems = items.map(doc => {
-        const likeKey = `${doc.page_id}-${doc.detection_index}`;
-        const likeData = likesMap[likeKey];
-        return {
-          pageId: doc.page_id, bookId: doc.book_id, pageNumber: doc.page_number,
-          detectionIndex: doc.detection_index, imageUrl: doc.image_url,
-          bookTitle: doc.book_title, author: doc.book_author, year: doc.book_year,
-          description: doc.description, type: doc.type, bbox: doc.bbox,
-          rotation: doc.rotation, extractedUrl: doc.extracted_url,
-          thumbnailUrl: doc.thumbnail_url, galleryQuality: doc.gallery_quality,
-          confidence: doc.confidence, museumDescription: doc.museum_description,
-          metadata: doc.metadata, firstSyncedAt: doc.first_synced_at || doc.updated_at || null,
-          likeCount: likeData?.count ?? 0, likedByVisitor: likeData?.liked ?? false,
-        };
-      });
-
-      let filters = { types: [] as string[], subjects: [] as string[], yearRange: { minYear: null as number | null, maxYear: null as number | null } };
-      if (offset === 0) {
-        filters = await getGalleryFilters(db);
-      }
-
-      return NextResponse.json({
-        items: mappedItems, total, limit, offset, bookInfo: null, filters, shuffled: true,
-      }, {
-        headers: { 'Cache-Control': 'no-store' },
-      });
-    }
+    // Shuffle is handled client-side — server-side $sample/$skip both timeout on Atlas
+    // with broad filters (minQuality=0.5, maxPerBook=999). The shuffle param is ignored.
 
     // When text searching, sort by relevance first, then quality
     const sortOrder: Record<string, any> = searchQuery
@@ -215,7 +153,13 @@ export async function GET(request: NextRequest) {
       ? { _id: 0, score: { $meta: 'textScore' } }
       : { _id: 0 };
 
-    // Run query and count in parallel
+    // Run query and count in parallel.
+    // Use estimatedDocumentCount when filter is broad (no book/type/collection filters)
+    // to avoid expensive collection scans on Atlas.
+    const isBroadFilter = !bookId && !collectionBookIds && !libraryBookIds && !imageType
+      && !subjectFilter && !figureFilter && !symbolFilter && !searchQuery
+      && yearStart === null && yearEnd === null;
+
     const [items, total] = await Promise.all([
       db.collection('gallery_images')
         .find(filter, { projection })
@@ -223,7 +167,9 @@ export async function GET(request: NextRequest) {
         .skip(offset)
         .limit(limit)
         .toArray(),
-      db.collection('gallery_images').countDocuments(filter),
+      isBroadFilter
+        ? db.collection('gallery_images').estimatedDocumentCount()
+        : db.collection('gallery_images').countDocuments(filter),
     ]);
 
     // Fetch like counts (and visitor's liked status) for these images
