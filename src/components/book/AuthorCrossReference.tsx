@@ -1,13 +1,10 @@
 import Link from 'next/link';
 import Image from 'next/image';
-import { getDb } from '@/lib/mongodb';
 import { BookOpen, Paintbrush } from 'lucide-react';
 import { sanitizeThumbnail } from '@/lib/collections-utils';
 import { authorUrl } from '@/lib/slugify';
 
-const VISUAL_TYPES = ['painting', 'print', 'drawing', 'fresco', 'emblem', 'object', 'map'];
-
-interface CrossRefItem {
+export interface CrossRefItem {
   slug: string;
   title: string;
   display_title?: string;
@@ -21,52 +18,26 @@ interface CrossRefItem {
   language?: string;
 }
 
+export interface AuthorCrossRefData {
+  artworks?: CrossRefItem[];
+  books?: CrossRefItem[];
+  total_artworks?: number;
+}
+
 interface Props {
   author: string;
-  currentBookId: string;
+  crossRef?: AuthorCrossRefData;
   /** 'book' = we're on a book page, show artworks. 'artwork' = we're on artwork, show books. */
   context: 'book' | 'artwork';
 }
 
-export default async function AuthorCrossReference({ author, currentBookId, context }: Props) {
-  const db = await getDb();
-
-  // Escape regex special chars in author name
-  const escaped = author.replace(/[.*+?^${}()|[\]\\]/g, '\\$&');
+export default function AuthorCrossReference({ author, crossRef, context }: Props) {
+  if (!crossRef) return null;
 
   if (context === 'book') {
-    // On a book page: find artworks by this author
-    const artworks = await db.collection('books')
-      .find(
-        {
-          author: { $regex: `^${escaped}$`, $options: 'i' },
-          resource_type: { $in: VISUAL_TYPES },
-          id: { $ne: currentBookId },
-        },
-        {
-          projection: {
-            slug: 1, title: 1, display_title: 1, published: 1,
-            resource_type: 1, thumbnail: 1, thumbnail_blob: 1,
-            commons_width: 1, commons_height: 1,
-          },
-          maxTimeMS: 3000,
-        },
-      )
-      .sort({ published: 1 })
-      .limit(12)
-      .toArray()
-      .catch((): never[] => []);
-
-    if (artworks.length === 0) return null;
-
-    const items = JSON.parse(JSON.stringify(artworks)) as CrossRefItem[];
-    const totalCount = await db.collection('books').countDocuments(
-      {
-        author: { $regex: `^${escaped}$`, $options: 'i' },
-        resource_type: { $in: VISUAL_TYPES },
-      },
-      { maxTimeMS: 3000 },
-    ).catch(() => artworks.length);
+    const items = crossRef.artworks;
+    if (!items || items.length === 0) return null;
+    const totalCount = crossRef.total_artworks ?? items.length;
 
     return (
       <div className="card p-6 sm:p-8">
@@ -113,70 +84,10 @@ export default async function AuthorCrossReference({ author, currentBookId, cont
     );
   }
 
-  // On an artwork page: find books by this author
-  const books = await db.collection('books')
-    .find(
-      {
-        author: { $regex: `^${escaped}$`, $options: 'i' },
-        resource_type: { $exists: false },
-        hidden: { $ne: true },
-        id: { $ne: currentBookId },
-      },
-      {
-        projection: {
-          slug: 1, title: 1, display_title: 1, published: 1,
-          language: 1, thumbnail: 1, thumbnail_blob: 1,
-          pages_translated: 1,
-        },
-        maxTimeMS: 3000,
-      },
-    )
-    .sort({ published: 1 })
-    .limit(8)
-    .toArray()
-    .catch((): never[] => []);
+  // On an artwork page: show books by this author
+  const items = crossRef.books;
+  if (!items || items.length === 0) return null;
 
-  // Also try "Surname, Firstname" format if author is "Firstname Surname"
-  if (books.length === 0 && !author.includes(',')) {
-    const parts = author.split(' ');
-    if (parts.length >= 2) {
-      const reversed = `${parts[parts.length - 1]}, ${parts.slice(0, -1).join(' ')}`;
-      const reversedEscaped = reversed.replace(/[.*+?^${}()|[\]\\]/g, '\\$&');
-      const altBooks = await db.collection('books')
-        .find(
-          {
-            author: { $regex: `^${reversedEscaped}$`, $options: 'i' },
-            resource_type: { $exists: false },
-            hidden: { $ne: true },
-            id: { $ne: currentBookId },
-          },
-          {
-            projection: {
-              slug: 1, title: 1, display_title: 1, published: 1,
-              language: 1, thumbnail: 1, thumbnail_blob: 1,
-              pages_translated: 1,
-            },
-            maxTimeMS: 3000,
-          },
-        )
-        .sort({ published: 1 })
-        .limit(8)
-        .toArray()
-        .catch((): never[] => []);
-
-      if (altBooks.length === 0) return null;
-      const items = JSON.parse(JSON.stringify(altBooks)) as CrossRefItem[];
-      return <BooksSection items={items} author={author} />;
-    }
-    return null;
-  }
-
-  if (books.length === 0) return null;
-  const items = JSON.parse(JSON.stringify(books)) as CrossRefItem[];
-  return <BooksSection items={items} author={author} />;
-}
-
-function BooksSection({ items, author }: { items: CrossRefItem[]; author: string }) {
   return (
     <div className="card p-6 sm:p-8">
       <div className="flex items-center justify-between mb-5">

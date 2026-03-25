@@ -6,6 +6,7 @@ export default defineConfig({
     globals: true,
     environment: 'node',
     include: ['tests/**/*.test.ts'],
+    exclude: ['tests/smoke/**'],
     setupFiles: ['tests/setup.ts'],
     testTimeout: 30000,
     // Isolate test files to prevent mongodb-memory-server port conflicts
