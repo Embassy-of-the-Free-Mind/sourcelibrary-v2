@@ -19,13 +19,18 @@ interface BookPagesSectionProps {
   bookId: string;
   bookTitle?: string;
   pages: Page[];
+  totalPageCount?: number;
   displayBrightness?: number;
 }
 
 const PAGES_PER_LOAD = 24; // 2 rows on 12-col grid
 
-export default function BookPagesSection({ bookId, bookTitle, pages: initialPages, displayBrightness }: BookPagesSectionProps) {
+export default function BookPagesSection({ bookId, bookTitle, pages: initialPages, totalPageCount, displayBrightness }: BookPagesSectionProps) {
   const [pages, setPages] = useState(initialPages);
+  const [allPagesFetched, setAllPagesFetched] = useState(
+    !totalPageCount || initialPages.length >= totalPageCount
+  );
+  const [fetchingMore, setFetchingMore] = useState(false);
   const [batchMode, setBatchMode] = useState(false);
   const [reorderMode, setReorderMode] = useState(false);
   const [selectedPages, setSelectedPages] = useState<Set<string>>(new Set());
@@ -36,10 +41,34 @@ export default function BookPagesSection({ bookId, bookTitle, pages: initialPage
   const [overwriteMode, setOverwriteMode] = useState(false); // Force re-process pages that already have data
   const [visibleCount, setVisibleCount] = useState(PAGES_PER_LOAD); // Pagination
 
+  // Fetch remaining pages from API when SSR only sent a partial set
+  const fetchRemainingPages = useCallback(async () => {
+    if (allPagesFetched || fetchingMore) return;
+    setFetchingMore(true);
+    try {
+      const res = await fetch(`/api/books/${bookId}?pageOffset=${pages.length}&pageLimit=0`);
+      if (!res.ok) throw new Error('Failed to fetch');
+      const data = await res.json();
+      if (data.pages?.length) {
+        setPages(prev => [...prev, ...data.pages]);
+      }
+      setAllPagesFetched(true);
+    } catch (error) {
+      console.error('Failed to fetch remaining pages:', error);
+    } finally {
+      setFetchingMore(false);
+    }
+  }, [bookId, pages.length, allPagesFetched, fetchingMore]);
+
   // Load more pages manually via button click (no auto-scroll)
   const handleLoadMore = useCallback(() => {
-    setVisibleCount(prev => Math.min(prev + PAGES_PER_LOAD, pages.length));
-  }, [pages.length]);
+    const nextVisible = Math.min(visibleCount + PAGES_PER_LOAD, totalPageCount || pages.length);
+    // If we're about to show more than we have, fetch the rest first
+    if (nextVisible > pages.length && !allPagesFetched) {
+      fetchRemainingPages();
+    }
+    setVisibleCount(nextVisible);
+  }, [visibleCount, pages.length, totalPageCount, allPagesFetched, fetchRemainingPages]);
 
   // Reorder mode state
   const [draggedPageId, setDraggedPageId] = useState<string | null>(null);
@@ -58,6 +87,7 @@ export default function BookPagesSection({ bookId, bookTitle, pages: initialPage
       const book = await books.get(bookId);
       if ('pages' in book && book.pages) {
         setPages(book.pages);
+        setAllPagesFetched(true);
       }
     } catch (error) {
       console.error('Failed to refresh pages:', error);
@@ -97,9 +127,10 @@ export default function BookPagesSection({ bookId, bookTitle, pages: initialPage
   const lastSelectedIndexRef = useRef<number | null>(null);
 
   // Calculate stats (check updated_at since data is excluded from projection)
+  // When only a partial page set was SSR'd, these are approximate until all pages load
   const pagesWithOcr = pages.filter(p => p.ocr?.updated_at).length;
   const pagesWithTranslation = pages.filter(p => p.translation?.updated_at).length;
-  const totalPages = pages.length;
+  const totalPages = totalPageCount || pages.length;
 
   // Calculate last activity dates
   const lastOcrDate = pages
@@ -210,7 +241,10 @@ export default function BookPagesSection({ bookId, bookTitle, pages: initialPage
     }
   }, [pages]);
 
-  const selectAll = () => setSelectedPages(new Set(pages.map(p => p.id)));
+  const selectAll = () => {
+    if (!allPagesFetched) fetchRemainingPages();
+    setSelectedPages(new Set(pages.map(p => p.id)));
+  };
   const clearSelection = () => setSelectedPages(new Set());
 
   const exitBatchMode = () => {
@@ -518,7 +552,7 @@ export default function BookPagesSection({ bookId, bookTitle, pages: initialPage
               savingOrder={savingOrder}
               pagesWithOcr={pagesWithOcr}
               pagesWithTranslation={pagesWithTranslation}
-              onBatchClick={() => setBatchMode(true)}
+              onBatchClick={() => { if (!allPagesFetched) fetchRemainingPages(); setBatchMode(true); }}
               onReorderClick={enterReorderMode}
               onExitBatch={exitBatchMode}
               onExitReorder={exitReorderMode}
@@ -603,6 +637,7 @@ export default function BookPagesSection({ bookId, bookTitle, pages: initialPage
         onDragEnd={handleDragEnd}
         onLoadMore={handleLoadMore}
         getImageUrl={getImageUrl}
+        totalCount={totalPages}
       />
     </div>
   );

@@ -32,6 +32,7 @@ interface PagesGridProps {
   selectedPages: Set<string>;
   settingCover: string | null;
   visibleCount: number;
+  totalCount?: number;
   draggedPageId: string | null;
   dragOverPageId: string | null;
   brightness?: number;
@@ -63,8 +64,10 @@ export default function PagesGrid({
   onDragOver,
   onDragEnd,
   onLoadMore,
-  getImageUrl
+  getImageUrl,
+  totalCount,
 }: PagesGridProps) {
+  const displayTotal = totalCount || pages.length;
   // CSS brightness filter — only apply when not default (1.0)
   const brightnessStyle = brightness && brightness !== 1.0
     ? { filter: `brightness(${brightness})` }
@@ -74,7 +77,7 @@ export default function PagesGrid({
       <div className="flex items-center justify-between mb-4">
         <h2 className="text-lg font-semibold" style={{ color: 'var(--text-primary)' }}>Pages</h2>
         <span className="text-sm text-stone-500">
-          Showing {Math.min(visibleCount, pages.length)} of {pages.length}
+          Showing {Math.min(visibleCount, pages.length)} of {displayTotal}
         </span>
       </div>
 
@@ -209,14 +212,14 @@ export default function PagesGrid({
       )}
 
       {/* Load More */}
-      {visibleCount < pages.length && (
+      {visibleCount < displayTotal && (
         <div className="mt-6 text-center">
           <button
             onClick={onLoadMore}
             className="inline-flex items-center gap-2 px-6 py-2.5 bg-white border border-stone-300 text-stone-700 rounded-lg hover:bg-stone-50 hover:border-stone-400 transition-colors text-sm font-medium"
           >
             <RefreshCw className="w-4 h-4" />
-            Load more ({pages.length - visibleCount} remaining)
+            Load more ({displayTotal - visibleCount} remaining)
           </button>
         </div>
       )}

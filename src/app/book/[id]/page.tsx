@@ -202,6 +202,7 @@ async function getBook(id: string): Promise<{ book: Book; pages: Page[]; totalBo
         maxTimeMS: 5000,
       })
       .sort({ page_number: 1 })
+      .limit(100)
       .toArray(),
     db.collection('books').estimatedDocumentCount().catch(() => 1200),
     db.collection('gallery_images').countDocuments(
@@ -740,11 +741,11 @@ async function BookInfo({ id }: { id: string }) {
           if (membersOnlyUntil && new Date(membersOnlyUntil) > new Date()) {
             return (
               <EarlyAccessGate membersOnlyUntil={membersOnlyUntil}>
-                <BookPagesSection bookId={book.id} bookTitle={book.display_title || book.title} pages={pages} displayBrightness={(book as unknown as { display_brightness?: number }).display_brightness} />
+                <BookPagesSection bookId={book.id} bookTitle={book.display_title || book.title} pages={pages} totalPageCount={book.pages_count || pages.length} displayBrightness={(book as unknown as { display_brightness?: number }).display_brightness} />
               </EarlyAccessGate>
             );
           }
-          return <BookPagesSection bookId={book.id} bookTitle={book.display_title || book.title} pages={pages} displayBrightness={(book as unknown as { display_brightness?: number }).display_brightness} />;
+          return <BookPagesSection bookId={book.id} bookTitle={book.display_title || book.title} pages={pages} totalPageCount={book.pages_count || pages.length} displayBrightness={(book as unknown as { display_brightness?: number }).display_brightness} />;
         })()}
         <AuthCheck role="admin">
           <BookHistory bookId={book.id} />

@@ -12,8 +12,8 @@ export default async function RelatedEditions({ bookId, workId }: RelatedEdition
 
   const related = await db.collection('books').find(
     { work_id: workId, id: { $ne: bookId }, hidden: { $ne: true } },
-    { projection: { 'image_source.provider_name': 1 } }
-  ).toArray();
+    { projection: { 'image_source.provider_name': 1 }, maxTimeMS: 3000 }
+  ).toArray().catch(() => []);
 
   if (related.length === 0) return null;
 
