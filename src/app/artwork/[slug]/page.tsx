@@ -1,13 +1,13 @@
 import { Metadata } from 'next';
-import { notFound } from 'next/navigation';
+import { notFound, redirect } from 'next/navigation';
 import { getDb } from '@/lib/mongodb';
+import { isAdmin } from '@/lib/auth-helpers';
 import { Book } from '@/lib/types';
 import SiteHeader from '@/components/layout/SiteHeader';
 import ArtworkInfo from '@/components/artwork/ArtworkInfo';
 
-export const revalidate = 3600;
+export const dynamic = 'force-dynamic';
 export const dynamicParams = true;
-export async function generateStaticParams() { return []; }
 
 interface PageProps {
   params: Promise<{ slug: string }>;
@@ -92,6 +92,9 @@ export async function generateMetadata({ params }: PageProps): Promise<Metadata>
 }
 
 export default async function ArtworkPage({ params }: PageProps) {
+  const admin = await isAdmin();
+  if (!admin) redirect('/');
+
   const { slug } = await params;
   const data = await getArtwork(slug);
   if (!data) notFound();
