@@ -10,6 +10,9 @@ interface LanguageStat {
   language: string;
   editions: number;
   with_scan: number;
+  scans_high: number;
+  scans_medium: number;
+  scans_low: number;
   pct_scanned: number;
   with_translation: number;
   pct_translated: number;
@@ -49,11 +52,11 @@ interface SearchResult {
   language: string;
   place: string;
   format: string;
-  has_scan: boolean;
   has_iiif_scan: boolean;
   scan_sources: string[];
+  scan_quality: string | null;
   iiif_manifest_url: string | null;
-  has_published_translation: boolean;
+  viewer_url: string | null;
   has_english_translation: boolean;
   translation_sources: string[];
   in_source_library: boolean;
@@ -69,6 +72,7 @@ interface WorksData {
   works_with_translation: number;
   works_in_sl: number;
   works_scanned_not_translated: number;
+  works_scanned_not_translated_non_english: number;
   works_neither: number;
   pct_scanned: number;
   pct_translated: number;
@@ -85,10 +89,10 @@ function ustcUrl(ustcId: number): string {
 }
 
 function resultHasScan(r: SearchResult): boolean {
-  return r.has_iiif_scan ?? r.has_scan ?? false;
+  return r.has_iiif_scan ?? false;
 }
 function resultHasTranslation(r: SearchResult): boolean {
-  return r.has_english_translation ?? r.has_published_translation ?? false;
+  return r.has_english_translation ?? false;
 }
 
 function pct(n: number, total: number): string {
@@ -210,7 +214,7 @@ node scripts/catalog-coverage/build.mjs`}
   }
 
   const t = summary?.total;
-  const scannedNotTranslated = works?.works_scanned_not_translated ?? 0;
+  const scannedNotTranslated = works?.works_scanned_not_translated_non_english ?? works?.works_scanned_not_translated ?? 0;
 
   return (
     <div className="min-h-screen bg-[#fdfcf9]">
@@ -272,19 +276,20 @@ node scripts/catalog-coverage/build.mjs`}
             <h2 className="font-['Cormorant_Garamond'] text-xl font-semibold text-[#1a1612] mb-2">The Opportunity</h2>
             <p className="text-[#444]">
               <span className="font-['Cormorant_Garamond'] text-3xl font-semibold text-[#9e4a3a]">{scannedNotTranslated.toLocaleString()}</span>{' '}
-              works have been digitized but never translated into English.
+              non-English works have been digitized but never translated into English.
               They are waiting to be read.
             </p>
             {works.works_neither > 0 && (
               <p className="text-sm text-[#6b6560] mt-2">
-                Another {works.works_neither.toLocaleString()} works have neither been scanned nor translated.
+                Another {works.works_neither.toLocaleString()} works have not yet been digitized at all.
+                Knowing which of these to scan first is itself a form of scholarship.
               </p>
             )}
             <button
               onClick={() => browseGap('true', 'false')}
               className="mt-4 px-4 py-2 bg-[#9e4a3a] text-white rounded text-sm hover:bg-[#8a3f32] transition-colors"
             >
-              Browse these books &rarr;
+              Browse the untranslated &rarr;
             </button>
           </div>
         )}
@@ -478,6 +483,13 @@ function LanguageTable({ data, onLanguageClick }: { data: LanguageStat[]; onLang
                 <td className="py-3 px-4 text-right tabular-nums">
                   <span className="text-[#444]">{l.with_scan.toLocaleString()}</span>
                   <span className="text-[#a09a92] ml-1 text-xs">{l.pct_scanned}%</span>
+                  {(l.scans_high > 0 || l.scans_low > 0) && (
+                    <div className="text-[10px] text-[#a09a92] mt-0.5">
+                      {l.scans_high > 0 && <span className="text-[#8b9a7d]">{l.scans_high.toLocaleString()} high</span>}
+                      {l.scans_high > 0 && l.scans_low > 0 && ' · '}
+                      {l.scans_low > 0 && <span className="text-[#c9a86c]">{l.scans_low.toLocaleString()} microfilm</span>}
+                    </div>
+                  )}
                 </td>
                 <td className="py-3 px-4 text-right tabular-nums">
                   <span className="text-[#444]">{l.with_translation.toLocaleString()}</span>
@@ -567,15 +579,28 @@ function SearchResultsTable({ results }: { results: SearchResult[] }) {
               <td className="py-3 px-3 text-right text-[#444] tabular-nums">{r.year || '?'}</td>
               <td className="py-3 px-3 text-center">
                 {resultHasScan(r) ? (
-                  r.iiif_manifest_url ? (
-                    <a href={iiifViewerUrl(r.iiif_manifest_url)} target="_blank" rel="noopener noreferrer"
-                      className="text-[#9e4a3a] hover:underline text-xs"
-                      title={`View scan (${(r.scan_sources || []).join(', ')})`}>
-                      {r.scan_sources?.[0] || 'view'}
-                    </a>
-                  ) : (
-                    <span className="text-xs text-[#c9a86c]">{r.scan_sources?.[0] || 'yes'}</span>
-                  )
+                  <div>
+                    {r.iiif_manifest_url ? (
+                      <a href={iiifViewerUrl(r.iiif_manifest_url)} target="_blank" rel="noopener noreferrer"
+                        className="text-[#9e4a3a] hover:underline text-xs"
+                        title={`View scan (${(r.scan_sources || []).join(', ')})`}>
+                        {r.scan_sources?.[0] || 'view'}
+                      </a>
+                    ) : r.viewer_url ? (
+                      <a href={r.viewer_url} target="_blank" rel="noopener noreferrer"
+                        className="text-[#c9a86c] hover:underline text-xs"
+                        title={`View at source (${(r.scan_sources || []).join(', ')})`}>
+                        {r.scan_sources?.[0] || 'view'}
+                      </a>
+                    ) : (
+                      <span className="text-xs text-[#c9a86c]">{r.scan_sources?.[0] || 'yes'}</span>
+                    )}
+                    {r.scan_quality && (
+                      <div className={`text-[10px] ${r.scan_quality === 'high' ? 'text-[#8b9a7d]' : r.scan_quality === 'low' ? 'text-[#c9a86c]' : 'text-[#a09a92]'}`}>
+                        {r.scan_quality === 'low' ? 'microfilm' : r.scan_quality}
+                      </div>
+                    )}
+                  </div>
                 ) : (
                   <span className="text-[#d4cfc4]">{'\u2014'}</span>
                 )}

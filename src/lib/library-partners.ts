@@ -15,6 +15,7 @@ export interface LibraryPartner {
 /**
  * Static metadata for each digital library partner.
  * Keyed by URL slug. Add a partner here and redeploy — no DB changes needed.
+ * Partners only appear on /libraries when books exist with their providerKey.
  */
 export const LIBRARY_PARTNERS: Record<string, LibraryPartner> = {
   'internet-archive': {
@@ -32,7 +33,7 @@ export const LIBRARY_PARTNERS: Record<string, LibraryPartner> = {
     shortName: 'Gallica',
     providerKey: 'gallica',
     url: 'https://gallica.bnf.fr',
-    description: 'Gallica is the digital library of the Biblioth\u00e8que nationale de France, providing free access to over 10 million documents including manuscripts, books, maps, and prints from one of the largest libraries in the world.',
+    description: 'Gallica is the digital library of the Bibliothèque nationale de France, providing free access to over 10 million documents including manuscripts, books, maps, and prints from one of the largest libraries in the world.',
     color: 'violet',
   },
   'bavarian-state-library': {
@@ -41,7 +42,7 @@ export const LIBRARY_PARTNERS: Record<string, LibraryPartner> = {
     shortName: 'MDZ',
     providerKey: 'mdz',
     url: 'https://www.digitale-sammlungen.de',
-    description: 'The M\u00fcnchener DigitalisierungsZentrum (MDZ) is the digitization center of the Bayerische Staatsbibliothek, one of the most important research libraries in Europe. Their digital collections include over 3 million digitized pages of rare books and manuscripts.',
+    description: 'The Münchener DigitalisierungsZentrum (MDZ) is the digitization center of the Bayerische Staatsbibliothek, one of the most important research libraries in Europe. Their digital collections include over 3 million digitized pages of rare books and manuscripts.',
     color: 'sage',
   },
   'bodleian': {
@@ -77,7 +78,7 @@ export const LIBRARY_PARTNERS: Record<string, LibraryPartner> = {
     slug: 'e-rara',
     name: 'e-rara',
     shortName: 'e-rara',
-    providerKey: 'e_rara',
+    providerKey: 'e-rara',
     url: 'https://www.e-rara.ch',
     description: 'e-rara.ch is the platform for digitized rare books from Swiss libraries. It provides free access to printed works from the 15th to the 20th century held by Swiss research libraries, with a focus on early printed books.',
     color: 'sage',
@@ -97,7 +98,7 @@ export const LIBRARY_PARTNERS: Record<string, LibraryPartner> = {
     shortName: 'HAB',
     providerKey: 'hab',
     url: 'https://diglib.hab.de',
-    description: 'The Herzog August Bibliothek in Wolfenb\u00fcttel is one of the oldest and most important research libraries in Germany. It holds outstanding collections of medieval and early modern books and manuscripts, with extensive digital facsimiles.',
+    description: 'The Herzog August Bibliothek in Wolfenbüttel is one of the oldest and most important research libraries in Germany. It holds outstanding collections of medieval and early modern books and manuscripts, with extensive digital facsimiles.',
     color: 'gold',
   },
   'vatican-library': {
@@ -136,6 +137,108 @@ export const LIBRARY_PARTNERS: Record<string, LibraryPartner> = {
     url: 'https://www.europeana.eu',
     description: 'Europeana is the European Union\'s digital platform for cultural heritage, aggregating metadata and digital objects from thousands of European museums, libraries, archives, and galleries into a single searchable collection.',
     color: 'gold',
+  },
+
+  // --- New partners (import routes exist, books growing) ---
+
+  'kloss-collection': {
+    slug: 'kloss-collection',
+    name: 'Kloss Collection (CMC)',
+    shortName: 'Kloss',
+    providerKey: 'cmc_kloss',
+    url: 'https://cmcdenhaag.nl',
+    description: 'The Bibliotheca Klossiana at CMC Prins Frederik in The Hague preserves the collection of Georg Kloss (1787–1854), one of the most important Masonic, Rosicrucian, and esoteric manuscript collections in Europe.',
+    color: 'gold',
+  },
+  'library-of-congress': {
+    slug: 'library-of-congress',
+    name: 'Library of Congress',
+    shortName: 'LOC',
+    providerKey: 'loc',
+    url: 'https://www.loc.gov',
+    description: 'The Library of Congress is the largest library in the world, with millions of items in its collections including books, recordings, photographs, newspapers, maps, and manuscripts spanning the history of human knowledge.',
+    color: 'rust',
+  },
+  'british-library': {
+    slug: 'british-library',
+    name: 'British Library',
+    shortName: 'BL',
+    providerKey: 'bl',
+    url: 'https://www.bl.uk',
+    description: 'The British Library is the national library of the United Kingdom, holding over 150 million items. Its digitized collections include the Harley, Sloane, Cotton, and Royal manuscript collections spanning Greek, Latin, Arabic, and Hebrew traditions.',
+    color: 'violet',
+  },
+  'sbb-berlin': {
+    slug: 'sbb-berlin',
+    name: 'Staatsbibliothek zu Berlin',
+    shortName: 'SBB',
+    providerKey: 'sbb',
+    url: 'https://digital.staatsbibliothek-berlin.de',
+    description: 'The Staatsbibliothek zu Berlin is one of the largest academic libraries in the German-speaking world. Its digital collections include VD16/VD17 early printed books, the Diez collection (Arabic, Persian, Turkish), and Hamilton manuscripts.',
+    color: 'sage',
+  },
+  'austrian-national-library': {
+    slug: 'austrian-national-library',
+    name: 'Austrian National Library',
+    shortName: 'ONB',
+    providerKey: 'onb',
+    url: 'https://digital.onb.ac.at',
+    description: 'The Österreichische Nationalbibliothek in Vienna holds the Habsburg collections, including important Greek, Latin, and Oriental manuscripts. Its digital platform provides access to codices, maps, and early printed works.',
+    color: 'gold',
+  },
+  'yale-beinecke': {
+    slug: 'yale-beinecke',
+    name: 'Yale Beinecke Library',
+    shortName: 'Beinecke',
+    providerKey: 'yale_beinecke',
+    url: 'https://beinecke.library.yale.edu',
+    description: 'The Beinecke Rare Book & Manuscript Library at Yale University houses one of the largest collections of rare books and manuscripts in the world, including the Voynich Manuscript, alchemical texts, and the Osborn Collection.',
+    color: 'violet',
+  },
+  'harvard-houghton': {
+    slug: 'harvard-houghton',
+    name: 'Harvard Houghton Library',
+    shortName: 'Houghton',
+    providerKey: 'harvard',
+    url: 'https://library.harvard.edu/libraries/houghton',
+    description: 'The Houghton Library at Harvard University is the primary repository for rare books and manuscripts, housing the Islamic Heritage Project collection, medieval codices, incunabula, and extensive printing history materials.',
+    color: 'rust',
+  },
+  'penn-schoenberg': {
+    slug: 'penn-schoenberg',
+    name: 'Penn Schoenberg Collection',
+    shortName: 'Penn',
+    providerKey: 'penn_colenda',
+    url: 'https://colenda.library.upenn.edu',
+    description: 'The Lawrence J. Schoenberg Collection at the University of Pennsylvania holds important medieval scientific manuscripts. Penn also hosts OPenn, providing CC0 access to over 51,000 manuscripts from 30+ institutions.',
+    color: 'sage',
+  },
+  'huntington': {
+    slug: 'huntington',
+    name: 'Huntington Library',
+    shortName: 'Huntington',
+    providerKey: 'huntington',
+    url: 'https://www.huntington.org',
+    description: 'The Huntington Library in San Marino, California holds the Ellesmere Chaucer, early English manuscripts, and the Burndy Library collection on the history of science. Its collections span medieval through early modern periods.',
+    color: 'gold',
+  },
+  'getty': {
+    slug: 'getty',
+    name: 'Getty Research Institute',
+    shortName: 'Getty',
+    providerKey: 'getty',
+    url: 'https://www.getty.edu/research',
+    description: 'The Getty Research Institute in Los Angeles holds exceptional collections of alchemical manuscripts, emblem books, festival books, and art historical archives from the Renaissance through the early modern period.',
+    color: 'violet',
+  },
+  'kyoto': {
+    slug: 'kyoto',
+    name: 'Kyoto University RMDA',
+    shortName: 'Kyoto',
+    providerKey: 'kyoto_rmda',
+    url: 'https://rmda.kulib.kyoto-u.ac.jp',
+    description: 'Kyoto University\'s Rare Materials Digital Archive provides access to Japanese rare books, natural history illustrations, architectural plans, and Meiji-era scientific materials from one of Japan\'s leading research universities.',
+    color: 'sage',
   },
 };
 

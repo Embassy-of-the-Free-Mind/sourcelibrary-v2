@@ -228,6 +228,23 @@ export interface PipelineDecision {
   data?: unknown;
 }
 
+export interface EnrichmentCoverage {
+  total: number;
+  ocr: number;
+  translation: number;
+  metadata: number;
+  ftVerification: number;
+  summary: number;
+  chapters: number;
+  collections: number;
+  qualityScore: number;
+  facetedTags: number;
+  authorEntity: number;
+  imageExtraction: number;
+  galleryImages: number;
+  pipelineComplete: number;
+}
+
 export interface PipelineData {
   snapshots: PipelineSnapshot[];
   velocity: PipelineVelocity;
@@ -236,6 +253,8 @@ export interface PipelineData {
   needsAttention: PipelineAttentionBook[];
   recentErrors: PipelineError[];
   recentDecisions: PipelineDecision[];
+  funnel?: Record<string, number>;
+  enrichmentCoverage?: EnrichmentCoverage;
   query: { hours: number };
 }
 

@@ -415,6 +415,7 @@ export default function CurateClient() {
         offset: newOffset.toString(),
         minQuality: minQuality.toString(),
         maxPerBook: '999',
+        shuffle: 'true',
       });
       if (filterType) params.append('type', filterType);
       if (filterCollection) params.append('collection', filterCollection);

@@ -80,8 +80,11 @@ export interface OcrWriteResult extends WriteResultBase {
     language: string;
     model: string;
     promptVersion: string;
+    promptId?: string;           // MongoDB ObjectId of the prompt used
+    promptHash?: string;         // md5 of prompt content for immutable provenance
     pageType?: string;
     columns?: number;
+    scriptType?: 'printed' | 'handwritten' | 'mixed';
     detectedImages?: unknown[];
   };
   geminiUsage?: GeminiUsagePayload;

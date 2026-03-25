@@ -40,11 +40,12 @@ export async function GET(request: NextRequest) {
     const language = searchParams.get('language') || '';
     const category = searchParams.get('category') || '';
     const collection = searchParams.get('collection') || '';
+    const library = searchParams.get('library') || '';
     const firstTranslation = searchParams.get('first_translation') === 'true';
     const sort = (searchParams.get('sort') || 'recent-translation') as SortOption;
 
     // Serve cached response for the default (unfiltered, first page) request
-    const isDefaultView = !search.trim() && !language && !category && !collection && !firstTranslation && sort === 'recent-translation' && skip === 0 && limit === DEFAULT_LIMIT;
+    const isDefaultView = !search.trim() && !language && !category && !collection && !library && !firstTranslation && sort === 'recent-translation' && skip === 0 && limit === DEFAULT_LIMIT;
     if (isDefaultView && defaultViewCache && (Date.now() - defaultViewCache.timestamp) < DEFAULT_CACHE_TTL) {
       return new NextResponse(defaultViewCache.data, {
         headers: {
@@ -70,12 +71,14 @@ export async function GET(request: NextRequest) {
           isFirstTranslation: firstTranslation || undefined,
         }),
         ...(collection ? [{ $match: { collections: collection } }] : []),
+        ...(library ? [{ $match: { 'image_source.provider': library } }] : []),
       ];
     } else {
       const matchConditions: Record<string, unknown>[] = [{ hidden: { $ne: true } }];
       if (language) matchConditions.push({ language });
       if (category) matchConditions.push({ categories: category });
       if (collection) matchConditions.push({ collections: collection });
+      if (library) matchConditions.push({ 'image_source.provider': library });
       if (firstTranslation) matchConditions.push({ is_first_translation: true });
       pipelineStart = [{ $match: { $and: matchConditions } }];
     }

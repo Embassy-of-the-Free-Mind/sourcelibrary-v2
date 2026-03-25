@@ -5,6 +5,7 @@ import { ArrowLeft, Book as BookIcon } from 'lucide-react';
 import { getDb } from '@/lib/mongodb';
 import { notFound, redirect } from 'next/navigation';
 import { bookUrl, authorSlug } from '@/lib/slugify';
+import { ObjectId } from 'mongodb';
 
 interface Book {
   id: string;
@@ -21,6 +22,17 @@ interface Book {
   summary?: { data: string } | string;
 }
 
+interface AuthorEntity {
+  _id: ObjectId;
+  name: string;
+  canonical_name?: string;
+  description?: string;
+  viaf_id?: string;
+  wikidata_id?: string;
+  wikidata_birth_date?: string;
+  wikidata_death_date?: string;
+}
+
 // ISR: rebuild at most every hour
 export const revalidate = 3600;
 export const dynamicParams = true;
@@ -32,20 +44,88 @@ interface AuthorPageProps {
   params: Promise<{ name: string }>;
 }
 
+/**
+ * Resolve an author slug to an entity + canonical name.
+ * Strategy:
+ *   1. Find a book matching the slug pattern
+ *   2. If that book has author_entity_id, load the entity (gets all variants)
+ *   3. Otherwise fall back to raw author string matching
+ */
 // eslint-disable-next-line @typescript-eslint/no-explicit-any
-async function resolveAuthorName(db: any, slug: string): Promise<string | null> {
+async function resolveAuthor(db: any, slug: string): Promise<{
+  authorName: string;
+  entity: AuthorEntity | null;
+  entityId: string | null;
+} | null> {
   const pattern = slug.split('-').map(s => s.replace(/[.*+?^${}()|[\]\\]/g, '\\$&')).join('[^a-z0-9]+');
   const book = await db.collection('books').findOne(
     { author: { $regex: new RegExp(`^${pattern}$`, 'i') }, hidden: { $ne: true } },
-    { projection: { author: 1 } }
+    { projection: { author: 1, author_entity_id: 1 } }
   );
-  return book?.author as string | null;
+
+  if (!book) {
+    // Try matching against entity aliases/canonical names
+    const entity = await db.collection('entities').findOne({
+      type: 'person',
+      canonical_name: { $exists: true },
+      $or: [
+        { canonical_name: { $regex: new RegExp(`^${pattern}$`, 'i') } },
+        { aliases: { $regex: new RegExp(`^${pattern}$`, 'i') } },
+      ]
+    }, { projection: { name: 1, canonical_name: 1, description: 1, viaf_id: 1, wikidata_id: 1, wikidata_birth_date: 1, wikidata_death_date: 1 } });
+
+    if (entity) {
+      return {
+        authorName: entity.canonical_name || entity.name,
+        entity: entity as AuthorEntity,
+        entityId: entity._id.toString(),
+      };
+    }
+    return null;
+  }
+
+  // If book has entity link, use that for canonical name
+  if (book.author_entity_id) {
+    try {
+      const entity = await db.collection('entities').findOne(
+        { _id: new ObjectId(book.author_entity_id) },
+        { projection: { name: 1, canonical_name: 1, description: 1, viaf_id: 1, wikidata_id: 1, wikidata_birth_date: 1, wikidata_death_date: 1 } }
+      );
+      if (entity) {
+        return {
+          authorName: entity.canonical_name || entity.name,
+          entity: entity as AuthorEntity,
+          entityId: book.author_entity_id,
+        };
+      }
+    } catch {
+      // Invalid ObjectId — fall through
+    }
+  }
+
+  return {
+    authorName: book.author as string,
+    entity: null,
+    entityId: null,
+  };
 }
 
-async function getAuthorBooks(authorName: string): Promise<Book[]> {
+/**
+ * Get all books by an author.
+ * When entityId is available, queries by author_entity_id (catches all name variants).
+ * Falls back to regex matching on the raw author string.
+ */
+async function getAuthorBooks(authorName: string, entityId: string | null): Promise<Book[]> {
   const db = await getDb();
+
+  // Build match condition: prefer entity-based lookup
+  // eslint-disable-next-line @typescript-eslint/no-explicit-any
+  const matchCondition: any = entityId
+    ? { author_entity_id: entityId, hidden: { $ne: true } }
+    : { author: { $regex: new RegExp(`^${authorName.replace(/[.*+?^${}()|[\]\\]/g, '\\$&')}$`, 'i') }, hidden: { $ne: true } };
+
   return db.collection('books').aggregate([
-    { $match: { author: { $regex: new RegExp(`^${authorName.replace(/[.*+?^${}()|[\]\\]/g, '\\$&')}$`, 'i') }, hidden: { $ne: true } } },
+    { $match: matchCondition },
     {
       $lookup: {
         from: 'pages',
@@ -91,7 +171,6 @@ async function getAuthorBooks(authorName: string): Promise<Book[]> {
         }
       }
     },
-    { $match: { pages_translated: { $gt: 0 } } },
     { $project: { pages_array: 0, _id: 0 } },
     { $sort: { year: 1, title: 1 } }
   ]).toArray() as unknown as Book[];
@@ -102,7 +181,10 @@ export async function generateMetadata({ params }: AuthorPageProps): Promise<Met
   const decoded = decodeURIComponent(name);
   const isOldFormat = decoded !== name;
   const db = await getDb();
-  const authorName = isOldFormat ? decoded : (await resolveAuthorName(db, name) || name.replace(/-/g, ' '));
+  const resolved = isOldFormat
+    ? { authorName: decoded, entity: null, entityId: null }
+    : await resolveAuthor(db, name);
+  const authorName = resolved?.authorName || name.replace(/-/g, ' ');
 
   return {
     title: `${authorName} — Source Library`,
@@ -129,10 +211,11 @@ export default async function AuthorPage({ params }: AuthorPageProps) {
   }
 
   const db = await getDb();
-  const authorName = await resolveAuthorName(db, name);
-  if (!authorName) notFound();
+  const resolved = await resolveAuthor(db, name);
+  if (!resolved) notFound();
 
-  const books = await getAuthorBooks(authorName);
+  const { authorName, entity, entityId } = resolved;
+  const books = await getAuthorBooks(authorName, entityId);
   if (books.length === 0) notFound();
 
   // Year range
@@ -143,8 +226,13 @@ export default async function AuthorPage({ params }: AuthorPageProps) {
       : `${Math.min(...years)}–${Math.max(...years)}`
     : null;
 
-  // Check for encyclopedia entry
-  const entity = await db.collection('entities').findOne(
+  // Life dates from entity
+  const birthYear = entity?.wikidata_birth_date?.split('-')[0];
+  const deathYear = entity?.wikidata_death_date?.split('-')[0];
+  const lifeDates = birthYear ? `${birthYear}–${deathYear || '?'}` : null;
+
+  // Encyclopedia entry: use entity directly if we have one, otherwise regex fallback
+  const encyclopediaEntity = entity || await db.collection('entities').findOne(
     { type: 'person', $or: [
       { name: { $regex: new RegExp(`^${authorName.replace(/[.*+?^${}()|[\]\\]/g, '\\$&')}$`, 'i') } },
       { aliases: { $regex: new RegExp(`^${authorName.replace(/[.*+?^${}()|[\]\\]/g, '\\$&')}$`, 'i') } },
@@ -177,18 +265,48 @@ export default async function AuthorPage({ params }: AuthorPageProps) {
             <p className="text-accent-gold font-medium">
               {books.length} work{books.length !== 1 ? 's' : ''}
             </p>
-            {yearRange && (
+            {lifeDates && (
+              <p className="text-stone-400">{lifeDates}</p>
+            )}
+            {!lifeDates && yearRange && (
               <p className="text-stone-400">{yearRange}</p>
             )}
           </div>
-          {entity && (
-            <Link
-              href={`/encyclopedia/${encodeURIComponent(entity.name)}`}
-              className="inline-block mt-4 px-3 py-1.5 text-sm bg-accent-rust/20 text-accent-gold hover:bg-accent-rust/30 rounded-full transition-colors"
-            >
-              View encyclopedia entry
-            </Link>
+          {entity?.description && (
+            <p className="text-stone-300 mt-2 text-sm max-w-2xl">
+              {entity.description}
+            </p>
           )}
+          <div className="flex flex-wrap gap-2 mt-4">
+            {encyclopediaEntity && (
+              <Link
+                href={`/encyclopedia/${encodeURIComponent(encyclopediaEntity.name)}`}
+                className="inline-block px-3 py-1.5 text-sm bg-accent-rust/20 text-accent-gold hover:bg-accent-rust/30 rounded-full transition-colors"
+              >
+                View encyclopedia entry
+              </Link>
+            )}
+            {entity?.viaf_id && (
+              <a
+                href={`https://viaf.org/viaf/${entity.viaf_id}`}
+                target="_blank"
+                rel="noopener noreferrer"
+                className="inline-block px-3 py-1.5 text-sm bg-stone-700/50 text-stone-300 hover:bg-stone-700 rounded-full transition-colors"
+              >
+                VIAF
+              </a>
+            )}
+            {entity?.wikidata_id && (
+              <a
+                href={`https://www.wikidata.org/wiki/${entity.wikidata_id}`}
+                target="_blank"
+                rel="noopener noreferrer"
+                className="inline-block px-3 py-1.5 text-sm bg-stone-700/50 text-stone-300 hover:bg-stone-700 rounded-full transition-colors"
+              >
+                Wikidata
+              </a>
+            )}
+          </div>
         </div>
       </div>
 

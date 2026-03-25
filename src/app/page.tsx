@@ -1,6 +1,7 @@
 import { getDb } from '@/lib/mongodb';
 import { Book } from '@/lib/types';
 import { type CollectionForGrid } from '@/components/book/BookLibrary';
+import { sortCollections, withTimeout } from '@/lib/collections-utils';
 import HeroSection from '@/components/layout/HeroSection';
 import HomePageSchema from '@/components/seo/HomePageSchema';
 import EditorialSpread from '@/components/prototype/EditorialSpread';
@@ -14,20 +15,6 @@ import Link from 'next/link';
 // Short revalidation so stale fallback data (from DB stress) doesn't persist long.
 export const revalidate = 300;
 export const maxDuration = 60;
-
-// ---------- Collection ordering (user-specified) ----------
-
-const PINNED_COLLECTION_SLUGS = ['natural-philosophy', 'classical-philosophy', 'renaissance-philosophy', 'sacred-texts'];
-
-function sortCollections<T extends { slug: string }>(collections: T[]): T[] {
-  const pinned = PINNED_COLLECTION_SLUGS.map(s => collections.find(c => c.slug === s)).filter(Boolean) as T[];
-  const rest = collections.filter(c => !PINNED_COLLECTION_SLUGS.includes(c.slug));
-  for (let i = rest.length - 1; i > 0; i--) {
-    const j = Math.floor(Math.random() * (i + 1));
-    [rest[i], rest[j]] = [rest[j], rest[i]];
-  }
-  return [...pinned, ...rest];
-}
 
 // ---------- Book projection shared across queries ----------
 
@@ -428,17 +415,6 @@ const BLOG_POSTS = [
 ];
 
 // ---------- Page ----------
-
-// Race a promise against a timeout, returning fallback on timeout OR error
-function withTimeout<T>(promise: Promise<T>, ms: number, fallback: T): Promise<T> {
-  return Promise.race([
-    promise.catch((err) => {
-      console.error('[Homepage] query failed:', err?.message || err);
-      return fallback;
-    }),
-    new Promise<T>(resolve => setTimeout(() => resolve(fallback), ms)),
-  ]);
-}
 
 export default async function HomePage() {
   const [featuredItems, discoverBooks, showcase, counts, collections] = await Promise.all([

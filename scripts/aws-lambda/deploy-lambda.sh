@@ -77,7 +77,7 @@ get_lambda_name() {
       echo "sourcelibrary-image-extraction-processor"
       ;;
     "write-processor")
-      echo "sourcelibrary-write-processor"
+      echo "sourcelibrary-db-write-processor"
       ;;
     *)
       echo ""

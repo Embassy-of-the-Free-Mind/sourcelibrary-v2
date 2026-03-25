@@ -15,11 +15,14 @@
 
 import { MongoClient } from 'mongodb';
 import { S3Client, PutObjectCommand } from '@aws-sdk/client-s3';
+import sharp from 'sharp';
 
 const UA = 'SourceLibrary/1.0 (https://sourcelibrary.org; contact@sourcelibrary.org)';
 const COMMONS_API = 'https://commons.wikimedia.org/w/api.php';
 const R2_PREFIX = 'artwork';
-const DELAY_MS = 200; // Polite rate limit for Commons
+const DELAY_MS = 100; // Polite rate limit for Commons
+const DISPLAY_WIDTH = 3840; // Max thumb size Commons serves
+const THUMB_WIDTH = 600; // Grid thumbnail size
 
 // ─── Import targets ──────────────────────────────────────────────────────────
 
@@ -32,6 +35,7 @@ const IMPORT_CATEGORIES = [
   { category: 'Prints by Hendrick Goltzius', artist: 'Hendrick Goltzius', type: 'print', recurse: false },
   { category: 'Works after Hendrick Goltzius', artist: 'Hendrick Goltzius (after)', type: 'print', recurse: false },
   { category: 'Prints by Jan Saenredam', artist: 'Jan Saenredam', type: 'print', recurse: false },
+  { category: 'Jan Saenredam', artist: 'Jan Saenredam', type: 'print', recurse: false },
 
   // Florence 1400-1500
   { category: 'Paintings by Sandro Botticelli', artist: 'Sandro Botticelli', type: 'painting', recurse: true },
@@ -47,19 +51,80 @@ const IMPORT_CATEGORIES = [
   { category: 'Paintings by Paolo Uccello', artist: 'Paolo Uccello', type: 'painting', recurse: true },
   { category: 'Paintings by Luca Signorelli', artist: 'Luca Signorelli', type: 'painting', recurse: true },
   { category: 'Paintings by Leonardo da Vinci', artist: 'Leonardo da Vinci', type: 'painting', recurse: true },
+  { category: 'Drawings by Leonardo da Vinci', artist: 'Leonardo da Vinci', type: 'drawing', recurse: true },
   { category: 'Paintings by Michelangelo Buonarroti', artist: 'Michelangelo', type: 'painting', recurse: true },
   { category: 'Paintings by Gentile da Fabriano', artist: 'Gentile da Fabriano', type: 'painting', recurse: true },
   { category: 'Paintings by Lorenzo Monaco', artist: 'Lorenzo Monaco', type: 'painting', recurse: true },
   { category: 'Paintings by Cosimo Rosselli', artist: 'Cosimo Rosselli', type: 'painting', recurse: true },
   { category: 'Paintings by Domenico Veneziano', artist: 'Domenico Veneziano', type: 'painting', recurse: true },
 
-  // Rome / Central Italy 1400-1500
+  // Sculpture
+  { category: 'Sculptures by Donatello', artist: 'Donatello', type: 'object', recurse: true },
+  { category: 'Donatello', artist: 'Donatello', type: 'object', recurse: false },
+  { category: 'Sculptures by Lorenzo Ghiberti', artist: 'Lorenzo Ghiberti', type: 'object', recurse: true },
+
+  // Rome / Central Italy
   { category: 'Paintings by Raffaello Sanzio', artist: 'Raphael', type: 'painting', recurse: true },
+  { category: 'Drawings by Raffaello Sanzio', artist: 'Raphael', type: 'drawing', recurse: true },
   { category: 'Paintings by Pietro Perugino', artist: 'Pietro Perugino', type: 'painting', recurse: true },
   { category: 'Paintings by Pinturicchio', artist: 'Pinturicchio', type: 'painting', recurse: true },
   { category: 'Paintings by Piero della Francesca', artist: 'Piero della Francesca', type: 'painting', recurse: true },
   { category: 'Paintings by Andrea Mantegna', artist: 'Andrea Mantegna', type: 'painting', recurse: true },
   { category: 'Paintings by Melozzo da Forlì', artist: 'Melozzo da Forlì', type: 'painting', recurse: true },
+
+  // Venetian / High Renaissance
+  { category: 'Paintings by Titian', artist: 'Titian', type: 'painting', recurse: true },
+  { category: 'Paintings by Giorgione', artist: 'Giorgione', type: 'painting', recurse: true },
+  { category: 'Paintings by Giovanni Bellini', artist: 'Giovanni Bellini', type: 'painting', recurse: true },
+  { category: 'Paintings by Paolo Veronese', artist: 'Paolo Veronese', type: 'painting', recurse: true },
+  { category: 'Paintings by Caravaggio', artist: 'Caravaggio', type: 'painting', recurse: true },
+
+  // Hieronymus Bosch — visionary/esoteric
+  { category: 'Hieronymus Bosch', artist: 'Hieronymus Bosch', type: 'painting', recurse: true },
+
+  // Rudolf II's court — the occult emperor
+  { category: 'Rudolf II, Holy Roman Emperor', artist: 'Various (Rudolf II court)', type: 'painting', recurse: true },
+  { category: 'Paintings by Giuseppe Arcimboldo', artist: 'Giuseppe Arcimboldo', type: 'painting', recurse: true },
+  { category: 'Paintings by Bartholomeus Spranger', artist: 'Bartholomeus Spranger', type: 'painting', recurse: true },
+  { category: 'Paintings by Hans von Aachen', artist: 'Hans von Aachen', type: 'painting', recurse: true },
+  { category: 'Joris Hoefnagel', artist: 'Joris Hoefnagel', type: 'drawing', recurse: true },
+  { category: 'Aegidius Sadeler', artist: 'Aegidius Sadeler', type: 'print', recurse: false },
+
+  // Hans Baldung Grien — witchcraft, alchemy
+  { category: 'Paintings by Hans Baldung', artist: 'Hans Baldung Grien', type: 'painting', recurse: true },
+
+  // Bruegel
+  { category: 'Paintings by Pieter Bruegel (I)', artist: 'Pieter Bruegel the Elder', type: 'painting', recurse: true },
+
+  // Albrecht Altdorfer — Danube school mystical landscapes
+  { category: 'Paintings by Albrecht Altdorfer', artist: 'Albrecht Altdorfer', type: 'painting', recurse: true },
+
+  // El Greco — mystical Neoplatonic
+  { category: 'Paintings by El Greco', artist: 'El Greco', type: 'painting', recurse: true },
+
+  // Teniers — alchemist genre paintings
+  { category: 'Alchemists by David Teniers the Younger', artist: 'David Teniers the Younger', type: 'painting', recurse: false },
+
+  // William Blake — visionary
+  { category: 'Art works by William Blake', artist: 'William Blake', type: 'print', recurse: true },
+
+  // Stradanus — Nova Reperta (discoveries/inventions)
+  { category: 'Nova Reperta', artist: 'Jan van der Straet (Stradanus)', type: 'print', recurse: true },
+  { category: 'Works after Jan van der Straet', artist: 'Jan van der Straet (Stradanus)', type: 'print', recurse: false },
+
+  // Historical figures — portraits and depictions
+  { category: 'John Dee', artist: 'Various', type: 'print', recurse: true },
+  { category: 'Edward Kelley', artist: 'Various', type: 'print', recurse: false },
+  { category: 'Paracelsus', artist: 'Various', type: 'print', recurse: true },
+
+  // Astronomical/cosmological objects
+  { category: 'Armillary spheres', artist: 'Various', type: 'object', recurse: false },
+  { category: 'Celestial globes', artist: 'Various', type: 'object', recurse: false },
+  { category: 'Zodiac in art', artist: 'Various', type: 'painting', recurse: false },
+
+  // Tarot
+  { category: 'Tarot cards', artist: 'Various', type: 'print', recurse: true },
+  { category: 'Visconti-Sforza tarot deck', artist: 'Bonifacio Bembo', type: 'painting', recurse: true },
 
   // Esoteric / Alchemical art
   { category: 'Atalanta Fugiens', artist: 'Michael Maier', type: 'print', recurse: false },
@@ -73,8 +138,14 @@ const IMPORT_CATEGORIES = [
   { category: 'Mantegna Tarocchi', artist: 'Unknown (Ferrara school)', type: 'print', recurse: true },
   { category: 'Danse Macabre (Holbein)', artist: 'Hans Holbein the Younger', type: 'print', recurse: true },
 
-  // Dürer master prints
-  { category: 'Prints by Albrecht Dürer', artist: 'Albrecht Dürer', type: 'print', recurse: false },
+  // Robert Fludd & Kircher
+  { category: 'Robert Fludd', artist: 'Robert Fludd', type: 'print', recurse: true },
+  { category: 'Books by Athanasius Kircher', artist: 'Athanasius Kircher', type: 'print', recurse: true },
+
+  // Dürer — author-artist (9 books in library)
+  { category: 'Prints by Albrecht Dürer', artist: 'Albrecht Dürer', type: 'print', recurse: true },
+  { category: 'Paintings by Albrecht Dürer', artist: 'Albrecht Dürer', type: 'painting', recurse: true },
+  { category: 'Drawings by Albrecht Dürer', artist: 'Albrecht Dürer', type: 'drawing', recurse: true },
 ];
 
 // ─── Helpers ─────────────────────────────────────────────────────────────────
@@ -156,8 +227,8 @@ async function getFileInfo(titles) {
       action: 'query',
       titles: batch.join('|'),
       prop: 'imageinfo|categories',
-      iiprop: 'url|size|extmetadata|mime',
-      iiurlwidth: '2400',
+      iiprop: 'url|size|extmetadata|mime|sha1|timestamp|user|mediatype',
+      iiurlwidth: String(DISPLAY_WIDTH),
       cllimit: '50',
     });
 
@@ -173,11 +244,16 @@ async function getFileInfo(titles) {
 
       results.push({
         commonsTitle: page.title,
+        commonsPageUrl: info.descriptionurl || `https://commons.wikimedia.org/wiki/${encodeURIComponent(page.title)}`,
         thumbUrl: info.thumburl || info.url,
         fullUrl: info.url,
         width: info.width,
         height: info.height,
         mime: info.mime,
+        sha1: info.sha1 || '',
+        mediatype: info.mediatype || '',
+        uploadTimestamp: info.timestamp || '',
+        uploader: info.user || '',
         // Extracted metadata
         title: cleanHtml(ext.ObjectName?.value) || page.title.replace('File:', '').replace(/\.[^.]+$/, ''),
         description: cleanHtml(ext.ImageDescription?.value) || '',
@@ -185,9 +261,16 @@ async function getFileInfo(titles) {
         dateCreated: cleanHtml(ext.DateTimeOriginal?.value) || ext.DateTime?.value || '',
         medium: cleanHtml(ext.Medium?.value) || '',
         dimensions: cleanHtml(ext.Dimensions?.value) || '',
+        // Licensing (complete)
         license: ext.LicenseShortName?.value || 'Unknown',
+        licenseId: ext.License?.value || '',
         licenseUrl: ext.LicenseUrl?.value || '',
+        usageTerms: ext.UsageTerms?.value || '',
+        copyrighted: ext.Copyrighted?.value === 'True',
+        attributionRequired: ext.AttributionRequired?.value === 'true',
+        restrictions: ext.Restrictions?.value || '',
         credit: cleanHtml(ext.Credit?.value) || '',
+        assessment: ext.Assessments?.value || '', // 'featured', 'quality', etc.
         categories: (page.categories || []).map(c => c.title.replace('Category:', '')),
       });
     }
@@ -223,21 +306,56 @@ function generateId() {
   return Array.from({ length: 24 }, () => Math.floor(Math.random() * 16).toString(16)).join('');
 }
 
-/** Download image and upload to R2 */
+/** Download image, resize, upload display + thumbnail to R2
+ *  - Display: up to 3840px wide (what Commons serves as max thumb)
+ *  - Thumbnail: 600px wide JPEG (for collection grids)
+ *  - Returns { display, thumb } URLs on R2
+ */
 async function uploadToR2(s3, imageUrl, key) {
-  const res = await fetch(imageUrl, { headers: { 'User-Agent': UA } });
+  const res = await fetch(imageUrl, {
+    headers: { 'User-Agent': UA },
+    signal: AbortSignal.timeout(60000),
+  });
   if (!res.ok) return null;
   const buffer = Buffer.from(await res.arrayBuffer());
 
-  const contentType = res.headers.get('content-type') || 'image/jpeg';
+  // Resize to display size (cap at 3840px wide) and optimize JPEG
+  const displayBuffer = await sharp(buffer)
+    .resize({ width: DISPLAY_WIDTH, withoutEnlargement: true })
+    .jpeg({ quality: 85, mozjpeg: true })
+    .toBuffer();
+
   await s3.send(new PutObjectCommand({
     Bucket: process.env.R2_BUCKET_NAME,
     Key: key,
-    Body: buffer,
-    ContentType: contentType,
+    Body: displayBuffer,
+    ContentType: 'image/jpeg',
+    CacheControl: 'public, max-age=31536000, immutable',
   }));
 
-  return `https://images.sourcelibrary.org/${key}`;
+  // Generate and upload grid thumbnail (600px wide)
+  const thumbKey = key.replace(/\.jpg$/, '-thumb.jpg');
+  try {
+    const thumbBuffer = await sharp(buffer)
+      .resize({ width: THUMB_WIDTH, withoutEnlargement: true })
+      .jpeg({ quality: 80, mozjpeg: true })
+      .toBuffer();
+    await s3.send(new PutObjectCommand({
+      Bucket: process.env.R2_BUCKET_NAME,
+      Key: thumbKey,
+      Body: thumbBuffer,
+      ContentType: 'image/jpeg',
+      CacheControl: 'public, max-age=31536000, immutable',
+    }));
+  } catch (err) {
+    // Non-fatal — some image formats may not resize cleanly
+    console.error(`  Thumb failed for ${key}: ${err.message}`);
+  }
+
+  return {
+    display: `https://images.sourcelibrary.org/${key}`,
+    thumb: `https://images.sourcelibrary.org/${thumbKey}`,
+  };
 }
 
 // ─── Main ────────────────────────────────────────────────────────────────────
@@ -251,6 +369,8 @@ async function main() {
   const limit = limitIdx >= 0 ? parseInt(args[limitIdx + 1]) : Infinity;
   const catIdx = args.indexOf('--category');
   const singleCategory = catIdx >= 0 ? args[catIdx + 1] : null;
+  const artistIdx = args.indexOf('--artist');
+  const singleArtist = artistIdx >= 0 ? args[artistIdx + 1] : null;
 
   console.log(`Mode: ${dryRun ? 'DRY RUN' : 'LIVE'} | Images: ${skipImages ? 'SKIP' : 'UPLOAD'} | Limit: ${limit === Infinity ? 'none' : limit}`);
 
@@ -275,7 +395,7 @@ async function main() {
 
   // Determine which categories to import
   const categories = singleCategory
-    ? [{ category: singleCategory, artist: 'Unknown', type: 'print', recurse: false }]
+    ? [{ category: singleCategory, artist: singleArtist || 'Unknown', type: 'print', recurse: false }]
     : IMPORT_CATEGORIES;
 
   let totalImported = 0;
@@ -322,13 +442,19 @@ async function main() {
       }
 
       // Upload image to R2
-      let thumbnailUrl = info.thumbUrl;
+      // Upload: display (3840px max) + thumbnail (600px) from original full-res
+      const imageSource = info.fullUrl || info.thumbUrl;
+      let displayUrl = info.thumbUrl; // fallback: Commons thumb
+      let gridThumbUrl = info.thumbUrl;
       if (s3 && !skipImages) {
         const r2Key = `${R2_PREFIX}/${slug}.jpg`;
         try {
-          const r2Url = await uploadToR2(s3, info.thumbUrl, r2Key);
-          if (r2Url) thumbnailUrl = r2Url;
-          await sleep(100); // Don't hammer Commons
+          const urls = await uploadToR2(s3, imageSource, r2Key);
+          if (urls) {
+            displayUrl = urls.display;
+            gridThumbUrl = urls.thumb;
+          }
+          await sleep(50);
         } catch (err) {
           console.error(`  Failed to upload ${slug}: ${err.message}`);
           totalErrors++;
@@ -349,8 +475,8 @@ async function main() {
         resource_type: cat.type,
         medium: info.medium || (cat.type === 'print' ? 'Engraving' : 'Oil on panel'),
         dimensions_display: info.dimensions || '',
-        thumbnail: thumbnailUrl,
-        thumbnail_blob: thumbnailUrl,
+        thumbnail: gridThumbUrl,       // 600px grid thumbnail on R2
+        thumbnail_blob: displayUrl,     // 3840px display image on R2
         pages_count: 1,
         pages_ocr: 0,
         pages_translated: 0,
@@ -361,19 +487,48 @@ async function main() {
         created_at: new Date(),
         updated_at: new Date(),
         // Commons-specific metadata
+        // Harvest metadata
+        harvested_at: new Date(),
+        harvest_source: 'wikimedia_commons',
+        harvest_category: cat.category,
+
+        // Commons record (complete)
         commons_title: info.commonsTitle,
-        commons_url: `https://commons.wikimedia.org/wiki/${encodeURIComponent(info.commonsTitle)}`,
+        commons_url: info.commonsPageUrl,
         commons_full_url: info.fullUrl,
         commons_width: info.width,
         commons_height: info.height,
-        commons_license: info.license,
+        commons_sha1: info.sha1 || '',
+        commons_mediatype: info.mediatype || '',
+        commons_upload_date: info.uploadTimestamp || '',
+        commons_uploader: info.uploader || '',
         commons_description: info.description?.slice(0, 2000) || '',
         commons_categories: info.categories,
+
+        // Licensing (complete, matches book image_source pattern)
+        commons_license: info.license,
+        commons_license_id: info.licenseId || '',
+        commons_license_url: info.licenseUrl || '',
+        commons_usage_terms: info.usageTerms || '',
+        commons_copyrighted: info.copyrighted,
+        commons_attribution_required: info.attributionRequired,
+        commons_restrictions: info.restrictions || '',
+        commons_credit: info.credit || '',
+        commons_assessment: info.assessment || '',
+
+        // image_source — matches book pattern for interoperability
         image_source: {
           provider: 'wikimedia_commons',
           provider_name: 'Wikimedia Commons',
-          source_url: `https://commons.wikimedia.org/wiki/${encodeURIComponent(info.commonsTitle)}`,
-          license: info.license === 'Public domain' ? 'CC0-1.0' : info.license,
+          source_url: info.commonsPageUrl,
+          identifier: info.commonsTitle.replace('File:', ''),
+          license: info.license === 'Public domain' ? 'CC0-1.0'
+            : info.licenseId === 'pd' ? 'CC0-1.0'
+            : info.license?.toLowerCase().includes('cc-by-sa') ? 'CC-BY-SA-4.0'
+            : info.license?.toLowerCase().includes('cc-by') ? 'CC-BY-4.0'
+            : info.license || 'unknown',
+          attribution: info.credit || info.artist || '',
+          access_date: new Date(),
         },
       };
 

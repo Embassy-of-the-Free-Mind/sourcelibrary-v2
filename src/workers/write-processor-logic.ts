@@ -69,7 +69,7 @@ async function processOcrResult(db: Awaited<ReturnType<typeof getDb>>, message: 
     ), `record OCR failure for page ${pageId}`, 3, LOG_PREFIX);
   } else if (message.data) {
     // Save OCR result to page
-    const { text, language, model, promptVersion, pageType, columns, detectedImages } = message.data;
+    const { text, language, model, promptVersion, promptId, promptHash, pageType, columns, scriptType, detectedImages } = message.data;
     await retryDbWrite(() => db.collection('pages').updateOne(
       { id: pageId },
       {
@@ -80,10 +80,13 @@ async function processOcrResult(db: Awaited<ReturnType<typeof getDb>>, message: 
             model,
             updated_at: new Date(),
             source: 'ai',
-            prompt_version: promptVersion
+            prompt_version: promptVersion,
+            ...(promptId && { prompt_id: promptId }),
+            ...(promptHash && { prompt_hash: promptHash }),
           },
           ...(pageType && { page_type: pageType }),
           ...(columns && { columns }),
+          ...(scriptType && { script_type: scriptType }),
           ...(detectedImages && detectedImages.length > 0 && { detected_images: detectedImages }),
           updated_at: new Date()
         }
@@ -143,16 +146,18 @@ async function processImageExtractionResult(db: Awaited<ReturnType<typeof getDb>
     const { detectedImages, promptVersion, galleryDocs } = message.data;
 
     // Save detected images to page
+    // Only overwrite if the new run found images — don't wipe existing OCR-detected images with an empty array
+    const imageSetFields: Record<string, unknown> = {
+      image_extraction_updated_at: new Date(),
+      image_extraction_prompt_version: promptVersion,
+      updated_at: new Date()
+    };
+    if (detectedImages && detectedImages.length > 0) {
+      imageSetFields.detected_images = detectedImages;
+    }
     await retryDbWrite(() => db.collection('pages').updateOne(
       { id: pageId },
-      {
-        $set: {
-          detected_images: detectedImages,
-          image_extraction_updated_at: new Date(),
-          image_extraction_prompt_version: promptVersion,
-          updated_at: new Date()
-        }
-      }
+      { $set: imageSetFields }
     ), `save image extraction for page ${pageId}`, 3, LOG_PREFIX);
 
     // Upsert gallery images (non-fatal — gallery is a cache)
