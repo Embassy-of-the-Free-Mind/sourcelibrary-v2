@@ -83,7 +83,14 @@ async function getBookForMetadata(id: string): Promise<Book | null> {
 
 export async function generateMetadata({ params }: PageProps): Promise<Metadata> {
   const { id } = await params;
-  const book = await getBookForMetadata(id);
+  let book: Book | null;
+  try {
+    book = await getBookForMetadata(id);
+  } catch {
+    // DB timeout or other error — return minimal metadata so navigation doesn't silently fail.
+    // The page component's own error handling will show the user a friendly message.
+    return { title: 'Source Library', robots: { index: false, follow: false } };
+  }
 
   if (!book) {
     return { title: 'Book Not Found - Source Library', robots: { index: false, follow: false } };

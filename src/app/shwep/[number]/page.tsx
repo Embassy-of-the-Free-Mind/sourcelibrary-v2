@@ -12,7 +12,12 @@ interface Props {
 
 export async function generateMetadata({ params }: Props): Promise<Metadata> {
   const { number } = await params;
-  const ep = await getEpisodeData(parseInt(number));
+  let ep;
+  try {
+    ep = await getEpisodeData(parseInt(number));
+  } catch {
+    return { title: 'Source Library', robots: { index: false, follow: false } };
+  }
   if (!ep) return { title: 'Episode Not Found - SHWEP Reading Room' };
   return {
     title: `${ep.title} - SHWEP Reading Room`,

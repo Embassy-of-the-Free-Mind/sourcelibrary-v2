@@ -66,7 +66,7 @@ export async function GET(
     const sortObj = sortMap[sort] || sortMap.year_asc;
 
     const projection = {
-      _id: 0, id: 1, title: 1, display_title: 1, author: 1, year: 1,
+      _id: 0, id: 1, slug: 1, title: 1, display_title: 1, author: 1, year: 1,
       language: 1, pages_count: 1, pages_ocr: 1, pages_translated: 1,
       photo: 1, categories: 1, thumbnail: 1, thumbnail_blob: 1, published: 1, read_count: 1,
     };

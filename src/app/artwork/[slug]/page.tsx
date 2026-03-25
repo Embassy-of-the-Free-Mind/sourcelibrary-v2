@@ -73,7 +73,12 @@ async function getArtwork(slug: string) {
 
 export async function generateMetadata({ params }: PageProps): Promise<Metadata> {
   const { slug } = await params;
-  const data = await getArtwork(slug);
+  let data: Awaited<ReturnType<typeof getArtwork>>;
+  try {
+    data = await getArtwork(slug);
+  } catch {
+    return { title: 'Source Library', robots: { index: false, follow: false } };
+  }
   if (!data) return { title: 'Not Found' };
   const { artwork } = data;
   return {

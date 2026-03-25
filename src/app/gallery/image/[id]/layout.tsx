@@ -101,7 +101,12 @@ export async function generateMetadata({
   params: Promise<{ id: string }>;
 }): Promise<Metadata> {
   const { id } = await params;
-  const data = await getImageData(id);
+  let data;
+  try {
+    data = await getImageData(id);
+  } catch {
+    return { title: 'Source Library', robots: { index: false, follow: false } };
+  }
 
   // Normalize ID to use - separator for canonical URLs
   const urlSafeId = decodeURIComponent(id).replace(/:(\d+)$/, '-$1');

@@ -15,11 +15,16 @@ interface PageProps {
 
 export async function generateMetadata({ params }: PageProps): Promise<Metadata> {
   const { id } = await params;
-  const db = await getDb();
-  const session = await db.collection('curator_sessions').findOne(
-    { id },
-    { projection: { title: 1, themes: 1, date: 1 } }
-  );
+  let session;
+  try {
+    const db = await getDb();
+    session = await db.collection('curator_sessions').findOne(
+      { id },
+      { projection: { title: 1, themes: 1, date: 1 } }
+    );
+  } catch {
+    return { title: 'Source Library', robots: { index: false, follow: false } };
+  }
 
   if (!session) return { title: 'Session Not Found' };
 

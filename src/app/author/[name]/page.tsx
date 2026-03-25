@@ -178,13 +178,18 @@ async function getAuthorBooks(authorName: string, entityId: string | null): Prom
 
 export async function generateMetadata({ params }: AuthorPageProps): Promise<Metadata> {
   const { name } = await params;
-  const decoded = decodeURIComponent(name);
-  const isOldFormat = decoded !== name;
-  const db = await getDb();
-  const resolved = isOldFormat
-    ? { authorName: decoded, entity: null, entityId: null }
-    : await resolveAuthor(db, name);
-  const authorName = resolved?.authorName || name.replace(/-/g, ' ');
+  let authorName: string;
+  try {
+    const decoded = decodeURIComponent(name);
+    const isOldFormat = decoded !== name;
+    const db = await getDb();
+    const resolved = isOldFormat
+      ? { authorName: decoded, entity: null, entityId: null }
+      : await resolveAuthor(db, name);
+    authorName = resolved?.authorName || name.replace(/-/g, ' ');
+  } catch {
+    return { title: 'Source Library', robots: { index: false, follow: false } };
+  }
 
   return {
     title: `${authorName} — Source Library`,

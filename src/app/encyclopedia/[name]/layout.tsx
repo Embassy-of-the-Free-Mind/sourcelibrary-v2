@@ -123,7 +123,12 @@ export const getEntity = cache(async (name: string) => {
 export async function generateMetadata({ params }: LayoutProps): Promise<Metadata> {
   const { name } = await params;
   const decodedName = decodeURIComponent(name);
-  const entity = await getEntity(decodedName);
+  let entity;
+  try {
+    entity = await getEntity(decodedName);
+  } catch {
+    return { title: 'Source Library', robots: { index: false, follow: false } };
+  }
 
   const typeLabels: Record<string, string> = {
     person: 'Person',

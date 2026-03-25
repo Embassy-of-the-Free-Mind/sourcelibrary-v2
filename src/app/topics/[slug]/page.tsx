@@ -75,12 +75,17 @@ export async function generateMetadata({ params }: Props): Promise<Metadata> {
   }
 
   // Fall back to old cluster slug
-  const db = await getDb();
-  const allClusters = await db.collection('books').aggregate([
-    { $match: { hidden: { $ne: true }, 'taxonomy.cluster': { $exists: true, $ne: null } } },
-    { $group: { _id: '$taxonomy.cluster' } },
-  ]).toArray();
-  const match = allClusters.find((c) => topicSlug(c._id) === slug);
+  let match;
+  try {
+    const db = await getDb();
+    const allClusters = await db.collection('books').aggregate([
+      { $match: { hidden: { $ne: true }, 'taxonomy.cluster': { $exists: true, $ne: null } } },
+      { $group: { _id: '$taxonomy.cluster' } },
+    ]).toArray();
+    match = allClusters.find((c) => topicSlug(c._id) === slug);
+  } catch {
+    return { title: 'Source Library', robots: { index: false, follow: false } };
+  }
   if (!match) return { title: 'Topic Not Found - Source Library' };
 
   return {
