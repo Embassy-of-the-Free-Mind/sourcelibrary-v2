@@ -9,7 +9,7 @@ export const maxDuration = 30;
  * Get collection metadata and its books with pagination/sorting.
  *
  * Query params:
- *   - sort: 'year_asc' (default), 'year_desc', 'title', 'recent'
+ *   - sort: 'year_asc' (default), 'year_desc', 'title', 'author', 'recent', 'popular', 'relevance'
  *   - language: filter by language
  *   - limit: max results (default 60, max 200)
  *   - offset: pagination offset
@@ -35,14 +35,19 @@ export async function GET(
       return NextResponse.json({ error: 'Collection not found' }, { status: 404 });
     }
 
-    // Build book filter — exclude empty shells (0 pages) from failed imports
-    const filter: Record<string, unknown> = {
-      collections: id,
-      status: { $ne: 'deleted' },
-      hidden: { $ne: true },
-      pages_count: { $gt: 0 },
-      pages_translated: { $gt: 0 },
-    };
+    // Art collections bypass hidden/translation filters since artworks are hidden: true
+    // and have no translated pages
+    const isArtCollection = collection.collection_type === 'visual_art';
+
+    const filter: Record<string, unknown> = isArtCollection
+      ? { collections: id, resource_type: { $exists: true } }
+      : {
+          collections: id,
+          status: { $ne: 'deleted' },
+          hidden: { $ne: true },
+          pages_count: { $gt: 0 },
+          pages_translated: { $gt: 0 },
+        };
     if (language) filter.language = language;
     if (q) {
       // Search title, author, display_title with case-insensitive regex
@@ -54,11 +59,12 @@ export async function GET(
       ];
     }
 
-    // Sort
+    // Sort — use 'published' for date sorts (artworks don't have 'year')
     const sortMap: Record<string, Record<string, 1 | -1>> = {
-      year_asc: { year: 1, title: 1 },
-      year_desc: { year: -1, title: 1 },
+      year_asc: { published: 1, title: 1 },
+      year_desc: { published: -1, title: 1 },
       title: { title: 1 },
+      author: { author: 1, title: 1 },
       recent: { created_at: -1 },
       popular: { read_count: -1, title: 1 },
       relevance: { [`collection_scores.${id}.relevance`]: -1, read_count: -1 },
@@ -69,6 +75,7 @@ export async function GET(
       _id: 0, id: 1, slug: 1, title: 1, display_title: 1, author: 1, year: 1,
       language: 1, pages_count: 1, pages_ocr: 1, pages_translated: 1,
       photo: 1, categories: 1, thumbnail: 1, thumbnail_blob: 1, published: 1, read_count: 1,
+      resource_type: 1,
     };
 
     const highlightProjection = {
@@ -91,13 +98,15 @@ export async function GET(
         .skip(offset)
         .limit(limit)
         .toArray(),
-      // Top 5 books: prefer translated books with summaries, ranked by quality/reads
+      // Top 5: art collections use main filter; book collections prefer translated
       db.collection('books')
         .find(
-          { collections: id, status: { $ne: 'deleted' }, hidden: { $ne: true }, pages_translated: { $gt: 0 } },
+          isArtCollection
+            ? { collections: id, resource_type: { $exists: true } }
+            : { collections: id, status: { $ne: 'deleted' }, hidden: { $ne: true }, pages_translated: { $gt: 0 } },
           { projection: highlightProjection },
         )
-        .sort({ quality_score: -1, read_count: -1, pages_translated: -1 })
+        .sort(isArtCollection ? { title: 1 } : { quality_score: -1, read_count: -1, pages_translated: -1 })
         .limit(5)
         .toArray(),
     ]);
