@@ -125,6 +125,41 @@ async function searchBooks(db: any, query: string, queryRegex: RegExp, limit: nu
       .toArray();
   }
 
+  // Author alias expansion: if results are sparse and query matches an entity alias,
+  // include books linked to that entity (catches variant name searches like "Marsilius Ficinus")
+  if (books.length < limit) {
+    const seenIds = new Set(books.map((b: any) => b.id));
+    const entity = await db.collection('entities').findOne({
+      type: 'person',
+      canonical_name: { $exists: true },
+      $or: [
+        { canonical_name: queryRegex },
+        { aliases: queryRegex },
+        { name: queryRegex },
+      ],
+    }, { projection: { _id: 1 }, maxTimeMS: 2000 }).catch(() => null);
+
+    if (entity) {
+      const aliasBooks = await db.collection('books')
+        .find({
+          author_entity_id: entity._id.toString(),
+          hidden: { $ne: true },
+          pages_count: { $gt: 0 },
+        })
+        .project({ id: 1, title: 1, display_title: 1, author: 1, language: 1, published: 1, pages_count: 1, pages_translated: 1, pages_ocr: 1, thumbnail: 1, thumbnail_blob: 1 })
+        .limit(limit - books.length)
+        .maxTimeMS(3000)
+        .toArray();
+
+      for (const ab of aliasBooks) {
+        if (!seenIds.has(ab.id)) {
+          books.push(ab);
+          seenIds.add(ab.id);
+        }
+      }
+    }
+  }
+
   return {
     results: books.map((b: any) => ({
       id: b.id,

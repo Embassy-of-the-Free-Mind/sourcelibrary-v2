@@ -23,7 +23,7 @@ import type { PageProcessingMessage } from '@/lib/types/sqs';
 import type { OcrWriteResult, GeminiUsagePayload } from '@/lib/types/sqs';
 import { performOCRWithBuffer } from '@/lib/ai';
 import { DEFAULT_MODEL } from '@/lib/types/ai-models';
-import { PROMPT_VERSION, extractPageType, extractColumns, parseDetectedImages } from '@/lib/types/prompts/defaults';
+import { PROMPT_VERSION, extractPageType, extractColumns, extractScriptType, parseDetectedImages } from '@/lib/types/prompts/defaults';
 import { images } from '@/lib/api-client/images';
 import type { Page } from '@/lib/types/page';
 import { classifyError } from '@/lib/errors';
@@ -166,9 +166,13 @@ export async function processOcrPage(message: PageProcessingMessage): Promise<vo
 
   // Fetch prompt from DB (or hardcoded fallback). Custom prompt overrides DB.
   let promptText: string;
+  let promptId: string | undefined;
+  let promptHash: string | undefined;
   try {
     const promptResult = await getOcrPrompt(customPrompt ? { customText: customPrompt } : undefined);
     promptText = promptResult.text;
+    promptId = promptResult.reference.id;
+    promptHash = promptResult.reference.content_hash;
   } catch (promptErr) {
     console.error(`[OCR] Failed to fetch prompt from DB (non-fatal), using custom or will fail:`, promptErr);
     if (customPrompt) {
@@ -206,6 +210,7 @@ export async function processOcrPage(message: PageProcessingMessage): Promise<vo
     // Send result to write queue — Writer Lambda handles all DB writes
     const pageType = extractPageType(ocrResult.text);
     const columns = extractColumns(ocrResult.text);
+    const scriptType = extractScriptType(ocrResult.text);
     const detectedImages = parseDetectedImages(ocrResult.text);
     await sendWriteResult({
       type: 'ocr',
@@ -220,8 +225,11 @@ export async function processOcrPage(message: PageProcessingMessage): Promise<vo
         language: job.config.language || 'auto-detect',
         model: modelId,
         promptVersion: PROMPT_VERSION,
+        promptId,
+        promptHash,
         ...(pageType && { pageType }),
         ...(columns && { columns }),
+        ...(scriptType && { scriptType }),
         ...(detectedImages.length > 0 && { detectedImages }),
       },
       geminiUsage: buildUsagePayload({
@@ -276,6 +284,8 @@ export async function processOcrPage(message: PageProcessingMessage): Promise<vo
               language: job.config.language || 'auto-detect',
               model: nextModel,
               promptVersion: PROMPT_VERSION,
+              promptId,
+              promptHash,
               ...(retryPageType && { pageType: retryPageType }),
               ...(retryColumns && { columns: retryColumns }),
               ...(retryImages.length > 0 && { detectedImages: retryImages }),

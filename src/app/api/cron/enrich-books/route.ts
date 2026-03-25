@@ -3,6 +3,7 @@ import { getDb } from '@/lib/mongodb';
 import { verifyCronAuth } from '@/lib/cron-auth';
 import { extractChaptersForBook } from '@/lib/chapter-extraction';
 import { scoreBookQuality } from '@/lib/quality-scoring';
+import { scoreBookAlignment } from '@/lib/semantic-alignment';
 import { scoreCollectionRelevance } from '@/lib/collection-relevance';
 import { createCronLogger } from '@/lib/cron-logger';
 import { performTransliteration } from '@/lib/ai';
@@ -143,6 +144,9 @@ export async function GET(request: NextRequest) {
 
           // Quality scoring — non-blocking, fast (~2s)
           try { await scoreBookQuality(db, book.id); } catch { /* non-critical */ }
+
+          // Semantic alignment — non-blocking, measures OCR↔translation faithfulness
+          try { await scoreBookAlignment(db, book.id); } catch { /* non-critical */ }
 
           return book;
         })

@@ -1084,6 +1084,7 @@ async function run() {
     needs_attention: 0,
     stale_retried: 0,
     stale_failed: 0,
+    zombie_jobs_cancelled: 0,
     errors: [],
   };
 
@@ -1943,15 +1944,36 @@ async function run() {
     if (shouldRun(4)) {
       console.log('\n--- Phase 4: Dispatch translation to Lambda (SQS FIFO) ---');
 
-      if (!SQS_TRANSLATION_QUEUE_URL) {
-        console.log('  SKIP: SQS_PAGE_TRANSLATION_QUEUE_URL not configured');
-      } else {
-        const sqsClient = new SQSClient({ region: process.env.AWS_REGION || 'eu-central-1' });
+      // Zombie job reaper: cancel translation jobs stuck in processing with 0 progress for >2h.
+      // These are dead Lambda workers that will never complete, blocking the in-flight cap.
+      if (!DRY_RUN) {
+        const zombieThreshold = new Date(Date.now() - 2 * 60 * 60 * 1000);
+        const zombieJobs = await db.collection('jobs').find({
+          type: 'translation',
+          status: 'processing',
+          'progress.completed': 0,
+          created_at: { $lt: zombieThreshold },
+        }).project({ _id: 1, book_id: 1, book_title: 1 }).toArray();
 
-        // Pre-check: cap total in-flight translations to prevent Lambda pile-up.
-        // Each translate_submitted book becomes its own Lambda worker. Without this
-        // cap, every 5-min cycle stacks 20 more books on top of whatever's running,
-        // quickly exceeding Atlas's ~40 concurrent connection limit.
+        if (zombieJobs.length > 0) {
+          const zombieBookIds = zombieJobs.map(j => j.book_id);
+          await db.collection('jobs').updateMany(
+            { _id: { $in: zombieJobs.map(j => j._id) } },
+            { $set: { status: 'failed', error: 'Auto-cancelled: stuck >2h with 0 progress', updated_at: new Date() } },
+          );
+          // Reset affected books so they can be re-dispatched
+          await db.collection('books').updateMany(
+            { id: { $in: zombieBookIds }, 'pipeline_auto.status': 'translate_submitted' },
+            { $set: { 'pipeline_auto.status': 'metadata_enriched', updated_at: new Date() }, $unset: { job: '' } },
+          );
+          log.zombie_jobs_cancelled += zombieJobs.length;
+          console.log(`  Zombie reaper: cancelled ${zombieJobs.length} stuck translation jobs, reset books to metadata_enriched`);
+        }
+      }
+
+      // Phase 4 creates translation jobs. The Hetzner translate-worker.mjs picks them up.
+      // SQS/Lambda path is deprecated — translate-worker runs on Hetzner cron and calls Gemini directly.
+      {
         const inFlight = await db.collection('books').countDocuments({
           'pipeline_auto.status': 'translate_submitted',
         });
@@ -1963,12 +1985,13 @@ async function run() {
           console.log('  SKIP: at in-flight cap, waiting for existing translations to complete');
         }
 
-        const readyForTranslate = effectiveLimit > 0 ? await db.collection('books')
-          .find({ 'pipeline_auto.status': { $in: ['metadata_enriched', 'ft_verified'] } })
-          .sort({ is_first_translation: -1, hidden: 1 })
-          .project({ id: 1, title: 1, pages_count: 1, language: 1, 'pipeline_auto.retry_count': 1 })
-          .limit(effectiveLimit)
-          .toArray() : [];
+        const readyForTranslate = effectiveLimit > 0 ? await db.collection('books').aggregate([
+          { $match: { 'pipeline_auto.status': { $in: ['metadata_enriched', 'ft_verified'] } } },
+          { $addFields: { _latinFirst: { $cond: [{ $eq: ['$language', 'Latin'] }, 0, 1] } } },
+          { $sort: { _latinFirst: 1, is_first_translation: -1, hidden: 1 } },
+          { $project: { id: 1, title: 1, pages_count: 1, language: 1, 'pipeline_auto.retry_count': 1 } },
+          { $limit: effectiveLimit }
+        ]).toArray() : [];
 
         console.log(`  Books ready for translation: ${readyForTranslate.length}`);
 
@@ -2002,11 +2025,11 @@ async function run() {
             const jobId = nanoid(12);
 
             if (DRY_RUN) {
-              console.log(`  Would dispatch: ${label} — ${pageIds.length} pages via Lambda`);
+              console.log(`  Would dispatch: ${label} — ${pageIds.length} pages`);
               continue;
             }
 
-            // Create job record
+            // Create job record — translate-worker.mjs picks this up
             await db.collection('jobs').insertOne({
               id: jobId,
               type: 'translation',
@@ -2026,30 +2049,8 @@ async function run() {
 
             await db.collection('books').updateOne(
               { id: book.id },
-              { $set: { job: { type: 'realtime', job_id: jobId } } },
+              { $set: { job: { type: 'hetzner-inline', job_id: jobId } } },
             );
-
-            // Enqueue pages to SQS FIFO in batches of 10
-            for (let i = 0; i < pageIds.length; i += 10) {
-              const batch = pageIds.slice(i, i + 10);
-              const entries = batch.map((pageId, idx) => ({
-                Id: `msg-${idx}`,
-                MessageBody: JSON.stringify({ bookId: book.id, pageId, jobId }),
-                MessageGroupId: jobId,
-                MessageDeduplicationId: createHash('sha256')
-                  .update(`${book.id}:${pageId}:${jobId}`)
-                  .digest('hex').slice(0, 128),
-              }));
-
-              const result = await sqsClient.send(new SendMessageBatchCommand({
-                QueueUrl: SQS_TRANSLATION_QUEUE_URL,
-                Entries: entries,
-              }));
-
-              if (result.Failed?.length) {
-                console.error(`    SQS batch failed: ${result.Failed.length} messages`);
-              }
-            }
 
             await setPipelineStatus(db, book.id, 'translate_submitted', {
               translate_job_id: jobId,
@@ -2553,6 +2554,7 @@ async function run() {
     console.log(`  Images submitted: ${log.images_submitted} | Images advanced: ${log.images_advanced}`);
     console.log(`  Finalized: ${log.finalized} | Needs attention: ${log.needs_attention}`);
     console.log(`  Stale retried: ${log.stale_retried} | Stale failed: ${log.stale_failed}`);
+    if (log.zombie_jobs_cancelled > 0) console.log(`  Zombie jobs cancelled: ${log.zombie_jobs_cancelled}`);
     if (log.errors.length > 0) {
       console.log(`  Errors (${log.errors.length}):`);
       for (const err of log.errors.slice(0, 30)) {
@@ -2603,6 +2605,7 @@ async function run() {
             needs_attention: log.needs_attention,
             stale_retried: log.stale_retried,
             stale_failed: log.stale_failed,
+            zombie_jobs_cancelled: log.zombie_jobs_cancelled,
           },
           errors: log.errors.slice(0, 50).map(msg => ({ message: msg, timestamp: new Date() })),
           error_count: log.errors.length,

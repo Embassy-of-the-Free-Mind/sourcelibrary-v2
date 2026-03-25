@@ -24,8 +24,18 @@ export interface Page {
   translation_summary?: string;    // 1-2 sentence page summary from translation
   translation_keywords?: string[]; // Key concepts/names/themes from translation
 
+  // Semantic alignment: cosine similarity between OCR and translation embeddings
+  semantic_alignment?: {
+    score: number;           // 0-1 cosine similarity
+    embedding_model: string;
+    scored_at: Date;
+  };
+
   // Page classification from OCR (title-page, frontispiece, toc, etc.)
   page_type?: string;
+
+  // Script type detected by OCR (printed, handwritten, mixed)
+  script_type?: 'printed' | 'handwritten' | 'mixed';
 
   // Number of text columns detected by OCR (2+ for multi-column pages)
   columns?: number;

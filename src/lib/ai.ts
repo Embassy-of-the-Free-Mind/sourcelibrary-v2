@@ -228,14 +228,29 @@ export async function performTranslation(
       : `\n\n**Previous page translation for continuity:**\n${previousPageTranslation.slice(0, 2000)}...`;
   }
 
+  // If the OCR flagged this as handwritten, inject a note into the prompt
+  // so the model knows readings are uncertain, and prepend the warning to the output
+  const scriptMatch = ocrText.match(/<script>(handwritten|mixed)<\/script>/i);
+  const warningMatch = ocrText.match(/<warning>([\s\S]*?)<\/warning>/i);
+  if (scriptMatch) {
+    prompt += `\n\n**Note:** This is a handwritten manuscript. Some readings marked <unclear> may be uncertain. Translate in context but acknowledge uncertainty where meaning is genuinely ambiguous.`;
+  }
+
   const result = await model.generateContent(prompt);
 
   const usageMetadata = result.response.usageMetadata;
   const inputTokens = usageMetadata?.promptTokenCount || 0;
   const outputTokens = usageMetadata?.candidatesTokenCount || 0;
 
+  // Carry manuscript warnings through to the translation so both panels show them
+  let translationText = sanitizeTranslationTags(result.response.text());
+  if (scriptMatch) {
+    const warningTag = warningMatch ? `<warning>${warningMatch[1]}</warning>\n` : '';
+    translationText = `<script>${scriptMatch[1]}</script>\n${warningTag}${translationText}`;
+  }
+
   return {
-    text: sanitizeTranslationTags(result.response.text()),
+    text: translationText,
     usage: {
       inputTokens,
       outputTokens,

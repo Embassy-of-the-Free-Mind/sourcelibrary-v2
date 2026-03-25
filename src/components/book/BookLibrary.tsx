@@ -7,6 +7,7 @@ import { useRouter } from 'next/navigation';
 import BookCard from '@/components/book/BookCard';
 import { Book } from '@/lib/types';
 import { bookUrl } from '@/lib/slugify';
+import { LIBRARY_PARTNERS } from '@/lib/library-partners';
 
 import { Search, Loader2, ExternalLink, BookOpen, Plus, Check, X, ChevronDown, ChevronUp } from 'lucide-react';
 import { catalog, importBooks, type CatalogResult } from '@/lib/api-client';
@@ -49,6 +50,7 @@ export default function BookLibrary({ initialBooks, totalBooks, languages, colle
   const [selectedLanguage, setSelectedLanguage] = useState('');
   const [selectedCategory, setSelectedCategory] = useState('');
   const [selectedCollection, setSelectedCollection] = useState('');
+  const [selectedLibrary, setSelectedLibrary] = useState('');
   const [collectionInfo, setCollectionInfo] = useState<CollectionInfo | null>(null);
   const [introExpanded, setIntroExpanded] = useState(false);
   const [sortBy, setSortBy] = useState<SortOption>('recent-translation');
@@ -62,9 +64,12 @@ export default function BookLibrary({ initialBooks, totalBooks, languages, colle
   const [loading, setLoading] = useState(false);
   const [loadingMore, setLoadingMore] = useState(false);
 
-  // Read collection from URL on mount (avoids useSearchParams BAILOUT_TO_CLIENT_SIDE_RENDERING)
+  // Read library + collection from URL on mount (avoids useSearchParams BAILOUT_TO_CLIENT_SIDE_RENDERING)
   useEffect(() => {
-    const col = new URLSearchParams(window.location.search).get('collection') || '';
+    const params = new URLSearchParams(window.location.search);
+    const lib = params.get('library') || '';
+    if (lib) { setSelectedLibrary(lib); setBrowseAll(true); }
+    const col = params.get('collection') || '';
     if (col) {
       setSelectedCollection(col);
       const match = collections.find(c => c.slug === col);
@@ -73,10 +78,12 @@ export default function BookLibrary({ initialBooks, totalBooks, languages, colle
     }
   }, []); // eslint-disable-line react-hooks/exhaustive-deps
 
-  // Sync collection from URL on back/forward navigation (popstate)
+  // Sync collection + library from URL on back/forward navigation (popstate)
   useEffect(() => {
     const handlePopState = () => {
-      const col = new URLSearchParams(window.location.search).get('collection') || '';
+      const params = new URLSearchParams(window.location.search);
+      setSelectedLibrary(params.get('library') || '');
+      const col = params.get('collection') || '';
       setSelectedCollection(prev => {
         if (prev === col) return prev;
         setIntroExpanded(false);
@@ -98,7 +105,7 @@ export default function BookLibrary({ initialBooks, totalBooks, languages, colle
   }, [collections]); // eslint-disable-line react-hooks/exhaustive-deps
 
   // Track whether we're in "browse" mode (no filters) or "search/filter" mode
-  const isFiltered = searchQuery.trim() !== '' || selectedLanguage !== '' || selectedCategory !== '' || selectedCollection !== '' || sortBy !== 'recent-translation';
+  const isFiltered = searchQuery.trim() !== '' || selectedLanguage !== '' || selectedCategory !== '' || selectedCollection !== '' || selectedLibrary !== '' || sortBy !== 'recent-translation';
   const needsBrowseFetch = browseAll || isFiltered;
   const showCollections = !isFiltered && !selectedCollection && !browseAll && collections.length > 0;
 
@@ -126,11 +133,12 @@ export default function BookLibrary({ initialBooks, totalBooks, languages, colle
     language?: string;
     category?: string;
     collection?: string;
+    library?: string;
     sort?: SortOption;
     skip?: number;
     append?: boolean;
   }) => {
-    const { search = '', language = '', category = '', collection = '', sort = 'recent-translation', skip = 0, append = false } = params;
+    const { search = '', language = '', category = '', collection = '', library = '', sort = 'recent-translation', skip = 0, append = false } = params;
 
     // Cancel previous request
     abortRef.current?.abort();
@@ -151,6 +159,7 @@ export default function BookLibrary({ initialBooks, totalBooks, languages, colle
       if (language) qs.set('language', language);
       if (category) qs.set('category', category);
       if (collection) qs.set('collection', collection);
+      if (library) qs.set('library', library);
       qs.set('sort', sort);
 
       const res = await fetch(`/api/books/library?${qs}`, { signal: controller.signal });
@@ -196,6 +205,7 @@ export default function BookLibrary({ initialBooks, totalBooks, languages, colle
       language: selectedLanguage,
       category: selectedCategory,
       collection: selectedCollection,
+      library: selectedLibrary,
       sort: sortBy,
     });
     if (searchQuery.trim()) {
@@ -207,7 +217,7 @@ export default function BookLibrary({ initialBooks, totalBooks, languages, colle
     return () => {
       if (debounceRef.current) clearTimeout(debounceRef.current);
     };
-  }, [searchQuery, selectedLanguage, selectedCategory, selectedCollection, sortBy, needsBrowseFetch, totalBooks, fetchBooks]);
+  }, [searchQuery, selectedLanguage, selectedCategory, selectedCollection, selectedLibrary, sortBy, needsBrowseFetch, totalBooks, fetchBooks]);
 
   const filteredBrowseBooks = useMemo(() => {
     return allLoadedBooks;
@@ -235,6 +245,7 @@ export default function BookLibrary({ initialBooks, totalBooks, languages, colle
         language: selectedLanguage,
         category: selectedCategory,
         collection: selectedCollection,
+        library: selectedLibrary,
         sort: sortBy,
         skip: allLoadedBooks.length,
         append: true,
@@ -331,6 +342,10 @@ export default function BookLibrary({ initialBooks, totalBooks, languages, colle
     }
   };
 
+  // Get library partner name from provider key
+  const getLibraryName = (providerKey: string) =>
+    Object.values(LIBRARY_PARTNERS).find(p => p.providerKey === providerKey)?.name || providerKey;
+
   return (
     <>
       {/* Back to collections */}
@@ -343,6 +358,12 @@ export default function BookLibrary({ initialBooks, totalBooks, languages, colle
               setIntroExpanded(false);
               const url = new URL(window.location.href);
               url.searchParams.delete('collection');
+              window.history.pushState({}, '', url.pathname + url.search);
+            }
+            if (selectedLibrary) {
+              setSelectedLibrary('');
+              const url = new URL(window.location.href);
+              url.searchParams.delete('library');
               window.history.pushState({}, '', url.pathname + url.search);
             }
             setBrowseAll(false);
@@ -368,6 +389,40 @@ export default function BookLibrary({ initialBooks, totalBooks, languages, colle
         )}
       </div>
 
+      {/* Library partner filter */}
+      <div className="mb-6 flex items-center gap-3">
+        <select
+          value={selectedLibrary}
+          onChange={(e) => {
+            const val = e.target.value;
+            setSelectedLibrary(val);
+            if (val && !browseAll) setBrowseAll(true);
+            const url = new URL(window.location.href);
+            if (val) url.searchParams.set('library', val);
+            else url.searchParams.delete('library');
+            window.history.pushState({}, '', url.pathname + url.search);
+          }}
+          className="text-sm border border-stone-200 rounded-lg px-3 py-2 bg-white text-stone-700 focus:outline-none focus:ring-2 focus:ring-stone-300"
+        >
+          <option value="">All source libraries</option>
+          {Object.values(LIBRARY_PARTNERS).map((p) => (
+            <option key={p.slug} value={p.providerKey}>{p.name}</option>
+          ))}
+        </select>
+        {selectedLibrary && (
+          <button
+            onClick={() => {
+              setSelectedLibrary('');
+              const url = new URL(window.location.href);
+              url.searchParams.delete('library');
+              window.history.pushState({}, '', url.pathname + url.search);
+            }}
+            className="text-xs text-stone-400 hover:text-stone-600 transition-colors"
+          >
+            Clear
+          </button>
+        )}
+      </div>
 
       {showCollections ? (
         <>
@@ -560,6 +615,11 @@ export default function BookLibrary({ initialBooks, totalBooks, languages, colle
             {selectedCollection && (
               <span className="text-stone-500">
                 {' '}in {collectionInfo?.name || selectedCollection}
+              </span>
+            )}
+            {selectedLibrary && (
+              <span className="text-stone-500">
+                {' '}from {getLibraryName(selectedLibrary)}
               </span>
             )}
           </>
