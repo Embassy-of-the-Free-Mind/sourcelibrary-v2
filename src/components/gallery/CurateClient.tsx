@@ -10,6 +10,7 @@ const VISITOR_ID_KEY = 'sl_visitor_id';
 const LIKES_CACHE_KEY = 'sl_likes_cache';
 const DOWNVOTES_KEY = 'sl_curate_downvotes';
 const DUPLICATES_KEY = 'sl_curate_duplicates';
+const APPLIED_LIKES_KEY = 'sl_curate_applied_likes';
 const BATCH_SIZE = 200;
 
 function getVisitorId(): string {
@@ -87,6 +88,23 @@ function saveDuplicatesCache(ids: Set<string>) {
 
 function getImageId(item: GalleryItem): string {
   return `${item.pageId}:${item.detectionIndex}`;
+}
+
+function getAppliedLikesCache(): Set<string> {
+  if (typeof window === 'undefined') return new Set();
+  try {
+    const cached = localStorage.getItem(APPLIED_LIKES_KEY);
+    return cached ? new Set(JSON.parse(cached)) : new Set();
+  } catch {
+    return new Set();
+  }
+}
+
+function saveAppliedLikesCache(ids: Set<string>) {
+  if (typeof window === 'undefined') return;
+  try {
+    localStorage.setItem(APPLIED_LIKES_KEY, JSON.stringify([...ids]));
+  } catch {}
 }
 
 function getImageSrc(item: GalleryItem): string {
@@ -346,6 +364,7 @@ export default function CurateClient() {
   const [lightboxIndex, setLightboxIndex] = useState<number | null>(null);
   const [infoId, setInfoId] = useState<string | null>(null);
   const [excludedBooks, setExcludedBooks] = useState<Set<string>>(new Set());
+  const [appliedLikes, setAppliedLikes] = useState<Set<string>>(new Set());
 
   // Grid size
   const [gridSize, setGridSize] = useState<'sm' | 'md' | 'lg'>('md');
@@ -505,6 +524,7 @@ export default function CurateClient() {
   useEffect(() => {
     setDownvotedIds(getDownvotesCache());
     setDuplicateIds(getDuplicatesCache());
+    setAppliedLikes(getAppliedLikesCache());
 
     const visitorId = getVisitorId();
     if (!visitorId) return;
@@ -587,6 +607,16 @@ export default function CurateClient() {
         const next = new Set(prev);
         next.delete(imageId);
         saveDownvotesCache(next);
+        return next;
+      });
+    }
+
+    // If re-liking an already-applied image, remove from applied so it's pending again
+    if (!likedIdsRef.current.has(imageId) && appliedLikesRef.current.has(imageId)) {
+      setAppliedLikes(prev => {
+        const next = new Set(prev);
+        next.delete(imageId);
+        saveAppliedLikesCache(next);
         return next;
       });
     }
@@ -697,15 +727,22 @@ export default function CurateClient() {
     } catch { toast.error('Failed to exclude book'); }
   }, [excludedBooks]);
 
-  // Apply curation
+  // Apply curation — only sends pending (unapplied) likes, plus downvotes/duplicates
+  const appliedLikesRef = useRef(appliedLikes);
+  appliedLikesRef.current = appliedLikes;
+
   const handleApplyCurated = useCallback(async () => {
-    const upCount = likedIdsRef.current.size;
+    // Compute pending likes (excluding already-applied ones)
+    const pendingUps = new Set<string>();
+    for (const id of likedIdsRef.current) {
+      if (!appliedLikesRef.current.has(id)) pendingUps.add(id);
+    }
     const downCount = downvotedIdsRef.current.size;
     const dupCount = duplicateIdsRef.current.size;
-    if (upCount === 0 && downCount === 0 && dupCount === 0) return;
+    if (pendingUps.size === 0 && downCount === 0 && dupCount === 0) return;
 
     const parts = [];
-    if (upCount > 0) parts.push(`${upCount} upvoted (+0.1 quality)`);
+    if (pendingUps.size > 0) parts.push(`${pendingUps.size} upvoted (+0.1 quality)`);
     if (downCount > 0) parts.push(`${downCount} downvoted (-0.15 quality)`);
     if (dupCount > 0) parts.push(`${dupCount} flagged as duplicates`);
     if (!confirm(`Apply curation? ${parts.join(', ')}`)) return;
@@ -716,23 +753,26 @@ export default function CurateClient() {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify({
-          upvoteIds: [...likedIdsRef.current],
+          upvoteIds: [...pendingUps],
           downvoteIds: [...downvotedIdsRef.current],
           duplicateIds: [...duplicateIdsRef.current],
         }),
       });
       const data = await res.json();
       if (data.success) {
-        // Clear all ratings so the curator can start fresh
-        setLikedIds(new Set());
-        likedIdsRef.current = new Set();
+        // Mark these likes as applied so they don't show as pending on reload
+        const newApplied = new Set(appliedLikesRef.current);
+        for (const id of pendingUps) newApplied.add(id);
+        setAppliedLikes(newApplied);
+        appliedLikesRef.current = newApplied;
+        saveAppliedLikesCache(newApplied);
+
+        // Clear downvotes and duplicates (these are one-shot, not persistent like likes)
         setDownvotedIds(new Set());
         downvotedIdsRef.current = new Set();
         setDuplicateIds(new Set());
         duplicateIdsRef.current = new Set();
-        // Clear localStorage caches
         if (typeof window !== 'undefined') {
-          localStorage.removeItem(LIKES_CACHE_KEY);
           localStorage.removeItem(DOWNVOTES_KEY);
           localStorage.removeItem(DUPLICATES_KEY);
         }
@@ -808,7 +848,14 @@ export default function CurateClient() {
     };
   }, [lightboxIndex, displayImages.length]);
 
-  const heartedCount = likedIds.size;
+  const pendingLikedIds = useMemo(() => {
+    const pending = new Set<string>();
+    for (const id of likedIds) {
+      if (!appliedLikes.has(id)) pending.add(id);
+    }
+    return pending;
+  }, [likedIds, appliedLikes]);
+  const heartedCount = pendingLikedIds.size;
   const downvotedCount = downvotedIds.size;
   const duplicateCount = duplicateIds.size;
 
