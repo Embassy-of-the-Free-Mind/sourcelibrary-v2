@@ -329,10 +329,31 @@ export default function RashiOcrPage() {
           The broader lesson: internal consistency metrics are necessary but not sufficient. A system that only checks whether its outputs agree with each other will miss the case where the whole pipeline is wrong in the same direction. For well-resourced languages with existing digital corpora, reference comparison is cheap and definitive. For everything else, we need humans in the loop &mdash; not to read every page, but to keep the quality signal grounded in reality.
         </p>
 
+        {/* --- Update --- */}
+        <h2 className="text-2xl md:text-3xl text-primary mt-16 mb-6">
+          Update: 25 March 2026
+        </h2>
+
+        <p className="text-secondary leading-relaxed mb-6">
+          We tested explicit Rashi script instructions with Gemini 3 Flash Preview. When the prompt tells the model &ldquo;This text is printed in Rashi script (semi-cursive Hebrew typeface), NOT standard square Hebrew &mdash; read the letterforms accordingly,&rdquo; the output improves substantially. The model produces recognizable Aramaic text with correct vocabulary, proper abbreviation markers (<span className="font-mono text-sm">&quot;ס&quot;א</span>, <span className="font-mono text-sm">קב&quot;ה</span>), and coherent paragraph structure. It&rsquo;s no longer hallucinating.
+        </p>
+
+        <p className="text-secondary leading-relaxed mb-6">
+          But &ldquo;better&rdquo; is not &ldquo;good.&rdquo; Comparing the prompted output against Sefaria&rsquo;s reference text still reveals word-level substitutions and dropped phrases. The model reads the general sense correctly but gets individual letters wrong &mdash; exactly the kind of errors you&rsquo;d expect from a vision model that hasn&rsquo;t been trained on this specific typeface. This is a fundamentally harder problem than the complete confabulation we saw before, and one that may require specialized fine-tuning or future model improvements to solve.
+        </p>
+
+        <p className="text-secondary leading-relaxed mb-6">
+          Our conclusion: Rashi-script books now display a quality warning banner in the reader. The warning appears on both the OCR and translation tabs, telling readers that current AI models struggle with this typeface and that the output should not be trusted. We&rsquo;ve set <span className="font-mono text-sm">metadata.scriptType: &ldquo;Rashi&rdquo;</span> on the Cremona and Mantua Zohar editions, which also triggers rendering in <a href="https://fonts.google.com/noto/specimen/Noto+Rashi+Hebrew" className="text-accent-rust hover:underline">Noto Rashi Hebrew</a> &mdash; the correct display typeface.
+        </p>
+
+        <p className="text-secondary leading-relaxed mb-12">
+          We are waiting for future model generations with better Rashi support before re-running OCR on these books at scale.
+        </p>
+
         <hr className="border-border-light my-12" />
 
         <p className="text-secondary leading-relaxed mb-4 text-sm">
-          The Zohar page discussed here is <a href="https://sourcelibrary.org/book/6990630be7b7642c081de08b/page/6990630ce7b7642c081de094" className="text-accent-rust hover:underline">viewable in the reader</a>. The full Hebrew OCR quality audit is tracked in <a href="https://github.com/Embassy-of-the-Free-Mind/sourcelibrary-v2/issues/350" className="text-accent-rust hover:underline">GitHub issue #350</a>.
+          The Zohar page discussed here is <a href="https://sourcelibrary.org/book/the-zohar-sefer-ha-zohar-attributed/page/6990630ce7b7642c081de096" className="text-accent-rust hover:underline">viewable in the reader</a> (with Rashi font rendering and quality warning). The full Hebrew OCR quality audit is tracked in <a href="https://github.com/Embassy-of-the-Free-Mind/sourcelibrary-v2/issues/350" className="text-accent-rust hover:underline">GitHub issue #350</a>.
         </p>
 
       </article>
