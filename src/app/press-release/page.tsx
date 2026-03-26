@@ -288,16 +288,27 @@ export default function PressReleasePage() {
 
           <p className="text-secondary leading-relaxed mb-6 font-body">
             Source Library&rsquo;s translations are generated using frontier artificial intelligence
-            models (Google Gemini 3), not traditional scholarly editing. However, unlike most critical
-            translations, each translated page is presented directly alongside an image of the
-            original-language text, allowing scholars to consult the source directly.
+            models (Google Gemini 3), not traditional scholarly editing. Each translated page is
+            presented directly alongside an image of the original-language text, so scholars can
+            always consult the source directly.
+          </p>
+
+          <p className="text-secondary leading-relaxed mb-6 font-body">
+            These are working translations, not critical editions. AI handles cleanly printed Latin
+            remarkably well, but users will encounter errors &mdash; particularly with handwritten
+            manuscripts, damaged pages, and unusual scripts. Some texts that appear as
+            &ldquo;first translations&rdquo; may have existing translations we have not yet identified.
+            The collection is a beta in the fullest sense: it is published early so the scholarly
+            community can help improve it.
           </p>
 
           <p className="text-secondary leading-relaxed mb-6 font-body">
             The Embassy views AI translation as a complement to, not a replacement for, expert human
-            scholarship. The goal is to make vast bodies of untranslated material discoverable and
-            navigable for the first time &mdash; lowering the barrier that has kept these texts
-            confined to specialists for centuries.
+            scholarship. The goal is not to produce definitive editions but to make vast bodies of
+            untranslated material discoverable and navigable for the first time &mdash; lowering
+            the barrier that has kept these texts confined to specialists for centuries. A working
+            translation that lets a researcher find a relevant passage in a 1,000-page Latin treatise
+            is, we believe, better than no translation at all.
           </p>
         </section>
 
@@ -335,12 +346,37 @@ export default function PressReleasePage() {
           </h2>
 
           <p className="text-secondary leading-relaxed mb-6 font-body">
+            Source Library is released as a public beta. The collection has been built in three months,
+            and it shows &mdash; there are rough edges. Manuscript transcriptions are often imperfect.
+            Metadata for some books is incomplete. Some &ldquo;first translation&rdquo; claims will
+            turn out to be wrong once scholars with deeper knowledge of specific fields weigh in.
+            We are publishing now rather than waiting for perfection because the alternative &mdash;
+            leaving hundreds of thousands of texts inaccessible while we polish &mdash; serves no one.
+          </p>
+
+          <p className="text-secondary leading-relaxed mb-6 font-body">
+            The aspiration is simple: translate the entire Renaissance. The{' '}
+            <a href="https://sourcelibrary.org/blog/counting-the-gap" className="text-accent-rust hover:underline">
+              Universal Short Title Catalogue
+            </a>{' '}
+            records over 690,000 distinct non-English works printed between 1450 and 1700. We estimate
+            that fewer than 5% have ever been translated into English. AI translation is now fast enough
+            and good enough to close that gap within years, not centuries. Source Library is the beginning
+            of that effort.
+          </p>
+
+          <p className="text-secondary leading-relaxed mb-6 font-body">
+            We welcome corrections, additions, and criticism. If you find an error, know of an existing
+            translation we missed, or want to contribute expertise on a particular text or tradition,
+            please reach out.
+          </p>
+
+          <p className="text-secondary leading-relaxed mb-6 font-body">
             Source Library is available now at{' '}
             <a href="https://sourcelibrary.org" className="text-accent-rust hover:underline">
               sourcelibrary.org
             </a>
-            . As a beta release, the collection and its features will continue to expand. Feedback from
-            scholars, librarians, and the public is welcome at{' '}
+            . Feedback is welcome at{' '}
             <a href="mailto:derek@sourcelibrary.org" className="text-accent-rust hover:underline">
               derek@sourcelibrary.org
             </a>.
