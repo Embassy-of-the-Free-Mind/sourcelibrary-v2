@@ -216,23 +216,22 @@ Phase 3.7 processes up to 10 books per cron run, at ~$0.01/book.
 
 ---
 
-## Current Numbers (March 9, 2026)
+## Current Numbers (March 26, 2026)
 
 | Metric | Count |
 |--------|-------|
-| Total `is_first_translation: true` | **2,446** |
-| Total non-English books | 4,288 |
-| Verified with tool-calling | 4,041 |
+| Total `is_first_translation: true` | **5,212** |
+| Total with FT verification | 7,688 |
 
 ### Disposition Breakdown
 
 | Disposition | Count | % of verified |
 |-------------|-------|--------------|
-| `confirmed_first` | 1,727 | 43% |
-| `first_complete_translation` | 609 | 15% |
-| `first_modern_translation` | 119 | 3% |
-| `translation_found` | 1,527 | 38% |
-| `needs_review` | 106 | 3% |
+| `confirmed_first` | 4,368 | 56.7% |
+| `translation_found` | 2,190 | 28.5% |
+| `first_complete_translation` | 734 | 9.5% |
+| `needs_review` | 289 | 3.8% |
+| `first_modern_translation` | 162 | 2.1% |
 
 ### Stage 1 Breakdown (for reference)
 
