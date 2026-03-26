@@ -93,7 +93,22 @@ async function main() {
         if (!dryRun) {
           await db.collection('books').updateOne(
             { id: book.id },
-            { $set: { ustc_id: result.match.ustc_sn, ustc_match: result.match } },
+            { $set: {
+              ustc_id: result.match.ustc_sn,
+              ustc_match: result.match,
+              'field_provenance.ustc_id': {
+                source: 'ai-matcher',
+                method: result.match.match_method,
+                confidence: result.match.confidence,
+                date: new Date(),
+              },
+              'field_provenance.ustc_match': {
+                source: 'ai-matcher',
+                method: result.match.match_method,
+                confidence: result.match.confidence,
+                date: new Date(),
+              },
+            } },
           );
         }
 
