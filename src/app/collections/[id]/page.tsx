@@ -11,6 +11,7 @@ import ExhibitionLayout from '@/components/collections/ExhibitionLayout';
 import SignUpCTA from '@/components/auth/SignUpCTA';
 import { bookUrl } from '@/lib/slugify';
 import { bookTitle, sanitizeThumbnail, withTimeout } from '@/lib/collections-utils';
+import { firstTranslationBadge } from '@/lib/first-translation-labels';
 
 // ISR: rebuild at most every 10 minutes
 export const revalidate = 600;
@@ -97,6 +98,7 @@ interface BookItem {
   published?: string;
   read_count?: number;
   is_first_translation?: boolean;
+  ft_disposition?: string;
 }
 
 interface CuratedHighlight {
@@ -107,6 +109,13 @@ interface CuratedHighlight {
   title?: string;
   author?: string;
   year?: number;
+  // Added during merge with book data
+  slug?: string;
+  thumbnail?: string;
+  is_first_translation?: boolean;
+  ft_disposition?: string;
+  language?: string;
+  id: string;
 }
 
 /** Auto-link book titles found in description text to their book pages.
@@ -262,7 +271,7 @@ async function fetchCollectionData(id: string) {
           db.collection('books')
             .find(
               { id: { $in: curatedBookIds }, status: { $ne: 'deleted' } },
-              { projection: { ...projection, is_first_translation: 1 } },
+              { projection: { ...projection, is_first_translation: 1, 'translation_verification.disposition': 1 } },
             )
             .toArray(),
           8000, [],
@@ -361,6 +370,8 @@ async function fetchCollectionData(id: string) {
         slug: book.slug as string | undefined,
         thumbnail: sanitizeThumbnail(book.thumbnail as string),
         is_first_translation: book.is_first_translation as boolean | undefined,
+        ft_disposition: (book.translation_verification as Record<string, unknown> | undefined)?.disposition as string | undefined,
+        language: book.language as string | undefined,
         id: h.book_id,
       };
     });
@@ -399,13 +410,14 @@ async function fetchCollectionData(id: string) {
       const exBooks = await withTimeout(
         db.collection('books').find(
           { id: { $in: [...allBookIds] }, status: { $ne: 'deleted' } },
-          { projection: { id: 1, slug: 1, title: 1, display_title: 1, author: 1, year: 1, thumbnail: 1, thumbnail_blob: 1, is_first_translation: 1 } },
+          { projection: { id: 1, slug: 1, title: 1, display_title: 1, author: 1, year: 1, language: 1, thumbnail: 1, thumbnail_blob: 1, is_first_translation: 1, 'translation_verification.disposition': 1 } },
         ).toArray(),
         8000, [],
       );
       exhibitionBooks = exBooks.map(b => ({
         ...b,
         thumbnail: sanitizeThumbnail(b.thumbnail as string) || sanitizeThumbnail(b.thumbnail_blob as string),
+        ft_disposition: (b.translation_verification as Record<string, unknown> | undefined)?.disposition as string | undefined,
       })) as unknown as BookItem[];
     }
   }
@@ -715,7 +727,7 @@ export default async function CollectionDetailPage({ params }: Props) {
                 </h2>
                 <p className="text-sm text-muted mb-6">The foundational texts of this tradition</p>
                 <div className="grid gap-4 sm:gap-5 grid-cols-1 sm:grid-cols-2">
-                  {tier1.map((h: { book_id: string; slug?: string; title?: string; author?: string; year?: number; thumbnail?: string; note: string; is_first_translation?: boolean; id: string }) => (
+                  {tier1.map((h: CuratedHighlight) => (
                     <Link
                       key={h.book_id}
                       href={bookUrl({ id: h.id, slug: h.slug })}
@@ -746,7 +758,7 @@ export default async function CollectionDetailPage({ params }: Props) {
                           {h.author}{h.year ? `, ${h.year}` : ''}
                           {h.is_first_translation && (
                             <span className="ml-2 text-[10px] font-medium bg-accent-rust/10 text-accent-rust px-1.5 py-0.5 rounded">
-                              First Translation
+                              {firstTranslationBadge(h.ft_disposition, h.language)}
                             </span>
                           )}
                         </p>
@@ -768,7 +780,7 @@ export default async function CollectionDetailPage({ params }: Props) {
                 </h2>
                 <p className="text-sm text-muted mb-5">Significant texts that deepen understanding</p>
                 <div className="grid gap-4 grid-cols-1 sm:grid-cols-2 lg:grid-cols-3">
-                  {tier2.map((h: { book_id: string; slug?: string; title?: string; author?: string; year?: number; thumbnail?: string; note: string; is_first_translation?: boolean; id: string }) => (
+                  {tier2.map((h: CuratedHighlight) => (
                     <Link
                       key={h.book_id}
                       href={bookUrl({ id: h.id, slug: h.slug })}
@@ -799,7 +811,7 @@ export default async function CollectionDetailPage({ params }: Props) {
                           {h.author}{h.year ? `, ${h.year}` : ''}
                           {h.is_first_translation && (
                             <span className="ml-1.5 text-[9px] font-medium bg-accent-rust/10 text-accent-rust px-1 py-0.5 rounded">
-                              First Translation
+                              {firstTranslationBadge(h.ft_disposition, h.language)}
                             </span>
                           )}
                         </p>
@@ -820,7 +832,7 @@ export default async function CollectionDetailPage({ params }: Props) {
                   Also Notable
                 </h2>
                 <div className="grid gap-2 grid-cols-1 sm:grid-cols-2">
-                  {tier3.map((h: { book_id: string; slug?: string; title?: string; author?: string; year?: number; thumbnail?: string; is_first_translation?: boolean; id: string }) => (
+                  {tier3.map((h: CuratedHighlight) => (
                     <Link
                       key={h.book_id}
                       href={bookUrl({ id: h.id, slug: h.slug })}
@@ -851,7 +863,7 @@ export default async function CollectionDetailPage({ params }: Props) {
                           {h.author}{h.year ? `, ${h.year}` : ''}
                           {h.is_first_translation && (
                             <span className="ml-1.5 text-[9px] font-medium bg-accent-rust/10 text-accent-rust px-1 py-0.5 rounded">
-                              First Translation
+                              {firstTranslationBadge(h.ft_disposition, h.language)}
                             </span>
                           )}
                         </p>
