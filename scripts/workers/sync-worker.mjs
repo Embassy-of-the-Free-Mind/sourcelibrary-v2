@@ -72,6 +72,19 @@ async function syncPageCounts(db) {
             ],
           },
         },
+        pages_archived: {
+          $sum: {
+            $cond: [
+              { $and: [
+                { $eq: [{ $type: '$archived_photo' }, 'string'] },
+                // Count any non-empty archived_photo; "failed:*" entries are rare
+                // and will be a small overcount vs the perf cost of $regexMatch
+                { $gt: [{ $strLenCP: '$archived_photo' }, 0] },
+              ] },
+              1, 0,
+            ],
+          },
+        },
       },
     },
   ]).toArray();
@@ -83,12 +96,13 @@ async function syncPageCounts(db) {
       pages_ocr: stat.pages_ocr,
       pages_translated: stat.pages_translated,
       pages_blank: stat.pages_blank,
+      pages_archived: stat.pages_archived,
     });
   }
 
   // Fetch all books' cached values
   const books = await db.collection('books')
-    .find({}, { projection: { _id: 1, id: 1, pages_count: 1, pages_ocr: 1, pages_translated: 1, pages_blank: 1 } })
+    .find({}, { projection: { _id: 1, id: 1, pages_count: 1, pages_ocr: 1, pages_translated: 1, pages_blank: 1, pages_archived: 1 } })
     .toArray();
 
   // Build bulk updates for mismatches
@@ -97,19 +111,21 @@ async function syncPageCounts(db) {
 
   for (const book of books) {
     const bookId = book.id || book._id?.toString();
-    const actual = statsMap.get(bookId) || { pages_count: 0, pages_ocr: 0, pages_translated: 0, pages_blank: 0 };
+    const actual = statsMap.get(bookId) || { pages_count: 0, pages_ocr: 0, pages_translated: 0, pages_blank: 0, pages_archived: 0 };
     const current = {
       pages_count: book.pages_count || 0,
       pages_ocr: book.pages_ocr || 0,
       pages_translated: book.pages_translated || 0,
       pages_blank: book.pages_blank || 0,
+      pages_archived: book.pages_archived || 0,
     };
 
     if (
       current.pages_count !== actual.pages_count ||
       current.pages_ocr !== actual.pages_ocr ||
       current.pages_translated !== actual.pages_translated ||
-      current.pages_blank !== actual.pages_blank
+      current.pages_blank !== actual.pages_blank ||
+      current.pages_archived !== actual.pages_archived
     ) {
       mismatchCount++;
       if (!DRY_RUN) {
@@ -122,6 +138,7 @@ async function syncPageCounts(db) {
                 pages_ocr: actual.pages_ocr,
                 pages_translated: actual.pages_translated,
                 pages_blank: actual.pages_blank,
+                pages_archived: actual.pages_archived,
                 updated_at: new Date(),
               },
             },
