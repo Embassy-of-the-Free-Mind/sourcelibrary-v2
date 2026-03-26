@@ -7,6 +7,7 @@ import { Book as BookIcon } from 'lucide-react';
 import type { Book } from '@/lib/types';
 import { recordLoadingMetric } from '@/lib/analytics';
 import { bookUrl } from '@/lib/slugify';
+import { firstTranslationBadge } from '@/lib/first-translation-labels';
 
 interface BookCardProps {
   book: Book;
@@ -148,7 +149,7 @@ export default function BookCard({ book, priority = false }: BookCardProps) {
           {book.is_first_translation && (
             <div className="absolute top-2 right-2 z-10">
               <div className="bg-accent-gold text-white text-[10px] px-1.5 py-0.5 rounded-full shadow font-medium">
-                First Translation
+                {firstTranslationBadge(book.translation_verification?.disposition, book.language)}
               </div>
             </div>
           )}

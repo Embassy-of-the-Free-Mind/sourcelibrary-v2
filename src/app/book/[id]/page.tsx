@@ -33,6 +33,7 @@ import CiteButton from '@/components/ui/CiteButton';
 import { AuthCheck } from '@/components/auth/AuthCheck';
 import SignUpCTA from '@/components/auth/SignUpCTA';
 import { authorUrl } from '@/lib/slugify';
+import { firstTranslationBadge, firstTranslationDescription } from '@/lib/first-translation-labels';
 import SiteHeader from '@/components/layout/SiteHeader';
 
 // ISR: rebuild at most every hour (requires no searchParams/headers() usage)
@@ -444,14 +445,11 @@ async function BookInfo({ id }: { id: string }) {
                 <div className="mt-3">
                   <details className="group">
                     <summary className="inline-flex px-2.5 py-1 bg-accent-gold/20 text-accent-gold hover:bg-accent-gold/30 text-xs font-medium rounded-full border border-accent-gold/30 transition-colors cursor-pointer list-none [&::-webkit-details-marker]:hidden">
-                      First English Translation
+                      {firstTranslationBadge(book.translation_verification?.disposition, book.language)}
                     </summary>
                     <div className="mt-2 p-3 bg-stone-800/50 rounded-lg border border-stone-700/50 text-xs space-y-2">
                       <p className="text-stone-300">
-                        {book.translation_verification?.disposition === 'confirmed_first' && 'No prior complete English translation of this text has been found.'}
-                        {book.translation_verification?.disposition === 'first_complete_translation' && 'Only partial translations or excerpts exist. This is the first complete English translation.'}
-                        {book.translation_verification?.disposition === 'first_modern_translation' && 'Only antiquated translations exist. This is the first modern English translation.'}
-                        {!book.translation_verification?.disposition && 'This text has not previously been translated into English.'}
+                        {firstTranslationDescription(book.translation_verification?.disposition)}
                       </p>
                       {book.translation_verification?.reasoning && (
                         <p className="text-stone-400">{book.translation_verification.reasoning}</p>

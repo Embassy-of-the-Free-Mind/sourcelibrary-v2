@@ -5,6 +5,7 @@ import Link from 'next/link';
 import Image from 'next/image';
 import { BookOpen, ArrowRight, Quote, Clock, Users, Sparkles } from 'lucide-react';
 import { bookUrl } from '@/lib/slugify';
+import { firstTranslationBadge } from '@/lib/first-translation-labels';
 
 // ─── Types ──────────────────────────────────────────────────────
 
@@ -15,8 +16,10 @@ interface BookRef {
   display_title?: string;
   author?: string;
   year?: number;
+  language?: string;
   thumbnail?: string;
   is_first_translation?: boolean;
+  ft_disposition?: string;
 }
 
 interface GalleryImage {
@@ -209,7 +212,7 @@ function SectionsBlock({ sections, books }: {
                       {book.author}{book.year ? `, ${book.year}` : ''}
                       {book.is_first_translation && (
                         <span className="ml-2 text-[10px] font-medium bg-accent-rust/10 text-accent-rust px-1.5 py-0.5 rounded">
-                          First Translation
+                          {firstTranslationBadge(book.ft_disposition, book.language)}
                         </span>
                       )}
                     </p>

@@ -32,7 +32,7 @@ const SUPABASE_ANON_KEY = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBh
 // ── Types ─────────────────────────────────────────────────────────────
 
 export interface TranslationVerification {
-  disposition: 'confirmed_first' | 'first_complete_translation' | 'first_modern_translation' | 'translation_found' | 'needs_review';
+  disposition: 'confirmed_first' | 'first_from_source' | 'first_complete_translation' | 'first_modern_translation' | 'translation_found' | 'needs_review';
   confidence: 'high' | 'medium' | 'low';
   reasoning: string;
   translations_found: Array<{
@@ -643,7 +643,7 @@ export async function verifyFirstTranslation(
       stage: 2,
     };
 
-    const isFirstTranslation = ['confirmed_first', 'first_complete_translation', 'first_modern_translation'].includes(normalizedDisposition);
+    const isFirstTranslation = ['confirmed_first', 'first_from_source', 'first_complete_translation', 'first_modern_translation'].includes(normalizedDisposition);
 
     // Persist to database (skip in dry-run mode)
     if (!options?.dryRun) {

@@ -5,6 +5,7 @@ import Link from 'next/link';
 import Image from 'next/image';
 import { BookOpen, Calendar, FileText } from 'lucide-react';
 import { cn } from '@/lib/utils';
+import { firstTranslationBadge } from '@/lib/first-translation-labels';
 
 interface CollectionBook {
   bookId: string;
@@ -22,6 +23,7 @@ interface CollectionBook {
   language?: string;
   has_doi?: boolean;
   is_first_translation?: boolean;
+  ft_disposition?: string;
   published?: string;
   translation_percent?: number;
 }
@@ -87,7 +89,7 @@ export default function CollectionBookCard({ book, priority = false }: Collectio
             <div className="absolute top-3 right-3 z-10 flex flex-col gap-1.5 items-end">
               {book.is_first_translation && (
                 <div className="bg-accent-gold text-white text-xs px-2 py-1 rounded-full shadow-lg font-medium">
-                  First Translation
+                  {firstTranslationBadge(book.ft_disposition, book.language)}
                 </div>
               )}
               {book.has_doi && (

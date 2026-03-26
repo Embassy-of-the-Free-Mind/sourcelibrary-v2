@@ -7,6 +7,7 @@ import { IMAGE_LICENSES } from '@/lib/types';
 import BookEditModal from './BookEditModal';
 import { useRouter } from 'next/navigation';
 import { AuthCheck } from '@/components/auth/AuthCheck';
+import { firstTranslationDescription } from '@/lib/first-translation-labels';
 
 const FIELD_LABELS: Record<string, string> = {
   display_title: 'Display Title',
@@ -317,12 +318,10 @@ export default function BibliographicInfo({ book, pagesCount }: BibliographicInf
                         </div>
                       ));
                   })()}
-                  {['confirmed_first', 'first_complete_translation', 'first_modern_translation'].includes(book.translation_verification.disposition) && (
+                  {['confirmed_first', 'first_from_source', 'first_complete_translation', 'first_modern_translation'].includes(book.translation_verification.disposition) && (
                     <div className="text-stone-500 text-xs space-y-1">
                       <p>
-                        {book.translation_verification.disposition === 'confirmed_first' && 'No prior complete English translation found.'}
-                        {book.translation_verification.disposition === 'first_complete_translation' && 'Only partial translations or excerpts exist. This is the first complete English translation.'}
-                        {book.translation_verification.disposition === 'first_modern_translation' && 'Only antiquated translations exist. This is the first modern English translation.'}
+                        {firstTranslationDescription(book.translation_verification.disposition)}
                       </p>
                       {book.translation_verification.tools_called && (
                         <details className="cursor-pointer">
