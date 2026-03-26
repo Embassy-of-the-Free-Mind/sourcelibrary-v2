@@ -93,6 +93,7 @@ export default function SearchPage() {
   const [browseBooks, setBrowseBooks] = useState<any[]>([]);
   const [browseTotal, setBrowseTotal] = useState(0);
   const [browseLoading, setBrowseLoading] = useState(false);
+  const [browseError, setBrowseError] = useState(false);
   const [browseSortBy, setBrowseSortBy] = useState<string>(
     searchParams.get('sort') || 'recent-translation'
   );
@@ -316,6 +317,7 @@ export default function SearchPage() {
   const isBrowseMode = !query || query.length < 2;
   const performBrowse = useCallback(async () => {
     setBrowseLoading(true);
+    setBrowseError(false);
     try {
       const data = await searchApi.browse({
         language: language || undefined,
@@ -333,6 +335,7 @@ export default function SearchPage() {
     } catch {
       setBrowseBooks([]);
       setBrowseTotal(0);
+      setBrowseError(true);
     } finally {
       setBrowseLoading(false);
     }
@@ -766,7 +769,21 @@ export default function SearchPage() {
               </div>
             )}
 
-            {!browseLoading && browseBooks.length === 0 && browseTotal === 0 && (
+            {!browseLoading && browseError && (
+              <div className="text-center py-16">
+                <Book className="w-16 h-16 text-border-medium mx-auto mb-4" />
+                <h2 className="text-2xl font-serif font-medium text-primary mb-2">Something went wrong</h2>
+                <p className="text-base text-muted mb-4">We couldn&apos;t load the library right now.</p>
+                <button
+                  onClick={() => performBrowse()}
+                  className="px-4 py-2 text-sm bg-primary text-white rounded-md hover:bg-primary/90 transition-colors"
+                >
+                  Try again
+                </button>
+              </div>
+            )}
+
+            {!browseLoading && !browseError && browseBooks.length === 0 && browseTotal === 0 && (
               <div className="text-center py-16">
                 <Book className="w-16 h-16 text-border-medium mx-auto mb-4" />
                 <h2 className="text-2xl font-serif font-medium text-primary mb-2">No books found</h2>
