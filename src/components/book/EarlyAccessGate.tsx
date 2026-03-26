@@ -60,8 +60,7 @@ export default function EarlyAccessGate({ membersOnlyUntil, children }: EarlyAcc
           This translation is new.
         </p>
         <p className="leading-relaxed mb-4" style={{ color: 'var(--text-secondary)' }}>
-          Ficino Society members get early access to new translations.
-          This book will be available to everyone
+          This translation will be available to everyone
           {daysLeft <= 1
             ? ' tomorrow.'
             : ` in ${daysLeft} days.`
@@ -69,11 +68,11 @@ export default function EarlyAccessGate({ membersOnlyUntil, children }: EarlyAcc
         </p>
         <div className="flex flex-col sm:flex-row gap-3 justify-center">
           <Link
-            href="/ficino-society"
+            href="/auth/signin"
             className="inline-block px-6 py-2.5 rounded-lg text-white font-medium transition-opacity hover:opacity-90"
             style={{ background: 'var(--accent-rust)' }}
           >
-            Join the Ficino Society
+            Create a free account
           </Link>
         </div>
       </div>
