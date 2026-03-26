@@ -184,7 +184,8 @@ function PipelineFunnel({ funnel }: { funnel: Array<{ status: string; count: num
   // Pipeline stages in progression order (early → late)
   const pipeline = [
     'queued', 'archiving', 'archive_complete',
-    'ocr_submitted', 'ocr_complete', 'metadata_enriched',
+    'ocr_submitted', 'ocr_complete',
+    'metadata_enriched', 'ft_verifying', 'ft_verified',
     'translate_submitted', 'translate_complete',
     'enriching', 'enriched',
     'chapters', 'chapters_complete',
@@ -200,11 +201,14 @@ function PipelineFunnel({ funnel }: { funnel: Array<{ status: string; count: num
   };
 
   const tiers = [
-    { label: 'Enrolled', count: sumFrom(0), color: 'var(--accent-violet)' },
+    { label: 'Enrolled', count: sumFrom(0), color: '#7c6caf' },
     { label: 'Archived', count: sumFrom(pipeline.indexOf('archive_complete')), color: '#6366f1' },
-    { label: 'OCR Complete', count: sumFrom(pipeline.indexOf('ocr_complete')), color: 'var(--accent-sage)' },
-    { label: 'Translated', count: sumFrom(pipeline.indexOf('translate_complete')), color: 'var(--accent-rust)' },
-    { label: 'Enriched', count: sumFrom(pipeline.indexOf('enriched')), color: 'var(--accent-gold-dark)' },
+    { label: 'OCR Complete', count: sumFrom(pipeline.indexOf('ocr_complete')), color: '#5b8a72' },
+    { label: 'Metadata Enriched', count: sumFrom(pipeline.indexOf('metadata_enriched')), color: '#6a9f7d' },
+    { label: 'Translated', count: sumFrom(pipeline.indexOf('translate_complete')), color: '#b87352' },
+    { label: 'Enriched', count: sumFrom(pipeline.indexOf('enriched')), color: '#c49a3c' },
+    { label: 'Chapters Done', count: sumFrom(pipeline.indexOf('chapters_complete')), color: '#a68832' },
+    { label: 'Images Extracted', count: sumFrom(pipeline.indexOf('images_complete')), color: '#3a9a6e' },
     { label: 'Complete', count: c('complete'), color: '#22c55e' },
   ];
 
@@ -216,6 +220,7 @@ function PipelineFunnel({ funnel }: { funnel: Array<{ status: string; count: num
   const active = [
     { label: 'Archiving', count: c('archiving') },
     { label: 'OCR running', count: c('ocr_submitted') },
+    { label: 'FT verifying', count: c('ft_verifying') },
     { label: 'Translating', count: c('translate_submitted') },
     { label: 'Enriching', count: c('enriching') },
     { label: 'Chapters', count: c('chapters') },
@@ -245,7 +250,7 @@ function PipelineFunnel({ funnel }: { funnel: Array<{ status: string; count: num
               key={tier.label}
               className="w-full flex items-center justify-center text-white text-sm"
               style={{
-                height: 38,
+                height: 32,
                 background: tier.color,
                 clipPath: `polygon(${50 - topPct / 2}% 0, ${50 + topPct / 2}% 0, ${50 + botPct / 2}% 100%, ${50 - botPct / 2}% 100%)`,
               }}
