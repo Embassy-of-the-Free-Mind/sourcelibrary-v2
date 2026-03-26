@@ -95,6 +95,17 @@ async function fetchImage(url) {
   return Buffer.from(await res.arrayBuffer());
 }
 
+// --- Path helpers (mirrors src/lib/storage.ts pagePaths) ---
+function pagePaths(bookId, pageNumber) {
+  const num = String(pageNumber).padStart(4, '0');
+  const base = `pages/${bookId}/${num}`;
+  return {
+    full: `${base}-full.jpg`,
+    display: `${base}.jpg`,
+    thumb: `${base}-thumb.jpg`,
+  };
+}
+
 // --- Create page record ---
 function makePageRecord(bookId, pageNumber, photoUrl, thumbnailUrl) {
   const id = new ObjectId().toHexString();
@@ -105,7 +116,6 @@ function makePageRecord(bookId, pageNumber, photoUrl, thumbnailUrl) {
     book_id: bookId,
     page_number: pageNumber,
     photo: photoUrl,
-    photo_original: photoUrl,
     thumbnail: thumbnailUrl,
     ocr: null,
     translation: null,
@@ -198,14 +208,13 @@ async function importBook(r2, db, bookMeta, pageSourceList) {
         : pageSrc.buffer;
 
       const pageNum = pageSrc.page_number ?? idx + 1;
-      const key = `archived/${book.id}/${String(pageNum).padStart(4, '0')}.jpg`;
-      const thumbKey = `thumbnails/${book.id}/${String(pageNum).padStart(4, '0')}.jpg`;
+      const paths = pagePaths(book.id, pageNum);
 
-      // Upload original + thumbnail in parallel
+      // Upload full-res + thumbnail in parallel
       const thumbBuf = await makeThumbnail(buffer);
       const [photoUrl, thumbUrl] = await Promise.all([
-        uploadToR2(r2, key, buffer),
-        uploadToR2(r2, thumbKey, thumbBuf),
+        uploadToR2(r2, paths.full, buffer),
+        uploadToR2(r2, paths.thumb, thumbBuf),
       ]);
 
       uploaded++;

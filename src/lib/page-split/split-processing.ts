@@ -4,7 +4,7 @@
  */
 
 import sharp from 'sharp';
-import { storagePut } from '../storage';
+import { storagePut, pagePaths } from '../storage';
 import type { Db } from 'mongodb';
 import { ObjectId } from 'mongodb';
 
@@ -146,7 +146,8 @@ export async function cropAndUploadHalf(
   buffer: Buffer,
   crop: { xStart: number; xEnd: number },
   bookId: string,
-  pageId: string
+  pageId: string,
+  pageNumber?: number
 ): Promise<{ url: string; buffer: Buffer }> {
   // Get dimensions
   const metadata = await sharp(buffer).metadata();
@@ -169,16 +170,15 @@ export async function cropAndUploadHalf(
     .jpeg({ quality: 90, progressive: true })
     .toBuffer();
 
-  // Upload to Vercel Blob
-  const blob = await storagePut(
-    `cropped/${bookId}/${pageId}.jpg`,
-    croppedBuffer,
-    {
-      access: 'public',
-      contentType: 'image/jpeg',
-      allowOverwrite: true
-    }
-  );
+  // Upload to R2 — use new path convention if pageNumber provided, legacy path otherwise
+  const key = pageNumber != null
+    ? pagePaths(bookId, pageNumber).full
+    : `cropped/${bookId}/${pageId}.jpg`;
+  const blob = await storagePut(key, croppedBuffer, {
+    access: 'public',
+    contentType: 'image/jpeg',
+    allowOverwrite: true
+  });
 
   return { url: blob.url, buffer: croppedBuffer };
 }
@@ -189,19 +189,19 @@ export async function cropAndUploadHalf(
 export async function generateAndUploadThumbnail(
   croppedBuffer: Buffer,
   bookId: string,
-  pageId: string
+  pageId: string,
+  pageNumber?: number
 ): Promise<{ url: string }> {
   const thumbnailBuffer = await compress_photo(croppedBuffer, 150, 60);
-  const thumbnailBlob = await storagePut(
-    `uploads/${bookId}/thumbnails/${pageId}.jpg`,
-    thumbnailBuffer,
-    {
-      access: 'public',
-      contentType: 'image/jpeg',
-      addRandomSuffix: false,
-      allowOverwrite: true
-    }
-  );
+  const key = pageNumber != null
+    ? pagePaths(bookId, pageNumber).thumb
+    : `uploads/${bookId}/thumbnails/${pageId}.jpg`;
+  const thumbnailBlob = await storagePut(key, thumbnailBuffer, {
+    access: 'public',
+    contentType: 'image/jpeg',
+    addRandomSuffix: false,
+    allowOverwrite: true
+  });
 
   return { url: thumbnailBlob.url };
 }
@@ -254,15 +254,17 @@ export async function processSplitImage(
   const rightPageId = new ObjectId().toHexString();
 
   // Crop and upload both halves in parallel
+  const leftPageNumber = startPageNumber;
+  const rightPageNumber = startPageNumber + 1;
   const [leftResult, rightResult] = await Promise.all([
-    cropAndUploadHalf(buffer, leftCrop, bookId, leftPageId),
-    cropAndUploadHalf(buffer, rightCrop, bookId, rightPageId)
+    cropAndUploadHalf(buffer, leftCrop, bookId, leftPageId, leftPageNumber),
+    cropAndUploadHalf(buffer, rightCrop, bookId, rightPageId, rightPageNumber)
   ]);
 
   // Generate thumbnails in parallel
   const [leftThumbnail, rightThumbnail] = await Promise.all([
-    generateAndUploadThumbnail(leftResult.buffer, bookId, leftPageId),
-    generateAndUploadThumbnail(rightResult.buffer, bookId, rightPageId)
+    generateAndUploadThumbnail(leftResult.buffer, bookId, leftPageId, leftPageNumber),
+    generateAndUploadThumbnail(rightResult.buffer, bookId, rightPageId, rightPageNumber)
   ]);
 
   // Create left page

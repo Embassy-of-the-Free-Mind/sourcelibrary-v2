@@ -9,7 +9,7 @@
  * - Return page records ready for DB insertion
  */
 
-import { storagePut } from '../storage';
+import { storagePut, pagePaths, r2Url } from '../storage';
 import type { Db } from 'mongodb';
 import type { Page } from '../types/page';
 import { compress_photo, convertToJpeg } from '../image-manipulation';
@@ -74,9 +74,9 @@ export async function processImageUpload(
     filename = filename.replace(/\.jp2$/i, '.jpg');
   }
   
-  // STEP 1: Upload original image to Vercel Blob (now JPEG if it was JP2)  
-  const originalBlobPath = `uploads/${bookId}/${filename}`;
-  const originalBlob = await storagePut(originalBlobPath, buffer, {
+  // STEP 1: Upload full-res original to R2
+  const paths = pagePaths(bookId, nextPageNumber);
+  const originalBlob = await storagePut(paths.full, buffer, {
     access: 'public',
     contentType,
     addRandomSuffix: false
@@ -111,10 +111,9 @@ export async function processImageUpload(
   // STEP 3b: Process as single page (either not a spread, split failed, or skipSplitDetection=true)
   // Generate thumbnail from original buffer
   const thumbnailBuffer = await compress_photo(buffer, 150, 60);
-  const thumbnailBlobPath = `uploads/${bookId}/thumbnails/${filename}`;
-  const thumbnailBlob = await storagePut(thumbnailBlobPath, thumbnailBuffer, {
+  const thumbnailBlob = await storagePut(paths.thumb, thumbnailBuffer, {
     access: 'public',
-    contentType,
+    contentType: 'image/jpeg',
     addRandomSuffix: false
   });
 

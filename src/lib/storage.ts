@@ -91,6 +91,41 @@ export async function storagePut(
   return { url: blob.url, pathname: blob.pathname };
 }
 
+// --- Path helpers ---
+// Standard R2 path convention. All image storage should use these.
+// Given bookId + pageNumber, URLs are fully predictable without DB lookups.
+
+/** Page image paths — pages/{bookId}/{0001}.jpg, pages/{bookId}/{0001}-full.jpg, etc. */
+export function pagePaths(bookId: string, pageNumber: number) {
+  const num = String(pageNumber).padStart(4, '0');
+  const base = `pages/${bookId}/${num}`;
+  return {
+    full: `${base}-full.jpg`,       // full-res original (OCR, zoom, download)
+    display: `${base}.jpg`,          // 1200px wide (browser display)
+    thumb: `${base}-thumb.jpg`,      // 150px (browse grids, search)
+  };
+}
+
+/** Gallery image paths — gallery/{bookId}/{imageId}.jpg, etc. */
+export function galleryPaths(bookId: string, imageId: string) {
+  const base = `gallery/${bookId}/${imageId}`;
+  return {
+    full: `${base}-full.jpg`,
+    display: `${base}.jpg`,
+    thumb: `${base}-thumb.jpg`,
+  };
+}
+
+/** Book cover path */
+export function coverPath(bookId: string) {
+  return `covers/${bookId}.jpg`;
+}
+
+/** Convert an R2 key to its public URL */
+export function r2Url(key: string): string {
+  return `${getR2PublicUrl()}/${key}`;
+}
+
 async function r2Put(
   client: S3Client,
   pathname: string,
