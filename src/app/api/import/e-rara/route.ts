@@ -270,6 +270,7 @@ export const POST = withAuth(async (request, session) => {
         access_date: new Date(),
       },
       status: 'draft',
+      hidden: true,
       source_fingerprint: sourceFingerprint({ image_source: { provider: 'e-rara', identifier: numericId, iiif_manifest: manifestUrl } }),
       normalized_title: normalizeTitle(title),
       normalized_author: normalizeAuthor(author),

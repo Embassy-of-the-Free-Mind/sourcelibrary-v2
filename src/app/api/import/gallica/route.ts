@@ -182,6 +182,7 @@ export const POST = withAuth(async (request, session) => {
         access_date: new Date(),
       },
       status: 'draft',
+      hidden: true,
       source_fingerprint: sourceFingerprint({ gallica_ark: ark }),
       normalized_title: normalizeTitle(title),
       normalized_author: normalizeAuthor(author),
