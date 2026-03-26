@@ -84,7 +84,7 @@ export async function GET(request: NextRequest) {
 
     // Fetch all books' current cached values
     const books = await db.collection('books')
-      .find({}, { projection: { _id: 1, id: 1, language: 1, pages_count: 1, pages_ocr: 1, pages_translated: 1, pages_blank: 1, translation_percent: 1 } })
+      .find({}, { projection: { _id: 1, id: 1, pages_count: 1, pages_ocr: 1, pages_translated: 1, pages_blank: 1 } })
       .toArray();
 
     // Build bulk updates for books with mismatched counts
@@ -94,34 +94,18 @@ export async function GET(request: NextRequest) {
     for (const book of books) {
       const bookId = book.id || book._id?.toString();
       const actual = statsMap.get(bookId) || { pages_count: 0, pages_ocr: 0, pages_translated: 0, pages_blank: 0 };
-
-      // Pre-compute translation_percent (same logic as browse route)
-      let translationPercent = 0;
-      if (book.language === 'English') {
-        if (actual.pages_count > 0) {
-          translationPercent = Math.round((actual.pages_ocr / actual.pages_count) * 100);
-        }
-      } else {
-        const denominator = actual.pages_ocr - actual.pages_blank;
-        if (denominator > 0) {
-          translationPercent = Math.round((actual.pages_translated / denominator) * 100);
-        }
-      }
-
       const current = {
         pages_count: book.pages_count || 0,
         pages_ocr: book.pages_ocr || 0,
         pages_translated: book.pages_translated || 0,
         pages_blank: book.pages_blank || 0,
-        translation_percent: book.translation_percent ?? -1,
       };
 
       if (
         current.pages_count !== actual.pages_count ||
         current.pages_ocr !== actual.pages_ocr ||
         current.pages_translated !== actual.pages_translated ||
-        current.pages_blank !== actual.pages_blank ||
-        current.translation_percent !== translationPercent
+        current.pages_blank !== actual.pages_blank
       ) {
         mismatchCount++;
         bulkOps.push({
@@ -133,7 +117,6 @@ export async function GET(request: NextRequest) {
                 pages_ocr: actual.pages_ocr,
                 pages_translated: actual.pages_translated,
                 pages_blank: actual.pages_blank,
-                translation_percent: translationPercent,
                 updated_at: new Date(),
               }
             }

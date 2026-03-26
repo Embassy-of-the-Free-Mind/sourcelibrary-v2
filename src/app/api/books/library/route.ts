@@ -10,7 +10,7 @@ const DEFAULT_LIMIT = 100;
 // In-memory cache for common browse views (keyed by filter combination)
 const browseCache = new Map<string, { data: string; timestamp: number }>();
 const BROWSE_CACHE_TTL = 60_000; // 1 minute
-const MAX_CACHE_ENTRIES = 50;
+const MAX_CACHE_ENTRIES = 10;
 
 type SortOption = 'recent-translation' | 'recent' | 'title-asc' | 'title-desc' | 'date_asc' | 'date_desc';
 
@@ -50,9 +50,9 @@ export async function GET(request: NextRequest) {
     const hasTranslation = searchParams.get('has_translation') === 'true';
     const sort = (searchParams.get('sort') || 'recent-translation') as SortOption;
 
-    // Serve cached response for cacheable requests (no text search, reasonable pagination)
-    const isCacheable = !search.trim() && skip < 200;
-    const cacheKey = `s:${sort}|sk:${skip}|l:${limit}|ft:${firstTranslation}|ht:${hasTranslation}|lang:${language}|cat:${category}|col:${collection}|lib:${library}`;
+    // Serve cached response for cacheable requests (first page, default sort, no text search)
+    const isCacheable = !search.trim() && !category && !collection && !library && !language && sort === 'recent-translation' && skip === 0 && limit === DEFAULT_LIMIT;
+    const cacheKey = `ft:${firstTranslation}|ht:${hasTranslation}`;
     if (isCacheable) {
       const cached = browseCache.get(cacheKey);
       if (cached && (Date.now() - cached.timestamp) < BROWSE_CACHE_TTL) {
@@ -108,7 +108,29 @@ export async function GET(request: NextRequest) {
           pages_ocr: { $ifNull: ['$pages_ocr', 0] },
           last_processed: { $ifNull: ['$updated_at', '$created_at'] },
           last_translation_at: { $ifNull: ['$last_translation_at', null] },
-          translation_percent: { $ifNull: ['$translation_percent', 0] },
+        },
+      },
+      {
+        $addFields: {
+          translation_percent: {
+            $cond: {
+              if: { $eq: ['$language', 'English'] },
+              then: {
+                $cond: {
+                  if: { $gt: ['$pages_count', 0] },
+                  then: { $round: [{ $multiply: [{ $divide: ['$pages_ocr', '$pages_count'] }, 100] }] },
+                  else: 0,
+                },
+              },
+              else: {
+                $cond: {
+                  if: { $gt: [{ $subtract: ['$pages_ocr', { $ifNull: ['$pages_blank', 0] }] }, 0] },
+                  then: { $round: [{ $multiply: [{ $divide: ['$pages_translated', { $subtract: ['$pages_ocr', { $ifNull: ['$pages_blank', 0] }] }] }, 100] }] },
+                  else: 0,
+                },
+              },
+            },
+          },
           has_translations: { $cond: { if: { $gt: ['$last_translation_at', null] }, then: 1, else: 0 } },
           is_bph_translated: {
             $cond: {
@@ -125,6 +147,7 @@ export async function GET(request: NextRequest) {
           },
           quality_score: { $ifNull: ['$quality_score', 0] },
           sort_title: { $toLower: { $ifNull: ['$display_title', '$title'] } },
+          // When filtering by collection, extract the relevance score for sorting
           ...(collection ? {
             _collection_relevance: {
               $ifNull: [`$collection_relevance.${collection}`, 0],
