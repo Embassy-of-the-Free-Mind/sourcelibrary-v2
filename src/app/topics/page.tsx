@@ -117,7 +117,10 @@ async function fetchFacetCounts(): Promise<{ groups: FacetGroup[]; totalBooks: n
 }
 
 export default async function TopicsPage() {
-  const { groups, totalBooks } = await fetchFacetCounts();
+  const { groups, totalBooks } = await fetchFacetCounts().catch((err) => {
+    console.error('Facet counts fetch failed:', err);
+    return { groups: [] as FacetGroup[], totalBooks: 0 };
+  });
 
   return (
     <ContentPageLayout
