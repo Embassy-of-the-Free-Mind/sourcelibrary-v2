@@ -5,7 +5,7 @@ import TimelineClient from './TimelineClient';
 import type { Metadata } from 'next';
 import type { TimelineOverview, DecadeBucket } from '@/lib/api-client/types/timeline';
 
-export const dynamic = 'force-dynamic';
+export const revalidate = 300; // 5 minutes — timeline data changes rarely
 export const maxDuration = 30;
 
 export const metadata: Metadata = {

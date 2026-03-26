@@ -16,6 +16,10 @@
     {
       "path": "/api/cron/daily-pipeline-report",
       "schedule": "0 6 * * *"
+    },
+    {
+      "path": "/api/cron/warm",
+      "schedule": "*/5 * * * *"
     }
   ]
 }

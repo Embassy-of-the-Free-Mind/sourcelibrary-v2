@@ -216,7 +216,16 @@ export default function SearchPage() {
           setBookResults(bookData.results || []);
           setBookTotal(bookData.total || 0);
           setLoading(false); // Show results as soon as books arrive
-        }).catch(() => {});
+        }).catch(async () => {
+          // First attempt failed (likely cold start) — retry once
+          try {
+            const retryData = await searchApi.search(q, { ...bookFilters, search_content: 'true' });
+            setBookResults(retryData.results || []);
+            setBookTotal(retryData.total || 0);
+          } catch {
+            // Both attempts failed — finally block will clear loading
+          }
+        });
         searchApi.index(q, {}).then(indexData => {
           setIndexResults((indexData.results || []).slice(0, PREVIEW_INDEX));
           setIndexTotal(indexData.total || 0);
