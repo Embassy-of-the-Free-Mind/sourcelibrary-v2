@@ -38,23 +38,12 @@ export async function GET() {
 
   const pageTotals = pageTotalsAgg[0] ?? { pages: 0, translated: 0 };
 
-  // Shared organization object — NDE requires contactPoint and identifier
-  const sourceLibraryOrg = {
-    '@type': 'Organization',
-    '@id': 'https://sourcelibrary.org',
-    name: { '@language': 'en', '@value': 'Source Library' },
-    url: 'https://sourcelibrary.org',
-    description: {
-      '@language': 'en',
-      '@value': 'A digital library providing AI-translated access to pre-modern texts on Western esoteric traditions.',
-    },
-    identifier: 'https://sourcelibrary.org',
-    contactPoint: {
-      '@type': 'ContactPoint',
-      contactType: 'General inquiries',
-      url: 'https://sourcelibrary.org/about',
-      email: 'derek@sourcelibrary.org',
-    },
+  // NDE SHACL requires: Organization with name, contactPoint (with name), identifier
+  const slContact = {
+    '@type': 'ContactPoint',
+    name: { '@language': 'en', '@value': 'Source Library general inquiries' },
+    url: 'https://sourcelibrary.org/about',
+    email: 'derek@sourcelibrary.org',
   };
 
   const dataset = {
@@ -102,8 +91,22 @@ export async function GET() {
       'OCR',
       'machine translation',
     ],
-    creator: sourceLibraryOrg,
-    publisher: sourceLibraryOrg,
+    creator: {
+      '@type': 'Organization',
+      '@id': 'https://sourcelibrary.org/#organization',
+      name: { '@language': 'en', '@value': 'Source Library' },
+      url: 'https://sourcelibrary.org',
+      identifier: 'https://sourcelibrary.org',
+      contactPoint: slContact,
+    },
+    publisher: {
+      '@type': 'Organization',
+      '@id': 'https://sourcelibrary.org/#publisher',
+      name: { '@language': 'en', '@value': 'Source Library' },
+      url: 'https://sourcelibrary.org',
+      identifier: 'https://sourcelibrary.org',
+      contactPoint: slContact,
+    },
     isBasedOn: {
       '@type': 'Collection',
       name: { '@language': 'en', '@value': 'Bibliotheca Philosophica Hermetica' },
@@ -113,19 +116,6 @@ export async function GET() {
           'UNESCO Memory of the World (Netherlands) since 2022.',
       },
       url: 'https://embassyofthefreemind.com/en/library',
-      maintainer: {
-        '@type': 'Organization',
-        name: { '@language': 'en', '@value': 'Embassy of the Free Mind' },
-        url: 'https://embassyofthefreemind.com',
-        identifier: 'https://www.wikidata.org/entity/Q59455804',
-        address: {
-          '@type': 'PostalAddress',
-          streetAddress: 'Keizersgracht 123',
-          addressLocality: 'Amsterdam',
-          postalCode: '1015 CJ',
-          addressCountry: 'NL',
-        },
-      },
     },
     distribution: [
       {
