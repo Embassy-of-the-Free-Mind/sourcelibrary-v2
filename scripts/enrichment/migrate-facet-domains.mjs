@@ -139,7 +139,7 @@ async function splitEsotericArts(db) {
   console.log('=== Step 2: Split esoteric-arts → practice / divination ===\n');
 
   const books = await db.collection('books').find(
-    { 'faceted_tags.knowledge_domain': 'esoteric-arts', hidden: { $ne: true } },
+    { 'faceted_tags.knowledge_domain': 'esoteric-arts' },
     { projection: {
       title: 1, author: 1, language: 1, categories: 1,
       'reading_summary.overview': 1,
@@ -204,7 +204,7 @@ async function splitEsotericArts(db) {
             { _id: book._id },
             { $set: {
               'faceted_tags.knowledge_domain': unique,
-              'faceted_tags.tag_sources.knowledge_domain_migration': 'domain_v2_split',
+              'tag_sources.knowledge_domain_migration': 'domain_v2_split',
             }}
           );
         }
