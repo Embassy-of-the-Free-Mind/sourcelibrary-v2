@@ -176,32 +176,54 @@ export default function UsageTab({ days }: UsageTabProps) {
 /* --- Sub-components extracted from the monolith for readability --- */
 
 function PipelineFunnel({ funnel }: { funnel: Array<{ status: string; count: number }> }) {
-  const stageOrder = [
-    'complete', 'images_complete', 'images_submitted',
-    'chapters_complete', 'chapters', 'enriched', 'enriching',
-    'translate_complete', 'translate_submitted',
-    'metadata_enriched', 'ocr_complete', 'ocr_submitted',
-    'archive_complete', 'archiving', 'queued', 'failed',
+  // Build status → count lookup
+  const counts: Record<string, number> = {};
+  for (const s of funnel) counts[s.status || 'not_enrolled'] = s.count;
+  const c = (key: string) => counts[key] || 0;
+
+  // Pipeline stages in progression order (early → late)
+  const pipeline = [
+    'queued', 'archiving', 'archive_complete',
+    'ocr_submitted', 'ocr_complete', 'metadata_enriched',
+    'translate_submitted', 'translate_complete',
+    'enriching', 'enriched',
+    'chapters', 'chapters_complete',
+    'images_submitted', 'images_complete',
+    'complete',
   ];
-  const stageLabels: Record<string, string> = {
-    complete: 'Complete', images_complete: 'Images done', images_submitted: 'Extracting images',
-    chapters_complete: 'Chapters done', chapters: 'Extracting chapters',
-    enriched: 'Enriched', enriching: 'Enriching',
-    translate_complete: 'Translated', translate_submitted: 'Translating...',
-    metadata_enriched: 'Metadata enriched', ocr_complete: 'OCR complete', ocr_submitted: 'OCR in progress...',
-    archive_complete: 'Archived', archiving: 'Archiving...', queued: 'Queued', failed: 'Failed',
-    not_enrolled: 'Not enrolled',
+
+  // Cumulative: books that reached at least this stage
+  const sumFrom = (idx: number) => {
+    let total = 0;
+    for (let i = idx; i < pipeline.length; i++) total += c(pipeline[i]);
+    return total;
   };
-  const stageColors: Record<string, string> = {
-    complete: '#22c55e', failed: 'var(--accent-rust)', not_enrolled: 'var(--text-muted)',
-  };
-  const activeStages = ['ocr_submitted', 'translate_submitted', 'archiving', 'enriching', 'chapters', 'images_submitted'];
-  const sorted = [...funnel].sort((a, b) => {
-    const ai = stageOrder.indexOf(a.status);
-    const bi = stageOrder.indexOf(b.status);
-    return (ai === -1 ? 99 : ai) - (bi === -1 ? 99 : bi);
-  });
-  const maxCount = Math.max(...sorted.map(s => s.count));
+
+  const tiers = [
+    { label: 'Enrolled', count: sumFrom(0), color: 'var(--accent-violet)' },
+    { label: 'Archived', count: sumFrom(pipeline.indexOf('archive_complete')), color: '#6366f1' },
+    { label: 'OCR Complete', count: sumFrom(pipeline.indexOf('ocr_complete')), color: 'var(--accent-sage)' },
+    { label: 'Translated', count: sumFrom(pipeline.indexOf('translate_complete')), color: 'var(--accent-rust)' },
+    { label: 'Enriched', count: sumFrom(pipeline.indexOf('enriched')), color: 'var(--accent-gold-dark)' },
+    { label: 'Complete', count: c('complete'), color: '#22c55e' },
+  ];
+
+  const notEnrolled = c('not_enrolled');
+  const needsAttention = c('needs_attention') + c('failed');
+  const maxCount = tiers[0].count || 1;
+
+  // In-progress stages for pills
+  const active = [
+    { label: 'Archiving', count: c('archiving') },
+    { label: 'OCR running', count: c('ocr_submitted') },
+    { label: 'Translating', count: c('translate_submitted') },
+    { label: 'Enriching', count: c('enriching') },
+    { label: 'Chapters', count: c('chapters') },
+    { label: 'Images', count: c('images_submitted') },
+  ].filter(s => s.count > 0);
+
+  // Width as percentage of container (30% min, 100% max)
+  const pctFor = (count: number) => 30 + (count / maxCount) * 70;
 
   return (
     <div className="p-6 rounded-xl" style={{ background: 'var(--bg-white)', border: '1px solid var(--border-light)' }}>
@@ -209,33 +231,55 @@ function PipelineFunnel({ funnel }: { funnel: Array<{ status: string; count: num
         <ListChecks className="w-5 h-5" style={{ color: 'var(--accent-violet)' }} />
         Pipeline Funnel
       </h2>
-      <div className="space-y-2">
-        {sorted.map(stage => (
-          <div key={stage.status} className="flex items-center gap-3">
-            <div className="w-[140px] text-xs text-right truncate" style={{
-              color: stage.status === 'failed' ? 'var(--accent-rust)' : 'var(--text-muted)',
-              fontWeight: stage.status === 'complete' || stage.status === 'failed' ? 600 : 400,
-            }}>
-              {stageLabels[stage.status] || stage.status}
-              {activeStages.includes(stage.status) && (
-                <Loader2 className="w-3 h-3 inline ml-1 animate-spin" />
-              )}
+
+      {/* Funnel tiers — each is a CSS clip-path trapezoid */}
+      <div className="flex flex-col items-center" style={{ gap: '1px' }}>
+        {tiers.map((tier, i) => {
+          const topPct = pctFor(tier.count);
+          const botPct = i < tiers.length - 1
+            ? pctFor(tiers[i + 1].count)
+            : topPct * 0.7;
+
+          return (
+            <div
+              key={tier.label}
+              className="w-full flex items-center justify-center text-white text-sm"
+              style={{
+                height: 38,
+                background: tier.color,
+                clipPath: `polygon(${50 - topPct / 2}% 0, ${50 + topPct / 2}% 0, ${50 + botPct / 2}% 100%, ${50 - botPct / 2}% 100%)`,
+              }}
+              title={`${tier.label}: ${tier.count.toLocaleString()} books${i > 0 ? ` (${Math.round((tier.count / tiers[0].count) * 100)}% of enrolled)` : ''}`}
+            >
+              <span className="font-medium mr-2">{tier.label}</span>
+              <span className="font-bold">{tier.count.toLocaleString()}</span>
             </div>
-            <div className="flex-1 h-5 rounded overflow-hidden" style={{ background: 'var(--bg-warm)' }}>
-              <div
-                className="h-full rounded flex items-center justify-end pr-2 text-xs font-medium text-white"
-                style={{
-                  width: `${Math.max(8, (stage.count / maxCount) * 100)}%`,
-                  background: stageColors[stage.status] || 'var(--accent-violet)',
-                  minWidth: '32px',
-                }}
-              >
-                {stage.count}
-              </div>
-            </div>
-          </div>
-        ))}
+          );
+        })}
       </div>
+
+      {/* Active stages + callouts */}
+      {(active.length > 0 || notEnrolled > 0 || needsAttention > 0) && (
+        <div className="flex flex-wrap gap-2 mt-4 pt-3 border-t" style={{ borderColor: 'var(--border-light)' }}>
+          {active.map(s => (
+            <span key={s.label} className="text-xs px-2 py-1 rounded-full flex items-center gap-1" style={{ background: 'var(--bg-warm)', color: 'var(--text-muted)' }}>
+              <Loader2 className="w-3 h-3 animate-spin" />
+              {s.label}: {s.count}
+            </span>
+          ))}
+          {notEnrolled > 0 && (
+            <span className="text-xs px-2 py-1 rounded-full" style={{ background: 'var(--bg-warm)', color: 'var(--text-muted)' }}>
+              {notEnrolled.toLocaleString()} not enrolled
+            </span>
+          )}
+          {needsAttention > 0 && (
+            <span className="text-xs px-2 py-1 rounded-full flex items-center gap-1" style={{ background: '#fef2f2', color: 'var(--accent-rust)' }}>
+              <AlertTriangle className="w-3 h-3" />
+              {needsAttention} need attention
+            </span>
+          )}
+        </div>
+      )}
     </div>
   );
 }
