@@ -223,6 +223,7 @@ export const POST = withAuth(async (request, session) => {
       },
       page_count_source: pageCountSource,
       status: 'draft',
+      hidden: true,
       source_fingerprint: sourceFingerprint({ ia_identifier }),
       normalized_title: normalizeTitle(title),
       normalized_author: normalizeAuthor(author),

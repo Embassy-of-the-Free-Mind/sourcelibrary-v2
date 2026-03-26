@@ -58,6 +58,27 @@ const enrichment = await db.collection('books').aggregate([
 ]).toArray();
 ```
 
+### 2b. First Translation Milestones
+
+```javascript
+// First translations into English (root-level boolean, set by Stage 2 verification)
+const firstTranslations = await db.collection('books').countDocuments({
+  is_first_translation: true
+});
+console.log(`First translations into English: ${firstTranslations}`);
+
+// >90% translated books
+const near90 = await db.collection('books').countDocuments({
+  status: { $ne: 'deleted' },
+  pages_count: { $gt: 0 },
+  pages_translated: { $gt: 0 },
+  $expr: { $gte: ['$pages_translated', { $multiply: ['$pages_count', 0.9] }] }
+});
+console.log(`>90% translated: ${near90}`);
+```
+
+**IMPORTANT:** The first-translation flag is `is_first_translation` at the book root level (NOT `translation_verification.is_first_translation`). It's a boolean derived from the `translation_verification.disposition` field — `true` for `confirmed_first`, `first_complete_translation`, and `first_modern_translation`.
+
 ### 3. Image Extraction & Gallery
 
 ```javascript
@@ -184,7 +205,11 @@ Pipeline Status — [timestamp]
 Dashboard: https://sourcelibrary.org/analytics (Pipeline tab)
 
 Pipeline funnel: Z queued → W archiving → ... → N complete
-Fully translated: X books
+
+Milestones:
+  Fully translated:          X books
+  >90% translated:           X books
+  First translations (EN):   X books  ← is_first_translation: true
 
 Enrichment coverage (of Y total books):
   OCR:              X (Z%)

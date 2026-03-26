@@ -225,6 +225,7 @@ for (let i = 0; i < candidates.length; i++) {
       },
       normalized_title: pressmark.toLowerCase().replace(/[^a-z0-9\s]/g, '').replace(/\s+/g, ' ').trim(),
       normalized_author: '',
+      hidden: true,
       pipeline_status: 'archive_complete',
       created_at: new Date(),
       updated_at: new Date(),

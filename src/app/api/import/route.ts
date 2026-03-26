@@ -105,6 +105,7 @@ export const POST = withAuth(async (request, session) => {
       pageCount: pageFiles.length,
       pages_count: pageFiles.length,
       status: 'draft',
+      hidden: true,
       created_at: new Date(),
       updated_at: new Date()
     };

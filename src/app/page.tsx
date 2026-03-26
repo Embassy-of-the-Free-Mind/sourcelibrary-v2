@@ -318,8 +318,8 @@ async function getCollectionShowcase() {
 
 async function getBookCounts(): Promise<{ totalBooks: number; translatedToEnglish: number; firstTranslationCount: number }> {
   // Hardcoded to avoid a 22s full-collection aggregation that was timing out the homepage.
-  // TODO: replace with a cached/indexed query. Actual counts as of 2026-03-17 (post-curation).
-  return { totalBooks: 4469, translatedToEnglish: 3746, firstTranslationCount: 1977 };
+  // TODO: replace with a cached/indexed query. Actual counts as of 2026-03-26.
+  return { totalBooks: 5167, translatedToEnglish: 5167, firstTranslationCount: 2916 };
 }
 
 // ---------- Hardcoded fallback data (DB resilience) ----------
@@ -442,7 +442,9 @@ export default async function HomePage() {
                   Collections
                 </h2>
                 <p className="text-muted mt-2">
-                  {counts.totalBooks.toLocaleString('en-US')} books &middot; {counts.translatedToEnglish.toLocaleString('en-US')} translated to English &middot; {counts.firstTranslationCount.toLocaleString('en-US')} for the first time
+                  <Link href="/search?has_translation=true" className="hover:text-accent-rust transition-colors">{counts.translatedToEnglish.toLocaleString('en-US')} translated books and manuscripts</Link>
+                  {' '}&middot;{' '}
+                  <Link href="/search?first_translation=true" className="hover:text-accent-rust transition-colors">{counts.firstTranslationCount.toLocaleString('en-US')} for the first time</Link>
                 </p>
               </div>
               <Link

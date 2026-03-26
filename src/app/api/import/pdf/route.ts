@@ -231,6 +231,7 @@ export const POST = withAuth(async (request) => {
       ...(catalog_metadata ? { catalog_metadata } : {}),
       page_count_source: 'pdf_extraction',
       status: 'draft',
+      hidden: true,
       source_fingerprint: sourceFingerprint({ image_source: { provider, identifier: identifier || undefined, pdf_url } }),
       normalized_title: normalizeTitle(title),
       normalized_author: normalizeAuthor(author),

@@ -2502,6 +2502,11 @@ async function run() {
 
         if (!DRY_RUN) {
           await setPipelineStatus(db, book.id, 'complete', { completed_at: new Date() });
+          // Auto-unhide: books that completed the full pipeline should be visible
+          await db.collection('books').updateOne(
+            { id: book.id, hidden: true },
+            { $set: { hidden: false, updated_at: new Date() }, $unset: { hidden_reason: '' } }
+          );
         }
         log.finalized++;
         console.log(`  Finalized: ${book.title}`);

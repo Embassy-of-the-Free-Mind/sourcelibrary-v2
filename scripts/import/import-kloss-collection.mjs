@@ -293,6 +293,7 @@ async function importRecord(db, record, index, total) {
       },
       page_count_source: 'pdf_extraction',
       status: 'draft',
+      hidden: true,
       created_at: now,
       updated_at: now,
     };

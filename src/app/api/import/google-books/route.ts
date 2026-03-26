@@ -195,6 +195,7 @@ export const POST = withAuth(async (request, session) => {
         access_date: new Date(),
       },
       status: 'draft',
+      hidden: true,
       source_fingerprint: sourceFingerprint({ ia_identifier, google_books_id }),
       normalized_title: normalizeTitle(title),
       normalized_author: normalizeAuthor(author),
