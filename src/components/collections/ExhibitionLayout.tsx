@@ -25,6 +25,7 @@ interface BookRef {
 interface GalleryImage {
   id: string;
   book_id: string;
+  page_id?: string;
   book_title: string;
   type?: string;
   museum_description?: string;
@@ -59,6 +60,11 @@ function bookTitle(book: BookRef): string {
 
 function imageUrl(img: GalleryImage): string {
   return img.extracted_url || img.thumbnail_url || img.image_url || '';
+}
+
+function imagePageHref(img: GalleryImage): string {
+  if (img.page_id) return `/book/${img.book_id}/page/${img.page_id}`;
+  return `/book/${img.book_id}`;
 }
 
 // ─── Helper: Link book titles in text ───────────────────────────
@@ -374,7 +380,7 @@ function FeaturedImageBlock({ image, caption }: {
   const src = image ? imageUrl(image) : '';
   if (!src) return null;
 
-  return (
+  const inner = (
     <figure className="rounded-xl overflow-hidden border border-border-light">
       <div className="relative aspect-[16/9] sm:aspect-[2/1] bg-dark">
         <Image
@@ -390,6 +396,16 @@ function FeaturedImageBlock({ image, caption }: {
       </figcaption>
     </figure>
   );
+
+  if (image?.book_id) {
+    return (
+      <Link href={imagePageHref(image)} className="block hover:opacity-95 transition-opacity">
+        {inner}
+      </Link>
+    );
+  }
+
+  return inner;
 }
 
 // ─── Component: Reading Paths ───────────────────────────────────
@@ -495,7 +511,7 @@ function GalleryGridBlock({ embeddedImages, fallbackImages, indices }: {
         return (
           <Link
             key={img.id}
-            href={`/book/${img.book_id}`}
+            href={imagePageHref(img)}
             className="group relative aspect-square rounded-lg overflow-hidden border border-border-light hover:border-accent-rust/40 transition-all hover:shadow-md"
             title={img.museum_description}
           >
