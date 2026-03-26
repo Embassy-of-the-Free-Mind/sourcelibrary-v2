@@ -817,6 +817,8 @@ export default async function HomePage() {
               <Link href="/browse/authors/A" className="text-stone-600 hover:text-accent-rust transition-colors underline underline-offset-2">author</Link>
               {' '}&middot;{' '}
               <Link href="/browse/years/1500s" className="text-stone-600 hover:text-accent-rust transition-colors underline underline-offset-2">year</Link>
+              {' '}&middot;{' '}
+              <Link href="/gallery" className="text-stone-600 hover:text-accent-rust transition-colors underline underline-offset-2">images</Link>
             </p>
           </div>
         </section>
