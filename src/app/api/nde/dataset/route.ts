@@ -38,18 +38,43 @@ export async function GET() {
 
   const pageTotals = pageTotalsAgg[0] ?? { pages: 0, translated: 0 };
 
+  // Shared organization object — NDE requires contactPoint and identifier
+  const sourceLibraryOrg = {
+    '@type': 'Organization',
+    '@id': 'https://sourcelibrary.org',
+    name: { '@language': 'en', '@value': 'Source Library' },
+    url: 'https://sourcelibrary.org',
+    description: {
+      '@language': 'en',
+      '@value': 'A digital library providing AI-translated access to pre-modern texts on Western esoteric traditions.',
+    },
+    identifier: 'https://sourcelibrary.org',
+    contactPoint: {
+      '@type': 'ContactPoint',
+      contactType: 'General inquiries',
+      url: 'https://sourcelibrary.org/about',
+      email: 'derek@sourcelibrary.org',
+    },
+  };
+
   const dataset = {
     '@context': 'https://schema.org/',
     '@type': 'Dataset',
     '@id': 'https://sourcelibrary.org/api/nde/dataset',
-    name: 'Bibliotheca Philosophica Hermetica — Source Library Digital Edition',
+    name: {
+      '@language': 'en',
+      '@value': 'Bibliotheca Philosophica Hermetica — Source Library Digital Edition',
+    },
     alternateName: 'BPH Collection on Source Library',
-    description:
-      `Digital facsimiles, OCR transcriptions, and AI-assisted English translations of ${totalBooks} books ` +
-      `(${pageTotals.pages.toLocaleString()} pages) from the Bibliotheca Philosophica Hermetica (BPH), ` +
-      `housed at the Embassy of the Free Mind in Amsterdam. The collection covers Hermetica, alchemy, ` +
-      `Kabbalah, Rosicrucianism, and Western esoteric traditions from the 15th–19th centuries. ` +
-      `${pageTotals.translated.toLocaleString()} pages have been translated into English.`,
+    description: {
+      '@language': 'en',
+      '@value':
+        `Digital facsimiles, OCR transcriptions, and AI-assisted English translations of ${totalBooks} books ` +
+        `(${pageTotals.pages.toLocaleString()} pages) from the Bibliotheca Philosophica Hermetica (BPH), ` +
+        `housed at the Embassy of the Free Mind in Amsterdam. The collection covers Hermetica, alchemy, ` +
+        `Kabbalah, Rosicrucianism, and Western esoteric traditions from the 15th–19th centuries. ` +
+        `${pageTotals.translated.toLocaleString()} pages have been translated into English.`,
+    },
     url: 'https://sourcelibrary.org/libraries/bibliotheca-philosophica-hermetica',
     mainEntityOfPage: 'https://sourcelibrary.org/libraries/bibliotheca-philosophica-hermetica',
     license: 'https://creativecommons.org/licenses/by-nc-sa/4.0/',
@@ -59,6 +84,12 @@ export async function GET() {
       '@type': 'Place',
       name: 'Europe',
     },
+    genre: [
+      'http://vocab.getty.edu/aat/300055911', // alchemy
+      'http://vocab.getty.edu/aat/300264849', // Hermetica
+      'http://vocab.getty.edu/aat/300055918', // Kabbalah
+      'http://vocab.getty.edu/aat/300055915', // Rosicrucianism
+    ],
     keywords: [
       'Hermetica',
       'alchemy',
@@ -71,31 +102,22 @@ export async function GET() {
       'OCR',
       'machine translation',
     ],
-    creator: {
-      '@type': 'Organization',
-      '@id': 'https://sourcelibrary.org',
-      name: 'Source Library',
-      url: 'https://sourcelibrary.org',
-      description:
-        'A digital library providing AI-translated access to pre-modern texts on Western esoteric traditions.',
-    },
-    publisher: {
-      '@type': 'Organization',
-      '@id': 'https://sourcelibrary.org',
-      name: 'Source Library',
-      url: 'https://sourcelibrary.org',
-    },
+    creator: sourceLibraryOrg,
+    publisher: sourceLibraryOrg,
     isBasedOn: {
       '@type': 'Collection',
-      name: 'Bibliotheca Philosophica Hermetica',
-      description:
-        'The Ritman Library collection at the Embassy of the Free Mind, Amsterdam. ' +
-        'UNESCO Memory of the World (Netherlands) since 2022.',
+      name: { '@language': 'en', '@value': 'Bibliotheca Philosophica Hermetica' },
+      description: {
+        '@language': 'en',
+        '@value': 'The Ritman Library collection at the Embassy of the Free Mind, Amsterdam. ' +
+          'UNESCO Memory of the World (Netherlands) since 2022.',
+      },
       url: 'https://embassyofthefreemind.com/en/library',
       maintainer: {
         '@type': 'Organization',
-        name: 'Embassy of the Free Mind',
+        name: { '@language': 'en', '@value': 'Embassy of the Free Mind' },
         url: 'https://embassyofthefreemind.com',
+        identifier: 'https://www.wikidata.org/entity/Q59455804',
         address: {
           '@type': 'PostalAddress',
           streetAddress: 'Keizersgracht 123',
@@ -108,21 +130,12 @@ export async function GET() {
     distribution: [
       {
         '@type': 'DataDownload',
-        name: 'IIIF Presentation API (per-book manifests)',
-        contentUrl: 'https://sourcelibrary.org/api/iiif/{book_id}/manifest',
-        encodingFormat: 'application/ld+json',
-        description:
-          'IIIF Presentation API v3 manifests for each digitized book. ' +
-          'Replace {book_id} with a Source Library book identifier.',
-      },
-      {
-        '@type': 'DataDownload',
         name: 'Dataset REST API',
-        contentUrl: 'https://sourcelibrary.org/api/dataset/v1/books?library=bph',
+        contentUrl: 'https://sourcelibrary.org/api/dataset/v1/stats',
         encodingFormat: 'application/json',
         description:
-          'Paginated JSON API returning book metadata, OCR text, and translations. ' +
-          'Requires an API key (see https://sourcelibrary.org/dataset).',
+          'JSON API returning book metadata, OCR text, and translations for BPH holdings. ' +
+          'Full access requires an API key (see https://sourcelibrary.org/dataset).',
         usageInfo: 'https://sourcelibrary.org/dataset#api',
       },
       {
@@ -133,6 +146,7 @@ export async function GET() {
         description: 'Browse and read BPH books with page-level OCR and English translations.',
       },
     ],
+    dateCreated: '2024-01-01',
     datePublished: '2024-01-01',
     dateModified: new Date().toISOString().split('T')[0],
     measurementTechnique:
