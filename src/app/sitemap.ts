@@ -198,11 +198,11 @@ export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
         };
       });
 
-    // Encyclopedia entities — only substantial entries to focus crawl budget
-    // Raised threshold from 5→20 books: 7,780 entities at ≥5 overwhelmed crawl budget
-    // and most were too thin to index (just a name + book list)
+    // Encyclopedia entities — include entries with descriptions (useful content for search)
+    // Previously threshold was 20 books — too aggressive, hid entities like Hermeticism/Neoplatonism.
+    // Now: ≥5 books AND must have a description (filters out thin stubs).
     const entities = await db.collection('entities').find(
-      { book_count: { $gte: 20 }, description: { $exists: true, $ne: '' } },
+      { book_count: { $gte: 5 }, description: { $exists: true, $ne: '' } },
       { projection: { name: 1, updated_at: 1, book_count: 1 } }
     ).toArray();
 
@@ -249,9 +249,50 @@ export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
       priority: 0.5,
     }));
 
-    // NOTE: /read and /guide pages removed from sitemap to improve indexing.
-    // For a new domain, focus on book landing pages only.
-    // Individual page URLs also removed — can be discovered via internal links.
+    // Language pages — aggregate distinct languages with enough content
+    const languages = await db.collection('books').aggregate([
+      { $match: { hidden: { $ne: true }, pages_count: { $gt: 0 }, language: { $exists: true, $ne: null } } },
+      { $group: { _id: '$language', count: { $sum: 1 } } },
+      { $match: { count: { $gte: 5 } } },
+    ]).toArray();
+
+    const languagePages: MetadataRoute.Sitemap = languages.map((lang) => ({
+      url: `${baseUrl}/languages/${(lang._id as string).toLowerCase().replace(/\s+/g, '-')}`,
+      lastModified: new Date(),
+      changeFrequency: 'weekly' as const,
+      priority: 0.5,
+    }));
+
+    // Gallery images — unique historical illustrations with rich metadata
+    // Only include images with museum descriptions (well-curated content)
+    const galleryImages = await db.collection('pages').aggregate([
+      { $match: { 'detected_images': { $exists: true, $ne: [] } } },
+      { $unwind: { path: '$detected_images', includeArrayIndex: 'img_idx' } },
+      { $match: { 'detected_images.museum_description': { $exists: true, $ne: '' } } },
+      { $project: { id: 1, img_idx: 1 } },
+      { $limit: 2000 },
+    ]).toArray();
+
+    const galleryPages: MetadataRoute.Sitemap = galleryImages.map((img) => ({
+      url: `${baseUrl}/gallery/image/${img.id}-${img.img_idx}`,
+      lastModified: new Date(),
+      changeFrequency: 'monthly' as const,
+      priority: 0.4,
+    }));
+
+    // Work pages — multi-edition comparison pages
+    const works = await db.collection('books').aggregate([
+      { $match: { work_id: { $exists: true, $ne: null }, hidden: { $ne: true } } },
+      { $group: { _id: '$work_id', count: { $sum: 1 } } },
+      { $match: { count: { $gte: 2 } } },
+    ]).toArray();
+
+    const workPages: MetadataRoute.Sitemap = works.map((w) => ({
+      url: `${baseUrl}/work/${w._id}`,
+      lastModified: new Date(),
+      changeFrequency: 'monthly' as const,
+      priority: 0.5,
+    }));
 
     return [
       ...staticPages,
@@ -262,6 +303,9 @@ export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
       ...entityPages,
       ...collectionPages,
       ...libraryPages,
+      ...languagePages,
+      ...galleryPages,
+      ...workPages,
     ];
   } catch (error) {
     console.error('Error generating sitemap:', error);

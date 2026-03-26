@@ -86,7 +86,7 @@ export async function generateMetadata({ params }: Props): Promise<Metadata> {
   } catch {
     return { title: 'Source Library', robots: { index: false, follow: false } };
   }
-  if (!match) return { title: 'Topic Not Found - Source Library' };
+  if (!match) return { title: 'Topic Not Found - Source Library', robots: { index: false, follow: true } };
 
   return {
     title: `${match._id} | Source Library`,

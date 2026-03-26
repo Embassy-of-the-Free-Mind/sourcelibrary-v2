@@ -48,7 +48,7 @@ export async function generateMetadata({ params }: PageProps): Promise<Metadata>
   } catch {
     return { title: 'Source Library', robots: { index: false, follow: false } };
   }
-  if (editions.length === 0) return { title: 'Work Not Found' };
+  if (editions.length === 0) return { title: 'Work Not Found', robots: { index: false, follow: true } };
 
   const title = workTitle(id);
   const libraries = new Set(editions.map(e => (e as unknown as { image_source?: { provider_name?: string } }).image_source?.provider_name).filter(Boolean));

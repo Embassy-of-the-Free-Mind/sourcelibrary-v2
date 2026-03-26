@@ -18,7 +18,7 @@ export async function generateMetadata({ params }: Props): Promise<Metadata> {
   } catch {
     return { title: 'Source Library', robots: { index: false, follow: false } };
   }
-  if (!ep) return { title: 'Episode Not Found - SHWEP Reading Room' };
+  if (!ep) return { title: 'Episode Not Found - SHWEP Reading Room', robots: { index: false, follow: true } };
   return {
     title: `${ep.title} - SHWEP Reading Room`,
     description: ep.description || `Primary sources discussed in SHWEP episode ${ep.number}.`,

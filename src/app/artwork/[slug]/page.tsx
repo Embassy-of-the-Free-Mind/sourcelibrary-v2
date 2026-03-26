@@ -79,7 +79,7 @@ export async function generateMetadata({ params }: PageProps): Promise<Metadata>
   } catch {
     return { title: 'Source Library', robots: { index: false, follow: false } };
   }
-  if (!data) return { title: 'Not Found' };
+  if (!data) return { title: 'Not Found', robots: { index: false, follow: true } };
   const { artwork } = data;
   return {
     title: `${artwork.display_title || artwork.title} — ${artwork.author} — Source Library`,
