@@ -279,9 +279,16 @@ async function fetchBufferWithMimeType(
   const timeoutId = setTimeout(() => controller.abort(), timeout);
 
   try {
+    // Use an explicit Headers object to prevent Next.js from propagating
+    // incoming request headers (e.g. Authorization) into this outbound fetch.
+    // Pre-signed S3 URLs carry their own auth — a forwarded Authorization header
+    // causes AWS to reject the request with "Invalid character in header content".
+    const headers = new Headers();
+    headers.set('User-Agent', USER_AGENT);
+
     const response = await fetch(url, {
       signal: controller.signal,
-      headers: { 'User-Agent': USER_AGENT },
+      headers,
     });
 
     clearTimeout(timeoutId);
