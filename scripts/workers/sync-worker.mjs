@@ -329,6 +329,104 @@ async function syncAuthorSlugs(db) {
   return { author_slugs: Object.keys(slugs).length };
 }
 
+// ── Refresh Analytics Snapshot ──
+
+async function refreshAnalyticsSnapshot(db) {
+  console.log('\n--- Refresh Analytics Snapshot ---');
+  const start = Date.now();
+
+  const cursor = db.collection('books').find(
+    { pages_count: { $gt: 0 } },
+    {
+      projection: {
+        pages_count: 1, pages_ocr: 1, pages_translated: 1,
+        'pipeline_auto.status': 1, language: 1, 'image_source.provider': 1,
+      },
+      batchSize: 5000,
+    }
+  );
+
+  let totalBooks = 0, totalPages = 0, pagesWithOcr = 0, pagesWithTranslation = 0;
+  let fullyTranslated = 0, oldOcrPages = 0;
+  const funnelMap = new Map();
+  const langMap = new Map();
+  const providerMap = new Map();
+
+  for await (const book of cursor) {
+    totalBooks++;
+    const pc = book.pages_count || 0;
+    const po = book.pages_ocr || 0;
+    const pt = book.pages_translated || 0;
+    totalPages += pc;
+    pagesWithOcr += po;
+    pagesWithTranslation += pt;
+
+    const status = book.pipeline_auto?.status || null;
+    funnelMap.set(status, (funnelMap.get(status) || 0) + 1);
+
+    const lang = book.language || 'Unknown';
+    langMap.set(lang, (langMap.get(lang) || 0) + 1);
+
+    const prov = book.image_source?.provider || 'unknown';
+    providerMap.set(prov, (providerMap.get(prov) || 0) + 1);
+
+    if (po > 0 && pt / po >= 0.95) fullyTranslated++;
+    if (!status && po > 0) oldOcrPages += po;
+  }
+
+  const pipelineFunnel = Array.from(funnelMap.entries())
+    .map(([status, count]) => ({ status: status || 'not_enrolled', count }))
+    .sort((a, b) => b.count - a.count);
+
+  const byLanguage = Array.from(langMap.entries())
+    .map(([_id, count]) => ({ _id, count }))
+    .sort((a, b) => b.count - a.count)
+    .slice(0, 15);
+
+  const byProvider = Array.from(providerMap.entries())
+    .map(([_id, count]) => ({ _id, count }))
+    .sort((a, b) => b.count - a.count);
+
+  const snapshot = {
+    canon: {
+      total_books: totalBooks,
+      total_pages: totalPages,
+      readable_books: fullyTranslated,
+      first_translations: 0,
+      first_translations_complete: fullyTranslated,
+    },
+    coverage: {
+      ocr_pages: pagesWithOcr,
+      ocr_percent: totalPages > 0 ? Math.round((pagesWithOcr / totalPages) * 1000) / 10 : 0,
+      translated_pages: pagesWithTranslation,
+      translated_percent: totalPages > 0 ? Math.round((pagesWithTranslation / totalPages) * 1000) / 10 : 0,
+    },
+    enrichment: { with_summary: 0, with_index: 0, with_chapters: 0, with_editions: 0 },
+    splitting: { needsSplitting: 0, alreadySplit: 0, noSplitNeeded: 0, unchecked: 0, booksWithSplitPages: 0 },
+    ocrBlocked: 0,
+    oldOcrPages,
+    pipelineFunnel,
+    byLanguage,
+    byCategory: [],
+    byProvider,
+  };
+
+  if (!DRY_RUN) {
+    await db.collection('system_config').updateOne(
+      { _id: 'analytics_usage' },
+      { $set: { data: snapshot, updated_at: new Date().toISOString() } },
+      { upsert: true }
+    );
+  }
+
+  const elapsed = ((Date.now() - start) / 1000).toFixed(1);
+  console.log(`  ${totalBooks} books scanned in ${elapsed}s`);
+  console.log(`  Pages: ${totalPages} | OCR: ${pagesWithOcr} (${snapshot.coverage.ocr_percent}%) | Translated: ${pagesWithTranslation} (${snapshot.coverage.translated_percent}%)`);
+  console.log(`  Funnel: ${pipelineFunnel.slice(0, 5).map(s => `${s.status}: ${s.count}`).join(', ')}`);
+
+  return { books_scanned: totalBooks, elapsed_s: parseFloat(elapsed) };
+}
+
 // ── Main ──
 
 async function run() {
@@ -351,6 +449,11 @@ async function run() {
   // Always sync author slugs (fast, no flag needed)
   await syncAuthorSlugs(db);
 
+  // Refresh analytics snapshot (cursor-based, ~3 min)
+  if (!GALLERY_ONLY) {
+    await refreshAnalyticsSnapshot(db);
+  }
+
   const duration = Date.now() - startTime;
 
   console.log(`\n=== SYNC COMPLETE (${(duration / 1000).toFixed(1)}s) ===`);
@@ -371,7 +474,7 @@ async function run() {
       },
       errors: [],
       error_count: 0,
-      summary: `Counts: ${countsResult.mismatches || 0} mismatches, ${countsResult.updated || 0} updated. Gallery: ${galleryResult.synced || 0} pages synced.`,
+      summary: `Counts: ${countsResult.mismatches || 0} mismatches, ${countsResult.updated || 0} updated. Gallery: ${galleryResult.synced || 0} pages synced. Analytics snapshot refreshed.`,
     }).catch(() => {});
   }
 
