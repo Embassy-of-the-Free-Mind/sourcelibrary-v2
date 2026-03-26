@@ -24,8 +24,10 @@ export const GET = withAuth(async (request, session) => {
 
     // === 4 queries total (down from ~25) using $facet ===
     const [booksFacetArr, recentBooksResult, geminiUsageFacetArr, batchJobsResult, highFailureBooks] = await Promise.all([
-      // 1. SINGLE books $facet — one scan of ~5k docs for ALL book-level stats
-      db.collection('books').aggregate([{
+      // 1. SINGLE books $facet — filter out catalog stubs (pages_count=0) to keep scan fast
+      db.collection('books').aggregate([
+        { $match: { pages_count: { $gt: 0 } } },
+        {
         $facet: {
           totals: [{ $group: {
             _id: null,
@@ -84,7 +86,10 @@ export const GET = withAuth(async (request, session) => {
             { $sort: { count: -1 } },
           ],
         }
-      }]).toArray().catch(() => [{}]),
+      }], { maxTimeMS: 30000 }).toArray().catch((err: Error) => {
+        console.error('Books facet failed:', err.message?.substring(0, 200));
+        return [{}];
+      }),
 
       // 2. Recent books (fast find with projection + index on created_at)
       db.collection('books')
