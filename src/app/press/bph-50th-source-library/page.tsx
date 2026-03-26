@@ -4,11 +4,11 @@ import ContentPageLayout, { ContentHeader } from '@/components/layout/ContentPag
 export const metadata: Metadata = {
   title: 'Embassy of the Free Mind Launches Source Library — Press Release',
   description:
-    'Marking a milestone for the Bibliotheca Philosophica Hermetica, the Embassy of the Free Mind announces Source Library: a free digital library of over 10,000 ancient and early modern texts translated into English.',
+    'Marking a milestone for the Bibliotheca Philosophica Hermetica, the Embassy of the Free Mind announces Source Library: a free digital library of over 13,000 ancient and early modern texts translated into English.',
   openGraph: {
     title: 'Embassy of the Free Mind Launches the World\'s Largest Collection of Translated Ancient Texts',
     description:
-      'Source Library: 10,000+ books in 100+ languages, 800,000+ pages translated into English. Free and open to all.',
+      'Source Library: 13,000+ books in 40+ languages, over 1 million pages translated into English. Free and open to all.',
     images: [{ url: 'https://sourcelibrary.org/og-image.png', width: 1200, height: 630 }],
   },
   alternates: { canonical: '/press/bph-50th-source-library' },
@@ -42,8 +42,8 @@ export default function PressReleasePage() {
 
         <p className="font-body text-xl text-secondary leading-relaxed mb-12 italic">
           Marking [50 years] of the Bibliotheca Philosophica Hermetica, the Embassy
-          announces a public beta of a digital library containing over 10,000 books in
-          100+ languages &mdash; with more than 4,000 translated into English, many for the first time.
+          announces a public beta of a digital library containing over 13,000 books in
+          40+ languages &mdash; with more than 3,300 fully translated into English, many for the first time.
         </p>
 
         {/* ── Body ── */}
@@ -53,8 +53,8 @@ export default function PressReleasePage() {
             public beta of{' '}
             <a href="https://sourcelibrary.org" className="text-accent-rust hover:underline">Source Library</a>,
             a free, open-access digital library that makes thousands of ancient and early modern
-            texts readable in English for the first time. With over 10,000 books spanning more
-            than 100 languages and 3.7&nbsp;million page images, Source Library is the largest
+            texts readable in English for the first time. With over 13,000 books spanning
+            40+ languages and 1.8&nbsp;million page images, Source Library is the largest
             freely available collection of translated historical primary sources ever assembled.
           </p>
 
@@ -71,10 +71,10 @@ export default function PressReleasePage() {
           <h3 className="font-serif text-2xl text-primary pt-6">A new scale of access</h3>
 
           <p>
-            Source Library draws on digitised books from over 160 libraries and institutions
+            Source Library draws on digitised books from major research libraries
             worldwide, including the Bavarian State Library, the Biblioth&egrave;que nationale
-            de France, the Vatican Library, the Bodleian Library at Oxford, the Getty Research
-            Institute, the Library of Congress, Harvard, and many others &mdash; accessed
+            de France, the Vatican Library, the Bodleian Library at Oxford, the Wellcome Collection,
+            the Library of Congress, Cambridge University Library, and many others &mdash; accessed
             through IIIF and the Internet Archive.
             Using AI-powered translation, texts that have sat unread in Latin, German, Arabic,
             Sanskrit, and dozens of other languages &mdash; many since they were first printed
@@ -92,16 +92,15 @@ export default function PressReleasePage() {
           <h3 className="font-serif text-2xl text-primary pt-6">By the numbers</h3>
 
           <ul className="list-none space-y-2 pl-0">
-            <li><strong>10,000+</strong> books from 100+ languages</li>
-            <li><strong>4,000+</strong> books with English translation (1,300+ fully translated)</li>
-            <li><strong>800,000+</strong> pages translated into English</li>
-            <li><strong>2,400+</strong> first-ever English translations</li>
-            <li><strong>3.7&nbsp;million</strong> digitised page images with 76,000+ extracted illustrations</li>
-            <li><strong>160+</strong> source libraries and institutions worldwide</li>
+            <li><strong>13,000+</strong> books in 40+ languages</li>
+            <li><strong>5,100+</strong> books with English translation (3,300+ fully translated)</li>
+            <li><strong>1.1&nbsp;million+</strong> pages translated into English</li>
+            <li><strong>2,900+</strong> first-ever English translations</li>
+            <li><strong>1.8&nbsp;million</strong> digitised page images with 69,000+ extracted illustrations</li>
           </ul>
 
           <p>
-            At roughly 4,000 translated volumes, Source Library surpasses every comparable
+            At over 5,000 translated volumes, Source Library surpasses every comparable
             collection by an order of magnitude. The Loeb Classical Library, the gold standard
             of bilingual scholarly editions since 1911, contains approximately 540 volumes.
             The Perseus Digital Library at Tufts hosts around 1,000 public-domain Victorian-era
@@ -189,8 +188,8 @@ export default function PressReleasePage() {
               Source Library is a free, open-access digital library of translated ancient and
               early modern primary sources. Using AI-powered translation, it makes previously
               inaccessible texts available in English alongside their original languages.
-              The collection spans 10,000+ books in 100+ languages from 160+ source
-              institutions worldwide. Source Library is [an initiative of / developed in partnership with]
+              The collection spans 13,000+ books in 40+ languages from major research libraries
+              worldwide. Source Library is [an initiative of / developed in partnership with]
               the Embassy of the Free Mind.{' '}
               <a href="https://sourcelibrary.org" className="text-accent-rust hover:underline">sourcelibrary.org</a>
             </p>
