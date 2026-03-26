@@ -64,7 +64,9 @@ export async function GET(request: NextRequest) {
         published: b.published,
       }));
 
-      return NextResponse.json({ decade: decadeNum, books: mapped, total, offset });
+      return NextResponse.json({ decade: decadeNum, books: mapped, total, offset }, {
+        headers: { 'Cache-Control': 'public, s-maxage=300, stale-while-revalidate=600' },
+      });
     }
 
     // Overview mode — read pre-computed snapshot from system_config (live agg takes 30-80s)
@@ -73,7 +75,9 @@ export async function GET(request: NextRequest) {
       .catch(() => null);
 
     if (cached?.data) {
-      return NextResponse.json(cached.data);
+      return NextResponse.json(cached.data, {
+        headers: { 'Cache-Control': 'public, s-maxage=300, stale-while-revalidate=600' },
+      });
     }
 
     // Fallback: compute live (will likely timeout on Atlas, but try)

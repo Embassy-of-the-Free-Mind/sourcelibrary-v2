@@ -2,7 +2,7 @@ import { Metadata } from 'next';
 import Link from 'next/link';
 import { getDb } from '@/lib/mongodb';
 
-export const dynamic = 'force-dynamic';
+export const revalidate = 600; // 10 min — stats change rarely
 
 export const metadata: Metadata = {
   title: 'Participate - Source Library',

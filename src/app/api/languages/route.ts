@@ -107,7 +107,7 @@ export async function GET() {
         },
       },
       { $sort: { count: -1 } },
-    ]).toArray();
+    ], { maxTimeMS: 10000 }).toArray();
 
     // Normalize and aggregate languages
     const normalizedMap = new Map<string, { count: number; variants: Set<string> }>();
@@ -143,6 +143,8 @@ export async function GET() {
     return NextResponse.json({
       languages,
       total_books: languageCounts.reduce((sum, c) => sum + (c.count as number), 0),
+    }, {
+      headers: { 'Cache-Control': 'public, s-maxage=600, stale-while-revalidate=1800' },
     });
   } catch (error) {
     console.error('Error fetching languages:', error);
