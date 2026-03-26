@@ -137,6 +137,39 @@ async function checkCoverage(db, ustcSn) {
   return doc || null;
 }
 
+// ── Translation detection ───────────────────────────────────────────
+
+let slBooksCache = null;
+
+async function checkTranslation(db, item, coverage) {
+  // Check catalog_coverage first
+  if (coverage?.has_english_translation) {
+    return { translated: true, source: coverage.translation_sources?.[0] || 'catalog_coverage' };
+  }
+
+  // Check Source Library books by title overlap (cached after first call)
+  if (!slBooksCache) {
+    slBooksCache = await db.collection('books').find(
+      { visible: true, pages_translated: { $gt: 0 } },
+      { projection: { title: 1, author: 1, published: 1, pages_translated: 1, pages_count: 1, id: 1 } }
+    ).toArray();
+  }
+
+  const titleWords = new Set((item.title || '').toLowerCase().replace(/[^a-zà-ÿ\s]/g, '').split(/\s+/).filter(w => w.length > 4));
+  if (titleWords.size === 0) return { translated: false };
+
+  for (const sl of slBooksCache) {
+    const slWords = new Set((sl.title || '').toLowerCase().replace(/[^a-zà-ÿ\s]/g, '').split(/\s+/).filter(w => w.length > 4));
+    if (slWords.size === 0) continue;
+    const overlap = [...titleWords].filter(w => slWords.has(w)).length;
+    if (overlap >= 2 && overlap / Math.min(titleWords.size, slWords.size) >= 0.4) {
+      return { translated: true, source: 'source_library', sl_id: sl.id };
+    }
+  }
+
+  return { translated: false };
+}
+
 // ── Main ─────────────────────────────────────────────────────────────
 
 async function main() {
@@ -210,17 +243,22 @@ async function main() {
     // Step 2: Check coverage
     const coverage = await checkCoverage(db, matchResult.match.ustc_sn);
 
+    // Step 3: Check translation status
+    const translation = await checkTranslation(db, item, coverage);
+
     const enriched = {
       ...item,
       ustc_sn: matchResult.match.ustc_sn,
       ustc_title: matchResult.match.ustc_title,
       match_confidence: matchResult.match.confidence,
       match_method: matchResult.match.match_method,
+      translated: translation.translated,
+      translation_source: translation.source || null,
     };
 
     if (!coverage || !coverage.has_iiif_scan) {
       results.unscanned.push(enriched);
-      logProgress(processed, items.length, 'UNSCANNED', item.title);
+      logProgress(processed, items.length, translation.translated ? 'UNSCANNED+T' : 'UNSCANNED', item.title);
     } else if (coverage.in_source_library) {
       results.in_source_library.push({
         ...enriched,
@@ -252,6 +290,13 @@ async function main() {
   console.log(`Not in USTC: ${results.not_in_ustc.length}`);
   console.log(`Match errors: ${results.match_failed.length}`);
   console.log(`AI cost: $${totalCost.toFixed(4)}`);
+
+  // Translation stats
+  const allItems = [...results.unscanned, ...results.scanned_elsewhere, ...results.in_source_library];
+  const translatedCount = allItems.filter(r => r.translated).length;
+  const untranslatedUnscanned = results.unscanned.filter(r => !r.translated).length;
+  console.log(`\nTranslated into English: ${translatedCount}`);
+  console.log(`Unscanned AND untranslated: ${untranslatedUnscanned} ← highest priority`);
 
   // Provider breakdown for scanned-elsewhere
   if (results.scanned_elsewhere.length > 0) {
