@@ -516,12 +516,22 @@ export default function TranslationEditor({
     const width = widths[tier];
     const quality = qualities[tier];
 
-    // Pre-generated cropped photo (split pages) — use directly
+    // New path convention: pages/{bookId}/{0001}.jpg, -full.jpg, -thumb.jpg
+    // If photo matches this pattern, derive other sizes by convention
+    const newPathMatch = p.photo?.match(/^(https:\/\/images\.sourcelibrary\.org\/pages\/[^/]+\/\d{4,})(-full)?\.jpg$/);
+    if (newPathMatch) {
+      const base = newPathMatch[1];
+      if (tier === 'full') return `${base}-full.jpg`;
+      if (tier === 'thumbnail') return `${base}-thumb.jpg`;
+      return `${base}.jpg`; // display — falls back to full if display not generated yet
+    }
+
+    // Legacy: pre-generated cropped photo (split pages) — use directly
     if (p.crop && p.cropped_photo) {
       return p.cropped_photo;
     }
 
-    // Prefer archived photo (Vercel Blob), then original sources
+    // Legacy: prefer archived photo, then original sources
     const baseUrl = p.archived_photo || p.photo_original || p.photo;
     if (!baseUrl) return '';
 
@@ -530,7 +540,7 @@ export default function TranslationEditor({
       return `/api/image?url=${encodeURIComponent(baseUrl)}&w=${width}&q=${quality}&cx=${p.crop.xStart}&cw=${p.crop.xEnd}`;
     }
 
-    // Archived images: full quality direct from Blob CDN, display/thumbnail via proxy for resize
+    // Archived images: full quality direct from CDN, display/thumbnail via proxy for resize
     if (p.archived_photo) {
       if (tier === 'full') {
         return p.archived_photo;

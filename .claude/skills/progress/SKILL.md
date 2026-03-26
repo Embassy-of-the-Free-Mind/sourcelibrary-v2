@@ -27,11 +27,21 @@ Run a single MongoDB script that reports ALL of the following. Use `set -a; sour
 const funnel = await db.collection('books').aggregate([
   { $match: { 'pipeline_auto.status': { $exists: true } } },
   { $group: { _id: '$pipeline_auto.status', count: { $sum: 1 } } },
-  { $sort: { count: -1 } }
 ]).toArray();
 ```
 
-Status order: `queued → archiving → archive_complete → ocr_submitted → ocr_complete → metadata_enriched → ft_verifying → ft_verified → translate_submitted → translate_complete → enriching → enriched → chapters → chapters_complete → images_submitted → images_complete → complete` (plus `needs_attention`, `failed`)
+**IMPORTANT: Display in lifecycle order, not sorted by count.** Use this fixed order (skip stages with 0 books):
+
+```
+queued → archiving → archive_complete → ocr_submitted → ocr_complete →
+metadata_enriched → ft_verifying → ft_verified → translate_submitted →
+translate_complete → enriching → enriched → chapters → chapters_complete →
+images_submitted → images_complete → complete
+```
+
+Then separately: `needs_attention`, `failed`, plus any other statuses (e.g. `empty_shell`, `paused`, `replaced_by_*`).
+
+This matches the Pipeline Funnel chart in the /analytics dashboard.
 
 ### 2. Enrichment Coverage (all phases)
 
@@ -82,10 +92,8 @@ console.log(`>90% translated: ${near90}`);
 ### 3. Image Extraction & Gallery
 
 ```javascript
-// Books with extracted images (from pages collection)
-const booksWithImages = await db.collection('pages').distinct('book_id', {
-  'detected_images.0': { $exists: true }
-});
+// Books with extracted images — use gallery_images (70K docs), NOT pages.distinct (times out on Atlas)
+const booksWithImages = await db.collection('gallery_images').distinct('book_id');
 console.log(`Books with extracted images: ${booksWithImages.length}`);
 
 // Gallery images count
@@ -204,12 +212,23 @@ Present results as a concise status report:
 Pipeline Status — [timestamp]
 Dashboard: https://sourcelibrary.org/analytics (Pipeline tab)
 
-Pipeline funnel: Z queued → W archiving → ... → N complete
+Pipeline Funnel (in lifecycle order, skip 0s):
+  archiving:          13,869
+  archive_complete:   12,014
+  ocr_submitted:         118
+  metadata_enriched:   5,914
+  translate_submitted:     7
+  translate_complete:     19
+  complete:            3,713
+  ---
+  needs_attention:     2,624
+  failed:                 57
+  other:                  50  (empty_shell, paused, replaced_by_*)
 
 Milestones:
-  Fully translated:          X books
+  First translations (EN):   X books
   >90% translated:           X books
-  First translations (EN):   X books  ← is_first_translation: true
+  Fully translated:          X books
 
 Enrichment coverage (of Y total books):
   OCR:              X (Z%)
@@ -220,7 +239,7 @@ Enrichment coverage (of Y total books):
   Chapters:         X (Z%)
   Collections:      X (Z%)
   Quality Score:    X (Z%)
-  Image Extraction: X (Z%)  |  Gallery: N images
+  Image Extraction: X books  |  Gallery: N images
   Faceted Tags:     X (Z%)
   Author Entities:  X (Z%)
   Pipeline Complete: X (Z%)
