@@ -13,6 +13,7 @@ const NAV_COLUMNS = [
     title: 'Library',
     links: [
       { label: 'Browse Books', href: '/' },
+      { label: 'Browse A–Z', href: '/browse' },
       { label: 'Gallery', href: '/gallery' },
       { label: 'Collections', href: '/collections' },
       { label: 'Libraries', href: '/libraries' },
