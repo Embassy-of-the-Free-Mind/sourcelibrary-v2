@@ -747,7 +747,7 @@ export default async function HomePage() {
             <p className="text-stone-500 text-sm mb-8">
               {counts.totalBooks.toLocaleString('en-US')} books &middot; {counts.authorCount.toLocaleString('en-US')}+ authors &middot; {counts.languageCount}+ languages
             </p>
-            <form action="/search" method="get" className="relative max-w-lg mx-auto">
+            <form action="/search" method="get" className="relative max-w-lg mx-auto mb-6">
               <svg className="absolute left-4 top-1/2 -translate-y-1/2 w-5 h-5 text-stone-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                 <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z" />
               </svg>
@@ -758,6 +758,14 @@ export default async function HomePage() {
                 className="w-full pl-12 pr-12 py-3.5 bg-white border border-stone-200 rounded-full text-stone-900 placeholder-stone-400 focus:outline-none focus:ring-2 focus:ring-accent-rust/20 focus:border-accent-rust shadow-sm"
               />
             </form>
+            <p className="text-stone-400 text-sm">
+              or browse by{' '}
+              <Link href="/browse/titles/A" className="text-stone-600 hover:text-accent-rust transition-colors underline underline-offset-2">title</Link>
+              {' '}&middot;{' '}
+              <Link href="/browse/authors/A" className="text-stone-600 hover:text-accent-rust transition-colors underline underline-offset-2">author</Link>
+              {' '}&middot;{' '}
+              <Link href="/browse/years/1500s" className="text-stone-600 hover:text-accent-rust transition-colors underline underline-offset-2">year</Link>
+            </p>
           </div>
         </section>
 
