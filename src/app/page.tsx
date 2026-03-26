@@ -319,7 +319,7 @@ async function getCollectionShowcase() {
 async function getBookCounts(): Promise<{ totalBooks: number; translatedToEnglish: number; firstTranslationCount: number }> {
   // Hardcoded to avoid a 22s full-collection aggregation that was timing out the homepage.
   // TODO: replace with a cached/indexed query. Actual counts as of 2026-03-26.
-  return { totalBooks: 3061, translatedToEnglish: 3061, firstTranslationCount: 1580 };
+  return { totalBooks: 5167, translatedToEnglish: 5167, firstTranslationCount: 2916 };
 }
 
 // ---------- Hardcoded fallback data (DB resilience) ----------
