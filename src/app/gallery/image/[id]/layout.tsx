@@ -113,21 +113,8 @@ export async function generateMetadata({
 
   if (!data) {
     return {
-      title: 'Image | Source Library',
-      description: 'Explore historical illustrations from early modern texts.',
-      alternates: {
-        canonical: `/gallery/image/${urlSafeId}`,
-      },
-      openGraph: {
-        title: 'Image',
-        description: 'Explore historical illustrations from early modern texts.',
-        siteName: 'Source Library',
-      },
-      twitter: {
-        card: 'summary_large_image',
-        title: 'Image',
-        description: 'Explore historical illustrations from early modern texts.',
-      },
+      title: 'Image Not Found | Source Library',
+      robots: { index: false, follow: true },
     };
   }
 

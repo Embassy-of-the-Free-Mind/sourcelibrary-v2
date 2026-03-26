@@ -34,7 +34,7 @@ export async function generateMetadata({ params }: Props): Promise<Metadata> {
   }
 
   if (!partner) {
-    return { title: 'Library Not Found - Source Library' };
+    return { title: 'Library Not Found - Source Library', robots: { index: false, follow: true } };
   }
 
   const description = `Browse books digitized by ${partner.name} on Source Library. ${partner.description.slice(0, 120)}...`;
