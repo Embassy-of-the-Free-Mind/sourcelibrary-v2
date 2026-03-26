@@ -108,6 +108,17 @@ const nextConfig: NextConfig = {
         destination: '/libraries/bibliotheca-philosophica-hermetica',
         permanent: true,
       },
+      // Ficino Society not yet launched — redirect to support page
+      {
+        source: '/ficino-society',
+        destination: '/support',
+        permanent: false,
+      },
+      {
+        source: '/ficino-society/:path*',
+        destination: '/support',
+        permanent: false,
+      },
     ];
   },
 };

@@ -310,10 +310,29 @@ async function getCollectionShowcase() {
   return JSON.parse(JSON.stringify(items));
 }
 
+const FALLBACK_COUNTS = { totalBooks: 13058, translatedToEnglish: 5190, firstTranslationCount: 4087, authorCount: 3200, languageCount: 50 };
+
 async function getBookCounts(): Promise<{ totalBooks: number; translatedToEnglish: number; firstTranslationCount: number; authorCount: number; languageCount: number }> {
-  // Hardcoded to avoid a 22s full-collection aggregation that was timing out the homepage.
-  // TODO: replace with a cached/indexed query. Actual counts as of 2026-03-26.
-  return { totalBooks: 13058, translatedToEnglish: 5190, firstTranslationCount: 4087, authorCount: 3200, languageCount: 50 };
+  try {
+    const db = await getDb();
+    // Try system_config cache first (written by cron or on-demand, <1ms)
+    const cached = await db.collection('system_config').findOne(
+      { _id: 'homepage_stats' } as any,
+      { maxTimeMS: 2000 }
+    );
+    if (cached?.totalBooks) {
+      return {
+        totalBooks: cached.totalBooks,
+        translatedToEnglish: cached.translatedToEnglish,
+        firstTranslationCount: cached.firstTranslationCount,
+        authorCount: cached.authorCount ?? FALLBACK_COUNTS.authorCount,
+        languageCount: cached.languageCount ?? FALLBACK_COUNTS.languageCount,
+      };
+    }
+  } catch {
+    // DB unreachable — use hardcoded fallback
+  }
+  return FALLBACK_COUNTS;
 }
 
 /**
