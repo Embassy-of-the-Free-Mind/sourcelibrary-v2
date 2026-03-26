@@ -215,6 +215,108 @@ Key 0 failed for file batch (404): {"error":{"message":"Requested entity was not
 | 2026-02-24 | Duplicate submissions | No guard for existing batch_jobs | Check before submit |
 | 2026-03-17 | RECITATION blocks | Missing BLOCK_NONE safety settings | Added to all request configs |
 | 2026-03-20 | Silent 3-day outage | 20GB file storage quota + invisible errors | File cleanup + error logging + key rotation |
+| 2026-03-26 | 450 batches stuck PENDING | Batch job quota (100/key) saturated by stale jobs that never ran | Cancel stale via API, mark MongoDB failed, reset books to archive_complete |
+| 2026-03-26 | Zombie jobs blocking orchestrator | 51 `processing` jobs with no Lambda worker; 34 books stuck at `translate_submitted` | Cancel zombies, reset books to `ocr_complete`; orchestrator counts pipeline status, not job records |
+| 2026-03-26 | Adaptive limits locked | `locked: true` prevented auto-scaling despite healthy Atlas | Unlock + manual bump to translate_lambda_max:50, global_active_max:50 |
+
+## Emergency: Clear Stale Batches
+
+When batches are stuck at PENDING and not processing (check with the monitoring commands above):
+
+```bash
+# 1. Cancel all active Gemini batches across all keys
+node -e "
+const keys = [process.env.GEMINI_API_KEY_TIER3, process.env.GEMINI_API_KEY_2, process.env.GEMINI_API_KEY].filter(Boolean);
+(async () => {
+  let cancelled = 0;
+  for (const key of keys) {
+    let pageToken = null;
+    do {
+      const url = new URL('https://generativelanguage.googleapis.com/v1beta/batches');
+      url.searchParams.set('key', key); url.searchParams.set('pageSize', '100');
+      if (pageToken) url.searchParams.set('pageToken', pageToken);
+      const res = await fetch(url); const data = await res.json();
+      for (const b of (data.operations || [])) {
+        const state = (b.metadata || b).state;
+        if (state === 'BATCH_STATE_PENDING' || state === 'BATCH_STATE_RUNNING') {
+          const r = await fetch('https://generativelanguage.googleapis.com/v1beta/' + b.name + ':cancel?key=' + key, { method: 'POST' });
+          if (r.ok) cancelled++;
+        }
+      }
+      pageToken = data.nextPageToken;
+    } while (pageToken);
+  }
+  console.log('Cancelled:', cancelled);
+})();
+"
+
+# 2. Mark MongoDB batch_jobs as failed
+node -e "
+const { MongoClient } = require('mongodb');
+(async () => {
+  const client = await MongoClient.connect(process.env.MONGODB_URI);
+  const db = client.db('bookstore');
+  const r = await db.collection('batch_jobs').updateMany(
+    { status: { \$in: ['pending', 'processing'] } },
+    { \$set: { status: 'failed', error: 'Cancelled: stale batch cleanup', updated_at: new Date() } }
+  );
+  console.log('Marked failed:', r.modifiedCount);
+  await client.close();
+})();
+"
+
+# 3. Reset stuck books so orchestrator can resubmit
+node -e "
+const { MongoClient } = require('mongodb');
+(async () => {
+  const client = await MongoClient.connect(process.env.MONGODB_URI);
+  const db = client.db('bookstore');
+  const r = await db.collection('books').updateMany(
+    { 'pipeline_auto.status': 'ocr_submitted' },
+    { \$set: { 'pipeline_auto.status': 'archive_complete', 'pipeline_auto.last_updated': new Date(), updated_at: new Date() } }
+  );
+  console.log('Reset to archive_complete:', r.modifiedCount);
+  await client.close();
+})();
+"
+```
+
+## Emergency: Clear Zombie Translation Jobs
+
+When the orchestrator shows "In-flight translations: N/30 — dispatching up to 0" but Lambda isn't actually processing:
+
+```bash
+# 1. Cancel zombie jobs (processing but no update in 2h)
+node -e "
+const { MongoClient } = require('mongodb');
+(async () => {
+  const client = await MongoClient.connect(process.env.MONGODB_URI);
+  const db = client.db('bookstore');
+  const stale = new Date(Date.now() - 2 * 3600000);
+  const r = await db.collection('jobs').updateMany(
+    { status: 'processing', updated_at: { \$lt: stale } },
+    { \$set: { status: 'failed', error: 'Cancelled: zombie job', updated_at: new Date() } }
+  );
+  console.log('Zombies cancelled:', r.modifiedCount);
+
+  // 2. Reset stuck translate_submitted books with no active job
+  const stuck = await db.collection('books').find(
+    { 'pipeline_auto.status': 'translate_submitted' },
+    { projection: { id: 1 } }
+  ).toArray();
+  let reset = 0;
+  for (const b of stuck) {
+    const hasJob = await db.collection('jobs').countDocuments({ book_id: b.id, status: { \$in: ['processing', 'queued'] } });
+    if (hasJob === 0) {
+      await db.collection('books').updateOne({ id: b.id }, { \$set: { 'pipeline_auto.status': 'ocr_complete', updated_at: new Date() } });
+      reset++;
+    }
+  }
+  console.log('Books reset to ocr_complete:', reset);
+  await client.close();
+})();
+"
+```
 
 ## Architecture Debt
 
