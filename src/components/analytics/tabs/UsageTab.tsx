@@ -200,17 +200,17 @@ function PipelineFunnel({ funnel }: { funnel: Array<{ status: string; count: num
   };
 
   const tiers = [
-    { label: 'Enrolled', count: sumFrom(0), color: 'var(--accent-violet)' },
-    { label: 'Archived', count: sumFrom(pipeline.indexOf('archive_complete')), color: '#6366f1' },
-    { label: 'OCR Complete', count: sumFrom(pipeline.indexOf('ocr_complete')), color: 'var(--accent-sage)' },
-    { label: 'Translated', count: sumFrom(pipeline.indexOf('translate_complete')), color: 'var(--accent-rust)' },
-    { label: 'Enriched', count: sumFrom(pipeline.indexOf('enriched')), color: 'var(--accent-gold-dark)' },
-    { label: 'Complete', count: c('complete'), color: '#22c55e' },
+    { label: 'Enrolled', count: sumFrom(0) },
+    { label: 'Archived', count: sumFrom(pipeline.indexOf('archive_complete')) },
+    { label: 'OCR Complete', count: sumFrom(pipeline.indexOf('ocr_complete')) },
+    { label: 'Translated', count: sumFrom(pipeline.indexOf('translate_complete')) },
+    { label: 'Enriched', count: sumFrom(pipeline.indexOf('enriched')) },
+    { label: 'Complete', count: c('complete') },
   ];
 
   const notEnrolled = c('not_enrolled');
   const needsAttention = c('needs_attention') + c('failed');
-  const maxCount = tiers[0].count || 1;
+  const total = tiers[0].count || 1;
 
   // In-progress stages for pills
   const active = [
@@ -222,45 +222,62 @@ function PipelineFunnel({ funnel }: { funnel: Array<{ status: string; count: num
     { label: 'Images', count: c('images_submitted') },
   ].filter(s => s.count > 0);
 
-  // Width as percentage of container (30% min, 100% max)
-  const pctFor = (count: number) => 30 + (count / maxCount) * 70;
+  // SVG funnel — each tier is a trapezoid that tapers from top width to next tier's width
+  const funnelH = 280;
+  const tierH = funnelH / tiers.length;
+  const svgW = 400;
+  const maxW = svgW * 0.92; // widest tier
+  const minW = svgW * 0.22; // narrowest tier
+  // Linear taper from 100% down to minW ratio based on tier's share of total
+  const widthFor = (count: number) => {
+    const ratio = count / total;
+    return minW + (maxW - minW) * ratio;
+  };
+
+  const tierColors = ['#7c6caf', '#6366f1', '#6a9f7d', '#b87352', '#c49a3c', '#22c55e'];
 
   return (
     <div className="p-6 rounded-xl" style={{ background: 'var(--bg-white)', border: '1px solid var(--border-light)' }}>
-      <h2 className="text-lg font-medium mb-4 flex items-center gap-2" style={{ color: 'var(--text-primary)' }}>
+      <h2 className="text-lg font-medium mb-5 flex items-center gap-2" style={{ color: 'var(--text-primary)' }}>
         <ListChecks className="w-5 h-5" style={{ color: 'var(--accent-violet)' }} />
         Pipeline Funnel
       </h2>
 
-      {/* Funnel tiers — each is a CSS clip-path trapezoid */}
-      <div className="flex flex-col items-center" style={{ gap: '1px' }}>
+      <svg viewBox={`0 0 ${svgW} ${funnelH}`} className="w-full" style={{ maxWidth: 420, margin: '0 auto', display: 'block' }}>
         {tiers.map((tier, i) => {
-          const topPct = pctFor(tier.count);
-          const botPct = i < tiers.length - 1
-            ? pctFor(tiers[i + 1].count)
-            : topPct * 0.7;
+          const topW = widthFor(tier.count);
+          const botW = i < tiers.length - 1 ? widthFor(tiers[i + 1].count) : topW * 0.55;
+          const y = i * tierH;
+          const cx = svgW / 2;
+
+          const path = [
+            `M ${cx - topW / 2} ${y}`,
+            `L ${cx + topW / 2} ${y}`,
+            `L ${cx + botW / 2} ${y + tierH}`,
+            `L ${cx - botW / 2} ${y + tierH}`,
+            'Z',
+          ].join(' ');
+
+          const pct = Math.round((tier.count / total) * 100);
+          const textY = y + tierH / 2;
 
           return (
-            <div
-              key={tier.label}
-              className="w-full flex items-center justify-center text-white text-sm"
-              style={{
-                height: 38,
-                background: tier.color,
-                clipPath: `polygon(${50 - topPct / 2}% 0, ${50 + topPct / 2}% 0, ${50 + botPct / 2}% 100%, ${50 - botPct / 2}% 100%)`,
-              }}
-              title={`${tier.label}: ${tier.count.toLocaleString()} books${i > 0 ? ` (${Math.round((tier.count / tiers[0].count) * 100)}% of enrolled)` : ''}`}
-            >
-              <span className="font-medium mr-2">{tier.label}</span>
-              <span className="font-bold">{tier.count.toLocaleString()}</span>
-            </div>
+            <g key={tier.label}>
+              <path d={path} fill={tierColors[i]} opacity={0.9} />
+              <text x={cx} y={textY - 5} textAnchor="middle" fill="white" fontSize="13" fontWeight="600">
+                {tier.label}
+              </text>
+              <text x={cx} y={textY + 12} textAnchor="middle" fill="rgba(255,255,255,0.85)" fontSize="11">
+                {tier.count.toLocaleString()} ({pct}%)
+              </text>
+            </g>
           );
         })}
-      </div>
+      </svg>
 
       {/* Active stages + callouts */}
       {(active.length > 0 || notEnrolled > 0 || needsAttention > 0) && (
-        <div className="flex flex-wrap gap-2 mt-4 pt-3 border-t" style={{ borderColor: 'var(--border-light)' }}>
+        <div className="flex flex-wrap gap-2 mt-5 pt-3 border-t" style={{ borderColor: 'var(--border-light)' }}>
           {active.map(s => (
             <span key={s.label} className="text-xs px-2 py-1 rounded-full flex items-center gap-1" style={{ background: 'var(--bg-warm)', color: 'var(--text-muted)' }}>
               <Loader2 className="w-3 h-3 animate-spin" />
