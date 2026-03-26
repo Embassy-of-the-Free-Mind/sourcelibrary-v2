@@ -61,7 +61,7 @@ export default function PipelineTab({ hours }: PipelineTabProps) {
   return (
     <div className="space-y-8">
       {/* Velocity Cards */}
-      <div className="grid grid-cols-1 md:grid-cols-4 gap-4">
+      <div className="grid grid-cols-1 md:grid-cols-3 lg:grid-cols-5 gap-4">
         <div className="p-5 rounded-xl" style={{ background: 'linear-gradient(135deg, var(--bg-white), #f0fdf4)', border: '1px solid var(--border-light)' }}>
           <div className="text-sm font-medium uppercase mb-1" style={{ color: 'var(--text-muted)' }}>OCR Velocity</div>
           <div className="text-3xl font-bold" style={{ color: 'var(--accent-sage-dark)' }}>
@@ -84,13 +84,18 @@ export default function PipelineTab({ hours }: PipelineTabProps) {
           <div className="text-xs mt-1" style={{ color: 'var(--text-muted)' }}>per day</div>
         </div>
         <div className="p-5 rounded-xl" style={{ background: 'linear-gradient(135deg, var(--bg-white), #fffbeb)', border: '1px solid var(--border-light)' }}>
-          <div className="text-sm font-medium uppercase mb-1" style={{ color: 'var(--text-muted)' }}>Data Window</div>
+          <div className="text-sm font-medium uppercase mb-1" style={{ color: 'var(--text-muted)' }}>First Translations</div>
           <div className="text-3xl font-bold" style={{ color: 'var(--accent-gold-dark)' }}>
-            {pipelineData.velocity?.period_hours || 0}h
+            {(pipelineData.milestones?.firstTranslations || 0).toLocaleString()}
           </div>
-          <div className="text-xs mt-1" style={{ color: 'var(--text-muted)' }}>
-            {pipelineData.snapshots?.length || 0} snapshots
+          <div className="text-xs mt-1" style={{ color: 'var(--text-muted)' }}>into English</div>
+        </div>
+        <div className="p-5 rounded-xl" style={{ background: 'linear-gradient(135deg, var(--bg-white), #fdf4ff)', border: '1px solid var(--border-light)' }}>
+          <div className="text-sm font-medium uppercase mb-1" style={{ color: 'var(--text-muted)' }}>&gt;90% Translated</div>
+          <div className="text-3xl font-bold" style={{ color: '#a855f7' }}>
+            {(pipelineData.milestones?.nearComplete || 0).toLocaleString()}
           </div>
+          <div className="text-xs mt-1" style={{ color: 'var(--text-muted)' }}>books</div>
         </div>
       </div>
 
