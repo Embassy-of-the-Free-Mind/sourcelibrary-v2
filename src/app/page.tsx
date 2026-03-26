@@ -316,10 +316,10 @@ async function getCollectionShowcase() {
   return JSON.parse(JSON.stringify(items));
 }
 
-async function getBookCounts(): Promise<{ totalBooks: number; translatedToEnglish: number; firstTranslationCount: number }> {
+async function getBookCounts(): Promise<{ totalBooks: number; translatedToEnglish: number; firstTranslationCount: number; authorCount: number; languageCount: number }> {
   // Hardcoded to avoid a 22s full-collection aggregation that was timing out the homepage.
   // TODO: replace with a cached/indexed query. Actual counts as of 2026-03-26.
-  return { totalBooks: 5167, translatedToEnglish: 5167, firstTranslationCount: 2916 };
+  return { totalBooks: 5167, translatedToEnglish: 5167, firstTranslationCount: 2916, authorCount: 3200, languageCount: 50 };
 }
 
 // ---------- Hardcoded fallback data (DB resilience) ----------
@@ -738,17 +738,23 @@ export default async function HomePage() {
           </div>
         </section>
 
-        {/* Search — compact */}
-        <section className="bg-[#f6f3ee] py-12">
-          <div className="px-6 md:px-12 max-w-lg mx-auto">
-            <form action="/search" method="get" className="relative">
+        {/* Search */}
+        <section className="bg-[#f6f3ee] py-16 md:py-20">
+          <div className="px-6 md:px-12 max-w-2xl mx-auto text-center">
+            <h2 className="text-2xl md:text-3xl font-display text-stone-900 mb-3">
+              Search the collection
+            </h2>
+            <p className="text-stone-500 text-sm mb-8">
+              {counts.totalBooks.toLocaleString('en-US')} books &middot; {counts.authorCount.toLocaleString('en-US')}+ authors &middot; {counts.languageCount}+ languages
+            </p>
+            <form action="/search" method="get" className="relative max-w-lg mx-auto">
               <svg className="absolute left-4 top-1/2 -translate-y-1/2 w-5 h-5 text-stone-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                 <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z" />
               </svg>
               <input
                 type="text"
                 name="q"
-                placeholder="Search the collection..."
+                placeholder="Try &ldquo;Hermes Trismegistus&rdquo; or &ldquo;prima materia&rdquo;..."
                 className="w-full pl-12 pr-12 py-3.5 bg-white border border-stone-200 rounded-full text-stone-900 placeholder-stone-400 focus:outline-none focus:ring-2 focus:ring-accent-rust/20 focus:border-accent-rust shadow-sm"
               />
             </form>
