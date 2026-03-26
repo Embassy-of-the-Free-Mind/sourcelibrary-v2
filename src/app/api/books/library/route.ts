@@ -84,7 +84,10 @@ export async function GET(request: NextRequest) {
         ...(library ? [{ $match: { 'image_source.provider': library } }] : []),
       ];
     } else {
-      const matchConditions: Record<string, unknown>[] = [{ hidden: { $ne: true } }];
+      const matchConditions: Record<string, unknown>[] = [
+        { hidden: { $ne: true } },
+        { pages_count: { $gt: 0 } },
+      ];
       if (language) matchConditions.push({ language });
       if (category) matchConditions.push({ categories: category });
       if (collection) matchConditions.push({ collections: collection });
@@ -186,6 +189,7 @@ export async function GET(request: NextRequest) {
 
     const [result] = await db.collection('books').aggregate(pipeline, {
       collation: { locale: 'en', strength: 1 },
+      maxTimeMS: 15000,
     }).toArray();
 
     const books = result.books || [];
