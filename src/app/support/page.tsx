@@ -51,76 +51,21 @@ const MEMBERSHIP_TIERS = [
 export default function SupportPage() {
   return (
     <div className="min-h-screen">
-      {/* Hero Section - matches front page */}
-      <section className="relative h-screen w-full overflow-hidden bg-black">
-        {/* Poster image - loads immediately as background */}
-        {/* eslint-disable-next-line @next/next/no-img-element */}
-        <img
-          src="/hero-poster.jpg"
-          alt=""
-          className="absolute inset-0 w-full h-full object-cover z-0"
-          fetchPriority="high"
-        />
-
-        {/* Video background */}
-        <video
-          autoPlay
-          loop
-          muted
-          playsInline
-          preload="auto"
-          className="absolute inset-0 w-full h-full object-cover z-0"
-        >
-          <source src="https://cdn.prod.website-files.com/68d800cb1402171531a597f4/68d800cb1402171531a598cf_embassy-of-the-free-mind-montage-002-transcode.webm" type="video/webm" />
-          <source src="https://cdn.prod.website-files.com/68d800cb1402171531a597f4/68d800cb1402171531a598cf_embassy-of-the-free-mind-montage-002-transcode.mp4" type="video/mp4" />
-        </video>
-
-        {/* Dark overlay */}
-        <div className="absolute inset-0 bg-black/40 z-0" />
-
-        {/* Header */}
-        <header className="relative z-50 flex items-center justify-between px-6 md:px-12 py-4">
-          <Link href="/" className="text-white flex items-center gap-3">
-            <svg className="w-10 h-10 md:w-12 md:h-12" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
-              <circle cx="12" cy="12" r="10" stroke="white" strokeWidth="1" />
-              <circle cx="12" cy="12" r="7" stroke="white" strokeWidth="1" />
-              <circle cx="12" cy="12" r="4" stroke="white" strokeWidth="1" />
-            </svg>
-            <span className="text-xl md:text-2xl uppercase tracking-wider text-white">
-              <span className="font-semibold text-white">Source</span>
-              <span className="font-light text-white">Library</span>
-            </span>
-          </Link>
-          <Link
-            href="/#library"
-            className="flex items-center gap-2 px-4 py-2 bg-white/10 backdrop-blur-sm text-white rounded-full text-sm font-medium hover:bg-white/20 transition-colors border border-white/20"
-          >
+      {/* Header */}
+      <section className="bg-gradient-to-b from-[#f6f3ee] to-white pt-8 pb-16 md:pt-12 md:pb-24">
+        <div className="px-6 md:px-12 max-w-5xl mx-auto">
+          <Link href="/" className="inline-flex items-center gap-2 text-sm mb-10 hover:opacity-70 transition-opacity" style={{ color: 'var(--text-muted)' }}>
             <svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-              <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M12 6.253v13m0-13C10.832 5.477 9.246 5 7.5 5S4.168 5.477 3 6.253v13C4.168 18.477 5.754 18 7.5 18s3.332.477 4.5 1.253m0-13C13.168 5.477 14.754 5 16.5 5c1.747 0 3.332.477 4.5 1.253v13C19.832 18.477 18.247 18 16.5 18c-1.746 0-3.332.477-4.5 1.253" />
+              <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M15 19l-7-7 7-7" />
             </svg>
-            Browse Library
+            Back to library
           </Link>
-        </header>
-
-        {/* Hero Content */}
-        <div className="relative z-10 h-full flex items-center">
-          <div className="px-6 md:px-12 max-w-3xl">
-            <h1
-              className="text-4xl md:text-5xl lg:text-6xl text-white mb-6 leading-tight tracking-wide font-display"
-            >
-              Help Preserve Ancient Wisdom
-            </h1>
-            <p className="text-lg md:text-xl font-light text-white/90 leading-relaxed max-w-2xl">
-              Your donation funds the digitization and translation of rare texts from the Bibliotheca Philosophica Hermetica.
-            </p>
-          </div>
-        </div>
-
-        {/* Scroll indicator */}
-        <div className="absolute bottom-8 left-1/2 -translate-x-1/2 z-20">
-          <svg className="w-6 h-6 text-white animate-bounce" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-            <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M19 14l-7 7m0 0l-7-7m7 7V3" />
-          </svg>
+          <h1 className="text-3xl md:text-4xl lg:text-5xl text-stone-900 mb-6 leading-tight font-display">
+            Support Source Library
+          </h1>
+          <p className="text-lg md:text-xl text-stone-600 leading-relaxed max-w-3xl">
+            Your donation funds the digitization and translation of rare texts from the Bibliotheca Philosophica Hermetica — making 2,500 years of wisdom freely available to everyone.
+          </p>
         </div>
       </section>
 
