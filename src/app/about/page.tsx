@@ -15,7 +15,7 @@ export default function AboutPage() {
     <ContentPageLayout
       header={
         <ContentHeader
-          title="Source Library continues the Ficino Society's mission to transform 2500+ years of wisdom texts into a living archive."
+          title="Source Library transforms 2500+ years of wisdom texts into a living archive, freely available to all."
         />
       }
       bg="bg-cream"

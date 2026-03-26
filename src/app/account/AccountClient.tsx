@@ -127,7 +127,7 @@ export default function AccountClient({ user }: AccountClientProps) {
               <div className="flex items-center gap-3">
                 <Crown className="w-5 h-5" style={{ color: 'var(--accent-sage)' }} />
                 <div>
-                  <p className="font-medium" style={{ color: 'var(--text-primary)' }}>Ficino Society Member</p>
+                  <p className="font-medium" style={{ color: 'var(--text-primary)' }}>Supporting Member</p>
                   {expiresAt && <p className="text-sm" style={{ color: 'var(--text-muted)' }}>Renews {expiresAt}</p>}
                 </div>
               </div>
@@ -153,12 +153,12 @@ export default function AccountClient({ user }: AccountClientProps) {
                   Members page profile
                 </h2>
                 <Link
-                  href="/ficino-society/members"
+                  href="/support"
                   className="text-sm hover:opacity-70 transition-opacity flex items-center gap-1"
                   style={{ color: 'var(--text-muted)' }}
                 >
                   <Users className="w-3.5 h-3.5" />
-                  View members
+                  Support page
                 </Link>
               </div>
               <div className="space-y-3">
@@ -215,12 +215,12 @@ export default function AccountClient({ user }: AccountClientProps) {
           </>
         ) : (
           <Link
-            href="/ficino-society"
+            href="/support"
             className="block rounded-xl p-6 mb-6 hover:opacity-90 transition-opacity"
             style={{ background: 'var(--accent-rust)', color: 'white' }}
           >
-            <p className="font-medium">Join the Ficino Society</p>
-            <p className="text-sm opacity-80">$100/year — support the library, unlimited downloads</p>
+            <p className="font-medium">Support the Library</p>
+            <p className="text-sm opacity-80">Help fund the digitization and translation of ancient texts</p>
           </Link>
         )}
 

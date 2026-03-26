@@ -668,32 +668,32 @@ export default async function HomePage() {
               </h2>
             </div>
 
-            {/* Ficino Society — primary */}
+            {/* Support the Library — primary */}
             <div className="max-w-2xl mx-auto mb-12">
               <div className="rounded-xl p-8 text-center" style={{ background: 'rgba(255,255,255,0.05)', border: '1px solid rgba(255,255,255,0.08)' }}>
                 <h3 className="text-xl font-display mb-3" style={{ color: '#f5f0e8' }}>
-                  The Ficino Society
+                  Support the Library
                 </h3>
                 <p className="leading-relaxed mb-6" style={{ color: '#a09a90' }}>
-                  Cosimo de&apos; Medici funded Ficino&apos;s translations and ignited the Renaissance.
-                  Members of the Ficino Society continue that tradition&mdash;funding the digitization
-                  and translation of ancient texts, with early access to new translations
-                  and their name on a book of their choosing.
+                  Thousands of texts from the ancient and early modern world remain untranslated
+                  and unread. Your support funds the digitization, OCR, and AI-assisted translation
+                  of these works&mdash;making them freely available to scholars, seekers, and
+                  the public for the first time.
                 </p>
                 <div className="flex flex-col sm:flex-row gap-3 justify-center">
                   <Link
-                    href="/ficino-society"
+                    href="/support"
                     className="inline-flex items-center justify-center gap-2 px-8 py-3.5 rounded-full text-sm font-medium transition-all hover:brightness-110"
                     style={{ background: 'var(--accent-rust)', color: '#fff' }}
                   >
-                    Learn more
+                    How to support
                   </Link>
                   <Link
-                    href="/ficino-society/members"
+                    href="/auth/signin"
                     className="inline-flex items-center justify-center gap-2 px-8 py-3.5 rounded-full text-sm font-medium transition-all hover:brightness-110"
                     style={{ background: 'rgba(255,255,255,0.08)', color: '#a09a90' }}
                   >
-                    View members
+                    Create a free account
                   </Link>
                 </div>
               </div>
