@@ -15,8 +15,8 @@ import {
   getExtensionFromMimeType
 } from '@/lib/uploads/utils';
 
-// Maximum file size: 20MB (same as formData upload)
-const MAX_FILE_SIZE_MEGABYTES = 20 * 1024 * 1024;
+// Maximum file size: 300MB (same as formData upload)
+const MAX_FILE_SIZE_MEGABYTES = 300 * 1024 * 1024;
 
 /**
  * Upload images from S3 URLs to a book
@@ -103,7 +103,7 @@ export async function POST(request: NextRequest) {
 
         // Fetch image from S3 with timeout
         const { buffer, mimeType } = await images.fetchBufferWithMimeType(imageUrl, {
-          timeout: 60000
+          timeout: 300000
         });
 
         // Validate size (same 20MB limit as formData)
@@ -118,6 +118,9 @@ export async function POST(request: NextRequest) {
         const ext = getExtensionFromMimeType(mimeType);
         const filename = `${new ObjectId().toHexString()}${ext}`;
 
+        // Re-fetch db after long S3 download — connection may have gone idle (maxIdleTimeMS=60s)
+        const freshDb = await getDb();
+
         // Use shared upload processing function
         const result = await processImageUpload({
           buffer,
@@ -125,11 +128,11 @@ export async function POST(request: NextRequest) {
           contentType: mimeType,
           bookId,
           nextPageNumber,
-          db
+          db: freshDb
         });
 
         // Insert pages into database
-        await db.collection('pages').insertMany(result.pages);
+        await freshDb.collection('pages').insertMany(result.pages);
         uploadedPages.push(...result.pages);
         nextPageNumber = result.nextPageNumber;
 
