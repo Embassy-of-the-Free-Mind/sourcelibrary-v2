@@ -6,7 +6,7 @@ import ExploreNav from '@/components/explore/ExploreNav';
 import DataSources from '@/components/explore/DataSources';
 import { getDb } from '@/lib/mongodb';
 
-export const dynamic = 'force-dynamic';
+export const revalidate = 600; // 10 min
 export const maxDuration = 30;
 
 export const metadata: Metadata = {
