@@ -323,15 +323,16 @@ async function BookInfo({ id }: { id: string }) {
 
   // Note: ObjectId→slug redirect is handled by proxy.ts → /api/redirect/book-slug
 
-  // Note: projection excludes .data fields, so check for object existence instead
-  const ocrCount = pages.filter(p => p.ocr).length;
-  const translatedCount = pages.filter(p => p.translation).length;
+  // Use book-level cached counts (not page array, which is truncated to first 100 pages)
+  const ocrCount = book.pages_ocr ?? pages.filter(p => p.ocr).length;
+  const translatedCount = book.pages_translated ?? pages.filter(p => p.translation).length;
+  const totalPages = book.pages_count || pages.length;
   const imageCount = galleryImages.length;
   const currentEdition = (book.editions as TranslationEdition[] | undefined)?.find(e => e.status === 'published') || (book.editions as TranslationEdition[] | undefined)?.find(e => e.status === 'draft');
 
   // Progression: OCR → Translation → Summary → Ask AI / Publish
   const hasOcr = ocrCount > 0;
-  const hasTranslations = translatedCount > pages.length / 2; // >50% translated
+  const hasTranslations = translatedCount > totalPages / 2; // >50% translated
   // Image downloads restricted for non-commercial licensed sources (BSB, Bodleian, Vatican, etc.)
   const imgLicense = (book as any).image_source?.license || 'unknown';
   const imageRestricted = imgLicense === 'unknown' || /\bnc\b/i.test(imgLicense);
@@ -340,7 +341,7 @@ async function BookInfo({ id }: { id: string }) {
   const readingSummary = (book as unknown as { reading_summary?: { overview?: string } }).reading_summary?.overview;
   const summaryText = indexBrief || readingSummary || (typeof book.summary === 'string' ? book.summary : book.summary?.data);
   const hasSummary = !!summaryText;
-  const isComplete = ocrCount === pages.length && translatedCount === pages.length && hasSummary;
+  const isComplete = ocrCount >= totalPages && translatedCount >= totalPages && hasSummary;
   const summaryEntities = buildEntityList((book as unknown as { index?: { people?: Array<{ term: string }>; places?: Array<{ term: string }>; concepts?: Array<{ term: string }> } }).index);
 
   return (
