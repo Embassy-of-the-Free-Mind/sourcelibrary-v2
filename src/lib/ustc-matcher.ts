@@ -142,57 +142,71 @@ function titleWordOverlap(a: string | null | undefined, b: string | null | undef
   return overlap / Math.min(wa.size, wb.size);
 }
 
-// ── Entity Alias Lookup ──────────────────────────────────────────────
+// ── Entity Alias Lookup (Supabase) ──────────────────────────────────
 
 function stripDiacritics(s: string): string {
   return s.normalize('NFD').replace(/[\u0300-\u036f]/g, '');
 }
 
+// In-memory cache for entity_aliases lookups (cleared per process)
+const aliasCache = new Map<string, string[]>();
+
+const PARTICLES = new Set(['von', 'van', 'de', 'di', 'del', 'of', 'ab', 'da', 'du', 'des', 'der', 'den', 'the']);
+
+function extractNamesFromDocs(docs: Array<{ names: string[]; surnames: string[] }>): Set<string> {
+  const variants = new Set<string>();
+  for (const doc of docs) {
+    for (const name of (doc.names || [])) {
+      const comma = name.indexOf(',');
+      if (comma > 0) variants.add(name.substring(0, comma).trim().toLowerCase());
+      for (const word of name.split(/\s+/)) {
+        const w = word.toLowerCase().replace(/[^a-zà-ÿ]/g, '');
+        if (w.length >= 4 && !PARTICLES.has(w)) variants.add(w);
+      }
+    }
+    for (const s of (doc.surnames || [])) variants.add(s);
+  }
+  return variants;
+}
+
 /**
- * Get all known surname variants for an author from entity_aliases.
- * Returns the original surname plus any variants from Wikidata/CERL.
+ * Get all known surname variants from entity_aliases in Supabase.
+ * Uses GIN index on surnames array. Cached in memory for batch runs.
  */
-async function getAuthorVariants(db: Db, author: string | null | undefined): Promise<string[]> {
+async function getAuthorVariants(_db: Db, author: string | null | undefined): Promise<string[]> {
   const surnameVariants = extractSurnameVariants(author);
   if (surnameVariants.length === 0) return [];
+
+  const cacheKey = surnameVariants.sort().join('|');
+  if (aliasCache.has(cacheKey)) return aliasCache.get(cacheKey)!;
+
   const variants = new Set<string>(surnameVariants);
 
   try {
-    // Search entity_aliases by all surname candidates
+    // Query Supabase entity_aliases using the GIN index on surnames
     const searchTerms = surnameVariants.map(s => stripDiacritics(s.toLowerCase()));
-    const docs = await db.collection('entity_aliases').find(
-      { surnames: { $in: searchTerms } },
-      { projection: { names: 1, surnames: 1 } }
-    ).limit(10).toArray();
+    // Supabase array overlap: surnames=ov.{term1,term2}
+    const overlapParam = `{${searchTerms.join(',')}}`;
+    const url = `${SUPABASE_URL}/rest/v1/entity_aliases?surnames=ov.${encodeURIComponent(overlapParam)}&select=names,surnames&limit=10`;
+    const res = await fetch(url, {
+      headers: { 'apikey': SUPABASE_ANON_KEY, 'Authorization': `Bearer ${SUPABASE_ANON_KEY}` },
+      signal: AbortSignal.timeout(5000),
+    });
 
-    for (const doc of docs) {
-      // Extract all possible surname forms from every name variant
-      for (const name of (doc.names || [])) {
-        const comma = name.indexOf(',');
-        if (comma > 0) {
-          // "Corvus, Andreas" → "corvus"
-          variants.add(name.substring(0, comma).trim().toLowerCase());
-        }
-        // Also add every word ≥4 chars as a potential surname
-        // This catches "Andreas Corvus Mirandulensis" → "corvus"
-        const particles = new Set(['von', 'van', 'de', 'di', 'del', 'of', 'ab', 'da', 'du', 'des', 'der', 'den', 'the']);
-        for (const word of name.split(/\s+/)) {
-          const w = word.toLowerCase().replace(/[^a-zà-ÿ]/g, '');
-          if (w.length >= 4 && !particles.has(w)) {
-            variants.add(w);
-          }
-        }
-      }
-      // Also add raw surnames from the doc
-      for (const s of (doc.surnames || [])) {
-        variants.add(s);
+    if (res.ok) {
+      const docs = await res.json();
+      if (Array.isArray(docs)) {
+        const extracted = extractNamesFromDocs(docs);
+        extracted.forEach(v => variants.add(v));
       }
     }
   } catch {
-    // entity_aliases unavailable — use original surname only
+    // Supabase unavailable — use original surname only
   }
 
-  return Array.from(variants).filter(s => s.length >= 3);
+  const result = Array.from(variants).filter(s => s.length >= 3);
+  aliasCache.set(cacheKey, result);
+  return result;
 }
 
 // ── Fast Pre-Filter (word overlap) ────────────────────────────────────
@@ -270,6 +284,48 @@ async function fastMatch(
 
   if (best && bestScore >= threshold) {
     return { ustcEdition: best, score: bestScore };
+  }
+
+  // Fast path fallback: English title matching via ustc_enrichments
+  // Translate title keywords to English-like search terms (simple heuristic, no LLM)
+  // This catches cross-language matches cheaply
+  if (allCandidates.length === 0) {
+    const titleTerms = Array.from(titleWordSet(book.title))
+      .filter(w => w.length >= 5)
+      .sort((a, b) => b.length - a.length)
+      .slice(0, 3);
+
+    if (titleTerms.length >= 1) {
+      const enrichParams = titleTerms
+        .map(w => `english_title=ilike.*${encodeURIComponent(w)}*`)
+        .join('&');
+      const enrichUrl = `${SUPABASE_URL}/rest/v1/ustc_enrichments?${enrichParams}&select=id,english_title,std_title&limit=10`;
+
+      try {
+        const enrichRes = await fetch(enrichUrl, { headers, signal: AbortSignal.timeout(5000) });
+        if (enrichRes.ok) {
+          const enrichments = await enrichRes.json();
+          if (Array.isArray(enrichments)) {
+            for (const e of enrichments) {
+              const origOverlap = titleWordOverlap(book.title, e.std_title as string);
+              if (origOverlap < 0.4) continue;
+
+              // Look up actual edition for year check
+              const edUrl = `${SUPABASE_URL}/rest/v1/ustc_editions?id=eq.${e.id}&select=sn,title,author_1,year,language_1,place`;
+              const edRes = await fetch(edUrl, { headers, signal: AbortSignal.timeout(5000) });
+              if (!edRes.ok) continue;
+              const editions = await edRes.json();
+              const ed = Array.isArray(editions) ? editions[0] : null;
+              if (!ed || Math.abs((ed.year as number) - book.year) > 25) continue;
+
+              return { ustcEdition: ed, score: origOverlap };
+            }
+          }
+        }
+      } catch {
+        // enrichments search failed — skip
+      }
+    }
   }
 
   return null;
