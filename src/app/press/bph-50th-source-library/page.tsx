@@ -8,7 +8,7 @@ export const metadata: Metadata = {
   openGraph: {
     title: 'Embassy of the Free Mind Launches the World\'s Largest Collection of Translated Ancient Texts',
     description:
-      'Source Library: 13,000+ books in 40+ languages, over 1 million pages translated into English. Free and open to all.',
+      'Source Library: 13,000+ books from 25+ digital libraries, over 2.5 million pages digitized, over 1.1 million translated into English. Free and open to all.',
     images: [{ url: 'https://sourcelibrary.org/og-image.png', width: 1200, height: 630 }],
   },
   alternates: { canonical: '/press/bph-50th-source-library' },
@@ -42,8 +42,8 @@ export default function PressReleasePage() {
 
         <p className="font-body text-xl text-secondary leading-relaxed mb-12 italic">
           Marking [50 years] of the Bibliotheca Philosophica Hermetica, the Embassy
-          announces a public beta of a digital library containing over 13,000 books in
-          40+ languages &mdash; with more than 3,300 fully translated into English, many for the first time.
+          announces a public beta of a digital library containing over 13,000 books from
+          25+ digital libraries &mdash; with more than 3,300 fully translated into English, many for the first time.
         </p>
 
         {/* ── Body ── */}
@@ -53,8 +53,8 @@ export default function PressReleasePage() {
             public beta of{' '}
             <a href="https://sourcelibrary.org" className="text-accent-rust hover:underline">Source Library</a>,
             a free, open-access digital library that makes thousands of ancient and early modern
-            texts readable in English for the first time. With over 13,000 books spanning
-            40+ languages and 1.8&nbsp;million page images, Source Library is the largest
+            texts readable in English for the first time. With over 13,000 books from
+            25+ digital libraries and 2.5&nbsp;million digitised page images, Source Library is the largest
             freely available collection of translated historical primary sources ever assembled.
           </p>
 
@@ -92,11 +92,11 @@ export default function PressReleasePage() {
           <h3 className="font-serif text-2xl text-primary pt-6">By the numbers</h3>
 
           <ul className="list-none space-y-2 pl-0">
-            <li><strong>13,000+</strong> books in 40+ languages</li>
+            <li><strong>13,000+</strong> books from 25+ digital libraries</li>
+            <li><strong>2.5&nbsp;million</strong> pages digitised, over <strong>1.1&nbsp;million</strong> pages translated into English</li>
             <li><strong>5,100+</strong> books with English translation (3,300+ fully translated)</li>
-            <li><strong>1.1&nbsp;million+</strong> pages translated into English</li>
-            <li><strong>2,900+</strong> first-ever English translations</li>
-            <li><strong>1.8&nbsp;million</strong> digitised page images with 69,000+ extracted illustrations</li>
+            <li>Nearly <strong>2,000</strong> first-ever English translations</li>
+            <li><strong>69,000+</strong> extracted illustrations</li>
           </ul>
 
           <p>
@@ -188,7 +188,7 @@ export default function PressReleasePage() {
               Source Library is a free, open-access digital library of translated ancient and
               early modern primary sources. Using AI-powered translation, it makes previously
               inaccessible texts available in English alongside their original languages.
-              The collection spans 13,000+ books in 40+ languages from major research libraries
+              The collection spans 13,000+ books from 25+ digital libraries
               worldwide. Source Library is [an initiative of / developed in partnership with]
               the Embassy of the Free Mind.{' '}
               <a href="https://sourcelibrary.org" className="text-accent-rust hover:underline">sourcelibrary.org</a>
