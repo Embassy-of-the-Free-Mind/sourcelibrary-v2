@@ -1,4 +1,4 @@
-import { NextRequest, NextResponse } from 'next/server';
+import { NextResponse } from 'next/server';
 import { getDb } from '@/lib/mongodb';
 import { withAuth } from '@/lib/auth-helpers';
 
@@ -22,74 +22,10 @@ export const GET = withAuth(async (request, session) => {
     const db = await getDb();
     const cutoffDate = new Date(Date.now() - days * 24 * 60 * 60 * 1000);
 
-    // === 4 queries total (down from ~25) using $facet ===
-    const [booksFacetArr, recentBooksResult, geminiUsageFacetArr, batchJobsResult, highFailureBooks] = await Promise.all([
-      // 1. SINGLE books $facet — filter out catalog stubs (pages_count=0) to keep scan fast
-      db.collection('books').aggregate([
-        { $match: { pages_count: { $gt: 0 } } },
-        {
-        $facet: {
-          totals: [{ $group: {
-            _id: null,
-            totalBooks: { $sum: 1 },
-            totalPages: { $sum: { $ifNull: ['$pages_count', 0] } },
-            pagesWithOcr: { $sum: { $ifNull: ['$pages_ocr', 0] } },
-            pagesWithTranslation: { $sum: { $ifNull: ['$pages_translated', 0] } },
-            // Pipeline health counts
-            needsSplitting: { $sum: { $cond: [{ $eq: ['$needs_splitting', true] }, 1, 0] } },
-            noSplitNeeded: { $sum: { $cond: [{ $eq: ['$needs_splitting', false] }, 1, 0] } },
-            splitChecked: { $sum: { $cond: [{ $ne: [{ $type: '$split_check' }, 'missing'] }, 1, 0] } },
-            booksWithSplitPages: { $sum: { $cond: [{ $eq: ['$split_check.needs_splitting', true] }, 1, 0] } },
-            booksWithSummary: { $sum: { $cond: [{ $or: [
-              { $and: [{ $eq: [{ $type: '$summary' }, 'string'] }, { $ne: ['$summary', ''] }] },
-              { $ne: [{ $ifNull: ['$summary.data', ''] }, ''] },
-            ]}, 1, 0] } },
-            booksWithIndex: { $sum: { $cond: [{ $ne: [{ $type: '$index.bookSummary' }, 'missing'] }, 1, 0] } },
-            booksWithChapters: { $sum: { $cond: [
-              { $gt: [{ $size: { $ifNull: ['$chapters', []] } }, 0] }, 1, 0,
-            ] } },
-            booksWithEditions: { $sum: { $cond: [
-              { $gt: [{ $size: { $ifNull: ['$editions', []] } }, 0] }, 1, 0,
-            ] } },
-            fullyTranslated: { $sum: { $cond: [{ $and: [
-              { $gt: [{ $ifNull: ['$pages_ocr', 0] }, 0] },
-              { $gte: [
-                { $divide: [{ $ifNull: ['$pages_translated', 0] }, { $max: [{ $ifNull: ['$pages_ocr', 0] }, 1] }] },
-                0.95,
-              ] },
-            ]}, 1, 0] } },
-            // Backlog: old OCR pages not in pipeline
-            oldOcrPages: { $sum: { $cond: [{ $and: [
-              { $not: ['$pipeline_auto.status'] },
-              { $gt: [{ $ifNull: ['$pages_ocr', 0] }, 0] },
-            ]}, '$pages_ocr', 0] } },
-            // Worker health: books blocked due to repeated OCR failures (dead images etc)
-            ocrBlocked: { $sum: { $cond: [{ $gt: [{ $ifNull: ['$ocr_blocked_until', null] }, new Date()] }, 1, 0] } },
-          }}],
-          pipelineFunnel: [
-            { $group: { _id: '$pipeline_auto.status', count: { $sum: 1 } } },
-            { $sort: { count: -1 } },
-          ],
-          byLanguage: [
-            { $group: { _id: '$language', count: { $sum: 1 } } },
-            { $sort: { count: -1 } },
-            { $limit: 15 },
-          ],
-          byCategory: [
-            { $unwind: { path: '$categories', preserveNullAndEmptyArrays: false } },
-            { $group: { _id: '$categories', count: { $sum: 1 } } },
-            { $sort: { count: -1 } },
-            { $limit: 15 },
-          ],
-          byProvider: [
-            { $group: { _id: '$image_source.provider', count: { $sum: 1 } } },
-            { $sort: { count: -1 } },
-          ],
-        }
-      }], { maxTimeMS: 30000 }).toArray().catch((err: Error) => {
-        console.error('Books facet failed:', err.message?.substring(0, 200));
-        return [{}];
-      }),
+    // === Read pre-computed snapshots (instant) + small queries ===
+    const [snapshot, recentBooksResult, geminiUsageFacetArr, batchJobsResult, highFailureBooks] = await Promise.all([
+      // 1. Pre-computed dashboard snapshot (updated by Hetzner cron)
+      db.collection('system_config').findOne({ _id: 'analytics_usage' } as any).catch(() => null),
 
       // 2. Recent books (fast find with projection + index on created_at)
       db.collection('books')
@@ -100,17 +36,13 @@ export const GET = withAuth(async (request, session) => {
         .toArray().catch(() => []),
 
       // 3. Pre-aggregated daily usage from gemini_usage_daily (fast: ~30 docs instead of 1.4M)
-      // Falls back to raw gemini_usage scan if daily collection is empty
       (async () => {
         const cutoffStr = cutoffDate.toISOString().slice(0, 10);
-
-        // Read pre-aggregated daily docs
         const dailyDocs = await db.collection('gemini_usage_daily')
           .find({ date: { $gte: cutoffStr } })
           .sort({ date: 1 })
           .toArray();
 
-        // If no daily docs, fall back to raw scan (before backfill runs)
         if (dailyDocs.length === 0) {
           return db.collection('gemini_usage').aggregate([
             { $match: { timestamp: { $gte: cutoffDate } } },
@@ -176,38 +108,30 @@ export const GET = withAuth(async (request, session) => {
             tokens: (doc.totalInputTokens || 0) + (doc.totalOutputTokens || 0),
           });
 
-          // byType → costByAction + imageStats
           for (const [type, stats] of Object.entries(doc.byType || {})) {
             const s = stats as any;
             const existing = costByActionMap.get(type) || { cost: 0, count: 0 };
             existing.cost += s.cost || 0;
             existing.count += s.count || 0;
             costByActionMap.set(type, existing);
-
-            if (type === 'extract_images') {
-              imagePages += s.successCount || 0;
-            }
+            if (type === 'extract_images') imagePages += s.successCount || 0;
           }
 
-          // byModel → modelUsage (OCR-only approximation: use all models since daily doesn't split by type+model)
           for (const [model, stats] of Object.entries(doc.byModel || {})) {
             const s = stats as any;
             modelUsageMap.set(model, (modelUsageMap.get(model) || 0) + (s.count || 0));
           }
 
-          // byEndpoint → promptUsage
           for (const [endpoint, count] of Object.entries(doc.byEndpoint || {})) {
             promptUsageMap.set(endpoint, (promptUsageMap.get(endpoint) || 0) + (count as number));
           }
 
-          // byErrorCategory → failuresByCategory
           for (const [cat, stats] of Object.entries(doc.byErrorCategory || {})) {
             const s = stats as any;
             failuresMap.set(cat, (failuresMap.get(cat) || 0) + (s.count || 0));
           }
         }
 
-        // Return in the same shape as the old $facet
         return [{
           costTotal: [{ totalCost, totalTokens }],
           costByDay: Array.from(costByDayMap.entries())
@@ -235,7 +159,7 @@ export const GET = withAuth(async (request, session) => {
         { $group: { _id: { status: '$status', type: '$type' }, count: { $sum: 1 } } },
       ]).toArray().catch(() => []),
 
-      // 5. High-failure-rate OCR jobs — books that keep failing (>90% failure)
+      // 5. High-failure-rate OCR jobs
       db.collection('jobs').aggregate([
         { $match: { type: 'ocr', status: 'completed_with_errors', updated_at: { $gte: cutoffDate } } },
         { $addFields: { failRate: { $cond: [
@@ -256,41 +180,47 @@ export const GET = withAuth(async (request, session) => {
       ]).toArray().catch(() => []),
     ]);
 
-    // === Unpack book facet ===
-    const bf = (booksFacetArr as any[])[0] || {};
-    const totals = bf.totals?.[0] || {};
-    const totalBooks = totals.totalBooks || 0;
-    const totalPages = totals.totalPages || 0;
-    const pagesWithOcr = totals.pagesWithOcr || 0;
-    const pagesWithTranslation = totals.pagesWithTranslation || 0;
+    // === Unpack snapshot (or fall back to dashboard_snapshot) ===
+    let snap = snapshot?.data;
+    if (!snap) {
+      // Fall back to dashboard_snapshot if analytics_usage hasn't been seeded yet
+      const fallback = await db.collection('system_config').findOne({ _id: 'dashboard_snapshot' } as any);
+      snap = fallback?.data;
+    }
+
+    const canon = snap?.canon || {};
+    const coverage = snap?.coverage || {};
+    const enrichment = snap?.enrichment || {};
+
+    const totalBooks = canon.total_books || 0;
+    const totalPages = canon.total_pages || 0;
+    const pagesWithOcr = coverage.ocr_pages || 0;
+    const pagesWithTranslation = coverage.translated_pages || 0;
 
     const recentBooks = (recentBooksResult as any[]).map(b => ({
       title: b.title, author: b.author, created_at: b.created_at, pages_count: b.pages_count,
     }));
 
-    // === Unpack gemini_usage facet ===
+    // === Unpack gemini_usage ===
     const gu = (geminiUsageFacetArr as any[])[0] || {};
 
     const modelUsage = (gu.modelUsage || []).map((m: any) => ({ model: m._id, count: m.count }));
     const promptUsage = (gu.promptUsage || []).map((p: any) => ({ prompt: p._id, count: p.count }));
 
-    // Collection stats (from book facet)
-    const alreadySplit = totals.booksWithSplitPages || 0;
+    // Collection stats from snapshot
     const collectionStats = {
       blobStorage: {
         pagesWithCroppedPhoto: 0,
         pagesWithArchivedPhoto: 0,
         totalBlobPages: 0,
-        booksWithSplitPages: alreadySplit,
+        booksWithSplitPages: snap?.splitting?.booksWithSplitPages || 0,
       },
-      byLanguage: (bf.byLanguage || []).map((l: any) => ({ language: l._id || 'Unknown', count: l.count })),
-      byCategory: (bf.byCategory || []).map((c: any) => ({ category: c._id || 'Unknown', count: c.count })),
-      byImageSource: (bf.byProvider || []).map((p: any) => ({ provider: p._id || 'unknown', count: p.count })),
+      byLanguage: (snap?.byLanguage || []).map((l: any) => ({ language: l._id || 'Unknown', count: l.count })),
+      byCategory: (snap?.byCategory || []).map((c: any) => ({ category: c._id || 'Unknown', count: c.count })),
+      byImageSource: (snap?.byProvider || []).map((p: any) => ({ provider: p._id || 'unknown', count: p.count })),
     };
 
-    // Pipeline health (from book facet totals + batch jobs)
-    const unchecked = totalBooks - (totals.splitChecked || 0) - alreadySplit;
-
+    // Pipeline health
     let pendingJobs = 0;
     let processingJobs = 0;
     const jobsByType: Record<string, number> = {};
@@ -302,18 +232,13 @@ export const GET = withAuth(async (request, session) => {
     }
 
     const pipelineHealth = {
-      splitting: {
-        needsSplitting: totals.needsSplitting || 0,
-        alreadySplit,
-        noSplitNeeded: totals.noSplitNeeded || 0,
-        unchecked: Math.max(0, unchecked),
-      },
+      splitting: snap?.splitting || { needsSplitting: 0, alreadySplit: 0, noSplitNeeded: 0, unchecked: 0 },
       enrichment: {
-        booksWithSummary: totals.booksWithSummary || 0,
-        booksWithIndex: totals.booksWithIndex || 0,
-        booksWithChapters: totals.booksWithChapters || 0,
-        booksWithEditions: totals.booksWithEditions || 0,
-        fullyTranslated: totals.fullyTranslated || 0,
+        booksWithSummary: enrichment.with_summary || 0,
+        booksWithIndex: enrichment.with_index || 0,
+        booksWithChapters: 0,
+        booksWithEditions: 0,
+        fullyTranslated: canon.first_translations_complete || 0,
       },
       images: { pagesWithDetectedImages: gu.imageStats?.[0]?.totalPages || 0, totalDetectedImages: 0 },
       batchJobs: {
@@ -322,8 +247,8 @@ export const GET = withAuth(async (request, session) => {
         byType: Object.entries(jobsByType).map(([type, count]) => ({ type, count })),
       },
       workerHealth: {
-        ocrBlocked: totals.ocrBlocked || 0,
-        needsAttention: (bf.pipelineFunnel || []).find((s: any) => s._id === 'needs_attention')?.count || 0,
+        ocrBlocked: snap?.ocrBlocked || 0,
+        needsAttention: (snap?.pipelineFunnel || []).find((s: any) => s.status === 'needs_attention')?.count || 0,
         failuresByCategory: (gu.failuresByCategory || []).map((f: any) => ({
           category: f._id || 'unknown',
           count: f.count,
@@ -338,7 +263,7 @@ export const GET = withAuth(async (request, session) => {
       },
     };
 
-    // Cost stats (from gemini_usage facet)
+    // Cost stats
     const costStats = {
       totalCost: gu.costTotal?.[0]?.totalCost || 0,
       totalTokens: gu.costTotal?.[0]?.totalTokens || 0,
@@ -346,17 +271,17 @@ export const GET = withAuth(async (request, session) => {
       costByAction: (gu.costByAction || []).map((a: any) => ({ action: a._id || 'unknown', cost: a.cost || 0, count: a.count || 0 })),
     };
 
-    // Pipeline funnel (from book facet)
-    const pipelineFunnel = (bf.pipelineFunnel || []).map((s: any) => ({
-      status: s._id || 'not_enrolled',
+    // Pipeline funnel from snapshot
+    const pipelineFunnel = (snap?.pipelineFunnel || []).map((s: any) => ({
+      status: s.status || s._id || 'not_enrolled',
       count: s.count,
     }));
 
-    // Backlog (reuse totals from book facet)
+    // Backlog
     const backlog = {
       needsOcr: Math.max(0, totalPages - pagesWithOcr),
       needsTranslation: Math.max(0, pagesWithOcr - pagesWithTranslation),
-      oldOcrPages: totals.oldOcrPages || 0,
+      oldOcrPages: snap?.oldOcrPages || 0,
     };
 
     const responseData = {
@@ -373,10 +298,10 @@ export const GET = withAuth(async (request, session) => {
       pipelineHealth,
       pipelineFunnel,
       backlog,
+      snapshotAge: snapshot?.updated_at ? Math.round((Date.now() - new Date(snapshot.updated_at).getTime()) / 60000) + ' min ago' : 'using dashboard_snapshot fallback',
       query: { days },
     };
 
-    // Cache the result for 5 minutes (all time ranges)
     cache.set(days, { data: responseData, timestamp: Date.now() });
 
     return NextResponse.json(responseData);
