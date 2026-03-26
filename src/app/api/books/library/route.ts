@@ -87,7 +87,6 @@ export async function GET(request: NextRequest) {
       const matchConditions: Record<string, unknown>[] = [
         { hidden: { $ne: true } },
         { pages_count: { $gt: 0 } },
-        { pages_archived: { $gt: 0 } },
       ];
       if (language) matchConditions.push({ language });
       if (category) matchConditions.push({ categories: category });

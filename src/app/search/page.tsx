@@ -315,21 +315,7 @@ export default function SearchPage() {
 
   // Browse mode: fetch books when no query
   const isBrowseMode = !query || query.length < 2;
-  const prefetchUsed = useRef(false);
   const performBrowse = useCallback(async () => {
-    // Check for prefetched data from homepage (instant load for common views)
-    if (!prefetchUsed.current && typeof window !== 'undefined' && offset === 0 && !language && !category && !collection && !library && browseSortBy === 'recent-translation') {
-      const prefetch = (window as any).__BROWSE_PREFETCH;
-      const prefetchTs = (window as any).__BROWSE_PREFETCH_TS;
-      const key = firstTranslation ? 'first_translation' : hasTranslation ? 'has_translation' : null;
-      if (key && prefetch?.[key] && prefetchTs && (Date.now() - prefetchTs) < 300_000) {
-        prefetchUsed.current = true;
-        setBrowseBooks(prefetch[key].books || []);
-        setBrowseTotal(prefetch[key].total || 0);
-        return;
-      }
-    }
-
     setBrowseLoading(true);
     setBrowseError(false);
     try {
