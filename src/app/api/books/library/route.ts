@@ -7,9 +7,10 @@ export const dynamic = 'force-dynamic';
 const MAX_LIMIT = 200;
 const DEFAULT_LIMIT = 100;
 
-// Cache for the default (unfiltered, first page) library request
-let defaultViewCache: { data: string; timestamp: number } | null = null;
-const DEFAULT_CACHE_TTL = 60_000; // 1 minute
+// In-memory cache for common browse views (keyed by filter combination)
+const browseCache = new Map<string, { data: string; timestamp: number }>();
+const BROWSE_CACHE_TTL = 60_000; // 1 minute
+const MAX_CACHE_ENTRIES = 10;
 
 type SortOption = 'recent-translation' | 'recent' | 'title-asc' | 'title-desc' | 'date_asc' | 'date_desc';
 
@@ -46,17 +47,22 @@ export async function GET(request: NextRequest) {
     const collection = searchParams.get('collection') || '';
     const library = searchParams.get('library') || '';
     const firstTranslation = searchParams.get('first_translation') === 'true';
+    const hasTranslation = searchParams.get('has_translation') === 'true';
     const sort = (searchParams.get('sort') || 'recent-translation') as SortOption;
 
-    // Serve cached response for the default (unfiltered, first page) request
-    const isDefaultView = !search.trim() && !language && !category && !collection && !library && !firstTranslation && sort === 'recent-translation' && skip === 0 && limit === DEFAULT_LIMIT;
-    if (isDefaultView && defaultViewCache && (Date.now() - defaultViewCache.timestamp) < DEFAULT_CACHE_TTL) {
-      return new NextResponse(defaultViewCache.data, {
-        headers: {
-          'Content-Type': 'application/json',
-          'Cache-Control': 'public, s-maxage=60, stale-while-revalidate=300',
-        },
-      });
+    // Serve cached response for cacheable requests (first page, default sort, no text search)
+    const isCacheable = !search.trim() && !category && !collection && !library && !language && sort === 'recent-translation' && skip === 0 && limit === DEFAULT_LIMIT;
+    const cacheKey = `ft:${firstTranslation}|ht:${hasTranslation}`;
+    if (isCacheable) {
+      const cached = browseCache.get(cacheKey);
+      if (cached && (Date.now() - cached.timestamp) < BROWSE_CACHE_TTL) {
+        return new NextResponse(cached.data, {
+          headers: {
+            'Content-Type': 'application/json',
+            'Cache-Control': 'public, s-maxage=60, stale-while-revalidate=300',
+          },
+        });
+      }
     }
 
     const db = await getDb();
@@ -84,6 +90,7 @@ export async function GET(request: NextRequest) {
       if (collection) matchConditions.push({ collections: collection });
       if (library) matchConditions.push({ 'image_source.provider': library });
       if (firstTranslation) matchConditions.push({ is_first_translation: true });
+      if (hasTranslation) matchConditions.push({ pages_translated: { $gt: 0 } });
       pipelineStart = [{ $match: { $and: matchConditions } }];
     }
 
@@ -186,9 +193,13 @@ export async function GET(request: NextRequest) {
 
     const responseData = JSON.stringify({ books, total });
 
-    // Cache the default view
-    if (isDefaultView) {
-      defaultViewCache = { data: responseData, timestamp: Date.now() };
+    // Cache cacheable views
+    if (isCacheable) {
+      if (browseCache.size >= MAX_CACHE_ENTRIES) {
+        const oldest = [...browseCache.entries()].sort((a, b) => a[1].timestamp - b[1].timestamp)[0];
+        if (oldest) browseCache.delete(oldest[0]);
+      }
+      browseCache.set(cacheKey, { data: responseData, timestamp: Date.now() });
     }
 
     return new NextResponse(responseData, {
