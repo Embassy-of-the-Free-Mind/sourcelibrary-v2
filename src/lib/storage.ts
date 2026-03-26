@@ -77,6 +77,9 @@ export async function storagePut(
     return r2Put(r2, pathname, body, options);
   }
 
+  // R2 not configured — this should not happen in production
+  console.warn('[storage] WARNING: R2 not configured, falling back to Vercel Blob. This costs money — check R2 env vars.');
+
   // Fallback to Vercel Blob
   const { put } = await import('@vercel/blob');
   const blob = await put(pathname, Buffer.isBuffer(body) ? body : Buffer.from(body as Uint8Array), {
