@@ -121,14 +121,15 @@ export async function POST(request: NextRequest) {
         // Re-fetch db after long S3 download — connection may have gone idle (maxIdleTimeMS=60s)
         const freshDb = await getDb();
 
-        // Use shared upload processing function
+        // Use shared upload processing function (split detection skipped for S3 imports)
         const result = await processImageUpload({
           buffer,
           filename,
           contentType: mimeType,
           bookId,
           nextPageNumber,
-          db: freshDb
+          db: freshDb,
+          skipSplitDetection: true,
         });
 
         // Insert pages into database

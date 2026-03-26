@@ -26,6 +26,7 @@ export interface ProcessImageUploadParams {
   bookId: string;
   nextPageNumber: number;
   db: Db;
+  skipSplitDetection?: boolean;
 }
 
 export interface ProcessImageUploadResult {
@@ -62,7 +63,7 @@ export interface ProcessImageUploadResult {
 export async function processImageUpload(
   params: ProcessImageUploadParams
 ): Promise<ProcessImageUploadResult> {
-  let { buffer, filename, contentType, bookId, nextPageNumber, db } = params;
+  let { buffer, filename, contentType, bookId, nextPageNumber, db, skipSplitDetection } = params;
 
   // Convert JP2 to JPEG for Gemini API compatibility
   if (contentType === 'image/jp2' || contentType === 'image/jpx') {    
@@ -81,31 +82,33 @@ export async function processImageUpload(
     addRandomSuffix: false
   });
 
-  // STEP 2: Detect if this is a two-page spread
-  const splitResult = await detectSplit(buffer, originalBlob.url, db);
+  // STEP 2: Detect if this is a two-page spread (skipped for bulk S3 imports)
+  if (!skipSplitDetection) {
+    const splitResult = await detectSplit(buffer, originalBlob.url, db);
 
-  // STEP 3a: Process as split image (creates 2 pages with separate thumbnails)
-  if (splitResult.isTwoPageSpread) {
-    try {
-      const [leftPage, rightPage] = await processSplitImage(
-        buffer,
-        bookId,
-        nextPageNumber,
-        originalBlob.url,
-        splitResult
-      );
+    // STEP 3a: Process as split image (creates 2 pages with separate thumbnails)
+    if (splitResult.isTwoPageSpread) {
+      try {
+        const [leftPage, rightPage] = await processSplitImage(
+          buffer,
+          bookId,
+          nextPageNumber,
+          originalBlob.url,
+          splitResult
+        );
 
-      return {
-        pages: [leftPage, rightPage],
-        nextPageNumber: nextPageNumber + 2
-      };
-    } catch (splitError) {
-      console.error(`Split processing failed for ${filename}, falling back to single page:`, splitError);
-      // Fall through to single page logic
+        return {
+          pages: [leftPage, rightPage],
+          nextPageNumber: nextPageNumber + 2
+        };
+      } catch (splitError) {
+        console.error(`Split processing failed for ${filename}, falling back to single page:`, splitError);
+        // Fall through to single page logic
+      }
     }
   }
 
-  // STEP 3b: Process as single page (either not a spread or split failed)
+  // STEP 3b: Process as single page (either not a spread, split failed, or skipSplitDetection=true)
   // Generate thumbnail from original buffer
   const thumbnailBuffer = await compress_photo(buffer, 150, 60);
   const thumbnailBlobPath = `uploads/${bookId}/thumbnails/${filename}`;
