@@ -96,20 +96,31 @@ async function main() {
   const first_translations_complete = firstCompleteArr[0]?.n || 0;
   const contributing_libraries = libAgg[0]?.n || 0;
 
-  // Deduplicate languages: split bilingual combos, normalize
+  // Deduplicate languages: split bilingual combos, normalize to base languages
+  const NOISE = new Set(['Ancient', 'Middle', 'Old', 'Church', 'Early', 'Modern', 'Classical',
+    'script', 'alphabet', 'characters', 'hieroglyphs', 'cuneiform',
+    'with', 'some', 'text', 'mixed', 'primarily', 'mostly', 'various',
+    'Multiple', 'Unknown', 'Undetermined', 'None']);
+  const ALIASES = {
+    'Geez': 'Ethiopic', "Ge'ez": 'Ethiopic', 'Saxon': 'Anglo-Saxon',
+    'Farsi': 'Persian', 'Castilian': 'Spanish', 'Judaeo': 'Judeo',
+    'Provençal': 'Occitan', 'Provencal': 'Occitan',
+  };
   const baseLanguages = new Set();
   for (const { _id: lang } of langAgg) {
-    if (!lang || lang === 'Unknown' || lang === 'Multiple') continue;
+    if (!lang) continue;
     const parts = lang
-      .replace(/[\/\-,]/g, ' ')
-      .replace(/\(.*?\)/g, '')
+      .replace(/[\/\-,;()]/g, ' ')
       .replace(/ and /g, ' ')
       .replace(/ in /g, ' ')
+      .replace(/ with /g, ' ')
       .split(/\s+/)
-      .filter(w => w.length > 3 && !['script', 'Hebrew', 'alphabet'].includes(w));
-    for (const p of parts) {
-      // Collapse historical variants
-      if (['Ancient', 'Middle', 'Old', 'Church'].includes(p)) continue;
+      .map(w => w.trim())
+      .filter(w => w.length > 2 && !NOISE.has(w));
+    for (let p of parts) {
+      p = ALIASES[p] || p;
+      // Skip non-language words (lowercase = likely noise like "the", "from")
+      if (p[0] !== p[0].toUpperCase()) continue;
       baseLanguages.add(p);
     }
   }
