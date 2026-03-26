@@ -99,9 +99,55 @@ function titleWordOverlap(a: string | null | undefined, b: string | null | undef
   return overlap / Math.min(wa.size, wb.size);
 }
 
+// ── Entity Alias Lookup ──────────────────────────────────────────────
+
+function stripDiacritics(s: string): string {
+  return s.normalize('NFD').replace(/[\u0300-\u036f]/g, '');
+}
+
+/**
+ * Get all known surname variants for an author from entity_aliases.
+ * Returns the original surname plus any variants from Wikidata/CERL.
+ */
+async function getAuthorVariants(db: Db, surname: string): Promise<string[]> {
+  const variants = new Set<string>([surname]);
+  const surnameNorm = stripDiacritics(surname.toLowerCase());
+
+  try {
+    // Search entity_aliases by surname (index: surnames)
+    const docs = await db.collection('entity_aliases').find(
+      { surnames: surnameNorm },
+      { projection: { names: 1, surnames: 1 } }
+    ).limit(5).toArray();
+
+    for (const doc of docs) {
+      // Extract all surname forms from the name variants
+      for (const name of (doc.names || [])) {
+        const comma = name.indexOf(',');
+        if (comma > 0) {
+          variants.add(name.substring(0, comma).trim().toLowerCase());
+        }
+        const parts = name.split(/\s+/);
+        if (parts.length >= 2) {
+          variants.add(parts[parts.length - 1].toLowerCase());
+        }
+      }
+      // Also add raw surnames from the doc
+      for (const s of (doc.surnames || [])) {
+        variants.add(s);
+      }
+    }
+  } catch {
+    // entity_aliases unavailable — use original surname only
+  }
+
+  return Array.from(variants).filter(s => s.length >= 3);
+}
+
 // ── Fast Pre-Filter (word overlap) ────────────────────────────────────
 
 async function fastMatch(
+  db: Db,
   book: { title: string; author?: string; year?: number },
 ): Promise<{ ustcEdition: Record<string, unknown>; score: number } | null> {
   const surname = extractSurname(book.author || null);
@@ -112,41 +158,55 @@ async function fastMatch(
     'Authorization': `Bearer ${SUPABASE_ANON_KEY}`,
   };
 
-  // Query USTC editions by author surname + year range
   const yearLo = book.year - 20;
   const yearHi = book.year + 20;
-  const url = new URL(`${SUPABASE_URL}/rest/v1/ustc_editions`);
-  url.searchParams.set('select', 'sn,title,author_1,year,language_1,place');
-  url.searchParams.set('author_1', `ilike.*${surname}*`);
-  url.searchParams.set('year', `gte.${yearLo}`);
-  url.searchParams.set('year', `lte.${yearHi}`);
-  url.searchParams.set('limit', '50');
 
-  // Supabase doesn't support two year filters with the same key, use and= syntax
-  const urlStr = `${SUPABASE_URL}/rest/v1/ustc_editions?select=sn,title,author_1,year,language_1,place&author_1=ilike.*${encodeURIComponent(surname)}*&year=gte.${yearLo}&year=lte.${yearHi}&limit=50`;
+  // Get all known name variants from entity_aliases
+  const surnameVariants = await getAuthorVariants(db, surname);
 
-  try {
-    const res = await fetch(urlStr, { headers, signal: AbortSignal.timeout(10000) });
-    if (!res.ok) return null;
-    const candidates = await res.json();
-    if (!Array.isArray(candidates) || candidates.length === 0) return null;
+  // Try each variant until we find candidates
+  let allCandidates: Record<string, unknown>[] = [];
+  const seenSns = new Set<number>();
 
-    // Score by title word overlap
-    let best: Record<string, unknown> | null = null;
-    let bestScore = 0;
-    for (const c of candidates) {
-      const score = titleWordOverlap(book.title, c.title as string);
-      if (score > bestScore) {
-        bestScore = score;
-        best = c;
+  for (const variant of surnameVariants) {
+    const urlStr = `${SUPABASE_URL}/rest/v1/ustc_editions?select=sn,title,author_1,year,language_1,place&author_1=ilike.*${encodeURIComponent(variant)}*&year=gte.${yearLo}&year=lte.${yearHi}&limit=50`;
+
+    try {
+      const res = await fetch(urlStr, { headers, signal: AbortSignal.timeout(10000) });
+      if (!res.ok) continue;
+      const candidates = await res.json();
+      if (!Array.isArray(candidates)) continue;
+      for (const c of candidates) {
+        if (!seenSns.has(c.sn as number)) {
+          seenSns.add(c.sn as number);
+          allCandidates.push(c);
+        }
       }
+      // If we already have good candidates, no need to try more variants
+      if (allCandidates.length > 0) break;
+    } catch {
+      // Timeout or network error — try next variant
     }
+  }
 
-    if (best && bestScore >= 0.6) {
-      return { ustcEdition: best, score: bestScore };
+  if (allCandidates.length === 0) return null;
+
+  // Score by title word overlap (try both original and diacritics-stripped)
+  let best: Record<string, unknown> | null = null;
+  let bestScore = 0;
+  for (const c of allCandidates) {
+    const score = Math.max(
+      titleWordOverlap(book.title, c.title as string),
+      titleWordOverlap(stripDiacritics(book.title), stripDiacritics(c.title as string)),
+    );
+    if (score > bestScore) {
+      bestScore = score;
+      best = c;
     }
-  } catch {
-    // Timeout or network error — fall through to AI
+  }
+
+  if (best && bestScore >= 0.6) {
+    return { ustcEdition: best, score: bestScore };
   }
 
   return null;
@@ -477,9 +537,9 @@ export async function matchToUstc(
   },
   options?: { force?: boolean; skipFastPath?: boolean },
 ): Promise<MatchResult> {
-  // Step 1: Try fast word-overlap match (free, instant)
+  // Step 1: Try fast word-overlap match (free, instant) — now with entity_aliases
   if (!options?.skipFastPath) {
-    const fast = await fastMatch(book);
+    const fast = await fastMatch(db, book);
     if (fast && fast.score >= 0.6) {
       const ed = fast.ustcEdition;
       return {
