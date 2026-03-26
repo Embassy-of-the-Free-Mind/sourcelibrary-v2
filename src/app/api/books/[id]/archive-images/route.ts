@@ -1,5 +1,5 @@
 import { NextRequest, NextResponse } from 'next/server';
-import { storagePut } from '@/lib/storage';
+import { storagePut, pagePaths } from '@/lib/storage';
 import { getDb } from '@/lib/mongodb';
 import { images } from '@/lib/api-client/images';
 import { compress_photo } from '@/lib/image-manipulation';
@@ -111,21 +111,20 @@ export const POST = withAuth(async (request, session, context) => {
             const { buffer, mimeType } = await images.fetchBufferWithMimeType(sourceUrl);
             const bytes = buffer.byteLength;
 
-            // Upload to Vercel Blob
-            const filename = `archived/${bookId}/${page.page_number}.jpg`;
-            const blob = await storagePut(filename, buffer, {
+            // Upload full-res to R2
+            const paths = pagePaths(bookId, page.page_number);
+            const blob = await storagePut(paths.full, buffer, {
               access: 'public',
               contentType: mimeType,
               addRandomSuffix: false,
               allowOverwrite: true,
             });
 
-            // Generate 150px thumbnail from the same buffer
+            // Generate 150px thumbnail
             let thumbnailUrl: string | undefined;
             try {
               const thumbBuffer = await compress_photo(buffer, 150, 60);
-              const thumbFilename = `thumbnails/${bookId}/${page.page_number}.jpg`;
-              const thumbBlob = await storagePut(thumbFilename, thumbBuffer, {
+              const thumbBlob = await storagePut(paths.thumb, thumbBuffer, {
                 access: 'public',
                 contentType: 'image/jpeg',
                 addRandomSuffix: false,
