@@ -88,7 +88,7 @@ const SHOWCASE_BOOKS = [
 ];
 
 const COMPARISONS = [
-  { name: 'Source Library', count: '5,100+', years: '3 months', access: 'Free & open', highlight: true },
+  { name: 'Source Library', count: '5,100+', years: 'Since 2022', access: 'Free & open', highlight: true },
   { name: 'Loeb Classical Library', count: '~540', years: '115 years', access: 'Paywall', highlight: false },
   { name: 'Perseus Digital Library', count: '~1,000', years: '38 years', access: 'Free (reprints)', highlight: false },
   { name: 'Sacred Texts Archive', count: '~1,700', years: '25+ years', access: 'Free (reprints)', highlight: false },
@@ -346,8 +346,13 @@ export default function PressReleasePage() {
           </h2>
 
           <p className="text-secondary leading-relaxed mb-6 font-body">
-            Source Library is released as a public beta. The collection has been built in three months,
-            and it shows &mdash; there are rough edges. Manuscript transcriptions are often imperfect.
+            Source Library is released as a public beta. The project began in 2022 when Lomas encountered
+            an{' '}
+            <a href="https://sourcelibrary.org/blog/origin-story" className="text-accent-rust hover:underline">
+              untranslated Ficino manuscript
+            </a>{' '}
+            in the BPH&rsquo;s collection and wondered why, in an age of AI, it had never been rendered
+            into English. The collection has grown rapidly since, and there are rough edges. Manuscript transcriptions are often imperfect.
             Metadata for some books is incomplete. Some &ldquo;first translation&rdquo; claims will
             turn out to be wrong once scholars with deeper knowledge of specific fields weigh in.
             We are publishing now rather than waiting for perfection because the alternative &mdash;
