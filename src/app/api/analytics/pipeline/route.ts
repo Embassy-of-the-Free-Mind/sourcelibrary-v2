@@ -88,8 +88,8 @@ export const GET = withAuth(async (request, session) => {
       ]).toArray(),
     ]);
 
-    // 6. Pipeline funnel (current book counts per status) + enrichment coverage
-    const [funnelResult, enrichmentResult, galleryCount] = await Promise.all([
+    // 6. Pipeline funnel (current book counts per status) + enrichment coverage + milestones
+    const [funnelResult, enrichmentResult, galleryCount, firstTranslations, nearComplete] = await Promise.all([
       db.collection('books').aggregate([
         { $match: { 'pipeline_auto.status': { $exists: true } } },
         { $group: { _id: '$pipeline_auto.status', count: { $sum: 1 } } },
@@ -116,15 +116,23 @@ export const GET = withAuth(async (request, session) => {
       ]).toArray(),
 
       db.collection('gallery_images').estimatedDocumentCount(),
+
+      // Milestones
+      db.collection('books').countDocuments({ is_first_translation: true }),
+
+      db.collection('books').countDocuments({
+        status: { $ne: 'deleted' },
+        pages_count: { $gt: 0 },
+        pages_translated: { $gt: 0 },
+        $expr: { $gte: ['$pages_translated', { $multiply: ['$pages_count', 0.9] }] },
+      }),
     ]);
 
     const funnel = Object.fromEntries(funnelResult.map((f: any) => [f._id, f.count]));
     const enrichment = enrichmentResult[0] || {};
 
-    // Image extraction: count books that have at least one page with detected_images
-    const booksWithImages = await db.collection('pages').distinct('book_id', {
-      'detected_images.0': { $exists: true },
-    });
+    // Image extraction: count distinct books in gallery_images (fast — 70K docs vs millions of pages)
+    const booksWithImages = await db.collection('gallery_images').distinct('book_id');
 
     // Compute velocity from snapshots (deltas between consecutive points)
     const velocity = computeVelocity(snapshots);
@@ -185,6 +193,10 @@ export const GET = withAuth(async (request, session) => {
         imageExtraction: booksWithImages.length,
         galleryImages: galleryCount,
         pipelineComplete: enrichment.pipeline_complete || 0,
+      },
+      milestones: {
+        firstTranslations,
+        nearComplete, // >90% translated
       },
       query: { hours },
     };

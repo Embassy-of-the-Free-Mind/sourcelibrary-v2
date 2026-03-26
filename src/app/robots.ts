@@ -29,6 +29,7 @@ export default function robots(): MetadataRoute.Robots {
           '/reading-history',
           '/highlights',
           '/favorites',
+          '/artwork/',
         ],
       },
 

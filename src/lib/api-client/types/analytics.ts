@@ -255,6 +255,10 @@ export interface PipelineData {
   recentDecisions: PipelineDecision[];
   funnel?: Record<string, number>;
   enrichmentCoverage?: EnrichmentCoverage;
+  milestones?: {
+    firstTranslations: number;
+    nearComplete: number;
+  };
   query: { hours: number };
 }
 

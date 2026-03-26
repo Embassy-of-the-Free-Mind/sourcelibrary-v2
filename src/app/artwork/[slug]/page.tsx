@@ -84,6 +84,8 @@ export async function generateMetadata({ params }: PageProps): Promise<Metadata>
   return {
     title: `${artwork.display_title || artwork.title} — ${artwork.author} — Source Library`,
     description: (artwork as any).commons_description?.slice(0, 200) || `${artwork.title} by ${artwork.author}`,
+    // Artwork pages are admin-only (non-admin gets redirected) — don't index
+    robots: { index: false, follow: true },
     openGraph: {
       title: `${artwork.display_title || artwork.title} by ${artwork.author}`,
       images: [artwork.thumbnail_blob || artwork.thumbnail || ''],

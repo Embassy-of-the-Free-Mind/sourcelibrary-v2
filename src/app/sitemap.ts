@@ -198,30 +198,10 @@ export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
         };
       });
 
-    // Encyclopedia entities — include entries with descriptions (useful content for search)
-    // Previously threshold was 20 books — too aggressive, hid entities like Hermeticism/Neoplatonism.
-    // Now: ≥5 books AND must have a description (filters out thin stubs).
-    const entities = await db.collection('entities').find(
-      { book_count: { $gte: 5 }, description: { $exists: true, $ne: '' } },
-      { projection: { name: 1, updated_at: 1, book_count: 1 } }
-    ).toArray();
-
-    const entityPages: MetadataRoute.Sitemap = entities.map((entity) => {
-      let lastModified: Date;
-      try {
-        lastModified = entity.updated_at ? new Date(entity.updated_at) : new Date();
-        if (isNaN(lastModified.getTime())) lastModified = new Date();
-      } catch {
-        lastModified = new Date();
-      }
-
-      return {
-        url: `${baseUrl}/encyclopedia/${encodeURIComponent(entity.name)}`,
-        lastModified,
-        changeFrequency: 'monthly' as const,
-        priority: entity.book_count >= 5 ? 0.7 : 0.5,
-      };
-    });
+    // Encyclopedia entities — excluded from sitemap for now.
+    // Most are thin (name + book list) and dilute crawl budget.
+    // Revisit when entity pages have richer content.
+    const entityPages: MetadataRoute.Sitemap = [];
 
     // Collections — exclude hidden ones
     const collections = await db.collection('collections').find(

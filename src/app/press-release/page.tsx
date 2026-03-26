@@ -88,7 +88,7 @@ const SHOWCASE_BOOKS = [
 ];
 
 const COMPARISONS = [
-  { name: 'Source Library', count: '5,100+', years: '3 months', access: 'Free & open', highlight: true },
+  { name: 'Source Library', count: '5,100+', years: 'Since 2025', access: 'Free & open', highlight: true },
   { name: 'Loeb Classical Library', count: '~540', years: '115 years', access: 'Paywall', highlight: false },
   { name: 'Perseus Digital Library', count: '~1,000', years: '38 years', access: 'Free (reprints)', highlight: false },
   { name: 'Sacred Texts Archive', count: '~1,700', years: '25+ years', access: 'Free (reprints)', highlight: false },
@@ -287,28 +287,31 @@ export default function PressReleasePage() {
           </h2>
 
           <p className="text-secondary leading-relaxed mb-6 font-body">
-            Source Library&rsquo;s translations are generated using frontier artificial intelligence
-            models (Google Gemini 3), not traditional scholarly editing. Each translated page is
-            presented directly alongside an image of the original-language text, so scholars can
-            always consult the source directly.
+            The project began in 2022, when Lomas encountered Marsilio Ficino&rsquo;s <em>Liber de
+            Voluptate</em> in the BPH&rsquo;s collection &mdash; a philosophical dialogue on pleasure
+            and virtue, written in 1457 and never translated into English. He commissioned a{' '}
+            <a href="https://sourcelibrary.org/blog/origin-story" className="text-accent-rust hover:underline">
+              professional translation from Oxford
+            </a>
+            , published it alongside scans of the original Latin, and that side-by-side format &mdash;
+            translation and source together &mdash; became the template for everything that followed.
           </p>
 
           <p className="text-secondary leading-relaxed mb-6 font-body">
-            These are working translations, not critical editions. AI handles cleanly printed Latin
-            remarkably well, but users will encounter errors &mdash; particularly with handwritten
-            manuscripts, damaged pages, and unusual scripts. Some texts that appear as
-            &ldquo;first translations&rdquo; may have existing translations we have not yet identified.
-            The collection is a beta in the fullest sense: it is published early so the scholarly
-            community can help improve it.
+            When frontier AI models proved capable of reading 500-year-old page images and producing
+            usable translations, the question changed from <em>whether</em> these texts could be
+            translated to <em>how fast</em>. Source Library&rsquo;s translations are generated using
+            Google&rsquo;s Gemini 3 vision models reading directly from digitised page images. Each
+            translated page is presented alongside the original, so scholars can always consult the
+            source.
           </p>
 
           <p className="text-secondary leading-relaxed mb-6 font-body">
             The Embassy views AI translation as a complement to, not a replacement for, expert human
-            scholarship. The goal is not to produce definitive editions but to make vast bodies of
-            untranslated material discoverable and navigable for the first time &mdash; lowering
-            the barrier that has kept these texts confined to specialists for centuries. A working
-            translation that lets a researcher find a relevant passage in a 1,000-page Latin treatise
-            is, we believe, better than no translation at all.
+            scholarship. These are working translations &mdash; the first time a modern reader can sit
+            down and read many of these texts from beginning to end. The Loeb Classical Library has been
+            publishing for over a century and has produced 540 volumes. At that rate, translating the
+            Renaissance would take millennia. AI changes the timeline from centuries to years.
           </p>
         </section>
 
@@ -342,33 +345,31 @@ export default function PressReleasePage() {
         {/* About the public beta */}
         <section className="mb-16">
           <h2 className="font-serif text-2xl md:text-3xl text-primary mb-6">
-            About the public beta
+            A public beta &mdash; and an invitation
           </h2>
 
           <p className="text-secondary leading-relaxed mb-6 font-body">
-            Source Library is released as a public beta. The collection has been built in three months,
-            and it shows &mdash; there are rough edges. Manuscript transcriptions are often imperfect.
-            Metadata for some books is incomplete. Some &ldquo;first translation&rdquo; claims will
-            turn out to be wrong once scholars with deeper knowledge of specific fields weigh in.
-            We are publishing now rather than waiting for perfection because the alternative &mdash;
-            leaving hundreds of thousands of texts inaccessible while we polish &mdash; serves no one.
-          </p>
-
-          <p className="text-secondary leading-relaxed mb-6 font-body">
-            The aspiration is simple: translate the entire Renaissance. The{' '}
+            The{' '}
             <a href="https://sourcelibrary.org/blog/counting-the-gap" className="text-accent-rust hover:underline">
               Universal Short Title Catalogue
             </a>{' '}
             records over 690,000 distinct non-English works printed between 1450 and 1700. We estimate
-            that fewer than 5% have ever been translated into English. AI translation is now fast enough
-            and good enough to close that gap within years, not centuries. Source Library is the beginning
-            of that effort.
+            that fewer than 5% have ever been translated into English. Source Library is the beginning
+            of an effort to close that gap &mdash; not in centuries, but in years.
           </p>
 
           <p className="text-secondary leading-relaxed mb-6 font-body">
-            We welcome corrections, additions, and criticism. If you find an error, know of an existing
-            translation we missed, or want to contribute expertise on a particular text or tradition,
-            please reach out.
+            Source Library is released as a public beta because the scholarly community is essential to
+            getting this right. Specialists will know of existing translations we have not yet identified.
+            Palaeographers will catch manuscript readings that AI misses. Historians will spot metadata
+            errors. We are publishing now because every correction makes the collection better, and
+            because leaving hundreds of thousands of texts inaccessible while we work in private serves
+            no one.
+          </p>
+
+          <p className="text-secondary leading-relaxed mb-6 font-body">
+            If you find something that needs fixing, know of a translation we missed, or want to
+            contribute expertise on a particular text or tradition, we want to hear from you.
           </p>
 
           <p className="text-secondary leading-relaxed mb-6 font-body">
