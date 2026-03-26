@@ -84,10 +84,12 @@ export async function generateMetadata({ params }: PageProps): Promise<Metadata>
   } catch {
     return { title: 'Source Library', robots: { index: false, follow: false } };
   }
-  if (!data) return { title: 'Not Found' };
+  if (!data) return { title: 'Not Found', robots: { index: false, follow: true } };
   return {
     title: `${data.name} — Source Library Visual Art`,
     description: `${data.artworks.length} works by ${data.name} in Source Library.`,
+    // Artist pages are admin-only (non-admin gets redirected) — don't index
+    robots: { index: false, follow: true },
   };
 }
 
