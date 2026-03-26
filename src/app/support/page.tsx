@@ -274,9 +274,7 @@ export default function SupportPage() {
             Scan the Renaissance
           </h2>
           <p className="text-lg text-stone-600 mb-6 leading-relaxed">
-            1.15 million Renaissance editions remain unscanned. We&apos;re starting with the Bibliotheca
-            Klossiana — 9,000 volumes of Masonic, Rosicrucian, and alchemical texts locked behind closed
-            doors in The Hague. A single gift can open an entire subject area.
+            1.15 million Renaissance editions remain unscanned. A single gift can open an entire subject area.
           </p>
           <Link
             href="/scan-the-renaissance"
