@@ -80,6 +80,49 @@ function extractSurname(author: string | null | undefined): string | null {
   return parts[parts.length - 1].toLowerCase();
 }
 
+/** Extract multiple candidate surnames for entity_aliases lookup.
+ *  "Ludolf von Sachsen" → ["sachsen", "ludolf"]
+ *  "Corvo, Andreas" → ["corvo"]
+ *  Handles particles: von, van, de, di, del, of, ab, a */
+function extractSurnameVariants(author: string | null | undefined): string[] {
+  if (!author) return [];
+  let s = author
+    .replace(/^\[+/, '').replace(/\]+$/, '')
+    .replace(/\[!\]/g, '')
+    .replace(/\s*\|.*/g, '')
+    .replace(/;\s*.*/g, '')
+    .replace(/\s*\(.*?\)/g, '')
+    .replace(/pub\.\s+.*/i, '')
+    .trim();
+  if (/^(anonymous|unknown|anon\.?|onbekend|none)$/i.test(s)) return [];
+  if (s.length <= 2) return [];
+
+  const variants = new Set<string>();
+  const comma = s.indexOf(',');
+  if (comma > 0) {
+    // "Corvo, Andreas" → corvo
+    variants.add(s.substring(0, comma).trim().toLowerCase());
+  } else {
+    // "Ludolf von Sachsen" → sachsen + ludolf
+    const parts = s.split(/\s+/);
+    const particles = new Set(['von', 'van', 'de', 'di', 'del', 'of', 'ab', 'a', 'da', 'du', 'des', 'der', 'den']);
+    // Last word
+    variants.add(parts[parts.length - 1].toLowerCase());
+    // First word (often the actual name for "Firstname von Place" patterns)
+    if (parts.length >= 2 && parts[0].length >= 3) {
+      variants.add(parts[0].toLowerCase());
+    }
+    // Any non-particle word
+    for (const p of parts) {
+      if (p.length >= 3 && !particles.has(p.toLowerCase())) {
+        variants.add(p.toLowerCase());
+      }
+    }
+  }
+
+  return Array.from(variants);
+}
+
 function titleWordSet(title: string | null | undefined): Set<string> {
   return new Set(
     (title || '')
@@ -109,27 +152,35 @@ function stripDiacritics(s: string): string {
  * Get all known surname variants for an author from entity_aliases.
  * Returns the original surname plus any variants from Wikidata/CERL.
  */
-async function getAuthorVariants(db: Db, surname: string): Promise<string[]> {
-  const variants = new Set<string>([surname]);
-  const surnameNorm = stripDiacritics(surname.toLowerCase());
+async function getAuthorVariants(db: Db, author: string | null | undefined): Promise<string[]> {
+  const surnameVariants = extractSurnameVariants(author);
+  if (surnameVariants.length === 0) return [];
+  const variants = new Set<string>(surnameVariants);
 
   try {
-    // Search entity_aliases by surname (index: surnames)
+    // Search entity_aliases by all surname candidates
+    const searchTerms = surnameVariants.map(s => stripDiacritics(s.toLowerCase()));
     const docs = await db.collection('entity_aliases').find(
-      { surnames: surnameNorm },
+      { surnames: { $in: searchTerms } },
       { projection: { names: 1, surnames: 1 } }
-    ).limit(5).toArray();
+    ).limit(10).toArray();
 
     for (const doc of docs) {
-      // Extract all surname forms from the name variants
+      // Extract all possible surname forms from every name variant
       for (const name of (doc.names || [])) {
         const comma = name.indexOf(',');
         if (comma > 0) {
+          // "Corvus, Andreas" → "corvus"
           variants.add(name.substring(0, comma).trim().toLowerCase());
         }
-        const parts = name.split(/\s+/);
-        if (parts.length >= 2) {
-          variants.add(parts[parts.length - 1].toLowerCase());
+        // Also add every word ≥4 chars as a potential surname
+        // This catches "Andreas Corvus Mirandulensis" → "corvus"
+        const particles = new Set(['von', 'van', 'de', 'di', 'del', 'of', 'ab', 'da', 'du', 'des', 'der', 'den', 'the']);
+        for (const word of name.split(/\s+/)) {
+          const w = word.toLowerCase().replace(/[^a-zà-ÿ]/g, '');
+          if (w.length >= 4 && !particles.has(w)) {
+            variants.add(w);
+          }
         }
       }
       // Also add raw surnames from the doc
@@ -161,8 +212,8 @@ async function fastMatch(
   const yearLo = book.year - 20;
   const yearHi = book.year + 20;
 
-  // Get all known name variants from entity_aliases
-  const surnameVariants = await getAuthorVariants(db, surname);
+  // Get all known name variants from entity_aliases (using full author string)
+  const surnameVariants = await getAuthorVariants(db, book.author);
 
   // Try each variant until we find candidates
   let allCandidates: Record<string, unknown>[] = [];
