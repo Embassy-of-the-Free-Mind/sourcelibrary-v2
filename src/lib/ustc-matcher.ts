@@ -233,8 +233,13 @@ async function fastMatch(
           allCandidates.push(c);
         }
       }
-      // If we already have good candidates, no need to try more variants
-      if (allCandidates.length > 0) break;
+      // If we have candidates with decent title overlap, stop searching
+      if (allCandidates.length > 0) {
+        const hasGoodMatch = allCandidates.some(c =>
+          titleWordOverlap(book.title, c.title as string) >= 0.4
+        );
+        if (hasGoodMatch) break;
+      }
     } catch {
       // Timeout or network error — try next variant
     }
@@ -256,7 +261,14 @@ async function fastMatch(
     }
   }
 
-  if (best && bestScore >= 0.6) {
+  // Threshold logic:
+  // - For short titles (≤2 significant words): require overlap == 1.0 (all words must match)
+  //   This prevents "Vita Christi" matching "operibus Christi" on the single word "christi"
+  // - For longer titles (≥3 words): 0.5 overlap is sufficient
+  const bookWords = titleWordSet(book.title);
+  const threshold = bookWords.size <= 2 ? 1.0 : 0.5;
+
+  if (best && bestScore >= threshold) {
     return { ustcEdition: best, score: bestScore };
   }
 
@@ -589,9 +601,11 @@ export async function matchToUstc(
   options?: { force?: boolean; skipFastPath?: boolean },
 ): Promise<MatchResult> {
   // Step 1: Try fast word-overlap match (free, instant) — now with entity_aliases
-  if (!options?.skipFastPath) {
-    const fast = await fastMatch(db, book);
-    if (fast && fast.score >= 0.6) {
+  const fast = !options?.skipFastPath ? await fastMatch(db, book) : null;
+  if (fast) {
+    const bookWords = titleWordSet(book.title);
+    const acceptThreshold = bookWords.size <= 2 ? 1.0 : 0.5;
+    if (fast.score >= acceptThreshold) {
       const ed = fast.ustcEdition;
       return {
         success: true,
@@ -615,9 +629,27 @@ export async function matchToUstc(
     }
   }
 
-  // Step 2: AI tool-calling match
+  // Step 2: AI tool-calling match (fast-path result kept for fallback)
   const apiKey = process.env.GEMINI_API_KEY;
-  if (!apiKey) return { success: false, error: 'GEMINI_API_KEY not set' };
+  if (!apiKey) {
+    // No API key — return fast path result if reasonable, even below threshold
+    if (fast && fast.score >= 0.4) {
+      const ed = fast.ustcEdition;
+      return {
+        success: true,
+        match: {
+          ustc_sn: ed.sn as number, ustc_title: ed.title as string,
+          ustc_author: ed.author_1 as string, ustc_year: ed.year as number,
+          ustc_language: ed.language_1 as string, confidence: 'low' as const,
+          reasoning: `Fast match fallback (no API key, score: ${fast.score.toFixed(2)})`,
+          match_method: 'word_overlap' as const, match_score: fast.score,
+          alternatives: [], tools_called: [], matched_at: new Date(),
+          model: 'word_overlap', cost_usd: 0,
+        },
+      };
+    }
+    return { success: false, error: 'GEMINI_API_KEY not set' };
+  }
 
   const ai = new GoogleGenAI({ apiKey });
   const systemPrompt = buildPrompt(book);
@@ -749,7 +781,27 @@ export async function matchToUstc(
 
     return { success: true, match };
   } catch (error) {
-    return { success: false, error: `Gemini error: ${error instanceof Error ? error.message : 'unknown'}` };
+    const errMsg = error instanceof Error ? error.message : String(error);
+
+    // On Gemini failure, fall back to fast-path best candidate if available
+    if (fast && fast.score >= 0.4) {
+      const ed = fast.ustcEdition;
+      return {
+        success: true,
+        match: {
+          ustc_sn: ed.sn as number, ustc_title: ed.title as string,
+          ustc_author: ed.author_1 as string, ustc_year: ed.year as number,
+          ustc_language: ed.language_1 as string,
+          confidence: fast.score >= 0.6 ? 'medium' as const : 'low' as const,
+          reasoning: `Fast match fallback (AI error: ${errMsg.substring(0, 80)}, score: ${fast.score.toFixed(2)})`,
+          match_method: 'word_overlap' as const, match_score: fast.score,
+          alternatives: [], tools_called: toolsCalled, matched_at: new Date(),
+          model: 'word_overlap_fallback', cost_usd: 0,
+        },
+      };
+    }
+
+    return { success: false, error: `Gemini error: ${errMsg.substring(0, 200)}` };
   }
 }
 
