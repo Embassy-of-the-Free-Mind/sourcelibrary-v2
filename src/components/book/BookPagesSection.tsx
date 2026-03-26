@@ -506,12 +506,18 @@ export default function BookPagesSection({ bookId, bookTitle, pages: initialPage
   const getImageUrl = (page: Page) => {
     const typedPage = page as Page & { archived_photo?: string; cropped_photo?: string };
 
-    // For split pages, prefer pre-cropped Blob image — thumbnail_blob may be from unsplit original
+    // New path convention: derive thumbnail from photo URL
+    const newPathMatch = page.photo?.match(/^(https:\/\/images\.sourcelibrary\.org\/pages\/[^/]+\/\d{4,})(-full)?\.jpg$/);
+    if (newPathMatch) {
+      return `${newPathMatch[1]}-thumb.jpg`;
+    }
+
+    // Legacy: split pages prefer pre-cropped image
     if (page.crop && typedPage.cropped_photo) {
       return typedPage.cropped_photo;
     }
 
-    // Pre-generated Vercel Blob thumbnail (fast CDN) — only for non-split pages
+    // Legacy: pre-generated thumbnails
     if (page.thumbnail_blob) {
       return page.thumbnail_blob;
     }
