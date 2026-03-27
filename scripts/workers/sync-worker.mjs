@@ -245,7 +245,7 @@ async function syncGalleryImages(db) {
         book_year: '$book.year',
         book_language: '$book.language',
         book_hidden: '$book.hidden',
-        book_rank: 0,
+        book_rank: { $literal: 0 },
         updated_at: new Date(),
       },
     },
