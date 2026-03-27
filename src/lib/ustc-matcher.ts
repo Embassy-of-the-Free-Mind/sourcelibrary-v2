@@ -286,9 +286,63 @@ async function fastMatch(
     return { ustcEdition: best, score: bestScore };
   }
 
-  // Fast path fallback: English title matching via ustc_enrichments
-  // Translate title keywords to English-like search terms (simple heuristic, no LLM)
-  // This catches cross-language matches cheaply
+  // Enrichment fallback: check English titles for candidates we already found by author
+  // This handles cases like BPH "Divinarum institutionum" vs USTC "Opera" (same work, different catalog title)
+  if (allCandidates.length > 0) {
+    const bookTitleWords = titleWordSet(book.title);
+    // Batch-fetch enrichments for up to 20 candidate IDs
+    const candidateIds = allCandidates.slice(0, 20).map(c => (c as Record<string, unknown>).sn);
+    // Enrichments use ustc_editions.id (not sn), so look up by joining through editions
+    // But we already have the candidates — look up enrichments by their edition IDs
+    // Actually, enrichments.id = ustc_editions.id. We need editions.id for these SNs.
+    // Simpler: search enrichments by original_author + english_title keywords
+    const bookTitleTerms = Array.from(bookTitleWords)
+      .filter(w => w.length >= 5)
+      .sort((a, b) => b.length - a.length)
+      .slice(0, 3);
+
+    if (bookTitleTerms.length >= 1) {
+      // Search enrichments by std_title (original language) — catches Latin↔Latin mismatches
+      // where USTC has "Opera" but BPH has "Divinarum institutionum"
+      const authorSurname = extractSurname(book.author || null);
+      const enrichFilters = [
+        ...bookTitleTerms.map(w => `std_title=ilike.*${encodeURIComponent(w)}*`),
+        ...(authorSurname ? [`original_author=ilike.*${encodeURIComponent(authorSurname)}*`] : []),
+      ];
+      const enrichUrl = `${SUPABASE_URL}/rest/v1/ustc_enrichments?${enrichFilters.join('&')}&select=id,english_title,std_title&limit=20`;
+
+      try {
+        const enrichRes = await fetch(enrichUrl, { headers, signal: AbortSignal.timeout(5000) });
+        if (enrichRes.ok) {
+          const enrichments = await enrichRes.json();
+          if (Array.isArray(enrichments)) {
+            for (const e of enrichments) {
+              // Check English title overlap with BPH title
+              const engOverlap = titleWordOverlap(book.title, e.english_title as string);
+              const stdOverlap = titleWordOverlap(book.title, e.std_title as string);
+              const bestEnrichScore = Math.max(engOverlap, stdOverlap);
+              if (bestEnrichScore < 0.4) continue;
+
+              // Look up actual edition for year check
+              const edUrl = `${SUPABASE_URL}/rest/v1/ustc_editions?id=eq.${e.id}&select=sn,title,author_1,year,language_1,place`;
+              const edRes = await fetch(edUrl, { headers, signal: AbortSignal.timeout(5000) });
+              if (!edRes.ok) continue;
+              const editions = await edRes.json();
+              const ed = Array.isArray(editions) ? editions[0] : null;
+              if (!ed || Math.abs((ed.year as number) - (book.year || 0)) > 25) continue;
+
+              return { ustcEdition: ed, score: bestEnrichScore };
+            }
+          }
+        }
+      } catch {
+        // enrichment fallback failed — continue to no-candidate path
+      }
+    }
+  }
+
+  // No-candidate fallback: search enrichments by title keywords alone
+  // For anonymous works or when author search found nothing
   if (allCandidates.length === 0) {
     const titleTerms = Array.from(titleWordSet(book.title))
       .filter(w => w.length >= 5)
@@ -310,13 +364,12 @@ async function fastMatch(
               const origOverlap = titleWordOverlap(book.title, e.std_title as string);
               if (origOverlap < 0.4) continue;
 
-              // Look up actual edition for year check
               const edUrl = `${SUPABASE_URL}/rest/v1/ustc_editions?id=eq.${e.id}&select=sn,title,author_1,year,language_1,place`;
               const edRes = await fetch(edUrl, { headers, signal: AbortSignal.timeout(5000) });
               if (!edRes.ok) continue;
               const editions = await edRes.json();
               const ed = Array.isArray(editions) ? editions[0] : null;
-              if (!ed || Math.abs((ed.year as number) - book.year) > 25) continue;
+              if (!ed || Math.abs((ed.year as number) - (book.year || 0)) > 25) continue;
 
               return { ustcEdition: ed, score: origOverlap };
             }
