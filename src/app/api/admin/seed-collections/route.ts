@@ -282,6 +282,110 @@ const SEED_COLLECTIONS: CollectionSeed[] = [
 ];
 
 /**
+ * Strip volume/tome/part markers from a title to get a "base title" for comparison.
+ * Books sharing a work_id with the same base title are multi-volume sets (keep all).
+ * Books sharing a work_id with different base titles are editions (dedup).
+ */
+function baseTitle(title: string): string {
+  return title
+    .replace(/,?\s*(?:Vol(?:ume)?|Tome?|Part|Bd|Band|Livre)\.?\s*[\dIVXLCDM]+/gi, '')
+    .replace(/\s*\((?:Vol(?:ume)?|Tome?)\.?\s*[\dIVXLCDM]+\)/gi, '')
+    .replace(/\s*[·]\s*卷[^\s)]*/, '') // Chinese juan/volume markers (卷上, 卷下之中, etc.)
+    .replace(/\s*\([一二三四五六七八九十百千零]+\)\s*$/, '') // CJK volume numbers in parens
+    .replace(/\s*[\dIVXLCDM]+\s*$/, '') // trailing volume numbers
+    .replace(/\s+/g, ' ')
+    .trim()
+    .toLowerCase();
+}
+
+/**
+ * Deduplicate images by work_id: when multiple editions of the same work
+ * contribute images to a collection, keep only the best edition's images.
+ * Multi-volume sets (same base title) are preserved — only true editions
+ * (different titles/years for the same work) get deduplicated.
+ */
+async function deduplicateByWorkId(
+  db: Awaited<ReturnType<typeof getDb>>,
+  imageIds: string[],
+): Promise<string[]> {
+  if (imageIds.length === 0) return [];
+
+  // Get book_id for each image
+  const images = await db.collection('gallery_images')
+    .find({ id: { $in: imageIds } }, { projection: { id: 1, book_id: 1, gallery_quality: 1 } })
+    .toArray();
+
+  const imageMap = new Map(images.map((img) => [img.id as string, img]));
+  const bookIds = [...new Set(images.map((img) => img.book_id as string))];
+
+  // Get work_id and title for each book
+  const books = await db.collection('books')
+    .find({ id: { $in: bookIds } }, { projection: { id: 1, work_id: 1, title: 1 } })
+    .toArray();
+
+  const bookInfo = new Map(books.map((b) => [b.id as string, { workId: b.work_id as string | undefined, title: (b.title || '') as string }]));
+
+  // Group book_ids by work_id
+  const workToBooks = new Map<string, string[]>();
+  for (const [bookId, info] of bookInfo) {
+    if (!info.workId) continue;
+    const existing = workToBooks.get(info.workId) || [];
+    existing.push(bookId);
+    workToBooks.set(info.workId, existing);
+  }
+
+  // For works with multiple editions, find the best edition (highest avg quality among candidates)
+  const excludedBooks = new Set<string>();
+  for (const [, editionBookIds] of workToBooks) {
+    if (editionBookIds.length <= 1) continue;
+
+    // Check if these are volumes of a set (same base title) or true editions (different titles)
+    const baseTitles = editionBookIds.map((id) => baseTitle(bookInfo.get(id)?.title || ''));
+    const uniqueBaseTitles = new Set(baseTitles);
+    // If all books share the same base title, they're volumes — skip dedup
+    if (uniqueBaseTitles.size === 1) continue;
+
+    // Group by base title — dedup across groups, keep all within each group
+    const titleGroups = new Map<string, string[]>();
+    for (let i = 0; i < editionBookIds.length; i++) {
+      const bt = baseTitles[i];
+      const existing = titleGroups.get(bt) || [];
+      existing.push(editionBookIds[i]);
+      titleGroups.set(bt, existing);
+    }
+
+    // Score each title group by best avg quality, keep the winning group
+    let bestGroup = '';
+    let bestAvg = -1;
+
+    for (const [bt, groupBookIds] of titleGroups) {
+      const groupImages = images.filter((img) => groupBookIds.includes(img.book_id as string));
+      if (groupImages.length === 0) continue;
+      const avg = groupImages.reduce((sum, img) => sum + (img.gallery_quality || 0), 0) / groupImages.length;
+      if (avg > bestAvg) {
+        bestAvg = avg;
+        bestGroup = bt;
+      }
+    }
+
+    // Exclude all groups except the best
+    for (const [bt, groupBookIds] of titleGroups) {
+      if (bt !== bestGroup) {
+        for (const bookId of groupBookIds) excludedBooks.add(bookId);
+      }
+    }
+  }
+
+  if (excludedBooks.size === 0) return imageIds;
+
+  // Filter out images from excluded editions, preserving original order
+  return imageIds.filter((id) => {
+    const img = imageMap.get(id);
+    return img && !excludedBooks.has(img.book_id as string);
+  });
+}
+
+/**
  * Build the match filter and aggregation pipeline for a collection seed.
  * Queries the flat `gallery_images` collection (much faster than nested pages).
  * Anchor books get ALL qualifying images; other books are capped at maxPerBook.
@@ -408,7 +512,8 @@ async function seedThematicCollections(
       .project({ id: 1 })
       .toArray();
 
-    const imageIds = images.map((img) => img.id as string);
+    const rawImageIds = images.map((img) => img.id as string);
+    const imageIds = await deduplicateByWorkId(db, rawImageIds);
 
     if (opts.dryRun) {
       results.push({ slug: galSlug, title: bc.name, imageCount: imageIds.length, status: 'dry_run' });
@@ -495,7 +600,8 @@ export const POST = withAdminAuth(async (request: NextRequest) => {
 
       const pipeline = buildPipeline(seed);
       const images = await db.collection('gallery_images').aggregate(pipeline).toArray();
-      const imageIds = images.map((img) => (img as { imageId: string }).imageId);
+      const rawImageIds = images.map((img) => (img as { imageId: string }).imageId);
+      const imageIds = await deduplicateByWorkId(db, rawImageIds);
 
       // Count how many came from anchor books (for reporting)
       const anchorSet = new Set(seed.anchorBooks || []);
