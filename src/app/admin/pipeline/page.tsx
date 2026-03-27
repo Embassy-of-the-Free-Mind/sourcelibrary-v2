@@ -56,7 +56,7 @@ const PIPELINE_ORDER = [
   'ocr_submitted', 'ocr_complete',
   'metadata_enriched',
   'translate_submitted', 'translate_complete',
-  'enriching', 'enriched',
+  'summarizing', 'summary_indexed',
   'chapters', 'chapters_complete',
   'images_submitted', 'images_complete',
   'cover_selected',
