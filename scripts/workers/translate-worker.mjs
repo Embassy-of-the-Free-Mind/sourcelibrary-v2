@@ -21,8 +21,8 @@ import { GoogleGenerativeAI } from '@google/generative-ai';
 import { createHash } from 'crypto';
 
 // ── Config ──
-const CONCURRENCY = 30;          // Max books translating simultaneously
-const PAGES_PER_RUN = 10000;     // Global page cap per run (prevent runaway costs)
+const CONCURRENCY = 20;          // Max books translating simultaneously
+const PAGES_PER_RUN = 8000;      // Global page cap per run (prevent runaway costs)
 const MAX_CONSECUTIVE_ERRORS = 5; // Per-book error threshold before giving up
 const RATE_LIMIT_BACKOFF_MS = 15000;
 const MODEL_FLASH = 'gemini-3-flash-preview';
