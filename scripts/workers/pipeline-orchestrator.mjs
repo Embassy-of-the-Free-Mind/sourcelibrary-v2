@@ -36,7 +36,13 @@ const SQS_IMAGE_EXTRACTION_QUEUE_URL = process.env.SQS_PAGE_IMAGE_EXTRACTION_QUE
 
 // Gemini Batch API config (for direct OCR submission, bypassing Vercel)
 const GEMINI_API_BASE = 'https://generativelanguage.googleapis.com/v1beta';
-const OCR_MODEL = 'gemini-3-flash-preview';
+const OCR_MODEL_FLASH = 'gemini-3-flash-preview';
+const OCR_MODEL_LITE = 'gemini-3.1-flash-lite-preview';
+function getOcrModelForBook(book) {
+  if (book?.image_source?.provider === 'bph') return OCR_MODEL_FLASH;
+  return OCR_MODEL_LITE;
+}
+const OCR_MODEL = OCR_MODEL_FLASH; // Legacy fallback for recitation retry path
 const OCR_PROMPT_VERSION = 'v5.2026-02';
 const OCR_INLINE_BATCH_SIZE = 20;  // Pages per inline batch (base64 in body, ~20MB limit)
 const OCR_FILE_BATCH_SIZE = 150;   // Pages per file-based batch (JSONL uploaded to File API)
@@ -246,7 +252,13 @@ function hashString(str) {
   return hash.toString(16);
 }
 
-const TRANSLATE_MODEL = 'gemini-3-flash-preview';
+const TRANSLATE_MODEL_FLASH = 'gemini-3-flash-preview';
+const TRANSLATE_MODEL_LITE = 'gemini-3.1-flash-lite-preview';
+function getTranslateModelForBook(book) {
+  if (book?.image_source?.provider === 'bph') return TRANSLATE_MODEL_FLASH;
+  return TRANSLATE_MODEL_LITE;
+}
+const TRANSLATE_MODEL = TRANSLATE_MODEL_FLASH; // Legacy fallback
 const TRANSLATE_PROMPT_VERSION = 'v5.2026-02';
 const TRANSLITERATION_MODEL = 'gemini-3.1-flash-lite-preview';
 const TRANSLITERATION_PROMPT = `You are a scholarly transliterator. Convert the following text to Latin characters using standard academic Romanization conventions.
@@ -827,7 +839,7 @@ async function getOcrPromptFromDb(db) {
  * A 300-page book now uses 2 batch jobs instead of 15.
  */
 async function submitOcrDirectly(db, book, { modelOverride } = {}) {
-  const ocrModel = modelOverride || OCR_MODEL;
+  const ocrModel = modelOverride || getOcrModelForBook(book);
   // Guard: check for existing active batch_jobs for this book
   const activeBatchForBook = await db.collection('batch_jobs').countDocuments({
     book_id: book.id,

@@ -25,7 +25,12 @@ const CONCURRENCY = 15;          // Max books translating simultaneously
 const PAGES_PER_RUN = 5000;      // Global page cap per run (prevent runaway costs)
 const MAX_CONSECUTIVE_ERRORS = 5; // Per-book error threshold before giving up
 const RATE_LIMIT_BACKOFF_MS = 15000;
-const MODEL = 'gemini-3-flash-preview';
+const MODEL_FLASH = 'gemini-3-flash-preview';
+const MODEL_LITE = 'gemini-3.1-flash-lite-preview';
+function getModelForBook(book) {
+  if (book?.image_source?.provider === 'bph') return MODEL_FLASH;
+  return MODEL_LITE;
+}
 const PROMPT_VERSION = 'v6';
 
 // ── Gemini API keys ──
@@ -128,7 +133,8 @@ async function translatePage(db, page, book, prevTranslation) {
   }
 
   const ai = getClient();
-  const model = ai.getGenerativeModel({ model: MODEL });
+  const selectedModel = getModelForBook(book);
+  const model = ai.getGenerativeModel({ model: selectedModel });
   const start = Date.now();
   const result = await model.generateContent(prompt);
   const durationMs = Date.now() - start;
@@ -237,7 +243,7 @@ async function processBook(db, book, job, globalCounter) {
               data: result.text,
               content_hash: contentHash(result.text),
               language: 'English',
-              model: MODEL,
+              model: getModelForBook(book),
               updated_at: new Date(),
               source: 'ai',
               prompt_version: PROMPT_VERSION,
@@ -252,7 +258,7 @@ async function processBook(db, book, job, globalCounter) {
       await db.collection('gemini_usage').insertOne({
         type: 'translation',
         mode: 'realtime',
-        model: MODEL,
+        model: getModelForBook(book),
         book_id: book.id,
         page_ids: [page.id],
         input_tokens: result.inputTokens,
@@ -296,7 +302,7 @@ async function processBook(db, book, job, globalCounter) {
         await db.collection('gemini_usage').insertOne({
           type: 'translation',
           mode: 'realtime',
-          model: MODEL,
+          model: getModelForBook(book),
           book_id: book.id,
           page_ids: [page.id],
           input_tokens: 0,
