@@ -120,6 +120,78 @@ export default function RithmomachiaPage() {
           proportion is understanding the structure of reality itself.
         </p>
 
+        <p className="text-secondary leading-relaxed mb-6 font-body">
+          The earliest printed source makes this connection vivid. In Lefèvre d&rsquo;Étaples&rsquo;s
+          1496 treatise, the rules are not presented as instructions at all. They are a{' '}
+          <Link href="/book/arithmetica-decem-libris-demonstrata-with-rithmimachie-ludus-stapulensis?page=145" className="text-accent-rust hover:text-accent-rust">
+            Socratic dialogue
+          </Link>{' '}
+          between three members of the Pythagorean community: Alcmeon, a mathematician and disciple
+          of Pythagoras, and two eager students named Bathillus and Brontinus. The students ask Alcmeon
+          to teach them a game the Pythagoreans play &ldquo;to relieve their cares after serious
+          studies.&rdquo; The entire ruleset unfolds through conversation.
+        </p>
+
+        <p className="text-secondary leading-relaxed mb-6 font-body">
+          Alcmeon explains the{' '}
+          <Link href="/book/arithmetica-decem-libris-demonstrata-with-rithmimachie-ludus-stapulensis?page=146" className="text-accent-rust hover:text-accent-rust">
+            color symbolism
+          </Link>{' '}
+          in explicitly cosmological terms: &ldquo;Let the side of the Even numbers
+          be blackish, for the Evens belong to the sensible world. And the side of the Odd be
+          white and shining, for the Odds are masculine and of undivided substance, always expressing
+          a likeness of the same.&rdquo; The pyramids receive special sacred colors &mdash; red for
+          the perfect pyramid (Even, 91), blue for the imperfect (Odd, 190) &mdash; &ldquo;on account
+          of the excellence both of their nature and of the divinity of the squares from whose
+          accumulation they arise.&rdquo;
+        </p>
+
+        <p className="text-secondary leading-relaxed mb-6 font-body">
+          Then comes a moment any student will recognize. Alcmeon, warming to his theme, begins
+          explaining that the pyramid&rsquo;s base is &ldquo;the first sensible circle of moving
+          things&rdquo; and its apex represents divinity &mdash; and Bathillus cuts him off:
+        </p>
+
+        <div className="border-l-4 border-accent-violet pl-6 my-10">
+          <p className="text-lg text-secondary italic font-body leading-relaxed">
+            &ldquo;You&rsquo;re making paradigms, Alcmeon &mdash; we seek a game, not symbols!&rdquo;
+          </p>
+          <p className="text-sm text-muted mt-2">
+            <Link href="/book/arithmetica-decem-libris-demonstrata-with-rithmimachie-ludus-stapulensis?page=146" className="text-accent-rust hover:text-accent-rust">
+              Jordanus / Lefèvre d&rsquo;Étaples, 1496, p. 146
+            </Link>
+          </p>
+        </div>
+
+        <p className="text-secondary leading-relaxed mb-6 font-body">
+          Alcmeon catches himself &mdash; &ldquo;You remind me rightly, Bathillus; I was almost
+          neglecting myself, and straying far from the task at hand&rdquo; &mdash; and returns to
+          the rules. But at the end of the lesson, after compressing the entire game into{' '}
+          <Link href="/book/arithmetica-decem-libris-demonstrata-with-rithmimachie-ludus-stapulensis?page=146" className="text-accent-rust hover:text-accent-rust">
+            twelve numbered rules
+          </Link>, he tells them something remarkable:
+        </p>
+
+        <div className="border-l-4 border-accent-rust pl-6 my-10">
+          <p className="text-lg text-secondary italic font-body leading-relaxed">
+            &ldquo;Indulge in the game while your tender age does not yet allow you to ascend to
+            higher things &hellip; Then, when you are more robust of spirit, seek our silence, and
+            join yourselves as companions to our company &mdash; always seeking the innocent life.&rdquo;
+          </p>
+          <p className="text-sm text-muted mt-2">
+            <Link href="/book/arithmetica-decem-libris-demonstrata-with-rithmimachie-ludus-stapulensis?page=148" className="text-accent-rust hover:text-accent-rust">
+              Jordanus / Lefèvre d&rsquo;Étaples, 1496, p. 148
+            </Link>
+          </p>
+        </div>
+
+        <p className="text-secondary leading-relaxed mb-6 font-body">
+          The game is not the destination. It is a gateway &mdash; a way to begin thinking in
+          numbers, ratios, and harmonies before the student is ready for the deeper silence
+          of Pythagorean contemplation. No other board game in history has been framed as a
+          stage in philosophical initiation.
+        </p>
+
         <hr className="border-border-light my-12" />
 
         {/* The Board and Pieces */}
