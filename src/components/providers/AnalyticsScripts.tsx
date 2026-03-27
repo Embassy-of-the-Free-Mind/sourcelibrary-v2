@@ -7,7 +7,7 @@ import { getConsent, type ConsentState } from '@/lib/consent';
 const GA_ID = 'G-C1QJNTSZT2';
 const AHREFS_KEY = 'rzuKlnvyAKd8TdooDnPSYg';
 const POSTHOG_KEY = 'phc_b6JJdGHB6YKKhjfPEKn3YLbsYmwAcWliAR3F8jbFch8';
-const POSTHOG_HOST = 'https://us.i.posthog.com';
+const POSTHOG_HOST = 'https://eu.i.posthog.com';
 
 /**
  * Conditionally loads Google Analytics and Ahrefs only after the user accepts cookies.
