@@ -14,6 +14,7 @@ import { GoogleGenerativeAI, HarmCategory, HarmBlockThreshold } from '@google/ge
 import { logGeminiCall } from './gemini-logger';
 import { logAuditEvent } from './audit-logger';
 import { logMetadataChange } from './book-changelog';
+import { generateUniqueBookSlug } from './slugify';
 
 const MODEL = 'gemini-3-flash-preview';
 const MAX_OCR_PAGES = 25;
@@ -474,6 +475,20 @@ export async function enrichBookMetadata(
 
   // Write to DB
   await db.collection('books').updateOne({ id: bookId }, { $set: updates });
+
+  // Regenerate slug if display_title was just set and current slug is bad
+  if (updates.display_title) {
+    const currentSlug = (book.slug as string) || '';
+    if (!currentSlug || currentSlug === 'undefined' || currentSlug.startsWith('untitled')) {
+      const newSlug = await generateUniqueBookSlug(
+        db, book.title as string, (updates.author || book.author) as string, updates.display_title as string
+      );
+      if (newSlug !== currentSlug) {
+        await db.collection('books').updateOne({ id: bookId }, { $set: { slug: newSlug } });
+        changes.push({ field: 'slug', previous: currentSlug, new_value: newSlug });
+      }
+    }
+  }
 
   // Log to gemini_usage
   await logGeminiCall({
