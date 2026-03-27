@@ -23,24 +23,70 @@ interface RawHeading {
   level: number;
   pageNumber: number;
   source: 'ocr' | 'translation';
+  context?: string; // Lines following the heading (helps distinguish TOC from body)
 }
 
-// Extract raw markdown headings from text
+// Extract headings from text: markdown headings, centered markers, bold standalone
 function extractRawHeadings(text: string, pageNumber: number, source: 'ocr' | 'translation'): RawHeading[] {
   const headings: RawHeading[] = [];
   const lines = text.split('\n');
 
-  for (const line of lines) {
-    const trimmed = line.trim();
+  for (let i = 0; i < lines.length; i++) {
+    const trimmed = lines[i].trim();
+    if (!trimmed) continue;
+
+    // Skip non-structural tags
+    if (/^<(margin|meta|header|sig|page-num|language|page-type|columns|warning|summary|keywords)>/.test(trimmed)) continue;
+
+    let title: string | null = null;
+    let level = 2;
+
+    // 1. Markdown headings
     const headingMatch = trimmed.match(/^(#{1,3})\s+(.+)$/);
     if (headingMatch) {
-      const level = headingMatch[1].length;
-      let title = headingMatch[2].trim();
-      title = title.replace(/^->/, '').replace(/<-$/, '').trim();
-      title = title.replace(/^\*\*/, '').replace(/\*\*$/, '').trim();
-      if (title.length < 3) continue;
-      headings.push({ title, level, pageNumber, source });
+      level = headingMatch[1].length;
+      title = headingMatch[2].trim()
+        .replace(/^->/, '').replace(/<-$/, '')
+        .replace(/^\*\*/, '').replace(/\*\*$/, '')
+        .trim();
     }
+
+    // 2. Centered markers: ->*Caput V. De anima.*<-
+    if (!title) {
+      const centeredMatch = trimmed.match(/^->\*(.+)\*<-$/);
+      if (centeredMatch) {
+        title = centeredMatch[1].trim();
+        level = 2;
+      }
+    }
+
+    // 3. Bold standalone structural labels: **LIBER PRIMUS**
+    if (!title) {
+      const boldMatch = trimmed.match(/^\*\*([A-Z][^*]{3,80})\*\*$/);
+      if (boldMatch) {
+        title = boldMatch[1].trim();
+        level = 1;
+      }
+    }
+
+    if (!title || title.length < 3) continue;
+
+    // Gather 3 lines of context after the heading
+    const contextLines: string[] = [];
+    for (let j = i + 1; j < Math.min(i + 4, lines.length); j++) {
+      const cl = lines[j].trim();
+      if (cl && !cl.startsWith('<') && cl.length > 10) {
+        contextLines.push(cl.slice(0, 100));
+      }
+    }
+
+    headings.push({
+      title,
+      level,
+      pageNumber,
+      source,
+      context: contextLines.join(' | ').slice(0, 200) || undefined,
+    });
   }
 
   return headings;
@@ -97,41 +143,36 @@ The following pages appear to contain a printed table of contents:\n\n`;
   const ocrHeadings = rawHeadings.filter(h => h.source === 'ocr');
   const translationHeadings = rawHeadings.filter(h => h.source === 'translation');
 
-  prompt += `## Raw OCR Headings
+  // Identify TOC page range to help Gemini
+  const tocPageNumbers = new Set(tocPages.map(t => t.pageNumber));
 
-The OCR system marked ${ocrHeadings.length} lines as headings. Most are noise (title pages, dedications, running headers, captions, centered text). Your job is to identify which ones are real structural divisions of the book.
+  prompt += `## Headings Found in the Text
+
+Below are headings from the OCR and translation, with context lines after each.
+- If context shows body text (prose, arguments), the heading likely starts a real chapter.
+- If context shows more chapter titles or page numbers, the heading is inside a table of contents.
+- If a heading appears in the TOC AND later in the body, use the BODY page number.
 
 `;
 
-  // Group OCR headings by page
-  const ocrByPage = new Map<number, RawHeading[]>();
-  for (const h of ocrHeadings) {
-    const arr = ocrByPage.get(h.pageNumber) || [];
+  // Merge all headings and present with context
+  const allByPage = new Map<number, RawHeading[]>();
+  for (const h of [...ocrHeadings, ...translationHeadings]) {
+    const arr = allByPage.get(h.pageNumber) || [];
     arr.push(h);
-    ocrByPage.set(h.pageNumber, arr);
+    allByPage.set(h.pageNumber, arr);
   }
 
-  for (const [pageNum, pageHeadings] of ocrByPage) {
-    prompt += `p.${pageNum}: ${pageHeadings.map(h => `${'#'.repeat(h.level)} ${h.title}`).join(' | ')}\n`;
-  }
-
-  // Translation headings (if available and distinct from OCR)
-  if (translationHeadings.length > 0) {
-    prompt += `
-## Translation Headings
-
-The English translation also contains ${translationHeadings.length} headings. These may clarify Latin/German section markers that are ambiguous in the original:
-
-`;
-    const transByPage = new Map<number, RawHeading[]>();
-    for (const h of translationHeadings) {
-      const arr = transByPage.get(h.pageNumber) || [];
-      arr.push(h);
-      transByPage.set(h.pageNumber, arr);
-    }
-
-    for (const [pageNum, pageHeadings] of transByPage) {
-      prompt += `p.${pageNum}: ${pageHeadings.map(h => `${'#'.repeat(h.level)} ${h.title}`).join(' | ')}\n`;
+  const sortedPages = [...allByPage.keys()].sort((a, b) => a - b);
+  for (const pageNum of sortedPages) {
+    const pageHeadings = allByPage.get(pageNum)!;
+    const isTocPage = tocPageNumbers.has(pageNum);
+    const prefix = isTocPage ? '[TOC] ' : '';
+    for (const h of pageHeadings) {
+      prompt += `${prefix}p.${pageNum}: ${'#'.repeat(h.level)} ${h.title}\n`;
+      if (h.context) {
+        prompt += `  → ${h.context}\n`;
+      }
     }
   }
 
@@ -139,30 +180,30 @@ The English translation also contains ${translationHeadings.length} headings. Th
 
 ## Instructions
 
-Return ONLY the real structural chapters/sections of this book as a JSON array. Each entry needs:
-- "title": Clean chapter title in the original language (fix obvious OCR errors if any)
-- "titleEn": English translation of the chapter title (concise, natural English — e.g., "Tractatus I: De Macrocosmi Historia" → "Treatise I: On the History of the Macrocosm"). If the book is already in English, omit this field.
-- "pageNumber": The page number where this chapter starts
-- "level": Hierarchy level (1 = top-level division like Tractatus/Part/Book/Tomus/Volume, 2 = major chapter like Liber/Section, 3 = sub-chapter like Caput/Chapter)
-- "confidence": "high" if this is clearly a structural division (appears in TOC, has a numbered label, or matches section analysis), "medium" if likely but uncertain, "low" if plausible but might be noise
+Return the real structural chapters as a JSON array. CRITICAL rules:
+- "pageNumber" must be where chapter TEXT BEGINS in the body, NOT where it appears in a table of contents
+- Headings marked [TOC] are from table of contents pages — use them to understand structure, but find the BODY page where each chapter actually starts
+- Verify each chapter by checking context: does body text follow, or more chapter listings?
+
+Each entry:
+- "title": Clean chapter title in the original language (fix obvious OCR errors)
+- "titleEn": English translation (concise — e.g., "Tractatus I: De Macrocosmi Historia" → "Treatise I: On the History of the Macrocosm"). Omit if already English.
+- "pageNumber": Page where this chapter's TEXT begins (not TOC reference)
+- "level": 1 = top-level (Tractatus/Part/Book/Tomus/Volume), 2 = chapter (Liber/Section/Caput), 3 = sub-chapter
+- "confidence": "high"/"medium"/"low"
 
 Guidelines:
 - Look for the book's actual organizational structure (Parts, Books, Chapters, Sections, Tractatus, Liber, Caput, Tomus, Volumen, Band, etc.)
-- For multi-volume works: use level 1 for volumes/tomi, level 2 for books/chapters within a volume
-- SKIP: title pages, dedications, epistles to the reader, indices/indexes, running headers, image captions, printer colophons
-- SKIP: fragmentary text, continuation lines, single words that aren't chapter titles
-- INCLUDE: prefaces/prologues if they are labeled sections the reader would navigate to
-- A typical book has 5-50 chapters. If you find more than 80, you're probably including too much noise.
-- If the book has a clear hierarchy (e.g., Tractatus > Liber > Caput), preserve it with levels 1/2/3
-- If a heading appears to be a table of contents entry listing a chapter, include the chapter, not the TOC entry
-- Merge multi-line titles that were split across headings on the same page
-- For titleEn: preserve structural labels (Tractatus → Treatise, Liber → Book, Caput → Chapter, Pars → Part, Tomus → Volume) and translate the descriptive part naturally
-- Cross-reference OCR headings with translation headings when available — if the same page has a heading in both, prefer the cleaner version for "title" (original language) and use the translation for "titleEn"
+- For multi-volume works: use level 1 for volumes, level 2 for chapters within. Chapter numbering restarts per volume.
+- SKIP: title pages, dedications, indices, running headers, image captions, colophons
+- INCLUDE: prefaces/prologues if they are labeled sections
+- A typical book has 5-50 chapters. Over 80 usually means noise.
+- Cross-reference OCR and translation headings — prefer the cleaner version for "title"
 
 Respond with ONLY a JSON array, no markdown fences, no explanation:
 [{"title": "...", "titleEn": "...", "pageNumber": N, "level": N, "confidence": "high|medium|low"}, ...]
 
-If the book has no discernible chapter structure, return an empty array: []`;
+Empty array [] if no discernible structure.`;
 
   return prompt;
 }
@@ -272,10 +313,22 @@ export async function extractChaptersForBook(
   const pricing = MODEL_PRICING[modelId] || MODEL_PRICING['default'];
   const costUsd = (inputTokens / 1_000_000) * pricing.input + (outputTokens / 1_000_000) * pricing.output;
 
-  // Parse AI response
+  // Parse AI response — handle various wrapper formats
   let aiChapters: Array<{ title: string; titleEn?: string; pageNumber: number; level: number; confidence?: string }>;
   try {
-    const cleaned = responseText.replace(/^```json?\s*\n?/i, '').replace(/\n?```\s*$/i, '').trim();
+    let cleaned = responseText.trim();
+    // Strip markdown code fences (may appear with or without leading text)
+    const jsonBlockMatch = cleaned.match(/```json?\s*\n?([\s\S]*?)\n?```/);
+    if (jsonBlockMatch) {
+      cleaned = jsonBlockMatch[1].trim();
+    } else {
+      cleaned = cleaned.replace(/^```json?\s*\n?/i, '').replace(/\n?```\s*$/i, '').trim();
+    }
+    // Find the JSON array even if surrounded by text
+    const arrayMatch = cleaned.match(/\[[\s\S]*\]/);
+    if (arrayMatch) {
+      cleaned = arrayMatch[0];
+    }
     aiChapters = JSON.parse(cleaned);
   } catch {
     throw new Error(`AI returned unparseable response: ${responseText.slice(0, 500)}`);
