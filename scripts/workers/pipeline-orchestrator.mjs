@@ -20,9 +20,10 @@
  *   node scripts/workers/pipeline-orchestrator.mjs --phase 2  # run only phase 2 (OCR submit)
  */
 
-import { MongoClient } from 'mongodb';
+import { MongoClient, ObjectId } from 'mongodb';
 import { nanoid } from 'nanoid';
 import { SQSClient, SendMessageBatchCommand } from '@aws-sdk/client-sqs';
+import { S3Client, PutObjectCommand } from '@aws-sdk/client-s3';
 import { createHash } from 'crypto';
 
 // ── Config ──
@@ -48,6 +49,51 @@ const OCR_INLINE_BATCH_SIZE = 20;  // Pages per inline batch (base64 in body, ~2
 const OCR_FILE_BATCH_SIZE = 150;   // Pages per file-based batch (JSONL uploaded to File API)
 const IMAGE_CONCURRENCY = 20;     // Parallel image downloads per book
 const MAX_PAGES_PER_BOOK = 500;   // Max pages to OCR per book
+
+// R2 config for split image uploads (mirrors batch-split-bph.mjs)
+const R2_BUCKET = process.env.R2_BUCKET_NAME || 'sourcelibrary';
+const R2_PUBLIC_URL = process.env.R2_PUBLIC_URL || 'https://images.sourcelibrary.org';
+const SPLIT_OVERLAP = 10; // overlap in 0-1000 scale
+const SPLIT_PAGE_CONCURRENCY = 5;
+const SPLIT_CROPPED_QUALITY = 90;
+const SPLIT_DISPLAY_WIDTH = 1200;
+const SPLIT_DISPLAY_QUALITY = 85;
+const SPLIT_THUMB_WIDTH = 150;
+const SPLIT_THUMB_QUALITY = 60;
+
+function getR2Client() {
+  const { R2_ACCOUNT_ID, R2_ACCESS_KEY_ID, R2_SECRET_ACCESS_KEY } = process.env;
+  if (!R2_ACCOUNT_ID || !R2_ACCESS_KEY_ID || !R2_SECRET_ACCESS_KEY) {
+    throw new Error('Missing R2 credentials for split image upload');
+  }
+  return new S3Client({
+    region: 'auto',
+    endpoint: `https://${R2_ACCOUNT_ID}.r2.cloudflarestorage.com`,
+    credentials: { accessKeyId: R2_ACCESS_KEY_ID, secretAccessKey: R2_SECRET_ACCESS_KEY },
+  });
+}
+
+async function uploadToR2(r2, key, buffer, contentType = 'image/jpeg') {
+  await r2.send(new PutObjectCommand({
+    Bucket: R2_BUCKET, Key: key, Body: buffer, ContentType: contentType,
+    CacheControl: 'public, max-age=86400, s-maxage=86400',
+  }));
+  return `${R2_PUBLIC_URL}/${key}`;
+}
+
+function splitPagePaths(bookId, pageNumber) {
+  const num = String(pageNumber).padStart(4, '0');
+  const base = `pages/${bookId}/${num}`;
+  return { full: `${base}-full.jpg`, display: `${base}.jpg`, thumb: `${base}-thumb.jpg` };
+}
+
+async function parallelMap(items, fn, concurrency) {
+  const results = [];
+  let i = 0;
+  async function worker() { while (i < items.length) { const idx = i++; results[idx] = await fn(items[idx], idx); } }
+  await Promise.all(Array.from({ length: Math.min(concurrency, items.length) }, worker));
+  return results;
+}
 
 if (!MONGODB_URI) { console.error('MONGODB_URI not set'); process.exit(1); }
 if (!CRON_SECRET) { console.error('CRON_SECRET not set'); process.exit(1); }
@@ -1248,8 +1294,8 @@ async function run() {
 
     // ── Phase 1.25: Split detection for spread scans ──
     // Checks archive_complete books for two-page spreads (landscape aspect ratio).
-    // Calls the Vercel auto-split-ml API to split spreads into individual pages
-    // and generate cropped images. Must run BEFORE OCR to avoid OCR'ing full spreads.
+    // Center-splits spreads inline (no API call), uploads cropped halves to R2.
+    // Based on batch-split-bph.mjs by Mayank. Must run BEFORE OCR.
     // See: https://github.com/Embassy-of-the-Free-Mind/sourcelibrary-v2/issues/264
     if (shouldRun(1.25)) {
       console.log('\n--- Phase 1.25: Split detection (spread → individual pages) ---');
@@ -1338,50 +1384,174 @@ async function run() {
             continue;
           }
 
-          // It's a spread — call Vercel auto-split-ml API
-          console.log(`    ${label}: SPREAD detected, running split detection...`);
+          // It's a spread — center-split inline (from batch-split-bph.mjs)
+          console.log(`    ${label}: SPREAD detected, running center-split...`);
 
           if (DRY_RUN) {
             console.log(`    Would split: ${label}`);
             continue;
           }
 
-          const splitRes = await fetch(`${BASE_URL}/api/books/${book.id}/auto-split-ml`, {
-            method: 'POST',
-            headers: {
-              'Authorization': `Bearer ${CRON_SECRET}`,
-              'Content-Type': 'application/json',
+          const r2 = getR2Client();
+          const sharp = (await import('sharp')).default;
+
+          // Get all pages for this book
+          const allBookPages = await db.collection('pages')
+            .find({ book_id: book.id })
+            .sort({ page_number: 1 })
+            .toArray();
+
+          const newPages = [];
+          const updateOps = [];
+          let bookSplitCount = 0;
+          let bookSingleCount = 0;
+          let bookErrors = 0;
+
+          await parallelMap(allBookPages, async (page) => {
+            try {
+              const imgUrl = page.archived_photo || page.photo_original || page.photo;
+              if (!imgUrl) return;
+
+              const imgRes = await fetch(imgUrl, { signal: AbortSignal.timeout(30000) });
+              if (!imgRes.ok) return;
+              const buf = Buffer.from(await imgRes.arrayBuffer());
+              const pageMeta = await sharp(buf).metadata();
+              const pageRatio = (pageMeta.width || 1) / (pageMeta.height || 1);
+
+              if (pageRatio <= ASPECT_RATIO_THRESHOLD) {
+                bookSingleCount++;
+                return;
+              }
+
+              // Center-split
+              const imgWidth = pageMeta.width || 1000;
+              const imgHeight = pageMeta.height || 1000;
+              const splitX = Math.round(imgWidth / 2);
+              const overlapPx = Math.round(SPLIT_OVERLAP * imgWidth / 1000);
+
+              const leftBuf = await sharp(buf)
+                .extract({ left: 0, top: 0, width: Math.min(imgWidth, splitX + overlapPx), height: imgHeight })
+                .jpeg({ quality: SPLIT_CROPPED_QUALITY, progressive: true })
+                .toBuffer();
+
+              const rightBuf = await sharp(buf)
+                .extract({ left: Math.max(0, splitX - overlapPx), top: 0, width: Math.min(imgWidth, imgWidth - splitX + overlapPx), height: imgHeight })
+                .jpeg({ quality: SPLIT_CROPPED_QUALITY, progressive: true })
+                .toBuffer();
+
+              const [leftDisplay, leftThumb, rightDisplay, rightThumb] = await Promise.all([
+                sharp(leftBuf).resize(SPLIT_DISPLAY_WIDTH).jpeg({ quality: SPLIT_DISPLAY_QUALITY }).toBuffer(),
+                sharp(leftBuf).resize(SPLIT_THUMB_WIDTH).jpeg({ quality: SPLIT_THUMB_QUALITY }).toBuffer(),
+                sharp(rightBuf).resize(SPLIT_DISPLAY_WIDTH).jpeg({ quality: SPLIT_DISPLAY_QUALITY }).toBuffer(),
+                sharp(rightBuf).resize(SPLIT_THUMB_WIDTH).jpeg({ quality: SPLIT_THUMB_QUALITY }).toBuffer(),
+              ]);
+
+              const leftPaths = splitPagePaths(book.id, page.page_number);
+              const rightPageId = new ObjectId().toHexString();
+              const rightTempKey = `pages/${book.id}/split-${rightPageId}`;
+
+              const [leftFullUrl, , leftThumbUrl] = await Promise.all([
+                uploadToR2(r2, leftPaths.full, leftBuf),
+                uploadToR2(r2, leftPaths.display, leftDisplay),
+                uploadToR2(r2, leftPaths.thumb, leftThumb),
+              ]);
+
+              const [rightFullUrl, , rightThumbUrl] = await Promise.all([
+                uploadToR2(r2, `${rightTempKey}-full.jpg`, rightBuf),
+                uploadToR2(r2, `${rightTempKey}.jpg`, rightDisplay),
+                uploadToR2(r2, `${rightTempKey}-thumb.jpg`, rightThumb),
+              ]);
+
+              const splitPosition = Math.round((splitX / imgWidth) * 1000);
+              const leftCrop = { xStart: 0, xEnd: splitPosition + SPLIT_OVERLAP };
+              const rightCrop = { xStart: splitPosition - SPLIT_OVERLAP, xEnd: 1000 };
+
+              updateOps.push({
+                updateOne: {
+                  filter: { id: page.id },
+                  update: {
+                    $set: {
+                      photo: leftFullUrl,
+                      photo_original: page.photo,
+                      cropped_photo: leftFullUrl,
+                      thumbnail: leftThumbUrl,
+                      crop: leftCrop,
+                      split_detection: {
+                        isTwoPageSpread: true, confidence: 'high', splitPosition,
+                        method: 'center-split', detected_at: new Date(),
+                      },
+                      updated_at: new Date(),
+                    },
+                    $unset: { ocr: '', translation: '', summary: '' },
+                  },
+                },
+              });
+
+              newPages.push({
+                _id: new ObjectId(rightPageId),
+                id: rightPageId,
+                tenant_id: 'default',
+                book_id: book.id,
+                page_number: page.page_number + 0.5,
+                photo: rightFullUrl,
+                photo_original: page.photo,
+                cropped_photo: rightFullUrl,
+                thumbnail: rightThumbUrl,
+                crop: rightCrop,
+                split_from: page.id,
+                split_detection: {
+                  isTwoPageSpread: true, confidence: 'high', splitPosition,
+                  method: 'center-split', detected_at: new Date(),
+                },
+                created_at: new Date(),
+                updated_at: new Date(),
+              });
+
+              bookSplitCount++;
+            } catch (err) {
+              console.log(`      page ${page.page_number}: FAIL — ${err.message?.slice(0, 80)}`);
+              bookErrors++;
+            }
+          }, SPLIT_PAGE_CONCURRENCY);
+
+          // Apply DB changes
+          if (updateOps.length > 0) await db.collection('pages').bulkWrite(updateOps);
+          if (newPages.length > 0) await db.collection('pages').insertMany(newPages);
+
+          // Renumber pages sequentially
+          const allPagesAfter = await db.collection('pages')
+            .find({ book_id: book.id })
+            .sort({ page_number: 1, _id: 1 })
+            .toArray();
+
+          const renumberOps = allPagesAfter.map((p, i) => ({
+            updateOne: { filter: { _id: p._id }, update: { $set: { page_number: i + 1 } } },
+          }));
+          if (renumberOps.length > 0) await db.collection('pages').bulkWrite(renumberOps);
+
+          // Update book counts
+          const ocrCount = await db.collection('pages').countDocuments({ book_id: book.id, 'ocr.data': { $exists: true, $ne: '' } });
+          const translateCount = await db.collection('pages').countDocuments({ book_id: book.id, 'translation.data': { $exists: true, $ne: '' } });
+
+          await db.collection('books').updateOne({ id: book.id }, {
+            $set: {
+              pages_count: allPagesAfter.length,
+              pages_ocr: ocrCount,
+              pages_translated: translateCount,
+              'pipeline_auto.split_checked': true,
+              'pipeline_auto.last_updated': new Date(),
+              ...(bookSplitCount > 0 ? {
+                'pipeline_auto.split_performed': true,
+                'pipeline_auto.split_count': bookSplitCount,
+                'pipeline_auto.split_at': new Date(),
+              } : {}),
             },
-            body: JSON.stringify({ limit: 200, dryRun: false }),
-            signal: AbortSignal.timeout(300000), // 5 min — splitting can be slow
           });
 
-          if (!splitRes.ok) {
-            const errText = await splitRes.text();
-            console.log(`    ${label}: split API failed: ${splitRes.status} — ${errText.slice(0, 200)}`);
-            continue;
-          }
-
-          const splitResult = await splitRes.json();
-          console.log(`    ${label}: split ${splitResult.splitCount || 0} spreads → ${splitResult.totalPages || 0} pages`);
-
-          // Mark as split-checked with provenance
-          const splitUpdate = {
-            'pipeline_auto.split_checked': true,
-            'pipeline_auto.last_updated': new Date(),
-          };
-          if (splitResult.splitCount > 0) {
-            splitUpdate['pipeline_auto.split_performed'] = true;
-            splitUpdate['pipeline_auto.split_count'] = splitResult.splitCount;
-            splitUpdate['pipeline_auto.split_at'] = new Date();
-          }
-          await db.collection('books').updateOne(
-            { id: book.id },
-            { $set: splitUpdate }
-          );
+          console.log(`    ${label}: ${bookSplitCount} spreads split, ${bookSingleCount} single → ${allPagesAfter.length} total pages${bookErrors ? `, ${bookErrors} errors` : ''}`);
 
           splitChecked++;
-          if (splitResult.splitCount > 0) splitApplied++;
+          if (bookSplitCount > 0) splitApplied++;
 
         } catch (err) {
           console.log(`    ${book.title?.slice(0, 50)}: ERROR — ${err.message?.slice(0, 120)}`);
