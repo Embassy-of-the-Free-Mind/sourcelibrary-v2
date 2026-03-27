@@ -41,9 +41,10 @@ export default function Piece({ piece, isSelected, isCurrentPlayer, isCaptured, 
   const isEven = piece.owner === 'even';
 
   // Engraving palette — high contrast, ink on paper
+  // Odd (dark) pieces get a light edge so they're visible on dark squares
   const fill = isEven ? '#f0ebe0' : '#1a1612';
-  const stroke = '#1a1612';
-  const strokeW = isEven ? 2 : 2.5;
+  const stroke = isEven ? '#1a1612' : '#8a8278';
+  const strokeW = isEven ? 2 : 1.5;
   const textColor = isEven ? '#1a1612' : '#f0ebe0';
   const hatchId = isEven ? HATCH_EVEN : HATCH_ODD;
   const selectRing = '#9e4a3a';
