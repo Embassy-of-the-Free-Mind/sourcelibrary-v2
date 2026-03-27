@@ -20,12 +20,14 @@ interface BookPagesSectionProps {
   bookTitle?: string;
   pages: Page[];
   totalPageCount?: number;
+  totalPagesOcr?: number;
+  totalPagesTranslated?: number;
   displayBrightness?: number;
 }
 
 const PAGES_PER_LOAD = 24; // 2 rows on 12-col grid
 
-export default function BookPagesSection({ bookId, bookTitle, pages: initialPages, totalPageCount, displayBrightness }: BookPagesSectionProps) {
+export default function BookPagesSection({ bookId, bookTitle, pages: initialPages, totalPageCount, totalPagesOcr, totalPagesTranslated, displayBrightness }: BookPagesSectionProps) {
   const [pages, setPages] = useState(initialPages);
   const [allPagesFetched, setAllPagesFetched] = useState(
     !totalPageCount || initialPages.length >= totalPageCount
@@ -126,10 +128,9 @@ export default function BookPagesSection({ bookId, bookTitle, pages: initialPage
 
   const lastSelectedIndexRef = useRef<number | null>(null);
 
-  // Calculate stats (check updated_at since data is excluded from projection)
-  // When only a partial page set was SSR'd, these are approximate until all pages load
-  const pagesWithOcr = pages.filter(p => p.ocr?.updated_at).length;
-  const pagesWithTranslation = pages.filter(p => p.translation?.updated_at).length;
+  // Use book-level cached counts when available (page array may be truncated to first 100)
+  const pagesWithOcr = totalPagesOcr ?? pages.filter(p => p.ocr?.updated_at).length;
+  const pagesWithTranslation = totalPagesTranslated ?? pages.filter(p => p.translation?.updated_at).length;
   const totalPages = totalPageCount || pages.length;
 
   // Calculate last activity dates
