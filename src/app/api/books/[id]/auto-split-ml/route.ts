@@ -1,7 +1,7 @@
 import { NextRequest, NextResponse } from 'next/server';
 import { getDb } from '@/lib/mongodb';
 import { ObjectId } from 'mongodb';
-import { extractFeatures, predictWithModel, type SplitModel } from '@/lib/page-split/splitDetectionML';
+import { extractFeatures, predictWithModel, detectSplitWithGemini, type SplitModel } from '@/lib/page-split/splitDetectionML';
 import { images } from '@/lib/api-client';
 import { cropAndUploadHalf, generateAndUploadThumbnail } from '@/lib/page-split/split-processing';
 import { withAuth } from '@/lib/auth-helpers';
@@ -11,25 +11,28 @@ export const maxDuration = 300;
 /**
  * POST /api/books/[id]/auto-split-ml
  *
- * Automatically split all two-page spreads in a book using the ML model.
+ * Automatically split all two-page spreads in a book.
+ * Supports method: 'gemini' (default, uses Gemini vision) or 'ml' (local ML model).
  * Only processes pages that have photo_original but no crop.
  */
 export const POST = withAuth(async (request, session, context) => {
   try {
     const { id: bookId } = await context.params;
-    const { limit = 50, dryRun = false } = await request.json().catch(() => ({}));
+    const { limit = 50, dryRun = false, method = 'gemini' } = await request.json().catch(() => ({}));
 
     const db = await getDb();
 
-    // Get the active ML model
-    const model = await db.collection('split_models')
-      .findOne({ isActive: true }) as unknown as SplitModel | null;
-
-    if (!model) {
-      return NextResponse.json(
-        { error: 'No trained ML model available' },
-        { status: 400 }
-      );
+    // For ML method, load the trained model
+    let model: SplitModel | null = null;
+    if (method === 'ml') {
+      model = await db.collection('split_models')
+        .findOne({ isActive: true }) as unknown as SplitModel | null;
+      if (!model) {
+        return NextResponse.json(
+          { error: 'No trained ML model available' },
+          { status: 400 }
+        );
+      }
     }
 
     // Get book
@@ -64,17 +67,26 @@ export const POST = withAuth(async (request, session, context) => {
 
     for (const page of pagesToSplit) {
       try {
-        // Fetch image - use smaller version for speed
         let imageUrl = page.photo_original;
         if (imageUrl.includes('archive.org') && imageUrl.includes('pct:50')) {
           imageUrl = imageUrl.replace('pct:50', 'pct:25');
         }
 
-        const imageBuffer = await images.fetchBuffer(imageUrl, { timeout: 30000 });
-        const features = await extractFeatures(imageBuffer);
+        let position: number;
 
-        // Predict split position using ML
-        const position = predictWithModel(features, model);
+        if (method === 'gemini') {
+          // Use Gemini vision for split detection
+          const geminiResult = await detectSplitWithGemini(imageUrl);
+          if (!geminiResult.isTwoPageSpread) {
+            continue; // Gemini says it's not a spread — skip
+          }
+          position = geminiResult.splitPosition;
+        } else {
+          // Use local ML model
+          const imageBuffer = await images.fetchBuffer(imageUrl, { timeout: 30000 });
+          const features = await extractFeatures(imageBuffer);
+          position = predictWithModel(features, model!);
+        }
 
         splits.push({
           pageId: page.id,
