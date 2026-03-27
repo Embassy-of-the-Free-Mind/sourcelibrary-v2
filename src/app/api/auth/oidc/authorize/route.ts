@@ -35,7 +35,7 @@ export async function GET(request: NextRequest) {
   }
 
   // Signed in — create auth code and redirect back to Synapse
-  const code = createAuthCode(session.user.id, redirectUri);
+  const code = await createAuthCode(session.user.id, redirectUri);
   const redirectUrl = new URL(redirectUri);
   redirectUrl.searchParams.set('code', code);
   if (state) redirectUrl.searchParams.set('state', state);

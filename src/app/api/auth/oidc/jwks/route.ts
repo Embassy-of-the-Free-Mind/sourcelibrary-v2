@@ -6,5 +6,5 @@ import { getJwks } from '@/lib/oidc/provider';
  * JSON Web Key Set — Synapse uses this to verify ID token signatures.
  */
 export async function GET() {
-  return NextResponse.json(getJwks());
+  return NextResponse.json(await getJwks());
 }

@@ -40,7 +40,7 @@ export async function POST(request: NextRequest) {
     return NextResponse.json({ error: 'invalid_client' }, { status: 401 });
   }
 
-  const result = exchangeAuthCode(code, redirectUri);
+  const result = await exchangeAuthCode(code, redirectUri);
   if (!result) {
     return NextResponse.json({ error: 'invalid_grant' }, { status: 400 });
   }
@@ -51,7 +51,7 @@ export async function POST(request: NextRequest) {
     return NextResponse.json({ error: 'invalid_grant' }, { status: 400 });
   }
 
-  const idToken = createIdToken(result.userId, userInfo.email, userInfo.name);
+  const idToken = await createIdToken(result.userId, userInfo.email, userInfo.name);
   const accessToken = createAccessToken(result.userId);
 
   return NextResponse.json({

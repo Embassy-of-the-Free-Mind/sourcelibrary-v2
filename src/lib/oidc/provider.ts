@@ -9,28 +9,42 @@ import { getDb } from '@/lib/mongodb';
 const OIDC_CLIENT_ID = 'synapse-embassy';
 const OIDC_CLIENT_SECRET = process.env.OIDC_CLIENT_SECRET || 'embassy-oidc-secret-2026';
 
-// In-memory stores (fine for single-instance Vercel — codes expire in 60s)
-const authCodes = new Map<string, { userId: string; redirectUri: string; expiresAt: number }>();
+// RSA key for signing JWTs — persisted in MongoDB for consistency across cold starts
+let _rsaKeys: { privateKey: string; publicKey: string; keyId: string } | null = null;
 
-// RSA key for signing JWTs — generated once per cold start
-let _rsaPrivateKey: string | null = null;
-let _rsaPublicKey: string | null = null;
-let _rsaKeyId: string | null = null;
+async function getOrCreateKeys() {
+  if (_rsaKeys) return _rsaKeys;
 
-function getOrCreateKeys() {
-  if (!_rsaPrivateKey) {
-    // Use a deterministic key from the secret to avoid key rotation on cold starts
-    const { generateKeyPairSync } = require('crypto');
-    const pair = generateKeyPairSync('rsa', {
-      modulusLength: 2048,
-      publicKeyEncoding: { type: 'spki', format: 'pem' },
-      privateKeyEncoding: { type: 'pkcs8', format: 'pem' },
-    });
-    _rsaPrivateKey = pair.privateKey;
-    _rsaPublicKey = pair.publicKey;
-    _rsaKeyId = createHash('sha256').update(pair.publicKey).digest('hex').slice(0, 8);
+  const db = await getDb();
+  const existing = await db.collection('system_config').findOne({ _id: 'oidc_rsa_keys' as any });
+
+  if (existing) {
+    _rsaKeys = {
+      privateKey: existing.privateKey,
+      publicKey: existing.publicKey,
+      keyId: existing.keyId,
+    };
+    return _rsaKeys;
   }
-  return { privateKey: _rsaPrivateKey!, publicKey: _rsaPublicKey!, keyId: _rsaKeyId! };
+
+  // Generate new keypair and persist
+  const { generateKeyPairSync } = require('crypto');
+  const pair = generateKeyPairSync('rsa', {
+    modulusLength: 2048,
+    publicKeyEncoding: { type: 'spki', format: 'pem' },
+    privateKeyEncoding: { type: 'pkcs8', format: 'pem' },
+  });
+
+  const keyId = createHash('sha256').update(pair.publicKey).digest('hex').slice(0, 8);
+
+  await db.collection('system_config').updateOne(
+    { _id: 'oidc_rsa_keys' as any },
+    { $set: { privateKey: pair.privateKey, publicKey: pair.publicKey, keyId, createdAt: new Date() } },
+    { upsert: true },
+  );
+
+  _rsaKeys = { privateKey: pair.privateKey, publicKey: pair.publicKey, keyId };
+  return _rsaKeys;
 }
 
 export function validateClient(clientId: string, clientSecret?: string): boolean {
@@ -39,22 +53,25 @@ export function validateClient(clientId: string, clientSecret?: string): boolean
   return true;
 }
 
-export function createAuthCode(userId: string, redirectUri: string): string {
+export async function createAuthCode(userId: string, redirectUri: string): Promise<string> {
   const code = randomBytes(32).toString('hex');
-  authCodes.set(code, {
+  const db = await getDb();
+  await db.collection('oidc_auth_codes').insertOne({
+    code,
     userId,
     redirectUri,
-    expiresAt: Date.now() + 60000, // 60s expiry
+    expiresAt: new Date(Date.now() + 120000), // 2 min expiry
+    createdAt: new Date(),
   });
   return code;
 }
 
-export function exchangeAuthCode(code: string, redirectUri: string): { userId: string } | null {
-  const entry = authCodes.get(code);
-  if (!entry) return null;
-  authCodes.delete(code);
+export async function exchangeAuthCode(code: string, redirectUri: string): Promise<{ userId: string } | null> {
+  const db = await getDb();
+  const entry = await db.collection('oidc_auth_codes').findOneAndDelete({ code });
 
-  if (Date.now() > entry.expiresAt) return null;
+  if (!entry) return null;
+  if (new Date() > entry.expiresAt) return null;
   if (entry.redirectUri !== redirectUri) return null;
 
   return { userId: entry.userId };
@@ -65,8 +82,8 @@ function base64url(data: Buffer | string): string {
   return buf.toString('base64url');
 }
 
-export function createIdToken(userId: string, email: string, name: string): string {
-  const { privateKey, keyId } = getOrCreateKeys();
+export async function createIdToken(userId: string, email: string, name: string): Promise<string> {
+  const { privateKey, keyId } = await getOrCreateKeys();
   const issuer = process.env.NEXTAUTH_URL || 'https://sourcelibrary.org';
 
   const header = { alg: 'RS256', typ: 'JWT', kid: keyId };
@@ -119,8 +136,8 @@ export async function getUserInfo(userId: string) {
   } : null;
 }
 
-export function getJwks() {
-  const { publicKey, keyId } = getOrCreateKeys();
+export async function getJwks() {
+  const { publicKey, keyId } = await getOrCreateKeys();
   const key = createPublicKey(publicKey);
   const jwk = key.export({ format: 'jwk' });
   return {
