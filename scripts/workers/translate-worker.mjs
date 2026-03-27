@@ -103,10 +103,14 @@ function contentHash(text) {
   return createHash('sha256').update(text || '').digest('hex').slice(0, 16);
 }
 
-// ── Cost calculation (Gemini Flash realtime pricing) ──
-function calculateCost(inputTokens, outputTokens) {
-  // gemini-3-flash-preview: $0.10/1M input, $0.40/1M output
-  return (inputTokens * 0.10 + outputTokens * 0.40) / 1_000_000;
+// ── Cost calculation ──
+const MODEL_PRICING = {
+  'gemini-3.1-flash-lite-preview': { input: 0.25, output: 1.50 },
+  'gemini-3-flash-preview': { input: 0.50, output: 3.00 },
+};
+function calculateCost(inputTokens, outputTokens, model) {
+  const pricing = MODEL_PRICING[model] || MODEL_PRICING['gemini-3-flash-preview'];
+  return (inputTokens * pricing.input + outputTokens * pricing.output) / 1_000_000;
 }
 
 // ── Translate a single page ──
@@ -254,7 +258,7 @@ async function processBook(db, book, job, globalCounter) {
       );
 
       // Log usage
-      const cost = calculateCost(result.inputTokens, result.outputTokens);
+      const cost = calculateCost(result.inputTokens, result.outputTokens, getModelForBook(book));
       await db.collection('gemini_usage').insertOne({
         type: 'translation',
         mode: 'realtime',
@@ -263,7 +267,7 @@ async function processBook(db, book, job, globalCounter) {
         page_ids: [page.id],
         input_tokens: result.inputTokens,
         output_tokens: result.outputTokens,
-        cost,
+        cost_usd: cost,
         status: 'success',
         duration_ms: result.durationMs,
         prompt_version: PROMPT_VERSION,
