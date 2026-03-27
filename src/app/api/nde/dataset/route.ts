@@ -1,7 +1,8 @@
 import { NextResponse } from 'next/server';
 import { getDb } from '@/lib/mongodb';
 
-export const dynamic = 'force-dynamic'; // Don't prerender — needs DB at runtime
+export const dynamic = 'force-dynamic';
+export const revalidate = 0; // Never cache, always run at request time
 
 /**
  * GET /api/nde/dataset
