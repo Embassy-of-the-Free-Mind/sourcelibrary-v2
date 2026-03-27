@@ -59,6 +59,7 @@ const PIPELINE_ORDER = [
   'enriching', 'enriched',
   'chapters', 'chapters_complete',
   'images_submitted', 'images_complete',
+  'cover_selected',
   'complete', 'failed', 'needs_attention',
 ];
 
