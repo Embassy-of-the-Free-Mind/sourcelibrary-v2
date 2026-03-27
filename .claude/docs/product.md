@@ -199,7 +199,7 @@ Book
 Page
 ├── id, book_id, page_number
 ├── photo_original (original external URL — never overwritten)
-├── archived_photo (Vercel Blob CDN URL)
+├── archived_photo (Cloudflare R2 CDN URL)
 ├── cropped_photo (split-detected single-page crop)
 ├── thumbnail_blob (150px JPEG)
 ├── ocr.data (Transcription)

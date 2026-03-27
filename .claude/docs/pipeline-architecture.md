@@ -11,7 +11,7 @@
 1. [Where Everything Runs](#where-everything-runs)
 2. [Book Lifecycle (State Machine)](#book-lifecycle-state-machine)
 3. [OCR (Gemini Batch API on Hetzner)](#ocr-gemini-batch-api-on-hetzner)
-4. [Translation (Lambda + SQS FIFO)](#translation-lambda--sqs-fifo)
+4. [Translation (Hetzner Inline Worker)](#translation-hetzner-inline-worker)
 5. [Adaptive Limits (Backpressure)](#adaptive-limits-backpressure)
 6. [Emergency Controls](#emergency-controls)
 7. [Current Velocity](#current-velocity-march-18-2026)
@@ -198,18 +198,27 @@ $0.0017/page (measured from `gemini_usage`: $354 / 211K pages over 7 days)
 
 ---
 
-## Translation (Lambda + SQS FIFO)
+## Translation (Hetzner Inline Worker)
 
-**Why Lambda, not Batch API:** Cross-page context continuity. Each page must see the previous page's translation to maintain coherent output. The Batch API returns results in arbitrary order -- this was learned the hard way on Feb 18 when 17K pages got wrong translations.
+**Why not Batch API:** Cross-page context continuity. Each page must see the previous page's translation to maintain coherent output. The Batch API returns results in arbitrary order -- this was learned the hard way on Feb 18 when 17K pages got wrong translations.
 
-### Flow
+**Why Hetzner, not Lambda/SQS:** The `translate-worker.mjs` calls Gemini directly, avoiding SQS/Lambda overhead and enabling model routing (flash for BPH, lite for others). Lambda translation still exists for preview and manual jobs.
 
-1. Phase 4 creates a job record, enqueues pages to SQS FIFO
-2. FIFO queue ensures sequential processing per `MessageGroupId` (job ID)
-3. Lambda worker fetches page OCR, queries previous page's translation from MongoDB
-4. Calls Gemini realtime, writes translation directly to MongoDB (not deferred -- context requires immediate write)
-5. Sends completion logging to write-results queue
-6. Writer Lambda logs `gemini_usage` and checks job completion
+### Flow (Production)
+
+1. Orchestrator Phase 4 creates a `jobs` record, sets book to `translate_submitted`
+2. `translate-worker.mjs` (Hetzner cron, every 5 min) picks up books in `translate_submitted`
+3. Translates pages sequentially per book (previous page's translation as context)
+4. Calls Gemini directly -- model: `gemini-3-flash-preview` (BPH) or `gemini-3.1-flash-lite-preview` (others)
+5. Writes translation directly to `pages` collection
+6. Rotates API keys on rate limits (up to 11 keys)
+7. Concurrency: 20 books simultaneously, 8,000 page cap per run
+
+### Legacy Lambda Path (Fallback)
+
+Lambda translation processor + SQS FIFO queue still work. Used only for:
+- Preview translation (first 25 pages via `preview-translate.ts`)
+- Manual job submission via `/api/jobs/queue-books`
 
 ### Special Cases
 
