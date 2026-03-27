@@ -1,0 +1,21 @@
+{
+  "thumbSize": 64,
+  "atlasSize": 4096,
+  "grid": 64,
+  "perAtlas": 4096,
+  "totalImages": 39783,
+  "totalAtlases": 10,
+  "atlases": [
+    "atlas-0.jpg",
+    "atlas-1.jpg",
+    "atlas-2.jpg",
+    "atlas-3.jpg",
+    "atlas-4.jpg",
+    "atlas-5.jpg",
+    "atlas-6.jpg",
+    "atlas-7.jpg",
+    "atlas-8.jpg",
+    "atlas-9.jpg"
+  ],
+  "generatedAt": "2026-03-27T18:45:38.837Z"
+}
