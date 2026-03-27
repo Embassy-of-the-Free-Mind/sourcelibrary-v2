@@ -2,7 +2,7 @@ import { getDb } from '@/lib/mongodb';
 import type { PageProcessingMessage } from '@/lib/types/sqs';
 import type { TranslationWriteResult, GeminiUsagePayload } from '@/lib/types/sqs';
 import { performTranslation } from '@/lib/ai';
-import { DEFAULT_MODEL, PROMPT_VERSION } from '@/lib/types';
+import { DEFAULT_MODEL, PROMPT_VERSION, getModelForBook } from '@/lib/types';
 import { SKIP_TRANSLATION_PAGE_TYPES, extractPageType } from '@/lib/types/prompts/defaults';
 import { classifyError } from '@/lib/errors';
 import { extractTranslationMetadata, propagateOcrWarnings } from '@/lib/translation-metadata';
@@ -84,7 +84,7 @@ export async function processTranslationPage(message: PageProcessingMessage) {
   // Fetch book metadata for translation context (title, author, year)
   const bookDoc = await db.collection('books').findOne(
     { id: bookId },
-    { projection: { title: 1, display_title: 1, author: 1, year: 1, published: 1 } }
+    { projection: { title: 1, display_title: 1, author: 1, year: 1, published: 1, 'image_source.provider': 1 } }
   );
   const bookContext = bookDoc ? {
     title: bookDoc.display_title || bookDoc.title,
@@ -161,7 +161,7 @@ export async function processTranslationPage(message: PageProcessingMessage) {
     }
   }
 
-  const modelId = job.config.model || DEFAULT_MODEL;
+  const modelId = job.config.model || getModelForBook(bookDoc as { image_source?: { provider?: string } } | null) || DEFAULT_MODEL;
   const startTime = Date.now();
 
   // Snapshot manually-edited content before overwriting
