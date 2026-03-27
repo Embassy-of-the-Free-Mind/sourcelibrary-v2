@@ -53,17 +53,17 @@ export function gameReducer(state: GameState, action: GameAction): GameState {
 }
 
 function handleSelectPiece(state: GameState, position: Position): GameState {
-  if (state.phase !== 'select') return state;
-
-  const piece = getPieceAt(state.board, position);
-  if (!piece || piece.owner !== state.currentPlayer) return state;
-
-  const moves = getLegalMoves(piece, state.board);
+  if (state.phase !== 'select' && state.phase !== 'move') return state;
 
   // If clicking the same piece, deselect
   if (state.selectedPiece && positionsEqual(state.selectedPiece, position)) {
     return { ...state, phase: 'select', selectedPiece: null, legalMoves: [] };
   }
+
+  const piece = getPieceAt(state.board, position);
+  if (!piece || piece.owner !== state.currentPlayer) return state;
+
+  const moves = getLegalMoves(piece, state.board);
 
   return {
     ...state,
