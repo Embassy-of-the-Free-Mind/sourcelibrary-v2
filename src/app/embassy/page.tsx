@@ -105,7 +105,7 @@ export default function EmbassyPage() {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify({
-          ...(threadId && { threadId }),
+          threadId,
           message: trimmed,
           history: messages,
           visibility,
@@ -387,36 +387,9 @@ export default function EmbassyPage() {
                 )}
               </div>
 
-              {/* Live Chat */}
-              <div className="mt-8 pt-6 border-t border-[#e8e4dc]">
-                <a
-                  href="https://chat.sourcelibrary.org"
-                  target="_blank"
-                  rel="noopener noreferrer"
-                  className="block py-3 px-4 -mx-2 rounded-lg border border-[#e8e4dc] hover:border-[#c9a86c] hover:bg-[#f5f0e8]/50 transition-colors group"
-                >
-                  <div className="flex items-center gap-2">
-                    <span className="text-sm font-sans text-[#1a1612] group-hover:text-[#9e4a3a] transition-colors">
-                      Live Chat
-                    </span>
-                    <span className="text-[9px] text-[#8a8480] font-sans">
-                      &#8599;
-                    </span>
-                  </div>
-                  <p className="text-[11px] text-[#8a8480] font-body mt-0.5">
-                    Real-time discussion with other scholars. Sign in with your Source Library account.
-                  </p>
-                </a>
-              </div>
-
-              {/* Profile + links */}
+              {/* Quick links */}
               <div className="mt-6 pt-4 border-t border-[#e8e4dc]">
                 <div className="space-y-2">
-                  {isSignedIn && (
-                    <Link href="/embassy/profile/edit" className="block text-sm text-[#444] hover:text-[#9e4a3a] transition-colors font-body">
-                      Your Profile
-                    </Link>
-                  )}
                   <Link href="/ficino-society" className="block text-sm text-[#444] hover:text-[#9e4a3a] transition-colors font-body">
                     The Ficino Society
                   </Link>
