@@ -150,8 +150,8 @@ async function checkTranslation(db, item, coverage) {
   // Check Source Library books by title overlap (cached after first call)
   if (!slBooksCache) {
     slBooksCache = await db.collection('books').find(
-      { visible: true, pages_translated: { $gt: 0 } },
-      { projection: { title: 1, author: 1, published: 1, pages_translated: 1, pages_count: 1, id: 1 } }
+      { pages_count: { $gt: 0 } },
+      { projection: { title: 1, author: 1, published: 1, pages_translated: 1, pages_count: 1, id: 1, 'image_source.provider': 1 } }
     ).toArray();
   }
 
@@ -168,6 +168,38 @@ async function checkTranslation(db, item, coverage) {
   }
 
   return { translated: false };
+}
+
+// ── Direct Source Library lookup ─────────────────────────────────────
+
+async function checkInSourceLibrary(db, item) {
+  // Ensure SL books cache is loaded
+  if (!slBooksCache) {
+    slBooksCache = await db.collection('books').find(
+      { pages_count: { $gt: 0 } },
+      { projection: { title: 1, author: 1, published: 1, pages_translated: 1, pages_count: 1, id: 1, 'image_source.provider': 1 } }
+    ).toArray();
+  }
+
+  const titleWords = new Set((item.title || '').toLowerCase().replace(/[^a-zà-ÿ\s]/g, '').split(/\s+/).filter(w => w.length > 4));
+  if (titleWords.size === 0) return null;
+
+  for (const sl of slBooksCache) {
+    const slWords = new Set((sl.title || '').toLowerCase().replace(/[^a-zà-ÿ\s]/g, '').split(/\s+/).filter(w => w.length > 4));
+    if (slWords.size === 0) continue;
+    const overlap = [...titleWords].filter(w => slWords.has(w)).length;
+    if (overlap >= 2 && overlap / Math.min(titleWords.size, slWords.size) >= 0.4) {
+      return {
+        sl_id: sl.id,
+        sl_title: sl.title,
+        pages_count: sl.pages_count,
+        pages_translated: sl.pages_translated,
+        provider: sl.image_source?.provider,
+      };
+    }
+  }
+
+  return null;
 }
 
 // ── Main ─────────────────────────────────────────────────────────────
@@ -229,11 +261,25 @@ async function main() {
     }
 
     if (!matchResult.match) {
-      results.not_in_ustc.push({
-        ...item,
-        reason: matchResult.skipped || 'No USTC match found',
-      });
-      logProgress(processed, items.length, 'NO USTC', item.title);
+      // Even without a USTC match, check if we have it in Source Library
+      const slDirect = await checkInSourceLibrary(db, item);
+      if (slDirect) {
+        results.in_source_library.push({
+          ...item,
+          sl_id: slDirect.sl_id,
+          sl_pages: slDirect.pages_count,
+          sl_translated: slDirect.pages_translated,
+          sl_provider: slDirect.provider,
+          match_method: 'direct_title_overlap',
+        });
+        logProgress(processed, items.length, 'IN SL (no USTC)', item.title);
+      } else {
+        results.not_in_ustc.push({
+          ...item,
+          reason: matchResult.skipped || 'No USTC match found',
+        });
+        logProgress(processed, items.length, 'NO USTC', item.title);
+      }
       continue;
     }
 
@@ -256,16 +302,22 @@ async function main() {
       translation_source: translation.source || null,
     };
 
-    if (!coverage || !coverage.has_iiif_scan) {
-      results.unscanned.push(enriched);
-      logProgress(processed, items.length, translation.translated ? 'UNSCANNED+T' : 'UNSCANNED', item.title);
-    } else if (coverage.in_source_library) {
+    // Check if item is in Source Library (catalog_coverage OR direct title match)
+    const slDirect = coverage?.in_source_library ? null : await checkInSourceLibrary(db, item);
+
+    if (coverage?.in_source_library || slDirect) {
       results.in_source_library.push({
         ...enriched,
-        sl_id: coverage.source_library_id,
-        scan_sources: coverage.scan_sources,
+        sl_id: coverage?.source_library_id || slDirect?.sl_id,
+        sl_pages: slDirect?.pages_count,
+        sl_translated: slDirect?.pages_translated,
+        sl_provider: slDirect?.provider,
+        scan_sources: coverage?.scan_sources,
       });
       logProgress(processed, items.length, 'IN SL', item.title);
+    } else if (!coverage || !coverage.has_iiif_scan) {
+      results.unscanned.push(enriched);
+      logProgress(processed, items.length, translation.translated ? 'UNSCANNED+T' : 'UNSCANNED', item.title);
     } else {
       results.scanned_elsewhere.push({
         ...enriched,
