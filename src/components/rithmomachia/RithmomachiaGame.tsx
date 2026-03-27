@@ -139,6 +139,10 @@ export default function RithmomachiaGame() {
           >
             Watch a demo
           </button>
+          <span className="text-border-medium">|</span>
+          <Link href="/rithmomachia/scenarios" className="text-sm text-accent-rust hover:underline">
+            Strategy scenarios
+          </Link>
         </div>
       </div>
 
