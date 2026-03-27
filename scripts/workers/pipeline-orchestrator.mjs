@@ -2158,9 +2158,10 @@ async function run() {
       console.log(`  Translation advanced: ${log.translate_advanced}`);
     }
 
-    // ── Phase 6: Enrich — summary + index (translate_complete -> enriched) ──
+    // ── Phase 6: Summary + Index (translate_complete -> summary_indexed) ──
+    // Calls /api/books/[id]/index which generates summary + index in one pass.
     if (shouldRun(6)) {
-      console.log('\n--- Phase 6: Enrichment (summary + index) ---');
+      console.log('\n--- Phase 6: Summary + Index ---');
 
       const readyForEnrich = await db.collection('books')
         .find({ 'pipeline_auto.status': 'translate_complete' })
@@ -2169,7 +2170,7 @@ async function run() {
         .limit(ENRICH_LIMIT)
         .toArray();
 
-      console.log(`  Books ready for enrichment: ${readyForEnrich.length}`);
+      console.log(`  Books ready for summary + index: ${readyForEnrich.length}`);
 
       for (const book of readyForEnrich) {
         try {
@@ -2178,7 +2179,7 @@ async function run() {
             continue;
           }
 
-          await setPipelineStatus(db, book.id, 'enriching');
+          await setPipelineStatus(db, book.id, 'summarizing');
 
           const res = await fetch(`${BASE_URL}/api/books/${book.id}/index`, {
             method: 'GET',
@@ -2187,32 +2188,31 @@ async function run() {
           if (!res.ok) {
             const retries = book.pipeline_auto?.retry_count || 0;
             if (retries >= MAX_RETRIES) {
-              await markFailed(db, book.id, `Enrich: HTTP ${res.status}`, retries);
+              await markFailed(db, book.id, `Summary+Index: HTTP ${res.status}`, retries);
             } else {
               await setPipelineStatus(db, book.id, 'translate_complete', { retry_count: retries + 1 });
             }
-            log.errors.push(`Enrich ${book.id}: HTTP ${res.status}`);
+            log.errors.push(`Summary+Index ${book.id}: HTTP ${res.status}`);
             continue;
           }
 
-          await setPipelineStatus(db, book.id, 'enriched', { retry_count: 0 });
+          await setPipelineStatus(db, book.id, 'summary_indexed', { retry_count: 0 });
           log.enriched++;
-          console.log(`  Enriched: ${book.title}`);
+          console.log(`  Summary + Index: ${book.title}`);
 
           await sleep(API_DELAY_MS);
         } catch (err) {
           const retries = book.pipeline_auto?.retry_count || 0;
           if (retries >= MAX_RETRIES) {
-            // Non-critical — skip
-            await setPipelineStatus(db, book.id, 'enriched', { retry_count: 0 });
+            await setPipelineStatus(db, book.id, 'summary_indexed', { retry_count: 0 });
             log.enriched++;
           } else {
             await setPipelineStatus(db, book.id, 'translate_complete', { retry_count: retries + 1 });
           }
-          log.errors.push(`Enrich ${book.id}: ${err.message}`);
+          log.errors.push(`Summary+Index ${book.id}: ${err.message}`);
         }
       }
-      console.log(`  Enriched: ${log.enriched}`);
+      console.log(`  Summary + Index: ${log.enriched}`);
     }
 
     // ── Phase 7: Chapter extraction (enriched -> chapters_complete) ──
@@ -2220,7 +2220,7 @@ async function run() {
       console.log('\n--- Phase 7: Chapter extraction ---');
 
       const readyForChapters = await db.collection('books')
-        .find({ 'pipeline_auto.status': 'enriched' })
+        .find({ 'pipeline_auto.status': 'summary_indexed' })
         .sort({ hidden: 1 })
         .project({ id: 1, title: 1, pages_count: 1, 'pipeline_auto.retry_count': 1 })
         .limit(CHAPTER_LIMIT)
@@ -2261,7 +2261,7 @@ async function run() {
               await setPipelineStatus(db, book.id, 'chapters_complete', { retry_count: 0 });
               log.chapters_skipped++;
             } else {
-              await setPipelineStatus(db, book.id, 'enriched', { retry_count: retries + 1 });
+              await setPipelineStatus(db, book.id, 'summary_indexed', { retry_count: retries + 1 });
             }
             log.errors.push(`Chapters ${book.id}: HTTP ${res.status}`);
           }
@@ -2276,7 +2276,7 @@ async function run() {
             log.chapters_skipped++;
           } else {
             if (!DRY_RUN) {
-              await setPipelineStatus(db, book.id, 'enriched', { retry_count: retries + 1 });
+              await setPipelineStatus(db, book.id, 'summary_indexed', { retry_count: retries + 1 });
             }
           }
           log.errors.push(`Chapters ${book.id}: ${err.message}`);
@@ -2416,7 +2416,7 @@ async function run() {
       const staleThreshold = new Date(Date.now() - 48 * 60 * 60 * 1000);
       const staleBooks = await db.collection('books')
         .find({
-          'pipeline_auto.status': { $in: ['ocr_submitted', 'translate_submitted', 'images_submitted', 'enriching', 'chapters'] },
+          'pipeline_auto.status': { $in: ['ocr_submitted', 'translate_submitted', 'images_submitted', 'summarizing', 'chapters'] },
           'pipeline_auto.last_updated': { $lt: staleThreshold },
         })
         .project({ id: 1, title: 1, pipeline_auto: 1 })
@@ -2429,8 +2429,8 @@ async function run() {
         'ocr_submitted': 'archive_complete',
         'translate_submitted': 'metadata_enriched',
         'images_submitted': 'chapters_complete',
-        'enriching': 'translate_complete',
-        'chapters': 'enriched',
+        'summarizing': 'translate_complete',
+        'chapters': 'summary_indexed',
       };
 
       for (const book of staleBooks) {
