@@ -60,6 +60,37 @@ export const TRADITION: Facet = {
 };
 
 // ─── DOMAIN (subject matter) ─────────────────────────────────────
+// 48 domains organized into 10 groups for browse UI.
+// Groups are presentational only — the DB stores flat domain IDs.
+
+export interface DomainGroup {
+  id: string;
+  label: string;
+  domains: string[]; // references DOMAIN.values[].id
+}
+
+export const DOMAIN_GROUPS: DomainGroup[] = [
+  { id: 'philosophy-thought', label: 'Philosophy & Thought',
+    domains: ['philosophy', 'theology', 'mysticism', 'cosmology', 'history'] },
+  { id: 'science-nature', label: 'Science & Nature',
+    domains: ['astronomy', 'mathematics', 'medicine', 'pharmacology', 'natural-history', 'natural-philosophy', 'chemistry', 'geography'] },
+  { id: 'hidden-arts', label: 'The Hidden Arts',
+    domains: ['alchemy', 'astrology', 'magic', 'divination', 'kabbalah'] },
+  { id: 'esoteric-currents', label: 'Esoteric Currents',
+    domains: ['hermeticism', 'neoplatonism', 'esotericism', 'freemasonry', 'rosicrucianism', 'theosophy'] },
+  { id: 'sacred-devotional', label: 'Sacred & Devotional',
+    domains: ['scripture', 'devotion', 'prophecy'] },
+  { id: 'world-knowledge', label: 'World Knowledge Systems',
+    domains: ['daoism', 'buddhism', 'sufism', 'gnosticism', 'demonology'] },
+  { id: 'human-affairs', label: 'Human Affairs',
+    domains: ['politics', 'military', 'law', 'economics', 'architecture'] },
+  { id: 'language-art-culture', label: 'Language, Art & Culture',
+    domains: ['literature', 'language', 'music', 'art', 'technology', 'education'] },
+  { id: 'reference', label: 'Reference',
+    domains: ['encyclopedia', 'bibliography'] },
+  { id: 'material-manuscript', label: 'Material & Manuscript',
+    domains: ['cryptography', 'printing', 'emblematics'] },
+];
 
 export const DOMAIN: Facet = {
   id: 'domain',
@@ -67,21 +98,73 @@ export const DOMAIN: Facet = {
   question: 'What is the subject matter?',
   cardinality: { min: 1, max: 3 },
   values: [
-    { id: 'medicine', label: 'Medicine & Healing', differentia: 'Treatment of disease, anatomy, pharmacology, herbalism' },
-    { id: 'astronomy', label: 'Astronomy & Cosmology', differentia: 'Celestial bodies, planetary motion, structure of the cosmos' },
-    { id: 'astrology', label: 'Astrology & Divination', differentia: 'Celestial influence on human affairs, or foretelling the future' },
-    { id: 'natural-philosophy', label: 'Natural Philosophy', differentia: 'Investigation of nature\'s causes — proto-science, physics, chemistry' },
-    { id: 'mathematics', label: 'Mathematics & Geometry', differentia: 'Number, measurement, spatial reasoning, sacred geometry' },
-    { id: 'music', label: 'Music & Harmony', differentia: 'Theory of sound, tuning, cosmic harmony, musica mundana' },
-    { id: 'theology', label: 'Theology & Scripture', differentia: 'God, salvation, scripture, doctrine, church' },
-    { id: 'ethics', label: 'Ethics & Politics', differentia: 'How to live, govern, and organize society' },
-    { id: 'magic', label: 'Magic & Ritual', differentia: 'Practical magic — grimoires, talismans, conjuration, theurgy' },
-    { id: 'language', label: 'Language & Philology', differentia: 'Grammar, etymology, lexicography, translation, rhetoric' },
-    { id: 'history', label: 'History & Biography', differentia: 'Narrative of past events, lives of persons, chronicles' },
-    { id: 'natural-history', label: 'Natural History & Botany', differentia: 'Plants, animals, minerals, materia medica, natural specimens' },
-    { id: 'art', label: 'Art & Architecture', differentia: 'Visual arts, proportion, perspective, building, design' },
+    // Philosophy & Thought
+    { id: 'philosophy', label: 'Philosophy', differentia: 'Ethics, logic, metaphysics, epistemology — secular reasoning about fundamental questions' },
+    { id: 'theology', label: 'Theology', differentia: 'God, salvation, doctrine, church fathers, systematic theology' },
+    { id: 'mysticism', label: 'Mysticism', differentia: 'Direct experience of the divine — contemplation, union, ecstasy across traditions' },
+    { id: 'cosmology', label: 'Cosmology', differentia: 'Structure of the cosmos, creation, cosmic cycles, world-soul' },
+    { id: 'history', label: 'History', differentia: 'Narrative of past events, chronicles, biography, historiography' },
+
+    // Science & Nature
+    { id: 'astronomy', label: 'Astronomy', differentia: 'Celestial bodies, planetary motion, observational and theoretical astronomy' },
+    { id: 'mathematics', label: 'Mathematics', differentia: 'Number, geometry, arithmetic, algebra, sacred geometry' },
+    { id: 'medicine', label: 'Medicine', differentia: 'Treatment of disease, anatomy, surgery, medical theory' },
+    { id: 'pharmacology', label: 'Pharmacology', differentia: 'Drugs, herbs, materia medica, recipes for medicines' },
+    { id: 'natural-history', label: 'Natural History', differentia: 'Plants, animals, minerals, specimens — descriptive study of nature' },
+    { id: 'natural-philosophy', label: 'Natural Philosophy', differentia: 'Investigation of nature\'s causes — proto-science, physics, mechanics' },
+    { id: 'chemistry', label: 'Chemistry', differentia: 'Chemical processes, iatrochemistry, laboratory arts distinct from alchemy' },
+    { id: 'geography', label: 'Geography', differentia: 'Description of lands, peoples, maps, cosmography, travel accounts' },
+
+    // The Hidden Arts
+    { id: 'alchemy', label: 'Alchemy', differentia: 'Transmutation of matter, the Great Work, philosopher\'s stone, spagyrics' },
+    { id: 'astrology', label: 'Astrology', differentia: 'Celestial influence on human affairs — nativities, elections, mundane astrology' },
+    { id: 'magic', label: 'Magic', differentia: 'Practical magic — grimoires, talismans, conjuration, theurgy, natural magic' },
+    { id: 'divination', label: 'Divination', differentia: 'Foretelling the future — geomancy, chiromancy, scrying, lots, omens' },
+    { id: 'kabbalah', label: 'Kabbalah', differentia: 'Jewish mystical tradition — Sefirot, letter mysticism, Zohar, Christian Cabala' },
+
+    // Esoteric Currents
+    { id: 'hermeticism', label: 'Hermeticism', differentia: 'Corpus Hermeticum, Asclepius, prisca theologia, Hermetic philosophy' },
+    { id: 'neoplatonism', label: 'Neoplatonism', differentia: 'Emanation from the One, Plotinus, Proclus, Ficino, Florentine Platonism' },
+    { id: 'esotericism', label: 'Esotericism', differentia: 'Western esotericism broadly — occult philosophy, secret traditions, initiatory knowledge' },
+    { id: 'freemasonry', label: 'Freemasonry', differentia: 'Masonic lodges, rituals, fraternal initiation, Templar traditions' },
+    { id: 'rosicrucianism', label: 'Rosicrucianism', differentia: 'The Rosy Cross, manifestos, Andreae, and their influence' },
+    { id: 'theosophy', label: 'Theosophy', differentia: 'Divine wisdom — Boehme\'s theosophy and Blavatsky\'s Theosophical Society' },
+
+    // Sacred & Devotional
+    { id: 'scripture', label: 'Scripture', differentia: 'Sacred texts, biblical studies, Qur\'an, Vedas, canonical and apocryphal works' },
+    { id: 'devotion', label: 'Devotion', differentia: 'Prayer, hymns, liturgy, hagiography, devotional practice' },
+    { id: 'prophecy', label: 'Prophecy', differentia: 'Prophetic and apocalyptic literature, millenarianism, eschatology' },
+
+    // World Knowledge Systems
+    { id: 'daoism', label: 'Daoism', differentia: 'Dao, wu wei, inner alchemy (neidan), Zhuangzi, Laozi, Daoist canon' },
+    { id: 'buddhism', label: 'Buddhism', differentia: 'Dharma, sutra, tantra — Theravada, Mahayana, Vajrayana, Chan/Zen' },
+    { id: 'sufism', label: 'Sufism', differentia: 'Islamic mysticism — tariqa, Rumi, Ibn Arabi, irfan' },
+    { id: 'gnosticism', label: 'Gnosticism', differentia: 'Salvation through knowledge, demiurge, pleroma, Nag Hammadi, Mandaeism' },
+    { id: 'demonology', label: 'Demonology', differentia: 'Demons, witchcraft, possession, exorcism, spirit hierarchies' },
+
+    // Human Affairs
+    { id: 'politics', label: 'Politics', differentia: 'Governance, diplomacy, statecraft, political philosophy' },
     { id: 'military', label: 'Military Science', differentia: 'Strategy, fortification, weapons, naval warfare' },
-    { id: 'bibliography', label: 'Bibliography & Book History', differentia: 'Catalogs of books, library science, printing, transmission of texts' },
+    { id: 'law', label: 'Law', differentia: 'Legal codes, jurisprudence, canon law, civil law' },
+    { id: 'economics', label: 'Economics', differentia: 'Trade, agriculture, administration, household management' },
+    { id: 'architecture', label: 'Architecture', differentia: 'Building, proportion, sacred architecture, engineering of structures' },
+
+    // Language, Art & Culture
+    { id: 'literature', label: 'Literature', differentia: 'Poetry, drama, fiction, allegory, letters, literary prose' },
+    { id: 'language', label: 'Language', differentia: 'Grammar, rhetoric, philology, lexicography, translation' },
+    { id: 'music', label: 'Music', differentia: 'Theory of sound, tuning, cosmic harmony, musica mundana, composition' },
+    { id: 'art', label: 'Art', differentia: 'Visual arts, painting, sculpture, perspective, proportion, design' },
+    { id: 'technology', label: 'Technology', differentia: 'Machines, engineering, hydraulics, instruments, practical invention' },
+    { id: 'education', label: 'Education', differentia: 'Pedagogy, memory arts, university curricula, teaching methods' },
+
+    // Reference
+    { id: 'encyclopedia', label: 'Encyclopedia', differentia: 'Comprehensive survey of a field or all knowledge' },
+    { id: 'bibliography', label: 'Bibliography', differentia: 'Catalogs of books, library science, book history, transmission of texts' },
+
+    // Material & Manuscript
+    { id: 'cryptography', label: 'Cryptography', differentia: 'Ciphers, codes, steganography, secret writing' },
+    { id: 'printing', label: 'Printing', differentia: 'Typography, book production, press history, type design' },
+    { id: 'emblematics', label: 'Emblematics', differentia: 'Emblem books, imprese, symbolic imagery with motto and epigram' },
   ],
 };
 
@@ -195,6 +278,21 @@ export interface FacetedTags {
  */
 export function buildTaggingPrompt(): string {
   const facetBlocks = FACETS.map(facet => {
+    // For domain facet, organize values by group for clarity
+    if (facet.id === 'domain') {
+      const groupBlocks = DOMAIN_GROUPS.map(group => {
+        const values = group.domains
+          .map(id => facet.values.find(v => v.id === id))
+          .filter((v): v is FacetValue => !!v)
+          .map(v => `  - ${v.id}: ${v.label} — ${v.differentia}`)
+          .join('\n');
+        return `**${group.label}:**\n${values}`;
+      }).join('\n');
+      return `### ${facet.label} (${facet.question})
+Pick ${facet.cardinality.min}–${facet.cardinality.max} values.
+${groupBlocks}`;
+    }
+
     const valueList = facet.values
       .map(v => `  - ${v.id}: ${v.label} — ${v.differentia}`)
       .join('\n');
