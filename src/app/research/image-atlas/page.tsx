@@ -1,5 +1,5 @@
 import { Metadata } from 'next';
-import ImageConstellationViz from '@/components/research/ImageConstellationViz';
+import ImageDeepZoomViz from '@/components/research/ImageDeepZoomViz';
 import dataRaw from '@/data/image-constellation.json';
 
 export const dynamic = 'force-dynamic';
@@ -16,7 +16,7 @@ export default function ImageAtlasPage() {
   const data = dataRaw as any;
   return (
     <main className="h-screen bg-black overflow-hidden">
-      <ImageConstellationViz data={data} />
+      <ImageDeepZoomViz data={data} />
     </main>
   );
 }
