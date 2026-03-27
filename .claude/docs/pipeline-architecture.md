@@ -155,11 +155,11 @@ Phase 3.7: Transliteration (inline on Hetzner for non-Latin scripts: Greek, Hebr
   [No status change -- adds transliteration.data to pages]
   |
   v
-Phase 4: Translation dispatch (pages enqueued to SQS FIFO)
+Phase 4: Translation dispatch (job created, Hetzner translate-worker picks up)
   -> translate_submitted
   |
   v
-Phase 5: Translation completion (Lambda workers process sequentially per book)
+Phase 5: Translation completion (translate-worker processes pages sequentially per book)
   -> translate_complete
   |
   v

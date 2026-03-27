@@ -55,7 +55,7 @@ Any state can transition to `failed` on persistent errors (after 3 retries). Spe
 | `metadata_enriched` | AI metadata enrichment complete (language, categories, description, source_work_dates) | Pipeline cron Phase 3.5 |
 | `ft_verifying` | First-translation verification in progress (LLM knowledge check) | Pipeline cron Phase 3.7 |
 | `ft_verified` | First-translation verification complete (or skipped for English books) | Pipeline cron Phase 3.7 |
-| `translate_submitted` | Lambda translation jobs enqueued | Pipeline cron Phase 4 |
+| `translate_submitted` | Translation job created, Hetzner worker picks up | Orchestrator Phase 4 |
 | `translate_complete` | Translation finished | Pipeline cron Phase 5 |
 | `enriching` | Summary + index generation in progress | enrich-books cron Phase 1 |
 | `enriched` | Summary + index complete | enrich-books cron Phase 1 |
@@ -516,41 +516,40 @@ Two parallel systems for processing pages:
 
 | Step | Auto Pipeline | Manual |
 |------|--------------|--------|
-| OCR | Lambda (default) or Batch API | Either (`queue-books` or `batch-ocr-async`) |
-| Translation | Lambda FIFO only | `queue-books` with `action: 'translation'` only |
-| Image Extraction | Lambda (via pipeline cron) | `queue-books` with `action: 'image_extraction'` |
-| Summary/Index | Realtime HTTP (via `/api/books/{id}/index`) | Same |
-| Chapters | Realtime inline (shared function) | POST `/api/books/{id}/extract-chapters` |
+| OCR | Gemini Batch API on Hetzner (primary), Lambda for preview | `queue-books` or `batch-ocr-async` |
+| Translation | Hetzner translate-worker (primary) | `queue-books` with `action: 'translation'` (Lambda FIFO fallback) |
+| Image Extraction | Lambda via SQS (pipeline Phase 8) | `queue-books` with `action: 'image_extraction'` |
+| Summary/Index | Vercel API called from Hetzner | GET/POST `/api/books/{id}/index` |
+| Chapters | Vercel API called from Hetzner | POST `/api/books/{id}/extract-chapters` |
 
 ---
 
 ## Cron Architecture
 
-Nine crons, all defined in `vercel.json`:
+Pipeline processing runs on **Hetzner** via crontab (21 entries). Vercel only runs 5 lightweight crons. See `pipeline-architecture.md` for the full Hetzner cron schedule, and `scripts/workers/crontab.production` for the authoritative source.
 
-| Cron | Schedule | Purpose | Pipeline Role |
-|------|----------|---------|---------------|
-| `post-import-pipeline` | Every 10 min | Main orchestrator — import → translate + images + finalization | Core |
-| `enrich-books` | Every 10 min | Enrichment (summary + index) + chapter extraction | Core (split from pipeline) |
-| `process-batches` | Every 2 hours | Collects Gemini Batch API results, saves to pages | OCR/translate batch completion |
-| `submit-batch-ocr` | Daily 3 AM UTC | Campaign-driven batch OCR submission (15 books, 100 pages each) | Batch processing |
-| `sync-page-counts` | Every 6 hours | Refreshes `pages_count`, `pages_ocr`, `pages_translated` caches on books | Data integrity |
-| `sync-gallery-images` | Every 6 hours | Syncs gallery image metadata from pages to gallery_images | Gallery |
-| `archive-ocr` | Every 4 hours | Archives page images to Cloudflare R2 for OCR'd pages | Data safety |
-| `social-post` | Every hour | Posts queued tweets | Social media |
-| `social-reset` | Daily midnight UTC | Resets daily tweet counter | Social media |
+### Vercel Crons (active in `vercel.json`)
 
-**Historical note:** `submit-ocr` cron was removed Mar 5, 2026 — it was redundant with the pipeline cron and wasted DB queries.
+| Cron | Schedule | Purpose |
+|------|----------|---------|
+| `social-post` | Every 3 hours | Posts to social media |
+| `social-reset` | Daily midnight UTC | Resets daily post counter |
+| `health-check` | Hourly | System health monitoring + email alerts |
+| `daily-pipeline-report` | Daily 6am UTC | Email pipeline summary |
+| `warm` | Every 5 min | Warm serverless pools |
 
-### Interaction Pattern
+### Archived Vercel Crons (in `_archived/`, NOT active)
+
+`post-import-pipeline`, `enrich-books`, `process-batches`, `submit-batch-ocr`, `sync-page-counts`, `sync-gallery-images`, `archive-ocr` — all replaced by Hetzner workers. Can be re-enabled by adding back to `vercel.json` (see `pipeline-architecture.md` "How to Switch Back to Vercel").
+
+### Hetzner Interaction Pattern
 
 ```
-post-import-pipeline: submit jobs → check jobs/batch_jobs → advance books
-enrich-books:         enrichment (summary+index) → chapter extraction → transliteration
-process-batches:      poll Gemini → save page results → update batch_jobs
+pipeline-orchestrator: advance books through all phases (enroll → OCR → translate → enrich → complete)
+translate-worker:      pick up translate_submitted books, call Gemini directly, write results
+batch-collector:       poll Gemini Batch API → save OCR results → advance books
+sync-worker:           reconcile book counters from page data (safety net)
 ```
-
-The pipeline cron **submits** OCR/translation jobs but doesn't collect Batch API results. The `process-batches` cron **collects** Batch API results. Lambda results flow through the Writer Lambda automatically.
 
 ---
 
@@ -636,14 +635,16 @@ curl -X POST https://sourcelibrary.org/api/books/BOOK_ID/batch-ocr-async \
 ### OCR (Direct SQS — bypasses API auth)
 For bulk operations from scripts, bypass the Next.js API and write directly to MongoDB + SQS. See `_tmp-ocr-shwep.mjs` for an example.
 
-### Translation (Realtime Lambda — ONLY method)
+### Translation (Manual trigger via API)
 ```bash
+# This enqueues to Lambda FIFO (fallback path). Production translation runs
+# automatically via Hetzner translate-worker.mjs.
 curl -X POST https://sourcelibrary.org/api/jobs/queue-books \
   -H "Content-Type: application/json" \
   -d '{"bookIds":["BOOK_ID"], "action":"translation"}'
 ```
 
-**NEVER use `batch-translate-async` for translation.** Lambda FIFO queue is required for cross-page context continuity.
+**NEVER use Gemini Batch API for translation.** Cross-page context continuity is required.
 
 ### Summary + Index
 ```bash
@@ -707,15 +708,14 @@ Based on `gemini-3-flash-preview` actual measured costs from `gemini_usage` coll
 | Image extraction | ~1,300 | ~80 | $0.0009/page | $0.27 |
 | Transliteration | ~1,900 | ~1,200 | $0.0017/page | $0.51 (non-Latin only) |
 
-**Typical full pipeline cost for a 300-page Latin book (Lambda):** ~$1.73
+**Typical full pipeline cost for a 300-page Latin book:** ~$1.73
 - OCR: $0.66, Translation: $1.05, Image extraction: $0.27 if visual content
 - Per-book phases (metadata, FT, summary, chapters): ~$0.03
+- Note: BPH books cost ~3x more (use flash instead of lite for OCR/translation)
 
 **Budget planning:** At ~$0.006/page average across OCR + translation, 1,000 pages costs roughly $6. Image extraction adds ~$0.001/page for pages with visual content.
 
 **Implied Gemini 3 Flash Preview rates:** ~$0.59/1M input, ~$2.87/1M output (back-calculated from actual translation call data).
-
-**Batch translation proposal (issue #217):** Sending 5 pages per Gemini call instead of 1 would reduce translation API calls by 80% and save ~12% on cost (~$2.5K at scale), with the primary benefit being 5x throughput at the same Lambda concurrency.
 
 ---
 
@@ -796,7 +796,7 @@ Deduplication: when a `gemini_usage` record has a `job_id` matching the `jobs` c
 ### Known Gaps
 
 1. **No `prompt_version` on pre-Feb-2026 pages** — all 132k OCR pages used the same prompt, but the field wasn't set. Fills in on re-OCR.
-2. **Batch API pages have `batch_job_id`** — set by `process-batches` cron on OCR and translation saves. Realtime Lambda pages link via `gemini_usage.job_id` instead.
-3. **Lambda translation `gemini_usage` records lack `job_id`** — Writer Lambda defers logging but the job_id linkage is incomplete. Cosmetic issue; translations work fine.
+2. **Batch API pages have `batch_job_id`** — set by batch-collector on OCR saves. Hetzner translate-worker logs with job_id directly.
+3. **Legacy Lambda translation `gemini_usage` records may lack `job_id`** — pre-March 2026 records from the Lambda path have incomplete linkage. Cosmetic issue.
 4. **No moderation audit** — annotations auto-approved, no tracking of admin approval/rejection.
 5. **OCR-aware image extraction** — `extractWithGemini()` accepts `ocrData` parameter and the worker passes it, but prompt augmentation is not yet implemented. Feature is a no-op.
