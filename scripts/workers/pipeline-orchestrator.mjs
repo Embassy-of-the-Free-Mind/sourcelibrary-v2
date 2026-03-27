@@ -2021,7 +2021,7 @@ async function run() {
           { $match: { 'pipeline_auto.status': { $in: ['metadata_enriched', 'ft_verified'] } } },
           { $addFields: { _latinFirst: { $cond: [{ $eq: ['$language', 'Latin'] }, 0, 1] } } },
           { $sort: { _latinFirst: 1, is_first_translation: -1, hidden: 1 } },
-          { $project: { id: 1, title: 1, pages_count: 1, language: 1, 'pipeline_auto.retry_count': 1 } },
+          { $project: { id: 1, title: 1, pages_count: 1, language: 1, 'pipeline_auto.retry_count': 1, 'image_source.provider': 1 } },
           { $limit: effectiveLimit }
         ]).toArray() : [];
 
@@ -2071,7 +2071,7 @@ async function run() {
               progress: { total: pageIds.length, completed: 0, failed: 0 },
               config: {
                 page_ids: pageIds,
-                model: 'gemini-3-flash-preview',
+                model: getTranslateModelForBook(book),
                 language: book.language || 'auto-detect',
               },
               initiated_by: 'pipeline_orchestrator',
