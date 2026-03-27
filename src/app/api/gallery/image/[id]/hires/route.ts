@@ -83,13 +83,26 @@ export async function GET(
       }
     }
 
-    // For high-res: prefer original IIIF URLs (can request any resolution)
-    // over archived_photo (R2 copy at ~1000px). Reverse of normal priority.
-    const iiifUrl = page.photo_original || page.photo;
-    const isIiif = iiifUrl && (iiifUrl.includes('/full/') || iiifUrl.includes('/iiif/'));
-    const hiresSourceUrl = isIiif
-      ? upgradeIiifUrl(iiifUrl, HIRES_WIDTH)
-      : getPageImageUrl(page); // Fall back to best available (archived R2 copy)
+    // For high-res: prefer the highest-resolution source available.
+    // IMPORTANT: For split pages (cropped_photo exists), the detection bbox is in
+    // the coordinate space of the cropped half, NOT the full spread. We must use
+    // cropped_photo as the source — using photo_original (the full spread) with
+    // half-page bbox coordinates produces misaligned crops.
+    const isSplitPage = !!page.cropped_photo;
+    let hiresSourceUrl: string | null;
+
+    if (isSplitPage) {
+      // Split page: bbox is relative to the cropped half — must stay in that space.
+      // cropped_photo is stored at full-res (no resize cap) on R2.
+      hiresSourceUrl = getPageImageUrl(page); // Returns cropped_photo first
+    } else {
+      // Non-split page: prefer IIIF at high resolution, fall back to R2 archived copy
+      const iiifUrl = page.photo_original || page.photo;
+      const isIiif = iiifUrl && (iiifUrl.includes('/full/') || iiifUrl.includes('/iiif/'));
+      hiresSourceUrl = isIiif
+        ? upgradeIiifUrl(iiifUrl, HIRES_WIDTH)
+        : getPageImageUrl(page);
+    }
 
     if (!hiresSourceUrl) {
       return NextResponse.json({ error: 'No source image available' }, { status: 404 });

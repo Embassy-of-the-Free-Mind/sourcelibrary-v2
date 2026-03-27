@@ -140,10 +140,10 @@ export const POST = withAdminAuth(async (request, session) => {
           try {
             const buffer = await images.fetchBuffer(sourceUrl, { timeout: 30000 });
             const { url: croppedUrl, buffer: croppedBuffer } = await cropAndUploadHalf(
-              buffer, page.crop, page.book_id, page.id
+              buffer, page.crop, page.book_id, page.id, page.page_number
             );
             const { url: thumbnailUrl } = await generateAndUploadThumbnail(
-              croppedBuffer, page.book_id, page.id
+              croppedBuffer, page.book_id, page.id, page.page_number
             );
 
             await db.collection('pages').updateOne(
