@@ -8,6 +8,10 @@ import { SEARCH } from './fixtures';
 const SEARCH_TIMEOUT = 45_000;
 
 test.describe('Search', () => {
+  // Run search tests serially — they share the same search endpoint
+  // and parallel requests trigger rate limiting (429)
+  test.describe.configure({ mode: 'serial' });
+
   test('shows results for known query', async ({ page }) => {
     await page.goto(`/search?q=${SEARCH.query}`);
 
@@ -15,18 +19,11 @@ test.describe('Search', () => {
     const resultLinks = page.locator('a[href*="/book/"]');
     await expect(resultLinks.first()).toBeVisible({ timeout: SEARCH_TIMEOUT });
     expect(await resultLinks.count()).toBeGreaterThanOrEqual(SEARCH.minResults);
-    await measurePerf(page, 'search: shows results for known query');
-  });
 
-  test('result cards link to books', async ({ page }) => {
-    await page.goto(`/search?q=${SEARCH.query}`);
-
-    // Wait for book result links to appear
-    const firstResult = page.locator('a[href*="/book/"]').first();
-    await expect(firstResult).toBeVisible({ timeout: SEARCH_TIMEOUT });
-    const href = await firstResult.getAttribute('href');
+    // Also verify result cards link to books (combined to avoid duplicate search requests)
+    const href = await resultLinks.first().getAttribute('href');
     expect(href).toMatch(/\/book\//);
-    await measurePerf(page, 'search: result cards link to books');
+    await measurePerf(page, 'search: shows results for known query');
   });
 
   test('search results heading appears', async ({ page }) => {
