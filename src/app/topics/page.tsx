@@ -3,7 +3,7 @@ import Link from 'next/link';
 import Image from 'next/image';
 import ContentPageLayout, { ContentHeader } from '@/components/layout/ContentPageLayout';
 import type { Metadata } from 'next';
-import { FACETS, DOMAIN_GROUPS } from '@/lib/taxonomy/faceted-vocabulary';
+import { FACETS, DOMAIN_GROUPS, facetDbField } from '@/lib/taxonomy/faceted-vocabulary';
 
 export const revalidate = 300; // 5 min — facet aggregations are expensive
 
@@ -49,10 +49,10 @@ async function fetchFacetCounts(): Promise<{ groups: FacetGroup[]; totalBooks: n
           hidden: { $ne: true },
         },
       },
-      { $unwind: `$faceted_tags.${facet.id}` },
+      { $unwind: `$faceted_tags.${facetDbField(facet)}` },
       {
         $group: {
-          _id: `$faceted_tags.${facet.id}`,
+          _id: `$faceted_tags.${facetDbField(facet)}`,
           count: { $sum: 1 },
           thumbnails: {
             $push: {
