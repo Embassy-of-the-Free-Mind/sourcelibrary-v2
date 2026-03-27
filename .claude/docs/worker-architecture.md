@@ -2,20 +2,23 @@
 
 ## Overview
 
-Three AWS Lambda AI workers process pages via SQS queues. Each invocation handles ONE page. A fourth **Writer Lambda** receives results via a write-results queue and performs all MongoDB writes, preventing connection storms during large batch jobs.
+The pipeline uses two execution environments for page processing:
 
-Workers are independent of the Next.js app — they share MongoDB (via the Writer Lambda) and the `gemini_usage` logging system.
+1. **Hetzner workers** (primary) — `translate-worker.mjs` handles all production translation inline via Gemini API. `batch-collector.mjs` collects OCR results from Gemini Batch API. No SQS or Lambda involved.
+2. **AWS Lambda workers** (secondary) — handle preview OCR, image extraction, and serve as a fallback for translation. Each Lambda invocation handles ONE page via SQS queues.
 
-## Workers
+A **Writer Lambda** receives results from Lambda workers via a write-results queue and performs MongoDB writes, preventing connection storms.
 
-| Worker | Handler | Logic | Queue | Concurrency |
-|--------|---------|-------|-------|-------------|
-| OCR | `src/workers/ocr-processor.ts` | `ocr-processor-logic.ts` | Standard (parallel) | Reserved: 10 |
-| Translation | `src/workers/translation-processor.ts` | `translation-processor-logic.ts` | FIFO (sequential per job) | N/A |
-| Image Extraction | `src/workers/image-extraction-processor.ts` | `image-extraction-processor-logic.ts` | Standard (parallel) | Reserved: 10 |
-| **Writer** | `src/workers/write-processor.ts` | `write-processor-logic.ts` | Standard (batched) | Reserved: 50 |
+## Lambda Workers
 
-Translation uses a FIFO queue so pages process in order — the worker fetches the previous page's translation for context continuity.
+| Worker | Handler | Logic | Queue | Concurrency | Active Use |
+|--------|---------|-------|-------|-------------|------------|
+| OCR | `src/workers/ocr-processor.ts` | `ocr-processor-logic.ts` | Standard (parallel) | Reserved: 10 | Preview OCR (first 25 pages) |
+| Translation | `src/workers/translation-processor.ts` | `translation-processor-logic.ts` | FIFO (sequential per job) | N/A | Preview translation, manual jobs only |
+| Image Extraction | `src/workers/image-extraction-processor.ts` | `image-extraction-processor-logic.ts` | Standard (parallel) | Reserved: 10 | All image extraction (Phase 8) |
+| **Writer** | `src/workers/write-processor.ts` | `write-processor-logic.ts` | Standard (batched) | Reserved: 50 | All Lambda result writes |
+
+**Note:** Full-book OCR uses Gemini Batch API on Hetzner (not Lambda). Full-book translation uses `translate-worker.mjs` on Hetzner (not Lambda). Lambda translation exists as a fallback — it uses FIFO queue so pages process in order, fetching the previous page's translation for context continuity.
 
 ## Write Queue Architecture (Issue #94)
 

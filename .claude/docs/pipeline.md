@@ -174,19 +174,19 @@ Stored on `book.pipeline_auto`:
 
 ---
 
-## Pipeline Cron Execution Order
+## Pipeline Phase Execution
 
-The `post-import-pipeline` cron (1,615 lines, `maxDuration = 300`) runs phases in a **non-sequential** order. Late-stage phases run FIRST as a "priority pass" so they don't get starved by heavy early-stage work.
+The Hetzner `pipeline-orchestrator.mjs` (~2,900 lines) runs all phases. Individual phases also run as separate cron entries for independence (so a slow translation run doesn't block OCR submission). Late-stage phases run in a "priority pass" first so they don't get starved by heavy early-stage work.
 
 ### Priority Pass (runs first)
 
-| Order | Phase | Transition | Notes |
-|-------|-------|-----------|-------|
-| 1 | Finalize | `images_complete` → `complete` | Validates OCR coverage (>10%), syncs to GitHub. Blocked by `imagesPaused`. |
-| 2 | Image submission | `chapters_complete` → `images_submitted` | Creates Lambda jobs. Blocked by `imagesPaused`. |
-| 3 | Image completion | `images_submitted` → `images_complete` | Checks jobs collection. |
-| 4 | Staleness detection | Roll back stuck books | 48h timeout on `*_submitted`, `ft_verifying`, `enriching`, `chapters`. Checks for active jobs before rolling back. |
-| 5 | Zombie job detection | Force-complete stuck jobs | Jobs in `processing` for >2h (Lambda max runtime is 15 min). |
+| Phase | Transition | Notes |
+|-------|-----------|-------|
+| Finalize | `images_complete` → `complete` | Validates OCR coverage (>10%), syncs to GitHub. Blocked by `imagesPaused`. |
+| Image submission | `chapters_complete` → `images_submitted` | Creates Lambda jobs via SQS. Blocked by `imagesPaused`. |
+| Image completion | `images_submitted` → `images_complete` | Checks jobs collection. |
+| Staleness detection | Roll back stuck books | 48h timeout on `*_submitted`, `ft_verifying`, `enriching`, `chapters`. Checks for active jobs before rolling back. |
+| Zombie job detection | Force-complete stuck jobs | Jobs in `processing` for >2h. |
 
 **Staleness rollback map:**
 - `ocr_submitted` → `archive_complete`
@@ -198,31 +198,34 @@ The `post-import-pipeline` cron (1,615 lines, `maxDuration = 300`) runs phases i
 
 ### Main Pass (standard pipeline order)
 
-| Order | Phase | Transition | Notes |
-|-------|-------|-----------|-------|
-| 6 | Phase 0: Auto-enroll | new → `queued` | Books imported within 7 days without `pipeline_auto`. FT verification deferred to Phase 3.7. |
-| 7 | Phase 1: Archive check | `queued` → `archiving` → `archive_complete` | DB checks only; Hetzner copies images to Cloudflare R2. 24h timeout — advances anyway since OCR works on original IIIF URLs. |
-| 8 | Phase 2: Submit OCR | `archive_complete` → `ocr_submitted` | Lambda workers (Batch API available but not default). See "OCR Routing" below. |
-| 9 | Phase 3: OCR completion | `ocr_submitted` → `ocr_complete` | Checks both Lambda jobs and batch_jobs. Loops if un-OCR'd pages remain (up to MAX_RETRIES). Blocked by `ocrPaused`. |
-| 10 | Phase 3.5: Metadata enrichment | `ocr_complete` → `metadata_enriched` | Calls `enrichBookMetadata()`. Detects language, categories, year, description, display_title, source_work_dates. Non-blocking: failures skip ahead. |
-| 10.5 | Phase 3.7: FT verification | `metadata_enriched` → `ft_verifying` → `ft_verified` | Calls `verifyFirstTranslation()` for non-English books. English/already-verified books skip straight to `ft_verified`. Non-blocking: failures skip ahead after 3 retries. |
-| 11 | Phase 4: Submit translation | `ft_verified` → `translate_submitted` | Lambda FIFO queue only. See "Translation Routing" below. |
-| 12 | Phase 5: Translation completion | `translate_submitted` → `translate_complete` | Checks Lambda jobs. Loop limit: `max(6, ceil(pages_count/200))`. Blocked by `translatePaused`. |
+| Phase | Transition | Notes |
+|-------|-----------|-------|
+| Phase 0: Auto-enroll | new → `queued` | Books imported within 14 days without `pipeline_auto`. |
+| Phase 1: Archive check | `queued` → `archiving` → `archive_complete` | DB checks only; Hetzner copies images to Cloudflare R2. 24h timeout — advances anyway since OCR works on original IIIF URLs. |
+| Phase 1.25: BPH split | `archive_complete` (BPH only) | Detects two-page spreads, crops into left/right pages. |
+| Phase 1.5: Preview OCR | `archive_complete` → (no status change) | First 25 pages sent to Lambda via SQS for fast preview. Triggers preview translation on completion. |
+| Phase 2: Submit OCR | `archive_complete` → `ocr_submitted` | Gemini Batch API (Hetzner direct). See "OCR Routing" below. |
+| Phase 3: OCR completion | `ocr_submitted` → `ocr_complete` | Checks batch_jobs status. Loops if un-OCR'd pages remain (up to 3 retries). Blocked by `ocrPaused`. |
+| Phase 3.5: Metadata enrichment | `ocr_complete` → `metadata_enriched` | Calls Vercel API `/api/books/[id]/verify-metadata`. Non-blocking: failures skip ahead. |
+| Phase 3.7: FT verification + Transliteration | `metadata_enriched` → `ft_verified` | FT verification for non-English books. Transliteration for non-Latin scripts (inline Gemini on Hetzner). Non-blocking. |
+| Phase 4: Translation dispatch | `ft_verified` → `translate_submitted` | Creates `jobs` record, Hetzner translate-worker picks it up. See "Translation Routing" below. |
+| Phase 5: Translation completion | `translate_submitted` → `translate_complete` | Checks job status + page counts. Recycles if partial. |
+| Phase 6: Summary + Index | `translate_complete` → `summary_indexed` | Calls Vercel API `/api/books/[id]/index`. |
+| Phase 7: Chapters | `summary_indexed` → `chapters_complete` | Calls Vercel API `/api/books/[id]/extract-chapters`. Skips books <10 pages. |
+| Phase 8: Image extraction | `chapters_complete` → `images_submitted` | Lambda workers via SQS. |
 
 ### Safety Mechanisms
 
-- **Early flush:** Writes partial `cron_runs` record at 240s (before Vercel's 300s kill) so observability isn't lost
 - **Pipeline snapshots:** Writes funnel counts to `pipeline_snapshots` collection at end of run
-- **MongoDB reconnect:** Catches connection errors, attempts `forceReconnect()`, returns 200 with partial results
-- **Time budget:** 270s working window; each phase checks `hasTimeBudget()` before starting
+- **MongoDB health probe:** Adaptive throttling based on DB latency (healthy/degraded/critical)
+- **Per-phase lock files:** `flock` prevents concurrent runs of the same phase
+- **Zombie reaper:** Cancels jobs stuck >2h with 0 progress
 
 ---
 
-## Enrich-Books Cron
+## Enrichment (Consolidated into Orchestrator)
 
-**Route:** `/api/cron/enrich-books` (~410 lines, `maxDuration = 300`)
-
-Split out from the pipeline cron so enrichment doesn't starve translation of time budget. Runs every 10 min. Three phases: enrichment → chapters → transliteration.
+Enrichment, chapter extraction, and transliteration originally ran as a separate Vercel cron (`enrich-books`). They're now phases in the Hetzner orchestrator. The Vercel route exists in `_archived/` if needed.
 
 ### Phase 1: Enrichment (`translate_complete`/`enriching` → `enriched`)
 
@@ -249,7 +252,7 @@ Romanizes OCR text for non-Latin scripts (Greek, Hebrew, Arabic, etc.). **Not ti
 - **Discovery:** `$lookup` aggregation finds books with non-Latin `language` field that have pages with `ocr.data` but no `transliteration.data`
 - **Skips page types:** blank, illustration, map, frontispiece, diagram
 - **Processing:** Concurrent chunks of 10 Gemini calls per batch
-- **Model:** `gemini-3-flash-preview`
+- **Model:** `gemini-3.1-flash-lite-preview` (text-only, cheap)
 - **Limits:** 10 books/run, 200 pages/run total
 - **Storage:** `page.transliteration.data` (romanized text), `.model`, `.updated_at`, `.source_ocr_hash` (cache invalidation), `.script` (source script name)
 - **Logging:** Each call logged to `gemini_usage` with `type: 'transliterate'`
