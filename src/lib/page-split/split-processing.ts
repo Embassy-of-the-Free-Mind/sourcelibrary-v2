@@ -141,7 +141,15 @@ export async function detectSplit(
 /**
  * Crop and upload a single half of a spread image
  * Shared by upload route and job processing
+ *
+ * Stores two variants when pageNumber is provided:
+ *   - full-res crop  → pages/{bookId}/{num}-full.jpg  (no resize cap)
+ *   - display crop   → pages/{bookId}/{num}.jpg       (1200px wide)
+ * Legacy callers without pageNumber get a single 2000px image at the old path.
  */
+const DISPLAY_WIDTH = 1200;
+const DISPLAY_QUALITY = 85;
+
 export async function cropAndUploadHalf(
   buffer: Buffer,
   crop: { xStart: number; xEnd: number },
@@ -158,29 +166,56 @@ export async function cropAndUploadHalf(
   const left = Math.round((crop.xStart / 1000) * imgWidth);
   const cropWidth = Math.round(((crop.xEnd - crop.xStart) / 1000) * imgWidth);
 
-  // Crop, resize, and compress
-  const croppedBuffer = await sharp(buffer)
+  // Crop at full resolution (no downscale)
+  const fullResBuffer = await sharp(buffer)
     .extract({
       left,
       top: 0,
       width: Math.min(cropWidth, imgWidth - left),
       height: imgHeight
     })
+    .jpeg({ quality: 90, progressive: true })
+    .toBuffer();
+
+  if (pageNumber != null) {
+    const paths = pagePaths(bookId, pageNumber);
+
+    // Upload full-res crop and display-size crop in parallel
+    const displayBuffer = await sharp(fullResBuffer)
+      .resize(DISPLAY_WIDTH, null, { fit: 'inside', withoutEnlargement: true })
+      .jpeg({ quality: DISPLAY_QUALITY, progressive: true })
+      .toBuffer();
+
+    const [fullBlob] = await Promise.all([
+      storagePut(paths.full, fullResBuffer, {
+        access: 'public',
+        contentType: 'image/jpeg',
+        allowOverwrite: true
+      }),
+      storagePut(paths.display, displayBuffer, {
+        access: 'public',
+        contentType: 'image/jpeg',
+        allowOverwrite: true
+      }),
+    ]);
+
+    // Return the full-res URL as cropped_photo — gallery extraction uses this
+    return { url: fullBlob.url, buffer: fullResBuffer };
+  }
+
+  // Legacy path (no pageNumber): single 2000px image for backwards compat
+  const legacyBuffer = await sharp(fullResBuffer)
     .resize(2000, null, { fit: 'inside', withoutEnlargement: true })
     .jpeg({ quality: 90, progressive: true })
     .toBuffer();
 
-  // Upload to R2 — use new path convention if pageNumber provided, legacy path otherwise
-  const key = pageNumber != null
-    ? pagePaths(bookId, pageNumber).full
-    : `cropped/${bookId}/${pageId}.jpg`;
-  const blob = await storagePut(key, croppedBuffer, {
+  const blob = await storagePut(`cropped/${bookId}/${pageId}.jpg`, legacyBuffer, {
     access: 'public',
     contentType: 'image/jpeg',
     allowOverwrite: true
   });
 
-  return { url: blob.url, buffer: croppedBuffer };
+  return { url: blob.url, buffer: legacyBuffer };
 }
 
 /**
