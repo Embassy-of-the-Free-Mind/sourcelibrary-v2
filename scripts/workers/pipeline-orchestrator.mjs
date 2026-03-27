@@ -229,6 +229,16 @@ function isNonLatin(language) {
   return language && NON_LATIN_LANGUAGES.has(language.toLowerCase());
 }
 
+/** Detect Google Books, Internet Archive, or other digitizer notice pages from OCR text. */
+function isDigitizerOcr(ocrData) {
+  if (!ocrData) return false;
+  const start = ocrData.substring(0, 1500);
+  return /google\s+logo|digitized\s+by\s+google|this\s+is\s+a\s+digital\s+copy/i.test(start) ||
+    /inserted\s+by\s+the\s+internet|internet\s+archive|digitization\s+(credit|notice)/i.test(start) ||
+    /not\s+part\s+of\s+the\s+original\s+book|scanner\s+barcode/i.test(start) ||
+    /ex[\s\-.]?libris|bookplate|library\s+stamp/i.test(start);
+}
+
 function languageToScript(language) {
   if (!language) return 'Unknown';
   const map = {
@@ -1090,6 +1100,8 @@ async function run() {
     chapters_skipped: 0,
     images_submitted: 0,
     images_advanced: 0,
+    covers_selected: 0,
+    digitizer_pages_hidden: 0,
     finalized: 0,
     needs_attention: 0,
     stale_retried: 0,
@@ -2465,6 +2477,157 @@ async function run() {
       }
     }
 
+    // ── Phase 8.9: Cover selection + digitizer page hiding ──
+    // Runs on images_complete books before finalize. Hides Google/IA notice pages
+    // and picks the best cover using page_type + detected_images scoring.
+    if (shouldRun(8.9) || shouldRun(9)) {
+      console.log('\n--- Phase 8.9: Cover selection + page cleanup ---');
+
+      const coverBooks = await db.collection('books')
+        .find({ 'pipeline_auto.status': 'images_complete', cover_selected_at: { $exists: false } })
+        .sort({ hidden: 1 })
+        .project({ id: 1, title: 1, thumbnail: 1, thumbnail_source: 1 })
+        .limit(50)
+        .toArray();
+
+      console.log(`  Books needing cover selection: ${coverBooks.length}`);
+      let coversSelected = 0;
+      let pagesHidden = 0;
+
+      for (const book of coverBooks) {
+        if (DRY_RUN) continue;
+        try {
+          // 1. Hide digitizer notice pages (Google, IA, barcodes) in first 5 pages
+          const earlyPages = await db.collection('pages').find(
+            { book_id: book.id, page_number: { $lte: 5 } },
+            { projection: { id: 1, page_number: 1, 'ocr.data': 1, page_type: 1 } }
+          ).sort({ page_number: 1 }).toArray();
+
+          for (const page of earlyPages) {
+            const ocr = (page.ocr?.data || '').substring(0, 1500);
+            const isDigitizerPage =
+              /google\s+logo|digitized\s+by\s+google|this\s+is\s+a\s+digital\s+copy/i.test(ocr) ||
+              /inserted\s+by\s+the\s+internet|internet\s+archive|digitization\s+(credit|notice)/i.test(ocr) ||
+              /not\s+part\s+of\s+the\s+original\s+book|scanner\s+barcode/i.test(ocr);
+
+            if (isDigitizerPage && page.page_type !== 'digitizer-notice') {
+              await db.collection('pages').updateOne(
+                { id: page.id },
+                { $set: {
+                  page_type: 'digitizer-notice',
+                  hidden: true,
+                  updated_at: new Date(),
+                  'field_provenance.page_type': {
+                    source: 'pipeline', method: 'ocr-pattern-match',
+                    confidence: 0.95, date: new Date(),
+                  },
+                }}
+              );
+              pagesHidden++;
+            }
+          }
+
+          // 2. Select best cover (skip if manually set)
+          if (book.thumbnail_source === 'manual') {
+            await db.collection('books').updateOne(
+              { id: book.id },
+              { $set: { cover_selected_at: new Date() } }
+            );
+            coversSelected++;
+            continue;
+          }
+
+          // Heuristic cover selection: frontispiece > title-page > best detected image
+          const proj = { page_number: 1, page_type: 1, cropped_photo: 1, archived_photo: 1, photo: 1, 'ocr.data': 1, detected_images: 1, hidden: 1 };
+          let bestPage = null;
+
+          // Priority 1: frontispiece (first 50 pages, not hidden, not digitizer)
+          const frontispieces = await db.collection('pages').find(
+            { book_id: book.id, page_type: 'frontispiece', page_number: { $lte: 50 }, hidden: { $ne: true } },
+            { projection: proj, sort: { page_number: 1 }, limit: 3 }
+          ).toArray();
+          bestPage = frontispieces.find(p => !isDigitizerOcr(p.ocr?.data)) || null;
+
+          // Priority 2: title-page (first 30 pages)
+          if (!bestPage) {
+            bestPage = await db.collection('pages').findOne(
+              { book_id: book.id, page_type: 'title-page', page_number: { $lte: 30 }, hidden: { $ne: true } },
+              { projection: proj, sort: { page_number: 1 } }
+            );
+          }
+
+          // Priority 3: best detected image by gallery_quality (first 30 pages)
+          if (!bestPage) {
+            const pagesWithImages = await db.collection('pages').find(
+              { book_id: book.id, 'detected_images.0': { $exists: true }, page_number: { $lte: 30 }, hidden: { $ne: true } },
+              { projection: proj }
+            ).toArray();
+
+            let bestScore = 0.4; // minimum threshold
+            for (const page of pagesWithImages) {
+              if (isDigitizerOcr(page.ocr?.data)) continue;
+              for (const img of (page.detected_images || [])) {
+                const q = img.gallery_quality || 0;
+                const posBonus = page.page_number <= 10 ? 0.1 : page.page_number <= 20 ? 0.05 : 0;
+                const typeBonus = ['frontispiece', 'emblem', 'portrait', 'engraving'].includes(img.type) ? 0.15 : 0;
+                const score = q * 0.5 + posBonus + typeBonus;
+                if (score > bestScore) {
+                  bestScore = score;
+                  bestPage = page;
+                }
+              }
+            }
+          }
+
+          // Priority 4: first non-hidden, non-blank page
+          if (!bestPage) {
+            bestPage = await db.collection('pages').findOne(
+              { book_id: book.id, hidden: { $ne: true }, page_type: { $nin: ['blank', 'digitizer-notice', null] } },
+              { projection: proj, sort: { page_number: 1 } }
+            );
+          }
+
+          if (bestPage) {
+            const newUrl = bestPage.cropped_photo || bestPage.archived_photo || bestPage.photo;
+            if (newUrl && newUrl !== book.thumbnail) {
+              await db.collection('books').updateOne(
+                { id: book.id },
+                { $set: {
+                  thumbnail: newUrl,
+                  thumbnail_source: 'auto',
+                  cover_page: bestPage.page_number,
+                  cover_selected_at: new Date(),
+                  'field_provenance.thumbnail': {
+                    source: 'pipeline', method: 'heuristic-cover-selection',
+                    confidence: 0.8, date: new Date(),
+                  },
+                }}
+              );
+            } else {
+              await db.collection('books').updateOne(
+                { id: book.id },
+                { $set: { cover_selected_at: new Date() } }
+              );
+            }
+          } else {
+            await db.collection('books').updateOne(
+              { id: book.id },
+              { $set: { cover_selected_at: new Date() } }
+            );
+          }
+
+          coversSelected++;
+        } catch (err) {
+          console.error(`  Cover selection failed for ${book.title}: ${err.message?.slice(0, 100)}`);
+          log.errors.push(`Cover failed ${book.id}: ${err.message?.slice(0, 80)}`);
+        }
+      }
+
+      console.log(`  Covers selected: ${coversSelected}, digitizer pages hidden: ${pagesHidden}`);
+      log.covers_selected = coversSelected;
+      log.digitizer_pages_hidden = pagesHidden;
+    }
+
     // ── Phase 9: Finalize (images_complete -> complete) ──
     if (shouldRun(9)) {
       console.log('\n--- Phase 9: Finalize ---');
@@ -2577,6 +2740,7 @@ async function run() {
     console.log(`  Translate submitted: ${log.translate_submitted} | Translate advanced: ${log.translate_advanced}`);
     console.log(`  Enriched: ${log.enriched} | Chapters: ${log.chapters_extracted} (${log.chapters_skipped} skipped)`);
     console.log(`  Images submitted: ${log.images_submitted} | Images advanced: ${log.images_advanced}`);
+    console.log(`  Covers: ${log.covers_selected} | Pages hidden: ${log.digitizer_pages_hidden}`);
     console.log(`  Finalized: ${log.finalized} | Needs attention: ${log.needs_attention}`);
     console.log(`  Stale retried: ${log.stale_retried} | Stale failed: ${log.stale_failed}`);
     if (log.zombie_jobs_cancelled > 0) console.log(`  Zombie jobs cancelled: ${log.zombie_jobs_cancelled}`);
