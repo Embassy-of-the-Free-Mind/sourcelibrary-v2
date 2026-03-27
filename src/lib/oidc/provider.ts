@@ -68,11 +68,28 @@ export async function createAuthCode(userId: string, redirectUri: string): Promi
 
 export async function exchangeAuthCode(code: string, redirectUri: string): Promise<{ userId: string } | null> {
   const db = await getDb();
-  const entry = await db.collection('oidc_auth_codes').findOneAndDelete({ code });
+  const entry = await db.collection('oidc_auth_codes').findOne({ code });
 
-  if (!entry) return null;
-  if (new Date() > entry.expiresAt) return null;
-  if (entry.redirectUri !== redirectUri) return null;
+  if (!entry) {
+    console.log('[OIDC] No auth code found for:', code.slice(0, 8));
+    return null;
+  }
+
+  // Delete immediately (one-time use)
+  await db.collection('oidc_auth_codes').deleteOne({ _id: entry._id });
+
+  if (new Date() > new Date(entry.expiresAt)) {
+    console.log('[OIDC] Auth code expired');
+    return null;
+  }
+
+  // Compare redirect URIs (URL-decode both for safety)
+  const storedUri = decodeURIComponent(entry.redirectUri);
+  const providedUri = decodeURIComponent(redirectUri);
+  if (storedUri !== providedUri) {
+    console.log('[OIDC] Redirect URI mismatch:', storedUri, '!==', providedUri);
+    return null;
+  }
 
   return { userId: entry.userId };
 }
