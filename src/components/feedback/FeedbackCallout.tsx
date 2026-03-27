@@ -39,6 +39,7 @@ export default function FeedbackCallout() {
         </p>
         <div className="flex items-center justify-center gap-4">
           <FeedbackWidget
+            label="Give Feedback"
             className="inline-flex items-center gap-2 px-5 py-2.5 rounded-lg text-sm font-medium text-white transition-all hover:opacity-90"
             style={{ background: 'var(--text-primary, #2c2824)' }}
           />
