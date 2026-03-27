@@ -572,6 +572,217 @@ export default function RithmomachiaPage() {
 
         <hr className="border-border-light my-12" />
 
+        {/* Secrets Hidden in the Rules */}
+        <h2 className="font-serif text-2xl md:text-3xl text-primary mt-16 mb-6">
+          The Secrets Hidden in the Rules
+        </h2>
+
+        <p className="text-secondary leading-relaxed mb-6 font-body">
+          Reading all five treatises side by side reveals details that no single source makes obvious.
+          The game is stranger, deeper, and more tactically rich than its basic rules suggest.
+        </p>
+
+        <h3 className="font-serif text-xl text-secondary mt-10 mb-4">
+          Winning Is Literally Playing a Chord
+        </h3>
+
+        <p className="text-secondary leading-relaxed mb-6 font-body">
+          The &ldquo;Greatest Victory&rdquo; isn&rsquo;t just an abstract mathematical exercise.
+          Selenus walks through how each winning set of four numbers encodes specific musical intervals.
+          Take the simplest example: 2, 3, 4, 6. Within those four numbers you find:
+        </p>
+
+        <div className="bg-warm rounded-xl p-6 border border-border-light my-10">
+          <div className="space-y-2 text-secondary font-body text-sm">
+            <p><strong className="text-stone-800">3:2</strong> &mdash; the Fifth (<em>Diapente</em>)</p>
+            <p><strong className="text-stone-800">4:3</strong> &mdash; the Fourth (<em>Diatessaron</em>)</p>
+            <p><strong className="text-stone-800">4:2 = 2:1</strong> &mdash; the Octave (<em>Diapason</em>)</p>
+            <p><strong className="text-stone-800">6:2 = 3:1</strong> &mdash; the Twelfth (<em>Diapason + Diapente</em>)</p>
+            <p><strong className="text-stone-800">4:1</strong> &mdash; the Fifteenth, or Double Octave (<em>Disdiapason</em>)</p>
+          </div>
+        </div>
+
+        <p className="text-secondary leading-relaxed mb-6 font-body">
+          Buxerius, quoted by Selenus, confirms the physical reality of this connection:
+        </p>
+
+        <div className="border-l-4 border-accent-gold pl-6 my-10">
+          <p className="text-lg text-secondary italic font-body leading-relaxed">
+            &ldquo;These ratios, if examined by weight — as in metals — or if tested
+            by measure — as in strings — always provide and exhibit Musical Harmony.&rdquo;
+          </p>
+          <p className="text-sm text-muted mt-2">
+            <Link href="/book/the-game-of-chess-gustavus-selenus?page=526" className="text-accent-rust hover:text-accent-rust">
+              Buxerius, via Selenus, 1616, p. 484
+            </Link>
+          </p>
+        </div>
+
+        <p className="text-secondary leading-relaxed mb-6 font-body">
+          You don&rsquo;t just win Rithmomachia by arranging numbers. You play a chord on the
+          board &mdash; a harmony you could literally reproduce on a monochord or a set of
+          tuned metal bars. The game&rsquo;s ultimate victory is an act of musical composition.
+        </p>
+
+        <h3 className="font-serif text-xl text-secondary mt-10 mb-4">
+          Two Pieces That Cannot Be Captured by Arithmetic
+        </h3>
+
+        <p className="text-secondary leading-relaxed mb-6 font-body">
+          Barozzi reveals a fact buried in the mathematics: two specific pieces &mdash; the white
+          square 153 and the black pyramid 190 &mdash; cannot be captured by any arithmetic method.
+          No combination of opposing pieces can sum, subtract, multiply, or divide to reach
+          these values.
+        </p>
+
+        <div className="border-l-4 border-accent-rust pl-6 my-10">
+          <p className="text-lg text-secondary italic font-body leading-relaxed">
+            &ldquo;There are two pieces in this game that cannot be captured except by siege
+            alone: the 190 black pyramid and the 153 white square.&rdquo;
+          </p>
+          <p className="text-sm text-muted mt-2">
+            <Link href="/book/il-nobilissimo-et-antiquissimo-giuoco-pythagoreo-nominato-barozzi?page=37" className="text-accent-rust hover:text-accent-rust">
+              Barozzi, 1572, p. 37
+            </Link>
+          </p>
+        </div>
+
+        <p className="text-secondary leading-relaxed mb-6 font-body">
+          This makes siege &mdash; surrounding a piece on all four sides &mdash; strategically
+          essential. The strongest pieces on the board can only fall to positional play, not
+          calculation. It also means these two pieces are the ultimate anchors: they can roam
+          the board knowing they are immune to every form of arithmetic attack.
+        </p>
+
+        <h3 className="font-serif text-xl text-secondary mt-10 mb-4">
+          The Pyramid&rsquo;s Chess Knight Escape
+        </h3>
+
+        <p className="text-secondary leading-relaxed mb-6 font-body">
+          Rithmomachia is emphatically not chess. But there is exactly one moment where chess
+          intrudes. Both Barozzi and Selenus describe a unique privilege of the pyramid: when
+          besieged &mdash; surrounded on all four sides &mdash; the pyramid can escape using a
+          chess knight&rsquo;s leap.
+        </p>
+
+        <div className="border-l-4 border-accent-violet pl-6 my-10">
+          <p className="text-lg text-secondary italic font-body leading-relaxed">
+            &ldquo;When the pyramid is besieged, it can free itself by making the knight&rsquo;s
+            jump of chess &hellip; All other pieces do not enjoy this freedom.&rdquo;
+          </p>
+          <p className="text-sm text-muted mt-2">
+            <Link href="/book/the-game-of-chess-gustavus-selenus?page=520" className="text-accent-rust hover:text-accent-rust">
+              Selenus, 1616, p. 478
+            </Link>
+          </p>
+        </div>
+
+        <p className="text-secondary leading-relaxed mb-6 font-body">
+          This is the only chess move in the entire game. It applies only to the pyramid, and only
+          when besieged. It cannot be used to capture &mdash; only to escape. The distinction
+          matters: it means a besieging player must not only surround the pyramid, but also control
+          all knight-jump escape squares, making siege of the pyramid extraordinarily difficult.
+        </p>
+
+        <h3 className="font-serif text-xl text-secondary mt-10 mb-4">
+          Victory Must Be Proclaimed
+        </h3>
+
+        <p className="text-secondary leading-relaxed mb-6 font-body">
+          Barozzi&rsquo;s seven rules for achieving victory include a remarkable protocol.
+          When you place the second-to-last piece of your victory formation, you must
+          announce your intention &mdash; giving your opponent a chance to disrupt it. Once
+          proclaimed, the pieces in your formation become immune to capture.
+        </p>
+
+        <div className="border-l-4 border-accent-rust pl-6 my-10">
+          <p className="text-lg text-secondary italic font-body leading-relaxed">
+            &ldquo;When you play the second-to-last piece for the final victory, it is necessary to
+            proclaim it, to warn the enemy to remedy it if he can &mdash; so that afterward, when
+            he can no longer remedy it, you may honorably move the last piece that completes the
+            final victory.&rdquo;
+          </p>
+          <p className="text-sm text-muted mt-2">
+            <Link href="/book/il-nobilissimo-et-antiquissimo-giuoco-pythagoreo-nominato-barozzi?page=52" className="text-accent-rust hover:text-accent-rust">
+              Barozzi, 1572, p. 52
+            </Link>
+          </p>
+        </div>
+
+        <p className="text-secondary leading-relaxed mb-6 font-body">
+          The victory is not a surprise attack. It is a demonstration &mdash; a public proof
+          that you have achieved mathematical harmony despite your opponent&rsquo;s best
+          efforts to prevent it. This is the game&rsquo;s most chivalric rule: you win
+          not by stealth, but by openly declaring your mastery and daring your opponent to
+          stop you.
+        </p>
+
+        <h3 className="font-serif text-xl text-secondary mt-10 mb-4">
+          The Polybius Connection: Pieces as an Army
+        </h3>
+
+        <p className="text-secondary leading-relaxed mb-6 font-body">
+          Selenus quotes Buxerius comparing the starting formation directly to the military
+          treatise of Polybius: &ldquo;The rear of the army should be more open &hellip; so that
+          if the front soldiers are weak, they can retreat to the rear, from which the ability
+          to fight again is granted. And the light cavalry on the wings resembles the arrangement
+          of this game.&rdquo;
+        </p>
+
+        <p className="text-secondary leading-relaxed mb-6 font-body">
+          The circles (low-value, short-range) form the front rank &mdash; infantry. The
+          triangles are the mobile middle ranks. The squares (high-value, long-range) hold
+          the back &mdash; heavy reserves. The pyramid is the king, protected at the center.
+          This isn&rsquo;t a metaphor invented by modern commentators; the original authors
+          explicitly thought of the game in military terms.
+        </p>
+
+        <h3 className="font-serif text-xl text-secondary mt-10 mb-4">
+          Three Different Games in One Book
+        </h3>
+
+        <p className="text-secondary leading-relaxed mb-6 font-body">
+          Lever and Fulke describe not one but three complete rulesets, which they call
+          &ldquo;kinds of play.&rdquo; In the first kind (the standard rules), circles move
+          diagonally and triangles and squares move orthogonally. In the third kind,
+          attributed to the Chaldean tradition, <em>no piece moves diagonally at all</em> &mdash;
+          Buxerius writes that they move &ldquo;straight, not through corners, like the mad
+          chess bishops.&rdquo; The second kind introduces a different capture system where
+          multiplication and division use the empty squares between pieces as the operand.
+          Each kind produces a fundamentally different tactical experience from the same board
+          and pieces.
+        </p>
+
+        <h3 className="font-serif text-xl text-secondary mt-10 mb-4">
+          Lever&rsquo;s Honest Admission
+        </h3>
+
+        <p className="text-secondary leading-relaxed mb-6 font-body">
+          After sixty-five pages of painstakingly detailed rules, tables, and mathematical
+          derivations, Lever and Fulke close their treatise with a confession that no strategy
+          guide can substitute for experience:
+        </p>
+
+        <div className="border-l-4 border-accent-gold pl-6 my-10">
+          <p className="text-lg text-secondary italic font-body leading-relaxed">
+            &ldquo;And thus is the first kind of playing at an end. And this is sufficient to
+            teach you to play, but if you would learn to play cunningly, you must use to play
+            often &mdash; so shall you learn better than by any precepts or rules.&rdquo;
+          </p>
+          <p className="text-sm text-muted mt-2">
+            <Link href="/book/the-most-noble-auncient-and-learned-playe-called-the-fulke?page=65" className="text-accent-rust hover:text-accent-rust">
+              Lever &amp; Fulke, 1563, p. 65
+            </Link>
+          </p>
+        </div>
+
+        <p className="text-secondary leading-relaxed mb-6 font-body">
+          Even in 1563, the game was too complex for written strategy. Five hundred years
+          later, it still is. The only way to learn Rithmomachia is to play it.
+        </p>
+
+        <hr className="border-border-light my-12" />
+
         {/* Why It Died */}
         <h2 className="font-serif text-2xl md:text-3xl text-primary mt-16 mb-6">
           Why It Disappeared
