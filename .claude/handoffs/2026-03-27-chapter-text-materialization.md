@@ -37,12 +37,31 @@ The chapter_texts docs are too large even after splitting. Would need individual
 ### 1 chunk still >100K tokens
 Edge case — probably a single enormous page.
 
+## Chapter extraction v2 (PR #472, merged)
+- Extracts inline centered markers (`->*Cap. 5.*<-`) and bold standalone labels
+- Includes 3 lines of context after each heading in Gemini prompt
+- Tags TOC page headings as `[TOC]` so Gemini can distinguish from body
+- Better JSON parsing (handles fences, extracts arrays from surrounding text)
+- Tested: Ficino 8→96, Kircher 3→118, Vesalius 6→85, Maier 8→9 (stable)
+
+## Re-extraction results
+- 150/161 broken books re-extracted and re-materialized
+- 11 failures (rate limits + parse errors — can retry)
+- Total cost: ~$0.05 (724K tokens)
+- Spot check issues found:
+  - Homer (2 ch for 463p) — manuscript, no headings in OCR
+  - The Magus (1 ch for 460p) — OCR missed the headings
+  - Faust grimoire (73 ch for 112p) — too granular, every spell = chapter
+  - These are the hard tail cases that need an AI reader, not heading extraction
+
 ## Next steps (discussed with Derek)
-1. **Fix broken chapters** — AI agent reads book structure, not regex
+1. **Align index batches to chapters** — replace arbitrary 50K-char batches in `/api/books/[id]/index` with `getChapterTexts()`. Each batch = one chapter. Makes sectionSummaries chapter-aligned. ~20 lines of code. GitHub issue #469.
 2. **Improve existing summaries** — regenerate sectionSummaries from full chapter text (~$47 for all books with Flash Lite)
-3. **Reading notes layer** — multiple AI agents accumulate observations as chapters are read. Schema: `chapter_notes { book_id, chapter_index, agent, context, note, connections, created_at }`. Converges with #1 — same agent capability.
+3. **Reading notes layer** — multiple AI agents accumulate observations as chapters are read. Schema: `chapter_notes { book_id, chapter_index, agent, context, note, connections, created_at }`. Issue #469.
+4. **Use topic discontinuity for failed books** — run AI batch index, detect theme shifts between batches to propose chapter boundaries for books where heading-based extraction fails.
+5. **TOC title matching** — validate extracted chapters by matching chapter titles against printed TOC entries (title similarity, not page numbers, since pagination systems vary in early printed books).
 
 ## Stats
 - chapter_texts collection: ~78K docs, ~888M tokens
 - Token distribution: 93% of chapters under 100K tokens (sweet spot 10K-50K)
-- Broken chapters: 340 books (9.5% of chaptered books)
+- Broken chapters: ~11 remaining (down from 340)
