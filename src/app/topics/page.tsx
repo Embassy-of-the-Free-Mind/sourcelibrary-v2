@@ -4,7 +4,6 @@ import Image from 'next/image';
 import ContentPageLayout, { ContentHeader } from '@/components/layout/ContentPageLayout';
 import type { Metadata } from 'next';
 import { FACETS, DOMAIN_GROUPS, facetDbField } from '@/lib/taxonomy/faceted-vocabulary';
-import DomainTreemap from '@/components/topics/DomainTreemap';
 
 export const revalidate = 300; // 5 min — facet aggregations are expensive
 
@@ -221,9 +220,9 @@ export default async function TopicsPage() {
               <p className="text-sm text-muted mt-1">{group.question}</p>
             </div>
 
-            {/* Domain facet: treemap only */}
+            {/* Domain facet: render with sub-groups */}
             {group.id === 'domain' ? (
-              <DomainTreemap domains={group.values.filter(v => v.count > 0).map(v => { const dg = DOMAIN_GROUPS.find(g => g.domains.includes(v.id)); return { id: v.id, label: v.label, count: v.count, groupId: dg?.id || 'reference', groupLabel: dg?.label || 'Other' }; })} totalBooks={totalBooks} />
+              <DomainGroupedGrid values={group.values} facetId={group.id} />
             ) : (
               <FacetGrid values={group.values} facetId={group.id} />
             )}
