@@ -144,6 +144,31 @@ export default function ScenarioPlayer({ scenario, onBack, onNext }: ScenarioPla
               <p className="text-secondary text-sm font-body leading-relaxed mb-4">
                 {scenario.explanation}
               </p>
+
+              {/* Primary source illustration */}
+              {scenario.illustration && (
+                <a
+                  href={sourceUrl(scenario.illustration.source, scenario.illustration.page)}
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="block rounded-lg overflow-hidden border border-border-light mb-4 hover:border-accent-rust/40 transition-colors group"
+                >
+                  <img
+                    src={scenario.illustration.imageUrl}
+                    alt={scenario.illustration.caption}
+                    className="w-full max-h-48 object-contain bg-warm/50"
+                  />
+                  <div className="px-3 py-2 bg-warm/50 flex items-center justify-between gap-2">
+                    <span className="text-xs text-secondary group-hover:text-primary transition-colors">
+                      {scenario.illustration.caption}
+                    </span>
+                    <span className="text-xs text-accent-rust/60 group-hover:text-accent-rust shrink-0">
+                      View source &rarr;
+                    </span>
+                  </div>
+                </a>
+              )}
+
               <div className="flex gap-3">
                 {onNext && (
                   <button

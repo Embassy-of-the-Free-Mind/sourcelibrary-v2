@@ -98,6 +98,35 @@ export default function Board({ state, onCellClick }: BoardProps) {
         opacity={0.4}
       />
 
+      {/* Last move indicator — subtle highlight on from/to squares */}
+      {state.moveHistory.length > 0 && (() => {
+        const last = state.moveHistory[state.moveHistory.length - 1];
+        return (
+          <>
+            <rect
+              x={last.from.col * CELL_SIZE + 2}
+              y={last.from.row * CELL_SIZE + 2}
+              width={CELL_SIZE - 4}
+              height={CELL_SIZE - 4}
+              rx={3}
+              fill="#9e4a3a"
+              opacity={0.08}
+              pointerEvents="none"
+            />
+            <rect
+              x={last.to.col * CELL_SIZE + 2}
+              y={last.to.row * CELL_SIZE + 2}
+              width={CELL_SIZE - 4}
+              height={CELL_SIZE - 4}
+              rx={3}
+              fill="#9e4a3a"
+              opacity={0.15}
+              pointerEvents="none"
+            />
+          </>
+        );
+      })()}
+
       {/* Legal move indicators */}
       {state.legalMoves.map(pos => (
         <circle
