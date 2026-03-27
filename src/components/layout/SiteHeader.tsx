@@ -78,19 +78,7 @@ export default function SiteHeader({ variant = 'light', breadcrumbs, sticky, cla
             </span>
           ))}
         </div>
-        <div className="flex items-center gap-6">
-          <Link
-            href="/embassy"
-            className={`text-sm font-sans tracking-wide ${
-              isWhiteText
-                ? 'text-white/70 hover:text-white'
-                : 'text-[#6b6560] hover:text-[#1a1612]'
-            } transition-colors hidden sm:block`}
-          >
-            The Embassy
-          </Link>
-          <UserMenu variant={isWhiteText ? 'hero' : 'default'} />
-        </div>
+        <UserMenu variant={isWhiteText ? 'hero' : 'default'} />
       </div>
     </header>
   );
