@@ -111,12 +111,12 @@ export default function HeroSection() {
         muted
         playsInline
         preload="auto"
+        poster="https://images.sourcelibrary.org/video/hero-poster.jpg"
         onCanPlay={handleVideoLoad}
-
         className="absolute inset-0 w-full h-full object-cover z-0"
       >
-        <source src="https://cdn.prod.website-files.com/68d800cb1402171531a597f4/68d800cb1402171531a598cf_embassy-of-the-free-mind-montage-002-transcode.webm#t=3" type="video/webm" />
-        <source src="https://cdn.prod.website-files.com/68d800cb1402171531a597f4/68d800cb1402171531a598cf_embassy-of-the-free-mind-montage-002-transcode.mp4#t=3" type="video/mp4" />
+        <source src="https://images.sourcelibrary.org/video/hero-bg.webm#t=3" type="video/webm" />
+        <source src="https://images.sourcelibrary.org/video/hero-bg.mp4#t=3" type="video/mp4" />
       </video>
 
       <div className="absolute inset-0 bg-black/40 z-0" />
