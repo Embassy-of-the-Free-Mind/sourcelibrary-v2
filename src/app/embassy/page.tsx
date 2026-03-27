@@ -11,6 +11,16 @@ interface Message {
   content: string;
 }
 
+interface Room {
+  id: string;
+  slug: string;
+  name: string;
+  description: string;
+  pinned: boolean;
+  messageCount: number;
+  lastMessageAt: string;
+}
+
 interface ThreadPreview {
   id: string;
   title: string;
@@ -45,17 +55,21 @@ export default function EmbassyPage() {
   const [sending, setSending] = useState(false);
   const [threadId, setThreadId] = useState<string | null>(null);
   const [threads, setThreads] = useState<ThreadPreview[]>([]);
+  const [rooms, setRooms] = useState<Room[]>([]);
   const [visibility, setVisibility] = useState<'public' | 'private'>('public');
   const messagesEndRef = useRef<HTMLDivElement>(null);
   const inputRef = useRef<HTMLTextAreaElement>(null);
 
-  // Load public threads for activity feed
+  // Load public threads and rooms
   useEffect(() => {
     fetch('/api/embassy/threads?limit=10')
       .then(r => r.json())
-      .then(data => {
-        if (data.threads) setThreads(data.threads);
-      })
+      .then(data => { if (data.threads) setThreads(data.threads); })
+      .catch(() => {});
+
+    fetch('/api/embassy/rooms')
+      .then(r => r.json())
+      .then(data => { if (data.rooms) setRooms(data.rooms); })
       .catch(() => {});
   }, []);
 
@@ -345,35 +359,42 @@ export default function EmbassyPage() {
                 </div>
               )}
 
-              {/* Quick links */}
+              {/* Rooms */}
               <div className="mt-8 pt-6 border-t border-[#e8e4dc]">
                 <h2 className="text-[11px] text-[#6b6560] tracking-[0.2em] uppercase font-sans mb-3">
-                  The Embassy
+                  Rooms
                 </h2>
+                {rooms.length === 0 ? (
+                  <p className="text-[#8a8480] text-sm font-body">Loading rooms...</p>
+                ) : (
+                  <div className="space-y-1">
+                    {rooms.map((room) => (
+                      <Link
+                        key={room.id}
+                        href={`/embassy/room/${room.slug}`}
+                        className="block py-2 -mx-2 px-2 rounded hover:bg-[#f5f0e8]/50 transition-colors"
+                      >
+                        <div className="flex items-center justify-between">
+                          <span className="text-sm font-sans text-[#1a1612]">{room.name}</span>
+                          {room.messageCount > 0 && (
+                            <span className="text-[10px] text-[#8a8480] font-sans">{room.messageCount}</span>
+                          )}
+                        </div>
+                        <p className="text-[11px] text-[#8a8480] font-body line-clamp-1">{room.description}</p>
+                      </Link>
+                    ))}
+                  </div>
+                )}
+              </div>
+
+              {/* Quick links */}
+              <div className="mt-6 pt-4 border-t border-[#e8e4dc]">
                 <div className="space-y-2">
-                  <Link
-                    href="/ficino-society"
-                    className="block text-sm text-[#444] hover:text-[#9e4a3a] transition-colors font-body"
-                  >
+                  <Link href="/ficino-society" className="block text-sm text-[#444] hover:text-[#9e4a3a] transition-colors font-body">
                     The Ficino Society
                   </Link>
-                  <Link
-                    href="/ficino-society/discussions"
-                    className="block text-sm text-[#444] hover:text-[#9e4a3a] transition-colors font-body"
-                  >
-                    The Correspondence
-                  </Link>
-                  <Link
-                    href="/collections"
-                    className="block text-sm text-[#444] hover:text-[#9e4a3a] transition-colors font-body"
-                  >
+                  <Link href="/collections" className="block text-sm text-[#444] hover:text-[#9e4a3a] transition-colors font-body">
                     Browse the Collection
-                  </Link>
-                  <Link
-                    href="/search"
-                    className="block text-sm text-[#444] hover:text-[#9e4a3a] transition-colors font-body"
-                  >
-                    Search
                   </Link>
                 </div>
               </div>
