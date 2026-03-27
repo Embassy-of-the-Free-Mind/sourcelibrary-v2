@@ -1352,7 +1352,7 @@ async function run() {
               'Authorization': `Bearer ${CRON_SECRET}`,
               'Content-Type': 'application/json',
             },
-            body: JSON.stringify({ limit: 200, dryRun: false, method: 'gemini' }),
+            body: JSON.stringify({ limit: 200, dryRun: false }),
             signal: AbortSignal.timeout(300000), // 5 min — splitting can be slow
           });
 
