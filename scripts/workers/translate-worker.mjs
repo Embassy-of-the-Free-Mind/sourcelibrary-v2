@@ -171,6 +171,7 @@ async function processBook(db, book, job, globalCounter) {
     })
     .sort({ page_number: 1 })
     .project({ id: 1, page_number: 1, 'ocr.data': 1, page_type: 1 })
+    .limit(200) // Cap per book per run — large books don't monopolize a worker slot
     .toArray();
 
   if (pages.length === 0) {
