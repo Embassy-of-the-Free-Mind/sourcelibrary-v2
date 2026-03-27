@@ -25,7 +25,7 @@ test.describe('Homepage', () => {
   });
 
   test('search input exists', async ({ page }) => {
-    const searchInput = page.locator('input[type="search"], input[placeholder*="earch"]');
+    const searchInput = page.locator('input[name="q"], input[type="search"], input[placeholder*="earch"]');
     await expect(searchInput.first()).toBeVisible();
   });
 });
