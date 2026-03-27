@@ -2484,7 +2484,7 @@ async function run() {
       console.log('\n--- Phase 8.9: Cover selection + page cleanup ---');
 
       const coverBooks = await db.collection('books')
-        .find({ 'pipeline_auto.status': 'images_complete', cover_selected_at: { $exists: false } })
+        .find({ 'pipeline_auto.status': 'images_complete' })
         .sort({ hidden: 1 })
         .project({ id: 1, title: 1, thumbnail: 1, thumbnail_source: 1 })
         .limit(50)
@@ -2529,10 +2529,7 @@ async function run() {
 
           // 2. Select best cover (skip if manually set)
           if (book.thumbnail_source === 'manual') {
-            await db.collection('books').updateOne(
-              { id: book.id },
-              { $set: { cover_selected_at: new Date() } }
-            );
+            await setPipelineStatus(db, book.id, 'cover_selected', { cover_selected_at: new Date() });
             coversSelected++;
             continue;
           }
@@ -2603,19 +2600,10 @@ async function run() {
                   },
                 }}
               );
-            } else {
-              await db.collection('books').updateOne(
-                { id: book.id },
-                { $set: { cover_selected_at: new Date() } }
-              );
             }
-          } else {
-            await db.collection('books').updateOne(
-              { id: book.id },
-              { $set: { cover_selected_at: new Date() } }
-            );
           }
 
+          await setPipelineStatus(db, book.id, 'cover_selected', { cover_selected_at: new Date() });
           coversSelected++;
         } catch (err) {
           console.error(`  Cover selection failed for ${book.title}: ${err.message?.slice(0, 100)}`);
@@ -2628,12 +2616,12 @@ async function run() {
       log.digitizer_pages_hidden = pagesHidden;
     }
 
-    // ── Phase 9: Finalize (images_complete -> complete) ──
+    // ── Phase 9: Finalize (cover_selected -> complete) ──
     if (shouldRun(9)) {
       console.log('\n--- Phase 9: Finalize ---');
 
       const readyToFinalize = await db.collection('books')
-        .find({ 'pipeline_auto.status': 'images_complete' })
+        .find({ 'pipeline_auto.status': 'cover_selected' })
         .sort({ hidden: 1 })
         .project({ id: 1, title: 1, pages_count: 1, language: 1 })
         .limit(FINALIZE_LIMIT)
