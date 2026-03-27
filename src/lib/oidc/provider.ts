@@ -1,4 +1,5 @@
 import { randomBytes, createHash, createSign, createPrivateKey, createPublicKey } from 'crypto';
+import { ObjectId } from 'mongodb';
 import { getDb } from '@/lib/mongodb';
 
 /**
@@ -141,8 +142,10 @@ export function decodeAccessToken(token: string): { sub: string } | null {
 
 export async function getUserInfo(userId: string) {
   const db = await getDb();
+  // NextAuth stores user IDs as ObjectId strings — query with ObjectId
+  const oid = ObjectId.isValid(userId) ? new ObjectId(userId) : userId;
   const user = await db.collection('users').findOne(
-    { _id: userId as any },
+    { _id: oid as any },
     { projection: { name: 1, email: 1, image: 1 } },
   );
   return user ? {
