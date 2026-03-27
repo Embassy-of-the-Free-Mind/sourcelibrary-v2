@@ -1380,6 +1380,7 @@ async function run() {
           .aggregate([
             { $match: {
               'pipeline_auto.status': 'archive_complete',
+              'pipeline_auto.split_checked': true,
               preview_ocr_queued_at: { $exists: false },
             }},
             { $addFields: {
@@ -1615,7 +1616,7 @@ async function run() {
       const ENGLISH_VARIANTS_P2 = ['english', 'eng', 'en'];
       const readyForOcr = ocrLimit > 0 ? await db.collection('books')
         .aggregate([
-          { $match: { 'pipeline_auto.status': 'archive_complete' } },
+          { $match: { 'pipeline_auto.status': 'archive_complete', 'pipeline_auto.split_checked': true } },
           { $addFields: {
             _priority: {
               $switch: {
