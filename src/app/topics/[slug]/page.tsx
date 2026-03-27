@@ -5,7 +5,7 @@ import { Metadata } from 'next';
 import { BookOpen, ArrowLeft } from 'lucide-react';
 import { notFound } from 'next/navigation';
 import { bookUrl } from '@/lib/slugify';
-import { FACETS } from '@/lib/taxonomy/faceted-vocabulary';
+import { FACETS, facetDbField } from '@/lib/taxonomy/faceted-vocabulary';
 
 export const revalidate = 300; // 5 min
 
@@ -107,9 +107,10 @@ async function fetchFacetData(facetId: string, valueId: string) {
   const facet = FACETS.find((f) => f.id === facetId)!;
   const value = facet.values.find((v) => v.id === valueId)!;
 
+  const dbField = facetDbField(facet);
   const query = {
     hidden: { $ne: true },
-    [`faceted_tags.${facetId}`]: valueId,
+    [`faceted_tags.${dbField}`]: valueId,
   };
 
   const books = await db
@@ -136,13 +137,14 @@ async function fetchFacetData(facetId: string, valueId: string) {
     : 'tradition';
 
   const crossFacet = FACETS.find((f) => f.id === crossFacetId)!;
+  const crossDbField = facetDbField(crossFacet);
 
   const groups = new Map<string, BookItem[]>();
   const ungrouped: BookItem[] = [];
 
   for (const book of books) {
     const crossValues = (book as Record<string, unknown>).faceted_tags as Record<string, string[]> | undefined;
-    const tags = crossValues?.[crossFacetId] || [];
+    const tags = crossValues?.[crossDbField] || [];
     if (tags.length > 0) {
       const primary = tags[0];
       if (!groups.has(primary)) groups.set(primary, []);
@@ -169,7 +171,7 @@ async function fetchFacetData(facetId: string, valueId: string) {
     if (f.id === facetId) continue;
     const counts = new Map<string, number>();
     for (const book of books) {
-      const tags = ((book as Record<string, unknown>).faceted_tags as Record<string, string[]> | undefined)?.[f.id] || [];
+      const tags = ((book as Record<string, unknown>).faceted_tags as Record<string, string[]> | undefined)?.[facetDbField(f)] || [];
       for (const t of tags) counts.set(t, (counts.get(t) || 0) + 1);
     }
     const sorted = Array.from(counts.entries())

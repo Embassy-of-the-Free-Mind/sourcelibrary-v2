@@ -1,6 +1,6 @@
 import { NextRequest, NextResponse } from 'next/server';
 import { getDb } from '@/lib/mongodb';
-import { FACETS } from '@/lib/taxonomy/faceted-vocabulary';
+import { FACETS, facetDbField } from '@/lib/taxonomy/faceted-vocabulary';
 
 /**
  * GET /api/books/facets
@@ -34,31 +34,33 @@ export async function GET(request: NextRequest) {
     hidden: { $ne: true },
   };
 
-  const facetIds = ['tradition', 'domain', 'form', 'sphere', 'era', 'mode'];
   const activeFilters: Record<string, string[]> = {};
 
-  for (const facetId of facetIds) {
-    const param = searchParams.get(facetId);
+  for (const facet of FACETS) {
+    const param = searchParams.get(facet.id);
     if (param) {
       const values = param.split(',').map(v => v.trim()).filter(Boolean);
       if (values.length > 0) {
-        query[`faceted_tags.${facetId}`] = { $in: values };
-        activeFilters[facetId] = values;
+        query[`faceted_tags.${facetDbField(facet)}`] = { $in: values };
+        activeFilters[facet.id] = values;
       }
     }
   }
 
-  // If counts mode, return aggregated facet counts — single $facet pipeline (7 queries → 1)
+  // If counts mode, return aggregated facet counts -- single $facet pipeline
   if (countsOnly) {
     const facetStages = Object.fromEntries(
-      facetIds.map(facetId => [
-        facetId,
-        [
-          { $unwind: `$faceted_tags.${facetId}` },
-          { $group: { _id: `$faceted_tags.${facetId}`, count: { $sum: 1 } } },
-          { $sort: { count: -1 } },
-        ],
-      ])
+      FACETS.map(facet => {
+        const dbf = facetDbField(facet);
+        return [
+          facet.id,
+          [
+            { $unwind: `$faceted_tags.${dbf}` },
+            { $group: { _id: `$faceted_tags.${dbf}`, count: { $sum: 1 } } },
+            { $sort: { count: -1 } },
+          ],
+        ];
+      })
     );
 
     const [result] = await db.collection('books').aggregate([
@@ -67,10 +69,10 @@ export async function GET(request: NextRequest) {
     ]).toArray();
 
     const counts: Record<string, Record<string, number>> = {};
-    for (const facetId of facetIds) {
-      counts[facetId] = {};
-      for (const r of (result[facetId] as { _id: string; count: number }[])) {
-        counts[facetId][r._id] = r.count;
+    for (const facet of FACETS) {
+      counts[facet.id] = {};
+      for (const r of (result[facet.id] as { _id: string; count: number }[])) {
+        counts[facet.id][r._id] = r.count;
       }
     }
 
