@@ -104,8 +104,10 @@ function generateCitations(
   // MLA
   const mla = `${authorLastFirst}. ${title}. Translated by Source Library, ${translationYear}.${doi ? ` DOI: ${doi}.` : ''} Accessed ${accessed}.`;
 
-  // Direct URL to page in Source Library
-  const url = `https://sourcelibrary.org/book/${bookId}/page/${pageId}`;
+  // Direct URL to page in Source Library (pinned to edition version)
+  const editionVersion = edition?.version;
+  const vParam = editionVersion ? `?v=${editionVersion}` : '';
+  const url = `https://sourcelibrary.org/book/${bookId}/page/${pageId}${vParam}`;
 
   // Short URL for sharing
   const short_url = getShortUrl(bookId, pageNumber, pageId);

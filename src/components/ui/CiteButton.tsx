@@ -26,7 +26,8 @@ function formatAccessedDate(): string {
 
 function generateApa(props: CiteButtonProps): string {
   const { author, title, displayTitle, year, doi, bookId, pageNumber, editionVersion } = props;
-  const url = `https://sourcelibrary.org/book/${bookId}`;
+  const vParam = editionVersion ? `?v=${editionVersion}` : '';
+  const url = `https://sourcelibrary.org/book/${bookId}${vParam}`;
   const displayName = displayTitle || title;
   const yearStr = year || 'n.d.';
   const authorStr = author || 'Anonymous';
@@ -61,7 +62,8 @@ function generateBibtex(props: CiteButtonProps): string {
   if (language) lines.push(`  language = {${language}},`);
   if (doi) lines.push(`  doi = {${doi}},`);
   if (pageNumber) lines.push(`  pages = {${pageNumber}},`);
-  lines.push(`  url = {https://sourcelibrary.org/book/${bookId}},`);
+  const vParam = editionVersion ? `?v=${editionVersion}` : '';
+  lines.push(`  url = {https://sourcelibrary.org/book/${bookId}${vParam}},`);
   lines.push(`  note = {AI-assisted English translation via Source Library}`);
   lines.push(`}`);
   return lines.join('\n');
