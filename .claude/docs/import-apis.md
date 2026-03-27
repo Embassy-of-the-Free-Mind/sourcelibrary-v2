@@ -104,7 +104,7 @@ Browse: https://www.loc.gov/collections/chinese-rare-books/
 POST /api/import/pdf
 { "pdf_url": "https://example.org/book.pdf", "title": "...", "author": "...", "provider": "cmc_kloss", "provider_name": "CMC Prins Frederik — Bibliotheca Klossiana" }
 ```
-Downloads a PDF, extracts pages with `pdftoppm` at configurable DPI (default 150), uploads page images to Vercel Blob, creates book+page records. Works with any publicly accessible PDF URL. Requires `pdftoppm` (poppler-utils) on the host — runs locally or on a server, not on Vercel serverless.
+Downloads a PDF, extracts pages with `pdftoppm` at configurable DPI (default 150), uploads page images to Cloudflare R2, creates book+page records. Works with any publicly accessible PDF URL. Requires `pdftoppm` (poppler-utils) on the host — runs locally or on a server, not on Vercel serverless.
 
 Optional fields: `language`, `published`, `categories`, `source_url`, `identifier`, `dpi`, `dublin_core`, `catalog_metadata`, `display_title`.
 
