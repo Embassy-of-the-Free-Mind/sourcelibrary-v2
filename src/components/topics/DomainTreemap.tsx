@@ -4,12 +4,19 @@ import { useRouter } from 'next/navigation';
 import { useMemo, useState, useCallback, useRef } from 'react';
 import { treemap, treemapSquarify, hierarchy, type HierarchyRectangularNode } from 'd3-hierarchy';
 
-interface DomainData {
+export interface SubDomain {
+  id: string;
+  label: string;
+  count: number;
+}
+
+export interface DomainData {
   id: string;
   label: string;
   count: number;
   groupId: string;
   groupLabel: string;
+  subDomains?: SubDomain[];
 }
 
 interface Props {
@@ -38,10 +45,20 @@ function textColor(bg: string): string {
   return (0.299 * r + 0.587 * g + 0.114 * b) / 255 > 0.5 ? '#2a1f14' : '#faf5ef';
 }
 
+// Lighten a hex color by a factor (0-1)
+function lighten(hex: string, factor: number): string {
+  const h = hex.replace('#', '');
+  const r = Math.min(255, parseInt(h.substring(0, 2), 16) + Math.round((255 - parseInt(h.substring(0, 2), 16)) * factor));
+  const g = Math.min(255, parseInt(h.substring(2, 4), 16) + Math.round((255 - parseInt(h.substring(2, 4), 16)) * factor));
+  const b = Math.min(255, parseInt(h.substring(4, 6), 16) + Math.round((255 - parseInt(h.substring(4, 6), 16)) * factor));
+  return `#${r.toString(16).padStart(2,'0')}${g.toString(16).padStart(2,'0')}${b.toString(16).padStart(2,'0')}`;
+}
+
 interface TreeNode {
   name: string;
   groupId?: string;
   domainId?: string;
+  subDomainId?: string;
   groupLabel?: string;
   value?: number;
   children?: TreeNode[];
@@ -50,7 +67,10 @@ interface TreeNode {
 interface TooltipState {
   x: number;
   y: number;
-  domain: DomainData;
+  label: string;
+  count: number;
+  group: string;
+  domain?: string;
 }
 
 export default function DomainTreemap({ domains, totalBooks }: Props) {
@@ -60,8 +80,9 @@ export default function DomainTreemap({ domains, totalBooks }: Props) {
   const containerRef = useRef<HTMLDivElement>(null);
 
   const WIDTH = 960;
-  const HEIGHT = 520;
+  const HEIGHT = 560;
 
+  // Build 3-level hierarchy: root → groups → domains → sub-domains
   const treeData = useMemo((): TreeNode => {
     const groupMap = new Map<string, DomainData[]>();
     for (const d of domains) {
@@ -74,13 +95,48 @@ export default function DomainTreemap({ domains, totalBooks }: Props) {
       children: Array.from(groupMap.entries()).map(([groupId, items]) => ({
         name: items[0]?.groupLabel || groupId,
         groupId,
-        children: items.map(d => ({
-          name: d.label,
-          domainId: d.id,
-          groupId: d.groupId,
-          groupLabel: d.groupLabel,
-          value: d.count,
-        })),
+        children: items.map(d => {
+          // If domain has sub-domains, nest them; otherwise leaf node
+          if (d.subDomains && d.subDomains.length > 1) {
+            const subTotal = d.subDomains.reduce((s, sd) => s + sd.count, 0);
+            const pureCount = Math.max(0, d.count - subTotal);
+            const children: TreeNode[] = [];
+            if (pureCount > 0) {
+              children.push({
+                name: d.label,
+                domainId: d.id,
+                subDomainId: '__pure__',
+                groupId: d.groupId,
+                groupLabel: d.groupLabel,
+                value: pureCount,
+              });
+            }
+            for (const sd of d.subDomains) {
+              children.push({
+                name: sd.label,
+                domainId: d.id,
+                subDomainId: sd.id,
+                groupId: d.groupId,
+                groupLabel: d.groupLabel,
+                value: sd.count,
+              });
+            }
+            return {
+              name: d.label,
+              domainId: d.id,
+              groupId: d.groupId,
+              groupLabel: d.groupLabel,
+              children,
+            };
+          }
+          return {
+            name: d.label,
+            domainId: d.id,
+            groupId: d.groupId,
+            groupLabel: d.groupLabel,
+            value: d.count,
+          };
+        }),
       })),
     };
   }, [domains]);
@@ -93,25 +149,18 @@ export default function DomainTreemap({ domains, totalBooks }: Props) {
     treemap<TreeNode>()
       .size([WIDTH, HEIGHT])
       .tile(treemapSquarify)
-      .paddingOuter(10)
-      .paddingTop(26)
-      .paddingInner(3)
+      .paddingOuter(8)
+      .paddingTop(24)
+      .paddingInner(2)
       (h);
 
     return h;
   }, [treeData]);
 
-  const domainMap = useMemo(() => {
-    const m = new Map<string, DomainData>();
-    for (const d of domains) m.set(d.id, d);
-    return m;
-  }, [domains]);
-
-  const handleMouseMove = useCallback((e: React.MouseEvent, domain: DomainData) => {
+  const handleMouseMove = useCallback((e: React.MouseEvent, info: TooltipState) => {
     if (!containerRef.current) return;
     const rect = containerRef.current.getBoundingClientRect();
-    setTooltip({ x: e.clientX - rect.left, y: e.clientY - rect.top, domain });
-    setHovered(domain.id);
+    setTooltip({ ...info, x: e.clientX - rect.left, y: e.clientY - rect.top });
   }, []);
 
   const handleMouseLeave = useCallback(() => {
@@ -120,6 +169,9 @@ export default function DomainTreemap({ domains, totalBooks }: Props) {
   }, []);
 
   type RNode = HierarchyRectangularNode<TreeNode>;
+
+  // Render all leaves (deepest cells)
+  const leaves = root.leaves() as RNode[];
 
   return (
     <div ref={containerRef} className="relative w-full">
@@ -130,32 +182,24 @@ export default function DomainTreemap({ domains, totalBooks }: Props) {
         role="img"
         aria-label={`${totalBooks.toLocaleString()} books across ${domains.length} knowledge domains`}
       >
+        {/* Level 1: Group backgrounds + headers */}
         {(root.children as RNode[] | undefined)?.map((group) => {
           const gd = group.data;
           const color = GROUP_COLORS[gd.groupId || ''] || '#8a8078';
-          const x = group.x0;
-          const y = group.y0;
-          const w = group.x1 - group.x0;
-          const h = group.y1 - group.y0;
+          const x = group.x0, y = group.y0;
+          const w = group.x1 - x, h = group.y1 - y;
           if (w < 1 || h < 1) return null;
-          const headerH = Math.min(24, h);
-
+          const hdrH = Math.min(22, h);
           return (
             <g key={gd.groupId}>
-              <rect x={x} y={y} width={w} height={h} rx={6} fill={color} opacity={0.08} />
-              <rect x={x} y={y} width={w} height={headerH} rx={6} fill={color} opacity={0.18} />
-              {headerH > 6 && (
-                <rect x={x} y={y + 6} width={w} height={Math.max(0, headerH - 6)} fill={color} opacity={0.18} />
-              )}
-              {w > 70 && (
-                <text
-                  x={x + 10} y={y + headerH / 2 + 1}
-                  dominantBaseline="central" fill={color}
-                  fontSize={11} fontWeight={600}
+              <rect x={x} y={y} width={w} height={h} rx={5} fill={color} opacity={0.06} />
+              <rect x={x} y={y} width={w} height={hdrH} rx={5} fill={color} opacity={0.15} />
+              {hdrH > 5 && <rect x={x} y={y+5} width={w} height={Math.max(0,hdrH-5)} fill={color} opacity={0.15} />}
+              {w > 60 && (
+                <text x={x+8} y={y+hdrH/2+1} dominantBaseline="central" fill={color}
+                  fontSize={10} fontWeight={600} letterSpacing="0.03em" opacity={0.85}
                   fontFamily="var(--font-serif, 'Cormorant Garamond'), serif"
-                  letterSpacing="0.02em" opacity={0.9}
-                  style={{ pointerEvents: 'none' }}
-                >
+                  style={{ pointerEvents: 'none' }}>
                   {gd.name}
                 </text>
               )}
@@ -163,71 +207,102 @@ export default function DomainTreemap({ domains, totalBooks }: Props) {
           );
         })}
 
-        {(root.leaves() as RNode[]).map((leaf) => {
-          const d = leaf.data;
-          if (!d.domainId) return null;
-          const domain = domainMap.get(d.domainId);
-          if (!domain) return null;
+        {/* Level 2: Domain backgrounds + headers (for domains with children) */}
+        {(root.children as RNode[] | undefined)?.flatMap(group =>
+          (group.children as RNode[] | undefined)?.filter(d => d.children && d.children.length > 0).map(domain => {
+            const dd = domain.data;
+            const color = GROUP_COLORS[dd.groupId || ''] || '#8a8078';
+            const x = domain.x0, y = domain.y0;
+            const w = domain.x1 - x, h = domain.y1 - y;
+            if (w < 1 || h < 1) return null;
+            const hdrH = Math.min(20, h);
+            return (
+              <g key={`dom-${dd.domainId}`}>
+                <rect x={x} y={y} width={w} height={hdrH} rx={3} fill={color} opacity={0.2} />
+                {hdrH > 4 && <rect x={x} y={y+3} width={w} height={Math.max(0,hdrH-3)} fill={color} opacity={0.2} />}
+                {w > 40 && (
+                  <text x={x+6} y={y+hdrH/2+1} dominantBaseline="central" fill={color}
+                    fontSize={9} fontWeight={600} opacity={0.9}
+                    fontFamily="var(--font-display, 'Playfair Display'), serif"
+                    style={{ pointerEvents: 'none' }}>
+                    {dd.name} ({(domain.value || 0).toLocaleString()})
+                  </text>
+                )}
+              </g>
+            );
+          }) || []
+        )}
 
-          const x = leaf.x0;
-          const y = leaf.y0;
-          const w = leaf.x1 - leaf.x0;
-          const h = leaf.y1 - leaf.y0;
+        {/* Level 3: Leaf cells (sub-domains or flat domains) */}
+        {leaves.map((leaf) => {
+          const d = leaf.data;
+          const gid = d.groupId || '';
+          const color = GROUP_COLORS[gid] || '#8a8078';
+          const x = leaf.x0, y = leaf.y0;
+          const w = leaf.x1 - x, h = leaf.y1 - y;
           if (w < 3 || h < 3) return null;
 
-          const color = GROUP_COLORS[domain.groupId] || '#8a8078';
-          const isHov = hovered === domain.id;
+          const isSub = !!d.subDomainId;
+          const isPure = d.subDomainId === '__pure__';
+          // Sub-domains get lighter shade; pure domain gets full color
+          const cellColor = isSub && !isPure ? lighten(color, 0.25) : color;
+          const key = `${d.domainId}-${d.subDomainId || 'leaf'}`;
+          const isHov = hovered === key;
           const area = w * h;
-          const showLabel = area > 1200 && w > 36 && h > 20;
-          const showCount = area > 4000 && w > 50 && h > 36;
-          const fontSize = area > 12000 ? 14 : area > 6000 ? 12 : 10;
-          const txtCol = textColor(color);
-          const maxChars = Math.floor(w / (fontSize * 0.55));
-          const label = domain.label.length > maxChars
-            ? domain.label.slice(0, Math.max(3, maxChars - 1)) + '\u2026'
-            : domain.label;
+          const showLabel = area > 800 && w > 30 && h > 16;
+          const showCount = area > 3000 && w > 45 && h > 30;
+          const fontSize = area > 10000 ? 13 : area > 4000 ? 11 : 9;
+          const txtCol = textColor(cellColor);
+          const maxChars = Math.floor(w / (fontSize * 0.52));
+          const label = d.name.length > maxChars
+            ? d.name.slice(0, Math.max(3, maxChars - 1)) + '\u2026'
+            : d.name;
+
+          const navTarget = d.subDomainId && d.subDomainId !== '__pure__'
+            ? `/topics/domain--${d.subDomainId}`
+            : `/topics/domain--${d.domainId}`;
 
           return (
-            <g
-              key={domain.id} className="cursor-pointer"
-              onClick={() => router.push(`/topics/domain--${domain.id}`)}
-              onMouseMove={(e) => handleMouseMove(e, domain)}
+            <g key={key} className="cursor-pointer"
+              onClick={() => router.push(navTarget)}
+              onMouseMove={(e) => {
+                setHovered(key);
+                handleMouseMove(e, {
+                  label: d.name,
+                  count: leaf.value || 0,
+                  group: d.groupLabel || '',
+                  domain: isSub ? (leaf.parent?.data.name || '') : undefined,
+                  x: 0, y: 0,
+                });
+              }}
               onMouseLeave={handleMouseLeave}
               role="link" tabIndex={0}
-              onKeyDown={(e) => { if (e.key === 'Enter') router.push(`/topics/domain--${domain.id}`); }}
-              aria-label={`${domain.label}: ${domain.count} books`}
+              onKeyDown={(e) => { if (e.key === 'Enter') router.push(navTarget); }}
+              aria-label={`${d.name}: ${leaf.value} books`}
             >
-              <rect
-                x={x} y={y} width={w} height={h} rx={4}
-                fill={color} opacity={isHov ? 1 : 0.78}
-                style={{ transition: 'opacity 150ms ease' }}
-              />
+              <rect x={x} y={y} width={w} height={h} rx={3}
+                fill={cellColor} opacity={isHov ? 1 : 0.75}
+                style={{ transition: 'opacity 150ms ease' }} />
               {isHov && (
-                <rect
-                  x={x + 1.5} y={y + 1.5} width={w - 3} height={h - 3}
-                  rx={3} fill="none" stroke="rgba(255,255,255,0.45)" strokeWidth={2}
-                />
+                <rect x={x+1} y={y+1} width={w-2} height={h-2} rx={2}
+                  fill="none" stroke="rgba(255,255,255,0.4)" strokeWidth={1.5} />
               )}
               {showLabel && (
-                <text
-                  x={x + 7} y={y + (showCount ? h * 0.38 : h / 2)}
+                <text x={x+5} y={y+(showCount ? h*0.36 : h/2)}
                   dominantBaseline="central" fill={txtCol}
-                  fontSize={fontSize} fontWeight={600}
+                  fontSize={fontSize} fontWeight={isPure || !isSub ? 600 : 500}
                   fontFamily="var(--font-display, 'Playfair Display'), serif"
-                  style={{ pointerEvents: 'none', textShadow: '0 1px 2px rgba(0,0,0,0.25)' }}
-                >
-                  {label}
+                  style={{ pointerEvents: 'none', textShadow: '0 1px 2px rgba(0,0,0,0.2)' }}>
+                  {isPure ? `${label} (core)` : label}
                 </text>
               )}
               {showCount && (
-                <text
-                  x={x + 7} y={y + h * 0.38 + fontSize + 5}
+                <text x={x+5} y={y+h*0.36+fontSize+3}
                   dominantBaseline="central" fill={txtCol}
-                  fontSize={fontSize - 2} opacity={0.6}
+                  fontSize={fontSize-2} opacity={0.6}
                   fontFamily="var(--font-sans, Inter), sans-serif"
-                  style={{ pointerEvents: 'none', textShadow: '0 1px 2px rgba(0,0,0,0.15)' }}
-                >
-                  {domain.count.toLocaleString()}
+                  style={{ pointerEvents: 'none', textShadow: '0 1px 1px rgba(0,0,0,0.1)' }}>
+                  {(leaf.value || 0).toLocaleString()}
                 </text>
               )}
             </g>
@@ -236,23 +311,25 @@ export default function DomainTreemap({ domains, totalBooks }: Props) {
       </svg>
 
       {tooltip && (
-        <div
-          className="absolute z-50 pointer-events-none px-3 py-2 rounded-md shadow-lg border border-border-light"
+        <div className="absolute z-50 pointer-events-none px-3 py-2 rounded-md shadow-lg border border-border-light"
           style={{
             left: Math.min(tooltip.x + 14, (containerRef.current?.clientWidth || 960) - 220),
-            top: Math.max(0, tooltip.y - 64),
+            top: Math.max(0, tooltip.y - 70),
             background: 'rgba(253, 252, 249, 0.96)',
             backdropFilter: 'blur(8px)',
-          }}
-        >
-          <div className="text-[10px] uppercase tracking-wider" style={{ color: GROUP_COLORS[tooltip.domain.groupId] }}>
-            {tooltip.domain.groupLabel}
+          }}>
+          <div className="text-[10px] uppercase tracking-wider"
+            style={{ color: GROUP_COLORS[domains.find(d => d.label === (tooltip.domain || tooltip.label))?.groupId || ''] || '#8a8078' }}>
+            {tooltip.group}
           </div>
+          {tooltip.domain && (
+            <div className="text-xs text-secondary">{tooltip.domain}</div>
+          )}
           <div className="font-display font-semibold text-primary text-sm leading-tight">
-            {tooltip.domain.label}
+            {tooltip.label}
           </div>
           <div className="text-xs text-secondary mt-0.5">
-            {tooltip.domain.count.toLocaleString()} books
+            {tooltip.count.toLocaleString()} books
           </div>
         </div>
       )}

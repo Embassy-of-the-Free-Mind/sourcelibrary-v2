@@ -4,7 +4,7 @@ import Image from 'next/image';
 import ContentPageLayout, { ContentHeader } from '@/components/layout/ContentPageLayout';
 import type { Metadata } from 'next';
 import { FACETS, DOMAIN_GROUPS, facetDbField } from '@/lib/taxonomy/faceted-vocabulary';
-import DomainTreemap from '@/components/topics/DomainTreemap';
+import DomainTreemap, { type SubDomain } from '@/components/topics/DomainTreemap';
 
 // ISR: rebuild every 6 hours. Allow 60s for first-hit generation.
 export const revalidate = 21600;
@@ -73,6 +73,40 @@ async function fetchFacetCounts(): Promise<{ groups: FacetGroup[]; totalBooks: n
   });
 
   return { groups, totalBooks };
+}
+
+
+/** Single aggregation: all domain co-occurrences in one pass */
+async function fetchDomainCrossTab(): Promise<Map<string, SubDomain[]>> {
+  const db = await getDb();
+  // Efficient: project array as two copies, unwind both, filter out self-pairs
+  const results = await db.collection('books').aggregate([
+    { $match: { 'faceted_tags.knowledge_domain.1': { $exists: true }, hidden: { $ne: true } } },
+    { $project: { a: '$faceted_tags.knowledge_domain', b: '$faceted_tags.knowledge_domain' } },
+    { $unwind: '$a' },
+    { $unwind: '$b' },
+    { $match: { $expr: { $gt: ['$b', '$a'] } } },  // ordered pairs only (avoids dupes)
+    { $group: { _id: { d1: '$a', d2: '$b' }, count: { $sum: 1 } } },
+    { $sort: { count: -1 } },
+  ], { allowDiskUse: true }).toArray();
+
+  const map = new Map<string, SubDomain[]>();
+  const labelify = (s: string) => s.replace(/-/g, ' ').replace(/\b\w/g, (c: string) => c.toUpperCase());
+  for (const r of results) {
+    const d1 = r._id.d1 as string;
+    const d2 = r._id.d2 as string;
+    const count = r.count as number;
+    if (count < 5) continue;
+    // Add to both domains (symmetric)
+    for (const [domain, coDomain] of [[d1, d2], [d2, d1]]) {
+      const arr = map.get(domain) || [];
+      if (arr.length < 8) {
+        arr.push({ id: coDomain, label: labelify(coDomain), count });
+      }
+      map.set(domain, arr);
+    }
+  }
+  return map;
 }
 
 function FacetValueCard({ value, facetId }: { value: FacetCount; facetId: string }) {
@@ -154,10 +188,13 @@ function DomainGroupedGrid({ values, facetId }: { values: FacetCount[]; facetId:
 }
 
 export default async function TopicsPage() {
-  const { groups, totalBooks } = await fetchFacetCounts().catch((err) => {
+  const [{ groups, totalBooks }, crossTab] = await Promise.all([
+    fetchFacetCounts().catch((err) => {
     console.error('Facet counts fetch failed:', err);
     return { groups: [] as FacetGroup[], totalBooks: 0 };
-  });
+    }),
+    fetchDomainCrossTab().catch(() => new Map<string, SubDomain[]>()),
+  ]);
 
   return (
     <ContentPageLayout
