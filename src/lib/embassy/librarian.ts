@@ -1,9 +1,10 @@
 import { getDb } from '@/lib/mongodb';
 import { getGeminiClient } from '@/lib/gemini-client';
+import { buildBookSearchStage, buildPageSearchStage } from '@/lib/atlas-search';
 
 /**
  * The Librarian — AI assistant for the Embassy Reading Room.
- * Searches the entire Source Library corpus and converses with visitors.
+ * Uses Atlas Search (indexed, fast) for corpus-wide retrieval + Gemini for conversation.
  */
 
 interface BookResult {
@@ -26,44 +27,45 @@ interface PageResult {
 }
 
 /**
- * Search the corpus for passages relevant to a query.
- * Uses Atlas text search on pages, then enriches with book metadata.
+ * Search the corpus for passages relevant to a query using Atlas Search.
+ * Fast — uses the pages_search index, not regex scans.
  */
-export async function searchCorpus(query: string, limit = 10): Promise<PageResult[]> {
+export async function searchCorpus(query: string, limit = 8): Promise<PageResult[]> {
+  if (!query.trim()) return [];
+
   const db = await getDb();
 
-  // Extract meaningful keywords
-  const keywords = extractKeywords(query);
-  if (keywords.length === 0) return [];
-
-  // Search translated pages across all books
-  const regexPatterns = keywords.map(k => new RegExp(k, 'i'));
+  // Atlas Search on pages — searches translation.data (boosted) and ocr.data
+  const searchStage = buildPageSearchStage(query);
 
   const pages = await db.collection('pages')
-    .find({
-      'translation.data': { $exists: true },
-      $or: regexPatterns.map(r => ({ 'translation.data': r })),
-    })
-    .project({ book_id: 1, page_number: 1, 'translation.data': 1 })
-    .limit(200) // Fetch more, score, then trim
+    .aggregate([
+      searchStage,
+      { $limit: limit * 2 }, // Fetch extra, then deduplicate by book
+      {
+        $project: {
+          book_id: 1,
+          page_number: 1,
+          'translation.data': 1,
+          score: { $meta: 'searchScore' },
+        },
+      },
+    ])
     .toArray();
 
-  // Score by keyword density
-  const scored = pages.map(page => {
-    const text = (page.translation?.data || '').toLowerCase();
-    let score = 0;
-    for (const kw of keywords) {
-      const matches = (text.match(new RegExp(kw, 'gi')) || []).length;
-      score += matches;
-    }
-    return { page, score };
-  });
+  if (pages.length === 0) return [];
 
-  scored.sort((a, b) => b.score - a.score);
-  const topPages = scored.slice(0, limit);
+  // Deduplicate: max 2 pages per book to get variety across the collection
+  const perBook = new Map<string, number>();
+  const deduped = pages.filter(p => {
+    const count = perBook.get(p.book_id) || 0;
+    if (count >= 2) return false;
+    perBook.set(p.book_id, count + 1);
+    return true;
+  }).slice(0, limit);
 
-  // Get book metadata for all matched books
-  const bookIds = [...new Set(topPages.map(p => p.page.book_id))];
+  // Enrich with book metadata
+  const bookIds = [...new Set(deduped.map(p => p.book_id))];
   const books = await db.collection('books')
     .find({ id: { $in: bookIds } })
     .project({ id: 1, title: 1, display_title: 1, author: 1, slug: 1 })
@@ -71,10 +73,9 @@ export async function searchCorpus(query: string, limit = 10): Promise<PageResul
 
   const bookMap = new Map(books.map(b => [b.id, b]));
 
-  return topPages.map(({ page }) => {
+  return deduped.map(page => {
     const book = bookMap.get(page.book_id);
     const rawText = page.translation?.data || '';
-    // Clean and truncate
     const text = rawText
       .replace(/\[\[[^\]]+\]\]/g, '')
       .replace(/^```(?:markdown)?\s*\n?/i, '')
@@ -94,27 +95,31 @@ export async function searchCorpus(query: string, limit = 10): Promise<PageResul
 }
 
 /**
- * Search for relevant books by title/author (for broader context).
+ * Search for relevant books by title/author using Atlas Search.
  */
 export async function searchBooks(query: string, limit = 5): Promise<BookResult[]> {
-  const db = await getDb();
-  const keywords = extractKeywords(query);
-  if (keywords.length === 0) return [];
+  if (!query.trim()) return [];
 
-  const regexPatterns = keywords.map(k => new RegExp(k, 'i'));
+  const db = await getDb();
+
+  const searchStage = buildBookSearchStage(query, { hasTranslation: true }, { fuzzy: true });
 
   const books = await db.collection('books')
-    .find({
-      hidden: { $ne: true },
-      pages_count: { $gt: 0 },
-      $or: [
-        ...regexPatterns.map(r => ({ title: r })),
-        ...regexPatterns.map(r => ({ display_title: r })),
-        ...regexPatterns.map(r => ({ author: r })),
-      ],
-    })
-    .project({ id: 1, title: 1, display_title: 1, author: 1, year: 1, language: 1, slug: 1 })
-    .limit(limit)
+    .aggregate([
+      searchStage,
+      { $limit: limit },
+      {
+        $project: {
+          id: 1,
+          title: 1,
+          display_title: 1,
+          author: 1,
+          year: 1,
+          language: 1,
+          slug: 1,
+        },
+      },
+    ])
     .toArray();
 
   return books.map(b => ({
@@ -128,42 +133,19 @@ export async function searchBooks(query: string, limit = 5): Promise<BookResult[
   }));
 }
 
-function extractKeywords(query: string): string[] {
-  const stopWords = new Set([
-    'a', 'an', 'the', 'is', 'are', 'was', 'were', 'be', 'been', 'being',
-    'have', 'has', 'had', 'do', 'does', 'did', 'will', 'would', 'could', 'should',
-    'may', 'might', 'must', 'shall', 'can', 'need', 'to', 'of', 'in', 'for',
-    'on', 'with', 'at', 'by', 'from', 'as', 'into', 'through', 'during',
-    'and', 'but', 'or', 'nor', 'so', 'yet', 'both', 'either', 'neither',
-    'not', 'only', 'own', 'same', 'than', 'too', 'very', 'just',
-    'what', 'which', 'who', 'whom', 'this', 'that', 'these', 'those',
-    'i', 'me', 'my', 'we', 'our', 'you', 'your', 'he', 'him', 'his',
-    'she', 'her', 'it', 'its', 'they', 'them', 'their',
-    'about', 'tell', 'says', 'said', 'does', 'mean', 'book', 'text', 'author',
-    'page', 'pages', 'read', 'write', 'wrote', 'written',
-    'know', 'think', 'like', 'want', 'how', 'why', 'where', 'when',
-  ]);
-
-  return query
-    .toLowerCase()
-    .replace(/[^\w\s]/g, ' ')
-    .split(/\s+/)
-    .filter(word => word.length > 2 && !stopWords.has(word));
-}
-
 interface ConversationMessage {
   role: 'user' | 'assistant';
   content: string;
 }
 
 /**
- * Generate a Librarian response using corpus search + Gemini.
+ * Generate a Librarian response using Atlas Search + Gemini.
  */
 export async function generateLibrarianResponse(
   userMessage: string,
   history: ConversationMessage[] = [],
 ): Promise<{ content: string; sources: PageResult[] }> {
-  // Search the corpus for relevant passages
+  // Search the corpus for relevant passages (parallel, fast via Atlas Search)
   const [passages, books] = await Promise.all([
     searchCorpus(userMessage, 8),
     searchBooks(userMessage, 5),
