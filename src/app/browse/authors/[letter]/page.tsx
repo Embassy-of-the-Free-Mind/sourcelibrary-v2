@@ -6,12 +6,12 @@ import { notFound } from 'next/navigation';
 
 const LETTERS = 'ABCDEFGHIJKLMNOPQRSTUVWXYZ'.split('');
 
-// ISR: rebuild daily.
+// ISR: rebuild daily. Generate on demand (not at build time) to avoid MongoDB timeouts.
 export const revalidate = 86400;
 export const dynamicParams = true;
 
 export function generateStaticParams() {
-  return LETTERS.map(letter => ({ letter }));
+  return []; // Generate on first request, not at build time
 }
 
 interface PageProps {
