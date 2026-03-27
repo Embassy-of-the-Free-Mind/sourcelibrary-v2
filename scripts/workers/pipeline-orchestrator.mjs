@@ -1341,10 +1341,19 @@ async function run() {
           const splitResult = await splitRes.json();
           console.log(`    ${label}: split ${splitResult.splitCount || 0} spreads → ${splitResult.totalPages || 0} pages`);
 
-          // Mark as split-checked
+          // Mark as split-checked with provenance
+          const splitUpdate = {
+            'pipeline_auto.split_checked': true,
+            'pipeline_auto.last_updated': new Date(),
+          };
+          if (splitResult.splitCount > 0) {
+            splitUpdate['pipeline_auto.split_performed'] = true;
+            splitUpdate['pipeline_auto.split_count'] = splitResult.splitCount;
+            splitUpdate['pipeline_auto.split_at'] = new Date();
+          }
           await db.collection('books').updateOne(
             { id: book.id },
-            { $set: { 'pipeline_auto.split_checked': true, 'pipeline_auto.last_updated': new Date() } }
+            { $set: splitUpdate }
           );
 
           splitChecked++;
