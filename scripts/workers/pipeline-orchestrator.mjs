@@ -213,12 +213,10 @@ const SKIP_TRANSLATION_PAGE_TYPES = [
   'blank',
 ];
 
-// Non-Latin languages that need transliteration
+// Languages that get inline transliteration before translation.
+// Currently Greek only — other scripts are handled by the translator directly.
 const NON_LATIN_LANGUAGES = new Set([
-  'greek', 'hebrew', 'arabic', 'persian', 'ottoman turkish',
-  'syriac', 'chinese', 'japanese', 'korean', 'sanskrit',
-  'armenian', 'georgian', 'ethiopic', 'coptic', 'tibetan',
-  'russian', 'church slavonic',
+  'greek',
 ]);
 
 function isNonLatin(language) {
