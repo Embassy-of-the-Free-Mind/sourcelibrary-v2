@@ -197,7 +197,7 @@ const captureSiege: Scenario = {
   sourceRefs: [
     { source: 'barozzi', page: 37, detail: '153 white square and 190 black pyramid can ONLY be captured by siege' },
     { source: 'lever', page: 41, detail: 'By oblivion any man may be taken, even the king' },
-    { source: 'selenus', page: 518, detail: 'Capture by besieging (Einsperren)' },
+    { source: 'selenus', page: 515, detail: 'Capture by besieging (Einsperren)' },
   ],
   explanation: 'Barozzi reveals that 153 and 190 are mathematically uncapturable — no combination of opposing pieces can sum, subtract, multiply, or divide to reach these values. Siege is the only option, making positional play essential.',
 };
@@ -239,16 +239,16 @@ const victoryGeometric: Scenario = {
   title: 'Geometric Progression',
   subtitle: 'Constant ratio',
   difficulty: 2,
-  description: 'Place three pieces with values in geometric progression (constant ratio) in a line on the enemy\'s half. You have pieces valued 4, 8, and 16. Move the 16 to complete the diagonal.',
+  description: 'Place three pieces with values in geometric progression (constant ratio) in a line on the enemy\'s half. You have pieces valued 2, 4, and 8. Move the 8 to complete the diagonal.',
   hints: [
     'Geometric progression: each value is the same multiple of the previous.',
-    '4, 8, 16 — each is doubled. The ratio is 2.',
+    '2, 4, 8 — each is doubled. The ratio is 2.',
     'A diagonal line counts — the pieces don\'t have to be in the same row or column.',
   ],
   pieces: [
-    { shape: 'circle', value: 4, owner: 'even', position: { col: 2, row: 10 } },
-    { shape: 'circle', value: 8, owner: 'even', position: { col: 3, row: 11 } },
-    { shape: 'circle', value: 16, owner: 'even', position: { col: 3, row: 13 } }, // needs to move to col 4, row 12
+    { shape: 'circle', value: 2, owner: 'even', position: { col: 2, row: 10 } },
+    { shape: 'circle', value: 4, owner: 'even', position: { col: 3, row: 11 } },
+    { shape: 'circle', value: 8, owner: 'even', position: { col: 3, row: 13 } }, // needs to move to col 4, row 12
   ],
   playerSide: 'even',
   successCondition: { type: 'victory-formation', victoryType: 'geometric' },
@@ -281,7 +281,7 @@ const victoryHarmonic: Scenario = {
   sourceRefs: [
     { source: 'lever', page: 58, detail: '3, 4, 6 — between 3 and 4 is 1; between 4 and 6 is 2; the whole is 3' },
     { source: 'barozzi', page: 43, detail: 'Musical proportion: reciprocals form arithmetic' },
-    { source: 'selenus', page: 526, detail: 'The ratios produce Diapente, Diatessaron, Diapason' },
+    { source: 'selenus', page: 523, detail: 'Singe-Kunst table lists 3, 4, 6 as harmonic proportion' },
   ],
   explanation: 'Selenus demonstrates that 3, 4, 6 encodes the musical fifth (3:2), fourth (4:3), and octave (6:3). Buxerius confirms: "These ratios, if examined by weight or measured in strings, always provide Musical Harmony." You don\'t just win — you play a chord.',
 };
