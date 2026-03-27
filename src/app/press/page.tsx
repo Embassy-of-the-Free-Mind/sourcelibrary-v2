@@ -236,13 +236,13 @@ export default function PressPage() {
           <div className="flex items-center gap-6 mt-8">
             {/* eslint-disable-next-line @next/next/no-img-element */}
             <img
-              src="https://cdn.prod.website-files.com/68d800cb1402171531a5981e/68e1613213023b8399f2c4c0_embassy%20of%20the%20free%20mind%20logo2.png"
+              src="https://images.sourcelibrary.org/assets/embassy-of-the-free-mind-logo.png"
               alt="Embassy of the Free Mind"
               className="h-14 w-auto"
             />
             {/* eslint-disable-next-line @next/next/no-img-element */}
             <img
-              src="https://cdn.prod.website-files.com/68d800cb1402171531a5981e/68d800cb1402171531a599ea_partners-unesco.avif"
+              src="https://images.sourcelibrary.org/assets/partners-unesco.avif"
               alt="UNESCO Memory of the World"
               className="h-16 w-auto"
             />

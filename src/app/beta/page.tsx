@@ -157,8 +157,8 @@ export default function BetaLandingPage() {
             autoPlay loop muted playsInline preload="auto"
             className="absolute inset-0 w-full h-full object-cover"
           >
-            <source src="https://cdn.prod.website-files.com/68d800cb1402171531a597f4/68d800cb1402171531a598cf_embassy-of-the-free-mind-montage-002-transcode.webm" type="video/webm" />
-            <source src="https://cdn.prod.website-files.com/68d800cb1402171531a597f4/68d800cb1402171531a598cf_embassy-of-the-free-mind-montage-002-transcode.mp4" type="video/mp4" />
+            <source src="https://images.sourcelibrary.org/video/hero-bg.webm" type="video/webm" />
+            <source src="https://images.sourcelibrary.org/video/hero-bg.mp4" type="video/mp4" />
           </video>
         )}
         <div className="absolute inset-0 bg-gradient-to-b from-black/70 via-black/40 to-black/70" />
@@ -180,7 +180,7 @@ export default function BetaLandingPage() {
             <span className="hidden md:inline text-white/30">|</span>
             {/* eslint-disable-next-line @next/next/no-img-element */}
             <img
-              src="https://cdn.prod.website-files.com/68d800cb1402171531a5981e/68e1613213023b8399f2c4c0_embassy%20of%20the%20free%20mind%20logo2.png"
+              src="https://images.sourcelibrary.org/assets/embassy-of-the-free-mind-logo.png"
               alt="Embassy of the Free Mind"
               className="hidden md:block h-8 w-auto opacity-80"
             />

@@ -45,7 +45,7 @@ const NAV_COLUMNS = [
 ] as const;
 
 const PARTNERS = [
-  { name: 'Embassy of the Free Mind', src: 'https://cdn.prod.website-files.com/68d800cb1402171531a5981e/68e1613213023b8399f2c4c0_embassy%20of%20the%20free%20mind%20logo2.png', href: 'https://embassyofthefreemind.com', width: 200, height: 60, invert: true },
+  { name: 'Embassy of the Free Mind', src: 'https://images.sourcelibrary.org/assets/embassy-of-the-free-mind-logo.png', href: 'https://embassyofthefreemind.com', width: 200, height: 60, invert: true },
   { name: 'TU Delft', src: '/partners/tudelft-white.png', href: 'https://www.tudelft.nl', width: 373, height: 174, invert: false },
 ];
 

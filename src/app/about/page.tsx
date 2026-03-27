@@ -132,12 +132,12 @@ export default function AboutPage() {
 
         <div className="flex flex-wrap items-center gap-8 mb-12">
           <img
-            src="https://cdn.prod.website-files.com/68d800cb1402171531a5981e/68e1613213023b8399f2c4c0_embassy%20of%20the%20free%20mind%20logo2.png"
+            src="https://images.sourcelibrary.org/assets/embassy-of-the-free-mind-logo.png"
             alt="Embassy of the Free Mind"
             className="h-16 w-auto object-contain"
           />
           <img
-            src="https://cdn.prod.website-files.com/68d800cb1402171531a5981e/68d800cb1402171531a599ea_partners-unesco.avif"
+            src="https://images.sourcelibrary.org/assets/partners-unesco.avif"
             alt="UNESCO Memory of the World"
             className="h-20 w-auto object-contain"
           />
