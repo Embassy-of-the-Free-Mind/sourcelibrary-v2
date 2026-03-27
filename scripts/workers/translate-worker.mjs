@@ -339,13 +339,37 @@ async function processBook(db, book, job, globalCounter) {
     },
   );
 
-  // If complete, advance pipeline
+  // If complete, advance pipeline and sync page counts
   if (isComplete) {
+    // Count actual translated + blank pages from source of truth
+    const [countAgg] = await db.collection('pages').aggregate([
+      { $match: { book_id: book.id } },
+      { $group: {
+        _id: null,
+        total: { $sum: 1 },
+        with_translation: { $sum: { $cond: [{ $and: [{ $ne: ['$translation.data', null] }, { $ne: ['$translation.data', ''] }, { $ifNull: ['$translation.data', false] }] }, 1, 0] } },
+        with_ocr: { $sum: { $cond: [{ $and: [{ $ne: ['$ocr.data', null] }, { $ne: ['$ocr.data', ''] }, { $ifNull: ['$ocr.data', false] }] }, 1, 0] } },
+        blank: { $sum: { $cond: [{ $eq: ['$page_type', 'blank'] }, 1, 0] } },
+      }}
+    ]).toArray();
+
+    const bookUpdate = {
+      'pipeline_auto.status': 'translate_complete',
+      updated_at: new Date(),
+      last_translation_at: new Date(),
+    };
+    if (countAgg) {
+      bookUpdate.pages_count = countAgg.total;
+      bookUpdate.pages_translated = countAgg.with_translation;
+      bookUpdate.pages_ocr = countAgg.with_ocr;
+      bookUpdate.pages_blank = countAgg.blank;
+    }
+
     await db.collection('books').updateOne(
       { id: book.id },
-      { $set: { 'pipeline_auto.status': 'translate_complete', updated_at: new Date() }, $unset: { job: '' } },
+      { $set: bookUpdate, $unset: { job: '' } },
     );
-    console.log(`  [${label}] Complete — ${newCompleted} translated, ${newFailed} failed`);
+    console.log(`  [${label}] Complete — ${newCompleted} translated, ${newFailed} failed (synced: ${countAgg?.with_translation}/${countAgg?.total} pages)`);
   } else {
     console.log(`  [${label}] Progress — ${translated} this run (${newCompleted}/${job.progress.total} total)`);
   }
