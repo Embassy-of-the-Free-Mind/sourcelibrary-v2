@@ -6,7 +6,7 @@ Operational reference for pipeline monitoring, debugging, and processing. For fu
 
 | Component | Where | How |
 |-----------|-------|-----|
-| Pipeline orchestrator | **Hetzner** (`pipeline-orchestrator.mjs`) | All phases, every 5 min |
+| Pipeline orchestrator | **Hetzner** (`pipeline-orchestrator.mjs`) | All phases, every 2 min |
 | Full-book OCR | **Hetzner → Gemini Batch API** | Direct submission, 50% cost discount |
 | Translation | **Hetzner** (`translate-worker.mjs`) | Direct Gemini calls, 20 concurrent books |
 | Batch result collection | **Hetzner** (`batch-collector.mjs`) | Polls Gemini API every 10 min |

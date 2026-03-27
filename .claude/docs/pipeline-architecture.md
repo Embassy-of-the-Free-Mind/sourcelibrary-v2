@@ -42,24 +42,47 @@ Note: `enrich-books` cron code exists in the codebase but is NOT in `vercel.json
 
 ### Hetzner (root@46.224.122.120, cax31, "clawdbot") -- ALL pipeline orchestration
 
-- 41 days uptime, load ~0.30
 - Main script: `scripts/workers/pipeline-orchestrator.mjs` (~2000 lines)
 - Independent phase crons with per-phase lock files
-- **CRITICAL:** Crontab entries and lock file setup are LOCAL to Hetzner, NOT in git
+- **Crontab is versioned** at `scripts/workers/crontab.production` (dumped 2026-03-27)
 
 #### Hetzner Cron Schedule
 
+**Pipeline core (high frequency):**
+
 | Cron | Interval | Lock file | Purpose |
 |------|----------|-----------|---------|
-| `pipeline-orchestrator.mjs` (main) | */5 min | `sl-pipeline.lock` | All phases (fallback) |
+| `pipeline-orchestrator.mjs` (main) | */2 min | `sl-pipeline.lock` | All phases (fallback orchestrator) |
+| `translate-worker.mjs` | */2 min | `sl-translate.lock` | Inline translation via Gemini (no Lambda) |
+| `--phase 1.5` (preview OCR) | */2 min | `sl-preview-ocr.lock` | First 25 pages via Lambda for fast preview |
+| `--phase 5` (translate complete) | */5 min | `sl-translate-complete.lock` | Translation completion check |
 | `--phase 0` (enrollment) | */10 min | `sl-enroll.lock` | New books -> queued |
 | `--phase 1` (archive check) | */10 min | `sl-archive-check.lock` | queued -> archive_complete |
 | `--phase 2` (OCR submit) | */10 min | `sl-ocr-submit.lock` | Submit to Gemini Batch API |
 | `--phase 3` (OCR complete) | */10 min | `sl-ocr-complete.lock` | Batch results -> pages |
-| `--phase 5` (translate complete) | */10 min | `sl-translate-complete.lock` | Lambda results -> books |
 | `batch-collector.mjs` | */10 min | `sl-collector.lock` | Poll Gemini Batch API |
+| `archive-bulk.mjs` | */10 min | `sl-archive-bulk.lock` | IA bulk JP2 zip download -> R2 |
+
+**Archiving & image processing (medium frequency):**
+
+| Cron | Interval | Lock file | Purpose |
+|------|----------|-----------|---------|
+| `archive-ocr.mjs` | */30 min | `sl-archive-ocr.lock` | Per-page IIIF download -> R2 |
+| `resize-worker.mjs` | */30 min | `sl-resize.lock` | Generate display-size from full-res |
 | `sync-worker.mjs` | */2 hr | `sl-sync.lock` | Page count cache refresh |
-| `archive-ocr.mjs` | */4 hr | `sl-archive-ocr.lock` | Images -> Cloudflare R2 |
+
+**Daily maintenance:**
+
+| Cron | Time | Lock file | Purpose |
+|------|------|-----------|---------|
+| `warm-author-pages.mjs` | 5:00 UTC | `sl-warm-authors.lock` | ISR cache warmup for author pages |
+| `prewarm-browse.mjs` | 5:15 UTC | `sl-prewarm.lock` | ISR cache warmup for browse pages |
+| `pipeline-health-alert.mjs` | 7:00 UTC | `sl-health.lock` | Daily throughput + storage alerts |
+
+**Vercel proxy (calls Vercel endpoints from Hetzner):**
+
+| Cron | Interval | Lock file | Purpose |
+|------|----------|-----------|---------|
 | `cron-caller.mjs social-post` | */3 hr | `sl-social-post.lock` | Calls Vercel endpoint |
 | `cron-caller.mjs social-reset` | Daily midnight | -- | Calls Vercel endpoint |
 | `cron-caller.mjs daily-pipeline-report` | Daily 6am | -- | Calls Vercel endpoint |
@@ -207,7 +230,7 @@ $0.0017/page (measured from `gemini_usage`: $354 / 211K pages over 7 days)
 ### Flow (Production)
 
 1. Orchestrator Phase 4 creates a `jobs` record, sets book to `translate_submitted`
-2. `translate-worker.mjs` (Hetzner cron, every 5 min) picks up books in `translate_submitted`
+2. `translate-worker.mjs` (Hetzner cron, every 2 min) picks up books in `translate_submitted`
 3. Translates pages sequentially per book (previous page's translation as context)
 4. Calls Gemini directly -- model: `gemini-3-flash-preview` (BPH) or `gemini-3.1-flash-lite-preview` (others)
 5. Writes translation directly to `pages` collection

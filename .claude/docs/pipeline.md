@@ -29,7 +29,7 @@ Every step is independent and idempotent. Books can enter at any stage and be re
 
 ## Auto Pipeline State Machine
 
-The pipeline is orchestrated from **Hetzner** (`scripts/workers/pipeline-orchestrator.mjs`, every 5 min). Translation runs on a separate Hetzner worker (`translate-worker.mjs`, every 5 min). Batch OCR results are collected by `batch-collector.mjs` (every 10 min). See `pipeline-architecture.md` for the full infrastructure map.
+The pipeline is orchestrated from **Hetzner** (`scripts/workers/pipeline-orchestrator.mjs`, every 2 min). Translation runs on a separate Hetzner worker (`translate-worker.mjs`, every 2 min). Batch OCR results are collected by `batch-collector.mjs` (every 10 min). See `pipeline-architecture.md` for the full cron schedule and infrastructure map.
 
 **Legacy:** The Vercel crons (`post-import-pipeline`, `enrich-books`) still exist in `_archived/` and can be re-enabled. The Hetzner orchestrator consolidated both into a single script with all phases.
 
@@ -292,7 +292,7 @@ The old Vercel-based `post-import-pipeline` cron also had OCR routing with Lambd
 
 ### Production Path: Hetzner Inline Worker
 
-`scripts/workers/translate-worker.mjs` runs on Hetzner cron every 5 minutes:
+`scripts/workers/translate-worker.mjs` runs on Hetzner cron every 2 minutes:
 - Picks up books in `translate_submitted` status
 - Translates pages sequentially per book (context continuity via previous page lookup)
 - Calls Gemini API directly — no SQS, no Lambda
