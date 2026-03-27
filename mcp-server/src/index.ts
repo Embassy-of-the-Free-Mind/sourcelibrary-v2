@@ -182,13 +182,17 @@ const TOOLS: Tool[] = [
   {
     name: "get_book_text",
     description:
-      "READ A BOOK — start here. Returns 50+ pages of text (OCR and/or translations) in a single call, each with a citation URL. Use page ranges (from/to) for focused reading. This is the primary tool for reading and analyzing book content.",
+      "READ A BOOK — start here. Preferred: use 'chapter' param to read one chapter at a time (includes page markers like [Page 42] for citation). Or use page ranges (from/to) for focused reading. Call get_book first to see the chapter list.",
     inputSchema: {
       type: "object" as const,
       properties: {
         book_id: {
           type: "string",
           description: "The book ID",
+        },
+        chapter: {
+          type: "number",
+          description: "Chapter index (0-based). Returns the full chapter text with embedded [Page N] markers for citation. Preferred over from/to for reading.",
         },
         content: {
           type: "string",
@@ -197,16 +201,16 @@ const TOOLS: Tool[] = [
         },
         from: {
           type: "number",
-          description: "Start page number (inclusive)",
+          description: "Start page number (inclusive). Use chapter param instead when possible.",
         },
         to: {
           type: "number",
-          description: "End page number (inclusive)",
+          description: "End page number (inclusive). Use chapter param instead when possible.",
         },
         format: {
           type: "string",
           enum: ["json", "plain"],
-          description: "Response format: 'json' (structured with per-page URLs, default) or 'plain' (concatenated text with page markers)",
+          description: "Response format: 'json' (structured, default) or 'plain' (concatenated text with page markers)",
         },
         include_metadata: {
           type: "boolean",

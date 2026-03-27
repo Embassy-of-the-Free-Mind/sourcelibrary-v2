@@ -2,6 +2,7 @@ import { NextRequest, NextResponse } from 'next/server';
 import { getDb } from '@/lib/mongodb';
 import { getGeminiClient } from '@/lib/gemini-client';
 import { withAuth } from '@/lib/auth-helpers';
+import { getChapterTexts } from '@/lib/chapter-text';
 import { z } from 'zod';
 
 // Validation schema for chat messages
@@ -121,7 +122,56 @@ async function searchBookPages(
   return scoredPages.slice(0, limit).map(sp => sp.page);
 }
 
-// Build context from book data with RAG-based page retrieval
+// Search chapter texts for relevant content using keyword matching
+async function searchChapterTexts(
+  bookId: string,
+  query: string,
+  limit: number = 3,
+): Promise<Array<{ index: number; title: string; titleEn?: string; pageStart: number; pageEnd: number; text: string; score: number }>> {
+  const db = await getDb();
+  const chapters = await getChapterTexts(db, bookId);
+  if (chapters.length === 0) return [];
+
+  const keywords = extractKeywords(query);
+  if (keywords.length === 0) {
+    // No keywords — return first chapter
+    return chapters.slice(0, 1).map(ct => ({
+      index: ct.chapter_index,
+      title: ct.title,
+      titleEn: ct.titleEn,
+      pageStart: ct.pageStart,
+      pageEnd: ct.pageEnd,
+      text: ct.text,
+      score: 0,
+    }));
+  }
+
+  // Score each chapter by keyword density
+  const scored = chapters.map(ct => {
+    const text = ct.text.toLowerCase();
+    let score = 0;
+    for (const kw of keywords) {
+      const matches = (text.match(new RegExp(kw, 'gi')) || []).length;
+      score += matches;
+    }
+    return {
+      index: ct.chapter_index,
+      title: ct.title,
+      titleEn: ct.titleEn,
+      pageStart: ct.pageStart,
+      pageEnd: ct.pageEnd,
+      text: ct.text,
+      score,
+    };
+  });
+
+  return scored
+    .filter(s => s.score > 0)
+    .sort((a, b) => b.score - a.score)
+    .slice(0, limit);
+}
+
+// Build context from book data — prefers chapter-level retrieval, falls back to page-level
 async function buildBookContext(
   bookId: string,
   userQuery: string
@@ -131,10 +181,8 @@ async function buildBookContext(
   const book = await db.collection('books').findOne({ id: bookId }) as unknown as BookData | null;
   if (!book) throw new Error('Book not found');
 
-  // Get total page count for reference
   const totalPages = book.pages_count || 0;
 
-  // Build context string with book info
   let context = `# Book Information
 Title: ${book.display_title || book.title}
 Author: ${book.author || 'Unknown'}
@@ -142,7 +190,6 @@ Language: ${book.language || 'Unknown'}
 Total Pages: ${totalPages}
 `;
 
-  // Add summary if available
   if (book.index?.bookSummary?.abstract) {
     context += `\n## Summary\n${book.index.bookSummary.abstract}\n`;
   }
@@ -151,24 +198,40 @@ Total Pages: ${totalPages}
     context += `\n## Detailed Overview\n${book.index.bookSummary.detailed}\n`;
   }
 
-  // Use RAG to find relevant pages based on the user's query
-  const relevantPages = await searchBookPages(bookId, userQuery, 15);
+  // Try chapter-level retrieval first (better context, includes page markers for citation)
+  const relevantChapters = await searchChapterTexts(bookId, userQuery, 3);
 
-  if (relevantPages.length > 0) {
-    context += `\n## Relevant Pages (based on your question)\n`;
-    context += `The following pages from the book are most relevant to your question:\n`;
+  if (relevantChapters.length > 0) {
+    context += `\n## Relevant Chapters\n`;
+    // Budget: ~80K chars total for chapter text to stay within model limits
+    let charBudget = 80000;
+    for (const ch of relevantChapters) {
+      const title = ch.titleEn || ch.title;
+      context += `\n### ${title} (pages ${ch.pageStart}–${ch.pageEnd})\n`;
+      if (ch.text.length <= charBudget) {
+        context += ch.text + '\n';
+        charBudget -= ch.text.length;
+      } else {
+        context += ch.text.substring(0, charBudget) + '\n...(truncated)\n';
+        break;
+      }
+    }
+  } else {
+    // Fall back to page-level search (no chapter texts materialized)
+    const relevantPages = await searchBookPages(bookId, userQuery, 15);
 
-    // Sort by page number for readability
-    relevantPages.sort((a, b) => a.page_number - b.page_number);
+    if (relevantPages.length > 0) {
+      context += `\n## Relevant Pages (based on your question)\n`;
+      relevantPages.sort((a, b) => a.page_number - b.page_number);
 
-    for (const page of relevantPages) {
-      const cleaned = cleanText(page.translation?.data || '');
-      if (cleaned.length > 50) {
-        // Include full page content (up to 2000 chars per page)
-        const content = cleaned.length > 2000
-          ? cleaned.substring(0, 2000) + '...'
-          : cleaned;
-        context += `\n### Page ${page.page_number}\n${content}\n`;
+      for (const page of relevantPages) {
+        const cleaned = cleanText(page.translation?.data || '');
+        if (cleaned.length > 50) {
+          const content = cleaned.length > 2000
+            ? cleaned.substring(0, 2000) + '...'
+            : cleaned;
+          context += `\n### Page ${page.page_number}\n${content}\n`;
+        }
       }
     }
   }

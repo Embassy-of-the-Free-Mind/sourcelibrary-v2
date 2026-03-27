@@ -2,6 +2,7 @@ import { NextRequest, NextResponse } from 'next/server';
 import { getDb } from '@/lib/mongodb';
 import { ObjectId } from 'mongodb';
 import { isBot, isTrustedBot, isBotAccessible, botGateResponse } from '@/lib/bot-gate';
+import { getChapterTexts } from '@/lib/chapter-text';
 
 export const maxDuration = 30;
 
@@ -15,6 +16,7 @@ export const maxDuration = 30;
  *   content=ocr|translation|both (default: both)
  *   from=N  — start page number (inclusive)
  *   to=N    — end page number (inclusive)
+ *   chapter=N — return chapter N (0-indexed). Overrides from/to.
  *   format=json|plain (default: json)
  *   include_metadata=true — include page-level OCR/translation metadata
  */
@@ -29,6 +31,7 @@ export async function GET(
     const content = searchParams.get('content') || 'both';
     const fromPage = searchParams.get('from') ? parseInt(searchParams.get('from')!) : undefined;
     const toPage = searchParams.get('to') ? parseInt(searchParams.get('to')!) : undefined;
+    const chapterParam = searchParams.get('chapter');
     const format = searchParams.get('format') || 'json';
     const includeMetadata = searchParams.get('include_metadata') === 'true';
 
@@ -66,6 +69,70 @@ export async function GET(
         botGateResponse({ ...book, ...fullBook, id: resolvedBookId }),
         { status: 200, headers: { 'Cache-Control': 'public, max-age=3600' } }
       );
+    }
+
+    // Chapter mode: return pre-materialized chapter text
+    if (chapterParam !== null) {
+      const chapterIndex = parseInt(chapterParam);
+      if (isNaN(chapterIndex) || chapterIndex < 0) {
+        return NextResponse.json({ error: 'chapter must be a non-negative integer' }, { status: 400 });
+      }
+
+      const chapterTexts = await getChapterTexts(db, resolvedBookId, chapterIndex);
+
+      if (chapterTexts.length === 0) {
+        // Fall back: check if chapters exist but aren't materialized yet
+        const bookWithChapters = await db.collection('books').findOne(
+          { id: resolvedBookId },
+          { projection: { chapters: 1 } },
+        );
+        if (bookWithChapters?.chapters?.[chapterIndex]) {
+          return NextResponse.json({
+            error: 'Chapter exists but text not yet materialized. Run POST /api/books/{id}/materialize-chapters first.',
+            chapter: bookWithChapters.chapters[chapterIndex],
+          }, { status: 404 });
+        }
+        return NextResponse.json({ error: 'Chapter not found' }, { status: 404 });
+      }
+
+      const ct = chapterTexts[0];
+      if (format === 'plain') {
+        const header = [
+          `# ${book.display_title || book.title}`,
+          `# ${book.author} (${book.published || 'n.d.'})`,
+          `# Chapter ${chapterIndex}: ${ct.titleEn || ct.title}`,
+          `# Pages ${ct.pageStart}–${ct.pageEnd}`,
+          `# Source: https://sourcelibrary.org/book/${resolvedBookId}`,
+          '',
+          content === 'ocr' ? (ct.ocr_text || ct.text) : ct.text,
+        ].join('\n');
+
+        return new Response(header, {
+          headers: { 'Content-Type': 'text/plain; charset=utf-8', 'Cache-Control': 'public, max-age=3600' },
+        });
+      }
+
+      return NextResponse.json({
+        book: {
+          id: resolvedBookId,
+          title: book.display_title || book.title,
+          author: book.author,
+          url: `https://sourcelibrary.org/book/${resolvedBookId}`,
+        },
+        chapter: {
+          index: ct.chapter_index,
+          title: ct.title,
+          titleEn: ct.titleEn,
+          level: ct.level,
+          pageStart: ct.pageStart,
+          pageEnd: ct.pageEnd,
+          token_estimate: ct.token_estimate,
+          text: content === 'ocr' ? (ct.ocr_text || ct.text) : ct.text,
+          ...(content === 'both' && ct.ocr_text ? { ocr_text: ct.ocr_text } : {}),
+        },
+      }, {
+        headers: { 'Cache-Control': 'public, max-age=3600' },
+      });
     }
 
     // Build page query

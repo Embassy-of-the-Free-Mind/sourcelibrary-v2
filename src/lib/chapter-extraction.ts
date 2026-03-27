@@ -15,6 +15,7 @@ import { getGeminiClient } from '@/lib/gemini-client';
 import { logGeminiCall } from '@/lib/gemini-logger';
 import { DEFAULT_MODEL } from '@/lib/types';
 import { MODEL_PRICING } from '@/lib/ai';
+import { computeEndPages } from '@/lib/chapter-text';
 import type { Chapter } from '@/lib/types';
 
 interface RawHeading {
@@ -312,6 +313,9 @@ export async function extractChaptersForBook(
   }
 
   chapters.sort((a, b) => a.pageNumber - b.pageNumber);
+
+  // Compute endPage for each chapter
+  computeEndPages(chapters, pages.length);
 
   // Save to book
   await db.collection('books').updateOne(

@@ -220,6 +220,7 @@ export async function getBook(args: { book_id: string }) {
 
 export async function getBookText(args: {
   book_id: string;
+  chapter?: number;
   content?: string;
   from?: number;
   to?: number;
@@ -227,6 +228,7 @@ export async function getBookText(args: {
   include_metadata?: boolean;
 }) {
   const params = new URLSearchParams();
+  if (args.chapter !== undefined) params.set("chapter", String(args.chapter));
   if (args.content) params.set("content", args.content);
   if (args.from !== undefined) params.set("from", String(args.from));
   if (args.to !== undefined) params.set("to", String(args.to));
