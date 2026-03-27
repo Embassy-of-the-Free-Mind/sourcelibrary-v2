@@ -12,9 +12,15 @@
 import type { Db } from 'mongodb';
 import type { Chapter } from '@/lib/types';
 
+// Max tokens per chunk. Chapters exceeding this are split at page boundaries.
+const MAX_CHUNK_TOKENS = 100_000;
+const MAX_CHUNK_CHARS = MAX_CHUNK_TOKENS * 4; // ~4 chars per token
+
 export interface ChapterText {
   book_id: string;
   chapter_index: number;
+  part?: number;          // Set when a chapter is split into multiple parts (1-based)
+  parts_total?: number;   // Total parts for this chapter (only set when split)
   title: string;
   titleEn?: string;
   level: number;
@@ -91,52 +97,85 @@ export async function materializeChapterTexts(
     const startPage = ch.pageNumber;
     const endPage = ch.endPage || totalPages;
 
-    const translationParts: string[] = [];
-    const ocrParts: string[] = [];
-
-    // Start with chapter header for structural context
-    const chapterLabel = ch.titleEn
-      ? `# ${ch.title}\n## ${ch.titleEn}`
-      : `# ${ch.title}`;
-    translationParts.push(chapterLabel);
-    ocrParts.push(`# ${ch.title}`);
+    // Collect per-page text first, then chunk
+    const pageTexts: Array<{ pn: number; trans: string; ocr: string }> = [];
 
     for (let pn = startPage; pn <= endPage; pn++) {
       const page = pageMap.get(pn);
       if (!page) continue;
 
-      // Embed page markers so readers can cite specific pages
       const marker = `[Page ${pn}]`;
+      const trans = page.translation
+        ? `${marker}\n${page.translation}`
+        : page.ocr
+          ? `${marker}\n${page.ocr}`
+          : '';
+      const ocr = page.ocr ? `${marker}\n${page.ocr}` : '';
 
-      if (page.translation) {
-        translationParts.push(`${marker}\n${page.translation}`);
-      } else if (page.ocr) {
-        translationParts.push(`${marker}\n${page.ocr}`);
-      }
-
-      if (page.ocr) {
-        ocrParts.push(`${marker}\n${page.ocr}`);
+      if (trans || ocr) {
+        pageTexts.push({ pn, trans, ocr });
       }
     }
 
-    const text = translationParts.join('\n\n');
-    const ocrText = ocrParts.join('\n\n');
-    const tokenEstimate = Math.round(text.length / 4);
-    totalTokens += tokenEstimate;
+    // Build chunks, splitting at page boundaries when exceeding MAX_CHUNK_CHARS
+    const chunks: Array<{ pageStart: number; pageEnd: number; transParts: string[]; ocrParts: string[] }> = [];
+    let current = { pageStart: startPage, pageEnd: startPage, transParts: [] as string[], ocrParts: [] as string[] };
+    let currentChars = 0;
 
-    docs.push({
-      book_id: bookId,
-      chapter_index: i,
-      title: ch.title,
-      titleEn: ch.titleEn,
-      level: ch.level,
-      pageStart: startPage,
-      pageEnd: endPage,
-      text,
-      ocr_text: ocrText || undefined,
-      token_estimate: tokenEstimate,
-      materialized_at: new Date(),
-    });
+    for (const pt of pageTexts) {
+      const pageChars = pt.trans.length + 4; // +4 for join separator
+      if (currentChars > 0 && currentChars + pageChars > MAX_CHUNK_CHARS) {
+        // Start a new chunk
+        chunks.push(current);
+        current = { pageStart: pt.pn, pageEnd: pt.pn, transParts: [], ocrParts: [] };
+        currentChars = 0;
+      }
+      if (pt.trans) current.transParts.push(pt.trans);
+      if (pt.ocr) current.ocrParts.push(pt.ocr);
+      current.pageEnd = pt.pn;
+      currentChars += pageChars;
+    }
+    if (current.transParts.length > 0) {
+      chunks.push(current);
+    }
+
+    const needsSplit = chunks.length > 1;
+
+    for (let partIdx = 0; partIdx < chunks.length; partIdx++) {
+      const chunk = chunks[partIdx];
+
+      // Prepend chapter header
+      const chapterLabel = ch.titleEn
+        ? `# ${ch.title}\n## ${ch.titleEn}`
+        : `# ${ch.title}`;
+      const headerSuffix = needsSplit ? ` (part ${partIdx + 1} of ${chunks.length})` : '';
+      chunk.transParts.unshift(chapterLabel + headerSuffix);
+      chunk.ocrParts.unshift(`# ${ch.title}${headerSuffix}`);
+
+      const text = chunk.transParts.join('\n\n');
+      const ocrText = chunk.ocrParts.join('\n\n');
+      const tokenEstimate = Math.round(text.length / 4);
+      totalTokens += tokenEstimate;
+
+      const doc: ChapterText = {
+        book_id: bookId,
+        chapter_index: i,
+        title: ch.title,
+        titleEn: ch.titleEn,
+        level: ch.level,
+        pageStart: chunk.pageStart,
+        pageEnd: chunk.pageEnd,
+        text,
+        ocr_text: ocrText || undefined,
+        token_estimate: tokenEstimate,
+        materialized_at: new Date(),
+      };
+      if (needsSplit) {
+        doc.part = partIdx + 1;
+        doc.parts_total = chunks.length;
+      }
+      docs.push(doc);
+    }
   }
 
   // Upsert: delete old chapter texts for this book, insert new ones
@@ -185,6 +224,6 @@ export async function getChapterTexts(
   }
   return db.collection('chapter_texts')
     .find(filter)
-    .sort({ chapter_index: 1 })
+    .sort({ chapter_index: 1, part: 1 })
     .toArray() as unknown as ChapterText[];
 }

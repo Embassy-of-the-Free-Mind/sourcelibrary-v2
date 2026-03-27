@@ -51,6 +51,7 @@ async function materializeBook(db, book) {
     });
   }
 
+  const MAX_CHUNK_CHARS = 400_000; // ~100K tokens at 4 chars/token
   const docs = [];
   let totalTokens = 0;
 
@@ -58,48 +59,76 @@ async function materializeBook(db, book) {
     const ch = chapters[i];
     const startPage = ch.pageNumber;
     const endPage = ch.endPage || book.pages_count || 0;
-    const translationParts = [];
-    const ocrParts = [];
 
-    // Start with chapter header for structural context
-    const chapterLabel = ch.titleEn
-      ? `# ${ch.title}\n## ${ch.titleEn}`
-      : `# ${ch.title}`;
-    translationParts.push(chapterLabel);
-    ocrParts.push(`# ${ch.title}`);
-
+    // Collect per-page text first
+    const pageTexts = [];
     for (let pn = startPage; pn <= endPage; pn++) {
       const page = pageMap.get(pn);
       if (!page) continue;
       const marker = `[Page ${pn}]`;
-      if (page.translation) {
-        translationParts.push(`${marker}\n${page.translation}`);
-      } else if (page.ocr) {
-        translationParts.push(`${marker}\n${page.ocr}`);
-      }
-      if (page.ocr) {
-        ocrParts.push(`${marker}\n${page.ocr}`);
-      }
+      const trans = page.translation
+        ? `${marker}\n${page.translation}`
+        : page.ocr
+          ? `${marker}\n${page.ocr}`
+          : '';
+      const ocr = page.ocr ? `${marker}\n${page.ocr}` : '';
+      if (trans || ocr) pageTexts.push({ pn, trans, ocr });
     }
 
-    const text = translationParts.join('\n\n');
-    const ocrText = ocrParts.join('\n\n');
-    const tokenEstimate = Math.round(text.length / 4);
-    totalTokens += tokenEstimate;
+    // Build chunks, splitting at page boundaries when exceeding limit
+    const chunks = [];
+    let current = { pageStart: startPage, pageEnd: startPage, transParts: [], ocrParts: [] };
+    let currentChars = 0;
 
-    docs.push({
-      book_id: book.id,
-      chapter_index: i,
-      title: ch.title,
-      titleEn: ch.titleEn,
-      level: ch.level,
-      pageStart: startPage,
-      pageEnd: endPage,
-      text,
-      ocr_text: ocrText || undefined,
-      token_estimate: tokenEstimate,
-      materialized_at: new Date(),
-    });
+    for (const pt of pageTexts) {
+      const pageChars = pt.trans.length + 4;
+      if (currentChars > 0 && currentChars + pageChars > MAX_CHUNK_CHARS) {
+        chunks.push(current);
+        current = { pageStart: pt.pn, pageEnd: pt.pn, transParts: [], ocrParts: [] };
+        currentChars = 0;
+      }
+      if (pt.trans) current.transParts.push(pt.trans);
+      if (pt.ocr) current.ocrParts.push(pt.ocr);
+      current.pageEnd = pt.pn;
+      currentChars += pageChars;
+    }
+    if (current.transParts.length > 0) chunks.push(current);
+
+    const needsSplit = chunks.length > 1;
+
+    for (let partIdx = 0; partIdx < chunks.length; partIdx++) {
+      const chunk = chunks[partIdx];
+      const chapterLabel = ch.titleEn
+        ? `# ${ch.title}\n## ${ch.titleEn}`
+        : `# ${ch.title}`;
+      const headerSuffix = needsSplit ? ` (part ${partIdx + 1} of ${chunks.length})` : '';
+      chunk.transParts.unshift(chapterLabel + headerSuffix);
+      chunk.ocrParts.unshift(`# ${ch.title}${headerSuffix}`);
+
+      const text = chunk.transParts.join('\n\n');
+      const ocrText = chunk.ocrParts.join('\n\n');
+      const tokenEstimate = Math.round(text.length / 4);
+      totalTokens += tokenEstimate;
+
+      const doc = {
+        book_id: book.id,
+        chapter_index: i,
+        title: ch.title,
+        titleEn: ch.titleEn,
+        level: ch.level,
+        pageStart: chunk.pageStart,
+        pageEnd: chunk.pageEnd,
+        text,
+        ocr_text: ocrText || undefined,
+        token_estimate: tokenEstimate,
+        materialized_at: new Date(),
+      };
+      if (needsSplit) {
+        doc.part = partIdx + 1;
+        doc.parts_total = chunks.length;
+      }
+      docs.push(doc);
+    }
   }
 
   await db.collection('chapter_texts').deleteMany({ book_id: book.id });

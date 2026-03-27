@@ -192,7 +192,11 @@ const TOOLS: Tool[] = [
         },
         chapter: {
           type: "number",
-          description: "Chapter index (0-based). Returns the full chapter text with embedded [Page N] markers for citation. Preferred over from/to for reading.",
+          description: "Chapter index (0-based). Returns chapter text with embedded [Page N] markers for citation. Preferred over from/to. If the chapter has multiple parts, returns part 1 — check parts_total in response.",
+        },
+        part: {
+          type: "number",
+          description: "Part number (1-based) for large chapters split into multiple parts.",
         },
         content: {
           type: "string",

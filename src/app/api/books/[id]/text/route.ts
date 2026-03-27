@@ -32,6 +32,7 @@ export async function GET(
     const fromPage = searchParams.get('from') ? parseInt(searchParams.get('from')!) : undefined;
     const toPage = searchParams.get('to') ? parseInt(searchParams.get('to')!) : undefined;
     const chapterParam = searchParams.get('chapter');
+    const partParam = searchParams.get('part');
     const format = searchParams.get('format') || 'json';
     const includeMetadata = searchParams.get('include_metadata') === 'true';
 
@@ -78,9 +79,9 @@ export async function GET(
         return NextResponse.json({ error: 'chapter must be a non-negative integer' }, { status: 400 });
       }
 
-      const chapterTexts = await getChapterTexts(db, resolvedBookId, chapterIndex);
+      const allParts = await getChapterTexts(db, resolvedBookId, chapterIndex);
 
-      if (chapterTexts.length === 0) {
+      if (allParts.length === 0) {
         // Fall back: check if chapters exist but aren't materialized yet
         const bookWithChapters = await db.collection('books').findOne(
           { id: resolvedBookId },
@@ -95,12 +96,18 @@ export async function GET(
         return NextResponse.json({ error: 'Chapter not found' }, { status: 404 });
       }
 
-      const ct = chapterTexts[0];
+      // Select the right part (default: part 1 or the only part)
+      const requestedPart = partParam ? parseInt(partParam) : 1;
+      const ct = allParts.length === 1
+        ? allParts[0]
+        : allParts.find(p => p.part === requestedPart) || allParts[0];
+
       if (format === 'plain') {
+        const partLabel = ct.parts_total ? ` (part ${ct.part} of ${ct.parts_total})` : '';
         const header = [
           `# ${book.display_title || book.title}`,
           `# ${book.author} (${book.published || 'n.d.'})`,
-          `# Chapter ${chapterIndex}: ${ct.titleEn || ct.title}`,
+          `# Chapter ${chapterIndex}: ${ct.titleEn || ct.title}${partLabel}`,
           `# Pages ${ct.pageStart}–${ct.pageEnd}`,
           `# Source: https://sourcelibrary.org/book/${resolvedBookId}`,
           '',
@@ -127,6 +134,7 @@ export async function GET(
           pageStart: ct.pageStart,
           pageEnd: ct.pageEnd,
           token_estimate: ct.token_estimate,
+          ...(ct.parts_total ? { part: ct.part, parts_total: ct.parts_total } : {}),
           text: content === 'ocr' ? (ct.ocr_text || ct.text) : ct.text,
           ...(content === 'both' && ct.ocr_text ? { ocr_text: ct.ocr_text } : {}),
         },
