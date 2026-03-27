@@ -48,6 +48,7 @@ Operational reference for pipeline monitoring, debugging, and processing. For fu
 ## Critical Rules
 
 - NEVER use Gemini Batch API for translation — lacks cross-page context. Use `translate-worker.mjs` (Hetzner) or Lambda FIFO (fallback).
+- **Any Hetzner worker that writes to `pages` must also update the parent book's cached counters** (`pages_ocr`, `pages_translated`, `pages_archived`). Vercel API routes do this via shared helpers, but standalone Hetzner scripts bypass them. See #497.
 - Any script overwriting `ocr.data` or `translation.data` MUST call `createRevision(pageId, field, jobId?)` first
 - Summary/Index generation: ALWAYS use `gemini-3-flash-preview` (per CLAUDE.md)
 - Stale Vercel connection pools after DB recovery → redeploy to reset
@@ -63,3 +64,4 @@ Operational reference for pipeline monitoring, debugging, and processing. For fu
 - **Batch API PENDING queue saturation (2026-03-26):** 450 Gemini batch jobs stuck at `BATCH_STATE_PENDING` across all API keys, blocking the entire batch OCR pipeline. Root cause: batch job quota (100 concurrent per key) exhausted by stale jobs that never transitioned to RUNNING. Fix: cancel stale batches via Gemini API (`POST /v1beta/{name}:cancel`), mark MongoDB `batch_jobs` as failed, and reset books from `ocr_submitted` → `archive_complete`. Monitor: `GET /v1beta/batches?key=KEY` should show <20 active batches per key.
 - **Adaptive limits locked = no auto-scaling (2026-03-26):** The `adaptive_limits.locked: true` flag prevents the orchestrator from auto-scaling even when health is "healthy". Check `locked` status when investigating slow throughput.
 - **Translation model routing bug (2026-03-27, PR #482):** Was hardcoding flash model for all jobs instead of calling `getTranslateModelForBook()`. 97% of translations used 3x expensive model. Fixed — BPH gets flash, others get lite.
+- **Hetzner workers don't sync book counters (2026-03-27, #497):** `translate-worker.mjs` was translating 169K pages over 3 days without updating `book.pages_translated`. Root cause: Vercel API routes use shared helpers that auto-sync counters, but Hetzner scripts bypass them. Fix: patched translate-worker to sync on job completion. Broader fix needed: audit all Hetzner workers, add counter sync to each.
