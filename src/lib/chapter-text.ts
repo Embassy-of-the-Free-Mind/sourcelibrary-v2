@@ -146,15 +146,27 @@ export async function materializeChapterTexts(
   }
 
   // Update book with endPages and materialization timestamp
-  await db.collection('books').updateOne(
-    { id: bookId },
-    {
-      $set: {
-        chapters: chapters,
-        chapter_texts_at: new Date(),
+  try {
+    await db.collection('books').updateOne(
+      { id: bookId },
+      {
+        $set: {
+          chapters: chapters,
+          chapter_texts_at: new Date(),
+        },
       },
-    },
-  );
+    );
+  } catch (err: unknown) {
+    // If book doc is too large (>16MB), just set the timestamp without chapters update
+    if (err instanceof Error && err.message.includes('larger than the maximum size')) {
+      await db.collection('books').updateOne(
+        { id: bookId },
+        { $set: { chapter_texts_at: new Date() } },
+      );
+    } else {
+      throw err;
+    }
+  }
 
   return { chapters: docs.length, totalTokens };
 }

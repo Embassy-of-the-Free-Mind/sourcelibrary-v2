@@ -108,10 +108,21 @@ async function materializeBook(db, book) {
   }
 
   // Update book with endPages
-  await db.collection('books').updateOne(
-    { id: book.id },
-    { $set: { chapters, chapter_texts_at: new Date() } },
-  );
+  try {
+    await db.collection('books').updateOne(
+      { id: book.id },
+      { $set: { chapters, chapter_texts_at: new Date() } },
+    );
+  } catch (err) {
+    if (err.message?.includes('larger than the maximum size')) {
+      await db.collection('books').updateOne(
+        { id: book.id },
+        { $set: { chapter_texts_at: new Date() } },
+      );
+    } else {
+      throw err;
+    }
+  }
 
   return { chapters: docs.length, totalTokens };
 }
