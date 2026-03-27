@@ -45,6 +45,12 @@ interface QuoteResponse {
   };
 }
 
+function formatAccessedDate(): string {
+  const d = new Date();
+  const months = ['January','February','March','April','May','June','July','August','September','October','November','December'];
+  return `${months[d.getMonth()]} ${d.getDate()}, ${d.getFullYear()}`;
+}
+
 function generateCitations(
   book: Book,
   pageNumber: number,
@@ -57,6 +63,7 @@ function generateCitations(
   const title = book.display_title || book.title;
   const doi = edition?.doi || book.doi;
   const doiUrl = doi ? `https://doi.org/${doi}` : undefined;
+  const accessed = formatAccessedDate();
   const translationYear = edition?.published_at
     ? new Date(edition.published_at).getFullYear()
     : new Date().getFullYear();
@@ -77,7 +84,7 @@ function generateCitations(
   const footnote = `${authorFirstLast}, ${title}, trans. Source Library (${translationYear}), ${pageNumber}${doi ? `. DOI: ${doi}` : ''}.`;
 
   // Bibliography entry
-  const bibliography = `${authorLastFirst}. ${title}. Translated by Source Library. ${translationYear}.${doi ? ` DOI: ${doi}.` : ''}`;
+  const bibliography = `${authorLastFirst}. ${title}. Translated by Source Library. ${translationYear}.${doi ? ` DOI: ${doi}.` : ` Accessed ${accessed}.`}`;
 
   // BibTeX
   const bibtexKey = `${authorParts[0].toLowerCase().replace(/[^a-z]/g, '')}${year}`;
@@ -92,10 +99,10 @@ function generateCitations(
 }`;
 
   // Chicago (Author-Date)
-  const chicago = `${authorLastFirst}. ${year}. ${title}. Translated by Source Library. ${translationYear}.${doi ? ` ${doiUrl}.` : ''}`;
+  const chicago = `${authorLastFirst}. ${year}. ${title}. Translated by Source Library. ${translationYear}.${doi ? ` ${doiUrl}.` : ` Accessed ${accessed}.`}`;
 
   // MLA
-  const mla = `${authorLastFirst}. ${title}. Translated by Source Library, ${translationYear}.${doi ? ` DOI: ${doi}.` : ''}`;
+  const mla = `${authorLastFirst}. ${title}. Translated by Source Library, ${translationYear}.${doi ? ` DOI: ${doi}.` : ''} Accessed ${accessed}.`;
 
   // Direct URL to page in Source Library
   const url = `https://sourcelibrary.org/book/${bookId}/page/${pageId}`;

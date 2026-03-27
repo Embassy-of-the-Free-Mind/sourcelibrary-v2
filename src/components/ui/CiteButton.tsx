@@ -18,6 +18,12 @@ interface CiteButtonProps {
   className?: string;
 }
 
+function formatAccessedDate(): string {
+  const d = new Date();
+  const months = ['January','February','March','April','May','June','July','August','September','October','November','December'];
+  return `${months[d.getMonth()]} ${d.getDate()}, ${d.getFullYear()}`;
+}
+
 function generateApa(props: CiteButtonProps): string {
   const { author, title, displayTitle, year, doi, bookId, pageNumber, editionVersion } = props;
   const url = `https://sourcelibrary.org/book/${bookId}`;
@@ -26,11 +32,12 @@ function generateApa(props: CiteButtonProps): string {
   const authorStr = author || 'Anonymous';
   const version = editionVersion ? `, v${editionVersion}` : '';
   const page = pageNumber ? `, p. ${pageNumber}` : '';
+  const accessed = formatAccessedDate();
 
   if (doi) {
     return `${authorStr}. ${displayName}, trans. Source Library (${yearStr})${version}${page}. https://doi.org/${doi}`;
   }
-  return `${authorStr}. (${yearStr}). ${displayName}. Source Library${page}. ${url}`;
+  return `${authorStr}. (${yearStr}). ${displayName}. Source Library${page}. Retrieved ${accessed}, from ${url}`;
 }
 
 function generateBibtex(props: CiteButtonProps): string {

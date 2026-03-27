@@ -1,12 +1,17 @@
 'use client';
 
-import { useState } from 'react';
+import { useState, useEffect, useRef } from 'react';
+import { createPortal } from 'react-dom';
 
 export default function FeedbackWidget({ className, style, initialMessage, label }: { className?: string; style?: React.CSSProperties; initialMessage?: string; label?: string }) {
   const [open, setOpen] = useState(false);
   const [message, setMessage] = useState('');
   const [name, setName] = useState('');
   const [status, setStatus] = useState<'idle' | 'sending' | 'sent' | 'error'>('idle');
+  const [mounted, setMounted] = useState(false);
+  const buttonRef = useRef<HTMLButtonElement>(null);
+
+  useEffect(() => { setMounted(true); }, []);
 
   const submit = async () => {
     if (!message.trim()) return;
@@ -31,20 +36,8 @@ export default function FeedbackWidget({ className, style, initialMessage, label
     }
   };
 
-  if (!open) {
-    return (
-      <button
-        onClick={() => { if (initialMessage && !message) setMessage(initialMessage); setOpen(true); }}
-        className={className || "text-accent-rust hover:text-accent-gold transition-colors"}
-        style={style}
-      >
-        {label || 'Feedback'}
-      </button>
-    );
-  }
-
-  return (
-    <div className="fixed inset-0 z-50 flex items-start sm:items-center justify-center p-4 pt-16 sm:pt-4" onClick={() => setOpen(false)}>
+  const modal = open && mounted ? createPortal(
+    <div className="fixed inset-0 z-[9999] bg-black/40 flex items-start sm:items-center justify-center p-4 pt-16 sm:pt-4" onClick={() => setOpen(false)}>
       <div
         className="bg-white rounded-xl shadow-2xl w-full max-w-md p-6 max-h-[80dvh] overflow-y-auto"
         onClick={(e) => e.stopPropagation()}
@@ -97,6 +90,21 @@ export default function FeedbackWidget({ className, style, initialMessage, label
           </>
         )}
       </div>
-    </div>
+    </div>,
+    document.body
+  ) : null;
+
+  return (
+    <>
+      <button
+        ref={buttonRef}
+        onClick={() => { if (initialMessage && !message) setMessage(initialMessage); setOpen(true); }}
+        className={className || "text-accent-rust hover:text-accent-gold transition-colors"}
+        style={style}
+      >
+        {label || 'Feedback'}
+      </button>
+      {modal}
+    </>
   );
 }
