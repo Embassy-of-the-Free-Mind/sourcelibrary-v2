@@ -119,6 +119,11 @@ const nextConfig: NextConfig = {
         destination: '/support',
         permanent: false,
       },
+      {
+        source: '/collections/shwep',
+        destination: '/shwep',
+        permanent: false,
+      },
     ];
   },
 };
