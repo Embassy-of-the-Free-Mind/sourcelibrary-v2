@@ -22,7 +22,7 @@ export const revalidate = 86400;
 export const dynamicParams = true;
 
 export function generateStaticParams() {
-  return PERIOD_SLUGS.map(period => ({ period }));
+  return []; // Generate on first request, not at build time
 }
 
 interface PageProps {
