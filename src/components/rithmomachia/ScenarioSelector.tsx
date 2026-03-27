@@ -1,13 +1,37 @@
 'use client';
 
-import { useState, useCallback } from 'react';
+import { useState, useCallback, useEffect } from 'react';
 import { SCENARIOS, SCENARIO_CATEGORIES, Scenario, ScenarioCategory } from '@/lib/rithmomachia/scenarios';
 import MiniBoard, { MiniBoardPiece } from './MiniBoard';
 import ScenarioPlayer from './ScenarioPlayer';
 
 export default function ScenarioSelector() {
-  const [selectedId, setSelectedId] = useState<string | null>(null);
-  const [key, setKey] = useState(0); // force re-mount on reset
+  // Read initial scenario from URL hash
+  const [selectedId, setSelectedId] = useState<string | null>(() => {
+    if (typeof window === 'undefined') return null;
+    const hash = window.location.hash.slice(1);
+    return hash && SCENARIOS.some(s => s.id === hash) ? hash : null;
+  });
+  const [key, setKey] = useState(0);
+
+  // Sync selection to URL hash
+  useEffect(() => {
+    if (selectedId) {
+      window.history.replaceState(null, '', `#${selectedId}`);
+    } else {
+      window.history.replaceState(null, '', window.location.pathname);
+    }
+  }, [selectedId]);
+
+  // Listen for back/forward navigation
+  useEffect(() => {
+    const onHashChange = () => {
+      const hash = window.location.hash.slice(1);
+      setSelectedId(hash && SCENARIOS.some(s => s.id === hash) ? hash : null);
+    };
+    window.addEventListener('hashchange', onHashChange);
+    return () => window.removeEventListener('hashchange', onHashChange);
+  }, []);
 
   const selectedScenario = selectedId ? SCENARIOS.find(s => s.id === selectedId) : null;
 
@@ -19,7 +43,8 @@ export default function ScenarioSelector() {
     if (!selectedId) return;
     const idx = SCENARIOS.findIndex(s => s.id === selectedId);
     if (idx < SCENARIOS.length - 1) {
-      setSelectedId(SCENARIOS[idx + 1].id);
+      const nextId = SCENARIOS[idx + 1].id;
+      setSelectedId(nextId);
       setKey(k => k + 1);
     } else {
       setSelectedId(null);

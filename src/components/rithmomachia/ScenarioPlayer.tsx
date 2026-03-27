@@ -7,8 +7,20 @@ import { positionsEqual } from '@/lib/rithmomachia/board';
 import { Scenario } from '@/lib/rithmomachia/scenarios';
 import { createScenarioState, checkScenarioSuccess } from '@/lib/rithmomachia/scenario-state';
 import { sourceUrl, SOURCES, SourceKey } from '@/lib/rithmomachia/sources';
-import Board from './Board';
+import Board, { BoardRegion } from './Board';
 import CapturePanel from './CapturePanel';
+
+/** Compute a tight board region from scenario pieces with padding */
+function computeRegion(pieces: { position: { col: number; row: number } }[]): BoardRegion {
+  const cols = pieces.map(p => p.position.col);
+  const rows = pieces.map(p => p.position.row);
+  return {
+    colStart: Math.max(0, Math.min(...cols) - 2),
+    colEnd: Math.min(8, Math.max(...cols) + 3),
+    rowStart: Math.max(0, Math.min(...rows) - 2),
+    rowEnd: Math.min(16, Math.max(...rows) + 3),
+  };
+}
 
 interface ScenarioPlayerProps {
   scenario: Scenario;
@@ -128,6 +140,7 @@ export default function ScenarioPlayer({ scenario, onBack, onNext }: ScenarioPla
           <Board
             state={state}
             onCellClick={handleCellClick}
+            region={computeRegion(scenario.pieces)}
           />
 
           {/* Capture panel */}
