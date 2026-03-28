@@ -16,7 +16,26 @@ Also remind the user: full pipeline dashboard is live at https://sourcelibrary.o
 3. **Spot-check actual pages.** For any "processing" job, check if its pages actually have `translation.data` or `ocr.data`. This is ground truth.
 4. **Flag stale jobs explicitly.** Any job in `processing` for >2 hours with 0 progress is stuck. Say so clearly.
 
-## What to Check
+## Snapshot-First Approach (PREFERRED)
+
+A pre-computed snapshot exists at `system_config._id: 'enrichment_snapshot'` (updated every 2h by Hetzner cron). **Always try this first** — it's a single document read vs 15+ slow aggregations.
+
+```javascript
+const snapshot = await db.collection('system_config').findOne({ _id: 'enrichment_snapshot' });
+```
+
+If the snapshot exists and `computed_at` is within the last 3 hours, use it directly. Display the `computed_at` timestamp so the user knows how fresh the data is.
+
+The snapshot contains: `funnel`, `enrichment`, `milestones`, `gallery`, `active_jobs`, `stuck_jobs`, `throughput`, `paused`, `paused_phases`, and `computation_ms`.
+
+**Only fall back to live queries** if:
+- The snapshot doesn't exist
+- The snapshot is older than 3 hours
+- The user explicitly asks for "live" or "fresh" data
+
+For live queries, prefer running the enrichment-snapshot script directly (`node scripts/workers/enrichment-snapshot.mjs`) rather than inline queries — it writes the snapshot and you can read it back.
+
+## What to Check (Live Fallback)
 
 Run a single MongoDB script that reports ALL of the following. Use `set -a; source .env.production.local; set +a; node -e "..."` to run.
 
