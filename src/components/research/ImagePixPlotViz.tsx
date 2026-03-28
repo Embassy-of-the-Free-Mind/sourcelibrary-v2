@@ -81,17 +81,19 @@ export default function ImagePixPlotViz({ data }: { data: ConstellationData }) {
       } catch { setLoadStatus('failed to load'); }
     })();
 
+    // Use window dimensions — never changes when side panel opens/closes
     const resize = () => {
       const dpr = devicePixelRatio || 1;
-      canvas.width = container.clientWidth * dpr;
-      canvas.height = container.clientHeight * dpr;
-      canvas.style.width = `${container.clientWidth}px`;
-      canvas.style.height = `${container.clientHeight}px`;
+      const w = window.innerWidth;
+      const h = window.innerHeight;
+      canvas.width = w * dpr;
+      canvas.height = h * dpr;
+      canvas.style.width = `${w}px`;
+      canvas.style.height = `${h}px`;
       dirtyRef.current = true;
     };
     resize();
-    const obs = new ResizeObserver(resize);
-    obs.observe(container);
+    window.addEventListener('resize', resize);
 
     const tick = () => {
       rafRef.current = requestAnimationFrame(tick);
@@ -144,7 +146,7 @@ export default function ImagePixPlotViz({ data }: { data: ConstellationData }) {
     return () => {
       cancelled = true;
       cancelAnimationFrame(rafRef.current);
-      obs.disconnect();
+      window.removeEventListener('resize', resize);
       canvas.removeEventListener('wheel', wheelHandler);
     };
   }, [data]);
