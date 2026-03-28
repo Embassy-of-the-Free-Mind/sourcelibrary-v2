@@ -211,10 +211,18 @@ async function probeDbHealth(db) {
       );
       if (result.modifiedCount > 0) {
         console.log(`[health] Cancelled ${result.modifiedCount} pending jobs`);
-        // Clear book.job references so books can be re-submitted later
+        // Clear book.job references AND roll back pipeline status so books can be re-submitted
         await db.collection('books').updateMany(
-          { 'job.job_id': { $exists: true } },
-          { $unset: { job: '' }, $set: { updated_at: new Date() } },
+          { 'pipeline_auto.status': 'translate_submitted' },
+          { $set: { 'pipeline_auto.status': 'metadata_enriched', updated_at: new Date() }, $unset: { job: '' } },
+        );
+        await db.collection('books').updateMany(
+          { 'pipeline_auto.status': 'ocr_submitted' },
+          { $set: { 'pipeline_auto.status': 'archive_complete', updated_at: new Date() }, $unset: { job: '' } },
+        );
+        await db.collection('books').updateMany(
+          { 'pipeline_auto.status': 'images_submitted' },
+          { $set: { 'pipeline_auto.status': 'chapters_complete', updated_at: new Date() }, $unset: { job: '' } },
         );
       }
     } catch (e) {
@@ -2180,6 +2188,37 @@ async function run() {
           );
           log.zombie_jobs_cancelled += zombieJobs.length;
           console.log(`  Zombie reaper: cancelled ${zombieJobs.length} stuck translation jobs, reset books to metadata_enriched`);
+        }
+      }
+
+      // Orphan detector: books in *_submitted state with no active job and no book.job reference.
+      // These get stranded when jobs are cancelled without rolling back pipeline status.
+      if (!DRY_RUN) {
+        const orphanStates = [
+          { from: 'translate_submitted', to: 'metadata_enriched' },
+          { from: 'ocr_submitted', to: 'archive_complete' },
+          { from: 'images_submitted', to: 'chapters_complete' },
+        ];
+        for (const { from, to } of orphanStates) {
+          const orphans = await db.collection('books').find({
+            'pipeline_auto.status': from,
+            $or: [{ job: { $exists: false } }, { job: null }],
+          }).project({ id: 1 }).toArray();
+          if (orphans.length > 0) {
+            // Verify no active jobs exist for these books
+            const orphanIds = orphans.map(b => b.id);
+            const activeJobCount = await db.collection('jobs').countDocuments({
+              book_id: { $in: orphanIds },
+              status: { $in: ['pending', 'processing'] },
+            });
+            if (activeJobCount === 0) {
+              await db.collection('books').updateMany(
+                { id: { $in: orphanIds }, 'pipeline_auto.status': from },
+                { $set: { 'pipeline_auto.status': to, updated_at: new Date() } },
+              );
+              console.log(`  Orphan detector: rolled back ${orphans.length} books from ${from} to ${to}`);
+            }
+          }
         }
       }
 
