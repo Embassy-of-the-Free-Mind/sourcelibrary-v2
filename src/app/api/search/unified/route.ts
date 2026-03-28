@@ -168,7 +168,7 @@ async function searchBooks(db: any, query: string, queryRegex: RegExp, limit: nu
       author: b.author || 'Unknown',
       language: b.language || 'Unknown',
       published: b.published || 'Unknown',
-      translation_percent: (b.pages_ocr || 0) > 0 ? Math.round((b.pages_translated || 0) / (b.pages_ocr || 1) * 100) : 0,
+      translation_percent: (b.pages_ocr || 0) > 0 ? Math.round((b.pages_translated || 0) / Math.max((b.pages_ocr || 0) - (b.pages_blank || 0), 1) * 100) : 0,
       thumbnail: b.thumbnail,
       thumbnail_blob: b.thumbnail_blob,
     })),

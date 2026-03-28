@@ -2379,8 +2379,13 @@ async function run() {
     }
 
     // ── Phase 6: Summary + Index (translate_complete -> summary_indexed) ──
-    // Calls /api/books/[id]/index which generates summary + index in one pass.
-    if (shouldRun(6)) {
+    // When ENRICHMENT_INLINE=true, the enrich-worker.mjs cron handles this.
+    // Otherwise falls back to the Vercel API route.
+    if (shouldRun(6) && process.env.ENRICHMENT_INLINE === 'true') {
+      console.log('\n--- Phase 6: Summary + Index (INLINE — handled by enrich-worker.mjs) ---');
+      const readyCount = await db.collection('books').countDocuments({ 'pipeline_auto.status': 'translate_complete' });
+      console.log(`  Books in translate_complete: ${readyCount} (enrich-worker processes these)`);
+    } else if (shouldRun(6)) {
       console.log('\n--- Phase 6: Summary + Index ---');
 
       const readyForEnrich = await db.collection('books')
@@ -2437,7 +2442,12 @@ async function run() {
     }
 
     // ── Phase 7: Chapter extraction (enriched -> chapters_complete) ──
-    if (shouldRun(7)) {
+    // When ENRICHMENT_INLINE=true, the enrich-worker.mjs cron handles this.
+    if (shouldRun(7) && process.env.ENRICHMENT_INLINE === 'true') {
+      console.log('\n--- Phase 7: Chapter Extraction (INLINE — handled by enrich-worker.mjs) ---');
+      const readyCount = await db.collection('books').countDocuments({ 'pipeline_auto.status': 'summary_indexed' });
+      console.log(`  Books in summary_indexed: ${readyCount} (enrich-worker processes these)`);
+    } else if (shouldRun(7)) {
       console.log('\n--- Phase 7: Chapter extraction ---');
 
       const readyForChapters = await db.collection('books')

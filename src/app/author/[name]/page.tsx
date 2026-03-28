@@ -93,7 +93,7 @@ async function loadAuthorData(db: any, slug: string): Promise<{
       projection: {
         _id: 0, id: 1, slug: 1, title: 1, display_title: 1, author: 1,
         author_entity_id: 1, language: 1, published: 1, thumbnail: 1,
-        pages_count: 1, pages_ocr: 1, pages_translated: 1, year: 1,
+        pages_count: 1, pages_ocr: 1, pages_translated: 1, pages_blank: 1, year: 1,
         summary: 1,
       }
     }
@@ -124,7 +124,7 @@ async function loadAuthorData(db: any, slug: string): Promise<{
       pages_count: b.pages_count || 0,
       pages_translated: b.pages_translated || 0,
       translation_percent: b.pages_ocr > 0
-        ? Math.round((b.pages_translated || 0) / b.pages_ocr * 100)
+        ? Math.round((b.pages_translated || 0) / Math.max((b.pages_ocr || 0) - (b.pages_blank || 0), 1) * 100)
         : 0,
     })),
   };
