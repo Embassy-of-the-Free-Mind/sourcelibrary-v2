@@ -26,6 +26,9 @@
 # Hetzner inline translation worker: translates via Gemini API (every 2 min)
 */2 * * * * cd /root/sourcelibrary && flock -n /tmp/sl-translate.lock bash -c "set -a; source .env.production.local; set +a; node scripts/workers/translate-worker.mjs" >> /var/log/sourcelibrary/translate.log 2>&1
 
+# Hetzner inline enrichment worker: summary+index + chapters via Gemini API (every 5 min)
+*/5 * * * * cd /root/sourcelibrary && flock -n /tmp/sl-enrich.lock bash -c "set -a; source .env.production.local; set +a; node scripts/workers/enrich-worker.mjs" >> /var/log/sourcelibrary/enrich.log 2>&1
+
 # Batch collector: collect Gemini Batch API OCR results (every 10 min)
 */10 * * * * cd /root/sourcelibrary && flock -n /tmp/sl-collector.lock bash -c 'set -a; source .env.production.local; set +a; node scripts/workers/batch-collector.mjs' >> /var/log/sourcelibrary/collector.log 2>&1
 
