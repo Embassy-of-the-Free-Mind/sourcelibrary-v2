@@ -204,6 +204,7 @@ async function translateBatch(db, pages, book, prevTranslation) {
   const translations = new Map();
   const regex = /<translation\s+page="(\d+)">([\s\S]*?)<\/translation>/g;
   let match;
+  const parsedEntries = []; // preserve order for positional fallback
   while ((match = regex.exec(responseText)) !== null) {
     const pageNum = parseInt(match[1], 10);
     const text = sanitizeTranslationTags(match[2].trim());
@@ -221,6 +222,22 @@ async function translateBatch(db, pages, book, prevTranslation) {
     }
 
     translations.set(pageNum, text);
+    parsedEntries.push(text);
+  }
+
+  // Positional fallback: if model renumbered pages (e.g. 1-5 instead of 491-495),
+  // map translations to batch pages by position when count matches exactly.
+  if (parsedEntries.length === pages.length && parsedEntries.length > 0) {
+    const matchedByNum = pages.filter(p => translations.has(p.page_number)).length;
+    if (matchedByNum < pages.length) {
+      // Remap by position — validate lengths against actual source pages
+      translations.clear();
+      for (let i = 0; i < pages.length; i++) {
+        const ocrLen = (pages[i].ocr?.data || '').length;
+        if (ocrLen > 100 && parsedEntries[i].length < ocrLen * 0.15) continue;
+        translations.set(pages[i].page_number, parsedEntries[i]);
+      }
+    }
   }
 
   return {
