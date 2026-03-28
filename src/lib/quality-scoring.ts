@@ -105,19 +105,21 @@ function computeMechanicalAdjustments(book: Record<string, unknown>, galleryImag
   const pagesCount = (book.pages_count as number) || 0;
   const pagesOcr = (book.pages_ocr as number) || 0;
   const pagesTranslated = (book.pages_translated as number) || 0;
+  const pagesBlank = (book.pages_blank as number) || 0;
+  const translatableDenom = Math.max(pagesOcr - pagesBlank, 1);
 
   // Completeness bonus (0 to +8)
   let completeness = 0;
   if (pagesCount > 0 && pagesOcr / pagesCount >= 0.9) completeness += 2;
-  if (pagesCount > 0 && pagesTranslated / pagesCount >= 0.9) completeness += 3;
+  if (pagesOcr > 0 && pagesTranslated / translatableDenom >= 0.9) completeness += 3;
   if (book.reading_summary) completeness += 1;
   if ((book.index as Record<string, unknown>)?.generatedAt) completeness += 1;
   if (book.chapters) completeness += 1;
   adjustments.completeness = completeness;
 
   // Incomplete penalty (-5 to 0)
-  if (pagesCount > 0) {
-    const translatedPct = pagesTranslated / pagesCount;
+  if (pagesOcr > 0) {
+    const translatedPct = pagesTranslated / translatableDenom;
     if (translatedPct < 0.1) {
       adjustments.incomplete_penalty = -5;
     } else if (translatedPct < 0.5) {

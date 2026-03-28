@@ -83,8 +83,10 @@ export async function GET() {
       const totalPages = book.total_pages || 0;
       const pagesWithOcr = book.pages_with_ocr || 0;
       const translatedPages = book.pages_with_translation || 0;
+      const blankPages = book.pages_blank || 0;
+      const translatableDenom = Math.max(pagesWithOcr - blankPages, 1);
       const translationPercent = pagesWithOcr > 0
-        ? Math.round((translatedPages / pagesWithOcr) * 100)
+        ? Math.round((translatedPages / translatableDenom) * 100)
         : 0;
 
       // Can generate summary if at least 1 page is translated

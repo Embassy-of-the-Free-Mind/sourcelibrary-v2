@@ -34,7 +34,7 @@ async function status() {
     db.collection('books').countDocuments({
       hidden: { $ne: true },
       pages_ocr: { $gte: 1 },
-      $expr: { $gte: ['$pages_translated', { $multiply: ['$pages_ocr', 0.9] }] },
+      $expr: { $gte: ['$pages_translated', { $multiply: [{ $subtract: [{ $ifNull: ['$pages_ocr', 0] }, { $ifNull: ['$pages_blank', 0] }] }, 0.9] }] },
     }),
 
     // First translations (verified flag from metadata enrichment)

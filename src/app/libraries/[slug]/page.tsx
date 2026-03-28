@@ -64,6 +64,7 @@ interface BookItem {
   pages_count?: number;
   pages_ocr?: number;
   pages_translated?: number;
+  pages_blank?: number;
   photo?: string;
   thumbnail?: string;
   thumbnail_blob?: string;
@@ -101,7 +102,7 @@ async function fetchLibraryData(providerKey: string, sort: string, language: str
 
   const projection = {
     _id: 0, id: 1, slug: 1, title: 1, display_title: 1, author: 1, year: 1,
-    language: 1, pages_count: 1, pages_ocr: 1, pages_translated: 1,
+    language: 1, pages_count: 1, pages_ocr: 1, pages_translated: 1, pages_blank: 1,
     photo: 1, thumbnail: 1, thumbnail_blob: 1, published: 1, read_count: 1,
   };
 
@@ -373,7 +374,7 @@ export default async function LibraryDetailPage({ params, searchParams }: Props)
                 language: book.language,
                 published: book.published,
                 translation_percent: book.pages_ocr && book.pages_translated
-                  ? Math.round((book.pages_translated / book.pages_ocr) * 100)
+                  ? Math.round((book.pages_translated / Math.max((book.pages_ocr || 0) - (book.pages_blank || 0), 1)) * 100)
                   : 0,
               }}
               priority={i < 10}

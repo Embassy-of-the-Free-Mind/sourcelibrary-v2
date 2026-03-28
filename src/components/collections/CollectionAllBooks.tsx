@@ -19,6 +19,7 @@ interface BookItem {
   pages_count?: number;
   pages_ocr?: number;
   pages_translated?: number;
+  pages_blank?: number;
   photo?: string;
   thumbnail?: string;
   thumbnail_blob?: string;
@@ -191,7 +192,7 @@ export default function CollectionAllBooks({
               language: book.language,
               published: book.published,
               translation_percent: book.pages_ocr && book.pages_translated
-                ? Math.round((book.pages_translated / book.pages_ocr) * 100)
+                ? Math.round((book.pages_translated / Math.max((book.pages_ocr || 0) - (book.pages_blank || 0), 1)) * 100)
                 : 0,
             }}
             priority={!expanded && i < 4}

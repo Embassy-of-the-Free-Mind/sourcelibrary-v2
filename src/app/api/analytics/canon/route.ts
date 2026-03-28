@@ -51,11 +51,17 @@ export const GET = withAuth(async () => {
         },
       ]).toArray(),
 
-      // 2. Books that are "readable" — >=90% of OCR'd pages translated
+      // 2. Books that are "readable" — >=90% of translatable pages translated
+      //    Denominator: pages_ocr - pages_blank (blank pages don't need translation)
       db.collection('books').countDocuments({
         hidden: { $ne: true },
         pages_ocr: { $gte: 1 },
-        $expr: { $gte: ['$pages_translated', { $multiply: ['$pages_ocr', 0.9] }] },
+        $expr: {
+          $gte: [
+            '$pages_translated',
+            { $multiply: [{ $subtract: [{ $ifNull: ['$pages_ocr', 0] }, { $ifNull: ['$pages_blank', 0] }] }, 0.9] },
+          ],
+        },
       }),
 
       // 3. "First translations" — uses verified is_first_translation flag from metadata enrichment
@@ -76,7 +82,7 @@ export const GET = withAuth(async () => {
                   {
                     $and: [
                       { $gte: ['$pages_ocr', 10] },
-                      { $gte: ['$pages_translated', { $multiply: ['$pages_ocr', 0.9] }] },
+                      { $gte: ['$pages_translated', { $multiply: [{ $subtract: [{ $ifNull: ['$pages_ocr', 0] }, { $ifNull: ['$pages_blank', 0] }] }, 0.9] }] },
                     ],
                   },
                   1, 0,
@@ -104,7 +110,7 @@ export const GET = withAuth(async () => {
                   {
                     $and: [
                       { $gte: ['$pages_ocr', 1] },
-                      { $gte: ['$pages_translated', { $multiply: ['$pages_ocr', 0.9] }] },
+                      { $gte: ['$pages_translated', { $multiply: [{ $subtract: [{ $ifNull: ['$pages_ocr', 0] }, { $ifNull: ['$pages_blank', 0] }] }, 0.9] }] },
                     ],
                   },
                   1, 0,
@@ -132,7 +138,7 @@ export const GET = withAuth(async () => {
                   {
                     $and: [
                       { $gte: ['$pages_ocr', 1] },
-                      { $gte: ['$pages_translated', { $multiply: ['$pages_ocr', 0.9] }] },
+                      { $gte: ['$pages_translated', { $multiply: [{ $subtract: [{ $ifNull: ['$pages_ocr', 0] }, { $ifNull: ['$pages_blank', 0] }] }, 0.9] }] },
                     ],
                   },
                   1, 0,
