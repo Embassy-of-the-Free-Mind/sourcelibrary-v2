@@ -4,7 +4,7 @@ import EntityMapLoader from '@/components/explore/EntityMapLoader';
 
 // ISR: rebuild every 6 hours. Allow 60s for first-hit generation.
 export const dynamic = 'force-dynamic';
-export const maxDuration = 60;
+export const maxDuration = 90;
 
 export const metadata: Metadata = {
   title: 'Map — Explore — Source Library',
