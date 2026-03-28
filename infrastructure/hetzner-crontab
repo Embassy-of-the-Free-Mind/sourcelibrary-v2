@@ -69,6 +69,11 @@
 0 0 * * * cd /root/sourcelibrary && bash -c "set -a; source .env.production.local; set +a; node scripts/workers/cron-caller.mjs social-reset" >> /var/log/sourcelibrary/cron-caller.log 2>&1
 0 6 * * * cd /root/sourcelibrary && bash -c "set -a; source .env.production.local; set +a; node scripts/workers/cron-caller.mjs daily-pipeline-report" >> /var/log/sourcelibrary/cron-caller.log 2>&1
 
+# ── Snapshots ──
+
+# Enrichment snapshot: compute all pipeline stats for /progress (every 2 hours)
+30 */2 * * * cd /root/sourcelibrary && flock -n /tmp/sl-enrichment-snapshot.lock bash -c "set -a; source .env.production.local; set +a; node scripts/workers/enrichment-snapshot.mjs" >> /var/log/sourcelibrary/enrichment-snapshot.log 2>&1
+
 # ── Maintenance ──
 
 # Pipeline health alert: daily at 7am UTC
