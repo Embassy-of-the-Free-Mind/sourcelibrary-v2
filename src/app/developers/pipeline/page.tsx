@@ -11,7 +11,8 @@ export const metadata: Metadata = {
   alternates: { canonical: '/developers/pipeline' },
 };
 
-export const dynamic = 'force-dynamic';
+// ISR: rebuild every 6 hours
+export const revalidate = 21600;
 
 /* ── Data fetching ── */
 
@@ -45,13 +46,14 @@ async function getPipelineStats() {
     const db = await getDb();
     const books = db.collection('books');
 
+    const maxTimeMS = 10000;
     const [funnel, pageAgg, totalBooks] = await Promise.all([
       books
         .aggregate([
           { $match: { 'pipeline_auto.status': { $exists: true } } },
           { $group: { _id: '$pipeline_auto.status', count: { $sum: 1 } } },
           { $sort: { count: -1 } },
-        ])
+        ], { maxTimeMS })
         .toArray(),
       books
         .aggregate([
@@ -63,9 +65,9 @@ async function getPipelineStats() {
               translated: { $sum: '$pages_translated' },
             },
           },
-        ])
+        ], { maxTimeMS })
         .toArray(),
-      books.countDocuments({ hidden: { $ne: true } }),
+      books.countDocuments({ hidden: { $ne: true } }, { maxTimeMS }),
     ]);
 
     const agg = pageAgg[0] || { pages: 0, ocr: 0, translated: 0 };

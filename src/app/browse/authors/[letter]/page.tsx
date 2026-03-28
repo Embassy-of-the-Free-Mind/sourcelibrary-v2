@@ -57,7 +57,7 @@ export default async function BrowseAuthorsPage({ params }: PageProps) {
       },
     },
     { $sort: { _id: 1 } },
-  ], { maxTimeMS: 15000 }).toArray();
+  ], { maxTimeMS: 10000 }).toArray();
 
   return (
     <div className="max-w-4xl mx-auto px-6 md:px-12 py-12 md:py-20">

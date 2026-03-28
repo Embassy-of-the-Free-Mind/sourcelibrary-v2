@@ -44,24 +44,21 @@ export default async function BrowseTitlesPage({ params }: PageProps) {
   if (l.length !== 1 || !/[A-Z]/.test(l)) notFound();
 
   const db = await getDb();
+
+  // Use $regex on title/display_title to avoid expensive $addFields on every document
+  const regex = new RegExp(`^${l}`, 'i');
   const books = await db.collection('books').aggregate<BrowseBook>([
     {
       $match: {
         hidden: { $ne: true },
         pages_count: { $gt: 0 },
         pages_translated: { $gt: 0 },
+        $or: [
+          { display_title: { $regex: regex } },
+          { display_title: { $exists: false }, title: { $regex: regex } },
+        ],
       },
     },
-    {
-      $addFields: {
-        _sort_title: {
-          $toUpper: {
-            $substrCP: [{ $ifNull: ['$display_title', '$title'] }, 0, 1],
-          },
-        },
-      },
-    },
-    { $match: { _sort_title: l } },
     { $sort: { display_title: 1, title: 1 } },
     {
       $project: {
@@ -75,7 +72,7 @@ export default async function BrowseTitlesPage({ params }: PageProps) {
         published: 1,
       },
     },
-  ], { maxTimeMS: 15000 }).toArray();
+  ], { maxTimeMS: 10000 }).toArray();
 
   return (
     <div className="max-w-4xl mx-auto px-6 md:px-12 py-12 md:py-20">

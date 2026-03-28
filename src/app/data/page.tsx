@@ -4,7 +4,8 @@ import { getDb } from '@/lib/mongodb';
 import ContentPageLayout, { ContentHeader } from '@/components/layout/ContentPageLayout';
 import { CenturyChart } from './DataCharts';
 
-export const dynamic = 'force-dynamic';
+// ISR: rebuild every 6 hours (public data changes slowly)
+export const revalidate = 21600;
 export const maxDuration = 30;
 
 export const metadata: Metadata = {
@@ -183,16 +184,18 @@ async function fetchLibraryData(showAdmin: boolean): Promise<LibraryData> {
   const visible = { hidden: { $ne: true } };
   const filter = showAdmin ? {} : visible;
 
+  const maxTimeMS = 15000;
+
   // Base queries (always run)
   const baseQueries = [
-    books.countDocuments(filter),
-    books.countDocuments({ ...filter, is_first_translation: true }),
+    books.countDocuments(filter, { maxTimeMS }),
+    books.countDocuments({ ...filter, is_first_translation: true }, { maxTimeMS }),
     books
       .aggregate<{ _id: string; count: number }>([
         { $match: filter },
         { $group: { _id: '$language', count: { $sum: 1 } } },
         { $sort: { count: -1 } },
-      ])
+      ], { maxTimeMS })
       .toArray(),
     books
       .aggregate<{ _id: number; count: number }>([
@@ -204,7 +207,7 @@ async function fetchLibraryData(showAdmin: boolean): Promise<LibraryData> {
         },
         { $group: { _id: '$century', count: { $sum: 1 } } },
         { $sort: { _id: 1 } },
-      ])
+      ], { maxTimeMS })
       .toArray(),
     books
       .aggregate<{ _id: string; count: number }>([
@@ -213,14 +216,14 @@ async function fetchLibraryData(showAdmin: boolean): Promise<LibraryData> {
         { $group: { _id: '$categories', count: { $sum: 1 } } },
         { $sort: { count: -1 } },
         ...(showAdmin ? [] : [{ $limit: 20 }]),
-      ])
+      ], { maxTimeMS })
       .toArray(),
     books
       .aggregate<{ _id: string; count: number }>([
         { $match: { ...filter, 'image_source.provider_name': { $exists: true } } },
         { $group: { _id: '$image_source.provider_name', count: { $sum: 1 } } },
         { $sort: { count: -1 } },
-      ])
+      ], { maxTimeMS })
       .toArray(),
     books
       .aggregate<{ _id: null; pages: number; ocr: number; translated: number }>([
@@ -233,7 +236,7 @@ async function fetchLibraryData(showAdmin: boolean): Promise<LibraryData> {
             translated: { $sum: { $ifNull: ['$pages_translated', 0] } },
           },
         },
-      ])
+      ], { maxTimeMS })
       .toArray(),
     db.collection('gallery_images').estimatedDocumentCount(),
     db
@@ -277,21 +280,21 @@ async function fetchLibraryData(showAdmin: boolean): Promise<LibraryData> {
   // Admin mode: run extra queries
   const [totalBooks, firstTranslations, languagesAgg, centuriesAgg, categoriesAgg, providersAgg, pageTotalsAgg, pagesWithIllustrations, collectionsAgg, hiddenCount, pipelineAgg, hasSummary, hasIndex, hasChapters, hasSourceDates, hasEditions, ocrTiersAgg, translationTiersAgg, emptyShells] = await Promise.all([
     ...baseQueries,
-    books.countDocuments({ hidden: true }),
+    books.countDocuments({ hidden: true }, { maxTimeMS }),
     books
       .aggregate<{ _id: string | null; count: number }>([
         { $group: { _id: '$pipeline_auto.status', count: { $sum: 1 } } },
         { $sort: { count: -1 } },
-      ])
+      ], { maxTimeMS })
       .toArray(),
-    books.countDocuments({ 'reading_summary.overview': { $exists: true } }),
-    books.countDocuments({ 'index.generatedAt': { $exists: true } }),
-    books.countDocuments({ 'chapters.0': { $exists: true } }),
-    books.countDocuments({ 'source_work_dates.0': { $exists: true } }),
+    books.countDocuments({ 'reading_summary.overview': { $exists: true } }, { maxTimeMS }),
+    books.countDocuments({ 'index.generatedAt': { $exists: true } }, { maxTimeMS }),
+    books.countDocuments({ 'chapters.0': { $exists: true } }, { maxTimeMS }),
+    books.countDocuments({ 'source_work_dates.0': { $exists: true } }, { maxTimeMS }),
     db.collection('editions').estimatedDocumentCount(),
-    books.aggregate(buildCoverageTiers('pages_ocr')).toArray(),
-    books.aggregate(buildCoverageTiers('pages_translated')).toArray(),
-    books.countDocuments({ $or: [{ pages_count: 0 }, { pages_count: { $exists: false } }] }),
+    books.aggregate(buildCoverageTiers('pages_ocr'), { maxTimeMS: 20000 }).toArray(),
+    books.aggregate(buildCoverageTiers('pages_translated'), { maxTimeMS: 20000 }).toArray(),
+    books.countDocuments({ $or: [{ pages_count: 0 }, { pages_count: { $exists: false } }] }, { maxTimeMS }),
   ]);
 
   const pageTotals = pageTotalsAgg[0] ?? { pages: 0, ocr: 0, translated: 0 };

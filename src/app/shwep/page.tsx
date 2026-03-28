@@ -2,7 +2,8 @@ import { Metadata } from 'next';
 import { getShwepIndexData } from './shwep-data';
 import ShwepClient from './ShwepClient';
 
-export const dynamic = 'force-dynamic';
+// ISR: rebuild every 6 hours
+export const revalidate = 21600;
 
 export const metadata: Metadata = {
   title: 'SHWEP Reading Room - Source Library',
