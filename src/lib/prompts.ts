@@ -154,7 +154,9 @@ export async function getTranslationPrompt(
     text: result.text
       .replace('{language}', sourceLanguage)
       .replace('{sourceLanguage}', sourceLanguage)
-      .replace('{targetLanguage}', targetLanguage),
+      .replace('{targetLanguage}', targetLanguage)
+      .replace('{source_language}', sourceLanguage)
+      .replace('{target_language}', targetLanguage),
     reference: result.reference,
   };
 }
