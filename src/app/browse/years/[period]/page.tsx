@@ -60,11 +60,11 @@ export default async function BrowseYearsPage({ params }: PageProps) {
   let books: BrowseBook[] = [];
   try {
     const db = await getDb();
+    // Use year_hidden_language compound index. pages_translated > 0 implies pages exist.
     const rawBooks = await db.collection('books').find(
       {
         year: { $gte: p.min, $lte: p.max },
         hidden: { $ne: true },
-        pages_count: { $gt: 0 },
         pages_translated: { $gt: 0 },
       },
       {

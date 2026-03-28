@@ -48,7 +48,8 @@ async function getPipelineStats() {
     const books = db.collection('books');
 
     const maxTimeMS = 45000;
-    const [funnel, pageAgg, totalBooks] = await Promise.all([
+    // Use indexed pipeline_auto.status query + pre-computed snapshot for page totals
+    const [funnel, snapshot] = await Promise.all([
       books
         .aggregate([
           { $match: { 'pipeline_auto.status': { $exists: true } } },
@@ -56,20 +57,14 @@ async function getPipelineStats() {
           { $sort: { count: -1 } },
         ], { maxTimeMS })
         .toArray(),
-      books
-        .aggregate([
-          {
-            $group: {
-              _id: null,
-              pages: { $sum: '$pages_count' },
-              ocr: { $sum: '$pages_ocr' },
-              translated: { $sum: '$pages_translated' },
-            },
-          },
-        ], { maxTimeMS })
-        .toArray(),
-      books.countDocuments({ hidden: { $ne: true } }, { maxTimeMS }),
+      db.collection('system_config').findOne(
+        { _id: 'dashboard_snapshot' as unknown as import('mongodb').ObjectId }
+      ),
     ]);
+
+    const snap = snapshot?.data as Record<string, Record<string, number>> | undefined;
+    const pageAgg = [{ pages: snap?.coverage?.ocr_pages ?? 0, ocr: snap?.coverage?.ocr_pages ?? 0, translated: snap?.coverage?.translated_pages ?? 0 }];
+    const totalBooks = snap?.canon?.total_books ?? 0;
 
     const agg = pageAgg[0] || { pages: 0, ocr: 0, translated: 0 };
 

@@ -42,15 +42,16 @@ export default async function BrowseAuthorsPage({ params }: PageProps) {
   let authors: AuthorEntry[] = [];
   try {
     const db = await getDb();
+    // Use author_1 index as primary filter. pages_translated > 0 implies pages_count > 0.
     const rawBooks = await db.collection('books').find(
       {
         author: { $regex: `^${l}`, $options: 'i' },
         hidden: { $ne: true },
-        pages_count: { $gt: 0 },
         pages_translated: { $gt: 0 },
       },
       {
         projection: { author: 1 },
+        hint: 'author_1',
         maxTimeMS: 45000,
       }
     ).toArray();
