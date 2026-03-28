@@ -19,6 +19,7 @@
  *   --dry-run       Count pages without embedding
  *   --book-id ID    Only process pages for this book
  *   --batch-size N  Texts per API call (default: 100, max 100)
+ *   --workers N     Concurrent books to process (default: 5)
  */
 
 import { MongoClient } from 'mongodb';
@@ -46,6 +47,7 @@ const DRY_RUN = args.includes('--dry-run');
 const LIMIT = getArg('limit') ? parseInt(getArg('limit')) : Infinity;
 const BOOK_ID = getArg('book-id');
 const BATCH_SIZE = Math.min(getArg('batch-size') ? parseInt(getArg('batch-size')) : 100, 100);
+const WORKERS = getArg('workers') ? parseInt(getArg('workers')) : 5;
 
 // --- Embedding helpers ---
 
@@ -163,15 +165,14 @@ async function main() {
   let totalFailed = 0;
   let totalTokens = 0;
   let totalSkipped = 0;
+  let booksCompleted = 0;
   const startTime = Date.now();
 
-  // Process book by book (short cursors, no timeout risk)
-  for (let bi = 0; bi < bookIds.length; bi++) {
-    if (totalProcessed >= LIMIT) break;
+  // Parallel worker pool — process N books concurrently
+  console.log(`[embed] Starting ${WORKERS} workers`);
+  let bookIndex = 0;
 
-    const bookId = bookIds[bi];
-
-    // Build filter: page has at least one field needing embedding
+  async function processBook(bookId) {
     const orConditions = [];
     if (DO_OCR) {
       orConditions.push({
@@ -186,45 +187,64 @@ async function main() {
       });
     }
 
-    const pageFilter = {
-      book_id: bookId,
-      $or: orConditions,
-    };
-
-    // Projection: fetch both fields so we can embed whatever's available
     const projection = { _id: 1, page_number: 1 };
     if (DO_OCR) projection['ocr.data'] = 1;
     if (DO_TRANS) projection['translation.data'] = 1;
 
     const pages = await db.collection('pages')
-      .find(pageFilter, { projection })
+      .find({ book_id: bookId, $or: orConditions }, { projection })
       .sort({ page_number: 1 })
       .toArray();
 
-    if (pages.length === 0) continue;
+    if (pages.length === 0) return { processed: 0, failed: 0, tokens: 0, skipped: 0 };
 
-    // Process this book's pages in batches
+    let result = { processed: 0, failed: 0, tokens: 0, skipped: 0 };
     for (let pi = 0; pi < pages.length; pi += BATCH_SIZE) {
-      if (totalProcessed >= LIMIT) break;
-
       const batch = pages.slice(pi, pi + BATCH_SIZE);
-      const result = await processPageBatch(db, batch);
-      totalProcessed += result.processed;
-      totalFailed += result.failed;
-      totalTokens += result.tokens;
-      totalSkipped += result.skipped;
+      const r = await processPageBatch(db, batch);
+      result.processed += r.processed;
+      result.failed += r.failed;
+      result.tokens += r.tokens;
+      result.skipped += r.skipped;
     }
+    return result;
+  }
 
-    // Progress every 50 books
-    if ((bi + 1) % 50 === 0 || bi === bookIds.length - 1) {
-      const elapsed = ((Date.now() - startTime) / 1000).toFixed(0);
-      const rate = (totalProcessed / (elapsed || 1)).toFixed(1);
-      const cost = (totalTokens * 0.15 / 1e6).toFixed(3);
-      console.log(
-        `[embed] book ${bi + 1}/${bookIds.length} | ${totalProcessed.toLocaleString()} pages (${rate}/s, ~$${cost}, ${elapsed}s)`
-      );
+  async function worker() {
+    while (true) {
+      const bi = bookIndex++;
+      if (bi >= bookIds.length || totalProcessed >= LIMIT) break;
+
+      const bookId = bookIds[bi];
+      try {
+        const result = await processBook(bookId);
+        totalProcessed += result.processed;
+        totalFailed += result.failed;
+        totalTokens += result.tokens;
+        totalSkipped += result.skipped;
+      } catch (err) {
+        console.error(`[embed] Book ${bookId} error:`, err.message);
+        totalFailed++;
+      }
+
+      booksCompleted++;
+      if (booksCompleted % 50 === 0) {
+        const elapsed = ((Date.now() - startTime) / 1000).toFixed(0);
+        const rate = (totalProcessed / (elapsed || 1)).toFixed(1);
+        const cost = (totalTokens * 0.15 / 1e6).toFixed(3);
+        console.log(
+          `[embed] ${booksCompleted}/${bookIds.length} books | ${totalProcessed.toLocaleString()} pages (${rate}/s, ~$${cost}, ${elapsed}s)`
+        );
+      }
     }
   }
+
+  // Launch workers
+  const workers = [];
+  for (let i = 0; i < WORKERS; i++) {
+    workers.push(worker());
+  }
+  await Promise.all(workers);
 
   const elapsed = ((Date.now() - startTime) / 1000).toFixed(0);
   const cost = (totalTokens * 0.15 / 1e6).toFixed(2);
