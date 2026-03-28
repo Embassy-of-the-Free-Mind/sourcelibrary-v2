@@ -124,6 +124,15 @@ function calculateCost(inputTokens, outputTokens, model) {
   return (inputTokens * pricing.input + outputTokens * pricing.output) / 1_000_000;
 }
 
+// ── Safety settings (BLOCK_NONE prevents RECITATION on public domain texts) ──
+const SAFETY_SETTINGS = [
+  { category: 'HARM_CATEGORY_HARASSMENT', threshold: 'BLOCK_NONE' },
+  { category: 'HARM_CATEGORY_HATE_SPEECH', threshold: 'BLOCK_NONE' },
+  { category: 'HARM_CATEGORY_SEXUALLY_EXPLICIT', threshold: 'BLOCK_NONE' },
+  { category: 'HARM_CATEGORY_DANGEROUS_CONTENT', threshold: 'BLOCK_NONE' },
+  { category: 'HARM_CATEGORY_CIVIC_INTEGRITY', threshold: 'BLOCK_NONE' },
+];
+
 // ── Build prompt header (shared between single and batch) ──
 function buildPromptHeader(book) {
   const isEnglish = (book.language || '').toLowerCase() === 'english';
@@ -135,6 +144,12 @@ function buildPromptHeader(book) {
   if (book.author) parts.push(`Author: ${book.author}`);
   if (book.year || book.published) parts.push(`Date: ${book.year || book.published}`);
   if (parts.length) prompt += `\n\n**Source work:** ${parts.join(' | ')}`;
+
+  // Copyright note — prevents RECITATION filter on public domain texts
+  const year = parseInt(book.year || book.published, 10);
+  if (year && year < 1930) {
+    prompt += `\n\n**Note:** This is a public domain work published in ${year}. It is not under copyright.`;
+  }
 
   return { prompt, isEnglish };
 }
@@ -156,7 +171,7 @@ async function translatePage(db, page, book, prevTranslation) {
 
   const ai = getClient();
   const selectedModel = getModelForBook(book);
-  const model = ai.getGenerativeModel({ model: selectedModel });
+  const model = ai.getGenerativeModel({ model: selectedModel, safetySettings: SAFETY_SETTINGS });
   const start = Date.now();
   const result = await model.generateContent(prompt);
   const durationMs = Date.now() - start;
@@ -193,7 +208,7 @@ async function translateBatch(db, pages, book, prevTranslation) {
 
   const ai = getClient();
   const selectedModel = getModelForBook(book);
-  const model = ai.getGenerativeModel({ model: selectedModel });
+  const model = ai.getGenerativeModel({ model: selectedModel, safetySettings: SAFETY_SETTINGS });
   const start = Date.now();
   const result = await model.generateContent(prompt);
   const durationMs = Date.now() - start;
