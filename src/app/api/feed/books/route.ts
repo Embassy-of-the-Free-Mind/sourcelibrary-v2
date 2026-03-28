@@ -3,7 +3,7 @@ import { getDb } from '@/lib/mongodb';
 
 export const dynamic = 'force-dynamic';
 export const preferredRegion = 'fra1';
-export const revalidate = 3600;
+export const dynamic = 'force-dynamic';
 
 const BASE_URL = 'https://sourcelibrary.org';
 

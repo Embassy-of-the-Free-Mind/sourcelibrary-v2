@@ -7,7 +7,7 @@ import { notFound } from 'next/navigation';
 import { bookUrl } from '@/lib/slugify';
 import { FACETS, facetDbField } from '@/lib/taxonomy/faceted-vocabulary';
 
-export const revalidate = 300; // 5 min
+export const dynamic = 'force-dynamic';
 
 interface Props {
   params: Promise<{ slug: string }>;

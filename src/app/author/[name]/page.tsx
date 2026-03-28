@@ -35,7 +35,7 @@ interface AuthorEntity {
 
 // ISR: author pages are mostly static — revalidate weekly.
 // Use POST /api/admin/revalidate-authors to force refresh after changes.
-export const revalidate = 604800;
+export const dynamic = 'force-dynamic';
 export const dynamicParams = true;
 export async function generateStaticParams() {
   return []; // All paths generated on demand via ISR

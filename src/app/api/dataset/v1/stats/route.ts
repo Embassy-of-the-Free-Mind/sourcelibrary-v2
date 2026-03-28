@@ -3,7 +3,7 @@ import { getDb } from '@/lib/mongodb';
 
 export const dynamic = 'force-dynamic';
 export const maxDuration = 15;
-export const revalidate = 3600; // Cache for 1 hour
+export const dynamic = 'force-dynamic';
 
 /**
  * GET /api/dataset/v1/stats

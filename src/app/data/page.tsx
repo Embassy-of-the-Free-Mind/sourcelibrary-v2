@@ -5,7 +5,7 @@ import ContentPageLayout, { ContentHeader } from '@/components/layout/ContentPag
 import { CenturyChart } from './DataCharts';
 
 // ISR: rebuild every 6 hours. Allow 60s for first-hit generation.
-export const revalidate = 21600;
+export const dynamic = 'force-dynamic';
 export const maxDuration = 60;
 
 export const metadata: Metadata = {

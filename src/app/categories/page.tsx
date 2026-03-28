@@ -4,7 +4,7 @@ import { ArrowLeft, BookOpen, ChevronRight } from 'lucide-react';
 import { getDb } from '@/lib/mongodb';
 import { LIBRARY_CATEGORIES, CategoryWithCount } from '@/app/api/categories/route';
 
-export const revalidate = 600; // 10 min — as originally intended
+export const dynamic = 'force-dynamic';
 
 export const metadata: Metadata = {
   title: 'Browse by Category — Source Library',

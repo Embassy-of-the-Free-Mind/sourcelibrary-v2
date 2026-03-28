@@ -13,7 +13,7 @@ import Link from 'next/link';
 
 // ISR: serve cached HTML, revalidate in background every 60 seconds.
 // Short revalidation so stale fallback data (from DB stress) doesn't persist long.
-export const revalidate = 300;
+export const dynamic = 'force-dynamic';
 export const maxDuration = 60;
 
 // ---------- Book projection shared across queries ----------

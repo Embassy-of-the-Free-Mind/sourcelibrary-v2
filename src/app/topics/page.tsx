@@ -5,7 +5,7 @@ import ContentPageLayout, { ContentHeader } from '@/components/layout/ContentPag
 import type { Metadata } from 'next';
 import { FACETS, DOMAIN_GROUPS, facetDbField } from '@/lib/taxonomy/faceted-vocabulary';
 
-export const revalidate = 300; // 5 min — facet aggregations are expensive
+export const dynamic = 'force-dynamic';
 
 export const metadata: Metadata = {
   title: 'Browse by Topic | Source Library',
