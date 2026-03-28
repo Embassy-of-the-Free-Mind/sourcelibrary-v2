@@ -939,7 +939,17 @@ async function submitOcrDirectly(db, book, { modelOverride } = {}) {
   }
   console.log(`    Downloaded ${downloaded.length}/${pages.length} images`);
 
-  const prompt = await getOcrPromptFromDb(db);
+  let prompt = await getOcrPromptFromDb(db);
+
+  // Append book provenance context to help Gemini avoid recitation blocks
+  // on public domain works it mistakes for copyrighted material
+  const yearStr = book.year ? `Published ${book.year}.` : '';
+  const copyrightNote = book.year && book.year < 1930
+    ? 'This work is in the public domain.'
+    : '';
+  if (yearStr || book.title) {
+    prompt += `\n\n**Document context:** "${book.title || 'Unknown'}" by ${book.author || 'Unknown'}. ${yearStr} ${copyrightNote}`.trim();
+  }
 
   // Choose batch size based on page count
   const useFileBased = downloaded.length > OCR_INLINE_BATCH_SIZE;
