@@ -46,34 +46,37 @@ export default async function BrowseTitlesPage({ params }: PageProps) {
 
   const db = await getDb();
 
-  // Use $regex on title/display_title to avoid expensive $addFields on every document
+  // Use find() with regex prefix match on title
   const regex = new RegExp(`^${l}`, 'i');
-  const books = await db.collection('books').aggregate<BrowseBook>([
+  const rawBooks = await db.collection('books').find(
     {
-      $match: {
-        hidden: { $ne: true },
-        pages_count: { $gt: 0 },
-        pages_translated: { $gt: 0 },
-        $or: [
-          { display_title: { $regex: regex } },
-          { display_title: { $exists: false }, title: { $regex: regex } },
-        ],
-      },
+      hidden: { $ne: true },
+      pages_count: { $gt: 0 },
+      pages_translated: { $gt: 0 },
+      $or: [
+        { display_title: { $regex: regex } },
+        { display_title: { $exists: false }, title: { $regex: regex } },
+      ],
     },
-    { $sort: { display_title: 1, title: 1 } },
     {
-      $project: {
-        _id: 0,
-        id: { $ifNull: ['$id', { $toString: '$_id' }] },
-        slug: 1,
-        title: 1,
-        display_title: 1,
-        author: 1,
-        language: 1,
-        published: 1,
+      projection: {
+        id: 1, slug: 1, title: 1, display_title: 1,
+        author: 1, language: 1, published: 1,
       },
-    },
-  ], { maxTimeMS: 45000 }).toArray();
+      sort: { display_title: 1, title: 1 },
+      maxTimeMS: 45000,
+    }
+  ).toArray();
+
+  const books: BrowseBook[] = rawBooks.map(b => ({
+    id: (b.id as string) || b._id.toString(),
+    slug: b.slug as string | undefined,
+    title: b.title as string,
+    display_title: b.display_title as string | undefined,
+    author: b.author as string,
+    language: b.language as string,
+    published: b.published as string,
+  }));
 
   return (
     <div className="max-w-4xl mx-auto px-6 md:px-12 py-12 md:py-20">

@@ -197,7 +197,8 @@ export async function getShwepIndexData(): Promise<ShwepIndexData> {
   }
 
   // Get total books count efficiently
-  const totalBooks = await db.collection('books').countDocuments({ deleted: { $ne: true } }, { maxTimeMS: 45000 });
+  // Use estimatedDocumentCount (instant, metadata-based) instead of slow filtered countDocuments
+  const totalBooks = await db.collection('books').estimatedDocumentCount();
 
   return {
     periods: reversedPeriods,
