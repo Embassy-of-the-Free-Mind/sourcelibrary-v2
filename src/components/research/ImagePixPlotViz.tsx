@@ -17,7 +17,8 @@ interface ConstellationData {
 
 interface AtlasManifest {
   thumbSize: number; atlasSize: number; grid: number;
-  perAtlas: number; totalAtlases: number; atlases: string[];
+  perAtlas: number; totalImages: number; totalAtlases: number; atlases: string[];
+  imageIds?: string[];
 }
 
 const ATLAS_PATH = '/atlases';
@@ -35,13 +36,21 @@ export default function ImagePixPlotViz({ data }: { data: ConstellationData }) {
   const rafRef = useRef(0);
   const dirtyRef = useRef(true);
 
-  const [selIdx, setSelIdx] = useState<number | null>(null);
+  const [selAtlasIdx, setSelAtlasIdx] = useState<number | null>(null);
   const [loadStatus, setLoadStatus] = useState('loading...');
+  const idToImageRef = useRef<Map<string, ImageItem>>(new Map());
 
   const stats = useMemo(() => ({
     total: data.meta.total_images,
     books: new Set(data.images.map(i => i.book_id)).size,
   }), [data]);
+
+  // Build ID→image lookup once
+  useEffect(() => {
+    const map = new Map<string, ImageItem>();
+    data.images.forEach(img => map.set(img.id, img));
+    idToImageRef.current = map;
+  }, [data.images]);
 
   useEffect(() => {
     const container = containerRef.current;
@@ -166,8 +175,8 @@ export default function ImagePixPlotViz({ data }: { data: ConstellationData }) {
     const iR = Math.floor((wy - aR * m.atlasSize) / m.thumbSize);
     if (iC < 0 || iC >= m.grid || iR < 0 || iR >= m.grid) return null;
     const idx = ai * m.perAtlas + iR * m.grid + iC;
-    return idx < data.images.length ? idx : null;
-  }, [data.images.length]);
+    return idx < m.totalImages ? idx : null;
+  }, []);
 
   const onDown = useCallback((e: React.PointerEvent) => {
     if (e.button !== 0) return;
@@ -187,11 +196,23 @@ export default function ImagePixPlotViz({ data }: { data: ConstellationData }) {
     const d = dragRef.current;
     dragRef.current = null;
     if (d && Math.abs(e.clientX - d.sx) + Math.abs(e.clientY - d.sy) < 5) {
-      setSelIdx(hitTest(e.clientX, e.clientY));
+      setSelAtlasIdx(hitTest(e.clientX, e.clientY));
     }
   }, [hitTest]);
 
-  const sel = selIdx !== null ? data.images[selIdx] : null;
+  // Resolve atlas position → image data via manifest imageIds
+  const sel = useMemo(() => {
+    if (selAtlasIdx === null) return null;
+    const m = manifestRef.current;
+    if (!m) return null;
+    // If manifest has imageIds, use them for robust lookup
+    if (m.imageIds && m.imageIds[selAtlasIdx]) {
+      const img = idToImageRef.current.get(m.imageIds[selAtlasIdx]);
+      if (img) return img;
+    }
+    // Fallback: direct index (only works if data ordering matches atlas)
+    return data.images[selAtlasIdx] || null;
+  }, [selAtlasIdx, data.images]);
 
   return (
     <div ref={containerRef} className="relative w-full h-full select-none bg-[#0a0a0f] overflow-hidden">
@@ -212,7 +233,7 @@ export default function ImagePixPlotViz({ data }: { data: ConstellationData }) {
           onPointerDownCapture={e => e.stopPropagation()}>
           <div className="p-4 border-b border-gray-200 flex items-center justify-between shrink-0">
             <span className="text-gray-400 text-xs font-mono">{sel.type.replace(/_/g, ' ')}</span>
-            <button onClick={() => setSelIdx(null)} className="text-gray-400 hover:text-gray-600 text-lg leading-none">&times;</button>
+            <button onClick={() => setSelAtlasIdx(null)} className="text-gray-400 hover:text-gray-600 text-lg leading-none">&times;</button>
           </div>
           {sel.thumbnail && (
             <div className="bg-gray-50 flex items-center justify-center p-6 shrink-0">
