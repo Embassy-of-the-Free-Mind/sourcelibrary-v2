@@ -2,13 +2,30 @@
 
 ## Development Workflow — CRITICAL
 - **Feature branches off `main`.** One branch per feature/task: `feat/ai-search`, `fix/cover-thumbnails`, etc. No long-running dev branches.
-- **Create a branch at the start of each task:** `git checkout main && git pull && git checkout -b feat/description`
+- **Create a branch via worktree:** Use `EnterWorktree` at session start — it creates an isolated checkout with its own branch. Do NOT `git checkout -b` in the main directory (see Multi-Session Awareness above).
 - **PR when done:** `gh pr create --base main`. Keep PRs focused (5-15 commits). Small PRs merge fast.
-- **After merge, clean up:** `git checkout main && git pull && git branch -d feat/description`
+- **After merge, clean up:** Delete the worktree branch. The main directory stays on `main`.
 - **NEVER run `vercel --prod` from a feature branch.** The CLI deploys whatever is on disk — it ignores the Vercel production branch setting. Use `vercel` (no `--prod`) for preview deploys from branches.
 - **NEVER push directly to main.** All changes go through PRs.
 - **Preview URL:** Push the branch (`git push`) and Vercel auto-deploys a shareable preview. Use that for testing and sharing with the other dev.
 - The production site (sourcelibrary.org) stays untouched until a PR is reviewed and merged.
+
+## Multi-Session Awareness — CRITICAL
+Derek runs ~10 Claude Code terminals simultaneously, all sharing the main working directory. Branch switches in one terminal silently break all others.
+
+**The rule is simple: the main directory stays on `main`. Always.**
+
+- **NEVER run `git checkout <branch>` in the main directory.** This is the #1 source of cross-session chaos.
+- **All feature work happens in worktrees.** At session start, if your task needs a feature branch, immediately call `EnterWorktree` to get an isolated copy. Branch switches in worktrees are safe — they don't affect other terminals.
+- **Read-only tasks (searching code, reading files, running queries) can stay in the main directory on `main`.** No worktree needed.
+- **If you're on an unexpected branch** (not `main` in the main directory), tell the user: "This directory is on `X` — another session may have switched it. Want me to switch back to `main`?" Do NOT silently switch or start working on the wrong branch.
+- **At session start, check your branch** with `git branch --show-current`. If it's not `main` and you're in the main directory, flag it immediately.
+- **Commit and push before exiting a worktree.** Uncommitted worktree changes are invisible to other sessions.
+
+**Worktree quick reference:**
+- `EnterWorktree` — creates an isolated checkout with its own branch
+- Active worktrees: `git worktree list`
+- Worktrees live in `.claude/worktrees/`
 
 ## Data Protection — CRITICAL
 - **NEVER** delete books, pages, or source material without explicit confirmation
