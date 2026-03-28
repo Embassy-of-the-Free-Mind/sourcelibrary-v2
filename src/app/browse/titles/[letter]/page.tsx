@@ -48,10 +48,11 @@ export default async function BrowseTitlesPage({ params }: PageProps) {
   try {
     const db = await getDb();
     const regex = new RegExp(`^${l}`, 'i');
+    // pages_translated > 0 implies pages_count > 0, so skip redundant filter.
+    // Use books_hidden_translated_idx for the base filter, then regex on title.
     const rawBooks = await db.collection('books').find(
       {
         hidden: { $ne: true },
-        pages_count: { $gt: 0 },
         pages_translated: { $gt: 0 },
         $or: [
           { display_title: { $regex: regex } },
