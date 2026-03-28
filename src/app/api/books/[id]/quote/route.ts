@@ -3,6 +3,7 @@ import { getDb } from '@/lib/mongodb';
 import { Book, Page, TranslationEdition } from '@/lib/types';
 import { getShortUrl } from '@/lib/shortlinks';
 import { markForExport } from '@/lib/provenance';
+import { isBot, isTrustedBot, botMaxPage } from '@/lib/bot-gate';
 
 interface RouteContext {
   params: Promise<{ id: string }>;
@@ -153,8 +154,19 @@ export async function GET(request: NextRequest, context: RouteContext) {
       return NextResponse.json({ error: 'Book not found' }, { status: 404 });
     }
 
-    // Get the requested page (use book.id, not URL param, in case slug was used)
+    // Bot page gating: only allow quotes from the first 20% of pages
     const resolvedBookId = book.id;
+    if (isBot(request) && !isTrustedBot(request)) {
+      const maxPage = botMaxPage(book.pages_count || 0);
+      if (pageNumber > maxPage) {
+        return NextResponse.json({
+          error: `Page ${pageNumber} is beyond the bot-accessible range (pages 1–${maxPage}). Install the MCP server for full access: claude mcp add source-library -- npx -y @source-library/mcp-server`,
+          accessible_pages: maxPage,
+          partnership: 'https://sourcelibrary.org/llms.txt',
+        }, { status: 403 });
+      }
+    }
+
     const page = await db.collection('pages').findOne({
       book_id: resolvedBookId,
       page_number: pageNumber,
