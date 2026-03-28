@@ -1,24 +1,24 @@
 #!/usr/bin/env node
 /**
- * Phase 2-3: Embed page-level OCR and translation text.
+ * Embed page-level OCR and/or translation text in a single pass.
  *
- * Stores vectors on page documents for semantic search across the library.
- * - OCR embeddings: cross-lingual search (find Latin from English queries)
- * - Translation embeddings: English semantic search + RAG
+ * For each page, embeds whichever fields have data (OCR, translation, or both).
+ * Uses book-batch iteration to avoid Atlas cursor timeouts.
  *
- * Cost: ~$55 for 1.2M translation pages, ~$120 for 2.6M OCR pages.
- * Storage: ~15 GB (translation) + ~31 GB (OCR) at 12KB per BSON double array.
+ * Cost: ~$175 for both fields on all pages with data.
+ * Storage: ~46 GB (OCR ~31 GB + translation ~15 GB) as BSON double arrays.
  *
  * Usage:
- *   set -a; source .env.production.local; set +a; node scripts/embed-pages.mjs --field translation
+ *   set -a; source .env.production.local; set +a; node scripts/embed-pages.mjs
  *   set -a; source .env.production.local; set +a; node scripts/embed-pages.mjs --field ocr
+ *   set -a; source .env.production.local; set +a; node scripts/embed-pages.mjs --field translation
  *
  * Options:
- *   --field F       "ocr" or "translation" (required)
+ *   --field F       "ocr", "translation", or "both" (default: both)
  *   --limit N       Process at most N pages (default: all)
  *   --dry-run       Count pages without embedding
  *   --book-id ID    Only process pages for this book
- *   --batch-size N  Pages per API call (default: 100, max 100)
+ *   --batch-size N  Texts per API call (default: 100, max 100)
  */
 
 import { MongoClient } from 'mongodb';
@@ -33,11 +33,14 @@ function getArg(name) {
   return idx >= 0 && args[idx + 1] ? args[idx + 1] : null;
 }
 
-const FIELD = getArg('field');
-if (!FIELD || !['ocr', 'translation'].includes(FIELD)) {
-  console.error('Usage: node scripts/embed-pages.mjs --field ocr|translation');
+const FIELD = getArg('field') || 'both';
+if (!['ocr', 'translation', 'both'].includes(FIELD)) {
+  console.error('Usage: node scripts/embed-pages.mjs [--field ocr|translation|both]');
   process.exit(1);
 }
+
+const DO_OCR = FIELD === 'ocr' || FIELD === 'both';
+const DO_TRANS = FIELD === 'translation' || FIELD === 'both';
 
 const DRY_RUN = args.includes('--dry-run');
 const LIMIT = getArg('limit') ? parseInt(getArg('limit')) : Infinity;
@@ -56,6 +59,8 @@ function loadApiKeys() {
     const k = process.env[`GEMINI_API_KEY_${i}`];
     if (k) apiKeys.push(k);
   }
+  // Also use TIER3 key for embedding (high quota)
+  if (process.env.GEMINI_API_KEY_TIER3) apiKeys.push(process.env.GEMINI_API_KEY_TIER3);
   if (apiKeys.length === 0) throw new Error('No GEMINI_API_KEY configured');
   console.log(`[embed] ${apiKeys.length} API keys loaded`);
 }
@@ -78,15 +83,24 @@ function sleep(ms) {
   return new Promise(r => setTimeout(r, ms));
 }
 
+let _GoogleGenerativeAI;
+async function getSDK() {
+  if (!_GoogleGenerativeAI) {
+    const mod = await import('@google/generative-ai');
+    _GoogleGenerativeAI = mod.GoogleGenerativeAI;
+  }
+  return _GoogleGenerativeAI;
+}
+
 async function batchEmbed(texts) {
-  const { GoogleGenerativeAI } = await import('@google/generative-ai');
+  const GoogleGenerativeAI = await getSDK();
   const results = [];
 
   for (let i = 0; i < texts.length; i += 100) {
     const batch = texts.slice(i, i + 100);
     let lastErr;
 
-    for (let retry = 0; retry < 3; retry++) {
+    for (let retry = 0; retry < 5; retry++) {
       const key = getNextKey();
       const client = new GoogleGenerativeAI(key);
       const model = client.getGenerativeModel({ model: SEMANTIC_MODEL });
@@ -106,8 +120,9 @@ async function batchEmbed(texts) {
         const msg = err.message || String(err);
         if (msg.includes('429') || msg.toLowerCase().includes('rate limit')) {
           keyCooldowns.set(key, Date.now());
-          console.warn(`[embed] Rate limited, retrying (${retry + 1}/3)`);
-          await sleep(2000 * (retry + 1));
+          const wait = 2000 * (retry + 1);
+          console.warn(`[embed] Rate limited, waiting ${wait / 1000}s (${retry + 1}/5)`);
+          await sleep(wait);
           continue;
         }
         throw err;
@@ -123,125 +138,203 @@ async function batchEmbed(texts) {
 
 async function main() {
   loadApiKeys();
+  console.log(`[embed] Mode: ${FIELD} | batch size: ${BATCH_SIZE}`);
 
   const mongoClient = new MongoClient(process.env.MONGODB_URI, { serverSelectionTimeoutMS: 10000 });
   await mongoClient.connect();
   const db = mongoClient.db('bookstore');
 
-  const sourceField = FIELD === 'ocr' ? 'ocr.data' : 'translation.data';
-  const embeddingPath = `embedding.${FIELD}`;
-
-  // Find pages that have source data but no embedding yet
-  const filter = {
-    [sourceField]: { $exists: true, $ne: '' },
-    [embeddingPath]: { $exists: false },
-  };
-  if (BOOK_ID) filter.book_id = BOOK_ID;
-
-  // Estimate count (this can be slow on pages collection)
-  console.log(`[embed] Counting ${FIELD} pages to embed...`);
-  const total = await db.collection('pages').countDocuments(filter, { maxTimeMS: 120000 });
-  console.log(`[embed] ${total.toLocaleString()} pages to embed`);
-
-  if (DRY_RUN) {
-    console.log('[embed] Dry run — exiting');
-    await mongoClient.close();
-    return;
+  // Get list of book IDs to process (avoids long cursor on pages)
+  let bookIds;
+  if (BOOK_ID) {
+    bookIds = [BOOK_ID];
+  } else {
+    console.log('[embed] Fetching book list...');
+    const bookFilter = { pages_count: { $gt: 0 } };
+    if (DO_OCR) bookFilter.pages_ocr = { $gt: 0 };
+    const books = await db.collection('books')
+      .find(bookFilter, { projection: { id: 1 }, noCursorTimeout: true })
+      .toArray();
+    bookIds = books.map(b => b.id);
+    console.log(`[embed] ${bookIds.length} books to scan`);
   }
 
-  const cursor = db.collection('pages')
-    .find(filter, {
-      projection: { id: 1, book_id: 1, page_number: 1, [sourceField]: 1 },
-      noCursorTimeout: true,
-    })
-    .sort({ book_id: 1, page_number: 1 })
-    .limit(LIMIT === Infinity ? 0 : LIMIT);
-
-  let processed = 0;
-  let failed = 0;
+  let totalProcessed = 0;
+  let totalFailed = 0;
   let totalTokens = 0;
+  let totalSkipped = 0;
   const startTime = Date.now();
-  let pageBatch = [];
 
-  for await (const page of cursor) {
-    pageBatch.push(page);
+  // Process book by book (short cursors, no timeout risk)
+  for (let bi = 0; bi < bookIds.length; bi++) {
+    if (totalProcessed >= LIMIT) break;
 
-    if (pageBatch.length >= BATCH_SIZE) {
-      await processBatch(pageBatch);
-      pageBatch = [];
-    }
-  }
+    const bookId = bookIds[bi];
 
-  if (pageBatch.length > 0) {
-    await processBatch(pageBatch);
-  }
-
-  async function processBatch(pages) {
-    const texts = pages.map(p => {
-      const data = FIELD === 'ocr' ? p.ocr?.data : p.translation?.data;
-      return data || '';
-    }).filter(t => t.length > 0);
-
-    if (texts.length === 0) return;
-
-    let vectors;
-    try {
-      vectors = await batchEmbed(texts);
-    } catch (err) {
-      console.error(`[embed] Batch failed:`, err.message);
-      failed += pages.length;
-      return;
-    }
-
-    // Build bulk write
-    const bulkOps = [];
-    let vi = 0;
-    for (const page of pages) {
-      const data = FIELD === 'ocr' ? page.ocr?.data : page.translation?.data;
-      if (!data) continue;
-
-      bulkOps.push({
-        updateOne: {
-          filter: { _id: page._id },
-          update: {
-            $set: {
-              [embeddingPath]: vectors[vi],
-              'embedding.model': SEMANTIC_MODEL,
-              'embedding.embedded_at': new Date(),
-            },
-          },
-        },
+    // Build filter: page has at least one field needing embedding
+    const orConditions = [];
+    if (DO_OCR) {
+      orConditions.push({
+        'ocr.data': { $exists: true, $ne: '' },
+        'embedding.ocr': { $exists: false },
       });
-
-      totalTokens += Math.ceil(data.length / 4);
-      vi++;
+    }
+    if (DO_TRANS) {
+      orConditions.push({
+        'translation.data': { $exists: true, $ne: '' },
+        'embedding.translation': { $exists: false },
+      });
     }
 
-    if (bulkOps.length > 0) {
-      await db.collection('pages').bulkWrite(bulkOps, { ordered: false });
+    const pageFilter = {
+      book_id: bookId,
+      $or: orConditions,
+    };
+
+    // Projection: fetch both fields so we can embed whatever's available
+    const projection = { _id: 1, page_number: 1 };
+    if (DO_OCR) projection['ocr.data'] = 1;
+    if (DO_TRANS) projection['translation.data'] = 1;
+
+    const pages = await db.collection('pages')
+      .find(pageFilter, { projection })
+      .sort({ page_number: 1 })
+      .toArray();
+
+    if (pages.length === 0) continue;
+
+    // Process this book's pages in batches
+    for (let pi = 0; pi < pages.length; pi += BATCH_SIZE) {
+      if (totalProcessed >= LIMIT) break;
+
+      const batch = pages.slice(pi, pi + BATCH_SIZE);
+      const result = await processPageBatch(db, batch);
+      totalProcessed += result.processed;
+      totalFailed += result.failed;
+      totalTokens += result.tokens;
+      totalSkipped += result.skipped;
     }
 
-    processed += bulkOps.length;
-    const elapsed = ((Date.now() - startTime) / 1000).toFixed(0);
-    const rate = (processed / (elapsed || 1)).toFixed(1);
-    const cost = (totalTokens * 0.15 / 1e6).toFixed(3);
-    const pct = total > 0 ? ((processed / total) * 100).toFixed(1) : '?';
-
-    if (processed % (BATCH_SIZE * 10) === 0 || processed === total) {
+    // Progress every 50 books
+    if ((bi + 1) % 50 === 0 || bi === bookIds.length - 1) {
+      const elapsed = ((Date.now() - startTime) / 1000).toFixed(0);
+      const rate = (totalProcessed / (elapsed || 1)).toFixed(1);
+      const cost = (totalTokens * 0.15 / 1e6).toFixed(3);
       console.log(
-        `[embed] ${processed.toLocaleString()}/${total.toLocaleString()} (${pct}%, ${rate}/s, ~$${cost}, ${elapsed}s)`
+        `[embed] book ${bi + 1}/${bookIds.length} | ${totalProcessed.toLocaleString()} pages (${rate}/s, ~$${cost}, ${elapsed}s)`
       );
     }
   }
 
   const elapsed = ((Date.now() - startTime) / 1000).toFixed(0);
   const cost = (totalTokens * 0.15 / 1e6).toFixed(2);
-  console.log(`\n[embed] Done. ${processed.toLocaleString()} embedded, ${failed} failed, ~$${cost}, ${elapsed}s`);
+  console.log(`\n[embed] Done.`);
+  console.log(`  Embedded: ${totalProcessed.toLocaleString()}`);
+  console.log(`  Skipped (already done): ${totalSkipped.toLocaleString()}`);
+  console.log(`  Failed: ${totalFailed}`);
+  console.log(`  Cost: ~$${cost}`);
+  console.log(`  Time: ${elapsed}s`);
 
   await mongoClient.close();
 }
 
-main().catch(err => {
-  console.error('Fatal:', err);
-  process.exit(1);
-});
+async function processPageBatch(db, pages) {
+  // Collect all texts to embed, tracking which page/field each belongs to
+  const embedJobs = []; // { pageIdx, field, text }
+
+  for (let i = 0; i < pages.length; i++) {
+    const page = pages[i];
+
+    if (DO_OCR && page.ocr?.data && !page.embedding?.ocr) {
+      embedJobs.push({ pageIdx: i, field: 'ocr', text: page.ocr.data });
+    }
+    if (DO_TRANS && page.translation?.data && !page.embedding?.translation) {
+      embedJobs.push({ pageIdx: i, field: 'translation', text: page.translation.data });
+    }
+  }
+
+  if (embedJobs.length === 0) {
+    return { processed: 0, failed: 0, tokens: 0, skipped: pages.length };
+  }
+
+  // Embed all texts in one batch call
+  let vectors;
+  try {
+    vectors = await batchEmbed(embedJobs.map(j => j.text));
+  } catch (err) {
+    console.error(`[embed] Batch failed:`, err.message);
+    return { processed: 0, failed: pages.length, tokens: 0, skipped: 0 };
+  }
+
+  // Group embeddings by page for bulk write
+  const pageUpdates = new Map(); // pageIdx -> { ocr?: vector, translation?: vector }
+  let tokens = 0;
+
+  for (let i = 0; i < embedJobs.length; i++) {
+    const job = embedJobs[i];
+    const update = pageUpdates.get(job.pageIdx) || {};
+    update[job.field] = vectors[i];
+    pageUpdates.set(job.pageIdx, update);
+    tokens += Math.ceil(job.text.length / 4);
+  }
+
+  // Build bulk write ops
+  const bulkOps = [];
+  for (const [pageIdx, updates] of pageUpdates) {
+    const page = pages[pageIdx];
+    const $set = {
+      'embedding.model': SEMANTIC_MODEL,
+      'embedding.embedded_at': new Date(),
+    };
+    if (updates.ocr) $set['embedding.ocr'] = updates.ocr;
+    if (updates.translation) $set['embedding.translation'] = updates.translation;
+
+    bulkOps.push({
+      updateOne: {
+        filter: { _id: page._id },
+        update: { $set },
+      },
+    });
+  }
+
+  if (bulkOps.length > 0) {
+    await db.collection('pages').bulkWrite(bulkOps, { ordered: false });
+  }
+
+  return { processed: bulkOps.length, failed: 0, tokens, skipped: 0 };
+}
+
+if (!DRY_RUN) {
+  main().catch(err => {
+    console.error('Fatal:', err);
+    process.exit(1);
+  });
+} else {
+  // Dry run mode
+  (async () => {
+    loadApiKeys();
+    const mongoClient = new MongoClient(process.env.MONGODB_URI, { serverSelectionTimeoutMS: 10000 });
+    await mongoClient.connect();
+    const db = mongoClient.db('bookstore');
+
+    if (DO_OCR) {
+      const ocrCount = await db.collection('pages').countDocuments(
+        { 'ocr.data': { $exists: true, $ne: '' }, 'embedding.ocr': { $exists: false } },
+        { maxTimeMS: 300000 }
+      );
+      console.log(`[dry-run] OCR pages to embed: ${ocrCount.toLocaleString()}`);
+    }
+    if (DO_TRANS) {
+      const transCount = await db.collection('pages').countDocuments(
+        { 'translation.data': { $exists: true, $ne: '' }, 'embedding.translation': { $exists: false } },
+        { maxTimeMS: 300000 }
+      );
+      console.log(`[dry-run] Translation pages to embed: ${transCount.toLocaleString()}`);
+    }
+
+    await mongoClient.close();
+  })().catch(err => {
+    console.error('Fatal:', err);
+    process.exit(1);
+  });
+}
