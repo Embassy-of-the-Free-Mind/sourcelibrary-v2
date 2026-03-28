@@ -418,11 +418,30 @@ async function main() {
   const globalCounter = { count: 0 };
   const results = await Promise.all(
     books.map(async (book) => {
-      const jobId = book.job?.job_id;
+      let jobId = book.job?.job_id;
       const zero = { translated: 0, failed: 0, completed: 0, inputTokens: 0, outputTokens: 0 };
       if (!jobId) {
-        console.log(`  [${(book.title || '').substring(0, 40)}] No job_id, skipping`);
-        return zero;
+        // Self-heal: try to find an active job for this book
+        const orphanJob = await db.collection('jobs').findOne(
+          { book_id: book.id, type: 'translation', status: { $in: ['pending', 'processing'] } },
+          { sort: { created_at: -1 } },
+        );
+        if (orphanJob) {
+          jobId = orphanJob.id || orphanJob._id.toString();
+          await db.collection('books').updateOne(
+            { id: book.id },
+            { $set: { job: { job_id: jobId, type: 'translation' }, updated_at: new Date() } },
+          );
+          console.log(`  [${(book.title || '').substring(0, 40)}] Re-linked orphan job ${jobId}`);
+        } else {
+          // No active job — roll back so pipeline can re-process
+          console.log(`  [${(book.title || '').substring(0, 40)}] No job found, rolling back to metadata_enriched`);
+          await db.collection('books').updateOne(
+            { id: book.id },
+            { $set: { 'pipeline_auto.status': 'metadata_enriched', updated_at: new Date() }, $unset: { job: '' } },
+          );
+          return zero;
+        }
       }
 
       const job = await db.collection('jobs').findOne({ id: jobId });
