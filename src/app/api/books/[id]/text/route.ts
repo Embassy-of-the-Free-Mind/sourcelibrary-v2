@@ -1,7 +1,7 @@
 import { NextRequest, NextResponse } from 'next/server';
 import { getDb } from '@/lib/mongodb';
 import { ObjectId } from 'mongodb';
-import { isBot, isTrustedBot, isBotAccessible, botGateResponse } from '@/lib/bot-gate';
+import { isBot, isTrustedBot, botMaxPage, botGateResponse } from '@/lib/bot-gate';
 import { getChapterTexts } from '@/lib/chapter-text';
 
 export const maxDuration = 30;
@@ -59,24 +59,30 @@ export async function GET(
 
     const resolvedBookId = book.id || bookId;
 
-    // Bot gating: non-trusted bots only get ~20% of books
-    if (isBot(request) && !isTrustedBot(request) && !isBotAccessible(resolvedBookId)) {
-      // Fetch summary for the gated response
-      const fullBook = await db.collection('books').findOne(
-        { id: resolvedBookId },
-        { projection: { reading_summary: 1, pages_count: 1 } }
-      );
-      return NextResponse.json(
-        botGateResponse({ ...book, ...fullBook, id: resolvedBookId }),
-        { status: 200, headers: { 'Cache-Control': 'public, max-age=3600' } }
-      );
-    }
+    // Bot gating: non-trusted bots get the first 20% of pages from any book
+    const isBotRequest = isBot(request) && !isTrustedBot(request);
+    const botPageLimit = isBotRequest ? botMaxPage(book.pages_count || 0) : undefined;
 
     // Chapter mode: return pre-materialized chapter text
     if (chapterParam !== null) {
       const chapterIndex = parseInt(chapterParam);
       if (isNaN(chapterIndex) || chapterIndex < 0) {
         return NextResponse.json({ error: 'chapter must be a non-negative integer' }, { status: 400 });
+      }
+
+      // Bot page limit: block chapters that start beyond the accessible range
+      if (botPageLimit !== undefined) {
+        const bookWithChapters = await db.collection('books').findOne(
+          { id: resolvedBookId },
+          { projection: { chapters: 1, reading_summary: 1, pages_count: 1 } },
+        );
+        const chapter = bookWithChapters?.chapters?.[chapterIndex];
+        if (chapter && chapter.pageStart > botPageLimit) {
+          return NextResponse.json(
+            botGateResponse({ ...book, ...bookWithChapters, id: resolvedBookId }),
+            { status: 200, headers: { 'Cache-Control': 'public, max-age=3600' } }
+          );
+        }
       }
 
       const allParts = await getChapterTexts(db, resolvedBookId, chapterIndex);
@@ -145,10 +151,14 @@ export async function GET(
 
     // Build page query
     const pageFilter: Record<string, unknown> = { book_id: resolvedBookId };
-    if (fromPage !== undefined || toPage !== undefined) {
+    if (fromPage !== undefined || toPage !== undefined || botPageLimit !== undefined) {
       pageFilter.page_number = {};
       if (fromPage !== undefined) (pageFilter.page_number as Record<string, number>).$gte = fromPage;
-      if (toPage !== undefined) (pageFilter.page_number as Record<string, number>).$lte = toPage;
+      // Bot page limit caps the maximum page number
+      const effectiveToPage = botPageLimit !== undefined
+        ? (toPage !== undefined ? Math.min(toPage, botPageLimit) : botPageLimit)
+        : toPage;
+      if (effectiveToPage !== undefined) (pageFilter.page_number as Record<string, number>).$lte = effectiveToPage;
     }
 
     // Build projection — only fetch what's needed
@@ -253,6 +263,15 @@ export async function GET(
       content_type: content,
       total_pages: book.pages_count || pages.length,
       pages_returned: pagesWithContent.length,
+      ...(botPageLimit !== undefined ? {
+        bot_access: {
+          truncated: true,
+          pages_accessible: botPageLimit,
+          pages_total: book.pages_count || pages.length,
+          full_access: 'Install the MCP server for full access: claude mcp add source-library -- npx -y @source-library/mcp-server',
+          partnership: 'https://sourcelibrary.org/llms.txt',
+        },
+      } : {}),
       pages: pagesWithContent.map(p => {
         const entry: Record<string, unknown> = { page_number: p.page_number };
 
