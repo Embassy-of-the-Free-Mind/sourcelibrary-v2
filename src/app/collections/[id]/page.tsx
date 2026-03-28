@@ -14,7 +14,7 @@ import { bookTitle, sanitizeThumbnail, withTimeout } from '@/lib/collections-uti
 import { firstTranslationBadge } from '@/lib/first-translation-labels';
 
 // ISR: rebuild at most every 10 minutes
-export const revalidate = 600;
+export const dynamic = 'force-dynamic';
 export const dynamicParams = true;
 export const maxDuration = 60;
 export async function generateStaticParams() {
