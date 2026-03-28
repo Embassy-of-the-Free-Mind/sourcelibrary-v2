@@ -87,7 +87,7 @@ const ENGLISH_MODERNIZATION_PROMPT = `You are a scholarly editor modernizing Ear
 - Do NOT add commentary or explanations — just the modernized text`;
 
 // ── Skip these page types (no translatable content) ──
-const SKIP_PAGE_TYPES = ['blank'];
+const SKIP_PAGE_TYPES = ['blank', 'digitizer-notice', 'illustration', 'map', 'diagram'];
 // Pages with very short OCR get excluded from batches (translated single-page instead).
 // Short pages in batches cause the model to produce minimal responses without XML tags.
 const MIN_OCR_CHARS_FOR_BATCH = 200;
