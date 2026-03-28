@@ -109,6 +109,7 @@ export default function EmbassyPage() {
           message: trimmed,
           history: messages,
           visibility,
+          stream: true,
         }),
       });
 
@@ -129,11 +130,60 @@ export default function EmbassyPage() {
         return;
       }
 
-      const data = await res.json();
-      if (data.threadId && !threadId) {
-        setThreadId(data.threadId);
+      // SSE streaming response
+      if (res.headers.get('content-type')?.includes('text/event-stream')) {
+        // Add empty assistant message that we'll stream into
+        setMessages(prev => [...prev, { role: 'assistant', content: '' }]);
+
+        const reader = res.body?.getReader();
+        const decoder = new TextDecoder();
+        let buffer = '';
+
+        if (reader) {
+          while (true) {
+            const { done, value } = await reader.read();
+            if (done) break;
+
+            buffer += decoder.decode(value, { stream: true });
+            const lines = buffer.split('\n');
+            buffer = lines.pop() || '';
+
+            for (const line of lines) {
+              if (!line.startsWith('data: ')) continue;
+              try {
+                const event = JSON.parse(line.slice(6));
+                if (event.type === 'threadId' && !threadId) {
+                  setThreadId(event.threadId);
+                } else if (event.type === 'chunk') {
+                  setMessages(prev => {
+                    const updated = [...prev];
+                    const last = updated[updated.length - 1];
+                    if (last?.role === 'assistant') {
+                      updated[updated.length - 1] = { ...last, content: last.content + event.text };
+                    }
+                    return updated;
+                  });
+                } else if (event.type === 'error') {
+                  setMessages(prev => {
+                    const updated = [...prev];
+                    updated[updated.length - 1] = { role: 'assistant', content: event.message };
+                    return updated;
+                  });
+                }
+              } catch {
+                // Skip malformed events
+              }
+            }
+          }
+        }
+      } else {
+        // Fallback: non-streaming JSON response
+        const data = await res.json();
+        if (data.threadId && !threadId) {
+          setThreadId(data.threadId);
+        }
+        setMessages(prev => [...prev, { role: 'assistant', content: data.message.content }]);
       }
-      setMessages(prev => [...prev, { role: 'assistant', content: data.message.content }]);
     } catch {
       setMessages(prev => [...prev, {
         role: 'assistant',

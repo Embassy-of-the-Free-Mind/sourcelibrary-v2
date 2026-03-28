@@ -2,7 +2,7 @@ import { NextRequest, NextResponse } from 'next/server';
 import { auth } from '@/lib/auth';
 import { getDb } from '@/lib/mongodb';
 import { ObjectId } from 'mongodb';
-import { generateLibrarianResponse } from '@/lib/embassy/librarian';
+import { generateLibrarianResponse, streamLibrarianResponse } from '@/lib/embassy/librarian';
 import { z } from 'zod';
 
 const messageSchema = z.object({
@@ -15,12 +15,14 @@ const chatRequestSchema = z.object({
   message: z.string().min(1, 'Message cannot be empty').max(5000, 'Message too long'),
   history: z.array(messageSchema).max(50).optional(),
   visibility: z.enum(['public', 'private']).optional(),
+  stream: z.boolean().optional(),
 });
 
 /**
  * POST /api/embassy/chat — Send a message to the Librarian.
  * Creates or continues a thread. Returns the AI response.
- * Auth required (free Ficino Society membership).
+ * Supports streaming via SSE when stream=true.
+ * Auth required.
  */
 export async function POST(request: NextRequest) {
   const session = await auth();
@@ -37,7 +39,7 @@ export async function POST(request: NextRequest) {
     );
   }
 
-  const { threadId, message, history = [], visibility = 'public' } = parsed.data;
+  const { threadId, message, history = [], visibility = 'public', stream = false } = parsed.data;
   const db = await getDb();
 
   // Get user display name
@@ -96,13 +98,79 @@ export async function POST(request: NextRequest) {
     });
   }
 
-  try {
-    // Generate Librarian response
-    const { content: aiResponse, sources } = await generateLibrarianResponse(message, history);
+  // Streaming response
+  if (stream) {
+    try {
+      const { stream: textStream, sources, getFullText } = await streamLibrarianResponse(message, history);
 
+      const encoder = new TextEncoder();
+      const readable = new ReadableStream({
+        async start(controller) {
+          try {
+            // Send threadId first
+            controller.enqueue(encoder.encode(`data: ${JSON.stringify({ type: 'threadId', threadId: activeThreadId })}\n\n`));
+
+            // Stream text chunks
+            for await (const chunk of textStream) {
+              controller.enqueue(encoder.encode(`data: ${JSON.stringify({ type: 'chunk', text: chunk })}\n\n`));
+            }
+
+            const fullText = getFullText();
+            const aiMessageTime = new Date();
+
+            // Save AI response to DB
+            await db.collection('embassy_messages').insertOne({
+              threadId: new ObjectId(activeThreadId),
+              authorType: 'ai',
+              authorName: 'The Librarian',
+              content: fullText,
+              sources: sources.map(s => ({
+                bookId: s.book_id,
+                bookTitle: s.bookTitle,
+                bookAuthor: s.bookAuthor,
+                pageNumber: s.page_number,
+                bookSlug: s.bookSlug,
+              })),
+              createdAt: aiMessageTime,
+            });
+
+            await db.collection('embassy_threads').updateOne(
+              { _id: new ObjectId(activeThreadId) },
+              { $set: { lastMessageAt: aiMessageTime }, $inc: { messageCount: 2 } },
+            );
+
+            // Signal done
+            controller.enqueue(encoder.encode(`data: ${JSON.stringify({ type: 'done' })}\n\n`));
+            controller.close();
+          } catch (err) {
+            console.error('[Embassy] Stream error:', err);
+            controller.enqueue(encoder.encode(`data: ${JSON.stringify({ type: 'error', message: 'The Librarian was interrupted.' })}\n\n`));
+            controller.close();
+          }
+        },
+      });
+
+      return new Response(readable, {
+        headers: {
+          'Content-Type': 'text/event-stream',
+          'Cache-Control': 'no-cache',
+          'Connection': 'keep-alive',
+        },
+      });
+    } catch (error) {
+      console.error('[Embassy] Stream init error:', error);
+      return NextResponse.json(
+        { error: 'The Librarian is momentarily away. Please try again.' },
+        { status: 500 },
+      );
+    }
+  }
+
+  // Non-streaming response (fallback)
+  try {
+    const { content: aiResponse, sources } = await generateLibrarianResponse(message, history);
     const aiMessageTime = new Date();
 
-    // Save AI response
     await db.collection('embassy_messages').insertOne({
       threadId: new ObjectId(activeThreadId),
       authorType: 'ai',
@@ -118,21 +186,14 @@ export async function POST(request: NextRequest) {
       createdAt: aiMessageTime,
     });
 
-    // Update thread
     await db.collection('embassy_threads').updateOne(
       { _id: new ObjectId(activeThreadId) },
-      {
-        $set: { lastMessageAt: aiMessageTime },
-        $inc: { messageCount: 2 }, // user + AI
-      },
+      { $set: { lastMessageAt: aiMessageTime }, $inc: { messageCount: 2 } },
     );
 
     return NextResponse.json({
       threadId: activeThreadId,
-      message: {
-        role: 'assistant',
-        content: aiResponse,
-      },
+      message: { role: 'assistant', content: aiResponse },
     });
   } catch (error) {
     console.error('[Embassy] Librarian error:', error);
