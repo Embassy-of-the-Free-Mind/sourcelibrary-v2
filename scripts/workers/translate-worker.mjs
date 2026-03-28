@@ -86,8 +86,11 @@ const ENGLISH_MODERNIZATION_PROMPT = `You are a scholarly editor modernizing Ear
 - Preserve any XML-like tags in the text
 - Do NOT add commentary or explanations — just the modernized text`;
 
-// ── Skip these page types ──
+// ── Skip these page types (no translatable content) ──
 const SKIP_PAGE_TYPES = ['blank'];
+// Pages with very short OCR get excluded from batches (translated single-page instead).
+// Short pages in batches cause the model to produce minimal responses without XML tags.
+const MIN_OCR_CHARS_FOR_BATCH = 200;
 
 // ── MongoDB ──
 const client = new MongoClient(process.env.MONGODB_URI, {
@@ -231,18 +234,20 @@ async function translateBatch(db, pages, book, prevTranslation) {
 // ── Determine effective batch size for a set of pages ──
 function effectiveBatchSize(pages, maxBatchSize) {
   if (SINGLE_PAGE || maxBatchSize <= 1) return 1;
-  const size = Math.min(pages.length, maxBatchSize);
-  // Estimate total OCR chars for the batch
+  // If the first page has very short OCR, force single-page (short pages in
+  // batches cause the model to skip XML tags and produce garbage responses)
+  if ((pages[0].ocr?.data || '').length < MIN_OCR_CHARS_FOR_BATCH) return 1;
+  // Count how many consecutive pages have enough OCR for batching
+  let size = 0;
   let totalChars = 0;
-  for (let i = 0; i < size; i++) {
-    totalChars += (pages[i].ocr?.data || '').length;
+  for (let i = 0; i < Math.min(pages.length, maxBatchSize); i++) {
+    const ocrLen = (pages[i].ocr?.data || '').length;
+    if (ocrLen < MIN_OCR_CHARS_FOR_BATCH) break; // Stop batch at first short page
+    totalChars += ocrLen;
+    if (totalChars > MAX_BATCH_OCR_CHARS) break; // Too much text for one batch
+    size++;
   }
-  if (totalChars > MAX_BATCH_OCR_CHARS) {
-    // Reduce batch size proportionally
-    const ratio = MAX_BATCH_OCR_CHARS / totalChars;
-    return Math.max(1, Math.floor(size * ratio));
-  }
-  return size;
+  return Math.max(1, size);
 }
 
 // ── Write a single page translation to DB ──
