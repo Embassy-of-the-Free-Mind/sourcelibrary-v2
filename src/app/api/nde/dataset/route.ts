@@ -2,7 +2,6 @@ import { NextResponse } from 'next/server';
 import { getDb } from '@/lib/mongodb';
 
 export const dynamic = 'force-dynamic';
-export const dynamic = 'force-dynamic';
 
 /**
  * GET /api/nde/dataset
