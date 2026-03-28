@@ -6,8 +6,9 @@ import { notFound } from 'next/navigation';
 
 const LETTERS = 'ABCDEFGHIJKLMNOPQRSTUVWXYZ'.split('');
 
-// ISR: rebuild daily. These pages are nearly static.
+// ISR: rebuild daily. Allow 60s for first-hit generation.
 export const revalidate = 86400;
+export const maxDuration = 60;
 export const dynamicParams = true;
 
 export function generateStaticParams() {
@@ -72,7 +73,7 @@ export default async function BrowseTitlesPage({ params }: PageProps) {
         published: 1,
       },
     },
-  ], { maxTimeMS: 10000 }).toArray();
+  ], { maxTimeMS: 45000 }).toArray();
 
   return (
     <div className="max-w-4xl mx-auto px-6 md:px-12 py-12 md:py-20">

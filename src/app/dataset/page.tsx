@@ -3,9 +3,9 @@ import Link from 'next/link';
 import ContentPageLayout, { ContentHeader } from '@/components/layout/ContentPageLayout';
 import { getDb } from '@/lib/mongodb';
 
-// ISR: rebuild every 6 hours
+// ISR: rebuild every 6 hours. Allow 60s for first-hit generation.
 export const revalidate = 21600;
-export const maxDuration = 15;
+export const maxDuration = 60;
 
 export const metadata: Metadata = {
   title: 'Dataset — Source Library',
@@ -28,7 +28,7 @@ async function fetchDatasetStats() {
   const books = db.collection('books');
   const visible = { hidden: { $ne: true } };
 
-  const maxTimeMS = 10000;
+  const maxTimeMS = 45000;
   const [totalBooks, pageTotalsAgg, languagesAgg] = await Promise.all([
     books.countDocuments(visible, { maxTimeMS }),
     books

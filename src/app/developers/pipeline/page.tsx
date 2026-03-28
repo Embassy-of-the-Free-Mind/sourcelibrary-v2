@@ -11,8 +11,9 @@ export const metadata: Metadata = {
   alternates: { canonical: '/developers/pipeline' },
 };
 
-// ISR: rebuild every 6 hours
+// ISR: rebuild every 6 hours. Allow 60s for first-hit generation.
 export const revalidate = 21600;
+export const maxDuration = 60;
 
 /* ── Data fetching ── */
 
@@ -46,7 +47,7 @@ async function getPipelineStats() {
     const db = await getDb();
     const books = db.collection('books');
 
-    const maxTimeMS = 10000;
+    const maxTimeMS = 45000;
     const [funnel, pageAgg, totalBooks] = await Promise.all([
       books
         .aggregate([

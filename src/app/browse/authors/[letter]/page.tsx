@@ -6,8 +6,9 @@ import { notFound } from 'next/navigation';
 
 const LETTERS = 'ABCDEFGHIJKLMNOPQRSTUVWXYZ'.split('');
 
-// ISR: rebuild daily. Generate on demand (not at build time) to avoid MongoDB timeouts.
+// ISR: rebuild daily. Allow 60s for first-hit generation.
 export const revalidate = 86400;
+export const maxDuration = 60;
 export const dynamicParams = true;
 
 export function generateStaticParams() {
@@ -57,7 +58,7 @@ export default async function BrowseAuthorsPage({ params }: PageProps) {
       },
     },
     { $sort: { _id: 1 } },
-  ], { maxTimeMS: 10000 }).toArray();
+  ], { maxTimeMS: 45000 }).toArray();
 
   return (
     <div className="max-w-4xl mx-auto px-6 md:px-12 py-12 md:py-20">
