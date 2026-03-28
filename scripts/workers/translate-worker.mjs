@@ -7,14 +7,14 @@
  *
  * Architecture:
  * - Picks up books in 'translate_submitted' status that have a job
- * - Translates pages in batches of BATCH_SIZE (default 3) for throughput
+ * - Translates pages in batches of BATCH_SIZE (default 5) for throughput
  * - Falls back to single-page on batch parse failures or errors
  * - Runs multiple books concurrently (up to CONCURRENCY cap)
  * - Writes translations + progress directly to MongoDB
  * - Rotates Gemini API keys on rate limit errors
  *
  * CLI flags:
- *   --batch-size=N   Pages per API call (default 3, set to 1 for single-page)
+ *   --batch-size=N   Pages per API call (default 5, set to 1 for single-page)
  *   --single-page    Force single-page mode (equivalent to --batch-size=1)
  *
  * The orchestrator (Phase 4) creates jobs and sets status to translate_submitted.
@@ -30,9 +30,9 @@ const CONCURRENCY = 20;          // Max books translating simultaneously
 const PAGES_PER_RUN = 8000;      // Global page cap per run (prevent runaway costs)
 const MAX_CONSECUTIVE_ERRORS = 5; // Per-book error threshold before giving up
 const RATE_LIMIT_BACKOFF_MS = 15000;
-const BATCH_SIZE = parseInt(process.argv.find(a => a.startsWith('--batch-size='))?.split('=')[1] || '3', 10);
+const BATCH_SIZE = parseInt(process.argv.find(a => a.startsWith('--batch-size='))?.split('=')[1] || '5', 10);
 const SINGLE_PAGE = process.argv.includes('--single-page');
-const MAX_BATCH_OCR_CHARS = 12000; // If total OCR text exceeds this, reduce batch size
+const MAX_BATCH_OCR_CHARS = 15000; // If total OCR text exceeds this, reduce batch size
 const MODEL_FLASH = 'gemini-3-flash-preview';
 const MODEL_LITE = 'gemini-3.1-flash-lite-preview';
 function getModelForBook(book) {
@@ -121,18 +121,25 @@ function calculateCost(inputTokens, outputTokens, model) {
   return (inputTokens * pricing.input + outputTokens * pricing.output) / 1_000_000;
 }
 
-// ── Translate a single page ──
-async function translatePage(db, page, book, prevTranslation) {
+// ── Build prompt header (shared between single and batch) ──
+function buildPromptHeader(book) {
   const isEnglish = (book.language || '').toLowerCase() === 'english';
   const basePrompt = isEnglish ? ENGLISH_MODERNIZATION_PROMPT : TRANSLATION_PROMPT;
   let prompt = basePrompt.replace('{source_language}', book.language || 'Latin');
 
-  // Book context
   const parts = [];
   if (book.display_title || book.title) parts.push(`Title: ${book.display_title || book.title}`);
   if (book.author) parts.push(`Author: ${book.author}`);
   if (book.year || book.published) parts.push(`Date: ${book.year || book.published}`);
   if (parts.length) prompt += `\n\n**Source work:** ${parts.join(' | ')}`;
+
+  return { prompt, isEnglish };
+}
+
+// ── Translate a single page ──
+async function translatePage(db, page, book, prevTranslation) {
+  const { prompt: headerPrompt, isEnglish } = buildPromptHeader(book);
+  let prompt = headerPrompt;
 
   prompt += isEnglish
     ? `\n\n**Text to modernize:**\n${page.ocr.data}`
@@ -164,16 +171,8 @@ async function translatePage(db, page, book, prevTranslation) {
 
 // ── Translate a batch of pages in one API call ──
 async function translateBatch(db, pages, book, prevTranslation) {
-  const isEnglish = (book.language || '').toLowerCase() === 'english';
-  const basePrompt = isEnglish ? ENGLISH_MODERNIZATION_PROMPT : TRANSLATION_PROMPT;
-  let prompt = basePrompt.replace('{source_language}', book.language || 'Latin');
-
-  // Book context
-  const parts = [];
-  if (book.display_title || book.title) parts.push(`Title: ${book.display_title || book.title}`);
-  if (book.author) parts.push(`Author: ${book.author}`);
-  if (book.year || book.published) parts.push(`Date: ${book.year || book.published}`);
-  if (parts.length) prompt += `\n\n**Source work:** ${parts.join(' | ')}`;
+  const { prompt: headerPrompt, isEnglish } = buildPromptHeader(book);
+  let prompt = headerPrompt;
 
   if (prevTranslation) {
     prompt += isEnglish
@@ -211,27 +210,48 @@ async function translateBatch(db, pages, book, prevTranslation) {
     inputTokens: usage.promptTokenCount || 0,
     outputTokens: usage.candidatesTokenCount || 0,
     durationMs,
-    responseText, // for debugging if parsing fails
   };
 }
 
 // ── Determine effective batch size for a set of pages ──
 function effectiveBatchSize(pages, maxBatchSize) {
   if (SINGLE_PAGE || maxBatchSize <= 1) return 1;
+  const size = Math.min(pages.length, maxBatchSize);
   // Estimate total OCR chars for the batch
   let totalChars = 0;
-  for (let i = 0; i < Math.min(pages.length, maxBatchSize); i++) {
+  for (let i = 0; i < size; i++) {
     totalChars += (pages[i].ocr?.data || '').length;
   }
   if (totalChars > MAX_BATCH_OCR_CHARS) {
     // Reduce batch size proportionally
     const ratio = MAX_BATCH_OCR_CHARS / totalChars;
-    return Math.max(1, Math.floor(maxBatchSize * ratio));
+    return Math.max(1, Math.floor(size * ratio));
   }
-  return maxBatchSize;
+  return size;
 }
 
-// ── Process one book (sequential pages for context) ──
+// ── Write a single page translation to DB ──
+async function writePageTranslation(db, page, text, book) {
+  await db.collection('pages').updateOne(
+    { id: page.id },
+    {
+      $set: {
+        translation: {
+          data: text,
+          content_hash: contentHash(text),
+          language: 'English',
+          model: getModelForBook(book),
+          updated_at: new Date(),
+          source: 'ai',
+          prompt_version: PROMPT_VERSION,
+        },
+        updated_at: new Date(),
+      },
+    },
+  );
+}
+
+// ── Process one book (sequential batches for context) ──
 async function processBook(db, book, job, globalCounter) {
   const label = (book.title || book.id).substring(0, 50);
   const pages = await db.collection('pages')
@@ -265,7 +285,8 @@ async function processBook(db, book, job, globalCounter) {
     return { translated: 0, failed: 0 };
   }
 
-  console.log(`  [${label}] ${pages.length} pages to translate`);
+  const batchMode = effectiveBatchSize(pages, BATCH_SIZE) > 1 ? `batch-${BATCH_SIZE}` : 'single';
+  console.log(`  [${label}] ${pages.length} pages to translate (${batchMode})`);
 
   // Mark job as processing
   await db.collection('jobs').updateOne(
@@ -319,29 +340,12 @@ async function processBook(db, book, job, globalCounter) {
     const batch = remaining.slice(0, batchSize);
 
     if (batchSize === 1) {
-      // ── Single-page path (original behavior) ──
+      // ── Single-page path ──
       const page = batch[0];
       try {
         const result = await translatePage(db, page, book, prevTranslation);
         prevTranslation = result.text;
-
-        await db.collection('pages').updateOne(
-          { id: page.id },
-          {
-            $set: {
-              translation: {
-                data: result.text,
-                content_hash: contentHash(result.text),
-                language: 'English',
-                model: getModelForBook(book),
-                updated_at: new Date(),
-                source: 'ai',
-                prompt_version: PROMPT_VERSION,
-              },
-              updated_at: new Date(),
-            },
-          },
-        );
+        await writePageTranslation(db, page, result.text, book);
 
         const cost = calculateCost(result.inputTokens, result.outputTokens, getModelForBook(book));
         await db.collection('gemini_usage').insertOne({
@@ -385,71 +389,34 @@ async function processBook(db, book, job, globalCounter) {
       // ── Multi-page batch path ──
       try {
         const result = await translateBatch(db, batch, book, prevTranslation);
-        const expectedPages = batch.map(p => p.page_number);
-        const gotPages = [...result.translations.keys()].sort((a, b) => a - b);
-
-        // Validate: did we get all expected pages back?
-        const missing = expectedPages.filter(n => !result.translations.has(n));
+        const missing = batch.filter(p => !result.translations.has(p.page_number));
 
         if (missing.length > 0) {
-          // Partial parse — save what we got, fall back to single-page for missing
-          console.log(`  [${label}] Batch ${expectedPages[0]}-${expectedPages[expectedPages.length - 1]}: got ${gotPages.length}/${batch.length}, falling back for ${missing.length} missing`);
+          console.log(`  [${label}] Batch ${batch[0].page_number}-${batch[batch.length - 1].page_number}: parsed ${result.translations.size}/${batch.length}, falling back for ${missing.length}`);
         }
 
         let batchTranslated = 0;
         for (const page of batch) {
           const translatedText = result.translations.get(page.page_number);
           if (translatedText) {
-            await db.collection('pages').updateOne(
-              { id: page.id },
-              {
-                $set: {
-                  translation: {
-                    data: translatedText,
-                    content_hash: contentHash(translatedText),
-                    language: 'English',
-                    model: getModelForBook(book),
-                    updated_at: new Date(),
-                    source: 'ai',
-                    prompt_version: PROMPT_VERSION,
-                  },
-                  updated_at: new Date(),
-                },
-              },
-            );
+            await writePageTranslation(db, page, translatedText, book);
             prevTranslation = translatedText;
             batchTranslated++;
             translated++;
             globalCounter.count++;
           } else {
-            // Missing from batch response — fall back to single page
+            // Missing from batch — fall back to single page
             try {
               const singleResult = await translatePage(db, page, book, prevTranslation);
               prevTranslation = singleResult.text;
-              await db.collection('pages').updateOne(
-                { id: page.id },
-                {
-                  $set: {
-                    translation: {
-                      data: singleResult.text,
-                      content_hash: contentHash(singleResult.text),
-                      language: 'English',
-                      model: getModelForBook(book),
-                      updated_at: new Date(),
-                      source: 'ai',
-                      prompt_version: PROMPT_VERSION,
-                    },
-                    updated_at: new Date(),
-                  },
-                },
-              );
+              await writePageTranslation(db, page, singleResult.text, book);
               batchTranslated++;
               translated++;
               globalCounter.count++;
               totalInputTokens += singleResult.inputTokens;
               totalOutputTokens += singleResult.outputTokens;
             } catch (fallbackErr) {
-              console.error(`  [${label}] Fallback failed for page ${page.page_number}: ${(fallbackErr.message || '').substring(0, 80)}`);
+              console.error(`  [${label}] Fallback page ${page.page_number} failed: ${(fallbackErr.message || '').substring(0, 80)}`);
               failed++;
             }
           }
@@ -464,7 +431,7 @@ async function processBook(db, book, job, globalCounter) {
           cost_usd: cost, status: missing.length > 0 ? 'partial' : 'success',
           duration_ms: result.durationMs, prompt_version: PROMPT_VERSION,
           endpoint: 'worker/hetzner-translate-batch',
-          batch_size: batch.length, pages_parsed: gotPages.length,
+          batch_size: batch.length, pages_parsed: result.translations.size,
           timestamp: new Date(),
         });
 
@@ -488,23 +455,7 @@ async function processBook(db, book, job, globalCounter) {
             try {
               const singleResult = await translatePage(db, page, book, prevTranslation);
               prevTranslation = singleResult.text;
-              await db.collection('pages').updateOne(
-                { id: page.id },
-                {
-                  $set: {
-                    translation: {
-                      data: singleResult.text,
-                      content_hash: contentHash(singleResult.text),
-                      language: 'English',
-                      model: getModelForBook(book),
-                      updated_at: new Date(),
-                      source: 'ai',
-                      prompt_version: PROMPT_VERSION,
-                    },
-                    updated_at: new Date(),
-                  },
-                },
-              );
+              await writePageTranslation(db, page, singleResult.text, book);
               translated++;
               globalCounter.count++;
               totalInputTokens += singleResult.inputTokens;
@@ -587,7 +538,8 @@ async function processBook(db, book, job, globalCounter) {
 // ── Main ──
 async function main() {
   const startTime = Date.now();
-  console.log(`\n[TRANSLATE] Worker starting — ${new Date().toISOString()}`);
+  const batchLabel = SINGLE_PAGE ? 'single-page' : `batch-${BATCH_SIZE}`;
+  console.log(`\n[TRANSLATE] Worker starting (${batchLabel}) — ${new Date().toISOString()}`);
 
   await client.connect();
   const db = client.db('bookstore');
@@ -603,7 +555,7 @@ async function main() {
   // Find books with active translation jobs
   const books = await db.collection('books')
     .find({ 'pipeline_auto.status': 'translate_submitted' })
-    .project({ id: 1, title: 1, display_title: 1, author: 1, year: 1, published: 1, language: 1, job: 1 })
+    .project({ id: 1, title: 1, display_title: 1, author: 1, year: 1, published: 1, language: 1, job: 1, image_source: 1 })
     .limit(CONCURRENCY)
     .toArray();
 
@@ -619,7 +571,7 @@ async function main() {
     return;
   }
 
-  console.log(`[TRANSLATE] Processing ${books.length} books (concurrency: ${CONCURRENCY})`);
+  console.log(`[TRANSLATE] Processing ${books.length} books (concurrency: ${CONCURRENCY}, ${batchLabel})`);
 
   // Load their jobs
   const globalCounter = { count: 0 };
@@ -656,7 +608,6 @@ async function main() {
   const elapsed = (durationMs / 1000).toFixed(1);
   const rate = durationMs > 0 ? Math.round(totalTranslated / (durationMs / 3600000)) : 0;
 
-  const batchLabel = SINGLE_PAGE ? 'single-page' : `batch-${BATCH_SIZE}`;
   console.log(`[TRANSLATE] Done (${batchLabel}) — ${totalTranslated} translated, ${totalFailed} failed, ${totalCompleted} books completed, ${elapsed}s, ~${rate}/hr, $${totalCost.toFixed(3)}`);
 
   // Log to cron_runs for analytics Pipeline tab
