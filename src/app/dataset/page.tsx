@@ -3,7 +3,8 @@ import Link from 'next/link';
 import ContentPageLayout, { ContentHeader } from '@/components/layout/ContentPageLayout';
 import { getDb } from '@/lib/mongodb';
 
-export const dynamic = 'force-dynamic';
+// ISR: rebuild every 6 hours
+export const revalidate = 21600;
 export const maxDuration = 15;
 
 export const metadata: Metadata = {
@@ -27,8 +28,9 @@ async function fetchDatasetStats() {
   const books = db.collection('books');
   const visible = { hidden: { $ne: true } };
 
+  const maxTimeMS = 10000;
   const [totalBooks, pageTotalsAgg, languagesAgg] = await Promise.all([
-    books.countDocuments(visible),
+    books.countDocuments(visible, { maxTimeMS }),
     books
       .aggregate<{ _id: null; pages: number; ocr: number; translated: number }>([
         { $match: visible },
@@ -40,7 +42,7 @@ async function fetchDatasetStats() {
             translated: { $sum: { $ifNull: ['$pages_translated', 0] } },
           },
         },
-      ])
+      ], { maxTimeMS })
       .toArray(),
     books
       .aggregate<{ _id: string; count: number; translated: number }>([
@@ -53,7 +55,7 @@ async function fetchDatasetStats() {
           },
         },
         { $sort: { count: -1 } },
-      ])
+      ], { maxTimeMS })
       .toArray(),
   ]);
 

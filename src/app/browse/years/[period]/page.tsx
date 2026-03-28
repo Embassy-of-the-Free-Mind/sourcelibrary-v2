@@ -58,40 +58,17 @@ export default async function BrowseYearsPage({ params }: PageProps) {
 
   const db = await getDb();
 
-  // published is stored as a string — parse to int for range filtering
+  // Use the numeric `year` field (indexed) instead of parsing the string `published` field
   const books = await db.collection('books').aggregate<BrowseBook>([
     {
       $match: {
         hidden: { $ne: true },
         pages_count: { $gt: 0 },
         pages_translated: { $gt: 0 },
-        published: { $exists: true, $ne: '' },
+        year: { $gte: p.min, $lte: p.max },
       },
     },
-    {
-      $addFields: {
-        _pub_year: {
-          $convert: {
-            input: {
-              $replaceAll: {
-                input: { $replaceAll: { input: '$published', find: 'c.', replacement: '' } },
-                find: '?',
-                replacement: '',
-              },
-            },
-            to: 'int',
-            onError: null,
-            onNull: null,
-          },
-        },
-      },
-    },
-    {
-      $match: {
-        _pub_year: { $gte: p.min, $lte: p.max },
-      },
-    },
-    { $sort: { _pub_year: 1, title: 1 } },
+    { $sort: { year: 1, title: 1 } },
     {
       $project: {
         _id: 0,
@@ -102,10 +79,10 @@ export default async function BrowseYearsPage({ params }: PageProps) {
         author: 1,
         language: 1,
         published: 1,
-        _pub_year: 1,
+        _pub_year: '$year',
       },
     },
-  ], { maxTimeMS: 20000 }).toArray();
+  ], { maxTimeMS: 10000 }).toArray();
 
   return (
     <div className="max-w-4xl mx-auto px-6 md:px-12 py-12 md:py-20">

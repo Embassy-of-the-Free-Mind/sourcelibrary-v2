@@ -2,7 +2,8 @@ import { Metadata } from 'next';
 import { getDb } from '@/lib/mongodb';
 import EntityMapLoader from '@/components/explore/EntityMapLoader';
 
-export const dynamic = 'force-dynamic';
+// ISR: rebuild every 6 hours (entity data changes slowly)
+export const revalidate = 21600;
 
 export const metadata: Metadata = {
   title: 'Map — Explore — Source Library',
@@ -21,20 +22,9 @@ export const metadata: Metadata = {
 async function fetchMapData() {
   const db = await getDb();
 
+  // Fetch entities with coordinates — avoid $lookup (too slow on Atlas)
   const entities = await db.collection('entities').aggregate([
     { $match: { wikidata_coordinates: { $exists: true, $ne: null } } },
-    {
-      $lookup: {
-        from: 'books',
-        localField: 'books.book_id',
-        foreignField: 'id',
-        as: 'book_docs',
-        pipeline: [
-          { $match: { year: { $exists: true, $gt: 0 } } },
-          { $project: { year: 1 } },
-        ],
-      },
-    },
     {
       $project: {
         _id: 0,
@@ -47,10 +37,39 @@ async function fetchMapData() {
         wikidata_id: 1,
         wikidata_birth_date: 1,
         wikidata_death_date: 1,
-        years: '$book_docs.year',
+        'books.book_id': 1,
       },
     },
-  ]).toArray();
+  ], { maxTimeMS: 10000 }).toArray();
+
+  // Build book_id → year map separately (much faster than $lookup)
+  const allBookIds = new Set<string>();
+  for (const e of entities) {
+    for (const b of (e.books as { book_id: string }[]) || []) {
+      allBookIds.add(b.book_id);
+    }
+  }
+  const bookYearDocs = allBookIds.size > 0
+    ? await db.collection('books').find(
+        { id: { $in: [...allBookIds] }, year: { $exists: true, $gt: 0 } },
+        { projection: { id: 1, year: 1 } }
+      ).toArray()
+    : [];
+  const bookYearMap = new Map<string, number>();
+  for (const b of bookYearDocs) {
+    if (b.id && b.year) bookYearMap.set(b.id, b.year as number);
+  }
+
+  // Attach years to entities
+  for (const e of entities) {
+    const years: number[] = [];
+    for (const b of (e.books as { book_id: string }[]) || []) {
+      const y = bookYearMap.get(b.book_id);
+      if (y) years.push(y);
+    }
+    e.years = years;
+    delete e.books;
+  }
 
   const byType: Record<string, number> = {};
   const byCentury: Record<string, number> = {};

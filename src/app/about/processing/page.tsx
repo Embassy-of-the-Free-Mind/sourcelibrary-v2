@@ -10,7 +10,8 @@ export const metadata: Metadata = {
   alternates: { canonical: '/about/processing' },
 };
 
-export const dynamic = 'force-dynamic';
+// ISR: rebuild every 6 hours
+export const revalidate = 21600;
 
 /* ── Data fetching ── */
 
@@ -19,10 +20,11 @@ async function getStats() {
     const db = await getDb();
     const books = db.collection('books');
 
+    const maxTimeMS = 10000;
     const [totalBooks, visibleBooks, pageAgg, languages, sources, funnel] =
       await Promise.all([
-        books.countDocuments({}),
-        books.countDocuments({ hidden: { $ne: true } }),
+        books.countDocuments({}, { maxTimeMS }),
+        books.countDocuments({ hidden: { $ne: true } }, { maxTimeMS }),
         books
           .aggregate([
             {
@@ -33,7 +35,7 @@ async function getStats() {
                 translated: { $sum: '$pages_translated' },
               },
             },
-          ])
+          ], { maxTimeMS })
           .toArray(),
         books
           .aggregate([
@@ -41,7 +43,7 @@ async function getStats() {
             { $group: { _id: '$language', count: { $sum: 1 } } },
             { $sort: { count: -1 } },
             { $limit: 10 },
-          ])
+          ], { maxTimeMS })
           .toArray(),
         books
           .aggregate([
@@ -49,14 +51,14 @@ async function getStats() {
             { $group: { _id: '$image_source.provider_name', count: { $sum: 1 } } },
             { $sort: { count: -1 } },
             { $limit: 8 },
-          ])
+          ], { maxTimeMS })
           .toArray(),
         books
           .aggregate([
             { $match: { 'pipeline_auto.status': { $exists: true } } },
             { $group: { _id: '$pipeline_auto.status', count: { $sum: 1 } } },
             { $sort: { count: -1 } },
-          ])
+          ], { maxTimeMS })
           .toArray(),
       ]);
 
