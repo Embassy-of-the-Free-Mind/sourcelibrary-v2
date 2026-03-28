@@ -76,8 +76,8 @@
 
 # ── Maintenance ──
 
-# Pipeline health alert: daily at 7am UTC
-0 7 * * * cd /root/sourcelibrary && flock -n /tmp/sl-health.lock bash -c "set -a; source .env.production.local; set +a; node scripts/workers/pipeline-health-alert.mjs" >> /var/log/sourcelibrary/health-alert.log 2>&1
+# Pipeline health alert: every 4h (catches translation stalls, orphan states)
+0 */4 * * * cd /root/sourcelibrary && flock -n /tmp/sl-health.lock bash -c "set -a; source .env.production.local; set +a; node scripts/workers/pipeline-health-alert.mjs" >> /var/log/sourcelibrary/health-alert.log 2>&1
 
 # Warm author pages: regenerate ISR cache (daily 5am)
 0 5 * * * cd /root/sourcelibrary && flock -n /tmp/sl-warm-authors.lock bash -c "set -a; source .env.production.local; set +a; node scripts/workers/warm-author-pages.mjs" >> /var/log/sourcelibrary/warm-authors.log 2>&1
