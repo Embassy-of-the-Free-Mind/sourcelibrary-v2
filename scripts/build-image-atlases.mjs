@@ -150,7 +150,7 @@ async function main() {
     totalSize += await buildAtlas(a, slice);
   }
 
-  // Write manifest
+  // Write manifest (imageIds maps atlas position → image ID for click lookup)
   const manifest = {
     thumbSize: THUMB_SIZE,
     atlasSize: ATLAS_SIZE,
@@ -159,6 +159,7 @@ async function main() {
     totalImages: images.length,
     totalAtlases,
     atlases: Array.from({ length: totalAtlases }, (_, i) => `atlas-${i}.jpg`),
+    imageIds: images.map(img => img.id),
     generatedAt: new Date().toISOString(),
   };
 
