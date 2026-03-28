@@ -183,7 +183,14 @@ async function fetchTimelineData() {
 }
 
 export default async function TimelinePage() {
-  const data = await fetchTimelineData();
-
-  return <TimelineLoader entities={data.entities} stats={data.stats} />;
+  try {
+    const data = await fetchTimelineData();
+    return <TimelineLoader entities={data.entities} stats={data.stats} />;
+  } catch {
+    return (
+      <div className="min-h-screen flex items-center justify-center">
+        <p className="text-stone-500">Timeline data is temporarily unavailable. Please try again shortly.</p>
+      </div>
+    );
+  }
 }
