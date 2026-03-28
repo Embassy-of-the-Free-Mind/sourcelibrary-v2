@@ -3,8 +3,8 @@
   "atlasSize": 4096,
   "grid": 64,
   "perAtlas": 4096,
-  "totalImages": 39783,
-  "totalAtlases": 10,
+  "totalImages": 35532,
+  "totalAtlases": 9,
   "atlases": [
     "atlas-0.jpg",
     "atlas-1.jpg",
@@ -14,8 +14,7 @@
     "atlas-5.jpg",
     "atlas-6.jpg",
     "atlas-7.jpg",
-    "atlas-8.jpg",
-    "atlas-9.jpg"
+    "atlas-8.jpg"
   ],
-  "generatedAt": "2026-03-27T18:45:38.837Z"
+  "generatedAt": "2026-03-28T17:39:53.425Z"
 }
