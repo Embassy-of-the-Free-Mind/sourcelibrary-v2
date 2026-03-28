@@ -39,31 +39,33 @@ export default async function BrowseAuthorsPage({ params }: PageProps) {
   const l = letter.toUpperCase();
   if (l.length !== 1 || !/[A-Z]/.test(l)) notFound();
 
-  const db = await getDb();
+  let authors: AuthorEntry[] = [];
+  try {
+    const db = await getDb();
+    const rawBooks = await db.collection('books').find(
+      {
+        author: { $regex: `^${l}`, $options: 'i' },
+        hidden: { $ne: true },
+        pages_count: { $gt: 0 },
+        pages_translated: { $gt: 0 },
+      },
+      {
+        projection: { author: 1 },
+        maxTimeMS: 45000,
+      }
+    ).toArray();
 
-  // Use find() + client-side grouping to avoid slow $group aggregation
-  const rawBooks = await db.collection('books').find(
-    {
-      author: { $regex: `^${l}`, $options: 'i' },
-      hidden: { $ne: true },
-      pages_count: { $gt: 0 },
-      pages_translated: { $gt: 0 },
-    },
-    {
-      projection: { author: 1 },
-      maxTimeMS: 45000,
+    const authorCounts = new Map<string, number>();
+    for (const b of rawBooks) {
+      const a = b.author as string;
+      authorCounts.set(a, (authorCounts.get(a) || 0) + 1);
     }
-  ).toArray();
-
-  // Group by author in JS (much faster than $group on Atlas)
-  const authorCounts = new Map<string, number>();
-  for (const b of rawBooks) {
-    const a = b.author as string;
-    authorCounts.set(a, (authorCounts.get(a) || 0) + 1);
+    authors = [...authorCounts.entries()]
+      .map(([name, count]) => ({ _id: name, count }))
+      .sort((a, b) => a._id.localeCompare(b._id));
+  } catch {
+    // DB timeout — render empty page with message
   }
-  const authors: AuthorEntry[] = [...authorCounts.entries()]
-    .map(([name, count]) => ({ _id: name, count }))
-    .sort((a, b) => a._id.localeCompare(b._id));
 
   return (
     <div className="max-w-4xl mx-auto px-6 md:px-12 py-12 md:py-20">

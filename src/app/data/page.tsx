@@ -360,7 +360,18 @@ export default async function DataPage({
 }) {
   const params = await searchParams;
   const showAdmin = params.admin === 'true';
-  const data = await fetchLibraryData(showAdmin);
+  let data: LibraryData;
+  try {
+    data = await fetchLibraryData(showAdmin);
+  } catch {
+    // Fallback on DB timeout
+    data = {
+      totalBooks: 0, totalPages: 0, totalTranslated: 0,
+      totalIllustrations: 0, firstTranslations: 0,
+      languages: [], centuries: [], categories: [],
+      providers: [], collections: [],
+    };
+  }
 
   const uniqueLanguages = data.languages.length;
   const earliestCentury = data.centuries[0]?.label ?? '';

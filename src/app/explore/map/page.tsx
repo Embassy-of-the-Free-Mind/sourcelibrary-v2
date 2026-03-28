@@ -154,7 +154,14 @@ async function fetchMapData() {
 }
 
 export default async function MapPage() {
-  const data = await fetchMapData();
-
-  return <EntityMapLoader entities={data.entities} stats={data.stats} />;
+  try {
+    const data = await fetchMapData();
+    return <EntityMapLoader entities={data.entities} stats={data.stats} />;
+  } catch {
+    return (
+      <div className="min-h-screen flex items-center justify-center">
+        <p className="text-stone-500">Map data is temporarily unavailable. Please try again shortly.</p>
+      </div>
+    );
+  }
 }
