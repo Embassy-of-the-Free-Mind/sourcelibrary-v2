@@ -202,7 +202,22 @@ async function translateBatch(db, pages, book, prevTranslation) {
   const regex = /<translation\s+page="(\d+)">([\s\S]*?)<\/translation>/g;
   let match;
   while ((match = regex.exec(responseText)) !== null) {
-    translations.set(parseInt(match[1], 10), sanitizeTranslationTags(match[2].trim()));
+    const pageNum = parseInt(match[1], 10);
+    const text = sanitizeTranslationTags(match[2].trim());
+
+    // Validate: reject suspiciously short translations (could indicate misparsing
+    // from OCR text containing </translation> tags or truncated output)
+    const sourcePage = pages.find(p => p.page_number === pageNum);
+    if (sourcePage) {
+      const ocrLen = (sourcePage.ocr?.data || '').length;
+      // Translation should be at least 15% of OCR length (translations are usually
+      // similar length or longer). Very short = likely truncated by a stray closing tag.
+      if (ocrLen > 100 && text.length < ocrLen * 0.15) {
+        continue; // Skip — will fall back to single-page
+      }
+    }
+
+    translations.set(pageNum, text);
   }
 
   return {
