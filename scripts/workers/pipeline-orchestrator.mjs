@@ -2402,6 +2402,7 @@ async function run() {
 
           const res = await fetch(`${BASE_URL}/api/books/${book.id}/index`, {
             method: 'GET',
+            headers: headers(),
           });
 
           if (!res.ok) {
