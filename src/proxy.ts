@@ -16,7 +16,7 @@ const BLOCKED_BOT_PATTERNS = [
   'CCBot', 'Bytespider', 'Diffbot', 'Omgilibot', 'FacebookBot',
   'PetalBot', 'SemrushBot', 'AhrefsBot', 'MJ12bot', 'DotBot',
   'BLEXBot', 'DataForSeoBot', 'serpstatbot', 'Seekport',
-  'MegaIndex', 'Linguee', 'YandexBot',
+  'MegaIndex', 'Linguee', 'YandexBot', 'Amazonbot',
 ];
 
 const BLOCKED_BOT_RE = new RegExp(BLOCKED_BOT_PATTERNS.join('|'), 'i');
