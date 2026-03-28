@@ -59,31 +59,34 @@ export default async function BrowseYearsPage({ params }: PageProps) {
 
   const db = await getDb();
 
-  // Use the numeric `year` field (indexed) instead of parsing the string `published` field
-  const books = await db.collection('books').aggregate<BrowseBook>([
+  // Use find() with year_hidden_language compound index
+  const rawBooks = await db.collection('books').find(
     {
-      $match: {
-        hidden: { $ne: true },
-        pages_count: { $gt: 0 },
-        pages_translated: { $gt: 0 },
-        year: { $gte: p.min, $lte: p.max },
-      },
+      year: { $gte: p.min, $lte: p.max },
+      hidden: { $ne: true },
+      pages_count: { $gt: 0 },
+      pages_translated: { $gt: 0 },
     },
-    { $sort: { year: 1, title: 1 } },
     {
-      $project: {
-        _id: 0,
-        id: { $ifNull: ['$id', { $toString: '$_id' }] },
-        slug: 1,
-        title: 1,
-        display_title: 1,
-        author: 1,
-        language: 1,
-        published: 1,
-        _pub_year: '$year',
+      projection: {
+        id: 1, slug: 1, title: 1, display_title: 1,
+        author: 1, language: 1, published: 1, year: 1,
       },
-    },
-  ], { maxTimeMS: 45000 }).toArray();
+      sort: { year: 1, title: 1 },
+      maxTimeMS: 45000,
+    }
+  ).toArray();
+
+  const books: BrowseBook[] = rawBooks.map(b => ({
+    id: (b.id as string) || b._id.toString(),
+    slug: b.slug as string | undefined,
+    title: b.title as string,
+    display_title: b.display_title as string | undefined,
+    author: b.author as string,
+    language: b.language as string,
+    published: b.published as string,
+    _pub_year: b.year as number,
+  }));
 
   return (
     <div className="max-w-4xl mx-auto px-6 md:px-12 py-12 md:py-20">

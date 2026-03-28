@@ -41,24 +41,29 @@ export default async function BrowseAuthorsPage({ params }: PageProps) {
 
   const db = await getDb();
 
-  // Aggregate distinct authors with book counts, filtered to this letter
-  const authors = await db.collection('books').aggregate<AuthorEntry>([
+  // Use find() + client-side grouping to avoid slow $group aggregation
+  const rawBooks = await db.collection('books').find(
     {
-      $match: {
-        hidden: { $ne: true },
-        pages_count: { $gt: 0 },
-        pages_translated: { $gt: 0 },
-        author: { $regex: `^${l}`, $options: 'i' },
-      },
+      author: { $regex: `^${l}`, $options: 'i' },
+      hidden: { $ne: true },
+      pages_count: { $gt: 0 },
+      pages_translated: { $gt: 0 },
     },
     {
-      $group: {
-        _id: '$author',
-        count: { $sum: 1 },
-      },
-    },
-    { $sort: { _id: 1 } },
-  ], { maxTimeMS: 45000 }).toArray();
+      projection: { author: 1 },
+      maxTimeMS: 45000,
+    }
+  ).toArray();
+
+  // Group by author in JS (much faster than $group on Atlas)
+  const authorCounts = new Map<string, number>();
+  for (const b of rawBooks) {
+    const a = b.author as string;
+    authorCounts.set(a, (authorCounts.get(a) || 0) + 1);
+  }
+  const authors: AuthorEntry[] = [...authorCounts.entries()]
+    .map(([name, count]) => ({ _id: name, count }))
+    .sort((a, b) => a._id.localeCompare(b._id));
 
   return (
     <div className="max-w-4xl mx-auto px-6 md:px-12 py-12 md:py-20">
