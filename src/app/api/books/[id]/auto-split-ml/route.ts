@@ -139,8 +139,7 @@ export const POST = withAuth(async (request, session, context) => {
       const page = pages.find(p => p.id === split.pageId);
       if (!page || !page.photo_original) continue;
 
-      // 2% overlap on each side to cover the gutter
-      const overlap = 20;
+      const overlap = 10;
       const leftCrop = { xStart: 0, xEnd: Math.min(1000, split.splitPosition + overlap) };
       const rightCrop = { xStart: Math.max(0, split.splitPosition - overlap), xEnd: 1000 };
 

@@ -284,8 +284,8 @@ export async function processSplitImage(
   splitResult: SplitDetectionResult
 ): Promise<[Page, Page]> {
 
-  // Calculate crop coordinates with 2% overlap on each side to cover the gutter
-  const overlap = 20;
+  // Calculate crop coordinates with 1% overlap on each side
+  const overlap = 10;
   const leftCrop = { xStart: 0, xEnd: Math.min(1000, splitResult.splitPosition + overlap) };
   const rightCrop = { xStart: Math.max(0, splitResult.splitPosition - overlap), xEnd: 1000 };
 
