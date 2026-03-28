@@ -2,8 +2,9 @@ import { Metadata } from 'next';
 import { getDb } from '@/lib/mongodb';
 import TimelineLoader from '@/components/explore/TimelineLoader';
 
-// ISR: rebuild every 6 hours (entity data changes slowly)
+// ISR: rebuild every 6 hours. Allow 60s for first-hit generation.
 export const revalidate = 21600;
+export const maxDuration = 60;
 
 export const metadata: Metadata = {
   title: 'Timeline — Explore — Source Library',
@@ -71,7 +72,7 @@ async function fetchTimelineData() {
           'books.book_id': 1,
         },
       },
-    ], { maxTimeMS: 10000 })
+    ], { maxTimeMS: 45000 })
     .toArray();
 
   // Build book_id → language map from books collection

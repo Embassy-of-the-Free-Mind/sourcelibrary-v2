@@ -10,8 +10,9 @@ export const metadata: Metadata = {
   alternates: { canonical: '/about/processing' },
 };
 
-// ISR: rebuild every 6 hours
+// ISR: rebuild every 6 hours. Allow 60s for first-hit generation.
 export const revalidate = 21600;
+export const maxDuration = 60;
 
 /* ── Data fetching ── */
 
@@ -20,7 +21,7 @@ async function getStats() {
     const db = await getDb();
     const books = db.collection('books');
 
-    const maxTimeMS = 10000;
+    const maxTimeMS = 45000;
     const [totalBooks, visibleBooks, pageAgg, languages, sources, funnel] =
       await Promise.all([
         books.countDocuments({}, { maxTimeMS }),

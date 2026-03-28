@@ -106,7 +106,7 @@ async function fetchMatchedBooks(db: any): Promise<Map<string, MatchedBook>> {
         thumbnail: 1, thumbnail_blob: 1,
         'reading_summary.overview': 1, 'index.bookSummary.brief': 1, summary: 1,
       },
-      maxTimeMS: 10000,
+      maxTimeMS: 45000,
     }
   ).toArray();
 
@@ -197,7 +197,7 @@ export async function getShwepIndexData(): Promise<ShwepIndexData> {
   }
 
   // Get total books count efficiently
-  const totalBooks = await db.collection('books').countDocuments({ deleted: { $ne: true } }, { maxTimeMS: 10000 });
+  const totalBooks = await db.collection('books').countDocuments({ deleted: { $ne: true } }, { maxTimeMS: 45000 });
 
   return {
     periods: reversedPeriods,

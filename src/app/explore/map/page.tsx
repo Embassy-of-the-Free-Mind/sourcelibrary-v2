@@ -2,8 +2,9 @@ import { Metadata } from 'next';
 import { getDb } from '@/lib/mongodb';
 import EntityMapLoader from '@/components/explore/EntityMapLoader';
 
-// ISR: rebuild every 6 hours (entity data changes slowly)
+// ISR: rebuild every 6 hours. Allow 60s for first-hit generation.
 export const revalidate = 21600;
+export const maxDuration = 60;
 
 export const metadata: Metadata = {
   title: 'Map — Explore — Source Library',
@@ -40,7 +41,7 @@ async function fetchMapData() {
         'books.book_id': 1,
       },
     },
-  ], { maxTimeMS: 10000 }).toArray();
+  ], { maxTimeMS: 45000 }).toArray();
 
   // Build book_id → year map separately (much faster than $lookup)
   const allBookIds = new Set<string>();

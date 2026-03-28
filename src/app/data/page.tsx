@@ -4,9 +4,9 @@ import { getDb } from '@/lib/mongodb';
 import ContentPageLayout, { ContentHeader } from '@/components/layout/ContentPageLayout';
 import { CenturyChart } from './DataCharts';
 
-// ISR: rebuild every 6 hours (public data changes slowly)
+// ISR: rebuild every 6 hours. Allow 60s for first-hit generation.
 export const revalidate = 21600;
-export const maxDuration = 30;
+export const maxDuration = 60;
 
 export const metadata: Metadata = {
   title: 'The Collection — Source Library',
@@ -184,7 +184,7 @@ async function fetchLibraryData(showAdmin: boolean): Promise<LibraryData> {
   const visible = { hidden: { $ne: true } };
   const filter = showAdmin ? {} : visible;
 
-  const maxTimeMS = 15000;
+  const maxTimeMS = 45000;
 
   // Base queries (always run)
   const baseQueries = [
@@ -292,8 +292,8 @@ async function fetchLibraryData(showAdmin: boolean): Promise<LibraryData> {
     books.countDocuments({ 'chapters.0': { $exists: true } }, { maxTimeMS }),
     books.countDocuments({ 'source_work_dates.0': { $exists: true } }, { maxTimeMS }),
     db.collection('editions').estimatedDocumentCount(),
-    books.aggregate(buildCoverageTiers('pages_ocr'), { maxTimeMS: 20000 }).toArray(),
-    books.aggregate(buildCoverageTiers('pages_translated'), { maxTimeMS: 20000 }).toArray(),
+    books.aggregate(buildCoverageTiers('pages_ocr'), { maxTimeMS: 45000 }).toArray(),
+    books.aggregate(buildCoverageTiers('pages_translated'), { maxTimeMS: 45000 }).toArray(),
     books.countDocuments({ $or: [{ pages_count: 0 }, { pages_count: { $exists: false } }] }, { maxTimeMS }),
   ]);
 
