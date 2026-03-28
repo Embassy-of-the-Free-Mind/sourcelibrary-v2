@@ -21,6 +21,7 @@ Derek runs ~10 Claude Code terminals simultaneously, all sharing the main workin
 - **If you're on an unexpected branch** (not `main` in the main directory), tell the user: "This directory is on `X` — another session may have switched it. Want me to switch back to `main`?" Do NOT silently switch or start working on the wrong branch.
 - **At session start, check your branch** with `git branch --show-current`. If it's not `main` and you're in the main directory, flag it immediately.
 - **Commit and push before exiting a worktree.** Uncommitted worktree changes are invisible to other sessions.
+- **Set the terminal title at session start.** Run: `printf '\033]0;CC: <task-description>\007'` (e.g., `CC: embeddings`, `CC: pipeline-monitor`). This labels the Ghostty tab so Derek can find the right terminal. Use a short, descriptive name based on what you're working on.
 
 **Worktree quick reference:**
 - `EnterWorktree` — creates an isolated checkout with its own branch
