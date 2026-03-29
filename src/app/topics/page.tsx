@@ -7,7 +7,7 @@ import { FACETS, DOMAIN_GROUPS, facetDbField } from '@/lib/taxonomy/faceted-voca
 
 // ISR: rebuild every 6 hours. Allow 60s for first-hit generation.
 export const revalidate = 21600;
-export const maxDuration = 90;
+export const maxDuration = 60;
 
 export const metadata: Metadata = {
   title: 'Browse by Topic | Source Library',
@@ -35,7 +35,7 @@ interface FacetGroup {
 
 async function fetchFacetCounts(): Promise<{ groups: FacetGroup[]; totalBooks: number }> {
   const db = await getDb();
-  const maxTimeMS = 50000;
+  const maxTimeMS = 30000;
   const baseMatch = { faceted_tags: { $exists: true }, hidden: { $ne: true } };
 
   // Single $facet aggregation — one collection scan for all 6 facets
