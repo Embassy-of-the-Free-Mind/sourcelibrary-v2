@@ -417,81 +417,19 @@ async function transliteratePage(db, page, sourceScript) {
 
 // ── Direct translation (Gemini realtime, FIFO per book) ──
 
-const TRANSLATION_PROMPT = `You are translating a manuscript transcription into accessible English.
-
-**Input:** The OCR transcription and (if available) the previous page's translation for continuity.
-
-**Output:** A readable English translation that preserves the markdown formatting from the OCR.
-
-**Preserve from OCR:**
-- Heading levels (# ## ###) - keep the same hierarchy
-- **Bold** and *italic* formatting
-- Tables - recreate them in the translation
-- Centered text (->text<-)
-- <column-break/> markers — preserve exactly as-is between translated columns
-- Line breaks and paragraph structure
-
-**Inline annotations (XML tags — toggleable by reader):**
-- <note>X</note> — interpretive notes, interpolated clarifications
-- <term>X</term> — technical/foreign terms kept in transliteration
-- <gloss>X</gloss> — definition immediately after a <term> tag; also translate interlinear annotations
-- <margin>X</margin> — translate and keep marginal notes
-- <insert>X</insert> — translate later additions
-- <unclear>X</unclear> — preserve uncertain readings from OCR
-
-**Metadata tags (hidden from readers):**
-- <meta>X</meta> for translator notes that should be hidden (e.g., continuity with previous page)
-
-**Do NOT use:**
-- Bare [square brackets] for interpolations — use <note>...</note> instead
-- Bare (parenthetical glosses) after terms — use <term>word</term> <gloss>meaning</gloss> instead
-- Code blocks or backticks — this is prose
-
-**IMPORTANT - Translate ALL languages to English:**
-The source text may contain phrases in multiple languages (Latin, Greek, Hebrew, Sanskrit, Arabic, etc.). You MUST translate EVERYTHING to English:
-- Latin quotes embedded in German → translate to English
-- Greek, Hebrew, Aramaic phrases → translate to English
-- Sanskrit, Prakrit, Pali, Arabic text → translate to English
-- Text in non-Latin scripts (Devanagari, Chinese, Arabic, etc.) → provide English translation immediately after
-- ANY non-English text → translate to English
-Use <note>original: "..."</note> to preserve important original phrases for scholars, but the main text must be fully readable in English without knowing other languages.
-
-**Image descriptions from OCR:**
-If the OCR contains <image-desc>...</image-desc>, translate the description and wrap the ENTIRE paragraph in <note>...</note>. Image descriptions are editorial content, not original text — they must be toggleable. Do NOT leave image description prose untagged. Example:
-  OCR: <image-desc>A woodcut of a pelican feeding her young</image-desc>
-  Translation: <note>A woodcut depicts a pelican feeding her young from her own breast, a symbol of self-sacrifice in alchemical tradition.</note>
-
-**Instructions:**
-1. Start with <meta>...</meta> if noting continuity with previous page (hidden from readers).
-2. Mirror the source layout - headings, paragraphs, tables, centered text.
-3. Translate ALL text including <margin>, <insert>, <gloss> - keep the XML tags.
-4. Translate embedded Latin/Greek/Hebrew phrases to English, noting originals when significant.
-5. For foreign terms kept in transliteration: <term>Chesed</term> <gloss>Mercy/Loving-kindness</gloss>
-
-**Examples of annotated translation:**
-- "He composed a very worthy book On the World and Religion <note>original: "De Seculo, & Religione"</note>; one On Fate and Fortune <note>original: "De Fato, & Fortuna"</note>; and another On Law and Medicine <note>original: "Della Legge, e della Medicina"</note>."
-- "The <term>prima materia</term> <gloss>first matter</gloss> must be purified through <term>calcination</term> <gloss>heating to powder</gloss> before the <term>opus</term> <gloss>the Great Work</gloss> can proceed."
-- "According to the <term>Sefer Yetzirah</term> <gloss>Book of Formation</gloss>, the ten <term>sefirot</term> <gloss>divine emanations</gloss> correspond to the paths of wisdom."
-6. For interpolated clarifications: <note>from the aspect of the secret</note>
-7. Add <note>...</note> inline to explain historical references or difficult phrases.
-8. Style: warm museum label - explain rather than assume knowledge.
-9. Preserve the voice and spirit of the original.
-8. Wrap ALL image/illustration descriptions in <note>...</note> — readers can toggle these off.
-9. END with <summary>...</summary> and <keywords>...</keywords> for indexing.
-
-**Writing style for summaries and notes:**
-- Never use em-dashes (—). Use commas, colons, semicolons, or separate sentences.
-- Avoid: "delves into", "rich tapestry", "fascinating exploration", "sheds light on", "comprehensive", "intricate", "nuanced", "multifaceted", "offers a window into".
-- Use short, direct sentences. Scholarly but accessible.
-
-**Source language:** {source_language}
-**Target language:** {target_language}
-
-**Final output format:**
-[translated text]
-
-<summary>1-2 sentence summary of this page's main content and significance</summary>
-<keywords>key concepts, names, themes in English, for indexing</keywords>`;
+// Translation prompt loaded from DB prompts collection (single source of truth)
+let _cachedTranslationPrompt = null;
+async function getTranslationPromptFromDb(db) {
+  if (_cachedTranslationPrompt) return _cachedTranslationPrompt;
+  const prompt = await db.collection('prompts').findOne(
+    { type: 'translation', is_default: true },
+    { sort: { version: -1 } }
+  );
+  if (!prompt?.content) throw new Error('No default translation prompt found in DB');
+  console.log(`[pipeline] Loaded translation prompt v${prompt.version} from DB`);
+  _cachedTranslationPrompt = prompt.content;
+  return _cachedTranslationPrompt;
+}
 
 const ENGLISH_MODERNIZATION_PROMPT = `You are modernizing Early Modern English text into clear, accessible Modern English.
 
@@ -579,7 +517,8 @@ async function translatePage(db, page, sourceLanguage, previousTranslation) {
   const url = `${GEMINI_API_BASE}/models/${TRANSLATE_MODEL}:generateContent?key=${apiKey}`;
 
   const isEnglish = sourceLanguage.toLowerCase() === 'english';
-  const basePrompt = isEnglish ? ENGLISH_MODERNIZATION_PROMPT : TRANSLATION_PROMPT;
+  const translationPrompt = await getTranslationPromptFromDb(db);
+  const basePrompt = isEnglish ? ENGLISH_MODERNIZATION_PROMPT : translationPrompt;
   let prompt = basePrompt
     .replace('{source_language}', sourceLanguage)
     .replace('{target_language}', 'English');
@@ -1541,7 +1480,7 @@ async function run() {
     if (shouldRun(1.25)) {
       console.log('\n--- Phase 1.25: Split detection (spread → individual pages) ---');
 
-      const SPLIT_LIMIT = 100; // Max books per cycle (increased from 10)
+      const SPLIT_LIMIT = 100; // Max books per cycle
       const ASPECT_RATIO_THRESHOLD = 1.2; // Width/height > 1.2 = likely spread
 
       // Find archive_complete books that haven't been split-checked yet
