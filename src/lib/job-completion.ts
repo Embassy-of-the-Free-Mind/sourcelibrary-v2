@@ -198,7 +198,7 @@ async function handleJobCompletion(
       // Mark enrichment stale if this book already has an index
       const bookDoc = await books.findOne(
         { id: bookId },
-        { projection: { 'index.generatedAt': 1 } }
+        { projection: { 'index.generatedAt': 1, pages_translated: 1, pages_ocr: 1, pages_blank: 1 } }
       );
       const enrichmentStale = bookDoc?.index?.generatedAt ? { enrichment_stale: true } : {};
 
@@ -217,6 +217,17 @@ async function handleJobCompletion(
       );
 
       console.log(`${logPrefix} Updated book ${bookId}: pages_translated = ${totalPagesWithTranslation}, pages_blank = ${totalPagesBlank}${enrichmentStale.enrichment_stale ? ', marked enrichment_stale' : ''}`);
+
+      // Inline milestone counter updates on the enrichment snapshot
+      // Compare old vs new to detect threshold crossings
+      await updateMilestoneCounters(db, {
+        oldTranslated: bookDoc?.pages_translated || 0,
+        newTranslated: totalPagesWithTranslation,
+        pagesOcr: bookDoc?.pages_ocr || 0,
+        pagesBlank: totalPagesBlank,
+        logPrefix,
+        bookId,
+      });
       break;
     }
 
@@ -228,5 +239,57 @@ async function handleJobCompletion(
       );
       break;
     }
+  }
+}
+
+/**
+ * Inline-update the enrichment snapshot's milestone counters when a book
+ * crosses the 90% or 100% translation threshold.
+ *
+ * The 2-hourly snapshot recompute resets these to ground truth, so small
+ * drift from race conditions is acceptable.
+ */
+async function updateMilestoneCounters(
+  db: Db,
+  opts: {
+    oldTranslated: number;
+    newTranslated: number;
+    pagesOcr: number;
+    pagesBlank: number;
+    logPrefix: string;
+    bookId: string;
+  }
+): Promise<void> {
+  const { oldTranslated, newTranslated, pagesOcr, pagesBlank, logPrefix, bookId } = opts;
+  const denominator = pagesOcr - pagesBlank;
+  if (denominator <= 0) return;
+
+  const threshold90 = Math.floor(denominator * 0.9);
+  const threshold100 = denominator;
+
+  const inc: Record<string, number> = {};
+
+  // Check 90% threshold crossing
+  if (oldTranslated < threshold90 && newTranslated >= threshold90) {
+    inc['milestones.over_90_pct'] = 1;
+  }
+
+  // Check 100% threshold crossing
+  if (oldTranslated < threshold100 && newTranslated >= threshold100) {
+    inc['milestones.fully_translated'] = 1;
+  }
+
+  if (Object.keys(inc).length === 0) return;
+
+  try {
+    await db.collection('system_config').updateOne(
+      { _id: 'enrichment_snapshot' as any },
+      { $inc: inc }
+    );
+    const crossed = Object.keys(inc).map(k => k.split('.')[1]).join(', ');
+    console.log(`${logPrefix} Milestone crossed for ${bookId}: ${crossed}`);
+  } catch (err) {
+    // Non-fatal — snapshot recompute will correct
+    console.error(`${logPrefix} Failed to update milestone counters:`, err);
   }
 }

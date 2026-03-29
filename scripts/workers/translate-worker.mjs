@@ -580,11 +580,47 @@ async function processBook(db, book, job, globalCounter) {
       { $set: bookUpdate, $unset: { job: '' } },
     );
     console.log(`  [${label}] Complete — ${newCompleted} translated, ${newFailed} failed (synced: ${countAgg?.with_translation}/${countAgg?.total} pages)`);
+
+    // Inline milestone counter updates on the enrichment snapshot
+    await updateMilestoneCounters(db, {
+      oldTranslated: book.pages_translated || 0,
+      newTranslated: countAgg?.with_translation || 0,
+      pagesOcr: countAgg?.with_ocr || book.pages_ocr || 0,
+      pagesBlank: countAgg?.blank || book.pages_blank || 0,
+      label,
+      bookId: book.id,
+    });
   } else {
     console.log(`  [${label}] Progress — ${translated} this run (${newCompleted}/${job.progress.total} total)`);
   }
 
   return { translated, failed, completed: isComplete ? 1 : 0, inputTokens: totalInputTokens, outputTokens: totalOutputTokens };
+}
+
+// ── Milestone counter updates ──
+// Inline-update the enrichment snapshot's milestone counters when a book
+// crosses the 90% or 100% translation threshold.
+// The 2-hourly snapshot recompute resets these to ground truth.
+async function updateMilestoneCounters(db, { oldTranslated, newTranslated, pagesOcr, pagesBlank, label, bookId }) {
+  const denominator = pagesOcr - pagesBlank;
+  if (denominator <= 0) return;
+
+  const threshold90 = Math.floor(denominator * 0.9);
+  const threshold100 = denominator;
+  const inc = {};
+
+  if (oldTranslated < threshold90 && newTranslated >= threshold90) inc['milestones.over_90_pct'] = 1;
+  if (oldTranslated < threshold100 && newTranslated >= threshold100) inc['milestones.fully_translated'] = 1;
+
+  if (Object.keys(inc).length === 0) return;
+
+  try {
+    await db.collection('system_config').updateOne({ _id: 'enrichment_snapshot' }, { $inc: inc });
+    const crossed = Object.keys(inc).map(k => k.split('.')[1]).join(', ');
+    console.log(`  [${label}] Milestone crossed for ${bookId}: ${crossed}`);
+  } catch (err) {
+    console.error(`  [${label}] Failed to update milestone counters:`, err.message);
+  }
 }
 
 // ── Main ──
@@ -607,7 +643,7 @@ async function main() {
   // Find books with active translation jobs
   const books = await db.collection('books')
     .find({ 'pipeline_auto.status': 'translate_submitted' })
-    .project({ id: 1, title: 1, display_title: 1, author: 1, year: 1, published: 1, language: 1, job: 1, image_source: 1 })
+    .project({ id: 1, title: 1, display_title: 1, author: 1, year: 1, published: 1, language: 1, job: 1, image_source: 1, pages_translated: 1, pages_ocr: 1, pages_blank: 1 })
     .limit(CONCURRENCY)
     .toArray();
 
