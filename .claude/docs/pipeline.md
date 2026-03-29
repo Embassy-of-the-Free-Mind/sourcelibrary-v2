@@ -31,7 +31,7 @@ Every step is independent and idempotent. Books can enter at any stage and be re
 
 The pipeline is orchestrated from **Hetzner** (`scripts/workers/pipeline-orchestrator.mjs`, every 2 min). Translation runs on a separate Hetzner worker (`translate-worker.mjs`, every 2 min). Batch OCR results are collected by `batch-collector.mjs` (every 10 min). See `pipeline-architecture.md` for the full cron schedule and infrastructure map.
 
-**Legacy:** The Vercel crons (`post-import-pipeline`, `enrich-books`) still exist in `_archived/` and can be re-enabled. The Hetzner orchestrator consolidated both into a single script with all phases.
+**Legacy:** The Vercel crons (`post-import-pipeline`, `enrich-books`) still exist in `_archived/` but are no longer active. The Hetzner orchestrator (`pipeline-orchestrator.mjs`) handles phases 0-5 and 8+. A separate Hetzner worker (`enrich-worker.mjs`, every 5 min) handles phases 6-7 (summary+index, chapters) with direct Gemini calls. The `cron_runs` collection logs from both — orchestrator runs log as `archive-bulk`, enrich runs have their own entries.
 
 Each book has a `pipeline_auto` object tracking its state.
 
@@ -57,10 +57,10 @@ Any state can transition to `failed` on persistent errors (after 3 retries). Spe
 | `ft_verified` | First-translation verification complete (or skipped for English books) | Pipeline cron Phase 3.7 |
 | `translate_submitted` | Translation job created, Hetzner worker picks up | Orchestrator Phase 4 |
 | `translate_complete` | Translation finished | Pipeline cron Phase 5 |
-| `enriching` | Summary + index generation in progress | enrich-books cron Phase 1 |
-| `enriched` | Summary + index complete | enrich-books cron Phase 1 |
-| `chapters` | Chapter extraction in progress | enrich-books cron Phase 2 |
-| `chapters_complete` | Chapters extracted (or skipped for short books) | enrich-books cron Phase 2 |
+| `summarizing` | Summary + index generation in progress | Hetzner `enrich-worker.mjs` Phase 6 |
+| `summary_indexed` | Summary + index complete | Hetzner `enrich-worker.mjs` Phase 6 |
+| `chapters` | Chapter extraction in progress | Hetzner `enrich-worker.mjs` Phase 7 |
+| `chapters_complete` | Chapters extracted (or skipped for short books) | Hetzner `enrich-worker.mjs` Phase 7 |
 | `images_submitted` | Image extraction job queued to Lambda | Pipeline cron (priority pass) |
 | `images_complete` | All pages scanned for illustrations | Pipeline cron (priority pass) |
 | `complete` | Fully processed | Pipeline cron (priority pass) |

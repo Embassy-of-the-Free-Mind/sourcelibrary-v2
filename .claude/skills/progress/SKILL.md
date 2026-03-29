@@ -290,4 +290,4 @@ Pauses: none (or list)
 - **`pages_translated` stale:** `sync-page-counts` cron runs every 6h. For real-time count, query pages directly.
 - **Book.job lock prevents re-submission:** Clear with `$unset: { job: '' }` on affected books.
 - **Image extraction stuck:** Check if `images` phase is in `paused_phases`. Also check Lambda CloudWatch for image-extraction-processor errors.
-- **Enrichment coverage low for summaries/chapters:** These run via `enrich-books` cron, not Lambda. Check if that cron is healthy in cron_runs.
+- **Enrichment coverage low for summaries/chapters:** These run via Hetzner `enrich-worker.mjs` (every 5 min, flock `/tmp/sl-enrich.lock`). Check `tail /var/log/sourcelibrary/enrich.log` on Hetzner, NOT the old Vercel `enrich-books` cron (deprecated since ~March 2026).

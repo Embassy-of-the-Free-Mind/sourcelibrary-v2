@@ -13,9 +13,9 @@ Operational reference for pipeline monitoring, debugging, and processing. For fu
 | Archiving | **Hetzner** (`archive-ocr.mjs`, `archive-bulk.mjs`) | Downloads → Cloudflare R2 |
 | Preview OCR (25 pages) | **Lambda** via SQS | Fast preview path, still active |
 | Image extraction | **Lambda** via SQS | Still active (Phase 8) |
-| Metadata enrichment | **Vercel API** (called from Hetzner) | HTTP fetch to `/api/books/[id]/verify-metadata` |
-| Summary + Index | **Vercel API** (called from Hetzner) | HTTP fetch to `/api/books/[id]/index` |
-| Chapter extraction | **Vercel API** (called from Hetzner) | HTTP fetch to `/api/books/[id]/extract-chapters` |
+| Metadata enrichment | **Hetzner** (orchestrator Phase 3.5) | HTTP fetch to Vercel `/api/books/[id]/verify-metadata` |
+| Summary + Index | **Hetzner** (`enrich-worker.mjs`) | Direct Gemini calls, every 5 min, 30 books/run |
+| Chapter extraction | **Hetzner** (`enrich-worker.mjs`) | Direct Gemini calls, runs after summary+index |
 | Lightweight crons | **Vercel** | social-post, health-check, daily-report, warm |
 | e-rara archiving | **Local Mac** via launchd | Hetzner IPs blocked by e-rara |
 
