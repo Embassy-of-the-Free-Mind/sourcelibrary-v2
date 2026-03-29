@@ -4,7 +4,8 @@ import { ArrowLeft, BookOpen, ChevronRight } from 'lucide-react';
 import { getDb } from '@/lib/mongodb';
 import { LIBRARY_CATEGORIES, CategoryWithCount } from '@/app/api/categories/route';
 
-// ISR: rebuild every 6 hours. Allow 60s for first-hit generation.
+// ISR: rebuild every 6 hours. Skip static generation (Atlas too slow at build time).
+export const dynamic = 'force-dynamic';
 export const revalidate = 21600;
 export const maxDuration = 60;
 
