@@ -1092,8 +1092,9 @@ async function getOcrPromptFromDb(db) {
  * This is a 7.5x improvement in quota efficiency vs the old 20-page-per-job approach.
  * A 300-page book now uses 2 batch jobs instead of 15.
  */
-async function submitOcrDirectly(db, book, { modelOverride } = {}) {
+async function submitOcrDirectly(db, book, { modelOverride, maxPages } = {}) {
   const ocrModel = modelOverride || getOcrModelForBook(book);
+  const pageLimit = maxPages || MAX_PAGES_PER_BOOK;
   // Guard: check for existing active batch_jobs for this book
   const activeBatchForBook = await db.collection('batch_jobs').countDocuments({
     book_id: book.id,
@@ -1122,7 +1123,7 @@ async function submitOcrDirectly(db, book, { modelOverride } = {}) {
       }]
     })
     .sort({ page_number: 1 })
-    .limit(MAX_PAGES_PER_BOOK)
+    .limit(pageLimit)
     .project({ _id: 0, id: 1, page_number: 1, photo: 1, photo_original: 1, archived_photo: 1, cropped_photo: 1, crop: 1 })
     .toArray();
 
@@ -2018,7 +2019,9 @@ async function run() {
     }
 
     // ── Phase 2: Submit OCR via Gemini Batch API (archive_complete -> ocr_submitted) ──
-    // Re-enabled: RECITATION fix applied (BLOCK_NONE safety settings + model fallback). See #256.
+    // Two-pass strategy:
+    //   Pass 1 ("preview"): First 25 pages of first-translation books — gives readers content fast
+    //   Pass 2 ("full"): Remaining pages for books that already have preview OCR
     if (shouldRun(2)) {
       console.log('\n--- Phase 2: OCR submission ---');
 
@@ -2030,12 +2033,83 @@ async function run() {
 
       const ocrLimit = activeBatchOcr >= MAX_ACTIVE_BATCH_OCR ? 0 : OCR_SUBMIT_LIMIT;
 
-      // Priority: confirmed first translations > non-English > English
       const ENGLISH_VARIANTS_P2 = ['english', 'eng', 'en'];
+      const PREVIEW_PAGES = 25;
+
+      // --- Pass 1: Preview OCR (first 25 pages) for books that haven't had any OCR yet ---
+      // Prioritize first-translation books. This spreads OCR across many books fast.
+      if (ocrLimit > 0) {
+        const previewCandidates = await db.collection('books')
+          .aggregate([
+            { $match: {
+              'pipeline_auto.status': 'archive_complete',
+              'pipeline_auto.split_checked': true,
+              'image_source.provider': { $ne: 'bph' },
+              pages_ocr: { $in: [0, null, undefined] }, // No OCR yet
+            }},
+            { $addFields: {
+              _priority: {
+                $switch: {
+                  branches: [
+                    { case: { $eq: ['$is_first_translation', true] }, then: 0 },
+                    { case: { $in: [{ $toLower: { $ifNull: ['$language', ''] } }, ENGLISH_VARIANTS_P2] }, then: 2 },
+                  ],
+                  default: 1,
+                },
+              },
+            }},
+            { $sort: { _priority: 1, hidden: 1 } },
+            { $project: { id: 1, title: 1, pages_count: 1, 'pipeline_auto.retry_count': 1 } },
+            { $limit: ocrLimit },
+          ])
+          .toArray();
+
+        if (previewCandidates.length > 0) {
+          console.log(`  Preview pass: ${previewCandidates.length} books (first ${PREVIEW_PAGES} pages each)`);
+        }
+
+        for (const book of previewCandidates) {
+          try {
+            const label = (book.title || '').substring(0, 50);
+            if (DRY_RUN) { console.log(`  Would preview OCR: ${label}`); continue; }
+            console.log(`  Preview OCR: ${label}...`);
+            const result = await submitOcrDirectly(db, book, { maxPages: PREVIEW_PAGES });
+
+            if (result.alreadyDone) {
+              await setPipelineStatus(db, book.id, 'ocr_complete');
+              log.ocr_advanced++;
+              console.log(`  Already OCR'd: ${label}`);
+            } else if (result.skippedDuplicate) {
+              console.log(`  Skipped (active batch exists): ${label}`);
+            } else if (result.submitted > 0) {
+              // Don't advance to ocr_submitted yet — still has remaining pages
+              // Mark that preview batch was sent so full pass picks it up later
+              await db.collection('books').updateOne(
+                { id: book.id },
+                { $set: { 'pipeline_auto.preview_batch_at': new Date() } }
+              );
+              log.ocr_submitted++;
+              console.log(`  Preview submitted: ${label} — ${result.submitted}/${book.pages_count || '?'} pages`);
+            } else {
+              console.log(`  OCR submitted: ${label} — 0 pages`);
+            }
+            await sleep(API_DELAY_MS);
+          } catch (err) {
+            const msg = err.message || String(err);
+            console.log(`  Preview OCR error: ${(book.title || '').substring(0, 40)} — ${msg.substring(0, 80)}`);
+          }
+        }
+      }
+
+      // --- Pass 2: Full OCR for books that already have some OCR (preview done, or partial) ---
       const readyForOcr = ocrLimit > 0 ? await db.collection('books')
         .aggregate([
-          // PAUSED: BPH books excluded pending split quality audit (#523)
-          { $match: { 'pipeline_auto.status': 'archive_complete', 'pipeline_auto.split_checked': true, 'image_source.provider': { $ne: 'bph' } } },
+          { $match: {
+            'pipeline_auto.status': 'archive_complete',
+            'pipeline_auto.split_checked': true,
+            'image_source.provider': { $ne: 'bph' },
+            pages_ocr: { $gt: 0 }, // Already has some OCR (preview pass done)
+          }},
           { $addFields: {
             _priority: {
               $switch: {
@@ -2053,7 +2127,9 @@ async function run() {
         ])
         .toArray() : [];
 
-      console.log(`  Books ready for OCR: ${readyForOcr.length}`);
+      if (readyForOcr.length > 0) {
+        console.log(`  Full pass: ${readyForOcr.length} books (all remaining pages)`);
+      }
 
       for (const book of readyForOcr) {
         const retries = book.pipeline_auto?.retry_count || 0;
