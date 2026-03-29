@@ -5,7 +5,7 @@ import Link from 'next/link';
 import type { Book } from '@/lib/types';
 import ContentPageLayout, { ContentHeader } from '@/components/layout/ContentPageLayout';
 
-export const dynamic = 'force-dynamic';
+export const revalidate = 600;
 export const dynamicParams = true;
 export async function generateStaticParams() {
   return [];

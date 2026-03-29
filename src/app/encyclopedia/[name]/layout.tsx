@@ -5,7 +5,7 @@ import { ObjectId } from 'mongodb';
 import EntitySchema from '@/components/seo/EntitySchema';
 
 // ISR: rebuild at most every 24 hours (entity data changes rarely)
-export const dynamic = 'force-dynamic';
+export const revalidate = 600;
 export const dynamicParams = true;
 export async function generateStaticParams() {
   return []; // All paths generated on demand via ISR

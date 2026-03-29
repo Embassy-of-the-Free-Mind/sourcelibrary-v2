@@ -18,7 +18,7 @@ const PERIODS: Record<string, { label: string; min: number; max: number }> = {
 const PERIOD_SLUGS = Object.keys(PERIODS);
 
 // ISR: rebuild daily. Allow 60s for first-hit generation.
-export const dynamic = 'force-dynamic';
+export const revalidate = 600;
 export const maxDuration = 60;
 export const dynamicParams = true;
 

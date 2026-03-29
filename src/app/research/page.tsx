@@ -5,7 +5,7 @@ import ContentPageLayout, { ContentHeader } from '@/components/layout/ContentPag
 import ResearchClient from '@/components/research/ResearchClient';
 import type { CuratorSessionListItem } from '@/lib/api-client/types/research';
 
-export const dynamic = 'force-dynamic';
+export const revalidate = 600;
 
 export const metadata: Metadata = {
   title: 'Research Sessions - Source Library',

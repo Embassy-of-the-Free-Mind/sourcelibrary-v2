@@ -4,7 +4,7 @@ import Image from 'next/image';
 import { ArrowLeft, Image as ImageIcon, Layers } from 'lucide-react';
 import { getDb } from '@/lib/mongodb';
 
-export const dynamic = 'force-dynamic';
+export const revalidate = 600;
 
 export const metadata: Metadata = {
   title: 'Curated Collections | Gallery | Source Library',

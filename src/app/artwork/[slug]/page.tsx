@@ -6,7 +6,7 @@ import { Book } from '@/lib/types';
 import SiteHeader from '@/components/layout/SiteHeader';
 import ArtworkInfo from '@/components/artwork/ArtworkInfo';
 
-export const dynamic = 'force-dynamic';
+export const revalidate = 600;
 export const dynamicParams = true;
 
 interface PageProps {

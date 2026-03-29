@@ -7,7 +7,7 @@ export const metadata: Metadata = {
   description: 'The circle of scholars and readers translating the Western esoteric tradition.',
 };
 
-export const dynamic = 'force-dynamic';
+export const revalidate = 600;
 
 interface MemberProfile {
   name: string;

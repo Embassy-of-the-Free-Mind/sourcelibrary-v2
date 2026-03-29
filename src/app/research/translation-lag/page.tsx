@@ -3,7 +3,7 @@ import { getDb } from '@/lib/mongodb';
 import ContentPageLayout, { ContentHeader } from '@/components/layout/ContentPageLayout';
 import TranslationLagViz from '@/components/research/TranslationLagViz';
 
-export const dynamic = 'force-dynamic';
+export const revalidate = 60;
 
 export const metadata: Metadata = {
   title: 'Translation Lag — Source Library Research',
