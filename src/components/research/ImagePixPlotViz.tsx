@@ -36,7 +36,68 @@ const WORLD_SIZE = 8000;
 const PADDING = 400;
 const MIN_Z = 0.05;
 const MAX_Z = 12.0;
-const THUMB_WORLD = 18; // world-space size per thumbnail
+const CELL_SIZE = 20;   // grid cell size (thumbnail + 2px gap)
+const THUMB_WORLD = 18;  // drawn size within each cell
+
+/**
+ * Snap UMAP positions to a non-overlapping grid.
+ * Each image gets a unique grid cell; collisions are resolved by
+ * spiraling outward to the nearest empty cell.
+ */
+function snapToGrid(images: ImageItem[]): Float32Array {
+  const usable = WORLD_SIZE - 2 * PADDING;
+  const gridW = Math.ceil(usable / CELL_SIZE);
+  const gridH = gridW;
+  const occupied = new Uint8Array(gridW * gridH); // 0 = empty
+  const out = new Float32Array(images.length * 2); // [x0, y0, x1, y1, ...]
+
+  // Sort by distance to centroid so central images get priority placement
+  const cx = images.reduce((s, im) => s + im.x, 0) / images.length;
+  const cy = images.reduce((s, im) => s + im.y, 0) / images.length;
+  const order = images.map((im, i) => ({
+    i,
+    d: (im.x - cx) ** 2 + (im.y - cy) ** 2,
+  }));
+  order.sort((a, b) => a.d - b.d);
+
+  for (const { i } of order) {
+    const im = images[i];
+    const idealCol = Math.round(im.x * (gridW - 1));
+    const idealRow = Math.round(im.y * (gridH - 1));
+
+    // Try ideal cell first, then spiral outward
+    let placed = false;
+    for (let r = 0; r < 200 && !placed; r++) {
+      const startC = Math.max(0, idealCol - r);
+      const endC = Math.min(gridW - 1, idealCol + r);
+      const startR = Math.max(0, idealRow - r);
+      const endR = Math.min(gridH - 1, idealRow + r);
+
+      // Only check the ring at radius r (skip interior which was checked)
+      for (let row = startR; row <= endR && !placed; row++) {
+        for (let col = startC; col <= endC && !placed; col++) {
+          // Only the border of the ring
+          if (r > 0 && row > startR && row < endR && col > startC && col < endC) continue;
+          const key = row * gridW + col;
+          if (!occupied[key]) {
+            occupied[key] = 1;
+            out[i * 2] = PADDING + col * CELL_SIZE + CELL_SIZE / 2;
+            out[i * 2 + 1] = PADDING + row * CELL_SIZE + CELL_SIZE / 2;
+            placed = true;
+          }
+        }
+      }
+    }
+
+    // Fallback (shouldn't happen with 27% fill)
+    if (!placed) {
+      out[i * 2] = PADDING + im.x * usable;
+      out[i * 2 + 1] = PADDING + im.y * usable;
+    }
+  }
+
+  return out;
+}
 
 export default function ImagePixPlotViz({ data }: { data: ConstellationData }) {
   const canvasRef = useRef<HTMLCanvasElement>(null);
@@ -57,11 +118,12 @@ export default function ImagePixPlotViz({ data }: { data: ConstellationData }) {
     books: new Set(data.images.map(i => i.book_id)).size,
   }), [data]);
 
-  // Precompute world positions (doesn't need atlas)
+  // Precompute world positions with grid snapping (no overlaps)
   useEffect(() => {
-    renderImagesRef.current = data.images.map((img) => ({
-      worldX: PADDING + img.x * (WORLD_SIZE - 2 * PADDING),
-      worldY: PADDING + img.y * (WORLD_SIZE - 2 * PADDING),
+    const positions = snapToGrid(data.images);
+    renderImagesRef.current = data.images.map((img, i) => ({
+      worldX: positions[i * 2],
+      worldY: positions[i * 2 + 1],
       atlasIdx: -1,
       srcX: 0,
       srcY: 0,
@@ -232,7 +294,7 @@ export default function ImagePixPlotViz({ data }: { data: ConstellationData }) {
     const cam = camRef.current;
     const wx = (clientX - rect.left - rect.width / 2) / cam.zoom + cam.x;
     const wy = (clientY - rect.top - rect.height / 2) / cam.zoom + cam.y;
-    const hitR2 = (THUMB_WORLD / 2) * (THUMB_WORLD / 2);
+    const hitR2 = (CELL_SIZE / 2) * (CELL_SIZE / 2);
     let best: RenderImage | null = null;
     let bestDist = hitR2;
     const items = renderImagesRef.current;
