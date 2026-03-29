@@ -2,7 +2,7 @@ import { ProcessingPrompts } from "./core";
 import type { DetectedImage } from "../page";
 
 // Bump this when DEFAULT_PROMPTS change. Stored on every page record for audit trail.
-export const PROMPT_VERSION = 'v5.1.2026-03';
+export const PROMPT_VERSION = 'v6.2026-03';
 
 const VALID_PAGE_TYPES = new Set([
   'title-page', 'frontispiece', 'dedication', 'preface', 'toc', 'index',
@@ -218,19 +218,21 @@ If text-only page, omit the <detected-images> block.`,
 - <column-break/> markers — preserve exactly as-is between translated columns
 - Line breaks and paragraph structure
 
-**Inline annotations (visible to readers):**
-- <note>X</note> — interpretive notes for readers
+**Inline annotations (XML tags — toggleable by reader):**
+- <note>X</note> — interpretive notes, interpolated clarifications
+- <term>X</term> — technical/foreign terms kept in transliteration
+- <gloss>X</gloss> — definition immediately after a <term> tag; also translate interlinear annotations
 - <margin>X</margin> — translate and keep marginal notes
-- <gloss>X</gloss> — translate interlinear annotations
-- <insert>X</insert> — translate later additions (inline only)
-- <unclear>X</unclear> — illegible readings
-- <term>X</term> — technical vocabulary with explanation
+- <insert>X</insert> — translate later additions
+- <unclear>X</unclear> — preserve uncertain readings from OCR
 
 **Metadata tags (hidden from readers):**
 - <meta>X</meta> for translator notes that should be hidden (e.g., continuity with previous page)
 
 **Do NOT use:**
-- Code blocks or backticks - this is prose
+- Bare [square brackets] for interpolations — use <note>...</note> instead
+- Bare (parenthetical glosses) after terms — use <term>word</term> <gloss>meaning</gloss> instead
+- Code blocks or backticks — this is prose
 
 **IMPORTANT - Translate ALL languages to English:**
 The source text may contain phrases in multiple languages (Latin, Greek, Hebrew, Sanskrit, Arabic, etc.). You MUST translate EVERYTHING to English:
@@ -251,9 +253,16 @@ If the OCR contains <image-desc>...</image-desc>, translate the description and 
 2. Mirror the source layout - headings, paragraphs, tables, centered text.
 3. Translate ALL text including <margin>, <insert>, <gloss> - keep the XML tags.
 4. Translate embedded Latin/Greek/Hebrew phrases to English, noting originals when significant.
-5. Add <note>...</note> inline to explain historical references or difficult phrases.
-6. Style: warm museum label - explain rather than assume knowledge.
-7. Preserve the voice and spirit of the original.
+5. For foreign terms kept in transliteration: <term>Chesed</term> <gloss>Mercy/Loving-kindness</gloss>
+
+**Examples of annotated translation:**
+- "He composed a very worthy book On the World and Religion <note>original: "De Seculo, & Religione"</note>; one On Fate and Fortune <note>original: "De Fato, & Fortuna"</note>; and another On Law and Medicine <note>original: "Della Legge, e della Medicina"</note>."
+- "The <term>prima materia</term> <gloss>first matter</gloss> must be purified through <term>calcination</term> <gloss>heating to powder</gloss> before the <term>opus</term> <gloss>the Great Work</gloss> can proceed."
+- "According to the <term>Sefer Yetzirah</term> <gloss>Book of Formation</gloss>, the ten <term>sefirot</term> <gloss>divine emanations</gloss> correspond to the paths of wisdom."
+6. For interpolated clarifications: <note>from the aspect of the secret</note>
+7. Add <note>...</note> inline to explain historical references or difficult phrases.
+8. Style: warm museum label - explain rather than assume knowledge.
+9. Preserve the voice and spirit of the original.
 8. Wrap ALL image/illustration descriptions in <note>...</note> — readers can toggle these off.
 9. END with <summary>...</summary> and <keywords>...</keywords> for indexing.
 

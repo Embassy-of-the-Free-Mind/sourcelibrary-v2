@@ -11,6 +11,8 @@
  *   2. Gemini File API storage usage (should be <15GB of 20GB)
  *   3. Batch jobs stuck in pending >6h
  *   4. Books stuck in ocr_submitted >48h
+ *   5. Translation throughput stall (books waiting but 0 pages translated in 2h)
+ *   5b. Orphan submitted books (in *_submitted state with no job reference)
  *
  * Usage:
  *   set -a; source .env.production.local; set +a; node scripts/workers/pipeline-health-alert.mjs
@@ -128,7 +130,72 @@ async function run() {
     });
   }
 
-  // 5. Quick stats
+  // 5. Translation throughput stall detection
+  // If books are in translate_submitted but 0 pages translated in 2h, translation is broken.
+  const twoHoursAgo = new Date(now - 2 * 60 * 60 * 1000);
+  const translateSubmitted = await db.collection('books').countDocuments({
+    'pipeline_auto.status': 'translate_submitted',
+  });
+  if (translateSubmitted > 0) {
+    const recentTranslations = await db.collection('pages').countDocuments({
+      'translation.updated_at': { $gte: twoHoursAgo },
+    });
+    if (recentTranslations === 0) {
+      alerts.push({
+        level: 'critical',
+        check: 'translation_stall',
+        message: `${translateSubmitted} books in translate_submitted but 0 pages translated in 2h. Translate worker may be stuck.`,
+      });
+    }
+  }
+
+  // 5b. Orphan submitted books — in *_submitted state with no book.job
+  for (const state of ['translate_submitted', 'ocr_submitted', 'images_submitted']) {
+    const orphans = await db.collection('books').countDocuments({
+      'pipeline_auto.status': state,
+      $or: [{ job: { $exists: false } }, { job: null }],
+    });
+    if (orphans > 0) {
+      alerts.push({
+        level: 'warning',
+        check: 'orphan_submitted',
+        message: `${orphans} books in ${state} with no job reference. Pipeline orchestrator should auto-fix.`,
+      });
+    }
+  }
+
+  // 6. Sync-worker phase completion check
+  // Verify that the last sync-worker run completed ALL phases (not just ran)
+  const lastSync = await db.collection('cron_runs')
+    .findOne({ cron: 'sync-worker' }, { sort: { timestamp: -1 } });
+  if (lastSync) {
+    const syncAge = now - lastSync.timestamp;
+    const syncAgeHours = syncAge / (60 * 60 * 1000);
+    if (syncAgeHours > 14) {
+      alerts.push({
+        level: 'warning',
+        check: 'sync_worker_stale',
+        message: `Last sync-worker run was ${syncAgeHours.toFixed(1)}h ago. Should run every 6h.`,
+      });
+    }
+    if (lastSync.failed || lastSync.status === 'partial_failure') {
+      const failedPhases = lastSync.phases_failed || lastSync.errors?.map(e => e.phase) || ['unknown'];
+      alerts.push({
+        level: 'critical',
+        check: 'sync_worker_partial_failure',
+        message: `Last sync-worker run had failed phases: ${failedPhases.join(', ')}. ${lastSync.errors?.map(e => `${e.phase}: ${e.error}`).join('; ') || ''}`,
+      });
+    }
+    console.log(`[health] Sync-worker: last run ${syncAgeHours.toFixed(1)}h ago, status=${lastSync.status || 'success'}, phases=${lastSync.phases_completed?.join(',') || 'unknown'}`);
+  } else {
+    alerts.push({
+      level: 'warning',
+      check: 'sync_worker_missing',
+      message: 'No sync-worker cron_runs record found. Worker may never have run.',
+    });
+  }
+
+  // 7. Quick stats
   const ocrSubmitted = await db.collection('books').countDocuments({
     'pipeline_auto.status': 'ocr_submitted',
   });

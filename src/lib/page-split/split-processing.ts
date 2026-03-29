@@ -67,6 +67,10 @@ export async function detectSplit(
         throw new Error('Image URL required for Gemini detection (upload image first)');
       }
       const geminiResult = await detectSplitWithGemini(imageUrl);
+      // Compute aspectRatio from the buffer so metrics are complete
+      const geminiMeta = await sharp(buffer).metadata();
+      const geminiAspectRatio = (geminiMeta.width && geminiMeta.height)
+        ? geminiMeta.width / geminiMeta.height : 0;
       return {
         isTwoPageSpread: geminiResult.isTwoPageSpread,
         confidence: geminiResult.confidence,
@@ -75,7 +79,7 @@ export async function detectSplit(
         hasTextAtSplit: false,
         textWarning: geminiResult.reasoning,
         metrics: {
-          aspectRatio: 0,
+          aspectRatio: geminiAspectRatio,
           gutterScore: 0,
           maxDarkRunAtSplit: 0,
           transitionsAtSplit: 0,
@@ -280,9 +284,10 @@ export async function processSplitImage(
   splitResult: SplitDetectionResult
 ): Promise<[Page, Page]> {
 
-  // Calculate crop coordinates
-  const leftCrop = { xStart: 0, xEnd: splitResult.splitPosition };
-  const rightCrop = { xStart: splitResult.splitPosition, xEnd: 1000 };
+  // Calculate crop coordinates with 1% overlap on each side
+  const overlap = 10;
+  const leftCrop = { xStart: 0, xEnd: Math.min(1000, splitResult.splitPosition + overlap) };
+  const rightCrop = { xStart: Math.max(0, splitResult.splitPosition - overlap), xEnd: 1000 };
 
   // Generate page IDs
   const leftPageId = new ObjectId().toHexString();

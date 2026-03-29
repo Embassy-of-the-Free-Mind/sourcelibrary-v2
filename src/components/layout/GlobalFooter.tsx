@@ -137,7 +137,7 @@ export default function GlobalFooter() {
                 {/* Feedback widget under Participate */}
                 {col.title === 'Participate' && (
                   <li>
-                    <FeedbackWidget label="Give Feedback" className="text-sm text-white/50 hover:text-white transition-colors" />
+                    <FeedbackWidget label="Give Feedback" className="text-sm font-bold text-accent-rust hover:text-white transition-colors" />
                   </li>
                 )}
               </ul>

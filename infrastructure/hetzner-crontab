@@ -26,6 +26,9 @@
 # Hetzner inline translation worker: translates via Gemini API (every 2 min)
 */2 * * * * cd /root/sourcelibrary && flock -n /tmp/sl-translate.lock bash -c "set -a; source .env.production.local; set +a; node scripts/workers/translate-worker.mjs" >> /var/log/sourcelibrary/translate.log 2>&1
 
+# Hetzner inline enrichment worker: summary+index + chapters via Gemini API (every 5 min)
+*/5 * * * * cd /root/sourcelibrary && flock -n /tmp/sl-enrich.lock bash -c "set -a; source .env.production.local; set +a; node scripts/workers/enrich-worker.mjs" >> /var/log/sourcelibrary/enrich.log 2>&1
+
 # Batch collector: collect Gemini Batch API OCR results (every 10 min)
 */10 * * * * cd /root/sourcelibrary && flock -n /tmp/sl-collector.lock bash -c 'set -a; source .env.production.local; set +a; node scripts/workers/batch-collector.mjs' >> /var/log/sourcelibrary/collector.log 2>&1
 
@@ -69,10 +72,15 @@
 0 0 * * * cd /root/sourcelibrary && bash -c "set -a; source .env.production.local; set +a; node scripts/workers/cron-caller.mjs social-reset" >> /var/log/sourcelibrary/cron-caller.log 2>&1
 0 6 * * * cd /root/sourcelibrary && bash -c "set -a; source .env.production.local; set +a; node scripts/workers/cron-caller.mjs daily-pipeline-report" >> /var/log/sourcelibrary/cron-caller.log 2>&1
 
+# ── Snapshots ──
+
+# Enrichment snapshot: compute all pipeline stats for /progress (every 2 hours)
+30 */2 * * * cd /root/sourcelibrary && flock -n /tmp/sl-enrichment-snapshot.lock bash -c "set -a; source .env.production.local; set +a; node scripts/workers/enrichment-snapshot.mjs" >> /var/log/sourcelibrary/enrichment-snapshot.log 2>&1
+
 # ── Maintenance ──
 
-# Pipeline health alert: daily at 7am UTC
-0 7 * * * cd /root/sourcelibrary && flock -n /tmp/sl-health.lock bash -c "set -a; source .env.production.local; set +a; node scripts/workers/pipeline-health-alert.mjs" >> /var/log/sourcelibrary/health-alert.log 2>&1
+# Pipeline health alert: every 4h (catches translation stalls, orphan states)
+0 */4 * * * cd /root/sourcelibrary && flock -n /tmp/sl-health.lock bash -c "set -a; source .env.production.local; set +a; node scripts/workers/pipeline-health-alert.mjs" >> /var/log/sourcelibrary/health-alert.log 2>&1
 
 # Warm author pages: regenerate ISR cache (daily 5am)
 0 5 * * * cd /root/sourcelibrary && flock -n /tmp/sl-warm-authors.lock bash -c "set -a; source .env.production.local; set +a; node scripts/workers/warm-author-pages.mjs" >> /var/log/sourcelibrary/warm-authors.log 2>&1

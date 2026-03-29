@@ -37,7 +37,7 @@ import { firstTranslationBadge, firstTranslationDescription } from '@/lib/first-
 import SiteHeader from '@/components/layout/SiteHeader';
 
 // ISR: rebuild at most every hour (requires no searchParams/headers() usage)
-export const revalidate = 3600;
+export const dynamic = 'force-dynamic';
 
 // Run SSR near the database to cut cross-region latency (~200ms RTT savings)
 export const preferredRegion = 'fra1';

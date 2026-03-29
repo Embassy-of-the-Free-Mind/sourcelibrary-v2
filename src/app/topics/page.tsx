@@ -4,8 +4,11 @@ import Image from 'next/image';
 import ContentPageLayout, { ContentHeader } from '@/components/layout/ContentPageLayout';
 import type { Metadata } from 'next';
 import { FACETS, DOMAIN_GROUPS, facetDbField } from '@/lib/taxonomy/faceted-vocabulary';
+import DomainTreemap, { type SubDomain } from '@/components/topics/DomainTreemap';
 
-export const revalidate = 300; // 5 min — facet aggregations are expensive
+// ISR: rebuild every 6 hours. Allow 60s for first-hit generation.
+export const revalidate = 21600;
+export const maxDuration = 60;
 
 export const metadata: Metadata = {
   title: 'Browse by Topic | Source Library',
@@ -33,87 +36,77 @@ interface FacetGroup {
 
 async function fetchFacetCounts(): Promise<{ groups: FacetGroup[]; totalBooks: number }> {
   const db = await getDb();
+  const maxTimeMS = 30000;
+  const baseMatch = { faceted_tags: { $exists: true }, hidden: { $ne: true } };
 
-  const totalBooks = await db.collection('books').countDocuments({
-    faceted_tags: { $exists: true },
-    hidden: { $ne: true },
-  });
-
-  const groups: FacetGroup[] = [];
-
+  // Single $facet aggregation — one collection scan for all 6 facets
+  const facetStages: Record<string, object[]> = {};
   for (const facet of FACETS) {
-    const pipeline = [
-      {
-        $match: {
-          faceted_tags: { $exists: true },
-          hidden: { $ne: true },
-        },
-      },
-      { $unwind: `$faceted_tags.${facetDbField(facet)}` },
-      {
-        $group: {
-          _id: `$faceted_tags.${facetDbField(facet)}`,
-          count: { $sum: 1 },
-          thumbnails: {
-            $push: {
-              $cond: [
-                {
-                  $and: [
-                    { $ne: ['$thumbnail_blob', null] },
-                    { $ne: ['$thumbnail_blob', ''] },
-                  ],
-                },
-                '$thumbnail_blob',
-                {
-                  $cond: [
-                    {
-                      $and: [
-                        { $ne: ['$thumbnail', null] },
-                        { $ne: ['$thumbnail', ''] },
-                        {
-                          $regexMatch: {
-                            input: { $ifNull: ['$thumbnail', ''] },
-                            regex: /^https?:\/\//,
-                          },
-                        },
-                      ],
-                    },
-                    '$thumbnail',
-                    '$$REMOVE',
-                  ],
-                },
-              ],
-            },
-          },
-        },
-      },
-      { $sort: { count: -1 as const } },
+    const field = `faceted_tags.${facetDbField(facet)}`;
+    facetStages[facet.id] = [
+      { $unwind: `$${field}` },
+      { $group: { _id: `$${field}`, count: { $sum: 1 }, sample_thumb: { $first: '$thumbnail_blob' } } },
+      { $sort: { count: -1 } },
     ];
+  }
+  facetStages['_total'] = [{ $count: 'n' }];
 
-    const results = await db
-      .collection('books')
-      .aggregate(pipeline, { allowDiskUse: true })
-      .toArray();
+  const [result] = await db.collection('books').aggregate([
+    { $match: baseMatch },
+    { $facet: facetStages },
+  ], { maxTimeMS, allowDiskUse: true }).toArray();
 
+  const totalBooks = result._total?.[0]?.n ?? 0;
+
+  const groups: FacetGroup[] = FACETS.map((facet) => {
+    const results = (result[facet.id] || []) as Array<{ _id: string; count: number; sample_thumb?: string }>;
     const values: FacetCount[] = results.map((r) => {
       const vocabValue = facet.values.find((v) => v.id === r._id);
       return {
-        id: r._id as string,
-        label: vocabValue?.label || (r._id as string),
+        id: r._id,
+        label: vocabValue?.label || r._id,
         count: r.count,
-        thumbnails: (r.thumbnails || []).filter(Boolean).slice(0, 4),
+        thumbnails: r.sample_thumb ? [r.sample_thumb] : [],
       };
     });
-
-    groups.push({
-      id: facet.id,
-      label: facet.label,
-      question: facet.question,
-      values,
-    });
-  }
+    return { id: facet.id, label: facet.label, question: facet.question, values };
+  });
 
   return { groups, totalBooks };
+}
+
+
+/** Single aggregation: all domain co-occurrences in one pass */
+async function fetchDomainCrossTab(): Promise<Map<string, SubDomain[]>> {
+  const db = await getDb();
+  // Efficient: project array as two copies, unwind both, filter out self-pairs
+  const results = await db.collection('books').aggregate([
+    { $match: { 'faceted_tags.knowledge_domain.1': { $exists: true }, hidden: { $ne: true } } },
+    { $project: { a: '$faceted_tags.knowledge_domain', b: '$faceted_tags.knowledge_domain' } },
+    { $unwind: '$a' },
+    { $unwind: '$b' },
+    { $match: { $expr: { $gt: ['$b', '$a'] } } },  // ordered pairs only (avoids dupes)
+    { $group: { _id: { d1: '$a', d2: '$b' }, count: { $sum: 1 } } },
+    { $sort: { count: -1 } },
+  ], { allowDiskUse: true, maxTimeMS: 8000 }).toArray();
+
+  const map = new Map<string, SubDomain[]>();
+  const labelify = (s: string) => s.replace(/-/g, ' ').replace(/\b\w/g, (c: string) => c.toUpperCase());
+  for (const r of results) {
+    const d1 = r._id.d1 as string;
+    const d2 = r._id.d2 as string;
+    const count = r.count as number;
+    if (count < 5) continue;
+    // Add to both domains (symmetric)
+    for (const [domain, coDomain] of [[d1, d2], [d2, d1]]) {
+      const arr = map.get(domain) || [];
+      if (arr.length < 8) {
+        arr.push({ id: coDomain, label: labelify(coDomain), count });
+      }
+      map.set(domain, arr);
+    }
+  }
+  return map;
 }
 
 function FacetValueCard({ value, facetId }: { value: FacetCount; facetId: string }) {
@@ -200,6 +193,12 @@ export default async function TopicsPage() {
     return { groups: [] as FacetGroup[], totalBooks: 0 };
   });
 
+  // Cross-tab is optional — don't let it block the page
+  const crossTab = await fetchDomainCrossTab().catch((err) => {
+    console.error('Cross-tab fetch failed (non-fatal):', err?.message);
+    return new Map<string, SubDomain[]>();
+  });
+
   return (
     <ContentPageLayout
       header={
@@ -220,9 +219,23 @@ export default async function TopicsPage() {
               <p className="text-sm text-muted mt-1">{group.question}</p>
             </div>
 
-            {/* Domain facet: render with sub-groups */}
+            {/* Domain facet: treemap only */}
             {group.id === 'domain' ? (
-              <DomainGroupedGrid values={group.values} facetId={group.id} />
+              <DomainTreemap
+                  domains={group.values
+                    .filter(v => v.count > 0)
+                    .map(v => {
+                      const dg = DOMAIN_GROUPS.find(g => g.domains.includes(v.id));
+                      return {
+                        id: v.id,
+                        label: v.label,
+                        count: v.count,
+                        groupId: dg?.id || 'reference',
+                        groupLabel: dg?.label || 'Other',
+                      };
+                    })}
+                  totalBooks={totalBooks}
+                />
             ) : (
               <FacetGrid values={group.values} facetId={group.id} />
             )}

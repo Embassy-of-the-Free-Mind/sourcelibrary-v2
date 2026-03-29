@@ -1,6 +1,5 @@
 // Route segment config - completely disable caching
 export const dynamic = 'force-dynamic';
-export const revalidate = 0;
 export const fetchCache = 'force-no-store';
 export const maxDuration = 180; // 3 minutes for JP2 conversion
 

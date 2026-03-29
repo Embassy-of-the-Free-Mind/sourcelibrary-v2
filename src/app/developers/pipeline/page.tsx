@@ -11,7 +11,9 @@ export const metadata: Metadata = {
   alternates: { canonical: '/developers/pipeline' },
 };
 
+// ISR: rebuild every 6 hours. Allow 60s for first-hit generation.
 export const dynamic = 'force-dynamic';
+export const maxDuration = 60;
 
 /* ── Data fetching ── */
 
@@ -45,28 +47,24 @@ async function getPipelineStats() {
     const db = await getDb();
     const books = db.collection('books');
 
-    const [funnel, pageAgg, totalBooks] = await Promise.all([
+    const maxTimeMS = 45000;
+    // Use indexed pipeline_auto.status query + pre-computed snapshot for page totals
+    const [funnel, snapshot] = await Promise.all([
       books
         .aggregate([
           { $match: { 'pipeline_auto.status': { $exists: true } } },
           { $group: { _id: '$pipeline_auto.status', count: { $sum: 1 } } },
           { $sort: { count: -1 } },
-        ])
+        ], { maxTimeMS })
         .toArray(),
-      books
-        .aggregate([
-          {
-            $group: {
-              _id: null,
-              pages: { $sum: '$pages_count' },
-              ocr: { $sum: '$pages_ocr' },
-              translated: { $sum: '$pages_translated' },
-            },
-          },
-        ])
-        .toArray(),
-      books.countDocuments({ hidden: { $ne: true } }),
+      db.collection('system_config').findOne(
+        { _id: 'dashboard_snapshot' as unknown as import('mongodb').ObjectId }
+      ),
     ]);
+
+    const snap = snapshot?.data as Record<string, Record<string, number>> | undefined;
+    const pageAgg = [{ pages: snap?.coverage?.ocr_pages ?? 0, ocr: snap?.coverage?.ocr_pages ?? 0, translated: snap?.coverage?.translated_pages ?? 0 }];
+    const totalBooks = snap?.canon?.total_books ?? 0;
 
     const agg = pageAgg[0] || { pages: 0, ocr: 0, translated: 0 };
 

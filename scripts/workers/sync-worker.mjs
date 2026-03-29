@@ -437,44 +437,77 @@ async function run() {
 
   let countsResult = {};
   let galleryResult = {};
+  const phaseErrors = [];
+  const phasesCompleted = [];
 
   if (!GALLERY_ONLY) {
-    countsResult = await syncPageCounts(db);
+    try {
+      countsResult = await syncPageCounts(db);
+      phasesCompleted.push('counts');
+    } catch (err) {
+      console.error(`[sync-worker] Page counts phase FAILED: ${err.message}`);
+      phaseErrors.push({ phase: 'counts', error: err.message });
+    }
   }
 
   if (!COUNTS_ONLY) {
-    galleryResult = await syncGalleryImages(db);
+    try {
+      galleryResult = await syncGalleryImages(db);
+      phasesCompleted.push('gallery');
+    } catch (err) {
+      console.error(`[sync-worker] Gallery sync phase FAILED: ${err.message}`);
+      phaseErrors.push({ phase: 'gallery', error: err.message });
+    }
   }
 
   // Always sync author slugs (fast, no flag needed)
-  await syncAuthorSlugs(db);
+  try {
+    await syncAuthorSlugs(db);
+    phasesCompleted.push('author_slugs');
+  } catch (err) {
+    console.error(`[sync-worker] Author slugs phase FAILED: ${err.message}`);
+    phaseErrors.push({ phase: 'author_slugs', error: err.message });
+  }
 
   // Refresh analytics snapshot (cursor-based, ~3 min)
   if (!GALLERY_ONLY) {
-    await refreshAnalyticsSnapshot(db);
+    try {
+      await refreshAnalyticsSnapshot(db);
+      phasesCompleted.push('analytics_snapshot');
+    } catch (err) {
+      console.error(`[sync-worker] Analytics snapshot phase FAILED: ${err.message}`);
+      phaseErrors.push({ phase: 'analytics_snapshot', error: err.message });
+    }
   }
 
   const duration = Date.now() - startTime;
+  const hasErrors = phaseErrors.length > 0;
 
-  console.log(`\n=== SYNC COMPLETE (${(duration / 1000).toFixed(1)}s) ===`);
+  console.log(`\n=== SYNC ${hasErrors ? 'PARTIAL' : 'COMPLETE'} (${(duration / 1000).toFixed(1)}s) ===`);
+  if (hasErrors) {
+    console.log(`  Completed phases: ${phasesCompleted.join(', ')}`);
+    console.log(`  Failed phases: ${phaseErrors.map(e => e.phase).join(', ')}`);
+  }
 
-  // Write cron_runs record
+  // Write cron_runs record (always, even on partial failure)
   if (!DRY_RUN) {
     await db.collection('cron_runs').insertOne({
       cron: 'sync-worker',
       timestamp: new Date(),
       duration_ms: duration,
-      status: 'success',
-      failed: false,
+      status: hasErrors ? 'partial_failure' : 'success',
+      failed: hasErrors,
+      phases_completed: phasesCompleted,
+      phases_failed: phaseErrors.map(e => e.phase),
       actions: {
         ...countsResult,
         gallery_synced: galleryResult.synced || 0,
         gallery_books_updated: galleryResult.books_updated || 0,
         gallery_orphans_removed: galleryResult.orphans_removed || 0,
       },
-      errors: [],
-      error_count: 0,
-      summary: `Counts: ${countsResult.mismatches || 0} mismatches, ${countsResult.updated || 0} updated. Gallery: ${galleryResult.synced || 0} pages synced. Analytics snapshot refreshed.`,
+      errors: phaseErrors,
+      error_count: phaseErrors.length,
+      summary: `Counts: ${countsResult.mismatches || 0} mismatches, ${countsResult.updated || 0} updated. Gallery: ${galleryResult.synced || 0} pages synced.${hasErrors ? ` FAILED: ${phaseErrors.map(e => e.phase).join(', ')}` : ' Analytics snapshot refreshed.'}`,
     }).catch(() => {});
   }
 

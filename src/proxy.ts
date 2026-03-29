@@ -16,7 +16,7 @@ const BLOCKED_BOT_PATTERNS = [
   'CCBot', 'Bytespider', 'Diffbot', 'Omgilibot', 'FacebookBot',
   'PetalBot', 'SemrushBot', 'AhrefsBot', 'MJ12bot', 'DotBot',
   'BLEXBot', 'DataForSeoBot', 'serpstatbot', 'Seekport',
-  'MegaIndex', 'Linguee', 'YandexBot',
+  'MegaIndex', 'Linguee', 'YandexBot', 'Amazonbot',
 ];
 
 const BLOCKED_BOT_RE = new RegExp(BLOCKED_BOT_PATTERNS.join('|'), 'i');
@@ -126,6 +126,29 @@ function checkLimit(key: string, limit: number, windowSeconds: number): boolean 
   return entry.count <= limit;
 }
 
+/**
+ * Fire-and-forget bot access logging. Sends a POST to the internal
+ * analytics endpoint — never awaited, never blocks the response.
+ */
+function logBotAccess(request: NextRequest, action: string) {
+  try {
+    const ua = request.headers.get('user-agent') || '';
+    const ip = getClientIp(request);
+    const origin = request.nextUrl.origin;
+    // Don't log our own analytics/cron/health endpoints
+    const path = request.nextUrl.pathname;
+    if (path.startsWith('/api/analytics') || path.startsWith('/api/cron')) return;
+
+    fetch(`${origin}/api/analytics/bots`, {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify({ userAgent: ua, path, action, ip }),
+    }).catch(() => {}); // swallow errors
+  } catch {
+    // never throw from logging
+  }
+}
+
 export function proxy(request: NextRequest) {
   const { pathname } = request.nextUrl;
 
@@ -142,6 +165,7 @@ export function proxy(request: NextRequest) {
 
   // Hard block: bots explicitly forbidden in robots.txt
   if (BLOCKED_BOT_RE.test(ua)) {
+    logBotAccess(request, 'blocked');
     return new NextResponse(BOT_RESPONSE, {
       status: 403,
       headers: { 'Content-Type': 'text/plain; charset=utf-8', 'X-Robots-Tag': 'noindex, nofollow' },
@@ -186,7 +210,9 @@ export function proxy(request: NextRequest) {
   if (pathname.startsWith('/api/') && !pathname.startsWith('/api/cron/')) {
     if (looksLikeBot(request)) {
       const ip = getClientIp(request);
+      logBotAccess(request, 'api-bot');
       if (!checkLimit(`${ip}:bot`, 10, 60)) {
+        logBotAccess(request, 'rate-limited');
         return new NextResponse(BOT_RESPONSE, {
           status: 429,
           headers: {

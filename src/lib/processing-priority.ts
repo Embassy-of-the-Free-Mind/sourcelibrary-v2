@@ -265,22 +265,24 @@ function scoreIllustrations(book: {
 // Shorter books give faster ROI. Sweet spot: 50-500 pages.
 // Very long books (1000+) still valuable but lower priority per-dollar.
 
-function scoreEfficiency(pagesCount: number | undefined, pagesOcr: number | undefined, pagesTranslated: number | undefined): { score: number; reasoning: string } {
+function scoreEfficiency(pagesCount: number | undefined, pagesOcr: number | undefined, pagesTranslated: number | undefined, pagesBlank: number | undefined): { score: number; reasoning: string } {
   const pages = pagesCount || 0;
+  const blank = pagesBlank || 0;
+  const denom = Math.max(pages - blank, 1);
 
   if (pages === 0) return { score: 3, reasoning: 'Unknown page count' };
 
   // Already fully translated — no processing needed, lowest priority
   const translated = pagesTranslated || 0;
-  if (pages > 0 && translated >= pages) {
+  if (pages > 0 && translated >= denom) {
     return { score: 0, reasoning: 'Fully translated' };
   }
 
   // Already partially processed — boost to finish what we started
   const ocr = pagesOcr || 0;
   let partialBonus = 0;
-  if (ocr > 0 && translated < pages) {
-    const ocrPct = ocr / pages;
+  if (ocr > 0 && translated < denom) {
+    const ocrPct = ocr / denom;
     if (ocrPct > 0.5) partialBonus = 2;
     else if (ocrPct > 0) partialBonus = 1;
   }
@@ -327,6 +329,7 @@ export function computeProcessingPriority(book: {
   pages_count?: number;
   pages_ocr?: number;
   pages_translated?: number;
+  pages_blank?: number;
   wikidata_id?: string;
   wikidata_match?: { confidence?: string };
   read_count?: number;
@@ -343,7 +346,7 @@ export function computeProcessingPriority(book: {
   const scan = scoreScanQuality(book);
   const scholarly = scoreScholarlySignal(book);
   const illustrations = scoreIllustrations(book);
-  const efficiency = scoreEfficiency(book.pages_count, book.pages_ocr, book.pages_translated);
+  const efficiency = scoreEfficiency(book.pages_count, book.pages_ocr, book.pages_translated, book.pages_blank);
 
   const score = Math.min(100,
     subject.score + language.score + scan.score + scholarly.score + illustrations.score + efficiency.score

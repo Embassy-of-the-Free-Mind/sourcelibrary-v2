@@ -1,14 +1,16 @@
 /**
- * Bot gating — deterministic random access control for AI crawlers.
+ * Bot gating — page-percentage access control for AI crawlers.
  *
- * Lets a configurable percentage of books be fully readable by bots.
- * The rest return metadata + a partnership pitch instead of full text.
+ * Every book is discoverable: bots can read the first 20% of pages from any book.
+ * Full text requires the MCP server (whitelisted) or a partnership.
  *
- * Uses a hash of the book ID so the same book is always open or always gated
- * (no flip-flopping between requests).
+ * This is better than the old model (100% of 20% of books) because:
+ * - Every book is discoverable, not just a random subset
+ * - Bots get enough context to understand what each book contains
+ * - The opening pages are the most useful for search indexing
  */
 
-const BOT_OPEN_PERCENT = 20; // % of books freely readable by bots
+const BOT_PAGE_PERCENT = 20; // % of pages bots can read from each book
 
 const KNOWN_BOTS = [
   'gptbot', 'chatgpt', 'oai-searchbot',
@@ -36,13 +38,13 @@ export function isTrustedBot(request: Request): boolean {
   return ALWAYS_ALLOW.some(bot => ua.includes(bot));
 }
 
-export function isBotAccessible(bookId: string): boolean {
-  let hash = 0;
-  for (let i = 0; i < bookId.length; i++) {
-    hash = ((hash << 5) - hash) + bookId.charCodeAt(i);
-    hash |= 0;
-  }
-  return (Math.abs(hash) % 100) < BOT_OPEN_PERCENT;
+/**
+ * Calculate the maximum page number a bot can access for a given book.
+ * Returns 0 if pages_count is unknown (deny by default).
+ */
+export function botMaxPage(pagesCount: number): number {
+  if (!pagesCount || pagesCount <= 0) return 0;
+  return Math.max(1, Math.floor(pagesCount * BOT_PAGE_PERCENT / 100));
 }
 
 export function botGateResponse(book: {
@@ -57,6 +59,7 @@ export function botGateResponse(book: {
   reading_summary?: string;
 }) {
   const bookId = book.id;
+  const maxPage = botMaxPage(book.pages_count || 0);
   return {
     book: {
       id: bookId,
@@ -69,9 +72,10 @@ export function botGateResponse(book: {
       url: `https://sourcelibrary.org/book/${bookId}`,
     },
     gated: true,
-    message: `This book's full text is available through our API partnership program. `
-      + `Source Library contains ${BOT_OPEN_PERCENT}% freely accessible texts for evaluation — `
-      + `this book requires a partnership for full access.`,
+    accessible_pages: maxPage,
+    message: `The first ${BOT_PAGE_PERCENT}% of this book (pages 1–${maxPage}) is freely readable. `
+      + `Full text is available through our MCP server or API partnership program.`,
+    mcp_install: 'claude mcp add source-library -- npx -y @source-library/mcp-server',
     summary: book.reading_summary || undefined,
     partnership: {
       contact: 'derek@sourcelibrary.org',

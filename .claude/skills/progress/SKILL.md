@@ -16,7 +16,26 @@ Also remind the user: full pipeline dashboard is live at https://sourcelibrary.o
 3. **Spot-check actual pages.** For any "processing" job, check if its pages actually have `translation.data` or `ocr.data`. This is ground truth.
 4. **Flag stale jobs explicitly.** Any job in `processing` for >2 hours with 0 progress is stuck. Say so clearly.
 
-## What to Check
+## Snapshot-First Approach (PREFERRED)
+
+A pre-computed snapshot exists at `system_config._id: 'enrichment_snapshot'` (updated every 2h by Hetzner cron). **Always try this first** — it's a single document read vs 15+ slow aggregations.
+
+```javascript
+const snapshot = await db.collection('system_config').findOne({ _id: 'enrichment_snapshot' });
+```
+
+If the snapshot exists and `computed_at` is within the last 3 hours, use it directly. Display the `computed_at` timestamp so the user knows how fresh the data is.
+
+The snapshot contains: `funnel`, `enrichment`, `milestones`, `gallery`, `active_jobs`, `stuck_jobs`, `throughput`, `paused`, `paused_phases`, and `computation_ms`.
+
+**Only fall back to live queries** if:
+- The snapshot doesn't exist
+- The snapshot is older than 3 hours
+- The user explicitly asks for "live" or "fresh" data
+
+For live queries, prefer running the enrichment-snapshot script directly (`node scripts/workers/enrichment-snapshot.mjs`) rather than inline queries — it writes the snapshot and you can read it back.
+
+## What to Check (Live Fallback)
 
 Run a single MongoDB script that reports ALL of the following. Use `set -a; source .env.production.local; set +a; node -e "..."` to run.
 
@@ -62,7 +81,7 @@ const enrichment = await db.collection('books').aggregate([
     has_quality_score: { $sum: { $cond: [{ $ifNull: ['$quality_score', false] }, 1, 0] } },
     has_faceted_tags: { $sum: { $cond: [{ $ifNull: ['$faceted_tags', false] }, 1, 0] } },
     has_author_entity: { $sum: { $cond: [{ $ifNull: ['$author_entity_id', false] }, 1, 0] } },
-    fully_translated: { $sum: { $cond: [{ $and: [{ $gt: ['$pages_translated', 0] }, { $gte: ['$pages_translated', '$pages_count'] }] }, 1, 0] } },
+    fully_translated: { $sum: { $cond: [{ $and: [{ $gt: ['$pages_translated', 0] }, { $gte: ['$pages_translated', { $subtract: [{ $ifNull: ['$pages_ocr', 0] }, { $ifNull: ['$pages_blank', 0] }] }] }] }, 1, 0] } },
     pipeline_complete: { $sum: { $cond: [{ $eq: ['$pipeline_auto.status', 'complete'] }, 1, 0] } },
   }}
 ]).toArray();
@@ -82,7 +101,7 @@ const near90 = await db.collection('books').countDocuments({
   status: { $ne: 'deleted' },
   pages_count: { $gt: 0 },
   pages_translated: { $gt: 0 },
-  $expr: { $gte: ['$pages_translated', { $multiply: ['$pages_count', 0.9] }] }
+  $expr: { $gte: ['$pages_translated', { $multiply: [{ $subtract: [{ $ifNull: ['$pages_ocr', 0] }, { $ifNull: ['$pages_blank', 0] }] }, 0.9] }] }
 });
 console.log(`>90% translated: ${near90}`);
 ```

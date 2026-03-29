@@ -2,7 +2,7 @@ import { getDb } from '@/lib/mongodb';
 import type { PageProcessingMessage } from '@/lib/types/sqs';
 import type { TranslationWriteResult, GeminiUsagePayload } from '@/lib/types/sqs';
 import { performTranslation } from '@/lib/ai';
-import { DEFAULT_MODEL, PROMPT_VERSION, getModelForBook } from '@/lib/types';
+import { DEFAULT_MODEL, getModelForBook } from '@/lib/types';
 import { SKIP_TRANSLATION_PAGE_TYPES, extractPageType } from '@/lib/types/prompts/defaults';
 import { classifyError } from '@/lib/errors';
 import { extractTranslationMetadata, propagateOcrWarnings } from '@/lib/translation-metadata';
@@ -10,7 +10,8 @@ import { createRevision } from '@/lib/page-revisions';
 import { sendWriteResult } from '@/lib/sqs-client';
 import { retryDbWrite } from '@/lib/retry-utils';
 import { contentHash } from '@/lib/steganographia';
-import { promptContentHash } from '@/lib/prompts';
+import { getTranslationPrompt } from '@/lib/prompts';
+import type { PromptReference } from '@/lib/types';
 
 /**
  * Translation Processor - processes one page at a time
@@ -33,7 +34,7 @@ import { promptContentHash } from '@/lib/prompts';
 function buildUsagePayload(
   opts: { model: string; bookId: string; pageId: string; jobId: string; durationMs: number;
     inputTokens: number; outputTokens: number; status: 'success' | 'failed';
-    errorMessage?: string; errorCategory?: string }
+    errorMessage?: string; errorCategory?: string; promptRef?: PromptReference }
 ): GeminiUsagePayload {
   return {
     type: 'translation',
@@ -48,7 +49,7 @@ function buildUsagePayload(
     ...(opts.errorCategory && { error_category: opts.errorCategory }),
     job_id: opts.jobId,
     duration_ms: opts.durationMs,
-    prompt_version: PROMPT_VERSION,
+    prompt_version: opts.promptRef ? `v${opts.promptRef.version}` : 'unknown',
     endpoint: 'worker/translation',
   };
 }
@@ -164,6 +165,16 @@ export async function processTranslationPage(message: PageProcessingMessage) {
   const modelId = job.config.model || getModelForBook(bookDoc as { image_source?: { provider?: string } } | null) || DEFAULT_MODEL;
   const startTime = Date.now();
 
+  // Resolve the translation prompt from DB (source of truth for prompt content + version)
+  const sourceLanguage = job.config.language || 'Latin';
+  const promptLookup = await getTranslationPrompt(
+    sourceLanguage,
+    'English',
+    customPrompt ? { customText: customPrompt } : undefined
+  );
+  const promptRef = promptLookup.reference;
+  console.log(`[TRANS] Using prompt "${promptRef.name}" v${promptRef.version} (hash: ${promptRef.content_hash || 'n/a'})`);
+
   // Snapshot manually-edited content before overwriting
   try {
     await createRevision(pageId, 'translation', jobId);
@@ -185,13 +196,13 @@ export async function processTranslationPage(message: PageProcessingMessage) {
       }
     }
 
-    // Translate with custom prompt if provided
+    // Pass the DB-resolved prompt text as customPrompt so performTranslation uses it
     const translationResult = await performTranslation(
       page.ocr.data,
-      job.config.language || 'Latin',
+      sourceLanguage,
       'English',
       context ?? undefined,
-      customPrompt,
+      promptLookup.text,
       modelId,
       bookContext
     );
@@ -204,11 +215,6 @@ export async function processTranslationPage(message: PageProcessingMessage) {
     // DIRECT WRITE: Save translation to page — required for FIFO context chain.
     // The next page in the queue reads this translation for continuity.
     const translationMeta = extractTranslationMetadata(finalTranslation);
-    // Compute prompt hash from the actual prompt used (for provenance)
-    const isEnglish = (job.config.language || 'Latin').toLowerCase() === 'english';
-    const { ENGLISH_MODERNIZATION_PROMPT: engPrompt, DEFAULT_PROMPTS } = await import('@/lib/types');
-    const effectivePrompt = customPrompt || (isEnglish ? engPrompt : DEFAULT_PROMPTS.translation);
-    const transPromptHash = promptContentHash(effectivePrompt);
     await retryDbWrite(() => pages.updateOne(
       { id: pageId },
       {
@@ -220,8 +226,10 @@ export async function processTranslationPage(message: PageProcessingMessage) {
             model: modelId,
             updated_at: new Date(),
             source: 'ai',
-            prompt_version: PROMPT_VERSION,
-            prompt_hash: transPromptHash,
+            prompt_version: `v${promptRef.version}`,
+            prompt_hash: promptRef.content_hash,
+            prompt_id: promptRef.id,
+            prompt_name: promptRef.name,
           },
           ...translationMeta,
           updated_at: new Date()
@@ -240,6 +248,7 @@ export async function processTranslationPage(message: PageProcessingMessage) {
         inputTokens: translationResult.usage.inputTokens,
         outputTokens: translationResult.usage.outputTokens,
         status: 'success',
+        promptRef,
       }),
     });
 
@@ -260,6 +269,7 @@ export async function processTranslationPage(message: PageProcessingMessage) {
         model: modelId, bookId, pageId, jobId, durationMs,
         inputTokens: 0, outputTokens: 0, status: 'failed',
         errorMessage: classified.message, errorCategory: classified.category,
+        promptRef,
       }),
     });
   }

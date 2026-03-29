@@ -437,14 +437,9 @@ export default function EmbassyPage() {
                 )}
               </div>
 
-              {/* Profile + links */}
+              {/* Quick links */}
               <div className="mt-6 pt-4 border-t border-[#e8e4dc]">
                 <div className="space-y-2">
-                  {isSignedIn && (
-                    <Link href="/embassy/profile/edit" className="block text-sm text-[#444] hover:text-[#9e4a3a] transition-colors font-body">
-                      Your Profile
-                    </Link>
-                  )}
                   <Link href="/ficino-society" className="block text-sm text-[#444] hover:text-[#9e4a3a] transition-colors font-body">
                     The Ficino Society
                   </Link>

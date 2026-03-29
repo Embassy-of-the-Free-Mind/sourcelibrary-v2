@@ -2,7 +2,9 @@ import { Metadata } from 'next';
 import Link from 'next/link';
 import { getDb } from '@/lib/mongodb';
 
-export const revalidate = 600; // 10 min — stats change rarely
+// ISR: rebuild every 6 hours. Allow 60s for first-hit generation.
+export const revalidate = 21600;
+export const maxDuration = 60;
 
 export const metadata: Metadata = {
   title: 'Participate - Source Library',
@@ -15,19 +17,20 @@ export const metadata: Metadata = {
 async function getStats() {
   try {
     const db = await getDb();
-    const [totalBooks, translatedCount, totalPages, galleryCount, languageResult] = await Promise.all([
-      db.collection('books').countDocuments({ pages_translated: { $gt: 0 } }),
-      db.collection('books').countDocuments({ pages_translated: { $gt: 0 } }),
+    // Use fast queries: estimatedDocumentCount + dashboard_snapshot (avoid distinct + countDocuments)
+    const [snapshot, totalPages, galleryCount] = await Promise.all([
+      db.collection('system_config').findOne({ _id: 'dashboard_snapshot' as unknown as import('mongodb').ObjectId }),
       db.collection('pages').estimatedDocumentCount(),
       db.collection('gallery_images').estimatedDocumentCount(),
-      db.collection('books').distinct('language'),
     ]);
+    const snap = snapshot?.data as Record<string, Record<string, number>> | undefined;
+    const totalBooks = snap?.canon?.total_books ?? 0;
     return {
       totalBooks,
-      translatedCount,
+      translatedCount: snap?.canon?.readable_books ?? totalBooks,
       totalPages,
       galleryCount,
-      languageCount: languageResult.filter(Boolean).length,
+      languageCount: 90, // approximate — avoids slow distinct() on 28K docs
     };
   } catch {
     return { totalBooks: 0, translatedCount: 0, totalPages: 0, galleryCount: 0, languageCount: 0 };
