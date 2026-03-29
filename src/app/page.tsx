@@ -12,8 +12,8 @@ import Image from 'next/image';
 import Link from 'next/link';
 
 // ISR: serve cached HTML, revalidate in background every 60 seconds.
-// Short revalidation so stale fallback data (from DB stress) doesn't persist long.
-export const dynamic = 'force-dynamic';
+// The homepage uses $sample for randomness — content rotates every revalidation cycle.
+export const revalidate = 60;
 export const maxDuration = 60;
 
 // ---------- Book projection shared across queries ----------
@@ -335,55 +335,6 @@ async function getBookCounts(): Promise<{ totalBooks: number; translatedToEnglis
   return FALLBACK_COUNTS;
 }
 
-/**
- * Prefetch browse results for the two homepage link targets so the search page
- * can render instantly on click. Data is injected as window.__BROWSE_PREFETCH.
- */
-async function prefetchBrowseData(): Promise<Record<string, { books: any[]; total: number }>> {
-  const db = await getDb();
-  const baseMatch = [
-    { hidden: { $ne: true } },
-    { pages_count: { $gt: 0 } },
-    { pages_archived: { $gt: 0 } },
-  ];
-  const projection = {
-    _id: 0, id: { $ifNull: ['$id', { $toString: '$_id' }] }, slug: 1, title: 1,
-    display_title: 1, author: 1, thumbnail: 1, thumbnail_blob: 1, language: 1,
-    published: 1, pages_count: 1, pages_ocr: 1, pages_translated: 1,
-    translation_percent: { $ifNull: ['$translation_percent', 0] },
-    is_first_translation: 1, last_processed: { $ifNull: ['$updated_at', '$created_at'] },
-    last_translation_at: { $ifNull: ['$last_translation_at', null] },
-  };
-  const sort = { is_bph_translated: -1 as const, quality_score: -1 as const, has_translations: -1 as const, last_translation_at: -1 as const, last_processed: -1 as const, title: 1 as const };
-  const limit = 20;
-
-  const queries = {
-    'has_translation': [...baseMatch, { pages_translated: { $gt: 0 } }],
-    'first_translation': [...baseMatch, { is_first_translation: true }],
-  };
-
-  const results: Record<string, { books: any[]; total: number }> = {};
-  await Promise.all(Object.entries(queries).map(async ([key, match]) => {
-    try {
-      const [result] = await db.collection('books').aggregate([
-        { $match: { $and: match } },
-        { $addFields: {
-          id: { $ifNull: ['$id', { $toString: '$_id' }] },
-          has_translations: { $cond: { if: { $gt: ['$last_translation_at', null] }, then: 1, else: 0 } },
-          is_bph_translated: { $cond: { if: { $and: [{ $eq: ['$image_source.provider', 'bph'] }, { $gt: ['$pages_count', 0] }, { $gte: [{ $multiply: [{ $divide: ['$pages_translated', { $max: ['$pages_count', 1] }] }, 100] }, 90] }] }, then: 1, else: 0 } },
-          quality_score: { $ifNull: ['$quality_score', 0] },
-        }},
-        { $sort: sort },
-        { $facet: { books: [{ $limit: limit }, { $project: projection }], total: [{ $count: 'count' }] } },
-      ], { maxTimeMS: 10000 }).toArray();
-      results[key] = { books: result.books || [], total: result.total[0]?.count || 0 };
-    } catch {
-      // Non-critical — search page will fetch normally
-    }
-  }));
-  return results;
-}
-
 // ---------- Hardcoded fallback data (DB resilience) ----------
 // Used when MongoDB is unreachable. Same pattern as getBookCounts().
 // Last updated: 2026-03-17 from production DB (post-curation: only translated, pre-1930 books visible).
@@ -479,25 +430,16 @@ const BLOG_POSTS = [
 // ---------- Page ----------
 
 export default async function HomePage() {
-  const [featuredItems, discoverBooks, showcase, counts, collections, browsePrefetch] = await Promise.all([
+  const [featuredItems, discoverBooks, showcase, counts, collections] = await Promise.all([
     withTimeout(getFeaturedCollections(), 20000, []),
     withTimeout(getDiscoverBooks(), 20000, FALLBACK_DISCOVER_BOOKS),
     withTimeout(getCollectionShowcase(), 20000, []),
     getBookCounts(),
     withTimeout(getRemainingCollections(), 20000, SORTED_FALLBACK_COLLECTIONS),
-    withTimeout(prefetchBrowseData(), 10000, {}),
   ]);
 
   return (
     <>
-      {/* Prefetched browse data for instant search page loads */}
-      {Object.keys(browsePrefetch).length > 0 && (
-        <script
-          dangerouslySetInnerHTML={{
-            __html: `window.__BROWSE_PREFETCH=${JSON.stringify(browsePrefetch)};window.__BROWSE_PREFETCH_TS=${Date.now()};`,
-          }}
-        />
-      )}
       <div className="min-h-screen">
         <HomePageSchema books={discoverBooks} bookCount={counts.totalBooks} translatedCount={counts.translatedToEnglish} />
 
