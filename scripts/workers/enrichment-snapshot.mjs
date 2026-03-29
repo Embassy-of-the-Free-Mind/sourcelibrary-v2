@@ -43,7 +43,7 @@ async function run() {
       has_quality_score: { $sum: { $cond: [{ $ifNull: ['$quality_score', false] }, 1, 0] } },
       has_faceted_tags: { $sum: { $cond: [{ $ifNull: ['$faceted_tags', false] }, 1, 0] } },
       has_author_entity: { $sum: { $cond: [{ $ifNull: ['$author_entity_id', false] }, 1, 0] } },
-      fully_translated: { $sum: { $cond: [{ $and: [{ $gt: ['$pages_translated', 0] }, { $gte: ['$pages_translated', '$pages_count'] }] }, 1, 0] } },
+      fully_translated: { $sum: { $cond: [{ $and: [{ $gt: ['$pages_translated', 0] }, { $gte: ['$pages_translated', { $subtract: ['$pages_count', { $ifNull: ['$pages_blank', 0] }] }] }] }, 1, 0] } },
       pipeline_complete: { $sum: { $cond: [{ $eq: ['$pipeline_auto.status', 'complete'] }, 1, 0] } },
     }}
   ]).toArray();
@@ -53,7 +53,7 @@ async function run() {
   const first_translations = await db.collection('books').countDocuments({ is_first_translation: true });
   const over_90_pct = await db.collection('books').countDocuments({
     status: { $ne: 'deleted' }, pages_count: { $gt: 0 }, pages_translated: { $gt: 0 },
-    $expr: { $gte: ['$pages_translated', { $multiply: ['$pages_count', 0.9] }] }
+    $expr: { $gte: ['$pages_translated', { $multiply: [{ $subtract: ['$pages_count', { $ifNull: ['$pages_blank', 0] }] }, 0.9] }] }
   });
   console.log(`  milestones: ${first_translations} first translations, ${over_90_pct} >90%`);
 

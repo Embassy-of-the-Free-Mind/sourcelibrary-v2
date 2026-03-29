@@ -164,7 +164,38 @@ async function run() {
     }
   }
 
-  // 6. Quick stats
+  // 6. Sync-worker phase completion check
+  // Verify that the last sync-worker run completed ALL phases (not just ran)
+  const lastSync = await db.collection('cron_runs')
+    .findOne({ cron: 'sync-worker' }, { sort: { timestamp: -1 } });
+  if (lastSync) {
+    const syncAge = now - lastSync.timestamp;
+    const syncAgeHours = syncAge / (60 * 60 * 1000);
+    if (syncAgeHours > 14) {
+      alerts.push({
+        level: 'warning',
+        check: 'sync_worker_stale',
+        message: `Last sync-worker run was ${syncAgeHours.toFixed(1)}h ago. Should run every 6h.`,
+      });
+    }
+    if (lastSync.failed || lastSync.status === 'partial_failure') {
+      const failedPhases = lastSync.phases_failed || lastSync.errors?.map(e => e.phase) || ['unknown'];
+      alerts.push({
+        level: 'critical',
+        check: 'sync_worker_partial_failure',
+        message: `Last sync-worker run had failed phases: ${failedPhases.join(', ')}. ${lastSync.errors?.map(e => `${e.phase}: ${e.error}`).join('; ') || ''}`,
+      });
+    }
+    console.log(`[health] Sync-worker: last run ${syncAgeHours.toFixed(1)}h ago, status=${lastSync.status || 'success'}, phases=${lastSync.phases_completed?.join(',') || 'unknown'}`);
+  } else {
+    alerts.push({
+      level: 'warning',
+      check: 'sync_worker_missing',
+      message: 'No sync-worker cron_runs record found. Worker may never have run.',
+    });
+  }
+
+  // 7. Quick stats
   const ocrSubmitted = await db.collection('books').countDocuments({
     'pipeline_auto.status': 'ocr_submitted',
   });
