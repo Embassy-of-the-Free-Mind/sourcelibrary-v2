@@ -5,7 +5,9 @@ import ContentPageLayout, { ContentHeader } from '@/components/layout/ContentPag
 import type { Metadata } from 'next';
 import { FACETS, DOMAIN_GROUPS, facetDbField } from '@/lib/taxonomy/faceted-vocabulary';
 
-export const dynamic = 'force-dynamic';
+// ISR: rebuild every 6 hours. Allow 60s for first-hit generation.
+export const revalidate = 21600;
+export const maxDuration = 60;
 
 export const metadata: Metadata = {
   title: 'Browse by Topic | Source Library',
@@ -33,85 +35,43 @@ interface FacetGroup {
 
 async function fetchFacetCounts(): Promise<{ groups: FacetGroup[]; totalBooks: number }> {
   const db = await getDb();
+  const maxTimeMS = 45000;
 
-  const totalBooks = await db.collection('books').countDocuments({
-    faceted_tags: { $exists: true },
-    hidden: { $ne: true },
-  });
+  const baseMatch = { faceted_tags: { $exists: true }, hidden: { $ne: true } };
 
-  const groups: FacetGroup[] = [];
-
-  for (const facet of FACETS) {
-    const pipeline = [
-      {
-        $match: {
-          faceted_tags: { $exists: true },
-          hidden: { $ne: true },
-        },
-      },
-      { $unwind: `$faceted_tags.${facetDbField(facet)}` },
-      {
-        $group: {
-          _id: `$faceted_tags.${facetDbField(facet)}`,
-          count: { $sum: 1 },
-          thumbnails: {
-            $push: {
-              $cond: [
-                {
-                  $and: [
-                    { $ne: ['$thumbnail_blob', null] },
-                    { $ne: ['$thumbnail_blob', ''] },
-                  ],
-                },
-                '$thumbnail_blob',
-                {
-                  $cond: [
-                    {
-                      $and: [
-                        { $ne: ['$thumbnail', null] },
-                        { $ne: ['$thumbnail', ''] },
-                        {
-                          $regexMatch: {
-                            input: { $ifNull: ['$thumbnail', ''] },
-                            regex: /^https?:\/\//,
-                          },
-                        },
-                      ],
-                    },
-                    '$thumbnail',
-                    '$$REMOVE',
-                  ],
-                },
-              ],
-            },
+  // Run all facet aggregations in parallel instead of sequentially
+  const [totalBooks, ...facetResults] = await Promise.all([
+    db.collection('books').countDocuments(baseMatch, { maxTimeMS }),
+    ...FACETS.map(facet =>
+      db.collection('books').aggregate([
+        { $match: baseMatch },
+        { $unwind: `$faceted_tags.${facetDbField(facet)}` },
+        {
+          $group: {
+            _id: `$faceted_tags.${facetDbField(facet)}`,
+            count: { $sum: 1 },
+            // Skip expensive thumbnail collection — use count only
+            sample_thumb: { $first: '$thumbnail_blob' },
           },
         },
-      },
-      { $sort: { count: -1 as const } },
-    ];
+        { $sort: { count: -1 as const } },
+      ], { maxTimeMS }).toArray()
+    ),
+  ]);
 
-    const results = await db
-      .collection('books')
-      .aggregate(pipeline, { allowDiskUse: true })
-      .toArray();
-
+  const groups: FacetGroup[] = FACETS.map((facet, i) => {
+    const results = facetResults[i];
     const values: FacetCount[] = results.map((r) => {
       const vocabValue = facet.values.find((v) => v.id === r._id);
       return {
         id: r._id as string,
         label: vocabValue?.label || (r._id as string),
         count: r.count,
-        thumbnails: (r.thumbnails || []).filter(Boolean).slice(0, 4),
+        thumbnails: r.sample_thumb ? [r.sample_thumb as string] : [],
       };
     });
-
-    groups.push({
-      id: facet.id,
-      label: facet.label,
-      question: facet.question,
-      values,
-    });
-  }
+    return { id: facet.id, label: facet.label, question: facet.question, values };
+  });
 
   return { groups, totalBooks };
 }
