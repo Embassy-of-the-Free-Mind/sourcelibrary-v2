@@ -24,11 +24,12 @@ export const POST = withAuth(async (request, session) => {
     const dryRun = body.dryRun || false;
     const model: 'gemini' | 'mistral' | 'grounding-dino' = body.model || 'gemini';
 
+    const useGemini = model === 'gemini';
     const extractFn = model === 'mistral'
       ? extractWithMistral
       : model === 'grounding-dino'
         ? extractWithGroundingDino
-        : extractWithGemini;
+        : null; // Gemini handled separately below for usage tracking
 
     const db = await getDb();
 
@@ -90,6 +91,11 @@ export const POST = withAuth(async (request, session) => {
       error?: string;
     }> = [];
 
+    // Track aggregate token usage for Gemini calls
+    let totalInputTokens = 0;
+    let totalOutputTokens = 0;
+    const geminiModelId = body.geminiModel || 'gemini-3-flash-preview';
+
     for (const page of pages) {
       const imageUrl = page.cropped_photo || page.photo_original || page.photo;
       if (!imageUrl) continue;
@@ -99,7 +105,14 @@ export const POST = withAuth(async (request, session) => {
       let error: string | undefined;
 
       try {
-        extractedImages = await extractFn(imageUrl);
+        if (useGemini) {
+          const result = await extractWithGemini(imageUrl, geminiModelId, { returnUsage: true });
+          extractedImages = result.images;
+          totalInputTokens += result.usage.inputTokens;
+          totalOutputTokens += result.usage.outputTokens;
+        } else {
+          extractedImages = await extractFn!(imageUrl);
+        }
 
         // Update the page with extracted images (unless dry run)
         if (!dryRun && extractedImages.length > 0) {
@@ -134,16 +147,16 @@ export const POST = withAuth(async (request, session) => {
     );
 
     // Log Gemini usage (only for gemini model)
-    if (model === 'gemini' && results.length > 0) {
+    if (useGemini && results.length > 0) {
       await logGeminiCall({
         type: 'extract_images',
         mode: 'realtime',
-        model: 'gemini-2.5-flash',
+        model: geminiModelId,
         book_id: bookId || undefined,
         page_ids: results.map(r => r.pageId),
         page_count: results.length,
-        input_tokens: 0, // Not tracked with raw fetch
-        output_tokens: 0,
+        input_tokens: totalInputTokens,
+        output_tokens: totalOutputTokens,
         status: errors > 0 ? 'failed' : 'success',
         endpoint: '/api/extract-images',
       });
