@@ -6,7 +6,7 @@ import { LIBRARY_CATEGORIES, CategoryWithCount } from '@/app/api/categories/rout
 
 // ISR: rebuild every 6 hours. Allow 60s for first-hit generation.
 export const revalidate = 21600;
-export const maxDuration = 90;
+export const maxDuration = 60;
 
 export const metadata: Metadata = {
   title: 'Browse by Category — Source Library',
@@ -27,7 +27,7 @@ async function getCategoriesWithCounts(): Promise<CategoryWithCount[]> {
       { $match: { hidden: { $ne: true }, categories: { $exists: true } } },
       { $unwind: '$categories' },
       { $group: { _id: '$categories', count: { $sum: 1 } } },
-    ], { maxTimeMS: 50000, hint: 'categories_1' }).toArray();
+    ], { maxTimeMS: 30000, hint: 'categories_1' }).toArray();
 
     for (const item of categoryCounts) {
       countMap.set(item._id as string, item.count as number);
