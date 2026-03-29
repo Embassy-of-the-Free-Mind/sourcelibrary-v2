@@ -653,6 +653,194 @@ function headers() {
   };
 }
 
+// ── Inline metadata verification (replaces Vercel POST /api/books/[id]/verify-metadata) ──
+// Searches external_catalog (EFM/IA) and USTC (Supabase) for catalog matches,
+// then applies high-confidence suggestions to fill missing/Unknown fields.
+// No Gemini dependency — pure catalog lookups.
+
+const SUPABASE_URL = 'https://ykhxaecbbxaaqlujuzde.supabase.co';
+const SUPABASE_ANON_KEY = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6InlraHhhZWNiYnhhYXFsdWp1emRlIiwicm9sZSI6ImFub24iLCJpYXQiOjE3NjUwNjExMDEsImV4cCI6MjA4MDYzNzEwMX0.O2chfnHGQWLOaVSFQ-F6UJMlya9EzPbsUh848SEOPj4';
+
+function metaNormalize(text) {
+  if (!text) return '';
+  return text.toLowerCase().replace(/[^\w\s]/g, '').replace(/\s+/g, ' ').trim();
+}
+
+function metaSimilarity(a, b) {
+  const normA = metaNormalize(a);
+  const normB = metaNormalize(b);
+  if (!normA || !normB) return 0;
+  const wordsA = new Set(normA.split(' ').filter(w => w.length > 2));
+  const wordsB = new Set(normB.split(' ').filter(w => w.length > 2));
+  if (wordsA.size === 0 || wordsB.size === 0) return 0;
+  const intersection = [...wordsA].filter(w => wordsB.has(w)).length;
+  const union = new Set([...wordsA, ...wordsB]).size;
+  return Math.round((intersection / union) * 100);
+}
+
+function extractYear(text) {
+  if (!text) return undefined;
+  const match = text.match(/\b(1[4-9]\d{2}|20[0-2]\d)\b/);
+  return match ? match[1] : undefined;
+}
+
+async function verifyMetadataInline(db, book) {
+  const matches = [];
+
+  // 1. Search local external_catalog (EFM + IA)
+  const searchTerms = [book.title, book.author]
+    .filter(Boolean)
+    .join(' ')
+    .split(' ')
+    .filter(w => w.length >= 3)
+    .slice(0, 3);
+
+  if (searchTerms.length > 0) {
+    const wordConditions = searchTerms.map(word => ({
+      $or: [
+        { title: { $regex: word, $options: 'i' } },
+        { author: { $regex: word, $options: 'i' } },
+      ]
+    }));
+
+    const catalogDocs = await db.collection('external_catalog')
+      .find({ $and: wordConditions })
+      .limit(20)
+      .toArray();
+
+    for (const doc of catalogDocs) {
+      const titleSim = metaSimilarity(book.title, doc.title);
+      const authorSim = metaSimilarity(book.author, doc.author);
+      const confidence = Math.round((titleSim * 0.7) + (authorSim * 0.3));
+      if (confidence > 30) {
+        matches.push({
+          source: doc.source === 'bph' ? 'EFM' : 'IA',
+          confidence,
+          year: doc.year?.toString(),
+          language: doc.language,
+          place: doc.placeOfPublication,
+          publisher: doc.publisher,
+        });
+      }
+    }
+  }
+
+  // 2. Search USTC via Supabase
+  try {
+    const supaHeaders = {
+      'apikey': SUPABASE_ANON_KEY,
+      'Authorization': `Bearer ${SUPABASE_ANON_KEY}`,
+    };
+    const searchQuery = metaNormalize(book.title).split(' ').slice(0, 3).join(' ');
+    if (searchQuery.length >= 3) {
+      const enrichedUrl = new URL(`${SUPABASE_URL}/rest/v1/ustc_enrichments`);
+      enrichedUrl.searchParams.set('select', 'id,std_title,english_title,detected_language,original_author');
+      enrichedUrl.searchParams.set('limit', '10');
+      enrichedUrl.searchParams.set('or', `(std_title.ilike.*${searchQuery}*,english_title.ilike.*${searchQuery}*,original_author.ilike.*${searchQuery}*)`);
+
+      const enrichRes = await fetch(enrichedUrl.toString(), { headers: supaHeaders });
+      if (enrichRes.ok) {
+        const enrichData = await enrichRes.json();
+        for (const row of enrichData) {
+          const titleSim = Math.max(
+            metaSimilarity(book.title, row.std_title || ''),
+            metaSimilarity(book.title, row.english_title || '')
+          );
+          const authorSim = metaSimilarity(book.author, row.original_author || '');
+          const confidence = Math.round((titleSim * 0.7) + (authorSim * 0.3));
+          if (confidence > 30) {
+            // Fetch edition data for year/place
+            const edUrl = new URL(`${SUPABASE_URL}/rest/v1/ustc_editions`);
+            edUrl.searchParams.set('select', 'year,place,language_1');
+            edUrl.searchParams.set('id', `eq.${row.id}`);
+            const edRes = await fetch(edUrl.toString(), { headers: supaHeaders });
+            const edData = edRes.ok ? await edRes.json() : [];
+            const edition = edData[0];
+            matches.push({
+              source: 'USTC',
+              confidence,
+              year: edition?.year?.toString(),
+              language: row.detected_language || edition?.language_1,
+              place: edition?.place,
+              publisher: undefined,
+            });
+          }
+        }
+      }
+    }
+  } catch (e) {
+    console.log(`  [metadata] USTC search error for ${book.id}: ${e.message}`);
+  }
+
+  // Sort by confidence, pick best
+  matches.sort((a, b) => b.confidence - a.confidence);
+  const bestMatch = matches[0];
+  if (!bestMatch || bestMatch.confidence <= 60) {
+    return { applied: 0, matches: matches.length };
+  }
+
+  // Build updates — only fill missing/Unknown fields
+  const updates = { updated_at: new Date() };
+  const changes = [];
+
+  if ((!book.published || book.published === 'Unknown') && bestMatch.year) {
+    const yr = extractYear(bestMatch.year) || bestMatch.year;
+    updates.published = yr;
+    changes.push({ field: 'published', previous: book.published, new_value: yr });
+  }
+  if ((!book.language || book.language === 'Unknown') && bestMatch.language && bestMatch.language !== 'Unknown') {
+    updates.language = bestMatch.language;
+    changes.push({ field: 'language', previous: book.language, new_value: bestMatch.language });
+  }
+  if (!book.place_of_publication && bestMatch.place) {
+    updates.place_of_publication = bestMatch.place;
+    changes.push({ field: 'place_of_publication', previous: null, new_value: bestMatch.place });
+  }
+  if (!book.publisher && bestMatch.publisher) {
+    updates.publisher = bestMatch.publisher;
+    changes.push({ field: 'publisher', previous: null, new_value: bestMatch.publisher });
+  }
+
+  if (changes.length === 0) {
+    return { applied: 0, matches: matches.length };
+  }
+
+  // Set field_provenance for each changed field
+  const provenance = {
+    source: 'metadata_verification',
+    verified_source: bestMatch.source,
+    confidence: bestMatch.confidence,
+    date: new Date(),
+  };
+  for (const c of changes) {
+    updates[`field_provenance.${c.field}`] = { ...provenance, previous_value: c.previous };
+  }
+
+  // Record verification metadata
+  updates.metadata_verified = {
+    date: new Date(),
+    source: bestMatch.source,
+    confidence: bestMatch.confidence,
+    changes: changes.map(c => `${c.field}: ${c.previous || 'none'} → ${c.new_value}`),
+  };
+
+  await db.collection('books').updateOne({ id: book.id }, { $set: updates });
+
+  // Append-only changelog
+  try {
+    await db.collection('book_metadata_changelog').insertOne({
+      id: nanoid(12),
+      book_id: book.id,
+      source: 'catalog_verification',
+      changes,
+      note: `Source: ${bestMatch.source}, confidence: ${bestMatch.confidence}`,
+      timestamp: new Date(),
+    });
+  } catch { /* non-fatal */ }
+
+  return { applied: changes.length, matches: matches.length, source: bestMatch.source, confidence: bestMatch.confidence };
+}
+
 function sleep(ms) {
   return new Promise(resolve => setTimeout(resolve, ms));
 }
@@ -2035,7 +2223,7 @@ async function run() {
       const readyForMetadata = await db.collection('books')
         .find({ 'pipeline_auto.status': 'ocr_complete' })
         .sort({ hidden: 1 })
-        .project({ id: 1, title: 1, 'pipeline_auto.retry_count': 1, 'ai_metadata.enriched_at': 1 })
+        .project({ id: 1, title: 1, author: 1, published: 1, language: 1, place_of_publication: 1, publisher: 1, 'pipeline_auto.retry_count': 1, 'ai_metadata.enriched_at': 1 })
         .limit(METADATA_ENRICH_LIMIT)
         .toArray();
 
@@ -2056,32 +2244,27 @@ async function run() {
             continue;
           }
 
-          const res = await fetch(`${BASE_URL}/api/books/${book.id}/verify-metadata`, {
-            method: 'POST',
-            headers: headers(),
-          });
+          // Inline catalog lookup + apply (no Vercel dependency)
+          const result = await verifyMetadataInline(db, book);
+          if (result.applied > 0) {
+            console.log(`  [metadata] ${book.id}: applied ${result.applied} fields from ${result.source} (${result.confidence}% confidence)`);
+          }
 
-          if (res.ok) {
-            await setPipelineStatus(db, book.id, 'metadata_enriched', { retry_count: 0 });
-            log.metadata_enriched++;
-          } else {
-            const retries = book.pipeline_auto?.retry_count || 0;
-            if (retries >= MAX_RETRIES) {
-              // Non-blocking: skip on persistent failure
+          await setPipelineStatus(db, book.id, 'metadata_enriched', { retry_count: 0 });
+          log.metadata_enriched++;
+        } catch (err) {
+          const retries = book.pipeline_auto?.retry_count || 0;
+          if (retries >= MAX_RETRIES) {
+            // Non-blocking: skip on persistent failure
+            if (!DRY_RUN) {
               await setPipelineStatus(db, book.id, 'metadata_enriched', { retry_count: 0 });
-              log.metadata_skipped++;
-            } else {
+            }
+            log.metadata_skipped++;
+          } else {
+            if (!DRY_RUN) {
               await setPipelineStatus(db, book.id, 'ocr_complete', { retry_count: retries + 1 });
             }
-            log.errors.push(`Metadata ${book.id}: HTTP ${res.status}`);
           }
-
-          await sleep(API_DELAY_MS);
-        } catch (err) {
-          if (!DRY_RUN) {
-            await setPipelineStatus(db, book.id, 'metadata_enriched', { retry_count: 0 });
-          }
-          log.metadata_skipped++;
           log.errors.push(`Metadata ${book.id}: ${err.message}`);
         }
       }

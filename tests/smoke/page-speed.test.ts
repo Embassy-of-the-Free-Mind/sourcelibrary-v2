@@ -9,7 +9,7 @@ import { describe, it, expect } from 'vitest';
  */
 
 const BASE = process.env.SMOKE_BASE_URL || 'https://sourcelibrary.org';
-const TIMEOUT_MS = 8000; // pages should respond well under this
+const TIMEOUT_MS = 5000; // pages should respond well under this
 
 // Sample of pages across different sizes and types
 const PAGES = [
