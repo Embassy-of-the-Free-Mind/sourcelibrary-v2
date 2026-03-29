@@ -82,8 +82,9 @@ export async function processImageUpload(
     addRandomSuffix: false
   });
 
-  // STEP 2: Detect if this is a two-page spread (skipped for bulk S3 imports)
-  if (!skipSplitDetection) {
+  // STEP 2: Detect if this is a two-page spread
+  // PAUSED: Split detection disabled globally pending quality audit (#523)
+  if (false && !skipSplitDetection) {
     const splitResult = await detectSplit(buffer, originalBlob.url, db);
 
     // STEP 3a: Process as split image (creates 2 pages with separate thumbnails)
