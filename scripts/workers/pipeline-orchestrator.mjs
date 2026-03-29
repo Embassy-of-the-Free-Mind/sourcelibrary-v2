@@ -1517,7 +1517,7 @@ async function run() {
     if (shouldRun(1.25)) {
       console.log('\n--- Phase 1.25: Split detection (spread → individual pages) ---');
 
-      const SPLIT_LIMIT = 10; // Max books per cycle
+      const SPLIT_LIMIT = 100; // Max books per cycle (increased from 10)
       const ASPECT_RATIO_THRESHOLD = 1.2; // Width/height > 1.2 = likely spread
 
       // Find archive_complete books that haven't been split-checked yet
