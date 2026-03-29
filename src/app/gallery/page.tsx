@@ -4,7 +4,7 @@ import GalleryClient from '@/components/gallery/GalleryClient';
 import SignUpCTA from '@/components/auth/SignUpCTA';
 import type { GalleryResponse } from '@/lib/api-client/types/gallery';
 
-export const revalidate = 300; // 5 min — filtering is client-side
+export const dynamic = 'force-dynamic';
 
 /**
  * Gallery page — server component that fetches initial data from gallery_images

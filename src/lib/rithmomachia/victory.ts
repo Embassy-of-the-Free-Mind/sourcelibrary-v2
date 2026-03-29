@@ -162,8 +162,9 @@ function isGeometricProgression(sorted: number[]): boolean {
 function isHarmonicProgression(sorted: number[]): boolean {
   if (sorted.length < 3) return false;
   if (sorted.some(v => v === 0)) return false;
-  const reciprocals = sorted.map(v => 1 / v);
-  // Check if reciprocals (in reverse — largest reciprocal first) form AP
-  reciprocals.reverse();
-  return isArithmeticProgression(reciprocals);
+  // Use integer cross-multiplication to avoid floating point errors with reciprocals.
+  // For three values a, b, c: harmonic iff 1/a - 1/b == 1/b - 1/c
+  // Cross-multiply: (b-a)/(ab) == (c-b)/(bc) => (b-a)*c == (c-b)*a
+  const [a, b, c] = sorted;
+  return (b - a) * c === (c - b) * a;
 }

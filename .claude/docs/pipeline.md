@@ -29,9 +29,9 @@ Every step is independent and idempotent. Books can enter at any stage and be re
 
 ## Auto Pipeline State Machine
 
-Two crons orchestrate the pipeline:
-- **`post-import-pipeline`** (every 10 min) — main orchestrator: import → archive → OCR → metadata → translate. Also handles image extraction, finalization, staleness detection, and zombie cleanup.
-- **`enrich-books`** (every 10 min) — dedicated cron for enrichment (summary + index), chapter extraction, and transliteration of non-Latin scripts. Split out so enrichment doesn't starve translation of time budget.
+The pipeline is orchestrated from **Hetzner** (`scripts/workers/pipeline-orchestrator.mjs`, every 2 min). Translation runs on a separate Hetzner worker (`translate-worker.mjs`, every 2 min). Batch OCR results are collected by `batch-collector.mjs` (every 10 min). See `pipeline-architecture.md` for the full cron schedule and infrastructure map.
+
+**Legacy:** The Vercel crons (`post-import-pipeline`, `enrich-books`) still exist in `_archived/` and can be re-enabled. The Hetzner orchestrator consolidated both into a single script with all phases.
 
 Each book has a `pipeline_auto` object tracking its state.
 
@@ -55,7 +55,7 @@ Any state can transition to `failed` on persistent errors (after 3 retries). Spe
 | `metadata_enriched` | AI metadata enrichment complete (language, categories, description, source_work_dates) | Pipeline cron Phase 3.5 |
 | `ft_verifying` | First-translation verification in progress (LLM knowledge check) | Pipeline cron Phase 3.7 |
 | `ft_verified` | First-translation verification complete (or skipped for English books) | Pipeline cron Phase 3.7 |
-| `translate_submitted` | Lambda translation jobs enqueued | Pipeline cron Phase 4 |
+| `translate_submitted` | Translation job created, Hetzner worker picks up | Orchestrator Phase 4 |
 | `translate_complete` | Translation finished | Pipeline cron Phase 5 |
 | `enriching` | Summary + index generation in progress | enrich-books cron Phase 1 |
 | `enriched` | Summary + index complete | enrich-books cron Phase 1 |
@@ -174,19 +174,19 @@ Stored on `book.pipeline_auto`:
 
 ---
 
-## Pipeline Cron Execution Order
+## Pipeline Phase Execution
 
-The `post-import-pipeline` cron (1,615 lines, `maxDuration = 300`) runs phases in a **non-sequential** order. Late-stage phases run FIRST as a "priority pass" so they don't get starved by heavy early-stage work.
+The Hetzner `pipeline-orchestrator.mjs` (~2,900 lines) runs all phases. Individual phases also run as separate cron entries for independence (so a slow translation run doesn't block OCR submission). Late-stage phases run in a "priority pass" first so they don't get starved by heavy early-stage work.
 
 ### Priority Pass (runs first)
 
-| Order | Phase | Transition | Notes |
-|-------|-------|-----------|-------|
-| 1 | Finalize | `images_complete` → `complete` | Validates OCR coverage (>10%), syncs to GitHub. Blocked by `imagesPaused`. |
-| 2 | Image submission | `chapters_complete` → `images_submitted` | Creates Lambda jobs. Blocked by `imagesPaused`. |
-| 3 | Image completion | `images_submitted` → `images_complete` | Checks jobs collection. |
-| 4 | Staleness detection | Roll back stuck books | 48h timeout on `*_submitted`, `ft_verifying`, `enriching`, `chapters`. Checks for active jobs before rolling back. |
-| 5 | Zombie job detection | Force-complete stuck jobs | Jobs in `processing` for >2h (Lambda max runtime is 15 min). |
+| Phase | Transition | Notes |
+|-------|-----------|-------|
+| Finalize | `images_complete` → `complete` | Validates OCR coverage (>10%), syncs to GitHub. Blocked by `imagesPaused`. |
+| Image submission | `chapters_complete` → `images_submitted` | Creates Lambda jobs via SQS. Blocked by `imagesPaused`. |
+| Image completion | `images_submitted` → `images_complete` | Checks jobs collection. |
+| Staleness detection | Roll back stuck books | 48h timeout on `*_submitted`, `ft_verifying`, `enriching`, `chapters`. Checks for active jobs before rolling back. |
+| Zombie job detection | Force-complete stuck jobs | Jobs in `processing` for >2h. |
 
 **Staleness rollback map:**
 - `ocr_submitted` → `archive_complete`
@@ -198,31 +198,34 @@ The `post-import-pipeline` cron (1,615 lines, `maxDuration = 300`) runs phases i
 
 ### Main Pass (standard pipeline order)
 
-| Order | Phase | Transition | Notes |
-|-------|-------|-----------|-------|
-| 6 | Phase 0: Auto-enroll | new → `queued` | Books imported within 7 days without `pipeline_auto`. FT verification deferred to Phase 3.7. |
-| 7 | Phase 1: Archive check | `queued` → `archiving` → `archive_complete` | DB checks only; Hetzner copies images to Cloudflare R2. 24h timeout — advances anyway since OCR works on original IIIF URLs. |
-| 8 | Phase 2: Submit OCR | `archive_complete` → `ocr_submitted` | Lambda workers (Batch API available but not default). See "OCR Routing" below. |
-| 9 | Phase 3: OCR completion | `ocr_submitted` → `ocr_complete` | Checks both Lambda jobs and batch_jobs. Loops if un-OCR'd pages remain (up to MAX_RETRIES). Blocked by `ocrPaused`. |
-| 10 | Phase 3.5: Metadata enrichment | `ocr_complete` → `metadata_enriched` | Calls `enrichBookMetadata()`. Detects language, categories, year, description, display_title, source_work_dates. Non-blocking: failures skip ahead. |
-| 10.5 | Phase 3.7: FT verification | `metadata_enriched` → `ft_verifying` → `ft_verified` | Calls `verifyFirstTranslation()` for non-English books. English/already-verified books skip straight to `ft_verified`. Non-blocking: failures skip ahead after 3 retries. |
-| 11 | Phase 4: Submit translation | `ft_verified` → `translate_submitted` | Lambda FIFO queue only. See "Translation Routing" below. |
-| 12 | Phase 5: Translation completion | `translate_submitted` → `translate_complete` | Checks Lambda jobs. Loop limit: `max(6, ceil(pages_count/200))`. Blocked by `translatePaused`. |
+| Phase | Transition | Notes |
+|-------|-----------|-------|
+| Phase 0: Auto-enroll | new → `queued` | Books imported within 14 days without `pipeline_auto`. |
+| Phase 1: Archive check | `queued` → `archiving` → `archive_complete` | DB checks only; Hetzner copies images to Cloudflare R2. 24h timeout — advances anyway since OCR works on original IIIF URLs. |
+| Phase 1.25: BPH split | `archive_complete` (BPH only) | Detects two-page spreads, crops into left/right pages. |
+| Phase 1.5: Preview OCR | `archive_complete` → (no status change) | First 25 pages sent to Lambda via SQS for fast preview. Triggers preview translation on completion. |
+| Phase 2: Submit OCR | `archive_complete` → `ocr_submitted` | Gemini Batch API (Hetzner direct). See "OCR Routing" below. |
+| Phase 3: OCR completion | `ocr_submitted` → `ocr_complete` | Checks batch_jobs status. Loops if un-OCR'd pages remain (up to 3 retries). Blocked by `ocrPaused`. |
+| Phase 3.5: Metadata enrichment | `ocr_complete` → `metadata_enriched` | Calls Vercel API `/api/books/[id]/verify-metadata`. Non-blocking: failures skip ahead. |
+| Phase 3.7: FT verification + Transliteration | `metadata_enriched` → `ft_verified` | FT verification for non-English books. Transliteration for non-Latin scripts (inline Gemini on Hetzner). Non-blocking. |
+| Phase 4: Translation dispatch | `ft_verified` → `translate_submitted` | Creates `jobs` record, Hetzner translate-worker picks it up. See "Translation Routing" below. |
+| Phase 5: Translation completion | `translate_submitted` → `translate_complete` | Checks job status + page counts. Recycles if partial. |
+| Phase 6: Summary + Index | `translate_complete` → `summary_indexed` | Calls Vercel API `/api/books/[id]/index`. |
+| Phase 7: Chapters | `summary_indexed` → `chapters_complete` | Calls Vercel API `/api/books/[id]/extract-chapters`. Skips books <10 pages. |
+| Phase 8: Image extraction | `chapters_complete` → `images_submitted` | Lambda workers via SQS. |
 
 ### Safety Mechanisms
 
-- **Early flush:** Writes partial `cron_runs` record at 240s (before Vercel's 300s kill) so observability isn't lost
 - **Pipeline snapshots:** Writes funnel counts to `pipeline_snapshots` collection at end of run
-- **MongoDB reconnect:** Catches connection errors, attempts `forceReconnect()`, returns 200 with partial results
-- **Time budget:** 270s working window; each phase checks `hasTimeBudget()` before starting
+- **MongoDB health probe:** Adaptive throttling based on DB latency (healthy/degraded/critical)
+- **Per-phase lock files:** `flock` prevents concurrent runs of the same phase
+- **Zombie reaper:** Cancels jobs stuck >2h with 0 progress
 
 ---
 
-## Enrich-Books Cron
+## Enrichment (Consolidated into Orchestrator)
 
-**Route:** `/api/cron/enrich-books` (~410 lines, `maxDuration = 300`)
-
-Split out from the pipeline cron so enrichment doesn't starve translation of time budget. Runs every 10 min. Three phases: enrichment → chapters → transliteration.
+Enrichment, chapter extraction, and transliteration originally ran as a separate Vercel cron (`enrich-books`). They're now phases in the Hetzner orchestrator. The Vercel route exists in `_archived/` if needed.
 
 ### Phase 1: Enrichment (`translate_complete`/`enriching` → `enriched`)
 
@@ -249,7 +252,7 @@ Romanizes OCR text for non-Latin scripts (Greek, Hebrew, Arabic, etc.). **Not ti
 - **Discovery:** `$lookup` aggregation finds books with non-Latin `language` field that have pages with `ocr.data` but no `transliteration.data`
 - **Skips page types:** blank, illustration, map, frontispiece, diagram
 - **Processing:** Concurrent chunks of 10 Gemini calls per batch
-- **Model:** `gemini-3-flash-preview`
+- **Model:** `gemini-3.1-flash-lite-preview` (text-only, cheap)
 - **Limits:** 10 books/run, 200 pages/run total
 - **Storage:** `page.transliteration.data` (romanized text), `.model`, `.updated_at`, `.source_ocr_hash` (cache invalidation), `.script` (source script name)
 - **Logging:** Each call logged to `gemini_usage` with `type: 'transliterate'`
@@ -261,38 +264,52 @@ Romanizes OCR text for non-Latin scripts (Greek, Hebrew, Arabic, etc.). **Not ti
 
 ## OCR Routing
 
-The pipeline cron has two OCR backends. Currently, Lambda is the default (hardcoded `ocrQuotaExhausted = true` forces Lambda fallback).
+### Production Path: Gemini Batch API on Hetzner (current default)
 
-### Lambda Workers (current default)
+The Hetzner `pipeline-orchestrator.mjs` Phase 2 submits OCR directly to Gemini Batch API:
+- Downloads page images locally, builds JSONL with OCR prompts + base64 images
+- File-based batch for >20 pages (~150 pages/job via Gemini File API), inline batch for <=20 pages
+- Model routing: `gemini-3-flash-preview` for BPH, `gemini-3.1-flash-lite-preview` for others
+- 50% cost discount via Batch API, latency up to 24 hours
+- API key rotation: tries `KEY_2` → `TIER3` → `KEY` on quota exhaustion
+- Results collected by `batch-collector.mjs` (Hetzner cron, every 10 min)
+- Backpressure: max 500 active batch jobs (`MAX_ACTIVE_BATCH_OCR`)
 
-- OCR worker processes ONE page per Lambda invocation via SQS standard queue (parallel)
+### Preview Path: Lambda Workers (first 25 pages)
+
+Phase 1.5 sends the first 25 pages to Lambda via SQS for fast preview OCR (minutes, not hours):
+- OCR worker processes ONE page per Lambda invocation via SQS standard queue
 - Concurrency: 10 reserved Lambda instances
 - Results written to write-results SQS queue → Writer Lambda → MongoDB
-- Backpressure: max 50 active Lambda OCR jobs (`MAX_ACTIVE_LAMBDA_OCR`)
-- Lambda fallback limit: 10 books per cron run
+- Triggers preview translation after completion
 
-### Gemini Batch API (available, not primary)
+### Legacy Vercel Cron Path (archived)
 
-- Submit JSONL with all page requests → Gemini processes asynchronously
-- 50% cost discount, but latency up to 24 hours
-- Results collected by `process-batches` cron (every 2 hours)
-- Parent-child architecture for 500+ page books
-- Backpressure: max 200 active batch jobs (`MAX_ACTIVE_BATCH_OCR`)
-
-### Consecutive Failure Fallback
-
-If 3+ consecutive batch submissions return HTTP 500, the cron automatically switches to Lambda for the rest of that run (`CONSECUTIVE_FAILURE_THRESHOLD = 3`).
+The old Vercel-based `post-import-pipeline` cron also had OCR routing with Lambda fallback. This code exists in `_archived/` but is not active. It can be re-enabled by adding crons back to `vercel.json` (see `pipeline-architecture.md` "How to Switch Back to Vercel").
 
 ---
 
 ## Translation Routing
 
-**CRITICAL: Translation ALWAYS uses Lambda workers (SQS FIFO queue). NEVER use Gemini Batch API for translation.** Batch API lacks cross-page context continuity which is critical for translation quality.
+**CRITICAL: NEVER use Gemini Batch API for translation.** Batch API lacks cross-page context continuity — each page must see the previous page's translation for coherent output.
 
-- Translation worker uses FIFO queue (sequential per job) — fetches previous page's translation for context
-- Hardcoded `translateQuotaExhausted = true` forces Lambda
-- Concurrency: max 100 active Lambda translation jobs (`MAX_ACTIVE_LAMBDA_TRANSLATE`)
-- Current temporary filter: only translates books >=90% done (based on `pages_translated / pages_ocr`)
+### Production Path: Hetzner Inline Worker
+
+`scripts/workers/translate-worker.mjs` runs on Hetzner cron every 2 minutes:
+- Picks up books in `translate_submitted` status
+- Translates pages sequentially per book (context continuity via previous page lookup)
+- Calls Gemini API directly — no SQS, no Lambda
+- Model routing: `gemini-3-flash-preview` for BPH, `gemini-3.1-flash-lite-preview` for all others
+- Concurrency: 20 books simultaneously, 8,000 page cap per run, 40 in-flight book cap
+- API key rotation on rate limits (up to 11 keys)
+
+### Fallback Path: Lambda + SQS FIFO
+
+Lambda translation processor still works for:
+- Preview translation (first 25 pages via `preview-translate.ts`)
+- Manual job submission via `/api/jobs/queue-books`
+
+These paths use SQS FIFO queue with `MessageGroupId` = job ID for sequential processing.
 
 ### English Modernization
 
@@ -499,41 +516,40 @@ Two parallel systems for processing pages:
 
 | Step | Auto Pipeline | Manual |
 |------|--------------|--------|
-| OCR | Lambda (default) or Batch API | Either (`queue-books` or `batch-ocr-async`) |
-| Translation | Lambda FIFO only | `queue-books` with `action: 'translation'` only |
-| Image Extraction | Lambda (via pipeline cron) | `queue-books` with `action: 'image_extraction'` |
-| Summary/Index | Realtime HTTP (via `/api/books/{id}/index`) | Same |
-| Chapters | Realtime inline (shared function) | POST `/api/books/{id}/extract-chapters` |
+| OCR | Gemini Batch API on Hetzner (primary), Lambda for preview | `queue-books` or `batch-ocr-async` |
+| Translation | Hetzner translate-worker (primary) | `queue-books` with `action: 'translation'` (Lambda FIFO fallback) |
+| Image Extraction | Lambda via SQS (pipeline Phase 8) | `queue-books` with `action: 'image_extraction'` |
+| Summary/Index | Vercel API called from Hetzner | GET/POST `/api/books/{id}/index` |
+| Chapters | Vercel API called from Hetzner | POST `/api/books/{id}/extract-chapters` |
 
 ---
 
 ## Cron Architecture
 
-Nine crons, all defined in `vercel.json`:
+Pipeline processing runs on **Hetzner** via crontab (21 entries). Vercel only runs 5 lightweight crons. See `pipeline-architecture.md` for the full Hetzner cron schedule, and `scripts/workers/crontab.production` for the authoritative source.
 
-| Cron | Schedule | Purpose | Pipeline Role |
-|------|----------|---------|---------------|
-| `post-import-pipeline` | Every 10 min | Main orchestrator — import → translate + images + finalization | Core |
-| `enrich-books` | Every 10 min | Enrichment (summary + index) + chapter extraction | Core (split from pipeline) |
-| `process-batches` | Every 2 hours | Collects Gemini Batch API results, saves to pages | OCR/translate batch completion |
-| `submit-batch-ocr` | Daily 3 AM UTC | Campaign-driven batch OCR submission (15 books, 100 pages each) | Batch processing |
-| `sync-page-counts` | Every 6 hours | Refreshes `pages_count`, `pages_ocr`, `pages_translated` caches on books | Data integrity |
-| `sync-gallery-images` | Every 6 hours | Syncs gallery image metadata from pages to gallery_images | Gallery |
-| `archive-ocr` | Every 4 hours | Archives page images to Cloudflare R2 for OCR'd pages | Data safety |
-| `social-post` | Every hour | Posts queued tweets | Social media |
-| `social-reset` | Daily midnight UTC | Resets daily tweet counter | Social media |
+### Vercel Crons (active in `vercel.json`)
 
-**Historical note:** `submit-ocr` cron was removed Mar 5, 2026 — it was redundant with the pipeline cron and wasted DB queries.
+| Cron | Schedule | Purpose |
+|------|----------|---------|
+| `social-post` | Every 3 hours | Posts to social media |
+| `social-reset` | Daily midnight UTC | Resets daily post counter |
+| `health-check` | Hourly | System health monitoring + email alerts |
+| `daily-pipeline-report` | Daily 6am UTC | Email pipeline summary |
+| `warm` | Every 5 min | Warm serverless pools |
 
-### Interaction Pattern
+### Archived Vercel Crons (in `_archived/`, NOT active)
+
+`post-import-pipeline`, `enrich-books`, `process-batches`, `submit-batch-ocr`, `sync-page-counts`, `sync-gallery-images`, `archive-ocr` — all replaced by Hetzner workers. Can be re-enabled by adding back to `vercel.json` (see `pipeline-architecture.md` "How to Switch Back to Vercel").
+
+### Hetzner Interaction Pattern
 
 ```
-post-import-pipeline: submit jobs → check jobs/batch_jobs → advance books
-enrich-books:         enrichment (summary+index) → chapter extraction → transliteration
-process-batches:      poll Gemini → save page results → update batch_jobs
+pipeline-orchestrator: advance books through all phases (enroll → OCR → translate → enrich → complete)
+translate-worker:      pick up translate_submitted books, call Gemini directly, write results
+batch-collector:       poll Gemini Batch API → save OCR results → advance books
+sync-worker:           reconcile book counters from page data (safety net)
 ```
-
-The pipeline cron **submits** OCR/translation jobs but doesn't collect Batch API results. The `process-batches` cron **collects** Batch API results. Lambda results flow through the Writer Lambda automatically.
 
 ---
 
@@ -619,14 +635,16 @@ curl -X POST https://sourcelibrary.org/api/books/BOOK_ID/batch-ocr-async \
 ### OCR (Direct SQS — bypasses API auth)
 For bulk operations from scripts, bypass the Next.js API and write directly to MongoDB + SQS. See `_tmp-ocr-shwep.mjs` for an example.
 
-### Translation (Realtime Lambda — ONLY method)
+### Translation (Manual trigger via API)
 ```bash
+# This enqueues to Lambda FIFO (fallback path). Production translation runs
+# automatically via Hetzner translate-worker.mjs.
 curl -X POST https://sourcelibrary.org/api/jobs/queue-books \
   -H "Content-Type: application/json" \
   -d '{"bookIds":["BOOK_ID"], "action":"translation"}'
 ```
 
-**NEVER use `batch-translate-async` for translation.** Lambda FIFO queue is required for cross-page context continuity.
+**NEVER use Gemini Batch API for translation.** Cross-page context continuity is required.
 
 ### Summary + Index
 ```bash
@@ -690,15 +708,14 @@ Based on `gemini-3-flash-preview` actual measured costs from `gemini_usage` coll
 | Image extraction | ~1,300 | ~80 | $0.0009/page | $0.27 |
 | Transliteration | ~1,900 | ~1,200 | $0.0017/page | $0.51 (non-Latin only) |
 
-**Typical full pipeline cost for a 300-page Latin book (Lambda):** ~$1.73
+**Typical full pipeline cost for a 300-page Latin book:** ~$1.73
 - OCR: $0.66, Translation: $1.05, Image extraction: $0.27 if visual content
 - Per-book phases (metadata, FT, summary, chapters): ~$0.03
+- Note: BPH books cost ~3x more (use flash instead of lite for OCR/translation)
 
 **Budget planning:** At ~$0.006/page average across OCR + translation, 1,000 pages costs roughly $6. Image extraction adds ~$0.001/page for pages with visual content.
 
 **Implied Gemini 3 Flash Preview rates:** ~$0.59/1M input, ~$2.87/1M output (back-calculated from actual translation call data).
-
-**Batch translation proposal (issue #217):** Sending 5 pages per Gemini call instead of 1 would reduce translation API calls by 80% and save ~12% on cost (~$2.5K at scale), with the primary benefit being 5x throughput at the same Lambda concurrency.
 
 ---
 
@@ -779,7 +796,7 @@ Deduplication: when a `gemini_usage` record has a `job_id` matching the `jobs` c
 ### Known Gaps
 
 1. **No `prompt_version` on pre-Feb-2026 pages** — all 132k OCR pages used the same prompt, but the field wasn't set. Fills in on re-OCR.
-2. **Batch API pages have `batch_job_id`** — set by `process-batches` cron on OCR and translation saves. Realtime Lambda pages link via `gemini_usage.job_id` instead.
-3. **Lambda translation `gemini_usage` records lack `job_id`** — Writer Lambda defers logging but the job_id linkage is incomplete. Cosmetic issue; translations work fine.
+2. **Batch API pages have `batch_job_id`** — set by batch-collector on OCR saves. Hetzner translate-worker logs with job_id directly.
+3. **Legacy Lambda translation `gemini_usage` records may lack `job_id`** — pre-March 2026 records from the Lambda path have incomplete linkage. Cosmetic issue.
 4. **No moderation audit** — annotations auto-approved, no tracking of admin approval/rejection.
 5. **OCR-aware image extraction** — `extractWithGemini()` accepts `ocrData` parameter and the worker passes it, but prompt augmentation is not yet implemented. Feature is a no-op.

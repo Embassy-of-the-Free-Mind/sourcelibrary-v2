@@ -5,9 +5,9 @@ import { Metadata } from 'next';
 import { BookOpen, ArrowLeft } from 'lucide-react';
 import { notFound } from 'next/navigation';
 import { bookUrl } from '@/lib/slugify';
-import { FACETS } from '@/lib/taxonomy/faceted-vocabulary';
+import { FACETS, facetDbField } from '@/lib/taxonomy/faceted-vocabulary';
 
-export const revalidate = 300; // 5 min
+export const dynamic = 'force-dynamic';
 
 interface Props {
   params: Promise<{ slug: string }>;
@@ -23,6 +23,7 @@ interface BookItem {
   pages_count?: number;
   pages_translated?: number;
   pages_ocr?: number;
+  pages_blank?: number;
   read_count?: number;
   thumbnail?: string;
   thumbnail_blob?: string;
@@ -107,9 +108,10 @@ async function fetchFacetData(facetId: string, valueId: string) {
   const facet = FACETS.find((f) => f.id === facetId)!;
   const value = facet.values.find((v) => v.id === valueId)!;
 
+  const dbField = facetDbField(facet);
   const query = {
     hidden: { $ne: true },
-    [`faceted_tags.${facetId}`]: valueId,
+    [`faceted_tags.${dbField}`]: valueId,
   };
 
   const books = await db
@@ -118,7 +120,7 @@ async function fetchFacetData(facetId: string, valueId: string) {
       projection: {
         _id: 0,
         id: 1, slug: 1, title: 1, display_title: 1, author: 1, language: 1,
-        pages_count: 1, pages_translated: 1, pages_ocr: 1, read_count: 1,
+        pages_count: 1, pages_translated: 1, pages_ocr: 1, pages_blank: 1, read_count: 1,
         thumbnail: 1, thumbnail_blob: 1, faceted_tags: 1,
       },
     })
@@ -136,13 +138,14 @@ async function fetchFacetData(facetId: string, valueId: string) {
     : 'tradition';
 
   const crossFacet = FACETS.find((f) => f.id === crossFacetId)!;
+  const crossDbField = facetDbField(crossFacet);
 
   const groups = new Map<string, BookItem[]>();
   const ungrouped: BookItem[] = [];
 
   for (const book of books) {
     const crossValues = (book as Record<string, unknown>).faceted_tags as Record<string, string[]> | undefined;
-    const tags = crossValues?.[crossFacetId] || [];
+    const tags = crossValues?.[crossDbField] || [];
     if (tags.length > 0) {
       const primary = tags[0];
       if (!groups.has(primary)) groups.set(primary, []);
@@ -169,7 +172,7 @@ async function fetchFacetData(facetId: string, valueId: string) {
     if (f.id === facetId) continue;
     const counts = new Map<string, number>();
     for (const book of books) {
-      const tags = ((book as Record<string, unknown>).faceted_tags as Record<string, string[]> | undefined)?.[f.id] || [];
+      const tags = ((book as Record<string, unknown>).faceted_tags as Record<string, string[]> | undefined)?.[facetDbField(f)] || [];
       for (const t of tags) counts.set(t, (counts.get(t) || 0) + 1);
     }
     const sorted = Array.from(counts.entries())
@@ -257,9 +260,10 @@ function BookCard({ book }: { book: BookItem }) {
   const title = book.display_title || book.title;
   const thumb = book.thumbnail_blob || (book.thumbnail?.startsWith('http') ? book.thumbnail : null);
   const pagesOcr = book.pages_ocr || book.pages_count || 0;
+  const denom = Math.max(pagesOcr - (book.pages_blank || 0), 1);
   const translationPercent =
     pagesOcr && book.pages_translated
-      ? Math.round((book.pages_translated / pagesOcr) * 100)
+      ? Math.round((book.pages_translated / denom) * 100)
       : 0;
 
   return (

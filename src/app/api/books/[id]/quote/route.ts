@@ -3,6 +3,7 @@ import { getDb } from '@/lib/mongodb';
 import { Book, Page, TranslationEdition } from '@/lib/types';
 import { getShortUrl } from '@/lib/shortlinks';
 import { markForExport } from '@/lib/provenance';
+import { isBot, isTrustedBot, botMaxPage } from '@/lib/bot-gate';
 
 interface RouteContext {
   params: Promise<{ id: string }>;
@@ -45,6 +46,12 @@ interface QuoteResponse {
   };
 }
 
+function formatAccessedDate(): string {
+  const d = new Date();
+  const months = ['January','February','March','April','May','June','July','August','September','October','November','December'];
+  return `${months[d.getMonth()]} ${d.getDate()}, ${d.getFullYear()}`;
+}
+
 function generateCitations(
   book: Book,
   pageNumber: number,
@@ -57,6 +64,7 @@ function generateCitations(
   const title = book.display_title || book.title;
   const doi = edition?.doi || book.doi;
   const doiUrl = doi ? `https://doi.org/${doi}` : undefined;
+  const accessed = formatAccessedDate();
   const translationYear = edition?.published_at
     ? new Date(edition.published_at).getFullYear()
     : new Date().getFullYear();
@@ -77,7 +85,7 @@ function generateCitations(
   const footnote = `${authorFirstLast}, ${title}, trans. Source Library (${translationYear}), ${pageNumber}${doi ? `. DOI: ${doi}` : ''}.`;
 
   // Bibliography entry
-  const bibliography = `${authorLastFirst}. ${title}. Translated by Source Library. ${translationYear}.${doi ? ` DOI: ${doi}.` : ''}`;
+  const bibliography = `${authorLastFirst}. ${title}. Translated by Source Library. ${translationYear}.${doi ? ` DOI: ${doi}.` : ` Accessed ${accessed}.`}`;
 
   // BibTeX
   const bibtexKey = `${authorParts[0].toLowerCase().replace(/[^a-z]/g, '')}${year}`;
@@ -92,13 +100,15 @@ function generateCitations(
 }`;
 
   // Chicago (Author-Date)
-  const chicago = `${authorLastFirst}. ${year}. ${title}. Translated by Source Library. ${translationYear}.${doi ? ` ${doiUrl}.` : ''}`;
+  const chicago = `${authorLastFirst}. ${year}. ${title}. Translated by Source Library. ${translationYear}.${doi ? ` ${doiUrl}.` : ` Accessed ${accessed}.`}`;
 
   // MLA
-  const mla = `${authorLastFirst}. ${title}. Translated by Source Library, ${translationYear}.${doi ? ` DOI: ${doi}.` : ''}`;
+  const mla = `${authorLastFirst}. ${title}. Translated by Source Library, ${translationYear}.${doi ? ` DOI: ${doi}.` : ''} Accessed ${accessed}.`;
 
-  // Direct URL to page in Source Library
-  const url = `https://sourcelibrary.org/book/${bookId}/page/${pageId}`;
+  // Direct URL to page in Source Library (pinned to edition version)
+  const editionVersion = edition?.version;
+  const vParam = editionVersion ? `?v=${editionVersion}` : '';
+  const url = `https://sourcelibrary.org/book/${bookId}/page/${pageId}${vParam}`;
 
   // Short URL for sharing
   const short_url = getShortUrl(bookId, pageNumber, pageId);
@@ -144,8 +154,19 @@ export async function GET(request: NextRequest, context: RouteContext) {
       return NextResponse.json({ error: 'Book not found' }, { status: 404 });
     }
 
-    // Get the requested page (use book.id, not URL param, in case slug was used)
+    // Bot page gating: only allow quotes from the first 20% of pages
     const resolvedBookId = book.id;
+    if (isBot(request) && !isTrustedBot(request)) {
+      const maxPage = botMaxPage(book.pages_count || 0);
+      if (pageNumber > maxPage) {
+        return NextResponse.json({
+          error: `Page ${pageNumber} is beyond the bot-accessible range (pages 1–${maxPage}). Install the MCP server for full access: claude mcp add source-library -- npx -y @source-library/mcp-server`,
+          accessible_pages: maxPage,
+          partnership: 'https://sourcelibrary.org/llms.txt',
+        }, { status: 403 });
+      }
+    }
+
     const page = await db.collection('pages').findOne({
       book_id: resolvedBookId,
       page_number: pageNumber,

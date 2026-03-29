@@ -5,7 +5,7 @@ import type { Book, Page } from '@/lib/types';
 import PageEditorClient from './PageEditorClient';
 
 // ISR: rebuild at most every hour (content changes infrequently)
-export const revalidate = 3600;
+export const dynamic = 'force-dynamic';
 
 interface PageProps {
   params: Promise<{ id: string; pageId: string }>;

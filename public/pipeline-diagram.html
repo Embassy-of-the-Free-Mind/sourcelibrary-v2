@@ -1,0 +1,346 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Source Library Pipeline Architecture</title>
+<style>
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+  body { font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif; background: #0a0a0a; color: #e0e0e0; padding: 32px; }
+  h1 { font-size: 24px; font-weight: 600; margin-bottom: 4px; color: #fff; }
+  .subtitle { font-size: 13px; color: #888; margin-bottom: 32px; }
+  .subtitle a { color: #6ba3ff; text-decoration: none; }
+
+  .grid { display: grid; grid-template-columns: 1fr 1fr 1fr; gap: 24px; margin-bottom: 32px; }
+  @media (max-width: 1200px) { .grid { grid-template-columns: 1fr; } }
+
+  .env { border: 1px solid #333; border-radius: 12px; padding: 20px; background: #111; }
+  .env-header { display: flex; align-items: center; gap: 8px; margin-bottom: 16px; }
+  .env-dot { width: 10px; height: 10px; border-radius: 50%; }
+  .env-dot.hetzner { background: #4ade80; }
+  .env-dot.lambda { background: #f59e0b; }
+  .env-dot.vercel { background: #6366f1; }
+  .env-label { font-size: 14px; font-weight: 600; }
+  .env-desc { font-size: 11px; color: #666; margin-left: auto; }
+
+  .worker { background: #1a1a1a; border: 1px solid #2a2a2a; border-radius: 8px; padding: 12px; margin-bottom: 8px; }
+  .worker:last-child { margin-bottom: 0; }
+  .worker-name { font-size: 13px; font-weight: 600; color: #fff; }
+  .worker-schedule { font-size: 11px; color: #888; float: right; }
+  .worker-desc { font-size: 12px; color: #999; margin-top: 4px; }
+  .worker-model { font-size: 11px; color: #6ba3ff; margin-top: 4px; }
+  .worker.deprecated { opacity: 0.5; border-style: dashed; }
+  .worker.deprecated .worker-name::after { content: ' (fallback)'; color: #666; font-weight: 400; }
+
+  .flow { margin-bottom: 32px; }
+  .flow h2 { font-size: 18px; font-weight: 600; margin-bottom: 16px; color: #fff; }
+
+  .pipeline { display: flex; flex-wrap: wrap; gap: 4px; align-items: center; }
+  .phase { background: #1a1a1a; border: 1px solid #333; border-radius: 8px; padding: 10px 14px; min-width: 120px; }
+  .phase-num { font-size: 10px; color: #666; text-transform: uppercase; letter-spacing: 0.5px; }
+  .phase-name { font-size: 13px; font-weight: 600; color: #fff; margin-top: 2px; }
+  .phase-where { font-size: 11px; margin-top: 4px; }
+  .phase-where.hetzner { color: #4ade80; }
+  .phase-where.lambda { color: #f59e0b; }
+  .phase-where.vercel { color: #6366f1; }
+  .phase-status { font-size: 10px; color: #555; margin-top: 2px; font-family: monospace; }
+  .arrow { color: #444; font-size: 20px; flex-shrink: 0; }
+
+  .models { margin-bottom: 32px; }
+  .models h2 { font-size: 18px; font-weight: 600; margin-bottom: 16px; color: #fff; }
+  .model-table { width: 100%; border-collapse: collapse; }
+  .model-table th { text-align: left; font-size: 12px; color: #666; padding: 8px 12px; border-bottom: 1px solid #333; font-weight: 500; }
+  .model-table td { font-size: 13px; padding: 8px 12px; border-bottom: 1px solid #1a1a1a; }
+  .model-table td:first-child { color: #999; }
+  .model-flash { color: #f59e0b; }
+  .model-lite { color: #4ade80; }
+
+  .counters { margin-bottom: 32px; }
+  .counters h2 { font-size: 18px; font-weight: 600; margin-bottom: 8px; color: #fff; }
+  .counters p { font-size: 13px; color: #999; margin-bottom: 12px; }
+  .counter-flow { display: flex; gap: 8px; align-items: center; flex-wrap: wrap; font-size: 12px; }
+  .counter-box { background: #1a1a1a; border: 1px solid #333; border-radius: 6px; padding: 8px 12px; }
+  .counter-box.warn { border-color: #f59e0b; }
+  .counter-box.ok { border-color: #4ade80; }
+
+  .legend { display: flex; gap: 24px; font-size: 12px; color: #888; margin-bottom: 24px; }
+  .legend-item { display: flex; align-items: center; gap: 6px; }
+
+  .updated { font-size: 11px; color: #444; margin-top: 32px; text-align: center; }
+</style>
+</head>
+<body>
+
+<h1>Source Library Pipeline Architecture</h1>
+<div class="subtitle">
+  Authoritative visual reference &mdash;
+  <a href="https://github.com/Embassy-of-the-Free-Mind/sourcelibrary-v2/blob/main/scripts/workers/crontab.production">crontab.production</a> |
+  <a href="https://github.com/Embassy-of-the-Free-Mind/sourcelibrary-v2/blob/main/.claude/docs/pipeline-architecture.md">pipeline-architecture.md</a>
+</div>
+
+<div class="legend">
+  <div class="legend-item"><div class="env-dot hetzner"></div> Hetzner (primary)</div>
+  <div class="legend-item"><div class="env-dot lambda"></div> AWS Lambda (secondary)</div>
+  <div class="legend-item"><div class="env-dot vercel"></div> Vercel API (called from Hetzner)</div>
+</div>
+
+<!-- ── Pipeline Flow ── -->
+<div class="flow">
+<h2>Book Processing Flow</h2>
+<div class="pipeline">
+  <div class="phase">
+    <div class="phase-num">Phase 0</div>
+    <div class="phase-name">Enroll</div>
+    <div class="phase-where hetzner">Hetzner</div>
+    <div class="phase-status">→ queued</div>
+  </div>
+  <div class="arrow">→</div>
+  <div class="phase">
+    <div class="phase-num">Phase 1</div>
+    <div class="phase-name">Archive</div>
+    <div class="phase-where hetzner">Hetzner → R2</div>
+    <div class="phase-status">→ archive_complete</div>
+  </div>
+  <div class="arrow">→</div>
+  <div class="phase">
+    <div class="phase-num">Phase 1.5</div>
+    <div class="phase-name">Preview OCR</div>
+    <div class="phase-where lambda">Lambda (25 pages)</div>
+    <div class="phase-status">no status change</div>
+  </div>
+  <div class="arrow">→</div>
+  <div class="phase">
+    <div class="phase-num">Phase 2</div>
+    <div class="phase-name">Full OCR</div>
+    <div class="phase-where hetzner">Hetzner → Gemini Batch</div>
+    <div class="phase-status">→ ocr_submitted</div>
+  </div>
+  <div class="arrow">→</div>
+  <div class="phase">
+    <div class="phase-num">Phase 3</div>
+    <div class="phase-name">OCR Complete</div>
+    <div class="phase-where hetzner">batch-collector</div>
+    <div class="phase-status">→ ocr_complete</div>
+  </div>
+  <div class="arrow">→</div>
+  <div class="phase">
+    <div class="phase-num">Phase 3.5</div>
+    <div class="phase-name">Metadata</div>
+    <div class="phase-where vercel">Vercel API</div>
+    <div class="phase-status">→ metadata_enriched</div>
+  </div>
+  <div class="arrow">→</div>
+  <div class="phase">
+    <div class="phase-num">Phase 3.7</div>
+    <div class="phase-name">Transliteration</div>
+    <div class="phase-where hetzner">Hetzner inline</div>
+    <div class="phase-status">→ ft_verified</div>
+  </div>
+  <div class="arrow">→</div>
+  <div class="phase">
+    <div class="phase-num">Phase 4</div>
+    <div class="phase-name">Translate</div>
+    <div class="phase-where hetzner">translate-worker</div>
+    <div class="phase-status">→ translate_submitted</div>
+  </div>
+  <div class="arrow">→</div>
+  <div class="phase">
+    <div class="phase-num">Phase 5</div>
+    <div class="phase-name">Translate Done</div>
+    <div class="phase-where hetzner">orchestrator check</div>
+    <div class="phase-status">→ translate_complete</div>
+  </div>
+  <div class="arrow">→</div>
+  <div class="phase">
+    <div class="phase-num">Phase 6</div>
+    <div class="phase-name">Summary + Index</div>
+    <div class="phase-where vercel">Vercel API</div>
+    <div class="phase-status">→ summary_indexed</div>
+  </div>
+  <div class="arrow">→</div>
+  <div class="phase">
+    <div class="phase-num">Phase 7</div>
+    <div class="phase-name">Chapters</div>
+    <div class="phase-where vercel">Vercel API</div>
+    <div class="phase-status">→ chapters_complete</div>
+  </div>
+  <div class="arrow">→</div>
+  <div class="phase">
+    <div class="phase-num">Phase 8</div>
+    <div class="phase-name">Images</div>
+    <div class="phase-where lambda">Lambda via SQS</div>
+    <div class="phase-status">→ images_complete</div>
+  </div>
+  <div class="arrow">→</div>
+  <div class="phase" style="border-color: #4ade80;">
+    <div class="phase-num">Phase 9</div>
+    <div class="phase-name">Complete</div>
+    <div class="phase-where hetzner">Finalize</div>
+    <div class="phase-status">→ complete ✓</div>
+  </div>
+</div>
+</div>
+
+<!-- ── Environments ── -->
+<div class="grid">
+
+  <!-- Hetzner -->
+  <div class="env">
+    <div class="env-header">
+      <div class="env-dot hetzner"></div>
+      <div class="env-label">Hetzner (cax31 ARM)</div>
+      <div class="env-desc">root@46.224.122.120</div>
+    </div>
+
+    <div class="worker">
+      <div class="worker-name">pipeline-orchestrator.mjs<span class="worker-schedule">*/2 min</span></div>
+      <div class="worker-desc">All phases — fallback orchestrator. Per-phase crons also run independently.</div>
+    </div>
+    <div class="worker">
+      <div class="worker-name">translate-worker.mjs<span class="worker-schedule">*/2 min</span></div>
+      <div class="worker-desc">Inline translation via Gemini. 20 concurrent books, 8K pages/run cap.</div>
+      <div class="worker-model">BPH → gemini-3-flash-preview | Others → gemini-3.1-flash-lite-preview</div>
+    </div>
+    <div class="worker">
+      <div class="worker-name">batch-collector.mjs<span class="worker-schedule">*/10 min</span></div>
+      <div class="worker-desc">Polls Gemini Batch API, writes OCR results to pages.</div>
+    </div>
+    <div class="worker">
+      <div class="worker-name">archive-ocr.mjs<span class="worker-schedule">*/30 min</span></div>
+      <div class="worker-desc">Per-page IIIF download → Cloudflare R2. Rate-limited per domain.</div>
+    </div>
+    <div class="worker">
+      <div class="worker-name">archive-bulk.mjs<span class="worker-schedule">*/10 min</span></div>
+      <div class="worker-desc">IA bulk JP2 zip download → R2. 4x faster than IIIF.</div>
+    </div>
+    <div class="worker">
+      <div class="worker-name">sync-worker.mjs<span class="worker-schedule">*/2 hr</span></div>
+      <div class="worker-desc">Reconcile book counters (pages_ocr, pages_translated, pages_archived) from page data.</div>
+    </div>
+    <div class="worker">
+      <div class="worker-name">resize-worker.mjs<span class="worker-schedule">*/30 min</span></div>
+      <div class="worker-desc">Generate display-size images from full-res on R2.</div>
+    </div>
+    <div class="worker">
+      <div class="worker-name">pipeline-health-alert.mjs<span class="worker-schedule">7:00 UTC</span></div>
+      <div class="worker-desc">Daily throughput + storage alerts.</div>
+    </div>
+  </div>
+
+  <!-- Lambda -->
+  <div class="env">
+    <div class="env-header">
+      <div class="env-dot lambda"></div>
+      <div class="env-label">AWS Lambda</div>
+      <div class="env-desc">eu-central-1</div>
+    </div>
+
+    <div class="worker">
+      <div class="worker-name">ocr-processor<span class="worker-schedule">SQS standard</span></div>
+      <div class="worker-desc">Preview OCR only (first 25 pages). 10 reserved concurrency.</div>
+    </div>
+    <div class="worker deprecated">
+      <div class="worker-name">translation-processor<span class="worker-schedule">SQS FIFO</span></div>
+      <div class="worker-desc">Preview translation + manual jobs only. Production uses Hetzner.</div>
+    </div>
+    <div class="worker">
+      <div class="worker-name">image-extraction-processor<span class="worker-schedule">SQS standard</span></div>
+      <div class="worker-desc">All image extraction (Phase 8). 10 reserved concurrency.</div>
+    </div>
+    <div class="worker">
+      <div class="worker-name">write-processor<span class="worker-schedule">SQS batched</span></div>
+      <div class="worker-desc">All Lambda → MongoDB writes. 50 reserved concurrency. Prevents connection storms.</div>
+    </div>
+  </div>
+
+  <!-- Vercel -->
+  <div class="env">
+    <div class="env-header">
+      <div class="env-dot vercel"></div>
+      <div class="env-label">Vercel</div>
+      <div class="env-desc">sourcelibrary.org</div>
+    </div>
+
+    <div class="worker">
+      <div class="worker-name">API Routes (called from Hetzner)</div>
+      <div class="worker-desc">
+        /api/books/[id]/verify-metadata (Phase 3.5)<br>
+        /api/books/[id]/index (Phase 6)<br>
+        /api/books/[id]/extract-chapters (Phase 7)
+      </div>
+    </div>
+    <div class="worker">
+      <div class="worker-name">health-check<span class="worker-schedule">hourly</span></div>
+      <div class="worker-desc">DB latency, zombie jobs, email alerts.</div>
+    </div>
+    <div class="worker">
+      <div class="worker-name">daily-pipeline-report<span class="worker-schedule">6:00 UTC</span></div>
+      <div class="worker-desc">Daily snapshot → pipeline_health_daily.</div>
+    </div>
+    <div class="worker">
+      <div class="worker-name">social-post / social-reset<span class="worker-schedule">*/3 hr / midnight</span></div>
+      <div class="worker-desc">Social media automation.</div>
+    </div>
+    <div class="worker">
+      <div class="worker-name">warm<span class="worker-schedule">*/5 min</span></div>
+      <div class="worker-desc">Keep serverless pools warm.</div>
+    </div>
+  </div>
+
+</div>
+
+<!-- ── Model Routing ── -->
+<div class="models">
+<h2>Model Routing</h2>
+<table class="model-table">
+  <tr><th>Task</th><th>BPH Books</th><th>All Others</th><th>Cost/page</th></tr>
+  <tr>
+    <td>OCR (Batch API)</td>
+    <td class="model-flash">gemini-3-flash-preview</td>
+    <td class="model-lite">gemini-3.1-flash-lite-preview</td>
+    <td>$0.0017</td>
+  </tr>
+  <tr>
+    <td>Translation</td>
+    <td class="model-flash">gemini-3-flash-preview</td>
+    <td class="model-lite">gemini-3.1-flash-lite-preview</td>
+    <td>$0.0045</td>
+  </tr>
+  <tr>
+    <td>Transliteration</td>
+    <td class="model-lite">gemini-3.1-flash-lite-preview</td>
+    <td class="model-lite">gemini-3.1-flash-lite-preview</td>
+    <td>~$0.001</td>
+  </tr>
+  <tr>
+    <td>Summary + Index</td>
+    <td class="model-flash">gemini-3-flash-preview</td>
+    <td class="model-flash">gemini-3-flash-preview</td>
+    <td>$0.0007</td>
+  </tr>
+  <tr>
+    <td>Image Extraction</td>
+    <td class="model-flash">gemini-3-flash-preview</td>
+    <td class="model-flash">gemini-3-flash-preview</td>
+    <td>$0.0017</td>
+  </tr>
+</table>
+</div>
+
+<!-- ── Counter Sync ── -->
+<div class="counters">
+<h2>Book Counter Sync</h2>
+<p>Cached counters on each book document. Workers must update after writing to pages. sync-worker reconciles every 2h as safety net.</p>
+<div class="counter-flow">
+  <div class="counter-box ok">pages_count</div>
+  <div class="counter-box ok">pages_ocr<br><span style="font-size:10px;color:#666">batch-collector syncs ✓</span></div>
+  <div class="counter-box ok">pages_translated<br><span style="font-size:10px;color:#666">translate-worker syncs ✓</span></div>
+  <div class="counter-box warn">pages_archived<br><span style="font-size:10px;color:#f59e0b">archive workers DON'T sync (#499)</span></div>
+  <div class="counter-box warn">translation_percent<br><span style="font-size:10px;color:#f59e0b">never computed (#499)</span></div>
+</div>
+</div>
+
+<div class="updated">Last updated: 2026-03-27 &mdash; Generated from crontab dump + code audit</div>
+
+</body>
+</html>

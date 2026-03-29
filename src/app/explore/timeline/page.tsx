@@ -1,9 +1,10 @@
 import { Metadata } from 'next';
-import { ObjectId } from 'mongodb';
 import { getDb } from '@/lib/mongodb';
 import TimelineLoader from '@/components/explore/TimelineLoader';
 
+// ISR: rebuild every 6 hours. Allow 60s for first-hit generation.
 export const dynamic = 'force-dynamic';
+export const maxDuration = 60;
 
 export const metadata: Metadata = {
   title: 'Timeline — Explore — Source Library',
@@ -71,7 +72,7 @@ async function fetchTimelineData() {
           'books.book_id': 1,
         },
       },
-    ])
+    ], { maxTimeMS: 45000 })
     .toArray();
 
   // Build book_id → language map from books collection
@@ -82,24 +83,17 @@ async function fetchTimelineData() {
     }
   }
 
-  const bookIdArr = [...allBookIds];
-  // Book IDs can be ObjectId hex strings or UUID strings
-  const objectIds = bookIdArr
-    .filter((id) => /^[a-f0-9]{24}$/.test(id))
-    .map((id) => new ObjectId(id));
-  const stringIds = bookIdArr.filter((id) => !/^[a-f0-9]{24}$/.test(id));
-
-  const bookDocs = await db.collection('books').find(
-    { $or: [
-      ...(objectIds.length ? [{ _id: { $in: objectIds } }] : []),
-      ...(stringIds.length ? [{ _id: { $in: stringIds as unknown as ObjectId[] } }] : []),
-    ] },
-    { projection: { _id: 1, language: 1 } }
-  ).toArray();
+  // Query by `id` field (app-level ID) — avoids needing ObjectId/string split
+  const bookDocs = allBookIds.size > 0
+    ? await db.collection('books').find(
+        { id: { $in: [...allBookIds] } },
+        { projection: { id: 1, language: 1 } }
+      ).toArray()
+    : [];
 
   const bookLangMap = new Map<string, string>();
   for (const b of bookDocs) {
-    if (b.language) bookLangMap.set(String(b._id), b.language as string);
+    if (b.language && b.id) bookLangMap.set(b.id as string, b.language as string);
   }
 
   // Compute dominant cultural tradition for an entity from its books' languages
@@ -189,7 +183,14 @@ async function fetchTimelineData() {
 }
 
 export default async function TimelinePage() {
-  const data = await fetchTimelineData();
-
-  return <TimelineLoader entities={data.entities} stats={data.stats} />;
+  try {
+    const data = await fetchTimelineData();
+    return <TimelineLoader entities={data.entities} stats={data.stats} />;
+  } catch {
+    return (
+      <div className="min-h-screen flex items-center justify-center">
+        <p className="text-stone-500">Timeline data is temporarily unavailable. Please try again shortly.</p>
+      </div>
+    );
+  }
 }

@@ -20,9 +20,10 @@
  *   node scripts/workers/pipeline-orchestrator.mjs --phase 2  # run only phase 2 (OCR submit)
  */
 
-import { MongoClient } from 'mongodb';
+import { MongoClient, ObjectId } from 'mongodb';
 import { nanoid } from 'nanoid';
 import { SQSClient, SendMessageBatchCommand } from '@aws-sdk/client-sqs';
+import { S3Client, PutObjectCommand } from '@aws-sdk/client-s3';
 import { createHash } from 'crypto';
 
 // ── Config ──
@@ -36,12 +37,64 @@ const SQS_IMAGE_EXTRACTION_QUEUE_URL = process.env.SQS_PAGE_IMAGE_EXTRACTION_QUE
 
 // Gemini Batch API config (for direct OCR submission, bypassing Vercel)
 const GEMINI_API_BASE = 'https://generativelanguage.googleapis.com/v1beta';
-const OCR_MODEL = 'gemini-3-flash-preview';
+const OCR_MODEL_FLASH = 'gemini-3-flash-preview';
+const OCR_MODEL_LITE = 'gemini-3.1-flash-lite-preview';
+function getOcrModelForBook(book) {
+  // A/B tested 2026-03-28: lite produces identical OCR on BPH books (2-4% char diff,
+  // indistinguishable from normal variation). 50% cost savings, 5-7x faster.
+  return OCR_MODEL_LITE;
+}
+const OCR_MODEL = OCR_MODEL_FLASH; // Legacy fallback for recitation retry path
 const OCR_PROMPT_VERSION = 'v5.2026-02';
 const OCR_INLINE_BATCH_SIZE = 20;  // Pages per inline batch (base64 in body, ~20MB limit)
 const OCR_FILE_BATCH_SIZE = 150;   // Pages per file-based batch (JSONL uploaded to File API)
 const IMAGE_CONCURRENCY = 20;     // Parallel image downloads per book
 const MAX_PAGES_PER_BOOK = 500;   // Max pages to OCR per book
+
+// R2 config for split image uploads (mirrors batch-split-bph.mjs)
+const R2_BUCKET = process.env.R2_BUCKET_NAME || 'sourcelibrary';
+const R2_PUBLIC_URL = process.env.R2_PUBLIC_URL || 'https://images.sourcelibrary.org';
+const SPLIT_OVERLAP = 10; // overlap in 0-1000 scale
+const SPLIT_PAGE_CONCURRENCY = 5;
+const SPLIT_CROPPED_QUALITY = 90;
+const SPLIT_DISPLAY_WIDTH = 1200;
+const SPLIT_DISPLAY_QUALITY = 85;
+const SPLIT_THUMB_WIDTH = 150;
+const SPLIT_THUMB_QUALITY = 60;
+
+function getR2Client() {
+  const { R2_ACCOUNT_ID, R2_ACCESS_KEY_ID, R2_SECRET_ACCESS_KEY } = process.env;
+  if (!R2_ACCOUNT_ID || !R2_ACCESS_KEY_ID || !R2_SECRET_ACCESS_KEY) {
+    throw new Error('Missing R2 credentials for split image upload');
+  }
+  return new S3Client({
+    region: 'auto',
+    endpoint: `https://${R2_ACCOUNT_ID}.r2.cloudflarestorage.com`,
+    credentials: { accessKeyId: R2_ACCESS_KEY_ID, secretAccessKey: R2_SECRET_ACCESS_KEY },
+  });
+}
+
+async function uploadToR2(r2, key, buffer, contentType = 'image/jpeg') {
+  await r2.send(new PutObjectCommand({
+    Bucket: R2_BUCKET, Key: key, Body: buffer, ContentType: contentType,
+    CacheControl: 'public, max-age=86400, s-maxage=86400',
+  }));
+  return `${R2_PUBLIC_URL}/${key}`;
+}
+
+function splitPagePaths(bookId, pageNumber) {
+  const num = String(pageNumber).padStart(4, '0');
+  const base = `pages/${bookId}/${num}`;
+  return { full: `${base}-full.jpg`, display: `${base}.jpg`, thumb: `${base}-thumb.jpg` };
+}
+
+async function parallelMap(items, fn, concurrency) {
+  const results = [];
+  let i = 0;
+  async function worker() { while (i < items.length) { const idx = i++; results[idx] = await fn(items[idx], idx); } }
+  await Promise.all(Array.from({ length: Math.min(concurrency, items.length) }, worker));
+  return results;
+}
 
 if (!MONGODB_URI) { console.error('MONGODB_URI not set'); process.exit(1); }
 if (!CRON_SECRET) { console.error('CRON_SECRET not set'); process.exit(1); }
@@ -57,8 +110,8 @@ let ARCHIVE_LIMIT = 500;
 let OCR_SUBMIT_LIMIT = 200;
 const MAX_ACTIVE_BATCH_OCR = 500; // Gemini Batch API is resilient
 let METADATA_ENRICH_LIMIT = 50;
-let TRANSLATE_SUBMIT_LIMIT = 20;
-let MAX_INFLIGHT_TRANSLATIONS = 30; // Total books in translate_submitted — caps concurrent Lambda workers
+let TRANSLATE_SUBMIT_LIMIT = 30;
+let MAX_INFLIGHT_TRANSLATIONS = 40; // Total books in translate_submitted — caps concurrent workers
 let ENRICH_LIMIT = 30;
 let CHAPTER_LIMIT = 50;
 let IMAGE_SUBMIT_LIMIT = 10;
@@ -159,10 +212,18 @@ async function probeDbHealth(db) {
       );
       if (result.modifiedCount > 0) {
         console.log(`[health] Cancelled ${result.modifiedCount} pending jobs`);
-        // Clear book.job references so books can be re-submitted later
+        // Clear book.job references AND roll back pipeline status so books can be re-submitted
         await db.collection('books').updateMany(
-          { 'job.job_id': { $exists: true } },
-          { $unset: { job: '' }, $set: { updated_at: new Date() } },
+          { 'pipeline_auto.status': 'translate_submitted' },
+          { $set: { 'pipeline_auto.status': 'metadata_enriched', updated_at: new Date() }, $unset: { job: '' } },
+        );
+        await db.collection('books').updateMany(
+          { 'pipeline_auto.status': 'ocr_submitted' },
+          { $set: { 'pipeline_auto.status': 'archive_complete', updated_at: new Date() }, $unset: { job: '' } },
+        );
+        await db.collection('books').updateMany(
+          { 'pipeline_auto.status': 'images_submitted' },
+          { $set: { 'pipeline_auto.status': 'chapters_complete', updated_at: new Date() }, $unset: { job: '' } },
         );
       }
     } catch (e) {
@@ -223,6 +284,16 @@ function isNonLatin(language) {
   return language && NON_LATIN_LANGUAGES.has(language.toLowerCase());
 }
 
+/** Detect Google Books, Internet Archive, or other digitizer notice pages from OCR text. */
+function isDigitizerOcr(ocrData) {
+  if (!ocrData) return false;
+  const start = ocrData.substring(0, 1500);
+  return /google\s+logo|digitized\s+by\s+google|this\s+is\s+a\s+digital\s+copy/i.test(start) ||
+    /inserted\s+by\s+the\s+internet|internet\s+archive|digitization\s+(credit|notice)/i.test(start) ||
+    /not\s+part\s+of\s+the\s+original\s+book|scanner\s+barcode/i.test(start) ||
+    /ex[\s\-.]?libris|bookplate|library\s+stamp/i.test(start);
+}
+
 function languageToScript(language) {
   if (!language) return 'Unknown';
   const map = {
@@ -246,7 +317,13 @@ function hashString(str) {
   return hash.toString(16);
 }
 
-const TRANSLATE_MODEL = 'gemini-3-flash-preview';
+const TRANSLATE_MODEL_FLASH = 'gemini-3-flash-preview';
+const TRANSLATE_MODEL_LITE = 'gemini-3.1-flash-lite-preview';
+function getTranslateModelForBook(book) {
+  if (book?.image_source?.provider === 'bph') return TRANSLATE_MODEL_FLASH;
+  return TRANSLATE_MODEL_LITE;
+}
+const TRANSLATE_MODEL = TRANSLATE_MODEL_FLASH; // Legacy fallback
 const TRANSLATE_PROMPT_VERSION = 'v5.2026-02';
 const TRANSLITERATION_MODEL = 'gemini-3.1-flash-lite-preview';
 const TRANSLITERATION_PROMPT = `You are a scholarly transliterator. Convert the following text to Latin characters using standard academic Romanization conventions.
@@ -576,6 +653,194 @@ function headers() {
   };
 }
 
+// ── Inline metadata verification (replaces Vercel POST /api/books/[id]/verify-metadata) ──
+// Searches external_catalog (EFM/IA) and USTC (Supabase) for catalog matches,
+// then applies high-confidence suggestions to fill missing/Unknown fields.
+// No Gemini dependency — pure catalog lookups.
+
+const SUPABASE_URL = 'https://ykhxaecbbxaaqlujuzde.supabase.co';
+const SUPABASE_ANON_KEY = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6InlraHhhZWNiYnhhYXFsdWp1emRlIiwicm9sZSI6ImFub24iLCJpYXQiOjE3NjUwNjExMDEsImV4cCI6MjA4MDYzNzEwMX0.O2chfnHGQWLOaVSFQ-F6UJMlya9EzPbsUh848SEOPj4';
+
+function metaNormalize(text) {
+  if (!text) return '';
+  return text.toLowerCase().replace(/[^\w\s]/g, '').replace(/\s+/g, ' ').trim();
+}
+
+function metaSimilarity(a, b) {
+  const normA = metaNormalize(a);
+  const normB = metaNormalize(b);
+  if (!normA || !normB) return 0;
+  const wordsA = new Set(normA.split(' ').filter(w => w.length > 2));
+  const wordsB = new Set(normB.split(' ').filter(w => w.length > 2));
+  if (wordsA.size === 0 || wordsB.size === 0) return 0;
+  const intersection = [...wordsA].filter(w => wordsB.has(w)).length;
+  const union = new Set([...wordsA, ...wordsB]).size;
+  return Math.round((intersection / union) * 100);
+}
+
+function extractYear(text) {
+  if (!text) return undefined;
+  const match = text.match(/\b(1[4-9]\d{2}|20[0-2]\d)\b/);
+  return match ? match[1] : undefined;
+}
+
+async function verifyMetadataInline(db, book) {
+  const matches = [];
+
+  // 1. Search local external_catalog (EFM + IA)
+  const searchTerms = [book.title, book.author]
+    .filter(Boolean)
+    .join(' ')
+    .split(' ')
+    .filter(w => w.length >= 3)
+    .slice(0, 3);
+
+  if (searchTerms.length > 0) {
+    const wordConditions = searchTerms.map(word => ({
+      $or: [
+        { title: { $regex: word, $options: 'i' } },
+        { author: { $regex: word, $options: 'i' } },
+      ]
+    }));
+
+    const catalogDocs = await db.collection('external_catalog')
+      .find({ $and: wordConditions })
+      .limit(20)
+      .toArray();
+
+    for (const doc of catalogDocs) {
+      const titleSim = metaSimilarity(book.title, doc.title);
+      const authorSim = metaSimilarity(book.author, doc.author);
+      const confidence = Math.round((titleSim * 0.7) + (authorSim * 0.3));
+      if (confidence > 30) {
+        matches.push({
+          source: doc.source === 'bph' ? 'EFM' : 'IA',
+          confidence,
+          year: doc.year?.toString(),
+          language: doc.language,
+          place: doc.placeOfPublication,
+          publisher: doc.publisher,
+        });
+      }
+    }
+  }
+
+  // 2. Search USTC via Supabase
+  try {
+    const supaHeaders = {
+      'apikey': SUPABASE_ANON_KEY,
+      'Authorization': `Bearer ${SUPABASE_ANON_KEY}`,
+    };
+    const searchQuery = metaNormalize(book.title).split(' ').slice(0, 3).join(' ');
+    if (searchQuery.length >= 3) {
+      const enrichedUrl = new URL(`${SUPABASE_URL}/rest/v1/ustc_enrichments`);
+      enrichedUrl.searchParams.set('select', 'id,std_title,english_title,detected_language,original_author');
+      enrichedUrl.searchParams.set('limit', '10');
+      enrichedUrl.searchParams.set('or', `(std_title.ilike.*${searchQuery}*,english_title.ilike.*${searchQuery}*,original_author.ilike.*${searchQuery}*)`);
+
+      const enrichRes = await fetch(enrichedUrl.toString(), { headers: supaHeaders });
+      if (enrichRes.ok) {
+        const enrichData = await enrichRes.json();
+        for (const row of enrichData) {
+          const titleSim = Math.max(
+            metaSimilarity(book.title, row.std_title || ''),
+            metaSimilarity(book.title, row.english_title || '')
+          );
+          const authorSim = metaSimilarity(book.author, row.original_author || '');
+          const confidence = Math.round((titleSim * 0.7) + (authorSim * 0.3));
+          if (confidence > 30) {
+            // Fetch edition data for year/place
+            const edUrl = new URL(`${SUPABASE_URL}/rest/v1/ustc_editions`);
+            edUrl.searchParams.set('select', 'year,place,language_1');
+            edUrl.searchParams.set('id', `eq.${row.id}`);
+            const edRes = await fetch(edUrl.toString(), { headers: supaHeaders });
+            const edData = edRes.ok ? await edRes.json() : [];
+            const edition = edData[0];
+            matches.push({
+              source: 'USTC',
+              confidence,
+              year: edition?.year?.toString(),
+              language: row.detected_language || edition?.language_1,
+              place: edition?.place,
+              publisher: undefined,
+            });
+          }
+        }
+      }
+    }
+  } catch (e) {
+    console.log(`  [metadata] USTC search error for ${book.id}: ${e.message}`);
+  }
+
+  // Sort by confidence, pick best
+  matches.sort((a, b) => b.confidence - a.confidence);
+  const bestMatch = matches[0];
+  if (!bestMatch || bestMatch.confidence <= 60) {
+    return { applied: 0, matches: matches.length };
+  }
+
+  // Build updates — only fill missing/Unknown fields
+  const updates = { updated_at: new Date() };
+  const changes = [];
+
+  if ((!book.published || book.published === 'Unknown') && bestMatch.year) {
+    const yr = extractYear(bestMatch.year) || bestMatch.year;
+    updates.published = yr;
+    changes.push({ field: 'published', previous: book.published, new_value: yr });
+  }
+  if ((!book.language || book.language === 'Unknown') && bestMatch.language && bestMatch.language !== 'Unknown') {
+    updates.language = bestMatch.language;
+    changes.push({ field: 'language', previous: book.language, new_value: bestMatch.language });
+  }
+  if (!book.place_of_publication && bestMatch.place) {
+    updates.place_of_publication = bestMatch.place;
+    changes.push({ field: 'place_of_publication', previous: null, new_value: bestMatch.place });
+  }
+  if (!book.publisher && bestMatch.publisher) {
+    updates.publisher = bestMatch.publisher;
+    changes.push({ field: 'publisher', previous: null, new_value: bestMatch.publisher });
+  }
+
+  if (changes.length === 0) {
+    return { applied: 0, matches: matches.length };
+  }
+
+  // Set field_provenance for each changed field
+  const provenance = {
+    source: 'metadata_verification',
+    verified_source: bestMatch.source,
+    confidence: bestMatch.confidence,
+    date: new Date(),
+  };
+  for (const c of changes) {
+    updates[`field_provenance.${c.field}`] = { ...provenance, previous_value: c.previous };
+  }
+
+  // Record verification metadata
+  updates.metadata_verified = {
+    date: new Date(),
+    source: bestMatch.source,
+    confidence: bestMatch.confidence,
+    changes: changes.map(c => `${c.field}: ${c.previous || 'none'} → ${c.new_value}`),
+  };
+
+  await db.collection('books').updateOne({ id: book.id }, { $set: updates });
+
+  // Append-only changelog
+  try {
+    await db.collection('book_metadata_changelog').insertOne({
+      id: nanoid(12),
+      book_id: book.id,
+      source: 'catalog_verification',
+      changes,
+      note: `Source: ${bestMatch.source}, confidence: ${bestMatch.confidence}`,
+      timestamp: new Date(),
+    });
+  } catch { /* non-fatal */ }
+
+  return { applied: changes.length, matches: matches.length, source: bestMatch.source, confidence: bestMatch.confidence };
+}
+
 function sleep(ms) {
   return new Promise(resolve => setTimeout(resolve, ms));
 }
@@ -827,7 +1092,7 @@ async function getOcrPromptFromDb(db) {
  * A 300-page book now uses 2 batch jobs instead of 15.
  */
 async function submitOcrDirectly(db, book, { modelOverride } = {}) {
-  const ocrModel = modelOverride || OCR_MODEL;
+  const ocrModel = modelOverride || getOcrModelForBook(book);
   // Guard: check for existing active batch_jobs for this book
   const activeBatchForBook = await db.collection('batch_jobs').countDocuments({
     book_id: book.id,
@@ -864,6 +1129,15 @@ async function submitOcrDirectly(db, book, { modelOverride } = {}) {
     return { submitted: 0, jobName: null, alreadyDone: true };
   }
 
+  // Guard: skip pages that are unsplit spreads (have no crop but book needs splitting)
+  // These would send two-page images to OCR, producing garbled results
+  const unsplitPages = pages.filter(p => !p.crop && !p.cropped_photo);
+  if (unsplitPages.length > 0 && unsplitPages.length === pages.length) {
+    // All pages are unsplit — book probably needs split detection first
+    console.log(`    WARNING: All ${pages.length} pages lack crop data — possible unsplit spreads, skipping OCR (#523)`);
+    return { submitted: 0, jobName: null, alreadyDone: false, skippedUnsplit: true };
+  }
+
   console.log(`    Downloading ${pages.length} images...`);
   const downloaded = await downloadImagesParallel(pages, IMAGE_CONCURRENCY);
   if (downloaded.length === 0) {
@@ -871,7 +1145,17 @@ async function submitOcrDirectly(db, book, { modelOverride } = {}) {
   }
   console.log(`    Downloaded ${downloaded.length}/${pages.length} images`);
 
-  const prompt = await getOcrPromptFromDb(db);
+  let prompt = await getOcrPromptFromDb(db);
+
+  // Append book provenance context to help Gemini avoid recitation blocks
+  // on public domain works it mistakes for copyrighted material
+  const yearStr = book.year ? `Published ${book.year}.` : '';
+  const copyrightNote = book.year && book.year < 1930
+    ? 'This work is in the public domain.'
+    : '';
+  if (yearStr || book.title) {
+    prompt += `\n\n**Document context:** "${book.title || 'Unknown'}" by ${book.author || 'Unknown'}. ${yearStr} ${copyrightNote}`.trim();
+  }
 
   // Choose batch size based on page count
   const useFileBased = downloaded.length > OCR_INLINE_BATCH_SIZE;
@@ -1078,6 +1362,8 @@ async function run() {
     chapters_skipped: 0,
     images_submitted: 0,
     images_advanced: 0,
+    covers_selected: 0,
+    digitizer_pages_hidden: 0,
     finalized: 0,
     needs_attention: 0,
     stale_retried: 0,
@@ -1224,8 +1510,8 @@ async function run() {
 
     // ── Phase 1.25: Split detection for spread scans ──
     // Checks archive_complete books for two-page spreads (landscape aspect ratio).
-    // Calls the Vercel auto-split-ml API to split spreads into individual pages
-    // and generate cropped images. Must run BEFORE OCR to avoid OCR'ing full spreads.
+    // Center-splits spreads inline (no API call), uploads cropped halves to R2.
+    // Based on batch-split-bph.mjs by Mayank. Must run BEFORE OCR.
     // See: https://github.com/Embassy-of-the-Free-Mind/sourcelibrary-v2/issues/264
     if (shouldRun(1.25)) {
       console.log('\n--- Phase 1.25: Split detection (spread → individual pages) ---');
@@ -1314,41 +1600,174 @@ async function run() {
             continue;
           }
 
-          // It's a spread — call Vercel auto-split-ml API
-          console.log(`    ${label}: SPREAD detected, running split detection...`);
+          // It's a spread — center-split inline (from batch-split-bph.mjs)
+          console.log(`    ${label}: SPREAD detected, running center-split...`);
 
           if (DRY_RUN) {
             console.log(`    Would split: ${label}`);
             continue;
           }
 
-          const splitRes = await fetch(`${BASE_URL}/api/books/${book.id}/auto-split-ml`, {
-            method: 'POST',
-            headers: {
-              'Authorization': `Bearer ${CRON_SECRET}`,
-              'Content-Type': 'application/json',
+          const r2 = getR2Client();
+          const sharp = (await import('sharp')).default;
+
+          // Get all pages for this book
+          const allBookPages = await db.collection('pages')
+            .find({ book_id: book.id })
+            .sort({ page_number: 1 })
+            .toArray();
+
+          const newPages = [];
+          const updateOps = [];
+          let bookSplitCount = 0;
+          let bookSingleCount = 0;
+          let bookErrors = 0;
+
+          await parallelMap(allBookPages, async (page) => {
+            try {
+              const imgUrl = page.archived_photo || page.photo_original || page.photo;
+              if (!imgUrl) return;
+
+              const imgRes = await fetch(imgUrl, { signal: AbortSignal.timeout(30000) });
+              if (!imgRes.ok) return;
+              const buf = Buffer.from(await imgRes.arrayBuffer());
+              const pageMeta = await sharp(buf).metadata();
+              const pageRatio = (pageMeta.width || 1) / (pageMeta.height || 1);
+
+              if (pageRatio <= ASPECT_RATIO_THRESHOLD) {
+                bookSingleCount++;
+                return;
+              }
+
+              // Center-split
+              const imgWidth = pageMeta.width || 1000;
+              const imgHeight = pageMeta.height || 1000;
+              const splitX = Math.round(imgWidth / 2);
+              const overlapPx = Math.round(SPLIT_OVERLAP * imgWidth / 1000);
+
+              const leftBuf = await sharp(buf)
+                .extract({ left: 0, top: 0, width: Math.min(imgWidth, splitX + overlapPx), height: imgHeight })
+                .jpeg({ quality: SPLIT_CROPPED_QUALITY, progressive: true })
+                .toBuffer();
+
+              const rightBuf = await sharp(buf)
+                .extract({ left: Math.max(0, splitX - overlapPx), top: 0, width: Math.min(imgWidth, imgWidth - splitX + overlapPx), height: imgHeight })
+                .jpeg({ quality: SPLIT_CROPPED_QUALITY, progressive: true })
+                .toBuffer();
+
+              const [leftDisplay, leftThumb, rightDisplay, rightThumb] = await Promise.all([
+                sharp(leftBuf).resize(SPLIT_DISPLAY_WIDTH).jpeg({ quality: SPLIT_DISPLAY_QUALITY }).toBuffer(),
+                sharp(leftBuf).resize(SPLIT_THUMB_WIDTH).jpeg({ quality: SPLIT_THUMB_QUALITY }).toBuffer(),
+                sharp(rightBuf).resize(SPLIT_DISPLAY_WIDTH).jpeg({ quality: SPLIT_DISPLAY_QUALITY }).toBuffer(),
+                sharp(rightBuf).resize(SPLIT_THUMB_WIDTH).jpeg({ quality: SPLIT_THUMB_QUALITY }).toBuffer(),
+              ]);
+
+              const leftPaths = splitPagePaths(book.id, page.page_number);
+              const rightPageId = new ObjectId().toHexString();
+              const rightTempKey = `pages/${book.id}/split-${rightPageId}`;
+
+              const [leftFullUrl, , leftThumbUrl] = await Promise.all([
+                uploadToR2(r2, leftPaths.full, leftBuf),
+                uploadToR2(r2, leftPaths.display, leftDisplay),
+                uploadToR2(r2, leftPaths.thumb, leftThumb),
+              ]);
+
+              const [rightFullUrl, , rightThumbUrl] = await Promise.all([
+                uploadToR2(r2, `${rightTempKey}-full.jpg`, rightBuf),
+                uploadToR2(r2, `${rightTempKey}.jpg`, rightDisplay),
+                uploadToR2(r2, `${rightTempKey}-thumb.jpg`, rightThumb),
+              ]);
+
+              const splitPosition = Math.round((splitX / imgWidth) * 1000);
+              const leftCrop = { xStart: 0, xEnd: splitPosition + SPLIT_OVERLAP };
+              const rightCrop = { xStart: splitPosition - SPLIT_OVERLAP, xEnd: 1000 };
+
+              updateOps.push({
+                updateOne: {
+                  filter: { id: page.id },
+                  update: {
+                    $set: {
+                      photo: leftFullUrl,
+                      photo_original: page.photo,
+                      cropped_photo: leftFullUrl,
+                      thumbnail: leftThumbUrl,
+                      crop: leftCrop,
+                      split_detection: {
+                        isTwoPageSpread: true, confidence: 'high', splitPosition,
+                        method: 'center-split', detected_at: new Date(),
+                      },
+                      updated_at: new Date(),
+                    },
+                    $unset: { ocr: '', translation: '', summary: '' },
+                  },
+                },
+              });
+
+              newPages.push({
+                _id: new ObjectId(rightPageId),
+                id: rightPageId,
+                tenant_id: 'default',
+                book_id: book.id,
+                page_number: page.page_number + 0.5,
+                photo: rightFullUrl,
+                photo_original: page.photo,
+                cropped_photo: rightFullUrl,
+                thumbnail: rightThumbUrl,
+                crop: rightCrop,
+                split_from: page.id,
+                split_detection: {
+                  isTwoPageSpread: true, confidence: 'high', splitPosition,
+                  method: 'center-split', detected_at: new Date(),
+                },
+                created_at: new Date(),
+                updated_at: new Date(),
+              });
+
+              bookSplitCount++;
+            } catch (err) {
+              console.log(`      page ${page.page_number}: FAIL — ${err.message?.slice(0, 80)}`);
+              bookErrors++;
+            }
+          }, SPLIT_PAGE_CONCURRENCY);
+
+          // Apply DB changes
+          if (updateOps.length > 0) await db.collection('pages').bulkWrite(updateOps);
+          if (newPages.length > 0) await db.collection('pages').insertMany(newPages);
+
+          // Renumber pages sequentially
+          const allPagesAfter = await db.collection('pages')
+            .find({ book_id: book.id })
+            .sort({ page_number: 1, _id: 1 })
+            .toArray();
+
+          const renumberOps = allPagesAfter.map((p, i) => ({
+            updateOne: { filter: { _id: p._id }, update: { $set: { page_number: i + 1 } } },
+          }));
+          if (renumberOps.length > 0) await db.collection('pages').bulkWrite(renumberOps);
+
+          // Update book counts
+          const ocrCount = await db.collection('pages').countDocuments({ book_id: book.id, 'ocr.data': { $exists: true, $ne: '' } });
+          const translateCount = await db.collection('pages').countDocuments({ book_id: book.id, 'translation.data': { $exists: true, $ne: '' } });
+
+          await db.collection('books').updateOne({ id: book.id }, {
+            $set: {
+              pages_count: allPagesAfter.length,
+              pages_ocr: ocrCount,
+              pages_translated: translateCount,
+              'pipeline_auto.split_checked': true,
+              'pipeline_auto.last_updated': new Date(),
+              ...(bookSplitCount > 0 ? {
+                'pipeline_auto.split_performed': true,
+                'pipeline_auto.split_count': bookSplitCount,
+                'pipeline_auto.split_at': new Date(),
+              } : {}),
             },
-            body: JSON.stringify({ limit: 200, dryRun: false }),
-            signal: AbortSignal.timeout(300000), // 5 min — splitting can be slow
           });
 
-          if (!splitRes.ok) {
-            const errText = await splitRes.text();
-            console.log(`    ${label}: split API failed: ${splitRes.status} — ${errText.slice(0, 200)}`);
-            continue;
-          }
-
-          const splitResult = await splitRes.json();
-          console.log(`    ${label}: split ${splitResult.splitCount || 0} spreads → ${splitResult.totalPages || 0} pages`);
-
-          // Mark as split-checked
-          await db.collection('books').updateOne(
-            { id: book.id },
-            { $set: { 'pipeline_auto.split_checked': true, 'pipeline_auto.last_updated': new Date() } }
-          );
+          console.log(`    ${label}: ${bookSplitCount} spreads split, ${bookSingleCount} single → ${allPagesAfter.length} total pages${bookErrors ? `, ${bookErrors} errors` : ''}`);
 
           splitChecked++;
-          if (splitResult.splitCount > 0) splitApplied++;
+          if (bookSplitCount > 0) splitApplied++;
 
         } catch (err) {
           console.log(`    ${book.title?.slice(0, 50)}: ERROR — ${err.message?.slice(0, 120)}`);
@@ -1614,7 +2033,8 @@ async function run() {
       const ENGLISH_VARIANTS_P2 = ['english', 'eng', 'en'];
       const readyForOcr = ocrLimit > 0 ? await db.collection('books')
         .aggregate([
-          { $match: { 'pipeline_auto.status': 'archive_complete', 'pipeline_auto.split_checked': true } },
+          // PAUSED: BPH books excluded pending split quality audit (#523)
+          { $match: { 'pipeline_auto.status': 'archive_complete', 'pipeline_auto.split_checked': true, 'image_source.provider': { $ne: 'bph' } } },
           { $addFields: {
             _priority: {
               $switch: {
@@ -1803,7 +2223,7 @@ async function run() {
       const readyForMetadata = await db.collection('books')
         .find({ 'pipeline_auto.status': 'ocr_complete' })
         .sort({ hidden: 1 })
-        .project({ id: 1, title: 1, 'pipeline_auto.retry_count': 1, 'ai_metadata.enriched_at': 1 })
+        .project({ id: 1, title: 1, author: 1, published: 1, language: 1, place_of_publication: 1, publisher: 1, 'pipeline_auto.retry_count': 1, 'ai_metadata.enriched_at': 1 })
         .limit(METADATA_ENRICH_LIMIT)
         .toArray();
 
@@ -1824,32 +2244,27 @@ async function run() {
             continue;
           }
 
-          const res = await fetch(`${BASE_URL}/api/books/${book.id}/verify-metadata`, {
-            method: 'POST',
-            headers: headers(),
-          });
+          // Inline catalog lookup + apply (no Vercel dependency)
+          const result = await verifyMetadataInline(db, book);
+          if (result.applied > 0) {
+            console.log(`  [metadata] ${book.id}: applied ${result.applied} fields from ${result.source} (${result.confidence}% confidence)`);
+          }
 
-          if (res.ok) {
-            await setPipelineStatus(db, book.id, 'metadata_enriched', { retry_count: 0 });
-            log.metadata_enriched++;
-          } else {
-            const retries = book.pipeline_auto?.retry_count || 0;
-            if (retries >= MAX_RETRIES) {
-              // Non-blocking: skip on persistent failure
+          await setPipelineStatus(db, book.id, 'metadata_enriched', { retry_count: 0 });
+          log.metadata_enriched++;
+        } catch (err) {
+          const retries = book.pipeline_auto?.retry_count || 0;
+          if (retries >= MAX_RETRIES) {
+            // Non-blocking: skip on persistent failure
+            if (!DRY_RUN) {
               await setPipelineStatus(db, book.id, 'metadata_enriched', { retry_count: 0 });
-              log.metadata_skipped++;
-            } else {
+            }
+            log.metadata_skipped++;
+          } else {
+            if (!DRY_RUN) {
               await setPipelineStatus(db, book.id, 'ocr_complete', { retry_count: retries + 1 });
             }
-            log.errors.push(`Metadata ${book.id}: HTTP ${res.status}`);
           }
-
-          await sleep(API_DELAY_MS);
-        } catch (err) {
-          if (!DRY_RUN) {
-            await setPipelineStatus(db, book.id, 'metadata_enriched', { retry_count: 0 });
-          }
-          log.metadata_skipped++;
           log.errors.push(`Metadata ${book.id}: ${err.message}`);
         }
       }
@@ -1970,6 +2385,37 @@ async function run() {
         }
       }
 
+      // Orphan detector: books in *_submitted state with no active job and no book.job reference.
+      // These get stranded when jobs are cancelled without rolling back pipeline status.
+      if (!DRY_RUN) {
+        const orphanStates = [
+          { from: 'translate_submitted', to: 'metadata_enriched' },
+          { from: 'ocr_submitted', to: 'archive_complete' },
+          { from: 'images_submitted', to: 'chapters_complete' },
+        ];
+        for (const { from, to } of orphanStates) {
+          const orphans = await db.collection('books').find({
+            'pipeline_auto.status': from,
+            $or: [{ job: { $exists: false } }, { job: null }],
+          }).project({ id: 1 }).toArray();
+          if (orphans.length > 0) {
+            // Verify no active jobs exist for these books
+            const orphanIds = orphans.map(b => b.id);
+            const activeJobCount = await db.collection('jobs').countDocuments({
+              book_id: { $in: orphanIds },
+              status: { $in: ['pending', 'processing'] },
+            });
+            if (activeJobCount === 0) {
+              await db.collection('books').updateMany(
+                { id: { $in: orphanIds }, 'pipeline_auto.status': from },
+                { $set: { 'pipeline_auto.status': to, updated_at: new Date() } },
+              );
+              console.log(`  Orphan detector: rolled back ${orphans.length} books from ${from} to ${to}`);
+            }
+          }
+        }
+      }
+
       // Phase 4 creates translation jobs. The Hetzner translate-worker.mjs picks them up.
       // SQS/Lambda path is deprecated — translate-worker runs on Hetzner cron and calls Gemini directly.
       {
@@ -1985,10 +2431,11 @@ async function run() {
         }
 
         const readyForTranslate = effectiveLimit > 0 ? await db.collection('books').aggregate([
-          { $match: { 'pipeline_auto.status': { $in: ['metadata_enriched', 'ft_verified'] } } },
+          // PAUSED: BPH books excluded pending split quality audit (#523)
+          { $match: { 'pipeline_auto.status': { $in: ['metadata_enriched', 'ft_verified'] }, 'image_source.provider': { $ne: 'bph' } } },
           { $addFields: { _latinFirst: { $cond: [{ $eq: ['$language', 'Latin'] }, 0, 1] } } },
           { $sort: { _latinFirst: 1, is_first_translation: -1, hidden: 1 } },
-          { $project: { id: 1, title: 1, pages_count: 1, language: 1, 'pipeline_auto.retry_count': 1 } },
+          { $project: { id: 1, title: 1, pages_count: 1, language: 1, 'pipeline_auto.retry_count': 1, 'image_source.provider': 1 } },
           { $limit: effectiveLimit }
         ]).toArray() : [];
 
@@ -2038,7 +2485,7 @@ async function run() {
               progress: { total: pageIds.length, completed: 0, failed: 0 },
               config: {
                 page_ids: pageIds,
-                model: 'gemini-3-flash-preview',
+                model: getTranslateModelForBook(book),
                 language: book.language || 'auto-detect',
               },
               initiated_by: 'pipeline_orchestrator',
@@ -2125,9 +2572,15 @@ async function run() {
       console.log(`  Translation advanced: ${log.translate_advanced}`);
     }
 
-    // ── Phase 6: Enrich — summary + index (translate_complete -> enriched) ──
-    if (shouldRun(6)) {
-      console.log('\n--- Phase 6: Enrichment (summary + index) ---');
+    // ── Phase 6: Summary + Index (translate_complete -> summary_indexed) ──
+    // When ENRICHMENT_INLINE=true, the enrich-worker.mjs cron handles this.
+    // Otherwise falls back to the Vercel API route.
+    if (shouldRun(6) && process.env.ENRICHMENT_INLINE === 'true') {
+      console.log('\n--- Phase 6: Summary + Index (INLINE — handled by enrich-worker.mjs) ---');
+      const readyCount = await db.collection('books').countDocuments({ 'pipeline_auto.status': 'translate_complete' });
+      console.log(`  Books in translate_complete: ${readyCount} (enrich-worker processes these)`);
+    } else if (shouldRun(6)) {
+      console.log('\n--- Phase 6: Summary + Index ---');
 
       const readyForEnrich = await db.collection('books')
         .find({ 'pipeline_auto.status': 'translate_complete' })
@@ -2136,7 +2589,7 @@ async function run() {
         .limit(ENRICH_LIMIT)
         .toArray();
 
-      console.log(`  Books ready for enrichment: ${readyForEnrich.length}`);
+      console.log(`  Books ready for summary + index: ${readyForEnrich.length}`);
 
       for (const book of readyForEnrich) {
         try {
@@ -2145,49 +2598,54 @@ async function run() {
             continue;
           }
 
-          await setPipelineStatus(db, book.id, 'enriching');
+          await setPipelineStatus(db, book.id, 'summarizing');
 
           const res = await fetch(`${BASE_URL}/api/books/${book.id}/index`, {
             method: 'GET',
+            headers: headers(),
           });
 
           if (!res.ok) {
             const retries = book.pipeline_auto?.retry_count || 0;
             if (retries >= MAX_RETRIES) {
-              await markFailed(db, book.id, `Enrich: HTTP ${res.status}`, retries);
+              await markFailed(db, book.id, `Summary+Index: HTTP ${res.status}`, retries);
             } else {
               await setPipelineStatus(db, book.id, 'translate_complete', { retry_count: retries + 1 });
             }
-            log.errors.push(`Enrich ${book.id}: HTTP ${res.status}`);
+            log.errors.push(`Summary+Index ${book.id}: HTTP ${res.status}`);
             continue;
           }
 
-          await setPipelineStatus(db, book.id, 'enriched', { retry_count: 0 });
+          await setPipelineStatus(db, book.id, 'summary_indexed', { retry_count: 0 });
           log.enriched++;
-          console.log(`  Enriched: ${book.title}`);
+          console.log(`  Summary + Index: ${book.title}`);
 
           await sleep(API_DELAY_MS);
         } catch (err) {
           const retries = book.pipeline_auto?.retry_count || 0;
           if (retries >= MAX_RETRIES) {
-            // Non-critical — skip
-            await setPipelineStatus(db, book.id, 'enriched', { retry_count: 0 });
+            await setPipelineStatus(db, book.id, 'summary_indexed', { retry_count: 0 });
             log.enriched++;
           } else {
             await setPipelineStatus(db, book.id, 'translate_complete', { retry_count: retries + 1 });
           }
-          log.errors.push(`Enrich ${book.id}: ${err.message}`);
+          log.errors.push(`Summary+Index ${book.id}: ${err.message}`);
         }
       }
-      console.log(`  Enriched: ${log.enriched}`);
+      console.log(`  Summary + Index: ${log.enriched}`);
     }
 
     // ── Phase 7: Chapter extraction (enriched -> chapters_complete) ──
-    if (shouldRun(7)) {
+    // When ENRICHMENT_INLINE=true, the enrich-worker.mjs cron handles this.
+    if (shouldRun(7) && process.env.ENRICHMENT_INLINE === 'true') {
+      console.log('\n--- Phase 7: Chapter Extraction (INLINE — handled by enrich-worker.mjs) ---');
+      const readyCount = await db.collection('books').countDocuments({ 'pipeline_auto.status': 'summary_indexed' });
+      console.log(`  Books in summary_indexed: ${readyCount} (enrich-worker processes these)`);
+    } else if (shouldRun(7)) {
       console.log('\n--- Phase 7: Chapter extraction ---');
 
       const readyForChapters = await db.collection('books')
-        .find({ 'pipeline_auto.status': 'enriched' })
+        .find({ 'pipeline_auto.status': 'summary_indexed' })
         .sort({ hidden: 1 })
         .project({ id: 1, title: 1, pages_count: 1, 'pipeline_auto.retry_count': 1 })
         .limit(CHAPTER_LIMIT)
@@ -2228,7 +2686,7 @@ async function run() {
               await setPipelineStatus(db, book.id, 'chapters_complete', { retry_count: 0 });
               log.chapters_skipped++;
             } else {
-              await setPipelineStatus(db, book.id, 'enriched', { retry_count: retries + 1 });
+              await setPipelineStatus(db, book.id, 'summary_indexed', { retry_count: retries + 1 });
             }
             log.errors.push(`Chapters ${book.id}: HTTP ${res.status}`);
           }
@@ -2243,7 +2701,7 @@ async function run() {
             log.chapters_skipped++;
           } else {
             if (!DRY_RUN) {
-              await setPipelineStatus(db, book.id, 'enriched', { retry_count: retries + 1 });
+              await setPipelineStatus(db, book.id, 'summary_indexed', { retry_count: retries + 1 });
             }
           }
           log.errors.push(`Chapters ${book.id}: ${err.message}`);
@@ -2383,7 +2841,7 @@ async function run() {
       const staleThreshold = new Date(Date.now() - 48 * 60 * 60 * 1000);
       const staleBooks = await db.collection('books')
         .find({
-          'pipeline_auto.status': { $in: ['ocr_submitted', 'translate_submitted', 'images_submitted', 'enriching', 'chapters'] },
+          'pipeline_auto.status': { $in: ['ocr_submitted', 'translate_submitted', 'images_submitted', 'summarizing', 'chapters'] },
           'pipeline_auto.last_updated': { $lt: staleThreshold },
         })
         .project({ id: 1, title: 1, pipeline_auto: 1 })
@@ -2396,8 +2854,8 @@ async function run() {
         'ocr_submitted': 'archive_complete',
         'translate_submitted': 'metadata_enriched',
         'images_submitted': 'chapters_complete',
-        'enriching': 'translate_complete',
-        'chapters': 'enriched',
+        'summarizing': 'translate_complete',
+        'chapters': 'summary_indexed',
       };
 
       for (const book of staleBooks) {
@@ -2444,12 +2902,151 @@ async function run() {
       }
     }
 
-    // ── Phase 9: Finalize (images_complete -> complete) ──
+    // ── Phase 8.9: Cover selection + digitizer page hiding ──
+    // Runs on images_complete books before finalize. Hides Google/IA notice pages
+    // and picks the best cover using page_type + detected_images scoring.
+    if (shouldRun(8.9) || shouldRun(9)) {
+      console.log('\n--- Phase 8.9: Cover selection + page cleanup ---');
+
+      const coverBooks = await db.collection('books')
+        .find({ 'pipeline_auto.status': 'images_complete' })
+        .sort({ hidden: 1 })
+        .project({ id: 1, title: 1, thumbnail: 1, thumbnail_source: 1 })
+        .limit(50)
+        .toArray();
+
+      console.log(`  Books needing cover selection: ${coverBooks.length}`);
+      let coversSelected = 0;
+      let pagesHidden = 0;
+
+      for (const book of coverBooks) {
+        if (DRY_RUN) continue;
+        try {
+          // 1. Hide digitizer notice pages (Google, IA, barcodes) in first 5 pages
+          const earlyPages = await db.collection('pages').find(
+            { book_id: book.id, page_number: { $lte: 5 } },
+            { projection: { id: 1, page_number: 1, 'ocr.data': 1, page_type: 1 } }
+          ).sort({ page_number: 1 }).toArray();
+
+          for (const page of earlyPages) {
+            const ocr = (page.ocr?.data || '').substring(0, 1500);
+            const isDigitizerPage =
+              /google\s+logo|digitized\s+by\s+google|this\s+is\s+a\s+digital\s+copy/i.test(ocr) ||
+              /inserted\s+by\s+the\s+internet|internet\s+archive|digitization\s+(credit|notice)/i.test(ocr) ||
+              /not\s+part\s+of\s+the\s+original\s+book|scanner\s+barcode/i.test(ocr);
+
+            if (isDigitizerPage && page.page_type !== 'digitizer-notice') {
+              await db.collection('pages').updateOne(
+                { id: page.id },
+                { $set: {
+                  page_type: 'digitizer-notice',
+                  hidden: true,
+                  updated_at: new Date(),
+                  'field_provenance.page_type': {
+                    source: 'pipeline', method: 'ocr-pattern-match',
+                    confidence: 0.95, date: new Date(),
+                  },
+                }}
+              );
+              pagesHidden++;
+            }
+          }
+
+          // 2. Select best cover (skip if manually set)
+          if (book.thumbnail_source === 'manual') {
+            await setPipelineStatus(db, book.id, 'cover_selected', { cover_selected_at: new Date() });
+            coversSelected++;
+            continue;
+          }
+
+          // Heuristic cover selection: frontispiece > title-page > best detected image
+          const proj = { page_number: 1, page_type: 1, cropped_photo: 1, archived_photo: 1, photo: 1, 'ocr.data': 1, detected_images: 1, hidden: 1 };
+          let bestPage = null;
+
+          // Priority 1: frontispiece (first 50 pages, not hidden, not digitizer)
+          const frontispieces = await db.collection('pages').find(
+            { book_id: book.id, page_type: 'frontispiece', page_number: { $lte: 50 }, hidden: { $ne: true } },
+            { projection: proj, sort: { page_number: 1 }, limit: 3 }
+          ).toArray();
+          bestPage = frontispieces.find(p => !isDigitizerOcr(p.ocr?.data)) || null;
+
+          // Priority 2: title-page (first 30 pages)
+          if (!bestPage) {
+            bestPage = await db.collection('pages').findOne(
+              { book_id: book.id, page_type: 'title-page', page_number: { $lte: 30 }, hidden: { $ne: true } },
+              { projection: proj, sort: { page_number: 1 } }
+            );
+          }
+
+          // Priority 3: best detected image by gallery_quality (first 30 pages)
+          if (!bestPage) {
+            const pagesWithImages = await db.collection('pages').find(
+              { book_id: book.id, 'detected_images.0': { $exists: true }, page_number: { $lte: 30 }, hidden: { $ne: true } },
+              { projection: proj }
+            ).toArray();
+
+            let bestScore = 0.4; // minimum threshold
+            for (const page of pagesWithImages) {
+              if (isDigitizerOcr(page.ocr?.data)) continue;
+              for (const img of (page.detected_images || [])) {
+                const q = img.gallery_quality || 0;
+                const posBonus = page.page_number <= 10 ? 0.1 : page.page_number <= 20 ? 0.05 : 0;
+                const typeBonus = ['frontispiece', 'emblem', 'portrait', 'engraving'].includes(img.type) ? 0.15 : 0;
+                const score = q * 0.5 + posBonus + typeBonus;
+                if (score > bestScore) {
+                  bestScore = score;
+                  bestPage = page;
+                }
+              }
+            }
+          }
+
+          // Priority 4: first non-hidden, non-blank page
+          if (!bestPage) {
+            bestPage = await db.collection('pages').findOne(
+              { book_id: book.id, hidden: { $ne: true }, page_type: { $nin: ['blank', 'digitizer-notice', null] } },
+              { projection: proj, sort: { page_number: 1 } }
+            );
+          }
+
+          if (bestPage) {
+            const newUrl = bestPage.cropped_photo || bestPage.archived_photo || bestPage.photo;
+            if (newUrl && newUrl !== book.thumbnail) {
+              await db.collection('books').updateOne(
+                { id: book.id },
+                { $set: {
+                  thumbnail: newUrl,
+                  thumbnail_source: 'auto',
+                  cover_page: bestPage.page_number,
+                  cover_selected_at: new Date(),
+                  'field_provenance.thumbnail': {
+                    source: 'pipeline', method: 'heuristic-cover-selection',
+                    confidence: 0.8, date: new Date(),
+                  },
+                }}
+              );
+            }
+          }
+
+          await setPipelineStatus(db, book.id, 'cover_selected', { cover_selected_at: new Date() });
+          coversSelected++;
+        } catch (err) {
+          console.error(`  Cover selection failed for ${book.title}: ${err.message?.slice(0, 100)}`);
+          log.errors.push(`Cover failed ${book.id}: ${err.message?.slice(0, 80)}`);
+        }
+      }
+
+      console.log(`  Covers selected: ${coversSelected}, digitizer pages hidden: ${pagesHidden}`);
+      log.covers_selected = coversSelected;
+      log.digitizer_pages_hidden = pagesHidden;
+    }
+
+    // ── Phase 9: Finalize (cover_selected -> complete) ──
     if (shouldRun(9)) {
       console.log('\n--- Phase 9: Finalize ---');
 
       const readyToFinalize = await db.collection('books')
-        .find({ 'pipeline_auto.status': 'images_complete' })
+        .find({ 'pipeline_auto.status': 'cover_selected' })
         .sort({ hidden: 1 })
         .project({ id: 1, title: 1, pages_count: 1, language: 1 })
         .limit(FINALIZE_LIMIT)
@@ -2556,6 +3153,7 @@ async function run() {
     console.log(`  Translate submitted: ${log.translate_submitted} | Translate advanced: ${log.translate_advanced}`);
     console.log(`  Enriched: ${log.enriched} | Chapters: ${log.chapters_extracted} (${log.chapters_skipped} skipped)`);
     console.log(`  Images submitted: ${log.images_submitted} | Images advanced: ${log.images_advanced}`);
+    console.log(`  Covers: ${log.covers_selected} | Pages hidden: ${log.digitizer_pages_hidden}`);
     console.log(`  Finalized: ${log.finalized} | Needs attention: ${log.needs_attention}`);
     console.log(`  Stale retried: ${log.stale_retried} | Stale failed: ${log.stale_failed}`);
     if (log.zombie_jobs_cancelled > 0) console.log(`  Zombie jobs cancelled: ${log.zombie_jobs_cancelled}`);

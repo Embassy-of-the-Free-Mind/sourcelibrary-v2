@@ -6,12 +6,13 @@ import { notFound } from 'next/navigation';
 
 const LETTERS = 'ABCDEFGHIJKLMNOPQRSTUVWXYZ'.split('');
 
-// ISR: rebuild daily.
-export const revalidate = 86400;
+// ISR: rebuild daily. Allow 60s for first-hit generation.
+export const dynamic = 'force-dynamic';
+export const maxDuration = 60;
 export const dynamicParams = true;
 
 export function generateStaticParams() {
-  return LETTERS.map(letter => ({ letter }));
+  return []; // Generate on first request, not at build time
 }
 
 interface PageProps {
@@ -38,26 +39,34 @@ export default async function BrowseAuthorsPage({ params }: PageProps) {
   const l = letter.toUpperCase();
   if (l.length !== 1 || !/[A-Z]/.test(l)) notFound();
 
-  const db = await getDb();
-
-  // Aggregate distinct authors with book counts, filtered to this letter
-  const authors = await db.collection('books').aggregate<AuthorEntry>([
-    {
-      $match: {
-        hidden: { $ne: true },
-        pages_count: { $gt: 0 },
-        pages_translated: { $gt: 0 },
+  let authors: AuthorEntry[] = [];
+  try {
+    const db = await getDb();
+    // Use author_1 index as primary filter. pages_translated > 0 implies pages_count > 0.
+    const rawBooks = await db.collection('books').find(
+      {
         author: { $regex: `^${l}`, $options: 'i' },
+        hidden: { $ne: true },
+        pages_translated: { $gt: 0 },
       },
-    },
-    {
-      $group: {
-        _id: '$author',
-        count: { $sum: 1 },
-      },
-    },
-    { $sort: { _id: 1 } },
-  ], { maxTimeMS: 15000 }).toArray();
+      {
+        projection: { author: 1 },
+        hint: 'author_1',
+        maxTimeMS: 45000,
+      }
+    ).toArray();
+
+    const authorCounts = new Map<string, number>();
+    for (const b of rawBooks) {
+      const a = b.author as string;
+      authorCounts.set(a, (authorCounts.get(a) || 0) + 1);
+    }
+    authors = [...authorCounts.entries()]
+      .map(([name, count]) => ({ _id: name, count }))
+      .sort((a, b) => a._id.localeCompare(b._id));
+  } catch {
+    // DB timeout — render empty page with message
+  }
 
   return (
     <div className="max-w-4xl mx-auto px-6 md:px-12 py-12 md:py-20">

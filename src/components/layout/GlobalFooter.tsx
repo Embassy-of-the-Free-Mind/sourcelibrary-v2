@@ -105,7 +105,7 @@ export default function GlobalFooter() {
                         className="text-sm text-white/50 hover:text-white transition-colors inline-flex items-center gap-1.5"
                       >
                         {link.label}
-                        <span className="text-[10px] bg-accent-gold/20 text-accent-gold px-1.5 py-0.5 rounded-full font-medium">
+                        <span className="text-[11px] bg-accent-rust/20 text-accent-rust px-2 py-0.5 rounded-full font-bold">
                           Donate
                         </span>
                       </Link>
@@ -137,7 +137,7 @@ export default function GlobalFooter() {
                 {/* Feedback widget under Participate */}
                 {col.title === 'Participate' && (
                   <li>
-                    <FeedbackWidget className="text-sm text-white/50 hover:text-white transition-colors" />
+                    <FeedbackWidget label="Give Feedback" className="text-sm font-bold text-accent-rust hover:text-white transition-colors" />
                   </li>
                 )}
               </ul>

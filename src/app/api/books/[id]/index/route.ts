@@ -4,6 +4,7 @@ import { GoogleGenerativeAI } from '@google/generative-ai';
 import { logGeminiCall } from '@/lib/gemini-logger';
 import { withAuth } from '@/lib/auth-helpers';
 import { loadAliasResolver } from '@/lib/entity-aliases';
+import { getChapterTexts, type ChapterText } from '@/lib/chapter-text';
 
 export const maxDuration = 300;
 
@@ -83,7 +84,7 @@ async function processBatch(
   bookLanguage?: string
 ): Promise<BatchExtraction> {
   const model = genAI.getGenerativeModel({
-    model: 'gemini-3-flash-preview',
+    model: 'gemini-3.1-flash-lite-preview',
     generationConfig: {
       temperature: 0.2, // Low temperature for consistent extraction
       maxOutputTokens: 2000,
@@ -159,7 +160,7 @@ CRITICAL for quotes:
     logGeminiCall({
       type: 'index',
       mode: 'realtime',
-      model: 'gemini-3-flash-preview',
+      model: 'gemini-3.1-flash-lite-preview',
       page_count: pages.length,
       input_tokens: usageMetadata?.promptTokenCount || 0,
       output_tokens: usageMetadata?.candidatesTokenCount || 0,
@@ -237,17 +238,50 @@ function createBatches(pages: PageData[]): PageData[][] {
   return batches;
 }
 
+// Convert chapter_texts into PageData batches for processBatch()
+function createBatchesFromChapters(
+  chapterTexts: ChapterText[],
+  pages: PageData[]
+): PageData[][] {
+  // Build page lookup
+  const pageMap = new Map<number, PageData>();
+  for (const p of pages) {
+    pageMap.set(p.page_number, p);
+  }
+
+  const batches: PageData[][] = [];
+  for (const ct of chapterTexts) {
+    const batch: PageData[] = [];
+    for (let pn = ct.pageStart; pn <= ct.pageEnd; pn++) {
+      const page = pageMap.get(pn);
+      if (page && page.translation?.data) {
+        batch.push(page);
+      }
+    }
+    if (batch.length > 0) {
+      batches.push(batch);
+    }
+  }
+
+  return batches;
+}
+
 // Process all pages in parallel batches (MapReduce approach)
 async function processAllBatches(
   pages: PageData[],
   bookTitle: string,
   bookAuthor: string,
-  bookLanguage?: string
+  bookLanguage?: string,
+  chapterTexts?: ChapterText[]
 ): Promise<BatchExtraction[]> {
-  const pageBatches = createBatches(pages);
+  // Use chapter-aligned batches when available, fall back to arbitrary char-count batches
+  const pageBatches = chapterTexts && chapterTexts.length > 1
+    ? createBatchesFromChapters(chapterTexts, pages)
+    : createBatches(pages);
   if (pageBatches.length === 0) return [];
 
-  console.log(`Processing ${pageBatches.length} batches in parallel...`);
+  const batchSource = chapterTexts && chapterTexts.length > 1 ? 'chapters' : 'char-count';
+  console.log(`Processing ${pageBatches.length} batches (${batchSource}) in parallel...`);
 
   // Process all batches in parallel for speed
   const batchPromises = pageBatches.map((batchPages, i) => {
@@ -588,7 +622,7 @@ async function generateBookSummary(
   researchContext?: string,
   chapters?: ChapterInfo[]
 ): Promise<GeneratedSummary> {
-  const model = genAI.getGenerativeModel({ model: 'gemini-3-flash-preview' });
+  const model = genAI.getGenerativeModel({ model: 'gemini-3.1-flash-lite-preview' });
 
   // If no batch extractions, fall back to research-only summary
   if (batchExtractions.length === 0) {
@@ -710,7 +744,7 @@ IMPORTANT: Use the actual quotes provided above. Don't invent new ones.`;
   logGeminiCall({
     type: 'summary',
     mode: 'realtime',
-    model: 'gemini-3-flash-preview',
+    model: 'gemini-3.1-flash-lite-preview',
     page_count: batchExtractions.length, // Number of batch sections processed
     input_tokens: usageMetadata?.promptTokenCount || 0,
     output_tokens: usageMetadata?.candidatesTokenCount || 0,
@@ -1108,6 +1142,13 @@ export async function GET(
       level: c.level || 1,
     }));
 
+    // Fetch chapter texts for chapter-aligned batching (only use extracted chapters, not topic-detected)
+    const chapterTexts = await getChapterTexts(db, id);
+    const useChapters = chapterTexts.length > 1;
+    if (useChapters) {
+      console.log(`Using ${chapterTexts.length} chapter-aligned batches`);
+    }
+
     // Research the book via Wikipedia (runs in parallel with batch processing)
     const researchPromise = researchBook(bookTitle, bookAuthor)
       .then(result => {
@@ -1128,7 +1169,8 @@ export async function GET(
       pages,
       bookTitle,
       bookAuthor,
-      book.language || undefined
+      book.language || undefined,
+      useChapters ? chapterTexts : undefined
     );
 
     // Wait for research to complete
@@ -1216,7 +1258,7 @@ export async function GET(
         data: bookSummary.brief,
         generated_at: new Date(),
         page_coverage: Math.round((pageSummaries.length / pages.length) * 100),
-        model: 'gemini-3-flash-preview'
+        model: 'gemini-3.1-flash-lite-preview'
       };
       // Also save as reading_summary (expected by pipeline, docs, and downstream checks)
       updateData.reading_summary = {
@@ -1225,7 +1267,7 @@ export async function GET(
         themes: batchExtractions.flatMap(b => b.themes).filter((v, i, a) => a.indexOf(v) === i).slice(0, 20),
         quotes: groundedBatchQuotes.slice(0, 15),
         generated_at: new Date(),
-        model: 'gemini-3-flash-preview'
+        model: 'gemini-3.1-flash-lite-preview'
       };
     }
 

@@ -52,6 +52,7 @@ export async function POST(request: NextRequest) {
               updated_at: now,
             },
             $inc: { pages_viewed: 1 },
+            $addToSet: { pages_read: { page_id, page_number } },
           }
         );
       } else {
@@ -63,6 +64,7 @@ export async function POST(request: NextRequest) {
           last_page_id: page_id,
           last_page_number: page_number,
           pages_viewed: 1,
+          pages_read: [{ page_id, page_number }],
           started_at: now,
           updated_at: now,
           ...(referrer ? { referrer } : {}),
@@ -133,6 +135,7 @@ export const GET = withAuth(async (request, session) => {
         last_page_id: 1,
         last_page_number: 1,
         pages_viewed: 1,
+        pages_read: 1,
         started_at: 1,
         updated_at: 1,
         referrer: 1,

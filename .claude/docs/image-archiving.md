@@ -1,6 +1,6 @@
 # Image Archiving & Provenance
 
-Images from external sources (IA, Gallica, MDZ, etc.) are archived to Cloudflare R2 (`images.sourcelibrary.org`). Original provenance is always preserved. Thumbnails are still on Vercel Blob (migrating to R2).
+Images from external sources (IA, Gallica, MDZ, etc.) are archived to Cloudflare R2 (`images.sourcelibrary.org`). Original provenance is always preserved. All new archiving goes to R2 (3 variants: full-res, display, thumbnail).
 
 ## Archive Endpoint
 ```

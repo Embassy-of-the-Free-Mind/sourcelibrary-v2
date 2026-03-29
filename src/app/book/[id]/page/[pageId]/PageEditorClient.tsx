@@ -2,6 +2,7 @@
 
 import { useEffect, useState, useCallback, useRef, Suspense } from 'react';
 import TranslationEditor from '@/components/pipeline/TranslationEditor';
+import VersionBanner from '@/components/ui/VersionBanner';
 import { useLoadingMetrics } from '@/hooks/useLoadingMetrics';
 import { useSearchHighlight } from '@/hooks/useSearchHighlight';
 import type { Book, Page } from '@/lib/types';
@@ -29,6 +30,18 @@ export default function PageEditorClient({
   const [currentPageId, setCurrentPageId] = useState<string>(initialPage.id);
   const [currentPage, setCurrentPage] = useState<Page>(initialPage);
 
+  // Version pinning: detect ?v= param for citation-pinned reading
+  const [pinnedVersion, setPinnedVersion] = useState<string | null>(null);
+  const [versionedTranslation, setVersionedTranslation] = useState<string | null>(null);
+  const [versionEdition, setVersionEdition] = useState<{
+    version: string;
+    versionLabel?: string;
+    publishedAt: string;
+    isCurrentVersion: boolean;
+    doi?: string;
+    doiUrl?: string;
+  } | null>(null);
+
   // Page cache: stores full page data keyed by page ID
   const pageCacheRef = useRef<Map<string, Page>>(new Map());
 
@@ -36,6 +49,56 @@ export default function PageEditorClient({
   useEffect(() => {
     pageCacheRef.current.set(initialPage.id, initialPage);
   }, [initialPage]);
+
+  // Detect ?v= on mount and fetch versioned content
+  useEffect(() => {
+    const params = new URLSearchParams(window.location.search);
+    const v = params.get('v');
+    if (!v) return;
+    setPinnedVersion(v);
+
+    fetch(`/api/books/${book.id}/edition-page?page_id=${initialPage.id}&v=${encodeURIComponent(v)}`)
+      .then(res => res.ok ? res.json() : null)
+      .then(data => {
+        if (!data) return;
+        setVersionedTranslation(data.translation);
+        setVersionEdition({
+          version: data.edition.version,
+          versionLabel: data.edition.versionLabel,
+          publishedAt: data.edition.publishedAt,
+          isCurrentVersion: data.is_current_version,
+          doi: data.edition.doi,
+          doiUrl: data.edition.doiUrl,
+        });
+      })
+      .catch(() => {
+        // Version not found — fall back to current
+        setPinnedVersion(null);
+      });
+  // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, []);
+
+  // Re-fetch versioned content when navigating to a new page while version-pinned
+  useEffect(() => {
+    if (!pinnedVersion || currentPageId === initialPage.id) return;
+
+    fetch(`/api/books/${book.id}/edition-page?page_id=${currentPageId}&v=${encodeURIComponent(pinnedVersion)}`)
+      .then(res => res.ok ? res.json() : null)
+      .then(data => {
+        if (!data) {
+          setVersionedTranslation(null);
+          return;
+        }
+        setVersionedTranslation(data.translation);
+        if (data.edition) {
+          setVersionEdition(prev => prev ? {
+            ...prev,
+            isCurrentVersion: data.is_current_version,
+          } : prev);
+        }
+      })
+      .catch(() => setVersionedTranslation(null));
+  }, [currentPageId, pinnedVersion, book.id, initialPage.id]);
 
   // Track loading metrics
   const { markLoaded } = useLoadingMetrics('page_editor', { bookId: book.id });
@@ -145,9 +208,10 @@ export default function PageEditorClient({
   // Client-side navigation - update URL and current page
   const handleNavigate = useCallback((newPageId: string) => {
     setCurrentPageId(newPageId);
-    window.history.pushState(null, '', `/book/${book.id}/page/${newPageId}`);
+    const vSuffix = pinnedVersion ? `?v=${encodeURIComponent(pinnedVersion)}` : '';
+    window.history.pushState(null, '', `/book/${book.id}/page/${newPageId}${vSuffix}`);
     window.scrollTo({ top: 0, behavior: 'instant' });
-  }, [book.id]);
+  }, [book.id, pinnedVersion]);
 
   const currentIndex = pageList.findIndex(p => p.id === currentPageId);
 
@@ -166,20 +230,42 @@ export default function PageEditorClient({
     }
   };
 
+  // When version-pinned, overlay the versioned translation onto the page object
+  const displayPage = pinnedVersion && versionedTranslation != null
+    ? {
+        ...currentPage,
+        translation: currentPage.translation
+          ? { ...currentPage.translation, data: versionedTranslation }
+          : { data: versionedTranslation, language: 'en', model: 'versioned' },
+      } as Page
+    : currentPage;
+
   return (
     <>
       <Suspense fallback={null}>
         <SearchHighlighter />
       </Suspense>
 
+      {versionEdition && (
+        <VersionBanner
+          version={versionEdition.version}
+          versionLabel={versionEdition.versionLabel}
+          publishedAt={versionEdition.publishedAt}
+          isCurrentVersion={versionEdition.isCurrentVersion}
+          doi={versionEdition.doi}
+          doiUrl={versionEdition.doiUrl}
+          bookUrl={`/book/${book.id}/page/${currentPageId}`}
+        />
+      )}
+
       <TranslationEditor
         book={book}
-        page={currentPage}
+        page={displayPage}
         pages={pageList}
         currentIndex={currentIndex}
         onNavigate={handleNavigate}
-        onSave={handleSave}
-        onRefresh={async () => {
+        onSave={pinnedVersion ? async () => {} : handleSave}
+        onRefresh={pinnedVersion ? async () => {} : async () => {
           try {
             const pageData = await pagesApi.get(currentPageId);
             pageCacheRef.current.set(currentPageId, pageData);

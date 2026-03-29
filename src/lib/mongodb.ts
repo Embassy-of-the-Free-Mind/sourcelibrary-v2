@@ -72,7 +72,7 @@ export async function connectToDatabase(): Promise<{ client: MongoClient; db: Db
         // Cross-region latency (~200ms RTT) needs generous timeouts.
         serverSelectionTimeoutMS: isOurLambda ? 5000 : 10000,
         connectTimeoutMS: isOurLambda ? 10000 : 10000,
-        socketTimeoutMS: isOurLambda ? 45000 : 15000,
+        socketTimeoutMS: isOurLambda ? 45000 : 50000,
 
         // Close idle connections after 1 minute to prevent pool exhaustion
         maxIdleTimeMS: 60000,

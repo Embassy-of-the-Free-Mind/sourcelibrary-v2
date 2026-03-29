@@ -282,6 +282,7 @@ export interface Chapter {
   titleEn?: string;    // English translation of title
   pageId: string;
   pageNumber: number;
+  endPage?: number;    // Last page of this chapter (computed from next chapter's start)
   level: number;  // 1 = top-level division, 2 = major chapter, 3 = sub-chapter
   confidence?: 'high' | 'medium' | 'low'; // AI's confidence in this chapter boundary
 }

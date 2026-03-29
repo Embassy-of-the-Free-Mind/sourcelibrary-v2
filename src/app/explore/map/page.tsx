@@ -2,7 +2,9 @@ import { Metadata } from 'next';
 import { getDb } from '@/lib/mongodb';
 import EntityMapLoader from '@/components/explore/EntityMapLoader';
 
+// ISR: rebuild every 6 hours. Allow 60s for first-hit generation.
 export const dynamic = 'force-dynamic';
+export const maxDuration = 60;
 
 export const metadata: Metadata = {
   title: 'Map — Explore — Source Library',
@@ -21,20 +23,9 @@ export const metadata: Metadata = {
 async function fetchMapData() {
   const db = await getDb();
 
+  // Single query — no book lookup needed. Use biographical dates for century ranges.
   const entities = await db.collection('entities').aggregate([
     { $match: { wikidata_coordinates: { $exists: true, $ne: null } } },
-    {
-      $lookup: {
-        from: 'books',
-        localField: 'books.book_id',
-        foreignField: 'id',
-        as: 'book_docs',
-        pipeline: [
-          { $match: { year: { $exists: true, $gt: 0 } } },
-          { $project: { year: 1 } },
-        ],
-      },
-    },
     {
       $project: {
         _id: 0,
@@ -47,10 +38,9 @@ async function fetchMapData() {
         wikidata_id: 1,
         wikidata_birth_date: 1,
         wikidata_death_date: 1,
-        years: '$book_docs.year',
       },
     },
-  ]).toArray();
+  ], { maxTimeMS: 45000 }).toArray();
 
   const byType: Record<string, number> = {};
   const byCentury: Record<string, number> = {};
@@ -81,17 +71,7 @@ async function fetchMapData() {
       }
     }
 
-    // Fall back to book years if no biographical dates
-    if (!century_range) {
-      const years = (e.years as number[]).filter((y: number) => y > 0);
-      if (years.length > 0) {
-        const minY = Math.min(...years);
-        const maxY = Math.max(...years);
-        const minC = Math.floor((minY - 1) / 100) + 1;
-        const maxC = Math.floor((maxY - 1) / 100) + 1;
-        century_range = [minC, maxC];
-      }
-    }
+    // No book-year fallback — biographical dates only (avoids expensive book lookup)
 
     if (century_range) {
       for (let c = century_range[0]; c <= century_range[1]; c++) {
@@ -134,7 +114,14 @@ async function fetchMapData() {
 }
 
 export default async function MapPage() {
-  const data = await fetchMapData();
-
-  return <EntityMapLoader entities={data.entities} stats={data.stats} />;
+  try {
+    const data = await fetchMapData();
+    return <EntityMapLoader entities={data.entities} stats={data.stats} />;
+  } catch {
+    return (
+      <div className="min-h-screen flex items-center justify-center">
+        <p className="text-stone-500">Map data is temporarily unavailable. Please try again shortly.</p>
+      </div>
+    );
+  }
 }

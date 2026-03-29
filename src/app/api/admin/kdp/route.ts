@@ -41,7 +41,7 @@ export const GET = withAdminAuth(async (request: NextRequest) => {
         projection: {
           id: 1, title: 1, display_title: 1, author: 1, language: 1,
           published: 1, categories: 1, thumbnail_blob: 1, thumbnail: 1,
-          pages_count: 1, pages_translated: 1, read_count: 1,
+          pages_count: 1, pages_translated: 1, pages_blank: 1, read_count: 1,
           kdp_score: 1, kdp_score_breakdown: 1, is_first_translation: 1,
           slug: 1,
         },
@@ -74,7 +74,7 @@ export const GET = withAdminAuth(async (request: NextRequest) => {
       thumbnail: b.thumbnail_blob || b.thumbnail,
       pages_count: b.pages_count || 0,
       pages_translated: b.pages_translated || 0,
-      translation_pct: b.pages_count ? Math.round((b.pages_translated || 0) / b.pages_count * 100) : 0,
+      translation_pct: b.pages_count ? Math.round((b.pages_translated || 0) / Math.max(b.pages_count - (b.pages_blank || 0), 1) * 100) : 0,
       read_count: b.read_count || 0,
       kdp_score: b.kdp_score || 0,
       kdp_score_breakdown: b.kdp_score_breakdown || null,

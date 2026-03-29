@@ -1,7 +1,8 @@
 import { NextRequest, NextResponse } from 'next/server';
 import { getDb } from '@/lib/mongodb';
 import { ObjectId } from 'mongodb';
-import { isBot, isTrustedBot, isBotAccessible, botGateResponse } from '@/lib/bot-gate';
+import { isBot, isTrustedBot, botMaxPage, botGateResponse } from '@/lib/bot-gate';
+import { getChapterTexts } from '@/lib/chapter-text';
 
 export const maxDuration = 30;
 
@@ -15,6 +16,7 @@ export const maxDuration = 30;
  *   content=ocr|translation|both (default: both)
  *   from=N  — start page number (inclusive)
  *   to=N    — end page number (inclusive)
+ *   chapter=N — return chapter N (0-indexed). Overrides from/to.
  *   format=json|plain (default: json)
  *   include_metadata=true — include page-level OCR/translation metadata
  */
@@ -29,6 +31,8 @@ export async function GET(
     const content = searchParams.get('content') || 'both';
     const fromPage = searchParams.get('from') ? parseInt(searchParams.get('from')!) : undefined;
     const toPage = searchParams.get('to') ? parseInt(searchParams.get('to')!) : undefined;
+    const chapterParam = searchParams.get('chapter');
+    const partParam = searchParams.get('part');
     const format = searchParams.get('format') || 'json';
     const includeMetadata = searchParams.get('include_metadata') === 'true';
 
@@ -55,25 +59,106 @@ export async function GET(
 
     const resolvedBookId = book.id || bookId;
 
-    // Bot gating: non-trusted bots only get ~20% of books
-    if (isBot(request) && !isTrustedBot(request) && !isBotAccessible(resolvedBookId)) {
-      // Fetch summary for the gated response
-      const fullBook = await db.collection('books').findOne(
-        { id: resolvedBookId },
-        { projection: { reading_summary: 1, pages_count: 1 } }
-      );
-      return NextResponse.json(
-        botGateResponse({ ...book, ...fullBook, id: resolvedBookId }),
-        { status: 200, headers: { 'Cache-Control': 'public, max-age=3600' } }
-      );
+    // Bot gating: non-trusted bots get the first 20% of pages from any book
+    const isBotRequest = isBot(request) && !isTrustedBot(request);
+    const botPageLimit = isBotRequest ? botMaxPage(book.pages_count || 0) : undefined;
+
+    // Chapter mode: return pre-materialized chapter text
+    if (chapterParam !== null) {
+      const chapterIndex = parseInt(chapterParam);
+      if (isNaN(chapterIndex) || chapterIndex < 0) {
+        return NextResponse.json({ error: 'chapter must be a non-negative integer' }, { status: 400 });
+      }
+
+      // Bot page limit: block chapters that start beyond the accessible range
+      if (botPageLimit !== undefined) {
+        const bookWithChapters = await db.collection('books').findOne(
+          { id: resolvedBookId },
+          { projection: { chapters: 1, reading_summary: 1, pages_count: 1 } },
+        );
+        const chapter = bookWithChapters?.chapters?.[chapterIndex];
+        if (chapter && chapter.pageStart > botPageLimit) {
+          return NextResponse.json(
+            botGateResponse({ ...book, ...bookWithChapters, id: resolvedBookId }),
+            { status: 200, headers: { 'Cache-Control': 'public, max-age=3600' } }
+          );
+        }
+      }
+
+      const allParts = await getChapterTexts(db, resolvedBookId, chapterIndex);
+
+      if (allParts.length === 0) {
+        // Fall back: check if chapters exist but aren't materialized yet
+        const bookWithChapters = await db.collection('books').findOne(
+          { id: resolvedBookId },
+          { projection: { chapters: 1 } },
+        );
+        if (bookWithChapters?.chapters?.[chapterIndex]) {
+          return NextResponse.json({
+            error: 'Chapter exists but text not yet materialized. Run POST /api/books/{id}/materialize-chapters first.',
+            chapter: bookWithChapters.chapters[chapterIndex],
+          }, { status: 404 });
+        }
+        return NextResponse.json({ error: 'Chapter not found' }, { status: 404 });
+      }
+
+      // Select the right part (default: part 1 or the only part)
+      const requestedPart = partParam ? parseInt(partParam) : 1;
+      const ct = allParts.length === 1
+        ? allParts[0]
+        : allParts.find(p => p.part === requestedPart) || allParts[0];
+
+      if (format === 'plain') {
+        const partLabel = ct.parts_total ? ` (part ${ct.part} of ${ct.parts_total})` : '';
+        const header = [
+          `# ${book.display_title || book.title}`,
+          `# ${book.author} (${book.published || 'n.d.'})`,
+          `# Chapter ${chapterIndex}: ${ct.titleEn || ct.title}${partLabel}`,
+          `# Pages ${ct.pageStart}–${ct.pageEnd}`,
+          `# Source: https://sourcelibrary.org/book/${resolvedBookId}`,
+          '',
+          content === 'ocr' ? (ct.ocr_text || ct.text) : ct.text,
+        ].join('\n');
+
+        return new Response(header, {
+          headers: { 'Content-Type': 'text/plain; charset=utf-8', 'Cache-Control': 'public, max-age=3600' },
+        });
+      }
+
+      return NextResponse.json({
+        book: {
+          id: resolvedBookId,
+          title: book.display_title || book.title,
+          author: book.author,
+          url: `https://sourcelibrary.org/book/${resolvedBookId}`,
+        },
+        chapter: {
+          index: ct.chapter_index,
+          title: ct.title,
+          titleEn: ct.titleEn,
+          level: ct.level,
+          pageStart: ct.pageStart,
+          pageEnd: ct.pageEnd,
+          token_estimate: ct.token_estimate,
+          ...(ct.parts_total ? { part: ct.part, parts_total: ct.parts_total } : {}),
+          text: content === 'ocr' ? (ct.ocr_text || ct.text) : ct.text,
+          ...(content === 'both' && ct.ocr_text ? { ocr_text: ct.ocr_text } : {}),
+        },
+      }, {
+        headers: { 'Cache-Control': 'public, max-age=3600' },
+      });
     }
 
     // Build page query
     const pageFilter: Record<string, unknown> = { book_id: resolvedBookId };
-    if (fromPage !== undefined || toPage !== undefined) {
+    if (fromPage !== undefined || toPage !== undefined || botPageLimit !== undefined) {
       pageFilter.page_number = {};
       if (fromPage !== undefined) (pageFilter.page_number as Record<string, number>).$gte = fromPage;
-      if (toPage !== undefined) (pageFilter.page_number as Record<string, number>).$lte = toPage;
+      // Bot page limit caps the maximum page number
+      const effectiveToPage = botPageLimit !== undefined
+        ? (toPage !== undefined ? Math.min(toPage, botPageLimit) : botPageLimit)
+        : toPage;
+      if (effectiveToPage !== undefined) (pageFilter.page_number as Record<string, number>).$lte = effectiveToPage;
     }
 
     // Build projection — only fetch what's needed
@@ -178,6 +263,15 @@ export async function GET(
       content_type: content,
       total_pages: book.pages_count || pages.length,
       pages_returned: pagesWithContent.length,
+      ...(botPageLimit !== undefined ? {
+        bot_access: {
+          truncated: true,
+          pages_accessible: botPageLimit,
+          pages_total: book.pages_count || pages.length,
+          full_access: 'Install the MCP server for full access: claude mcp add source-library -- npx -y @source-library/mcp-server',
+          partnership: 'https://sourcelibrary.org/llms.txt',
+        },
+      } : {}),
       pages: pagesWithContent.map(p => {
         const entry: Record<string, unknown> = { page_number: p.page_number };
 

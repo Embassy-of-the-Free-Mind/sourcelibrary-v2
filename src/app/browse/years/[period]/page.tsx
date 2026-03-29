@@ -17,12 +17,13 @@ const PERIODS: Record<string, { label: string; min: number; max: number }> = {
 
 const PERIOD_SLUGS = Object.keys(PERIODS);
 
-// ISR: rebuild daily.
-export const revalidate = 86400;
+// ISR: rebuild daily. Allow 60s for first-hit generation.
+export const dynamic = 'force-dynamic';
+export const maxDuration = 60;
 export const dynamicParams = true;
 
 export function generateStaticParams() {
-  return PERIOD_SLUGS.map(period => ({ period }));
+  return []; // Generate on first request, not at build time
 }
 
 interface PageProps {
@@ -56,56 +57,39 @@ export default async function BrowseYearsPage({ params }: PageProps) {
   const p = PERIODS[period];
   if (!p) notFound();
 
-  const db = await getDb();
-
-  // published is stored as a string — parse to int for range filtering
-  const books = await db.collection('books').aggregate<BrowseBook>([
-    {
-      $match: {
+  let books: BrowseBook[] = [];
+  try {
+    const db = await getDb();
+    // Use year_hidden_language compound index. pages_translated > 0 implies pages exist.
+    const rawBooks = await db.collection('books').find(
+      {
+        year: { $gte: p.min, $lte: p.max },
         hidden: { $ne: true },
-        pages_count: { $gt: 0 },
         pages_translated: { $gt: 0 },
-        published: { $exists: true, $ne: '' },
       },
-    },
-    {
-      $addFields: {
-        _pub_year: {
-          $convert: {
-            input: {
-              $replaceAll: {
-                input: { $replaceAll: { input: '$published', find: 'c.', replacement: '' } },
-                find: '?',
-                replacement: '',
-              },
-            },
-            to: 'int',
-            onError: null,
-            onNull: null,
-          },
+      {
+        projection: {
+          id: 1, slug: 1, title: 1, display_title: 1,
+          author: 1, language: 1, published: 1, year: 1,
         },
-      },
-    },
-    {
-      $match: {
-        _pub_year: { $gte: p.min, $lte: p.max },
-      },
-    },
-    { $sort: { _pub_year: 1, title: 1 } },
-    {
-      $project: {
-        _id: 0,
-        id: { $ifNull: ['$id', { $toString: '$_id' }] },
-        slug: 1,
-        title: 1,
-        display_title: 1,
-        author: 1,
-        language: 1,
-        published: 1,
-        _pub_year: 1,
-      },
-    },
-  ], { maxTimeMS: 20000 }).toArray();
+        sort: { year: 1, title: 1 },
+        maxTimeMS: 45000,
+      }
+    ).toArray();
+
+    books = rawBooks.map(b => ({
+      id: (b.id as string) || b._id.toString(),
+      slug: b.slug as string | undefined,
+      title: b.title as string,
+      display_title: b.display_title as string | undefined,
+      author: b.author as string,
+      language: b.language as string,
+      published: b.published as string,
+      _pub_year: b.year as number,
+    }));
+  } catch {
+    // DB timeout — render empty page with message
+  }
 
   return (
     <div className="max-w-4xl mx-auto px-6 md:px-12 py-12 md:py-20">

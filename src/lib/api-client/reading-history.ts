@@ -7,6 +7,7 @@ export interface ReadingHistoryEntry {
   last_page_id: string;
   last_page_number: number;
   pages_viewed: number;
+  pages_read?: { page_id: string; page_number: number }[];
   started_at: string;
   updated_at: string;
   referrer?: string;

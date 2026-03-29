@@ -10,7 +10,7 @@ Each step is independent — a book can be at any stage. Not all steps are requi
 
 ## 1. Import
 
-Routes: `/api/import/ia`, `/api/import/gallica`, `/api/import/mdz`, `/api/import/wellcome`, `/api/import/e-rara`
+Routes: `/api/import/iiif` (generic), `/api/import/ia`, `/api/import/gallica`, `/api/import/mdz`, `/api/import/e-rara`, `/api/import/bl`, `/api/import/bodleian`, `/api/import/cambridge`, `/api/import/loc`, `/api/import/sbb`, `/api/import/yale`, `/api/import/hab`, `/api/import/vatican`, `/api/import/penn`, `/api/import/onb`, and others (26+ total)
 
 Creates book + page records. Pages get `photo` (original IIIF URL) and `photo_original` (preserved forever). Triggers split detection check asynchronously.
 
@@ -43,14 +43,13 @@ Detects two-page spreads in digitized books.
 
 ## 3. Archive Images
 
-Downloads images from external sources (IA, Gallica, MDZ) and re-hosts on Vercel Blob.
+Downloads images from external sources (IA, Gallica, MDZ) and re-hosts on Cloudflare R2 (`images.sourcelibrary.org`). Archiving runs on Hetzner via `archive-ocr.mjs` and `archive-bulk.mjs` crons.
 
-Route: `POST /api/books/[id]/archive-images`
+Route: `POST /api/books/[id]/archive-images` (manual), Hetzner cron (automatic)
 
-- Downloads from original URLs
-- Compresses with sharp (JPEG optimization)
-- Uploads to Vercel Blob with content hash
-- Sets `page.archived_photo` (Blob URL), `page.archive_metadata` (source_url, archived_at, bytes, checksum)
+- Downloads from original IIIF URLs (rate-limited per domain)
+- Uploads 3 variants to R2: full-res, display (1200px), thumbnail (150px)
+- Sets `page.archived_photo` (R2 URL), `page.archive_metadata` (source_url, archived_at, bytes, checksum)
 - Never overwrites `page.photo_original`
 
 See: `.claude/docs/image-archiving.md`
@@ -169,7 +168,7 @@ Key image fields:
 ```
 photo          — current display URL
 photo_original — original external URL (never overwritten)
-archived_photo — Vercel Blob URL
+archived_photo — Cloudflare R2 URL (images.sourcelibrary.org)
 cropped_photo  — result of split detection
 thumbnail_blob — pre-generated 150px JPEG
 ```

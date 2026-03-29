@@ -28,4 +28,12 @@ test.describe('Homepage', () => {
     const searchInput = page.locator('input[name="q"], input[type="search"], input[placeholder*="earch"]');
     await expect(searchInput.first()).toBeVisible();
   });
+
+  test('TTFB is under 3 seconds', async ({ page }) => {
+    const ttfb = await page.evaluate(() => {
+      const nav = performance.getEntriesByType('navigation')[0] as PerformanceNavigationTiming;
+      return Math.round(nav.responseStart - nav.startTime);
+    });
+    expect(ttfb, `Homepage TTFB was ${ttfb}ms`).toBeLessThan(2000);
+  });
 });

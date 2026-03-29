@@ -1,7 +1,7 @@
 import { NextResponse } from 'next/server';
 import { getDb } from '@/lib/mongodb';
 
-export const revalidate = 86400; // Revalidate daily
+export const dynamic = 'force-dynamic'; // Skip prerender — MongoDB times out during build
 
 /**
  * GET /api/nde/dataset

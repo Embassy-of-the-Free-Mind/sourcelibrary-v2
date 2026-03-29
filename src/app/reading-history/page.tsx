@@ -3,7 +3,7 @@
 import { useState, useEffect, useCallback } from 'react';
 import Link from 'next/link';
 import Image from 'next/image';
-import { History, BookOpen, Clock, Eye, ArrowRight, Trash2 } from 'lucide-react';
+import { BookOpen, Clock, Eye, ArrowRight, Trash2, ChevronDown, ChevronUp } from 'lucide-react';
 import { readingHistory, type ReadingHistoryEntry } from '@/lib/api-client';
 import { BookLoader } from '@/components/ui/BookLoader';
 import { bookUrl } from '@/lib/slugify';
@@ -28,6 +28,11 @@ function formatDate(dateStr: string): string {
     month: 'short',
     day: 'numeric',
     year: 'numeric',
+  });
+}
+
+function formatTime(dateStr: string): string {
+  return new Date(dateStr).toLocaleTimeString('en-US', {
     hour: 'numeric',
     minute: '2-digit',
   });
@@ -70,34 +75,63 @@ export default function ReadingHistoryPage() {
     setTotal(prev => prev - 1);
   };
 
+  // Group entries by date
+  const groupedEntries = entries.reduce<Record<string, ReadingHistoryEntry[]>>((groups, entry) => {
+    const date = formatDate(entry.updated_at);
+    if (!groups[date]) groups[date] = [];
+    groups[date].push(entry);
+    return groups;
+  }, {});
+
   return (
-    <div className="min-h-screen bg-gradient-to-b from-[#f6f3ee] to-[#f3ede6]">
-      {/* Header */}
-      <header className="bg-stone-900 text-white py-6">
-        <div className="max-w-5xl mx-auto px-4 sm:px-6 lg:px-8">
-          <div className="flex items-center justify-between">
-            <div>
-              <h1 className="text-2xl font-serif">Reading History</h1>
-              <p className="text-stone-400 text-sm mt-1">
-                {total} {total === 1 ? 'session' : 'sessions'}
-              </p>
-            </div>
-            <div className="flex items-center gap-3">
-              {total > 0 && (
-                <button
-                  onClick={handleClearAll}
-                  className="text-sm text-stone-400 hover:text-white transition-colors"
-                >
-                  Clear all
-                </button>
-              )}
-              <History className="w-8 h-8 text-accent-gold" />
-            </div>
-          </div>
+    <div className="min-h-screen bg-stone-50">
+      {/* Logo bar */}
+      <header className="bg-white border-b border-border-light">
+        <div className="max-w-5xl mx-auto px-6 py-4">
+          <Link
+            href="/"
+            className="flex items-center gap-2 text-secondary hover:text-primary transition-colors"
+          >
+            <svg className="w-8 h-8" viewBox="0 0 24 24" fill="none">
+              <circle cx="12" cy="12" r="10" stroke="currentColor" strokeWidth="1" />
+              <circle cx="12" cy="12" r="7" stroke="currentColor" strokeWidth="1" />
+              <circle cx="12" cy="12" r="4" stroke="currentColor" strokeWidth="1" />
+            </svg>
+            <span className="font-medium">Source Library</span>
+          </Link>
         </div>
       </header>
 
-      <div className="max-w-5xl mx-auto px-4 sm:px-6 lg:px-8 py-6">
+      {/* Dark hero */}
+      <div className="bg-gradient-to-b from-stone-800 to-stone-900 text-white py-16">
+        <div className="max-w-5xl mx-auto px-6">
+          <div className="flex items-start justify-between">
+            <div>
+              <h1 className="text-4xl md:text-5xl mb-4">Reading History</h1>
+              <p className="text-xl text-stone-300 max-w-2xl">
+                Every page you read is saved here, so you can pick up where you left off
+                or revisit passages that caught your eye.
+              </p>
+              {total > 0 && (
+                <p className="text-stone-500 text-sm mt-4">
+                  {total} reading {total === 1 ? 'session' : 'sessions'}
+                </p>
+              )}
+            </div>
+            {total > 0 && (
+              <button
+                onClick={handleClearAll}
+                className="flex-shrink-0 text-sm text-stone-500 hover:text-stone-300 transition-colors mt-2"
+              >
+                Clear all
+              </button>
+            )}
+          </div>
+        </div>
+      </div>
+
+      {/* Content */}
+      <main className="max-w-5xl mx-auto px-6 py-10">
         {loading && (
           <div className="flex items-center justify-center py-20">
             <BookLoader size="sm" />
@@ -106,14 +140,14 @@ export default function ReadingHistoryPage() {
 
         {!loading && entries.length === 0 && (
           <div className="text-center py-20">
-            <History className="w-16 h-16 text-stone-300 mx-auto mb-4" />
-            <h2 className="text-xl font-serif text-stone-700 mb-2">No reading history yet</h2>
-            <p className="text-stone-500 mb-6">
+            <BookOpen className="w-12 h-12 text-stone-300 mx-auto mb-4" />
+            <h2 className="text-lg font-medium text-stone-600 mb-2">No reading history yet</h2>
+            <p className="text-stone-400 mb-6 text-sm">
               Pages you read will appear here so you can pick up where you left off.
             </p>
             <Link
               href="/"
-              className="inline-flex items-center gap-2 px-6 py-2 bg-accent-rust text-white rounded-lg hover:bg-accent-rust/90 transition-colors"
+              className="inline-flex items-center gap-2 px-5 py-2.5 bg-stone-800 text-white text-sm rounded-lg hover:bg-stone-700 transition-colors"
             >
               Browse Library
               <ArrowRight className="w-4 h-4" />
@@ -123,19 +157,28 @@ export default function ReadingHistoryPage() {
 
         {!loading && entries.length > 0 && (
           <>
-            <div className="space-y-3">
-              {entries.map((entry, i) => (
-                <ReadingHistoryCard
-                  key={`${entry.book_id}-${entry.started_at}-${i}`}
-                  entry={entry}
-                  onRemove={handleClearBook}
-                />
+            <div className="space-y-8">
+              {Object.entries(groupedEntries).map(([date, dateEntries]) => (
+                <div key={date}>
+                  <h2 className="text-xs font-medium text-stone-400 uppercase tracking-wider mb-3">
+                    {date}
+                  </h2>
+                  <div className="space-y-3">
+                    {dateEntries.map((entry, i) => (
+                      <ReadingHistoryCard
+                        key={`${entry.book_id}-${entry.started_at}-${i}`}
+                        entry={entry}
+                        onRemove={handleClearBook}
+                      />
+                    ))}
+                  </div>
+                </div>
               ))}
             </div>
 
             {/* Pagination */}
             {total > limit && (
-              <div className="flex items-center justify-center gap-3 mt-6">
+              <div className="flex items-center justify-center gap-3 mt-10">
                 <button
                   onClick={() => load(Math.max(0, offset - limit))}
                   disabled={offset === 0}
@@ -157,7 +200,7 @@ export default function ReadingHistoryPage() {
             )}
           </>
         )}
-      </div>
+      </main>
     </div>
   );
 }
@@ -170,6 +213,7 @@ function ReadingHistoryCard({
   onRemove: (bookId: string, e: React.MouseEvent) => void;
 }) {
   const [imageError, setImageError] = useState(false);
+  const [expanded, setExpanded] = useState(false);
   const book = entry.book;
   const displayTitle = book.display_title || book.title;
   const url = bookUrl({ slug: book.slug, id: book.id });
@@ -179,82 +223,116 @@ function ReadingHistoryCard({
     ? Math.round((entry.last_page_number / book.pages_count) * 100)
     : 0;
 
-  return (
-    <Link
-      href={pageUrl}
-      className="flex gap-4 bg-white rounded-lg shadow-sm border border-stone-200 p-4 hover:shadow-md hover:-translate-y-0.5 transition-all"
-    >
-      {/* Cover */}
-      <div className="relative w-16 h-20 flex-shrink-0 bg-stone-100 rounded overflow-hidden">
-        {book.thumbnail && !imageError ? (
-          <Image
-            src={book.thumbnail}
-            alt={displayTitle}
-            fill
-            className="object-cover"
-            sizes="64px"
-            onError={() => setImageError(true)}
-            unoptimized
-          />
-        ) : (
-          <div className="absolute inset-0 flex items-center justify-center text-stone-300">
-            <BookOpen className="w-6 h-6" />
-          </div>
-        )}
-      </div>
+  const pagesRead = entry.pages_read || [];
+  const sortedPages = [...pagesRead].sort((a, b) => a.page_number - b.page_number);
+  const hasPageDetail = sortedPages.length > 0;
 
-      {/* Info */}
-      <div className="flex-1 min-w-0">
-        <h3 className="font-serif text-stone-800 line-clamp-1">{displayTitle}</h3>
-        <div className="flex items-center gap-2 text-sm text-stone-500 mt-0.5">
-          {book.author && <span>{book.author}</span>}
-          {book.year && <span>({book.year})</span>}
+  return (
+    <div className="group rounded-lg overflow-hidden bg-warm border border-border-light hover:border-border-medium transition-colors">
+      <Link
+        href={pageUrl}
+        className="flex gap-4 p-5"
+      >
+        {/* Cover */}
+        <div className="relative w-14 h-[72px] flex-shrink-0 bg-stone-100 rounded overflow-hidden">
+          {book.thumbnail && !imageError ? (
+            <Image
+              src={book.thumbnail}
+              alt={displayTitle}
+              fill
+              className="object-cover opacity-90 group-hover:opacity-100 transition-opacity"
+              sizes="56px"
+              onError={() => setImageError(true)}
+              unoptimized
+            />
+          ) : (
+            <div className="absolute inset-0 flex items-center justify-center text-stone-300">
+              <BookOpen className="w-5 h-5" />
+            </div>
+          )}
         </div>
 
-        {/* Progress bar */}
-        {entry.last_page_number > 0 && (
-          <div className="mt-2">
-            <div className="flex items-center justify-between text-xs text-stone-500 mb-1">
-              <span className="flex items-center gap-1">
-                <Eye className="w-3 h-3" />
-                Page {entry.last_page_number}
-                {book.pages_count ? ` of ${book.pages_count}` : ''}
-              </span>
-              <span className="flex items-center gap-1">
+        {/* Info */}
+        <div className="flex-1 min-w-0">
+          <div className="flex items-start justify-between gap-3">
+            <div>
+              <h3 className="font-serif font-medium text-primary group-hover:text-accent-rust transition-colors line-clamp-1">
+                {displayTitle}
+              </h3>
+              <div className="flex items-center gap-2 text-sm text-muted mt-0.5">
+                {book.author && <span>{book.author}</span>}
+                {book.year && <span className="text-faint">({book.year})</span>}
+              </div>
+            </div>
+            <div className="flex items-center gap-2 flex-shrink-0">
+              <span className="text-xs text-faint flex items-center gap-1">
                 <Clock className="w-3 h-3" />
                 {timeAgo(entry.updated_at)}
               </span>
+              <button
+                onClick={(e) => onRemove(entry.book_id, e)}
+                className="p-1.5 text-stone-300 hover:text-red-400 rounded transition-colors opacity-0 group-hover:opacity-100"
+                title="Remove from history"
+              >
+                <Trash2 className="w-3.5 h-3.5" />
+              </button>
             </div>
+          </div>
+
+          {/* Progress row */}
+          <div className="mt-3 flex items-center gap-3">
             {book.pages_count && (
-              <div className="w-full h-1.5 bg-stone-100 rounded-full overflow-hidden">
-                <div
-                  className="h-full bg-accent-gold/80 rounded-full transition-all"
-                  style={{ width: `${Math.min(100, progress)}%` }}
-                />
+              <div className="flex-1 max-w-xs">
+                <div className="w-full h-1.5 bg-stone-100 rounded-full overflow-hidden">
+                  <div
+                    className="h-full bg-accent-gold/80 rounded-full transition-all"
+                    style={{ width: `${Math.min(100, progress)}%` }}
+                  />
+                </div>
               </div>
             )}
+            <div className="flex items-center gap-3 text-xs text-faint">
+              <span className="flex items-center gap-1">
+                <Eye className="w-3 h-3" />
+                {entry.pages_viewed} {entry.pages_viewed === 1 ? 'page' : 'pages'}
+              </span>
+              {book.pages_count && (
+                <span>p. {entry.last_page_number} of {book.pages_count}</span>
+              )}
+              <span className="text-accent-rust flex items-center gap-1 font-medium">
+                Continue
+                <ArrowRight className="w-3 h-3" />
+              </span>
+            </div>
           </div>
-        )}
-
-        <p className="text-xs text-stone-400 mt-1">
-          {entry.pages_viewed} {entry.pages_viewed === 1 ? 'page' : 'pages'} read
-        </p>
-      </div>
-
-      {/* Actions */}
-      <div className="flex flex-col items-end justify-between">
-        <button
-          onClick={(e) => onRemove(entry.book_id, e)}
-          className="p-1.5 text-stone-300 hover:text-red-400 rounded transition-colors"
-          title="Remove from history"
-        >
-          <Trash2 className="w-3.5 h-3.5" />
-        </button>
-        <div className="flex items-center text-accent-rust">
-          <span className="text-xs whitespace-nowrap">Continue</span>
-          <ArrowRight className="w-4 h-4 ml-1" />
         </div>
-      </div>
-    </Link>
+      </Link>
+
+      {/* Expandable pages-read detail */}
+      {hasPageDetail && (
+        <div className="border-t border-border-light">
+          <button
+            onClick={() => setExpanded(!expanded)}
+            className="w-full px-5 py-2 flex items-center gap-2 text-xs text-faint hover:text-muted transition-colors"
+          >
+            {expanded ? <ChevronUp className="w-3 h-3" /> : <ChevronDown className="w-3 h-3" />}
+            {sortedPages.length} {sortedPages.length === 1 ? 'page' : 'pages'} visited
+          </button>
+          {expanded && (
+            <div className="px-5 pb-3 flex flex-wrap gap-1.5">
+              {sortedPages.map((p) => (
+                <Link
+                  key={p.page_id}
+                  href={`${url}/page/${p.page_id}`}
+                  className="px-2 py-0.5 text-xs bg-stone-100 text-stone-600 hover:bg-accent-gold/20 hover:text-accent-rust rounded transition-colors"
+                >
+                  p. {p.page_number}
+                </Link>
+              ))}
+            </div>
+          )}
+        </div>
+      )}
+    </div>
   );
 }

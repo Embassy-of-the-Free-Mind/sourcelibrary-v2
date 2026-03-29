@@ -4,7 +4,9 @@ import { ArrowLeft, BookOpen, ChevronRight } from 'lucide-react';
 import { getDb } from '@/lib/mongodb';
 import { LIBRARY_CATEGORIES, CategoryWithCount } from '@/app/api/categories/route';
 
-export const revalidate = 600; // 10 min — as originally intended
+// ISR: rebuild every 6 hours. Categories change rarely.
+export const revalidate = 21600;
+export const maxDuration = 60;
 
 export const metadata: Metadata = {
   title: 'Browse by Category — Source Library',
@@ -22,10 +24,10 @@ async function getCategoriesWithCounts(): Promise<CategoryWithCount[]> {
   try {
     const db = await getDb();
     const categoryCounts = await db.collection('books').aggregate([
-      { $match: { hidden: { $ne: true } } },
+      { $match: { hidden: { $ne: true }, categories: { $exists: true } } },
       { $unwind: '$categories' },
       { $group: { _id: '$categories', count: { $sum: 1 } } },
-    ]).toArray();
+    ], { maxTimeMS: 30000, hint: 'categories_1' }).toArray();
 
     for (const item of categoryCounts) {
       countMap.set(item._id as string, item.count as number);

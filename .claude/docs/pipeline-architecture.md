@@ -11,7 +11,7 @@
 1. [Where Everything Runs](#where-everything-runs)
 2. [Book Lifecycle (State Machine)](#book-lifecycle-state-machine)
 3. [OCR (Gemini Batch API on Hetzner)](#ocr-gemini-batch-api-on-hetzner)
-4. [Translation (Lambda + SQS FIFO)](#translation-lambda--sqs-fifo)
+4. [Translation (Hetzner Inline Worker)](#translation-hetzner-inline-worker)
 5. [Adaptive Limits (Backpressure)](#adaptive-limits-backpressure)
 6. [Emergency Controls](#emergency-controls)
 7. [Current Velocity](#current-velocity-march-18-2026)
@@ -42,24 +42,47 @@ Note: `enrich-books` cron code exists in the codebase but is NOT in `vercel.json
 
 ### Hetzner (root@46.224.122.120, cax31, "clawdbot") -- ALL pipeline orchestration
 
-- 41 days uptime, load ~0.30
 - Main script: `scripts/workers/pipeline-orchestrator.mjs` (~2000 lines)
 - Independent phase crons with per-phase lock files
-- **CRITICAL:** Crontab entries and lock file setup are LOCAL to Hetzner, NOT in git
+- **Crontab is versioned** at `scripts/workers/crontab.production` (dumped 2026-03-27)
 
 #### Hetzner Cron Schedule
 
+**Pipeline core (high frequency):**
+
 | Cron | Interval | Lock file | Purpose |
 |------|----------|-----------|---------|
-| `pipeline-orchestrator.mjs` (main) | */5 min | `sl-pipeline.lock` | All phases (fallback) |
+| `pipeline-orchestrator.mjs` (main) | */2 min | `sl-pipeline.lock` | All phases (fallback orchestrator) |
+| `translate-worker.mjs` | */2 min | `sl-translate.lock` | Inline translation via Gemini (no Lambda) |
+| `--phase 1.5` (preview OCR) | */2 min | `sl-preview-ocr.lock` | First 25 pages via Lambda for fast preview |
+| `--phase 5` (translate complete) | */5 min | `sl-translate-complete.lock` | Translation completion check |
 | `--phase 0` (enrollment) | */10 min | `sl-enroll.lock` | New books -> queued |
 | `--phase 1` (archive check) | */10 min | `sl-archive-check.lock` | queued -> archive_complete |
 | `--phase 2` (OCR submit) | */10 min | `sl-ocr-submit.lock` | Submit to Gemini Batch API |
 | `--phase 3` (OCR complete) | */10 min | `sl-ocr-complete.lock` | Batch results -> pages |
-| `--phase 5` (translate complete) | */10 min | `sl-translate-complete.lock` | Lambda results -> books |
 | `batch-collector.mjs` | */10 min | `sl-collector.lock` | Poll Gemini Batch API |
+| `archive-bulk.mjs` | */10 min | `sl-archive-bulk.lock` | IA bulk JP2 zip download -> R2 |
+
+**Archiving & image processing (medium frequency):**
+
+| Cron | Interval | Lock file | Purpose |
+|------|----------|-----------|---------|
+| `archive-ocr.mjs` | */30 min | `sl-archive-ocr.lock` | Per-page IIIF download -> R2 |
+| `resize-worker.mjs` | */30 min | `sl-resize.lock` | Generate display-size from full-res |
 | `sync-worker.mjs` | */2 hr | `sl-sync.lock` | Page count cache refresh |
-| `archive-ocr.mjs` | */4 hr | `sl-archive-ocr.lock` | Images -> Cloudflare R2 |
+
+**Daily maintenance:**
+
+| Cron | Time | Lock file | Purpose |
+|------|------|-----------|---------|
+| `warm-author-pages.mjs` | 5:00 UTC | `sl-warm-authors.lock` | ISR cache warmup for author pages |
+| `prewarm-browse.mjs` | 5:15 UTC | `sl-prewarm.lock` | ISR cache warmup for browse pages |
+| `pipeline-health-alert.mjs` | 7:00 UTC | `sl-health.lock` | Daily throughput + storage alerts |
+
+**Vercel proxy (calls Vercel endpoints from Hetzner):**
+
+| Cron | Interval | Lock file | Purpose |
+|------|----------|-----------|---------|
 | `cron-caller.mjs social-post` | */3 hr | `sl-social-post.lock` | Calls Vercel endpoint |
 | `cron-caller.mjs social-reset` | Daily midnight | -- | Calls Vercel endpoint |
 | `cron-caller.mjs daily-pipeline-report` | Daily 6am | -- | Calls Vercel endpoint |
@@ -132,11 +155,11 @@ Phase 3.7: Transliteration (inline on Hetzner for non-Latin scripts: Greek, Hebr
   [No status change -- adds transliteration.data to pages]
   |
   v
-Phase 4: Translation dispatch (pages enqueued to SQS FIFO)
+Phase 4: Translation dispatch (job created, Hetzner translate-worker picks up)
   -> translate_submitted
   |
   v
-Phase 5: Translation completion (Lambda workers process sequentially per book)
+Phase 5: Translation completion (translate-worker processes pages sequentially per book)
   -> translate_complete
   |
   v
@@ -198,18 +221,27 @@ $0.0017/page (measured from `gemini_usage`: $354 / 211K pages over 7 days)
 
 ---
 
-## Translation (Lambda + SQS FIFO)
+## Translation (Hetzner Inline Worker)
 
-**Why Lambda, not Batch API:** Cross-page context continuity. Each page must see the previous page's translation to maintain coherent output. The Batch API returns results in arbitrary order -- this was learned the hard way on Feb 18 when 17K pages got wrong translations.
+**Why not Batch API:** Cross-page context continuity. Each page must see the previous page's translation to maintain coherent output. The Batch API returns results in arbitrary order -- this was learned the hard way on Feb 18 when 17K pages got wrong translations.
 
-### Flow
+**Why Hetzner, not Lambda/SQS:** The `translate-worker.mjs` calls Gemini directly, avoiding SQS/Lambda overhead and enabling model routing (flash for BPH, lite for others). Lambda translation still exists for preview and manual jobs.
 
-1. Phase 4 creates a job record, enqueues pages to SQS FIFO
-2. FIFO queue ensures sequential processing per `MessageGroupId` (job ID)
-3. Lambda worker fetches page OCR, queries previous page's translation from MongoDB
-4. Calls Gemini realtime, writes translation directly to MongoDB (not deferred -- context requires immediate write)
-5. Sends completion logging to write-results queue
-6. Writer Lambda logs `gemini_usage` and checks job completion
+### Flow (Production)
+
+1. Orchestrator Phase 4 creates a `jobs` record, sets book to `translate_submitted`
+2. `translate-worker.mjs` (Hetzner cron, every 2 min) picks up books in `translate_submitted`
+3. Translates pages sequentially per book (previous page's translation as context)
+4. Calls Gemini directly -- model: `gemini-3-flash-preview` (BPH) or `gemini-3.1-flash-lite-preview` (others)
+5. Writes translation directly to `pages` collection
+6. Rotates API keys on rate limits (up to 11 keys)
+7. Concurrency: 20 books simultaneously, 8,000 page cap per run
+
+### Legacy Lambda Path (Fallback)
+
+Lambda translation processor + SQS FIFO queue still work. Used only for:
+- Preview translation (first 25 pages via `preview-translate.ts`)
+- Manual job submission via `/api/jobs/queue-books`
 
 ### Special Cases
 

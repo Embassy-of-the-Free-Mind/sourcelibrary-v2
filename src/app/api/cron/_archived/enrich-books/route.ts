@@ -2,6 +2,7 @@ import { NextRequest, NextResponse } from 'next/server';
 import { getDb } from '@/lib/mongodb';
 import { verifyCronAuth } from '@/lib/cron-auth';
 import { extractChaptersForBook } from '@/lib/chapter-extraction';
+import { materializeChapterTexts } from '@/lib/chapter-text';
 import { scoreBookQuality } from '@/lib/quality-scoring';
 import { scoreBookAlignment } from '@/lib/semantic-alignment';
 import { scoreCollectionRelevance } from '@/lib/collection-relevance';
@@ -227,6 +228,8 @@ export async function GET(request: NextRequest) {
           );
 
           await extractChaptersForBook(db, book.id);
+          // Materialize chapter text (concatenate pages into chapter chunks)
+          await materializeChapterTexts(db, book.id);
 
           await db.collection('books').updateOne(
             { id: book.id },
