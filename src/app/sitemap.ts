@@ -1,8 +1,9 @@
 import { MetadataRoute } from 'next';
 import { getDb } from '@/lib/mongodb';
 
-// Generate at runtime to avoid MongoDB timeouts during build
-export const dynamic = 'force-dynamic';
+// Next.js metadata files (sitemap.ts) are statically generated at build time.
+// All DB queries use maxTimeMS to stay well under Vercel's 60s build timeout.
+// If any query fails, the catch block returns static-only pages.
 
 export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
   const baseUrl = 'https://sourcelibrary.org';
@@ -157,7 +158,7 @@ export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
     priority: 0.5,
   }));
 
-  // Dynamic pages from DB — with timeout to prevent build hangs
+  // Dynamic pages from DB — each query has maxTimeMS to prevent build hangs
   try {
     const dbPromise = getDb();
     const timeoutPromise = new Promise<never>((_, reject) =>
@@ -165,14 +166,54 @@ export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
     );
     const db = await Promise.race([dbPromise, timeoutPromise]);
 
-    // Books
-    const books = await db.collection('books').find(
-      { hidden: { $ne: true } },
-      { projection: { id: 1, slug: 1, updated_at: 1, pages_ocr: 1, pages_translated: 1, is_first_translation: 1, read_count: 1 } }
-    ).toArray();
+    // Run all queries in parallel with individual timeouts
+    const [books, collections, libraries, languages, galleryImages, works] = await Promise.all([
+      // Books
+      db.collection('books').find(
+        { hidden: { $ne: true } },
+        {
+          projection: { id: 1, slug: 1, updated_at: 1, pages_ocr: 1, pages_translated: 1, is_first_translation: 1, read_count: 1 },
+          maxTimeMS: 8000,
+        }
+      ).toArray(),
+
+      // Collections
+      db.collection('collections').find(
+        { hidden: { $ne: true } },
+        { projection: { slug: 1, updated_at: 1 }, maxTimeMS: 5000 }
+      ).toArray(),
+
+      // Libraries
+      db.collection('libraries').find(
+        {},
+        { projection: { slug: 1, updated_at: 1 }, maxTimeMS: 5000 }
+      ).toArray(),
+
+      // Languages
+      db.collection('books').aggregate([
+        { $match: { hidden: { $ne: true }, pages_count: { $gt: 0 }, language: { $exists: true, $ne: null } } },
+        { $group: { _id: '$language', count: { $sum: 1 } } },
+        { $match: { count: { $gte: 5 } } },
+      ], { maxTimeMS: 8000 }).toArray(),
+
+      // Gallery images — heaviest query (pages collection, 9.5M docs)
+      db.collection('pages').aggregate([
+        { $match: { 'detected_images': { $exists: true, $ne: [] } } },
+        { $unwind: { path: '$detected_images', includeArrayIndex: 'img_idx' } },
+        { $match: { 'detected_images.museum_description': { $exists: true, $ne: '' } } },
+        { $project: { id: 1, img_idx: 1 } },
+        { $limit: 2000 },
+      ], { maxTimeMS: 15000, allowDiskUse: true }).toArray(),
+
+      // Works
+      db.collection('books').aggregate([
+        { $match: { work_id: { $exists: true, $ne: null }, hidden: { $ne: true } } },
+        { $group: { _id: '$work_id', count: { $sum: 1 } } },
+        { $match: { count: { $gte: 2 } } },
+      ], { maxTimeMS: 8000 }).toArray(),
+    ]);
 
     const bookPages: MetadataRoute.Sitemap = books
-      // Exclude books with no OCR or very thin content (1-3 OCR pages, no translation)
       .filter((book) => book.pages_ocr > 0 && (book.pages_ocr > 3 || book.pages_translated > 0))
       .map((book) => {
         let lastModified: Date;
@@ -183,7 +224,6 @@ export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
           lastModified = new Date();
         }
 
-        // Tiered priority based on content completeness and value
         let priority = 0.5;
         if (book.pages_translated > 0) priority = 0.7;
         if (book.is_first_translation) priority = 0.85;
@@ -198,29 +238,12 @@ export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
         };
       });
 
-    // Encyclopedia entities — excluded from sitemap for now.
-    // Most are thin (name + book list) and dilute crawl budget.
-    // Revisit when entity pages have richer content.
-    const entityPages: MetadataRoute.Sitemap = [];
-
-    // Collections — exclude hidden ones
-    const collections = await db.collection('collections').find(
-      { hidden: { $ne: true } },
-      { projection: { slug: 1, updated_at: 1 } }
-    ).toArray();
-
     const collectionPages: MetadataRoute.Sitemap = collections.map((col) => ({
       url: `${baseUrl}/collections/${col.slug}`,
       lastModified: col.updated_at ? new Date(col.updated_at) : new Date(),
       changeFrequency: 'weekly' as const,
       priority: 0.7,
     }));
-
-    // Library partners
-    const libraries = await db.collection('libraries').find(
-      {},
-      { projection: { slug: 1, updated_at: 1 } }
-    ).toArray();
 
     const libraryPages: MetadataRoute.Sitemap = libraries.map((lib) => ({
       url: `${baseUrl}/libraries/${lib.slug}`,
@@ -229,13 +252,6 @@ export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
       priority: 0.5,
     }));
 
-    // Language pages — aggregate distinct languages with enough content
-    const languages = await db.collection('books').aggregate([
-      { $match: { hidden: { $ne: true }, pages_count: { $gt: 0 }, language: { $exists: true, $ne: null } } },
-      { $group: { _id: '$language', count: { $sum: 1 } } },
-      { $match: { count: { $gte: 5 } } },
-    ]).toArray();
-
     const languagePages: MetadataRoute.Sitemap = languages.map((lang) => ({
       url: `${baseUrl}/languages/${(lang._id as string).toLowerCase().replace(/\s+/g, '-')}`,
       lastModified: new Date(),
@@ -243,29 +259,12 @@ export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
       priority: 0.5,
     }));
 
-    // Gallery images — unique historical illustrations with rich metadata
-    // Only include images with museum descriptions (well-curated content)
-    const galleryImages = await db.collection('pages').aggregate([
-      { $match: { 'detected_images': { $exists: true, $ne: [] } } },
-      { $unwind: { path: '$detected_images', includeArrayIndex: 'img_idx' } },
-      { $match: { 'detected_images.museum_description': { $exists: true, $ne: '' } } },
-      { $project: { id: 1, img_idx: 1 } },
-      { $limit: 2000 },
-    ]).toArray();
-
     const galleryPages: MetadataRoute.Sitemap = galleryImages.map((img) => ({
       url: `${baseUrl}/gallery/image/${img.id}-${img.img_idx}`,
       lastModified: new Date(),
       changeFrequency: 'monthly' as const,
       priority: 0.4,
     }));
-
-    // Work pages — multi-edition comparison pages
-    const works = await db.collection('books').aggregate([
-      { $match: { work_id: { $exists: true, $ne: null }, hidden: { $ne: true } } },
-      { $group: { _id: '$work_id', count: { $sum: 1 } } },
-      { $match: { count: { $gte: 2 } } },
-    ]).toArray();
 
     const workPages: MetadataRoute.Sitemap = works.map((w) => ({
       url: `${baseUrl}/work/${w._id}`,
@@ -280,7 +279,6 @@ export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
       ...categoryPages,
       ...pressPages,
       ...bookPages,
-      ...entityPages,
       ...collectionPages,
       ...libraryPages,
       ...languagePages,
