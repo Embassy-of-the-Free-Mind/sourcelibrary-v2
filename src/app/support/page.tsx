@@ -277,10 +277,10 @@ export default function SupportPage() {
             1.15 million Renaissance editions remain unscanned. A single gift can open an entire subject area.
           </p>
           <Link
-            href="/scan-the-renaissance"
+            href="/contribute"
             className="inline-block bg-stone-900 text-white py-3 px-8 rounded-full hover:bg-stone-800 transition-colors text-base font-medium"
           >
-            Read the Vision
+            How to Contribute
           </Link>
         </div>
       </section>

@@ -6,7 +6,7 @@ import { sortCollections } from '@/lib/collections-utils';
 import EraTimeline, { type DecadeBucket } from '@/components/collections/EraTimeline';
 import type { Metadata } from 'next';
 
-export const dynamic = 'force-dynamic'; // ISR: rebuild every hour
+export const revalidate = 3600; // ISR: rebuild every hour
 
 export const metadata: Metadata = {
   title: 'Collections | Source Library',

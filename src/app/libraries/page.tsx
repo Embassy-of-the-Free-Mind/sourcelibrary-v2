@@ -6,8 +6,7 @@ import ContentPageLayout, { ContentHeader } from '@/components/layout/ContentPag
 import { LIBRARY_PARTNERS, getPartnerByProvider } from '@/lib/library-partners';
 import type { Metadata } from 'next';
 
-export const dynamic = 'force-dynamic';
-export const maxDuration = 30;
+export const revalidate = 3600; // ISR: rebuild every hour
 
 export const metadata: Metadata = {
   title: 'Libraries | Source Library',

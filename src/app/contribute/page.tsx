@@ -103,12 +103,6 @@ export default async function ParticipatePage() {
                 <path strokeLinecap="round" strokeLinejoin="round" d="M13 7l5 5m0 0l-5 5m5-5H6" />
               </svg>
             </Link>
-            <Link
-              href="/contribute/process"
-              className="inline-flex items-center gap-2 border border-stone-500 text-white px-6 py-3 rounded-full font-medium hover:bg-white/10 transition-colors"
-            >
-              Process pages with your API key
-            </Link>
           </div>
         </div>
       </section>
@@ -260,25 +254,6 @@ export default async function ParticipatePage() {
             Go deeper
           </h2>
           <div className="grid grid-cols-1 md:grid-cols-2 gap-5">
-            <Link
-              href="/contribute/process"
-              className="group p-6 rounded-xl border border-border-light hover:border-accent-sage/40 hover:shadow-sm transition-all"
-            >
-              <div className="flex items-start gap-4">
-                <div className="flex-shrink-0 w-10 h-10 rounded-lg bg-accent-sage/10 flex items-center justify-center">
-                  <svg className="w-5 h-5 text-accent-sage" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={1.5}>
-                    <path strokeLinecap="round" strokeLinejoin="round" d="M3.75 13.5l10.5-11.25L12 10.5h8.25L9.75 21.75 12 13.5H3.75z" />
-                  </svg>
-                </div>
-                <div>
-                  <h3 className="font-semibold text-primary mb-1 group-hover:text-accent-sage transition-colors">Process pages</h3>
-                  <p className="text-sm text-secondary leading-relaxed">
-                    Use your own free Gemini API key to OCR or translate pages.
-                    Set your budget, pick a book, watch it come to life. Every page you process is permanently free for the world.
-                  </p>
-                </div>
-              </div>
-            </Link>
 
             <div className="p-6 rounded-xl border border-border-light">
               <div className="flex items-start gap-4">
