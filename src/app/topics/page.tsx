@@ -88,7 +88,7 @@ async function fetchDomainCrossTab(): Promise<Map<string, SubDomain[]>> {
     { $match: { $expr: { $gt: ['$b', '$a'] } } },  // ordered pairs only (avoids dupes)
     { $group: { _id: { d1: '$a', d2: '$b' }, count: { $sum: 1 } } },
     { $sort: { count: -1 } },
-  ], { allowDiskUse: true }).toArray();
+  ], { allowDiskUse: true, maxTimeMS: 8000 }).toArray();
 
   const map = new Map<string, SubDomain[]>();
   const labelify = (s: string) => s.replace(/-/g, ' ').replace(/\b\w/g, (c: string) => c.toUpperCase());
@@ -188,13 +188,16 @@ function DomainGroupedGrid({ values, facetId }: { values: FacetCount[]; facetId:
 }
 
 export default async function TopicsPage() {
-  const [{ groups, totalBooks }, crossTab] = await Promise.all([
-    fetchFacetCounts().catch((err) => {
+  const { groups, totalBooks } = await fetchFacetCounts().catch((err) => {
     console.error('Facet counts fetch failed:', err);
     return { groups: [] as FacetGroup[], totalBooks: 0 };
-    }),
-    fetchDomainCrossTab().catch(() => new Map<string, SubDomain[]>()),
-  ]);
+  });
+
+  // Cross-tab is optional — don't let it block the page
+  const crossTab = await fetchDomainCrossTab().catch((err) => {
+    console.error('Cross-tab fetch failed (non-fatal):', err?.message);
+    return new Map<string, SubDomain[]>();
+  });
 
   return (
     <ContentPageLayout
