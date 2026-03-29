@@ -174,7 +174,7 @@ async function getBookStats() {
 
   const books = await db.collection('books').find(
     { slug: { $in: slugs } },
-    { projection: { slug: 1, title: 1, author: 1, published: 1, pages_count: 1, pages_translated: 1, language: 1 } }
+    { projection: { slug: 1, title: 1, author: 1, published: 1, pages_count: 1, pages_translated: 1, pages_blank: 1, language: 1 } }
   ).toArray();
 
   const bySlug = new Map(books.map(b => [b.slug, b]));
@@ -182,17 +182,18 @@ async function getBookStats() {
   // Also get Fludd vol 2 for the combined post
   const fludd2 = await db.collection('books').findOne(
     { slug: 'history-of-both-worlds-microcosm-fludd' },
-    { projection: { pages_count: 1, pages_translated: 1 } }
+    { projection: { pages_count: 1, pages_translated: 1, pages_blank: 1 } }
   );
 
   return { bySlug, fludd2 };
 }
 
-interface BookStats { pages_count: number; pages_translated: number; language?: string }
+interface BookStats { pages_count: number; pages_translated: number; pages_blank?: number; language?: string }
 
 function buildWikiText(config: typeof FEATURED_BOOKS[number], book: BookStats, fludd2?: BookStats | null) {
   const bookUrl = `https://sourcelibrary.org/book/${config.slug}`;
-  const pct = book.pages_count > 0 ? Math.round(book.pages_translated / book.pages_count * 100) : 0;
+  const denom = Math.max(book.pages_count - (book.pages_blank || 0), 1);
+  const pct = book.pages_count > 0 ? Math.round(book.pages_translated / denom * 100) : 0;
   const lang = book.language || 'Latin';
   const langNote = lang !== 'English' ? ` Original ${lang} alongside translation.` : '';
   const desc = config.wikiDesc
@@ -217,7 +218,8 @@ function buildWikiText(config: typeof FEATURED_BOOKS[number], book: BookStats, f
 
   // Add Fludd vol 2 if applicable
   if (config.slug === 'history-of-both-worlds-macrocosm-fludd' && fludd2) {
-    const f2pct = fludd2.pages_count > 0 ? Math.round(fludd2.pages_translated / fludd2.pages_count * 100) : 0;
+    const f2denom = Math.max(fludd2.pages_count - (fludd2.pages_blank || 0), 1);
+    const f2pct = fludd2.pages_count > 0 ? Math.round(fludd2.pages_translated / f2denom * 100) : 0;
     body += `\n* [https://sourcelibrary.org/book/history-of-both-worlds-microcosm-fludd Utriusque Cosmi Historia Vol. 2 (1619)] — ${fludd2.pages_count.toLocaleString()} pages, ${f2pct}% complete.`;
   }
 
@@ -231,15 +233,18 @@ export default async function WikipediaContributePage() {
     const book = bySlug.get(config.slug);
     if (!book) return null;
 
-    const pct = book.pages_count > 0 ? Math.round((book.pages_translated as number) / (book.pages_count as number) * 100) : 0;
+    const blankAdj = Math.max((book.pages_count as number) - ((book.pages_blank as number) || 0), 1);
+    const pct = book.pages_count > 0 ? Math.round((book.pages_translated as number) / blankAdj * 100) : 0;
     const bookStats: BookStats = {
       pages_count: book.pages_count as number,
       pages_translated: book.pages_translated as number,
+      pages_blank: (book.pages_blank as number) || 0,
       language: book.language as string | undefined,
     };
     const f2Stats: BookStats | null = fludd2 ? {
       pages_count: fludd2.pages_count as number,
       pages_translated: fludd2.pages_translated as number,
+      pages_blank: (fludd2.pages_blank as number) || 0,
     } : null;
 
     return {

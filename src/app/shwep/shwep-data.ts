@@ -14,6 +14,7 @@ export interface MatchedBook {
   pages_count?: number;
   pages_ocr?: number;
   pages_translated?: number;
+  pages_blank?: number;
   thumbnail?: string;
   overview?: string;
   url: string;
@@ -75,6 +76,7 @@ function toMatchedBook(b: any): MatchedBook {
     pages_count: b.pages_count,
     pages_ocr: b.pages_ocr,
     pages_translated: b.pages_translated,
+    pages_blank: b.pages_blank,
     thumbnail: b.thumbnail_blob || b.thumbnail || undefined,
     overview: overview ? String(overview).slice(0, 300) : undefined,
     url: `https://sourcelibrary.org/book/${b._id}`,
@@ -102,7 +104,7 @@ async function fetchMatchedBooks(db: any): Promise<Map<string, MatchedBook>> {
     {
       projection: {
         _id: 1, title: 1, display_title: 1, author: 1, year: 1, published: 1,
-        language: 1, pages_count: 1, pages_ocr: 1, pages_translated: 1,
+        language: 1, pages_count: 1, pages_ocr: 1, pages_translated: 1, pages_blank: 1,
         thumbnail: 1, thumbnail_blob: 1,
         'reading_summary.overview': 1, 'index.bookSummary.brief': 1, summary: 1,
       },
