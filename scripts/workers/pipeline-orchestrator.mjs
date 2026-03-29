@@ -889,10 +889,11 @@ function shouldRun(phase) {
 // ── Gemini Batch API helpers (direct OCR submission, no Vercel) ──
 
 // All keys for rotation — try each until one works (batch jobs are per-key)
+// KEY_2 moved to end: frequently quota-exhausted, let healthy keys go first
 const GEMINI_BATCH_KEYS = [
-  process.env.GEMINI_API_KEY_2,       // Prefer KEY_2 for batch (separate quota pool)
   process.env.GEMINI_API_KEY_TIER3,
   process.env.GEMINI_API_KEY,
+  process.env.GEMINI_API_KEY_2,
 ].filter(k => !!k);
 
 function getGeminiApiKey(keyIndex = 0) {

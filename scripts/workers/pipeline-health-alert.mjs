@@ -102,18 +102,42 @@ async function run() {
     }
   }
 
-  // 3. Check for stale batch jobs
+  // 3. Check for stale batch jobs (>24h is the actual stale threshold now)
+  const twentyFourHoursAgo = new Date(now - 24 * 60 * 60 * 1000);
   const staleBatchJobs = await db.collection('batch_jobs').countDocuments({
     status: { $in: ['pending', 'processing'] },
-    created_at: { $lt: sixHoursAgo },
+    created_at: { $lt: twentyFourHoursAgo },
   });
 
   if (staleBatchJobs > 0) {
     alerts.push({
       level: 'warning',
       check: 'stale_batch_jobs',
-      message: `${staleBatchJobs} batch jobs stuck for >6h.`,
+      message: `${staleBatchJobs} batch jobs stuck for >24h.`,
     });
+  }
+
+  // 3b. Batch failure rate — alert if >50% failing in last 24h
+  const recentFailed = await db.collection('batch_jobs').countDocuments({
+    status: 'failed',
+    job_name: { $exists: true },
+    created_at: { $gte: oneDayAgo },
+  });
+  const recentTotal = await db.collection('batch_jobs').countDocuments({
+    job_name: { $exists: true },
+    created_at: { $gte: oneDayAgo },
+  });
+  if (recentTotal >= 10) {
+    const failRate = recentFailed / recentTotal;
+    if (failRate > 0.5) {
+      alerts.push({
+        level: 'critical',
+        check: 'batch_failure_rate',
+        message: `Batch failure rate ${(failRate * 100).toFixed(0)}% (${recentFailed}/${recentTotal} in 24h). Possible API quota exhaustion or outage.`,
+      });
+    } else {
+      console.log(`[health] Batch failure rate: ${(failRate * 100).toFixed(0)}% (${recentFailed}/${recentTotal} in 24h)`);
+    }
   }
 
   // 4. Check for books stuck in ocr_submitted
@@ -222,6 +246,44 @@ async function run() {
       },
       { upsert: true },
     );
+
+    // Email critical alerts via Resend (with 4h cooldown)
+    const hasCritical = alerts.some(a => a.level === 'critical');
+    if (hasCritical && process.env.RESEND_API_KEY) {
+      const COOLDOWN_MS = 4 * 60 * 60 * 1000;
+      const lastAlert = await db.collection('system_config').findOne({ _id: 'pipeline_alert_state' });
+      const elapsed = lastAlert?.last_sent_at ? (Date.now() - new Date(lastAlert.last_sent_at).getTime()) : Infinity;
+      if (elapsed >= COOLDOWN_MS) {
+        try {
+          const { Resend } = await import('resend');
+          const resend = new Resend(process.env.RESEND_API_KEY);
+          const criticalAlerts = alerts.filter(a => a.level === 'critical');
+          await resend.emails.send({
+            from: 'Source Library <noreply@sourcelibrary.org>',
+            to: process.env.ALERT_EMAIL || 'derek@sourcelibrary.org',
+            subject: `[PIPELINE] ${criticalAlerts.map(a => a.check).join(', ')}`,
+            html: [
+              '<h2>Pipeline Health Alert</h2>',
+              `<p><strong>Time:</strong> ${now.toISOString()}</p>`,
+              '<table border="1" cellpadding="6" cellspacing="0" style="border-collapse:collapse">',
+              '<tr><th>Check</th><th>Level</th><th>Detail</th></tr>',
+              ...alerts.map(a => `<tr><td>${a.check}</td><td style="color:${a.level === 'critical' ? 'red' : 'orange'}">${a.level}</td><td>${a.message}</td></tr>`),
+              '</table>',
+            ].join('\n'),
+          });
+          await db.collection('system_config').updateOne(
+            { _id: 'pipeline_alert_state' },
+            { $set: { last_sent_at: new Date(), last_alerts: criticalAlerts } },
+            { upsert: true },
+          );
+          console.log('[health] Email alert sent');
+        } catch (emailErr) {
+          console.error('[health] Email alert failed:', emailErr.message);
+        }
+      } else {
+        console.log(`[health] Email cooldown: ${((COOLDOWN_MS - elapsed) / 3600000).toFixed(1)}h remaining`);
+      }
+    }
   } else {
     console.log('\n[health] All checks passed');
     await db.collection('system_config').updateOne(

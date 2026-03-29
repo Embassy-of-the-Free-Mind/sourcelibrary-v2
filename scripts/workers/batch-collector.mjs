@@ -341,8 +341,9 @@ async function processOneJob(db, job) {
     };
 
   } else if (state === 'JOB_STATE_PENDING' || state === 'JOB_STATE_RUNNING') {
-    // Check for stale jobs — if PENDING for >6 hours with no progress, cancel and let orchestrator retry
-    const STALE_HOURS = 6;
+    // Check for stale jobs — if PENDING for >24 hours with no progress, cancel and let orchestrator retry
+    // Note: Flash Lite batches routinely take 8-9h. Previous 6h timeout was killing valid jobs.
+    const STALE_HOURS = 24;
     const jobAge = (Date.now() - new Date(job.created_at).getTime()) / 3600000;
     if (state === 'JOB_STATE_PENDING' && jobAge > STALE_HOURS) {
       console.log(`  Stale PENDING job (${jobAge.toFixed(1)}h old): ${job.job_name || job.gemini_job_name} — cancelling`);
