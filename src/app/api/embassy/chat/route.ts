@@ -11,7 +11,7 @@ const messageSchema = z.object({
 });
 
 const chatRequestSchema = z.object({
-  threadId: z.string().optional(),
+  threadId: z.string().nullable().optional(),
   message: z.string().min(1, 'Message cannot be empty').max(5000, 'Message too long'),
   history: z.array(messageSchema).max(50).optional(),
   visibility: z.enum(['public', 'private']).optional(),

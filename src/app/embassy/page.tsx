@@ -105,7 +105,7 @@ export default function EmbassyPage() {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify({
-          threadId,
+          ...(threadId && { threadId }),
           message: trimmed,
           history: messages,
           visibility,
