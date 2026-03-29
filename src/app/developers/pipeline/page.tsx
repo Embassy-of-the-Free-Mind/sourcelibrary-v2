@@ -12,7 +12,7 @@ export const metadata: Metadata = {
 };
 
 // ISR: rebuild every 6 hours. Allow 60s for first-hit generation.
-export const dynamic = 'force-dynamic';
+export const revalidate = 60;
 export const maxDuration = 60;
 
 /* ── Data fetching ── */

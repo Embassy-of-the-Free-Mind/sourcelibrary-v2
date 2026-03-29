@@ -7,7 +7,7 @@ import ConversationView from '@/components/research/ConversationView';
 import type { CuratorSession, BookRef } from '@/lib/api-client/types/research';
 import Link from 'next/link';
 
-export const dynamic = 'force-dynamic';
+export const revalidate = 600;
 
 interface PageProps {
   params: Promise<{ id: string }>;

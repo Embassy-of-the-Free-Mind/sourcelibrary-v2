@@ -7,7 +7,7 @@ import { isAdmin } from '@/lib/auth-helpers';
 import SiteHeader from '@/components/layout/SiteHeader';
 import { sanitizeThumbnail } from '@/lib/collections-utils';
 
-export const dynamic = 'force-dynamic';
+export const revalidate = 600;
 export const dynamicParams = true;
 
 interface PageProps {

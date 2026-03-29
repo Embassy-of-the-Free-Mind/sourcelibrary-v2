@@ -5,7 +5,7 @@ import { ArrowLeft, Image as ImageIcon, Layers } from 'lucide-react';
 import { getDb } from '@/lib/mongodb';
 import CollectionImageCard, { CollectionImageProps } from './CollectionImageCard';
 
-export const dynamic = 'force-dynamic';
+export const revalidate = 600;
 
 interface PageProps {
   params: Promise<{ slug: string }>;

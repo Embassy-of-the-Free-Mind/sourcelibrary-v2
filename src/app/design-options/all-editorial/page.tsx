@@ -6,7 +6,7 @@ import Image from 'next/image';
 import { BookOpen, ArrowRight } from 'lucide-react';
 import { bookUrl } from '@/lib/slugify';
 
-export const dynamic = 'force-dynamic';
+export const revalidate = 600;
 export const maxDuration = 60;
 
 interface FeaturedBook {

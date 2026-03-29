@@ -2,7 +2,7 @@ import { Metadata } from 'next';
 import ImagePixPlotViz from '@/components/research/ImagePixPlotViz';
 import dataRaw from '@/data/image-constellation.json';
 
-export const dynamic = 'force-dynamic';
+export const revalidate = 600;
 
 export const metadata: Metadata = {
   title: 'Image PixPlot — Source Library',

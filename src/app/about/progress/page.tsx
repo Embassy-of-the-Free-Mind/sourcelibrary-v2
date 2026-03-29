@@ -9,7 +9,7 @@ export const metadata: Metadata = {
   alternates: { canonical: '/about/progress' },
 };
 
-export const dynamic = 'force-dynamic';
+export const revalidate = 60;
 
 // ── Data Loading ──────────────────────────────────────────────────────
 
