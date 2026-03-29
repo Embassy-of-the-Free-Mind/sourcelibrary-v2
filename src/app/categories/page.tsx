@@ -6,7 +6,7 @@ import { LIBRARY_CATEGORIES, CategoryWithCount } from '@/app/api/categories/rout
 
 // ISR: rebuild every 6 hours. Allow 60s for first-hit generation.
 export const revalidate = 21600;
-export const maxDuration = 60;
+export const maxDuration = 90;
 
 export const metadata: Metadata = {
   title: 'Browse by Category — Source Library',
