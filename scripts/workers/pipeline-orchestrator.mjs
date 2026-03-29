@@ -324,7 +324,7 @@ function getTranslateModelForBook(book) {
   return TRANSLATE_MODEL_LITE;
 }
 const TRANSLATE_MODEL = TRANSLATE_MODEL_FLASH; // Legacy fallback
-const TRANSLATE_PROMPT_VERSION = 'v5.2026-02';
+const TRANSLATE_PROMPT_VERSION = 'v10';
 const TRANSLITERATION_MODEL = 'gemini-3.1-flash-lite-preview';
 const TRANSLITERATION_PROMPT = `You are a scholarly transliterator. Convert the following text to Latin characters using standard academic Romanization conventions.
 
@@ -431,37 +431,58 @@ const TRANSLATION_PROMPT = `You are translating a manuscript transcription into 
 - <column-break/> markers — preserve exactly as-is between translated columns
 - Line breaks and paragraph structure
 
-**Inline annotations (visible to readers):**
-- <note>X</note> — interpretive notes for readers
+**Inline annotations (XML tags — toggleable by reader):**
+- <note>X</note> — interpretive notes, interpolated clarifications
+- <term>X</term> — technical/foreign terms kept in transliteration
+- <gloss>X</gloss> — definition immediately after a <term> tag; also translate interlinear annotations
 - <margin>X</margin> — translate and keep marginal notes
-- <gloss>X</gloss> — translate interlinear annotations
-- <insert>X</insert> — translate later additions (inline only)
-- <unclear>X</unclear> — illegible readings
-- <term>X</term> — technical vocabulary with explanation
+- <insert>X</insert> — translate later additions
+- <unclear>X</unclear> — preserve uncertain readings from OCR
 
 **Metadata tags (hidden from readers):**
 - <meta>X</meta> for translator notes that should be hidden (e.g., continuity with previous page)
 
 **Do NOT use:**
-- Code blocks or backticks - this is prose
+- Bare [square brackets] for interpolations — use <note>...</note> instead
+- Bare (parenthetical glosses) after terms — use <term>word</term> <gloss>meaning</gloss> instead
+- Code blocks or backticks — this is prose
 
 **IMPORTANT - Translate ALL languages to English:**
-The source text may contain phrases in multiple languages (Latin, Greek, Hebrew, etc.). You MUST translate EVERYTHING to English:
+The source text may contain phrases in multiple languages (Latin, Greek, Hebrew, Sanskrit, Arabic, etc.). You MUST translate EVERYTHING to English:
 - Latin quotes embedded in German → translate to English
-- Greek phrases → translate to English
-- Hebrew or Aramaic terms → translate to English
+- Greek, Hebrew, Aramaic phrases → translate to English
+- Sanskrit, Prakrit, Pali, Arabic text → translate to English
+- Text in non-Latin scripts (Devanagari, Chinese, Arabic, etc.) → provide English translation immediately after
 - ANY non-English text → translate to English
 Use <note>original: "..."</note> to preserve important original phrases for scholars, but the main text must be fully readable in English without knowing other languages.
+
+**Image descriptions from OCR:**
+If the OCR contains <image-desc>...</image-desc>, translate the description and wrap the ENTIRE paragraph in <note>...</note>. Image descriptions are editorial content, not original text — they must be toggleable. Do NOT leave image description prose untagged. Example:
+  OCR: <image-desc>A woodcut of a pelican feeding her young</image-desc>
+  Translation: <note>A woodcut depicts a pelican feeding her young from her own breast, a symbol of self-sacrifice in alchemical tradition.</note>
 
 **Instructions:**
 1. Start with <meta>...</meta> if noting continuity with previous page (hidden from readers).
 2. Mirror the source layout - headings, paragraphs, tables, centered text.
 3. Translate ALL text including <margin>, <insert>, <gloss> - keep the XML tags.
 4. Translate embedded Latin/Greek/Hebrew phrases to English, noting originals when significant.
-5. Add <note>...</note> inline to explain historical references or difficult phrases.
-6. Style: warm museum label - explain rather than assume knowledge.
-7. Preserve the voice and spirit of the original.
-8. END with <summary>...</summary> and <keywords>...</keywords> for indexing.
+5. For foreign terms kept in transliteration: <term>Chesed</term> <gloss>Mercy/Loving-kindness</gloss>
+
+**Examples of annotated translation:**
+- "He composed a very worthy book On the World and Religion <note>original: "De Seculo, & Religione"</note>; one On Fate and Fortune <note>original: "De Fato, & Fortuna"</note>; and another On Law and Medicine <note>original: "Della Legge, e della Medicina"</note>."
+- "The <term>prima materia</term> <gloss>first matter</gloss> must be purified through <term>calcination</term> <gloss>heating to powder</gloss> before the <term>opus</term> <gloss>the Great Work</gloss> can proceed."
+- "According to the <term>Sefer Yetzirah</term> <gloss>Book of Formation</gloss>, the ten <term>sefirot</term> <gloss>divine emanations</gloss> correspond to the paths of wisdom."
+6. For interpolated clarifications: <note>from the aspect of the secret</note>
+7. Add <note>...</note> inline to explain historical references or difficult phrases.
+8. Style: warm museum label - explain rather than assume knowledge.
+9. Preserve the voice and spirit of the original.
+8. Wrap ALL image/illustration descriptions in <note>...</note> — readers can toggle these off.
+9. END with <summary>...</summary> and <keywords>...</keywords> for indexing.
+
+**Writing style for summaries and notes:**
+- Never use em-dashes (—). Use commas, colons, semicolons, or separate sentences.
+- Avoid: "delves into", "rich tapestry", "fascinating exploration", "sheds light on", "comprehensive", "intricate", "nuanced", "multifaceted", "offers a window into".
+- Use short, direct sentences. Scholarly but accessible.
 
 **Source language:** {source_language}
 **Target language:** {target_language}
@@ -470,7 +491,7 @@ Use <note>original: "..."</note> to preserve important original phrases for scho
 [translated text]
 
 <summary>1-2 sentence summary of this page's main content and significance</summary>
-<keywords>key concepts, names, themes in English — for indexing</keywords>`;
+<keywords>key concepts, names, themes in English, for indexing</keywords>`;
 
 const ENGLISH_MODERNIZATION_PROMPT = `You are modernizing Early Modern English text into clear, accessible Modern English.
 
@@ -1133,9 +1154,11 @@ async function submitOcrDirectly(db, book, { modelOverride, maxPages } = {}) {
 
   // Guard: skip pages that are unsplit spreads (have no crop but book needs splitting)
   // These would send two-page images to OCR, producing garbled results
+  // BUT: if the book was already split_checked, it passed Phase 1.25 and was determined
+  // to be portrait/single-page — no crop data expected, safe to OCR as-is.
   const unsplitPages = pages.filter(p => !p.crop && !p.cropped_photo);
-  if (unsplitPages.length > 0 && unsplitPages.length === pages.length) {
-    // All pages are unsplit — book probably needs split detection first
+  if (unsplitPages.length > 0 && unsplitPages.length === pages.length && !book.pipeline_auto?.split_checked) {
+    // All pages are unsplit AND book hasn't been through split detection
     console.log(`    WARNING: All ${pages.length} pages lack crop data — possible unsplit spreads, skipping OCR (#523)`);
     return { submitted: 0, jobName: null, alreadyDone: false, skippedUnsplit: true };
   }
