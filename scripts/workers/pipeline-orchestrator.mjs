@@ -941,6 +941,15 @@ async function submitOcrDirectly(db, book, { modelOverride } = {}) {
     return { submitted: 0, jobName: null, alreadyDone: true };
   }
 
+  // Guard: skip pages that are unsplit spreads (have no crop but book needs splitting)
+  // These would send two-page images to OCR, producing garbled results
+  const unsplitPages = pages.filter(p => !p.crop && !p.cropped_photo);
+  if (unsplitPages.length > 0 && unsplitPages.length === pages.length) {
+    // All pages are unsplit — book probably needs split detection first
+    console.log(`    WARNING: All ${pages.length} pages lack crop data — possible unsplit spreads, skipping OCR (#523)`);
+    return { submitted: 0, jobName: null, alreadyDone: false, skippedUnsplit: true };
+  }
+
   console.log(`    Downloading ${pages.length} images...`);
   const downloaded = await downloadImagesParallel(pages, IMAGE_CONCURRENCY);
   if (downloaded.length === 0) {
@@ -1836,7 +1845,8 @@ async function run() {
       const ENGLISH_VARIANTS_P2 = ['english', 'eng', 'en'];
       const readyForOcr = ocrLimit > 0 ? await db.collection('books')
         .aggregate([
-          { $match: { 'pipeline_auto.status': 'archive_complete', 'pipeline_auto.split_checked': true } },
+          // PAUSED: BPH books excluded pending split quality audit (#523)
+          { $match: { 'pipeline_auto.status': 'archive_complete', 'pipeline_auto.split_checked': true, 'image_source.provider': { $ne: 'bph' } } },
           { $addFields: {
             _priority: {
               $switch: {
@@ -2238,7 +2248,8 @@ async function run() {
         }
 
         const readyForTranslate = effectiveLimit > 0 ? await db.collection('books').aggregate([
-          { $match: { 'pipeline_auto.status': { $in: ['metadata_enriched', 'ft_verified'] } } },
+          // PAUSED: BPH books excluded pending split quality audit (#523)
+          { $match: { 'pipeline_auto.status': { $in: ['metadata_enriched', 'ft_verified'] }, 'image_source.provider': { $ne: 'bph' } } },
           { $addFields: { _latinFirst: { $cond: [{ $eq: ['$language', 'Latin'] }, 0, 1] } } },
           { $sort: { _latinFirst: 1, is_first_translation: -1, hidden: 1 } },
           { $project: { id: 1, title: 1, pages_count: 1, language: 1, 'pipeline_auto.retry_count': 1, 'image_source.provider': 1 } },
