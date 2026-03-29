@@ -725,16 +725,6 @@ export default async function HomePage() {
                 </p>
               </Link>
               <Link
-                href="/scan-the-renaissance"
-                className="rounded-lg p-5 text-center hover:brightness-110 transition-all"
-                style={{ background: 'rgba(255,255,255,0.03)', border: '1px solid rgba(255,255,255,0.06)' }}
-              >
-                <p className="text-sm font-medium mb-1" style={{ color: '#f5f0e8' }}>Scan the Renaissance</p>
-                <p className="text-xs leading-relaxed" style={{ color: '#6b6560' }}>
-                  Visit a library near you and help us digitize rare books
-                </p>
-              </Link>
-              <Link
                 href="/developers"
                 className="rounded-lg p-5 text-center hover:brightness-110 transition-all"
                 style={{ background: 'rgba(255,255,255,0.03)', border: '1px solid rgba(255,255,255,0.06)' }}

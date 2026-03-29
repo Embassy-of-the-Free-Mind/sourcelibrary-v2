@@ -37,9 +37,7 @@ const NAV_COLUMNS = [
     links: [
       { label: 'Contribute', href: '/contribute' },
       { label: 'Support', href: '/support' },
-      { label: 'Scan the Renaissance', href: '/scan-the-renaissance' },
       { label: 'Developers', href: '/developers' },
-      { label: 'Standards', href: '/about/standards' },
     ],
   },
 ] as const;

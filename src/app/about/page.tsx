@@ -168,12 +168,6 @@ export default function AboutPage() {
             FAQ
           </Link>
           <Link
-            href="/about/standards"
-            className="px-5 py-2.5 bg-white border border-stone-300 text-stone-700 rounded-full hover:bg-stone-50 transition-colors"
-          >
-            Standards & Interoperability
-          </Link>
-          <Link
             href="/developers"
             className="px-5 py-2.5 bg-white border border-stone-300 text-stone-700 rounded-full hover:bg-stone-50 transition-colors"
           >
