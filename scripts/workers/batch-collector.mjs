@@ -42,6 +42,26 @@ const HALLUCINATION_LIMIT = 25_000;
 
 console.log(`[batch-collector] Keys: ${ALL_KEYS.length} | Concurrency: ${CONCURRENCY} | Dry run: ${DRY_RUN}`);
 
+// ── Cost calculation (mirrors gemini-logger.ts) ──
+
+const MODEL_PRICING = {
+  'gemini-3.1-flash-lite-preview': { input: 0.25, output: 1.50 },
+  'gemini-3-flash-preview': { input: 0.50, output: 3.00 },
+  'gemini-3-pro-preview': { input: 2.50, output: 10.00 },
+  'gemini-2.5-flash': { input: 0.15, output: 0.60 },
+  'gemini-2.5-pro': { input: 1.25, output: 5.00 },
+  'gemini-1.5-flash': { input: 0.075, output: 0.30 },
+  'gemini-1.5-pro': { input: 1.25, output: 5.00 },
+};
+const BATCH_DISCOUNT = 0.5;
+
+function calculateCost(model, inputTokens, outputTokens) {
+  const pricing = MODEL_PRICING[model] || MODEL_PRICING['gemini-2.5-flash'];
+  const inputCost = (inputTokens / 1_000_000) * pricing.input * BATCH_DISCOUNT;
+  const outputCost = (outputTokens / 1_000_000) * pricing.output * BATCH_DISCOUNT;
+  return Math.round((inputCost + outputCost) * 1_000_000) / 1_000_000;
+}
+
 // ── OCR metadata extraction (mirrors defaults.ts) ──
 
 function extractPageType(text) {
@@ -299,6 +319,8 @@ async function processOneJob(db, job) {
       ? `All ${recitationCount} pages blocked by RECITATION filter`
       : successCount === 0 ? `All ${failCount} pages failed` : undefined;
 
+    const costUsd = calculateCost(job.model, totalInputTokens, totalOutputTokens);
+
     await db.collection('batch_jobs').updateOne(
       { _id: job._id },
       {
@@ -310,6 +332,9 @@ async function processOneJob(db, job) {
           results_collected: true,
           completed_at: now,
           updated_at: now,
+          input_tokens: totalInputTokens,
+          output_tokens: totalOutputTokens,
+          cost_usd: costUsd,
           ...(errorDetail && { error: errorDetail }),
         },
       }
@@ -324,7 +349,7 @@ async function processOneJob(db, job) {
       page_count: successCount,
       input_tokens: totalInputTokens,
       output_tokens: totalOutputTokens,
-      total_tokens: totalInputTokens + totalOutputTokens,
+      cost_usd: costUsd,
       status: 'success',
       batch_job_id: jobIdStr,
       timestamp: now,

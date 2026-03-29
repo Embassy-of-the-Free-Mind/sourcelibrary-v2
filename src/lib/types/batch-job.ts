@@ -41,4 +41,9 @@ export interface BatchJob {
   // Results (for child jobs)
   completed_pages?: number;
   failed_pages?: number;
+
+  // Cost tracking (set by batch-collector on completion)
+  input_tokens?: number;
+  output_tokens?: number;
+  cost_usd?: number;
 }
