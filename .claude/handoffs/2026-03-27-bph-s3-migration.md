@@ -1,27 +1,40 @@
-# BPH S3→R2 Migration — Handoff 2026-03-27
+# BPH S3→R2 Migration — Handoff 2026-03-28 (updated)
 
 ## Summary
 
-Migrating 1,057 new BPH books (169,726 pages) from Momo's Ritman S3 bucket to Cloudflare R2 + MongoDB. Images are JPEG 2000 (JP2), converted to JPEG via `opj_decompress` + sharp on Hetzner.
+Migrating 1,057 new BPH books (~170K pages) from Momo's Ritman S3 bucket to Cloudflare R2 + MongoDB. Images are JPEG 2000 (JP2), converted to JPEG via `opj_decompress` + sharp on Hetzner.
+
+## Current Status
+
+**219 / 1,057 books completed** (21%). Zero failures since upload fix. Running on Hetzner with auto-restart wrapper.
+
+**Architecture:** Producer/consumer with bounded buffer.
+- Producer downloads JP2s to /dev/shm (RAM-backed tmpfs) at 30 pages/book concurrency
+- 3 consumer workers process books simultaneously (6 convert+upload workers each = 18 total)
+- Buffer of 8 books — downloads never blocked by processing
+- `sharp.concurrency(1)` prevents libvips thread contention
+- Async `exec` (not `execSync`) for opj_decompress — critical for true parallelism
+
+**Throughput:** ~3 pages/s, CPU at 96%. ETA: ~12 hours from 2026-03-28 15:30 UTC.
+
+**Prioritized manifest:** Gems (pre-1560, Hermes, Ficino, Bruno, Lull, etc.) imported first via `/tmp/bph-manifest-prioritized.json`.
 
 ## What's Running
 
-**Migration script**: `scripts/migration/bph-s3-to-r2.mjs` running on Hetzner via nohup.
-- Manifest: `/tmp/bph-manifest.json` (74MB, downloaded from presigned S3 URL)
-- Presigned URLs expire **April 3, 2026** (7-day window from March 27)
-- Rate: ~0.2-0.3 pages/s with 3 books × 20 pages concurrency
-- ETA: ~2-3 days
-- Resume support: `/tmp/bph-migration-progress.json`
+**Auto-restart wrapper:** `scripts/migration/run-bph-migration.sh` running via nohup on Hetzner.
+- Uses `/tmp/bph-manifest-prioritized.json` (gems first, then rest)
+- Restarts on crash (up to 50 times, 30s cooldown)
+- Resume via `/tmp/bph-migration-progress.json`
 
 **Monitor:**
 ```bash
 ssh root@46.224.122.120 'tail -20 /tmp/bph-migration.log'
-ssh root@46.224.122.120 'pgrep -c -f bph-s3-to-r2'
+ssh root@46.224.122.120 'python3 -c "import json; d=json.load(open(\"/tmp/bph-migration-progress.json\")); print(len(d[\"completed\"]))"'
 ```
 
-**If it dies, restart:**
+**If it dies and wrapper isn't running:**
 ```bash
-ssh root@46.224.122.120 'cd /root/sourcelibrary && set -a && source .env.production.local && set +a && nohup node scripts/migration/bph-s3-to-r2.mjs --manifest /tmp/bph-manifest.json --concurrency 20 --book-concurrency 3 --resume > /tmp/bph-migration.log 2>&1 &'
+ssh root@46.224.122.120 'nohup bash /root/sourcelibrary/scripts/migration/run-bph-migration.sh > /dev/null 2>&1 &'
 ```
 
 ## Pipeline After Import
@@ -43,39 +56,49 @@ set -a; source .env.production.local; set +a
 node scripts/workers/batch-split-bph.mjs --limit 50
 ```
 
-## Data Provenance
+**Run enrichment (adds UBN + catalog fields):**
+```bash
+node scripts/migration/enrich-bph-from-csv.mjs --csv /tmp/bph-scanned-books.csv
+```
 
-Two provenance layers on every book:
+## Known Issues
+
+- **885 pages failed** in early runs (before upload retry fix). Books marked "completed" but have missing pages. Need a backfill script to find books where `pages_count < expected` and re-upload gaps.
+- **Presigned URLs expire April 3, 2026.** Must complete before then.
+- JP2 conversion is CPU-bound (~1s/page via opj_decompress). This is the theoretical floor.
+- Some pages get `ECONNRESET` from S3 — retries (5x with exponential backoff) handle this.
+
+## Performance Evolution
+
+| Version | Architecture | Pages/s | CPU | Bottleneck |
+|---------|-------------|---------|-----|------------|
+| v1 (original) | Interleaved DL+convert+upload, 3 books | 0.2 | 14% | Network/CPU interleaved |
+| v2 (phase-separated) | DL→convert→upload per book, 2 books | 0.8 | 30% | Sequential phases |
+| v3 (streamed) | DL then convert+upload merged, 2 books | 1.0 | 56% | execSync blocking event loop |
+| v4 (producer/consumer) | Decoupled DL, 3 consumers, async exec | 3.0 | 96% | opj_decompress throughput (theoretical floor) |
+
+Key optimizations:
+1. Pre-fetch existing source_ids (1 query vs 1000+ findOne)
+2. RAM-backed tmpfs for temp files (/dev/shm)
+3. `sharp.concurrency(1)` to prevent thread contention
+4. Async `exec` instead of `execSync` (6x speedup — the big one)
+5. Producer/consumer with bounded buffer
+6. 3 concurrent consumer workers
+
+## Data Provenance
 
 | Layer | Source | Provider | Fields |
 |-------|--------|----------|--------|
 | Import | `bph-s3-manifest` | `picturae-dam` | title, author, published, publisher, place_published |
 | Enrichment | `bph-scanned-books-csv` | `vitec-memorix` | dublin_core.dc_identifier (UBN), shelf_mark, provenance, binding |
 
-**RIT→UBN mapping**: `ScannedBooks.csv` from Vitec Memorix, 100% coverage of manifest.
-- CSV stored at: `/tmp/bph-scanned-books.csv` (Hetzner) and `scripts/data/bph-scanned-books.csv` (repo, not committed)
-- RIT = Picturae DAM barcode (e.g., `RIT001001449`)
-- UBN = BPH catalog number (e.g., `15312`)
-- `dublin_core.dc_source` = `"BPH Catalogue (UBN: 15312)"`
-
-**Run enrichment after migration (adds UBN + catalog fields):**
-```bash
-node scripts/migration/enrich-bph-from-csv.mjs --csv /tmp/bph-scanned-books.csv
-```
-
-## Overlap with Existing Collection
-
-- **Existing BPH/EFM books**: 1,260 (provider=`bph`, no RIT source_id)
-- **New from manifest**: 1,057 (provider=`bph`, source_id=`RIT*`)
-- **Zero overlap by source_id** — manifest books are all new
-- **~83 title matches** with existing books → skipped by migration script
-- **~974 genuinely new books** imported
-
 ## Key Files
 
 | File | Purpose |
 |------|---------|
-| `scripts/migration/bph-s3-to-r2.mjs` | Main migration: S3 JP2 → R2 JPEG + MongoDB |
+| `scripts/migration/bph-s3-to-r2-fast.mjs` | Main migration: producer/consumer, S3 JP2 → R2 JPEG + MongoDB |
+| `scripts/migration/bph-s3-to-r2.mjs` | Original version (superseded) |
+| `scripts/migration/run-bph-migration.sh` | Auto-restart wrapper on Hetzner |
 | `scripts/migration/enrich-bph-from-csv.mjs` | Add UBN + catalog metadata from CSV |
 | `scripts/workers/batch-split-bph.mjs` | Batch split detection + cropping |
 | `scripts/data/bph-scanned-books.csv` | RIT→UBN mapping (3,074 rows) |
@@ -83,19 +106,12 @@ node scripts/migration/enrich-bph-from-csv.mjs --csv /tmp/bph-scanned-books.csv
 ## Issues
 
 - [#432](https://github.com/Embassy-of-the-Free-Mind/sourcelibrary-v2/issues/432) — BPH migration tracking issue
-- [#264](https://github.com/Embassy-of-the-Free-Mind/sourcelibrary-v2/issues/264) — Split detection in pipeline (batch-split-bph.mjs addresses this)
+- [#264](https://github.com/Embassy-of-the-Free-Mind/sourcelibrary-v2/issues/264) — Split detection in pipeline
 
 ## Momo's Data Files
 
 Received from Momo (Mayank):
-- `manifest.json` — 1,057 books with presigned S3 page URLs (JP2)
+- `manifest.json` — 1,057 books with presigned S3 page URLs (JP2), expires April 3
 - `ScannedBooks.csv` — RIT→UBN mapping + catalog metadata
 - `PageScans.csv.zip` (AllScansExport.csv) — per-page scan data with dimensions, batches
 - `migration_state.db.zip` — SQLite DB from Momo's migration tool
-
-## Known Issues
-
-- JP2 conversion is CPU-bound (~1.5s/page via opj_decompress). Sharp lacks JP2 input support.
-- Some pages get `ECONNRESET` from S3 — the script retries 2x with backoff.
-- `nohup` on Hetzner sometimes spawns duplicate processes. Always check `pgrep -c -f bph-s3-to-r2` and kill extras.
-- Language is `null` for 914/1057 books in the manifest. CSV has language for some. Pipeline metadata enrichment will detect language from OCR text.
