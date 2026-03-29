@@ -35,39 +35,37 @@ interface FacetGroup {
 
 async function fetchFacetCounts(): Promise<{ groups: FacetGroup[]; totalBooks: number }> {
   const db = await getDb();
-  const maxTimeMS = 45000;
-
+  const maxTimeMS = 50000;
   const baseMatch = { faceted_tags: { $exists: true }, hidden: { $ne: true } };
 
-  // Run all facet aggregations in parallel instead of sequentially
-  const [totalBooks, ...facetResults] = await Promise.all([
-    db.collection('books').countDocuments(baseMatch, { maxTimeMS }),
-    ...FACETS.map(facet =>
-      db.collection('books').aggregate([
-        { $match: baseMatch },
-        { $unwind: `$faceted_tags.${facetDbField(facet)}` },
-        {
-          $group: {
-            _id: `$faceted_tags.${facetDbField(facet)}`,
-            count: { $sum: 1 },
-            // Skip expensive thumbnail collection — use count only
-            sample_thumb: { $first: '$thumbnail_blob' },
-          },
-        },
-        { $sort: { count: -1 as const } },
-      ], { maxTimeMS }).toArray()
-    ),
-  ]);
+  // Single $facet aggregation — one collection scan for all 6 facets
+  const facetStages: Record<string, object[]> = {};
+  for (const facet of FACETS) {
+    const field = `faceted_tags.${facetDbField(facet)}`;
+    facetStages[facet.id] = [
+      { $unwind: `$${field}` },
+      { $group: { _id: `$${field}`, count: { $sum: 1 }, sample_thumb: { $first: '$thumbnail_blob' } } },
+      { $sort: { count: -1 } },
+    ];
+  }
+  facetStages['_total'] = [{ $count: 'n' }];
 
-  const groups: FacetGroup[] = FACETS.map((facet, i) => {
-    const results = facetResults[i];
+  const [result] = await db.collection('books').aggregate([
+    { $match: baseMatch },
+    { $facet: facetStages },
+  ], { maxTimeMS, allowDiskUse: true }).toArray();
+
+  const totalBooks = result._total?.[0]?.n ?? 0;
+
+  const groups: FacetGroup[] = FACETS.map((facet) => {
+    const results = (result[facet.id] || []) as Array<{ _id: string; count: number; sample_thumb?: string }>;
     const values: FacetCount[] = results.map((r) => {
       const vocabValue = facet.values.find((v) => v.id === r._id);
       return {
-        id: r._id as string,
-        label: vocabValue?.label || (r._id as string),
+        id: r._id,
+        label: vocabValue?.label || r._id,
         count: r.count,
-        thumbnails: r.sample_thumb ? [r.sample_thumb as string] : [],
+        thumbnails: r.sample_thumb ? [r.sample_thumb] : [],
       };
     });
     return { id: facet.id, label: facet.label, question: facet.question, values };

@@ -27,7 +27,7 @@ async function getCategoriesWithCounts(): Promise<CategoryWithCount[]> {
       { $match: { hidden: { $ne: true }, categories: { $exists: true } } },
       { $unwind: '$categories' },
       { $group: { _id: '$categories', count: { $sum: 1 } } },
-    ], { maxTimeMS: 45000 }).toArray();
+    ], { maxTimeMS: 50000, hint: 'categories_1' }).toArray();
 
     for (const item of categoryCounts) {
       countMap.set(item._id as string, item.count as number);
