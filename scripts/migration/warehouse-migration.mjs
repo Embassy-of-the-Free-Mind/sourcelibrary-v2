@@ -2,14 +2,14 @@
 /**
  * Migration: Move archived books to warehouse collections.
  *
- * Moves books with pipeline_auto.status in ['archiving', 'archive_complete']
- * from `books` → `books_warehouse` and their pages from `pages` → `pages_warehouse`.
+ * Uses chunked $merge to copy server-side, then bulk deletes.
+ * Chunks by book ID ranges to avoid timeouts on Atlas.
  *
- * Safe to re-run (idempotent). Uses batched operations to avoid memory issues.
+ * Safe to re-run — $merge with 'keepExisting' skips dupes.
  *
  * Usage:
  *   set -a; source .env.production.local; set +a; node scripts/migration/warehouse-migration.mjs
- *   # Dry run:
+ *   # Dry run (just counts):
  *   set -a; source .env.production.local; set +a; node scripts/migration/warehouse-migration.mjs --dry-run
  */
 
@@ -19,141 +19,119 @@ const MONGODB_URI = process.env.MONGODB_URI;
 if (!MONGODB_URI) { console.error('MONGODB_URI not set'); process.exit(1); }
 
 const DRY_RUN = process.argv.includes('--dry-run');
-const BATCH_SIZE = 100; // Books per batch
 const WAREHOUSE_STATUSES = ['archiving', 'archive_complete'];
+const BOOK_CHUNK = 1000; // Books per $merge chunk
+const PAGE_CHUNK = 200; // Book IDs per page $merge chunk (page-heavy books timeout at larger sizes)
 
 async function run() {
-  const client = new MongoClient(MONGODB_URI);
+  const client = new MongoClient(MONGODB_URI, {
+    maxPoolSize: 5,
+    socketTimeoutMS: 600000, // 10 min
+  });
   await client.connect();
   const db = client.db('bookstore');
+  const startTime = Date.now();
 
-  console.log(`[warehouse-migration] ${DRY_RUN ? 'DRY RUN — ' : ''}Starting at ${new Date().toISOString()}`);
+  console.log(`[wh] ${DRY_RUN ? 'DRY RUN — ' : ''}Starting at ${new Date().toISOString()}`);
 
-  // Ensure indexes on warehouse collections
-  if (!DRY_RUN) {
-    console.log('[warehouse-migration] Creating warehouse indexes...');
-    await db.collection('books_warehouse').createIndex({ id: 1 }, { unique: true });
-    await db.collection('books_warehouse').createIndex({ 'pipeline_auto.status': 1 });
-    await db.collection('books_warehouse').createIndex({ ia_identifier: 1 });
-    await db.collection('pages_warehouse').createIndex({ book_id: 1, page_number: 1 });
-    await db.collection('pages_warehouse').createIndex({ book_id: 1 });
-    console.log('[warehouse-migration] Indexes created.');
-  }
-
-  // Count books to move
-  const totalToMove = await db.collection('books').countDocuments({
+  // Get all book IDs to move
+  const bookIds = await db.collection('books').distinct('id', {
     'pipeline_auto.status': { $in: WAREHOUSE_STATUSES }
   });
-  console.log(`[warehouse-migration] Found ${totalToMove} books to warehouse`);
+  console.log(`[wh] ${bookIds.length} books to warehouse`);
 
-  if (totalToMove === 0) {
-    console.log('[warehouse-migration] Nothing to do.');
+  if (bookIds.length === 0) {
+    console.log('[wh] Nothing to do.');
     await client.close();
     return;
   }
 
-  let movedBooks = 0;
-  let movedPages = 0;
-  let errors = 0;
-
-  // Process in batches
-  while (movedBooks < totalToMove) {
-    const batch = await db.collection('books').find({
-      'pipeline_auto.status': { $in: WAREHOUSE_STATUSES }
-    }).limit(BATCH_SIZE).toArray();
-
-    if (batch.length === 0) break;
-
-    for (const book of batch) {
-      const bookId = book.id || book._id.toString();
-      try {
-        if (DRY_RUN) {
-          const pageCount = await db.collection('pages').countDocuments({ book_id: bookId });
-          console.log(`  [dry] Would move: ${bookId} "${book.title?.substring(0, 50)}" (${pageCount} pages, status: ${book.pipeline_auto?.status})`);
-          movedBooks++;
-          movedPages += pageCount;
-          continue;
-        }
-
-        // 1. Upsert book into warehouse
-        await db.collection('books_warehouse').replaceOne(
-          { id: bookId },
-          book,
-          { upsert: true }
-        );
-
-        // 2. Move pages in sub-batches (some books have 500+ pages)
-        let pagesMoved = 0;
-        while (true) {
-          const pages = await db.collection('pages')
-            .find({ book_id: bookId })
-            .limit(500)
-            .toArray();
-
-          if (pages.length === 0) break;
-
-          const bulkOps = pages.map(page => ({
-            replaceOne: {
-              filter: { _id: page._id },
-              replacement: page,
-              upsert: true,
-            }
-          }));
-          await db.collection('pages_warehouse').bulkWrite(bulkOps, { ordered: false });
-
-          // Delete moved pages from live
-          const pageIds = pages.map(p => p._id);
-          await db.collection('pages').deleteMany({ _id: { $in: pageIds } });
-          pagesMoved += pages.length;
-        }
-
-        // 3. Delete book from live
-        await db.collection('books').deleteOne({ _id: book._id });
-
-        movedPages += pagesMoved;
-        movedBooks++;
-
-        if (movedBooks % 100 === 0) {
-          console.log(`[warehouse-migration] Progress: ${movedBooks}/${totalToMove} books, ${movedPages} pages moved`);
-        }
-      } catch (err) {
-        errors++;
-        console.error(`[warehouse-migration] Error moving ${bookId}: ${err.message}`);
-        // Don't delete from live if warehouse write failed — data is safe
-      }
-    }
+  if (DRY_RUN) {
+    console.log(`[wh] DRY RUN complete — would move ${bookIds.length} books`);
+    await client.close();
+    return;
   }
 
-  // Log migration result to system_config
-  if (!DRY_RUN) {
-    await db.collection('system_config').updateOne(
-      { _id: 'warehouse_migration' },
-      { $set: {
-        last_run: new Date(),
-        books_moved: movedBooks,
-        pages_moved: movedPages,
-        errors,
-      }},
-      { upsert: true }
+  // ── Step 1: Create indexes ──
+  console.log('[wh] Creating warehouse indexes...');
+  await db.collection('books_warehouse').createIndex({ id: 1 }, { unique: true }).catch(() => {});
+  await db.collection('books_warehouse').createIndex({ 'pipeline_auto.status': 1 }).catch(() => {});
+  await db.collection('books_warehouse').createIndex({ ia_identifier: 1 }).catch(() => {});
+  await db.collection('pages_warehouse').createIndex({ book_id: 1, page_number: 1 }).catch(() => {});
+  await db.collection('pages_warehouse').createIndex({ book_id: 1 }).catch(() => {});
+  console.log('[wh] Indexes ready.');
+
+  // ── Step 2: Copy books in chunks via $merge ──
+  let booksCopied = 0;
+  for (let i = 0; i < bookIds.length; i += BOOK_CHUNK) {
+    const chunk = bookIds.slice(i, i + BOOK_CHUNK);
+    await db.collection('books').aggregate([
+      { $match: { id: { $in: chunk } } },
+      { $merge: { into: 'books_warehouse', on: '_id', whenMatched: 'keepExisting', whenNotMatched: 'insert' } },
+    ], { maxTimeMS: 300000 }).toArray();
+    booksCopied += chunk.length;
+    console.log(`[wh] Books copied: ${booksCopied}/${bookIds.length} (${((Date.now() - startTime) / 1000).toFixed(0)}s)`);
+  }
+
+  // ── Step 3: Copy pages in chunks via $merge ──
+  let pagesPhase = Date.now();
+  for (let i = 0; i < bookIds.length; i += PAGE_CHUNK) {
+    const chunk = bookIds.slice(i, i + PAGE_CHUNK);
+
+    // Skip chunks where pages are already in warehouse (re-run optimization)
+    const livePagesInChunk = await db.collection('pages').countDocuments(
+      { book_id: { $in: chunk } },
+      { maxTimeMS: 30000 }
     );
+    if (livePagesInChunk === 0) {
+      console.log(`[wh] Pages chunk ${i}-${Math.min(i + PAGE_CHUNK, bookIds.length)}: 0 live pages, skipping`);
+      continue;
+    }
+
+    await db.collection('pages').aggregate([
+      { $match: { book_id: { $in: chunk } } },
+      { $merge: { into: 'pages_warehouse', on: '_id', whenMatched: 'keepExisting', whenNotMatched: 'insert' } },
+    ], { maxTimeMS: 600000 }).toArray();
+    console.log(`[wh] Pages copied for books ${i}-${Math.min(i + PAGE_CHUNK, bookIds.length)}: ${livePagesInChunk} pages (${((Date.now() - pagesPhase) / 1000).toFixed(0)}s)`);
   }
 
-  // Verify counts
+  // Verify
+  const whBooks = await db.collection('books_warehouse').estimatedDocumentCount();
+  const whPages = await db.collection('pages_warehouse').estimatedDocumentCount();
+  console.log(`[wh] Warehouse: ${whBooks} books, ~${whPages} pages`);
+
+  // ── Step 4: Delete from live in chunks ──
+  let pagesDeleted = 0;
+  for (let i = 0; i < bookIds.length; i += PAGE_CHUNK) {
+    const chunk = bookIds.slice(i, i + PAGE_CHUNK);
+    const r = await db.collection('pages').deleteMany({ book_id: { $in: chunk } });
+    pagesDeleted += r.deletedCount;
+    console.log(`[wh] Pages deleted: ${pagesDeleted} (chunk ${i}-${Math.min(i + PAGE_CHUNK, bookIds.length)})`);
+  }
+
+  const booksDeleted = await db.collection('books').deleteMany({
+    id: { $in: bookIds }
+  });
+  console.log(`[wh] Books deleted from live: ${booksDeleted.deletedCount}`);
+
+  // ── Step 5: Log ──
+  await db.collection('system_config').updateOne(
+    { _id: 'warehouse_migration' },
+    { $set: { last_run: new Date(), books_moved: bookIds.length, pages_moved: pagesDeleted }},
+    { upsert: true }
+  );
+
   const liveBooks = await db.collection('books').estimatedDocumentCount();
-  const warehouseBooks = await db.collection('books_warehouse').estimatedDocumentCount();
   const livePages = await db.collection('pages').estimatedDocumentCount();
-  const warehousePages = await db.collection('pages_warehouse').estimatedDocumentCount();
 
   console.log(`
-[warehouse-migration] ${DRY_RUN ? 'DRY RUN ' : ''}Complete!
-  Books moved:    ${movedBooks}
-  Pages moved:    ${movedPages}
-  Errors:         ${errors}
-
-  Live books:     ${liveBooks}
-  Warehouse books: ${warehouseBooks}
-  Live pages:     ${livePages}
-  Warehouse pages: ${warehousePages}
+[wh] Complete in ${((Date.now() - startTime) / 1000).toFixed(0)}s!
+  Books moved:      ${bookIds.length}
+  Pages moved:      ${pagesDeleted}
+  Live books:       ${liveBooks}
+  Live pages:       ${livePages}
+  Warehouse books:  ${whBooks}
+  Warehouse pages:  ${whPages}
 `);
 
   await client.close();
