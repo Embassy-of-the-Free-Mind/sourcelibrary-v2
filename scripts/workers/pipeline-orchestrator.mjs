@@ -172,7 +172,10 @@ async function probeDbHealth(db) {
     activeJobs = 999; // assume worst-case
   }
 
-  // Grade
+  // Grade — based on actual DB latency, not job count.
+  // Job count was a proxy for DB load but stopped correlating when translation
+  // moved to Hetzner (jobs stay "processing" for hours without DB pressure).
+  // If high job counts actually stress Atlas, latency metrics will catch it.
   let grade = 'healthy';
   if (findMs > 1000 || countMs > 1500) grade = 'critical';
   else if (findMs > 300 || countMs > 500) grade = 'degraded';
