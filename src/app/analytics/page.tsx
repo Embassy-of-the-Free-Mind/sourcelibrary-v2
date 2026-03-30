@@ -5,12 +5,22 @@ import Link from 'next/link';
 import dynamic from 'next/dynamic';
 import { ChevronLeft, RefreshCw } from 'lucide-react';
 
-const UsageTab = dynamic(() => import('@/components/analytics/tabs/UsageTab'), { ssr: false });
-const PerformanceTab = dynamic(() => import('@/components/analytics/tabs/PerformanceTab'), { ssr: false });
-const LogsTab = dynamic(() => import('@/components/analytics/tabs/LogsTab'), { ssr: false });
-const SearchTab = dynamic(() => import('@/components/analytics/tabs/SearchTab'), { ssr: false });
-const TrafficTab = dynamic(() => import('@/components/analytics/tabs/TrafficTab'), { ssr: false });
-const PipelineTab = dynamic(() => import('@/components/analytics/tabs/PipelineTab'), { ssr: false });
+const LoadingBar = () => (
+  <div className="py-8">
+    <div className="w-full h-1.5 rounded-full overflow-hidden" style={{ background: 'var(--bg-warm)' }}>
+      <div className="h-full rounded-full" style={{ background: 'var(--accent-sage)', width: '40%', animation: 'loading-bar 2s ease-in-out infinite' }} />
+    </div>
+    <style>{`@keyframes loading-bar { 0% { transform: translateX(-100%); } 50% { transform: translateX(150%); } 100% { transform: translateX(-100%); } }`}</style>
+    <p className="text-center text-sm mt-4" style={{ color: 'var(--text-muted)' }}>Loading...</p>
+  </div>
+);
+const opts = { ssr: false, loading: LoadingBar };
+const UsageTab = dynamic(() => import('@/components/analytics/tabs/UsageTab'), opts);
+const PerformanceTab = dynamic(() => import('@/components/analytics/tabs/PerformanceTab'), opts);
+const LogsTab = dynamic(() => import('@/components/analytics/tabs/LogsTab'), opts);
+const SearchTab = dynamic(() => import('@/components/analytics/tabs/SearchTab'), opts);
+const TrafficTab = dynamic(() => import('@/components/analytics/tabs/TrafficTab'), opts);
+const PipelineTab = dynamic(() => import('@/components/analytics/tabs/PipelineTab'), opts);
 type Tab = 'usage' | 'performance' | 'logs' | 'search' | 'traffic' | 'pipeline';
 
 const TABS: { key: Tab; label: string }[] = [
