@@ -476,6 +476,9 @@ export default async function CollectionDetailPage({ params }: Props) {
   }
   const diverseGalleryImages = shuffled.slice(0, 9);
   const heroImages = shuffled.slice(0, 6);
+  // Count total images and unique source books for gallery label
+  const galleryTotalImages = galleryImages.length;
+  const galleryUniqueBooks = new Set(galleryImages.map((img: { book_id?: string; bookId?: string }) => img.book_id || img.bookId)).size;
   const allBooksForLinking = [
     ...curatedHighlightsData.map((h: { book_id: string; slug?: string; title?: string }) => ({
       id: h.book_id,
@@ -663,7 +666,7 @@ export default async function CollectionDetailPage({ params }: Props) {
       {diverseGalleryImages.length > 0 && (
         <div className="bg-warm border-b border-border-light">
           <div className="max-w-7xl mx-auto px-6 py-8">
-            <div className="flex items-center justify-between mb-5">
+            <div className="flex items-center justify-between mb-2">
               <h2 className="text-2xl sm:text-3xl text-primary font-display">
                 Illustrations
               </h2>
@@ -675,6 +678,9 @@ export default async function CollectionDetailPage({ params }: Props) {
                 Browse all
               </Link>
             </div>
+            <p className="text-sm text-muted mb-5">
+              {galleryTotalImages.toLocaleString()} images extracted from {galleryUniqueBooks.toLocaleString()} {itemLabel}
+            </p>
             <div className="grid grid-cols-3 sm:grid-cols-4 lg:grid-cols-5 gap-4">
               {diverseGalleryImages.map((img: { pageId?: string; page_id?: string; bookId?: string; book_id?: string; detectionIndex?: number; detection_index?: number; thumbnailUrl?: string; thumbnail_url?: string; extractedUrl?: string; extracted_url?: string; imageUrl?: string; image_url?: string; museumDescription?: string; museum_description?: string; description?: string; bookTitle?: string; book_title?: string; type?: string }) => {
                 const thumb = img.extracted_url || img.extractedUrl || img.thumbnail_url || img.thumbnailUrl || img.imageUrl || img.image_url;
