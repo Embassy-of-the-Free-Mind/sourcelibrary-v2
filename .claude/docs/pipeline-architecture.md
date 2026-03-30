@@ -55,6 +55,7 @@ Note: `enrich-books` cron code exists in the codebase but is NOT in `vercel.json
 | `pipeline-orchestrator.mjs` (main) | */2 min | `sl-pipeline.lock` | All phases (fallback orchestrator) |
 | `translate-worker.mjs` | */2 min | `sl-translate.lock` | Inline translation via Gemini (no Lambda) |
 | `--phase 1.5` (preview OCR) | */2 min | `sl-preview-ocr.lock` | First 25 pages via Lambda for fast preview |
+| `--phase 4` (translate dispatch) | */2 min | `sl-translate-dispatch.lock` | Dispatch books to translate-worker |
 | `--phase 5` (translate complete) | */5 min | `sl-translate-complete.lock` | Translation completion check |
 | `--phase 0` (enrollment) | */10 min | `sl-enroll.lock` | New books -> queued |
 | `--phase 1` (archive check) | */10 min | `sl-archive-check.lock` | queued -> archive_complete |
