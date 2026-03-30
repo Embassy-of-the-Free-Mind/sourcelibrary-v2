@@ -115,9 +115,11 @@ function buildStubDb(): Db {
 
 export async function getDb(): Promise<Db> {
   // Skip DB during build only — pages render with empty data and populate via ISR.
-  // VERCEL_REGION is only set at runtime (not during build), so we use its absence
-  // combined with SKIP_DB_AT_BUILD to detect build-time execution.
-  if (process.env.SKIP_DB_AT_BUILD === '1' && !process.env.VERCEL_REGION) {
+  // Bracket notation prevents Next.js from inlining the value at build time.
+  // At runtime, SKIP_DB_AT_BUILD should be removed from Vercel env vars.
+  const skipKey = 'SKIP_DB_AT_BUILD';
+  if (process.env[skipKey] === '1') {
+    console.log('[MongoDB] SKIP_DB_AT_BUILD=1, returning stub');
     return buildStubDb();
   }
   // Race against a timeout to prevent build workers from hanging indefinitely
