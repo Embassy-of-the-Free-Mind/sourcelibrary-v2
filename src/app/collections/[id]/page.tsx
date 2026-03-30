@@ -609,28 +609,72 @@ export default async function CollectionDetailPage({ params }: Props) {
         </div>
       )}
 
-      {/* Overview: description + gallery grid (hidden when exhibition provides its own description) */}
-      <div className="bg-warm border-b border-border-light">
-        <div className="max-w-7xl mx-auto px-6 py-8">
-          {!exhibition?.layout && (
-            <>
-              <h2 className="text-2xl sm:text-3xl text-primary mb-5 font-display">
-                Overview
-              </h2>
-
-              {(collection.expanded_description || collection.description) && (
-                <div className="mb-8 max-w-5xl">
-                  {(collection.expanded_description || collection.description)!.split('\n\n').map((para: string, i: number) => (
-                    <p key={i} className="text-secondary text-xl leading-relaxed mb-5 last:mb-0 font-body">
-                      {linkBookTitles(para, allBooksForLinking, explicitMentions)}
-                    </p>
-                  ))}
+      {/* Featured Book — the #1 curated highlight, shown prominently to get visitors into a book fast */}
+      {tier1.length > 0 && !exhibition?.layout && (() => {
+        const featured = tier1[0];
+        return (
+          <div className="bg-warm border-b border-border-light">
+            <div className="max-w-7xl mx-auto px-6 py-8">
+              <Link
+                href={bookUrl({ id: featured.id, slug: featured.slug })}
+                className="group flex flex-col sm:flex-row gap-6 sm:gap-8"
+              >
+                <div className="w-40 sm:w-48 flex-shrink-0 mx-auto sm:mx-0">
+                  <div className="aspect-[3/4] relative rounded-lg overflow-hidden bg-white shadow-lg group-hover:shadow-xl transition-shadow">
+                    {featured.thumbnail ? (
+                      <Image
+                        src={featured.thumbnail}
+                        alt={featured.title || ''}
+                        fill
+                        className="object-cover group-hover:scale-105 transition-transform duration-500"
+                        sizes="192px"
+                      />
+                    ) : (
+                      <div className="absolute inset-0 flex items-center justify-center">
+                        <BookOpen className="w-12 h-12 text-muted" />
+                      </div>
+                    )}
+                  </div>
                 </div>
-              )}
-            </>
-          )}
+                <div className="flex-1 min-w-0 flex flex-col justify-center">
+                  <p className="text-xs font-medium uppercase tracking-wider text-accent-rust mb-2">Start here</p>
+                  <h2 className="text-2xl sm:text-3xl font-semibold text-primary group-hover:text-accent-rust transition-colors leading-tight mb-2 font-display">
+                    {featured.title}
+                  </h2>
+                  <p className="text-base text-muted mb-3">
+                    {featured.author}{featured.year ? `, ${featured.year}` : ''}
+                    {featured.is_first_translation && (
+                      <span className="ml-2 text-[10px] font-medium bg-accent-rust/10 text-accent-rust px-1.5 py-0.5 rounded">
+                        {firstTranslationBadge(featured.ft_disposition, featured.language)}
+                      </span>
+                    )}
+                  </p>
+                  <p className="text-secondary leading-relaxed max-w-2xl">
+                    {featured.note}
+                  </p>
+                </div>
+              </Link>
+            </div>
+          </div>
+        );
+      })()}
 
-          {diverseGalleryImages.length > 0 && (
+      {/* Gallery — labeled illustrations from this collection */}
+      {diverseGalleryImages.length > 0 && (
+        <div className="bg-warm border-b border-border-light">
+          <div className="max-w-7xl mx-auto px-6 py-8">
+            <div className="flex items-center justify-between mb-5">
+              <h2 className="text-2xl sm:text-3xl text-primary font-display">
+                Illustrations
+              </h2>
+              <Link
+                href={galleryCollectionSlug ? `/gallery/collections/${galleryCollectionSlug}` : `/gallery?collection=${id}`}
+                className="text-sm text-muted hover:text-accent-rust transition-colors flex items-center gap-1.5"
+              >
+                <Images className="w-4 h-4" />
+                Browse all
+              </Link>
+            </div>
             <div className="grid grid-cols-3 sm:grid-cols-4 lg:grid-cols-5 gap-4">
               {diverseGalleryImages.map((img: { pageId?: string; page_id?: string; bookId?: string; book_id?: string; detectionIndex?: number; detection_index?: number; thumbnailUrl?: string; thumbnail_url?: string; extractedUrl?: string; extracted_url?: string; imageUrl?: string; image_url?: string; museumDescription?: string; museum_description?: string; description?: string; bookTitle?: string; book_title?: string; type?: string }) => {
                 const thumb = img.extracted_url || img.extractedUrl || img.thumbnail_url || img.thumbnailUrl || img.imageUrl || img.image_url;
@@ -638,12 +682,13 @@ export default async function CollectionDetailPage({ params }: Props) {
                 const bookId = img.bookId || img.book_id;
                 const detIdx = img.detectionIndex ?? img.detection_index;
                 const galleryId = `${pageId}-${detIdx}`;
+                const label = img.museumDescription || img.museum_description || img.description || img.bookTitle || img.book_title;
                 return (
                   <Link
                     key={galleryId}
                     href={`/book/${bookId}/page/${pageId}`}
                     className="group relative aspect-square rounded-lg overflow-hidden border border-border-light hover:border-accent-rust/40 transition-all hover:shadow-md"
-                    title={img.museumDescription || img.museum_description || img.description || img.bookTitle || img.book_title}
+                    title={label}
                   >
                     {thumb ? (
                       <Image
@@ -659,25 +704,39 @@ export default async function CollectionDetailPage({ params }: Props) {
                         <Images className="w-6 h-6 text-muted" />
                       </div>
                     )}
+                    {/* Label overlay */}
+                    <div className="absolute inset-x-0 bottom-0 bg-gradient-to-t from-black/70 to-transparent p-2 pt-6 opacity-0 group-hover:opacity-100 transition-opacity">
+                      <p className="text-[11px] text-white leading-tight line-clamp-2">
+                        {label}
+                      </p>
+                    </div>
                     {img.type && (
-                      <span className="absolute bottom-1.5 left-1.5 text-[10px] bg-dark/70 text-white px-1.5 py-0.5 rounded capitalize leading-none">
+                      <span className="absolute top-1.5 left-1.5 text-[10px] bg-dark/70 text-white px-1.5 py-0.5 rounded capitalize leading-none">
                         {img.type}
                       </span>
                     )}
                   </Link>
                 );
               })}
-              <Link
-                href={galleryCollectionSlug ? `/gallery/collections/${galleryCollectionSlug}` : `/gallery?collection=${id}`}
-                className="aspect-square rounded-lg border border-border-light bg-cream hover:bg-white hover:border-accent-rust/30 transition-all flex flex-col items-center justify-center gap-2 text-muted hover:text-accent-rust"
-              >
-                <Images className="w-7 h-7" />
-                <span className="text-xs font-medium">Browse gallery</span>
-              </Link>
             </div>
-          )}
+          </div>
         </div>
-      </div>
+      )}
+
+      {/* Overview description */}
+      {!exhibition?.layout && (collection.expanded_description || collection.description) && (
+        <div className="bg-warm border-b border-border-light">
+          <div className="max-w-7xl mx-auto px-6 py-8">
+            <div className="max-w-4xl">
+              {(collection.expanded_description || collection.description)!.split('\n\n').map((para: string, i: number) => (
+                <p key={i} className="text-secondary text-lg leading-relaxed mb-4 last:mb-0 font-body">
+                  {linkBookTitles(para, allBooksForLinking, explicitMentions)}
+                </p>
+              ))}
+            </div>
+          </div>
+        </div>
+      )}
 
       <div className="max-w-7xl mx-auto px-6 py-10">
 
@@ -696,18 +755,18 @@ export default async function CollectionDetailPage({ params }: Props) {
           </div>
         )}
 
-        {/* Curated Highlights — 3-tier display (hidden when exhibition is present) */}
+        {/* Curated Highlights — remaining tier 1 + tiers 2 & 3 (hidden when exhibition is present) */}
         {hasCuratedHighlights && !exhibition?.layout && (
           <div className="mb-12">
-            {/* Tier 1: Essential Reading */}
-            {tier1.length > 0 && (
+            {/* Tier 1: Essential Reading (skip first, already shown as featured) */}
+            {tier1.length > 1 && (
               <div className="mb-10">
                 <h2 className="text-2xl sm:text-3xl text-primary mb-2 font-display">
                   Essential Reading
                 </h2>
                 <p className="text-sm text-muted mb-6">The foundational texts of this tradition</p>
                 <div className="grid gap-4 sm:gap-5 grid-cols-1 sm:grid-cols-2">
-                  {tier1.map((h: CuratedHighlight) => (
+                  {tier1.slice(1).map((h: CuratedHighlight) => (
                     <Link
                       key={h.book_id}
                       href={bookUrl({ id: h.id, slug: h.slug })}
