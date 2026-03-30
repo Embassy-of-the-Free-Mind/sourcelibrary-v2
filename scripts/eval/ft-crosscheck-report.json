@@ -1,0 +1,2013 @@
+{
+  "metadata": {
+    "date": "2026-03-30T17:09:03.151Z",
+    "total_checked": 5836,
+    "skipped": 1029,
+    "no_catalog_match": 3797,
+    "surname_collision": 556,
+    "different_work": 377,
+    "probable_same_work": 77
+  },
+  "potential_false_positives": [
+    {
+      "book_id": "69b4189f2b0edf3eaa2dd733",
+      "author": "Paracelsus",
+      "title": "Paracelsus — Czech Prognostication for Ferdinand I, post-1536",
+      "language": "Czech",
+      "disposition": "confirmed_first",
+      "confidence": "high",
+      "reasoning": "Extensive searches of local catalogs and Open Library databases for a translation of the specific Czech work 'Pranostyka Ktera trwala za Cztvrtczytma Lett' (Prognostication for Ferdinand I) yielded no results. While general collections of Paracelsus's prophecies exist, there is no evidence of a translation of this specific Czech-language prognostic text.",
+      "tools_called": 4,
+      "title_similarity": 1,
+      "best_catalog_match": {
+        "source": "openlibrary",
+        "english_title": "Paracelsus",
+        "translator": "Norbert Guterman (Translator)",
+        "year": "1941",
+        "publisher": "Princeton University Press",
+        "completeness": "unknown"
+      },
+      "all_catalog_hits": 34
+    },
+    {
+      "book_id": "69b418a12b0edf3eaa2dd755",
+      "author": "Alexander von Suchten; Paracelsus",
+      "title": "Three Faculties & Magical Invention — Suchten & Paracelsus, 16th C.",
+      "language": "German",
+      "disposition": "confirmed_first",
+      "confidence": "medium",
+      "reasoning": "Extensive searches of local catalogs and Open Library yielded no records of an English translation for the specific work 'Three Faculties & Magical Invention' by Alexander von Suchten and Paracelsus. Given the specialized nature of these 16th-century alchemical texts and the lack of bibliographic evidence for any English edition, it is highly probable that no translation exists.",
+      "tools_called": 4,
+      "title_similarity": 1,
+      "best_catalog_match": {
+        "source": "openlibrary",
+        "english_title": "Paracelsus",
+        "translator": "Norbert Guterman (Translator)",
+        "year": "1941",
+        "publisher": "Princeton University Press",
+        "completeness": "unknown"
+      },
+      "all_catalog_hits": 29
+    },
+    {
+      "book_id": "69b51e439a81ef7feb3d2522",
+      "author": "Pico Mirandola",
+      "title": "Gratiana, Favola Boscareccia Del Infiamato : Al Ill.mo Sig. Federico Pico Conte di Concordia, & Prencipe della Mirandola",
+      "language": "Italian",
+      "disposition": "confirmed_first",
+      "confidence": "high",
+      "reasoning": "Extensive searches of local catalogs, Open Library, and Google Books (via query) yielded no evidence of an English translation for the work 'Gratiana, Favola Boscareccia' by Pico della Mirandola. The search results for the author primarily focus on his philosophical and theological works (Oration, Heptaplus, etc.). Given the rarity of this specific pastoral play, it is highly likely that no English translation exists.",
+      "tools_called": 4,
+      "title_similarity": 1,
+      "best_catalog_match": {
+        "source": "openlibrary",
+        "english_title": "Pico Della Mirandola",
+        "translator": "",
+        "year": "1943",
+        "publisher": "Marquette University Press",
+        "completeness": "unknown"
+      },
+      "all_catalog_hits": 22
+    },
+    {
+      "book_id": "69b51d1847b06ecd5818398f",
+      "author": "Paracelsus",
+      "title": "The Sixth Part of the Books and Writings of the Noble and Highly Learned Philosopher and Physician Paracelsus",
+      "language": "German",
+      "disposition": "first_complete_translation",
+      "confidence": "high",
+      "reasoning": "The 'Sechster Theil' (Sixth Part) of the Huser edition of Paracelsus (1603) contains several major alchemical and medical treatises, most notably the 'Archidoxis' and 'De Natura Rerum'. While these individual treatises were translated into English during the 17th century (e.g., by Robert Turner in 1656) and appeared in A.E. Waite's 1894 thematic collection, the specific volume as organized by Johannes Huser has never been translated into English as a complete, standalone work. Therefore, this represents the first complete translation of this specific German volume.",
+      "tools_called": 4,
+      "title_similarity": 1,
+      "best_catalog_match": {
+        "source": "unesco_master",
+        "english_title": "Selected writings",
+        "original_title": "Selected writings",
+        "translator": "",
+        "year": "1951",
+        "publisher": "",
+        "completeness": "partial"
+      },
+      "all_catalog_hits": 34
+    },
+    {
+      "book_id": "69b3f757a107e55a0ee1cb64",
+      "author": "Paracelsus",
+      "title": "Paracelsus — Theological Works, Volume I",
+      "language": "German",
+      "disposition": "first_complete_translation",
+      "confidence": "high",
+      "reasoning": "The search results indicate that while there are various collections of Paracelsus's writings (such as those by A.E. Waite), there is no evidence of a complete English translation of the 1570 'Theological Works' (Theologische Werke). Existing English publications are either partial selections or scholarly commentaries rather than a complete translation of this specific theological corpus.",
+      "tools_called": 4,
+      "title_similarity": 1,
+      "best_catalog_match": {
+        "source": "openlibrary",
+        "english_title": "Paracelsus",
+        "translator": "Norbert Guterman (Translator)",
+        "year": "1941",
+        "publisher": "Princeton University Press",
+        "completeness": "unknown"
+      },
+      "all_catalog_hits": 34
+    },
+    {
+      "book_id": "69b3f759a107e55a0ee1cdc7",
+      "author": "Paracelsus",
+      "title": "Paracelsus — Theological Works, Volume II",
+      "language": "German",
+      "disposition": "first_complete_translation",
+      "confidence": "high",
+      "reasoning": "Paracelsus's theological works were published in German in the 16th century. Searches of local catalogs and library databases confirm that only partial translations or anthologies (such as those by A.E. Waite) exist in English. There is no evidence of a complete English translation of the specific 'Theological Works, Volume II' published in 1570.",
+      "tools_called": 4,
+      "title_similarity": 1,
+      "best_catalog_match": {
+        "source": "openlibrary",
+        "english_title": "Paracelsus",
+        "translator": "Norbert Guterman (Translator)",
+        "year": "1941",
+        "publisher": "Princeton University Press",
+        "completeness": "unknown"
+      },
+      "all_catalog_hits": 34
+    },
+    {
+      "book_id": "69b51db6efd8df28f2da96e3",
+      "author": "Paracelsus",
+      "title": "The Collected Books and Writings of the Noble and Highly Learned Philosopher and Physician Paracelsus",
+      "language": "German",
+      "disposition": "first_complete_translation",
+      "confidence": "high",
+      "reasoning": "The 1616 edition referred to is the Huser edition (the first major collected edition of Paracelsus's works in German). There is no single English translation that encompasses the entirety of this specific 1616 collection. While various English translations of Paracelsus's individual treatises exist (such as A.E. Waite's 'The Hermetic and Alchemical Writings'), these are selective or thematic compilations rather than a complete translation of the 1616 Huser edition. Therefore, only partial/excerpts exist in English.",
+      "tools_called": 4,
+      "title_similarity": 1,
+      "best_catalog_match": {
+        "source": "unesco_master",
+        "english_title": "Selected writings",
+        "original_title": "Selected writings",
+        "translator": "",
+        "year": "1951",
+        "publisher": "",
+        "completeness": "partial"
+      },
+      "all_catalog_hits": 34
+    },
+    {
+      "book_id": "6955d43328a09ca65927f6e0",
+      "author": "John Flamsteed",
+      "title": "Historia Coelestis Britannica Vol. 2",
+      "language": "Latin",
+      "disposition": "first_complete_translation",
+      "confidence": "high",
+      "reasoning": "While the introductory 'Prolegomena' (Preface) of the 'Historia Coelestis Britannica' was translated into English by Alison D. Johnson and Allan Chapman in 1982, the vast majority of the work, including the astronomical observations and tables that comprise Volume 2, has never been translated from its original Latin-headed format. Therefore, no complete English translation of the entire work or of Volume 2 specifically exists.",
+      "tools_called": 4,
+      "title_similarity": 1,
+      "best_catalog_match": {
+        "source": "unesco_master",
+        "english_title": "The preface to John Flamsteed's Historia coelestis Britannica; or, British catalogue of the heavens (1725)",
+        "original_title": "Historia Coelestis Britannica",
+        "translator": "Johnson, Alison Dione",
+        "year": "1982",
+        "publisher": "Trustees of the National Maritime Museum",
+        "completeness": "unknown"
+      },
+      "all_catalog_hits": 1
+    },
+    {
+      "book_id": "69b51ce304616a7c1dfb2708",
+      "author": "Paracelsus",
+      "title": "The Collected Works of Paracelsus, Volume 6: On Spagyric Preparations and Alchemy",
+      "language": "German",
+      "disposition": "first_complete_translation",
+      "confidence": "high",
+      "reasoning": "While individual treatises contained within Volume 6 of the 1590 Huser edition (such as the 'Archidoxis' and 'De Natura Rerum') have been translated into English in various anthologies and 17th-century editions, no complete English translation of the entire volume as a single set exists. This work represents the first complete translation of the specific contents and arrangement of the Huser Volume 6 from the original German.",
+      "tools_called": 4,
+      "title_similarity": 1,
+      "best_catalog_match": {
+        "source": "openlibrary",
+        "english_title": "Paracelsus",
+        "translator": "Norbert Guterman (Translator)",
+        "year": "1941",
+        "publisher": "Princeton University Press",
+        "completeness": "unknown"
+      },
+      "all_catalog_hits": 34
+    },
+    {
+      "book_id": "69b51d5c261c58d636649cee",
+      "author": "Paracelsus",
+      "title": "The Collected Works of Paracelsus",
+      "language": "German",
+      "disposition": "first_complete_translation",
+      "confidence": "high",
+      "reasoning": "The 1589 'Collected Works of Paracelsus' is a historical compilation of his German writings. While various partial translations and anthologies of Paracelsus's works exist (such as those by A.E. Waite), there is no evidence of a complete, systematic English translation of this specific 1589 collection. The existing English editions are typically selections or thematic compilations rather than a full translation of the 1589 corpus.",
+      "tools_called": 4,
+      "title_similarity": 1,
+      "best_catalog_match": {
+        "source": "unesco_master",
+        "english_title": "The life and doctrine of Philippus Theophrastus, bombast von Hohenheim, known by the name of Paracelsus",
+        "translator": "Hartmann, Franz",
+        "year": "1932",
+        "publisher": "Macoy Pub. &amp; Masonic Supply Co.",
+        "completeness": "unknown"
+      },
+      "all_catalog_hits": 34
+    },
+    {
+      "book_id": "6953e55177f38f6761bf0299",
+      "author": "William Harvey",
+      "title": "On the Motion of the Heart and Blood",
+      "language": "Latin",
+      "disposition": "translation_found",
+      "confidence": "high",
+      "reasoning": "William Harvey's 'De Motu Cordis' (1628) was first translated into English in 1653 as 'The Anatomical Exercises of Dr. William Harvey... Concerning the Motion of the Heart and Blood'. Multiple subsequent translations exist, including the widely used 1847 translation by Robert Willis for the Sydenham Society. Any edition or translation from 1824 would post-date the original 17th-century English version.",
+      "tools_called": 4,
+      "title_similarity": 1,
+      "best_catalog_match": {
+        "source": "unesco_master",
+        "english_title": "On the motion of the heart and blood in animals /",
+        "original_title": "De motu cordis.",
+        "translator": "Willis, Robert",
+        "year": "1993",
+        "publisher": "Prometheus Books",
+        "completeness": "unknown"
+      },
+      "all_catalog_hits": 8
+    },
+    {
+      "book_id": "6991c5793074a1745a411838",
+      "author": "Theophrastus Paracelsus",
+      "title": "f. xxvi bis, f.1-6v Theophrastus Paracelsus, De viribus membrorum, Liber primus de [etc.] VCF 16",
+      "language": "German",
+      "disposition": "confirmed_first",
+      "confidence": "high",
+      "reasoning": "While many of Paracelsus's major works were translated by A.E. Waite in 1894, 'De viribus membrorum' (or its German equivalent 'Von den Kräften der Glieder') is not included in that collection or other major English anthologies like 'Four Treatises' (1941). This specific Latin text from the Vossius collection (VCF 16) lacks a recorded English translation.",
+      "tools_called": 4,
+      "title_similarity": 1,
+      "best_catalog_match": {
+        "source": "openlibrary",
+        "english_title": "Paracelsus",
+        "translator": "Norbert Guterman (Translator)",
+        "year": "1941",
+        "publisher": "Princeton University Press",
+        "completeness": "unknown"
+      },
+      "all_catalog_hits": 29
+    },
+    {
+      "book_id": "69b1c632edda7fb64e1a06e0",
+      "author": "Giambattista della Porta",
+      "title": "On Distillation",
+      "language": "Latin",
+      "disposition": "first_complete_translation",
+      "confidence": "medium",
+      "reasoning": "The search results indicate that only a partial translation (specifically the 'First Book') exists, published in 2023 by Adam McLean. There is no evidence of a complete English translation of the entire work 'De Distillatione' (1608).",
+      "tools_called": 4,
+      "title_similarity": 1,
+      "best_catalog_match": {
+        "source": "unesco_master",
+        "english_title": "First Book of Distillation",
+        "original_title": "First Book of Distillation",
+        "translator": "Adam McLean",
+        "year": "2023",
+        "publisher": "Self-published",
+        "series": "Alchemical Translations",
+        "completeness": "unknown"
+      },
+      "all_catalog_hits": 1
+    },
+    {
+      "book_id": "69b21bfe79013c3863288da6",
+      "author": "Giovanni Aurelio Augurello",
+      "title": "Works of Giovanni Aurelio Augurello",
+      "language": "Latin",
+      "disposition": "first_complete_translation",
+      "confidence": "high",
+      "reasoning": "The 1505 volume is a collection of Augurello's works. The 2020 Brill publication by Matteo Soranzo provides a critical edition of his alchemical poems (including Chrysopoeia), but it is a scholarly critical edition rather than a complete English translation of the entire 1505 collection. Therefore, no complete English translation of the 1505 volume exists.",
+      "tools_called": 4,
+      "title_similarity": 1,
+      "best_catalog_match": {
+        "source": "unesco_master",
+        "english_title": "Giovanni Aurelio Augurello (1441-1524) and Renaissance Alchemy: A Critical Edition of Chrysopoeia and Other Alchemical Poems",
+        "translator": "Matteo Soranzo",
+        "year": "2020",
+        "publisher": "Brill",
+        "series": "Renaissance Society of America Texts and Studies, 14",
+        "completeness": "unknown"
+      },
+      "all_catalog_hits": 2
+    },
+    {
+      "book_id": "69528f2bb184004c526a0f1a",
+      "author": "Giovanni Boccaccio",
+      "title": "On Famous Women",
+      "language": "Italian",
+      "disposition": "confirmed_first",
+      "confidence": "high",
+      "reasoning": "The 1881 edition (HQ 1122 B6 1881) is the Italian translation ('volgarizzamento') of Boccaccio's 'De mulieribus claris' by Donato degli Albanzani, edited by Giacomo Zaccaria. While Boccaccio's original Latin text has been translated into English multiple times (e.g., by Guido Guarino in 1963 and Virginia Brown in 2001), this specific 14th-century Italian rendering by Donato degli Albanzani has no known English translation. Following the instruction that translations from the original language (Latin) do not count as translations of this specific source text (Italian), this is a confirmed first English translation.",
+      "tools_called": 4,
+      "title_similarity": 1,
+      "best_catalog_match": {
+        "source": "unesco_master",
+        "english_title": "Famous women",
+        "original_title": "De mulieribus claris",
+        "translator": "Brown, Virginia",
+        "year": "2001",
+        "publisher": "Harvard University Press",
+        "completeness": "unknown"
+      },
+      "all_catalog_hits": 9
+    },
+    {
+      "book_id": "69528cf1ab34727b1f04f65d",
+      "author": "Giovanni Boccaccio",
+      "title": "On Famous Women",
+      "language": "French",
+      "disposition": "confirmed_first",
+      "confidence": "high",
+      "reasoning": "While Giovanni Boccaccio's 'De mulieribus claris' has been translated into English from the original Latin (notably by Guido Guarino in 1963 and Virginia Brown in 2001), there is no evidence of an English translation of the specific 1493 French translation ('Des cleres et nobles femmes'). Following the provided guidelines, a translation of a specific vernacular version is considered a first translation if only translations of the original language (Latin) exist.",
+      "tools_called": 4,
+      "title_similarity": 1,
+      "best_catalog_match": {
+        "source": "unesco_master",
+        "english_title": "Famous women",
+        "original_title": "De mulieribus claris",
+        "translator": "Brown, Virginia",
+        "year": "2001",
+        "publisher": "Harvard University Press",
+        "completeness": "unknown"
+      },
+      "all_catalog_hits": 9
+    },
+    {
+      "book_id": "6953ab1077f38f6761bd67aa",
+      "author": "Hermes Trismegistus",
+      "title": "The Hermetic Corpus",
+      "language": "Latin",
+      "disposition": "first_modern_translation",
+      "confidence": "high",
+      "reasoning": "The Latin version of the Hermetic Corpus (specifically Marsilio Ficino's 1471 'Pimander', based on his 1463 manuscript) was translated into English by John Everard in 1650 as 'The Divine Pymander'. While numerous modern translations of the Hermetica exist (e.g., Copenhaver 1992, Salaman 1999), these are translated from the original Greek sources rather than Ficino's Latin. Everard's 17th-century version remains the primary English translation of the Latin text, making a new scholarly translation the first modern one.",
+      "tools_called": 4,
+      "title_similarity": 1,
+      "best_catalog_match": {
+        "source": "unesco_master",
+        "english_title": "Hermetica : the ancient Greek and Latin writings which contain religious or philosophic teachings ascribed to Hermes Trismegistus (1:) Introduction, texts, and translation; (2:) Notes on the Corpus Hermeticum; (3:) Notes on the Latin Asclepius and the Hermetic excerpts of Stobaeus; (4:) Testimonia  with introduction, addenda and indices by A.S. Ferguson",
+        "original_title": "Corpus hermeticum",
+        "translator": "",
+        "year": "1985",
+        "publisher": "Shambhala",
+        "completeness": "partial"
+      },
+      "all_catalog_hits": 9
+    },
+    {
+      "book_id": "6953a82c77f38f6761bd0bc5",
+      "author": "Various",
+      "title": "New Testament",
+      "language": "Armenian",
+      "disposition": "first_complete_translation",
+      "confidence": "high",
+      "reasoning": "While individual books of the Armenian New Testament have been translated into English for scholarly and comparative purposes (notably by S.C. Malan and F.C. Conybeare), there is no record of a complete English translation of the entire New Testament specifically from the Armenian 'Queen of Versions' text. Most English translations are derived from Greek manuscripts.",
+      "tools_called": 4,
+      "title_similarity": 1,
+      "best_catalog_match": {
+        "source": "unesco_master",
+        "english_title": "The Vulgate Bible, Volume VI: The New Testament",
+        "translator": "Swift Edgar",
+        "year": "2013",
+        "publisher": "Harvard University Press",
+        "series": "Dumbarton Oaks Medieval Library",
+        "completeness": "partial"
+      },
+      "all_catalog_hits": 104
+    },
+    {
+      "book_id": "6955d43028a09ca65927f1b5",
+      "author": "John Flamsteed",
+      "title": "Historia Coelestis Britannica Vol. 1",
+      "language": "Latin",
+      "disposition": "first_complete_translation",
+      "confidence": "high",
+      "reasoning": "The primary prose component of John Flamsteed's 'Historia Coelestis Britannica', known as the Prolegomena or Preface, was translated into English by Allan Chapman and Alison Dione Johnson and published in 1982. The remainder of Volume 1 consists of astronomical observations and numerical tables which, while containing Latin headings and annotations, have not been issued in a complete formal English translation. Therefore, while the main narrative text exists in English, a complete translation of the entire volume has not been published.",
+      "tools_called": 4,
+      "title_similarity": 1,
+      "best_catalog_match": {
+        "source": "unesco_master",
+        "english_title": "The preface to John Flamsteed's Historia coelestis Britannica; or, British catalogue of the heavens (1725)",
+        "original_title": "Historia Coelestis Britannica",
+        "translator": "Johnson, Alison Dione",
+        "year": "1982",
+        "publisher": "Trustees of the National Maritime Museum",
+        "completeness": "unknown"
+      },
+      "all_catalog_hits": 1
+    },
+    {
+      "book_id": "69906303e7b7642c081dd7a8",
+      "author": "Jean Baptiste Morin",
+      "title": "Astrologia Gallica",
+      "language": "Latin",
+      "disposition": "first_complete_translation",
+      "confidence": "high",
+      "reasoning": "While many individual books of Jean-Baptiste Morin's 26-book 'Astrologia Gallica' (1661) have been translated into English (specifically Books 13-17, 19, and 21-26 by James Herschel Holden and Richard S. Baldwin), no complete translation of the entire 26-book folio exists. Books 1-12, which cover philosophical and physical foundations, as well as Books 18 and 20, do not appear in any major translation catalogs, confirming that a full translation of the work has not yet been published.",
+      "tools_called": 6,
+      "title_similarity": 1,
+      "best_catalog_match": {
+        "source": "unesco_master",
+        "english_title": "Astrologia gallica: book twenty-two, directions",
+        "original_title": "Astrologia gallica principiis &amp; rationibus stabilita",
+        "translator": "Holden, James Herschel",
+        "year": "1994",
+        "publisher": "American Federation of Astrologers",
+        "completeness": "unknown"
+      },
+      "all_catalog_hits": 8
+    },
+    {
+      "book_id": "6953dd5b77f38f6761be743b",
+      "author": "Meister Eckhart",
+      "title": "Meister Eckhart - Complete Works",
+      "language": "German-English",
+      "disposition": "first_complete_translation",
+      "confidence": "high",
+      "reasoning": "The 1924 translation by C. de B. Evans is the first comprehensive English translation of Meister Eckhart's German works (based on the Pfeiffer edition). While a small selection of sermons was translated by Claud Field in 1909, the Evans edition is recognized as the first 'complete' effort to bring the corpus into English. Later scholarly translations by Walshe and McGinn have since superseded it in accuracy, but it remains the historical first complete version.",
+      "tools_called": 4,
+      "title_similarity": 1,
+      "best_catalog_match": {
+        "source": "unesco_master",
+        "english_title": "Meister Eckhart, the essential sermons, commentaries, treatises, amd defense",
+        "original_title": "Essential Sermons and Commentaries",
+        "translator": "McGinn, Bernard; Colledge, Edmund",
+        "year": "1981",
+        "publisher": "Paulist Press",
+        "completeness": "unknown"
+      },
+      "all_catalog_hits": 9
+    },
+    {
+      "book_id": "6952861eab34727b1f04c3df",
+      "author": "Giovanni Pico della Mirandola",
+      "title": "The Complete Works of Giovanni Pico della Mirandola",
+      "language": "Latin",
+      "disposition": "first_complete_translation",
+      "confidence": "high",
+      "reasoning": "While the major constituent works of the 1519 'Omnia Opera' (such as the Oration, Heptaplus, and De ente et uno) have been translated into English individually by various scholars, there is no single-volume English translation that encompasses the entire 1519 collection. Notably, the massive 'Disputationes adversus astrologiam divinatricem', which is a core part of the 1519 edition, lacks a complete English translation.",
+      "tools_called": 4,
+      "title_similarity": 1,
+      "best_catalog_match": {
+        "source": "unesco_master",
+        "english_title": "Life of Giovanni Pico della Mirandola. Oration, Giovanni Francesco Pico della Mirandola",
+        "original_title": "Life of Giovanni Pico della Mirandola. Oration, Giovanni Francesco Pico della Mirandola",
+        "translator": "Brian P. Copenhaver with Michael J. B. Allen",
+        "year": "2022",
+        "publisher": "Harvard University Press",
+        "series": "ITRL",
+        "completeness": "unknown"
+      },
+      "all_catalog_hits": 21
+    },
+    {
+      "book_id": "697e23cbed510657aed145f2",
+      "author": "Thomas a Kempis",
+      "title": "The Imitation of Christ",
+      "language": "French",
+      "disposition": "confirmed_first",
+      "confidence": "high",
+      "reasoning": "While the original Latin 'De Imitatione Christi' by Thomas à Kempis is one of the most translated works in history, this 1704 edition represents the French verse paraphrase by Pierre Corneille. Corneille's version is a distinct literary masterpiece of the French 'Grand Siècle' and, despite its historical popularity in France, no complete English translation of this specific French verse text exists. All identified English translations are derived directly from the original Latin or other prose sources.",
+      "tools_called": 7,
+      "title_similarity": 1,
+      "best_catalog_match": {
+        "source": "unesco_master",
+        "english_title": "The imitation of Christ",
+        "original_title": "De imitatione Christi",
+        "translator": "Daplyn, Edgar",
+        "year": "1979",
+        "publisher": "Lakeland",
+        "completeness": "unknown"
+      },
+      "all_catalog_hits": 39
+    },
+    {
+      "book_id": "adad5f6d-4f68-4009-9406-d0e083cf0acc",
+      "author": "Giovanni Pico della Mirandola",
+      "title": "Pico della Mirandola: Opera (1496)",
+      "language": "Latin",
+      "disposition": "first_complete_translation",
+      "confidence": "high",
+      "reasoning": "While the major individual components of the 1496 'Opera' (such as the 'Oration on the Dignity of Man', 'Heptaplus', and 'De ente et uno') have been translated into English by various scholars, there is no single-volume English translation that encompasses the entire 1496/1601 'Opera' collection as a unified work. Most notably, the 'Apologia' and the full corpus of his correspondence included in the 'Opera' lack a consolidated modern English translation within the context of this specific editorial collection.",
+      "tools_called": 4,
+      "title_similarity": 1,
+      "best_catalog_match": {
+        "source": "openlibrary",
+        "english_title": "Pico Della Mirandola",
+        "translator": "",
+        "year": "1943",
+        "publisher": "Marquette University Press",
+        "completeness": "unknown"
+      },
+      "all_catalog_hits": 21
+    },
+    {
+      "book_id": "6957efa3cbe1dcad7b76cb5a",
+      "author": "Andrea Cesalpino",
+      "title": "De plantis libri XVI",
+      "language": "Latin",
+      "disposition": "first_complete_translation",
+      "confidence": "high",
+      "reasoning": "While the foundational theoretical section (Book I) has been translated into English several times, most notably by A.G. Morton (1981) and in a recent scholarly edition by Quentin Hiernaux and Corentin Tresnie (De Gruyter, 2023), the vast majority of the work (Books II-XVI) remains untranslated. No complete English translation of the entire sixteen-book encyclopedia exists.",
+      "tools_called": 4,
+      "title_similarity": 1,
+      "best_catalog_match": {
+        "source": "unesco_master",
+        "english_title": "Andrea Cesalpino's De Plantis Libri XVI (1583): Edition Translation and Commentary on Book I",
+        "translator": "Quentin Hiernaux and Corentin Tresnie",
+        "year": "2023",
+        "publisher": "De Gruyter",
+        "series": "Medical Traditions",
+        "completeness": "partial"
+      },
+      "all_catalog_hits": 4
+    },
+    {
+      "book_id": "6953eaad1479a63c11087441",
+      "author": "René Descartes",
+      "title": "The Collected Works of Descartes, Volume 1: Correspondence",
+      "language": "French",
+      "disposition": "first_complete_translation",
+      "confidence": "high",
+      "reasoning": "The 1897 Adam-Tannery (AT) edition of Descartes' correspondence (Volume 1) is the definitive French source text. While major selections of these letters have been translated in 'The Philosophical Writings of Descartes, Vol. 3' (1991) and Anthony Kenny's 'Philosophical Letters' (1970), no complete English translation of the correspondence in AT Volume 1 exists. The 2015 Oxford University Press edition by Ariew, Bos, and Verbeek is the first project aiming for a complete translation, but its first volume only covers the years 1619–1635, which is a subset of the letters contained in the 1897 AT Volume 1 (1617–1637).",
+      "tools_called": 4,
+      "title_similarity": 1,
+      "best_catalog_match": {
+        "source": "unesco_master",
+        "english_title": "The philosophical writings of Descartes (3:) The correspondence",
+        "original_title": "Philosophical Writings Volume 3: Correspondence",
+        "translator": "Cottingham, John; et al.",
+        "year": "1991",
+        "publisher": "Cambridge University Press",
+        "completeness": "unknown"
+      },
+      "all_catalog_hits": 18
+    },
+    {
+      "book_id": "8a9eea4b-6be1-4424-9a38-b7a0deb58f95",
+      "author": "Paracelsus",
+      "title": "Complete Medical, Chemical, and Surgical Works of Paracelsus",
+      "language": "Latin",
+      "disposition": "first_complete_translation",
+      "confidence": "high",
+      "reasoning": "The 1658 Geneva 'Opera Omnia Medico-Chemico-Chirurgica' is a massive three-volume Latin collection of Paracelsus' works. While many individual treatises (such as the 'Archidoxes of Magic') and thematic anthologies (most notably A.E. Waite's 1894 collection of hermetic and alchemical writings) have been translated into English, there has never been a complete English translation of this entire multi-volume set, which includes his extensive medical and surgical corpus. Existing English versions are either selections, excerpts, or translations of single works.",
+      "tools_called": 4,
+      "title_similarity": 1,
+      "best_catalog_match": {
+        "source": "openlibrary",
+        "english_title": "Paracelsus",
+        "translator": "Norbert Guterman (Translator)",
+        "year": "1941",
+        "publisher": "Princeton University Press",
+        "completeness": "unknown"
+      },
+      "all_catalog_hits": 34
+    },
+    {
+      "book_id": "694b3abfde93d1d4cec196fd",
+      "author": "Marsilio Ficino",
+      "title": "The Complete Works of Marsilio Ficino",
+      "language": "Latin",
+      "disposition": "first_complete_translation",
+      "confidence": "high",
+      "reasoning": "The 1561 Basel 'Opera Omnia' is a massive two-volume collection of Ficino's original treatises, letters, and Latin translations of Greek philosophy. While major individual components like the 'Platonic Theology', 'Three Books on Life', and 'Letters' have been translated into English by various scholars, the collection has never been published as a single, unified English edition. Many of Ficino's Latin translations of Greek works included in the 'Opera Omnia' remain untranslated from his specific Latin versions.",
+      "tools_called": 4,
+      "title_similarity": 1,
+      "best_catalog_match": {
+        "source": "unesco_master",
+        "english_title": "The letters of Marsilio Ficino (3)",
+        "original_title": "Epistolae",
+        "translator": "",
+        "year": "1981",
+        "publisher": "Shepheard-Walwyn",
+        "completeness": "unknown"
+      },
+      "all_catalog_hits": 27
+    },
+    {
+      "book_id": "69904dd67d19f3f2aac1d49d",
+      "author": "Robert Fludd",
+      "title": "Utriusque Cosmi Historia (1617)",
+      "language": "Latin",
+      "disposition": "first_complete_translation",
+      "confidence": "high",
+      "reasoning": "Robert Fludd's 'Utriusque Cosmi Historia' is a massive multi-volume work of over 1,000 folio pages. While several significant sections have been translated into English—including the first tractate by Patricia Tahil (1982) and extensive selections and summaries by Joscelyn Godwin (1979, 2019)—no complete, unabridged English translation of the entire Latin corpus has ever been published. The work is typically translated in parts or presented as a sourcebook of excerpts due to its immense scale.",
+      "tools_called": 4,
+      "title_similarity": 0.75,
+      "best_catalog_match": {
+        "source": "unesco_master",
+        "english_title": "The origin and structure of the cosmos",
+        "original_title": "Utriusque cosmi historia",
+        "translator": "Tahil, Patricia",
+        "year": "1982",
+        "publisher": "Magnum Opus Hermetic Sourceworks",
+        "completeness": "unknown"
+      },
+      "all_catalog_hits": 6
+    },
+    {
+      "book_id": "69527313ab34727b1f048b15",
+      "author": "Giordano Bruno",
+      "title": "The Latin Works of Giordano Bruno",
+      "language": "Latin",
+      "disposition": "first_complete_translation",
+      "confidence": "high",
+      "reasoning": "The 1886 publication refers to the 'Opera latine conscripta', the standard multi-volume collection of Giordano Bruno's Latin works. While several major individual treatises within this collection (such as 'De Umbris Idearum' and 'De Imaginum Compositione') have received modern English translations, there is no single complete English translation of the entire Latin corpus as presented in the 1886-1891 edition. Many of the shorter or more obscure Latin texts remain untranslated or only available in excerpted form.",
+      "tools_called": 4,
+      "title_similarity": 0.6666666666666666,
+      "best_catalog_match": {
+        "source": "openlibrary",
+        "english_title": "Opere di Giordano Bruno",
+        "translator": "",
+        "year": "1830",
+        "publisher": "Weidmann",
+        "completeness": "unknown"
+      },
+      "all_catalog_hits": 14
+    },
+    {
+      "book_id": "6952dbc477f38f6761bc75f1",
+      "author": "Giordano Bruno",
+      "title": "Collected Works of Giordano Bruno the Nolan",
+      "language": "Italian",
+      "disposition": "first_complete_translation",
+      "confidence": "high",
+      "reasoning": "The 1830 edition of 'Opere di Giordano Bruno' edited by Adolf Wagner is the first modern collection of Bruno's six Italian dialogues. While every individual dialogue within this collection has been translated into English by various scholars (such as Stanley Jaki, Dorothea Waley Singer, and Arthur Imerti), there is no published English edition that translates the 1830 Wagner collection as a unified 'Collected Works'. Thus, while the content is available in disparate volumes, the specific 1830 edition as a bibliographic entity has no complete English translation.",
+      "tools_called": 4,
+      "title_similarity": 0.6666666666666666,
+      "best_catalog_match": {
+        "source": "openlibrary",
+        "english_title": "Opere di Giordano Bruno",
+        "translator": "",
+        "year": "1830",
+        "publisher": "Weidmann",
+        "completeness": "unknown"
+      },
+      "all_catalog_hits": 14
+    },
+    {
+      "book_id": "69ac5f9c4f76006bddda2ef1",
+      "author": "Christiaan Huygens",
+      "title": "Complete Works, Volume 18: The Pendulum Clock and Percussion",
+      "language": "French",
+      "disposition": "first_from_source",
+      "confidence": "high",
+      "reasoning": "While the primary scientific works contained in this volume (Horologium oscillatorium and De motu corporum ex percussione) were originally written in Latin and have been translated into English from that language (notably by Richard J. Blackwell in 1986 and 1977), the specific French text, editorial apparatus, and commentary found in Tome 18 of the 'Oeuvres complètes' (1934) have never been translated into English. Following the provided guidelines, a translation of this specific French edition constitutes a first English translation.",
+      "tools_called": 4,
+      "title_similarity": 0.6666666666666666,
+      "best_catalog_match": {
+        "source": "unesco_master",
+        "english_title": "Christiaan Huygens' the pendulum clock; or, Geometrical demonstrations concerning the motion of pendula as applied to clocks",
+        "original_title": "Horologium oscillatorium.",
+        "translator": "Blackwell, Richard J.",
+        "year": "1986",
+        "publisher": "Iowa State University Press",
+        "completeness": "unknown"
+      },
+      "all_catalog_hits": 1
+    },
+    {
+      "book_id": "6952dac977f38f6761bc6cb0",
+      "author": "Robert Fludd",
+      "title": "History of the Two Worlds, Volume 2",
+      "language": "Latin",
+      "disposition": "first_complete_translation",
+      "confidence": "high",
+      "reasoning": "Catalog searches confirm the existence of several partial translations and excerpted volumes of Fludd's 'Utriusque Cosmi Historia' by scholars such as Patricia Tahil, Charles Rainsford, and Joscelyn Godwin. However, these works typically cover specific technical tracts or provide anthologized selections rather than a complete, cover-to-cover translation of the entire 1619 'Tomus Secundus' (Microcosm). No record of a full, unabridged English translation of this specific volume was found.",
+      "tools_called": 4,
+      "title_similarity": 0.6666666666666666,
+      "best_catalog_match": {
+        "source": "godwin",
+        "english_title": "Robert Fludd: Hermetic Philosopher and Surveyor of Two Worlds",
+        "translator": "Joscelyn Godwin",
+        "year": "1979",
+        "publisher": "Thames & Hudson",
+        "completeness": "unknown"
+      },
+      "all_catalog_hits": 6
+    },
+    {
+      "book_id": "69520176ab34727b1f04136b",
+      "author": "Robert Fludd",
+      "title": "History of the Macrocosm and Microcosm",
+      "language": "Latin",
+      "disposition": "first_complete_translation",
+      "confidence": "high",
+      "reasoning": "Robert Fludd's 'Utriusque Cosmi Historia' is a massive multi-volume work. While catalog searches identify several partial translations of specific sections (such as those by Patricia Tahil and Charles Rainsford for the Magnum Opus Hermetic Sourceworks) and scholarly surveys with extensive excerpts (by Joscelyn Godwin), no complete, unabridged English translation of the entire work exists.",
+      "tools_called": 4,
+      "title_similarity": 0.6666666666666666,
+      "best_catalog_match": {
+        "source": "godwin",
+        "english_title": "The Greater and Lesser Worlds of Robert Fludd: Macrocosm Microcosm and Medicine",
+        "translator": "Joscelyn Godwin",
+        "year": "2019",
+        "publisher": "Inner Traditions",
+        "completeness": "unknown"
+      },
+      "all_catalog_hits": 6
+    },
+    {
+      "book_id": "6952dac677f38f6761bc683a",
+      "author": "Robert Fludd",
+      "title": "The History of the Two Worlds",
+      "language": "Latin",
+      "disposition": "first_complete_translation",
+      "confidence": "high",
+      "reasoning": "Search results confirm that while several significant portions of Robert Fludd's 'Utriusque Cosmi Historia' (1617) have been translated into English, these are partial or thematic selections. Patricia Tahil translated 'The Origin and Structure of the Cosmos' (1982) and Charles Rainsford translated 'On the Divine Numbers and the Divine Harmony' (1997), but no record exists of a complete, unified English translation of the entire 1,000+ page Latin folio. Joscelyn Godwin's 2019 work also appears to be a survey or selection rather than a full translation of the source text.",
+      "tools_called": 4,
+      "title_similarity": 0.6666666666666666,
+      "best_catalog_match": {
+        "source": "godwin",
+        "english_title": "Robert Fludd: Hermetic Philosopher and Surveyor of Two Worlds",
+        "translator": "Joscelyn Godwin",
+        "year": "1979",
+        "publisher": "Thames & Hudson",
+        "completeness": "unknown"
+      },
+      "all_catalog_hits": 6
+    },
+    {
+      "book_id": "69b51e17efd8df28f2db053e",
+      "author": "Paracelsus",
+      "title": "Philippi Theophrasti Paracelsi von Hohenhaim etliche Tractetlein zur Archidoxa gehörig : 1. Von dem Magneten vnnd seiner wunderbarlichen tugend in allerley kranckheiten ... zugebrauchen. 2. De occulta Philosophia, darinnen tractirt wird De Consecrationibus. De Coniurationibus. De Caracteribus. Von allerley erscheinungen im schlaff. Von den jrdischen Geistern oder Schroetlein. Von der Imagination. Von den verborgnen Schätzen. Wie der mensch vom Teuffel besessen wird. Wie man den bösen Geist von den besessenen leuten außtreiben sol. Von dem Vngewitter. 3. Die recht weiß zu Administrirn die Medicin von Theophrasti aigner hand gezogen. 4. Von vilerley gifftigen Thiern wie man jhnen das gifft nemen vnd tödten sol",
+      "language": "German",
+      "disposition": "first_complete_translation",
+      "confidence": "medium",
+      "reasoning": "The work is a 1570 collection of specific tracts by Paracelsus. While some of these individual tracts (such as 'De occulta Philosophia' or 'Von dem Magneten') appear in various English collections of Paracelsus's works (e.g., Waite's 'Hermetic and Alchemical Writings' or 'Four Treatises'), there is no evidence of a complete English translation of this specific 1570 compilation as a single volume. The existing English editions are either thematic collections or selections, making this a case where only partial or excerpted translations exist for the contents of this specific 1570 publication.",
+      "tools_called": 4,
+      "title_similarity": 0.6,
+      "best_catalog_match": {
+        "source": "openlibrary",
+        "english_title": "Prognosticatio eximii doctoris Theophrasti Paracelsi",
+        "translator": "I. J. Kohn (Translator)",
+        "year": "1973",
+        "publisher": "Rider",
+        "completeness": "unknown"
+      },
+      "all_catalog_hits": 34
+    },
+    {
+      "book_id": "69a684647ab725b59be411fb",
+      "author": "Galileo Galilei",
+      "title": "The New Thoughts of Galileo",
+      "language": "French",
+      "disposition": "confirmed_first",
+      "confidence": "high",
+      "reasoning": "The work 'Les Nouvelles Pensées de Galilée' (1639) is Marin Mersenne's French adaptation and reworking of Galileo's 'Discorsi' (1638). While Galileo's original Italian text has been translated into English multiple times (e.g., by Crew & de Salvio or Stillman Drake), no English translation of Mersenne's specific French version exists in the searched catalogs. As the prompt specifies that translations of the source text in other languages (like the Italian original) do not count, this French-to-English translation is a confirmed first.",
+      "tools_called": 8,
+      "title_similarity": 0.5,
+      "best_catalog_match": {
+        "source": "unesco_master",
+        "english_title": "The Selected writings of William Gilbert, Galileo Galilei, William Harvey : On the loadstone and magnetic bodies and on the great magnet, the earth ; Dialogues concerning two new sciences ; An anatomical disquisition on the motion of the heart and blood in animals. On the circulation of the blood. Anatomical exercises on the generation of animals",
+        "original_title": "Selected Scientific Writings",
+        "translator": "",
+        "year": "1984",
+        "publisher": "Franklin Library",
+        "completeness": "partial"
+      },
+      "all_catalog_hits": 6
+    },
+    {
+      "book_id": "69b4c04d978ca9526eda33f7",
+      "author": "Various",
+      "title": "Sacred Art of the Philosophers (Greek alchemical anthology)",
+      "language": "Greek",
+      "disposition": "confirmed_first",
+      "confidence": "medium",
+      "reasoning": "The work described, 'Sacred Art of the Philosophers' (often associated with the Greek alchemical corpus, such as the 'Collection des anciens alchimistes grecs'), does not appear to have a direct, complete English translation under this specific title in the searched catalogs. While scholarly excerpts of Greek alchemy exist, no complete English edition matching this specific 15th-century anthology title was found.",
+      "tools_called": 4,
+      "title_similarity": 0.5,
+      "best_catalog_match": {
+        "source": "unesco_master",
+        "english_title": "Greek and Latin Letters: An Anthology with Translation",
+        "translator": "Michael Trapp",
+        "year": "2003",
+        "publisher": "Cambridge University Press",
+        "series": "Cambridge Greek and Latin Classics",
+        "completeness": "partial"
+      },
+      "all_catalog_hits": 104
+    },
+    {
+      "book_id": "6952722eab34727b1f04805e",
+      "author": "Robert Fludd",
+      "title": "The Proscenium of Truth",
+      "language": "Latin",
+      "disposition": "first_complete_translation",
+      "confidence": "high",
+      "reasoning": "Extensive searches in scholarly and library catalogs (UNESCO, Open Library) for Robert Fludd's 'Veritatis Proscenium' (1621) failed to identify any complete, standalone English translation. While the search results returned several works by Joscelyn Godwin that include excerpts and scholarly analysis of Fludd's corpus, no record indicates a full translation of this specific polemical work has been published. Therefore, a new translation would represent the first complete English version of the text.",
+      "tools_called": 4,
+      "title_similarity": 0.5,
+      "best_catalog_match": {
+        "source": "unesco_master",
+        "english_title": "Mosaical philosophy: grounded upon the essential truth or eternal sapience",
+        "original_title": "Philosophia moysaica",
+        "translator": "Fludd, Robert",
+        "year": "1979",
+        "publisher": "A. McLean",
+        "completeness": "unknown"
+      },
+      "all_catalog_hits": 6
+    },
+    {
+      "book_id": "69a5ee3cbfd8cafd91e43719",
+      "author": "Jacobus de Cessolis",
+      "title": "The Game of Chess",
+      "language": "German",
+      "disposition": "first_from_source",
+      "confidence": "high",
+      "reasoning": "While Jacobus de Cessolis's work is famous in English via William Caxton's 1474 translation (from French) and modern scholarly versions (from Latin), the specific German vernacular version (such as the 1407 manuscript Cod. germ. 49) has never been translated into English. Following the instruction that translations from different source languages do not count, this German text remains untranslated.",
+      "tools_called": 4,
+      "title_similarity": 0.5,
+      "best_catalog_match": {
+        "source": "unesco_master",
+        "english_title": "The book of chess",
+        "original_title": "De ludo scachorum",
+        "translator": "Williams, H. L.",
+        "year": "2008",
+        "publisher": "Italica Press",
+        "completeness": "unknown"
+      },
+      "all_catalog_hits": 1
+    },
+    {
+      "book_id": "69a5ea00d507939f0352c836",
+      "author": "Jacobus de Cessolis",
+      "title": "The Game of Chess",
+      "language": "German",
+      "disposition": "first_from_source",
+      "confidence": "high",
+      "reasoning": "While the Latin original (De ludo scachorum) and its French adaptations have been translated into English (notably by William Caxton in 1474 and H. L. Williams in 2008), no English translation of the specific German version (Schachzabelspiel), such as the one found in the 1463 manuscript Cod. Pal. germ. 463, was identified in the catalog searches. Following the provided guidelines, a translation of a specific vernacular rendering is considered a first translation even if the underlying work exists in English from other source languages.",
+      "tools_called": 4,
+      "title_similarity": 0.5,
+      "best_catalog_match": {
+        "source": "unesco_master",
+        "english_title": "The book of chess",
+        "original_title": "De ludo scachorum",
+        "translator": "Williams, H. L.",
+        "year": "2008",
+        "publisher": "Italica Press",
+        "completeness": "unknown"
+      },
+      "all_catalog_hits": 1
+    },
+    {
+      "book_id": "6955d9b48407b7c9ae212fd5",
+      "author": "Meister Eckhart",
+      "title": "Meister Eckhart und seine Jünger",
+      "language": "German",
+      "disposition": "first_complete_translation",
+      "confidence": "high",
+      "reasoning": "The 1895 edition by Franz Jostes is a specific philological collection of Middle High German texts, many of which were previously unpublished. While individual sermons and treatises contained within this volume have been translated in various English anthologies (such as those by C. de B. Evans, Maurice O'C. Walshe, and Bernard McGinn), the Jostes volume itself has never been translated into English as a complete, standalone work.",
+      "tools_called": 7,
+      "title_similarity": 0.5,
+      "best_catalog_match": {
+        "source": "unesco_master",
+        "english_title": "Treatises and sermons of Meister Eckhart",
+        "original_title": "Treatises and Sermons",
+        "translator": "Clark, James Midgley; Skinner, John V.",
+        "year": "1983",
+        "publisher": "Octagon Books",
+        "completeness": "unknown"
+      },
+      "all_catalog_hits": 9
+    },
+    {
+      "book_id": "6953dd6777f38f6761be7932",
+      "author": "Meister Eckhart",
+      "title": "Meister Eckhart and His Disciples - Unpublished Texts",
+      "language": "German",
+      "disposition": "confirmed_first",
+      "confidence": "high",
+      "reasoning": "The 1895 edition by Franz Jostes, 'Meister Eckhart und seine Jünger', is a specific scholarly compilation of Middle High German texts. While many of the individual sermons and treatises it contains have been translated in modern 'Complete Works' (such as those by Maurice O'C. Walshe) or anthologies (McGinn), the Jostes volume itself, including its specific selection and scholarly apparatus, has never been published as a standalone English translation until now. Catalog searches confirm no prior English edition of this specific work exists.",
+      "tools_called": 8,
+      "title_similarity": 0.5,
+      "best_catalog_match": {
+        "source": "unesco_master",
+        "english_title": "Treatises and sermons of Meister Eckhart",
+        "original_title": "Treatises and Sermons",
+        "translator": "Clark, James Midgley; Skinner, John V.",
+        "year": "1983",
+        "publisher": "Octagon Books",
+        "completeness": "unknown"
+      },
+      "all_catalog_hits": 9
+    },
+    {
+      "book_id": "69a5e659e751f06e74b899e7",
+      "author": "Various",
+      "title": "Christian Arabic homilies of the Church Fathers (MS Or.1287)",
+      "language": "Syriac",
+      "disposition": "confirmed_first",
+      "confidence": "high",
+      "reasoning": "No English translation of the specific collection of homilies contained in British Library MS Or. 1287 (whether in Arabic or Syriac) was found in any major catalog. While the underlying works by the Church Fathers exist in English from their original Greek or Latin sources, this specific manuscript tradition represents a distinct textual transmission that has not been previously published in English.",
+      "tools_called": 4,
+      "title_similarity": 0.5,
+      "best_catalog_match": {
+        "source": "unesco_master",
+        "english_title": "A select library of Nicene and Post-Nicene Fathers of the Christian Church",
+        "original_title": "A select library of Nicene and Post-Nicene Fathers of the Christian Church",
+        "translator": "",
+        "year": "1899",
+        "publisher": "Oxford: James Parker and Compant; New York: The Christian Literature Company",
+        "completeness": "unknown"
+      },
+      "all_catalog_hits": 104
+    },
+    {
+      "book_id": "69593413b282844d7b277aaf",
+      "author": "Robert Fludd",
+      "title": "Utriusque Cosmi Historia - Tomus Primus (De Macrocosmi)",
+      "language": "Latin",
+      "disposition": "first_complete_translation",
+      "confidence": "high",
+      "reasoning": "While significant portions of Robert Fludd's 'Utriusque Cosmi Historia' (1617) have been translated into English, notably by Patricia Tahil and Joscelyn Godwin, these represent partial translations or excerpted selections rather than a complete translation of the entire 'Tomus Primus'. Tahil's work focuses on the 'Origin and Structure' (Metaphysics/Physics) and specific technical sections like music, but the massive 1617 folio in its entirety has not been published as a single complete English edition.",
+      "tools_called": 4,
+      "title_similarity": 0.5,
+      "best_catalog_match": {
+        "source": "unesco_master",
+        "english_title": "The origin and structure of the cosmos",
+        "original_title": "Utriusque cosmi historia",
+        "translator": "Tahil, Patricia",
+        "year": "1982",
+        "publisher": "Magnum Opus Hermetic Sourceworks",
+        "completeness": "unknown"
+      },
+      "all_catalog_hits": 6
+    },
+    {
+      "book_id": "69593416b282844d7b277b86",
+      "author": "Robert Fludd",
+      "title": "Utriusque Cosmi Historia - Philosophia Sacra et Meteorologia Cosmica",
+      "language": "Latin",
+      "disposition": "first_complete_translation",
+      "confidence": "high",
+      "reasoning": "While Robert Fludd's 'Utriusque Cosmi Historia' is a monumental work with various sections translated (such as the 'Metaphysica' or 'Musica Mundana'), no complete English translation of the specific 1626 volume 'Philosophia Sacra et Meteorologia Cosmica' was found in the catalogs. Existing publications by Joscelyn Godwin and Patricia Tahil provide translations of other parts of the 'Utriusque Cosmi Historia' or scholarly excerpts, but this specific tractate remains untranslated in its entirety.",
+      "tools_called": 4,
+      "title_similarity": 0.5,
+      "best_catalog_match": {
+        "source": "unesco_master",
+        "english_title": "The origin and structure of the cosmos",
+        "original_title": "Utriusque cosmi historia",
+        "translator": "Tahil, Patricia",
+        "year": "1982",
+        "publisher": "Magnum Opus Hermetic Sourceworks",
+        "completeness": "unknown"
+      },
+      "all_catalog_hits": 6
+    },
+    {
+      "book_id": "69b1cb02a282e3475aab417f",
+      "author": "René Descartes",
+      "title": "The Passions of the Soul",
+      "language": "Latin",
+      "disposition": "translation_found",
+      "confidence": "high",
+      "reasoning": "The work 'The Passions of the Soul' (originally published in French as 'Les Passions de l'âme' in 1649, with a Latin translation in 1650) has been translated into English multiple times. Open Library records show editions dating back to 1650 ('The passions of the soule') and modern editions (e.g., 1989, 2015). Therefore, it is not a first English translation.",
+      "tools_called": 4,
+      "title_similarity": 0.5,
+      "best_catalog_match": {
+        "source": "unesco_master",
+        "english_title": "Meditations on first philosophy: in which the existence of God and the distinction of the soul from the body are demonstrated",
+        "original_title": "Meditationes de prima philosophia",
+        "translator": "Cress, Donald A.",
+        "year": "1979",
+        "publisher": "Hackett",
+        "completeness": "unknown"
+      },
+      "all_catalog_hits": 18
+    },
+    {
+      "book_id": "695201a9ab34727b1f041826",
+      "author": "Robert Fludd",
+      "title": "History of the Microcosm, Volume II",
+      "language": "Latin",
+      "disposition": "first_complete_translation",
+      "confidence": "high",
+      "reasoning": "While significant portions and specific sections of Robert Fludd's 'Utriusque Cosmi Historia' (including the Microcosm volume) have been translated by scholars like Joscelyn Godwin and Patricia Tahil, no complete, cover-to-cover English translation of the 1619 Latin 'History of the Microcosm' (Volume II) exists. Existing publications are either anthologies of excerpts, sourcebooks, or translations of specific chapters (such as those on music or memory).",
+      "tools_called": 4,
+      "title_similarity": 0.5,
+      "best_catalog_match": {
+        "source": "godwin",
+        "english_title": "The Greater and Lesser Worlds of Robert Fludd: Macrocosm Microcosm and Medicine",
+        "translator": "Joscelyn Godwin",
+        "year": "2019",
+        "publisher": "Inner Traditions",
+        "completeness": "unknown"
+      },
+      "all_catalog_hits": 6
+    },
+    {
+      "book_id": "695929a57c072c27f686d29f",
+      "author": "Johannes Trithemius",
+      "title": "Steganographia vindicata, reserata et illustrata",
+      "language": "Latin",
+      "disposition": "translation_found",
+      "confidence": "high",
+      "reasoning": "While Johannes Trithemius's original 'Steganographia' has been translated into English (notably by Adam McLean in 1982 and Stephen Skinner in 2024), the specific 1676 work 'Steganographia vindicata, reserata et illustrata' is an edition by Wolfgang Ernst Heidel that includes his own extensive Latin commentary and 'vindication.' No English translation of Heidel's specific Latin text and commentary was found in the catalogs; existing translations focus on Trithemius's primary text rather than Heidel's 17th-century scholarly apparatus.",
+      "tools_called": 4,
+      "title_similarity": 0.5,
+      "best_catalog_match": {
+        "source": "unesco_master",
+        "english_title": "The Steganographia, Books I-IV",
+        "original_title": "The Steganographia, Books I-IV",
+        "translator": "Stephen Skinner & Daniel Clark",
+        "year": "2024",
+        "publisher": "Golden Hoard Press",
+        "completeness": "unknown"
+      },
+      "all_catalog_hits": 3
+    },
+    {
+      "book_id": "69b4190a2b0edf3eaa2de972",
+      "author": "Heinrich Khunrath",
+      "title": "Khunrath — Amphitheatre of Eternal Wisdom, 1702 MS",
+      "language": "Latin",
+      "disposition": "first_complete_translation",
+      "confidence": "high",
+      "reasoning": "Extensive searches confirm that while Heinrich Khunrath's 'Amphitheatrum sapientiae aeternae' is a seminal work in Hermetic philosophy, no complete English translation of the full Latin text has been published. The search results identify only partial treatments, such as Patricia Tahil's 1980 work focusing on the engravings, and various scholarly analyses that discuss the work in English without providing a full translation of the original Latin text.",
+      "tools_called": 4,
+      "title_similarity": 0.4,
+      "best_catalog_match": {
+        "source": "unesco_master",
+        "english_title": "The amphitheatre engravings of Heinrich Khunrath",
+        "original_title": "Amphitheatrum sapientiae aeternae solius verae Christiano-Kabalisticum...",
+        "translator": "Tahil, Patricia",
+        "year": "1980",
+        "publisher": "A. McLean",
+        "completeness": "unknown"
+      },
+      "all_catalog_hits": 1
+    },
+    {
+      "book_id": "69b6522418b87551bfcb033f",
+      "author": "Paracelsus",
+      "title": "Medicorum et philosophorum summi, Aureoli Theophrasti Paracelsi, Eremitae, libri quinque de causis, signis & curationibus morborum ex Tartaro utilissimi",
+      "language": "Latin",
+      "disposition": "confirmed_first",
+      "confidence": "high",
+      "reasoning": "A search of scholarly catalogs and digital libraries confirms that while many of Paracelsus's alchemical and hermetic works have been translated (notably by A.E. Waite), his major medical treatise on 'Tartaric Diseases' (Libri quinque de causis, signis & curationibus morborum ex Tartaro) has not been published in a complete English translation. Existing English collections such as the 'Four Treatises' (1941) and 'Selected Writings' (1951) focus on other texts like the 'Volumen Paramirum' or 'Seven Defensiones', leaving this specific Latin work untranslated in full.",
+      "tools_called": 4,
+      "title_similarity": 0.4,
+      "best_catalog_match": {
+        "source": "openlibrary",
+        "english_title": "Prognosticatio eximii doctoris Theophrasti Paracelsi",
+        "translator": "I. J. Kohn (Translator)",
+        "year": "1973",
+        "publisher": "Rider",
+        "completeness": "unknown"
+      },
+      "all_catalog_hits": 34
+    },
+    {
+      "book_id": "69b6554918b87551bfcd3648",
+      "author": "Paracelsus",
+      "title": "Liber Paramirum clarissimi doctissimique viri Areoli Theophrasti Paracelsi",
+      "language": "Latin",
+      "disposition": "confirmed_first",
+      "confidence": "high",
+      "reasoning": "While Paracelsus's 'Volumen Paramirum' (a distinct work) was translated by Kurt Leidecker in 1949, no complete English translation of the 'Liber Paramirum' (the Greater Paramirum) was found in the searched catalogs. Furthermore, the 1570 Latin edition represents a specific rendering of the work; even if translations of the original German text exist in anthologies (such as those by Waite or Goodrick-Clarke), there is no record of a translation specifically sourced from this Latin text.",
+      "tools_called": 5,
+      "title_similarity": 0.4,
+      "best_catalog_match": {
+        "source": "openlibrary",
+        "english_title": "Prognosticatio eximii doctoris Theophrasti Paracelsi",
+        "translator": "I. J. Kohn (Translator)",
+        "year": "1973",
+        "publisher": "Rider",
+        "completeness": "unknown"
+      },
+      "all_catalog_hits": 34
+    },
+    {
+      "book_id": "69b51db1ff09e4fe943a70cf",
+      "author": "Paracelsus",
+      "title": "... Theil Der Bücher und Schrifften, des Edlen, Hochgelehrten und Bewehrten Philosophi unnd Medici, Philippi Theophrasti Bombast von Hohenheim, Paracelsi genannt. 6, In diesem Tomo seind begriffen solche Bücher, in welchen deß mehrer theils von Spagyrischer Bereitung Natürlicher dingen, die Artzney betreffend, gehandelt wirt. Item, ettliche Alchimistische Büchlin, so allein von der Transmutation der Metallen tractiren",
+      "language": "German",
+      "disposition": "confirmed_first",
+      "confidence": "high",
+      "reasoning": "The 1590 edition is the sixth volume of the 'Huser edition,' the first collected edition of Paracelsus's works in German. While many of the individual alchemical and medical treatises contained in this volume have been translated into English (notably by Arthur Edward Waite in 1894), those translations were primarily based on later Latin editions (such as the 1658 Geneva edition) rather than this specific German source text. No complete English translation of the 1590 German Volume 6 exists, nor is there a complete translation of the Huser edition as a whole.",
+      "tools_called": 4,
+      "title_similarity": 0.4,
+      "best_catalog_match": {
+        "source": "openlibrary",
+        "english_title": "Prognosticatio eximii doctoris Theophrasti Paracelsi",
+        "translator": "I. J. Kohn (Translator)",
+        "year": "1973",
+        "publisher": "Rider",
+        "completeness": "unknown"
+      },
+      "all_catalog_hits": 34
+    },
+    {
+      "book_id": "69b6554618b87551bfcd3460",
+      "author": "Paracelsus",
+      "title": "Medicorum et Philosophorum summi, Aureoli Theophrasti Paracelsi, Eremitae, de Tartaro libri septem",
+      "language": "Latin",
+      "disposition": "confirmed_first",
+      "confidence": "high",
+      "reasoning": "No English translation of Paracelsus's 'De Tartaro libri septem' (Seven Books on Tartar) was found in any of the searched catalogs. While major collections of Paracelsus's work exist in English, such as Waite's 'Hermetic and Alchemical Writings' and Sigerist's 'Four Treatises', these do not include this specific medical treatise on tartaric diseases. The work remains untranslated into English from the original Latin/German corpus.",
+      "tools_called": 4,
+      "title_similarity": 0.4,
+      "best_catalog_match": {
+        "source": "openlibrary",
+        "english_title": "Prognosticatio eximii doctoris Theophrasti Paracelsi",
+        "translator": "I. J. Kohn (Translator)",
+        "year": "1973",
+        "publisher": "Rider",
+        "completeness": "unknown"
+      },
+      "all_catalog_hits": 34
+    },
+    {
+      "book_id": "69b51d5a261c58d63664983d",
+      "author": "Paracelsus",
+      "title": "Aureoli Philippi Theophrasti Bombasts von Hohenheim Paracelsi/ deß Edlen/ Hochgelehrten/ Fürtrefflichsten/ Weitberümbtesten Philosophi und Medici Opera : Bücher und Schrifften/ so viel deren zur Hand gebracht: und vor wenig Jahren/ mit und auß ihren glaubwürdigen eygener Handgeschriebenen Originalien collacioniert/ vergliechen/ verbessert. 1",
+      "language": "German",
+      "disposition": "first_complete_translation",
+      "confidence": "high",
+      "reasoning": "The work in question is the 1616 German edition of the collected works (Opera) of Paracelsus. While various English translations of individual treatises, selected works, and specific collections (such as the Hermetic and Alchemical writings) exist, there is no complete English translation of this specific 1616 collected edition. Therefore, only partial translations exist.",
+      "tools_called": 4,
+      "title_similarity": 0.4,
+      "best_catalog_match": {
+        "source": "openlibrary",
+        "english_title": "Prognosticatio eximii doctoris Theophrasti Paracelsi",
+        "translator": "I. J. Kohn (Translator)",
+        "year": "1973",
+        "publisher": "Rider",
+        "completeness": "unknown"
+      },
+      "all_catalog_hits": 34
+    },
+    {
+      "book_id": "69905d1a2fd6a0399389ee80",
+      "author": "Tommaso Campanella",
+      "title": "Realis Philosophiae Epilogisticae (Civitas Solis)",
+      "language": "Latin",
+      "disposition": "first_complete_translation",
+      "confidence": "high",
+      "reasoning": "While the appendix 'Civitas Solis' (The City of the Sun) is a famous utopian work with several English translations dating back to the 19th century, the main body of 'Realis Philosophiae Epilogisticae'—comprising the books on Physiology, Ethics, Politics, and Economics—has never been translated into English in its entirety. Existing publications focus exclusively on the 'Civitas Solis' portion.",
+      "tools_called": 4,
+      "title_similarity": 0.4,
+      "best_catalog_match": {
+        "source": "unesco_master",
+        "english_title": "The City of the Sun: a poetical dialogue",
+        "original_title": "Civitas solis",
+        "translator": "Donno, Daniel John",
+        "year": "1981",
+        "publisher": "University of California Press",
+        "completeness": "unknown"
+      },
+      "all_catalog_hits": 3
+    },
+    {
+      "book_id": "69b41877f1200e2ab53cf94e",
+      "author": "Various",
+      "title": "Alchemical Anthology — 17th-Century German MS",
+      "language": "German",
+      "disposition": "confirmed_first",
+      "confidence": "high",
+      "reasoning": "The work is a unique 17th-century manuscript compilation held in the Bibliotheca Philosophica Hermetica. As a specific manuscript, it does not have a published English translation. Searches in local catalogs and Open Library yielded no results for this specific collection.",
+      "tools_called": 4,
+      "title_similarity": 0.3333333333333333,
+      "best_catalog_match": {
+        "source": "unesco_master",
+        "english_title": "Latin Literature: An Anthology",
+        "original_title": "Latin Literature: An Anthology",
+        "translator": "Michael Grant",
+        "year": "2015",
+        "publisher": "Penguin",
+        "series": "Penguin Classics",
+        "completeness": "partial"
+      },
+      "all_catalog_hits": 104
+    },
+    {
+      "book_id": "69b419052b0edf3eaa2de888",
+      "author": "Johannes Trithemius",
+      "title": "Trithemius — Book of Experiments, 17th-Century Latin MS",
+      "language": "Latin",
+      "disposition": "confirmed_first",
+      "confidence": "high",
+      "reasoning": "Extensive searches of scholarly catalogs, Open Library, and Google Books yielded no evidence of an English translation for the specific Latin manuscript 'De Diversis Experimentis' by Johannes Trithemius. While other works by Trithemius, such as 'Steganographia' and 'Antipalus Maleficiorum', have been translated, this specific collection of experiments remains untranslated in English.",
+      "tools_called": 4,
+      "title_similarity": 0.3333333333333333,
+      "best_catalog_match": {
+        "source": "unesco_master",
+        "english_title": "The steganographia of Johannes Trithemius",
+        "original_title": "Steganographia",
+        "translator": "McLean, Adam",
+        "year": "1982",
+        "publisher": "Magnum Opus Hermetic Sourceworks",
+        "completeness": "unknown"
+      },
+      "all_catalog_hits": 3
+    },
+    {
+      "book_id": "69b4187cf1200e2ab53cf9bd",
+      "author": "Various",
+      "title": "Alchemical Anthology — post-1686 German MS",
+      "language": "German",
+      "disposition": "confirmed_first",
+      "confidence": "medium",
+      "reasoning": "The work in question is a specific 1686 compilation by Johannes Luppius (often associated with the 'Claviculae Salomonis' and other hermetic texts). While the individual texts contained within such anthologies (like the Arbatel or the Key of Solomon) have been translated into English many times, there is no evidence of a complete English translation of this specific 1686 Luppius compilation as a single volume. Searches in library catalogs and databases yielded no results for a translation of this specific edition.",
+      "tools_called": 4,
+      "title_similarity": 0.3333333333333333,
+      "best_catalog_match": {
+        "source": "unesco_master",
+        "english_title": "Latin Literature: An Anthology",
+        "original_title": "Latin Literature: An Anthology",
+        "translator": "Michael Grant",
+        "year": "2015",
+        "publisher": "Penguin",
+        "series": "Penguin Classics",
+        "completeness": "partial"
+      },
+      "all_catalog_hits": 104
+    },
+    {
+      "book_id": "69b3e679304c1c6b3950b712",
+      "author": "Various",
+      "title": "Christ Church MS 198",
+      "language": "Hebrew",
+      "disposition": "first_complete_translation",
+      "confidence": "high",
+      "reasoning": "Christ Church MS 198 is a specific manuscript collection of various Hebrew kabbalistic and philosophical texts. It is not a published book in the traditional sense, but a unique archival object. While individual works contained within the manuscript (such as Sefer Yetzirah or Sefer ha-Bahir) have been translated into English separately, the manuscript as a whole collection has never been translated into English. Therefore, only partial/excerpts of the content exist in English translation.",
+      "tools_called": 4,
+      "title_similarity": 0.3333333333333333,
+      "best_catalog_match": {
+        "source": "unesco_master",
+        "english_title": "A select library of Nicene and Post-Nicene Fathers of the Christian Church",
+        "original_title": "A select library of Nicene and Post-Nicene Fathers of the Christian Church",
+        "translator": "",
+        "year": "1899",
+        "publisher": "Oxford: James Parker and Compant; New York: The Christian Literature Company",
+        "completeness": "unknown"
+      },
+      "all_catalog_hits": 104
+    },
+    {
+      "book_id": "69a5f3b61cf742c3604134ce",
+      "author": "Various",
+      "title": "Syriac Theological Anthology",
+      "language": "Syriac",
+      "disposition": "confirmed_first",
+      "confidence": "high",
+      "reasoning": "Extensive searches across scholarly catalogs, Open Library, and Google Books for 'Syriac Theological Anthology' yielded no results for an English translation. The work, dated to approximately 1200, appears to be a compilation for which no published English version currently exists in the searched databases.",
+      "tools_called": 4,
+      "title_similarity": 0.3333333333333333,
+      "best_catalog_match": {
+        "source": "unesco_master",
+        "english_title": "Anthology of European Neo-Latin Literature",
+        "original_title": "Anthology of European Neo-Latin Literature",
+        "translator": "Gesine Manuwald et al.",
+        "year": "2020",
+        "publisher": "Bloomsbury",
+        "completeness": "partial"
+      },
+      "all_catalog_hits": 104
+    },
+    {
+      "book_id": "699388ea0f04c37dcfa60427",
+      "author": "Euclid",
+      "title": "Euclid, Elements (palimpsest)",
+      "language": "Greek",
+      "disposition": "confirmed_first",
+      "confidence": "high",
+      "reasoning": "While Euclid's 'Elements' has been translated into English many times (most notably by Thomas Heath and Richard Fitzpatrick), these translations are based on the reconstructed Greek text established by J.L. Heiberg. A translation specifically of a Greek palimpsest manuscript of the 'Elements' (such as the 10th-century palimpsest used by Heiberg or the Euclid portions of the Archimedes Palimpsest) represents a translation of a distinct source text with its own unique readings and fragmentary nature. No complete English translation of a specific Euclid palimpsest as a standalone work was found in the catalogs, making this a first English translation of this specific source text.",
+      "tools_called": 4,
+      "title_similarity": 0.3333333333333333,
+      "best_catalog_match": {
+        "source": "unesco_master",
+        "english_title": "Medieval Latin Translation of the Data of Euclid",
+        "translator": "Shuntaro Ito",
+        "year": "2014",
+        "publisher": "Birkhauser",
+        "completeness": "unknown"
+      },
+      "all_catalog_hits": 1
+    },
+    {
+      "book_id": "69b4187ef1200e2ab53cfa5c",
+      "author": "Various",
+      "title": "Alchemical Anthology — 18th-Century French MS",
+      "language": "French",
+      "disposition": "confirmed_first",
+      "confidence": "high",
+      "reasoning": "The work is described as a unique 18th-century French manuscript anthology. Such compilations are typically singular, unpublished historical documents rather than published books. Searches of library catalogs and databases yielded no evidence of a published English translation of this specific manuscript. Given its nature as a unique manuscript, it is highly improbable that a formal English translation exists.",
+      "tools_called": 4,
+      "title_similarity": 0.3333333333333333,
+      "best_catalog_match": {
+        "source": "unesco_master",
+        "english_title": "Latin Literature: An Anthology",
+        "original_title": "Latin Literature: An Anthology",
+        "translator": "Michael Grant",
+        "year": "2015",
+        "publisher": "Penguin",
+        "series": "Penguin Classics",
+        "completeness": "partial"
+      },
+      "all_catalog_hits": 104
+    },
+    {
+      "book_id": "69a5f366d4c2e3cf8ecb8a85",
+      "author": "Various",
+      "title": "Theological and Philosophical Anthology",
+      "language": "Syriac",
+      "disposition": "confirmed_first",
+      "confidence": "high",
+      "reasoning": "Extensive searches across scholarly catalogs, Open Library, and Google Books for a Syriac 'Theological and Philosophical Anthology' dated circa 800 AD yielded no results. While Syriac florilegia containing philosophical and theological texts are known to scholars (such as those found in British Library manuscripts), no record of a complete or partial English translation of a work under this specific title was found in the searched databases.",
+      "tools_called": 4,
+      "title_similarity": 0.3333333333333333,
+      "best_catalog_match": {
+        "source": "unesco_master",
+        "english_title": "Anthology of European Neo-Latin Literature",
+        "original_title": "Anthology of European Neo-Latin Literature",
+        "translator": "Gesine Manuwald et al.",
+        "year": "2020",
+        "publisher": "Bloomsbury",
+        "completeness": "partial"
+      },
+      "all_catalog_hits": 104
+    },
+    {
+      "book_id": "69a5f359d4c2e3cf8ecb82c3",
+      "author": "Various",
+      "title": "Liturgical and Patristic Anthology",
+      "language": "Syriac",
+      "disposition": "confirmed_first",
+      "confidence": "high",
+      "reasoning": "Extensive searches in scholarly catalogs (UNESCO Index Translationum), Open Library, and Google Books for 'Liturgical and Patristic Anthology' in the context of Syriac literature yielded no results. This title appears to be a descriptive name for a specific 10th-century Syriac manuscript or collection (florilegium) that has not been published in a complete English translation.",
+      "tools_called": 4,
+      "title_similarity": 0.3333333333333333,
+      "best_catalog_match": {
+        "source": "unesco_master",
+        "english_title": "Anthology of European Neo-Latin Literature",
+        "original_title": "Anthology of European Neo-Latin Literature",
+        "translator": "Gesine Manuwald et al.",
+        "year": "2020",
+        "publisher": "Bloomsbury",
+        "completeness": "partial"
+      },
+      "all_catalog_hits": 104
+    },
+    {
+      "book_id": "69b51e3f768235dc6598e2c7",
+      "author": "Paracelsus",
+      "title": "Five Books on Long Life",
+      "language": "Latin",
+      "disposition": "first_modern_translation",
+      "confidence": "high",
+      "reasoning": "The work 'De Vita Longa' (Five Books on Long Life) was translated into English by Arthur Edward Waite and included in his two-volume collection 'The Hermetic and Alchemical Writings of Paracelsus', first published in 1894. This translation was based on the Latin text (specifically the Huser edition). While this provides a complete English version, it dates to the late 19th century and no modern scholarly translation (post-1900) was identified in the search results, making a new translation a 'first modern translation'.",
+      "tools_called": 4,
+      "title_similarity": 0.3333333333333333,
+      "best_catalog_match": {
+        "source": "unesco_master",
+        "english_title": "The life and doctrine of Philippus Theophrastus, bombast von Hohenheim, known by the name of Paracelsus",
+        "translator": "Hartmann, Franz",
+        "year": "1932",
+        "publisher": "Macoy Pub. &amp; Masonic Supply Co.",
+        "completeness": "unknown"
+      },
+      "all_catalog_hits": 34
+    },
+    {
+      "book_id": "69b51e3e768235dc6598e25e",
+      "author": "Paracelsus",
+      "title": "Four Books on Long Life",
+      "language": "Latin",
+      "disposition": "first_complete_translation",
+      "confidence": "medium",
+      "reasoning": "While A.E. Waite's 1894 collection 'The Hermetic and Alchemical Writings of Paracelsus' includes a treatise titled 'The Book Concerning Long Life,' it is part of a larger anthology and often represents an abridged or specific version rather than a complete translation of the 'Four Books on Long Life' (De vita longa, libri quatuor). No evidence of a standalone or modern complete English translation of this specific four-book work was found in the scholarly catalogs searched.",
+      "tools_called": 8,
+      "title_similarity": 0.3333333333333333,
+      "best_catalog_match": {
+        "source": "unesco_master",
+        "english_title": "The life and doctrine of Philippus Theophrastus, bombast von Hohenheim, known by the name of Paracelsus",
+        "translator": "Hartmann, Franz",
+        "year": "1932",
+        "publisher": "Macoy Pub. &amp; Masonic Supply Co.",
+        "completeness": "unknown"
+      },
+      "all_catalog_hits": 34
+    },
+    {
+      "book_id": "6990500f7d19f3f2aac1dbee",
+      "author": "Marsilio Ficino",
+      "title": "Ficino: De Christiana Religione (1474 incunabulum)",
+      "language": "Italian",
+      "disposition": "first_from_source",
+      "confidence": "high",
+      "reasoning": "While a complete English translation of Marsilio Ficino's 'De Christiana Religione' was published by the University of Toronto Press in 2022 (trans. Attrell, Bartlett, and Porreca), that translation is based on the Latin text. The 1474 incunabulum in question is the Italian version ('Della Cristiana Religione'), which Ficino produced as a vernacular counterpart. Per the instructions to distinguish between source languages, no English translation of the specific Italian text has been found.",
+      "tools_called": 4,
+      "title_similarity": 0.3333333333333333,
+      "best_catalog_match": {
+        "source": "unesco_master",
+        "english_title": "The Letters of Marsilio Ficino, Vol. 6",
+        "original_title": "The Letters of Marsilio Ficino, Vol. 6",
+        "translator": "Clement Salaman",
+        "year": "1999",
+        "publisher": "Shepheard-Walwyn",
+        "series": "Letters of Ficino",
+        "completeness": "partial"
+      },
+      "all_catalog_hits": 27
+    },
+    {
+      "book_id": "699050447d19f3f2aac1dcd4",
+      "author": "Pierio Valeriano",
+      "title": "Valeriano: Hieroglyphica (1575)",
+      "language": "Latin",
+      "disposition": "translation_found",
+      "confidence": "high",
+      "reasoning": "Pierio Valeriano's 'Hieroglyphica' (1556) is a massive 58-book encyclopedic work on symbols and emblems. While it was profoundly influential on Renaissance culture and is frequently excerpted or cited in English-language scholarship (such as in studies by Peter Daly or Julia Haig Gaisser), no complete English translation of the full Latin text has ever been published. The only major work by Valeriano with a complete English translation is 'De litteratorum infelicitate'.",
+      "tools_called": 4,
+      "title_similarity": 0.3333333333333333,
+      "best_catalog_match": {
+        "source": "unesco_master",
+        "english_title": "Pierio Valeriano on the ill fortune of learned men : a Renaissance humanist and his world",
+        "original_title": "De litteratorum infelicitate",
+        "translator": "Gaisser, Julia Haig",
+        "year": "1999",
+        "publisher": "University of Michigan Press",
+        "completeness": "unknown"
+      },
+      "all_catalog_hits": 1
+    },
+    {
+      "book_id": "699050547d19f3f2aac1e087",
+      "author": "Cesare Ripa",
+      "title": "Ripa: Iconologia (1603)",
+      "language": "Italian",
+      "disposition": "first_complete_translation",
+      "confidence": "high",
+      "reasoning": "While Cesare Ripa's 'Iconologia' was adapted into English during the 18th century by Pierce Tempest (1709) and George Richardson (1777-79), these works were selective adaptations or 'moralized' versions rather than complete translations of the 1603 Italian text. Modern editions, such as Maser's (1971), are based on later specific editions (like the Hertel edition) or are reprints of the 1709 adaptation. No complete, literal English translation of the full 1603 Italian edition has been published.",
+      "tools_called": 4,
+      "title_similarity": 0.3333333333333333,
+      "best_catalog_match": {
+        "source": "unesco_master",
+        "english_title": "Baroque and rococo pictorial imagery : the 1758-60 Hertel edition of Ripa's 'Iconologia' with 200 engraved illustrations",
+        "original_title": "Iconologia",
+        "translator": "",
+        "year": "1991",
+        "publisher": "Constable",
+        "completeness": "unknown"
+      },
+      "all_catalog_hits": 1
+    },
+    {
+      "book_id": "69c1b7b48522835be8448cf5",
+      "author": "Various",
+      "title": "Fourteen texts on geometry, cosmology, philosophy and the Qur'an, by Ibn Sina (d. 1037), `Umar al-Khayyam (d. 1123), al-Sijzi (d. c.1020) and others",
+      "language": "Arabic",
+      "disposition": "confirmed_first",
+      "confidence": "high",
+      "reasoning": "The provided title appears to be a modern academic compilation or a specific manuscript collection title rather than a widely published historical work. Searches for this specific title in library catalogs and databases yielded no results, suggesting that no English translation of this specific collection exists.",
+      "tools_called": 4,
+      "title_similarity": 0.3333333333333333,
+      "best_catalog_match": {
+        "source": "unesco_master",
+        "english_title": "Medieval Italy: Texts in Translation",
+        "translator": "",
+        "year": "2009",
+        "publisher": "University of Pennsylvania Press",
+        "series": "Middle Ages Series",
+        "completeness": "unknown"
+      },
+      "all_catalog_hits": 104
+    },
+    {
+      "book_id": "6991c57d3074a1745a4118d2",
+      "author": "Vincent of Beauvais; Arnaldus de Villanova; Various",
+      "title": "Composite manuscript, two parts (mostly Latin)",
+      "language": "Latin",
+      "disposition": "confirmed_first",
+      "confidence": "high",
+      "reasoning": "The work is a unique composite manuscript (Ms. Lat. Voss. C. 46) from the Leiden University Library, containing a variety of alchemical, medical, and divinatory texts by multiple authors including Vincent of Beauvais and Arnaldus de Villanova. No record of a complete English translation of this specific manuscript collection exists in scholarly catalogs or digital libraries. While individual major works by these authors have been translated, this specific compilation of minor and obscure treatises remains untranslated as a cohesive unit.",
+      "tools_called": 8,
+      "title_similarity": 0.3333333333333333,
+      "best_catalog_match": {
+        "source": "unesco_master",
+        "english_title": "Medieval Latin Liturgy in English Translation",
+        "original_title": "Medieval Latin Liturgy in English Translation",
+        "translator": "Matthew Cheung Salisbury",
+        "year": "2017",
+        "publisher": "Cambridge University Press",
+        "completeness": "unknown"
+      },
+      "all_catalog_hits": 86
+    },
+    {
+      "book_id": "697e23ca05adde1df98f104f",
+      "author": "Augurellus, Johannes Aurelius",
+      "title": "Iambic Verses, Book One",
+      "language": "Latin",
+      "disposition": "translation_found",
+      "confidence": "high",
+      "reasoning": "While Matteo Soranzo published a translation of Augurello's alchemical poems (Chrysopoeia and Geronticon) in 2020, no complete English translation of the 'Iambici' (Iambic Verses) has been identified. The 1505 Aldine edition contains several distinct poetic works, and the Iambic verses are separate from the alchemical corpus translated by Soranzo.",
+      "tools_called": 4,
+      "title_similarity": 0.3333333333333333,
+      "best_catalog_match": {
+        "source": "unesco_master",
+        "english_title": "Love one another, my friends : St. Augustine's homilies on the First letter of John : an abridged English version",
+        "original_title": "In Epistolam Joannis ad Parthos tractatus decem",
+        "translator": "",
+        "year": "1989",
+        "publisher": "Harper &amp; Row",
+        "completeness": "partial"
+      },
+      "all_catalog_hits": 93
+    },
+    {
+      "book_id": "69a552c142054c7ce7175dd4",
+      "author": "Emanuel Swedenborg",
+      "title": "The Soul, or Rational Psychology",
+      "language": "English",
+      "disposition": "first_modern_translation",
+      "confidence": "high",
+      "reasoning": "Search results from Open Library identify an English translation titled 'The soul, or Rational psychology' published in 1887 (translated by Frank Sewall). No modern scholarly translations (post-1900) appeared in the catalog searches, although the work is a well-known part of Swedenborg's scientific corpus. The 1887 edition is considered antiquated by modern scholarly standards.",
+      "tools_called": 6,
+      "title_similarity": 0.3333333333333333,
+      "best_catalog_match": {
+        "source": "unesco_master",
+        "english_title": "The interaction of the soul and the body",
+        "original_title": "Commercio animae et corporis",
+        "translator": "",
+        "year": "1996",
+        "publisher": "Swedenborg Society",
+        "completeness": "unknown"
+      },
+      "all_catalog_hits": 59
+    },
+    {
+      "book_id": "6991c58c3074a1745a411b3b",
+      "author": "Paul of Tarento; Friar Elias; Various",
+      "title": "Alchemical miscellany (Latin MS 65)",
+      "language": "Latin",
+      "disposition": "confirmed_first",
+      "confidence": "high",
+      "reasoning": "This work is a medieval Latin alchemical manuscript (specifically Rylands Latin MS 65, formerly of the Bibliotheca Lindesiana) containing a collection of tracts, including the 'Lumen luminum'. While scholars like William R. Newman have translated other works by Paul of Tarento (such as the 'Summa Perfectionis'), no complete English translation of this specific manuscript miscellany or its version of the 'Lumen luminum' exists.",
+      "tools_called": 11,
+      "title_similarity": 0.3333333333333333,
+      "best_catalog_match": {
+        "source": "unesco_master",
+        "english_title": "Medieval Latin Liturgy in English Translation",
+        "original_title": "Medieval Latin Liturgy in English Translation",
+        "translator": "Matthew Cheung Salisbury",
+        "year": "2017",
+        "publisher": "Cambridge University Press",
+        "completeness": "unknown"
+      },
+      "all_catalog_hits": 86
+    },
+    {
+      "book_id": "6953ea0a1479a63c11085bed",
+      "author": "Leonhard Euler",
+      "title": "Einleitung in die Analysis des Unendlichen",
+      "language": "German",
+      "disposition": "first_from_source",
+      "confidence": "high",
+      "reasoning": "The work 'Einleitung in die Analysis des Unendlichen' is the German translation of Leonhard Euler's Latin 'Introductio in analysin infinitorum'. While a well-known English translation by John D. Blanton (Springer, 1988/1990) exists, it was translated directly from the original Latin text. No English translation of the specific German text (originally translated from Latin by J.A.C. Michelsen in 1788) has been found. Following the instruction that translations from different source languages do not count, this would be a first English translation of the German version.",
+      "tools_called": 4,
+      "title_similarity": 0.3333333333333333,
+      "best_catalog_match": {
+        "source": "unesco_master",
+        "english_title": "Introduction to analysis of the infinite",
+        "original_title": "Introductio in analysin infinitorum",
+        "translator": "Blanton, John D.",
+        "year": "1990",
+        "publisher": "Springer",
+        "completeness": "unknown"
+      },
+      "all_catalog_hits": 3
+    },
+    {
+      "book_id": "69ac5f82ebeb54840de0f318",
+      "author": "Christiaan Huygens",
+      "title": "Complete Works of Christiaan Huygens, Volume 14: Calculus of Probabilities and Pure Mathematics",
+      "language": "French",
+      "disposition": "confirmed_first",
+      "confidence": "high",
+      "reasoning": "While individual treatises contained within Volume 14 of Huygens' 'Oeuvres complètes' have been translated in the past (notably the probability treatise 'De ratiociniis in ludo aleae' by John Arbuthnot in 1692), there is no complete English translation of this specific volume or the French text of the 'Dioptrique' (Part 2) as presented in the definitive scholarly edition. The 'Oeuvres complètes' remains the standard reference in its original French and Latin, and no modern English edition of Volume 14 exists.",
+      "tools_called": 4,
+      "title_similarity": 0.3333333333333333,
+      "best_catalog_match": {
+        "source": "unesco_master",
+        "english_title": "Christiaan Huygens' the pendulum clock; or, Geometrical demonstrations concerning the motion of pendula as applied to clocks",
+        "original_title": "Horologium oscillatorium.",
+        "translator": "Blackwell, Richard J.",
+        "year": "1986",
+        "publisher": "Iowa State University Press",
+        "completeness": "unknown"
+      },
+      "all_catalog_hits": 1
+    }
+  ],
+  "different_work_sample": [
+    {
+      "book_id": "69b3e598c94a4ff7cce22dfc",
+      "author": "Hermes Trismegistus",
+      "title": "Bodleian Library MS. Arab. d. 221",
+      "best_catalog_title": "",
+      "similarity": 0,
+      "catalog_hits": 9
+    },
+    {
+      "book_id": "69b3e59fc94a4ff7cce22e00",
+      "author": "Jabir ibn Hayyan",
+      "title": "Bodleian Library MS. Marsh 70",
+      "best_catalog_title": "",
+      "similarity": 0,
+      "catalog_hits": 1
+    },
+    {
+      "book_id": "69b65c6218b87551bfd14472",
+      "author": "Platter, Felix",
+      "title": "De ischuria theses",
+      "best_catalog_title": "",
+      "similarity": 0,
+      "catalog_hits": 1
+    },
+    {
+      "book_id": "69b664d5b3f4fc0441552154",
+      "author": "Haltern, Statius",
+      "title": "... Ex decreto amplissimi Iurisconsultorum Ordinis in celebe",
+      "best_catalog_title": "",
+      "similarity": 0,
+      "catalog_hits": 21
+    },
+    {
+      "book_id": "69c807206c6f3cc53c84578e",
+      "author": "Johannes Chrysostomus",
+      "title": "[Greek] In sactos Maccabaeos, et in eorum matrem, homilia",
+      "best_catalog_title": "",
+      "similarity": 0,
+      "catalog_hits": 2
+    },
+    {
+      "book_id": "69b65c7d18b87551bfd14824",
+      "author": "Pyne, Tertullian",
+      "title": "De testibus et testimoniis theses L",
+      "best_catalog_title": "",
+      "similarity": 0,
+      "catalog_hits": 111
+    },
+    {
+      "book_id": "69b66b5fb3f4fc044157de78",
+      "author": "Beumler, Marcus",
+      "title": "Theses theologicae de deo",
+      "best_catalog_title": "",
+      "similarity": 0,
+      "catalog_hits": 1
+    },
+    {
+      "book_id": "69b66c3cb3f4fc044158304c",
+      "author": "Wilhelm, Peter",
+      "title": "... De renum calculo paraskeuē iatrikē",
+      "best_catalog_title": "",
+      "similarity": 0,
+      "catalog_hits": 5
+    },
+    {
+      "book_id": "69b67664b3f4fc04415c2b7c",
+      "author": "Coccius, Benedictus",
+      "title": "... Encomium sac. medicinae fictum & conscriptum prosaica pa",
+      "best_catalog_title": "",
+      "similarity": 0,
+      "catalog_hits": 6
+    },
+    {
+      "book_id": "69c83c836c6f3cc53c84f9c8",
+      "author": "Johannes Chrysostomus",
+      "title": "[Greek] De invidia homilia xvii",
+      "best_catalog_title": "",
+      "similarity": 0,
+      "catalog_hits": 2
+    },
+    {
+      "book_id": "69b665fdb3f4fc04415583ad",
+      "author": "Moritz, Erasmus",
+      "title": "Subsequentes de possessionibus conclusiones",
+      "best_catalog_title": "",
+      "similarity": 0,
+      "catalog_hits": 6
+    },
+    {
+      "book_id": "69b65cffb3f4fc0441516293",
+      "author": "Platter, Felix",
+      "title": "Propositiones de lithiasi tōn nephrōn",
+      "best_catalog_title": "",
+      "similarity": 0,
+      "catalog_hits": 1
+    },
+    {
+      "book_id": "69b6921a080b19f98fce5a2f",
+      "author": "Platter, Felix",
+      "title": "... Positiones de elephantiasi",
+      "best_catalog_title": "",
+      "similarity": 0,
+      "catalog_hits": 1
+    },
+    {
+      "book_id": "69c878bb6c6f3cc53c858317",
+      "author": "Paracelsus, Theophrastus",
+      "title": "Haupt-Schlüssel der Paracelsischen Arcanen, oder das zehende",
+      "best_catalog_title": "",
+      "similarity": 0,
+      "catalog_hits": 2
+    },
+    {
+      "book_id": "69c807696c6f3cc53c845874",
+      "author": "Johannes Chrysostomus",
+      "title": "[Greek] De sancto martyre Romano Oratio II",
+      "best_catalog_title": "",
+      "similarity": 0,
+      "catalog_hits": 2
+    },
+    {
+      "book_id": "69b66be4b3f4fc0441582e05",
+      "author": "Mörder, Justinian",
+      "title": "Disputatio iuridica de homicidio",
+      "best_catalog_title": "",
+      "similarity": 0,
+      "catalog_hits": 4
+    },
+    {
+      "book_id": "69b6596d18b87551bfcfb441",
+      "author": "Platter, Felix",
+      "title": "De venis mesaraicis obstructis ipsarumque ita affectarum cur",
+      "best_catalog_title": "",
+      "similarity": 0,
+      "catalog_hits": 1
+    },
+    {
+      "book_id": "69b66779b3f4fc04415615e8",
+      "author": "Reuzius, Erasmus",
+      "title": "... Theses de codicillis et clausula codicillari",
+      "best_catalog_title": "",
+      "similarity": 0,
+      "catalog_hits": 6
+    },
+    {
+      "book_id": "69b6790e70c69d645a6f412a",
+      "author": "Platter, Felix",
+      "title": "... hanc de therapeia generali syzētēsin",
+      "best_catalog_title": "",
+      "similarity": 0,
+      "catalog_hits": 1
+    },
+    {
+      "book_id": "69c807766c6f3cc53c84589c",
+      "author": "Johannes Chrysostomus",
+      "title": "[Greek] Tractatus in terraemotum",
+      "best_catalog_title": "",
+      "similarity": 0,
+      "catalog_hits": 2
+    },
+    {
+      "book_id": "69c86fb56c6f3cc53c85713b",
+      "author": "Augurellus, Johannes Aurelius",
+      "title": "Chrysopoeiae",
+      "best_catalog_title": "",
+      "similarity": 0,
+      "catalog_hits": 93
+    },
+    {
+      "book_id": "69c8072e6c6f3cc53c8457b9",
+      "author": "Johannes Chrysostomus",
+      "title": "[Greek: Omilia]",
+      "best_catalog_title": "",
+      "similarity": 0,
+      "catalog_hits": 2
+    },
+    {
+      "book_id": "69c89d966c6f3cc53c85d88d",
+      "author": "Alanus de Insulis",
+      "title": "De maximis theologiae",
+      "best_catalog_title": "",
+      "similarity": 0,
+      "catalog_hits": 3
+    },
+    {
+      "book_id": "69c71c28da9771c716316924",
+      "author": "Aevolus, Caesar",
+      "title": "De divinis attributis, quae sephirot ab Hebraeis nuncupata",
+      "best_catalog_title": "",
+      "similarity": 0,
+      "catalog_hits": 6
+    },
+    {
+      "book_id": "69b69812080b19f98fcf5a17",
+      "author": "Platter, Felix",
+      "title": "... Theōrian omnium praestantissimi sensus visus eiusque org",
+      "best_catalog_title": "",
+      "similarity": 0,
+      "catalog_hits": 1
+    },
+    {
+      "book_id": "69b185d4c4be2cdd0edc4592",
+      "author": "Johan de Witt",
+      "title": "Waerdye van Lyf-Renten naer Proportie van Los-Renten",
+      "best_catalog_title": "",
+      "similarity": 0,
+      "catalog_hits": 2
+    },
+    {
+      "book_id": "69c820706c6f3cc53c84a844",
+      "author": "Cooke, William",
+      "title": "An enquiry into the patriarchal and druidical religion, temp",
+      "best_catalog_title": "",
+      "similarity": 0,
+      "catalog_hits": 1
+    },
+    {
+      "book_id": "69c79e8492b884e4f81736f2",
+      "author": "Aevolus, Caesar",
+      "title": "De divinis attributis, quae sephirot ab Hebraeis nuncupantur",
+      "best_catalog_title": "",
+      "similarity": 0,
+      "catalog_hits": 6
+    },
+    {
+      "book_id": "69b6509318b87551bfc9f83c",
+      "author": "Aristoteles",
+      "title": "Aristotelous peri aretōn, kai kakiōn biblion a",
+      "best_catalog_title": "",
+      "similarity": 0,
+      "catalog_hits": 3
+    },
+    {
+      "book_id": "69b1caaea282e3475aab3462",
+      "author": "Jakob Böhme",
+      "title": "The High Worthy Gate of Divine Contemplation",
+      "best_catalog_title": "",
+      "similarity": 0,
+      "catalog_hits": 1
+    },
+    {
+      "book_id": "69b51e1ecf111105c42975b8",
+      "author": "Basilius, Valentinus",
+      "title": "De occulta philosophia : oder von d. heiml. Wundergeburt d. ",
+      "best_catalog_title": "",
+      "similarity": 0,
+      "catalog_hits": 2
+    },
+    {
+      "book_id": "69b41879f1200e2ab53cf975",
+      "author": "Various",
+      "title": "Alchemical Collection — Late 17th-Century German MS",
+      "best_catalog_title": "",
+      "similarity": 0,
+      "catalog_hits": 104
+    },
+    {
+      "book_id": "69c8189b6c6f3cc53c84913b",
+      "author": "Figulus, Benedictus",
+      "title": "Paradisus aureolus hermeticus",
+      "best_catalog_title": "",
+      "similarity": 0,
+      "catalog_hits": 6
+    },
+    {
+      "book_id": "69c773e06a0f3d112faf9266",
+      "author": "Basilius Valentinus",
+      "title": "Von den natürlichen und ubernatürlichen Dingen",
+      "best_catalog_title": "",
+      "similarity": 0,
+      "catalog_hits": 2
+    },
+    {
+      "book_id": "69b300475545150b61b4c666",
+      "author": "John Chrysostom",
+      "title": "Lucubrationes (1526)",
+      "best_catalog_title": "",
+      "similarity": 0,
+      "catalog_hits": 2
+    },
+    {
+      "book_id": "69b65a7118b87551bfd02b1b",
+      "author": "Aretius, Benedictus",
+      "title": "Isagoge in canonicas septem epistolas, qua (ut in Paulinis) ",
+      "best_catalog_title": "",
+      "similarity": 0,
+      "catalog_hits": 6
+    },
+    {
+      "book_id": "69b51e1d47b06ecd5818a5f1",
+      "author": "Basilius, Valentinus",
+      "title": "De Occulta Philosophia, Oder Von der heimlichen Wundergeburt",
+      "best_catalog_title": "",
+      "similarity": 0,
+      "catalog_hits": 2
+    },
+    {
+      "book_id": "69b3e612304c1c6b3950b1a3",
+      "author": "Abraham ibn Ezra",
+      "title": "Bodleian Library MS. Reggio 46",
+      "best_catalog_title": "",
+      "similarity": 0,
+      "catalog_hits": 2
+    },
+    {
+      "book_id": "69b51defcf111105c4293ade",
+      "author": "Basilius, Valentinus",
+      "title": "Fr. Basilii Valentini Ordin. S. Benedict. Tractatvs Chymicvs",
+      "best_catalog_title": "",
+      "similarity": 0,
+      "catalog_hits": 2
+    },
+    {
+      "book_id": "69b51dd247b06ecd58184e54",
+      "author": "Basilius, Valentinus",
+      "title": "Révélation des mystères des teintures essentielles des sept ",
+      "best_catalog_title": "",
+      "similarity": 0,
+      "catalog_hits": 2
+    },
+    {
+      "book_id": "69b51e01efd8df28f2daf260",
+      "author": "Daniel Mylius",
+      "title": "Fachkatalog der Drucke der Bibliothek des Hochstifts Passau,",
+      "best_catalog_title": "",
+      "similarity": 0,
+      "catalog_hits": 1
+    },
+    {
+      "book_id": "69c87bd56c6f3cc53c858922",
+      "author": "Rabanus Maurus",
+      "title": "De laudibus sancte crucis",
+      "best_catalog_title": "",
+      "similarity": 0,
+      "catalog_hits": 1
+    },
+    {
+      "book_id": "69b51d34261c58d636649029",
+      "author": "Figulus, Benedictus",
+      "title": "Rosarivm Novvm Olympicvm Et Benedictvm, Das ist: Ein newer G",
+      "best_catalog_title": "",
+      "similarity": 0,
+      "catalog_hits": 6
+    },
+    {
+      "book_id": "69b65f54b3f4fc0441528075",
+      "author": "Cecil, William",
+      "title": "Justitia Britannica",
+      "best_catalog_title": "",
+      "similarity": 0,
+      "catalog_hits": 1
+    },
+    {
+      "book_id": "69b6554b18b87551bfcd37c2",
+      "author": "Paracelsus",
+      "title": "Expositio vera harum imaginum olim Nurenbergae repertarum ex",
+      "best_catalog_title": "",
+      "similarity": 0,
+      "catalog_hits": 34
+    },
+    {
+      "book_id": "69b51db5ff09e4fe943a7ad6",
+      "author": "Figulus, Benedictus",
+      "title": "New Olympic and Blessed Rose Garden",
+      "best_catalog_title": "",
+      "similarity": 0,
+      "catalog_hits": 6
+    },
+    {
+      "book_id": "69b51ecaff09e4fe943b4a48",
+      "author": "Plotinus",
+      "title": "Kurtze Nachricht von den Büchern und deren Urhebern in der S",
+      "best_catalog_title": "",
+      "similarity": 0,
+      "catalog_hits": 3
+    },
+    {
+      "book_id": "69b51dbdefd8df28f2daa158",
+      "author": "Basilius, Valentinus",
+      "title": "Fr. Basilii Valentini Benedicter Ordens Offenbahrung Der ver",
+      "best_catalog_title": "",
+      "similarity": 0,
+      "catalog_hits": 2
+    },
+    {
+      "book_id": "69c7e10c295ea01b70c8d66d",
+      "author": "Paracelsus, Theophrastus",
+      "title": "De kleyne chirurgie ende 't gast-huys boeck",
+      "best_catalog_title": "",
+      "similarity": 0,
+      "catalog_hits": 2
+    },
+    {
+      "book_id": "69b51de5768235dc65989003",
+      "author": "Basilius, Valentinus",
+      "title": "Die auffrichtig entdeckte Probier- und Scheide-Kunst derer V",
+      "best_catalog_title": "",
+      "similarity": 0,
+      "catalog_hits": 2
+    }
+  ]
+}
