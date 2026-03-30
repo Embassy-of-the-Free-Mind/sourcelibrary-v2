@@ -125,7 +125,7 @@ export async function getDb(): Promise<Db> {
   // Race against a timeout to prevent build workers from hanging indefinitely
   // when Atlas is slow from Vercel's DC (Virginia → Mumbai cross-region).
   const timeout = new Promise<never>((_, reject) =>
-    setTimeout(() => reject(new Error('DB connection timeout')), 15000)
+    setTimeout(() => reject(new Error('DB connection timeout')), 60000)
   );
   const { db } = await Promise.race([connectToDatabase(), timeout]);
   return db;
