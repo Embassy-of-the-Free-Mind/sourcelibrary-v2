@@ -232,6 +232,23 @@ async function probeDbHealth(db) {
     } catch (e) {
       console.error('[health] Failed to cancel pending jobs:', e.message);
     }
+  } else if (grade === 'healthy') {
+    // Explicitly reset to full defaults — undoes any halving from a previous degraded probe.
+    // Without this, a single degraded blip creates a throughput dip that persists until
+    // the process restarts (limits are in-memory, halved but never restored).
+    ENROLL_LIMIT = 100;
+    ARCHIVE_LIMIT = 500;
+    OCR_SUBMIT_LIMIT = 200;
+    METADATA_ENRICH_LIMIT = 50;
+    TRANSLATE_SUBMIT_LIMIT = 50;
+    MAX_INFLIGHT_TRANSLATIONS = 60;
+    ENRICH_LIMIT = 30;
+    CHAPTER_LIMIT = 50;
+    IMAGE_SUBMIT_LIMIT = 10;
+    FINALIZE_LIMIT = 200;
+    TRANSLITERATE_LIMIT = 10;
+    MAX_ACTIVE_IMAGE_JOBS = 15;
+    PREVIEW_LIMIT = 20;
   } else if (grade === 'degraded') {
     console.log('[health] DEGRADED — halving all submission limits');
     ENROLL_LIMIT = Math.max(5, Math.floor(ENROLL_LIMIT / 2));
