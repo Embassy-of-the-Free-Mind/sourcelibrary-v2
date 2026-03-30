@@ -1,9 +1,8 @@
 'use client';
 
-import { useState, useCallback, useRef, useEffect } from 'react';
+import { useState, useCallback, useMemo, useRef, useEffect } from 'react';
 import { ArrowRight, Search, X, LayoutGrid, List } from 'lucide-react';
 import { useRouter, useSearchParams } from 'next/navigation';
-import { useDebouncedCallback } from 'use-debounce';
 import CollectionBookCard from '@/components/CollectionBookCard';
 import CollectionListView from '@/components/collections/CollectionListView';
 import CatalogPagination from '@/components/collections/CatalogPagination';
@@ -30,15 +29,16 @@ interface BookItem {
   read_count?: number;
   is_first_translation?: boolean;
   ft_disposition?: string;
+  relevance?: number;
+  created_at?: string;
+  last_translation_at?: string;
 }
 
 interface CollectionAllBooksProps {
   collectionId: string;
-  /** First 14 books from server render (compact view) */
   compactBooks: BookItem[];
   total: number;
   languages: { lang: string; count: number }[];
-  /** 'visual_art' collections use "works" instead of "books" */
   collectionType?: string;
 }
 
@@ -47,6 +47,46 @@ type ViewMode = 'grid' | 'list';
 function getStoredView(): ViewMode | null {
   if (typeof window === 'undefined') return null;
   return localStorage.getItem('sl-collection-view') as ViewMode | null;
+}
+
+// Client-side sort comparators
+function sortBooks(books: BookItem[], sort: string): BookItem[] {
+  const sorted = [...books];
+  switch (sort) {
+    case 'year_asc':
+      return sorted.sort((a, b) => (a.year || 9999) - (b.year || 9999) || (a.title || '').localeCompare(b.title || ''));
+    case 'year_desc':
+      return sorted.sort((a, b) => (b.year || 0) - (a.year || 0) || (a.title || '').localeCompare(b.title || ''));
+    case 'title':
+      return sorted.sort((a, b) => (a.display_title || a.title || '').localeCompare(b.display_title || b.title || ''));
+    case 'author':
+      return sorted.sort((a, b) => (a.author || 'zzz').localeCompare(b.author || 'zzz') || (a.title || '').localeCompare(b.title || ''));
+    case 'recent':
+      return sorted.sort((a, b) => (b.created_at || '').localeCompare(a.created_at || ''));
+    case 'last_translated':
+      return sorted.sort((a, b) => (b.last_translation_at || '').localeCompare(a.last_translation_at || ''));
+    case 'popular':
+      return sorted.sort((a, b) => (b.read_count || 0) - (a.read_count || 0) || (a.title || '').localeCompare(b.title || ''));
+    case 'relevance':
+    default:
+      return sorted.sort((a, b) => (b.relevance || 0) - (a.relevance || 0) || (b.read_count || 0) - (a.read_count || 0));
+  }
+}
+
+function filterBooks(books: BookItem[], query: string, language: string): BookItem[] {
+  let result = books;
+  if (language) {
+    result = result.filter(b => b.language === language);
+  }
+  if (query) {
+    const q = query.toLowerCase();
+    result = result.filter(b =>
+      (b.title || '').toLowerCase().includes(q) ||
+      (b.display_title || '').toLowerCase().includes(q) ||
+      (b.author || '').toLowerCase().includes(q)
+    );
+  }
+  return result;
 }
 
 export default function CollectionAllBooks({
@@ -64,113 +104,107 @@ export default function CollectionAllBooks({
   const urlSort = searchParams.get('sort') || 'relevance';
   const urlLang = searchParams.get('language') || '';
   const urlQ = searchParams.get('q') || '';
-  const urlPage = parseInt(searchParams.get('page') || '0');
+  const urlPage = parseInt(searchParams.get('page') || '1');
   const urlView = searchParams.get('view') as ViewMode | null;
   const hasUrlParams = searchParams.has('sort') || searchParams.has('page') || searchParams.has('view');
 
-  // Default to list for large collections (200+)
   const sizeDefault: ViewMode = total > 200 ? 'list' : 'grid';
   const initialView = urlView || getStoredView() || sizeDefault;
 
   const [expanded, setExpanded] = useState(hasUrlParams);
-  const [books, setBooks] = useState<BookItem[]>([]);
+  const [allBooks, setAllBooks] = useState<BookItem[]>([]);
   const [loading, setLoading] = useState(false);
-  const [fetchedTotal, setFetchedTotal] = useState(total);
   const [sort, setSort] = useState(urlSort);
   const [language, setLanguage] = useState(urlLang);
   const [query, setQuery] = useState(urlQ);
-  const [offset, setOffset] = useState(urlPage * PER_PAGE);
+  const [currentPage, setCurrentPage] = useState(urlPage);
   const [viewMode, setViewMode] = useState<ViewMode>(initialView);
-  const [initialFetchDone, setInitialFetchDone] = useState(false);
   const searchRef = useRef<HTMLInputElement>(null);
 
-  // Fetch on mount if URL had params
-  useEffect(() => {
-    if (hasUrlParams && !initialFetchDone) {
-      setInitialFetchDone(true);
-      fetchBooks(sort, language, offset, query);
-    }
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, []);
-
-  const updateUrl = useCallback((s: string, lang: string, off: number, q: string, view: ViewMode) => {
-    const params = new URLSearchParams();
-    if (s !== 'relevance') params.set('sort', s);
-    if (lang) params.set('language', lang);
-    if (q) params.set('q', q);
-    if (off > 0) params.set('page', String(Math.floor(off / PER_PAGE)));
-    if (view !== sizeDefault) params.set('view', view);
-    const qs = params.toString();
-    const url = `/collections/${collectionId}${qs ? `?${qs}` : ''}`;
-    router.replace(url, { scroll: false });
-  }, [collectionId, sizeDefault, router]);
-
-  const fetchBooks = useCallback(async (s: string, lang: string, off: number, q: string = '') => {
+  // Fetch all books on expand (manifest mode — one request, then all client-side)
+  const fetchManifest = useCallback(async () => {
     setLoading(true);
     try {
-      const params = new URLSearchParams({ sort: s, offset: String(off), limit: String(PER_PAGE) });
-      if (lang) params.set('language', lang);
-      if (q) params.set('q', q);
-      const res = await fetch(`/api/collections/${collectionId}?${params}`);
+      const res = await fetch(`/api/collections/${collectionId}?mode=manifest`);
       if (!res.ok) throw new Error('Failed to fetch');
       const data = await res.json();
-      setBooks(data.books || []);
-      setFetchedTotal(data.total ?? total);
-      setSort(s);
-      setLanguage(lang);
-      setOffset(off);
+      setAllBooks(data.books || []);
     } catch {
       // Keep existing state on error
     } finally {
       setLoading(false);
     }
-  }, [collectionId, total]);
+  }, [collectionId]);
+
+  // Fetch on mount if URL had params
+  useEffect(() => {
+    if (hasUrlParams) {
+      fetchManifest();
+    }
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, []);
+
+  // Client-side filter → sort → paginate (instant, no network)
+  const filtered = useMemo(() => filterBooks(allBooks, query, language), [allBooks, query, language]);
+  const sorted = useMemo(() => sortBooks(filtered, sort), [filtered, sort]);
+  const totalPages = Math.ceil(sorted.length / PER_PAGE);
+  const safePage = Math.min(currentPage, Math.max(1, totalPages));
+  const pageBooks = useMemo(
+    () => sorted.slice((safePage - 1) * PER_PAGE, safePage * PER_PAGE),
+    [sorted, safePage],
+  );
+
+  const updateUrl = useCallback((s: string, lang: string, page: number, q: string, view: ViewMode) => {
+    const params = new URLSearchParams();
+    if (s !== 'relevance') params.set('sort', s);
+    if (lang) params.set('language', lang);
+    if (q) params.set('q', q);
+    if (page > 1) params.set('page', String(page));
+    if (view !== sizeDefault) params.set('view', view);
+    const qs = params.toString();
+    router.replace(`/collections/${collectionId}${qs ? `?${qs}` : ''}`, { scroll: false });
+  }, [collectionId, sizeDefault, router]);
 
   const handleExpand = useCallback(() => {
     setExpanded(true);
-    fetchBooks('relevance', '', 0);
-    updateUrl('relevance', '', 0, '', viewMode);
-  }, [fetchBooks, updateUrl, viewMode]);
+    fetchManifest();
+    updateUrl('relevance', '', 1, '', viewMode);
+  }, [fetchManifest, updateUrl, viewMode]);
 
   const handleSort = useCallback((newSort: string) => {
-    fetchBooks(newSort, language, 0, query);
-    updateUrl(newSort, language, 0, query, viewMode);
-  }, [fetchBooks, language, query, updateUrl, viewMode]);
+    setSort(newSort);
+    setCurrentPage(1);
+    updateUrl(newSort, language, 1, query, viewMode);
+  }, [language, query, updateUrl, viewMode]);
 
   const handleLanguage = useCallback((newLang: string) => {
-    fetchBooks(sort, newLang, 0, query);
-    updateUrl(sort, newLang, 0, query, viewMode);
-  }, [fetchBooks, sort, query, updateUrl, viewMode]);
-
-  const debouncedSearch = useDebouncedCallback((q: string) => {
-    fetchBooks(sort, language, 0, q);
-    updateUrl(sort, language, 0, q, viewMode);
-  }, 300);
+    setLanguage(newLang);
+    setCurrentPage(1);
+    updateUrl(sort, newLang, 1, query, viewMode);
+  }, [sort, query, updateUrl, viewMode]);
 
   const handleSearch = useCallback((value: string) => {
     setQuery(value);
-    debouncedSearch(value);
-  }, [debouncedSearch]);
+    setCurrentPage(1);
+    // URL update on every keystroke would be noisy — skip for search
+  }, []);
 
   const handlePage = useCallback((page: number) => {
-    const newOffset = (page - 1) * PER_PAGE;
-    fetchBooks(sort, language, newOffset, query);
-    updateUrl(sort, language, newOffset, query, viewMode);
+    setCurrentPage(page);
+    updateUrl(sort, language, page, query, viewMode);
     document.getElementById('collection-all-books')?.scrollIntoView({ behavior: 'smooth' });
-  }, [fetchBooks, sort, language, query, updateUrl, viewMode]);
+  }, [sort, language, query, updateUrl, viewMode]);
 
   const handleViewToggle = useCallback((mode: ViewMode) => {
     setViewMode(mode);
     localStorage.setItem('sl-collection-view', mode);
     if (expanded) {
-      updateUrl(sort, language, offset, query, mode);
+      updateUrl(sort, language, currentPage, query, mode);
     }
-  }, [expanded, sort, language, offset, query, updateUrl]);
+  }, [expanded, sort, language, currentPage, query, updateUrl]);
 
   const showSeeAllCard = !expanded && total > compactBooks.length;
-  const displayBooks = expanded ? books : compactBooks;
-  const totalPages = Math.ceil(fetchedTotal / PER_PAGE);
-  const currentPage = Math.floor(offset / PER_PAGE) + 1;
+  const displayBooks = expanded ? pageBooks : compactBooks;
 
   return (
     <div id="collection-all-books">
@@ -181,7 +215,13 @@ export default function CollectionAllBooks({
             All {collectionType === 'visual_art' ? 'Works' : 'Books'}
           </h2>
           <p className="text-sm text-muted mt-1">
-            {(expanded ? fetchedTotal : total).toLocaleString()} {itemLabel} in this collection
+            {expanded ? (
+              query || language
+                ? `${sorted.length.toLocaleString()} of ${allBooks.length.toLocaleString()} ${itemLabel}`
+                : `${allBooks.length.toLocaleString()} ${itemLabel} in this collection`
+            ) : (
+              `${total.toLocaleString()} ${itemLabel} in this collection`
+            )}
           </p>
         </div>
 
@@ -215,7 +255,7 @@ export default function CollectionAllBooks({
               </button>
             </div>
 
-            {/* Search */}
+            {/* Search — instant client-side filtering */}
             <div className="relative">
               <Search className="absolute left-2.5 top-1/2 -translate-y-1/2 w-4 h-4 text-muted" />
               <input
@@ -223,8 +263,8 @@ export default function CollectionAllBooks({
                 type="text"
                 value={query}
                 onChange={(e) => handleSearch(e.target.value)}
-                placeholder="Search within..."
-                className="text-sm border border-border-light rounded-lg pl-8 pr-8 py-1.5 bg-white text-primary w-44 focus:outline-none focus:ring-2 focus:ring-accent-rust/30"
+                placeholder="Search title or author..."
+                className="text-sm border border-border-light rounded-lg pl-8 pr-8 py-1.5 bg-white text-primary w-52 focus:outline-none focus:ring-2 focus:ring-accent-rust/30"
               />
               {query && (
                 <button
@@ -328,7 +368,7 @@ export default function CollectionAllBooks({
       {/* Pagination */}
       {expanded && (
         <CatalogPagination
-          currentPage={currentPage}
+          currentPage={safePage}
           totalPages={totalPages}
           onPageChange={handlePage}
         />
@@ -340,7 +380,10 @@ export default function CollectionAllBooks({
           <button
             onClick={() => {
               setExpanded(false);
-              setOffset(0);
+              setCurrentPage(1);
+              setQuery('');
+              setLanguage('');
+              setSort('relevance');
               router.replace(`/collections/${collectionId}`, { scroll: false });
             }}
             className="text-sm text-muted hover:text-accent-rust transition-colors cursor-pointer"
