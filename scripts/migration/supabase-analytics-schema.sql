@@ -174,16 +174,17 @@ GROUP BY 1, 2, 3;
 
 CREATE UNIQUE INDEX IF NOT EXISTS idx_dashboard_usage_key ON dashboard_usage (day, type, model);
 
--- Pipeline velocity over time
+-- Pipeline velocity over time (aggregated per hour to avoid duplicate keys)
 CREATE MATERIALIZED VIEW IF NOT EXISTS pipeline_velocity AS
 SELECT
   date_trunc('hour', timestamp) AS hour,
-  (funnel->>'complete')::int AS books_complete,
-  (pages->>'translated')::int AS pages_translated,
-  (pages->>'ocr')::int AS pages_ocr,
-  (pages->>'total')::int AS pages_total
+  MAX((funnel->>'complete')::int) AS books_complete,
+  MAX((pages->>'translated')::int) AS pages_translated,
+  MAX((pages->>'ocr')::int) AS pages_ocr,
+  MAX((pages->>'total')::int) AS pages_total
 FROM pipeline_snapshots
-WHERE timestamp > NOW() - INTERVAL '30 days';
+WHERE timestamp > NOW() - INTERVAL '30 days'
+GROUP BY 1;
 
 CREATE UNIQUE INDEX IF NOT EXISTS idx_pipeline_velocity_hour ON pipeline_velocity (hour);
 
