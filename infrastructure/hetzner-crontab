@@ -77,6 +77,11 @@
 # Enrichment snapshot: compute all pipeline stats for /progress (every 2 hours)
 30 */2 * * * cd /root/sourcelibrary && flock -n /tmp/sl-enrichment-snapshot.lock bash -c "set -a; source .env.production.local; set +a; node scripts/workers/enrichment-snapshot.mjs" >> /var/log/sourcelibrary/enrichment-snapshot.log 2>&1
 
+# ── Git auto-pull ──
+
+# Pull latest main every 5 min (stash local patches, pull, re-apply)
+*/5 * * * * cd /root/sourcelibrary && flock -n /tmp/sl-gitpull.lock bash -c "git stash -q 2>/dev/null; git pull -q origin main 2>/dev/null; git stash pop -q 2>/dev/null" >> /var/log/sourcelibrary/git-pull.log 2>&1
+
 # ── Maintenance ──
 
 # Pipeline health alert: every 4h (catches translation stalls, orphan states)
