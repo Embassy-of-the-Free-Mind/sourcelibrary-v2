@@ -117,7 +117,7 @@ async function searchBooks(db: any, query: string, queryRegex: RegExp, limit: nu
           { author: queryRegex },
           { 'reading_summary.overview': queryRegex },
         ],
-        hidden: { $ne: true },
+        visible: true,
         pages_count: { $gt: 0 },
       })
       .project({ id: 1, title: 1, display_title: 1, author: 1, language: 1, published: 1, pages_count: 1, pages_translated: 1, pages_ocr: 1, thumbnail: 1, thumbnail_blob: 1 })
@@ -143,7 +143,7 @@ async function searchBooks(db: any, query: string, queryRegex: RegExp, limit: nu
       const aliasBooks = await db.collection('books')
         .find({
           author_entity_id: entity._id.toString(),
-          hidden: { $ne: true },
+          visible: true,
           pages_count: { $gt: 0 },
         })
         .project({ id: 1, title: 1, display_title: 1, author: 1, language: 1, published: 1, pages_count: 1, pages_translated: 1, pages_ocr: 1, thumbnail: 1, thumbnail_blob: 1 })
@@ -238,7 +238,7 @@ async function searchIndex(db: any, query: string, limit: number) {
   if (results.length === 0 && query.length >= 4) {
     const books = await db.collection('books').find({
       'index.generatedAt': { $exists: true },
-      hidden: { $ne: true },
+      visible: true,
       $or: [
         { 'index.concepts.term': queryRegex },
         { 'index.people.term': queryRegex },

@@ -266,7 +266,7 @@ export const POST = withAuth(async (request, session) => {
         ...(start_page || end_page ? { page_range: `${startIdx + 1}-${endIdx}` } : {}),
       },
       status: 'draft',
-      hidden: true,
+      hidden: true, visible: false,
       source_fingerprint: sourceFingerprint({ image_source: { provider: 'loc', identifier: lccn } }),
       normalized_title: normalizeTitle(bookTitle),
       normalized_author: normalizeAuthor(bookAuthor),

@@ -47,10 +47,10 @@ async function fetchCollections(): Promise<CollectionDoc[]> {
       parent: { $exists: false },
       type: { $ne: 'curated' },
       collection_type: { $ne: 'visual_art' },
-      hidden: { $ne: true },
+      visible: true,
     }).toArray(),
     db.collection('collections').aggregate<{ _id: string; count: number }>([
-      { $match: { parent: { $exists: true }, hidden: { $ne: true } } },
+      { $match: { parent: { $exists: true }, visible: true } },
       { $group: { _id: '$parent', count: { $sum: 1 } } },
     ]).toArray(),
   ]);
@@ -68,7 +68,7 @@ async function fetchTimelineDecades(): Promise<{ decades: DecadeBucket[]; total:
   try {
     const db = await getDb();
     const pipeline = [
-      { $match: { year: { $exists: true, $ne: null }, hidden: { $ne: true } } },
+      { $match: { year: { $exists: true, $ne: null }, visible: true } },
       { $project: { year: 1, language: { $ifNull: ['$language', 'Unknown'] } } },
       {
         $group: {

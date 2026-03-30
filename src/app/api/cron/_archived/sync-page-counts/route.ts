@@ -182,7 +182,7 @@ export async function GET(request: NextRequest) {
       const liveCount = await db.collection('books').countDocuments({
         collections: col.slug,
         status: { $ne: 'deleted' },
-        hidden: { $ne: true },
+        visible: true,
         pages_count: { $gt: 0 },
         pages_translated: { $gt: 0 },
       });

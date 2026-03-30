@@ -208,7 +208,7 @@ async function fetchCollectionData(id: string) {
     : {
         collections: id,
         status: { $ne: 'deleted' },
-        hidden: { $ne: true },
+        visible: true,
         pages_count: { $gt: 0 },
         pages_translated: { $gt: 0 },
       };
@@ -287,7 +287,7 @@ async function fetchCollectionData(id: string) {
           }
           // Fallback: dynamic query (before thematic collections are seeded)
           const bookDocs = await db.collection('books')
-            .find({ collections: id, status: { $ne: 'deleted' }, hidden: { $ne: true } }, { projection: { id: 1 }, maxTimeMS: 5000 })
+            .find({ collections: id, status: { $ne: 'deleted' }, visible: true }, { projection: { id: 1 }, maxTimeMS: 5000 })
             .toArray();
           const bookIds = bookDocs.map(d => d.id);
           if (bookIds.length === 0) return [];
@@ -331,7 +331,7 @@ async function fetchCollectionData(id: string) {
   // Fetch child collections if this is a parent collection
   const childCollections = await withTimeout(
     db.collection('collections')
-      .find({ parent: id, hidden: { $ne: true } })
+      .find({ parent: id, visible: true })
       .sort({ book_count: -1 })
       .project({ slug: 1, name: 1, subtitle: 1, book_count: 1, featured_images: 1 })
       .toArray(),

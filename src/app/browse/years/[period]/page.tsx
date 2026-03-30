@@ -65,7 +65,7 @@ export default async function BrowseYearsPage({ params }: PageProps) {
     const rawBooks = await db.collection('books').find(
       {
         year: { $gte: p.min, $lte: p.max },
-        hidden: { $ne: true },
+        visible: true,
         pages_translated: { $gt: 0 },
       },
       {

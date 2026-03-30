@@ -359,7 +359,7 @@ export async function importBookFromIIIF(
         : {}),
     },
     status: 'draft',
-    hidden: true,
+    hidden: true, visible: false,
     pipeline_auto: {
       status: 'queued',
       source: 'import',

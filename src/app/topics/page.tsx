@@ -37,7 +37,7 @@ interface FacetGroup {
 async function fetchFacetCounts(): Promise<{ groups: FacetGroup[]; totalBooks: number }> {
   const db = await getDb();
   const maxTimeMS = 30000;
-  const baseMatch = { faceted_tags: { $exists: true }, hidden: { $ne: true } };
+  const baseMatch = { faceted_tags: { $exists: true }, visible: true };
 
   // Single $facet aggregation — one collection scan for all 6 facets
   const facetStages: Record<string, object[]> = {};
@@ -81,7 +81,7 @@ async function fetchDomainCrossTab(): Promise<Map<string, SubDomain[]>> {
   const db = await getDb();
   // Efficient: project array as two copies, unwind both, filter out self-pairs
   const results = await db.collection('books').aggregate([
-    { $match: { 'faceted_tags.knowledge_domain.1': { $exists: true }, hidden: { $ne: true } } },
+    { $match: { 'faceted_tags.knowledge_domain.1': { $exists: true }, visible: true } },
     { $project: { a: '$faceted_tags.knowledge_domain', b: '$faceted_tags.knowledge_domain' } },
     { $unwind: '$a' },
     { $unwind: '$b' },

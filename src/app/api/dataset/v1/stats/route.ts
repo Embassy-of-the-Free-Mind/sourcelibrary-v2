@@ -13,7 +13,7 @@ export const maxDuration = 15;
 export async function GET() {
   const db = await getDb();
   const books = db.collection('books');
-  const visible = { hidden: { $ne: true } };
+  const visible = { visible: true };
 
   const [
     totalBooks,

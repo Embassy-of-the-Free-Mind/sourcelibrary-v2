@@ -47,7 +47,7 @@ export default async function BrowseAuthorsPage({ params }: PageProps) {
     const rawBooks = await db.collection('books').find(
       {
         author: { $regex: `^${l}`, $options: 'i' },
-        hidden: { $ne: true },
+        visible: true,
         pages_translated: { $gt: 0 },
       },
       {

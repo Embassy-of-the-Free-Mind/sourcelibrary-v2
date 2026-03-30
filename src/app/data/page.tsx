@@ -181,7 +181,7 @@ function extractTiers(
 async function fetchLibraryData(showAdmin: boolean): Promise<LibraryData> {
   const db = await getDb();
   const books = db.collection('books');
-  const visible = { hidden: { $ne: true } };
+  const visible = { visible: true };
   const filter = showAdmin ? {} : visible;
 
   const maxTimeMS = 45000;

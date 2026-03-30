@@ -15,7 +15,7 @@ export async function GET(request: NextRequest) {
     // Base filter: has year, not hidden
     const baseMatch: Record<string, unknown> = {
       year: { $exists: true, $ne: null },
-      hidden: { $ne: true },
+      visible: true,
     };
     if (language) baseMatch.language = language;
     if (collection) baseMatch.categories = collection;

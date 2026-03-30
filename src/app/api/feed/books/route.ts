@@ -19,7 +19,7 @@ export async function GET() {
   const db = await getDb();
 
   const books = await db.collection('books')
-    .find({ hidden: { $ne: true }, pages_translated: { $gt: 0 } })
+    .find({ visible: true, pages_translated: { $gt: 0 } })
     .sort({ created_at: -1 })
     .limit(50)
     .project({

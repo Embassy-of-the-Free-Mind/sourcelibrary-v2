@@ -38,7 +38,7 @@ async function fetchTopics(): Promise<{ topics: TopicSummary[]; totalBooks: numb
   const pipeline = [
     {
       $match: {
-        hidden: { $ne: true },
+        visible: true,
         'taxonomy.cluster': { $exists: true, $ne: null },
       },
     },

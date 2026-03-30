@@ -81,7 +81,7 @@ async function fetchLibraryData(providerKey: string, sort: string, language: str
   const filter: Record<string, unknown> = {
     'image_source.provider': providerKey,
     status: { $ne: 'deleted' },
-    hidden: { $ne: true },
+    visible: true,
     pages_count: { $gt: 0 },
     pages_translated: { $gt: 0 },
   };
@@ -111,7 +111,7 @@ async function fetchLibraryData(providerKey: string, sort: string, language: str
   const langFilter = {
     'image_source.provider': providerKey,
     status: { $ne: 'deleted' },
-    hidden: { $ne: true },
+    visible: true,
     pages_count: { $gt: 0 },
     pages_translated: { $gt: 0 },
   };
@@ -143,7 +143,7 @@ async function fetchLibraryData(providerKey: string, sort: string, language: str
           { $match: {
             book_id: { $in: sampleBookIds },
             gallery_quality: { $gte: 0.7 },
-            book_hidden: { $ne: true },
+            book_visible: true,
             type: { $nin: ['decorative', 'symbol', 'musical_score', 'exlibris', 'bookplate'] },
           }},
           { $sort: { gallery_quality: -1 } },

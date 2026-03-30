@@ -25,7 +25,7 @@ async function getStats() {
     const [totalBooks, visibleBooks, pageAgg, languages, sources, funnel] =
       await Promise.all([
         books.countDocuments({}, { maxTimeMS }),
-        books.countDocuments({ hidden: { $ne: true } }, { maxTimeMS }),
+        books.countDocuments({ visible: true }, { maxTimeMS }),
         books
           .aggregate([
             {
@@ -40,7 +40,7 @@ async function getStats() {
           .toArray(),
         books
           .aggregate([
-            { $match: { hidden: { $ne: true }, language: { $exists: true, $ne: 'Unknown' } } },
+            { $match: { visible: true, language: { $exists: true, $ne: 'Unknown' } } },
             { $group: { _id: '$language', count: { $sum: 1 } } },
             { $sort: { count: -1 } },
             { $limit: 10 },
@@ -48,7 +48,7 @@ async function getStats() {
           .toArray(),
         books
           .aggregate([
-            { $match: { hidden: { $ne: true }, 'image_source.provider_name': { $exists: true } } },
+            { $match: { visible: true, 'image_source.provider_name': { $exists: true } } },
             { $group: { _id: '$image_source.provider_name', count: { $sum: 1 } } },
             { $sort: { count: -1 } },
             { $limit: 8 },

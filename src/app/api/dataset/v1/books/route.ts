@@ -47,7 +47,7 @@ export async function GET(request: NextRequest) {
   }
 
   const db = await getDb();
-  const filter: any = { hidden: { $ne: true } };
+  const filter: any = { visible: true };
   if (language) filter.language = language;
   if (cluster) filter['taxonomy.cluster'] = cluster;
   if (fromYear || toYear) {

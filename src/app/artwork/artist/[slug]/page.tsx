@@ -37,7 +37,7 @@ async function getArtist(slug: string) {
       .toArray(),
     db.collection('books')
       .find(
-        { author: authorRegex, resource_type: { $exists: false }, hidden: { $ne: true } },
+        { author: authorRegex, resource_type: { $exists: false }, visible: true },
         { projection: {
           slug: 1, title: 1, display_title: 1, author: 1, published: 1,
           language: 1, thumbnail: 1, thumbnail_blob: 1, pages_translated: 1,
@@ -56,7 +56,7 @@ async function getArtist(slug: string) {
       const reversedEscaped = reversed.replace(/[.*+?^${}()|[\]\\]/g, '\\$&');
       allBooks = await db.collection('books')
         .find(
-          { author: { $regex: `^${reversedEscaped}$`, $options: 'i' }, resource_type: { $exists: false }, hidden: { $ne: true } },
+          { author: { $regex: `^${reversedEscaped}$`, $options: 'i' }, resource_type: { $exists: false }, visible: true },
           { projection: {
             slug: 1, title: 1, display_title: 1, author: 1, published: 1,
             language: 1, thumbnail: 1, thumbnail_blob: 1, pages_translated: 1,

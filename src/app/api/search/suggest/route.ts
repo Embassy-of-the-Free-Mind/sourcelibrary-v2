@@ -31,7 +31,7 @@ async function getVocabulary(): Promise<string[]> {
   // have no `index` field and are skipped in the index-terms loop.
   const books = await db.collection('books')
     .find(
-      { hidden: { $ne: true }, pages_count: { $gt: 0 } },
+      { visible: true, pages_count: { $gt: 0 } },
       {
         projection: { title: 1, display_title: 1, author: 1, 'index.concepts': 1, 'index.people': 1, 'index.places': 1, 'index.keyTerms': 1 },
         maxTimeMS: 8000,

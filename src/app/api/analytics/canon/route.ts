@@ -39,7 +39,7 @@ export const GET = withAuth(async () => {
     ] = await Promise.all([
       // 1. Overall totals
       db.collection('books').aggregate([
-        { $match: { hidden: { $ne: true } } },
+        { $match: { visible: true } },
         {
           $group: {
             _id: null,
@@ -54,7 +54,7 @@ export const GET = withAuth(async () => {
       // 2. Books that are "readable" — >=90% of translatable pages translated
       //    Denominator: pages_ocr - pages_blank (blank pages don't need translation)
       db.collection('books').countDocuments({
-        hidden: { $ne: true },
+        visible: true,
         pages_ocr: { $gte: 1 },
         $expr: {
           $gte: [
@@ -68,7 +68,7 @@ export const GET = withAuth(async () => {
       db.collection('books').aggregate([
         {
           $match: {
-            hidden: { $ne: true },
+            visible: true,
             is_first_translation: true,
           },
         },
@@ -96,7 +96,7 @@ export const GET = withAuth(async () => {
 
       // 4. Breakdown by original language
       db.collection('books').aggregate([
-        { $match: { hidden: { $ne: true }, pages_count: { $gte: 1 } } },
+        { $match: { visible: true, pages_count: { $gte: 1 } } },
         {
           $group: {
             _id: { $ifNull: ['$language', 'Unknown'] },
@@ -125,7 +125,7 @@ export const GET = withAuth(async () => {
 
       // 5. Breakdown by collection (top traditions)
       db.collection('books').aggregate([
-        { $match: { hidden: { $ne: true }, collections: { $exists: true, $ne: [] } } },
+        { $match: { visible: true, collections: { $exists: true, $ne: [] } } },
         { $unwind: '$collections' },
         {
           $group: {
@@ -153,7 +153,7 @@ export const GET = withAuth(async () => {
 
       // 6. Recently completed translations (last 30 days, by pipeline completion)
       db.collection('books').find({
-        hidden: { $ne: true },
+        visible: true,
         'pipeline_auto.status': 'complete',
         'pipeline_auto.completed_at': { $gte: new Date(Date.now() - 30 * 24 * 60 * 60 * 1000) },
         language: { $nin: ['English', 'english'] },

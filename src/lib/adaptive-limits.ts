@@ -197,7 +197,7 @@ export async function getAdaptiveLimits(
     // is writing heavily, even when findOne reports 14ms.
     timedQuery(() =>
       db.collection('books').find(
-        { hidden: { $ne: true }, pages_count: { $gt: 0 } }
+        { visible: true, pages_count: { $gt: 0 } }
       ).sort({ created_at: -1 }).limit(10).project({ _id: 1 }).toArray(),
       5000
     ),

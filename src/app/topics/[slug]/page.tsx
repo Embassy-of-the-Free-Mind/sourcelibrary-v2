@@ -81,7 +81,7 @@ export async function generateMetadata({ params }: Props): Promise<Metadata> {
   try {
     const db = await getDb();
     const allClusters = await db.collection('books').aggregate([
-      { $match: { hidden: { $ne: true }, 'taxonomy.cluster': { $exists: true, $ne: null } } },
+      { $match: { visible: true, 'taxonomy.cluster': { $exists: true, $ne: null } } },
       { $group: { _id: '$taxonomy.cluster' } },
     ]).toArray();
     match = allClusters.find((c) => topicSlug(c._id) === slug);
@@ -111,7 +111,7 @@ async function fetchFacetData(facetId: string, valueId: string) {
 
   const dbField = facetDbField(facet);
   const query = {
-    hidden: { $ne: true },
+    visible: true,
     [`faceted_tags.${dbField}`]: valueId,
   };
 
@@ -204,7 +204,7 @@ async function fetchClusterData(slug: string) {
   const db = await getDb();
 
   const allClusters = await db.collection('books').aggregate([
-    { $match: { hidden: { $ne: true }, 'taxonomy.cluster': { $exists: true, $ne: null } } },
+    { $match: { visible: true, 'taxonomy.cluster': { $exists: true, $ne: null } } },
     { $group: { _id: '$taxonomy.cluster', cluster_id: { $first: '$taxonomy.cluster_id' } } },
   ]).toArray();
 
@@ -214,7 +214,7 @@ async function fetchClusterData(slug: string) {
   const clusterName = match._id;
 
   const books = await db.collection('books')
-    .find({ hidden: { $ne: true }, 'taxonomy.cluster': clusterName }, {
+    .find({ visible: true, 'taxonomy.cluster': clusterName }, {
       projection: {
         _id: 0, id: 1, slug: 1, title: 1, display_title: 1, author: 1, language: 1,
         pages_count: 1, pages_translated: 1, read_count: 1, thumbnail: 1, 'taxonomy.subcluster': 1,

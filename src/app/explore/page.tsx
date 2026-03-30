@@ -47,7 +47,7 @@ async function fetchExploreStats() {
 
       // Books by century — fast aggregation on books collection
       db.collection('books').aggregate([
-        { $match: { year: { $exists: true, $gt: 0 }, hidden: { $ne: true } } },
+        { $match: { year: { $exists: true, $gt: 0 }, visible: true } },
         {
           $group: {
             _id: {

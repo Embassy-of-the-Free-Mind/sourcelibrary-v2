@@ -29,7 +29,7 @@ async function getData() {
   // Only query the small collections table (19 docs) — fast and reliable.
   // Skip the expensive books aggregation that was causing timeouts.
   const collections = await db.collection('collections')
-    .find({ collection_type: 'visual_art', hidden: { $ne: true } })
+    .find({ collection_type: 'visual_art', visible: true })
     .sort({ order: 1 })
     .project({ _id: 0, slug: 1, name: 1, subtitle: 1, color: 1, book_count: 1, featured_images: 1 })
     .toArray() as ArtCollection[];

@@ -33,7 +33,7 @@ async function fetchTimelineData(): Promise<TimelineOverview> {
     // Fallback: live aggregation with generous timeout
     const baseMatch = {
       year: { $exists: true, $ne: null },
-      hidden: { $ne: true },
+      visible: true,
     };
 
     const pipeline = [

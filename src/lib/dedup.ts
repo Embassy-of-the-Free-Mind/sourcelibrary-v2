@@ -166,7 +166,7 @@ export async function checkDuplicate(
   const fp = sourceFingerprint(book);
   if (fp) {
     const fpMatch = await db.collection('books').findOne(
-      { source_fingerprint: fp, hidden: { $ne: true } },
+      { source_fingerprint: fp, visible: true },
       { projection: { id: 1, title: 1 } }
     );
     if (fpMatch) {
@@ -190,7 +190,7 @@ export async function checkDuplicate(
       {
         normalized_title: normTitle,
         normalized_author: normAuthor,
-        hidden: { $ne: true },
+        visible: true,
       },
       { projection: { id: 1, title: 1 } }
     ).limit(5).toArray();
@@ -213,7 +213,7 @@ export async function checkDuplicate(
     const iiifMatch = await db.collection('books').findOne(
       {
         'image_source.iiif_manifest': book.image_source.iiif_manifest,
-        hidden: { $ne: true },
+        visible: true,
       },
       { projection: { id: 1, title: 1 } }
     );
@@ -301,7 +301,7 @@ export async function scanForDuplicates(db: Db): Promise<{
 }> {
   // Find duplicate fingerprints
   const fpDupes = await db.collection('books').aggregate([
-    { $match: { hidden: { $ne: true }, source_fingerprint: { $exists: true, $ne: null } } },
+    { $match: { visible: true, source_fingerprint: { $exists: true, $ne: null } } },
     { $group: {
       _id: '$source_fingerprint',
       count: { $sum: 1 },
@@ -315,7 +315,7 @@ export async function scanForDuplicates(db: Db): Promise<{
   // Find duplicate title+author combos
   const taDupes = await db.collection('books').aggregate([
     { $match: {
-      hidden: { $ne: true },
+      visible: true,
       normalized_title: { $exists: true, $nin: [null, ''] },
       // Exclude generic titles
       title: { $nin: ['Unknown', 'Untitled'] },

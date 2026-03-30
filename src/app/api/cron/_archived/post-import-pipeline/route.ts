@@ -2089,7 +2089,7 @@ export async function GET(request: NextRequest) {
           translated: { $sum: { $ifNull: ['$pages_translated', 0] } },
         }}],
         canon: [
-          { $match: { hidden: { $ne: true } } },
+          { $match: { visible: true } },
           { $group: {
             _id: null,
             visible_books: { $sum: 1 },

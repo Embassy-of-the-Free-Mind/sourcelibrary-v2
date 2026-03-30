@@ -206,7 +206,7 @@ export async function GET() {
 
     // Get category counts from books
     const categoryCounts = await db.collection('books').aggregate([
-      { $match: { hidden: { $ne: true } } },
+      { $match: { visible: true } },
       { $unwind: '$categories' },
       { $group: { _id: '$categories', count: { $sum: 1 } } },
     ]).toArray();

@@ -29,7 +29,7 @@ async function fetchLagData(): Promise<LagDataPoint[]> {
   const db = await getDb();
   const books = await db.collection('books').find(
     {
-      hidden: { $ne: true },
+      visible: true,
       deleted: { $ne: true },
       source_work_dates: { $elemMatch: { type: 'composition' } },
       year: { $exists: true, $ne: null },

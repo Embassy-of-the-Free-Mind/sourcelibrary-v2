@@ -489,7 +489,7 @@ async function seedThematicCollections(
     // Find all book IDs in this collection
     const bookDocs = await db.collection('books')
       .find(
-        { collections: bc.slug, status: { $ne: 'deleted' }, hidden: { $ne: true } },
+        { collections: bc.slug, status: { $ne: 'deleted' }, visible: true },
         { projection: { id: 1 } },
       )
       .toArray();
