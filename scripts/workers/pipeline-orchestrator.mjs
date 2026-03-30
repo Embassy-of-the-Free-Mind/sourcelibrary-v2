@@ -640,7 +640,7 @@ async function translatePage(db, page, sourceLanguage, previousTranslation) {
 }
 
 // Sources whose pages need archiving
-const ARCHIVABLE_SOURCES = /archive\.org|gallica\.bnf\.fr|digitale-sammlungen\.de|digi\.vatlib\.it|diglib\.hab\.de|e-rara|wellcomecollection|cudl\.lib\.cam|digital\.bodleian/;
+const ARCHIVABLE_SOURCES = /archive\.org|gallica\.bnf\.fr|digitale-sammlungen\.de|digi\.vatlib\.it|diglib\.hab\.de|e-rara|wellcomecollection|cudl\.lib\.cam|digital\.bodleian|cdli\.earth|contentdm\.oclc\.org|digitalcollections\.manchester|viewer\.cbl\.ie|universiteitleiden|digi\.ub\.uni-heidelberg|iiif\.qdl\.qa|permalinkbnd\.bnportugal/;
 
 console.log(`[pipeline-orchestrator] Base URL: ${BASE_URL} | Dry run: ${DRY_RUN}${ONLY_PHASE !== null ? ` | Phase: ${ONLY_PHASE}` : ''}`);
 
