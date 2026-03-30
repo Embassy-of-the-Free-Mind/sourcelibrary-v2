@@ -699,12 +699,19 @@ async function main() {
     }
   }
 
-  // Find books with active translation jobs
-  const books = await db.collection('books')
-    .find({ 'pipeline_auto.status': 'translate_submitted' })
-    .project({ id: 1, title: 1, display_title: 1, author: 1, year: 1, published: 1, language: 1, job: 1, image_source: 1, pages_translated: 1, pages_ocr: 1, pages_blank: 1 })
-    .limit(CONCURRENCY)
-    .toArray();
+  // Find books — fresh books first (pages_translated: 0).
+  // Fresh books all hit the 200-page cap at ~the same time, minimizing convoy waste.
+  const proj = { id: 1, title: 1, display_title: 1, author: 1, year: 1, published: 1, language: 1, job: 1, image_source: 1, pages_translated: 1, pages_ocr: 1, pages_blank: 1 };
+  const fresh = await db.collection('books')
+    .find({ 'pipeline_auto.status': 'translate_submitted', $or: [{ pages_translated: 0 }, { pages_translated: { $exists: false } }] })
+    .project(proj).limit(CONCURRENCY).toArray();
+  let books = fresh;
+  if (fresh.length < CONCURRENCY) {
+    const rest = await db.collection('books')
+      .find({ 'pipeline_auto.status': 'translate_submitted', pages_translated: { $gt: 0 } })
+      .project(proj).limit(CONCURRENCY - fresh.length).toArray();
+    books = [...fresh, ...rest];
+  }
 
   if (books.length === 0) {
     console.log('[TRANSLATE] No books to translate');
