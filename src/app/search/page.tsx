@@ -11,6 +11,7 @@ import {
 } from 'lucide-react';
 import { useSearchParams, useRouter } from 'next/navigation';
 import { useDebouncedCallback } from 'use-debounce';
+import { reportError } from '@/components/providers/ErrorReporter';
 import {
   search as searchApi,
   gallery as galleryApi,
@@ -223,8 +224,11 @@ export default function SearchPage() {
             const retryData = await searchApi.search(q, { ...bookFilters, search_content: 'true' });
             setBookResults(retryData.results || []);
             setBookTotal(retryData.total || 0);
-          } catch {
-            // Both attempts failed — finally block will clear loading
+          } catch (retryErr) {
+            reportError({
+              message: `Search API failed (with retry): ${retryErr instanceof Error ? retryErr.message : String(retryErr)}`,
+              source: 'search_query',
+            });
           }
         });
         searchApi.index(q, {}).then(indexData => {
@@ -346,10 +350,14 @@ export default function SearchPage() {
       });
       setBrowseBooks(data.books || []);
       setBrowseTotal(data.total || 0);
-    } catch {
+    } catch (err) {
       setBrowseBooks([]);
       setBrowseTotal(0);
       setBrowseError(true);
+      reportError({
+        message: `Browse API failed: ${err instanceof Error ? err.message : String(err)}`,
+        source: 'search_browse',
+      });
     } finally {
       setBrowseLoading(false);
     }

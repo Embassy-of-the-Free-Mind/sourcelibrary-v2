@@ -34,6 +34,8 @@ const SOURCE_LABELS: Record<string, string> = {
   'window.onerror': 'JS Error',
   'unhandledrejection': 'Promise',
   'react_error_boundary': 'React',
+  'search_browse': 'Browse API',
+  'search_query': 'Search API',
 };
 
 export default function AdminErrorsPage() {

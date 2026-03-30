@@ -3,7 +3,7 @@
 import { useEffect, useCallback } from 'react';
 import ErrorBoundary from './ErrorBoundary';
 
-function reportError(data: {
+export function reportError(data: {
   message: string;
   stack?: string;
   source: string;

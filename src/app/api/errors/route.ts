@@ -1,7 +1,28 @@
 import { NextRequest, NextResponse } from 'next/server';
 import { getDb } from '@/lib/mongodb';
+import { withAdminAuth } from '@/lib/auth-helpers';
 
 export const maxDuration = 10;
+
+/**
+ * GET /api/errors — admin-only: list recent errors for inspection.
+ */
+export const GET = withAdminAuth(async (request) => {
+  try {
+    const limit = Math.min(parseInt(request.nextUrl.searchParams.get('limit') || '100'), 500);
+    const db = await getDb();
+    const errors = await db.collection('application_errors')
+      .find({})
+      .sort({ timestamp: -1 })
+      .limit(limit)
+      .toArray();
+    const total = await db.collection('application_errors').estimatedDocumentCount();
+    return NextResponse.json({ errors, total });
+  } catch (error) {
+    console.error('[errors] Failed to fetch errors:', error);
+    return NextResponse.json({ error: 'Failed to fetch errors' }, { status: 500 });
+  }
+});
 
 /**
  * POST /api/errors
