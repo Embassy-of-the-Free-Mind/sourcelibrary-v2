@@ -166,7 +166,7 @@ export async function GET(request: NextRequest) {
 
     const [result] = await db.collection('books').aggregate(pipeline, {
       collation: { locale: 'en', strength: 1 },
-      maxTimeMS: 15000,
+      maxTimeMS: 30000,
     }).toArray();
 
     const books = result.books || [];
