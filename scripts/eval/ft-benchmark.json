@@ -1,0 +1,10 @@
+{
+  "metadata": {
+    "description": "Ground-truth benchmark for first-translation verification. Each case has a manually verified expected disposition.",
+    "created": "2026-03-30",
+    "version": 1,
+    "last_evaluated": null,
+    "notes": "Seed with `npx tsx scripts/eval/ft-eval.mjs seed`. Run eval with `npx tsx scripts/eval/ft-eval.mjs run`."
+  },
+  "cases": []
+}
