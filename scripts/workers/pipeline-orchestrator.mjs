@@ -174,8 +174,8 @@ async function probeDbHealth(db) {
 
   // Grade
   let grade = 'healthy';
-  if (findMs > 1000 || countMs > 1500 || activeJobs > 200) grade = 'critical';
-  else if (findMs > 300 || countMs > 500 || activeJobs > 100) grade = 'degraded';
+  if (findMs > 1000 || countMs > 1500) grade = 'critical';
+  else if (findMs > 300 || countMs > 500) grade = 'degraded';
 
   const duration = Date.now() - t0;
   console.log(`[health] grade=${grade} find=${findMs}ms count=${countMs}ms jobs=${activeJobs} (probed in ${duration}ms)`);
