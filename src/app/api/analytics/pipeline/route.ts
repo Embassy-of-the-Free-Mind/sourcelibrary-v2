@@ -23,7 +23,7 @@ const CACHE_TTL_MS = 3 * 60 * 1000;
 export const GET = withAuth(async (request, session) => {
   try {
     const { searchParams } = new URL(request.url);
-    const hours = Math.min(parseInt(searchParams.get('hours') || '24', 10), 168); // max 7 days
+    const hours = Math.min(parseInt(searchParams.get('hours') || '24', 10), 336); // max 14 days
 
     // Check cache
     const cacheKey = `pipeline-${hours}`;
