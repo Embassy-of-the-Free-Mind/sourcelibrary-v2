@@ -190,15 +190,7 @@ async function main() {
   const client = await MongoClient.connect(process.env.MONGODB_URI);
   const db = client.db('bookstore');
 
-  // Find pages with a photo URL but no archived copy.
-  // Uses pages_archive_needed_idx (partial index on {archived_photo:1} where photo exists).
-  const query = {
-    photo: { $exists: true, $nin: [null, ''] },
-    archived_photo: { $in: [null, ''] },
-  };
-
-  // Skip expensive count — just fetch pages and check if any returned
-  console.log(`[archive-ocr] Looking for unarchived pages (up to ${MAX_PAGES})...`);
+  console.log(`[archive-ocr] Looking for books with unarchived pages...`);
   console.log(`[archive-ocr] Per-domain rate limits: ${Object.entries(DOMAIN_RATE_LIMITS).filter(([k]) => k !== '_default').map(([k, v]) => `${k}:${v}/s`).join(', ')}`);
 
   let archived = 0;
@@ -207,23 +199,55 @@ async function main() {
   let processed = 0;
   const domainStats = {};
 
-  // Simple find — no $lookup. The priority aggregation was timing out on Atlas
-  // with 9.5M pages. Just grab unarchived pages directly.
-  const pages = await db.collection('pages')
-    .find(query, {
-      projection: { _id: 1, book_id: 1, page_number: 1, photo: 1 },
-      limit: MAX_PAGES,
-    })
-    .maxTimeMS(120_000)
+  // Strategy: query books in archiving status, then fetch their unarchived pages.
+  // This avoids a full scan of the 9.5M pages collection.
+  const books = await db.collection('books')
+    .find(
+      { 'pipeline_auto.status': 'archiving', 'archive_metadata.blocked': { $ne: true } },
+      { projection: { id: 1, title: 1, 'image_source.provider': 1 } }
+    )
+    .limit(200)
+    .maxTimeMS(30_000)
     .toArray();
 
-  if (pages.length === 0) {
-    console.log(`[archive-ocr] No pages need archiving`);
+  if (books.length === 0) {
+    console.log(`[archive-ocr] No books in archiving status`);
     await client.close();
     return;
   }
 
-  console.log(`[archive-ocr] Found ${pages.length} pages to archive`);
+  // Fetch unarchived pages per book (uses pages_book_pagenum_idx)
+  const pages = [];
+  const pagesPerBook = Math.ceil(MAX_PAGES / books.length);
+  for (const book of books) {
+    if (pages.length >= MAX_PAGES) break;
+    const bookPages = await db.collection('pages')
+      .find(
+        {
+          book_id: book.id,
+          photo: { $exists: true, $nin: [null, ''] },
+          $or: [
+            { archived_photo: { $exists: false } },
+            { archived_photo: null },
+            { archived_photo: '' },
+          ],
+        },
+        { projection: { _id: 1, book_id: 1, page_number: 1, photo: 1 } }
+      )
+      .limit(pagesPerBook)
+      .maxTimeMS(10_000)
+      .toArray()
+      .catch(() => []);
+    pages.push(...bookPages);
+  }
+
+  if (pages.length === 0) {
+    console.log(`[archive-ocr] No unarchived pages found across ${books.length} books`);
+    await client.close();
+    return;
+  }
+
+  console.log(`[archive-ocr] Found ${pages.length} pages across ${books.length} books`);
 
   // Group by domain with per-domain cap
   const byDomain = {};
