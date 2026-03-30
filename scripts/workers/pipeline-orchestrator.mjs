@@ -190,11 +190,11 @@ async function probeDbHealth(db) {
   // Job count was a proxy for DB load but stopped correlating when translation
   // moved to Hetzner (jobs stay "processing" for hours without DB pressure).
   // If high job counts actually stress Atlas, latency metrics will catch it.
-  // browseMs catches the failure mode where indexed queries are fine but
-  // user-facing queries time out (WiredTiger cache saturation from writes).
+  // browseMs is informational only — the $ne:true query is inherently slow on Atlas
+  // and produces false positives that starve the pipeline. Use findMs/countMs for grading.
   let grade = 'healthy';
-  if (findMs > 1000 || countMs > 1500 || browseMs > 5000) grade = 'critical';
-  else if (findMs > 300 || countMs > 500 || browseMs > 2000) grade = 'degraded';
+  if (findMs > 1000 || countMs > 1500) grade = 'critical';
+  else if (findMs > 300 || countMs > 500) grade = 'degraded';
 
   const duration = Date.now() - t0;
   console.log(`[health] grade=${grade} find=${findMs}ms count=${countMs}ms browse=${browseMs}ms jobs=${activeJobs} (probed in ${duration}ms)`);
