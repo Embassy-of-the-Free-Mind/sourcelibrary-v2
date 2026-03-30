@@ -79,6 +79,7 @@ export default function AnalyticsPage() {
                 <option value={24}>Last 24 hours</option>
                 <option value={72}>Last 3 days</option>
                 <option value={168}>Last 7 days</option>
+                <option value={336}>Last 14 days</option>
               </select>
             )}
             {(activeTab === 'usage' || activeTab === 'search') && (
