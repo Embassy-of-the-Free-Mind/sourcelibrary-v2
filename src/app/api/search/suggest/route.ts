@@ -26,13 +26,16 @@ async function getVocabulary(): Promise<string[]> {
 
   const db = await getDb();
 
-  // Single query: titles/authors + index terms in one round trip.
+  // Only fetch books that have pages (skip catalog stubs — growing toward 100K).
   // Projection covers both use cases; books without an index simply
   // have no `index` field and are skipped in the index-terms loop.
   const books = await db.collection('books')
     .find(
-      { hidden: { $ne: true } },
-      { projection: { title: 1, display_title: 1, author: 1, 'index.concepts': 1, 'index.people': 1, 'index.places': 1, 'index.keyTerms': 1 } }
+      { hidden: { $ne: true }, pages_count: { $gt: 0 } },
+      {
+        projection: { title: 1, display_title: 1, author: 1, 'index.concepts': 1, 'index.people': 1, 'index.places': 1, 'index.keyTerms': 1 },
+        maxTimeMS: 8000,
+      },
     )
     .toArray();
 

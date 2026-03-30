@@ -241,7 +241,7 @@ async function fetchCollectionData(id: string) {
   const [books, highlights, galleryImages, mentionedBooks] = await Promise.all([
     withTimeout(
       db.collection('books')
-        .find(filter, { projection: { ...projection, collection_scores: 1 } })
+        .find(filter, { projection: { ...projection, collection_scores: 1 }, maxTimeMS: 8000 })
         .sort({ read_count: -1, title: 1 })
         .limit(COMPACT_LIMIT)
         .toArray()
@@ -287,7 +287,7 @@ async function fetchCollectionData(id: string) {
           }
           // Fallback: dynamic query (before thematic collections are seeded)
           const bookDocs = await db.collection('books')
-            .find({ collections: id, status: { $ne: 'deleted' }, hidden: { $ne: true } }, { projection: { id: 1 } })
+            .find({ collections: id, status: { $ne: 'deleted' }, hidden: { $ne: true } }, { projection: { id: 1 }, maxTimeMS: 5000 })
             .toArray();
           const bookIds = bookDocs.map(d => d.id);
           if (bookIds.length === 0) return [];
