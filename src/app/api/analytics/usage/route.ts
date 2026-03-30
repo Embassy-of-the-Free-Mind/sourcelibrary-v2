@@ -1,12 +1,13 @@
 import { NextResponse } from 'next/server';
 import { getDb } from '@/lib/mongodb';
 import { withAuth } from '@/lib/auth-helpers';
+import { supabase } from '@/lib/supabase';
 
-export const maxDuration = 60;
+export const maxDuration = 30;
 
 // Simple in-memory cache keyed by days param (persists for serverless function lifetime)
 const cache = new Map<number, { data: any; timestamp: number }>();
-const CACHE_TTL_MS = 5 * 60 * 1000; // 5 minutes
+const CACHE_TTL_MS = 60 * 1000; // 1 minute (Supabase queries are fast)
 
 export const GET = withAuth(async (request, session) => {
   try {
@@ -35,100 +36,56 @@ export const GET = withAuth(async (request, session) => {
         .project({ title: 1, author: 1, created_at: 1, pages_count: 1 })
         .toArray().catch(() => []),
 
-      // 3. Pre-aggregated daily usage from gemini_usage_daily (fast: ~30 docs instead of 1.4M)
+      // 3. Cost/usage data from Supabase materialized view (instant — replaces 45s MongoDB aggregation)
       (async () => {
         const cutoffStr = cutoffDate.toISOString().slice(0, 10);
-        const dailyDocs = await db.collection('gemini_usage_daily')
-          .find({ date: { $gte: cutoffStr } })
-          .sort({ date: 1 })
-          .toArray();
 
-        if (dailyDocs.length === 0) {
-          return db.collection('gemini_usage').aggregate([
-            { $match: { timestamp: { $gte: cutoffDate } } },
-            { $facet: {
-              costTotal: [{ $group: {
-                _id: null,
-                totalCost: { $sum: { $ifNull: ['$cost_usd', 0] } },
-                totalTokens: { $sum: { $add: [{ $ifNull: ['$input_tokens', 0] }, { $ifNull: ['$output_tokens', 0] }] } },
-              }}],
-              costByDay: [
-                { $group: {
-                  _id: { $dateToString: { format: '%Y-%m-%d', date: '$timestamp' } },
-                  cost: { $sum: { $ifNull: ['$cost_usd', 0] } },
-                  tokens: { $sum: { $add: [{ $ifNull: ['$input_tokens', 0] }, { $ifNull: ['$output_tokens', 0] }] } },
-                }},
-                { $sort: { _id: 1 } },
-              ],
-              costByAction: [
-                { $group: { _id: '$type', cost: { $sum: { $ifNull: ['$cost_usd', 0] } }, count: { $sum: 1 } } },
-                { $sort: { cost: -1 } },
-              ],
-              modelUsage: [
-                { $match: { type: 'ocr', model: { $exists: true, $ne: null } } },
-                { $group: { _id: '$model', count: { $sum: 1 } } },
-                { $sort: { count: -1 } },
-              ],
-              promptUsage: [
-                { $match: { type: 'ocr', endpoint: { $exists: true, $ne: null } } },
-                { $group: { _id: '$endpoint', count: { $sum: 1 } } },
-                { $sort: { count: -1 } },
-              ],
-              imageStats: [
-                { $match: { type: 'extract_images', status: 'success' } },
-                { $group: { _id: null, totalPages: { $sum: 1 } } },
-              ],
-              failuresByCategory: [
-                { $match: { status: 'failed' } },
-                { $group: { _id: '$error_category', count: { $sum: 1 } } },
-                { $sort: { count: -1 } },
-              ],
-            }}
-          ], { maxTimeMS: 45000 }).toArray().catch((err: Error) => {
-            console.warn('gemini_usage aggregate timed out or failed:', err.message?.substring(0, 100));
-            return [{}];
-          });
-        }
+        const { data: rows } = await supabase
+          .from('dashboard_usage')
+          .select('*')
+          .gte('day', cutoffStr)
+          .order('day', { ascending: true });
 
-        // Merge daily docs into the same shape the old $facet returned
+        if (!rows || rows.length === 0) return [{}];
+
         let totalCost = 0, totalTokens = 0;
         const costByDayMap = new Map<string, { cost: number; tokens: number }>();
         const costByActionMap = new Map<string, { cost: number; count: number }>();
         const modelUsageMap = new Map<string, number>();
-        const promptUsageMap = new Map<string, number>();
         let imagePages = 0;
         const failuresMap = new Map<string, number>();
 
-        for (const doc of dailyDocs) {
-          totalCost += doc.totalCost || 0;
-          totalTokens += (doc.totalInputTokens || 0) + (doc.totalOutputTokens || 0);
+        for (const row of rows) {
+          const cost = Number(row.total_cost) || 0;
+          const tokens = (Number(row.total_input_tokens) || 0) + (Number(row.total_output_tokens) || 0);
+          totalCost += cost;
+          totalTokens += tokens;
 
-          costByDayMap.set(doc.date, {
-            cost: doc.totalCost || 0,
-            tokens: (doc.totalInputTokens || 0) + (doc.totalOutputTokens || 0),
-          });
+          // Aggregate by day
+          const dayStr = row.day;
+          const existing = costByDayMap.get(dayStr) || { cost: 0, tokens: 0 };
+          existing.cost += cost;
+          existing.tokens += tokens;
+          costByDayMap.set(dayStr, existing);
 
-          for (const [type, stats] of Object.entries(doc.byType || {})) {
-            const s = stats as any;
-            const existing = costByActionMap.get(type) || { cost: 0, count: 0 };
-            existing.cost += s.cost || 0;
-            existing.count += s.count || 0;
-            costByActionMap.set(type, existing);
-            if (type === 'extract_images') imagePages += s.successCount || 0;
+          // Aggregate by type
+          if (row.type) {
+            const actionExisting = costByActionMap.get(row.type) || { cost: 0, count: 0 };
+            actionExisting.cost += cost;
+            actionExisting.count += Number(row.call_count) || 0;
+            costByActionMap.set(row.type, actionExisting);
+            if (row.type === 'extract_images') imagePages += Number(row.success_count) || 0;
           }
 
-          for (const [model, stats] of Object.entries(doc.byModel || {})) {
-            const s = stats as any;
-            modelUsageMap.set(model, (modelUsageMap.get(model) || 0) + (s.count || 0));
+          // Aggregate by model
+          if (row.model) {
+            modelUsageMap.set(row.model, (modelUsageMap.get(row.model) || 0) + (Number(row.call_count) || 0));
           }
 
-          for (const [endpoint, count] of Object.entries(doc.byEndpoint || {})) {
-            promptUsageMap.set(endpoint, (promptUsageMap.get(endpoint) || 0) + (count as number));
-          }
-
-          for (const [cat, stats] of Object.entries(doc.byErrorCategory || {})) {
-            const s = stats as any;
-            failuresMap.set(cat, (failuresMap.get(cat) || 0) + (s.count || 0));
+          // Aggregate failures
+          const failCount = Number(row.failed_count) || 0;
+          if (failCount > 0 && row.type) {
+            failuresMap.set(row.type, (failuresMap.get(row.type) || 0) + failCount);
           }
         }
 
@@ -143,9 +100,7 @@ export const GET = withAuth(async (request, session) => {
           modelUsage: Array.from(modelUsageMap.entries())
             .sort(([, a], [, b]) => b - a)
             .map(([model, count]) => ({ _id: model, count })),
-          promptUsage: Array.from(promptUsageMap.entries())
-            .sort(([, a], [, b]) => b - a)
-            .map(([endpoint, count]) => ({ _id: endpoint, count })),
+          promptUsage: [],  // Not available from materialized view; add if needed
           imageStats: imagePages > 0 ? [{ totalPages: imagePages }] : [],
           failuresByCategory: Array.from(failuresMap.entries())
             .sort(([, a], [, b]) => b - a)
