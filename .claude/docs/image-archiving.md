@@ -19,8 +19,16 @@ Dublin Core: `dublin_core.dc_source`, `dublin_core.dc_identifier`.
 
 ## Archiving Infrastructure
 
-- **Hetzner server** (`root@46.224.122.120`) runs `archive-images-fast.ts` to download images from IIIF sources and upload to R2
-- **Pipeline cron Phase 1** checks archiving progress (100 books/cycle) and advances to `archive_complete`
+Three dedicated workers download page images and upload to R2:
+
+- **`scripts/workers/archive-ocr.mjs`** (Hetzner, every 30 min) — Per-page IIIF archiving for most sources (MDZ, Gallica, Bodleian, Vatican, Wellcome, Cambridge, HAB, CDLI, Manchester, Chester Beatty, etc.). Per-domain rate limiting. Up to 10,000 pages/run.
+- **`scripts/workers/archive-bulk.mjs`** (Hetzner, every 10 min) — Bulk JP2-zip archiving for Internet Archive books. ~4x faster than per-page IIIF. 20 books/run.
+- **`scripts/workers/archive-erara.mjs`** (Mac local, every 30 min via launchd) — PDF-based archiving for e-rara.ch books. Runs locally because e-rara blocks Hetzner IPs.
+
+Other:
+- **`POST /api/books/[id]/archive-images`** — Manual per-book archiving API endpoint
+- **Pipeline orchestrator Phase 1** checks archiving progress and advances to `archive_complete`
+- **`ARCHIVABLE_SOURCES` regex** in `pipeline-orchestrator.mjs` (line ~643) determines which source domains require archiving. Books from unlisted domains skip archiving entirely. Keep this in sync with `next.config.ts` `remotePatterns`.
 - **24h timeout** — if archiving takes >24h, the book advances anyway since OCR works on original IIIF URLs
 - **R2 costs:** Storage $0.015/GB/month, writes $4.50/million ops, egress free
 

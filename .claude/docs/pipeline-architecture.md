@@ -347,11 +347,11 @@ Health signals: DB query latency, active job count, cron duration, SQS depth.
 
 ## Archiving to Cloudflare R2
 
-Script: `archive-ocr.mjs` (every 4 hours on Hetzner)
+Scripts: `archive-ocr.mjs` (every 30 min), `archive-bulk.mjs` (every 10 min), `archive-erara.mjs` (Mac local, every 30 min)
 
 ### Flow
 
-1. Finds pages with `ocr.data` but no `archived_photo`
+1. Finds pages with `photo` set but no `archived_photo` (no OCR required — archiving is a prerequisite for OCR)
 2. Downloads from source IIIF URL
 3. Uploads to `https://images.sourcelibrary.org/archived/{bookId}/{pageNumber}.jpg`
 4. Stores `archive_metadata.archived_at`, `source_url`, `bytes`

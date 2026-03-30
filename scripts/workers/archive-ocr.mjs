@@ -28,6 +28,14 @@ const DOMAIN_RATE_LIMITS = {
   'gallica.bnf.fr':           2,    // 403'd robots.txt — be careful
   'e-rara.ch':                1,    // robots.txt: 1s crawl-delay for allowed bots
   'digi.vatlib.it':           0.1,  // robots.txt: 10s crawl-delay
+  'cdli.earth':               2,    // Cuneiform Digital Library — open access
+  'contentdm.oclc.org':       1,    // OCLC ContentDM — conservative
+  'digitalcollections.manchester.ac.uk': 2, // Manchester — no explicit policy
+  'viewer.cbl.ie':            1,    // Chester Beatty Library — conservative
+  'universiteitleiden.nl':    2,    // Leiden University — no explicit policy
+  'digi.ub.uni-heidelberg.de':2,    // Heidelberg University — no explicit policy
+  'iiif.qdl.qa':              1,    // Qatar Digital Library — conservative
+  'permalinkbnd.bnportugal.gov.pt': 1, // Portugal National Library
   _default:                   1,    // Unknown domains: 1 req/s
 };
 
