@@ -270,6 +270,18 @@ async function processBook(book, db) {
   } catch (err) {
     console.log(`  [ERROR] ${book.title?.slice(0, 50)}: ${err.message?.slice(0, 100)}`);
     stats.booksFailed++;
+
+    // Mark 401/403 books so we don't retry them every 10 minutes
+    if (err.message?.includes('HTTP 401') || err.message?.includes('HTTP 403')) {
+      await db.collection('books').updateOne(
+        { id: book.id },
+        { $set: {
+          'archive_metadata.blocked': true,
+          'archive_metadata.blocked_at': new Date(),
+          'archive_metadata.blocked_reason': err.message.slice(0, 200),
+        }}
+      );
+    }
   } finally {
     try { fs.rmSync(tmpDir, { recursive: true, force: true }); } catch {}
   }
@@ -290,6 +302,7 @@ async function main() {
     .aggregate([
       { $match: {
         'pipeline_auto.status': 'archiving',
+        'archive_metadata.blocked': { $ne: true },
         $or: [
           { ia_identifier: { $exists: true, $ne: null, $ne: '' } },
           { 'image_source.provider': 'internet_archive' },
