@@ -58,8 +58,53 @@ export default function PipelineTab({ hours }: PipelineTabProps) {
     return { labels, ocrData, transData };
   })();
 
+  // Translation progress bar
+  const ec = pipelineData.enrichmentCoverage;
+  const translateRate = pipelineData.velocity?.translate_per_hour || 0;
+  const progressBar = ec && ec.ocr > 0 ? (() => {
+    const pct = Math.min(100, Math.round((ec.translation / ec.ocr) * 100));
+    const fullyDone = ec.pipelineComplete || 0;
+    const fullyPct = Math.min(100, Math.round((fullyDone / ec.ocr) * 100));
+    // Rough ETA: assume ~140 pages/book average remaining, times books needing translation
+    const booksRemaining = ec.ocr - ec.translation;
+    const pagesEstimate = booksRemaining * 140;
+    const etaHours = translateRate > 0 ? Math.round(pagesEstimate / translateRate) : 0;
+    const etaDays = Math.round(etaHours / 24 * 10) / 10;
+    return { pct, fullyPct, fullyDone, booksRemaining, etaHours, etaDays };
+  })() : null;
+
   return (
     <div className="space-y-8">
+      {/* Translation Progress */}
+      {progressBar && (
+        <div className="p-5 rounded-xl" style={{ background: 'var(--bg-white)', border: '1px solid var(--border-light)' }}>
+          <div className="flex justify-between items-baseline mb-2">
+            <div className="text-sm font-medium" style={{ color: 'var(--text-primary)' }}>
+              Translation Progress
+            </div>
+            <div className="text-sm" style={{ color: 'var(--text-muted)' }}>
+              {ec!.translation.toLocaleString()} / {ec!.ocr.toLocaleString()} books with OCR
+              {progressBar.etaDays > 0 && translateRate > 0 && (
+                <span> &middot; ~{progressBar.etaDays < 1 ? `${progressBar.etaHours}h` : `${progressBar.etaDays}d`} remaining at {translateRate.toLocaleString()}/hr</span>
+              )}
+            </div>
+          </div>
+          <div className="w-full h-4 rounded-full overflow-hidden" style={{ background: 'var(--bg-warm)' }}>
+            <div
+              className="h-full rounded-full transition-all duration-500"
+              style={{
+                width: `${progressBar.pct}%`,
+                background: 'linear-gradient(90deg, var(--accent-sage), var(--accent-sage-dark))',
+              }}
+            />
+          </div>
+          <div className="flex justify-between mt-1">
+            <span className="text-xs" style={{ color: 'var(--text-muted)' }}>{progressBar.pct}% have translation</span>
+            <span className="text-xs" style={{ color: 'var(--text-muted)' }}>{progressBar.fullyDone.toLocaleString()} pipeline complete ({progressBar.fullyPct}%)</span>
+          </div>
+        </div>
+      )}
+
       {/* Velocity Cards */}
       <div className="grid grid-cols-1 md:grid-cols-3 lg:grid-cols-5 gap-4">
         <div className="p-5 rounded-xl" style={{ background: 'linear-gradient(135deg, var(--bg-white), #f0fdf4)', border: '1px solid var(--border-light)' }}>
