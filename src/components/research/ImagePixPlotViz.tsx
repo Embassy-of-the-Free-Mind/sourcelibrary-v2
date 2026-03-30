@@ -7,6 +7,7 @@ interface ImageItem {
   book_title: string; book_author: string; book_year: number | null;
   book_id: string; book_slug?: string; subjects: string[];
   x: number; y: number; z: number; cluster: number;
+  gx?: number; gy?: number; // precomputed grid-snapped positions
 }
 
 interface ConstellationData {
@@ -21,14 +22,16 @@ interface AtlasManifest {
   imageIds?: string[];
 }
 
-// Precomputed per-image rendering data
-interface RenderImage {
-  worldX: number;
-  worldY: number;
-  atlasIdx: number;
-  srcX: number;
-  srcY: number;
-  image: ImageItem;
+// Precomputed per-image rendering data stored in typed arrays for performance
+interface RenderState {
+  // Parallel typed arrays (SoA layout for cache-friendly iteration)
+  worldX: Float32Array;
+  worldY: Float32Array;
+  atlasIdx: Int16Array;
+  srcX: Uint16Array;
+  srcY: Uint16Array;
+  count: number;
+  images: ImageItem[]; // reference to original data for hit-test lookups
 }
 
 const ATLAS_PATH = '/atlases';
@@ -36,68 +39,13 @@ const WORLD_SIZE = 8000;
 const PADDING = 400;
 const MIN_Z = 0.05;
 const MAX_Z = 12.0;
-const CELL_SIZE = 20;   // grid cell size (thumbnail + 2px gap)
-const THUMB_WORLD = 18;  // drawn size within each cell
+const CELL_SIZE = 20;
+const THUMB_WORLD = 18;
 
-/**
- * Snap UMAP positions to a non-overlapping grid.
- * Each image gets a unique grid cell; collisions are resolved by
- * spiraling outward to the nearest empty cell.
- */
-function snapToGrid(images: ImageItem[]): Float32Array {
-  const usable = WORLD_SIZE - 2 * PADDING;
-  const gridW = Math.ceil(usable / CELL_SIZE);
-  const gridH = gridW;
-  const occupied = new Uint8Array(gridW * gridH); // 0 = empty
-  const out = new Float32Array(images.length * 2); // [x0, y0, x1, y1, ...]
-
-  // Sort by distance to centroid so central images get priority placement
-  const cx = images.reduce((s, im) => s + im.x, 0) / images.length;
-  const cy = images.reduce((s, im) => s + im.y, 0) / images.length;
-  const order = images.map((im, i) => ({
-    i,
-    d: (im.x - cx) ** 2 + (im.y - cy) ** 2,
-  }));
-  order.sort((a, b) => a.d - b.d);
-
-  for (const { i } of order) {
-    const im = images[i];
-    const idealCol = Math.round(im.x * (gridW - 1));
-    const idealRow = Math.round(im.y * (gridH - 1));
-
-    // Try ideal cell first, then spiral outward
-    let placed = false;
-    for (let r = 0; r < 200 && !placed; r++) {
-      const startC = Math.max(0, idealCol - r);
-      const endC = Math.min(gridW - 1, idealCol + r);
-      const startR = Math.max(0, idealRow - r);
-      const endR = Math.min(gridH - 1, idealRow + r);
-
-      // Only check the ring at radius r (skip interior which was checked)
-      for (let row = startR; row <= endR && !placed; row++) {
-        for (let col = startC; col <= endC && !placed; col++) {
-          // Only the border of the ring
-          if (r > 0 && row > startR && row < endR && col > startC && col < endC) continue;
-          const key = row * gridW + col;
-          if (!occupied[key]) {
-            occupied[key] = 1;
-            out[i * 2] = PADDING + col * CELL_SIZE + CELL_SIZE / 2;
-            out[i * 2 + 1] = PADDING + row * CELL_SIZE + CELL_SIZE / 2;
-            placed = true;
-          }
-        }
-      }
-    }
-
-    // Fallback (shouldn't happen with 27% fill)
-    if (!placed) {
-      out[i * 2] = PADDING + im.x * usable;
-      out[i * 2 + 1] = PADDING + im.y * usable;
-    }
-  }
-
-  return out;
-}
+// Zoom threshold: below this, use the cached overview canvas
+const OVERVIEW_ZOOM_THRESHOLD = 0.25;
+// Overview canvas resolution (px per world unit)
+const OVERVIEW_SCALE = 0.5;
 
 export default function ImagePixPlotViz({ data }: { data: ConstellationData }) {
   const canvasRef = useRef<HTMLCanvasElement>(null);
@@ -108,7 +56,9 @@ export default function ImagePixPlotViz({ data }: { data: ConstellationData }) {
   const manifestRef = useRef<AtlasManifest | null>(null);
   const rafRef = useRef(0);
   const dirtyRef = useRef(true);
-  const renderImagesRef = useRef<RenderImage[]>([]);
+  const renderRef = useRef<RenderState | null>(null);
+  const overviewRef = useRef<HTMLCanvasElement | null>(null);
+  const overviewReadyRef = useRef(false);
 
   const [selected, setSelected] = useState<ImageItem | null>(null);
   const [loadStatus, setLoadStatus] = useState('loading...');
@@ -118,17 +68,25 @@ export default function ImagePixPlotViz({ data }: { data: ConstellationData }) {
     books: new Set(data.images.map(i => i.book_id)).size,
   }), [data]);
 
-  // Precompute world positions with grid snapping (no overlaps)
+  // Build render state from precomputed positions (instant — no grid snap needed)
   useEffect(() => {
-    const positions = snapToGrid(data.images);
-    renderImagesRef.current = data.images.map((img, i) => ({
-      worldX: positions[i * 2],
-      worldY: positions[i * 2 + 1],
-      atlasIdx: -1,
-      srcX: 0,
-      srcY: 0,
-      image: img,
-    }));
+    const n = data.images.length;
+    const wx = new Float32Array(n);
+    const wy = new Float32Array(n);
+    const ai = new Int16Array(n);
+    const sx = new Uint16Array(n);
+    const sy = new Uint16Array(n);
+    const usable = WORLD_SIZE - 2 * PADDING;
+
+    for (let i = 0; i < n; i++) {
+      const img = data.images[i];
+      // Use precomputed grid positions if available, else raw UMAP
+      wx[i] = img.gx ?? (PADDING + img.x * usable);
+      wy[i] = img.gy ?? (PADDING + img.y * usable);
+      ai[i] = -1;
+    }
+
+    renderRef.current = { worldX: wx, worldY: wy, atlasIdx: ai, srcX: sx, srcY: sy, count: n, images: data.images };
     dirtyRef.current = true;
   }, [data.images]);
 
@@ -152,15 +110,17 @@ export default function ImagePixPlotViz({ data }: { data: ConstellationData }) {
           m.imageIds.forEach((id, i) => idToAtlasPos.set(id, i));
         }
 
-        // Fill atlas source coordinates
-        renderImagesRef.current.forEach((ri, dataIdx) => {
-          const atlasPos = idToAtlasPos.get(ri.image.id) ?? dataIdx;
-          const ai = Math.floor(atlasPos / m.perAtlas);
-          const posInAtlas = atlasPos % m.perAtlas;
-          ri.atlasIdx = ai;
-          ri.srcX = (posInAtlas % m.grid) * m.thumbSize;
-          ri.srcY = Math.floor(posInAtlas / m.grid) * m.thumbSize;
-        });
+        // Fill atlas source coordinates in typed arrays
+        const rs = renderRef.current;
+        if (rs) {
+          for (let i = 0; i < rs.count; i++) {
+            const atlasPos = idToAtlasPos.get(rs.images[i].id) ?? i;
+            rs.atlasIdx[i] = Math.floor(atlasPos / m.perAtlas);
+            const posInAtlas = atlasPos % m.perAtlas;
+            rs.srcX[i] = (posInAtlas % m.grid) * m.thumbSize;
+            rs.srcY[i] = Math.floor(posInAtlas / m.grid) * m.thumbSize;
+          }
+        }
 
         // Load atlas sheets
         let loaded = 0;
@@ -180,11 +140,52 @@ export default function ImagePixPlotViz({ data }: { data: ConstellationData }) {
                 zoom: Math.min(container.clientWidth, container.clientHeight) / (WORLD_SIZE * 1.1),
               };
             }
+            // Build overview once all atlases loaded
+            if (loaded === m.totalAtlases) {
+              buildOverview();
+            }
           };
           img.src = `${ATLAS_PATH}/${m.atlases[i]}`;
         }
       } catch { setLoadStatus('failed to load'); }
     })();
+
+    /** Pre-render the full constellation at a fixed low resolution. */
+    function buildOverview() {
+      const rs = renderRef.current;
+      const m = manifestRef.current;
+      if (!rs || !m) return;
+
+      const ovW = Math.ceil(WORLD_SIZE * OVERVIEW_SCALE);
+      const ovH = ovW;
+      const oc = document.createElement('canvas');
+      oc.width = ovW;
+      oc.height = ovH;
+      const octx = oc.getContext('2d');
+      if (!octx) return;
+
+      octx.fillStyle = '#0a0a0f';
+      octx.fillRect(0, 0, ovW, ovH);
+      octx.imageSmoothingEnabled = true;
+      octx.imageSmoothingQuality = 'medium';
+
+      const drawSz = THUMB_WORLD * OVERVIEW_SCALE;
+      const half = drawSz / 2;
+      const atlases = atlasImgs.current;
+      const thumbSz = m.thumbSize;
+
+      for (let i = 0; i < rs.count; i++) {
+        const atlas = atlases[rs.atlasIdx[i]];
+        if (!atlas) continue;
+        const dx = rs.worldX[i] * OVERVIEW_SCALE - half;
+        const dy = rs.worldY[i] * OVERVIEW_SCALE - half;
+        octx.drawImage(atlas, rs.srcX[i], rs.srcY[i], thumbSz, thumbSz, dx, dy, drawSz, drawSz);
+      }
+
+      overviewRef.current = oc;
+      overviewReadyRef.current = true;
+      dirtyRef.current = true;
+    }
 
     const resize = () => {
       const dpr = devicePixelRatio || 1;
@@ -207,6 +208,7 @@ export default function ImagePixPlotViz({ data }: { data: ConstellationData }) {
       const ctx = canvas.getContext('2d');
       if (!ctx) return;
       const m = manifestRef.current;
+      const rs = renderRef.current;
       const dpr = devicePixelRatio || 1;
       const w = canvas.width, h = canvas.height;
       const cam = camRef.current;
@@ -214,23 +216,34 @@ export default function ImagePixPlotViz({ data }: { data: ConstellationData }) {
 
       ctx.fillStyle = '#0a0a0f';
       ctx.fillRect(0, 0, w, h);
-      if (!m) return;
+      if (!m || !rs) return;
+
+      // At low zoom, blit the pre-rendered overview (1 drawImage vs 35K)
+      if (cam.zoom < OVERVIEW_ZOOM_THRESHOLD && overviewReadyRef.current && overviewRef.current) {
+        const oc = overviewRef.current;
+        // Map overview canvas onto screen
+        const sx = (0 - cam.x) * scale + w / 2;
+        const sy = (0 - cam.y) * scale + h / 2;
+        const sw = WORLD_SIZE * scale;
+        const sh = WORLD_SIZE * scale;
+        ctx.imageSmoothingEnabled = true;
+        ctx.imageSmoothingQuality = 'medium';
+        ctx.drawImage(oc, sx, sy, sw, sh);
+        return;
+      }
 
       const toSx = (wx: number) => (wx - cam.x) * scale + w / 2;
       const toSy = (wy: number) => (wy - cam.y) * scale + h / 2;
 
       const drawSize = THUMB_WORLD * scale;
       const halfDraw = drawSize / 2;
-      const items = renderImagesRef.current;
-      const atlases = atlasImgs.current;
-      const thumbSz = m.thumbSize;
 
       // If thumbnails too small, draw dots
       if (drawSize < 1.5) {
         ctx.fillStyle = 'rgba(140, 130, 180, 0.35)';
-        for (let i = 0; i < items.length; i++) {
-          const sx = toSx(items[i].worldX);
-          const sy = toSy(items[i].worldY);
+        for (let i = 0; i < rs.count; i++) {
+          const sx = toSx(rs.worldX[i]);
+          const sy = toSy(rs.worldY[i]);
           if (sx < -2 || sx > w + 2 || sy < -2 || sy > h + 2) continue;
           ctx.fillRect(sx - 0.5, sy - 0.5, 1.5, 1.5);
         }
@@ -238,17 +251,19 @@ export default function ImagePixPlotViz({ data }: { data: ConstellationData }) {
       }
 
       ctx.imageSmoothingEnabled = true;
-      ctx.imageSmoothingQuality = cam.zoom > 2 ? 'high' : 'medium';
+      ctx.imageSmoothingQuality = cam.zoom > 2 ? 'high' : 'low';
 
+      const atlases = atlasImgs.current;
+      const thumbSz = m.thumbSize;
       let drawn = 0;
-      for (let i = 0; i < items.length; i++) {
-        const ri = items[i];
-        const sx = toSx(ri.worldX) - halfDraw;
-        const sy = toSy(ri.worldY) - halfDraw;
+
+      for (let i = 0; i < rs.count; i++) {
+        const sx = toSx(rs.worldX[i]) - halfDraw;
+        const sy = toSy(rs.worldY[i]) - halfDraw;
         if (sx + drawSize < 0 || sx > w || sy + drawSize < 0 || sy > h) continue;
-        const atlas = atlases[ri.atlasIdx];
+        const atlas = atlases[rs.atlasIdx[i]];
         if (!atlas) continue;
-        ctx.drawImage(atlas, ri.srcX, ri.srcY, thumbSz, thumbSz, sx, sy, drawSize, drawSize);
+        ctx.drawImage(atlas, rs.srcX[i], rs.srcY[i], thumbSz, thumbSz, sx, sy, drawSize, drawSize);
         drawn++;
       }
 
@@ -290,20 +305,20 @@ export default function ImagePixPlotViz({ data }: { data: ConstellationData }) {
   // Hit test — find closest image in world space
   const hitTest = useCallback((clientX: number, clientY: number): ImageItem | null => {
     const rect = canvasRef.current?.getBoundingClientRect();
-    if (!rect) return null;
+    const rs = renderRef.current;
+    if (!rect || !rs) return null;
     const cam = camRef.current;
     const wx = (clientX - rect.left - rect.width / 2) / cam.zoom + cam.x;
     const wy = (clientY - rect.top - rect.height / 2) / cam.zoom + cam.y;
     const hitR2 = (CELL_SIZE / 2) * (CELL_SIZE / 2);
-    let best: RenderImage | null = null;
+    let bestIdx = -1;
     let bestDist = hitR2;
-    const items = renderImagesRef.current;
-    for (let i = 0; i < items.length; i++) {
-      const dx = items[i].worldX - wx, dy = items[i].worldY - wy;
+    for (let i = 0; i < rs.count; i++) {
+      const dx = rs.worldX[i] - wx, dy = rs.worldY[i] - wy;
       const d2 = dx * dx + dy * dy;
-      if (d2 < bestDist) { bestDist = d2; best = items[i]; }
+      if (d2 < bestDist) { bestDist = d2; bestIdx = i; }
     }
-    return best?.image ?? null;
+    return bestIdx >= 0 ? rs.images[bestIdx] : null;
   }, []);
 
   const onDown = useCallback((e: React.PointerEvent) => {
