@@ -603,6 +603,36 @@ export const POST = withAuth(async (request, session) => {
         : `error: ${err.message}`;
     }
 
+    // Pages - batch job lookup (cost backfill, batch-collector queries)
+    // Query: { 'ocr.batch_job_id': jobId }
+    try {
+      await db.collection('pages').createIndex(
+        { 'ocr.batch_job_id': 1 },
+        { name: 'pages_ocr_batch_job_id_sparse', sparse: true, background: true }
+      );
+      results['pages.pages_ocr_batch_job_id_sparse'] = 'created';
+    } catch (e) {
+      const err = e as Error;
+      results['pages.pages_ocr_batch_job_id_sparse'] = err.message.includes('already exists')
+        ? 'exists'
+        : `error: ${err.message}`;
+    }
+
+    // Pages - batch translation job lookup
+    // Query: { 'translation.batch_job_id': jobId }
+    try {
+      await db.collection('pages').createIndex(
+        { 'translation.batch_job_id': 1 },
+        { name: 'pages_translation_batch_job_id_sparse', sparse: true, background: true }
+      );
+      results['pages.pages_translation_batch_job_id_sparse'] = 'created';
+    } catch (e) {
+      const err = e as Error;
+      results['pages.pages_translation_batch_job_id_sparse'] = err.message.includes('already exists')
+        ? 'exists'
+        : `error: ${err.message}`;
+    }
+
     // Analytics pageviews - timestamp for date range queries
     // Query: { timestamp: { $gte } } used by all traffic aggregations
     try {
