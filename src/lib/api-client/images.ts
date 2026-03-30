@@ -26,7 +26,7 @@
  */
 
 // Polite User-Agent for external library servers
-const USER_AGENT = 'SourceLibrary/1.0 (https://sourcelibrary.org; derek@ancientwisdomtrust.org)';
+const USER_AGENT = 'SourceLibrary/1.0 (https://sourcelibrary.org; derek@sourcelibrary.org)';
 
 /**
  * Fetch an image from a URL and return it as a Buffer

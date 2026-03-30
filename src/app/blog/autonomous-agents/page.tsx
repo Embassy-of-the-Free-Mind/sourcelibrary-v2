@@ -482,7 +482,7 @@ export default function AutonomousAgentsPage() {
 
         <p className="text-secondary leading-relaxed mb-12">
           Source Library is a project of the{' '}
-          <a href="https://www.ancientwisdomtrust.org" className="text-accent-rust hover:underline">Ancient Wisdom Trust</a>, affiliated with the{' '}
+          <a href="https://www.sourcelibrary.org" className="text-accent-rust hover:underline">Ancient Wisdom Trust</a>, affiliated with the{' '}
           <a href="https://embassyofthefreemind.com" className="text-accent-rust hover:underline">Embassy of the Free Mind</a> (Bibliotheca Philosophica Hermetica) in Amsterdam.
         </p>
 

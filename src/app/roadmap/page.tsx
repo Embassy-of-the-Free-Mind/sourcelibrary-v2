@@ -299,7 +299,7 @@ export default function RoadmapPage() {
           </p>
           <div className="flex flex-wrap gap-4">
             <a
-              href="mailto:derek@ancientwisdomtrust.org"
+              href="mailto:derek@sourcelibrary.org"
               className="inline-flex items-center gap-2 bg-accent-rust hover:bg-accent-gold/80 text-white px-6 py-3 rounded-lg font-medium transition-colors"
             >
               <BookOpen className="w-5 h-5" />

@@ -130,8 +130,8 @@ export default function TermsPage() {
           </p>
           <p className="text-secondary">
             <strong>Contact us:</strong>{' '}
-            <a href="mailto:derek@ancientwisdomtrust.org" className="text-accent-rust hover:underline">
-              derek@ancientwisdomtrust.org
+            <a href="mailto:derek@sourcelibrary.org" className="text-accent-rust hover:underline">
+              derek@sourcelibrary.org
             </a>
           </p>
         </section>
@@ -219,8 +219,8 @@ export default function TermsPage() {
           </h2>
           <p className="text-secondary">
             Questions about these terms or interested in a partnership?{' '}
-            <a href="mailto:derek@ancientwisdomtrust.org" className="text-accent-rust hover:underline">
-              derek@ancientwisdomtrust.org
+            <a href="mailto:derek@sourcelibrary.org" className="text-accent-rust hover:underline">
+              derek@sourcelibrary.org
             </a>
           </p>
         </section>

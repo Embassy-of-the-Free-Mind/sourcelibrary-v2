@@ -233,7 +233,7 @@ export default async function ParticipatePage() {
             </p>
           </Link>
 
-          <a href="mailto:derek@ancientwisdomtrust.org?subject=Study group idea" className="group p-4 rounded-xl bg-white border border-border-light hover:border-accent-violet/40 hover:shadow-sm transition-all text-center">
+          <a href="mailto:derek@sourcelibrary.org?subject=Study group idea" className="group p-4 rounded-xl bg-white border border-border-light hover:border-accent-violet/40 hover:shadow-sm transition-all text-center">
             <div className="w-9 h-9 mx-auto mb-2 rounded-lg bg-accent-violet/10 flex items-center justify-center">
               <svg className="w-5 h-5 text-accent-violet" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={1.5}>
                 <path strokeLinecap="round" strokeLinejoin="round" d="M18 18.72a9.094 9.094 0 003.741-.479 3 3 0 00-4.682-2.72m.94 3.198l.001.031c0 .225-.012.447-.037.666A11.944 11.944 0 0112 21c-2.17 0-4.207-.576-5.963-1.584A6.062 6.062 0 016 18.719m12 0a5.971 5.971 0 00-.941-3.197m0 0A5.995 5.995 0 0012 12.75a5.995 5.995 0 00-5.058 2.772m0 0a3 3 0 00-4.681 2.72 8.986 8.986 0 003.74.477m.94-3.197a5.971 5.971 0 00-.94 3.197M15 6.75a3 3 0 11-6 0 3 3 0 016 0zm6 3a2.25 2.25 0 11-4.5 0 2.25 2.25 0 014.5 0zm-13.5 0a2.25 2.25 0 11-4.5 0 2.25 2.25 0 014.5 0z" />
@@ -326,10 +326,10 @@ export default async function ParticipatePage() {
           </p>
           <div className="flex flex-wrap items-center gap-x-6 gap-y-3">
             <a
-              href="mailto:derek@ancientwisdomtrust.org"
+              href="mailto:derek@sourcelibrary.org"
               className="inline-flex items-center gap-2 text-lg text-primary font-medium hover:text-accent-rust transition-colors"
             >
-              derek@ancientwisdomtrust.org
+              derek@sourcelibrary.org
               <svg className="w-4 h-4" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={2}>
                 <path strokeLinecap="round" strokeLinejoin="round" d="M13 7l5 5m0 0l-5 5m5-5H6" />
               </svg>
@@ -351,7 +351,7 @@ export default async function ParticipatePage() {
       <footer className="border-t border-border-light">
         <div className="max-w-5xl mx-auto px-6 py-8">
           <p className="text-muted text-sm leading-relaxed">
-            Everything here is CC0 public domain. No paywalls, no login walls. AI translations are first drafts &mdash; the originals are always preserved alongside them. Published editions carry DOIs via Zenodo, so your contributions become citable scholarship.
+            No paywalls, no login walls. AI translations are first drafts &mdash; the originals are always preserved alongside them. Published editions carry DOIs via Zenodo, so your contributions become citable scholarship.
           </p>
         </div>
       </footer>

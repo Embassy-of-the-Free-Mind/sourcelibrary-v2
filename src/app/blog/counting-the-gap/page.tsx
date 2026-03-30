@@ -231,7 +231,7 @@ export default function CountingTheGapPage() {
             All data and code is open source at{' '}
             <a href="https://github.com/Embassy-of-the-Free-Mind/sourcelibrary-v2" className="text-accent-rust hover:text-accent-rust underline">github.com/Embassy-of-the-Free-Mind/sourcelibrary-v2</a>.
             If you know of a translation we missed, please reach out &mdash;{' '}
-            <a href="mailto:derek@ancientwisdomtrust.org" className="text-accent-rust hover:text-accent-rust underline">derek@ancientwisdomtrust.org</a>.
+            <a href="mailto:derek@sourcelibrary.org" className="text-accent-rust hover:text-accent-rust underline">derek@sourcelibrary.org</a>.
           </p>
         </div>
       </article>

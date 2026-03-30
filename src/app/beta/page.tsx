@@ -423,7 +423,7 @@ export default function BetaLandingPage() {
               <a href="mailto:press@sourcelibrary.org" className="text-accent-gold/60 hover:text-accent-gold transition-colors">
                 Press
               </a>
-              <a href="mailto:derek@ancientwisdomtrust.org" className="text-accent-gold/60 hover:text-accent-gold transition-colors">
+              <a href="mailto:derek@sourcelibrary.org" className="text-accent-gold/60 hover:text-accent-gold transition-colors">
                 Contact
               </a>
             </div>
