@@ -164,7 +164,7 @@ export async function generateMetadata({ params }: PageProps): Promise<Metadata>
 interface GalleryImagePreview { id: string; extracted_url?: string; thumbnail_url?: string; image_url?: string; description?: string; type?: string; page_number?: number; gallery_quality?: number }
 interface BookCollectionPreview { slug: string; name: string; subtitle?: string; color?: string; book_count?: number; featured_images?: Array<{ extracted_url?: string; thumbnail_url?: string; image_url?: string }> }
 
-async function getBook(id: string): Promise<{ book: Book; pages: Page[]; totalBooks: number; galleryImages: GalleryImagePreview[]; bookCollections: BookCollectionPreview[]; matchedBySlug: boolean } | null> {
+async function getBook(id: string): Promise<{ book: Book; pages: Page[]; totalBooks: number; galleryImages: GalleryImagePreview[]; galleryImageCount: number; bookCollections: BookCollectionPreview[]; matchedBySlug: boolean } | null> {
   // Reuse the cached book lookup (shared with generateMetadata — saves a full DB round trip)
   const [result, db] = await Promise.all([
     getCachedBookLookup(id),
@@ -180,7 +180,7 @@ async function getBook(id: string): Promise<{ book: Book; pages: Page[]; totalBo
   // Inclusion projection — only fetch fields the book detail UI actually uses
   // Status dots need .updated_at; image count needs array length via .type
   // All queries have maxTimeMS to fail fast during DB degradation
-  const [pagesRaw, totalBooks, galleryImagesRaw, bookCollectionsRaw] = await Promise.all([
+  const [pagesRaw, totalBooks, galleryImagesRaw, galleryImageCount, bookCollectionsRaw] = await Promise.all([
     db.collection('pages')
       .find({ book_id: bookId, page_type: { $ne: 'digitizer-insert' } }, {
         projection: {
@@ -206,7 +206,6 @@ async function getBook(id: string): Promise<{ book: Book; pages: Page[]; totalBo
       .limit(100)
       .toArray(),
     db.collection('books').estimatedDocumentCount().catch(() => 1200),
-    // Gallery count derived from fetched images below — countDocuments too slow on Atlas (20s+)
     // Top 8 gallery images for preview row
     db.collection('gallery_images')
       .find(
@@ -217,6 +216,13 @@ async function getBook(id: string): Promise<{ book: Book; pages: Page[]; totalBo
       .limit(8)
       .toArray()
       .catch(() => []),
+    // Separate count query for accurate image count display
+    db.collection('gallery_images')
+      .countDocuments(
+        { book_id: bookId, gallery_quality: { $gte: 0.7 }, book_hidden: { $ne: true } },
+        { maxTimeMS: 5000 },
+      )
+      .catch(() => 0),
     // Collections this book belongs to
     book.collections?.length
       ? db.collection('collections')
@@ -236,7 +242,7 @@ async function getBook(id: string): Promise<{ book: Book; pages: Page[]; totalBo
   const galleryImages = JSON.parse(JSON.stringify(galleryImagesRaw)) as GalleryImagePreview[];
   const bookCollections = JSON.parse(JSON.stringify(bookCollectionsRaw)) as BookCollectionPreview[];
 
-  return { book: serializedBook as Book, pages: serializedPages as Page[], totalBooks, galleryImages, bookCollections, matchedBySlug };
+  return { book: serializedBook as Book, pages: serializedPages as Page[], totalBooks, galleryImages, galleryImageCount, bookCollections, matchedBySlug };
 }
 
 // Skeleton for book info while loading
@@ -299,7 +305,7 @@ async function BookInfo({ id }: { id: string }) {
     notFound();
   }
 
-  const { book, pages, totalBooks, galleryImages, bookCollections } = data;
+  const { book, pages, totalBooks, galleryImages, galleryImageCount, bookCollections } = data;
 
   // Empty shell books (0 pages from failed imports) should 404
   // But visual art (paintings, prints, etc.) legitimately has no page documents
@@ -327,7 +333,7 @@ async function BookInfo({ id }: { id: string }) {
   const ocrCount = book.pages_ocr ?? pages.filter(p => p.ocr).length;
   const translatedCount = book.pages_translated ?? pages.filter(p => p.translation).length;
   const totalPages = book.pages_count || pages.length;
-  const imageCount = galleryImages.length;
+  const imageCount = galleryImageCount || galleryImages.length;
   const currentEdition = (book.editions as TranslationEdition[] | undefined)?.find(e => e.status === 'published') || (book.editions as TranslationEdition[] | undefined)?.find(e => e.status === 'draft');
 
   // Progression: OCR → Translation → Summary → Ask AI / Publish
@@ -349,7 +355,7 @@ async function BookInfo({ id }: { id: string }) {
       {/* Schema.org JSON-LD for Google Scholar */}
       <SchemaOrgMetadata
         book={book}
-        pageCount={pages.length}
+        pageCount={totalPages}
         translatedCount={translatedCount}
         currentEdition={currentEdition}
       />
@@ -428,7 +434,7 @@ async function BookInfo({ id }: { id: string }) {
                 )}
                 <div className="flex items-center gap-2">
                   <FileText className="w-4 h-4" />
-                  {pages.length} pages
+                  {totalPages} pages
                 </div>
                 {imageCount > 0 && (
                   <Link
@@ -685,7 +691,7 @@ async function BookInfo({ id }: { id: string }) {
                 <div className="flex items-center justify-between mb-4">
                   <h2 className="text-lg font-semibold" style={{ color: 'var(--text-primary)' }}>
                     Illustrations
-                    <span className="text-sm font-normal text-stone-400 ml-2">{galleryImages.length === 8 ? '8+' : galleryImages.length}</span>
+                    <span className="text-sm font-normal text-stone-400 ml-2">{imageCount}</span>
                   </h2>
                   <Link
                     href={`/gallery?bookId=${book.id}`}

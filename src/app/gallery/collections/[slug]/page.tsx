@@ -1,7 +1,8 @@
 import { Metadata } from 'next';
 import { notFound } from 'next/navigation';
 import Link from 'next/link';
-import { ArrowLeft, Image as ImageIcon, Layers } from 'lucide-react';
+import { Image as ImageIcon, Layers } from 'lucide-react';
+import SiteHeader from '@/components/layout/SiteHeader';
 import { getDb } from '@/lib/mongodb';
 import CollectionImageCard, { CollectionImageProps } from './CollectionImageCard';
 
@@ -104,26 +105,7 @@ export default async function CollectionDetailPage({ params }: PageProps) {
 
   return (
     <div className="min-h-screen bg-gradient-to-b from-[#f6f3ee] to-[#f3ede6]">
-      {/* Header */}
-      <header className="bg-stone-900 text-white py-4">
-        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-          <div className="flex items-center justify-between">
-            <Link href="/gallery/collections" className="flex items-center gap-2 text-stone-400 hover:text-white transition-colors">
-              <ArrowLeft className="w-5 h-5" />
-              <span>Collections</span>
-            </Link>
-            <div className="flex items-center gap-3">
-              <div className="text-right">
-                <h1 className="text-lg font-serif">{data.title}</h1>
-                <p className="text-stone-400 text-xs">
-                  {data.imageCount} {data.imageCount === 1 ? 'image' : 'images'}
-                </p>
-              </div>
-              <Layers className="w-6 h-6 text-accent-gold" />
-            </div>
-          </div>
-        </div>
-      </header>
+      <SiteHeader variant="dark" breadcrumbs={[{ label: 'Gallery', href: '/gallery' }]} />
 
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8">
         {/* Collection description */}

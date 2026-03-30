@@ -427,6 +427,118 @@ async function refreshAnalyticsSnapshot(db) {
   return { books_scanned: totalBooks, elapsed_s: parseFloat(elapsed) };
 }
 
+// ── Sync Gemini Usage Daily ──
+
+async function aggregateDay(db, dayStart, dayEnd) {
+  const [result] = await db.collection('gemini_usage').aggregate([
+    { $match: { timestamp: { $gte: dayStart, $lt: dayEnd } } },
+    { $facet: {
+      totals: [{ $group: {
+        _id: null,
+        totalCost: { $sum: { $ifNull: ['$cost_usd', 0] } },
+        totalInputTokens: { $sum: { $ifNull: ['$input_tokens', 0] } },
+        totalOutputTokens: { $sum: { $ifNull: ['$output_tokens', 0] } },
+        totalRecords: { $sum: 1 },
+      }}],
+      byType: [{ $group: {
+        _id: '$type',
+        count: { $sum: 1 },
+        cost: { $sum: { $ifNull: ['$cost_usd', 0] } },
+        inputTokens: { $sum: { $ifNull: ['$input_tokens', 0] } },
+        outputTokens: { $sum: { $ifNull: ['$output_tokens', 0] } },
+        successCount: { $sum: { $cond: [{ $eq: ['$status', 'success'] }, 1, 0] } },
+        failedCount: { $sum: { $cond: [{ $eq: ['$status', 'failed'] }, 1, 0] } },
+        pageCount: { $sum: { $ifNull: ['$page_count', 0] } },
+      }}],
+      byModel: [{ $group: {
+        _id: '$model',
+        count: { $sum: 1 },
+        cost: { $sum: { $ifNull: ['$cost_usd', 0] } },
+      }}],
+      byEndpoint: [
+        { $match: { endpoint: { $exists: true, $ne: null } } },
+        { $group: { _id: '$endpoint', count: { $sum: 1 } } },
+      ],
+      byErrorCategory: [
+        { $match: { status: 'failed', error_category: { $exists: true } } },
+        { $group: {
+          _id: '$error_category',
+          count: { $sum: 1 },
+          lastMessage: { $last: '$error_message' },
+        }},
+      ],
+    }},
+  ]).toArray();
+
+  const totals = result?.totals?.[0];
+  if (!totals || totals.totalRecords === 0) return null;
+
+  const byType = {};
+  for (const t of (result.byType || [])) {
+    byType[t._id || 'unknown'] = {
+      count: t.count, cost: t.cost, inputTokens: t.inputTokens,
+      outputTokens: t.outputTokens, successCount: t.successCount,
+      failedCount: t.failedCount, pageCount: t.pageCount,
+    };
+  }
+  const byModel = {};
+  for (const m of (result.byModel || [])) {
+    byModel[m._id || 'unknown'] = { count: m.count, cost: m.cost };
+  }
+  const byEndpoint = {};
+  for (const e of (result.byEndpoint || [])) {
+    byEndpoint[e._id] = e.count;
+  }
+  const byErrorCategory = {};
+  for (const e of (result.byErrorCategory || [])) {
+    byErrorCategory[e._id || 'unknown'] = {
+      count: e.count,
+      lastMessage: (e.lastMessage || '').substring(0, 200),
+    };
+  }
+
+  return {
+    totalCost: totals.totalCost,
+    totalInputTokens: totals.totalInputTokens,
+    totalOutputTokens: totals.totalOutputTokens,
+    totalRecords: totals.totalRecords,
+    byType, byModel, byEndpoint, byErrorCategory,
+  };
+}
+
+async function syncUsageDaily(db) {
+  console.log('\n--- Sync Gemini Usage Daily ---');
+  const start = Date.now();
+
+  // Aggregate today and the past 2 days (covers late-arriving records)
+  const now = new Date();
+  let daysUpdated = 0;
+
+  for (let offset = 2; offset >= 0; offset--) {
+    const d = new Date(now);
+    d.setUTCDate(d.getUTCDate() - offset);
+    const dateStr = d.toISOString().slice(0, 10);
+    const dayStart = new Date(dateStr + 'T00:00:00Z');
+    const dayEnd = new Date(dayStart.getTime() + 24 * 60 * 60 * 1000);
+
+    const summary = await aggregateDay(db, dayStart, dayEnd);
+    if (summary) {
+      if (!DRY_RUN) {
+        await db.collection('gemini_usage_daily').updateOne(
+          { date: dateStr },
+          { $set: { date: dateStr, ...summary, updatedAt: new Date() } },
+          { upsert: true },
+        );
+      }
+      daysUpdated++;
+    }
+  }
+
+  const elapsed = ((Date.now() - start) / 1000).toFixed(1);
+  console.log(`  ${daysUpdated} days updated | ${elapsed}s`);
+  return { days_updated: daysUpdated };
+}
+
 // ── Main ──
 
 async function run() {
@@ -477,6 +589,17 @@ async function run() {
     } catch (err) {
       console.error(`[sync-worker] Analytics snapshot phase FAILED: ${err.message}`);
       phaseErrors.push({ phase: 'analytics_snapshot', error: err.message });
+    }
+  }
+
+  // Aggregate gemini_usage into daily rollups (today + 2 trailing days)
+  if (!GALLERY_ONLY) {
+    try {
+      await syncUsageDaily(db);
+      phasesCompleted.push('usage_daily');
+    } catch (err) {
+      console.error(`[sync-worker] Usage daily phase FAILED: ${err.message}`);
+      phaseErrors.push({ phase: 'usage_daily', error: err.message });
     }
   }
 

@@ -1,12 +1,13 @@
 import { NextRequest, NextResponse } from 'next/server';
 import { getDb } from '@/lib/mongodb';
 import { withAuth } from '@/lib/auth-helpers';
+import { supabase } from '@/lib/supabase';
 
 export const maxDuration = 30;
 
-// In-memory cache (3 minutes) — pipeline data is expensive to compute
+// In-memory cache (1 minute) — Supabase queries are fast
 let pipelineCache: { data: any; key: string; ts: number } | null = null;
-const CACHE_TTL_MS = 3 * 60 * 1000;
+const CACHE_TTL_MS = 60 * 1000;
 
 /**
  * GET /api/analytics/pipeline
@@ -36,20 +37,22 @@ export const GET = withAuth(async (request, session) => {
     const db = await getDb();
 
     const [snapshots, cronRuns, needsAttention, recentErrors, recentDecisions] = await Promise.all([
-      // 1. Pipeline snapshots for velocity + trends
-      db.collection('pipeline_snapshots')
-        .find({ timestamp: { $gte: cutoff } })
-        .sort({ timestamp: 1 })
-        .project({ _id: 0, timestamp: 1, funnel: 1, pages: 1, books: 1, active_batch: 1 })
-        .toArray(),
+      // 1. Pipeline snapshots from Supabase (fast time-series query)
+      supabase
+        .from('pipeline_snapshots')
+        .select('timestamp, funnel, pages, books, active_batch')
+        .gte('timestamp', cutoff.toISOString())
+        .order('timestamp', { ascending: true })
+        .then(({ data }) => data || []),
 
-      // 2. Recent cron runs (all crons, last 50)
-      db.collection('cron_runs')
-        .find({ timestamp: { $gte: cutoff } })
-        .sort({ timestamp: -1 })
+      // 2. Recent cron runs from Supabase
+      supabase
+        .from('cron_runs')
+        .select('cron, timestamp, duration_ms, actions, errors, error_count, status')
+        .gte('timestamp', cutoff.toISOString())
+        .order('timestamp', { ascending: false })
         .limit(50)
-        .project({ _id: 0, cron: 1, timestamp: 1, duration_ms: 1, actions: 1, errors: 1, failed: 1, pages_saved: 1 })
-        .toArray(),
+        .then(({ data }) => data || []),
 
       // 3. Books needing attention (with error details)
       db.collection('books')
@@ -65,74 +68,70 @@ export const GET = withAuth(async (request, session) => {
         .limit(50)
         .toArray(),
 
-      // 4. Recent errors from gemini_usage (last 6h, grouped)
-      db.collection('gemini_usage').aggregate([
-        { $match: { status: 'failed', timestamp: { $gte: new Date(Date.now() - 6 * 60 * 60 * 1000) } } },
-        { $group: {
-          _id: { type: '$type', category: '$error_category' },
-          count: { $sum: 1 },
-          lastError: { $last: '$error' },
-          lastAt: { $max: '$timestamp' },
-        }},
-        { $sort: { count: -1 } },
-        { $limit: 20 },
-      ]).toArray(),
+      // 4. Recent errors from Supabase gemini_usage (last 6h)
+      supabase
+        .from('gemini_usage')
+        .select('type, error_category, error_message, timestamp')
+        .eq('status', 'failed')
+        .gte('timestamp', new Date(Date.now() - 6 * 60 * 60 * 1000).toISOString())
+        .order('timestamp', { ascending: false })
+        .limit(100)
+        .then(({ data }) => {
+          if (!data) return [];
+          // Group in JS (Supabase doesn't support GROUP BY via REST)
+          const groups = new Map<string, { count: number; lastError: string; lastAt: string }>();
+          for (const row of data) {
+            const key = `${row.type}|${row.error_category || 'unknown'}`;
+            const existing = groups.get(key);
+            if (existing) {
+              existing.count++;
+            } else {
+              groups.set(key, { count: 1, lastError: row.error_message || '', lastAt: row.timestamp });
+            }
+          }
+          return Array.from(groups.entries())
+            .map(([key, v]) => {
+              const [type, category] = key.split('|');
+              return { _id: { type, category }, count: v.count, lastError: v.lastError, lastAt: v.lastAt };
+            })
+            .sort((a, b) => b.count - a.count)
+            .slice(0, 20);
+        }),
 
-      // 5. Recent decisions from cron_runs (skip, backpressure, time_budget)
-      db.collection('cron_runs').aggregate([
-        { $match: { timestamp: { $gte: cutoff }, 'decisions.0': { $exists: true } } },
-        { $unwind: '$decisions' },
-        { $sort: { timestamp: -1 } },
-        { $limit: 50 },
-        { $project: { _id: 0, cron: 1, timestamp: 1, decision: '$decisions' } },
-      ]).toArray(),
+      // 5. Recent decisions from Supabase cron_runs
+      supabase
+        .from('cron_runs')
+        .select('cron, timestamp, decisions')
+        .gte('timestamp', cutoff.toISOString())
+        .not('decisions', 'is', null)
+        .order('timestamp', { ascending: false })
+        .limit(20)
+        .then(({ data }) => {
+          if (!data) return [];
+          const results: any[] = [];
+          for (const row of data) {
+            const decisions = row.decisions as any[];
+            if (!Array.isArray(decisions)) continue;
+            for (const decision of decisions) {
+              results.push({ cron: row.cron, timestamp: row.timestamp, decision });
+              if (results.length >= 50) break;
+            }
+            if (results.length >= 50) break;
+          }
+          return results;
+        }),
     ]);
 
-    // 6. Pipeline funnel (current book counts per status) + enrichment coverage + milestones
-    const [funnelResult, enrichmentResult, galleryCount, firstTranslations, nearComplete] = await Promise.all([
-      db.collection('books').aggregate([
-        { $match: { 'pipeline_auto.status': { $exists: true } } },
-        { $group: { _id: '$pipeline_auto.status', count: { $sum: 1 } } },
-        { $sort: { count: -1 } },
-      ]).toArray(),
+    // 6. Pipeline funnel + enrichment coverage + milestones — use pre-computed snapshot (2h cache)
+    //    instead of expensive live aggregations that take 10-30s on Atlas
+    const snapshot = await db.collection('system_config').findOne({ _id: 'enrichment_snapshot' as any });
 
-      db.collection('books').aggregate([
-        { $match: { status: { $ne: 'deleted' }, pages_count: { $gt: 0 } } },
-        { $group: {
-          _id: null,
-          total: { $sum: 1 },
-          has_ocr: { $sum: { $cond: [{ $gt: ['$pages_ocr', 0] }, 1, 0] } },
-          has_translation: { $sum: { $cond: [{ $gt: ['$pages_translated', 0] }, 1, 0] } },
-          has_metadata: { $sum: { $cond: [{ $ifNull: ['$ai_metadata.enriched_at', false] }, 1, 0] } },
-          has_ft_verification: { $sum: { $cond: [{ $ifNull: ['$translation_verification.verified_at', false] }, 1, 0] } },
-          has_summary: { $sum: { $cond: [{ $ifNull: ['$index.generatedAt', false] }, 1, 0] } },
-          has_chapters: { $sum: { $cond: [{ $ifNull: ['$chapters', false] }, 1, 0] } },
-          has_collections: { $sum: { $cond: [{ $ifNull: ['$collection_scores', false] }, 1, 0] } },
-          has_quality_score: { $sum: { $cond: [{ $ifNull: ['$quality_score', false] }, 1, 0] } },
-          has_faceted_tags: { $sum: { $cond: [{ $ifNull: ['$faceted_tags', false] }, 1, 0] } },
-          has_author_entity: { $sum: { $cond: [{ $ifNull: ['$author_entity_id', false] }, 1, 0] } },
-          pipeline_complete: { $sum: { $cond: [{ $eq: ['$pipeline_auto.status', 'complete'] }, 1, 0] } },
-        }},
-      ]).toArray(),
-
-      db.collection('gallery_images').estimatedDocumentCount(),
-
-      // Milestones
-      db.collection('books').countDocuments({ is_first_translation: true }),
-
-      db.collection('books').countDocuments({
-        status: { $ne: 'deleted' },
-        pages_count: { $gt: 0 },
-        pages_translated: { $gt: 0 },
-        $expr: { $gte: ['$pages_translated', { $multiply: ['$pages_count', 0.9] }] },
-      }),
-    ]);
-
-    const funnel = Object.fromEntries(funnelResult.map((f: any) => [f._id, f.count]));
-    const enrichment = enrichmentResult[0] || {};
-
-    // Image extraction: count distinct books in gallery_images (fast — 70K docs vs millions of pages)
-    const booksWithImages = await db.collection('gallery_images').distinct('book_id');
+    const funnel = snapshot?.funnel || {};
+    const enrichment = snapshot?.enrichment || {};
+    const galleryCount = snapshot?.gallery?.gallery_images || 0;
+    const booksWithImages = snapshot?.gallery?.books_with_images ? Array(snapshot.gallery.books_with_images).fill('') : [];
+    const firstTranslations = snapshot?.milestones?.first_translations || 0;
+    const nearComplete = snapshot?.milestones?.over_90_pct || 0;
 
     // Compute velocity from snapshots (deltas between consecutive points)
     const velocity = computeVelocity(snapshots);

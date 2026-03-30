@@ -4,10 +4,13 @@
  * Uses Gemini with tool use to search multiple catalogs and make an
  * evidence-based determination of whether a book is a first English translation.
  *
- * Five tools available to the model:
+ * Eight tools available to the model:
  *   - search_local_catalogs: MongoDB translation_catalogs collection
  *   - search_open_library: Open Library API
  *   - search_google_books: Google Books API
+ *   - search_internet_archive: Internet Archive Advanced Search
+ *   - search_openalex: OpenAlex scholarly works (250M+ records)
+ *   - search_loc: Library of Congress live catalog
  *   - search_ustc: USTC Supabase to verify the original work
  *   - make_determination: Terminal tool — final verdict with evidence
  *
@@ -22,12 +25,13 @@ import { logGeminiCall } from './gemini-logger';
 import { logMetadataChange } from './book-changelog';
 
 const MODEL = 'gemini-3.1-flash-lite-preview';
-const MAX_ROUNDS = 6; // Max Gemini round-trips (tool calls + responses)
+const MAX_ROUNDS = 10; // Max Gemini round-trips (tool calls + responses)
 const TEMPERATURE = 0.1;
 
-// USTC Supabase (public anon key — read-only access)
-const SUPABASE_URL = 'https://ykhxaecbbxaaqlujuzde.supabase.co';
-const SUPABASE_ANON_KEY = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6InlraHhhZWNiYnhhYXFsdWp1emRlIiwicm9sZSI6ImFub24iLCJpYXQiOjE3NjUwNjExMDEsImV4cCI6MjA4MDYzNzEwMX0.O2chfnHGQWLOaVSFQ-F6UJMlya9EzPbsUh848SEOPj4';
+// OpenAlex polite pool — faster rate limits when you provide a contact email
+const OPENALEX_MAILTO = 'derek@sourcelibrary.org';
+
+import { SUPABASE_URL, SUPABASE_ANON_KEY } from './supabase';
 
 // ── Types ─────────────────────────────────────────────────────────────
 
@@ -109,6 +113,48 @@ const TOOL_DECLARATIONS: FunctionDeclaration[] = [
     },
   },
   {
+    name: 'search_internet_archive',
+    description: 'Search Internet Archive for digitized English translations. Excellent coverage of public domain translations, older academic press editions, and reprints. Returns title, creator, date, publisher, and description. Covers material that Open Library may miss (scanned books without modern catalog records).',
+    parameters: {
+      type: Type.OBJECT,
+      properties: {
+        query: {
+          type: Type.STRING,
+          description: 'Search query — combine author + title keywords (e.g., "ficino platonic theology")',
+        },
+      },
+      required: ['query'],
+    },
+  },
+  {
+    name: 'search_openalex',
+    description: 'Search OpenAlex, an open catalog of 250M+ scholarly works including books, journal articles, and book chapters. Excellent for finding academic press translations (Brill, De Gruyter, Cambridge, Oxford UP) and translations published in journals or edited volumes that other catalogs miss. Returns title, authors, publication year, publisher/journal, DOI, and type.',
+    parameters: {
+      type: Type.OBJECT,
+      properties: {
+        query: {
+          type: Type.STRING,
+          description: 'Search query — author + title + "english translation" (e.g., "Ficino Platonic Theology english translation")',
+        },
+      },
+      required: ['query'],
+    },
+  },
+  {
+    name: 'search_loc',
+    description: 'Search the Library of Congress live catalog. The most authoritative US library catalog, with records for translations held by LOC and contributed by other research libraries. May catch recent cataloging not present in bulk data dumps. Returns title, contributors, date, publisher, subjects, and description.',
+    parameters: {
+      type: Type.OBJECT,
+      properties: {
+        query: {
+          type: Type.STRING,
+          description: 'Search query — author + title keywords (e.g., "Ficino Platonic Theology english")',
+        },
+      },
+      required: ['query'],
+    },
+  },
+  {
     name: 'search_ustc',
     description: 'Search the Universal Short Title Catalogue to verify the original work exists and find variant titles. Useful for confirming the identity of the source work being translated. Returns USTC records with title, author, language, year, and place of publication.',
     parameters: {
@@ -130,8 +176,8 @@ const TOOL_DECLARATIONS: FunctionDeclaration[] = [
       properties: {
         disposition: {
           type: Type.STRING,
-          description: 'The verdict: "confirmed_first" (no English translation of any kind exists), "first_complete_translation" (only partial translations, excerpts, or anthologized selections exist — no complete translation has been published), "first_modern_translation" (only old/antiquated translations exist, e.g. pre-1900, and no modern scholarly translation has been published), "translation_found" (a complete, modern English translation already exists), "needs_review" (evidence is conflicting or inconclusive)',
-          enum: ['confirmed_first', 'first_complete_translation', 'first_modern_translation', 'translation_found', 'needs_review'],
+          description: 'The verdict: "confirmed_first" (no English translation of any kind exists), "first_from_source" (English translations exist from a DIFFERENT source language, but not from THIS specific language text — e.g., Greek→English exists but Latin→English does not), "first_complete_translation" (only partial translations, excerpts, or anthologized selections exist — no complete translation has been published), "first_modern_translation" (only old/antiquated translations exist, e.g. pre-1900, and no modern scholarly translation has been published), "translation_found" (a complete, modern English translation already exists), "needs_review" (evidence is conflicting or inconclusive)',
+          enum: ['confirmed_first', 'first_from_source', 'first_complete_translation', 'first_modern_translation', 'translation_found', 'needs_review'],
         },
         confidence: {
           type: Type.STRING,
@@ -159,8 +205,8 @@ const TOOL_DECLARATIONS: FunctionDeclaration[] = [
               },
               evidence_source: {
                 type: Type.STRING,
-                description: 'Which tool found this translation. MUST be one of: "local_catalogs", "open_library", "google_books", "ustc"',
-                enum: ['local_catalogs', 'open_library', 'google_books', 'ustc'],
+                description: 'Which tool found this translation. MUST be one of the listed values.',
+                enum: ['local_catalogs', 'open_library', 'google_books', 'internet_archive', 'openalex', 'loc', 'ustc'],
               },
               url: { type: Type.STRING, description: 'URL from the search results (e.g., Open Library or Google Books link). Required when available.' },
             },
@@ -326,6 +372,130 @@ async function executeSearchUstc(
   }
 }
 
+async function executeSearchInternetArchive(
+  args: { query: string },
+): Promise<Record<string, unknown>> {
+  try {
+    // Internet Archive Advanced Search — free, no auth required
+    // Filter to texts in English. Use mediatype:texts to exclude audio/video.
+    const iaQuery = `(${args.query}) AND language:(eng OR english) AND mediatype:(texts)`;
+    const params = new URLSearchParams({
+      q: iaQuery,
+      'fl[]': 'identifier,title,creator,date,publisher,language,description',
+      rows: '10',
+      output: 'json',
+      sort: 'downloads desc', // Most-downloaded first = most likely to be real translations
+    });
+    // fl[] needs to be repeated — URLSearchParams only keeps last value
+    const url = `https://archive.org/advancedsearch.php?q=${encodeURIComponent(iaQuery)}&fl[]=identifier&fl[]=title&fl[]=creator&fl[]=date&fl[]=publisher&fl[]=language&fl[]=description&rows=10&output=json&sort=downloads+desc`;
+
+    const res = await fetch(url, { signal: AbortSignal.timeout(15000) });
+    if (!res.ok) return { error: `Internet Archive returned ${res.status}`, results: [] };
+
+    const data = await res.json();
+    const docs = data.response?.docs || [];
+    const results = docs.slice(0, 10).map((doc: Record<string, unknown>) => ({
+      title: doc.title,
+      creator: doc.creator,
+      date: doc.date,
+      publisher: doc.publisher,
+      description: typeof doc.description === 'string' ? doc.description.slice(0, 300) :
+        Array.isArray(doc.description) ? (doc.description as string[])[0]?.slice(0, 300) : undefined,
+      url: doc.identifier ? `https://archive.org/details/${doc.identifier}` : undefined,
+    }));
+
+    return { total: data.response?.numFound || 0, results };
+  } catch (error) {
+    return { error: `Internet Archive search failed: ${error instanceof Error ? error.message : 'unknown'}`, results: [] };
+  }
+}
+
+async function executeSearchOpenAlex(
+  args: { query: string },
+): Promise<Record<string, unknown>> {
+  try {
+    // OpenAlex — free, open catalog of 250M+ scholarly works
+    // Polite pool (faster rate limits) when providing mailto
+    const params = new URLSearchParams({
+      search: args.query,
+      'filter': 'language:en',
+      per_page: '10',
+      mailto: OPENALEX_MAILTO,
+    });
+    const url = `https://api.openalex.org/works?${params.toString()}`;
+
+    const res = await fetch(url, { signal: AbortSignal.timeout(15000) });
+    if (!res.ok) return { error: `OpenAlex returned ${res.status}`, results: [] };
+
+    const data = await res.json();
+    const results = (data.results || []).slice(0, 10).map((work: Record<string, unknown>) => {
+      const authorships = (work.authorships || []) as Array<Record<string, unknown>>;
+      const authors = authorships
+        .map(a => (a.author as Record<string, unknown>)?.display_name)
+        .filter(Boolean)
+        .join(', ');
+      const source = work.primary_location as Record<string, unknown> | undefined;
+      const sourceObj = source?.source as Record<string, unknown> | undefined;
+
+      return {
+        title: work.title || work.display_name,
+        authors: authors || undefined,
+        year: work.publication_year,
+        type: work.type, // e.g., 'book', 'article', 'book-chapter'
+        publisher: sourceObj?.display_name || sourceObj?.host_organization_name,
+        journal_or_series: sourceObj?.display_name,
+        doi: work.doi,
+        url: (work.doi as string) || (work.id as string) || undefined,
+      };
+    });
+
+    return { total: data.meta?.count || 0, results };
+  } catch (error) {
+    return { error: `OpenAlex search failed: ${error instanceof Error ? error.message : 'unknown'}`, results: [] };
+  }
+}
+
+async function executeSearchLoc(
+  args: { query: string },
+): Promise<Record<string, unknown>> {
+  try {
+    // Library of Congress JSON API — searches catalog and digital collections
+    // fa=language:english filters to English-language items
+    const params = new URLSearchParams({
+      q: args.query,
+      fa: 'language:english',
+      fo: 'json',
+      c: '10', // count
+    });
+    const url = `https://www.loc.gov/books/?${params.toString()}`;
+
+    const res = await fetch(url, {
+      signal: AbortSignal.timeout(15000),
+      headers: { 'Accept': 'application/json' },
+    });
+    if (!res.ok) return { error: `Library of Congress returned ${res.status}`, results: [] };
+
+    const data = await res.json();
+    const results = (data.results || []).slice(0, 10).map((item: Record<string, unknown>) => {
+      const contributors = Array.isArray(item.contributor) ? (item.contributor as string[]).join(', ') : undefined;
+      return {
+        title: item.title,
+        contributors,
+        date: item.date,
+        description: Array.isArray(item.description)
+          ? (item.description as string[]).slice(0, 2).join(' ').slice(0, 300)
+          : typeof item.description === 'string' ? (item.description as string).slice(0, 300) : undefined,
+        subjects: Array.isArray(item.subject) ? (item.subject as string[]).slice(0, 5) : undefined,
+        url: item.url || item.id || undefined,
+      };
+    });
+
+    return { total: data.pagination?.total || results.length, results };
+  } catch (error) {
+    return { error: `Library of Congress search failed: ${error instanceof Error ? error.message : 'unknown'}`, results: [] };
+  }
+}
+
 // ── Tool Dispatch ─────────────────────────────────────────────────────
 
 async function executeTool(
@@ -340,6 +510,12 @@ async function executeTool(
       return executeSearchOpenLibrary(args as { query: string });
     case 'search_google_books':
       return executeSearchGoogleBooks(args as { query: string });
+    case 'search_internet_archive':
+      return executeSearchInternetArchive(args as { query: string });
+    case 'search_openalex':
+      return executeSearchOpenAlex(args as { query: string });
+    case 'search_loc':
+      return executeSearchLoc(args as { query: string });
     case 'search_ustc':
       return executeSearchUstc(args as { query: string });
     case 'make_determination':
@@ -423,11 +599,26 @@ ${ocrSamples.map((s, i) => `Page ${i + 1}: ${s.slice(0, 500)}`).join('\n\n')}
 
   prompt += `## Instructions
 
-1. ALWAYS call \`search_local_catalogs\` first with the author's surname. This searches 12+ scholarly catalogs including UNESCO Index Translationum, Loeb Classical Library, Brill, Penguin Classics, etc.
-2. If the local catalog search finds matches, evaluate whether they are translations of THIS SPECIFIC WORK (not just any work by the same author).
-3. If no local matches (or matches are for different works), call \`search_open_library\` and/or \`search_google_books\` to check for translations not in our catalogs.
-4. You may optionally call \`search_ustc\` to verify the identity of the original work.
-5. After gathering evidence, call \`make_determination\` with your verdict. Do NOT do more than 3-4 searches — make your determination based on what you have found.
+You have access to 7 search tools covering different catalog ecosystems. Use them strategically:
+
+### Phase 1: Core catalog search (ALWAYS do these)
+1. **\`search_local_catalogs\`** — ALWAYS call first with the author's surname. Searches 12+ scholarly catalogs (UNESCO Index Translationum, Loeb, Brill, Penguin, Cambridge, etc.). Free and instant.
+2. **\`search_open_library\`** — Search Open Library for English editions. Good for modern academic translations with ISBNs.
+3. **\`search_google_books\`** — Search Google Books. Good for academic press publications.
+
+### Phase 2: Deep verification (use when Phase 1 is inconclusive)
+4. **\`search_internet_archive\`** — Search Internet Archive for digitized English translations. Excellent for older public domain translations, reprints, and out-of-print academic editions that other catalogs miss.
+5. **\`search_openalex\`** — Search OpenAlex (250M+ scholarly works). Catches academic press translations (Brill, De Gruyter, OUP, CUP) and translations published in journals or edited volumes.
+6. **\`search_loc\`** — Search the Library of Congress live catalog. The most authoritative US library catalog — may have records not in our bulk data.
+
+### Phase 3: Work identity verification (optional)
+7. **\`search_ustc\`** — Verify the original work exists in the USTC and find variant titles.
+
+### Search strategy
+- For well-known authors (Ficino, Agrippa, Paracelsus, Boehme): run Phase 1 + Phase 2 (all 6 translation searches). These authors are most likely to have translations in niche catalogs.
+- For obscure authors or anonymous works: Phase 1 is usually sufficient. If Phase 1 finds nothing, run 1-2 Phase 2 searches for confirmation.
+- Vary your search queries across tools — try different combinations of author name, title keywords, and "english translation".
+- After gathering evidence, call \`make_determination\` with your verdict.
 
 ## CRITICAL: Evidence Must Come From Tool Results
 
@@ -448,6 +639,7 @@ Example: Iamblichus' "De Mysteriis" in Ficino's Latin — even though Taylor (18
 ## Determination Guidelines
 
 - **confirmed_first**: No English translation of any kind exists for this specific ${lang} text. No complete, partial, or excerpt translations found across any source. Strong evidence = no matches across multiple catalog searches, OR only translations from a different source language exist.
+- **first_from_source**: English translations exist from a DIFFERENT source language, but not from THIS ${lang} text. E.g., Greek→English exists but Latin→English does not. Use this instead of confirmed_first when translations from other source languages were found.
 - **first_complete_translation**: Partial translations, excerpts, or anthologized selections exist, but NO complete/full English translation has been published. This is still a significant "first" — the first COMPLETE translation. List the partial translations found.
 - **first_modern_translation**: Old or antiquated English translations exist (typically pre-1900), but no modern scholarly translation has been published. The existing translation(s) may be unreliable, archaic, or lack critical apparatus. List the old translations found.
 - **translation_found**: A complete, modern English translation of THIS SPECIFIC ${lang} text already exists. Cite the specific translation found. The translation must be FROM THIS LANGUAGE, not from the original language of the work.
@@ -584,8 +776,8 @@ export async function verifyFirstTranslation(
       // If determination was made, we're done
       if (determination) break;
 
-      // After 3 rounds of searching, nudge the model to make a determination
-      if (round >= 2 && !determination) {
+      // After 5 rounds of searching, nudge the model to make a determination
+      if (round >= 4 && !determination) {
         contents.push({
           role: 'user',
           parts: [{ text: 'You have done enough searching. Now call make_determination with your verdict based on the evidence gathered so far.' }],
@@ -626,7 +818,7 @@ export async function verifyFirstTranslation(
       if (d === 'first_translation') return 'confirmed_first' as const;
       if (d === 'first_full_translation') return 'first_complete_translation' as const;
       if (d === 'translation_exists') return 'translation_found' as const;
-      if (['confirmed_first', 'first_complete_translation', 'first_modern_translation', 'translation_found', 'needs_review'].includes(d)) return d as typeof disposition;
+      if (['confirmed_first', 'first_from_source', 'first_complete_translation', 'first_modern_translation', 'translation_found', 'needs_review'].includes(d)) return d as typeof disposition;
       return 'needs_review' as const;
     })();
 

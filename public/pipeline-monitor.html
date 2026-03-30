@@ -1,0 +1,159 @@
+<!DOCTYPE html>
+<html><head>
+<meta charset="utf-8">
+<title>Pipeline Monitor - Source Library</title>
+<script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+<style>
+  * { box-sizing: border-box; margin: 0; }
+  body { font-family: system-ui, -apple-system, sans-serif; background: #0f172a; color: #e2e8f0; padding: 24px; }
+  h1 { font-size: 1.3em; color: #94a3b8; margin-bottom: 16px; }
+  .grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(200px, 1fr)); gap: 16px; margin-bottom: 24px; }
+  .card { background: #1e293b; border-radius: 8px; padding: 16px; }
+  .card .label { font-size: 0.75em; color: #64748b; text-transform: uppercase; letter-spacing: 0.05em; }
+  .card .value { font-size: 1.8em; font-weight: 700; margin-top: 4px; }
+  .card .sub { font-size: 0.8em; color: #64748b; margin-top: 2px; }
+  .ocr { color: #3b82f6; }
+  .trans { color: #f97316; }
+  .cost { color: #10b981; }
+  .total { color: #e2e8f0; }
+  .chart-container { background: #1e293b; border-radius: 8px; padding: 16px; margin-bottom: 24px; }
+  .chart-row { display: grid; grid-template-columns: 1fr 1fr; gap: 16px; }
+  canvas { width: 100% !important; }
+  .updated { font-size: 0.7em; color: #475569; text-align: right; margin-top: 8px; }
+  .refresh-info { font-size: 0.75em; color: #475569; margin-bottom: 16px; }
+  @media (max-width: 800px) { .chart-row { grid-template-columns: 1fr; } }
+</style>
+</head><body>
+
+<h1>Source Library Pipeline Monitor</h1>
+<p class="refresh-info">Auto-refreshes every 60s</p>
+
+<div class="grid">
+  <div class="card"><div class="label">OCR / hour</div><div class="value ocr" id="ocr-rate">--</div><div class="sub" id="ocr-1h">last hour</div></div>
+  <div class="card"><div class="label">Translation / hour</div><div class="value trans" id="trans-rate">--</div><div class="sub" id="trans-1h">last hour</div></div>
+  <div class="card"><div class="label">Today's cost</div><div class="value cost" id="today-cost">--</div><div class="sub" id="cost-sub">estimated</div></div>
+  <div class="card"><div class="label">OCR today</div><div class="value ocr" id="ocr-today">--</div><div class="sub" id="ocr-today-sub">pages</div></div>
+  <div class="card"><div class="label">Translated today</div><div class="value trans" id="trans-today">--</div><div class="sub" id="trans-today-sub">pages</div></div>
+  <div class="card"><div class="label">90-day total cost</div><div class="value total" id="total-cost">--</div><div class="sub">all Gemini API</div></div>
+</div>
+
+<div class="chart-row">
+  <div class="chart-container">
+    <canvas id="hourlyChart"></canvas>
+  </div>
+  <div class="chart-container">
+    <canvas id="dailyChart"></canvas>
+  </div>
+</div>
+
+<div class="updated" id="updated"></div>
+
+<script>
+let hourlyChart, dailyChart;
+
+async function fetchData() {
+  const resp = await fetch('/api/analytics/pipeline-velocity');
+  if (!resp.ok) throw new Error('API error: ' + resp.status);
+  return resp.json();
+}
+
+function formatNum(n) {
+  if (n >= 1000000) return (n / 1000000).toFixed(1) + 'M';
+  if (n >= 1000) return (n / 1000).toFixed(1) + 'K';
+  return n.toString();
+}
+
+function update(data) {
+  document.getElementById('ocr-rate').textContent = formatNum(data.ocrPerHour);
+  document.getElementById('trans-rate').textContent = formatNum(data.transPerHour);
+  document.getElementById('ocr-1h').textContent = formatNum(data.ocr1h) + ' in last hour';
+  document.getElementById('trans-1h').textContent = formatNum(data.trans1h) + ' in last hour';
+  document.getElementById('today-cost').textContent = '$' + data.todayCost.toFixed(2);
+  document.getElementById('ocr-today').textContent = formatNum(data.ocrToday);
+  document.getElementById('trans-today').textContent = formatNum(data.transToday);
+  document.getElementById('total-cost').textContent = '$' + formatNum(Math.round(data.totalCost90d));
+  document.getElementById('updated').textContent = 'Updated ' + new Date().toLocaleTimeString();
+
+  // Hourly chart (last 24h)
+  const hourlyCtx = document.getElementById('hourlyChart');
+  const hLabels = data.hourly.map(h => h.hour + ':00');
+  const hOcr = data.hourly.map(h => h.ocr);
+  const hTrans = data.hourly.map(h => h.trans);
+
+  if (hourlyChart) {
+    hourlyChart.data.labels = hLabels;
+    hourlyChart.data.datasets[0].data = hOcr;
+    hourlyChart.data.datasets[1].data = hTrans;
+    hourlyChart.update('none');
+  } else {
+    hourlyChart = new Chart(hourlyCtx, {
+      type: 'bar',
+      data: {
+        labels: hLabels,
+        datasets: [
+          { label: 'OCR', data: hOcr, backgroundColor: 'rgba(59,130,246,0.7)', borderRadius: 2 },
+          { label: 'Translation', data: hTrans, backgroundColor: 'rgba(249,115,22,0.7)', borderRadius: 2 },
+        ]
+      },
+      options: {
+        responsive: true,
+        plugins: { legend: { position: 'top', labels: { color: '#94a3b8' } }, title: { display: true, text: 'Last 24 Hours (by hour)', color: '#94a3b8' } },
+        scales: {
+          x: { grid: { display: false }, ticks: { color: '#475569', font: { size: 9 } } },
+          y: { beginAtZero: true, grid: { color: '#1e293b' }, ticks: { color: '#475569' } }
+        }
+      }
+    });
+  }
+
+  // Daily chart (last 14 days)
+  const dailyCtx = document.getElementById('dailyChart');
+  const dLabels = data.daily.map(d => d.date.slice(5));
+  const dOcr = data.daily.map(d => d.ocr);
+  const dTrans = data.daily.map(d => d.trans);
+  const dCost = data.daily.map(d => d.cost);
+
+  if (dailyChart) {
+    dailyChart.data.labels = dLabels;
+    dailyChart.data.datasets[0].data = dOcr;
+    dailyChart.data.datasets[1].data = dTrans;
+    dailyChart.data.datasets[2].data = dCost;
+    dailyChart.update('none');
+  } else {
+    dailyChart = new Chart(dailyCtx, {
+      type: 'bar',
+      data: {
+        labels: dLabels,
+        datasets: [
+          { label: 'OCR', data: dOcr, backgroundColor: 'rgba(59,130,246,0.7)', borderRadius: 2, yAxisID: 'y' },
+          { label: 'Translation', data: dTrans, backgroundColor: 'rgba(249,115,22,0.7)', borderRadius: 2, yAxisID: 'y' },
+          { label: 'Cost', data: dCost, type: 'line', borderColor: '#10b981', backgroundColor: 'rgba(16,185,129,0.1)', fill: true, tension: 0.3, pointRadius: 2, borderWidth: 2, yAxisID: 'y1' },
+        ]
+      },
+      options: {
+        responsive: true,
+        plugins: { legend: { position: 'top', labels: { color: '#94a3b8' } }, title: { display: true, text: 'Last 14 Days', color: '#94a3b8' } },
+        interaction: { mode: 'index', intersect: false },
+        scales: {
+          x: { grid: { display: false }, ticks: { color: '#475569' } },
+          y: { beginAtZero: true, position: 'left', grid: { color: '#1e293b' }, ticks: { color: '#475569' }, title: { display: true, text: 'Pages', color: '#475569' } },
+          y1: { beginAtZero: true, position: 'right', grid: { drawOnChartArea: false }, ticks: { color: '#475569' }, title: { display: true, text: 'USD', color: '#475569' } },
+        }
+      }
+    });
+  }
+}
+
+async function refresh() {
+  try {
+    const data = await fetchData();
+    update(data);
+  } catch (e) {
+    document.getElementById('updated').textContent = 'Error: ' + e.message;
+  }
+}
+
+refresh();
+setInterval(refresh, 60000);
+</script>
+</body></html>

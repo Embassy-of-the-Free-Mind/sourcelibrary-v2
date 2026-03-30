@@ -24,9 +24,7 @@ const MODEL = 'gemini-3.1-flash-lite-preview';
 const MAX_ROUNDS = 5;
 const TEMPERATURE = 0.1;
 
-// Supabase (read-only anon key — from env)
-const SUPABASE_URL = process.env.SUPABASE_URL!;
-const SUPABASE_ANON_KEY = process.env.SUPABASE_ANON_KEY!;
+import { SUPABASE_URL, SUPABASE_ANON_KEY } from './supabase';
 
 // ── Types ─────────────────────────────────────────────────────────────
 

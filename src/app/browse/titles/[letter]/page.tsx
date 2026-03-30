@@ -1,5 +1,6 @@
 import { Metadata } from 'next';
 import Link from 'next/link';
+import SiteHeader from '@/components/layout/SiteHeader';
 import { getDb } from '@/lib/mongodb';
 import { bookUrl } from '@/lib/slugify';
 import { notFound } from 'next/navigation';
@@ -83,14 +84,9 @@ export default async function BrowseTitlesPage({ params }: PageProps) {
   }
 
   return (
-    <div className="max-w-4xl mx-auto px-6 md:px-12 py-12 md:py-20">
-      <Link href="/browse" className="inline-flex items-center gap-2 text-sm mb-8 hover:opacity-70 transition-opacity" style={{ color: 'var(--text-muted)' }}>
-        <svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-          <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M15 19l-7-7 7-7" />
-        </svg>
-        Browse
-      </Link>
-
+    <>
+      <SiteHeader variant="light" breadcrumbs={[{ label: 'Browse', href: '/browse' }]} />
+      <div className="max-w-4xl mx-auto px-6 md:px-12 py-12 md:py-20">
       <h1 className="text-3xl md:text-4xl font-display mb-2" style={{ color: 'var(--text-primary)' }}>
         Titles: {l}
       </h1>
@@ -143,5 +139,6 @@ export default async function BrowseTitlesPage({ params }: PageProps) {
         </p>
       )}
     </div>
+    </>
   );
 }

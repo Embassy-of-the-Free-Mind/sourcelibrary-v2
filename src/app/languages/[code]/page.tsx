@@ -1,7 +1,8 @@
 import { Metadata } from 'next';
 import Link from 'next/link';
 import Image from 'next/image';
-import { BookOpen, ArrowLeft, Images } from 'lucide-react';
+import { BookOpen, Images } from 'lucide-react';
+import SiteHeader from '@/components/layout/SiteHeader';
 import { getDb } from '@/lib/mongodb';
 import { notFound } from 'next/navigation';
 import CollectionBookCard from '@/components/CollectionBookCard';
@@ -185,18 +186,11 @@ export default async function LanguageDetailPage({ params, searchParams }: Props
 
   return (
     <div className="min-h-screen bg-cream">
+      <SiteHeader variant="dark" />
       {/* Hero Section */}
       <div className="relative bg-dark overflow-hidden">
         <div className="absolute inset-0 bg-gradient-to-b from-black/70 via-black/40 to-transparent" />
         <div className="relative max-w-7xl mx-auto px-6 pt-8 pb-12 sm:pb-16">
-          <Link
-            href="/languages"
-            className="inline-flex items-center gap-2 text-sm text-white/50 hover:text-white/80 transition-colors mb-8"
-          >
-            <ArrowLeft className="w-4 h-4" />
-            Languages
-          </Link>
-
           <h1 className="text-4xl sm:text-5xl md:text-6xl text-white font-semibold leading-tight mb-3 font-display">
             {langName}
           </h1>

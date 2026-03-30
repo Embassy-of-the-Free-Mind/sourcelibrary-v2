@@ -2,7 +2,8 @@ import { getDb } from '@/lib/mongodb';
 import Link from 'next/link';
 import Image from 'next/image';
 import { Metadata } from 'next';
-import { BookOpen, ArrowLeft } from 'lucide-react';
+import { BookOpen } from 'lucide-react';
+import SiteHeader from '@/components/layout/SiteHeader';
 import { notFound } from 'next/navigation';
 import { bookUrl } from '@/lib/slugify';
 import { FACETS, facetDbField } from '@/lib/taxonomy/faceted-vocabulary';
@@ -320,17 +321,10 @@ export default async function TopicDetailPage({ params }: Props) {
 
     return (
       <div className="min-h-screen bg-cream">
+        <SiteHeader variant="dark" />
         {/* Hero */}
         <div className="bg-gradient-to-b from-[#2a1f17] to-[#1a1612] text-white">
           <div className="max-w-5xl mx-auto px-6 pt-8 pb-12">
-            <Link
-              href="/topics"
-              className="inline-flex items-center gap-2 text-sm text-white/50 hover:text-white/80 transition-colors mb-8"
-            >
-              <ArrowLeft className="w-4 h-4" />
-              Browse
-            </Link>
-
             <p className="text-sm text-white/40 mb-2">{data.facet.label}</p>
             <h1 className="text-3xl sm:text-4xl md:text-5xl text-white font-semibold leading-tight mb-3 font-display">
               {data.value.label}
@@ -433,16 +427,9 @@ export default async function TopicDetailPage({ params }: Props) {
 
   return (
     <div className="min-h-screen bg-cream">
+      <SiteHeader variant="dark" />
       <div className="bg-gradient-to-b from-[#2a1f17] to-[#1a1612] text-white">
         <div className="max-w-5xl mx-auto px-6 pt-8 pb-12">
-          <Link
-            href="/topics/clusters"
-            className="inline-flex items-center gap-2 text-sm text-white/50 hover:text-white/80 transition-colors mb-8"
-          >
-            <ArrowLeft className="w-4 h-4" />
-            All Clusters
-          </Link>
-
           <h1 className="text-3xl sm:text-4xl md:text-5xl text-white font-semibold leading-tight mb-3 font-display">
             {clusterName}
           </h1>

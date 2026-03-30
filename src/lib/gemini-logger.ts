@@ -201,6 +201,39 @@ export async function logGeminiCall(params: {
     };
 
     await db.collection('gemini_usage').insertOne(log);
+
+    // Dual-write to Supabase (fire-and-forget, non-blocking)
+    try {
+      const { supabaseAdmin } = await import('./supabase');
+      if (supabaseAdmin) {
+        supabaseAdmin.from('gemini_usage').insert({
+          id: log.id,
+          timestamp: log.timestamp,
+          type: log.type,
+          mode: log.mode || null,
+          model: log.model || null,
+          book_id: log.book_id || null,
+          book_title: log.book_title || null,
+          page_count: log.page_count || 0,
+          input_tokens: log.input_tokens || 0,
+          output_tokens: log.output_tokens || 0,
+          cost_usd: log.cost_usd || 0,
+          status: log.status || null,
+          error_message: log.error_message || null,
+          error_category: log.error_category || null,
+          duration_ms: log.duration_ms || null,
+          prompt_version: log.prompt_version || null,
+          job_id: log.job_id || null,
+          batch_job_id: log.batch_job_id || null,
+          endpoint: log.endpoint || null,
+          completed_at: null,
+        }).then(({ error }) => {
+          if (error) console.warn('[gemini-logger] Supabase write failed:', error.message);
+        });
+      }
+    } catch {
+      // Supabase dual-write is best-effort
+    }
   } catch (error) {
     // Don't let logging failures break the main flow
     console.error('[gemini-logger] Failed to log:', error);

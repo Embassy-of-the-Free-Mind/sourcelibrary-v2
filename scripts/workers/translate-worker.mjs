@@ -597,7 +597,18 @@ async function processBook(db, book, job, globalCounter) {
       bookId: book.id,
     });
   } else {
-    console.log(`  [${label}] Progress — ${translated} this run (${newCompleted}/${job.progress.total} total)`);
+    // Park this book — it got its 200-page chunk, let other books go first.
+    // Status moves to translate_partial so it's no longer picked up as translate_submitted.
+    await db.collection('books').updateOne(
+      { id: book.id },
+      { $set: {
+        'pipeline_auto.status': 'translate_partial',
+        pages_translated: newCompleted,
+        updated_at: new Date(),
+        last_translation_at: new Date(),
+      }},
+    );
+    console.log(`  [${label}] Parked — ${translated} this run (${newCompleted}/${job.progress.total} total), moving to translate_partial`);
   }
 
   return { translated, failed, completed: isComplete ? 1 : 0, inputTokens: totalInputTokens, outputTokens: totalOutputTokens };
@@ -699,19 +710,12 @@ async function main() {
     }
   }
 
-  // Find books — fresh books first (pages_translated: 0).
-  // Fresh books all hit the 200-page cap at ~the same time, minimizing convoy waste.
+  // Find books in translate_submitted — each book gets up to 200 pages then gets parked.
+  // Only pick books that haven't been translated yet (fresh) to maximize breadth.
   const proj = { id: 1, title: 1, display_title: 1, author: 1, year: 1, published: 1, language: 1, job: 1, image_source: 1, pages_translated: 1, pages_ocr: 1, pages_blank: 1 };
-  const fresh = await db.collection('books')
-    .find({ 'pipeline_auto.status': 'translate_submitted', $or: [{ pages_translated: 0 }, { pages_translated: { $exists: false } }] })
+  const books = await db.collection('books')
+    .find({ 'pipeline_auto.status': 'translate_submitted' })
     .project(proj).limit(CONCURRENCY).toArray();
-  let books = fresh;
-  if (fresh.length < CONCURRENCY) {
-    const rest = await db.collection('books')
-      .find({ 'pipeline_auto.status': 'translate_submitted', pages_translated: { $gt: 0 } })
-      .project(proj).limit(CONCURRENCY - fresh.length).toArray();
-    books = [...fresh, ...rest];
-  }
 
   if (books.length === 0) {
     console.log('[TRANSLATE] No books to translate');

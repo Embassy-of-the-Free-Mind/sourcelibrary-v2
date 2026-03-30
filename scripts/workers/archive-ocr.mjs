@@ -201,16 +201,8 @@ async function main() {
     ],
   };
 
-  // Use estimatedDocumentCount for speed, exact count is too slow on 2.65M pages
-  const totalNeeding = await db.collection('pages').countDocuments(query, { maxTimeMS: 30_000 }).catch(() => -1);
-
-  if (totalNeeding === 0) {
-    console.log(`[archive-ocr] No pages need archiving`);
-    await client.close();
-    return;
-  }
-
-  console.log(`[archive-ocr] ~${totalNeeding} pages need archiving (processing up to ${MAX_PAGES})`);
+  // Skip expensive count — just fetch pages and check if any returned
+  console.log(`[archive-ocr] Looking for unarchived pages (up to ${MAX_PAGES})...`);
   console.log(`[archive-ocr] Per-domain rate limits: ${Object.entries(DOMAIN_RATE_LIMITS).filter(([k]) => k !== '_default').map(([k, v]) => `${k}:${v}/s`).join(', ')}`);
 
   let archived = 0;
@@ -219,37 +211,23 @@ async function main() {
   let processed = 0;
   const domainStats = {};
 
-  // Fetch pages with book-level priority: first translations > non-English > English
-  const ENGLISH_VARIANTS = ['english', 'eng', 'en'];
+  // Simple find — no $lookup. The priority aggregation was timing out on Atlas
+  // with 9.5M pages. Just grab unarchived pages directly.
   const pages = await db.collection('pages')
-    .aggregate([
-      { $match: query },
-      { $limit: MAX_PAGES * 2 }, // Over-fetch to allow priority sorting
-      { $lookup: {
-        from: 'books',
-        let: { bid: '$book_id' },
-        pipeline: [
-          { $match: { $expr: { $eq: ['$id', '$$bid'] } } },
-          { $project: { is_first_translation: 1, language: 1 } },
-        ],
-        as: '_book',
-      }},
-      { $addFields: {
-        _priority: {
-          $switch: {
-            branches: [
-              { case: { $eq: [{ $arrayElemAt: ['$_book.is_first_translation', 0] }, true] }, then: 0 },
-              { case: { $in: [{ $toLower: { $ifNull: [{ $arrayElemAt: ['$_book.language', 0] }, ''] } }, ENGLISH_VARIANTS] }, then: 2 },
-            ],
-            default: 1,
-          },
-        },
-      }},
-      { $sort: { _priority: 1 } },
-      { $limit: MAX_PAGES },
-      { $project: { _id: 1, book_id: 1, page_number: 1, photo: 1 } },
-    ], { maxTimeMS: 120_000 })
+    .find(query, {
+      projection: { _id: 1, book_id: 1, page_number: 1, photo: 1 },
+      limit: MAX_PAGES,
+    })
+    .maxTimeMS(60_000)
     .toArray();
+
+  if (pages.length === 0) {
+    console.log(`[archive-ocr] No pages need archiving`);
+    await client.close();
+    return;
+  }
+
+  console.log(`[archive-ocr] Found ${pages.length} pages to archive`);
 
   // Group by domain with per-domain cap
   const byDomain = {};
@@ -297,7 +275,7 @@ async function main() {
 
   const duration = ((Date.now() - start) / 1000).toFixed(1);
   const mb = (totalBytes / (1024 * 1024)).toFixed(1);
-  console.log(`[archive-ocr] Done in ${duration}s: ${archived} archived (${mb} MB), ${failed} failed, ${totalNeeding - processed} remaining`);
+  console.log(`[archive-ocr] Done in ${duration}s: ${archived} archived (${mb} MB), ${failed} failed`);
   console.log(`[archive-ocr] Per-domain: ${Object.entries(domainStats).map(([d, s]) => `${d}:${s.ok}ok/${s.fail}fail`).join(', ')}`);
 
   // Log to cron_runs for monitoring
@@ -308,7 +286,7 @@ async function main() {
     finished_at: new Date(),
     duration_ms: Date.now() - start,
     status: failed === 0 ? 'success' : 'partial',
-    actions: { archived, failed, bytes: totalBytes, remaining: totalNeeding - processed, domainStats },
+    actions: { archived, failed, bytes: totalBytes, domainStats },
   });
 
   await client.close();

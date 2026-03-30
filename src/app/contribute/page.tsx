@@ -1,6 +1,7 @@
 import { Metadata } from 'next';
 import Link from 'next/link';
 import { getDb } from '@/lib/mongodb';
+import SiteHeader from '@/components/layout/SiteHeader';
 
 // ISR: rebuild every 6 hours. Allow 60s for first-hit generation.
 export const revalidate = 21600;
@@ -64,22 +65,7 @@ export default async function ParticipatePage() {
 
   return (
     <div className="min-h-screen bg-cream">
-      {/* Nav */}
-      <header className="bg-white border-b border-border-light">
-        <div className="max-w-5xl mx-auto px-6 py-4">
-          <Link
-            href="/"
-            className="flex items-center gap-2 text-secondary hover:text-primary transition-colors"
-          >
-            <svg className="w-8 h-8" viewBox="0 0 24 24" fill="none">
-              <circle cx="12" cy="12" r="10" stroke="currentColor" strokeWidth="1" />
-              <circle cx="12" cy="12" r="7" stroke="currentColor" strokeWidth="1" />
-              <circle cx="12" cy="12" r="4" stroke="currentColor" strokeWidth="1" />
-            </svg>
-            <span className="font-medium">Source Library</span>
-          </Link>
-        </div>
-      </header>
+      <SiteHeader variant="light" />
 
       {/* Hero */}
       <section className="bg-gradient-to-b from-stone-800 to-stone-900 text-white py-20 md:py-28">

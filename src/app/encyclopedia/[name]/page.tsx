@@ -1,6 +1,7 @@
 import { notFound } from 'next/navigation';
 import Link from 'next/link';
-import { ArrowLeft, User, MapPin, Lightbulb, ExternalLink } from 'lucide-react';
+import { User, MapPin, Lightbulb, ExternalLink } from 'lucide-react';
+import SiteHeader from '@/components/layout/SiteHeader';
 import { ENTITY_TYPE_STYLES, ENTITY_TYPE_LABELS, type EntityType } from '@/lib/style-constants';
 import SignUpCTA from '@/components/auth/SignUpCTA';
 import { getEntity, getSharedBooks } from './layout';
@@ -51,18 +52,7 @@ export default async function EntityDetailPage({
 
   return (
     <div className="min-h-screen bg-stone-50">
-      {/* Header */}
-      <header className="bg-white border-b border-stone-200">
-        <div className="max-w-5xl mx-auto px-4 py-4">
-          <Link
-            href="/encyclopedia"
-            className="inline-flex items-center gap-2 text-stone-600 hover:text-stone-900"
-          >
-            <ArrowLeft className="w-4 h-4" />
-            Back to Encyclopedia
-          </Link>
-        </div>
-      </header>
+      <SiteHeader variant="light" />
 
       {/* Hero */}
       <div className="bg-gradient-to-b from-stone-800 to-stone-900 text-white py-12">

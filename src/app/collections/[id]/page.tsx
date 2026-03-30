@@ -2,7 +2,8 @@ import React from 'react';
 import Link from 'next/link';
 import Image from 'next/image';
 import { Metadata } from 'next';
-import { BookOpen, Images, ArrowLeft, Library } from 'lucide-react';
+import { ArrowLeft, BookOpen, Images, Library } from 'lucide-react';
+import SiteHeader from '@/components/layout/SiteHeader';
 import { getDb } from '@/lib/mongodb';
 import { notFound } from 'next/navigation';
 import CollectionSchema from '@/components/seo/CollectionSchema';
@@ -217,6 +218,7 @@ async function fetchCollectionData(id: string) {
     language: 1, pages_count: 1, pages_ocr: 1, pages_translated: 1, pages_blank: 1,
     photo: 1, categories: 1, thumbnail: 1, thumbnail_blob: 1, published: 1, read_count: 1,
     resource_type: 1, commons_width: 1, commons_height: 1,
+    is_first_translation: 1, ft_disposition: 1,
   };
 
   // Extract curated highlights from collection document
@@ -493,6 +495,7 @@ export default async function CollectionDetailPage({ params }: Props) {
 
   return (
     <div className="min-h-screen bg-cream">
+      <SiteHeader variant="dark" />
       <CollectionSchema
         slug={id}
         name={collection.name}
@@ -549,7 +552,12 @@ export default async function CollectionDetailPage({ params }: Props) {
           )}
 
           <div className="flex flex-wrap items-center gap-4 text-sm text-white/50">
-            <span>{total.toLocaleString('en-US')} {itemLabel}</span>
+            <a
+              href="#collection-all-books"
+              className="hover:text-white/80 transition-colors underline underline-offset-2 decoration-white/30"
+            >
+              {total.toLocaleString('en-US')} {itemLabel}
+            </a>
             {languages.length > 0 && (
               <>
                 <span className="w-px h-4 bg-white/20" />

@@ -1,5 +1,6 @@
 import { Metadata } from 'next';
 import Link from 'next/link';
+import SiteHeader from '@/components/layout/SiteHeader';
 
 export const metadata: Metadata = {
   title: 'Press - Source Library',
@@ -64,8 +65,9 @@ const SOURCE_LIBRARIES = [
 export default function PressPage() {
   return (
     <div className="min-h-screen bg-white">
-      {/* Header */}
-      <header className="bg-stone-900 text-white py-16 md:py-24">
+      <SiteHeader variant="dark" />
+      {/* Hero */}
+      <div className="bg-stone-900 text-white py-16 md:py-24">
         <div className="max-w-5xl mx-auto px-6 md:px-12">
           <p className="text-accent-gold text-sm tracking-[0.2em] uppercase mb-4">
             Press
@@ -80,7 +82,7 @@ export default function PressPage() {
             AI-powered translations of thousands of rare historical texts, freely available online.
           </p>
         </div>
-      </header>
+      </div>
 
       <div className="max-w-5xl mx-auto px-6 md:px-12 py-16 space-y-16">
         {/* Launch Press Release */}

@@ -1,7 +1,7 @@
 import { getDb } from '@/lib/mongodb';
 import Link from 'next/link';
 import Image from 'next/image';
-import { ArrowLeft } from 'lucide-react';
+import SiteHeader from '@/components/layout/SiteHeader';
 import SignUpCTA from '@/components/auth/SignUpCTA';
 import { sanitizeThumbnail } from '@/lib/collections-utils';
 import type { Metadata } from 'next';
@@ -129,17 +129,10 @@ export default async function CuratedCollectionsPage() {
 
   return (
     <div className="min-h-screen bg-cream">
+      <SiteHeader variant="light" />
       {/* Hero */}
       <div className="bg-warm border-b border-border-light">
         <div className="max-w-7xl mx-auto px-6 pt-8 pb-10 sm:pb-12">
-          <Link
-            href="/#library"
-            className="inline-flex items-center gap-2 text-sm text-muted hover:text-primary transition-colors mb-8"
-          >
-            <ArrowLeft className="w-4 h-4" />
-            Library
-          </Link>
-
           <h1 className="text-4xl sm:text-5xl md:text-6xl text-primary font-semibold leading-tight mb-3 font-display">
             Curated Collections
           </h1>
