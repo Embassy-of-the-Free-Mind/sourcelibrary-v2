@@ -1,5 +1,5 @@
 import { Metadata } from 'next';
-import Link from 'next/link';
+import SiteHeader from '@/components/layout/SiteHeader';
 
 export const metadata: Metadata = {
   title: 'Privacy Policy - Source Library',
@@ -10,13 +10,7 @@ export const metadata: Metadata = {
 export default function PrivacyPage() {
   return (
     <div className="min-h-screen" style={{ background: 'var(--bg-cream)' }}>
-      <header className="border-b" style={{ background: 'var(--bg-white)', borderColor: 'var(--border-light)' }}>
-        <div className="max-w-2xl mx-auto px-6 py-4">
-          <Link href="/" className="text-sm hover:opacity-70 transition-opacity" style={{ color: 'var(--text-muted)' }}>
-            &larr; Back to Source Library
-          </Link>
-        </div>
-      </header>
+      <SiteHeader variant="light" />
       <main className="max-w-2xl mx-auto px-6 py-12">
         <h1 className="text-3xl font-medium mb-8" style={{ color: 'var(--text-primary)' }}>
           Privacy Policy

@@ -1,5 +1,6 @@
 import { Suspense } from 'react';
 import Link from 'next/link';
+import SiteHeader from '@/components/layout/SiteHeader';
 import { User, MapPin, Lightbulb, BookOpen, ArrowRight, Search, ChevronLeft, ChevronRight } from 'lucide-react';
 import { getDb } from '@/lib/mongodb';
 import type { Sort } from 'mongodb';
@@ -166,14 +167,7 @@ export default async function EncyclopediaPage({
 
   return (
     <div className="min-h-screen bg-stone-50">
-      {/* Header */}
-      <header className="bg-white border-b border-stone-200">
-        <div className="max-w-7xl mx-auto px-4 py-4">
-          <Link href="/" className="text-stone-600 hover:text-stone-900 text-sm">
-            &larr; Back to Library
-          </Link>
-        </div>
-      </header>
+      <SiteHeader variant="light" />
 
       {/* Hero */}
       <div className="bg-gradient-to-b from-stone-800 to-stone-900 text-white py-12">
