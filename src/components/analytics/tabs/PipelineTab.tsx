@@ -32,9 +32,21 @@ export default function PipelineTab({ hours }: PipelineTabProps) {
   }, [hours]);
 
   if (loading) return (
-    <div className="py-12 text-center">
-      <BookLoader size="xs" />
-      {slow && <p className="text-sm mt-4" style={{ color: 'var(--text-muted)' }}>Loading pipeline snapshots and cron health...</p>}
+    <div className="py-12">
+      <div className="w-full h-1.5 rounded-full overflow-hidden mb-4" style={{ background: 'var(--bg-warm)' }}>
+        <div className="h-full rounded-full animate-loading-bar" style={{ background: 'var(--accent-sage)', width: '40%' }} />
+      </div>
+      <style>{`
+        @keyframes loading-bar {
+          0% { transform: translateX(-100%); }
+          50% { transform: translateX(150%); }
+          100% { transform: translateX(-100%); }
+        }
+        .animate-loading-bar { animation: loading-bar 2s ease-in-out infinite; }
+      `}</style>
+      <p className="text-center text-sm" style={{ color: 'var(--text-muted)' }}>
+        {slow ? 'Still loading — pipeline queries can be slow on Atlas...' : 'Loading pipeline data...'}
+      </p>
     </div>
   );
 
