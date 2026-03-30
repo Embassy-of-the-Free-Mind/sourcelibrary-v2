@@ -122,51 +122,16 @@ export const GET = withAuth(async (request, session) => {
         }),
     ]);
 
-    // 6. Pipeline funnel (current book counts per status) + enrichment coverage + milestones
-    const [funnelResult, enrichmentResult, galleryCount, firstTranslations, nearComplete] = await Promise.all([
-      db.collection('books').aggregate([
-        { $match: { 'pipeline_auto.status': { $exists: true } } },
-        { $group: { _id: '$pipeline_auto.status', count: { $sum: 1 } } },
-        { $sort: { count: -1 } },
-      ]).toArray(),
+    // 6. Pipeline funnel + enrichment coverage + milestones — use pre-computed snapshot (2h cache)
+    //    instead of expensive live aggregations that take 10-30s on Atlas
+    const snapshot = await db.collection('system_config').findOne({ _id: 'enrichment_snapshot' as any });
 
-      db.collection('books').aggregate([
-        { $match: { status: { $ne: 'deleted' }, pages_count: { $gt: 0 } } },
-        { $group: {
-          _id: null,
-          total: { $sum: 1 },
-          has_ocr: { $sum: { $cond: [{ $gt: ['$pages_ocr', 0] }, 1, 0] } },
-          has_translation: { $sum: { $cond: [{ $gt: ['$pages_translated', 0] }, 1, 0] } },
-          has_metadata: { $sum: { $cond: [{ $ifNull: ['$ai_metadata.enriched_at', false] }, 1, 0] } },
-          has_ft_verification: { $sum: { $cond: [{ $ifNull: ['$translation_verification.verified_at', false] }, 1, 0] } },
-          has_summary: { $sum: { $cond: [{ $ifNull: ['$index.generatedAt', false] }, 1, 0] } },
-          has_chapters: { $sum: { $cond: [{ $ifNull: ['$chapters', false] }, 1, 0] } },
-          has_collections: { $sum: { $cond: [{ $ifNull: ['$collection_scores', false] }, 1, 0] } },
-          has_quality_score: { $sum: { $cond: [{ $ifNull: ['$quality_score', false] }, 1, 0] } },
-          has_faceted_tags: { $sum: { $cond: [{ $ifNull: ['$faceted_tags', false] }, 1, 0] } },
-          has_author_entity: { $sum: { $cond: [{ $ifNull: ['$author_entity_id', false] }, 1, 0] } },
-          pipeline_complete: { $sum: { $cond: [{ $eq: ['$pipeline_auto.status', 'complete'] }, 1, 0] } },
-        }},
-      ]).toArray(),
-
-      db.collection('gallery_images').estimatedDocumentCount(),
-
-      // Milestones
-      db.collection('books').countDocuments({ is_first_translation: true }),
-
-      db.collection('books').countDocuments({
-        status: { $ne: 'deleted' },
-        pages_count: { $gt: 0 },
-        pages_translated: { $gt: 0 },
-        $expr: { $gte: ['$pages_translated', { $multiply: ['$pages_count', 0.9] }] },
-      }),
-    ]);
-
-    const funnel = Object.fromEntries(funnelResult.map((f: any) => [f._id, f.count]));
-    const enrichment = enrichmentResult[0] || {};
-
-    // Image extraction: count distinct books in gallery_images (fast — 70K docs vs millions of pages)
-    const booksWithImages = await db.collection('gallery_images').distinct('book_id');
+    const funnel = snapshot?.funnel || {};
+    const enrichment = snapshot?.enrichment || {};
+    const galleryCount = snapshot?.gallery?.gallery_images || 0;
+    const booksWithImages = snapshot?.gallery?.books_with_images ? Array(snapshot.gallery.books_with_images).fill('') : [];
+    const firstTranslations = snapshot?.milestones?.first_translations || 0;
+    const nearComplete = snapshot?.milestones?.over_90_pct || 0;
 
     // Compute velocity from snapshots (deltas between consecutive points)
     const velocity = computeVelocity(snapshots);
