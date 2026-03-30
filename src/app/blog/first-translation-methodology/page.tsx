@@ -24,7 +24,7 @@ export default function FirstTranslationMethodologyPage() {
           title="How We Identify First Translations"
           subtitle="The methodology behind Source Library's classification system"
         >
-          <p className="text-stone-400 text-sm mt-4">23 February 2026, updated 9 March 2026 &middot; 18 min read</p>
+          <p className="text-stone-400 text-sm mt-4">23 February 2026, updated 30 March 2026 &middot; 22 min read</p>
         </ContentHeader>
       }
       bg="bg-cream"
@@ -164,14 +164,17 @@ export default function FirstTranslationMethodologyPage() {
         </p>
 
         <p className="text-secondary leading-relaxed mb-6">
-          The verification model is given five tools it can call autonomously:
+          The verification model is given eight tools it can call autonomously:
         </p>
 
         <ol className="space-y-3 text-secondary mb-8 ml-4 list-decimal list-outside pl-2">
-          <li className="leading-relaxed pl-2"><strong>Local translation catalogs</strong> &mdash; a MongoDB collection of ~12,000 records from UNESCO&apos;s <em>Index Translationum</em>, the Loeb Classical Library, Brill&apos;s translations, Penguin Classics, and other standard translation catalogs</li>
+          <li className="leading-relaxed pl-2"><strong>Local translation catalogs</strong> &mdash; a database of ~14,000 records from UNESCO&apos;s <em>Index Translationum</em>, the Loeb Classical Library, Brill&apos;s translations, Penguin Classics, HathiTrust, and other standard translation catalogs</li>
           <li className="leading-relaxed pl-2"><strong>Open Library API</strong> &mdash; searches for English-language editions by title and author, returns ISBNs, publishers, and edition history</li>
-          <li className="leading-relaxed pl-2"><strong>Google Books API</strong> &mdash; broadest coverage, including out-of-print and academic works with language filtering</li>
-          <li className="leading-relaxed pl-2"><strong>Universal Short Title Catalogue (USTC)</strong> &mdash; searches for the specific edition and any English derivatives in the standard catalog of early printed books</li>
+          <li className="leading-relaxed pl-2"><strong>Google Books API</strong> &mdash; broad coverage, including out-of-print and academic works with language filtering</li>
+          <li className="leading-relaxed pl-2"><strong>Internet Archive</strong> &mdash; searches 30 million+ digitized texts for public domain translations, older academic editions, and reprints that other catalogs miss</li>
+          <li className="leading-relaxed pl-2"><strong>OpenAlex</strong> &mdash; an open catalog of 250 million scholarly works, excellent for finding academic press translations (Brill, De Gruyter, Cambridge, Oxford) and translations published in journals or edited volumes</li>
+          <li className="leading-relaxed pl-2"><strong>Library of Congress</strong> &mdash; the authoritative US library catalog, catching recent cataloging and translations held by research libraries</li>
+          <li className="leading-relaxed pl-2"><strong>Universal Short Title Catalogue (USTC)</strong> &mdash; verifies the identity of the original work in the standard catalog of early printed books</li>
           <li className="leading-relaxed pl-2"><strong>make_determination</strong> &mdash; a structured output tool the model calls when it has gathered enough evidence to render a verdict, citing specific translations found (with URLs) or explaining why none were found</li>
         </ol>
 
@@ -203,7 +206,7 @@ export default function FirstTranslationMethodologyPage() {
             <tbody>
               <tr className="border-b border-border-light">
                 <td className="px-4 py-3 text-secondary font-medium">Translation catalogs</td>
-                <td className="px-4 py-3 text-secondary">~12,000 records from UNESCO Index Translationum, Loeb Classical Library, Brill, Penguin Classics, and other standard catalogs</td>
+                <td className="px-4 py-3 text-secondary">~14,000 records from UNESCO Index Translationum, Loeb Classical Library, Brill, Penguin Classics, HathiTrust, and other standard catalogs</td>
                 <td className="px-4 py-3 text-secondary">Best for canonical translations; includes translator, publisher, and year</td>
               </tr>
               <tr className="border-b border-border-light">
@@ -214,12 +217,27 @@ export default function FirstTranslationMethodologyPage() {
               <tr className="border-b border-border-light">
                 <td className="px-4 py-3 text-secondary font-medium">Google Books</td>
                 <td className="px-4 py-3 text-secondary">Title + author search with language filter</td>
-                <td className="px-4 py-3 text-secondary">Broadest coverage; includes out-of-print and academic works</td>
+                <td className="px-4 py-3 text-secondary">Broad coverage; includes out-of-print and academic works</td>
+              </tr>
+              <tr className="border-b border-border-light">
+                <td className="px-4 py-3 text-secondary font-medium">Internet Archive</td>
+                <td className="px-4 py-3 text-secondary">Advanced search across 30M+ digitized texts</td>
+                <td className="px-4 py-3 text-secondary">Public domain translations, older academic editions, and reprints</td>
+              </tr>
+              <tr className="border-b border-border-light">
+                <td className="px-4 py-3 text-secondary font-medium">OpenAlex</td>
+                <td className="px-4 py-3 text-secondary">250M+ scholarly works including books, articles, and book chapters</td>
+                <td className="px-4 py-3 text-secondary">Academic press translations; finds translations in journals and edited volumes</td>
+              </tr>
+              <tr className="border-b border-border-light">
+                <td className="px-4 py-3 text-secondary font-medium">Library of Congress</td>
+                <td className="px-4 py-3 text-secondary">Live catalog search filtered to English-language holdings</td>
+                <td className="px-4 py-3 text-secondary">Authoritative US library catalog; catches recent cataloging</td>
               </tr>
               <tr>
                 <td className="px-4 py-3 text-secondary font-medium">USTC</td>
-                <td className="px-4 py-3 text-secondary">Early printed book records, English derivatives of specific editions</td>
-                <td className="px-4 py-3 text-secondary">Standard catalog of pre-1601 books; catches early English translations</td>
+                <td className="px-4 py-3 text-secondary">Early printed book records, verifies identity of the original work</td>
+                <td className="px-4 py-3 text-secondary">Standard catalog of pre-1601 books; confirms work identity</td>
               </tr>
             </tbody>
           </table>
@@ -238,7 +256,7 @@ export default function FirstTranslationMethodologyPage() {
         </h3>
 
         <p className="text-secondary leading-relaxed mb-6">
-          After verification, each book receives one of five dispositions:
+          After verification, each book receives one of six dispositions:
         </p>
 
         <div className="bg-white rounded-xl border border-border-light overflow-hidden mb-8">
@@ -269,7 +287,14 @@ export default function FirstTranslationMethodologyPage() {
                 <td className="px-4 py-3 text-secondary font-medium">first_modern_translation</td>
                 <td className="px-4 py-3 text-secondary">An English translation exists, but only from before 1800. This is the first modern translation using current scholarly standards.</td>
                 <td className="px-4 py-3">
-                  <span className="bg-accent-gold text-white text-xs px-2 py-0.5 rounded-full font-medium">First Translation</span>
+                  <span className="bg-accent-gold text-white text-xs px-2 py-0.5 rounded-full font-medium">First Modern Translation</span>
+                </td>
+              </tr>
+              <tr className="border-b border-border-light">
+                <td className="px-4 py-3 text-secondary font-medium">first_from_source</td>
+                <td className="px-4 py-3 text-secondary">English translations exist from a different source language, but not from this specific text. For example, a Latin translation of a Greek work where the Greek has been translated to English but the Latin has not.</td>
+                <td className="px-4 py-3">
+                  <span className="bg-accent-gold text-white text-xs px-2 py-0.5 rounded-full font-medium">First from Latin</span>
                 </td>
               </tr>
               <tr className="border-b border-border-light">
@@ -339,7 +364,7 @@ export default function FirstTranslationMethodologyPage() {
         </p>
 
         <p className="text-secondary leading-relaxed mb-8">
-          <strong className="text-primary">Catalog coverage has limits.</strong> The verification pipeline searches multiple major catalogs, but cannot find translations that exist only in unpublished dissertations, private archives, or out-of-print anthologies with no digital footprint. The combination of translation catalogs, Open Library, Google Books, and USTC catches the vast majority of published translations, but a small number of edge cases will inevitably be missed.
+          <strong className="text-primary">Catalog coverage has limits.</strong> The verification pipeline now searches seven major sources &mdash; including Internet Archive, OpenAlex, and the Library of Congress &mdash; but cannot find translations that exist only in unpublished dissertations, private archives, or out-of-print anthologies with no digital footprint. Our March 2026 accuracy evaluation suggests the false positive rate is under 0.5%, but a small number of edge cases will inevitably be missed.
         </p>
 
         <h2 className="text-2xl md:text-3xl text-primary mt-16 mb-6">
@@ -426,6 +451,88 @@ export default function FirstTranslationMethodologyPage() {
 
         <p className="text-secondary leading-relaxed mb-8">
           Of the 2,455 first translations, 1,276 are now fully translated &mdash; readable from the first page to the last. Another 223 are 80% or more complete. The translations span 670 Latin works, 430 German, 420 Chinese, 182 French, 144 Greek, 135 Sanskrit, and dozens of other languages including Syriac, Dutch, Italian, Armenian, Hebrew, and Arabic.
+        </p>
+
+        <h2 className="text-2xl md:text-3xl text-primary mt-16 mb-6">
+          Accuracy evaluation (March 2026)
+        </h2>
+
+        <p className="text-secondary leading-relaxed mb-6">
+          How reliable are our first-translation claims? We conducted a systematic evaluation in March 2026 to answer this question. The evaluation had two parts: a cross-check against our own catalog data, and a re-verification of flagged cases using an expanded set of catalog sources.
+        </p>
+
+        <h3 className="text-xl text-primary mt-10 mb-4">
+          Catalog cross-check
+        </h3>
+
+        <p className="text-secondary leading-relaxed mb-6">
+          We cross-referenced all 5,836 books claiming first-translation status against the 13,862 entries in our translation catalog database. For each book, we checked whether the catalog contained a translation of a plausibly matching work by the same author, using surname matching and title-keyword similarity scoring. The results:
+        </p>
+
+        <div className="bg-white rounded-xl border border-border-light overflow-hidden mb-8">
+          <table className="w-full text-sm">
+            <tbody>
+              <tr className="border-b border-border-light">
+                <td className="px-4 py-3 text-secondary font-medium">No catalog match at all</td>
+                <td className="px-4 py-3 text-secondary text-right font-medium">3,797</td>
+                <td className="px-4 py-3 text-secondary">No known translations by this author in any catalog</td>
+              </tr>
+              <tr className="border-b border-border-light">
+                <td className="px-4 py-3 text-secondary font-medium">Same author, different work</td>
+                <td className="px-4 py-3 text-secondary text-right font-medium">377</td>
+                <td className="px-4 py-3 text-secondary">Author has translated works, but not this specific text</td>
+              </tr>
+              <tr className="border-b border-border-light">
+                <td className="px-4 py-3 text-secondary font-medium">Surname collision</td>
+                <td className="px-4 py-3 text-secondary text-right font-medium">556</td>
+                <td className="px-4 py-3 text-secondary">Different person with the same surname</td>
+              </tr>
+              <tr>
+                <td className="px-4 py-3 text-secondary font-medium">Probable same work (review needed)</td>
+                <td className="px-4 py-3 text-secondary text-right font-medium">77</td>
+                <td className="px-4 py-3 text-secondary">Catalog has a translation that may match this specific text</td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+
+        <p className="text-secondary leading-relaxed mb-8">
+          77 cases out of 5,836 &mdash; 1.3% &mdash; were flagged for manual review. On inspection, the majority turned out to be correct nuanced classifications: collected works where only excerpts had been translated (<code className="text-accent-rust bg-accent-gold/8 px-1.5 py-0.5 rounded text-sm">first_complete_translation</code>), or Latin versions of Greek texts where only the Greek had been translated to English (<code className="text-accent-rust bg-accent-gold/8 px-1.5 py-0.5 rounded text-sm">first_from_source</code>). The tool&apos;s reasoning on these hard cases &mdash; Paracelsus&apos;s collected works, Boccaccio&apos;s Italian <em>volgarizzamento</em>, Mersenne&apos;s French adaptation of Galileo &mdash; was precise and defensible.
+        </p>
+
+        <h3 className="text-xl text-primary mt-10 mb-4">
+          Expanded verification pipeline
+        </h3>
+
+        <p className="text-secondary leading-relaxed mb-6">
+          In late March 2026, we expanded the verification pipeline from 4 catalog sources to 7, adding Internet Archive (30M+ digitized texts), OpenAlex (250M scholarly works), and the Library of Congress live catalog. We then re-verified the 77 flagged cases with the expanded pipeline.
+        </p>
+
+        <p className="text-secondary leading-relaxed mb-6">
+          The results were significant: 34 out of 77 dispositions changed (44%). Of those, 12 books changed from &ldquo;first translation&rdquo; to &ldquo;translation found&rdquo; &mdash; genuine corrections. Examples:
+        </p>
+
+        <ul className="space-y-3 text-secondary mb-8">
+          <li className="flex items-start gap-3">
+            <span className="text-accent-rust mt-1.5 shrink-0">&bull;</span>
+            <span>Marsilio Ficino&apos;s <em>De Christiana Religione</em> &mdash; Google Books found a 2022 University of Toronto Press translation the old pipeline missed</span>
+          </li>
+          <li className="flex items-start gap-3">
+            <span className="text-accent-rust mt-1.5 shrink-0">&bull;</span>
+            <span>Leonhard Euler&apos;s <em>Einleitung in die Analysis des Unendlichen</em> &mdash; the German title didn&apos;t match the English catalog entry; with more sources, the tool found Blanton&apos;s translation</span>
+          </li>
+          <li className="flex items-start gap-3">
+            <span className="text-accent-rust mt-1.5 shrink-0">&bull;</span>
+            <span>Cesare Ripa&apos;s <em>Iconologia</em> &mdash; Open Library surfaced the 1709 English translation that the old pipeline overlooked</span>
+          </li>
+        </ul>
+
+        <p className="text-secondary leading-relaxed mb-6">
+          The new tools are being used heavily: Internet Archive is called on 70% of verifications, OpenAlex on 61%, and Library of Congress on 42%. All three are finding translations that the original four sources miss.
+        </p>
+
+        <p className="text-secondary leading-relaxed mb-8">
+          We are now re-running the full pipeline with the expanded tool set across all previously verified books, starting with the Latin corpus (2,400+ books). The estimated false positive rate for outright errors is under 0.5%. The remaining edge cases are legitimate scholarly judgment calls about what constitutes &ldquo;the same work&rdquo; &mdash; whether a partial anthology counts as a translation, whether a Latin rendering of a Greek text is distinct from the Greek original, and similar questions that reasonable bibliographers could disagree on.
         </p>
 
         <h2 className="text-2xl md:text-3xl text-primary mt-16 mb-6">
