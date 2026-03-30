@@ -395,6 +395,11 @@ async function fetchCollectionData(id: string) {
           if (f.key_book_id) allBookIds.add(f.key_book_id);
         }
       }
+      if (block.component === 'timeline') {
+        for (const h of block.highlights || []) {
+          if (h.book_id) allBookIds.add(h.book_id);
+        }
+      }
     }
     if (allBookIds.size > 0) {
       const exBooks = await withTimeout(
@@ -597,8 +602,9 @@ export default async function CollectionDetailPage({ params }: Props) {
                         unoptimized
                       />
                     ) : (
-                      <div className="absolute inset-0 bg-cream flex items-center justify-center">
-                        <Library className="w-8 h-8 text-muted" />
+                      <div className="absolute inset-0 bg-gradient-to-br from-[#3d3529] to-[#2a2318] flex flex-col items-center justify-center gap-2">
+                        <Library className="w-8 h-8 text-white/30" />
+                        <span className="text-white/20 text-xs font-display">{child.book_count ? `${child.book_count} ${itemLabel}` : ''}</span>
                       </div>
                     )}
                     <div className="absolute inset-0 bg-gradient-to-t from-[rgba(26,22,18,0.85)] via-[rgba(26,22,18,0.35)] to-transparent" />

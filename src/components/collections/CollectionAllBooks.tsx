@@ -348,16 +348,33 @@ export default function CollectionAllBooks({
             />
           ))}
 
-          {/* "See all" card in compact view */}
+          {/* "See all" card in compact view — shows preview thumbnails */}
           {showSeeAllCard && (
             <button
               onClick={handleExpand}
-              className="group flex flex-col items-center justify-center gap-3 rounded-xl border border-border-light bg-white hover:border-accent-rust/30 hover:shadow-md transition-all aspect-[3/4] cursor-pointer"
+              className="group flex flex-col items-center justify-center gap-3 rounded-xl border border-border-light bg-white hover:border-accent-rust/30 hover:shadow-md transition-all aspect-[3/4] cursor-pointer relative overflow-hidden"
             >
-              <div className="w-12 h-12 rounded-full bg-accent-rust/8 flex items-center justify-center group-hover:bg-accent-rust/15 transition-colors">
+              {/* Mini thumbnail preview strip */}
+              {compactBooks.length > 0 && (
+                <div className="absolute top-0 left-0 right-0 flex">
+                  {compactBooks.slice(0, 5).map((b) => (
+                    <div key={b.id} className="flex-1 aspect-square relative opacity-15 group-hover:opacity-25 transition-opacity">
+                      {(b.thumbnail || b.thumbnail_blob) && (
+                        // eslint-disable-next-line @next/next/no-img-element
+                        <img
+                          src={b.thumbnail || b.thumbnail_blob || ''}
+                          alt=""
+                          className="absolute inset-0 w-full h-full object-cover"
+                        />
+                      )}
+                    </div>
+                  ))}
+                </div>
+              )}
+              <div className="relative z-10 w-12 h-12 rounded-full bg-accent-rust/8 flex items-center justify-center group-hover:bg-accent-rust/15 transition-colors">
                 <ArrowRight className="w-5 h-5 text-accent-rust" />
               </div>
-              <div className="text-center px-3">
+              <div className="relative z-10 text-center px-3">
                 <span className="text-sm font-medium text-primary group-hover:text-accent-rust transition-colors block">
                   See all {total.toLocaleString()}
                 </span>

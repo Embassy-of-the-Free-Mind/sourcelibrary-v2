@@ -333,13 +333,12 @@ function QuotesBlock({ quotes, books }: {
 
 // ─── Component: Timeline ────────────────────────────────────────
 
-function TimelineBlock({ start_year, end_year, highlights }: {
+function TimelineBlock({ start_year, end_year, highlights, books }: {
   start_year: number;
   end_year: number;
-  highlights: { year: number; label: string; book_id?: string }[];
+  highlights: { year: number; label: string; book_id?: string; author?: string }[];
+  books?: BookRef[];
 }) {
-  const range = end_year - start_year;
-
   return (
     <div>
       <h3 className="text-xl sm:text-2xl font-display text-primary mb-6 flex items-center gap-2">
@@ -352,7 +351,7 @@ function TimelineBlock({ start_year, end_year, highlights }: {
 
         <div className="space-y-6 pl-10">
           {highlights.map((h, i) => {
-            const pct = ((h.year - start_year) / range) * 100;
+            const book = h.book_id && books ? findBook(books, h.book_id) : undefined;
             return (
               <div key={i} className="relative">
                 {/* Dot */}
@@ -362,6 +361,22 @@ function TimelineBlock({ start_year, end_year, highlights }: {
                 />
                 <div className="text-xs text-muted font-mono mb-0.5">{h.year}</div>
                 <p className="text-sm text-primary leading-snug">{h.label}</p>
+                {(book || h.author) && (
+                  <div className="mt-1 flex items-center gap-2">
+                    {h.author && (
+                      <span className="text-xs text-muted">{h.author}</span>
+                    )}
+                    {book && (
+                      <Link
+                        href={bookUrl({ id: book.id, slug: book.slug })}
+                        className="text-xs text-accent-rust hover:underline flex items-center gap-1"
+                      >
+                        <BookOpen className="w-3 h-3" />
+                        {bookTitle(book)}
+                      </Link>
+                    )}
+                  </div>
+                )}
               </div>
             );
           })}
@@ -491,10 +506,11 @@ function CrossCollectionsBlock({ links }: {
 
 // ─── Component: Gallery Grid ────────────────────────────────────
 
-function GalleryGridBlock({ embeddedImages, fallbackImages, indices }: {
+function GalleryGridBlock({ embeddedImages, fallbackImages, indices, title }: {
   embeddedImages?: GalleryImage[];
   fallbackImages: GalleryImage[];
   indices?: number[];
+  title?: string;
 }) {
   // Prefer embedded resolved images, fall back to index-based lookup
   const selected = embeddedImages && embeddedImages.length > 0
@@ -504,32 +520,40 @@ function GalleryGridBlock({ embeddedImages, fallbackImages, indices }: {
   if (selected.length === 0) return null;
 
   return (
-    <div className="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-4 gap-3">
-      {selected.map((img) => {
-        const src = imageUrl(img);
-        if (!src) return null;
-        return (
-          <Link
-            key={img.id}
-            href={imagePageHref(img)}
-            className="group relative aspect-square rounded-lg overflow-hidden border border-border-light hover:border-accent-rust/40 transition-all hover:shadow-md"
-            title={img.museum_description}
-          >
-            <Image
-              src={src}
-              alt={img.museum_description || img.book_title || 'Illustration'}
-              fill
-              className="object-cover group-hover:scale-105 transition-transform duration-300"
-              sizes="(min-width: 1024px) 200px, (min-width: 640px) 160px, 50vw"
-            />
-            {img.type && (
-              <span className="absolute bottom-1.5 left-1.5 text-[10px] bg-dark/70 text-white px-1.5 py-0.5 rounded capitalize">
-                {img.type}
-              </span>
-            )}
-          </Link>
-        );
-      })}
+    <div>
+      {title && (
+        <h3 className="text-xl sm:text-2xl font-display text-primary mb-4 flex items-center gap-2">
+          <Sparkles className="w-5 h-5 text-muted" />
+          {title}
+        </h3>
+      )}
+      <div className="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-4 gap-3">
+        {selected.map((img) => {
+          const src = imageUrl(img);
+          if (!src) return null;
+          return (
+            <Link
+              key={img.id}
+              href={imagePageHref(img)}
+              className="group relative aspect-square rounded-lg overflow-hidden border border-border-light hover:border-accent-rust/40 transition-all hover:shadow-md"
+              title={img.museum_description}
+            >
+              <Image
+                src={src}
+                alt={img.museum_description || img.book_title || 'Illustration'}
+                fill
+                className="object-cover group-hover:scale-105 transition-transform duration-300"
+                sizes="(min-width: 1024px) 200px, (min-width: 640px) 160px, 50vw"
+              />
+              {img.type && (
+                <span className="absolute bottom-1.5 left-1.5 text-[10px] bg-dark/70 text-white px-1.5 py-0.5 rounded capitalize">
+                  {img.type}
+                </span>
+              )}
+            </Link>
+          );
+        })}
+      </div>
     </div>
   );
 }
@@ -557,7 +581,7 @@ export default function ExhibitionLayout({ layout, books, images, collectionSlug
             return <QuotesBlock key={i} quotes={block.quotes} books={books} />;
 
           case 'timeline':
-            return <TimelineBlock key={i} start_year={block.start_year} end_year={block.end_year} highlights={block.highlights} />;
+            return <TimelineBlock key={i} start_year={block.start_year} end_year={block.end_year} highlights={block.highlights} books={books} />;
 
           case 'featured_image': {
             const featImg = block.image || (typeof block.image_index === 'number' ? images[block.image_index] : null);
@@ -570,7 +594,7 @@ export default function ExhibitionLayout({ layout, books, images, collectionSlug
             return <ReadingPathsBlock key={i} paths={block.paths} books={books} />;
 
           case 'gallery_grid':
-            return <GalleryGridBlock key={i} embeddedImages={block.images} fallbackImages={images} indices={block.image_indices} />;
+            return <GalleryGridBlock key={i} embeddedImages={block.images} fallbackImages={images} indices={block.image_indices} title={block.title || 'Illustrations from the Collection'} />;
 
           case 'cross_collections':
             return <CrossCollectionsBlock key={i} links={block.links} />;
