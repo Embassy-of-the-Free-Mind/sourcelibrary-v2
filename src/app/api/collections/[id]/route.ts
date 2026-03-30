@@ -9,6 +9,7 @@ export const maxDuration = 30;
  * Get collection metadata and its books with pagination/sorting.
  *
  * Query params:
+ *   - mode: 'manifest' returns lightweight data for all books (client-side filter/sort)
  *   - sort: 'year_asc' (default), 'year_desc', 'title', 'author', 'recent', 'popular', 'relevance'
  *   - language: filter by language
  *   - limit: max results (default 60, max 200)
@@ -21,6 +22,7 @@ export async function GET(
   try {
     const { id } = await params;
     const { searchParams } = new URL(request.url);
+    const mode = searchParams.get('mode');
     const sort = searchParams.get('sort') || 'year_asc';
     const language = searchParams.get('language');
     const q = searchParams.get('q')?.trim();
@@ -48,6 +50,39 @@ export async function GET(
           pages_count: { $gt: 0 },
           pages_translated: { $gt: 0 },
         };
+
+    // Manifest mode: return lightweight data for all books in one shot.
+    // Enables instant client-side search/sort/filter. ~50-100KB for 2,000 books.
+    if (mode === 'manifest') {
+      const manifestProjection = {
+        _id: 0, id: 1, slug: 1, title: 1, display_title: 1, author: 1, year: 1,
+        language: 1, pages_count: 1, pages_ocr: 1, pages_translated: 1, pages_blank: 1,
+        published: 1, read_count: 1, thumbnail: 1, thumbnail_blob: 1,
+        is_first_translation: 1, ft_disposition: 1,
+        created_at: 1, last_translation_at: 1,
+      };
+      // Include relevance score for this collection
+      const manifestProjectionWithScore = {
+        ...manifestProjection,
+        [`collection_scores.${id}.relevance`]: 1,
+      };
+      const allBooks = await db.collection('books')
+        .find(filter, { projection: manifestProjectionWithScore })
+        .sort({ published: 1 })
+        .toArray();
+
+      // Flatten relevance score to top level
+      const books = allBooks.map(({ collection_scores, ...rest }) => ({
+        ...rest,
+        relevance: collection_scores?.[id]?.relevance ?? 0,
+      }));
+
+      return NextResponse.json({
+        books,
+        total: books.length,
+      });
+    }
+
     if (language) filter.language = language;
     if (q) {
       const escaped = q.replace(/[.*+?^${}()|[\]\\]/g, '\\$&');
@@ -65,6 +100,7 @@ export async function GET(
       title: { title: 1 },
       author: { author: 1, title: 1 },
       recent: { created_at: -1 },
+      last_translated: { last_translation_at: -1, title: 1 },
       popular: { read_count: -1, title: 1 },
       relevance: { [`collection_scores.${id}.relevance`]: -1, read_count: -1 },
     };
@@ -72,9 +108,9 @@ export async function GET(
 
     const projection = {
       _id: 0, id: 1, slug: 1, title: 1, display_title: 1, author: 1, year: 1,
-      language: 1, pages_count: 1, pages_ocr: 1, pages_translated: 1,
+      language: 1, pages_count: 1, pages_ocr: 1, pages_translated: 1, pages_blank: 1,
       photo: 1, categories: 1, thumbnail: 1, thumbnail_blob: 1, published: 1, read_count: 1,
-      resource_type: 1,
+      resource_type: 1, is_first_translation: 1, ft_disposition: 1,
     };
 
     const highlightProjection = {
