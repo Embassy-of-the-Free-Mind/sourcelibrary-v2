@@ -84,3 +84,4 @@ mcp-server/dist/
 logs/*.log
 split-review.html
 input.json
+supabase/.temp/

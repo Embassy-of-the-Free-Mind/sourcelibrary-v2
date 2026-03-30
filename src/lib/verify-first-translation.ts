@@ -25,9 +25,7 @@ const MODEL = 'gemini-3.1-flash-lite-preview';
 const MAX_ROUNDS = 6; // Max Gemini round-trips (tool calls + responses)
 const TEMPERATURE = 0.1;
 
-// USTC Supabase (public anon key — read-only access)
-const SUPABASE_URL = 'https://ykhxaecbbxaaqlujuzde.supabase.co';
-const SUPABASE_ANON_KEY = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6InlraHhhZWNiYnhhYXFsdWp1emRlIiwicm9sZSI6ImFub24iLCJpYXQiOjE3NjUwNjExMDEsImV4cCI6MjA4MDYzNzEwMX0.O2chfnHGQWLOaVSFQ-F6UJMlya9EzPbsUh848SEOPj4';
+import { SUPABASE_URL, SUPABASE_ANON_KEY } from './supabase';
 
 // ── Types ─────────────────────────────────────────────────────────────
 

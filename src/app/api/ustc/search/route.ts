@@ -3,9 +3,7 @@ import { getDb } from '@/lib/mongodb';
 
 export const dynamic = 'force-dynamic';
 
-// USTC enriched database (for USTC ID lookups)
-const SUPABASE_URL = 'https://ykhxaecbbxaaqlujuzde.supabase.co';
-const SUPABASE_ANON_KEY = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6InlraHhhZWNiYnhhYXFsdWp1emRlIiwicm9sZSI6ImFub24iLCJpYXQiOjE3NjUwNjExMDEsImV4cCI6MjA4MDYzNzEwMX0.O2chfnHGQWLOaVSFQ-F6UJMlya9EzPbsUh848SEOPj4';
+import { SUPABASE_URL, SUPABASE_ANON_KEY } from '@/lib/supabase';
 
 interface SearchResult {
   id: string;
