@@ -1210,7 +1210,23 @@ async function main() {
   await client.connect();
   const db = client.db('bookstore');
 
+  const startTime = Date.now();
   console.log(`[ENRICH] ${new Date().toISOString()} — phase=${phaseArg}, dry-run=${DRY_RUN}`);
+
+  // Check pause status
+  const control = await db.collection('system_config').findOne({ _id: 'processing_control' });
+  if (control?.paused || control?.paused_phases?.includes('enrichment')) {
+    const reason = control?.paused ? 'pipeline paused' : 'enrichment phase paused';
+    console.log(`[ENRICH] ${reason}, exiting`);
+    await db.collection('cron_runs').insertOne({
+      cron: 'hetzner-enrich-worker', timestamp: new Date(),
+      duration_ms: Date.now() - startTime, status: 'skipped', failed: false,
+      actions: { skip_reason: reason }, errors: [], error_count: 0,
+      summary: `skipped: ${reason}`,
+    }).catch(() => {});
+    await client.close();
+    return;
+  }
 
   let enriched = 0;
   let chaptersExtracted = 0;
@@ -1312,11 +1328,23 @@ async function main() {
   }
 
   // Summary
-  console.log(`\n[ENRICH] Done — enriched=${enriched}, chapters=${chaptersExtracted}, errors=${errors.length}`);
+  const durationMs = Date.now() - startTime;
+  console.log(`\n[ENRICH] Done — enriched=${enriched}, chapters=${chaptersExtracted}, errors=${errors.length}, ${(durationMs/1000).toFixed(0)}s`);
   if (errors.length > 0) {
     console.log('  Errors:');
     for (const err of errors.slice(0, 10)) console.log(`    ${err}`);
   }
+
+  await db.collection('cron_runs').insertOne({
+    cron: 'hetzner-enrich-worker', timestamp: new Date(),
+    duration_ms: durationMs,
+    status: errors.length > 0 ? 'completed_with_errors' : 'success',
+    failed: false,
+    actions: { enriched, chapters_extracted: chaptersExtracted },
+    errors: errors.slice(0, 20).map(msg => ({ message: msg, timestamp: new Date() })),
+    error_count: errors.length,
+    summary: `E:${enriched} C:${chaptersExtracted} err:${errors.length}`,
+  }).catch(() => {});
 
   await client.close();
 }

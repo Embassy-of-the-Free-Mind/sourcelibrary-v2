@@ -300,7 +300,7 @@ The old Vercel-based `post-import-pipeline` cron also had OCR routing with Lambd
 - Translates pages sequentially per book (context continuity via previous page lookup)
 - Calls Gemini API directly — no SQS, no Lambda
 - Model routing: `gemini-3-flash-preview` for BPH, `gemini-3.1-flash-lite-preview` for all others
-- Concurrency: 20 books simultaneously, 8,000 page cap per run, 40 in-flight book cap
+- Concurrency: 40 books simultaneously, 8,000 page cap per run, 40 in-flight book cap
 - API key rotation on rate limits (up to 11 keys)
 
 ### Fallback Path: Lambda + SQS FIFO

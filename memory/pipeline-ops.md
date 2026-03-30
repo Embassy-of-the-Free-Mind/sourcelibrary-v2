@@ -8,7 +8,7 @@ Operational reference for pipeline monitoring, debugging, and processing. For fu
 |-----------|-------|-----|
 | Pipeline orchestrator | **Hetzner** (`pipeline-orchestrator.mjs`) | All phases, every 2 min |
 | Full-book OCR | **Hetzner → Gemini Batch API** | Direct submission, 50% cost discount |
-| Translation | **Hetzner** (`translate-worker.mjs`) | Direct Gemini calls, 20 concurrent books |
+| Translation | **Hetzner** (`translate-worker.mjs`) | Direct Gemini calls, 40 concurrent books |
 | Batch result collection | **Hetzner** (`batch-collector.mjs`) | Polls Gemini API every 10 min |
 | Archiving | **Hetzner** (`archive-ocr.mjs`, `archive-bulk.mjs`) | Downloads → Cloudflare R2 |
 | Preview OCR (25 pages) | **Lambda** via SQS | Fast preview path, still active |
@@ -36,22 +36,28 @@ Operational reference for pipeline monitoring, debugging, and processing. For fu
 - **Resume:** `POST /api/admin/emergency-stop?resume=true`
 - **Selective pause:** `paused_phases: ['ocr','translation','images']`
 - **Adaptive limits:** `GET/PATCH /api/admin/adaptive-limits`
-- **`paused: true` doesn't stop Lambda workers or Hetzner translate-worker.** Must CANCEL jobs in MongoDB for actual load reduction.
+- **`paused: true` is respected by Hetzner workers** (orchestrator, translate-worker, enrich-worker). Workers auto-resume stale pauses after 30min if DB is healthy (<500ms findOne). Phase-specific pauses are always respected.
+- **Audit log:** All pause/unpause events logged to `processing_control_log` collection (action, timestamp, source, detail).
+- To force-stop Lambda workers: must CANCEL jobs in MongoDB (Lambda doesn't check pause flag).
 
 ## Concurrency Limits
 
 - MongoDB Atlas saturates at ~40 concurrent Lambda jobs (global backpressure limit)
 - Per-phase maximums: OCR 20, translation 30 (in-flight cap 40 books), images 50
-- Translate-worker runs 20 concurrent books, 8000 pages/run cap
+- Translate-worker runs 40 concurrent books, 8000 pages/run cap
 - Tested higher (2026-03-26): `global_active_max` 50, `translate_lambda_max` 50 — Atlas stayed healthy. Adaptive system will auto-dial back if needed (ensure `locked: false`).
 
 ## Critical Rules
 
 - NEVER use Gemini Batch API for translation — lacks cross-page context. Use `translate-worker.mjs` (Hetzner) or Lambda FIFO (fallback).
+- **Translation prompt source of truth is the DB `prompts` collection** (type: 'translation', is_default: true). Both workers read it once per run and cache. Never hardcode prompts in worker files. To update the prompt, update the DB — no code deploy needed.
 - **Any Hetzner worker that writes to `pages` must also update the parent book's cached counters** (`pages_ocr`, `pages_translated`, `pages_archived`). Vercel API routes do this via shared helpers, but standalone Hetzner scripts bypass them. See #497.
 - Any script overwriting `ocr.data` or `translation.data` MUST call `createRevision(pageId, field, jobId?)` first
+- **Never patch Hetzner without committing to git.** Local-only patches cause drift that's invisible to other devs and future sessions. Apply fixes in git first, then `git pull` on Hetzner.
+- **Health grading uses DB latency only** (findMs, countMs), not job count. Job count stopped correlating with DB load when translation moved to Hetzner. See lesson 2026-03-30.
 - Summary/Index generation: ALWAYS use `gemini-3-flash-preview` (per CLAUDE.md)
 - Stale Vercel connection pools after DB recovery → redeploy to reset
+- **All Hetzner workers log to `cron_runs`** with their `cron` field name (not `name`). Workers: `hetzner-translate-worker`, `pipeline-orchestrator-worker`, `hetzner-enrich-worker`. Query: `db.collection('cron_runs').find({ cron: '...' }).sort({ timestamp: -1 })`.
 
 ## Lessons Learned
 
