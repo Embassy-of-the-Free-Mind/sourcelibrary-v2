@@ -236,7 +236,7 @@ $0.0017/page (measured from `gemini_usage`: $354 / 211K pages over 7 days)
 4. Calls Gemini directly -- model: `gemini-3-flash-preview` (BPH) or `gemini-3.1-flash-lite-preview` (others)
 5. Writes translation directly to `pages` collection
 6. Rotates API keys on rate limits (up to 11 keys)
-7. Concurrency: 20 books simultaneously, 8,000 page cap per run
+7. Concurrency: 40 books simultaneously, 8,000 page cap per run
 
 ### Legacy Lambda Path (Fallback)
 

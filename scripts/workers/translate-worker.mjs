@@ -26,7 +26,7 @@ import { GoogleGenerativeAI } from '@google/generative-ai';
 import { createHash } from 'crypto';
 
 // ── Config ──
-const CONCURRENCY = 20;          // Max books translating simultaneously
+const CONCURRENCY = 40;          // Max books translating simultaneously
 const PAGES_PER_RUN = 8000;      // Global page cap per run (prevent runaway costs)
 const MAX_CONSECUTIVE_ERRORS = 5; // Per-book error threshold before giving up
 const RATE_LIMIT_BACKOFF_MS = 15000;
@@ -99,7 +99,7 @@ const MIN_OCR_CHARS_FOR_BATCH = 200;
 // ── MongoDB ──
 const client = new MongoClient(process.env.MONGODB_URI, {
   serverSelectionTimeoutMS: 10000,
-  maxPoolSize: CONCURRENCY + 5,
+  maxPoolSize: CONCURRENCY + 10,
 });
 
 // ── Sanitize translation tags (matches src/lib/sanitize-translation-tags.ts) ──
@@ -638,12 +638,65 @@ async function main() {
   await client.connect();
   const db = client.db('bookstore');
 
-  // Check pause status
+  // Check pause status — with auto-resume for stale global pauses
   const control = await db.collection('system_config').findOne({ _id: 'processing_control' });
-  if (control?.paused || control?.paused_phases?.includes('translation')) {
-    console.log('[TRANSLATE] Pipeline paused, exiting');
-    await client.close();
-    return;
+  const translationPhasePaused = control?.paused_phases?.includes('translation');
+  if (control?.paused || translationPhasePaused) {
+    // Phase-specific pauses are always respected (intentional)
+    if (translationPhasePaused) {
+      console.log('[TRANSLATE] Translation phase paused, exiting');
+      await db.collection('cron_runs').insertOne({
+        cron: 'hetzner-translate-worker', timestamp: new Date(),
+        duration_ms: Date.now() - startTime, status: 'skipped', failed: false,
+        pages_saved: 0, actions: { books_processed: 0, skip_reason: 'translation phase paused' },
+        errors: [], error_count: 0, summary: 'skipped: translation phase paused',
+      }).catch(() => {});
+      await client.close();
+      return;
+    }
+
+    // Global pause: auto-resume if stale (>30min) and DB is healthy
+    const pauseAgeMs = control.paused_at ? Date.now() - new Date(control.paused_at).getTime() : Infinity;
+    const STALE_PAUSE_MS = 30 * 60 * 1000;
+
+    if (pauseAgeMs > STALE_PAUSE_MS) {
+      const probeStart = Date.now();
+      await db.collection('books').findOne({ pages_count: { $gt: 0 } });
+      const findMs = Date.now() - probeStart;
+
+      if (findMs < 500) {
+        console.log(`[TRANSLATE] Auto-resuming stale pause (${Math.round(pauseAgeMs / 60000)}min old, DB ${findMs}ms)`);
+        await db.collection('system_config').updateOne(
+          { _id: 'processing_control' },
+          { $set: { paused: false, unpaused_at: new Date(), unpaused_by: `auto-resume: translate-worker (${Math.round(pauseAgeMs / 60000)}min stale, DB ${findMs}ms)` } }
+        );
+        await db.collection('processing_control_log').insertOne({
+          action: 'auto_resume', timestamp: new Date(), source: 'translate-worker',
+          detail: `Stale pause auto-cleared after ${Math.round(pauseAgeMs / 60000)}min. DB: ${findMs}ms. Original: ${control.paused_by}`,
+        }).catch(() => {});
+        // Continue — don't return
+      } else {
+        console.log(`[TRANSLATE] Stale pause but DB slow (${findMs}ms), staying paused`);
+        await db.collection('cron_runs').insertOne({
+          cron: 'hetzner-translate-worker', timestamp: new Date(),
+          duration_ms: Date.now() - startTime, status: 'skipped', failed: false,
+          pages_saved: 0, actions: { books_processed: 0, skip_reason: 'pipeline paused (DB slow)', db_find_ms: findMs },
+          errors: [], error_count: 0, summary: `skipped: paused (stale but DB ${findMs}ms)`,
+        }).catch(() => {});
+        await client.close();
+        return;
+      }
+    } else {
+      console.log(`[TRANSLATE] Pipeline paused (${Math.round(pauseAgeMs / 60000)}min ago), exiting`);
+      await db.collection('cron_runs').insertOne({
+        cron: 'hetzner-translate-worker', timestamp: new Date(),
+        duration_ms: Date.now() - startTime, status: 'skipped', failed: false,
+        pages_saved: 0, actions: { books_processed: 0, skip_reason: 'pipeline paused' },
+        errors: [], error_count: 0, summary: `skipped: pipeline paused (${Math.round(pauseAgeMs / 60000)}min ago)`,
+      }).catch(() => {});
+      await client.close();
+      return;
+    }
   }
 
   // Find books with active translation jobs

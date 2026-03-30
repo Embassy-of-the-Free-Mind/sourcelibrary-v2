@@ -96,6 +96,18 @@ async function run() {
   // 8. Pause status
   const control = await db.collection('system_config').findOne({ _id: 'processing_control' });
 
+  // 9. Stall detection — flag when translation throughput is 0 but jobs exist
+  const translationActive = active_jobs.some(j => j._id.type === 'translation');
+  const translationStalled = translationActive && throughput.translation_1h === 0;
+  if (translationStalled) {
+    console.log(`[enrichment-snapshot] WARNING: Translation stalled — active jobs exist but 0 pages translated in 1h`);
+    await db.collection('processing_control_log').insertOne({
+      action: 'stall_detected', timestamp: new Date(), source: 'enrichment-snapshot',
+      detail: `translation_1h=0 with ${active_jobs.filter(j => j._id.type === 'translation').reduce((s, j) => s + j.count, 0)} active translation jobs`,
+      paused: control?.paused || false,
+    }).catch(() => {});
+  }
+
   // Write snapshot
   const snapshot = {
     _id: 'enrichment_snapshot',
@@ -138,6 +150,7 @@ async function run() {
     throughput,
     paused: control?.paused || false,
     paused_phases: control?.paused_phases || [],
+    translation_stalled: translationStalled,
   };
 
   await db.collection('system_config').replaceOne(

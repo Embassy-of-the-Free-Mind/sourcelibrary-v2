@@ -31,8 +31,11 @@ export const POST = withAdminAuth(async (request: NextRequest) => {
   if (resume) {
     await db.collection('system_config').updateOne(
       { _id: 'processing_control' as any },
-      { $set: { paused: false, paused_phases: [], resumed_at: new Date() } },
+      { $set: { paused: false, paused_phases: [], resumed_at: new Date(), resumed_by: 'emergency-stop-api' } },
     );
+    await db.collection('processing_control_log').insertOne({
+      action: 'resume', timestamp: new Date(), source: 'emergency-stop-api',
+    });
     return NextResponse.json({ success: true, action: 'resumed' });
   }
 
@@ -123,6 +126,11 @@ export const POST = withAdminAuth(async (request: NextRequest) => {
       { $set: pauseUpdate },
       { upsert: true }
     );
+    await db.collection('processing_control_log').insertOne({
+      action: 'pause', timestamp: new Date(), source: 'emergency-stop-api',
+      reason: 'emergency stop', paused_phases: pausedPhases || 'all',
+      jobs_cancelled: activeJobCount, batch_jobs_cancelled: activeBatchCount,
+    });
   }
 
   // 5. Purge SQS AI queues (unless skipped or dry run)
