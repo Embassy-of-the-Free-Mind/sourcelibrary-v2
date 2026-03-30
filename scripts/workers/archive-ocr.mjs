@@ -190,15 +190,11 @@ async function main() {
   const client = await MongoClient.connect(process.env.MONGODB_URI);
   const db = client.db('bookstore');
 
-  // No longer requires ocr.data — archiving is a prerequisite for OCR, not post-OCR.
-  // This unblocks 4.3M+ pages that were stuck in a deadlock.
+  // Find pages with a photo URL but no archived copy.
+  // Uses pages_archive_needed_idx (partial index on {archived_photo:1} where photo exists).
   const query = {
     photo: { $exists: true, $nin: [null, ''] },
-    $or: [
-      { archived_photo: { $exists: false } },
-      { archived_photo: null },
-      { archived_photo: '' },
-    ],
+    archived_photo: { $in: [null, ''] },
   };
 
   // Skip expensive count — just fetch pages and check if any returned
@@ -218,7 +214,7 @@ async function main() {
       projection: { _id: 1, book_id: 1, page_number: 1, photo: 1 },
       limit: MAX_PAGES,
     })
-    .maxTimeMS(60_000)
+    .maxTimeMS(120_000)
     .toArray();
 
   if (pages.length === 0) {
