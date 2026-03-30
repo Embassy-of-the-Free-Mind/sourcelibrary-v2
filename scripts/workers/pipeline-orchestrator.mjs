@@ -2486,7 +2486,8 @@ async function run() {
           console.log('  SKIP: at in-flight cap, waiting for existing translations to complete');
         }
 
-        const readyForTranslate = effectiveLimit > 0 ? await db.collection('books').aggregate([
+        // Fresh books first (never translated), then re-queue partially-translated books
+        const freshBooks = effectiveLimit > 0 ? await db.collection('books').aggregate([
           // PAUSED: BPH books excluded pending split quality audit (#523)
           { $match: { 'pipeline_auto.status': { $in: ['metadata_enriched', 'ft_verified'] }, 'image_source.provider': { $ne: 'bph' } } },
           { $addFields: { _latinFirst: { $cond: [{ $eq: ['$language', 'Latin'] }, 0, 1] } } },
@@ -2494,6 +2495,22 @@ async function run() {
           { $project: { id: 1, title: 1, pages_count: 1, language: 1, 'pipeline_auto.retry_count': 1, 'image_source.provider': 1 } },
           { $limit: effectiveLimit }
         ]).toArray() : [];
+
+        // If no fresh books, re-queue partially-translated books for their next chunk
+        let partialBooks = [];
+        if (freshBooks.length === 0 && effectiveLimit > 0) {
+          partialBooks = await db.collection('books')
+            .find({ 'pipeline_auto.status': 'translate_partial', 'image_source.provider': { $ne: 'bph' } })
+            .project({ id: 1, title: 1, pages_count: 1, language: 1, 'pipeline_auto.retry_count': 1, 'image_source.provider': 1 })
+            .sort({ pages_translated: 1 }) // least-translated first
+            .limit(effectiveLimit)
+            .toArray();
+          if (partialBooks.length > 0) {
+            console.log(`  No fresh books — re-queuing ${partialBooks.length} partially-translated books`);
+          }
+        }
+
+        const readyForTranslate = [...freshBooks, ...partialBooks];
 
         console.log(`  Books ready for translation: ${readyForTranslate.length}`);
 
