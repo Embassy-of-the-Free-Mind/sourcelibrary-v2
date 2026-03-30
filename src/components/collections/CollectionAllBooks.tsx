@@ -1,9 +1,12 @@
 'use client';
 
-import { useState, useCallback, useRef } from 'react';
-import { ArrowRight, Search, X } from 'lucide-react';
+import { useState, useCallback, useRef, useEffect } from 'react';
+import { ArrowRight, Search, X, LayoutGrid, List } from 'lucide-react';
+import { useRouter, useSearchParams } from 'next/navigation';
 import { useDebouncedCallback } from 'use-debounce';
 import CollectionBookCard from '@/components/CollectionBookCard';
+import CollectionListView from '@/components/collections/CollectionListView';
+import CatalogPagination from '@/components/collections/CatalogPagination';
 import { bookTitle } from '@/lib/collections-utils';
 
 const PER_PAGE = 60;
@@ -25,6 +28,8 @@ interface BookItem {
   thumbnail_blob?: string;
   published?: string;
   read_count?: number;
+  is_first_translation?: boolean;
+  ft_disposition?: string;
 }
 
 interface CollectionAllBooksProps {
@@ -37,6 +42,13 @@ interface CollectionAllBooksProps {
   collectionType?: string;
 }
 
+type ViewMode = 'grid' | 'list';
+
+function getStoredView(): ViewMode | null {
+  if (typeof window === 'undefined') return null;
+  return localStorage.getItem('sl-collection-view') as ViewMode | null;
+}
+
 export default function CollectionAllBooks({
   collectionId,
   compactBooks,
@@ -45,16 +57,53 @@ export default function CollectionAllBooks({
   collectionType,
 }: CollectionAllBooksProps) {
   const itemLabel = collectionType === 'visual_art' ? 'works' : 'books';
-  const itemLabelSingular = collectionType === 'visual_art' ? 'work' : 'book';
-  const [expanded, setExpanded] = useState(false);
+  const router = useRouter();
+  const searchParams = useSearchParams();
+
+  // Read initial state from URL params
+  const urlSort = searchParams.get('sort') || 'relevance';
+  const urlLang = searchParams.get('language') || '';
+  const urlQ = searchParams.get('q') || '';
+  const urlPage = parseInt(searchParams.get('page') || '0');
+  const urlView = searchParams.get('view') as ViewMode | null;
+  const hasUrlParams = searchParams.has('sort') || searchParams.has('page') || searchParams.has('view');
+
+  // Default to list for large collections (200+)
+  const sizeDefault: ViewMode = total > 200 ? 'list' : 'grid';
+  const initialView = urlView || getStoredView() || sizeDefault;
+
+  const [expanded, setExpanded] = useState(hasUrlParams);
   const [books, setBooks] = useState<BookItem[]>([]);
   const [loading, setLoading] = useState(false);
   const [fetchedTotal, setFetchedTotal] = useState(total);
-  const [sort, setSort] = useState('relevance');
-  const [language, setLanguage] = useState('');
-  const [query, setQuery] = useState('');
-  const [offset, setOffset] = useState(0);
+  const [sort, setSort] = useState(urlSort);
+  const [language, setLanguage] = useState(urlLang);
+  const [query, setQuery] = useState(urlQ);
+  const [offset, setOffset] = useState(urlPage * PER_PAGE);
+  const [viewMode, setViewMode] = useState<ViewMode>(initialView);
+  const [initialFetchDone, setInitialFetchDone] = useState(false);
   const searchRef = useRef<HTMLInputElement>(null);
+
+  // Fetch on mount if URL had params
+  useEffect(() => {
+    if (hasUrlParams && !initialFetchDone) {
+      setInitialFetchDone(true);
+      fetchBooks(sort, language, offset, query);
+    }
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, []);
+
+  const updateUrl = useCallback((s: string, lang: string, off: number, q: string, view: ViewMode) => {
+    const params = new URLSearchParams();
+    if (s !== 'relevance') params.set('sort', s);
+    if (lang) params.set('language', lang);
+    if (q) params.set('q', q);
+    if (off > 0) params.set('page', String(Math.floor(off / PER_PAGE)));
+    if (view !== sizeDefault) params.set('view', view);
+    const qs = params.toString();
+    const url = `/collections/${collectionId}${qs ? `?${qs}` : ''}`;
+    router.replace(url, { scroll: false });
+  }, [collectionId, sizeDefault, router]);
 
   const fetchBooks = useCallback(async (s: string, lang: string, off: number, q: string = '') => {
     setLoading(true);
@@ -80,18 +129,22 @@ export default function CollectionAllBooks({
   const handleExpand = useCallback(() => {
     setExpanded(true);
     fetchBooks('relevance', '', 0);
-  }, [fetchBooks]);
+    updateUrl('relevance', '', 0, '', viewMode);
+  }, [fetchBooks, updateUrl, viewMode]);
 
   const handleSort = useCallback((newSort: string) => {
     fetchBooks(newSort, language, 0, query);
-  }, [fetchBooks, language, query]);
+    updateUrl(newSort, language, 0, query, viewMode);
+  }, [fetchBooks, language, query, updateUrl, viewMode]);
 
   const handleLanguage = useCallback((newLang: string) => {
     fetchBooks(sort, newLang, 0, query);
-  }, [fetchBooks, sort, query]);
+    updateUrl(sort, newLang, 0, query, viewMode);
+  }, [fetchBooks, sort, query, updateUrl, viewMode]);
 
   const debouncedSearch = useDebouncedCallback((q: string) => {
     fetchBooks(sort, language, 0, q);
+    updateUrl(sort, language, 0, q, viewMode);
   }, 300);
 
   const handleSearch = useCallback((value: string) => {
@@ -99,10 +152,20 @@ export default function CollectionAllBooks({
     debouncedSearch(value);
   }, [debouncedSearch]);
 
-  const handlePage = useCallback((newOffset: number) => {
+  const handlePage = useCallback((page: number) => {
+    const newOffset = (page - 1) * PER_PAGE;
     fetchBooks(sort, language, newOffset, query);
+    updateUrl(sort, language, newOffset, query, viewMode);
     document.getElementById('collection-all-books')?.scrollIntoView({ behavior: 'smooth' });
-  }, [fetchBooks, sort, language, query]);
+  }, [fetchBooks, sort, language, query, updateUrl, viewMode]);
+
+  const handleViewToggle = useCallback((mode: ViewMode) => {
+    setViewMode(mode);
+    localStorage.setItem('sl-collection-view', mode);
+    if (expanded) {
+      updateUrl(sort, language, offset, query, mode);
+    }
+  }, [expanded, sort, language, offset, query, updateUrl]);
 
   const showSeeAllCard = !expanded && total > compactBooks.length;
   const displayBooks = expanded ? books : compactBooks;
@@ -124,6 +187,35 @@ export default function CollectionAllBooks({
 
         {expanded && (
           <div className="flex flex-wrap items-center gap-3">
+            {/* View toggle */}
+            <div className="flex items-center border border-border-light rounded-lg overflow-hidden">
+              <button
+                onClick={() => handleViewToggle('grid')}
+                className={`p-1.5 transition-colors cursor-pointer ${
+                  viewMode === 'grid'
+                    ? 'bg-accent-rust/10 text-accent-rust'
+                    : 'text-muted hover:text-primary'
+                }`}
+                aria-label="Grid view"
+                title="Grid view"
+              >
+                <LayoutGrid className="w-4 h-4" />
+              </button>
+              <button
+                onClick={() => handleViewToggle('list')}
+                className={`p-1.5 transition-colors cursor-pointer ${
+                  viewMode === 'list'
+                    ? 'bg-accent-rust/10 text-accent-rust'
+                    : 'text-muted hover:text-primary'
+                }`}
+                aria-label="List view"
+                title="List view"
+              >
+                <List className="w-4 h-4" />
+              </button>
+            </div>
+
+            {/* Search */}
             <div className="relative">
               <Search className="absolute left-2.5 top-1/2 -translate-y-1/2 w-4 h-4 text-muted" />
               <input
@@ -143,6 +235,8 @@ export default function CollectionAllBooks({
                 </button>
               )}
             </div>
+
+            {/* Sort dropdown */}
             <select
               value={sort}
               onChange={(e) => handleSort(e.target.value)}
@@ -153,10 +247,13 @@ export default function CollectionAllBooks({
               <option value="year_asc">Oldest First</option>
               <option value="year_desc">Newest First</option>
               <option value="title">Title A-Z</option>
-              <option value="author">Artist A-Z</option>
+              <option value="author">{collectionType === 'visual_art' ? 'Artist' : 'Author'} A-Z</option>
+              <option value="last_translated">Recently Translated</option>
               <option value="recent">Recently Added</option>
             </select>
-            {languages.length > 0 && (
+
+            {/* Language filter */}
+            {languages.length > 1 && (
               <select
                 value={language}
                 onChange={(e) => handleLanguage(e.target.value)}
@@ -172,90 +269,80 @@ export default function CollectionAllBooks({
         )}
       </div>
 
-      {/* Books Grid */}
-      <div className={`grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-4 xl:grid-cols-5 gap-4 ${loading ? 'opacity-50 pointer-events-none' : ''}`}>
-        {displayBooks.map((book, i) => (
-          <CollectionBookCard
-            key={book.id}
-            book={{
-              bookId: book.id,
-              id: book.id,
-              slug: book.slug,
-              title: bookTitle(book),
-              author: book.author || '',
-              year: book.year || 0,
-              pages_count: book.pages_count,
-              pages_ocr: book.pages_ocr,
-              pages_translated: book.pages_translated,
-              thumbnail: book.thumbnail || book.thumbnail_blob || book.photo,
-              thumbnail_blob: book.thumbnail_blob,
-              language: book.language,
-              published: book.published,
-              translation_percent: book.pages_ocr && book.pages_translated
-                ? Math.round((book.pages_translated / Math.max((book.pages_ocr || 0) - (book.pages_blank || 0), 1)) * 100)
-                : 0,
-            }}
-            priority={!expanded && i < 4}
-          />
-        ))}
+      {/* Books — Grid or List */}
+      {viewMode === 'list' && expanded ? (
+        <CollectionListView
+          books={displayBooks}
+          sort={sort}
+          onSort={handleSort}
+          loading={loading}
+          collectionType={collectionType}
+        />
+      ) : (
+        <div className={`grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-4 xl:grid-cols-5 gap-4 ${loading ? 'opacity-50 pointer-events-none' : ''}`}>
+          {displayBooks.map((book, i) => (
+            <CollectionBookCard
+              key={book.id}
+              book={{
+                bookId: book.id,
+                id: book.id,
+                slug: book.slug,
+                title: bookTitle(book),
+                author: book.author || '',
+                year: book.year || 0,
+                pages_count: book.pages_count,
+                pages_ocr: book.pages_ocr,
+                pages_translated: book.pages_translated,
+                thumbnail: book.thumbnail || book.thumbnail_blob || book.photo,
+                thumbnail_blob: book.thumbnail_blob,
+                language: book.language,
+                published: book.published,
+                translation_percent: book.pages_ocr && book.pages_translated
+                  ? Math.round((book.pages_translated / Math.max((book.pages_ocr || 0) - (book.pages_blank || 0), 1)) * 100)
+                  : 0,
+              }}
+              priority={!expanded && i < 4}
+            />
+          ))}
 
-        {/* "See all" card in compact view */}
-        {showSeeAllCard && (
-          <button
-            onClick={handleExpand}
-            className="group flex flex-col items-center justify-center gap-3 rounded-xl border border-border-light bg-white hover:border-accent-rust/30 hover:shadow-md transition-all aspect-[3/4] cursor-pointer"
-          >
-            <div className="w-12 h-12 rounded-full bg-accent-rust/8 flex items-center justify-center group-hover:bg-accent-rust/15 transition-colors">
-              <ArrowRight className="w-5 h-5 text-accent-rust" />
-            </div>
-            <div className="text-center px-3">
-              <span className="text-sm font-medium text-primary group-hover:text-accent-rust transition-colors block">
-                See all {total.toLocaleString()}
-              </span>
-              <span className="text-xs text-muted">{itemLabel}</span>
-            </div>
-          </button>
-        )}
-      </div>
-
-      {/* Pagination (only in expanded view) */}
-      {expanded && totalPages > 1 && (
-        <div className="flex items-center justify-center gap-4 mt-10 text-sm">
-          {offset > 0 ? (
+          {/* "See all" card in compact view */}
+          {showSeeAllCard && (
             <button
-              onClick={() => handlePage(Math.max(0, offset - PER_PAGE))}
-              className="px-4 py-2 rounded-lg border border-border-light hover:bg-warm transition-colors cursor-pointer"
+              onClick={handleExpand}
+              className="group flex flex-col items-center justify-center gap-3 rounded-xl border border-border-light bg-white hover:border-accent-rust/30 hover:shadow-md transition-all aspect-[3/4] cursor-pointer"
             >
-              Previous
+              <div className="w-12 h-12 rounded-full bg-accent-rust/8 flex items-center justify-center group-hover:bg-accent-rust/15 transition-colors">
+                <ArrowRight className="w-5 h-5 text-accent-rust" />
+              </div>
+              <div className="text-center px-3">
+                <span className="text-sm font-medium text-primary group-hover:text-accent-rust transition-colors block">
+                  See all {total.toLocaleString()}
+                </span>
+                <span className="text-xs text-muted">{itemLabel}</span>
+              </div>
             </button>
-          ) : (
-            <span className="px-4 py-2 rounded-lg border border-border-light opacity-30">
-              Previous
-            </span>
-          )}
-          <span className="text-muted">
-            Page {currentPage} of {totalPages}
-          </span>
-          {currentPage < totalPages ? (
-            <button
-              onClick={() => handlePage(offset + PER_PAGE)}
-              className="px-4 py-2 rounded-lg border border-border-light hover:bg-warm transition-colors cursor-pointer"
-            >
-              Next
-            </button>
-          ) : (
-            <span className="px-4 py-2 rounded-lg border border-border-light opacity-30">
-              Next
-            </span>
           )}
         </div>
+      )}
+
+      {/* Pagination */}
+      {expanded && (
+        <CatalogPagination
+          currentPage={currentPage}
+          totalPages={totalPages}
+          onPageChange={handlePage}
+        />
       )}
 
       {/* Collapse back to compact */}
       {expanded && (
         <div className="mt-6 text-center">
           <button
-            onClick={() => { setExpanded(false); setOffset(0); }}
+            onClick={() => {
+              setExpanded(false);
+              setOffset(0);
+              router.replace(`/collections/${collectionId}`, { scroll: false });
+            }}
             className="text-sm text-muted hover:text-accent-rust transition-colors cursor-pointer"
           >
             Show less

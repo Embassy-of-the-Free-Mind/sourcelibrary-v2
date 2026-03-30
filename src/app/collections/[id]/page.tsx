@@ -217,6 +217,7 @@ async function fetchCollectionData(id: string) {
     language: 1, pages_count: 1, pages_ocr: 1, pages_translated: 1, pages_blank: 1,
     photo: 1, categories: 1, thumbnail: 1, thumbnail_blob: 1, published: 1, read_count: 1,
     resource_type: 1, commons_width: 1, commons_height: 1,
+    is_first_translation: 1, ft_disposition: 1,
   };
 
   // Extract curated highlights from collection document
