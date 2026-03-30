@@ -14,13 +14,12 @@ const LoadingBar = () => (
     <p className="text-center text-sm mt-4" style={{ color: 'var(--text-muted)' }}>Loading...</p>
   </div>
 );
-const opts = { ssr: false, loading: LoadingBar };
-const UsageTab = dynamic(() => import('@/components/analytics/tabs/UsageTab'), opts);
-const PerformanceTab = dynamic(() => import('@/components/analytics/tabs/PerformanceTab'), opts);
-const LogsTab = dynamic(() => import('@/components/analytics/tabs/LogsTab'), opts);
-const SearchTab = dynamic(() => import('@/components/analytics/tabs/SearchTab'), opts);
-const TrafficTab = dynamic(() => import('@/components/analytics/tabs/TrafficTab'), opts);
-const PipelineTab = dynamic(() => import('@/components/analytics/tabs/PipelineTab'), opts);
+const UsageTab = dynamic(() => import('@/components/analytics/tabs/UsageTab'), { ssr: false, loading: LoadingBar });
+const PerformanceTab = dynamic(() => import('@/components/analytics/tabs/PerformanceTab'), { ssr: false, loading: LoadingBar });
+const LogsTab = dynamic(() => import('@/components/analytics/tabs/LogsTab'), { ssr: false, loading: LoadingBar });
+const SearchTab = dynamic(() => import('@/components/analytics/tabs/SearchTab'), { ssr: false, loading: LoadingBar });
+const TrafficTab = dynamic(() => import('@/components/analytics/tabs/TrafficTab'), { ssr: false, loading: LoadingBar });
+const PipelineTab = dynamic(() => import('@/components/analytics/tabs/PipelineTab'), { ssr: false, loading: LoadingBar });
 type Tab = 'usage' | 'performance' | 'logs' | 'search' | 'traffic' | 'pipeline';
 
 const TABS: { key: Tab; label: string }[] = [
