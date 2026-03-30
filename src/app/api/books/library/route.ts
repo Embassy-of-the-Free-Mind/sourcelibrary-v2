@@ -69,9 +69,10 @@ export async function GET(request: NextRequest) {
     const db = await getDb();
 
     // When a search term is present, use Atlas Search ($search must be first stage).
+    // Language, category, firstTranslation are pushed as Atlas Search filters.
+    // Collection is not in the search index so it stays as a post-$search $match.
     // When no search term, use a standard $match (cheaper for unfiltered browsing).
     let pipelineStart: Record<string, unknown>[];
-    let matchFilter: Record<string, unknown> | null = null;
 
     if (search.trim()) {
       pipelineStart = [
@@ -94,8 +95,7 @@ export async function GET(request: NextRequest) {
       if (library) matchConditions.push({ 'image_source.provider': library });
       if (firstTranslation) matchConditions.push({ is_first_translation: true });
       if (hasTranslation) matchConditions.push({ pages_translated: { $gt: 0 } });
-      matchFilter = { $and: matchConditions };
-      pipelineStart = [{ $match: matchFilter }];
+      pipelineStart = [{ $match: { $and: matchConditions } }];
     }
 
     const pipeline = [
@@ -133,46 +133,45 @@ export async function GET(request: NextRequest) {
         },
       },
       buildSortStage(sort, collection || undefined),
-      { $skip: skip },
-      { $limit: limit },
       {
-        $project: {
-          _id: 0,
-          id: 1,
-          slug: 1,
-          title: 1,
-          display_title: 1,
-          author: 1,
-          thumbnail: 1,
-          thumbnail_blob: 1,
-          language: 1,
-          published: 1,
-          pages_count: 1,
-          pages_ocr: 1,
-          pages_translated: 1,
-          translation_percent: 1,
-          is_first_translation: 1,
-          last_processed: 1,
-          last_translation_at: 1,
+        $facet: {
+          books: [
+            { $skip: skip },
+            { $limit: limit },
+            {
+              $project: {
+                _id: 0,
+                id: 1,
+                slug: 1,
+                title: 1,
+                display_title: 1,
+                author: 1,
+                thumbnail: 1,
+                thumbnail_blob: 1,
+                language: 1,
+                published: 1,
+                pages_count: 1,
+                pages_ocr: 1,
+                pages_translated: 1,
+                translation_percent: 1,
+                is_first_translation: 1,
+                last_processed: 1,
+                last_translation_at: 1,
+              },
+            },
+          ],
+          total: [{ $count: 'count' }],
         },
       },
     ];
 
-    // Run results pipeline and count in parallel.
-    // For non-search queries, count uses a lightweight countDocuments (index-backed).
-    // For search queries, count uses a separate $search + $count pipeline.
-    const [books, total] = await Promise.all([
-      db.collection('books').aggregate(pipeline, {
-        collation: { locale: 'en', strength: 1 },
-        maxTimeMS: 15000,
-      }).toArray(),
-      matchFilter
-        ? db.collection('books').countDocuments(matchFilter, { maxTimeMS: 10000 }).catch(() => 0)
-        : db.collection('books').aggregate([
-            ...pipelineStart,
-            { $count: 'count' },
-          ], { maxTimeMS: 10000 }).toArray().then(r => r[0]?.count || 0).catch(() => 0),
-    ]);
+    const [result] = await db.collection('books').aggregate(pipeline, {
+      collation: { locale: 'en', strength: 1 },
+      maxTimeMS: 90000,
+    }).toArray();
+
+    const books = result.books || [];
+    const total = result.total[0]?.count || 0;
 
     const responseData = JSON.stringify({ books, total });
 
