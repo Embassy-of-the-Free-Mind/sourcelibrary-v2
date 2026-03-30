@@ -201,9 +201,15 @@ async function main() {
 
   // Strategy: query books in archiving status, then fetch their unarchived pages.
   // This avoids a full scan of the 9.5M pages collection.
+  // Exclude e-rara (blocked on Hetzner IPs, archived locally via launchd on Mac)
+  // and internet_archive (handled by archive-bulk.mjs via JP2 zip download).
   const books = await db.collection('books')
     .find(
-      { 'pipeline_auto.status': 'archiving', 'archive_metadata.blocked': { $ne: true } },
+      {
+        'pipeline_auto.status': 'archiving',
+        'archive_metadata.blocked': { $ne: true },
+        'image_source.provider': { $nin: ['e-rara', 'internet_archive'] },
+      },
       { projection: { id: 1, title: 1, 'image_source.provider': 1 } }
     )
     .limit(200)
