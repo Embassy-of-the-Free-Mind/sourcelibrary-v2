@@ -114,7 +114,11 @@ const COLLECTIONS = [
       book_id: doc.book_id || null,
       page_id: doc.page_id || null,
       ip: doc.ip || null,
-      timestamp: doc.timestamp || doc.created_at,
+      timestamp: doc.timestamp instanceof Date ? doc.timestamp
+        : typeof doc.timestamp === 'number' ? new Date(doc.timestamp)
+        : doc.created_at instanceof Date ? doc.created_at
+        : typeof doc.created_at === 'number' ? new Date(doc.created_at)
+        : new Date(),
     }),
   },
   {
