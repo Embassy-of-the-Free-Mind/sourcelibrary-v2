@@ -10,6 +10,10 @@ A Next.js application for digitizing and translating historical texts. Built for
 - **Storage**: Vercel Blob for images
 - **Deployment**: Vercel
 
+## Hosted deployment
+
+A hosted deployment is available on [Fronteir AI](https://fronteir.ai/mcp/embassy-of-the-free-mind-sourcelibrary-v2).
+
 ## Getting Started
 
 ```bash
