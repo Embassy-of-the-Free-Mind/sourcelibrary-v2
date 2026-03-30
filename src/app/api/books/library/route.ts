@@ -3,6 +3,7 @@ import { getDb } from '@/lib/mongodb';
 import { buildBookSearchStage } from '@/lib/atlas-search';
 
 export const dynamic = 'force-dynamic';
+export const maxDuration = 120;
 
 const MAX_LIMIT = 200;
 const DEFAULT_LIMIT = 100;
