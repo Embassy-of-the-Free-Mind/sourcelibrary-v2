@@ -1,0 +1,631 @@
+{
+  "metadata": {
+    "built": "2026-03-30T12:16:45.055Z",
+    "total_books": 33,
+    "apis_queried": [
+      "open_library",
+      "google_books",
+      "internet_archive",
+      "openalex",
+      "loc"
+    ],
+    "matching_method": "deterministic (author surname + title keywords, no LLM)"
+  },
+  "cases": [
+    {
+      "book_id": "69b6544318b87551bfcc77ac",
+      "author": "Erasmus, Desiderius",
+      "title": "De octo orationis partium constructione libellus perelegans",
+      "language": "Latin",
+      "tool_disposition": "translation_found",
+      "tool_confidence": "high",
+      "tool_is_first": false,
+      "external_verdict": "translation_likely",
+      "external_confidence": "medium",
+      "external_sources_with_matches": [
+        "internet_archive"
+      ],
+      "external_match_count": 1,
+      "external_total_results": 29,
+      "top_matches": [
+        {
+          "source": "internet_archive",
+          "title": "Libellus de constructione octo partium orationis.",
+          "url": "https://archive.org/details/bim_early-english-books-1475-1640_libellus-de-construction"
+        }
+      ]
+    },
+    {
+      "book_id": "69b653a818b87551bfcbfd52",
+      "author": "Seneca, Lucius Annaeus",
+      "title": "L. Annaei Senecae Tragoediae",
+      "language": "Latin",
+      "tool_disposition": "translation_found",
+      "tool_confidence": "high",
+      "tool_is_first": false,
+      "external_verdict": "translation_likely",
+      "external_confidence": "medium",
+      "external_sources_with_matches": [
+        "internet_archive"
+      ],
+      "external_match_count": 1,
+      "external_total_results": 31,
+      "top_matches": [
+        {
+          "source": "internet_archive",
+          "title": "L. & M. ANNAEI Senecæ Tragoediae: ... 1624",
+          "authors": "Seneca, Lucius Annæus.",
+          "year": "1624",
+          "url": "https://archive.org/details/bim_early-english-books-1475-1640_l-m-annaei-senec-t_seneca-lucius-annus_1624"
+        }
+      ]
+    },
+    {
+      "book_id": "69b00089ea029321151e51ba",
+      "author": "Euclid; F. Peyrard (ed.)",
+      "title": "Les Oeuvres d'Euclide, Vol. 3",
+      "language": "Latin",
+      "tool_disposition": "translation_found",
+      "tool_confidence": "high",
+      "tool_is_first": true,
+      "external_verdict": "no_translation_found",
+      "external_confidence": "high",
+      "external_sources_with_matches": [],
+      "external_match_count": 0,
+      "external_total_results": 24,
+      "top_matches": []
+    },
+    {
+      "book_id": "69aec4753b6ebce5e0ee6458",
+      "author": "John Adams",
+      "title": "A Defence of the Constitutions of Government of the United States of America",
+      "language": "Latin",
+      "tool_disposition": "translation_found",
+      "tool_confidence": "high",
+      "tool_is_first": false,
+      "external_verdict": "translation_likely",
+      "external_confidence": "medium",
+      "external_sources_with_matches": [
+        "internet_archive"
+      ],
+      "external_match_count": 2,
+      "external_total_results": 60,
+      "top_matches": [
+        {
+          "source": "internet_archive",
+          "title": "Discourses on Davila : a series of papers, on political history. Written in the year 1790, and then published in the Gazette of the United States",
+          "authors": [
+            "Adams, John, 1735-1826",
+            "John Adams Library (Boston Public Library) MB (BRL)",
+            "Adams, John, 1735-1826, former owner"
+          ],
+          "year": "1805",
+          "publisher": "Boston : Printed by Russell and Cutler",
+          "url": "https://archive.org/details/discoursesondavi00adam"
+        },
+        {
+          "source": "internet_archive",
+          "title": "The works of John Adams, second President of the United States:",
+          "authors": "John Adams, Charles Francis Adams",
+          "year": "1850",
+          "publisher": "Boston, Little, Brown and company [etc.]",
+          "url": "https://archive.org/details/worksjohnadamss02unkngoog"
+        }
+      ]
+    },
+    {
+      "book_id": "69a6845e7ab725b59be40ee1",
+      "author": "Alhazen (Ibn al-Haytham)",
+      "title": "Treasury of Optics",
+      "language": "Latin",
+      "tool_disposition": "translation_found",
+      "tool_confidence": "high",
+      "tool_is_first": false,
+      "external_verdict": "no_translation_found",
+      "external_confidence": "high",
+      "external_sources_with_matches": [],
+      "external_match_count": 0,
+      "external_total_results": 17,
+      "top_matches": []
+    },
+    {
+      "book_id": "69b65bfa18b87551bfd0fbd5",
+      "author": "Calvin, Jean",
+      "title": "Joannis Calvini Praelectiones in duodecim prophetas (quos vocant) minores",
+      "language": "Latin",
+      "tool_disposition": "translation_found",
+      "tool_confidence": "high",
+      "tool_is_first": false,
+      "external_verdict": "no_translation_found",
+      "external_confidence": "high",
+      "external_sources_with_matches": [],
+      "external_match_count": 0,
+      "external_total_results": 20,
+      "top_matches": []
+    },
+    {
+      "book_id": "6991dc4879a19ded6bdb3ef9",
+      "author": "Frédéric Bastiat",
+      "title": "Harmonies économiques",
+      "language": "French",
+      "tool_disposition": "translation_found",
+      "tool_confidence": "high",
+      "tool_is_first": false,
+      "external_verdict": "no_translation_found",
+      "external_confidence": "high",
+      "external_sources_with_matches": [],
+      "external_match_count": 0,
+      "external_total_results": 30,
+      "top_matches": []
+    },
+    {
+      "book_id": "695434811479a63c11089ee5",
+      "author": "Immanuel Kant",
+      "title": "Die Religion innerhalb der Grenzen der blossen Vernunft",
+      "language": "German",
+      "tool_disposition": "translation_found",
+      "tool_confidence": "high",
+      "tool_is_first": false,
+      "external_verdict": "translation_likely",
+      "external_confidence": "medium",
+      "external_sources_with_matches": [
+        "internet_archive"
+      ],
+      "external_match_count": 1,
+      "external_total_results": 53,
+      "top_matches": [
+        {
+          "source": "internet_archive",
+          "title": "Kant's Critique of practical reason and other works on the theory of ethics",
+          "authors": "Kant, Immanuel, 1724-1804",
+          "year": "1898",
+          "publisher": "London ; New York ; Bombay : Longmans, Green and co.",
+          "url": "https://archive.org/details/kantscritiqueofp1898kant"
+        }
+      ]
+    },
+    {
+      "book_id": "6984e8509997eabe3e80f242",
+      "author": "[Grasshoff, Johann]",
+      "title": "The Little Peasant",
+      "language": "German",
+      "tool_disposition": "translation_found",
+      "tool_confidence": "high",
+      "tool_is_first": false,
+      "external_verdict": "no_translation_found",
+      "external_confidence": "high",
+      "external_sources_with_matches": [],
+      "external_match_count": 0,
+      "external_total_results": 18,
+      "top_matches": []
+    },
+    {
+      "book_id": "69ac853b960d5ad0b4731bde",
+      "author": "Pierre Gassendi",
+      "title": "Opera Omnia, Tomus Quartus",
+      "language": "Latin",
+      "tool_disposition": "translation_found",
+      "tool_confidence": "high",
+      "tool_is_first": false,
+      "external_verdict": "translation_likely",
+      "external_confidence": "medium",
+      "external_sources_with_matches": [
+        "google_books"
+      ],
+      "external_match_count": 3,
+      "external_total_results": 31,
+      "top_matches": [
+        {
+          "source": "google_books",
+          "title": "Opera omnia",
+          "authors": "Pierre Gassendi",
+          "year": "1964",
+          "url": "http://books.google.nl/books?id=Woqf0QEACAAJ&dq=Pierre+Gassendi+Opera+Omnia,+Tomus+Quartus+english+translation&hl=&source=gbs_api"
+        },
+        {
+          "source": "google_books",
+          "title": "Opera omnia. 4",
+          "authors": "Pierre Gassendi",
+          "year": "1964",
+          "url": "http://books.google.nl/books?id=88gqswEACAAJ&dq=Pierre+Gassendi+Opera+Omnia,+Tomus+Quartus+english+translation&hl=&source=gbs_api"
+        },
+        {
+          "source": "google_books",
+          "title": "Opera omnia. 3",
+          "authors": "Pierre Gassendi",
+          "year": "1964",
+          "url": "http://books.google.nl/books?id=eBLWtAEACAAJ&dq=Pierre+Gassendi+Opera+Omnia,+Tomus+Quartus+english+translation&hl=&source=gbs_api"
+        }
+      ]
+    },
+    {
+      "book_id": "699ef9f3b0a976d32fd37463",
+      "author": "Böhme, Jacob",
+      "title": "The Signature of All Things",
+      "language": "German",
+      "tool_disposition": "translation_found",
+      "tool_confidence": "high",
+      "tool_is_first": false,
+      "external_verdict": "translation_likely",
+      "external_confidence": "medium",
+      "external_sources_with_matches": [
+        "loc"
+      ],
+      "external_match_count": 2,
+      "external_total_results": 31,
+      "top_matches": [
+        {
+          "source": "loc",
+          "title": "Things as they are, or, Federalism turned inside out!! : being a collection of extracts from Federal papers, &c. and remarks upon them, originally written for, and published in the Evening post",
+          "authors": "thomas jefferson library collection (library of congress), jacob bailey moore pamphlet collection (library of congress), niles, hezekiah, jefferson, thomas",
+          "year": "1809",
+          "url": "https://www.loc.gov/item/08011852/"
+        },
+        {
+          "source": "loc",
+          "title": "Stultifera Nauis : qua omnium mortalium narratur stultitia, admodum vtilis & necessaria ab omnibus ad suam salutem perlegenda, è Latino sermone in nostrum vulgarem versa, & iam diligenter impressa ... = The ship of fooles : wherein is shewed the folly of all states, with diuers other workes adioyned vnto the same, very profitable and fruitfull for all men",
+          "authors": "crawford, james ludovic lindsay, locher, jacob, mancinus, dominicus, monckton, edward, lessing j. rosenwald collection (library of congress), clark, clarence h. (clarence howard), barclay, alexander, cawood, john, brant, sebastian",
+          "year": "1570",
+          "url": "https://www.loc.gov/item/09031705/"
+        }
+      ]
+    },
+    {
+      "book_id": "69b6665cb3f4fc044155b84b",
+      "author": "Pelecyus, Johannes",
+      "title": "De infidelitate et tribus eius speciebus, ethnicismo, iudaismo et haeresi",
+      "language": "Latin",
+      "tool_disposition": "confirmed_first",
+      "tool_confidence": "high",
+      "tool_is_first": true,
+      "external_verdict": "no_translation_found",
+      "external_confidence": "high",
+      "external_sources_with_matches": [],
+      "external_match_count": 0,
+      "external_total_results": 6,
+      "top_matches": []
+    },
+    {
+      "book_id": "69b51debefd8df28f2dad3ff",
+      "author": "Jencquel, Kaspar Friedrich",
+      "title": "Museography: A Guide to the Proper Concept and Useful Arrangement of Museums or Cabinets of Curiosities",
+      "language": "German",
+      "tool_disposition": "confirmed_first",
+      "tool_confidence": "high",
+      "tool_is_first": true,
+      "external_verdict": "no_translation_found",
+      "external_confidence": "high",
+      "external_sources_with_matches": [],
+      "external_match_count": 0,
+      "external_total_results": 9,
+      "top_matches": []
+    },
+    {
+      "book_id": "697932b1f35c6bbfbfd252fd",
+      "author": "Poiret, Pierre",
+      "title": "Rational Thoughts on God, the Soul, and Evil",
+      "language": "Latin",
+      "tool_disposition": "confirmed_first",
+      "tool_confidence": "high",
+      "tool_is_first": true,
+      "external_verdict": "no_translation_found",
+      "external_confidence": "high",
+      "external_sources_with_matches": [],
+      "external_match_count": 0,
+      "external_total_results": 25,
+      "top_matches": []
+    },
+    {
+      "book_id": "69b51df6efd8df28f2dae589",
+      "author": "Panzer, Georg Wolfgang",
+      "title": "The Thomasius Library: A Comprehensive Treasury of the Most Excellent and Rare Books on Jurisprudence and Medicine",
+      "language": "Latin",
+      "tool_disposition": "confirmed_first",
+      "tool_confidence": "high",
+      "tool_is_first": true,
+      "external_verdict": "no_translation_found",
+      "external_confidence": "high",
+      "external_sources_with_matches": [],
+      "external_match_count": 0,
+      "external_total_results": 15,
+      "top_matches": []
+    },
+    {
+      "book_id": "69b659e418b87551bfcfe934",
+      "author": "Costeo, Giovanni",
+      "title": "De universali stirpium natura",
+      "language": "Latin",
+      "tool_disposition": "confirmed_first",
+      "tool_confidence": "high",
+      "tool_is_first": true,
+      "external_verdict": "no_translation_found",
+      "external_confidence": "high",
+      "external_sources_with_matches": [],
+      "external_match_count": 0,
+      "external_total_results": 27,
+      "top_matches": []
+    },
+    {
+      "book_id": "6985ca74e3007574295ea81b",
+      "author": "Moldenhawer, Daniel Gotthilf",
+      "title": "Trial of the Order of the Knights Templar",
+      "language": "German",
+      "tool_disposition": "confirmed_first",
+      "tool_confidence": "high",
+      "tool_is_first": true,
+      "external_verdict": "no_translation_found",
+      "external_confidence": "high",
+      "external_sources_with_matches": [],
+      "external_match_count": 0,
+      "external_total_results": 24,
+      "top_matches": []
+    },
+    {
+      "book_id": "69b660f2b3f4fc0441535efb",
+      "author": "Hotman, François",
+      "title": "Franc. Hotomani jurisconsulti Consilia, tum in civilibus, tum in criminalibus causis exposita",
+      "language": "Latin",
+      "tool_disposition": "confirmed_first",
+      "tool_confidence": "high",
+      "tool_is_first": true,
+      "external_verdict": "no_translation_found",
+      "external_confidence": "high",
+      "external_sources_with_matches": [],
+      "external_match_count": 0,
+      "external_total_results": 15,
+      "top_matches": []
+    },
+    {
+      "book_id": "69b6a4e3080b19f98fd2121c",
+      "author": "Hummel, Christoph",
+      "title": "... Disputationem inauguralem de rerum divisione & acquirendo earum dominio",
+      "language": "Latin",
+      "tool_disposition": "confirmed_first",
+      "tool_confidence": "high",
+      "tool_is_first": true,
+      "external_verdict": "no_translation_found",
+      "external_confidence": "high",
+      "external_sources_with_matches": [],
+      "external_match_count": 0,
+      "external_total_results": 2,
+      "top_matches": []
+    },
+    {
+      "book_id": "69b51dfcefd8df28f2daf00a",
+      "author": "Vandelli, Domenico",
+      "title": "Grisley's Portuguese Garden Illustrated with Linnaean Names",
+      "language": "Latin",
+      "tool_disposition": "confirmed_first",
+      "tool_confidence": "high",
+      "tool_is_first": true,
+      "external_verdict": "no_translation_found",
+      "external_confidence": "high",
+      "external_sources_with_matches": [],
+      "external_match_count": 0,
+      "external_total_results": 16,
+      "top_matches": []
+    },
+    {
+      "book_id": "698255eeba3a154c96ca0660",
+      "author": "Riper, Albert",
+      "title": "Moses the God of Aaron, or the Power and Duty of Princes in Sacred Matters",
+      "language": "Latin",
+      "tool_disposition": "confirmed_first",
+      "tool_confidence": "high",
+      "tool_is_first": true,
+      "external_verdict": "no_translation_found",
+      "external_confidence": "high",
+      "external_sources_with_matches": [],
+      "external_match_count": 0,
+      "external_total_results": 33,
+      "top_matches": []
+    },
+    {
+      "book_id": "697d9c9b971fd6d8096654d8",
+      "author": "Neander, Theophilus",
+      "title": "Alchemical Heptad: Select Philosophical Treatises on the Magistery of the Stone",
+      "language": "German",
+      "tool_disposition": "confirmed_first",
+      "tool_confidence": "high",
+      "tool_is_first": true,
+      "external_verdict": "no_translation_found",
+      "external_confidence": "high",
+      "external_sources_with_matches": [],
+      "external_match_count": 0,
+      "external_total_results": 20,
+      "top_matches": []
+    },
+    {
+      "book_id": "69b51e41ff09e4fe943aa79c",
+      "author": "Pico della Mirandola, Giovanni, 1463-1494; Pico della Mirandola, Giovanni Francesco",
+      "title": "Complete Works of Giovanni Pico della Mirandola",
+      "language": "Latin",
+      "tool_disposition": "first_complete_translation",
+      "tool_confidence": "high",
+      "tool_is_first": true,
+      "external_verdict": "no_translation_found",
+      "external_confidence": "high",
+      "external_sources_with_matches": [],
+      "external_match_count": 0,
+      "external_total_results": 60,
+      "top_matches": []
+    },
+    {
+      "book_id": "6975158da88d83c830d99e38",
+      "author": "Trissmosin, Salomon",
+      "title": "The Golden Fleece (Aureum Vellus)",
+      "language": "German",
+      "tool_disposition": "first_complete_translation",
+      "tool_confidence": "high",
+      "tool_is_first": true,
+      "external_verdict": "no_translation_found",
+      "external_confidence": "high",
+      "external_sources_with_matches": [],
+      "external_match_count": 0,
+      "external_total_results": 22,
+      "top_matches": []
+    },
+    {
+      "book_id": "69a5b99ed76b98f272fced25",
+      "author": "Albrecht Dürer",
+      "title": "Instruction on the Fortification of Cities",
+      "language": "German",
+      "tool_disposition": "first_complete_translation",
+      "tool_confidence": "high",
+      "tool_is_first": true,
+      "external_verdict": "no_translation_found",
+      "external_confidence": "high",
+      "external_sources_with_matches": [],
+      "external_match_count": 0,
+      "external_total_results": 30,
+      "top_matches": []
+    },
+    {
+      "book_id": "69906e698a353648e1ecfb0b",
+      "author": "Morienus Romanus, pseudo-Avicenna, pseudo-Rhazes, Geber, et al.",
+      "title": "Alchemical and Astrological Texts (Cambridge, University Library, MS Ii.3.17)",
+      "language": "Latin",
+      "tool_disposition": "first_complete_translation",
+      "tool_confidence": "high",
+      "tool_is_first": true,
+      "external_verdict": "translation_likely",
+      "external_confidence": "medium",
+      "external_sources_with_matches": [
+        "loc"
+      ],
+      "external_match_count": 2,
+      "external_total_results": 17,
+      "top_matches": [
+        {
+          "source": "loc",
+          "title": "An American dictionary of the English language;",
+          "authors": "porter, noah, webster, noah, goodrich, chauncey a. (chauncey allen)",
+          "year": "1860",
+          "url": "https://www.loc.gov/item/40023586/"
+        },
+        {
+          "source": "loc",
+          "title": "What literature knows : forays into literary knowledge production",
+          "authors": "merten, kai, kley, antje",
+          "year": "2018",
+          "url": "https://www.loc.gov/item/2020718891/"
+        }
+      ]
+    },
+    {
+      "book_id": "698255f48ea663743f78ab0e",
+      "author": "Teellinck, Willem",
+      "title": "The North Star of True Godliness",
+      "language": "Dutch",
+      "tool_disposition": "first_modern_translation",
+      "tool_confidence": "high",
+      "tool_is_first": true,
+      "external_verdict": "translation_likely",
+      "external_confidence": "medium",
+      "external_sources_with_matches": [
+        "google_books"
+      ],
+      "external_match_count": 1,
+      "external_total_results": 18,
+      "top_matches": [
+        {
+          "source": "google_books",
+          "title": "The Path of True Godliness",
+          "authors": "Willem Teellinck",
+          "year": "2003",
+          "url": "http://books.google.nl/books?id=R5QRAQAAIAAJ&dq=Teellinck,+Willem+The+North+Star+of+True+Godliness+english+translation&hl=&source=gbs_api"
+        }
+      ]
+    },
+    {
+      "book_id": "69b65febb3f4fc044152cf4e",
+      "author": "Marlorat, Augustin",
+      "title": "In CL Psalmos Davidis et aliorum Ss. prophetarum explicatio ecclesiastica, seu bibliotheca expositionum in Psalmos, ex probatis theologis collecta, et in unum corpus non minus ingeniose quam laboriose concinnata",
+      "language": "Latin",
+      "tool_disposition": "first_modern_translation",
+      "tool_confidence": "high",
+      "tool_is_first": true,
+      "external_verdict": "no_translation_found",
+      "external_confidence": "high",
+      "external_sources_with_matches": [],
+      "external_match_count": 0,
+      "external_total_results": 23,
+      "top_matches": []
+    },
+    {
+      "book_id": "697a3055a3866af9498458ac",
+      "author": "Gaffarel, Jacques",
+      "title": "Unheard-of Curiosities concerning the Talismanic Sculpture of the Persians",
+      "language": "French",
+      "tool_disposition": "first_modern_translation",
+      "tool_confidence": "high",
+      "tool_is_first": true,
+      "external_verdict": "no_translation_found",
+      "external_confidence": "high",
+      "external_sources_with_matches": [],
+      "external_match_count": 0,
+      "external_total_results": 38,
+      "top_matches": []
+    },
+    {
+      "book_id": "695593437bd6d2cd1d61bda2",
+      "author": "Iamblichus / Marsilio Ficino",
+      "title": "Iamblichus De Mysteriis (Ficino Edition 1570)",
+      "language": "Latin",
+      "tool_disposition": "first_from_source",
+      "tool_confidence": "high",
+      "tool_is_first": true,
+      "external_verdict": "no_translation_found",
+      "external_confidence": "high",
+      "external_sources_with_matches": [],
+      "external_match_count": 0,
+      "external_total_results": 22,
+      "top_matches": []
+    },
+    {
+      "book_id": "6970e3859b09d309d780a2dc",
+      "author": "Tritheim, Johann",
+      "title": "Answer to Eight Questions",
+      "language": "German",
+      "tool_disposition": "first_from_source",
+      "tool_confidence": "high",
+      "tool_is_first": true,
+      "external_verdict": "no_translation_found",
+      "external_confidence": "high",
+      "external_sources_with_matches": [],
+      "external_match_count": 0,
+      "external_total_results": 22,
+      "top_matches": []
+    },
+    {
+      "book_id": "69b51dcaff09e4fe943a90b1",
+      "author": "Maier, Michael",
+      "title": "The Traveler's Guide to the Seven Mountains of the Planets or Metals",
+      "language": "Latin",
+      "tool_disposition": "needs_review",
+      "tool_confidence": "medium",
+      "tool_is_first": false,
+      "external_verdict": "no_translation_found",
+      "external_confidence": "high",
+      "external_sources_with_matches": [],
+      "external_match_count": 0,
+      "external_total_results": 49,
+      "top_matches": []
+    },
+    {
+      "book_id": "69b51e8dcf111105c429f9d7",
+      "author": "Elias Ashmole",
+      "title": "Samlung von merkwürdigen Lebensbeschreibungen. 4",
+      "language": "German",
+      "tool_disposition": "needs_review",
+      "tool_confidence": "low",
+      "tool_is_first": false,
+      "external_verdict": "no_translation_found",
+      "external_confidence": "high",
+      "external_sources_with_matches": [],
+      "external_match_count": 0,
+      "external_total_results": 4,
+      "top_matches": []
+    }
+  ]
+}
