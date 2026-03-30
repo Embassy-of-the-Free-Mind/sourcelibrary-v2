@@ -29,6 +29,7 @@ interface HealthState {
   grade: HealthGrade;
   find_ms: number;
   count_ms: number;
+  browse_ms: number;
   active_jobs: number;
   last_cron_duration_ms: number;
   sqs_combined_depth: number;
@@ -88,9 +89,9 @@ async function timedQuery(fn: () => Promise<unknown>, timeoutMs = 2500): Promise
 }
 
 /** Grade a single signal */
-function gradeLatency(findMs: number, countMs: number): HealthGrade {
-  if (findMs > 1000 || countMs > 1500) return 'critical';
-  if (findMs > 300 || countMs > 500) return 'degraded';
+function gradeLatency(findMs: number, countMs: number, browseMs = 0): HealthGrade {
+  if (findMs > 1000 || countMs > 1500 || browseMs > 5000) return 'critical';
+  if (findMs > 300 || countMs > 500 || browseMs > 2000) return 'degraded';
   return 'healthy';
 }
 
@@ -174,7 +175,7 @@ export async function getAdaptiveLimits(
     } catch { /* non-critical */ }
   }
 
-  const [findMs, countMs] = await Promise.all([
+  const [findMs, countMs, browseMs] = await Promise.all([
     sampleBookId
       ? timedQuery(() =>
           db.collection('pages').findOne(
@@ -191,6 +192,15 @@ export async function getAdaptiveLimits(
           )
         )
       : Promise.resolve(0),
+    // User-facing browse query — catches WiredTiger cache saturation that indexed
+    // page queries miss. This is the query pattern that times out when the pipeline
+    // is writing heavily, even when findOne reports 14ms.
+    timedQuery(() =>
+      db.collection('books').find(
+        { hidden: { $ne: true }, pages_count: { $gt: 0 } }
+      ).sort({ created_at: -1 }).limit(10).project({ _id: 1 }).toArray(),
+      5000
+    ),
   ]);
 
   // ── Signal 2: Active jobs ──
@@ -223,7 +233,7 @@ export async function getAdaptiveLimits(
 
   // ── Grade ──
   const grade = compositeGrade(
-    gradeLatency(findMs, countMs),
+    gradeLatency(findMs, countMs, browseMs),
     gradeJobs(activeJobs),
     gradeCronDuration(lastCronMs),
     sqsGrade,
@@ -242,6 +252,7 @@ export async function getAdaptiveLimits(
     grade,
     find_ms: findMs,
     count_ms: countMs,
+    browse_ms: browseMs,
     active_jobs: activeJobs,
     last_cron_duration_ms: lastCronMs,
     sqs_combined_depth: sqsCombined,
@@ -306,8 +317,8 @@ export async function getAdaptiveLimits(
 
   // Log decision
   if (logger && adjustment !== 'none') {
-    logger.decision('backpressure', `adaptive: ${adjustment} (grade=${grade}, find=${findMs}ms, count=${countMs}ms, jobs=${activeJobs}, cron=${lastCronMs}ms, sqs_ocr=${sqsOcrDepth}, sqs_translate=${sqsTranslateDepth}${jobsCancelled ? `, cancelled=${jobsCancelled}` : ''})`, {
-      grade, find_ms: findMs, count_ms: countMs, active_jobs: activeJobs, last_cron_duration_ms: lastCronMs,
+    logger.decision('backpressure', `adaptive: ${adjustment} (grade=${grade}, find=${findMs}ms, count=${countMs}ms, browse=${browseMs}ms, jobs=${activeJobs}, cron=${lastCronMs}ms, sqs_ocr=${sqsOcrDepth}, sqs_translate=${sqsTranslateDepth}${jobsCancelled ? `, cancelled=${jobsCancelled}` : ''})`, {
+      grade, find_ms: findMs, count_ms: countMs, browse_ms: browseMs, active_jobs: activeJobs, last_cron_duration_ms: lastCronMs,
       sqs_ocr_depth: sqsOcrDepth, sqs_translate_depth: sqsTranslateDepth, sqs_combined_depth: sqsCombined,
       jobs_cancelled: jobsCancelled, adjustment,
     });
