@@ -32,7 +32,7 @@ function clearCache() {
 }
 
 export async function connectToDatabase(): Promise<{ client: MongoClient; db: Db }> {
-  if (!uri || !dbName || process.env.SKIP_DB_AT_BUILD === '1') {
+  if (!uri || !dbName) {
     throw new Error('MongoDB environment variables not configured');
   }
 
@@ -72,7 +72,7 @@ export async function connectToDatabase(): Promise<{ client: MongoClient; db: Db
         // Cross-region latency (~200ms RTT) needs generous timeouts.
         serverSelectionTimeoutMS: isOurLambda ? 5000 : 10000,
         connectTimeoutMS: isOurLambda ? 10000 : 10000,
-        socketTimeoutMS: isOurLambda ? 45000 : 50000,
+        socketTimeoutMS: isOurLambda ? 45000 : 30000,
 
         // Close idle connections after 1 minute to prevent pool exhaustion
         maxIdleTimeMS: 60000,
@@ -106,8 +106,24 @@ export async function connectToDatabase(): Promise<{ client: MongoClient; db: Db
   return connectingPromise;
 }
 
+// Stub Db that returns empty results — used during build when Atlas is unavailable
+function buildStubDb(): Db {
+  const emptyCursor = { toArray: async () => [], sort: () => emptyCursor, limit: () => emptyCursor, skip: () => emptyCursor, project: () => emptyCursor, next: async () => null, hasNext: async () => false, count: async () => 0 };
+  const emptyCollection = { find: () => emptyCursor, findOne: async () => null, countDocuments: async () => 0, estimatedDocumentCount: async () => 0, aggregate: () => emptyCursor, distinct: async () => [] };
+  return new Proxy({} as Db, { get: (_t, prop) => prop === 'collection' ? () => emptyCollection : prop === 'command' ? async () => ({ ok: 1 }) : undefined });
+}
+
 export async function getDb(): Promise<Db> {
-  const { db } = await connectToDatabase();
+  // Skip DB entirely during build — pages render with empty data and populate via ISR
+  if (process.env.SKIP_DB_AT_BUILD === '1') {
+    return buildStubDb();
+  }
+  // Race against a timeout to prevent build workers from hanging indefinitely
+  // when Atlas is slow from Vercel's DC (Virginia → Mumbai cross-region).
+  const timeout = new Promise<never>((_, reject) =>
+    setTimeout(() => reject(new Error('DB connection timeout')), 15000)
+  );
+  const { db } = await Promise.race([connectToDatabase(), timeout]);
   return db;
 }
 

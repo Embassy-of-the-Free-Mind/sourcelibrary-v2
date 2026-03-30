@@ -39,55 +39,21 @@ function getCategory(id: string) {
 }
 
 async function getCategoryBooks(id: string): Promise<Book[]> {
-  const db = await getDb();
-  return db.collection('books').aggregate([
-    { $match: { categories: id, hidden: { $ne: true } } },
-    {
-      $lookup: {
-        from: 'pages',
-        localField: 'id',
-        foreignField: 'book_id',
-        as: 'pages_array'
-      }
-    },
-    {
-      $addFields: {
-        pages_count: { $size: '$pages_array' },
-        pages_translated: {
-          $size: {
-            $filter: {
-              input: '$pages_array',
-              as: 'page',
-              cond: {
-                $or: [
-                  { $and: [
-                    { $ne: ['$$page.translation', null] },
-                    { $ne: ['$$page.translation.data', null] },
-                    { $gt: [{ $strLenCP: { $ifNull: ['$$page.translation.data', ''] } }, 50] }
-                  ]},
-                  { $eq: [{ $ifNull: ['$$page.page_type', ''] }, 'blank'] }
-                ]
-              }
-            }
-          }
-        }
-      }
-    },
-    {
-      $addFields: {
-        translation_percent: {
-          $cond: {
-            if: { $gt: [{ $ifNull: ['$pages_ocr', 0] }, 0] },
-            then: { $round: [{ $multiply: [{ $divide: [{ $ifNull: ['$pages_translated', 0] }, { $max: [{ $subtract: [{ $ifNull: ['$pages_ocr', 0] }, { $ifNull: ['$pages_blank', 0] }] }, 1] }] }, 100] }] },
-            else: 0
-          }
-        }
-      }
-    },
-    { $match: { pages_translated: { $gt: 0 } } },
-    { $project: { pages_array: 0, _id: 0 } },
-    { $sort: { translation_percent: -1, title: 1 } }
-  ]).toArray() as unknown as Book[];
+  try {
+    const db = await getDb();
+    // Use cached pages_translated on books — no $lookup against 9.5M pages collection
+    const books = await db.collection('books').find(
+      { categories: id, hidden: { $ne: true }, pages_translated: { $gt: 0 } },
+      { maxTimeMS: 30000 }
+    )
+    .project({ _id: 0, pages_array: 0 })
+    .sort({ pages_translated: -1, title: 1 })
+    .toArray();
+    return books as unknown as Book[];
+  } catch (err) {
+    console.error(`Category books fetch failed for ${id}:`, err);
+    return [];
+  }
 }
 
 export async function generateMetadata({ params }: CategoryPageProps): Promise<Metadata> {

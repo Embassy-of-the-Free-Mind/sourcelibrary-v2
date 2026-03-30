@@ -8,7 +8,7 @@ Operational reference for pipeline monitoring, debugging, and processing. For fu
 |-----------|-------|-----|
 | Pipeline orchestrator | **Hetzner** (`pipeline-orchestrator.mjs`) | All phases, every 2 min |
 | Full-book OCR | **Hetzner → Gemini Batch API** | Direct submission, 50% cost discount |
-| Translation | **Hetzner** (`translate-worker.mjs`) | Direct Gemini calls, 40 concurrent books |
+| Translation | **Hetzner** (`translate-worker.mjs`) | Direct Gemini calls, 20 concurrent books |
 | Batch result collection | **Hetzner** (`batch-collector.mjs`) | Polls Gemini API every 10 min |
 | Archiving | **Hetzner** (`archive-ocr.mjs`, `archive-bulk.mjs`) | Downloads → Cloudflare R2 |
 | Preview OCR (25 pages) | **Lambda** via SQS | Fast preview path, still active |
@@ -36,15 +36,13 @@ Operational reference for pipeline monitoring, debugging, and processing. For fu
 - **Resume:** `POST /api/admin/emergency-stop?resume=true`
 - **Selective pause:** `paused_phases: ['ocr','translation','images']`
 - **Adaptive limits:** `GET/PATCH /api/admin/adaptive-limits`
-- **`paused: true` is respected by Hetzner workers** (orchestrator, translate-worker, enrich-worker). Workers auto-resume stale pauses after 30min if DB is healthy (<500ms findOne). Phase-specific pauses are always respected.
-- **Audit log:** All pause/unpause events logged to `processing_control_log` collection (action, timestamp, source, detail).
-- To force-stop Lambda workers: must CANCEL jobs in MongoDB (Lambda doesn't check pause flag).
+- **`paused: true` doesn't stop Lambda workers or Hetzner translate-worker.** Must CANCEL jobs in MongoDB for actual load reduction.
 
 ## Concurrency Limits
 
 - MongoDB Atlas saturates at ~40 concurrent Lambda jobs (global backpressure limit)
-- Per-phase maximums: OCR 20, translation 30 (in-flight cap 40 books), images 50
-- Translate-worker runs 40 concurrent books, 8000 pages/run cap
+- Per-phase maximums: OCR 200/cycle (hardcoded default), translation 30 (in-flight cap 40 books), images 50
+- Translate-worker runs 20 concurrent books, 8000 pages/run cap
 - Tested higher (2026-03-26): `global_active_max` 50, `translate_lambda_max` 50 — Atlas stayed healthy. Adaptive system will auto-dial back if needed (ensure `locked: false`).
 
 ## Critical Rules
@@ -53,11 +51,10 @@ Operational reference for pipeline monitoring, debugging, and processing. For fu
 - **Translation prompt source of truth is the DB `prompts` collection** (type: 'translation', is_default: true). Both workers read it once per run and cache. Never hardcode prompts in worker files. To update the prompt, update the DB — no code deploy needed.
 - **Any Hetzner worker that writes to `pages` must also update the parent book's cached counters** (`pages_ocr`, `pages_translated`, `pages_archived`). Vercel API routes do this via shared helpers, but standalone Hetzner scripts bypass them. See #497.
 - Any script overwriting `ocr.data` or `translation.data` MUST call `createRevision(pageId, field, jobId?)` first
-- **Never patch Hetzner without committing to git.** Local-only patches cause drift that's invisible to other devs and future sessions. Apply fixes in git first, then `git pull` on Hetzner.
+- **Never patch Hetzner directly without committing to git.** Local-only patches cause drift that's invisible to other devs and future sessions. Apply fixes in git first, then `git pull` on Hetzner.
 - **Health grading uses DB latency only** (findMs, countMs), not job count. Job count stopped correlating with DB load when translation moved to Hetzner. See lesson 2026-03-30.
 - Summary/Index generation: ALWAYS use `gemini-3-flash-preview` (per CLAUDE.md)
 - Stale Vercel connection pools after DB recovery → redeploy to reset
-- **All Hetzner workers log to `cron_runs`** with their `cron` field name (not `name`). Workers: `hetzner-translate-worker`, `pipeline-orchestrator-worker`, `hetzner-enrich-worker`. Query: `db.collection('cron_runs').find({ cron: '...' }).sort({ timestamp: -1 })`.
 
 ## Lessons Learned
 
@@ -72,3 +69,7 @@ Operational reference for pipeline monitoring, debugging, and processing. For fu
 - **Translation model routing bug (2026-03-27, PR #482):** Was hardcoding flash model for all jobs instead of calling `getTranslateModelForBook()`. 97% of translations used 3x expensive model. Fixed — BPH gets flash, others get lite.
 - **Hetzner workers don't sync book counters (2026-03-27, #497):** `translate-worker.mjs` was translating 169K pages over 3 days without updating `book.pages_translated`. Root cause: Vercel API routes use shared helpers that auto-sync counters, but Hetzner scripts bypass them. Fix: patched translate-worker to sync on job completion. Broader fix needed: audit all Hetzner workers, add counter sync to each.
 - **RECITATION in translate-worker (2026-03-28):** Philo's "Lucubrationes Omnes" stuck at 683/688 pages — 5 pages hitting RECITATION every cron cycle. Root cause: translate-worker was missing `BLOCK_NONE` safety settings and public domain copyright note that the OCR pipeline already had. Fix: added both. **Rule: any new Gemini call in any worker must include BLOCK_NONE safety settings + copyright note for pre-1930 works.**
+- **OCR guard blocked split-checked portrait books (2026-03-30, PR #541):** 7,283 books stuck at `archive_complete` for 10+ days. The per-page crop guard in `submitOcrDirectly()` rejected ALL books where pages lacked `crop`/`cropped_photo` — even portrait books that Phase 1.25 correctly identified as not needing splitting. Fix: guard now checks `!book.pipeline_auto?.split_checked` before rejecting. **Rule: `split_checked: true` means the book passed split detection — trust it.**
+- **Health check job count threshold was stale (2026-03-30, PR #542):** `activeJobs > 100` triggered "degraded" health grade even with DB latency at 15ms. This halved OCR submission limits. Root cause: threshold was set when translation ran through Lambda; after moving to Hetzner, ~100 translation jobs stay in "processing" for hours without DB pressure. Fix: removed `activeJobs` from grading — health now based solely on actual DB latency (`findMs`, `countMs`). **Rule: grade health on what you measure (latency), not proxies (job count).**
+- **Hetzner/git drift from local patches (2026-03-30, PR #541/#542):** Translation prompt v10 ran on Hetzner for weeks without being in git. Three fixes applied by sed on Hetzner before being committed. Fix: synced all patches, moved translation prompt source of truth to DB `prompts` collection (read once per run, cached). **Rule: never patch Hetzner directly without committing to git. Translation prompt lives in DB, not code.**
+- **`preview_ocr_queued_at` filter blocked split detection (2026-03-30, PR #542):** 9,090 books had preview OCR queued (Phase 1.5) but couldn't be split-checked (Phase 1.25) because the split detection query excluded them. These are independent operations. Fix: removed the filter. **Rule: split detection and preview OCR are independent — don't gate one on the other.**

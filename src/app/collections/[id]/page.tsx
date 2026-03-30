@@ -18,21 +18,9 @@ export const revalidate = 600;
 export const dynamicParams = true;
 export const maxDuration = 60;
 export async function generateStaticParams() {
-  // Pre-render top collections at build time so the first visitor never hits a cold cache
-  try {
-    const db = await Promise.race([
-      getDb(),
-      new Promise<never>((_, reject) => setTimeout(() => reject(new Error('timeout')), 5000)),
-    ]);
-    const collections = await db.collection('collections')
-      .find({ hidden: { $ne: true } }, { projection: { slug: 1 } })
-      .sort({ book_count: -1 })
-      .limit(30)
-      .toArray();
-    return collections.map(c => ({ id: c.slug }));
-  } catch {
-    return []; // Fallback: generate on demand
-  }
+  // Don't pre-render collections at build time — Atlas timeouts during build
+  // cause hard failures. ISR will generate on first request instead.
+  return [];
 }
 
 interface Props {
@@ -449,9 +437,9 @@ export default async function CollectionDetailPage({ params }: Props) {
     data = await fetchCollectionData(id);
   } catch (err) {
     console.error('[Collection page] fetchCollectionData failed:', err instanceof Error ? err.message : err);
-    // Re-throw so Next.js returns a 500 — ISR will NOT cache error responses,
-    // and the error.tsx boundary will show a user-friendly message.
-    throw err;
+    // Don't re-throw — a crash here kills the build and blocks all deploys.
+    // ISR will regenerate with real data on next revalidation.
+    notFound();
   }
   if (!data) notFound();
 
