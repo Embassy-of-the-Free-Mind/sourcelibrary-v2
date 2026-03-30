@@ -1,5 +1,5 @@
 import { Metadata } from 'next';
-import Link from 'next/link';
+import SiteHeader from '@/components/layout/SiteHeader';
 import VolunteerForm from '@/components/contribute/VolunteerForm';
 
 export const metadata: Metadata = {
@@ -13,20 +13,7 @@ export const metadata: Metadata = {
 export default function VolunteerPage() {
   return (
     <div className="min-h-screen bg-cream">
-      {/* Nav */}
-      <header className="bg-white border-b border-border-light">
-        <div className="max-w-2xl mx-auto px-6 py-4">
-          <Link
-            href="/contribute"
-            className="flex items-center gap-2 text-secondary hover:text-primary transition-colors"
-          >
-            <svg className="w-4 h-4" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={2}>
-              <path strokeLinecap="round" strokeLinejoin="round" d="M10.5 19.5L3 12m0 0l7.5-7.5M3 12h18" />
-            </svg>
-            Back to Participate
-          </Link>
-        </div>
-      </header>
+      <SiteHeader variant="light" />
 
       <div className="max-w-2xl mx-auto px-6 py-12 md:py-16">
         <h1 className="font-serif text-3xl md:text-4xl text-primary mb-3">
