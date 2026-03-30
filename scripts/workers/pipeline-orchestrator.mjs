@@ -434,64 +434,19 @@ async function getTranslationPromptFromDb(db) {
   return _cachedTranslationPrompt;
 }
 
-const ENGLISH_MODERNIZATION_PROMPT = `You are modernizing Early Modern English text into clear, accessible Modern English.
-
-**Context:** This is a historical text (1500s-1700s) written in Early Modern English. The OCR transcription preserves the original spelling, vocabulary, and syntax. Your job is to make it readable for a modern audience while preserving the author's meaning and the document's formatting.
-
-**Input:** The OCR transcription with markdown formatting and XML tags, plus (if available) the previous page's modernization for continuity.
-
-**Output:** Modern English text that preserves the markdown formatting and XML tags from the OCR.
-
-**Preserve from OCR:**
-- Heading levels (# ## ###) - keep the same hierarchy
-- **Bold** and *italic* formatting
-- Tables - recreate them with modern text
-- Centered text (->text<-)
-- Line breaks and paragraph structure
-
-**Inline annotations (visible to readers):**
-- <note>X</note> — keep or add interpretive notes for readers
-- <margin>X</margin> — modernize and keep marginal notes
-- <gloss>X</gloss> — modernize interlinear annotations
-- <insert>X</insert> — modernize later additions (inline only)
-- <unclear>X</unclear> — illegible readings
-- <term>X</term> — explain archaic or technical vocabulary
-
-**Metadata tags (hidden from readers):**
-- <meta>X</meta> for notes about continuity with previous page
-
-**What to modernize:**
-1. **Spelling** — normalize archaic spelling
-2. **Vocabulary** — replace obsolete words with modern equivalents
-3. **Sentence structure** — break up very long periodic sentences while preserving meaning
-4. **Punctuation** — modernize capitalization, punctuation, and emphasis
-5. **Grammar** — update archaic forms ("hath" → "has", "doth" → "does")
-
-**What to keep:**
-- All substantive content (don't summarize or skip anything)
-- Key names, titles, and proper nouns
-- The author's arguments, reasoning, and rhetorical structure
-
-**IMPORTANT - Translate ALL embedded foreign languages to English:**
-Use <note>original: "..."</note> to preserve important original phrases.
-
-**Do NOT use:**
-- Code blocks or backticks — this is prose
-
-**Instructions:**
-1. Start with <meta>...</meta> if noting continuity with previous page.
-2. Mirror the source layout — headings, paragraphs, tables, centered text.
-3. Modernize ALL text including <margin>, <insert>, <gloss> — keep the XML tags.
-4. Translate any Latin/Greek/Hebrew phrases to English.
-5. Add <note>...</note> inline to explain historical references.
-6. Preserve the voice and spirit of the original.
-7. END with <summary>...</summary> and <keywords>...</keywords> for indexing.
-
-**Final output format:**
-[modernized text]
-
-<summary>1-2 sentence summary of this page's main content and significance</summary>
-<keywords>key concepts, names, themes — for indexing</keywords>`;
+// English modernization prompt loaded from DB (single source of truth)
+let _cachedEnglishPrompt = null;
+async function getEnglishModernizationPromptFromDb(db) {
+  if (_cachedEnglishPrompt) return _cachedEnglishPrompt;
+  const prompt = await db.collection('prompts').findOne(
+    { type: 'english_modernization', is_default: true },
+    { sort: { version: -1 } }
+  );
+  if (!prompt?.content) throw new Error('No default english_modernization prompt found in DB');
+  console.log(`[pipeline] Loaded english modernization prompt v${prompt.version} from DB`);
+  _cachedEnglishPrompt = prompt.content;
+  return _cachedEnglishPrompt;
+}
 
 function extractTranslationMetadata(text) {
   const result = {};
@@ -521,7 +476,8 @@ async function translatePage(db, page, sourceLanguage, previousTranslation) {
 
   const isEnglish = sourceLanguage.toLowerCase() === 'english';
   const translationPrompt = await getTranslationPromptFromDb(db);
-  const basePrompt = isEnglish ? ENGLISH_MODERNIZATION_PROMPT : translationPrompt;
+  const englishPrompt = await getEnglishModernizationPromptFromDb(db);
+  const basePrompt = isEnglish ? englishPrompt : translationPrompt;
   let prompt = basePrompt
     .replace('{source_language}', sourceLanguage)
     .replace('{target_language}', 'English');

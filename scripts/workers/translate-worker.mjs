@@ -76,16 +76,19 @@ async function getTranslationPromptFromDb(db) {
   return _cachedTranslationPrompt;
 }
 
-const ENGLISH_MODERNIZATION_PROMPT = `You are a scholarly editor modernizing Early Modern English texts for contemporary readers.
-
-**Your task:** Modernize the following Early Modern English text into clear, contemporary English.
-
-**Guidelines:**
-- Update archaic spelling, grammar, and vocabulary to modern equivalents
-- Preserve the original meaning and tone
-- Keep proper nouns, titles, and technical terms recognizable
-- Preserve any XML-like tags in the text
-- Do NOT add commentary or explanations — just the modernized text`;
+// English modernization prompt loaded from DB (single source of truth)
+let _cachedEnglishPrompt = null;
+async function getEnglishModernizationPromptFromDb(db) {
+  if (_cachedEnglishPrompt) return _cachedEnglishPrompt;
+  const prompt = await db.collection('prompts').findOne(
+    { type: 'english_modernization', is_default: true },
+    { sort: { version: -1 } }
+  );
+  if (!prompt?.content) throw new Error('No default english_modernization prompt found in DB');
+  console.log(`[TRANSLATE] Loaded english modernization prompt v${prompt.version} from DB`);
+  _cachedEnglishPrompt = prompt.content;
+  return _cachedEnglishPrompt;
+}
 
 // ── Skip these page types (no translatable content) ──
 const SKIP_PAGE_TYPES = ['blank', 'digitizer-notice', 'illustration', 'map', 'diagram'];
@@ -138,7 +141,8 @@ const SAFETY_SETTINGS = [
 async function buildPromptHeader(db, book) {
   const isEnglish = (book.language || '').toLowerCase() === 'english';
   const translationPrompt = await getTranslationPromptFromDb(db);
-  const basePrompt = isEnglish ? ENGLISH_MODERNIZATION_PROMPT : translationPrompt;
+  const englishPrompt = await getEnglishModernizationPromptFromDb(db);
+  const basePrompt = isEnglish ? englishPrompt : translationPrompt;
   let prompt = basePrompt.replace('{source_language}', book.language || 'Latin');
 
   const parts = [];
