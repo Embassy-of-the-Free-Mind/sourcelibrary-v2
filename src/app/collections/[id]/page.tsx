@@ -449,17 +449,9 @@ export default async function CollectionDetailPage({ params }: Props) {
     data = await fetchCollectionData(id);
   } catch (err) {
     console.error('[Collection page] fetchCollectionData failed:', err instanceof Error ? err.message : err);
-    // Show a temporary error page instead of 500 — ISR won't cache this
-    // because we return a response, not throw
-    return (
-      <div className="min-h-screen bg-cream flex items-center justify-center">
-        <div className="text-center max-w-md px-6">
-          <h1 className="text-2xl font-display text-primary mb-3">Temporarily Unavailable</h1>
-          <p className="text-secondary mb-6">This collection is taking longer than expected to load. Please try again in a moment.</p>
-          <Link href="/" className="text-accent-rust hover:underline">Return to Library</Link>
-        </div>
-      </div>
-    );
+    // Re-throw so Next.js returns a 500 — ISR will NOT cache error responses,
+    // and the error.tsx boundary will show a user-friendly message.
+    throw err;
   }
   if (!data) notFound();
 
