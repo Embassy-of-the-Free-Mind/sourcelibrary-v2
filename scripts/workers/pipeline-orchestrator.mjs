@@ -2082,7 +2082,7 @@ async function run() {
               },
             }},
             { $sort: { _priority: 1, hidden: 1 } },
-            { $project: { id: 1, title: 1, pages_count: 1, 'pipeline_auto.retry_count': 1 } },
+            { $project: { id: 1, title: 1, pages_count: 1, 'pipeline_auto.retry_count': 1, 'pipeline_auto.split_checked': 1 } },
             { $limit: ocrLimit },
           ])
           .toArray();
@@ -2145,7 +2145,7 @@ async function run() {
             },
           }},
           { $sort: { _priority: 1, hidden: 1 } },
-          { $project: { id: 1, title: 1, pages_count: 1, 'pipeline_auto.retry_count': 1, 'pipeline_auto.recitation_retry': 1 } },
+          { $project: { id: 1, title: 1, pages_count: 1, 'pipeline_auto.retry_count': 1, 'pipeline_auto.recitation_retry': 1, 'pipeline_auto.split_checked': 1 } },
           { $limit: ocrLimit },
         ])
         .toArray() : [];
