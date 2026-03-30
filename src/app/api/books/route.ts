@@ -4,35 +4,33 @@ import { ObjectId } from 'mongodb';
 import { Book } from '@/lib/types';
 import { withAuth } from '@/lib/auth-helpers';
 
-export async function GET() {
+export async function GET(request: NextRequest) {
   try {
+    const { searchParams } = new URL(request.url);
+    const limit = Math.min(parseInt(searchParams.get('limit') || '100', 10), 500);
+    const offset = Math.max(parseInt(searchParams.get('offset') || '0', 10), 0);
+
     const db = await getDb();
 
-    // Get all books with page counts
-    const books = await db.collection('books').aggregate([
-      { $match: { hidden: { $ne: true } } },
-      {
-        $lookup: {
-          from: 'pages',
-          localField: 'id',
-          foreignField: 'book_id',
-          as: 'pages_array'
-        }
-      },
-      {
-        $addFields: {
-          pages_count: { $size: '$pages_array' }
-        }
-      },
-      {
-        $project: {
-          pages_array: 0
-        }
-      },
-      {
-        $sort: { created_at: -1 }
-      }
-    ], { maxTimeMS: 30000 }).toArray();
+    // pages_count is already cached on each book by the sync-page-counts cron.
+    // NEVER $lookup to the pages collection (9.5M docs) on a hot path.
+    const books = await db.collection('books')
+      .find(
+        { hidden: { $ne: true } },
+        {
+          projection: {
+            _id: 0, id: 1, title: 1, display_title: 1, author: 1, language: 1,
+            published: 1, pages_count: 1, pages_ocr: 1, pages_translated: 1,
+            status: 1, slug: 1, thumbnail: 1, thumbnail_blob: 1, created_at: 1,
+            ia_identifier: 1, image_source: 1, collections: 1,
+          },
+          maxTimeMS: 8000,
+        },
+      )
+      .sort({ created_at: -1 })
+      .skip(offset)
+      .limit(limit)
+      .toArray();
 
     return NextResponse.json(books, {
       headers: {
