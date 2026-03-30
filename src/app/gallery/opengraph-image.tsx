@@ -1,7 +1,7 @@
 import { ImageResponse } from 'next/og';
 import { getDb } from '@/lib/mongodb';
 
-export const revalidate = 600;
+export const dynamic = 'force-dynamic';
 export const alt = 'Image Gallery - Source Library';
 export const size = {
   width: 1200,

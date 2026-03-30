@@ -37,7 +37,10 @@ interface TraditionCollection {
 }
 
 async function getTraditions(): Promise<{ traditions: TraditionCollection[]; totalBooks: number }> {
-  const db = await getDb();
+  const db = await Promise.race([
+    getDb(),
+    new Promise<never>((_, reject) => setTimeout(() => reject(new Error('DB timeout')), 10000)),
+  ]);
 
   const traditions = await db
     .collection('collections')
