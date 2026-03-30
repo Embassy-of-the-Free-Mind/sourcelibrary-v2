@@ -32,7 +32,7 @@ function clearCache() {
 }
 
 export async function connectToDatabase(): Promise<{ client: MongoClient; db: Db }> {
-  if (!uri || !dbName) {
+  if (!uri || !dbName || process.env.SKIP_DB_AT_BUILD === '1') {
     throw new Error('MongoDB environment variables not configured');
   }
 
