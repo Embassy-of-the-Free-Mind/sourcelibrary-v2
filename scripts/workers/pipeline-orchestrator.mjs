@@ -1549,7 +1549,7 @@ async function run() {
         .find({
           'pipeline_auto.status': 'archive_complete',
           'pipeline_auto.split_checked': { $ne: true },
-          preview_ocr_queued_at: { $exists: false }, // Not yet in OCR
+          // preview_ocr_queued_at filter removed — split detection is independent of preview OCR
         })
         .sort({ hidden: 1 })
         .project({ id: 1, title: 1, pages_count: 1 })
