@@ -14,15 +14,28 @@ export const metadata: Metadata = {
 };
 
 async function fetchTimelineData(): Promise<TimelineOverview> {
+  const empty: TimelineOverview = {
+    decades: [],
+    summary: { total: 0, yearRange: { min: 0, max: 0 }, topLanguages: [] },
+    filters: { languages: [], collections: [] },
+  };
+
   try {
     const db = await getDb();
 
+    // Try pre-computed cache first (seeded by scripts/seed-timeline-filters.mjs)
+    // eslint-disable-next-line @typescript-eslint/no-explicit-any
+    const cached = await db.collection('system_config').findOne({ _id: 'timeline_overview' } as any);
+    if (cached && cached.data?.decades?.length > 0) {
+      return cached.data as TimelineOverview;
+    }
+
+    // Fallback: live aggregation with generous timeout
     const baseMatch = {
       year: { $exists: true, $ne: null },
       hidden: { $ne: true },
     };
 
-    // Single aggregation: group by decade+language, then reshape
     const pipeline = [
       { $match: baseMatch },
       { $project: { year: 1, language: { $ifNull: ['$language', 'Unknown'] } } },
@@ -47,7 +60,7 @@ async function fetchTimelineData(): Promise<TimelineOverview> {
     ];
 
     const [rawDecades, languages] = await Promise.all([
-      db.collection('books').aggregate(pipeline, { maxTimeMS: 10000 }).toArray(),
+      db.collection('books').aggregate(pipeline, { maxTimeMS: 45000 }).toArray(),
       db.collection('books').distinct('language', baseMatch),
     ]);
 
@@ -84,11 +97,7 @@ async function fetchTimelineData(): Promise<TimelineOverview> {
     };
   } catch (err) {
     console.error('Timeline data fetch failed:', err);
-    return {
-      decades: [],
-      summary: { total: 0, yearRange: { min: 0, max: 0 }, topLanguages: [] },
-      filters: { languages: [], collections: [] },
-    };
+    return empty;
   }
 }
 

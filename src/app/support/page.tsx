@@ -6,7 +6,7 @@ import Link from 'next/link';
 // When available, replace this URL so donors see "Source Library" instead of the generic Embassy form.
 const DONORPERFECT_URL = 'https://form-renderer-app.donorperfect.io/give/naf/embassyofthefreemind';
 
-const CONTACT_EMAIL = 'derek@ancientwisdomtrust.org';
+const CONTACT_EMAIL = 'derek@sourcelibrary.org';
 
 const MEMBERSHIP_TIERS = [
   {
@@ -227,7 +227,7 @@ export default function SupportPage() {
               },
               {
                 title: 'Open Access for Everyone',
-                text: 'Everything we produce — scans, OCR text, translations — is released under CC0 public domain. No paywalls, no restrictions. Wisdom belongs to everyone, and your support keeps it that way.',
+                text: 'Everything we produce — scans, OCR text, translations — is open access. No paywalls, no restrictions. Wisdom belongs to everyone, and your support keeps it that way.',
               },
               {
                 title: 'Enriching AI with Ancient Knowledge',

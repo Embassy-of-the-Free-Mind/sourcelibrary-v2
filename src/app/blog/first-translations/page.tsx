@@ -438,8 +438,8 @@ export default function FirstTranslationsPage() {
         {/* === Footer === */}
         <div className="border-t border-border-light pt-8 mt-16">
           <p className="text-secondary text-sm leading-relaxed font-body">
-            Source Library is a project of the Embassy of the Free Mind. Everything in the collection is CC0 public domain. If you are a scholar who can improve any of these translations, or if you know of a prior English translation we missed, please reach out &mdash;{' '}
-            <a href="mailto:derek@ancientwisdomtrust.org" className="text-accent-rust hover:text-accent-rust underline">derek@ancientwisdomtrust.org</a>.
+            Source Library is a project of the Embassy of the Free Mind. If you are a scholar who can improve any of these translations, or if you know of a prior English translation we missed, please reach out &mdash;{' '}
+            <a href="mailto:derek@sourcelibrary.org" className="text-accent-rust hover:text-accent-rust underline">derek@sourcelibrary.org</a>.
           </p>
         </div>
       </article>

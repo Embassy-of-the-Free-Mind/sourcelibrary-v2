@@ -56,7 +56,7 @@ async function fetchProviderStats(): Promise<ProviderStats[]> {
     { $project: { count: 1, languages: 1, sampleIds: { $slice: ['$sampleIds', 3] } } },
   ];
 
-  const results = await db.collection('books').aggregate(pipeline, { maxTimeMS: 25000 }).toArray();
+  const results = await db.collection('books').aggregate(pipeline, { maxTimeMS: 45000 }).toArray();
 
   // Fetch one hero gallery image per provider (small $in query)
   const allBookIds = results.flatMap(r => (r.sampleIds as string[]));
@@ -116,7 +116,7 @@ async function fetchContributingLibraries(): Promise<ContributingLibrary[]> {
       },
     },
     { $sort: { count: -1 as const } },
-  ], { maxTimeMS: 25000 }).toArray();
+  ], { maxTimeMS: 45000 }).toArray();
 
   // Filter out entries that duplicate a digital source name (e.g. "Internet Archive")
   const digitalNames = new Set(Object.values(LIBRARY_PARTNERS).map(p => p.name.toLowerCase()));

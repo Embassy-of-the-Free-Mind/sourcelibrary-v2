@@ -184,7 +184,7 @@ export default function McpServerPage() {
         </ul>
 
         <p className="text-secondary leading-relaxed mb-8">
-          Every book has been OCR&apos;d from the original page images and translated to English by AI, with the original language always preserved alongside for verification. Published editions carry DOIs via Zenodo. Everything is CC0 public domain.
+          Every book has been OCR&apos;d from the original page images and translated to English by AI, with the original language always preserved alongside for verification. Published editions carry DOIs via Zenodo.
         </p>
 
         <h2 className="text-2xl md:text-3xl text-primary mt-16 mb-6">
@@ -268,8 +268,8 @@ export default function McpServerPage() {
 
         <div className="border-t border-border-light pt-8 mt-16">
           <p className="text-secondary text-sm leading-relaxed">
-            Source Library is a project of the Embassy of the Free Mind. Everything in the collection is CC0 public domain. If you use it for research, we&apos;d love to hear about it &mdash;{' '}
-            <a href="mailto:derek@ancientwisdomtrust.org" className="text-accent-rust hover:text-accent-rust underline">derek@ancientwisdomtrust.org</a>.
+            Source Library is a project of the Embassy of the Free Mind. If you use it for research, we&apos;d love to hear about it &mdash;{' '}
+            <a href="mailto:derek@sourcelibrary.org" className="text-accent-rust hover:text-accent-rust underline">derek@sourcelibrary.org</a>.
           </p>
         </div>
       </article>

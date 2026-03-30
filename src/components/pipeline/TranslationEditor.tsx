@@ -1992,12 +1992,10 @@ export default function TranslationEditor({
 
       </div>
 
-      {/* CC0 Footer */}
+      {/* Footer */}
       <div className="px-4 py-1.5 flex items-center justify-center gap-2 text-xs" style={{ background: 'var(--bg-warm)', color: 'var(--text-muted)', borderTop: '1px solid var(--border-light)' }}>
-        <span>CC0 Public Domain</span>
-        <span>•</span>
-        <a href="mailto:derek@ancientwisdomtrust.org" className="hover:underline" style={{ color: 'var(--accent-rust)' }}>
-          derek@ancientwisdomtrust.org
+        <a href="mailto:derek@sourcelibrary.org" className="hover:underline" style={{ color: 'var(--accent-rust)' }}>
+          derek@sourcelibrary.org
         </a>
       </div>
 

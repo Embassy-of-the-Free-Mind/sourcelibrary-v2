@@ -32,7 +32,7 @@ export async function POST(request: NextRequest) {
 
     await db.collection('volunteers').insertOne(doc);
 
-    // TODO: Send email notification to derek@ancientwisdomtrust.org on new submissions
+    // TODO: Send email notification to derek@sourcelibrary.org on new submissions
     // Options: Resend API, or a simple webhook to Slack/Discord
 
     return NextResponse.json({ ok: true });
