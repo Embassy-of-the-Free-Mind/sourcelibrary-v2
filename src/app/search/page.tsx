@@ -10,6 +10,7 @@ import {
   ChevronLeft, ChevronRight, ArrowUpDown, ImageIcon, ChevronDown
 } from 'lucide-react';
 import { useSearchParams, useRouter } from 'next/navigation';
+import SiteHeader from '@/components/layout/SiteHeader';
 import { useDebouncedCallback } from 'use-debounce';
 import { reportError } from '@/components/providers/ErrorReporter';
 import {
@@ -425,26 +426,7 @@ export default function SearchPage() {
 
   return (
     <div className="min-h-screen bg-cream">
-      {/* Header */}
-      <header className="bg-dark">
-        <div className="max-w-5xl mx-auto px-6 py-4">
-          <Link
-            href="/"
-            className="flex items-center gap-3"
-            aria-label="Source Library home"
-          >
-            <svg className="w-10 h-10 md:w-12 md:h-12" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
-              <circle cx="12" cy="12" r="10" stroke="white" strokeWidth="1" />
-              <circle cx="12" cy="12" r="7" stroke="white" strokeWidth="1" />
-              <circle cx="12" cy="12" r="4" stroke="white" strokeWidth="1" />
-            </svg>
-            <span className="text-xl md:text-2xl uppercase tracking-wider text-white">
-              <span className="font-semibold text-white">Source</span>
-              <span className="font-light text-white">Library</span>
-            </span>
-          </Link>
-        </div>
-      </header>
+      <SiteHeader variant="dark" />
 
       {/* Search Bar */}
       <div className="bg-white border-b border-border-light sticky top-0 z-10">

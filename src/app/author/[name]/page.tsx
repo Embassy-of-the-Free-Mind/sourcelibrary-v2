@@ -1,7 +1,8 @@
 import { Metadata } from 'next';
 import Link from 'next/link';
 import Image from 'next/image';
-import { ArrowLeft, Book as BookIcon } from 'lucide-react';
+import { Book as BookIcon } from 'lucide-react';
+import SiteHeader from '@/components/layout/SiteHeader';
 import { getDb } from '@/lib/mongodb';
 import { notFound, redirect } from 'next/navigation';
 import { bookUrl, authorSlug } from '@/lib/slugify';
@@ -193,18 +194,7 @@ export default async function AuthorPage({ params }: AuthorPageProps) {
 
   return (
     <div className="min-h-screen bg-stone-50">
-      {/* Header */}
-      <header className="bg-white border-b border-stone-200">
-        <div className="max-w-5xl mx-auto px-4 py-4">
-          <Link
-            href="/"
-            className="inline-flex items-center gap-2 text-stone-600 hover:text-stone-900"
-          >
-            <ArrowLeft className="w-4 h-4" />
-            Library
-          </Link>
-        </div>
-      </header>
+      <SiteHeader variant="light" />
 
       {/* Hero */}
       <div className="bg-gradient-to-b from-stone-800 to-stone-900 text-white">

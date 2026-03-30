@@ -1,6 +1,7 @@
 'use client';
 
 import Link from 'next/link';
+import SiteHeader from '@/components/layout/SiteHeader';
 
 // TODO: Ask NAF for a Source Library-specific DonorPerfect form.
 // When available, replace this URL so donors see "Source Library" instead of the generic Embassy form.
@@ -51,15 +52,10 @@ const MEMBERSHIP_TIERS = [
 export default function SupportPage() {
   return (
     <div className="min-h-screen">
+      <SiteHeader variant="light" />
       {/* Header */}
       <section className="bg-gradient-to-b from-[#f6f3ee] to-white pt-8 pb-16 md:pt-12 md:pb-24">
         <div className="px-6 md:px-12 max-w-5xl mx-auto">
-          <Link href="/" className="inline-flex items-center gap-2 text-sm mb-10 hover:opacity-70 transition-opacity" style={{ color: 'var(--text-muted)' }}>
-            <svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-              <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M15 19l-7-7 7-7" />
-            </svg>
-            Back to library
-          </Link>
           <h1 className="text-3xl md:text-4xl lg:text-5xl text-stone-900 mb-6 leading-tight font-display">
             Support Source Library
           </h1>

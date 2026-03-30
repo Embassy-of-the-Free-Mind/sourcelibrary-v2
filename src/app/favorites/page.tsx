@@ -4,6 +4,7 @@ import { useState, useEffect, useCallback } from 'react';
 import Link from 'next/link';
 import Image from 'next/image';
 import { Heart, BookOpen, FileText, Image as ImageIcon, User, TrendingUp } from 'lucide-react';
+import SiteHeader from '@/components/layout/SiteHeader';
 import { BookLoader } from '@/components/ui/BookLoader';
 import { likes } from '@/lib/api-client';
 
@@ -153,22 +154,7 @@ export default function FavoritesPage() {
 
   return (
     <div className="min-h-screen bg-stone-50">
-      {/* Logo bar */}
-      <header className="bg-white border-b border-border-light">
-        <div className="max-w-5xl mx-auto px-6 py-4">
-          <Link
-            href="/"
-            className="flex items-center gap-2 text-secondary hover:text-primary transition-colors"
-          >
-            <svg className="w-8 h-8" viewBox="0 0 24 24" fill="none">
-              <circle cx="12" cy="12" r="10" stroke="currentColor" strokeWidth="1" />
-              <circle cx="12" cy="12" r="7" stroke="currentColor" strokeWidth="1" />
-              <circle cx="12" cy="12" r="4" stroke="currentColor" strokeWidth="1" />
-            </svg>
-            <span className="font-medium">Source Library</span>
-          </Link>
-        </div>
-      </header>
+      <SiteHeader variant="light" />
 
       {/* Dark hero */}
       <div className="bg-gradient-to-b from-stone-800 to-stone-900 text-white py-16">

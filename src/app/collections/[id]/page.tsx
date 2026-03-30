@@ -2,7 +2,8 @@ import React from 'react';
 import Link from 'next/link';
 import Image from 'next/image';
 import { Metadata } from 'next';
-import { BookOpen, Images, ArrowLeft, Library } from 'lucide-react';
+import { ArrowLeft, BookOpen, Images, Library } from 'lucide-react';
+import SiteHeader from '@/components/layout/SiteHeader';
 import { getDb } from '@/lib/mongodb';
 import { notFound } from 'next/navigation';
 import CollectionSchema from '@/components/seo/CollectionSchema';
@@ -490,6 +491,7 @@ export default async function CollectionDetailPage({ params }: Props) {
 
   return (
     <div className="min-h-screen bg-cream">
+      <SiteHeader variant="dark" />
       <CollectionSchema
         slug={id}
         name={collection.name}

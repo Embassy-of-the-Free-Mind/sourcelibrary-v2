@@ -1,6 +1,7 @@
 'use client';
 
 import Link from 'next/link';
+import Logo from './Logo';
 import UserMenu from './UserMenu';
 
 interface Breadcrumb {
@@ -17,35 +18,6 @@ interface SiteHeaderProps {
   sticky?: boolean;
   /** Additional className for the header element */
   className?: string;
-}
-
-function Logo({ white, compact }: { white?: boolean; compact?: boolean }) {
-  const strokeColor = white ? 'white' : 'currentColor';
-  return (
-    <Link
-      href="/"
-      className={`inline-flex items-center gap-3 ${
-        white
-          ? 'text-white hover:opacity-80'
-          : 'text-primary hover:text-secondary'
-      } transition-colors`}
-      aria-label="Source Library home"
-    >
-      <svg
-        className={compact ? 'w-8 h-8' : 'w-10 h-10 md:w-12 md:h-12'}
-        viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg" aria-hidden="true"
-      >
-        <circle cx="12" cy="12" r="10" stroke={strokeColor} strokeWidth="1" />
-        <circle cx="12" cy="12" r="7" stroke={strokeColor} strokeWidth="1" />
-        <circle cx="12" cy="12" r="4" stroke={strokeColor} strokeWidth="1" />
-      </svg>
-      <span className={`${compact ? 'text-lg' : 'text-xl md:text-2xl'} uppercase tracking-wider`}>
-        <span className="font-semibold">Source</span>
-        <span className="font-light">Library</span>
-        <sup className="text-[0.6em] font-light tracking-normal normal-case ml-1 opacity-80 relative -top-[0.5em]">Beta</sup>
-      </span>
-    </Link>
-  );
 }
 
 export default function SiteHeader({ variant = 'light', breadcrumbs, sticky, className = '' }: SiteHeaderProps) {
