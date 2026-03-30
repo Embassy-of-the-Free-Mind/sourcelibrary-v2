@@ -549,7 +549,12 @@ export default async function CollectionDetailPage({ params }: Props) {
           )}
 
           <div className="flex flex-wrap items-center gap-4 text-sm text-white/50">
-            <span>{total.toLocaleString('en-US')} {itemLabel}</span>
+            <a
+              href="#collection-all-books"
+              className="hover:text-white/80 transition-colors underline underline-offset-2 decoration-white/30"
+            >
+              {total.toLocaleString('en-US')} {itemLabel}
+            </a>
             {languages.length > 0 && (
               <>
                 <span className="w-px h-4 bg-white/20" />
@@ -634,6 +639,11 @@ export default async function CollectionDetailPage({ params }: Props) {
           )}
 
           {diverseGalleryImages.length > 0 && (
+            <div>
+              <h3 className="text-lg text-primary mb-3 font-display flex items-center gap-2">
+                <Images className="w-4 h-4 text-muted" />
+                Illustrations from the Collection
+              </h3>
             <div className="grid grid-cols-3 sm:grid-cols-4 lg:grid-cols-5 gap-4">
               {diverseGalleryImages.map((img: { pageId?: string; page_id?: string; bookId?: string; book_id?: string; detectionIndex?: number; detection_index?: number; thumbnailUrl?: string; thumbnail_url?: string; extractedUrl?: string; extracted_url?: string; imageUrl?: string; image_url?: string; museumDescription?: string; museum_description?: string; description?: string; bookTitle?: string; book_title?: string; type?: string }) => {
                 const thumb = img.extracted_url || img.extractedUrl || img.thumbnail_url || img.thumbnailUrl || img.imageUrl || img.image_url;
@@ -677,6 +687,7 @@ export default async function CollectionDetailPage({ params }: Props) {
                 <Images className="w-7 h-7" />
                 <span className="text-xs font-medium">Browse gallery</span>
               </Link>
+            </div>
             </div>
           )}
         </div>

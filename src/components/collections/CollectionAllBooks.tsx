@@ -124,7 +124,8 @@ export default function CollectionAllBooks({
     }
   }, [collectionId]);
 
-  // Read URL params on mount (avoids useSearchParams SSR bailout)
+  // Auto-expand and fetch manifest on mount.
+  // Read URL params for deep-linked state (avoids useSearchParams SSR bailout).
   useEffect(() => {
     if (initializedRef.current) return;
     initializedRef.current = true;
@@ -135,7 +136,6 @@ export default function CollectionAllBooks({
     const urlPage = params.get('page');
     const urlView = params.get('view') as ViewMode | null;
     const storedView = getStoredView();
-    const hasParams = urlSort || urlPage || urlView;
 
     if (urlSort) setSort(urlSort);
     if (urlLang) setLanguage(urlLang);
@@ -143,10 +143,8 @@ export default function CollectionAllBooks({
     if (urlPage) setCurrentPage(parseInt(urlPage));
     setViewMode(urlView || storedView || sizeDefault);
 
-    if (hasParams) {
-      setExpanded(true);
-      fetchManifest();
-    }
+    setExpanded(true);
+    fetchManifest();
   }, [fetchManifest, sizeDefault]);
 
   // Client-side filter → sort → paginate (instant, no network)
