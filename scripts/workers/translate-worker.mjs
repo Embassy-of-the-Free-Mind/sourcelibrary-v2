@@ -710,12 +710,17 @@ async function main() {
     }
   }
 
-  // Find books in translate_submitted — each book gets up to 200 pages then gets parked.
-  // Only pick books that haven't been translated yet (fresh) to maximize breadth.
+  // Only fresh books (0 translated) per batch — all hit the 200-page cap together, zero convoy waste.
+  // Partial books only when no fresh books remain.
   const proj = { id: 1, title: 1, display_title: 1, author: 1, year: 1, published: 1, language: 1, job: 1, image_source: 1, pages_translated: 1, pages_ocr: 1, pages_blank: 1 };
-  const books = await db.collection('books')
-    .find({ 'pipeline_auto.status': 'translate_submitted' })
+  let books = await db.collection('books')
+    .find({ 'pipeline_auto.status': 'translate_submitted', $or: [{ pages_translated: 0 }, { pages_translated: { $exists: false } }] })
     .project(proj).limit(CONCURRENCY).toArray();
+  if (books.length === 0) {
+    books = await db.collection('books')
+      .find({ 'pipeline_auto.status': 'translate_submitted' })
+      .project(proj).limit(CONCURRENCY).toArray();
+  }
 
   if (books.length === 0) {
     console.log('[TRANSLATE] No books to translate');
