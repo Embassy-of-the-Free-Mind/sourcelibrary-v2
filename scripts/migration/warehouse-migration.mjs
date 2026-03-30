@@ -21,12 +21,12 @@ if (!MONGODB_URI) { console.error('MONGODB_URI not set'); process.exit(1); }
 const DRY_RUN = process.argv.includes('--dry-run');
 const WAREHOUSE_STATUSES = ['archiving', 'archive_complete'];
 const BOOK_CHUNK = 1000; // Books per $merge chunk
-const PAGE_CHUNK = 200; // Book IDs per page $merge chunk (page-heavy books timeout at larger sizes)
+const PAGE_CHUNK = 50; // Book IDs per page $merge chunk (Atlas write throughput is the bottleneck)
 
 async function run() {
   const client = new MongoClient(MONGODB_URI, {
     maxPoolSize: 5,
-    socketTimeoutMS: 600000, // 10 min
+    socketTimeoutMS: 1800000, // 30 min — large page merges need time
   });
   await client.connect();
   const db = client.db('bookstore');
@@ -88,11 +88,26 @@ async function run() {
       continue;
     }
 
-    await db.collection('pages').aggregate([
-      { $match: { book_id: { $in: chunk } } },
-      { $merge: { into: 'pages_warehouse', on: '_id', whenMatched: 'keepExisting', whenNotMatched: 'insert' } },
-    ], { maxTimeMS: 600000 }).toArray();
+    // Retry up to 3 times on network errors
+    for (let attempt = 0; attempt < 3; attempt++) {
+      try {
+        await db.collection('pages').aggregate([
+          { $match: { book_id: { $in: chunk } } },
+          { $merge: { into: 'pages_warehouse', on: '_id', whenMatched: 'keepExisting', whenNotMatched: 'insert' } },
+        ], { maxTimeMS: 1800000 }).toArray();
+        break;
+      } catch (err) {
+        if (attempt === 2) throw err;
+        console.log(`[wh] Chunk ${i} failed (attempt ${attempt + 1}): ${err.message?.slice(0, 80)} — retrying in 10s...`);
+        await new Promise(r => setTimeout(r, 10000));
+      }
+    }
     console.log(`[wh] Pages copied for books ${i}-${Math.min(i + PAGE_CHUNK, bookIds.length)}: ${livePagesInChunk} pages (${((Date.now() - pagesPhase) / 1000).toFixed(0)}s)`);
+
+    // Cooldown between heavy chunks to let Atlas recover
+    if (livePagesInChunk > 10000) {
+      await new Promise(r => setTimeout(r, 5000));
+    }
   }
 
   // Verify
