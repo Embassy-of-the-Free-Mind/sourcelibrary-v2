@@ -162,7 +162,21 @@ async function probeDbHealth(db) {
     countMs = 3000;
   }
 
-  // Signal 2: Active jobs
+  // Signal 2: User-facing query latency — tests the browse pattern that actual users hit.
+  // The pages-level probes above can report "healthy" (indexed findOne) while browse
+  // queries time out due to WiredTiger cache pressure from write amplification.
+  let browseMs = 0;
+  try {
+    const t3 = Date.now();
+    await db.collection('books').find(
+      { hidden: { $ne: true }, pages_count: { $gt: 0 } }
+    ).sort({ created_at: -1 }).limit(10).project({ _id: 1 }).toArray();
+    browseMs = Date.now() - t3;
+  } catch {
+    browseMs = 5000; // treat timeout as worst-case
+  }
+
+  // Signal 3: Active jobs
   try {
     activeJobs = await db.collection('jobs').countDocuments(
       { status: 'processing' },
@@ -176,12 +190,14 @@ async function probeDbHealth(db) {
   // Job count was a proxy for DB load but stopped correlating when translation
   // moved to Hetzner (jobs stay "processing" for hours without DB pressure).
   // If high job counts actually stress Atlas, latency metrics will catch it.
+  // browseMs catches the failure mode where indexed queries are fine but
+  // user-facing queries time out (WiredTiger cache saturation from writes).
   let grade = 'healthy';
-  if (findMs > 1000 || countMs > 1500) grade = 'critical';
-  else if (findMs > 300 || countMs > 500) grade = 'degraded';
+  if (findMs > 1000 || countMs > 1500 || browseMs > 5000) grade = 'critical';
+  else if (findMs > 300 || countMs > 500 || browseMs > 2000) grade = 'degraded';
 
   const duration = Date.now() - t0;
-  console.log(`[health] grade=${grade} find=${findMs}ms count=${countMs}ms jobs=${activeJobs} (probed in ${duration}ms)`);
+  console.log(`[health] grade=${grade} find=${findMs}ms count=${countMs}ms browse=${browseMs}ms jobs=${activeJobs} (probed in ${duration}ms)`);
 
   // Apply throttling
   if (grade === 'critical') {
@@ -275,6 +291,7 @@ async function probeDbHealth(db) {
           'health.grade': grade,
           'health.find_ms': findMs,
           'health.count_ms': countMs,
+          'health.browse_ms': browseMs,
           'health.active_jobs': activeJobs,
           'health.measured_at': new Date(),
           'health.source': 'hetzner-orchestrator',
