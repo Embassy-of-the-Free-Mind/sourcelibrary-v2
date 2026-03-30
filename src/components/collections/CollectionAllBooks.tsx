@@ -2,7 +2,6 @@
 
 import { useState, useCallback, useMemo, useRef, useEffect } from 'react';
 import { ArrowRight, Search, X, LayoutGrid, List } from 'lucide-react';
-import { useRouter, useSearchParams } from 'next/navigation';
 import CollectionBookCard from '@/components/CollectionBookCard';
 import CollectionListView from '@/components/collections/CollectionListView';
 import CatalogPagination from '@/components/collections/CatalogPagination';
@@ -97,29 +96,18 @@ export default function CollectionAllBooks({
   collectionType,
 }: CollectionAllBooksProps) {
   const itemLabel = collectionType === 'visual_art' ? 'works' : 'books';
-  const router = useRouter();
-  const searchParams = useSearchParams();
-
-  // Read initial state from URL params
-  const urlSort = searchParams.get('sort') || 'relevance';
-  const urlLang = searchParams.get('language') || '';
-  const urlQ = searchParams.get('q') || '';
-  const urlPage = parseInt(searchParams.get('page') || '1');
-  const urlView = searchParams.get('view') as ViewMode | null;
-  const hasUrlParams = searchParams.has('sort') || searchParams.has('page') || searchParams.has('view');
-
   const sizeDefault: ViewMode = total > 200 ? 'list' : 'grid';
-  const initialView = urlView || getStoredView() || sizeDefault;
 
-  const [expanded, setExpanded] = useState(hasUrlParams);
+  const [expanded, setExpanded] = useState(false);
   const [allBooks, setAllBooks] = useState<BookItem[]>([]);
   const [loading, setLoading] = useState(false);
-  const [sort, setSort] = useState(urlSort);
-  const [language, setLanguage] = useState(urlLang);
-  const [query, setQuery] = useState(urlQ);
-  const [currentPage, setCurrentPage] = useState(urlPage);
-  const [viewMode, setViewMode] = useState<ViewMode>(initialView);
+  const [sort, setSort] = useState('relevance');
+  const [language, setLanguage] = useState('');
+  const [query, setQuery] = useState('');
+  const [currentPage, setCurrentPage] = useState(1);
+  const [viewMode, setViewMode] = useState<ViewMode>(sizeDefault);
   const searchRef = useRef<HTMLInputElement>(null);
+  const initializedRef = useRef(false);
 
   // Fetch all books on expand (manifest mode — one request, then all client-side)
   const fetchManifest = useCallback(async () => {
@@ -136,13 +124,30 @@ export default function CollectionAllBooks({
     }
   }, [collectionId]);
 
-  // Fetch on mount if URL had params
+  // Read URL params on mount (avoids useSearchParams SSR bailout)
   useEffect(() => {
-    if (hasUrlParams) {
+    if (initializedRef.current) return;
+    initializedRef.current = true;
+    const params = new URLSearchParams(window.location.search);
+    const urlSort = params.get('sort');
+    const urlLang = params.get('language');
+    const urlQ = params.get('q');
+    const urlPage = params.get('page');
+    const urlView = params.get('view') as ViewMode | null;
+    const storedView = getStoredView();
+    const hasParams = urlSort || urlPage || urlView;
+
+    if (urlSort) setSort(urlSort);
+    if (urlLang) setLanguage(urlLang);
+    if (urlQ) setQuery(urlQ);
+    if (urlPage) setCurrentPage(parseInt(urlPage));
+    setViewMode(urlView || storedView || sizeDefault);
+
+    if (hasParams) {
+      setExpanded(true);
       fetchManifest();
     }
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, []);
+  }, [fetchManifest, sizeDefault]);
 
   // Client-side filter → sort → paginate (instant, no network)
   const filtered = useMemo(() => filterBooks(allBooks, query, language), [allBooks, query, language]);
@@ -162,8 +167,8 @@ export default function CollectionAllBooks({
     if (page > 1) params.set('page', String(page));
     if (view !== sizeDefault) params.set('view', view);
     const qs = params.toString();
-    router.replace(`/collections/${collectionId}${qs ? `?${qs}` : ''}`, { scroll: false });
-  }, [collectionId, sizeDefault, router]);
+    window.history.replaceState(null, '', `/collections/${collectionId}${qs ? `?${qs}` : ''}`);
+  }, [collectionId, sizeDefault]);
 
   const handleExpand = useCallback(() => {
     setExpanded(true);
@@ -384,7 +389,7 @@ export default function CollectionAllBooks({
               setQuery('');
               setLanguage('');
               setSort('relevance');
-              router.replace(`/collections/${collectionId}`, { scroll: false });
+              window.history.replaceState(null, '', `/collections/${collectionId}`);
             }}
             className="text-sm text-muted hover:text-accent-rust transition-colors cursor-pointer"
           >
