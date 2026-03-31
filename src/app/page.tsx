@@ -462,9 +462,10 @@ export default async function HomePage() {
               </div>
               <Link
                 href="/catalog"
-                className="text-sm text-accent-rust hover:underline hidden md:block"
+                className="inline-flex items-center gap-1.5 text-sm font-medium px-4 py-2 rounded-lg border border-accent-rust/30 text-accent-rust hover:bg-accent-rust hover:text-white transition-colors hidden md:flex"
               >
-                Browse all books
+                Browse Catalog
+                <span className="text-xs">&rarr;</span>
               </Link>
             </div>
 
@@ -565,7 +566,7 @@ export default async function HomePage() {
               <div className="text-center py-12">
                 <p className="text-muted mb-4">Browse the collection to discover translated primary sources.</p>
                 <Link href="/catalog" className="inline-block px-6 py-3 bg-accent-rust text-white rounded-lg hover:bg-accent-rust/90 transition-colors">
-                  Browse all books
+                  Browse Catalog
                 </Link>
               </div>
             )}
