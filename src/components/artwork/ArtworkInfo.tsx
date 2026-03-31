@@ -50,6 +50,7 @@ export default function ArtworkInfo({ book, collections, prevWork, nextWork }: A
   const commonsHeight = (book as any).commons_height || 0;
   const isLandscape = commonsWidth > commonsHeight;
   const resourceType = book.resource_type || 'print';
+  const attributionNote = (book as any).attribution_note || '';
   const holdingMuseum = (book.image_source as any)?.contributing_library || '';
 
   return (
@@ -85,6 +86,9 @@ export default function ArtworkInfo({ book, collections, prevWork, nextWork }: A
                 <p className="text-stone-400 italic mt-1 text-sm">{book.title}</p>
               )}
               <p className="text-xl text-stone-300 mt-3">
+                {attributionNote && (
+                  <span className="text-stone-500 italic mr-1">{attributionNote} </span>
+                )}
                 {book.author.split(/,\s*/).map((name, i, arr) => (
                   <span key={name}>
                     <Link

@@ -31,6 +31,7 @@ export interface Book {
 
   // Author and publication
   author: string;
+  attribution_note?: string;  // "after" for prints after a designer, "circle of", "workshop of", etc.
   author_entity_id?: string;  // FK to entities collection — canonical author identity (VIAF/Wikidata linked)
   language: string;           // Original language of the text
   published: string;          // Publication year

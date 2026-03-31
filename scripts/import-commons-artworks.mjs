@@ -33,7 +33,7 @@ const IMPORT_CATEGORIES = [
 
   // Goltzius and school
   { category: 'Prints by Hendrick Goltzius', artist: 'Hendrick Goltzius', type: 'print', recurse: false },
-  { category: 'Works after Hendrick Goltzius', artist: 'Hendrick Goltzius (after)', type: 'print', recurse: false },
+  { category: 'Works after Hendrick Goltzius', artist: 'Hendrick Goltzius', type: 'print', recurse: false, attribution_note: 'after' },
   { category: 'Prints by Jan Saenredam', artist: 'Jan Saenredam', type: 'print', recurse: false },
   { category: 'Jan Saenredam', artist: 'Jan Saenredam', type: 'print', recurse: false },
 
@@ -470,6 +470,7 @@ async function main() {
         title: info.title || info.commonsTitle.replace('File:', '').replace(/\.[^.]+$/, ''),
         display_title: info.title || undefined,
         author: cat.artist,
+        ...(cat.attribution_note && { attribution_note: cat.attribution_note }),
         language: 'Visual',
         published: info.dateCreated?.match(/\d{4}/)?.[0] || '',
         resource_type: cat.type,
