@@ -157,7 +157,8 @@ async function archivePage(db, page) {
 }
 
 // --- Main ---
-const client = new MongoClient(process.env.MONGODB_URI, {
+async function main() {
+const client = new MongoClient(process.env.MONGODB_URI!, {
   serverSelectionTimeoutMS: 30000, connectTimeoutMS: 30000, socketTimeoutMS: 120000,
 });
 await client.connect();
@@ -170,7 +171,7 @@ if (EXCLUDE_SOURCE) console.log(`Excluding: ${EXCLUDE_SOURCE}`);
 if (LIMIT) console.log(`Limit: ${LIMIT} books`);
 
 // Step 1: Find books with non-R2 thumbnails (fast query on books collection)
-const bookQuery = {
+const bookQuery: any = {
   pages_count: { $gt: 0 },
   visible: true,
   thumbnail: { $exists: true, $not: /images\.sourcelibrary\.org/ },
@@ -291,3 +292,6 @@ console.log(`Thumbnails switched to R2: ${thumbsFixed}`);
 console.log(`Time: ${totalElapsed} minutes`);
 
 await client.close();
+}
+
+main().catch(e => { console.error(e); process.exit(1); });
