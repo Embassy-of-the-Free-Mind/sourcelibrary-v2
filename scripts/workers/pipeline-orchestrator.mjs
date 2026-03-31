@@ -331,6 +331,164 @@ function isDigitizerOcr(ocrData) {
     /ex[\s\-.]?libris|bookplate|library\s+stamp/i.test(start);
 }
 
+/**
+ * Score a page as a potential book cover using OCR content analysis.
+ * Detects binding photos, digitizer inserts, bookplates (incl. BPH pelican),
+ * and prefers decorated title pages with woodcuts/borders/printer's marks.
+ *
+ * @param {Object} page - Page document with page_number, page_type, ocr.data
+ * @returns {{ score: number, reason: string }}
+ */
+function scorePageForCover(page) {
+  const ocr = (page.ocr?.data || '').substring(0, 800).toLowerCase();
+  const pageType = page.page_type;
+  const pageNum = page.page_number;
+  let score = 0;
+  let reason = pageType || 'unknown';
+
+  // Skip hidden pages
+  if (page.hidden) return { score: -200, reason: 'hidden' };
+
+  // --- NEGATIVE signals ---
+
+  if (pageType === 'blank') return { score: -100, reason: 'blank' };
+  if (pageType === 'digitizer-notice') return { score: -90, reason: 'digitizer-notice' };
+
+  // Book binding / cover photos
+  if (ocr.includes('front cover') || (ocr.includes('external') && ocr.includes('cover')) ||
+      (ocr.includes('binding') && ocr.includes('spine')) || ocr.includes('fore-edge') ||
+      ocr.includes('closed book') || ocr.includes('book block') ||
+      ocr.includes('leather-bound') || ocr.includes('leather bound') ||
+      ((ocr.includes('blind-stamp') || ocr.includes('blind stamp')) && ocr.includes('cover'))) {
+    return { score: -80, reason: 'physical book photo' };
+  }
+
+  // Digitizer inserts and portal pages
+  if (ocr.includes('digitized by') || (ocr.includes('google') && ocr.includes('logo')) ||
+      (ocr.includes('internet archive') && ocr.includes('logo')) ||
+      ocr.includes('proquest') || ocr.includes('early european books') ||
+      ocr.includes('hathitrust') || ocr.includes('scan sheet') ||
+      ocr.includes('e-rara.ch') || ocr.includes('www.e-rara') ||
+      ocr.includes('gallica.bnf') || ocr.includes('mdz-nbn') ||
+      ocr.includes('digital.staatsbibliothek') || ocr.includes('daten.digitale-sammlungen')) {
+    return { score: -70, reason: 'digitizer insert' };
+  }
+
+  // BPH pelican bookplate
+  const isBphBookplate = (ocr.includes('pelican') && (ocr.includes('piety') || ocr.includes('nest') || ocr.includes('young') || ocr.includes('hermetica'))) ||
+      ocr.includes('philosophia hermetica') || ocr.includes('philosophica hermetica');
+  if (isBphBookplate && pageType !== 'title-page') {
+    return { score: -65, reason: 'BPH pelican bookplate' };
+  }
+
+  // Ex-libris / bookplates (but allow on title pages with small inscriptions)
+  const hasExLibris = ocr.includes('ex-libris') || ocr.includes('exlibris') || ocr.includes('ex libris') ||
+      ocr.includes('bookplate') || (ocr.includes('ownership') && ocr.includes('stamp')) ||
+      ocr.includes('library stamp') || ocr.includes('library sticker');
+  if (hasExLibris && pageType !== 'title-page') {
+    return { score: -60, reason: 'ex-libris/bookplate' };
+  }
+
+  // Bleed-through / ghosting
+  if (ocr.includes('bleed-through') || ocr.includes('ghosting') || ocr.includes('mirrored impression')) {
+    return { score: -50, reason: 'bleed-through' };
+  }
+
+  if (pageType === 'toc' || pageType === 'index') return { score: -20, reason: pageType };
+  if (pageType === 'colophon') return { score: -10, reason: 'colophon' };
+
+  // --- POSITIVE signals ---
+
+  const hasHeadings = (ocr.match(/^#+ .+/gm) || []).length;
+  const isTitlePage = pageType === 'title-page';
+  const looksLikeTitlePage = !pageType && hasHeadings >= 3;
+
+  if (isTitlePage) { score += 80; reason = 'title-page'; }
+  else if (looksLikeTitlePage) { score += 70; reason = 'likely title-page'; }
+
+  if (isTitlePage || looksLikeTitlePage) {
+    // Publisher imprint bonus
+    if (ocr.includes('excudebat') || ocr.includes('typis') || ocr.includes('apud') ||
+        ocr.includes('impensis') || ocr.includes('sumptibus') || ocr.includes('officina') ||
+        ocr.includes('printed by') || ocr.includes('published by') || ocr.includes('printed for')) {
+      score += 15;
+      reason = (isTitlePage ? 'title-page' : 'likely title-page') + ' with imprint';
+    }
+    // Decorative elements bonus
+    if (ocr.includes('decorative') || ocr.includes('ornamental') || ocr.includes('border') ||
+        ocr.includes('frame') || ocr.includes('vignette') || ocr.includes('woodcut') ||
+        ocr.includes('architectural') || ocr.includes("printer's mark") ||
+        ocr.includes("printer's device")) {
+      score += 20;
+      reason = 'decorated title-page';
+    }
+  }
+
+  // Frontispieces — but not binding photos mislabeled as frontispiece
+  if (pageType === 'frontispiece') {
+    if (ocr.includes('cover') && (ocr.includes('leather') || ocr.includes('binding') || ocr.includes('marbled'))) {
+      return { score: -80, reason: 'binding photo (mislabeled frontispiece)' };
+    }
+    score += 90; reason = 'frontispiece';
+    if (ocr.includes('engrav') || ocr.includes('allegor') || ocr.includes('portrait') ||
+        ocr.includes('emblem') || ocr.includes('woodcut')) {
+      score += 15; reason = 'frontispiece with engraving';
+    }
+  }
+
+  if (pageType === 'illustration') {
+    if (ocr.includes('photograph') && (ocr.includes('fore-edge') || (ocr.includes('book') && ocr.includes('closed')))) {
+      return { score: -80, reason: 'physical book photo' };
+    }
+    score += 60; reason = 'illustration';
+  }
+
+  if (pageType === 'dedication') { score += 15; reason = 'dedication'; }
+  if (pageType === 'text' && score === 0) { score += 5; reason = 'text'; }
+
+  // Position bonus
+  if (pageNum <= 5) score += 5;
+  else if (pageNum <= 10) score += 3;
+  else if (pageNum > 15) score -= 3;
+
+  return { score, reason };
+}
+
+/**
+ * Select the best cover page for a book from its first N pages.
+ * Uses scorePageForCover() for OCR-based intelligent scoring.
+ *
+ * @param {Object} db - MongoDB database instance
+ * @param {string} bookId - Book ID
+ * @param {number} maxPages - Max pages to consider (default 20)
+ * @returns {Promise<{page: Object, score: number, reason: string} | null>}
+ */
+async function selectBestCoverPage(db, bookId, maxPages = 20) {
+  const pages = await db.collection('pages').find(
+    { book_id: bookId, page_number: { $lte: maxPages } },
+    { projection: {
+      page_number: 1, page_type: 1, hidden: 1,
+      cropped_photo: 1, archived_photo: 1, photo: 1,
+      'ocr.data': 1, detected_images: 1,
+    }}
+  ).sort({ page_number: 1 }).toArray();
+
+  if (!pages.length) return null;
+
+  const scored = pages
+    .map(p => ({ page: p, ...scorePageForCover(p) }))
+    .sort((a, b) => b.score - a.score);
+
+  const best = scored[0];
+  if (best.score < 30) return null;
+
+  // Get the best image URL (prefer R2)
+  const url = best.page.cropped_photo || best.page.archived_photo || best.page.photo;
+  if (!url || !url.startsWith('http')) return null;
+
+  return { page: best.page, score: best.score, reason: best.reason, url };
+}
+
 function languageToScript(language) {
   if (!language) return 'Unknown';
   const map = {
@@ -2280,6 +2438,29 @@ async function run() {
           } else {
             if (!DRY_RUN) {
               await setPipelineStatus(db, book.id, 'ocr_complete');
+
+              // Early cover selection — pick a good cover now that OCR page_type is available.
+              // This runs again in Phase 8.9 after image extraction, but gives books a decent
+              // cover immediately instead of waiting for the full pipeline to complete.
+              if (book.thumbnail_source !== 'manual') {
+                try {
+                  const coverResult = await selectBestCoverPage(db, book.id);
+                  if (coverResult) {
+                    await db.collection('books').updateOne(
+                      { id: book.id },
+                      { $set: {
+                        thumbnail: coverResult.url,
+                        thumbnail_source: 'smart_ocr',
+                        cover_page: coverResult.page.page_number,
+                        cover_selected_at: new Date(),
+                      }}
+                    );
+                    console.log(`    Cover: page ${coverResult.page.page_number} (${coverResult.reason})`);
+                  }
+                } catch (e) {
+                  // Non-fatal — cover will be selected in Phase 8.9
+                }
+              }
             }
             log.ocr_advanced++;
             console.log(`  OCR complete: ${book.title}`);
@@ -3090,73 +3271,23 @@ async function run() {
             continue;
           }
 
-          // Heuristic cover selection: frontispiece > title-page > best detected image
-          const proj = { page_number: 1, page_type: 1, cropped_photo: 1, archived_photo: 1, photo: 1, 'ocr.data': 1, detected_images: 1, hidden: 1 };
-          let bestPage = null;
-
-          // Priority 1: frontispiece (first 50 pages, not hidden, not digitizer)
-          const frontispieces = await db.collection('pages').find(
-            { book_id: book.id, page_type: 'frontispiece', page_number: { $lte: 50 }, hidden: { $ne: true } },
-            { projection: proj, sort: { page_number: 1 }, limit: 3 }
-          ).toArray();
-          bestPage = frontispieces.find(p => !isDigitizerOcr(p.ocr?.data)) || null;
-
-          // Priority 2: title-page (first 30 pages)
-          if (!bestPage) {
-            bestPage = await db.collection('pages').findOne(
-              { book_id: book.id, page_type: 'title-page', page_number: { $lte: 30 }, hidden: { $ne: true } },
-              { projection: proj, sort: { page_number: 1 } }
+          // Smart OCR-based cover selection
+          const coverResult = await selectBestCoverPage(db, book.id);
+          if (coverResult && coverResult.url !== book.thumbnail) {
+            await db.collection('books').updateOne(
+              { id: book.id },
+              { $set: {
+                thumbnail: coverResult.url,
+                thumbnail_source: 'smart_ocr',
+                cover_page: coverResult.page.page_number,
+                cover_selected_at: new Date(),
+                'field_provenance.thumbnail': {
+                  source: 'pipeline', method: 'smart-ocr-cover-selection',
+                  confidence: 0.85, date: new Date(),
+                  detail: `${coverResult.reason} (score: ${coverResult.score})`,
+                },
+              }}
             );
-          }
-
-          // Priority 3: best detected image by gallery_quality (first 30 pages)
-          if (!bestPage) {
-            const pagesWithImages = await db.collection('pages').find(
-              { book_id: book.id, 'detected_images.0': { $exists: true }, page_number: { $lte: 30 }, hidden: { $ne: true } },
-              { projection: proj }
-            ).toArray();
-
-            let bestScore = 0.4; // minimum threshold
-            for (const page of pagesWithImages) {
-              if (isDigitizerOcr(page.ocr?.data)) continue;
-              for (const img of (page.detected_images || [])) {
-                const q = img.gallery_quality || 0;
-                const posBonus = page.page_number <= 10 ? 0.1 : page.page_number <= 20 ? 0.05 : 0;
-                const typeBonus = ['frontispiece', 'emblem', 'portrait', 'engraving'].includes(img.type) ? 0.15 : 0;
-                const score = q * 0.5 + posBonus + typeBonus;
-                if (score > bestScore) {
-                  bestScore = score;
-                  bestPage = page;
-                }
-              }
-            }
-          }
-
-          // Priority 4: first non-hidden, non-blank page
-          if (!bestPage) {
-            bestPage = await db.collection('pages').findOne(
-              { book_id: book.id, hidden: { $ne: true }, page_type: { $nin: ['blank', 'digitizer-notice', null] } },
-              { projection: proj, sort: { page_number: 1 } }
-            );
-          }
-
-          if (bestPage) {
-            const newUrl = bestPage.cropped_photo || bestPage.archived_photo || bestPage.photo;
-            if (newUrl && newUrl !== book.thumbnail) {
-              await db.collection('books').updateOne(
-                { id: book.id },
-                { $set: {
-                  thumbnail: newUrl,
-                  thumbnail_source: 'auto',
-                  cover_page: bestPage.page_number,
-                  cover_selected_at: new Date(),
-                  'field_provenance.thumbnail': {
-                    source: 'pipeline', method: 'heuristic-cover-selection',
-                    confidence: 0.8, date: new Date(),
-                  },
-                }}
-              );
-            }
           }
 
           await setPipelineStatus(db, book.id, 'cover_selected', { cover_selected_at: new Date() });
