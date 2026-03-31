@@ -212,7 +212,7 @@ export default function BetaLandingPage() {
             >
               Source Library uses AI to translate thousands of rare historical texts
               in early science, philosophy, medicine, alchemy, and theology into modern English.
-              Over 4,000 books. 1.6 million pages. 120 books free and open.
+              Over 9,000 books. 3 million pages. Thousands of books free and open.
               Register for free to access the full collection.
             </p>
 
@@ -353,12 +353,13 @@ export default function BetaLandingPage() {
       <section className="py-16 md:py-20 bg-stone-900">
         <div className="px-6 md:px-12 max-w-7xl mx-auto">
           <div className="grid grid-cols-2 md:grid-cols-5 gap-8 text-center">
+            {/* Stats last verified 2026-03-31. 9,344 visible books, 1M+ translated pages. */}
             {[
-              { number: '4,400+', label: 'Rare books' },
-              { number: '1.6M', label: 'Pages scanned' },
-              { number: '280K+', label: 'Pages translated' },
-              { number: '90+', label: 'Languages' },
-              { number: '53K+', label: 'Illustrations' },
+              { number: '9,000+', label: 'Rare books' },
+              { number: '3M+', label: 'Pages scanned' },
+              { number: '1M+', label: 'Pages translated' },
+              { number: '100+', label: 'Languages' },
+              { number: '74K+', label: 'Illustrations' },
             ].map((stat) => (
               <div key={stat.label}>
                 <div
@@ -390,9 +391,9 @@ export default function BetaLandingPage() {
           <p
             className="text-lg text-white/50 mb-10 max-w-xl mx-auto font-body"
           >
-            Source Library opens February 22, 2026.
-            120 books are completely open, no account needed.
-            Register for free to unlock the full collection of over 4,000 texts.
+            Source Library is live and growing every day.
+            Thousands of books are completely open, no account needed.
+            Register for free to unlock the full collection of over 9,000 texts.
             No payment required, ever.
           </p>
 
