@@ -181,24 +181,23 @@ async function main() {
     console.log(`[backfill-display] Single book: ${book.title?.slice(0, 60)}`);
     await processBook(book, db);
   } else {
-    // Stream books one at a time via cursor — avoids loading 9.5K docs into memory
-    // and avoids getMore timeouts on Atlas
-    console.log(`[backfill-display] Streaming books...`);
-    const cursor = db.collection('books')
-      .find({}, { projection: { id: 1, title: 1 } })
-      .batchSize(100);
+    // Paginate books using _id ranges — each query is a fast indexed lookup.
+    // Avoids cursor getMore timeouts that plague Atlas under load.
+    console.log(`[backfill-display] Paginating books by id index...`);
+    let lastId = null;
+    let totalBooks = 0;
 
-    // Collect a batch of books, process them, repeat
-    let done = false;
-    while (!done && stats.processed < LIMIT) {
-      const batch = [];
-      for (let i = 0; i < 50 && !done; i++) {
-        const book = await cursor.next();
-        if (!book) { done = true; break; }
-        batch.push(book);
-      }
+    while (stats.processed < LIMIT) {
+      const query = lastId ? { id: { $gt: lastId } } : {};
+      const batch = await db.collection('books')
+        .find(query, { projection: { _id: 0, id: 1 }, hint: { id: 1 } })
+        .limit(500)
+        .maxTimeMS(15_000)
+        .toArray();
 
       if (batch.length === 0) break;
+      lastId = batch[batch.length - 1].id;
+      totalBooks += batch.length;
 
       // Process this batch of books with bounded concurrency
       let bookIdx = 0;
@@ -215,9 +214,11 @@ async function main() {
       if (stats.processed > 0 && stats.processed % 500 < 50) {
         logProgress();
       }
-    }
 
-    await cursor.close();
+      if (totalBooks % 500 === 0) {
+        console.log(`  [scan] ${totalBooks} books checked...`);
+      }
+    }
   }
 
   const elapsed = (Date.now() - stats.startTime) / 1000;
