@@ -3,14 +3,13 @@
  * Embed translated pages for semantic search.
  *
  * Reads pages with translations from MongoDB, generates embeddings
- * using Gemini text-embedding-004, and upserts to Supabase
- * page_translations table with both text (for tsvector) and embedding
- * (for pgvector).
+ * via the local embedding server (multilingual-e5-base on Hetzner),
+ * and upserts to Supabase page_translations table.
  *
- * Uses Gemini (not local model) to match the query-time embedding model
- * in /api/search/semantic. Model mismatch = broken similarity.
+ * Cost: $0 (local model).
  *
- * Cost: ~$0.0001 per page → ~$60 for 600K pages.
+ * Prerequisites: embedding-server.mjs must be running on localhost:3456
+ *   node scripts/workers/embedding-server.mjs &
  *
  * Modes:
  *   --full        Process all translated pages
@@ -18,7 +17,7 @@
  *   --book ID     Process a single book
  *   --limit N     Stop after N pages (for testing)
  *
- * Env: MONGODB_URI, SUPABASE_URL, SUPABASE_SERVICE_ROLE_KEY, GEMINI_API_KEY
+ * Env: MONGODB_URI, SUPABASE_URL, SUPABASE_SERVICE_ROLE_KEY
  */
 
 import { MongoClient } from 'mongodb';
@@ -29,10 +28,10 @@ import { createClient } from '@supabase/supabase-js';
 const MONGODB_URI = process.env.MONGODB_URI;
 const SUPABASE_URL = process.env.SUPABASE_URL || 'https://ykhxaecbbxaaqlujuzde.supabase.co';
 const SUPABASE_SERVICE_KEY = process.env.SUPABASE_SERVICE_ROLE_KEY;
-const GEMINI_API_KEY = process.env.GEMINI_API_KEY;
+const EMBED_URL = process.env.EMBED_URL || 'http://localhost:3456';
 
-if (!MONGODB_URI || !SUPABASE_SERVICE_KEY || !GEMINI_API_KEY) {
-  console.error('Missing MONGODB_URI, SUPABASE_SERVICE_ROLE_KEY, or GEMINI_API_KEY');
+if (!MONGODB_URI || !SUPABASE_SERVICE_KEY) {
+  console.error('Missing MONGODB_URI or SUPABASE_SERVICE_ROLE_KEY');
   process.exit(1);
 }
 
@@ -46,33 +45,21 @@ const supabase = createClient(SUPABASE_URL, SUPABASE_SERVICE_KEY, { auth: { pers
 
 // ── Gemini Embedding API ────────────────────────────────────────────
 
-const EMBED_MODEL = 'gemini-embedding-001';
-
 async function embedBatch(texts) {
-  const requests = texts.map(text => ({
-    model: `models/${EMBED_MODEL}`,
-    content: { parts: [{ text: text.slice(0, 2048) }] },
-    taskType: 'RETRIEVAL_DOCUMENT',
-    outputDimensionality: 768,
-  }));
-
-  const res = await fetch(
-    `https://generativelanguage.googleapis.com/v1beta/models/${EMBED_MODEL}:batchEmbedContents?key=${GEMINI_API_KEY}`,
-    {
-      method: 'POST',
-      headers: { 'Content-Type': 'application/json' },
-      body: JSON.stringify({ requests }),
-      signal: AbortSignal.timeout(30000),
-    }
-  );
+  const res = await fetch(`${EMBED_URL}/embed`, {
+    method: 'POST',
+    headers: { 'Content-Type': 'application/json' },
+    body: JSON.stringify({ texts, task: 'passage' }),
+    signal: AbortSignal.timeout(60000),
+  });
 
   if (!res.ok) {
     const err = await res.text();
-    throw new Error(`Gemini API ${res.status}: ${err.slice(0, 200)}`);
+    throw new Error(`Embedding server ${res.status}: ${err.slice(0, 200)}`);
   }
 
   const data = await res.json();
-  return data.embeddings.map(e => e.values);
+  return data.embeddings;
 }
 
 // ── Helpers ──────────────────────────────────────────────────────────

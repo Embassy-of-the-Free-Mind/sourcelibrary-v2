@@ -118,33 +118,23 @@ export async function GET(request: NextRequest) {
 }
 
 /**
- * Generate query embedding using the Supabase edge or a cached model.
- * For now, uses Gemini text-embedding-004 (small cost per query).
- * TODO: Move to local model on Vercel Edge or use cached embeddings.
+ * Generate query embedding via the Hetzner embedding server.
+ * Uses multilingual-e5-base (same model as the backfill).
+ * Cost: $0 (local model on Hetzner).
  */
 async function getQueryEmbedding(query: string): Promise<number[] | null> {
+  const embedUrl = process.env.EMBED_URL || 'http://46.224.122.120:3456';
   try {
-    const apiKey = process.env.GEMINI_API_KEY;
-    if (!apiKey) return null;
-
-    const res = await fetch(
-      `https://generativelanguage.googleapis.com/v1beta/models/gemini-embedding-001:embedContent?key=${apiKey}`,
-      {
-        method: 'POST',
-        headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify({
-          model: 'models/gemini-embedding-001',
-          content: { parts: [{ text: query }] },
-          taskType: 'RETRIEVAL_QUERY',
-          outputDimensionality: 768,
-        }),
-        signal: AbortSignal.timeout(3000),
-      }
-    );
+    const res = await fetch(`${embedUrl}/embed`, {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify({ texts: [query], task: 'query' }),
+      signal: AbortSignal.timeout(3000),
+    });
 
     if (!res.ok) return null;
     const data = await res.json();
-    return data?.embedding?.values || null;
+    return data?.embeddings?.[0] || null;
   } catch {
     return null;
   }
