@@ -1,4 +1,4 @@
-export type PromptType = 'ocr' | 'translation' | 'summary';
+export type PromptType = 'ocr' | 'translation' | 'summary' | 'image_extraction';
 
 export interface PromptReference {
   id: string;                   // Prompt document ID
@@ -11,6 +11,7 @@ export interface ProcessingPrompts {
   ocr: string;
   translation: string;
   summary: string;
+  image_extraction: string;
 }
 
 /**

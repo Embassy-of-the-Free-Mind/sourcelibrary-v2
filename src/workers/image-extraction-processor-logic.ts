@@ -2,7 +2,8 @@ import { getDb } from '@/lib/mongodb';
 import type { PageProcessingMessage } from '@/lib/types/sqs';
 import type { ImageExtractionWriteResult, GeminiUsagePayload } from '@/lib/types/sqs';
 import type { Page } from '@/lib/types/page';
-import { extractWithGemini } from '@/lib/image-extraction';
+import { extractWithGemini, type BookContext } from '@/lib/image-extraction';
+import { getImageExtractionPrompt } from '@/lib/prompts';
 import { DEFAULT_MODEL } from '@/lib/types/ai-models';
 import { PROMPT_VERSION } from '@/lib/types/prompts/defaults';
 import { classifyError } from '@/lib/errors';
@@ -149,16 +150,35 @@ export async function processImageExtractionPage(message: PageProcessingMessage)
   const modelId = job.config.model || DEFAULT_MODEL;
   const startTime = Date.now();
 
+  // Fetch book metadata for context-aware extraction
+  const book = await db.collection('books').findOne(
+    { id: bookId },
+    { projection: { title: 1, author: 1, year: 1, language: 1, 'tags.tradition': 1, 'tags.domain': 1 } }
+  );
+  const bookContext: BookContext | undefined = book ? {
+    title: book.title,
+    author: book.author,
+    year: book.year,
+    language: book.language,
+    subjects: [...(book.tags?.tradition || []), ...(book.tags?.domain || [])].filter(Boolean),
+  } : undefined;
+
+  // Get versioned prompt from DB (or hardcoded fallback)
+  const promptResult = await getImageExtractionPrompt();
+
   try {
     // Pass OCR data if available — helps model place bounding boxes accurately
     const ocrData = (page.ocr?.data && typeof page.ocr.data === 'string') ? page.ocr.data : undefined;
-    const result = await extractWithGemini(imageUrl, modelId, { returnUsage: true, ocrData });
+    const result = await extractWithGemini(imageUrl, modelId, {
+      returnUsage: true, ocrData, bookContext, promptText: promptResult.text,
+    });
     const durationMs = Date.now() - startTime;
 
-    // Attach job_id to each detection for provenance
+    // Attach job_id and prompt provenance to each detection
     const imagesWithJob = (result.images as unknown as Array<Record<string, unknown>>).map((img) => ({
       ...img,
       job_id: jobId,
+      prompt: promptResult.reference,
     }));
 
     // Build gallery docs now (we have book metadata in memory) — writer just inserts them
