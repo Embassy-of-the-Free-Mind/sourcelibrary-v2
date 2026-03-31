@@ -1446,53 +1446,20 @@ async function run() {
   await client.connect();
   const db = client.db('bookstore');
 
-  // Emergency stop check — with auto-resume for stale pauses
+  // Emergency stop check — no auto-resume (scheduler owns resume decisions)
   const control = await db.collection('system_config').findOne({ _id: 'processing_control' });
   if (control?.paused) {
     const pauseAgeMs = control.paused_at ? Date.now() - new Date(control.paused_at).getTime() : Infinity;
-    const STALE_PAUSE_MS = 30 * 60 * 1000; // 30 minutes
-
-    // Auto-resume if pause is stale and DB is responsive
-    if (pauseAgeMs > STALE_PAUSE_MS) {
-      const probeStart = Date.now();
-      await db.collection('books').findOne({ pages_count: { $gt: 0 } });
-      const findMs = Date.now() - probeStart;
-
-      if (findMs < 500) {
-        console.log(`[pipeline-orchestrator] Auto-resuming stale pause (${Math.round(pauseAgeMs / 60000)}min old, DB ${findMs}ms). Original paused_by: ${control.paused_by}`);
-        await db.collection('system_config').updateOne(
-          { _id: 'processing_control' },
-          { $set: { paused: false, unpaused_at: new Date(), unpaused_by: `auto-resume: stale pause (${Math.round(pauseAgeMs / 60000)}min), DB healthy (${findMs}ms)` } }
-        );
-        await db.collection('processing_control_log').insertOne({
-          action: 'auto_resume', timestamp: new Date(), source: 'pipeline-orchestrator',
-          detail: `Stale pause auto-cleared after ${Math.round(pauseAgeMs / 60000)}min. DB findOne: ${findMs}ms. Original: ${control.paused_by}`,
-        }).catch(() => {});
-        // Continue execution — don't return
-      } else {
-        console.log(`[pipeline-orchestrator] Pause is stale (${Math.round(pauseAgeMs / 60000)}min) but DB slow (${findMs}ms). Staying paused.`);
-        await db.collection('cron_runs').insertOne({
-          cron: 'pipeline-orchestrator-worker', timestamp: new Date(),
-          duration_ms: Date.now() - startTime, status: 'skipped', failed: false,
-          actions: { skip_reason: 'pipeline paused (stale but DB slow)', paused_by: control.paused_by, paused_at: control.paused_at, db_find_ms: findMs },
-          errors: [], error_count: 0,
-          summary: `skipped: paused (stale ${Math.round(pauseAgeMs / 60000)}min, DB ${findMs}ms)`,
-        }).catch(() => {});
-        await client.close();
-        return;
-      }
-    } else {
-      console.log(`[pipeline-orchestrator] PAUSED (${Math.round(pauseAgeMs / 60000)}min ago by ${control.paused_by}). Exiting.`);
-      await db.collection('cron_runs').insertOne({
-        cron: 'pipeline-orchestrator-worker', timestamp: new Date(),
-        duration_ms: Date.now() - startTime, status: 'skipped', failed: false,
-        actions: { skip_reason: 'pipeline paused', paused_by: control.paused_by, paused_at: control.paused_at },
-        errors: [], error_count: 0,
-        summary: `skipped: pipeline paused (by ${control.paused_by || 'unknown'}, ${Math.round(pauseAgeMs / 60000)}min ago)`,
-      }).catch(() => {});
-      await client.close();
-      return;
-    }
+    console.log(`[pipeline-orchestrator] PAUSED (${Math.round(pauseAgeMs / 60000)}min ago by ${control.paused_by || 'unknown'}). Exiting.`);
+    await db.collection('cron_runs').insertOne({
+      cron: 'pipeline-orchestrator-worker', timestamp: new Date(),
+      duration_ms: Date.now() - startTime, status: 'skipped', failed: false,
+      actions: { skip_reason: 'pipeline paused', paused_by: control.paused_by, paused_at: control.paused_at },
+      errors: [], error_count: 0,
+      summary: `skipped: pipeline paused (by ${control.paused_by || 'unknown'}, ${Math.round(pauseAgeMs / 60000)}min ago)`,
+    }).catch(() => {});
+    await client.close();
+    return;
   }
 
   // DB health probe — adjusts submission limits based on Atlas load

@@ -191,8 +191,16 @@ async function archivePage(page, db) {
 
 async function main() {
   const start = Date.now();
-  const client = await MongoClient.connect(process.env.MONGODB_URI);
+  const client = await MongoClient.connect(process.env.MONGODB_URI, { maxPoolSize: 5 });
   const db = client.db('bookstore');
+
+  // Check processing_control pause
+  const control = await db.collection('system_config').findOne({ _id: 'processing_control' });
+  if (control?.paused) {
+    console.log(`[archive-ocr] Pipeline paused. Exiting.`);
+    await client.close();
+    process.exit(0);
+  }
 
   console.log(`[archive-ocr] Looking for books with unarchived pages...`);
   console.log(`[archive-ocr] Per-domain rate limits: ${Object.entries(DOMAIN_RATE_LIMITS).filter(([k]) => k !== '_default').map(([k, v]) => `${k}:${v}/s`).join(', ')}`);

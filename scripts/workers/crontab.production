@@ -8,59 +8,22 @@
 
 
 
-# Source Library Pipeline Workers (installed 2026-02-20)
-# Batch collector: collect Gemini Batch API results every 10 minutes
-*/10 * * * * cd /root/sourcelibrary && flock -n /tmp/sl-collector.lock bash -c 'set -a; source .env.production.local; set +a; node scripts/workers/batch-collector.mjs' >> /var/log/sourcelibrary/collector.log 2>&1
+# ── Source Library: Unified Scheduler (issue #646) ──
+# Single coordinator that checks DB health, enforces connection budget (~40),
+# and spawns pipeline workers in priority order. Replaces 15+ independent crons.
+*/2 * * * * cd /root/sourcelibrary && flock -n /tmp/sl-scheduler.lock bash -c "set -a; source .env.production.local; set +a; node scripts/workers/scheduler.mjs" >> /var/log/sourcelibrary/scheduler.log 2>&1
 
-# Pipeline orchestrator: advance books through pipeline every 5 minutes
-*/2 * * * * cd /root/sourcelibrary && flock -n /tmp/sl-pipeline.lock bash -c 'set -a; source .env.production.local; set +a; node scripts/workers/pipeline-orchestrator.mjs' >> /var/log/sourcelibrary/pipeline.log 2>&1
-
-# Sync worker: refresh page counts and gallery images every 2 hours
-0 */2 * * * cd /root/sourcelibrary && flock -n /tmp/sl-sync.lock bash -c 'set -a; source .env.production.local; set +a; node scripts/workers/sync-worker.mjs' >> /var/log/sourcelibrary/sync.log 2>&1
-
-# Cron caller: triggers remaining Vercel cron endpoints from Hetzner (installed 2026-03-16)
-# Archive OCR: standalone Hetzner worker (replaces Vercel cron)
-*/30 * * * * cd /root/sourcelibrary && flock -n /tmp/sl-archive-ocr.lock bash -c "set -a; source .env.production.local; set +a; node scripts/workers/archive-ocr.mjs" >> /var/log/sourcelibrary/archive-ocr.log 2>&1
+# ── Non-Atlas workers (HTTP-only, keep separate) ──
+# Social posting
 0 */3 * * * cd /root/sourcelibrary && flock -n /tmp/sl-social-post.lock bash -c "set -a; source .env.production.local; set +a; node scripts/workers/cron-caller.mjs social-post" >> /var/log/sourcelibrary/cron-caller.log 2>&1
 0 0 * * * cd /root/sourcelibrary && bash -c "set -a; source .env.production.local; set +a; node scripts/workers/cron-caller.mjs social-reset" >> /var/log/sourcelibrary/cron-caller.log 2>&1
+
+# Daily pipeline report
 0 6 * * * cd /root/sourcelibrary && bash -c "set -a; source .env.production.local; set +a; node scripts/workers/cron-caller.mjs daily-pipeline-report" >> /var/log/sourcelibrary/cron-caller.log 2>&1
 
-# Batch OCR submission: runs Phase 2 independently so translation doesnt block it
-*/10 * * * * cd /root/sourcelibrary && flock -n /tmp/sl-ocr-submit.lock bash -c "set -a; source .env.production.local; set +a; node scripts/workers/pipeline-orchestrator.mjs --phase 2" >> /var/log/sourcelibrary/ocr-submit.log 2>&1
-
-# Pipeline phases that should not be blocked by long-running translation
-
-# Phase 3: OCR completion check (every 10 min)
-*/10 * * * * cd /root/sourcelibrary && flock -n /tmp/sl-ocr-complete.lock bash -c "set -a; source .env.production.local; set +a; node scripts/workers/pipeline-orchestrator.mjs --phase 3" >> /var/log/sourcelibrary/ocr-complete.log 2>&1
-
-# Phase 5: Translation completion check (every 10 min)
-*/5 * * * * cd /root/sourcelibrary && flock -n /tmp/sl-translate-complete.lock bash -c "set -a; source .env.production.local; set +a; node scripts/workers/pipeline-orchestrator.mjs --phase 5" >> /var/log/sourcelibrary/translate-complete.log 2>&1
-
-# Phase 0: enrollment (every 10 min)
-*/10 * * * * cd /root/sourcelibrary && flock -n /tmp/sl-enroll.lock bash -c "set -a; source .env.production.local; set +a; node scripts/workers/pipeline-orchestrator.mjs --phase 0" >> /var/log/sourcelibrary/enroll.log 2>&1
-
-# Phase 1.5: Preview OCR — first 25 pages via Lambda (every 5 min)
-*/2 * * * * cd /root/sourcelibrary && flock -n /tmp/sl-preview-ocr.lock bash -c "set -a; source .env.production.local; set +a; node scripts/workers/pipeline-orchestrator.mjs --phase 1.5" >> /var/log/sourcelibrary/preview-ocr.log 2>&1
-# Phase 1: archive check (every 10 min)
-*/10 * * * * cd /root/sourcelibrary && flock -n /tmp/sl-archive-check.lock bash -c "set -a; source .env.production.local; set +a; node scripts/workers/pipeline-orchestrator.mjs --phase 1" >> /var/log/sourcelibrary/archive-check.log 2>&1
-
-# Pipeline health alert: daily at 7am UTC
+# Pipeline health alert (read-only, lightweight)
 0 7 * * * cd /root/sourcelibrary && flock -n /tmp/sl-health.lock bash -c "set -a; source .env.production.local; set +a; node scripts/workers/pipeline-health-alert.mjs" >> /var/log/sourcelibrary/health-alert.log 2>&1
 
-# Bulk JP2 archive worker: IA books via zip download (faster than per-page IIIF)
-*/10 * * * * cd /root/sourcelibrary && flock -n /tmp/sl-archive-bulk.lock bash -c "set -a; source .env.production.local; set +a; node scripts/workers/archive-bulk.mjs --limit=100 --concurrency=6" >> /var/log/sourcelibrary/archive-bulk.log 2>&1
-
-# Hetzner inline translation worker: translates books directly via Gemini API (no Lambda/SQS)
-*/2 * * * * cd /root/sourcelibrary && flock -n /tmp/sl-translate.lock bash -c "set -a; source .env.production.local; set +a; node scripts/workers/translate-worker.mjs" >> /var/log/sourcelibrary/translate.log 2>&1
-
-# Warm author pages: regenerate ISR cache after sync-worker updates counts
+# ISR cache warming (HTTP revalidation, no DB)
 0 5 * * * cd /root/sourcelibrary && flock -n /tmp/sl-warm-authors.lock bash -c "set -a; source .env.production.local; set +a; node scripts/workers/warm-author-pages.mjs" >> /var/log/sourcelibrary/warm-authors.log 2>&1
-
-# Browse pre-warm + homepage stats: warm all ISR browse pages daily at 5:15am
 15 5 * * * cd /root/sourcelibrary && flock -n /tmp/sl-prewarm.lock bash -c "set -a; source .env.production.local; set +a; node scripts/maintenance/prewarm-browse.mjs" >> /var/log/sourcelibrary/prewarm-browse.log 2>&1
-
-# Resize worker: generate display-size images from full-res (every 30 min)
-*/30 * * * * cd /root/sourcelibrary && flock -n /tmp/sl-resize.lock bash -c "set -a; source .env.production.local; set +a; node scripts/workers/resize-worker.mjs --limit 500 --concurrency 10" >> /var/log/sourcelibrary/resize.log 2>&1
-
-# Display image backfill: generate 1200px display + 150px thumb for archived pages
-*/30 * * * * cd /root/sourcelibrary && flock -n /tmp/sl-display-backfill.lock bash -c "set -a; source .env.production.local; set +a; node scripts/migration/backfill-display-images.mjs --limit=10000 --concurrency=10 --book-concurrency=2" >> /var/log/sourcelibrary/display-backfill.log 2>&1

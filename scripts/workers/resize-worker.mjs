@@ -110,8 +110,16 @@ async function main() {
   console.log(`Resize worker — display size (${DISPLAY_WIDTH}px)`);
   console.log(`Concurrency: ${CONCURRENCY}, Limit: ${LIMIT}, Dry run: ${DRY_RUN}`);
 
-  const client = await MongoClient.connect(process.env.MONGODB_URI);
+  const client = await MongoClient.connect(process.env.MONGODB_URI, { maxPoolSize: 5 });
   const db = client.db('bookstore');
+
+  // Check processing_control pause
+  const control = await db.collection('system_config').findOne({ _id: 'processing_control' });
+  if (control?.paused) {
+    console.log(`[resize-worker] Pipeline paused. Exiting.`);
+    await client.close();
+    process.exit(0);
+  }
 
   // Find pages using new path convention (pages/{bookId}/...)
   const pages = await db.collection('pages').find({

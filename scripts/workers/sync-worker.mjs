@@ -547,6 +547,14 @@ async function run() {
   await client.connect();
   const db = client.db('bookstore');
 
+  // Check processing_control pause
+  const control = await db.collection('system_config').findOne({ _id: 'processing_control' });
+  if (control?.paused) {
+    console.log(`[sync-worker] Pipeline paused. Exiting.`);
+    await client.close();
+    process.exit(0);
+  }
+
   let countsResult = {};
   let galleryResult = {};
   const phaseErrors = [];
