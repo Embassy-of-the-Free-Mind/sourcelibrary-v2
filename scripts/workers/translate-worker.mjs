@@ -848,11 +848,25 @@ async function main() {
     }
   }
 
-  // Find books in translate_submitted — each book gets up to 200 pages then gets parked.
+  // Find books — fresh (0 translated) first, then partials sorted by most remaining pages.
+  // Grouping similar workloads per batch minimizes convoy tail waste.
   const proj = { id: 1, title: 1, display_title: 1, author: 1, year: 1, published: 1, language: 1, job: 1, image_source: 1, pages_translated: 1, pages_ocr: 1, pages_blank: 1 };
   let books = await db.collection('books')
-    .find({ 'pipeline_auto.status': 'translate_submitted' })
+    .find({ 'pipeline_auto.status': 'translate_submitted', $or: [{ pages_translated: 0 }, { pages_translated: { $exists: false } }] })
     .project(proj).limit(CONCURRENCY).toArray();
+  if (books.length < CONCURRENCY) {
+    // Fill remaining slots with partial books, most remaining pages first
+    const needed = CONCURRENCY - books.length;
+    const freshIds = new Set(books.map(b => b.id));
+    const partial = await db.collection('books').aggregate([
+      { $match: { 'pipeline_auto.status': 'translate_submitted', pages_translated: { $gt: 0 } } },
+      { $addFields: { _remaining: { $subtract: [{ $ifNull: ['$pages_ocr', 0] }, { $add: [{ $ifNull: ['$pages_translated', 0] }, { $ifNull: ['$pages_blank', 0] }] }] } } },
+      { $sort: { _remaining: -1 } },
+      { $limit: needed },
+      { $project: proj },
+    ]).toArray();
+    books = [...books, ...partial.filter(b => !freshIds.has(b.id))];
+  }
 
   // Self-dispatch: if no books are waiting, create jobs directly instead of waiting for Phase 4
   if (books.length < CONCURRENCY) {
