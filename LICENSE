@@ -1,0 +1,117 @@
+Source Library — Licensing
+
+This project contains multiple types of intellectual property, each
+governed by a different license.
+
+
+1. SOFTWARE (AGPL-3.0-or-later)
+════════════════════════════════
+
+All source code in this repository — including but not limited to
+application code, scripts, API routes, worker processes, and
+infrastructure configuration — is licensed under the GNU Affero General
+Public License, version 3 or later.
+
+    Copyright (C) 2025–2026 PlayPower Labs, Inc.
+
+    This program is free software: you can redistribute it and/or modify
+    it under the terms of the GNU Affero General Public License as
+    published by the Free Software Foundation, either version 3 of the
+    License, or (at your option) any later version.
+
+    This program is distributed in the hope that it will be useful, but
+    WITHOUT ANY WARRANTY; without even the implied warranty of
+    MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the GNU
+    Affero General Public License for more details.
+
+    You should have received a copy of the GNU Affero General Public
+    License along with this program. If not, see
+    <https://www.gnu.org/licenses/>.
+
+The full text of the AGPL-3.0 is included in the file LICENSE-AGPL-3.0.
+
+
+2. ORIGINAL SOURCE TEXTS (Public Domain, with jurisdictional caveats)
+═════════════════════════════════════════════════════════════════════════
+
+The historical texts digitized by Source Library are, in most
+jurisdictions, in the public domain by virtue of their age. These
+include works published before 1928 (US), works whose authors died more
+than 70 years ago (EU), and similar thresholds worldwide.
+
+HOWEVER, public domain status is not universal:
+
+  • The Vatican (Vatican City State) asserts perpetual copyright over
+    certain ecclesiastical texts and official documents. Works published
+    by the Holy See may not be in the public domain in all contexts.
+
+  • Some jurisdictions recognize "perpetual moral rights" that survive
+    the expiration of economic copyright.
+
+  • Digitized reproductions of public domain works may carry new rights
+    in some jurisdictions (e.g., the "sweat of the brow" doctrine),
+    though this is increasingly disfavored (see Bridgeman v. Corel).
+
+Users are responsible for verifying the public domain status of
+individual texts under the laws of their own jurisdiction.
+
+
+3. OCR TRANSCRIPTIONS AND TRANSLATIONS (CC BY-SA 4.0)
+══════════════════════════════════════════════════════════
+
+All machine-generated OCR transcriptions and AI-generated translations
+produced by Source Library are licensed under the Creative Commons
+Attribution-ShareAlike 4.0 International License.
+
+    You are free to:
+      • Share — copy and redistribute the material in any medium or format
+      • Adapt — remix, transform, and build upon the material for any
+        purpose, including commercially
+
+    Under the following terms:
+      • Attribution — You must give appropriate credit to Source Library,
+        provide a link to the license, and indicate if changes were made.
+      • ShareAlike — If you remix, transform, or build upon the material,
+        you must distribute your contributions under the same license.
+
+    Full license text: https://creativecommons.org/licenses/by-sa/4.0/
+
+
+4. DATABASE RIGHTS (Sui Generis)
+══════════════════════════════════
+
+The structured database — including the selection, arrangement, and
+organization of catalog records, metadata, and cross-references — is
+protected under the EU Database Directive (96/9/EC) and Dutch copyright
+law (Databankenwet).
+
+Database rights are held by:
+
+    PlayPower Labs, Inc.
+    Delaware, United States
+
+A perpetual, irrevocable, worldwide, royalty-free license to the
+database (including rights to extract and re-utilize the whole or a
+substantial part) has been granted to:
+
+    Stichting Wereldhart
+    Amsterdam, The Netherlands
+    (operating as the Embassy of the Free Mind /
+     Bibliotheca Philosophica Hermetica)
+
+The database is made available for non-commercial research and
+educational use. Commercial use of substantial portions of the database
+requires a separate license. Contact: derek@sourcelibrary.org
+
+
+5. THIRD-PARTY CONTENT
+═══════════════════════
+
+Digitized page images are sourced from partner institutions (Internet
+Archive, Bibliotheca Philosophica Hermetica, e-rara, Gallica, HathiTrust,
+and others). These images are subject to the terms of their respective
+holding institutions. Source Library does not claim copyright over
+third-party digitizations.
+
+Attribution to contributing institutions is provided on a per-book basis
+within the application.
