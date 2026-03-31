@@ -100,34 +100,39 @@ interface TraditionCollection {
 /* ── Data fetching ── */
 
 async function getTraditions(): Promise<{ traditions: TraditionCollection[]; totalBooks: number }> {
-  const db = await Promise.race([
-    getDb(),
-    new Promise<never>((_, reject) => setTimeout(() => reject(new Error('DB timeout')), 10000)),
-  ]);
+  try {
+    const db = await Promise.race([
+      getDb(),
+      new Promise<never>((_, reject) => setTimeout(() => reject(new Error('DB timeout')), 10000)),
+    ]);
 
-  const traditions = await db
-    .collection('collections')
-    .find({ parent: 'contemplative-traditions' })
-    .sort({ order: 1 })
-    .toArray();
+    const traditions = await db
+      .collection('collections')
+      .find({ parent: 'contemplative-traditions' })
+      .sort({ order: 1 })
+      .toArray();
 
-  const parent = await db.collection('collections').findOne({ slug: 'contemplative-traditions' });
-  const totalBooks = parent?.book_count || traditions.reduce((sum, t) => sum + (t.book_count || 0), 0);
+    const parent = await db.collection('collections').findOne({ slug: 'contemplative-traditions' });
+    const totalBooks = parent?.book_count || traditions.reduce((sum, t) => sum + (t.book_count || 0), 0);
 
-  return {
-    traditions: traditions.map(t => ({
-      slug: t.slug,
-      name: t.name,
-      subtitle: t.subtitle || '',
-      description: t.description || '',
-      book_count: t.book_count || 0,
-      order: t.order || 99,
-      color: t.color,
-      languages: t.languages || [],
-      sample_books: t.sample_books || [],
-    })) as TraditionCollection[],
-    totalBooks,
-  };
+    return {
+      traditions: traditions.map(t => ({
+        slug: t.slug,
+        name: t.name,
+        subtitle: t.subtitle || '',
+        description: t.description || '',
+        book_count: t.book_count || 0,
+        order: t.order || 99,
+        color: t.color,
+        languages: t.languages || [],
+        sample_books: t.sample_books || [],
+      })) as TraditionCollection[],
+      totalBooks,
+    };
+  } catch (e) {
+    console.warn('[Contemplative Traditions portal] Failed to load:', (e as Error).message);
+    return { traditions: [], totalBooks: 0 };
+  }
 }
 
 /* ── Components ── */
