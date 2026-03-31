@@ -641,14 +641,37 @@ async function updateMilestoneCounters(db, { oldTranslated, newTranslated, pages
   }
 }
 
+// ── Language speed tiers ──
+// Group languages by translation speed so each batch is homogeneous.
+// CJK is ~3x slower per page than Latin-script languages.
+// Sorting by tier ensures all 40 slots finish at roughly the same time.
+function langSpeedTier(lang) {
+  if (!lang) return 1; // unknown → treat as Latin-speed
+  const l = lang.toLowerCase();
+  // Tier 0: Latin-script (fastest) — Latin, German, French, Italian, Dutch, Spanish, etc.
+  if (['latin', 'german', 'french', 'italian', 'dutch', 'spanish', 'portuguese', 'english', 'czech', 'polish', 'swedish', 'danish'].includes(l)) return 0;
+  // Tier 1: Greek, Hebrew, Arabic, Syriac, Armenian (medium)
+  if (['greek', 'hebrew', 'arabic', 'syriac', 'armenian', 'coptic', 'ethiopic', 'persian'].includes(l)) return 1;
+  // Tier 2: CJK (slowest — dense content, more tokens)
+  if (['chinese', 'japanese', 'korean', 'tibetan', 'sanskrit', 'tamil', 'thai'].includes(l)) return 2;
+  return 1; // default to medium
+}
+
 // ── Self-dispatch: create jobs for books that need translation ──
 // Eliminates the gap between translate-worker finishing and Phase 4 dispatching new books.
 async function selfDispatch(db, limit) {
-  // Find fresh books (metadata_enriched/ft_verified) — same query as orchestrator Phase 4
+  // Find fresh books (metadata_enriched/ft_verified) — sorted by language speed tier
+  // so each batch is homogeneous (all fast or all slow books together).
   const fresh = await db.collection('books').aggregate([
     { $match: { 'pipeline_auto.status': { $in: ['metadata_enriched', 'ft_verified'] }, 'image_source.provider': { $ne: 'bph' } } },
-    { $addFields: { _latinFirst: { $cond: [{ $eq: ['$language', 'Latin'] }, 0, 1] } } },
-    { $sort: { _latinFirst: 1, is_first_translation: -1, hidden: 1 } },
+    { $addFields: { _speedTier: { $switch: {
+      branches: [
+        { case: { $in: ['$language', ['Latin', 'German', 'French', 'Italian', 'Dutch', 'Spanish', 'Portuguese', 'English', 'Czech', 'Polish', 'Swedish', 'Danish']] }, then: 0 },
+        { case: { $in: ['$language', ['Chinese', 'Japanese', 'Korean', 'Tibetan', 'Sanskrit', 'Tamil', 'Thai']] }, then: 2 },
+      ],
+      default: 1,
+    }}}},
+    { $sort: { _speedTier: 1, is_first_translation: -1, hidden: 1 } },
     { $project: { id: 1, title: 1, pages_count: 1, language: 1, 'image_source.provider': 1 } },
     { $limit: limit },
   ]).toArray();
