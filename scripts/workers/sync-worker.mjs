@@ -311,7 +311,7 @@ async function syncAuthorSlugs(db) {
   console.log('\n--- Sync Author Slugs ---');
   const start = Date.now();
   const authors = await db.collection('books').distinct('author', {
-    hidden: { $ne: true },
+    visible: true,
     author: { $exists: true, $ne: null, $nin: ['Unknown', 'Anonymous', 'Various'] },
   });
   const slugs = {};

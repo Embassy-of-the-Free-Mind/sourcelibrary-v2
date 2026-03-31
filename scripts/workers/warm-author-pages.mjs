@@ -32,7 +32,7 @@ async function main() {
   const db = client.db('bookstore');
 
   const authors = await db.collection('books').distinct('author', {
-    hidden: { $ne: true },
+    visible: true,
     author: { $exists: true, $ne: null, $nin: ['Unknown', 'Anonymous', 'Various'] },
   });
   await client.close();

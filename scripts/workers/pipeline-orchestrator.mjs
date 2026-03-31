@@ -1494,7 +1494,7 @@ async function run() {
             if (bookDoc) {
               await db.collection('books').updateOne(
                 { id: book.id },
-                { $set: { hidden: false, updated_at: new Date() }, $unset: { hidden_reason: '' } }
+                { $set: { hidden: false, visible: true, updated_at: new Date() }, $unset: { hidden_reason: '' } }
               );
               console.log(`    ✓ Auto-unhidden: ${bookDoc.title?.slice(0, 60)}`);
             }
@@ -3232,7 +3232,7 @@ async function run() {
           // Auto-unhide: books that completed the full pipeline should be visible
           await db.collection('books').updateOne(
             { id: book.id, hidden: true },
-            { $set: { hidden: false, updated_at: new Date() }, $unset: { hidden_reason: '' } }
+            { $set: { hidden: false, visible: true, updated_at: new Date() }, $unset: { hidden_reason: '' } }
           );
         }
         log.finalized++;
