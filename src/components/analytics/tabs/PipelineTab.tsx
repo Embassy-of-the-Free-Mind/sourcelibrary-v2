@@ -14,6 +14,17 @@ import { compactNumber, dateLabel } from '../charts/chart-utils';
 const errorText = (e: unknown): string =>
   typeof e === 'string' ? e : (e as any)?.message || JSON.stringify(e);
 
+/** Smart x-axis label: time-only for <2d, date+time for 2-7d, date-only for >7d */
+function smartLabel(iso: string, hours: number): string {
+  const d = new Date(iso);
+  const hh = d.getHours().toString().padStart(2, '0');
+  const mm = d.getMinutes().toString().padStart(2, '0');
+  const months = ['Jan','Feb','Mar','Apr','May','Jun','Jul','Aug','Sep','Oct','Nov','Dec'];
+  if (hours <= 48) return `${hh}:${mm}`;
+  if (hours <= 168) return `${months[d.getMonth()]} ${d.getDate()} ${hh}:00`;
+  return `${months[d.getMonth()]} ${d.getDate()}`;
+}
+
 interface PipelineTabProps {
   hours: number;
 }
@@ -64,7 +75,7 @@ export default function PipelineTab({ hours }: PipelineTabProps) {
   const velocityChart = (() => {
     if (!pipelineData.snapshots || pipelineData.snapshots.length < 2) return null;
     const sorted = [...pipelineData.snapshots].sort((a, b) => new Date(a.timestamp).getTime() - new Date(b.timestamp).getTime());
-    const labels = sorted.map(s => dateLabel(s.timestamp));
+    const labels = sorted.map(s => smartLabel(s.timestamp, hours));
     const ocrData = sorted.map(s => s.pages?.ocr ?? 0);
     const transData = sorted.map(s => s.pages?.translated ?? 0);
     return { labels, ocrData, transData };
@@ -306,7 +317,7 @@ export default function PipelineTab({ hours }: PipelineTabProps) {
         for (let i = 1; i < sorted.length; i++) {
           const dt = (new Date(sorted[i].timestamp).getTime() - new Date(sorted[i - 1].timestamp).getTime()) / 3600000;
           if (dt < 0.01) continue;
-          labels.push(dateLabel(sorted[i].timestamp));
+          labels.push(smartLabel(sorted[i].timestamp, hours));
           ocrRate.push(Math.max(0, Math.round(((sorted[i].pages?.ocr ?? 0) - (sorted[i - 1].pages?.ocr ?? 0)) / dt)));
           transRate.push(Math.max(0, Math.round(((sorted[i].pages?.translated ?? 0) - (sorted[i - 1].pages?.translated ?? 0)) / dt)));
         }
