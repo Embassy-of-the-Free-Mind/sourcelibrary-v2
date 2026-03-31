@@ -62,7 +62,7 @@ function EmailForm({
           You&apos;re in.
         </p>
         <p className={`text-sm ${variant === 'dark' ? 'text-white/70' : 'text-stone-600'}`}>
-          We&apos;ll send you access when the beta opens.
+          We&apos;ll send you a link to create your free account.
         </p>
       </div>
     );
@@ -88,7 +88,7 @@ function EmailForm({
           disabled={status === 'loading'}
           className="px-8 py-4 bg-accent-gold/80 hover:bg-accent-gold disabled:bg-accent-gold/40 text-stone-900 rounded-lg text-base font-medium transition-colors whitespace-nowrap font-sans"
         >
-          {status === 'loading' ? 'Joining...' : 'Get Early Access'}
+          {status === 'loading' ? 'Joining...' : 'Get Free Access'}
         </button>
       </form>
       {status === 'error' && (
@@ -188,7 +188,7 @@ export default function BetaLandingPage() {
           <div className="hidden md:flex items-center gap-6 text-sm text-white/60 font-sans">
             <a href="#demo" className="hover:text-white transition-colors">See It Work</a>
             <a href="#gallery" className="hover:text-white transition-colors">Gallery</a>
-            <a href="#signup" className="hover:text-white transition-colors">Get Access</a>
+            <a href="#signup" className="hover:text-white transition-colors">Sign Up</a>
           </div>
         </header>
 
