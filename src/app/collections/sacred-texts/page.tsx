@@ -37,6 +37,7 @@ interface TraditionCollection {
 }
 
 async function getTraditions(): Promise<{ traditions: TraditionCollection[]; totalBooks: number }> {
+  try {
   const db = await Promise.race([
     getDb(),
     new Promise<never>((_, reject) => setTimeout(() => reject(new Error('DB timeout')), 10000)),
@@ -48,52 +49,44 @@ async function getTraditions(): Promise<{ traditions: TraditionCollection[]; tot
     .sort({ order: 1 })
     .toArray();
 
-  // For each tradition, count scripture/commentary books and find a hero image
-  const enriched: TraditionCollection[] = await Promise.all(
+  // Enrich each tradition — use Promise.allSettled to not crash build on slow queries
+  const results = await Promise.allSettled(
     traditions.map(async (t) => {
-      // Count books that are scripture or canonical commentary
+      // Count books — use maxTimeMS to avoid blocking the build
       const scriptureCount = await db.collection('books').countDocuments({
         collections: t.slug,
         'sacred_text_type.type': { $in: ['scripture', 'canonical_commentary', 'liturgical'] },
         visible: true,
         pages_count: { $gt: 0 },
         pages_translated: { $gt: 0 },
-      });
+      }, { maxTimeMS: 3000 }).catch(() => 0);
 
-      // Find a hero image: best gallery image from this tradition's books
-      let heroImage: string | null = null;
+      // Find a hero image from the collection's own hero_image field first
+      let heroImage: string | null = sanitizeThumbnail(t.hero_image) || null;
 
-      // Try gallery images first
-      const traditionBooks = await db.collection('books')
-        .find({ collections: t.slug, visible: true }, { projection: { id: 1 } })
-        .limit(50)
-        .toArray();
-      const bookIds = traditionBooks.map(b => b.id);
+      // If no collection-level hero, try gallery
+      if (!heroImage) {
+        const traditionBooks = await db.collection('books')
+          .find({ collections: t.slug, visible: true }, { projection: { id: 1 } })
+          .limit(20)
+          .maxTimeMS(3000)
+          .toArray()
+          .catch(() => [] as { id: string }[]);
+        const bookIds = traditionBooks.map(b => b.id);
 
-      if (bookIds.length > 0) {
-        const galleryImg = await db.collection('gallery_images')
-          .findOne(
-            {
-              book_id: { $in: bookIds },
-              gallery_quality: { $gte: 0.7 },
-              type: { $nin: ['decorative', 'symbol', 'printer_device', 'printer_mark', 'ornament', 'border'] },
-            },
-            { sort: { gallery_quality: -1 } },
-          );
-        if (galleryImg) {
-          heroImage = galleryImg.extracted_url || galleryImg.thumbnail_url || galleryImg.image_url || null;
-        }
-      }
-
-      // Fallback to book thumbnail
-      if (!heroImage && bookIds.length > 0) {
-        const bookWithThumb = await db.collection('books')
-          .findOne(
-            { id: { $in: bookIds }, thumbnail: { $exists: true, $ne: null, $not: /^data:/ } },
-            { projection: { thumbnail: 1 } },
-          );
-        if (bookWithThumb) {
-          heroImage = sanitizeThumbnail(bookWithThumb.thumbnail) || null;
+        if (bookIds.length > 0) {
+          const galleryImg = await db.collection('gallery_images')
+            .findOne(
+              {
+                book_id: { $in: bookIds },
+                gallery_quality: { $gte: 0.7 },
+                type: { $nin: ['decorative', 'symbol', 'printer_device', 'printer_mark', 'ornament', 'border'] },
+              },
+              { sort: { gallery_quality: -1 }, maxTimeMS: 3000 },
+            ).catch(() => null);
+          if (galleryImg) {
+            heroImage = galleryImg.extracted_url || galleryImg.thumbnail_url || galleryImg.image_url || null;
+          }
         }
       }
 
@@ -110,10 +103,18 @@ async function getTraditions(): Promise<{ traditions: TraditionCollection[]; tot
     }),
   );
 
-  // Total across all traditions (scripture + commentary only)
+  // Extract fulfilled results, skip failed ones
+  const enriched = results
+    .filter((r): r is PromiseFulfilledResult<TraditionCollection> => r.status === 'fulfilled')
+    .map(r => r.value);
+
   const totalBooks = enriched.reduce((sum, t) => sum + t.scripture_count, 0);
 
   return { traditions: enriched, totalBooks };
+  } catch (e) {
+    console.warn('[Sacred Texts portal] Failed to load:', (e as Error).message);
+    return { traditions: [], totalBooks: 0 };
+  }
 }
 
 function TraditionCard({ tradition }: { tradition: TraditionCollection }) {
