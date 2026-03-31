@@ -218,6 +218,20 @@ async function probeDbHealth(db) {
 // ── Spawn a worker ──
 
 function spawnWorker(worker) {
+  // Syntax-check the worker script before spawning — catches broken .mjs files early
+  const scriptMatch = worker.cmd.match(/node\s+([\w./\-]+\.mjs)/);
+  if (scriptMatch) {
+    try {
+      execSync(`node --check ${scriptMatch[1]}`, {
+        cwd: process.env.HOME ? `${process.env.HOME}/sourcelibrary` : '/root/sourcelibrary',
+        timeout: 5000,
+      });
+    } catch (err) {
+      console.error(`[scheduler] SYNTAX ERROR in ${scriptMatch[1]} — skipping ${worker.name}`);
+      return null;
+    }
+  }
+
   const timestamp = new Date().toISOString();
   appendFileSync(worker.log, `\n--- Spawned by scheduler at ${timestamp} ---\n`);
 
@@ -364,7 +378,11 @@ async function main() {
       if (DRY_RUN) {
         console.log(`[scheduler]   ${worker.name}: WOULD SPAWN (dry-run)`);
       } else {
-        spawnWorker(worker);
+        const pid = spawnWorker(worker);
+        if (pid === null) {
+          skipped.push(`${worker.name}(syntax)`);
+          continue;
+        }
         lastRuns[worker.name] = now;
       }
       usedConnections += worker.connections;
