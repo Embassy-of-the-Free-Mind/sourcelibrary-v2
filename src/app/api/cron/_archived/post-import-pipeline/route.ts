@@ -1831,7 +1831,16 @@ export async function GET(request: NextRequest) {
         }
         const retries = book.pipeline_auto?.retry_count || 0;
 
-        // English books get modernized (Early Modern → Modern English) via the same batch route
+        // English books: skip translation entirely — OCR text is already readable.
+        // Modernization (Early Modern → Modern English) is nice-to-have, not a blocker.
+        const lang = (book.language || '').toLowerCase();
+        if (lang === 'english') {
+          await setPipelineStatus(db, book.id, 'translate_complete');
+          log.translate_advanced++;
+          continue;
+        }
+
+        // Non-English books: translate via batch API or Lambda
         try {
           // If batch quota is exhausted, use Lambda workers directly
           if (translateQuotaExhausted) {
