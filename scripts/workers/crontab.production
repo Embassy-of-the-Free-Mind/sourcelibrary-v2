@@ -62,5 +62,5 @@
 # Resize worker: generate display-size images from full-res (every 30 min)
 */30 * * * * cd /root/sourcelibrary && flock -n /tmp/sl-resize.lock bash -c "set -a; source .env.production.local; set +a; node scripts/workers/resize-worker.mjs --limit 500 --concurrency 10" >> /var/log/sourcelibrary/resize.log 2>&1
 
-# Display image backfill: generate 1200px display + 150px thumb for archived pages (off-peak, 2-6 AM UTC)
-0 2,3,4,5 * * * cd /root/sourcelibrary && flock -n /tmp/sl-display-backfill.lock bash -c "set -a; source .env.production.local; set +a; node scripts/migration/backfill-display-images.mjs --limit=10000 --concurrency=10 --book-concurrency=2" >> /var/log/sourcelibrary/display-backfill.log 2>&1
+# Display image backfill: generate 1200px display + 150px thumb for archived pages
+*/30 * * * * cd /root/sourcelibrary && flock -n /tmp/sl-display-backfill.lock bash -c "set -a; source .env.production.local; set +a; node scripts/migration/backfill-display-images.mjs --limit=10000 --concurrency=10 --book-concurrency=2" >> /var/log/sourcelibrary/display-backfill.log 2>&1
