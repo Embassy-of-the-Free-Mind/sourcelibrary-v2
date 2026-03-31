@@ -21,12 +21,13 @@ const LIMIT = (() => {
   return idx !== -1 ? parseInt(process.argv[idx + 1]) : 0;
 })();
 
+const R2_PREFIX = 'https://images.sourcelibrary.org';
 const BLOB_PREFIX = 'https://3kwioilsplnmnkv8.public.blob.vercel-storage.com';
 
 const client = new MongoClient(process.env.MONGODB_URI, {
   serverSelectionTimeoutMS: 30000,
   connectTimeoutMS: 30000,
-  socketTimeoutMS: 60000,
+  socketTimeoutMS: 120000,
 });
 
 await client.connect();
@@ -36,17 +37,19 @@ console.log(`\n=== Fix External Thumbnails ===`);
 console.log(`Mode: ${DRY_RUN ? 'DRY RUN' : 'LIVE'}`);
 if (LIMIT) console.log(`Limit: ${LIMIT}`);
 
-// Find all books where thumbnail is NOT a Vercel Blob URL
-const books = await db.collection('books').find({
-  hidden: { $ne: true },
-  thumbnail: {
-    $exists: true,
-    $ne: null,
-    $not: { $regex: `^${BLOB_PREFIX.replace(/[.*+?^${}()|[\]\\]/g, '\\$&')}` }
-  }
-}, {
-  projection: { _id: 0, id: 1, title: 1, thumbnail: 1, thumbnail_blob: 1 }
-}).toArray();
+// Find all visible books where thumbnail is NOT on R2 or Vercel Blob
+// Use visible index (books_visible_created_idx) for efficiency
+const allVisible = await db.collection('books').find(
+  { visible: true, pages_count: { $gt: 0 } },
+  { projection: { id: 1, title: 1, thumbnail: 1, thumbnail_blob: 1 } }
+).hint('books_visible_created_idx').maxTimeMS(120000).toArray();
+
+// Filter client-side to avoid regex on Atlas
+const books = allVisible.filter(b =>
+  b.thumbnail &&
+  !b.thumbnail.startsWith(R2_PREFIX) &&
+  !b.thumbnail.startsWith(BLOB_PREFIX)
+);
 
 console.log(`Found ${books.length} books with external thumbnails\n`);
 
@@ -135,15 +138,27 @@ for (let i = 0; i < books.length; i += BATCH) {
       matchedPage = bookPages[0];
     }
 
-    // Check if the matched page has an archived_photo (Vercel Blob)
-    if (!matchedPage.archived_photo || !matchedPage.archived_photo.startsWith('https://')) {
+    // Check if the matched page has an archived_photo on R2 or Blob
+    const ap = matchedPage.archived_photo;
+    if (!ap || (!ap.startsWith(R2_PREFIX) && !ap.startsWith(BLOB_PREFIX))) {
       noArchive++;
-      unfixable.push({ id: book.id, title: book.title?.substring(0, 50), reason: 'no archived_photo' });
+      unfixable.push({ id: book.id, title: book.title?.substring(0, 50), reason: 'no archived_photo on R2/Blob' });
       continue;
     }
 
     // Prefer cropped_photo for split pages, fall back to archived_photo
-    const updates = { thumbnail: matchedPage.cropped_photo || matchedPage.archived_photo };
+    const newThumb = matchedPage.cropped_photo || matchedPage.archived_photo;
+    const updates = {
+      thumbnail: newThumb,
+      updated_at: new Date(),
+      'field_provenance.thumbnail': {
+        source: 'fix-external-thumbnails',
+        method: 'page-match',
+        confidence: 0.9,
+        date: new Date(),
+        previous: thumbUrl,
+      },
+    };
     if (matchedPage.thumbnail_blob && !book.thumbnail_blob) {
       updates.thumbnail_blob = matchedPage.thumbnail_blob;
     }
