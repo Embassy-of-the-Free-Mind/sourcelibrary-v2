@@ -98,80 +98,81 @@ export async function GET(request: NextRequest) {
       pipelineStart = [{ $match: { $and: matchConditions } }];
     }
 
-    const pipeline = [
-      ...pipelineStart,
-      {
-        $addFields: {
-          id: { $ifNull: ['$id', { $toString: '$_id' }] },
-          pages_count: { $ifNull: ['$pages_count', 0] },
-          pages_translated: { $ifNull: ['$pages_translated', 0] },
-          pages_ocr: { $ifNull: ['$pages_ocr', 0] },
-          last_processed: { $ifNull: ['$updated_at', '$created_at'] },
-          last_translation_at: { $ifNull: ['$last_translation_at', null] },
-          translation_percent: { $ifNull: ['$translation_percent', 0] },
-          has_translations: { $cond: { if: { $gt: ['$last_translation_at', null] }, then: 1, else: 0 } },
-          is_bph_translated: {
-            $cond: {
-              if: {
-                $and: [
-                  { $eq: ['$image_source.provider', 'bph'] },
-                  { $gt: ['$pages_count', 0] },
-                  { $gte: [{ $multiply: [{ $divide: ['$pages_translated', { $max: ['$pages_count', 1] }] }, 100] }, 90] },
-                ],
-              },
-              then: 1,
-              else: 0,
+    // Only compute the fields needed for the current sort mode
+    // This avoids the expensive full-scan $addFields on every book
+    const addFields: Record<string, unknown> = {
+      id: { $ifNull: ['$id', { $toString: '$_id' }] },
+    };
+
+    // Only add computed fields required by the active sort
+    if (sort === 'title-asc' || sort === 'title-desc') {
+      addFields.sort_title = { $toLower: { $ifNull: ['$display_title', '$title'] } };
+    } else if (sort === 'recent-translation') {
+      addFields.has_translations = { $cond: { if: { $gt: ['$last_translation_at', null] }, then: 1, else: 0 } };
+      if (!collection) {
+        addFields.is_bph_translated = {
+          $cond: {
+            if: {
+              $and: [
+                { $eq: ['$image_source.provider', 'bph'] },
+                { $gt: ['$pages_count', 0] },
+                { $gte: [{ $multiply: [{ $divide: [{ $ifNull: ['$pages_translated', 0] }, { $max: [{ $ifNull: ['$pages_count', 1] }, 1] }] }, 100] }, 90] },
+              ],
             },
+            then: 1,
+            else: 0,
           },
-          quality_score: { $ifNull: ['$quality_score', 0] },
-          sort_title: { $toLower: { $ifNull: ['$display_title', '$title'] } },
-          ...(collection ? {
-            _collection_relevance: {
-              $ifNull: [`$collection_relevance.${collection}`, 0],
-            },
-          } : {}),
-        },
-      },
-      buildSortStage(sort, collection || undefined),
-      {
-        $facet: {
-          books: [
-            { $skip: skip },
-            { $limit: limit },
-            {
-              $project: {
-                _id: 0,
-                id: 1,
-                slug: 1,
-                title: 1,
-                display_title: 1,
-                author: 1,
-                thumbnail: 1,
-                thumbnail_blob: 1,
-                language: 1,
-                published: 1,
-                pages_count: 1,
-                pages_ocr: 1,
-                pages_translated: 1,
-                translation_percent: 1,
-                is_first_translation: 1,
-                last_processed: 1,
-                last_translation_at: 1,
-              },
-            },
-          ],
-          total: [{ $count: 'count' }],
-        },
-      },
-    ];
+        };
+      }
+      if (collection) {
+        addFields._collection_relevance = { $ifNull: [`$collection_relevance.${collection}`, 0] };
+      }
+    } else if (sort === 'recent') {
+      addFields.last_processed = { $ifNull: ['$updated_at', '$created_at'] };
+    }
 
-    const [result] = await db.collection('books').aggregate(pipeline, {
-      collation: { locale: 'en', strength: 1 },
-      maxTimeMS: 90000,
-    }).toArray();
+    const bookProject = {
+      _id: 0,
+      id: 1,
+      slug: 1,
+      title: 1,
+      display_title: 1,
+      author: 1,
+      thumbnail: 1,
+      thumbnail_blob: 1,
+      language: 1,
+      published: 1,
+      pages_count: 1,
+      pages_ocr: 1,
+      pages_translated: 1,
+      translation_percent: 1,
+      is_first_translation: 1,
+      last_processed: 1,
+      last_translation_at: 1,
+    };
 
-    const books = result.books || [];
-    const total = result.total[0]?.count || 0;
+    // Run count and paginated results in parallel (avoids $facet double-scan)
+    const basePipeline = [...pipelineStart, { $addFields: addFields }];
+
+    const [books, countResult] = await Promise.all([
+      db.collection('books').aggregate([
+        ...basePipeline,
+        buildSortStage(sort, collection || undefined),
+        { $skip: skip },
+        { $limit: limit },
+        { $project: bookProject },
+      ], {
+        collation: { locale: 'en', strength: 1 },
+        maxTimeMS: 30000,
+      }).toArray(),
+      // Count query — skip the sort/project, just count matches
+      db.collection('books').aggregate([
+        ...pipelineStart,
+        { $count: 'count' },
+      ], { maxTimeMS: 15000 }).toArray(),
+    ]);
+
+    const total = countResult[0]?.count || 0;
 
     const responseData = JSON.stringify({ books, total });
 
