@@ -2507,8 +2507,14 @@ async function run() {
         const freshBooks = effectiveLimit > 0 ? await db.collection('books').aggregate([
           // PAUSED: BPH books excluded pending split quality audit (#523)
           { $match: { 'pipeline_auto.status': { $in: ['metadata_enriched', 'ft_verified'] }, 'image_source.provider': { $ne: 'bph' } } },
-          { $addFields: { _latinFirst: { $cond: [{ $eq: ['$language', 'Latin'] }, 0, 1] } } },
-          { $sort: { _latinFirst: 1, is_first_translation: -1, hidden: 1 } },
+          { $addFields: { _speedTier: { $switch: {
+            branches: [
+              { case: { $in: ['$language', ['Latin', 'German', 'French', 'Italian', 'Dutch', 'Spanish', 'Portuguese', 'English', 'Czech', 'Polish', 'Swedish', 'Danish']] }, then: 0 },
+              { case: { $in: ['$language', ['Chinese', 'Japanese', 'Korean', 'Tibetan', 'Sanskrit', 'Tamil', 'Thai']] }, then: 2 },
+            ],
+            default: 1,
+          }}}},
+          { $sort: { _speedTier: 1, is_first_translation: -1, hidden: 1 } },
           { $project: { id: 1, title: 1, pages_count: 1, language: 1, 'pipeline_auto.retry_count': 1, 'image_source.provider': 1 } },
           { $limit: effectiveLimit }
         ]).toArray() : [];
