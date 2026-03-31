@@ -23,6 +23,7 @@ import AuthorCrossReference from '@/components/book/AuthorCrossReference';
 import PublishEditionButton from '@/components/editions/PublishEditionButton';
 import EditionsPanel from '@/components/editions/EditionsPanel';
 import SchemaOrgMetadata from '@/components/seo/SchemaOrgMetadata';
+import DublinCoreMeta from '@/components/seo/DublinCoreMeta';
 import CategoryPicker from '@/components/ui/CategoryPicker';
 import FeedbackWidget from '@/components/feedback/FeedbackWidget';
 import ExpandableGuide from '@/components/book/ExpandableGuide';
@@ -358,6 +359,24 @@ async function BookInfo({ id }: { id: string }) {
         pageCount={totalPages}
         translatedCount={translatedCount}
         currentEdition={currentEdition}
+      />
+      {/* Dublin Core meta tags for library crawlers */}
+      <DublinCoreMeta
+        title={book.title}
+        displayTitle={book.display_title}
+        author={book.author}
+        language={book.language}
+        year={(book as unknown as { year_published?: number }).year_published}
+        description={book.ai_metadata?.description as string | undefined}
+        categories={book.categories}
+        keywords={(book as unknown as { subject_keywords?: string[] }).subject_keywords}
+        publisher={book.dublin_core?.dc_publisher || book.image_source?.provider_name}
+        rights={book.dublin_core?.dc_rights}
+        identifier={`https://sourcelibrary.org/book/${book.slug || book.id}`}
+        source={book.image_source?.source_url}
+        pageCount={totalPages}
+        doi={book.doi}
+        ustcSn={(book as unknown as { ustc_sn?: string }).ustc_sn}
       />
 
       {/* Cross-book citation_reference meta tags + related books stream in separately */}
