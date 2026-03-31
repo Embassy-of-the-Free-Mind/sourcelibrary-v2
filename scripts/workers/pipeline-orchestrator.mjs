@@ -2823,6 +2823,30 @@ async function run() {
           .limit(IMAGE_SUBMIT_LIMIT)
           .toArray();
 
+        // Catch-up: books processed outside pipeline (no pipeline_auto) with OCR but no image extraction
+        const remainingSlots = IMAGE_SUBMIT_LIMIT - readyForImages.length;
+        if (remainingSlots > 0) {
+          const catchUp = await db.collection('books')
+            .find({
+              'pipeline_auto.status': { $exists: false },
+              pages_ocr: { $gt: 0 },
+              $or: [
+                { detected_images_count: { $exists: false } },
+                { detected_images_count: 0 },
+              ],
+              // Skip books already being processed
+              'job.type': { $ne: 'image_extraction' },
+            })
+            .sort({ visible: -1, pages_count: -1 })
+            .project({ id: 1, title: 1 })
+            .limit(remainingSlots)
+            .toArray();
+          if (catchUp.length > 0) {
+            readyForImages.push(...catchUp);
+            console.log(`  Catch-up: ${catchUp.length} pre-pipeline books queued for image extraction`);
+          }
+        }
+
         console.log(`  Books ready for image extraction: ${readyForImages.length}`);
 
         for (const book of readyForImages) {
@@ -2833,7 +2857,7 @@ async function run() {
                 book_id: book.id,
                 $or: [
                   { page_type: { $in: IMAGE_CANDIDATE_PAGE_TYPES } },
-                  { page_type: { $exists: false }, 'ocr.data': { $regex: '<detected-images>' } },
+                  { page_type: { $exists: false }, 'ocr.data': { $regex: '<detected-images>|<image-desc' } },
                 ],
               }, { projection: { id: 1 } })
               .toArray();
@@ -2917,7 +2941,18 @@ async function run() {
         });
 
         if (imgJob) {
-          if (!DRY_RUN) await setPipelineStatus(db, book.id, 'images_complete');
+          if (!DRY_RUN) {
+            // Update detected_images_count from actual page data
+            const imgCount = await db.collection('pages').countDocuments({
+              book_id: book.id,
+              'detected_images.0': { $exists: true },
+            });
+            await db.collection('books').updateOne(
+              { id: book.id },
+              { $set: { detected_images_count: imgCount } }
+            );
+            await setPipelineStatus(db, book.id, 'images_complete');
+          }
           log.images_advanced++;
         }
       }
