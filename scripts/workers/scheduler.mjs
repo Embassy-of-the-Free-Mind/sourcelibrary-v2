@@ -62,7 +62,7 @@ const WORKERS = [
     name: 'translate-worker',
     cmd: 'node scripts/workers/translate-worker.mjs',
     lock: '/tmp/sl-translate.lock',
-    connections: 50,
+    connections: 15,
     tier: 2,
     interval: 120,      // every 2 min
     healthMin: 'healthy',
