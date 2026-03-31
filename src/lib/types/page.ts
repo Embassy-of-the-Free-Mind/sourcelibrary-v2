@@ -50,6 +50,7 @@ export interface Page {
   photo_original?: string;      // Original S3 URL before cropping
   cropped_photo?: string;       // Local path to cropped image
   archived_photo?: string;      // Vercel Blob URL for archived IA images
+  display_photo?: string;       // 1200px display-size JPEG in R2 (with provenance marks baked in)
   thumbnail_blob?: string;      // Pre-generated 150px JPEG thumbnail in Vercel Blob
   crop?: CropData;              // Crop coordinates used
   split_from?: string;          // ID of parent page if this was split from another

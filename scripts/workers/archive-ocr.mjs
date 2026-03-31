@@ -13,6 +13,7 @@
 
 import { MongoClient } from 'mongodb';
 import { S3Client, PutObjectCommand } from '@aws-sdk/client-s3';
+import { uploadPageVariants } from './lib/display-image.mjs';
 
 const MAX_PAGES = 10_000;
 const MAX_PAGES_PER_DOMAIN = 5000;  // Prevent one domain from crowding out others
@@ -161,15 +162,18 @@ async function archivePage(page, db) {
         throw err;
       }
     }
-    const { buffer, mimeType } = result;
-    const key = `archived/${page.book_id}/${page.page_number}.jpg`;
-    const url = await uploadToR2(key, buffer, mimeType);
+    const { buffer } = result;
+
+    // Upload full-res + generate and upload display (1200px) + thumbnail (150px)
+    const urls = await uploadPageVariants(buffer, page.book_id, page.page_number, uploadToR2);
 
     await db.collection('pages').updateOne(
       { _id: page._id },
       {
         $set: {
-          archived_photo: url,
+          archived_photo: urls.archived,
+          display_photo: urls.display,
+          thumbnail_blob: urls.thumb,
           'archive_metadata.archived_at': new Date(),
           'archive_metadata.source_url': sourceUrl,
           'archive_metadata.original_url': originalUrl,

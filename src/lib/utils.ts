@@ -55,3 +55,62 @@ export function getPageImageUrl(page: Record<string, any>): string | null {
   if (isUsableImageUrl(page.photo)) return page.photo;
   return null;
 }
+
+/**
+ * Get the best display-size (1200px) URL for a page.
+ * Prefers pre-rendered display_photo from R2 CDN (no proxy needed).
+ * Falls back to /api/image proxy for pages without display variants.
+ *
+ * Split pages (with crop) always go through the proxy since the display
+ * variant is generated from the full spread, not the cropped half.
+ */
+// eslint-disable-next-line @typescript-eslint/no-explicit-any
+export function getPageDisplayUrl(page: Record<string, any>, width = 1200, quality = 80): string | null {
+  // Split pages need server-side cropping — always use proxy
+  if (page.crop?.xStart !== undefined && page.crop?.xEnd !== undefined) {
+    const baseUrl = page.archived_photo || page.photo_original || page.photo;
+    if (!baseUrl || isArchiveFailed(baseUrl)) return null;
+    return `/api/image?url=${encodeURIComponent(baseUrl)}&w=${width}&q=${quality}&cx=${page.crop.xStart}&cw=${page.crop.xEnd}`;
+  }
+
+  // Pre-rendered display photo — direct from R2 CDN, no proxy
+  if (isUsableImageUrl(page.display_photo)) return page.display_photo;
+
+  // Fallback: derive display URL from new path convention
+  const newPathMatch = page.photo?.match(/^(https:\/\/images\.sourcelibrary\.org\/pages\/[^/]+\/\d{4,})(-full)?\.jpg$/);
+  if (newPathMatch) return `${newPathMatch[1]}.jpg`;
+
+  // Legacy fallback: proxy for resize
+  const baseUrl = page.archived_photo || page.photo_original || page.photo;
+  if (!baseUrl || isArchiveFailed(baseUrl)) return null;
+  return `/api/image?url=${encodeURIComponent(baseUrl)}&w=${width}&q=${quality}`;
+}
+
+/**
+ * Get the best thumbnail (150px) URL for a page.
+ * Prefers pre-rendered thumbnail from R2 CDN.
+ */
+// eslint-disable-next-line @typescript-eslint/no-explicit-any
+export function getPageThumbUrl(page: Record<string, any>): string | null {
+  // Split pages with crop coordinates need proxy
+  if (page.crop?.xStart !== undefined && page.crop?.xEnd !== undefined) {
+    const baseUrl = page.archived_photo || page.photo_original || page.photo;
+    if (!baseUrl || isArchiveFailed(baseUrl)) return null;
+    return `/api/image?url=${encodeURIComponent(baseUrl)}&w=150&q=60&cx=${page.crop.xStart}&cw=${page.crop.xEnd}`;
+  }
+
+  // Pre-rendered thumbnail
+  if (isUsableImageUrl(page.thumbnail_blob)) return page.thumbnail_blob;
+
+  // Derive from new path convention
+  const newPathMatch = page.photo?.match(/^(https:\/\/images\.sourcelibrary\.org\/pages\/[^/]+\/\d{4,})(-full)?\.jpg$/);
+  if (newPathMatch) return `${newPathMatch[1]}-thumb.jpg`;
+
+  // Existing thumbnail field
+  if (isUsableImageUrl(page.thumbnail)) return page.thumbnail;
+
+  // Legacy fallback: proxy
+  const baseUrl = page.archived_photo || page.photo_original || page.photo;
+  if (!baseUrl || isArchiveFailed(baseUrl)) return null;
+  return `/api/image?url=${encodeURIComponent(baseUrl)}&w=150&q=60`;
+}

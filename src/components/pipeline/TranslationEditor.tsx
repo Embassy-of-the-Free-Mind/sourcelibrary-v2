@@ -34,6 +34,7 @@ import CiteButton from '@/components/ui/CiteButton';
 import { prompts as promptsApi, analytics, pages as pagesApi, processing as processingApi } from '@/lib/api-client';
 import LikeButton from '@/components/ui/LikeButton';
 import { getShortUrl } from '@/lib/shortlinks';
+import { getPageDisplayUrl, getPageThumbUrl, isUsableImageUrl } from '@/lib/utils';
 import type { Page, Book, Prompt, ContentSource } from '@/lib/types';
 import { GEMINI_MODELS, DEFAULT_MODEL } from '@/lib/types';
 import { AuthCheck } from '../auth/AuthCheck';
@@ -512,45 +513,27 @@ export default function TranslationEditor({
   // Tier 2: Display (1200px) - for main reading view
   // Tier 3: Full (2400px) - for magnifier, fullscreen
   const getImageUrl = (p: Page, tier: 'thumbnail' | 'display' | 'full' = 'display') => {
-    const widths = { thumbnail: 150, display: 1200, full: 2400 };
-    const qualities = { thumbnail: 60, display: 80, full: 90 };
-    const width = widths[tier];
-    const quality = qualities[tier];
+    if (tier === 'thumbnail') return getPageThumbUrl(p) || '';
+    if (tier === 'display') return getPageDisplayUrl(p) || '';
 
-    // New path convention: pages/{bookId}/{0001}.jpg, -full.jpg, -thumb.jpg
-    // If photo matches this pattern, derive other sizes by convention
-    const newPathMatch = p.photo?.match(/^(https:\/\/images\.sourcelibrary\.org\/pages\/[^/]+\/\d{4,})(-full)?\.jpg$/);
-    if (newPathMatch) {
-      const base = newPathMatch[1];
-      if (tier === 'full') return `${base}-full.jpg`;
-      if (tier === 'thumbnail') return `${base}-thumb.jpg`;
-      return `${base}.jpg`; // display — falls back to full if display not generated yet
-    }
-
-    // Legacy: pre-generated cropped photo (split pages) — use directly
-    if (p.crop && p.cropped_photo) {
-      return p.cropped_photo;
-    }
-
-    // Legacy: prefer archived photo, then original sources
-    const baseUrl = p.archived_photo || p.photo_original || p.photo;
-    if (!baseUrl) return '';
-
-    // Cropping requires the image proxy for server-side crop
+    // Full tier: for magnifier/fullscreen — want the highest resolution
+    // Split pages with crop use proxy for server-side crop
     if (p.crop?.xStart !== undefined && p.crop?.xEnd !== undefined) {
-      return `/api/image?url=${encodeURIComponent(baseUrl)}&w=${width}&q=${quality}&cx=${p.crop.xStart}&cw=${p.crop.xEnd}`;
+      const baseUrl = p.archived_photo || p.photo_original || p.photo;
+      if (!baseUrl) return '';
+      return `/api/image?url=${encodeURIComponent(baseUrl)}&w=2400&q=90&cx=${p.crop.xStart}&cw=${p.crop.xEnd}`;
     }
 
-    // Archived images: full quality direct from CDN, display/thumbnail via proxy for resize
-    if (p.archived_photo) {
-      if (tier === 'full') {
-        return p.archived_photo;
-      }
-      return `/api/image?url=${encodeURIComponent(p.archived_photo)}&w=${width}&q=${quality}`;
-    }
+    // New path convention: derive full-res URL
+    const newPathMatch = p.photo?.match(/^(https:\/\/images\.sourcelibrary\.org\/pages\/[^/]+\/\d{4,})(-full)?\.jpg$/);
+    if (newPathMatch) return `${newPathMatch[1]}-full.jpg`;
 
-    // External sources: proxy for resize/optimization
-    return `/api/image?url=${encodeURIComponent(baseUrl)}&w=${width}&q=${quality}`;
+    // Archived photo is full-res — serve directly from CDN
+    if (isUsableImageUrl(p.archived_photo)) return p.archived_photo!;
+
+    // External sources: proxy
+    const baseUrl = p.photo_original || p.photo;
+    return baseUrl ? `/api/image?url=${encodeURIComponent(baseUrl)}&w=2400&q=90` : '';
   };
 
   // URLs for current page at different quality tiers
@@ -694,12 +677,7 @@ export default function TranslationEditor({
 
   // Prefetch adjacent page images for faster navigation
   useEffect(() => {
-    const getSmallImageUrl = (p: Page) => {
-      if (p.thumbnail) return p.thumbnail;
-      if (p.archived_photo) return `/api/image?url=${encodeURIComponent(p.archived_photo)}&w=150&q=60`;
-      const baseUrl = p.photo_original || p.photo;
-      return baseUrl ? `/api/image?url=${encodeURIComponent(baseUrl)}&w=150&q=60` : '';
-    };
+    const getSmallImageUrl = (p: Page) => getPageThumbUrl(p) || '';
 
     const prefetchImage = (url: string) => {
       const img = new window.Image();
