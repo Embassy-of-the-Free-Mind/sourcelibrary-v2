@@ -167,9 +167,17 @@ function logProgress() {
 async function main() {
   console.log(`[backfill-display] Display image backfill — limit=${LIMIT}, concurrency=${CONCURRENCY}${DRY_RUN ? ' (DRY RUN)' : ''}`);
 
-  const client = new MongoClient(MONGODB_URI, { maxPoolSize: 10 });
+  const client = new MongoClient(MONGODB_URI, { maxPoolSize: 5 });
   await client.connect();
   const db = client.db('bookstore');
+
+  // Check processing_control pause
+  const control = await db.collection('system_config').findOne({ _id: 'processing_control' });
+  if (control?.paused) {
+    console.log(`[backfill-display] Pipeline paused. Exiting.`);
+    await client.close();
+    process.exit(0);
+  }
 
   if (BOOK_ID) {
     // Single book mode

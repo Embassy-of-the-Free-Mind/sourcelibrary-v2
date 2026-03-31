@@ -310,6 +310,14 @@ async function main() {
   await client.connect();
   const db = client.db('bookstore');
 
+  // Check processing_control pause
+  const control = await db.collection('system_config').findOne({ _id: 'processing_control' });
+  if (control?.paused) {
+    console.log(`[archive-bulk] Pipeline paused. Exiting.`);
+    await client.close();
+    process.exit(0);
+  }
+
   // Find IA books with pages that may need archiving (regardless of pipeline status).
   // Priority: first translations > non-English > English
   const ENGLISH_VARIANTS = ['english', 'eng', 'en'];
