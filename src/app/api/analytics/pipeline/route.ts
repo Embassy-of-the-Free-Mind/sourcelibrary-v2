@@ -38,10 +38,12 @@ export const GET = withAuth(async (request, session) => {
 
     const [snapshots, cronRuns, needsAttention, recentErrors, recentDecisions] = await Promise.all([
       // 1. Pipeline snapshots from Supabase (fast time-series query)
+      // Filter out zero-page snapshots (caused by warehouse migration or orchestrator restarts)
       supabase
         .from('pipeline_snapshots')
         .select('timestamp, funnel, pages, books, active_batch')
         .gte('timestamp', cutoff.toISOString())
+        .gt('pages->>ocr', '0')
         .order('timestamp', { ascending: true })
         .then(({ data }) => data || []),
 
@@ -51,7 +53,7 @@ export const GET = withAuth(async (request, session) => {
         .select('cron, timestamp, duration_ms, actions, errors, error_count, status')
         .gte('timestamp', cutoff.toISOString())
         .order('timestamp', { ascending: false })
-        .limit(50)
+        .limit(200)
         .then(({ data }) => data || []),
 
       // 3. Books needing attention (with error details)
