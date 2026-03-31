@@ -66,6 +66,8 @@ const IMPORT_CATEGORIES = [
   // Rome / Central Italy
   { category: 'Paintings by Raffaello Sanzio', artist: 'Raphael', type: 'painting', recurse: true },
   { category: 'Drawings by Raffaello Sanzio', artist: 'Raphael', type: 'drawing', recurse: true },
+  { category: 'Frescoes by Raphael', artist: 'Raphael', type: 'painting', recurse: false },
+  { category: 'Raphael Rooms (Vatican Museums)', artist: 'Raphael', type: 'painting', recurse: true },
   { category: 'Paintings by Pietro Perugino', artist: 'Pietro Perugino', type: 'painting', recurse: true },
   { category: 'Paintings by Pinturicchio', artist: 'Pinturicchio', type: 'painting', recurse: true },
   { category: 'Paintings by Piero della Francesca', artist: 'Piero della Francesca', type: 'painting', recurse: true },
@@ -371,6 +373,7 @@ async function main() {
   const singleCategory = catIdx >= 0 ? args[catIdx + 1] : null;
   const artistIdx = args.indexOf('--artist');
   const singleArtist = artistIdx >= 0 ? args[artistIdx + 1] : null;
+  const recurseFlag = args.includes('--recurse');
 
   console.log(`Mode: ${dryRun ? 'DRY RUN' : 'LIVE'} | Images: ${skipImages ? 'SKIP' : 'UPLOAD'} | Limit: ${limit === Infinity ? 'none' : limit}`);
 
@@ -379,6 +382,7 @@ async function main() {
   await client.connect();
   const db = client.db('bookstore');
   const books = db.collection('books');
+  const booksWarehouse = db.collection('books_warehouse');
 
   // Set up R2 client
   let s3 = null;
@@ -395,13 +399,31 @@ async function main() {
 
   // Determine which categories to import
   const categories = singleCategory
-    ? [{ category: singleCategory, artist: singleArtist || 'Unknown', type: 'print', recurse: false }]
+    ? [{ category: singleCategory, artist: singleArtist || 'Unknown', type: 'print', recurse: recurseFlag }]
     : IMPORT_CATEGORIES;
 
   let totalImported = 0;
   let totalSkipped = 0;
   let totalErrors = 0;
   const seenTitles = new Set();
+
+  // Pre-load existing slugs and commons_titles for fast dedup
+  console.log('Loading existing artwork slugs for dedup...');
+  const existingSlugs = new Set();
+  const existingCommonsTitles = new Set();
+  if (!force) {
+    for (const coll of [books, booksWarehouse]) {
+      const cursor = coll.find(
+        { slug: /^art-/ },
+        { projection: { slug: 1, commons_title: 1 }, maxTimeMS: 120000 }
+      );
+      for await (const doc of cursor) {
+        if (doc.slug) existingSlugs.add(doc.slug);
+        if (doc.commons_title) existingCommonsTitles.add(doc.commons_title);
+      }
+    }
+    console.log(`  Loaded ${existingSlugs.size} slugs, ${existingCommonsTitles.size} commons_titles`);
+  }
 
   for (const cat of categories) {
     if (totalImported >= limit) break;
@@ -429,13 +451,9 @@ async function main() {
       const slug = slugify(info.title || info.commonsTitle.replace('File:', ''));
       if (!slug) continue;
 
-      // Check if already exists
+      // Check if already exists (fast in-memory dedup)
       if (!force) {
-        const exists = await books.findOne(
-          { $or: [{ slug: `art-${slug}` }, { 'commons_title': info.commonsTitle }] },
-          { projection: { _id: 1 } }
-        );
-        if (exists) {
+        if (existingSlugs.has(`art-${slug}`) || existingCommonsTitles.has(info.commonsTitle)) {
           totalSkipped++;
           continue;
         }
@@ -538,6 +556,8 @@ async function main() {
       } else {
         try {
           await books.insertOne(doc);
+          existingSlugs.add(doc.slug);
+          if (doc.commons_title) existingCommonsTitles.add(doc.commons_title);
           console.log(`  ✓ ${doc.slug} — ${doc.title}`);
         } catch (err) {
           if (err.code === 11000) {
