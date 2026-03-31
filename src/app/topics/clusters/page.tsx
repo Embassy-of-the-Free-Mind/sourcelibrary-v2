@@ -75,8 +75,9 @@ async function fetchTopics(): Promise<{ topics: TopicSummary[]; totalBooks: numb
 
   const results = await db
     .collection('books')
-    .aggregate(pipeline, { allowDiskUse: true })
-    .toArray();
+    .aggregate(pipeline, { allowDiskUse: true, maxTimeMS: 30000 })
+    .toArray()
+    .catch(() => [] as Record<string, unknown>[]);
 
   let totalBooks = 0;
   const topics: TopicSummary[] = results.map((r) => {
