@@ -162,7 +162,7 @@ export default function PipelineTab({ hours }: PipelineTabProps) {
           'queued', 'archiving', 'archive_complete',
           'ocr_submitted', 'ocr_complete',
           'metadata_enriched', 'ft_verifying', 'ft_verified',
-          'translate_submitted', 'translate_complete',
+          'translate_submitted', 'translate_partial', 'translate_complete',
           'enriching', 'enriched', 'chapters', 'chapters_complete',
           'images_submitted', 'images_complete',
           'complete', 'needs_attention', 'failed',

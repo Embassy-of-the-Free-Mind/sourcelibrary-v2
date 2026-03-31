@@ -55,7 +55,7 @@ const PIPELINE_ORDER = [
   'queued', 'archiving', 'archive_complete',
   'ocr_submitted', 'ocr_complete',
   'metadata_enriched',
-  'translate_submitted', 'translate_complete',
+  'translate_submitted', 'translate_partial', 'translate_complete',
   'summarizing', 'summary_indexed',
   'chapters', 'chapters_complete',
   'images_submitted', 'images_complete',

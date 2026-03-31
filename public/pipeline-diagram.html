@@ -31,6 +31,8 @@
   .worker-model { font-size: 11px; color: #6ba3ff; margin-top: 4px; }
   .worker.deprecated { opacity: 0.5; border-style: dashed; }
   .worker.deprecated .worker-name::after { content: ' (fallback)'; color: #666; font-weight: 400; }
+  .worker.new { border-color: #4ade80; }
+  .worker.new .worker-name::after { content: ' NEW'; color: #4ade80; font-weight: 400; font-size: 10px; margin-left: 6px; }
 
   .flow { margin-bottom: 32px; }
   .flow h2 { font-size: 18px; font-weight: 600; margin-bottom: 16px; color: #fff; }
@@ -44,7 +46,9 @@
   .phase-where.lambda { color: #f59e0b; }
   .phase-where.vercel { color: #6366f1; }
   .phase-status { font-size: 10px; color: #555; margin-top: 2px; font-family: monospace; }
+  .phase.highlight { border-color: #4ade80; }
   .arrow { color: #444; font-size: 20px; flex-shrink: 0; }
+  .arrow.loop { color: #4ade80; font-size: 14px; }
 
   .models { margin-bottom: 32px; }
   .models h2 { font-size: 18px; font-weight: 600; margin-bottom: 16px; color: #fff; }
@@ -62,6 +66,18 @@
   .counter-box { background: #1a1a1a; border: 1px solid #333; border-radius: 6px; padding: 8px 12px; }
   .counter-box.warn { border-color: #f59e0b; }
   .counter-box.ok { border-color: #4ade80; }
+
+  .detail-section { margin-bottom: 32px; }
+  .detail-section h2 { font-size: 18px; font-weight: 600; margin-bottom: 16px; color: #fff; }
+  .detail-box { background: #111; border: 1px solid #333; border-radius: 12px; padding: 20px; }
+  .detail-box h3 { font-size: 14px; font-weight: 600; color: #fff; margin-bottom: 12px; }
+  .detail-flow { display: flex; flex-wrap: wrap; gap: 6px; align-items: center; margin-bottom: 12px; }
+  .detail-step { background: #1a1a1a; border: 1px solid #2a2a2a; border-radius: 6px; padding: 8px 12px; font-size: 12px; }
+  .detail-step.active { border-color: #4ade80; color: #4ade80; }
+  .detail-step.parked { border-color: #f59e0b; color: #f59e0b; }
+  .detail-note { font-size: 12px; color: #888; line-height: 1.6; }
+  .detail-note strong { color: #ccc; }
+  .detail-stat { display: inline-block; background: #1a1a1a; border: 1px solid #333; border-radius: 4px; padding: 2px 8px; font-family: monospace; font-size: 12px; color: #4ade80; }
 
   .legend { display: flex; gap: 24px; font-size: 12px; color: #888; margin-bottom: 24px; }
   .legend-item { display: flex; align-items: center; gap: 6px; }
@@ -137,31 +153,31 @@
     <div class="phase-status">→ ft_verified</div>
   </div>
   <div class="arrow">→</div>
-  <div class="phase">
+  <div class="phase highlight">
     <div class="phase-num">Phase 4</div>
     <div class="phase-name">Translate</div>
-    <div class="phase-where hetzner">translate-worker</div>
-    <div class="phase-status">→ translate_submitted</div>
+    <div class="phase-where hetzner">translate-worker (self-dispatch)</div>
+    <div class="phase-status">→ translate_submitted → translate_partial ↺</div>
   </div>
   <div class="arrow">→</div>
   <div class="phase">
     <div class="phase-num">Phase 5</div>
     <div class="phase-name">Translate Done</div>
-    <div class="phase-where hetzner">orchestrator check</div>
+    <div class="phase-where hetzner">translate-worker</div>
     <div class="phase-status">→ translate_complete</div>
   </div>
   <div class="arrow">→</div>
   <div class="phase">
     <div class="phase-num">Phase 6</div>
     <div class="phase-name">Summary + Index</div>
-    <div class="phase-where vercel">Vercel API</div>
+    <div class="phase-where hetzner">enrich-worker</div>
     <div class="phase-status">→ summary_indexed</div>
   </div>
   <div class="arrow">→</div>
   <div class="phase">
     <div class="phase-num">Phase 7</div>
     <div class="phase-name">Chapters</div>
-    <div class="phase-where vercel">Vercel API</div>
+    <div class="phase-where hetzner">enrich-worker</div>
     <div class="phase-status">→ chapters_complete</div>
   </div>
   <div class="arrow">→</div>
@@ -181,6 +197,37 @@
 </div>
 </div>
 
+<!-- ── Translation Detail ── -->
+<div class="detail-section">
+<h2>Translation Architecture (Phase 4 Detail)</h2>
+<div class="detail-box">
+  <h3>Breadth-first translation with self-dispatch</h3>
+  <div class="detail-flow">
+    <div class="detail-step active">metadata_enriched</div>
+    <div class="arrow">→</div>
+    <div class="detail-step" style="font-size:11px;color:#888;">self-dispatch<br>(create job)</div>
+    <div class="arrow">→</div>
+    <div class="detail-step active">translate_submitted</div>
+    <div class="arrow">→</div>
+    <div class="detail-step" style="font-size:11px;color:#888;">translate up to<br>200 pages</div>
+    <div class="arrow">→</div>
+    <div class="detail-step parked">translate_partial</div>
+    <div class="arrow loop">↺ re-queue when<br>no fresh books</div>
+  </div>
+  <div class="detail-flow" style="margin-top: 4px;">
+    <div class="detail-step" style="font-size:11px;color:#888;">all pages done?</div>
+    <div class="arrow">→</div>
+    <div class="detail-step active">translate_complete</div>
+  </div>
+  <div class="detail-note" style="margin-top: 16px;">
+    <strong>Self-dispatch:</strong> The translate-worker creates its own jobs directly from <code>metadata_enriched</code> books instead of waiting for the orchestrator's Phase 4 cron. Eliminates 10-12 min idle gaps between runs.<br><br>
+    <strong>200-page parking:</strong> Each book gets at most 200 pages per run, then is parked as <code>translate_partial</code>. Fresh (untranslated) books always get priority. When no fresh books remain, partial books are re-queued, least-translated first. This ensures breadth — all books get their first 200 pages before any book gets seconds.<br><br>
+    <strong>Concurrency:</strong> 40 books simultaneously, batch-5 (5 pages per API call). All 40 books have ~200 pages, so they finish together &mdash; minimal idle slots.<br><br>
+    <strong>Throughput:</strong> <span class="detail-stat">~14,000 pages/hr</span> peak, <span class="detail-stat">~7,000 pages/hr</span> sustained. ~20s median per-page latency from Gemini.
+  </div>
+</div>
+</div>
+
 <!-- ── Environments ── -->
 <div class="grid">
 
@@ -196,10 +243,14 @@
       <div class="worker-name">pipeline-orchestrator.mjs<span class="worker-schedule">*/2 min</span></div>
       <div class="worker-desc">All phases — fallback orchestrator. Per-phase crons also run independently.</div>
     </div>
-    <div class="worker">
+    <div class="worker new">
       <div class="worker-name">translate-worker.mjs<span class="worker-schedule">*/2 min</span></div>
-      <div class="worker-desc">Inline translation via Gemini. 20 concurrent books, 8K pages/run cap.</div>
+      <div class="worker-desc">Inline translation via Gemini. 40 concurrent books, self-dispatches from metadata_enriched. 200-page cap per book per run.</div>
       <div class="worker-model">BPH → gemini-3-flash-preview | Others → gemini-3.1-flash-lite-preview</div>
+    </div>
+    <div class="worker">
+      <div class="worker-name">enrich-worker.mjs<span class="worker-schedule">*/2 min</span></div>
+      <div class="worker-desc">Summary, index, and chapter extraction (Phases 6-7). Inline on Hetzner.</div>
     </div>
     <div class="worker">
       <div class="worker-name">batch-collector.mjs<span class="worker-schedule">*/10 min</span></div>
@@ -265,8 +316,8 @@
       <div class="worker-name">API Routes (called from Hetzner)</div>
       <div class="worker-desc">
         /api/books/[id]/verify-metadata (Phase 3.5)<br>
-        /api/books/[id]/index (Phase 6)<br>
-        /api/books/[id]/extract-chapters (Phase 7)
+        /api/books/[id]/index (Phase 6 fallback)<br>
+        /api/books/[id]/extract-chapters (Phase 7 fallback)
       </div>
     </div>
     <div class="worker">
@@ -333,14 +384,14 @@
 <p>Cached counters on each book document. Workers must update after writing to pages. sync-worker reconciles every 2h as safety net.</p>
 <div class="counter-flow">
   <div class="counter-box ok">pages_count</div>
-  <div class="counter-box ok">pages_ocr<br><span style="font-size:10px;color:#666">batch-collector syncs ✓</span></div>
-  <div class="counter-box ok">pages_translated<br><span style="font-size:10px;color:#666">translate-worker syncs ✓</span></div>
+  <div class="counter-box ok">pages_ocr<br><span style="font-size:10px;color:#666">batch-collector syncs &#10003;</span></div>
+  <div class="counter-box ok">pages_translated<br><span style="font-size:10px;color:#666">translate-worker syncs &#10003;</span></div>
   <div class="counter-box warn">pages_archived<br><span style="font-size:10px;color:#f59e0b">archive workers DON'T sync (#499)</span></div>
   <div class="counter-box warn">translation_percent<br><span style="font-size:10px;color:#f59e0b">never computed (#499)</span></div>
 </div>
 </div>
 
-<div class="updated">Last updated: 2026-03-27 &mdash; Generated from crontab dump + code audit</div>
+<div class="updated">Last updated: 2026-03-31 &mdash; translate_partial parking + self-dispatch</div>
 
 </body>
 </html>
