@@ -67,6 +67,11 @@ const stats = {
 
 async function processPage(page, db) {
   try {
+    // Skip failed or non-URL archived photos
+    if (!page.archived_photo?.startsWith('https://')) {
+      stats.skipped++;
+      return;
+    }
     const fullResBuffer = await downloadFromR2(page.archived_photo);
 
     if (DRY_RUN) {
@@ -113,27 +118,19 @@ async function main() {
   const db = client.db('bookstore');
 
   // Find pages with archived_photo but no display_photo
+  // Use simple filter — avoid $regex on unindexed field (9.5M pages collection)
   const filter = {
-    archived_photo: { $exists: true, $regex: /^https:/ },
-    $or: [
-      { display_photo: { $exists: false } },
-      { display_photo: null },
-      { display_photo: '' },
-    ],
+    archived_photo: { $exists: true, $ne: null },
+    display_photo: { $exists: false },
     ...(BOOK_ID ? { book_id: BOOK_ID } : {}),
   };
 
-  const total = await db.collection('pages').countDocuments(filter);
-  console.log(`[backfill-display] Found ${total.toLocaleString()} pages needing display variants`);
-
-  if (total === 0) {
-    await client.close();
-    return;
-  }
+  console.log(`[backfill-display] Querying pages (skipping count to avoid collection scan)...`);
 
   const pages = await db.collection('pages')
     .find(filter, { projection: { _id: 1, book_id: 1, page_number: 1, archived_photo: 1 } })
     .limit(LIMIT)
+    .maxTimeMS(60_000)
     .toArray();
 
   console.log(`[backfill-display] Processing ${pages.length.toLocaleString()} pages...`);
@@ -166,7 +163,7 @@ async function main() {
   console.log(`  Failed: ${stats.failed.toLocaleString()}`);
   console.log(`  Rate: ${rate} pages/sec`);
   console.log(`  Uploaded: ${(stats.bytesUploaded / (1024 * 1024 * 1024)).toFixed(2)} GB`);
-  console.log(`  Remaining: ${(total - stats.processed).toLocaleString()} pages`);
+  console.log(`  Note: run again to process more pages`);
 
   await client.close();
 }
