@@ -55,7 +55,7 @@ async function getTraditions(): Promise<{ traditions: TraditionCollection[]; tot
       const scriptureCount = await db.collection('books').countDocuments({
         collections: t.slug,
         'sacred_text_type.type': { $in: ['scripture', 'canonical_commentary', 'liturgical'] },
-        status: { $ne: 'deleted' },
+        visible: true,
         pages_count: { $gt: 0 },
         pages_translated: { $gt: 0 },
       });
@@ -65,7 +65,7 @@ async function getTraditions(): Promise<{ traditions: TraditionCollection[]; tot
 
       // Try gallery images first
       const traditionBooks = await db.collection('books')
-        .find({ collections: t.slug, status: { $ne: 'deleted' } }, { projection: { id: 1 } })
+        .find({ collections: t.slug, visible: true }, { projection: { id: 1 } })
         .limit(50)
         .toArray();
       const bookIds = traditionBooks.map(b => b.id);

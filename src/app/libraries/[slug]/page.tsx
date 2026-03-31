@@ -80,7 +80,6 @@ async function fetchLibraryData(providerKey: string, sort: string, language: str
 
   const filter: Record<string, unknown> = {
     'image_source.provider': providerKey,
-    status: { $ne: 'deleted' },
     visible: true,
     pages_count: { $gt: 0 },
     pages_translated: { $gt: 0 },
@@ -110,7 +109,6 @@ async function fetchLibraryData(providerKey: string, sort: string, language: str
   // Get all unique languages for this provider (unfiltered by language/search, but exclude hidden)
   const langFilter = {
     'image_source.provider': providerKey,
-    status: { $ne: 'deleted' },
     visible: true,
     pages_count: { $gt: 0 },
     pages_translated: { $gt: 0 },

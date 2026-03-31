@@ -21,7 +21,7 @@ export const GET = withAuth(async (req: NextRequest, _session: Session, context?
 
     // Get all book IDs in this collection
     const books = await db.collection('books').find(
-      { collections: slug, visible: true, status: { $ne: 'deleted' } },
+      { collections: slug, visible: true },
       { projection: { _id: 0, id: { $ifNull: ['$id', { $toString: '$_id' }] }, slug: 1 } }
     ).toArray();
 
@@ -101,7 +101,7 @@ export const POST = withAuth(async (req: NextRequest, _session: Session, context
 
     // Get all book IDs in this collection
     const books = await db.collection('books').find(
-      { collections: slug, visible: true, status: { $ne: 'deleted' } },
+      { collections: slug, visible: true },
       { projection: { _id: 0, id: { $ifNull: ['$id', { $toString: '$_id' }] }, slug: 1 } }
     ).toArray();
     const bookIds = books.map(b => b.id);

@@ -38,7 +38,7 @@ async function fetchProviderStats(): Promise<ProviderStats[]> {
     {
       $match: {
         'image_source.provider': { $exists: true, $nin: ['user_upload', 'other', 'library', 'iiif'] },
-        status: { $ne: 'deleted' },
+        visible: true,
         pages_count: { $gt: 0 },
         pages_translated: { $gt: 0 },
       },
@@ -105,7 +105,7 @@ async function fetchContributingLibraries(): Promise<ContributingLibrary[]> {
     {
       $match: {
         'image_source.contributing_library': { $exists: true, $nin: [null, ''] },
-        status: { $ne: 'deleted' },
+        visible: true,
         pages_count: { $gt: 0 },
       },
     },
