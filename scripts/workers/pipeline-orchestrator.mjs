@@ -169,7 +169,7 @@ async function probeDbHealth(db) {
   try {
     const t3 = Date.now();
     await db.collection('books').find(
-      { hidden: { $ne: true }, pages_count: { $gt: 0 } }
+      { visible: true, pages_count: { $gt: 0 } }
     ).sort({ created_at: -1 }).limit(10).project({ _id: 1 }).toArray();
     browseMs = Date.now() - t3;
   } catch {

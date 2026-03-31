@@ -28,7 +28,7 @@ async function fetchDatasetStats() {
 
   try {
     const books = db.collection('books');
-    const visible = { hidden: { $ne: true } };
+    const visible = { visible: true };
     const maxTimeMS = 45000;
 
     const [totalBooks, pageTotalsAgg, languagesAgg] = await Promise.all([

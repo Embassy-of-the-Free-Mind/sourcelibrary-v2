@@ -70,7 +70,7 @@ export async function GET(request: NextRequest) {
       // Fallback: regex search (skip countDocuments — it's a full collection scan)
       const queryRegex = new RegExp(escapeRegex(query), 'i');
       const filter = {
-        hidden: { $ne: true },
+        visible: true,
         pages_count: { $gt: 0 },
         $or: [
           { title: queryRegex },

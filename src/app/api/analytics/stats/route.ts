@@ -45,7 +45,7 @@ export async function GET(request: NextRequest) {
     // Uses cached pages_translated from books instead of scanning 916k pages
     const [bookStats, totalBooks, totalPages] = await Promise.all([
       db.collection('books').aggregate([
-        { $match: { hidden: { $ne: true } } },
+        { $match: { visible: true } },
         { $group: {
           _id: null,
           totalReads: { $sum: '$read_count' },
@@ -53,7 +53,7 @@ export async function GET(request: NextRequest) {
           pagesTranslated: { $sum: { $ifNull: ['$pages_translated', 0] } },
         } }
       ]).toArray(),
-      db.collection('books').countDocuments({ hidden: { $ne: true } }),
+      db.collection('books').countDocuments({ visible: true }),
       db.collection('pages').estimatedDocumentCount(),
     ]);
     const pagesTranslated = bookStats[0]?.pagesTranslated || 0;

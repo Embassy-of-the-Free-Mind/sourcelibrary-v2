@@ -59,7 +59,7 @@ export async function GET() {
       }),
 
       // Total books
-      db.collection('books').countDocuments({ hidden: { $ne: true } }),
+      db.collection('books').countDocuments({ visible: true }),
 
       // Type distribution
       db.collection('entities').aggregate([

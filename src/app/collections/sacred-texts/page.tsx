@@ -44,7 +44,7 @@ async function getTraditions(): Promise<{ traditions: TraditionCollection[]; tot
 
   const traditions = await db
     .collection('collections')
-    .find({ parent: 'sacred-texts', hidden: { $ne: true } })
+    .find({ parent: 'sacred-texts', visible: true })
     .sort({ order: 1 })
     .toArray();
 

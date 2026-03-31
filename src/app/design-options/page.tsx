@@ -68,7 +68,7 @@ async function getFeaturedCollection(): Promise<FeaturedCollectionItem | null> {
           book_count: { $gte: 10 },
           parent: { $exists: false },
           type: { $ne: 'curated' },
-          hidden: { $ne: true },
+          visible: true,
         },
       },
       { $sample: { size: 1 } },
@@ -107,7 +107,7 @@ async function getFeaturedCollection(): Promise<FeaturedCollectionItem | null> {
                 { id: { $in: highlightedIds } },
                 { _id: { $in: highlightedIds } },
               ],
-              hidden: { $ne: true },
+              visible: true,
               pages_count: { $gt: 0 },
               pages_translated: { $gt: 0 },
             },
@@ -129,7 +129,7 @@ async function getFeaturedCollection(): Promise<FeaturedCollectionItem | null> {
           {
             $match: {
               collections: col.slug,
-              hidden: { $ne: true },
+              visible: true,
               pages_count: { $gt: 0 },
               pages_translated: { $gt: 0 },
               thumbnail_blob: { $exists: true, $ne: null },
@@ -191,7 +191,7 @@ async function getMultipleFeaturedCollections(): Promise<FeaturedCollectionItem[
           book_count: { $gte: 10 },
           parent: { $exists: false },
           type: { $ne: 'curated' },
-          hidden: { $ne: true },
+          visible: true,
         },
       },
       { $sample: { size: 5 } },
@@ -210,7 +210,7 @@ async function getMultipleFeaturedCollections(): Promise<FeaturedCollectionItem[
   for (const col of collections) {
     // Get books for this collection
     const colBooks = (await db.collection('books').aggregate([
-      { $match: { collections: col.slug, hidden: { $ne: true }, pages_count: { $gt: 0 }, pages_translated: { $gt: 0 }, thumbnail_blob: { $exists: true, $ne: null } } },
+      { $match: { collections: col.slug, visible: true, pages_count: { $gt: 0 }, pages_translated: { $gt: 0 }, thumbnail_blob: { $exists: true, $ne: null } } },
       { $sort: { read_count: -1 } },
       { $limit: 10 },
       { $project: bookProjection },
@@ -243,7 +243,7 @@ async function getMultipleFeaturedCollections(): Promise<FeaturedCollectionItem[
 async function getCollectionSummaries(): Promise<CollectionSummary[]> {
   const db = await getDb();
   const docs = await db.collection('collections').find(
-    { parent: { $exists: false }, type: { $ne: 'curated' }, hidden: { $ne: true }, book_count: { $gte: 5 } },
+    { parent: { $exists: false }, type: { $ne: 'curated' }, visible: true, book_count: { $gte: 5 } },
     { projection: { _id: 0, slug: 1, name: 1, subtitle: 1, book_count: 1, featured_images: 1, languages: 1 } }
   ).limit(8).toArray();
 

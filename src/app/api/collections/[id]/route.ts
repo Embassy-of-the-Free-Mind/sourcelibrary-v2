@@ -46,7 +46,7 @@ export async function GET(
       : {
           collections: id,
           status: { $ne: 'deleted' },
-          hidden: { $ne: true },
+          visible: true,
           pages_count: { $gt: 0 },
           pages_translated: { $gt: 0 },
         };
@@ -136,7 +136,7 @@ export async function GET(
         .find(
           isArtCollection
             ? { collections: id, resource_type: { $exists: true } }
-            : { collections: id, status: { $ne: 'deleted' }, hidden: { $ne: true }, pages_translated: { $gt: 0 } },
+            : { collections: id, status: { $ne: 'deleted' }, visible: true, pages_translated: { $gt: 0 } },
           { projection: highlightProjection },
         )
         .sort(isArtCollection ? { title: 1 } : { quality_score: -1, read_count: -1, pages_translated: -1 })

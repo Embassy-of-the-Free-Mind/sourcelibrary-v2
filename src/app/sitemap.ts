@@ -170,7 +170,7 @@ export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
     const [books, collections, libraries, languages, galleryImages, works] = await Promise.all([
       // Books
       db.collection('books').find(
-        { hidden: { $ne: true } },
+        { visible: true },
         {
           projection: { id: 1, slug: 1, updated_at: 1, pages_ocr: 1, pages_translated: 1, is_first_translation: 1, read_count: 1 },
           maxTimeMS: 8000,
@@ -179,7 +179,7 @@ export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
 
       // Collections
       db.collection('collections').find(
-        { hidden: { $ne: true } },
+        { visible: true },
         { projection: { slug: 1, updated_at: 1 }, maxTimeMS: 5000 }
       ).toArray(),
 
@@ -191,7 +191,7 @@ export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
 
       // Languages
       db.collection('books').aggregate([
-        { $match: { hidden: { $ne: true }, pages_count: { $gt: 0 }, language: { $exists: true, $ne: null } } },
+        { $match: { visible: true, pages_count: { $gt: 0 }, language: { $exists: true, $ne: null } } },
         { $group: { _id: '$language', count: { $sum: 1 } } },
         { $match: { count: { $gte: 5 } } },
       ], { maxTimeMS: 8000 }).toArray(),
@@ -207,7 +207,7 @@ export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
 
       // Works
       db.collection('books').aggregate([
-        { $match: { work_id: { $exists: true, $ne: null }, hidden: { $ne: true } } },
+        { $match: { work_id: { $exists: true, $ne: null }, visible: true } },
         { $group: { _id: '$work_id', count: { $sum: 1 } } },
         { $match: { count: { $gte: 2 } } },
       ], { maxTimeMS: 8000 }).toArray(),

@@ -86,7 +86,7 @@ export const GET = withAdminAuth(async (request) => {
 
   const db = await getDb();
   const books = await db.collection('books').find(
-    { hidden: { $ne: true } },
+    { visible: true },
     { projection: {
       id: 1, title: 1, author: 1, slug: 1,
       normalized_title: 1, normalized_author: 1,
@@ -243,9 +243,9 @@ export const POST = withAdminAuth(async (request) => {
   const now = new Date();
 
   const result = await db.collection('books').updateMany(
-    { id: { $in: bookIds }, hidden: { $ne: true } },
+    { id: { $in: bookIds }, visible: true },
     { $set: {
-      hidden: true,
+      hidden: true, visible: false,
       hidden_reason: 'duplicate',
       hidden_at: now,
       ...(keeperId ? { duplicate_of: keeperId } : {}),

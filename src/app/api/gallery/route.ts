@@ -106,7 +106,7 @@ export async function GET(request: NextRequest) {
     // Build query filter
     const filter: Record<string, unknown> = {
       gallery_quality: { $gte: minQuality },
-      book_hidden: { $ne: true },
+      book_visible: true,
     };
 
     // Book diversity: limit to top N images per book (unless filtering by single book or showing all)

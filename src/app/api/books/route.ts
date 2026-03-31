@@ -16,7 +16,7 @@ export async function GET(request: NextRequest) {
     // NEVER $lookup to the pages collection (9.5M docs) on a hot path.
     const books = await db.collection('books')
       .find(
-        { hidden: { $ne: true } },
+        { visible: true },
         {
           projection: {
             _id: 0, id: 1, title: 1, display_title: 1, author: 1, language: 1,

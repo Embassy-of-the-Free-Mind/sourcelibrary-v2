@@ -243,7 +243,7 @@ export const POST = withAuth(async (request, session) => {
     }
 
     // Books - recently translated sort (homepage, library default sort)
-    // Query: { hidden: { $ne: true }, pages_translated: { $gt: 0 }, last_translation_at: { $exists: true } }
+    // Query: { visible: true, pages_translated: { $gt: 0 }, last_translation_at: { $exists: true } }
     try {
       await db.collection('books').createIndex(
         { last_translation_at: -1 },
@@ -258,7 +258,7 @@ export const POST = withAuth(async (request, session) => {
     }
 
     // Books - translated book count (homepage stat)
-    // Query: { hidden: { $ne: true }, pages_translated: { $gt: 0 } }
+    // Query: { visible: true, pages_translated: { $gt: 0 } }
     try {
       await db.collection('books').createIndex(
         { pages_translated: 1, hidden: 1 },
@@ -331,7 +331,7 @@ export const POST = withAuth(async (request, session) => {
     }
 
     // Books - compound index for filtered search (language + category + hidden)
-    // Query: { $text: ..., hidden: { $ne: true }, language: ..., categories: ... }
+    // Query: { $text: ..., visible: true, language: ..., categories: ... }
     try {
       await db.collection('books').createIndex(
         { hidden: 1, language: 1, categories: 1 },

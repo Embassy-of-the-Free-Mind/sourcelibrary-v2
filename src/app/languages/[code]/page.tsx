@@ -36,7 +36,7 @@ export async function generateMetadata({ params }: Props): Promise<Metadata> {
     count = await db.collection('books').countDocuments({
       language: langName,
       status: { $ne: 'deleted' },
-      hidden: { $ne: true },
+      visible: true,
       pages_count: { $gt: 0 },
     });
   } catch {
@@ -88,7 +88,7 @@ async function fetchLanguageData(langName: string, sort: string, offset: number,
   const baseFilter: Record<string, unknown> = {
     language: langName,
     status: { $ne: 'deleted' },
-    hidden: { $ne: true },
+    visible: true,
     pages_count: { $gt: 0 },
   };
 
@@ -140,7 +140,7 @@ async function fetchLanguageData(langName: string, sort: string, offset: number,
           { $match: {
             book_id: { $in: sampleBookIds },
             gallery_quality: { $gte: 0.7 },
-            book_hidden: { $ne: true },
+            book_visible: true,
             type: { $nin: ['decorative', 'symbol', 'musical_score', 'exlibris', 'bookplate'] },
           }},
           { $sort: { gallery_quality: -1 } },

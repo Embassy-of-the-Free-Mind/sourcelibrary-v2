@@ -44,7 +44,7 @@ async function getCategoryBooks(id: string): Promise<Book[]> {
     const db = await getDb();
     // Use cached pages_translated on books — no $lookup against 9.5M pages collection
     const books = await db.collection('books').find(
-      { categories: id, hidden: { $ne: true }, pages_translated: { $gt: 0 } },
+      { categories: id, visible: true, pages_translated: { $gt: 0 } },
       { maxTimeMS: 30000 }
     )
     .project({ _id: 0, pages_array: 0 })

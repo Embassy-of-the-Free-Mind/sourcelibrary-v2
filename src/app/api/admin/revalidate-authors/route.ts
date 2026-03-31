@@ -24,7 +24,7 @@ export const POST = withAdminAuth(async (request) => {
 
   // Get distinct authors from visible books
   const authors: string[] = await db.collection('books').distinct('author', {
-    hidden: { $ne: true },
+    visible: true,
     author: { $exists: true, $ne: null, $nin: ['Unknown', 'Anonymous', 'Various'] },
   });
 

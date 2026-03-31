@@ -209,7 +209,7 @@ async function getBook(id: string): Promise<{ book: Book; pages: Page[]; totalBo
     // Top 8 gallery images for preview row
     db.collection('gallery_images')
       .find(
-        { book_id: bookId, gallery_quality: { $gte: 0.7 }, book_hidden: { $ne: true } },
+        { book_id: bookId, gallery_quality: { $gte: 0.7 }, book_visible: true },
         { projection: { _id: 0, id: 1, extracted_url: 1, thumbnail_url: 1, image_url: 1, description: 1, type: 1, page_number: 1, gallery_quality: 1 }, maxTimeMS: 5000 },
       )
       .sort({ gallery_quality: -1 })
@@ -219,7 +219,7 @@ async function getBook(id: string): Promise<{ book: Book; pages: Page[]; totalBo
     // Separate count query for accurate image count display
     db.collection('gallery_images')
       .countDocuments(
-        { book_id: bookId, gallery_quality: { $gte: 0.7 }, book_hidden: { $ne: true } },
+        { book_id: bookId, gallery_quality: { $gte: 0.7 }, book_visible: true },
         { maxTimeMS: 5000 },
       )
       .catch(() => 0),
@@ -227,7 +227,7 @@ async function getBook(id: string): Promise<{ book: Book; pages: Page[]; totalBo
     book.collections?.length
       ? db.collection('collections')
           .find(
-            { slug: { $in: book.collections }, hidden: { $ne: true } },
+            { slug: { $in: book.collections }, visible: true },
             { projection: { _id: 0, slug: 1, name: 1, subtitle: 1, color: 1, book_count: 1, featured_images: 1 }, maxTimeMS: 5000 },
           )
           .sort({ order: 1 })

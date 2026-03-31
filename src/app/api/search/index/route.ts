@@ -64,7 +64,7 @@ export async function GET(request: NextRequest) {
       ? db.collection('books').aggregate([
           { $match: {
               'index.generatedAt': { $exists: true },
-              hidden: { $ne: true },
+              visible: true,
               pages_count: { $gt: 0 },
               $or: termTypes.map(t => ({ [`${t.field}.term`]: queryRegex }))
             }
@@ -105,7 +105,7 @@ export async function GET(request: NextRequest) {
       ? db.collection('books').aggregate([
           { $match: {
               'index.generatedAt': { $exists: true },
-              hidden: { $ne: true },
+              visible: true,
               pages_count: { $gt: 0 },
               'index.sectionSummaries.quotes.text': queryRegex
             }

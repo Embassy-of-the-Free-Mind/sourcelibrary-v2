@@ -248,7 +248,7 @@ export const POST = withAuth(async (request, session) => {
         access_date: new Date(),
       },
       status: 'draft',
-      hidden: true,
+      hidden: true, visible: false,
       source_fingerprint: sourceFingerprint({ image_source: { provider: 'wellcome', identifier: work_id, iiif_manifest: manifestUrl } }),
       normalized_title: normalizeTitle(title),
       normalized_author: normalizeAuthor(author),

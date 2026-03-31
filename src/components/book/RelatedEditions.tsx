@@ -11,7 +11,7 @@ export default async function RelatedEditions({ bookId, workId }: RelatedEdition
   const db = await getDb();
 
   const related = await db.collection('books').find(
-    { work_id: workId, id: { $ne: bookId }, hidden: { $ne: true } },
+    { work_id: workId, id: { $ne: bookId }, visible: true },
     { projection: { 'image_source.provider_name': 1 }, maxTimeMS: 3000 }
   ).toArray().catch(() => []);
 

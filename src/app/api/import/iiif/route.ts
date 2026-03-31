@@ -405,7 +405,7 @@ export const POST = withAuth(async (request, session) => {
         ...(shelfmark ? { shelfmark } : {}),
       },
       status: 'draft',
-      hidden: true,
+      hidden: true, visible: false,
       source_fingerprint: sourceFingerprint({ image_source: { provider: 'iiif', iiif_manifest: manifest_url } }),
       normalized_title: normalizeTitle(title),
       normalized_author: normalizeAuthor(author),

@@ -43,7 +43,7 @@ async function getFeaturedCollections() {
 
   // Pick 1 random collection with enough books for the editorial spread
   const collections = await db.collection('collections').aggregate([
-    { $match: { book_count: { $gte: 10 }, parent: { $exists: false }, type: { $ne: 'curated' }, collection_type: { $ne: 'visual_art' }, hidden: { $ne: true } } },
+    { $match: { book_count: { $gte: 10 }, parent: { $exists: false }, type: { $ne: 'curated' }, collection_type: { $ne: 'visual_art' }, visible: true } },
     { $sample: { size: 1 } },
   ]).toArray();
 
@@ -67,7 +67,7 @@ async function getFeaturedCollections() {
   // Fetch highlighted books by ID (these are curated, high-quality picks)
   const highlightedBooks = allHighlightedIds.length > 0
     ? await db.collection('books').aggregate([
-        { $match: { $or: [{ id: { $in: allHighlightedIds } }, { _id: { $in: allHighlightedIds } }], hidden: { $ne: true }, pages_count: { $gt: 0 }, pages_translated: { $gt: 0 } } },
+        { $match: { $or: [{ id: { $in: allHighlightedIds } }, { _id: { $in: allHighlightedIds } }], visible: true, pages_count: { $gt: 0 }, pages_translated: { $gt: 0 } } },
         { $project: bookProjection },
       ], { maxTimeMS: 8000 }).toArray()
     : [];
@@ -89,7 +89,7 @@ async function getFeaturedCollections() {
   if (slugsNeedingMore.length > 0) {
     const existingIds = new Set([...booksBySlug.values()].flat().map(b => b.id));
     const backfillBooks = await db.collection('books').aggregate([
-      { $match: { collections: { $in: slugsNeedingMore }, hidden: { $ne: true }, pages_count: { $gt: 0 }, pages_translated: { $gt: 0 }, thumbnail_blob: { $exists: true, $ne: null } } },
+      { $match: { collections: { $in: slugsNeedingMore }, visible: true, pages_count: { $gt: 0 }, pages_translated: { $gt: 0 }, thumbnail_blob: { $exists: true, $ne: null } } },
       { $sort: { read_count: -1 } },
       { $limit: slugsNeedingMore.length * 10 },
       { $project: bookProjection },
@@ -152,7 +152,7 @@ async function getFeaturedCollections() {
 
 async function getRemainingCollections(): Promise<CollectionForGrid[]> {
   const db = await getDb();
-  const docs = await db.collection('collections').find({ parent: { $exists: false }, type: { $ne: 'curated' }, hidden: { $ne: true }, 'highlighted_books.0': { $exists: true } }).toArray();
+  const docs = await db.collection('collections').find({ parent: { $exists: false }, type: { $ne: 'curated' }, visible: true, 'highlighted_books.0': { $exists: true } }).toArray();
 
   const result = docs.map(({ _id, ...rest }) => {
     const images = rest.featured_images || [];
@@ -193,7 +193,7 @@ async function getRemainingCollections(): Promise<CollectionForGrid[]> {
         {
           $match: {
             collections: { $in: missingSlugs },
-            hidden: { $ne: true },
+            visible: true,
             $or: [
               { thumbnail_blob: { $exists: true, $nin: [null, ''] } },
               { thumbnail: { $exists: true, $nin: [null, ''] } },
@@ -235,7 +235,7 @@ async function getDiscoverBooks(): Promise<Book[]> {
   // Over-sample to account for hidden/untranslated books being filtered out.
   const books = await db.collection('books').aggregate([
     { $sample: { size: 200 } },
-    { $match: { hidden: { $ne: true }, pages_translated: { $gte: 10 } } },
+    { $match: { visible: true, pages_translated: { $gte: 10 } } },
     { $limit: 10 },
     { $project: BOOK_PROJECTION },
   ], { maxTimeMS: 8000 }).toArray();
@@ -260,7 +260,7 @@ async function getCollectionShowcase() {
           { thumbnail_url: { $type: 'string', $gt: '' } },
           { extracted_url: { $type: 'string', $gt: '' } },
         ],
-        book_hidden: { $ne: true },
+        book_visible: true,
       },
     },
     { $limit: 40 },

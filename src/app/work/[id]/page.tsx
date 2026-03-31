@@ -18,7 +18,7 @@ interface PageProps {
 async function getWorkEditions(workId: string) {
   const db = await getDb();
   const editions = await db.collection('books').find(
-    { work_id: workId, hidden: { $ne: true } },
+    { work_id: workId, visible: true },
     {
       projection: {
         id: 1, slug: 1, title: 1, display_title: 1, author: 1, published: 1,

@@ -96,7 +96,7 @@ export const PATCH = withAuth(async (request) => {
       const bookCount = await db.collection('books').countDocuments({
         collections: slug,
         status: { $ne: 'deleted' },
-        hidden: { $ne: true },
+        visible: true,
         pages_count: { $gt: 0 },
       });
       updates.book_count = bookCount;
@@ -174,7 +174,7 @@ export const POST = withAuth(async (request) => {
     const bookCount = await db.collection('books').countDocuments({
       collections: slug,
       status: { $ne: 'deleted' },
-      hidden: { $ne: true },
+      visible: true,
       pages_count: { $gt: 0 },
     });
 

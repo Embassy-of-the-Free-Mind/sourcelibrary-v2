@@ -38,7 +38,7 @@ async function fetchLanguageStats(): Promise<{ languages: LanguageStats[]; total
     {
       $match: {
         status: { $ne: 'deleted' },
-        hidden: { $ne: true },
+        visible: true,
         pages_count: { $gt: 0 },
         language: { $exists: true, $nin: [null, ''] },
       },

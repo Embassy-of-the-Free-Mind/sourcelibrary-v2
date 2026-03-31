@@ -38,7 +38,7 @@ async function getAllCollectionsWithBooks(): Promise<CollectionWithBooks[]> {
   const db = await getDb();
 
   const collections = await db.collection('collections').find(
-    { parent: { $exists: false }, type: { $ne: 'curated' }, hidden: { $ne: true }, book_count: { $gte: 5 } },
+    { parent: { $exists: false }, type: { $ne: 'curated' }, visible: true, book_count: { $gte: 5 } },
     { projection: { slug: 1, name: 1, subtitle: 1, description: 1, book_count: 1, featured_images: 1, curated_gallery: 1, highlighted_books: 1 } }
   ).sort({ book_count: -1 }).toArray();
 
@@ -66,7 +66,7 @@ async function getAllCollectionsWithBooks(): Promise<CollectionWithBooks[]> {
   // Batch-fetch all highlighted books in one query
   const highlightedBooks = allHighlightedIds.length > 0
     ? await db.collection('books').aggregate([
-        { $match: { $or: [{ id: { $in: allHighlightedIds } }, { _id: { $in: allHighlightedIds } }], hidden: { $ne: true }, pages_count: { $gt: 0 }, pages_translated: { $gt: 0 } } },
+        { $match: { $or: [{ id: { $in: allHighlightedIds } }, { _id: { $in: allHighlightedIds } }], visible: true, pages_count: { $gt: 0 }, pages_translated: { $gt: 0 } } },
         { $project: bookProjection },
       ], { maxTimeMS: 10000 }).toArray()
     : [];
@@ -111,7 +111,7 @@ async function getAllCollectionsWithBooks(): Promise<CollectionWithBooks[]> {
     if (books.length < 8) {
       const existingIds = new Set(books.map(b => b.id));
       const backfill = (await db.collection('books').aggregate([
-        { $match: { collections: slug, hidden: { $ne: true }, pages_count: { $gt: 0 }, pages_translated: { $gt: 0 }, thumbnail_blob: { $exists: true, $ne: null } } },
+        { $match: { collections: slug, visible: true, pages_count: { $gt: 0 }, pages_translated: { $gt: 0 }, thumbnail_blob: { $exists: true, $ne: null } } },
         { $sort: { read_count: -1 } },
         { $limit: 16 },
         { $project: bookProjection },

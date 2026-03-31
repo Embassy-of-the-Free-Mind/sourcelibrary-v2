@@ -25,7 +25,7 @@ async function getCategoriesWithCounts(): Promise<CategoryWithCount[]> {
   try {
     const db = await getDb();
     const categoryCounts = await db.collection('books').aggregate([
-      { $match: { hidden: { $ne: true }, categories: { $exists: true } } },
+      { $match: { visible: true, categories: { $exists: true } } },
       { $unwind: '$categories' },
       { $group: { _id: '$categories', count: { $sum: 1 } } },
     ], { maxTimeMS: 30000, hint: 'categories_1' }).toArray();

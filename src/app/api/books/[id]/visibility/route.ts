@@ -30,6 +30,7 @@ export const POST = withAdminAuth(async (
 
     const update: Record<string, unknown> = {
       hidden,
+      visible: !hidden,
       updated_at: new Date(),
     };
 

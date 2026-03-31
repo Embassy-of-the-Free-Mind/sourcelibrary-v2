@@ -31,7 +31,7 @@ export async function GET(request: NextRequest) {
   // Build MongoDB query from facet filters
   const query: Record<string, unknown> = {
     'faceted_tags': { $exists: true },
-    hidden: { $ne: true },
+    visible: true,
   };
 
   const activeFilters: Record<string, string[]> = {};

@@ -27,7 +27,7 @@ export async function GET() {
     const dayStart = new Date(`${dateStr}T00:00:00Z`);
     const dayEnd = new Date(`${dateStr}T23:59:59.999Z`);
 
-    const vis = { hidden: { $ne: true } };
+    const vis = { visible: true };
 
     // ── Collection state (from book-level caches) — single pass ──
     const [collectionState] = await books.aggregate([

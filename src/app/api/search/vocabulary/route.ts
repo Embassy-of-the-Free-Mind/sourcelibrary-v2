@@ -21,7 +21,7 @@ export async function GET() {
     const db = await getDb();
     const books = await db.collection('books')
       .find(
-        { hidden: { $ne: true }, pages_count: { $gt: 0 } },
+        { visible: true, pages_count: { $gt: 0 } },
         { projection: { title: 1, display_title: 1, author: 1 } }
       )
       .toArray();

@@ -8,7 +8,7 @@ const STALE_AFTER_MS = 15 * 60 * 1000;
 
 async function computeSnapshot(db: any) {
   const books = db.collection('books');
-  const notHidden = { hidden: { $ne: true } };
+  const notHidden = { visible: true };
 
   // Use simple countDocuments — each one is fast with proper filters
   // Run in two batches to avoid overwhelming cold connections

@@ -10,7 +10,7 @@ export async function GET() {
 
     // Aggregate: group by cluster + subcluster, get counts and sample books
     const groups = await books.aggregate([
-      { $match: { taxonomy: { $exists: true }, hidden: { $ne: true } } },
+      { $match: { taxonomy: { $exists: true }, visible: true } },
       { $sort: { year: 1 } },
       {
         $group: {

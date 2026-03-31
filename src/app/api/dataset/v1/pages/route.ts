@@ -72,7 +72,7 @@ export async function GET(request: NextRequest) {
   const db = await getDb();
 
   // Build book filter
-  const bookFilter: any = { hidden: { $ne: true } };
+  const bookFilter: any = { visible: true };
   if (language) bookFilter.language = language;
   if (cluster) bookFilter['taxonomy.cluster'] = cluster;
   if (fromYear || toYear) {

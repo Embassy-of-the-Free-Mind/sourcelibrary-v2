@@ -79,7 +79,7 @@ async function loadAuthorData(db: any, slug: string): Promise<{
     const guess = slug.split('-').map((w: string) => w.charAt(0).toUpperCase() + w.slice(1)).join(' ');
     // Verify this author exists with an exact match
     const check = await db.collection('books').findOne(
-      { author: guess, hidden: { $ne: true } },
+      { author: guess, visible: true },
       { projection: { _id: 1 } }
     );
     if (check) authorName = guess;
@@ -89,7 +89,7 @@ async function loadAuthorData(db: any, slug: string): Promise<{
 
   // Fetch books + entity in parallel
   const booksPromise = db.collection('books').find(
-    { author: authorName, hidden: { $ne: true } },
+    { author: authorName, visible: true },
     {
       projection: {
         _id: 0, id: 1, slug: 1, title: 1, display_title: 1, author: 1,
