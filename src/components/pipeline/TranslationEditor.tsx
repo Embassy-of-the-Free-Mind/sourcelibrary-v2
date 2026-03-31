@@ -877,7 +877,7 @@ export default function TranslationEditor({
                 onClick={() => previousPage && onNavigate(previousPage.id)}
                 disabled={!previousPage}
                 className="p-1.5 sm:p-2 rounded-md transition-all disabled:opacity-30 focus-visible:ring-2 focus-visible:ring-accent-rust focus-visible:outline-none"
-                style={{ color: 'var(--text-secondary)' }}
+                style={{ color: 'var(--accent-rust)' }}
                 aria-label="Previous page"
               >
                 <ChevronLeft className="w-4 h-4" aria-hidden="true" />
@@ -887,7 +887,7 @@ export default function TranslationEditor({
                 onClick={() => nextPage && onNavigate(nextPage.id)}
                 disabled={!nextPage}
                 className="p-1.5 sm:p-2 rounded-md transition-all disabled:opacity-30 focus-visible:ring-2 focus-visible:ring-accent-rust focus-visible:outline-none"
-                style={{ color: 'var(--text-secondary)' }}
+                style={{ color: 'var(--accent-rust)' }}
                 aria-label="Next page"
               >
                 <ChevronRight className="w-4 h-4" aria-hidden="true" />
@@ -1145,6 +1145,25 @@ export default function TranslationEditor({
                         <div className="w-full h-48 flex items-center justify-center" style={{ color: 'var(--text-muted)' }}>
                           No image available
                         </div>
+                      )}
+                      {/* Floating page arrows on scan */}
+                      {previousPage && (
+                        <button
+                          onClick={() => onNavigate(previousPage.id)}
+                          className="absolute left-2 top-1/2 -translate-y-1/2 p-1.5 rounded-full bg-black/30 hover:bg-black/50 text-white/80 hover:text-white transition-all backdrop-blur-sm"
+                          aria-label="Previous page"
+                        >
+                          <ChevronLeft className="w-4 h-4" />
+                        </button>
+                      )}
+                      {nextPage && (
+                        <button
+                          onClick={() => onNavigate(nextPage.id)}
+                          className="absolute right-2 top-1/2 -translate-y-1/2 p-1.5 rounded-full bg-black/30 hover:bg-black/50 text-white/80 hover:text-white transition-all backdrop-blur-sm"
+                          aria-label="Next page"
+                        >
+                          <ChevronRight className="w-4 h-4" />
+                        </button>
                       )}
                     </div>
                     {/* CDLI Witness selector */}
@@ -1799,6 +1818,25 @@ export default function TranslationEditor({
                   <div className="w-full h-48 flex items-center justify-center" style={{ color: 'var(--text-muted)' }}>
                     No image available
                   </div>
+                )}
+                {/* Floating page arrows on scan */}
+                {previousPage && (
+                  <button
+                    onClick={() => onNavigate(previousPage.id)}
+                    className="absolute left-2 top-1/2 -translate-y-1/2 p-1.5 rounded-full bg-black/30 hover:bg-black/50 text-white/80 hover:text-white transition-all backdrop-blur-sm"
+                    aria-label="Previous page"
+                  >
+                    <ChevronLeft className="w-4 h-4" />
+                  </button>
+                )}
+                {nextPage && (
+                  <button
+                    onClick={() => onNavigate(nextPage.id)}
+                    className="absolute right-2 top-1/2 -translate-y-1/2 p-1.5 rounded-full bg-black/30 hover:bg-black/50 text-white/80 hover:text-white transition-all backdrop-blur-sm"
+                    aria-label="Next page"
+                  >
+                    <ChevronRight className="w-4 h-4" />
+                  </button>
                 )}
               </div>
               {/* CDLI Witness selector (edit mode) */}
