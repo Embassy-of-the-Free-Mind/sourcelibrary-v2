@@ -371,6 +371,9 @@ async function processBook(db, book, job, globalCounter) {
   }
 
   let pageIdx = 0;
+  let consecutiveBatchFailures = 0; // Batches where 0 pages parsed — signals broken book
+  const MAX_BATCH_FAILURES = 3; // Park book after 3 consecutive total-parse-failure batches
+
   while (pageIdx < pages.length) {
     // Check global page cap
     if (globalCounter.count >= PAGES_PER_RUN) {
@@ -381,6 +384,12 @@ async function processBook(db, book, job, globalCounter) {
     // Check consecutive errors
     if (consecutiveErrors >= MAX_CONSECUTIVE_ERRORS) {
       console.log(`  [${label}] ${MAX_CONSECUTIVE_ERRORS} consecutive errors, stopping`);
+      break;
+    }
+
+    // Check consecutive batch parse failures — park early instead of grinding through single-page fallbacks
+    if (consecutiveBatchFailures >= MAX_BATCH_FAILURES) {
+      console.log(`  [${label}] ${consecutiveBatchFailures} consecutive batch parse failures, parking early`);
       break;
     }
 
@@ -454,6 +463,13 @@ async function processBook(db, book, job, globalCounter) {
           console.log(`  [${label}] Batch ${batch[0].page_number}-${batch[batch.length - 1].page_number}: parsed ${result.translations.size}/${batch.length}, falling back for ${missing.length}`);
         }
 
+        // Track batch parse failure rate
+        if (result.translations.size === 0) {
+          consecutiveBatchFailures++;
+        } else {
+          consecutiveBatchFailures = 0;
+        }
+
         let batchTranslated = 0;
         for (const page of batch) {
           const translatedText = result.translations.get(page.page_number);
@@ -510,6 +526,7 @@ async function processBook(db, book, job, globalCounter) {
           // Non-rate-limit error — fall back to single-page for entire batch
           console.log(`  [${label}] Batch failed (${msg.substring(0, 80)}), retrying as single pages`);
           consecutiveErrors++;
+          consecutiveBatchFailures++;
           for (const page of batch) {
             try {
               const singleResult = await translatePage(db, page, book, prevTranslation);
