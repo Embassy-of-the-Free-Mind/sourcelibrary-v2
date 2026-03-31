@@ -19,7 +19,7 @@ const ARTIST_FILTER = process.argv.find((_, i, a) => a[i - 1] === '--artist') ||
 
 const client = new MongoClient(process.env.MONGODB_URI);
 const genAI = new GoogleGenerativeAI(process.env.GEMINI_API_KEY);
-const model = genAI.getGenerativeModel({ model: 'gemini-2.5-flash-preview-05-20' });
+const model = genAI.getGenerativeModel({ model: 'gemini-3-flash-preview' });
 
 // Visual art collections that artworks can be assigned to
 const VISUAL_ART_COLLECTIONS = [
@@ -81,7 +81,7 @@ Analyze this artwork image and return JSON with these fields:
   "description": "2-3 sentences a museum visitor would read. What they're looking at, what's happening, notable visual details. No art-historical jargon. No AI slop ('masterful', 'captivating', 'testament to').",
   "significance": "1-2 sentences on why this matters — its intellectual, historical, or philosophical context. Connection to specific texts, thinkers, or ideas from the Western esoteric/philosophical tradition. If no meaningful connection exists, set to null. Do NOT invent connections.",
   "genre": "portrait | allegory | religious | mythological | landscape | genre-scene | still-life | scientific | decorative | emblem | architectural | anatomical | map | botanical",
-  "collections": ["Array of collection slugs this artwork belongs in. Choose from the list below. Include ALL that genuinely apply, but be selective — most artworks fit 1-3 collections. An artwork with no esoteric connection might fit 0 topical collections."],
+  "collections": ["Array of collection slugs this artwork belongs in. Choose from the list below. Be VERY selective — most artworks fit 1-2 collections, rarely 3. Only assign a collection if the artwork is a STRONG fit, not a tangential one. A map of a Dutch city does NOT belong in 'courts-of-wonder'. A portrait of a philosopher belongs in 'portraits-tradition', not also in every tradition they studied."],
   "cross_references": [
     {
       "text_or_author": "Specific text title or author name from the Western esoteric tradition",
@@ -156,22 +156,36 @@ async function main() {
   const query = { resource_type: { $exists: true }, enrichment: { $exists: false } };
   if (ARTIST_FILTER) query.author = ARTIST_FILTER;
 
-  const artworks = await books.find(query, {
-    projection: {
-      _id: 1, id: 1, slug: 1, title: 1, author: 1, published: 1,
-      medium: 1, resource_type: 1, thumbnail_blob: 1, thumbnail: 1,
-      commons_categories: 1,
-    },
-  }).limit(LIMIT).toArray();
+  const projection = {
+    _id: 1, id: 1, slug: 1, title: 1, author: 1, published: 1,
+    medium: 1, resource_type: 1, thumbnail_blob: 1, thumbnail: 1,
+    commons_categories: 1,
+  };
 
-  console.log(`${DRY_RUN ? 'DRY RUN — ' : ''}Found ${artworks.length} artworks to enrich (limit ${LIMIT})`);
+  // Use cursor-based iteration to avoid loading all docs into memory
+  // Atlas is slow on large .toArray() calls
+  let cursor;
+  if (!ARTIST_FILTER && DRY_RUN) {
+    // In dry-run mode, sample randomly for diversity
+    const sampled = await books.aggregate([
+      { $match: query },
+      { $sample: { size: LIMIT } },
+      { $project: projection },
+    ]).toArray();
+    cursor = { [Symbol.asyncIterator]: async function*() { for (const d of sampled) yield d; }, count: sampled.length };
+  } else {
+    cursor = books.find(query, { projection }).limit(LIMIT);
+    cursor.count = LIMIT; // approximate
+  }
 
-  let success = 0, errors = 0, totalTokens = 0;
+  console.log(`${DRY_RUN ? 'DRY RUN — ' : ''}Processing up to ${LIMIT} artworks...`);
+
+  let success = 0, errors = 0, totalTokens = 0, processed = 0;
   const results = [];
 
-  for (let i = 0; i < artworks.length; i++) {
-    const art = artworks[i];
-    const label = `[${i + 1}/${artworks.length}] ${art.author} — ${art.title?.substring(0, 50)}`;
+  for await (const art of cursor) {
+    processed++;
+    const label = `[${processed}] ${art.author} — ${art.title?.substring(0, 50)}`;
 
     try {
       console.log(`\n${label}`);
@@ -214,7 +228,7 @@ async function main() {
             has_readable_text: !!enrichment.has_readable_text,
             figures_depicted: enrichment.figures_depicted || [],
             symbols: enrichment.symbols || [],
-            model: 'gemini-2.5-flash-preview-05-20',
+            model: 'gemini-3-flash-preview',
             enriched_at: new Date(),
           },
           updated_at: new Date(),
@@ -234,9 +248,7 @@ async function main() {
       }
 
       // Rate limit: 2s between calls
-      if (i < artworks.length - 1) {
-        await new Promise(r => setTimeout(r, 2000));
-      }
+      await new Promise(r => setTimeout(r, 2000));
     } catch (err) {
       console.log(`  ERROR: ${err.message}`);
       errors++;
@@ -252,7 +264,7 @@ async function main() {
 
   // Summary
   console.log('\n━━━ SUMMARY ━━━');
-  console.log(`Success: ${success}/${artworks.length}`);
+  console.log(`Success: ${success}/${processed}`);
   console.log(`Errors: ${errors}`);
   console.log(`Total tokens: ${totalTokens.toLocaleString()}`);
   console.log(`Avg tokens/artwork: ${success > 0 ? Math.round(totalTokens / success) : 0}`);
