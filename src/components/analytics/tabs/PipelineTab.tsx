@@ -25,6 +25,25 @@ function smartLabel(iso: string, hours: number): string {
   return `${months[d.getMonth()]} ${d.getDate()}`;
 }
 
+/** Relative time ago string */
+function timeAgo(iso: string): string {
+  const mins = Math.round((Date.now() - new Date(iso).getTime()) / 60000);
+  if (mins < 1) return 'just now';
+  if (mins < 60) return `${mins}m ago`;
+  const hrs = Math.round(mins / 60);
+  if (hrs < 24) return `${hrs}h ago`;
+  return `${Math.round(hrs / 24)}d ago`;
+}
+
+/** Small muted source label */
+function SourceLabel({ children }: { children: React.ReactNode }) {
+  return (
+    <span className="text-xs ml-2 font-normal" style={{ color: 'var(--text-muted)', opacity: 0.7 }}>
+      {children}
+    </span>
+  );
+}
+
 interface PipelineTabProps {
   hours: number;
 }
@@ -104,6 +123,9 @@ export default function PipelineTab({ hours }: PipelineTabProps) {
           <div className="flex justify-between items-baseline mb-2">
             <div className="text-sm font-medium" style={{ color: 'var(--text-primary)' }}>
               Translation Progress
+              {pipelineData._meta?.snapshotComputedAt && (
+                <SourceLabel>snapshot {timeAgo(pipelineData._meta.snapshotComputedAt)}</SourceLabel>
+              )}
             </div>
             <div className="text-sm" style={{ color: 'var(--text-muted)' }}>
               {ec!.translation.toLocaleString()} / {ec!.ocr.toLocaleString()} books with OCR
@@ -129,6 +151,12 @@ export default function PipelineTab({ hours }: PipelineTabProps) {
       )}
 
       {/* Velocity Cards */}
+      {pipelineData._meta?.snapshotRange && (
+        <div className="text-xs" style={{ color: 'var(--text-muted)', opacity: 0.7 }}>
+          Velocity computed from {pipelineData._meta.snapshotCount} snapshots
+          ({timeAgo(pipelineData._meta.snapshotRange.from)} to {timeAgo(pipelineData._meta.snapshotRange.to)})
+        </div>
+      )}
       <div className="grid grid-cols-1 md:grid-cols-3 lg:grid-cols-5 gap-4">
         <div className="p-5 rounded-xl" style={{ background: 'linear-gradient(135deg, var(--bg-white), #f0fdf4)', border: '1px solid var(--border-light)' }}>
           <div className="text-sm font-medium uppercase mb-1" style={{ color: 'var(--text-muted)' }}>OCR Velocity</div>
@@ -204,6 +232,9 @@ export default function PipelineTab({ hours }: PipelineTabProps) {
             <h2 className="text-lg font-medium mb-4 flex items-center gap-2" style={{ color: 'var(--text-primary)' }}>
               <Layers className="w-5 h-5" style={{ color: 'var(--accent-sage)' }} />
               Pipeline Funnel
+              {pipelineData._meta?.snapshotComputedAt && (
+                <SourceLabel>snapshot {timeAgo(pipelineData._meta.snapshotComputedAt)}</SourceLabel>
+              )}
             </h2>
             <div className="space-y-1.5">
               {sorted.map(({ status, count }) => (
@@ -257,6 +288,9 @@ export default function PipelineTab({ hours }: PipelineTabProps) {
             <h2 className="text-lg font-medium mb-1 flex items-center gap-2" style={{ color: 'var(--text-primary)' }}>
               <Image className="w-5 h-5" style={{ color: 'var(--accent-violet)' }} />
               Enrichment Coverage
+              {pipelineData._meta?.snapshotComputedAt && (
+                <SourceLabel>snapshot {timeAgo(pipelineData._meta.snapshotComputedAt)}</SourceLabel>
+              )}
             </h2>
             <p className="text-xs mb-4" style={{ color: 'var(--text-muted)' }}>
               {total.toLocaleString()} books with pages &middot; {cov.galleryImages.toLocaleString()} gallery images
@@ -292,6 +326,7 @@ export default function PipelineTab({ hours }: PipelineTabProps) {
         <div className="p-6 rounded-xl" style={{ background: 'var(--bg-white)', border: '1px solid var(--border-light)' }}>
           <h2 className="text-lg font-medium mb-4" style={{ color: 'var(--text-primary)' }}>
             OCR & Translation Progress Over Time
+            <SourceLabel>pipeline_snapshots</SourceLabel>
           </h2>
           <MultiLineChart
             series={[
@@ -328,6 +363,7 @@ export default function PipelineTab({ hours }: PipelineTabProps) {
           <div className="p-6 rounded-xl" style={{ background: 'var(--bg-white)', border: '1px solid var(--border-light)' }}>
             <h2 className="text-lg font-medium mb-4" style={{ color: 'var(--text-primary)' }}>
               Pipeline Throughput (pages/hr)
+              <SourceLabel>pipeline_snapshots</SourceLabel>
             </h2>
             <MultiLineChart
               series={[
@@ -386,6 +422,7 @@ export default function PipelineTab({ hours }: PipelineTabProps) {
           <h2 className="text-lg font-medium mb-4 flex items-center gap-2" style={{ color: 'var(--text-primary)' }}>
             <Clock className="w-5 h-5" style={{ color: 'var(--accent-sage)' }} />
             Cron Health
+            <SourceLabel>cron_runs ({pipelineData._meta?.cronRunsCount || 0} entries)</SourceLabel>
           </h2>
           <div className="overflow-x-auto">
             <table className="w-full text-sm">
@@ -456,6 +493,7 @@ export default function PipelineTab({ hours }: PipelineTabProps) {
           <h2 className="text-lg font-medium mb-4 flex items-center gap-2" style={{ color: 'var(--text-primary)' }}>
             <XCircle className="w-5 h-5" style={{ color: '#ef4444' }} />
             Recent AI Errors (last 6h)
+            <SourceLabel>gemini_usage</SourceLabel>
           </h2>
           <div className="overflow-x-auto">
             <table className="w-full text-sm">
@@ -498,6 +536,7 @@ export default function PipelineTab({ hours }: PipelineTabProps) {
           <h2 className="text-lg font-medium mb-4 flex items-center gap-2" style={{ color: 'var(--text-primary)' }}>
             <AlertTriangle className="w-5 h-5" style={{ color: 'var(--accent-rust)' }} />
             Books Needing Attention ({pipelineData.needsAttention.length})
+            <SourceLabel>live query</SourceLabel>
           </h2>
           <div className="space-y-3">
             {pipelineData.needsAttention.map((book) => (

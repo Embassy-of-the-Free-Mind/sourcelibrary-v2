@@ -24,7 +24,7 @@ const CACHE_TTL_MS = 60 * 1000;
 export const GET = withAuth(async (request, session) => {
   try {
     const { searchParams } = new URL(request.url);
-    const hours = Math.min(parseInt(searchParams.get('hours') || '24', 10), 336); // max 14 days
+    const hours = Math.min(parseInt(searchParams.get('hours') || '24', 10), 720); // max 30 days
 
     // Check cache
     const cacheKey = `pipeline-${hours}`;
@@ -200,6 +200,14 @@ export const GET = withAuth(async (request, session) => {
         nearComplete, // >90% translated
       },
       query: { hours },
+      _meta: {
+        snapshotComputedAt: snapshot?.computed_at || null,
+        snapshotCount: snapshots.length,
+        snapshotRange: snapshots.length > 0
+          ? { from: snapshots[0].timestamp, to: snapshots[snapshots.length - 1].timestamp }
+          : null,
+        cronRunsCount: cronRuns.length,
+      },
     };
 
     // Update cache
