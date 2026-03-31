@@ -172,7 +172,7 @@ export default function FoundingDonorsPage() {
             Philosophica Hermetica &mdash; one of the world&rsquo;s most important collections of
             esoteric and philosophical texts, inscribed on the{' '}
             <strong>UNESCO Memory of the World Register</strong>. Source Library is an initiative
-            of the Ancient Wisdom Trust (Wereldhart), the Embassy&rsquo;s supporting foundation.
+            of the Embassy of the Free Mind (Stichting Wereldhart), Amsterdam.
           </p>
 
           <p>

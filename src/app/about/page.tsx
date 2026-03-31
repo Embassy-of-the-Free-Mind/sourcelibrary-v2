@@ -144,7 +144,7 @@ export default function AboutPage() {
         </div>
 
         <p className="text-secondary mb-8">
-          Source Library is a project of the <strong>Ancient Wisdom Trust</strong>, working in partnership with the Embassy of the Free Mind and the Bibliotheca Philosophica Hermetica.
+          Source Library is a project of the <strong>Embassy of the Free Mind</strong> (Bibliotheca Philosophica Hermetica), Amsterdam.
         </p>
 
         {/* Links */}
