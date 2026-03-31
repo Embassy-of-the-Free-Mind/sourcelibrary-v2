@@ -38,11 +38,35 @@ export async function requireAdmin(): Promise<Session> {
 }
 
 /**
+ * Require inner_circle or admin role in server components
+ */
+export async function requireInnerCircle(): Promise<Session> {
+  const session = await getSession();
+  if (!session?.user) {
+    redirect('/auth/signin');
+  }
+  const role = (session.user as any).role;
+  if (role !== 'admin' && role !== 'inner_circle') {
+    redirect('/unauthorized');
+  }
+  return session;
+}
+
+/**
  * Check if current user is an admin
  */
 export async function isAdmin(): Promise<boolean> {
   const session = await getSession();
   return (session?.user as any)?.role === 'admin';
+}
+
+/**
+ * Check if current user is inner_circle or admin
+ */
+export async function isInnerCircle(): Promise<boolean> {
+  const session = await getSession();
+  const role = (session?.user as any)?.role;
+  return role === 'admin' || role === 'inner_circle';
 }
 
 /**
@@ -116,6 +140,43 @@ export async function resolveIdentity(request: NextRequest): Promise<ResolvedIde
   }
 
   return null;
+}
+
+/**
+ * Wrapper for API routes requiring inner_circle or admin role.
+ * Returns 401 if not authenticated, 403 if not inner_circle/admin.
+ */
+export function withInnerCircleAuth(
+  handler: (request: NextRequest, session: Session, context?: any) => Promise<NextResponse>
+): (request: NextRequest, context?: any) => Promise<NextResponse> {
+  return async (request: NextRequest, context?: any) => {
+    // Check for CRON_SECRET bearer token (internal service-to-service calls)
+    const cronSecret = process.env.CRON_SECRET;
+    const authHeader = request.headers.get('authorization');
+    if (cronSecret && authHeader === `Bearer ${cronSecret}`) {
+      const cronSession: Session = {
+        user: { name: 'Pipeline Cron', email: 'cron@sourcelibrary.org', role: 'admin' } as any,
+        expires: new Date(Date.now() + 3600000).toISOString(),
+      };
+      return handler(request, cronSession, context);
+    }
+
+    const session = await auth();
+    if (!session?.user) {
+      return NextResponse.json(
+        { error: 'Unauthorized - Authentication required' },
+        { status: 401 }
+      );
+    }
+    const role = (session.user as any).role;
+    if (role !== 'admin' && role !== 'inner_circle') {
+      return NextResponse.json(
+        { error: 'Forbidden - Inner circle access required' },
+        { status: 403 }
+      );
+    }
+    return handler(request, session, context);
+  };
 }
 
 /**

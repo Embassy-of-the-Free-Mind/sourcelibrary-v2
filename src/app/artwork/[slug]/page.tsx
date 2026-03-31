@@ -1,7 +1,7 @@
 import { Metadata } from 'next';
 import { notFound, redirect } from 'next/navigation';
 import { getDb } from '@/lib/mongodb';
-import { isAdmin } from '@/lib/auth-helpers';
+import { isInnerCircle } from '@/lib/auth-helpers';
 import { Book } from '@/lib/types';
 import SiteHeader from '@/components/layout/SiteHeader';
 import ArtworkInfo from '@/components/artwork/ArtworkInfo';
@@ -94,7 +94,7 @@ export async function generateMetadata({ params }: PageProps): Promise<Metadata>
 }
 
 export default async function ArtworkPage({ params }: PageProps) {
-  const admin = await isAdmin();
+  const admin = await isInnerCircle();
   if (!admin) redirect('/');
 
   const { slug } = await params;

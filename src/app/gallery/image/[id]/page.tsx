@@ -51,7 +51,8 @@ export default function ImageDetailPage({
   params: Promise<{ id: string }>;
 }) {
   const { data: session } = useSession();
-  const isAdmin = (session?.user as any)?.role === 'admin';
+  const userRole = (session?.user as any)?.role;
+  const isAdmin = userRole === 'admin' || userRole === 'inner_circle';
   const [imageId, setImageId] = useState<string | null>(null);
   const [data, setData] = useState<GalleryImageDetail | null>(null);
   const [loading, setLoading] = useState(true);

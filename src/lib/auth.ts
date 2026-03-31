@@ -66,19 +66,22 @@ const WELCOME_HTML = `
 </div>
 `;
 
-// Helper: check if user is in the admin whitelist
-async function isAdminUser(email: string): Promise<boolean> {
+// Helper: check user role from admin_users whitelist
+// Returns 'admin', 'inner_circle', or null
+async function getUserRole(email: string): Promise<'admin' | 'inner_circle' | null> {
   try {
     const client = await clientPromise;
     const db = client.db(dbName);
-    const admin = await db.collection('admin_users').findOne({
+    const entry = await db.collection('admin_users').findOne({
       email: email.toLowerCase(),
       active: true,
     });
-    return !!admin;
+    if (!entry) return null;
+    // Default to 'admin' for existing entries without a role field (backward compat)
+    return entry.role === 'inner_circle' ? 'inner_circle' : 'admin';
   } catch (error) {
-    console.error('[auth] Error checking admin status:', error);
-    return false;
+    console.error('[auth] Error checking user role:', error);
+    return null;
   }
 }
 
@@ -200,7 +203,7 @@ export const { handlers, signIn, signOut, auth } = NextAuth({
         token.id = user.id;
         // Check admin status on first sign-in
         if (user.email) {
-          token.role = (await isAdminUser(user.email)) ? 'admin' : 'reader';
+          token.role = (await getUserRole(user.email)) || 'reader';
         } else {
           token.role = 'reader';
         }
