@@ -723,13 +723,23 @@ async function run() {
   // ── Recovery sweep: re-check recently-failed jobs against Gemini ──
   // Race condition: collector marks a job as "failed" (stale PENDING), but Gemini
   // completes it afterward. Without this sweep, those results are lost forever.
-  // Only runs on a fraction of failed jobs per cycle to avoid hammering Gemini.
+  // Runs once per hour (not every 10-min cycle) — no urgency for already-stale jobs.
   let recoveredJobs = 0;
   let recoveredPages = 0;
-  const RECOVERY_BATCH_SIZE = 20; // check up to 20 failed jobs per cycle
+  const RECOVERY_BATCH_SIZE = 20;
   const RECOVERY_WINDOW_DAYS = 7;
+  const RECOVERY_INTERVAL_MS = 3600000; // 1 hour
 
-  try {
+  // Only run if last sweep was >1h ago
+  const lastSweep = await db.collection('system_config').findOne({ _id: 'batch_recovery_last_sweep' });
+  const shouldSweep = !lastSweep || (Date.now() - new Date(lastSweep.timestamp).getTime()) > RECOVERY_INTERVAL_MS;
+
+  if (shouldSweep) try {
+    await db.collection('system_config').updateOne(
+      { _id: 'batch_recovery_last_sweep' },
+      { $set: { timestamp: new Date() } },
+      { upsert: true }
+    );
     const failedWithJobName = await db.collection('batch_jobs')
       .find({
         status: 'failed',
