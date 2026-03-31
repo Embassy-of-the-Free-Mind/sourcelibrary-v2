@@ -12,6 +12,8 @@ const client = new MongoClient(process.env.MONGODB_URI);
 
 // Pattern: "Name (after)" or "Name (circle of)" etc.
 const ATTRIBUTION_PATTERN = /^(.+?)\s*\((after|circle of|workshop of|manner of|follower of|school of|attributed to|style of)\)$/i;
+// Pattern: "after Name" (prefix form found in actual data)
+const PREFIX_PATTERN = /^(after|circle of|workshop of|manner of|follower of|school of|attributed to|style of)\s+(.+)$/i;
 
 // Non-artist names that should never generate artist pages
 const NON_ARTIST_NAMES = [
@@ -30,18 +32,31 @@ async function main() {
 
   console.log(DRY_RUN ? '=== DRY RUN ===' : '=== LIVE RUN ===');
 
-  // 1. Fix "(after)" pattern in author names
-  const withParens = await books.find(
-    { author: ATTRIBUTION_PATTERN, resource_type: { $exists: true } },
+  // 1. Fix attribution qualifiers in author names (both suffix and prefix forms)
+  const allArtworks = await books.find(
+    { resource_type: { $exists: true } },
     { projection: { author: 1, title: 1, slug: 1, _id: 1 } }
   ).toArray();
 
-  console.log(`\nFound ${withParens.length} artworks with attribution qualifiers in author:`);
-  for (const doc of withParens) {
-    const match = doc.author.match(ATTRIBUTION_PATTERN);
-    if (!match) continue;
-    const cleanAuthor = match[1].trim();
-    const note = match[2].toLowerCase();
+  let fixedCount = 0;
+  console.log(`\nScanning ${allArtworks.length} artworks for attribution qualifiers...`);
+  for (const doc of allArtworks) {
+    // Try suffix form: "Name (after)"
+    let match = doc.author.match(ATTRIBUTION_PATTERN);
+    let cleanAuthor, note;
+    if (match) {
+      cleanAuthor = match[1].trim();
+      note = match[2].toLowerCase();
+    } else {
+      // Try prefix form: "after Name"
+      match = doc.author.match(PREFIX_PATTERN);
+      if (match) {
+        note = match[1].toLowerCase();
+        cleanAuthor = match[2].trim();
+      }
+    }
+    if (!cleanAuthor || !note) continue;
+    fixedCount++;
     console.log(`  "${doc.author}" → "${cleanAuthor}" (${note}) — ${doc.title?.substring(0, 50)}`);
     if (!DRY_RUN) {
       await books.updateOne(
@@ -50,6 +65,7 @@ async function main() {
       );
     }
   }
+  console.log(`Fixed ${fixedCount} artworks.`);
 
   // 2. Report non-artist author counts (informational — no migration needed)
   console.log('\nNon-artist author names (no migration needed, filtered in UI):');
