@@ -2,6 +2,7 @@
 
 import { useState, useCallback, useMemo, useRef, useEffect } from 'react';
 import { ArrowRight, Search, X, LayoutGrid, List } from 'lucide-react';
+import Link from 'next/link';
 import CollectionBookCard from '@/components/CollectionBookCard';
 import CollectionListView from '@/components/collections/CollectionListView';
 import CatalogPagination from '@/components/collections/CatalogPagination';
@@ -214,9 +215,18 @@ export default function CollectionAllBooks({
       {/* Header */}
       <div className="flex flex-wrap items-end justify-between gap-4 mb-6">
         <div>
-          <h2 className="text-2xl sm:text-3xl text-primary font-display">
-            All {collectionType === 'visual_art' ? 'Works' : 'Books'}
-          </h2>
+          <div className="flex items-baseline gap-4">
+            <h2 className="text-2xl sm:text-3xl text-primary font-display">
+              All {collectionType === 'visual_art' ? 'Works' : 'Books'}
+            </h2>
+            <Link
+              href="/catalog"
+              className="inline-flex items-center gap-1.5 text-xs font-medium px-3 py-1.5 rounded-lg border border-accent-rust/30 text-accent-rust hover:bg-accent-rust hover:text-white transition-colors"
+            >
+              Browse Full Catalog
+              <span>&rarr;</span>
+            </Link>
+          </div>
           <p className="text-sm text-muted mt-1">
             {expanded ? (
               query || language
