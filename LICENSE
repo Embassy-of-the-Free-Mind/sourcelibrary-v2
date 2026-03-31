@@ -69,15 +69,38 @@ Attribution-ShareAlike 4.0 International License.
         purpose, including commercially
 
     Under the following terms:
-      • Attribution — You must give appropriate credit to Source Library,
-        provide a link to the license, and indicate if changes were made.
+      • Attribution — You must give appropriate credit to Source Library
+        and the Embassy of the Free Mind, provide a link to the license,
+        and indicate if changes were made.
       • ShareAlike — If you remix, transform, or build upon the material,
         you must distribute your contributions under the same license.
 
     Full license text: https://creativecommons.org/licenses/by-sa/4.0/
 
+COMMERCIAL LICENSING: The CC BY-SA 4.0 ShareAlike clause requires
+derivative works to be released under the same license. Organizations
+seeking to use Source Library translations under alternative commercial
+terms (e.g., without the ShareAlike obligation) may obtain a separate
+commercial license. Contact: derek@sourcelibrary.org
 
-4. DATABASE RIGHTS (Sui Generis)
+
+4. CURATED DATASETS (Commercial License Available)
+════════════════════════════════════════════════════
+
+Source Library offers curated, structured datasets — including parallel
+corpora (original text + translation), metadata, and scholarly
+annotations — via API for research and commercial use.
+
+Individual translations on the website are CC BY-SA 4.0 (see above).
+The curated datasets as a whole, including their selection, structure,
+labeling, and delivery format, are available under separate commercial
+license terms.
+
+Commercial dataset licensing is administered by the Embassy of the Free
+Mind (Stichting Wereldhart). Contact: derek@sourcelibrary.org
+
+
+5. DATABASE RIGHTS (Sui Generis)
 ══════════════════════════════════
 
 The structured database — including the selection, arrangement, and
@@ -104,7 +127,7 @@ educational use. Commercial use of substantial portions of the database
 requires a separate license. Contact: derek@sourcelibrary.org
 
 
-5. THIRD-PARTY CONTENT
+6. THIRD-PARTY CONTENT
 ═══════════════════════
 
 Digitized page images are sourced from partner institutions (Internet
