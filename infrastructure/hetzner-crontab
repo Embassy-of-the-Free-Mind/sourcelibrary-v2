@@ -82,8 +82,8 @@
 
 # ── Git auto-pull ──
 
-# Pull latest main every 5 min (stash local patches, pull, re-apply)
-*/5 * * * * cd /root/sourcelibrary && flock -n /tmp/sl-gitpull.lock bash -c "git stash -q 2>/dev/null; git pull -q origin main 2>/dev/null; git stash pop -q 2>/dev/null" >> /var/log/sourcelibrary/git-pull.log 2>&1
+# Pull latest main every 5 min (stash local patches, pull, re-apply, auto-apply crontab)
+*/5 * * * * cd /root/sourcelibrary && flock -n /tmp/sl-gitpull.lock bash -c "git stash -q 2>/dev/null; git pull -q origin main 2>/dev/null; git stash pop -q 2>/dev/null; crontab infrastructure/hetzner-crontab" >> /var/log/sourcelibrary/git-pull.log 2>&1
 
 # ── Maintenance ──
 
