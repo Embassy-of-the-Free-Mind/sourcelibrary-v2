@@ -29,9 +29,9 @@ if (!MONGODB_URI) { console.error('MONGODB_URI not set'); process.exit(1); }
 const DRY_RUN = process.argv.includes('--dry-run');
 const VERBOSE = process.argv.includes('--verbose') || process.argv.includes('-v');
 
-// Global Atlas connection budget. Atlas M10 saturates around 40 concurrent
-// pipeline connections. Leave headroom for Vercel SSR/ISR queries.
-const MAX_CONNECTIONS = 40;
+// Global Atlas connection budget. With capped pools (maxPoolSize 5-20 per worker),
+// actual peak is well under Atlas M10 limits. 60 leaves headroom for Vercel SSR/ISR.
+const MAX_CONNECTIONS = 60;
 
 // ── Worker Definitions ──
 // Each worker has:
@@ -62,7 +62,7 @@ const WORKERS = [
     name: 'translate-worker',
     cmd: 'node scripts/workers/translate-worker.mjs',
     lock: '/tmp/sl-translate.lock',
-    connections: 15,
+    connections: 20,
     tier: 2,
     interval: 120,      // every 2 min
     healthMin: 'healthy',
@@ -285,6 +285,30 @@ async function main() {
       },
       { upsert: true }
     ).catch(() => {});
+
+    // 2b. Reap zombie jobs — any job stuck in "processing" with no update for >30min
+    //     Workers crash, get OOM-killed, or time out — their jobs rot forever.
+    const ZOMBIE_THRESHOLD_MS = 30 * 60 * 1000;
+    const zombieCutoff = new Date(Date.now() - ZOMBIE_THRESHOLD_MS);
+    const reaped = await db.collection('jobs').updateMany(
+      {
+        status: 'processing',
+        $or: [
+          { updated_at: { $lt: zombieCutoff } },
+          { updated_at: { $exists: false }, started_at: { $lt: zombieCutoff } },
+        ],
+      },
+      {
+        $set: {
+          status: 'cancelled',
+          cancelled_at: new Date(),
+          cancel_reason: 'scheduler: zombie reaper (no heartbeat for >30min)',
+        },
+      }
+    ).catch(err => { console.log(`[scheduler] zombie reap failed: ${err.message}`); return { modifiedCount: 0 }; });
+    if (reaped.modifiedCount > 0) {
+      console.log(`[scheduler] REAPED ${reaped.modifiedCount} zombie jobs`);
+    }
 
     // 3. Survey running workers and compute used connection budget
     const lastRuns = getLastRuns();
