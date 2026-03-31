@@ -538,17 +538,17 @@ export default function BookPagesSection({ bookId, bookTitle, pages: initialPage
 
   return (
     <div className="space-y-6">
-      {/* Stats Bar & Actions */}
-      <div className="bg-white rounded-xl border border-stone-200 p-4">
-        <div className="flex items-center justify-between">
-          <BookPagesStats
-            pagesWithOcr={pagesWithOcr}
-            pagesWithTranslation={pagesWithTranslation}
-            totalPages={totalPages}
-            lastOcrDate={lastOcrDate}
-            lastTranslationDate={lastTranslationDate}
-          />
-          <AuthCheck role="inner_circle">
+      {/* Stats Bar & Actions — inner_circle only */}
+      <AuthCheck role="inner_circle">
+        <div className="bg-white rounded-xl border border-stone-200 p-4">
+          <div className="flex items-center justify-between">
+            <BookPagesStats
+              pagesWithOcr={pagesWithOcr}
+              pagesWithTranslation={pagesWithTranslation}
+              totalPages={totalPages}
+              lastOcrDate={lastOcrDate}
+              lastTranslationDate={lastTranslationDate}
+            />
             <BookPagesActions
               bookId={bookId}
               batchMode={batchMode}
@@ -565,9 +565,9 @@ export default function BookPagesSection({ bookId, bookTitle, pages: initialPage
               onExitReorder={exitReorderMode}
               onSaveOrder={savePageOrder}
             />
-          </AuthCheck>
+          </div>
         </div>
-      </div>
+      </AuthCheck>
 
       {/* Job Status Banner */}
       {currentJob && (
