@@ -152,7 +152,7 @@ async function main() {
   const db = client.db('bookstore');
   const books = db.collection('books');
 
-  // Build query
+  // Build query — resource_type_sparse index makes this fast
   const query = { resource_type: { $exists: true }, enrichment: { $exists: false } };
   if (ARTIST_FILTER) query.author = ARTIST_FILTER;
 
