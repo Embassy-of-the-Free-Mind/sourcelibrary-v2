@@ -1112,7 +1112,7 @@ export default function TranslationEditor({
             >
               {/* Source Image Panel */}
               {showImagePanel && (
-                <div className={`w-full ${panelWidth} flex flex-col min-h-[50vh] shrink-0 lg:min-h-0 lg:shrink lg:flex-1`} style={{ background: 'var(--bg-warm)', borderRight: '1px solid var(--border-light)' }}>
+                <div className={`w-full ${panelWidth} flex flex-col min-h-[50vh] shrink-0 lg:min-h-0 lg:shrink lg:flex-1 relative`} style={{ background: 'var(--bg-warm)', borderRight: '1px solid var(--border-light)' }}>
                   <div className="px-4 py-2 flex items-center justify-between flex-shrink-0" style={{ borderBottom: '1px solid var(--border-light)' }}>
                     <span className="text-xs font-medium uppercase tracking-wide" style={{ color: 'var(--text-muted)' }}>
                       {!pageDisplayUrl && hasWitnessPhotos ? 'Tablet Photo' : 'Source Image'}
@@ -1145,25 +1145,6 @@ export default function TranslationEditor({
                         <div className="w-full h-48 flex items-center justify-center" style={{ color: 'var(--text-muted)' }}>
                           No image available
                         </div>
-                      )}
-                      {/* Floating page arrows — fixed to viewport center */}
-                      {previousPage && (
-                        <button
-                          onClick={() => onNavigate(previousPage.id)}
-                          className="fixed left-3 top-1/2 -translate-y-1/2 z-30 p-2 rounded-full bg-black/30 hover:bg-black/50 text-white/80 hover:text-white transition-all backdrop-blur-sm"
-                          aria-label="Previous page"
-                        >
-                          <ChevronLeft className="w-5 h-5" />
-                        </button>
-                      )}
-                      {nextPage && (
-                        <button
-                          onClick={() => onNavigate(nextPage.id)}
-                          className="fixed right-3 top-1/2 -translate-y-1/2 z-30 p-2 rounded-full bg-black/30 hover:bg-black/50 text-white/80 hover:text-white transition-all backdrop-blur-sm"
-                          aria-label="Next page"
-                        >
-                          <ChevronRight className="w-5 h-5" />
-                        </button>
                       )}
                     </div>
                     {/* CDLI Witness selector */}
@@ -1203,6 +1184,25 @@ export default function TranslationEditor({
                       </div>
                     )}
                   </div>
+                  {/* Floating page arrows on image panel edges */}
+                  {previousPage && (
+                    <button
+                      onClick={() => onNavigate(previousPage.id)}
+                      className="absolute left-2 top-1/2 -translate-y-1/2 z-10 p-2 rounded-full bg-black/30 hover:bg-black/50 text-white/80 hover:text-white transition-all backdrop-blur-sm"
+                      aria-label="Previous page"
+                    >
+                      <ChevronLeft className="w-5 h-5" />
+                    </button>
+                  )}
+                  {nextPage && (
+                    <button
+                      onClick={() => onNavigate(nextPage.id)}
+                      className="absolute right-2 top-1/2 -translate-y-1/2 z-10 p-2 rounded-full bg-black/30 hover:bg-black/50 text-white/80 hover:text-white transition-all backdrop-blur-sm"
+                      aria-label="Next page"
+                    >
+                      <ChevronRight className="w-5 h-5" />
+                    </button>
+                  )}
                 </div>
               )}
 
@@ -1785,7 +1785,7 @@ export default function TranslationEditor({
       <div className="flex-1 flex flex-col lg:flex-row overflow-auto lg:overflow-hidden">
         {/* Source Image Panel */}
         {showImagePanel && (
-          <div className="w-full min-h-[50vh] lg:min-h-0 lg:flex-1 flex flex-col shrink-0 lg:shrink" style={{ background: 'var(--bg-cream)', borderRight: '1px solid var(--border-light)' }}>
+          <div className="w-full min-h-[50vh] lg:min-h-0 lg:flex-1 flex flex-col shrink-0 lg:shrink relative" style={{ background: 'var(--bg-cream)', borderRight: '1px solid var(--border-light)' }}>
             <div className="px-3 sm:px-4 py-2 sm:py-3 flex items-center justify-between" style={{ borderBottom: '1px solid var(--border-light)' }}>
               <div className="flex items-center gap-2">
                 <span className="label">Source</span>
@@ -1818,25 +1818,6 @@ export default function TranslationEditor({
                   <div className="w-full h-48 flex items-center justify-center" style={{ color: 'var(--text-muted)' }}>
                     No image available
                   </div>
-                )}
-                {/* Floating page arrows — fixed to viewport center */}
-                {previousPage && (
-                  <button
-                    onClick={() => onNavigate(previousPage.id)}
-                    className="fixed left-3 top-1/2 -translate-y-1/2 z-30 p-2 rounded-full bg-black/30 hover:bg-black/50 text-white/80 hover:text-white transition-all backdrop-blur-sm"
-                    aria-label="Previous page"
-                  >
-                    <ChevronLeft className="w-5 h-5" />
-                  </button>
-                )}
-                {nextPage && (
-                  <button
-                    onClick={() => onNavigate(nextPage.id)}
-                    className="fixed right-3 top-1/2 -translate-y-1/2 z-30 p-2 rounded-full bg-black/30 hover:bg-black/50 text-white/80 hover:text-white transition-all backdrop-blur-sm"
-                    aria-label="Next page"
-                  >
-                    <ChevronRight className="w-5 h-5" />
-                  </button>
                 )}
               </div>
               {/* CDLI Witness selector (edit mode) */}
@@ -1882,6 +1863,25 @@ export default function TranslationEditor({
                 </div>
               )}
             </div>
+            {/* Floating page arrows on image panel edges */}
+            {previousPage && (
+              <button
+                onClick={() => onNavigate(previousPage.id)}
+                className="absolute left-2 top-1/2 -translate-y-1/2 z-10 p-2 rounded-full bg-black/30 hover:bg-black/50 text-white/80 hover:text-white transition-all backdrop-blur-sm"
+                aria-label="Previous page"
+              >
+                <ChevronLeft className="w-5 h-5" />
+              </button>
+            )}
+            {nextPage && (
+              <button
+                onClick={() => onNavigate(nextPage.id)}
+                className="absolute right-2 top-1/2 -translate-y-1/2 z-10 p-2 rounded-full bg-black/30 hover:bg-black/50 text-white/80 hover:text-white transition-all backdrop-blur-sm"
+                aria-label="Next page"
+              >
+                <ChevronRight className="w-5 h-5" />
+              </button>
+            )}
           </div>
         )}
 
