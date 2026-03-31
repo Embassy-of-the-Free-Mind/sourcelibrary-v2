@@ -41,15 +41,15 @@ export const search = {
   /**
    * Unified search (books + pages + indexes in one request)
    */
-  unified: async (query: string, options?: { limit?: number; filters?: SearchFilters }): Promise<UnifiedSearchResponse> => {
+  unified: async (query: string, options?: { limit?: number; galleryLimit?: number; filters?: SearchFilters }): Promise<UnifiedSearchResponse> => {
     const params = new URLSearchParams({ q: query });
     if (options?.limit) params.append('limit', options.limit.toString());
+    if (options?.galleryLimit) params.append('gallery_limit', options.galleryLimit.toString());
     if (options?.filters?.language) params.append('language', options.filters.language);
-    if (options?.filters?.date_from) params.append('date_from', options.filters.date_from);
-    if (options?.filters?.date_to) params.append('date_to', options.filters.date_to);
-    if (options?.filters?.has_doi) params.append('has_doi', options.filters.has_doi);
-    if (options?.filters?.has_translation) params.append('has_translation', options.filters.has_translation);
     if (options?.filters?.category) params.append('category', options.filters.category);
+    if (options?.filters?.has_translation) params.append('has_translation', options.filters.has_translation);
+    if (options?.filters?.first_translation) params.append('first_translation', options.filters.first_translation);
+    if (options?.filters?.library) params.append('library', options.filters.library);
 
     return await apiClient.get(`/api/search/unified?${params}`);
   },

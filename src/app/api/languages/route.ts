@@ -93,13 +93,25 @@ export function normalizeLanguage(language: string | null | undefined): string {
   return trimmed.charAt(0).toUpperCase() + trimmed.slice(1);
 }
 
+// In-memory cache — languages change rarely, no need to scan books on every request
+let languageCache: { data: any; ts: number } | null = null;
+const CACHE_TTL = 30 * 60_000; // 30 minutes
+
 // GET /api/languages - List all languages with book counts
 export async function GET() {
   try {
+    // Return cached data if fresh
+    if (languageCache && Date.now() - languageCache.ts < CACHE_TTL) {
+      return NextResponse.json(languageCache.data, {
+        headers: { 'Cache-Control': 'public, s-maxage=600, stale-while-revalidate=1800' },
+      });
+    }
+
     const db = await getDb();
 
-    // Get language counts from books
+    // Get language counts from visible books with pages only
     const languageCounts = await db.collection('books').aggregate([
+      { $match: { visible: true, pages_count: { $gt: 0 } } },
       {
         $group: {
           _id: '$language',
@@ -140,10 +152,15 @@ export async function GET() {
     // Sort by book count descending
     languages.sort((a, b) => b.book_count - a.book_count);
 
-    return NextResponse.json({
+    const responseData = {
       languages,
       total_books: languageCounts.reduce((sum, c) => sum + (c.count as number), 0),
-    }, {
+    };
+
+    // Cache in memory
+    languageCache = { data: responseData, ts: Date.now() };
+
+    return NextResponse.json(responseData, {
       headers: { 'Cache-Control': 'public, s-maxage=600, stale-while-revalidate=1800' },
     });
   } catch (error) {

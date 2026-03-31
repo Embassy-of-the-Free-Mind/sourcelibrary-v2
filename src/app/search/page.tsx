@@ -206,46 +206,86 @@ export default function SearchPage() {
 
     try {
       if (mode === 'unified') {
-        // Run all three in parallel, limited previews
-        const bookFilters: Record<string, string | undefined> = {
-          limit: String(PREVIEW_BOOKS),
-          language: language || undefined,
-          category: category || undefined,
-          date_from: dateFrom || undefined,
-          date_to: dateTo || undefined,
-          has_doi: hasDoi ? 'true' : undefined,
-          has_translation: hasTranslation ? 'true' : undefined,
-          first_translation: firstTranslation ? 'true' : undefined,
-          library: library || undefined,
-          sort: sortBy !== 'relevance' ? sortBy : undefined,
-        };
-        // Fire all searches independently — results render as each resolves
-        const bookPromise = searchApi.search(q, { ...bookFilters, search_content: 'true' }).then(bookData => {
-          setBookResults(bookData.results || []);
-          setBookTotal(bookData.total || 0);
-          setLoading(false); // Show results as soon as books arrive
-        }).catch(async () => {
-          // First attempt failed (likely cold start) — retry once
-          try {
-            const retryData = await searchApi.search(q, { ...bookFilters, search_content: 'true' });
-            setBookResults(retryData.results || []);
-            setBookTotal(retryData.total || 0);
-          } catch (retryErr) {
-            reportError({
-              message: `Search API failed (with retry): ${retryErr instanceof Error ? retryErr.message : String(retryErr)}`,
-              source: 'search_query',
-            });
+        // Check client-side cache first
+        const cacheKey = `unified:${q}:${language}:${category}:${hasTranslation}:${firstTranslation}:${library}`;
+        const cached = searchCache.current.get(cacheKey);
+        if (cached && Date.now() - cached.ts < CACHE_TTL) {
+          setBookResults(cached.books);
+          setBookTotal(cached.bookTotal);
+          setIndexResults(cached.index);
+          setIndexTotal(cached.indexTotal);
+          setImageResults(cached.images);
+          setImageTotal(cached.imageTotal);
+          setLoading(false);
+          return;
+        }
+
+        // Single unified request — books + index + gallery in one roundtrip
+        try {
+          const filters: Record<string, string | undefined> = {
+            language: language || undefined,
+            category: category || undefined,
+            has_translation: hasTranslation ? 'true' : undefined,
+            first_translation: firstTranslation ? 'true' : undefined,
+            library: library || undefined,
+          };
+          const data = await searchApi.unified(q, {
+            limit: PREVIEW_BOOKS,
+            galleryLimit: PREVIEW_IMAGES,
+            filters,
+          });
+
+          const books = data.books?.results || [];
+          const bTotal = data.books?.total || 0;
+          const index = (data.index?.results || []).slice(0, PREVIEW_INDEX);
+          const iTotal = data.index?.total || 0;
+
+          // Map unified gallery results to GalleryItem shape
+          const galleryResults = data.gallery?.results || [];
+          const images: GalleryItem[] = galleryResults.map((g: any) => {
+            const parts = (g.id || '').split('-');
+            const detectionIndex = parseInt(parts.pop() || '0');
+            const pageId = parts.join('-');
+            return {
+              pageId,
+              bookId: g.bookId || '',
+              pageNumber: 0,
+              detectionIndex,
+              imageUrl: g.imageUrl || '',
+              thumbnailUrl: g.imageUrl || '',
+              bookTitle: g.bookTitle || '',
+              author: '',
+              description: g.description || '',
+              type: g.type,
+            } as GalleryItem;
+          });
+          const imTotal = data.gallery?.total || 0;
+
+          setBookResults(books);
+          setBookTotal(bTotal);
+          setIndexResults(index);
+          setIndexTotal(iTotal);
+          setImageResults(images);
+          setImageTotal(imTotal);
+
+          // Cache the result
+          searchCache.current.set(cacheKey, {
+            ts: Date.now(),
+            books, bookTotal: bTotal,
+            index, indexTotal: iTotal,
+            images, imageTotal: imTotal,
+          });
+          // Evict old cache entries
+          if (searchCache.current.size > 50) {
+            const oldest = [...searchCache.current.entries()].sort((a, b) => a[1].ts - b[1].ts)[0];
+            if (oldest) searchCache.current.delete(oldest[0]);
           }
-        });
-        searchApi.index(q, {}).then(indexData => {
-          setIndexResults((indexData.results || []).slice(0, PREVIEW_INDEX));
-          setIndexTotal(indexData.total || 0);
-        }).catch(() => {});
-        galleryApi.list({ query: q, limit: PREVIEW_IMAGES, minQuality: 0.85 }).then(imageData => {
-          setImageResults(imageData.items || []);
-          setImageTotal(imageData.total || 0);
-        }).catch(() => {});
-        await bookPromise; // Wait for books before exiting (for loading state)
+        } catch (err) {
+          reportError({
+            message: `Unified search failed: ${err instanceof Error ? err.message : String(err)}`,
+            source: 'search_query',
+          });
+        }
       } else if (mode === 'books') {
         const data = await searchApi.search(q, {
           language: language || undefined,
@@ -303,11 +343,15 @@ export default function SearchPage() {
     router.replace(`/search?${params.toString()}`, { scroll: false });
   }, [router, indexType, language, category, collection, dateFrom, dateTo, hasDoi, hasTranslation, firstTranslation, library, sortBy, browseSortBy, resultsPerPage]);
 
+  // Client-side search cache — avoids re-fetching on backspace/retype
+  const searchCache = useRef(new Map<string, { ts: number; books: SearchResult[]; bookTotal: number; index: IndexSearchResult[]; indexTotal: number; images: GalleryItem[]; imageTotal: number }>());
+  const CACHE_TTL = 60_000; // 1 minute
+
   const debouncedSearch = useDebouncedCallback((value: string) => {
     setOffset(0);
     performSearch(value, viewMode, 0);
     updateUrl(value, viewMode, 0);
-  }, 300);
+  }, 450);
 
   // Search on initial load (from URL params) and when filters/sort/mode change
   const aiTriggeredForQuery = useRef('');

@@ -83,6 +83,15 @@ export interface IndexSearchResponse {
   results: IndexSearchResult[];
 }
 
+export interface UnifiedGalleryResult {
+  id: string;
+  imageUrl: string;
+  description: string;
+  type?: string;
+  bookTitle: string;
+  bookId: string;
+}
+
 export interface UnifiedSearchResponse {
   query: string;
   books: {
@@ -91,6 +100,10 @@ export interface UnifiedSearchResponse {
   };
   index: {
     results: IndexSearchResult[];
+    total: number;
+  };
+  gallery?: {
+    results: UnifiedGalleryResult[];
     total: number;
   };
 }

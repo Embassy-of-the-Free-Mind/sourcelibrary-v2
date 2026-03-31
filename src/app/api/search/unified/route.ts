@@ -1,23 +1,12 @@
 import { NextRequest, NextResponse } from 'next/server';
 import { getDb } from '@/lib/mongodb';
-import { buildBookSearchStage } from '@/lib/atlas-search';
+import { buildBookSearchStage, type BookSearchFilters } from '@/lib/atlas-search';
+import type { SearchResult } from '@/lib/api-client/types/search';
 
 const ENTITIES_SEARCH_INDEX = 'entities_search';
 const GALLERY_SEARCH_INDEX = 'gallery_search';
 
 export const preferredRegion = 'fra1';
-
-interface BookResult {
-  id: string;
-  title: string;
-  display_title?: string;
-  author: string;
-  language: string;
-  published: string;
-  translation_percent?: number;
-  thumbnail?: string;
-  thumbnail_blob?: string;
-}
 
 interface IndexResult {
   type: 'concept' | 'person' | 'place' | 'keyword';
@@ -40,34 +29,50 @@ interface GalleryResult {
 /**
  * GET /api/search/unified
  *
- * Fast unified search across books and index.
- * Returns grouped results for the homepage dropdown.
+ * Fast unified search across books, index, and gallery in ONE request.
+ * Designed for typeahead — no page content search (that's the slow part).
  */
 export async function GET(request: NextRequest) {
   try {
     const { searchParams } = new URL(request.url);
     const query = searchParams.get('q') || '';
     const limit = Math.min(parseInt(searchParams.get('limit') || '5'), 10);
+    const galleryLimit = Math.min(parseInt(searchParams.get('gallery_limit') || '6'), 12);
+
+    // Parse filters
+    const language = searchParams.get('language') || undefined;
+    const category = searchParams.get('category') || undefined;
+    const firstTranslation = searchParams.get('first_translation') === 'true';
+    const hasTranslation = searchParams.get('has_translation') === 'true';
+    const library = searchParams.get('library') || undefined;
 
     if (!query || query.length < 2) {
       return NextResponse.json({
         query: '',
         books: { results: [], total: 0 },
-        index: { results: [], total: 0 }
+        index: { results: [], total: 0 },
+        gallery: { results: [], total: 0 },
       });
     }
 
     const db = await getDb();
     const queryRegex = new RegExp(query.replace(/[.*+?^${}()|[\]\\]/g, '\\$&'), 'i');
 
+    // Build Atlas Search filters
+    const searchFilters: BookSearchFilters = {};
+    if (language) searchFilters.language = language;
+    if (category) searchFilters.category = category;
+    if (firstTranslation) searchFilters.isFirstTranslation = true;
+    if (hasTranslation) searchFilters.hasTranslation = true;
+
     // Run book, index, and gallery search in parallel (each handles its own errors)
     const [booksResult, indexResult, galleryResult] = await Promise.all([
-      searchBooks(db, query, queryRegex, limit),
+      searchBooks(db, query, queryRegex, limit, searchFilters, library),
       searchIndex(db, query, limit).catch((err) => {
         console.error('Index search error:', err);
         return { results: [] as IndexResult[], total: 0 };
       }),
-      searchGallery(db, query, queryRegex, 3)
+      searchGallery(db, query, queryRegex, galleryLimit),
     ]);
 
     // Log search query (fire-and-forget)
@@ -75,7 +80,7 @@ export async function GET(request: NextRequest) {
       event: 'search_query',
       query,
       results_count: booksResult.total + indexResult.total + galleryResult.total,
-      filters: { source: 'unified' },
+      filters: { language, category, library, source: 'unified' },
       timestamp: new Date(),
       ip: request.headers.get('x-forwarded-for')?.split(',')[0]?.trim() || 'unknown',
       created_at: new Date(),
@@ -85,7 +90,7 @@ export async function GET(request: NextRequest) {
       query,
       books: booksResult,
       index: indexResult,
-      gallery: galleryResult
+      gallery: galleryResult,
     }, {
       headers: {
         'Cache-Control': 'public, s-maxage=60, stale-while-revalidate=300',
@@ -97,30 +102,63 @@ export async function GET(request: NextRequest) {
   }
 }
 
-async function searchBooks(db: any, query: string, queryRegex: RegExp, limit: number) {
+async function searchBooks(
+  db: any,
+  query: string,
+  queryRegex: RegExp,
+  limit: number,
+  searchFilters: BookSearchFilters,
+  library?: string,
+) {
+  const bookProjection = {
+    id: 1, slug: 1, title: 1, display_title: 1, author: 1, language: 1, published: 1,
+    pages_count: 1, pages_translated: 1, pages_ocr: 1, pages_blank: 1,
+    thumbnail: 1, thumbnail_blob: 1, doi: 1, categories: 1, quality_score: 1,
+    'reading_summary.overview': 1,
+  };
+
   let books;
 
   try {
     // Use Atlas Search with autocomplete + fuzzy for instant prefix matching
-    books = await db.collection('books').aggregate([
-      buildBookSearchStage(query, {}, { autocomplete: true, fuzzy: true }),
-      { $limit: limit },
-      { $project: { id: 1, title: 1, display_title: 1, author: 1, language: 1, published: 1, pages_count: 1, pages_translated: 1, pages_ocr: 1, thumbnail: 1, thumbnail_blob: 1 } },
-    ], { maxTimeMS: 5000 }).toArray();
+    // eslint-disable-next-line @typescript-eslint/no-explicit-any
+    const pipeline: any[] = [
+      buildBookSearchStage(query, searchFilters, { autocomplete: true, fuzzy: true }),
+    ];
+
+    // Post-filter for fields not in Atlas Search index
+    const postMatch: Record<string, unknown> = {};
+    if (library) postMatch['image_source.provider'] = library;
+    if (Object.keys(postMatch).length > 0) {
+      pipeline.push({ $limit: limit * 3 });
+      pipeline.push({ $match: postMatch });
+    }
+
+    pipeline.push({ $limit: limit });
+    pipeline.push({ $project: bookProjection });
+
+    books = await db.collection('books').aggregate(pipeline, { maxTimeMS: 5000 }).toArray();
   } catch {
     // Fallback to regex if Atlas Search index not available
+    const regexFilter: Record<string, unknown> = {
+      $or: [
+        { title: queryRegex },
+        { display_title: queryRegex },
+        { author: queryRegex },
+        { 'reading_summary.overview': queryRegex },
+      ],
+      visible: true,
+      pages_count: { $gt: 0 },
+    };
+    if (searchFilters.language) regexFilter.language = searchFilters.language;
+    if (searchFilters.category) regexFilter.categories = searchFilters.category;
+    if (searchFilters.isFirstTranslation) regexFilter.is_first_translation = true;
+    if (searchFilters.hasTranslation) regexFilter.pages_translated = { $gt: 0 };
+    if (library) regexFilter['image_source.provider'] = library;
+
     books = await db.collection('books')
-      .find({
-        $or: [
-          { title: queryRegex },
-          { display_title: queryRegex },
-          { author: queryRegex },
-          { 'reading_summary.overview': queryRegex },
-        ],
-        visible: true,
-        pages_count: { $gt: 0 },
-      })
-      .project({ id: 1, title: 1, display_title: 1, author: 1, language: 1, published: 1, pages_count: 1, pages_translated: 1, pages_ocr: 1, thumbnail: 1, thumbnail_blob: 1 })
+      .find(regexFilter)
+      .project(bookProjection)
       .limit(limit)
       .toArray();
   }
@@ -140,13 +178,16 @@ async function searchBooks(db: any, query: string, queryRegex: RegExp, limit: nu
     }, { projection: { _id: 1 }, maxTimeMS: 2000 }).catch(() => null);
 
     if (entity) {
+      const aliasFilter: Record<string, unknown> = {
+        author_entity_id: entity._id.toString(),
+        visible: true,
+        pages_count: { $gt: 0 },
+      };
+      if (library) aliasFilter['image_source.provider'] = library;
+
       const aliasBooks = await db.collection('books')
-        .find({
-          author_entity_id: entity._id.toString(),
-          visible: true,
-          pages_count: { $gt: 0 },
-        })
-        .project({ id: 1, title: 1, display_title: 1, author: 1, language: 1, published: 1, pages_count: 1, pages_translated: 1, pages_ocr: 1, thumbnail: 1, thumbnail_blob: 1 })
+        .find(aliasFilter)
+        .project(bookProjection)
         .limit(limit - books.length)
         .maxTimeMS(3000)
         .toArray();
@@ -161,18 +202,31 @@ async function searchBooks(db: any, query: string, queryRegex: RegExp, limit: nu
   }
 
   return {
-    results: books.map((b: any) => ({
-      id: b.id,
-      title: b.title,
-      display_title: b.display_title,
-      author: b.author || 'Unknown',
-      language: b.language || 'Unknown',
-      published: b.published || 'Unknown',
-      translation_percent: (b.pages_ocr || 0) > 0 ? Math.round((b.pages_translated || 0) / Math.max((b.pages_ocr || 0) - (b.pages_blank || 0), 1) * 100) : 0,
-      thumbnail: b.thumbnail,
-      thumbnail_blob: b.thumbnail_blob,
-    })),
-    total: books.length
+    results: books.map((b: any): SearchResult => {
+      const summaryText = b.reading_summary?.overview;
+      return {
+        id: b.id,
+        type: 'book',
+        book_id: b.id,
+        slug: b.slug,
+        title: b.title,
+        display_title: b.display_title,
+        author: b.author || 'Unknown',
+        language: b.language || 'Unknown',
+        published: b.published || 'Unknown',
+        page_count: b.pages_count,
+        translated_count: b.pages_translated,
+        has_doi: !!b.doi,
+        doi: b.doi,
+        categories: b.categories,
+        summary: summaryText ? summaryText.slice(0, 300) : undefined,
+        snippet_type: summaryText ? 'summary' : undefined,
+        thumbnail: b.thumbnail,
+        thumbnail_blob: b.thumbnail_blob,
+        quality_score: b.quality_score,
+      };
+    }),
+    total: books.length,
   };
 }
 
