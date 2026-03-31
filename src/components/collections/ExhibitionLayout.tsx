@@ -6,6 +6,7 @@ import Image from 'next/image';
 import { BookOpen, ArrowRight, Quote, Clock, Users, Sparkles } from 'lucide-react';
 import { bookUrl } from '@/lib/slugify';
 import { firstTranslationBadge } from '@/lib/first-translation-labels';
+import AuthorName from '@/components/AuthorName';
 
 // ─── Types ──────────────────────────────────────────────────────
 
@@ -215,7 +216,7 @@ function SectionsBlock({ sections, books }: {
                       {bookTitle(book)}
                     </h4>
                     <p className="text-xs text-muted mb-1.5">
-                      {book.author}{book.year ? `, ${book.year}` : ''}
+                      <AuthorName author={book.author} />{book.year ? `, ${book.year}` : ''}
                       {book.is_first_translation && (
                         <span className="ml-2 text-[10px] font-medium bg-accent-rust/10 text-accent-rust px-1.5 py-0.5 rounded">
                           {firstTranslationBadge(book.ft_disposition, book.language)}
@@ -309,7 +310,7 @@ function QuotesBlock({ quotes, books }: {
               &ldquo;{q.text}&rdquo;
             </p>
             <footer className="mt-2 text-sm text-muted">
-              — {q.author}
+              — <AuthorName author={q.author} />
               {book ? (
                 <Link
                   href={q.page_number
@@ -364,7 +365,7 @@ function TimelineBlock({ start_year, end_year, highlights, books }: {
                 {(book || h.author) && (
                   <div className="mt-1 flex items-center gap-2">
                     {h.author && (
-                      <span className="text-xs text-muted">{h.author}</span>
+                      <span className="text-xs text-muted"><AuthorName author={h.author} /></span>
                     )}
                     {book && (
                       <Link

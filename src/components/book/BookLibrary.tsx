@@ -8,6 +8,7 @@ import BookCard from '@/components/book/BookCard';
 import { Book } from '@/lib/types';
 import { bookUrl } from '@/lib/slugify';
 import { LIBRARY_PARTNERS } from '@/lib/library-partners';
+import AuthorName from '@/components/AuthorName';
 
 import { Search, Loader2, ExternalLink, BookOpen, Plus, Check, X, ChevronDown, ChevronUp } from 'lucide-react';
 import { catalog, importBooks, type CatalogResult } from '@/lib/api-client';
@@ -701,7 +702,7 @@ export default function BookLibrary({ initialBooks, totalBooks, languages, colle
               {/* Info */}
               <div className="flex-1 min-w-0">
                 <h3 className="font-medium text-stone-900 truncate">{book.display_title || book.title}</h3>
-                {book.author && <p className="text-sm text-stone-500 truncate">{book.author}</p>}
+                {book.author && <p className="text-sm text-stone-500 truncate"><AuthorName author={book.author} /></p>}
                 <div className="flex items-center gap-3 mt-1 text-xs text-stone-400">
                   {book.language && <span>{book.language.startsWith('Multiple') ? 'Multiple' : book.language}</span>}
                   {book.pages_count && <span>{book.pages_count} pages</span>}
@@ -809,7 +810,7 @@ export default function BookLibrary({ initialBooks, totalBooks, languages, colle
                   {/* Info */}
                   <div className="flex-1 min-w-0">
                     <h4 className="font-medium text-stone-900 line-clamp-2">{item.title}</h4>
-                    {item.author && <p className="text-sm text-stone-500">{item.author}</p>}
+                    {item.author && <p className="text-sm text-stone-500"><AuthorName author={item.author} /></p>}
                     <div className="flex flex-wrap items-center gap-2 mt-2">
                       <span className={`inline-flex items-center gap-1 px-2 py-0.5 rounded-full text-xs font-medium ${
                         item.source === 'ia'
