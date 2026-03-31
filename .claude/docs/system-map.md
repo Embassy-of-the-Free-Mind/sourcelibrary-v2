@@ -48,9 +48,10 @@ Import (IA/Gallica/IIIF)
             ├─ Phase 1: OCR (parallel, batch-friendly)
             │  SQS pageOcr ──> Lambda ocr-processor (×10) ──> Gemini ──> writeResults
             │
-            ├─ Phase 2: Translation (FIFO sequential — needs cross-page context)
-            │  SQS pageTranslation ──> Lambda translation-processor (×15) ──> Gemini ──> writeResults
-            │  ⚠ Realtime API only. NEVER use Batch API for translation.
+            ├─ Phase 2: Translation (Hetzner inline — self-dispatching)
+            │  translate-worker.mjs (40 concurrent books) ──> Gemini direct ──> MongoDB pages
+            │  200-page cap per book → translate_partial → re-queue when fresh books exhausted
+            │  ⚠ Realtime API only. NEVER use Batch API for translation. Lambda is fallback only.
             │
             └─ Phase 3: Image Extraction (parallel)
                SQS pageImageExtraction ──> Lambda image-extraction-processor (×10) ──> Gemini ──> writeResults

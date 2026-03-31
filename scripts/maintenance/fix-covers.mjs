@@ -49,6 +49,10 @@ function isExLibris(page) {
   ];
   if (patterns.some(p => ocrSnippet.includes(p))) return true;
 
+  // BPH pelican bookplate (Embassy of the Free Mind)
+  if (ocrSnippet.includes('philosophia hermetica') || ocrSnippet.includes('philosophica hermetica')) return true;
+  if (ocrSnippet.includes('pelican') && (ocrSnippet.includes('piety') || ocrSnippet.includes('nest') || ocrSnippet.includes('hermetica'))) return true;
+
   // "pasted-in emblem" on early pages is almost always a bookplate
   if (page.page_number <= 5 && ocrSnippet.includes('pasted') && ocrSnippet.includes('emblem')) return true;
 
@@ -73,10 +77,12 @@ function scorePage(page) {
 
   // Detected images scoring
   if (page.detected_images?.length > 0) {
-    const bestImage = page.detected_images.reduce((best, img) =>
+    const validImages = page.detected_images.filter(Boolean);
+    const bestImage = validImages.length > 0 ? validImages.reduce((best, img) =>
       (img.gallery_quality || 0) > (best.gallery_quality || 0) ? img : best
-    , page.detected_images[0]);
+    , validImages[0]) : null;
 
+    if (!bestImage) return score; // all entries were null
     const quality = bestImage.gallery_quality || 0;
     score += quality * 50;
 

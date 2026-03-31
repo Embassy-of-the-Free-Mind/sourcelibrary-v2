@@ -62,11 +62,10 @@ async function main() {
   // Find all first-translation books verified with old pipeline
   // Can't use $expr/$size in countDocuments reliably when field may be missing.
   // Use aggregation to find books with old-pipeline tool counts.
-  // Re-verify books with old pipeline. Focus on Latin — the largest and
-  // most important corpus for first-translation claims.
+  // Re-verify books with old pipeline across all Western languages.
   const matchStage = {
     'translation_verification.tools_called': { $exists: true, $type: 'array' },
-    language: 'Latin',
+    language: { $in: ['German', 'French', 'Greek', 'Hebrew', 'Italian', 'Dutch', 'Spanish', 'Portuguese', 'Arabic', 'Syriac', 'Armenian'] },
   };
   const sizeFilter = {
     $expr: {

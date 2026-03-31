@@ -3378,6 +3378,7 @@ async function run() {
 
     // Pipeline funnel snapshot
     let facetResult;
+    let facetTimedOut = false;
     try {
       [facetResult] = await db.collection('books').aggregate([{
         $facet: {
@@ -3396,6 +3397,7 @@ async function run() {
       }], { maxTimeMS: 15000 }).toArray();
     } catch {
       console.log('  Summary facet timed out — skipping funnel snapshot');
+      facetTimedOut = true;
       facetResult = { funnel: [], totals: [{ books: 0, pages: 0, ocr: 0, translated: 0 }] };
     }
 
@@ -3427,7 +3429,7 @@ async function run() {
       }
     }
 
-    // Write cron_runs + pipeline_snapshots
+    // Write cron_runs + pipeline_snapshots (skip snapshot if facet timed out — zero counts poison charts)
     if (!DRY_RUN) {
       const activeBatch = await db.collection('batch_jobs').aggregate([
         { $match: { status: { $in: ['pending', 'processing'] } } },
@@ -3436,7 +3438,7 @@ async function run() {
       const batchByType = Object.fromEntries(activeBatch.map(b => [b._id, { count: b.count, pages: b.pages }]));
 
       await Promise.allSettled([
-        db.collection('pipeline_snapshots').insertOne({
+        facetTimedOut ? Promise.resolve() : db.collection('pipeline_snapshots').insertOne({
           timestamp: new Date(),
           funnel: counts,
           pages: { total: totals.pages, ocr: totals.ocr, translated: totals.translated },
