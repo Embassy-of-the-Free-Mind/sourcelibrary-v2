@@ -57,6 +57,26 @@ MUSEUM DESCRIPTION: Write 2-3 sentences for a museum label - what the viewer see
 
 Return ONLY a valid JSON array. If no significant illustrations, return: []`;
 
+export interface BookContext {
+  title?: string;
+  author?: string;
+  year?: number | string;
+  language?: string;
+  subjects?: string[];
+}
+
+/** Build a context prefix to prepend to the extraction prompt */
+function buildContextPrefix(ctx: BookContext): string {
+  const parts: string[] = [];
+  if (ctx.title) parts.push(`Book: "${ctx.title}"`);
+  if (ctx.author) parts.push(`Author: ${ctx.author}`);
+  if (ctx.year) parts.push(`Year: ${ctx.year}`);
+  if (ctx.language) parts.push(`Language: ${ctx.language}`);
+  if (ctx.subjects?.length) parts.push(`Subjects: ${ctx.subjects.join(', ')}`);
+  if (parts.length === 0) return '';
+  return `BOOK CONTEXT (use this to inform your analysis — identify figures, symbols, and traditions specific to this work):\n${parts.join(' | ')}\n\n`;
+}
+
 export interface ImageMetadata {
   subjects?: string[];
   figures?: string[];
@@ -116,6 +136,7 @@ function getMimeType(url: string, headerType: string | null | undefined): string
 export interface ExtractionResult {
   images: DetectedImage[];
   usage: { inputTokens: number; outputTokens: number };
+  promptHash?: string;
 }
 
 /**
@@ -133,12 +154,12 @@ export async function extractWithGemini(
 export async function extractWithGemini(
   imageUrl: string,
   model: string,
-  options: { returnUsage: true; ocrData?: string }
+  options: { returnUsage: true; ocrData?: string; bookContext?: BookContext; promptText?: string }
 ): Promise<ExtractionResult>;
 export async function extractWithGemini(
   imageUrl: string,
   model: string = DEFAULT_MODEL,
-  options?: { returnUsage?: true; ocrData?: string }
+  options?: { returnUsage?: true; ocrData?: string; bookContext?: BookContext; promptText?: string }
 ): Promise<DetectedImage[] | ExtractionResult> {
   const apiKey = process.env.GEMINI_API_KEY;
   if (!apiKey) {
@@ -159,7 +180,7 @@ export async function extractWithGemini(
       body: JSON.stringify({
         contents: [{
           parts: [
-            { text: IMAGE_EXTRACTION_PROMPT },
+            { text: (options?.bookContext ? buildContextPrefix(options.bookContext) : '') + (options?.promptText || IMAGE_EXTRACTION_PROMPT) },
             { inline_data: { mime_type: mimeType, data: base64Image } }
           ]
         }],
