@@ -167,17 +167,9 @@ function logProgress() {
 async function main() {
   console.log(`[backfill-display] Display image backfill — limit=${LIMIT}, concurrency=${CONCURRENCY}${DRY_RUN ? ' (DRY RUN)' : ''}`);
 
-  const client = new MongoClient(MONGODB_URI, { maxPoolSize: 5 });
+  const client = new MongoClient(MONGODB_URI, { maxPoolSize: 10 });
   await client.connect();
   const db = client.db('bookstore');
-
-  // Check processing_control pause
-  const control = await db.collection('system_config').findOne({ _id: 'processing_control' });
-  if (control?.paused) {
-    console.log(`[backfill-display] Pipeline paused. Exiting.`);
-    await client.close();
-    process.exit(0);
-  }
 
   if (BOOK_ID) {
     // Single book mode
@@ -230,12 +222,51 @@ async function main() {
   }
 
   const elapsed = (Date.now() - stats.startTime) / 1000;
-  const rate = stats.processed > 0 ? (stats.processed / elapsed).toFixed(1) : '0';
+  const rate = stats.processed > 0 ? parseFloat((stats.processed / elapsed).toFixed(1)) : 0;
+  const gb = parseFloat((stats.bytesUploaded / (1024 * 1024 * 1024)).toFixed(2));
   console.log(`\n[backfill-display] Done in ${Math.round(elapsed)}s`);
   console.log(`  Books: ${stats.booksProcessed} processed, ${stats.booksSkipped} skipped (no pages needing backfill)`);
   console.log(`  Pages: ${stats.processed.toLocaleString()} processed, ${stats.succeeded.toLocaleString()} succeeded, ${stats.failed} failed`);
   console.log(`  Rate: ${rate} pages/sec`);
-  console.log(`  Uploaded: ${(stats.bytesUploaded / (1024 * 1024 * 1024)).toFixed(2)} GB`);
+  console.log(`  Uploaded: ${gb} GB`);
+
+  // Log stats to system_config for the monitoring dashboard
+  if (stats.processed > 0) {
+    try {
+      const runRecord = {
+        completedAt: new Date().toISOString(),
+        pages: stats.succeeded,
+        failed: stats.failed,
+        rate,
+        gb,
+        elapsed: Math.round(elapsed),
+        concurrency: CONCURRENCY,
+      };
+      // Read CPU load from log file
+      let cpuLoad = [];
+      try {
+        const fs = await import('fs');
+        const lines = fs.readFileSync('/var/log/sourcelibrary/cpu-load.log', 'utf-8').trim().split('\n').slice(-288); // last 24h at 5min intervals
+        cpuLoad = lines.map(line => {
+          const [time, ...rest] = line.split(' ');
+          const [l1, l5, l15] = rest.join(' ').split(',').map(s => parseFloat(s.trim()));
+          return { time, load1: l1, load5: l5, load15: l15 };
+        }).filter(d => !isNaN(d.load1));
+      } catch {}
+
+      await db.collection('system_config').updateOne(
+        { _id: 'display_backfill_stats' },
+        {
+          $push: { runs: { $each: [runRecord], $slice: -100 } },
+          $inc: { totalPages: stats.succeeded, totalGB: gb },
+          $set: { cpuLoad, lastRunAt: new Date(), updatedAt: new Date() },
+        },
+        { upsert: true }
+      );
+    } catch (e) {
+      console.error('  [warn] Failed to write stats to DB:', e.message);
+    }
+  }
 
   await client.close();
 }

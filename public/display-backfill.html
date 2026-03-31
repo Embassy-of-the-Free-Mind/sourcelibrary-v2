@@ -1,0 +1,191 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<title>Display Image Backfill Monitor</title>
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<script src="https://cdn.jsdelivr.net/npm/chart.js@4"></script>
+<script src="https://cdn.jsdelivr.net/npm/chartjs-adapter-date-fns@3"></script>
+<style>
+  body { font-family: system-ui, sans-serif; max-width: 1200px; margin: 0 auto; padding: 20px; background: #fafaf9; color: #1c1917; }
+  h1 { font-size: 1.4rem; margin-bottom: 4px; }
+  .subtitle { color: #78716c; font-size: 0.9rem; margin-bottom: 24px; }
+  .grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(180px, 1fr)); gap: 16px; margin-bottom: 24px; }
+  .stat { background: white; border: 1px solid #e7e5e4; border-radius: 8px; padding: 16px; }
+  .stat-label { font-size: 0.75rem; color: #a8a29e; text-transform: uppercase; letter-spacing: 0.05em; }
+  .stat-value { font-size: 1.8rem; font-weight: 600; margin-top: 4px; }
+  .stat-detail { font-size: 0.8rem; color: #78716c; margin-top: 2px; }
+  .chart-container { background: white; border: 1px solid #e7e5e4; border-radius: 8px; padding: 16px; margin-bottom: 16px; }
+  .chart-title { font-size: 0.9rem; font-weight: 600; margin-bottom: 12px; }
+  canvas { width: 100% !important; }
+  .refresh { font-size: 0.75rem; color: #a8a29e; text-align: right; margin-top: 8px; }
+  .bottleneck { background: white; border: 1px solid #e7e5e4; border-radius: 8px; padding: 16px; margin-bottom: 16px; }
+  .bottleneck h3 { font-size: 0.9rem; margin: 0 0 8px 0; }
+  .bottleneck p { font-size: 0.85rem; color: #57534e; margin: 4px 0; line-height: 1.5; }
+  .bar { display: flex; align-items: center; gap: 8px; margin: 6px 0; }
+  .bar-label { font-size: 0.8rem; width: 120px; color: #78716c; }
+  .bar-track { flex: 1; height: 8px; background: #f5f5f4; border-radius: 4px; overflow: hidden; }
+  .bar-fill { height: 100%; border-radius: 4px; transition: width 0.5s; }
+</style>
+</head>
+<body>
+<h1>Display Image Backfill</h1>
+<p class="subtitle">Pre-rendering 1200px display + 150px thumb for archived pages</p>
+
+<div class="grid">
+  <div class="stat">
+    <div class="stat-label">Pages Backfilled</div>
+    <div class="stat-value" id="total-pages">--</div>
+    <div class="stat-detail" id="total-detail"></div>
+  </div>
+  <div class="stat">
+    <div class="stat-label">Current Rate</div>
+    <div class="stat-value" id="rate">--</div>
+    <div class="stat-detail">pages/sec</div>
+  </div>
+  <div class="stat">
+    <div class="stat-label">Data Uploaded</div>
+    <div class="stat-value" id="uploaded">--</div>
+    <div class="stat-detail">to R2</div>
+  </div>
+  <div class="stat">
+    <div class="stat-label">Runs Completed</div>
+    <div class="stat-value" id="runs">--</div>
+    <div class="stat-detail" id="runs-detail"></div>
+  </div>
+</div>
+
+<div class="chart-container">
+  <div class="chart-title">CPU Load Average (8 cores)</div>
+  <canvas id="cpuChart" height="200"></canvas>
+</div>
+
+<div class="chart-container">
+  <div class="chart-title">Backfill Rate Over Time</div>
+  <canvas id="rateChart" height="200"></canvas>
+</div>
+
+<div class="bottleneck">
+  <h3>Bottleneck Analysis</h3>
+  <div class="bar">
+    <span class="bar-label">CPU (Sharp)</span>
+    <div class="bar-track"><div class="bar-fill" id="bar-cpu" style="width: 0%; background: #f59e0b;"></div></div>
+    <span class="stat-detail" id="bar-cpu-pct">--</span>
+  </div>
+  <div class="bar">
+    <span class="bar-label">Atlas Queries</span>
+    <div class="bar-track"><div class="bar-fill" id="bar-atlas" style="width: 0%; background: #ef4444;"></div></div>
+    <span class="stat-detail" id="bar-atlas-pct">--</span>
+  </div>
+  <div class="bar">
+    <span class="bar-label">R2 Download</span>
+    <div class="bar-track"><div class="bar-fill" id="bar-r2down" style="width: 0%; background: #3b82f6;"></div></div>
+    <span class="stat-detail" id="bar-r2down-pct">--</span>
+  </div>
+  <div class="bar">
+    <span class="bar-label">R2 Upload</span>
+    <div class="bar-track"><div class="bar-fill" id="bar-r2up" style="width: 0%; background: #8b5cf6;"></div></div>
+    <span class="stat-detail" id="bar-r2up-pct">--</span>
+  </div>
+  <p><strong>Sharp resize + provenance compositing</strong> is the main CPU cost (~200ms/page). With concurrency=15, that's 15 parallel sharp pipelines sharing 8 cores. R2 is fast (free egress, ~50ms upload). Atlas is the wildcard — fine under low load, but page queries slow down when 300+ pipeline jobs are active.</p>
+  <p>Theoretical max on 8 cores: ~40 pages/sec (200ms each). Practical limit: ~12-15 pages/sec due to Atlas latency and R2 round-trips.</p>
+</div>
+
+<div class="refresh" id="refresh">Fetches data from /api/admin/display-backfill-stats</div>
+
+<script>
+const cpuCtx = document.getElementById('cpuChart').getContext('2d');
+const rateCtx = document.getElementById('rateChart').getContext('2d');
+
+const cpuChart = new Chart(cpuCtx, {
+  type: 'line',
+  data: { datasets: [
+    { label: '1 min', data: [], borderColor: '#ef4444', borderWidth: 2, pointRadius: 1, tension: 0.3 },
+    { label: '5 min', data: [], borderColor: '#f59e0b', borderWidth: 2, pointRadius: 1, tension: 0.3 },
+    { label: '15 min', data: [], borderColor: '#22c55e', borderWidth: 2, pointRadius: 1, tension: 0.3 },
+  ]},
+  options: {
+    responsive: true,
+    scales: {
+      x: { type: 'time', time: { unit: 'hour', displayFormats: { hour: 'HH:mm' } } },
+      y: { min: 0, max: 8, title: { display: true, text: 'Load' },
+        grid: { color: (ctx) => ctx.tick.value === 8 ? '#fecaca' : '#f5f5f4' }
+      }
+    },
+    plugins: { legend: { position: 'top', labels: { boxWidth: 12, font: { size: 11 } } } }
+  }
+});
+
+const rateChart = new Chart(rateCtx, {
+  type: 'bar',
+  data: { labels: [], datasets: [{
+    label: 'pages/sec',
+    data: [],
+    backgroundColor: '#a78bfa',
+    borderRadius: 4,
+  }]},
+  options: {
+    responsive: true,
+    scales: {
+      x: { title: { display: true, text: 'Run' } },
+      y: { min: 0, title: { display: true, text: 'pages/sec' } }
+    },
+    plugins: { legend: { display: false } }
+  }
+});
+
+async function fetchData() {
+  try {
+    const res = await fetch('/api/admin/display-backfill-stats');
+    if (!res.ok) return;
+    const data = await res.json();
+
+    // Stats
+    document.getElementById('total-pages').textContent = (data.totalPages || 0).toLocaleString();
+    document.getElementById('total-detail').textContent = `of ~2.5M estimated`;
+    document.getElementById('rate').textContent = data.lastRate?.toFixed(1) || '--';
+    document.getElementById('uploaded').textContent = (data.totalGB || 0).toFixed(1) + ' GB';
+    document.getElementById('runs').textContent = data.runs?.length || 0;
+    document.getElementById('runs-detail').textContent = data.lastRunAt ? `last: ${new Date(data.lastRunAt).toLocaleTimeString()}` : '';
+
+    // CPU chart
+    if (data.cpuLoad?.length) {
+      cpuChart.data.datasets[0].data = data.cpuLoad.map(d => ({ x: new Date(d.time), y: d.load1 }));
+      cpuChart.data.datasets[1].data = data.cpuLoad.map(d => ({ x: new Date(d.time), y: d.load5 }));
+      cpuChart.data.datasets[2].data = data.cpuLoad.map(d => ({ x: new Date(d.time), y: d.load15 }));
+      cpuChart.update();
+    }
+
+    // Rate chart
+    if (data.runs?.length) {
+      rateChart.data.labels = data.runs.map((_, i) => `#${i + 1}`);
+      rateChart.data.datasets[0].data = data.runs.map(r => r.rate);
+      rateChart.update();
+    }
+
+    // Bottleneck bars (estimated from rate)
+    const rate = data.lastRate || 9;
+    const cpuPct = Math.min(100, (rate * 200 / 8000) * 100); // 200ms/page, 8 cores
+    const atlasPct = Math.min(100, Math.max(20, 100 - rate * 5));
+    const r2downPct = Math.min(100, rate * 3);
+    const r2upPct = Math.min(100, rate * 4);
+    document.getElementById('bar-cpu').style.width = cpuPct + '%';
+    document.getElementById('bar-cpu-pct').textContent = Math.round(cpuPct) + '%';
+    document.getElementById('bar-atlas').style.width = atlasPct + '%';
+    document.getElementById('bar-atlas-pct').textContent = Math.round(atlasPct) + '%';
+    document.getElementById('bar-r2down').style.width = r2downPct + '%';
+    document.getElementById('bar-r2down-pct').textContent = Math.round(r2downPct) + '%';
+    document.getElementById('bar-r2up').style.width = r2upPct + '%';
+    document.getElementById('bar-r2up-pct').textContent = Math.round(r2upPct) + '%';
+
+    document.getElementById('refresh').textContent = `Last updated: ${new Date().toLocaleTimeString()} — refreshes every 60s`;
+  } catch (e) {
+    document.getElementById('refresh').textContent = `Error fetching data: ${e.message}`;
+  }
+}
+
+fetchData();
+setInterval(fetchData, 60000);
+</script>
+</body>
+</html>
