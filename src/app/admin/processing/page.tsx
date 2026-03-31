@@ -19,6 +19,7 @@ const STATUS_COLORS: Record<string, string> = {
   translate_complete: 'var(--accent-gold)',
   ocr_submitted: 'var(--accent-gold)',
   translate_submitted: 'var(--accent-gold)',
+  translate_partial: 'var(--accent-gold)',
   archiving: 'var(--text-muted)',
   queued: 'var(--text-muted)',
   failed: 'var(--accent-rust)',
