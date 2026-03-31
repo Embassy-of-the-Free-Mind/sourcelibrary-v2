@@ -286,6 +286,30 @@ async function main() {
       { upsert: true }
     ).catch(() => {});
 
+    // 2b. Reap zombie jobs — any job stuck in "processing" with no update for >30min
+    //     Workers crash, get OOM-killed, or time out — their jobs rot forever.
+    const ZOMBIE_THRESHOLD_MS = 30 * 60 * 1000;
+    const zombieCutoff = new Date(Date.now() - ZOMBIE_THRESHOLD_MS);
+    const reaped = await db.collection('jobs').updateMany(
+      {
+        status: 'processing',
+        $or: [
+          { updated_at: { $lt: zombieCutoff } },
+          { updated_at: { $exists: false }, started_at: { $lt: zombieCutoff } },
+        ],
+      },
+      {
+        $set: {
+          status: 'cancelled',
+          cancelled_at: new Date(),
+          cancel_reason: 'scheduler: zombie reaper (no heartbeat for >30min)',
+        },
+      }
+    ).catch(err => { console.log(`[scheduler] zombie reap failed: ${err.message}`); return { modifiedCount: 0 }; });
+    if (reaped.modifiedCount > 0) {
+      console.log(`[scheduler] REAPED ${reaped.modifiedCount} zombie jobs`);
+    }
+
     // 3. Survey running workers and compute used connection budget
     const lastRuns = getLastRuns();
     const now = Date.now();
