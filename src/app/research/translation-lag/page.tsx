@@ -39,8 +39,9 @@ async function fetchLagData(): Promise<LagDataPoint[]> {
         title: 1, display_title: 1, year: 1, language: 1, slug: 1,
         source_work_dates: 1, author: 1, categories: 1, is_first_translation: 1,
       },
+      maxTimeMS: 30000,
     },
-  ).toArray();
+  ).toArray().catch(() => [] as Record<string, unknown>[]);
 
   const results: LagDataPoint[] = [];
   for (const b of books) {
