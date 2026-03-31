@@ -207,7 +207,6 @@ async function fetchCollectionData(id: string) {
     ? { collections: id, resource_type: { $exists: true } }
     : {
         collections: id,
-        status: { $ne: 'deleted' },
         visible: true,
         pages_count: { $gt: 0 },
         pages_translated: { $gt: 0 },
@@ -260,7 +259,7 @@ async function fetchCollectionData(id: string) {
       ? withTimeout(
           db.collection('books')
             .find(
-              { id: { $in: curatedBookIds }, status: { $ne: 'deleted' } },
+              { id: { $in: curatedBookIds }, visible: true },
               { projection: { ...projection, is_first_translation: 1, 'translation_verification.disposition': 1 } },
             )
             .toArray(),
@@ -287,7 +286,7 @@ async function fetchCollectionData(id: string) {
           }
           // Fallback: dynamic query (before thematic collections are seeded)
           const bookDocs = await db.collection('books')
-            .find({ collections: id, status: { $ne: 'deleted' }, visible: true }, { projection: { id: 1 }, maxTimeMS: 5000 })
+            .find({ collections: id, visible: true }, { projection: { id: 1 }, maxTimeMS: 5000 })
             .toArray();
           const bookIds = bookDocs.map(d => d.id);
           if (bookIds.length === 0) return [];
@@ -404,7 +403,7 @@ async function fetchCollectionData(id: string) {
     if (allBookIds.size > 0) {
       const exBooks = await withTimeout(
         db.collection('books').find(
-          { id: { $in: [...allBookIds] }, status: { $ne: 'deleted' } },
+          { id: { $in: [...allBookIds] }, visible: true },
           { projection: { id: 1, slug: 1, title: 1, display_title: 1, author: 1, year: 1, language: 1, thumbnail: 1, thumbnail_blob: 1, is_first_translation: 1, 'translation_verification.disposition': 1 } },
         ).toArray(),
         8000, [],
