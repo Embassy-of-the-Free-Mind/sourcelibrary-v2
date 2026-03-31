@@ -144,20 +144,6 @@ export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
     priority: 0.7,
   }));
 
-  // Press releases
-  const pressPages: MetadataRoute.Sitemap = [
-    'origins-of-science',
-    'kabbalah',
-    'hermetic-tradition',
-    'world-sacred-texts',
-    'alchemy',
-  ].map((slug) => ({
-    url: `${baseUrl}/press/${slug}`,
-    lastModified: new Date(),
-    changeFrequency: 'monthly' as const,
-    priority: 0.5,
-  }));
-
   // Dynamic pages from DB — each query has maxTimeMS to prevent build hangs
   try {
     const dbPromise = getDb();
@@ -277,8 +263,7 @@ export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
       ...staticPages,
       ...blogPosts,
       ...categoryPages,
-      ...pressPages,
-      ...bookPages,
+            ...bookPages,
       ...collectionPages,
       ...libraryPages,
       ...languagePages,
@@ -287,6 +272,6 @@ export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
     ];
   } catch (error) {
     console.error('Error generating sitemap:', error);
-    return [...staticPages, ...blogPosts, ...categoryPages, ...pressPages];
+    return [...staticPages, ...blogPosts, ...categoryPages];
   }
 }
