@@ -38,25 +38,26 @@ console.log(`Mode: ${DRY_RUN ? 'DRY RUN' : 'LIVE'}`);
 if (LIMIT) console.log(`Limit: ${LIMIT}`);
 
 // Find visible books with external thumbnails.
-// Paginate by _id to avoid cursor timeouts on Atlas.
+// Use skip/limit pagination to avoid cursor timeouts on Atlas.
 console.log('Loading visible books...');
 const books = [];
-let lastId = null;
-const PAGE_SIZE = 500;
+const PAGE_SIZE = 200;
+let offset = 0;
 
 while (true) {
-  const filter = { visible: true, pages_count: { $gt: 0 } };
-  if (lastId) filter._id = { $gt: lastId };
-
   const batch = await db.collection('books')
-    .find(filter, { projection: { _id: 1, id: 1, title: 1, thumbnail: 1, thumbnail_blob: 1 } })
-    .sort({ _id: 1 })
+    .find(
+      { visible: true, pages_count: { $gt: 0 } },
+      { projection: { id: 1, title: 1, thumbnail: 1, thumbnail_blob: 1 } }
+    )
+    .hint('books_visible_created_idx')
+    .sort({ visible: 1, created_at: -1 })
+    .skip(offset)
     .limit(PAGE_SIZE)
-    .maxTimeMS(30000)
     .toArray();
 
   if (batch.length === 0) break;
-  lastId = batch[batch.length - 1]._id;
+  offset += batch.length;
 
   // Filter client-side: keep only books with external thumbnails
   for (const b of batch) {
@@ -64,10 +65,10 @@ while (true) {
       books.push(b);
     }
   }
-  process.stdout.write(`  Scanned ${books.length} external thumbnails so far...\r`);
+  process.stdout.write(`  Scanned ${offset} books, ${books.length} with external thumbnails...\r`);
 }
 
-console.log(`Found ${books.length} books with external thumbnails\n`);
+console.log(`\nFound ${books.length} books with external thumbnails\n`);
 
 // Categorize
 const categories = { ia: 0, gallica: 0, proxy: 0, iiif: 0, vatican: 0, bodleian: 0, other: 0 };
