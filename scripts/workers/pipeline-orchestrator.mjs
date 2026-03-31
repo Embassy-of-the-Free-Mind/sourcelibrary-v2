@@ -2695,7 +2695,8 @@ async function run() {
             ],
             default: 1,
           }}}},
-          { $sort: { _speedTier: 1, is_first_translation: -1, hidden: 1 } },
+          { $addFields: { _bigBook: { $cond: [{ $gte: ['$pages_count', 200] }, 0, 1] } } },
+          { $sort: { _speedTier: 1, _bigBook: 1, is_first_translation: -1, hidden: 1 } },
           { $project: { id: 1, title: 1, pages_count: 1, language: 1, 'pipeline_auto.retry_count': 1, 'image_source.provider': 1 } },
           { $limit: effectiveLimit }
         ]).toArray() : [];
