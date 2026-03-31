@@ -90,7 +90,7 @@ export async function GET(request: NextRequest) {
     if (collectionSlug) {
       collectionBookIds = await db.collection('books').distinct('id', {
         collections: collectionSlug,
-        status: { $ne: 'deleted' },
+        visible: true,
       }) as string[];
     }
 
@@ -99,7 +99,7 @@ export async function GET(request: NextRequest) {
     if (libraryFilter) {
       libraryBookIds = await db.collection('books').distinct('id', {
         'image_source.provider': libraryFilter,
-        status: { $ne: 'deleted' },
+        visible: true,
       }) as string[];
     }
 
@@ -482,7 +482,7 @@ async function legacyGalleryQuery(db: Awaited<ReturnType<typeof getDb>>, searchP
 
   pipeline.push({ $lookup: { from: 'books', localField: 'book_id', foreignField: 'id', as: 'book' } });
   pipeline.push({ $unwind: { path: '$book', preserveNullAndEmptyArrays: true } });
-  pipeline.push({ $match: { 'book.hidden': { $ne: true } } });
+  pipeline.push({ $match: { 'book.visible': true } });
 
   if (yearStart !== null || yearEnd !== null) {
     const yearMatch: Record<string, unknown> = {};

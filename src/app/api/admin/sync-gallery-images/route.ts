@@ -50,7 +50,7 @@ export const POST = withAdminAuth(async (request: NextRequest) => {
       // Lookup book info
       { $lookup: { from: 'books', localField: 'book_id', foreignField: 'id', as: 'book' } },
       { $unwind: { path: '$book', preserveNullAndEmptyArrays: true } },
-      { $match: { 'book.hidden': { $ne: true } } },
+      { $match: { 'book.visible': true } },
 
       // Strip to needed fields before unwind
       {

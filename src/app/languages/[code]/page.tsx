@@ -35,7 +35,6 @@ export async function generateMetadata({ params }: Props): Promise<Metadata> {
     const db = await getDb();
     count = await db.collection('books').countDocuments({
       language: langName,
-      status: { $ne: 'deleted' },
       visible: true,
       pages_count: { $gt: 0 },
     });
@@ -87,7 +86,6 @@ async function fetchLanguageData(langName: string, sort: string, offset: number,
 
   const baseFilter: Record<string, unknown> = {
     language: langName,
-    status: { $ne: 'deleted' },
     visible: true,
     pages_count: { $gt: 0 },
   };

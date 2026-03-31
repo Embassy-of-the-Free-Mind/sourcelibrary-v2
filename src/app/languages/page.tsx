@@ -37,7 +37,6 @@ async function fetchLanguageStats(): Promise<{ languages: LanguageStats[]; total
   const langAgg = await db.collection('books').aggregate([
     {
       $match: {
-        status: { $ne: 'deleted' },
         visible: true,
         pages_count: { $gt: 0 },
         language: { $exists: true, $nin: [null, ''] },
