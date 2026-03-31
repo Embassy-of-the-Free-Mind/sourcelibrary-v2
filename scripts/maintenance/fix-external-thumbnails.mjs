@@ -37,19 +37,35 @@ console.log(`\n=== Fix External Thumbnails ===`);
 console.log(`Mode: ${DRY_RUN ? 'DRY RUN' : 'LIVE'}`);
 if (LIMIT) console.log(`Limit: ${LIMIT}`);
 
-// Find all visible books where thumbnail is NOT on R2 or Vercel Blob
-// Use visible index (books_visible_created_idx) for efficiency
-const allVisible = await db.collection('books').find(
-  { visible: true, pages_count: { $gt: 0 } },
-  { projection: { id: 1, title: 1, thumbnail: 1, thumbnail_blob: 1 } }
-).hint('books_visible_created_idx').maxTimeMS(120000).toArray();
+// Find visible books with external thumbnails.
+// Paginate by _id to avoid cursor timeouts on Atlas.
+console.log('Loading visible books...');
+const books = [];
+let lastId = null;
+const PAGE_SIZE = 500;
 
-// Filter client-side to avoid regex on Atlas
-const books = allVisible.filter(b =>
-  b.thumbnail &&
-  !b.thumbnail.startsWith(R2_PREFIX) &&
-  !b.thumbnail.startsWith(BLOB_PREFIX)
-);
+while (true) {
+  const filter = { visible: true, pages_count: { $gt: 0 } };
+  if (lastId) filter._id = { $gt: lastId };
+
+  const batch = await db.collection('books')
+    .find(filter, { projection: { _id: 1, id: 1, title: 1, thumbnail: 1, thumbnail_blob: 1 } })
+    .sort({ _id: 1 })
+    .limit(PAGE_SIZE)
+    .maxTimeMS(30000)
+    .toArray();
+
+  if (batch.length === 0) break;
+  lastId = batch[batch.length - 1]._id;
+
+  // Filter client-side: keep only books with external thumbnails
+  for (const b of batch) {
+    if (b.thumbnail && !b.thumbnail.startsWith(R2_PREFIX) && !b.thumbnail.startsWith(BLOB_PREFIX)) {
+      books.push(b);
+    }
+  }
+  process.stdout.write(`  Scanned ${books.length} external thumbnails so far...\r`);
+}
 
 console.log(`Found ${books.length} books with external thumbnails\n`);
 
