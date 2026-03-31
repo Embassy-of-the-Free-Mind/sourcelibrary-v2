@@ -19,7 +19,7 @@
 
 import { MongoClient } from 'mongodb';
 import { execSync, spawn } from 'child_process';
-import { existsSync, readFileSync, writeFileSync, createWriteStream } from 'fs';
+import { existsSync, readFileSync, writeFileSync, openSync, closeSync, appendFileSync } from 'fs';
 
 // ── Config ──
 
@@ -218,21 +218,24 @@ async function probeDbHealth(db) {
 // ── Spawn a worker ──
 
 function spawnWorker(worker) {
-  const logStream = createWriteStream(worker.log, { flags: 'a' });
   const timestamp = new Date().toISOString();
-  logStream.write(`\n--- Spawned by scheduler at ${timestamp} ---\n`);
+  appendFileSync(worker.log, `\n--- Spawned by scheduler at ${timestamp} ---\n`);
+
+  // Open log file as fd for spawn stdio (streams don't work with spawn)
+  const logFd = openSync(worker.log, 'a');
 
   // Use flock so the worker's own lock is held while it runs
   const fullCmd = `flock -n "${worker.lock}" bash -c "set -a; source .env.production.local; set +a; ${worker.cmd}"`;
 
   const child = spawn('bash', ['-c', fullCmd], {
     cwd: process.env.HOME ? `${process.env.HOME}/sourcelibrary` : '/root/sourcelibrary',
-    stdio: ['ignore', logStream, logStream],
+    stdio: ['ignore', logFd, logFd],
     detached: true,
     env: process.env,
   });
 
   child.unref();
+  closeSync(logFd);
   console.log(`[scheduler] SPAWNED ${worker.name} (pid=${child.pid})`);
   return child.pid;
 }
