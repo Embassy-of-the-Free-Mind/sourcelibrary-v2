@@ -251,6 +251,18 @@ async function processBook(book, db) {
     const rate = (archived / ((Date.now() - stats.startTime) / 1000)).toFixed(1);
     console.log(`    ${archived}/${workItems.length} archived, ${failed} failed (${rate} pages/sec overall)`);
 
+    // Sync pages_archived counter (#497)
+    if (archived > 0) {
+      const archivedCount = await db.collection('pages').countDocuments(
+        { book_id: book.id, archived_photo: { $exists: true, $nin: [null, ''] } },
+        { maxTimeMS: 10000 }
+      );
+      await db.collection('books').updateOne(
+        { id: book.id },
+        { $set: { pages_archived: archivedCount, updated_at: new Date() } }
+      );
+    }
+
     // If all pages archived, mark book as archive_complete
     const remainingUnarchived = await db.collection('pages').countDocuments({
       book_id: book.id,

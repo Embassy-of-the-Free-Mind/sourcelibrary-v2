@@ -46,6 +46,33 @@ export const GET = withAdminAuth(async () => {
     });
   }
 
+  // --- 1b. User-facing query latency ---
+  // Tests the actual query pattern users hit (browse page).
+  // ping can return 14ms while this takes 300s if cache is thrashed.
+  // See: GitHub issue #567
+  try {
+    const browseStart = Date.now();
+    await db.collection('books')
+      .find({ visible: true, pages_count: { $gt: 0 } })
+      .sort({ created_at: -1 })
+      .limit(10)
+      .maxTimeMS(10000)
+      .project({ id: 1, title: 1 })
+      .toArray();
+    const browseMs = Date.now() - browseStart;
+    checks.browse_query = {
+      status: browseMs > 5000 ? 'critical'
+            : browseMs > 2000 ? 'warning'
+            : 'ok',
+      latency_ms: browseMs,
+    };
+  } catch (error) {
+    checks.browse_query = {
+      status: 'critical',
+      error: error instanceof Error ? error.message : String(error),
+    };
+  }
+
   // --- Run remaining checks in parallel ---
   const oneHourAgo = new Date(Date.now() - 60 * 60 * 1000);
   const fourHoursAgo = new Date(Date.now() - 4 * 60 * 60 * 1000);

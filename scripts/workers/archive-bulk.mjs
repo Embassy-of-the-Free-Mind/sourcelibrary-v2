@@ -270,6 +270,18 @@ async function processBook(book, db) {
     stats.booksProcessed++;
     console.log(`    ${archived} archived, ${failed} failed`);
 
+    // Sync pages_archived counter on this book (#497)
+    if (archived > 0) {
+      const archivedCount = await db.collection('pages').countDocuments(
+        { book_id: book.id, archived_photo: { $exists: true, $nin: [null, ''] } },
+        { maxTimeMS: 10000 }
+      );
+      await db.collection('books').updateOne(
+        { id: book.id },
+        { $set: { pages_archived: archivedCount, updated_at: new Date() } }
+      );
+    }
+
   } catch (err) {
     console.log(`  [ERROR] ${book.title?.slice(0, 50)}: ${err.message?.slice(0, 100)}`);
     stats.booksFailed++;

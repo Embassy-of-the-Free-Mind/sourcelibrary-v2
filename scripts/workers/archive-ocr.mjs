@@ -202,6 +202,7 @@ async function main() {
   let totalBytes = 0;
   let processed = 0;
   const domainStats = {};
+  const touchedBookIds = new Set();
 
   // Strategy: find books with pages that need archiving, regardless of pipeline status.
   // Books move through pipeline stages even if archiving isn't complete.
@@ -283,6 +284,7 @@ async function main() {
         archived++;
         totalBytes += result.bytes;
         domainStats[domain].ok++;
+        touchedBookIds.add(page.book_id);
       } else {
         failed++;
         domainStats[domain].fail++;
@@ -307,6 +309,23 @@ async function main() {
   const mb = (totalBytes / (1024 * 1024)).toFixed(1);
   console.log(`[archive-ocr] Done in ${duration}s: ${archived} archived (${mb} MB), ${failed} failed`);
   console.log(`[archive-ocr] Per-domain: ${Object.entries(domainStats).map(([d, s]) => `${d}:${s.ok}ok/${s.fail}fail`).join(', ')}`);
+
+  // Sync pages_archived counter on touched books (#497)
+  if (touchedBookIds.size > 0) {
+    let synced = 0;
+    for (const bookId of touchedBookIds) {
+      const archivedCount = await db.collection('pages').countDocuments(
+        { book_id: bookId, archived_photo: { $exists: true, $nin: [null, ''] } },
+        { maxTimeMS: 10000 }
+      );
+      await db.collection('books').updateOne(
+        { id: bookId },
+        { $set: { pages_archived: archivedCount, updated_at: new Date() } }
+      );
+      synced++;
+    }
+    console.log(`[archive-ocr] Synced pages_archived on ${synced} books`);
+  }
 
   // Log to cron_runs for monitoring
   await db.collection('cron_runs').insertOne({
