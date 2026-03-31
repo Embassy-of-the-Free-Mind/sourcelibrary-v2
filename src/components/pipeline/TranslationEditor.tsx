@@ -1019,8 +1019,8 @@ export default function TranslationEditor({
               </div>
 
 
-              {/* Mode Toggle - admin only */}
-              <AuthCheck role="admin">
+              {/* Mode Toggle - admin and inner circle */}
+              <AuthCheck role="inner_circle">
                 <div className="flex items-center rounded-lg p-0.5 sm:p-1" style={{ background: 'var(--bg-warm)' }}>
                   <button
                     onClick={() => setMode('read')}

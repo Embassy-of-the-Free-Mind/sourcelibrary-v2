@@ -185,8 +185,8 @@ export default function PagesGrid({
                     )}
                   </div>
                 </a>
-                {/* Set as Cover button — admin only */}
-                <AuthCheck role="admin">
+                {/* Set as Cover button — admin and inner circle */}
+                <AuthCheck role="inner_circle">
                   <button
                     onClick={(e) => {
                       e.preventDefault();

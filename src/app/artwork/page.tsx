@@ -3,7 +3,7 @@ import Link from 'next/link';
 import Image from 'next/image';
 import { redirect } from 'next/navigation';
 import { getDb } from '@/lib/mongodb';
-import { isAdmin } from '@/lib/auth-helpers';
+import { isInnerCircle } from '@/lib/auth-helpers';
 import SiteHeader from '@/components/layout/SiteHeader';
 import { sanitizeThumbnail } from '@/lib/collections-utils';
 
@@ -40,7 +40,7 @@ async function getData() {
 }
 
 export default async function ArtworkLandingPage() {
-  const admin = await isAdmin();
+  const admin = await isInnerCircle();
   if (!admin) redirect('/');
 
   const { collections, totalCount } = await getData();
