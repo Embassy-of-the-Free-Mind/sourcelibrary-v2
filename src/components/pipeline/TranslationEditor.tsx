@@ -882,7 +882,7 @@ export default function TranslationEditor({
               >
                 <ChevronLeft className="w-4 h-4" aria-hidden="true" />
               </button>
-              <span className="px-1 sm:px-2 text-sm font-medium" style={{ color: 'var(--text-muted)' }} aria-label={`Page ${currentIndex + 1} of ${pages.length}`}>{currentIndex + 1}/{pages.length}</span>
+              <span className="px-1 sm:px-2 text-sm font-medium" style={{ color: 'var(--accent-rust)' }} aria-label={`Page ${currentIndex + 1} of ${pages.length}`}>{currentIndex + 1}/{pages.length}</span>
               <button
                 onClick={() => nextPage && onNavigate(nextPage.id)}
                 disabled={!nextPage}
@@ -1146,23 +1146,23 @@ export default function TranslationEditor({
                           No image available
                         </div>
                       )}
-                      {/* Floating page arrows on scan */}
+                      {/* Floating page arrows — fixed to viewport center */}
                       {previousPage && (
                         <button
                           onClick={() => onNavigate(previousPage.id)}
-                          className="absolute left-2 top-1/2 -translate-y-1/2 p-1.5 rounded-full bg-black/30 hover:bg-black/50 text-white/80 hover:text-white transition-all backdrop-blur-sm"
+                          className="fixed left-3 top-1/2 -translate-y-1/2 z-30 p-2 rounded-full bg-black/30 hover:bg-black/50 text-white/80 hover:text-white transition-all backdrop-blur-sm"
                           aria-label="Previous page"
                         >
-                          <ChevronLeft className="w-4 h-4" />
+                          <ChevronLeft className="w-5 h-5" />
                         </button>
                       )}
                       {nextPage && (
                         <button
                           onClick={() => onNavigate(nextPage.id)}
-                          className="absolute right-2 top-1/2 -translate-y-1/2 p-1.5 rounded-full bg-black/30 hover:bg-black/50 text-white/80 hover:text-white transition-all backdrop-blur-sm"
+                          className="fixed right-3 top-1/2 -translate-y-1/2 z-30 p-2 rounded-full bg-black/30 hover:bg-black/50 text-white/80 hover:text-white transition-all backdrop-blur-sm"
                           aria-label="Next page"
                         >
-                          <ChevronRight className="w-4 h-4" />
+                          <ChevronRight className="w-5 h-5" />
                         </button>
                       )}
                     </div>
@@ -1819,23 +1819,23 @@ export default function TranslationEditor({
                     No image available
                   </div>
                 )}
-                {/* Floating page arrows on scan */}
+                {/* Floating page arrows — fixed to viewport center */}
                 {previousPage && (
                   <button
                     onClick={() => onNavigate(previousPage.id)}
-                    className="absolute left-2 top-1/2 -translate-y-1/2 p-1.5 rounded-full bg-black/30 hover:bg-black/50 text-white/80 hover:text-white transition-all backdrop-blur-sm"
+                    className="fixed left-3 top-1/2 -translate-y-1/2 z-30 p-2 rounded-full bg-black/30 hover:bg-black/50 text-white/80 hover:text-white transition-all backdrop-blur-sm"
                     aria-label="Previous page"
                   >
-                    <ChevronLeft className="w-4 h-4" />
+                    <ChevronLeft className="w-5 h-5" />
                   </button>
                 )}
                 {nextPage && (
                   <button
                     onClick={() => onNavigate(nextPage.id)}
-                    className="absolute right-2 top-1/2 -translate-y-1/2 p-1.5 rounded-full bg-black/30 hover:bg-black/50 text-white/80 hover:text-white transition-all backdrop-blur-sm"
+                    className="fixed right-3 top-1/2 -translate-y-1/2 z-30 p-2 rounded-full bg-black/30 hover:bg-black/50 text-white/80 hover:text-white transition-all backdrop-blur-sm"
                     aria-label="Next page"
                   >
-                    <ChevronRight className="w-4 h-4" />
+                    <ChevronRight className="w-5 h-5" />
                   </button>
                 )}
               </div>
