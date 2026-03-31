@@ -28,6 +28,7 @@ import * as os from 'os';
 import { pipeline } from 'stream/promises';
 import { createWriteStream } from 'fs';
 import { S3Client, PutObjectCommand } from '@aws-sdk/client-s3';
+import { uploadPageVariants } from './lib/display-image.mjs';
 
 // CLI args
 const args = process.argv.slice(2);
@@ -240,14 +241,16 @@ async function processBook(book, db) {
             jpegBuffer = await sharpInst.jpeg({ quality: JPEG_QUALITY }).toBuffer();
           }
 
-          const key = `archived/${page.book_id}/${page.page_number}.jpg`;
-          const url = await uploadToR2(key, jpegBuffer);
+          // Upload full-res + generate and upload display (1200px) + thumbnail (150px)
+          const urls = await uploadPageVariants(jpegBuffer, page.book_id, page.page_number, uploadToR2);
           stats.bytesUploaded += jpegBuffer.length;
 
           await db.collection('pages').updateOne(
             { _id: page._id },
             { $set: {
-              archived_photo: url,
+              archived_photo: urls.archived,
+              display_photo: urls.display,
+              thumbnail_blob: urls.thumb,
               'archive_metadata.archived_at': new Date(),
               'archive_metadata.source': 'bulk_jp2',
               'archive_metadata.bytes': jpegBuffer.length,
