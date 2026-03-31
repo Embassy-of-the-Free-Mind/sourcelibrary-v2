@@ -393,7 +393,15 @@ async function processBook(db, book, job, globalCounter) {
       break;
     }
 
-    // Check if job was cancelled externally
+    // Heartbeat — keeps zombie reaper from killing live work (every 10 pages)
+    if (translated % 10 === 0 && translated > 0) {
+      await db.collection('jobs').updateOne(
+        { id: job.id },
+        { $set: { updated_at: new Date(), pages_processed: translated } },
+      );
+    }
+
+    // Check if job was cancelled externally (every 50 pages, includes a read)
     if (translated % 50 === 0 && translated > 0) {
       const freshJob = await db.collection('jobs').findOne({ id: job.id }, { projection: { status: 1 } });
       if (freshJob?.status === 'cancelled' || freshJob?.status === 'failed') {
