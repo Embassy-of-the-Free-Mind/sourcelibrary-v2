@@ -1617,8 +1617,8 @@ function PostCard({
                     <div className="flex gap-2 mb-2">
                       <div className="w-10 h-10 bg-stone-300 rounded-full flex-shrink-0" />
                       <div>
-                        <div className="font-bold">Ancient Wisdom Trust</div>
-                        <div className="text-stone-500 text-xs">@AncientWisdomTr</div>
+                        <div className="font-bold">Embassy of the Free Mind</div>
+                        <div className="text-stone-500 text-xs">@EmbassyFreeMind</div>
                       </div>
                     </div>
                     <p className="whitespace-pre-wrap mb-2">{editText}</p>

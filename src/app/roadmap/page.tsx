@@ -293,9 +293,9 @@ export default function RoadmapPage() {
             Help Build the Library
           </h2>
           <p className="text-stone-300 mb-6 max-w-2xl">
-            Source Library is a project of the Ancient Wisdom Trust, working in partnership
-            with the Embassy of the Free Mind. We seek patrons, scholars, and volunteers
-            to help digitize and translate the foundational texts of human thought.
+            Source Library is a project of the Embassy of the Free Mind, Amsterdam.
+            We seek patrons, scholars, and volunteers to help digitize and translate
+            the foundational texts of human thought.
           </p>
           <div className="flex flex-wrap gap-4">
             <a

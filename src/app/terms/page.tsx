@@ -30,8 +30,7 @@ export default function TermsPage() {
 
         <p className="text-sm text-muted">
           <strong>Effective date:</strong> March 15, 2026
-          &middot; Operated by the Ancient Wisdom Trust
-          in partnership with the Embassy of the Free Mind, Amsterdam.
+          &middot; Operated by the Embassy of the Free Mind, Amsterdam.
         </p>
 
         {/* ── Tier 1: Original Texts & Page Images ── */}
@@ -55,10 +54,15 @@ export default function TermsPage() {
           <div className="bg-cream rounded-lg p-6">
             <p className="text-secondary font-medium mb-2">Image license summary:</p>
             <ul className="text-secondary space-y-1 list-disc list-inside text-sm">
-              <li><strong>~6,000 books</strong> &mdash; public domain or CC0 (use freely)</li>
-              <li><strong>~1,500 books</strong> &mdash; non-commercial only (Bavarian State Library, Bodleian, Vatican, Cambridge)</li>
-              <li><strong>~2,500 books</strong> &mdash; institution-specific terms (check per book)</li>
+              <li><strong>Most books</strong> &mdash; public domain or CC0 (use freely)</li>
+              <li><strong>Some books</strong> &mdash; non-commercial only (e.g., Bavarian State Library, Bodleian, Vatican, Cambridge)</li>
+              <li><strong>Some books</strong> &mdash; institution-specific terms (check per book)</li>
             </ul>
+            <p className="text-secondary text-xs mt-2">
+              See our{' '}
+              <Link href="/about/sources" className="text-accent-rust hover:underline">source libraries</Link>
+              {' '}page for the full list of partner institutions and their terms.
+            </p>
           </div>
         </section>
 
