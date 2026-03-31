@@ -84,11 +84,13 @@ export default function AnalyticsPage() {
                 className="px-3 py-1.5 rounded-lg text-sm"
                 style={{ border: '1px solid var(--border-medium)', background: 'var(--bg-white)' }}
               >
+                <option value={1}>Last hour</option>
                 <option value={6}>Last 6 hours</option>
                 <option value={24}>Last 24 hours</option>
                 <option value={72}>Last 3 days</option>
                 <option value={168}>Last 7 days</option>
                 <option value={336}>Last 14 days</option>
+                <option value={720}>Last 30 days</option>
               </select>
             )}
             {(activeTab === 'usage' || activeTab === 'search') && (
