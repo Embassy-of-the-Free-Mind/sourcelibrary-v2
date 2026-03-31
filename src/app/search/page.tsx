@@ -34,7 +34,8 @@ import BookCard from '@/components/book/BookCard';
 const PREVIEW_BOOKS = 5;
 const PREVIEW_INDEX = 5;
 const PREVIEW_IMAGES = 6;
-const RESULTS_PER_PAGE = 20;
+const DEFAULT_RESULTS_PER_PAGE = 20;
+const RESULTS_PER_PAGE_OPTIONS = [20, 48, 96];
 
 const INDEX_TYPES = [
   { value: '', label: 'All Types', icon: Search },
@@ -91,6 +92,11 @@ export default function SearchPage() {
   const [categories, setCategories] = useState<CategoryOption[]>([{ value: '', label: 'All Categories' }]);
   const [collectionsList, setCollectionsList] = useState<Collection[]>([]);
 
+  // Results per page
+  const [resultsPerPage, setResultsPerPage] = useState(
+    parseInt(searchParams.get('per_page') || '') || DEFAULT_RESULTS_PER_PAGE
+  );
+
   // Browse mode state
   const [browseBooks, setBrowseBooks] = useState<any[]>([]);
   const [browseTotal, setBrowseTotal] = useState(0);
@@ -110,34 +116,33 @@ export default function SearchPage() {
   const [aiStreaming, setAiStreaming] = useState(false);
   const aiAbortRef = useRef<(() => void) | null>(null);
 
-  // Load filter options + collections
+  // Load filter options + collections (independent so one failure doesn't block others)
   useEffect(() => {
-    (async () => {
-      try {
-        const [langData, catData, colData] = await Promise.all([
-          utils.languages(),
-          categoriesApi.list(),
-          collectionsApi.list(),
+    utils.languages().then((langData) => {
+      if (langData.languages) {
+        setLanguages([
+          { value: '', label: 'All Languages' },
+          ...langData.languages.map((l: any) => ({ value: l.code, label: `${l.name} (${l.book_count})` })),
         ]);
-        if (langData.languages) {
-          setLanguages([
-            { value: '', label: 'All Languages' },
-            ...langData.languages.map((l: any) => ({ value: l.code, label: `${l.name} (${l.book_count})` })),
-          ]);
-        }
-        if (catData.categories) {
-          setCategories([
-            { value: '', label: 'All Categories' },
-            ...catData.categories
-              .filter((c: any) => c.book_count > 0)
-              .map((c: any) => ({ value: c.id, label: `${c.icon ? c.icon + ' ' : ''}${c.name} (${c.book_count})`, icon: c.icon })),
-          ]);
-        }
-        if (colData.collections) {
-          setCollectionsList(colData.collections);
-        }
-      } catch {}
-    })();
+      }
+    }).catch(() => {});
+
+    categoriesApi.list().then((catData) => {
+      if (catData.categories) {
+        setCategories([
+          { value: '', label: 'All Categories' },
+          ...catData.categories
+            .filter((c: any) => c.book_count > 0)
+            .map((c: any) => ({ value: c.id, label: `${c.icon ? c.icon + ' ' : ''}${c.name} (${c.book_count})`, icon: c.icon })),
+        ]);
+      }
+    }).catch(() => {});
+
+    collectionsApi.list().then((colData) => {
+      if (colData.collections) {
+        setCollectionsList(colData.collections);
+      }
+    }).catch(() => {});
   }, []);
 
   // AI-assisted search — start streaming immediately when user searches
@@ -253,7 +258,7 @@ export default function SearchPage() {
           library: library || undefined,
           sort: sortBy !== 'relevance' ? sortBy : undefined,
           offset: pageOffset > 0 ? pageOffset : undefined,
-          limit: RESULTS_PER_PAGE,
+          limit: resultsPerPage,
           search_content: 'true',
         });
         setBookResults(data.results || []);
@@ -263,7 +268,7 @@ export default function SearchPage() {
         setIndexResults(data.results || []);
         setIndexTotal(data.total || 0);
       } else if (mode === 'images') {
-        const data = await galleryApi.list({ query: q, limit: RESULTS_PER_PAGE, offset: pageOffset });
+        const data = await galleryApi.list({ query: q, limit: resultsPerPage, offset: pageOffset });
         setImageResults(data.items || []);
         setImageTotal(data.total || 0);
       }
@@ -274,7 +279,7 @@ export default function SearchPage() {
       setLoading(false);
     }
   // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [viewMode, indexType, language, category, dateFrom, dateTo, hasDoi, hasTranslation, firstTranslation, library, sortBy]);
+  }, [viewMode, indexType, language, category, dateFrom, dateTo, hasDoi, hasTranslation, firstTranslation, library, sortBy, resultsPerPage]);
 
   const updateUrl = useCallback((q: string, mode: ViewMode, pageOffset = 0) => {
     const params = new URLSearchParams();
@@ -294,8 +299,9 @@ export default function SearchPage() {
     if (q && sortBy !== 'relevance') params.set('sort', sortBy);
     if (!q && browseSortBy !== 'recent-translation') params.set('sort', browseSortBy);
     if (pageOffset > 0) params.set('offset', pageOffset.toString());
+    if (resultsPerPage !== DEFAULT_RESULTS_PER_PAGE) params.set('per_page', resultsPerPage.toString());
     router.replace(`/search?${params.toString()}`, { scroll: false });
-  }, [router, indexType, language, category, collection, dateFrom, dateTo, hasDoi, hasTranslation, firstTranslation, library, sortBy, browseSortBy]);
+  }, [router, indexType, language, category, collection, dateFrom, dateTo, hasDoi, hasTranslation, firstTranslation, library, sortBy, browseSortBy, resultsPerPage]);
 
   const debouncedSearch = useDebouncedCallback((value: string) => {
     setOffset(0);
@@ -344,7 +350,7 @@ export default function SearchPage() {
         collection: collection || undefined,
         library: library || undefined,
         sort: browseSortBy,
-        limit: RESULTS_PER_PAGE,
+        limit: resultsPerPage,
         skip: offset,
         first_translation: firstTranslation || undefined,
         has_translation: hasTranslation || undefined,
@@ -362,7 +368,7 @@ export default function SearchPage() {
     } finally {
       setBrowseLoading(false);
     }
-  }, [language, category, collection, library, browseSortBy, offset, firstTranslation, hasTranslation]);
+  }, [language, category, collection, library, browseSortBy, offset, firstTranslation, hasTranslation, resultsPerPage]);
 
   useEffect(() => {
     if (isBrowseMode) {
@@ -632,8 +638,8 @@ export default function SearchPage() {
                 </div>
               </div>
 
-              {/* Desktop: inline panel (unchanged) */}
-              <div className="hidden md:block mt-3 p-4 bg-warm rounded-xl border border-border-light">
+              {/* Desktop: inline panel */}
+              <div className="hidden md:block mt-3 p-4 bg-warm rounded-xl border border-border-light relative z-20">
                 <div className="flex items-center justify-between mb-3">
                   {hasActiveFilters && (
                     <button onClick={clearFilters} className="text-sm text-muted hover:text-primary flex items-center gap-1 ml-auto">
@@ -747,18 +753,38 @@ export default function SearchPage() {
               </div>
             )}
 
-            {/* Results count */}
+            {/* Results count + per-page selector */}
             {!browseLoading && browseTotal > 0 && (
-              <div className="mb-4 text-muted">
-                <span className="font-medium text-primary">{browseTotal}</span> books
-                {collection && collectionsList.find(c => c.slug === collection) && (
-                  <span> in <span className="font-medium text-primary">{collectionsList.find(c => c.slug === collection)!.name}</span></span>
-                )}
-                {browseTotal > RESULTS_PER_PAGE && (
-                  <span className="ml-2 text-faint">
-                    (showing {offset + 1}&ndash;{Math.min(offset + RESULTS_PER_PAGE, browseTotal)})
-                  </span>
-                )}
+              <div className="mb-4 flex items-center justify-between flex-wrap gap-2">
+                <div className="text-muted">
+                  <span className="font-medium text-primary">{browseTotal}</span> books
+                  {collection && collectionsList.find(c => c.slug === collection) && (
+                    <span> in <span className="font-medium text-primary">{collectionsList.find(c => c.slug === collection)!.name}</span></span>
+                  )}
+                  {browseTotal > resultsPerPage && (
+                    <span className="ml-2 text-faint">
+                      (showing {offset + 1}&ndash;{Math.min(offset + resultsPerPage, browseTotal)})
+                    </span>
+                  )}
+                </div>
+                <div className="flex items-center gap-4">
+                  <div className="flex items-center gap-2 text-sm text-muted">
+                    <span>Show</span>
+                    <select
+                      value={resultsPerPage}
+                      onChange={(e) => { setResultsPerPage(Number(e.target.value)); setOffset(0); }}
+                      className="px-2 py-1 border border-border-medium rounded-md bg-white text-sm focus:outline-none focus:ring-2 focus:ring-accent-rust/30"
+                    >
+                      {RESULTS_PER_PAGE_OPTIONS.map((n) => (
+                        <option key={n} value={n}>{n}</option>
+                      ))}
+                    </select>
+                    <span>per page</span>
+                  </div>
+                  <Link href="/catalog" className="text-sm text-accent-rust hover:underline">
+                    Browse Full Catalog
+                  </Link>
+                </div>
               </div>
             )}
 
@@ -795,7 +821,7 @@ export default function SearchPage() {
               </div>
             )}
 
-            <Pagination total={browseTotal} offset={offset} setOffset={setOffset} loading={browseLoading} />
+            <Pagination total={browseTotal} offset={offset} setOffset={setOffset} loading={browseLoading} pageSize={resultsPerPage} />
           </div>
         )}
 
@@ -966,13 +992,28 @@ export default function SearchPage() {
         {viewMode === 'books' && query.length >= 2 && (
           <>
             {!loading && (
-              <div className="mb-6 text-muted">
-                Found <span className="font-medium text-primary">{bookTotal}</span> books & pages for &ldquo;{query}&rdquo;
-                {bookTotal > RESULTS_PER_PAGE && (
-                  <span className="ml-2 text-faint">
-                    (showing {offset + 1}&ndash;{Math.min(offset + RESULTS_PER_PAGE, bookTotal)})
-                  </span>
-                )}
+              <div className="mb-6 flex items-center justify-between flex-wrap gap-2">
+                <div className="text-muted">
+                  Found <span className="font-medium text-primary">{bookTotal}</span> books & pages for &ldquo;{query}&rdquo;
+                  {bookTotal > resultsPerPage && (
+                    <span className="ml-2 text-faint">
+                      (showing {offset + 1}&ndash;{Math.min(offset + resultsPerPage, bookTotal)})
+                    </span>
+                  )}
+                </div>
+                <div className="flex items-center gap-2 text-sm text-muted">
+                  <span>Show</span>
+                  <select
+                    value={resultsPerPage}
+                    onChange={(e) => { setResultsPerPage(Number(e.target.value)); setOffset(0); }}
+                    className="px-2 py-1 border border-border-medium rounded-md bg-white text-sm focus:outline-none focus:ring-2 focus:ring-accent-rust/30"
+                  >
+                    {RESULTS_PER_PAGE_OPTIONS.map((n) => (
+                      <option key={n} value={n}>{n}</option>
+                    ))}
+                  </select>
+                  <span>per page</span>
+                </div>
               </div>
             )}
             {loading && <div className="py-4"><BookLoader size="xs" /></div>}
@@ -981,7 +1022,7 @@ export default function SearchPage() {
                 <BookResultCard key={result.id} result={result} query={query} />
               ))}
             </div>
-            <Pagination total={bookTotal} offset={offset} setOffset={setOffset} loading={loading} />
+            <Pagination total={bookTotal} offset={offset} setOffset={setOffset} loading={loading} pageSize={resultsPerPage} />
           </>
         )}
 
@@ -1008,9 +1049,9 @@ export default function SearchPage() {
             {!loading && (
               <div className="mb-6 text-muted">
                 Found <span className="font-medium text-primary">{imageTotal}</span> images for &ldquo;{query}&rdquo;
-                {imageTotal > RESULTS_PER_PAGE && (
+                {imageTotal > resultsPerPage && (
                   <span className="ml-2 text-faint">
-                    (showing {offset + 1}&ndash;{Math.min(offset + RESULTS_PER_PAGE, imageTotal)})
+                    (showing {offset + 1}&ndash;{Math.min(offset + resultsPerPage, imageTotal)})
                   </span>
                 )}
               </div>
@@ -1021,7 +1062,7 @@ export default function SearchPage() {
                 <ImageResultCard key={`${item.pageId}-${item.detectionIndex}-${idx}`} item={item} query={query} large />
               ))}
             </div>
-            <Pagination total={imageTotal} offset={offset} setOffset={setOffset} loading={loading} />
+            <Pagination total={imageTotal} offset={offset} setOffset={setOffset} loading={loading} pageSize={resultsPerPage} />
           </>
         )}
         {/* AI-expanded related results — shows for all searches with results */}
@@ -1205,26 +1246,26 @@ function ImageResultCard({ item, query, large }: { item: GalleryItem; query: str
 
 // ==================== PAGINATION ====================
 
-function Pagination({ total, offset, setOffset, loading }: {
-  total: number; offset: number; setOffset: (n: number) => void; loading: boolean;
+function Pagination({ total, offset, setOffset, loading, pageSize }: {
+  total: number; offset: number; setOffset: (n: number) => void; loading: boolean; pageSize: number;
 }) {
-  if (total <= RESULTS_PER_PAGE || loading) return null;
+  if (total <= pageSize || loading) return null;
 
   return (
     <div className="flex items-center justify-center gap-4 mt-8 pt-6 border-t border-border-light">
       <button
-        onClick={() => { setOffset(Math.max(0, offset - RESULTS_PER_PAGE)); window.scrollTo(0, 0); }}
+        onClick={() => { setOffset(Math.max(0, offset - pageSize)); window.scrollTo(0, 0); }}
         disabled={offset === 0}
         className="flex items-center gap-1.5 px-4 py-2 text-sm font-medium rounded-lg border border-border-medium text-secondary transition-colors disabled:opacity-40 disabled:cursor-not-allowed hover:bg-warm"
       >
         <ChevronLeft className="w-4 h-4" /> Previous
       </button>
       <span className="text-sm text-muted">
-        Page {Math.floor(offset / RESULTS_PER_PAGE) + 1} of {Math.ceil(total / RESULTS_PER_PAGE)}
+        Page {Math.floor(offset / pageSize) + 1} of {Math.ceil(total / pageSize)}
       </span>
       <button
-        onClick={() => { setOffset(offset + RESULTS_PER_PAGE); window.scrollTo(0, 0); }}
-        disabled={offset + RESULTS_PER_PAGE >= total}
+        onClick={() => { setOffset(offset + pageSize); window.scrollTo(0, 0); }}
+        disabled={offset + pageSize >= total}
         className="flex items-center gap-1.5 px-4 py-2 text-sm font-medium rounded-lg border border-border-medium text-secondary transition-colors disabled:opacity-40 disabled:cursor-not-allowed hover:bg-warm"
       >
         Next <ChevronRight className="w-4 h-4" />
