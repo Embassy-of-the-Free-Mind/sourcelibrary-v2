@@ -33,7 +33,7 @@ export default function SiteHeader({ variant = 'light', breadcrumbs, sticky, cla
     <header
       className={`${variantClasses} ${sticky ? 'sticky top-0 z-20' : ''} ${className}`}
     >
-      <div className="flex items-center justify-between px-6 md:px-12 max-w-[var(--container-wide)] mx-auto">
+      <div className={`flex items-center justify-between px-6 md:px-12 ${variant !== 'transparent' ? 'max-w-[var(--container-wide)] mx-auto' : ''}`}>
         <div className="flex items-center gap-3">
           <Logo white={isWhiteText} compact={!!breadcrumbs} />
           {breadcrumbs?.map((crumb) => (
