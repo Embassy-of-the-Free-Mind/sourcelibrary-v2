@@ -60,6 +60,18 @@ const BLOB_TOKEN = process.env.BLOB_READ_WRITE_TOKEN;
 if (!MONGODB_URI) { console.error('Missing MONGODB_URI'); process.exit(1); }
 if (!BLOB_TOKEN) { console.error('Missing BLOB_READ_WRITE_TOKEN'); process.exit(1); }
 
+/**
+ * Update a page in whichever collection it lives in (live or warehouse).
+ * Tries live first (cheaper), falls back to warehouse.
+ */
+async function updatePageAnywhere(db: any, pageId: any, update: any) {
+  const result = await db.collection('pages').updateOne({ _id: pageId }, update);
+  if (result.matchedCount === 0) {
+    return db.collection('pages_warehouse').updateOne({ _id: pageId }, update);
+  }
+  return result;
+}
+
 // Check for pdftoppm (poppler-utils) — needed for bulk PDF download
 // Install: brew install poppler (macOS) or apt-get install poppler-utils (Linux)
 let hasPdftoppm = false;
@@ -390,7 +402,7 @@ async function bulkArchiveBook(
         };
         if (thumbnailUrl) updateFields.thumbnail_blob = thumbnailUrl;
 
-        await db.collection('pages').updateOne({ _id: page._id }, { $set: updateFields });
+        await updatePageAnywhere(db, page._id, { $set: updateFields });
 
         success++;
         stats.downloaded++;
@@ -599,10 +611,7 @@ async function archivePage(page: any, db: any): Promise<boolean> {
       updateFields.thumbnail_blob = thumbnailUrl;
     }
 
-    await db.collection('pages').updateOne(
-      { _id: page._id },
-      { $set: updateFields }
-    );
+    await updatePageAnywhere(db, page._id, { $set: updateFields });
 
     stats.bySource[source]!.ok++;
     return true;
@@ -618,10 +627,7 @@ async function archivePage(page: any, db: any): Promise<boolean> {
     }
 
     // Mark permanent failures
-    await db.collection('pages').updateOne(
-      { _id: page._id },
-      { $set: { archived_photo: `failed:${msg.slice(0, 80)}` } }
-    ).catch(() => {});
+    await updatePageAnywhere(db, page._id, { $set: { archived_photo: `failed:${msg.slice(0, 80)}` } }).catch(() => {});
 
     process.stderr.write(`  [FAIL] ${page.book_id}/${page.page_number} (${source}): ${msg}\n`);
     stats.bySource[source]!.fail++;
@@ -710,11 +716,18 @@ async function main() {
       bookQuery.hidden = true;
       bookQuery.hidden_reason = 'unarchived';
     }
-    const books = await db.collection('books')
+    // Query both live and warehouse collections (archiving books may be in either)
+    const booksLive = await db.collection('books')
       .find(bookQuery, { projection: { id: 1, title: 1 } })
       .sort({ created_at: -1 })
       .limit(RECENT || 0)
       .toArray();
+    const booksWarehouse = await db.collection('books_warehouse')
+      .find(bookQuery, { projection: { id: 1, title: 1 } })
+      .sort({ created_at: -1 })
+      .limit(RECENT || 0)
+      .toArray();
+    const books = [...booksLive, ...booksWarehouse];
     bookIdFilter = books.map(b => b.id);
     console.log(`  Resolved to ${bookIdFilter.length} books`);
     if (bookIdFilter.length <= 10) {
@@ -755,8 +768,11 @@ async function main() {
   if (BOOK_ID) query.book_id = BOOK_ID;
   if (bookIdFilter) query.book_id = { $in: bookIdFilter };
 
-  const totalNeeding = await db.collection('pages').countDocuments(query);
-  console.log(`Pages needing archiving: ${totalNeeding}`);
+  // Query both live and warehouse page collections (archiving pages may be in either)
+  const totalNeedingLive = await db.collection('pages').countDocuments(query);
+  const totalNeedingWarehouse = await db.collection('pages_warehouse').countDocuments(query);
+  const totalNeeding = totalNeedingLive + totalNeedingWarehouse;
+  console.log(`Pages needing archiving: ${totalNeeding} (${totalNeedingLive} live, ${totalNeedingWarehouse} warehouse)`);
 
   if (totalNeeding === 0) {
     console.log('Nothing to do!');
@@ -770,15 +786,26 @@ async function main() {
   let bulkFailed = 0;
 
   if (!NO_BULK && hasPdftoppm) {
-    const distinctBookIds = await db.collection('pages').distinct('book_id', query);
+    // Query both live and warehouse for distinct book IDs
+    const distinctBookIdsLive = await db.collection('pages').distinct('book_id', query);
+    const distinctBookIdsWarehouse = await db.collection('pages_warehouse').distinct('book_id', query);
+    const distinctBookIds = [...new Set([...distinctBookIdsLive, ...distinctBookIdsWarehouse])];
 
     if (distinctBookIds.length > 0 && distinctBookIds.length <= 100) {
-      const books = await db.collection('books')
+      // Query both collections for book metadata
+      const booksLive = await db.collection('books')
         .find(
           { id: { $in: distinctBookIds } },
           { projection: { id: 1, title: 1, ia_identifier: 1, erara_id: 1, image_source: 1 } }
         )
         .toArray();
+      const booksWh = await db.collection('books_warehouse')
+        .find(
+          { id: { $in: distinctBookIds } },
+          { projection: { id: 1, title: 1, ia_identifier: 1, erara_id: 1, image_source: 1 } }
+        )
+        .toArray();
+      const books = [...booksLive, ...booksWh];
 
       const booksWithPdf = books.filter(b => hasBulkPdfSource(b));
 
@@ -786,13 +813,17 @@ async function main() {
         console.log(`\nBulk PDF download available for ${booksWithPdf.length}/${distinctBookIds.length} book(s)`);
 
         for (const book of booksWithPdf) {
-          const allBookPages = await db.collection('pages')
-            .find(
-              { book_id: book.id },
-              { projection: { _id: 1, id: 1, book_id: 1, page_number: 1, photo: 1, photo_original: 1, archived_photo: 1, crop: 1, thumbnail_blob: 1 } }
-            )
+          // Query pages from whichever collection has them
+          const pageProjection = { _id: 1, id: 1, book_id: 1, page_number: 1, photo: 1, photo_original: 1, archived_photo: 1, crop: 1, thumbnail_blob: 1 };
+          const pagesLive = await db.collection('pages')
+            .find({ book_id: book.id }, { projection: pageProjection })
             .sort({ page_number: 1 })
             .toArray();
+          const pagesWh = pagesLive.length > 0 ? [] : await db.collection('pages_warehouse')
+            .find({ book_id: book.id }, { projection: pageProjection })
+            .sort({ page_number: 1 })
+            .toArray();
+          const allBookPages = pagesLive.length > 0 ? pagesLive : pagesWh;
 
           const pagesToArchive = allBookPages.filter((p: any) => !p.archived_photo);
           if (pagesToArchive.length === 0) continue;
@@ -806,7 +837,7 @@ async function main() {
           }
         }
 
-        const remainingAfterBulk = await db.collection('pages').countDocuments(query);
+        const remainingAfterBulk = await db.collection('pages').countDocuments(query) + await db.collection('pages_warehouse').countDocuments(query);
         if (remainingAfterBulk === 0) {
           console.log(`\nAll pages archived via bulk PDF download!`);
         } else {
@@ -829,17 +860,26 @@ async function main() {
     if (remaining <= 0) break;
 
     // Re-query each chunk to skip pages completed by other workers
-    const pages = await db.collection('pages')
-      .find(query, {
-        projection: {
-          _id: 1, id: 1, book_id: 1, page_number: 1,
-          photo: 1, photo_original: 1, archived_photo: 1,
-          cropped_photo: 1, crop: 1, thumbnail_blob: 1,
-        }
-      })
+    // Query both live and warehouse collections
+    const pageProjection = {
+      _id: 1, id: 1, book_id: 1, page_number: 1,
+      photo: 1, photo_original: 1, archived_photo: 1,
+      cropped_photo: 1, crop: 1, thumbnail_blob: 1,
+    };
+    const chunkLimit = Math.min(CHUNK_SIZE, remaining);
+    const pagesLive = await db.collection('pages')
+      .find(query, { projection: pageProjection })
       .sort({ book_id: 1, page_number: 1 })
-      .limit(Math.min(CHUNK_SIZE, remaining))
+      .limit(chunkLimit)
       .toArray();
+    const pagesWarehouse = pagesLive.length < chunkLimit
+      ? await db.collection('pages_warehouse')
+          .find(query, { projection: pageProjection })
+          .sort({ book_id: 1, page_number: 1 })
+          .limit(chunkLimit - pagesLive.length)
+          .toArray()
+      : [];
+    const pages = [...pagesLive, ...pagesWarehouse];
 
     if (pages.length === 0) break;
 
