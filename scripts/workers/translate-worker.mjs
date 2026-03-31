@@ -802,7 +802,6 @@ async function main() {
     }).catch(() => {});
     await client.close();
     return;
-    }
   }
 
   // Find books — fresh (0 translated) first, then partials sorted by most remaining pages.
