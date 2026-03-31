@@ -29,9 +29,9 @@ if (!MONGODB_URI) { console.error('MONGODB_URI not set'); process.exit(1); }
 const DRY_RUN = process.argv.includes('--dry-run');
 const VERBOSE = process.argv.includes('--verbose') || process.argv.includes('-v');
 
-// Global Atlas connection budget. Atlas M10 saturates around 40 concurrent
-// pipeline connections. Leave headroom for Vercel SSR/ISR queries.
-const MAX_CONNECTIONS = 40;
+// Global Atlas connection budget. With capped pools (maxPoolSize 5-20 per worker),
+// actual peak is well under Atlas M10 limits. 60 leaves headroom for Vercel SSR/ISR.
+const MAX_CONNECTIONS = 60;
 
 // ── Worker Definitions ──
 // Each worker has:
@@ -62,7 +62,7 @@ const WORKERS = [
     name: 'translate-worker',
     cmd: 'node scripts/workers/translate-worker.mjs',
     lock: '/tmp/sl-translate.lock',
-    connections: 15,
+    connections: 20,
     tier: 2,
     interval: 120,      // every 2 min
     healthMin: 'healthy',

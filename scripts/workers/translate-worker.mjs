@@ -27,7 +27,7 @@ import { createHash } from 'crypto';
 import { nanoid } from 'nanoid';
 
 // ── Config ──
-const CONCURRENCY = 8;           // Max books translating simultaneously (tuned for 40-connection budget)
+const CONCURRENCY = 15;          // Max books translating simultaneously (tuned for 60-connection budget)
 const PAGES_PER_RUN = 8000;      // Global page cap per run (prevent runaway costs)
 const MAX_CONSECUTIVE_ERRORS = 5; // Per-book error threshold before giving up
 const RATE_LIMIT_BACKOFF_MS = 15000;
@@ -100,7 +100,7 @@ const MIN_OCR_CHARS_FOR_BATCH = 200;
 // ── MongoDB ──
 const client = new MongoClient(process.env.MONGODB_URI, {
   serverSelectionTimeoutMS: 10000,
-  maxPoolSize: 15,
+  maxPoolSize: 20,
 });
 
 // ── Sanitize translation tags (matches src/lib/sanitize-translation-tags.ts) ──
