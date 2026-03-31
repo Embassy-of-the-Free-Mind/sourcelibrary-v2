@@ -125,7 +125,7 @@ async function processBook(book, db) {
       { projection: { _id: 1, book_id: 1, page_number: 1, archived_photo: 1, display_photo: 1 } }
     )
     .sort({ page_number: 1 })
-    .maxTimeMS(15_000)
+    .maxTimeMS(30_000)
     .toArray()
     .catch(() => []);
 
@@ -181,35 +181,43 @@ async function main() {
     console.log(`[backfill-display] Single book: ${book.title?.slice(0, 60)}`);
     await processBook(book, db);
   } else {
-    // Find books with pages that have archived photos (uses pages_count > 0)
-    console.log(`[backfill-display] Finding books with archived pages...`);
-    const books = await db.collection('books')
-      .find(
-        { pages_count: { $gt: 0 } },
-        { projection: { id: 1, title: 1, pages_count: 1 } }
-      )
-      .sort({ pages_count: -1 })  // Big books first — more impact per book
-      .limit(5000)
-      .maxTimeMS(30_000)
-      .toArray();
+    // Stream books one at a time via cursor — avoids loading 9.5K docs into memory
+    // and avoids getMore timeouts on Atlas
+    console.log(`[backfill-display] Streaming books...`);
+    const cursor = db.collection('books')
+      .find({}, { projection: { id: 1, title: 1 } })
+      .batchSize(100);
 
-    console.log(`[backfill-display] Found ${books.length} books to check`);
+    // Collect a batch of books, process them, repeat
+    let done = false;
+    while (!done && stats.processed < LIMIT) {
+      const batch = [];
+      for (let i = 0; i < 50 && !done; i++) {
+        const book = await cursor.next();
+        if (!book) { done = true; break; }
+        batch.push(book);
+      }
 
-    // Process books with bounded concurrency
-    let bookIdx = 0;
-    async function bookWorker() {
-      while (bookIdx < books.length && stats.processed < LIMIT) {
-        const i = bookIdx++;
-        if (i >= books.length) break;
-        await processBook(books[i], db);
+      if (batch.length === 0) break;
 
-        if (stats.processed > 0 && stats.processed % 500 === 0) {
-          logProgress();
+      // Process this batch of books with bounded concurrency
+      let bookIdx = 0;
+      async function bookWorker() {
+        while (bookIdx < batch.length && stats.processed < LIMIT) {
+          const i = bookIdx++;
+          if (i >= batch.length) break;
+          await processBook(batch[i], db);
         }
+      }
+
+      await Promise.all(Array.from({ length: Math.min(BOOK_CONCURRENCY, batch.length) }, () => bookWorker()));
+
+      if (stats.processed > 0 && stats.processed % 500 < 50) {
+        logProgress();
       }
     }
 
-    await Promise.all(Array.from({ length: BOOK_CONCURRENCY }, () => bookWorker()));
+    await cursor.close();
   }
 
   const elapsed = (Date.now() - stats.startTime) / 1000;
