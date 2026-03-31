@@ -1,5 +1,6 @@
 import Link from 'next/link';
 import type { RelatedBooks as RelatedBooksType } from '@/lib/types';
+import AuthorName from '@/components/AuthorName';
 
 interface RelatedBooksProps {
   relatedBooks: RelatedBooksType;
@@ -75,7 +76,7 @@ export default function RelatedBooks({ relatedBooks }: RelatedBooksProps) {
                     {rb.title}
                   </span>
                   {rb.author && rb.author !== 'Unknown' && (
-                    <span className="text-xs text-stone-400 shrink-0 truncate max-w-[120px]">{rb.author}</span>
+                    <span className="text-xs text-stone-400 shrink-0 truncate max-w-[120px]"><AuthorName author={rb.author} /></span>
                   )}
                   <span className="text-xs text-accent-sage shrink-0">
                     {rb.shared_names?.length ? rb.shared_names.join(', ') : `${rb.shared_count} shared`}

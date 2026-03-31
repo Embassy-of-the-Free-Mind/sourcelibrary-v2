@@ -45,6 +45,20 @@ export function isArchiveFailed(photo: string | undefined | null): boolean {
  * the original source URLs are assumed dead and skipped.
  */
 // eslint-disable-next-line @typescript-eslint/no-explicit-any
+/**
+ * Format an author name for display.
+ * Strips bibliographic square brackets (indicating attributed authorship)
+ * and returns both the clean name and whether it was attributed.
+ */
+export function formatAuthor(author: string | undefined | null): { name: string; attributed: boolean } {
+  if (!author) return { name: '', attributed: false };
+  let trimmed = author.trim().replace(/[,;]+$/, '').trim();
+  if (trimmed.startsWith('[') && trimmed.endsWith(']')) {
+    return { name: trimmed.slice(1, -1), attributed: true };
+  }
+  return { name: trimmed, attributed: false };
+}
+
 export function getPageImageUrl(page: Record<string, any>): string | null {
   if (isUsableImageUrl(page.cropped_photo)) return page.cropped_photo;
   if (isUsableImageUrl(page.archived_photo)) return page.archived_photo;

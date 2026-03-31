@@ -1,5 +1,6 @@
 import { Book, TranslationEdition } from '@/lib/types';
 import { BASE_URL, getLicenseUrl } from './schema-utils';
+import { formatAuthor } from '@/lib/utils';
 
 interface SchemaOrgMetadataProps {
   book: Book;
@@ -30,8 +31,9 @@ export default function SchemaOrgMetadata({
   const compositionLayer = book.source_work_dates?.find(l => l.type === 'composition');
 
   // Link author to their encyclopedia page if they have one
-  const authorEncyclopediaUrl = book.author
-    ? `${baseUrl}/encyclopedia/${encodeURIComponent(book.author)}`
+  const cleanAuthor = formatAuthor(book.author).name || book.author;
+  const authorEncyclopediaUrl = cleanAuthor
+    ? `${baseUrl}/encyclopedia/${encodeURIComponent(cleanAuthor)}`
     : undefined;
 
   // Original work metadata
@@ -41,7 +43,7 @@ export default function SchemaOrgMetadata({
     name: book.title,
     author: {
       '@type': 'Person',
-      name: book.author,
+      name: cleanAuthor,
       ...(authorEncyclopediaUrl && {
         '@id': `${authorEncyclopediaUrl}#entity`,
         url: authorEncyclopediaUrl,
@@ -212,7 +214,7 @@ function getDescription(book: Book, translatedCount: number, pageCount: number):
     parts.push(book.title);
   }
 
-  parts.push(`by ${book.author}`);
+  parts.push(`by ${formatAuthor(book.author).name || book.author}`);
 
   if (book.published) {
     parts.push(`(${book.published})`);

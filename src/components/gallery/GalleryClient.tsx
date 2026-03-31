@@ -13,6 +13,8 @@ import { useIdentity } from '@/hooks/useIdentity';
 import { BookLoader } from '@/components/ui/BookLoader';
 import FeaturedCollections from '@/components/gallery/FeaturedCollections';
 import SiteHeader from '@/components/layout/SiteHeader';
+import { formatAuthor } from '@/lib/utils';
+import AuthorName from '@/components/AuthorName';
 import { LIBRARY_PARTNERS, getPartnerByProvider } from '@/lib/library-partners';
 import {
   gallery,
@@ -328,7 +330,7 @@ export default function GalleryClient({ initialData, initialCollections, bookCol
                     className="w-full text-left px-3 py-2 hover:bg-stone-50 text-sm border-b border-stone-100 last:border-0"
                   >
                     <span className="font-medium text-stone-800">{book.display_title || book.title}</span>
-                    {book.author && <span className="text-stone-500 ml-1">— {book.author}</span>}
+                    {book.author && <span className="text-stone-500 ml-1">— <AuthorName author={book.author} /></span>}
                   </button>
                 ))}
               </div>
@@ -685,7 +687,7 @@ function GalleryCard({ item }: { item: GalleryItem }) {
           </p>
           {((item.author && item.author !== 'Various') || item.year) && (
             <p className="text-xs text-white/60 line-clamp-1">
-              {item.author && item.author !== 'Various' ? item.author : ''}{item.author && item.author !== 'Various' && item.year ? ', ' : ''}{item.year}
+              {item.author && item.author !== 'Various' ? formatAuthor(item.author).name : ''}{item.author && item.author !== 'Various' && item.year ? ', ' : ''}{item.year}
             </p>
           )}
         </div>
@@ -734,7 +736,7 @@ function BookEmptyState({ bookInfo }: { bookInfo: BookInfo }) {
         <BookOpen className="w-12 h-12 text-stone-300 mx-auto mb-4" />
         <h2 className="text-lg font-serif text-stone-800 mb-2">{bookInfo.title}</h2>
         {bookInfo.author && (
-          <p className="text-stone-500 text-sm mb-4">by {bookInfo.author}</p>
+          <p className="text-stone-500 text-sm mb-4">by <AuthorName author={bookInfo.author} /></p>
         )}
 
         {!bookInfo.hasImages && bookInfo.hasOcr && (

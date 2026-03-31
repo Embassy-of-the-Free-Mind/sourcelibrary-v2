@@ -1,4 +1,5 @@
 import { BASE_URL, getLicenseUrl } from './schema-utils';
+import { formatAuthor } from '@/lib/utils';
 
 interface GalleryImageSchemaProps {
   imageId: string;
@@ -78,7 +79,7 @@ export default function GalleryImageSchema({
       about: metadata.subjects.map(s => ({ '@type': 'Thing', name: s })),
     }),
     ...(book?.author && {
-      creator: { '@type': 'Person', name: book.author },
+      creator: { '@type': 'Person', name: formatAuthor(book.author).name || book.author },
     }),
     ...(book?.published && { dateCreated: book.published }),
     ...(license && { license: getLicenseUrl(license) }),

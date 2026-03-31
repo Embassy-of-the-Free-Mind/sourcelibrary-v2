@@ -1,4 +1,5 @@
 import { Book } from '@/lib/types';
+import { formatAuthor } from '@/lib/utils';
 
 interface HomePageSchemaProps {
   books: Book[];
@@ -73,7 +74,7 @@ export default function HomePageSchema({ books, bookCount, translatedCount }: Ho
       name: book.display_title || book.title,
       author: {
         '@type': 'Person',
-        name: book.author,
+        name: formatAuthor(book.author).name || book.author,
       },
       inLanguage: book.language,
       ...(book.published && { datePublished: book.published }),
