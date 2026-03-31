@@ -24,6 +24,7 @@
 import { MongoClient } from 'mongodb';
 import { GoogleGenerativeAI } from '@google/generative-ai';
 import { createHash } from 'crypto';
+import { nanoid } from 'nanoid';
 
 // ── Config ──
 const CONCURRENCY = 40;          // Max books translating simultaneously
@@ -640,6 +641,100 @@ async function updateMilestoneCounters(db, { oldTranslated, newTranslated, pages
   }
 }
 
+// ── Self-dispatch: create jobs for books that need translation ──
+// Eliminates the gap between translate-worker finishing and Phase 4 dispatching new books.
+async function selfDispatch(db, limit) {
+  // Find fresh books (metadata_enriched/ft_verified) — same query as orchestrator Phase 4
+  const fresh = await db.collection('books').aggregate([
+    { $match: { 'pipeline_auto.status': { $in: ['metadata_enriched', 'ft_verified'] }, 'image_source.provider': { $ne: 'bph' } } },
+    { $addFields: { _latinFirst: { $cond: [{ $eq: ['$language', 'Latin'] }, 0, 1] } } },
+    { $sort: { _latinFirst: 1, is_first_translation: -1, hidden: 1 } },
+    { $project: { id: 1, title: 1, pages_count: 1, language: 1, 'image_source.provider': 1 } },
+    { $limit: limit },
+  ]).toArray();
+
+  // If no fresh books, pull from translate_partial
+  let candidates = fresh;
+  if (fresh.length === 0) {
+    candidates = await db.collection('books')
+      .find({ 'pipeline_auto.status': 'translate_partial', 'image_source.provider': { $ne: 'bph' } })
+      .project({ id: 1, title: 1, pages_count: 1, language: 1, 'image_source.provider': 1 })
+      .sort({ pages_translated: 1 })
+      .limit(limit)
+      .toArray();
+    if (candidates.length > 0) {
+      console.log(`[TRANSLATE] Self-dispatch: no fresh books, re-queuing ${candidates.length} partial books`);
+    }
+  }
+
+  if (candidates.length === 0) return [];
+
+  const dispatched = [];
+  for (const book of candidates) {
+    const pages = await db.collection('pages')
+      .find({
+        book_id: book.id,
+        'ocr.data': { $exists: true, $nin: [null, ''] },
+        page_type: { $nin: SKIP_PAGE_TYPES },
+        $or: [
+          { 'translation.data': { $exists: false } },
+          { 'translation.data': null },
+          { 'translation.data': '' },
+          { $expr: { $lt: ['$translation.updated_at', '$ocr.updated_at'] } },
+        ],
+      })
+      .sort({ page_number: 1 })
+      .project({ id: 1 })
+      .toArray();
+
+    if (pages.length === 0) {
+      // Already fully translated — advance
+      await db.collection('books').updateOne(
+        { id: book.id },
+        { $set: { 'pipeline_auto.status': 'translate_complete', updated_at: new Date() }, $unset: { job: '' } },
+      );
+      continue;
+    }
+
+    const jobId = nanoid(12);
+    const label = (book.title || '').substring(0, 50);
+    const pageIds = pages.map(p => p.id);
+
+    await db.collection('jobs').insertOne({
+      id: jobId,
+      type: 'translation',
+      book_id: book.id,
+      book_title: book.title,
+      status: 'pending',
+      progress: { total: pageIds.length, completed: 0, failed: 0 },
+      config: {
+        page_ids: pageIds,
+        model: getModelForBook(book),
+        language: book.language || 'auto-detect',
+      },
+      initiated_by: 'translate-worker-self-dispatch',
+      created_at: new Date(),
+      updated_at: new Date(),
+    });
+
+    await db.collection('books').updateOne(
+      { id: book.id },
+      { $set: {
+        'pipeline_auto.status': 'translate_submitted',
+        'pipeline_auto.last_updated': new Date(),
+        'pipeline_auto.translate_job_id': jobId,
+        job: { type: 'hetzner-inline', job_id: jobId },
+        updated_at: new Date(),
+      }},
+    );
+
+    dispatched.push({ ...book, job: { job_id: jobId } });
+    console.log(`[TRANSLATE] Self-dispatched: ${label} — ${pageIds.length} pages (job ${jobId})`);
+  }
+
+  return dispatched;
+}
+
 // ── Main ──
 async function main() {
   const startTime = Date.now();
@@ -711,11 +806,24 @@ async function main() {
   }
 
   // Find books in translate_submitted — each book gets up to 200 pages then gets parked.
-  // Only pick books that haven't been translated yet (fresh) to maximize breadth.
   const proj = { id: 1, title: 1, display_title: 1, author: 1, year: 1, published: 1, language: 1, job: 1, image_source: 1, pages_translated: 1, pages_ocr: 1, pages_blank: 1 };
-  const books = await db.collection('books')
+  let books = await db.collection('books')
     .find({ 'pipeline_auto.status': 'translate_submitted' })
     .project(proj).limit(CONCURRENCY).toArray();
+
+  // Self-dispatch: if no books are waiting, create jobs directly instead of waiting for Phase 4
+  if (books.length < CONCURRENCY) {
+    const needed = CONCURRENCY - books.length;
+    const dispatched = await selfDispatch(db, needed);
+    if (dispatched.length > 0) {
+      console.log(`[TRANSLATE] Self-dispatched ${dispatched.length} books (had ${books.length} in queue)`);
+      // Re-query to pick up the newly dispatched books with full projection
+      const newBooks = await db.collection('books')
+        .find({ 'pipeline_auto.status': 'translate_submitted', id: { $in: dispatched.map(b => b.id) } })
+        .project(proj).toArray();
+      books = [...books, ...newBooks];
+    }
+  }
 
   if (books.length === 0) {
     console.log('[TRANSLATE] No books to translate');
