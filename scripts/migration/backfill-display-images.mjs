@@ -118,33 +118,35 @@ async function processPage(page, db) {
 
 async function processBook(book, db) {
   // Query pages per book — uses book_id index, fast
+  // Don't filter on display_photo (unindexed) — check in code instead
   const pages = await db.collection('pages')
     .find(
-      {
-        book_id: book.id,
-        archived_photo: { $exists: true, $ne: null },
-        display_photo: { $exists: false },
-      },
-      { projection: { _id: 1, book_id: 1, page_number: 1, archived_photo: 1 } }
+      { book_id: book.id },
+      { projection: { _id: 1, book_id: 1, page_number: 1, archived_photo: 1, display_photo: 1 } }
     )
     .sort({ page_number: 1 })
     .maxTimeMS(15_000)
     .toArray()
     .catch(() => []);
 
-  if (pages.length === 0) {
+  // Filter in code: need archived_photo, no display_photo yet
+  const needsBackfill = pages.filter(p =>
+    p.archived_photo && !p.display_photo && p.archived_photo.startsWith('https://')
+  );
+
+  if (needsBackfill.length === 0) {
     stats.booksSkipped++;
     return 0;
   }
 
   // Process pages within this book with bounded concurrency
   let idx = 0;
-  const pageConcurrency = Math.min(CONCURRENCY, pages.length);
+  const pageConcurrency = Math.min(CONCURRENCY, needsBackfill.length);
   async function pageWorker() {
-    while (idx < pages.length && stats.processed < LIMIT) {
+    while (idx < needsBackfill.length && stats.processed < LIMIT) {
       const i = idx++;
-      if (i >= pages.length) break;
-      await processPage(pages[i], db);
+      if (i >= needsBackfill.length) break;
+      await processPage(needsBackfill[i], db);
       stats.processed++;
     }
   }
@@ -152,7 +154,7 @@ async function processBook(book, db) {
   await Promise.all(Array.from({ length: pageConcurrency }, () => pageWorker()));
   stats.booksProcessed++;
 
-  return pages.length;
+  return needsBackfill.length;
 }
 
 function logProgress() {
