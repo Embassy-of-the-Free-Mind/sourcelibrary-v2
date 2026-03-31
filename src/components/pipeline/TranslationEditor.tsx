@@ -877,17 +877,17 @@ export default function TranslationEditor({
                 onClick={() => previousPage && onNavigate(previousPage.id)}
                 disabled={!previousPage}
                 className="p-1.5 sm:p-2 rounded-md transition-all disabled:opacity-30 focus-visible:ring-2 focus-visible:ring-accent-rust focus-visible:outline-none"
-                style={{ color: 'var(--accent-rust)' }}
+                style={{ color: 'var(--text-secondary)' }}
                 aria-label="Previous page"
               >
                 <ChevronLeft className="w-4 h-4" aria-hidden="true" />
               </button>
-              <span className="px-1 sm:px-2 text-sm font-medium" style={{ color: 'var(--accent-rust)' }} aria-label={`Page ${currentIndex + 1} of ${pages.length}`}>{currentIndex + 1}/{pages.length}</span>
+              <span className="px-1 sm:px-2 text-sm font-medium" style={{ color: 'var(--text-muted)' }} aria-label={`Page ${currentIndex + 1} of ${pages.length}`}>{currentIndex + 1}/{pages.length}</span>
               <button
                 onClick={() => nextPage && onNavigate(nextPage.id)}
                 disabled={!nextPage}
                 className="p-1.5 sm:p-2 rounded-md transition-all disabled:opacity-30 focus-visible:ring-2 focus-visible:ring-accent-rust focus-visible:outline-none"
-                style={{ color: 'var(--accent-rust)' }}
+                style={{ color: 'var(--text-secondary)' }}
                 aria-label="Next page"
               >
                 <ChevronRight className="w-4 h-4" aria-hidden="true" />
