@@ -461,7 +461,7 @@ export default async function HomePage() {
                 </p>
               </div>
               <Link
-                href="/search"
+                href="/catalog"
                 className="text-sm text-accent-rust hover:underline hidden md:block"
               >
                 Browse all books
@@ -564,7 +564,7 @@ export default async function HomePage() {
             ) : (
               <div className="text-center py-12">
                 <p className="text-muted mb-4">Browse the collection to discover translated primary sources.</p>
-                <Link href="/search?has_translation=true" className="inline-block px-6 py-3 bg-accent-rust text-white rounded-lg hover:bg-accent-rust/90 transition-colors">
+                <Link href="/catalog" className="inline-block px-6 py-3 bg-accent-rust text-white rounded-lg hover:bg-accent-rust/90 transition-colors">
                   Browse all books
                 </Link>
               </div>
