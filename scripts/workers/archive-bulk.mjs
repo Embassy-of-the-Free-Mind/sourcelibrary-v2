@@ -295,13 +295,13 @@ async function main() {
   await client.connect();
   const db = client.db('bookstore');
 
-  // Find IA books in archiving status with unarchived pages
+  // Find IA books with pages that may need archiving (regardless of pipeline status).
   // Priority: first translations > non-English > English
   const ENGLISH_VARIANTS = ['english', 'eng', 'en'];
   const iaBooks = await db.collection('books')
     .aggregate([
       { $match: {
-        'pipeline_auto.status': 'archiving',
+        pages_count: { $gt: 0 },
         'archive_metadata.blocked': { $ne: true },
         $or: [
           { ia_identifier: { $exists: true, $ne: null, $ne: '' } },
