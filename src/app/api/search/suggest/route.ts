@@ -2,21 +2,12 @@ import { NextRequest, NextResponse } from 'next/server';
 import { getDb } from '@/lib/mongodb';
 import { findSuggestions } from '@/lib/fuzzy';
 
-// In-memory vocabulary cache (refreshed every 10 minutes)
+// In-memory cache backed by system_config snapshot.
+// The snapshot is pre-built by scripts/workers/suggest-vocabulary-snapshot.mjs
+// and refreshed every 2 hours. This route just reads it (<50ms).
 let vocabularyCache: string[] | null = null;
 let cacheTimestamp = 0;
-const CACHE_TTL = 60 * 60 * 1000; // 1 hour (vocabulary changes slowly)
-
-/**
- * Tokenize a phrase into individual words suitable for fuzzy matching.
- * Keeps only words >= 3 chars to avoid noise from articles/prepositions.
- */
-function tokenize(text: string): string[] {
-  return text
-    .split(/[\s,;:]+/)
-    .map(w => w.replace(/[^a-zA-ZÀ-ÿ\-']/g, ''))
-    .filter(w => w.length >= 3);
-}
+const CACHE_TTL = 10 * 60 * 1000; // 10 min — re-read snapshot from DB
 
 async function getVocabulary(): Promise<string[]> {
   const now = Date.now();
@@ -26,53 +17,33 @@ async function getVocabulary(): Promise<string[]> {
 
   const db = await getDb();
 
-  // Only fetch books that have pages (skip catalog stubs — growing toward 100K).
-  // Projection covers both use cases; books without an index simply
-  // have no `index` field and are skipped in the index-terms loop.
+  // Read pre-computed vocabulary from system_config (single doc, <50ms).
+  // Falls back to a lightweight titles-only query if snapshot doesn't exist yet.
+  const snapshot = await db.collection('system_config')
+    .findOne({ _id: 'suggest_vocabulary' as unknown as any }, { maxTimeMS: 5000 });
+
+  if (snapshot?.terms?.length) {
+    vocabularyCache = snapshot.terms as string[];
+    cacheTimestamp = now;
+    return vocabularyCache;
+  }
+
+  // Fallback: lightweight query (titles + authors only, no index terms)
   const books = await db.collection('books')
     .find(
       { visible: true, pages_count: { $gt: 0 } },
       {
-        projection: { title: 1, display_title: 1, author: 1, 'index.concepts': 1, 'index.people': 1, 'index.places': 1, 'index.keyTerms': 1 },
+        projection: { title: 1, display_title: 1, author: 1 },
         maxTimeMS: 8000,
       },
     )
     .toArray();
 
   const terms = new Set<string>();
-
   for (const book of books) {
-    // Add full titles for multi-word matching
-    if (book.title) terms.add(book.title);
     if (book.display_title) terms.add(book.display_title);
+    else if (book.title) terms.add(book.title);
     if (book.author) terms.add(book.author);
-
-    // Also add individual words for single-word typo matching
-    for (const field of [book.title, book.display_title, book.author]) {
-      if (field) {
-        for (const word of tokenize(field)) {
-          terms.add(word);
-        }
-      }
-    }
-
-    // Index terms (only present on books with a generated index)
-    const idx = book.index;
-    if (!idx) continue;
-
-    for (const arr of [idx.concepts, idx.people, idx.places, idx.keyTerms]) {
-      if (!Array.isArray(arr)) continue;
-      for (const item of arr) {
-        const name = typeof item === 'string' ? item : item?.term || item?.name;
-        if (name && name.length >= 2) {
-          terms.add(name);
-          // Tokenize multi-word index terms too
-          for (const word of tokenize(name)) {
-            terms.add(word);
-          }
-        }
-      }
-    }
   }
 
   vocabularyCache = Array.from(terms);
