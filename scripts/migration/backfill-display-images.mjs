@@ -3,12 +3,17 @@
  * Backfill display (1200px) and thumbnail (150px) variants for pages
  * that already have archived_photo but no display_photo.
  *
+ * Strategy: iterate books (small collection, indexed), then query pages
+ * per book using the book_id index. Avoids collection-scanning the
+ * 9.5M pages collection on unindexed fields.
+ *
  * Downloads full-res from R2, generates variants, uploads back to R2.
  * R2 egress is free, so the only cost is CPU time + write ops.
  *
  * Usage:
  *   set -a; source .env.production.local; set +a; node scripts/migration/backfill-display-images.mjs
  *   node scripts/migration/backfill-display-images.mjs --limit=1000 --concurrency=8 --dry-run
+ *   node scripts/migration/backfill-display-images.mjs --book=BOOK_ID
  */
 
 import { MongoClient } from 'mongodb';
@@ -21,6 +26,7 @@ const hasFlag = (name) => args.includes(`--${name}`);
 
 const LIMIT = parseInt(getArg('limit') || '50000', 10);
 const CONCURRENCY = parseInt(getArg('concurrency') || '10', 10);
+const BOOK_CONCURRENCY = parseInt(getArg('book-concurrency') || '3', 10);
 const DRY_RUN = hasFlag('dry-run');
 const BOOK_ID = getArg('book');  // Optional: backfill a single book
 
@@ -62,12 +68,12 @@ async function downloadFromR2(url) {
 
 const stats = {
   processed: 0, succeeded: 0, failed: 0, skipped: 0,
+  booksProcessed: 0, booksSkipped: 0,
   bytesUploaded: 0, startTime: Date.now(),
 };
 
 async function processPage(page, db) {
   try {
-    // Skip failed or non-URL archived photos
     if (!page.archived_photo?.startsWith('https://')) {
       stats.skipped++;
       return;
@@ -110,60 +116,107 @@ async function processPage(page, db) {
   }
 }
 
-async function main() {
-  console.log(`[backfill-display] Display image backfill — limit=${LIMIT}, concurrency=${CONCURRENCY}${DRY_RUN ? ' (DRY RUN)' : ''}`);
-
-  const client = new MongoClient(MONGODB_URI, { maxPoolSize: 5 });
-  await client.connect();
-  const db = client.db('bookstore');
-
-  // Find pages with archived_photo but no display_photo
-  // Use simple filter — avoid $regex on unindexed field (9.5M pages collection)
-  const filter = {
-    archived_photo: { $exists: true, $ne: null },
-    display_photo: { $exists: false },
-    ...(BOOK_ID ? { book_id: BOOK_ID } : {}),
-  };
-
-  console.log(`[backfill-display] Querying pages (skipping count to avoid collection scan)...`);
-
+async function processBook(book, db) {
+  // Query pages per book — uses book_id index, fast
   const pages = await db.collection('pages')
-    .find(filter, { projection: { _id: 1, book_id: 1, page_number: 1, archived_photo: 1 } })
-    .limit(LIMIT)
-    .maxTimeMS(60_000)
-    .toArray();
+    .find(
+      {
+        book_id: book.id,
+        archived_photo: { $exists: true, $ne: null },
+        display_photo: { $exists: false },
+      },
+      { projection: { _id: 1, book_id: 1, page_number: 1, archived_photo: 1 } }
+    )
+    .sort({ page_number: 1 })
+    .maxTimeMS(15_000)
+    .toArray()
+    .catch(() => []);
 
-  console.log(`[backfill-display] Processing ${pages.length.toLocaleString()} pages...`);
+  if (pages.length === 0) {
+    stats.booksSkipped++;
+    return 0;
+  }
 
-  // Process with bounded concurrency
+  // Process pages within this book with bounded concurrency
   let idx = 0;
-  async function worker() {
-    while (idx < pages.length) {
+  const pageConcurrency = Math.min(CONCURRENCY, pages.length);
+  async function pageWorker() {
+    while (idx < pages.length && stats.processed < LIMIT) {
       const i = idx++;
       if (i >= pages.length) break;
       await processPage(pages[i], db);
       stats.processed++;
-
-      if (stats.processed % 500 === 0) {
-        const elapsed = (Date.now() - stats.startTime) / 1000;
-        const rate = (stats.processed / elapsed).toFixed(1);
-        const mb = (stats.bytesUploaded / (1024 * 1024)).toFixed(0);
-        console.log(`  ${stats.processed.toLocaleString()}/${pages.length.toLocaleString()} — ${stats.succeeded} ok, ${stats.failed} fail — ${rate}/s — ${mb}MB uploaded`);
-      }
     }
   }
 
-  await Promise.all(Array.from({ length: Math.min(CONCURRENCY, pages.length) }, () => worker()));
+  await Promise.all(Array.from({ length: pageConcurrency }, () => pageWorker()));
+  stats.booksProcessed++;
 
+  return pages.length;
+}
+
+function logProgress() {
   const elapsed = (Date.now() - stats.startTime) / 1000;
   const rate = (stats.processed / elapsed).toFixed(1);
+  const mb = (stats.bytesUploaded / (1024 * 1024)).toFixed(0);
+  console.log(`  ${stats.processed.toLocaleString()} pages (${stats.booksProcessed} books) — ${stats.succeeded} ok, ${stats.failed} fail — ${rate}/s — ${mb}MB uploaded`);
+}
+
+async function main() {
+  console.log(`[backfill-display] Display image backfill — limit=${LIMIT}, concurrency=${CONCURRENCY}${DRY_RUN ? ' (DRY RUN)' : ''}`);
+
+  const client = new MongoClient(MONGODB_URI, { maxPoolSize: 10 });
+  await client.connect();
+  const db = client.db('bookstore');
+
+  if (BOOK_ID) {
+    // Single book mode
+    const book = await db.collection('books').findOne(
+      { $or: [{ id: BOOK_ID }, { _id: BOOK_ID }] },
+      { projection: { id: 1, title: 1 } }
+    );
+    if (!book) { console.error(`Book not found: ${BOOK_ID}`); await client.close(); return; }
+    console.log(`[backfill-display] Single book: ${book.title?.slice(0, 60)}`);
+    await processBook(book, db);
+  } else {
+    // Find books with pages that have archived photos (uses pages_count > 0)
+    console.log(`[backfill-display] Finding books with archived pages...`);
+    const books = await db.collection('books')
+      .find(
+        { pages_count: { $gt: 0 } },
+        { projection: { id: 1, title: 1, pages_count: 1 } }
+      )
+      .sort({ pages_count: -1 })  // Big books first — more impact per book
+      .limit(5000)
+      .maxTimeMS(30_000)
+      .toArray();
+
+    console.log(`[backfill-display] Found ${books.length} books to check`);
+
+    // Process books with bounded concurrency
+    let bookIdx = 0;
+    async function bookWorker() {
+      while (bookIdx < books.length && stats.processed < LIMIT) {
+        const i = bookIdx++;
+        if (i >= books.length) break;
+        await processBook(books[i], db);
+
+        if (stats.processed > 0 && stats.processed % 500 === 0) {
+          logProgress();
+        }
+      }
+    }
+
+    await Promise.all(Array.from({ length: BOOK_CONCURRENCY }, () => bookWorker()));
+  }
+
+  const elapsed = (Date.now() - stats.startTime) / 1000;
+  const rate = stats.processed > 0 ? (stats.processed / elapsed).toFixed(1) : '0';
   console.log(`\n[backfill-display] Done in ${Math.round(elapsed)}s`);
-  console.log(`  Processed: ${stats.processed.toLocaleString()}`);
-  console.log(`  Succeeded: ${stats.succeeded.toLocaleString()}`);
-  console.log(`  Failed: ${stats.failed.toLocaleString()}`);
+  console.log(`  Books: ${stats.booksProcessed} processed, ${stats.booksSkipped} skipped (no pages needing backfill)`);
+  console.log(`  Pages: ${stats.processed.toLocaleString()} processed, ${stats.succeeded.toLocaleString()} succeeded, ${stats.failed} failed`);
   console.log(`  Rate: ${rate} pages/sec`);
   console.log(`  Uploaded: ${(stats.bytesUploaded / (1024 * 1024 * 1024)).toFixed(2)} GB`);
-  console.log(`  Note: run again to process more pages`);
 
   await client.close();
 }
