@@ -1,0 +1,25 @@
+name: Deploy to Hetzner
+
+on:
+  push:
+    branches: [main]
+    paths:
+      - 'scripts/workers/**'
+      - 'scripts/crons/**'
+
+jobs:
+  deploy:
+    runs-on: ubuntu-latest
+    timeout-minutes: 2
+
+    steps:
+      - name: Pull latest on Hetzner
+        uses: appleboy/ssh-action@v1
+        with:
+          host: 46.224.122.120
+          username: root
+          key: ${{ secrets.HETZNER_SSH_KEY }}
+          script: |
+            cd /root/sourcelibrary
+            git fetch origin main
+            git reset --hard origin/main
