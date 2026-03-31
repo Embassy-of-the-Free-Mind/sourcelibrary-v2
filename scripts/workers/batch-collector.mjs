@@ -24,9 +24,9 @@ const MONGODB_URI = process.env.MONGODB_URI;
 const GEMINI_API_BASE = 'https://generativelanguage.googleapis.com/v1beta';
 
 const ALL_KEYS = [
-  process.env.GEMINI_API_KEY_TIER3,
-  process.env.GEMINI_API_KEY_2,
   process.env.GEMINI_API_KEY,
+  ...Array.from({ length: 9 }, (_, i) => process.env[`GEMINI_API_KEY_${i + 2}`]),
+  process.env.GEMINI_API_KEY_TIER3,
 ].filter(Boolean);
 
 if (!MONGODB_URI) { console.error('MONGODB_URI not set'); process.exit(1); }
@@ -720,6 +720,78 @@ async function run() {
     }
   }
 
+  // ── Recovery sweep: re-check recently-failed jobs against Gemini ──
+  // Race condition: collector marks a job as "failed" (stale PENDING), but Gemini
+  // completes it afterward. Without this sweep, those results are lost forever.
+  // Only runs on a fraction of failed jobs per cycle to avoid hammering Gemini.
+  let recoveredJobs = 0;
+  let recoveredPages = 0;
+  const RECOVERY_BATCH_SIZE = 20; // check up to 20 failed jobs per cycle
+  const RECOVERY_WINDOW_DAYS = 7;
+
+  try {
+    const failedWithJobName = await db.collection('batch_jobs')
+      .find({
+        status: 'failed',
+        job_name: { $exists: true, $nin: [null, ''] },
+        created_at: { $gte: new Date(Date.now() - RECOVERY_WINDOW_DAYS * 24 * 3600000) },
+        recovery_checked_at: { $exists: false }, // skip already-checked jobs
+      })
+      .sort({ created_at: -1 })
+      .limit(RECOVERY_BATCH_SIZE)
+      .toArray();
+
+    if (failedWithJobName.length > 0) {
+      console.log(`\n[recovery] Checking ${failedWithJobName.length} recently-failed jobs against Gemini...`);
+    }
+
+    for (const job of failedWithJobName) {
+      const result = await getJobData(job.job_name);
+      // Mark as checked regardless of outcome — avoid re-checking every cycle
+      await db.collection('batch_jobs').updateOne(
+        { _id: job._id },
+        { $set: { recovery_checked_at: new Date() } }
+      );
+
+      if (!result) continue;
+      const state = getJobState(result.data);
+      const normalized = normalizeState(state);
+
+      if (normalized !== 'JOB_STATE_SUCCEEDED') continue;
+
+      // This job actually succeeded on Gemini! Re-process it.
+      console.log(`  [recovery] FOUND: ${job.book_id} | ${job.job_name} | ${job.page_count} pages`);
+      // Reset status so processOneJob can handle it
+      await db.collection('batch_jobs').updateOne(
+        { _id: job._id },
+        { $set: { status: 'pending', recovery_note: 'Recovered — Gemini completed after collector marked failed' } }
+      );
+
+      if (!DRY_RUN) {
+        try {
+          const val = await processOneJob(db, { ...job, status: 'pending' });
+          if (val.status === 'collected') {
+            recoveredJobs++;
+            recoveredPages += val.successCount;
+            if (val.bookId) {
+              bookIdsToUpdate.add(val.bookId);
+              try { await updateBookCounts(db, val.bookId); } catch (_) {}
+              try { await advancePipelineStatus(db, val.bookId, val.type); } catch (_) {}
+            }
+          }
+        } catch (e) {
+          console.error(`  [recovery] Error processing ${job.book_id}: ${e.message}`);
+        }
+      }
+    }
+
+    if (recoveredJobs > 0) {
+      console.log(`[recovery] Recovered ${recoveredJobs} jobs (${recoveredPages} pages)`);
+    }
+  } catch (e) {
+    console.error(`[recovery] Sweep error: ${e.message}`);
+  }
+
   const totalElapsed = ((Date.now() - startTime) / 1000).toFixed(0);
   console.log(`\n=== SUMMARY ===`);
   console.log(`Jobs collected: ${collected}`);
@@ -728,6 +800,7 @@ async function run() {
   console.log(`Errors: ${errors}`);
   console.log(`Books updated: ${bookIdsToUpdate.size}`);
   if (recitationBooks.size > 0) console.log(`RECITATION resets: ${recitationBooks.size}`);
+  if (recoveredJobs > 0) console.log(`Recovery: ${recoveredJobs} jobs (${recoveredPages} pages)`);
   console.log(`Total time: ${totalElapsed}s`);
 
   // Write cron_runs record for observability
@@ -740,6 +813,8 @@ async function run() {
     errors,
     books_updated: bookIdsToUpdate.size,
     parents_updated: parentIdsToUpdate.size,
+    recovered_jobs: recoveredJobs,
+    recovered_pages: recoveredPages,
   }, errorMessages);
 
   await client.close();
