@@ -22,6 +22,9 @@ export async function moveToWarehouse(db: Db, bookId: string): Promise<boolean> 
   const book = await db.collection('books').findOne({ id: bookId });
   if (!book) return false;
 
+  // Never warehouse artworks — they live in books with resource_type set
+  if (book.resource_type) return false;
+
   // Insert into warehouse (use upsert to be idempotent)
   await db.collection('books_warehouse').replaceOne(
     { id: bookId },

@@ -14,11 +14,22 @@ interface PageProps {
   params: Promise<{ slug: string }>;
 }
 
+// Names that should not generate artist pages
+const NON_ARTIST_NAMES = ['Various', 'Unknown', 'Anonymous', 'Splendor Solis'];
+
+function isNonArtist(name: string): boolean {
+  return NON_ARTIST_NAMES.some(n => name.toLowerCase().startsWith(n.toLowerCase()));
+}
+
 async function getArtist(slug: string) {
   const db = await getDb();
 
   // Slug can be "Leonardo-da-Vinci" (dashes) or "Leonardo%20da%20Vinci" (encoded)
   const artistName = decodeURIComponent(slug).replace(/-/g, ' ');
+
+  // Don't generate pages for non-artist names
+  if (isNonArtist(artistName)) return null;
+
   const escaped = artistName.replace(/[.*+?^${}()|[\]\\]/g, '\\$&');
   const authorRegex = { $regex: `^${escaped}$`, $options: 'i' };
 
@@ -30,7 +41,7 @@ async function getArtist(slug: string) {
         { projection: {
           slug: 1, title: 1, display_title: 1, author: 1, published: 1,
           resource_type: 1, medium: 1, thumbnail: 1, thumbnail_blob: 1,
-          commons_width: 1, commons_height: 1,
+          commons_width: 1, commons_height: 1, attribution_note: 1,
         }},
       )
       .sort({ published: 1 })
@@ -216,7 +227,9 @@ export default async function ArtistPage({ params }: PageProps) {
                   <h3 className="text-sm font-medium leading-tight line-clamp-2 group-hover:text-accent-rust transition-colors" style={{ color: 'var(--text-primary)' }}>
                     {a.display_title || a.title}
                   </h3>
-                  {a.published && <p className="text-xs mt-0.5" style={{ color: 'var(--text-muted)' }}>{a.published}</p>}
+                  <p className="text-xs mt-0.5" style={{ color: 'var(--text-muted)' }}>
+                    {[a.attribution_note ? `(${a.attribution_note})` : '', a.published].filter(Boolean).join(' · ')}
+                  </p>
                 </div>
               </Link>
             );
