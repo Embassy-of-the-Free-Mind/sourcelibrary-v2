@@ -90,6 +90,7 @@ const unfixable = [];
 
 // Process in batches of 50
 const BATCH = 50;
+let batchErrors = 0;
 for (let i = 0; i < books.length; i += BATCH) {
   if (LIMIT && fixed >= LIMIT) break;
 
@@ -100,8 +101,10 @@ for (let i = 0; i < books.length; i += BATCH) {
   // Strategy: decode the thumbnail URL to extract the original image URL,
   // then match against page photo/photo_original/archived_photo fields.
 
+  let pages;
+  try {
   // Also get page 1 as fallback
-  const pages = await db.collection('pages').find({
+  pages = await db.collection('pages').find({
     book_id: { $in: bookIds },
     page_number: { $lte: 20 },
   }, {
@@ -110,7 +113,12 @@ for (let i = 0; i < books.length; i += BATCH) {
       photo: 1, photo_original: 1, archived_photo: 1,
       thumbnail_blob: 1, cropped_photo: 1,
     }
-  }).sort({ book_id: 1, page_number: 1 }).toArray();
+  }).sort({ book_id: 1, page_number: 1 }).maxTimeMS(30000).toArray();
+  } catch (err) {
+    batchErrors++;
+    console.log(`  [WARN] Batch ${Math.floor(i / BATCH) + 1} failed: ${err.message?.slice(0, 80)}`);
+    continue;
+  }
 
   // Group by book_id
   const pagesByBook = new Map();
@@ -205,6 +213,7 @@ console.log(`Total external thumbnails: ${books.length}`);
 console.log(`${DRY_RUN ? 'Would fix' : 'Fixed'}: ${fixed}`);
 console.log(`No matching page: ${noMatch}`);
 console.log(`No archived_photo: ${noArchive}`);
+if (batchErrors > 0) console.log(`Batch errors (skipped): ${batchErrors}`);
 
 if (changes.length > 0) {
   console.log(`\n--- Changes ${DRY_RUN ? '(preview)' : '(applied)'} ---`);
