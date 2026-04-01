@@ -22,6 +22,7 @@ const args = process.argv.slice(2);
 const CONCURRENCY = parseInt(args.find(a => a.startsWith('--concurrency='))?.split('=')[1] || '5');
 const LIMIT = parseInt(args.find(a => a.startsWith('--limit='))?.split('=')[1] || '0');
 const DRY_RUN = args.includes('--dry-run');
+const USE_WAREHOUSE = args.includes('--warehouse');
 const MAX_TOOLS_OLD = 5; // Books verified with this many tools or fewer get re-verified
 
 // Env loading
@@ -59,13 +60,15 @@ async function main() {
   await client.connect();
   const db = client.db('bookstore');
 
+  const booksCol = USE_WAREHOUSE ? 'books_warehouse' : 'books';
+
   // Find all first-translation books verified with old pipeline
   // Can't use $expr/$size in countDocuments reliably when field may be missing.
   // Use aggregation to find books with old-pipeline tool counts.
   // Re-verify books with old pipeline across all Western languages.
   const matchStage = {
     'translation_verification.tools_called': { $exists: true, $type: 'array' },
-    language: { $in: ['German', 'French', 'Greek', 'Hebrew', 'Italian', 'Dutch', 'Spanish', 'Portuguese', 'Arabic', 'Syriac', 'Armenian'] },
+    language: { $in: ['Latin', 'German', 'French', 'Greek', 'Hebrew', 'Italian', 'Dutch', 'Spanish', 'Portuguese', 'Arabic', 'Syriac', 'Armenian'] },
   };
   const sizeFilter = {
     $expr: {
@@ -76,7 +79,7 @@ async function main() {
     },
   };
 
-  const countResult = await db.collection('books').aggregate([
+  const countResult = await db.collection(booksCol).aggregate([
     { $match: matchStage },
     { $match: sizeFilter },
     { $count: 'total' },
@@ -86,13 +89,14 @@ async function main() {
 
   console.log(`\nBatch Re-verification`);
   console.log(`=====================`);
+  console.log(`Collection: ${booksCol}`);
   console.log(`Target: ${total} books verified with ≤${MAX_TOOLS_OLD} tools`);
   console.log(`Processing: ${effectiveLimit}${LIMIT > 0 ? ' (limited)' : ''}`);
   console.log(`Concurrency: ${CONCURRENCY}`);
   console.log(`Mode: ${DRY_RUN ? 'DRY RUN (no DB writes)' : 'LIVE (writing to DB)'}`);
   console.log(`Log: ${LOG_PATH}\n`);
 
-  const books = await db.collection('books').aggregate([
+  const books = await db.collection(booksCol).aggregate([
     { $match: matchStage },
     { $match: sizeFilter },
     { $project: { id: 1, author: 1, display_title: 1, title: 1, language: 1,
@@ -129,6 +133,7 @@ async function main() {
         const result = await verifyFirstTranslation(db, book.id, {
           dryRun: DRY_RUN,
           force: true,
+          collection: USE_WAREHOUSE ? 'books_warehouse' : 'books',
         });
 
         if (!result.success) {
