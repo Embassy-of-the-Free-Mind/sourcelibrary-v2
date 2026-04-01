@@ -1,0 +1,228 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Museum Image Sources — Source Library</title>
+  <style>
+    :root { --bg: #0d0d0d; --surface: #1a1a1a; --border: #2a2a2a; --text: #e0e0e0; --muted: #888; --accent: #c9a84c; --green: #4ade80; --red: #f87171; --blue: #60a5fa; }
+    * { margin: 0; padding: 0; box-sizing: border-box; }
+    body { font-family: 'Inter', system-ui, sans-serif; background: var(--bg); color: var(--text); line-height: 1.6; padding: 2rem; max-width: 1200px; margin: 0 auto; }
+    h1 { font-size: 1.8rem; color: var(--accent); margin-bottom: 0.5rem; }
+    .subtitle { color: var(--muted); margin-bottom: 2rem; }
+    h2 { font-size: 1.3rem; color: var(--accent); margin: 2rem 0 1rem; border-bottom: 1px solid var(--border); padding-bottom: 0.5rem; }
+    h3 { font-size: 1.1rem; margin: 1.5rem 0 0.5rem; }
+    table { width: 100%; border-collapse: collapse; margin: 1rem 0; }
+    th, td { padding: 0.6rem 1rem; text-align: left; border-bottom: 1px solid var(--border); }
+    th { color: var(--accent); font-weight: 600; font-size: 0.85rem; text-transform: uppercase; letter-spacing: 0.05em; }
+    td { font-size: 0.9rem; }
+    .tag { display: inline-block; padding: 0.15rem 0.5rem; border-radius: 3px; font-size: 0.75rem; font-weight: 600; }
+    .tag-cc0 { background: rgba(74, 222, 128, 0.15); color: var(--green); }
+    .tag-ccby { background: rgba(96, 165, 250, 0.15); color: var(--blue); }
+    .tag-restricted { background: rgba(248, 113, 113, 0.15); color: var(--red); }
+    .tag-iiif { background: rgba(201, 168, 76, 0.15); color: var(--accent); }
+    .tag-api { background: rgba(168, 85, 247, 0.15); color: #a855f7; }
+    .res { font-family: monospace; color: var(--muted); }
+    .notes { color: var(--muted); font-size: 0.85rem; }
+    .stats { display: grid; grid-template-columns: repeat(auto-fit, minmax(200px, 1fr)); gap: 1rem; margin: 1rem 0 2rem; }
+    .stat { background: var(--surface); border: 1px solid var(--border); border-radius: 8px; padding: 1rem; }
+    .stat-value { font-size: 1.8rem; font-weight: 700; color: var(--accent); }
+    .stat-label { font-size: 0.8rem; color: var(--muted); text-transform: uppercase; }
+    code { background: var(--surface); padding: 0.15rem 0.4rem; border-radius: 3px; font-size: 0.85rem; }
+    pre { background: var(--surface); padding: 1rem; border-radius: 6px; overflow-x: auto; font-size: 0.85rem; margin: 0.5rem 0; }
+    a { color: var(--blue); text-decoration: none; }
+    a:hover { text-decoration: underline; }
+    .priority { font-weight: 700; }
+    .priority-1 { color: var(--green); }
+    .priority-2 { color: var(--blue); }
+    .priority-3 { color: var(--muted); }
+  </style>
+</head>
+<body>
+  <h1>Museum Image Sources</h1>
+  <p class="subtitle">High-resolution artwork acquisition strategy for Source Library. Last updated: <span id="date"></span></p>
+
+  <div class="stats">
+    <div class="stat"><div class="stat-value" id="total">7,091</div><div class="stat-label">Total Artworks</div></div>
+    <div class="stat"><div class="stat-value" id="hires">6,290</div><div class="stat-label">&ge; 800px</div></div>
+    <div class="stat"><div class="stat-value" id="lowres">801</div><div class="stat-label">&lt; 800px (hidden)</div></div>
+    <div class="stat"><div class="stat-value" id="great">3,536</div><div class="stat-label">&ge; 3000px</div></div>
+  </div>
+
+  <h2>Tier 1 — Open API, CC0, High Resolution</h2>
+  <p class="notes">Direct API access, public domain, machine-readable. Can be automated fully.</p>
+  <table>
+    <tr><th>Museum</th><th>API</th><th>License</th><th>Max Res</th><th>Collection Size</th><th>Import Approach</th></tr>
+    <tr>
+      <td><strong>Rijksmuseum</strong></td>
+      <td><span class="tag tag-api">REST API</span></td>
+      <td><span class="tag tag-cc0">CC0</span></td>
+      <td class="res">~4500px</td>
+      <td>700K+ objects, 400K+ with images</td>
+      <td>API key required (free). <code>GET /api/en/collection?q=...&imgonly=true</code>. Images via <code>=s3840</code> suffix. Already integrated in upgrade script.</td>
+    </tr>
+    <tr>
+      <td><strong>Metropolitan Museum</strong></td>
+      <td><span class="tag tag-api">REST API</span></td>
+      <td><span class="tag tag-cc0">CC0</span></td>
+      <td class="res">~4000px</td>
+      <td>490K objects, ~375K public domain</td>
+      <td>No key needed. <code>collectionapi.metmuseum.org/public/collection/v1/search</code>. Check <code>isPublicDomain</code>. Already integrated.</td>
+    </tr>
+    <tr>
+      <td><strong>Art Institute of Chicago</strong></td>
+      <td><span class="tag tag-api">REST API</span> <span class="tag tag-iiif">IIIF</span></td>
+      <td><span class="tag tag-cc0">CC0</span></td>
+      <td class="res">~8000px</td>
+      <td>300K objects, 120K+ public domain</td>
+      <td>No key needed. <code>api.artic.edu/api/v1/artworks/search</code>. IIIF images via <code>artic.edu/iiif/2/{image_id}/full/3840,/0/default.jpg</code>. Already integrated.</td>
+    </tr>
+    <tr>
+      <td><strong>Cleveland Museum of Art</strong></td>
+      <td><span class="tag tag-api">REST API</span></td>
+      <td><span class="tag tag-cc0">CC0</span></td>
+      <td class="res">~6000px</td>
+      <td>61K objects, 30K+ open access</td>
+      <td>No key needed. <code>openaccess-api.clevelandart.org/api/artworks/?q=...</code>. Check <code>share_license_status: "CC0"</code>.</td>
+    </tr>
+    <tr>
+      <td><strong>National Gallery of Art (DC)</strong></td>
+      <td><span class="tag tag-api">REST API</span> <span class="tag tag-iiif">IIIF</span></td>
+      <td><span class="tag tag-cc0">CC0</span></td>
+      <td class="res">~8000px</td>
+      <td>150K objects, images for ~50K</td>
+      <td><code>api.nga.gov</code> with DEMO_KEY. IIIF for full-res. Some rate limiting.</td>
+    </tr>
+    <tr>
+      <td><strong>Wikimedia Commons</strong></td>
+      <td><span class="tag tag-api">MediaWiki API</span></td>
+      <td><span class="tag tag-cc0">CC0</span> <span class="tag tag-ccby">CC-BY</span></td>
+      <td class="res">varies</td>
+      <td>90M+ files</td>
+      <td>Primary source for current artworks. Quality varies wildly. Use Wikidata P18 to find alternate/better uploads. Current importer: <code>scripts/import-commons-artworks.mjs</code></td>
+    </tr>
+  </table>
+
+  <h2>Tier 2 — IIIF / Structured Access, Often CC0</h2>
+  <p class="notes">IIIF Image API or structured downloads. May need scraping but images are explicitly open.</p>
+  <table>
+    <tr><th>Museum</th><th>API</th><th>License</th><th>Max Res</th><th>Notes</th></tr>
+    <tr>
+      <td><strong>Yale Center for British Art</strong></td>
+      <td><span class="tag tag-iiif">IIIF</span></td>
+      <td><span class="tag tag-cc0">CC0</span></td>
+      <td class="res">~8000px</td>
+      <td>IIIF manifests. <code>collections.britishart.yale.edu</code>. Great for Blake, Turner.</td>
+    </tr>
+    <tr>
+      <td><strong>Europeana</strong></td>
+      <td><span class="tag tag-api">REST API</span></td>
+      <td><span class="tag tag-cc0">CC0</span> <span class="tag tag-ccby">mixed</span></td>
+      <td class="res">varies</td>
+      <td>Aggregator. 60M+ items. API key required. Links to original institution images. Check <code>rights</code> field per item.</td>
+    </tr>
+    <tr>
+      <td><strong>Smithsonian Open Access</strong></td>
+      <td><span class="tag tag-api">REST API</span></td>
+      <td><span class="tag tag-cc0">CC0</span></td>
+      <td class="res">~6000px</td>
+      <td>12M images across all Smithsonian museums. <code>api.si.edu/openaccess/api/v1.0/search</code>.</td>
+    </tr>
+    <tr>
+      <td><strong>Getty Museum</strong></td>
+      <td><span class="tag tag-iiif">IIIF</span></td>
+      <td><span class="tag tag-cc0">CC0</span></td>
+      <td class="res">~8000px</td>
+      <td>Open Content Program. IIIF manifests. No bulk API — scrape collection pages or use Wikidata links.</td>
+    </tr>
+    <tr>
+      <td><strong>Bibliothèque nationale de France</strong></td>
+      <td><span class="tag tag-iiif">IIIF</span></td>
+      <td><span class="tag tag-ccby">Mixed</span></td>
+      <td class="res">~6000px</td>
+      <td>Gallica IIIF. Prints, manuscripts, maps. Some rate limiting.</td>
+    </tr>
+    <tr>
+      <td><strong>Kunsthistorisches Museum (Vienna)</strong></td>
+      <td><span class="tag tag-iiif">IIIF</span></td>
+      <td><span class="tag tag-restricted">Research only</span></td>
+      <td class="res">very high</td>
+      <td>Holds the Raphael "Saint Margaret" that started this investigation. IIIF available but terms restrictive. Check individual items.</td>
+    </tr>
+    <tr>
+      <td><strong>National Gallery (London)</strong></td>
+      <td><span class="tag tag-iiif">IIIF</span></td>
+      <td><span class="tag tag-ccby">CC-BY-NC</span></td>
+      <td class="res">~6000px</td>
+      <td>IIIF manifests via <code>data.ng-london.org.uk</code>. Non-commercial only.</td>
+    </tr>
+  </table>
+
+  <h2>Tier 3 — Google Arts & Culture / High-Res Partners</h2>
+  <p class="notes">Gigapixel images available, but access is restricted. Best for manual sourcing of key works.</p>
+  <table>
+    <tr><th>Museum / Platform</th><th>Access</th><th>License</th><th>Max Res</th><th>Notes</th></tr>
+    <tr>
+      <td><strong>Google Arts & Culture</strong></td>
+      <td><span class="tag tag-restricted">No API</span></td>
+      <td><span class="tag tag-restricted">View only</span></td>
+      <td class="res">gigapixel</td>
+      <td>Many partner museums. No download API. Tiles can be assembled but ToS-prohibited. Use for reference only — link, don't scrape.</td>
+    </tr>
+    <tr>
+      <td><strong>Web Gallery of Art</strong></td>
+      <td><span class="tag tag-restricted">Web only</span></td>
+      <td><span class="tag tag-restricted">Educational</span></td>
+      <td class="res">~2000px</td>
+      <td>Comprehensive medieval/Renaissance coverage. No API. Fair use only.</td>
+    </tr>
+  </table>
+
+  <h2>Upgrade Pipeline</h2>
+  <p>The automated upgrade script checks sources in this order:</p>
+  <ol style="margin: 1rem 0; padding-left: 2rem;">
+    <li><strong>Wikidata → alternate Commons images</strong> — same artwork may have multiple uploads, some much larger</li>
+    <li><strong>Rijksmuseum API</strong> — 93K pre-1700 prints, all CC0 at high resolution</li>
+    <li><strong>Met API</strong> — 375K public domain works, direct image URLs</li>
+    <li><strong>Art Institute of Chicago</strong> — IIIF, often highest resolution available</li>
+    <li><strong>National Gallery of Art</strong> — IIIF, US public domain</li>
+  </ol>
+
+  <h3>Running the upgrade</h3>
+  <pre>
+# Dry run first
+set -a; source .env.production.local; set +a
+node scripts/upgrade-lowres-artworks.mjs --dry-run --limit 20
+
+# Live run (downloads, uploads to R2, updates DB, unhides)
+node scripts/upgrade-lowres-artworks.mjs --limit 50
+  </pre>
+
+  <h3>Adding a new museum source</h3>
+  <p>To add a new museum API to the upgrade pipeline:</p>
+  <ol style="margin: 1rem 0; padding-left: 2rem;">
+    <li>Add a <code>searchMuseum(title, artist)</code> function that returns <code>{ source, imageUrl, objectUrl, objectNumber, title, artist, license }</code></li>
+    <li>Add it to the fallback chain in <code>main()</code></li>
+    <li>Ensure the license is CC0 or CC-BY compatible</li>
+  </ol>
+
+  <h2>Wikidata Enrichment</h2>
+  <p>For every artwork the upgrade script touches, it pulls full Wikidata metadata:</p>
+  <table>
+    <tr><th>Property</th><th>Wikidata</th><th>Stored As</th></tr>
+    <tr><td>Image</td><td>P18</td><td><code>commons_full_url</code></td></tr>
+    <tr><td>Creator</td><td>P170</td><td><code>author</code> (resolved label)</td></tr>
+    <tr><td>Collection</td><td>P195</td><td><code>holding_institution</code></td></tr>
+    <tr><td>Location</td><td>P276</td><td><code>current_location</code></td></tr>
+    <tr><td>Material</td><td>P186</td><td><code>materials[]</code></td></tr>
+    <tr><td>Inception</td><td>P571</td><td><code>date_inception</code></td></tr>
+    <tr><td>Inventory #</td><td>P217</td><td><code>inventory_number</code></td></tr>
+    <tr><td>Described at</td><td>P973</td><td><code>museum_url</code></td></tr>
+    <tr><td>Copyright</td><td>P6216</td><td>checked for public domain</td></tr>
+  </table>
+
+  <script>
+    document.getElementById('date').textContent = new Date().toISOString().split('T')[0];
+  </script>
+</body>
+</html>
