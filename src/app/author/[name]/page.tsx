@@ -1,7 +1,5 @@
 import { Metadata } from 'next';
 import Link from 'next/link';
-import Image from 'next/image';
-import { Book as BookIcon } from 'lucide-react';
 import SiteHeader from '@/components/layout/SiteHeader';
 import { getDb } from '@/lib/mongodb';
 import { notFound, redirect } from 'next/navigation';
@@ -336,66 +334,45 @@ export default async function AuthorPage({ params }: AuthorPageProps) {
         </div>
       </div>
 
-      {/* Content */}
-      <main className="max-w-5xl mx-auto px-4 py-8">
-        <div className="grid gap-6 sm:grid-cols-2 lg:grid-cols-3">
+      {/* Content — catalog list */}
+      <main className="max-w-4xl mx-auto px-6 md:px-12 py-8 md:py-12">
+        <div className="divide-y" style={{ borderColor: 'var(--border-light)' }}>
           {books.map(book => {
             const summaryText = typeof book.summary === 'string'
               ? book.summary
               : book.summary?.data;
+            const pct = book.translation_percent ?? 0;
 
             return (
               <Link
                 key={book.id}
                 href={bookUrl(book)}
-                className="group bg-white rounded-xl border border-stone-200 overflow-hidden hover:border-accent-gold/20 hover:shadow-lg transition-all"
+                className="flex items-start gap-4 py-4 hover:opacity-70 transition-opacity"
               >
-                {/* Thumbnail */}
-                <div className="aspect-[3/2] bg-stone-100 relative overflow-hidden">
-                  {book.thumbnail ? (
-                    <Image
-                      src={book.thumbnail}
-                      alt={book.title}
-                      fill
-                      className="object-cover group-hover:scale-105 transition-transform duration-300"
-                      sizes="(max-width: 640px) 100vw, (max-width: 1024px) 50vw, 33vw"
-                    />
-                  ) : (
-                    <div className="absolute inset-0 flex items-center justify-center">
-                      <BookIcon className="w-12 h-12 text-stone-300" />
-                    </div>
-                  )}
-                  {/* Translation badge */}
-                  {book.translation_percent !== undefined && (
-                    <div className={`absolute top-2 right-2 px-2 py-1 rounded-full text-xs font-medium ${
-                      (book.translation_percent ?? 0) >= 95
-                        ? 'bg-status-success text-white'
-                        : (book.translation_percent ?? 0) > 0
-                          ? 'bg-accent-gold/80 text-white'
-                          : 'bg-stone-500 text-white'
-                    }`}>
-                      {(book.translation_percent ?? 0) >= 95
-                        ? 'Translated'
-                        : `${book.translation_percent}%`}
-                    </div>
-                  )}
-                </div>
-
-                {/* Info */}
-                <div className="p-4">
-                  <h3 className="font-serif font-semibold text-stone-900 group-hover:text-accent-rust transition-colors line-clamp-2">
+                <div className="flex-1 min-w-0">
+                  <p className="font-medium text-sm" style={{ color: 'var(--text-primary)' }}>
                     {book.display_title || book.title}
-                  </h3>
-                  <div className="flex items-center gap-2 mt-2 text-xs text-stone-500">
-                    <span className="px-2 py-0.5 bg-stone-100 rounded">{book.language}</span>
-                    {book.published && <span>{book.published}</span>}
-                  </div>
+                  </p>
+                  <p className="text-xs mt-0.5" style={{ color: 'var(--text-muted)' }}>
+                    {book.published || ''}
+                    {book.language ? ` · ${book.language}` : ''}
+                    {book.pages_count ? ` · ${book.pages_count} pp.` : ''}
+                  </p>
                   {summaryText && (
-                    <p className="text-sm text-stone-600 mt-3 line-clamp-2">
+                    <p className="text-xs mt-1 line-clamp-1" style={{ color: 'var(--text-faint)' }}>
                       {summaryText}
                     </p>
                   )}
                 </div>
+                <span className={`shrink-0 px-2 py-0.5 rounded text-xs font-medium ${
+                  pct >= 95
+                    ? 'bg-status-success/10 text-status-success'
+                    : pct > 0
+                      ? 'bg-accent-gold/10 text-accent-gold'
+                      : 'bg-stone-100 text-stone-400'
+                }`}>
+                  {pct >= 95 ? 'Translated' : `${pct}%`}
+                </span>
               </Link>
             );
           })}
