@@ -28,8 +28,10 @@ interface AuthorEntity {
   name: string;
   canonical_name?: string;
   description?: string;
+  aliases?: string[];
   viaf_id?: string;
   wikidata_id?: string;
+  wikipedia_url?: string;
   wikidata_birth_date?: string;
   wikidata_death_date?: string;
 }
@@ -123,7 +125,7 @@ async function loadAuthorData(db: any, slug: string): Promise<{
     try {
       entity = await db.collection('entities').findOne(
         { _id: new ObjectId(repBook.author_entity_id) },
-        { projection: { name: 1, canonical_name: 1, description: 1, viaf_id: 1, wikidata_id: 1, wikidata_birth_date: 1, wikidata_death_date: 1 } }
+        { projection: { name: 1, canonical_name: 1, description: 1, aliases: 1, viaf_id: 1, wikidata_id: 1, wikipedia_url: 1, wikidata_birth_date: 1, wikidata_death_date: 1 } }
       ) as AuthorEntity | null;
     } catch { /* invalid ObjectId */ }
 
@@ -153,7 +155,7 @@ async function loadAuthorData(db: any, slug: string): Promise<{
       try {
         entity = await db.collection('entities').findOne(
           { _id: new ObjectId(entityBookId) },
-          { projection: { name: 1, canonical_name: 1, description: 1, viaf_id: 1, wikidata_id: 1, wikidata_birth_date: 1, wikidata_death_date: 1 } }
+          { projection: { name: 1, canonical_name: 1, description: 1, aliases: 1, viaf_id: 1, wikidata_id: 1, wikipedia_url: 1, wikidata_birth_date: 1, wikidata_death_date: 1 } }
         ) as AuthorEntity | null;
       } catch { /* invalid ObjectId */ }
     }
@@ -231,40 +233,84 @@ export default async function AuthorPage({ params }: AuthorPageProps) {
     { projection: { name: 1 } }
   );
 
+  // Derive Wikipedia URL from entity
+  const wikipediaUrl = entity?.wikipedia_url
+    || (entity?.wikidata_id ? `https://www.wikidata.org/wiki/Special:GoToLinkedPage/enwiki/${entity.wikidata_id}` : null);
+
+  // Collect distinct name variants from books (for "Also known as")
+  const nameVariants = entity?.aliases?.length
+    ? entity.aliases.filter(a => a.toLowerCase() !== authorName.toLowerCase())
+    : [];
+  // Also add unique author strings from books that differ from canonical
+  const bookVariants = [...new Set(books.map(b => b.author))]
+    .filter(a => a && a !== authorName && !nameVariants.some(v => v.toLowerCase() === a.toLowerCase()));
+  const allVariants = [...nameVariants, ...bookVariants].slice(0, 8);
+
+  // Language breakdown for stats
+  const langCounts = new Map<string, number>();
+  for (const b of books) {
+    if (b.language) langCounts.set(b.language, (langCounts.get(b.language) || 0) + 1);
+  }
+  const languages = [...langCounts.entries()].sort((a, b) => b[1] - a[1]);
+
   return (
-    <div className="min-h-screen bg-stone-50">
+    <div className="min-h-screen" style={{ background: 'var(--bg-cream)' }}>
       <SiteHeader variant="light" />
 
       {/* Hero */}
       <div className="bg-gradient-to-b from-stone-800 to-stone-900 text-white">
-        <div className="max-w-5xl mx-auto px-4 py-12">
-          <h1 className="text-3xl sm:text-4xl font-serif font-bold">
+        <div className="max-w-5xl mx-auto px-4 py-12 sm:py-16">
+          <h1 className="text-3xl sm:text-4xl font-display font-bold">
             {authorName}
           </h1>
-          <div className="flex flex-wrap items-center gap-4 mt-3">
-            <p className="text-accent-gold font-medium">
-              {books.length} work{books.length !== 1 ? 's' : ''}
-            </p>
-            {lifeDates && (
-              <p className="text-stone-400">{lifeDates}</p>
-            )}
-            {!lifeDates && yearRange && (
-              <p className="text-stone-400">{yearRange}</p>
-            )}
-          </div>
+          {lifeDates && (
+            <p className="text-stone-400 mt-1 text-lg">{lifeDates}</p>
+          )}
+          {!lifeDates && yearRange && (
+            <p className="text-stone-400 mt-1">fl. {yearRange}</p>
+          )}
           {entity?.description && (
-            <p className="text-stone-300 mt-2 text-sm max-w-2xl">
+            <p className="text-stone-300 mt-3 text-sm max-w-2xl leading-relaxed">
               {entity.description}
             </p>
           )}
-          <div className="flex flex-wrap gap-2 mt-4">
+          {allVariants.length > 0 && (
+            <p className="text-stone-500 mt-2 text-xs">
+              Also known as: {allVariants.join(' · ')}
+            </p>
+          )}
+
+          {/* Stats row */}
+          <div className="flex flex-wrap items-center gap-4 mt-5 text-sm">
+            <span className="text-accent-gold font-medium">
+              {books.length} work{books.length !== 1 ? 's' : ''}
+            </span>
+            {languages.length > 0 && (
+              <span className="text-stone-400">
+                {languages.map(([lang]) => lang).join(', ')}
+              </span>
+            )}
+          </div>
+
+          {/* External links */}
+          <div className="flex flex-wrap gap-2 mt-5">
             {encyclopediaEntity && (
               <Link
                 href={`/encyclopedia/${encodeURIComponent(encyclopediaEntity.name)}`}
                 className="inline-block px-3 py-1.5 text-sm bg-accent-rust/20 text-accent-gold hover:bg-accent-rust/30 rounded-full transition-colors"
               >
-                View encyclopedia entry
+                Encyclopedia entry
               </Link>
+            )}
+            {wikipediaUrl && (
+              <a
+                href={wikipediaUrl}
+                target="_blank"
+                rel="noopener noreferrer"
+                className="inline-block px-3 py-1.5 text-sm bg-stone-700/50 text-stone-300 hover:bg-stone-700 rounded-full transition-colors"
+              >
+                Wikipedia
+              </a>
             )}
             {entity?.viaf_id && (
               <a
