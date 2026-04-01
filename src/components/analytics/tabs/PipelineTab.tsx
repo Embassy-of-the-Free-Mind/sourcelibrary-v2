@@ -204,6 +204,7 @@ export default function PipelineTab({ hours }: PipelineTabProps) {
           'translate_submitted', 'translate_partial', 'translate_complete',
           'enriching', 'enriched', 'chapters', 'chapters_complete',
           'images_submitted', 'images_complete',
+          'cover_selected',
           'complete', 'needs_attention', 'failed',
         ];
         const sorted = statusOrder
@@ -223,6 +224,7 @@ export default function PipelineTab({ hours }: PipelineTabProps) {
           enriching: '#10b981', enriched: '#10b981',
           chapters: '#06b6d4', chapters_complete: '#06b6d4',
           images_submitted: '#ec4899', images_complete: '#ec4899',
+          cover_selected: '#a855f7',
           complete: '#16a34a',
           needs_attention: '#dc2626', failed: '#dc2626',
         };
