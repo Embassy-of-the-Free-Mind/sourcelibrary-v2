@@ -90,6 +90,8 @@ Analyze this artwork image and return JSON with these fields:
     }
   ],
   "inscriptions": "If the image contains readable text (Latin inscriptions, titles, captions, cartouches, verses, dedications, labels), transcribe it here verbatim. Preserve line breaks. If no readable text, set to null.",
+  "inscriptions_translation": "If inscriptions are in a non-English language (Latin, Dutch, German, French, etc.), provide an English translation. If already English or no inscriptions, set to null.",
+  "inscriptions_language": "Language of the inscriptions (e.g., 'Latin', 'Dutch', 'German'). Null if no inscriptions.",
   "has_readable_text": true,
   "figures_depicted": ["Named figures, historical persons, or figure types (e.g., 'Mercury', 'alchemist', 'Hermes Trismegistus')"],
   "symbols": ["Identifiable symbols with specific iconographic meaning (e.g., 'caduceus', 'ouroboros', 'pelican-in-her-piety'). NOT generic items like 'tree' or 'building'."]
