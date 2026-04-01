@@ -127,13 +127,15 @@ async function applyProvenanceMarks(buffer) {
  * @returns {{ display: Buffer, thumb: Buffer }} - The generated variants
  */
 export async function generateDisplayVariants(fullResBuffer) {
-  // Display: 1200px wide with provenance marks
+  // Display: 1200px wide, provenance marks on ~10% of pages (random)
   const displayResized = await sharp(fullResBuffer)
     .resize(DISPLAY_WIDTH, null, { fit: 'inside', withoutEnlargement: true })
     .jpeg({ quality: DISPLAY_QUALITY, progressive: true })
     .toBuffer();
 
-  const display = await applyProvenanceMarks(displayResized);
+  const display = Math.random() < 0.1
+    ? await applyProvenanceMarks(displayResized)
+    : displayResized;
 
   // Thumbnail: 150px wide, no provenance marks (too small)
   const thumb = await sharp(fullResBuffer)
