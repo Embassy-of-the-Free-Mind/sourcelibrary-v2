@@ -47,32 +47,38 @@ console.log(`\n=== Re-host External Thumbnails ===`);
 console.log(`Mode: ${DRY_RUN ? 'DRY RUN' : 'LIVE'}`);
 if (LIMIT) console.log(`Limit: ${LIMIT}`);
 
-// Find books with external thumbnails (paginated)
-console.log('Scanning for external thumbnails...');
+// Find books with external thumbnails using known provider patterns.
+// Direct queries by provider are fast (indexed). Avoids scanning all 9K books.
+console.log('Finding external-thumbnail books by provider...');
 const books = [];
-let lastId = null;
+const providers = ['e-rara', 'vatican', 'mdz', 'internet_archive', 'google_books',
+  'loc', 'etcsl', 'iiif', 'cambridge', 'library_of_congress'];
 
-while (true) {
-  const filter = { visible: true, pages_count: { $gt: 0 } };
-  if (lastId) filter._id = { $gt: lastId };
+for (const provider of providers) {
+  try {
+    const batch = await db.collection('books')
+      .find(
+        { visible: true, pages_count: { $gt: 0 }, 'image_source.provider': provider },
+        { projection: { id: 1, title: 1, thumbnail: 1 } }
+      )
+      .hint('books_provider_browse_idx')
+      .maxTimeMS(30000)
+      .toArray();
 
-  const batch = await db.collection('books')
-    .find(filter, { projection: { _id: 1, id: 1, title: 1, thumbnail: 1 } })
-    .sort({ _id: 1 })
-    .limit(500)
-    .toArray();
-
-  if (batch.length === 0) break;
-  lastId = batch[batch.length - 1]._id;
-
-  for (const b of batch) {
-    if (b.thumbnail && !b.thumbnail.startsWith(R2_PREFIX) && !b.thumbnail.startsWith(BLOB_PREFIX)) {
-      books.push(b);
+    let count = 0;
+    for (const b of batch) {
+      if (b.thumbnail && !b.thumbnail.startsWith(R2_PREFIX) && !b.thumbnail.startsWith(BLOB_PREFIX)) {
+        books.push(b);
+        count++;
+      }
     }
+    if (count > 0) console.log(`  ${provider}: ${count} external thumbnails`);
+  } catch (err) {
+    console.log(`  ${provider}: query failed — ${err.message?.slice(0, 60)}`);
   }
 }
 
-console.log(`Found ${books.length} books with external thumbnails\n`);
+console.log(`\nFound ${books.length} books with external thumbnails\n`);
 
 let rehosted = 0, failed = 0, skipped = 0;
 
