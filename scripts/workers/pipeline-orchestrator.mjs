@@ -3343,33 +3343,39 @@ async function run() {
     // ── Summary ──
     const duration = Date.now() - startTime;
 
-    // Pipeline funnel snapshot
-    let facetResult;
+    // Pipeline funnel + page totals — use enrichment_snapshot (fast single-doc read)
+    // instead of $facet which times out on Atlas under load
+    let counts = {};
+    let totals = { books: 0, pages: 0, ocr: 0, translated: 0 };
     let facetTimedOut = false;
     try {
-      [facetResult] = await db.collection('books').aggregate([{
-        $facet: {
-          funnel: [
-            { $match: { 'pipeline_auto.status': { $exists: true } } },
-            { $group: { _id: '$pipeline_auto.status', count: { $sum: 1 } } },
-          ],
-          totals: [{ $group: {
-            _id: null,
-            books: { $sum: 1 },
-            pages: { $sum: { $ifNull: ['$pages_count', 0] } },
-            ocr: { $sum: { $ifNull: ['$pages_ocr', 0] } },
-            translated: { $sum: { $ifNull: ['$pages_translated', 0] } },
-          }}],
-        },
-      }], { maxTimeMS: 15000 }).toArray();
-    } catch {
-      console.log('  Summary facet timed out — skipping funnel snapshot');
+      const snapshot = await db.collection('system_config').findOne({ _id: 'enrichment_snapshot' });
+      if (snapshot?.funnel && snapshot?.enrichment) {
+        counts = snapshot.funnel;
+        totals = {
+          books: snapshot.enrichment.total || 0,
+          pages: 0, // not needed for snapshot write
+          ocr: snapshot.enrichment.has_ocr || 0,
+          translated: snapshot.enrichment.has_translation || 0,
+        };
+        // Get actual page totals from cached book counters (fast indexed sum)
+        const [pageSum] = await db.collection('books').aggregate([
+          { $match: { pages_count: { $gt: 0 } } },
+          { $group: { _id: null, pages: { $sum: '$pages_count' }, ocr: { $sum: '$pages_ocr' }, translated: { $sum: '$pages_translated' } } },
+        ], { maxTimeMS: 10000 }).toArray().catch(() => [{}]);
+        if (pageSum) {
+          totals.pages = pageSum.pages || 0;
+          totals.ocr = pageSum.ocr || 0;
+          totals.translated = pageSum.translated || 0;
+        }
+      } else {
+        console.log('  Enrichment snapshot not available — skipping funnel snapshot');
+        facetTimedOut = true;
+      }
+    } catch (e) {
+      console.log('  Snapshot/totals query failed — skipping funnel snapshot:', e.message);
       facetTimedOut = true;
-      facetResult = { funnel: [], totals: [{ books: 0, pages: 0, ocr: 0, translated: 0 }] };
     }
-
-    const counts = Object.fromEntries((facetResult?.funnel || []).map(s => [s._id, s.count]));
-    const totals = facetResult?.totals?.[0] || { books: 0, pages: 0, ocr: 0, translated: 0 };
 
     console.log(`\n=== PIPELINE FUNNEL ===`);
     for (const [status, count] of Object.entries(counts).sort((a, b) => b[1] - a[1])) {
