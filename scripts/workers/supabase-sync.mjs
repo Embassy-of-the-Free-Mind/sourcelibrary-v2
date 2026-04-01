@@ -195,6 +195,59 @@ for (const config of COLLECTIONS) {
   results.push(result);
 }
 
+// Sync books_catalog (upsert, not insert — books have a primary key)
+{
+  const since = await getLastTimestamp('books_catalog');
+  const query = since
+    ? { visible: true, pages_count: { $gt: 0 }, updated_at: { $gt: since } }
+    : { visible: true, pages_count: { $gt: 0 } };
+  const cursor = db.collection('books').find(query, {
+    projection: {
+      id: 1, slug: 1, title: 1, display_title: 1, author: 1,
+      thumbnail: 1, thumbnail_blob: 1, language: 1, year: 1, published: 1,
+      pages_count: 1, pages_ocr: 1, pages_translated: 1,
+      is_first_translation: 1, visible: 1, quality_score: 1,
+      last_translation_at: 1, updated_at: 1, created_at: 1,
+      categories: 1, collections: 1, collection_relevance: 1,
+      'image_source.provider': 1,
+    },
+  }).batchSize(200);
+
+  let synced = 0, errors = 0;
+  let batch = [];
+  for await (const book of cursor) {
+    batch.push({
+      id: book.id, slug: book.slug || null,
+      title: book.title || 'Untitled', display_title: book.display_title || null,
+      author: book.author || null, thumbnail: book.thumbnail || null,
+      thumbnail_blob: book.thumbnail_blob || null, language: book.language || null,
+      year: typeof book.year === 'number' ? book.year : null,
+      published: book.published || null,
+      pages_count: book.pages_count || 0, pages_ocr: book.pages_ocr || 0,
+      pages_translated: book.pages_translated || 0,
+      is_first_translation: book.is_first_translation === true,
+      visible: book.visible === true, quality_score: book.quality_score || 0,
+      last_translation_at: book.last_translation_at || null,
+      last_processed: book.updated_at || book.created_at || null,
+      created_at: book.created_at || null, updated_at: book.updated_at || null,
+      categories: Array.isArray(book.categories) ? book.categories : [],
+      collections: Array.isArray(book.collections) ? book.collections : [],
+      collection_relevance: book.collection_relevance || null,
+      image_source_provider: book.image_source?.provider || null,
+    });
+    if (batch.length >= 200) {
+      const { error } = await supabase.from('books_catalog').upsert(batch, { onConflict: 'id' });
+      if (error) errors += batch.length; else synced += batch.length;
+      batch = [];
+    }
+  }
+  if (batch.length > 0) {
+    const { error } = await supabase.from('books_catalog').upsert(batch, { onConflict: 'id' });
+    if (error) errors += batch.length; else synced += batch.length;
+  }
+  results.push({ name: 'books_catalog', synced, errors: errors || undefined });
+}
+
 await mongoClient.close();
 
 const totalSynced = results.reduce((s, r) => s + r.synced, 0);
