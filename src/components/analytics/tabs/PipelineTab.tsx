@@ -203,9 +203,12 @@ export default function PipelineTab({ hours }: PipelineTabProps) {
           'metadata_enriched', 'ft_verifying', 'ft_verified',
           'translate_submitted', 'translate_partial', 'translate_complete',
           'enriching', 'enriched', 'chapters', 'chapters_complete',
-          'images_submitted', 'images_complete',
+          'images_submitted', 'images_complete', 'visual_complete',
           'cover_selected',
-          'complete', 'needs_attention', 'failed',
+          'complete',
+          'paused', 'empty_shell', 'not_digitized',
+          'replaced_by_alt_import', 'replaced_by_ia_import', 'duplicate_empty_shell',
+          'needs_attention', 'failed',
         ];
         const sorted = statusOrder
           .filter(s => pipelineData.funnel![s])
@@ -223,9 +226,11 @@ export default function PipelineTab({ hours }: PipelineTabProps) {
           translate_submitted: '#f59e0b', translate_complete: '#f59e0b',
           enriching: '#10b981', enriched: '#10b981',
           chapters: '#06b6d4', chapters_complete: '#06b6d4',
-          images_submitted: '#ec4899', images_complete: '#ec4899',
+          images_submitted: '#ec4899', images_complete: '#ec4899', visual_complete: '#ec4899',
           cover_selected: '#a855f7',
           complete: '#16a34a',
+          paused: '#94a3b8', empty_shell: '#94a3b8', not_digitized: '#94a3b8',
+          replaced_by_alt_import: '#64748b', replaced_by_ia_import: '#64748b', duplicate_empty_shell: '#64748b',
           needs_attention: '#dc2626', failed: '#dc2626',
         };
 
