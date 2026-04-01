@@ -935,18 +935,6 @@ export default function TranslationEditor({
 
             {/* Right side: Mode toggle + Like + extras on desktop */}
             <div className="flex items-center gap-1 sm:gap-2">
-              {isSplitPage && (
-                <button
-                  onClick={() => setShowResetSplitConfirm(true)}
-                  className="hidden sm:flex items-center gap-1.5 px-2.5 py-1.5 rounded-md text-sm font-medium hover:bg-red-50 transition-all"
-                  style={{ color: 'var(--text-muted)' }}
-                  title="Reset this split back to original two-page spread"
-                >
-                  <RotateCcw className="w-4 h-4" />
-                  Reset Split
-                </button>
-              )}
-
               {/* Desktop extras: Font size */}
               <div className="hidden sm:flex items-center p-1 rounded-lg" style={{ background: 'var(--bg-warm)' }}>
                 <div className="relative" ref={fontControlsRef}>
@@ -1540,74 +1528,6 @@ export default function TranslationEditor({
         )}
 
 
-        {/* Reset Split Confirmation Modal (read mode) */}
-        {showResetSplitConfirm && (
-          <div className="fixed inset-0 bg-black/50 flex items-center justify-center z-50 p-4">
-            <div
-              role="dialog"
-              aria-modal="true"
-              aria-labelledby="reset-split-title-read"
-              className="bg-white rounded-xl shadow-2xl max-w-md w-full p-6"
-            >
-              <div className="flex items-center gap-3 mb-4">
-                <div className="w-10 h-10 rounded-full flex items-center justify-center" style={{ background: 'linear-gradient(135deg, #fef3c7 0%, #fde68a 100%)' }}>
-                  <RotateCcw className="w-5 h-5" style={{ color: 'var(--accent-rust, #c45d3a)' }} aria-hidden="true" />
-                </div>
-                <h3 id="reset-split-title-read" className="text-lg font-semibold" style={{ color: 'var(--text-primary)' }}>
-                  Reset Split?
-                </h3>
-              </div>
-
-              <p className="text-sm mb-4" style={{ color: 'var(--text-secondary)' }}>
-                This will merge this page back with its other half into a single two-page spread.
-              </p>
-
-              {hasDataOnSplit && (
-                <div className="rounded-lg p-3 mb-4" style={{ background: 'rgb(254 243 199)', border: '1px solid rgb(251 191 36)' }}>
-                  <p className="text-sm font-medium" style={{ color: 'rgb(146 64 14)' }}>
-                    ⚠️ Warning: OCR or translation data exists
-                  </p>
-                  <p className="text-xs mt-1" style={{ color: 'rgb(180 83 9)' }}>
-                    Resetting will delete the right page and its OCR/translation. The left page data will remain but may not match the full image.
-                  </p>
-                </div>
-              )}
-
-              <p className="text-sm mb-6" style={{ color: 'var(--text-muted)' }}>
-                You&apos;ll be taken to the Split page where you can re-split with a different position if needed.
-              </p>
-
-              <div className="flex justify-end gap-3">
-                <button
-                  onClick={() => setShowResetSplitConfirm(false)}
-                  disabled={resettingSplit}
-                  className="px-4 py-2 text-sm font-medium rounded-lg transition-colors hover:bg-stone-100"
-                  style={{ color: 'var(--text-muted)' }}
-                >
-                  Cancel
-                </button>
-                <button
-                  onClick={handleResetSplit}
-                  disabled={resettingSplit}
-                  className="flex items-center gap-2 px-4 py-2 text-sm font-medium text-white rounded-lg transition-all hover:opacity-90 disabled:opacity-50"
-                  style={{ background: 'rgb(220 38 38)' }}
-                >
-                  {resettingSplit ? (
-                    <>
-                      <Loader2 className="w-4 h-4 animate-spin" />
-                      Resetting...
-                    </>
-                  ) : (
-                    <>
-                      <RotateCcw className="w-4 h-4" />
-                      Reset Split
-                    </>
-                  )}
-                </button>
-              </div>
-            </div>
-          </div>
-        )}
       </div>
     );
   }
@@ -2128,75 +2048,6 @@ export default function TranslationEditor({
                 style={{ background: 'var(--accent-rust, #c45d3a)' }}
               >
                 Got it
-              </button>
-            </div>
-          </div>
-        </div>
-      )}
-
-      {/* Reset Split Confirmation Modal */}
-      {showResetSplitConfirm && (
-        <div className="fixed inset-0 bg-black/50 flex items-center justify-center z-50 p-4">
-          <div
-            role="dialog"
-            aria-modal="true"
-            aria-labelledby="reset-split-title"
-            className="bg-white rounded-xl shadow-2xl max-w-md w-full p-6"
-          >
-            <div className="flex items-center gap-3 mb-4">
-              <div className="w-10 h-10 rounded-full flex items-center justify-center" style={{ background: 'linear-gradient(135deg, #fef3c7 0%, #fde68a 100%)' }}>
-                <RotateCcw className="w-5 h-5" style={{ color: 'var(--accent-rust, #c45d3a)' }} aria-hidden="true" />
-              </div>
-              <h3 id="reset-split-title" className="text-lg font-semibold" style={{ color: 'var(--text-primary)' }}>
-                Reset Split?
-              </h3>
-            </div>
-
-            <p className="text-sm mb-4" style={{ color: 'var(--text-secondary)' }}>
-              This will merge this page back with its other half into a single two-page spread.
-            </p>
-
-            {hasDataOnSplit && (
-              <div className="rounded-lg p-3 mb-4" style={{ background: 'rgb(254 243 199)', border: '1px solid rgb(251 191 36)' }}>
-                <p className="text-sm font-medium" style={{ color: 'rgb(146 64 14)' }}>
-                  ⚠️ Warning: OCR or translation data exists
-                </p>
-                <p className="text-xs mt-1" style={{ color: 'rgb(180 83 9)' }}>
-                  Resetting will delete the right page and its OCR/translation. The left page data will remain but may not match the full image.
-                </p>
-              </div>
-            )}
-
-            <p className="text-sm mb-6" style={{ color: 'var(--text-muted)' }}>
-              You&apos;ll be taken to the Split page where you can re-split with a different position if needed.
-            </p>
-
-            <div className="flex justify-end gap-3">
-              <button
-                onClick={() => setShowResetSplitConfirm(false)}
-                disabled={resettingSplit}
-                className="px-4 py-2 text-sm font-medium rounded-lg transition-colors hover:bg-stone-100"
-                style={{ color: 'var(--text-muted)' }}
-              >
-                Cancel
-              </button>
-              <button
-                onClick={handleResetSplit}
-                disabled={resettingSplit}
-                className="flex items-center gap-2 px-4 py-2 text-sm font-medium text-white rounded-lg transition-all hover:opacity-90 disabled:opacity-50"
-                style={{ background: 'rgb(220 38 38)' }}
-              >
-                {resettingSplit ? (
-                  <>
-                    <Loader2 className="w-4 h-4 animate-spin" />
-                    Resetting...
-                  </>
-                ) : (
-                  <>
-                    <RotateCcw className="w-4 h-4" />
-                    Reset Split
-                  </>
-                )}
               </button>
             </div>
           </div>
