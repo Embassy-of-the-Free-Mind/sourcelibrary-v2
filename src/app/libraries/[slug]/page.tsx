@@ -4,6 +4,7 @@ import Image from 'next/image';
 import { BookOpen, ExternalLink, Images, Library } from 'lucide-react';
 import SiteHeader from '@/components/layout/SiteHeader';
 import { getDb } from '@/lib/mongodb';
+import { supabase } from '@/lib/supabase';
 import { browseBooks, getLanguageCounts } from '@/lib/books-catalog';
 import { notFound } from 'next/navigation';
 import { getPartnerBySlug, getAllPartnerSlugs } from '@/lib/library-partners';
@@ -117,21 +118,26 @@ async function fetchLibraryData(providerKey: string, sort: string, language: str
     } catch { /* Gallery is optional */ }
   }
 
-  // Contributing libraries from MongoDB (needs image_source.contributing_library, not in catalog)
-  let contributingLibraries: { name: string; count: number }[] = [];
-  try {
-    const db = await getDb();
-    const contributorsAgg = await db.collection('books').aggregate([
-      { $match: { 'image_source.provider': providerKey, visible: true, pages_count: { $gt: 0 }, pages_translated: { $gt: 0 }, 'image_source.contributing_library': { $exists: true, $ne: null } } },
-      { $group: { _id: '$image_source.contributing_library', count: { $sum: 1 } } },
-      { $sort: { count: -1 } },
-      { $limit: 20 },
-    ], { maxTimeMS: 5000 }).toArray();
-    contributingLibraries = contributorsAgg.map(c => ({
-      name: c._id as string,
-      count: c.count as number,
-    }));
-  } catch { /* contributing libraries are optional */ }
+  // Contributing libraries from Supabase (was 5s+ MongoDB aggregation)
+  const { data: contribData } = await supabase
+    .from('books_catalog')
+    .select('contributing_library')
+    .eq('visible', true)
+    .eq('image_source_provider', providerKey)
+    .gt('pages_count', 0)
+    .gt('pages_translated', 0)
+    .not('contributing_library', 'is', null);
+
+  const contribCounts = new Map<string, number>();
+  for (const row of (contribData || [])) {
+    if (row.contributing_library) {
+      contribCounts.set(row.contributing_library, (contribCounts.get(row.contributing_library) || 0) + 1);
+    }
+  }
+  const contributingLibraries = [...contribCounts.entries()]
+    .map(([name, count]) => ({ name, count }))
+    .sort((a, b) => b.count - a.count)
+    .slice(0, 20);
 
   return {
     books: booksResult.books as unknown as BookItem[],

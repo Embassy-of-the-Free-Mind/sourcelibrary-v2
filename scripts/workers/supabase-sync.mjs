@@ -210,6 +210,7 @@ for (const config of COLLECTIONS) {
       last_translation_at: 1, updated_at: 1, created_at: 1,
       categories: 1, collections: 1, collection_relevance: 1,
       'image_source.provider': 1,
+      'image_source.contributing_library': 1,
     },
   }).batchSize(200);
 
@@ -235,6 +236,7 @@ for (const config of COLLECTIONS) {
       collections: Array.isArray(book.collections) ? book.collections : [],
       collection_relevance: book.collection_relevance || null,
       image_source_provider: book.image_source?.provider || null,
+      contributing_library: book.image_source?.contributing_library || null,
     });
     if (batch.length >= 200) {
       const { error } = await supabase.from('books_catalog').upsert(batch, { onConflict: 'id' });
