@@ -1,11 +1,10 @@
-import { getDb } from '@/lib/mongodb';
+import { supabase } from '@/lib/supabase';
 import Link from 'next/link';
 import Image from 'next/image';
 import ContentPageLayout, { ContentHeader } from '@/components/layout/ContentPageLayout';
 import type { Metadata } from 'next';
 
 export const revalidate = 600;
-export const maxDuration = 30;
 
 export const metadata: Metadata = {
   title: 'Languages | Source Library',
@@ -31,83 +30,53 @@ function languageSlug(name: string): string {
 }
 
 async function fetchLanguageStats(): Promise<{ languages: LanguageStats[]; totalBooks: number }> {
-  const db = await getDb();
+  // Query books_catalog in Supabase — instant vs 10s+ MongoDB aggregation
+  const { data, error } = await supabase
+    .from('books_catalog')
+    .select('language, published, thumbnail, thumbnail_blob')
+    .eq('visible', true)
+    .gt('pages_count', 0)
+    .not('language', 'is', null)
+    .neq('language', '');
 
-  // Aggregate book counts by language
-  const langAgg = await db.collection('books').aggregate([
-    {
-      $match: {
-        visible: true,
-        pages_count: { $gt: 0 },
-        language: { $exists: true, $nin: [null, ''] },
-      },
-    },
-    {
-      $group: {
-        _id: '$language',
-        count: { $sum: 1 },
-        minYear: { $min: '$published' },
-        maxYear: { $max: '$published' },
-        sampleIds: { $push: '$id' },
-      },
-    },
-    { $match: { count: { $gte: 2 } } },
-    { $sort: { count: -1 as const } },
-    { $project: { count: 1, minYear: 1, maxYear: 1, sampleIds: { $slice: ['$sampleIds', 5] } } },
-  ], { maxTimeMS: 10000 }).toArray();
+  if (error) throw new Error(`Language stats query failed: ${error.message}`);
 
-  // Fetch hero images for top languages
-  const allSampleIds = langAgg.flatMap(r => (r.sampleIds as string[]));
-  const heroImages = allSampleIds.length > 0
-    ? await db.collection('gallery_images')
-        .find({
-          book_id: { $in: allSampleIds },
-          gallery_quality: { $gte: 0.7 },
-          type: { $nin: ['decorative', 'symbol', 'musical_score'] },
-        }, { maxTimeMS: 5000 })
-        .sort({ gallery_quality: -1 })
-        .limit(50)
-        .toArray()
-        .catch(() => [])
-    : [];
-
-  // Map book IDs to languages
-  const bookToLang = new Map<string, string>();
-  for (const r of langAgg) {
-    for (const bid of (r.sampleIds as string[])) {
-      bookToLang.set(bid, r._id as string);
+  // Group by language
+  const langMap = new Map<string, { count: number; minYear?: string; maxYear?: string; heroImage?: string }>();
+  for (const row of (data || [])) {
+    const lang = row.language as string;
+    const existing = langMap.get(lang) || { count: 0 };
+    existing.count++;
+    const pub = row.published as string | null;
+    if (pub) {
+      if (!existing.minYear || pub < existing.minYear) existing.minYear = pub;
+      if (!existing.maxYear || pub > existing.maxYear) existing.maxYear = pub;
     }
+    if (!existing.heroImage) {
+      const thumb = (row.thumbnail_blob || row.thumbnail) as string | null;
+      if (thumb) existing.heroImage = thumb;
+    }
+    langMap.set(lang, existing);
   }
 
-  // Best image per language
-  const langHero = new Map<string, string>();
-  for (const img of heroImages) {
-    const lang = bookToLang.get(img.book_id as string);
-    if (lang && !langHero.has(lang)) {
-      const url = (img.thumbnailUrl || img.thumbnail_url || img.extractedUrl || img.extracted_url || img.imageUrl || img.image_url) as string;
-      if (url) langHero.set(lang, url);
-    }
-  }
-
-  const totalBooks = langAgg.reduce((sum, r) => sum + (r.count as number), 0);
-
-  const languages: LanguageStats[] = langAgg.map(r => {
-    const name = r._id as string;
-    const minYear = r.minYear as string | undefined;
-    const maxYear = r.maxYear as string | undefined;
-    const yearRange = minYear && maxYear && minYear !== maxYear
-      ? `${minYear} - ${maxYear}`
-      : minYear || maxYear || undefined;
-
-    return {
+  let totalBooks = 0;
+  const languages: LanguageStats[] = [];
+  for (const [name, stats] of langMap.entries()) {
+    if (stats.count < 2) continue;
+    totalBooks += stats.count;
+    const yearRange = stats.minYear && stats.maxYear && stats.minYear !== stats.maxYear
+      ? `${stats.minYear} - ${stats.maxYear}`
+      : stats.minYear || stats.maxYear || undefined;
+    languages.push({
       name,
       slug: languageSlug(name),
-      bookCount: r.count as number,
+      bookCount: stats.count,
       yearRange,
-      heroImage: langHero.get(name),
-    };
-  });
+      heroImage: stats.heroImage,
+    });
+  }
 
+  languages.sort((a, b) => b.bookCount - a.bookCount);
   return { languages, totalBooks };
 }
 

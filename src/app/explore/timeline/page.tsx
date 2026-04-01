@@ -87,7 +87,7 @@ async function fetchTimelineData() {
   const bookDocs = allBookIds.size > 0
     ? await db.collection('books').find(
         { id: { $in: [...allBookIds] } },
-        { projection: { id: 1, language: 1 } }
+        { projection: { id: 1, language: 1 }, maxTimeMS: 30000 }
       ).toArray()
     : [];
 
