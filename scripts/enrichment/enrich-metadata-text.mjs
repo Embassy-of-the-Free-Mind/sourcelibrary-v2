@@ -213,13 +213,18 @@ async function main() {
   const dryRun = !args.includes('--apply');
   const unknownOnly = args.includes('--unknown-only');
   const datelessOnly = args.includes('--dateless');
+  const useWarehouse = args.includes('--warehouse');
   const limit = args.includes('--limit') ? parseInt(args[args.indexOf('--limit') + 1]) : 500;
   const pagesPerBook = args.includes('--pages') ? parseInt(args[args.indexOf('--pages') + 1]) : PAGES_PER_BOOK;
   const specificBook = args.includes('--book') ? args[args.indexOf('--book') + 1] : null;
   const ocrOnly = args.includes('--ocr-only'); // Only process books that have OCR
 
+  const booksCollectionName = useWarehouse ? 'books_warehouse' : 'books';
+  const pagesCollectionName = useWarehouse ? 'pages_warehouse' : 'pages';
+
   console.log(`=== Book Metadata Enrichment via OCR Text ===`);
   console.log(`Mode: ${dryRun ? 'DRY RUN (use --apply to write)' : 'APPLYING CHANGES'}`);
+  console.log(`Collection: ${booksCollectionName}`);
   console.log(`Model: ${MODEL}`);
   console.log(`OCR pages per book: ${pagesPerBook}`);
   console.log(`API keys: ${apiKeys.length}`);
@@ -249,7 +254,7 @@ async function main() {
     ];
   }
 
-  const books = await db.collection('books')
+  const books = await db.collection(booksCollectionName)
     .find(filter)
     .sort({ pages_count: -1 })
     .limit(limit)
@@ -262,7 +267,7 @@ async function main() {
   if (ocrOnly) {
     // Quick check which books have OCR
     const bookIds = books.map(b => b.id);
-    const booksWithOcr = await db.collection('pages').aggregate([
+    const booksWithOcr = await db.collection(pagesCollectionName).aggregate([
       { $match: { book_id: { $in: bookIds }, 'ocr.data': { $exists: true, $ne: '' } } },
       { $group: { _id: '$book_id' } }
     ]).toArray();
@@ -293,7 +298,7 @@ async function main() {
 
     const results = await Promise.allSettled(batch.map(async (book) => {
       // Fetch OCR text from first N pages
-      const pages = await db.collection('pages')
+      const pages = await db.collection(pagesCollectionName)
         .find(
           { book_id: book.id, 'ocr.data': { $exists: true, $ne: '' } },
           { projection: { page_number: 1, 'ocr.data': 1 } }
@@ -446,7 +451,7 @@ async function main() {
         updates.field_provenance = provenance;
 
         try {
-          await db.collection('books').updateOne({ id: book.id }, { $set: updates });
+          await db.collection(booksCollectionName).updateOne({ id: book.id }, { $set: updates });
           await db.collection('gemini_usage').insertOne({
             timestamp: new Date(),
             type: 'other',
