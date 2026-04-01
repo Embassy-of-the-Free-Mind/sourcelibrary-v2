@@ -8,107 +8,78 @@ const STALE_AFTER_MS = 15 * 60 * 1000;
 
 async function computeSnapshot(db: any) {
   const books = db.collection('books');
+  const warehouse = db.collection('books_warehouse');
   const notHidden = { visible: true };
+  const invisible = { visible: { $ne: true } };
+  const groupStage = {
+    $group: {
+      _id: null,
+      pages: { $sum: { $ifNull: ['$pages_count', 0] } },
+      pages_ocr: { $sum: { $ifNull: ['$pages_ocr', 0] } },
+      pages_translated: { $sum: { $ifNull: ['$pages_translated', 0] } },
+    },
+  };
 
-  // Use simple countDocuments — each one is fast with proper filters
-  // Run in two batches to avoid overwhelming cold connections
-  const [totalBooks, totals] = await Promise.all([
-    books.countDocuments(notHidden),
-    books.aggregate([
-      { $match: notHidden },
-      {
-        $group: {
-          _id: null,
-          pages: { $sum: { $ifNull: ['$pages_count', 0] } },
-          pages_ocr: { $sum: { $ifNull: ['$pages_ocr', 0] } },
-          pages_translated: { $sum: { $ifNull: ['$pages_translated', 0] } },
-        },
-      },
-    ], { maxTimeMS: 15000 }).toArray(),
-  ]);
-
-  const t = totals[0] || { pages: 0, pages_ocr: 0, pages_translated: 0 };
-
-  // Second batch: simple indexed counts
-  // NOTE: translation_percent is NOT stored on docs — must use $expr on pages_ocr/pages_translated
+  // All counts in parallel — visible, invisible, warehouse, enrichment, jobs, cost
   const [
-    firstTranslations,
-    withSummary,
-    withIndex,
-    withImages,
-    tagged,
+    totalBooks, totals,
+    invisibleCount, invisibleTotals,
+    warehouseCount, warehouseTotals,
+    firstTranslations, invisibleFirstTranslations, warehouseFirstTranslations,
+    withSummary, withIndex, withImages, tagged,
     jobsActive,
+    readable, firstTranslationsComplete,
+    costData,
   ] = await Promise.all([
+    // Visible
+    books.countDocuments(notHidden),
+    books.aggregate([{ $match: notHidden }, groupStage], { maxTimeMS: 15000 }).toArray(),
+    // Invisible
+    books.countDocuments(invisible),
+    books.aggregate([{ $match: invisible }, groupStage], { maxTimeMS: 15000 }).toArray(),
+    // Warehouse
+    warehouse.countDocuments({}),
+    warehouse.aggregate([groupStage], { maxTimeMS: 15000 }).toArray(),
+    // First translations
     books.countDocuments({ ...notHidden, is_first_translation: true }),
+    books.countDocuments({ ...invisible, is_first_translation: true }),
+    warehouse.countDocuments({ is_first_translation: true }),
+    // Enrichment
     books.countDocuments({ ...notHidden, summary: { $exists: true, $ne: null } }),
     books.countDocuments({ ...notHidden, index_of_topics: { $exists: true, $ne: null } }),
     books.countDocuments({ ...notHidden, 'detected_images.0': { $exists: true } }),
     books.countDocuments({ ...notHidden, faceted_tags: { $exists: true, $ne: null } }),
+    // Jobs
     db.collection('jobs').aggregate([
       { $match: { status: { $in: ['processing', 'queued'] } } },
       { $group: { _id: '$status', count: { $sum: 1 } } },
     ], { maxTimeMS: 5000 }).toArray(),
-  ]);
-
-  // Readable = >=90% of OCR'd pages translated (uses cached page counts)
-  const readable = await books.countDocuments({
-    ...notHidden,
-    pages_ocr: { $gte: 1 },
-    $expr: { $gte: ['$pages_translated', { $multiply: ['$pages_ocr', 0.9] }] },
-  });
-
-  const firstTranslationsComplete = await books.countDocuments({
-    ...notHidden,
-    is_first_translation: true,
-    pages_ocr: { $gte: 10 },
-    $expr: { $gte: ['$pages_translated', { $multiply: ['$pages_ocr', 0.9] }] },
-  });
-
-  // Cost query last (different collection, can be slow)
-  let economics = { cost_per_page_30d: 0, total_cost_30d: 0, pages_translated_30d: 0 };
-  try {
-    const costData = await db.collection('gemini_usage').aggregate([
-      {
-        $match: {
-          type: { $in: ['translate', 'translation'] },
-          status: 'success',
-          timestamp: { $gte: new Date(Date.now() - 30 * 24 * 60 * 60 * 1000) },
-        },
-      },
+    // Readable + complete FTs
+    books.countDocuments({
+      ...notHidden, pages_ocr: { $gte: 1 },
+      $expr: { $gte: ['$pages_translated', { $multiply: ['$pages_ocr', 0.9] }] },
+    }),
+    books.countDocuments({
+      ...notHidden, is_first_translation: true, pages_ocr: { $gte: 10 },
+      $expr: { $gte: ['$pages_translated', { $multiply: ['$pages_ocr', 0.9] }] },
+    }),
+    // Cost
+    db.collection('gemini_usage').aggregate([
+      { $match: { type: { $in: ['translate', 'translation'] }, status: 'success', timestamp: { $gte: new Date(Date.now() - 30 * 24 * 60 * 60 * 1000) } } },
       { $group: { _id: null, total_cost: { $sum: { $ifNull: ['$cost_usd', 0] } }, pages: { $sum: 1 } } },
-    ], { maxTimeMS: 10000 }).toArray();
-    const cost = costData[0] || { total_cost: 0, pages: 0 };
-    economics = {
-      cost_per_page_30d: cost.pages > 0 ? +(cost.total_cost / cost.pages).toFixed(4) : 0,
-      total_cost_30d: +cost.total_cost.toFixed(2),
-      pages_translated_30d: cost.pages,
-    };
-  } catch { /* cost query timed out — use defaults */ }
-
-  const jobMap = Object.fromEntries(jobsActive.map((j: any) => [j._id, j.count]));
-
-  // Invisible books (main collection, not visible) + warehouse counts
-  const invisible = { visible: { $ne: true } };
-  const warehouse = db.collection('books_warehouse');
-
-  const [invisibleCount, invisibleTotals, warehouseCount, warehouseTotals,
-    invisibleFirstTranslations, warehouseFirstTranslations,
-  ] = await Promise.all([
-    books.countDocuments(invisible),
-    books.aggregate([
-      { $match: invisible },
-      { $group: { _id: null, pages: { $sum: { $ifNull: ['$pages_count', 0] } }, pages_ocr: { $sum: { $ifNull: ['$pages_ocr', 0] } }, pages_translated: { $sum: { $ifNull: ['$pages_translated', 0] } } } },
-    ], { maxTimeMS: 15000 }).toArray(),
-    warehouse.countDocuments({}),
-    warehouse.aggregate([
-      { $group: { _id: null, pages: { $sum: { $ifNull: ['$pages_count', 0] } }, pages_ocr: { $sum: { $ifNull: ['$pages_ocr', 0] } }, pages_translated: { $sum: { $ifNull: ['$pages_translated', 0] } } } },
-    ], { maxTimeMS: 15000 }).toArray(),
-    books.countDocuments({ ...invisible, is_first_translation: true }),
-    warehouse.countDocuments({ is_first_translation: true }),
+    ], { maxTimeMS: 10000 }).toArray().catch(() => []),
   ]);
 
+  const t = totals[0] || { pages: 0, pages_ocr: 0, pages_translated: 0 };
   const it = invisibleTotals[0] || { pages: 0, pages_ocr: 0, pages_translated: 0 };
   const wt = warehouseTotals[0] || { pages: 0, pages_ocr: 0, pages_translated: 0 };
+  const jobMap = Object.fromEntries(jobsActive.map((j: any) => [j._id, j.count]));
+  const cost = costData[0] || { total_cost: 0, pages: 0 };
+  const economics = {
+    cost_per_page_30d: cost.pages > 0 ? +(cost.total_cost / cost.pages).toFixed(4) : 0,
+    total_cost_30d: +cost.total_cost.toFixed(2),
+    pages_translated_30d: cost.pages,
+  };
 
   return {
     canon: {
