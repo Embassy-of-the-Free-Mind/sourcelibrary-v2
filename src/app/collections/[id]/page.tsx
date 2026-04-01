@@ -247,7 +247,7 @@ async function fetchCollectionData(id: string) {
             { collections: id, resource_type: { $exists: true } },
             {
               projection: {
-                _id: 0, id: 1, slug: 1, title: 1, author: 1, published: 1,
+                _id: 0, id: 1, slug: 1, title: 1, display_title: 1, author: 1, published: 1,
                 resource_type: 1, medium: 1, thumbnail: 1, thumbnail_blob: 1,
                 'enrichment.subject': 1, 'enrichment.genre': 1,
                 commons_width: 1, commons_height: 1,
@@ -806,7 +806,7 @@ export default async function CollectionDetailPage({ params }: Props) {
               {artworks.length} {artworks.length === 1 ? 'work' : 'works'} of visual art in this collection
             </p>
             <div className="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-4 xl:grid-cols-5 gap-4">
-              {artworks.slice(0, 15).map((art: { id: string; slug?: string; title: string; author?: string; published?: string; resource_type?: string; medium?: string; thumbnail?: string; thumbnail_blob?: string; enrichment?: { subject?: string; genre?: string }; commons_width?: number; commons_height?: number }) => {
+              {artworks.slice(0, 15).map((art: { id: string; slug?: string; title: string; display_title?: string; author?: string; published?: string; resource_type?: string; medium?: string; thumbnail?: string; thumbnail_blob?: string; enrichment?: { subject?: string; genre?: string }; commons_width?: number; commons_height?: number }) => {
                 const thumb = sanitizeThumbnail(art.thumbnail_blob || art.thumbnail || '');
                 const isPortrait = (art.commons_height || 0) > (art.commons_width || 0);
                 return (
@@ -821,7 +821,7 @@ export default async function CollectionDetailPage({ params }: Props) {
                           /* eslint-disable-next-line @next/next/no-img-element */
                           <img
                             src={thumb}
-                            alt={art.title}
+                            alt={art.display_title || art.title}
                             className="absolute inset-0 w-full h-full object-cover group-hover:scale-105 transition-transform duration-300"
                             loading="lazy"
                           />
@@ -841,7 +841,7 @@ export default async function CollectionDetailPage({ params }: Props) {
                           className="text-sm font-semibold text-primary group-hover:text-accent-rust transition-colors leading-tight line-clamp-2 mb-1"
                           style={{ fontFamily: 'var(--font-serif)' }}
                         >
-                          {art.title}
+                          {art.display_title || art.title}
                         </h3>
                         {art.author && (
                           <p className="text-xs text-muted line-clamp-1">{art.author}</p>
