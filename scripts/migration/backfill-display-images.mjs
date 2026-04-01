@@ -18,6 +18,7 @@
 
 import { MongoClient } from 'mongodb';
 import { S3Client, PutObjectCommand } from '@aws-sdk/client-s3';
+import { createClient } from '@supabase/supabase-js';
 import { generateDisplayVariants } from '../workers/lib/display-image.mjs';
 
 const args = process.argv.slice(2);
@@ -29,6 +30,7 @@ const CONCURRENCY = parseInt(getArg('concurrency') || '10', 10);
 const BOOK_CONCURRENCY = parseInt(getArg('book-concurrency') || '3', 10);
 const DRY_RUN = hasFlag('dry-run');
 const BOOK_ID = getArg('book');  // Optional: backfill a single book
+const START_AFTER = getArg('start-after');  // Start after this book id (for partitioning)
 
 const MONGODB_URI = process.env.MONGODB_URI;
 const R2_ACCOUNT_ID = process.env.R2_ACCOUNT_ID;
@@ -117,17 +119,20 @@ async function processPage(page, db) {
 }
 
 async function processBook(book, db) {
-  // Query pages per book — uses book_id index, fast
+  // Query pages per book — uses book_id index, fast. No sort needed for backfill.
   // Don't filter on display_photo (unindexed) — check in code instead
   const pages = await db.collection('pages')
     .find(
       { book_id: book.id },
       { projection: { _id: 1, book_id: 1, page_number: 1, archived_photo: 1, display_photo: 1 } }
     )
-    .sort({ page_number: 1 })
-    .maxTimeMS(30_000)
+    .batchSize(5000)
+    .maxTimeMS(15_000)
     .toArray()
-    .catch(() => []);
+    .catch((err) => {
+      if (stats.failed <= 5) console.error(`  [book ${book.id}] page query failed: ${err.message?.slice(0, 80)}`);
+      return [];
+    });
 
   // Filter in code: need archived_photo, no display_photo yet
   const needsBackfill = pages.filter(p =>
@@ -181,43 +186,75 @@ async function main() {
     console.log(`[backfill-display] Single book: ${book.title?.slice(0, 60)}`);
     await processBook(book, db);
   } else {
-    // Paginate books using _id ranges — each query is a fast indexed lookup.
-    // Avoids cursor getMore timeouts that plague Atlas under load.
-    console.log(`[backfill-display] Paginating books by id index...`);
-    let lastId = null;
+    // Get all book IDs from Supabase (fast: 9K books in <1s)
+    // Atlas book queries timeout under pipeline load — Supabase doesn't.
+    const SUPABASE_URL = process.env.SUPABASE_URL || 'https://ykhxaecbbxaaqlujuzde.supabase.co';
+    const SUPABASE_KEY = process.env.SUPABASE_SERVICE_ROLE_KEY;
+
+    if (!SUPABASE_KEY) {
+      console.error('[backfill-display] Missing SUPABASE_SERVICE_ROLE_KEY — falling back to Atlas');
+      process.exit(1);
+    }
+
+    const supabase = createClient(SUPABASE_URL, SUPABASE_KEY, { auth: { persistSession: false } });
+
+    console.log(`[backfill-display] Fetching book IDs from Supabase...`);
+    const t = Date.now();
+    const allBookIds = [];
+    let from = 0;
+    while (true) {
+      const { data, error } = await supabase.from('books_catalog').select('id').range(from, from + 999);
+      if (error) { console.error('Supabase error:', error.message); break; }
+      if (!data || data.length === 0) break;
+      allBookIds.push(...data.map(d => d.id));
+      from += 1000;
+    }
+    console.log(`[backfill-display] ${allBookIds.length} books from Supabase in ${Date.now() - t}ms`);
+
+    // Resume from last processed book (saved in system_config)
+    let resumeAfter = START_AFTER || null;
+    if (!resumeAfter) {
+      try {
+        const checkpoint = await db.collection('system_config').findOne({ _id: 'display_backfill_stats' });
+        resumeAfter = checkpoint?.lastBookId || null;
+        if (resumeAfter) console.log(`  Resuming after book ${resumeAfter} (from checkpoint)`);
+      } catch {}
+    }
+
+    let bookIds = allBookIds;
+    if (resumeAfter) {
+      const idx = bookIds.indexOf(resumeAfter);
+      bookIds = idx >= 0 ? bookIds.slice(idx + 1) : bookIds.filter(id => id > resumeAfter);
+      console.log(`  ${bookIds.length} books remaining after checkpoint`);
+    }
+
+    // Process books — Atlas only hit for per-book page queries (indexed, fast)
     let totalBooks = 0;
+    let lastProcessedBookId = resumeAfter;
+    for (let i = 0; i < bookIds.length && stats.processed < LIMIT; i += BOOK_CONCURRENCY) {
+      const batch = bookIds.slice(i, i + BOOK_CONCURRENCY);
 
-    while (stats.processed < LIMIT) {
-      const query = lastId ? { id: { $gt: lastId } } : {};
-      const batch = await db.collection('books')
-        .find(query, { projection: { _id: 0, id: 1 }, hint: { id: 1 } })
-        .limit(500)
-        .maxTimeMS(15_000)
-        .toArray();
-
-      if (batch.length === 0) break;
-      lastId = batch[batch.length - 1].id;
+      await Promise.all(batch.map(id => processBook({ id }, db)));
       totalBooks += batch.length;
+      lastProcessedBookId = batch[batch.length - 1];
 
-      // Process this batch of books with bounded concurrency
-      let bookIdx = 0;
-      async function bookWorker() {
-        while (bookIdx < batch.length && stats.processed < LIMIT) {
-          const i = bookIdx++;
-          if (i >= batch.length) break;
-          await processBook(batch[i], db);
-        }
-      }
-
-      await Promise.all(Array.from({ length: Math.min(BOOK_CONCURRENCY, batch.length) }, () => bookWorker()));
-
-      if (stats.processed > 0 && stats.processed % 500 < 50) {
+      if (stats.processed > 0 && stats.processed % 500 < BOOK_CONCURRENCY) {
         logProgress();
       }
-
-      if (totalBooks % 500 === 0) {
-        console.log(`  [scan] ${totalBooks} books checked...`);
+      if (totalBooks % 500 < BOOK_CONCURRENCY) {
+        console.log(`  [scan] ${totalBooks}/${bookIds.length} books checked...`);
       }
+    }
+
+    // Save checkpoint so next run resumes here
+    if (lastProcessedBookId) {
+      try {
+        await db.collection('system_config').updateOne(
+          { _id: 'display_backfill_stats' },
+          { $set: { lastBookId: lastProcessedBookId } },
+          { upsert: true }
+        );
+      } catch {}
     }
   }
 
