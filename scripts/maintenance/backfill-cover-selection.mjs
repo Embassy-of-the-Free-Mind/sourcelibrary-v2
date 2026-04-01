@@ -33,9 +33,8 @@ if (LIMIT) console.log(`Limit: ${LIMIT}`);
 const filter = { 'pipeline_auto.status': 'complete', cover_page: { $exists: false } };
 const books = await db.collection('books')
   .find(filter, { projection: { id: 1, title: 1, thumbnail: 1, thumbnail_source: 1 } })
-  .hint('books_pipeline_status_idx')
   .limit(LIMIT || 0)
-  .maxTimeMS(30000)
+  .maxTimeMS(60000)
   .toArray();
 
 console.log(`Found ${books.length} complete books without cover_page\n`);
