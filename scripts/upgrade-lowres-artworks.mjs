@@ -147,20 +147,23 @@ function isPlausibleMatch(queryTitle, queryArtist, resultTitle, resultArtist) {
   const qArtist = normalize(queryArtist);
   const rArtist = normalize(resultArtist);
 
-  // Must share significant words in title
-  const qWords = new Set(qTitle.split(' ').filter(w => w.length > 2));
-  const rWords = new Set(rTitle.split(' ').filter(w => w.length > 2));
+  // Must share significant words in title (exclude very common words)
+  const stopWords = new Set(['the', 'and', 'with', 'from', 'for', 'saint', 'san', 'santa', 'detail', 'painting', 'portrait', 'madonna', 'virgin', 'child']);
+  const qWords = new Set(qTitle.split(' ').filter(w => w.length > 2 && !stopWords.has(w)));
+  const rWords = new Set(rTitle.split(' ').filter(w => w.length > 2 && !stopWords.has(w)));
   const shared = [...qWords].filter(w => rWords.has(w));
   const titleOverlap = qWords.size > 0 ? shared.length / qWords.size : 0;
 
-  // Artist name overlap (at least one significant word)
-  const qArtistWords = qArtist.split(' ').filter(w => w.length > 2);
-  const artistMatch = qArtistWords.some(w => rArtist.includes(w));
+  // Artist surname match (last word of artist name, or any word > 4 chars)
+  const qArtistWords = qArtist.split(' ').filter(w => w.length > 3);
+  const rArtistWords = rArtist.split(' ').filter(w => w.length > 3);
+  const artistMatch = qArtistWords.some(w => rArtistWords.includes(w));
 
-  // Need either good title match OR artist match + some title overlap
-  if (titleOverlap >= 0.5) return true;
-  if (artistMatch && titleOverlap >= 0.3) return true;
-  if (artistMatch && shared.length >= 2) return true;
+  // Strict: need strong title match, artist match is supporting evidence only
+  if (titleOverlap >= 0.6 && shared.length >= 2) return true;
+  if (artistMatch && titleOverlap >= 0.5 && shared.length >= 2) return true;
+  // Exact title substring match (handles "Hercules and Telephos" → "Farnese Hercules")
+  if (qTitle.length > 8 && (rTitle.includes(qTitle) || qTitle.includes(rTitle))) return true;
 
   return false;
 }
