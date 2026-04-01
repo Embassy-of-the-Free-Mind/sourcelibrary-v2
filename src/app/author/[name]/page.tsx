@@ -53,12 +53,34 @@ interface AuthorPageProps {
  *   2. If that book has author_entity_id, load the entity (gets all variants)
  *   3. Otherwise fall back to raw author string matching
  */
+const BOOK_PROJECTION = {
+  _id: 0, id: 1, slug: 1, title: 1, display_title: 1, author: 1,
+  author_entity_id: 1, language: 1, published: 1, thumbnail: 1,
+  pages_count: 1, pages_ocr: 1, pages_translated: 1, pages_blank: 1, year: 1,
+  summary: 1,
+};
+
+function computeBooks(raw: any[]): Book[] {
+  return raw.map((b: any) => ({
+    ...b,
+    pages_count: b.pages_count || 0,
+    pages_translated: b.pages_translated || 0,
+    translation_percent: b.pages_ocr > 0
+      ? Math.round((b.pages_translated || 0) / Math.max((b.pages_ocr || 0) - (b.pages_blank || 0), 1) * 100)
+      : 0,
+  }));
+}
+
 // eslint-disable-next-line @typescript-eslint/no-explicit-any
 /**
- * Load author page data in a single pass.
- * Queries system_config for a pre-built author slug→name map (built by sync-worker),
- * then fetches books by exact author match (indexed) and entity by _id (indexed).
- * Zero regex, zero collection scans.
+ * Load author page data. Entity-aware: if an entity exists, fetches ALL books
+ * linked to that entity (across name variants), not just exact author match.
+ *
+ * Strategy:
+ *   1. Resolve slug → author name via system_config cache
+ *   2. Find a book with that author to get author_entity_id
+ *   3. If entity found, query books by author_entity_id (captures all variants)
+ *   4. If no entity, fall back to exact author string match
  */
 async function loadAuthorData(db: any, slug: string): Promise<{
   authorName: string;
@@ -87,47 +109,64 @@ async function loadAuthorData(db: any, slug: string): Promise<{
 
   if (!authorName) return null;
 
-  // Fetch books + entity in parallel
-  const booksPromise = db.collection('books').find(
-    { author: authorName, visible: true },
-    {
-      projection: {
-        _id: 0, id: 1, slug: 1, title: 1, display_title: 1, author: 1,
-        author_entity_id: 1, language: 1, published: 1, thumbnail: 1,
-        pages_count: 1, pages_ocr: 1, pages_translated: 1, pages_blank: 1, year: 1,
-        summary: 1,
-      }
-    }
-  ).sort({ year: 1, title: 1 }).toArray();
+  // Find a representative book to get entity link
+  const repBook = await db.collection('books').findOne(
+    { author: authorName, visible: true, author_entity_id: { $exists: true, $ne: null } },
+    { projection: { author_entity_id: 1 } }
+  );
 
-  const books = await booksPromise;
-  if (books.length === 0) return null;
-
-  // Resolve entity from first book with author_entity_id
   let entity: AuthorEntity | null = null;
-  const entityBookId = books.find((b: any) => b.author_entity_id)?.author_entity_id;
-  if (entityBookId) {
+  let books: any[];
+
+  if (repBook?.author_entity_id) {
+    // Entity-driven path: get entity, then ALL books linked to it
     try {
       entity = await db.collection('entities').findOne(
-        { _id: new ObjectId(entityBookId) },
+        { _id: new ObjectId(repBook.author_entity_id) },
         { projection: { name: 1, canonical_name: 1, description: 1, viaf_id: 1, wikidata_id: 1, wikidata_birth_date: 1, wikidata_death_date: 1 } }
       ) as AuthorEntity | null;
     } catch { /* invalid ObjectId */ }
+
+    if (entity) {
+      // Fetch all books with this entity (any name variant)
+      books = await db.collection('books').find(
+        { author_entity_id: repBook.author_entity_id, visible: true },
+        { projection: BOOK_PROJECTION }
+      ).sort({ year: 1, title: 1 }).toArray();
+    } else {
+      // Entity not found — fall back to string match
+      books = await db.collection('books').find(
+        { author: authorName, visible: true },
+        { projection: BOOK_PROJECTION }
+      ).sort({ year: 1, title: 1 }).toArray();
+    }
+  } else {
+    // No entity link — string match only
+    books = await db.collection('books').find(
+      { author: authorName, visible: true },
+      { projection: BOOK_PROJECTION }
+    ).sort({ year: 1, title: 1 }).toArray();
+
+    // Still try to resolve entity from any linked book in results
+    const entityBookId = books.find((b: any) => b.author_entity_id)?.author_entity_id;
+    if (entityBookId) {
+      try {
+        entity = await db.collection('entities').findOne(
+          { _id: new ObjectId(entityBookId) },
+          { projection: { name: 1, canonical_name: 1, description: 1, viaf_id: 1, wikidata_id: 1, wikidata_birth_date: 1, wikidata_death_date: 1 } }
+        ) as AuthorEntity | null;
+      } catch { /* invalid ObjectId */ }
+    }
   }
+
+  if (books.length === 0) return null;
 
   const displayName = entity?.canonical_name || entity?.name || authorName;
 
   return {
     authorName: displayName,
     entity,
-    books: books.map((b: any) => ({
-      ...b,
-      pages_count: b.pages_count || 0,
-      pages_translated: b.pages_translated || 0,
-      translation_percent: b.pages_ocr > 0
-        ? Math.round((b.pages_translated || 0) / Math.max((b.pages_ocr || 0) - (b.pages_blank || 0), 1) * 100)
-        : 0,
-    })),
+    books: computeBooks(books),
   };
 }
 
