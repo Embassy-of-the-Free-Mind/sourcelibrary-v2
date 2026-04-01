@@ -482,6 +482,17 @@ export default async function CollectionDetailPage({ params }: Props) {
   }
   const diverseGalleryImages = shuffled.slice(0, 9);
   const heroImages = shuffled.slice(0, 6);
+
+  // Fallback hero: use collection.hero_image or first featured_image when no gallery images
+  const fallbackHeroUrl = !heroImages.length
+    ? (collection.hero_image as string | undefined)
+      || (() => {
+        const fi = (collection.featured_images as { extracted_url?: string; image_url?: string; thumbnail_url?: string }[] | undefined);
+        const first = fi?.find(img => img.extracted_url || img.image_url || img.thumbnail_url);
+        return first?.extracted_url || first?.image_url || first?.thumbnail_url;
+      })()
+      || null
+    : null;
   // Count total images and unique source books for gallery label
   const galleryTotalImages = galleryImages.length;
   const galleryUniqueBooks = new Set(galleryImages.map((img: { book_id?: string; bookId?: string }) => img.book_id || img.bookId)).size;
@@ -516,7 +527,7 @@ export default async function CollectionDetailPage({ params }: Props) {
       />
       {/* Hero Section */}
       <div className="relative bg-dark overflow-hidden">
-        {heroImages.length > 0 && (
+        {heroImages.length > 0 ? (
           <div className="absolute inset-0 grid grid-cols-3 sm:grid-cols-6 opacity-30">
             {heroImages.map((img: { pageId?: string; page_id?: string; detectionIndex?: number; detection_index?: number; thumbnailUrl?: string; thumbnail_url?: string; extractedUrl?: string; extracted_url?: string; imageUrl?: string; image_url?: string }) => {
               const src = img.extracted_url || img.extractedUrl || img.thumbnail_url || img.thumbnailUrl || img.imageUrl || img.image_url;
@@ -529,6 +540,11 @@ export default async function CollectionDetailPage({ params }: Props) {
                 </div>
               );
             })}
+          </div>
+        ) : fallbackHeroUrl && (
+          <div className="absolute inset-0 opacity-40">
+            {/* eslint-disable-next-line @next/next/no-img-element */}
+            <img src={fallbackHeroUrl} alt="" className="absolute inset-0 w-full h-full object-cover" />
           </div>
         )}
 
