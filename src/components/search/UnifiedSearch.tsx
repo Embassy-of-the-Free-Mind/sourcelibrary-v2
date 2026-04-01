@@ -113,7 +113,7 @@ export default function UnifiedSearch() {
     setIsOpen(true);
 
     try {
-      const data = await searchApi.unified(searchQuery, { limit: 5 });
+      const data = await searchApi.unified(searchQuery, { limit: 8 });
       setCachedResult(cacheKey, data);
       setResults(data);
     } catch (error) {
@@ -349,9 +349,9 @@ export default function UnifiedSearch() {
                   <div className="p-3">
                     <div className="flex items-center justify-between mb-2 px-2">
                       <span className="text-xs font-semibold text-stone-400 uppercase tracking-wide">
-                        Books ({results.books.total})
+                        Books{results.books.hasMore ? '' : ` (${results.books.total})`}
                       </span>
-                      {results.books.total > 5 && (
+                      {results.books.hasMore && (
                         <Link
                           href={`/search?q=${encodeURIComponent(query)}`}
                           className="text-xs text-accent-rust hover:text-accent-rust flex items-center gap-0.5"
@@ -404,9 +404,9 @@ export default function UnifiedSearch() {
                   <div className="p-3">
                     <div className="flex items-center justify-between mb-2 px-2">
                       <span className="text-xs font-semibold text-stone-400 uppercase tracking-wide">
-                        Index ({results.index.total})
+                        Index{results.index.hasMore ? '' : ` (${results.index.total})`}
                       </span>
-                      {results.index.total > 5 && (
+                      {results.index.hasMore && (
                         <Link
                           href={`/search?q=${encodeURIComponent(query)}&mode=index`}
                           className="text-xs text-accent-rust hover:text-accent-rust flex items-center gap-0.5"
