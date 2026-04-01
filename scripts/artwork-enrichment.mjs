@@ -6,7 +6,7 @@
  *
  * Usage:
  *   set -a; source .env.production.local; set +a
- *   node scripts/artwork-enrichment.mjs --limit 10 [--dry-run] [--artist "Hendrick Goltzius"]
+ *   node scripts/artwork-enrichment.mjs --limit 10 [--dry-run] [--artist "Hendrick Goltzius"] [--force] [--provider met]
  *
  * GitHub issues: #336, #374
  */
@@ -14,8 +14,10 @@ import { MongoClient } from 'mongodb';
 import { GoogleGenerativeAI } from '@google/generative-ai';
 
 const DRY_RUN = process.argv.includes('--dry-run');
+const FORCE = process.argv.includes('--force');
 const LIMIT = parseInt(process.argv.find((_, i, a) => a[i - 1] === '--limit') || '10');
 const ARTIST_FILTER = process.argv.find((_, i, a) => a[i - 1] === '--artist') || null;
+const PROVIDER_FILTER = process.argv.find((_, i, a) => a[i - 1] === '--provider') || null;
 
 const client = new MongoClient(process.env.MONGODB_URI);
 const genAI = new GoogleGenerativeAI(process.env.GEMINI_API_KEY);
@@ -155,8 +157,10 @@ async function main() {
   const books = db.collection('books');
 
   // Build query — resource_type_sparse index makes this fast
-  const query = { resource_type: { $exists: true }, enrichment: { $exists: false } };
+  const query = { resource_type: { $exists: true } };
+  if (!FORCE) query.enrichment = { $exists: false };
   if (ARTIST_FILTER) query.author = ARTIST_FILTER;
+  if (PROVIDER_FILTER) query['image_source.provider'] = PROVIDER_FILTER;
 
   const projection = {
     _id: 1, id: 1, slug: 1, title: 1, author: 1, published: 1,
@@ -180,7 +184,7 @@ async function main() {
     cursor.count = LIMIT; // approximate
   }
 
-  console.log(`${DRY_RUN ? 'DRY RUN — ' : ''}Processing up to ${LIMIT} artworks...`);
+  console.log(`${DRY_RUN ? 'DRY RUN — ' : ''}${FORCE ? 'FORCE RE-ENRICH — ' : ''}Processing up to ${LIMIT} artworks...${PROVIDER_FILTER ? ` (provider: ${PROVIDER_FILTER})` : ''}`);
 
   let success = 0, errors = 0, totalTokens = 0, processed = 0;
   const results = [];
