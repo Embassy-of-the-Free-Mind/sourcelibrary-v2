@@ -87,6 +87,29 @@ async function computeSnapshot(db: any) {
 
   const jobMap = Object.fromEntries(jobsActive.map((j: any) => [j._id, j.count]));
 
+  // Invisible books (main collection, not visible) + warehouse counts
+  const invisible = { visible: { $ne: true } };
+  const warehouse = db.collection('books_warehouse');
+
+  const [invisibleCount, invisibleTotals, warehouseCount, warehouseTotals,
+    invisibleFirstTranslations, warehouseFirstTranslations,
+  ] = await Promise.all([
+    books.countDocuments(invisible),
+    books.aggregate([
+      { $match: invisible },
+      { $group: { _id: null, pages: { $sum: { $ifNull: ['$pages_count', 0] } }, pages_ocr: { $sum: { $ifNull: ['$pages_ocr', 0] } }, pages_translated: { $sum: { $ifNull: ['$pages_translated', 0] } } } },
+    ], { maxTimeMS: 15000 }).toArray(),
+    warehouse.countDocuments({}),
+    warehouse.aggregate([
+      { $group: { _id: null, pages: { $sum: { $ifNull: ['$pages_count', 0] } }, pages_ocr: { $sum: { $ifNull: ['$pages_ocr', 0] } }, pages_translated: { $sum: { $ifNull: ['$pages_translated', 0] } } } },
+    ], { maxTimeMS: 15000 }).toArray(),
+    books.countDocuments({ ...invisible, is_first_translation: true }),
+    warehouse.countDocuments({ is_first_translation: true }),
+  ]);
+
+  const it = invisibleTotals[0] || { pages: 0, pages_ocr: 0, pages_translated: 0 };
+  const wt = warehouseTotals[0] || { pages: 0, pages_ocr: 0, pages_translated: 0 };
+
   return {
     canon: {
       total_books: totalBooks,
@@ -113,6 +136,20 @@ async function computeSnapshot(db: any) {
       queued: jobMap.queued || 0,
     },
     economics,
+    invisible: {
+      total_books: invisibleCount,
+      total_pages: it.pages,
+      pages_ocr: it.pages_ocr,
+      pages_translated: it.pages_translated,
+      first_translations: invisibleFirstTranslations,
+    },
+    warehouse: {
+      total_books: warehouseCount,
+      total_pages: wt.pages,
+      pages_ocr: wt.pages_ocr,
+      pages_translated: wt.pages_translated,
+      first_translations: warehouseFirstTranslations,
+    },
   };
 }
 
