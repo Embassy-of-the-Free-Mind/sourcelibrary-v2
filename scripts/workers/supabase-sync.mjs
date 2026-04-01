@@ -45,8 +45,6 @@ const COLLECTIONS = [
     mongoCollection: 'pipeline_snapshots',
     supabaseTable: 'pipeline_snapshots',
     timestampField: 'timestamp',
-    // Skip zero-page snapshots (caused by facet timeouts — they poison charts)
-    filter: (doc) => doc.pages?.ocr > 0 || doc.pages?.translated > 0,
     transform: (doc) => ({
       timestamp: doc.timestamp,
       source: doc.source || 'hetzner-worker',
@@ -152,7 +150,6 @@ async function syncCollection(db, config) {
 
   for await (const doc of cursor) {
     try {
-      if (config.filter && !config.filter(doc)) continue;
       batch.push(config.transform(doc));
     } catch {
       errors++;
@@ -195,60 +192,40 @@ for (const config of COLLECTIONS) {
   results.push(result);
 }
 
-// Sync books_catalog (upsert, not insert — books have a primary key)
+// ── pages_images sync (image URLs for display backfill) ──────────────
+// Syncs pages updated in the last 10 minutes (covers archiving + backfill writes).
+// Uses updated_at from MongoDB, upserts to Supabase.
 {
-  const since = await getLastTimestamp('books_catalog');
-  const query = since
-    ? { visible: true, updated_at: { $gt: since } }
-    : { visible: true };
-  const cursor = db.collection('books').find(query, {
-    projection: {
-      id: 1, slug: 1, title: 1, display_title: 1, author: 1,
-      thumbnail: 1, thumbnail_blob: 1, photo: 1, language: 1, year: 1, published: 1,
-      pages_count: 1, pages_ocr: 1, pages_translated: 1, pages_blank: 1,
-      is_first_translation: 1, visible: 1, quality_score: 1, read_count: 1,
-      last_translation_at: 1, updated_at: 1, created_at: 1,
-      categories: 1, collections: 1, collection_relevance: 1,
-      'image_source.provider': 1,
-      'image_source.contributing_library': 1,
-    },
-  }).batchSize(200);
+  const since = new Date(Date.now() - 10 * 60 * 1000); // last 10 min
+  const pages = await db.collection('pages')
+    .find(
+      { updated_at: { $gt: since }, archived_photo: { $exists: true } },
+      { projection: { id: 1, _id: 1, book_id: 1, page_number: 1, archived_photo: 1, display_photo: 1, thumbnail_blob: 1 } }
+    )
+    .batchSize(5000)
+    .maxTimeMS(10_000)
+    .toArray()
+    .catch(() => []);
 
-  let synced = 0, errors = 0;
-  let batch = [];
-  for await (const book of cursor) {
-    batch.push({
-      id: book.id, slug: book.slug || null,
-      title: book.title || 'Untitled', display_title: book.display_title || null,
-      author: book.author || null, thumbnail: book.thumbnail || null,
-      thumbnail_blob: book.thumbnail_blob || null, language: book.language || null,
-      year: typeof book.year === 'number' ? book.year : null,
-      published: book.published || null,
-      pages_count: book.pages_count || 0, pages_ocr: book.pages_ocr || 0,
-      pages_translated: book.pages_translated || 0, pages_blank: book.pages_blank || 0,
-      is_first_translation: book.is_first_translation === true,
-      visible: book.visible === true, quality_score: book.quality_score || 0,
-      photo: book.photo || null, read_count: book.read_count || 0,
-      last_translation_at: book.last_translation_at || null,
-      last_processed: book.updated_at || book.created_at || null,
-      created_at: book.created_at || null, updated_at: book.updated_at || null,
-      categories: Array.isArray(book.categories) ? book.categories : [],
-      collections: Array.isArray(book.collections) ? book.collections : [],
-      collection_relevance: book.collection_relevance || null,
-      image_source_provider: book.image_source?.provider || null,
-      contributing_library: book.image_source?.contributing_library || null,
-    });
-    if (batch.length >= 200) {
-      const { error } = await supabase.from('books_catalog').upsert(batch, { onConflict: 'id' });
-      if (error) errors += batch.length; else synced += batch.length;
-      batch = [];
+  if (pages.length > 0) {
+    const rows = pages.map(p => ({
+      id: p.id || p._id?.toString(),
+      book_id: p.book_id,
+      page_number: p.page_number,
+      archived_photo: p.archived_photo || null,
+      display_photo: p.display_photo || null,
+      thumbnail_blob: p.thumbnail_blob || null,
+    }));
+
+    let synced = 0;
+    for (let i = 0; i < rows.length; i += BATCH_SIZE) {
+      const batch = rows.slice(i, i + BATCH_SIZE);
+      const { error } = await supabase.from('pages_images').upsert(batch, { onConflict: 'id' });
+      if (!error) synced += batch.length;
     }
+
+    results.push({ name: 'pages_images', synced });
   }
-  if (batch.length > 0) {
-    const { error } = await supabase.from('books_catalog').upsert(batch, { onConflict: 'id' });
-    if (error) errors += batch.length; else synced += batch.length;
-  }
-  results.push({ name: 'books_catalog', synced, errors: errors || undefined });
 }
 
 await mongoClient.close();
