@@ -59,8 +59,9 @@ function extractPrimaryAuthor(raw) {
   // Strip outer brackets (uncertain attribution)
   s = s.replace(/^\[+/, '').replace(/\]+$/, '');
 
-  // Take first author before semicolons or pipes
+  // Take first author before semicolons, pipes, or ampersands
   s = s.split(/[;|]/)[0].trim();
+  s = s.split(/\s+&\s+/)[0].trim();
 
   // Strip role qualifiers
   s = s.replace(/\s*\((ed\.|trans\.|translator|compiler|printer|comm\.).*?\)/gi, '');
@@ -73,8 +74,11 @@ function extractPrimaryAuthor(raw) {
   // Strip "et al."
   s = s.replace(/\s+et\s+al\.?$/i, '');
 
-  // Strip date suffixes like ", ca1577-1626" or ", 1646-1724"
+  // Strip date suffixes like ", ca1577-1626" or ", 1646-1724" or ", ca. 2./4. Jh."
   s = s.replace(/,\s*(?:ca\.?\s*)?\d{4}(?:\s*-\s*\d{4})?$/, '');
+  s = s.replace(/,\s*ca\.?\s*\d+\.?\/?\d*\.?\s*Jh\.?$/i, '');
+  // Strip profession suffixes like ", prentgraveur" or ", publisher"
+  s = s.replace(/,\s*(?:prentgraveur|publisher|printer|engraver|bookseller|libraire)$/i, '');
 
   // Strip leading/trailing brackets that might remain
   s = s.replace(/^\[+/, '').replace(/\]+$/, '');
@@ -300,7 +304,8 @@ async function main() {
 
   let wikidataCreated = 0;
   if (USE_WIKIDATA) {
-    const worthSearching = results.unmatched.filter(u => u.count >= 2);
+    const MIN_BOOKS = process.argv.includes('--all-authors') ? 1 : 2;
+    const worthSearching = results.unmatched.filter(u => u.count >= MIN_BOOKS);
     console.log(`\n3b. Searching Wikidata for ${worthSearching.length} unmatched authors (2+ books)...`);
 
     for (let i = 0; i < worthSearching.length; i++) {
