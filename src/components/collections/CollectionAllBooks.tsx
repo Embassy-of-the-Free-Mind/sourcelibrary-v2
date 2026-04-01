@@ -117,7 +117,9 @@ export default function CollectionAllBooks({
       const res = await fetch(`/api/collections/${collectionId}?mode=manifest`);
       if (!res.ok) throw new Error('Failed to fetch');
       const data = await res.json();
-      setAllBooks(data.books || []);
+      // Filter out artworks — they have their own section on the collection page
+      const booksOnly = (data.books || []).filter((b: BookItem & { resource_type?: string }) => !b.resource_type);
+      setAllBooks(booksOnly);
     } catch {
       // Keep existing state on error
     } finally {

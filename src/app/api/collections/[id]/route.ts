@@ -37,17 +37,18 @@ export async function GET(
       return NextResponse.json({ error: 'Collection not found' }, { status: 404 });
     }
 
-    // Art collections bypass hidden/translation filters since artworks are hidden: true
-    // and have no translated pages
+    // Art-only collections filter by resource_type.
+    // Book collections include both books AND artworks (mixed content).
     const isArtCollection = collection.collection_type === 'visual_art';
 
     const filter: Record<string, unknown> = isArtCollection
       ? { collections: id, resource_type: { $exists: true } }
       : {
           collections: id,
-          visible: true,
-          pages_count: { $gt: 0 },
-          pages_translated: { $gt: 0 },
+          $or: [
+            { visible: true, pages_count: { $gt: 0 }, pages_translated: { $gt: 0 } },
+            { resource_type: { $exists: true } },
+          ],
         };
 
     // Manifest mode: return lightweight data for all books in one shot.
@@ -59,6 +60,7 @@ export async function GET(
         published: 1, read_count: 1, thumbnail: 1, thumbnail_blob: 1,
         is_first_translation: 1, ft_disposition: 1,
         created_at: 1, last_translation_at: 1,
+        resource_type: 1, medium: 1, enrichment: 1,
       };
       // Include relevance score for this collection
       const manifestProjectionWithScore = {
@@ -109,7 +111,8 @@ export async function GET(
       _id: 0, id: 1, slug: 1, title: 1, display_title: 1, author: 1, year: 1,
       language: 1, pages_count: 1, pages_ocr: 1, pages_translated: 1, pages_blank: 1,
       photo: 1, categories: 1, thumbnail: 1, thumbnail_blob: 1, published: 1, read_count: 1,
-      resource_type: 1, is_first_translation: 1, ft_disposition: 1,
+      resource_type: 1, medium: 1, 'enrichment.subject': 1, 'enrichment.genre': 1,
+      is_first_translation: 1, ft_disposition: 1,
     };
 
     const highlightProjection = {
@@ -130,12 +133,12 @@ export async function GET(
         .skip(offset)
         .limit(limit)
         .toArray(),
-      // Top 5: art collections use main filter; book collections prefer translated
+      // Top 5: art collections use main filter; book collections prefer translated books (not artworks)
       db.collection('books')
         .find(
           isArtCollection
             ? { collections: id, resource_type: { $exists: true } }
-            : { collections: id, visible: true, pages_translated: { $gt: 0 } },
+            : { collections: id, visible: true, pages_translated: { $gt: 0 }, resource_type: { $exists: false } },
           { projection: highlightProjection },
         )
         .sort(isArtCollection ? { title: 1 } : { quality_score: -1, read_count: -1, pages_translated: -1 })
