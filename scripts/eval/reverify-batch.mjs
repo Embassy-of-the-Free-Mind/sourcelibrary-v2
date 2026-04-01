@@ -157,7 +157,7 @@ async function main() {
         const v = result.verification;
         totalCost += v.cost_usd || 0;
         const newDisp = v.disposition;
-        const dispChanged = oldDisp !== newDisp;
+        const dispChanged = oldDisp != null && oldDisp !== newDisp; // null/undefined = new verification, not a change
         const wasFirst = ['confirmed_first', 'first_from_source', 'first_complete_translation', 'first_modern_translation'].includes(oldDisp);
         const isFirst = result.is_first_translation;
 
@@ -206,7 +206,7 @@ async function main() {
         process.stdout.write('E');
       } else if (r.dispChanged) {
         const arrow = r.isFirst ? '~' : '!';
-        console.log(`\n  ${arrow} ${r.book.author?.slice(0, 20).padEnd(22)} ${r.oldDisp.padEnd(28)} → ${r.newDisp}`);
+        console.log(`\n  ${arrow} ${r.book.author?.slice(0, 20).padEnd(22)} ${(r.oldDisp || 'none').padEnd(28)} → ${r.newDisp}`);
       } else {
         process.stdout.write('.');
       }
