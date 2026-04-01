@@ -814,22 +814,64 @@ async function main() {
 
   // Find books — fresh (0 translated) first, then partials sorted by most remaining pages.
   // Grouping similar workloads per batch minimizes convoy tail waste.
+  // Books with <10 pages remaining are auto-completed (overhead not worth it).
+  const MIN_REMAINING = 10;
   const proj = { id: 1, title: 1, display_title: 1, author: 1, year: 1, published: 1, language: 1, job: 1, image_source: 1, pages_translated: 1, pages_ocr: 1, pages_blank: 1 };
+
+  // Auto-complete near-zero books — job setup overhead exceeds the work
+  const nearZero = await db.collection('books').aggregate([
+    { $match: { 'pipeline_auto.status': { $in: ['translate_submitted', 'translate_partial'] } } },
+    { $addFields: { _remaining: { $subtract: [{ $ifNull: ['$pages_ocr', 0] }, { $add: [{ $ifNull: ['$pages_translated', 0] }, { $ifNull: ['$pages_blank', 0] }] }] } } },
+    { $match: { _remaining: { $lt: MIN_REMAINING } } },
+    { $limit: 100 },
+    { $project: { id: 1, _remaining: 1 } },
+  ], { maxTimeMS: 10000 }).toArray();
+
+  if (nearZero.length > 0) {
+    const ids = nearZero.map(b => b.id);
+    await db.collection('books').updateMany(
+      { id: { $in: ids } },
+      { $set: { 'pipeline_auto.status': 'translate_complete', updated_at: new Date() }, $unset: { job: '' } },
+    );
+    await db.collection('jobs').updateMany(
+      { book_id: { $in: ids }, type: 'translation', status: { $in: ['pending', 'processing'] } },
+      { $set: { status: 'completed', completed_at: new Date(), updated_at: new Date() } },
+    );
+    console.log(`[TRANSLATE] Auto-completed ${nearZero.length} near-zero books (<${MIN_REMAINING} pages remaining)`);
+  }
+
   let books = await db.collection('books')
     .find({ 'pipeline_auto.status': 'translate_submitted', $or: [{ pages_translated: 0 }, { pages_translated: { $exists: false } }] })
     .project(proj).limit(CONCURRENCY).toArray();
   if (books.length < CONCURRENCY) {
     // Fill remaining slots with partial books, most remaining pages first
+    // Only pull books with ≥50 pages remaining — smaller ones wait for a cleanup pass
     const needed = CONCURRENCY - books.length;
     const freshIds = new Set(books.map(b => b.id));
     const partial = await db.collection('books').aggregate([
-      { $match: { 'pipeline_auto.status': 'translate_submitted', pages_translated: { $gt: 0 } } },
+      { $match: { 'pipeline_auto.status': { $in: ['translate_submitted', 'translate_partial'] }, pages_translated: { $gt: 0 } } },
       { $addFields: { _remaining: { $subtract: [{ $ifNull: ['$pages_ocr', 0] }, { $add: [{ $ifNull: ['$pages_translated', 0] }, { $ifNull: ['$pages_blank', 0] }] }] } } },
+      { $match: { _remaining: { $gte: 50 } } },
       { $sort: { _remaining: -1 } },
       { $limit: needed },
       { $project: proj },
     ]).toArray();
     books = [...books, ...partial.filter(b => !freshIds.has(b.id))];
+  }
+
+  // If no big partials, fall back to any remaining partial (cleanup mode)
+  if (books.length < CONCURRENCY) {
+    const needed = CONCURRENCY - books.length;
+    const haveIds = new Set(books.map(b => b.id));
+    const small = await db.collection('books').aggregate([
+      { $match: { 'pipeline_auto.status': { $in: ['translate_submitted', 'translate_partial'] }, pages_translated: { $gt: 0 } } },
+      { $addFields: { _remaining: { $subtract: [{ $ifNull: ['$pages_ocr', 0] }, { $add: [{ $ifNull: ['$pages_translated', 0] }, { $ifNull: ['$pages_blank', 0] }] }] } } },
+      { $match: { _remaining: { $gte: MIN_REMAINING } } },
+      { $sort: { _remaining: -1 } },
+      { $limit: needed },
+      { $project: proj },
+    ]).toArray();
+    books = [...books, ...small.filter(b => !haveIds.has(b.id))];
   }
 
   // Self-dispatch: if no books are waiting, create jobs directly instead of waiting for Phase 4
