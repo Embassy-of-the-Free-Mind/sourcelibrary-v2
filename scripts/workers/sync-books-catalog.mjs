@@ -47,9 +47,12 @@ function transformBook(book) {
     pages_count: book.pages_count || 0,
     pages_ocr: book.pages_ocr || 0,
     pages_translated: book.pages_translated || 0,
+    pages_blank: book.pages_blank || 0,
     is_first_translation: book.is_first_translation === true,
     visible: book.visible === true,
     quality_score: book.quality_score || 0,
+    photo: book.photo || null,
+    read_count: book.read_count || 0,
     last_translation_at: book.last_translation_at || null,
     last_processed: book.updated_at || book.created_at || null,
     created_at: book.created_at || null,
@@ -77,7 +80,8 @@ const mongoClient = new MongoClient(MONGODB_URI, { maxPoolSize: 2 });
 await mongoClient.connect();
 const db = mongoClient.db('bookstore');
 
-let query = { visible: true, pages_count: { $gt: 0 } };
+// Sync all visible books (not just those with pages) — browse/language pages need all of them
+let query = { visible: true };
 
 if (!FULL_MODE) {
   const lastSync = await getLastSyncTime();
@@ -91,7 +95,8 @@ if (!FULL_MODE) {
 
 const projection = {
   id: 1, slug: 1, title: 1, display_title: 1, author: 1,
-  thumbnail: 1, thumbnail_blob: 1, language: 1, year: 1, published: 1,
+  thumbnail: 1, thumbnail_blob: 1, photo: 1, language: 1, year: 1, published: 1,
+  read_count: 1, pages_blank: 1,
   pages_count: 1, pages_ocr: 1, pages_translated: 1,
   is_first_translation: 1, visible: 1, quality_score: 1,
   last_translation_at: 1, updated_at: 1, created_at: 1,

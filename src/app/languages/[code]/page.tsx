@@ -4,6 +4,7 @@ import Image from 'next/image';
 import { BookOpen, Images } from 'lucide-react';
 import SiteHeader from '@/components/layout/SiteHeader';
 import { getDb } from '@/lib/mongodb';
+import { browseBooks, countBooks } from '@/lib/books-catalog';
 import { notFound } from 'next/navigation';
 import CollectionBookCard from '@/components/CollectionBookCard';
 import CollectionFilters from '@/components/collections/CollectionFilters';
@@ -32,12 +33,7 @@ export async function generateMetadata({ params }: Props): Promise<Metadata> {
 
   let count: number;
   try {
-    const db = await getDb();
-    count = await db.collection('books').countDocuments({
-      language: langName,
-      visible: true,
-      pages_count: { $gt: 0 },
-    });
+    count = await countBooks({ language: langName });
   } catch {
     return { title: 'Source Library', robots: { index: false, follow: false } };
   }
@@ -82,75 +78,47 @@ interface BookItem {
 // ---------- Data fetching ----------
 
 async function fetchLanguageData(langName: string, sort: string, offset: number, q?: string) {
-  const db = await getDb();
-
-  const baseFilter: Record<string, unknown> = {
-    language: langName,
-    visible: true,
-    pages_count: { $gt: 0 },
-  };
-
-  const filter = { ...baseFilter };
-  if (q && q.length >= 2) {
-    const escaped = q.replace(/[.*+?^${}()|[\]\\]/g, '\\$&');
-    const regex = { $regex: escaped, $options: 'i' };
-    filter.$or = [{ title: regex }, { display_title: regex }, { author: regex }];
-  }
-
-  const sortMap: Record<string, Record<string, 1 | -1>> = {
-    year_asc: { published: 1, title: 1 },
-    year_desc: { published: -1, title: 1 },
-    title: { title: 1 },
-    recent: { created_at: -1 },
-    popular: { read_count: -1, title: 1 },
-  };
-  const sortObj = sortMap[sort] || sortMap.popular;
-
-  const projection = {
-    _id: 0, id: 1, slug: 1, title: 1, display_title: 1, author: 1, year: 1,
-    language: 1, pages_count: 1, pages_ocr: 1, pages_translated: 1,
-    photo: 1, thumbnail: 1, thumbnail_blob: 1, published: 1, read_count: 1,
-    is_first_translation: 1,
-  };
-
-  // Sample book IDs for gallery
-  const sampleBookIds = await db.collection('books')
-    .find(baseFilter, { projection: { _id: 0, id: 1 } })
-    .sort({ read_count: -1 })
-    .limit(50)
-    .toArray()
-    .then(docs => docs.map(d => d.id as string));
-
-  const [books, total, firstTranslationCount, galleryImages] = await Promise.all([
-    db.collection('books')
-      .find(filter, { projection })
-      .sort(sortObj)
-      .skip(offset)
-      .limit(PER_PAGE)
-      .toArray(),
-    db.collection('books').countDocuments(filter),
-    db.collection('books').countDocuments({
-      ...baseFilter,
-      is_first_translation: true,
+  // Books + counts from Supabase (instant), gallery from MongoDB
+  const [booksResult, firstTranslationCount, sampleResult] = await Promise.all([
+    browseBooks({
+      language: langName,
+      search: q && q.length >= 2 ? q : undefined,
+      sort: (sort as 'popular' | 'title' | 'year_asc' | 'year_desc' | 'recent') || 'popular',
+      offset,
+      limit: PER_PAGE,
     }),
-    sampleBookIds.length > 0
-      ? db.collection('gallery_images').aggregate([
-          { $match: {
-            book_id: { $in: sampleBookIds },
-            gallery_quality: { $gte: 0.7 },
-            book_visible: true,
-            type: { $nin: ['decorative', 'symbol', 'musical_score', 'exlibris', 'bookplate'] },
-          }},
-          { $sort: { gallery_quality: -1 } },
-          { $group: { _id: '$book_id', images: { $push: '$$ROOT' } } },
-          { $project: { images: { $slice: ['$images', 2] } } },
-          { $unwind: '$images' },
-          { $replaceRoot: { newRoot: '$images' } },
-          { $sort: { gallery_quality: -1 } },
-          { $limit: 12 },
-        ]).toArray().catch(() => [])
-      : Promise.resolve([]),
+    countBooks({ language: langName, firstTranslation: true }),
+    browseBooks({ language: langName, sort: 'popular', limit: 50 }),
   ]);
+
+  const books = booksResult.books;
+  const total = booksResult.total;
+  const sampleBookIds = sampleResult.books.map(b => b.id);
+
+  // Gallery images from MongoDB (fast, well-indexed)
+  let galleryImages: unknown[] = [];
+  if (sampleBookIds.length > 0) {
+    try {
+      const db = await getDb();
+      galleryImages = await db.collection('gallery_images').aggregate([
+        { $match: {
+          book_id: { $in: sampleBookIds },
+          gallery_quality: { $gte: 0.7 },
+          book_visible: true,
+          type: { $nin: ['decorative', 'symbol', 'musical_score', 'exlibris', 'bookplate'] },
+        }},
+        { $sort: { gallery_quality: -1 } },
+        { $group: { _id: '$book_id', images: { $push: '$$ROOT' } } },
+        { $project: { images: { $slice: ['$images', 2] } } },
+        { $unwind: '$images' },
+        { $replaceRoot: { newRoot: '$images' } },
+        { $sort: { gallery_quality: -1 } },
+        { $limit: 12 },
+      ]).toArray();
+    } catch {
+      // Gallery is optional
+    }
+  }
 
   return {
     books: books as unknown as BookItem[],

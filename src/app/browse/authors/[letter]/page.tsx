@@ -1,7 +1,7 @@
 import { Metadata } from 'next';
 import Link from 'next/link';
 import SiteHeader from '@/components/layout/SiteHeader';
-import { getDb } from '@/lib/mongodb';
+import { browseBooks } from '@/lib/books-catalog';
 import { authorSlug } from '@/lib/slugify';
 import { notFound } from 'next/navigation';
 
@@ -42,31 +42,20 @@ export default async function BrowseAuthorsPage({ params }: PageProps) {
 
   let authors: AuthorEntry[] = [];
   try {
-    const db = await getDb();
-    // Use author_1 index as primary filter. pages_translated > 0 implies pages_count > 0.
-    const rawBooks = await db.collection('books').find(
-      {
-        author: { $regex: `^${l}`, $options: 'i' },
-        visible: true,
-        pages_translated: { $gt: 0 },
-      },
-      {
-        projection: { author: 1 },
-        hint: 'author_1',
-        maxTimeMS: 45000,
-      }
-    ).toArray();
-
+    const result = await browseBooks({
+      authorPrefix: l,
+      hasTranslation: true,
+      limit: 5000,
+    });
     const authorCounts = new Map<string, number>();
-    for (const b of rawBooks) {
-      const a = b.author as string;
-      authorCounts.set(a, (authorCounts.get(a) || 0) + 1);
+    for (const b of result.books) {
+      if (b.author) authorCounts.set(b.author, (authorCounts.get(b.author) || 0) + 1);
     }
     authors = [...authorCounts.entries()]
       .map(([name, count]) => ({ _id: name, count }))
       .sort((a, b) => a._id.localeCompare(b._id));
   } catch {
-    // DB timeout — render empty page with message
+    // Supabase error — render empty page
   }
 
   return (
