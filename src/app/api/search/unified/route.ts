@@ -36,7 +36,7 @@ export async function GET(request: NextRequest) {
   try {
     const { searchParams } = new URL(request.url);
     const query = searchParams.get('q') || '';
-    const limit = Math.min(parseInt(searchParams.get('limit') || '5'), 10);
+    const limit = Math.min(parseInt(searchParams.get('limit') || '8'), 12);
     const galleryLimit = Math.min(parseInt(searchParams.get('gallery_limit') || '6'), 12);
 
     // Parse filters
@@ -134,7 +134,8 @@ async function searchBooks(
       pipeline.push({ $match: postMatch });
     }
 
-    pipeline.push({ $limit: limit });
+    // Fetch one extra to detect if there are more results
+    pipeline.push({ $limit: limit + 1 });
     pipeline.push({ $project: bookProjection });
 
     books = await db.collection('books').aggregate(pipeline, { maxTimeMS: 5000 }).toArray();
@@ -159,7 +160,7 @@ async function searchBooks(
     books = await db.collection('books')
       .find(regexFilter)
       .project(bookProjection)
-      .limit(limit)
+      .limit(limit + 1)
       .toArray();
   }
 
@@ -201,8 +202,11 @@ async function searchBooks(
     }
   }
 
+  const hasMore = books.length > limit;
+  const truncated = hasMore ? books.slice(0, limit) : books;
+
   return {
-    results: books.map((b: any): SearchResult => {
+    results: truncated.map((b: any): SearchResult => {
       const summaryText = b.reading_summary?.overview;
       return {
         id: b.id,
@@ -226,7 +230,8 @@ async function searchBooks(
         quality_score: b.quality_score,
       };
     }),
-    total: books.length,
+    total: truncated.length,
+    hasMore,
   };
 }
 
@@ -326,7 +331,7 @@ async function searchIndex(db: any, query: string, limit: number) {
     }
   }
 
-  return { results, total: results.length };
+  return { results, total: results.length, hasMore: results.length >= limit };
 }
 
 async function searchGallery(db: any, query: string, queryRegex: RegExp, limit: number): Promise<{ results: GalleryResult[]; total: number }> {
