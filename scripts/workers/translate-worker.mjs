@@ -874,16 +874,27 @@ async function main() {
     books = [...books, ...small.filter(b => !haveIds.has(b.id))];
   }
 
-  // Self-dispatch: if no books are waiting, create jobs directly instead of waiting for Phase 4
-  if (books.length < CONCURRENCY) {
-    const needed = CONCURRENCY - books.length;
+  // Self-dispatch: always reserve slots for fresh books from metadata_enriched.
+  // Without this, 600+ partials fill all slots and fresh books never start.
+  const FRESH_SLOTS = Math.max(3, CONCURRENCY - books.length); // at least 3 slots for fresh books
+  if (books.length < CONCURRENCY || FRESH_SLOTS > 0) {
+    const needed = Math.min(FRESH_SLOTS, CONCURRENCY - books.length + 3);
     const dispatched = await selfDispatch(db, needed);
     if (dispatched.length > 0) {
-      console.log(`[TRANSLATE] Self-dispatched ${dispatched.length} books (had ${books.length} in queue)`);
-      // Re-query to pick up the newly dispatched books with full projection
+      console.log(`[TRANSLATE] Self-dispatched ${dispatched.length} fresh books (had ${books.length} partials)`);
       const newBooks = await db.collection('books')
         .find({ 'pipeline_auto.status': 'translate_submitted', id: { $in: dispatched.map(b => b.id) } })
         .project(proj).toArray();
+      // Replace smallest partials with fresh big books if we're over capacity
+      if (books.length + newBooks.length > CONCURRENCY) {
+        // Sort existing by remaining pages ascending, drop the smallest
+        const withRemaining = books.map(b => ({
+          ...b,
+          _remaining: (b.pages_ocr || 0) - (b.pages_translated || 0) - (b.pages_blank || 0),
+        }));
+        withRemaining.sort((a, b) => a._remaining - b._remaining);
+        books = withRemaining.slice(newBooks.length); // drop smallest to make room
+      }
       books = [...books, ...newBooks];
     }
   }
