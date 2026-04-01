@@ -1,7 +1,7 @@
 import { Metadata } from 'next';
 import Link from 'next/link';
 import SiteHeader from '@/components/layout/SiteHeader';
-import { getDb } from '@/lib/mongodb';
+import { browseBooks } from '@/lib/books-catalog';
 import { bookUrl } from '@/lib/slugify';
 import { notFound } from 'next/navigation';
 
@@ -47,40 +47,23 @@ export default async function BrowseTitlesPage({ params }: PageProps) {
 
   let books: BrowseBook[] = [];
   try {
-    const db = await getDb();
-    const regex = new RegExp(`^${l}`, 'i');
-    // pages_translated > 0 implies pages_count > 0, so skip redundant filter.
-    // Use books_hidden_translated_idx for the base filter, then regex on title.
-    const rawBooks = await db.collection('books').find(
-      {
-        visible: true,
-        pages_translated: { $gt: 0 },
-        $or: [
-          { display_title: { $regex: regex } },
-          { display_title: { $exists: false }, title: { $regex: regex } },
-        ],
-      },
-      {
-        projection: {
-          id: 1, slug: 1, title: 1, display_title: 1,
-          author: 1, language: 1, published: 1,
-        },
-        sort: { display_title: 1, title: 1 },
-        maxTimeMS: 45000,
-      }
-    ).toArray();
-
-    books = rawBooks.map(b => ({
-      id: (b.id as string) || b._id.toString(),
-      slug: b.slug as string | undefined,
-      title: b.title as string,
-      display_title: b.display_title as string | undefined,
-      author: b.author as string,
-      language: b.language as string,
-      published: b.published as string,
+    const result = await browseBooks({
+      titlePrefix: l,
+      hasTranslation: true,
+      sort: 'title',
+      limit: 2000,
+    });
+    books = result.books.map(b => ({
+      id: b.id,
+      slug: b.slug || undefined,
+      title: b.title,
+      display_title: b.display_title || undefined,
+      author: b.author || '',
+      language: b.language || '',
+      published: b.published || '',
     }));
   } catch {
-    // DB timeout — render empty page with message
+    // Supabase error — render empty page
   }
 
   return (

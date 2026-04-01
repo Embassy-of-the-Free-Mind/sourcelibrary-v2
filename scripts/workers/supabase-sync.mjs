@@ -199,14 +199,14 @@ for (const config of COLLECTIONS) {
 {
   const since = await getLastTimestamp('books_catalog');
   const query = since
-    ? { visible: true, pages_count: { $gt: 0 }, updated_at: { $gt: since } }
-    : { visible: true, pages_count: { $gt: 0 } };
+    ? { visible: true, updated_at: { $gt: since } }
+    : { visible: true };
   const cursor = db.collection('books').find(query, {
     projection: {
       id: 1, slug: 1, title: 1, display_title: 1, author: 1,
-      thumbnail: 1, thumbnail_blob: 1, language: 1, year: 1, published: 1,
-      pages_count: 1, pages_ocr: 1, pages_translated: 1,
-      is_first_translation: 1, visible: 1, quality_score: 1,
+      thumbnail: 1, thumbnail_blob: 1, photo: 1, language: 1, year: 1, published: 1,
+      pages_count: 1, pages_ocr: 1, pages_translated: 1, pages_blank: 1,
+      is_first_translation: 1, visible: 1, quality_score: 1, read_count: 1,
       last_translation_at: 1, updated_at: 1, created_at: 1,
       categories: 1, collections: 1, collection_relevance: 1,
       'image_source.provider': 1,
@@ -224,9 +224,10 @@ for (const config of COLLECTIONS) {
       year: typeof book.year === 'number' ? book.year : null,
       published: book.published || null,
       pages_count: book.pages_count || 0, pages_ocr: book.pages_ocr || 0,
-      pages_translated: book.pages_translated || 0,
+      pages_translated: book.pages_translated || 0, pages_blank: book.pages_blank || 0,
       is_first_translation: book.is_first_translation === true,
       visible: book.visible === true, quality_score: book.quality_score || 0,
+      photo: book.photo || null, read_count: book.read_count || 0,
       last_translation_at: book.last_translation_at || null,
       last_processed: book.updated_at || book.created_at || null,
       created_at: book.created_at || null, updated_at: book.updated_at || null,

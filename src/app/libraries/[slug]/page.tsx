@@ -4,6 +4,7 @@ import Image from 'next/image';
 import { BookOpen, ExternalLink, Images, Library } from 'lucide-react';
 import SiteHeader from '@/components/layout/SiteHeader';
 import { getDb } from '@/lib/mongodb';
+import { browseBooks, getLanguageCounts } from '@/lib/books-catalog';
 import { notFound } from 'next/navigation';
 import { getPartnerBySlug, getAllPartnerSlugs } from '@/lib/library-partners';
 import CollectionBookCard from '@/components/CollectionBookCard';
@@ -76,107 +77,65 @@ interface BookItem {
 // ---------- Data fetching ----------
 
 async function fetchLibraryData(providerKey: string, sort: string, language: string, offset: number, q?: string) {
-  const db = await getDb();
-
-  const filter: Record<string, unknown> = {
-    'image_source.provider': providerKey,
-    visible: true,
-    pages_count: { $gt: 0 },
-    pages_translated: { $gt: 0 },
-  };
-  if (language) filter.language = language;
-  if (q && q.length >= 2) {
-    const escaped = q.replace(/[.*+?^${}()|[\]\\]/g, '\\$&');
-    const regex = { $regex: escaped, $options: 'i' };
-    filter.$or = [{ title: regex }, { display_title: regex }, { author: regex }];
-  }
-
-  const sortMap: Record<string, Record<string, 1 | -1>> = {
-    year_asc: { year: 1, title: 1 },
-    year_desc: { year: -1, title: 1 },
-    title: { title: 1 },
-    recent: { created_at: -1 },
-    popular: { read_count: -1, title: 1 },
-  };
-  const sortObj = sortMap[sort] || sortMap.popular;
-
-  const projection = {
-    _id: 0, id: 1, slug: 1, title: 1, display_title: 1, author: 1, year: 1,
-    language: 1, pages_count: 1, pages_ocr: 1, pages_translated: 1, pages_blank: 1,
-    photo: 1, thumbnail: 1, thumbnail_blob: 1, published: 1, read_count: 1,
-  };
-
-  // Get all unique languages for this provider (unfiltered by language/search, but exclude hidden)
-  const langFilter = {
-    'image_source.provider': providerKey,
-    visible: true,
-    pages_count: { $gt: 0 },
-    pages_translated: { $gt: 0 },
-  };
-
-  // Get a sample of book IDs for gallery image lookup
-  const sampleBookIds = await db.collection('books')
-    .find(langFilter, { projection: { _id: 0, id: 1 } })
-    .sort({ read_count: -1 })
-    .limit(50)
-    .toArray()
-    .then(docs => docs.map(d => d.id as string));
-
-  const [books, total, langAgg, galleryImages] = await Promise.all([
-    db.collection('books')
-      .find(filter, { projection })
-      .sort(sortObj)
-      .skip(offset)
-      .limit(PER_PAGE)
-      .toArray(),
-    db.collection('books').countDocuments(filter),
-    db.collection('books').aggregate([
-      { $match: langFilter },
-      { $group: { _id: '$language', count: { $sum: 1 } } },
-      { $match: { _id: { $ne: null } } },
-      { $sort: { count: -1 } },
-    ]).toArray(),
-    sampleBookIds.length > 0
-      ? db.collection('gallery_images').aggregate([
-          { $match: {
-            book_id: { $in: sampleBookIds },
-            gallery_quality: { $gte: 0.7 },
-            book_visible: true,
-            type: { $nin: ['decorative', 'symbol', 'musical_score', 'exlibris', 'bookplate'] },
-          }},
-          { $sort: { gallery_quality: -1 } },
-          // Limit to 2 per book for diversity
-          { $group: {
-            _id: '$book_id',
-            images: { $push: '$$ROOT' },
-          }},
-          { $project: { images: { $slice: ['$images', 2] } } },
-          { $unwind: '$images' },
-          { $replaceRoot: { newRoot: '$images' } },
-          { $sort: { gallery_quality: -1 } },
-          { $limit: 12 },
-        ]).toArray().catch(() => [])
-      : Promise.resolve([]),
+  // Books + languages from Supabase (instant), gallery + contributors from MongoDB
+  const [booksResult, languages, sampleResult] = await Promise.all([
+    browseBooks({
+      provider: providerKey,
+      language: language || undefined,
+      hasTranslation: true,
+      search: q && q.length >= 2 ? q : undefined,
+      sort: (sort as 'popular' | 'title' | 'year_asc' | 'year_desc' | 'recent') || 'popular',
+      offset,
+      limit: PER_PAGE,
+    }),
+    getLanguageCounts({ provider: providerKey }),
+    browseBooks({ provider: providerKey, hasTranslation: true, sort: 'popular', limit: 50 }),
   ]);
 
-  const languages = langAgg.map(l => ({ lang: l._id as string, count: l.count as number }));
+  const sampleBookIds = sampleResult.books.map(b => b.id);
 
-  // Aggregate contributing libraries (for providers like IA that track this)
-  const contributorsAgg = await db.collection('books').aggregate([
-    { $match: { ...langFilter, 'image_source.contributing_library': { $exists: true, $ne: null } } },
-    { $group: { _id: '$image_source.contributing_library', count: { $sum: 1 } } },
-    { $sort: { count: -1 } },
-    { $limit: 20 },
-  ]).toArray().catch(() => []);
+  // Gallery images from MongoDB (fast, well-indexed)
+  let galleryImages: unknown[] = [];
+  if (sampleBookIds.length > 0) {
+    try {
+      const db = await getDb();
+      galleryImages = await db.collection('gallery_images').aggregate([
+        { $match: {
+          book_id: { $in: sampleBookIds },
+          gallery_quality: { $gte: 0.7 },
+          book_visible: true,
+          type: { $nin: ['decorative', 'symbol', 'musical_score', 'exlibris', 'bookplate'] },
+        }},
+        { $sort: { gallery_quality: -1 } },
+        { $group: { _id: '$book_id', images: { $push: '$$ROOT' } } },
+        { $project: { images: { $slice: ['$images', 2] } } },
+        { $unwind: '$images' },
+        { $replaceRoot: { newRoot: '$images' } },
+        { $sort: { gallery_quality: -1 } },
+        { $limit: 12 },
+      ]).toArray();
+    } catch { /* Gallery is optional */ }
+  }
 
-  const contributingLibraries = contributorsAgg.map(c => ({
-    name: c._id as string,
-    count: c.count as number,
-  }));
+  // Contributing libraries from MongoDB (needs image_source.contributing_library, not in catalog)
+  let contributingLibraries: { name: string; count: number }[] = [];
+  try {
+    const db = await getDb();
+    const contributorsAgg = await db.collection('books').aggregate([
+      { $match: { 'image_source.provider': providerKey, visible: true, pages_count: { $gt: 0 }, pages_translated: { $gt: 0 }, 'image_source.contributing_library': { $exists: true, $ne: null } } },
+      { $group: { _id: '$image_source.contributing_library', count: { $sum: 1 } } },
+      { $sort: { count: -1 } },
+      { $limit: 20 },
+    ], { maxTimeMS: 5000 }).toArray();
+    contributingLibraries = contributorsAgg.map(c => ({
+      name: c._id as string,
+      count: c.count as number,
+    }));
+  } catch { /* contributing libraries are optional */ }
 
   return {
-    books: books as unknown as BookItem[],
-    total,
+    books: booksResult.books as unknown as BookItem[],
+    total: booksResult.total,
     languages,
     // eslint-disable-next-line @typescript-eslint/no-explicit-any
     galleryImages: galleryImages as any[],
