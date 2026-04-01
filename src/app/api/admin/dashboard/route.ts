@@ -20,41 +20,26 @@ async function computeSnapshot(db: any) {
     },
   };
 
-  // All counts in parallel — visible, invisible, warehouse, enrichment, jobs, cost
+  // Phase 1: Core visible-books queries (same as before, ~10 parallel queries)
   const [
     totalBooks, totals,
-    invisibleCount, invisibleTotals,
-    warehouseCount, warehouseTotals,
-    firstTranslations, invisibleFirstTranslations, warehouseFirstTranslations,
+    firstTranslations,
     withSummary, withIndex, withImages, tagged,
     jobsActive,
     readable, firstTranslationsComplete,
     costData,
   ] = await Promise.all([
-    // Visible
     books.countDocuments(notHidden),
     books.aggregate([{ $match: notHidden }, groupStage], { maxTimeMS: 15000 }).toArray(),
-    // Invisible
-    books.countDocuments(invisible),
-    books.aggregate([{ $match: invisible }, groupStage], { maxTimeMS: 15000 }).toArray(),
-    // Warehouse
-    warehouse.countDocuments({}),
-    warehouse.aggregate([groupStage], { maxTimeMS: 15000 }).toArray(),
-    // First translations
     books.countDocuments({ ...notHidden, is_first_translation: true }),
-    books.countDocuments({ ...invisible, is_first_translation: true }),
-    warehouse.countDocuments({ is_first_translation: true }),
-    // Enrichment
     books.countDocuments({ ...notHidden, summary: { $exists: true, $ne: null } }),
     books.countDocuments({ ...notHidden, index_of_topics: { $exists: true, $ne: null } }),
     books.countDocuments({ ...notHidden, 'detected_images.0': { $exists: true } }),
     books.countDocuments({ ...notHidden, faceted_tags: { $exists: true, $ne: null } }),
-    // Jobs
     db.collection('jobs').aggregate([
       { $match: { status: { $in: ['processing', 'queued'] } } },
       { $group: { _id: '$status', count: { $sum: 1 } } },
     ], { maxTimeMS: 5000 }).toArray(),
-    // Readable + complete FTs
     books.countDocuments({
       ...notHidden, pages_ocr: { $gte: 1 },
       $expr: { $gte: ['$pages_translated', { $multiply: ['$pages_ocr', 0.9] }] },
@@ -63,7 +48,6 @@ async function computeSnapshot(db: any) {
       ...notHidden, is_first_translation: true, pages_ocr: { $gte: 10 },
       $expr: { $gte: ['$pages_translated', { $multiply: ['$pages_ocr', 0.9] }] },
     }),
-    // Cost
     db.collection('gemini_usage').aggregate([
       { $match: { type: { $in: ['translate', 'translation'] }, status: 'success', timestamp: { $gte: new Date(Date.now() - 30 * 24 * 60 * 60 * 1000) } } },
       { $group: { _id: null, total_cost: { $sum: { $ifNull: ['$cost_usd', 0] } }, pages: { $sum: 1 } } },
@@ -71,8 +55,6 @@ async function computeSnapshot(db: any) {
   ]);
 
   const t = totals[0] || { pages: 0, pages_ocr: 0, pages_translated: 0 };
-  const it = invisibleTotals[0] || { pages: 0, pages_ocr: 0, pages_translated: 0 };
-  const wt = warehouseTotals[0] || { pages: 0, pages_ocr: 0, pages_translated: 0 };
   const jobMap = Object.fromEntries(jobsActive.map((j: any) => [j._id, j.count]));
   const cost = costData[0] || { total_cost: 0, pages: 0 };
   const economics = {
@@ -80,6 +62,27 @@ async function computeSnapshot(db: any) {
     total_cost_30d: +cost.total_cost.toFixed(2),
     pages_translated_30d: cost.pages,
   };
+
+  // Phase 2: Invisible + warehouse (optional, gracefully degrades)
+  let invisibleStats = null;
+  let warehouseStats = null;
+  try {
+    const [
+      invisibleCount, invisibleTotals, invisibleFT,
+      warehouseCount, warehouseTotals, warehouseFT,
+    ] = await Promise.all([
+      books.countDocuments(invisible),
+      books.aggregate([{ $match: invisible }, groupStage], { maxTimeMS: 10000 }).toArray(),
+      books.countDocuments({ ...invisible, is_first_translation: true }),
+      warehouse.countDocuments({}),
+      warehouse.aggregate([groupStage], { maxTimeMS: 10000 }).toArray(),
+      warehouse.countDocuments({ is_first_translation: true }),
+    ]);
+    const it = invisibleTotals[0] || { pages: 0, pages_ocr: 0, pages_translated: 0 };
+    const wt = warehouseTotals[0] || { pages: 0, pages_ocr: 0, pages_translated: 0 };
+    invisibleStats = { total_books: invisibleCount, total_pages: it.pages, pages_ocr: it.pages_ocr, pages_translated: it.pages_translated, first_translations: invisibleFT };
+    warehouseStats = { total_books: warehouseCount, total_pages: wt.pages, pages_ocr: wt.pages_ocr, pages_translated: wt.pages_translated, first_translations: warehouseFT };
+  } catch { /* Atlas overloaded — skip extended stats */ }
 
   return {
     canon: {
@@ -107,20 +110,8 @@ async function computeSnapshot(db: any) {
       queued: jobMap.queued || 0,
     },
     economics,
-    invisible: {
-      total_books: invisibleCount,
-      total_pages: it.pages,
-      pages_ocr: it.pages_ocr,
-      pages_translated: it.pages_translated,
-      first_translations: invisibleFirstTranslations,
-    },
-    warehouse: {
-      total_books: warehouseCount,
-      total_pages: wt.pages,
-      pages_ocr: wt.pages_ocr,
-      pages_translated: wt.pages_translated,
-      first_translations: warehouseFirstTranslations,
-    },
+    ...(invisibleStats && { invisible: invisibleStats }),
+    ...(warehouseStats && { warehouse: warehouseStats }),
   };
 }
 
