@@ -163,7 +163,10 @@ export default function BookLibrary({ initialBooks, totalBooks, languages, colle
       if (library) qs.set('library', library);
       qs.set('sort', sort);
 
-      const res = await fetch(`/api/books/library?${qs}`, { signal: controller.signal });
+      // Use Supabase-backed browse for non-search requests (11s → 0.6s)
+      // Search requests use Atlas Search via the library endpoint
+      const endpoint = search ? '/api/books/library' : '/api/books/browse';
+      const res = await fetch(`${endpoint}?${qs}`, { signal: controller.signal });
       if (!res.ok) throw new Error('Failed to fetch');
       const data = await res.json();
 

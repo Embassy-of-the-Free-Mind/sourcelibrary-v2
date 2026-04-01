@@ -160,6 +160,7 @@ export const search = {
     if (params?.library) qs.set('library', params.library);
     if (params?.first_translation) qs.set('first_translation', 'true');
     if (params?.has_translation) qs.set('has_translation', 'true');
-    return await apiClient.get(`/api/books/library?${qs}`);
+    const endpoint = params?.search ? '/api/books/library' : '/api/books/browse';
+    return await apiClient.get(`${endpoint}?${qs}`);
   },
 };
