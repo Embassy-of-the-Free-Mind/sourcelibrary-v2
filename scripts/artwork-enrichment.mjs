@@ -234,17 +234,17 @@ async function main() {
           updated_at: new Date(),
         };
 
-        // Add to collection_slugs if collections assigned
-        if (enrichment.collections?.length > 0) {
-          const validSlugs = enrichment.collections.filter(s =>
-            ALL_COLLECTIONS.some(c => c.slug === s)
-          );
-          if (validSlugs.length > 0) {
-            updateFields.collection_slugs = validSlugs;
-          }
+        // Tag artwork into collections (same field books use)
+        const collectionSlugs = (enrichment.collections || []).filter(s =>
+          ALL_COLLECTIONS.some(c => c.slug === s)
+        );
+
+        const update = { $set: updateFields };
+        if (collectionSlugs.length > 0) {
+          update.$addToSet = { collections: { $each: collectionSlugs } };
         }
 
-        await books.updateOne({ _id: art._id }, { $set: updateFields });
+        await books.updateOne({ _id: art._id }, update);
       }
 
       // Rate limit: 2s between calls
