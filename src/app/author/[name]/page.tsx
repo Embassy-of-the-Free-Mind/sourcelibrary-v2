@@ -1,5 +1,6 @@
 import { Metadata } from 'next';
 import Link from 'next/link';
+import Image from 'next/image';
 import SiteHeader from '@/components/layout/SiteHeader';
 import { getDb } from '@/lib/mongodb';
 import { notFound, redirect } from 'next/navigation';
@@ -25,6 +26,8 @@ interface Book {
   summary?: { data: string } | string;
   is_first_translation?: boolean;
   ft_disposition?: string;
+  publisher?: string;
+  place_of_publication?: string;
   image_source?: { contributing_library?: string; provider_name?: string };
 }
 
@@ -62,9 +65,10 @@ interface AuthorPageProps {
  */
 const BOOK_PROJECTION = {
   _id: 0, id: 1, slug: 1, title: 1, display_title: 1, author: 1,
-  author_entity_id: 1, language: 1, published: 1,
+  author_entity_id: 1, language: 1, published: 1, thumbnail: 1,
   pages_count: 1, pages_ocr: 1, pages_translated: 1, pages_blank: 1, year: 1,
   summary: 1, is_first_translation: 1, ft_disposition: 1,
+  publisher: 1, place_of_publication: 1,
   'image_source.contributing_library': 1, 'image_source.provider_name': 1,
 };
 
@@ -342,6 +346,37 @@ export default async function AuthorPage({ params }: AuthorPageProps) {
         </div>
       </div>
 
+      {/* Title page gallery */}
+      {(() => {
+        const thumbBooks = books.filter(b => b.thumbnail);
+        if (thumbBooks.length === 0) return null;
+        const shown = thumbBooks.slice(0, 8);
+        return (
+          <div className="border-b" style={{ borderColor: 'var(--border-light)', background: 'var(--bg-warm)' }}>
+            <div className="max-w-6xl mx-auto px-6 md:px-12 py-6">
+              <div className="flex gap-3 overflow-x-auto pb-1">
+                {shown.map(book => (
+                  <Link key={book.id} href={bookUrl(book)} className="shrink-0 group">
+                    <div className="w-24 h-32 relative rounded overflow-hidden bg-stone-200">
+                      <Image
+                        src={book.thumbnail!}
+                        alt={book.display_title || book.title}
+                        fill
+                        className="object-cover group-hover:scale-105 transition-transform duration-300"
+                        sizes="96px"
+                      />
+                    </div>
+                    <p className="text-[10px] mt-1 w-24 line-clamp-1" style={{ color: 'var(--text-faint)' }}>
+                      {book.year || book.published || ''}
+                    </p>
+                  </Link>
+                ))}
+              </div>
+            </div>
+          </div>
+        );
+      })()}
+
       {/* Content — bibliography table */}
       <main className="max-w-6xl mx-auto px-6 md:px-12 py-8 md:py-12">
         <div className="overflow-x-auto">
@@ -351,7 +386,7 @@ export default async function AuthorPage({ params }: AuthorPageProps) {
                 <th className="pb-3 pr-4 font-medium">Title</th>
                 <th className="pb-3 pr-4 font-medium w-16">Year</th>
                 <th className="pb-3 pr-4 font-medium hidden md:table-cell w-24">Language</th>
-                <th className="pb-3 pr-4 font-medium hidden lg:table-cell">Source</th>
+                <th className="pb-3 pr-4 font-medium hidden lg:table-cell">Publisher</th>
                 <th className="pb-3 font-medium hidden sm:table-cell w-20 text-right">Pages</th>
               </tr>
             </thead>
@@ -359,7 +394,8 @@ export default async function AuthorPage({ params }: AuthorPageProps) {
               {books.map(book => {
                 const pct = book.translation_percent ?? 0;
                 const hasOriginalTitle = book.display_title && book.title !== book.display_title;
-                const source = book.image_source?.contributing_library || book.image_source?.provider_name;
+                const publisher = book.publisher?.split('|')[0]?.trim();
+                const place = book.place_of_publication;
 
                 return (
                   <tr key={book.id} className="group" style={{ transition: 'background 150ms' }}>
@@ -397,7 +433,8 @@ export default async function AuthorPage({ params }: AuthorPageProps) {
                     </td>
                     <td className="py-3 pr-4 hidden lg:table-cell">
                       <Link href={bookUrl(book)} className="block text-xs line-clamp-1" style={{ color: 'var(--text-faint)' }}>
-                        {source || '—'}
+                        {publisher || '—'}
+                        {place && publisher && <span className="text-[10px]"> ({place})</span>}
                       </Link>
                     </td>
                     <td className="py-3 hidden sm:table-cell text-right">
