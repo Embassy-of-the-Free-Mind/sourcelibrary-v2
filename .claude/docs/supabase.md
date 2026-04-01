@@ -13,7 +13,7 @@ MongoDB Atlas had 23 database incidents in March 2026 alone (see `database-incid
 
 2. **Slow aggregations blocking user-facing pages.** `$facet` pipelines on the books collection took 90+ seconds under load, collapsing WiredTiger cache and taking down the entire site (Mar 30 crisis). Pipeline velocity and cron health queries now run against Supabase, not Atlas.
 
-3. **No hybrid search capability.** MongoDB can't combine keyword search (`$search`) with vector similarity (`$vectorSearch`) in a single query. Supabase does both in one SQL query via `tsvector` + `pgvector`, enabling semantic search across translations.
+3. **No hybrid search capability.** MongoDB can't combine keyword search (`$search`) with vector similarity (`$vectorSearch`) in a single query. Supabase does both in one SQL query via `tsvector` + `pgvector`. However, as of 2026-04-01 this is experimental — only 4.1% of pages are embedded, the hybrid_search RPC is unreliable from Vercel, and there is no UI integration. The existing Atlas Search handles all production search needs.
 
 **The boundary is clear:** MongoDB stays for document storage (books, pages), the pipeline state machine (`pipeline_auto.status`), Atlas Search (keyword search), and flexible-schema imports. Supabase handles everything analytical, relational, or vector-based.
 
@@ -57,10 +57,12 @@ The `page_translations` table contains a cleaned copy of translation text + embe
 | `dashboard_usage` | Every 5 min | `/api/analytics/usage` — daily cost/usage by type+model |
 | `pipeline_velocity` | Every 5 min | `/api/analytics/pipeline` — hourly pipeline progress |
 
-### Semantic Search
+### Semantic Search (experimental — not in UI)
 | Table | Rows | Purpose |
 |-------|------|---------|
-| `page_translations` | ~600K (backfilling) | Translation text + tsvector + pgvector(768) for hybrid search |
+| `page_translations` | 65,928 of 1.59M (4.1%) | Translation text + tsvector + pgvector(768) for hybrid search |
+
+**Status (2026-04-01):** API endpoint works (`/api/search/semantic`) but is NOT wired into the search UI. Backfill running at ~3.3 pages/sec (~5 days to complete). Hybrid mode only triggers ~20% of queries — most fall back to keyword-only, which returns poor results. The `hybrid_search` RPC times out from Vercel on the keyword-only path. Needs: finish backfill, fix RPC performance, integrate into UI, then validate quality before shipping.
 
 ## How Data Flows
 
