@@ -98,8 +98,10 @@ async function processPage(page, db) {
 
     stats.bytesUploaded += display.length + thumb.length;
 
+    // Update Atlas (use id field which matches pages_images.id)
+    const pageId = page.id || page._id;
     await db.collection('pages').updateOne(
-      { _id: page._id },
+      { $or: [{ id: pageId }, { _id: pageId }] },
       {
         $set: {
           display_photo: displayUrl,
@@ -108,6 +110,17 @@ async function processPage(page, db) {
         }
       }
     );
+
+    // Track for Supabase bulk update (include all required columns for upsert)
+    if (!stats._supabaseUpdates) stats._supabaseUpdates = [];
+    stats._supabaseUpdates.push({
+      id: pageId,
+      book_id: page.book_id,
+      page_number: page.page_number,
+      archived_photo: page.archived_photo,
+      display_photo: displayUrl,
+      thumbnail_blob: thumbUrl,
+    });
 
     stats.succeeded++;
   } catch (err) {
@@ -186,75 +199,87 @@ async function main() {
     console.log(`[backfill-display] Single book: ${book.title?.slice(0, 60)}`);
     await processBook(book, db);
   } else {
-    // Get all book IDs from Supabase (fast: 9K books in <1s)
-    // Atlas book queries timeout under pipeline load — Supabase doesn't.
+    // Query pages needing backfill directly from Supabase pages_images table.
+    // One indexed query replaces thousands of per-book Atlas queries.
     const SUPABASE_URL = process.env.SUPABASE_URL || 'https://ykhxaecbbxaaqlujuzde.supabase.co';
     const SUPABASE_KEY = process.env.SUPABASE_SERVICE_ROLE_KEY;
 
     if (!SUPABASE_KEY) {
-      console.error('[backfill-display] Missing SUPABASE_SERVICE_ROLE_KEY — falling back to Atlas');
+      console.error('[backfill-display] Missing SUPABASE_SERVICE_ROLE_KEY');
       process.exit(1);
     }
 
     const supabase = createClient(SUPABASE_URL, SUPABASE_KEY, { auth: { persistSession: false } });
 
-    console.log(`[backfill-display] Fetching book IDs from Supabase...`);
+    console.log(`[backfill-display] Querying pages_images for pages needing display variants...`);
     const t = Date.now();
-    const allBookIds = [];
+    // Supabase default limit is 1000 — paginate to get up to LIMIT
+    const pages = [];
     let from = 0;
-    while (true) {
-      const { data, error } = await supabase.from('books_catalog').select('id').range(from, from + 999);
-      if (error) { console.error('Supabase error:', error.message); break; }
+    while (pages.length < LIMIT) {
+      const batchSize = Math.min(1000, LIMIT - pages.length);
+      const { data, error: qErr } = await supabase
+        .from('pages_images')
+        .select('id,book_id,page_number,archived_photo')
+        .not('archived_photo', 'is', null)
+        .is('display_photo', null)
+        .range(from, from + batchSize - 1);
+      if (qErr) { console.error('Supabase query error:', qErr.message); break; }
       if (!data || data.length === 0) break;
-      allBookIds.push(...data.map(d => d.id));
-      from += 1000;
+      pages.push(...data);
+      from += data.length;
+      if (data.length < batchSize) break; // no more results
     }
-    console.log(`[backfill-display] ${allBookIds.length} books from Supabase in ${Date.now() - t}ms`);
+    const error = null;
 
-    // Resume from last processed book (saved in system_config)
-    let resumeAfter = START_AFTER || null;
-    if (!resumeAfter) {
-      try {
-        const checkpoint = await db.collection('system_config').findOne({ _id: 'display_backfill_stats' });
-        resumeAfter = checkpoint?.lastBookId || null;
-        if (resumeAfter) console.log(`  Resuming after book ${resumeAfter} (from checkpoint)`);
-      } catch {}
+    if (error) {
+      console.error('Supabase query error:', error.message);
+      await client.close();
+      return;
     }
 
-    let bookIds = allBookIds;
-    if (resumeAfter) {
-      const idx = bookIds.indexOf(resumeAfter);
-      bookIds = idx >= 0 ? bookIds.slice(idx + 1) : bookIds.filter(id => id > resumeAfter);
-      console.log(`  ${bookIds.length} books remaining after checkpoint`);
+    console.log(`[backfill-display] ${pages.length} pages from Supabase in ${Date.now() - t}ms`);
+
+    if (pages.length === 0) {
+      console.log('[backfill-display] No pages need backfill — done!');
+      await client.close();
+      return;
     }
 
-    // Process books — Atlas only hit for per-book page queries (indexed, fast)
-    let totalBooks = 0;
-    let lastProcessedBookId = resumeAfter;
-    for (let i = 0; i < bookIds.length && stats.processed < LIMIT; i += BOOK_CONCURRENCY) {
-      const batch = bookIds.slice(i, i + BOOK_CONCURRENCY);
+    // Process pages with bounded concurrency
+    // Atlas only needed for writes (updateOne per page) — no reads!
+    let idx = 0;
+    async function worker() {
+      while (idx < pages.length) {
+        const i = idx++;
+        if (i >= pages.length) break;
+        const page = pages[i];
+        // Skip non-URL archived photos
+        if (!page.archived_photo?.startsWith('https://')) {
+          stats.skipped++;
+          stats.processed++;
+          continue;
+        }
+        await processPage({ _id: page.id, ...page }, db);
+        stats.processed++;
 
-      await Promise.all(batch.map(id => processBook({ id }, db)));
-      totalBooks += batch.length;
-      lastProcessedBookId = batch[batch.length - 1];
-
-      if (stats.processed > 0 && stats.processed % 500 < BOOK_CONCURRENCY) {
-        logProgress();
+        if (stats.processed % 500 === 0) {
+          logProgress();
+        }
       }
-      if (totalBooks % 500 < BOOK_CONCURRENCY) {
-        console.log(`  [scan] ${totalBooks}/${bookIds.length} books checked...`);
-      }
     }
 
-    // Save checkpoint so next run resumes here
-    if (lastProcessedBookId) {
-      try {
-        await db.collection('system_config').updateOne(
-          { _id: 'display_backfill_stats' },
-          { $set: { lastBookId: lastProcessedBookId } },
-          { upsert: true }
-        );
-      } catch {}
+    await Promise.all(Array.from({ length: Math.min(CONCURRENCY, pages.length) }, () => worker()));
+
+    // Bulk update Supabase mirror so next run skips these pages
+    const updates = stats._supabaseUpdates || [];
+    if (updates.length > 0) {
+      console.log(`  Syncing ${updates.length} display_photo updates to Supabase...`);
+      for (let i = 0; i < updates.length; i += 500) {
+        const batch = updates.slice(i, i + 500);
+        const { error: upsertErr } = await supabase.from('pages_images').upsert(batch, { onConflict: 'id' });
+        if (upsertErr) console.error(`  Supabase sync error: ${upsertErr.message}`);
+      }
     }
   }
 
@@ -262,7 +287,7 @@ async function main() {
   const rate = stats.processed > 0 ? parseFloat((stats.processed / elapsed).toFixed(1)) : 0;
   const gb = parseFloat((stats.bytesUploaded / (1024 * 1024 * 1024)).toFixed(2));
   console.log(`\n[backfill-display] Done in ${Math.round(elapsed)}s`);
-  console.log(`  Books: ${stats.booksProcessed} processed, ${stats.booksSkipped} skipped (no pages needing backfill)`);
+  if (stats.booksProcessed) console.log(`  Books: ${stats.booksProcessed} processed, ${stats.booksSkipped} skipped`);
   console.log(`  Pages: ${stats.processed.toLocaleString()} processed, ${stats.succeeded.toLocaleString()} succeeded, ${stats.failed} failed`);
   console.log(`  Rate: ${rate} pages/sec`);
   console.log(`  Uploaded: ${gb} GB`);
