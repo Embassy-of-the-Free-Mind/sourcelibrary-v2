@@ -77,7 +77,7 @@ async function fetchInitialGalleryData(): Promise<GalleryResponse> {
         { $group: { _id: '$type' } },
         { $match: { _id: { $ne: null } } },
         { $sort: { _id: 1 } },
-      ]).toArray() as { _id: string }[];
+      ], { maxTimeMS: 10000 }).toArray() as { _id: string }[];
       yearResult = [{ minYear: 1400, maxYear: 1900 }];
     }
 
