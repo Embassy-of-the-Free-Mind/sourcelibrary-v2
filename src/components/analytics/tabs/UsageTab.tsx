@@ -17,12 +17,17 @@ export default function UsageTab({ days }: UsageTabProps) {
   const [data, setData] = useState<UsageStats | null>(null);
   const [loading, setLoading] = useState(true);
   const [slow, setSlow] = useState(false);
+  const [error, setError] = useState<string | null>(null);
 
   useEffect(() => {
     setLoading(true);
     setSlow(false);
+    setError(null);
     const timer = setTimeout(() => setSlow(true), 3000);
-    analytics.usage(days).then(setData).finally(() => { setLoading(false); clearTimeout(timer); });
+    analytics.usage(days)
+      .then(setData)
+      .catch((e) => setError(e?.message || String(e)))
+      .finally(() => { setLoading(false); clearTimeout(timer); });
     return () => clearTimeout(timer);
   }, [days]);
 
@@ -30,6 +35,11 @@ export default function UsageTab({ days }: UsageTabProps) {
     <div className="py-12 text-center">
       <BookLoader size="xs" />
       {slow && <p className="text-sm mt-4" style={{ color: 'var(--text-muted)' }}>Crunching cost and pipeline data...</p>}
+    </div>
+  );
+  if (error) return (
+    <div className="py-12 text-center">
+      <p className="text-sm" style={{ color: '#dc2626' }}>Failed to load usage data: {error}</p>
     </div>
   );
   if (!data) return null;
