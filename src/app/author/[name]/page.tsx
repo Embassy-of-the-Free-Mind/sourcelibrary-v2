@@ -306,13 +306,13 @@ export default async function AuthorPage({ params }: AuthorPageProps) {
       <div className="bg-gradient-to-b from-stone-800 to-stone-900 text-white">
         <div className="max-w-5xl mx-auto px-4 py-12 sm:py-16 flex gap-8 items-start">
           {portraitUrl && (
-            <div className="hidden sm:block shrink-0 w-28 h-36 relative rounded-lg overflow-hidden bg-stone-700">
-              <Image
+            <div className="hidden sm:block shrink-0 w-28 h-36 rounded-lg overflow-hidden bg-stone-700">
+              {/* eslint-disable-next-line @next/next/no-img-element */}
+              <img
                 src={portraitUrl}
                 alt={`Portrait of ${authorName}`}
-                fill
-                className="object-cover"
-                sizes="112px"
+                className="w-full h-full object-cover"
+                loading="lazy"
               />
             </div>
           )}
