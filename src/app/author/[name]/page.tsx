@@ -6,7 +6,6 @@ import { getDb } from '@/lib/mongodb';
 import { notFound, redirect } from 'next/navigation';
 import { bookUrl, authorSlug } from '@/lib/slugify';
 import { firstTranslationBadge } from '@/lib/first-translation-labels';
-import { createHash } from 'crypto';
 import { ObjectId, type Db } from 'mongodb';
 
 interface Book {
@@ -62,9 +61,8 @@ async function getPortraitUrl(db: Db, entity: AuthorEntity | null): Promise<stri
     const filename = data.entities?.[entity.wikidata_id]?.claims?.P18?.[0]?.mainsnak?.datavalue?.value;
     if (!filename) return null;
 
-    const encoded = encodeURIComponent(filename.replace(/ /g, '_'));
-    const md5 = createHash('md5').update(filename.replace(/ /g, '_')).digest('hex');
-    const thumbUrl = `https://upload.wikimedia.org/wikipedia/commons/thumb/${md5[0]}/${md5[0]}${md5[1]}/${encoded}/300px-${encoded}`;
+    // Use thumb.php API — more reliable than direct commons URL (avoids 429s)
+    const thumbUrl = `https://commons.wikimedia.org/w/thumb.php?f=${encodeURIComponent(filename)}&w=300`;
 
     // Cache on entity (fire-and-forget)
     db.collection('entities').updateOne(
@@ -448,7 +446,7 @@ export default async function AuthorPage({ params }: AuthorPageProps) {
                 const place = book.place_of_publication;
 
                 return (
-                  <tr key={book.id} className="group" style={{ transition: 'background 150ms' }}>
+                  <tr key={book.id} className="group hover:bg-warm/50 transition-colors">
                     <td className="py-3 pr-4">
                       <Link href={bookUrl(book)} className="block">
                         <span
