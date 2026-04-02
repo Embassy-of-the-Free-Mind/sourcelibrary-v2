@@ -341,7 +341,7 @@ async function processBook(db, book, job, globalCounter, deadline) {
       { $set: { 'pipeline_auto.status': 'translate_complete', updated_at: new Date() }, $unset: { job: '' } },
     );
     console.log(`  [${label}] Already complete`);
-    return { translated: 0, failed: 0 };
+    return { translated: 0, failed: 0, completed: 1, inputTokens: 0, outputTokens: 0 };
   }
 
   const batchMode = effectiveBatchSize(pages, BATCH_SIZE) > 1 ? `batch-${BATCH_SIZE}` : 'single';
@@ -997,8 +997,9 @@ async function main() {
 
   console.log(`[TRANSLATE] Starting pool (concurrency: ${CONCURRENCY}, deadline: ${Math.round(RUN_DEADLINE_MS/60000)}min, ${batchLabel})`);
 
-  // Seed the queue with initial books
-  const queue = [...books];
+  // Seed the queue with initial books, sorted by speed tier (fast/batch-able first)
+  // This ensures Latin-script books (batch-5, ~5x faster) fill slots before manuscripts
+  const queue = [...books].sort((a, b) => langSpeedTier(a.language) - langSpeedTier(b.language));
   books.forEach(b => processedIds.add(b.id));
   let activeSlots = 0;
 
@@ -1024,6 +1025,8 @@ async function main() {
           if (queue.length < 3 && Date.now() < deadline && globalCounter.count < PAGES_PER_RUN) {
             fetchMoreBooks(CONCURRENCY).then(more => {
               const newBooks = more.filter(b => !processedIds.has(b.id));
+              // Sort fast books first so they fill freed slots before slow manuscripts
+              newBooks.sort((a, b) => langSpeedTier(a.language) - langSpeedTier(b.language));
               newBooks.forEach(b => { processedIds.add(b.id); queue.push(b); });
               if (newBooks.length > 0) console.log(`[TRANSLATE] Backfilled ${newBooks.length} books (queue: ${queue.length})`);
               tryStartNext();
