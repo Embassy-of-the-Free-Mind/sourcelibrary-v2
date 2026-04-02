@@ -3,6 +3,7 @@
 import { useState, useEffect, useRef } from 'react';
 import { Search, X, FileText, Languages, Loader2 } from 'lucide-react';
 import Link from 'next/link';
+import { useRouter } from 'next/navigation';
 import HighlightedText from './HighlightedText';
 
 interface SearchMatch {
@@ -31,6 +32,7 @@ interface SearchPanelProps {
 }
 
 export default function SearchPanel({ bookId, className = '' }: SearchPanelProps) {
+  const router = useRouter();
   const [query, setQuery] = useState('');
   const [results, setResults] = useState<SearchResult[]>([]);
   const [isSearching, setIsSearching] = useState(false);
@@ -127,7 +129,14 @@ export default function SearchPanel({ bookId, className = '' }: SearchPanelProps
   return (
     <div className="relative">
       {/* Search Input */}
-      <div
+      <form
+        onSubmit={(e) => {
+          e.preventDefault();
+          if (query.trim()) {
+            setIsOpen(false);
+            router.push(`/book/${bookId}/search?q=${encodeURIComponent(query.trim())}`);
+          }
+        }}
         className="flex items-center gap-2 px-3 py-2 rounded-lg"
         style={{ background: 'rgba(255,255,255,0.15)' }}
       >
@@ -146,11 +155,12 @@ export default function SearchPanel({ bookId, className = '' }: SearchPanelProps
           autoFocus
         />
         {query && (
-          <button onClick={handleClear} className="text-white/50 hover:text-white">
+          <button type="button" onClick={handleClear} className="text-white/50 hover:text-white">
             <X className="w-4 h-4" />
           </button>
         )}
         <button
+          type="button"
           onClick={() => {
             setIsOpen(false);
             setQuery('');
@@ -159,7 +169,7 @@ export default function SearchPanel({ bookId, className = '' }: SearchPanelProps
         >
           ESC
         </button>
-      </div>
+      </form>
 
       {/* Results Dropdown */}
       {query.trim() && (
@@ -234,6 +244,16 @@ export default function SearchPanel({ bookId, className = '' }: SearchPanelProps
                   </Link>
                 ))}
               </div>
+              <Link
+                href={`/book/${bookId}/search?q=${encodeURIComponent(query.trim())}`}
+                onClick={() => {
+                  setIsOpen(false);
+                  setQuery('');
+                }}
+                className="block px-3 py-2.5 text-center text-sm text-stone-500 hover:text-stone-700 hover:bg-stone-50 border-t border-stone-100 transition-colors"
+              >
+                View all results
+              </Link>
             </>
           )}
         </div>
