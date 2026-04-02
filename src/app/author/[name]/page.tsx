@@ -315,7 +315,6 @@ export default async function AuthorPage({ params }: AuthorPageProps) {
                 fill
                 className="object-cover"
                 sizes="112px"
-                unoptimized
               />
             </div>
           )}

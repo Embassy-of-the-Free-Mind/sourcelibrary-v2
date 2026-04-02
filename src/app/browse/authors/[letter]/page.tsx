@@ -1,8 +1,9 @@
 import { Metadata } from 'next';
 import Link from 'next/link';
 import SiteHeader from '@/components/layout/SiteHeader';
-import { browseBooks } from '@/lib/books-catalog';
 import { authorSlug } from '@/lib/slugify';
+import { getDb } from '@/lib/mongodb';
+import { ObjectId } from 'mongodb';
 import { notFound } from 'next/navigation';
 
 const LETTERS = 'ABCDEFGHIJKLMNOPQRSTUVWXYZ'.split('');
@@ -42,20 +43,45 @@ export default async function BrowseAuthorsPage({ params }: PageProps) {
 
   let authors: AuthorEntry[] = [];
   try {
-    const result = await browseBooks({
-      authorPrefix: l,
-      hasTranslation: true,
-      limit: 5000,
-    });
-    const authorCounts = new Map<string, number>();
-    for (const b of result.books) {
-      if (b.author) authorCounts.set(b.author, (authorCounts.get(b.author) || 0) + 1);
+    const db = await getDb();
+
+    // Get all visible books with translations, starting with this letter
+    const books = await db.collection('books').find(
+      {
+        visible: true,
+        author: { $regex: `^${l}`, $options: 'i' },
+        pages_translated: { $gt: 0 },
+      },
+      { projection: { author: 1, author_entity_id: 1 } }
+    ).toArray();
+
+    // Group by entity when available, fall back to raw author string
+    const entityIds = [...new Set(books.map(b => b.author_entity_id).filter(Boolean))];
+    const entityMap = new Map<string, string>(); // entityId → canonical name
+    if (entityIds.length > 0) {
+      const entities = await db.collection('entities').find(
+        { _id: { $in: entityIds.map(id => { try { return new ObjectId(id); } catch { return null; } }).filter((v): v is ObjectId => v !== null) } },
+        { projection: { canonical_name: 1, name: 1 } }
+      ).toArray();
+      for (const e of entities) {
+        entityMap.set(e._id.toString(), e.canonical_name || e.name);
+      }
     }
+
+    // Deduplicate: entity-linked books use canonical name, others use raw author
+    const authorCounts = new Map<string, number>();
+    for (const b of books) {
+      const name = (b.author_entity_id && entityMap.get(b.author_entity_id)) || b.author;
+      if (name) authorCounts.set(name, (authorCounts.get(name) || 0) + 1);
+    }
+
+    // Filter to names starting with the letter (canonical names may differ)
     authors = [...authorCounts.entries()]
+      .filter(([name]) => name.toUpperCase().startsWith(l))
       .map(([name, count]) => ({ _id: name, count }))
       .sort((a, b) => a._id.localeCompare(b._id));
   } catch {
-    // Supabase error — render empty page
+    // DB error — render empty page
   }
 
   return (
