@@ -175,28 +175,42 @@ async function main() {
     commons_categories: 1,
   };
 
-  // Use cursor-based iteration to avoid loading all docs into memory
-  // Atlas is slow on large .toArray() calls
-  let cursor;
+  // Batch fetch to avoid Atlas cursor timeouts (cursors die after 10min idle).
+  // Each enrichment call takes ~15s, so cursor-based iteration fails after ~40 items.
+  const BATCH_SIZE = 50;
+
   if (!ARTIST_FILTER && DRY_RUN) {
     // In dry-run mode, sample randomly for diversity
-    const sampled = await books.aggregate([
+    var _dryRunBatch = await books.aggregate([
       { $match: query },
       { $sample: { size: LIMIT } },
       { $project: projection },
     ]).toArray();
-    cursor = { [Symbol.asyncIterator]: async function*() { for (const d of sampled) yield d; }, count: sampled.length };
-  } else {
-    cursor = books.find(query, { projection }).limit(LIMIT);
-    cursor.count = LIMIT; // approximate
   }
 
-  console.log(`${DRY_RUN ? 'DRY RUN — ' : ''}${FORCE ? 'FORCE RE-ENRICH — ' : ''}Processing up to ${LIMIT} artworks...${PROVIDER_FILTER ? ` (provider: ${PROVIDER_FILTER})` : ''}`);
+  console.log(`${DRY_RUN ? 'DRY RUN — ' : ''}${FORCE ? 'FORCE RE-ENRICH — ' : ''}Processing up to ${LIMIT} artworks in batches of ${BATCH_SIZE}...${PROVIDER_FILTER ? ` (provider: ${PROVIDER_FILTER})` : ''}`);
 
   let success = 0, errors = 0, totalTokens = 0, processed = 0;
   const results = [];
+  let lastId = null;
 
-  for await (const art of cursor) {
+  while (processed < LIMIT) {
+    // Fetch next batch (fresh query each time — no cursor to expire)
+    let batch;
+    if (_dryRunBatch) {
+      batch = _dryRunBatch;
+      _dryRunBatch = null; // only use once
+    } else {
+      const batchQuery = lastId ? { ...query, _id: { $gt: lastId } } : query;
+      batch = await books.find(batchQuery, { projection })
+        .sort({ _id: 1 })
+        .limit(Math.min(BATCH_SIZE, LIMIT - processed))
+        .toArray();
+    }
+    if (batch.length === 0) break;
+
+  for (const art of batch) {
+    lastId = art._id;
     processed++;
     const label = `[${processed}] ${art.author} — ${art.title?.substring(0, 50)}`;
 
@@ -275,7 +289,8 @@ async function main() {
         await new Promise(r => setTimeout(r, 2000));
       }
     }
-  }
+  } // end for batch
+  } // end while batches
 
   // Summary
   console.log('\n━━━ SUMMARY ━━━');
