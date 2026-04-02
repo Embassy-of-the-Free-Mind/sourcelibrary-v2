@@ -490,8 +490,11 @@ export default function BookPagesSection({ bookId, bookTitle, pages: initialPage
 
       // For main thumbnail, prefer archived/cropped photos, fall back to direct source URL.
       // NEVER store /api/image?url= wrappers — they crash Next.js Image during SSR.
+      // Split-from-spread pages: use photo directly (no legacy fallback)
       const typedPage = page as Page & { archived_photo?: string; cropped_photo?: string };
-      const directUrl = typedPage.cropped_photo || typedPage.archived_photo || page.photo_original || page.photo;
+      const directUrl = page.split_from_spread
+        ? page.photo
+        : (typedPage.cropped_photo || typedPage.archived_photo || page.photo_original || page.photo);
       if (directUrl) {
         updates.thumbnail = directUrl;
       }
@@ -573,7 +576,7 @@ export default function BookPagesSection({ bookId, bookTitle, pages: initialPage
             const firstId = Array.from(selectedPages)[0];
             const page = pages.find(p => p.id === firstId);
             if (!page) return null;
-            const baseUrl = page.photo_original || page.photo;
+            const baseUrl = page.split_from_spread ? page.photo : (page.photo_original || page.photo);
             if (!baseUrl) return null;
             return `/api/image?url=${encodeURIComponent(baseUrl)}&w=200&q=70`;
           })()}
