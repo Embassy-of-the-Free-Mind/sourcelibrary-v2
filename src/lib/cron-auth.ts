@@ -11,7 +11,10 @@ import { NextRequest, NextResponse } from 'next/server';
 export function verifyCronAuth(request: NextRequest): NextResponse | null {
   const secret = process.env.CRON_SECRET;
   if (!secret) {
-    // If CRON_SECRET isn't configured, allow (development mode)
+    if (process.env.NODE_ENV === 'production') {
+      return NextResponse.json({ error: 'CRON_SECRET not configured' }, { status: 500 });
+    }
+    // Development mode — allow without secret
     return null;
   }
 

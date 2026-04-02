@@ -4,6 +4,10 @@ import { ObjectId } from 'mongodb';
 import { withAuth } from '@/lib/auth-helpers';
 import { buildEntityJsonLd } from '@/lib/jsonld';
 
+function escapeRegex(str: string): string {
+  return str.replace(/[.*+?^${}()|[\]\\]/g, '\\$&');
+}
+
 /**
  * GET /api/entities/[id]
  *
@@ -28,7 +32,7 @@ export async function GET(
     if (!entity) {
       const decodedName = decodeURIComponent(id);
       entity = await db.collection('entities').findOne(
-        { name: { $regex: `^${decodedName}$`, $options: 'i' } },
+        { name: { $regex: `^${escapeRegex(decodedName)}$`, $options: 'i' } },
         { sort: { book_count: -1 } }
       );
     }
