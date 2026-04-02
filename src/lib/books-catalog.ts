@@ -142,8 +142,7 @@ export async function getLanguageCounts(filter: {
     .from('books_catalog')
     .select('language')
     .eq('visible', true)
-    .gt('pages_count', 0)
-    .gt('pages_translated', 0);
+    .gt('pages_count', 0);
 
   if (filter.provider) query = query.eq('image_source_provider', filter.provider);
   if (filter.collection) query = query.contains('collections', [filter.collection]);
@@ -156,4 +155,26 @@ export async function getLanguageCounts(filter: {
   return [...counts.entries()]
     .map(([lang, count]) => ({ lang, count }))
     .sort((a, b) => b.count - a.count);
+}
+
+/**
+ * Get category counts from books_catalog.
+ * Unnests the categories array and counts occurrences.
+ */
+export async function getCategoryCounts(): Promise<Map<string, number>> {
+  const { data } = await supabase
+    .from('books_catalog')
+    .select('categories')
+    .eq('visible', true)
+    .gt('pages_count', 0);
+
+  const counts = new Map<string, number>();
+  for (const row of (data || [])) {
+    if (Array.isArray(row.categories)) {
+      for (const cat of row.categories) {
+        counts.set(cat, (counts.get(cat) || 0) + 1);
+      }
+    }
+  }
+  return counts;
 }
