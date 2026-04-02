@@ -6,7 +6,8 @@ import { getDb } from '@/lib/mongodb';
 import { notFound, redirect } from 'next/navigation';
 import { bookUrl, authorSlug } from '@/lib/slugify';
 import { firstTranslationBadge } from '@/lib/first-translation-labels';
-import { ObjectId } from 'mongodb';
+import { createHash } from 'crypto';
+import { ObjectId, type Db } from 'mongodb';
 
 interface Book {
   id: string;
@@ -42,6 +43,39 @@ interface AuthorEntity {
   wikipedia_url?: string;
   wikidata_birth_date?: string;
   wikidata_death_date?: string;
+  portrait_url?: string;
+}
+
+/** Fetch portrait thumbnail URL from Wikidata P18 claim, cache on entity */
+async function getPortraitUrl(db: Db, entity: AuthorEntity | null): Promise<string | null> {
+  if (!entity) return null;
+  if (entity.portrait_url) return entity.portrait_url;
+  if (!entity.wikidata_id) return null;
+
+  try {
+    const res = await fetch(
+      `https://www.wikidata.org/w/api.php?action=wbgetentities&ids=${entity.wikidata_id}&props=claims&format=json`,
+      { next: { revalidate: 86400 } } // cache 24h
+    );
+    if (!res.ok) return null;
+    const data = await res.json();
+    const filename = data.entities?.[entity.wikidata_id]?.claims?.P18?.[0]?.mainsnak?.datavalue?.value;
+    if (!filename) return null;
+
+    const encoded = encodeURIComponent(filename.replace(/ /g, '_'));
+    const md5 = createHash('md5').update(filename.replace(/ /g, '_')).digest('hex');
+    const thumbUrl = `https://upload.wikimedia.org/wikipedia/commons/thumb/${md5[0]}/${md5[0]}${md5[1]}/${encoded}/300px-${encoded}`;
+
+    // Cache on entity (fire-and-forget)
+    db.collection('entities').updateOne(
+      { _id: entity._id },
+      { $set: { portrait_url: thumbUrl } }
+    ).catch(() => {});
+
+    return thumbUrl;
+  } catch {
+    return null;
+  }
 }
 
 // ISR: author pages are mostly static — revalidate weekly.
@@ -135,7 +169,7 @@ async function loadAuthorData(db: any, slug: string): Promise<{
     try {
       entity = await db.collection('entities').findOne(
         { _id: new ObjectId(repBook.author_entity_id) },
-        { projection: { name: 1, canonical_name: 1, description: 1, aliases: 1, viaf_id: 1, wikidata_id: 1, wikipedia_url: 1, wikidata_birth_date: 1, wikidata_death_date: 1 } }
+        { projection: { name: 1, canonical_name: 1, description: 1, aliases: 1, viaf_id: 1, wikidata_id: 1, wikipedia_url: 1, wikidata_birth_date: 1, wikidata_death_date: 1, portrait_url: 1 } }
       ) as AuthorEntity | null;
     } catch { /* invalid ObjectId */ }
 
@@ -165,7 +199,7 @@ async function loadAuthorData(db: any, slug: string): Promise<{
       try {
         entity = await db.collection('entities').findOne(
           { _id: new ObjectId(entityBookId) },
-          { projection: { name: 1, canonical_name: 1, description: 1, aliases: 1, viaf_id: 1, wikidata_id: 1, wikipedia_url: 1, wikidata_birth_date: 1, wikidata_death_date: 1 } }
+          { projection: { name: 1, canonical_name: 1, description: 1, aliases: 1, viaf_id: 1, wikidata_id: 1, wikipedia_url: 1, wikidata_birth_date: 1, wikidata_death_date: 1, portrait_url: 1 } }
         ) as AuthorEntity | null;
       } catch { /* invalid ObjectId */ }
     }
@@ -243,6 +277,9 @@ export default async function AuthorPage({ params }: AuthorPageProps) {
     { projection: { name: 1 } }
   );
 
+  // Portrait image from Wikidata
+  const portraitUrl = await getPortraitUrl(db, entity);
+
   // Derive Wikipedia URL from entity
   const wikipediaUrl = entity?.wikipedia_url
     || (entity?.wikidata_id ? `https://www.wikidata.org/wiki/Special:GoToLinkedPage/enwiki/${entity.wikidata_id}` : null);
@@ -269,7 +306,20 @@ export default async function AuthorPage({ params }: AuthorPageProps) {
 
       {/* Hero */}
       <div className="bg-gradient-to-b from-stone-800 to-stone-900 text-white">
-        <div className="max-w-5xl mx-auto px-4 py-12 sm:py-16">
+        <div className="max-w-5xl mx-auto px-4 py-12 sm:py-16 flex gap-8 items-start">
+          {portraitUrl && (
+            <div className="hidden sm:block shrink-0 w-28 h-36 relative rounded-lg overflow-hidden bg-stone-700">
+              <Image
+                src={portraitUrl}
+                alt={`Portrait of ${authorName}`}
+                fill
+                className="object-cover"
+                sizes="112px"
+                unoptimized
+              />
+            </div>
+          )}
+          <div className="flex-1 min-w-0">
           <h1 className="text-3xl sm:text-4xl font-display font-bold">
             {authorName}
           </h1>
@@ -343,6 +393,7 @@ export default async function AuthorPage({ params }: AuthorPageProps) {
               </a>
             )}
           </div>
+          </div>{/* close flex-1 */}
         </div>
       </div>
 
