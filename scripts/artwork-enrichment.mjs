@@ -15,6 +15,7 @@ import { GoogleGenerativeAI } from '@google/generative-ai';
 
 const DRY_RUN = process.argv.includes('--dry-run');
 const FORCE = process.argv.includes('--force');
+const NEEDS_TRANSLATION = process.argv.includes('--needs-translation');
 const LIMIT = parseInt(process.argv.find((_, i, a) => a[i - 1] === '--limit') || '10');
 const ARTIST_FILTER = process.argv.find((_, i, a) => a[i - 1] === '--artist') || null;
 const PROVIDER_FILTER = process.argv.find((_, i, a) => a[i - 1] === '--provider') || null;
@@ -158,7 +159,13 @@ async function main() {
 
   // Build query — resource_type_sparse index makes this fast
   const query = { resource_type: { $exists: true } };
-  if (!FORCE) query.enrichment = { $exists: false };
+  if (NEEDS_TRANSLATION) {
+    // Target artworks with readable text but no translation yet
+    query['enrichment.has_readable_text'] = true;
+    query['enrichment.inscriptions_translation'] = { $exists: false };
+  } else if (!FORCE) {
+    query.enrichment = { $exists: false };
+  }
   if (ARTIST_FILTER) query.author = ARTIST_FILTER;
   if (PROVIDER_FILTER) query['image_source.provider'] = PROVIDER_FILTER;
 
@@ -231,6 +238,8 @@ async function main() {
             genre: enrichment.genre,
             cross_references: enrichment.cross_references || [],
             inscriptions: enrichment.inscriptions || null,
+            inscriptions_translation: enrichment.inscriptions_translation || null,
+            inscriptions_language: enrichment.inscriptions_language || null,
             has_readable_text: !!enrichment.has_readable_text,
             figures_depicted: enrichment.figures_depicted || [],
             symbols: enrichment.symbols || [],
