@@ -116,6 +116,39 @@ export function extractDate(manifest: IIIFManifest): string | null {
   return null;
 }
 
+/**
+ * Extract publisher/printer from a IIIF manifest metadata array.
+ * Checks for labels like "Publisher", "Printer", "Imprint", etc.
+ */
+export function extractPublisher(manifest: IIIFManifest): string | null {
+  if (!Array.isArray(manifest.metadata)) return null;
+  const pubLabels = ['publisher', 'printer', 'imprint', 'drucker', 'verleger', 'éditeur', 'imprimeur', 'editore', 'stampatore'];
+  for (const entry of manifest.metadata) {
+    const label = extractLabel(entry.label as string | Record<string, string[]>)?.toLowerCase();
+    if (label && pubLabels.some(p => label.includes(p))) {
+      const value = extractLabel(entry.value as string | Record<string, string[]>);
+      if (value) return value.trim();
+    }
+  }
+  return null;
+}
+
+/**
+ * Extract place of publication from a IIIF manifest metadata array.
+ */
+export function extractPlace(manifest: IIIFManifest): string | null {
+  if (!Array.isArray(manifest.metadata)) return null;
+  const placeLabels = ['place of publication', 'place', 'published in', 'druckort', 'lieu de publication', 'luogo di pubblicazione'];
+  for (const entry of manifest.metadata) {
+    const label = extractLabel(entry.label as string | Record<string, string[]>)?.toLowerCase();
+    if (label && placeLabels.some(p => label.includes(p))) {
+      const value = extractLabel(entry.value as string | Record<string, string[]>);
+      if (value) return value.trim();
+    }
+  }
+  return null;
+}
+
 export function parseLicense(
   licenseUrl: string | null,
   attribution: string | null,
@@ -304,6 +337,8 @@ export async function importBookFromIIIF(
   // Extract metadata from manifest
   const manifestDate = extractDate(manifest);
   const manifestLabel = extractLabel(manifest.label);
+  const manifestPublisher = extractPublisher(manifest);
+  const manifestPlace = extractPlace(manifest);
   const rawLicenseUrl = manifest.rights
     || (Array.isArray(manifest.license) ? manifest.license[0] : manifest.license)
     || null;
@@ -381,6 +416,10 @@ export async function importBookFromIIIF(
   if (fp) (bookDoc as Record<string, unknown>).source_fingerprint = fp;
   (bookDoc as Record<string, unknown>).normalized_title = normalizeTitle(config.title);
   (bookDoc as Record<string, unknown>).normalized_author = normalizeAuthor(config.author);
+
+  // Publisher/place from IIIF manifest metadata
+  if (manifestPublisher) (bookDoc as Record<string, unknown>).publisher = manifestPublisher;
+  if (manifestPlace) (bookDoc as Record<string, unknown>).place_of_publication = manifestPlace;
 
   await db.collection('books').insertOne(bookDoc);
 
