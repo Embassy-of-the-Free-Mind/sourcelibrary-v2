@@ -121,24 +121,27 @@ async function computeDataPageSnapshot(db: any): Promise<LibraryData> {
   const books = db.collection('books');
   const maxTimeMS = 45000;
 
+  // Only count books that actually have content (not empty catalog stubs)
+  const real = { visible: true, pages_count: { $gt: 0 } };
+
   // Run queries sequentially in groups to avoid saturating Atlas
   // Group 1: counts
   const [totalBooks, firstTranslations, hiddenCount, emptyShells] = await Promise.all([
-    books.countDocuments({ visible: true }, { maxTimeMS }),
-    books.countDocuments({ visible: true, is_first_translation: true }, { maxTimeMS }),
+    books.countDocuments(real, { maxTimeMS }),
+    books.countDocuments({ ...real, is_first_translation: true }, { maxTimeMS }),
     books.countDocuments({ hidden: true }, { maxTimeMS }),
-    books.countDocuments({ $or: [{ pages_count: 0 }, { pages_count: { $exists: false } }] }, { maxTimeMS }),
+    books.countDocuments({ visible: true, $or: [{ pages_count: 0 }, { pages_count: { $exists: false } }] }, { maxTimeMS }),
   ]);
 
   // Group 2: aggregations (breakdowns)
   const [languagesAgg, centuriesAgg, pageTotalsAgg] = await Promise.all([
     books.aggregate([
-      { $match: { visible: true } },
+      { $match: real },
       { $group: { _id: '$language', count: { $sum: 1 } } },
       { $sort: { count: -1 } },
     ], { maxTimeMS }).toArray(),
     books.aggregate([
-      { $match: { visible: true, year: { $exists: true, $type: 'number' } } },
+      { $match: { ...real, year: { $exists: true, $type: 'number' } } },
       {
         $addFields: {
           century: { $multiply: [{ $floor: { $divide: ['$year', 100] } }, 100] },
@@ -148,7 +151,7 @@ async function computeDataPageSnapshot(db: any): Promise<LibraryData> {
       { $sort: { _id: 1 } },
     ], { maxTimeMS }).toArray(),
     books.aggregate([
-      { $match: { visible: true } },
+      { $match: real },
       {
         $group: {
           _id: null,
@@ -163,13 +166,13 @@ async function computeDataPageSnapshot(db: any): Promise<LibraryData> {
   // Group 3: categories, providers, collections, illustrations
   const [categoriesAgg, providersAgg, collectionsAgg, totalIllustrations] = await Promise.all([
     books.aggregate([
-      { $match: { visible: true, categories: { $exists: true } } },
+      { $match: { ...real, categories: { $exists: true } } },
       { $unwind: '$categories' },
       { $group: { _id: '$categories', count: { $sum: 1 } } },
       { $sort: { count: -1 } },
     ], { maxTimeMS }).toArray(),
     books.aggregate([
-      { $match: { visible: true, 'image_source.provider_name': { $exists: true } } },
+      { $match: { ...real, 'image_source.provider_name': { $exists: true } } },
       { $group: { _id: '$image_source.provider_name', count: { $sum: 1 } } },
       { $sort: { count: -1 } },
     ], { maxTimeMS }).toArray(),
