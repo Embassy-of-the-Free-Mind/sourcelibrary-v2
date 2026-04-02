@@ -1,6 +1,9 @@
 import { Metadata } from 'next';
 import SiteHeader from '@/components/layout/SiteHeader';
 import CatalogBrowser from '@/components/catalog/CatalogBrowser';
+import { browseBooks, getLanguageCounts } from '@/lib/books-catalog';
+
+export const revalidate = 600;
 
 export const metadata: Metadata = {
   title: 'Catalog - Source Library',
@@ -8,7 +11,12 @@ export const metadata: Metadata = {
   alternates: { canonical: '/catalog' },
 };
 
-export default function CatalogPage() {
+export default async function CatalogPage() {
+  const [{ books, total }, languages] = await Promise.all([
+    browseBooks({ hasTranslation: true, sort: 'popular', limit: 60 }),
+    getLanguageCounts({}),
+  ]);
+
   return (
     <>
       <SiteHeader variant="light" />
@@ -20,7 +28,11 @@ export default function CatalogPage() {
           Every translated book in the library.
         </p>
 
-        <CatalogBrowser />
+        <CatalogBrowser
+          initialBooks={books}
+          initialTotal={total}
+          languages={languages}
+        />
       </div>
     </>
   );

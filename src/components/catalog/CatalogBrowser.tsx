@@ -1,6 +1,6 @@
 'use client';
 
-import { useState, useCallback, useMemo, useRef, useEffect } from 'react';
+import { useState, useCallback, useRef, useEffect } from 'react';
 import { Search, X, LayoutGrid, List } from 'lucide-react';
 import CollectionBookCard from '@/components/CollectionBookCard';
 import CollectionListView from '@/components/collections/CollectionListView';
@@ -10,25 +10,23 @@ const PER_PAGE = 60;
 
 interface BookItem {
   id: string;
-  slug?: string;
+  slug?: string | null;
   title: string;
-  display_title?: string;
-  author?: string;
-  year?: number;
-  language?: string;
+  display_title?: string | null;
+  author?: string | null;
+  year?: number | null;
+  language?: string | null;
   pages_count?: number;
   pages_ocr?: number;
   pages_translated?: number;
   pages_blank?: number;
-  photo?: string;
-  thumbnail?: string;
-  thumbnail_blob?: string;
-  published?: string;
+  photo?: string | null;
+  thumbnail?: string | null;
+  thumbnail_blob?: string | null;
+  published?: string | null;
   read_count?: number;
   is_first_translation?: boolean;
   ft_disposition?: string;
-  created_at?: string;
-  last_translation_at?: string;
 }
 
 type ViewMode = 'grid' | 'list';
@@ -38,48 +36,16 @@ function getStoredView(): ViewMode | null {
   return localStorage.getItem('sl-catalog-view') as ViewMode | null;
 }
 
-function sortBooks(books: BookItem[], sort: string): BookItem[] {
-  const sorted = [...books];
-  switch (sort) {
-    case 'year_asc':
-      return sorted.sort((a, b) => (a.year || 9999) - (b.year || 9999) || (a.title || '').localeCompare(b.title || ''));
-    case 'year_desc':
-      return sorted.sort((a, b) => (b.year || 0) - (a.year || 0) || (a.title || '').localeCompare(b.title || ''));
-    case 'title':
-      return sorted.sort((a, b) => (a.display_title || a.title || '').localeCompare(b.display_title || b.title || ''));
-    case 'author':
-      return sorted.sort((a, b) => (a.author || 'zzz').localeCompare(b.author || 'zzz') || (a.title || '').localeCompare(b.title || ''));
-    case 'recent':
-      return sorted.sort((a, b) => (b.created_at || '').localeCompare(a.created_at || ''));
-    case 'last_translated':
-      return sorted.sort((a, b) => (b.last_translation_at || '').localeCompare(a.last_translation_at || ''));
-    case 'popular':
-      return sorted.sort((a, b) => (b.read_count || 0) - (a.read_count || 0) || (a.title || '').localeCompare(b.title || ''));
-    default:
-      return sorted.sort((a, b) => (b.read_count || 0) - (a.read_count || 0));
-  }
+interface CatalogBrowserProps {
+  initialBooks: BookItem[];
+  initialTotal: number;
+  languages: { lang: string; count: number }[];
 }
 
-function filterBooks(books: BookItem[], query: string, language: string): BookItem[] {
-  let result = books;
-  if (language) {
-    result = result.filter(b => b.language === language);
-  }
-  if (query) {
-    const q = query.toLowerCase();
-    result = result.filter(b =>
-      (b.title || '').toLowerCase().includes(q) ||
-      (b.display_title || '').toLowerCase().includes(q) ||
-      (b.author || '').toLowerCase().includes(q)
-    );
-  }
-  return result;
-}
-
-export default function CatalogBrowser() {
-  const [allBooks, setAllBooks] = useState<BookItem[]>([]);
-  const [languages, setLanguages] = useState<{ lang: string; count: number }[]>([]);
-  const [loading, setLoading] = useState(true);
+export default function CatalogBrowser({ initialBooks, initialTotal, languages }: CatalogBrowserProps) {
+  const [books, setBooks] = useState<BookItem[]>(initialBooks);
+  const [total, setTotal] = useState(initialTotal);
+  const [loading, setLoading] = useState(false);
   const [sort, setSort] = useState('popular');
   const [language, setLanguage] = useState('');
   const [query, setQuery] = useState('');
@@ -87,46 +53,68 @@ export default function CatalogBrowser() {
   const [viewMode, setViewMode] = useState<ViewMode>('list');
   const searchRef = useRef<HTMLInputElement>(null);
   const initializedRef = useRef(false);
+  const debounceRef = useRef<ReturnType<typeof setTimeout> | null>(null);
+  const abortRef = useRef<AbortController | null>(null);
 
-  // Fetch manifest on mount
+  const totalPages = Math.ceil(total / PER_PAGE);
+
+  // Fetch from API with current filters
+  const fetchBooks = useCallback(async (params: {
+    sort: string; language: string; query: string; page: number;
+  }) => {
+    // Cancel any in-flight request
+    if (abortRef.current) abortRef.current.abort();
+    const controller = new AbortController();
+    abortRef.current = controller;
+
+    setLoading(true);
+    try {
+      const qs = new URLSearchParams();
+      if (params.sort !== 'popular') qs.set('sort', params.sort);
+      if (params.language) qs.set('language', params.language);
+      if (params.query) qs.set('q', params.query);
+      if (params.page > 1) qs.set('page', String(params.page));
+
+      const res = await fetch(`/api/catalog/browse?${qs.toString()}`, {
+        signal: controller.signal,
+      });
+      if (!res.ok) throw new Error('fetch failed');
+      const data = await res.json();
+      setBooks(data.books || []);
+      setTotal(data.total || 0);
+    } catch (err) {
+      if ((err as Error).name === 'AbortError') return;
+      // Keep current state on error
+    } finally {
+      if (!controller.signal.aborted) setLoading(false);
+    }
+  }, []);
+
+  // Initialize from URL params on mount
   useEffect(() => {
     if (initializedRef.current) return;
     initializedRef.current = true;
 
-    // Read URL state
     const params = new URLSearchParams(window.location.search);
-    const urlSort = params.get('sort');
-    const urlLang = params.get('language');
-    const urlQ = params.get('q');
-    const urlPage = params.get('page');
+    const urlSort = params.get('sort') || 'popular';
+    const urlLang = params.get('language') || '';
+    const urlQ = params.get('q') || '';
+    const urlPage = parseInt(params.get('page') || '1', 10);
     const urlView = params.get('view') as ViewMode | null;
     const storedView = getStoredView();
 
-    if (urlSort) setSort(urlSort);
-    if (urlLang) setLanguage(urlLang);
-    if (urlQ) setQuery(urlQ);
-    if (urlPage) setCurrentPage(parseInt(urlPage));
+    setSort(urlSort);
+    setLanguage(urlLang);
+    setQuery(urlQ);
+    setCurrentPage(urlPage);
     setViewMode(urlView || storedView || 'list');
 
-    fetch('/api/catalog/browse')
-      .then(res => res.json())
-      .then(data => {
-        setAllBooks(data.books || []);
-        setLanguages(data.languages || []);
-      })
-      .catch(() => {})
-      .finally(() => setLoading(false));
-  }, []);
-
-  // Client-side filter → sort → paginate
-  const filtered = useMemo(() => filterBooks(allBooks, query, language), [allBooks, query, language]);
-  const sorted = useMemo(() => sortBooks(filtered, sort), [filtered, sort]);
-  const totalPages = Math.ceil(sorted.length / PER_PAGE);
-  const safePage = Math.min(currentPage, Math.max(1, totalPages));
-  const pageBooks = useMemo(
-    () => sorted.slice((safePage - 1) * PER_PAGE, safePage * PER_PAGE),
-    [sorted, safePage],
-  );
+    // If URL has non-default params, fetch that specific page
+    const isDefault = urlSort === 'popular' && !urlLang && !urlQ && urlPage === 1;
+    if (!isDefault) {
+      fetchBooks({ sort: urlSort, language: urlLang, query: urlQ, page: urlPage });
+    }
+  }, [fetchBooks]);
 
   const updateUrl = useCallback((s: string, lang: string, page: number, q: string, view: ViewMode) => {
     const params = new URLSearchParams();
@@ -143,24 +131,33 @@ export default function CatalogBrowser() {
     setSort(newSort);
     setCurrentPage(1);
     updateUrl(newSort, language, 1, query, viewMode);
-  }, [language, query, updateUrl, viewMode]);
+    fetchBooks({ sort: newSort, language, query, page: 1 });
+  }, [language, query, viewMode, updateUrl, fetchBooks]);
 
   const handleLanguage = useCallback((newLang: string) => {
     setLanguage(newLang);
     setCurrentPage(1);
     updateUrl(sort, newLang, 1, query, viewMode);
-  }, [sort, query, updateUrl, viewMode]);
+    fetchBooks({ sort, language: newLang, query, page: 1 });
+  }, [sort, query, viewMode, updateUrl, fetchBooks]);
 
   const handleSearch = useCallback((value: string) => {
     setQuery(value);
     setCurrentPage(1);
-  }, []);
+    // Debounce API call
+    if (debounceRef.current) clearTimeout(debounceRef.current);
+    debounceRef.current = setTimeout(() => {
+      updateUrl(sort, language, 1, value, viewMode);
+      fetchBooks({ sort, language, query: value, page: 1 });
+    }, 300);
+  }, [sort, language, viewMode, updateUrl, fetchBooks]);
 
   const handlePage = useCallback((page: number) => {
     setCurrentPage(page);
     updateUrl(sort, language, page, query, viewMode);
+    fetchBooks({ sort, language, query, page });
     window.scrollTo({ top: 0, behavior: 'smooth' });
-  }, [sort, language, query, updateUrl, viewMode]);
+  }, [sort, language, query, viewMode, updateUrl, fetchBooks]);
 
   const handleViewToggle = useCallback((mode: ViewMode) => {
     setViewMode(mode);
@@ -174,12 +171,10 @@ export default function CatalogBrowser() {
       <div className="flex flex-wrap items-end justify-between gap-4 mb-6">
         <div>
           <p className="text-sm text-muted">
-            {loading ? (
-              'Loading catalog...'
-            ) : query || language ? (
-              `${sorted.length.toLocaleString()} of ${allBooks.length.toLocaleString()} books`
+            {query || language ? (
+              `${total.toLocaleString()} of ${initialTotal.toLocaleString()} books`
             ) : (
-              `${allBooks.length.toLocaleString()} books`
+              `${total.toLocaleString()} books`
             )}
           </p>
         </div>
@@ -222,8 +217,8 @@ export default function CatalogBrowser() {
             <option value="popular">Most read</option>
             <option value="recent">Recently added</option>
             <option value="last_translated">Recently translated</option>
-            <option value="title">Title A–Z</option>
-            <option value="author">Author A–Z</option>
+            <option value="title">Title A-Z</option>
+            <option value="author">Author A-Z</option>
             <option value="year_asc">Year (oldest)</option>
             <option value="year_desc">Year (newest)</option>
           </select>
@@ -255,7 +250,14 @@ export default function CatalogBrowser() {
             />
             {query && (
               <button
-                onClick={() => { setQuery(''); searchRef.current?.focus(); }}
+                onClick={() => {
+                  setQuery('');
+                  setCurrentPage(1);
+                  if (debounceRef.current) clearTimeout(debounceRef.current);
+                  updateUrl(sort, language, 1, '', viewMode);
+                  fetchBooks({ sort, language, query: '', page: 1 });
+                  searchRef.current?.focus();
+                }}
                 className="absolute right-2 top-1/2 -translate-y-1/2 text-muted hover:text-primary cursor-pointer"
               >
                 <X className="w-3.5 h-3.5" />
@@ -266,40 +268,45 @@ export default function CatalogBrowser() {
       </div>
 
       {/* Book list/grid */}
-      {loading ? (
-        <div className="py-20 text-center text-muted">Loading...</div>
-      ) : sorted.length === 0 ? (
-        <div className="py-20 text-center text-muted">
-          No books match your filters.
-        </div>
-      ) : viewMode === 'list' ? (
-        <CollectionListView
-          books={pageBooks}
-          sort={sort}
-          onSort={handleSort}
-          loading={loading}
-        />
-      ) : (
-        <div className="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-5 gap-4 md:gap-5">
-          {pageBooks.map(book => (
-            <CollectionBookCard
-              key={book.id}
-              book={{
-                ...book,
-                bookId: book.id,
-                author: book.author || 'Unknown',
-                year: book.year || 0,
-                pages_count: book.pages_count || 0,
-                pages_translated: book.pages_translated || 0,
-                pages_ocr: book.pages_ocr || 0,
-              }}
-            />
-          ))}
-        </div>
-      )}
+      <div className={loading ? 'opacity-60 pointer-events-none transition-opacity' : 'transition-opacity'}>
+        {books.length === 0 && !loading ? (
+          <div className="py-20 text-center text-muted">
+            No books match your filters.
+          </div>
+        ) : viewMode === 'list' ? (
+          <CollectionListView
+            books={books as any}
+            sort={sort}
+            onSort={handleSort}
+            loading={loading}
+          />
+        ) : (
+          <div className="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-5 gap-4 md:gap-5">
+            {books.map(book => (
+              <CollectionBookCard
+                key={book.id}
+                book={{
+                  ...book,
+                  bookId: book.id,
+                  slug: book.slug || undefined,
+                  author: book.author || 'Unknown',
+                  year: book.year || 0,
+                  pages_count: book.pages_count || 0,
+                  pages_translated: book.pages_translated || 0,
+                  pages_ocr: book.pages_ocr || 0,
+                  thumbnail: book.thumbnail || undefined,
+                  thumbnail_blob: book.thumbnail_blob || undefined,
+                  language: book.language || undefined,
+                  published: book.published || undefined,
+                }}
+              />
+            ))}
+          </div>
+        )}
+      </div>
 
       <CatalogPagination
-        currentPage={safePage}
+        currentPage={currentPage}
         totalPages={totalPages}
         onPageChange={handlePage}
       />

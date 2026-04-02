@@ -36,7 +36,7 @@ export interface CatalogBook {
 
 const BOOK_SELECT = 'id, slug, title, display_title, author, year, language, published, pages_count, pages_ocr, pages_translated, pages_blank, photo, thumbnail, thumbnail_blob, read_count, is_first_translation, quality_score, image_source_provider, categories, collections';
 
-export type SortOption = 'popular' | 'title' | 'year_asc' | 'year_desc' | 'recent' | 'quality';
+export type SortOption = 'popular' | 'title' | 'author' | 'year_asc' | 'year_desc' | 'recent' | 'last_translated' | 'quality';
 
 // eslint-disable-next-line @typescript-eslint/no-explicit-any
 function applySort(query: any, sort: SortOption) {
@@ -44,7 +44,9 @@ function applySort(query: any, sort: SortOption) {
     case 'title': return query.order('sort_title', { ascending: true });
     case 'year_asc': return query.order('year', { ascending: true, nullsFirst: false }).order('title', { ascending: true });
     case 'year_desc': return query.order('year', { ascending: false, nullsFirst: false }).order('title', { ascending: true });
+    case 'author': return query.order('author', { ascending: true, nullsFirst: false }).order('title', { ascending: true });
     case 'recent': return query.order('created_at', { ascending: false });
+    case 'last_translated': return query.order('last_translation_at', { ascending: false, nullsFirst: false }).order('title', { ascending: true });
     case 'quality': return query.order('quality_score', { ascending: false }).order('title', { ascending: true });
     case 'popular':
     default: return query.order('read_count', { ascending: false, nullsFirst: false }).order('title', { ascending: true });
