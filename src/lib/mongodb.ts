@@ -118,8 +118,8 @@ export async function getDb(): Promise<Db> {
   // Bracket notation prevents Next.js from inlining the value at build time.
   // At runtime, SKIP_DB_AT_BUILD should be removed from Vercel env vars.
   const skipKey = 'SKIP_DB_AT_BUILD';
-  if (process.env[skipKey] === '1') {
-    console.log('[MongoDB] SKIP_DB_AT_BUILD=1, returning stub');
+  if (process.env[skipKey] === '1' || !process.env.MONGODB_URI) {
+    console.log('[MongoDB] No DB available (SKIP_DB_AT_BUILD or missing MONGODB_URI), returning stub');
     return buildStubDb();
   }
   // Race against a timeout to prevent build workers from hanging indefinitely
