@@ -106,6 +106,13 @@ export function getPageDisplayUrl(page: Record<string, any>, width = 1200, quali
  */
 // eslint-disable-next-line @typescript-eslint/no-explicit-any
 export function getPageThumbUrl(page: Record<string, any>): string | null {
+  // Split-from-spread pages have clean photo/thumbnail — skip legacy fallback chain
+  if (page.split_from_spread) {
+    if (isUsableImageUrl(page.thumbnail)) return page.thumbnail;
+    if (isUsableImageUrl(page.photo)) return `/api/image?url=${encodeURIComponent(page.photo)}&w=150&q=60`;
+    return null;
+  }
+
   // Split pages with crop coordinates need proxy
   if (page.crop?.xStart !== undefined && page.crop?.xEnd !== undefined) {
     const baseUrl = page.archived_photo || page.photo_original || page.photo;
