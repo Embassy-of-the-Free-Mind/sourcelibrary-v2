@@ -249,8 +249,11 @@ export default function EmbassyPage() {
                       Welcome to the Embassy of the Free Mind.
                     </p>
                     <p className="text-[#8a8480] text-sm font-body max-w-[400px] mx-auto leading-relaxed">
-                      The Librarian has read every text in the collection.
+                      The Librarian is an AI that searches the translated texts in the collection.
                       Ask about an author, a tradition, a symbol, or a passage.
+                    </p>
+                    <p className="text-[#8a8480]/60 text-xs font-body mt-2">
+                      Responses may contain errors &mdash; always verify against the source page.
                     </p>
                     <div className="flex flex-wrap justify-center gap-2 mt-6">
                       {[

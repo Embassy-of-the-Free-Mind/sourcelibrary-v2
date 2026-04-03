@@ -528,6 +528,17 @@ async function BookInfo({ id }: { id: string }) {
                 </p>
               )}
 
+              {/* Translation credit */}
+              {translatedCount > 0 && (
+                <p className="text-xs text-stone-500 mt-2">
+                  Translated by Source Library AI{' '}
+                  <span className="text-stone-600">&middot;</span>{' '}
+                  <Link href="/about/research" className="hover:text-stone-300 transition-colors underline underline-offset-2">
+                    How our translations work
+                  </Link>
+                </p>
+              )}
+
               {/* Dedication */}
               <div className="mt-3">
                 <BookDedication bookId={book.id} dedication={(book as any).dedication || null} />

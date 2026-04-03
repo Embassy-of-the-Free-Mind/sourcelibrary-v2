@@ -125,12 +125,21 @@ export default function AboutPage() {
           </li>
         </ul>
 
-        {/* Partners */}
+        {/* Who's Behind This */}
         <h2 className="text-2xl md:text-3xl text-primary mt-16 mb-6">
-          Partners
+          Who&apos;s Behind This
         </h2>
 
-        <div className="flex flex-wrap items-center gap-8 mb-12">
+        <p className="text-secondary mb-6 leading-relaxed">
+          Source Library was founded by <strong>Derek Lomas</strong> in February 2022 after encountering Marsilio Ficino&apos;s <em>Liber de Voluptate</em> at the Embassy of the Free Mind in Amsterdam. A cognitive scientist (Yale) turned technologist, Derek saw that thousands of foundational texts in Western esotericism, philosophy, and science had never been translated into English &mdash; and that AI was finally making it possible to change that.
+        </p>
+
+        {/* Partners */}
+        <h2 className="text-2xl md:text-3xl text-primary mt-16 mb-6">
+          In Partnership with the Embassy of the Free Mind
+        </h2>
+
+        <div className="flex flex-wrap items-center gap-8 mb-8">
           <img
             src="https://images.sourcelibrary.org/assets/embassy-of-the-free-mind-logo.png"
             alt="Embassy of the Free Mind"
@@ -143,8 +152,28 @@ export default function AboutPage() {
           />
         </div>
 
-        <p className="text-secondary mb-8">
-          Source Library is a project of the <strong>Embassy of the Free Mind</strong> (Bibliotheca Philosophica Hermetica), Amsterdam.
+        <p className="text-secondary mb-4 leading-relaxed">
+          The <a href="https://embassyofthefreemind.com" target="_blank" rel="noopener noreferrer" className="text-accent-rust hover:underline">Embassy of the Free Mind</a> in Amsterdam is home to the Bibliotheca Philosophica Hermetica &mdash; a 25,000-volume research library inscribed on the <strong>UNESCO Memory of the World</strong> register. Library Director <strong>Paul Dijstelberge</strong> (PhD, former assistant professor for the history of the book at the University of Amsterdam; former curator at the Allard Pierson) provides scholarly guidance for Source Library&apos;s work with the BPH collection.
+        </p>
+
+        <p className="text-secondary mb-4 leading-relaxed">
+          The Embassy&apos;s <a href="https://embassyofthefreemind.com/en/research/281-staff" target="_blank" rel="noopener noreferrer" className="text-accent-rust hover:underline">Academic Advisory Board</a> includes leading international scholars in the fields covered by the collection:
+        </p>
+
+        <ul className="text-secondary text-sm mb-8 space-y-1 ml-4">
+          <li>Wouter Hanegraaff (University of Amsterdam)</li>
+          <li>Lawrence Principe (Johns Hopkins University)</li>
+          <li>Bernard McGinn (University of Chicago, emer.)</li>
+          <li>Georgiana Hedesan (Oxford University)</li>
+          <li>Didier Kahn (CNRS, France)</li>
+          <li>Yuval Harari (Ben Gurion University of the Negev)</li>
+          <li>Matthew Melvin-Koushki (University of South Carolina)</li>
+          <li>Mike Driedger (Brock University, Canada)</li>
+          <li>Vladimir Urbanek (Academy of Sciences, Czech Republic)</li>
+        </ul>
+
+        <p className="text-secondary mb-8 leading-relaxed">
+          Senior researcher <strong>Dr. Carlos Gilly</strong> (University of Basel), a pillar of the BPH for over thirty years and one of the world&apos;s foremost scholars of Rosicrucianism and early modern Hermetism, contributes to the Institute&apos;s research and curation.
         </p>
 
         {/* Links */}
