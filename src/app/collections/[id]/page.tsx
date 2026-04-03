@@ -561,7 +561,12 @@ export default async function CollectionDetailPage({ params }: Props) {
       {/* Hero Section */}
       <div className="relative bg-dark overflow-hidden">
         {heroImages.length > 0 ? (
-          <div className="absolute inset-0 grid grid-cols-3 sm:grid-cols-6 opacity-30">
+          <div className={`absolute inset-0 grid opacity-30 ${
+            heroImages.length <= 2 ? 'grid-cols-2' :
+            heroImages.length <= 3 ? 'grid-cols-3' :
+            heroImages.length <= 4 ? 'grid-cols-2 sm:grid-cols-4' :
+            'grid-cols-3 sm:grid-cols-6'
+          }`}>
             {heroImages.map((img: { pageId?: string; page_id?: string; detectionIndex?: number; detection_index?: number; thumbnailUrl?: string; thumbnail_url?: string; extractedUrl?: string; extracted_url?: string; imageUrl?: string; image_url?: string }) => {
               const src = img.extracted_url || img.extractedUrl || img.thumbnail_url || img.thumbnailUrl || img.imageUrl || img.image_url;
               const key = `${img.pageId || img.page_id}-${img.detectionIndex ?? img.detection_index}`;
