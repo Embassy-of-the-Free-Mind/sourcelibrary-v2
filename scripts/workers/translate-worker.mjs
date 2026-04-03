@@ -97,6 +97,46 @@ const SKIP_PAGE_TYPES = ['blank', 'digitizer-notice', 'illustration', 'map', 'di
 // Short pages in batches cause the model to produce minimal responses without XML tags.
 const MIN_OCR_CHARS_FOR_BATCH = 200;
 
+// ── Graceful shutdown tracking ──
+// Track in-flight books so signal handlers can clean up zombie locks
+const activeBooks = new Map(); // bookId → jobId
+
+async function cleanupAndExit(reason) {
+  if (activeBooks.size === 0) {
+    console.log(`[TRANSLATE] ${reason} — no active books, exiting cleanly`);
+    process.exit(0);
+  }
+  console.log(`[TRANSLATE] ${reason} — cleaning up ${activeBooks.size} active book(s)`);
+  try {
+    const cleanupClient = new MongoClient(process.env.MONGODB_URI, {
+      serverSelectionTimeoutMS: 5000,
+      maxPoolSize: 1,
+    });
+    await cleanupClient.connect();
+    const db = cleanupClient.db('bookstore');
+    for (const [bookId, jobId] of activeBooks) {
+      await db.collection('books').updateOne(
+        { id: bookId },
+        { $unset: { job: '' }, $set: { updated_at: new Date() } },
+      );
+      if (jobId) {
+        await db.collection('jobs').updateOne(
+          { id: jobId, status: 'processing' },
+          { $set: { status: 'cancelled', cancelled_at: new Date(), cancel_reason: 'worker_shutdown' } },
+        );
+      }
+      console.log(`[TRANSLATE] Cleaned up book ${bookId} (job ${jobId})`);
+    }
+    await cleanupClient.close();
+  } catch (err) {
+    console.error(`[TRANSLATE] Cleanup failed: ${err.message}`);
+  }
+  process.exit(0);
+}
+
+process.on('SIGTERM', () => cleanupAndExit('SIGTERM received'));
+process.on('SIGINT', () => cleanupAndExit('SIGINT received'));
+
 // ── MongoDB ──
 const client = new MongoClient(process.env.MONGODB_URI, {
   serverSelectionTimeoutMS: 10000,
@@ -967,6 +1007,8 @@ async function main() {
   async function processWithJob(book) {
     const zero = { translated: 0, failed: 0, completed: 0, inputTokens: 0, outputTokens: 0 };
     let jobId = book.job?.job_id;
+    // Track for graceful shutdown cleanup
+    activeBooks.set(book.id, jobId || null);
     if (!jobId) {
       const orphanJob = await db.collection('jobs').findOne(
         { book_id: book.id, type: 'translation', status: { $in: ['pending', 'processing'] } },
@@ -1059,6 +1101,7 @@ async function main() {
 
         processWithJob(book).then(result => {
           activeSlots--;
+          activeBooks.delete(book.id);
           results.push(result);
 
           // If queue is getting low, fetch more
@@ -1076,6 +1119,7 @@ async function main() {
           }
         }).catch(err => {
           activeSlots--;
+          activeBooks.delete(book.id);
           console.error(`[TRANSLATE] processWithJob error: ${err.message}`);
           results.push({ translated: 0, failed: 0, completed: 0, inputTokens: 0, outputTokens: 0 });
           tryStartNext();
@@ -1150,7 +1194,7 @@ async function main() {
   await client.close();
 }
 
-main().catch((err) => {
+main().catch(async (err) => {
   console.error('[TRANSLATE] Fatal:', err);
-  process.exit(1);
+  await cleanupAndExit(`Fatal error: ${err.message}`);
 });
