@@ -2,6 +2,14 @@
 
 import { useState, useEffect } from 'react';
 
+interface CollectionStats {
+  total_books: number;
+  total_pages: number;
+  pages_ocr: number;
+  pages_translated: number;
+  first_translations: number;
+}
+
 interface DashboardData {
   canon: {
     total_books: number;
@@ -32,6 +40,8 @@ interface DashboardData {
     total_cost_30d: number;
     pages_translated_30d: number;
   };
+  invisible?: CollectionStats;
+  warehouse?: CollectionStats;
   _snapshot?: {
     updated_at: string;
     stale: boolean;
@@ -228,7 +238,7 @@ export default function AdminDashboard() {
       </div>
 
       {/* Row 4: Pipeline + Economics */}
-      <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: 12 }}>
+      <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: 12, marginBottom: 28 }}>
         <div style={{
           background: '#0d1117', border: '1px solid #30363d', borderRadius: 10,
           padding: '16px 20px',
@@ -280,6 +290,80 @@ export default function AdminDashboard() {
           </div>
         </div>
       </div>
+
+      {/* Row 5: Full Library Breakdown */}
+      {(data.invisible || data.warehouse) && (
+        <div style={{ marginBottom: 28 }}>
+          <div style={{ fontSize: 11, textTransform: 'uppercase', letterSpacing: 1, color: '#8b949e', marginBottom: 10 }}>
+            Full Library
+          </div>
+          <div style={{
+            background: '#0d1117', border: '1px solid #30363d', borderRadius: 10,
+            padding: '16px 20px',
+          }}>
+            <table style={{ width: '100%', borderCollapse: 'collapse', fontSize: 13 }}>
+              <thead>
+                <tr style={{ color: '#8b949e', textAlign: 'left' }}>
+                  <th style={{ padding: '6px 12px 6px 0', fontWeight: 500 }}>Collection</th>
+                  <th style={{ padding: '6px 12px', fontWeight: 500, textAlign: 'right' }}>Books</th>
+                  <th style={{ padding: '6px 12px', fontWeight: 500, textAlign: 'right' }}>Pages</th>
+                  <th style={{ padding: '6px 12px', fontWeight: 500, textAlign: 'right' }}>OCR</th>
+                  <th style={{ padding: '6px 12px', fontWeight: 500, textAlign: 'right' }}>Translated</th>
+                  <th style={{ padding: '6px 12px', fontWeight: 500, textAlign: 'right' }}>First Trans.</th>
+                </tr>
+              </thead>
+              <tbody>
+                <tr style={{ color: '#3fb950' }}>
+                  <td style={{ padding: '6px 12px 6px 0' }}>Visible</td>
+                  <td style={{ padding: '6px 12px', textAlign: 'right' }}>{fmt(canon.total_books)}</td>
+                  <td style={{ padding: '6px 12px', textAlign: 'right' }}>{fmt(canon.total_pages)}</td>
+                  <td style={{ padding: '6px 12px', textAlign: 'right' }}>{fmt(coverage.ocr_pages)}</td>
+                  <td style={{ padding: '6px 12px', textAlign: 'right' }}>{fmt(coverage.translated_pages)}</td>
+                  <td style={{ padding: '6px 12px', textAlign: 'right' }}>{canon.first_translations}</td>
+                </tr>
+                {data.invisible && (
+                  <tr style={{ color: '#d29922' }}>
+                    <td style={{ padding: '6px 12px 6px 0' }}>Invisible</td>
+                    <td style={{ padding: '6px 12px', textAlign: 'right' }}>{fmt(data.invisible.total_books)}</td>
+                    <td style={{ padding: '6px 12px', textAlign: 'right' }}>{fmt(data.invisible.total_pages)}</td>
+                    <td style={{ padding: '6px 12px', textAlign: 'right' }}>{fmt(data.invisible.pages_ocr)}</td>
+                    <td style={{ padding: '6px 12px', textAlign: 'right' }}>{fmt(data.invisible.pages_translated)}</td>
+                    <td style={{ padding: '6px 12px', textAlign: 'right' }}>{data.invisible.first_translations}</td>
+                  </tr>
+                )}
+                {data.warehouse && (
+                  <tr style={{ color: '#8b949e' }}>
+                    <td style={{ padding: '6px 12px 6px 0' }}>Warehouse</td>
+                    <td style={{ padding: '6px 12px', textAlign: 'right' }}>{fmt(data.warehouse.total_books)}</td>
+                    <td style={{ padding: '6px 12px', textAlign: 'right' }}>{fmt(data.warehouse.total_pages)}</td>
+                    <td style={{ padding: '6px 12px', textAlign: 'right' }}>{fmt(data.warehouse.pages_ocr)}</td>
+                    <td style={{ padding: '6px 12px', textAlign: 'right' }}>{fmt(data.warehouse.pages_translated)}</td>
+                    <td style={{ padding: '6px 12px', textAlign: 'right' }}>{data.warehouse.first_translations}</td>
+                  </tr>
+                )}
+                <tr style={{ color: '#f0f6fc', borderTop: '1px solid #30363d', fontWeight: 600 }}>
+                  <td style={{ padding: '8px 12px 6px 0' }}>Total</td>
+                  <td style={{ padding: '8px 12px', textAlign: 'right' }}>
+                    {fmt(canon.total_books + (data.invisible?.total_books || 0) + (data.warehouse?.total_books || 0))}
+                  </td>
+                  <td style={{ padding: '8px 12px', textAlign: 'right' }}>
+                    {fmt(canon.total_pages + (data.invisible?.total_pages || 0) + (data.warehouse?.total_pages || 0))}
+                  </td>
+                  <td style={{ padding: '8px 12px', textAlign: 'right' }}>
+                    {fmt(coverage.ocr_pages + (data.invisible?.pages_ocr || 0) + (data.warehouse?.pages_ocr || 0))}
+                  </td>
+                  <td style={{ padding: '8px 12px', textAlign: 'right' }}>
+                    {fmt(coverage.translated_pages + (data.invisible?.pages_translated || 0) + (data.warehouse?.pages_translated || 0))}
+                  </td>
+                  <td style={{ padding: '8px 12px', textAlign: 'right' }}>
+                    {canon.first_translations + (data.invisible?.first_translations || 0) + (data.warehouse?.first_translations || 0)}
+                  </td>
+                </tr>
+              </tbody>
+            </table>
+          </div>
+        </div>
+      )}
     </div>
   );
 }

@@ -7,6 +7,7 @@ import type { JobType, Job } from '@/lib/types/job';
 import type { ActionType } from './ProcessingPanel';
 import { prompts as promptsApi, jobs, books } from '@/lib/api-client';
 import { queueBooks } from '@/lib/api-client/queues';
+import { getPageThumbUrl } from '@/lib/utils';
 import { AuthCheck } from '@/components/auth/AuthCheck';
 import BookPagesStats from './BookPagesStats';
 import BookPagesActions from './BookPagesActions';
@@ -489,8 +490,11 @@ export default function BookPagesSection({ bookId, bookTitle, pages: initialPage
 
       // For main thumbnail, prefer archived/cropped photos, fall back to direct source URL.
       // NEVER store /api/image?url= wrappers — they crash Next.js Image during SSR.
+      // Split-from-spread pages: use photo directly (no legacy fallback)
       const typedPage = page as Page & { archived_photo?: string; cropped_photo?: string };
-      const directUrl = typedPage.cropped_photo || typedPage.archived_photo || page.photo_original || page.photo;
+      const directUrl = page.split_from_spread
+        ? page.photo
+        : (typedPage.cropped_photo || typedPage.archived_photo || page.photo_original || page.photo);
       if (directUrl) {
         updates.thumbnail = directUrl;
       }
@@ -504,37 +508,7 @@ export default function BookPagesSection({ bookId, bookTitle, pages: initialPage
     }
   };
 
-  const getImageUrl = (page: Page) => {
-    const typedPage = page as Page & { archived_photo?: string; cropped_photo?: string };
-
-    // New path convention: derive thumbnail from photo URL
-    const newPathMatch = page.photo?.match(/^(https:\/\/images\.sourcelibrary\.org\/pages\/[^/]+\/\d{4,})(-full)?\.jpg$/);
-    if (newPathMatch) {
-      return `${newPathMatch[1]}-thumb.jpg`;
-    }
-
-    // Legacy: split pages prefer pre-cropped image
-    if (page.crop && typedPage.cropped_photo) {
-      return typedPage.cropped_photo;
-    }
-
-    // Legacy: pre-generated thumbnails
-    if (page.thumbnail_blob) {
-      return page.thumbnail_blob;
-    }
-    if (page.thumbnail) {
-      return page.thumbnail;
-    }
-
-    const baseUrl = typedPage.archived_photo || page.photo_original || page.photo;
-    if (!baseUrl) return null;
-
-    if (page.crop?.xStart !== undefined && page.crop?.xEnd !== undefined) {
-      return `/api/image?url=${encodeURIComponent(baseUrl)}&w=150&q=60&cx=${page.crop.xStart}&cw=${page.crop.xEnd}`;
-    }
-
-    return `/api/image?url=${encodeURIComponent(baseUrl)}&w=150&q=60`;
-  };
+  const getImageUrl = (page: Page) => getPageThumbUrl(page);
 
   return (
     <div className="space-y-6">
@@ -602,7 +576,7 @@ export default function BookPagesSection({ bookId, bookTitle, pages: initialPage
             const firstId = Array.from(selectedPages)[0];
             const page = pages.find(p => p.id === firstId);
             if (!page) return null;
-            const baseUrl = page.photo_original || page.photo;
+            const baseUrl = page.split_from_spread ? page.photo : (page.photo_original || page.photo);
             if (!baseUrl) return null;
             return `/api/image?url=${encodeURIComponent(baseUrl)}&w=200&q=70`;
           })()}

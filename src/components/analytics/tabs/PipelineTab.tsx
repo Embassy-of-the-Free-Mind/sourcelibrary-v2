@@ -14,6 +14,36 @@ import { compactNumber, dateLabel } from '../charts/chart-utils';
 const errorText = (e: unknown): string =>
   typeof e === 'string' ? e : (e as any)?.message || JSON.stringify(e);
 
+/** Smart x-axis label: time-only for <2d, date+time for 2-7d, date-only for >7d */
+function smartLabel(iso: string, hours: number): string {
+  const d = new Date(iso);
+  const hh = d.getHours().toString().padStart(2, '0');
+  const mm = d.getMinutes().toString().padStart(2, '0');
+  const months = ['Jan','Feb','Mar','Apr','May','Jun','Jul','Aug','Sep','Oct','Nov','Dec'];
+  if (hours <= 48) return `${hh}:${mm}`;
+  if (hours <= 168) return `${months[d.getMonth()]} ${d.getDate()} ${hh}:00`;
+  return `${months[d.getMonth()]} ${d.getDate()}`;
+}
+
+/** Relative time ago string */
+function timeAgo(iso: string): string {
+  const mins = Math.round((Date.now() - new Date(iso).getTime()) / 60000);
+  if (mins < 1) return 'just now';
+  if (mins < 60) return `${mins}m ago`;
+  const hrs = Math.round(mins / 60);
+  if (hrs < 24) return `${hrs}h ago`;
+  return `${Math.round(hrs / 24)}d ago`;
+}
+
+/** Small muted source label */
+function SourceLabel({ children }: { children: React.ReactNode }) {
+  return (
+    <span className="text-xs ml-2 font-normal" style={{ color: 'var(--text-muted)', opacity: 0.7 }}>
+      {children}
+    </span>
+  );
+}
+
 interface PipelineTabProps {
   hours: number;
 }
@@ -64,7 +94,7 @@ export default function PipelineTab({ hours }: PipelineTabProps) {
   const velocityChart = (() => {
     if (!pipelineData.snapshots || pipelineData.snapshots.length < 2) return null;
     const sorted = [...pipelineData.snapshots].sort((a, b) => new Date(a.timestamp).getTime() - new Date(b.timestamp).getTime());
-    const labels = sorted.map(s => dateLabel(s.timestamp));
+    const labels = sorted.map(s => smartLabel(s.timestamp, hours));
     const ocrData = sorted.map(s => s.pages?.ocr ?? 0);
     const transData = sorted.map(s => s.pages?.translated ?? 0);
     return { labels, ocrData, transData };
@@ -93,6 +123,9 @@ export default function PipelineTab({ hours }: PipelineTabProps) {
           <div className="flex justify-between items-baseline mb-2">
             <div className="text-sm font-medium" style={{ color: 'var(--text-primary)' }}>
               Translation Progress
+              {pipelineData._meta?.snapshotComputedAt && (
+                <SourceLabel>snapshot {timeAgo(pipelineData._meta.snapshotComputedAt)}</SourceLabel>
+              )}
             </div>
             <div className="text-sm" style={{ color: 'var(--text-muted)' }}>
               {ec!.translation.toLocaleString()} / {ec!.ocr.toLocaleString()} books with OCR
@@ -118,6 +151,12 @@ export default function PipelineTab({ hours }: PipelineTabProps) {
       )}
 
       {/* Velocity Cards */}
+      {pipelineData._meta?.snapshotRange && (
+        <div className="text-xs" style={{ color: 'var(--text-muted)', opacity: 0.7 }}>
+          Velocity computed from {pipelineData._meta.snapshotCount} snapshots
+          ({timeAgo(pipelineData._meta.snapshotRange.from)} to {timeAgo(pipelineData._meta.snapshotRange.to)})
+        </div>
+      )}
       <div className="grid grid-cols-1 md:grid-cols-3 lg:grid-cols-5 gap-4">
         <div className="p-5 rounded-xl" style={{ background: 'linear-gradient(135deg, var(--bg-white), #f0fdf4)', border: '1px solid var(--border-light)' }}>
           <div className="text-sm font-medium uppercase mb-1" style={{ color: 'var(--text-muted)' }}>OCR Velocity</div>
@@ -164,8 +203,12 @@ export default function PipelineTab({ hours }: PipelineTabProps) {
           'metadata_enriched', 'ft_verifying', 'ft_verified',
           'translate_submitted', 'translate_partial', 'translate_complete',
           'enriching', 'enriched', 'chapters', 'chapters_complete',
-          'images_submitted', 'images_complete',
-          'complete', 'needs_attention', 'failed',
+          'images_submitted', 'images_complete', 'visual_complete',
+          'cover_selected',
+          'complete',
+          'paused', 'empty_shell', 'not_digitized',
+          'replaced_by_alt_import', 'replaced_by_ia_import', 'duplicate_empty_shell',
+          'needs_attention', 'failed',
         ];
         const sorted = statusOrder
           .filter(s => pipelineData.funnel![s])
@@ -183,8 +226,11 @@ export default function PipelineTab({ hours }: PipelineTabProps) {
           translate_submitted: '#f59e0b', translate_complete: '#f59e0b',
           enriching: '#10b981', enriched: '#10b981',
           chapters: '#06b6d4', chapters_complete: '#06b6d4',
-          images_submitted: '#ec4899', images_complete: '#ec4899',
+          images_submitted: '#ec4899', images_complete: '#ec4899', visual_complete: '#ec4899',
+          cover_selected: '#a855f7',
           complete: '#16a34a',
+          paused: '#94a3b8', empty_shell: '#94a3b8', not_digitized: '#94a3b8',
+          replaced_by_alt_import: '#64748b', replaced_by_ia_import: '#64748b', duplicate_empty_shell: '#64748b',
           needs_attention: '#dc2626', failed: '#dc2626',
         };
 
@@ -193,6 +239,9 @@ export default function PipelineTab({ hours }: PipelineTabProps) {
             <h2 className="text-lg font-medium mb-4 flex items-center gap-2" style={{ color: 'var(--text-primary)' }}>
               <Layers className="w-5 h-5" style={{ color: 'var(--accent-sage)' }} />
               Pipeline Funnel
+              {pipelineData._meta?.snapshotComputedAt && (
+                <SourceLabel>snapshot {timeAgo(pipelineData._meta.snapshotComputedAt)}</SourceLabel>
+              )}
             </h2>
             <div className="space-y-1.5">
               {sorted.map(({ status, count }) => (
@@ -246,6 +295,9 @@ export default function PipelineTab({ hours }: PipelineTabProps) {
             <h2 className="text-lg font-medium mb-1 flex items-center gap-2" style={{ color: 'var(--text-primary)' }}>
               <Image className="w-5 h-5" style={{ color: 'var(--accent-violet)' }} />
               Enrichment Coverage
+              {pipelineData._meta?.snapshotComputedAt && (
+                <SourceLabel>snapshot {timeAgo(pipelineData._meta.snapshotComputedAt)}</SourceLabel>
+              )}
             </h2>
             <p className="text-xs mb-4" style={{ color: 'var(--text-muted)' }}>
               {total.toLocaleString()} books with pages &middot; {cov.galleryImages.toLocaleString()} gallery images
@@ -281,6 +333,7 @@ export default function PipelineTab({ hours }: PipelineTabProps) {
         <div className="p-6 rounded-xl" style={{ background: 'var(--bg-white)', border: '1px solid var(--border-light)' }}>
           <h2 className="text-lg font-medium mb-4" style={{ color: 'var(--text-primary)' }}>
             OCR & Translation Progress Over Time
+            <SourceLabel>pipeline_snapshots</SourceLabel>
           </h2>
           <MultiLineChart
             series={[
@@ -306,7 +359,7 @@ export default function PipelineTab({ hours }: PipelineTabProps) {
         for (let i = 1; i < sorted.length; i++) {
           const dt = (new Date(sorted[i].timestamp).getTime() - new Date(sorted[i - 1].timestamp).getTime()) / 3600000;
           if (dt < 0.01) continue;
-          labels.push(dateLabel(sorted[i].timestamp));
+          labels.push(smartLabel(sorted[i].timestamp, hours));
           ocrRate.push(Math.max(0, Math.round(((sorted[i].pages?.ocr ?? 0) - (sorted[i - 1].pages?.ocr ?? 0)) / dt)));
           transRate.push(Math.max(0, Math.round(((sorted[i].pages?.translated ?? 0) - (sorted[i - 1].pages?.translated ?? 0)) / dt)));
         }
@@ -317,6 +370,7 @@ export default function PipelineTab({ hours }: PipelineTabProps) {
           <div className="p-6 rounded-xl" style={{ background: 'var(--bg-white)', border: '1px solid var(--border-light)' }}>
             <h2 className="text-lg font-medium mb-4" style={{ color: 'var(--text-primary)' }}>
               Pipeline Throughput (pages/hr)
+              <SourceLabel>pipeline_snapshots</SourceLabel>
             </h2>
             <MultiLineChart
               series={[
@@ -375,6 +429,7 @@ export default function PipelineTab({ hours }: PipelineTabProps) {
           <h2 className="text-lg font-medium mb-4 flex items-center gap-2" style={{ color: 'var(--text-primary)' }}>
             <Clock className="w-5 h-5" style={{ color: 'var(--accent-sage)' }} />
             Cron Health
+            <SourceLabel>cron_runs ({pipelineData._meta?.cronRunsCount || 0} entries)</SourceLabel>
           </h2>
           <div className="overflow-x-auto">
             <table className="w-full text-sm">
@@ -445,6 +500,7 @@ export default function PipelineTab({ hours }: PipelineTabProps) {
           <h2 className="text-lg font-medium mb-4 flex items-center gap-2" style={{ color: 'var(--text-primary)' }}>
             <XCircle className="w-5 h-5" style={{ color: '#ef4444' }} />
             Recent AI Errors (last 6h)
+            <SourceLabel>gemini_usage</SourceLabel>
           </h2>
           <div className="overflow-x-auto">
             <table className="w-full text-sm">
@@ -487,6 +543,7 @@ export default function PipelineTab({ hours }: PipelineTabProps) {
           <h2 className="text-lg font-medium mb-4 flex items-center gap-2" style={{ color: 'var(--text-primary)' }}>
             <AlertTriangle className="w-5 h-5" style={{ color: 'var(--accent-rust)' }} />
             Books Needing Attention ({pipelineData.needsAttention.length})
+            <SourceLabel>live query</SourceLabel>
           </h2>
           <div className="space-y-3">
             {pipelineData.needsAttention.map((book) => (

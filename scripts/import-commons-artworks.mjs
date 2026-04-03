@@ -23,6 +23,7 @@ const R2_PREFIX = 'artwork';
 const DELAY_MS = 100; // Polite rate limit for Commons
 const DISPLAY_WIDTH = 3840; // Max thumb size Commons serves
 const THUMB_WIDTH = 600; // Grid thumbnail size
+const MIN_DIMENSION = 800; // Minimum max(width, height) — reject smaller images
 
 // ─── Import targets ──────────────────────────────────────────────────────────
 
@@ -241,8 +242,8 @@ async function getFileInfo(titles) {
 
       // Skip non-image files
       if (!info.mime?.startsWith('image/')) continue;
-      // Skip tiny images (icons, logos)
-      if (info.width < 300 || info.height < 300) continue;
+      // Skip images below minimum resolution threshold
+      if (Math.max(info.width, info.height) < MIN_DIMENSION) continue;
 
       results.push({
         commonsTitle: page.title,
@@ -283,7 +284,7 @@ async function getFileInfo(titles) {
 
 function cleanHtml(html) {
   if (!html) return '';
-  return html
+  let text = html
     .replace(/<[^>]+>/g, '') // Strip HTML tags
     .replace(/&amp;/g, '&')
     .replace(/&lt;/g, '<')
@@ -292,6 +293,13 @@ function cleanHtml(html) {
     .replace(/&#39;/g, "'")
     .replace(/\s+/g, ' ')
     .trim();
+  // Strip Wikidata Quickstatements markup (e.g. "title QS:P1476,de:\"...\"label QS:Lde,...")
+  if (text.includes('QS:')) {
+    text = text.replace(/\s*(title|label)\s+QS:[^\s"]*("([^"]*)")?/g, '').trim();
+    // If still has QS remnants, take everything before first QS
+    if (text.includes('QS:')) text = text.split(/\s*QS:/)[0].trim();
+  }
+  return text;
 }
 
 function slugify(text) {

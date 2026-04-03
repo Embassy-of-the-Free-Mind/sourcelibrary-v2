@@ -27,7 +27,7 @@ import { createHash } from 'crypto';
 import { nanoid } from 'nanoid';
 
 // ── Config ──
-const CONCURRENCY = 40;          // Max books translating simultaneously
+const CONCURRENCY = 15;          // Max books translating simultaneously (tuned for 60-connection budget)
 const PAGES_PER_RUN = 8000;      // Global page cap per run (prevent runaway costs)
 const MAX_CONSECUTIVE_ERRORS = 5; // Per-book error threshold before giving up
 const RATE_LIMIT_BACKOFF_MS = 15000;
@@ -100,7 +100,7 @@ const MIN_OCR_CHARS_FOR_BATCH = 200;
 // ── MongoDB ──
 const client = new MongoClient(process.env.MONGODB_URI, {
   serverSelectionTimeoutMS: 10000,
-  maxPoolSize: CONCURRENCY + 10,
+  maxPoolSize: 20,
 });
 
 // ── Sanitize translation tags (matches src/lib/sanitize-translation-tags.ts) ──
@@ -311,7 +311,7 @@ async function writePageTranslation(db, page, text, book) {
 }
 
 // ── Process one book (sequential batches for context) ──
-async function processBook(db, book, job, globalCounter) {
+async function processBook(db, book, job, globalCounter, deadline) {
   const label = (book.title || book.id).substring(0, 50);
   const pages = await db.collection('pages')
     .find({
@@ -341,7 +341,7 @@ async function processBook(db, book, job, globalCounter) {
       { $set: { 'pipeline_auto.status': 'translate_complete', updated_at: new Date() }, $unset: { job: '' } },
     );
     console.log(`  [${label}] Already complete`);
-    return { translated: 0, failed: 0 };
+    return { translated: 0, failed: 0, completed: 1, inputTokens: 0, outputTokens: 0 };
   }
 
   const batchMode = effectiveBatchSize(pages, BATCH_SIZE) > 1 ? `batch-${BATCH_SIZE}` : 'single';
@@ -381,6 +381,12 @@ async function processBook(db, book, job, globalCounter) {
       break;
     }
 
+    // Check run deadline
+    if (deadline && Date.now() > deadline) {
+      console.log(`  [${label}] Hit run deadline, parking`);
+      break;
+    }
+
     // Check consecutive errors
     if (consecutiveErrors >= MAX_CONSECUTIVE_ERRORS) {
       console.log(`  [${label}] ${MAX_CONSECUTIVE_ERRORS} consecutive errors, stopping`);
@@ -393,7 +399,15 @@ async function processBook(db, book, job, globalCounter) {
       break;
     }
 
-    // Check if job was cancelled externally
+    // Heartbeat — keeps zombie reaper from killing live work (every 10 pages)
+    if (translated % 10 === 0 && translated > 0) {
+      await db.collection('jobs').updateOne(
+        { id: job.id },
+        { $set: { updated_at: new Date(), pages_processed: translated } },
+      );
+    }
+
+    // Check if job was cancelled externally (every 50 pages, includes a read)
     if (translated % 50 === 0 && translated > 0) {
       const freshJob = await db.collection('jobs').findOne({ id: job.id }, { projection: { status: 1 } });
       if (freshJob?.status === 'cancelled' || freshJob?.status === 'failed') {
@@ -688,7 +702,10 @@ async function selfDispatch(db, limit) {
       ],
       default: 1,
     }}}},
-    { $sort: { _speedTier: 1, is_first_translation: -1, hidden: 1 } },
+    // Books with ≥200 pages fill the full 200-page cap and finish together.
+    // Small books finish early, leaving idle slots. Dispatch big books first.
+    { $addFields: { _bigBook: { $cond: [{ $gte: ['$pages_count', 200] }, 0, 1] } } },
+    { $sort: { _speedTier: 1, _bigBook: 1, is_first_translation: -1, hidden: 1 } },
     { $project: { id: 1, title: 1, pages_count: 1, language: 1, 'image_source.provider': 1 } },
     { $limit: limit },
   ]).toArray();
@@ -784,83 +801,106 @@ async function main() {
   await client.connect();
   const db = client.db('bookstore');
 
-  // Check pause status — with auto-resume for stale global pauses
+  // Check pause status — no auto-resume (scheduler owns resume decisions)
   const control = await db.collection('system_config').findOne({ _id: 'processing_control' });
   const translationPhasePaused = control?.paused_phases?.includes('translation');
   if (control?.paused || translationPhasePaused) {
-    // Phase-specific pauses are always respected (intentional)
-    if (translationPhasePaused) {
-      console.log('[TRANSLATE] Translation phase paused, exiting');
-      await db.collection('cron_runs').insertOne({
-        cron: 'hetzner-translate-worker', timestamp: new Date(),
-        duration_ms: Date.now() - startTime, status: 'skipped', failed: false,
-        pages_saved: 0, actions: { books_processed: 0, skip_reason: 'translation phase paused' },
-        errors: [], error_count: 0, summary: 'skipped: translation phase paused',
-      }).catch(() => {});
-      await client.close();
-      return;
-    }
-
-    // Global pause: auto-resume if stale (>30min) and DB is healthy
+    const reason = translationPhasePaused ? 'translation phase paused' : 'pipeline paused';
     const pauseAgeMs = control.paused_at ? Date.now() - new Date(control.paused_at).getTime() : Infinity;
-    const STALE_PAUSE_MS = 30 * 60 * 1000;
-
-    if (pauseAgeMs > STALE_PAUSE_MS) {
-      const probeStart = Date.now();
-      await db.collection('books').findOne({ pages_count: { $gt: 0 } });
-      const findMs = Date.now() - probeStart;
-
-      if (findMs < 500) {
-        console.log(`[TRANSLATE] Auto-resuming stale pause (${Math.round(pauseAgeMs / 60000)}min old, DB ${findMs}ms)`);
-        await db.collection('system_config').updateOne(
-          { _id: 'processing_control' },
-          { $set: { paused: false, unpaused_at: new Date(), unpaused_by: `auto-resume: translate-worker (${Math.round(pauseAgeMs / 60000)}min stale, DB ${findMs}ms)` } }
-        );
-        await db.collection('processing_control_log').insertOne({
-          action: 'auto_resume', timestamp: new Date(), source: 'translate-worker',
-          detail: `Stale pause auto-cleared after ${Math.round(pauseAgeMs / 60000)}min. DB: ${findMs}ms. Original: ${control.paused_by}`,
-        }).catch(() => {});
-        // Continue — don't return
-      } else {
-        console.log(`[TRANSLATE] Stale pause but DB slow (${findMs}ms), staying paused`);
-        await db.collection('cron_runs').insertOne({
-          cron: 'hetzner-translate-worker', timestamp: new Date(),
-          duration_ms: Date.now() - startTime, status: 'skipped', failed: false,
-          pages_saved: 0, actions: { books_processed: 0, skip_reason: 'pipeline paused (DB slow)', db_find_ms: findMs },
-          errors: [], error_count: 0, summary: `skipped: paused (stale but DB ${findMs}ms)`,
-        }).catch(() => {});
-        await client.close();
-        return;
-      }
-    } else {
-      console.log(`[TRANSLATE] Pipeline paused (${Math.round(pauseAgeMs / 60000)}min ago), exiting`);
-      await db.collection('cron_runs').insertOne({
-        cron: 'hetzner-translate-worker', timestamp: new Date(),
-        duration_ms: Date.now() - startTime, status: 'skipped', failed: false,
-        pages_saved: 0, actions: { books_processed: 0, skip_reason: 'pipeline paused' },
-        errors: [], error_count: 0, summary: `skipped: pipeline paused (${Math.round(pauseAgeMs / 60000)}min ago)`,
-      }).catch(() => {});
-      await client.close();
-      return;
-    }
+    console.log(`[TRANSLATE] ${reason} (${Math.round(pauseAgeMs / 60000)}min ago), exiting`);
+    await db.collection('cron_runs').insertOne({
+      cron: 'hetzner-translate-worker', timestamp: new Date(),
+      duration_ms: Date.now() - startTime, status: 'skipped', failed: false,
+      pages_saved: 0, actions: { books_processed: 0, skip_reason: reason },
+      errors: [], error_count: 0, summary: `skipped: ${reason}`,
+    }).catch(() => {});
+    await client.close();
+    return;
   }
 
-  // Find books in translate_submitted — each book gets up to 200 pages then gets parked.
+  // Find books — fresh (0 translated) first, then partials sorted by most remaining pages.
+  // Grouping similar workloads per batch minimizes convoy tail waste.
+  // Books with <10 pages remaining are auto-completed (overhead not worth it).
+  const MIN_REMAINING = 10;
   const proj = { id: 1, title: 1, display_title: 1, author: 1, year: 1, published: 1, language: 1, job: 1, image_source: 1, pages_translated: 1, pages_ocr: 1, pages_blank: 1 };
-  let books = await db.collection('books')
-    .find({ 'pipeline_auto.status': 'translate_submitted' })
-    .project(proj).limit(CONCURRENCY).toArray();
 
-  // Self-dispatch: if no books are waiting, create jobs directly instead of waiting for Phase 4
+  // Auto-complete near-zero books — job setup overhead exceeds the work
+  const nearZero = await db.collection('books').aggregate([
+    { $match: { 'pipeline_auto.status': { $in: ['translate_submitted', 'translate_partial'] } } },
+    { $addFields: { _remaining: { $subtract: [{ $ifNull: ['$pages_ocr', 0] }, { $add: [{ $ifNull: ['$pages_translated', 0] }, { $ifNull: ['$pages_blank', 0] }] }] } } },
+    { $match: { _remaining: { $lt: MIN_REMAINING } } },
+    { $limit: 100 },
+    { $project: { id: 1, _remaining: 1 } },
+  ], { maxTimeMS: 10000 }).toArray();
+
+  if (nearZero.length > 0) {
+    const ids = nearZero.map(b => b.id);
+    await db.collection('books').updateMany(
+      { id: { $in: ids } },
+      { $set: { 'pipeline_auto.status': 'translate_complete', updated_at: new Date() }, $unset: { job: '' } },
+    );
+    await db.collection('jobs').updateMany(
+      { book_id: { $in: ids }, type: 'translation', status: { $in: ['pending', 'processing'] } },
+      { $set: { status: 'completed', completed_at: new Date(), updated_at: new Date() } },
+    );
+    console.log(`[TRANSLATE] Auto-completed ${nearZero.length} near-zero books (<${MIN_REMAINING} pages remaining)`);
+  }
+
+  let books = await db.collection('books')
+    .find({ 'pipeline_auto.status': 'translate_submitted', $or: [{ pages_translated: 0 }, { pages_translated: { $exists: false } }] })
+    .project(proj).limit(CONCURRENCY).toArray();
+  if (books.length < CONCURRENCY) {
+    // Fill remaining slots with partial books, most remaining pages first
+    // Only pull books with ≥50 pages remaining — smaller ones wait for a cleanup pass
+    const needed = CONCURRENCY - books.length;
+    const freshIds = new Set(books.map(b => b.id));
+    const partial = await db.collection('books').aggregate([
+      { $match: { 'pipeline_auto.status': { $in: ['translate_submitted', 'translate_partial'] }, pages_translated: { $gt: 0 } } },
+      { $addFields: { _remaining: { $subtract: [{ $ifNull: ['$pages_ocr', 0] }, { $add: [{ $ifNull: ['$pages_translated', 0] }, { $ifNull: ['$pages_blank', 0] }] }] } } },
+      { $match: { _remaining: { $gte: 50 } } },
+      { $sort: { _remaining: -1 } },
+      { $limit: needed },
+      { $project: proj },
+    ]).toArray();
+    books = [...books, ...partial.filter(b => !freshIds.has(b.id))];
+  }
+
+  // If no big partials, fall back to any remaining partial (cleanup mode)
   if (books.length < CONCURRENCY) {
     const needed = CONCURRENCY - books.length;
+    const haveIds = new Set(books.map(b => b.id));
+    const small = await db.collection('books').aggregate([
+      { $match: { 'pipeline_auto.status': { $in: ['translate_submitted', 'translate_partial'] }, pages_translated: { $gt: 0 } } },
+      { $addFields: { _remaining: { $subtract: [{ $ifNull: ['$pages_ocr', 0] }, { $add: [{ $ifNull: ['$pages_translated', 0] }, { $ifNull: ['$pages_blank', 0] }] }] } } },
+      { $match: { _remaining: { $gte: MIN_REMAINING } } },
+      { $sort: { _remaining: -1 } },
+      { $limit: needed },
+      { $project: proj },
+    ]).toArray();
+    books = [...books, ...small.filter(b => !haveIds.has(b.id))];
+  }
+
+  // Self-dispatch: always reserve slots for fresh books from metadata_enriched.
+  // Without this, 600+ partials fill all slots and fresh books never start.
+  const FRESH_SLOTS = Math.max(3, CONCURRENCY - books.length); // at least 3 slots for fresh books
+  if (books.length < CONCURRENCY || FRESH_SLOTS > 0) {
+    const needed = Math.min(FRESH_SLOTS, CONCURRENCY - books.length + 3);
     const dispatched = await selfDispatch(db, needed);
     if (dispatched.length > 0) {
-      console.log(`[TRANSLATE] Self-dispatched ${dispatched.length} books (had ${books.length} in queue)`);
-      // Re-query to pick up the newly dispatched books with full projection
+      console.log(`[TRANSLATE] Self-dispatched ${dispatched.length} fresh books (had ${books.length} partials)`);
       const newBooks = await db.collection('books')
         .find({ 'pipeline_auto.status': 'translate_submitted', id: { $in: dispatched.map(b => b.id) } })
         .project(proj).toArray();
+      // Replace smallest partials with fresh big books if we're over capacity
+      if (books.length + newBooks.length > CONCURRENCY) {
+        // Sort existing by remaining pages ascending, drop the smallest
+        const withRemaining = books.map(b => ({
+          ...b,
+          _remaining: (b.pages_ocr || 0) - (b.pages_translated || 0) - (b.pages_blank || 0),
+        }));
+        withRemaining.sort((a, b) => a._remaining - b._remaining);
+        books = withRemaining.slice(newBooks.length); // drop smallest to make room
+      }
       books = [...books, ...newBooks];
     }
   }
@@ -877,51 +917,153 @@ async function main() {
     return;
   }
 
-  console.log(`[TRANSLATE] Processing ${books.length} books (concurrency: ${CONCURRENCY}, ${batchLabel})`);
-
-  // Load their jobs
+  // ── Time-boxed work queue with slot backfill ──
+  // Instead of Promise.all(15 books) that waits for the slowest, run a pool
+  // that refills slots as books finish. Deadline prevents runaway runs.
+  const RUN_DEADLINE_MS = 15 * 60 * 1000; // 15 minutes
+  const deadline = startTime + RUN_DEADLINE_MS;
   const globalCounter = { count: 0 };
-  const results = await Promise.all(
-    books.map(async (book) => {
-      let jobId = book.job?.job_id;
-      const zero = { translated: 0, failed: 0, completed: 0, inputTokens: 0, outputTokens: 0 };
-      if (!jobId) {
-        // Self-heal: try to find an active job for this book
-        const orphanJob = await db.collection('jobs').findOne(
-          { book_id: book.id, type: 'translation', status: { $in: ['pending', 'processing'] } },
-          { sort: { created_at: -1 } },
-        );
-        if (orphanJob) {
-          jobId = orphanJob.id || orphanJob._id.toString();
-          await db.collection('books').updateOne(
-            { id: book.id },
-            { $set: { job: { job_id: jobId, type: 'translation' }, updated_at: new Date() } },
-          );
-          console.log(`  [${(book.title || '').substring(0, 40)}] Re-linked orphan job ${jobId}`);
-        } else {
-          // No active job — roll back so pipeline can re-process
-          console.log(`  [${(book.title || '').substring(0, 40)}] No job found, rolling back to metadata_enriched`);
-          await db.collection('books').updateOne(
-            { id: book.id },
-            { $set: { 'pipeline_auto.status': 'metadata_enriched', updated_at: new Date() }, $unset: { job: '' } },
-          );
-          return zero;
-        }
-      }
+  const results = [];
+  const processedIds = new Set();
+  let booksProcessed = 0;
 
-      const job = await db.collection('jobs').findOne({ id: jobId });
-      if (!job || job.status === 'cancelled' || job.status === 'failed') {
-        console.log(`  [${(book.title || '').substring(0, 40)}] Job ${jobId} is ${job?.status || 'missing'}, resetting`);
+  // Resolve a book's job, then process it. Returns result object.
+  async function processWithJob(book) {
+    const zero = { translated: 0, failed: 0, completed: 0, inputTokens: 0, outputTokens: 0 };
+    let jobId = book.job?.job_id;
+    if (!jobId) {
+      const orphanJob = await db.collection('jobs').findOne(
+        { book_id: book.id, type: 'translation', status: { $in: ['pending', 'processing'] } },
+        { sort: { created_at: -1 } },
+      );
+      if (orphanJob) {
+        jobId = orphanJob.id || orphanJob._id.toString();
+        await db.collection('books').updateOne(
+          { id: book.id },
+          { $set: { job: { job_id: jobId, type: 'translation' }, updated_at: new Date() } },
+        );
+        console.log(`  [${(book.title || '').substring(0, 40)}] Re-linked orphan job ${jobId}`);
+      } else {
+        console.log(`  [${(book.title || '').substring(0, 40)}] No job found, rolling back to metadata_enriched`);
         await db.collection('books').updateOne(
           { id: book.id },
           { $set: { 'pipeline_auto.status': 'metadata_enriched', updated_at: new Date() }, $unset: { job: '' } },
         );
         return zero;
       }
+    }
+    const job = await db.collection('jobs').findOne({ id: jobId });
+    if (!job || job.status === 'cancelled' || job.status === 'failed') {
+      console.log(`  [${(book.title || '').substring(0, 40)}] Job ${jobId} is ${job?.status || 'missing'}, resetting`);
+      await db.collection('books').updateOne(
+        { id: book.id },
+        { $set: { 'pipeline_auto.status': 'metadata_enriched', updated_at: new Date() }, $unset: { job: '' } },
+      );
+      return zero;
+    }
+    return processBook(db, book, job, globalCounter, deadline);
+  }
 
-      return processBook(db, book, job, globalCounter);
-    }),
-  );
+  // Fetch more books for the queue (excluding already processed)
+  async function fetchMoreBooks(limit) {
+    const excludeIds = [...processedIds];
+    const fresh = await db.collection('books')
+      .find({ 'pipeline_auto.status': 'translate_submitted', id: { $nin: excludeIds } })
+      .project(proj).limit(limit).toArray();
+    if (fresh.length < limit) {
+      const partial = await db.collection('books').aggregate([
+        { $match: { 'pipeline_auto.status': { $in: ['translate_submitted', 'translate_partial'] }, id: { $nin: [...excludeIds, ...fresh.map(b => b.id)] } } },
+        { $addFields: { _remaining: { $subtract: [{ $ifNull: ['$pages_ocr', 0] }, { $add: [{ $ifNull: ['$pages_translated', 0] }, { $ifNull: ['$pages_blank', 0] }] }] } } },
+        { $match: { _remaining: { $gte: MIN_REMAINING } } },
+        { $sort: { _remaining: -1 } },
+        { $limit: limit - fresh.length },
+        { $project: proj },
+      ], { maxTimeMS: 10000 }).toArray();
+      fresh.push(...partial);
+    }
+    // Also try self-dispatch if we still have room
+    if (fresh.length < limit) {
+      const dispatched = await selfDispatch(db, limit - fresh.length);
+      if (dispatched.length > 0) {
+        const newBooks = await db.collection('books')
+          .find({ 'pipeline_auto.status': 'translate_submitted', id: { $in: dispatched.map(b => b.id) } })
+          .project(proj).toArray();
+        fresh.push(...newBooks);
+        if (newBooks.length > 0) console.log(`[TRANSLATE] Self-dispatched ${newBooks.length} fresh books mid-run`);
+      }
+    }
+    return fresh;
+  }
+
+  console.log(`[TRANSLATE] Starting pool (concurrency: ${CONCURRENCY}, deadline: ${Math.round(RUN_DEADLINE_MS/60000)}min, ${batchLabel})`);
+
+  // Seed the queue with initial books, sorted by speed tier (fast/batch-able first)
+  // This ensures Latin-script books (batch-5, ~5x faster) fill slots before manuscripts
+  const queue = [...books].sort((a, b) => langSpeedTier(a.language) - langSpeedTier(b.language));
+  books.forEach(b => processedIds.add(b.id));
+  let activeSlots = 0;
+
+  // Process books through a concurrency-limited pool with backfill
+  await new Promise((resolvePool) => {
+    function tryStartNext() {
+      // Check deadline and page cap
+      if (Date.now() > deadline || globalCounter.count >= PAGES_PER_RUN) {
+        if (activeSlots === 0) resolvePool();
+        return;
+      }
+
+      while (activeSlots < CONCURRENCY && queue.length > 0) {
+        const book = queue.shift();
+        activeSlots++;
+        booksProcessed++;
+
+        processWithJob(book).then(result => {
+          activeSlots--;
+          results.push(result);
+
+          // If queue is getting low, fetch more
+          if (queue.length < 3 && Date.now() < deadline && globalCounter.count < PAGES_PER_RUN) {
+            fetchMoreBooks(CONCURRENCY).then(more => {
+              const newBooks = more.filter(b => !processedIds.has(b.id));
+              // Sort fast books first so they fill freed slots before slow manuscripts
+              newBooks.sort((a, b) => langSpeedTier(a.language) - langSpeedTier(b.language));
+              newBooks.forEach(b => { processedIds.add(b.id); queue.push(b); });
+              if (newBooks.length > 0) console.log(`[TRANSLATE] Backfilled ${newBooks.length} books (queue: ${queue.length})`);
+              tryStartNext();
+            }).catch(() => tryStartNext());
+          } else {
+            tryStartNext();
+          }
+        }).catch(err => {
+          activeSlots--;
+          console.error(`[TRANSLATE] processWithJob error: ${err.message}`);
+          results.push({ translated: 0, failed: 0, completed: 0, inputTokens: 0, outputTokens: 0 });
+          tryStartNext();
+        });
+      }
+
+      // No more books and nothing active — done
+      if (activeSlots === 0 && queue.length === 0) {
+        // Try one more fetch before giving up
+        if (Date.now() < deadline && globalCounter.count < PAGES_PER_RUN) {
+          fetchMoreBooks(CONCURRENCY).then(more => {
+            const newBooks = more.filter(b => !processedIds.has(b.id));
+            newBooks.forEach(b => { processedIds.add(b.id); queue.push(b); });
+            if (newBooks.length > 0) {
+              console.log(`[TRANSLATE] Refilled ${newBooks.length} books after queue empty`);
+              tryStartNext();
+            } else {
+              resolvePool(); // truly done
+            }
+          }).catch(() => resolvePool());
+        } else {
+          resolvePool();
+        }
+      }
+    }
+
+    tryStartNext();
+  });
 
   const totalTranslated = results.reduce((s, r) => s + r.translated, 0);
   const totalFailed = results.reduce((s, r) => s + r.failed, 0);
@@ -933,7 +1075,9 @@ async function main() {
   const elapsed = (durationMs / 1000).toFixed(1);
   const rate = durationMs > 0 ? Math.round(totalTranslated / (durationMs / 3600000)) : 0;
 
-  console.log(`[TRANSLATE] Done (${batchLabel}) — ${totalTranslated} translated, ${totalFailed} failed, ${totalCompleted} books completed, ${elapsed}s, ~${rate}/hr, $${totalCost.toFixed(3)}`);
+  const hitDeadline = Date.now() >= deadline;
+  const pagesPerMin = durationMs > 0 ? (totalTranslated / (durationMs / 60000)).toFixed(1) : 0;
+  console.log(`[TRANSLATE] Done (${batchLabel}) — ${totalTranslated}p ${booksProcessed}b ${totalCompleted} completed, ${elapsed}s, ${pagesPerMin}p/min ~${rate}/hr, $${totalCost.toFixed(3)}${hitDeadline ? ' [deadline]' : ''}`);
 
   // Log to cron_runs for analytics Pipeline tab
   try {
@@ -945,7 +1089,7 @@ async function main() {
       failed: totalFailed > 0,
       pages_saved: totalTranslated,
       actions: {
-        books_processed: books.length,
+        books_processed: booksProcessed,
         pages_translated: totalTranslated,
         pages_failed: totalFailed,
         books_completed: totalCompleted,
@@ -957,7 +1101,7 @@ async function main() {
       errors: [],
       error_count: totalFailed,
       batch_size: SINGLE_PAGE ? 1 : BATCH_SIZE,
-      summary: `T:${totalTranslated}p ${totalCompleted}b $${totalCost.toFixed(2)} ~${rate}/hr (${batchLabel})`,
+      summary: `T:${totalTranslated}p ${booksProcessed}b(${totalCompleted}done) ${pagesPerMin}p/min $${totalCost.toFixed(2)} ~${rate}/hr${hitDeadline ? ' [deadline]' : ''}`,
     });
   } catch (logErr) {
     console.error('[TRANSLATE] Failed to log cron_run:', logErr.message);

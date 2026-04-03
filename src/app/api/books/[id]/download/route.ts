@@ -146,7 +146,7 @@ function generateTxtDownload(book: Book, pages: Page[], format: 'translation' | 
   lines.push('');
   lines.push(`Source: ${BASE_URL}/book/${book.id}`);
   lines.push('');
-  lines.push('Source Library is a project of the Ancient Wisdom Trust.');
+  lines.push('Source Library is a project of the Embassy of the Free Mind.');
   lines.push('Preserving humanity\'s wisdom for the digital age.');
   lines.push('═'.repeat(60));
 
@@ -756,7 +756,7 @@ p:first-of-type {
       <div class="colophon">
         <p><strong>Source:</strong> ${BASE_URL}/book/${book.id}</p>
         <p><strong>License:</strong> CC BY-SA 4.0 (Creative Commons Attribution)</p>
-        <p>Source Library is a project of the Ancient Wisdom Trust.</p>
+        <p>Source Library is a project of the Embassy of the Free Mind.</p>
       </div>
     `, 'About This Edition', 'page-right');
     archive.append(colophonPage, { name: 'OEBPS/colophon.xhtml' });
@@ -1089,7 +1089,7 @@ p:first-of-type { text-indent: 0; }
       <div class="colophon">
         <p><strong>Source:</strong> ${BASE_URL}/book/${book.id}</p>
         <p><strong>License:</strong> CC BY-SA 4.0</p>
-        <p>Source Library · Ancient Wisdom Trust</p>
+        <p>Source Library · Embassy of the Free Mind</p>
       </div>
     `, 'About This Edition', 'page-right');
     archive.append(colophonPage, { name: 'OEBPS/colophon.xhtml' });

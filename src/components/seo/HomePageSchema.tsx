@@ -1,4 +1,5 @@
 import { Book } from '@/lib/types';
+import { formatAuthor } from '@/lib/utils';
 
 interface HomePageSchemaProps {
   books: Book[];
@@ -41,10 +42,10 @@ export default function HomePageSchema({ books, bookCount, translatedCount }: Ho
       '@type': 'ImageObject',
       url: `${baseUrl}/logo.svg`,
     },
-    description: 'A digital library project of the Ancient Wisdom Trust, continuing the mission of Cosimo de\' Medici and Marsilio Ficino.',
+    description: 'A digital library project of the Embassy of the Free Mind, continuing the mission of Cosimo de\' Medici and Marsilio Ficino.',
     parentOrganization: {
       '@type': 'Organization',
-      name: 'Ancient Wisdom Trust',
+      name: 'Embassy of the Free Mind',
     },
     sameAs: [
       'https://github.com/Embassy-of-the-Free-Mind/sourcelibrary-v2',
@@ -73,7 +74,7 @@ export default function HomePageSchema({ books, bookCount, translatedCount }: Ho
       name: book.display_title || book.title,
       author: {
         '@type': 'Person',
-        name: book.author,
+        name: formatAuthor(book.author).name || book.author,
       },
       inLanguage: book.language,
       ...(book.published && { datePublished: book.published }),

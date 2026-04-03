@@ -107,7 +107,7 @@ const db = client.db('bookstore');
 const books = await db.collection('books').find({
   language: { $regex: /greek/i },
   pages_translated: { $gt: 0 },
-  hidden: { $ne: true },
+  visible: true,
 }, { projection: { id: 1, title: 1, pages_ocr: 1 } })
 .sort({ pages_ocr: 1 }) // shortest first
 .toArray();

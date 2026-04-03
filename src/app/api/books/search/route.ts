@@ -40,27 +40,18 @@ export async function GET(request: NextRequest) {
     let total: number;
 
     try {
-      // Atlas Search with tight timeout
-      const [result] = await withTimeout(
+      // Atlas Search — no $facet (causes Atlas timeouts on large collections)
+      books = await withTimeout(
         db.collection('books').aggregate([
           buildBookSearchStage(query),
-          {
-            $facet: {
-              results: [
-                { $skip: skip },
-                { $limit: limit },
-                { $project: projection },
-              ],
-              total: [{ $count: 'n' }],
-            },
-          },
+          { $skip: skip },
+          { $limit: limit },
+          { $project: projection },
         ], { maxTimeMS: 5000 }).toArray(),
         8000,
         'Atlas Search',
       );
-
-      books = result?.results ?? [];
-      total = result?.total[0]?.n ?? 0;
+      total = -1; // Skip expensive count — hasMore uses result length instead
     } catch (searchErr) {
       // If connection is stale, force reconnect and try regex fallback
       if (isConnectionError(searchErr)) {

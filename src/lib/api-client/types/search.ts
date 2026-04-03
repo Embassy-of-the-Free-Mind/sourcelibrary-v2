@@ -97,10 +97,12 @@ export interface UnifiedSearchResponse {
   books: {
     results: SearchResult[];
     total: number;
+    hasMore?: boolean;
   };
   index: {
     results: IndexSearchResult[];
     total: number;
+    hasMore?: boolean;
   };
   gallery?: {
     results: UnifiedGalleryResult[];

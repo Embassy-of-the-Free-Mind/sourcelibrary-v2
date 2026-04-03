@@ -1,4 +1,5 @@
 import { BASE_URL } from './schema-utils';
+import { formatAuthor } from '@/lib/utils';
 
 interface CategorySchemaProps {
   id: string;
@@ -46,7 +47,7 @@ export default function CategorySchema({
           '@type': 'Book',
           '@id': `${BASE_URL}/book/${book.slug || book.id}`,
           name: book.title,
-          ...(book.author && { author: { '@type': 'Person', name: book.author } }),
+          ...(book.author && { author: { '@type': 'Person', name: formatAuthor(book.author).name || book.author } }),
         },
       })),
     };

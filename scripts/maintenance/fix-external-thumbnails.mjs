@@ -21,12 +21,13 @@ const LIMIT = (() => {
   return idx !== -1 ? parseInt(process.argv[idx + 1]) : 0;
 })();
 
+const R2_PREFIX = 'https://images.sourcelibrary.org';
 const BLOB_PREFIX = 'https://3kwioilsplnmnkv8.public.blob.vercel-storage.com';
 
 const client = new MongoClient(process.env.MONGODB_URI, {
   serverSelectionTimeoutMS: 30000,
   connectTimeoutMS: 30000,
-  socketTimeoutMS: 60000,
+  socketTimeoutMS: 120000,
 });
 
 await client.connect();
@@ -36,19 +37,38 @@ console.log(`\n=== Fix External Thumbnails ===`);
 console.log(`Mode: ${DRY_RUN ? 'DRY RUN' : 'LIVE'}`);
 if (LIMIT) console.log(`Limit: ${LIMIT}`);
 
-// Find all books where thumbnail is NOT a Vercel Blob URL
-const books = await db.collection('books').find({
-  hidden: { $ne: true },
-  thumbnail: {
-    $exists: true,
-    $ne: null,
-    $not: { $regex: `^${BLOB_PREFIX.replace(/[.*+?^${}()|[\]\\]/g, '\\$&')}` }
-  }
-}, {
-  projection: { _id: 0, id: 1, title: 1, thumbnail: 1, thumbnail_blob: 1 }
-}).toArray();
+// Find visible books with external thumbnails.
+// Use skip/limit pagination to avoid cursor timeouts on Atlas.
+console.log('Loading visible books...');
+const books = [];
+const PAGE_SIZE = 200;
+let offset = 0;
 
-console.log(`Found ${books.length} books with external thumbnails\n`);
+while (true) {
+  const batch = await db.collection('books')
+    .find(
+      { visible: true, pages_count: { $gt: 0 } },
+      { projection: { id: 1, title: 1, thumbnail: 1, thumbnail_blob: 1 } }
+    )
+    .hint('books_visible_created_idx')
+    .sort({ visible: 1, created_at: -1 })
+    .skip(offset)
+    .limit(PAGE_SIZE)
+    .toArray();
+
+  if (batch.length === 0) break;
+  offset += batch.length;
+
+  // Filter client-side: keep only books with external thumbnails
+  for (const b of batch) {
+    if (b.thumbnail && !b.thumbnail.startsWith(R2_PREFIX) && !b.thumbnail.startsWith(BLOB_PREFIX)) {
+      books.push(b);
+    }
+  }
+  process.stdout.write(`  Scanned ${offset} books, ${books.length} with external thumbnails...\r`);
+}
+
+console.log(`\nFound ${books.length} books with external thumbnails\n`);
 
 // Categorize
 const categories = { ia: 0, gallica: 0, proxy: 0, iiif: 0, vatican: 0, bodleian: 0, other: 0 };
@@ -70,6 +90,7 @@ const unfixable = [];
 
 // Process in batches of 50
 const BATCH = 50;
+let batchErrors = 0;
 for (let i = 0; i < books.length; i += BATCH) {
   if (LIMIT && fixed >= LIMIT) break;
 
@@ -80,8 +101,10 @@ for (let i = 0; i < books.length; i += BATCH) {
   // Strategy: decode the thumbnail URL to extract the original image URL,
   // then match against page photo/photo_original/archived_photo fields.
 
+  let pages;
+  try {
   // Also get page 1 as fallback
-  const pages = await db.collection('pages').find({
+  pages = await db.collection('pages').find({
     book_id: { $in: bookIds },
     page_number: { $lte: 20 },
   }, {
@@ -90,7 +113,12 @@ for (let i = 0; i < books.length; i += BATCH) {
       photo: 1, photo_original: 1, archived_photo: 1,
       thumbnail_blob: 1, cropped_photo: 1,
     }
-  }).sort({ book_id: 1, page_number: 1 }).toArray();
+  }).sort({ book_id: 1, page_number: 1 }).maxTimeMS(30000).toArray();
+  } catch (err) {
+    batchErrors++;
+    console.log(`  [WARN] Batch ${Math.floor(i / BATCH) + 1} failed: ${err.message?.slice(0, 80)}`);
+    continue;
+  }
 
   // Group by book_id
   const pagesByBook = new Map();
@@ -135,15 +163,27 @@ for (let i = 0; i < books.length; i += BATCH) {
       matchedPage = bookPages[0];
     }
 
-    // Check if the matched page has an archived_photo (Vercel Blob)
-    if (!matchedPage.archived_photo || !matchedPage.archived_photo.startsWith('https://')) {
+    // Check if the matched page has an archived_photo on R2 or Blob
+    const ap = matchedPage.archived_photo;
+    if (!ap || (!ap.startsWith(R2_PREFIX) && !ap.startsWith(BLOB_PREFIX))) {
       noArchive++;
-      unfixable.push({ id: book.id, title: book.title?.substring(0, 50), reason: 'no archived_photo' });
+      unfixable.push({ id: book.id, title: book.title?.substring(0, 50), reason: 'no archived_photo on R2/Blob' });
       continue;
     }
 
     // Prefer cropped_photo for split pages, fall back to archived_photo
-    const updates = { thumbnail: matchedPage.cropped_photo || matchedPage.archived_photo };
+    const newThumb = matchedPage.cropped_photo || matchedPage.archived_photo;
+    const updates = {
+      thumbnail: newThumb,
+      updated_at: new Date(),
+      'field_provenance.thumbnail': {
+        source: 'fix-external-thumbnails',
+        method: 'page-match',
+        confidence: 0.9,
+        date: new Date(),
+        previous: thumbUrl,
+      },
+    };
     if (matchedPage.thumbnail_blob && !book.thumbnail_blob) {
       updates.thumbnail_blob = matchedPage.thumbnail_blob;
     }
@@ -173,6 +213,7 @@ console.log(`Total external thumbnails: ${books.length}`);
 console.log(`${DRY_RUN ? 'Would fix' : 'Fixed'}: ${fixed}`);
 console.log(`No matching page: ${noMatch}`);
 console.log(`No archived_photo: ${noArchive}`);
+if (batchErrors > 0) console.log(`Batch errors (skipped): ${batchErrors}`);
 
 if (changes.length > 0) {
   console.log(`\n--- Changes ${DRY_RUN ? '(preview)' : '(applied)'} ---`);

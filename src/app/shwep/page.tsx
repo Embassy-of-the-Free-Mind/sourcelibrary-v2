@@ -18,7 +18,17 @@ export const metadata: Metadata = {
 };
 
 export default async function ShwepPage() {
-  const data = await getShwepIndexData();
+  let data;
+  try {
+    data = await getShwepIndexData();
+  } catch (err) {
+    console.error('SHWEP data fetch failed:', err);
+    data = {
+      periods: [],
+      galleryImages: [],
+      stats: { totalEpisodes: 0, episodesWithBooks: 0, totalMatches: 0, totalBooksInCollection: 0 },
+    };
+  }
 
   return (
     <div className="min-h-screen bg-gradient-to-b from-[#f6f3ee] to-[#f3ede6]">

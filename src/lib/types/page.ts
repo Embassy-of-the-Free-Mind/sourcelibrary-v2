@@ -46,10 +46,17 @@ export interface Page {
   // Detected illustrations/images on this page
   detected_images?: DetectedImage[];
 
-  // Split/crop workflow
+  // Spread splitting (BPH two-page scans)
+  split_from_spread?: boolean;  // true if this page was created by splitting a spread
+  split_side?: 'left' | 'right' | 'single'; // which side of the spread this page came from
+  split_position?: number;      // 0-1000 gutter position used for cropping
+  split_source_page?: string;   // ID of original spread page (for right pages)
+
+  // Split/crop workflow (legacy — stale on split_from_spread pages)
   photo_original?: string;      // Original S3 URL before cropping
   cropped_photo?: string;       // Local path to cropped image
   archived_photo?: string;      // Vercel Blob URL for archived IA images
+  display_photo?: string;       // 1200px display-size JPEG in R2 (with provenance marks baked in)
   thumbnail_blob?: string;      // Pre-generated 150px JPEG thumbnail in Vercel Blob
   crop?: CropData;              // Crop coordinates used
   split_from?: string;          // ID of parent page if this was split from another

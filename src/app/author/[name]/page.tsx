@@ -1,12 +1,12 @@
 import { Metadata } from 'next';
 import Link from 'next/link';
 import Image from 'next/image';
-import { Book as BookIcon } from 'lucide-react';
 import SiteHeader from '@/components/layout/SiteHeader';
 import { getDb } from '@/lib/mongodb';
 import { notFound, redirect } from 'next/navigation';
 import { bookUrl, authorSlug } from '@/lib/slugify';
-import { ObjectId } from 'mongodb';
+import { firstTranslationBadge } from '@/lib/first-translation-labels';
+import { ObjectId, type Db } from 'mongodb';
 
 interface Book {
   id: string;
@@ -16,11 +16,19 @@ interface Book {
   author: string;
   language: string;
   published: string;
+  year?: number;
   thumbnail?: string;
   pages_count?: number;
+  pages_ocr?: number;
   pages_translated?: number;
+  pages_blank?: number;
   translation_percent?: number;
   summary?: { data: string } | string;
+  is_first_translation?: boolean;
+  ft_disposition?: string;
+  publisher?: string;
+  place_of_publication?: string;
+  image_source?: { contributing_library?: string; provider_name?: string };
 }
 
 interface AuthorEntity {
@@ -28,10 +36,44 @@ interface AuthorEntity {
   name: string;
   canonical_name?: string;
   description?: string;
+  aliases?: string[];
   viaf_id?: string;
   wikidata_id?: string;
+  wikipedia_url?: string;
   wikidata_birth_date?: string;
   wikidata_death_date?: string;
+  portrait_url?: string;
+}
+
+/** Fetch portrait thumbnail URL from Wikidata P18 claim, cache on entity */
+async function getPortraitUrl(db: Db, entity: AuthorEntity | null): Promise<string | null> {
+  if (!entity) return null;
+  if (entity.portrait_url) return entity.portrait_url;
+  if (!entity.wikidata_id) return null;
+
+  try {
+    const res = await fetch(
+      `https://www.wikidata.org/w/api.php?action=wbgetentities&ids=${entity.wikidata_id}&props=claims&format=json`,
+      { next: { revalidate: 86400 } } // cache 24h
+    );
+    if (!res.ok) return null;
+    const data = await res.json();
+    const filename = data.entities?.[entity.wikidata_id]?.claims?.P18?.[0]?.mainsnak?.datavalue?.value;
+    if (!filename) return null;
+
+    // Use thumb.php API — more reliable than direct commons URL (avoids 429s)
+    const thumbUrl = `https://commons.wikimedia.org/w/thumb.php?f=${encodeURIComponent(filename)}&w=300`;
+
+    // Cache on entity (fire-and-forget)
+    db.collection('entities').updateOne(
+      { _id: entity._id },
+      { $set: { portrait_url: thumbUrl } }
+    ).catch(() => {});
+
+    return thumbUrl;
+  } catch {
+    return null;
+  }
 }
 
 // ISR: author pages are mostly static — revalidate weekly.
@@ -53,12 +95,36 @@ interface AuthorPageProps {
  *   2. If that book has author_entity_id, load the entity (gets all variants)
  *   3. Otherwise fall back to raw author string matching
  */
+const BOOK_PROJECTION = {
+  _id: 0, id: 1, slug: 1, title: 1, display_title: 1, author: 1,
+  author_entity_id: 1, language: 1, published: 1, thumbnail: 1,
+  pages_count: 1, pages_ocr: 1, pages_translated: 1, pages_blank: 1, year: 1,
+  summary: 1, is_first_translation: 1, ft_disposition: 1,
+  publisher: 1, place_of_publication: 1,
+  'image_source.contributing_library': 1, 'image_source.provider_name': 1,
+};
+
+function computeBooks(raw: any[]): Book[] {
+  return raw.map((b: any) => ({
+    ...b,
+    pages_count: b.pages_count || 0,
+    pages_translated: b.pages_translated || 0,
+    translation_percent: b.pages_ocr > 0
+      ? Math.round((b.pages_translated || 0) / Math.max((b.pages_ocr || 0) - (b.pages_blank || 0), 1) * 100)
+      : 0,
+  }));
+}
+
 // eslint-disable-next-line @typescript-eslint/no-explicit-any
 /**
- * Load author page data in a single pass.
- * Queries system_config for a pre-built author slug→name map (built by sync-worker),
- * then fetches books by exact author match (indexed) and entity by _id (indexed).
- * Zero regex, zero collection scans.
+ * Load author page data. Entity-aware: if an entity exists, fetches ALL books
+ * linked to that entity (across name variants), not just exact author match.
+ *
+ * Strategy:
+ *   1. Resolve slug → author name via system_config cache
+ *   2. Find a book with that author to get author_entity_id
+ *   3. If entity found, query books by author_entity_id (captures all variants)
+ *   4. If no entity, fall back to exact author string match
  */
 async function loadAuthorData(db: any, slug: string): Promise<{
   authorName: string;
@@ -87,47 +153,64 @@ async function loadAuthorData(db: any, slug: string): Promise<{
 
   if (!authorName) return null;
 
-  // Fetch books + entity in parallel
-  const booksPromise = db.collection('books').find(
-    { author: authorName, visible: true },
-    {
-      projection: {
-        _id: 0, id: 1, slug: 1, title: 1, display_title: 1, author: 1,
-        author_entity_id: 1, language: 1, published: 1, thumbnail: 1,
-        pages_count: 1, pages_ocr: 1, pages_translated: 1, pages_blank: 1, year: 1,
-        summary: 1,
-      }
-    }
-  ).sort({ year: 1, title: 1 }).toArray();
+  // Find a representative book to get entity link
+  const repBook = await db.collection('books').findOne(
+    { author: authorName, visible: true, author_entity_id: { $exists: true, $ne: null } },
+    { projection: { author_entity_id: 1 } }
+  );
 
-  const books = await booksPromise;
-  if (books.length === 0) return null;
-
-  // Resolve entity from first book with author_entity_id
   let entity: AuthorEntity | null = null;
-  const entityBookId = books.find((b: any) => b.author_entity_id)?.author_entity_id;
-  if (entityBookId) {
+  let books: any[];
+
+  if (repBook?.author_entity_id) {
+    // Entity-driven path: get entity, then ALL books linked to it
     try {
       entity = await db.collection('entities').findOne(
-        { _id: new ObjectId(entityBookId) },
-        { projection: { name: 1, canonical_name: 1, description: 1, viaf_id: 1, wikidata_id: 1, wikidata_birth_date: 1, wikidata_death_date: 1 } }
+        { _id: new ObjectId(repBook.author_entity_id) },
+        { projection: { name: 1, canonical_name: 1, description: 1, aliases: 1, viaf_id: 1, wikidata_id: 1, wikipedia_url: 1, wikidata_birth_date: 1, wikidata_death_date: 1, portrait_url: 1 } }
       ) as AuthorEntity | null;
     } catch { /* invalid ObjectId */ }
+
+    if (entity) {
+      // Fetch all books with this entity (any name variant)
+      books = await db.collection('books').find(
+        { author_entity_id: repBook.author_entity_id, visible: true },
+        { projection: BOOK_PROJECTION }
+      ).sort({ year: 1, title: 1 }).toArray();
+    } else {
+      // Entity not found — fall back to string match
+      books = await db.collection('books').find(
+        { author: authorName, visible: true },
+        { projection: BOOK_PROJECTION }
+      ).sort({ year: 1, title: 1 }).toArray();
+    }
+  } else {
+    // No entity link — string match only
+    books = await db.collection('books').find(
+      { author: authorName, visible: true },
+      { projection: BOOK_PROJECTION }
+    ).sort({ year: 1, title: 1 }).toArray();
+
+    // Still try to resolve entity from any linked book in results
+    const entityBookId = books.find((b: any) => b.author_entity_id)?.author_entity_id;
+    if (entityBookId) {
+      try {
+        entity = await db.collection('entities').findOne(
+          { _id: new ObjectId(entityBookId) },
+          { projection: { name: 1, canonical_name: 1, description: 1, aliases: 1, viaf_id: 1, wikidata_id: 1, wikipedia_url: 1, wikidata_birth_date: 1, wikidata_death_date: 1, portrait_url: 1 } }
+        ) as AuthorEntity | null;
+      } catch { /* invalid ObjectId */ }
+    }
   }
+
+  if (books.length === 0) return null;
 
   const displayName = entity?.canonical_name || entity?.name || authorName;
 
   return {
     authorName: displayName,
     entity,
-    books: books.map((b: any) => ({
-      ...b,
-      pages_count: b.pages_count || 0,
-      pages_translated: b.pages_translated || 0,
-      translation_percent: b.pages_ocr > 0
-        ? Math.round((b.pages_translated || 0) / Math.max((b.pages_ocr || 0) - (b.pages_blank || 0), 1) * 100)
-        : 0,
-    })),
+    books: computeBooks(books),
   };
 }
 
@@ -192,40 +275,99 @@ export default async function AuthorPage({ params }: AuthorPageProps) {
     { projection: { name: 1 } }
   );
 
+  // Portrait image from Wikidata
+  const portraitUrl = await getPortraitUrl(db, entity);
+
+  // Derive Wikipedia URL from entity
+  const wikipediaUrl = entity?.wikipedia_url
+    || (entity?.wikidata_id ? `https://www.wikidata.org/wiki/Special:GoToLinkedPage/enwiki/${entity.wikidata_id}` : null);
+
+  // Collect distinct name variants from books (for "Also known as")
+  const nameVariants = entity?.aliases?.length
+    ? entity.aliases.filter(a => a.toLowerCase() !== authorName.toLowerCase())
+    : [];
+  // Also add unique author strings from books that differ from canonical
+  const bookVariants = [...new Set(books.map(b => b.author))]
+    .filter(a => a && a !== authorName && !nameVariants.some(v => v.toLowerCase() === a.toLowerCase()));
+  const allVariants = [...nameVariants, ...bookVariants].slice(0, 8);
+
+  // Language breakdown for stats
+  const langCounts = new Map<string, number>();
+  for (const b of books) {
+    if (b.language) langCounts.set(b.language, (langCounts.get(b.language) || 0) + 1);
+  }
+  const languages = [...langCounts.entries()].sort((a, b) => b[1] - a[1]);
+
   return (
-    <div className="min-h-screen bg-stone-50">
+    <div className="min-h-screen" style={{ background: 'var(--bg-cream)' }}>
       <SiteHeader variant="light" />
 
       {/* Hero */}
       <div className="bg-gradient-to-b from-stone-800 to-stone-900 text-white">
-        <div className="max-w-5xl mx-auto px-4 py-12">
-          <h1 className="text-3xl sm:text-4xl font-serif font-bold">
+        <div className="max-w-5xl mx-auto px-4 py-12 sm:py-16 flex gap-8 items-start">
+          {portraitUrl && (
+            <div className="hidden sm:block shrink-0 w-28 h-36 rounded-lg overflow-hidden bg-stone-700">
+              {/* eslint-disable-next-line @next/next/no-img-element */}
+              <img
+                src={portraitUrl}
+                alt={`Portrait of ${authorName}`}
+                className="w-full h-full object-cover"
+                loading="lazy"
+              />
+            </div>
+          )}
+          <div className="flex-1 min-w-0">
+          <h1 className="text-3xl sm:text-4xl font-display font-bold">
             {authorName}
           </h1>
-          <div className="flex flex-wrap items-center gap-4 mt-3">
-            <p className="text-accent-gold font-medium">
-              {books.length} work{books.length !== 1 ? 's' : ''}
-            </p>
-            {lifeDates && (
-              <p className="text-stone-400">{lifeDates}</p>
-            )}
-            {!lifeDates && yearRange && (
-              <p className="text-stone-400">{yearRange}</p>
-            )}
-          </div>
+          {lifeDates && (
+            <p className="text-stone-400 mt-1 text-lg">{lifeDates}</p>
+          )}
+          {!lifeDates && yearRange && (
+            <p className="text-stone-400 mt-1">fl. {yearRange}</p>
+          )}
           {entity?.description && (
-            <p className="text-stone-300 mt-2 text-sm max-w-2xl">
+            <p className="text-stone-300 mt-3 text-sm max-w-2xl leading-relaxed">
               {entity.description}
             </p>
           )}
-          <div className="flex flex-wrap gap-2 mt-4">
+          {allVariants.length > 0 && (
+            <p className="text-stone-500 mt-2 text-xs">
+              Also known as: {allVariants.join(' · ')}
+            </p>
+          )}
+
+          {/* Stats row */}
+          <div className="flex flex-wrap items-center gap-4 mt-5 text-sm">
+            <span className="text-accent-gold font-medium">
+              {books.length} work{books.length !== 1 ? 's' : ''}
+            </span>
+            {languages.length > 0 && (
+              <span className="text-stone-400">
+                {languages.map(([lang]) => lang).join(', ')}
+              </span>
+            )}
+          </div>
+
+          {/* External links */}
+          <div className="flex flex-wrap gap-2 mt-5">
             {encyclopediaEntity && (
               <Link
                 href={`/encyclopedia/${encodeURIComponent(encyclopediaEntity.name)}`}
                 className="inline-block px-3 py-1.5 text-sm bg-accent-rust/20 text-accent-gold hover:bg-accent-rust/30 rounded-full transition-colors"
               >
-                View encyclopedia entry
+                Encyclopedia entry
               </Link>
+            )}
+            {wikipediaUrl && (
+              <a
+                href={wikipediaUrl}
+                target="_blank"
+                rel="noopener noreferrer"
+                className="inline-block px-3 py-1.5 text-sm bg-stone-700/50 text-stone-300 hover:bg-stone-700 rounded-full transition-colors"
+              >
+                Wikipedia
+              </a>
             )}
             {entity?.viaf_id && (
               <a
@@ -248,72 +390,117 @@ export default async function AuthorPage({ params }: AuthorPageProps) {
               </a>
             )}
           </div>
+          </div>{/* close flex-1 */}
         </div>
       </div>
 
-      {/* Content */}
-      <main className="max-w-5xl mx-auto px-4 py-8">
-        <div className="grid gap-6 sm:grid-cols-2 lg:grid-cols-3">
-          {books.map(book => {
-            const summaryText = typeof book.summary === 'string'
-              ? book.summary
-              : book.summary?.data;
-
-            return (
-              <Link
-                key={book.id}
-                href={bookUrl(book)}
-                className="group bg-white rounded-xl border border-stone-200 overflow-hidden hover:border-accent-gold/20 hover:shadow-lg transition-all"
-              >
-                {/* Thumbnail */}
-                <div className="aspect-[3/2] bg-stone-100 relative overflow-hidden">
-                  {book.thumbnail ? (
-                    <Image
-                      src={book.thumbnail}
-                      alt={book.title}
-                      fill
-                      className="object-cover group-hover:scale-105 transition-transform duration-300"
-                      sizes="(max-width: 640px) 100vw, (max-width: 1024px) 50vw, 33vw"
-                    />
-                  ) : (
-                    <div className="absolute inset-0 flex items-center justify-center">
-                      <BookIcon className="w-12 h-12 text-stone-300" />
+      {/* Title page gallery */}
+      {(() => {
+        const thumbBooks = books.filter(b => b.thumbnail);
+        if (thumbBooks.length === 0) return null;
+        const shown = thumbBooks.slice(0, 8);
+        return (
+          <div className="border-b" style={{ borderColor: 'var(--border-light)', background: 'var(--bg-warm)' }}>
+            <div className="max-w-6xl mx-auto px-6 md:px-12 py-6">
+              <div className="flex gap-3 overflow-x-auto pb-1">
+                {shown.map(book => (
+                  <Link key={book.id} href={bookUrl(book)} className="shrink-0 group">
+                    <div className="w-24 h-32 relative rounded overflow-hidden bg-stone-200">
+                      <Image
+                        src={book.thumbnail!}
+                        alt={book.display_title || book.title}
+                        fill
+                        className="object-cover group-hover:scale-105 transition-transform duration-300"
+                        sizes="96px"
+                      />
                     </div>
-                  )}
-                  {/* Translation badge */}
-                  {book.translation_percent !== undefined && (
-                    <div className={`absolute top-2 right-2 px-2 py-1 rounded-full text-xs font-medium ${
-                      (book.translation_percent ?? 0) >= 95
-                        ? 'bg-status-success text-white'
-                        : (book.translation_percent ?? 0) > 0
-                          ? 'bg-accent-gold/80 text-white'
-                          : 'bg-stone-500 text-white'
-                    }`}>
-                      {(book.translation_percent ?? 0) >= 95
-                        ? 'Translated'
-                        : `${book.translation_percent}%`}
-                    </div>
-                  )}
-                </div>
-
-                {/* Info */}
-                <div className="p-4">
-                  <h3 className="font-serif font-semibold text-stone-900 group-hover:text-accent-rust transition-colors line-clamp-2">
-                    {book.display_title || book.title}
-                  </h3>
-                  <div className="flex items-center gap-2 mt-2 text-xs text-stone-500">
-                    <span className="px-2 py-0.5 bg-stone-100 rounded">{book.language}</span>
-                    {book.published && <span>{book.published}</span>}
-                  </div>
-                  {summaryText && (
-                    <p className="text-sm text-stone-600 mt-3 line-clamp-2">
-                      {summaryText}
+                    <p className="text-[10px] mt-1 w-24 line-clamp-1" style={{ color: 'var(--text-faint)' }}>
+                      {book.year || book.published || ''}
                     </p>
-                  )}
-                </div>
-              </Link>
-            );
-          })}
+                  </Link>
+                ))}
+              </div>
+            </div>
+          </div>
+        );
+      })()}
+
+      {/* Content — bibliography table */}
+      <main className="max-w-6xl mx-auto px-6 md:px-12 py-8 md:py-12">
+        <div className="overflow-x-auto">
+          <table className="w-full text-left">
+            <thead>
+              <tr className="border-b text-xs uppercase tracking-wide" style={{ borderColor: 'var(--border-medium)', color: 'var(--text-muted)' }}>
+                <th className="pb-3 pr-4 font-medium">Title</th>
+                <th className="pb-3 pr-4 font-medium w-16">Year</th>
+                <th className="pb-3 pr-4 font-medium hidden md:table-cell w-24">Language</th>
+                <th className="pb-3 pr-4 font-medium hidden lg:table-cell">Publisher</th>
+                <th className="pb-3 font-medium hidden sm:table-cell w-20 text-right">Pages</th>
+              </tr>
+            </thead>
+            <tbody className="divide-y" style={{ borderColor: 'var(--border-light)' }}>
+              {books.map(book => {
+                const pct = book.translation_percent ?? 0;
+                const hasOriginalTitle = book.display_title && book.title !== book.display_title;
+                const publisher = book.publisher?.split('|')[0]?.trim();
+                const place = book.place_of_publication;
+
+                return (
+                  <tr key={book.id} className="group hover:bg-warm/50 transition-colors">
+                    <td className="py-3 pr-4">
+                      <Link href={bookUrl(book)} className="block">
+                        <span
+                          className="text-sm font-medium line-clamp-1"
+                          style={{ color: 'var(--text-primary)', fontFamily: 'var(--font-serif)' }}
+                        >
+                          {book.display_title || book.title}
+                        </span>
+                        {book.is_first_translation && (
+                          <span className="inline-block ml-2 bg-accent-gold/15 text-[10px] px-1.5 py-0.5 rounded-full font-medium align-middle" style={{ color: 'var(--accent-gold-dark)' }}>
+                            {firstTranslationBadge(book.ft_disposition, book.language)}
+                          </span>
+                        )}
+                        {hasOriginalTitle && (
+                          <span className="block text-xs mt-0.5 line-clamp-1 italic" style={{ color: 'var(--text-faint)' }}>
+                            {book.title}
+                          </span>
+                        )}
+                      </Link>
+                    </td>
+                    <td className="py-3 pr-4 text-sm tabular-nums" style={{ color: 'var(--text-muted)' }}>
+                      <Link href={bookUrl(book)} className="block">
+                        {book.year || book.published || '—'}
+                      </Link>
+                    </td>
+                    <td className="py-3 pr-4 hidden md:table-cell">
+                      <Link href={bookUrl(book)} className="block">
+                        <span className="text-xs px-2 py-0.5 rounded" style={{ color: 'var(--text-muted)', background: 'var(--bg-warm)' }}>
+                          {book.language || '—'}
+                        </span>
+                      </Link>
+                    </td>
+                    <td className="py-3 pr-4 hidden lg:table-cell">
+                      <Link href={bookUrl(book)} className="block text-xs line-clamp-1" style={{ color: 'var(--text-faint)' }}>
+                        {publisher || '—'}
+                        {place && publisher && <span className="text-[10px]"> ({place})</span>}
+                      </Link>
+                    </td>
+                    <td className="py-3 hidden sm:table-cell text-right">
+                      <Link href={bookUrl(book)} className="block text-sm tabular-nums" style={{ color: 'var(--text-muted)' }}>
+                        {book.pages_count || '—'}
+                        {pct > 0 && pct < 95 && (
+                          <span className="text-[10px] ml-1" style={{ color: 'var(--accent-gold-dark)' }}>{pct}%</span>
+                        )}
+                        {pct >= 95 && (
+                          <span className="text-[10px] ml-1" style={{ color: 'var(--status-success)' }}>done</span>
+                        )}
+                      </Link>
+                    </td>
+                  </tr>
+                );
+              })}
+            </tbody>
+          </table>
         </div>
       </main>
     </div>

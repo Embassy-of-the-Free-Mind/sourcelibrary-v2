@@ -62,7 +62,7 @@ function EmailForm({
           You&apos;re in.
         </p>
         <p className={`text-sm ${variant === 'dark' ? 'text-white/70' : 'text-stone-600'}`}>
-          We&apos;ll send you access when the beta opens.
+          We&apos;ll send you a link to create your free account.
         </p>
       </div>
     );
@@ -88,7 +88,7 @@ function EmailForm({
           disabled={status === 'loading'}
           className="px-8 py-4 bg-accent-gold/80 hover:bg-accent-gold disabled:bg-accent-gold/40 text-stone-900 rounded-lg text-base font-medium transition-colors whitespace-nowrap font-sans"
         >
-          {status === 'loading' ? 'Joining...' : 'Get Early Access'}
+          {status === 'loading' ? 'Joining...' : 'Get Free Access'}
         </button>
       </form>
       {status === 'error' && (
@@ -188,7 +188,7 @@ export default function BetaLandingPage() {
           <div className="hidden md:flex items-center gap-6 text-sm text-white/60 font-sans">
             <a href="#demo" className="hover:text-white transition-colors">See It Work</a>
             <a href="#gallery" className="hover:text-white transition-colors">Gallery</a>
-            <a href="#signup" className="hover:text-white transition-colors">Get Access</a>
+            <a href="#signup" className="hover:text-white transition-colors">Sign Up</a>
           </div>
         </header>
 
@@ -212,7 +212,7 @@ export default function BetaLandingPage() {
             >
               Source Library uses AI to translate thousands of rare historical texts
               in early science, philosophy, medicine, alchemy, and theology into modern English.
-              Over 4,000 books. 1.6 million pages. 120 books free and open.
+              Over 9,000 books. 3 million pages. Thousands of books free and open.
               Register for free to access the full collection.
             </p>
 
@@ -353,12 +353,13 @@ export default function BetaLandingPage() {
       <section className="py-16 md:py-20 bg-stone-900">
         <div className="px-6 md:px-12 max-w-7xl mx-auto">
           <div className="grid grid-cols-2 md:grid-cols-5 gap-8 text-center">
+            {/* Stats last verified 2026-03-31. 9,344 visible books, 1M+ translated pages. */}
             {[
-              { number: '4,400+', label: 'Rare books' },
-              { number: '1.6M', label: 'Pages scanned' },
-              { number: '280K+', label: 'Pages translated' },
-              { number: '90+', label: 'Languages' },
-              { number: '53K+', label: 'Illustrations' },
+              { number: '9,000+', label: 'Rare books' },
+              { number: '3M+', label: 'Pages scanned' },
+              { number: '1M+', label: 'Pages translated' },
+              { number: '100+', label: 'Languages' },
+              { number: '74K+', label: 'Illustrations' },
             ].map((stat) => (
               <div key={stat.label}>
                 <div
@@ -390,9 +391,9 @@ export default function BetaLandingPage() {
           <p
             className="text-lg text-white/50 mb-10 max-w-xl mx-auto font-body"
           >
-            Source Library opens February 22, 2026.
-            120 books are completely open, no account needed.
-            Register for free to unlock the full collection of over 4,000 texts.
+            Source Library is live and growing every day.
+            Thousands of books are completely open, no account needed.
+            Register for free to unlock the full collection of over 9,000 texts.
             No payment required, ever.
           </p>
 

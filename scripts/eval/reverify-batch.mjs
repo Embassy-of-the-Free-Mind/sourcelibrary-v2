@@ -6,7 +6,7 @@
  *
  * Usage:
  *   set -a; source .env.production.local; set +a
- *   npx tsx scripts/eval/reverify-batch.mjs [--concurrency=5] [--limit=100] [--dry-run]
+ *   npx tsx scripts/eval/reverify-batch.mjs [--concurrency=5] [--limit=100] [--dry-run] [--unverified] [--warehouse]
  */
 
 import { MongoClient } from 'mongodb';
@@ -22,6 +22,8 @@ const args = process.argv.slice(2);
 const CONCURRENCY = parseInt(args.find(a => a.startsWith('--concurrency='))?.split('=')[1] || '5');
 const LIMIT = parseInt(args.find(a => a.startsWith('--limit='))?.split('=')[1] || '0');
 const DRY_RUN = args.includes('--dry-run');
+const USE_WAREHOUSE = args.includes('--warehouse');
+const UNVERIFIED = args.includes('--unverified'); // Target books with OCR but no verification at all
 const MAX_TOOLS_OLD = 5; // Books verified with this many tools or fewer get re-verified
 
 // Env loading
@@ -59,47 +61,61 @@ async function main() {
   await client.connect();
   const db = client.db('bookstore');
 
-  // Find all first-translation books verified with old pipeline
-  // Can't use $expr/$size in countDocuments reliably when field may be missing.
-  // Use aggregation to find books with old-pipeline tool counts.
-  // Re-verify books with old pipeline. Focus on Latin — the largest and
-  // most important corpus for first-translation claims.
-  const matchStage = {
-    'translation_verification.tools_called': { $exists: true, $type: 'array' },
-    language: 'Latin',
-  };
-  const sizeFilter = {
-    $expr: {
-      $and: [
-        { $isArray: '$translation_verification.tools_called' },
-        { $lte: [{ $size: '$translation_verification.tools_called' }, MAX_TOOLS_OLD] },
-      ]
-    },
-  };
+  const booksCol = USE_WAREHOUSE ? 'books_warehouse' : 'books';
 
-  const countResult = await db.collection('books').aggregate([
-    { $match: matchStage },
-    { $match: sizeFilter },
-    { $count: 'total' },
-  ]).toArray();
+  // Target selection:
+  // --unverified: books with OCR but NO verification at all (no tools_called field)
+  // default: books verified with old pipeline (≤5 tools) that need re-verification
+  const WESTERN_LANGUAGES = ['Latin', 'German', 'French', 'Greek', 'Hebrew', 'Italian', 'Dutch', 'Spanish', 'Portuguese', 'Arabic', 'Syriac', 'Armenian'];
+
+  let matchStage, sizeFilter;
+  if (UNVERIFIED) {
+    matchStage = {
+      'translation_verification.tools_called': { $exists: false },
+      language: { $in: WESTERN_LANGUAGES },
+      pages_ocr: { $gt: 0 },
+    };
+    sizeFilter = {}; // no size filter needed
+  } else {
+    matchStage = {
+      'translation_verification.tools_called': { $exists: true, $type: 'array' },
+      language: { $in: WESTERN_LANGUAGES },
+    };
+    sizeFilter = {
+      $expr: {
+        $and: [
+          { $isArray: '$translation_verification.tools_called' },
+          { $lte: [{ $size: '$translation_verification.tools_called' }, MAX_TOOLS_OLD] },
+        ]
+      },
+    };
+  }
+
+  const pipeline = [{ $match: matchStage }];
+  if (Object.keys(sizeFilter).length > 0) pipeline.push({ $match: sizeFilter });
+  pipeline.push({ $count: 'total' });
+
+  const countResult = await db.collection(booksCol).aggregate(pipeline).toArray();
   const total = countResult[0]?.total || 0;
   const effectiveLimit = LIMIT > 0 ? Math.min(LIMIT, total) : total;
 
   console.log(`\nBatch Re-verification`);
   console.log(`=====================`);
-  console.log(`Target: ${total} books verified with ≤${MAX_TOOLS_OLD} tools`);
+  console.log(`Collection: ${booksCol}`);
+  console.log(`Target: ${total} books ${UNVERIFIED ? 'with OCR, never verified' : `verified with ≤${MAX_TOOLS_OLD} tools`}`);
   console.log(`Processing: ${effectiveLimit}${LIMIT > 0 ? ' (limited)' : ''}`);
   console.log(`Concurrency: ${CONCURRENCY}`);
   console.log(`Mode: ${DRY_RUN ? 'DRY RUN (no DB writes)' : 'LIVE (writing to DB)'}`);
   console.log(`Log: ${LOG_PATH}\n`);
 
-  const books = await db.collection('books').aggregate([
-    { $match: matchStage },
-    { $match: sizeFilter },
+  const fetchPipeline = [{ $match: matchStage }];
+  if (Object.keys(sizeFilter).length > 0) fetchPipeline.push({ $match: sizeFilter });
+  fetchPipeline.push(
     { $project: { id: 1, author: 1, display_title: 1, title: 1, language: 1,
       'translation_verification.disposition': 1 } },
     { $limit: effectiveLimit },
-  ]).toArray();
+  );
+  const books = await db.collection(booksCol).aggregate(fetchPipeline).toArray();
 
   // Open log file (append mode)
   const logStream = fs.createWriteStream(LOG_PATH, { flags: 'a' });
@@ -130,6 +146,7 @@ async function main() {
         const result = await verifyFirstTranslation(db, book.id, {
           dryRun: DRY_RUN,
           force: true,
+          collection: USE_WAREHOUSE ? 'books_warehouse' : 'books',
         });
 
         if (!result.success) {
@@ -140,7 +157,7 @@ async function main() {
         const v = result.verification;
         totalCost += v.cost_usd || 0;
         const newDisp = v.disposition;
-        const dispChanged = oldDisp !== newDisp;
+        const dispChanged = oldDisp != null && oldDisp !== newDisp; // null/undefined = new verification, not a change
         const wasFirst = ['confirmed_first', 'first_from_source', 'first_complete_translation', 'first_modern_translation'].includes(oldDisp);
         const isFirst = result.is_first_translation;
 
@@ -189,7 +206,7 @@ async function main() {
         process.stdout.write('E');
       } else if (r.dispChanged) {
         const arrow = r.isFirst ? '~' : '!';
-        console.log(`\n  ${arrow} ${r.book.author?.slice(0, 20).padEnd(22)} ${r.oldDisp.padEnd(28)} → ${r.newDisp}`);
+        console.log(`\n  ${arrow} ${r.book.author?.slice(0, 20).padEnd(22)} ${(r.oldDisp || 'none').padEnd(28)} → ${r.newDisp}`);
       } else {
         process.stdout.write('.');
       }

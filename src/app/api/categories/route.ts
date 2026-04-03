@@ -1,5 +1,5 @@
 import { NextResponse } from 'next/server';
-import { getDb } from '@/lib/mongodb';
+import { getCategoryCounts } from '@/lib/books-catalog';
 
 // Predefined categories for the library's focus areas
 export const LIBRARY_CATEGORIES = [
@@ -192,29 +192,17 @@ export interface CategoryWithCount {
 const CACHE_TTL_MS = 30 * 60 * 1000;
 let cachedResult: { data: unknown; timestamp: number } | null = null;
 
-// GET /api/categories - List all categories with book counts
+// GET /api/categories — powered by Supabase books_catalog
 export async function GET() {
+  const headers = { 'Cache-Control': 'public, s-maxage=1800, stale-while-revalidate=3600' };
+
   try {
-    // Return cached result if fresh
+    // Return in-memory cached result if fresh
     if (cachedResult && Date.now() - cachedResult.timestamp < CACHE_TTL_MS) {
-      return NextResponse.json(cachedResult.data, {
-        headers: { 'Cache-Control': 'public, s-maxage=1800, stale-while-revalidate=3600' },
-      });
+      return NextResponse.json(cachedResult.data, { headers });
     }
 
-    const db = await getDb();
-
-    // Get category counts from books
-    const categoryCounts = await db.collection('books').aggregate([
-      { $match: { visible: true } },
-      { $unwind: '$categories' },
-      { $group: { _id: '$categories', count: { $sum: 1 } } },
-    ]).toArray();
-
-    const countMap = new Map<string, number>();
-    for (const item of categoryCounts) {
-      countMap.set(item._id as string, item.count as number);
-    }
+    const countMap = await getCategoryCounts();
 
     // Merge with predefined categories
     const categories: CategoryWithCount[] = LIBRARY_CATEGORIES.map(cat => ({
@@ -222,13 +210,12 @@ export async function GET() {
       book_count: countMap.get(cat.id) || 0,
     }));
 
-    // Sort by book count descending, then alphabetically
     categories.sort((a, b) => {
       if (b.book_count !== a.book_count) return b.book_count - a.book_count;
       return a.name.localeCompare(b.name);
     });
 
-    // Also include any custom categories not in our predefined list
+    // Include custom categories not in predefined list
     const predefinedIds = new Set(LIBRARY_CATEGORIES.map(c => c.id));
     for (const [categoryId, count] of countMap) {
       if (!predefinedIds.has(categoryId)) {
@@ -244,19 +231,13 @@ export async function GET() {
 
     const data = {
       categories,
-      total_categorized: categoryCounts.reduce((sum, c) => sum + (c.count as number), 0),
+      total_categorized: [...countMap.values()].reduce((sum, c) => sum + c, 0),
     };
 
     cachedResult = { data, timestamp: Date.now() };
-
-    return NextResponse.json(data, {
-      headers: { 'Cache-Control': 'public, s-maxage=1800, stale-while-revalidate=3600' },
-    });
+    return NextResponse.json(data, { headers });
   } catch (error) {
     console.error('Error fetching categories:', error);
-    return NextResponse.json(
-      { error: 'Failed to fetch categories' },
-      { status: 500 }
-    );
+    return NextResponse.json({ error: 'Failed to fetch categories' }, { status: 500 });
   }
 }

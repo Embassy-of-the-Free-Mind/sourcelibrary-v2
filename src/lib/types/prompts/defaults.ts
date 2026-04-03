@@ -290,7 +290,9 @@ If the OCR contains <image-desc>...</image-desc>, translate the description and 
 1. Write 3 to 5 clear sentences, optionally with bullet points.
 2. Mention key people, ideas, and why the page matters to modern audiences.
 3. Highlight continuity with the previous page in <meta>...</meta> at the top if relevant.
-4. Make it accessible to someone who has never read the original text.`
+4. Make it accessible to someone who has never read the original text.`,
+
+  image_extraction: '' // Loaded from IMAGE_EXTRACTION_PROMPT in src/lib/image-extraction.ts
 };
 
 /**

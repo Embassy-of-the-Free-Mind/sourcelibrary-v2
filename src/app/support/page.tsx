@@ -249,7 +249,7 @@ export default function SupportPage() {
           </h2>
           <div className="text-gray-600 text-lg leading-relaxed space-y-6">
             <p>
-              Source Library is a project of the Ancient Wisdom Trust, based at the{' '}
+              Source Library is a project of the{' '}
               <a href="https://embassyofthefreemind.com" target="_blank" rel="noopener noreferrer" className="text-accent-rust hover:text-accent-gold-dark underline">
                 Embassy of the Free Mind
               </a>{' '}
@@ -312,7 +312,7 @@ export default function SupportPage() {
           {/* Footer Links */}
           <div className="flex flex-col md:flex-row justify-between items-start md:items-center">
             <div className="mb-4 md:mb-0 text-gray-600">
-              &copy; {new Date().getFullYear()} Source Library — A project of the Ancient Wisdom Trust
+              &copy; {new Date().getFullYear()} Source Library — Embassy of the Free Mind
             </div>
             <div className="flex flex-wrap items-center gap-4 md:gap-6 text-gray-600">
               <Link

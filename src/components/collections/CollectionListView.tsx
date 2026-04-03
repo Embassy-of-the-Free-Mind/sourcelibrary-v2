@@ -3,6 +3,7 @@
 import Link from 'next/link';
 import { ArrowUpDown, ArrowUp, ArrowDown } from 'lucide-react';
 import { firstTranslationBadge } from '@/lib/first-translation-labels';
+import AuthorName from '@/components/AuthorName';
 
 interface BookItem {
   id: string;
@@ -127,13 +128,13 @@ export default function CollectionListView({
                     )}
                     {/* Author on mobile (hidden on sm+) */}
                     <span className="block sm:hidden text-xs text-muted mt-0.5 line-clamp-1">
-                      {book.author || 'Unknown'}
+                      <AuthorName author={book.author} fallback="Unknown" />
                     </span>
                   </Link>
                 </td>
                 <td className="py-3 pr-4 hidden sm:table-cell">
                   <Link href={href} className="text-sm text-secondary line-clamp-1 block">
-                    {book.author || 'Unknown'}
+                    <AuthorName author={book.author} fallback="Unknown" />
                   </Link>
                 </td>
                 <td className="py-3 pr-4 text-sm text-muted tabular-nums">

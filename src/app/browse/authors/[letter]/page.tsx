@@ -1,8 +1,9 @@
 import { Metadata } from 'next';
 import Link from 'next/link';
 import SiteHeader from '@/components/layout/SiteHeader';
-import { getDb } from '@/lib/mongodb';
 import { authorSlug } from '@/lib/slugify';
+import { getDb } from '@/lib/mongodb';
+import { ObjectId } from 'mongodb';
 import { notFound } from 'next/navigation';
 
 const LETTERS = 'ABCDEFGHIJKLMNOPQRSTUVWXYZ'.split('');
@@ -43,30 +44,44 @@ export default async function BrowseAuthorsPage({ params }: PageProps) {
   let authors: AuthorEntry[] = [];
   try {
     const db = await getDb();
-    // Use author_1 index as primary filter. pages_translated > 0 implies pages_count > 0.
-    const rawBooks = await db.collection('books').find(
+
+    // Get all visible books with translations, starting with this letter
+    const books = await db.collection('books').find(
       {
-        author: { $regex: `^${l}`, $options: 'i' },
         visible: true,
+        author: { $regex: `^${l}`, $options: 'i' },
         pages_translated: { $gt: 0 },
       },
-      {
-        projection: { author: 1 },
-        hint: 'author_1',
-        maxTimeMS: 45000,
-      }
+      { projection: { author: 1, author_entity_id: 1 } }
     ).toArray();
 
-    const authorCounts = new Map<string, number>();
-    for (const b of rawBooks) {
-      const a = b.author as string;
-      authorCounts.set(a, (authorCounts.get(a) || 0) + 1);
+    // Group by entity when available, fall back to raw author string
+    const entityIds = [...new Set(books.map(b => b.author_entity_id).filter(Boolean))];
+    const entityMap = new Map<string, string>(); // entityId → canonical name
+    if (entityIds.length > 0) {
+      const entities = await db.collection('entities').find(
+        { _id: { $in: entityIds.map(id => { try { return new ObjectId(id); } catch { return null; } }).filter((v): v is ObjectId => v !== null) } },
+        { projection: { canonical_name: 1, name: 1 } }
+      ).toArray();
+      for (const e of entities) {
+        entityMap.set(e._id.toString(), e.canonical_name || e.name);
+      }
     }
+
+    // Deduplicate: entity-linked books use canonical name, others use raw author
+    const authorCounts = new Map<string, number>();
+    for (const b of books) {
+      const name = (b.author_entity_id && entityMap.get(b.author_entity_id)) || b.author;
+      if (name) authorCounts.set(name, (authorCounts.get(name) || 0) + 1);
+    }
+
+    // Filter to names starting with the letter (canonical names may differ)
     authors = [...authorCounts.entries()]
+      .filter(([name]) => name.toUpperCase().startsWith(l))
       .map(([name, count]) => ({ _id: name, count }))
       .sort((a, b) => a._id.localeCompare(b._id));
   } catch {
-    // DB timeout — render empty page with message
+    // DB error — render empty page
   }
 
   return (

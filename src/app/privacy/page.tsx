@@ -19,8 +19,8 @@ export default function PrivacyPage() {
           <p><strong>Effective date:</strong> March 15, 2026</p>
 
           <p>
-            Source Library is operated by the Ancient Wisdom Trust in partnership with the
-            Embassy of the Free Mind, Amsterdam. We are committed to protecting your privacy.
+            Source Library is operated by the Embassy of the Free Mind, Amsterdam.
+            We are committed to protecting your privacy.
           </p>
 
           <h2 className="text-lg font-medium mt-8 mb-3" style={{ color: 'var(--text-primary)' }}>Cookies and consent</h2>

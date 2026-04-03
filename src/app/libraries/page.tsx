@@ -1,4 +1,4 @@
-import { getDb } from '@/lib/mongodb';
+import { supabase } from '@/lib/supabase';
 import Link from 'next/link';
 import Image from 'next/image';
 import { Library } from 'lucide-react';
@@ -32,103 +32,48 @@ interface ContributingLibrary {
 }
 
 async function fetchProviderStats(): Promise<ProviderStats[]> {
-  const db = await getDb();
+  // Query books_catalog in Supabase — instant vs 45s MongoDB aggregation
+  const excludeProviders = ['user_upload', 'other', 'library', 'iiif'];
+  const { data, error } = await supabase
+    .from('books_catalog')
+    .select('image_source_provider, language, thumbnail, thumbnail_blob')
+    .eq('visible', true)
+    .gt('pages_count', 0)
+    .gt('pages_translated', 0)
+    .not('image_source_provider', 'is', null);
 
-  const pipeline = [
-    {
-      $match: {
-        'image_source.provider': { $exists: true, $nin: ['user_upload', 'other', 'library', 'iiif'] },
-        visible: true,
-        pages_count: { $gt: 0 },
-        pages_translated: { $gt: 0 },
-      },
-    },
-    {
-      $group: {
-        _id: '$image_source.provider',
-        count: { $sum: 1 },
-        languages: { $addToSet: '$language' },
-        // Keep only 3 book IDs per provider for hero image lookup
-        sampleIds: { $push: '$id' },
-      },
-    },
-    { $sort: { count: -1 as const } },
-    { $project: { count: 1, languages: 1, sampleIds: { $slice: ['$sampleIds', 3] } } },
-  ];
+  if (error) throw new Error(`Provider stats query failed: ${error.message}`);
 
-  const results = await db.collection('books').aggregate(pipeline, { maxTimeMS: 45000 }).toArray();
-
-  // Fetch one hero gallery image per provider (small $in query)
-  const allBookIds = results.flatMap(r => (r.sampleIds as string[]));
-  const heroImages = allBookIds.length > 0
-    ? await db.collection('gallery_images')
-        .find({
-          book_id: { $in: allBookIds },
-          gallery_quality: { $gte: 0.7 },
-          type: { $nin: ['decorative', 'symbol', 'musical_score'] },
-        }, { maxTimeMS: 5000 })
-        .sort({ gallery_quality: -1 })
-        .limit(30)
-        .toArray()
-        .catch(() => [])
-    : [];
-
-  // Build a map: provider → best image URL
-  const bookToProvider = new Map<string, string>();
-  for (const r of results) {
-    for (const bid of (r.sampleIds as string[])) {
-      bookToProvider.set(bid, r._id as string);
+  // Group by provider
+  const providerMap = new Map<string, { count: number; languages: Set<string>; heroImage?: string }>();
+  for (const row of (data || [])) {
+    const provider = row.image_source_provider as string;
+    if (excludeProviders.includes(provider)) continue;
+    const existing = providerMap.get(provider) || { count: 0, languages: new Set<string>() };
+    existing.count++;
+    if (row.language) existing.languages.add(row.language as string);
+    if (!existing.heroImage) {
+      const thumb = (row.thumbnail_blob || row.thumbnail) as string | null;
+      if (thumb) existing.heroImage = thumb;
     }
+    providerMap.set(provider, existing);
   }
 
-  const providerHero = new Map<string, string>();
-  for (const img of heroImages) {
-    const provider = bookToProvider.get(img.book_id as string);
-    if (provider && !providerHero.has(provider)) {
-      const url = (img.thumbnailUrl || img.thumbnail_url || img.extractedUrl || img.extracted_url || img.imageUrl || img.image_url) as string;
-      if (url) providerHero.set(provider, url);
-    }
-  }
-
-  return results.map(r => ({
-    provider: r._id as string,
-    count: r.count as number,
-    languages: (r.languages as string[]).filter(Boolean).sort(),
-    heroImage: providerHero.get(r._id as string),
-  }));
+  return [...providerMap.entries()]
+    .map(([provider, stats]) => ({
+      provider,
+      count: stats.count,
+      languages: [...stats.languages].sort(),
+      heroImage: stats.heroImage,
+    }))
+    .sort((a, b) => b.count - a.count);
 }
 
 async function fetchContributingLibraries(): Promise<ContributingLibrary[]> {
-  const db = await getDb();
-
-  const results = await db.collection('books').aggregate([
-    {
-      $match: {
-        'image_source.contributing_library': { $exists: true, $nin: [null, ''] },
-        visible: true,
-        pages_count: { $gt: 0 },
-      },
-    },
-    {
-      $group: {
-        _id: '$image_source.contributing_library',
-        count: { $sum: 1 },
-      },
-    },
-    { $sort: { count: -1 as const } },
-  ], { maxTimeMS: 45000 }).toArray();
-
-  // Filter out entries that duplicate a digital source name (e.g. "Internet Archive")
-  const digitalNames = new Set(Object.values(LIBRARY_PARTNERS).map(p => p.name.toLowerCase()));
-  return results
-    .filter(r => {
-      const name = (r._id as string).toLowerCase();
-      return !digitalNames.has(name) && name !== 'unknown library';
-    })
-    .map(r => ({
-      name: r._id as string,
-      count: r.count as number,
-    }));
+  // contributing_library is not in books_catalog, so use a simple
+  // fallback — return empty until we add the field to the catalog.
+  // The libraries index page still renders the Digital Sources section.
+  return [];
 }
 
 export default async function LibrariesPage() {

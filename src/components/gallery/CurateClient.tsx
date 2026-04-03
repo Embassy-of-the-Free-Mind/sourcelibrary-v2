@@ -6,6 +6,8 @@ import { Grid, type CellComponentProps } from 'react-window';
 import { Heart, ThumbsDown, Loader2, Check, Filter, X, ChevronLeft, ChevronRight, Info, Shuffle, Clock, Grid3X3, LayoutGrid, Square, BookOpen, RotateCcw, ExternalLink, CalendarPlus } from 'lucide-react';
 import type { GalleryItem } from '@/lib/api-client/types/gallery';
 
+import { formatAuthor } from '@/lib/utils';
+
 const VISITOR_ID_KEY = 'sl_visitor_id';
 const LIKES_CACHE_KEY = 'sl_likes_cache';
 const DOWNVOTES_KEY = 'sl_curate_downvotes';
@@ -232,7 +234,7 @@ const ImageTile = memo(function ImageTile({
           onClick={(e) => e.stopPropagation()}
         >
           <a href={`/book/${item.bookId}`} target="_blank" rel="noopener noreferrer" className="font-medium line-clamp-2 hover:text-amber-300 transition-colors">{item.bookTitle}</a>
-          {item.author && <p className="text-white/60 mt-0.5">{item.author}{item.year ? `, ${item.year}` : ''}</p>}
+          {item.author && <p className="text-white/60 mt-0.5">{formatAuthor(item.author).name}{item.year ? `, ${item.year}` : ''}</p>}
           <p className="text-white/50 mt-0.5">
             {item.type && <span className="capitalize">{item.type}</span>}
             {item.galleryQuality !== undefined && <span> · {item.galleryQuality.toFixed(2)}</span>}
@@ -1247,7 +1249,7 @@ export default function CurateClient() {
                   className="text-white/70 hover:text-white text-xs max-w-sm truncate hidden sm:inline-flex items-center gap-1 transition-colors"
                   onClick={e => e.stopPropagation()}
                 >
-                  {item.bookTitle}{item.author ? ` — ${item.author}` : ''}{item.year ? ` (${item.year})` : ''}
+                  {item.bookTitle}{item.author ? ` — ${formatAuthor(item.author).name}` : ''}{item.year ? ` (${item.year})` : ''}
                   <ExternalLink className="w-3 h-3 flex-shrink-0" />
                 </a>
                 {item.type && (

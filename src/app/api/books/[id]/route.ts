@@ -51,6 +51,7 @@ export async function GET(
         photo: 1,
         photo_original: 1,
         archived_photo: 1,
+        display_photo: 1,
         cropped_photo: 1,
         thumbnail: 1,
         thumbnail_blob: 1,

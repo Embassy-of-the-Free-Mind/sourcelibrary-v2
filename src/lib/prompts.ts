@@ -169,3 +169,27 @@ export async function getSummaryPrompt(
 ): Promise<PromptLookupResult> {
   return getPrompt('summary', options);
 }
+
+/**
+ * Get image extraction prompt from DB (or hardcoded fallback).
+ */
+export async function getImageExtractionPrompt(
+  options?: { name?: string; id?: string; customText?: string }
+): Promise<PromptLookupResult> {
+  // IMAGE_EXTRACTION_PROMPT is the canonical source — import dynamically to avoid circular deps
+  const result = await getPrompt('image_extraction', options);
+  // If we got the empty hardcoded fallback, use the real prompt from image-extraction.ts
+  if (result.reference.id === 'hardcoded' || !result.text) {
+    const { IMAGE_EXTRACTION_PROMPT } = await import('./image-extraction');
+    return {
+      text: IMAGE_EXTRACTION_PROMPT,
+      reference: {
+        id: 'hardcoded',
+        name: 'Image Extraction v1',
+        version: 1,
+        content_hash: promptContentHash(IMAGE_EXTRACTION_PROMPT),
+      },
+    };
+  }
+  return result;
+}

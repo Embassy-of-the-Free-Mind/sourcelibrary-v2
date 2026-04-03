@@ -24,7 +24,7 @@ const CACHE_TTL_MS = 60 * 1000;
 export const GET = withAuth(async (request, session) => {
   try {
     const { searchParams } = new URL(request.url);
-    const hours = Math.min(parseInt(searchParams.get('hours') || '24', 10), 336); // max 14 days
+    const hours = Math.min(parseInt(searchParams.get('hours') || '24', 10), 720); // max 30 days
 
     // Check cache
     const cacheKey = `pipeline-${hours}`;
@@ -36,12 +36,14 @@ export const GET = withAuth(async (request, session) => {
 
     const db = await getDb();
 
-    const [snapshots, cronRuns, needsAttention, recentErrors, recentDecisions] = await Promise.all([
+    const [snapshots, cronRuns, needsAttention, recentErrors, recentDecisions, velocityRows] = await Promise.all([
       // 1. Pipeline snapshots from Supabase (fast time-series query)
+      // Filter out zero-page snapshots (caused by warehouse migration or orchestrator restarts)
       supabase
         .from('pipeline_snapshots')
         .select('timestamp, funnel, pages, books, active_batch')
         .gte('timestamp', cutoff.toISOString())
+        .gt('pages->>ocr', '0')
         .order('timestamp', { ascending: true })
         .then(({ data }) => data || []),
 
@@ -51,7 +53,7 @@ export const GET = withAuth(async (request, session) => {
         .select('cron, timestamp, duration_ms, actions, errors, error_count, status')
         .gte('timestamp', cutoff.toISOString())
         .order('timestamp', { ascending: false })
-        .limit(50)
+        .limit(200)
         .then(({ data }) => data || []),
 
       // 3. Books needing attention (with error details)
@@ -120,6 +122,14 @@ export const GET = withAuth(async (request, session) => {
           }
           return results;
         }),
+
+      // 6. Pipeline velocity from materialized view (pre-computed hourly rates)
+      supabase
+        .from('pipeline_velocity')
+        .select('hour, books_complete, pages_translated, pages_ocr, pages_total')
+        .gte('hour', cutoff.toISOString())
+        .order('hour', { ascending: true })
+        .then(({ data }) => data || []),
     ]);
 
     // 6. Pipeline funnel + enrichment coverage + milestones — use pre-computed snapshot (2h cache)
@@ -133,8 +143,11 @@ export const GET = withAuth(async (request, session) => {
     const firstTranslations = snapshot?.milestones?.first_translations || 0;
     const nearComplete = snapshot?.milestones?.over_90_pct || 0;
 
-    // Compute velocity from snapshots (deltas between consecutive points)
-    const velocity = computeVelocity(snapshots);
+    // Compute velocity from materialized view (pre-aggregated hourly data),
+    // falling back to raw snapshot computation if the view has no data
+    const velocity = velocityRows.length >= 2
+      ? computeVelocityFromView(velocityRows)
+      : computeVelocity(snapshots);
 
     // Summarize cron health per cron name
     const cronHealth = summarizeCronHealth(cronRuns);
@@ -198,6 +211,14 @@ export const GET = withAuth(async (request, session) => {
         nearComplete, // >90% translated
       },
       query: { hours },
+      _meta: {
+        snapshotComputedAt: snapshot?.computed_at || null,
+        snapshotCount: snapshots.length,
+        snapshotRange: snapshots.length > 0
+          ? { from: snapshots[0].timestamp, to: snapshots[snapshots.length - 1].timestamp }
+          : null,
+        cronRunsCount: cronRuns.length,
+      },
     };
 
     // Update cache
@@ -235,6 +256,34 @@ function computeVelocity(snapshots: any[]): {
   const ocrDelta = (last.pages?.ocr || 0) - (first.pages?.ocr || 0);
   const translateDelta = (last.pages?.translated || 0) - (first.pages?.translated || 0);
   const completeDelta = (last.funnel?.complete || 0) - (first.funnel?.complete || 0);
+
+  return {
+    ocr_per_hour: Math.round(Math.max(0, ocrDelta) / hours),
+    translate_per_hour: Math.round(Math.max(0, translateDelta) / hours),
+    books_completing_per_day: Math.round(Math.max(0, completeDelta) / hours * 24),
+    period_hours: Math.round(hours * 10) / 10,
+  };
+}
+
+
+/** Compute velocity from the pipeline_velocity materialized view (hourly aggregates) */
+function computeVelocityFromView(rows: any[]): {
+  ocr_per_hour: number;
+  translate_per_hour: number;
+  books_completing_per_day: number;
+  period_hours: number;
+} {
+  const first = rows[0];
+  const last = rows[rows.length - 1];
+  const hours = (new Date(last.hour).getTime() - new Date(first.hour).getTime()) / (1000 * 60 * 60);
+
+  if (hours < 0.5) {
+    return { ocr_per_hour: 0, translate_per_hour: 0, books_completing_per_day: 0, period_hours: 0 };
+  }
+
+  const ocrDelta = (last.pages_ocr || 0) - (first.pages_ocr || 0);
+  const translateDelta = (last.pages_translated || 0) - (first.pages_translated || 0);
+  const completeDelta = (last.books_complete || 0) - (first.books_complete || 0);
 
   return {
     ocr_per_hour: Math.round(Math.max(0, ocrDelta) / hours),

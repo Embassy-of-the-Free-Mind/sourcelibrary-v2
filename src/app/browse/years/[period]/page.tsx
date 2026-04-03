@@ -1,7 +1,7 @@
 import { Metadata } from 'next';
 import Link from 'next/link';
 import SiteHeader from '@/components/layout/SiteHeader';
-import { getDb } from '@/lib/mongodb';
+import { browseBooks } from '@/lib/books-catalog';
 import { bookUrl } from '@/lib/slugify';
 import { notFound } from 'next/navigation';
 
@@ -60,36 +60,25 @@ export default async function BrowseYearsPage({ params }: PageProps) {
 
   let books: BrowseBook[] = [];
   try {
-    const db = await getDb();
-    // Use year_hidden_language compound index. pages_translated > 0 implies pages exist.
-    const rawBooks = await db.collection('books').find(
-      {
-        year: { $gte: p.min, $lte: p.max },
-        visible: true,
-        pages_translated: { $gt: 0 },
-      },
-      {
-        projection: {
-          id: 1, slug: 1, title: 1, display_title: 1,
-          author: 1, language: 1, published: 1, year: 1,
-        },
-        sort: { year: 1, title: 1 },
-        maxTimeMS: 45000,
-      }
-    ).toArray();
-
-    books = rawBooks.map(b => ({
-      id: (b.id as string) || b._id.toString(),
-      slug: b.slug as string | undefined,
-      title: b.title as string,
-      display_title: b.display_title as string | undefined,
-      author: b.author as string,
-      language: b.language as string,
-      published: b.published as string,
-      _pub_year: b.year as number,
+    const result = await browseBooks({
+      yearMin: p.min,
+      yearMax: p.max,
+      hasTranslation: true,
+      sort: 'year_asc',
+      limit: 2000,
+    });
+    books = result.books.map(b => ({
+      id: b.id,
+      slug: b.slug || undefined,
+      title: b.title,
+      display_title: b.display_title || undefined,
+      author: b.author || '',
+      language: b.language || '',
+      published: b.published || '',
+      _pub_year: b.year || 0,
     }));
   } catch {
-    // DB timeout — render empty page with message
+    // Supabase error — render empty page
   }
 
   return (

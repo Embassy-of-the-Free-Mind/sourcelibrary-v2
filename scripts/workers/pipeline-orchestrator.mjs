@@ -331,6 +331,164 @@ function isDigitizerOcr(ocrData) {
     /ex[\s\-.]?libris|bookplate|library\s+stamp/i.test(start);
 }
 
+/**
+ * Score a page as a potential book cover using OCR content analysis.
+ * Detects binding photos, digitizer inserts, bookplates (incl. BPH pelican),
+ * and prefers decorated title pages with woodcuts/borders/printer's marks.
+ *
+ * @param {Object} page - Page document with page_number, page_type, ocr.data
+ * @returns {{ score: number, reason: string }}
+ */
+function scorePageForCover(page) {
+  const ocr = (page.ocr?.data || '').substring(0, 800).toLowerCase();
+  const pageType = page.page_type;
+  const pageNum = page.page_number;
+  let score = 0;
+  let reason = pageType || 'unknown';
+
+  // Skip hidden pages
+  if (page.hidden) return { score: -200, reason: 'hidden' };
+
+  // --- NEGATIVE signals ---
+
+  if (pageType === 'blank') return { score: -100, reason: 'blank' };
+  if (pageType === 'digitizer-notice') return { score: -90, reason: 'digitizer-notice' };
+
+  // Book binding / cover photos
+  if (ocr.includes('front cover') || (ocr.includes('external') && ocr.includes('cover')) ||
+      (ocr.includes('binding') && ocr.includes('spine')) || ocr.includes('fore-edge') ||
+      ocr.includes('closed book') || ocr.includes('book block') ||
+      ocr.includes('leather-bound') || ocr.includes('leather bound') ||
+      ((ocr.includes('blind-stamp') || ocr.includes('blind stamp')) && ocr.includes('cover'))) {
+    return { score: -80, reason: 'physical book photo' };
+  }
+
+  // Digitizer inserts and portal pages
+  if (ocr.includes('digitized by') || (ocr.includes('google') && ocr.includes('logo')) ||
+      (ocr.includes('internet archive') && ocr.includes('logo')) ||
+      ocr.includes('proquest') || ocr.includes('early european books') ||
+      ocr.includes('hathitrust') || ocr.includes('scan sheet') ||
+      ocr.includes('e-rara.ch') || ocr.includes('www.e-rara') ||
+      ocr.includes('gallica.bnf') || ocr.includes('mdz-nbn') ||
+      ocr.includes('digital.staatsbibliothek') || ocr.includes('daten.digitale-sammlungen')) {
+    return { score: -70, reason: 'digitizer insert' };
+  }
+
+  // BPH pelican bookplate
+  const isBphBookplate = (ocr.includes('pelican') && (ocr.includes('piety') || ocr.includes('nest') || ocr.includes('young') || ocr.includes('hermetica'))) ||
+      ocr.includes('philosophia hermetica') || ocr.includes('philosophica hermetica');
+  if (isBphBookplate && pageType !== 'title-page') {
+    return { score: -65, reason: 'BPH pelican bookplate' };
+  }
+
+  // Ex-libris / bookplates (but allow on title pages with small inscriptions)
+  const hasExLibris = ocr.includes('ex-libris') || ocr.includes('exlibris') || ocr.includes('ex libris') ||
+      ocr.includes('bookplate') || (ocr.includes('ownership') && ocr.includes('stamp')) ||
+      ocr.includes('library stamp') || ocr.includes('library sticker');
+  if (hasExLibris && pageType !== 'title-page') {
+    return { score: -60, reason: 'ex-libris/bookplate' };
+  }
+
+  // Bleed-through / ghosting
+  if (ocr.includes('bleed-through') || ocr.includes('ghosting') || ocr.includes('mirrored impression')) {
+    return { score: -50, reason: 'bleed-through' };
+  }
+
+  if (pageType === 'toc' || pageType === 'index') return { score: -20, reason: pageType };
+  if (pageType === 'colophon') return { score: -10, reason: 'colophon' };
+
+  // --- POSITIVE signals ---
+
+  const hasHeadings = (ocr.match(/^#+ .+/gm) || []).length;
+  const isTitlePage = pageType === 'title-page';
+  const looksLikeTitlePage = !pageType && hasHeadings >= 3;
+
+  if (isTitlePage) { score += 80; reason = 'title-page'; }
+  else if (looksLikeTitlePage) { score += 70; reason = 'likely title-page'; }
+
+  if (isTitlePage || looksLikeTitlePage) {
+    // Publisher imprint bonus
+    if (ocr.includes('excudebat') || ocr.includes('typis') || ocr.includes('apud') ||
+        ocr.includes('impensis') || ocr.includes('sumptibus') || ocr.includes('officina') ||
+        ocr.includes('printed by') || ocr.includes('published by') || ocr.includes('printed for')) {
+      score += 15;
+      reason = (isTitlePage ? 'title-page' : 'likely title-page') + ' with imprint';
+    }
+    // Decorative elements bonus
+    if (ocr.includes('decorative') || ocr.includes('ornamental') || ocr.includes('border') ||
+        ocr.includes('frame') || ocr.includes('vignette') || ocr.includes('woodcut') ||
+        ocr.includes('architectural') || ocr.includes("printer's mark") ||
+        ocr.includes("printer's device")) {
+      score += 20;
+      reason = 'decorated title-page';
+    }
+  }
+
+  // Frontispieces — but not binding photos mislabeled as frontispiece
+  if (pageType === 'frontispiece') {
+    if (ocr.includes('cover') && (ocr.includes('leather') || ocr.includes('binding') || ocr.includes('marbled'))) {
+      return { score: -80, reason: 'binding photo (mislabeled frontispiece)' };
+    }
+    score += 90; reason = 'frontispiece';
+    if (ocr.includes('engrav') || ocr.includes('allegor') || ocr.includes('portrait') ||
+        ocr.includes('emblem') || ocr.includes('woodcut')) {
+      score += 15; reason = 'frontispiece with engraving';
+    }
+  }
+
+  if (pageType === 'illustration') {
+    if (ocr.includes('photograph') && (ocr.includes('fore-edge') || (ocr.includes('book') && ocr.includes('closed')))) {
+      return { score: -80, reason: 'physical book photo' };
+    }
+    score += 60; reason = 'illustration';
+  }
+
+  if (pageType === 'dedication') { score += 15; reason = 'dedication'; }
+  if (pageType === 'text' && score === 0) { score += 5; reason = 'text'; }
+
+  // Position bonus
+  if (pageNum <= 5) score += 5;
+  else if (pageNum <= 10) score += 3;
+  else if (pageNum > 15) score -= 3;
+
+  return { score, reason };
+}
+
+/**
+ * Select the best cover page for a book from its first N pages.
+ * Uses scorePageForCover() for OCR-based intelligent scoring.
+ *
+ * @param {Object} db - MongoDB database instance
+ * @param {string} bookId - Book ID
+ * @param {number} maxPages - Max pages to consider (default 20)
+ * @returns {Promise<{page: Object, score: number, reason: string} | null>}
+ */
+async function selectBestCoverPage(db, bookId, maxPages = 20) {
+  const pages = await db.collection('pages').find(
+    { book_id: bookId, page_number: { $lte: maxPages } },
+    { projection: {
+      page_number: 1, page_type: 1, hidden: 1,
+      cropped_photo: 1, archived_photo: 1, photo: 1,
+      'ocr.data': 1, detected_images: 1,
+    }}
+  ).sort({ page_number: 1 }).toArray();
+
+  if (!pages.length) return null;
+
+  const scored = pages
+    .map(p => ({ page: p, ...scorePageForCover(p) }))
+    .sort((a, b) => b.score - a.score);
+
+  const best = scored[0];
+  if (best.score < 30) return null;
+
+  // Get the best image URL (prefer R2)
+  const url = best.page.cropped_photo || best.page.archived_photo || best.page.photo;
+  if (!url || !url.startsWith('http')) return null;
+
+  return { page: best.page, score: best.score, reason: best.reason, url };
+}
+
 function languageToScript(language) {
   if (!language) return 'Unknown';
   const map = {
@@ -1288,53 +1446,20 @@ async function run() {
   await client.connect();
   const db = client.db('bookstore');
 
-  // Emergency stop check — with auto-resume for stale pauses
+  // Emergency stop check — no auto-resume (scheduler owns resume decisions)
   const control = await db.collection('system_config').findOne({ _id: 'processing_control' });
   if (control?.paused) {
     const pauseAgeMs = control.paused_at ? Date.now() - new Date(control.paused_at).getTime() : Infinity;
-    const STALE_PAUSE_MS = 30 * 60 * 1000; // 30 minutes
-
-    // Auto-resume if pause is stale and DB is responsive
-    if (pauseAgeMs > STALE_PAUSE_MS) {
-      const probeStart = Date.now();
-      await db.collection('books').findOne({ pages_count: { $gt: 0 } });
-      const findMs = Date.now() - probeStart;
-
-      if (findMs < 500) {
-        console.log(`[pipeline-orchestrator] Auto-resuming stale pause (${Math.round(pauseAgeMs / 60000)}min old, DB ${findMs}ms). Original paused_by: ${control.paused_by}`);
-        await db.collection('system_config').updateOne(
-          { _id: 'processing_control' },
-          { $set: { paused: false, unpaused_at: new Date(), unpaused_by: `auto-resume: stale pause (${Math.round(pauseAgeMs / 60000)}min), DB healthy (${findMs}ms)` } }
-        );
-        await db.collection('processing_control_log').insertOne({
-          action: 'auto_resume', timestamp: new Date(), source: 'pipeline-orchestrator',
-          detail: `Stale pause auto-cleared after ${Math.round(pauseAgeMs / 60000)}min. DB findOne: ${findMs}ms. Original: ${control.paused_by}`,
-        }).catch(() => {});
-        // Continue execution — don't return
-      } else {
-        console.log(`[pipeline-orchestrator] Pause is stale (${Math.round(pauseAgeMs / 60000)}min) but DB slow (${findMs}ms). Staying paused.`);
-        await db.collection('cron_runs').insertOne({
-          cron: 'pipeline-orchestrator-worker', timestamp: new Date(),
-          duration_ms: Date.now() - startTime, status: 'skipped', failed: false,
-          actions: { skip_reason: 'pipeline paused (stale but DB slow)', paused_by: control.paused_by, paused_at: control.paused_at, db_find_ms: findMs },
-          errors: [], error_count: 0,
-          summary: `skipped: paused (stale ${Math.round(pauseAgeMs / 60000)}min, DB ${findMs}ms)`,
-        }).catch(() => {});
-        await client.close();
-        return;
-      }
-    } else {
-      console.log(`[pipeline-orchestrator] PAUSED (${Math.round(pauseAgeMs / 60000)}min ago by ${control.paused_by}). Exiting.`);
-      await db.collection('cron_runs').insertOne({
-        cron: 'pipeline-orchestrator-worker', timestamp: new Date(),
-        duration_ms: Date.now() - startTime, status: 'skipped', failed: false,
-        actions: { skip_reason: 'pipeline paused', paused_by: control.paused_by, paused_at: control.paused_at },
-        errors: [], error_count: 0,
-        summary: `skipped: pipeline paused (by ${control.paused_by || 'unknown'}, ${Math.round(pauseAgeMs / 60000)}min ago)`,
-      }).catch(() => {});
-      await client.close();
-      return;
-    }
+    console.log(`[pipeline-orchestrator] PAUSED (${Math.round(pauseAgeMs / 60000)}min ago by ${control.paused_by || 'unknown'}). Exiting.`);
+    await db.collection('cron_runs').insertOne({
+      cron: 'pipeline-orchestrator-worker', timestamp: new Date(),
+      duration_ms: Date.now() - startTime, status: 'skipped', failed: false,
+      actions: { skip_reason: 'pipeline paused', paused_by: control.paused_by, paused_at: control.paused_at },
+      errors: [], error_count: 0,
+      summary: `skipped: pipeline paused (by ${control.paused_by || 'unknown'}, ${Math.round(pauseAgeMs / 60000)}min ago)`,
+    }).catch(() => {});
+    await client.close();
+    return;
   }
 
   // DB health probe — adjusts submission limits based on Atlas load
@@ -1494,7 +1619,7 @@ async function run() {
             if (bookDoc) {
               await db.collection('books').updateOne(
                 { id: book.id },
-                { $set: { hidden: false, updated_at: new Date() }, $unset: { hidden_reason: '' } }
+                { $set: { hidden: false, visible: true, updated_at: new Date() }, $unset: { hidden_reason: '' } }
               );
               console.log(`    ✓ Auto-unhidden: ${bookDoc.title?.slice(0, 60)}`);
             }
@@ -2280,6 +2405,29 @@ async function run() {
           } else {
             if (!DRY_RUN) {
               await setPipelineStatus(db, book.id, 'ocr_complete');
+
+              // Early cover selection — pick a good cover now that OCR page_type is available.
+              // This runs again in Phase 8.9 after image extraction, but gives books a decent
+              // cover immediately instead of waiting for the full pipeline to complete.
+              if (book.thumbnail_source !== 'manual') {
+                try {
+                  const coverResult = await selectBestCoverPage(db, book.id);
+                  if (coverResult) {
+                    await db.collection('books').updateOne(
+                      { id: book.id },
+                      { $set: {
+                        thumbnail: coverResult.url,
+                        thumbnail_source: 'smart_ocr',
+                        cover_page: coverResult.page.page_number,
+                        cover_selected_at: new Date(),
+                      }}
+                    );
+                    console.log(`    Cover: page ${coverResult.page.page_number} (${coverResult.reason})`);
+                  }
+                } catch (e) {
+                  // Non-fatal — cover will be selected in Phase 8.9
+                }
+              }
             }
             log.ocr_advanced++;
             console.log(`  OCR complete: ${book.title}`);
@@ -2514,7 +2662,8 @@ async function run() {
             ],
             default: 1,
           }}}},
-          { $sort: { _speedTier: 1, is_first_translation: -1, hidden: 1 } },
+          { $addFields: { _bigBook: { $cond: [{ $gte: ['$pages_count', 200] }, 0, 1] } } },
+          { $sort: { _speedTier: 1, _bigBook: 1, is_first_translation: -1, hidden: 1 } },
           { $project: { id: 1, title: 1, pages_count: 1, language: 1, 'pipeline_auto.retry_count': 1, 'image_source.provider': 1 } },
           { $limit: effectiveLimit }
         ]).toArray() : [];
@@ -3090,73 +3239,23 @@ async function run() {
             continue;
           }
 
-          // Heuristic cover selection: frontispiece > title-page > best detected image
-          const proj = { page_number: 1, page_type: 1, cropped_photo: 1, archived_photo: 1, photo: 1, 'ocr.data': 1, detected_images: 1, hidden: 1 };
-          let bestPage = null;
-
-          // Priority 1: frontispiece (first 50 pages, not hidden, not digitizer)
-          const frontispieces = await db.collection('pages').find(
-            { book_id: book.id, page_type: 'frontispiece', page_number: { $lte: 50 }, hidden: { $ne: true } },
-            { projection: proj, sort: { page_number: 1 }, limit: 3 }
-          ).toArray();
-          bestPage = frontispieces.find(p => !isDigitizerOcr(p.ocr?.data)) || null;
-
-          // Priority 2: title-page (first 30 pages)
-          if (!bestPage) {
-            bestPage = await db.collection('pages').findOne(
-              { book_id: book.id, page_type: 'title-page', page_number: { $lte: 30 }, hidden: { $ne: true } },
-              { projection: proj, sort: { page_number: 1 } }
+          // Smart OCR-based cover selection
+          const coverResult = await selectBestCoverPage(db, book.id);
+          if (coverResult && coverResult.url !== book.thumbnail) {
+            await db.collection('books').updateOne(
+              { id: book.id },
+              { $set: {
+                thumbnail: coverResult.url,
+                thumbnail_source: 'smart_ocr',
+                cover_page: coverResult.page.page_number,
+                cover_selected_at: new Date(),
+                'field_provenance.thumbnail': {
+                  source: 'pipeline', method: 'smart-ocr-cover-selection',
+                  confidence: 0.85, date: new Date(),
+                  detail: `${coverResult.reason} (score: ${coverResult.score})`,
+                },
+              }}
             );
-          }
-
-          // Priority 3: best detected image by gallery_quality (first 30 pages)
-          if (!bestPage) {
-            const pagesWithImages = await db.collection('pages').find(
-              { book_id: book.id, 'detected_images.0': { $exists: true }, page_number: { $lte: 30 }, hidden: { $ne: true } },
-              { projection: proj }
-            ).toArray();
-
-            let bestScore = 0.4; // minimum threshold
-            for (const page of pagesWithImages) {
-              if (isDigitizerOcr(page.ocr?.data)) continue;
-              for (const img of (page.detected_images || [])) {
-                const q = img.gallery_quality || 0;
-                const posBonus = page.page_number <= 10 ? 0.1 : page.page_number <= 20 ? 0.05 : 0;
-                const typeBonus = ['frontispiece', 'emblem', 'portrait', 'engraving'].includes(img.type) ? 0.15 : 0;
-                const score = q * 0.5 + posBonus + typeBonus;
-                if (score > bestScore) {
-                  bestScore = score;
-                  bestPage = page;
-                }
-              }
-            }
-          }
-
-          // Priority 4: first non-hidden, non-blank page
-          if (!bestPage) {
-            bestPage = await db.collection('pages').findOne(
-              { book_id: book.id, hidden: { $ne: true }, page_type: { $nin: ['blank', 'digitizer-notice', null] } },
-              { projection: proj, sort: { page_number: 1 } }
-            );
-          }
-
-          if (bestPage) {
-            const newUrl = bestPage.cropped_photo || bestPage.archived_photo || bestPage.photo;
-            if (newUrl && newUrl !== book.thumbnail) {
-              await db.collection('books').updateOne(
-                { id: book.id },
-                { $set: {
-                  thumbnail: newUrl,
-                  thumbnail_source: 'auto',
-                  cover_page: bestPage.page_number,
-                  cover_selected_at: new Date(),
-                  'field_provenance.thumbnail': {
-                    source: 'pipeline', method: 'heuristic-cover-selection',
-                    confidence: 0.8, date: new Date(),
-                  },
-                }}
-              );
-            }
           }
 
           await setPipelineStatus(db, book.id, 'cover_selected', { cover_selected_at: new Date() });
@@ -3232,7 +3331,7 @@ async function run() {
           // Auto-unhide: books that completed the full pipeline should be visible
           await db.collection('books').updateOne(
             { id: book.id, hidden: true },
-            { $set: { hidden: false, updated_at: new Date() }, $unset: { hidden_reason: '' } }
+            { $set: { hidden: false, visible: true, updated_at: new Date() }, $unset: { hidden_reason: '' } }
           );
         }
         log.finalized++;
@@ -3244,31 +3343,39 @@ async function run() {
     // ── Summary ──
     const duration = Date.now() - startTime;
 
-    // Pipeline funnel snapshot
-    let facetResult;
+    // Pipeline funnel + page totals — use enrichment_snapshot (fast single-doc read)
+    // instead of $facet which times out on Atlas under load
+    let counts = {};
+    let totals = { books: 0, pages: 0, ocr: 0, translated: 0 };
+    let facetTimedOut = false;
     try {
-      [facetResult] = await db.collection('books').aggregate([{
-        $facet: {
-          funnel: [
-            { $match: { 'pipeline_auto.status': { $exists: true } } },
-            { $group: { _id: '$pipeline_auto.status', count: { $sum: 1 } } },
-          ],
-          totals: [{ $group: {
-            _id: null,
-            books: { $sum: 1 },
-            pages: { $sum: { $ifNull: ['$pages_count', 0] } },
-            ocr: { $sum: { $ifNull: ['$pages_ocr', 0] } },
-            translated: { $sum: { $ifNull: ['$pages_translated', 0] } },
-          }}],
-        },
-      }], { maxTimeMS: 15000 }).toArray();
-    } catch {
-      console.log('  Summary facet timed out — skipping funnel snapshot');
-      facetResult = { funnel: [], totals: [{ books: 0, pages: 0, ocr: 0, translated: 0 }] };
+      const snapshot = await db.collection('system_config').findOne({ _id: 'enrichment_snapshot' });
+      if (snapshot?.funnel && snapshot?.enrichment) {
+        counts = snapshot.funnel;
+        totals = {
+          books: snapshot.enrichment.total || 0,
+          pages: 0, // not needed for snapshot write
+          ocr: snapshot.enrichment.has_ocr || 0,
+          translated: snapshot.enrichment.has_translation || 0,
+        };
+        // Get actual page totals from cached book counters (fast indexed sum)
+        const [pageSum] = await db.collection('books').aggregate([
+          { $match: { pages_count: { $gt: 0 } } },
+          { $group: { _id: null, pages: { $sum: '$pages_count' }, ocr: { $sum: '$pages_ocr' }, translated: { $sum: '$pages_translated' } } },
+        ], { maxTimeMS: 10000 }).toArray().catch(() => [{}]);
+        if (pageSum) {
+          totals.pages = pageSum.pages || 0;
+          totals.ocr = pageSum.ocr || 0;
+          totals.translated = pageSum.translated || 0;
+        }
+      } else {
+        console.log('  Enrichment snapshot not available — skipping funnel snapshot');
+        facetTimedOut = true;
+      }
+    } catch (e) {
+      console.log('  Snapshot/totals query failed — skipping funnel snapshot:', e.message);
+      facetTimedOut = true;
     }
-
-    const counts = Object.fromEntries((facetResult?.funnel || []).map(s => [s._id, s.count]));
-    const totals = facetResult?.totals?.[0] || { books: 0, pages: 0, ocr: 0, translated: 0 };
 
     console.log(`\n=== PIPELINE FUNNEL ===`);
     for (const [status, count] of Object.entries(counts).sort((a, b) => b[1] - a[1])) {
@@ -3295,7 +3402,7 @@ async function run() {
       }
     }
 
-    // Write cron_runs + pipeline_snapshots
+    // Write cron_runs + pipeline_snapshots (skip snapshot if facet timed out — zero counts poison charts)
     if (!DRY_RUN) {
       const activeBatch = await db.collection('batch_jobs').aggregate([
         { $match: { status: { $in: ['pending', 'processing'] } } },
@@ -3304,7 +3411,7 @@ async function run() {
       const batchByType = Object.fromEntries(activeBatch.map(b => [b._id, { count: b.count, pages: b.pages }]));
 
       await Promise.allSettled([
-        db.collection('pipeline_snapshots').insertOne({
+        facetTimedOut ? Promise.resolve() : db.collection('pipeline_snapshots').insertOne({
           timestamp: new Date(),
           funnel: counts,
           pages: { total: totals.pages, ocr: totals.ocr, translated: totals.translated },

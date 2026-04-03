@@ -260,6 +260,12 @@ export interface PipelineData {
     nearComplete: number;
   };
   query: { hours: number };
+  _meta?: {
+    snapshotComputedAt: string | null;
+    snapshotCount: number;
+    snapshotRange: { from: string; to: string } | null;
+    cronRunsCount: number;
+  };
 }
 
 // --- Search Analytics ---

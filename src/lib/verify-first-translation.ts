@@ -655,12 +655,14 @@ Important: Be precise about matching. A translation of a different work by the s
 export async function verifyFirstTranslation(
   db: Db,
   bookId: string,
-  options?: { dryRun?: boolean; force?: boolean },
+  options?: { dryRun?: boolean; force?: boolean; collection?: 'books' | 'books_warehouse' },
 ): Promise<VerificationResult> {
   const startTime = Date.now();
+  const booksCol = options?.collection || 'books';
+  const pagesCol = booksCol === 'books_warehouse' ? 'pages_warehouse' : 'pages';
 
   // Fetch book
-  const book = await db.collection('books').findOne(
+  const book = await db.collection(booksCol).findOne(
     { id: bookId },
     { projection: {
       id: 1, title: 1, display_title: 1, author: 1, language: 1,
@@ -688,7 +690,7 @@ export async function verifyFirstTranslation(
   }
 
   // Fetch first 3 pages of OCR for context
-  const pages = await db.collection('pages')
+  const pages = await db.collection(pagesCol)
     .find({ book_id: bookId, 'ocr.data': { $exists: true, $ne: '' } })
     .sort({ page_number: 1 })
     .project({ 'ocr.data': 1 })
@@ -842,7 +844,7 @@ export async function verifyFirstTranslation(
       const previousVerification = book.translation_verification;
       const previousIsFirst = book.is_first_translation;
 
-      await db.collection('books').updateOne(
+      await db.collection(booksCol).updateOne(
         { id: bookId },
         {
           $set: {

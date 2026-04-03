@@ -11,6 +11,7 @@
  *     --limit N         Max items to import (default: unlimited)
  *     --skip-images     Don't download/upload images to R2 (metadata only)
  *     --query "..."     Override search query
+ *     --object-ids N,N  Fetch specific object IDs directly (skip search)
  */
 
 import { MongoClient } from 'mongodb';
@@ -183,8 +184,12 @@ async function main() {
   const limit = limitIdx >= 0 ? parseInt(args[limitIdx + 1]) : Infinity;
   const queryIdx = args.indexOf('--query');
   const singleQuery = queryIdx >= 0 ? args[queryIdx + 1] : null;
+  const objectIdsIdx = args.indexOf('--object-ids');
+  const explicitIds = objectIdsIdx >= 0
+    ? args[objectIdsIdx + 1].split(',').map(s => parseInt(s.trim())).filter(n => !isNaN(n))
+    : null;
 
-  console.log(`Mode: ${dryRun ? 'DRY RUN' : 'LIVE'} | Images: ${skipImages ? 'SKIP' : 'UPLOAD'} | Limit: ${limit === Infinity ? 'none' : limit}`);
+  console.log(`Mode: ${dryRun ? 'DRY RUN' : 'LIVE'} | Images: ${skipImages ? 'SKIP' : 'UPLOAD'} | Limit: ${limit === Infinity ? 'none' : limit}${explicitIds ? ` | Object IDs: ${explicitIds.length}` : ''}`);
 
   const client = new MongoClient(process.env.MONGODB_URI);
   await client.connect();
@@ -203,13 +208,136 @@ async function main() {
     });
   }
 
+  let totalImported = 0;
+  let totalSkipped = 0;
+  let totalErrors = 0;
+
+  // Helper: process a single Met object through the import pipeline
+  async function importObject(id, obj, resourceTypeOverride) {
+    const title = obj.title || `Met Object ${id}`;
+    const slug = slugify(`met-${obj.artistDisplayName || 'unknown'}-${title}`);
+    if (!slug) return;
+
+    // Check if already exists
+    const exists = await books.findOne(
+      { $or: [{ slug }, { 'image_source.identifier': `met-${id}` }] },
+      { projection: { _id: 1 } }
+    );
+    if (exists) {
+      totalSkipped++;
+      return;
+    }
+
+    const resourceType = resourceTypeOverride || guessResourceType(obj.medium || '', obj.classification || '');
+    const artist = obj.artistDisplayName || 'Unknown';
+
+    if (dryRun) {
+      console.log(`  [DRY] ${slug} — ${artist} — ${title.substring(0, 60)} — ${obj.objectDate || '?'}`);
+      totalImported++;
+      return;
+    }
+
+    // Upload image
+    let displayUrl = obj.primaryImage;
+    let thumbUrl = obj.primaryImageSmall || obj.primaryImage;
+    let width = 0, height = 0;
+
+    if (s3) {
+      const r2Key = `${R2_PREFIX}/${slug}.jpg`;
+      try {
+        const urls = await uploadToR2(s3, obj.primaryImage, r2Key);
+        if (urls) {
+          displayUrl = urls.display;
+          thumbUrl = urls.thumb;
+          width = urls.width || 0;
+          height = urls.height || 0;
+        }
+      } catch (err) {
+        console.error(`  Failed to upload ${slug}: ${err.message}`);
+        totalErrors++;
+        return;
+      }
+    }
+
+    const doc = {
+      id: generateId(),
+      slug,
+      tenant_id: 'default',
+      title,
+      display_title: title,
+      author: artist,
+      language: 'Visual',
+      published: obj.objectBeginDate ? String(obj.objectBeginDate) : obj.objectDate?.match(/\d{4}/)?.[0] || '',
+      resource_type: resourceType,
+      medium: obj.medium || '',
+      dimensions_display: obj.dimensions || '',
+      thumbnail: thumbUrl,
+      thumbnail_blob: displayUrl,
+      pages_count: 1,
+      pages_ocr: 0,
+      pages_translated: 0,
+      status: 'published',
+      visible: true,
+      categories: [`Visual Art — ${resourceType.charAt(0).toUpperCase() + resourceType.slice(1)}`],
+      created_at: new Date(),
+      updated_at: new Date(),
+      // Met-specific metadata
+      commons_width: width,
+      commons_height: height,
+      commons_title: `Met: ${title}`,
+      commons_url: obj.objectURL || `https://www.metmuseum.org/art/collection/search/${id}`,
+      commons_full_url: obj.primaryImage,
+      commons_license: 'CC0 1.0',
+      commons_description: [
+        obj.medium,
+        obj.dimensions,
+        obj.creditLine,
+        obj.repository,
+      ].filter(Boolean).join('\n'),
+      commons_categories: [obj.classification, obj.department].filter(Boolean),
+      image_source: {
+        provider: 'met',
+        provider_name: 'The Metropolitan Museum of Art',
+        source_url: obj.objectURL || `https://www.metmuseum.org/art/collection/search/${id}`,
+        identifier: `met-${id}`,
+        license: 'CC0 1.0',
+        attribution: obj.creditLine || '',
+        contributing_library: obj.repository || 'The Metropolitan Museum of Art',
+        access_date: new Date().toISOString(),
+      },
+      harvested_at: new Date(),
+    };
+
+    await books.insertOne(doc);
+    console.log(`  ✓ ${slug} — ${artist} — ${title.substring(0, 50)} (${obj.objectDate || '?'})`);
+    totalImported++;
+  }
+
+  // ─── Explicit object IDs mode ───────────────────────────────────────────────
+  if (explicitIds) {
+    console.log(`\n━━━ Fetching ${explicitIds.length} explicit object IDs ━━━`);
+    for (const id of explicitIds) {
+      if (totalImported >= limit) break;
+      await sleep(DELAY_MS);
+      const obj = await metObject(id);
+      if (!obj || !obj.primaryImage) {
+        console.log(`  Skipped ${id} (no image or not found)`);
+        totalSkipped++;
+        continue;
+      }
+      if (!obj.isPublicDomain) {
+        console.log(`  Skipped ${id} (not public domain)`);
+        totalSkipped++;
+        continue;
+      }
+      await importObject(id, obj);
+    }
+  } else {
+  // ─── Search-based mode ────────────────────────────────────────────────────
   const targets = singleQuery
     ? [{ query: singleQuery, type: 'print' }]
     : IMPORT_TARGETS;
 
-  let totalImported = 0;
-  let totalSkipped = 0;
-  let totalErrors = 0;
   const seenIds = new Set();
 
   for (const target of targets) {
@@ -249,104 +377,9 @@ async function main() {
         continue;
       }
 
-      const title = obj.title || `Met Object ${id}`;
-      const slug = slugify(`met-${obj.artistDisplayName || 'unknown'}-${title}`);
-      if (!slug) continue;
-
-      // Check if already exists
-      const exists = await books.findOne(
-        { $or: [{ slug }, { 'image_source.identifier': `met-${id}` }] },
-        { projection: { _id: 1 } }
-      );
-      if (exists) {
-        totalSkipped++;
-        continue;
-      }
-
-      const resourceType = target.type || guessResourceType(obj.medium || '', obj.classification || '');
-      const artist = obj.artistDisplayName || 'Unknown';
-
-      if (dryRun) {
-        console.log(`  [DRY] ${slug} — ${artist} — ${title.substring(0, 60)} — ${obj.objectDate || '?'}`);
-        totalImported++;
-        continue;
-      }
-
-      // Upload image
-      let displayUrl = obj.primaryImage;
-      let thumbUrl = obj.primaryImageSmall || obj.primaryImage;
-      let width = 0, height = 0;
-
-      if (s3) {
-        const r2Key = `${R2_PREFIX}/${slug}.jpg`;
-        try {
-          const urls = await uploadToR2(s3, obj.primaryImage, r2Key);
-          if (urls) {
-            displayUrl = urls.display;
-            thumbUrl = urls.thumb;
-            width = urls.width || 0;
-            height = urls.height || 0;
-          }
-        } catch (err) {
-          console.error(`  Failed to upload ${slug}: ${err.message}`);
-          totalErrors++;
-          continue;
-        }
-      }
-
-      const doc = {
-        id: generateId(),
-        slug,
-        tenant_id: 'default',
-        title,
-        display_title: title,
-        author: artist,
-        language: 'Visual',
-        published: obj.objectBeginDate ? String(obj.objectBeginDate) : obj.objectDate?.match(/\d{4}/)?.[0] || '',
-        resource_type: resourceType,
-        medium: obj.medium || '',
-        dimensions_display: obj.dimensions || '',
-        thumbnail: thumbUrl,
-        thumbnail_blob: displayUrl,
-        pages_count: 1,
-        pages_ocr: 0,
-        pages_translated: 0,
-        status: 'published',
-        visible: true,
-        categories: [`Visual Art — ${resourceType.charAt(0).toUpperCase() + resourceType.slice(1)}`],
-        created_at: new Date(),
-        updated_at: new Date(),
-        // Met-specific metadata
-        commons_width: width,
-        commons_height: height,
-        commons_title: `Met: ${title}`,
-        commons_url: obj.objectURL || `https://www.metmuseum.org/art/collection/search/${id}`,
-        commons_full_url: obj.primaryImage,
-        commons_license: 'CC0 1.0',
-        commons_description: [
-          obj.medium,
-          obj.dimensions,
-          obj.creditLine,
-          obj.repository,
-        ].filter(Boolean).join('\n'),
-        commons_categories: [obj.classification, obj.department].filter(Boolean),
-        image_source: {
-          provider: 'met',
-          provider_name: 'The Metropolitan Museum of Art',
-          source_url: obj.objectURL || `https://www.metmuseum.org/art/collection/search/${id}`,
-          identifier: `met-${id}`,
-          license: 'CC0 1.0',
-          attribution: obj.creditLine || '',
-          contributing_library: obj.repository || 'The Metropolitan Museum of Art',
-          access_date: new Date().toISOString(),
-        },
-        harvested_at: new Date(),
-      };
-
-      await books.insertOne(doc);
-      console.log(`  ✓ ${slug} — ${artist} — ${title.substring(0, 50)} (${obj.objectDate || '?'})`);
-      totalImported++;
+      await importObject(id, obj, target.type);
     }
+  }
   }
 
   console.log(`\n━━━ DONE ━━━`);

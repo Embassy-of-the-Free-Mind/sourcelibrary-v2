@@ -176,6 +176,46 @@ export async function GET(
 
     let detection = detections[detectionIndex];
 
+    // Handle null/undefined detection entries (corrupt data)
+    if (!detection) {
+      const galleryImageId = `${pageId}-${detectionIndex}`;
+      const galleryDoc = await db.collection('gallery_images').findOne({ id: galleryImageId });
+      if (galleryDoc) {
+        return NextResponse.json({
+          id,
+          pageId,
+          detectionIndex,
+          imageUrl: galleryDoc.extracted_url || galleryDoc.thumbnail_url || galleryDoc.image_url,
+          fullPageUrl: galleryDoc.image_url,
+          highResUrl: galleryDoc.extracted_url || galleryDoc.image_url,
+          extractedUrl: galleryDoc.extracted_url ?? null,
+          thumbnailUrl: galleryDoc.thumbnail_url ?? null,
+          rotation: galleryDoc.rotation ?? 0,
+          description: galleryDoc.description,
+          type: galleryDoc.type,
+          confidence: galleryDoc.confidence,
+          galleryQuality: galleryDoc.gallery_quality ?? null,
+          museumDescription: galleryDoc.museum_description ?? null,
+          metadata: galleryDoc.metadata ?? null,
+          bbox: galleryDoc.bbox,
+          book: {
+            id: pageData.book_id,
+            title: pageData.book?.display_title || pageData.book?.title || 'Unknown',
+            author: pageData.book?.author,
+            year: pageData.book?.published,
+          },
+          pageNumber: pageData.page_number,
+          readUrl: `/book/${pageData.book?.slug || pageData.book_id}/page/${pageId}`,
+          galleryUrl: `/gallery?bookId=${pageData.book_id}`,
+          citation: `${pageData.book?.author || ''}, "${pageData.book?.display_title || pageData.book?.title || 'Unknown'}", p. ${pageData.page_number}, Source Library`,
+          corrupt: true,
+        }, {
+          headers: { 'Cache-Control': 'public, max-age=3600, stale-while-revalidate=86400' },
+        });
+      }
+      return NextResponse.json({ error: 'Detection data is null' }, { status: 404 });
+    }
+
     // If the page detection is missing key fields, backfill from gallery_images
     // (gallery_images may have richer data from a previous extraction run)
     if (!detection.description || detection.gallery_quality == null) {

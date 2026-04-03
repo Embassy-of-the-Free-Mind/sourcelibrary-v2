@@ -4,10 +4,21 @@ import { withAuth } from '@/lib/auth-helpers';
 
 export const maxDuration = 30;
 
+// In-memory cache (5 minutes) — MongoDB search aggregations can be slow
+const cache = new Map<number, { data: any; timestamp: number }>();
+const CACHE_TTL_MS = 5 * 60 * 1000;
+
 export const GET = withAuth(async (request, session) => {
   try {
     const { searchParams } = new URL(request.url);
     const days = parseInt(searchParams.get('days') || '30', 10);
+
+    // Return cached result if fresh
+    const cached = cache.get(days);
+    if (cached && (Date.now() - cached.timestamp) < CACHE_TTL_MS) {
+      return NextResponse.json(cached.data);
+    }
+
     const cutoffDate = new Date(Date.now() - days * 24 * 60 * 60 * 1000);
 
     const db = await getDb();
@@ -83,7 +94,7 @@ export const GET = withAuth(async (request, session) => {
         .toArray(),
     ]);
 
-    return NextResponse.json({
+    const responseData = {
       totalSearches,
       topQueries: topQueries.map(q => ({
         query: q._id,
@@ -112,7 +123,12 @@ export const GET = withAuth(async (request, session) => {
         timestamp: s.created_at,
       })),
       query: { days },
-    });
+    };
+
+    // Update cache
+    cache.set(days, { data: responseData, timestamp: Date.now() });
+
+    return NextResponse.json(responseData);
   } catch (error) {
     console.error('Search analytics error:', error);
     return NextResponse.json(

@@ -1,8 +1,17 @@
-import { normalizeText } from './utils';
-
 export interface TextSegment {
   text: string;
   highlight: boolean;
+}
+
+/**
+ * Normalize text for matching: NFD decompose, strip diacritics, lowercase.
+ * Does NOT trim — preserving position alignment with the character mapping.
+ */
+function normalizeForMatch(text: string): string {
+  return text
+    .normalize('NFD')
+    .replace(/[\u0300-\u036f]/g, '')
+    .toLowerCase();
 }
 
 /**
@@ -20,17 +29,17 @@ export function splitByMatches(text: string, query: string): TextSegment[] {
     return [{ text, highlight: false }];
   }
 
-  const normalizedText = normalizeText(text);
+  // Use non-trimming normalize to keep position alignment with the mapping
+  const normalizedText = normalizeForMatch(text);
 
   // Build a boolean mask of which character positions match
   const mask = new Array(text.length).fill(false);
 
   for (const word of words) {
-    const normalizedWord = normalizeText(word);
+    const normalizedWord = normalizeForMatch(word).trim();
     if (normalizedWord.length === 0) continue;
 
     // Map normalized positions back to original positions.
-    // normalizeText does NFD + strip diacritics + lowercase + trim.
     const nfd = text.normalize('NFD');
     const nfdToOriginal: number[] = [];
 

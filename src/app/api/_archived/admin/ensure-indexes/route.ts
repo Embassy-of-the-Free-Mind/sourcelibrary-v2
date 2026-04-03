@@ -330,21 +330,6 @@ export const POST = withAuth(async (request, session) => {
         : `error: ${err.message}`;
     }
 
-    // Books - compound index for filtered search (language + category + hidden)
-    // Query: { $text: ..., visible: true, language: ..., categories: ... }
-    try {
-      await db.collection('books').createIndex(
-        { hidden: 1, language: 1, categories: 1 },
-        { name: 'books_hidden_lang_cat_idx', background: true }
-      );
-      results['books.books_hidden_lang_cat_idx'] = 'created';
-    } catch (e) {
-      const err = e as Error;
-      results['books.books_hidden_lang_cat_idx'] = err.message.includes('already exists')
-        ? 'exists'
-        : `error: ${err.message}`;
-    }
-
     // Books - index.generatedAt existence (unified search fetches all indexed books)
     try {
       await db.collection('books').createIndex(
@@ -1202,6 +1187,54 @@ export const POST = withAuth(async (request, session) => {
     } catch (e) {
       const err = e as Error;
       results['reading_history.rh_user_book_updated_idx'] = err.message.includes('already exists')
+        ? 'exists'
+        : `error: ${err.message}`;
+    }
+
+    // Books - visible + created_at (browse pages, newest-first listings)
+    // Query: find({ visible: true }).sort({ created_at: -1 })
+    // CRITICAL: Without this, browse pages do full collection scans (326s → 24ms with index)
+    // See: GitHub issue #561
+    try {
+      await db.collection('books').createIndex(
+        { visible: 1, created_at: -1 },
+        { name: 'books_visible_created_idx', background: true }
+      );
+      results['books.books_visible_created_idx'] = 'created';
+    } catch (e) {
+      const err = e as Error;
+      results['books.books_visible_created_idx'] = err.message.includes('already exists')
+        ? 'exists'
+        : `error: ${err.message}`;
+    }
+
+    // Books - visible + categories + created_at (category/collection browse pages)
+    // Query: find({ visible: true, categories: 'alchemy' }).sort({ created_at: -1 })
+    // See: GitHub issue #561
+    try {
+      await db.collection('books').createIndex(
+        { visible: 1, categories: 1, created_at: -1 },
+        { name: 'books_visible_categories_idx', background: true }
+      );
+      results['books.books_visible_categories_idx'] = 'created';
+    } catch (e) {
+      const err = e as Error;
+      results['books.books_visible_categories_idx'] = err.message.includes('already exists')
+        ? 'exists'
+        : `error: ${err.message}`;
+    }
+
+    // Books - visible + collections + created_at (collection browse pages)
+    // Query: find({ visible: true, collections: 'hermetic-corpus' }).sort({ created_at: -1 })
+    try {
+      await db.collection('books').createIndex(
+        { visible: 1, collections: 1, created_at: -1 },
+        { name: 'books_visible_collections_idx', background: true }
+      );
+      results['books.books_visible_collections_idx'] = 'created';
+    } catch (e) {
+      const err = e as Error;
+      results['books.books_visible_collections_idx'] = err.message.includes('already exists')
         ? 'exists'
         : `error: ${err.message}`;
     }

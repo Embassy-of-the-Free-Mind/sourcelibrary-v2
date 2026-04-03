@@ -102,7 +102,7 @@ async function syncPageCounts(db) {
 
   // Fetch all books' cached values
   const books = await db.collection('books')
-    .find({}, { projection: { _id: 1, id: 1, pages_count: 1, pages_ocr: 1, pages_translated: 1, pages_blank: 1, pages_archived: 1 } })
+    .find({}, { projection: { _id: 1, id: 1, pages_count: 1, pages_ocr: 1, pages_translated: 1, pages_blank: 1, pages_archived: 1, is_fully_translated: 1, over_90_translated: 1 } })
     .toArray();
 
   // Build bulk updates for mismatches
@@ -120,12 +120,22 @@ async function syncPageCounts(db) {
       pages_archived: book.pages_archived || 0,
     };
 
+    // Pre-compute translation metrics (avoids $expr queries on Atlas)
+    const denominator = actual.pages_ocr - actual.pages_blank;
+    const translation_pct = denominator > 0
+      ? Math.round((actual.pages_translated / denominator) * 10000) / 100  // 2 decimal places
+      : 0;
+    const is_fully_translated = actual.pages_translated > 0 && actual.pages_translated >= denominator;
+    const over_90_translated = actual.pages_translated > 0 && actual.pages_translated >= denominator * 0.9;
+
     if (
       current.pages_count !== actual.pages_count ||
       current.pages_ocr !== actual.pages_ocr ||
       current.pages_translated !== actual.pages_translated ||
       current.pages_blank !== actual.pages_blank ||
-      current.pages_archived !== actual.pages_archived
+      current.pages_archived !== actual.pages_archived ||
+      book.is_fully_translated !== is_fully_translated ||
+      book.over_90_translated !== over_90_translated
     ) {
       mismatchCount++;
       if (!DRY_RUN) {
@@ -139,6 +149,9 @@ async function syncPageCounts(db) {
                 pages_translated: actual.pages_translated,
                 pages_blank: actual.pages_blank,
                 pages_archived: actual.pages_archived,
+                translation_pct,
+                is_fully_translated,
+                over_90_translated,
                 updated_at: new Date(),
               },
             },
@@ -311,7 +324,7 @@ async function syncAuthorSlugs(db) {
   console.log('\n--- Sync Author Slugs ---');
   const start = Date.now();
   const authors = await db.collection('books').distinct('author', {
-    hidden: { $ne: true },
+    visible: true,
     author: { $exists: true, $ne: null, $nin: ['Unknown', 'Anonymous', 'Various'] },
   });
   const slugs = {};
@@ -546,6 +559,14 @@ async function run() {
   const client = new MongoClient(MONGODB_URI, { maxPoolSize: 5, serverSelectionTimeoutMS: 10000 });
   await client.connect();
   const db = client.db('bookstore');
+
+  // Check processing_control pause
+  const control = await db.collection('system_config').findOne({ _id: 'processing_control' });
+  if (control?.paused) {
+    console.log(`[sync-worker] Pipeline paused. Exiting.`);
+    await client.close();
+    process.exit(0);
+  }
 
   let countsResult = {};
   let galleryResult = {};

@@ -9,7 +9,7 @@ import { Document } from 'mongodb';
  * GET /api/oai?verb=Identify|ListMetadataFormats|ListSets|ListIdentifiers|ListRecords|GetRecord
  */
 
-export const revalidate = 3600; // ISR: 1 hour
+export const dynamic = 'force-dynamic';
 
 const BASE_URL = 'https://sourcelibrary.org/api/oai';
 const REPO_NAME = 'Source Library';
@@ -119,7 +119,8 @@ ${dc.join('\n')}
 
 function bookToRecord(book: Document, headersOnly = false): string {
   const identifier = `oai:sourcelibrary.org:${book.id}`;
-  const datestamp = (book.updated_at || book.created_at || new Date()).toISOString().split('T')[0];
+  const rawDate = book.updated_at || book.created_at;
+  const datestamp = rawDate ? new Date(rawDate).toISOString().split('T')[0] : '2024-01-01';
   const sets = (book.categories || []).map((c: string) =>
     `      <setSpec>${escXml(c.toLowerCase().replace(/\s+/g, '-'))}</setSpec>`
   ).join('\n');
@@ -174,7 +175,9 @@ function buildQuery(from?: string, until?: string, set?: string): Document {
     if (until) query.updated_at.$lte = new Date(until + 'T23:59:59Z');
   }
   if (set) {
-    query.categories = { $regex: new RegExp(`^${set.replace(/-/g, '[\\s-]')}$`, 'i') };
+    // Escape regex special chars to prevent injection, then match hyphens as spaces or hyphens
+    const escaped = set.replace(/[.*+?^${}()|[\]\\]/g, '\\$&');
+    query.categories = { $regex: new RegExp(`^${escaped.replace(/-/g, '[\\s-]')}$`, 'i') };
   }
   return query;
 }
@@ -185,7 +188,7 @@ async function handleIdentify(now: string): Promise<NextResponse> {
   const db = await getDb();
   const earliest = await db.collection('books').findOne(
     { pages_count: { $gt: 0 } },
-    { sort: { created_at: 1 }, projection: { created_at: 1 } }
+    { sort: { created_at: 1 }, projection: { created_at: 1 }, maxTimeMS: 15000 }
   );
   const earliestDate = earliest?.created_at
     ? new Date(earliest.created_at).toISOString().split('T')[0]
@@ -262,7 +265,7 @@ async function handleListRecords(
   const resumptionToken = params.get('resumptionToken');
   if (resumptionToken) {
     const token = decodeToken(resumptionToken);
-    if (!token) return oaiError('badResumptionToken', 'Invalid resumption token', verbName);
+    if (!token) return oaiError('badArgument', 'Invalid or expired resumption token', verbName);
     offset = token.offset;
     metadataPrefix = token.metadataPrefix;
     from = token.from;
@@ -279,12 +282,12 @@ async function handleListRecords(
 
   const db = await getDb();
   const query = buildQuery(from, until, set);
-  const total = await db.collection('books').countDocuments(query);
+  const total = await db.collection('books').countDocuments(query, { maxTimeMS: 30000 });
 
   if (total === 0) return oaiError('noRecordsMatch', 'No records match the request', verbName);
 
   const books = await db.collection('books')
-    .find(query)
+    .find(query, { maxTimeMS: 30000 })
     .sort({ updated_at: -1 })
     .skip(offset)
     .limit(PAGE_SIZE)

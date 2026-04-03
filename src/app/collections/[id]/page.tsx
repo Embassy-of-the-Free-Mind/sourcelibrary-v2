@@ -88,6 +88,7 @@ interface BookItem {
   read_count?: number;
   is_first_translation?: boolean;
   ft_disposition?: string;
+  resource_type?: string;
 }
 
 interface CuratedHighlight {
@@ -207,9 +208,10 @@ async function fetchCollectionData(id: string) {
     ? { collections: id, resource_type: { $exists: true } }
     : {
         collections: id,
-        visible: true,
-        pages_count: { $gt: 0 },
-        pages_translated: { $gt: 0 },
+        $or: [
+          { visible: true, pages_count: { $gt: 0 }, pages_translated: { $gt: 0 } },
+          { resource_type: { $exists: true } },
+        ],
       };
 
   const projection = {
@@ -237,6 +239,29 @@ async function fetchCollectionData(id: string) {
 
   // All queries run in parallel with timeouts. Cold MongoDB connections from
   // Mumbai→Virginia can take 15-20s, so even "critical" queries need protection.
+  // Fetch artworks for mixed collections (book collections that also contain artworks)
+  const artworksPromise = !isArtCollection
+    ? withTimeout(
+        db.collection('books')
+          .find(
+            { collections: id, resource_type: { $exists: true } },
+            {
+              projection: {
+                _id: 0, id: 1, slug: 1, title: 1, display_title: 1, author: 1, published: 1,
+                resource_type: 1, medium: 1, thumbnail: 1, thumbnail_blob: 1,
+                'enrichment.subject': 1, 'enrichment.genre': 1,
+                commons_width: 1, commons_height: 1,
+              },
+              maxTimeMS: 8000,
+            },
+          )
+          .sort({ author: 1, title: 1 })
+          .limit(60)
+          .toArray(),
+        8000, [],
+      )
+    : Promise.resolve([]);
+
   const [books, highlights, galleryImages, mentionedBooks] = await Promise.all([
     withTimeout(
       db.collection('books')
@@ -311,6 +336,8 @@ async function fetchCollectionData(id: string) {
         )
       : Promise.resolve([]),
   ]);
+
+  const artworks = await artworksPromise;
 
   // Fetch parent collection if this is a subcollection
   let parentCollection: { slug: string; name: string } | null = null;
@@ -430,6 +457,8 @@ async function fetchCollectionData(id: string) {
     exhibition: curationDraft?.curation || null,
     exhibitionBooks,
     childCollections: childCollections.map(({ _id, ...rest }) => rest) as { slug: string; name: string; subtitle?: string; book_count?: number; featured_images?: { extracted_url?: string; image_url?: string; thumbnail_url?: string }[] }[],
+    // eslint-disable-next-line @typescript-eslint/no-explicit-any
+    artworks: artworks as any[],
   };
 }
 
@@ -449,7 +478,7 @@ export default async function CollectionDetailPage({ params }: Props) {
   }
   if (!data) notFound();
 
-  const { collection, books, highlights: curatedHighlightsData, galleryImages, total, mentionedBooks, parentCollection, galleryCollectionSlug, exhibition, exhibitionBooks, childCollections } = data;
+  const { collection, books, highlights: curatedHighlightsData, galleryImages, total, mentionedBooks, parentCollection, galleryCollectionSlug, exhibition, exhibitionBooks, childCollections, artworks } = data;
   const languages = (collection.languages || []).filter((l: { count: number }) => l.count > 2);
   const isArtCollection = collection.collection_type === 'visual_art';
   const itemLabel = isArtCollection ? 'works' : 'books';
@@ -482,6 +511,17 @@ export default async function CollectionDetailPage({ params }: Props) {
   }
   const diverseGalleryImages = shuffled.slice(0, 9);
   const heroImages = shuffled.slice(0, 6);
+
+  // Fallback hero: use collection.hero_image or first featured_image when no gallery images
+  const fallbackHeroUrl = !heroImages.length
+    ? (collection.hero_image as string | undefined)
+      || (() => {
+        const fi = (collection.featured_images as { extracted_url?: string; image_url?: string; thumbnail_url?: string }[] | undefined);
+        const first = fi?.find(img => img.extracted_url || img.image_url || img.thumbnail_url);
+        return first?.extracted_url || first?.image_url || first?.thumbnail_url;
+      })()
+      || null
+    : null;
   // Count total images and unique source books for gallery label
   const galleryTotalImages = galleryImages.length;
   const galleryUniqueBooks = new Set(galleryImages.map((img: { book_id?: string; bookId?: string }) => img.book_id || img.bookId)).size;
@@ -516,7 +556,7 @@ export default async function CollectionDetailPage({ params }: Props) {
       />
       {/* Hero Section */}
       <div className="relative bg-dark overflow-hidden">
-        {heroImages.length > 0 && (
+        {heroImages.length > 0 ? (
           <div className="absolute inset-0 grid grid-cols-3 sm:grid-cols-6 opacity-30">
             {heroImages.map((img: { pageId?: string; page_id?: string; detectionIndex?: number; detection_index?: number; thumbnailUrl?: string; thumbnail_url?: string; extractedUrl?: string; extracted_url?: string; imageUrl?: string; image_url?: string }) => {
               const src = img.extracted_url || img.extractedUrl || img.thumbnail_url || img.thumbnailUrl || img.imageUrl || img.image_url;
@@ -529,6 +569,11 @@ export default async function CollectionDetailPage({ params }: Props) {
                 </div>
               );
             })}
+          </div>
+        ) : fallbackHeroUrl && (
+          <div className="absolute inset-0 opacity-40">
+            {/* eslint-disable-next-line @next/next/no-img-element */}
+            <img src={fallbackHeroUrl} alt="" className="absolute inset-0 w-full h-full object-cover" />
           </div>
         )}
 
@@ -742,6 +787,88 @@ export default async function CollectionDetailPage({ params }: Props) {
         </div>
       )}
 
+      {/* Visual Art — artworks tagged to this collection */}
+      {artworks.length > 0 && (
+        <div className="bg-warm border-b border-border-light">
+          <div className="max-w-7xl mx-auto px-6 py-8">
+            <div className="flex items-center justify-between mb-2">
+              <h2 className="text-2xl sm:text-3xl text-primary font-display">
+                Visual Art
+              </h2>
+              <Link
+                href="/artwork"
+                className="text-sm text-muted hover:text-accent-rust transition-colors"
+              >
+                Browse all art &rarr;
+              </Link>
+            </div>
+            <p className="text-sm text-muted mb-5">
+              {artworks.length} {artworks.length === 1 ? 'work' : 'works'} of visual art in this collection
+            </p>
+            <div className="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-4 xl:grid-cols-5 gap-4">
+              {artworks.slice(0, 15).map((art: { id: string; slug?: string; title: string; display_title?: string; author?: string; published?: string; resource_type?: string; medium?: string; thumbnail?: string; thumbnail_blob?: string; enrichment?: { subject?: string; genre?: string }; commons_width?: number; commons_height?: number }) => {
+                const thumb = sanitizeThumbnail(art.thumbnail_blob || art.thumbnail || '');
+                const isPortrait = (art.commons_height || 0) > (art.commons_width || 0);
+                return (
+                  <Link
+                    key={art.id}
+                    href={`/artwork/${art.slug || art.id}`}
+                    className="group block"
+                  >
+                    <div className="rounded-lg border border-border-light hover:border-accent-rust/40 hover:shadow-lg transition-[border-color,box-shadow] overflow-hidden bg-white">
+                      <div className={`relative ${isPortrait ? 'aspect-[3/4]' : 'aspect-[4/3]'} bg-stone-100 overflow-hidden`}>
+                        {thumb ? (
+                          /* eslint-disable-next-line @next/next/no-img-element */
+                          <img
+                            src={thumb}
+                            alt={art.display_title || art.title}
+                            className="absolute inset-0 w-full h-full object-cover group-hover:scale-105 transition-transform duration-300"
+                            loading="lazy"
+                          />
+                        ) : (
+                          <div className="absolute inset-0 flex items-center justify-center">
+                            <Images className="w-8 h-8 text-muted" />
+                          </div>
+                        )}
+                        {art.resource_type && art.resource_type !== 'printed_book' && (
+                          <span className="absolute top-2 left-2 text-[10px] bg-dark/70 text-white px-1.5 py-0.5 rounded capitalize">
+                            {art.resource_type}
+                          </span>
+                        )}
+                      </div>
+                      <div className="p-3">
+                        <h3
+                          className="text-sm font-semibold text-primary group-hover:text-accent-rust transition-colors leading-tight line-clamp-2 mb-1"
+                          style={{ fontFamily: 'var(--font-serif)' }}
+                        >
+                          {art.display_title || art.title}
+                        </h3>
+                        {art.author && (
+                          <p className="text-xs text-muted line-clamp-1">{art.author}</p>
+                        )}
+                        {art.enrichment?.subject && (
+                          <p className="text-xs text-secondary mt-1 line-clamp-2 leading-relaxed">
+                            {art.enrichment.subject}
+                          </p>
+                        )}
+                      </div>
+                    </div>
+                  </Link>
+                );
+              })}
+              {artworks.length > 15 && (
+                <Link
+                  href={`/artwork`}
+                  className="flex items-center justify-center rounded-lg border border-dashed border-border-light hover:border-accent-rust/40 hover:bg-warm transition-all aspect-[4/3] text-sm text-muted hover:text-accent-rust"
+                >
+                  +{artworks.length - 15} more works
+                </Link>
+              )}
+            </div>
+          </div>
+        </div>
+      )}
+
       {/* Overview description */}
       {!exhibition?.layout && (collection.expanded_description || collection.description) && (
         <div className="bg-warm border-b border-border-light">
@@ -937,7 +1064,7 @@ export default async function CollectionDetailPage({ params }: Props) {
         {/* All Books — client component handles compact → expanded transition */}
         <CollectionAllBooks
           collectionId={id}
-          compactBooks={books}
+          compactBooks={books.filter(b => !b.resource_type)}
           total={total}
           languages={languages}
           collectionType={collection.collection_type}

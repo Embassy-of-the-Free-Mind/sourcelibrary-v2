@@ -34,6 +34,7 @@ import CiteButton from '@/components/ui/CiteButton';
 import { prompts as promptsApi, analytics, pages as pagesApi, processing as processingApi } from '@/lib/api-client';
 import LikeButton from '@/components/ui/LikeButton';
 import { getShortUrl } from '@/lib/shortlinks';
+import { getPageDisplayUrl, getPageThumbUrl, isUsableImageUrl } from '@/lib/utils';
 import type { Page, Book, Prompt, ContentSource } from '@/lib/types';
 import { GEMINI_MODELS, DEFAULT_MODEL } from '@/lib/types';
 import { AuthCheck } from '../auth/AuthCheck';
@@ -512,45 +513,27 @@ export default function TranslationEditor({
   // Tier 2: Display (1200px) - for main reading view
   // Tier 3: Full (2400px) - for magnifier, fullscreen
   const getImageUrl = (p: Page, tier: 'thumbnail' | 'display' | 'full' = 'display') => {
-    const widths = { thumbnail: 150, display: 1200, full: 2400 };
-    const qualities = { thumbnail: 60, display: 80, full: 90 };
-    const width = widths[tier];
-    const quality = qualities[tier];
+    if (tier === 'thumbnail') return getPageThumbUrl(p) || '';
+    if (tier === 'display') return getPageDisplayUrl(p) || '';
 
-    // New path convention: pages/{bookId}/{0001}.jpg, -full.jpg, -thumb.jpg
-    // If photo matches this pattern, derive other sizes by convention
-    const newPathMatch = p.photo?.match(/^(https:\/\/images\.sourcelibrary\.org\/pages\/[^/]+\/\d{4,})(-full)?\.jpg$/);
-    if (newPathMatch) {
-      const base = newPathMatch[1];
-      if (tier === 'full') return `${base}-full.jpg`;
-      if (tier === 'thumbnail') return `${base}-thumb.jpg`;
-      return `${base}.jpg`; // display — falls back to full if display not generated yet
-    }
-
-    // Legacy: pre-generated cropped photo (split pages) — use directly
-    if (p.crop && p.cropped_photo) {
-      return p.cropped_photo;
-    }
-
-    // Legacy: prefer archived photo, then original sources
-    const baseUrl = p.archived_photo || p.photo_original || p.photo;
-    if (!baseUrl) return '';
-
-    // Cropping requires the image proxy for server-side crop
+    // Full tier: for magnifier/fullscreen — want the highest resolution
+    // Split pages with crop use proxy for server-side crop
     if (p.crop?.xStart !== undefined && p.crop?.xEnd !== undefined) {
-      return `/api/image?url=${encodeURIComponent(baseUrl)}&w=${width}&q=${quality}&cx=${p.crop.xStart}&cw=${p.crop.xEnd}`;
+      const baseUrl = p.archived_photo || p.photo_original || p.photo;
+      if (!baseUrl) return '';
+      return `/api/image?url=${encodeURIComponent(baseUrl)}&w=2400&q=90&cx=${p.crop.xStart}&cw=${p.crop.xEnd}`;
     }
 
-    // Archived images: full quality direct from CDN, display/thumbnail via proxy for resize
-    if (p.archived_photo) {
-      if (tier === 'full') {
-        return p.archived_photo;
-      }
-      return `/api/image?url=${encodeURIComponent(p.archived_photo)}&w=${width}&q=${quality}`;
-    }
+    // New path convention: derive full-res URL
+    const newPathMatch = p.photo?.match(/^(https:\/\/images\.sourcelibrary\.org\/pages\/[^/]+\/\d{4,})(-full)?\.jpg$/);
+    if (newPathMatch) return `${newPathMatch[1]}-full.jpg`;
 
-    // External sources: proxy for resize/optimization
-    return `/api/image?url=${encodeURIComponent(baseUrl)}&w=${width}&q=${quality}`;
+    // Archived photo is full-res — serve directly from CDN
+    if (isUsableImageUrl(p.archived_photo)) return p.archived_photo!;
+
+    // External sources: proxy
+    const baseUrl = p.photo_original || p.photo;
+    return baseUrl ? `/api/image?url=${encodeURIComponent(baseUrl)}&w=2400&q=90` : '';
   };
 
   // URLs for current page at different quality tiers
@@ -694,12 +677,7 @@ export default function TranslationEditor({
 
   // Prefetch adjacent page images for faster navigation
   useEffect(() => {
-    const getSmallImageUrl = (p: Page) => {
-      if (p.thumbnail) return p.thumbnail;
-      if (p.archived_photo) return `/api/image?url=${encodeURIComponent(p.archived_photo)}&w=150&q=60`;
-      const baseUrl = p.photo_original || p.photo;
-      return baseUrl ? `/api/image?url=${encodeURIComponent(baseUrl)}&w=150&q=60` : '';
-    };
+    const getSmallImageUrl = (p: Page) => getPageThumbUrl(p) || '';
 
     const prefetchImage = (url: string) => {
       const img = new window.Image();
@@ -957,18 +935,6 @@ export default function TranslationEditor({
 
             {/* Right side: Mode toggle + Like + extras on desktop */}
             <div className="flex items-center gap-1 sm:gap-2">
-              {isSplitPage && (
-                <button
-                  onClick={() => setShowResetSplitConfirm(true)}
-                  className="hidden sm:flex items-center gap-1.5 px-2.5 py-1.5 rounded-md text-sm font-medium hover:bg-red-50 transition-all"
-                  style={{ color: 'var(--text-muted)' }}
-                  title="Reset this split back to original two-page spread"
-                >
-                  <RotateCcw className="w-4 h-4" />
-                  Reset Split
-                </button>
-              )}
-
               {/* Desktop extras: Font size */}
               <div className="hidden sm:flex items-center p-1 rounded-lg" style={{ background: 'var(--bg-warm)' }}>
                 <div className="relative" ref={fontControlsRef}>
@@ -1562,74 +1528,6 @@ export default function TranslationEditor({
         )}
 
 
-        {/* Reset Split Confirmation Modal (read mode) */}
-        {showResetSplitConfirm && (
-          <div className="fixed inset-0 bg-black/50 flex items-center justify-center z-50 p-4">
-            <div
-              role="dialog"
-              aria-modal="true"
-              aria-labelledby="reset-split-title-read"
-              className="bg-white rounded-xl shadow-2xl max-w-md w-full p-6"
-            >
-              <div className="flex items-center gap-3 mb-4">
-                <div className="w-10 h-10 rounded-full flex items-center justify-center" style={{ background: 'linear-gradient(135deg, #fef3c7 0%, #fde68a 100%)' }}>
-                  <RotateCcw className="w-5 h-5" style={{ color: 'var(--accent-rust, #c45d3a)' }} aria-hidden="true" />
-                </div>
-                <h3 id="reset-split-title-read" className="text-lg font-semibold" style={{ color: 'var(--text-primary)' }}>
-                  Reset Split?
-                </h3>
-              </div>
-
-              <p className="text-sm mb-4" style={{ color: 'var(--text-secondary)' }}>
-                This will merge this page back with its other half into a single two-page spread.
-              </p>
-
-              {hasDataOnSplit && (
-                <div className="rounded-lg p-3 mb-4" style={{ background: 'rgb(254 243 199)', border: '1px solid rgb(251 191 36)' }}>
-                  <p className="text-sm font-medium" style={{ color: 'rgb(146 64 14)' }}>
-                    ⚠️ Warning: OCR or translation data exists
-                  </p>
-                  <p className="text-xs mt-1" style={{ color: 'rgb(180 83 9)' }}>
-                    Resetting will delete the right page and its OCR/translation. The left page data will remain but may not match the full image.
-                  </p>
-                </div>
-              )}
-
-              <p className="text-sm mb-6" style={{ color: 'var(--text-muted)' }}>
-                You&apos;ll be taken to the Split page where you can re-split with a different position if needed.
-              </p>
-
-              <div className="flex justify-end gap-3">
-                <button
-                  onClick={() => setShowResetSplitConfirm(false)}
-                  disabled={resettingSplit}
-                  className="px-4 py-2 text-sm font-medium rounded-lg transition-colors hover:bg-stone-100"
-                  style={{ color: 'var(--text-muted)' }}
-                >
-                  Cancel
-                </button>
-                <button
-                  onClick={handleResetSplit}
-                  disabled={resettingSplit}
-                  className="flex items-center gap-2 px-4 py-2 text-sm font-medium text-white rounded-lg transition-all hover:opacity-90 disabled:opacity-50"
-                  style={{ background: 'rgb(220 38 38)' }}
-                >
-                  {resettingSplit ? (
-                    <>
-                      <Loader2 className="w-4 h-4 animate-spin" />
-                      Resetting...
-                    </>
-                  ) : (
-                    <>
-                      <RotateCcw className="w-4 h-4" />
-                      Reset Split
-                    </>
-                  )}
-                </button>
-              </div>
-            </div>
-          </div>
-        )}
       </div>
     );
   }
@@ -2150,75 +2048,6 @@ export default function TranslationEditor({
                 style={{ background: 'var(--accent-rust, #c45d3a)' }}
               >
                 Got it
-              </button>
-            </div>
-          </div>
-        </div>
-      )}
-
-      {/* Reset Split Confirmation Modal */}
-      {showResetSplitConfirm && (
-        <div className="fixed inset-0 bg-black/50 flex items-center justify-center z-50 p-4">
-          <div
-            role="dialog"
-            aria-modal="true"
-            aria-labelledby="reset-split-title"
-            className="bg-white rounded-xl shadow-2xl max-w-md w-full p-6"
-          >
-            <div className="flex items-center gap-3 mb-4">
-              <div className="w-10 h-10 rounded-full flex items-center justify-center" style={{ background: 'linear-gradient(135deg, #fef3c7 0%, #fde68a 100%)' }}>
-                <RotateCcw className="w-5 h-5" style={{ color: 'var(--accent-rust, #c45d3a)' }} aria-hidden="true" />
-              </div>
-              <h3 id="reset-split-title" className="text-lg font-semibold" style={{ color: 'var(--text-primary)' }}>
-                Reset Split?
-              </h3>
-            </div>
-
-            <p className="text-sm mb-4" style={{ color: 'var(--text-secondary)' }}>
-              This will merge this page back with its other half into a single two-page spread.
-            </p>
-
-            {hasDataOnSplit && (
-              <div className="rounded-lg p-3 mb-4" style={{ background: 'rgb(254 243 199)', border: '1px solid rgb(251 191 36)' }}>
-                <p className="text-sm font-medium" style={{ color: 'rgb(146 64 14)' }}>
-                  ⚠️ Warning: OCR or translation data exists
-                </p>
-                <p className="text-xs mt-1" style={{ color: 'rgb(180 83 9)' }}>
-                  Resetting will delete the right page and its OCR/translation. The left page data will remain but may not match the full image.
-                </p>
-              </div>
-            )}
-
-            <p className="text-sm mb-6" style={{ color: 'var(--text-muted)' }}>
-              You&apos;ll be taken to the Split page where you can re-split with a different position if needed.
-            </p>
-
-            <div className="flex justify-end gap-3">
-              <button
-                onClick={() => setShowResetSplitConfirm(false)}
-                disabled={resettingSplit}
-                className="px-4 py-2 text-sm font-medium rounded-lg transition-colors hover:bg-stone-100"
-                style={{ color: 'var(--text-muted)' }}
-              >
-                Cancel
-              </button>
-              <button
-                onClick={handleResetSplit}
-                disabled={resettingSplit}
-                className="flex items-center gap-2 px-4 py-2 text-sm font-medium text-white rounded-lg transition-all hover:opacity-90 disabled:opacity-50"
-                style={{ background: 'rgb(220 38 38)' }}
-              >
-                {resettingSplit ? (
-                  <>
-                    <Loader2 className="w-4 h-4 animate-spin" />
-                    Resetting...
-                  </>
-                ) : (
-                  <>
-                    <RotateCcw className="w-4 h-4" />
-                    Reset Split
-                  </>
-                )}
               </button>
             </div>
           </div>

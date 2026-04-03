@@ -6,6 +6,7 @@ import Image from 'next/image';
 import { BookOpen, Calendar, FileText } from 'lucide-react';
 import { cn } from '@/lib/utils';
 import { firstTranslationBadge } from '@/lib/first-translation-labels';
+import AuthorName from '@/components/AuthorName';
 
 interface CollectionBook {
   bookId: string;
@@ -109,7 +110,7 @@ export default function CollectionBookCard({ book, priority = false }: Collectio
           >
             {book.title}
           </h3>
-          <p className="text-sm text-secondary mb-3 line-clamp-1">{book.author}</p>
+          <p className="text-sm text-secondary mb-3 line-clamp-1"><AuthorName author={book.author} /></p>
 
           <div className="flex flex-wrap gap-2 text-xs text-muted">
             <span className="flex items-center gap-1">

@@ -192,6 +192,42 @@ for (const config of COLLECTIONS) {
   results.push(result);
 }
 
+// ── pages_images sync (image URLs for display backfill) ──────────────
+// Syncs pages updated in the last 10 minutes (covers archiving + backfill writes).
+// Uses updated_at from MongoDB, upserts to Supabase.
+{
+  const since = new Date(Date.now() - 10 * 60 * 1000); // last 10 min
+  const pages = await db.collection('pages')
+    .find(
+      { updated_at: { $gt: since }, archived_photo: { $exists: true } },
+      { projection: { id: 1, _id: 1, book_id: 1, page_number: 1, archived_photo: 1, display_photo: 1, thumbnail_blob: 1 } }
+    )
+    .batchSize(5000)
+    .maxTimeMS(10_000)
+    .toArray()
+    .catch(() => []);
+
+  if (pages.length > 0) {
+    const rows = pages.map(p => ({
+      id: p.id || p._id?.toString(),
+      book_id: p.book_id,
+      page_number: p.page_number,
+      archived_photo: p.archived_photo || null,
+      display_photo: p.display_photo || null,
+      thumbnail_blob: p.thumbnail_blob || null,
+    }));
+
+    let synced = 0;
+    for (let i = 0; i < rows.length; i += BATCH_SIZE) {
+      const batch = rows.slice(i, i + BATCH_SIZE);
+      const { error } = await supabase.from('pages_images').upsert(batch, { onConflict: 'id' });
+      if (!error) synced += batch.length;
+    }
+
+    results.push({ name: 'pages_images', synced });
+  }
+}
+
 await mongoClient.close();
 
 const totalSynced = results.reduce((s, r) => s + r.synced, 0);

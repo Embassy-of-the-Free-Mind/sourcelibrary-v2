@@ -8,6 +8,7 @@ import type { Book } from '@/lib/types';
 import { recordLoadingMetric } from '@/lib/analytics';
 import { bookUrl } from '@/lib/slugify';
 import { firstTranslationBadge } from '@/lib/first-translation-labels';
+import AuthorName from '@/components/AuthorName';
 
 interface BookCardProps {
   book: Book;
@@ -110,7 +111,7 @@ export default function BookCard({ book, priority = false }: BookCardProps) {
             }}
           >
             <div className="font-serif font-semibold">{book.display_title || book.title}</div>
-            <div className="text-stone-300 text-xs mt-1">{book.author}</div>
+            <div className="text-stone-300 text-xs mt-1"><AuthorName author={book.author} /></div>
           </div>
         )}
 
@@ -160,7 +161,7 @@ export default function BookCard({ book, priority = false }: BookCardProps) {
           <h3 className="font-serif font-semibold text-stone-900 line-clamp-2 group-hover:text-accent-rust transition-colors">
             {book.display_title || book.title}
           </h3>
-          <p className="text-sm text-stone-600 mt-1 line-clamp-1">{book.author}</p>
+          <p className="text-sm text-stone-600 mt-1 line-clamp-1"><AuthorName author={book.author} /></p>
           <div className="flex items-center flex-wrap gap-x-2 gap-y-1 mt-2 text-xs text-stone-500">
             <span className="px-2 py-0.5 bg-stone-100 rounded">
               {book.language?.startsWith('Multiple') ? 'Multiple' : book.language}
