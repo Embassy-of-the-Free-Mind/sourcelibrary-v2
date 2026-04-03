@@ -22,7 +22,7 @@ interface SearchOptions {
 
 /**
  * Build a $search aggregation stage for the books collection.
- * Searches title, display_title, author, reading_summary.overview with boosting.
+ * Searches title, display_title, english_title, author, reading_summary.overview with boosting.
  * Filters on indexed fields (hidden, language, categories, year, is_first_translation, pages_translated).
  *
  * Options:
@@ -37,6 +37,7 @@ export function buildBookSearchStage(query: string, filters: BookSearchFilters =
         // Autocomplete for prefix matching on title/author
         { autocomplete: { query, path: 'title', score: { boost: { value: 10 } }, ...fuzzyOpt } },
         { autocomplete: { query, path: 'display_title', score: { boost: { value: 10 } }, ...fuzzyOpt } },
+        { autocomplete: { query, path: 'english_title', score: { boost: { value: 8 } }, ...fuzzyOpt } },
         { autocomplete: { query, path: 'author', score: { boost: { value: 5 } }, ...fuzzyOpt } },
         // Also include text match on overview (no autocomplete index on this field)
         { text: { query, path: 'reading_summary.overview' } },
@@ -44,6 +45,7 @@ export function buildBookSearchStage(query: string, filters: BookSearchFilters =
     : [
         { text: { query, path: 'title', score: { boost: { value: 10 } }, ...fuzzyOpt } },
         { text: { query, path: 'display_title', score: { boost: { value: 10 } }, ...fuzzyOpt } },
+        { text: { query, path: 'english_title', score: { boost: { value: 8 } }, ...fuzzyOpt } },
         { text: { query, path: 'author', score: { boost: { value: 5 } }, ...fuzzyOpt } },
         { text: { query, path: 'reading_summary.overview', ...fuzzyOpt } },
       ];
