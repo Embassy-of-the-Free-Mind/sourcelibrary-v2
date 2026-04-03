@@ -17,7 +17,8 @@ interface Props {
   searchParams: Promise<Record<string, string | string[] | undefined>>;
 }
 
-// Decode slug back to language name — handles multi-word languages
+// Decode slug back to language name — handles multi-word and hyphenated languages.
+// Tries exact match first (space-joined), then hyphen-joined, then case-insensitive DB lookup.
 function decodeLanguageSlug(slug: string): string {
   return slug
     .split('-')
@@ -25,11 +26,46 @@ function decodeLanguageSlug(slug: string): string {
     .join(' ');
 }
 
+async function resolveLanguageName(slug: string): Promise<string | null> {
+  const { supabase } = await import('@/lib/supabase');
+
+  // Generate candidate names from the slug
+  const parts = slug.split('-').map(w => w.charAt(0).toUpperCase() + w.slice(1));
+  const candidates = [
+    parts.join(' '),     // "Latin German"
+    parts.join('-'),     // "Latin-German"
+    slug,                // "egy" (raw slug, for short codes)
+  ];
+
+  // Try exact matches first (fast)
+  for (const name of candidates) {
+    const { count } = await supabase
+      .from('books_catalog')
+      .select('id', { count: 'exact', head: true })
+      .eq('visible', true)
+      .gt('pages_count', 0)
+      .eq('language', name);
+    if (count && count > 0) return name;
+  }
+
+  // Fallback: case-insensitive search
+  const { data } = await supabase
+    .from('books_catalog')
+    .select('language')
+    .eq('visible', true)
+    .gt('pages_count', 0)
+    .ilike('language', candidates[0].replace(/ /g, '%'))
+    .limit(1);
+  if (data && data.length > 0) return data[0].language as string;
+
+  return null;
+}
+
 // ---------- Metadata ----------
 
 export async function generateMetadata({ params }: Props): Promise<Metadata> {
   const { code } = await params;
-  const langName = decodeLanguageSlug(code);
+  const langName = await resolveLanguageName(code) || decodeLanguageSlug(code);
 
   let count: number;
   try {
@@ -133,7 +169,7 @@ async function fetchLanguageData(langName: string, sort: string, offset: number,
 
 export default async function LanguageDetailPage({ params, searchParams }: Props) {
   const { code } = await params;
-  const langName = decodeLanguageSlug(code);
+  const langName = await resolveLanguageName(code) || decodeLanguageSlug(code);
 
   const sp = await searchParams;
   const sort = (typeof sp.sort === 'string' ? sp.sort : '') || 'popular';
