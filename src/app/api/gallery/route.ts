@@ -91,7 +91,7 @@ export async function GET(request: NextRequest) {
       collectionBookIds = await db.collection('books').distinct('id', {
         collections: collectionSlug,
         visible: true,
-      }) as string[];
+      }, { maxTimeMS: 10000 }) as string[];
     }
 
     // If filtering by library/provider, resolve to book IDs
@@ -100,7 +100,7 @@ export async function GET(request: NextRequest) {
       libraryBookIds = await db.collection('books').distinct('id', {
         'image_source.provider': libraryFilter,
         visible: true,
-      }) as string[];
+      }, { maxTimeMS: 10000 }) as string[];
     }
 
     // Build query filter
