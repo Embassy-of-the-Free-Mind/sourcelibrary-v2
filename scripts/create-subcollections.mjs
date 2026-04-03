@@ -109,6 +109,18 @@ const SUBCOLLECTIONS = {
     { slug: 'judeo-islamic-philosophy', name: 'Judeo-Islamic Philosophy', subtitle: 'Maimonides, Judeo-Arabic texts, and the rich philosophical exchange between Jewish and Islamic thinkers' },
     { slug: 'quran-islamic-theology', name: 'Quran & Islamic Theology', subtitle: 'Quran editions, tafsir commentaries, kalam theology, and Islamic sacred texts' },
   ],
+  'sumerian-mesopotamian': [
+    { slug: 'royal-court-poetry', name: 'Royal & Court Poetry', subtitle: 'Hymns and praise poems for Sumerian and Babylonian kings — Šulgi, Išme-Dagan, Hammurabi, and the ideology of sacred kingship' },
+    { slug: 'divine-hymns', name: 'Divine Hymns & Temple Songs', subtitle: 'Hymns to Enlil, Inana, Nanna, Enki, and the great gods — the liturgical poetry of Mesopotamian temples' },
+    { slug: 'myths-epics', name: 'Myths & Epics', subtitle: 'Gilgamesh, Enmerkar, Lugalbanda, the Flood — the narrative imagination of the ancient Near East' },
+    { slug: 'wisdom-debate-literature', name: 'Wisdom & Debate Literature', subtitle: 'Proverb collections, dialogues, disputations, and diatribes — the philosophical voice of Sumer' },
+  ],
+  'slavic-tradition': [
+    { slug: 'russian-religious-philosophy', name: 'Russian Religious Philosophy', subtitle: 'Solovyov, Berdyaev, Bulgakov, Frank, Florensky — the great tradition of Russian philosophical theology' },
+    { slug: 'russian-theosophy-occultism', name: 'Russian Theosophy & Occultism', subtitle: 'Blavatsky, Ouspensky, Gurdjieff — the Russian contribution to the Western esoteric tradition' },
+    { slug: 'russian-literary-social-thought', name: 'Russian Literary & Social Thought', subtitle: 'Herzen, Chaadaev, Chernyshevsky, Lavrov — philosophy, criticism, and the Russian intelligentsia' },
+    { slug: 'slavic-esoteric-translations', name: 'Slavic Esoteric Translations', subtitle: 'Western mystical and Masonic works in Russian translation — Eckartshausen, Saint-Martin, and the Masonic underground' },
+  ],
 };
 
 // ─── Rule-based classification ───
@@ -333,6 +345,55 @@ const RULES = {
     if (hasCat(cats, 'philosophy', 'neoplatonism') || a.includes('averro') || a.includes('al-farabi')
       || a.includes('al-kindi') || a.includes('al-ghazali') || t.includes('aristotel'))
       return 'falsafa';
+    return null;
+  },
+  'sumerian-mesopotamian': (b) => {
+    const cats = (b.categories || []).map(lc);
+    const t = lc(b.title);
+    // Myths & Epics
+    if (hasCat(cats, 'myths and epics', 'gilgameš') || t.includes('gilgamesh') || t.includes('gilgameš')
+      || t.includes('enmerkar') || t.includes('lugalbanda') || t.includes('flood'))
+      return 'myths-epics';
+    // Wisdom & Debate
+    if (hasCat(cats, 'wisdom and debate', 'proverb collections', 'diatribes')
+      || t.includes('proverb') || t.includes('diatribe') || t.includes('debate') || t.includes('dispute'))
+      return 'wisdom-debate-literature';
+    // Royal & Court Poetry
+    if (hasCat(cats, 'royal and court poetry', 'literary letters'))
+      return 'royal-court-poetry';
+    // Divine Hymns
+    if (hasCat(cats, 'hymns and songs') || cats.some(c => c.includes('hymns'))
+      || t.includes('hymn') || t.includes('lament') || t.includes('prayer'))
+      return 'divine-hymns';
+    return null;
+  },
+  'slavic-tradition': (b) => {
+    const cats = (b.categories || []).map(lc);
+    const t = lc(b.title);
+    const a = lc(b.author);
+    // Theosophy & Occultism — Blavatsky, Ouspensky
+    if (hasCat(cats, 'theosophy') || a.includes('blavatsky') || a.includes('ouspensky')
+      || a.includes('gurdjieff') || t.includes('theosophy') || t.includes('secret doctrine')
+      || t.includes('isis unveiled') || t.includes('tertium organum'))
+      return 'russian-theosophy-occultism';
+    // Esoteric translations — identifiable by Cyrillic markers or known translators
+    if (t.includes('cyrillisch') || t.includes('cyrillic') || hasCat(cats, 'freemasonry')
+      || a.includes('eckartshausen') || a.includes('lopukhin') || a.includes('starck')
+      || a.includes('saint-martin') || a.includes('köppen'))
+      return 'slavic-esoteric-translations';
+    // Religious Philosophy — Solovyov, Berdyaev, Bulgakov, Frank, Florensky, Khomyakov
+    if (a.includes('solovyov') || a.includes('soloviev') || a.includes('berdyaev') || a.includes('бердяев')
+      || a.includes('bulgakov') || a.includes('frank') || a.includes('florensky') || a.includes('florenskii')
+      || a.includes('khomyakov') || a.includes('khomiakov') || a.includes('trubetskoi')
+      || a.includes('losev') || a.includes('lossky') || a.includes('shestov') || a.includes('шестов')
+      || hasCat(cats, 'christian-mysticism') || (hasCat(cats, 'theology') && hasCat(cats, 'philosophy')))
+      return 'russian-religious-philosophy';
+    // Literary & Social Thought — Herzen, Chaadaev, Chernyshevsky, Lavrov
+    if (a.includes('herzen') || a.includes('chaadaev') || a.includes('chernyshevsky') || a.includes('чернышевский')
+      || a.includes('lavrov') || a.includes('merezhkovsky') || a.includes('belinsky')
+      || a.includes('pushkin') || a.includes('пушкин') || a.includes('dostoevsk')
+      || a.includes('tolsto'))
+      return 'russian-literary-social-thought';
     return null;
   },
 };
