@@ -142,26 +142,68 @@ const STATIC_PAGES = [
   '/upload',
 ];
 
-// Dynamic pages with known-good sample slugs
+// Dynamic pages with known-good sample slugs — cover every dynamic route template
 const DYNAMIC_PAGES = [
+  // /book/[id] — multiple books to catch template bugs
   '/book/the-hermetic-museum-various-sendivogius',
+  '/book/theatrum-chemicum-zetzner',
+  '/book/de-occulta-philosophia-agrippa',
+
+  // /collections/[id] — broad sample across collection types
   '/collections/alchemy',
   '/collections/classical-philosophy',
   '/collections/hermetica',
   '/collections/kabbalah',
   '/collections/rosicrucianism',
   '/collections/astrology',
+  '/collections/natural-philosophy',
+  '/collections/theurgy',
+
+  // /browse/authors/[letter]
   '/browse/authors/A',
   '/browse/authors/F',
+  '/browse/authors/M',
+  '/browse/authors/P',
+
+  // /browse/titles/[letter]
   '/browse/titles/A',
+  '/browse/titles/D',
+  '/browse/titles/T',
+
+  // /browse/years/[period]
+  '/browse/years/ancient',
+  '/browse/years/medieval',
   '/browse/years/1500s',
+  '/browse/years/1600s',
+  '/browse/years/1700s',
+
+  // /libraries/[slug]
   '/libraries/internet-archive',
+  '/libraries/embassy-of-the-free-mind',
+
+  // /languages/[code]
   '/languages/latin',
   '/languages/german',
-  '/search?q=alchemy',
-  '/search?q=Ficino',
+  '/languages/french',
+  '/languages/greek',
+  '/languages/hebrew',
+
+  // /author/[name]
   '/author/Marsilio-Ficino',
   '/author/Paracelsus',
+  '/author/Heinrich-Cornelius-Agrippa',
+  '/author/Robert-Fludd',
+
+  // /search with queries
+  '/search?q=alchemy',
+  '/search?q=Ficino',
+  '/search?q=translation',
+
+  // /artwork pages
+  '/artwork',
+
+  // /encyclopedia/[name]
+  '/encyclopedia/Hermes%20Trismegistus',
 ];
 
 const ALL_PAGES = [...STATIC_PAGES, ...DYNAMIC_PAGES];
@@ -213,94 +255,194 @@ interface PageResult {
   loadTimeMs: number;
 }
 
+// Shared helper: check a single URL and return the result
+async function checkPage(
+  request: { get: (url: string, opts?: { timeout?: number }) => Promise<any> },
+  path: string,
+  isAuth: boolean
+): Promise<PageResult> {
+  const start = Date.now();
+  try {
+    const response = await request.get(path, { timeout: 30_000 });
+    const status = response.status();
+    const elapsed = Date.now() - start;
+
+    let error: string | null = null;
+
+    if (isAuth) {
+      if (status >= 500) {
+        error = `Server error ${status}`;
+      }
+    } else if (status >= 400) {
+      error = `HTTP ${status}`;
+    }
+
+    // Check response body for error messages on pages that returned 200
+    if (status === 200 && !isAuth) {
+      const body = await response.text();
+      for (const pattern of ERROR_PATTERNS) {
+        if (body.includes(pattern)) {
+          error = `Page returned 200 but contains error: "${pattern}"`;
+          break;
+        }
+      }
+    }
+
+    return { path, status, error, loadTimeMs: elapsed };
+  } catch (err: any) {
+    const elapsed = Date.now() - start;
+    return {
+      path,
+      status: null,
+      error: `Request failed: ${err.message?.slice(0, 100)}`,
+      loadTimeMs: elapsed,
+    };
+  }
+}
+
+function printResults(results: PageResult[], broken: PageResult[], label: string) {
+  console.log(`\n========== ${label} ==========`);
+  console.log(`Total pages tested: ${results.length}`);
+  console.log(`Passed: ${results.length - broken.length}`);
+  console.log(`Broken: ${broken.length}`);
+
+  if (broken.length > 0) {
+    console.log('\n--- BROKEN PAGES ---');
+    for (const b of broken) {
+      console.log(`  ${b.status ?? 'TIMEOUT'} | ${b.path} | ${b.error} (${b.loadTimeMs}ms)`);
+    }
+  }
+
+  const slow = results.filter(r => r.loadTimeMs > 10_000 && !r.error);
+  if (slow.length > 0) {
+    console.log('\n--- SLOW PAGES (>10s) ---');
+    for (const s of slow) {
+      console.log(`  ${s.loadTimeMs}ms | ${s.path}`);
+    }
+  }
+
+  console.log('\n====================================\n');
+}
+
 test.describe('Full site crawl', () => {
-  // Increase timeout for the full crawl
   test.setTimeout(600_000); // 10 minutes
 
-  test('crawl all pages and report broken ones', async ({ page, request }) => {
+  test('crawl all pages and report broken ones', async ({ request }) => {
     const results: PageResult[] = [];
     const broken: PageResult[] = [];
 
     for (const path of ALL_PAGES) {
       const isAuth = AUTH_PAGES.has(path.split('?')[0]);
-      const start = Date.now();
-
-      try {
-        // Use request context for speed — no JS execution needed for status check
-        const response = await request.get(path, { timeout: 30_000 });
-        const status = response.status();
-        const elapsed = Date.now() - start;
-
-        let error: string | null = null;
-
-        if (isAuth) {
-          // Auth pages might redirect (302/307) or return 401/403 — that's fine
-          if (status >= 500) {
-            error = `Server error ${status}`;
-          }
-        } else if (status >= 400) {
-          error = `HTTP ${status}`;
-        }
-
-        // Check response body for error messages on pages that returned 200
-        if (status === 200 && !isAuth) {
-          const body = await response.text();
-          for (const pattern of ERROR_PATTERNS) {
-            if (body.includes(pattern)) {
-              error = `Page returned 200 but contains error: "${pattern}"`;
-              break;
-            }
-          }
-        }
-
-        const result: PageResult = { path, status, error, loadTimeMs: elapsed };
-        results.push(result);
-        if (error) broken.push(result);
-
-      } catch (err: any) {
-        const elapsed = Date.now() - start;
-        const result: PageResult = {
-          path,
-          status: null,
-          error: `Request failed: ${err.message?.slice(0, 100)}`,
-          loadTimeMs: elapsed,
-        };
-        results.push(result);
-        broken.push(result);
-      }
+      const result = await checkPage(request, path, isAuth);
+      results.push(result);
+      if (result.error) broken.push(result);
 
       // Small delay to avoid hammering the server
       await new Promise(r => setTimeout(r, 200));
     }
 
-    // Print summary
-    console.log('\n========== CRAWL RESULTS ==========');
-    console.log(`Total pages tested: ${results.length}`);
-    console.log(`Passed: ${results.length - broken.length}`);
-    console.log(`Broken: ${broken.length}`);
+    printResults(results, broken, 'CRAWL RESULTS');
 
-    if (broken.length > 0) {
-      console.log('\n--- BROKEN PAGES ---');
-      for (const b of broken) {
-        console.log(`  ${b.status ?? 'TIMEOUT'} | ${b.path} | ${b.error} (${b.loadTimeMs}ms)`);
-      }
-    }
-
-    // Also report slow pages (>10s)
-    const slow = results.filter(r => r.loadTimeMs > 10_000 && !r.error);
-    if (slow.length > 0) {
-      console.log('\n--- SLOW PAGES (>10s) ---');
-      for (const s of slow) {
-        console.log(`  ${s.loadTimeMs}ms | ${s.path}`);
-      }
-    }
-
-    console.log('\n====================================\n');
-
-    // Fail the test if any pages are broken
     expect(
       broken.map(b => `${b.status ?? 'TIMEOUT'} ${b.path}: ${b.error}`),
       `${broken.length} broken pages found`
+    ).toHaveLength(0);
+  });
+});
+
+test.describe('Link follower', () => {
+  test.setTimeout(600_000); // 10 minutes
+
+  test('follow internal links from key pages and verify they resolve', async ({ page, request }) => {
+    // Seed pages to start crawling from — these are high-traffic pages with many links
+    const SEED_PAGES = [
+      '/',
+      '/collections',
+      '/browse',
+      '/languages',
+      '/libraries',
+      '/about',
+      '/embassy',
+    ];
+
+    const baseUrl = (page as any)._browserContext._options?.baseURL
+      || process.env.BASE_URL
+      || 'https://sourcelibrary-v2.vercel.app';
+
+    const visited = new Set<string>();
+    const discovered = new Set<string>();
+    const results: PageResult[] = [];
+    const broken: PageResult[] = [];
+
+    // Collect all internal links from seed pages
+    for (const seedPath of SEED_PAGES) {
+      try {
+        await page.goto(seedPath, { waitUntil: 'domcontentloaded', timeout: 30_000 });
+
+        // Extract all internal hrefs
+        const hrefs = await page.evaluate((base: string) => {
+          const links = document.querySelectorAll('a[href]');
+          const paths: string[] = [];
+          for (const link of links) {
+            const href = link.getAttribute('href');
+            if (!href) continue;
+
+            // Skip external links, anchors, mailto, tel, javascript
+            if (href.startsWith('http') && !href.startsWith(base)) continue;
+            if (href.startsWith('#') || href.startsWith('mailto:') || href.startsWith('tel:') || href.startsWith('javascript:')) continue;
+
+            // Normalize: strip base URL prefix, keep path + query
+            let path = href;
+            if (path.startsWith(base)) path = path.slice(base.length);
+            if (!path.startsWith('/')) continue;
+
+            // Strip hash fragments
+            path = path.split('#')[0];
+            if (!path) continue;
+
+            paths.push(path);
+          }
+          return [...new Set(paths)];
+        }, baseUrl);
+
+        for (const href of hrefs) {
+          discovered.add(href);
+        }
+      } catch {
+        // Seed page failed — that's OK, it'll be caught by the main crawl test
+      }
+    }
+
+    // Filter out already-tested pages, auth pages, API routes, and image URLs
+    const linksToCheck = [...discovered].filter(path => {
+      const cleanPath = path.split('?')[0];
+      if (visited.has(cleanPath)) return false;
+      if (AUTH_PAGES.has(cleanPath)) return false;
+      if (cleanPath.startsWith('/api/')) return false;
+      if (cleanPath.startsWith('/auth/')) return false;
+      if (cleanPath.match(/\.(png|jpg|jpeg|gif|svg|ico|webp|pdf|xml|json|txt|css|js)$/i)) return false;
+      visited.add(cleanPath);
+      return true;
+    });
+
+    console.log(`\nDiscovered ${discovered.size} unique internal links from ${SEED_PAGES.length} seed pages`);
+    console.log(`Checking ${linksToCheck.length} links (after filtering auth/api/assets)\n`);
+
+    // Check each discovered link
+    for (const path of linksToCheck) {
+      const result = await checkPage(request, path, false);
+      results.push(result);
+      if (result.error) broken.push(result);
+
+      // Small delay
+      await new Promise(r => setTimeout(r, 150));
+    }
+
+    printResults(results, broken, 'LINK FOLLOWER RESULTS');
+
+    expect(
+      broken.map(b => `${b.status ?? 'TIMEOUT'} ${b.path}: ${b.error}`),
+      `${broken.length} broken links found`
     ).toHaveLength(0);
   });
 });
