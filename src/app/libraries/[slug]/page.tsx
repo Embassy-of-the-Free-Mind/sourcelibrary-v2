@@ -144,6 +144,7 @@ async function fetchLibraryData(providerKey: string, sort: string, language: str
   return {
     books: booksResult.books as unknown as BookItem[],
     total: booksResult.total,
+    topBooks: sampleResult.books.slice(0, 5) as unknown as BookItem[],
     languages,
     // eslint-disable-next-line @typescript-eslint/no-explicit-any
     galleryImages: galleryImages as any[],
@@ -204,7 +205,7 @@ export default async function LibraryDetailPage({ params, searchParams }: Props)
     isBph ? fetchBphCatalogTotal() : Promise.resolve(0),
   ]);
 
-  const { books, total, languages, galleryImages, contributingLibraries } = libraryData;
+  const { books, total, topBooks, languages, galleryImages, contributingLibraries } = libraryData;
 
   const totalPages = Math.ceil(total / PER_PAGE);
   const currentPage = Math.floor(offset / PER_PAGE) + 1;
@@ -359,6 +360,53 @@ export default async function LibraryDetailPage({ params, searchParams }: Props)
         {/* Catalog View */}
         {isBph && view === 'catalog' ? (
           <div>
+            {/* Selected Books row */}
+            {topBooks.length > 0 && (
+              <div className="mb-10">
+                <h2 className="text-2xl sm:text-3xl text-primary font-display mb-1">
+                  Selected Books
+                </h2>
+                <p className="text-sm text-muted mb-4">
+                  {total.toLocaleString()} books from the BPH collection translated on Source Library.
+                </p>
+                <div className="grid grid-cols-3 sm:grid-cols-4 lg:grid-cols-6 gap-4">
+                  {topBooks.map((book, i) => (
+                    <CollectionBookCard
+                      key={book.id}
+                      book={{
+                        bookId: book.id,
+                        id: book.id,
+                        slug: book.slug,
+                        title: bookTitle(book),
+                        author: book.author || '',
+                        year: book.year || 0,
+                        pages_count: book.pages_count,
+                        pages_ocr: book.pages_ocr,
+                        pages_translated: book.pages_translated,
+                        thumbnail: book.thumbnail || book.thumbnail_blob || book.photo,
+                        thumbnail_blob: book.thumbnail_blob,
+                        language: book.language,
+                        published: book.published,
+                        translation_percent: book.pages_ocr && book.pages_translated
+                          ? Math.round((book.pages_translated / Math.max((book.pages_ocr || 0) - (book.pages_blank || 0), 1)) * 100)
+                          : 0,
+                      }}
+                      priority={i < 5}
+                    />
+                  ))}
+                  <Link
+                    href={basePath}
+                    className="group flex flex-col items-center justify-center rounded-lg border border-border-light hover:border-accent-rust/40 transition-all hover:shadow-md bg-cream aspect-[2/3] min-h-[180px]"
+                  >
+                    <BookOpen className="w-6 h-6 text-muted mb-2 group-hover:text-accent-rust transition-colors" />
+                    <span className="text-sm text-secondary group-hover:text-accent-rust transition-colors font-medium text-center px-3">
+                      See all books
+                    </span>
+                  </Link>
+                </div>
+              </div>
+            )}
+
             <div className="mb-6">
               <h2 className="text-2xl sm:text-3xl text-primary font-display">
                 Library Catalog
