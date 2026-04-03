@@ -6,7 +6,7 @@
  *
  * Usage:
  *   set -a; source .env.production.local; set +a
- *   node scripts/artwork-enrichment.mjs --limit 10 [--dry-run] [--artist "Hendrick Goltzius"] [--force] [--provider met]
+ *   node scripts/artwork-enrichment.mjs --limit 10 [--dry-run] [--artist "Hendrick Goltzius"]
  *
  * GitHub issues: #336, #374
  */
@@ -14,11 +14,8 @@ import { MongoClient } from 'mongodb';
 import { GoogleGenerativeAI } from '@google/generative-ai';
 
 const DRY_RUN = process.argv.includes('--dry-run');
-const FORCE = process.argv.includes('--force');
-const NEEDS_TRANSLATION = process.argv.includes('--needs-translation');
 const LIMIT = parseInt(process.argv.find((_, i, a) => a[i - 1] === '--limit') || '10');
 const ARTIST_FILTER = process.argv.find((_, i, a) => a[i - 1] === '--artist') || null;
-const PROVIDER_FILTER = process.argv.find((_, i, a) => a[i - 1] === '--provider') || null;
 
 const client = new MongoClient(process.env.MONGODB_URI);
 const genAI = new GoogleGenerativeAI(process.env.GEMINI_API_KEY);
@@ -93,8 +90,6 @@ Analyze this artwork image and return JSON with these fields:
     }
   ],
   "inscriptions": "If the image contains readable text (Latin inscriptions, titles, captions, cartouches, verses, dedications, labels), transcribe it here verbatim. Preserve line breaks. If no readable text, set to null.",
-  "inscriptions_translation": "If inscriptions are in a non-English language (Latin, Dutch, German, French, etc.), provide an English translation. If already English or no inscriptions, set to null.",
-  "inscriptions_language": "Language of the inscriptions (e.g., 'Latin', 'Dutch', 'German'). Null if no inscriptions.",
   "has_readable_text": true,
   "figures_depicted": ["Named figures, historical persons, or figure types (e.g., 'Mercury', 'alchemist', 'Hermes Trismegistus')"],
   "symbols": ["Identifiable symbols with specific iconographic meaning (e.g., 'caduceus', 'ouroboros', 'pelican-in-her-piety'). NOT generic items like 'tree' or 'building'."]
@@ -158,16 +153,8 @@ async function main() {
   const books = db.collection('books');
 
   // Build query — resource_type_sparse index makes this fast
-  const query = { resource_type: { $exists: true } };
-  if (NEEDS_TRANSLATION) {
-    // Target artworks with readable text but no translation yet
-    query['enrichment.has_readable_text'] = true;
-    query['enrichment.inscriptions_translation'] = { $exists: false };
-  } else if (!FORCE) {
-    query.enrichment = { $exists: false };
-  }
+  const query = { resource_type: { $exists: true }, enrichment: { $exists: false } };
   if (ARTIST_FILTER) query.author = ARTIST_FILTER;
-  if (PROVIDER_FILTER) query['image_source.provider'] = PROVIDER_FILTER;
 
   const projection = {
     _id: 1, id: 1, slug: 1, title: 1, author: 1, published: 1,
@@ -175,42 +162,28 @@ async function main() {
     commons_categories: 1,
   };
 
-  // Batch fetch to avoid Atlas cursor timeouts (cursors die after 10min idle).
-  // Each enrichment call takes ~15s, so cursor-based iteration fails after ~40 items.
-  const BATCH_SIZE = 50;
-
+  // Use cursor-based iteration to avoid loading all docs into memory
+  // Atlas is slow on large .toArray() calls
+  let cursor;
   if (!ARTIST_FILTER && DRY_RUN) {
     // In dry-run mode, sample randomly for diversity
-    var _dryRunBatch = await books.aggregate([
+    const sampled = await books.aggregate([
       { $match: query },
       { $sample: { size: LIMIT } },
       { $project: projection },
     ]).toArray();
+    cursor = { [Symbol.asyncIterator]: async function*() { for (const d of sampled) yield d; }, count: sampled.length };
+  } else {
+    cursor = books.find(query, { projection }).limit(LIMIT);
+    cursor.count = LIMIT; // approximate
   }
 
-  console.log(`${DRY_RUN ? 'DRY RUN — ' : ''}${FORCE ? 'FORCE RE-ENRICH — ' : ''}Processing up to ${LIMIT} artworks in batches of ${BATCH_SIZE}...${PROVIDER_FILTER ? ` (provider: ${PROVIDER_FILTER})` : ''}`);
+  console.log(`${DRY_RUN ? 'DRY RUN — ' : ''}Processing up to ${LIMIT} artworks...`);
 
   let success = 0, errors = 0, totalTokens = 0, processed = 0;
   const results = [];
-  let lastId = null;
 
-  while (processed < LIMIT) {
-    // Fetch next batch (fresh query each time — no cursor to expire)
-    let batch;
-    if (_dryRunBatch) {
-      batch = _dryRunBatch;
-      _dryRunBatch = null; // only use once
-    } else {
-      const batchQuery = lastId ? { ...query, _id: { $gt: lastId } } : query;
-      batch = await books.find(batchQuery, { projection })
-        .sort({ _id: 1 })
-        .limit(Math.min(BATCH_SIZE, LIMIT - processed))
-        .toArray();
-    }
-    if (batch.length === 0) break;
-
-  for (const art of batch) {
-    lastId = art._id;
+  for await (const art of cursor) {
     processed++;
     const label = `[${processed}] ${art.author} — ${art.title?.substring(0, 50)}`;
 
@@ -252,8 +225,6 @@ async function main() {
             genre: enrichment.genre,
             cross_references: enrichment.cross_references || [],
             inscriptions: enrichment.inscriptions || null,
-            inscriptions_translation: enrichment.inscriptions_translation || null,
-            inscriptions_language: enrichment.inscriptions_language || null,
             has_readable_text: !!enrichment.has_readable_text,
             figures_depicted: enrichment.figures_depicted || [],
             symbols: enrichment.symbols || [],
@@ -263,17 +234,20 @@ async function main() {
           updated_at: new Date(),
         };
 
-        // Tag artwork into collections (same field books use)
-        const collectionSlugs = (enrichment.collections || []).filter(s =>
-          ALL_COLLECTIONS.some(c => c.slug === s)
-        );
+        await books.updateOne({ _id: art._id }, { $set: updateFields });
 
-        const update = { $set: updateFields };
-        if (collectionSlugs.length > 0) {
-          update.$addToSet = { collections: { $each: collectionSlugs } };
+        // Add to collections array (used by collection pages for querying)
+        if (enrichment.collections?.length > 0) {
+          const validSlugs = enrichment.collections.filter(s =>
+            ALL_COLLECTIONS.some(c => c.slug === s)
+          );
+          if (validSlugs.length > 0) {
+            await books.updateOne(
+              { _id: art._id },
+              { $addToSet: { collections: { $each: validSlugs } } }
+            );
+          }
         }
-
-        await books.updateOne({ _id: art._id }, update);
       }
 
       // Rate limit: 2s between calls
@@ -289,8 +263,7 @@ async function main() {
         await new Promise(r => setTimeout(r, 2000));
       }
     }
-  } // end for batch
-  } // end while batches
+  }
 
   // Summary
   console.log('\n━━━ SUMMARY ━━━');
