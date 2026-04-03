@@ -1155,6 +1155,7 @@ export default function SearchPage() {
 function BookResultCard({ result, query }: { result: SearchResult; query: string }) {
   const cover = result.thumbnail || (result as any).thumbnail_blob;
   const text = result.snippet || result.summary;
+  const [imgError, setImgError] = useState(false);
 
   return (
     <Link
@@ -1162,13 +1163,15 @@ function BookResultCard({ result, query }: { result: SearchResult; query: string
       className="block bg-white rounded-xl border border-border-light p-4 hover:border-accent-rust/30 hover:shadow-md transition-all"
     >
       <div className="flex items-start gap-4">
-        {cover ? (
+        {cover && !imgError ? (
           <Image
             src={cover}
             alt=""
             width={60}
             height={84}
             className="rounded shadow-sm flex-shrink-0 object-cover"
+            onError={() => setImgError(true)}
+            unoptimized
           />
         ) : (
           <div className="w-[60px] h-[84px] rounded bg-warm flex items-center justify-center flex-shrink-0">

@@ -121,8 +121,8 @@ export default async function CollectionDetailPage({ params }: PageProps) {
           </div>
         ) : (
           <div className="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-5 gap-4">
-            {data.items.map((item) => (
-              <CollectionImageCard key={item.id} item={item} />
+            {data.items.map((item, i) => (
+              <CollectionImageCard key={item.id} item={item} priority={i < 10} />
             ))}
           </div>
         )}

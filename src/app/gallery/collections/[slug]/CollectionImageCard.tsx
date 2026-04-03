@@ -18,7 +18,7 @@ export interface CollectionImageProps {
   likeCount?: number;
 }
 
-export default function CollectionImageCard({ item }: { item: CollectionImageProps }) {
+export default function CollectionImageCard({ item, priority = false }: { item: CollectionImageProps; priority?: boolean }) {
   const [imageError, setImageError] = useState(false);
   const displayUrl = item.thumbnailUrl || item.extractedUrl || item.imageUrl;
 
@@ -35,6 +35,8 @@ export default function CollectionImageCard({ item }: { item: CollectionImagePro
               sizes="(max-width: 640px) 50vw, (max-width: 768px) 33vw, (max-width: 1024px) 25vw, 16vw"
               onError={() => setImageError(true)}
               unoptimized
+              priority={priority}
+              loading={priority ? 'eager' : 'lazy'}
             />
           ) : (
             <div className="absolute inset-0 flex items-center justify-center text-stone-300">
