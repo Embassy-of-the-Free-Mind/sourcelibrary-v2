@@ -63,7 +63,7 @@ async function fetchCuratedCollections() {
   return { published, upcoming };
 }
 
-function PublishedCard({ col }: { col: CuratedCollection }) {
+function PublishedCard({ col, priority = false }: { col: CuratedCollection; priority?: boolean }) {
   const heroUrl = getHeroImage(col);
 
   return (
@@ -79,6 +79,7 @@ function PublishedCard({ col }: { col: CuratedCollection }) {
           sizes="(max-width: 640px) 100vw, 50vw"
           className="object-cover transition-transform duration-500 ease-out group-hover:scale-105"
           unoptimized
+          {...(priority ? { priority: true } : { loading: 'lazy' as const })}
         />
       ) : (
         <div className="absolute inset-0 bg-warm" />
@@ -148,8 +149,8 @@ export default async function CuratedCollectionsPage() {
         {published.length > 0 && (
           <div className="mb-14">
             <div className="grid gap-6 grid-cols-1 sm:grid-cols-2">
-              {published.map((col) => (
-                <PublishedCard key={col.slug} col={col} />
+              {published.map((col, i) => (
+                <PublishedCard key={col.slug} col={col} priority={i < 4} />
               ))}
             </div>
           </div>
