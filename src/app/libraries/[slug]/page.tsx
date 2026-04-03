@@ -305,8 +305,8 @@ export default async function LibraryDetailPage({ params, searchParams }: Props)
         </div>
       )}
 
-      {/* Contributing Libraries (for IA and similar aggregators) */}
-      {contributingLibraries.length > 0 && (
+      {/* Contributing Libraries (for IA and similar aggregators — hide for BPH since it IS the library) */}
+      {contributingLibraries.length > 0 && !isBph && (
         <div className="bg-warm border-b border-border-light">
           <div className="max-w-7xl mx-auto px-6 py-6">
             <div className="flex items-center gap-2 mb-4">
