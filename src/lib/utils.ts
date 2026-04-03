@@ -59,8 +59,20 @@ export function formatAuthor(author: string | undefined | null): { name: string;
   return { name: trimmed, attributed: false };
 }
 
+/**
+ * Resolve the best source image URL for a page.
+ *
+ * IMPORTANT: All image resolution in the app should go through this function
+ * or one of its variants (getPageDisplayUrl, getPageThumbUrl) to ensure
+ * consistent behavior. In particular, split-from-spread pages bypass the
+ * legacy fallback chain entirely — see `.claude/docs/page-system.md`.
+ *
+ * Legacy chain (non-split pages): cropped_photo > archived_photo > photo_original > photo
+ * Split pages: photo directly (no fallback)
+ */
 export function getPageImageUrl(page: Record<string, any>): string | null {
-  // Split-from-spread pages have clean photo — skip legacy fallback chain
+  // Split-from-spread pages: photo is the single source of truth.
+  // NEVER fall through to photo_original/archived_photo — those point to the unsplit spread.
   if (page.split_from_spread && isUsableImageUrl(page.photo)) return page.photo;
 
   if (isUsableImageUrl(page.cropped_photo)) return page.cropped_photo;

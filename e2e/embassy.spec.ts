@@ -62,13 +62,19 @@ test.describe('Embassy - Reading Room', () => {
     }
   });
 
-  test('profile link visible in sidebar', async ({ page }) => {
-    await expect(page.locator('a[href="/ficino-society"]')).toBeVisible();
-    await expect(page.locator('a[href="/collections"]')).toBeVisible();
+  test('sidebar links to Ficino Society and Collections', async ({ page }) => {
+    // These links are at the bottom of the sidebar — scroll into view first
+    const ficinoLink = page.locator('a[href="/ficino-society"]');
+    await ficinoLink.scrollIntoViewIfNeeded();
+    await expect(ficinoLink).toBeVisible();
+    const collectionsLink = page.locator('a[href="/collections"]').last();
+    await collectionsLink.scrollIntoViewIfNeeded();
+    await expect(collectionsLink).toBeVisible();
   });
 
   test('breadcrumb shows The Embassy', async ({ page }) => {
-    await expect(page.locator('a:has-text("The Embassy")')).toBeVisible();
+    // Use the breadcrumb link specifically (not the nav "The Embassy" link)
+    await expect(page.locator('header a[href="/embassy"]').first()).toBeVisible();
   });
 });
 

@@ -1,6 +1,6 @@
 import Link from 'next/link';
 import Image from 'next/image';
-import { BookOpen, Scale, CheckCircle2, Layers, Shield, Cpu, AlertTriangle } from 'lucide-react';
+import { BookOpen, Scale, CheckCircle2, Layers, Shield, Cpu, AlertTriangle, Image as ImageIcon, FileText, Languages } from 'lucide-react';
 import ContentPageLayout, { ContentHeader } from '@/components/layout/ContentPageLayout';
 import type { Metadata } from 'next';
 
@@ -49,21 +49,33 @@ export default function ResearchPage() {
 
         <div className="grid md:grid-cols-3 gap-4 mb-8">
           <div className="bg-white rounded-xl border border-border-light p-5 text-center">
-            <div className="text-3xl mb-3">🖼</div>
+            <div className="flex justify-center mb-3">
+              <div className="p-2.5 bg-stone-100 rounded-lg">
+                <ImageIcon className="w-6 h-6 text-stone-600" />
+              </div>
+            </div>
             <h3 className="font-semibold text-primary mb-1">Original Scan</h3>
             <p className="text-sm text-secondary">
               The page image as digitized by the source library. High-resolution, zoomable.
             </p>
           </div>
           <div className="bg-white rounded-xl border border-border-light p-5 text-center">
-            <div className="text-3xl mb-3">📜</div>
+            <div className="flex justify-center mb-3">
+              <div className="p-2.5 bg-accent-gold/10 rounded-lg">
+                <FileText className="w-6 h-6 text-accent-gold-dark" />
+              </div>
+            </div>
             <h3 className="font-semibold text-primary mb-1">OCR Transcription</h3>
             <p className="text-sm text-secondary">
               The original language text, read by AI from the page image. Searchable and copyable.
             </p>
           </div>
           <div className="bg-white rounded-xl border border-border-light p-5 text-center">
-            <div className="text-3xl mb-3">🌐</div>
+            <div className="flex justify-center mb-3">
+              <div className="p-2.5 bg-blue-100 rounded-lg">
+                <Languages className="w-6 h-6 text-blue-600" />
+              </div>
+            </div>
             <h3 className="font-semibold text-primary mb-1">English Translation</h3>
             <p className="text-sm text-secondary">
               AI translation with scholarly annotations: glosses, marginal notes, and page summaries.
