@@ -13,6 +13,7 @@ interface CollectionBook {
   id?: string;
   slug?: string;
   title: string;
+  display_title?: string | null;
   author: string;
   year: number;
   pages?: number;
@@ -60,7 +61,7 @@ export default function CollectionBookCard({ book, priority = false }: Collectio
           {thumbnailUrl && !imageError ? (
             <Image
               src={thumbnailUrl}
-              alt={book.title}
+              alt={book.display_title || book.title}
               fill
               quality={85}
               className={cn(
@@ -108,7 +109,7 @@ export default function CollectionBookCard({ book, priority = false }: Collectio
             className="text-base font-bold text-primary group-hover:text-accent-rust transition-colors mb-2 leading-tight line-clamp-2"
             style={{ fontFamily: 'var(--font-serif)' }}
           >
-            {book.title}
+            {book.display_title || book.title}
           </h3>
           <p className="text-sm text-secondary mb-3 line-clamp-1"><AuthorName author={book.author} /></p>
 

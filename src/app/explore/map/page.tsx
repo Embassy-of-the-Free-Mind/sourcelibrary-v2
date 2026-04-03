@@ -42,7 +42,7 @@ async function fetchMapData() {
     .find(
       { visible: true, 'locations.0': { $exists: true } },
       {
-        projection: { id: 1, title: 1, author: 1, year: 1, slug: 1, locations: 1 },
+        projection: { id: 1, title: 1, display_title: 1, author: 1, year: 1, slug: 1, locations: 1 },
         maxTimeMS: 45000,
       },
     )
@@ -74,6 +74,7 @@ async function fetchMapData() {
         group.books.push({
           id: book.id as string,
           title: (book.title as string) || 'Untitled',
+          display_title: (book.display_title as string) || undefined,
           author: (book.author as string) || 'Unknown',
           year: (book.year as number) || null,
           slug: (book.slug as string) || '',
