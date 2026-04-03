@@ -1244,13 +1244,16 @@ async function submitOcrDirectly(db, book, { modelOverride, maxPages } = {}) {
 
   // Guard: skip pages that are unsplit spreads (have no crop but book needs splitting)
   // These would send two-page images to OCR, producing garbled results
-  // BUT: if the book was already split_checked, it passed Phase 1.25 and was determined
+  // EXCEPTION: if book.needs_splitting, we USE the spread OCR prompt which handles
+  // two-page images directly — no physical split needed before OCR.
+  // Also: if the book was already split_checked, it passed Phase 1.25 and was determined
   // to be portrait/single-page — no crop data expected, safe to OCR as-is.
-  const unsplitPages = pages.filter(p => !p.crop && !p.cropped_photo);
-  if (unsplitPages.length > 0 && unsplitPages.length === pages.length && !book.pipeline_auto?.split_checked) {
-    // All pages are unsplit AND book hasn't been through split detection
-    console.log(`    WARNING: All ${pages.length} pages lack crop data — possible unsplit spreads, skipping OCR (#523)`);
-    return { submitted: 0, jobName: null, alreadyDone: false, skippedUnsplit: true };
+  if (!book.needs_splitting) {
+    const unsplitPages = pages.filter(p => !p.crop && !p.cropped_photo);
+    if (unsplitPages.length > 0 && unsplitPages.length === pages.length && !book.pipeline_auto?.split_checked) {
+      console.log(`    WARNING: All ${pages.length} pages lack crop data — possible unsplit spreads, skipping OCR (#523)`);
+      return { submitted: 0, jobName: null, alreadyDone: false, skippedUnsplit: true };
+    }
   }
 
   console.log(`    Downloading ${pages.length} images...`);
@@ -1262,6 +1265,32 @@ async function submitOcrDirectly(db, book, { modelOverride, maxPages } = {}) {
 
   let prompt = await getOcrPromptFromDb(db);
 
+  // Spread OCR: for BPH two-page spread books, prepend instructions to process
+  // both pages separately with <split-position> and <page-break/> markers.
+  // This lets us OCR + split-detect in one Gemini call.
+  // See: .claude/docs/spread-splitting.md
+  if (book.needs_splitting) {
+    const spreadPrefix = `**TWO-PAGE SPREAD HANDLING:**
+This image is a two-page spread (open book scan). Process BOTH pages separately.
+
+CRITICAL: Each page may have its own multi-column layout. Handle columns WITHIN each page:
+- If a page has 2+ columns, use <column-break/> between columns ON THAT PAGE
+- Each page MUST include its own <vocab> tag with key terms from THAT page only.
+- Use ISO 639-1 language codes (de, fr, la, en, nl, he, grc — NOT "German", "Latin", etc.)
+
+If this is NOT a two-page spread (single page), set split_position to null and process normally.
+
+Output structure:
+1. <split-position>N</split-position> (0-1000, or null if single page) at the very top
+2. All metadata and content for LEFT page
+3. <page-break/> on its own line
+4. All metadata and content for RIGHT page
+
+`;
+    prompt = spreadPrefix + prompt;
+    console.log(`    Spread OCR mode: prepended spread prefix for needs_splitting book`);
+  }
+
   // Append book provenance context to help Gemini avoid recitation blocks
   // on public domain works it mistakes for copyrighted material
   const yearStr = book.year ? `Published ${book.year}.` : '';
@@ -1272,8 +1301,10 @@ async function submitOcrDirectly(db, book, { modelOverride, maxPages } = {}) {
     prompt += `\n\n**Document context:** "${book.title || 'Unknown'}" by ${book.author || 'Unknown'}. ${yearStr} ${copyrightNote}`.trim();
   }
 
-  // Choose batch size based on page count
-  const useFileBased = downloaded.length > OCR_INLINE_BATCH_SIZE;
+  // Choose batch size based on page count.
+  // Force file-based for needs_splitting books — inline doesn't work with Lite model
+  // (confirmed: 300 inline Lite jobs stuck PENDING, 0 succeeded; 1995 file-based succeeded).
+  const useFileBased = downloaded.length > OCR_INLINE_BATCH_SIZE || book.needs_splitting;
   const batchSize = useFileBased ? OCR_FILE_BATCH_SIZE : OCR_INLINE_BATCH_SIZE;
 
   const parentJobId = nanoid();
