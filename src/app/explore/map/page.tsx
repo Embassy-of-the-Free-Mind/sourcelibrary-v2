@@ -23,62 +23,69 @@ export const metadata: Metadata = {
 async function fetchBookLocations() {
   const db = await getDb();
 
-  // Unwind book locations and group by city+type
-  const pipeline = [
-    { $match: { visible: true, 'locations.0': { $exists: true } } },
-    { $unwind: '$locations' },
-    {
-      $group: {
-        _id: {
-          city: '$locations.city',
-          country: '$locations.country',
-          type: '$locations.type',
-          lat: '$locations.lat',
-          lng: '$locations.lng',
-        },
-        books: {
-          $push: {
-            id: '$id',
-            title: '$title',
-            author: '$author',
-            year: '$year',
-            slug: '$slug',
-          },
-        },
-      },
-    },
-    { $sort: { 'books': -1 } },
-  ];
-
-  const results = await db
+  // Fetch books with locations — project only what we need
+  const books = await db
     .collection('books')
-    .aggregate(pipeline, { maxTimeMS: 45000 })
+    .find(
+      { visible: true, 'locations.0': { $exists: true } },
+      {
+        projection: {
+          id: 1, title: 1, author: 1, year: 1, slug: 1, locations: 1,
+        },
+        maxTimeMS: 30000,
+      },
+    )
     .toArray();
 
+  // Client-side grouping by city+type (avoids expensive $unwind/$group on Atlas)
+  const groups = new Map<string, BookLocation>();
   const byType: Record<string, number> = {};
   let totalBooks = 0;
 
-  const locations: BookLocation[] = results.map((r) => {
-    const type = r._id.type as string;
-    byType[type] = (byType[type] || 0) + (r.books as unknown[]).length;
-    totalBooks += (r.books as unknown[]).length;
+  for (const book of books) {
+    const locs = book.locations as Array<{
+      type: string; city: string; country: string | null;
+      lat: number; lng: number;
+    }>;
+    if (!locs) continue;
 
-    return {
-      city: r._id.city as string,
-      country: r._id.country as string | null,
-      lat: r._id.lat as number,
-      lng: r._id.lng as number,
-      type: type as BookLocation['type'],
-      books: (r.books as Array<{ id: string; title: string; author: string; year: number | null; slug: string }>)
-        .slice(0, 50), // Cap per-location to avoid huge payloads
-    };
-  });
+    for (const loc of locs) {
+      if (!loc.lat || !loc.lng || !loc.city) continue;
+
+      const key = `${loc.city}|${loc.type}|${loc.lat.toFixed(2)}|${loc.lng.toFixed(2)}`;
+
+      if (!groups.has(key)) {
+        groups.set(key, {
+          city: loc.city,
+          country: loc.country,
+          lat: loc.lat,
+          lng: loc.lng,
+          type: loc.type as BookLocation['type'],
+          books: [],
+        });
+      }
+
+      const group = groups.get(key)!;
+      if (group.books.length < 50) {
+        group.books.push({
+          id: book.id as string,
+          title: (book.title as string) || 'Untitled',
+          author: (book.author as string) || 'Unknown',
+          year: (book.year as number) || null,
+          slug: (book.slug as string) || '',
+        });
+      }
+
+      byType[loc.type] = (byType[loc.type] || 0) + 1;
+      totalBooks++;
+    }
+  }
 
   return {
-    locations,
+    locations: Array.from(groups.values()),
     stats: {
       total_books: totalBooks,
-      total_locations: locations.length,
+      total_locations: groups.size,
       by_type: byType,
     },
   };
@@ -88,7 +95,8 @@ export default async function MapPage() {
   try {
     const data = await fetchBookLocations();
     return <BookMapLoader locations={data.locations} stats={data.stats} />;
-  } catch {
+  } catch (err) {
+    console.error('Map page error:', err);
     return (
       <div className="min-h-screen flex items-center justify-center">
         <p className="text-stone-500">Map data is temporarily unavailable. Please try again shortly.</p>
