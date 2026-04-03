@@ -70,10 +70,26 @@ async function fetchProviderStats(): Promise<ProviderStats[]> {
 }
 
 async function fetchContributingLibraries(): Promise<ContributingLibrary[]> {
-  // contributing_library is not in books_catalog, so use a simple
-  // fallback — return empty until we add the field to the catalog.
-  // The libraries index page still renders the Digital Sources section.
-  return [];
+  const { data, error } = await supabase
+    .from('books_catalog')
+    .select('contributing_library')
+    .eq('visible', true)
+    .gt('pages_count', 0)
+    .gt('pages_translated', 0)
+    .not('contributing_library', 'is', null);
+
+  if (error) throw new Error(`Contributing libraries query failed: ${error.message}`);
+
+  const counts = new Map<string, number>();
+  for (const row of (data || [])) {
+    const name = (row.contributing_library as string || '').trim();
+    if (!name) continue;
+    counts.set(name, (counts.get(name) || 0) + 1);
+  }
+
+  return [...counts.entries()]
+    .map(([name, count]) => ({ name, count }))
+    .sort((a, b) => b.count - a.count);
 }
 
 export default async function LibrariesPage() {
@@ -97,7 +113,7 @@ export default async function LibrariesPage() {
     <ContentPageLayout>
       <ContentHeader
         title="Libraries"
-        subtitle={`${totalBooks.toLocaleString()} books sourced from ${partners.length} digital platforms and ${totalInstitutions} contributing institutions worldwide.`}
+        subtitle={`${totalBooks.toLocaleString()} books sourced from ${partners.length} digital platforms${totalInstitutions > 0 ? ` and ${totalInstitutions} contributing institutions` : ''} worldwide.`}
       />
 
       {/* Digital Sources */}
@@ -107,7 +123,7 @@ export default async function LibrariesPage() {
       </p>
 
       <div className="grid gap-5 grid-cols-1 sm:grid-cols-2 mb-16">
-        {partners.map((partner) => {
+        {partners.map((partner, i) => {
           const topLangs = partner.languages.slice(0, 3).map(l => l).join(', ');
 
           return (
@@ -125,6 +141,7 @@ export default async function LibrariesPage() {
                   sizes="(max-width: 640px) 100vw, 50vw"
                   className="object-cover transition-transform duration-500 ease-out group-hover:scale-105"
                   unoptimized
+                  {...(i < 4 ? { priority: true } : { loading: 'lazy' as const })}
                 />
               ) : (
                 <div className="absolute inset-0 bg-warm" />
