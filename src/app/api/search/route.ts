@@ -189,6 +189,7 @@ export async function GET(request: NextRequest) {
               $or: [
                 { title: queryRegex },
                 { display_title: queryRegex },
+                { english_title: queryRegex },
                 { author: queryRegex },
                 { 'reading_summary.overview': queryRegex },
               ],
@@ -351,16 +352,40 @@ export async function GET(request: NextRequest) {
         return aTitle.localeCompare(bTitle);
       });
     } else {
-      // Default: relevance — books first, title matches first, quality score tie-breaker
+      // Default: canon-weighted relevance
+      // Priority: books > pages, title match, original language, older editions, quality
+      const ENGLISH = 'English';
+      const queryLower = query.toLowerCase();
+
       results.sort((a, b) => {
+        // 1. Books before pages
         if (a.type !== b.type) return a.type === 'book' ? -1 : 1;
+
+        // 2. Title/author match (strongest signal)
         const aTitle = (a.display_title || a.title).toLowerCase();
         const bTitle = (b.display_title || b.title).toLowerCase();
-        const queryLower = query.toLowerCase();
         const aTitleMatch = aTitle.includes(queryLower);
         const bTitleMatch = bTitle.includes(queryLower);
         if (aTitleMatch !== bTitleMatch) return aTitleMatch ? -1 : 1;
-        // Quality score tie-breaker
+
+        const aAuthor = (a.author || '').toLowerCase();
+        const bAuthor = (b.author || '').toLowerCase();
+        const aAuthorMatch = aAuthor.includes(queryLower);
+        const bAuthorMatch = bAuthor.includes(queryLower);
+        if (aAuthorMatch !== bAuthorMatch) return aAuthorMatch ? -1 : 1;
+
+        // 3. Original language beats modern English translations
+        // A Latin "De Occulta Philosophia" should rank above an English reprint
+        const aOriginal = a.language !== ENGLISH ? 1 : 0;
+        const bOriginal = b.language !== ENGLISH ? 1 : 0;
+        if (aOriginal !== bOriginal) return bOriginal - aOriginal;
+
+        // 4. Older editions rank higher (earlier = closer to source)
+        const aYear = parseInt(a.published?.match(/\d{4}/)?.[0] || '9999');
+        const bYear = parseInt(b.published?.match(/\d{4}/)?.[0] || '9999');
+        if (aYear !== bYear) return aYear - bYear;
+
+        // 5. Quality score tie-breaker
         const aScore = (a as any).quality_score || 0;
         const bScore = (b as any).quality_score || 0;
         return bScore - aScore;
