@@ -62,6 +62,20 @@ export async function GET(request: NextRequest) {
     if (rotation && [90, 180, 270].includes(rotation)) {
       pipeline = pipeline.rotate(rotation);
     }
+
+    // Ensure minimum display size — small crops from low-res sources look terrible
+    const MIN_CROP_DIM = 800;
+    // After rotation, width/height may swap
+    const croppedW = (rotation === 90 || rotation === 270) ? height : width;
+    const croppedH = (rotation === 90 || rotation === 270) ? width : height;
+    if (Math.max(croppedW, croppedH) < MIN_CROP_DIM) {
+      pipeline = pipeline.resize(MIN_CROP_DIM, MIN_CROP_DIM, {
+        fit: 'inside',
+        withoutEnlargement: false,
+        kernel: 'lanczos3',
+      });
+    }
+
     const croppedBuffer = await pipeline
       .jpeg({ quality: 85 })
       .toBuffer();
