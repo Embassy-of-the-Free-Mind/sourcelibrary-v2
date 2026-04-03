@@ -2663,22 +2663,25 @@ async function run() {
             default: 1,
           }}}},
           { $addFields: { _bigBook: { $cond: [{ $gte: ['$pages_count', 200] }, 0, 1] } } },
-          { $sort: { _speedTier: 1, _bigBook: 1, is_first_translation: -1, hidden: 1 } },
+          // First translations prioritized above speed tier — clear untranslated backlog first
+          { $sort: { is_first_translation: -1, _speedTier: 1, _bigBook: 1, hidden: 1 } },
           { $project: { id: 1, title: 1, pages_count: 1, language: 1, 'pipeline_auto.retry_count': 1, 'image_source.provider': 1 } },
           { $limit: effectiveLimit }
         ]).toArray() : [];
 
-        // If no fresh books, re-queue partially-translated books for their next chunk
+        // If no fresh books, only re-queue >90% translated partials (near-complete cleanup)
         let partialBooks = [];
         if (freshBooks.length === 0 && effectiveLimit > 0) {
-          partialBooks = await db.collection('books')
-            .find({ 'pipeline_auto.status': 'translate_partial', 'image_source.provider': { $ne: 'bph' } })
-            .project({ id: 1, title: 1, pages_count: 1, language: 1, 'pipeline_auto.retry_count': 1, 'image_source.provider': 1 })
-            .sort({ pages_translated: 1 }) // least-translated first
-            .limit(effectiveLimit)
-            .toArray();
+          partialBooks = await db.collection('books').aggregate([
+            { $match: { 'pipeline_auto.status': 'translate_partial', 'image_source.provider': { $ne: 'bph' } } },
+            { $addFields: { _denominator: { $subtract: [{ $ifNull: ['$pages_ocr', 0] }, { $ifNull: ['$pages_blank', 0] }] } } },
+            { $match: { _denominator: { $gt: 0 }, $expr: { $gte: [{ $divide: ['$pages_translated', '$_denominator'] }, 0.9] } } },
+            { $project: { id: 1, title: 1, pages_count: 1, language: 1, 'pipeline_auto.retry_count': 1, 'image_source.provider': 1 } },
+            { $sort: { pages_translated: -1 } },
+            { $limit: effectiveLimit },
+          ]).toArray();
           if (partialBooks.length > 0) {
-            console.log(`  No fresh books — re-queuing ${partialBooks.length} partially-translated books`);
+            console.log(`  No fresh books — re-queuing ${partialBooks.length} near-complete (>90%) partials`);
           }
         }
 
