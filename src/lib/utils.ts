@@ -60,6 +60,9 @@ export function formatAuthor(author: string | undefined | null): { name: string;
 }
 
 export function getPageImageUrl(page: Record<string, any>): string | null {
+  // Split-from-spread pages have clean photo — skip legacy fallback chain
+  if (page.split_from_spread && isUsableImageUrl(page.photo)) return page.photo;
+
   if (isUsableImageUrl(page.cropped_photo)) return page.cropped_photo;
   if (isUsableImageUrl(page.archived_photo)) return page.archived_photo;
   // If archiving was attempted and failed ("failed:HTTP 404" etc), the source URL is dead.
@@ -80,6 +83,9 @@ export function getPageImageUrl(page: Record<string, any>): string | null {
  */
 // eslint-disable-next-line @typescript-eslint/no-explicit-any
 export function getPageDisplayUrl(page: Record<string, any>, width = 1200, quality = 80): string | null {
+  // Split-from-spread pages have clean photo — use directly
+  if (page.split_from_spread && isUsableImageUrl(page.photo)) return page.photo;
+
   // Split pages need server-side cropping — always use proxy
   if (page.crop?.xStart !== undefined && page.crop?.xEnd !== undefined) {
     const baseUrl = page.archived_photo || page.photo_original || page.photo;
@@ -90,8 +96,8 @@ export function getPageDisplayUrl(page: Record<string, any>, width = 1200, quali
   // Pre-rendered display photo — direct from R2 CDN, no proxy
   if (isUsableImageUrl(page.display_photo)) return page.display_photo;
 
-  // Fallback: derive display URL from new path convention
-  const newPathMatch = page.photo?.match(/^(https:\/\/images\.sourcelibrary\.org\/pages\/[^/]+\/\d{4,})(-full)?\.jpg$/);
+  // Fallback: derive display URL from new path convention (handles sp prefix)
+  const newPathMatch = page.photo?.match(/^(https:\/\/images\.sourcelibrary\.org\/pages\/[^/]+\/(?:sp)?\d{4,})(-full)?\.jpg$/);
   if (newPathMatch) return `${newPathMatch[1]}.jpg`;
 
   // Legacy fallback: proxy for resize
@@ -123,8 +129,8 @@ export function getPageThumbUrl(page: Record<string, any>): string | null {
   // Pre-rendered thumbnail
   if (isUsableImageUrl(page.thumbnail_blob)) return page.thumbnail_blob;
 
-  // Derive from new path convention
-  const newPathMatch = page.photo?.match(/^(https:\/\/images\.sourcelibrary\.org\/pages\/[^/]+\/\d{4,})(-full)?\.jpg$/);
+  // Derive from new path convention (handles sp prefix for split pages)
+  const newPathMatch = page.photo?.match(/^(https:\/\/images\.sourcelibrary\.org\/pages\/[^/]+\/(?:sp)?\d{4,})(-full)?\.jpg$/);
   if (newPathMatch) return `${newPathMatch[1]}-thumb.jpg`;
 
   // Existing thumbnail field
