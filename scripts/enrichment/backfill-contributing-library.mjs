@@ -104,6 +104,62 @@ const PROVIDER_MAP = {
     name: 'Daotam.info',
     url: 'https://daotam.info',
   },
+  'bph': {
+    name: 'Bibliotheca Philosophica Hermetica (Embassy of the Free Mind)',
+    url: 'https://embassyofthefreemind.com',
+  },
+  'etcsl': {
+    name: 'Electronic Text Corpus of Sumerian Literature (University of Oxford)',
+    url: 'https://etcsl.orinst.ox.ac.uk',
+  },
+  'heidelberg': {
+    name: 'Universitätsbibliothek Heidelberg',
+    url: 'https://www.ub.uni-heidelberg.de',
+  },
+  'hab': {
+    name: 'Herzog August Bibliothek Wolfenbüttel',
+    url: 'https://www.hab.de',
+  },
+  'huntington': {
+    name: 'The Huntington Library',
+    url: 'https://www.huntington.org',
+  },
+  'yale': {
+    name: 'Yale University Library',
+    url: 'https://web.library.yale.edu',
+  },
+  'penn': {
+    name: 'University of Pennsylvania Libraries',
+    url: 'https://www.library.upenn.edu',
+  },
+  'harvard': {
+    name: 'Harvard University Library',
+    url: 'https://library.harvard.edu',
+  },
+  'sbb': {
+    name: 'Staatsbibliothek zu Berlin',
+    url: 'https://staatsbibliothek-berlin.de',
+  },
+  'onb': {
+    name: 'Österreichische Nationalbibliothek',
+    url: 'https://www.onb.ac.at',
+  },
+  'getty': {
+    name: 'Getty Research Institute',
+    url: 'https://www.getty.edu/research/',
+  },
+  'kyoto': {
+    name: 'Kyoto University Library',
+    url: 'https://www.kulib.kyoto-u.ac.jp',
+  },
+  'cleveland': {
+    name: 'Cleveland Museum of Art',
+    url: 'https://www.clevelandart.org',
+  },
+  'ndl': {
+    name: 'National Diet Library of Japan',
+    url: 'https://www.ndl.go.jp',
+  },
 };
 
 async function main() {

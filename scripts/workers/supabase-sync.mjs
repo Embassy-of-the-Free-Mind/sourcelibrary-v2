@@ -45,6 +45,8 @@ const COLLECTIONS = [
     mongoCollection: 'pipeline_snapshots',
     supabaseTable: 'pipeline_snapshots',
     timestampField: 'timestamp',
+    // Skip zero-page snapshots (caused by facet timeouts — they poison charts)
+    filter: (doc) => doc.pages?.ocr > 0 || doc.pages?.translated > 0,
     transform: (doc) => ({
       timestamp: doc.timestamp,
       source: doc.source || 'hetzner-worker',
@@ -150,6 +152,7 @@ async function syncCollection(db, config) {
 
   for await (const doc of cursor) {
     try {
+      if (config.filter && !config.filter(doc)) continue;
       batch.push(config.transform(doc));
     } catch {
       errors++;

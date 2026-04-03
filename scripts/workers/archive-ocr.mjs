@@ -20,13 +20,13 @@ const MAX_PAGES_PER_DOMAIN = 5000;  // Prevent one domain from crowding out othe
 
 // Per-domain rate limits (requests per second) — be a good citizen
 const DOMAIN_RATE_LIMITS = {
-  'archive.org':              8,    // IA is permissive, no crawl-delay
-  'digitale-sammlungen.de':   4,    // MDZ: open robots.txt
-  'wellcomecollection.org':   3,    // No explicit policy
-  'digital.bodleian.ox.ac.uk':2,    // No explicit policy, conservative
-  'cudl.lib.cam.ac.uk':      2,    // No explicit policy, conservative
-  'diglib.hab.de':            2,    // No explicit policy, conservative
-  'gallica.bnf.fr':           2,    // 403'd robots.txt — be careful
+  'archive.org':              15,    // IA is permissive, no crawl-delay
+  'digitale-sammlungen.de':   8,    // MDZ: open robots.txt
+  'wellcomecollection.org':   6,    // No explicit policy
+  'digital.bodleian.ox.ac.uk':4,    // No explicit policy, conservative
+  'cudl.lib.cam.ac.uk':      4,    // No explicit policy, conservative
+  'diglib.hab.de':            4,    // No explicit policy, conservative
+  'gallica.bnf.fr':           4,    // 403'd robots.txt — be careful
   'e-rara.ch':                1,    // robots.txt: 1s crawl-delay for allowed bots
   'digi.vatlib.it':           0.1,  // robots.txt: 10s crawl-delay
   'cdli.earth':               2,    // Cuneiform Digital Library — open access
@@ -37,7 +37,7 @@ const DOMAIN_RATE_LIMITS = {
   'digi.ub.uni-heidelberg.de':2,    // Heidelberg University — no explicit policy
   'iiif.qdl.qa':              1,    // Qatar Digital Library — conservative
   'permalinkbnd.bnportugal.gov.pt': 1, // Portugal National Library
-  _default:                   1,    // Unknown domains: 1 req/s
+  _default:                   2,    // Unknown domains: 1 req/s
 };
 
 // Token bucket per domain
@@ -221,11 +221,11 @@ async function main() {
       {
         pages_count: { $gt: 0 },
         'archive_metadata.blocked': { $ne: true },
-        'image_source.provider': { $nin: ['e-rara', 'internet_archive'] },
+        'image_source.provider': { $ne: 'e-rara' },
       },
       { projection: { id: 1, title: 1, 'image_source.provider': 1 } }
     )
-    .limit(500)
+    .limit(2000)
     .maxTimeMS(30_000)
     .toArray();
 

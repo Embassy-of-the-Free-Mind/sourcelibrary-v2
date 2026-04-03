@@ -145,6 +145,7 @@ async function searchBooks(
       $or: [
         { title: queryRegex },
         { display_title: queryRegex },
+        { english_title: queryRegex },
         { author: queryRegex },
         { 'reading_summary.overview': queryRegex },
       ],
