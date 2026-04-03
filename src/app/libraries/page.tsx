@@ -141,7 +141,8 @@ export default async function LibrariesPage() {
                   sizes="(max-width: 640px) 100vw, 50vw"
                   className="object-cover transition-transform duration-500 ease-out group-hover:scale-105"
                   unoptimized
-                  {...(i < 4 ? { priority: true } : { loading: 'lazy' as const })}
+                  priority={i < 4}
+                  loading={i < 4 ? 'eager' : 'lazy'}
                 />
               ) : (
                 <div className="absolute inset-0 bg-warm" />

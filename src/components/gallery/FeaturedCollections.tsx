@@ -61,7 +61,8 @@ export default function FeaturedCollections({ initialCollections }: FeaturedColl
                 className="object-cover group-hover:scale-105 transition-transform duration-300"
                 sizes="(max-width: 640px) 100vw, (max-width: 1024px) 50vw, 33vw"
                 unoptimized
-                {...(i < 6 ? { priority: true } : { loading: 'lazy' as const })}
+                priority={i < 6}
+                loading={i < 6 ? 'eager' : 'lazy'}
               />
             ) : (
               <div className="absolute inset-0 bg-stone-200 flex items-center justify-center text-stone-400">

@@ -122,7 +122,8 @@ function CollectionCard({ col, priority = false }: { col: CollectionDoc; priorit
           sizes="(max-width: 640px) 50vw, 25vw"
           className="object-cover transition-transform duration-500 ease-out group-hover:scale-105"
           unoptimized
-          {...(priority ? { priority: true } : { loading: 'lazy' as const })}
+          priority={priority}
+          loading={priority ? 'eager' : 'lazy'}
         />
       ) : (
         <div className="absolute inset-0 bg-warm" />

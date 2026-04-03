@@ -79,7 +79,8 @@ function PublishedCard({ col, priority = false }: { col: CuratedCollection; prio
           sizes="(max-width: 640px) 100vw, 50vw"
           className="object-cover transition-transform duration-500 ease-out group-hover:scale-105"
           unoptimized
-          {...(priority ? { priority: true } : { loading: 'lazy' as const })}
+          priority={priority}
+          loading={priority ? 'eager' : 'lazy'}
         />
       ) : (
         <div className="absolute inset-0 bg-warm" />
