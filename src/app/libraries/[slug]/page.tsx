@@ -267,7 +267,7 @@ export default async function LibraryDetailPage({ params, searchParams }: Props)
               Illustrations
             </h2>
             <div className="grid grid-cols-3 sm:grid-cols-4 lg:grid-cols-6 gap-3">
-              {galleryImages.map((img: { pageId?: string; page_id?: string; detectionIndex?: number; detection_index?: number; thumbnailUrl?: string; thumbnail_url?: string; extractedUrl?: string; extracted_url?: string; imageUrl?: string; image_url?: string; museumDescription?: string; museum_description?: string; description?: string; bookTitle?: string; book_title?: string; type?: string }) => {
+              {galleryImages.slice(0, 11).map((img: { pageId?: string; page_id?: string; detectionIndex?: number; detection_index?: number; thumbnailUrl?: string; thumbnail_url?: string; extractedUrl?: string; extracted_url?: string; imageUrl?: string; image_url?: string; museumDescription?: string; museum_description?: string; description?: string; bookTitle?: string; book_title?: string; type?: string }) => {
                 const thumb = img.thumbnailUrl || img.thumbnail_url || img.extractedUrl || img.extracted_url || img.imageUrl || img.image_url;
                 const pageId = img.pageId || img.page_id;
                 const detIdx = img.detectionIndex ?? img.detection_index;
@@ -300,6 +300,17 @@ export default async function LibraryDetailPage({ params, searchParams }: Props)
                   </Link>
                 );
               })}
+              <Link
+                href="/gallery"
+                className="group relative aspect-square rounded-lg overflow-hidden border border-border-light hover:border-accent-rust/40 transition-all hover:shadow-md bg-cream flex items-center justify-center"
+              >
+                <div className="text-center px-2">
+                  <Images className="w-6 h-6 text-muted mx-auto mb-1.5 group-hover:text-accent-rust transition-colors" />
+                  <span className="text-xs text-secondary group-hover:text-accent-rust transition-colors font-medium">
+                    See all illustrations
+                  </span>
+                </div>
+              </Link>
             </div>
           </div>
         </div>
