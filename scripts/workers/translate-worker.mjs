@@ -318,6 +318,7 @@ async function processBook(db, book, job, globalCounter, deadline) {
       book_id: book.id,
       'ocr.data': { $exists: true, $nin: [null, ''] },
       page_type: { $nin: SKIP_PAGE_TYPES },
+      'translation.recitation_blocked': { $ne: true },
       $or: [
         { 'translation.data': { $exists: false } },
         { 'translation.data': null },
@@ -505,7 +506,15 @@ async function processBook(db, book, job, globalCounter, deadline) {
               totalInputTokens += singleResult.inputTokens;
               totalOutputTokens += singleResult.outputTokens;
             } catch (fallbackErr) {
-              console.error(`  [${label}] Fallback page ${page.page_number} failed: ${(fallbackErr.message || '').substring(0, 80)}`);
+              const errMsg = fallbackErr.message || '';
+              console.error(`  [${label}] Fallback page ${page.page_number} failed: ${errMsg.substring(0, 80)}`);
+              if (errMsg.includes('RECITATION')) {
+                await db.collection('pages').updateOne(
+                  { _id: page._id },
+                  { : { 'translation.recitation_blocked': true, 'translation.recitation_at': new Date() } }
+                );
+                console.log(`  [${label}] Page ${page.page_number} marked as RECITATION-blocked (will skip on future runs)`);
+              }
               failed++;
             }
           }
@@ -551,8 +560,16 @@ async function processBook(db, book, job, globalCounter, deadline) {
               totalInputTokens += singleResult.inputTokens;
               totalOutputTokens += singleResult.outputTokens;
             } catch (fallbackErr) {
+              const errMsg = fallbackErr.message || '';
+              console.error(`  [${label}] Fallback page ${page.page_number} failed: ${errMsg.substring(0, 80)}`);
+              if (errMsg.includes('RECITATION')) {
+                await db.collection('pages').updateOne(
+                  { _id: page._id },
+                  { : { 'translation.recitation_blocked': true, 'translation.recitation_at': new Date() } }
+                );
+                console.log(`  [${label}] Page ${page.page_number} marked as RECITATION-blocked (will skip on future runs)`);
+              }
               failed++;
-              console.error(`  [${label}] Fallback page ${page.page_number} failed: ${(fallbackErr.message || '').substring(0, 80)}`);
             }
           }
           pageIdx += batch.length;
@@ -736,6 +753,7 @@ async function selfDispatch(db, limit) {
         book_id: book.id,
         'ocr.data': { $exists: true, $nin: [null, ''] },
         page_type: { $nin: SKIP_PAGE_TYPES },
+      'translation.recitation_blocked': { $ne: true },
         $or: [
           { 'translation.data': { $exists: false } },
           { 'translation.data': null },
