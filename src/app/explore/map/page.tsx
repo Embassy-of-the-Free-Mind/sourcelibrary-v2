@@ -21,48 +21,51 @@ export const metadata: Metadata = {
   },
 };
 
-async function fetchBookLocations() {
+async function fetchMapData() {
   const db = await getDb();
 
-  // Fetch books with locations — project only what we need
+  // Read pre-computed map data from system_config (fast single-doc read)
+  const cached = await db
+    .collection('system_config')
+    .findOne({ _id: 'map_data' as any }, { maxTimeMS: 10000 });
+
+  if (cached?.data) {
+    return cached.data as {
+      locations: BookLocation[];
+      stats: { total_books: number; total_locations: number; by_type: Record<string, number> };
+    };
+  }
+
+  // Fallback: compute live (slow but works if cache is empty)
   const books = await db
     .collection('books')
     .find(
       { visible: true, 'locations.0': { $exists: true } },
       {
-        projection: {
-          id: 1, title: 1, author: 1, year: 1, slug: 1, locations: 1,
-        },
-        maxTimeMS: 30000,
+        projection: { id: 1, title: 1, author: 1, year: 1, slug: 1, locations: 1 },
+        maxTimeMS: 45000,
       },
     )
     .toArray();
 
-  // Client-side grouping by city+type (avoids expensive $unwind/$group on Atlas)
   const groups = new Map<string, BookLocation>();
   const byType: Record<string, number> = {};
   let totalBooks = 0;
 
   for (const book of books) {
     const locs = book.locations as Array<{
-      type: string; city: string; country: string | null;
-      lat: number; lng: number;
+      type: string; city: string; country: string | null; lat: number; lng: number;
     }>;
     if (!locs) continue;
 
     for (const loc of locs) {
       if (!loc.lat || !loc.lng || !loc.city) continue;
-
       const key = `${loc.city}|${loc.type}|${loc.lat.toFixed(2)}|${loc.lng.toFixed(2)}`;
 
       if (!groups.has(key)) {
         groups.set(key, {
-          city: loc.city,
-          country: loc.country,
-          lat: loc.lat,
-          lng: loc.lng,
-          type: loc.type as BookLocation['type'],
-          books: [],
+          city: loc.city, country: loc.country, lat: loc.lat, lng: loc.lng,
+          type: loc.type as BookLocation['type'], books: [],
         });
       }
 
@@ -84,17 +87,13 @@ async function fetchBookLocations() {
 
   return {
     locations: Array.from(groups.values()),
-    stats: {
-      total_books: totalBooks,
-      total_locations: groups.size,
-      by_type: byType,
-    },
+    stats: { total_books: totalBooks, total_locations: groups.size, by_type: byType },
   };
 }
 
 export default async function MapPage() {
   try {
-    const data = await fetchBookLocations();
+    const data = await fetchMapData();
     return (
       <>
         <SiteHeader />
