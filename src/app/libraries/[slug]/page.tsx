@@ -11,6 +11,8 @@ import { getPartnerBySlug, getAllPartnerSlugs } from '@/lib/library-partners';
 import CollectionBookCard from '@/components/CollectionBookCard';
 import CollectionFilters from '@/components/collections/CollectionFilters';
 import { bookTitle } from '@/lib/collections-utils';
+import LibraryViewTabs from '@/components/libraries/LibraryViewTabs';
+import BphCatalogBrowser from '@/components/libraries/BphCatalogBrowser';
 
 const PER_PAGE = 60;
 
@@ -149,6 +151,36 @@ async function fetchLibraryData(providerKey: string, sort: string, language: str
   };
 }
 
+/** Build a UBN → { id, slug } map for BPH books on Source Library */
+async function fetchBphDigitizedMap(): Promise<Record<string, { id: string; slug: string }>> {
+  try {
+    const db = await getDb();
+    const bphBooks = await db.collection('books').find(
+      { 'image_source.provider': 'bph', 'dublin_core.dc_identifier': { $exists: true } },
+      { projection: { id: 1, slug: 1, 'dublin_core.dc_identifier': 1 } }
+    ).toArray();
+
+    const map: Record<string, { id: string; slug: string }> = {};
+    for (const b of bphBooks) {
+      const ubn = b.dublin_core?.dc_identifier;
+      if (ubn) {
+        map[ubn] = { id: b.id, slug: b.slug || b.id };
+      }
+    }
+    return map;
+  } catch {
+    return {};
+  }
+}
+
+/** Get total count of BPH catalog works */
+async function fetchBphCatalogTotal(): Promise<number> {
+  const { count } = await supabase
+    .from('bph_works')
+    .select('*', { count: 'exact', head: true });
+  return count || 0;
+}
+
 // ---------- Page ----------
 
 export default async function LibraryDetailPage({ params, searchParams }: Props) {
@@ -161,10 +193,18 @@ export default async function LibraryDetailPage({ params, searchParams }: Props)
   const language = typeof sp.language === 'string' ? sp.language : '';
   const q = typeof sp.q === 'string' ? sp.q : '';
   const offset = parseInt(typeof sp.offset === 'string' ? sp.offset : '0') || 0;
+  const view = typeof sp.view === 'string' ? sp.view : 'books';
 
-  const { books, total, languages, galleryImages, contributingLibraries } = await fetchLibraryData(
-    partner.providerKey, sort, language, offset, q || undefined
-  );
+  const isBph = partner.providerKey === 'bph';
+
+  // Fetch data — catalog data only for BPH
+  const [libraryData, digitizedUbns, catalogTotal] = await Promise.all([
+    fetchLibraryData(partner.providerKey, sort, language, offset, q || undefined),
+    isBph ? fetchBphDigitizedMap() : Promise.resolve({}),
+    isBph ? fetchBphCatalogTotal() : Promise.resolve(0),
+  ]);
+
+  const { books, total, languages, galleryImages, contributingLibraries } = libraryData;
 
   const totalPages = Math.ceil(total / PER_PAGE);
   const currentPage = Math.floor(offset / PER_PAGE) + 1;
@@ -190,7 +230,13 @@ export default async function LibraryDetailPage({ params, searchParams }: Props)
           </p>
 
           <div className="flex flex-wrap items-center gap-4 text-sm text-white/50">
-            <span>{total.toLocaleString()} books</span>
+            <span>{total.toLocaleString()} translated books</span>
+            {isBph && catalogTotal > 0 && (
+              <>
+                <span className="w-px h-4 bg-white/20" />
+                <span>{catalogTotal.toLocaleString()} works in catalog</span>
+              </>
+            )}
             {languages.length > 0 && (
               <>
                 <span className="w-px h-4 bg-white/20" />
@@ -290,100 +336,130 @@ export default async function LibraryDetailPage({ params, searchParams }: Props)
       )}
 
       <div className="max-w-7xl mx-auto px-6 py-10">
-        {/* All Books Header */}
-        <div className="flex flex-wrap items-end justify-between gap-4 mb-6">
-          <div>
-            <h2
-              className="text-2xl sm:text-3xl text-primary font-display"
-            >
-              All Books
-            </h2>
-            <p className="text-sm text-muted mt-1">
-              {total.toLocaleString()} books from {partner.name}
-            </p>
-          </div>
-
-          <CollectionFilters
-            collectionId={slug}
-            languages={filteredLanguages}
+        {/* View tabs (BPH only) */}
+        {isBph && (
+          <LibraryViewTabs
             basePath={basePath}
-            showSearch
+            catalogTotal={catalogTotal}
+            booksTotal={total}
           />
-        </div>
-
-        {/* Books Grid */}
-        <div className="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-4 xl:grid-cols-5 gap-4">
-          {books.map((book, i) => (
-            <CollectionBookCard
-              key={book.id}
-              book={{
-                bookId: book.id,
-                id: book.id,
-                slug: book.slug,
-                title: bookTitle(book),
-                author: book.author || '',
-                year: book.year || 0,
-                pages_count: book.pages_count,
-                pages_ocr: book.pages_ocr,
-                pages_translated: book.pages_translated,
-                thumbnail: book.thumbnail || book.thumbnail_blob || book.photo,
-                thumbnail_blob: book.thumbnail_blob,
-                language: book.language,
-                published: book.published,
-                translation_percent: book.pages_ocr && book.pages_translated
-                  ? Math.round((book.pages_translated / Math.max((book.pages_ocr || 0) - (book.pages_blank || 0), 1)) * 100)
-                  : 0,
-              }}
-              priority={i < 10}
-            />
-          ))}
-        </div>
-
-        {/* Empty state */}
-        {books.length === 0 && (
-          <div className="text-center py-16">
-            <BookOpen className="w-12 h-12 text-muted mx-auto mb-4" />
-            <p className="text-lg text-secondary">No books found matching your filters.</p>
-            <Link
-              href={basePath}
-              className="text-sm text-accent-rust hover:underline mt-2 inline-block"
-            >
-              Clear filters
-            </Link>
-          </div>
         )}
 
-        {/* Pagination */}
-        {totalPages > 1 && (
-          <div className="flex items-center justify-center gap-4 mt-10 text-sm">
-            {offset > 0 ? (
-              <Link
-                href={`${basePath}?sort=${sort}${language ? `&language=${language}` : ''}&offset=${Math.max(0, offset - PER_PAGE)}`}
-                className="px-4 py-2 rounded-lg border border-border-light hover:bg-warm transition-colors"
-              >
-                Previous
-              </Link>
-            ) : (
-              <span className="px-4 py-2 rounded-lg border border-border-light opacity-30">
-                Previous
-              </span>
-            )}
-            <span className="text-muted">
-              Page {currentPage} of {totalPages}
-            </span>
-            {currentPage < totalPages ? (
-              <Link
-                href={`${basePath}?sort=${sort}${language ? `&language=${language}` : ''}&offset=${offset + PER_PAGE}`}
-                className="px-4 py-2 rounded-lg border border-border-light hover:bg-warm transition-colors"
-              >
-                Next
-              </Link>
-            ) : (
-              <span className="px-4 py-2 rounded-lg border border-border-light opacity-30">
-                Next
-              </span>
-            )}
+        {/* Catalog View */}
+        {isBph && view === 'catalog' ? (
+          <div>
+            <div className="mb-6">
+              <h2 className="text-2xl sm:text-3xl text-primary font-display">
+                Library Catalog
+              </h2>
+              <p className="text-sm text-muted mt-1">
+                Complete catalog of the Bibliotheca Philosophica Hermetica — {catalogTotal.toLocaleString()} works in the collection.
+                Works available on Source Library are marked with a book icon.
+              </p>
+            </div>
+            <BphCatalogBrowser
+              basePath={basePath}
+              digitizedUbns={digitizedUbns}
+            />
           </div>
+        ) : (
+          <>
+            {/* All Books Header */}
+            <div className="flex flex-wrap items-end justify-between gap-4 mb-6">
+              <div>
+                <h2
+                  className="text-2xl sm:text-3xl text-primary font-display"
+                >
+                  {isBph ? 'Translated Books' : 'All Books'}
+                </h2>
+                <p className="text-sm text-muted mt-1">
+                  {total.toLocaleString()} books from {partner.name}
+                </p>
+              </div>
+
+              <CollectionFilters
+                collectionId={slug}
+                languages={filteredLanguages}
+                basePath={basePath}
+                showSearch
+              />
+            </div>
+
+            {/* Books Grid */}
+            <div className="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-4 xl:grid-cols-5 gap-4">
+              {books.map((book, i) => (
+                <CollectionBookCard
+                  key={book.id}
+                  book={{
+                    bookId: book.id,
+                    id: book.id,
+                    slug: book.slug,
+                    title: bookTitle(book),
+                    author: book.author || '',
+                    year: book.year || 0,
+                    pages_count: book.pages_count,
+                    pages_ocr: book.pages_ocr,
+                    pages_translated: book.pages_translated,
+                    thumbnail: book.thumbnail || book.thumbnail_blob || book.photo,
+                    thumbnail_blob: book.thumbnail_blob,
+                    language: book.language,
+                    published: book.published,
+                    translation_percent: book.pages_ocr && book.pages_translated
+                      ? Math.round((book.pages_translated / Math.max((book.pages_ocr || 0) - (book.pages_blank || 0), 1)) * 100)
+                      : 0,
+                  }}
+                  priority={i < 10}
+                />
+              ))}
+            </div>
+
+            {/* Empty state */}
+            {books.length === 0 && (
+              <div className="text-center py-16">
+                <BookOpen className="w-12 h-12 text-muted mx-auto mb-4" />
+                <p className="text-lg text-secondary">No books found matching your filters.</p>
+                <Link
+                  href={basePath}
+                  className="text-sm text-accent-rust hover:underline mt-2 inline-block"
+                >
+                  Clear filters
+                </Link>
+              </div>
+            )}
+
+            {/* Pagination */}
+            {totalPages > 1 && (
+              <div className="flex items-center justify-center gap-4 mt-10 text-sm">
+                {offset > 0 ? (
+                  <Link
+                    href={`${basePath}?sort=${sort}${language ? `&language=${language}` : ''}&offset=${Math.max(0, offset - PER_PAGE)}`}
+                    className="px-4 py-2 rounded-lg border border-border-light hover:bg-warm transition-colors"
+                  >
+                    Previous
+                  </Link>
+                ) : (
+                  <span className="px-4 py-2 rounded-lg border border-border-light opacity-30">
+                    Previous
+                  </span>
+                )}
+                <span className="text-muted">
+                  Page {currentPage} of {totalPages}
+                </span>
+                {currentPage < totalPages ? (
+                  <Link
+                    href={`${basePath}?sort=${sort}${language ? `&language=${language}` : ''}&offset=${offset + PER_PAGE}`}
+                    className="px-4 py-2 rounded-lg border border-border-light hover:bg-warm transition-colors"
+                  >
+                    Next
+                  </Link>
+                ) : (
+                  <span className="px-4 py-2 rounded-lg border border-border-light opacity-30">
+                    Next
+                  </span>
+                )}
+              </div>
+            )}
+          </>
         )}
 
         {/* Attribution */}
