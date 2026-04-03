@@ -283,7 +283,7 @@ export const POST = withAuth(async (request, session) => {
         const imageService = service?.id || service?.['@id'];
 
         if (imageService) {
-          imageUrl = `${imageService}/full/1000,/0/default.jpg`;
+          imageUrl = `${imageService}/full/2000,/0/default.jpg`;
         }
 
         let thumbnailUrl = canvas.thumbnail?.[0]?.id || '';
@@ -304,7 +304,7 @@ export const POST = withAuth(async (request, session) => {
         const imageService = imageResource?.service?.['@id'];
 
         if (imageService) {
-          imageUrl = `${imageService}/full/1000,/0/default.jpg`;
+          imageUrl = `${imageService}/full/2000,/0/default.jpg`;
         }
 
         let thumbnailUrl = imageUrl;
