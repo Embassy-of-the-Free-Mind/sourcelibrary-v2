@@ -1,122 +1,93 @@
 import { Metadata } from 'next';
 import { getDb } from '@/lib/mongodb';
-import EntityMapLoader from '@/components/explore/EntityMapLoader';
+import BookMapLoader from '@/components/explore/BookMapLoader';
+import type { BookLocation } from '@/components/explore/BookMap';
 
-// ISR: rebuild every 6 hours. Allow 60s for first-hit generation.
 export const revalidate = 600;
 export const maxDuration = 60;
 
 export const metadata: Metadata = {
   title: 'Map — Explore — Source Library',
   description:
-    'Interactive map of 1,600+ places, people, and institutions from the Western esoteric tradition, plotted from Wikidata coordinates.',
+    'Interactive map of 7,000+ books plotted by publication city and author birthplace from Wikidata coordinates.',
   openGraph: {
     title: 'Map — Explore — Source Library',
     description:
-      'Geographic distribution of entities across 1,200+ digitized historical texts.',
+      'Geographic distribution of historical texts across 500+ cities worldwide.',
     url: 'https://sourcelibrary.org/explore/map',
     siteName: 'Source Library',
     type: 'website',
   },
 };
 
-async function fetchMapData() {
+async function fetchBookLocations() {
   const db = await getDb();
 
-  // Single query — no book lookup needed. Use biographical dates for century ranges.
-  const entities = await db.collection('entities').aggregate([
-    { $match: { wikidata_coordinates: { $exists: true, $ne: null } } },
+  // Unwind book locations and group by city+type
+  const pipeline = [
+    { $match: { visible: true, 'locations.0': { $exists: true } } },
+    { $unwind: '$locations' },
     {
-      $project: {
-        _id: 0,
-        name: 1,
-        type: 1,
-        coordinates: '$wikidata_coordinates',
-        book_count: 1,
-        total_mentions: 1,
-        description: 1,
-        wikidata_id: 1,
-        wikidata_birth_date: 1,
-        wikidata_death_date: 1,
+      $group: {
+        _id: {
+          city: '$locations.city',
+          country: '$locations.country',
+          type: '$locations.type',
+          lat: '$locations.lat',
+          lng: '$locations.lng',
+        },
+        books: {
+          $push: {
+            id: '$id',
+            title: '$title',
+            author: '$author',
+            year: '$year',
+            slug: '$slug',
+          },
+        },
       },
     },
-  ], { maxTimeMS: 45000 }).toArray();
+    { $sort: { 'books': -1 } },
+  ];
+
+  const results = await db
+    .collection('books')
+    .aggregate(pipeline, { maxTimeMS: 45000 })
+    .toArray();
 
   const byType: Record<string, number> = {};
-  const byCentury: Record<string, number> = {};
+  let totalBooks = 0;
 
-  const mapped = entities.map((e) => {
-    const type = e.type as string;
-    byType[type] = (byType[type] || 0) + 1;
-
-    // Prefer biographical dates for century range (people),
-    // fall back to book publication years (places, concepts, or people without dates)
-    let century_range: [number, number] | null = null;
-
-    const birthStr = e.wikidata_birth_date as string | undefined;
-    const deathStr = e.wikidata_death_date as string | undefined;
-    // parseInt handles negative dates: "-0384-01-01" → -384
-    const birthYear = birthStr ? parseInt(birthStr, 10) : NaN;
-    const deathYear = deathStr ? parseInt(deathStr, 10) : NaN;
-
-    if (!isNaN(birthYear) || !isNaN(deathYear)) {
-      const bioYears = [birthYear, deathYear].filter((y) => !isNaN(y) && y !== 0);
-      if (bioYears.length > 0) {
-        const minY = Math.min(...bioYears);
-        const maxY = Math.max(...bioYears);
-        const toCentury = (y: number) => y < 0
-          ? -Math.floor((Math.abs(y) - 1) / 100) - 1
-          : Math.floor((y - 1) / 100) + 1;
-        century_range = [toCentury(minY), toCentury(maxY)];
-      }
-    }
-
-    // No book-year fallback — biographical dates only (avoids expensive book lookup)
-
-    if (century_range) {
-      for (let c = century_range[0]; c <= century_range[1]; c++) {
-        byCentury[String(c)] = (byCentury[String(c)] || 0) + 1;
-      }
-    }
-
-    // Build lifespan string from biographical dates
-    const fmtYear = (y: number) => y < 0 ? `${Math.abs(y)} BCE` : String(y);
-    let lifespan: string | undefined;
-    if (!isNaN(birthYear) && birthYear !== 0 && !isNaN(deathYear) && deathYear !== 0) {
-      lifespan = `${fmtYear(birthYear)}\u2013${fmtYear(deathYear)}`;
-    } else if (!isNaN(birthYear) && birthYear !== 0) {
-      lifespan = `b.\u00a0${fmtYear(birthYear)}`;
-    } else if (!isNaN(deathYear) && deathYear !== 0) {
-      lifespan = `d.\u00a0${fmtYear(deathYear)}`;
-    }
+  const locations: BookLocation[] = results.map((r) => {
+    const type = r._id.type as string;
+    byType[type] = (byType[type] || 0) + (r.books as unknown[]).length;
+    totalBooks += (r.books as unknown[]).length;
 
     return {
-      name: e.name as string,
-      type: type as 'person' | 'place' | 'concept',
-      coordinates: e.coordinates as { lat: number; lng: number },
-      book_count: (e.book_count as number) || 0,
-      total_mentions: (e.total_mentions as number) || 0,
-      description: (e.description as string) || undefined,
-      wikidata_id: (e.wikidata_id as string) || undefined,
-      century_range,
-      lifespan,
+      city: r._id.city as string,
+      country: r._id.country as string | null,
+      lat: r._id.lat as number,
+      lng: r._id.lng as number,
+      type: type as BookLocation['type'],
+      books: (r.books as Array<{ id: string; title: string; author: string; year: number | null; slug: string }>)
+        .slice(0, 50), // Cap per-location to avoid huge payloads
     };
   });
 
   return {
-    entities: mapped,
+    locations,
     stats: {
-      total: mapped.length,
+      total_books: totalBooks,
+      total_locations: locations.length,
       by_type: byType,
-      by_century: byCentury,
     },
   };
 }
 
 export default async function MapPage() {
   try {
-    const data = await fetchMapData();
-    return <EntityMapLoader entities={data.entities} stats={data.stats} />;
+    const data = await fetchBookLocations();
+    return <BookMapLoader locations={data.locations} stats={data.stats} />;
   } catch {
     return (
       <div className="min-h-screen flex items-center justify-center">
