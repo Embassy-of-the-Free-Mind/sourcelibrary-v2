@@ -1,5 +1,6 @@
 import { Metadata } from 'next';
 import { getDb } from '@/lib/mongodb';
+import SiteHeader from '@/components/layout/SiteHeader';
 import BookMapLoader from '@/components/explore/BookMapLoader';
 import type { BookLocation } from '@/components/explore/BookMap';
 
@@ -94,13 +95,21 @@ async function fetchBookLocations() {
 export default async function MapPage() {
   try {
     const data = await fetchBookLocations();
-    return <BookMapLoader locations={data.locations} stats={data.stats} />;
+    return (
+      <>
+        <SiteHeader />
+        <BookMapLoader locations={data.locations} stats={data.stats} />
+      </>
+    );
   } catch (err) {
     console.error('Map page error:', err);
     return (
-      <div className="min-h-screen flex items-center justify-center">
-        <p className="text-stone-500">Map data is temporarily unavailable. Please try again shortly.</p>
-      </div>
+      <>
+        <SiteHeader />
+        <div className="min-h-[60vh] flex items-center justify-center">
+          <p className="text-stone-500">Map data is temporarily unavailable. Please try again shortly.</p>
+        </div>
+      </>
     );
   }
 }
