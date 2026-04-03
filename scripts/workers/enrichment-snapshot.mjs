@@ -168,7 +168,109 @@ async function run() {
   const elapsed = ((Date.now() - start) / 1000).toFixed(1);
   console.log(`[enrichment-snapshot] Done in ${elapsed}s`);
 
+  // ── Data page snapshot ──
+  // Computes stats for /data page (languages, centuries, categories, providers).
+  // Same connection, avoids a separate cron entry.
+  await computeDataPageSnapshot(db);
+
   await client.close();
+}
+
+/**
+ * Compute and cache the /data page stats in system_config._id: 'data_page_snapshot'.
+ * Only counts books with visible: true AND pages_count > 0 (excludes empty catalog stubs).
+ */
+async function computeDataPageSnapshot(db) {
+  const t0 = Date.now();
+  console.log(`[data-page-snapshot] Starting...`);
+
+  const books = db.collection('books');
+  const maxTimeMS = 45000;
+  const real = { visible: true, pages_count: { $gt: 0 } };
+
+  function formatCentury(yearBucket) {
+    if (yearBucket <= 0) return '1st c.';
+    const c = Math.floor(yearBucket / 100) + 1;
+    const mod10 = c % 10, mod100 = c % 100;
+    const suffix = mod100 >= 11 && mod100 <= 13 ? 'th' : mod10 === 1 ? 'st' : mod10 === 2 ? 'nd' : mod10 === 3 ? 'rd' : 'th';
+    return `${c}${suffix} c.`;
+  }
+
+  const PIPELINE_STATUS_ORDER = [
+    'queued','archiving','archive_complete','ocr_submitted','ocr_complete',
+    'metadata_enriched','translate_submitted','translate_complete',
+    'enriching','enriched','chapters','chapters_complete',
+    'images_submitted','images_complete','complete','needs_attention','failed',
+  ];
+
+  // Group 1: counts
+  const [totalBooks, firstTranslations, hiddenCount, emptyShells] = await Promise.all([
+    books.countDocuments(real, { maxTimeMS }),
+    books.countDocuments({ ...real, is_first_translation: true }, { maxTimeMS }),
+    books.countDocuments({ hidden: true }, { maxTimeMS }),
+    books.countDocuments({ visible: true, $or: [{ pages_count: 0 }, { pages_count: { $exists: false } }] }, { maxTimeMS }),
+  ]);
+
+  // Group 2: breakdowns
+  const [languagesAgg, centuriesAgg, pageTotalsAgg] = await Promise.all([
+    books.aggregate([{ $match: real }, { $group: { _id: '$language', count: { $sum: 1 } } }, { $sort: { count: -1 } }], { maxTimeMS }).toArray(),
+    books.aggregate([{ $match: { ...real, year: { $exists: true, $type: 'number' } } }, { $addFields: { century: { $multiply: [{ $floor: { $divide: ['$year', 100] } }, 100] } } }, { $group: { _id: '$century', count: { $sum: 1 } } }, { $sort: { _id: 1 } }], { maxTimeMS }).toArray(),
+    books.aggregate([{ $match: real }, { $group: { _id: null, pages: { $sum: { $ifNull: ['$pages_count', 0] } }, ocr: { $sum: { $ifNull: ['$pages_ocr', 0] } }, translated: { $sum: { $ifNull: ['$pages_translated', 0] } } } }], { maxTimeMS }).toArray(),
+  ]);
+
+  // Group 3: categories, providers, collections, illustrations
+  const [categoriesAgg, providersAgg, collectionsAgg, totalIllustrations] = await Promise.all([
+    books.aggregate([{ $match: { ...real, categories: { $exists: true } } }, { $unwind: '$categories' }, { $group: { _id: '$categories', count: { $sum: 1 } } }, { $sort: { count: -1 } }], { maxTimeMS }).toArray(),
+    books.aggregate([{ $match: { ...real, 'image_source.provider_name': { $exists: true } } }, { $group: { _id: '$image_source.provider_name', count: { $sum: 1 } } }, { $sort: { count: -1 } }], { maxTimeMS }).toArray(),
+    db.collection('collections').find({}).sort({ order: 1 }).project({ slug: 1, name: 1, book_count: 1, _id: 0 }).toArray(),
+    db.collection('gallery_images').estimatedDocumentCount(),
+  ]);
+
+  // Group 4: enrichment counts
+  const [hasSummary, hasIndex, hasChapters, hasSourceDates, hasEditions] = await Promise.all([
+    books.countDocuments({ 'reading_summary.overview': { $exists: true } }, { maxTimeMS }),
+    books.countDocuments({ 'index.generatedAt': { $exists: true } }, { maxTimeMS }),
+    books.countDocuments({ 'chapters.0': { $exists: true } }, { maxTimeMS }),
+    books.countDocuments({ 'source_work_dates.0': { $exists: true } }, { maxTimeMS }),
+    db.collection('editions').estimatedDocumentCount(),
+  ]);
+
+  // Group 5: pipeline statuses (no $facet — too heavy for regular refresh)
+  const pipelineAgg = await books.aggregate([
+    { $group: { _id: '$pipeline_auto.status', count: { $sum: 1 } } },
+    { $sort: { count: -1 } },
+  ], { maxTimeMS }).toArray();
+
+  const pageTotals = pageTotalsAgg[0] || { pages: 0, ocr: 0, translated: 0 };
+
+  const pipelineMap = new Map();
+  for (const p of pipelineAgg) pipelineMap.set(p._id || 'no pipeline', p.count);
+  const pipelineStatuses = [];
+  for (const s of PIPELINE_STATUS_ORDER) { const c = pipelineMap.get(s); if (c) pipelineStatuses.push({ status: s, count: c }); }
+  const noPipeline = pipelineMap.get('no pipeline');
+  if (noPipeline) pipelineStatuses.push({ status: 'no pipeline', count: noPipeline });
+
+  const data = {
+    totalBooks, totalPages: pageTotals.pages, totalOcr: pageTotals.ocr,
+    totalTranslated: pageTotals.translated, totalIllustrations, firstTranslations,
+    hiddenCount, emptyShells, hasSummary, hasIndex, hasChapters, hasSourceDates, hasEditions,
+    pipelineStatuses,
+    ocrTiers: [], translationTiers: [], // Skip $facet in cron — too expensive
+    languages: languagesAgg.filter(l => l._id && l._id !== 'Unknown').map(l => ({ language: l._id, count: l.count })),
+    centuries: centuriesAgg.map(c => ({ century: c._id, label: formatCentury(c._id), count: c.count })),
+    categories: categoriesAgg.map(c => ({ slug: c._id, name: c._id.split('-').map(w => w.charAt(0).toUpperCase() + w.slice(1)).join(' '), count: c.count })),
+    providers: providersAgg.filter(p => p._id).map(p => ({ name: p._id, count: p.count })),
+    collections: collectionsAgg,
+  };
+
+  await db.collection('system_config').updateOne(
+    { _id: 'data_page_snapshot' },
+    { $set: { data, updated_at: new Date() } },
+    { upsert: true },
+  );
+
+  const elapsed = ((Date.now() - t0) / 1000).toFixed(1);
+  console.log(`[data-page-snapshot] Done in ${elapsed}s — ${totalBooks} books, ${data.languages.length} languages`);
 }
 
 run().catch(e => { console.error(e); process.exit(1); });
