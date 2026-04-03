@@ -75,7 +75,6 @@ async function fetchContributingLibraries(): Promise<ContributingLibrary[]> {
     .select('contributing_library')
     .eq('visible', true)
     .gt('pages_count', 0)
-    .gt('pages_translated', 0)
     .not('contributing_library', 'is', null);
 
   if (error) throw new Error(`Contributing libraries query failed: ${error.message}`);

@@ -600,7 +600,7 @@ export default function GalleryClient({ initialData, initialCollections, bookCol
             )}
             <div className="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-5 xl:grid-cols-6 gap-4">
               {allItems.map((item, idx) => (
-                <GalleryCard key={`${item.pageId}-${item.detectionIndex}-${idx}`} item={item} />
+                <GalleryCard key={`${item.pageId}-${item.detectionIndex}-${idx}`} item={item} priority={idx < 12} />
               ))}
             </div>
 
@@ -630,7 +630,7 @@ export default function GalleryClient({ initialData, initialCollections, bookCol
   );
 }
 
-function GalleryCard({ item }: { item: GalleryItem }) {
+function GalleryCard({ item, priority = false }: { item: GalleryItem; priority?: boolean }) {
   const [imageError, setImageError] = useState(false);
   const [useCropFallback, setUseCropFallback] = useState(false);
 
@@ -672,6 +672,8 @@ function GalleryCard({ item }: { item: GalleryItem }) {
               }
             }}
             unoptimized={!isPreGenerated && !!item.bbox}
+            priority={priority}
+            loading={priority ? 'eager' : 'lazy'}
           />
         ) : (
           <div className="absolute inset-0 flex items-center justify-center text-stone-300">
