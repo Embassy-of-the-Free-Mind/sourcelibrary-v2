@@ -121,6 +121,18 @@ const SUBCOLLECTIONS = {
     { slug: 'russian-literary-social-thought', name: 'Russian Literary & Social Thought', subtitle: 'Herzen, Chaadaev, Chernyshevsky, Lavrov — philosophy, criticism, and the Russian intelligentsia' },
     { slug: 'slavic-esoteric-translations', name: 'Slavic Esoteric Translations', subtitle: 'Western mystical and Masonic works in Russian translation — Eckartshausen, Saint-Martin, and the Masonic underground' },
   ],
+  psychology: [
+    { slug: 'animal-magnetism-mesmerism', name: 'Animal Magnetism & Mesmerism', subtitle: 'Mesmer, Du Potet, Binet — the discovery of animal magnetism and its contested legacy in medicine and philosophy' },
+    { slug: 'faculty-psychology-de-anima', name: 'Faculty Psychology & De Anima', subtitle: 'Aristotle, Avicenna, Blemmydes — the soul and its faculties from antiquity through Scholasticism' },
+    { slug: 'depth-psychology', name: 'Depth Psychology', subtitle: 'Jung, Freud, the unconscious — modern psychology engaging with myth, symbol, and the inner life' },
+    { slug: 'psychology-of-religion', name: 'Psychology of Religion & Mysticism', subtitle: 'The psychology of religious experience, ecstasy, visions, and contemplative states' },
+  ],
+  demonology: [
+    { slug: 'witch-trial-literature', name: 'Witch Trial Literature', subtitle: 'Malleus Maleficarum, Bodin, Del Rio — the legal and theological apparatus of the European witch hunts' },
+    { slug: 'spirit-conjuration', name: 'Spirit Conjuration & Necromancy', subtitle: 'Grimoires, Solomonic magic, Dee and Kelley — the practical tradition of spirit communication' },
+    { slug: 'theological-demonology', name: 'Theological Demonology', subtitle: 'The nature of demons, fallen angels, possession, and exorcism in Christian theology' },
+    { slug: 'skeptical-rational-critique', name: 'Skeptical & Rational Critique', subtitle: 'Weyer, Scot, Webster, Hutchinson — the voices of doubt and reason against witch persecution' },
+  ],
 };
 
 // ─── Rule-based classification ───
@@ -433,6 +445,60 @@ const RULES = {
       || a.includes('ленин') || a.includes('lenin')
       || a.includes('skovoroda') || a.includes('сковорода'))
       return 'russian-literary-social-thought';
+    return null;
+  },
+  psychology: (b) => {
+    const cats = (b.categories || []).map(lc);
+    const t = lc(b.title);
+    const a = lc(b.author);
+    // Animal Magnetism & Mesmerism
+    if (t.includes('magnetism') || t.includes('mesmer') || t.includes('hypnoti')
+      || a.includes('mesmer') || a.includes('du potet') || a.includes('puysegur')
+      || a.includes('teste') || a.includes('atkinson'))
+      return 'animal-magnetism-mesmerism';
+    // Depth Psychology — Jung, Freud
+    if (a.includes('jung') || a.includes('freud') || t.includes('unconscious')
+      || t.includes('psychoanaly') || t.includes('depth psychol'))
+      return 'depth-psychology';
+    // Psychology of Religion & Mysticism
+    if ((hasCat(cats, 'mysticism', 'christian-mysticism', 'theology') && hasCat(cats, 'philosophy'))
+      || t.includes('religious experience') || t.includes('ecstasy') || t.includes('vision'))
+      return 'psychology-of-religion';
+    // Faculty Psychology / De Anima
+    if (t.includes('de anima') || t.includes('anima') || t.includes('parva naturalia')
+      || t.includes('faculty') || t.includes('seele') || t.includes('soul')
+      || a.includes('aristotle') || a.includes('avicenna') || a.includes('blemmyd')
+      || a.includes('gassendi') || a.includes('poiret'))
+      return 'faculty-psychology-de-anima';
+    return null;
+  },
+  demonology: (b) => {
+    const cats = (b.categories || []).map(lc);
+    const t = lc(b.title);
+    const a = lc(b.author);
+    // Skeptical & Rational Critique
+    if (a.includes('weyer') || a.includes('wier') || a.includes('scot') || a.includes('webster')
+      || a.includes('hutchinson') || a.includes('ady') || a.includes('bekker')
+      || t.includes('discovery of witchcraft') || t.includes('candle in the dark')
+      || t.includes('historical essay concerning witchcraft'))
+      return 'skeptical-rational-critique';
+    // Spirit Conjuration & Necromancy — grimoires, Dee, practical magic
+    if (t.includes('grimoir') || t.includes('spirit') || t.includes('conjur') || t.includes('necromancy')
+      || t.includes('goetia') || t.includes('solomon') || t.includes('occult philosophy')
+      || (a.includes('dee') && t.includes('spirit'))
+      || hasCat(cats, 'divination', 'hermeticism') && !hasCat(cats, 'theology'))
+      return 'spirit-conjuration';
+    // Witch Trial Literature — legal/historical
+    if (hasCat(cats, 'witchcraft', 'law') || t.includes('witch') || t.includes('malefic')
+      || t.includes('malleus') || t.includes('inquisition') || t.includes('hexen')
+      || a.includes('bodin') || a.includes('del rio') || a.includes('remy')
+      || a.includes('notestein') || a.includes('stearne') || a.includes('perkins'))
+      return 'witch-trial-literature';
+    // Theological Demonology — possession, exorcism, demon nature
+    if (hasCat(cats, 'demonology') || t.includes('demon') || t.includes('daemon')
+      || t.includes('possess') || t.includes('exorcis') || t.includes('devil')
+      || t.includes('spectre') || t.includes('specter'))
+      return 'theological-demonology';
     return null;
   },
 };
