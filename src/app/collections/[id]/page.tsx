@@ -236,6 +236,7 @@ async function fetchCollectionData(id: string) {
 
   // Track gallery collection slug for linking (captured in the gallery query below)
   let galleryCollectionSlug: string | null = null;
+  let galleryTotalCount: number | null = null; // real total from thematic gallery (not capped)
 
   // All queries run in parallel with timeouts. Cold MongoDB connections from
   // Mumbai→Virginia can take 15-20s, so even "critical" queries need protection.
@@ -301,7 +302,8 @@ async function fetchCollectionData(id: string) {
           }
           const thematicIds = thematicCol?.image_ids as string[] | undefined;
           if (thematicIds && thematicIds.length > 0) {
-            // Resolve image IDs to full gallery_images docs for rendering
+            galleryTotalCount = thematicIds.length;
+            // Resolve a sample of image IDs for rendering (full set available via gallery page)
             return db.collection('gallery_images')
               .find({ id: { $in: thematicIds.slice(0, 60) } })
               .toArray();
@@ -454,6 +456,7 @@ async function fetchCollectionData(id: string) {
     mentionedBooks: sanitizeBookThumbs(mentionedBooks) as unknown as BookItem[],
     parentCollection,
     galleryCollectionSlug,
+    galleryTotalCount,
     exhibition: curationDraft?.curation || null,
     exhibitionBooks,
     childCollections: childCollections.map(({ _id, ...rest }) => rest) as { slug: string; name: string; subtitle?: string; book_count?: number; featured_images?: { extracted_url?: string; image_url?: string; thumbnail_url?: string }[] }[],
@@ -478,7 +481,7 @@ export default async function CollectionDetailPage({ params }: Props) {
   }
   if (!data) notFound();
 
-  const { collection, books, highlights: curatedHighlightsData, galleryImages, total, mentionedBooks, parentCollection, galleryCollectionSlug, exhibition, exhibitionBooks, childCollections, artworks } = data;
+  const { collection, books, highlights: curatedHighlightsData, galleryImages, total, mentionedBooks, parentCollection, galleryCollectionSlug, galleryTotalCount, exhibition, exhibitionBooks, childCollections, artworks } = data;
   const languages = (collection.languages || []).filter((l: { count: number }) => l.count > 2);
   const isArtCollection = collection.collection_type === 'visual_art';
   const itemLabel = isArtCollection ? 'works' : 'books';
@@ -523,7 +526,8 @@ export default async function CollectionDetailPage({ params }: Props) {
       || null
     : null;
   // Count total images and unique source books for gallery label
-  const galleryTotalImages = galleryImages.length;
+  // Use the real thematic total if available; otherwise fall back to fetched count
+  const galleryTotalImages = galleryTotalCount ?? galleryImages.length;
   const galleryUniqueBooks = new Set(galleryImages.map((img: { book_id?: string; bookId?: string }) => img.book_id || img.bookId)).size;
   const allBooksForLinking = [
     ...curatedHighlightsData.map((h: { book_id: string; slug?: string; title?: string }) => ({
@@ -737,7 +741,7 @@ export default async function CollectionDetailPage({ params }: Props) {
               </Link>
             </div>
             <p className="text-sm text-muted mb-5">
-              {galleryTotalImages.toLocaleString()} images extracted from {galleryUniqueBooks.toLocaleString()} {itemLabel}
+              {galleryTotalImages.toLocaleString()} images extracted{galleryTotalCount ? '' : ` from ${galleryUniqueBooks.toLocaleString()} ${itemLabel}`}
             </p>
             <div className="grid grid-cols-3 sm:grid-cols-4 lg:grid-cols-5 gap-4">
               {diverseGalleryImages.map((img: { pageId?: string; page_id?: string; bookId?: string; book_id?: string; detectionIndex?: number; detection_index?: number; thumbnailUrl?: string; thumbnail_url?: string; extractedUrl?: string; extracted_url?: string; imageUrl?: string; image_url?: string; museumDescription?: string; museum_description?: string; description?: string; bookTitle?: string; book_title?: string; type?: string }) => {
@@ -782,6 +786,18 @@ export default async function CollectionDetailPage({ params }: Props) {
                   </Link>
                 );
               })}
+              {/* "View all" CTA card as last panel */}
+              {galleryTotalImages > diverseGalleryImages.length && (
+                <Link
+                  href={galleryCollectionSlug ? `/gallery/collections/${galleryCollectionSlug}` : `/gallery?collection=${id}`}
+                  className="group relative aspect-square rounded-lg overflow-hidden border border-border-light hover:border-accent-rust/40 transition-all hover:shadow-md bg-cream flex flex-col items-center justify-center gap-2 text-center"
+                >
+                  <Images className="w-8 h-8 text-muted group-hover:text-accent-rust transition-colors" />
+                  <span className="text-sm font-medium text-muted group-hover:text-accent-rust transition-colors px-3">
+                    View all {galleryTotalImages.toLocaleString()} illustrations
+                  </span>
+                </Link>
+              )}
             </div>
           </div>
         </div>
