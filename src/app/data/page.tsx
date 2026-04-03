@@ -4,9 +4,10 @@ import { getDb } from '@/lib/mongodb';
 import ContentPageLayout, { ContentHeader } from '@/components/layout/ContentPageLayout';
 import { CenturyChart } from './DataCharts';
 
-// ISR: rebuild every 6 hours. Allow 60s for first-hit generation.
+// ISR: rebuild every 10 minutes. The page reads from a pre-computed snapshot
+// so rendering is fast — no heavy Atlas aggregations at request time.
 export const revalidate = 600;
-export const maxDuration = 60;
+export const maxDuration = 15;
 
 export const metadata: Metadata = {
   title: 'The Collection — Source Library',
@@ -42,23 +43,6 @@ const PROVIDER_URLS: Record<string, string> = {
 
 /* ── helpers ── */
 
-function formatCentury(yearBucket: number): string {
-  if (yearBucket <= 0) return '1st c.';
-  const c = Math.floor(yearBucket / 100) + 1;
-  const mod10 = c % 10;
-  const mod100 = c % 100;
-  const suffix =
-    mod100 >= 11 && mod100 <= 13 ? 'th' : mod10 === 1 ? 'st' : mod10 === 2 ? 'nd' : mod10 === 3 ? 'rd' : 'th';
-  return `${c}${suffix} c.`;
-}
-
-function formatCategory(slug: string): string {
-  return slug
-    .split('-')
-    .map((w) => w.charAt(0).toUpperCase() + w.slice(1))
-    .join(' ');
-}
-
 function formatNumber(n: number): string {
   return n.toLocaleString('en-US');
 }
@@ -68,14 +52,7 @@ function pct(part: number, whole: number): string {
   return `${((part / whole) * 100).toFixed(1)}%`;
 }
 
-/* ── pipeline status labels and ordering ── */
-
-const PIPELINE_STATUS_ORDER = [
-  'queued', 'archiving', 'archive_complete', 'ocr_submitted', 'ocr_complete',
-  'metadata_enriched', 'translate_submitted', 'translate_complete',
-  'enriching', 'enriched', 'chapters', 'chapters_complete',
-  'images_submitted', 'images_complete', 'complete', 'needs_attention', 'failed',
-] as const;
+/* ── pipeline status colors ── */
 
 const PIPELINE_STATUS_COLORS: Record<string, string> = {
   queued: 'bg-stone-200', archiving: 'bg-amber-200', archive_complete: 'bg-amber-300',
@@ -88,7 +65,7 @@ const PIPELINE_STATUS_COLORS: Record<string, string> = {
   'no pipeline': 'bg-stone-300',
 };
 
-/* ── data fetching ── */
+/* ── data fetching from pre-computed snapshot ── */
 
 interface LibraryData {
   totalBooks: number;
@@ -101,7 +78,6 @@ interface LibraryData {
   categories: Array<{ slug: string; name: string; count: number }>;
   providers: Array<{ name: string; count: number }>;
   collections: Array<{ slug: string; name: string; book_count: number }>;
-  // Admin-only fields (only populated when showAdmin=true)
   hiddenCount?: number;
   totalOcr?: number;
   pipelineStatuses?: Array<{ status: string; count: number }>;
@@ -115,240 +91,58 @@ interface LibraryData {
   emptyShells?: number;
 }
 
-function buildCoverageTiers(field: string) {
-  return [
-    {
-      $facet: {
-        zero: [
-          { $match: { pages_count: { $gt: 0 }, [field]: { $in: [0, null, undefined] } } },
-          { $count: 'n' },
-        ],
-        low: [
-          {
-            $match: {
-              pages_count: { $gt: 0 },
-              [field]: { $gt: 0 },
-              $expr: { $lt: [{ $divide: [`$${field}`, '$pages_count'] }, 0.5] },
-            },
-          },
-          { $count: 'n' },
-        ],
-        mid: [
-          {
-            $match: {
-              pages_count: { $gt: 0 },
-              $expr: {
-                $and: [
-                  { $gte: [{ $divide: [`$${field}`, '$pages_count'] }, 0.5] },
-                  { $lt: [{ $divide: [`$${field}`, '$pages_count'] }, 1] },
-                ],
-              },
-            },
-          },
-          { $count: 'n' },
-        ],
-        full: [
-          {
-            $match: {
-              pages_count: { $gt: 0 },
-              $expr: { $gte: [{ $divide: [`$${field}`, '$pages_count'] }, 1] },
-            },
-          },
-          { $count: 'n' },
-        ],
-      },
-    },
-  ];
-}
+const EMPTY_DATA: LibraryData = {
+  totalBooks: 0, totalPages: 0, totalTranslated: 0,
+  totalIllustrations: 0, firstTranslations: 0,
+  languages: [], centuries: [], categories: [],
+  providers: [], collections: [],
+};
 
-function extractTiers(
-  result: Array<{
-    zero: Array<{ n: number }>;
-    low: Array<{ n: number }>;
-    mid: Array<{ n: number }>;
-    full: Array<{ n: number }>;
-  }>
-): Array<{ tier: string; count: number }> {
-  const r = result[0] ?? { zero: [], low: [], mid: [], full: [] };
-  return [
-    { tier: '0%', count: r.zero[0]?.n ?? 0 },
-    { tier: '1–49%', count: r.low[0]?.n ?? 0 },
-    { tier: '50–99%', count: r.mid[0]?.n ?? 0 },
-    { tier: '100%', count: r.full[0]?.n ?? 0 },
-  ];
-}
-
-async function fetchLibraryData(showAdmin: boolean): Promise<LibraryData> {
+/**
+ * Read pre-computed stats from system_config.data_page_snapshot.
+ * Falls back to dashboard_snapshot for core numbers if dedicated snapshot is missing.
+ * Never runs heavy aggregations inline — that's done by POST /api/admin/data-snapshot.
+ */
+async function fetchLibraryData(): Promise<LibraryData> {
   const db = await getDb();
-  const books = db.collection('books');
-  const visible = { visible: true };
-  const filter = showAdmin ? {} : visible;
+  const config = db.collection('system_config');
 
-  const maxTimeMS = 45000;
+  // Try dedicated data page snapshot first
+  const snapshot = await config.findOne({ _id: 'data_page_snapshot' as any });
+  if (snapshot?.data) {
+    return snapshot.data as LibraryData;
+  }
 
-  // Base queries (always run)
-  const baseQueries = [
-    books.countDocuments(filter, { maxTimeMS }),
-    books.countDocuments({ ...filter, is_first_translation: true }, { maxTimeMS }),
-    books
-      .aggregate<{ _id: string; count: number }>([
-        { $match: filter },
-        { $group: { _id: '$language', count: { $sum: 1 } } },
-        { $sort: { count: -1 } },
-      ], { maxTimeMS })
-      .toArray(),
-    books
-      .aggregate<{ _id: number; count: number }>([
-        { $match: { ...filter, year: { $exists: true, $type: 'number' } } },
-        {
-          $addFields: {
-            century: { $multiply: [{ $floor: { $divide: ['$year', 100] } }, 100] },
-          },
-        },
-        { $group: { _id: '$century', count: { $sum: 1 } } },
-        { $sort: { _id: 1 } },
-      ], { maxTimeMS })
-      .toArray(),
-    books
-      .aggregate<{ _id: string; count: number }>([
-        { $match: { ...filter, categories: { $exists: true } } },
-        { $unwind: '$categories' },
-        { $group: { _id: '$categories', count: { $sum: 1 } } },
-        { $sort: { count: -1 } },
-        ...(showAdmin ? [] : [{ $limit: 20 }]),
-      ], { maxTimeMS })
-      .toArray(),
-    books
-      .aggregate<{ _id: string; count: number }>([
-        { $match: { ...filter, 'image_source.provider_name': { $exists: true } } },
-        { $group: { _id: '$image_source.provider_name', count: { $sum: 1 } } },
-        { $sort: { count: -1 } },
-      ], { maxTimeMS })
-      .toArray(),
-    books
-      .aggregate<{ _id: null; pages: number; ocr: number; translated: number }>([
-        { $match: filter },
-        {
-          $group: {
-            _id: null,
-            pages: { $sum: { $ifNull: ['$pages_count', 0] } },
-            ocr: { $sum: { $ifNull: ['$pages_ocr', 0] } },
-            translated: { $sum: { $ifNull: ['$pages_translated', 0] } },
-          },
-        },
-      ], { maxTimeMS })
-      .toArray(),
-    db.collection('gallery_images').estimatedDocumentCount(),
-    db
-      .collection('collections')
-      .find({})
-      .sort({ order: 1 })
-      .project({ slug: 1, name: 1, book_count: 1, _id: 0 })
-      .toArray(),
-  ] as const;
-
-  if (!showAdmin) {
-    const [totalBooks, firstTranslations, languagesAgg, centuriesAgg, categoriesAgg, providersAgg, pageTotalsAgg, pagesWithIllustrations, collectionsAgg] = await Promise.all(baseQueries);
-    const pageTotals = pageTotalsAgg[0] ?? { pages: 0, ocr: 0, translated: 0 };
-
+  // Fall back to dashboard_snapshot for core numbers
+  const dashboard = await config.findOne({ _id: 'dashboard_snapshot' as any });
+  if (dashboard?.data) {
+    const d = dashboard.data as any;
     return {
-      totalBooks,
-      totalPages: pageTotals.pages,
-      totalTranslated: pageTotals.translated,
-      totalIllustrations: pagesWithIllustrations,
-      firstTranslations,
-      languages: languagesAgg
-        .filter((l) => l._id && l._id !== 'Unknown')
-        .map((l) => ({ language: l._id, count: l.count })),
-      centuries: centuriesAgg.map((c) => ({
-        century: c._id,
-        label: formatCentury(c._id),
-        count: c.count,
-      })),
-      categories: categoriesAgg.map((c) => ({
-        slug: c._id,
-        name: formatCategory(c._id),
-        count: c.count,
-      })),
-      providers: providersAgg
-        .filter((p) => p._id)
-        .map((p) => ({ name: p._id, count: p.count })),
-      collections: collectionsAgg as Array<{ slug: string; name: string; book_count: number }>,
+      totalBooks: d.canon?.total_books ?? 0,
+      totalPages: d.canon?.total_pages ?? 0,
+      totalOcr: d.coverage?.ocr_pages ?? 0,
+      totalTranslated: d.coverage?.translated_pages ?? 0,
+      totalIllustrations: 0,
+      firstTranslations: d.canon?.first_translations ?? 0,
+      hiddenCount: d.invisible?.total_books ?? 0,
+      hasSummary: d.enrichment?.with_summary ?? 0,
+      hasIndex: d.enrichment?.with_index ?? 0,
+      hasChapters: 0,
+      hasSourceDates: 0,
+      hasEditions: 0,
+      emptyShells: 0,
+      languages: [],
+      centuries: [],
+      categories: [],
+      providers: [],
+      collections: [],
+      pipelineStatuses: [],
+      ocrTiers: [],
+      translationTiers: [],
     };
   }
 
-  // Admin mode: run extra queries
-  const [totalBooks, firstTranslations, languagesAgg, centuriesAgg, categoriesAgg, providersAgg, pageTotalsAgg, pagesWithIllustrations, collectionsAgg, hiddenCount, pipelineAgg, hasSummary, hasIndex, hasChapters, hasSourceDates, hasEditions, ocrTiersAgg, translationTiersAgg, emptyShells] = await Promise.all([
-    ...baseQueries,
-    books.countDocuments({ hidden: true }, { maxTimeMS }),
-    books
-      .aggregate<{ _id: string | null; count: number }>([
-        { $group: { _id: '$pipeline_auto.status', count: { $sum: 1 } } },
-        { $sort: { count: -1 } },
-      ], { maxTimeMS })
-      .toArray(),
-    books.countDocuments({ 'reading_summary.overview': { $exists: true } }, { maxTimeMS }),
-    books.countDocuments({ 'index.generatedAt': { $exists: true } }, { maxTimeMS }),
-    books.countDocuments({ 'chapters.0': { $exists: true } }, { maxTimeMS }),
-    books.countDocuments({ 'source_work_dates.0': { $exists: true } }, { maxTimeMS }),
-    db.collection('editions').estimatedDocumentCount(),
-    books.aggregate(buildCoverageTiers('pages_ocr'), { maxTimeMS: 45000 }).toArray(),
-    books.aggregate(buildCoverageTiers('pages_translated'), { maxTimeMS: 45000 }).toArray(),
-    books.countDocuments({ $or: [{ pages_count: 0 }, { pages_count: { $exists: false } }] }, { maxTimeMS }),
-  ]);
-
-  const pageTotals = pageTotalsAgg[0] ?? { pages: 0, ocr: 0, translated: 0 };
-
-  // Build pipeline status array in canonical order
-  const pipelineMap = new Map<string, number>();
-  for (const p of pipelineAgg) {
-    pipelineMap.set(p._id ?? 'no pipeline', p.count);
-  }
-  const pipelineStatuses: Array<{ status: string; count: number }> = [];
-  for (const s of PIPELINE_STATUS_ORDER) {
-    const count = pipelineMap.get(s);
-    if (count) pipelineStatuses.push({ status: s, count });
-  }
-  const noPipeline = pipelineMap.get('no pipeline');
-  if (noPipeline) pipelineStatuses.push({ status: 'no pipeline', count: noPipeline });
-
-  return {
-    totalBooks,
-    hiddenCount,
-    totalPages: pageTotals.pages,
-    totalOcr: pageTotals.ocr,
-    totalTranslated: pageTotals.translated,
-    totalIllustrations: pagesWithIllustrations,
-    firstTranslations,
-    pipelineStatuses,
-    hasSummary,
-    hasIndex,
-    hasChapters,
-    hasSourceDates,
-    hasEditions,
-    // eslint-disable-next-line @typescript-eslint/no-explicit-any
-    ocrTiers: extractTiers(ocrTiersAgg as any),
-    // eslint-disable-next-line @typescript-eslint/no-explicit-any
-    translationTiers: extractTiers(translationTiersAgg as any),
-    emptyShells,
-    languages: languagesAgg
-      .filter((l) => l._id && l._id !== 'Unknown')
-      .map((l) => ({ language: l._id, count: l.count })),
-    centuries: centuriesAgg.map((c) => ({
-      century: c._id,
-      label: formatCentury(c._id),
-      count: c.count,
-    })),
-    categories: categoriesAgg.map((c) => ({
-      slug: c._id,
-      name: formatCategory(c._id),
-      count: c.count,
-    })),
-    providers: providersAgg
-      .filter((p) => p._id)
-      .map((p) => ({ name: p._id, count: p.count })),
-    collections: collectionsAgg as Array<{ slug: string; name: string; book_count: number }>,
-  };
+  return EMPTY_DATA;
 }
 
 /* ── page ── */
@@ -362,15 +156,9 @@ export default async function DataPage({
   const showAdmin = params.admin === 'true';
   let data: LibraryData;
   try {
-    data = await fetchLibraryData(showAdmin);
+    data = await fetchLibraryData();
   } catch {
-    // Fallback on DB timeout
-    data = {
-      totalBooks: 0, totalPages: 0, totalTranslated: 0,
-      totalIllustrations: 0, firstTranslations: 0,
-      languages: [], centuries: [], categories: [],
-      providers: [], collections: [],
-    };
+    data = EMPTY_DATA;
   }
 
   const uniqueLanguages = data.languages.length;

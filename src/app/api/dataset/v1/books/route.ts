@@ -47,7 +47,7 @@ export async function GET(request: NextRequest) {
   }
 
   const db = await getDb();
-  const filter: any = { visible: true };
+  const filter: any = { visible: true, pages_count: { $gt: 0 } };
   if (language) filter.language = language;
   if (cluster) filter['taxonomy.cluster'] = cluster;
   if (fromYear || toYear) {

@@ -72,7 +72,7 @@ export async function GET() {
         wikidata_id: { $exists: true, $ne: null },
       }, { maxTimeMS: MAX_TIME }),
 
-      db.collection('books').countDocuments({ visible: true }, { maxTimeMS: MAX_TIME }),
+      db.collection('books').countDocuments({ visible: true, pages_count: { $gt: 0 } }, { maxTimeMS: MAX_TIME }),
 
       db.collection('entities').aggregate([
         { $group: { _id: '$type', count: { $sum: 1 } } },

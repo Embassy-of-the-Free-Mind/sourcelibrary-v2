@@ -39,7 +39,7 @@ export const GET = withAuth(async () => {
     ] = await Promise.all([
       // 1. Overall totals
       db.collection('books').aggregate([
-        { $match: { visible: true } },
+        { $match: { visible: true, pages_count: { $gt: 0 } } },
         {
           $group: {
             _id: null,
@@ -55,6 +55,7 @@ export const GET = withAuth(async () => {
       //    Denominator: pages_ocr - pages_blank (blank pages don't need translation)
       db.collection('books').countDocuments({
         visible: true,
+        pages_count: { $gt: 0 },
         pages_ocr: { $gte: 1 },
         $expr: {
           $gte: [
@@ -69,6 +70,7 @@ export const GET = withAuth(async () => {
         {
           $match: {
             visible: true,
+            pages_count: { $gt: 0 },
             is_first_translation: true,
           },
         },
