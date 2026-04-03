@@ -29,9 +29,15 @@ Every step is independent and idempotent. Books can enter at any stage and be re
 
 ## Auto Pipeline State Machine
 
-The pipeline is orchestrated from **Hetzner** (`scripts/workers/pipeline-orchestrator.mjs`, every 2 min). Translation runs on a separate Hetzner worker (`translate-worker.mjs`, every 2 min). Batch OCR results are collected by `batch-collector.mjs` (every 10 min). See `pipeline-architecture.md` for the full cron schedule and infrastructure map.
+**Current (2026-03-28+):** All Hetzner crons consolidated into a **unified scheduler** (`scripts/workers/scheduler.mjs`). Replaces 15+ independent crons with a single entry point that enforces connection budget (~60), health checks, and pause respect. See PRs #647/#649.
 
-**Legacy:** The Vercel crons (`post-import-pipeline`, `enrich-books`) still exist in `_archived/` but are no longer active. The Hetzner orchestrator (`pipeline-orchestrator.mjs`) handles phases 0-5 and 8+. A separate Hetzner worker (`enrich-worker.mjs`, every 5 min) handles phases 6-7 (summary+index, chapters) with direct Gemini calls. The `cron_runs` collection logs from both — orchestrator runs log as `archive-bulk`, enrich runs have their own entries.
+The scheduler runs the orchestrator, translate-worker, batch-collector, enrich-worker, and other tasks on configurable intervals. Translation runs inline on Hetzner (`translate-worker.mjs`). Batch OCR results are collected by `batch-collector.mjs`.
+
+**Legacy:** The Vercel crons (`post-import-pipeline`, `enrich-books`) still exist in `_archived/` but are no longer active. The `cron_runs` collection logs all runs.
+
+**Operational lessons:**
+- **NEVER comment out crons with `#PAUSED#`** — bypasses all in-code auto-resume. Use `processing_control` only. Caused 7h stall on 2026-03-30.
+- **Always check `git diff` on Hetzner before AND after deploying** — `git stash/pop` silently reverts local fixes. Caused 3x throughput regression on 2026-03-30.
 
 Each book has a `pipeline_auto` object tracking its state.
 
