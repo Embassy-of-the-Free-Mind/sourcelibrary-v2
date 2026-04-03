@@ -226,6 +226,9 @@ export async function generateMetadata({ params }: AuthorPageProps): Promise<Met
   return {
     title: `${authorName} — Source Library`,
     description: `Browse works by ${authorName} in Source Library's collection of rare historical texts, digitized and translated with AI.`,
+    alternates: {
+      canonical: `/author/${name}`,
+    },
     openGraph: {
       title: `${authorName} — Source Library`,
       description: `Works by ${authorName} in Source Library`,

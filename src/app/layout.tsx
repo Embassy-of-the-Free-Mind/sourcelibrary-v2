@@ -11,7 +11,7 @@ import InputWidget from "@/components/InputWidget";
 
 
 export const metadata: Metadata = {
-  title: "Source Library",
+  title: "Source Library — Ancient Texts Translated to English",
   description: "Digitizing and translating ancient texts for scholars, seekers and AI systems.",
   metadataBase: new URL('https://sourcelibrary.org'),
   alternates: {
