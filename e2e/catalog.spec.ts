@@ -12,16 +12,10 @@ test.describe('Catalog', () => {
   });
 
   test('page loads and shows book count', async ({ page }) => {
-    // Intercept the browse API to measure timing
-    const apiPromise = page.waitForResponse(resp =>
-      resp.url().includes('/api/catalog/browse') && resp.status() === 200,
-    );
-
+    // SSR provides initial data — no client-side API call on default load.
+    // Just verify the page renders with book count from server props.
     await page.goto('/catalog');
 
-    const apiResp = await apiPromise;
-
-    // Wait for data to render
     const countText = page.locator('text=/\\d[\\d,]+ books/');
     await expect(countText).toBeVisible({ timeout: 15_000 });
 
@@ -29,9 +23,7 @@ test.describe('Catalog', () => {
     const text = await countText.textContent();
     const count = parseInt((text || '').replace(/,/g, ''));
     expect(count).toBeGreaterThan(1000);
-
-    const body = await apiResp.body();
-    console.log(`API response: ${apiResp.status()}, ${body.length} bytes`);
+    console.log(`Catalog loaded with ${count} books (SSR)`);
   });
 
   test('list view renders book rows', async ({ page }) => {

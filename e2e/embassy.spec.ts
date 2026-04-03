@@ -20,8 +20,8 @@ test.describe('Embassy - Reading Room', () => {
   });
 
   test('shows welcome message with sun symbol', async ({ page }) => {
-    await expect(page.locator('text=Welcome to the Embassy')).toBeVisible();
-    await expect(page.locator('text=The Librarian has read every text')).toBeVisible();
+    await expect(page.getByText('Welcome to the Embassy of the Free Mind.')).toBeVisible();
+    await expect(page.getByText('The Librarian is an AI')).toBeVisible();
   });
 
   test('shows suggestion chips', async ({ page }) => {
