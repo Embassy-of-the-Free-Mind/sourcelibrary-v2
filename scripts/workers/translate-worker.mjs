@@ -511,7 +511,7 @@ async function processBook(db, book, job, globalCounter, deadline) {
               if (errMsg.includes('RECITATION')) {
                 await db.collection('pages').updateOne(
                   { _id: page._id },
-                  { : { 'translation.recitation_blocked': true, 'translation.recitation_at': new Date() } }
+                  { $set: { 'translation.recitation_blocked': true, 'translation.recitation_at': new Date() } }
                 );
                 console.log(`  [${label}] Page ${page.page_number} marked as RECITATION-blocked (will skip on future runs)`);
               }
@@ -565,7 +565,7 @@ async function processBook(db, book, job, globalCounter, deadline) {
               if (errMsg.includes('RECITATION')) {
                 await db.collection('pages').updateOne(
                   { _id: page._id },
-                  { : { 'translation.recitation_blocked': true, 'translation.recitation_at': new Date() } }
+                  { $set: { 'translation.recitation_blocked': true, 'translation.recitation_at': new Date() } }
                 );
                 console.log(`  [${label}] Page ${page.page_number} marked as RECITATION-blocked (will skip on future runs)`);
               }

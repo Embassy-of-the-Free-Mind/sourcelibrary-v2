@@ -93,6 +93,34 @@ const SUBCOLLECTIONS = {
     { slug: 'chinese-divination-cosmology', name: 'Chinese Divination & Cosmology', subtitle: 'Yi Jing and commentaries, feng shui, Chinese astrology, numerology, and cosmographic texts' },
     { slug: 'chinese-history-statecraft', name: 'Chinese History & Statecraft', subtitle: 'Dynastic histories, military strategy, political philosophy — Sun Tzu, Legalism, and the historiographic tradition' },
   ],
+  'indic-traditions': [
+    { slug: 'jyotisha-vedic-astrology', name: 'Jyotisha & Vedic Astrology', subtitle: 'Varahamihira, Parashara, Brihat Samhita — the Sanskrit astrological tradition and its vast commentarial literature' },
+    { slug: 'vedanta-darshana', name: 'Vedanta & Darshana', subtitle: 'Shankaracharya, Ramanuja, the Brahma Sutras, and the six classical schools of Indian philosophy' },
+    { slug: 'puranas-epics', name: 'Puranas & Epics', subtitle: 'The Mahabharata, Ramayana, Puranas, and the mythological literature of the Hindu tradition' },
+    { slug: 'yoga-tantra-mysticism', name: 'Yoga, Tantra & Mysticism', subtitle: 'Patanjali, Hatha Yoga, Kundalini, tantric texts, and the experiential traditions of India' },
+    { slug: 'indian-mathematics-astronomy', name: 'Indian Mathematics & Astronomy', subtitle: 'Aryabhata, Brahmagupta, Bhaskara — the mathematical and astronomical achievements of classical India' },
+    { slug: 'indian-buddhist-jain', name: 'Buddhist & Jain Texts', subtitle: 'Pali canon, Mahayana sutras, Abhidharma, and Jain philosophical literature in the Indian context' },
+  ],
+  'islamic-philosophy': [
+    { slug: 'falsafa', name: 'Falsafa', subtitle: 'Avicenna, Averroes, Al-Farabi, Al-Kindi — the Aristotelian philosophical tradition in the Islamic world' },
+    { slug: 'sufism-islamic-mysticism', name: 'Sufism & Islamic Mysticism', subtitle: 'Ibn Arabi, Al-Ghazali, Al-Qushayri, Rumi — the inner path of Islam' },
+    { slug: 'islamic-medicine-science', name: 'Islamic Medicine & Science', subtitle: 'The Canon of Medicine, optics, algebra — the golden age of Islamic natural philosophy' },
+    { slug: 'islamic-occult-sciences', name: 'Islamic Occult Sciences', subtitle: 'Al-Buni, Jabir ibn Hayyan, astrology, alchemy, and the lettristic tradition' },
+    { slug: 'judeo-islamic-philosophy', name: 'Judeo-Islamic Philosophy', subtitle: 'Maimonides, Judeo-Arabic texts, and the rich philosophical exchange between Jewish and Islamic thinkers' },
+    { slug: 'quran-islamic-theology', name: 'Quran & Islamic Theology', subtitle: 'Quran editions, tafsir commentaries, kalam theology, and Islamic sacred texts' },
+  ],
+  'sumerian-mesopotamian': [
+    { slug: 'royal-court-poetry', name: 'Royal & Court Poetry', subtitle: 'Hymns and praise poems for Sumerian and Babylonian kings — Šulgi, Išme-Dagan, Hammurabi, and the ideology of sacred kingship' },
+    { slug: 'divine-hymns', name: 'Divine Hymns & Temple Songs', subtitle: 'Hymns to Enlil, Inana, Nanna, Enki, and the great gods — the liturgical poetry of Mesopotamian temples' },
+    { slug: 'myths-epics', name: 'Myths & Epics', subtitle: 'Gilgamesh, Enmerkar, Lugalbanda, the Flood — the narrative imagination of the ancient Near East' },
+    { slug: 'wisdom-debate-literature', name: 'Wisdom & Debate Literature', subtitle: 'Proverb collections, dialogues, disputations, and diatribes — the philosophical voice of Sumer' },
+  ],
+  'slavic-tradition': [
+    { slug: 'russian-religious-philosophy', name: 'Russian Religious Philosophy', subtitle: 'Solovyov, Berdyaev, Bulgakov, Frank, Florensky — the great tradition of Russian philosophical theology' },
+    { slug: 'russian-theosophy-occultism', name: 'Russian Theosophy & Occultism', subtitle: 'Blavatsky, Ouspensky, Gurdjieff — the Russian contribution to the Western esoteric tradition' },
+    { slug: 'russian-literary-social-thought', name: 'Russian Literary & Social Thought', subtitle: 'Herzen, Chaadaev, Chernyshevsky, Lavrov — philosophy, criticism, and the Russian intelligentsia' },
+    { slug: 'slavic-esoteric-translations', name: 'Slavic Esoteric Translations', subtitle: 'Western mystical and Masonic works in Russian translation — Eckartshausen, Saint-Martin, and the Masonic underground' },
+  ],
 };
 
 // ─── Rule-based classification ───
@@ -247,6 +275,164 @@ const RULES = {
       || (hasCat(cats, 'history') && hasCat(cats, 'politics'))
       || a.includes('sun tzu') || t.includes('art of war') || t.includes('book of lord shang'))
       return 'chinese-history-statecraft';
+    return null;
+  },
+  'indic-traditions': (b) => {
+    const cats = (b.categories || []).map(lc);
+    const t = lc(b.title);
+    const a = lc(b.author);
+    const lang = lc(b.language);
+    // Buddhist & Jain
+    if (hasCat(cats, 'buddhism') || t.includes('sutra') || t.includes('buddhis') || t.includes('pali')
+      || lang === 'ardhamagadhi prakrit' || t.includes('jain'))
+      return 'indian-buddhist-jain';
+    // Mathematics & Astronomy (before astrology — some overlap)
+    if (hasCat(cats, 'mathematics') && !hasCat(cats, 'astrology'))
+      return 'indian-mathematics-astronomy';
+    if (a.includes('aryabhata') || a.includes('brahmagupta') || a.includes('bhaskara')
+      || (hasCat(cats, 'astronomy') && !hasCat(cats, 'astrology', 'divination')))
+      return 'indian-mathematics-astronomy';
+    // Jyotisha & astrology
+    if (hasCat(cats, 'astrology', 'divination') || t.includes('jyotish') || t.includes('hora ')
+      || a.includes('varahamihira') || a.includes('parashara'))
+      return 'jyotisha-vedic-astrology';
+    // Yoga, Tantra & Mysticism
+    if (hasCat(cats, 'theosophy') || t.includes('yoga') || t.includes('tantr') || t.includes('kundalini')
+      || a.includes('ramacharaka') || a.includes('besant') || a.includes('vivekananda')
+      || (hasCat(cats, 'mysticism') && !hasCat(cats, 'vedanta')))
+      return 'yoga-tantra-mysticism';
+    // Vedanta & Darshana
+    if (hasCat(cats, 'vedanta') || a.includes('shankar') || a.includes('ramanuja')
+      || t.includes('vedant') || t.includes('upanishad') || t.includes('brahma sutra')
+      || (hasCat(cats, 'philosophy') && !hasCat(cats, 'history', 'politics')))
+      return 'vedanta-darshana';
+    // Puranas & Epics
+    if (t.includes('purana') || t.includes('mahabharata') || t.includes('ramayana') || t.includes('harivam')
+      || t.includes('bhagavad') || (hasCat(cats, 'theology') && hasCat(cats, 'literature')))
+      return 'puranas-epics';
+    if (hasCat(cats, 'theology') && !hasCat(cats, 'philosophy'))
+      return 'puranas-epics';
+    return null;
+  },
+  'islamic-philosophy': (b) => {
+    const cats = (b.categories || []).map(lc);
+    const t = lc(b.title);
+    const a = lc(b.author);
+    const lang = lc(b.language);
+    // Sufism & Islamic Mysticism
+    if (hasCat(cats, 'sufism') || t.includes('sufi') || a.includes('ibn arabi') || a.includes('al-qushayri')
+      || a.includes('rumi') || t.includes('futuhat') || t.includes('awrad'))
+      return 'sufism-islamic-mysticism';
+    // Islamic Occult Sciences
+    if (hasCat(cats, 'ritual-magic', 'divination') || a.includes('al-buni')
+      || (hasCat(cats, 'alchemy') && !hasCat(cats, 'philosophy'))
+      || (hasCat(cats, 'astrology') && !hasCat(cats, 'astronomy')))
+      return 'islamic-occult-sciences';
+    // Judeo-Islamic Philosophy — Hebrew/Judeo-Arabic language texts
+    if (lang.includes('judeo-arabic') || lang.includes('hebrew')
+      || a.includes('maimonid') || a.includes('gersonid') || a.includes('saadia'))
+      return 'judeo-islamic-philosophy';
+    // Islamic Medicine & Science
+    if (hasCat(cats, 'medicine') || a.includes('avicenna') || a.includes('ibn sina')
+      || t.includes('canon medicin') || hasCat(cats, 'natural-philosophy')
+      || (hasCat(cats, 'astronomy') && hasCat(cats, 'mathematics')))
+      return 'islamic-medicine-science';
+    // Quran & Theology
+    if (hasCat(cats, 'theology', 'biblical-studies') || t.includes('quran') || t.includes('qur\'an')
+      || t.includes('koran') || t.includes('al-coranus') || t.includes('bible') || t.includes('tafsir'))
+      return 'quran-islamic-theology';
+    // Falsafa — general philosophy, neoplatonism
+    if (hasCat(cats, 'philosophy', 'neoplatonism') || a.includes('averro') || a.includes('al-farabi')
+      || a.includes('al-kindi') || a.includes('al-ghazali') || t.includes('aristotel'))
+      return 'falsafa';
+    return null;
+  },
+  'sumerian-mesopotamian': (b) => {
+    const cats = (b.categories || []).map(lc);
+    const t = lc(b.title);
+    // Myths & Epics
+    if (hasCat(cats, 'myths and epics', 'gilgameš') || t.includes('gilgamesh') || t.includes('gilgameš')
+      || t.includes('enmerkar') || t.includes('lugalbanda') || t.includes('flood'))
+      return 'myths-epics';
+    // Wisdom & Debate
+    if (hasCat(cats, 'wisdom and debate', 'proverb collections', 'diatribes')
+      || t.includes('proverb') || t.includes('diatribe') || t.includes('debate') || t.includes('dispute'))
+      return 'wisdom-debate-literature';
+    // Royal & Court Poetry
+    if (hasCat(cats, 'royal and court poetry', 'literary letters'))
+      return 'royal-court-poetry';
+    // Divine Hymns
+    if (hasCat(cats, 'hymns and songs') || cats.some(c => c.includes('hymns'))
+      || t.includes('hymn') || t.includes('lament') || t.includes('prayer'))
+      return 'divine-hymns';
+    return null;
+  },
+  'slavic-tradition': (b) => {
+    const cats = (b.categories || []).map(lc);
+    const t = lc(b.title);
+    const a = lc(b.author);
+    // Theosophy & Occultism — Blavatsky, Ouspensky
+    if (hasCat(cats, 'theosophy') || a.includes('blavatsky') || a.includes('ouspensky')
+      || a.includes('gurdjieff') || t.includes('theosophy') || t.includes('secret doctrine')
+      || t.includes('isis unveiled') || t.includes('tertium organum'))
+      return 'russian-theosophy-occultism';
+    // Esoteric translations — identifiable by Cyrillic markers or known translators
+    if (t.includes('cyrillisch') || t.includes('cyrillic') || hasCat(cats, 'freemasonry')
+      || a.includes('eckartshausen') || a.includes('lopukhin') || a.includes('starck')
+      || a.includes('saint-martin') || a.includes('köppen'))
+      return 'slavic-esoteric-translations';
+    // Religious Philosophy — Solovyov, Berdyaev, Bulgakov, Frank, Florensky, Khomyakov, Rozanov, Leontiev, Kireevsky, etc.
+    if (a.includes('solovyov') || a.includes('soloviev') || a.includes('соловьёв') || a.includes('соловьев')
+      || a.includes('berdyaev') || a.includes('бердяев')
+      || a.includes('bulgakov') || a.includes('frank') || a.includes('зеньковский')
+      || a.includes('florensky') || a.includes('florenskii')
+      || a.includes('khomyakov') || a.includes('khomiakov') || a.includes('хомяков')
+      || a.includes('trubetskoi') || a.includes('трубецкой')
+      || a.includes('losev') || a.includes('lossky') || a.includes('лосский')
+      || a.includes('shestov') || a.includes('шестов')
+      || a.includes('rozanov') || a.includes('розанов')
+      || a.includes('leontiev') || a.includes('леонтьев') || a.includes('леонтьевъ')
+      || a.includes('kireevsky') || a.includes('киреевский') || a.includes('киреевскаго')
+      || a.includes('aksakov') || a.includes('аксаков')
+      || a.includes('karsavin') || a.includes('карсавин')
+      || a.includes('struve') || a.includes('ern ')
+      || a.includes('фёдоров') || a.includes('федоров')
+      || a.includes('gershenzon') || a.includes('гершензон')
+      || hasCat(cats, 'christian-mysticism') || (hasCat(cats, 'theology') && hasCat(cats, 'philosophy')))
+      return 'russian-religious-philosophy';
+    // Literary & Social Thought — novelists, poets, critics, political thinkers
+    if (a.includes('herzen') || a.includes('герцен') || a.includes('chaadaev') || a.includes('чаадаев')
+      || a.includes('chernyshevsky') || a.includes('чернышевский') || a.includes('чернышевскій')
+      || a.includes('lavrov') || a.includes('лавров')
+      || a.includes('merezhkovsky') || a.includes('мережковский') || a.includes('мережковскій')
+      || a.includes('belinsky') || a.includes('белинский') || a.includes('белинскій')
+      || a.includes('pushkin') || a.includes('пушкин')
+      || a.includes('dostoevsk') || a.includes('достоевск')
+      || a.includes('tolsto') || a.includes('толсто')
+      || a.includes('turgenev') || a.includes('тургенев')
+      || a.includes('chekhov') || a.includes('чехов')
+      || a.includes('gogol') || a.includes('гоголь')
+      || a.includes('lermontov') || a.includes('лермонтов')
+      || a.includes('leskov') || a.includes('лесков') || a.includes('лѣсков')
+      || a.includes('салтыков') || a.includes('щедрин')
+      || a.includes('kropotkin') || a.includes('кропоткин')
+      || a.includes('bakunin') || a.includes('бакунин')
+      || a.includes('ostrovsky') || a.includes('островск')
+      || a.includes('некрасов') || a.includes('nekrasov')
+      || a.includes('добролюбов') || a.includes('dobrolyubov') || a.includes('добролюбовъ')
+      || a.includes('писарев') || a.includes('pisarev')
+      || a.includes('lomonosov') || a.includes('ломоносов')
+      || a.includes('грибоедов') || a.includes('griboedov')
+      || a.includes('державин') || a.includes('derzhavin')
+      || a.includes('крылов') || a.includes('krylov')
+      || a.includes('карамзин') || a.includes('karamzin')
+      || a.includes('жуковский') || a.includes('жуковскаго') || a.includes('zhukovsk')
+      || a.includes('гончаров') || a.includes('goncharov')
+      || a.includes('фонвизин') || a.includes('fonvizin')
+      || a.includes('радищев') || a.includes('radishchev')
+      || a.includes('ленин') || a.includes('lenin')
+      || a.includes('skovoroda') || a.includes('сковорода'))
+      return 'russian-literary-social-thought';
     return null;
   },
 };
