@@ -341,8 +341,8 @@ export async function GET(request: NextRequest) {
     if (sortBy === 'date_asc' || sortBy === 'date_desc') {
       const dir = sortBy === 'date_asc' ? 1 : -1;
       results.sort((a, b) => {
-        const aYear = parseInt(a.published?.match(/\d{4}/)?.[0] || '0');
-        const bYear = parseInt(b.published?.match(/\d{4}/)?.[0] || '0');
+        const aYear = parseInt(a.published?.match(/\d{3,4}/)?.[0] || '0');
+        const bYear = parseInt(b.published?.match(/\d{3,4}/)?.[0] || '0');
         return (aYear - bYear) * dir;
       });
     } else if (sortBy === 'title') {
@@ -381,8 +381,8 @@ export async function GET(request: NextRequest) {
         if (aOriginal !== bOriginal) return bOriginal - aOriginal;
 
         // 4. Older editions rank higher (earlier = closer to source)
-        const aYear = parseInt(a.published?.match(/\d{4}/)?.[0] || '9999');
-        const bYear = parseInt(b.published?.match(/\d{4}/)?.[0] || '9999');
+        const aYear = parseInt(a.published?.match(/\d{3,4}/)?.[0] || '9999');
+        const bYear = parseInt(b.published?.match(/\d{3,4}/)?.[0] || '9999');
         if (aYear !== bYear) return aYear - bYear;
 
         // 5. Quality score tie-breaker
@@ -454,8 +454,8 @@ export async function GET(request: NextRequest) {
 
         // Sort nearby by year distance from target
         nearby.sort((a, b) => {
-          const aYear = parseInt(a.published?.match(/\d{4}/)?.[0] || '0');
-          const bYear = parseInt(b.published?.match(/\d{4}/)?.[0] || '0');
+          const aYear = parseInt(a.published?.match(/\d{3,4}/)?.[0] || '0');
+          const bYear = parseInt(b.published?.match(/\d{3,4}/)?.[0] || '0');
           return Math.abs(aYear - yearNum) - Math.abs(bYear - yearNum);
         });
       }

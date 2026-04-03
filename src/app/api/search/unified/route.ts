@@ -6,6 +6,13 @@ import type { SearchResult } from '@/lib/api-client/types/search';
 const ENTITIES_SEARCH_INDEX = 'entities_search';
 const GALLERY_SEARCH_INDEX = 'gallery_search';
 
+/** Parse year from published field — handles 3-digit years (e.g. "895") and 4-digit */
+function parsePublishedYear(published: string | undefined): number {
+  if (!published) return 9999;
+  const match = published.match(/\d{3,4}/);
+  return match ? parseInt(match[0]) : 9999;
+}
+
 export const preferredRegion = 'fra1';
 
 interface IndexResult {
@@ -202,6 +209,30 @@ async function searchBooks(
       }
     }
   }
+
+  // Canon-weighted reranking: older editions first, original language preferred
+  const queryLower = query.toLowerCase();
+  books.sort((a: any, b: any) => {
+    // 1. Title match (strongest signal)
+    const aTitle = (a.display_title || a.title || '').toLowerCase();
+    const bTitle = (b.display_title || b.title || '').toLowerCase();
+    const aTitleMatch = aTitle.includes(queryLower);
+    const bTitleMatch = bTitle.includes(queryLower);
+    if (aTitleMatch !== bTitleMatch) return aTitleMatch ? -1 : 1;
+
+    // 2. Original language beats English translations
+    const aOriginal = a.language !== 'English' ? 1 : 0;
+    const bOriginal = b.language !== 'English' ? 1 : 0;
+    if (aOriginal !== bOriginal) return bOriginal - aOriginal;
+
+    // 3. Older editions rank higher (earlier = closer to source)
+    const aYear = parsePublishedYear(a.published);
+    const bYear = parsePublishedYear(b.published);
+    if (aYear !== bYear) return aYear - bYear;
+
+    // 4. Quality score tie-breaker
+    return (b.quality_score || 0) - (a.quality_score || 0);
+  });
 
   const hasMore = books.length > limit;
   const truncated = hasMore ? books.slice(0, limit) : books;
