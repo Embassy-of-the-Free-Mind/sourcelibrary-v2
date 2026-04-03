@@ -32,6 +32,7 @@ export async function GET(request: NextRequest) {
   const query: Record<string, unknown> = {
     'faceted_tags': { $exists: true },
     visible: true,
+    pages_count: { $gt: 0 },
   };
 
   const activeFilters: Record<string, string[]> = {};
