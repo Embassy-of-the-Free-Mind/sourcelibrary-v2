@@ -85,6 +85,14 @@ const SUBCOLLECTIONS = {
     { slug: 'horoscopic-western-astrology', name: 'Horoscopic Astrology', subtitle: "Ptolemy's Tetrabiblos, Abu Ma'shar, Lilly — natal and horary astrology" },
     { slug: 'celestial-divination', name: 'Celestial Divination', subtitle: 'Omens, portents, cometary interpretation, mundane astrology, almanacs' },
   ],
+  'chinese-classics': [
+    { slug: 'confucian-classics', name: 'Confucian Classics', subtitle: 'The Five Classics, Four Books, and their vast commentary tradition — Confucius, Mencius, Zhu Xi, Wang Yangming' },
+    { slug: 'daoist-classics', name: 'Daoist Classics', subtitle: 'Laozi, Zhuangzi, Daodejing commentaries, inner alchemy, and the Daoist canon' },
+    { slug: 'chinese-buddhist-texts', name: 'Chinese Buddhist Texts', subtitle: 'Sutras in Chinese translation, Chan/Zen texts, Dunhuang manuscripts, and the Chinese Buddhist canon' },
+    { slug: 'chinese-medicine-natural-philosophy', name: 'Chinese Medicine & Natural Philosophy', subtitle: 'Huangdi Neijing, Bencao Gangmu, materia medica, and traditional Chinese cosmology' },
+    { slug: 'chinese-divination-cosmology', name: 'Chinese Divination & Cosmology', subtitle: 'Yi Jing and commentaries, feng shui, Chinese astrology, numerology, and cosmographic texts' },
+    { slug: 'chinese-history-statecraft', name: 'Chinese History & Statecraft', subtitle: 'Dynastic histories, military strategy, political philosophy — Sun Tzu, Legalism, and the historiographic tradition' },
+  ],
 };
 
 // ─── Rule-based classification ───
@@ -207,6 +215,38 @@ const RULES = {
       return 'celestial-divination';
     if ((b.year || 9999) < 1700 && ['latin', 'english', 'french', 'german', 'arabic', 'greek'].includes(lang))
       return 'horoscopic-western-astrology';
+    return null;
+  },
+  'chinese-classics': (b) => {
+    const cats = (b.categories || []).map(lc);
+    const t = lc(b.title);
+    const a = lc(b.author);
+    // Daoism — check category and known authors/titles
+    if (hasCat(cats, 'daoism') || t.includes('dao de jing') || t.includes('daodejing') || t.includes('tao te') || t.includes('taoism') || t.includes('taoist')
+      || a.includes('laozi') || a.includes('lao tzu') || a.includes('zhuangzi') || a.includes('chuang tzu'))
+      return 'daoist-classics';
+    // Buddhism
+    if (hasCat(cats, 'buddhism') || t.includes('sutra') || t.includes('dunhuang') || t.includes('pelliot')
+      || t.includes('buddhis') || t.includes('chan ') || t.includes('zen '))
+      return 'chinese-buddhist-texts';
+    // Divination & cosmology — Yi Jing, astrology, divination
+    if (hasCat(cats, 'divination', 'astrology') || t.includes('yi jing') || t.includes('i ching') || t.includes('yi king')
+      || t.includes('hexagram') || t.includes('feng shui'))
+      return 'chinese-divination-cosmology';
+    // Medicine & natural philosophy
+    if (hasCat(cats, 'medicine', 'botany') || t.includes('ben cao') || t.includes('bencao') || t.includes('materia medica')
+      || t.includes('neijing') || t.includes('herbal'))
+      return 'chinese-medicine-natural-philosophy';
+    // Confucian — philosophy, politics, known authors
+    if (a.includes('confuci') || a.includes('mencius') || a.includes('xunzi') || a.includes('hsüntze')
+      || a.includes('zhu xi') || a.includes('wang yang') || t.includes('analects') || t.includes('confuci')
+      || (hasCat(cats, 'philosophy') && hasCat(cats, 'politics')))
+      return 'confucian-classics';
+    // History & statecraft — military, history, politics, law
+    if (hasCat(cats, 'military') || hasCat(cats, 'law')
+      || (hasCat(cats, 'history') && hasCat(cats, 'politics'))
+      || a.includes('sun tzu') || t.includes('art of war') || t.includes('book of lord shang'))
+      return 'chinese-history-statecraft';
     return null;
   },
 };
