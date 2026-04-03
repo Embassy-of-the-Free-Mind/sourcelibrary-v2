@@ -188,7 +188,19 @@ export default function BookMap({ locations, stats }: BookMapProps) {
           offset: [0, -10],
         });
         cluster.on('click', () => {
-          map.setView([avgLat, avgLng], zoom + 2);
+          if (zoom >= 7) {
+            const allBooks = group.flatMap(l => l.books);
+            const merged: BookLocation = {
+              city: group.length === 1 ? group[0].city : `${group.length} locations`,
+              country: group.length === 1 ? group[0].country : null,
+              lat: avgLat, lng: avgLng,
+              type: group[0].type,
+              books: allBooks.slice(0, 50),
+            };
+            handleSelect(merged);
+          } else {
+            map.setView([avgLat, avgLng], zoom + 2);
+          }
         });
         layerGroup.addLayer(cluster);
       }
@@ -293,7 +305,7 @@ function BookMapSidebar({ location, onClose }: { location: BookLocation | null; 
   if (!location) {
     return (
       <div
-        className="w-full lg:w-80 shrink-0 p-6 flex items-center justify-center"
+        className="hidden lg:flex w-80 shrink-0 p-6 items-center justify-center"
         style={{ background: 'var(--bg-cream)', borderLeft: '1px solid var(--border-light)' }}
       >
         <p className="text-sm text-center" style={{ color: 'var(--text-muted)' }}>
@@ -308,8 +320,8 @@ function BookMapSidebar({ location, onClose }: { location: BookLocation | null; 
 
   return (
     <div
-      className="w-full lg:w-80 shrink-0 overflow-y-auto"
-      style={{ background: 'var(--bg-cream)', borderLeft: '1px solid var(--border-light)' }}
+      className="absolute bottom-0 left-0 right-0 max-h-[50vh] lg:static lg:max-h-none lg:w-80 shrink-0 overflow-y-auto z-[1000]"
+      style={{ background: 'var(--bg-cream)', borderLeft: '1px solid var(--border-light)', borderTop: '1px solid var(--border-light)' }}
     >
       <div className="p-5 space-y-4">
         {/* Header */}
