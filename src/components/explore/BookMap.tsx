@@ -163,16 +163,21 @@ export default function BookMap({ locations, stats }: BookMapProps) {
           { direction: 'top', offset: [0, -10], className: 'book-tooltip' }
         );
         cluster.on('click', () => {
-          if (zoom >= 7) {
-            const allBooks = group.flatMap(l => l.books);
-            handleSelect({
-              city: group.length === 1 ? group[0].city : `${group.length} locations`,
-              country: group.length === 1 ? group[0].country : null,
-              lat: avgLat, lng: avgLng, type: group[0].type,
-              books: allBooks.slice(0, 50),
-            });
-          } else {
-            map.setView([avgLat, avgLng], zoom + 2);
+          // Always show books in sidebar
+          const allBooks = group.flatMap(l => l.books);
+          // Find the dominant city (most books)
+          const sorted = [...group].sort((a, b) => b.books.length - a.books.length);
+          const topCity = sorted[0];
+          handleSelect({
+            city: group.length === 1 ? topCity.city :
+              `${topCity.city}${group.length > 1 ? ` + ${group.length - 1} nearby` : ''}`,
+            country: topCity.country,
+            lat: avgLat, lng: avgLng, type: topCity.type,
+            books: allBooks.slice(0, 100),
+          });
+          // Also zoom in a bit for context
+          if (zoom < 8) {
+            map.setView([avgLat, avgLng], Math.min(zoom + 2, 10));
           }
         });
         layerGroup.addLayer(cluster);
