@@ -711,7 +711,7 @@ async function selfDispatch(db, limit) {
   // Find fresh books (metadata_enriched/ft_verified) — sorted by language speed tier
   // so each batch is homogeneous (all fast or all slow books together).
   const fresh = await db.collection('books').aggregate([
-    { $match: { 'pipeline_auto.status': { $in: ['metadata_enriched', 'ft_verified'] }, 'image_source.provider': { $ne: 'bph' } } },
+    { $match: { 'pipeline_auto.status': { $in: ['metadata_enriched', 'ft_verified'] } } },
     { $addFields: { _speedTier: { $switch: {
       branches: [
         { case: { $in: ['$language', ['Latin', 'German', 'French', 'Italian', 'Dutch', 'Spanish', 'Portuguese', 'English', 'Czech', 'Polish', 'Swedish', 'Danish']] }, then: 0 },
@@ -732,7 +732,7 @@ async function selfDispatch(db, limit) {
   let candidates = fresh;
   if (fresh.length === 0) {
     candidates = await db.collection('books').aggregate([
-      { $match: { 'pipeline_auto.status': 'translate_partial', 'image_source.provider': { $ne: 'bph' } } },
+      { $match: { 'pipeline_auto.status': 'translate_partial' } },
       { $addFields: { _denominator: { $subtract: [{ $ifNull: ['$pages_ocr', 0] }, { $ifNull: ['$pages_blank', 0] }] } } },
       { $match: { _denominator: { $gt: 0 }, $expr: { $gte: [{ $divide: ['$pages_translated', '$_denominator'] }, 0.5] } } },
       { $project: { id: 1, title: 1, pages_count: 1, language: 1, 'image_source.provider': 1 } },
