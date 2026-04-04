@@ -1064,7 +1064,7 @@ export default async function CollectionDetailPage({ params }: Props) {
         {/* All Books — client component handles compact → expanded transition */}
         <CollectionAllBooks
           collectionId={id}
-          compactBooks={books.filter(b => !b.resource_type)}
+          compactBooks={isArtCollection ? books : books.filter(b => !b.resource_type)}
           total={total}
           languages={languages}
           collectionType={collection.collection_type}
