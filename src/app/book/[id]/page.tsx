@@ -184,8 +184,10 @@ async function getBook(id: string): Promise<{ book: Book; pages: Page[]; totalBo
   // Status dots need .updated_at; image count needs array length via .type
   // All queries have maxTimeMS to fail fast during DB degradation
   const [pagesRaw, totalBooks, galleryImagesRaw, galleryImageCount, bookCollectionsRaw] = await Promise.all([
+    // Drop $ne filter — it prevents use of the {book_id,page_number} compound
+    // index and forces a collection scan. Filter digitizer-inserts in JS instead.
     db.collection('pages')
-      .find({ book_id: bookId, page_type: { $ne: 'digitizer-insert' } }, {
+      .find({ book_id: bookId }, {
         projection: {
           _id: 0,
           id: 1,
@@ -206,8 +208,9 @@ async function getBook(id: string): Promise<{ book: Book; pages: Page[]; totalBo
         maxTimeMS: 5000,
       })
       .sort({ page_number: 1 })
-      .limit(100)
-      .toArray(),
+      .limit(110) // slight over-fetch to account for digitizer-inserts filtered below
+      .toArray()
+      .then(docs => docs.filter(d => d.page_type !== 'digitizer-insert').slice(0, 100)),
     db.collection('books').estimatedDocumentCount().catch(() => 1200),
     // Top 8 gallery images for preview row
     db.collection('gallery_images')
