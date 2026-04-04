@@ -812,6 +812,38 @@ async function run() {
     console.error(`[recovery] Sweep error: ${e.message}`);
   }
 
+  // ── Zombie Reaper: cancel stale processing jobs (>6h no update) ──
+  let zombiesReaped = 0;
+  try {
+    const sixHoursAgo = new Date(Date.now() - 6 * 60 * 60 * 1000);
+    const zombieResult = await db.collection('jobs').updateMany(
+      { status: 'processing', updated_at: { $lt: sixHoursAgo } },
+      { $set: { status: 'cancelled', cancelled_at: new Date(), cancel_reason: 'zombie reaper — stale >6h' } }
+    );
+    zombiesReaped = zombieResult.modifiedCount;
+    if (zombiesReaped > 0) console.log(`\n[zombie-reaper] Cancelled ${zombiesReaped} stale jobs (>6h)`);
+  } catch (e) { console.error(`[zombie-reaper] Error: ${e.message}`); }
+
+  // ── Ghost Cleanup: mark orphaned parent batch jobs as saved ──
+  // Parent jobs (no job_name) get stuck at 'completed' because the collector
+  // only queries jobs with job_name. Their children already saved the pages.
+  let ghostsCleaned = 0;
+  try {
+    const ghostResult = await db.collection('batch_jobs').updateMany(
+      {
+        status: 'completed',
+        parent_job_id: { $exists: false },
+        $or: [
+          { job_name: { $in: [null, ''] } },
+          { job_name: { $exists: false } },
+        ],
+      },
+      { $set: { status: 'saved', saved_at: new Date(), save_note: 'ghost cleanup — parent job, children already collected' } }
+    );
+    ghostsCleaned = ghostResult.modifiedCount;
+    if (ghostsCleaned > 0) console.log(`[ghost-cleanup] Marked ${ghostsCleaned} orphaned parent jobs as saved`);
+  } catch (e) { console.error(`[ghost-cleanup] Error: ${e.message}`); }
+
   const totalElapsed = ((Date.now() - startTime) / 1000).toFixed(0);
   console.log(`\n=== SUMMARY ===`);
   console.log(`Jobs collected: ${collected}`);
@@ -821,6 +853,8 @@ async function run() {
   console.log(`Books updated: ${bookIdsToUpdate.size}`);
   if (recitationBooks.size > 0) console.log(`RECITATION resets: ${recitationBooks.size}`);
   if (recoveredJobs > 0) console.log(`Recovery: ${recoveredJobs} jobs (${recoveredPages} pages)`);
+  if (zombiesReaped > 0) console.log(`Zombies reaped: ${zombiesReaped}`);
+  if (ghostsCleaned > 0) console.log(`Ghosts cleaned: ${ghostsCleaned}`);
   console.log(`Total time: ${totalElapsed}s`);
 
   // Write cron_runs record for observability
@@ -835,6 +869,8 @@ async function run() {
     parents_updated: parentIdsToUpdate.size,
     recovered_jobs: recoveredJobs,
     recovered_pages: recoveredPages,
+    zombies_reaped: zombiesReaped,
+    ghosts_cleaned: ghostsCleaned,
   }, errorMessages);
 
   await client.close();
