@@ -72,7 +72,7 @@ export default async function ArtworkLandingPage() {
         <div className="max-w-[var(--container-standard)] mx-auto px-6 md:px-12 py-12">
           <h2 className="text-2xl font-display font-semibold mb-8" style={{ color: 'var(--text-primary)' }}>Collections</h2>
           <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">
-            {collections.map(col => (
+            {collections.map((col, i) => (
               <Link
                 key={col.slug}
                 href={`/collections/${col.slug}`}
@@ -85,6 +85,8 @@ export default async function ArtworkLandingPage() {
                     fill
                     className="object-cover group-hover:scale-[1.03] transition-transform duration-700"
                     sizes="(max-width: 640px) 100vw, (max-width: 1024px) 50vw, 33vw"
+                    priority={i < 6}
+                    loading={i < 6 ? 'eager' : 'lazy'}
                   />
                 )}
                 <div className="absolute inset-0 bg-gradient-to-t from-black/70 via-black/20 to-transparent" />

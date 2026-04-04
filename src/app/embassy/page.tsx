@@ -231,8 +231,8 @@ export default function EmbassyPage() {
               </h1>
               <p className="text-[#6b6560] text-sm font-body leading-relaxed max-w-[520px]">
                 Ask the Librarian about any text in the collection — alchemy, Hermetica,
-                Kabbalah, astrology, natural philosophy. Over 5,000 rare books, many translated
-                for the first time.
+                Kabbalah, astrology, natural philosophy. Thousands of rare books, many translated
+                into English for the first time.
               </p>
             </div>
 

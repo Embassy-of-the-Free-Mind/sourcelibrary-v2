@@ -126,6 +126,11 @@ const nextConfig: NextConfig = {
         destination: '/shwep',
         permanent: false,
       },
+      {
+        source: '/research-notes',
+        destination: '/blog',
+        permanent: true,
+      },
     ];
   },
 };
