@@ -99,12 +99,10 @@ export default function BphCatalogBrowser({ basePath, digitizedUbns }: Props) {
   // Sync URL params
   const updateUrl = useCallback((q: string, s: string, kw: string, off: number) => {
     const params = new URLSearchParams(searchParams.toString());
-    // Preserve existing params (view tab, etc.)
     if (q) params.set('cq', q); else params.delete('cq');
     if (s && s !== 'title') params.set('csort', s); else params.delete('csort');
     if (kw) params.set('ckeyword', kw); else params.delete('ckeyword');
     if (off) params.set('coffset', String(off)); else params.delete('coffset');
-    params.set('view', 'catalog');
     router.replace(`${basePath}?${params}`, { scroll: false });
   }, [searchParams, router, basePath]);
 

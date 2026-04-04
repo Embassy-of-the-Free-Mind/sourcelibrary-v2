@@ -11,7 +11,6 @@ import { getPartnerBySlug, getAllPartnerSlugs } from '@/lib/library-partners';
 import CollectionBookCard from '@/components/CollectionBookCard';
 import CollectionFilters from '@/components/collections/CollectionFilters';
 import { bookTitle } from '@/lib/collections-utils';
-import LibraryViewTabs from '@/components/libraries/LibraryViewTabs';
 import BphCatalogBrowser from '@/components/libraries/BphCatalogBrowser';
 
 const PER_PAGE = 60;
@@ -194,7 +193,7 @@ export default async function LibraryDetailPage({ params, searchParams }: Props)
   const language = typeof sp.language === 'string' ? sp.language : '';
   const q = typeof sp.q === 'string' ? sp.q : '';
   const offset = parseInt(typeof sp.offset === 'string' ? sp.offset : '0') || 0;
-  const view = typeof sp.view === 'string' ? sp.view : 'books';
+  const view = typeof sp.view === 'string' ? sp.view : '';
 
   const isBph = partner.providerKey === 'bph';
 
@@ -211,6 +210,9 @@ export default async function LibraryDetailPage({ params, searchParams }: Props)
   const currentPage = Math.floor(offset / PER_PAGE) + 1;
   const filteredLanguages = languages.filter(l => l.count > 2);
   const basePath = `/libraries/${slug}`;
+
+  // BPH shows: Selected Books + Catalog by default, full grid on ?view=books
+  const showBooksGrid = !isBph || view === 'books';
 
   return (
     <div className="min-h-screen bg-cream">
@@ -348,80 +350,7 @@ export default async function LibraryDetailPage({ params, searchParams }: Props)
       )}
 
       <div className="max-w-7xl mx-auto px-6 py-10">
-        {/* View tabs (BPH only) */}
-        {isBph && (
-          <LibraryViewTabs
-            basePath={basePath}
-            catalogTotal={catalogTotal}
-            booksTotal={total}
-          />
-        )}
-
-        {/* Catalog View */}
-        {isBph && view === 'catalog' ? (
-          <div>
-            {/* Selected Books row */}
-            {topBooks.length > 0 && (
-              <div className="mb-10">
-                <h2 className="text-2xl sm:text-3xl text-primary font-display mb-1">
-                  Selected Books
-                </h2>
-                <p className="text-sm text-muted mb-4">
-                  {total.toLocaleString()} books from the BPH collection translated on Source Library.
-                </p>
-                <div className="grid grid-cols-3 sm:grid-cols-4 lg:grid-cols-6 gap-4">
-                  {topBooks.map((book, i) => (
-                    <CollectionBookCard
-                      key={book.id}
-                      book={{
-                        bookId: book.id,
-                        id: book.id,
-                        slug: book.slug,
-                        title: bookTitle(book),
-                        author: book.author || '',
-                        year: book.year || 0,
-                        pages_count: book.pages_count,
-                        pages_ocr: book.pages_ocr,
-                        pages_translated: book.pages_translated,
-                        thumbnail: book.thumbnail || book.thumbnail_blob || book.photo,
-                        thumbnail_blob: book.thumbnail_blob,
-                        language: book.language,
-                        published: book.published,
-                        translation_percent: book.pages_ocr && book.pages_translated
-                          ? Math.round((book.pages_translated / Math.max((book.pages_ocr || 0) - (book.pages_blank || 0), 1)) * 100)
-                          : 0,
-                      }}
-                      priority={i < 5}
-                    />
-                  ))}
-                  <Link
-                    href={basePath}
-                    className="group flex flex-col items-center justify-center rounded-lg border border-border-light hover:border-accent-rust/40 transition-all hover:shadow-md bg-cream aspect-[2/3] min-h-[180px]"
-                  >
-                    <BookOpen className="w-6 h-6 text-muted mb-2 group-hover:text-accent-rust transition-colors" />
-                    <span className="text-sm text-secondary group-hover:text-accent-rust transition-colors font-medium text-center px-3">
-                      See all books
-                    </span>
-                  </Link>
-                </div>
-              </div>
-            )}
-
-            <div className="mb-6">
-              <h2 className="text-2xl sm:text-3xl text-primary font-display">
-                Library Catalog
-              </h2>
-              <p className="text-sm text-muted mt-1">
-                Complete catalog of the Bibliotheca Philosophica Hermetica — {catalogTotal.toLocaleString()} works in the collection.
-                Works available on Source Library are marked with a book icon.
-              </p>
-            </div>
-            <BphCatalogBrowser
-              basePath={basePath}
-              digitizedUbns={digitizedUbns}
-            />
-          </div>
-        ) : (
+        {showBooksGrid ? (
           <>
             {/* All Books Header */}
             <div className="flex flex-wrap items-end justify-between gap-4 mb-6">
@@ -429,7 +358,7 @@ export default async function LibraryDetailPage({ params, searchParams }: Props)
                 <h2
                   className="text-2xl sm:text-3xl text-primary font-display"
                 >
-                  {isBph ? 'Translated Books' : 'All Books'}
+                  All Books
                 </h2>
                 <p className="text-sm text-muted mt-1">
                   {total.toLocaleString()} books from {partner.name}
@@ -491,7 +420,7 @@ export default async function LibraryDetailPage({ params, searchParams }: Props)
               <div className="flex items-center justify-center gap-4 mt-10 text-sm">
                 {offset > 0 ? (
                   <Link
-                    href={`${basePath}?sort=${sort}${language ? `&language=${language}` : ''}&offset=${Math.max(0, offset - PER_PAGE)}`}
+                    href={`${basePath}?view=books&sort=${sort}${language ? `&language=${language}` : ''}&offset=${Math.max(0, offset - PER_PAGE)}`}
                     className="px-4 py-2 rounded-lg border border-border-light hover:bg-warm transition-colors"
                   >
                     Previous
@@ -506,7 +435,7 @@ export default async function LibraryDetailPage({ params, searchParams }: Props)
                 </span>
                 {currentPage < totalPages ? (
                   <Link
-                    href={`${basePath}?sort=${sort}${language ? `&language=${language}` : ''}&offset=${offset + PER_PAGE}`}
+                    href={`${basePath}?view=books&sort=${sort}${language ? `&language=${language}` : ''}&offset=${offset + PER_PAGE}`}
                     className="px-4 py-2 rounded-lg border border-border-light hover:bg-warm transition-colors"
                   >
                     Next
@@ -519,6 +448,71 @@ export default async function LibraryDetailPage({ params, searchParams }: Props)
               </div>
             )}
           </>
+        ) : (
+          /* BPH default: Selected Books + Catalog */
+          <div>
+            {/* Selected Books row */}
+            {topBooks.length > 0 && (
+              <div className="mb-10">
+                <h2 className="text-2xl sm:text-3xl text-primary font-display mb-1">
+                  Selected Books
+                </h2>
+                <p className="text-sm text-muted mb-4">
+                  {total.toLocaleString()} books from the BPH collection translated on Source Library.
+                </p>
+                <div className="grid grid-cols-3 sm:grid-cols-4 lg:grid-cols-6 gap-4">
+                  {topBooks.map((book, i) => (
+                    <CollectionBookCard
+                      key={book.id}
+                      book={{
+                        bookId: book.id,
+                        id: book.id,
+                        slug: book.slug,
+                        title: bookTitle(book),
+                        author: book.author || '',
+                        year: book.year || 0,
+                        pages_count: book.pages_count,
+                        pages_ocr: book.pages_ocr,
+                        pages_translated: book.pages_translated,
+                        thumbnail: book.thumbnail || book.thumbnail_blob || book.photo,
+                        thumbnail_blob: book.thumbnail_blob,
+                        language: book.language,
+                        published: book.published,
+                        translation_percent: book.pages_ocr && book.pages_translated
+                          ? Math.round((book.pages_translated / Math.max((book.pages_ocr || 0) - (book.pages_blank || 0), 1)) * 100)
+                          : 0,
+                      }}
+                      priority={i < 5}
+                    />
+                  ))}
+                  <Link
+                    href={`${basePath}?view=books`}
+                    className="group flex flex-col items-center justify-center rounded-lg border border-border-light hover:border-accent-rust/40 transition-all hover:shadow-md bg-cream aspect-[2/3] min-h-[180px]"
+                  >
+                    <BookOpen className="w-6 h-6 text-muted mb-2 group-hover:text-accent-rust transition-colors" />
+                    <span className="text-sm text-secondary group-hover:text-accent-rust transition-colors font-medium text-center px-3">
+                      See all books
+                    </span>
+                  </Link>
+                </div>
+              </div>
+            )}
+
+            {/* Library Catalog */}
+            <div className="mb-6">
+              <h2 className="text-2xl sm:text-3xl text-primary font-display">
+                Library Catalog
+              </h2>
+              <p className="text-sm text-muted mt-1">
+                Complete catalog of the Bibliotheca Philosophica Hermetica — {catalogTotal.toLocaleString()} works in the collection.
+                Works available on Source Library are marked with a book icon.
+              </p>
+            </div>
+            <BphCatalogBrowser
+              basePath={basePath}
+              digitizedUbns={digitizedUbns}
+            />
+          </div>
         )}
 
         {/* Attribution */}
