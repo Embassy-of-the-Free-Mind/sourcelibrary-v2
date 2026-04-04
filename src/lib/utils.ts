@@ -109,7 +109,7 @@ export function getPageDisplayUrl(page: Record<string, any>, width = 1200, quali
   if (isUsableImageUrl(page.display_photo)) return page.display_photo;
 
   // Fallback: derive display URL from new path convention (handles sp prefix)
-  const newPathMatch = page.photo?.match(/^(https:\/\/images\.sourcelibrary\.org\/pages\/[^/]+\/(?:sp)?\d{4,})(-full)?\.jpg$/);
+  const newPathMatch = page.photo?.match(/^(https:\/\/images\.sourcelibrary\.org\/pages\/[^/]+\/(?:sp[a-z0-9]*-?)?\d{4,})(-full)?\.jpg$/);
   if (newPathMatch) return `${newPathMatch[1]}.jpg`;
 
   // Legacy fallback: proxy for resize
@@ -142,7 +142,7 @@ export function getPageThumbUrl(page: Record<string, any>): string | null {
   if (isUsableImageUrl(page.thumbnail_blob)) return page.thumbnail_blob;
 
   // Derive from new path convention (handles sp prefix for split pages)
-  const newPathMatch = page.photo?.match(/^(https:\/\/images\.sourcelibrary\.org\/pages\/[^/]+\/(?:sp)?\d{4,})(-full)?\.jpg$/);
+  const newPathMatch = page.photo?.match(/^(https:\/\/images\.sourcelibrary\.org\/pages\/[^/]+\/(?:sp[a-z0-9]*-?)?\d{4,})(-full)?\.jpg$/);
   if (newPathMatch) return `${newPathMatch[1]}-thumb.jpg`;
 
   // Existing thumbnail field
