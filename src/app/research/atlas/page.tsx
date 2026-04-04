@@ -5,7 +5,7 @@ import dataRaw from '@/data/book-constellation.json';
 export const metadata: Metadata = {
   title: 'Book Atlas — Source Library',
   description:
-    'Explore 3,500 pre-modern texts as a navigable constellation, clustered by content similarity using AI embeddings and UMAP dimensionality reduction.',
+    'Explore 8,900+ pre-modern texts as a navigable constellation, clustered by content similarity using AI embeddings and UMAP dimensionality reduction.',
   alternates: { canonical: '/research/atlas' },
 };
 
