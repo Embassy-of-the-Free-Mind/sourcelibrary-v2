@@ -156,12 +156,23 @@ export async function generateDisplayVariants(fullResBuffer) {
  * @param {Function} uploadFn - async (key, buffer, contentType) => url
  * @returns {{ archived: string, display: string, thumb: string }}
  */
+/**
+ * Validate an R2 key has no undefined/null segments.
+ * Catches interpolation bugs before they write garbage to the bucket.
+ */
+function validateR2Key(key) {
+  if (/(?:^|\/)(undefined|null)(?:\/|$)/.test(key)) {
+    throw new Error(`R2 key contains invalid segment: ${key}`);
+  }
+}
+
 export async function uploadPageVariants(fullResBuffer, bookId, pageNumber, uploadFn) {
   if (!bookId) throw new Error(`uploadPageVariants: bookId is ${bookId} for page ${pageNumber}`);
   const num = String(pageNumber).padStart(4, '0');
 
   // Upload full-res (to the existing archived/ path for backward compat)
   const archivedKey = `archived/${bookId}/${pageNumber}.jpg`;
+  validateR2Key(archivedKey);
   const archivedUrl = await uploadFn(archivedKey, fullResBuffer, 'image/jpeg');
 
   // Generate variants
@@ -169,10 +180,12 @@ export async function uploadPageVariants(fullResBuffer, bookId, pageNumber, uplo
 
   // Upload display (1200px with provenance)
   const displayKey = `pages/${bookId}/${num}.jpg`;
+  validateR2Key(displayKey);
   const displayUrl = await uploadFn(displayKey, display, 'image/jpeg');
 
   // Upload thumbnail (150px)
   const thumbKey = `pages/${bookId}/${num}-thumb.jpg`;
+  validateR2Key(thumbKey);
   const thumbUrl = await uploadFn(thumbKey, thumb, 'image/jpeg');
 
   return { archived: archivedUrl, display: displayUrl, thumb: thumbUrl };

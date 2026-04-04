@@ -270,6 +270,22 @@ async function processBook(book, db) {
     stats.booksProcessed++;
     console.log(`    ${archived} archived, ${failed} failed`);
 
+    // Smoke test: verify page 1's display_photo actually resolves
+    if (archived > 0) {
+      const check = await db.collection('pages').findOne(
+        { book_id: book.id, display_photo: { $exists: true, $ne: null } },
+        { projection: { display_photo: 1 }, sort: { page_number: 1 }, maxTimeMS: 5000 }
+      );
+      if (check?.display_photo) {
+        try {
+          const res = await fetch(check.display_photo, { method: 'HEAD', signal: AbortSignal.timeout(5000) });
+          if (!res.ok) console.log(`    [SMOKE] display_photo returned ${res.status}: ${check.display_photo}`);
+        } catch (e) {
+          console.log(`    [SMOKE] display_photo unreachable: ${e.message?.slice(0, 80)}`);
+        }
+      }
+    }
+
     // Sync pages_archived counter on this book (#497)
     if (archived > 0) {
       const archivedCount = await db.collection('pages').countDocuments(
