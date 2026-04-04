@@ -90,6 +90,8 @@ Analyze this artwork image and return JSON with these fields:
     }
   ],
   "inscriptions": "If the image contains readable text (Latin inscriptions, titles, captions, cartouches, verses, dedications, labels), transcribe it here verbatim. Preserve line breaks. If no readable text, set to null.",
+  "inscriptions_translation": "If inscriptions is non-null and NOT already in English, provide an English translation. Preserve line breaks to match the original. If inscriptions is null or already English, set to null.",
+  "inscriptions_language": "The language of the inscription (e.g., 'Latin', 'Dutch', 'German', 'French', 'Italian'). Null if no inscription.",
   "has_readable_text": true,
   "figures_depicted": ["Named figures, historical persons, or figure types (e.g., 'Mercury', 'alchemist', 'Hermes Trismegistus')"],
   "symbols": ["Identifiable symbols with specific iconographic meaning (e.g., 'caduceus', 'ouroboros', 'pelican-in-her-piety'). NOT generic items like 'tree' or 'building'."]
@@ -225,6 +227,8 @@ async function main() {
             genre: enrichment.genre,
             cross_references: enrichment.cross_references || [],
             inscriptions: enrichment.inscriptions || null,
+            inscriptions_translation: enrichment.inscriptions_translation || null,
+            inscriptions_language: enrichment.inscriptions_language || null,
             has_readable_text: !!enrichment.has_readable_text,
             figures_depicted: enrichment.figures_depicted || [],
             symbols: enrichment.symbols || [],
