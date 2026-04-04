@@ -1,6 +1,6 @@
 # Supabase Integration
 
-Source Library uses Supabase Postgres alongside MongoDB. MongoDB handles the reading experience, pipeline state, and imports. Supabase handles analytics, catalog cross-referencing, and semantic search.
+Source Library uses Supabase Postgres alongside MongoDB. MongoDB is the source of truth for all book/page data and pipeline state. Supabase serves analytics, browse/filter read paths, catalog cross-referencing, and experimental semantic search.
 
 **Project:** `ykhxaecbbxaaqlujuzde` (secondrenaissance), West EU (Ireland), Pro plan ($25/mo)
 **Client:** `src/lib/supabase.ts` — exports `supabase` (anon), `supabaseAdmin` (service role)
@@ -13,23 +13,31 @@ MongoDB Atlas had 23 database incidents in March 2026 alone (see `database-incid
 
 2. **Slow aggregations blocking user-facing pages.** `$facet` pipelines on the books collection took 90+ seconds under load, collapsing WiredTiger cache and taking down the entire site (Mar 30 crisis). Pipeline velocity and cron health queries now run against Supabase, not Atlas.
 
-3. **No hybrid search capability.** MongoDB can't combine keyword search (`$search`) with vector similarity (`$vectorSearch`) in a single query. Supabase does both in one SQL query via `tsvector` + `pgvector`. However, as of 2026-04-01 this is experimental — only 4.1% of pages are embedded, the hybrid_search RPC is unreliable from Vercel, and there is no UI integration. The existing Atlas Search handles all production search needs.
+3. **Low-selectivity browse queries timing out.** `visible: true` matches 86% of books, so index scans degenerate into collection scans. All five browse/filter page types (`/browse/*`, `/languages/*`, `/libraries/*`) were dead — 60s+ timeouts. Now served from `books_catalog` on Supabase in <50ms. (PR #667, 2026-04-01.)
 
-**The boundary is clear:** MongoDB stays for document storage (books, pages), the pipeline state machine (`pipeline_auto.status`), Atlas Search (keyword search), and flexible-schema imports. Supabase handles everything analytical, relational, or vector-based.
+4. **No hybrid search capability.** MongoDB can't combine keyword search (`$search`) with vector similarity (`$vectorSearch`) in a single query. Supabase does both in one SQL query via `tsvector` + `pgvector`. However, as of 2026-04-01 this is experimental — only 4.1% of pages are embedded, the hybrid_search RPC is unreliable from Vercel, and there is no UI integration. The existing Atlas Search handles all production search needs.
 
-## What Is NOT in Supabase
+**The boundary:** MongoDB owns the document model (books, pages, pipeline state, Atlas Search). Supabase serves analytics, catalog cross-referencing, browse/filter read paths, and experimental semantic search. See "What Lives Where" below for the full split.
 
-Book and page data is **not mirrored** to Supabase. The `books` and `pages` MongoDB collections are the sole source of truth for:
-- Book metadata (title, author, year, language, collections, pipeline state)
-- Page images (photo URLs, thumbnails, crops)
-- OCR text (`pages.ocr.data`)
-- Translation text (`pages.translation.data`) — except for the cleaned copy in `page_translations` used for search only
-- Pipeline state (`books.pipeline_auto`)
+## What Lives Where (The Boundary)
+
+**MongoDB is the source of truth** for all book and page data. Supabase serves derived read caches and analytics. If they diverge, MongoDB wins.
+
+MongoDB owns (not in Supabase):
+- Page content: OCR text (`pages.ocr.data`), translations (`pages.translation.data`)
+- Page images, thumbnails, crops
+- Pipeline state (`books.pipeline_auto`, `jobs`, `batch_jobs`)
 - Page revisions (`page_revisions` collection)
+- Gallery images (`gallery_images`, `detected_images`)
 
-The `page_translations` table contains a cleaned copy of translation text + embeddings for search purposes, but it is NOT a read replica of the pages collection. It lacks OCR text, images, pipeline state, and many other fields.
+Supabase mirrors (synced from MongoDB, read-only):
+- **`books_catalog`** — book metadata for browse/filter queries (PR #667, 2026-04-01). Synced by `sync-books-catalog.mjs` on Hetzner cron. Powers `/browse/titles`, `/browse/authors`, `/browse/years`, `/languages`, `/libraries`.
+- **`page_translations`** — cleaned translation text + embeddings for semantic search (experimental)
+- **Analytics tables** — gemini_usage, pipeline_snapshots, pageviews, events, cron_runs, loading_metrics
 
-**Why not mirror books/pages?** The warehousing migration (Mar 30) cut live collections by 75% (34K→9K books, 9.6M→2.5M pages). Combined with the `visible: true` index migration, MongoDB is now fast enough for the read path. A full Postgres mirror would add sync complexity without proportionate benefit. This decision should be revisited if Atlas performance degrades again.
+**Why the split?** MongoDB's `visible: true` filter matches 86% of books — indexes barely help. Browse/filter queries that scan the full collection time out on Atlas (60s+). The same queries run in <50ms on Postgres. Page-level reads (book detail, reader) are fast on MongoDB with `book_id` indexes, so they stay.
+
+**Scope discipline:** `books_catalog` is a lightweight metadata cache, not a full mirror. It has title, author, year, language, library, thumbnail — enough for browse cards. It does NOT have pipeline state, page counts, OCR/translation data, or any page-level content. Don't expand it without good reason — every field added is a field to keep in sync.
 
 ## What Lives in Supabase
 
@@ -40,6 +48,11 @@ The `page_translations` table contains a cleaned copy of translation text + embe
 | `ustc_enrichments` | 1.6M | AI-enriched USTC records (English titles, detected language) |
 | `bph_works` | 28K | Embassy of the Free Mind / BPH catalog |
 | `entity_aliases` | 1.3K | Author name variants from Wikidata |
+
+### Browse / Read Cache (synced from MongoDB)
+| Table | Source | Sync Method | What it powers |
+|-------|--------|-------------|----------------|
+| `books_catalog` | MongoDB `books` | `sync-books-catalog.mjs` (Hetzner cron) | `/browse/*`, `/languages/*`, `/libraries/*` |
 
 ### Analytics (synced from MongoDB)
 | Table | Source | Sync Method |
@@ -71,10 +84,15 @@ MongoDB (writes)
   ├── gemini-logger.ts ──dual-write──→ Supabase gemini_usage
   ├── pipeline-orchestrator ──writes──→ MongoDB pipeline_snapshots
   │                                      └── Hetzner cron syncs → Supabase
-  └── track/route.ts ──writes──→ MongoDB analytics_pageviews
-                                   └── Hetzner cron syncs → Supabase
+  ├── track/route.ts ──writes──→ MongoDB analytics_pageviews
+  │                                └── Hetzner cron syncs → Supabase
+  └── books collection ──sync──→ Supabase books_catalog
+                                   └── Hetzner cron (sync-books-catalog.mjs)
 
 Supabase (reads)
+  ├── /browse/titles,authors,years ──reads──→ books_catalog
+  ├── /languages/[code] ──reads──→ books_catalog
+  ├── /libraries/[slug] ──reads──→ books_catalog
   ├── /api/analytics/usage ──reads──→ dashboard_usage materialized view
   ├── /api/analytics/pipeline ──reads──→ pipeline_snapshots + cron_runs
   ├── /api/search/semantic ──reads──→ page_translations (hybrid search)

@@ -198,7 +198,7 @@ export const POST = withAuth(async (request, session) => {
                        canvas?.images?.[0]?.resource?.['@id'];
       if (imageUrl) {
         // Use IIIF Image API for consistent sizing
-        return `${imageUrl}/full/1000,/0/default.jpg`;
+        return `${imageUrl}/full/2000,/0/default.jpg`;
       }
       return null;
     };

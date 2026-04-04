@@ -6,20 +6,20 @@ type: reference
 
 ## Identifying BPH / Embassy of the Free Mind Books
 
-**976 books** from the BPH (Bibliotheca Philosophica Hermetica) collection at the Embassy of the Free Mind, Amsterdam.
+**2,317 books** from the BPH (Bibliotheca Philosophica Hermetica) collection at the Embassy of the Free Mind, Amsterdam. (Count as of 2026-04-01)
 
 ### Query patterns
 
-**Primary:** `image_source.provider === "efm"` (976 books)
-**With catalog number:** `dublin_core.dc_source` matches `"BPH Catalogue (UBN: XXXX)"` (966 books)
-**By campaign:** `acquisition_campaign === "EFM Bulk Import"` (911 books — misses early imports)
+**Primary:** `image_source.provider === "bph"` (2,317 books)
+**With catalog number:** `dublin_core.dc_source` matches `"BPH Catalogue (UBN: XXXX)"`
+**By campaign:** `acquisition_campaign === "EFM Bulk Import"` (subset — misses later imports)
 
 ### Fields on BPH books
-- `image_source.provider`: `"efm"`
+- `image_source.provider`: `"bph"`
 - `image_source.provider_name`: `"Embassy of the Free Mind"`
 - `dublin_core.dc_source`: `"BPH Catalogue (UBN: 1987)"` — the UBN is the BPH catalog number
 - `dublin_core.dc_identifier`: `"1987"` — just the number
-- `field_provenance.*.provider`: `"efm"` on all imported fields
+- `field_provenance.*.provider`: `"bph"` on all imported fields
 - `acquisition_campaign`: `"EFM Bulk Import"` (most but not all)
 
 ### BPH visual identifier

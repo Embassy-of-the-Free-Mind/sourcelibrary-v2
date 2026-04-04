@@ -102,7 +102,7 @@ async function fetchTimelineDecades(): Promise<{ decades: DecadeBucket[]; total:
   }
 }
 
-function CollectionCard({ col }: { col: CollectionDoc }) {
+function CollectionCard({ col, priority = false }: { col: CollectionDoc; priority?: boolean }) {
   const hero = col.featured_images?.find(
     img => img.extracted_url || img.image_url || img.thumbnail_url
   );
@@ -122,6 +122,8 @@ function CollectionCard({ col }: { col: CollectionDoc }) {
           sizes="(max-width: 640px) 50vw, 25vw"
           className="object-cover transition-transform duration-500 ease-out group-hover:scale-105"
           unoptimized
+          priority={priority}
+          loading={priority ? 'eager' : 'lazy'}
         />
       ) : (
         <div className="absolute inset-0 bg-warm" />
@@ -172,8 +174,8 @@ export default async function CollectionsPage() {
 
       {/* Category collections */}
       <div className="grid gap-4 grid-cols-2 lg:grid-cols-4">
-        {categories.map((col) => (
-          <CollectionCard key={col.slug} col={col} />
+        {categories.map((col, i) => (
+          <CollectionCard key={col.slug} col={col} priority={i < 8} />
         ))}
       </div>
 

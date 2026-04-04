@@ -20,7 +20,7 @@ export async function GET() {
   const books = db.collection('books');
 
   // Live stats for the BPH subset
-  const bphFilter = { 'image_source.provider': 'bph', visible: true };
+  const bphFilter = { 'image_source.provider': 'bph', visible: true, pages_count: { $gt: 0 } };
 
   const [totalBooks, pageTotalsAgg] = await Promise.all([
     books.countDocuments(bphFilter),

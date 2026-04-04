@@ -66,7 +66,7 @@ Extracts text from page images using Gemini vision models.
 | `POST /api/books/[id]/batch-ocr-multi` | Multi-batch | Large books |
 | `POST /api/pages/[id]/ask` | Single page | 1 page |
 
-**Model:** `gemini-3-flash-preview` (default). Language-specific prompts for Latin, German, Hebrew, Arabic, etc.
+**Model:** `gemini-3-flash-preview` for BPH books, `gemini-3.1-flash-lite-preview` for all others (50% cheaper). Routing via `getModelForBook()` in `src/lib/types/ai-models.ts`. ALWAYS use Standard OCR v6 prompt — do NOT use language-specific prompts.
 
 **Image fallback chain:** `cropped_photo` → `archived_photo` → `photo` → `photo_original`
 

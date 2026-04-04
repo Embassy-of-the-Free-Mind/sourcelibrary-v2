@@ -10,6 +10,67 @@ Source Library acquires historical texts from institutional archives and makes t
 - **Translation**: the translation pipeline expects single-page text
 - **Image extraction**: illustrations need per-page references
 
+## Batch Submission — Critical Details
+
+The Hetzner `pipeline-orchestrator.mjs` has the **only proven working batch submission path**. Key details discovered the hard way:
+
+### Inline vs File-Based Submission
+
+| Method | Limit | Works with Lite? | Where |
+|---|---|---|---|
+| Inline (`ai.batches.create({ src: [...] })`) | ~20MB (~8-10 images) | **NO** — jobs stuck PENDING forever | SDK, Vercel route |
+| File-based (upload JSONL → REST API) | 150+ pages per job | **YES** — 431 completed + 1,564 saved | Hetzner orchestrator |
+
+**ALWAYS use file-based submission for `gemini-3.1-flash-lite-preview`.** The inline method via the `@google/genai` SDK does not work with this model.
+
+### JSONL Format (file-based)
+
+```json
+{"request":{"contents":[{"parts":[{"text":"prompt"},{"inlineData":{"mimeType":"image/jpeg","data":"base64..."}}]}],"safetySettings":[{"category":"HARM_CATEGORY_HARASSMENT","threshold":"BLOCK_NONE"},{"category":"HARM_CATEGORY_HATE_SPEECH","threshold":"BLOCK_NONE"},{"category":"HARM_CATEGORY_SEXUALLY_EXPLICIT","threshold":"BLOCK_NONE"},{"category":"HARM_CATEGORY_DANGEROUS_CONTENT","threshold":"BLOCK_NONE"},{"category":"HARM_CATEGORY_CIVIC_INTEGRITY","threshold":"BLOCK_NONE"}],"generationConfig":{"temperature":0.1,"maxOutputTokens":16384,"thinkingConfig":{"thinkingBudget":0}}},"metadata":{"key":"pageId"}}
+```
+
+Key differences from SDK inline format:
+- Wrapped in `request: { ... }` — not bare `contents`
+- `safetySettings: BLOCK_NONE` on ALL 5 categories (prevents ~2-5% safety blocks on historical texts)
+- `generationConfig` not `config`
+- `metadata.key` for result matching (results come back in random order)
+
+### File Upload Rules
+
+1. **Upload via resumable protocol** to `https://generativelanguage.googleapis.com/upload/v1beta/files`
+2. **Use `text/plain` content type** — `application/jsonl` has a backend bug
+3. **Same API key for upload AND batch creation** — files are key-scoped. Using a different key → 404.
+4. **Delete file immediately after batch creation** — Gemini copies into the job. Prevents hitting 20GB storage quota.
+5. **Key rotation on 429** — try all keys for upload, then use the successful key for batch creation.
+
+### Batch Creation (REST, not SDK)
+
+```
+POST https://generativelanguage.googleapis.com/v1beta/models/{model}:batchGenerateContent?key={apiKey}
+{
+  "batch": {
+    "display_name": "...",
+    "input_config": { "file_name": "files/xxx" }
+  }
+}
+```
+
+The `@google/genai` SDK's `ai.batches.create()` uses a different format that doesn't work reliably with Lite. Use the REST API directly.
+
+### Source of Truth
+
+`scripts/workers/pipeline-orchestrator.mjs` lines 1095-1181 — `uploadBatchFile()` and `createBatchJobFromFile()`. This is the code that produced all 431+1564 successful Lite batch jobs.
+
+### Past Issues (from handoffs)
+
+| Date | Issue | Root cause | Fix |
+|---|---|---|---|
+| 2026-02-24 | All 3 keys quota-exhausted | 1,581 duplicate submissions from OCR resubmission loop | 5 guards added (check pending jobs before resubmitting) |
+| 2026-03-17 | File-based batch 404 | Upload key ≠ batch creation key (files are key-scoped) | Pass upload key index to batch creation |
+| 2026-03-17 | 700+ small batch jobs | Inline submission created one job per 20 pages | Changed to file-based, one job per book |
+| 2026-04-01 | 288 jobs stuck PENDING | Used inline SDK for Lite model | File-based submission works; inline doesn't for Lite |
+| 2026-04-03 | 12 more jobs stuck PENDING | Route uses inline for <20 page books | Need to force file-based regardless of size |
+
 ## The Pipeline
 
 ### Input

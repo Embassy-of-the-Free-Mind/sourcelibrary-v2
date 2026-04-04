@@ -4,10 +4,12 @@
 
 Batch OCR uses the Gemini Batch API to transcribe book page images at 50% lower cost than realtime API calls. The pipeline runs on Hetzner, not Vercel.
 
+**Model routing (since 2026-03-27):** BPH books use `gemini-3-flash-preview`, all others use `gemini-3.1-flash-lite-preview` (additional 50% savings). Routing via `getModelForBook()` in `src/lib/types/ai-models.ts`.
+
 **Key files:**
 - `scripts/workers/pipeline-orchestrator.mjs` — submits OCR jobs (Phase 2) and checks completion (Phase 3)
 - `scripts/workers/batch-collector.mjs` — collects results from Gemini and saves to MongoDB
-- Both run on Hetzner via crontab (every 10 minutes)
+- Both managed by unified scheduler (`scripts/workers/scheduler.mjs`)
 
 ## How It Works
 

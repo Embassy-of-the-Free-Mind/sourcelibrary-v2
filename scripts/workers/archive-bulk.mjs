@@ -325,6 +325,7 @@ async function main() {
     .aggregate([
       { $match: {
         pages_count: { $gt: 0 },
+        $expr: { $lt: [{ $ifNull: ['$pages_archived', 0] }, '$pages_count'] },
         'archive_metadata.blocked': { $ne: true },
         $or: [
           { ia_identifier: { $exists: true, $ne: null, $ne: '' } },

@@ -41,17 +41,17 @@ Derek runs ~10 Claude Code terminals simultaneously, all sharing the main workin
 
 ## Stack
 - Next.js 16, MongoDB Atlas, Gemini AI, Vercel deployment
-- Production database: `bookstore` (5,355 books), NOT `sourcelibrary_research`
+- Production database: `bookstore` (~17K live books, ~24.5K warehouse), NOT `sourcelibrary_research`
 
 ## AI Models — IMPORTANT
 - Summary/Index generation: ALWAYS use `gemini-3-flash-preview`. This was a recurring issue — do not use older models.
-- OCR/Translation: check batch-ocr and translate routes for current models
+- OCR/Translation routing: `gemini-3-flash-preview` for BPH books, `gemini-3.1-flash-lite-preview` for everything else (50% cheaper). See `src/lib/types/ai-models.ts`.
 - Reference: https://ai.google.dev/gemini-api/docs/models
 
 ## System Map
 - **Interactive diagram:** https://sourcelibrary.org/admin/system-map — click any node for details, key files, collections, gotchas
 - **Markdown reference:** `.claude/docs/system-map.md` — full text version with file layout, collection inventory, dead code list
-- **Dead code cleanup:** GitHub issue #258 — 35 unused components, 2 duplicate functions, disabled cron routes
+- **Dead code cleanup:** GitHub issue #258 (closed) — most cleaned up, some camera/rithmomachia components may remain
 
 ## Domain Context
 Detect the work domain from the user's prompt and load the right context automatically:

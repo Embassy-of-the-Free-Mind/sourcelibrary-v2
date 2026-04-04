@@ -1,0 +1,779 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Source Library — Translation Pipeline</title>
+<style>
+  @import url('https://fonts.googleapis.com/css2?family=EB+Garamond:ital,wght@0,400;0,600;1,400&family=JetBrains+Mono:wght@400;500;600&display=swap');
+
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+
+  body {
+    background: #0a0a0f;
+    color: #e0ddd5;
+    font-family: 'JetBrains Mono', monospace;
+    overflow: hidden;
+    height: 100vh;
+    width: 100vw;
+  }
+
+  .container {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    height: 100vh;
+  }
+
+  /* LEFT — Real page image */
+  .page-panel {
+    position: relative;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background: #0d0d14;
+    overflow: hidden;
+  }
+
+  .page-panel::before {
+    content: '';
+    position: absolute;
+    inset: 0;
+    background: radial-gradient(ellipse at 60% 50%, rgba(180, 160, 120, 0.03) 0%, transparent 70%);
+    pointer-events: none;
+  }
+
+  .page-frame {
+    width: 420px;
+    height: 600px;
+    position: relative;
+    box-shadow:
+      0 0 40px rgba(0,0,0,0.5),
+      0 0 80px rgba(180, 160, 120, 0.08);
+    border-radius: 2px;
+    overflow: hidden;
+  }
+
+  .page-frame img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    display: block;
+    transition: opacity 0.4s ease;
+  }
+
+  .page-frame img.loading {
+    opacity: 0.3;
+  }
+
+  /* Scan overlay on the real image */
+  .scan-overlay {
+    position: absolute;
+    inset: 0;
+    pointer-events: none;
+    z-index: 10;
+  }
+
+  .scan-line {
+    position: absolute;
+    left: 0;
+    right: 0;
+    height: 2px;
+    background: linear-gradient(90deg, transparent 5%, rgba(59, 130, 246, 0.5) 20%, rgba(59, 130, 246, 0.8) 50%, rgba(59, 130, 246, 0.5) 80%, transparent 95%);
+    box-shadow: 0 0 15px rgba(59, 130, 246, 0.3), 0 -20px 40px rgba(59, 130, 246, 0.05), 0 20px 40px rgba(59, 130, 246, 0.05);
+    opacity: 0;
+    transition: opacity 0.2s;
+    z-index: 11;
+  }
+
+  .scan-line.active {
+    opacity: 1;
+  }
+
+  /* Full-page processing glow (not blocks) */
+  .page-glow {
+    position: absolute;
+    inset: 0;
+    border: 2px solid transparent;
+    transition: all 0.4s ease;
+    z-index: 12;
+    pointer-events: none;
+  }
+
+  .page-glow.ocr {
+    border-color: rgba(59, 130, 246, 0.5);
+    box-shadow: inset 0 0 30px rgba(59, 130, 246, 0.08);
+  }
+
+  .page-glow.translating {
+    border-color: rgba(168, 85, 247, 0.5);
+    box-shadow: inset 0 0 30px rgba(168, 85, 247, 0.08);
+  }
+
+  .page-glow.done {
+    border-color: rgba(34, 197, 94, 0.4);
+    box-shadow: inset 0 0 20px rgba(34, 197, 94, 0.06);
+  }
+
+  /* Phase label on the image */
+  .phase-label {
+    position: absolute;
+    top: 12px;
+    left: 12px;
+    font-size: 9px;
+    padding: 3px 8px;
+    border-radius: 3px;
+    text-transform: uppercase;
+    letter-spacing: 1.5px;
+    font-weight: 500;
+    opacity: 0;
+    transition: opacity 0.3s;
+    z-index: 15;
+  }
+
+  .phase-label.ocr {
+    background: rgba(59, 130, 246, 0.2);
+    color: #60a5fa;
+    border: 1px solid rgba(59, 130, 246, 0.3);
+    opacity: 1;
+  }
+
+  .phase-label.translating {
+    background: rgba(168, 85, 247, 0.2);
+    color: #a78bfa;
+    border: 1px solid rgba(168, 85, 247, 0.3);
+    opacity: 1;
+  }
+
+  .phase-label.done {
+    background: rgba(34, 197, 94, 0.15);
+    color: #4ade80;
+    border: 1px solid rgba(34, 197, 94, 0.25);
+    opacity: 1;
+  }
+
+  /* Book info */
+  .book-info {
+    position: absolute;
+    top: 16px;
+    left: 16px;
+    right: 16px;
+    z-index: 30;
+  }
+
+  .book-info .bi-label {
+    font-size: 8px;
+    color: #444;
+    text-transform: uppercase;
+    letter-spacing: 2px;
+    margin-bottom: 3px;
+  }
+
+  .book-info .bi-title {
+    font-family: 'EB Garamond', serif;
+    font-size: 14px;
+    color: #b4a078;
+    font-style: italic;
+  }
+
+  .book-info .bi-meta {
+    font-size: 9px;
+    color: #555;
+    margin-top: 2px;
+  }
+
+  /* Page counter */
+  .page-counter {
+    position: absolute;
+    bottom: 16px;
+    left: 16px;
+    font-size: 10px;
+    color: #444;
+    z-index: 30;
+  }
+
+  .page-counter .cur {
+    color: #3b82f6;
+    font-weight: 600;
+    font-size: 20px;
+  }
+
+  /* Connection budget */
+  .conn-bar {
+    position: absolute;
+    bottom: 16px;
+    right: 16px;
+    z-index: 30;
+    text-align: right;
+  }
+
+  .conn-bar .conn-label {
+    font-size: 8px;
+    color: #333;
+    text-transform: uppercase;
+    letter-spacing: 1px;
+    margin-bottom: 2px;
+  }
+
+  .conn-track {
+    width: 80px;
+    height: 4px;
+    background: rgba(255,255,255,0.05);
+    border-radius: 2px;
+    overflow: hidden;
+  }
+
+  .conn-fill {
+    height: 100%;
+    background: #3b82f6;
+    transition: width 0.3s;
+    border-radius: 2px;
+  }
+
+  /* RIGHT — Code panel */
+  .code-panel {
+    display: flex;
+    flex-direction: column;
+    background: #111118;
+    border-left: 1px solid rgba(255,255,255,0.06);
+    position: relative;
+  }
+
+  .panel-header {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    padding: 10px 16px;
+    background: rgba(255,255,255,0.02);
+    border-bottom: 1px solid rgba(255,255,255,0.06);
+    font-size: 11px;
+    color: #888;
+  }
+
+  .panel-header .dot { width: 8px; height: 8px; border-radius: 50%; }
+  .dot.red { background: #ff5f56; }
+  .dot.yellow { background: #ffbd2e; }
+  .dot.green { background: #27c93f; }
+
+  .panel-header .hdr-title {
+    margin-left: 8px;
+    color: #555;
+    font-size: 10px;
+  }
+
+  .panel-header .hdr-infra {
+    margin-left: auto;
+    display: flex;
+    gap: 12px;
+    font-size: 9px;
+    color: #444;
+  }
+
+  .hdr-infra .live { color: #22c55e; }
+
+  /* Phase strip */
+  .phase-strip {
+    display: flex;
+    border-bottom: 1px solid rgba(255,255,255,0.06);
+    background: rgba(0,0,0,0.2);
+    padding: 0 8px;
+  }
+
+  .phase-pip {
+    padding: 6px 10px;
+    font-size: 9px;
+    color: #333;
+    letter-spacing: 1px;
+    text-transform: uppercase;
+    border-bottom: 2px solid transparent;
+    transition: all 0.3s;
+    white-space: nowrap;
+  }
+
+  .phase-pip.active { color: #3b82f6; border-bottom-color: #3b82f6; }
+  .phase-pip.done { color: #22c55e; }
+  .phase-pip.done::after { content: ' \u2713'; font-size: 8px; }
+
+  /* Code output */
+  .code-output {
+    flex: 1;
+    padding: 12px 16px;
+    overflow: hidden;
+    font-size: 11px;
+    line-height: 1.6;
+  }
+
+  .code-line {
+    white-space: pre-wrap;
+    word-break: break-all;
+    opacity: 0;
+    transform: translateY(3px);
+    animation: lineIn 0.2s ease forwards;
+  }
+
+  @keyframes lineIn { to { opacity: 1; transform: translateY(0); } }
+
+  .kw { color: #c678dd; }
+  .fn { color: #61afef; }
+  .str { color: #98c379; }
+  .num { color: #d19a66; }
+  .cm { color: #5c6370; font-style: italic; }
+  .op { color: #56b6c2; }
+  .var { color: #e5c07b; }
+  .dim { color: #3a3a45; }
+  .ok { color: #22c55e; }
+  .warn { color: #eab308; }
+  .tag { color: #e06c75; }
+  .xml { color: #e06c75; font-size: 10px; }
+  .latin { color: #d4a574; font-family: 'EB Garamond', serif; font-size: 12px; }
+  .english { color: #93c5fd; font-family: 'EB Garamond', serif; font-size: 12px; }
+
+  /* Stats bar */
+  .stats-bar {
+    padding: 8px 16px;
+    border-top: 1px solid rgba(255,255,255,0.06);
+    display: flex;
+    gap: 18px;
+    font-size: 10px;
+    color: #444;
+    background: rgba(255,255,255,0.01);
+    flex-wrap: wrap;
+  }
+
+  .stat-item .sv { color: #666; font-weight: 500; }
+  .stat-item .sv.hl { color: #3b82f6; }
+  .stat-item .sv.green { color: #22c55e; }
+
+  .progress-track { height: 3px; background: rgba(255,255,255,0.03); }
+  .progress-fill {
+    height: 100%;
+    background: linear-gradient(90deg, #3b82f6, #8b5cf6, #22c55e);
+    width: 0%;
+    transition: width 0.4s ease;
+    box-shadow: 0 0 8px rgba(59, 130, 246, 0.3);
+  }
+</style>
+</head>
+<body>
+<div class="container">
+  <div class="page-panel">
+    <div class="book-info">
+      <div class="bi-label">Now processing</div>
+      <div class="bi-title">Mercurius Trimegistus — Ficino interprete</div>
+      <div class="bi-meta">Biblioteca Medicea Laurenziana · Plut.21.8 · 560 pages · Latin</div>
+    </div>
+
+    <div class="page-frame" id="pageFrame">
+      <img id="pageImg" src="" alt="Manuscript page" crossorigin="anonymous">
+      <div class="scan-overlay">
+        <div class="scan-line" id="scanLine"></div>
+        <div class="page-glow" id="pageGlow"></div>
+        <div class="phase-label" id="phaseLabel"></div>
+      </div>
+    </div>
+
+    <div class="page-counter">
+      <span class="cur" id="currentPage">20</span>
+      <span> / 560</span>
+    </div>
+
+    <div class="conn-bar">
+      <div class="conn-label">Atlas connections</div>
+      <div class="conn-track">
+        <div class="conn-fill" id="connFill" style="width: 33%"></div>
+      </div>
+    </div>
+  </div>
+
+  <div class="code-panel">
+    <div class="panel-header">
+      <span class="dot red"></span>
+      <span class="dot yellow"></span>
+      <span class="dot green"></span>
+      <span class="hdr-title">Hetzner cax31 — translate-worker.mjs</span>
+      <div class="hdr-infra">
+        <span>Atlas <span class="live">\u25cf</span></span>
+        <span>R2</span>
+        <span>SQS</span>
+      </div>
+    </div>
+
+    <div class="phase-strip">
+      <div class="phase-pip" id="pipArchive">archive</div>
+      <div class="phase-pip" id="pipOcr">ocr</div>
+      <div class="phase-pip" id="pipTranslate">translate</div>
+      <div class="phase-pip" id="pipEnrich">enrich</div>
+      <div class="phase-pip" id="pipImages">images</div>
+    </div>
+
+    <div class="code-output" id="codeOutput"></div>
+
+    <div class="stats-bar">
+      <div class="stat-item">model <span class="sv" id="statModel">\u2014</span></div>
+      <div class="stat-item">in <span class="sv hl" id="statIn">0</span> out <span class="sv hl" id="statOut">0</span></div>
+      <div class="stat-item">latency <span class="sv" id="statLat">\u2014</span></div>
+      <div class="stat-item">cost <span class="sv green" id="statCost">$0.0000</span></div>
+      <div class="stat-item">pages <span class="sv" id="statPages">0/560</span></div>
+    </div>
+
+    <div class="progress-track">
+      <div class="progress-fill" id="progressFill"></div>
+    </div>
+  </div>
+</div>
+
+<script>
+// Real data from Ficino's Hermes Trismegistus (BML Plut.21.8)
+const PAGES = [
+  {
+    num: 20,
+    img: 'https://cdm21059.contentdm.oclc.org/iiif/2/plutei:55679/full/600,/0/default.jpg',
+    ocr: `<language>Latin</language>\n<page-type>text</page-type>\n\nDei potestas, quid Sapientia, quo ordine intrinfecus conci-\npiant: quo progre\u017fu extrinfecus pariant. Preterea que\nproducta \u017funt quomodo \u017fe inuicem habeant, quo conueni-\nant, quoue di\u017fcrepent: quo deniqz pacto \u017fuum re\u017fpiciant\nauctorem. Ordo autem uoluminis e\u017ft, ut in libellos quin-\ndecim di\u017ftinguatur: utqz Prime partes Pimandro dentur.\nSecundasqz teneat Tri\u017fmegi\u017ftus. Tertias E\u017fculapius. Quar-\ntum locum obtineat Tatius.`,
+    ocrTags: '<language>Latin</language>  <page-type>text</page-type>',
+    translation: `...is the power of God, what is His wisdom, in what order they are conceived inwardly, and with what progress they are brought forth outwardly. Furthermore, how those things which were produced relate to one another, in what they agree, or in what they differ; and, finally, by what manner they look back to their author. The order of the volume is that it is distinguished into fifteen books, and that the first parts are given to Pimander.`,
+    vocab: 'Sapientia, Pimander, Trismegistus, Esculapius, Tatius, Mercurius'
+  },
+  {
+    num: 21,
+    img: 'https://cdm21059.contentdm.oclc.org/iiif/2/plutei:55680/full/600,/0/default.jpg',
+    ocr: `<language>Latin</language>\n<page-type>text</page-type>\n<page-num>5</page-num>\n<header>MERCURIVS</header>\n\n<image-desc>A highly ornate illuminated border runs down the left margin, featuring intricate floral motifs in blue, red, and pink with gold leaf accents.</image-desc>\n\n### MERCURII TRISMEGISTI LIBER DE POTESTATE ET SAPIENTIA DEI`,
+    ocrTags: '<language>Latin</language>  <page-type>text</page-type>  <page-num>5</page-num>  <header>MERCURIVS</header>',
+    translation: `THE BOOK OF MERCURY TRISMEGISTUS ON THE POWER AND WISDOM OF GOD, TRANSLATED FROM THE GREEK LANGUAGE INTO LATIN BY MARSILIO FICINO OF FLORENCE, FOR COSMO DE' MEDICI, FATHER OF THE FATHERLAND.\n\nWhen I was pondering the nature of things and raising the gaze of my mind to the things above, the senses of my body now having been lulled to sleep\u2014as usually happens to those who are heavy with sleep from satiety or fatigue\u2014suddenly I seemed to see someone of immense bodily size...`,
+    vocab: 'Mercurius Trismegistus, Pimander, Ficino, Cosmo de Medici',
+    hasImage: true,
+    imageDesc: 'illuminated border with floral motifs, blue/red/pink with gold leaf'
+  },
+  {
+    num: 22,
+    img: 'https://cdm21059.contentdm.oclc.org/iiif/2/plutei:55681/full/600,/0/default.jpg',
+    ocr: `<language>Latin</language>\n<page-type>text</page-type>\n\neam fouebat. Ex humide autem natur\u0119 uisceribus scaturiens\nleuis ignis protinus euolans alta petijt. Aer quoque leuis spiritum pariter\nMedia regione inter ignem & aquam sortiebatur. Terra uero\n& aqua sic inuicem commixt\u0119 iacebant ut terr\u0119 facies aquis\nobruta nusquam pateret.`,
+    ocrTags: '<language>Latin</language>  <page-type>text</page-type>',
+    translation: `...was cherishing it. From the bowels of the moist nature, however, a light fire gushing forth immediately flew up and sought the heights. The light air also received the spirit equally in the middle region between fire and water. The earth, however, and the water were so mixed together that the face of the earth, overwhelmed by the waters, nowhere appeared.`,
+    vocab: 'natura, ignis, spiritus, terra, aqua, Pimander'
+  },
+  {
+    num: 23,
+    img: 'https://cdm21059.contentdm.oclc.org/iiif/2/plutei:55682/full/600,/0/default.jpg',
+    ocr: `<language>Latin</language>\n<page-type>text</page-type>\n<page-num>6</page-num>\n<header>MERCURIVS.</header>\n\npeperit. Qui quidem Deus ignis atq; spiritus numen septe\ndeinceps fabricauit gubernatores qui circulis mundum se\nsibilem complectuntur: eorumq; dispositio fatum uocatur.\n<margin>Fatum</margin>`,
+    ocrTags: '<language>Latin</language>  <page-type>text</page-type>  <page-num>6</page-num>  <header>MERCURIVS.</header>',
+    translation: `...that is, God, the deity of fire and spirit, who then fashioned seven governors who embrace the sensible world in circles; and their arrangement is called Fate. Then the Word of God bound together from the elements of God tending downward a pure artifice of nature, and it was united to the craftsman Mind, for it was consubstantial.`,
+    vocab: 'Deus, fatum, gubernatores, Verbum Dei, Mens opifex',
+    hasMargin: true
+  },
+  {
+    num: 24,
+    img: 'https://cdm21059.contentdm.oclc.org/iiif/2/plutei:55683/full/600,/0/default.jpg',
+    ocr: `<language>Latin</language>\n<page-type>text</page-type>\n\nautem humane mentis meditatione gaudentes, singuli eo-\nrum proprij ordinis participem hominem reddidere. qui\npostq\u0303 didicerat hor\u016b e\u1ebdntiam propriamq\u0303 natur\u0101 c\u014dspe\nxit, penetrare atq\u0303 rescindere iam exoptabat ambitum\ncirculor\u016b, uimq\u0303 gubernatoris presidentis igni comprehe\ndere.`,
+    ocrTags: '<language>Latin</language>  <page-type>text</page-type>',
+    translation: `...however, rejoicing in the meditation of the human mind, each of them made man a participant of their own order. After he had learned their essence and had observed their proper nature, he now desired to penetrate and break through the circumference of the circles and to grasp the power of the governor presiding over the fire.`,
+    vocab: 'mens humana, circulorum ambitus, gubernator, harmonia'
+  },
+  {
+    num: 25,
+    img: 'https://cdm21059.contentdm.oclc.org/iiif/2/plutei:55684/full/600,/0/default.jpg',
+    ocr: `<language>Latin</language>\n<page-type>text</page-type>\n<page-num>7</page-num>\n<header>MERCURIVS.</header>\n\neffectus est. Hic utriusq; sexous fecunditate munitus\nab eo qui amborum sexuum fons \u0113 uigilq; factus ab eo q\u0304\nest uigilans continetur atq; eius Dominationi subijcitur.\n<margin>Pimander</margin>`,
+    ocrTags: '<language>Latin</language>  <page-type>text</page-type>  <page-num>7</page-num>  <header>MERCURIVS.</header>',
+    translation: `He, having been fortified with the fecundity of both sexes by him who is the fountain of both sexes, and having been made wakeful, is contained by him who is wakeful and is subjected to his domination. After these things, I said, "Mind, you yourself are the reason of my mind." Then Pimander, "That is the mystery which until this very day has been hidden from the human race."`,
+    vocab: 'Pimander, Mens diuina, mysterium, fecunditas, Dominatio',
+    hasMargin: true
+  }
+];
+
+// --- State ---
+const codeEl = document.getElementById('codeOutput');
+let totalIn = 0, totalOut = 0, totalCost = 0, pagesProcessed = 0;
+
+function sleep(ms) { return new Promise(r => setTimeout(r, ms)); }
+
+function addLine(html) {
+  const div = document.createElement('div');
+  div.className = 'code-line';
+  div.innerHTML = html;
+  codeEl.appendChild(div);
+  codeEl.scrollTop = codeEl.scrollHeight;
+  while (codeEl.children.length > 40) codeEl.removeChild(codeEl.firstChild);
+}
+
+function setPip(id, state) {
+  document.getElementById(id).className = 'phase-pip' + (state ? ' ' + state : '');
+}
+
+function setGlow(cls) {
+  const g = document.getElementById('pageGlow');
+  g.className = 'page-glow' + (cls ? ' ' + cls : '');
+}
+
+function setPhaseLabel(text, cls) {
+  const el = document.getElementById('phaseLabel');
+  el.textContent = text;
+  el.className = 'phase-label' + (cls ? ' ' + cls : '');
+}
+
+function updateStats(inT, outT, latMs, cost) {
+  totalIn += inT; totalOut += outT; totalCost += cost;
+  document.getElementById('statIn').textContent = totalIn.toLocaleString();
+  document.getElementById('statOut').textContent = totalOut.toLocaleString();
+  if (latMs) document.getElementById('statLat').textContent = latMs + 'ms';
+  document.getElementById('statCost').textContent = '$' + totalCost.toFixed(4);
+  document.getElementById('statPages').textContent = pagesProcessed + '/560';
+}
+
+function setModel(m) { document.getElementById('statModel').textContent = m; }
+function setProgress(p) { document.getElementById('progressFill').style.width = p + '%'; }
+
+function setConn(n) {
+  const pct = (n / 60) * 100;
+  document.getElementById('connFill').style.width = pct + '%';
+}
+
+function esc(s) {
+  return s.replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;');
+}
+
+async function animateScan() {
+  const sl = document.getElementById('scanLine');
+  sl.style.top = '0px';
+  sl.classList.add('active');
+  const h = 600;
+  const steps = 30;
+  for (let i = 0; i <= steps; i++) {
+    sl.style.top = (h * i / steps) + 'px';
+    await sleep(45);
+  }
+  sl.classList.remove('active');
+}
+
+async function processPage(page, idx) {
+  // Load real image
+  const img = document.getElementById('pageImg');
+  img.classList.add('loading');
+  img.src = page.img;
+  document.getElementById('currentPage').textContent = page.num;
+
+  await new Promise(resolve => {
+    img.onload = () => { img.classList.remove('loading'); resolve(); };
+    img.onerror = () => { img.classList.remove('loading'); resolve(); };
+    setTimeout(resolve, 3000); // fallback
+  });
+
+  await sleep(300);
+
+  // === IMAGE RESOLUTION ===
+  setPip('pipArchive', 'active');
+  addLine(`<span class="dim">\u2500\u2500\u2500 page ${page.num} / 560 \u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500</span>`);
+  addLine(`<span class="fn">getPageImageUrl</span>(page)`);
+  await sleep(100);
+  addLine(`  <span class="dim">cropped_photo:</span> <span class="num">null</span> <span class="cm">// not a spread</span>`);
+  addLine(`  <span class="dim">archived_photo:</span> <span class="num">null</span> <span class="cm">// not yet archived to R2</span>`);
+  addLine(`  <span class="dim">photo_original:</span> <span class="str">'${page.img.substring(0,65)}...'</span>`);
+  addLine(`  <span class="ok">\u2192 IIIF source (Biblioteca Medicea Laurenziana)</span>`);
+  await sleep(200);
+  setPip('pipArchive', 'done');
+
+  // === OCR PHASE ===
+  setPip('pipOcr', 'active');
+  setGlow('ocr');
+  setPhaseLabel('OCR', 'ocr');
+  setModel('gemini-3-flash');
+  addLine(``);
+  addLine(`<span class="fn">createRevision</span>(pageId, <span class="str">'ocr'</span>, jobId) <span class="cm">// snapshot before overwrite</span>`);
+  await sleep(150);
+
+  // Show the real API call structure
+  addLine(`<span class="fn">performOCRWithBuffer</span>(buffer, <span class="str">'image/jpeg'</span>, promptText, prevOcr)`);
+  addLine(`  model.<span class="fn">generateContent</span>({`);
+  addLine(`    contents: [{ role: <span class="str">'user'</span>, parts: [`);
+  addLine(`      { text: <span class="str">'Standard OCR v6'</span> }, <span class="cm">// from prompts collection</span>`);
+  addLine(`      { inlineData: { mimeType, data: base64 } } <span class="cm">// whole page image</span>`);
+  addLine(`    ]}]`);
+  addLine(`  })`);
+  await sleep(200);
+
+  // Scan line sweeps the real image
+  const scanP = animateScan();
+
+  await sleep(800);
+  // Show the actual OCR output with real XML tags
+  const inTok = 900 + Math.floor(Math.random() * 300);
+  const outTok = 350 + Math.floor(Math.random() * 200);
+  const latency = 200 + Math.floor(Math.random() * 150);
+
+  addLine(``);
+  addLine(`  <span class="cm">// Gemini returns full-page transcription:</span>`);
+
+  // Show the real XML tags
+  const tagLines = page.ocrTags.split('  ');
+  for (const t of tagLines) {
+    const colored = t.replace(/<(\w[\w-]*)>/g, '<span class="xml">&lt;$1&gt;</span>')
+                     .replace(/<\/(\w[\w-]*)>/g, '<span class="xml">&lt;/$1&gt;</span>');
+    addLine(`  ${colored}`);
+    await sleep(80);
+  }
+
+  await scanP;
+
+  // Show a snippet of the real OCR text (the Latin)
+  const ocrPlain = page.ocr.replace(/<[^>]+>/g, '').trim().split('\n').filter(l => l.trim())[0] || '';
+  addLine(`  <span class="latin">${esc(ocrPlain.substring(0, 70))}...</span>`);
+  await sleep(100);
+
+  addLine(`  <span class="xml">&lt;vocab&gt;</span><span class="str">${page.vocab}</span><span class="xml">&lt;/vocab&gt;</span>`);
+
+  if (page.hasImage) {
+    addLine(`  <span class="xml">&lt;image-desc&gt;</span><span class="str">${page.imageDesc}</span><span class="xml">&lt;/image-desc&gt;</span>`);
+  }
+  if (page.hasMargin) {
+    addLine(`  <span class="xml">&lt;margin&gt;</span><span class="str">Pimander</span><span class="xml">&lt;/margin&gt;</span> <span class="cm">// marginal gloss</span>`);
+  }
+
+  const cost1 = 0.0005 + Math.random() * 0.0003;
+  updateStats(inTok, outTok, latency, cost1);
+  setConn(28);
+
+  addLine(`  usageMetadata: { promptTokenCount: <span class="num">${inTok}</span>, candidatesTokenCount: <span class="num">${outTok}</span> }`);
+  addLine(`  <span class="fn">logGeminiCall</span>() <span class="dim">\u2192 gemini_usage collection</span>`);
+  addLine(`  <span class="ok">saved \u2192 pages.ocr.data</span>`);
+  await sleep(300);
+  setPip('pipOcr', 'done');
+  setGlow('');
+  setPhaseLabel('', '');
+
+  // === TRANSLATION PHASE ===
+  setPip('pipTranslate', 'active');
+  setGlow('translating');
+  setPhaseLabel('Translating', 'translating');
+
+  addLine(``);
+  addLine(`<span class="cm">// translate-worker.mjs \u2014 Hetzner inline (NOT Lambda, NOT Batch API)</span>`);
+  addLine(`<span class="kw">const</span> { prompt, isEnglish } = <span class="kw">await</span> <span class="fn">buildPromptHeader</span>(db, book)`);
+  addLine(`  <span class="dim">prompt from DB:</span> <span class="str">'translation_v9'</span> <span class="dim">(prompts collection, is_default: true)</span>`);
+  await sleep(150);
+
+  addLine(`<span class="kw">const</span> prevTranslation = pages[${page.num - 1}]?.translation?.data`);
+  addLine(`  <span class="dim">\u2192 sliced to 2000 chars for continuity context</span>`);
+  await sleep(150);
+
+  addLine(`<span class="fn">translatePage</span>(db, page, book, prevTranslation)`);
+  addLine(`  prompt += <span class="str">'\\nText to translate:\\n'</span> + page.ocr.data`);
+  addLine(`  model: <span class="fn">getModelForBook</span>(book) <span class="dim">\u2192</span> <span class="str">'gemini-3-flash-preview'</span>`);
+  addLine(`  <span class="cm">// IIIF book \u2192 flash (BPH would also use flash; non-BPH uses lite)</span>`);
+  await sleep(300);
+
+  setConn(35);
+
+  // Show the real Latin source and English translation
+  const srcSnip = page.ocr.replace(/<[^>]+>/g, '').trim().split('\n').filter(l => l.trim()).slice(0, 2).join(' ').substring(0, 70);
+  const transSnip = page.translation.replace(/^\.\.\./, '').trim().substring(0, 90);
+
+  addLine(``);
+  addLine(`  <span class="dim">src:</span> <span class="latin">${esc(srcSnip)}...</span>`);
+  await sleep(250);
+  addLine(`  <span class="dim">eng:</span> <span class="english">${esc(transSnip)}...</span>`);
+
+  const inTok2 = 400 + Math.floor(Math.random() * 200);
+  const outTok2 = 300 + Math.floor(Math.random() * 200);
+  const lat2 = 250 + Math.floor(Math.random() * 200);
+  const cost2 = 0.0008 + Math.random() * 0.0005;
+  updateStats(inTok2, outTok2, lat2, cost2);
+
+  await sleep(300);
+  addLine(`  <span class="fn">createRevision</span>(pageId, <span class="str">'translation'</span>, jobId)`);
+  addLine(`  <span class="ok">saved \u2192 pages.translation.data</span>`);
+  await sleep(200);
+
+  setPip('pipTranslate', 'done');
+  setGlow('done');
+  setPhaseLabel('Complete', 'done');
+
+  // === ENRICHMENT (quick) ===
+  setPip('pipEnrich', 'active');
+  await sleep(100);
+  addLine(``);
+  addLine(`<span class="fn">enrichBookMetadata</span>() <span class="dim">\u2192 language: la, categories: ['Hermetica','Neoplatonism']</span>`);
+  updateStats(80, 30, null, 0.0001);
+  await sleep(150);
+  setPip('pipEnrich', 'done');
+
+  // === IMAGE EXTRACTION ===
+  setPip('pipImages', 'active');
+  await sleep(80);
+  if (page.hasImage) {
+    addLine(`<span class="fn">detectImages</span>() <span class="dim">\u2192 SQS \u2192 Lambda</span> <span class="ok">1 illustration: ${page.imageDesc.substring(0, 50)}</span>`);
+    updateStats(200, 60, null, 0.0003);
+  } else {
+    addLine(`<span class="fn">detectImages</span>() <span class="dim">\u2192 SQS \u2192 Lambda</span> <span class="warn">no illustrations</span>`);
+  }
+  await sleep(100);
+  setPip('pipImages', 'done');
+
+  // === COMPLETION ===
+  pagesProcessed++;
+  addLine(`<span class="fn">checkJobCompletion</span>() <span class="dim">\u2192 ${pagesProcessed}/560 (${(pagesProcessed/560*100).toFixed(1)}%)</span>`);
+  setProgress((pagesProcessed / PAGES.length) * 100);
+  setConn(22);
+
+  await sleep(400);
+  setGlow('');
+  setPhaseLabel('', '');
+}
+
+async function run() {
+  // --- Boot sequence ---
+  addLine(`<span class="cm">// Source Library Pipeline \u00b7 Hetzner cax31 \u00b7 clawdbot</span>`);
+  addLine(`<span class="cm">// Processing: Mercurius Trimegistus Ficino interprete</span>`);
+  addLine(`<span class="cm">// BML Plut.21.8 \u00b7 560 pages \u00b7 Latin \u00b7 15th century</span>`);
+  addLine(``);
+  await sleep(400);
+
+  addLine(`<span class="fn">probeDbHealth</span>(db)`);
+  addLine(`  find: <span class="num">47</span>ms  count: <span class="num">112</span>ms  <span class="dim">\u2192</span> <span class="ok">healthy</span>`);
+  await sleep(200);
+
+  addLine(`<span class="kw">const</span> control = system_config.<span class="fn">findOne</span>({ _id: <span class="str">'processing_control'</span> })`);
+  addLine(`  paused: <span class="str">false</span> <span class="dim">\u2192 proceeding</span>`);
+  await sleep(200);
+
+  addLine(``);
+  addLine(`<span class="cm">// Connection budget: 60 max (Atlas M10)</span>`);
+  addLine(`<span class="fn">spawnWorker</span>(<span class="str">'translate-worker'</span>) <span class="dim">\u00b7 +20 conns \u00b7 CONCURRENCY=15</span>`);
+  setConn(20);
+  await sleep(200);
+
+  addLine(``);
+  addLine(`<span class="fn">getModelForBook</span>(book)`);
+  addLine(`  image_source.provider: <span class="str">'iiif'</span> <span class="dim">(not BPH)</span>`);
+  addLine(`  <span class="dim">\u2192</span> <span class="str">'gemini-3-flash-preview'</span>`);
+  setModel('gemini-3-flash');
+  await sleep(200);
+
+  // Real MongoDB query
+  addLine(``);
+  addLine(`<span class="kw">const</span> pages = db.collection(<span class="str">'pages'</span>).<span class="fn">find</span>({`);
+  addLine(`  book_id: book.id,`);
+  addLine(`  <span class="str">'ocr.data'</span>: { <span class="op">$exists</span>: true, <span class="op">$nin</span>: [null, <span class="str">''</span>] },`);
+  addLine(`  page_type: { <span class="op">$nin</span>: [<span class="str">'blank'</span>, <span class="str">'digitizer-insert'</span>] },`);
+  addLine(`  <span class="str">'translation.data'</span>: { <span class="op">$exists</span>: false }`);
+  addLine(`}).<span class="fn">sort</span>({ page_number: 1 }).<span class="fn">limit</span>(200)`);
+  addLine(`  <span class="dim">\u2192</span> <span class="num">560</span> pages to process`);
+  await sleep(600);
+
+  // Process real pages in a loop
+  while (true) {
+    for (let i = 0; i < PAGES.length; i++) {
+      // Reset pips
+      ['pipArchive','pipOcr','pipTranslate','pipEnrich','pipImages'].forEach(id => setPip(id, ''));
+      await processPage(PAGES[i], i);
+      await sleep(600);
+    }
+    // Reset for loop
+    totalIn = 0; totalOut = 0; totalCost = 0; pagesProcessed = 0;
+    document.getElementById('statIn').textContent = '0';
+    document.getElementById('statOut').textContent = '0';
+    document.getElementById('statCost').textContent = '$0.0000';
+    setProgress(0);
+  }
+}
+
+run();
+</script>
+</body>
+</html>

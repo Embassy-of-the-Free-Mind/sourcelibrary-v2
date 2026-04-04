@@ -80,7 +80,7 @@ function pickBestImage(variants: LOCFileVariant[]): { photo: string; thumbnail: 
   if (jp2?.info) {
     // IIIF Image API — construct from info endpoint base
     const iiifBase = jp2.info.replace(/\/info\.json$/, '');
-    photo = `${iiifBase}/full/1000,/0/default.jpg`;
+    photo = `${iiifBase}/full/2000,/0/default.jpg`;
     thumbnail = `${iiifBase}/full/200,/0/default.jpg`;
   }
 

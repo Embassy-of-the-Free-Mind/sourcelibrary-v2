@@ -7,6 +7,7 @@ import type { Sort } from 'mongodb';
 import { ENTITY_TYPE_STYLES, type EntityType } from '@/lib/style-constants';
 import EncyclopediaFilters from './EncyclopediaFilters';
 
+export const revalidate = 600;
 export const maxDuration = 30;
 
 const TYPE_ICONS = {

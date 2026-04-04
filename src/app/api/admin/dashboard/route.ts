@@ -9,7 +9,7 @@ const STALE_AFTER_MS = 15 * 60 * 1000;
 async function computeSnapshot(db: any) {
   const books = db.collection('books');
   const warehouse = db.collection('books_warehouse');
-  const notHidden = { visible: true };
+  const notHidden = { visible: true, pages_count: { $gt: 0 } };
   const invisible = { visible: { $ne: true } };
   const groupStage = {
     $group: {

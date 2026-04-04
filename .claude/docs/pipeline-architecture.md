@@ -1,6 +1,6 @@
 # Source Library Pipeline Architecture
 
-> Authoritative reference as of March 18, 2026. Detailed enough for any developer (human or AI) to operate, debug, or migrate the pipeline.
+> Authoritative reference as of April 2, 2026. Detailed enough for any developer (human or AI) to operate, debug, or migrate the pipeline.
 >
 > **See also:** `pipeline.md` for the full processing pipeline (states, crons, prompts, costs).
 
@@ -48,19 +48,14 @@ Note: `enrich-books` cron code exists in the codebase but is NOT in `vercel.json
 
 #### Hetzner Cron Schedule
 
-**Pipeline core (high frequency):**
+> **Since late March 2026:** All Hetzner crons are managed by a **unified scheduler** (`scripts/workers/scheduler.mjs`, PRs #647/#649). The scheduler is the single crontab entry that spawns all workers below. It enforces a global ~60-connection budget, probes DB health before spawning, and respects `processing_control.paused`. Individual phase crons no longer run independently.
 
-| Cron | Interval | Lock file | Purpose |
-|------|----------|-----------|---------|
+**Pipeline core (high frequency, managed by scheduler):**
+
+| Worker | Interval | Lock file | Purpose |
+|--------|----------|-----------|---------|
 | `pipeline-orchestrator.mjs` (main) | */2 min | `sl-pipeline.lock` | All phases (fallback orchestrator) |
 | `translate-worker.mjs` | */2 min | `sl-translate.lock` | Inline translation via Gemini (no Lambda) |
-| `--phase 1.5` (preview OCR) | */2 min | `sl-preview-ocr.lock` | First 25 pages via Lambda for fast preview |
-| `--phase 4` (translate dispatch) | */2 min | `sl-translate-dispatch.lock` | Dispatch books to translate-worker |
-| `--phase 5` (translate complete) | */5 min | `sl-translate-complete.lock` | Translation completion check |
-| `--phase 0` (enrollment) | */10 min | `sl-enroll.lock` | New books -> queued |
-| `--phase 1` (archive check) | */10 min | `sl-archive-check.lock` | queued -> archive_complete |
-| `--phase 2` (OCR submit) | */10 min | `sl-ocr-submit.lock` | Submit to Gemini Batch API |
-| `--phase 3` (OCR complete) | */10 min | `sl-ocr-complete.lock` | Batch results -> pages |
 | `batch-collector.mjs` | */10 min | `sl-collector.lock` | Poll Gemini Batch API |
 | `archive-bulk.mjs` | */10 min | `sl-archive-bulk.lock` | IA bulk JP2 zip download -> R2 |
 
@@ -120,8 +115,8 @@ npm run lambda:prepare && secret-lover run -- bash -c \
 
 ### MongoDB Atlas (db: bookstore)
 
-- 28,625 books, 4.22M `gemini_usage` records
-- Key collections: `books`, `pages`, `jobs`, `batch_jobs`, `gemini_usage`, `cron_runs`, `system_config`, `page_revisions`
+- ~17K live books + ~24.5K warehouse books, ~3.1M live pages + ~6.4M warehouse pages (as of 2026-04-01)
+- Key collections: `books`, `books_warehouse`, `pages`, `pages_warehouse`, `jobs`, `batch_jobs`, `gemini_usage`, `cron_runs`, `system_config`, `page_revisions`
 - **Saturates at ~40 concurrent Lambda jobs** -- adaptive limits prevent this
 
 ---
@@ -236,7 +231,7 @@ $0.0017/page (measured from `gemini_usage`: $354 / 211K pages over 7 days)
 4. Calls Gemini directly -- model: `gemini-3-flash-preview` (BPH) or `gemini-3.1-flash-lite-preview` (others)
 5. Writes translation directly to `pages` collection
 6. Rotates API keys on rate limits (up to 11 keys)
-7. Concurrency: 40 books simultaneously, 8,000 page cap per run
+7. Concurrency: 15 books simultaneously (tuned for 60-connection budget), 8,000 page cap per run
 
 ### Legacy Lambda Path (Fallback)
 

@@ -126,10 +126,10 @@ export const POST = withAuth(async (request, session) => {
     const bookIdStr = bookId.toHexString();
 
     // Gallica IIIF image URL pattern
-    // Full quality: /full/full/0/native.jpg
-    // Reduced for display: /full/1000,/0/default.jpg
+    // Full quality: /full/full/0/default.jpg (native resolution, typically 3000-5000px)
+    // Display: /full/2000,/0/default.jpg (capped at 2000px wide for reasonable file sizes)
     const getPageImageUrl = (pageNum: number) =>
-      `https://gallica.bnf.fr/iiif/ark:/12148/${ark}/f${pageNum + 1}/full/1000,/0/default.jpg`;
+      `https://gallica.bnf.fr/iiif/ark:/12148/${ark}/f${pageNum + 1}/full/2000,/0/default.jpg`;
 
     const getThumbnailUrl = (pageNum: number) =>
       `https://gallica.bnf.fr/iiif/ark:/12148/${ark}/f${pageNum + 1}/full/200,/0/default.jpg`;

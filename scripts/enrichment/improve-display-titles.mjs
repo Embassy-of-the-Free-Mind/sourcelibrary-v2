@@ -76,6 +76,7 @@ function getArg(name) {
 const LIMIT = getArg('--limit') ? parseInt(getArg('--limit')) : null;
 const OFFSET = getArg('--offset') ? parseInt(getArg('--offset')) : 0;
 const BOOK_ID = getArg('--book-id');
+const PROVIDER = getArg('--provider');
 
 if (!DRY_RUN && !APPLY) {
   console.error('Specify --dry-run or --apply');
@@ -298,6 +299,9 @@ async function main() {
   } else {
     // Non-English books only
     query.language = { $nin: ['English', 'english', null, ''] };
+    if (PROVIDER) {
+      query['image_source.provider'] = PROVIDER;
+    }
   }
 
   const totalCount = await db.collection('books').countDocuments(query);

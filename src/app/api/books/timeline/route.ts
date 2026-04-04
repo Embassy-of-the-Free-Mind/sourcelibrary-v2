@@ -16,6 +16,7 @@ export async function GET(request: NextRequest) {
     const baseMatch: Record<string, unknown> = {
       year: { $exists: true, $ne: null },
       visible: true,
+      pages_count: { $gt: 0 },
     };
     if (language) baseMatch.language = language;
     if (collection) baseMatch.categories = collection;

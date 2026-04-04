@@ -99,9 +99,27 @@ export async function generateGalleryImages(
   }
 
   // Generate full-size extracted image (JPEG 85)
-  const extractedBuffer = await pipeline
-    .jpeg({ quality: 85, progressive: true })
-    .toBuffer();
+  // Ensure a minimum display size of 800px on the longest side — if the source is
+  // low-res and the crop region is small, the extracted image can be tiny (e.g. 300px).
+  // Upscaling with Lanczos produces acceptable results and prevents blurry gallery cards.
+  const MIN_GALLERY_DIM = 800;
+  const croppedBuffer = await pipeline.toBuffer();
+  const croppedMeta = await sharp(croppedBuffer).metadata();
+  const croppedW = croppedMeta.width || 1;
+  const croppedH = croppedMeta.height || 1;
+
+  let extractedBuffer: Buffer;
+  if (Math.max(croppedW, croppedH) < MIN_GALLERY_DIM) {
+    // Upscale so longest side hits MIN_GALLERY_DIM
+    extractedBuffer = await sharp(croppedBuffer)
+      .resize(MIN_GALLERY_DIM, MIN_GALLERY_DIM, { fit: 'inside', withoutEnlargement: false, kernel: 'lanczos3' })
+      .jpeg({ quality: 85, progressive: true })
+      .toBuffer();
+  } else {
+    extractedBuffer = await sharp(croppedBuffer)
+      .jpeg({ quality: 85, progressive: true })
+      .toBuffer();
+  }
 
   // Get pixel dimensions of the extracted crop
   const extractedMeta = await sharp(extractedBuffer).metadata();

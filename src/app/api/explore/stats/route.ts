@@ -27,6 +27,24 @@ export async function GET() {
 
     const db = await getDb();
 
+    // Try pre-computed snapshot first (these aggregations take 30-80s on Atlas)
+    const snapshot = await db.collection('system_config').findOne(
+      { _id: 'explore_stats_snapshot' } as any,
+      { maxTimeMS: 3000 },
+    );
+
+    if (snapshot?.data && snapshot?.updated_at) {
+      const age = Date.now() - new Date(snapshot.updated_at).getTime();
+      if (age < 24 * 60 * 60 * 1000) { // 24h — this data changes slowly
+        cachedResult = { data: snapshot.data, timestamp: Date.now() };
+        return NextResponse.json(snapshot.data, {
+          headers: { 'Cache-Control': 'public, s-maxage=3600, stale-while-revalidate=7200' },
+        });
+      }
+    }
+
+    const MAX_TIME = 15000;
+
     const [
       totalEntities,
       withDates,
@@ -37,37 +55,29 @@ export async function GET() {
       heatmapData,
       topByEra,
     ] = await Promise.all([
-      // Total entities
-      db.collection('entities').countDocuments(),
+      db.collection('entities').countDocuments({}, { maxTimeMS: MAX_TIME }),
 
-      // Entities with birth or death dates
       db.collection('entities').countDocuments({
         $or: [
           { wikidata_birth_date: { $exists: true, $ne: null } },
           { wikidata_death_date: { $exists: true, $ne: null } },
         ],
-      }),
+      }, { maxTimeMS: MAX_TIME }),
 
-      // Entities with coordinates
       db.collection('entities').countDocuments({
         wikidata_coordinates: { $exists: true, $ne: null },
-      }),
+      }, { maxTimeMS: MAX_TIME }),
 
-      // Entities with wikidata IDs
       db.collection('entities').countDocuments({
         wikidata_id: { $exists: true, $ne: null },
-      }),
+      }, { maxTimeMS: MAX_TIME }),
 
-      // Total books
-      db.collection('books').countDocuments({ visible: true }),
+      db.collection('books').countDocuments({ visible: true, pages_count: { $gt: 0 } }, { maxTimeMS: MAX_TIME }),
 
-      // Type distribution
       db.collection('entities').aggregate([
         { $group: { _id: '$type', count: { $sum: 1 } } },
-      ]).toArray(),
+      ], { maxTimeMS: MAX_TIME }).toArray(),
 
-      // Century × type heatmap
-      // Uses books' years to bin entities into centuries
       db.collection('entities').aggregate([
         { $unwind: '$books' },
         {
@@ -101,9 +111,8 @@ export async function GET() {
           },
         },
         { $sort: { '_id.century': 1 } },
-      ]).toArray(),
+      ], { maxTimeMS: 30000 }).toArray(),
 
-      // Top entities per era (top 5 per century by book_count)
       db.collection('entities').aggregate([
         { $match: { book_count: { $gte: 2 } } },
         { $unwind: '$books' },
@@ -152,7 +161,7 @@ export async function GET() {
           },
         },
         { $sort: { century: 1 } },
-      ]).toArray(),
+      ], { maxTimeMS: 30000 }).toArray(),
     ]);
 
     // Format heatmap data
@@ -220,6 +229,13 @@ export async function GET() {
 
     cachedResult = { data, timestamp: Date.now() };
 
+    // Write snapshot for next cold start (fire-and-forget)
+    db.collection('system_config').updateOne(
+      { _id: 'explore_stats_snapshot' } as any,
+      { $set: { data, updated_at: new Date().toISOString() } },
+      { upsert: true },
+    ).catch(() => {});
+
     return NextResponse.json(data, {
       headers: {
         'Cache-Control': 'public, s-maxage=3600, stale-while-revalidate=7200',
@@ -227,6 +243,21 @@ export async function GET() {
     });
   } catch (error) {
     console.error('Error fetching explore stats:', error);
+
+    // Serve stale snapshot on error
+    try {
+      const db = await getDb();
+      const stale = await db.collection('system_config').findOne(
+        { _id: 'explore_stats_snapshot' } as any,
+        { maxTimeMS: 3000 },
+      );
+      if (stale?.data) {
+        return NextResponse.json(stale.data, {
+          headers: { 'Cache-Control': 'public, s-maxage=60, stale-while-revalidate=30' },
+        });
+      }
+    } catch { /* ignore */ }
+
     return NextResponse.json(
       { error: 'Failed to fetch explore stats' },
       { status: 500 }

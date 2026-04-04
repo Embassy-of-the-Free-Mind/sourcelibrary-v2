@@ -207,12 +207,12 @@ export const POST = withAuth(async (request, session) => {
       const canvas = canvases[index];
       const serviceId = canvas?.images?.[0]?.resource?.service?.['@id'];
       if (serviceId) {
-        return `${serviceId}/full/1000,/0/default.jpg`;
+        return `${serviceId}/full/2000,/0/default.jpg`;
       }
       // Fallback to webcache
       const canvasId = canvas?.['@id']?.split('/').pop();
       if (canvasId) {
-        return `https://www.e-rara.ch/download/webcache/1000/${canvasId}`;
+        return `https://www.e-rara.ch/download/webcache/2000/${canvasId}`;
       }
       return null;
     };

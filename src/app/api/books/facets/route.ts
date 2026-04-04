@@ -32,6 +32,7 @@ export async function GET(request: NextRequest) {
   const query: Record<string, unknown> = {
     'faceted_tags': { $exists: true },
     visible: true,
+    pages_count: { $gt: 0 },
   };
 
   const activeFilters: Record<string, string[]> = {};
@@ -66,7 +67,7 @@ export async function GET(request: NextRequest) {
     const [result] = await db.collection('books').aggregate([
       { $match: query },
       { $facet: { _total: [{ $count: 'n' }], ...facetStages } },
-    ]).toArray();
+    ], { maxTimeMS: 10000 }).toArray();
 
     const counts: Record<string, Record<string, number>> = {};
     for (const facet of FACETS) {
@@ -102,12 +103,13 @@ export async function GET(request: NextRequest) {
           published: 1, language: 1, thumbnail_blob: 1, thumbnail: 1,
           faceted_tags: 1, pages_count: 1, pages_translated: 1, pages_ocr: 1,
         },
+        maxTimeMS: 10000,
       })
       .sort({ read_count: -1, pages_translated: -1 })
       .skip(skip)
       .limit(limit)
       .toArray(),
-    db.collection('books').countDocuments(query),
+    db.collection('books').countDocuments(query, { maxTimeMS: 10000 }),
   ]);
 
   return NextResponse.json({
