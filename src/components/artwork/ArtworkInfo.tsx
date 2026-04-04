@@ -1,7 +1,7 @@
 import Link from 'next/link';
 import { Book } from '@/lib/types';
 import ArtworkHero from './ArtworkHero';
-import { Calendar, MapPin, Ruler, Palette, ExternalLink, Heart, Share2, Quote } from 'lucide-react';
+import { Calendar, MapPin, Ruler, Palette, ExternalLink, Heart, Share2, Quote, Download, BookOpen, ScrollText } from 'lucide-react';
 import LikeButton from '@/components/ui/LikeButton';
 import { BookShare } from '@/components/ui/ShareButton';
 import SiteHeader from '@/components/layout/SiteHeader';
@@ -52,6 +52,18 @@ export default function ArtworkInfo({ book, collections, prevWork, nextWork }: A
   const resourceType = book.resource_type || 'print';
   const attributionNote = (book as any).attribution_note || '';
   const holdingMuseum = (book.image_source as any)?.contributing_library || '';
+
+  // Enrichment data (AI-generated museum-label content)
+  const enrichment = (book as any).enrichment;
+  const enrichDescription = enrichment?.description || '';
+  const enrichSignificance = enrichment?.significance || '';
+  const enrichInscriptions = enrichment?.inscriptions || '';
+  const enrichCrossRefs = enrichment?.cross_references || [];
+  const enrichFigures = enrichment?.figures_depicted || [];
+  const enrichSymbols = enrichment?.symbols || [];
+  const archivedFullUrl = (book as any).archived_full_url || '';
+  const fullWidth = (book as any).full_width || commonsWidth;
+  const fullHeight = (book as any).full_height || commonsHeight;
 
   return (
     <>
@@ -147,6 +159,13 @@ export default function ArtworkInfo({ book, collections, prevWork, nextWork }: A
                 label="Share"
                 className="text-stone-300 hover:text-white hover:bg-white/10"
               />
+              {archivedFullUrl && (
+                <a href={archivedFullUrl} download
+                  className="flex items-center gap-1.5 px-3 py-1.5 text-sm text-stone-300 hover:text-white hover:bg-white/10 rounded-md transition-colors">
+                  <Download className="w-3.5 h-3.5" />
+                  <span className="hidden sm:inline">Download</span>
+                </a>
+              )}
               {commonsUrl && (
                 <a href={commonsUrl} target="_blank" rel="noopener noreferrer"
                   className="flex items-center gap-1.5 px-3 py-1.5 text-sm text-stone-300 hover:text-white hover:bg-white/10 rounded-md transition-colors">
@@ -164,13 +183,66 @@ export default function ArtworkInfo({ book, collections, prevWork, nextWork }: A
       {/* Content */}
       <div className="max-w-[var(--container-standard)] mx-auto px-6 md:px-12 py-10 space-y-8">
 
-        {/* Description from Commons */}
-        {commonsDescription && (
+        {/* Description — prefer enrichment over Commons */}
+        {(enrichDescription || commonsDescription) && (
           <div className="card p-6 sm:p-8">
             <h2 className="text-lg font-display font-semibold mb-4" style={{ color: 'var(--text-primary)' }}>About This Work</h2>
-            <div className="prose-content max-w-none">
-              {commonsDescription.split('\n\n').map((p: string, i: number) => (
-                <p key={i} className="mb-4 last:mb-0">{p}</p>
+            <div className="prose-content max-w-none" style={{ color: 'var(--text-secondary)' }}>
+              {enrichDescription ? (
+                <p className="mb-4 leading-relaxed">{enrichDescription}</p>
+              ) : (
+                commonsDescription.split('\n\n').map((p: string, i: number) => (
+                  <p key={i} className="mb-4 last:mb-0">{p}</p>
+                ))
+              )}
+              {enrichSignificance && (
+                <p className="leading-relaxed" style={{ color: 'var(--text-primary)' }}>{enrichSignificance}</p>
+              )}
+            </div>
+
+            {/* Figures & Symbols */}
+            {(enrichFigures.length > 0 || enrichSymbols.length > 0) && (
+              <div className="flex flex-wrap gap-1.5 mt-5 pt-5 border-t" style={{ borderColor: 'var(--border-light)' }}>
+                {enrichFigures.map((f: string) => (
+                  <span key={f} className="px-2 py-0.5 text-xs rounded-full border" style={{ borderColor: 'var(--border-light)', color: 'var(--text-secondary)' }}>{f}</span>
+                ))}
+                {enrichSymbols.map((s: string) => (
+                  <span key={s} className="px-2 py-0.5 text-xs rounded-full border italic" style={{ borderColor: 'var(--border-light)', color: 'var(--text-muted)' }}>{s}</span>
+                ))}
+              </div>
+            )}
+          </div>
+        )}
+
+        {/* Inscriptions */}
+        {enrichInscriptions && (
+          <div className="card p-6 sm:p-8">
+            <h2 className="text-lg font-display font-semibold mb-4 flex items-center gap-2" style={{ color: 'var(--text-primary)' }}>
+              <ScrollText className="w-5 h-5" style={{ color: 'var(--accent-rust)' }} />
+              Inscriptions
+            </h2>
+            <pre className="text-sm whitespace-pre-wrap font-serif leading-relaxed" style={{ color: 'var(--text-secondary)' }}>
+              {enrichInscriptions}
+            </pre>
+          </div>
+        )}
+
+        {/* Cross-references to texts/traditions */}
+        {enrichCrossRefs.length > 0 && (
+          <div className="card p-6 sm:p-8">
+            <h2 className="text-lg font-display font-semibold mb-4 flex items-center gap-2" style={{ color: 'var(--text-primary)' }}>
+              <BookOpen className="w-5 h-5" style={{ color: 'var(--accent-rust)' }} />
+              Connected Texts
+            </h2>
+            <div className="space-y-3">
+              {enrichCrossRefs.map((ref: { text_or_author: string; relationship: string; confidence: string }, i: number) => (
+                <div key={i} className="flex gap-3">
+                  <div className="w-1 rounded-full flex-shrink-0" style={{ background: ref.confidence === 'high' ? 'var(--accent-rust)' : 'var(--border-light)' }} />
+                  <div>
+                    <p className="text-sm font-medium" style={{ color: 'var(--text-primary)' }}>{ref.text_or_author}</p>
+                    <p className="text-sm mt-0.5" style={{ color: 'var(--text-secondary)' }}>{ref.relationship}</p>
+                  </div>
+                </div>
               ))}
             </div>
           </div>
@@ -251,10 +323,10 @@ export default function ArtworkInfo({ book, collections, prevWork, nextWork }: A
             )}
 
             {/* Full resolution link */}
-            {commonsFullUrl && (
+            {(archivedFullUrl || commonsFullUrl) && (
               <p className="pt-2">
-                <a href={commonsFullUrl} target="_blank" rel="noopener noreferrer" className="text-accent-rust hover:underline">
-                  View full resolution original →
+                <a href={archivedFullUrl || commonsFullUrl} target="_blank" rel="noopener noreferrer" className="text-accent-rust hover:underline">
+                  View full resolution{fullWidth && fullHeight ? ` (${fullWidth} × ${fullHeight})` : ''} →
                 </a>
               </p>
             )}
