@@ -524,8 +524,8 @@ export default function TranslationEditor({
       return `/api/image?url=${encodeURIComponent(baseUrl)}&w=2400&q=90&cx=${p.crop.xStart}&cw=${p.crop.xEnd}`;
     }
 
-    // New path convention: derive full-res URL
-    const newPathMatch = p.photo?.match(/^(https:\/\/images\.sourcelibrary\.org\/pages\/[^/]+\/\d{4,})(-full)?\.jpg$/);
+    // New path convention: derive full-res URL (handles sp-prefixed split pages too)
+    const newPathMatch = p.photo?.match(/^(https:\/\/images\.sourcelibrary\.org\/pages\/[^/]+\/(?:sp[a-z0-9]+-?)?\d{4,})(-full)?\.jpg$/);
     if (newPathMatch) return `${newPathMatch[1]}-full.jpg`;
 
     // Archived photo is full-res — serve directly from CDN
