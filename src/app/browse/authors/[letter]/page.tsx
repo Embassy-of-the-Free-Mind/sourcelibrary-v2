@@ -45,14 +45,16 @@ export default async function BrowseAuthorsPage({ params }: PageProps) {
   try {
     const db = await getDb();
 
-    // Get all visible books with translations, starting with this letter
+    // Get all visible books with translations, starting with this letter.
+    // Use case-sensitive regex ^[Aa] so MongoDB can use the author_1 index
+    // ($options:'i' forces a full collection scan and times out on Atlas).
     const books = await db.collection('books').find(
       {
         visible: true,
-        author: { $regex: `^${l}`, $options: 'i' },
+        author: { $regex: `^[${l}${l.toLowerCase()}]` },
         pages_translated: { $gt: 0 },
       },
-      { projection: { author: 1, author_entity_id: 1 } }
+      { projection: { author: 1, author_entity_id: 1 }, maxTimeMS: 15_000 }
     ).toArray();
 
     // Group by entity when available, fall back to raw author string
@@ -61,7 +63,7 @@ export default async function BrowseAuthorsPage({ params }: PageProps) {
     if (entityIds.length > 0) {
       const entities = await db.collection('entities').find(
         { _id: { $in: entityIds.map(id => { try { return new ObjectId(id); } catch { return null; } }).filter((v): v is ObjectId => v !== null) } },
-        { projection: { canonical_name: 1, name: 1 } }
+        { projection: { canonical_name: 1, name: 1 }, maxTimeMS: 10_000 }
       ).toArray();
       for (const e of entities) {
         entityMap.set(e._id.toString(), e.canonical_name || e.name);
