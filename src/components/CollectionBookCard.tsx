@@ -65,7 +65,7 @@ export default function CollectionBookCard({ book, priority = false }: Collectio
               quality={85}
               className={cn(
                 'object-cover group-hover:scale-105 transition-transform duration-300',
-                imageLoaded ? 'opacity-100' : 'opacity-0'
+                priority ? 'opacity-100' : (imageLoaded ? 'opacity-100' : 'opacity-0')
               )}
               sizes="(max-width: 768px) 50vw, (max-width: 1024px) 33vw, 25vw"
               onLoad={() => setImageLoaded(true)}
