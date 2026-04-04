@@ -115,7 +115,7 @@ async function fetchLibraryData(providerKey: string, sort: string, language: str
         { $replaceRoot: { newRoot: '$images' } },
         { $sort: { gallery_quality: -1 } },
         { $limit: 12 },
-      ]).toArray();
+      ], { maxTimeMS: 15_000 }).toArray();
     } catch { /* Gallery is optional */ }
   }
 
@@ -157,7 +157,7 @@ async function fetchBphDigitizedMap(): Promise<Record<string, { id: string; slug
     const db = await getDb();
     const bphBooks = await db.collection('books').find(
       { 'image_source.provider': 'bph', 'dublin_core.dc_identifier': { $exists: true } },
-      { projection: { id: 1, slug: 1, 'dublin_core.dc_identifier': 1 } }
+      { projection: { id: 1, slug: 1, 'dublin_core.dc_identifier': 1 }, maxTimeMS: 15_000 }
     ).toArray();
 
     const map: Record<string, { id: string; slug: string }> = {};
