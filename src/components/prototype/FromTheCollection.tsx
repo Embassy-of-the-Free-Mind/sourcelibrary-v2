@@ -52,7 +52,7 @@ export default function FromTheCollection({ items }: FromTheCollectionProps) {
                 <Link href={`/gallery/image/${galleryId}`}>
                   <div className="relative aspect-[3/4] bg-cream rounded-lg overflow-hidden border border-border-light group-hover:shadow-lg transition-all">
                     <Image
-                      src={item.extracted_url || item.thumbnail_url}
+                      src={item.thumbnail_url || item.extracted_url || ''}
                       alt={item.museum_description || 'Gallery image'}
                       fill
                       quality={85}

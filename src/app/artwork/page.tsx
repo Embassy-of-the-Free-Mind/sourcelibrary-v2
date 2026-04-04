@@ -78,9 +78,9 @@ export default async function ArtworkLandingPage() {
                 href={`/collections/${col.slug}`}
                 className="group relative aspect-[4/3] rounded-lg overflow-hidden bg-stone-200"
               >
-                {col.featured_images?.[0] && sanitizeThumbnail(col.featured_images[0].extracted_url || col.featured_images[0].thumbnail_url || col.featured_images[0].image_url || '') && (
+                {col.featured_images?.[0] && sanitizeThumbnail(col.featured_images[0].thumbnail_url || col.featured_images[0].extracted_url || col.featured_images[0].image_url || '') && (
                   <Image
-                    src={sanitizeThumbnail(col.featured_images[0].extracted_url || col.featured_images[0].thumbnail_url || col.featured_images[0].image_url || '') as string}
+                    src={sanitizeThumbnail(col.featured_images[0].thumbnail_url || col.featured_images[0].extracted_url || col.featured_images[0].image_url || '') as string}
                     alt=""
                     fill
                     className="object-cover group-hover:scale-[1.03] transition-transform duration-700"

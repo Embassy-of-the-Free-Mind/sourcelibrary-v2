@@ -126,7 +126,8 @@ async function getFeaturedCollections() {
       const hero = images.find(
         (img: unknown) => typeof img === 'string' || (img && typeof img === 'object' && ((img as Record<string, unknown>).extracted_url || (img as Record<string, unknown>).image_url || (img as Record<string, unknown>).thumbnail_url))
       );
-      heroUrl = typeof hero === 'string' ? hero : ((hero as Record<string, unknown>)?.extracted_url || (hero as Record<string, unknown>)?.image_url || (hero as Record<string, unknown>)?.thumbnail_url || null) as string | null;
+      // Prefer thumbnail for card grids — extracted images are ~2MB vs ~38KB thumbnails
+      heroUrl = typeof hero === 'string' ? hero : ((hero as Record<string, unknown>)?.thumbnail_url || (hero as Record<string, unknown>)?.extracted_url || (hero as Record<string, unknown>)?.image_url || null) as string | null;
     }
 
     const books = (booksBySlug.get(collection.slug as string) || []).map(({ collections: _c, ...rest }) => rest);
@@ -157,9 +158,10 @@ async function getRemainingCollections(): Promise<CollectionForGrid[]> {
   const result = docs.map(({ _id, ...rest }) => {
     const images = rest.featured_images || [];
     const hero = images.find(
-      (img: unknown) => typeof img === 'string' || (img && typeof img === 'object' && ((img as Record<string, unknown>).extracted_url || (img as Record<string, unknown>).image_url || (img as Record<string, unknown>).thumbnail_url))
+      (img: unknown) => typeof img === 'string' || (img && typeof img === 'object' && ((img as Record<string, unknown>).thumbnail_url || (img as Record<string, unknown>).extracted_url || (img as Record<string, unknown>).image_url))
     );
-    const heroUrl = typeof hero === 'string' ? hero : ((hero as Record<string, unknown>)?.extracted_url || (hero as Record<string, unknown>)?.image_url || (hero as Record<string, unknown>)?.thumbnail_url || null) as string | null;
+    // Prefer thumbnail for card grids — extracted images are ~2MB vs ~38KB thumbnails
+    const heroUrl = typeof hero === 'string' ? hero : ((hero as Record<string, unknown>)?.thumbnail_url || (hero as Record<string, unknown>)?.extracted_url || (hero as Record<string, unknown>)?.image_url || null) as string | null;
     const languageValues = Array.isArray(rest.languages)
       ? rest.languages
       : [];

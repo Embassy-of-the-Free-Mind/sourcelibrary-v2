@@ -82,7 +82,7 @@ async function resolveImages(db: any, imageIds: string[]): Promise<CollectionIma
     if (!doc) continue;
     results.push({
       id: doc.id,
-      imageUrl: doc.extracted_url || doc.thumbnail_url || doc.image_url,
+      imageUrl: doc.thumbnail_url || doc.extracted_url || doc.image_url,
       bookTitle: doc.book_title || 'Unknown',
       description: doc.description || '',
       type: doc.type,

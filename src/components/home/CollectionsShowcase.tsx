@@ -19,9 +19,9 @@ export interface CollectionSummary {
 
 function CollectionCard({ col, size }: { col: CollectionSummary; size: 'large' | 'small' }) {
   const hero = col.featured_images?.find(
-    img => img.extracted_url || img.thumbnail_url || img.image_url
+    img => img.thumbnail_url || img.extracted_url || img.image_url
   );
-  const heroUrl = hero?.extracted_url || hero?.thumbnail_url || hero?.image_url;
+  const heroUrl = hero?.thumbnail_url || hero?.extracted_url || hero?.image_url;
   const topLangs = (col.languages || []).slice(0, 3).map(l => l.lang).join(', ');
 
   return (
