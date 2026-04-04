@@ -58,6 +58,8 @@ export default function ArtworkInfo({ book, collections, prevWork, nextWork }: A
   const enrichDescription = enrichment?.description || '';
   const enrichSignificance = enrichment?.significance || '';
   const enrichInscriptions = enrichment?.inscriptions || '';
+  const enrichInscriptionsTranslation = enrichment?.inscriptions_translation || '';
+  const enrichInscriptionsLanguage = enrichment?.inscriptions_language || '';
   const enrichCrossRefs = enrichment?.cross_references || [];
   const enrichFigures = enrichment?.figures_depicted || [];
   const enrichSymbols = enrichment?.symbols || [];
@@ -220,10 +222,21 @@ export default function ArtworkInfo({ book, collections, prevWork, nextWork }: A
             <h2 className="text-lg font-display font-semibold mb-4 flex items-center gap-2" style={{ color: 'var(--text-primary)' }}>
               <ScrollText className="w-5 h-5" style={{ color: 'var(--accent-rust)' }} />
               Inscriptions
+              {enrichInscriptionsLanguage && (
+                <span className="text-xs font-normal ml-1" style={{ color: 'var(--text-muted)' }}>({enrichInscriptionsLanguage})</span>
+              )}
             </h2>
             <pre className="text-sm whitespace-pre-wrap font-serif leading-relaxed" style={{ color: 'var(--text-secondary)' }}>
               {enrichInscriptions}
             </pre>
+            {enrichInscriptionsTranslation && (
+              <div className="mt-4 pt-4 border-t" style={{ borderColor: 'var(--border-light)' }}>
+                <p className="text-xs uppercase tracking-wider font-medium mb-2" style={{ color: 'var(--text-muted)' }}>Translation</p>
+                <pre className="text-sm whitespace-pre-wrap font-serif leading-relaxed" style={{ color: 'var(--text-primary)' }}>
+                  {enrichInscriptionsTranslation}
+                </pre>
+              </div>
+            )}
           </div>
         )}
 
