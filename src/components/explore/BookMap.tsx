@@ -52,26 +52,6 @@ function createLocationIcon(type: string, bookCount: number) {
   });
 }
 
-function createClusterIcon(count: number, types: Set<string>) {
-  const size = Math.max(28, Math.min(46, 26 + Math.log10(count) * 11));
-  const colors = [...types].map(t => TYPE_CONFIG[t]?.color || '#999');
-  const bg = colors.length === 1 ? colors[0] : '#3d3529';
-  return L.divIcon({
-    className: 'cluster-marker',
-    html: `<div style="
-      width: ${size}px; height: ${size}px; border-radius: 50%;
-      background: ${bg}; opacity: 0.85; color: rgba(255,255,255,0.95);
-      display: flex; align-items: center; justify-content: center;
-      font-size: 11px; font-weight: 600; letter-spacing: 0.02em;
-      font-family: var(--font-sans);
-      border: 1.5px solid rgba(255,255,255,0.5);
-      box-shadow: 0 1px 6px rgba(0,0,0,0.15);
-      cursor: pointer;
-    ">${count.toLocaleString()}</div>`,
-    iconSize: [size, size],
-    iconAnchor: [size / 2, size / 2],
-  });
-}
 
 export default function BookMap({ locations, stats }: BookMapProps) {
   const mapRef = useRef<L.Map | null>(null);
@@ -90,6 +70,8 @@ export default function BookMap({ locations, stats }: BookMapProps) {
       return loc.books.length >= filters.minBooks;
     });
   }, [locations, filters]);
+
+  const [zoom, setZoom] = useState(5);
 
   // Initialize map
   useEffect(() => {
@@ -121,86 +103,78 @@ export default function BookMap({ locations, stats }: BookMapProps) {
     setSelected(loc);
   }, []);
 
-  // Render markers
+  // Merge locations by city (combine publication + author_birth + author_death for same city)
+  const cityPins = useMemo(() => {
+    const byCity = new Map<string, { city: string; country: string | null; lat: number; lng: number; books: BookLocation['books']; types: Set<string>; totalBooks: number }>();
+    for (const loc of filtered) {
+      const key = `${loc.city}|${loc.lat.toFixed(2)}|${loc.lng.toFixed(2)}`;
+      const existing = byCity.get(key);
+      if (existing) {
+        // Merge books, avoid duplicates by id
+        const existingIds = new Set(existing.books.map(b => b.id));
+        for (const b of loc.books) {
+          if (!existingIds.has(b.id) && existing.books.length < 200) {
+            existing.books.push(b);
+          }
+        }
+        existing.types.add(loc.type);
+        existing.totalBooks += loc.books.length;
+      } else {
+        byCity.set(key, {
+          city: loc.city, country: loc.country, lat: loc.lat, lng: loc.lng,
+          books: [...loc.books], types: new Set([loc.type]), totalBooks: loc.books.length,
+        });
+      }
+    }
+    return [...byCity.values()].sort((a, b) => b.totalBooks - a.totalBooks);
+  }, [filtered]);
+
+  // Render city pins
   useEffect(() => {
     const map = mapRef.current;
     const layerGroup = markersRef.current;
     if (!map || !layerGroup) return;
 
     layerGroup.clearLayers();
-    const zoom = map.getZoom();
-    const cellSize = Math.max(0.5, 40 / Math.pow(2, zoom));
 
-    const grid = new Map<string, BookLocation[]>();
-    for (const loc of filtered) {
-      const key = `${Math.floor(loc.lng / cellSize)}:${Math.floor(loc.lat / cellSize)}`;
-      if (!grid.has(key)) grid.set(key, []);
-      grid.get(key)!.push(loc);
-    }
+    // At low zoom, only show cities with enough books to matter
+    const minBooksForZoom = zoom <= 3 ? 20 : zoom <= 4 ? 5 : 1;
 
-    for (const [, group] of grid) {
-      if (group.length === 1 || zoom >= 10) {
-        for (const loc of group) {
-          const marker = L.marker([loc.lat, loc.lng], {
-            icon: createLocationIcon(loc.type, loc.books.length),
-          });
-          marker.bindTooltip(
-            `<strong>${loc.city}</strong>${loc.country ? `<br/><span style="opacity:0.7">${loc.country}</span>` : ''}<br/>${loc.books.length} book${loc.books.length !== 1 ? 's' : ''}`,
-            { direction: 'top', offset: [0, -6], className: 'book-tooltip' }
-          );
-          marker.on('click', () => handleSelect(loc));
-          layerGroup.addLayer(marker);
-        }
-      } else {
-        const avgLat = group.reduce((s, l) => s + l.lat, 0) / group.length;
-        const avgLng = group.reduce((s, l) => s + l.lng, 0) / group.length;
-        const totalBooks = group.reduce((s, l) => s + l.books.length, 0);
-        const types = new Set(group.map(l => l.type));
-        const cluster = L.marker([avgLat, avgLng], {
-          icon: createClusterIcon(totalBooks, types),
+    for (const pin of cityPins) {
+      if (pin.totalBooks < minBooksForZoom) continue;
+
+      const dominantType = pin.types.has('publication') ? 'publication'
+        : pin.types.has('author_birth') ? 'author_birth' : 'author_death';
+
+      const marker = L.marker([pin.lat, pin.lng], {
+        icon: createLocationIcon(dominantType, pin.totalBooks),
+      });
+
+      const typeLabels = [...pin.types].map(t => TYPE_CONFIG[t]?.label || t).join(' · ');
+      marker.bindTooltip(
+        `<strong>${pin.city}</strong>${pin.country ? `<br/><span style="opacity:0.7">${pin.country}</span>` : ''}<br/>${pin.totalBooks} book${pin.totalBooks !== 1 ? 's' : ''}<br/><span style="opacity:0.5;font-size:10px">${typeLabels}</span>`,
+        { direction: 'top', offset: [0, -6], className: 'book-tooltip' }
+      );
+
+      marker.on('click', () => {
+        handleSelect({
+          city: pin.city,
+          country: pin.country,
+          lat: pin.lat, lng: pin.lng,
+          type: dominantType,
+          books: pin.books.slice(0, 200),
         });
-        cluster.bindTooltip(
-          `${totalBooks.toLocaleString()} books across ${group.length} cities`,
-          { direction: 'top', offset: [0, -10], className: 'book-tooltip' }
-        );
-        cluster.on('click', () => {
-          // Group by city, merge types, sort by book count
-          const byCityMap = new Map<string, { city: string; country: string | null; books: BookLocation['books']; types: Set<string> }>();
-          for (const loc of group) {
-            const existing = byCityMap.get(loc.city);
-            if (existing) {
-              existing.books.push(...loc.books);
-              existing.types.add(loc.type);
-            } else {
-              byCityMap.set(loc.city, { city: loc.city, country: loc.country, books: [...loc.books], types: new Set([loc.type]) });
-            }
-          }
-          const cities = [...byCityMap.values()].sort((a, b) => b.books.length - a.books.length);
-          const topCity = cities[0];
-          const allBooks = cities.flatMap(c => c.books);
+      });
 
-          handleSelect({
-            city: cities.length === 1 ? topCity.city :
-              `${topCity.city}${cities.length > 1 ? ` + ${cities.length - 1} nearby` : ''}`,
-            country: topCity.country,
-            lat: avgLat, lng: avgLng, type: 'publication', // default for display
-            books: allBooks.slice(0, 150),
-          });
-          // Zoom in for context
-          if (zoom < 8) {
-            map.setView([avgLat, avgLng], Math.min(zoom + 2, 10));
-          }
-        });
-        layerGroup.addLayer(cluster);
-      }
+      layerGroup.addLayer(marker);
     }
-  }, [filtered, handleSelect]);
+  }, [cityPins, zoom, handleSelect]);
 
-  // Re-render on zoom
+  // Re-render on zoom (to adjust min-books threshold at low zoom)
   useEffect(() => {
     const map = mapRef.current;
     if (!map) return;
-    const onZoom = () => setFilters(f => ({ ...f }));
+    const onZoom = () => setZoom(map.getZoom());
     map.on('zoomend', onZoom);
     return () => { map.off('zoomend', onZoom); };
   }, []);
@@ -378,7 +352,7 @@ export default function BookMap({ locations, stats }: BookMapProps) {
           font-weight: 600;
           color: var(--text-primary);
         }
-        .book-marker, .cluster-marker {
+        .book-marker {
           background: none !important;
           border: none !important;
         }
