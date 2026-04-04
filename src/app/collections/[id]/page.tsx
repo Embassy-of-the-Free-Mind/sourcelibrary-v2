@@ -496,7 +496,7 @@ export default async function CollectionDetailPage({ params }: Props) {
   const imagePool: typeof galleryImages = [];
   const bookImageCounts = new Map<string, number>();
   for (const img of galleryImages) {
-    const thumb = img.extracted_url || img.extractedUrl || img.thumbnail_url || img.thumbnailUrl || img.imageUrl || img.image_url;
+    const thumb = img.thumbnail_url || img.thumbnailUrl || img.extracted_url || img.extractedUrl || img.imageUrl || img.image_url;
     if (!thumb) continue;
     const bid = img.book_id || img.bookId;
     const count = bookImageCounts.get(bid) || 0;
@@ -520,8 +520,8 @@ export default async function CollectionDetailPage({ params }: Props) {
     ? (collection.hero_image as string | undefined)
       || (() => {
         const fi = (collection.featured_images as { extracted_url?: string; image_url?: string; thumbnail_url?: string }[] | undefined);
-        const first = fi?.find(img => img.extracted_url || img.image_url || img.thumbnail_url);
-        return first?.extracted_url || first?.image_url || first?.thumbnail_url;
+        const first = fi?.find(img => img.thumbnail_url || img.extracted_url || img.image_url);
+        return first?.thumbnail_url || first?.extracted_url || first?.image_url;
       })()
       || null
     : null;
@@ -581,7 +581,7 @@ export default async function CollectionDetailPage({ params }: Props) {
             'grid-cols-3 sm:grid-cols-6'
           }`}>
             {heroImages.map((img: { pageId?: string; page_id?: string; detectionIndex?: number; detection_index?: number; thumbnailUrl?: string; thumbnail_url?: string; extractedUrl?: string; extracted_url?: string; imageUrl?: string; image_url?: string }) => {
-              const src = img.extracted_url || img.extractedUrl || img.thumbnail_url || img.thumbnailUrl || img.imageUrl || img.image_url;
+              const src = img.thumbnail_url || img.thumbnailUrl || img.extracted_url || img.extractedUrl || img.imageUrl || img.image_url;
               const key = `${img.pageId || img.page_id}-${img.detectionIndex ?? img.detection_index}`;
               if (!src) return null;
               return (
@@ -662,9 +662,9 @@ export default async function CollectionDetailPage({ params }: Props) {
             <div className="grid gap-4 grid-cols-2 lg:grid-cols-4">
               {childCollections.map((child) => {
                 const hero = child.featured_images?.find(
-                  (img) => img.extracted_url || img.image_url || img.thumbnail_url
+                  (img) => img.thumbnail_url || img.extracted_url || img.image_url
                 );
-                const heroUrl = hero?.extracted_url || hero?.image_url || hero?.thumbnail_url;
+                const heroUrl = hero?.thumbnail_url || hero?.extracted_url || hero?.image_url;
                 return (
                   <Link
                     key={child.slug}
@@ -776,7 +776,7 @@ export default async function CollectionDetailPage({ params }: Props) {
             </p>
             <div className="grid grid-cols-3 sm:grid-cols-4 lg:grid-cols-5 gap-4">
               {diverseGalleryImages.map((img: { pageId?: string; page_id?: string; bookId?: string; book_id?: string; detectionIndex?: number; detection_index?: number; thumbnailUrl?: string; thumbnail_url?: string; extractedUrl?: string; extracted_url?: string; imageUrl?: string; image_url?: string; museumDescription?: string; museum_description?: string; description?: string; bookTitle?: string; book_title?: string; type?: string }) => {
-                const thumb = img.extracted_url || img.extractedUrl || img.thumbnail_url || img.thumbnailUrl || img.imageUrl || img.image_url;
+                const thumb = img.thumbnail_url || img.thumbnailUrl || img.extracted_url || img.extractedUrl || img.imageUrl || img.image_url;
                 const pageId = img.pageId || img.page_id;
                 const bookId = img.bookId || img.book_id;
                 const detIdx = img.detectionIndex ?? img.detection_index;

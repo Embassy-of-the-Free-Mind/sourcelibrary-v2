@@ -635,7 +635,8 @@ function GalleryCard({ item, priority = false }: { item: GalleryItem; priority?:
   const [useCropFallback, setUseCropFallback] = useState(false);
 
   const cropUrl = item.bbox ? getCroppedImageUrl(item.imageUrl, item.bbox) : null;
-  const blobUrl = item.extractedUrl || item.thumbnailUrl;
+  // Prefer thumbnail for grid cards — extracted images are ~2MB vs ~38KB thumbnails
+  const blobUrl = item.thumbnailUrl || item.extractedUrl;
 
   const displayUrl = useCropFallback
     ? (cropUrl || toThumbnailUrl(item.imageUrl))

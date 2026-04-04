@@ -60,7 +60,7 @@ function bookTitle(book: BookRef): string {
 }
 
 function imageUrl(img: GalleryImage): string {
-  return img.extracted_url || img.thumbnail_url || img.image_url || '';
+  return img.thumbnail_url || img.extracted_url || img.image_url || '';
 }
 
 function imagePageHref(img: GalleryImage): string {

@@ -43,9 +43,10 @@ interface CuratedCollection {
 
 function getHeroImage(col: CuratedCollection): string | undefined {
   const hero = col.featured_images?.find(
-    (img) => img.extracted_url || img.image_url || img.thumbnail_url,
+    (img) => img.thumbnail_url || img.extracted_url || img.image_url,
   );
-  const raw = hero?.extracted_url || hero?.image_url || hero?.thumbnail_url;
+  // Prefer thumbnail for card grids — extracted images are ~2MB vs ~38KB thumbnails
+  const raw = hero?.thumbnail_url || hero?.extracted_url || hero?.image_url;
   return sanitizeThumbnail(raw);
 }
 
