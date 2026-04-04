@@ -154,7 +154,7 @@ export const POST = withAuth(async (request, session) => {
     // Format: bsb_id_pagenum (padded to 5 digits)
     const getPageImageUrl = (pageNum: number) => {
       const paddedPage = String(pageNum + 1).padStart(5, '0');
-      return `https://api.digitale-sammlungen.de/iiif/image/v2/${normalizedId}_${paddedPage}/full/1000,/0/default.jpg`;
+      return `https://api.digitale-sammlungen.de/iiif/image/v2/${normalizedId}_${paddedPage}/full/2000,/0/default.jpg`;
     };
 
     const getThumbnailUrl = (pageNum: number) => {
