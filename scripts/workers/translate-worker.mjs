@@ -734,13 +734,13 @@ async function selfDispatch(db, limit) {
     candidates = await db.collection('books').aggregate([
       { $match: { 'pipeline_auto.status': 'translate_partial', 'image_source.provider': { $ne: 'bph' } } },
       { $addFields: { _denominator: { $subtract: [{ $ifNull: ['$pages_ocr', 0] }, { $ifNull: ['$pages_blank', 0] }] } } },
-      { $match: { _denominator: { $gt: 0 }, $expr: { $gte: [{ $divide: ['$pages_translated', '$_denominator'] }, 0.9] } } },
+      { $match: { _denominator: { $gt: 0 }, $expr: { $gte: [{ $divide: ['$pages_translated', '$_denominator'] }, 0.5] } } },
       { $project: { id: 1, title: 1, pages_count: 1, language: 1, 'image_source.provider': 1 } },
       { $sort: { pages_translated: -1 } }, // most-translated first — finish fastest
       { $limit: limit },
     ]).toArray();
     if (candidates.length > 0) {
-      console.log(`[TRANSLATE] Self-dispatch: no fresh books, re-queuing ${candidates.length} near-complete (>90%) partials`);
+      console.log(`[TRANSLATE] Self-dispatch: no fresh books, re-queuing ${candidates.length} partials (>50%)`);
     }
   }
 
@@ -867,13 +867,13 @@ async function main() {
     console.log(`[TRANSLATE] Auto-completed ${nearZero.length} near-zero books (<${MIN_REMAINING} pages remaining)`);
   }
 
-  // Priority: fresh (untranslated) books first, then only >90% partials to finish them off.
-  // All other partials are paused until untranslated backlog clears.
+  // Priority: fresh (untranslated) books first, then >50% partials to finish them off.
+  // Sub-50% partials are paused until higher-priority backlog clears.
   let books = await db.collection('books')
     .find({ 'pipeline_auto.status': 'translate_submitted', $or: [{ pages_translated: 0 }, { pages_translated: { $exists: false } }] })
     .project(proj).limit(CONCURRENCY).toArray();
 
-  // Only allow >90% translated partials to fill remaining slots (near-complete cleanup)
+  // Only allow >50% translated partials to fill remaining slots
   if (books.length < CONCURRENCY) {
     const needed = CONCURRENCY - books.length;
     const freshIds = new Set(books.map(b => b.id));
@@ -884,14 +884,14 @@ async function main() {
         _remaining: { $subtract: [{ $ifNull: ['$pages_ocr', 0] }, { $add: [{ $ifNull: ['$pages_translated', 0] }, { $ifNull: ['$pages_blank', 0] }] }] },
       }},
       // Only >90% translated books
-      { $match: { _denominator: { $gt: 0 }, $expr: { $gte: [{ $divide: ['$pages_translated', '$_denominator'] }, 0.9] }, _remaining: { $gte: MIN_REMAINING } } },
+      { $match: { _denominator: { $gt: 0 }, $expr: { $gte: [{ $divide: ['$pages_translated', '$_denominator'] }, 0.5] }, _remaining: { $gte: MIN_REMAINING } } },
       { $sort: { _remaining: 1 } }, // least remaining first — finish them fast
       { $limit: needed },
       { $project: proj },
     ]).toArray();
     books = [...books, ...nearComplete.filter(b => !freshIds.has(b.id))];
     if (nearComplete.length > 0) {
-      console.log(`[TRANSLATE] Added ${nearComplete.length} near-complete (>90%) partials to fill slots`);
+      console.log(`[TRANSLATE] Added ${nearComplete.length} partials (>50%) to fill slots`);
     }
   }
 
@@ -974,7 +974,7 @@ async function main() {
     const fresh = await db.collection('books')
       .find({ 'pipeline_auto.status': 'translate_submitted', id: { $nin: excludeIds } })
       .project(proj).limit(limit).toArray();
-    // Only backfill with >90% translated partials (near-complete cleanup)
+    // Only backfill with >50% translated partials
     if (fresh.length < limit) {
       const partial = await db.collection('books').aggregate([
         { $match: { 'pipeline_auto.status': { $in: ['translate_submitted', 'translate_partial'] }, pages_translated: { $gt: 0 }, id: { $nin: [...excludeIds, ...fresh.map(b => b.id)] } } },
@@ -982,7 +982,7 @@ async function main() {
           _denominator: { $subtract: [{ $ifNull: ['$pages_ocr', 0] }, { $ifNull: ['$pages_blank', 0] }] },
           _remaining: { $subtract: [{ $ifNull: ['$pages_ocr', 0] }, { $add: [{ $ifNull: ['$pages_translated', 0] }, { $ifNull: ['$pages_blank', 0] }] }] },
         }},
-        { $match: { _denominator: { $gt: 0 }, $expr: { $gte: [{ $divide: ['$pages_translated', '$_denominator'] }, 0.9] }, _remaining: { $gte: MIN_REMAINING } } },
+        { $match: { _denominator: { $gt: 0 }, $expr: { $gte: [{ $divide: ['$pages_translated', '$_denominator'] }, 0.5] }, _remaining: { $gte: MIN_REMAINING } } },
         { $sort: { _remaining: 1 } },
         { $limit: limit - fresh.length },
         { $project: proj },
