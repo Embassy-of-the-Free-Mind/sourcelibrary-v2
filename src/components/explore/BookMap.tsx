@@ -164,19 +164,29 @@ export default function BookMap({ locations, stats }: BookMapProps) {
           { direction: 'top', offset: [0, -10], className: 'book-tooltip' }
         );
         cluster.on('click', () => {
-          // Always show books in sidebar
-          const allBooks = group.flatMap(l => l.books);
-          // Find the dominant city (most books)
-          const sorted = [...group].sort((a, b) => b.books.length - a.books.length);
-          const topCity = sorted[0];
+          // Group by city, merge types, sort by book count
+          const byCityMap = new Map<string, { city: string; country: string | null; books: BookLocation['books']; types: Set<string> }>();
+          for (const loc of group) {
+            const existing = byCityMap.get(loc.city);
+            if (existing) {
+              existing.books.push(...loc.books);
+              existing.types.add(loc.type);
+            } else {
+              byCityMap.set(loc.city, { city: loc.city, country: loc.country, books: [...loc.books], types: new Set([loc.type]) });
+            }
+          }
+          const cities = [...byCityMap.values()].sort((a, b) => b.books.length - a.books.length);
+          const topCity = cities[0];
+          const allBooks = cities.flatMap(c => c.books);
+
           handleSelect({
-            city: group.length === 1 ? topCity.city :
-              `${topCity.city}${group.length > 1 ? ` + ${group.length - 1} nearby` : ''}`,
+            city: cities.length === 1 ? topCity.city :
+              `${topCity.city}${cities.length > 1 ? ` + ${cities.length - 1} nearby` : ''}`,
             country: topCity.country,
-            lat: avgLat, lng: avgLng, type: topCity.type,
-            books: allBooks.slice(0, 100),
+            lat: avgLat, lng: avgLng, type: 'publication', // default for display
+            books: allBooks.slice(0, 150),
           });
-          // Also zoom in a bit for context
+          // Zoom in for context
           if (zoom < 8) {
             map.setView([avgLat, avgLng], Math.min(zoom + 2, 10));
           }
@@ -290,19 +300,21 @@ export default function BookMap({ locations, stats }: BookMapProps) {
                   >
                     {selected.city}
                   </h2>
-                  <div className="flex items-center gap-2 mt-1">
+                  <div className="flex items-center gap-2 mt-1 flex-wrap">
                     {selected.country && (
                       <span className="text-xs" style={{ color: 'var(--text-muted)' }}>
                         {selected.country}
                       </span>
                     )}
-                    <span
-                      className="inline-flex items-center gap-1 px-1.5 py-0.5 rounded text-[10px] font-medium uppercase tracking-wider"
-                      style={{ background: TYPE_CONFIG[selected.type]?.lightBg, color: TYPE_CONFIG[selected.type]?.color }}
-                    >
-                      <span className="w-1.5 h-1.5 rounded-full" style={{ background: TYPE_CONFIG[selected.type]?.color }} />
-                      {TYPE_CONFIG[selected.type]?.label || selected.type}
-                    </span>
+                    {!selected.city.includes('+') && (
+                      <span
+                        className="inline-flex items-center gap-1 px-1.5 py-0.5 rounded text-[10px] font-medium uppercase tracking-wider"
+                        style={{ background: TYPE_CONFIG[selected.type]?.lightBg, color: TYPE_CONFIG[selected.type]?.color }}
+                      >
+                        <span className="w-1.5 h-1.5 rounded-full" style={{ background: TYPE_CONFIG[selected.type]?.color }} />
+                        {TYPE_CONFIG[selected.type]?.label || selected.type}
+                      </span>
+                    )}
                   </div>
                 </div>
                 <button
