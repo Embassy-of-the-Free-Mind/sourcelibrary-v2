@@ -13,6 +13,7 @@ export interface BookLocation {
   books: Array<{
     id: string;
     title: string;
+    display_title?: string;
     author: string;
     year: number | null;
     slug: string;
@@ -331,7 +332,7 @@ export default function BookMap({ locations, stats }: BookMapProps) {
                     className="text-[13px] leading-snug font-medium"
                     style={{ color: 'var(--text-primary)' }}
                   >
-                    {book.title.length > 65 ? book.title.substring(0, 65) + '\u2026' : book.title}
+                    {(() => { const t = book.display_title || book.title; return t.length > 65 ? t.substring(0, 65) + '\u2026' : t; })()}
                   </div>
                   <div className="text-[11px] mt-0.5" style={{ color: 'var(--text-muted)' }}>
                     {book.author.length > 40 ? book.author.substring(0, 40) + '\u2026' : book.author}
