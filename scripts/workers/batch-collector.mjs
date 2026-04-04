@@ -495,7 +495,9 @@ async function updateParentJobProgress(db, parentJobId) {
 
   let parentStatus;
   if (allChildrenDone) {
-    parentStatus = anyChildFailed || progress.failed > 0 ? 'completed_with_errors' : 'completed';
+    // Children handle the actual page saves — parent is just a tracker.
+    // Mark as 'saved' (not 'completed') so it doesn't linger as a ghost job.
+    parentStatus = anyChildFailed || progress.failed > 0 ? 'completed_with_errors' : 'saved';
   } else {
     parentStatus = progress.completed > 0 ? 'processing' : 'pending';
   }
