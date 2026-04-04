@@ -70,7 +70,7 @@ async function fetchMapData() {
       }
 
       const group = groups.get(key)!;
-      if (group.books.length < 50) {
+      if (group.books.length < 200) {
         group.books.push({
           id: book.id as string,
           title: (book.title as string) || 'Untitled',
