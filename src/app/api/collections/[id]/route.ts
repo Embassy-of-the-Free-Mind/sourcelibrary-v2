@@ -68,8 +68,7 @@ export async function GET(
         [`collection_scores.${id}.relevance`]: 1,
       };
       const allBooks = await db.collection('books')
-        .find(filter, { projection: manifestProjectionWithScore })
-        .sort({ published: 1 })
+        .find(filter, { projection: manifestProjectionWithScore, maxTimeMS: 15000 })
         .toArray();
 
       // Flatten relevance score to top level
@@ -123,12 +122,12 @@ export async function GET(
     };
 
     const total = (q || language)
-      ? await db.collection('books').countDocuments(filter)
+      ? await db.collection('books').countDocuments(filter, { maxTimeMS: 10000 })
       : (collection.book_count as number) || 0;
 
     const [books, highlights] = await Promise.all([
       db.collection('books')
-        .find(filter, { projection })
+        .find(filter, { projection, maxTimeMS: 15000 })
         .sort(sortObj)
         .skip(offset)
         .limit(limit)
@@ -139,7 +138,7 @@ export async function GET(
           isArtCollection
             ? { collections: id, resource_type: { $exists: true } }
             : { collections: id, visible: true, pages_translated: { $gt: 0 }, resource_type: { $exists: false } },
-          { projection: highlightProjection },
+          { projection: highlightProjection, maxTimeMS: 10000 },
         )
         .sort(isArtCollection ? { title: 1 } : { quality_score: -1, read_count: -1, pages_translated: -1 })
         .limit(5)

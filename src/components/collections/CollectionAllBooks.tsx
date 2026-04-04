@@ -121,11 +121,13 @@ export default function CollectionAllBooks({
       const booksOnly = (data.books || []).filter((b: BookItem & { resource_type?: string }) => !b.resource_type);
       setAllBooks(booksOnly);
     } catch {
-      // Keep existing state on error
+      // Manifest failed (timeout, etc.) — fall back to server-rendered compact books
+      // so the page still shows something rather than "0 books"
+      setAllBooks(prev => prev.length === 0 ? compactBooks : prev);
     } finally {
       setLoading(false);
     }
-  }, [collectionId]);
+  }, [collectionId, compactBooks]);
 
   // Auto-expand and fetch manifest on mount.
   // Read URL params for deep-linked state (avoids useSearchParams SSR bailout).
