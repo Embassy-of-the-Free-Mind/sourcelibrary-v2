@@ -166,7 +166,7 @@ async function processBook(book, db) {
   if (pages.length === 0) { stats.booksSkipped++; return; }
 
   const allPages = await db.collection('pages')
-    .find({ book_id: book.id }, { projection: { _id: 1, id: 1, page_number: 1, photo: 1, photo_original: 1 } })
+    .find({ book_id: book.id }, { projection: { _id: 1, id: 1, book_id: 1, page_number: 1, photo: 1, photo_original: 1 } })
     .sort({ page_number: 1 }).toArray();
 
   const tmpDir = fs.mkdtempSync(path.join(os.tmpdir(), `sl-bulk-${iaId.slice(0, 20)}-`));

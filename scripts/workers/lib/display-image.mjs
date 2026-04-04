@@ -157,6 +157,7 @@ export async function generateDisplayVariants(fullResBuffer) {
  * @returns {{ archived: string, display: string, thumb: string }}
  */
 export async function uploadPageVariants(fullResBuffer, bookId, pageNumber, uploadFn) {
+  if (!bookId) throw new Error(`uploadPageVariants: bookId is ${bookId} for page ${pageNumber}`);
   const num = String(pageNumber).padStart(4, '0');
 
   // Upload full-res (to the existing archived/ path for backward compat)
