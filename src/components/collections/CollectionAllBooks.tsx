@@ -117,9 +117,13 @@ export default function CollectionAllBooks({
       const res = await fetch(`/api/collections/${collectionId}?mode=manifest`);
       if (!res.ok) throw new Error('Failed to fetch');
       const data = await res.json();
-      // Filter out artworks — they have their own section on the collection page
-      const booksOnly = (data.books || []).filter((b: BookItem & { resource_type?: string }) => !b.resource_type);
-      setAllBooks(booksOnly);
+      // For book collections, filter out artworks — they have their own section.
+      // For art collections, keep everything (all items have resource_type).
+      const isArt = collectionType === 'visual_art';
+      const books = isArt
+        ? (data.books || [])
+        : (data.books || []).filter((b: BookItem & { resource_type?: string }) => !b.resource_type);
+      setAllBooks(books);
     } catch {
       // Manifest failed (timeout, etc.) — fall back to server-rendered compact books
       // so the page still shows something rather than "0 books"
