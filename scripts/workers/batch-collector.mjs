@@ -17,6 +17,42 @@
  */
 
 import { MongoClient } from 'mongodb';
+import { randomBytes } from 'crypto';
+
+/**
+ * Save current page content as a revision before overwriting.
+ * Lightweight inline version of src/lib/page-revisions.ts createRevision().
+ */
+async function saveRevisionBeforeOverwrite(db, pageId, field, jobId) {
+  try {
+    const page = await db.collection('pages').findOne(
+      { id: pageId },
+      { projection: { book_id: 1, ocr: 1, translation: 1 } }
+    );
+    if (!page) return;
+    const fieldData = page[field];
+    if (!fieldData?.data) return; // No existing content — first write
+
+    await db.collection('page_revisions').insertOne({
+      id: randomBytes(6).toString('hex'),
+      page_id: pageId,
+      book_id: page.book_id,
+      field,
+      data: fieldData.data,
+      source: fieldData.source || 'ai',
+      model: fieldData.model,
+      language: fieldData.language,
+      prompt_version: fieldData.prompt_version,
+      edited_by: fieldData.edited_by,
+      job_id: jobId,
+      original_date: fieldData.updated_at,
+      created_at: new Date(),
+    });
+  } catch (e) {
+    // Non-fatal — don't block collection on revision failure
+    console.error(`  [revision] Failed for ${pageId}/${field}: ${e.message?.slice(0, 50)}`);
+  }
+}
 
 // ── Config ──
 
@@ -247,7 +283,14 @@ async function processOneJob(db, job) {
       await db.collection('pages').bulkWrite(nullFixOps, { ordered: false });
     }
 
-    // Second pass: save results
+    // Second pass: save revisions then results
+    const field = job.type === 'ocr' ? 'ocr' : 'translation';
+    // Save revisions for pages that already have content (non-blocking, parallel)
+    const revisionPromises = pageResults
+      .filter(r => r.text.length <= HALLUCINATION_LIMIT)
+      .map(r => saveRevisionBeforeOverwrite(db, r.pageId, field, jobIdStr));
+    await Promise.allSettled(revisionPromises);
+
     const bulkOps = [];
     let totalInputTokens = 0;
     let totalOutputTokens = 0;
