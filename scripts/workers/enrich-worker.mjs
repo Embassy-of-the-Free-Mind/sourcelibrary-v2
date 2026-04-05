@@ -15,6 +15,11 @@
  *   Detects chapter headings from OCR+translation text, calls Gemini
  *   to structure them. Writes book.chapters.
  *
+ * - Phase 7.5: Quality Scoring (any book with summary but no quality_score)
+ *   AI-powered 4-dimension scoring (historical significance, visual appeal,
+ *   accessibility, scholarly value) plus mechanical adjustments. Writes
+ *   book.quality_score and book.quality_assessment.
+ *
  * Runs standalone via cron or called from the orchestrator.
  *
  * CLI flags:
@@ -47,6 +52,7 @@ const DRY_RUN = args.includes('--dry-run');
 const phaseArg = args.find(a => a.startsWith('--phase='))?.split('=')[1] || 'all';
 const RUN_PHASE_6 = phaseArg === 'all' || phaseArg === '6';
 const RUN_PHASE_7 = phaseArg === 'all' || phaseArg === '7';
+const RUN_PHASE_7_5 = phaseArg === 'all' || phaseArg === '7.5';
 const limitArg = args.find(a => a.startsWith('--limit='))?.split('=')[1];
 const PHASE_6_LIMIT = limitArg ? parseInt(limitArg) : 30;
 const PHASE_7_LIMIT = limitArg ? parseInt(limitArg) : 50;
@@ -1327,9 +1333,138 @@ async function main() {
     console.log(`  Chapters extracted: ${chaptersExtracted}`);
   }
 
+  // ── Phase 7.5: Quality Scoring ──
+  // Score books that have summaries but no quality_score. Runs on chapters_complete
+  // books and also catches older books that were never scored.
+  let qualityScored = 0;
+  const QUALITY_LIMIT = 20;
+  if (RUN_PHASE_7_5) {
+    console.log('\n=== Phase 7.5: Quality Scoring ===');
+
+    const unscoredBooks = await db.collection('books')
+      .find({
+        quality_score: { $exists: false },
+        $or: [
+          { 'reading_summary.overview': { $exists: true, $ne: '' } },
+          { 'index.generatedAt': { $exists: true } },
+          { description: { $exists: true, $ne: '' } },
+        ],
+        hidden: { $ne: true },
+        pages_count: { $gt: 0 },
+      })
+      .sort({ 'pipeline_auto.status': 1, read_count: -1 })
+      .project({
+        id: 1, title: 1, display_title: 1, author: 1, language: 1, year: 1,
+        categories: 1, pages_count: 1, pages_ocr: 1, pages_translated: 1,
+        reading_summary: 1, index: 1, description: 1, doi: 1, chapters: 1,
+      })
+      .limit(QUALITY_LIMIT)
+      .toArray();
+
+    console.log(`  Unscored books found: ${unscoredBooks.length}`);
+
+    for (const book of unscoredBooks) {
+      const title = book.display_title || book.title;
+      try {
+        const galleryCount = await db.collection('gallery_images').countDocuments({ book_id: book.id });
+        const overview = (book.reading_summary?.overview || '').substring(0, 500);
+        const themes = (book.reading_summary?.themes || []).join(', ');
+        const description = (book.description || '').substring(0, 200);
+
+        const prompt = `You are a rare books curator rating books for Source Library, a digital library of Western esotericism, alchemy, Hermeticism, and related traditions.
+
+Rate this book on four dimensions (0-25 each). Be discriminating — 15 is average. Reserve 20+ for genuinely outstanding books.
+
+Book: "${title}" by ${book.author || 'Unknown'}
+Language: ${book.language || 'Unknown'}, Year: ${book.year || 'Unknown'}
+Categories: ${(book.categories || []).join(', ') || 'none'}
+Pages: ${book.pages_count || 0}
+Summary: ${overview || '(none)'}
+Themes: ${themes || '(none)'}
+Description: ${description || '(none)'}
+Illustrations: ${galleryCount} detected
+Has DOI: ${book.doi ? 'yes' : 'no'}
+
+Respond with JSON only — no markdown fences, no explanation.
+
+{
+  "historical_significance": { "score": <0-25>, "reasoning": "<1 sentence>" },
+  "visual_appeal": { "score": <0-25>, "reasoning": "<1 sentence>" },
+  "accessibility": { "score": <0-25>, "reasoning": "<1 sentence>" },
+  "scholarly_value": { "score": <0-25>, "reasoning": "<1 sentence>" }
+}
+
+Guidelines:
+- Historical significance: author fame, text's role in intellectual history, rarity
+- Visual appeal: LOW (0-5) for pure text. Higher for illustrations, emblems, diagrams, frontispieces
+- Accessibility: broad appeal (alchemy, magic, Hermetica) > narrow (obscure theology, legal texts)
+- Scholarly value: primary sources > derivative compilations, major authors > anonymous fragments`;
+
+        const model = genai.getGenerativeModel({
+          model: 'gemini-3-flash-preview',
+          generationConfig: { temperature: 0.1, maxOutputTokens: 2048, responseMimeType: 'application/json' },
+        });
+
+        const result = await model.generateContent(prompt);
+        const text = result.response.text().trim();
+        const usageMeta = result.response.usageMetadata;
+
+        let aiScores;
+        try { aiScores = JSON.parse(text); }
+        catch { const m = text.match(/\{[\s\S]*\}/); aiScores = m ? JSON.parse(m[0]) : null; }
+
+        if (!aiScores) {
+          console.log(`  SKIP (parse fail): ${title}`);
+          continue;
+        }
+
+        const aiTotal = (aiScores.historical_significance?.score || 0)
+          + (aiScores.visual_appeal?.score || 0)
+          + (aiScores.accessibility?.score || 0)
+          + (aiScores.scholarly_value?.score || 0);
+
+        // Mechanical adjustments (0-10 range, adds to AI score)
+        const adjustments = {};
+        const ocrPct = book.pages_count > 0 ? (book.pages_ocr || 0) / book.pages_count : 0;
+        const trPct = book.pages_count > 0 ? (book.pages_translated || 0) / book.pages_count : 0;
+        adjustments.completeness = Math.round((ocrPct * 0.3 + trPct * 0.7) * 5);
+        adjustments.chapters = book.chapters?.length > 0 ? 2 : 0;
+        adjustments.gallery = galleryCount > 10 ? 3 : galleryCount > 0 ? 1 : 0;
+        const mechTotal = Object.values(adjustments).reduce((a, b) => a + b, 0);
+
+        const finalScore = Math.min(100, aiTotal + mechTotal);
+
+        if (!DRY_RUN) {
+          await db.collection('books').updateOne(
+            { id: book.id },
+            { $set: {
+              quality_score: finalScore,
+              quality_assessment: {
+                ai_scores: aiScores, ai_total: aiTotal,
+                mechanical_adjustments: adjustments, mechanical_total: mechTotal,
+                final_score: finalScore, model: 'gemini-3-flash-preview',
+                scored_at: new Date(),
+              },
+              updated_at: new Date(),
+            }}
+          );
+          await logUsage(db, usageMeta, 'quality-scoring', book.id);
+        }
+        qualityScored++;
+        console.log(`  [${qualityScored}] ${title} — score: ${finalScore} (AI: ${aiTotal} + mech: ${mechTotal})`);
+
+        await new Promise(r => setTimeout(r, 300));
+      } catch (err) {
+        console.error(`  ERROR scoring "${title}": ${err.message}`);
+        errors.push(`quality-score ${book.id}: ${err.message}`);
+      }
+    }
+    console.log(`  Quality scores: ${qualityScored}`);
+  }
+
   // Summary
   const durationMs = Date.now() - startTime;
-  console.log(`\n[ENRICH] Done — enriched=${enriched}, chapters=${chaptersExtracted}, errors=${errors.length}, ${(durationMs/1000).toFixed(0)}s`);
+  console.log(`\n[ENRICH] Done — enriched=${enriched}, chapters=${chaptersExtracted}, quality=${qualityScored}, errors=${errors.length}, ${(durationMs/1000).toFixed(0)}s`);
   if (errors.length > 0) {
     console.log('  Errors:');
     for (const err of errors.slice(0, 10)) console.log(`    ${err}`);
@@ -1340,10 +1475,10 @@ async function main() {
     duration_ms: durationMs,
     status: errors.length > 0 ? 'completed_with_errors' : 'success',
     failed: false,
-    actions: { enriched, chapters_extracted: chaptersExtracted },
+    actions: { enriched, chapters_extracted: chaptersExtracted, quality_scored: qualityScored },
     errors: errors.slice(0, 20).map(msg => ({ message: msg, timestamp: new Date() })),
     error_count: errors.length,
-    summary: `E:${enriched} C:${chaptersExtracted} err:${errors.length}`,
+    summary: `E:${enriched} C:${chaptersExtracted} Q:${qualityScored} err:${errors.length}`,
   }).catch(() => {});
 
   await client.close();
