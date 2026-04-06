@@ -21,7 +21,7 @@ import fs from 'fs';
 
 // ── Config ──────────────────────────────────────────────────────────
 
-const MODEL = 'gemini-2.5-flash';
+const MODEL = 'gemini-3.1-flash-lite-preview';
 const PAGES_PER_BOOK = 10; // OCR text from first 10 pages is plenty
 const CONCURRENCY = 10;    // Much higher than vision — text is fast
 const DELAY_BETWEEN_BATCHES_MS = 500;

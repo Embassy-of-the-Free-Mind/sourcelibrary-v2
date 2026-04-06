@@ -23,7 +23,7 @@ import { fileURLToPath } from 'url';
 
 const __dirname = path.dirname(fileURLToPath(import.meta.url));
 const MONGODB_URI = process.env.MONGODB_URI;
-const MODEL = 'gemini-2.5-flash';
+const MODEL = 'gemini-3.1-flash-lite-preview';
 const EPISODES_PER_BATCH = 15;
 
 const args = process.argv.slice(2);

@@ -23,7 +23,7 @@ import fs from 'fs';
 
 // ── Config ──────────────────────────────────────────────────────────
 
-const MODEL = 'gemini-2.5-flash';
+const MODEL = 'gemini-3-flash-preview';
 const PAGES_PER_BOOK = 25;
 const CONCURRENCY = 5; // parallel books
 const DELAY_BETWEEN_BATCHES_MS = 1000;
@@ -199,7 +199,7 @@ async function classifyBook(book, pages, pagesPerBook) {
     safetySettings: SAFETY_SETTINGS,
     generationConfig: {
       temperature: 0.1,
-      maxOutputTokens: 8192,  // gemini-2.5-flash uses thinking tokens that count against this
+      maxOutputTokens: 8192,  // gemini-3-flash-preview uses thinking tokens that count against this
       responseMimeType: 'application/json',
     },
   });
@@ -356,7 +356,7 @@ async function classifyBook(book, pages, pagesPerBook) {
 // ── Token cost calculation ───────────────────────────────────────────
 
 function calculateCost(usage) {
-  // gemini-2.5-flash pricing
+  // gemini-3-flash-preview pricing
   const inputCostPer1M = 0.15;
   const outputCostPer1M = 0.60;
   return (
