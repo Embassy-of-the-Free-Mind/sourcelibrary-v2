@@ -148,6 +148,45 @@ function parseDetectedImages(text) {
   return images;
 }
 
+/**
+ * Parse image extraction response — expects a JSON array of detected images.
+ * Handles markdown code fences and extra whitespace.
+ */
+function parseImageExtractionResponse(text) {
+  if (!text || typeof text !== 'string') return [];
+  // Strip markdown code fences if present
+  const cleaned = text.replace(/^```(?:json)?\s*/m, '').replace(/\s*```\s*$/m, '').trim();
+  const jsonMatch = cleaned.match(/\[[\s\S]*\]/);
+  if (!jsonMatch) return [];
+  try {
+    const parsed = JSON.parse(jsonMatch[0]);
+    return Array.isArray(parsed) ? parsed : [];
+  } catch {
+    return [];
+  }
+}
+
+/**
+ * Normalize bbox values to 0-1 range.
+ * AI models sometimes return 0-1000 scale instead of the requested 0-1.
+ */
+function normalizeBbox(raw) {
+  const x = parseFloat(raw.x) || 0;
+  const y = parseFloat(raw.y) || 0;
+  const width = parseFloat(raw.width) || 0;
+  const height = parseFloat(raw.height) || 0;
+  if (x > 1 || y > 1 || width > 1 || height > 1) {
+    const scale = Math.max(x + width, y + height, 1000);
+    return {
+      x: Math.min(x / scale, 0.95),
+      y: Math.min(y / scale, 0.95),
+      width: Math.min(width / scale, 1),
+      height: Math.min(height / scale, 1),
+    };
+  }
+  return { x, y, width, height };
+}
+
 function parseMultiPageOcr(text) {
   const results = new Map();
   const regex = /<page\s+id="([^"]+)">([\s\S]*?)(?=<page\s+id="|$)/g;
@@ -272,26 +311,28 @@ async function processOneJob(db, job) {
       console.log(`  RECITATION: ${recitationCount}/${responses.length} responses blocked (book: ${job.book_id})`);
     }
 
-    // First pass: fix null ocr/translation subdocuments
-    const nullFixOps = pageResults.map(({ pageId }) => ({
-      updateOne: {
-        filter: { id: pageId, [job.type === 'ocr' ? 'ocr' : 'translation']: null },
-        update: { $set: { [job.type === 'ocr' ? 'ocr' : 'translation']: {} } },
-      },
-    }));
-    if (nullFixOps.length > 0) {
-      await db.collection('pages').bulkWrite(nullFixOps, { ordered: false });
+    // First pass: fix null ocr/translation subdocuments (skip for image_extraction)
+    if (job.type !== 'image_extraction') {
+      const nullFixOps = pageResults.map(({ pageId }) => ({
+        updateOne: {
+          filter: { id: pageId, [job.type === 'ocr' ? 'ocr' : 'translation']: null },
+          update: { $set: { [job.type === 'ocr' ? 'ocr' : 'translation']: {} } },
+        },
+      }));
+      if (nullFixOps.length > 0) {
+        await db.collection('pages').bulkWrite(nullFixOps, { ordered: false });
+      }
+
+      // Save revisions for pages that already have content (non-blocking, parallel)
+      const field = job.type === 'ocr' ? 'ocr' : 'translation';
+      const revisionPromises = pageResults
+        .filter(r => r.text.length <= HALLUCINATION_LIMIT)
+        .map(r => saveRevisionBeforeOverwrite(db, r.pageId, field, jobIdStr));
+      await Promise.allSettled(revisionPromises);
     }
 
-    // Second pass: save revisions then results
-    const field = job.type === 'ocr' ? 'ocr' : 'translation';
-    // Save revisions for pages that already have content (non-blocking, parallel)
-    const revisionPromises = pageResults
-      .filter(r => r.text.length <= HALLUCINATION_LIMIT)
-      .map(r => saveRevisionBeforeOverwrite(db, r.pageId, field, jobIdStr));
-    await Promise.allSettled(revisionPromises);
-
     const bulkOps = [];
+    let galleryDocs = null; // Populated by image_extraction jobs
     let totalInputTokens = 0;
     let totalOutputTokens = 0;
 
@@ -326,6 +367,70 @@ async function processOneJob(db, job) {
         if (detectedImages.length > 0) setObj.detected_images = detectedImages;
 
         bulkOps.push({ updateOne: { filter: { id: pageId }, update: { $set: setObj } } });
+      } else if (job.type === 'image_extraction') {
+        // Parse JSON array of detected images from Gemini response
+        const parsed = parseImageExtractionResponse(text);
+        if (parsed.length > 0) {
+          const detectedImages = parsed.map(img => ({
+            description: img.description || '',
+            type: img.type || 'unknown',
+            bbox: img.bbox ? normalizeBbox(img.bbox) : undefined,
+            confidence: img.confidence,
+            gallery_quality: typeof img.gallery_quality === 'number' ? img.gallery_quality : undefined,
+            gallery_rationale: img.gallery_rationale || undefined,
+            metadata: img.metadata || undefined,
+            museum_description: img.museum_description || undefined,
+            detected_at: now,
+            detection_source: 'vision_model',
+            model: job.model,
+            batch_job_id: jobIdStr,
+          }));
+
+          bulkOps.push({
+            updateOne: {
+              filter: { id: pageId },
+              update: {
+                $set: {
+                  detected_images: detectedImages,
+                  image_extraction_updated_at: now,
+                  updated_at: now,
+                },
+              },
+            },
+          });
+
+          // Queue gallery_images docs for bulk insert after the loop
+          if (!galleryDocs) galleryDocs = [];
+          for (let di = 0; di < detectedImages.length; di++) {
+            const img = detectedImages[di];
+            galleryDocs.push({
+              id: `${pageId}-${di}`,
+              page_id: pageId,
+              book_id: job.book_id,
+              detection_index: di,
+              description: img.description,
+              type: img.type,
+              bbox: img.bbox,
+              gallery_quality: img.gallery_quality,
+              gallery_rationale: img.gallery_rationale,
+              museum_description: img.museum_description,
+              metadata: img.metadata,
+              detected_at: now,
+              detection_source: 'vision_model',
+              model: job.model,
+              batch_job_id: jobIdStr,
+              updated_at: now,
+            });
+          }
+        } else {
+          // No images detected — still mark as processed
+          bulkOps.push({
+            updateOne: {
+              filter: { id: pageId },
+              update: { $set: { image_extraction_updated_at: now, updated_at: now } },
+            },
+          });
+        }
       } else {
         bulkOps.push({
           updateOne: {
@@ -354,6 +459,53 @@ async function processOneJob(db, job) {
       const bulkResult = await db.collection('pages').bulkWrite(bulkOps, { ordered: false });
       successCount = bulkResult.matchedCount;
       failCount += (bulkOps.length - bulkResult.matchedCount);
+    }
+
+    // Insert gallery_images for image extraction jobs (upsert to avoid dupes on re-collection)
+    if (galleryDocs && galleryDocs.length > 0) {
+      try {
+        // Fetch page numbers + image URLs for gallery docs
+        const pageIdsForGallery = [...new Set(galleryDocs.map(d => d.page_id))];
+        const pageInfoMap = new Map();
+        const pageInfos = await db.collection('pages')
+          .find({ id: { $in: pageIdsForGallery } })
+          .project({ id: 1, page_number: 1, photo: 1, photo_original: 1, archived_photo: 1, cropped_photo: 1, crop: 1 })
+          .toArray();
+        for (const p of pageInfos) pageInfoMap.set(p.id, p);
+
+        // Fetch book metadata for gallery docs
+        const bookDoc = await db.collection('books').findOne(
+          { id: job.book_id },
+          { projection: { display_title: 1, title: 1, author: 1, year: 1, language: 1 } }
+        );
+
+        for (const doc of galleryDocs) {
+          const pageInfo = pageInfoMap.get(doc.page_id);
+          if (pageInfo) {
+            doc.page_number = pageInfo.page_number;
+            // Image URL fallback chain (same as image-extraction-processor)
+            doc.image_url = pageInfo.cropped_photo || pageInfo.archived_photo || pageInfo.photo_original || pageInfo.photo;
+          }
+          if (bookDoc) {
+            doc.book_title = bookDoc.display_title || bookDoc.title;
+            doc.book_author = bookDoc.author;
+            doc.book_year = bookDoc.year;
+            doc.book_language = bookDoc.language;
+          }
+        }
+
+        const galleryOps = galleryDocs.map(doc => ({
+          updateOne: {
+            filter: { id: doc.id },
+            update: { $set: doc },
+            upsert: true,
+          },
+        }));
+        await db.collection('gallery_images').bulkWrite(galleryOps, { ordered: false });
+        console.log(`  Gallery: ${galleryDocs.length} images written for book ${job.book_id}`);
+      } catch (galleryErr) {
+        console.error(`  Gallery write error: ${galleryErr.message}`);
+      }
     }
 
     // Update batch_jobs status — mark as 'failed' if zero pages saved
@@ -385,7 +537,7 @@ async function processOneJob(db, job) {
 
     // Log to gemini_usage
     await db.collection('gemini_usage').insertOne({
-      type: job.type === 'ocr' ? 'ocr' : 'translation',
+      type: job.type || 'ocr',
       mode: 'batch',
       model: job.model,
       book_id: job.book_id,
@@ -611,6 +763,33 @@ async function advancePipelineStatus(db, bookId, jobType) {
         }
       );
       console.log(`  Pipeline: ${bookId} translate_submitted -> translate_complete`);
+    }
+  }
+
+  if (jobType === 'image_extraction' && status === 'images_submitted') {
+    const pendingImages = await db.collection('batch_jobs').countDocuments({
+      book_id: bookId,
+      type: 'image_extraction',
+      status: { $in: ['pending', 'processing', 'JOB_STATE_PENDING', 'JOB_STATE_RUNNING'] },
+    });
+    if (pendingImages === 0) {
+      // Update detected_images_count from actual page data
+      const imgCount = await db.collection('pages').countDocuments({
+        book_id: bookId,
+        'detected_images.0': { $exists: true },
+      });
+      await db.collection('books').updateOne(
+        { id: bookId },
+        {
+          $set: {
+            detected_images_count: imgCount,
+            'pipeline_auto.status': 'images_complete',
+            'pipeline_auto.last_updated': new Date(),
+            updated_at: new Date(),
+          },
+        }
+      );
+      console.log(`  Pipeline: ${bookId} images_submitted -> images_complete (${imgCount} images)`);
     }
   }
 }
