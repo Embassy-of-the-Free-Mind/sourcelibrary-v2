@@ -237,9 +237,11 @@ export default function CollectionAllBooks({
           </div>
           <p className="text-sm text-muted mt-1">
             {expanded ? (
-              query || language
-                ? `${sorted.length.toLocaleString()} of ${allBooks.length.toLocaleString()} ${itemLabel}`
-                : `${allBooks.length.toLocaleString()} ${itemLabel} in this collection`
+              loading
+                ? `Loading ${total.toLocaleString()} ${itemLabel}…`
+                : query || language
+                  ? `${sorted.length.toLocaleString()} of ${allBooks.length.toLocaleString()} ${itemLabel}`
+                  : `${allBooks.length.toLocaleString()} ${itemLabel} in this collection`
             ) : (
               `${total.toLocaleString()} ${itemLabel} in this collection`
             )}
