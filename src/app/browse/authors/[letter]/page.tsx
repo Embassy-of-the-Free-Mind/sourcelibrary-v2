@@ -2,13 +2,12 @@ import { Metadata } from 'next';
 import Link from 'next/link';
 import SiteHeader from '@/components/layout/SiteHeader';
 import { authorSlug } from '@/lib/slugify';
-import { getDb } from '@/lib/mongodb';
-import { ObjectId } from 'mongodb';
+import { browseAuthors } from '@/lib/books-catalog';
 import { notFound } from 'next/navigation';
 
 const LETTERS = 'ABCDEFGHIJKLMNOPQRSTUVWXYZ'.split('');
 
-// ISR: rebuild daily. Allow 60s for first-hit generation.
+// ISR: rebuild every 10 min.
 export const revalidate = 600;
 export const maxDuration = 60;
 export const dynamicParams = true;
@@ -31,59 +30,16 @@ export async function generateMetadata({ params }: PageProps): Promise<Metadata>
   };
 }
 
-interface AuthorEntry {
-  _id: string;
-  count: number;
-}
-
 export default async function BrowseAuthorsPage({ params }: PageProps) {
   const { letter } = await params;
   const l = letter.toUpperCase();
   if (l.length !== 1 || !/[A-Z]/.test(l)) notFound();
 
-  let authors: AuthorEntry[] = [];
+  let authors: { name: string; count: number }[] = [];
   try {
-    const db = await getDb();
-
-    // Get all visible books with translations, starting with this letter.
-    // Use case-sensitive regex ^[Aa] so MongoDB can use the author_1 index
-    // ($options:'i' forces a full collection scan and times out on Atlas).
-    const books = await db.collection('books').find(
-      {
-        visible: true,
-        author: { $regex: `^[${l}${l.toLowerCase()}]` },
-        pages_translated: { $gt: 0 },
-      },
-      { projection: { author: 1, author_entity_id: 1 }, maxTimeMS: 15_000 }
-    ).toArray();
-
-    // Group by entity when available, fall back to raw author string
-    const entityIds = [...new Set(books.map(b => b.author_entity_id).filter(Boolean))];
-    const entityMap = new Map<string, string>(); // entityId → canonical name
-    if (entityIds.length > 0) {
-      const entities = await db.collection('entities').find(
-        { _id: { $in: entityIds.map(id => { try { return new ObjectId(id); } catch { return null; } }).filter((v): v is ObjectId => v !== null) } },
-        { projection: { canonical_name: 1, name: 1 }, maxTimeMS: 10_000 }
-      ).toArray();
-      for (const e of entities) {
-        entityMap.set(e._id.toString(), e.canonical_name || e.name);
-      }
-    }
-
-    // Deduplicate: entity-linked books use canonical name, others use raw author
-    const authorCounts = new Map<string, number>();
-    for (const b of books) {
-      const name = (b.author_entity_id && entityMap.get(b.author_entity_id)) || b.author;
-      if (name) authorCounts.set(name, (authorCounts.get(name) || 0) + 1);
-    }
-
-    // Filter to names starting with the letter (canonical names may differ)
-    authors = [...authorCounts.entries()]
-      .filter(([name]) => name.toUpperCase().startsWith(l))
-      .map(([name, count]) => ({ _id: name, count }))
-      .sort((a, b) => a._id.localeCompare(b._id));
+    authors = await browseAuthors(l);
   } catch {
-    // DB error — render empty page
+    // Supabase error — render empty page
   }
 
   return (
@@ -120,12 +76,12 @@ export default async function BrowseAuthorsPage({ params }: PageProps) {
       <div className="divide-y" style={{ borderColor: 'var(--border-light)' }}>
         {authors.map(author => (
           <Link
-            key={author._id}
-            href={`/author/${authorSlug(author._id)}`}
+            key={author.name}
+            href={`/author/${authorSlug(author.name)}`}
             className="flex items-baseline justify-between py-3 hover:opacity-70 transition-opacity"
           >
             <p className="font-medium text-sm" style={{ color: 'var(--text-primary)' }}>
-              {author._id}
+              {author.name}
             </p>
             <p className="text-xs tabular-nums" style={{ color: 'var(--text-muted)' }}>
               {author.count} {author.count === 1 ? 'book' : 'books'}

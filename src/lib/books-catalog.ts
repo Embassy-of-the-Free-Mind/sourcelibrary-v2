@@ -158,6 +158,34 @@ export async function getLanguageCounts(filter: {
 }
 
 /**
+ * Browse authors by letter prefix.
+ * Returns alphabetically sorted list of { name, count } for authors
+ * whose names start with the given letter and have translations.
+ */
+export async function browseAuthors(letter: string): Promise<{ name: string; count: number }[]> {
+  // Fetch just the author column for books matching this letter with translations
+  const { data, error } = await supabase
+    .from('books_catalog')
+    .select('author')
+    .eq('visible', true)
+    .gt('pages_count', 0)
+    .gt('pages_translated', 0)
+    .ilike('author', `${letter}%`);
+
+  if (error) throw new Error(`browseAuthors query failed: ${error.message}`);
+
+  // Group by author and count
+  const counts = new Map<string, number>();
+  for (const row of (data || [])) {
+    if (row.author) counts.set(row.author, (counts.get(row.author) || 0) + 1);
+  }
+
+  return [...counts.entries()]
+    .map(([name, count]) => ({ name, count }))
+    .sort((a, b) => a.name.localeCompare(b.name));
+}
+
+/**
  * Get category counts from books_catalog.
  * Unnests the categories array and counts occurrences.
  */
