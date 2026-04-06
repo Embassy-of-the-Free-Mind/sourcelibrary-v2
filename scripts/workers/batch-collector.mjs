@@ -297,8 +297,14 @@ async function processOneJob(db, job) {
     } else {
       for (let idx = 0; idx < responses.length; idx++) {
         const r = responses[idx];
-        const pageId = r.metadata?.key || (job.page_ids && job.page_ids[idx]);
-        if (!pageId) { failCount++; continue; }
+        const pageId = r.metadata?.key;
+        if (!pageId) {
+          // NEVER fall back to index-based matching — response order is not guaranteed.
+          // Index fallback caused cross-book contamination (2026-03-24 incident).
+          console.warn(`  SKIP: response ${idx} missing metadata.key (book: ${job.book_id})`);
+          failCount++;
+          continue;
+        }
         const candidate = r.response?.candidates?.[0];
         if (candidate?.finishReason === 'RECITATION') { recitationCount++; failCount++; continue; }
         const text = candidate?.content?.parts?.[0]?.text;
