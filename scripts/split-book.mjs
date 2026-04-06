@@ -548,7 +548,20 @@ if (!coverPage && newDocs.length > 0) {
   coverPage = { num: first.page_number, url: first.photo, type: first.page_type };
 }
 
-console.log(`  Deleting ${existingPages.length} old pages...`);
+// Safety check: don't delete pages if too many failed (>20% loss = abort)
+const failedCount = newPages.length - newDocs.length;
+if (failedCount > 0 && failedCount / newPages.length > 0.2) {
+  console.error(`\nABORT: ${failedCount}/${newPages.length} pages failed (>${Math.round(0.2 * 100)}% threshold). Not deleting old pages.`);
+  await client.close();
+  process.exit(1);
+}
+if (newDocs.length === 0) {
+  console.error('\nABORT: Zero pages would be created. Not deleting old pages.');
+  await client.close();
+  process.exit(1);
+}
+
+console.log(`  Deleting ${existingPages.length} old pages (${failedCount} failed, within threshold)...`);
 await db.collection('pages').deleteMany({ book_id: book.id });
 
 console.log(`  Inserting ${newDocs.length} new pages...`);

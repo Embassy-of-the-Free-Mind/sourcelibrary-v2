@@ -2667,7 +2667,7 @@ Reply with ONLY: {"is_spread": true} or {"is_spread": false}` },
           split_completed: { $ne: true },
         })
         .sort({ pages_count: 1 }) // smallest first — fast wins
-        .project({ id: 1, title: 1, pages_count: 1 })
+        .project({ id: 1, title: 1, pages_count: 1, 'pipeline_auto.split_retry_count': 1 })
         .limit(SPLIT_BATCH_LIMIT)
         .toArray();
 
