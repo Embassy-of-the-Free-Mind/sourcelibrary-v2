@@ -52,6 +52,10 @@ export interface Page {
   split_position?: number;      // 0-1000 gutter position used for cropping
   split_source_page?: string;   // ID of original spread page (for right pages)
 
+  // Image dimensions (populated during archiving)
+  image_width?: number;         // Full-res image width in pixels
+  image_height?: number;        // Full-res image height in pixels
+
   // Split/crop workflow (legacy — stale on split_from_spread pages)
   photo_original?: string;      // Original S3 URL before cropping
   cropped_photo?: string;       // Local path to cropped image

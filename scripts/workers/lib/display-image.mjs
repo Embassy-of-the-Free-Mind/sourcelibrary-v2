@@ -170,6 +170,11 @@ export async function uploadPageVariants(fullResBuffer, bookId, pageNumber, uplo
   if (!bookId) throw new Error(`uploadPageVariants: bookId is ${bookId} for page ${pageNumber}`);
   const num = String(pageNumber).padStart(4, '0');
 
+  // Read full-res dimensions before any resizing
+  const meta = await sharp(fullResBuffer).metadata();
+  const width = meta.width || null;
+  const height = meta.height || null;
+
   // Upload full-res (to the existing archived/ path for backward compat)
   const archivedKey = `archived/${bookId}/${pageNumber}.jpg`;
   validateR2Key(archivedKey);
@@ -188,5 +193,5 @@ export async function uploadPageVariants(fullResBuffer, bookId, pageNumber, uplo
   validateR2Key(thumbKey);
   const thumbUrl = await uploadFn(thumbKey, thumb, 'image/jpeg');
 
-  return { archived: archivedUrl, display: displayUrl, thumb: thumbUrl };
+  return { archived: archivedUrl, display: displayUrl, thumb: thumbUrl, width, height };
 }

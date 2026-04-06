@@ -4,6 +4,7 @@ import { getDb } from '@/lib/mongodb';
 import { images } from '@/lib/api-client/images';
 import { compress_photo } from '@/lib/image-manipulation';
 import { withAuth } from '@/lib/auth-helpers';
+import sharp from 'sharp';
 
 // Increase timeout for archiving many images
 export const maxDuration = 300;
@@ -135,6 +136,17 @@ export const POST = withAuth(async (request, session, context) => {
               // Non-fatal — thumbnail can be generated later
             }
 
+            // Read image dimensions from the full-res buffer
+            let imageWidth: number | undefined;
+            let imageHeight: number | undefined;
+            try {
+              const meta = await sharp(buffer).metadata();
+              imageWidth = meta.width;
+              imageHeight = meta.height;
+            } catch {
+              // Non-fatal — dimensions can be backfilled later
+            }
+
             // Update page record
             const updateFields: Record<string, unknown> = {
               archived_photo: blob.url,
@@ -143,6 +155,8 @@ export const POST = withAuth(async (request, session, context) => {
               'archive_metadata.bytes': bytes,
               updated_at: new Date()
             };
+            if (imageWidth) updateFields.image_width = imageWidth;
+            if (imageHeight) updateFields.image_height = imageHeight;
             if (thumbnailUrl) {
               updateFields.thumbnail_blob = thumbnailUrl;
             }

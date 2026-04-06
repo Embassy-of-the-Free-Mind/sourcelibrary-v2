@@ -167,6 +167,10 @@ async function archivePage(page, db) {
     // Upload full-res + generate and upload display (1200px) + thumbnail (150px)
     const urls = await uploadPageVariants(buffer, page.book_id, page.page_number, uploadToR2);
 
+    const dimFields = {};
+    if (urls.width) dimFields.image_width = urls.width;
+    if (urls.height) dimFields.image_height = urls.height;
+
     await db.collection('pages').updateOne(
       { _id: page._id },
       {
@@ -174,6 +178,7 @@ async function archivePage(page, db) {
           archived_photo: urls.archived,
           display_photo: urls.display,
           thumbnail_blob: urls.thumb,
+          ...dimFields,
           'archive_metadata.archived_at': new Date(),
           'archive_metadata.source_url': sourceUrl,
           'archive_metadata.original_url': originalUrl,
