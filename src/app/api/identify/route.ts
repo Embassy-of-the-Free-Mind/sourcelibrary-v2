@@ -203,13 +203,28 @@ export async function POST(request: NextRequest) {
     const topMatches = matches.slice(0, 5);
     const pages = db.collection('pages');
 
-    // Build search terms from inscriptions — pick distinctive multi-word phrases
+    // Build search terms from inscriptions — pick distinctive words and short phrases.
+    // Full lines often don't match OCR exactly (line breaks differ), so we extract
+    // individual distinctive words and 2-word phrases.
     const inscriptionText = identification.inscriptions || '';
-    const searchPhrases = inscriptionText
-      .split('\n')
-      .map(l => l.trim())
-      .filter(l => l.length > 5 && !/^\d+$/.test(l))
-      .slice(0, 8);
+    const allWords = inscriptionText
+      .split(/[\n\s,.:;()[\]]+/)
+      .map(w => w.trim())
+      .filter(w => w.length > 4 && !/^\d+$/.test(w));
+    // Deduplicate and pick the most distinctive words (longer = more distinctive)
+    const uniqueWords = [...new Set(allWords.map(w => w.toLowerCase()))];
+    // Common Latin/print words to skip
+    const stopWords = new Set(['latin', 'french', 'german', 'dutch', 'verse', 'column', 'image', 'below', 'above', 'title', 'label', 'print']);
+    const searchTerms = uniqueWords
+      .filter(w => !stopWords.has(w))
+      .sort((a, b) => b.length - a.length)
+      .slice(0, 12);
+
+    // Also extract 2-3 word phrases from inscription lines (stronger signal)
+    const lines = inscriptionText.split('\n').map(l => l.trim()).filter(l => l.length > 8);
+    const phrases = lines
+      .filter(l => !/^\[.*\]$/.test(l) && !/^\d+$/.test(l))
+      .slice(0, 6);
 
     // Also use subject keywords as fallback
     const subjectWords = (identification.subject || '')
@@ -219,11 +234,11 @@ export async function POST(request: NextRequest) {
 
     const pageMatches: { bookId: string; pageNumber: number; score: number }[] = [];
 
-    if (searchPhrases.length > 0 && topMatches.length > 0) {
+    if ((searchTerms.length > 0 || phrases.length > 0) && topMatches.length > 0) {
       const bookIds = topMatches.map(m => m.id);
 
-      // Search OCR text of pages in candidate books for inscription phrases
-      for (const phrase of searchPhrases.slice(0, 4)) {
+      // Strategy A: Search for distinctive phrases (strongest signal — exact multi-word match)
+      for (const phrase of phrases.slice(0, 4)) {
         const escaped = phrase.replace(/[.*+?^${}()|[\]\\]/g, '\\$&');
         const found = await pages
           .find(
@@ -245,9 +260,40 @@ export async function POST(request: NextRequest) {
             pm => pm.bookId === p.book_id && pm.pageNumber === p.page_number,
           );
           if (existing) {
-            existing.score += 10;
+            existing.score += 15;
           } else {
-            pageMatches.push({ bookId: p.book_id, pageNumber: p.page_number, score: 10 });
+            pageMatches.push({ bookId: p.book_id, pageNumber: p.page_number, score: 15 });
+          }
+        }
+      }
+
+      // Strategy B: Search for individual distinctive words (more queries but catches
+      // pages where OCR line breaks differ from the inscriptions)
+      for (const term of searchTerms.slice(0, 6)) {
+        const escaped = term.replace(/[.*+?^${}()|[\]\\]/g, '\\$&');
+        const found = await pages
+          .find(
+            {
+              book_id: { $in: bookIds },
+              'ocr.data': { $regex: escaped, $options: 'i' },
+            },
+            {
+              projection: { book_id: 1, page_number: 1 },
+              maxTimeMS: 3000,
+            },
+          )
+          .limit(20)
+          .toArray()
+          .catch(() => []);
+
+        for (const p of found) {
+          const existing = pageMatches.find(
+            pm => pm.bookId === p.book_id && pm.pageNumber === p.page_number,
+          );
+          if (existing) {
+            existing.score += 5;
+          } else {
+            pageMatches.push({ bookId: p.book_id, pageNumber: p.page_number, score: 5 });
           }
         }
       }
