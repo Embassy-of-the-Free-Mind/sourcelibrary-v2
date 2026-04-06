@@ -1,6 +1,4 @@
 import { NextRequest, NextResponse } from 'next/server';
-import { auth } from '@/lib/auth';
-import { validateClient, createAuthCode } from '@/lib/oidc/provider';
 
 export const dynamic = 'force-dynamic';
 
@@ -16,6 +14,10 @@ export async function GET(request: NextRequest) {
   const redirectUri = url.searchParams.get('redirect_uri') || '';
   const state = url.searchParams.get('state') || '';
   const responseType = url.searchParams.get('response_type') || '';
+
+  // Lazy imports to prevent MongoDB connection during build
+  const { auth } = await import('@/lib/auth');
+  const { validateClient, createAuthCode } = await import('@/lib/oidc/provider');
 
   if (responseType !== 'code') {
     return NextResponse.json({ error: 'unsupported_response_type' }, { status: 400 });
