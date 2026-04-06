@@ -44,7 +44,7 @@ Derek runs ~10 Claude Code terminals simultaneously, all sharing the main workin
 - Production database: `bookstore` (~17K live books, ~24.5K warehouse), NOT `sourcelibrary_research`
 
 ## AI Models — IMPORTANT
-- Summary/Index generation: ALWAYS use `gemini-3-flash-preview`. This was a recurring issue — do not use older models.
+- Summary/Index generation: enrich-worker uses `gemini-3.1-flash-lite-preview` for summary+index (Phase 6), `gemini-3-flash-preview` for chapters (Phase 7) and quality scoring (Phase 7.5), `gemini-3.1-flash-lite-preview` for collection assignment (Phase 7.6). NEVER use models older than v3.
 - OCR/Translation routing: `gemini-3-flash-preview` for BPH books, `gemini-3.1-flash-lite-preview` for everything else (50% cheaper). See `src/lib/types/ai-models.ts`.
 - Reference: https://ai.google.dev/gemini-api/docs/models
 

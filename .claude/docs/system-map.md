@@ -42,29 +42,43 @@ Users ──> Vercel (Next.js 16) ──> MongoDB Atlas (bookstore)
 | **Zenodo** | DOI publishing | Scholarly editions |
 | **Twitter/X** | Social automation | 3h posting cron |
 
-## Data Pipeline Flow (One Pipeline, Three Phases)
+## Data Pipeline Flow
 
-The system has **one unified pipeline** with three parallel processing phases sharing a single `jobs` collection (discriminated by `type` field):
+The pipeline has **13+ phases** managed by `pipeline-orchestrator.mjs` (every 2 min) and `enrich-worker.mjs` (every 5 min) on Hetzner. Books flow through `pipeline_auto.status` states:
 
 ```
-Import (IA/Gallica/IIIF)
-  └─> books + pages collections created
-       └─> Hetzner unified scheduler (scheduler.mjs, every 10min)
-            ├─ Phase 1: OCR (parallel, batch-friendly)
-            │  SQS pageOcr ──> Lambda ocr-processor (×10) ──> Gemini ──> writeResults
-            │
-            ├─ Phase 2: Translation (Hetzner inline — self-dispatching)
-            │  translate-worker.mjs (40 concurrent books) ──> Gemini direct ──> MongoDB pages
-            │  200-page cap per book → translate_partial → re-queue when fresh books exhausted
-            │  ⚠ Realtime API only. NEVER use Batch API for translation. Lambda is fallback only.
-            │
-            └─ Phase 3: Image Extraction (parallel)
-               SQS pageImageExtraction ──> Lambda image-extraction-processor (×10) ──> Gemini ──> writeResults
-                                                                                          │
-                                                                          write-processor Lambda (×50) ──> MongoDB pages
+Import (IA/Gallica/IIIF/Wellcome/etc.)
+  └─> Phase 0: Auto-enroll ──> queued
+       └─> Phase 1: Archive (download images to R2) ──> archiving ──> archive_complete
+            └─> Phase 1.25: Split detection (spread scans → individual pages)
+            └─> Phase 1.5: Preview OCR (first 25 pages via Lambda, fast turnaround)
+            └─> Phase 1.7: Preview translation (inline via Vercel)
+       └─> Phase 2: Batch OCR (Gemini Batch API, 3.1-flash-lite) ──> ocr_submitted
+            └─> Phase 3: OCR completion check ──> ocr_complete
+       └─> Phase 3.5: Metadata enrichment (catalog lookups, no Gemini) ──> metadata_enriched
+       └─> Phase 3.7: Transliteration (non-Latin scripts, 3.1-flash-lite)
+       └─> Phase 4: Translation dispatch (creates job for translate-worker)
+            │  translate-worker.mjs (15 concurrent books) ──> Gemini realtime ──> MongoDB pages
+            │  ⚠ Realtime API only. NEVER use Batch API for translation.
+            └─> Phase 5: Translation completion ──> translate_complete
+
+  enrich-worker.mjs (every 5 min):
+       └─> Phase 6: Summary + Index (3.1-flash-lite) ──> summary_indexed
+       └─> Phase 7: Chapter extraction (3-flash) ──> chapters_complete
+       └─> Phase 7.5: Quality scoring (3-flash, 0-100 score)
+       └─> Phase 7.6: Collection assignment (3.1-flash-lite, additive)
+
+  pipeline-orchestrator.mjs (continued):
+       └─> Phase 8: Image extraction (Lambda) ──> images_submitted ──> images_complete
+       └─> Phase 8.5: Staleness detection (>48h stuck → retry or flag)
+       └─> Phase 8.9: Cover selection + page cleanup ──> cover_selected
+       └─> Phase 9: Finalize (validate OCR >10%, auto-unhide) ──> complete
+
+  batch-collector.mjs (every 10 min):
+       Polls Gemini Batch API, saves OCR results, zombie reaper (>6h), ghost cleanup
 ```
 
-Phases run concurrently with independent concurrency limits. Backpressure: `system_config.paused_phases` array.
+Concurrency limits managed by `system_config.adaptive_limits` (auto-halved when Atlas degrades). Backpressure: `system_config.paused_phases` array.
 
 ## Supabase Layer (added 2026-03-27+)
 
