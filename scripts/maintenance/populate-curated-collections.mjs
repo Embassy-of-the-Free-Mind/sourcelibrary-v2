@@ -179,7 +179,7 @@ async function callGeminiWithRetry(model, prompt, retries = 3) {
 
 async function selectBooksWithGemini(collection, candidates) {
   const model = genAI.getGenerativeModel({
-    model: 'gemini-2.0-flash',
+    model: 'gemini-3.1-flash-lite-preview',
     generationConfig: {
       responseMimeType: 'application/json',
       temperature: 0.1,

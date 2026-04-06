@@ -182,7 +182,7 @@ async function callGemini(artworks, batchNum, totalBatches) {
     },
   };
 
-  const url = `https://generativelanguage.googleapis.com/v1beta/models/gemini-2.0-flash:generateContent?key=${apiKey}`;
+  const url = `https://generativelanguage.googleapis.com/v1beta/models/gemini-3-flash-preview:generateContent?key=${apiKey}`;
 
   for (let attempt = 0; attempt < 3; attempt++) {
     try {

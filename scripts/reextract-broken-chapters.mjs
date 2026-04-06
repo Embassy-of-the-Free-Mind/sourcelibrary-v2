@@ -181,7 +181,7 @@ async function processBook(db, book) {
 
   const prompt = buildPrompt(book, allHeadings, tocPages, sectionHints, pages.length);
 
-  const model = genAI.getGenerativeModel({ model: 'gemini-2.0-flash' });
+  const model = genAI.getGenerativeModel({ model: 'gemini-3-flash-preview' });
   const result = await model.generateContent(prompt);
   const responseText = result.response.text();
 

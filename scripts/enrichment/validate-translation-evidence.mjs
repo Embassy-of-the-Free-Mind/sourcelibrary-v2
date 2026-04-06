@@ -23,7 +23,7 @@ import { MongoClient } from 'mongodb';
 import fs from 'fs';
 
 // ── Config ──────────────────────────────────────────────────────────
-const MODEL = 'gemini-2.5-flash';
+const MODEL = 'gemini-3.1-flash-lite-preview';
 const CONCURRENCY = 5;
 const DELAY_MS = 400;
 const API_DELAY_MS = 1200;

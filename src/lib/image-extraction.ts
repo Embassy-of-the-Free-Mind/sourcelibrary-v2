@@ -143,7 +143,7 @@ export interface ExtractionResult {
  * Extract illustrations from a page image using Gemini vision.
  *
  * @param imageUrl URL to fetch the image from
- * @param model Gemini model to use (default: gemini-2.5-flash)
+ * @param model Gemini model to use (default: gemini-3-flash-preview)
  * @param options Pass { returnUsage: true } to get token counts alongside images
  * @returns DetectedImage[] by default, or ExtractionResult with usage when requested
  */

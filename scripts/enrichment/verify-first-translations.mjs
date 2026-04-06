@@ -20,7 +20,7 @@ import { MongoClient } from 'mongodb';
 import fs from 'fs';
 
 // ── Config ──────────────────────────────────────────────────────────
-const MODEL = 'gemini-2.5-flash';
+const MODEL = 'gemini-3.1-flash-lite-preview';
 const CONCURRENCY = 5;
 const DELAY_MS = 500;
 const NEW_DISCOVERIES_CSV = '/Users/dereklomas/secondrenaissance/scripts/latin_translations_new_discoveries.csv';

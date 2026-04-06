@@ -118,7 +118,7 @@ function calculateCost(
   outputTokens: number,
   isBatch: boolean
 ): number {
-  const pricing = MODEL_PRICING[model] || MODEL_PRICING['gemini-2.5-flash'];
+  const pricing = MODEL_PRICING[model] || MODEL_PRICING['gemini-3-flash-preview'];
   const discount = isBatch ? BATCH_DISCOUNT : 1;
 
   const inputCost = (inputTokens / 1_000_000) * pricing.input * discount;
@@ -309,7 +309,7 @@ export async function logBatchResult(params: {
       await logGeminiCall({
         type: 'ocr', // Default, could be improved
         mode: 'batch',
-        model: 'gemini-2.5-flash', // Default
+        model: 'gemini-3-flash-preview', // Default
         batch_job_id: params.batch_job_id,
         input_tokens: params.input_tokens,
         output_tokens: params.output_tokens,

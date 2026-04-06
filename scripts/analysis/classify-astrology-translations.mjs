@@ -20,7 +20,7 @@ import { GoogleGenAI } from '@google/genai';
 const args = process.argv.slice(2);
 const dryRun = args.includes('--dry-run');
 const BATCH_SIZE = args.includes('--batch-size') ? parseInt(args[args.indexOf('--batch-size') + 1]) : 20;
-const MODEL = 'gemini-2.5-flash';
+const MODEL = 'gemini-3.1-flash-lite-preview';
 const API_KEY = process.env.GEMINI_API_KEY_TIER3 || process.env.GEMINI_API_KEY;
 
 if (!process.env.MONGODB_URI) { console.error('MONGODB_URI not set'); process.exit(1); }

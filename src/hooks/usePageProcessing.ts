@@ -105,13 +105,13 @@ export function usePageProcessing({
           updates.translation = {
             data: result.translation,
             language: page.translation?.language || 'English',
-            model: page.translation?.model || 'gemini-2.0-flash'
+            model: page.translation?.model || 'gemini-3-flash-preview'
           };
         }
         if (result.summary) {
           updates.summary = {
             data: result.summary,
-            model: page.summary?.model || 'gemini-2.0-flash'
+            model: page.summary?.model || 'gemini-3-flash-preview'
           };
         }
         onPageUpdate(pageId, updates);

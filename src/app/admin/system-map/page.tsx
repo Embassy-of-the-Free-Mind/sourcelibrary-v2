@@ -386,7 +386,7 @@ const serviceData: Record<string, ServiceInfo> = {
     details: [
       'The orchestrator runs every 2 minutes on Hetzner (46.224.122.120). Individual phases also run as separate cron entries so a slow phase doesn\'t block others. Crontab is versioned at scripts/workers/crontab.production.',
       'OCR: Submitted directly to Gemini Batch API from Hetzner (50% cost discount). Results collected by batch-collector.mjs every 10 min. Lambda is only used for preview OCR (first 25 pages).',
-      'Translation: Hetzner translate-worker.mjs calls Gemini API directly (no SQS, no Lambda). 40 concurrent books, self-dispatches from metadata_enriched (no Phase 4 wait). Each book gets 200 pages then is parked as translate_partial — fresh books always prioritized. ~14K pages/hr peak, ~7K sustained. Model routing: gemini-3-flash-preview for BPH, gemini-3.1-flash-lite-preview for others.',
+      'Translation: Hetzner translate-worker.mjs calls Gemini API directly (no SQS, no Lambda). 15 concurrent books, self-dispatches from metadata_enriched (no Phase 4 wait). Each book gets 200 pages then is parked as translate_partial — fresh books always prioritized. ~14K pages/hr peak, ~7K sustained. Model routing: gemini-3-flash-preview for BPH, gemini-3.1-flash-lite-preview for others.',
       'Enrichment: Summary, index, chapters, transliteration — all orchestrated from Hetzner, calling Vercel API routes for summary/index/chapters and running transliteration inline.',
       'Image Extraction: Still uses Lambda workers via SQS (Phase 8). Results written via write-processor Lambda.',
       'Backpressure: MongoDB Atlas saturates at ~40 concurrent connections. Adaptive limits auto-adjust based on DB latency (healthy → ramp up 20%, degraded → reduce 50%, critical → slam to minimums).',
@@ -411,7 +411,7 @@ const serviceData: Record<string, ServiceInfo> = {
     url: 'https://sourcelibrary.org/admin/pipeline',
     summary: 'Enriches books with AI-generated metadata: summaries, chapter extraction, searchable indexes, and transliteration of non-Latin scripts. Now consolidated into the Hetzner orchestrator (Phases 3.5, 6, 7, 3.7).',
     details: [
-      'Summary + Index (Phase 6): Calls Vercel API /api/books/[id]/index from Hetzner. Uses gemini-3-flash-preview always.',
+      'Summary + Index (Phase 6): Calls Vercel API /api/books/[id]/index from Hetzner. enrich-worker uses gemini-3.1-flash-lite-preview for summary/index.',
       'Chapter extraction (Phase 7): Calls Vercel API /api/books/[id]/extract-chapters from Hetzner. Skips books with <10 pages.',
       'Transliteration (Phase 3.7): Runs inline on Hetzner via Gemini. For non-Latin scripts (Greek, Hebrew, Arabic, Chinese, etc.). Uses gemini-3.1-flash-lite-preview (text-only, cheap).',
       'Metadata enrichment (Phase 3.5): Calls Vercel API /api/books/[id]/verify-metadata. Detects language, categories, description, source_work_dates.',
@@ -419,7 +419,7 @@ const serviceData: Record<string, ServiceInfo> = {
       'Legacy: The enrich-books Vercel cron exists in _archived/ but is not active. All enrichment runs from the Hetzner orchestrator now.',
     ],
     gotchas: [
-      'ALWAYS use gemini-3-flash-preview for summary/index. Do not use older models.',
+      'enrich-worker uses gemini-3.1-flash-lite-preview for summary/index.',
       'Enrichment only runs on books that have completed translation (translate_complete status).',
     ],
     files: [
@@ -509,7 +509,7 @@ const serviceData: Record<string, ServiceInfo> = {
       'Input: SQS message with pageId and imageUrl. Downloads the page image from R2/archive source.',
       'Processing: Sends image to Gemini with Standard OCR prompt v6. All languages, no language-specific prompts.',
       'Output: WriteResultMessage to writeResults SQS queue with OCR text, content hash, detected_images.',
-      'Error handling: RECITATION fallback chain: gemini-2.5-flash, gemini-2.0-flash, gemini-1.5-flash.',
+      'Error handling: RECITATION fallback chain: gemini-3-flash-preview, gemini-3.1-flash-lite-preview.',
       'Reserved concurrency: 10 Lambda instances.',
     ],
     gotchas: [
@@ -588,16 +588,16 @@ const serviceData: Record<string, ServiceInfo> = {
   gemini: {
     label: 'Gemini AI', subtitle: '11-key rotation', color: '#4285f4', icon: '🤖',
     url: 'https://ai.google.dev/gemini-api/docs/models',
-    summary: 'Google\'s Gemini is the AI backbone for everything: OCR, translation, image extraction, enrichment, and classification. Model routing: gemini-3-flash-preview for BPH books and summary/index, gemini-3.1-flash-lite-preview for everything else. 11 API keys with rotation.',
+    summary: 'Google\'s Gemini is the AI backbone for everything: OCR, translation, image extraction, enrichment, and classification. Model routing: gemini-3-flash-preview for BPH books, gemini-3.1-flash-lite-preview for everything else. 11 API keys with rotation.',
     details: [
-      'Model routing: BPH books use gemini-3-flash-preview (higher quality). All other books use gemini-3.1-flash-lite-preview (50% cheaper). Summary/index generation always uses flash. Transliteration always uses lite (text-only).',
+      'Model routing: BPH books use gemini-3-flash-preview (higher quality). All other books use gemini-3.1-flash-lite-preview (50% cheaper). Summary/index generation uses lite. Transliteration always uses lite (text-only).',
       'Key rotation: 11 API keys (GEMINI_API_KEY, GEMINI_API_KEY_2 through _10, GEMINI_API_KEY_TIER3). On rate limit (429), rotate to next key. translate-worker.mjs and pipeline-orchestrator.mjs each manage their own rotation.',
       'Batch API: Used for OCR (50% cost discount, submitted from Hetzner). NEVER for translation (lacks cross-page context). Batch jobs are only visible to the creating API key.',
       'Cost tracking: Every API call logged to gemini_usage with model, tokens, cost, latency. ~$0.009/page full pipeline. Monthly run rate ~$3,700-$4,000.',
       'Prompt management: OCR uses Standard OCR v6. Translation prompt includes previous page context. Enrichment prompts in metadata-enrichment.ts. Prompts collection stores versioned copies for A/B testing.',
     ],
     gotchas: [
-      'ALWAYS use gemini-3-flash-preview for summary/index generation.',
+      'Summary/index generation uses gemini-3.1-flash-lite-preview (not flash).',
       'Batch API jobs are only visible to the creating API key. Lost visibility if you switch keys.',
       'NEVER use Batch API for translation.',
     ],

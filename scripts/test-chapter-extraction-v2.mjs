@@ -227,7 +227,7 @@ async function testBook(db, bookId) {
   const inputTokenEst = Math.round(prompt.length / 4);
   console.log(`Prompt: ~${inputTokenEst} tokens`);
 
-  const model = genAI.getGenerativeModel({ model: 'gemini-2.0-flash' });
+  const model = genAI.getGenerativeModel({ model: 'gemini-3-flash-preview' });
   const result = await model.generateContent(prompt);
   const responseText = result.response.text();
 

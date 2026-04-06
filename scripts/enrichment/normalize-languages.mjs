@@ -15,7 +15,7 @@ import { MongoClient } from 'mongodb';
 import fs from 'fs';
 
 // ── Config ──────────────────────────────────────────────────────────
-const GEMINI_MODEL = 'gemini-2.5-flash';
+const GEMINI_MODEL = 'gemini-3.1-flash-lite-preview';
 const GEMINI_BATCH_SIZE = 30; // books per Gemini call
 const PAGES_FOR_INFERENCE = 3; // page images to send per book
 
