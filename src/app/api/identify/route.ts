@@ -119,7 +119,8 @@ export async function POST(request: NextRequest) {
           maxTimeMS: 8000,
         })
         .limit(50)
-        .toArray();
+        .toArray()
+        .catch(() => []);
 
       // Score each match by how many search terms appear in its fields
       const terms = identification.search_terms || [];
@@ -187,7 +188,8 @@ export async function POST(request: NextRequest) {
             },
           )
           .limit(20)
-          .toArray();
+          .toArray()
+          .catch(() => []);
 
         for (const book of termBooks) {
           if (!existingIds.has(book.id)) {
