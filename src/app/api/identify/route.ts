@@ -99,7 +99,8 @@ export async function POST(request: NextRequest) {
 
     // Strategy 1: Artist + title regex (strongest signal)
     if (identification.artist) {
-      const artistRegex = identification.artist.split(/\s+/).pop() || identification.artist;
+      const artistLast = identification.artist.split(/\s+/).pop() || identification.artist;
+      const artistRegex = artistLast.replace(/[.*+?^${}()|[\]\\]/g, '\\$&');
       const artistQuery: Record<string, unknown> = {
         author: { $regex: artistRegex, $options: 'i' },
         $or: [
