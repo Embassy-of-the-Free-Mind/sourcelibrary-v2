@@ -17,39 +17,23 @@ import { createClient, type SupabaseClient } from '@supabase/supabase-js';
 // New code should use the supabase client directly.
 export const SUPABASE_URL = process.env.SUPABASE_URL || 'https://ykhxaecbbxaaqlujuzde.supabase.co';
 export const SUPABASE_ANON_KEY = process.env.SUPABASE_ANON_KEY || '';
+const SUPABASE_SERVICE_ROLE_KEY = process.env.SUPABASE_SERVICE_ROLE_KEY || '';
 
-// Lazily-created clients — avoids build-time crashes when env vars are missing
-let _supabase: SupabaseClient | null = null;
-let _supabaseAdmin: SupabaseClient | null = null;
+if (!SUPABASE_ANON_KEY && typeof window === 'undefined') {
+  console.warn('SUPABASE_ANON_KEY not set — Supabase queries will fail');
+}
 
 // Read-only anon client (safe for server + client)
-export const supabase: SupabaseClient = new Proxy({} as SupabaseClient, {
-  get(_target, prop) {
-    if (!_supabase) {
-      if (!SUPABASE_ANON_KEY && typeof window === 'undefined') {
-        console.warn('SUPABASE_ANON_KEY not set — Supabase queries will fail');
-      }
-      _supabase = createClient(SUPABASE_URL, SUPABASE_ANON_KEY, {
-        auth: { persistSession: false },
-      });
-    }
-    return (_supabase as any)[prop];
-  },
+export const supabase: SupabaseClient = createClient(SUPABASE_URL, SUPABASE_ANON_KEY, {
+  auth: { persistSession: false },
 });
 
 // Service-role client for writes (server-only, optional)
-export const supabaseAdmin: SupabaseClient | null = new Proxy({} as SupabaseClient, {
-  get(_target, prop) {
-    if (!_supabaseAdmin) {
-      const serviceKey = process.env.SUPABASE_SERVICE_ROLE_KEY || '';
-      if (!serviceKey) return undefined;
-      _supabaseAdmin = createClient(SUPABASE_URL, serviceKey, {
-        auth: { persistSession: false },
-      });
-    }
-    return (_supabaseAdmin as any)[prop];
-  },
-});
+export const supabaseAdmin: SupabaseClient | null = SUPABASE_SERVICE_ROLE_KEY
+  ? createClient(SUPABASE_URL, SUPABASE_SERVICE_ROLE_KEY, {
+      auth: { persistSession: false },
+    })
+  : null;
 
 /**
  * Helper: query USTC editions by Supabase auto-increment ID.
