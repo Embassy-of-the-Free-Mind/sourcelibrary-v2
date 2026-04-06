@@ -2394,7 +2394,7 @@ Reply with ONLY: {"is_spread": true} or {"is_spread": false}` },
               },
             }},
             { $sort: { _priority: 1, hidden: 1 } },
-            { $project: { id: 1, title: 1, pages_count: 1, 'pipeline_auto.retry_count': 1, 'pipeline_auto.split_checked': 1 } },
+            { $project: { id: 1, title: 1, author: 1, year: 1, pages_count: 1, needs_splitting: 1, 'pipeline_auto.retry_count': 1, 'pipeline_auto.split_checked': 1 } },
             { $limit: ocrLimit },
           ])
           .toArray();
@@ -2456,7 +2456,7 @@ Reply with ONLY: {"is_spread": true} or {"is_spread": false}` },
             },
           }},
           { $sort: { _priority: 1, hidden: 1 } },
-          { $project: { id: 1, title: 1, pages_count: 1, 'pipeline_auto.retry_count': 1, 'pipeline_auto.recitation_retry': 1, 'pipeline_auto.split_checked': 1 } },
+          { $project: { id: 1, title: 1, author: 1, year: 1, pages_count: 1, needs_splitting: 1, 'pipeline_auto.retry_count': 1, 'pipeline_auto.recitation_retry': 1, 'pipeline_auto.split_checked': 1 } },
           { $limit: ocrLimit },
         ])
         .toArray() : [];
