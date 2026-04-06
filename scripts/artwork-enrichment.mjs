@@ -14,12 +14,14 @@ import { MongoClient } from 'mongodb';
 import { GoogleGenerativeAI } from '@google/generative-ai';
 
 const DRY_RUN = process.argv.includes('--dry-run');
+const RE_ENRICH = process.argv.includes('--re-enrich');
 const LIMIT = parseInt(process.argv.find((_, i, a) => a[i - 1] === '--limit') || '10');
 const ARTIST_FILTER = process.argv.find((_, i, a) => a[i - 1] === '--artist') || null;
+const SLUG_FILTER = process.argv.find((_, i, a) => a[i - 1] === '--slug') || null;
 
 const client = new MongoClient(process.env.MONGODB_URI);
 const genAI = new GoogleGenerativeAI(process.env.GEMINI_API_KEY);
-const model = genAI.getGenerativeModel({ model: 'gemini-3-flash-preview' });
+const model = genAI.getGenerativeModel({ model: 'gemini-3.1-flash-lite-preview' });
 
 // Visual art collections that artworks can be assigned to
 const VISUAL_ART_COLLECTIONS = [
@@ -89,7 +91,7 @@ Analyze this artwork image and return JSON with these fields:
       "confidence": "high | medium | low"
     }
   ],
-  "inscriptions": "If the image contains readable text (Latin inscriptions, titles, captions, cartouches, verses, dedications, labels), transcribe it here verbatim. Preserve line breaks. If no readable text, set to null.",
+  "inscriptions": "CRITICAL: Transcribe EVERY piece of readable text on the image — ALL inscriptions, captions, verses, dedications, labels, publisher lines, plate numbers, cartouche text, and colophons. Prints and engravings often have multiple blocks of text (e.g. verses in Latin AND vernacular, publisher/excudit lines, numbering). Transcribe ALL of them, preserving line breaks and separating distinct text blocks with blank lines. If no readable text, set to null.",
   "inscriptions_translation": "If inscriptions is non-null and NOT already in English, provide an English translation. Preserve line breaks to match the original. If inscriptions is null or already English, set to null.",
   "inscriptions_language": "The language of the inscription (e.g., 'Latin', 'Dutch', 'German', 'French', 'Italian'). Null if no inscription.",
   "has_readable_text": true,
@@ -103,7 +105,7 @@ ${COLLECTION_LIST}
 RULES:
 - Be HONEST. If you're not confident in an identification, say so. If there's no esoteric connection, say null.
 - Be SPECIFIC. "A print depicting Mercury" not "a beautiful work showing a figure."
-- Inscriptions: transcribe ALL visible text, including small captions. This is important for prints and engravings.
+- Inscriptions: transcribe EVERY piece of visible text — prints often have 3-4+ text blocks (title, verses in multiple languages, publisher lines, plate numbers). Missing any is a cataloging failure. Look at the ENTIRE image, especially bottom margins and cartouches.
 - Collections: only assign collections you're confident about. An ordinary landscape with no esoteric content should get 0 topical collections.
 - cross_references: only include if confidence is medium or high. Never fabricate.
 - Return valid JSON only. No markdown, no commentary.`;
@@ -117,7 +119,9 @@ async function fetchImageBase64(url) {
 }
 
 async function enrichArtwork(artwork) {
-  const imageUrl = artwork.thumbnail_blob || artwork.thumbnail;
+  // Prefer highest resolution for better inscription reading.
+  // commons_full_url is the original upload (often 4000+ px).
+  const imageUrl = artwork.commons_full_url || artwork.thumbnail_blob || artwork.thumbnail;
   if (!imageUrl) return { error: 'no_image' };
 
   const prompt = buildPrompt(artwork);
@@ -155,13 +159,15 @@ async function main() {
   const books = db.collection('books');
 
   // Build query — resource_type_sparse index makes this fast
-  const query = { resource_type: { $exists: true }, enrichment: { $exists: false } };
+  const query = { resource_type: { $exists: true } };
+  if (!RE_ENRICH) query.enrichment = { $exists: false };
   if (ARTIST_FILTER) query.author = ARTIST_FILTER;
+  if (SLUG_FILTER) query.slug = SLUG_FILTER;
 
   const projection = {
     _id: 1, id: 1, slug: 1, title: 1, author: 1, published: 1,
     medium: 1, resource_type: 1, thumbnail_blob: 1, thumbnail: 1,
-    commons_categories: 1,
+    commons_full_url: 1, commons_categories: 1,
   };
 
   // Use cursor-based iteration to avoid loading all docs into memory
@@ -232,7 +238,7 @@ async function main() {
             has_readable_text: !!enrichment.has_readable_text,
             figures_depicted: enrichment.figures_depicted || [],
             symbols: enrichment.symbols || [],
-            model: 'gemini-3-flash-preview',
+            model: 'gemini-3.1-flash-lite-preview',
             enriched_at: new Date(),
           },
           updated_at: new Date(),
