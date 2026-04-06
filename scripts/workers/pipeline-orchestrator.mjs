@@ -25,6 +25,9 @@ import { nanoid } from 'nanoid';
 import { SQSClient, SendMessageBatchCommand } from '@aws-sdk/client-sqs';
 import { S3Client, PutObjectCommand } from '@aws-sdk/client-s3';
 import { createHash } from 'crypto';
+import { execFile } from 'child_process';
+import { promisify } from 'util';
+const execFileAsync = promisify(execFile);
 
 // ── Config ──
 
@@ -2645,6 +2648,77 @@ Reply with ONLY: {"is_spread": true} or {"is_spread": false}` },
         }
       }
       console.log(`  OCR advanced: ${log.ocr_advanced}`);
+    }
+
+    // ── Phase 3.1: Post-OCR spread split (ocr_complete + needs_splitting -> split) ──
+    // For books flagged needs_splitting in Phase 1.25, the spread-aware OCR (Phase 2)
+    // stored <split-position> and <page-break/> in the OCR text. Now we crop images
+    // at the detected gutter position and create separate left/right page records.
+    // Delegates to split-book.mjs (battle-tested, handles R2 uploads, page replacement).
+    if (shouldRun(3.1) || shouldRun(3)) {
+      console.log('\n--- Phase 3.1: Post-OCR spread split ---');
+
+      const SPLIT_BATCH_LIMIT = 10; // Books per cycle (each book is heavy: downloads + crops + uploads)
+
+      const readyForSplit = await db.collection('books')
+        .find({
+          'pipeline_auto.status': 'ocr_complete',
+          needs_splitting: true,
+          split_completed: { $ne: true },
+        })
+        .sort({ pages_count: 1 }) // smallest first — fast wins
+        .project({ id: 1, title: 1, pages_count: 1 })
+        .limit(SPLIT_BATCH_LIMIT)
+        .toArray();
+
+      console.log(`  Books ready for split: ${readyForSplit.length}`);
+
+      let splitDone = 0;
+      let splitErrors = 0;
+
+      for (const book of readyForSplit) {
+        const label = (book.title || '').substring(0, 50);
+
+        if (DRY_RUN) {
+          console.log(`  Would split: ${label} (${book.pages_count} pages)`);
+          continue;
+        }
+
+        try {
+          console.log(`  Splitting: ${label} (${book.pages_count} pages)...`);
+          const scriptPath = new URL('../split-book.mjs', import.meta.url).pathname;
+          const { stdout, stderr } = await execFileAsync('node', [scriptPath, book.id], {
+            timeout: 300000, // 5 min per book
+            env: process.env,
+            maxBuffer: 10 * 1024 * 1024,
+          });
+          if (stderr) console.log(`    stderr: ${stderr.slice(0, 200)}`);
+          // split-book.mjs sets split_completed=true and needs_splitting=false on success
+          console.log(`    Done: ${label}`);
+          splitDone++;
+        } catch (err) {
+          const msg = err.stderr || err.message || String(err);
+          console.log(`    FAIL: ${label} — ${msg.slice(0, 150)}`);
+          splitErrors++;
+          // Don't block the pipeline — mark for attention if it fails repeatedly
+          const retryCount = (book.pipeline_auto?.split_retry_count || 0) + 1;
+          if (retryCount >= 3) {
+            await setPipelineStatus(db, book.id, 'needs_attention', {
+              error: `Split failed ${retryCount} times: ${msg.slice(0, 200)}`,
+              split_retry_count: retryCount,
+            });
+          } else {
+            await db.collection('books').updateOne(
+              { id: book.id },
+              { $set: { 'pipeline_auto.split_retry_count': retryCount, 'pipeline_auto.last_updated': new Date() } }
+            );
+          }
+        }
+      }
+
+      if (readyForSplit.length > 0) {
+        console.log(`  Split: ${splitDone} done, ${splitErrors} errors`);
+      }
     }
 
     // ── Phase 3.5: Metadata enrichment (ocr_complete -> metadata_enriched) ──
