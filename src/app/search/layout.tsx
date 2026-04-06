@@ -27,5 +27,10 @@ export default function SearchLayout({
 }: {
   children: React.ReactNode;
 }) {
-  return <Suspense>{children}</Suspense>;
+  return (
+    <Suspense>
+      <h1 className="sr-only">Search Source Library</h1>
+      {children}
+    </Suspense>
+  );
 }

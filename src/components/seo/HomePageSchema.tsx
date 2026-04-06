@@ -49,6 +49,8 @@ export default function HomePageSchema({ books, bookCount, translatedCount }: Ho
     },
     sameAs: [
       'https://github.com/Embassy-of-the-Free-Mind/sourcelibrary-v2',
+      'https://x.com/SourceLibrary_',
+      'https://en.wikipedia.org/wiki/Embassy_of_the_Free_Mind',
     ],
   };
 

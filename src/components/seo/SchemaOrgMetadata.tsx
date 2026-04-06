@@ -157,26 +157,46 @@ export default function SchemaOrgMetadata({
   };
 
   // Breadcrumb navigation
-  const breadcrumbItems = [
+  // Insert primary collection as intermediate level when available
+  // eslint-disable-next-line @typescript-eslint/no-explicit-any
+  const collections = (book as any).collections as string[] | undefined;
+  const primaryCollection = collections?.[0];
+  const primaryCollectionName = primaryCollection
+    ? primaryCollection.replace(/-/g, ' ').replace(/\b\w/g, c => c.toUpperCase())
+    : undefined;
+
+  const breadcrumbItems: Array<{ '@type': string; position: number; name: string; item: string }> = [
     {
       '@type': 'ListItem',
       position: 1,
       name: 'Home',
       item: baseUrl,
     },
-    {
-      '@type': 'ListItem',
-      position: 2,
-      name: book.display_title || book.title,
-      item: `${baseUrl}/book/${bookPath}`,
-    },
   ];
+
+  let nextPosition = 2;
+
+  if (primaryCollection && primaryCollectionName) {
+    breadcrumbItems.push({
+      '@type': 'ListItem',
+      position: nextPosition++,
+      name: primaryCollectionName,
+      item: `${baseUrl}/collections/${primaryCollection}`,
+    });
+  }
+
+  breadcrumbItems.push({
+    '@type': 'ListItem',
+    position: nextPosition++,
+    name: book.display_title || book.title,
+    item: `${baseUrl}/book/${bookPath}`,
+  });
 
   // Add page breadcrumb if viewing a specific page
   if (currentPage) {
     breadcrumbItems.push({
       '@type': 'ListItem',
-      position: 3,
+      position: nextPosition++,
       name: `Page ${currentPage}`,
       item: `${baseUrl}/book/${bookPath}/page/${currentPage}`,
     });
