@@ -6,6 +6,7 @@ import { ArrowLeft, BookOpen, Images, Library } from 'lucide-react';
 import SiteHeader from '@/components/layout/SiteHeader';
 import { getDb } from '@/lib/mongodb';
 import { notFound } from 'next/navigation';
+import { unstable_noStore } from 'next/cache';
 import CollectionSchema from '@/components/seo/CollectionSchema';
 import CollectionAllBooks from '@/components/collections/CollectionAllBooks';
 import ExhibitionLayout from '@/components/collections/ExhibitionLayout';
@@ -475,8 +476,10 @@ export default async function CollectionDetailPage({ params }: Props) {
     data = await fetchCollectionData(id);
   } catch (err) {
     console.error('[Collection page] fetchCollectionData failed:', err instanceof Error ? err.message : err);
-    // Don't re-throw — a crash here kills the build and blocks all deploys.
-    // ISR will regenerate with real data on next revalidation.
+    // Opt out of ISR caching for this response so the error isn't persisted.
+    // Without this, notFound() gets cached as a permanent 404 for up to 10 min,
+    // breaking collection pages that have transient DB timeouts.
+    unstable_noStore();
     notFound();
   }
   if (!data) notFound();
