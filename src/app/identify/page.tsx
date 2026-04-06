@@ -1,0 +1,288 @@
+'use client';
+
+import { useState, useRef, useCallback } from 'react';
+import Link from 'next/link';
+import { Camera, Upload, Loader2, ArrowLeft, ExternalLink } from 'lucide-react';
+import { bookUrl } from '@/lib/slugify';
+
+interface Match {
+  id: string;
+  slug?: string;
+  title: string;
+  display_title?: string;
+  author?: string;
+  published?: string;
+  thumbnail?: string;
+  thumbnail_blob?: string;
+  resource_type?: string;
+  subject?: string;
+  score: number;
+}
+
+interface Identification {
+  artist?: string | null;
+  title?: string | null;
+  inscriptions?: string | null;
+  subject?: string | null;
+  medium?: string;
+  period_guess?: string;
+  search_terms?: string[];
+}
+
+interface Result {
+  identification: Identification;
+  matches: Match[];
+}
+
+export default function IdentifyPage() {
+  const [image, setImage] = useState<string | null>(null);
+  const [loading, setLoading] = useState(false);
+  const [result, setResult] = useState<Result | null>(null);
+  const [error, setError] = useState<string | null>(null);
+  const fileInputRef = useRef<HTMLInputElement>(null);
+  const cameraInputRef = useRef<HTMLInputElement>(null);
+
+  const handleFile = useCallback(async (file: File) => {
+    // Preview
+    const reader = new FileReader();
+    reader.onload = (e) => setImage(e.target?.result as string);
+    reader.readAsDataURL(file);
+
+    // Submit
+    setLoading(true);
+    setError(null);
+    setResult(null);
+
+    const formData = new FormData();
+    formData.append('image', file);
+
+    try {
+      const res = await fetch('/api/identify', { method: 'POST', body: formData });
+      const data = await res.json();
+      if (!res.ok) {
+        setError(data.error || 'Failed to identify');
+      } else {
+        setResult(data);
+      }
+    } catch {
+      setError('Network error — please try again');
+    } finally {
+      setLoading(false);
+    }
+  }, []);
+
+  const handleInputChange = useCallback((e: React.ChangeEvent<HTMLInputElement>) => {
+    const file = e.target.files?.[0];
+    if (file) handleFile(file);
+  }, [handleFile]);
+
+  const reset = useCallback(() => {
+    setImage(null);
+    setResult(null);
+    setError(null);
+    if (fileInputRef.current) fileInputRef.current.value = '';
+    if (cameraInputRef.current) cameraInputRef.current.value = '';
+  }, []);
+
+  return (
+    <div className="min-h-screen bg-cream">
+      {/* Header */}
+      <div className="bg-dark text-white">
+        <div className="max-w-2xl mx-auto px-4 py-6">
+          <Link href="/" className="inline-flex items-center gap-1.5 text-sm text-white/50 hover:text-white/80 transition-colors mb-4">
+            <ArrowLeft className="w-4 h-4" />
+            Library
+          </Link>
+          <h1 className="text-2xl sm:text-3xl font-display font-semibold">Identify</h1>
+          <p className="text-white/60 mt-1 text-sm">Photograph an artwork or book to find it in Source Library</p>
+        </div>
+      </div>
+
+      <div className="max-w-2xl mx-auto px-4 py-8 space-y-6">
+        {/* Upload area */}
+        {!image && (
+          <div className="space-y-3">
+            {/* Camera button (primary on mobile) */}
+            <button
+              onClick={() => cameraInputRef.current?.click()}
+              className="w-full flex items-center justify-center gap-3 px-6 py-12 rounded-xl border-2 border-dashed border-accent-rust/30 bg-white hover:border-accent-rust/60 hover:bg-accent-rust/5 transition-colors cursor-pointer"
+            >
+              <Camera className="w-8 h-8 text-accent-rust" />
+              <div className="text-left">
+                <p className="text-lg font-medium text-primary">Take a Photo</p>
+                <p className="text-sm text-muted">Point your camera at an artwork or book</p>
+              </div>
+            </button>
+            <input
+              ref={cameraInputRef}
+              type="file"
+              accept="image/*"
+              capture="environment"
+              onChange={handleInputChange}
+              className="hidden"
+            />
+
+            {/* File upload (secondary) */}
+            <button
+              onClick={() => fileInputRef.current?.click()}
+              className="w-full flex items-center justify-center gap-2 px-4 py-3 rounded-lg border border-border-light bg-white hover:border-accent-rust/30 transition-colors text-sm text-secondary cursor-pointer"
+            >
+              <Upload className="w-4 h-4" />
+              Upload from gallery
+            </button>
+            <input
+              ref={fileInputRef}
+              type="file"
+              accept="image/*"
+              onChange={handleInputChange}
+              className="hidden"
+            />
+          </div>
+        )}
+
+        {/* Preview + loading */}
+        {image && (
+          <div className="space-y-4">
+            <div className="relative rounded-xl overflow-hidden bg-stone-100">
+              {/* eslint-disable-next-line @next/next/no-img-element */}
+              <img src={image} alt="Your photo" className="w-full max-h-[50vh] object-contain" />
+              {loading && (
+                <div className="absolute inset-0 bg-black/40 flex items-center justify-center">
+                  <div className="flex items-center gap-3 bg-white/90 rounded-full px-5 py-2.5">
+                    <Loader2 className="w-5 h-5 animate-spin text-accent-rust" />
+                    <span className="text-sm font-medium">Identifying...</span>
+                  </div>
+                </div>
+              )}
+            </div>
+
+            {!loading && (
+              <button
+                onClick={reset}
+                className="text-sm text-accent-rust hover:underline cursor-pointer"
+              >
+                Try another image
+              </button>
+            )}
+          </div>
+        )}
+
+        {/* Error */}
+        {error && (
+          <div className="rounded-lg bg-red-50 border border-red-200 p-4 text-sm text-red-800">
+            {error}
+          </div>
+        )}
+
+        {/* Results */}
+        {result && (
+          <div className="space-y-6">
+            {/* What Gemini saw */}
+            <div className="card p-5 space-y-3">
+              <h2 className="text-lg font-display font-semibold text-primary">Analysis</h2>
+              <dl className="text-sm space-y-2">
+                {result.identification.artist && (
+                  <div>
+                    <dt className="text-muted text-xs uppercase tracking-wider">Artist</dt>
+                    <dd className="text-primary font-medium">{result.identification.artist}</dd>
+                  </div>
+                )}
+                {result.identification.title && (
+                  <div>
+                    <dt className="text-muted text-xs uppercase tracking-wider">Title</dt>
+                    <dd className="text-primary">{result.identification.title}</dd>
+                  </div>
+                )}
+                {result.identification.subject && (
+                  <div>
+                    <dt className="text-muted text-xs uppercase tracking-wider">Subject</dt>
+                    <dd className="text-secondary">{result.identification.subject}</dd>
+                  </div>
+                )}
+                {result.identification.medium && (
+                  <div className="flex gap-4">
+                    <div>
+                      <dt className="text-muted text-xs uppercase tracking-wider">Medium</dt>
+                      <dd className="text-secondary capitalize">{result.identification.medium}</dd>
+                    </div>
+                    {result.identification.period_guess && (
+                      <div>
+                        <dt className="text-muted text-xs uppercase tracking-wider">Period</dt>
+                        <dd className="text-secondary">{result.identification.period_guess}</dd>
+                      </div>
+                    )}
+                  </div>
+                )}
+                {result.identification.inscriptions && (
+                  <div>
+                    <dt className="text-muted text-xs uppercase tracking-wider">Inscriptions</dt>
+                    <dd className="text-secondary whitespace-pre-line font-serif text-xs mt-1">
+                      {result.identification.inscriptions}
+                    </dd>
+                  </div>
+                )}
+              </dl>
+            </div>
+
+            {/* Matches */}
+            {result.matches.length > 0 ? (
+              <div>
+                <h2 className="text-lg font-display font-semibold text-primary mb-3">
+                  {result.matches.length === 1 ? 'Match Found' : `${result.matches.length} Possible Matches`}
+                </h2>
+                <div className="space-y-2">
+                  {result.matches.map((match, i) => (
+                    <Link
+                      key={match.id}
+                      href={bookUrl({ slug: match.slug, id: match.id })}
+                      className="flex gap-4 p-3 rounded-lg bg-white border border-border-light hover:border-accent-rust/30 hover:shadow-sm transition-all group"
+                    >
+                      {(match.thumbnail_blob || match.thumbnail) && (
+                        <div className="w-16 h-20 flex-shrink-0 rounded overflow-hidden bg-stone-100">
+                          {/* eslint-disable-next-line @next/next/no-img-element */}
+                          <img
+                            src={match.thumbnail_blob || match.thumbnail || ''}
+                            alt=""
+                            className="w-full h-full object-cover"
+                          />
+                        </div>
+                      )}
+                      <div className="flex-1 min-w-0">
+                        <p className="font-medium text-primary group-hover:text-accent-rust transition-colors line-clamp-1">
+                          {i === 0 && result.matches.length > 1 && (
+                            <span className="text-xs bg-accent-rust/10 text-accent-rust rounded px-1.5 py-0.5 mr-2">Best match</span>
+                          )}
+                          {match.display_title || match.title}
+                        </p>
+                        {match.author && (
+                          <p className="text-sm text-secondary mt-0.5">{match.author}</p>
+                        )}
+                        <div className="flex items-center gap-2 mt-1 text-xs text-muted">
+                          {match.published && <span>{match.published}</span>}
+                          {match.resource_type && (
+                            <span className="capitalize">{match.resource_type}</span>
+                          )}
+                          {match.subject && (
+                            <span className="line-clamp-1">{match.subject}</span>
+                          )}
+                        </div>
+                      </div>
+                      <ExternalLink className="w-4 h-4 text-muted group-hover:text-accent-rust flex-shrink-0 mt-1" />
+                    </Link>
+                  ))}
+                </div>
+              </div>
+            ) : (
+              <div className="card p-5 text-center">
+                <p className="text-secondary">No matches found in the library.</p>
+                <p className="text-sm text-muted mt-1">
+                  This work may not be in Source Library yet.
+                </p>
+              </div>
+            )}
+          </div>
+        )}
+      </div>
+    </div>
+  );
+}
