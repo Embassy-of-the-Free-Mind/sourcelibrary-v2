@@ -2,6 +2,8 @@ import { NextRequest, NextResponse } from 'next/server';
 import { auth } from '@/lib/auth';
 import { validateClient, createAuthCode } from '@/lib/oidc/provider';
 
+export const dynamic = 'force-dynamic';
+
 /**
  * GET /api/auth/oidc/authorize
  * OIDC Authorization endpoint. Synapse redirects users here.
