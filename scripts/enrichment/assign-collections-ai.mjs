@@ -1,21 +1,32 @@
 #!/usr/bin/env node
 /**
- * AI-powered collection assignment using Gemini Flash.
+ * AI-powered collection assignment using Gemini Flash Lite.
  *
  * For each book, sends metadata to Gemini and gets back:
  *   - Which collections (1-3) the book belongs to
  *   - A relevance score (0-100) for each
  *
+ * Default behavior: only processes books that have not been AI-classified yet
+ * (no `collection_scores` field). Use --force to reclassify everything.
+ *
+ * Writes are additive:
+ *   - $addToSet for collections array (never removes existing assignments)
+ *   - dot-notation $set for collection_relevance (preserves scores from other sources)
+ *   - collection_scores marker records that AI classification has run
+ *
  * Usage:
- *   set -a; source .env.production.local; set +a; node scripts/enrichment/assign-collections-ai.mjs [--dry-run] [--limit N] [--offset N] [--concurrency N]
+ *   set -a; source .env.production.local; set +a; \
+ *   node scripts/enrichment/assign-collections-ai.mjs \
+ *     [--dry-run] [--force] [--limit N] [--offset N] [--concurrency N] \
+ *     [--batch-size N] [--update-metadata]
  */
 
 import { MongoClient } from 'mongodb';
-import { GoogleGenAI } from '@google/genai';
+import { GoogleGenerativeAI } from '@google/generative-ai';
 
-// ── Collection Definitions ──────────────────────────────────────────────────
+// ── Fallback Collection Definitions (used if DB returns empty) ────────────────
 
-const COLLECTIONS = [
+const FALLBACK_COLLECTIONS = [
   {
     slug: 'alchemy',
     name: 'Alchemy',
@@ -162,14 +173,22 @@ const COLLECTIONS = [
   },
 ];
 
-const COLLECTION_SUMMARY = COLLECTIONS.map(c => `- ${c.slug}: ${c.name} — ${c.description}`).join('\n');
+// ── Build collection summary string for the prompt ────────────────────────────
 
-// ── Gemini Classification ───────────────────────────────────────────────────
+function buildCollectionSummary(collections) {
+  return collections.map(c => `- ${c.slug}: ${c.name} — ${c.description}`).join('\n');
+}
 
-const SYSTEM_PROMPT = `You are a specialist librarian classifying rare books into thematic collections. For each book, assign 1-3 collections that BEST fit, with a relevance score.
+// ── Gemini Classification ─────────────────────────────────────────────────────
+
+const MODEL = 'gemini-3.1-flash-lite-preview';
+
+function buildSystemPrompt(collections) {
+  const summary = buildCollectionSummary(collections);
+  return `You are a specialist librarian classifying rare books into thematic collections. For each book, assign 1-3 collections that BEST fit, with a relevance score.
 
 COLLECTIONS:
-${COLLECTION_SUMMARY}
+${summary}
 
 RULES:
 1. Assign 1-3 collections per book. Most books should get 1-2.
@@ -183,8 +202,12 @@ Respond with a JSON array, one entry per book, in the same order as input. Each 
 {"i": <index>, "c": [{"s": "<slug>", "r": <score>}]}
 
 NO explanation, just the JSON array.`;
+}
 
-async function classifyBatch(ai, books, batchIndex) {
+async function classifyBatch(genai, books, collections, batchIndex) {
+  const validSlugs = new Set(collections.map(c => c.slug));
+  const systemPrompt = buildSystemPrompt(collections);
+
   const booksText = books.map((b, i) => {
     const cats = (b.categories || []).slice(0, 8).join(', ');
     return `[${i}] "${(b.display_title || b.title || 'Untitled').substring(0, 120)}" by ${(b.author || 'Unknown').substring(0, 60)} (${b.year || '?'}, ${b.language || '?'}) [${cats}]`;
@@ -194,17 +217,17 @@ async function classifyBatch(ai, books, batchIndex) {
 
   for (let attempt = 0; attempt < 3; attempt++) {
     try {
-      const response = await ai.models.generateContent({
-        model: 'gemini-2.0-flash',
-        contents: prompt,
-        config: {
-          systemInstruction: SYSTEM_PROMPT,
+      const model = genai.getGenerativeModel({
+        model: MODEL,
+        generationConfig: {
           temperature: 0.1,
           responseMimeType: 'application/json',
         },
+        systemInstruction: systemPrompt,
       });
 
-      const text = response.text.trim();
+      const result = await model.generateContent(prompt);
+      const text = result.response.text().trim();
       const results = JSON.parse(text);
       if (!Array.isArray(results)) throw new Error('Not an array');
       return results;
@@ -217,17 +240,22 @@ async function classifyBatch(ai, books, batchIndex) {
   return books.map((_, i) => ({ i, c: [] }));
 }
 
-// ── Main ────────────────────────────────────────────────────────────────────
+// ── Main ──────────────────────────────────────────────────────────────────────
 
 async function main() {
   const args = process.argv.slice(2);
   const dryRun = args.includes('--dry-run');
+  const force = args.includes('--force');
+  const updateMetadata = args.includes('--update-metadata');
+
   const limitIdx = args.indexOf('--limit');
   const limit = limitIdx >= 0 ? parseInt(args[limitIdx + 1]) : 0;
   const offsetIdx = args.indexOf('--offset');
   const offset = offsetIdx >= 0 ? parseInt(args[offsetIdx + 1]) : 0;
   const concurrencyIdx = args.indexOf('--concurrency');
   const concurrency = concurrencyIdx >= 0 ? parseInt(args[concurrencyIdx + 1]) : 5;
+  const batchSizeArg = args.find(a => a.startsWith('--batch-size='));
+  const BATCH_SIZE = batchSizeArg ? parseInt(batchSizeArg.split('=')[1]) : 25;
 
   if (!process.env.MONGODB_URI) {
     console.error('MONGODB_URI not set');
@@ -238,27 +266,60 @@ async function main() {
     process.exit(1);
   }
 
-  const ai = new GoogleGenAI({ apiKey: process.env.GEMINI_API_KEY });
+  const genai = new GoogleGenerativeAI(process.env.GEMINI_API_KEY);
 
   const client = new MongoClient(process.env.MONGODB_URI);
   await client.connect();
   const db = client.db('bookstore');
 
-  // Fetch books
+  // ── Load collections from DB, fall back to hardcoded list ──
+  let collections = await db.collection('collections').find({}).toArray();
+  if (collections.length === 0) {
+    console.log('No collections in DB — using fallback list');
+    collections = FALLBACK_COLLECTIONS;
+  } else {
+    console.log(`Loaded ${collections.length} collections from DB`);
+    // Ensure required fields exist; patch from fallback if needed
+    const fallbackMap = new Map(FALLBACK_COLLECTIONS.map(c => [c.slug, c]));
+    collections = collections.map(c => ({
+      slug: c.slug,
+      name: c.name || fallbackMap.get(c.slug)?.name || c.slug,
+      description: c.description || fallbackMap.get(c.slug)?.description || '',
+      subtitle: c.subtitle || fallbackMap.get(c.slug)?.subtitle || '',
+      color: c.color || fallbackMap.get(c.slug)?.color || 'sage',
+      order: c.order ?? fallbackMap.get(c.slug)?.order ?? 99,
+    }));
+    // Sort by order
+    collections.sort((a, b) => (a.order ?? 99) - (b.order ?? 99));
+  }
+
+  // ── Build book query ──
+  const baseQuery = force
+    ? { status: { $ne: 'deleted' }, pages_count: { $gt: 0 }, hidden: { $ne: true } }
+    : { collection_scores: { $exists: false }, pages_count: { $gt: 0 }, hidden: { $ne: true } };
+
   const projection = {
     id: 1, title: 1, display_title: 1, author: 1, year: 1, language: 1,
     categories: 1, pages_count: 1, thumbnail: 1, thumbnail_blob: 1, photo: 1,
   };
+
   let cursor = db.collection('books')
-    .find({ status: { $ne: 'deleted' } }, { projection })
+    .find(baseQuery, { projection })
     .sort({ created_at: 1 })
     .skip(offset);
   if (limit) cursor = cursor.limit(limit);
   const books = await cursor.toArray();
+
+  console.log(`Mode: ${force ? '--force (reclassify all)' : 'incremental (unclassified only)'}`);
   console.log(`Loaded ${books.length} books (offset=${offset})\n`);
 
-  // Batch classify
-  const BATCH_SIZE = 25;
+  if (books.length === 0) {
+    console.log('No books to process.');
+    await client.close();
+    return;
+  }
+
+  // ── Batch classify ──
   const batches = [];
   for (let i = 0; i < books.length; i += BATCH_SIZE) {
     batches.push(books.slice(i, i + BATCH_SIZE));
@@ -273,13 +334,14 @@ async function main() {
   for (let i = 0; i < batches.length; i += concurrency) {
     const chunk = batches.slice(i, i + concurrency);
     const promises = chunk.map((batch, j) =>
-      classifyBatch(ai, batch, i + j).then(results => {
+      classifyBatch(genai, batch, collections, i + j).then(results => {
+        const validSlugs = new Set(collections.map(c => c.slug));
         for (const result of results) {
           const bookIdx = (i + j) * BATCH_SIZE + result.i;
           const book = books[bookIdx];
           if (!book) continue;
           const assignments = (result.c || [])
-            .filter(a => a.s && COLLECTIONS.some(c => c.slug === a.s) && a.r >= 50)
+            .filter(a => a.s && validSlugs.has(a.s) && a.r >= 50)
             .sort((a, b) => b.r - a.r)
             .slice(0, 3);
           bookAssignments.set(book.id, assignments);
@@ -292,9 +354,9 @@ async function main() {
   }
   console.log(`\nClassification complete.\n`);
 
-  // Summarize
+  // ── Summarize ──
   const collectionCounts = {};
-  for (const col of COLLECTIONS) collectionCounts[col.slug] = 0;
+  for (const col of collections) collectionCounts[col.slug] = 0;
   let unassigned = 0;
   let totalAssignments = 0;
 
@@ -311,13 +373,15 @@ async function main() {
   }
 
   console.log('=== COLLECTION ASSIGNMENTS ===\n');
-  for (const col of COLLECTIONS) {
-    console.log(`${col.name}: ${collectionCounts[col.slug] || 0} books`);
+  for (const col of collections) {
+    const count = collectionCounts[col.slug] || 0;
+    if (count > 0) console.log(`${col.name}: ${count} books`);
   }
   console.log(`\nTotal assignments: ${totalAssignments} (avg ${(totalAssignments / books.length).toFixed(1)} per book)`);
-  console.log(`Unassigned: ${unassigned} books\n`);
+  console.log(`Unassigned: ${unassigned} books`);
+  console.log(`Assigned: ${books.length - unassigned} books\n`);
 
-  // Show unassigned
+  // Show sample unassigned
   if (unassigned > 0) {
     console.log('Sample unassigned:');
     let shown = 0;
@@ -328,167 +392,218 @@ async function main() {
         shown++;
       }
     }
+    console.log();
   }
 
   if (dryRun) {
-    console.log('\n[DRY RUN] No changes written.');
+    console.log('[DRY RUN] No changes written.');
     await client.close();
     return;
   }
 
-  // Write to DB
-  console.log('\nWriting to database...');
+  // ── Write to DB (additive) ──
+  console.log('Writing to database...');
 
-  // 1. Update each book with collections array + collection_relevance map
+  // Update each book: additive collections, dot-notation relevance, collection_scores marker
   const bulkOps = [];
   for (const book of books) {
     const assignments = bookAssignments.get(book.id) || [];
+    if (assignments.length === 0) continue; // don't write marker for unclassified books
+
     const slugs = assignments.map(a => a.s);
-    const relevance = {};
-    for (const a of assignments) relevance[a.s] = a.r;
+
+    // Build dot-notation relevance updates
+    const relevanceSets = {};
+    for (const a of assignments) {
+      relevanceSets[`collection_relevance.${a.s}`] = a.r;
+    }
 
     bulkOps.push({
       updateOne: {
         filter: { id: book.id },
-        update: { $set: { collections: slugs, collection_relevance: relevance } },
+        update: {
+          $addToSet: { collections: { $each: slugs } },
+          $set: {
+            ...relevanceSets,
+            collection_scores: {
+              assigned_at: new Date(),
+              model: MODEL,
+            },
+            updated_at: new Date(),
+          },
+        },
       },
     });
   }
 
+  // Also write collection_scores marker as "skipped" for books with zero assignments
+  // so they don't get re-processed on next incremental run
+  const skippedOps = [];
+  for (const book of books) {
+    const assignments = bookAssignments.get(book.id) || [];
+    if (assignments.length === 0) {
+      skippedOps.push({
+        updateOne: {
+          filter: { id: book.id },
+          update: {
+            $set: {
+              collection_scores: {
+                assigned_at: new Date(),
+                model: MODEL,
+                result: 'no_match',
+              },
+            },
+          },
+        },
+      });
+    }
+  }
+
   const WRITE_BATCH = 500;
   let updated = 0;
-  for (let i = 0; i < bulkOps.length; i += WRITE_BATCH) {
-    const batch = bulkOps.slice(i, i + WRITE_BATCH);
+  const allOps = [...bulkOps, ...skippedOps];
+  for (let i = 0; i < allOps.length; i += WRITE_BATCH) {
+    const batch = allOps.slice(i, i + WRITE_BATCH);
     const result = await db.collection('books').bulkWrite(batch);
     updated += result.modifiedCount;
-    process.stdout.write(`  Books: ${Math.min(i + WRITE_BATCH, bulkOps.length)}/${bulkOps.length}\r`);
+    process.stdout.write(`  Books: ${Math.min(i + WRITE_BATCH, allOps.length)}/${allOps.length}\r`);
   }
   console.log(`  Books updated: ${updated}                `);
 
-  // 2. Upsert collection metadata
-  const collectionsColl = db.collection('collections');
+  // ── Collection metadata update (only if --update-metadata or processed >100 books) ──
+  const shouldUpdateMetadata = updateMetadata || books.length > 100;
+  if (shouldUpdateMetadata) {
+    console.log('\nUpdating collection metadata...');
+    const collectionsColl = db.collection('collections');
 
-  // Delete old collections that no longer exist
-  const newSlugs = COLLECTIONS.map(c => c.slug);
-  const deleted = await collectionsColl.deleteMany({ slug: { $nin: newSlugs } });
-  if (deleted.deletedCount > 0) {
-    console.log(`  Removed ${deleted.deletedCount} old collections`);
-  }
+    for (const col of collections) {
+      // Get books for this collection, sorted by relevance
+      const colBooks = books
+        .filter(b => {
+          const a = bookAssignments.get(b.id) || [];
+          return a.some(x => x.s === col.slug);
+        })
+        .sort((a, b) => {
+          const ra = (bookAssignments.get(a.id) || []).find(x => x.s === col.slug)?.r || 0;
+          const rb = (bookAssignments.get(b.id) || []).find(x => x.s === col.slug)?.r || 0;
+          return rb - ra;
+        });
 
-  for (const col of COLLECTIONS) {
-    // Get books for this collection, sorted by relevance
-    const colBooks = books
-      .filter(b => {
-        const a = bookAssignments.get(b.id) || [];
-        return a.some(x => x.s === col.slug);
-      })
-      .sort((a, b) => {
-        const ra = (bookAssignments.get(a.id) || []).find(x => x.s === col.slug)?.r || 0;
-        const rb = (bookAssignments.get(b.id) || []).find(x => x.s === col.slug)?.r || 0;
-        return rb - ra;
-      });
+      if (colBooks.length === 0) continue;
 
-    // Pick sample books (top relevance, with thumbnails)
-    const withThumbs = colBooks.filter(b => b.thumbnail_blob || b.thumbnail || b.photo);
-    const samplePool = withThumbs.length >= 8 ? withThumbs : colBooks;
-    const sampleBooks = samplePool.slice(0, 8).map(b => ({
-      id: b.id,
-      title: (b.display_title || b.title || '').substring(0, 100),
-      author: (b.author || '').substring(0, 80),
-      year: b.year,
-      thumbnail: b.thumbnail_blob || b.thumbnail || b.photo || null,
-    }));
+      // Pick sample books (top relevance, with thumbnails)
+      const withThumbs = colBooks.filter(b => b.thumbnail_blob || b.thumbnail || b.photo);
+      const samplePool = withThumbs.length >= 8 ? withThumbs : colBooks;
+      const sampleBooks = samplePool.slice(0, 8).map(b => ({
+        id: b.id,
+        title: (b.display_title || b.title || '').substring(0, 100),
+        author: (b.author || '').substring(0, 80),
+        year: b.year,
+        thumbnail: b.thumbnail_blob || b.thumbnail || b.photo || null,
+      }));
 
-    // Language distribution
-    const langCounts = {};
-    for (const b of colBooks) {
-      const l = b.language || 'Unknown';
-      langCounts[l] = (langCounts[l] || 0) + 1;
-    }
-    const languages = Object.entries(langCounts)
-      .sort((a, b) => b[1] - a[1])
-      .slice(0, 6)
-      .map(([lang, count]) => ({ lang, count }));
+      // Language distribution
+      const langCounts = {};
+      for (const b of colBooks) {
+        const l = b.language || 'Unknown';
+        langCounts[l] = (langCounts[l] || 0) + 1;
+      }
+      const languages = Object.entries(langCounts)
+        .sort((a, b) => b[1] - a[1])
+        .slice(0, 6)
+        .map(([lang, count]) => ({ lang, count }));
 
-    await collectionsColl.updateOne(
-      { slug: col.slug },
-      {
-        $set: {
-          slug: col.slug,
-          name: col.name,
-          subtitle: col.subtitle,
-          description: col.description,
-          color: col.color,
-          order: col.order,
-          book_count: colBooks.length,
-          sample_books: sampleBooks,
-          languages,
-          updated_at: new Date(),
-        },
-        $setOnInsert: { created_at: new Date() },
-      },
-      { upsert: true }
-    );
-  }
-  console.log(`  Collections metadata: ${COLLECTIONS.length} upserted`);
-
-  // 3. Populate featured_images from gallery_images
-  console.log('\nPopulating featured images from gallery...');
-  const galleryImages = db.collection('gallery_images');
-
-  for (const col of COLLECTIONS) {
-    const colBookIds = books
-      .filter(b => (bookAssignments.get(b.id) || []).some(x => x.s === col.slug))
-      .map(b => b.id);
-
-    if (colBookIds.length === 0) continue;
-
-    const images = await galleryImages.aggregate([
-      { $match: {
-        book_id: { $in: colBookIds },
-        gallery_quality: { $gte: 0.7 },
-        thumbnail_url: { $exists: true, $ne: null },
-      }},
-      { $addFields: {
-        _score: { $add: [
-          { $multiply: ['$gallery_quality', 50] },
-          { $cond: [{ $gt: [{ $size: { $ifNull: ['$metadata.subjects', []] } }, 0] }, 5, 0] },
-          { $cond: [{ $and: [
-            { $ne: ['$museum_description', null] },
-            { $gt: [{ $strLenCP: { $ifNull: ['$museum_description', ''] } }, 50] },
-          ]}, 10, 0] },
-          { $cond: [{ $in: ['$type', ['emblem', 'engraving', 'frontispiece', 'diagram', 'portrait']] }, 10, 0] },
-        ]},
-      }},
-      { $sort: { _score: -1 } },
-      { $group: {
-        _id: '$book_id',
-        top: { $first: '$$ROOT' },
-      }},
-      { $replaceRoot: { newRoot: '$top' } },
-      { $sort: { _score: -1 } },
-      { $limit: 6 },
-      { $project: {
-        id: 1, page_id: 1, detection_index: 1,
-        thumbnail_url: 1, extracted_url: 1, image_url: 1,
-        description: 1, type: 1, gallery_quality: 1,
-        book_id: 1, book_title: 1, book_author: 1, book_year: 1,
-      }},
-    ]).toArray();
-
-    if (images.length > 0) {
       await collectionsColl.updateOne(
         { slug: col.slug },
-        { $set: { featured_images: images } }
+        {
+          $set: {
+            slug: col.slug,
+            name: col.name,
+            subtitle: col.subtitle,
+            description: col.description,
+            color: col.color,
+            order: col.order,
+            sample_books: sampleBooks,
+            languages,
+            updated_at: new Date(),
+          },
+          $setOnInsert: { created_at: new Date() },
+          $inc: { book_count: colBooks.length },
+        },
+        { upsert: true }
       );
-      console.log(`  ${col.name}: ${images.length} featured images`);
-    } else {
-      console.log(`  ${col.name}: no gallery images found`);
     }
+    console.log(`  Collection metadata updated for ${collections.filter(c => (collectionCounts[c.slug] || 0) > 0).length} collections`);
+
+    // Populate featured_images from gallery_images
+    console.log('\nPopulating featured images from gallery...');
+    const galleryImages = db.collection('gallery_images');
+
+    for (const col of collections) {
+      const colBookIds = books
+        .filter(b => (bookAssignments.get(b.id) || []).some(x => x.s === col.slug))
+        .map(b => b.id);
+
+      if (colBookIds.length === 0) continue;
+
+      const images = await galleryImages.aggregate([
+        { $match: {
+          book_id: { $in: colBookIds },
+          gallery_quality: { $gte: 0.7 },
+          thumbnail_url: { $exists: true, $ne: null },
+        }},
+        { $addFields: {
+          _score: { $add: [
+            { $multiply: ['$gallery_quality', 50] },
+            { $cond: [{ $gt: [{ $size: { $ifNull: ['$metadata.subjects', []] } }, 0] }, 5, 0] },
+            { $cond: [{ $and: [
+              { $ne: ['$museum_description', null] },
+              { $gt: [{ $strLenCP: { $ifNull: ['$museum_description', ''] } }, 50] },
+            ]}, 10, 0] },
+            { $cond: [{ $in: ['$type', ['emblem', 'engraving', 'frontispiece', 'diagram', 'portrait']] }, 10, 0] },
+          ]},
+        }},
+        { $sort: { _score: -1 } },
+        { $group: {
+          _id: '$book_id',
+          top: { $first: '$$ROOT' },
+        }},
+        { $replaceRoot: { newRoot: '$top' } },
+        { $sort: { _score: -1 } },
+        { $limit: 6 },
+        { $project: {
+          id: 1, page_id: 1, detection_index: 1,
+          thumbnail_url: 1, extracted_url: 1, image_url: 1,
+          description: 1, type: 1, gallery_quality: 1,
+          book_id: 1, book_title: 1, book_author: 1, book_year: 1,
+        }},
+      ]).toArray();
+
+      if (images.length > 0) {
+        await collectionsColl.updateOne(
+          { slug: col.slug },
+          { $set: { featured_images: images } }
+        );
+        console.log(`  ${col.name}: ${images.length} featured images`);
+      }
+    }
+  } else {
+    console.log('\nSkipping metadata update (< 100 books processed; use --update-metadata to force)');
   }
 
-  await client.close();
+  // ── Final summary ──
+  console.log('\n=== SUMMARY ===');
+  console.log(`Books processed: ${books.length}`);
+  console.log(`Assignments made: ${totalAssignments} across ${books.length - unassigned} books`);
+  console.log(`Unmatched: ${unassigned} books`);
+  console.log('\nBy collection:');
+  for (const col of collections) {
+    const count = collectionCounts[col.slug] || 0;
+    if (count > 0) console.log(`  ${col.slug}: ${count}`);
+  }
   console.log('\nDone.');
+
+  await client.close();
 }
 
 main().catch(e => {

@@ -20,6 +20,11 @@
  *   accessibility, scholarly value) plus mechanical adjustments. Writes
  *   book.quality_score and book.quality_assessment.
  *
+ * - Phase 7.6: Collection Assignment (books with summary/description but no collection_scores)
+ *   Classifies books into thematic collections using Gemini Flash Lite. Additive writes
+ *   only — never removes existing collection assignments. Writes book.collections,
+ *   book.collection_relevance, and book.collection_scores marker.
+ *
  * Runs standalone via cron or called from the orchestrator.
  *
  * CLI flags:
@@ -53,6 +58,7 @@ const phaseArg = args.find(a => a.startsWith('--phase='))?.split('=')[1] || 'all
 const RUN_PHASE_6 = phaseArg === 'all' || phaseArg === '6';
 const RUN_PHASE_7 = phaseArg === 'all' || phaseArg === '7';
 const RUN_PHASE_7_5 = phaseArg === 'all' || phaseArg === '7.5';
+const RUN_PHASE_7_6 = phaseArg === 'all' || phaseArg === '7.6';
 const limitArg = args.find(a => a.startsWith('--limit='))?.split('=')[1];
 const PHASE_6_LIMIT = limitArg ? parseInt(limitArg) : 30;
 const PHASE_7_LIMIT = limitArg ? parseInt(limitArg) : 50;
@@ -1400,7 +1406,7 @@ Guidelines:
 - Accessibility: broad appeal (alchemy, magic, Hermetica) > narrow (obscure theology, legal texts)
 - Scholarly value: primary sources > derivative compilations, major authors > anonymous fragments`;
 
-        const model = genai.getGenerativeModel({
+        const model = getClient().getGenerativeModel({
           model: 'gemini-3-flash-preview',
           generationConfig: { temperature: 0.1, maxOutputTokens: 2048, responseMimeType: 'application/json' },
         });
@@ -1448,7 +1454,13 @@ Guidelines:
               updated_at: new Date(),
             }}
           );
-          await logUsage(db, usageMeta, 'quality-scoring', book.id);
+          await logUsage(db, {
+            type: 'quality-scoring', mode: 'realtime', model: 'gemini-3-flash-preview',
+            book_id: book.id, book_title: title,
+            input_tokens: usageMeta?.promptTokenCount || 0,
+            output_tokens: usageMeta?.candidatesTokenCount || 0,
+            status: 'success', endpoint: 'worker/hetzner-enrich',
+          });
         }
         qualityScored++;
         console.log(`  [${qualityScored}] ${title} — score: ${finalScore} (AI: ${aiTotal} + mech: ${mechTotal})`);
@@ -1462,9 +1474,193 @@ Guidelines:
     console.log(`  Quality scores: ${qualityScored}`);
   }
 
+  // ── Phase 7.6: Collection Assignment ──
+  // Classify books that have a summary or description but no collection_scores marker yet.
+  // Additive writes only: $addToSet for collections, dot-notation for relevance scores.
+  let collectionAssigned = 0;
+  const COLLECTION_MODEL = LITE_MODEL;
+  const COLLECTION_BATCH_SIZE = 25;
+  const COLLECTION_LIMIT = 50;
+
+  if (RUN_PHASE_7_6) {
+    console.log('\n=== Phase 7.6: Collection Assignment ===');
+
+    // Load collection definitions from DB
+    let collections = await db.collection('collections').find({}).toArray();
+    if (collections.length === 0) {
+      console.log('  No collections in DB — skipping phase 7.6');
+    } else {
+      // Normalize collection objects to what the prompt needs
+      collections = collections
+        .map(c => ({
+          slug: c.slug,
+          name: c.name || c.slug,
+          description: c.description || '',
+        }))
+        .filter(c => c.slug && c.name);
+
+      const collectionSummary = collections
+        .map(c => `- ${c.slug}: ${c.name} — ${c.description}`)
+        .join('\n');
+
+      const collectionSystemPrompt = `You are a specialist librarian classifying rare books into thematic collections. For each book, assign 1-3 collections that BEST fit, with a relevance score.
+
+COLLECTIONS:
+${collectionSummary}
+
+RULES:
+1. Assign 1-3 collections per book. Most books should get 1-2.
+2. Only assign a collection if the book genuinely belongs. Don't pad with marginal matches.
+3. The MOST relevant collection should score 80-100. Secondary fits: 50-79. Don't assign below 50.
+4. Consider title, author, year, language, and existing categories together.
+5. A book about Paracelsian medicine could be "alchemy" (80) + "medicine" (70). Use judgment.
+6. For non-Western books (Chinese, Sanskrit, etc.), prefer the regional collection (chinese-classics, indic-traditions) over Western categories.
+
+Respond with a JSON array, one entry per book, in the same order as input. Each entry:
+{"i": <index>, "c": [{"s": "<slug>", "r": <score>}]}
+
+NO explanation, just the JSON array.`;
+
+      const validSlugs = new Set(collections.map(c => c.slug));
+
+      // Find books that have content but haven't been classified yet
+      const unclassifiedBooks = await db.collection('books')
+        .find({
+          collection_scores: { $exists: false },
+          pages_count: { $gt: 0 },
+          hidden: { $ne: true },
+          $or: [
+            { 'reading_summary.overview': { $exists: true, $ne: '' } },
+            { description: { $exists: true, $ne: '' } },
+          ],
+        })
+        .project({
+          id: 1, title: 1, display_title: 1, author: 1, year: 1, language: 1, categories: 1,
+        })
+        .limit(COLLECTION_LIMIT)
+        .toArray();
+
+      console.log(`  Unclassified books found: ${unclassifiedBooks.length}`);
+
+      if (unclassifiedBooks.length > 0 && !DRY_RUN) {
+        // Process in batches of COLLECTION_BATCH_SIZE
+        for (let i = 0; i < unclassifiedBooks.length; i += COLLECTION_BATCH_SIZE) {
+          const batch = unclassifiedBooks.slice(i, i + COLLECTION_BATCH_SIZE);
+
+          const booksText = batch.map((b, idx) => {
+            const cats = (b.categories || []).slice(0, 8).join(', ');
+            return `[${idx}] "${(b.display_title || b.title || 'Untitled').substring(0, 120)}" by ${(b.author || 'Unknown').substring(0, 60)} (${b.year || '?'}, ${b.language || '?'}) [${cats}]`;
+          }).join('\n');
+
+          const prompt = `Classify these ${batch.length} books:\n\n${booksText}`;
+
+          let results;
+          for (let attempt = 0; attempt < 3; attempt++) {
+            try {
+              const model = getClient().getGenerativeModel({
+                model: COLLECTION_MODEL,
+                generationConfig: {
+                  temperature: 0.1,
+                  responseMimeType: 'application/json',
+                },
+                systemInstruction: collectionSystemPrompt,
+              });
+
+              const result = await model.generateContent(prompt);
+              const text = result.response.text().trim();
+              const usageMeta = result.response.usageMetadata;
+
+              results = JSON.parse(text);
+              if (!Array.isArray(results)) throw new Error('Not an array');
+
+              await logUsage(db, {
+                type: 'collection-assignment', mode: 'realtime', model: COLLECTION_MODEL,
+                input_tokens: usageMeta?.promptTokenCount || 0,
+                output_tokens: usageMeta?.candidatesTokenCount || 0,
+                status: 'success', endpoint: 'worker/hetzner-enrich',
+              });
+              break;
+            } catch (err) {
+              if (err.message?.includes('429') || err.message?.includes('RESOURCE_EXHAUSTED')) rotateKey();
+              console.error(`  Collection batch ${Math.floor(i / COLLECTION_BATCH_SIZE)} attempt ${attempt + 1} failed: ${err.message}`);
+              if (attempt < 2) await new Promise(r => setTimeout(r, 2000 * (attempt + 1)));
+              else results = batch.map((_, idx) => ({ i: idx, c: [] }));
+            }
+          }
+
+          // Write results for this batch
+          const bulkOps = [];
+          for (const res of results) {
+            const book = batch[res.i];
+            if (!book) continue;
+
+            const assignments = (res.c || [])
+              .filter(a => a.s && validSlugs.has(a.s) && a.r >= 50)
+              .sort((a, b) => b.r - a.r)
+              .slice(0, 3);
+
+            const slugs = assignments.map(a => a.s);
+
+            // Build dot-notation relevance updates
+            const relevanceSets = {};
+            for (const a of assignments) {
+              relevanceSets[`collection_relevance.${a.s}`] = a.r;
+            }
+
+            if (slugs.length > 0) {
+              bulkOps.push({
+                updateOne: {
+                  filter: { id: book.id },
+                  update: {
+                    $addToSet: { collections: { $each: slugs } },
+                    $set: {
+                      ...relevanceSets,
+                      collection_scores: {
+                        assigned_at: new Date(),
+                        model: COLLECTION_MODEL,
+                      },
+                      updated_at: new Date(),
+                    },
+                  },
+                },
+              });
+              collectionAssigned++;
+            } else {
+              // Mark as processed even with no match, so we don't re-attempt
+              bulkOps.push({
+                updateOne: {
+                  filter: { id: book.id },
+                  update: {
+                    $set: {
+                      collection_scores: {
+                        assigned_at: new Date(),
+                        model: COLLECTION_MODEL,
+                        result: 'no_match',
+                      },
+                    },
+                  },
+                },
+              });
+            }
+          }
+
+          if (bulkOps.length > 0) {
+            await db.collection('books').bulkWrite(bulkOps);
+          }
+
+          process.stdout.write(`  Processed: ${Math.min(i + COLLECTION_BATCH_SIZE, unclassifiedBooks.length)}/${unclassifiedBooks.length}\r`);
+        }
+        console.log(`\n  Collection assignments: ${collectionAssigned}`);
+      } else if (DRY_RUN) {
+        console.log(`  Would classify ${unclassifiedBooks.length} books`);
+      }
+    }
+    console.log(`  Collections assigned: ${collectionAssigned}`);
+  }
+
   // Summary
   const durationMs = Date.now() - startTime;
-  console.log(`\n[ENRICH] Done — enriched=${enriched}, chapters=${chaptersExtracted}, quality=${qualityScored}, errors=${errors.length}, ${(durationMs/1000).toFixed(0)}s`);
+  console.log(`\n[ENRICH] Done — enriched=${enriched}, chapters=${chaptersExtracted}, quality=${qualityScored}, collections=${collectionAssigned}, errors=${errors.length}, ${(durationMs/1000).toFixed(0)}s`);
   if (errors.length > 0) {
     console.log('  Errors:');
     for (const err of errors.slice(0, 10)) console.log(`    ${err}`);
@@ -1475,10 +1671,10 @@ Guidelines:
     duration_ms: durationMs,
     status: errors.length > 0 ? 'completed_with_errors' : 'success',
     failed: false,
-    actions: { enriched, chapters_extracted: chaptersExtracted, quality_scored: qualityScored },
+    actions: { enriched, chapters_extracted: chaptersExtracted, quality_scored: qualityScored, collections_assigned: collectionAssigned },
     errors: errors.slice(0, 20).map(msg => ({ message: msg, timestamp: new Date() })),
     error_count: errors.length,
-    summary: `E:${enriched} C:${chaptersExtracted} Q:${qualityScored} err:${errors.length}`,
+    summary: `E:${enriched} C:${chaptersExtracted} Q:${qualityScored} COL:${collectionAssigned} err:${errors.length}`,
   }).catch(() => {});
 
   await client.close();
