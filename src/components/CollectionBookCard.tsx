@@ -114,10 +114,12 @@ export default function CollectionBookCard({ book, priority = false }: Collectio
           <p className="text-sm text-secondary mb-3 line-clamp-1"><AuthorName author={book.author} /></p>
 
           <div className="flex flex-wrap gap-2 text-xs text-muted">
-            <span className="flex items-center gap-1">
-              <Calendar className="w-3 h-3" />
-              {book.year}
-            </span>
+            {book.year > 0 && (
+              <span className="flex items-center gap-1">
+                <Calendar className="w-3 h-3" />
+                {book.year}
+              </span>
+            )}
             {pageCount > 0 && (
               <>
                 <span>•</span>
