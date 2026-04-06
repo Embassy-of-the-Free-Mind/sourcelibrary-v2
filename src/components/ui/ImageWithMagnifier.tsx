@@ -41,6 +41,8 @@ export default function ImageWithMagnifier({
   const [fullImageLoaded, setFullImageLoaded] = useState(false);
   const [isTouchDevice, setIsTouchDevice] = useState(false);
   const [showFullscreen, setShowFullscreen] = useState(false);
+  // Track last known image height to prevent layout shift during page transitions
+  const [lastImageHeight, setLastImageHeight] = useState<number>(0);
   const containerRef = useRef<HTMLDivElement>(null);
   const imgRef = useRef<HTMLImageElement>(null);
 
@@ -224,9 +226,12 @@ export default function ImageWithMagnifier({
         onMouseLeave={() => setShowMagnifier(false)}
         onClick={handleClick}
       >
-        {/* Loading skeleton */}
+        {/* Loading skeleton — use last known height in scrollable mode to prevent layout shift */}
         {!isLoaded && (
-          <div className={`flex items-center justify-center ${darkMode ? 'bg-black' : 'bg-stone-100 animate-pulse'} ${scrollable ? 'w-full h-48' : 'absolute inset-0'}`}>
+          <div
+            className={`flex items-center justify-center ${darkMode ? 'bg-black' : 'bg-stone-100 animate-pulse'} ${scrollable ? 'w-full' : 'absolute inset-0'}`}
+            style={scrollable && lastImageHeight > 0 ? { height: lastImageHeight } : scrollable ? { height: '12rem' } : undefined}
+          >
             <div className={`text-sm ${darkMode ? 'text-stone-600' : 'text-stone-400'}`}>Loading...</div>
           </div>
         )}
@@ -252,6 +257,9 @@ export default function ImageWithMagnifier({
             if (imgRef.current) {
               const rect = imgRef.current.getBoundingClientRect();
               setImageDimensions({ width: rect.width, height: rect.height });
+              if (scrollable && rect.height > 0) {
+                setLastImageHeight(rect.height);
+              }
             }
           }}
           onError={() => {
