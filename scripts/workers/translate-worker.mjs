@@ -27,7 +27,7 @@ import { createHash } from 'crypto';
 import { nanoid } from 'nanoid';
 
 // ── Config ──
-const CONCURRENCY = 15;          // Max books translating simultaneously (tuned for 60-connection budget)
+const CONCURRENCY = 25;          // Max books translating simultaneously
 const PAGES_PER_RUN = 8000;      // Global page cap per run (prevent runaway costs)
 const MAX_CONSECUTIVE_ERRORS = 5; // Per-book error threshold before giving up
 const RATE_LIMIT_BACKOFF_MS = 15000;
@@ -996,7 +996,7 @@ async function main() {
   // ── Time-boxed work queue with slot backfill ──
   // Instead of Promise.all(15 books) that waits for the slowest, run a pool
   // that refills slots as books finish. Deadline prevents runaway runs.
-  const RUN_DEADLINE_MS = 15 * 60 * 1000; // 15 minutes
+  const RUN_DEADLINE_MS = 45 * 60 * 1000; // 45 minutes — big books need time to finish
   const deadline = startTime + RUN_DEADLINE_MS;
   const globalCounter = { count: 0 };
   const results = [];
