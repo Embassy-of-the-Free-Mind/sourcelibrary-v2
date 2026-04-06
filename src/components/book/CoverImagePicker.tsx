@@ -48,7 +48,7 @@ export default function CoverImagePicker({ bookId, currentThumbnail, currentThum
     // Split-from-spread pages: use photo directly, skip legacy fallback
     if (page.split_from_spread) return page.photo;
 
-    // Prefer pre-generated Vercel Blob thumbnail (fast CDN)
+    // Prefer pre-generated R2 thumbnail (fast CDN)
     if (page.thumbnail_blob) return page.thumbnail_blob;
 
     // For split pages, prefer pre-cropped Blob image (avoids proxy overhead)

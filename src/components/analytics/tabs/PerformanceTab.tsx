@@ -33,13 +33,13 @@ export default function PerformanceTab({ hours }: PerformanceTabProps) {
           <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
             {perfData.sourceStats.map((stat) => {
               const sourceLabels: Record<string, string> = {
-                blob: 'Vercel Blob (Archived)',
+                r2: 'R2 CDN (Archived)',
                 ia: 'Internet Archive',
                 local: 'API Proxy',
                 other: 'Other',
               };
               const sourceColors: Record<string, string> = {
-                blob: '#22c55e',
+                r2: '#22c55e',
                 ia: '#f59e0b',
                 local: 'var(--accent-sage)',
                 other: 'var(--text-muted)',
@@ -86,27 +86,27 @@ export default function PerformanceTab({ hours }: PerformanceTabProps) {
           </div>
           {/* Comparison Bar */}
           {perfData.sourceStats.length >= 2 && (() => {
-            const blob = perfData.sourceStats.find(s => s.source === 'blob');
+            const r2 = perfData.sourceStats.find(s => s.source === 'r2');
             const ia = perfData.sourceStats.find(s => s.source === 'ia');
-            if (blob && ia) {
-              const speedup = ((ia.avg - blob.avg) / ia.avg * 100).toFixed(0);
-              const faster = blob.avg < ia.avg ? 'blob' : 'ia';
+            if (r2 && ia) {
+              const speedup = ((ia.avg - r2.avg) / ia.avg * 100).toFixed(0);
+              const faster = r2.avg < ia.avg ? 'r2' : 'ia';
               return (
                 <div className="mt-4 p-4 rounded-lg text-center" style={{ background: 'var(--bg-cream)' }}>
-                  {faster === 'blob' ? (
+                  {faster === 'r2' ? (
                     <p style={{ color: 'var(--text-primary)' }}>
-                      <span className="font-semibold" style={{ color: '#22c55e' }}>Vercel Blob</span> is{' '}
+                      <span className="font-semibold" style={{ color: '#22c55e' }}>R2 CDN</span> is{' '}
                       <span className="font-semibold">{speedup}% faster</span> than Internet Archive
                       <span className="text-sm ml-2" style={{ color: 'var(--text-muted)' }}>
-                        ({formatDuration(blob.avg)} vs {formatDuration(ia.avg)})
+                        ({formatDuration(r2.avg)} vs {formatDuration(ia.avg)})
                       </span>
                     </p>
                   ) : (
                     <p style={{ color: 'var(--text-primary)' }}>
                       <span className="font-semibold" style={{ color: '#f59e0b' }}>Internet Archive</span> is{' '}
-                      <span className="font-semibold">{Math.abs(Number(speedup))}% faster</span> than Vercel Blob
+                      <span className="font-semibold">{Math.abs(Number(speedup))}% faster</span> than R2 CDN
                       <span className="text-sm ml-2" style={{ color: 'var(--text-muted)' }}>
-                        ({formatDuration(ia.avg)} vs {formatDuration(blob.avg)})
+                        ({formatDuration(ia.avg)} vs {formatDuration(r2.avg)})
                       </span>
                     </p>
                   )}

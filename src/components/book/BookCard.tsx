@@ -45,9 +45,9 @@ export default function BookCard({ book, priority = false }: BookCardProps) {
   const thumbnailUrl = useFallback && fallbackUrl ? fallbackUrl : primaryUrl;
 
   // Determine image source type for analytics
-  const getImageSource = (): 'blob' | 'ia' | 'local' | 'other' => {
+  const getImageSource = (): 'r2' | 'ia' | 'local' | 'other' => {
     if (!thumbnailUrl) return 'other';
-    if (thumbnailUrl.includes('blob.vercel-storage.com')) return 'blob';
+    if (thumbnailUrl.includes('images.sourcelibrary.org')) return 'r2';
     if (thumbnailUrl.includes('archive.org')) return 'ia';
     if (thumbnailUrl.startsWith('/api/')) return 'local';
     return 'other';
@@ -60,8 +60,8 @@ export default function BookCard({ book, priority = false }: BookCardProps) {
       recordLoadingMetric('book_card_image_load', loadTime, {
         bookId: book.id,
         priority,
-        source, // 'blob' = Vercel Blob, 'ia' = Internet Archive, 'local' = API proxy, 'other' = unknown
-        isArchived: source === 'blob'
+        source, // 'r2' = R2 CDN, 'ia' = Internet Archive, 'local' = API proxy, 'other' = unknown
+        isArchived: source === 'r2'
       });
     }
     setImageLoaded(true);

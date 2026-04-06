@@ -55,9 +55,9 @@ export interface Page {
   // Split/crop workflow (legacy — stale on split_from_spread pages)
   photo_original?: string;      // Original S3 URL before cropping
   cropped_photo?: string;       // Local path to cropped image
-  archived_photo?: string;      // Vercel Blob URL for archived IA images
+  archived_photo?: string;      // Full-res archived JPEG in R2
   display_photo?: string;       // 1200px display-size JPEG in R2 (with provenance marks baked in)
-  thumbnail_blob?: string;      // Pre-generated 150px JPEG thumbnail in Vercel Blob
+  thumbnail_blob?: string;      // Pre-generated 150px JPEG thumbnail in R2
   crop?: CropData;              // Crop coordinates used
   split_from?: string;          // ID of parent page if this was split from another
   split_detection?: {           // Pixel analysis result
@@ -223,8 +223,8 @@ export interface DetectedImage {
     height: number; // Height (0-1)
   };
   rotation?: 0 | 90 | 180 | 270;  // Rotation in degrees (clockwise)
-  extracted_url?: string;       // Full-size cropped+rotated Vercel Blob URL
-  thumbnail_url?: string;       // 300px gallery grid thumbnail in Vercel Blob
+  extracted_url?: string;       // Full-size cropped+rotated JPEG in R2
+  thumbnail_url?: string;       // 300px gallery grid thumbnail in R2
   detected_at?: Date;
   detection_source: 'ocr_tag' | 'vision_model' | 'manual';
   model?: 'gemini' | 'mistral' | 'grounding-dino';

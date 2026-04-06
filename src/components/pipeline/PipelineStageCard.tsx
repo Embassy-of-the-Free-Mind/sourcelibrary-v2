@@ -27,7 +27,7 @@ export const STAGE_DETAILS: StageDetail[] = [
     id: 'archive',
     name: 'Archive',
     color: 'var(--accent-gold)',
-    description: 'Page images are archived from external sources to Vercel Blob, ensuring long-term availability. Original URLs are always preserved for provenance.',
+    description: 'Page images are archived from external sources to R2, ensuring long-term availability. Original URLs are always preserved for provenance.',
     backend: 'Hetzner server (external script) + cron check',
     notes: [
       'Generates thumbnails; split detection uses aspect ratio analysis to identify two-page spreads',

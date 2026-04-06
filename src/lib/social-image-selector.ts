@@ -29,7 +29,7 @@ export interface SocialImageCandidate {
     width: number;
     height: number;
   };
-  extractedUrl?: string;        // Pre-generated Vercel Blob URL
+  extractedUrl?: string;        // Pre-generated R2 URL
 
   // Book context
   bookId: string;

@@ -2,9 +2,9 @@
  * Gallery Image Generation
  *
  * Generates pre-cropped, rotated gallery images and thumbnails,
- * then uploads them to Vercel Blob for fast gallery rendering.
+ * then uploads them to R2 for fast gallery rendering.
  *
- * Replaces on-the-fly /api/crop-image calls with pre-generated Blob URLs.
+ * Replaces on-the-fly /api/crop-image calls with pre-generated R2 URLs.
  */
 
 import sharp from 'sharp';
@@ -28,7 +28,7 @@ interface GenerateGalleryImagesResult {
 }
 
 /**
- * Generate cropped+rotated gallery image and thumbnail, upload to Vercel Blob.
+ * Generate cropped+rotated gallery image and thumbnail, upload to R2.
  *
  * Pipeline: fetch source → sharp extract (bbox + padding) → rotate → JPEG → upload
  * Also generates a 300px-wide thumbnail for the gallery grid.
@@ -132,7 +132,7 @@ export async function generateGalleryImages(
     .jpeg({ quality: 70 })
     .toBuffer();
 
-  // Upload both to storage (R2 or Vercel Blob)
+  // Upload both to R2
   const blobPrefix = `gallery/${bookId}/${pageId}-${detectionIndex}`;
 
   const [extractedBlob, thumbnailBlob] = await Promise.all([
