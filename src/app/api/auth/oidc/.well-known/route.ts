@@ -1,5 +1,7 @@
 import { NextResponse } from 'next/server';
 
+export const dynamic = 'force-dynamic';
+
 /**
  * GET /api/auth/oidc/.well-known
  * OpenID Connect Discovery — tells Synapse where all the OIDC endpoints are.
