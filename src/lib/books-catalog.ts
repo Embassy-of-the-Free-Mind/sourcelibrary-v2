@@ -163,14 +163,16 @@ export async function getLanguageCounts(filter: {
  * whose names start with the given letter and have translations.
  */
 export async function browseAuthors(letter: string): Promise<{ name: string; count: number }[]> {
-  // Fetch just the author column for books matching this letter with translations
+  // Fetch just the author column for books matching this letter with translations.
+  // Must set range beyond default 1000-row limit (letter A has ~1100 books).
   const { data, error } = await supabase
     .from('books_catalog')
     .select('author')
     .eq('visible', true)
     .gt('pages_count', 0)
     .gt('pages_translated', 0)
-    .ilike('author', `${letter}%`);
+    .ilike('author', `${letter}%`)
+    .range(0, 4999);
 
   if (error) throw new Error(`browseAuthors query failed: ${error.message}`);
 
