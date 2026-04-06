@@ -1,11 +1,5 @@
 import { MongoClient } from 'mongodb';
 
-const uri = process.env.MONGODB_URI;
-
-if (!uri) {
-  console.error('MONGODB_URI environment variable is not set');
-}
-
 const options = {
   serverSelectionTimeoutMS: 5000,
   connectTimeoutMS: 5000,
@@ -13,6 +7,17 @@ const options = {
   maxPoolSize: 5,
   minPoolSize: 0,
 };
+
+function createClientPromise(): Promise<MongoClient> {
+  const uri = process.env.MONGODB_URI;
+  if (!uri) {
+    // Return a promise that rejects at call time, not at import time.
+    // This prevents build-time crashes when env vars aren't available.
+    return Promise.reject(new Error('MONGODB_URI environment variable is not set'));
+  }
+  const client = new MongoClient(uri, options);
+  return client.connect();
+}
 
 // Singleton MongoClient promise for NextAuth MongoDB adapter
 let clientPromise: Promise<MongoClient>;
@@ -23,13 +28,11 @@ if (process.env.NODE_ENV === 'development') {
     _mongoClientPromise?: Promise<MongoClient>;
   };
   if (!globalWithMongo._mongoClientPromise) {
-    const client = new MongoClient(uri!, options);
-    globalWithMongo._mongoClientPromise = client.connect();
+    globalWithMongo._mongoClientPromise = createClientPromise();
   }
   clientPromise = globalWithMongo._mongoClientPromise;
 } else {
-  const client = new MongoClient(uri!, options);
-  clientPromise = client.connect();
+  clientPromise = createClientPromise();
 }
 
 export default clientPromise;
