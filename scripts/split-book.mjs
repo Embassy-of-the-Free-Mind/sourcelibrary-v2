@@ -530,6 +530,10 @@ for (let i = 0; i < newPages.length; i++) {
     split_from_spread: true,
     split_side: p.side === 'error' ? 'single' : p.side,
     split_position: p.splitPosition,
+    field_provenance: {
+      ocr: { source: 'gemini', method: 'spread-split-ocr', confidence: 1.0, date: new Date() },
+      photo: { source: 'r2', method: 'spread-split-crop', confidence: 1.0, date: new Date() },
+    },
     created_at: new Date(),
     updated_at: new Date(),
   };
@@ -548,7 +552,33 @@ if (!coverPage && newDocs.length > 0) {
   coverPage = { num: first.page_number, url: first.photo, type: first.page_type };
 }
 
-console.log(`  Deleting ${existingPages.length} old pages...`);
+// Safety check: don't delete pages if too many failed (>20% loss = abort)
+const failedCount = newPages.length - newDocs.length;
+if (failedCount > 0 && failedCount / newPages.length > 0.2) {
+  console.error(`\nABORT: ${failedCount}/${newPages.length} pages failed (>${Math.round(0.2 * 100)}% threshold). Not deleting old pages.`);
+  await client.close();
+  process.exit(1);
+}
+if (newDocs.length === 0) {
+  console.error('\nABORT: Zero pages would be created. Not deleting old pages.');
+  await client.close();
+  process.exit(1);
+}
+
+// Save pre-split revision (lightweight snapshot before destructive delete)
+const pagesWithOcrData = allExistingPages.filter(p => p.ocr?.data);
+if (pagesWithOcrData.length > 0) {
+  await db.collection('page_revisions').insertOne({
+    book_id: book.id,
+    type: 'pre-split-snapshot',
+    page_count: allExistingPages.length,
+    pages_with_ocr: pagesWithOcrData.length,
+    created_at: new Date(),
+    note: `Snapshot before spread split. ${allExistingPages.length} pages → ${newDocs.length} split pages.`,
+  });
+}
+
+console.log(`  Deleting ${allExistingPages.length} old pages (${failedCount} failed, within threshold)...`);
 await db.collection('pages').deleteMany({ book_id: book.id });
 
 console.log(`  Inserting ${newDocs.length} new pages...`);

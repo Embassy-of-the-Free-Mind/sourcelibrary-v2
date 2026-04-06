@@ -25,6 +25,9 @@ import { nanoid } from 'nanoid';
 import { SQSClient, SendMessageBatchCommand } from '@aws-sdk/client-sqs';
 import { S3Client, PutObjectCommand } from '@aws-sdk/client-s3';
 import { createHash } from 'crypto';
+import { execFile } from 'child_process';
+import { promisify } from 'util';
+const execFileAsync = promisify(execFile);
 
 // ── Config ──
 
@@ -1918,12 +1921,15 @@ async function run() {
     }
 
     // ── Phase 1.25: Split detection for spread scans ──
-    // Checks archive_complete books for two-page spreads (landscape aspect ratio).
-    // Center-splits spreads inline (no API call), uploads cropped halves to R2.
-    // Based on batch-split-bph.mjs by Mayank. Must run BEFORE OCR.
-    // See: https://github.com/Embassy-of-the-Free-Mind/sourcelibrary-v2/issues/264
+    // Three-step flow:
+    //   1. AR screening (free, sharp metadata) — filters obvious portrait pages
+    //   2. Gemini visual check (cheap flash-lite) — confirms spread vs foldout/map/table
+    //   3. Flag needs_splitting=true → Phase 2 OCR uses spread-aware prompt with
+    //      <split-position> + <page-break/> → post-OCR split crops images
+    // AR > 1.2 is necessary but NOT sufficient — foldouts and maps are wide single pages.
+    // See: https://github.com/Embassy-of-the-Free-Mind/sourcelibrary-v2/issues/824
     if (shouldRun(1.25)) {
-      console.log('\n--- Phase 1.25: Split detection (spread → individual pages) ---');
+      console.log('\n--- Phase 1.25: Split detection (AR screen → Gemini confirm) ---');
 
       const SPLIT_LIMIT = 100; // Max books per cycle
       const ASPECT_RATIO_THRESHOLD = 1.2; // Width/height > 1.2 = likely spread
@@ -1933,7 +1939,6 @@ async function run() {
         .find({
           'pipeline_auto.status': 'archive_complete',
           'pipeline_auto.split_checked': { $ne: true },
-          // preview_ocr_queued_at filter removed — split detection is independent of preview OCR
         })
         .sort({ hidden: 1 })
         .project({ id: 1, title: 1, pages_count: 1 })
@@ -1943,18 +1948,18 @@ async function run() {
       console.log(`  Candidates for split check: ${candidates.length}`);
 
       let splitChecked = 0;
-      let splitApplied = 0;
+      let splitFlagged = 0;
 
       for (const book of candidates) {
         try {
           const label = (book.title || '').substring(0, 50);
 
-          // Sample first 3 pages to check aspect ratio
+          // Sample first 5 pages to check aspect ratio
           const samplePages = await db.collection('pages')
             .find({ book_id: book.id, crop: { $exists: false } })
             .sort({ page_number: 1 })
-            .limit(3)
-            .project({ id: 1, photo: 1, photo_original: 1, archived_photo: 1 })
+            .limit(5)
+            .project({ id: 1, page_number: 1, photo: 1, photo_original: 1, archived_photo: 1 })
             .toArray();
 
           if (samplePages.length === 0) {
@@ -1969,221 +1974,145 @@ async function run() {
             continue;
           }
 
-          // Check aspect ratio of first available image
+          // Check aspect ratio of sample pages
+          const sharp = (await import('sharp')).default;
           let isSpread = false;
+          let checkedAny = false;
+          let detectedAr = null;
+          let spreadImageBuffer = null; // Keep buffer for Gemini confirmation
+
           for (const page of samplePages) {
             const imageUrl = page.archived_photo || page.photo_original || page.photo;
             if (!imageUrl) continue;
 
             try {
-              const res = await fetch(imageUrl, { method: 'HEAD', signal: AbortSignal.timeout(10000) });
-              // Can't get dimensions from HEAD. Download a small version and check.
               const imgRes = await fetch(imageUrl, { signal: AbortSignal.timeout(15000) });
               if (!imgRes.ok) continue;
               const buffer = Buffer.from(await imgRes.arrayBuffer());
-              const sharp = (await import('sharp')).default;
               const meta = await sharp(buffer).metadata();
               if (meta.width && meta.height) {
+                checkedAny = true;
                 const ratio = meta.width / meta.height;
-                console.log(`    ${label}: page ${page.id} aspect ratio = ${ratio.toFixed(2)}`);
                 if (ratio > ASPECT_RATIO_THRESHOLD) {
                   isSpread = true;
+                  detectedAr = ratio;
+                  spreadImageBuffer = buffer;
+                  break; // One wide page is enough to flag the book
                 }
-                break; // One sample is enough
               }
             } catch (err) {
-              console.log(`    ${label}: failed to check aspect ratio: ${err.message?.slice(0, 80)}`);
+              console.log(`    ${label}: AR check failed p${page.page_number}: ${err.message?.slice(0, 60)}`);
             }
           }
 
+          if (!checkedAny) {
+            console.log(`    ${label}: could not check any page images, skipping`);
+            continue; // Don't mark split_checked — retry next cycle
+          }
+
           if (!isSpread) {
-            // Not a spread — mark as checked and move on
+            // All pages are portrait — no spread, mark as checked
             if (!DRY_RUN) {
               await db.collection('books').updateOne(
                 { id: book.id },
                 { $set: { 'pipeline_auto.split_checked': true, 'pipeline_auto.last_updated': new Date() } }
               );
             }
-            console.log(`    ${label}: not a spread (portrait pages), skipping`);
+            console.log(`    ${label}: portrait pages, no split needed`);
             splitChecked++;
             continue;
           }
 
-          // It's a spread — center-split inline (from batch-split-bph.mjs)
-          console.log(`    ${label}: SPREAD detected, running center-split...`);
+          // AR > threshold — confirm with Gemini before flagging for spread-aware OCR.
+          // This prevents wasting the spread OCR prompt on foldouts, maps, and wide tables.
+          console.log(`    ${label}: AR=${detectedAr.toFixed(2)}, confirming with Gemini...`);
 
           if (DRY_RUN) {
-            console.log(`    Would split: ${label}`);
+            console.log(`    Would confirm with Gemini: ${label}`);
+            splitChecked++;
             continue;
           }
 
-          const r2 = getR2Client();
-          const sharp = (await import('sharp')).default;
+          let isConfirmedSpread = false;
+          try {
+            // Use the already-downloaded buffer from AR check, resize for cheap call
+            const candidateBuf = spreadImageBuffer;
+            const resized = await sharp(candidateBuf).resize(1024).jpeg({ quality: 80 }).toBuffer();
+            const base64 = resized.toString('base64');
 
-          // Get all pages for this book
-          const allBookPages = await db.collection('pages')
-            .find({ book_id: book.id })
-            .sort({ page_number: 1 })
-            .toArray();
+            const SPLIT_CONFIRM_KEY = process.env.GEMINI_API_KEY_TIER3 || process.env.GEMINI_API_KEY;
+            const SPLIT_CONFIRM_MODEL = 'gemini-3.1-flash-lite-preview';
+            const geminiUrl = `${GEMINI_API_BASE}/models/${SPLIT_CONFIRM_MODEL}:generateContent?key=${SPLIT_CONFIRM_KEY}`;
+            const geminiRes = await fetch(geminiUrl, {
+              method: 'POST',
+              headers: { 'Content-Type': 'application/json' },
+              body: JSON.stringify({
+                contents: [{
+                  parts: [
+                    { text: `Is this a TWO-PAGE SPREAD (two book pages photographed together with a gutter in the middle) or a SINGLE WIDE PAGE (foldout, map, table, or illustration)?
 
-          const newPages = [];
-          const updateOps = [];
-          let bookSplitCount = 0;
-          let bookSingleCount = 0;
-          let bookErrors = 0;
+Look for: central gutter/binding shadow, two separate text blocks, page numbers on both margins.
 
-          await parallelMap(allBookPages, async (page) => {
-            try {
-              const imgUrl = page.archived_photo || page.photo_original || page.photo;
-              if (!imgUrl) return;
+Reply with ONLY: {"is_spread": true} or {"is_spread": false}` },
+                    { inline_data: { mime_type: 'image/jpeg', data: base64 } },
+                  ],
+                }],
+                generationConfig: { temperature: 0, maxOutputTokens: 30 },
+              }),
+              signal: AbortSignal.timeout(20000),
+            });
 
-              const imgRes = await fetch(imgUrl, { signal: AbortSignal.timeout(30000) });
-              if (!imgRes.ok) return;
-              const buf = Buffer.from(await imgRes.arrayBuffer());
-              const pageMeta = await sharp(buf).metadata();
-              const pageRatio = (pageMeta.width || 1) / (pageMeta.height || 1);
-
-              if (pageRatio <= ASPECT_RATIO_THRESHOLD) {
-                bookSingleCount++;
-                return;
+            if (geminiRes.ok) {
+              const geminiData = await geminiRes.json();
+              const rawText = geminiData.candidates?.[0]?.content?.parts?.[0]?.text || '';
+              const jsonMatch = rawText.match(/\{[\s\S]*\}/);
+              if (jsonMatch) {
+                const result = JSON.parse(jsonMatch[0]);
+                isConfirmedSpread = !!result.is_spread;
               }
-
-              // Center-split
-              const imgWidth = pageMeta.width || 1000;
-              const imgHeight = pageMeta.height || 1000;
-              const splitX = Math.round(imgWidth / 2);
-              const overlapPx = Math.round(SPLIT_OVERLAP * imgWidth / 1000);
-
-              const leftBuf = await sharp(buf)
-                .extract({ left: 0, top: 0, width: Math.min(imgWidth, splitX + overlapPx), height: imgHeight })
-                .jpeg({ quality: SPLIT_CROPPED_QUALITY, progressive: true })
-                .toBuffer();
-
-              const rightBuf = await sharp(buf)
-                .extract({ left: Math.max(0, splitX - overlapPx), top: 0, width: Math.min(imgWidth, imgWidth - splitX + overlapPx), height: imgHeight })
-                .jpeg({ quality: SPLIT_CROPPED_QUALITY, progressive: true })
-                .toBuffer();
-
-              const [leftDisplay, leftThumb, rightDisplay, rightThumb] = await Promise.all([
-                sharp(leftBuf).resize(SPLIT_DISPLAY_WIDTH).jpeg({ quality: SPLIT_DISPLAY_QUALITY }).toBuffer(),
-                sharp(leftBuf).resize(SPLIT_THUMB_WIDTH).jpeg({ quality: SPLIT_THUMB_QUALITY }).toBuffer(),
-                sharp(rightBuf).resize(SPLIT_DISPLAY_WIDTH).jpeg({ quality: SPLIT_DISPLAY_QUALITY }).toBuffer(),
-                sharp(rightBuf).resize(SPLIT_THUMB_WIDTH).jpeg({ quality: SPLIT_THUMB_QUALITY }).toBuffer(),
-              ]);
-
-              const leftPaths = splitPagePaths(book.id, page.page_number);
-              const rightPageId = new ObjectId().toHexString();
-              const rightTempKey = `pages/${book.id}/split-${rightPageId}`;
-
-              const [leftFullUrl, , leftThumbUrl] = await Promise.all([
-                uploadToR2(r2, leftPaths.full, leftBuf),
-                uploadToR2(r2, leftPaths.display, leftDisplay),
-                uploadToR2(r2, leftPaths.thumb, leftThumb),
-              ]);
-
-              const [rightFullUrl, , rightThumbUrl] = await Promise.all([
-                uploadToR2(r2, `${rightTempKey}-full.jpg`, rightBuf),
-                uploadToR2(r2, `${rightTempKey}.jpg`, rightDisplay),
-                uploadToR2(r2, `${rightTempKey}-thumb.jpg`, rightThumb),
-              ]);
-
-              const splitPosition = Math.round((splitX / imgWidth) * 1000);
-              const leftCrop = { xStart: 0, xEnd: splitPosition + SPLIT_OVERLAP };
-              const rightCrop = { xStart: splitPosition - SPLIT_OVERLAP, xEnd: 1000 };
-
-              updateOps.push({
-                updateOne: {
-                  filter: { id: page.id },
-                  update: {
-                    $set: {
-                      photo: leftFullUrl,
-                      photo_original: page.photo,
-                      cropped_photo: leftFullUrl,
-                      thumbnail: leftThumbUrl,
-                      crop: leftCrop,
-                      split_detection: {
-                        isTwoPageSpread: true, confidence: 'high', splitPosition,
-                        method: 'center-split', detected_at: new Date(),
-                      },
-                      updated_at: new Date(),
-                    },
-                    $unset: { ocr: '', translation: '', summary: '' },
-                  },
-                },
-              });
-
-              newPages.push({
-                _id: new ObjectId(rightPageId),
-                id: rightPageId,
-                tenant_id: 'default',
-                book_id: book.id,
-                page_number: page.page_number + 0.5,
-                photo: rightFullUrl,
-                photo_original: page.photo,
-                cropped_photo: rightFullUrl,
-                thumbnail: rightThumbUrl,
-                crop: rightCrop,
-                split_from: page.id,
-                split_detection: {
-                  isTwoPageSpread: true, confidence: 'high', splitPosition,
-                  method: 'center-split', detected_at: new Date(),
-                },
-                created_at: new Date(),
-                updated_at: new Date(),
-              });
-
-              bookSplitCount++;
-            } catch (err) {
-              console.log(`      page ${page.page_number}: FAIL — ${err.message?.slice(0, 80)}`);
-              bookErrors++;
             }
-          }, SPLIT_PAGE_CONCURRENCY);
+          } catch (err) {
+            // On Gemini failure, assume spread (safer — OCR prompt handles non-spreads gracefully)
+            console.log(`    ${label}: Gemini check failed (${err.message?.slice(0, 60)}), assuming spread`);
+            isConfirmedSpread = true;
+          }
 
-          // Apply DB changes
-          if (updateOps.length > 0) await db.collection('pages').bulkWrite(updateOps);
-          if (newPages.length > 0) await db.collection('pages').insertMany(newPages);
+          if (!isConfirmedSpread) {
+            // Gemini says NOT a spread — mark checked, skip spread-aware OCR
+            await db.collection('books').updateOne(
+              { id: book.id },
+              { $set: {
+                needs_splitting: false,
+                'pipeline_auto.split_checked': true,
+                'pipeline_auto.split_ar': detectedAr,
+                'pipeline_auto.last_updated': new Date(),
+              } }
+            );
+            console.log(`    ${label}: Gemini says NOT a spread (wide single page), skipping`);
+            splitChecked++;
+            continue;
+          }
 
-          // Renumber pages sequentially
-          const allPagesAfter = await db.collection('pages')
-            .find({ book_id: book.id })
-            .sort({ page_number: 1, _id: 1 })
-            .toArray();
-
-          const renumberOps = allPagesAfter.map((p, i) => ({
-            updateOne: { filter: { _id: p._id }, update: { $set: { page_number: i + 1 } } },
-          }));
-          if (renumberOps.length > 0) await db.collection('pages').bulkWrite(renumberOps);
-
-          // Update book counts
-          const ocrCount = await db.collection('pages').countDocuments({ book_id: book.id, 'ocr.data': { $exists: true, $ne: '' } });
-          const translateCount = await db.collection('pages').countDocuments({ book_id: book.id, 'translation.data': { $exists: true, $ne: '' } });
-
-          await db.collection('books').updateOne({ id: book.id }, {
-            $set: {
-              pages_count: allPagesAfter.length,
-              pages_ocr: ocrCount,
-              pages_translated: translateCount,
+          // Confirmed spread — flag for spread-aware OCR in Phase 2
+          await db.collection('books').updateOne(
+            { id: book.id },
+            { $set: {
+              needs_splitting: true,
               'pipeline_auto.split_checked': true,
+              'pipeline_auto.split_ar': detectedAr,
               'pipeline_auto.last_updated': new Date(),
-              ...(bookSplitCount > 0 ? {
-                'pipeline_auto.split_performed': true,
-                'pipeline_auto.split_count': bookSplitCount,
-                'pipeline_auto.split_at': new Date(),
-              } : {}),
-            },
-          });
-
-          console.log(`    ${label}: ${bookSplitCount} spreads split, ${bookSingleCount} single → ${allPagesAfter.length} total pages${bookErrors ? `, ${bookErrors} errors` : ''}`);
-
+            } }
+          );
+          console.log(`    ${label}: SPREAD confirmed, flagged for spread-aware OCR`);
           splitChecked++;
-          if (bookSplitCount > 0) splitApplied++;
+          splitFlagged++;
 
         } catch (err) {
           console.log(`    ${book.title?.slice(0, 50)}: ERROR — ${err.message?.slice(0, 120)}`);
         }
       }
 
-      console.log(`  Split checked: ${splitChecked}, splits applied: ${splitApplied}`);
+      console.log(`  Split checked: ${splitChecked}, flagged for splitting: ${splitFlagged}`);
     }
 
     // ── Phase 1.5: Preview OCR+Translation for first 25 pages via Lambda ──
@@ -2451,7 +2380,6 @@ async function run() {
             { $match: {
               'pipeline_auto.status': 'archive_complete',
               'pipeline_auto.split_checked': true,
-              'image_source.provider': { $ne: 'bph' },
               pages_ocr: { $in: [0, null, undefined] }, // No OCR yet
             }},
             { $addFields: {
@@ -2466,7 +2394,7 @@ async function run() {
               },
             }},
             { $sort: { _priority: 1, hidden: 1 } },
-            { $project: { id: 1, title: 1, pages_count: 1, 'pipeline_auto.retry_count': 1, 'pipeline_auto.split_checked': 1 } },
+            { $project: { id: 1, title: 1, author: 1, year: 1, pages_count: 1, needs_splitting: 1, 'pipeline_auto.retry_count': 1, 'pipeline_auto.split_checked': 1 } },
             { $limit: ocrLimit },
           ])
           .toArray();
@@ -2514,7 +2442,6 @@ async function run() {
           { $match: {
             'pipeline_auto.status': 'archive_complete',
             'pipeline_auto.split_checked': true,
-            'image_source.provider': { $ne: 'bph' },
             pages_ocr: { $gt: 0 }, // Already has some OCR (preview pass done)
           }},
           { $addFields: {
@@ -2529,7 +2456,7 @@ async function run() {
             },
           }},
           { $sort: { _priority: 1, hidden: 1 } },
-          { $project: { id: 1, title: 1, pages_count: 1, 'pipeline_auto.retry_count': 1, 'pipeline_auto.recitation_retry': 1, 'pipeline_auto.split_checked': 1 } },
+          { $project: { id: 1, title: 1, author: 1, year: 1, pages_count: 1, needs_splitting: 1, 'pipeline_auto.retry_count': 1, 'pipeline_auto.recitation_retry': 1, 'pipeline_auto.split_checked': 1 } },
           { $limit: ocrLimit },
         ])
         .toArray() : [];
@@ -2721,6 +2648,77 @@ async function run() {
         }
       }
       console.log(`  OCR advanced: ${log.ocr_advanced}`);
+    }
+
+    // ── Phase 3.1: Post-OCR spread split (ocr_complete + needs_splitting -> split) ──
+    // For books flagged needs_splitting in Phase 1.25, the spread-aware OCR (Phase 2)
+    // stored <split-position> and <page-break/> in the OCR text. Now we crop images
+    // at the detected gutter position and create separate left/right page records.
+    // Delegates to split-book.mjs (battle-tested, handles R2 uploads, page replacement).
+    if (shouldRun(3.1) || shouldRun(3)) {
+      console.log('\n--- Phase 3.1: Post-OCR spread split ---');
+
+      const SPLIT_BATCH_LIMIT = 10; // Books per cycle (each book is heavy: downloads + crops + uploads)
+
+      const readyForSplit = await db.collection('books')
+        .find({
+          'pipeline_auto.status': 'ocr_complete',
+          needs_splitting: true,
+          split_completed: { $ne: true },
+        })
+        .sort({ pages_count: 1 }) // smallest first — fast wins
+        .project({ id: 1, title: 1, pages_count: 1, 'pipeline_auto.split_retry_count': 1 })
+        .limit(SPLIT_BATCH_LIMIT)
+        .toArray();
+
+      console.log(`  Books ready for split: ${readyForSplit.length}`);
+
+      let splitDone = 0;
+      let splitErrors = 0;
+
+      for (const book of readyForSplit) {
+        const label = (book.title || '').substring(0, 50);
+
+        if (DRY_RUN) {
+          console.log(`  Would split: ${label} (${book.pages_count} pages)`);
+          continue;
+        }
+
+        try {
+          console.log(`  Splitting: ${label} (${book.pages_count} pages)...`);
+          const scriptPath = new URL('../split-book.mjs', import.meta.url).pathname;
+          const { stdout, stderr } = await execFileAsync('node', [scriptPath, book.id], {
+            timeout: 300000, // 5 min per book
+            env: process.env,
+            maxBuffer: 10 * 1024 * 1024,
+          });
+          if (stderr) console.log(`    stderr: ${stderr.slice(0, 200)}`);
+          // split-book.mjs sets split_completed=true and needs_splitting=false on success
+          console.log(`    Done: ${label}`);
+          splitDone++;
+        } catch (err) {
+          const msg = err.stderr || err.message || String(err);
+          console.log(`    FAIL: ${label} — ${msg.slice(0, 150)}`);
+          splitErrors++;
+          // Don't block the pipeline — mark for attention if it fails repeatedly
+          const retryCount = (book.pipeline_auto?.split_retry_count || 0) + 1;
+          if (retryCount >= 3) {
+            await setPipelineStatus(db, book.id, 'needs_attention', {
+              error: `Split failed ${retryCount} times: ${msg.slice(0, 200)}`,
+              split_retry_count: retryCount,
+            });
+          } else {
+            await db.collection('books').updateOne(
+              { id: book.id },
+              { $set: { 'pipeline_auto.split_retry_count': retryCount, 'pipeline_auto.last_updated': new Date() } }
+            );
+          }
+        }
+      }
+
+      if (readyForSplit.length > 0) {
+        console.log(`  Split: ${splitDone} done, ${splitErrors} errors`);
+      }
     }
 
     // ── Phase 3.5: Metadata enrichment (ocr_complete -> metadata_enriched) ──
@@ -2953,8 +2951,7 @@ async function run() {
 
         // Fresh books first (never translated), then re-queue partially-translated books
         const freshBooks = effectiveLimit > 0 ? await db.collection('books').aggregate([
-          // PAUSED: BPH books excluded pending split quality audit (#523)
-          { $match: { 'pipeline_auto.status': { $in: ['metadata_enriched', 'ft_verified'] }, 'image_source.provider': { $ne: 'bph' } } },
+          { $match: { 'pipeline_auto.status': { $in: ['metadata_enriched', 'ft_verified'] } } },
           { $addFields: { _speedTier: { $switch: {
             branches: [
               { case: { $in: ['$language', ['Latin', 'German', 'French', 'Italian', 'Dutch', 'Spanish', 'Portuguese', 'English', 'Czech', 'Polish', 'Swedish', 'Danish']] }, then: 0 },
@@ -2973,7 +2970,7 @@ async function run() {
         let partialBooks = [];
         if (freshBooks.length === 0 && effectiveLimit > 0) {
           partialBooks = await db.collection('books').aggregate([
-            { $match: { 'pipeline_auto.status': 'translate_partial', 'image_source.provider': { $ne: 'bph' } } },
+            { $match: { 'pipeline_auto.status': 'translate_partial' } },
             { $addFields: { _denominator: { $subtract: [{ $ifNull: ['$pages_ocr', 0] }, { $ifNull: ['$pages_blank', 0] }] } } },
             { $match: { _denominator: { $gt: 0 }, $expr: { $gte: [{ $divide: ['$pages_translated', '$_denominator'] }, 0.9] } } },
             { $project: { id: 1, title: 1, pages_count: 1, language: 1, 'pipeline_auto.retry_count': 1, 'image_source.provider': 1 } },
