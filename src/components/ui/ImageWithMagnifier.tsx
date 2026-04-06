@@ -226,11 +226,13 @@ export default function ImageWithMagnifier({
         onMouseLeave={() => setShowMagnifier(false)}
         onClick={handleClick}
       >
-        {/* Loading skeleton — use last known height in scrollable mode to prevent layout shift */}
+        {/* Loading skeleton — use last known height in scrollable mode to prevent layout shift.
+            Default to 140vw for portrait book pages (~1.4:1 aspect ratio) to avoid a big
+            jump when the real image loads. Capped at 900px for large screens. */}
         {!isLoaded && (
           <div
             className={`flex items-center justify-center ${darkMode ? 'bg-black' : 'bg-stone-100 animate-pulse'} ${scrollable ? 'w-full' : 'absolute inset-0'}`}
-            style={scrollable && lastImageHeight > 0 ? { height: lastImageHeight } : scrollable ? { height: '12rem' } : undefined}
+            style={scrollable && lastImageHeight > 0 ? { height: lastImageHeight } : scrollable ? { height: 'min(140vw, 900px)' } : undefined}
           >
             <div className={`text-sm ${darkMode ? 'text-stone-600' : 'text-stone-400'}`}>Loading...</div>
           </div>
