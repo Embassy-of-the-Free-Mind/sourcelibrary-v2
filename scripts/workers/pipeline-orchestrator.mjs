@@ -1918,43 +1918,18 @@ async function run() {
     }
 
     // ── Phase 1.25: Split detection for spread scans ──
-    // Two-layer detection:
-    //   Layer 1: Aspect ratio screening (free, sharp metadata only)
-    //   Layer 2: Gemini confirmation (cheap flash-lite call — is this a spread or a wide single page?)
-    // AR > 1.2 is necessary but NOT sufficient evidence for a spread. Foldouts, tables, and maps
-    // can be wide single pages. Gemini confirms and provides the gutter position.
+    // Three-step flow:
+    //   1. AR screening (free, sharp metadata) — filters obvious portrait pages
+    //   2. Gemini visual check (cheap flash-lite) — confirms spread vs foldout/map/table
+    //   3. Flag needs_splitting=true → Phase 2 OCR uses spread-aware prompt with
+    //      <split-position> + <page-break/> → post-OCR split crops images
+    // AR > 1.2 is necessary but NOT sufficient — foldouts and maps are wide single pages.
     // See: https://github.com/Embassy-of-the-Free-Mind/sourcelibrary-v2/issues/824
     if (shouldRun(1.25)) {
-      console.log('\n--- Phase 1.25: Split detection (AR screen → Gemini confirm → split) ---');
+      console.log('\n--- Phase 1.25: Split detection (AR screen → Gemini confirm) ---');
 
       const SPLIT_LIMIT = 100; // Max books per cycle
-      const ASPECT_RATIO_THRESHOLD = 1.2; // Width/height > 1.2 = candidate for spread
-      const SPLIT_CONFIRM_MODEL = 'gemini-3.1-flash-lite-preview'; // Cheapest model for binary classification
-      const SPLIT_CONFIRM_KEY = process.env.GEMINI_API_KEY_TIER3 || process.env.GEMINI_API_KEY;
-
-      const SPLIT_CONFIRM_PROMPT = `You are analyzing a scanned page from a historical book.
-
-Determine if this image shows a TWO-PAGE SPREAD (two separate pages photographed together as one image, with a visible gutter/binding in the middle) or a SINGLE PAGE (one page, which may be wide due to a foldout, table, map, or illustration).
-
-Key indicators of a two-page spread:
-- Visible central gutter or binding shadow
-- Two distinct text blocks side by side
-- Page numbers on both left and right margins
-- Text that would be upside down or sideways if read as one page
-
-Key indicators of a single wide page:
-- Continuous illustration, map, table, or diagram across the full width
-- No central gutter shadow
-- Single text flow
-- Foldout pages
-
-Respond with ONLY a JSON object (no markdown, no explanation):
-{"is_spread": true, "split_position": 500, "confidence": "high"}
-
-Where:
-- is_spread: true if two-page spread, false if single page
-- split_position: 0-1000 scale position of the gutter (500 = center). Only meaningful if is_spread is true.
-- confidence: "high", "medium", or "low"`;
+      const ASPECT_RATIO_THRESHOLD = 1.2; // Width/height > 1.2 = likely spread
 
       // Find archive_complete books that haven't been split-checked yet
       const candidates = await db.collection('books')
@@ -1970,13 +1945,13 @@ Where:
       console.log(`  Candidates for split check: ${candidates.length}`);
 
       let splitChecked = 0;
-      let splitApplied = 0;
+      let splitFlagged = 0;
 
       for (const book of candidates) {
         try {
           const label = (book.title || '').substring(0, 50);
 
-          // Sample first 5 pages to check aspect ratio (more samples = more reliable)
+          // Sample first 5 pages to check aspect ratio
           const samplePages = await db.collection('pages')
             .find({ book_id: book.id, crop: { $exists: false } })
             .sort({ page_number: 1 })
@@ -1996,10 +1971,12 @@ Where:
             continue;
           }
 
-          // Layer 1: AR screening — check all sample pages
+          // Check aspect ratio of sample pages
           const sharp = (await import('sharp')).default;
-          let spreadCandidatePages = [];
+          let isSpread = false;
           let checkedAny = false;
+          let detectedAr = null;
+          let spreadImageBuffer = null; // Keep buffer for Gemini confirmation
 
           for (const page of samplePages) {
             const imageUrl = page.archived_photo || page.photo_original || page.photo;
@@ -2014,7 +1991,10 @@ Where:
                 checkedAny = true;
                 const ratio = meta.width / meta.height;
                 if (ratio > ASPECT_RATIO_THRESHOLD) {
-                  spreadCandidatePages.push({ page, buffer, width: meta.width, height: meta.height, ratio });
+                  isSpread = true;
+                  detectedAr = ratio;
+                  spreadImageBuffer = buffer;
+                  break; // One wide page is enough to flag the book
                 }
               }
             } catch (err) {
@@ -2027,22 +2007,22 @@ Where:
             continue; // Don't mark split_checked — retry next cycle
           }
 
-          if (spreadCandidatePages.length === 0) {
-            // All pages are portrait — no spread
+          if (!isSpread) {
+            // All pages are portrait — no spread, mark as checked
             if (!DRY_RUN) {
               await db.collection('books').updateOne(
                 { id: book.id },
                 { $set: { 'pipeline_auto.split_checked': true, 'pipeline_auto.last_updated': new Date() } }
               );
             }
-            console.log(`    ${label}: not a spread (portrait pages, ${samplePages.length} checked)`);
+            console.log(`    ${label}: portrait pages, no split needed`);
             splitChecked++;
             continue;
           }
 
-          // Layer 2: Gemini confirmation on first candidate page
-          const candidate = spreadCandidatePages[0];
-          console.log(`    ${label}: AR=${candidate.ratio.toFixed(2)} on p${candidate.page.page_number}, asking Gemini...`);
+          // AR > threshold — confirm with Gemini before flagging for spread-aware OCR.
+          // This prevents wasting the spread OCR prompt on foldouts, maps, and wide tables.
+          console.log(`    ${label}: AR=${detectedAr.toFixed(2)}, confirming with Gemini...`);
 
           if (DRY_RUN) {
             console.log(`    Would confirm with Gemini: ${label}`);
@@ -2050,12 +2030,15 @@ Where:
             continue;
           }
 
-          let geminiResult = null;
+          let isConfirmedSpread = false;
           try {
-            // Resize to 1024px wide for cheaper/faster Gemini call
-            const resized = await sharp(candidate.buffer).resize(1024).jpeg({ quality: 80 }).toBuffer();
+            // Use the already-downloaded buffer from AR check, resize for cheap call
+            const candidateBuf = spreadImageBuffer;
+            const resized = await sharp(candidateBuf).resize(1024).jpeg({ quality: 80 }).toBuffer();
             const base64 = resized.toString('base64');
 
+            const SPLIT_CONFIRM_KEY = process.env.GEMINI_API_KEY_TIER3 || process.env.GEMINI_API_KEY;
+            const SPLIT_CONFIRM_MODEL = 'gemini-3.1-flash-lite-preview';
             const geminiUrl = `${GEMINI_API_BASE}/models/${SPLIT_CONFIRM_MODEL}:generateContent?key=${SPLIT_CONFIRM_KEY}`;
             const geminiRes = await fetch(geminiUrl, {
               method: 'POST',
@@ -2063,228 +2046,70 @@ Where:
               body: JSON.stringify({
                 contents: [{
                   parts: [
-                    { text: SPLIT_CONFIRM_PROMPT },
+                    { text: `Is this a TWO-PAGE SPREAD (two book pages photographed together with a gutter in the middle) or a SINGLE WIDE PAGE (foldout, map, table, or illustration)?
+
+Look for: central gutter/binding shadow, two separate text blocks, page numbers on both margins.
+
+Reply with ONLY: {"is_spread": true} or {"is_spread": false}` },
                     { inline_data: { mime_type: 'image/jpeg', data: base64 } },
                   ],
                 }],
-                generationConfig: { temperature: 0, maxOutputTokens: 100 },
+                generationConfig: { temperature: 0, maxOutputTokens: 30 },
               }),
-              signal: AbortSignal.timeout(30000),
+              signal: AbortSignal.timeout(20000),
             });
 
-            if (!geminiRes.ok) {
-              const errText = await geminiRes.text();
-              throw new Error(`Gemini ${geminiRes.status}: ${errText.slice(0, 200)}`);
-            }
-
-            const geminiData = await geminiRes.json();
-            const rawText = geminiData.candidates?.[0]?.content?.parts?.[0]?.text || '';
-            // Parse JSON from response, handling markdown code blocks
-            const jsonMatch = rawText.match(/\{[\s\S]*\}/);
-            if (jsonMatch) {
-              geminiResult = JSON.parse(jsonMatch[0]);
+            if (geminiRes.ok) {
+              const geminiData = await geminiRes.json();
+              const rawText = geminiData.candidates?.[0]?.content?.parts?.[0]?.text || '';
+              const jsonMatch = rawText.match(/\{[\s\S]*\}/);
+              if (jsonMatch) {
+                const result = JSON.parse(jsonMatch[0]);
+                isConfirmedSpread = !!result.is_spread;
+              }
             }
           } catch (err) {
-            console.log(`    ${label}: Gemini confirmation failed: ${err.message?.slice(0, 100)}`);
-            // On Gemini failure, fall back to AR-only decision (center-split)
-            // This preserves existing behavior when API is down
-            geminiResult = { is_spread: true, split_position: 500, confidence: 'ar-fallback' };
-            console.log(`    ${label}: falling back to center-split (AR-only)`);
+            // On Gemini failure, assume spread (safer — OCR prompt handles non-spreads gracefully)
+            console.log(`    ${label}: Gemini check failed (${err.message?.slice(0, 60)}), assuming spread`);
+            isConfirmedSpread = true;
           }
 
-          if (!geminiResult || !geminiResult.is_spread) {
-            // Gemini says NOT a spread despite wide AR — mark as checked, don't split
-            if (!DRY_RUN) {
-              await db.collection('books').updateOne(
-                { id: book.id },
-                { $set: {
-                  'pipeline_auto.split_checked': true,
-                  'pipeline_auto.last_updated': new Date(),
-                  'pipeline_auto.split_gemini_confirmed': false,
-                  'pipeline_auto.split_ar': candidate.ratio,
-                } }
-              );
-            }
-            console.log(`    ${label}: Gemini says NOT a spread (AR=${candidate.ratio.toFixed(2)}, confidence=${geminiResult?.confidence})`);
+          if (!isConfirmedSpread) {
+            // Gemini says NOT a spread — mark checked, skip spread-aware OCR
+            await db.collection('books').updateOne(
+              { id: book.id },
+              { $set: {
+                needs_splitting: false,
+                'pipeline_auto.split_checked': true,
+                'pipeline_auto.split_ar': detectedAr,
+                'pipeline_auto.last_updated': new Date(),
+              } }
+            );
+            console.log(`    ${label}: Gemini says NOT a spread (wide single page), skipping`);
             splitChecked++;
             continue;
           }
 
-          // Gemini confirmed: it IS a spread
-          const geminiSplitPos = geminiResult.split_position || 500;
-          const geminiConfidence = geminiResult.confidence || 'unknown';
-          console.log(`    ${label}: SPREAD confirmed by Gemini (pos=${geminiSplitPos}, confidence=${geminiConfidence}), splitting...`);
-
-          const r2 = getR2Client();
-          // sharp already imported above in AR screening
-
-          // Get all pages for this book
-          const allBookPages = await db.collection('pages')
-            .find({ book_id: book.id })
-            .sort({ page_number: 1 })
-            .toArray();
-
-          const newPages = [];
-          const updateOps = [];
-          let bookSplitCount = 0;
-          let bookSingleCount = 0;
-          let bookErrors = 0;
-
-          await parallelMap(allBookPages, async (page) => {
-            try {
-              const imgUrl = page.archived_photo || page.photo_original || page.photo;
-              if (!imgUrl) return;
-
-              const imgRes = await fetch(imgUrl, { signal: AbortSignal.timeout(30000) });
-              if (!imgRes.ok) return;
-              const buf = Buffer.from(await imgRes.arrayBuffer());
-              const pageMeta = await sharp(buf).metadata();
-              const pageRatio = (pageMeta.width || 1) / (pageMeta.height || 1);
-
-              if (pageRatio <= ASPECT_RATIO_THRESHOLD) {
-                bookSingleCount++;
-                return;
-              }
-
-              // Split at Gemini-confirmed position (or center as fallback)
-              const imgWidth = pageMeta.width || 1000;
-              const imgHeight = pageMeta.height || 1000;
-              const splitX = Math.round((geminiSplitPos / 1000) * imgWidth);
-              const overlapPx = Math.round(SPLIT_OVERLAP * imgWidth / 1000);
-
-              const leftBuf = await sharp(buf)
-                .extract({ left: 0, top: 0, width: Math.min(imgWidth, splitX + overlapPx), height: imgHeight })
-                .jpeg({ quality: SPLIT_CROPPED_QUALITY, progressive: true })
-                .toBuffer();
-
-              const rightBuf = await sharp(buf)
-                .extract({ left: Math.max(0, splitX - overlapPx), top: 0, width: Math.min(imgWidth, imgWidth - splitX + overlapPx), height: imgHeight })
-                .jpeg({ quality: SPLIT_CROPPED_QUALITY, progressive: true })
-                .toBuffer();
-
-              const [leftDisplay, leftThumb, rightDisplay, rightThumb] = await Promise.all([
-                sharp(leftBuf).resize(SPLIT_DISPLAY_WIDTH).jpeg({ quality: SPLIT_DISPLAY_QUALITY }).toBuffer(),
-                sharp(leftBuf).resize(SPLIT_THUMB_WIDTH).jpeg({ quality: SPLIT_THUMB_QUALITY }).toBuffer(),
-                sharp(rightBuf).resize(SPLIT_DISPLAY_WIDTH).jpeg({ quality: SPLIT_DISPLAY_QUALITY }).toBuffer(),
-                sharp(rightBuf).resize(SPLIT_THUMB_WIDTH).jpeg({ quality: SPLIT_THUMB_QUALITY }).toBuffer(),
-              ]);
-
-              const leftPaths = splitPagePaths(book.id, page.page_number);
-              const rightPageId = new ObjectId().toHexString();
-              const rightTempKey = `pages/${book.id}/split-${rightPageId}`;
-
-              const [leftFullUrl, , leftThumbUrl] = await Promise.all([
-                uploadToR2(r2, leftPaths.full, leftBuf),
-                uploadToR2(r2, leftPaths.display, leftDisplay),
-                uploadToR2(r2, leftPaths.thumb, leftThumb),
-              ]);
-
-              const [rightFullUrl, , rightThumbUrl] = await Promise.all([
-                uploadToR2(r2, `${rightTempKey}-full.jpg`, rightBuf),
-                uploadToR2(r2, `${rightTempKey}.jpg`, rightDisplay),
-                uploadToR2(r2, `${rightTempKey}-thumb.jpg`, rightThumb),
-              ]);
-
-              const splitPosition = Math.round((splitX / imgWidth) * 1000);
-              const leftCrop = { xStart: 0, xEnd: splitPosition + SPLIT_OVERLAP };
-              const rightCrop = { xStart: splitPosition - SPLIT_OVERLAP, xEnd: 1000 };
-
-              updateOps.push({
-                updateOne: {
-                  filter: { id: page.id },
-                  update: {
-                    $set: {
-                      photo: leftFullUrl,
-                      photo_original: page.photo,
-                      cropped_photo: leftFullUrl,
-                      thumbnail: leftThumbUrl,
-                      crop: leftCrop,
-                      split_detection: {
-                        isTwoPageSpread: true, confidence: geminiConfidence, splitPosition,
-                        method: geminiConfidence === 'ar-fallback' ? 'center-split' : 'gemini-confirmed', detected_at: new Date(),
-                      },
-                      updated_at: new Date(),
-                    },
-                    $unset: { ocr: '', translation: '', summary: '' },
-                  },
-                },
-              });
-
-              newPages.push({
-                _id: new ObjectId(rightPageId),
-                id: rightPageId,
-                tenant_id: 'default',
-                book_id: book.id,
-                page_number: page.page_number + 0.5,
-                photo: rightFullUrl,
-                photo_original: page.photo,
-                cropped_photo: rightFullUrl,
-                thumbnail: rightThumbUrl,
-                crop: rightCrop,
-                split_from: page.id,
-                split_detection: {
-                  isTwoPageSpread: true, confidence: geminiConfidence, splitPosition,
-                  method: geminiConfidence === 'ar-fallback' ? 'center-split' : 'gemini-confirmed', detected_at: new Date(),
-                },
-                created_at: new Date(),
-                updated_at: new Date(),
-              });
-
-              bookSplitCount++;
-            } catch (err) {
-              console.log(`      page ${page.page_number}: FAIL — ${err.message?.slice(0, 80)}`);
-              bookErrors++;
-            }
-          }, SPLIT_PAGE_CONCURRENCY);
-
-          // Apply DB changes
-          if (updateOps.length > 0) await db.collection('pages').bulkWrite(updateOps);
-          if (newPages.length > 0) await db.collection('pages').insertMany(newPages);
-
-          // Renumber pages sequentially
-          const allPagesAfter = await db.collection('pages')
-            .find({ book_id: book.id })
-            .sort({ page_number: 1, _id: 1 })
-            .toArray();
-
-          const renumberOps = allPagesAfter.map((p, i) => ({
-            updateOne: { filter: { _id: p._id }, update: { $set: { page_number: i + 1 } } },
-          }));
-          if (renumberOps.length > 0) await db.collection('pages').bulkWrite(renumberOps);
-
-          // Update book counts
-          const ocrCount = await db.collection('pages').countDocuments({ book_id: book.id, 'ocr.data': { $exists: true, $ne: '' } });
-          const translateCount = await db.collection('pages').countDocuments({ book_id: book.id, 'translation.data': { $exists: true, $ne: '' } });
-
-          await db.collection('books').updateOne({ id: book.id }, {
-            $set: {
-              pages_count: allPagesAfter.length,
-              pages_ocr: ocrCount,
-              pages_translated: translateCount,
+          // Confirmed spread — flag for spread-aware OCR in Phase 2
+          await db.collection('books').updateOne(
+            { id: book.id },
+            { $set: {
+              needs_splitting: true,
               'pipeline_auto.split_checked': true,
+              'pipeline_auto.split_ar': detectedAr,
               'pipeline_auto.last_updated': new Date(),
-              'pipeline_auto.split_gemini_confirmed': true,
-              'pipeline_auto.split_ar': candidate.ratio,
-              ...(bookSplitCount > 0 ? {
-                'pipeline_auto.split_performed': true,
-                'pipeline_auto.split_count': bookSplitCount,
-                'pipeline_auto.split_at': new Date(),
-                'pipeline_auto.split_method': geminiConfidence === 'ar-fallback' ? 'center-split' : 'gemini-confirmed',
-              } : {}),
-            },
-          });
-
-          console.log(`    ${label}: ${bookSplitCount} spreads split, ${bookSingleCount} single → ${allPagesAfter.length} total pages${bookErrors ? `, ${bookErrors} errors` : ''}`);
-
+            } }
+          );
+          console.log(`    ${label}: SPREAD confirmed, flagged for spread-aware OCR`);
           splitChecked++;
-          if (bookSplitCount > 0) splitApplied++;
+          splitFlagged++;
 
         } catch (err) {
           console.log(`    ${book.title?.slice(0, 50)}: ERROR — ${err.message?.slice(0, 120)}`);
         }
       }
 
-      console.log(`  Split checked: ${splitChecked}, splits applied: ${splitApplied}`);
+      console.log(`  Split checked: ${splitChecked}, flagged for splitting: ${splitFlagged}`);
     }
 
     // ── Phase 1.5: Preview OCR+Translation for first 25 pages via Lambda ──
