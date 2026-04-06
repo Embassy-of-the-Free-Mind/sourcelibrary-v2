@@ -78,7 +78,7 @@ async function uploadToR2(r2, key, buffer, contentType = 'image/jpeg') {
 
 // --- Path helpers (mirrors src/lib/storage.ts) ---
 function pagePaths(bookId, pageNumber) {
-  const num = String(pageNumber).padStart(4, '0');
+  const num = 'sp' + String(pageNumber).padStart(4, '0');
   const base = `pages/${bookId}/${num}`;
   return {
     full: `${base}-full.jpg`,
@@ -172,7 +172,19 @@ async function processBook(r2, db, book) {
       const pageRatio = (pageMeta.width || 1) / (pageMeta.height || 1);
 
       if (pageRatio <= ASPECT_RATIO_THRESHOLD) {
-        // Single page — no split needed
+        // Single page — no split needed, but mark as checked
+        updateOps.push({
+          updateOne: {
+            filter: { id: page.id },
+            update: {
+              $set: {
+                split_from_spread: true,
+                split_side: 'single',
+                updated_at: new Date(),
+              },
+            },
+          },
+        });
         singleCount++;
         return;
       }
@@ -240,10 +252,10 @@ async function processBook(r2, db, book) {
           update: {
             $set: {
               photo: leftFullUrl,
-              photo_original: page.photo, // preserve original spread URL
-              cropped_photo: leftFullUrl,
               thumbnail: leftThumbUrl,
               crop: leftCrop,
+              split_from_spread: true,
+              split_side: 'left',
               split_detection: {
                 isTwoPageSpread: true,
                 confidence: 'high',
@@ -253,7 +265,7 @@ async function processBook(r2, db, book) {
               },
               updated_at: new Date(),
             },
-            $unset: { ocr: '', translation: '', summary: '' },
+            $unset: { ocr: '', translation: '', summary: '', photo_original: '', archived_photo: '', cropped_photo: '', thumbnail_blob: '' },
           },
         },
       });
@@ -266,11 +278,11 @@ async function processBook(r2, db, book) {
         book_id: book.id,
         page_number: rightPageNum, // 0.5 — renumbered later
         photo: rightFullUrl,
-        photo_original: page.photo,
-        cropped_photo: rightFullUrl,
         thumbnail: rightThumbUrl,
         crop: rightCrop,
         split_from: page.id,
+        split_from_spread: true,
+        split_side: 'right',
         split_detection: {
           isTwoPageSpread: true,
           confidence: 'high',
