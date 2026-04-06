@@ -1,4 +1,4 @@
-import { randomBytes, createHash, createSign, createPrivateKey, createPublicKey } from 'crypto';
+import { randomBytes, createHash, createHmac, createSign, createPrivateKey, createPublicKey } from 'crypto';
 import { ObjectId } from 'mongodb';
 import { getDb } from '@/lib/mongodb';
 
@@ -8,7 +8,10 @@ import { getDb } from '@/lib/mongodb';
  */
 
 const OIDC_CLIENT_ID = 'synapse-embassy';
-const OIDC_CLIENT_SECRET = process.env.OIDC_CLIENT_SECRET || 'embassy-oidc-secret-2026';
+const OIDC_CLIENT_SECRET = process.env.OIDC_CLIENT_SECRET;
+if (!OIDC_CLIENT_SECRET && process.env.NODE_ENV === 'production') {
+  throw new Error('OIDC_CLIENT_SECRET must be set in production');
+}
 
 // RSA key for signing JWTs — persisted in MongoDB for consistency across cold starts
 let _rsaKeys: { privateKey: string; publicKey: string; keyId: string } | null = null;
@@ -50,7 +53,10 @@ async function getOrCreateKeys() {
 
 export function validateClient(clientId: string, clientSecret?: string): boolean {
   if (clientId !== OIDC_CLIENT_ID) return false;
-  if (clientSecret && clientSecret !== OIDC_CLIENT_SECRET) return false;
+  if (clientSecret) {
+    // In production, OIDC_CLIENT_SECRET must be set (enforced at module load)
+    if (!OIDC_CLIENT_SECRET || clientSecret !== OIDC_CLIENT_SECRET) return false;
+  }
   return true;
 }
 
@@ -126,13 +132,24 @@ export async function createIdToken(userId: string, email: string, name: string)
   return `${signingInput}.${signature}`;
 }
 
+function getTokenSecret(): string {
+  return process.env.AUTH_SECRET || process.env.NEXTAUTH_SECRET || 'dev-only-secret';
+}
+
 export function createAccessToken(userId: string): string {
-  return Buffer.from(JSON.stringify({ sub: userId, exp: Date.now() + 3600000 })).toString('base64url');
+  const payload = Buffer.from(JSON.stringify({ sub: userId, exp: Date.now() + 3600000 })).toString('base64url');
+  const sig = createHmac('sha256', getTokenSecret()).update(payload).digest('base64url');
+  return `${payload}.${sig}`;
 }
 
 export function decodeAccessToken(token: string): { sub: string } | null {
   try {
-    const data = JSON.parse(Buffer.from(token, 'base64url').toString());
+    const [payload, sig] = token.split('.');
+    if (!payload || !sig) return null;
+    // Verify HMAC signature
+    const expected = createHmac('sha256', getTokenSecret()).update(payload).digest('base64url');
+    if (sig !== expected) return null;
+    const data = JSON.parse(Buffer.from(payload, 'base64url').toString());
     if (data.exp < Date.now()) return null;
     return { sub: data.sub };
   } catch {

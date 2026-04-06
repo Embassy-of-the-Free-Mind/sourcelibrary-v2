@@ -23,6 +23,17 @@ export async function GET(request: NextRequest) {
     return NextResponse.json({ error: 'invalid_client' }, { status: 400 });
   }
 
+  // Validate redirect_uri against allowed origins
+  try {
+    const redirectHost = new URL(redirectUri).hostname;
+    const allowedHosts = (process.env.OIDC_ALLOWED_REDIRECT_HOSTS || 'chat.embassyofthefreemind.com').split(',');
+    if (!allowedHosts.some(h => redirectHost === h.trim() || redirectHost.endsWith('.' + h.trim()))) {
+      return NextResponse.json({ error: 'invalid_redirect_uri' }, { status: 400 });
+    }
+  } catch {
+    return NextResponse.json({ error: 'invalid_redirect_uri' }, { status: 400 });
+  }
+
   // Check if user is signed in to Source Library
   const session = await auth();
 
