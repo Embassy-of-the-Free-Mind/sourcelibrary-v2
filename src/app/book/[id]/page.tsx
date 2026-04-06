@@ -102,7 +102,13 @@ export async function generateMetadata({ params }: PageProps): Promise<Metadata>
 
   const title = book.display_title || book.title;
   const ogTitle = book.published ? `${title} (${book.published})` : title;
-  const description = `Read the English translation of "${title}" by ${formatAuthor(book.author).name || book.author}${book.published ? ` (${book.published})` : ''}. Digitized and translated with AI from the original ${book.language || 'manuscript'}.`;
+  const author = formatAuthor(book.author).name || book.author;
+  const year = book.published ? ` (${book.published})` : '';
+  // Build description front-loading title+author+date, truncated to 155 chars for SEO
+  let description = `${title} by ${author}${year} — read the full English translation online.`;
+  if (description.length > 155) {
+    description = `${title} by ${author}${year}`.slice(0, 152) + '...';
+  }
   const bookUrl = `/book/${book.slug || book.id}`;
 
   // Get publication date for OG tags

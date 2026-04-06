@@ -19,6 +19,7 @@ export default async function GalleryPage() {
 
   return (
     <div className="min-h-screen bg-gradient-to-b from-[#f6f3ee] to-[#f3ede6]">
+      <h1 className="sr-only">Image Gallery — Illustrations from Rare Historical Texts</h1>
       <Suspense>
         <GalleryClient
           initialData={initialData}
