@@ -237,7 +237,7 @@ async function processBook(book, db) {
   const allPages = await db.collection('pages')
     .find(
       { book_id: book.id },
-      { projection: { _id: 1, id: 1, page_number: 1, photo: 1, photo_original: 1 } }
+      { projection: { _id: 1, id: 1, book_id: 1, page_number: 1, photo: 1, photo_original: 1 } }
     )
     .sort({ page_number: 1 })
     .toArray();
