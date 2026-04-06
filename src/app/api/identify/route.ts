@@ -199,13 +199,107 @@ export async function POST(request: NextRequest) {
       }
     }
 
+    // Phase 2: Find the exact page within top book matches using inscription text
+    const topMatches = matches.slice(0, 5);
+    const pages = db.collection('pages');
+
+    // Build search terms from inscriptions — pick distinctive multi-word phrases
+    const inscriptionText = identification.inscriptions || '';
+    const searchPhrases = inscriptionText
+      .split('\n')
+      .map(l => l.trim())
+      .filter(l => l.length > 5 && !/^\d+$/.test(l))
+      .slice(0, 8);
+
+    // Also use subject keywords as fallback
+    const subjectWords = (identification.subject || '')
+      .split(/\s+/)
+      .filter(w => w.length > 4)
+      .slice(0, 5);
+
+    const pageMatches: { bookId: string; pageNumber: number; score: number }[] = [];
+
+    if (searchPhrases.length > 0 && topMatches.length > 0) {
+      const bookIds = topMatches.map(m => m.id);
+
+      // Search OCR text of pages in candidate books for inscription phrases
+      for (const phrase of searchPhrases.slice(0, 4)) {
+        const escaped = phrase.replace(/[.*+?^${}()|[\]\\]/g, '\\$&');
+        const found = await pages
+          .find(
+            {
+              book_id: { $in: bookIds },
+              'ocr.data': { $regex: escaped, $options: 'i' },
+            },
+            {
+              projection: { book_id: 1, page_number: 1 },
+              maxTimeMS: 5000,
+            },
+          )
+          .limit(10)
+          .toArray()
+          .catch(() => []);
+
+        for (const p of found) {
+          const existing = pageMatches.find(
+            pm => pm.bookId === p.book_id && pm.pageNumber === p.page_number,
+          );
+          if (existing) {
+            existing.score += 10;
+          } else {
+            pageMatches.push({ bookId: p.book_id, pageNumber: p.page_number, score: 10 });
+          }
+        }
+      }
+    }
+
+    // Also check detected_images descriptions if no page match from OCR
+    if (pageMatches.length === 0 && subjectWords.length > 0 && topMatches.length > 0) {
+      const bookIds = topMatches.map(m => m.id);
+      const subjectRegex = subjectWords.slice(0, 3).map(w => w.replace(/[.*+?^${}()|[\]\\]/g, '\\$&')).join('|');
+      const imgPages = await db.collection('gallery_images')
+        .find(
+          {
+            book_id: { $in: bookIds },
+            $or: [
+              { description: { $regex: subjectRegex, $options: 'i' } },
+              { type: { $regex: subjectRegex, $options: 'i' } },
+            ],
+          },
+          { projection: { book_id: 1, page_number: 1 }, maxTimeMS: 5000 },
+        )
+        .limit(10)
+        .toArray()
+        .catch(() => []);
+
+      for (const img of imgPages) {
+        if (img.page_number) {
+          pageMatches.push({ bookId: img.book_id, pageNumber: img.page_number, score: 5 });
+        }
+      }
+    }
+
+    // Sort page matches by score and attach to book results
+    pageMatches.sort((a, b) => b.score - a.score);
+    const bestPage = pageMatches[0] || null;
+
     return NextResponse.json({
       identification,
-      matches: matches.slice(0, 10).map(({ _score, enrichment, ...rest }) => ({
-        ...rest,
-        score: _score,
-        subject: enrichment?.subject,
-      })),
+      matches: matches.slice(0, 10).map(({ _score, enrichment, ...rest }) => {
+        // Attach page match if this book has one
+        const pm = pageMatches.find(p => p.bookId === rest.id);
+        return {
+          ...rest,
+          score: _score,
+          subject: enrichment?.subject,
+          ...(pm ? { page_number: pm.pageNumber, page_score: pm.score } : {}),
+        };
+      }),
+      page: bestPage ? {
+        book_id: bestPage.bookId,
+        page_number: bestPage.pageNumber,
+        score: bestPage.score,
+      } : null,
     });
   } catch (error) {
     const msg = error instanceof Error ? error.message : String(error);
