@@ -17,6 +17,8 @@ interface Match {
   resource_type?: string;
   subject?: string;
   score: number;
+  page_number?: number;
+  page_score?: number;
 }
 
 interface Identification {
@@ -32,6 +34,7 @@ interface Identification {
 interface Result {
   identification: Identification;
   matches: Match[];
+  page?: { book_id: string; page_number: number; score: number } | null;
 }
 
 export default function IdentifyPage() {
@@ -231,10 +234,14 @@ export default function IdentifyPage() {
                   {result.matches.length === 1 ? 'Match Found' : `${result.matches.length} Possible Matches`}
                 </h2>
                 <div className="space-y-2">
-                  {result.matches.map((match, i) => (
+                  {result.matches.map((match, i) => {
+                    const pageUrl = match.page_number
+                      ? `${bookUrl({ slug: match.slug, id: match.id })}/page-number/${match.page_number}`
+                      : bookUrl({ slug: match.slug, id: match.id });
+                    return (
                     <Link
                       key={match.id}
-                      href={bookUrl({ slug: match.slug, id: match.id })}
+                      href={pageUrl}
                       className="flex gap-4 p-3 rounded-lg bg-white border border-border-light hover:border-accent-rust/30 hover:shadow-sm transition-all group"
                     >
                       {(match.thumbnail_blob || match.thumbnail) && (
@@ -262,14 +269,18 @@ export default function IdentifyPage() {
                           {match.resource_type && (
                             <span className="capitalize">{match.resource_type}</span>
                           )}
-                          {match.subject && (
+                          {match.page_number && (
+                            <span className="font-medium text-accent-rust">Page {match.page_number}</span>
+                          )}
+                          {match.subject && !match.page_number && (
                             <span className="line-clamp-1">{match.subject}</span>
                           )}
                         </div>
                       </div>
                       <ExternalLink className="w-4 h-4 text-muted group-hover:text-accent-rust flex-shrink-0 mt-1" />
                     </Link>
-                  ))}
+                    );
+                  })}
                 </div>
               </div>
             ) : (
