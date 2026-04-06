@@ -14,6 +14,7 @@ import SignUpCTA from '@/components/auth/SignUpCTA';
 import { bookUrl } from '@/lib/slugify';
 import { bookTitle, sanitizeThumbnail, withTimeout } from '@/lib/collections-utils';
 import { firstTranslationBadge } from '@/lib/first-translation-labels';
+import { browseBooks } from '@/lib/books-catalog';
 
 // ISR: rebuild at most every 10 minutes
 export const revalidate = 600;
@@ -264,24 +265,50 @@ async function fetchCollectionData(id: string) {
       )
     : Promise.resolve([]);
 
+  // Books query: try MongoDB first (has collection_scores for relevance sorting),
+  // fall back to Supabase if MongoDB times out (large collections like SHWEP trigger
+  // Atlas multiplanner timeouts that cause permanent 404s).
+  async function fetchBooksWithFallback() {
+    try {
+      const docs = await withTimeout(
+        db.collection('books')
+          .find(filter, { projection: { ...projection, collection_scores: 1 }, maxTimeMS: 8000 })
+          .sort({ read_count: -1, title: 1 })
+          .limit(COMPACT_LIMIT)
+          .toArray(),
+        15000, null,
+      );
+      if (docs === null) throw new Error('MongoDB timeout');
+      return docs.sort((a, b) => {
+        const aScore = a.collection_scores?.[id]?.relevance ?? 0;
+        const bScore = b.collection_scores?.[id]?.relevance ?? 0;
+        if (bScore !== aScore) return bScore - aScore;
+        return (b.read_count || 0) - (a.read_count || 0);
+      }).map(({ collection_scores, ...rest }) => rest);
+    } catch {
+      // Supabase fallback — no collection_scores, but at least the page renders
+      console.warn(`[Collection ${id}] MongoDB books query failed, falling back to Supabase`);
+      const { books: sbBooks } = await browseBooks({
+        collection: id,
+        hasTranslation: !isArtCollection,
+        sort: 'popular',
+        limit: COMPACT_LIMIT,
+      });
+      return sbBooks.map(b => ({
+        id: b.id, slug: b.slug, title: b.title, display_title: b.display_title,
+        author: b.author, year: b.year, language: b.language,
+        pages_count: b.pages_count, pages_ocr: b.pages_ocr,
+        pages_translated: b.pages_translated, pages_blank: b.pages_blank,
+        photo: b.photo, thumbnail: b.thumbnail, thumbnail_blob: b.thumbnail_blob,
+        published: b.published, read_count: b.read_count,
+        is_first_translation: b.is_first_translation,
+        categories: b.categories,
+      }));
+    }
+  }
+
   const [books, highlights, galleryImages, mentionedBooks] = await Promise.all([
-    withTimeout(
-      db.collection('books')
-        .find(filter, { projection: { ...projection, collection_scores: 1 }, maxTimeMS: 8000 })
-        .sort({ read_count: -1, title: 1 })
-        .limit(COMPACT_LIMIT)
-        .toArray()
-        .then(docs => {
-          // Re-sort by collection relevance score if available
-          return docs.sort((a, b) => {
-            const aScore = a.collection_scores?.[id]?.relevance ?? 0;
-            const bScore = b.collection_scores?.[id]?.relevance ?? 0;
-            if (bScore !== aScore) return bScore - aScore;
-            return (b.read_count || 0) - (a.read_count || 0);
-          }).map(({ collection_scores, ...rest }) => rest);
-        }),
-      15000, [],
-    ),
+    fetchBooksWithFallback(),
     curatedBookIds.length > 0
       ? withTimeout(
           db.collection('books')
