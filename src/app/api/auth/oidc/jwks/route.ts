@@ -1,5 +1,4 @@
 import { NextResponse } from 'next/server';
-import { getJwks } from '@/lib/oidc/provider';
 
 export const dynamic = 'force-dynamic';
 
@@ -8,5 +7,6 @@ export const dynamic = 'force-dynamic';
  * JSON Web Key Set — Synapse uses this to verify ID token signatures.
  */
 export async function GET() {
+  const { getJwks } = await import('@/lib/oidc/provider');
   return NextResponse.json(await getJwks());
 }

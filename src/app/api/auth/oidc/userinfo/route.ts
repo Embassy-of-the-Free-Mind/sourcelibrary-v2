@@ -1,5 +1,4 @@
 import { NextRequest, NextResponse } from 'next/server';
-import { decodeAccessToken, getUserInfo } from '@/lib/oidc/provider';
 
 export const dynamic = 'force-dynamic';
 
@@ -8,6 +7,8 @@ export const dynamic = 'force-dynamic';
  * OIDC UserInfo endpoint. Returns profile data for the authenticated user.
  */
 export async function GET(request: NextRequest) {
+  const { decodeAccessToken, getUserInfo } = await import('@/lib/oidc/provider');
+
   const authHeader = request.headers.get('authorization') || '';
   if (!authHeader.startsWith('Bearer ')) {
     return NextResponse.json({ error: 'invalid_token' }, { status: 401 });

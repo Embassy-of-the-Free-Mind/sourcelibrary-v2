@@ -1,11 +1,4 @@
 import { NextRequest, NextResponse } from 'next/server';
-import {
-  validateClient,
-  exchangeAuthCode,
-  createIdToken,
-  createAccessToken,
-  getUserInfo,
-} from '@/lib/oidc/provider';
 
 export const dynamic = 'force-dynamic';
 
@@ -14,6 +7,14 @@ export const dynamic = 'force-dynamic';
  * OIDC Token endpoint. Synapse exchanges an auth code for tokens.
  */
 export async function POST(request: NextRequest) {
+  const {
+    validateClient,
+    exchangeAuthCode,
+    createIdToken,
+    createAccessToken,
+    getUserInfo,
+  } = await import('@/lib/oidc/provider');
+
   const body = await request.formData().catch(() => null);
   const params = body
     ? Object.fromEntries(body.entries())
