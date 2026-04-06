@@ -114,11 +114,11 @@ let TRANSLATE_SUBMIT_LIMIT = 50;
 let MAX_INFLIGHT_TRANSLATIONS = 60; // Total books in translate_submitted — caps concurrent workers
 let ENRICH_LIMIT = 30;
 let CHAPTER_LIMIT = 50;
-let IMAGE_SUBMIT_LIMIT = 10;
+let IMAGE_SUBMIT_LIMIT = 50;
 let FINALIZE_LIMIT = 200;
 let TRANSLITERATE_LIMIT = 10;  // Books per run (pages processed inline)
 const TRANSLITERATE_CONCURRENCY = 10;  // Parallel Gemini calls per book
-let MAX_ACTIVE_IMAGE_JOBS = 15;
+let MAX_ACTIVE_IMAGE_JOBS = 50;
 const PREVIEW_PAGE_COUNT = 25;
 let PREVIEW_LIMIT = 20; // Books per run to queue preview OCR
 const MAX_RETRIES = 3;
@@ -260,10 +260,10 @@ async function probeDbHealth(db) {
     MAX_INFLIGHT_TRANSLATIONS = 60;
     ENRICH_LIMIT = 30;
     CHAPTER_LIMIT = 50;
-    IMAGE_SUBMIT_LIMIT = 10;
+    IMAGE_SUBMIT_LIMIT = 50;
     FINALIZE_LIMIT = 200;
     TRANSLITERATE_LIMIT = 10;
-    MAX_ACTIVE_IMAGE_JOBS = 15;
+    MAX_ACTIVE_IMAGE_JOBS = 50;
     PREVIEW_LIMIT = 20;
   } else if (grade === 'degraded') {
     console.log('[health] DEGRADED — halving all submission limits');
