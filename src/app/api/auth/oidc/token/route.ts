@@ -7,6 +7,8 @@ import {
   getUserInfo,
 } from '@/lib/oidc/provider';
 
+export const dynamic = 'force-dynamic';
+
 /**
  * POST /api/auth/oidc/token
  * OIDC Token endpoint. Synapse exchanges an auth code for tokens.

@@ -1,6 +1,8 @@
 import { NextRequest, NextResponse } from 'next/server';
 import { decodeAccessToken, getUserInfo } from '@/lib/oidc/provider';
 
+export const dynamic = 'force-dynamic';
+
 /**
  * GET /api/auth/oidc/userinfo
  * OIDC UserInfo endpoint. Returns profile data for the authenticated user.
