@@ -133,7 +133,7 @@ export default function HeroSection() {
             A New Renaissance of Ancient Wisdom
           </h1>
           <p className="text-xl md:text-2xl lg:text-3xl font-light text-white/90 leading-relaxed max-w-2xl mb-8">
-            Rare historical texts from European archives, AI-translated into English for the first time. Free and open to all.
+            Welcome to the world&rsquo;s largest library<br /> of AI-translated ancient sources.
           </p>
 
           {/* Reserve min-height to prevent layout shift while session loads */}
