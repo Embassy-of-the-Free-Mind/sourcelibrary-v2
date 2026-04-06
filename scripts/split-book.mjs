@@ -261,37 +261,42 @@ const existingPageCount = book.pages_count || 0;
 let iiifUrls;
 
 // Try archived copies first — use known page count instead of sequential HEAD probing.
-// Binary-search verify: check image 1 exists and is a real spread (width > 500).
-const firstArchived = `${R2_URL}/archived/${book.id}/1.jpg`;
-try {
-  const testResp = await fetch(firstArchived, { signal: AbortSignal.timeout(8000) });
-  if (testResp.ok) {
+// BPH books use zero-padded names (0001.jpg), others use plain (1.jpg). Try both.
+const archivePatterns = [
+  { fmt: (i) => `${R2_URL}/archived/${book.id}/${String(i).padStart(4, '0')}.jpg`, label: '0001.jpg' },
+  { fmt: (i) => `${R2_URL}/archived/${book.id}/${i}.jpg`, label: '1.jpg' },
+];
+
+for (const pattern of archivePatterns) {
+  if (iiifUrls) break;
+  try {
+    const testResp = await fetch(pattern.fmt(1), { signal: AbortSignal.timeout(8000) });
+    if (!testResp.ok) continue;
     const testBuf = Buffer.from(await testResp.arrayBuffer());
     const meta = await sharp(testBuf).metadata();
-    if (meta.width > 500) {
-      // Check the last expected image exists too
-      const lastUrl = `${R2_URL}/archived/${book.id}/${existingPageCount}.jpg`;
-      const lastResp = await fetch(lastUrl, { method: 'HEAD', signal: AbortSignal.timeout(3000) });
-      if (lastResp.ok) {
-        iiifUrls = Array.from({ length: existingPageCount }, (_, i) => `${R2_URL}/archived/${book.id}/${i + 1}.jpg`);
-        console.log(`  Using ${iiifUrls.length} archived R2 copies (${meta.width}x${meta.height})`);
-      } else {
-        // Archived count doesn't match page count — fall back to probing from the end
-        let hi = existingPageCount;
-        let lo = 1;
-        while (lo < hi) {
-          const mid = Math.ceil((lo + hi) / 2);
-          const r = await fetch(`${R2_URL}/archived/${book.id}/${mid}.jpg`, { method: 'HEAD', signal: AbortSignal.timeout(3000) });
-          if (r.ok) lo = mid; else hi = mid - 1;
-        }
-        iiifUrls = Array.from({ length: lo }, (_, i) => `${R2_URL}/archived/${book.id}/${i + 1}.jpg`);
-        console.log(`  Using ${iiifUrls.length} archived R2 copies (binary search, ${meta.width}x${meta.height})`);
-      }
-    } else {
-      console.log(`  Archived copies too small (${meta.width}px) — need IIIF fallback`);
+    if (meta.width <= 500) {
+      console.log(`  Archived copies too small (${meta.width}px, ${pattern.label}) — skipping`);
+      continue;
     }
-  }
-} catch {}
+    // Check the last expected image exists too
+    const lastResp = await fetch(pattern.fmt(existingPageCount), { method: 'HEAD', signal: AbortSignal.timeout(3000) });
+    if (lastResp.ok) {
+      iiifUrls = Array.from({ length: existingPageCount }, (_, i) => pattern.fmt(i + 1));
+      console.log(`  Using ${iiifUrls.length} archived R2 copies (${pattern.label}, ${meta.width}x${meta.height})`);
+    } else {
+      // Archived count doesn't match page count — binary search for actual count
+      let hi = existingPageCount;
+      let lo = 1;
+      while (lo < hi) {
+        const mid = Math.ceil((lo + hi) / 2);
+        const r = await fetch(pattern.fmt(mid), { method: 'HEAD', signal: AbortSignal.timeout(3000) });
+        if (r.ok) lo = mid; else hi = mid - 1;
+      }
+      iiifUrls = Array.from({ length: lo }, (_, i) => pattern.fmt(i + 1));
+      console.log(`  Using ${iiifUrls.length} archived R2 copies (binary search, ${pattern.label}, ${meta.width}x${meta.height})`);
+    }
+  } catch {}
+}
 
 if (!iiifUrls && manifestUrl) {
   iiifUrls = await getOriginalImageUrls(book.id, manifestUrl, existingPageCount);
