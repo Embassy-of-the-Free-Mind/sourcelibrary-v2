@@ -217,6 +217,10 @@ async function processBook(book, db) {
           const urls = await uploadPageVariants(jpegBuffer, page.book_id, page.page_number, uploadToR2);
           stats.bytesUploaded += jpegBuffer.length;
 
+          const dimFields = {};
+          if (urls.width) dimFields.image_width = urls.width;
+          if (urls.height) dimFields.image_height = urls.height;
+
           await db.collection('pages').updateOne(
             { _id: page._id },
             {
@@ -224,6 +228,7 @@ async function processBook(book, db) {
                 archived_photo: urls.archived,
                 display_photo: urls.display,
                 thumbnail_blob: urls.thumb,
+                ...dimFields,
                 'archive_metadata.archived_at': new Date(),
                 'archive_metadata.source': 'erara_pdf',
                 'archive_metadata.source_url': `https://www.e-rara.ch/download/pdf/${eraraId}`,
