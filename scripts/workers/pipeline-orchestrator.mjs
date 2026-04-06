@@ -2610,16 +2610,15 @@ async function run() {
     if (shouldRun(4)) {
       console.log('\n--- Phase 4: Dispatch translation to Lambda (SQS FIFO) ---');
 
-      // Zombie job reaper: cancel translation jobs stuck in processing with 0 progress for >2h.
+      // Zombie job reaper: cancel ANY jobs stuck in processing with 0 progress for >2h.
       // These are dead Lambda workers that will never complete, blocking the in-flight cap.
       if (!DRY_RUN) {
         const zombieThreshold = new Date(Date.now() - 2 * 60 * 60 * 1000);
         const zombieJobs = await db.collection('jobs').find({
-          type: 'translation',
           status: 'processing',
           'progress.completed': 0,
           created_at: { $lt: zombieThreshold },
-        }).project({ _id: 1, book_id: 1, book_title: 1 }).toArray();
+        }).project({ _id: 1, book_id: 1, book_title: 1, type: 1 }).toArray();
 
         if (zombieJobs.length > 0) {
           const zombieBookIds = zombieJobs.map(j => j.book_id);
@@ -2628,12 +2627,25 @@ async function run() {
             { $set: { status: 'failed', error: 'Auto-cancelled: stuck >2h with 0 progress', updated_at: new Date() } },
           );
           // Reset affected books so they can be re-dispatched
+          const rollbackMap = {
+            'translate_submitted': 'metadata_enriched',
+            'images_submitted': 'chapters_complete',
+          };
+          for (const [from, to] of Object.entries(rollbackMap)) {
+            await db.collection('books').updateMany(
+              { id: { $in: zombieBookIds }, 'pipeline_auto.status': from },
+              { $set: { 'pipeline_auto.status': to, updated_at: new Date() }, $unset: { job: '' } },
+            );
+          }
+          // Clear job locks on any zombie books
           await db.collection('books').updateMany(
-            { id: { $in: zombieBookIds }, 'pipeline_auto.status': 'translate_submitted' },
-            { $set: { 'pipeline_auto.status': 'metadata_enriched', updated_at: new Date() }, $unset: { job: '' } },
+            { id: { $in: zombieBookIds }, job: { $exists: true } },
+            { $unset: { job: '' }, $set: { updated_at: new Date() } },
           );
           log.zombie_jobs_cancelled += zombieJobs.length;
-          console.log(`  Zombie reaper: cancelled ${zombieJobs.length} stuck translation jobs, reset books to metadata_enriched`);
+          const byType = {};
+          zombieJobs.forEach(j => { byType[j.type] = (byType[j.type] || 0) + 1; });
+          console.log(`  Zombie reaper: cancelled ${zombieJobs.length} stuck jobs (${Object.entries(byType).map(([t,c]) => `${t}:${c}`).join(', ')})`);
         }
       }
 
