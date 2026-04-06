@@ -26,6 +26,7 @@ const OVERLAP = 0.01;        // 1% overlap on each crop
 const CONCURRENCY = 3;       // Gemini / fetch concurrency
 const MAX_RETRIES = 3;       // Image fetch retries
 const FETCH_TIMEOUT = 15000; // 15s per image
+const MIN_SPREAD_AR = 1.1;   // Aspect ratio gate: below this is portrait (single page), skip splitting
 
 // --- Parse args ---
 const args = process.argv.slice(2);
@@ -250,54 +251,50 @@ console.log(`\n=== ${book.title} ===`);
 console.log(`Current: ${book.pages_count} pages | needs_splitting: ${book.needs_splitting} | split_completed: ${book.split_completed}`);
 
 // --- Step 1: Get original image URLs ---
-// First load existing pages to know the original spread count
-const allExistingPagesPreload = await db.collection('pages')
-  .find({ book_id: book.id })
-  .sort({ page_number: 1 })
-  .project({ id: 1 })
-  .toArray();
-
 const manifestUrl = book.image_source?.iiif_manifest;
 
 console.log('\n--- Step 1: Get original image URLs ---');
-// Use the ORIGINAL spread count. For previously-split books, count archived images.
-// For never-split books, use existing page count.
+
+// Use existing page count as the expected spread count (before any prior split).
+// For books that were already split once, batch_jobs.page_count is the true spread count.
+const existingPageCount = book.pages_count || 0;
 let iiifUrls;
 
-// Try archived copies first (works for S3-imported books without IIIF)
-const archivedUrls = [];
-for (let i = 1; i <= 1000; i++) {
-  const testUrl = `${R2_URL}/archived/${book.id}/${i}.jpg`;
-  try {
-    const resp = await fetch(testUrl, { method: 'HEAD', signal: AbortSignal.timeout(3000) });
-    if (resp.ok) {
-      archivedUrls.push(testUrl);
-    } else {
-      break; // No more archived images
-    }
-  } catch {
-    break;
-  }
-}
-
-if (archivedUrls.length > 0) {
-  // Verify first image is an original (not a cropped half)
-  try {
-    const testResp = await fetch(archivedUrls[0], { signal: AbortSignal.timeout(8000) });
+// Try archived copies first — use known page count instead of sequential HEAD probing.
+// Binary-search verify: check image 1 exists and is a real spread (width > 500).
+const firstArchived = `${R2_URL}/archived/${book.id}/1.jpg`;
+try {
+  const testResp = await fetch(firstArchived, { signal: AbortSignal.timeout(8000) });
+  if (testResp.ok) {
     const testBuf = Buffer.from(await testResp.arrayBuffer());
     const meta = await sharp(testBuf).metadata();
-    if (meta.width > 500) { // Archived originals are at least 600px+ wide
-      console.log(`  Using ${archivedUrls.length} archived R2 copies (${meta.width}x${meta.height})`);
-      iiifUrls = archivedUrls;
+    if (meta.width > 500) {
+      // Check the last expected image exists too
+      const lastUrl = `${R2_URL}/archived/${book.id}/${existingPageCount}.jpg`;
+      const lastResp = await fetch(lastUrl, { method: 'HEAD', signal: AbortSignal.timeout(3000) });
+      if (lastResp.ok) {
+        iiifUrls = Array.from({ length: existingPageCount }, (_, i) => `${R2_URL}/archived/${book.id}/${i + 1}.jpg`);
+        console.log(`  Using ${iiifUrls.length} archived R2 copies (${meta.width}x${meta.height})`);
+      } else {
+        // Archived count doesn't match page count — fall back to probing from the end
+        let hi = existingPageCount;
+        let lo = 1;
+        while (lo < hi) {
+          const mid = Math.ceil((lo + hi) / 2);
+          const r = await fetch(`${R2_URL}/archived/${book.id}/${mid}.jpg`, { method: 'HEAD', signal: AbortSignal.timeout(3000) });
+          if (r.ok) lo = mid; else hi = mid - 1;
+        }
+        iiifUrls = Array.from({ length: lo }, (_, i) => `${R2_URL}/archived/${book.id}/${i + 1}.jpg`);
+        console.log(`  Using ${iiifUrls.length} archived R2 copies (binary search, ${meta.width}x${meta.height})`);
+      }
     } else {
       console.log(`  Archived copies too small (${meta.width}px) — need IIIF fallback`);
     }
-  } catch {}
-}
+  }
+} catch {}
 
 if (!iiifUrls && manifestUrl) {
-  const originalCount = archivedUrls.length || allExistingPagesPreload.length;
-  iiifUrls = await getOriginalImageUrls(book.id, manifestUrl, originalCount);
+  iiifUrls = await getOriginalImageUrls(book.id, manifestUrl, existingPageCount);
 }
 
 if (!iiifUrls || iiifUrls.length === 0) {
@@ -307,16 +304,35 @@ if (!iiifUrls || iiifUrls.length === 0) {
 
 console.log(`  ${iiifUrls.length} original images found`);
 
+// --- AR gate: check first image aspect ratio ---
+// If the first image is portrait (AR < 1.1), this book isn't actually spreads.
+try {
+  const gateBuf = await fetchImage(iiifUrls[0]);
+  const gateMeta = await sharp(gateBuf).metadata();
+  const ar = gateMeta.width / gateMeta.height;
+  if (ar < MIN_SPREAD_AR) {
+    console.log(`  AR gate: ${ar.toFixed(2)} < ${MIN_SPREAD_AR} — portrait pages, not spreads. Skipping.`);
+    await db.collection('books').updateOne({ id: book.id }, {
+      $set: { needs_splitting: false, split_completed: true, split_note: `AR gate: ${ar.toFixed(2)} — portrait` },
+    });
+    await client.close();
+    process.exit(0);
+  }
+  console.log(`  AR: ${ar.toFixed(2)} — confirmed spreads`);
+} catch (e) {
+  console.log(`  AR gate: failed to fetch first image (${e.message?.slice(0, 40)}) — proceeding anyway`);
+}
+
 // --- Step 2: Load existing pages (for their OCR) ---
 console.log('\n--- Step 2: Load existing page OCR ---');
 const allExistingPages = await db.collection('pages')
   .find({ book_id: book.id })
   .sort({ page_number: 1 })
-  .project({ id: 1, page_number: 1, photo: 1, 'ocr.data': 1, 'ocr.prompt_version': 1 })
+  .project({ id: 1, page_number: 1, photo: 1, 'ocr.data': 1, 'ocr.prompt_version': 1, 'ocr.model': 1 })
   .toArray();
 
-// Only use the first N pages matching the IIIF manifest count (the original spreads).
-// If the book was previously split, there may be more page records than IIIF images.
+// Only use the first N pages matching the source image count (the original spreads).
+// If the book was previously split, there may be more page records than source images.
 const existingPages = allExistingPages.slice(0, iiifUrls.length);
 
 console.log(`  ${allExistingPages.length} existing page records, using first ${existingPages.length} (matching ${iiifUrls.length} source images)`);
@@ -467,6 +483,9 @@ for (let batch = 0; batch < sourceIndices.length; batch += CONCURRENCY) {
         entry._thumb = urls.thumbUrl;
       }
     }
+
+    // Free image buffer to avoid memory buildup on large books
+    page._imageBuf = null;
   }));
   process.stderr.write(`  Upload: ${Math.min(batch + CONCURRENCY, sourceIndices.length)}/${sourceIndices.length}\r`);
 }
@@ -541,6 +560,8 @@ await db.collection('books').updateOne({ id: book.id }, {
   $set: {
     pages_count: newDocs.length,
     pages_ocr: pagesWithOCR,
+    pages_translated: 0,  // Reset — old spread translations are gone
+    pages_blank: 0,        // Reset — will be recomputed by sync-page-counts cron
     needs_splitting: false,
     split_completed: true,
     split_completed_at: new Date(),
