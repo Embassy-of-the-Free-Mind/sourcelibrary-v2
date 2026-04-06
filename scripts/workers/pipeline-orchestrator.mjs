@@ -1469,6 +1469,261 @@ Output structure:
   return { submitted: totalSubmitted, jobName: firstJobName || parentJobId, childCount: childJobIds.length, method };
 }
 
+/**
+ * Submit image extraction via Gemini Batch API.
+ * Mirrors submitOcrDirectly() but uses the image extraction prompt instead of OCR.
+ * Returns detected images as JSON arrays (parsed by batch-collector).
+ *
+ * Cost: ~50% discount vs Lambda realtime. Throughput: ~200+ books/hr vs ~50.
+ */
+const IMAGE_EXTRACTION_MODEL = 'gemini-3-flash-preview'; // Vision task — bbox accuracy critical
+const IMAGE_EXTRACTION_BATCH_SIZE = 150; // Pages per file-based batch (same as OCR)
+const IMAGE_EXTRACTION_INLINE_SIZE = 20;
+
+const IMAGE_EXTRACTION_PROMPT = `You are a museum curator analyzing a historical book page scan. Extract only significant illustrations — skip decorative elements like ornaments, borders, printer's marks, and initials.
+
+BOUNDING BOX (0.0-1.0 normalized coordinates):
+- x: LEFT edge (0=left, 1=right), y: TOP edge (0=top, 1=bottom)
+- width, height: span of illustration
+- TIGHTLY enclose the illustration only
+
+IMAGE TYPES (use these exactly):
+- emblem: Symbolic/allegorical with motto, often framed
+- woodcut: Bold relief print lines
+- engraving: Fine detailed intaglio lines, crosshatching
+- portrait: Depiction of a person
+- frontispiece: Decorative title page illustration
+- musical_score: Sheet music, notation, fugues (NOT "table")
+- diagram: Technical/scientific illustration
+- symbol: Alchemical, astrological symbols
+- map: Geographic representation
+
+SKIP these — do NOT include them:
+- Page ornaments, borders, decorative initials, printer's devices
+- Marbled papers, blank frames, ruled lines
+- Any element that is purely decorative with no intellectual content
+
+For each significant illustration return:
+{
+  "description": "Brief factual description",
+  "type": "emblem|woodcut|engraving|portrait|frontispiece|musical_score|diagram|symbol|map",
+  "bbox": { "x": 0.15, "y": 0.25, "width": 0.70, "height": 0.45 },
+  "confidence": 0.95,
+  "gallery_quality": 0.85,
+  "gallery_rationale": "Why gallery-worthy or not",
+  "metadata": {
+    "subjects": ["alchemy", "transformation"],
+    "figures": ["old man", "serpent"],
+    "symbols": ["ouroboros", "athanor"],
+    "style": "Northern European Renaissance",
+    "technique": "woodcut"
+  },
+  "museum_description": "A compelling allegorical scene depicting... This exemplifies early modern alchemical imagery..."
+}
+
+GALLERY QUALITY (0.0-1.0):
+- 0.9-1.0: Exceptional emblems, portraits, allegorical scenes with figures
+- 0.8-0.9: Illustrations with people/figures
+- 0.6-0.8: Good illustrations without people
+- 0.4-0.6: Musical scores, alchemical symbols
+
+MUSEUM DESCRIPTION: Write 2-3 sentences for a museum label - what the viewer sees and its significance.
+
+Return ONLY a valid JSON array. If no significant illustrations, return: []`;
+
+async function submitImageExtractionBatch(db, book, candidatePages) {
+  // Guard: check for existing active batch_jobs for this book
+  const activeBatchForBook = await db.collection('batch_jobs').countDocuments({
+    book_id: book.id,
+    type: 'image_extraction',
+    status: { $in: ['pending', 'processing', 'JOB_STATE_PENDING', 'JOB_STATE_RUNNING'] },
+  });
+  if (activeBatchForBook > 0) {
+    console.log(`    Skipping: ${activeBatchForBook} active image extraction batch jobs already exist`);
+    return { submitted: 0, skippedDuplicate: true };
+  }
+
+  // Fetch page image URLs
+  const pages = await db.collection('pages')
+    .find({ id: { $in: candidatePages.map(p => p.id) } })
+    .project({ _id: 0, id: 1, page_number: 1, photo: 1, photo_original: 1, archived_photo: 1, cropped_photo: 1, crop: 1 })
+    .toArray();
+
+  if (pages.length === 0) return { submitted: 0 };
+
+  console.log(`    Downloading ${pages.length} images for image extraction...`);
+  const downloaded = await downloadImagesParallel(pages, IMAGE_CONCURRENCY);
+  if (downloaded.length === 0) {
+    throw new Error(`All ${pages.length} image downloads failed`);
+  }
+  console.log(`    Downloaded ${downloaded.length}/${pages.length} images`);
+
+  // Build prompt with book context
+  const contextParts = [];
+  if (book.title) contextParts.push(`Book: "${book.title}"`);
+  if (book.author) contextParts.push(`Author: ${book.author}`);
+  if (book.year) contextParts.push(`Year: ${book.year}`);
+  if (book.language) contextParts.push(`Language: ${book.language}`);
+  if (book.subjects?.length) contextParts.push(`Subjects: ${book.subjects.join(', ')}`);
+  const contextPrefix = contextParts.length > 0
+    ? `BOOK CONTEXT (use this to inform your analysis — identify figures, symbols, and traditions specific to this work):\n${contextParts.join(' | ')}\n\n`
+    : '';
+  const prompt = contextPrefix + IMAGE_EXTRACTION_PROMPT;
+
+  const useFileBased = downloaded.length > IMAGE_EXTRACTION_INLINE_SIZE;
+  const batchSize = useFileBased ? IMAGE_EXTRACTION_BATCH_SIZE : IMAGE_EXTRACTION_INLINE_SIZE;
+
+  const parentJobId = nanoid();
+  const childJobIds = [];
+  let totalSubmitted = 0;
+  let firstJobName = null;
+
+  for (let j = 0; j < downloaded.length; j += batchSize) {
+    const chunk = downloaded.slice(j, j + batchSize);
+    const childJobId = nanoid();
+    const displayName = `pipeline-images-${book.id}-${childJobId}`;
+    let batchJob;
+
+    if (useFileBased) {
+      console.log(`    Building JSONL for ${chunk.length} pages (image extraction, file-based)...`);
+      const jsonlLines = chunk.map(item => JSON.stringify({
+        request: {
+          contents: [{
+            parts: [
+              { text: prompt },
+              { inlineData: { mimeType: item.image.mimeType, data: item.image.data } },
+            ],
+          }],
+          safetySettings: [
+            { category: 'HARM_CATEGORY_HARASSMENT', threshold: 'BLOCK_NONE' },
+            { category: 'HARM_CATEGORY_HATE_SPEECH', threshold: 'BLOCK_NONE' },
+            { category: 'HARM_CATEGORY_SEXUALLY_EXPLICIT', threshold: 'BLOCK_NONE' },
+            { category: 'HARM_CATEGORY_DANGEROUS_CONTENT', threshold: 'BLOCK_NONE' },
+            { category: 'HARM_CATEGORY_CIVIC_INTEGRITY', threshold: 'BLOCK_NONE' },
+          ],
+          generationConfig: {
+            temperature: 0.1,
+            maxOutputTokens: 2048,
+            thinkingConfig: { thinkingBudget: 0 },
+          },
+        },
+        metadata: { key: item.pageId },
+      }));
+      const jsonlContent = jsonlLines.join('\n');
+
+      let fileResult;
+      let uploadKeyIndex = -1;
+      for (let uki = 0; uki < GEMINI_BATCH_KEYS.length; uki++) {
+        const uploadKey = getGeminiApiKey(uki);
+        try {
+          fileResult = await uploadBatchFile(jsonlContent, displayName, uploadKey);
+          uploadKeyIndex = uki;
+          console.log(`    Uploaded file: ${fileResult.name} (key ${uki})`);
+          break;
+        } catch (uploadErr) {
+          if (uploadErr.message.includes('429') || uploadErr.message.includes('quota')) {
+            console.log(`    Upload key ${uki} quota exhausted, trying next...`);
+            continue;
+          }
+          throw uploadErr;
+        }
+      }
+      if (!fileResult) throw new Error('ALL_KEYS_QUOTA_EXHAUSTED');
+
+      batchJob = await createBatchJobFromFile(IMAGE_EXTRACTION_MODEL, fileResult.name, displayName, uploadKeyIndex);
+
+      try {
+        await fetch(`https://generativelanguage.googleapis.com/v1beta/${fileResult.name}?key=${getGeminiApiKey(uploadKeyIndex)}`, { method: 'DELETE' });
+      } catch (cleanupErr) {
+        console.log(`    Warning: file cleanup failed: ${cleanupErr.message}`);
+      }
+    } else {
+      const inlineRequests = chunk.map(item => ({
+        request: {
+          contents: [{
+            parts: [
+              { text: prompt },
+              { inlineData: { mimeType: item.image.mimeType, data: item.image.data } },
+            ],
+          }],
+          safetySettings: [
+            { category: 'HARM_CATEGORY_HARASSMENT', threshold: 'BLOCK_NONE' },
+            { category: 'HARM_CATEGORY_HATE_SPEECH', threshold: 'BLOCK_NONE' },
+            { category: 'HARM_CATEGORY_SEXUALLY_EXPLICIT', threshold: 'BLOCK_NONE' },
+            { category: 'HARM_CATEGORY_DANGEROUS_CONTENT', threshold: 'BLOCK_NONE' },
+            { category: 'HARM_CATEGORY_CIVIC_INTEGRITY', threshold: 'BLOCK_NONE' },
+          ],
+          generationConfig: {
+            temperature: 0.1,
+            maxOutputTokens: 2048,
+            thinkingConfig: { thinkingBudget: 0 },
+          },
+        },
+        metadata: { key: item.pageId },
+      }));
+      batchJob = await createBatchJobInline(IMAGE_EXTRACTION_MODEL, inlineRequests, displayName);
+    }
+
+    if (!firstJobName) firstJobName = batchJob.name;
+
+    // Record in batch_jobs
+    await db.collection('batch_jobs').insertOne({
+      id: childJobId,
+      parent_job_id: parentJobId,
+      job_name: batchJob.name,
+      type: 'image_extraction',
+      book_id: book.id,
+      page_ids: chunk.map(c => c.pageId),
+      page_count: chunk.length,
+      status: 'pending',
+      model: IMAGE_EXTRACTION_MODEL,
+      submission_method: useFileBased ? 'file' : 'inline',
+      created_at: new Date(),
+      updated_at: new Date(),
+    });
+
+    childJobIds.push(childJobId);
+    totalSubmitted += chunk.length;
+
+    // Log to gemini_usage
+    await db.collection('gemini_usage').insertOne({
+      type: 'image_extraction',
+      mode: 'batch',
+      model: IMAGE_EXTRACTION_MODEL,
+      book_id: book.id,
+      book_title: book.title,
+      page_ids: chunk.map(c => c.pageId),
+      page_count: chunk.length,
+      batch_job_id: childJobId,
+      gemini_job_name: batchJob.name,
+      input_tokens: 0,
+      output_tokens: 0,
+      status: 'submitted',
+      endpoint: 'hetzner/pipeline-orchestrator',
+      submission_method: useFileBased ? 'file' : 'inline',
+      timestamp: new Date(),
+    });
+  }
+
+  // Create parent job if multiple children
+  if (childJobIds.length > 1) {
+    await db.collection('batch_jobs').insertOne({
+      id: parentJobId,
+      type: 'image_extraction',
+      book_id: book.id,
+      child_job_ids: childJobIds,
+      total_pages: totalSubmitted,
+      status: 'pending',
+      model: IMAGE_EXTRACTION_MODEL,
+      created_at: new Date(),
+      updated_at: new Date(),
+    });
+  }
+
+  const method = useFileBased ? 'file-based' : 'inline';
+  return { submitted: totalSubmitted, jobName: firstJobName || parentJobId, childCount: childJobIds.length, method };
+}
+
 // ── Main ──
 
 async function run() {
@@ -3007,156 +3262,270 @@ async function run() {
     if (shouldRun(8)) {
       console.log('\n--- Phase 8: Image extraction ---');
 
-      const activeImageJobs = await db.collection('jobs').countDocuments({
-        type: 'image_extraction',
-        status: { $in: ['pending', 'processing'] },
-      });
-      console.log(`  Active image jobs: ${activeImageJobs}/${MAX_ACTIVE_IMAGE_JOBS}`);
+      const USE_BATCH = process.env.IMAGE_EXTRACTION_USE_BATCH !== 'false'; // Default: true (batch)
+      console.log(`  Mode: ${USE_BATCH ? 'BATCH API' : 'Lambda/SQS'}`);
 
-      if (!SQS_IMAGE_EXTRACTION_QUEUE_URL) {
-        console.log('  SKIP: SQS_PAGE_IMAGE_EXTRACTION_QUEUE_URL not configured');
-      } else if (activeImageJobs < MAX_ACTIVE_IMAGE_JOBS) {
-        const IMAGE_CANDIDATE_PAGE_TYPES = ['illustration', 'diagram', 'map', 'frontispiece', 'mixed'];
-        const sqsClient = new SQSClient({ region: process.env.AWS_REGION || 'eu-central-1' });
+      if (USE_BATCH) {
+        // ── Batch API path: submit via Gemini Batch API (same as OCR) ──
+        const activeBatchImageJobs = await db.collection('batch_jobs').countDocuments({
+          type: 'image_extraction',
+          status: { $in: ['pending', 'processing', 'JOB_STATE_PENDING', 'JOB_STATE_RUNNING'] },
+        });
+        console.log(`  Active batch image jobs: ${activeBatchImageJobs}/${MAX_ACTIVE_IMAGE_JOBS}`);
 
-        const readyForImages = await db.collection('books')
-          .find({ 'pipeline_auto.status': 'chapters_complete' })
-          .sort({ processing_priority: -1, hidden: 1 })
-          .project({ id: 1, title: 1 })
-          .limit(IMAGE_SUBMIT_LIMIT)
-          .toArray();
+        if (activeBatchImageJobs < MAX_ACTIVE_IMAGE_JOBS) {
+          const IMAGE_CANDIDATE_PAGE_TYPES = ['illustration', 'diagram', 'map', 'frontispiece', 'mixed'];
 
-        // Catch-up: books processed outside pipeline (no pipeline_auto) with OCR but no image extraction
-        const remainingSlots = IMAGE_SUBMIT_LIMIT - readyForImages.length;
-        if (remainingSlots > 0) {
-          const catchUp = await db.collection('books')
-            .find({
-              'pipeline_auto.status': { $exists: false },
-              pages_ocr: { $gt: 0 },
-              $or: [
-                { detected_images_count: { $exists: false } },
-                { detected_images_count: 0 },
-              ],
-              // Skip books already being processed
-              'job.type': { $ne: 'image_extraction' },
-            })
-            .sort({ visible: -1, pages_count: -1 })
-            .project({ id: 1, title: 1 })
-            .limit(remainingSlots)
+          const readyForImages = await db.collection('books')
+            .find({ 'pipeline_auto.status': 'chapters_complete' })
+            .sort({ processing_priority: -1, hidden: 1 })
+            .project({ id: 1, title: 1, author: 1, year: 1, language: 1, subjects: 1 })
+            .limit(IMAGE_SUBMIT_LIMIT)
             .toArray();
-          if (catchUp.length > 0) {
-            readyForImages.push(...catchUp);
-            console.log(`  Catch-up: ${catchUp.length} pre-pipeline books queued for image extraction`);
+
+          // Catch-up: books processed outside pipeline with OCR but no image extraction
+          const remainingSlots = IMAGE_SUBMIT_LIMIT - readyForImages.length;
+          if (remainingSlots > 0) {
+            const catchUp = await db.collection('books')
+              .find({
+                'pipeline_auto.status': { $exists: false },
+                pages_ocr: { $gt: 0 },
+                $or: [
+                  { detected_images_count: { $exists: false } },
+                  { detected_images_count: 0 },
+                ],
+                'job.type': { $ne: 'image_extraction' },
+              })
+              .sort({ visible: -1, pages_count: -1 })
+              .project({ id: 1, title: 1, author: 1, year: 1, language: 1, subjects: 1 })
+              .limit(remainingSlots)
+              .toArray();
+            if (catchUp.length > 0) {
+              readyForImages.push(...catchUp);
+              console.log(`  Catch-up: ${catchUp.length} pre-pipeline books queued for image extraction`);
+            }
+          }
+
+          console.log(`  Books ready for image extraction: ${readyForImages.length}`);
+
+          for (const book of readyForImages) {
+            try {
+              // Find candidate pages (same filter as Lambda path)
+              const bookPages = await db.collection('pages')
+                .find({
+                  book_id: book.id,
+                  $or: [
+                    { page_type: { $in: IMAGE_CANDIDATE_PAGE_TYPES } },
+                    { page_type: { $exists: false }, 'ocr.data': { $regex: '<detected-images>|<image-desc' } },
+                  ],
+                }, { projection: { id: 1 } })
+                .toArray();
+
+              if (bookPages.length === 0) {
+                if (!DRY_RUN) await setPipelineStatus(db, book.id, 'images_complete');
+                log.images_advanced++;
+                console.log(`  No image candidates, skipped: ${book.title}`);
+                continue;
+              }
+
+              if (DRY_RUN) {
+                console.log(`  Would submit batch image extraction: ${book.title} (${bookPages.length} pages)`);
+                continue;
+              }
+
+              const result = await submitImageExtractionBatch(db, book, bookPages);
+              if (result.skippedDuplicate) continue;
+              if (result.submitted === 0) {
+                await setPipelineStatus(db, book.id, 'images_complete');
+                log.images_advanced++;
+                continue;
+              }
+
+              await setPipelineStatus(db, book.id, 'images_submitted', {
+                image_extraction_batch: true,
+                image_extraction_job_name: result.jobName,
+              });
+              log.images_submitted++;
+              console.log(`  Batch image extraction submitted: ${book.title} (${result.submitted} pages, ${result.childCount || 1} jobs, ${result.method})`);
+
+              await sleep(API_DELAY_MS);
+            } catch (err) {
+              log.errors.push(`Images batch submit ${book.id}: ${err.message}`);
+            }
           }
         }
+      } else {
+        // ── Lambda/SQS path (original, fallback) ──
+        const activeImageJobs = await db.collection('jobs').countDocuments({
+          type: 'image_extraction',
+          status: { $in: ['pending', 'processing'] },
+        });
+        console.log(`  Active image jobs: ${activeImageJobs}/${MAX_ACTIVE_IMAGE_JOBS}`);
 
-        console.log(`  Books ready for image extraction: ${readyForImages.length}`);
+        if (!SQS_IMAGE_EXTRACTION_QUEUE_URL) {
+          console.log('  SKIP: SQS_PAGE_IMAGE_EXTRACTION_QUEUE_URL not configured');
+        } else if (activeImageJobs < MAX_ACTIVE_IMAGE_JOBS) {
+          const IMAGE_CANDIDATE_PAGE_TYPES = ['illustration', 'diagram', 'map', 'frontispiece', 'mixed'];
+          const sqsClient = new SQSClient({ region: process.env.AWS_REGION || 'eu-central-1' });
 
-        for (const book of readyForImages) {
-          try {
-            // Find pages with image candidates (same logic as Vercel cron)
-            const bookPages = await db.collection('pages')
+          const readyForImages = await db.collection('books')
+            .find({ 'pipeline_auto.status': 'chapters_complete' })
+            .sort({ processing_priority: -1, hidden: 1 })
+            .project({ id: 1, title: 1 })
+            .limit(IMAGE_SUBMIT_LIMIT)
+            .toArray();
+
+          const remainingSlots = IMAGE_SUBMIT_LIMIT - readyForImages.length;
+          if (remainingSlots > 0) {
+            const catchUp = await db.collection('books')
               .find({
-                book_id: book.id,
+                'pipeline_auto.status': { $exists: false },
+                pages_ocr: { $gt: 0 },
                 $or: [
-                  { page_type: { $in: IMAGE_CANDIDATE_PAGE_TYPES } },
-                  { page_type: { $exists: false }, 'ocr.data': { $regex: '<detected-images>|<image-desc' } },
+                  { detected_images_count: { $exists: false } },
+                  { detected_images_count: 0 },
                 ],
-              }, { projection: { id: 1 } })
+                'job.type': { $ne: 'image_extraction' },
+              })
+              .sort({ visible: -1, pages_count: -1 })
+              .project({ id: 1, title: 1 })
+              .limit(remainingSlots)
               .toArray();
-
-            if (bookPages.length === 0) {
-              // No image candidates — skip straight to images_complete
-              if (!DRY_RUN) await setPipelineStatus(db, book.id, 'images_complete');
-              log.images_advanced++;
-              console.log(`  No image candidates, skipped: ${book.title}`);
-              continue;
+            if (catchUp.length > 0) {
+              readyForImages.push(...catchUp);
+              console.log(`  Catch-up: ${catchUp.length} pre-pipeline books queued for image extraction`);
             }
+          }
 
-            if (DRY_RUN) {
-              console.log(`  Would submit image extraction: ${book.title} (${bookPages.length} pages)`);
-              continue;
+          console.log(`  Books ready for image extraction: ${readyForImages.length}`);
+
+          for (const book of readyForImages) {
+            try {
+              const bookPages = await db.collection('pages')
+                .find({
+                  book_id: book.id,
+                  $or: [
+                    { page_type: { $in: IMAGE_CANDIDATE_PAGE_TYPES } },
+                    { page_type: { $exists: false }, 'ocr.data': { $regex: '<detected-images>|<image-desc' } },
+                  ],
+                }, { projection: { id: 1 } })
+                .toArray();
+
+              if (bookPages.length === 0) {
+                if (!DRY_RUN) await setPipelineStatus(db, book.id, 'images_complete');
+                log.images_advanced++;
+                console.log(`  No image candidates, skipped: ${book.title}`);
+                continue;
+              }
+
+              if (DRY_RUN) {
+                console.log(`  Would submit image extraction: ${book.title} (${bookPages.length} pages)`);
+                continue;
+              }
+
+              const pageIds = bookPages.map(p => p.id);
+              const jobId = nanoid(12);
+
+              await db.collection('jobs').insertOne({
+                id: jobId,
+                type: 'image_extraction',
+                status: 'pending',
+                book_id: book.id,
+                book_title: book.title,
+                progress: { total: pageIds.length, completed: 0, failed: 0 },
+                config: { page_ids: pageIds },
+                created_at: new Date(),
+                updated_at: new Date(),
+              });
+
+              await db.collection('books').updateOne(
+                { id: book.id },
+                { $set: { job: { type: 'image_extraction', job_id: jobId } } }
+              );
+
+              for (let i = 0; i < pageIds.length; i += 10) {
+                const batch = pageIds.slice(i, i + 10);
+                await sqsClient.send(new SendMessageBatchCommand({
+                  QueueUrl: SQS_IMAGE_EXTRACTION_QUEUE_URL,
+                  Entries: batch.map((pageId, idx) => ({
+                    Id: String(idx),
+                    MessageBody: JSON.stringify({ bookId: book.id, pageId, jobId }),
+                  })),
+                }));
+              }
+
+              await setPipelineStatus(db, book.id, 'images_submitted', {
+                image_extraction_job_id: jobId,
+              });
+              log.images_submitted++;
+              console.log(`  Image extraction submitted: ${book.title} (${pageIds.length} pages)`);
+
+              await sleep(API_DELAY_MS);
+            } catch (err) {
+              log.errors.push(`Images submit ${book.id}: ${err.message}`);
             }
-
-            const pageIds = bookPages.map(p => p.id);
-            const jobId = nanoid(12);
-
-            // Create job record
-            await db.collection('jobs').insertOne({
-              id: jobId,
-              type: 'image_extraction',
-              status: 'pending',
-              book_id: book.id,
-              book_title: book.title,
-              progress: { total: pageIds.length, completed: 0, failed: 0 },
-              config: { page_ids: pageIds },
-              created_at: new Date(),
-              updated_at: new Date(),
-            });
-
-            await db.collection('books').updateOne(
-              { id: book.id },
-              { $set: { job: { type: 'image_extraction', job_id: jobId } } }
-            );
-
-            // Enqueue pages to SQS in batches of 10
-            for (let i = 0; i < pageIds.length; i += 10) {
-              const batch = pageIds.slice(i, i + 10);
-              await sqsClient.send(new SendMessageBatchCommand({
-                QueueUrl: SQS_IMAGE_EXTRACTION_QUEUE_URL,
-                Entries: batch.map((pageId, idx) => ({
-                  Id: String(idx),
-                  MessageBody: JSON.stringify({ bookId: book.id, pageId, jobId }),
-                })),
-              }));
-            }
-
-            await setPipelineStatus(db, book.id, 'images_submitted', {
-              image_extraction_job_id: jobId,
-            });
-            log.images_submitted++;
-            console.log(`  Image extraction submitted: ${book.title} (${pageIds.length} pages)`);
-
-            await sleep(API_DELAY_MS);
-          } catch (err) {
-            log.errors.push(`Images submit ${book.id}: ${err.message}`);
           }
         }
       }
 
-      // Check completed image extraction jobs
+      // Check completed image extraction — both batch API and Lambda/SQS paths
       const imagesPending = await db.collection('books')
         .find({ 'pipeline_auto.status': 'images_submitted' })
-        .project({ id: 1, 'pipeline_auto.image_extraction_job_id': 1 })
+        .project({ id: 1, pipeline_auto: 1 })
         .toArray();
 
       for (const book of imagesPending) {
-        const imgJobId = book.pipeline_auto?.image_extraction_job_id;
-        if (!imgJobId) {
-          if (!DRY_RUN) await setPipelineStatus(db, book.id, 'images_complete');
-          log.images_advanced++;
-          continue;
-        }
+        const isBatch = book.pipeline_auto?.image_extraction_batch;
 
-        const imgJob = await db.collection('jobs').findOne({
-          id: imgJobId,
-          status: { $in: ['completed', 'completed_with_errors'] },
-        });
-
-        if (imgJob) {
-          if (!DRY_RUN) {
-            // Update detected_images_count from actual page data
-            const imgCount = await db.collection('pages').countDocuments({
-              book_id: book.id,
-              'detected_images.0': { $exists: true },
-            });
-            await db.collection('books').updateOne(
-              { id: book.id },
-              { $set: { detected_images_count: imgCount } }
-            );
-            await setPipelineStatus(db, book.id, 'images_complete');
+        if (isBatch) {
+          // Batch path: check if all batch_jobs for this book are done
+          const pendingBatch = await db.collection('batch_jobs').countDocuments({
+            book_id: book.id,
+            type: 'image_extraction',
+            status: { $in: ['pending', 'processing', 'JOB_STATE_PENDING', 'JOB_STATE_RUNNING'] },
+          });
+          if (pendingBatch === 0) {
+            if (!DRY_RUN) {
+              const imgCount = await db.collection('pages').countDocuments({
+                book_id: book.id,
+                'detected_images.0': { $exists: true },
+              });
+              await db.collection('books').updateOne(
+                { id: book.id },
+                { $set: { detected_images_count: imgCount } }
+              );
+              await setPipelineStatus(db, book.id, 'images_complete');
+            }
+            log.images_advanced++;
           }
-          log.images_advanced++;
+        } else {
+          // Lambda/SQS path: check jobs collection
+          const imgJobId = book.pipeline_auto?.image_extraction_job_id;
+          if (!imgJobId) {
+            if (!DRY_RUN) await setPipelineStatus(db, book.id, 'images_complete');
+            log.images_advanced++;
+            continue;
+          }
+
+          const imgJob = await db.collection('jobs').findOne({
+            id: imgJobId,
+            status: { $in: ['completed', 'completed_with_errors'] },
+          });
+
+          if (imgJob) {
+            if (!DRY_RUN) {
+              const imgCount = await db.collection('pages').countDocuments({
+                book_id: book.id,
+                'detected_images.0': { $exists: true },
+              });
+              await db.collection('books').updateOne(
+                { id: book.id },
+                { $set: { detected_images_count: imgCount } }
+              );
+              await setPipelineStatus(db, book.id, 'images_complete');
+            }
+            log.images_advanced++;
+          }
         }
       }
       console.log(`  Images submitted: ${log.images_submitted}, advanced: ${log.images_advanced}`);
