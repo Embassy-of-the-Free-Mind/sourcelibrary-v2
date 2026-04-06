@@ -199,6 +199,37 @@ export async function browseAuthors(letter: string): Promise<{ name: string; cou
 }
 
 /**
+ * Search books by title/author text — returns matching book IDs.
+ *
+ * Use this instead of MongoDB regex queries on books.title/author.
+ * Supabase has trigram GIN indexes on these columns, making ILIKE
+ * queries ~100x faster than MongoDB collection scans.
+ *
+ * Pattern for scripts that need full book data from MongoDB:
+ *   const ids = await searchBookIds('iamblichus');
+ *   const books = await db.collection('books').find({ id: { $in: ids } }).toArray();
+ */
+export async function searchBookIds(
+  text: string,
+  opts?: { includeHidden?: boolean; limit?: number }
+): Promise<string[]> {
+  const limit = opts?.limit || 500;
+
+  let query = supabase
+    .from('books_catalog')
+    .select('id')
+    .gt('pages_count', 0)
+    .or(`title.ilike.%${text}%,display_title.ilike.%${text}%,author.ilike.%${text}%`)
+    .limit(limit);
+
+  if (!opts?.includeHidden) query = query.eq('visible', true);
+
+  const { data, error } = await query;
+  if (error) throw new Error(`searchBookIds failed: ${error.message}`);
+  return (data || []).map(row => row.id);
+}
+
+/**
  * Get category counts from books_catalog.
  * Unnests the categories array and counts occurrences.
  */
