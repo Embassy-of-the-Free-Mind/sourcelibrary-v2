@@ -646,18 +646,33 @@ async function processBook(db, book, job, globalCounter, deadline) {
       bookId: book.id,
     });
   } else {
-    // Park this book — it got its 200-page chunk, let other books go first.
-    // Status moves to translate_partial so it's no longer picked up as translate_submitted.
-    await db.collection('books').updateOne(
-      { id: book.id },
-      { $set: {
-        'pipeline_auto.status': 'translate_partial',
-        pages_translated: newCompleted,
-        updated_at: new Date(),
-        last_translation_at: new Date(),
-      }},
-    );
-    console.log(`  [${label}] Parked — ${translated} this run (${newCompleted}/${job.progress.total} total), moving to translate_partial`);
+    // Circuit breaker: if 0 pages translated this run AND the book was already attempted before,
+    // it's stuck (e.g. Gemini safety filters blocking all pages). Mark needs_attention instead of spinning.
+    if (translated === 0 && book.last_translation_at) {
+      await db.collection('books').updateOne(
+        { id: book.id },
+        { $set: {
+          'pipeline_auto.status': 'needs_attention',
+          'pipeline_auto.attention_reason': 'Translation made zero progress on consecutive attempts',
+          updated_at: new Date(),
+        }, $unset: { job: '' } },
+      );
+      await db.collection('jobs').updateOne({ id: job.id }, { $set: { status: 'failed', error: 'zero-progress-circuit-breaker', updated_at: new Date() } });
+      console.log(`  [${label}] Circuit breaker: 0 pages on retry, marking needs_attention`);
+    } else {
+      // Park this book — it got its 200-page chunk, let other books go first.
+      // Status moves to translate_partial so it's no longer picked up as translate_submitted.
+      await db.collection('books').updateOne(
+        { id: book.id },
+        { $set: {
+          'pipeline_auto.status': 'translate_partial',
+          pages_translated: newCompleted,
+          updated_at: new Date(),
+          last_translation_at: new Date(),
+        }},
+      );
+      console.log(`  [${label}] Parked — ${translated} this run (${newCompleted}/${job.progress.total} total), moving to translate_partial`);
+    }
   }
 
   return { translated, failed, completed: isComplete ? 1 : 0, inputTokens: totalInputTokens, outputTokens: totalOutputTokens };
@@ -883,8 +898,7 @@ async function main() {
         _denominator: { $subtract: [{ $ifNull: ['$pages_ocr', 0] }, { $ifNull: ['$pages_blank', 0] }] },
         _remaining: { $subtract: [{ $ifNull: ['$pages_ocr', 0] }, { $add: [{ $ifNull: ['$pages_translated', 0] }, { $ifNull: ['$pages_blank', 0] }] }] },
       }},
-      // Only >90% translated books
-      { $match: { _denominator: { $gt: 0 }, $expr: { $gte: [{ $divide: ['$pages_translated', '$_denominator'] }, 0] }, _remaining: { $gte: MIN_REMAINING } } },
+      { $match: { _denominator: { $gt: 0 }, _remaining: { $gte: MIN_REMAINING } } },
       { $sort: { _remaining: 1 } }, // least remaining first — finish them fast
       { $limit: needed },
       { $project: proj },
@@ -895,8 +909,26 @@ async function main() {
     }
   }
 
-  // Self-dispatch: aggressively fill all remaining slots with fresh books.
-  // Partials are limited to >90% only — fresh books get maximum throughput.
+  // Resume orphaned jobs: books with pending/processing translation jobs but not found by status queries above.
+  // This catches jobs created by a previous selfDispatch that parked before finishing.
+  if (books.length < CONCURRENCY) {
+    const bookIds = new Set(books.map(b => b.id));
+    const orphanJobs = await db.collection('jobs').find({
+      type: 'translation', status: { $in: ['pending', 'processing'] },
+      book_id: { $nin: [...bookIds] },
+    }).sort({ created_at: 1 }).limit(CONCURRENCY - books.length).project({ book_id: 1 }).toArray();
+    if (orphanJobs.length > 0) {
+      const orphanBooks = await db.collection('books')
+        .find({ id: { $in: orphanJobs.map(j => j.book_id) }, 'pipeline_auto.status': { $nin: ['needs_attention', 'complete', 'failed'] } })
+        .project(proj).toArray();
+      books = [...books, ...orphanBooks.filter(b => !bookIds.has(b.id))].slice(0, CONCURRENCY);
+      if (orphanBooks.length > 0) {
+        console.log(`[TRANSLATE] Resumed ${orphanBooks.length} books with orphaned jobs`);
+      }
+    }
+  }
+
+  // Self-dispatch: fill remaining slots with fresh books from metadata_enriched/ft_verified.
   if (books.length < CONCURRENCY) {
     const needed = CONCURRENCY - books.length;
     const dispatched = await selfDispatch(db, needed);
