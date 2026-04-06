@@ -267,6 +267,8 @@ async function processOneJob(db, job) {
   const state = normalizeState(rawState);
 
   if (state === 'JOB_STATE_SUCCEEDED') {
+    const stats = geminiData.metadata?.batchStats || {};
+    console.log(`  Collecting: ${job.book_id} | ${job.type} | ${stats.successfulRequestCount || '?'}/${stats.requestCount || '?'} pages | ${rawState}`);
     if (DRY_RUN) return { status: 'would_collect', bookId: job.book_id };
 
     const responses = await extractResults(geminiData, workingKey);
@@ -1053,14 +1055,17 @@ async function run() {
   } catch (e) { console.error(`[zombie-reaper] Error: ${e.message}`); }
 
   // ── Ghost Cleanup: mark orphaned parent batch jobs as saved ──
-  // Parent jobs (no job_name) get stuck at 'completed' because the collector
-  // only queries jobs with job_name. Their children already saved the pages.
+  // Parent jobs (no job_name) get stuck at 'completed' or 'processing' because
+  // the collector only queries jobs with job_name. Their children already saved
+  // the pages. Parent jobs enter 'processing' when some children complete, and
+  // 'completed' when all children are done — but both states can linger forever.
   let ghostsCleaned = 0;
   try {
     const ghostResult = await db.collection('batch_jobs').updateMany(
       {
-        status: 'completed',
+        status: { $in: ['completed', 'processing'] },
         parent_job_id: { $exists: false },
+        child_job_ids: { $exists: true },
         $or: [
           { job_name: { $in: [null, ''] } },
           { job_name: { $exists: false } },
