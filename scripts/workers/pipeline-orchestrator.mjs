@@ -47,7 +47,7 @@ function getOcrModelForBook(book) {
 const OCR_MODEL = OCR_MODEL_FLASH; // Legacy fallback for recitation retry path
 const OCR_PROMPT_VERSION = 'v10'; // Read from DB at runtime; this label is for batch_jobs metadata only
 const OCR_INLINE_BATCH_SIZE = 20;  // Pages per inline batch (base64 in body, ~20MB limit)
-const OCR_FILE_BATCH_SIZE = 150;   // Pages per file-based batch (JSONL uploaded to File API)
+const OCR_FILE_BATCH_SIZE = 75;    // Pages per file-based batch (JSONL uploaded to File API) — reduced from 150 to avoid "Invalid string length" on 500+ page books
 const IMAGE_CONCURRENCY = 20;     // Parallel image downloads per book
 const MAX_PAGES_PER_BOOK = 500;   // Max pages to OCR per book
 
