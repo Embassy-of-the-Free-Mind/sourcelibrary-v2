@@ -3250,13 +3250,20 @@ async function run() {
       for (const book of coverBooks) {
         if (DRY_RUN) continue;
         try {
-          // 1. Hide digitizer notice pages (Google, IA, barcodes) in first 5 pages
-          const earlyPages = await db.collection('pages').find(
-            { book_id: book.id, page_number: { $lte: 5 } },
+          // 1. Hide digitizer notice pages (Google, IA, barcodes) in first & last 5 pages
+          const bookPageCount = (await db.collection('books').findOne(
+            { id: book.id }, { projection: { pages_count: 1 } }
+          ))?.pages_count || 0;
+          const lastPageThreshold = Math.max(6, bookPageCount - 4); // last 5 pages
+          const edgePages = await db.collection('pages').find(
+            { book_id: book.id, $or: [
+              { page_number: { $lte: 5 } },
+              { page_number: { $gte: lastPageThreshold } },
+            ]},
             { projection: { id: 1, page_number: 1, 'ocr.data': 1, page_type: 1 } }
           ).sort({ page_number: 1 }).toArray();
 
-          for (const page of earlyPages) {
+          for (const page of edgePages) {
             const ocr = (page.ocr?.data || '').substring(0, 1500);
             const isDigitizerPage =
               /google\s+logo|digitized\s+by\s+google|this\s+is\s+a\s+digital\s+copy/i.test(ocr) ||
