@@ -350,7 +350,7 @@ export default function CollectionAllBooks({
                 slug: book.slug,
                 title: bookTitle(book),
                 author: book.author || '',
-                year: book.year || 0,
+                year: book.year || parseInt(book.published || '', 10) || 0,
                 pages_count: book.pages_count,
                 pages_ocr: book.pages_ocr,
                 pages_translated: book.pages_translated,
