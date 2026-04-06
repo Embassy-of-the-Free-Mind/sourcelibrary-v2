@@ -742,10 +742,11 @@ export default function TranslationEditor({
     setOcrText(page.ocr?.data || '');
     setTranslationText(page.translation?.data || '');
     setSummaryText(page.summary?.data || '');
-    // Reset scroll on all content panels
+    // Reset scroll on all content panels and the outer panel container (mobile stacked layout)
     document.querySelectorAll('[data-reader-panel]').forEach(el => {
       el.scrollTop = 0;
     });
+    document.querySelector('[data-reader-panels-container]')?.scrollTo(0, 0);
   }, [page]);
 
   const handleProcess = async (action: 'ocr' | 'translation' | 'summary' | 'all') => {
@@ -860,7 +861,12 @@ export default function TranslationEditor({
               >
                 <ChevronLeft className="w-4 h-4" aria-hidden="true" />
               </button>
-              <span className="px-1 sm:px-2 text-sm font-medium" style={{ color: 'var(--text-muted)' }} aria-label={`Page ${currentIndex + 1} of ${pages.length}`}>{currentIndex + 1}/{pages.length}</span>
+              <div className="flex flex-col items-center px-1 sm:px-2">
+                <span className="text-sm font-medium" style={{ color: 'var(--text-muted)' }} aria-label={`Page ${currentIndex + 1} of ${pages.length}`}>{currentIndex + 1}/{pages.length}</span>
+                {page.page_number != null && (
+                  <span className="text-[10px] leading-tight" style={{ color: 'var(--text-muted)' }}>p. {page.page_number}</span>
+                )}
+              </div>
               <button
                 onClick={() => nextPage && onNavigate(nextPage.id)}
                 disabled={!nextPage}
@@ -1066,6 +1072,7 @@ export default function TranslationEditor({
           return (
             <div
               className="flex-1 flex flex-col lg:flex-row overflow-auto lg:overflow-hidden relative"
+              data-reader-panels-container
               onTouchStart={handleTouchStart}
               onTouchMove={handleTouchMove}
               onTouchEnd={handleTouchEnd}
@@ -1559,7 +1566,12 @@ export default function TranslationEditor({
             >
               <ChevronLeft className="w-4 h-4" />
             </button>
-            <span className="px-1 sm:px-2 text-sm font-medium" style={{ color: 'var(--text-muted)' }}>{currentIndex + 1}/{pages.length}</span>
+            <div className="flex flex-col items-center px-1 sm:px-2">
+              <span className="text-sm font-medium" style={{ color: 'var(--text-muted)' }}>{currentIndex + 1}/{pages.length}</span>
+              {page.page_number != null && (
+                <span className="text-[10px] leading-tight" style={{ color: 'var(--text-muted)' }}>p. {page.page_number}</span>
+              )}
+            </div>
             <button
               onClick={() => nextPage && onNavigate(nextPage.id)}
               disabled={!nextPage}
@@ -1680,7 +1692,7 @@ export default function TranslationEditor({
 
       {/* Main Content - Panels toggle visibility, stacked on mobile, columns on desktop */}
       {/* On mobile: panels have min-height and container scrolls. On desktop: panels share space */}
-      <div className="flex-1 flex flex-col lg:flex-row overflow-auto lg:overflow-hidden">
+      <div className="flex-1 flex flex-col lg:flex-row overflow-auto lg:overflow-hidden" data-reader-panels-container>
         {/* Source Image Panel */}
         {showImagePanel && (
           <div className="w-full min-h-[50vh] lg:min-h-0 lg:flex-1 flex flex-col shrink-0 lg:shrink relative" style={{ background: 'var(--bg-cream)', borderRight: '1px solid var(--border-light)' }}>
