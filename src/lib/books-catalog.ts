@@ -163,22 +163,33 @@ export async function getLanguageCounts(filter: {
  * whose names start with the given letter and have translations.
  */
 export async function browseAuthors(letter: string): Promise<{ name: string; count: number }[]> {
-  // Fetch just the author column for books matching this letter with translations.
-  // Must set range beyond default 1000-row limit (letter A has ~1100 books).
-  const { data, error } = await supabase
-    .from('books_catalog')
-    .select('author')
-    .eq('visible', true)
-    .gt('pages_count', 0)
-    .gt('pages_translated', 0)
-    .ilike('author', `${letter}%`)
-    .range(0, 4999);
+  // Supabase PostgREST caps responses at 1000 rows. Letter A has ~1100 books,
+  // so we paginate to get all results.
+  const allRows: { author: string | null }[] = [];
+  const PAGE = 1000;
+  let offset = 0;
 
-  if (error) throw new Error(`browseAuthors query failed: ${error.message}`);
+  // eslint-disable-next-line no-constant-condition
+  while (true) {
+    const { data, error } = await supabase
+      .from('books_catalog')
+      .select('author')
+      .eq('visible', true)
+      .gt('pages_count', 0)
+      .gt('pages_translated', 0)
+      .ilike('author', `${letter}%`)
+      .range(offset, offset + PAGE - 1);
+
+    if (error) throw new Error(`browseAuthors query failed: ${error.message}`);
+    if (!data || data.length === 0) break;
+    allRows.push(...data);
+    if (data.length < PAGE) break;
+    offset += PAGE;
+  }
 
   // Group by author and count
   const counts = new Map<string, number>();
-  for (const row of (data || [])) {
+  for (const row of allRows) {
     if (row.author) counts.set(row.author, (counts.get(row.author) || 0) + 1);
   }
 
