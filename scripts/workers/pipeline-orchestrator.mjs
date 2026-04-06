@@ -2610,21 +2610,23 @@ async function run() {
     if (shouldRun(4)) {
       console.log('\n--- Phase 4: Dispatch translation to Lambda (SQS FIFO) ---');
 
-      // Zombie job reaper: cancel ANY jobs stuck in processing with 0 progress for >2h.
-      // These are dead Lambda workers that will never complete, blocking the in-flight cap.
+      // Zombie job reaper: cancel ANY job stuck in processing with no update for >1h.
+      // Workers crash, get OOM-killed, or stall — their jobs rot forever, blocking the in-flight cap.
       if (!DRY_RUN) {
-        const zombieThreshold = new Date(Date.now() - 2 * 60 * 60 * 1000);
+        const zombieThreshold = new Date(Date.now() - 1 * 60 * 60 * 1000);
         const zombieJobs = await db.collection('jobs').find({
           status: 'processing',
-          'progress.completed': 0,
-          created_at: { $lt: zombieThreshold },
+          $or: [
+            { updated_at: { $lt: zombieThreshold } },
+            { updated_at: { $exists: false }, created_at: { $lt: zombieThreshold } },
+          ],
         }).project({ _id: 1, book_id: 1, book_title: 1, type: 1 }).toArray();
 
         if (zombieJobs.length > 0) {
           const zombieBookIds = zombieJobs.map(j => j.book_id);
           await db.collection('jobs').updateMany(
             { _id: { $in: zombieJobs.map(j => j._id) } },
-            { $set: { status: 'failed', error: 'Auto-cancelled: stuck >2h with 0 progress', updated_at: new Date() } },
+            { $set: { status: 'failed', error: 'Auto-cancelled: stuck >1h with no update', updated_at: new Date() } },
           );
           // Reset affected books so they can be re-dispatched
           const rollbackMap = {

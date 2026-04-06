@@ -304,24 +304,42 @@ async function main() {
     //     Workers crash, get OOM-killed, or time out — their jobs rot forever.
     const ZOMBIE_THRESHOLD_MS = 30 * 60 * 1000;
     const zombieCutoff = new Date(Date.now() - ZOMBIE_THRESHOLD_MS);
-    const reaped = await db.collection('jobs').updateMany(
-      {
-        status: 'processing',
-        $or: [
-          { updated_at: { $lt: zombieCutoff } },
-          { updated_at: { $exists: false }, started_at: { $lt: zombieCutoff } },
-        ],
-      },
-      {
-        $set: {
-          status: 'cancelled',
-          cancelled_at: new Date(),
-          cancel_reason: 'scheduler: zombie reaper (no heartbeat for >30min)',
-        },
+    // First find zombie jobs so we can clean up their book locks too
+    const zombieJobs = await db.collection('jobs').find({
+      status: 'processing',
+      $or: [
+        { updated_at: { $lt: zombieCutoff } },
+        { updated_at: { $exists: false }, started_at: { $lt: zombieCutoff } },
+      ],
+    }).project({ _id: 1, book_id: 1 }).toArray().catch(err => {
+      console.log(`[scheduler] zombie find failed: ${err.message}`);
+      return [];
+    });
+
+    if (zombieJobs.length > 0) {
+      // Cancel the zombie jobs
+      await db.collection('jobs').updateMany(
+        { _id: { $in: zombieJobs.map(j => j._id) } },
+        {
+          $set: {
+            status: 'cancelled',
+            cancelled_at: new Date(),
+            cancel_reason: 'scheduler: zombie reaper (no heartbeat for >30min)',
+          },
+        }
+      ).catch(err => { console.log(`[scheduler] zombie cancel failed: ${err.message}`); });
+
+      // Unset book.job on affected books so they can be re-dispatched
+      const zombieBookIds = zombieJobs.map(j => j.book_id).filter(Boolean);
+      if (zombieBookIds.length > 0) {
+        const bookCleanup = await db.collection('books').updateMany(
+          { id: { $in: zombieBookIds }, 'job': { $exists: true } },
+          { $unset: { job: '' }, $set: { updated_at: new Date() } },
+        ).catch(err => { console.log(`[scheduler] zombie book cleanup failed: ${err.message}`); return { modifiedCount: 0 }; });
+        console.log(`[scheduler] REAPED ${zombieJobs.length} zombie jobs, unset book.job on ${bookCleanup.modifiedCount} books`);
+      } else {
+        console.log(`[scheduler] REAPED ${zombieJobs.length} zombie jobs (no book_ids to clean)`);
       }
-    ).catch(err => { console.log(`[scheduler] zombie reap failed: ${err.message}`); return { modifiedCount: 0 }; });
-    if (reaped.modifiedCount > 0) {
-      console.log(`[scheduler] REAPED ${reaped.modifiedCount} zombie jobs`);
     }
 
     // 3. Survey running workers and compute used connection budget
