@@ -389,8 +389,7 @@ async function searchGallery(db: any, query: string, queryRegex: RegExp, limit: 
             },
           },
         },
-        { $match: { $or: [{ thumbnail_url: { $ne: null } }, { extracted_url: { $ne: null } }] } },
-        { $limit: limit },
+        { $limit: limit * 2 },
         { $project: { page_id: 1, detection_index: 1, description: 1, type: 1, thumbnail_url: 1, extracted_url: 1, book_id: 1, book_title: 1, gallery_quality: 1 } },
       ], { maxTimeMS: 3000 }).toArray();
     } catch {
@@ -399,14 +398,13 @@ async function searchGallery(db: any, query: string, queryRegex: RegExp, limit: 
         .find(
           {
             gallery_quality: { $gte: 0.5 },
+            extracted_url: { $ne: null },
             $or: [
               { description: queryRegex },
               { museum_description: queryRegex },
               { 'metadata.subjects': queryRegex },
               { 'metadata.figures': queryRegex },
             ],
-            // Exclude images without thumbnails
-            $and: [{ $or: [{ thumbnail_url: { $ne: null } }, { extracted_url: { $ne: null } }] }],
           },
           { projection: { page_id: 1, detection_index: 1, description: 1, type: 1, thumbnail_url: 1, extracted_url: 1, book_id: 1, book_title: 1, gallery_quality: 1 } }
         )
@@ -416,8 +414,11 @@ async function searchGallery(db: any, query: string, queryRegex: RegExp, limit: 
         .toArray();
     }
 
+    // Filter out images without any thumbnail/extracted URL (detection without extraction)
+    const withImages = images.filter((img: any) => img.thumbnail_url || img.extracted_url);
+
     return {
-      results: images.map((img: any) => ({
+      results: withImages.slice(0, limit).map((img: any) => ({
         id: `${img.page_id}-${img.detection_index}`,
         imageUrl: img.thumbnail_url || img.extracted_url || '',
         description: img.description || '',
@@ -425,7 +426,7 @@ async function searchGallery(db: any, query: string, queryRegex: RegExp, limit: 
         bookTitle: img.book_title || '',
         bookId: img.book_id || '',
       })),
-      total: images.length,
+      total: withImages.length,
     };
   } catch (err) {
     console.error('Gallery search error:', err);
