@@ -381,6 +381,106 @@ source-library search "alchemy" --json | jq .results`}
         </div>
       </section>
 
+      {/* DTS & IIIF Section */}
+      <section className="mb-16">
+        <div className="flex items-center gap-3 mb-6">
+          <div className="w-10 h-10 bg-violet-100 rounded-lg flex items-center justify-center">
+            <svg className="w-5 h-5 text-violet-700" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+              <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M19 11H5m14 0a2 2 0 012 2v6a2 2 0 01-2 2H5a2 2 0 01-2-2v-6a2 2 0 012-2m14 0V9a2 2 0 00-2-2M5 11V9a2 2 0 012-2m0 0V5a2 2 0 012-2h6a2 2 0 012 2v2M7 7h10" />
+            </svg>
+          </div>
+          <h2 className="text-2xl font-semibold text-primary">Interoperability Standards</h2>
+        </div>
+
+        <p className="text-secondary mb-6 max-w-2xl">
+          Source Library implements two open standards for scholarly infrastructure.
+          IIIF serves the image layer (page facsimiles); DTS serves the text layer (structured citation and passage retrieval).
+          Both are machine-readable and interoperable with tools like Mirador, Scaife, and Recogito.
+        </p>
+
+        <div className="grid md:grid-cols-2 gap-6 mb-8">
+          {/* DTS */}
+          <div className="bg-white rounded-xl border border-border-light overflow-hidden">
+            <div className="bg-violet-50 px-4 py-3 border-b border-border-light">
+              <h3 className="font-semibold text-primary">Distributed Text Services (DTS) v1.0</h3>
+              <p className="text-secondary text-sm mt-1">Navigate, cite, and retrieve text passages</p>
+            </div>
+            <div className="p-4 space-y-3">
+              <div>
+                <div className="flex items-center gap-2 mb-1">
+                  <span className="px-2 py-0.5 bg-green-100 text-green-700 text-xs font-mono rounded">GET</span>
+                  <code className="text-primary text-sm">/api/dts</code>
+                </div>
+                <p className="text-secondary text-sm ml-12">Entry point &mdash; discover all endpoints</p>
+              </div>
+              <div>
+                <div className="flex items-center gap-2 mb-1">
+                  <span className="px-2 py-0.5 bg-green-100 text-green-700 text-xs font-mono rounded">GET</span>
+                  <code className="text-primary text-sm">/api/dts/collection</code>
+                </div>
+                <p className="text-secondary text-sm ml-12">Browse collections and books with Dublin Core metadata</p>
+              </div>
+              <div>
+                <div className="flex items-center gap-2 mb-1">
+                  <span className="px-2 py-0.5 bg-green-100 text-green-700 text-xs font-mono rounded">GET</span>
+                  <code className="text-primary text-sm">/api/dts/navigation</code>
+                </div>
+                <p className="text-secondary text-sm ml-12">Citation structure &mdash; chapters and pages per book</p>
+              </div>
+              <div>
+                <div className="flex items-center gap-2 mb-1">
+                  <span className="px-2 py-0.5 bg-green-100 text-green-700 text-xs font-mono rounded">GET</span>
+                  <code className="text-primary text-sm">/api/dts/document</code>
+                </div>
+                <p className="text-secondary text-sm ml-12">Retrieve OCR or translation text by page, chapter, or range</p>
+              </div>
+              <div className="mt-4 bg-stone-900 rounded-lg p-3 space-y-1">
+                <code className="text-stone-400 text-xs block"># Get chapter structure</code>
+                <code className="text-stone-300 text-sm block">GET /api/dts/navigation?resource=&#123;bookId&#125;&amp;down=1</code>
+                <code className="text-stone-400 text-xs block mt-2"># Retrieve chapter 3 in English</code>
+                <code className="text-stone-300 text-sm block">GET /api/dts/document?resource=&#123;bookId&#125;&amp;ref=ch3&amp;edition=translation</code>
+              </div>
+            </div>
+          </div>
+
+          {/* IIIF */}
+          <div className="bg-white rounded-xl border border-border-light overflow-hidden">
+            <div className="bg-violet-50 px-4 py-3 border-b border-border-light">
+              <h3 className="font-semibold text-primary">IIIF Presentation API 3.0</h3>
+              <p className="text-secondary text-sm mt-1">Page images, facsimile viewing, annotations</p>
+            </div>
+            <div className="p-4 space-y-3">
+              <div>
+                <div className="flex items-center gap-2 mb-1">
+                  <span className="px-2 py-0.5 bg-green-100 text-green-700 text-xs font-mono rounded">GET</span>
+                  <code className="text-primary text-sm">/api/iiif/&#123;bookId&#125;/manifest</code>
+                </div>
+                <p className="text-secondary text-sm ml-12">Full IIIF manifest with canvases, ranges, and metadata</p>
+              </div>
+              <div className="mt-2 text-secondary text-sm space-y-2">
+                <p>Every book has a IIIF manifest that works with standard viewers like Mirador and Universal Viewer. Manifests include:</p>
+                <ul className="list-disc list-inside space-y-1 text-sm">
+                  <li>High-resolution page images from original sources</li>
+                  <li>Table of contents as IIIF Ranges</li>
+                  <li>OCR and translation as annotation references</li>
+                  <li>Dublin Core metadata and license information</li>
+                </ul>
+              </div>
+              <div className="mt-4 bg-stone-900 rounded-lg p-3 space-y-1">
+                <code className="text-stone-400 text-xs block"># Open in any IIIF viewer</code>
+                <code className="text-stone-300 text-sm block break-all">https://sourcelibrary.org/api/iiif/&#123;bookId&#125;/manifest</code>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <p className="text-sm text-muted">
+          <a href="https://distributed-text-services.github.io/specifications/" target="_blank" rel="noopener noreferrer" className="text-accent-rust hover:underline">DTS v1.0 Specification</a>
+          {' '}&bull;{' '}
+          <a href="https://iiif.io/api/presentation/3.0/" target="_blank" rel="noopener noreferrer" className="text-accent-rust hover:underline">IIIF Presentation 3.0 Specification</a>
+        </p>
+      </section>
+
       {/* Citation URLs */}
       <section className="mb-16">
         <h2 className="text-2xl font-semibold text-primary mb-6">Citation URLs</h2>
