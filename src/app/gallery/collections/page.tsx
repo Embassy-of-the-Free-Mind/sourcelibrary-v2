@@ -5,7 +5,7 @@ import { Image as ImageIcon, Layers } from 'lucide-react';
 import SiteHeader from '@/components/layout/SiteHeader';
 import { getDb } from '@/lib/mongodb';
 
-export const revalidate = 600;
+export const revalidate = 86400;
 
 export const metadata: Metadata = {
   title: 'Curated Collections | Gallery | Source Library',

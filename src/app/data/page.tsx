@@ -6,7 +6,7 @@ import { CenturyChart } from './DataCharts';
 
 // ISR: rebuild every 10 minutes. The page reads from a pre-computed snapshot
 // so rendering is fast — no heavy Atlas aggregations at request time.
-export const revalidate = 600;
+export const revalidate = 86400;
 export const maxDuration = 15;
 
 export const metadata: Metadata = {

@@ -8,7 +8,7 @@ import { notFound } from 'next/navigation';
 const LETTERS = 'ABCDEFGHIJKLMNOPQRSTUVWXYZ'.split('');
 
 // ISR: rebuild every 10 min.
-export const revalidate = 600;
+export const revalidate = 86400;
 export const maxDuration = 60;
 export const dynamicParams = true;
 

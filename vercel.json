@@ -19,7 +19,7 @@
     },
     {
       "path": "/api/cron/warm",
-      "schedule": "*/5 * * * *"
+      "schedule": "0 4 * * *"
     },
     {
       "path": "/api/cron/latency-trend",

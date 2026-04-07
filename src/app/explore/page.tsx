@@ -6,7 +6,7 @@ import ExploreNav from '@/components/explore/ExploreNav';
 import DataSources from '@/components/explore/DataSources';
 import { getDb } from '@/lib/mongodb';
 
-export const revalidate = 600;
+export const revalidate = 86400;
 export const maxDuration = 30;
 
 export const metadata: Metadata = {

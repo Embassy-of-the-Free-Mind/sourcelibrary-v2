@@ -78,7 +78,7 @@ async function getPortraitUrl(db: Db, entity: AuthorEntity | null): Promise<stri
 
 // ISR: author pages are mostly static — revalidate weekly.
 // Use POST /api/admin/revalidate-authors to force refresh after changes.
-export const revalidate = 600;
+export const revalidate = 86400;
 export const dynamicParams = true;
 export async function generateStaticParams() {
   return []; // All paths generated on demand via ISR

@@ -6,7 +6,7 @@ import SiteHeader from '@/components/layout/SiteHeader';
 import { getDb } from '@/lib/mongodb';
 import CollectionImageCard, { CollectionImageProps } from './CollectionImageCard';
 
-export const revalidate = 600;
+export const revalidate = 86400;
 
 interface PageProps {
   params: Promise<{ slug: string }>;

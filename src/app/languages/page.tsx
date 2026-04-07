@@ -4,7 +4,7 @@ import Image from 'next/image';
 import ContentPageLayout, { ContentHeader } from '@/components/layout/ContentPageLayout';
 import type { Metadata } from 'next';
 
-export const revalidate = 600;
+export const revalidate = 86400;
 
 export const metadata: Metadata = {
   title: 'Languages | Source Library',
