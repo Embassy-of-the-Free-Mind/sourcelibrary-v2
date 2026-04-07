@@ -1,7 +1,16 @@
-'use client';
-
 import Link from 'next/link';
+import { Metadata } from 'next';
 import SiteHeader from '@/components/layout/SiteHeader';
+import { getDb } from '@/lib/mongodb';
+
+export const revalidate = 600;
+export const maxDuration = 60;
+
+export const metadata: Metadata = {
+  title: 'Support — Source Library',
+  description: 'Support the digitization and translation of rare historical texts from the Bibliotheca Philosophica Hermetica.',
+  alternates: { canonical: '/support' },
+};
 
 const MOLLIE_URL = 'https://payment-links.mollie.com/en/payment/ug24y6U3mtCvzCwUhfPHD/details';
 const DONORPERFECT_URL = 'https://form-renderer-app.donorperfect.io/give/naf/embassyofthefreemind';
@@ -43,7 +52,40 @@ const PHASES = [
   },
 ];
 
-export default function SupportPage() {
+function formatStat(n: number): string {
+  if (n >= 1_000_000) return `${(n / 1_000_000).toFixed(1)}M`;
+  if (n >= 1_000) return `${(n / 1_000).toFixed(1)}K`.replace('.0K', 'K');
+  return n.toLocaleString('en-US');
+}
+
+async function fetchStats() {
+  try {
+    const db = await getDb();
+    const books = db.collection('books');
+    const match = { visible: true, pages_count: { $gt: 0 } };
+
+    const [totalBooks, firstTranslations, agg] = await Promise.all([
+      books.countDocuments(match, { maxTimeMS: 15000 }),
+      books.countDocuments({ ...match, is_first_translation: true, pages_translated: { $gt: 0 } }, { maxTimeMS: 15000 }),
+      books.aggregate([
+        { $match: match },
+        { $group: { _id: null, translated: { $sum: { $ifNull: ['$pages_translated', 0] } } } },
+      ], { maxTimeMS: 15000 }).toArray(),
+    ]);
+
+    return {
+      totalBooks,
+      firstTranslations,
+      pagesTranslated: agg[0]?.translated || 0,
+    };
+  } catch {
+    return { totalBooks: 9900, firstTranslations: 5500, pagesTranslated: 2400000 };
+  }
+}
+
+export default async function SupportPage() {
+  const stats = await fetchStats();
+
   return (
     <div className="min-h-screen">
       <SiteHeader variant="light" />
@@ -69,8 +111,102 @@ export default function SupportPage() {
         </div>
       </section>
 
-      {/* Why Now */}
+      {/* Stats */}
+      <section className="bg-white border-b border-stone-200">
+        <div className="px-6 md:px-12 max-w-5xl mx-auto py-12 md:py-16">
+          <div className="grid grid-cols-1 md:grid-cols-3 gap-8 md:gap-12">
+            <div className="text-center md:text-left">
+              <div className="text-4xl md:text-5xl font-display text-stone-900 mb-2">
+                {formatStat(stats.totalBooks)}
+              </div>
+              <div className="text-sm text-stone-500 uppercase tracking-wider">
+                Books digitized
+              </div>
+            </div>
+            <div className="text-center md:text-left">
+              <div className="text-4xl md:text-5xl font-display text-stone-900 mb-2">
+                {formatStat(stats.pagesTranslated)}
+              </div>
+              <div className="text-sm text-stone-500 uppercase tracking-wider">
+                Pages translated
+              </div>
+            </div>
+            <div className="text-center md:text-left">
+              <div className="text-4xl md:text-5xl font-display text-stone-900 mb-2">
+                {formatStat(stats.firstTranslations)}
+              </div>
+              <div className="text-sm text-stone-500 uppercase tracking-wider">
+                First-ever English translations
+              </div>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      {/* Example: Before & After */}
       <section className="bg-white py-16 md:py-24">
+        <div className="px-6 md:px-12 max-w-5xl mx-auto">
+          <h2 className="text-3xl md:text-4xl text-gray-900 mb-4 leading-tight font-display">
+            What this looks like
+          </h2>
+          <p className="text-lg text-gray-600 mb-10 max-w-3xl">
+            The opening of the <em>Pimander</em> — the foundational text of the Hermetic tradition — translated by Marsilio Ficino in 1481. This Venice edition had never been rendered into English until Source Library.
+          </p>
+
+          <div className="grid grid-cols-1 lg:grid-cols-2 gap-6 lg:gap-8">
+            {/* Original scan */}
+            <div className="rounded-xl overflow-hidden border border-stone-200 bg-stone-50">
+              <div className="px-4 py-3 bg-stone-100 border-b border-stone-200">
+                <span className="text-xs font-medium text-stone-500 uppercase tracking-wider">
+                  Original &middot; Venice, 1481
+                </span>
+              </div>
+              <Link href="/book/corpus-hermeticum-pimander-1481-venice-edition-hermes-trismegistus">
+                <img
+                  src="https://images.sourcelibrary.org/pages/694f3d6cbe37f451a5324e10/0015.jpg"
+                  alt="Opening page of Ficino's 1481 Latin translation of the Pimander"
+                  className="w-full h-auto"
+                  loading="lazy"
+                />
+              </Link>
+            </div>
+
+            {/* Translation */}
+            <div className="rounded-xl overflow-hidden border border-stone-200 bg-white flex flex-col">
+              <div className="px-4 py-3 bg-stone-100 border-b border-stone-200">
+                <span className="text-xs font-medium text-stone-500 uppercase tracking-wider">
+                  English translation &middot; Source Library
+                </span>
+              </div>
+              <div className="p-6 md:p-8 flex-1 flex flex-col">
+                <h3 className="text-base font-semibold text-stone-900 mb-1 uppercase tracking-wide">
+                  The Book of Mercury Trismegistus
+                </h3>
+                <p className="text-xs text-stone-500 mb-6 uppercase tracking-wide">
+                  On the Power and Wisdom of God, translated from Greek into Latin by Marsilio Ficino the Florentine to Cosimo de&apos; Medici, Father of his Country
+                </p>
+                <h4 className="text-sm font-semibold text-stone-700 mb-4 uppercase tracking-wide">
+                  The Pimander begins.
+                </h4>
+                <blockquote className="text-stone-700 text-base md:text-lg leading-relaxed flex-1 font-serif italic">
+                  &ldquo;When I was meditating on the nature of things and raising the sharp point of my mind toward the heavens, the senses of my body were now put to sleep — just as it usually happens to those who are heavy with sleep due to fullness or exhaustion. Suddenly, I seemed to see someone of immense bodily stature, who, calling me by name, cried out in this manner: &lsquo;What is it, O Mercury, that you wish to hear and see, and having seen, to learn and know?&rsquo;&rdquo;
+                </blockquote>
+                <div className="mt-6 pt-4 border-t border-stone-100">
+                  <Link
+                    href="/book/corpus-hermeticum-pimander-1481-venice-edition-hermes-trismegistus"
+                    className="text-accent-rust hover:text-accent-gold-dark text-sm font-medium"
+                  >
+                    Read the full text &rarr;
+                  </Link>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      {/* Why Now */}
+      <section className="bg-gradient-to-b from-[#f6f3ee] to-white py-16 md:py-24">
         <div className="px-6 md:px-12 max-w-5xl mx-auto">
           <h2 className="text-3xl md:text-4xl lg:text-5xl text-gray-900 mb-8 leading-tight font-display">
             Why now?
@@ -82,7 +218,7 @@ export default function SupportPage() {
       </section>
 
       {/* How to Donate — Two Routes */}
-      <section className="bg-gradient-to-b from-[#f6f3ee] to-[#f3ede6] py-16 md:py-24">
+      <section className="bg-white py-16 md:py-24">
         <div className="px-6 md:px-12 max-w-5xl mx-auto">
           <h2 className="text-3xl md:text-4xl text-stone-900 mb-4 leading-tight font-display">
             How to Donate
@@ -93,9 +229,9 @@ export default function SupportPage() {
 
           <div className="grid grid-cols-1 md:grid-cols-2 gap-8">
             {/* US Donors — NAF */}
-            <div className="bg-white rounded-2xl border border-stone-200 shadow-sm p-8 flex flex-col">
+            <div className="bg-[#faf8f5] rounded-2xl border border-stone-200 p-8 flex flex-col">
               <div className="flex items-center gap-3 mb-4">
-                <span className="inline-flex items-center justify-center w-10 h-10 rounded-full bg-stone-100 text-stone-600 text-lg font-semibold shrink-0">
+                <span className="inline-flex items-center justify-center w-10 h-10 rounded-full bg-stone-200 text-stone-600 text-lg font-semibold shrink-0">
                   US
                 </span>
                 <h3 className="text-xl font-semibold text-stone-900">
@@ -122,9 +258,9 @@ export default function SupportPage() {
             </div>
 
             {/* International Donors — EFM / Mollie */}
-            <div className="bg-white rounded-2xl border border-stone-200 shadow-sm p-8 flex flex-col">
+            <div className="bg-[#faf8f5] rounded-2xl border border-stone-200 p-8 flex flex-col">
               <div className="flex items-center gap-3 mb-4">
-                <span className="inline-flex items-center justify-center w-10 h-10 rounded-full bg-stone-100 text-stone-600 text-lg font-semibold shrink-0">
+                <span className="inline-flex items-center justify-center w-10 h-10 rounded-full bg-stone-200 text-stone-600 text-lg font-semibold shrink-0">
                   EU
                 </span>
                 <h3 className="text-xl font-semibold text-stone-900">
@@ -154,7 +290,7 @@ export default function SupportPage() {
           </div>
 
           {/* Tax Benefits */}
-          <div className="mt-10 bg-white/60 rounded-xl border border-stone-200 p-6">
+          <div className="mt-10 bg-[#faf8f5] rounded-xl border border-stone-200 p-6">
             <h3 className="text-base font-semibold text-stone-900 mb-2">Tax Benefits</h3>
             <p className="text-stone-600 text-sm leading-relaxed">
               The Embassy of the Free Mind is a registered non-profit organization (ANBI-registered in the Netherlands). Your donation may be tax-deductible depending on your country of residence. US donors giving through the Netherland-America Foundation receive full 501(c)(3) tax benefits.
@@ -175,22 +311,22 @@ export default function SupportPage() {
       </section>
 
       {/* Early Supporters */}
-      <section className="bg-white py-16 md:py-24">
+      <section className="bg-gradient-to-b from-[#f6f3ee] to-[#f3ede6] py-16 md:py-24">
         <div className="px-6 md:px-12 max-w-5xl mx-auto">
-          <h2 className="text-3xl md:text-4xl text-gray-900 mb-4 leading-tight font-display">
+          <h2 className="text-3xl md:text-4xl text-stone-900 mb-4 leading-tight font-display">
             Become an Early Supporter
           </h2>
-          <p className="text-lg text-gray-600 leading-relaxed mb-6 max-w-3xl">
+          <p className="text-lg text-stone-600 leading-relaxed mb-6 max-w-3xl">
             As an Early Supporter, you play a key role in kickstarting Source Library. Your contribution helps make the first phase of development possible — enabling us to build the foundation of the platform, curate and digitize essential sources, and produce the initial translations.
           </p>
-          <p className="text-lg text-gray-600 leading-relaxed max-w-3xl">
+          <p className="text-lg text-stone-600 leading-relaxed max-w-3xl">
             Early Supporters help us move from idea to reality. We are building toward a community around this work — and those who contribute now are its founding members.
           </p>
         </div>
       </section>
 
       {/* Where Your Support Goes */}
-      <section className="bg-gradient-to-b from-[#f6f3ee] to-[#f3ede6] py-16 md:py-24">
+      <section className="bg-white py-16 md:py-24">
         <div className="px-6 md:px-12 max-w-5xl mx-auto">
           <h2 className="text-3xl md:text-4xl text-stone-900 mb-12 leading-tight font-display">
             Where Your Support Goes
@@ -218,7 +354,7 @@ export default function SupportPage() {
                 text: 'Building and maintaining the open-access reading platform — page-by-page bilingual display, full-text search, image galleries, and integration with global digital humanities infrastructure.',
               },
             ].map((item) => (
-              <div key={item.title} className="bg-white rounded-xl border border-stone-200 p-6 md:p-8">
+              <div key={item.title} className="bg-[#faf8f5] rounded-xl border border-stone-200 p-6 md:p-8">
                 <span className="inline-block text-xs font-semibold text-stone-400 tracking-wider uppercase mb-3">
                   {item.icon}
                 </span>
@@ -237,7 +373,7 @@ export default function SupportPage() {
                 className={`rounded-xl p-6 ${
                   phase.status === 'current'
                     ? 'bg-stone-900 text-white'
-                    : 'bg-white border border-stone-200'
+                    : 'bg-[#faf8f5] border border-stone-200'
                 }`}
               >
                 <span className="inline-block text-xs font-semibold text-stone-400 tracking-wider uppercase mb-1">
@@ -280,12 +416,12 @@ export default function SupportPage() {
       </section>
 
       {/* How It All Connects */}
-      <section className="bg-white py-16 md:py-24">
+      <section className="bg-gradient-to-b from-[#f6f3ee] to-[#f3ede6] py-16 md:py-24">
         <div className="px-6 md:px-12 max-w-5xl mx-auto">
-          <h2 className="text-3xl md:text-4xl text-gray-900 mb-8 leading-tight font-display">
+          <h2 className="text-3xl md:text-4xl text-stone-900 mb-8 leading-tight font-display">
             How It All Connects
           </h2>
-          <div className="text-gray-600 text-lg leading-relaxed space-y-6">
+          <div className="text-stone-600 text-lg leading-relaxed space-y-6">
             <p>
               Source Library is a project of the{' '}
               <a
@@ -314,7 +450,7 @@ export default function SupportPage() {
       </section>
 
       {/* Scan the Renaissance */}
-      <section className="bg-gradient-to-b from-[#f6f3ee] to-[#f3ede6] py-16 md:py-24">
+      <section className="bg-white py-16 md:py-24">
         <div className="px-6 md:px-12 max-w-5xl mx-auto text-center">
           <h2 className="text-3xl md:text-4xl text-stone-900 mb-4 leading-tight font-display">
             Scan the Renaissance
@@ -350,7 +486,7 @@ export default function SupportPage() {
 
           {/* Other Ways to Help */}
           <div className="mb-12 pb-12 border-b border-stone-300">
-            <p className="text-gray-600 text-lg">
+            <p className="text-stone-600 text-lg">
               Not everyone gives money — some give time and expertise.{' '}
               <Link
                 href="/contribute"
@@ -364,11 +500,11 @@ export default function SupportPage() {
 
           {/* Footer Links */}
           <div className="flex flex-col md:flex-row justify-between items-start md:items-center">
-            <div className="mb-4 md:mb-0 text-gray-600">
+            <div className="mb-4 md:mb-0 text-stone-600">
               &copy; {new Date().getFullYear()} Source Library — Embassy of the Free Mind
             </div>
-            <div className="flex flex-wrap items-center gap-4 md:gap-6 text-gray-600">
-              <Link href="/" className="hover:text-gray-900 transition-colors">
+            <div className="flex flex-wrap items-center gap-4 md:gap-6 text-stone-600">
+              <Link href="/" className="hover:text-stone-900 transition-colors">
                 Home
               </Link>
               <span className="hidden md:inline">&middot;</span>
