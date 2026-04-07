@@ -105,10 +105,11 @@ export async function GET(request: NextRequest) {
       }, { maxTimeMS: 10000 }) as string[];
     }
 
-    // Build query filter
+    // Build query filter — exclude images without extracted thumbnails
     const filter: Record<string, unknown> = {
       gallery_quality: { $gte: minQuality },
       book_visible: true,
+      extracted_url: { $ne: null },
     };
 
     // Book diversity: limit to top N images per book (unless filtering by single book or showing all)
