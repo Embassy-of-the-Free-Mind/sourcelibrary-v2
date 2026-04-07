@@ -67,6 +67,7 @@ export async function GET(request: NextRequest) {
     const subjectFilter = searchParams.get('subject');
     const figureFilter = searchParams.get('figure');
     const symbolFilter = searchParams.get('symbol');
+    const iconclassFilter = searchParams.get('iconclass');
     const yearStart = searchParams.get('yearStart') ? parseInt(searchParams.get('yearStart')!) : null;
     const yearEnd = searchParams.get('yearEnd') ? parseInt(searchParams.get('yearEnd')!) : null;
     const includeArchive = searchParams.get('includeArchive') === 'true';
@@ -131,6 +132,7 @@ export async function GET(request: NextRequest) {
     if (subjectFilter) filter['metadata.subjects'] = subjectFilter;
     if (figureFilter) filter['metadata.figures'] = figureFilter;
     if (symbolFilter) filter['metadata.symbols'] = symbolFilter;
+    if (iconclassFilter) filter['metadata.iconclass'] = iconclassFilter;
 
     if (yearStart !== null || yearEnd !== null) {
       const yearFilter: Record<string, number> = {};
@@ -426,6 +428,7 @@ async function legacyGalleryQuery(db: Awaited<ReturnType<typeof getDb>>, searchP
   const subjectFilter = searchParams.get('subject');
   const figureFilter = searchParams.get('figure');
   const symbolFilter = searchParams.get('symbol');
+  const iconclassFilter = searchParams.get('iconclass');
   const searchQuery = searchParams.get('q');
 
   function buildImageFilters(prefix: string) {
@@ -439,6 +442,7 @@ async function legacyGalleryQuery(db: Awaited<ReturnType<typeof getDb>>, searchP
     if (subjectFilter) conditions.push({ [`${p}metadata.subjects`]: subjectFilter });
     if (figureFilter) conditions.push({ [`${p}metadata.figures`]: figureFilter });
     if (symbolFilter) conditions.push({ [`${p}metadata.symbols`]: symbolFilter });
+    if (iconclassFilter) conditions.push({ [`${p}metadata.iconclass`]: iconclassFilter });
     if (searchQuery) {
       const pattern = escapeAndNormalizeRegex(searchQuery);
       conditions.push({

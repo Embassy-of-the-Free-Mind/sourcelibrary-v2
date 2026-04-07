@@ -213,6 +213,8 @@ export interface ImageMetadata {
   style?: string;               // Art style: "Northern European Renaissance"
   technique?: string;           // Production: "woodcut", "engraving with crosshatching"
   condition?: string;           // Physical state: "good", "fair", "poor"
+  iconclass?: string[];         // Iconclass codes: ["49E39", "25F23(LION)"] — Western art iconography
+  cit?: string[];               // Chinese Iconography Thesaurus codes: ["4.3", "1.7.2"]
 }
 
 export interface DetectedImage {
