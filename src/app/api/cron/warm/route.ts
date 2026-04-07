@@ -1,12 +1,13 @@
 import { NextResponse } from 'next/server';
+import { getDb } from '@/lib/mongodb';
 
-export const maxDuration = 60;
+export const maxDuration = 300;
 export const preferredRegion = 'fra1';
 
 /**
  * Warm up critical Vercel serverless functions and ISR page caches.
- * Prevents cold-start delays for user-facing routes after deploys.
- * Runs every 5 minutes via Vercel cron.
+ * Fetches collection slugs from DB so new collections are auto-warmed.
+ * Runs daily via Vercel cron (ISR is 24h).
  */
 
 const API_ENDPOINTS = [
@@ -15,26 +16,16 @@ const API_ENDPOINTS = [
   '/api/search?q=test&limit=1',
 ];
 
-// High-traffic ISR pages that should always be warm
-const ISR_PAGES = [
+// Static pages that should always be warm
+const STATIC_PAGES = [
   '/',
   '/collections',
-  '/collections/alchemy',
-  '/collections/classical-philosophy',
-  '/collections/hermetica',
-  '/collections/kabbalah',
-  '/collections/rosicrucianism',
-  '/collections/sacred-texts',
-  '/collections/astrology',
-  '/collections/natural-philosophy',
-  '/collections/theurgy',
   '/browse',
-  '/browse/authors',
+  '/browse/authors/A',
   '/gallery',
   '/libraries',
   '/languages',
   '/search',
-  '/timeline',
   '/about',
   '/embassy',
   '/blog',
@@ -66,27 +57,57 @@ export async function GET() {
     ? `https://${process.env.VERCEL_URL}`
     : 'https://sourcelibrary.org';
 
+  // Fetch all visible collection slugs from DB
+  let collectionSlugs: string[] = [];
+  try {
+    const db = await getDb();
+    const collections = await db.collection('collections')
+      .find({ visible: { $ne: false } }, { projection: { slug: 1 }, maxTimeMS: 5000 })
+      .toArray();
+    collectionSlugs = collections.map(c => c.slug as string).filter(Boolean);
+  } catch {
+    // Fallback to known collections if DB fails
+    collectionSlugs = [
+      'alchemy', 'classical-philosophy', 'hermetica', 'kabbalah',
+      'rosicrucianism', 'sacred-texts', 'astrology', 'natural-philosophy',
+      'theurgy', 'early-science', 'natural-magic', 'contemplative-traditions',
+    ];
+  }
+
+  const collectionPages = collectionSlugs.map(s => `/collections/${s}`);
+
   // Warm API endpoints first (fast, keeps serverless hot)
   const apiResults = await Promise.all(
     API_ENDPOINTS.map((ep) => warmUrl(baseUrl, ep, 10_000))
   );
 
-  // Warm ISR pages in batches of 5 to avoid overwhelming Atlas
-  const isrResults: { endpoint: string; status: number; ms: number }[] = [];
-  for (let i = 0; i < ISR_PAGES.length; i += 5) {
-    const batch = ISR_PAGES.slice(i, i + 5);
+  // Warm static pages in batches of 5
+  const pageResults: { endpoint: string; status: number; ms: number }[] = [];
+  for (let i = 0; i < STATIC_PAGES.length; i += 5) {
+    const batch = STATIC_PAGES.slice(i, i + 5);
     const batchResults = await Promise.all(
       batch.map((p) => warmUrl(baseUrl, p))
     );
-    isrResults.push(...batchResults);
+    pageResults.push(...batchResults);
   }
 
-  const results = [...apiResults, ...isrResults];
+  // Warm all collection pages in batches of 3 (heavier queries)
+  const collectionResults: { endpoint: string; status: number; ms: number }[] = [];
+  for (let i = 0; i < collectionPages.length; i += 3) {
+    const batch = collectionPages.slice(i, i + 3);
+    const batchResults = await Promise.all(
+      batch.map((p) => warmUrl(baseUrl, p))
+    );
+    collectionResults.push(...batchResults);
+  }
+
+  const results = [...apiResults, ...pageResults, ...collectionResults];
   const failed = results.filter((r) => r.status === 0 || r.status >= 400);
 
   return NextResponse.json({
     warmed: results.length,
     failed: failed.length,
+    collections: collectionSlugs.length,
     results,
   });
 }
