@@ -214,20 +214,42 @@ async function main() {
 
   // Strategy: find books with pages that need archiving, regardless of pipeline status.
   // Books move through pipeline stages even if archiving isn't complete.
-  // Exclude e-rara (blocked on Hetzner IPs, archived locally via launchd on Mac)
-  // and internet_archive (handled by archive-bulk.mjs via JP2 zip download).
-  const books = await db.collection('books')
+  // Exclude e-rara (blocked on Hetzner IPs, archived locally via launchd on Mac).
+  // Exclude IA (handled by archive-bulk.mjs via JP2 zip download, much faster).
+  // Prioritize providers that are NOT yet fully archived (IIIF, Gallica, Cambridge, etc.)
+  const PRIORITY_PROVIDERS = ['iiif', 'gallica', 'cambridge', 'vatican', 'loc', 'wellcome', 'heidelberg', 'bl'];
+  const priorityBooks = await db.collection('books')
     .find(
       {
         pages_count: { $gt: 0 },
         'archive_metadata.blocked': { $ne: true },
-        'image_source.provider': { $ne: 'e-rara' },
+        'image_source.provider': { $in: PRIORITY_PROVIDERS },
       },
       { projection: { id: 1, title: 1, 'image_source.provider': 1 } }
     )
-    .limit(2000)
+    .limit(1000)
     .maxTimeMS(30_000)
-    .toArray();
+    .toArray()
+    .catch(() => []);
+
+  // Fill remaining slots with any other non-excluded provider
+  const remainingSlots = 2000 - priorityBooks.length;
+  const otherBooks = remainingSlots > 0 ? await db.collection('books')
+    .find(
+      {
+        pages_count: { $gt: 0 },
+        'archive_metadata.blocked': { $ne: true },
+        'image_source.provider': { $nin: ['e-rara', 'internet_archive', ...PRIORITY_PROVIDERS] },
+      },
+      { projection: { id: 1, title: 1, 'image_source.provider': 1 } }
+    )
+    .limit(remainingSlots)
+    .maxTimeMS(30_000)
+    .toArray()
+    .catch(() => []) : [];
+
+  const books = [...priorityBooks, ...otherBooks];
+  console.log(`[archive-ocr] Checking ${priorityBooks.length} priority + ${otherBooks.length} other books`);
 
   if (books.length === 0) {
     console.log(`[archive-ocr] No books with pages found`);
