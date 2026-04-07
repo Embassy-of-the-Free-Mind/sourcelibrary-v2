@@ -263,6 +263,15 @@ async function getCollectionShowcase() {
           { extracted_url: { $type: 'string', $gt: '' } },
         ],
         book_visible: true,
+        // Exclude extreme aspect ratios — wide headpieces look blurry in 3:4 portrait cards
+        extracted_width: { $exists: true },
+        extracted_height: { $exists: true },
+        $expr: {
+          $and: [
+            { $lt: [{ $divide: ['$extracted_width', '$extracted_height'] }, 2] },
+            { $gt: [{ $divide: ['$extracted_width', '$extracted_height'] }, 0.3] },
+          ],
+        },
       },
     },
     { $limit: 40 },
