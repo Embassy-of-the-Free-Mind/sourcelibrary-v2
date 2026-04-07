@@ -1347,18 +1347,25 @@ async function main() {
   if (RUN_PHASE_7_5) {
     console.log('\n=== Phase 7.5: Quality Scoring ===');
 
+    // AI-upgrade books with provisional mechanical scores, or score unscored books.
+    // Mechanical scores are computed instantly for all books; AI curation upgrades them later.
     const unscoredBooks = await db.collection('books')
       .find({
-        quality_score: { $exists: false },
-        $or: [
-          { 'reading_summary.overview': { $exists: true, $ne: '' } },
-          { 'index.generatedAt': { $exists: true } },
-          { description: { $exists: true, $ne: '' } },
+        $and: [
+          { $or: [
+            { quality_score: { $exists: false } },
+            { 'quality_assessment.method': 'mechanical-provisional' },
+          ]},
+          { $or: [
+            { 'reading_summary.overview': { $exists: true, $ne: '' } },
+            { 'index.generatedAt': { $exists: true } },
+            { description: { $exists: true, $ne: '' } },
+          ]},
         ],
         hidden: { $ne: true },
         pages_count: { $gt: 0 },
       })
-      .sort({ 'pipeline_auto.status': 1, read_count: -1 })
+      .sort({ read_count: -1 })
       .project({
         id: 1, title: 1, display_title: 1, author: 1, language: 1, year: 1,
         categories: 1, pages_count: 1, pages_ocr: 1, pages_translated: 1,
