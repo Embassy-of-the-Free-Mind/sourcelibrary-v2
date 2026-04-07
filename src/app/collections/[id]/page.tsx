@@ -265,29 +265,10 @@ async function fetchCollectionData(id: string) {
       )
     : Promise.resolve([]);
 
-  // Books query: try MongoDB first (has collection_scores for relevance sorting),
-  // fall back to Supabase if MongoDB times out (large collections like SHWEP trigger
-  // Atlas multiplanner timeouts that cause permanent 404s).
+  // Books query: Supabase primary (fast), MongoDB fallback (has collection_scores
+  // but Atlas multiplanner timeouts cause 10-15s delays or 500s).
   async function fetchBooksWithFallback() {
     try {
-      const docs = await withTimeout(
-        db.collection('books')
-          .find(filter, { projection: { ...projection, collection_scores: 1 }, maxTimeMS: 8000 })
-          .sort({ read_count: -1, title: 1 })
-          .limit(COMPACT_LIMIT)
-          .toArray(),
-        15000, null,
-      );
-      if (docs === null) throw new Error('MongoDB timeout');
-      return docs.sort((a, b) => {
-        const aScore = a.collection_scores?.[id]?.relevance ?? 0;
-        const bScore = b.collection_scores?.[id]?.relevance ?? 0;
-        if (bScore !== aScore) return bScore - aScore;
-        return (b.read_count || 0) - (a.read_count || 0);
-      }).map(({ collection_scores, ...rest }) => rest);
-    } catch {
-      // Supabase fallback — no collection_scores, but at least the page renders
-      console.warn(`[Collection ${id}] MongoDB books query failed, falling back to Supabase`);
       const { books: sbBooks } = await browseBooks({
         collection: id,
         hasTranslation: !isArtCollection,
@@ -304,6 +285,18 @@ async function fetchCollectionData(id: string) {
         is_first_translation: b.is_first_translation,
         categories: b.categories,
       }));
+    } catch {
+      // MongoDB fallback — if Supabase is down
+      console.warn(`[Collection ${id}] Supabase books query failed, falling back to MongoDB`);
+      const docs = await withTimeout(
+        db.collection('books')
+          .find(filter, { projection, maxTimeMS: 8000 })
+          .sort({ read_count: -1, title: 1 })
+          .limit(COMPACT_LIMIT)
+          .toArray(),
+        15000, [],
+      );
+      return docs;
     }
   }
 
