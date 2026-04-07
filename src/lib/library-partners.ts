@@ -26,6 +26,7 @@ export const LIBRARY_PARTNERS: Record<string, LibraryPartner> = {
     url: 'https://archive.org',
     description: 'The Internet Archive is a non-profit digital library offering free access to millions of books, movies, and web pages. Their Open Library and book scanning initiatives have digitized millions of volumes from partner libraries worldwide.',
     color: 'rust',
+    heroImageOverride: 'https://images.sourcelibrary.org/pages/69d0065c73df40dce83db54c/0006.jpg',
   },
   'gallica': {
     slug: 'gallica',
@@ -35,6 +36,7 @@ export const LIBRARY_PARTNERS: Record<string, LibraryPartner> = {
     url: 'https://gallica.bnf.fr',
     description: 'Gallica is the digital library of the Bibliothèque nationale de France, providing free access to over 10 million documents including manuscripts, books, maps, and prints from one of the largest libraries in the world.',
     color: 'violet',
+    heroImageOverride: 'https://images.sourcelibrary.org/pages/69a5ef41bfd8cafd91e44049/0022.jpg',
   },
   'bavarian-state-library': {
     slug: 'bavarian-state-library',
@@ -44,6 +46,7 @@ export const LIBRARY_PARTNERS: Record<string, LibraryPartner> = {
     url: 'https://www.digitale-sammlungen.de',
     description: 'The Münchener DigitalisierungsZentrum (MDZ) is the digitization center of the Bayerische Staatsbibliothek, one of the most important research libraries in Europe. Their digital collections include over 3 million digitized pages of rare books and manuscripts.',
     color: 'sage',
+    heroImageOverride: 'https://images.sourcelibrary.org/pages/69b51ec447b06ecd58196723/0002.jpg',
   },
   'bodleian': {
     slug: 'bodleian',
@@ -53,6 +56,7 @@ export const LIBRARY_PARTNERS: Record<string, LibraryPartner> = {
     url: 'https://digital.bodleian.ox.ac.uk',
     description: 'The Bodleian Libraries at the University of Oxford form the largest university library system in the United Kingdom. Their Digital Bodleian platform provides access to rare books, manuscripts, and special collections spanning nearly a millennium.',
     color: 'rust',
+    heroImageOverride: 'https://images.sourcelibrary.org/pages/699067d3249ce014347d422a/0014.jpg',
   },
   'cambridge': {
     slug: 'cambridge',
@@ -62,7 +66,7 @@ export const LIBRARY_PARTNERS: Record<string, LibraryPartner> = {
     url: 'https://cudl.lib.cam.ac.uk',
     description: 'The Cambridge University Digital Library provides free online access to some of the University of Cambridge\'s most important collections, including Isaac Newton\'s papers, medieval manuscripts, and early printed books.',
     color: 'violet',
-    heroImageOverride: 'https://images.sourcelibrary.org/archived/699065ad3dc2ed39a49f2387/77.jpg',
+    heroImageOverride: 'https://images.sourcelibrary.org/pages/69907bdc5f855ec553e7177b/0001.jpg',
   },
   'bibliotheca-philosophica-hermetica': {
     slug: 'bibliotheca-philosophica-hermetica',
@@ -82,6 +86,7 @@ export const LIBRARY_PARTNERS: Record<string, LibraryPartner> = {
     url: 'https://www.e-rara.ch',
     description: 'e-rara.ch is the platform for digitized rare books from Swiss libraries. It provides free access to printed works from the 15th to the 20th century held by Swiss research libraries, with a focus on early printed books.',
     color: 'sage',
+    heroImageOverride: 'https://images.sourcelibrary.org/archived/69b69ff8080b19f98fd128a3/2.jpg',
   },
   'wellcome-collection': {
     slug: 'wellcome-collection',
@@ -91,6 +96,7 @@ export const LIBRARY_PARTNERS: Record<string, LibraryPartner> = {
     url: 'https://wellcomecollection.org',
     description: 'Wellcome Collection in London is a free museum and library exploring health, life, and our place in the world. Their digital collections include medical manuscripts, alchemical texts, and works on the history of science and medicine.',
     color: 'rust',
+    heroImageOverride: 'https://images.sourcelibrary.org/pages/6991d8978c1030b12444c035/0047.jpg',
   },
   'hab-wolfenbuettel': {
     slug: 'hab-wolfenbuettel',
@@ -109,6 +115,7 @@ export const LIBRARY_PARTNERS: Record<string, LibraryPartner> = {
     url: 'https://digi.vatlib.it',
     description: 'The Biblioteca Apostolica Vaticana is one of the oldest and most significant libraries in the world. DigiVatLib provides free access to digitized manuscripts, incunabula, and rare printed books from the Vatican\'s extraordinary collections.',
     color: 'violet',
+    heroImageOverride: 'https://images.sourcelibrary.org/pages/69a5e476006a4098422172b0/0443.jpg',
   },
   'google-books': {
     slug: 'google-books',
@@ -158,6 +165,7 @@ export const LIBRARY_PARTNERS: Record<string, LibraryPartner> = {
     url: 'https://allardpierson.nl',
     description: 'Allard Pierson at the University of Amsterdam houses the Bibliotheca Rosenthaliana and important collections of early printed books, manuscripts, and maps from the Dutch Golden Age and beyond.',
     color: 'gold',
+    heroImageOverride: 'https://images.sourcelibrary.org/pages/69b525ce6be6046083032a57/0007.jpg',
   },
   'laurenziana': {
     slug: 'laurenziana',
@@ -167,6 +175,7 @@ export const LIBRARY_PARTNERS: Record<string, LibraryPartner> = {
     url: 'https://www.bmlonline.it',
     description: 'The Biblioteca Medicea Laurenziana in Florence, designed by Michelangelo, holds the Medici family\'s manuscript collection — one of the most important repositories of Greek, Latin, and Hebrew manuscripts in the world.',
     color: 'violet',
+    heroImageOverride: 'https://images.sourcelibrary.org/pages/69b52c393dd6d9423027eb56/0003.jpg',
   },
   'leiden': {
     slug: 'leiden',
@@ -176,6 +185,7 @@ export const LIBRARY_PARTNERS: Record<string, LibraryPartner> = {
     url: 'https://digitalcollections.universiteitleiden.nl',
     description: 'Leiden University Library, founded in 1575, holds the Scaliger collection of Oriental manuscripts, the Vossius collection of classical texts, and important Dutch Golden Age scientific works.',
     color: 'sage',
+    heroImageOverride: 'https://images.sourcelibrary.org/pages/6991c57d3074a1745a4118d2/0004.jpg',
   },
   'e-codices': {
     slug: 'e-codices',
@@ -185,6 +195,7 @@ export const LIBRARY_PARTNERS: Record<string, LibraryPartner> = {
     url: 'https://www.e-codices.unifr.ch',
     description: 'e-codices is the Virtual Manuscript Library of Switzerland, providing free access to medieval and early modern manuscripts from Swiss libraries, abbeys, and private collections.',
     color: 'sage',
+    heroImageOverride: 'https://images.sourcelibrary.org/pages/699066472ec9f7db57179ee2/0002.jpg',
   },
   'chester-beatty': {
     slug: 'chester-beatty',
@@ -194,6 +205,7 @@ export const LIBRARY_PARTNERS: Record<string, LibraryPartner> = {
     url: 'https://chesterbeatty.ie',
     description: 'The Chester Beatty Library in Dublin holds one of the finest collections of Islamic manuscripts, East Asian art, and early Biblical papyri in the Western world, assembled by mining magnate Sir Alfred Chester Beatty.',
     color: 'gold',
+    heroImageOverride: 'https://images.sourcelibrary.org/pages/69c1b79ffe4b8f25b9200411/0008.jpg',
   },
   'ndl-japan': {
     slug: 'ndl-japan',
@@ -215,6 +227,7 @@ export const LIBRARY_PARTNERS: Record<string, LibraryPartner> = {
     url: 'https://cmcdenhaag.nl',
     description: 'The Bibliotheca Klossiana at CMC Prins Frederik in The Hague preserves the collection of Georg Kloss (1787–1854), one of the most important Masonic, Rosicrucian, and esoteric manuscript collections in Europe.',
     color: 'gold',
+    heroImageOverride: 'https://images.sourcelibrary.org/pages/69c1d094b82ba5d5bed99883/0355.jpg',
   },
   'library-of-congress': {
     slug: 'library-of-congress',
@@ -224,6 +237,7 @@ export const LIBRARY_PARTNERS: Record<string, LibraryPartner> = {
     url: 'https://www.loc.gov',
     description: 'The Library of Congress is the largest library in the world, with millions of items in its collections including books, recordings, photographs, newspapers, maps, and manuscripts spanning the history of human knowledge.',
     color: 'rust',
+    heroImageOverride: 'https://images.sourcelibrary.org/pages/6992f3d4dc69844b023ff228/0179.jpg',
   },
   'british-library': {
     slug: 'british-library',
@@ -233,6 +247,7 @@ export const LIBRARY_PARTNERS: Record<string, LibraryPartner> = {
     url: 'https://www.bl.uk',
     description: 'The British Library is the national library of the United Kingdom, holding over 150 million items. Its digitized collections include the Harley, Sloane, Cotton, and Royal manuscript collections spanning Greek, Latin, Arabic, and Hebrew traditions.',
     color: 'violet',
+    heroImageOverride: 'https://images.sourcelibrary.org/archived/6991bf67734f402cad489bb9/24.jpg',
   },
   'sbb-berlin': {
     slug: 'sbb-berlin',
