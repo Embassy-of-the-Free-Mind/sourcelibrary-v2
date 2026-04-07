@@ -18,12 +18,12 @@ import { MongoClient } from 'mongodb';
 // ---------------------------------------------------------------------------
 
 const ENDPOINTS = [
-  // /api/health bypasses Cloudflare JS challenge (no browser required)
-  { name: 'health', url: 'https://sourcelibrary.org/api/health' },
-  { name: 'api', url: 'https://sourcelibrary.org/api/books?limit=1' },
+  // Use .vercel.app to bypass Cloudflare JS challenge (Hetzner IP gets 403 on sourcelibrary.org)
+  { name: 'health', url: 'https://sourcelibrary-v2.vercel.app/api/health' },
+  { name: 'api', url: 'https://sourcelibrary-v2.vercel.app/api/books?limit=1' },
 ];
 
-const TIMEOUT_MS = 15_000;
+const TIMEOUT_MS = 30_000;
 const NTFY_TOPIC = 'https://ntfy.sh/sourcelibrary-uptime';
 // How long to suppress repeat alerts for the same endpoint (1 hour)
 const ALERT_COOLDOWN_MS = 60 * 60 * 1000;
