@@ -37,6 +37,7 @@ function corsHeaders() {
   return {
     'Content-Type': 'application/ld+json',
     'Access-Control-Allow-Origin': '*',
+    'Cache-Control': 'public, max-age=3600',
   };
 }
 

@@ -147,6 +147,9 @@ export async function generateMetadata({ params }: PageProps): Promise<Metadata>
     ...(!shouldIndex && { robots: { index: false, follow: true } }),
     alternates: {
       canonical: bookUrl,
+      types: {
+        'application/ld+json': `https://sourcelibrary.org/api/dts/collection?id=${book.id}`,
+      },
     },
     other: scholarMeta,
     openGraph: {

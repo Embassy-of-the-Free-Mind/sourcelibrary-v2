@@ -28,6 +28,7 @@ export async function GET() {
     headers: {
       'Content-Type': 'application/ld+json',
       'Access-Control-Allow-Origin': '*',
+      'Cache-Control': 'public, max-age=86400',
     },
   });
 }
