@@ -511,6 +511,11 @@ async function processBook(db, book, job, globalCounter, deadline) {
           console.error(`  [${label}] Page ${page.page_number} failed: ${msg.substring(0, 100)}`);
           // Mark safety-blocked pages so they're skipped on future runs (like RECITATION)
           if (msg.includes('PROHIBITED') || msg.includes('SAFETY') || msg.includes('safety')) {
+            // If translation is null (not missing), unset it first so $set can create subdocument
+            await db.collection('pages').updateOne(
+              { _id: page._id, translation: null },
+              { $unset: { translation: '' } }
+            );
             await db.collection('pages').updateOne(
               { _id: page._id },
               { $set: { 'translation.safety_blocked': true, 'translation.safety_blocked_at': new Date(), 'translation.safety_reason': msg.substring(0, 200) } }
@@ -569,11 +574,19 @@ async function processBook(db, book, job, globalCounter, deadline) {
               console.error(`  [${label}] Fallback page ${page.page_number} failed: ${errMsg.substring(0, 80)}`);
               if (errMsg.includes('RECITATION')) {
                 await db.collection('pages').updateOne(
+                  { _id: page._id, translation: null },
+                  { $unset: { translation: '' } }
+                );
+                await db.collection('pages').updateOne(
                   { _id: page._id },
                   { $set: { 'translation.recitation_blocked': true, 'translation.recitation_at': new Date() } }
                 );
                 console.log(`  [${label}] Page ${page.page_number} marked as RECITATION-blocked (will skip on future runs)`);
               } else if (errMsg.includes('PROHIBITED') || errMsg.includes('SAFETY') || errMsg.includes('safety')) {
+                await db.collection('pages').updateOne(
+                  { _id: page._id, translation: null },
+                  { $unset: { translation: '' } }
+                );
                 await db.collection('pages').updateOne(
                   { _id: page._id },
                   { $set: { 'translation.safety_blocked': true, 'translation.safety_blocked_at': new Date(), 'translation.safety_reason': errMsg.substring(0, 200) } }
@@ -629,11 +642,19 @@ async function processBook(db, book, job, globalCounter, deadline) {
               console.error(`  [${label}] Fallback page ${page.page_number} failed: ${errMsg.substring(0, 80)}`);
               if (errMsg.includes('RECITATION')) {
                 await db.collection('pages').updateOne(
+                  { _id: page._id, translation: null },
+                  { $unset: { translation: '' } }
+                );
+                await db.collection('pages').updateOne(
                   { _id: page._id },
                   { $set: { 'translation.recitation_blocked': true, 'translation.recitation_at': new Date() } }
                 );
                 console.log(`  [${label}] Page ${page.page_number} marked as RECITATION-blocked (will skip on future runs)`);
               } else if (errMsg.includes('PROHIBITED') || errMsg.includes('SAFETY') || errMsg.includes('safety')) {
+                await db.collection('pages').updateOne(
+                  { _id: page._id, translation: null },
+                  { $unset: { translation: '' } }
+                );
                 await db.collection('pages').updateOne(
                   { _id: page._id },
                   { $set: { 'translation.safety_blocked': true, 'translation.safety_blocked_at': new Date(), 'translation.safety_reason': errMsg.substring(0, 200) } }
