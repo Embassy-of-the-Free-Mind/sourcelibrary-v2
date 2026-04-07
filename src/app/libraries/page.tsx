@@ -32,20 +32,41 @@ interface ContributingLibrary {
   count: number;
 }
 
+// eslint-disable-next-line @typescript-eslint/no-explicit-any
+async function fetchAllRows(
+  queryFn: (offset: number, limit: number) => any
+): Promise<any[]> {
+  const PAGE = 1000;
+  // eslint-disable-next-line @typescript-eslint/no-explicit-any
+  const allRows: any[] = [];
+  let offset = 0;
+  while (true) {
+    const { data, error } = await queryFn(offset, PAGE);
+    if (error) throw new Error(`Supabase query failed: ${error.message}`);
+    if (!data || data.length === 0) break;
+    allRows.push(...data);
+    if (data.length < PAGE) break;
+    offset += PAGE;
+  }
+  return allRows;
+}
+
 async function fetchProviderStats(): Promise<ProviderStats[]> {
   const excludeProviders = ['user_upload', 'other', 'library', 'iiif'];
-  const { data, error } = await supabase
-    .from('books_catalog')
-    .select('image_source_provider, language, thumbnail, thumbnail_blob')
-    .eq('visible', true)
-    .gt('pages_count', 0)
-    .gt('pages_translated', 0)
-    .not('image_source_provider', 'is', null);
 
-  if (error) throw new Error(`Provider stats query failed: ${error.message}`);
+  const allRows = await fetchAllRows((offset, limit) =>
+    supabase
+      .from('books_catalog')
+      .select('image_source_provider, language, thumbnail, thumbnail_blob')
+      .eq('visible', true)
+      .gt('pages_count', 0)
+      .gt('pages_translated', 0)
+      .not('image_source_provider', 'is', null)
+      .range(offset, offset + limit - 1)
+  );
 
   const providerMap = new Map<string, { count: number; languages: Set<string>; heroImage?: string }>();
-  for (const row of (data || [])) {
+  for (const row of allRows) {
     const provider = row.image_source_provider as string;
     if (excludeProviders.includes(provider)) continue;
     const existing = providerMap.get(provider) || { count: 0, languages: new Set<string>() };
@@ -69,17 +90,18 @@ async function fetchProviderStats(): Promise<ProviderStats[]> {
 }
 
 async function fetchContributingLibraries(): Promise<ContributingLibrary[]> {
-  const { data, error } = await supabase
-    .from('books_catalog')
-    .select('contributing_library')
-    .eq('visible', true)
-    .gt('pages_count', 0)
-    .not('contributing_library', 'is', null);
-
-  if (error) throw new Error(`Contributing libraries query failed: ${error.message}`);
+  const allRows = await fetchAllRows((offset, limit) =>
+    supabase
+      .from('books_catalog')
+      .select('contributing_library')
+      .eq('visible', true)
+      .gt('pages_count', 0)
+      .not('contributing_library', 'is', null)
+      .range(offset, offset + limit - 1)
+  );
 
   const counts = new Map<string, number>();
-  for (const row of (data || [])) {
+  for (const row of allRows) {
     const name = (row.contributing_library as string || '').trim();
     if (!name) continue;
     counts.set(name, (counts.get(name) || 0) + 1);
