@@ -1837,6 +1837,7 @@ async function run() {
             _priority: {
               $switch: {
                 branches: [
+                  { case: { $eq: ['$image_source.provider', 'bph'] }, then: -1 }, // BPH priority until backlog cleared
                   { case: { $eq: ['$is_first_translation', true] }, then: 0 },
                   { case: { $in: [{ $toLower: { $ifNull: ['$language', ''] } }, ENGLISH_VARIANTS_P1] }, then: 2 },
                 ],
@@ -1867,6 +1868,7 @@ async function run() {
             _priority: {
               $switch: {
                 branches: [
+                  { case: { $eq: ['$image_source.provider', 'bph'] }, then: -1 }, // BPH priority until backlog cleared
                   { case: { $eq: ['$is_first_translation', true] }, then: 0 },
                   { case: { $in: [{ $toLower: { $ifNull: ['$language', ''] } }, ENGLISH_VARIANTS_P1] }, then: 2 },
                 ],
@@ -2142,7 +2144,8 @@ Reply with ONLY: {"is_spread": true} or {"is_spread": false}` },
               _priority: {
                 $switch: {
                   branches: [
-                    { case: { $eq: ['$is_first_translation', true] }, then: 0 },
+                    { case: { $eq: ['$image_source.provider', 'bph'] }, then: -1 }, // BPH priority until backlog cleared
+                  { case: { $eq: ['$is_first_translation', true] }, then: 0 },
                     { case: { $in: [{ $toLower: { $ifNull: ['$language', ''] } }, ENGLISH_VARIANTS] }, then: 2 },
                   ],
                   default: 1,  // Non-English = likely first translation
@@ -2386,7 +2389,8 @@ Reply with ONLY: {"is_spread": true} or {"is_spread": false}` },
               _priority: {
                 $switch: {
                   branches: [
-                    { case: { $eq: ['$is_first_translation', true] }, then: 0 },
+                    { case: { $eq: ['$image_source.provider', 'bph'] }, then: -1 }, // BPH priority until backlog cleared
+                  { case: { $eq: ['$is_first_translation', true] }, then: 0 },
                     { case: { $in: [{ $toLower: { $ifNull: ['$language', ''] } }, ENGLISH_VARIANTS_P2] }, then: 2 },
                   ],
                   default: 1,
@@ -2448,6 +2452,7 @@ Reply with ONLY: {"is_spread": true} or {"is_spread": false}` },
             _priority: {
               $switch: {
                 branches: [
+                  { case: { $eq: ['$image_source.provider', 'bph'] }, then: -1 }, // BPH priority until backlog cleared
                   { case: { $eq: ['$is_first_translation', true] }, then: 0 },
                   { case: { $in: [{ $toLower: { $ifNull: ['$language', ''] } }, ENGLISH_VARIANTS_P2] }, then: 2 },
                 ],
@@ -2960,8 +2965,9 @@ Reply with ONLY: {"is_spread": true} or {"is_spread": false}` },
             default: 1,
           }}}},
           { $addFields: { _bigBook: { $cond: [{ $gte: ['$pages_count', 200] }, 0, 1] } } },
-          // First translations prioritized above speed tier — clear untranslated backlog first
-          { $sort: { is_first_translation: -1, _speedTier: 1, _bigBook: 1, hidden: 1 } },
+          { $addFields: { _isBph: { $cond: [{ $eq: ['$image_source.provider', 'bph'] }, 0, 1] } } },
+          // BPH priority until backlog cleared, then first translations, then speed tier
+          { $sort: { _isBph: 1, is_first_translation: -1, _speedTier: 1, _bigBook: 1, hidden: 1 } },
           { $project: { id: 1, title: 1, pages_count: 1, language: 1, 'pipeline_auto.retry_count': 1, 'image_source.provider': 1 } },
           { $limit: effectiveLimit }
         ]).toArray() : [];
@@ -2974,7 +2980,8 @@ Reply with ONLY: {"is_spread": true} or {"is_spread": false}` },
             { $addFields: { _denominator: { $subtract: [{ $ifNull: ['$pages_ocr', 0] }, { $ifNull: ['$pages_blank', 0] }] } } },
             { $match: { _denominator: { $gt: 0 }, $expr: { $gte: [{ $divide: ['$pages_translated', '$_denominator'] }, 0.9] } } },
             { $project: { id: 1, title: 1, pages_count: 1, language: 1, 'pipeline_auto.retry_count': 1, 'image_source.provider': 1 } },
-            { $sort: { pages_translated: -1 } },
+            { $addFields: { _isBph: { $cond: [{ $eq: ['$image_source.provider', 'bph'] }, 0, 1] } } },
+            { $sort: { _isBph: 1, pages_translated: -1 } },
             { $limit: effectiveLimit },
           ]).toArray();
           if (partialBooks.length > 0) {
