@@ -156,7 +156,7 @@ export async function GET(request: NextRequest, context: RouteContext) {
 
     // Bot page gating: only allow quotes from the first 20% of pages
     const resolvedBookId = book.id;
-    if (isBot(request) && !isTrustedBot(request)) {
+    if (isBot(request) && !(await isTrustedBot(request))) {
       const maxPage = botMaxPage(book.pages_count || 0);
       if (pageNumber > maxPage) {
         return NextResponse.json({

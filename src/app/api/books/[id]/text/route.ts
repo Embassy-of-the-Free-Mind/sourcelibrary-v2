@@ -60,7 +60,7 @@ export async function GET(
     const resolvedBookId = book.id || bookId;
 
     // Bot gating: non-trusted bots get the first 20% of pages from any book
-    const isBotRequest = isBot(request) && !isTrustedBot(request);
+    const isBotRequest = isBot(request) && !(await isTrustedBot(request));
     const botPageLimit = isBotRequest ? botMaxPage(book.pages_count || 0) : undefined;
 
     // Chapter mode: return pre-materialized chapter text
