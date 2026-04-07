@@ -12,6 +12,7 @@ import LikeButton from '@/components/ui/LikeButton';
 import { useIdentity } from '@/hooks/useIdentity';
 import { BookLoader } from '@/components/ui/BookLoader';
 import FeaturedCollections from '@/components/gallery/FeaturedCollections';
+import IconclassFilter from '@/components/gallery/IconclassFilter';
 import SiteHeader from '@/components/layout/SiteHeader';
 import { formatAuthor } from '@/lib/utils';
 import AuthorName from '@/components/AuthorName';
@@ -123,6 +124,7 @@ export default function GalleryClient({ initialData, initialCollections, bookCol
   const libraryFilter = searchParams.get('library') || '';
   const typeFilter = searchParams.get('type') || '';
   const subjectFilter = searchParams.get('subject') || '';
+  const iconclassFilter = searchParams.get('iconclass') || '';
   const yearStart = searchParams.get('yearStart') || '';
   const yearEnd = searchParams.get('yearEnd') || '';
 
@@ -144,7 +146,7 @@ export default function GalleryClient({ initialData, initialCollections, bookCol
 
   // Fetch gallery data when filters change (resets items) — skip on initial load if no URL filters
   useEffect(() => {
-    const hasUrlFilters = bookId || collectionFilter || libraryFilter || imageSearchQuery || typeFilter || subjectFilter || yearStart || yearEnd || qualityParam || includeArchive;
+    const hasUrlFilters = bookId || collectionFilter || libraryFilter || imageSearchQuery || typeFilter || subjectFilter || iconclassFilter || yearStart || yearEnd || qualityParam || includeArchive;
     if (isInitialLoad && !hasUrlFilters) {
       setIsInitialLoad(false);
       return;
@@ -164,6 +166,7 @@ export default function GalleryClient({ initialData, initialCollections, bookCol
           query: imageSearchQuery || undefined,
           type: typeFilter || undefined,
           subject: subjectFilter || undefined,
+          iconclass: iconclassFilter || undefined,
           yearFrom: yearStart ? parseInt(yearStart) : undefined,
           yearTo: yearEnd ? parseInt(yearEnd) : undefined,
           minQuality: qualityParam ? parseFloat(qualityParam) : undefined,
@@ -181,7 +184,7 @@ export default function GalleryClient({ initialData, initialCollections, bookCol
 
     fetchGallery();
   // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [bookId, collectionFilter, libraryFilter, imageSearchQuery, typeFilter, subjectFilter, yearStart, yearEnd, qualityParam, includeArchive, identity.id]);
+  }, [bookId, collectionFilter, libraryFilter, imageSearchQuery, typeFilter, subjectFilter, iconclassFilter, yearStart, yearEnd, qualityParam, includeArchive, identity.id]);
 
   // Load more handler — appends next batch to accumulated items
   const handleLoadMore = useCallback(async () => {
@@ -197,6 +200,7 @@ export default function GalleryClient({ initialData, initialCollections, bookCol
         query: imageSearchQuery || undefined,
         type: typeFilter || undefined,
         subject: subjectFilter || undefined,
+        iconclass: iconclassFilter || undefined,
         yearFrom: yearStart ? parseInt(yearStart) : undefined,
         yearTo: yearEnd ? parseInt(yearEnd) : undefined,
         minQuality: qualityParam ? parseFloat(qualityParam) : undefined,
@@ -213,7 +217,7 @@ export default function GalleryClient({ initialData, initialCollections, bookCol
     } finally {
       setLoadingMore(false);
     }
-  }, [loadingMore, data, currentOffset, bookId, collectionFilter, libraryFilter, imageSearchQuery, typeFilter, subjectFilter, yearStart, yearEnd, qualityParam, identity.id, limit]);
+  }, [loadingMore, data, currentOffset, bookId, collectionFilter, libraryFilter, imageSearchQuery, typeFilter, subjectFilter, iconclassFilter, yearStart, yearEnd, qualityParam, identity.id, limit]);
 
   // Book search with debounce
   useEffect(() => {
@@ -502,6 +506,13 @@ export default function GalleryClient({ initialData, initialCollections, bookCol
                   ))}
                 </select>
               </div>
+
+              {/* Iconclass Subject */}
+              <IconclassFilter
+                value={iconclassFilter}
+                onChange={(code) => updateParams({ iconclass: code })}
+                compact
+              />
 
               {/* Subjects */}
               {data.filters.subjects.length > 0 && (

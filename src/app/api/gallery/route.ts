@@ -132,7 +132,10 @@ export async function GET(request: NextRequest) {
     if (subjectFilter) filter['metadata.subjects'] = subjectFilter;
     if (figureFilter) filter['metadata.figures'] = figureFilter;
     if (symbolFilter) filter['metadata.symbols'] = symbolFilter;
-    if (iconclassFilter) filter['metadata.iconclass'] = iconclassFilter;
+    if (iconclassFilter) {
+      // Prefix match: ?iconclass=49 matches 49E39, 49C11, etc.
+      filter['metadata.iconclass'] = { $regex: `^${iconclassFilter.replace(/[.*+?^${}()|[\]\\]/g, '\\$&')}` };
+    }
 
     if (yearStart !== null || yearEnd !== null) {
       const yearFilter: Record<string, number> = {};
@@ -442,7 +445,7 @@ async function legacyGalleryQuery(db: Awaited<ReturnType<typeof getDb>>, searchP
     if (subjectFilter) conditions.push({ [`${p}metadata.subjects`]: subjectFilter });
     if (figureFilter) conditions.push({ [`${p}metadata.figures`]: figureFilter });
     if (symbolFilter) conditions.push({ [`${p}metadata.symbols`]: symbolFilter });
-    if (iconclassFilter) conditions.push({ [`${p}metadata.iconclass`]: iconclassFilter });
+    if (iconclassFilter) conditions.push({ [`${p}metadata.iconclass`]: { $regex: `^${iconclassFilter.replace(/[.*+?^${}()|[\]\\]/g, '\\$&')}` } });
     if (searchQuery) {
       const pattern = escapeAndNormalizeRegex(searchQuery);
       conditions.push({

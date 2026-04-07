@@ -39,6 +39,7 @@ export const gallery = {
     if (params?.maxPerBook) queryParams.append('maxPerBook', params.maxPerBook.toString());
     if (params?.sort) queryParams.append('sort', params.sort);
     if (params?.visitorId) queryParams.append('visitor_id', params.visitorId);
+    if (params?.iconclass) queryParams.append('iconclass', params.iconclass);
 
     const query = queryParams.toString();
     return await apiClient.get(`/api/gallery${query ? `?${query}` : ''}`);

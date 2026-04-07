@@ -16,6 +16,8 @@ export interface ImageMetadata {
   symbols?: string[];
   style?: string;
   technique?: string;
+  iconclass?: string[];
+  cit?: string[];
 }
 
 export interface GalleryItem {
@@ -87,6 +89,7 @@ export interface GallerySearchParams {
   maxPerBook?: number;
   sort?: string;
   visitorId?: string;
+  iconclass?: string;
 }
 
 export interface GalleryImageUpdateRequest {
