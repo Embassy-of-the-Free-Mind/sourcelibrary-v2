@@ -27,7 +27,7 @@ import { createHash } from 'crypto';
 import { nanoid } from 'nanoid';
 
 // ── Config ──
-const CONCURRENCY = 25;          // Max books translating simultaneously
+const CONCURRENCY = 40;          // Max books translating simultaneously
 const PAGES_PER_RUN = 8000;      // Global page cap per run (prevent runaway costs)
 const MAX_CONSECUTIVE_ERRORS = 5; // Per-book error threshold before giving up
 const RATE_LIMIT_BACKOFF_MS = 15000;
