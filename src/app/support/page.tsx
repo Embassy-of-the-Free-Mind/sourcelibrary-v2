@@ -3,48 +3,42 @@
 import Link from 'next/link';
 import SiteHeader from '@/components/layout/SiteHeader';
 
-// TODO: Ask NAF for a Source Library-specific DonorPerfect form.
-// When available, replace this URL so donors see "Source Library" instead of the generic Embassy form.
+const MOLLIE_URL = 'https://payment-links.mollie.com/en/payment/ug24y6U3mtCvzCwUhfPHD/details';
 const DONORPERFECT_URL = 'https://form-renderer-app.donorperfect.io/give/naf/embassyofthefreemind';
-
 const CONTACT_EMAIL = 'derek@sourcelibrary.org';
 
-const MEMBERSHIP_TIERS = [
+const PHASES = [
   {
-    name: 'Friend',
-    price: '$100',
-    period: '/ year',
-    description: 'Join the community and follow the work as it unfolds.',
-    benefits: [
-      'Monthly digest of newly translated texts',
-      'Name on the Source Library supporters page',
-      'Museum access at the Embassy of the Free Mind',
-      'Community event invitations',
+    label: 'Phase 1',
+    name: 'Foundation',
+    status: 'current' as const,
+    items: [
+      'Digitize and OCR the core BPH collection',
+      'AI-assisted translation of Latin, Greek, and German texts',
+      'Build the open-access platform and reading interface',
+      'Scholarly review pipeline for translation verification',
     ],
   },
   {
-    name: 'Freethinker',
-    price: '$500',
-    period: '/ year',
-    highlight: true,
-    description: 'Sustain the scholarly pipeline and shape which texts come next.',
-    benefits: [
-      'Everything in Friend',
-      'Quarterly reports on the translation pipeline',
-      'Vote on which texts are prioritized for review',
-      'Invitations to exclusive events and openings',
+    label: 'Phase 2',
+    name: 'Expansion',
+    status: 'upcoming' as const,
+    items: [
+      'Expand to partner libraries across Europe',
+      'Add Sanskrit, Arabic, and Hebrew source traditions',
+      'Community tools for collaborative annotation',
+      'Comprehensive search across all translated texts',
     ],
   },
   {
-    name: 'Pioneer',
-    price: '$1,000',
-    period: '/ year',
-    description: 'Leave your mark on the collection and help build the foundation.',
-    benefits: [
-      'Everything in Freethinker',
-      'Named acknowledgment on reviewed books',
-      'Private rare book tour for you and guests',
-      'Direct updates from the project lead',
+    label: 'Phase 3',
+    name: 'Community',
+    status: 'upcoming' as const,
+    items: [
+      'Build a scholarly community around the collection',
+      'Educational programs and guided reading paths',
+      'API access for researchers and AI developers',
+      'Full integration with global digital humanities infrastructure',
     ],
   },
 ];
@@ -53,6 +47,7 @@ export default function SupportPage() {
   return (
     <div className="min-h-screen">
       <SiteHeader variant="light" />
+
       {/* Header */}
       <section className="bg-gradient-to-b from-[#f6f3ee] to-white pt-8 pb-16 md:pt-12 md:pb-24">
         <div className="px-6 md:px-12 max-w-5xl mx-auto">
@@ -60,7 +55,16 @@ export default function SupportPage() {
             Support Source Library
           </h1>
           <p className="text-lg md:text-xl text-stone-600 leading-relaxed max-w-3xl">
-            Your donation funds the digitization and translation of rare texts from the Bibliotheca Philosophica Hermetica — making 2,500 years of wisdom freely available to everyone.
+            Source Library is an initiative of the{' '}
+            <a
+              href="https://embassyofthefreemind.com"
+              target="_blank"
+              rel="noopener noreferrer"
+              className="text-accent-rust hover:text-accent-gold-dark underline"
+            >
+              Embassy of the Free Mind
+            </a>{' '}
+            (EFM) in Amsterdam. All contributions are received by EFM and allocated specifically to the Source Library project — funding the digitization, translation, and open publication of rare historical texts.
           </p>
         </div>
       </section>
@@ -68,9 +72,7 @@ export default function SupportPage() {
       {/* Why Now */}
       <section className="bg-white py-16 md:py-24">
         <div className="px-6 md:px-12 max-w-5xl mx-auto">
-          <h2
-            className="text-3xl md:text-4xl lg:text-5xl text-gray-900 mb-8 leading-tight font-display"
-          >
+          <h2 className="text-3xl md:text-4xl lg:text-5xl text-gray-900 mb-8 leading-tight font-display">
             Why now?
           </h2>
           <p className="text-lg md:text-xl text-gray-600 leading-relaxed">
@@ -79,126 +81,110 @@ export default function SupportPage() {
         </div>
       </section>
 
-      {/* Become a Member */}
+      {/* How to Donate — Two Routes */}
       <section className="bg-gradient-to-b from-[#f6f3ee] to-[#f3ede6] py-16 md:py-24">
         <div className="px-6 md:px-12 max-w-5xl mx-auto">
-          <h2
-            className="text-3xl md:text-4xl text-stone-900 mb-4 leading-tight font-display"
-          >
-            Become a Member
+          <h2 className="text-3xl md:text-4xl text-stone-900 mb-4 leading-tight font-display">
+            How to Donate
           </h2>
           <p className="text-lg text-stone-600 mb-12 max-w-3xl">
-            Join an international community dedicated to making universal wisdom accessible — to humanity and to the AI systems shaping our future.
+            There are two ways to support Source Library, depending on your location and needs.
           </p>
 
-          {/* Tier Cards */}
-          <div className="grid grid-cols-1 md:grid-cols-3 gap-6 mb-10">
-            {MEMBERSHIP_TIERS.map((tier) => (
-              <div
-                key={tier.name}
-                className={`rounded-2xl p-8 flex flex-col ${
-                  tier.highlight
-                    ? 'bg-stone-900 text-white ring-2 ring-stone-700'
-                    : 'bg-white border border-stone-200 shadow-sm'
-                }`}
-              >
-                <h3 className={`text-xl font-semibold mb-1 ${tier.highlight ? 'text-white' : 'text-stone-900'}`}>
-                  {tier.name}
+          <div className="grid grid-cols-1 md:grid-cols-2 gap-8">
+            {/* US Donors — NAF */}
+            <div className="bg-white rounded-2xl border border-stone-200 shadow-sm p-8 flex flex-col">
+              <div className="flex items-center gap-3 mb-4">
+                <span className="inline-flex items-center justify-center w-10 h-10 rounded-full bg-stone-100 text-stone-600 text-lg font-semibold shrink-0">
+                  US
+                </span>
+                <h3 className="text-xl font-semibold text-stone-900">
+                  US Tax-Deductible Donation
                 </h3>
-                <div className="mb-4">
-                  <span className={`text-3xl font-bold ${tier.highlight ? 'text-white' : 'text-stone-900'}`}>
-                    {tier.price}
-                  </span>
-                  <span className={`text-sm ${tier.highlight ? 'text-stone-400' : 'text-stone-500'}`}>
-                    {' '}{tier.period}
-                  </span>
-                </div>
-                <p className={`text-sm leading-relaxed mb-6 ${tier.highlight ? 'text-stone-300' : 'text-stone-600'}`}>
-                  {tier.description}
-                </p>
-                <ul className={`text-sm space-y-2 mb-8 flex-1 ${tier.highlight ? 'text-stone-300' : 'text-stone-600'}`}>
-                  {tier.benefits.map((benefit) => (
-                    <li key={benefit} className="flex gap-2">
-                      <span className={`mt-1 shrink-0 ${tier.highlight ? 'text-accent-gold' : 'text-stone-400'}`}>
-                        &#10003;
-                      </span>
-                      {benefit}
-                    </li>
-                  ))}
-                </ul>
+              </div>
+              <p className="text-stone-600 text-sm leading-relaxed mb-4">
+                For US-based donors and companies seeking tax benefits. Donations are processed through the{' '}
+                <strong>Netherland-America Foundation</strong> (NAF), a 501(c)(3) public charity (EIN: 13-2989216).
+              </p>
+              <p className="text-stone-500 text-xs leading-relaxed mb-6">
+                Tax-deductible to the full extent permitted by US law. Please write &ldquo;Source Library&rdquo; in the comments field.
+              </p>
+              <div className="mt-auto">
                 <a
-                  href={`mailto:${CONTACT_EMAIL}?subject=Source%20Library%20Membership%20%E2%80%94%20${encodeURIComponent(tier.name)}&body=I%20would%20like%20to%20become%20a%20${encodeURIComponent(tier.name)}%20member%20of%20Source%20Library.`}
-                  className={`block w-full text-center py-3 px-6 rounded-full transition-colors text-base font-medium ${
-                    tier.highlight
-                      ? 'bg-white text-stone-900 hover:bg-stone-100'
-                      : 'bg-stone-900 text-white hover:bg-stone-800'
-                  }`}
+                  href={DONORPERFECT_URL}
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="block w-full text-center bg-stone-900 text-white py-3 px-6 rounded-full hover:bg-stone-800 transition-colors text-base font-medium"
                 >
-                  Become a {tier.name}
+                  Donate via NAF
                 </a>
               </div>
-            ))}
-          </div>
+            </div>
 
-          {/* Patron tier */}
-          <div className="bg-white rounded-2xl border border-stone-200 shadow-sm p-8 md:p-10 mb-10">
-            <div className="md:flex md:items-start md:justify-between md:gap-8">
-              <div className="flex-1">
-                <h3 className="text-xl font-semibold text-stone-900 mb-1">Patrons</h3>
-                <p className="text-stone-500 text-sm mb-4">Apollo &middot; Minerva &middot; Mercury</p>
-                <p className="text-2xl font-bold text-stone-900 mb-4">
-                  $5,000 &middot; $10,000 &middot; $25,000
-                  <span className="text-sm font-normal text-stone-500"> / year</span>
-                </p>
-                <p className="text-stone-600 text-sm leading-relaxed max-w-2xl">
-                  Patrons receive all Pioneer benefits plus personalized involvement in Source Library&apos;s direction — including the annual Patrons&apos; Dinner at the Embassy of the Free Mind, venue access, and a direct role in shaping which collections, languages, and traditions are prioritized. Each patron relationship is unique.
-                </p>
+            {/* International Donors — EFM / Mollie */}
+            <div className="bg-white rounded-2xl border border-stone-200 shadow-sm p-8 flex flex-col">
+              <div className="flex items-center gap-3 mb-4">
+                <span className="inline-flex items-center justify-center w-10 h-10 rounded-full bg-stone-100 text-stone-600 text-lg font-semibold shrink-0">
+                  EU
+                </span>
+                <h3 className="text-xl font-semibold text-stone-900">
+                  Direct Donation via EFM
+                </h3>
               </div>
-              <div className="mt-6 md:mt-0 md:shrink-0">
+              <p className="text-stone-600 text-sm leading-relaxed mb-4">
+                For European and international donors. Your contribution goes directly to the Embassy of the Free Mind, earmarked for Source Library.
+              </p>
+              <p className="text-stone-500 text-xs leading-relaxed mb-2">
+                Please include <strong>&ldquo;Source Library&rdquo;</strong> in the description of your donation so we can allocate your contribution correctly.
+              </p>
+              <p className="text-stone-500 text-xs leading-relaxed mb-6">
+                Donation confirmations and receipts are available upon request.
+              </p>
+              <div className="mt-auto">
                 <a
-                  href={`mailto:${CONTACT_EMAIL}?subject=Source%20Library%20%E2%80%94%20Patron%20Inquiry&body=I%20am%20interested%20in%20becoming%20a%20patron%20of%20Source%20Library.`}
-                  className="inline-block bg-stone-900 text-white py-3 px-8 rounded-full hover:bg-stone-800 transition-colors text-base font-medium"
+                  href={MOLLIE_URL}
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="block w-full text-center bg-stone-900 text-white py-3 px-6 rounded-full hover:bg-stone-800 transition-colors text-base font-medium"
                 >
-                  Get in Touch
+                  Donate via EFM
                 </a>
               </div>
             </div>
           </div>
 
-          <p className="text-center text-stone-500 text-sm">
-            All donations are tax-deductible for US taxpayers through the Netherland-America Foundation (501(c)(3)).
+          {/* Tax Benefits */}
+          <div className="mt-10 bg-white/60 rounded-xl border border-stone-200 p-6">
+            <h3 className="text-base font-semibold text-stone-900 mb-2">Tax Benefits</h3>
+            <p className="text-stone-600 text-sm leading-relaxed">
+              The Embassy of the Free Mind is a registered non-profit organization (ANBI-registered in the Netherlands). Your donation may be tax-deductible depending on your country of residence. US donors giving through the Netherland-America Foundation receive full 501(c)(3) tax benefits.
+            </p>
+          </div>
+
+          {/* Large gifts */}
+          <p className="text-stone-500 text-sm mt-8 text-center">
+            For wire transfers, stock gifts, or donations over $10,000,{' '}
+            <a
+              href={`mailto:${CONTACT_EMAIL}?subject=Source%20Library%20%E2%80%94%20Large%20Gift%20Inquiry`}
+              className="text-accent-rust hover:text-accent-gold-dark underline"
+            >
+              contact us directly
+            </a>.
           </p>
         </div>
       </section>
 
-      {/* Give Once */}
+      {/* Early Supporters */}
       <section className="bg-white py-16 md:py-24">
-        <div className="px-6 md:px-12 max-w-2xl mx-auto text-center">
-          <h2
-            className="text-3xl md:text-4xl text-gray-900 mb-4 leading-tight font-display"
-          >
-            Give Once
+        <div className="px-6 md:px-12 max-w-5xl mx-auto">
+          <h2 className="text-3xl md:text-4xl text-gray-900 mb-4 leading-tight font-display">
+            Become an Early Supporter
           </h2>
-          <p className="text-lg text-gray-600 mb-8">
-            Not ready for a membership? A one-time gift of any size moves the work forward. Please write &ldquo;Source Library&rdquo; in the comments field.
+          <p className="text-lg text-gray-600 leading-relaxed mb-6 max-w-3xl">
+            As an Early Supporter, you play a key role in kickstarting Source Library. Your contribution helps make the first phase of development possible — enabling us to build the foundation of the platform, curate and digitize essential sources, and produce the initial translations.
           </p>
-          <a
-            href={DONORPERFECT_URL}
-            target="_blank"
-            rel="noopener noreferrer"
-            className="inline-block bg-stone-900 text-white py-4 px-10 rounded-full hover:bg-stone-800 transition-colors text-lg font-medium"
-          >
-            Donate Now
-          </a>
-          <p className="text-stone-500 text-xs mt-4 leading-relaxed">
-            Secure donation through the Netherland-America Foundation &middot; 501(c)(3) &middot; EIN: 13-2989216<br />
-            Tax-deductible to the full extent permitted by law
-          </p>
-          <p className="text-stone-500 text-sm mt-6">
-            For wire transfers, stock gifts, or donations over $10,000,{' '}
-            <a href={`mailto:${CONTACT_EMAIL}?subject=Source%20Library%20%E2%80%94%20Large%20Gift%20Inquiry`} className="text-accent-rust hover:text-accent-gold-dark underline">
-              contact us directly
-            </a>.
+          <p className="text-lg text-gray-600 leading-relaxed max-w-3xl">
+            Early Supporters help us move from idea to reality. We are building toward a community around this work — and those who contribute now are its founding members.
           </p>
         </div>
       </section>
@@ -206,33 +192,87 @@ export default function SupportPage() {
       {/* Where Your Support Goes */}
       <section className="bg-gradient-to-b from-[#f6f3ee] to-[#f3ede6] py-16 md:py-24">
         <div className="px-6 md:px-12 max-w-5xl mx-auto">
-          <h2
-            className="text-3xl md:text-4xl text-stone-900 mb-12 leading-tight font-display"
-          >
+          <h2 className="text-3xl md:text-4xl text-stone-900 mb-12 leading-tight font-display">
             Where Your Support Goes
           </h2>
-          <div className="grid grid-cols-1 md:grid-cols-2 gap-8">
+          <div className="grid grid-cols-1 md:grid-cols-2 gap-8 mb-16">
             {[
               {
-                title: 'Scholarly Review & Certification',
-                text: 'The majority of funds go directly to classical language experts — specialists in Latin, Greek, Sanskrit, Arabic, and Hebrew — who review every AI-generated translation for accuracy. This is what makes Source Library a citable, trustworthy resource rather than raw AI output.',
+                icon: '01',
+                title: 'Research & Curation',
+                text: 'Identifying, sourcing, and prioritizing the most important texts from rare book collections across Europe — building a roadmap of what to digitize, translate, and publish.',
               },
               {
-                title: 'Digitization of Unscanned Texts',
-                text: 'Many rare books in the Bibliotheca Philosophica Hermetica have never been digitized. We work page by page to create high-resolution scans that preserve these fragile works for anyone with an internet connection.',
+                icon: '02',
+                title: 'Digitization',
+                text: 'High-resolution scanning of fragile manuscripts and rare printed books from the Bibliotheca Philosophica Hermetica and partner libraries, preserving them for future generations.',
               },
               {
-                title: 'Open Access for Everyone',
-                text: 'Everything we produce — scans, OCR text, translations — is open access. No paywalls, no restrictions. Wisdom belongs to everyone, and your support keeps it that way.',
+                icon: '03',
+                title: 'Translation & Editorial',
+                text: 'AI-assisted translation of Latin, Greek, German, and other historical languages, followed by scholarly review to ensure accuracy. This is the core of the work and the largest cost.',
               },
               {
-                title: 'Enriching AI with Ancient Knowledge',
-                text: 'By making this material available now, we ensure the next generation of AI systems understands not just modern knowledge but the full depth of human thought — from Hermetic philosophy to Neoplatonist metaphysics to Renaissance natural philosophy.',
+                icon: '04',
+                title: 'Platform Development',
+                text: 'Building and maintaining the open-access reading platform — page-by-page bilingual display, full-text search, image galleries, and integration with global digital humanities infrastructure.',
               },
             ].map((item) => (
               <div key={item.title} className="bg-white rounded-xl border border-stone-200 p-6 md:p-8">
+                <span className="inline-block text-xs font-semibold text-stone-400 tracking-wider uppercase mb-3">
+                  {item.icon}
+                </span>
                 <h3 className="text-lg font-semibold text-stone-900 mb-3">{item.title}</h3>
                 <p className="text-stone-600 text-sm leading-relaxed">{item.text}</p>
+              </div>
+            ))}
+          </div>
+
+          {/* Roadmap Phases */}
+          <h3 className="text-2xl text-stone-900 mb-8 font-display">Roadmap</h3>
+          <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
+            {PHASES.map((phase) => (
+              <div
+                key={phase.name}
+                className={`rounded-xl p-6 ${
+                  phase.status === 'current'
+                    ? 'bg-stone-900 text-white'
+                    : 'bg-white border border-stone-200'
+                }`}
+              >
+                <span className="inline-block text-xs font-semibold text-stone-400 tracking-wider uppercase mb-1">
+                  {phase.label}
+                </span>
+                <h4
+                  className={`text-lg font-semibold mb-4 ${
+                    phase.status === 'current' ? 'text-white' : 'text-stone-900'
+                  }`}
+                >
+                  {phase.name}
+                  {phase.status === 'current' && (
+                    <span className="ml-2 inline-block text-xs font-medium bg-white/20 text-white/80 px-2 py-0.5 rounded-full">
+                      Now
+                    </span>
+                  )}
+                </h4>
+                <ul
+                  className={`text-sm space-y-2 ${
+                    phase.status === 'current' ? 'text-stone-300' : 'text-stone-600'
+                  }`}
+                >
+                  {phase.items.map((item) => (
+                    <li key={item} className="flex gap-2">
+                      <span
+                        className={`mt-1 shrink-0 ${
+                          phase.status === 'current' ? 'text-accent-gold' : 'text-stone-400'
+                        }`}
+                      >
+                        &#10003;
+                      </span>
+                      {item}
+                    </li>
+                  ))}
+                </ul>
               </div>
             ))}
           </div>
@@ -242,22 +282,32 @@ export default function SupportPage() {
       {/* How It All Connects */}
       <section className="bg-white py-16 md:py-24">
         <div className="px-6 md:px-12 max-w-5xl mx-auto">
-          <h2
-            className="text-3xl md:text-4xl text-gray-900 mb-8 leading-tight font-display"
-          >
+          <h2 className="text-3xl md:text-4xl text-gray-900 mb-8 leading-tight font-display">
             How It All Connects
           </h2>
           <div className="text-gray-600 text-lg leading-relaxed space-y-6">
             <p>
               Source Library is a project of the{' '}
-              <a href="https://embassyofthefreemind.com" target="_blank" rel="noopener noreferrer" className="text-accent-rust hover:text-accent-gold-dark underline">
+              <a
+                href="https://embassyofthefreemind.com"
+                target="_blank"
+                rel="noopener noreferrer"
+                className="text-accent-rust hover:text-accent-gold-dark underline"
+              >
                 Embassy of the Free Mind
               </a>{' '}
-              in Amsterdam — home to the Bibliotheca Philosophica Hermetica (BPH). The Embassy, supported by the Worldheart Foundation, preserves and shares the physical collection. Source Library extends that mission digitally, making these texts freely accessible worldwide.
+              in Amsterdam — home to the Bibliotheca Philosophica Hermetica (BPH). The Embassy preserves and shares the physical collection. Source Library extends that mission digitally, making these texts freely accessible worldwide.
             </p>
             <p>
-              US tax-deductible donations are processed through the{' '}
-              <strong>Netherland-America Foundation</strong> (NAF), a 501(c)(3) public charity (EIN: 13-2989216) that strengthens bonds between the Netherlands and the United States. European donors can give directly through the Worldheart Foundation (ANBI-registered).
+              If you are interested in becoming a member of the Embassy of the Free Mind or supporting the broader organization,{' '}
+              <a
+                href="https://embassyofthefreemind.com"
+                target="_blank"
+                rel="noopener noreferrer"
+                className="text-accent-rust hover:text-accent-gold-dark underline"
+              >
+                visit the EFM website
+              </a>.
             </p>
           </div>
         </div>
@@ -302,7 +352,10 @@ export default function SupportPage() {
           <div className="mb-12 pb-12 border-b border-stone-300">
             <p className="text-gray-600 text-lg">
               Not everyone gives money — some give time and expertise.{' '}
-              <Link href="/contribute" className="text-accent-rust hover:text-accent-gold-dark underline font-medium">
+              <Link
+                href="/contribute"
+                className="text-accent-rust hover:text-accent-gold-dark underline font-medium"
+              >
                 Participate
               </Link>{' '}
               as a translator, reviewer, or community volunteer.
@@ -315,15 +368,12 @@ export default function SupportPage() {
               &copy; {new Date().getFullYear()} Source Library — Embassy of the Free Mind
             </div>
             <div className="flex flex-wrap items-center gap-4 md:gap-6 text-gray-600">
-              <Link
-                href="/"
-                className="hover:text-gray-900 transition-colors"
-              >
+              <Link href="/" className="hover:text-gray-900 transition-colors">
                 Home
               </Link>
-              <span className="hidden md:inline">•</span>
+              <span className="hidden md:inline">&middot;</span>
               <span>CC0 Public Domain</span>
-              <span className="hidden md:inline">•</span>
+              <span className="hidden md:inline">&middot;</span>
               <a
                 href={`mailto:${CONTACT_EMAIL}`}
                 className="text-accent-rust hover:text-accent-gold-dark transition-colors"
