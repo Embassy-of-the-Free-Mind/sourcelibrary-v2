@@ -62,6 +62,17 @@ function transformBook(book) {
     collection_relevance: book.collection_relevance || null,
     image_source_provider: book.image_source?.provider || null,
     contributing_library: book.image_source?.contributing_library || null,
+    // Computed columns (require ALTER TABLE first — see issue #xxx)
+    translation_pct: (() => {
+      const denom = (book.pages_count || 0) - (book.pages_blank || 0);
+      return denom > 0 ? Math.round(((book.pages_translated || 0) / denom) * 100) : 0;
+    })(),
+    ocr_pct: (() => {
+      const denom = (book.pages_count || 0) - (book.pages_blank || 0);
+      return denom > 0 ? Math.round(((book.pages_ocr || 0) / denom) * 100) : 0;
+    })(),
+    pipeline_status: book.pipeline_auto?.status || null,
+    needs_splitting: book.needs_splitting === true,
   };
 }
 
@@ -104,6 +115,8 @@ const projection = {
   categories: 1, collections: 1, collection_relevance: 1,
   'image_source.provider': 1,
   'image_source.contributing_library': 1,
+  'pipeline_auto.status': 1,
+  needs_splitting: 1,
 };
 
 const cursor = db.collection('books')
