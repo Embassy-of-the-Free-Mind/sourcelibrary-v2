@@ -73,7 +73,7 @@ export async function GET(request: NextRequest) {
 
     // Bot gating
     const bot = isBot(request);
-    const trusted = bot && isTrustedBot(request);
+    const trusted = bot && (await isTrustedBot(request));
     const maxPage = bot && !trusted ? botMaxPage(pagesCount) : pagesCount;
 
     // Determine page range to fetch

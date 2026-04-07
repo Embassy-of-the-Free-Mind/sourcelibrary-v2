@@ -6,6 +6,7 @@
   "type": "module",
   "main": "dist/index.js",
   "bin": {
+    "mcp-server": "dist/index.js",
     "source-library-mcp": "dist/index.js",
     "source-library": "dist/cli.js"
   },

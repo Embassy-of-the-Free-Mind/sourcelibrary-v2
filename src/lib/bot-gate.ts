@@ -2,13 +2,15 @@
  * Bot gating — page-percentage access control for AI crawlers.
  *
  * Every book is discoverable: bots can read the first 20% of pages from any book.
- * Full text requires the MCP server (whitelisted) or a partnership.
+ * Full text requires the MCP server (whitelisted), a valid API key, or a partnership.
  *
  * This is better than the old model (100% of 20% of books) because:
  * - Every book is discoverable, not just a random subset
  * - Bots get enough context to understand what each book contains
  * - The opening pages are the most useful for search indexing
  */
+
+import { validateApiKey } from '@/lib/dataset/api-keys';
 
 const BOT_PAGE_PERCENT = 20; // % of pages bots can read from each book
 
@@ -33,9 +35,22 @@ export function isBot(request: Request): boolean {
   return KNOWN_BOTS.some(bot => ua.includes(bot));
 }
 
-export function isTrustedBot(request: Request): boolean {
+/**
+ * Check if the request is trusted — either via whitelisted User-Agent
+ * or a valid API key (Bearer sl_data_...).
+ */
+export async function isTrustedBot(request: Request): Promise<boolean> {
   const ua = (request.headers.get('user-agent') || '').toLowerCase();
-  return ALWAYS_ALLOW.some(bot => ua.includes(bot));
+  if (ALWAYS_ALLOW.some(bot => ua.includes(bot))) return true;
+
+  // Check for API key — holders bypass bot gating on all endpoints
+  const authHeader = request.headers.get('authorization');
+  if (authHeader) {
+    const keyDoc = await validateApiKey(authHeader);
+    if (keyDoc) return true;
+  }
+
+  return false;
 }
 
 /**
