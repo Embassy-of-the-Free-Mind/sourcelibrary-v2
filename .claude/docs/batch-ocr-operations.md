@@ -37,21 +37,27 @@ Phase 2: Submit                    Gemini Cloud                  Collector
 ### 2. Batch Job Quota (100 concurrent per project)
 - **What:** Max 100 active batch jobs per API key project
 - **Symptom:** Jobs stuck at PENDING indefinitely
-- **Fix:** Orchestrator has backpressure check (500 limit in code, but real limit is 100)
+- **Fix:** Orchestrator has backpressure check (MAX_ACTIVE_BATCH_OCR = 500 in code, but real Gemini limit is 100)
 - **Monitor:** Check `batch_jobs` collection for jobs in `pending`/`processing` status
 
-### 3. Rate Limits (requests per minute)
+### 3. Rate Limits (requests per minute AND daily)
 - **What:** Per-key rate limits on batch creation and file upload
 - **Symptom:** 429 errors with retry-after header
-- **Fix:** Key rotation across GEMINI_API_KEY_2, TIER3, and primary
+- **Fix:** Key rotation across TIER3, PRIMARY, and GEMINI_API_KEY_2
+- **CRITICAL (2026-04-06):** Batch creation (`batchGenerateContent`) has a **project-wide daily rate limit** (~700 creations). Exhausts ALL keys simultaneously. Resets in 12-24h. Do NOT burst-submit via scripts — use the orchestrator's natural pacing (200/cycle at 10min intervals).
+
+### 4. Orphan Files from Failed Batch Creation
+- **What:** When file upload succeeds but batch creation 429s, the JSONL file persists until the collector's 1h sweep
+- **Symptom:** File storage fills up silently (14GB of orphans after a burst)
+- **Fix:** Cleaned up manually 2026-04-07. Collector sweeps stale files >1h. If bursting, manually clean files afterward.
 
 ## API Key Architecture
 
-The orchestrator uses keys in this priority order:
+The orchestrator uses keys in this priority order (updated 2026-04-07):
 ```
-Index 0: GEMINI_API_KEY_2     — preferred for batch (separate quota pool)
-Index 1: GEMINI_API_KEY_TIER3 — fallback (higher tier, reliable File API)
-Index 2: GEMINI_API_KEY       — last resort
+Index 0: GEMINI_API_KEY_TIER3 — primary for batch (reliable File API)
+Index 1: GEMINI_API_KEY       — fallback
+Index 2: GEMINI_API_KEY_2     — last resort (File API permanently broken on this key)
 ```
 
 **CRITICAL RULE:** The same key must be used for:
@@ -220,6 +226,8 @@ Key 0 failed for file batch (404): {"error":{"message":"Requested entity was not
 | 2026-03-26 | 450 batches stuck PENDING | Batch job quota (100/key) saturated by stale jobs that never ran | Cancel stale via API, mark MongoDB failed, reset books to archive_complete |
 | 2026-03-26 | Zombie jobs blocking orchestrator | 51 `processing` jobs with no Lambda worker; 34 books stuck at `translate_submitted` | Cancel zombies, reset books to `ocr_complete`; orchestrator counts pipeline status, not job records |
 | 2026-03-26 | Adaptive limits locked | `locked: true` prevented auto-scaling despite healthy Atlas | Unlock + manual bump to translate_lambda_max:50, global_active_max:50 |
+| 2026-04-06 | Batch creation rate limit | Burst-submitted ~700 batch jobs via script, hit project-wide daily limit | All keys 429 for 12+h. Orphan files consumed 14GB. Cleaned up, rate limit self-resolved. Lesson: use orchestrator pacing, don't burst. |
+| 2026-04-07 | 2,239 stale `completed` batch_jobs | Old Vercel cron set `completed` instead of `saved`. Collector rechecked them every cycle. | Bulk updated to `saved`. Not a collector bug — different code path (Vercel route). |
 
 ## Emergency: Clear Stale Batches
 
@@ -322,7 +330,7 @@ const { MongoClient } = require('mongodb');
 
 ## Architecture Debt
 
-1. **Orchestrator not fully in git** — The Hetzner `pipeline-orchestrator.mjs` has local patches that diverge from the repo. As of 2026-03-21, the key rotation and file cleanup patches are committed in `fix/batch-ocr-file-quota`.
+1. **Orchestrator fully in git** — As of 2026-04-07, all Hetzner patches are committed and deployed via `git pull`. Rule: never patch Hetzner without committing first.
 
 2. **No automated alerting** — If batch OCR throughput drops to zero, nobody is notified. A simple check: "did any pages get OCR'd in the last 24h?" would catch most failures.
 
