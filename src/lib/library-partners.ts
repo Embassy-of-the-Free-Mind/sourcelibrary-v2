@@ -139,7 +139,73 @@ export const LIBRARY_PARTNERS: Record<string, LibraryPartner> = {
     color: 'gold',
   },
 
-  // --- New partners (import routes exist, books growing) ---
+  // --- IIIF-sourced libraries (institutional collections) ---
+
+  'manchester': {
+    slug: 'manchester',
+    name: 'John Rylands Library',
+    shortName: 'Manchester',
+    providerKey: 'manchester',
+    url: 'https://www.digitalcollections.manchester.ac.uk',
+    description: 'The John Rylands Library at the University of Manchester holds exceptional collections of medieval manuscripts, early printed books, and the Gaster Collection of Hebrew and Samaritan amulets and magical texts.',
+    color: 'rust',
+  },
+  'allard-pierson': {
+    slug: 'allard-pierson',
+    name: 'Allard Pierson',
+    shortName: 'AP',
+    providerKey: 'allard_pierson',
+    url: 'https://allardpierson.nl',
+    description: 'Allard Pierson at the University of Amsterdam houses the Bibliotheca Rosenthaliana and important collections of early printed books, manuscripts, and maps from the Dutch Golden Age and beyond.',
+    color: 'gold',
+  },
+  'laurenziana': {
+    slug: 'laurenziana',
+    name: 'Biblioteca Medicea Laurenziana',
+    shortName: 'Laurenziana',
+    providerKey: 'laurenziana',
+    url: 'https://www.bmlonline.it',
+    description: 'The Biblioteca Medicea Laurenziana in Florence, designed by Michelangelo, holds the Medici family\'s manuscript collection — one of the most important repositories of Greek, Latin, and Hebrew manuscripts in the world.',
+    color: 'violet',
+  },
+  'leiden': {
+    slug: 'leiden',
+    name: 'Leiden University Library',
+    shortName: 'Leiden',
+    providerKey: 'leiden',
+    url: 'https://digitalcollections.universiteitleiden.nl',
+    description: 'Leiden University Library, founded in 1575, holds the Scaliger collection of Oriental manuscripts, the Vossius collection of classical texts, and important Dutch Golden Age scientific works.',
+    color: 'sage',
+  },
+  'e-codices': {
+    slug: 'e-codices',
+    name: 'e-codices',
+    shortName: 'e-codices',
+    providerKey: 'e-codices',
+    url: 'https://www.e-codices.unifr.ch',
+    description: 'e-codices is the Virtual Manuscript Library of Switzerland, providing free access to medieval and early modern manuscripts from Swiss libraries, abbeys, and private collections.',
+    color: 'sage',
+  },
+  'chester-beatty': {
+    slug: 'chester-beatty',
+    name: 'Chester Beatty Library',
+    shortName: 'CBL',
+    providerKey: 'chester_beatty',
+    url: 'https://chesterbeatty.ie',
+    description: 'The Chester Beatty Library in Dublin holds one of the finest collections of Islamic manuscripts, East Asian art, and early Biblical papyri in the Western world, assembled by mining magnate Sir Alfred Chester Beatty.',
+    color: 'gold',
+  },
+  'ndl-japan': {
+    slug: 'ndl-japan',
+    name: 'National Diet Library of Japan',
+    shortName: 'NDL',
+    providerKey: 'ndl_japan',
+    url: 'https://dl.ndl.go.jp',
+    description: 'The National Diet Library of Japan is the national library of Japan, providing digital access to rare Japanese books, manuscripts, maps, and prints spanning over a millennium of Japanese literary and scientific tradition.',
+    color: 'rust',
+  },
+
+  // --- Other partners ---
 
   'kloss-collection': {
     slug: 'kloss-collection',
