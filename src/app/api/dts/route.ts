@@ -3,7 +3,7 @@
  *
  * GET /api/dts
  *
- * Returns JSON-LD with URI templates for the Collection, Navigation,
+ * Returns JSON-LD with RFC 6570 URI templates for the Collection, Navigation,
  * and Document endpoints. This is the discovery root for DTS clients.
  *
  * Spec: https://distributed-text-services.github.io/specifications/
@@ -18,9 +18,10 @@ export async function GET() {
     '@context': 'https://dtsapi.org/context/v1.0.json',
     '@id': `${BASE}/api/dts`,
     '@type': 'EntryPoint',
-    collection: `${BASE}/api/dts/collection`,
-    navigation: `${BASE}/api/dts/navigation`,
-    document: `${BASE}/api/dts/document`,
+    dtsVersion: '1.0',
+    collection: `${BASE}/api/dts/collection/{?id,page,nav}`,
+    navigation: `${BASE}/api/dts/navigation/{?resource,ref,start,end,down,page}`,
+    document: `${BASE}/api/dts/document/{?resource,ref,start,end,mediaType}`,
   };
 
   return NextResponse.json(entry, {

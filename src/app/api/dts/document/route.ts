@@ -18,12 +18,17 @@ import { isBot, isTrustedBot, botMaxPage } from '@/lib/bot-gate';
 
 const BASE = 'https://sourcelibrary.org';
 
-function corsHeaders(contentType = 'text/plain; charset=utf-8') {
-  return {
+function corsHeaders(contentType: string, resourceId?: string) {
+  const headers: Record<string, string> = {
     'Content-Type': contentType,
     'Access-Control-Allow-Origin': '*',
-    'Link': `<${BASE}/api/dts>; rel="https://dtsapi.org/ns/entrypoint"`,
   };
+  // DTS spec: Link header points to Collection endpoint for this resource
+  if (resourceId) {
+    headers['Link'] =
+      `<${BASE}/api/dts/collection/?id=${encodeURIComponent(resourceId)}>; rel="collection"`;
+  }
+  return headers;
 }
 
 export async function GET(request: NextRequest) {
@@ -124,7 +129,7 @@ export async function GET(request: NextRequest) {
             message: `Bot access limited to pages 1–${maxPage}. Full text available via MCP server or API partnership.`,
             mcp_install: 'claude mcp add source-library -- npx -y @source-library/mcp-server',
           },
-          { status: 403, headers: corsHeaders('application/json') }
+          { status: 403, headers: corsHeaders('application/json', bookId) }
         );
       }
     }
@@ -177,7 +182,7 @@ export async function GET(request: NextRequest) {
         + htmlParts.join('\n')
         + `\n</body>\n</html>`;
 
-      return new NextResponse(html, { headers: corsHeaders('text/html; charset=utf-8') });
+      return new NextResponse(html, { headers: corsHeaders('text/html; charset=utf-8', bookId) });
     }
 
     // Default: text/plain
@@ -192,7 +197,7 @@ export async function GET(request: NextRequest) {
       + `Source Library: ${BASE}/book/${book.slug || bookId}\n\n`;
 
     return new NextResponse(header + textParts.join('\n\n'), {
-      headers: corsHeaders('text/plain; charset=utf-8'),
+      headers: corsHeaders('text/plain; charset=utf-8', bookId),
     });
   } catch (error) {
     console.error('DTS document error:', error);
