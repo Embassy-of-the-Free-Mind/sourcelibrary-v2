@@ -28,8 +28,21 @@ export type ImageSourceProvider =
   | 'etcsl'          // Electronic Text Corpus of Sumerian Literature
   | 'cdli'           // Cuneiform Digital Library Initiative
   | 'heidelberg'     // Heidelberg University Library
-  | 'iiif'           // Generic IIIF source
+  | 'iiif'           // Generic IIIF source (should be migrated to specific provider)
   | 'wellcome'       // Wellcome Collection
+  | 'manchester'     // John Rylands Library, University of Manchester
+  | 'allard_pierson' // Allard Pierson, University of Amsterdam
+  | 'laurenziana'    // Biblioteca Medicea Laurenziana, Florence
+  | 'leiden'         // Leiden University Library
+  | 'chester_beatty' // Chester Beatty Library, Dublin
+  | 'ndl_japan'      // National Diet Library of Japan
+  | 'e-codices'      // Virtual Manuscript Library of Switzerland
+  | 'v_and_a'        // Victoria and Albert Museum
+  | 'tu_delft'       // TU Delft Library
+  | 'qdl'            // Qatar Digital Library / British Library
+  | 'escorial'       // Real Biblioteca del Monasterio de El Escorial
+  | 'bnp'            // Biblioteca Nacional de Portugal
+  | 'irht'           // IRHT (CNRS)
   | 'library'
   | 'user_upload'
   | 'other';
