@@ -520,7 +520,7 @@ async function processBook(db, book, job, globalCounter, deadline) {
               if (msg.includes('RECITATION')) {
                 await db.collection('pages').updateOne(
                   { _id: page._id },
-                  { $set: { 'translation.recitation_blocked': true, 'translation.recitation_at': new Date() } }
+                  { $set: { 'translation.recitation_blocked': true, 'translation.recitation_at': new Date(), 'translation.safety_reason': msg.substring(0, 200) } }
                 );
                 console.log(`  [${label}] Page ${page.page_number} marked as RECITATION-blocked (will skip on future runs)`);
               } else {
@@ -593,7 +593,7 @@ async function processBook(db, book, job, globalCounter, deadline) {
                 if (errMsg.includes('RECITATION')) {
                   await db.collection('pages').updateOne(
                     { _id: page._id },
-                    { $set: { 'translation.recitation_blocked': true, 'translation.recitation_at': new Date() } }
+                    { $set: { 'translation.recitation_blocked': true, 'translation.recitation_at': new Date(), 'translation.safety_reason': errMsg.substring(0, 200) } }
                   );
                   console.log(`  [${label}] Page ${page.page_number} marked as RECITATION-blocked (will skip on future runs)`);
                 } else if (errMsg.includes('PROHIBITED') || errMsg.includes('SAFETY') || errMsg.includes('safety')) {
@@ -662,7 +662,7 @@ async function processBook(db, book, job, globalCounter, deadline) {
                 if (errMsg.includes('RECITATION')) {
                   await db.collection('pages').updateOne(
                     { _id: page._id },
-                    { $set: { 'translation.recitation_blocked': true, 'translation.recitation_at': new Date() } }
+                    { $set: { 'translation.recitation_blocked': true, 'translation.recitation_at': new Date(), 'translation.safety_reason': errMsg.substring(0, 200) } }
                   );
                   console.log(`  [${label}] Page ${page.page_number} marked as RECITATION-blocked (will skip on future runs)`);
                 } else if (errMsg.includes('PROHIBITED') || errMsg.includes('SAFETY') || errMsg.includes('safety')) {

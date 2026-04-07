@@ -217,27 +217,21 @@ async function main() {
   const domainStats = {};
   const touchedBookIds = new Set();
 
-  // Strategy: find books that actually need archiving (pages_archived < pages_count).
-  // Skip fully-archived books to avoid wasting 2,000 per-book page queries on empty results.
+  // Strategy: find books with pages that need archiving, regardless of pipeline status.
+  // Books move through pipeline stages even if archiving isn't complete.
   // Exclude e-rara (blocked on Hetzner IPs, archived locally via launchd on Mac).
+  // Exclude Gallica (429s from Hetzner, archived locally via archive-gallica.mjs on Mac).
   // Exclude IA (handled by archive-bulk.mjs via JP2 zip download, much faster).
-  const needsArchiving = {
-    pages_count: { $gt: 0 },
-    'archive_metadata.blocked': { $ne: true },
-    $or: [
-      { pages_archived: { $exists: false } },
-      { $expr: { $lt: ['$pages_archived', '$pages_count'] } },
-    ],
-  };
-
-  const PRIORITY_PROVIDERS = ['iiif', 'gallica', 'cambridge', 'vatican', 'loc', 'wellcome', 'heidelberg', 'bl'];
+  // Prioritize providers that are NOT yet fully archived (IIIF, Cambridge, etc.)
+  const PRIORITY_PROVIDERS = ['iiif', 'cambridge', 'vatican', 'loc', 'wellcome', 'heidelberg', 'bl'];
   const priorityBooks = await db.collection('books')
     .find(
       {
-        ...needsArchiving,
+        pages_count: { $gt: 0 },
+        'archive_metadata.blocked': { $ne: true },
         'image_source.provider': { $in: PRIORITY_PROVIDERS },
       },
-      { projection: { id: 1, title: 1, 'image_source.provider': 1, pages_count: 1, pages_archived: 1 } }
+      { projection: { id: 1, title: 1, 'image_source.provider': 1 } }
     )
     .limit(1000)
     .maxTimeMS(30_000)
@@ -249,10 +243,11 @@ async function main() {
   const otherBooks = remainingSlots > 0 ? await db.collection('books')
     .find(
       {
-        ...needsArchiving,
-        'image_source.provider': { $nin: ['e-rara', 'internet_archive', ...PRIORITY_PROVIDERS] },
+        pages_count: { $gt: 0 },
+        'archive_metadata.blocked': { $ne: true },
+        'image_source.provider': { $nin: ['e-rara', 'gallica', 'internet_archive', ...PRIORITY_PROVIDERS] },
       },
-      { projection: { id: 1, title: 1, 'image_source.provider': 1, pages_count: 1, pages_archived: 1 } }
+      { projection: { id: 1, title: 1, 'image_source.provider': 1 } }
     )
     .limit(remainingSlots)
     .maxTimeMS(30_000)
@@ -260,10 +255,10 @@ async function main() {
     .catch(() => []) : [];
 
   const books = [...priorityBooks, ...otherBooks];
-  console.log(`[archive-ocr] Found ${priorityBooks.length} priority + ${otherBooks.length} other books needing archiving`);
+  console.log(`[archive-ocr] Checking ${priorityBooks.length} priority + ${otherBooks.length} other books`);
 
   if (books.length === 0) {
-    console.log(`[archive-ocr] All books fully archived — nothing to do`);
+    console.log(`[archive-ocr] No books with pages found`);
     await client.close();
     return;
   }
@@ -302,9 +297,11 @@ async function main() {
   console.log(`[archive-ocr] Found ${pages.length} pages across ${books.length} books`);
 
   // Group by domain with per-domain cap
+  // Skip Gallica pages — handled locally by archive-gallica.mjs (Hetzner gets 429)
   const byDomain = {};
   for (const page of pages) {
     const domain = getDomain(page.photo);
+    if (domain === 'gallica.bnf.fr') continue;
     if (!byDomain[domain]) byDomain[domain] = [];
     if (byDomain[domain].length < MAX_PAGES_PER_DOMAIN) {
       byDomain[domain].push(page);
