@@ -1,7 +1,7 @@
 'use client';
 
 import { useState, useEffect } from 'react';
-import { BookOpen, FileText, Languages, Users, DollarSign, Coins, ListChecks, Database, HardDrive, Archive, AlertTriangle, Loader2 } from 'lucide-react';
+import { BookOpen, FileText, Languages, Users, DollarSign, Coins, ListChecks, Database, HardDrive, AlertTriangle, Loader2 } from 'lucide-react';
 import { analytics } from '@/lib/api-client';
 import { BookLoader } from '@/components/ui/BookLoader';
 import type { UsageStats } from '@/lib/api-client/types/analytics';
@@ -353,37 +353,14 @@ function CollectionPipeline({ summary, collectionStats }: { summary: UsageStats[
     <div className="p-6 rounded-xl" style={{ background: 'var(--bg-white)', border: '1px solid var(--border-light)' }}>
       <h2 className="text-lg font-medium mb-4 flex items-center gap-2" style={{ color: 'var(--text-primary)' }}>
         <Database className="w-5 h-5" style={{ color: 'var(--accent-violet)' }} />
-        Collection Processing Pipeline
+        Processing Progress
       </h2>
       <div className="space-y-4">
-        {/* Total Pages Bar */}
-        <div>
-          <div className="flex justify-between text-sm mb-2">
-            <span style={{ color: 'var(--text-primary)' }}>Total Pages</span>
-            <span style={{ color: 'var(--text-muted)' }}>{formatNumber(summary.totalPages)}</span>
-          </div>
-          <div className="h-8 rounded-lg overflow-hidden flex" style={{ background: 'var(--bg-warm)' }}>
-            <div
-              className="h-full flex items-center justify-center text-xs font-medium text-white"
-              style={{
-                width: `${(collectionStats.blobStorage.totalBlobPages / summary.totalPages) * 100}%`,
-                background: '#22c55e',
-                minWidth: collectionStats.blobStorage.totalBlobPages > 0 ? '60px' : '0',
-              }}
-              title={`${formatNumber(collectionStats.blobStorage.totalBlobPages)} pages archived to Vercel Blob`}
-            >
-              {((collectionStats.blobStorage.totalBlobPages / summary.totalPages) * 100).toFixed(0)}% Blob
-            </div>
-            <div className="h-full flex items-center justify-center text-xs" style={{ flex: 1, color: 'var(--text-muted)' }}>
-              {formatNumber(summary.totalPages - collectionStats.blobStorage.totalBlobPages)} from external sources
-            </div>
-          </div>
-        </div>
         {/* OCR Progress */}
         <div>
           <div className="flex justify-between text-sm mb-2">
-            <span style={{ color: 'var(--text-primary)' }}>OCR Progress</span>
-            <span style={{ color: 'var(--text-muted)' }}>{formatNumber(summary.pagesWithOcr)} / {formatNumber(summary.totalPages)}</span>
+            <span style={{ color: 'var(--text-primary)' }}>OCR</span>
+            <span style={{ color: 'var(--text-muted)' }}>{formatNumber(summary.pagesWithOcr)} / {formatNumber(summary.totalPages)} pages</span>
           </div>
           <div className="h-6 rounded-lg overflow-hidden flex" style={{ background: 'var(--bg-warm)' }}>
             <div className="h-full flex items-center justify-center text-xs font-medium text-white" style={{ width: `${summary.ocrPercentage}%`, background: 'var(--accent-sage)', minWidth: summary.ocrPercentage > 0 ? '40px' : '0' }}>
@@ -394,8 +371,8 @@ function CollectionPipeline({ summary, collectionStats }: { summary: UsageStats[
         {/* Translation Progress */}
         <div>
           <div className="flex justify-between text-sm mb-2">
-            <span style={{ color: 'var(--text-primary)' }}>Translation Progress</span>
-            <span style={{ color: 'var(--text-muted)' }}>{formatNumber(summary.pagesWithTranslation)} / {formatNumber(summary.totalPages)}</span>
+            <span style={{ color: 'var(--text-primary)' }}>Translation</span>
+            <span style={{ color: 'var(--text-muted)' }}>{formatNumber(summary.pagesWithTranslation)} / {formatNumber(summary.totalPages)} pages</span>
           </div>
           <div className="h-6 rounded-lg overflow-hidden flex" style={{ background: 'var(--bg-warm)' }}>
             <div className="h-full flex items-center justify-center text-xs font-medium text-white" style={{ width: `${summary.translationPercentage}%`, background: 'var(--accent-rust)', minWidth: summary.translationPercentage > 0 ? '40px' : '0' }}>
@@ -404,24 +381,16 @@ function CollectionPipeline({ summary, collectionStats }: { summary: UsageStats[
           </div>
         </div>
       </div>
-      {/* Storage Breakdown Cards */}
-      <div className="grid grid-cols-2 md:grid-cols-4 gap-4 mt-6">
-        {[
-          { icon: Archive, color: '#22c55e', label: 'Archived', value: collectionStats.blobStorage.pagesWithArchivedPhoto, sub: 'full pages' },
-          { icon: HardDrive, color: 'var(--accent-violet)', label: 'Cropped', value: collectionStats.blobStorage.pagesWithCroppedPhoto, sub: 'split pages' },
-          { icon: BookOpen, color: 'var(--accent-sage)', label: 'Split Books', value: collectionStats.blobStorage.booksWithSplitPages, sub: 'books processed' },
-          { icon: Database, color: 'var(--accent-rust)', label: 'Total Blob', value: collectionStats.blobStorage.totalBlobPages, sub: `${((collectionStats.blobStorage.totalBlobPages / summary.totalPages) * 100).toFixed(1)}% of collection` },
-        ].map((item) => (
-          <div key={item.label} className="p-3 rounded-lg" style={{ background: 'var(--bg-warm)' }}>
-            <div className="flex items-center gap-2 mb-1">
-              <item.icon className="w-4 h-4" style={{ color: item.color }} />
-              <span className="text-xs font-medium" style={{ color: 'var(--text-muted)' }}>{item.label}</span>
-            </div>
-            <div className="text-lg font-semibold" style={{ color: 'var(--text-primary)' }}>{formatNumber(item.value)}</div>
-            <div className="text-xs" style={{ color: 'var(--text-muted)' }}>{item.sub}</div>
+      {collectionStats.blobStorage.booksWithSplitPages > 0 && (
+        <div className="mt-4 p-3 rounded-lg" style={{ background: 'var(--bg-warm)' }}>
+          <div className="flex items-center gap-2 mb-1">
+            <BookOpen className="w-4 h-4" style={{ color: 'var(--accent-sage)' }} />
+            <span className="text-xs font-medium" style={{ color: 'var(--text-muted)' }}>Split Books</span>
           </div>
-        ))}
-      </div>
+          <div className="text-lg font-semibold" style={{ color: 'var(--text-primary)' }}>{formatNumber(collectionStats.blobStorage.booksWithSplitPages)}</div>
+          <div className="text-xs" style={{ color: 'var(--text-muted)' }}>books with spread pages split</div>
+        </div>
+      )}
     </div>
   );
 }
@@ -604,7 +573,7 @@ function CostToComplete({ summary, costStats }: { summary: UsageStats['summary']
 
 function CollectionBreakdown({ collectionStats }: { collectionStats: NonNullable<UsageStats['collectionStats']> }) {
   const colors = ['var(--accent-rust)', 'var(--accent-sage)', 'var(--accent-violet)', '#f59e0b', '#22c55e'];
-  const providerLabels: Record<string, string> = { internet_archive: 'Internet Archive', gallica: 'Gallica (BnF)', mdz: 'MDZ (Bavarian)', bph: 'BPH Manuscripts', iiif: 'IIIF Generic', vercel_blob: 'Vercel Blob' };
+  const providerLabels: Record<string, string> = { internet_archive: 'Internet Archive', gallica: 'Gallica (BnF)', mdz: 'MDZ (Bavarian)', bph: 'BPH Manuscripts', iiif: 'IIIF Generic', vercel_blob: 'R2 (Archived)' };
   const providerColors: Record<string, string> = { internet_archive: '#f59e0b', gallica: '#3b82f6', mdz: '#22c55e', bph: 'var(--accent-violet)', iiif: 'var(--accent-rust)', vercel_blob: '#22c55e' };
 
   return (

@@ -166,9 +166,6 @@ export const GET = withAuth(async (request, session) => {
     // Collection stats from snapshot
     const collectionStats = {
       blobStorage: {
-        pagesWithCroppedPhoto: 0,
-        pagesWithArchivedPhoto: 0,
-        totalBlobPages: 0,
         booksWithSplitPages: snap?.splitting?.booksWithSplitPages || 0,
       },
       byLanguage: (snap?.byLanguage || []).map((l: any) => ({ language: l._id || 'Unknown', count: l.count })),

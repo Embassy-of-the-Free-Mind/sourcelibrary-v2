@@ -1,6 +1,6 @@
 'use client';
 
-import { useState, useEffect, use } from 'react';
+import { useState, useEffect, useCallback, use } from 'react';
 import Link from 'next/link';
 import SiteHeader from '@/components/layout/SiteHeader';
 import ReactMarkdown from 'react-markdown';
@@ -36,6 +36,13 @@ interface ThreadData {
   createdAt: string;
 }
 
+interface PodcastData {
+  audioUrl: string;
+  generatedAt: string;
+  topic: string;
+  findingCount: number;
+}
+
 function formatDate(dateStr: string): string {
   const d = new Date(dateStr);
   return d.toLocaleDateString('en-US', {
@@ -45,6 +52,109 @@ function formatDate(dateStr: string): string {
     year: 'numeric',
   });
 }
+
+// ── Podcast Player ────────────────────────────────────────────────────
+
+function PodcastPlayer({ threadId }: { threadId: string }) {
+  const [podcast, setPodcast] = useState<PodcastData | null>(null);
+  const [generating, setGenerating] = useState(false);
+  const [error, setError] = useState<string | null>(null);
+  const [checked, setChecked] = useState(false);
+
+  // Check for existing podcast on mount
+  useEffect(() => {
+    fetch(`/api/embassy/threads/${threadId}/podcast`)
+      .then(r => r.ok ? r.json() : null)
+      .then(data => {
+        if (data?.podcast) setPodcast(data.podcast);
+        setChecked(true);
+      })
+      .catch(() => setChecked(true));
+  }, [threadId]);
+
+  const handleGenerate = useCallback(async () => {
+    setGenerating(true);
+    setError(null);
+    try {
+      const res = await fetch(`/api/embassy/threads/${threadId}/podcast`, {
+        method: 'POST',
+      });
+      const data = await res.json();
+      if (!res.ok) {
+        setError(data.error || 'Generation failed');
+        return;
+      }
+      setPodcast(data.podcast);
+    } catch {
+      setError('Network error — please try again');
+    } finally {
+      setGenerating(false);
+    }
+  }, [threadId]);
+
+  if (!checked) return null;
+
+  // Already have a podcast — show player
+  if (podcast) {
+    return (
+      <div className="mt-8 p-5 bg-[#f5f0e8] rounded-xl border border-[#e0d9cc]">
+        <div className="flex items-center gap-2 mb-3">
+          <svg className="w-5 h-5 text-[#9e4a3a]" fill="none" viewBox="0 0 24 24" strokeWidth={1.5} stroke="currentColor">
+            <path strokeLinecap="round" strokeLinejoin="round" d="M19.114 5.636a9 9 0 010 12.728M16.463 8.288a5.25 5.25 0 010 7.424M6.75 8.25l4.72-4.72a.75.75 0 011.28.53v15.88a.75.75 0 01-1.28.53l-4.72-4.72H4.51c-.88 0-1.704-.507-1.938-1.354A9.01 9.01 0 012.25 12c0-.83.112-1.633.322-2.396C2.806 8.756 3.63 8.25 4.51 8.25H6.75z" />
+          </svg>
+          <p className="text-sm font-sans font-medium text-[#1a1612]">
+            Deep Dive — {podcast.topic}
+          </p>
+        </div>
+        <audio
+          controls
+          src={podcast.audioUrl}
+          className="w-full"
+          preload="metadata"
+        />
+        <p className="text-[11px] text-[#8a8480] font-sans mt-2">
+          Generated from {podcast.findingCount} research findings
+        </p>
+      </div>
+    );
+  }
+
+  // No podcast yet — show generate button
+  return (
+    <div className="mt-8 p-5 bg-[#f5f0e8]/50 rounded-xl border border-[#e0d9cc] border-dashed text-center">
+      <p className="text-sm text-[#6b6560] font-body mb-3">
+        Turn this research into a podcast episode
+      </p>
+      <button
+        onClick={handleGenerate}
+        disabled={generating}
+        className="inline-flex items-center gap-2 px-5 py-2.5 bg-[#1a1612] text-white rounded-lg text-sm font-sans hover:bg-[#2a2622] transition-colors disabled:opacity-50 disabled:cursor-not-allowed"
+      >
+        {generating ? (
+          <>
+            <svg className="w-4 h-4 animate-spin" fill="none" viewBox="0 0 24 24">
+              <circle className="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" strokeWidth="4" />
+              <path className="opacity-75" fill="currentColor" d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4z" />
+            </svg>
+            Generating podcast...
+          </>
+        ) : (
+          <>
+            <svg className="w-4 h-4" fill="none" viewBox="0 0 24 24" strokeWidth={1.5} stroke="currentColor">
+              <path strokeLinecap="round" strokeLinejoin="round" d="M19.114 5.636a9 9 0 010 12.728M16.463 8.288a5.25 5.25 0 010 7.424M6.75 8.25l4.72-4.72a.75.75 0 011.28.53v15.88a.75.75 0 01-1.28.53l-4.72-4.72H4.51c-.88 0-1.704-.507-1.938-1.354A9.01 9.01 0 012.25 12c0-.83.112-1.633.322-2.396C2.806 8.756 3.63 8.25 4.51 8.25H6.75z" />
+            </svg>
+            Generate Deep Dive
+          </>
+        )}
+      </button>
+      {error && (
+        <p className="text-xs text-red-600 font-sans mt-2">{error}</p>
+      )}
+    </div>
+  );
+}
+
+// ── Thread Page ───────────────────────────────────────────────────────
 
 export default function ThreadPage({ params }: { params: Promise<{ id: string }> }) {
   const { id } = use(params);
@@ -165,6 +275,9 @@ export default function ThreadPage({ params }: { params: Promise<{ id: string }>
             </div>
           ))}
         </div>
+
+        {/* Podcast player / generator */}
+        <PodcastPlayer threadId={id} />
 
         <div className="mt-12 pt-8 border-t border-[#e8e4dc] text-center">
           <p className="text-[#6b6560] text-sm font-body mb-3">
