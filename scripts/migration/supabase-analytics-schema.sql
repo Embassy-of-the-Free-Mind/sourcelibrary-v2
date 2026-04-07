@@ -19,6 +19,20 @@ CREATE INDEX IF NOT EXISTS idx_ustc_enrichments_original_author_trgm
   ON ustc_enrichments USING GIN (original_author gin_trgm_ops);
 
 -- ============================================================
+-- PHASE 1a2: Trigram indexes on books_catalog (fast ILIKE search)
+-- Without these, ILIKE %term% does a sequential scan on ~8K rows.
+-- ============================================================
+
+CREATE INDEX IF NOT EXISTS idx_books_catalog_title_trgm
+  ON books_catalog USING GIN (title gin_trgm_ops);
+
+CREATE INDEX IF NOT EXISTS idx_books_catalog_author_trgm
+  ON books_catalog USING GIN (author gin_trgm_ops);
+
+CREATE INDEX IF NOT EXISTS idx_books_catalog_display_title_trgm
+  ON books_catalog USING GIN (display_title gin_trgm_ops);
+
+-- ============================================================
 -- PHASE 1b: Unaccent extension (improves diacritics matching)
 -- ============================================================
 
