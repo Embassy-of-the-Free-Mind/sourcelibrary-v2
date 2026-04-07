@@ -79,6 +79,7 @@ export async function GET() {
       ], { maxTimeMS: MAX_TIME }).toArray(),
 
       db.collection('entities').aggregate([
+        { $match: { books: { $exists: true, $type: 'array' } } },
         { $unwind: '$books' },
         {
           $lookup: {
@@ -114,7 +115,7 @@ export async function GET() {
       ], { maxTimeMS: 30000 }).toArray(),
 
       db.collection('entities').aggregate([
-        { $match: { book_count: { $gte: 2 } } },
+        { $match: { book_count: { $gte: 2 }, books: { $exists: true, $type: 'array' } } },
         { $unwind: '$books' },
         {
           $lookup: {
