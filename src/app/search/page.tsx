@@ -1266,7 +1266,7 @@ function ImageResultCard({ item, query, large }: { item: GalleryItem; query: str
       className="group block bg-white rounded-lg border border-border-light overflow-hidden hover:border-accent-gold/30 hover:shadow-md transition-all"
     >
       <div className={`relative bg-warm ${large ? 'aspect-[3/4]' : 'aspect-square'}`}>
-        {!imageError ? (
+        {!imageError && displayUrl ? (
           <Image
             src={displayUrl}
             alt={item.description}

@@ -30,7 +30,7 @@
     "@google/genai": "^1.34.0",
     "@google/generative-ai": "^0.24.1",
     "@octokit/rest": "^22.0.1",
-    "@supabase/supabase-js": "^2.100.1",
+    "@supabase/supabase-js": "^2.102.0",
     "@types/archiver": "^7.0.0",
     "@types/three": "^0.183.1",
     "@vercel/blob": "^2.0.0",

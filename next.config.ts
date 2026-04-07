@@ -47,9 +47,8 @@ const nextConfig: NextConfig = {
       { protocol: 'https', hostname: 'babel.hathitrust.org' },
       // British Library (IIIF via Digirati)
       { protocol: 'https', hostname: 'bl.digirati.io' },
-      // Wikimedia Commons (Wikipedia images for collection thumbnails + author portraits)
+      // Wikimedia Commons (Wikipedia images for collection thumbnails)
       { protocol: 'https', hostname: 'upload.wikimedia.org' },
-      { protocol: 'https', hostname: 'commons.wikimedia.org' },
       // Cambridge University Library
       { protocol: 'https', hostname: 'images.lib.cam.ac.uk' },
       // e-codices (Swiss manuscripts)
@@ -68,6 +67,8 @@ const nextConfig: NextConfig = {
       { protocol: 'https', hostname: 'permalinkbnd.bnportugal.gov.pt' },
       // CDLI (Cuneiform Digital Library)
       { protocol: 'https', hostname: 'cdli.earth' },
+      // University of Amsterdam (UBA)
+      { protocol: 'https', hostname: 'images.uba.uva.nl' },
     ],
   },
   async headers() {
@@ -125,11 +126,6 @@ const nextConfig: NextConfig = {
         source: '/collections/shwep',
         destination: '/shwep',
         permanent: false,
-      },
-      {
-        source: '/research-notes',
-        destination: '/blog',
-        permanent: true,
       },
     ];
   },

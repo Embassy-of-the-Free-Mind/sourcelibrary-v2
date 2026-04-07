@@ -281,7 +281,7 @@ export default function UnifiedSearch() {
         )}
         <input
           ref={inputRef}
-          type="search"
+          type="text"
           value={query}
           onChange={(e) => handleQueryChange(e.target.value)}
           onKeyDown={handleKeyDown}
@@ -311,7 +311,7 @@ export default function UnifiedSearch() {
 
       {/* Results Dropdown */}
       {isOpen && (hasResults || noResults) && (
-        <div id="search-results" role="listbox" className="absolute top-full mt-2 left-0 right-0 bg-white rounded-xl shadow-xl border border-stone-200 overflow-hidden z-50 max-h-[60vh] overflow-y-auto">
+        <div id="search-results" role="listbox" className="absolute bottom-full mb-2 left-0 right-0 bg-white rounded-xl shadow-xl border border-stone-200 overflow-hidden z-50 max-h-[60vh] overflow-y-auto">
           {noResults ? (
             <div className="p-6 text-center">
               <Search className="w-8 h-8 text-stone-300 mx-auto mb-2" />
@@ -372,9 +372,8 @@ export default function UnifiedSearch() {
                           role="option"
                           aria-selected={activeIndex === itemIndex}
                           data-search-index={itemIndex}
-                          className={`flex items-center gap-3 px-2 py-2 rounded-lg transition-colors ${
-                            activeIndex === itemIndex ? 'bg-accent-gold/8' : 'hover:bg-accent-gold/8'
-                          }`}
+                          className={`flex items-center gap-3 px-2 py-2 rounded-lg transition-colors ${activeIndex === itemIndex ? 'bg-accent-gold/8' : 'hover:bg-accent-gold/8'
+                            }`}
                         >
                           <Book className="w-4 h-4 text-accent-rust flex-shrink-0" />
                           <div className="flex-1 min-w-0">
@@ -431,22 +430,19 @@ export default function UnifiedSearch() {
                           role="option"
                           aria-selected={activeIndex === itemIndex}
                           data-search-index={itemIndex}
-                          className={`flex items-center gap-3 px-2 py-2 rounded-lg transition-colors ${
-                            activeIndex === itemIndex ? 'bg-accent-violet/[0.06]' : 'hover:bg-accent-violet/[0.06]'
-                          }`}
+                          className={`flex items-center gap-3 px-2 py-2 rounded-lg transition-colors ${activeIndex === itemIndex ? 'bg-accent-violet/[0.06]' : 'hover:bg-accent-violet/[0.06]'
+                            }`}
                         >
-                          <Icon className={`w-4 h-4 flex-shrink-0 ${
-                            ENTITY_TYPE_STYLES[item.type as EntityType]?.iconColor ?? 'text-stone-500'
-                          }`} />
+                          <Icon className={`w-4 h-4 flex-shrink-0 ${ENTITY_TYPE_STYLES[item.type as EntityType]?.iconColor ?? 'text-stone-500'
+                            }`} />
                           <div className="flex-1 min-w-0">
                             <p className="font-medium text-stone-900 text-sm">
                               <HighlightedText text={item.term} query={query} />
                             </p>
                             <p className="text-xs text-stone-500 truncate">{item.book_title}</p>
                           </div>
-                          <span className={`text-[10px] px-1.5 py-0.5 rounded ${
-                            ENTITY_TYPE_STYLES[item.type as EntityType]?.badge ?? 'bg-stone-100 text-stone-700'
-                          }`}>
+                          <span className={`text-[10px] px-1.5 py-0.5 rounded ${ENTITY_TYPE_STYLES[item.type as EntityType]?.badge ?? 'bg-stone-100 text-stone-700'
+                            }`}>
                             {item.type}
                           </span>
                         </Link>
@@ -484,9 +480,8 @@ export default function UnifiedSearch() {
                           role="option"
                           aria-selected={activeIndex === itemIndex}
                           data-search-index={itemIndex}
-                          className={`flex items-center gap-3 px-2 py-2 rounded-lg transition-colors ${
-                            activeIndex === itemIndex ? 'bg-rose-50' : 'hover:bg-rose-50'
-                          }`}
+                          className={`flex items-center gap-3 px-2 py-2 rounded-lg transition-colors ${activeIndex === itemIndex ? 'bg-rose-50' : 'hover:bg-rose-50'
+                            }`}
                         >
                           {img.imageUrl ? (
                             <div className="w-8 h-8 rounded overflow-hidden flex-shrink-0 bg-stone-100">
@@ -532,11 +527,10 @@ export default function UnifiedSearch() {
                     role="option"
                     aria-selected={activeIndex === fullSearchIndex}
                     data-search-index={fullSearchIndex}
-                    className={`flex items-center justify-center gap-2 p-3 text-sm font-medium transition-colors ${
-                      activeIndex === fullSearchIndex
-                        ? 'bg-accent-gold/8 text-accent-gold-dark'
-                        : 'bg-stone-50 text-stone-600 hover:text-stone-900'
-                    }`}
+                    className={`flex items-center justify-center gap-2 p-3 text-sm font-medium transition-colors ${activeIndex === fullSearchIndex
+                      ? 'bg-accent-gold/8 text-accent-gold-dark'
+                      : 'bg-stone-50 text-stone-600 hover:text-stone-900'
+                      }`}
                   >
                     <Search className="w-4 h-4" />
                     Full search for &ldquo;{query}&rdquo;
