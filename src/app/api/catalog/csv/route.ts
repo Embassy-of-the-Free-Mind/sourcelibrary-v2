@@ -4,6 +4,9 @@ import { supabase } from '@/lib/supabase';
 export const dynamic = 'force-dynamic';
 export const maxDuration = 30;
 
+const R2_PUBLIC_URL = process.env.R2_PUBLIC_URL || 'https://images.sourcelibrary.org';
+const STATIC_CSV_URL = `${R2_PUBLIC_URL}/exports/catalog.csv`;
+
 const CSV_COLUMNS = [
   'title', 'author', 'language', 'year', 'pages',
   'pages_transcribed', 'pages_translated', 'translation_pct',
@@ -23,12 +26,9 @@ function csvEscape(val: string): string {
  * GET /api/catalog/csv
  *
  * Public CSV download of the entire Source Library catalog.
- * Powered by Supabase books_catalog (fast, no MongoDB load).
  *
- * Query params:
- *   ?language=Latin        — filter by language
- *   ?collection=alchemy    — filter by collection
- *   ?translated=true       — only books with translations
+ * Without filters: redirects to the weekly static snapshot on R2.
+ * With filters (?language, ?collection, ?translated): generates dynamically from Supabase.
  */
 export async function GET(request: NextRequest) {
   try {
@@ -37,8 +37,14 @@ export async function GET(request: NextRequest) {
     const collection = searchParams.get('collection') || '';
     const translatedOnly = searchParams.get('translated') === 'true';
 
-    // Paginate through all results (Supabase caps at 1000 per request)
+    // No filters — redirect to the pre-built static CSV on R2
+    if (!language && !collection && !translatedOnly) {
+      return NextResponse.redirect(STATIC_CSV_URL, 302);
+    }
+
+    // Filtered request — generate dynamically from Supabase
     const PAGE_SIZE = 1000;
+    // eslint-disable-next-line @typescript-eslint/no-explicit-any
     const allRows: Record<string, any>[] = [];
     let offset = 0;
 

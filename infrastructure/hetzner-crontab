@@ -95,3 +95,6 @@
 
 # Browse pre-warm + homepage stats (daily 5:15am)
 15 5 * * * cd /root/sourcelibrary && flock -n /tmp/sl-prewarm.lock bash -c "set -a; source .env.production.local; set +a; node scripts/maintenance/prewarm-browse.mjs" >> /var/log/sourcelibrary/prewarm-browse.log 2>&1
+
+# Catalog CSV snapshot: weekly static export to R2 (Sunday 4am)
+0 4 * * 0 cd /root/sourcelibrary && flock -n /tmp/sl-catalog-csv.lock bash -c "set -a; source .env.production.local; set +a; node scripts/workers/catalog-csv-snapshot.mjs" >> /var/log/sourcelibrary/catalog-csv.log 2>&1
