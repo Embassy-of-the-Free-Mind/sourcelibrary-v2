@@ -189,7 +189,12 @@ async function processBook(r2, db, book) {
         return;
       }
 
-      // It's a spread — split at center
+      // It's a spread — archive the original full-res spread to R2 before splitting
+      const originalUrl = page.photo;
+      const spreadKey = `archived/${book.id}/${page.page_number}-spread.jpg`;
+      const spreadR2Url = await uploadToR2(r2, spreadKey, buf);
+
+      // Split at center
       const imgWidth = pageMeta.width || 1000;
       const imgHeight = pageMeta.height || 1000;
       const splitX = Math.round(imgWidth / 2);
@@ -256,6 +261,8 @@ async function processBook(r2, db, book) {
               archived_photo: leftFullUrl,
               display_photo: leftDisplayUrl,
               thumbnail_blob: leftThumbUrl,
+              photo_original: originalUrl,
+              spread_archived: spreadR2Url,
               crop: leftCrop,
               split_from_spread: true,
               split_side: 'left',
@@ -268,7 +275,7 @@ async function processBook(r2, db, book) {
               },
               updated_at: new Date(),
             },
-            $unset: { ocr: '', translation: '', summary: '', photo_original: '', cropped_photo: '' },
+            $unset: { ocr: '', translation: '', summary: '', cropped_photo: '' },
           },
         },
       });
@@ -285,6 +292,8 @@ async function processBook(r2, db, book) {
         archived_photo: rightFullUrl,
         display_photo: rightDisplayUrl,
         thumbnail_blob: rightThumbUrl,
+        photo_original: originalUrl,
+        spread_archived: spreadR2Url,
         crop: rightCrop,
         split_from: page.id,
         split_from_spread: true,
