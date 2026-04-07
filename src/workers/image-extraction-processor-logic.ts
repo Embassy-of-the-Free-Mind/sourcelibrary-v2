@@ -153,7 +153,7 @@ export async function processImageExtractionPage(message: PageProcessingMessage)
   // Fetch book metadata for context-aware extraction
   const book = await db.collection('books').findOne(
     { id: bookId },
-    { projection: { title: 1, author: 1, year: 1, language: 1, 'tags.tradition': 1, 'tags.domain': 1 } }
+    { projection: { title: 1, author: 1, year: 1, language: 1, 'tags.tradition': 1, 'tags.domain': 1, 'faceted_tags.cultural_sphere': 1 } }
   );
   const bookContext: BookContext | undefined = book ? {
     title: book.title,
@@ -161,6 +161,7 @@ export async function processImageExtractionPage(message: PageProcessingMessage)
     year: book.year,
     language: book.language,
     subjects: [...(book.tags?.tradition || []), ...(book.tags?.domain || [])].filter(Boolean),
+    cultural_sphere: book.faceted_tags?.cultural_sphere?.[0],
   } : undefined;
 
   // Get versioned prompt from DB (or hardcoded fallback)

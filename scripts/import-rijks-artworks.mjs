@@ -197,6 +197,10 @@ async function resolveObject(objectUrl) {
   const shows = Array.isArray(obj.shows) ? obj.shows : [obj.shows].filter(Boolean);
   const visualItemUrl = shows[0]?.id;
 
+  // Extract Iconclass codes from the visual item's represents_instance_of_type
+  // (populated when we resolve the visual item later)
+  // For now, store visual item URL — Iconclass extracted in resolveVisualItem()
+
   // Get Rijksmuseum web URL
   const subjectOf = Array.isArray(obj.subject_of) ? obj.subject_of : [];
   const webPage = subjectOf.find(s => {
@@ -237,6 +241,21 @@ async function resolveIiifUrl(visualItemUrl) {
   const vi = await fetchJson(visualItemUrl);
   if (!vi) return null;
 
+  // Extract Iconclass codes from represents_instance_of_type
+  // Rijksmuseum stores them as: { equivalent: [{ id: "https://iconclass.org/73D732" }] }
+  const iconclassCodes = [];
+  const reps = Array.isArray(vi.represents_instance_of_type) ? vi.represents_instance_of_type : [];
+  for (const rep of reps) {
+    const equivs = Array.isArray(rep.equivalent) ? rep.equivalent : [];
+    for (const eq of equivs) {
+      const id = typeof eq === 'string' ? eq : eq?.id;
+      if (id && id.includes('iconclass.org/')) {
+        const code = id.split('iconclass.org/')[1];
+        if (code) iconclassCodes.push(code);
+      }
+    }
+  }
+
   // Get DigitalObject URL from digitally_shown_by
   const digi = Array.isArray(vi.digitally_shown_by) ? vi.digitally_shown_by : [vi.digitally_shown_by].filter(Boolean);
   const digitalUrl = digi[0]?.id;
@@ -260,7 +279,7 @@ async function resolveIiifUrl(visualItemUrl) {
     if (info) { width = info.width || 0; height = info.height || 0; }
   } catch {}
 
-  return { iiifUrl, width, height };
+  return { iiifUrl, width, height, iconclassCodes };
 }
 
 function slugify(text) {
@@ -454,6 +473,13 @@ async function main() {
         commons_license: 'CC0 1.0',
         commons_description: obj.description,
         commons_categories: obj.catalogueRefs || [],
+        // Iconclass codes from Rijksmuseum Linked Art (authoritative, not AI-generated)
+        ...(iiif.iconclassCodes?.length > 0 && {
+          enrichment: {
+            iconclass: iiif.iconclassCodes,
+            iconclass_source: 'rijksmuseum',
+          },
+        }),
         // Rich Linked Art metadata
         linked_art: {
           technique: obj.technique,
@@ -479,7 +505,8 @@ async function main() {
       };
 
       await books.insertOne(doc);
-      console.log(`  ✓ ${slug} — ${obj.title.substring(0, 50)} (${year}) ${width}x${height}`);
+      const icLabel = iiif.iconclassCodes?.length > 0 ? ` [IC: ${iiif.iconclassCodes.join(', ')}]` : '';
+      console.log(`  ✓ ${slug} — ${obj.title.substring(0, 50)} (${year}) ${width}x${height}${icLabel}`);
       totalImported++;
     }
   }

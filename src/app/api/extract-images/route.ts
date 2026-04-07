@@ -106,7 +106,15 @@ export const POST = withAuth(async (request, session) => {
 
       try {
         if (useGemini) {
-          const result = await extractWithGemini(imageUrl, geminiModelId, { returnUsage: true });
+          const bookContext = page.book ? {
+            title: page.book.display_title || page.book.title,
+            author: page.book.author,
+            year: page.book.year,
+            language: page.book.language,
+            subjects: page.book.faceted_tags?.knowledge_domain,
+            cultural_sphere: page.book.faceted_tags?.cultural_sphere?.[0],
+          } : undefined;
+          const result = await extractWithGemini(imageUrl, geminiModelId, { returnUsage: true, bookContext });
           extractedImages = result.images;
           totalInputTokens += result.usage.inputTokens;
           totalOutputTokens += result.usage.outputTokens;

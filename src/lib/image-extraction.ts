@@ -5,6 +5,7 @@
 
 import Replicate from 'replicate';
 import { images } from '@/lib/api-client';
+import { buildClassificationPrompt, getClassificationSystems } from '@/lib/iconography';
 
 export const IMAGE_EXTRACTION_PROMPT = `You are a museum curator analyzing a historical book page scan. Extract only significant illustrations — skip decorative elements like ornaments, borders, printer's marks, and initials.
 
@@ -42,7 +43,8 @@ For each significant illustration return:
     "figures": ["old man", "serpent"],
     "symbols": ["ouroboros", "athanor"],
     "style": "Northern European Renaissance",
-    "technique": "woodcut"
+    "technique": "woodcut",
+    "iconclass": ["49E39", "25FF41"]
   },
   "museum_description": "A compelling allegorical scene depicting... This exemplifies early modern alchemical imagery..."
 }
@@ -55,6 +57,8 @@ GALLERY QUALITY (0.0-1.0):
 
 MUSEUM DESCRIPTION: Write 2-3 sentences for a museum label - what the viewer sees and its significance.
 
+ICONCLASS: Assign 2-5 Iconclass codes (iconclass.org) in metadata.iconclass. Use the most specific code that applies. Example: "49E39" for alchemy, "25F23(LION)" for a lion, "98C231" for Claudia Quinta. Parenthetical qualifiers add specificity. See the classification context appended below (if present) for guidance.
+
 Return ONLY a valid JSON array. If no significant illustrations, return: []`;
 
 export interface BookContext {
@@ -63,6 +67,7 @@ export interface BookContext {
   year?: number | string;
   language?: string;
   subjects?: string[];
+  cultural_sphere?: string;
 }
 
 /** Build a context prefix to prepend to the extraction prompt */
@@ -84,6 +89,8 @@ export interface ImageMetadata {
   style?: string;
   technique?: string;
   condition?: string;
+  iconclass?: string[];
+  cit?: string[];
 }
 
 /**
@@ -116,6 +123,15 @@ export interface DetectedImage {
   detected_at: Date;
   detection_source: 'vision_model';
   model: string;
+}
+
+/** Build the complete prompt with book context + classification system context. */
+function buildFullPrompt(bookContext?: BookContext, customPrompt?: string): string {
+  const base = customPrompt || IMAGE_EXTRACTION_PROMPT;
+  const prefix = bookContext ? buildContextPrefix(bookContext) : '';
+  const systems = getClassificationSystems(bookContext);
+  const classificationSuffix = buildClassificationPrompt(systems);
+  return prefix + base + classificationSuffix;
 }
 
 const DEFAULT_MODEL = 'gemini-3-flash-preview';
@@ -180,7 +196,7 @@ export async function extractWithGemini(
       body: JSON.stringify({
         contents: [{
           parts: [
-            { text: (options?.bookContext ? buildContextPrefix(options.bookContext) : '') + (options?.promptText || IMAGE_EXTRACTION_PROMPT) },
+            { text: buildFullPrompt(options?.bookContext, options?.promptText) },
             { inline_data: { mime_type: mimeType, data: base64Image } }
           ]
         }],
@@ -239,6 +255,8 @@ export async function extractWithGemini(
       style: item.metadata.style || undefined,
       technique: item.metadata.technique || undefined,
       condition: item.metadata.condition || undefined,
+      iconclass: Array.isArray(item.metadata.iconclass) ? item.metadata.iconclass : undefined,
+      cit: Array.isArray(item.metadata.cit) ? item.metadata.cit : undefined,
     } : undefined,
     museum_description: item.museum_description || undefined,
     detected_at: new Date(),
