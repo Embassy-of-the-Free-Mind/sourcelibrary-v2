@@ -7,7 +7,7 @@ import SiteHeader from '@/components/layout/SiteHeader';
 import { LIBRARY_PARTNERS, getPartnerByProvider } from '@/lib/library-partners';
 import type { Metadata } from 'next';
 
-export const revalidate = 3600; // ISR: rebuild every hour
+export const revalidate = 600; // ISR: rebuild every 10 minutes
 
 export const metadata: Metadata = {
   title: 'Libraries | Source Library',
