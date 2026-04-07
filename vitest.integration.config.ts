@@ -5,9 +5,12 @@ export default defineConfig({
   test: {
     globals: true,
     environment: 'node',
-    include: ['tests/**/*.test.ts'],
-    exclude: ['tests/smoke/**', 'tests/integration/**'],
+    include: ['tests/integration/**/*.test.ts'],
+    setupFiles: ['tests/setup.ts'],
     testTimeout: 30000,
+    hookTimeout: 30000,
+    // Isolate test files to prevent mongodb-memory-server port conflicts
+    pool: 'forks',
   },
   resolve: {
     alias: {
