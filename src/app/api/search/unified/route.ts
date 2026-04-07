@@ -100,7 +100,7 @@ export async function GET(request: NextRequest) {
       gallery: galleryResult,
     }, {
       headers: {
-        'Cache-Control': 'public, s-maxage=60, stale-while-revalidate=300',
+        'Cache-Control': 'no-store',
       },
     });
   } catch (error) {
@@ -291,7 +291,7 @@ async function searchIndex(db: any, query: string, limit: number) {
       },
       { $limit: limit * 3 },
       { $project: { name: 1, type: 1, books: 1 } },
-    ], { maxTimeMS: 5000 }).toArray();
+    ], { maxTimeMS: 7000 }).toArray();
   } catch {
     // Fallback to regex if Atlas Search index not ready
     entities = await db.collection('entities')
@@ -304,7 +304,7 @@ async function searchIndex(db: any, query: string, limit: number) {
       .project({ name: 1, type: 1, books: 1 })
       .sort({ book_count: -1 })
       .limit(limit * 3)
-      .maxTimeMS(5000)
+      .maxTimeMS(7000)
       .toArray();
   }
 
@@ -339,7 +339,7 @@ async function searchIndex(db: any, query: string, limit: number) {
     }).project({
       id: 1, slug: 1, title: 1, display_title: 1,
       'index.concepts': 1, 'index.people': 1, 'index.places': 1, 'index.keywords': 1,
-    }).limit(limit).maxTimeMS(5000).toArray();
+    }).limit(limit).maxTimeMS(7000).toArray();
 
     for (const book of books) {
       const allEntries = [
@@ -391,7 +391,7 @@ async function searchGallery(db: any, query: string, queryRegex: RegExp, limit: 
         },
         { $limit: limit },
         { $project: { page_id: 1, detection_index: 1, description: 1, type: 1, thumbnail_url: 1, extracted_url: 1, book_id: 1, book_title: 1, gallery_quality: 1 } },
-      ], { maxTimeMS: 3000 }).toArray();
+      ], { maxTimeMS: 5000 }).toArray();
     } catch {
       // Fallback to regex if Atlas Search index not ready
       images = await db.collection('gallery_images')

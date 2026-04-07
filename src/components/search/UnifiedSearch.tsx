@@ -375,7 +375,21 @@ export default function UnifiedSearch() {
                           className={`flex items-center gap-3 px-2 py-2 rounded-lg transition-colors ${activeIndex === itemIndex ? 'bg-accent-gold/8' : 'hover:bg-accent-gold/8'
                             }`}
                         >
-                          <Book className="w-4 h-4 text-accent-rust flex-shrink-0" />
+                          {book.thumbnail || book.thumbnail_blob ? (
+                            <div className="w-8 h-10 rounded overflow-hidden flex-shrink-0 bg-stone-100">
+                              <Image
+                                src={book.thumbnail_blob || book.thumbnail!}
+                                alt={book.display_title || book.title}
+                                width={32}
+                                height={40}
+                                sizes="32px"
+                                className="w-full h-full object-cover"
+                                unoptimized
+                              />
+                            </div>
+                          ) : (
+                            <Book className="w-4 h-4 text-accent-rust flex-shrink-0" />
+                          )}
                           <div className="flex-1 min-w-0">
                             <p className="font-medium text-stone-900 truncate text-sm">
                               <HighlightedText text={book.display_title || book.title} query={query} />
