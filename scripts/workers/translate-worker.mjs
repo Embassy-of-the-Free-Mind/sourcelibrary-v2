@@ -509,20 +509,29 @@ async function processBook(db, book, job, globalCounter, deadline) {
           consecutiveErrors = Math.max(0, consecutiveErrors - 1);
         } else {
           console.error(`  [${label}] Page ${page.page_number} failed: ${msg.substring(0, 100)}`);
-          // Mark safety-blocked pages so they're skipped on future runs (like RECITATION)
-          if (msg.includes('PROHIBITED') || msg.includes('SAFETY') || msg.includes('safety')) {
+          // Mark blocked pages so they're skipped on future runs
+          if (msg.includes('PROHIBITED') || msg.includes('SAFETY') || msg.includes('safety') || msg.includes('RECITATION')) {
             try {
+              // Replace null translation with {} so sub-fields can be set
               await db.collection('pages').updateOne(
                 { _id: page._id },
                 [{ $set: { translation: { $cond: { if: { $eq: ['$translation', null] }, then: {}, else: '$translation' } } } }]
               );
-              await db.collection('pages').updateOne(
-                { _id: page._id },
-                { $set: { 'translation.safety_blocked': true, 'translation.safety_blocked_at': new Date(), 'translation.safety_reason': msg.substring(0, 200) } }
-              );
-              console.log(`  [${label}] Page ${page.page_number} marked as SAFETY-blocked (will skip on future runs)`);
+              if (msg.includes('RECITATION')) {
+                await db.collection('pages').updateOne(
+                  { _id: page._id },
+                  { $set: { 'translation.recitation_blocked': true, 'translation.recitation_at': new Date() } }
+                );
+                console.log(`  [${label}] Page ${page.page_number} marked as RECITATION-blocked (will skip on future runs)`);
+              } else {
+                await db.collection('pages').updateOne(
+                  { _id: page._id },
+                  { $set: { 'translation.safety_blocked': true, 'translation.safety_blocked_at': new Date(), 'translation.safety_reason': msg.substring(0, 200) } }
+                );
+                console.log(`  [${label}] Page ${page.page_number} marked as SAFETY-blocked (will skip on future runs)`);
+              }
             } catch (markErr) {
-              console.error(`  [${label}] Failed to mark page ${page.page_number} as safety-blocked: ${markErr.message}`);
+              console.error(`  [${label}] Failed to mark page ${page.page_number} as blocked: ${markErr.message}`);
             }
             consecutiveErrors = Math.max(0, consecutiveErrors - 1); // don't count toward circuit breaker
           }
