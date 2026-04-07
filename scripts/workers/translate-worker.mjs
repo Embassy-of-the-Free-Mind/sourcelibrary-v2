@@ -359,6 +359,7 @@ async function processBook(db, book, job, globalCounter, deadline) {
       'ocr.data': { $exists: true, $nin: [null, ''] },
       page_type: { $nin: SKIP_PAGE_TYPES },
       'translation.recitation_blocked': { $ne: true },
+      'translation.safety_blocked': { $ne: true },
       $or: [
         { 'translation.data': { $exists: false } },
         { 'translation.data': null },
@@ -499,6 +500,15 @@ async function processBook(db, book, job, globalCounter, deadline) {
           consecutiveErrors = Math.max(0, consecutiveErrors - 1);
         } else {
           console.error(`  [${label}] Page ${page.page_number} failed: ${msg.substring(0, 100)}`);
+          // Mark safety-blocked pages so they're skipped on future runs (like RECITATION)
+          if (msg.includes('PROHIBITED') || msg.includes('SAFETY') || msg.includes('safety')) {
+            await db.collection('pages').updateOne(
+              { _id: page._id },
+              { $set: { 'translation.safety_blocked': true, 'translation.safety_blocked_at': new Date(), 'translation.safety_reason': msg.substring(0, 200) } }
+            );
+            console.log(`  [${label}] Page ${page.page_number} marked as SAFETY-blocked (will skip on future runs)`);
+            consecutiveErrors = Math.max(0, consecutiveErrors - 1); // don't count toward circuit breaker
+          }
           await db.collection('gemini_usage').insertOne({
             type: 'translation', mode: 'realtime', model: getModelForBook(book),
             book_id: book.id, page_ids: [page.id],
@@ -554,6 +564,12 @@ async function processBook(db, book, job, globalCounter, deadline) {
                   { $set: { 'translation.recitation_blocked': true, 'translation.recitation_at': new Date() } }
                 );
                 console.log(`  [${label}] Page ${page.page_number} marked as RECITATION-blocked (will skip on future runs)`);
+              } else if (errMsg.includes('PROHIBITED') || errMsg.includes('SAFETY') || errMsg.includes('safety')) {
+                await db.collection('pages').updateOne(
+                  { _id: page._id },
+                  { $set: { 'translation.safety_blocked': true, 'translation.safety_blocked_at': new Date(), 'translation.safety_reason': errMsg.substring(0, 200) } }
+                );
+                console.log(`  [${label}] Page ${page.page_number} marked as SAFETY-blocked (will skip on future runs)`);
               }
               failed++;
             }
@@ -608,6 +624,12 @@ async function processBook(db, book, job, globalCounter, deadline) {
                   { $set: { 'translation.recitation_blocked': true, 'translation.recitation_at': new Date() } }
                 );
                 console.log(`  [${label}] Page ${page.page_number} marked as RECITATION-blocked (will skip on future runs)`);
+              } else if (errMsg.includes('PROHIBITED') || errMsg.includes('SAFETY') || errMsg.includes('safety')) {
+                await db.collection('pages').updateOne(
+                  { _id: page._id },
+                  { $set: { 'translation.safety_blocked': true, 'translation.safety_blocked_at': new Date(), 'translation.safety_reason': errMsg.substring(0, 200) } }
+                );
+                console.log(`  [${label}] Page ${page.page_number} marked as SAFETY-blocked (will skip on future runs)`);
               }
               failed++;
             }
@@ -809,6 +831,7 @@ async function selfDispatch(db, limit) {
         'ocr.data': { $exists: true, $nin: [null, ''] },
         page_type: { $nin: SKIP_PAGE_TYPES },
       'translation.recitation_blocked': { $ne: true },
+      'translation.safety_blocked': { $ne: true },
         $or: [
           { 'translation.data': { $exists: false } },
           { 'translation.data': null },
