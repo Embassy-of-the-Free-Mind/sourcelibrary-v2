@@ -228,14 +228,14 @@ async function processBook(r2, db, book) {
       const rightTempKey = `pages/${book.id}/split-${rightPageId}`;
 
       // Upload left half (overwrite existing full-res with cropped)
-      const [leftFullUrl, , leftThumbUrl] = await Promise.all([
+      const [leftFullUrl, leftDisplayUrl, leftThumbUrl] = await Promise.all([
         uploadToR2(r2, leftPaths.full, leftBuf),
         uploadToR2(r2, leftPaths.display, leftDisplay),
         uploadToR2(r2, leftPaths.thumb, leftThumb),
       ]);
 
       // Upload right half
-      const [rightFullUrl, , rightThumbUrl] = await Promise.all([
+      const [rightFullUrl, rightDisplayUrl, rightThumbUrl] = await Promise.all([
         uploadToR2(r2, `${rightTempKey}-full.jpg`, rightBuf),
         uploadToR2(r2, `${rightTempKey}.jpg`, rightDisplay),
         uploadToR2(r2, `${rightTempKey}-thumb.jpg`, rightThumb),
@@ -253,6 +253,9 @@ async function processBook(r2, db, book) {
             $set: {
               photo: leftFullUrl,
               thumbnail: leftThumbUrl,
+              archived_photo: leftFullUrl,
+              display_photo: leftDisplayUrl,
+              thumbnail_blob: leftThumbUrl,
               crop: leftCrop,
               split_from_spread: true,
               split_side: 'left',
@@ -265,7 +268,7 @@ async function processBook(r2, db, book) {
               },
               updated_at: new Date(),
             },
-            $unset: { ocr: '', translation: '', summary: '', photo_original: '', archived_photo: '', cropped_photo: '', thumbnail_blob: '' },
+            $unset: { ocr: '', translation: '', summary: '', photo_original: '', cropped_photo: '' },
           },
         },
       });
@@ -279,6 +282,9 @@ async function processBook(r2, db, book) {
         page_number: rightPageNum, // 0.5 — renumbered later
         photo: rightFullUrl,
         thumbnail: rightThumbUrl,
+        archived_photo: rightFullUrl,
+        display_photo: rightDisplayUrl,
+        thumbnail_blob: rightThumbUrl,
         crop: rightCrop,
         split_from: page.id,
         split_from_spread: true,
