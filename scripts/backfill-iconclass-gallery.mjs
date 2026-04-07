@@ -37,33 +37,45 @@ async function main() {
 
   const genai = new GoogleGenAI({ apiKey: process.env.GEMINI_API_KEY });
 
-  // Find gallery images without iconclass codes, with extracted URLs
-  const cursor = db.collection('gallery_images')
-    .find({
-      extracted_url: { $ne: null },
-      gallery_quality: { $gte: MIN_QUALITY },
-      $or: [
-        { 'metadata.iconclass': { $exists: false } },
-        { 'metadata.iconclass': { $size: 0 } },
-      ],
-    }, {
-      projection: {
-        id: 1, page_id: 1, book_id: 1, detection_index: 1,
-        extracted_url: 1, description: 1, type: 1,
-        book_title: 1, book_year: 1,
-        metadata: 1, gallery_quality: 1,
-      },
-    })
-    .sort({ gallery_quality: -1 }) // Best images first
-    .limit(LIMIT);
+  // Use batch pagination instead of cursor to avoid Atlas cursor timeout.
+  // Each batch fetches PAGE_SIZE docs, processes them, then fetches the next batch.
+  const PAGE_SIZE = 200;
+  const query = {
+    extracted_url: { $ne: null },
+    gallery_quality: { $gte: MIN_QUALITY },
+    $or: [
+      { 'metadata.iconclass': { $exists: false } },
+      { 'metadata.iconclass': { $size: 0 } },
+    ],
+  };
+  const projection = {
+    id: 1, page_id: 1, book_id: 1, detection_index: 1,
+    extracted_url: 1, description: 1, type: 1,
+    book_title: 1, book_year: 1,
+    metadata: 1, gallery_quality: 1,
+  };
 
-  console.log(`${DRY_RUN ? 'DRY RUN — ' : ''}Backfilling Iconclass codes (min quality: ${MIN_QUALITY})\n`);
+  // Count total to process
+  const totalToProcess = await db.collection('gallery_images').countDocuments(query, { maxTimeMS: 30000 });
+  console.log(`${DRY_RUN ? 'DRY RUN — ' : ''}Backfilling ${totalToProcess} gallery images (min quality: ${MIN_QUALITY})\n`);
 
   let success = 0, errors = 0, totalTokens = 0, processed = 0;
+  let pageOffset = 0;
 
-  const batch = [];
+  while (processed < LIMIT) {
+    // Fetch a batch — re-query each time since processed docs no longer match the filter
+    const pageDocs = await db.collection('gallery_images')
+      .find(query, { projection })
+      .sort({ gallery_quality: -1 })
+      .limit(Math.min(PAGE_SIZE, LIMIT - processed))
+      .toArray();
 
-  for await (const img of cursor) {
+    if (pageDocs.length === 0) break;
+    console.log(`\n  [Fetched batch of ${pageDocs.length} images]`);
+
+    const batch = [];
+
+  for (const img of pageDocs) {
     processed++;
     const label = `[${processed}] q=${img.gallery_quality} ${img.type} — ${(img.description || '').substring(0, 50)}`;
 
@@ -155,10 +167,13 @@ async function main() {
     }
   }
 
-  // Flush remaining
+  // Flush remaining in this batch
   if (batch.length > 0) {
     await flushBatch(db, batch);
+    batch.length = 0;
   }
+
+  } // end while
 
   console.log('\n=== SUMMARY ===');
   console.log(`Success: ${success}/${processed}`);
