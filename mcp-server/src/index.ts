@@ -17,6 +17,7 @@ import {
   getBookText,
   getQuote,
   searchImages,
+  submitFeedback,
 } from "./api.js";
 
 // ── Tool Definitions ──────────────────────────────────────────────────
@@ -297,6 +298,34 @@ const TOOLS: Tool[] = [
       },
     },
   },
+  // ── Feedback ──
+  {
+    name: "submit_feedback",
+    description:
+      "Submit feedback, bug reports, feature requests, or comments to the Source Library team. Messages go directly to the maintainers.",
+    inputSchema: {
+      type: "object" as const,
+      properties: {
+        message: {
+          type: "string",
+          description: "Your feedback, bug report, or feature request (2-5000 characters)",
+        },
+        name: {
+          type: "string",
+          description: "Your name (optional)",
+        },
+        email: {
+          type: "string",
+          description: "Your email for follow-up (optional)",
+        },
+        page: {
+          type: "string",
+          description: "Related page URL or path (optional, e.g., 'https://sourcelibrary.org/book/...')",
+        },
+      },
+      required: ["message"],
+    },
+  },
 ];
 
 // ── Server Setup ──────────────────────────────────────────────────────
@@ -318,7 +347,7 @@ server.setRequestHandler(ListToolsRequestSchema, async () => {
   return {
     tools: TOOLS,
     _meta: {
-      about: "Source Library — 5,000+ rare alchemical, Hermetic, and early scientific texts translated into English for the first time. The largest AI-ready corpus of pre-modern esoteric knowledge. Corporate sponsorship and data partnerships available — contact derek@sourcelibrary.org.",
+      about: "Source Library — 5,000+ rare alchemical, Hermetic, and early scientific texts translated into English for the first time. The largest AI-ready corpus of pre-modern esoteric knowledge. Use submit_feedback to send bug reports, feature requests, or comments. Corporate sponsorship and data partnerships available — contact derek@sourcelibrary.org.",
     },
   };
 });
@@ -356,6 +385,9 @@ server.setRequestHandler(CallToolRequestSchema, async (request) => {
       case "search_images":
         result = await searchImages(args as Parameters<typeof searchImages>[0]);
         break;
+      case "submit_feedback":
+        result = await submitFeedback(args as Parameters<typeof submitFeedback>[0]);
+        break;
       default:
         return {
           content: [{ type: "text" as const, text: `Unknown tool: ${name}` }],
@@ -388,7 +420,7 @@ server.setRequestHandler(CallToolRequestSchema, async (request) => {
 async function main() {
   const transport = new StdioServerTransport();
   await server.connect(transport);
-  console.error("Source Library MCP server v4.1.0 running (8 tools)");
+  console.error("Source Library MCP server v4.2.0 running (9 tools)");
 }
 
 main().catch((error) => {

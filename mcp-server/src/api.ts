@@ -20,6 +20,20 @@ export async function apiGet(path: string, params?: URLSearchParams): Promise<un
   return response.json();
 }
 
+export async function apiPost(path: string, body: unknown): Promise<unknown> {
+  const url = `${API_BASE}${path}`;
+  const response = await fetch(url, {
+    method: "POST",
+    headers: { ...MCP_HEADERS, "Content-Type": "application/json" },
+    body: JSON.stringify(body),
+  });
+  if (!response.ok) {
+    const text = await response.text().catch(() => response.statusText);
+    throw new Error(`API ${response.status}: ${text}`);
+  }
+  return response.json();
+}
+
 export async function apiGetText(path: string, params?: URLSearchParams): Promise<string> {
   const url = params ? `${API_BASE}${path}?${params}` : `${API_BASE}${path}`;
   const response = await fetch(url, { headers: MCP_HEADERS });
@@ -31,6 +45,25 @@ export async function apiGetText(path: string, params?: URLSearchParams): Promis
 }
 
 // ── Tool Implementations ──────────────────────────────────────────────
+
+export async function submitFeedback(args: {
+  message: string;
+  name?: string;
+  email?: string;
+  page?: string;
+}) {
+  await apiPost("/feedback", {
+    message: args.message,
+    name: args.name || null,
+    email: args.email || null,
+    page: args.page || null,
+  });
+
+  return {
+    ok: true,
+    message: "Feedback submitted successfully. Thank you!",
+  };
+}
 
 export async function searchLibrary(args: {
   query: string;

@@ -12,6 +12,7 @@ import {
   getBookText,
   getQuote,
   searchImages,
+  submitFeedback,
 } from "./api.js";
 
 // ── Formatting helpers ────────────────────────────────────────────────
@@ -240,6 +241,10 @@ ${bold("COMMANDS")}
     images [--query=...] [--type=...] [--subject=...] [--book=...]
                                 Search 50,000+ historical illustrations
 
+  ${bold("Feedback")}
+    feedback <message>          Submit feedback to the Source Library team
+                                [--name=...] [--email=...] [--page=...]
+
   ${bold("Other")}
     help                        Show this help
     json <command> [args...]    Output raw JSON (for piping)
@@ -258,6 +263,7 @@ ${bold("EXAMPLES")}
   source-library text 694f49d3... --from=1 --to=50
   source-library books --language=German --sort=title-asc
   source-library images --subject=alchemy --type=emblem
+  source-library feedback "Love this translation of Fludd!" --name="Jane"
   source-library search "Paracelsus" | jq .results
 
 ${bold("PIPING")}
@@ -425,6 +431,22 @@ async function run() {
           limit: flagNum(flags, "limit"),
         });
         if (!jsonMode) { formatImages(result as AnyRecord); return; }
+        break;
+      }
+
+      case "feedback": {
+        const msg = pos.join(" ");
+        if (!msg) { console.error("Usage: source-library feedback <message> [--name=...] [--email=...]"); process.exit(1); }
+        result = await submitFeedback({
+          message: msg,
+          name: flag(flags, "name"),
+          email: flag(flags, "email"),
+          page: flag(flags, "page"),
+        });
+        if (!jsonMode) {
+          console.log(green("Feedback submitted. Thank you!"));
+          return;
+        }
         break;
       }
 

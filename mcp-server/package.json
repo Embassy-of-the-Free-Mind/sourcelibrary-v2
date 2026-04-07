@@ -1,8 +1,8 @@
 {
   "name": "@source-library/mcp-server",
-  "version": "4.1.1",
+  "version": "4.2.0",
   "mcpName": "io.github.Embassy-of-the-Free-Mind/source-library",
-  "description": "Search, read, and cite 1,200+ rare historical texts from the terminal or via MCP. 8 research tools, CLI + MCP server, no API key needed.",
+  "description": "Search, read, and cite 1,200+ rare historical texts from the terminal or via MCP. 9 research tools + feedback, CLI + MCP server, no API key needed.",
   "type": "module",
   "main": "dist/index.js",
   "bin": {

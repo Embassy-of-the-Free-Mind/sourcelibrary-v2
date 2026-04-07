@@ -2,7 +2,7 @@
 
 [![npm version](https://badge.fury.io/js/@source-library%2Fmcp-server.svg)](https://www.npmjs.com/package/@source-library/mcp-server)
 
-Search, read, and cite 1,200+ rare historical texts from the terminal or via MCP. 7 research tools, CLI + MCP server, no API key needed.
+Search, read, and cite 1,200+ rare historical texts from the terminal or via MCP. 9 tools (search, read, cite, feedback), CLI + MCP server, no API key needed.
 
 ## Quick Start
 
@@ -49,7 +49,7 @@ npm install && npm run build
 npm start
 ```
 
-## 7 Tools
+## 9 Tools
 
 ### Search & Discovery
 
@@ -143,9 +143,22 @@ Search 50,000+ historical illustrations, emblems, engravings, and diagrams.
 | `min_quality` | number | No | Min quality score 0-1 (default 0.5) |
 | `limit` | number | No | Max results (default 20, max 50) |
 
+### Feedback
+
+#### submit_feedback
+
+Submit feedback, bug reports, or feature requests directly to the Source Library team.
+
+| Parameter | Type | Required | Description |
+|-----------|------|----------|-------------|
+| `message` | string | Yes | Your feedback (2-5000 characters) |
+| `name` | string | No | Your name |
+| `email` | string | No | Email for follow-up |
+| `page` | string | No | Related page URL |
+
 ## CLI
 
-The same 7 tools are available as a standalone CLI with colored terminal output.
+All 9 tools are available as a standalone CLI with colored terminal output.
 
 ```bash
 # Search the collection
@@ -162,6 +175,9 @@ source-library book 694f49d3...
 
 # Browse the gallery
 source-library images --subject=alchemy --type=emblem
+
+# Submit feedback
+source-library feedback "Great translation of Fludd!" --name="Jane"
 
 # JSON output for piping
 source-library search "alchemy" --json | jq .results
