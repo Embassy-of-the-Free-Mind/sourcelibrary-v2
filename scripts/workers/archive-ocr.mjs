@@ -26,7 +26,7 @@ const DOMAIN_RATE_LIMITS = {
   'digital.bodleian.ox.ac.uk':4,    // No explicit policy, conservative
   'cudl.lib.cam.ac.uk':      4,    // No explicit policy, conservative
   'diglib.hab.de':            4,    // No explicit policy, conservative
-  'gallica.bnf.fr':           4,    // 403'd robots.txt — be careful
+  'gallica.bnf.fr':           2,    // 403'd robots.txt — gets 429 at 4/s
   'e-rara.ch':                1,    // robots.txt: 1s crawl-delay for allowed bots
   'digi.vatlib.it':           0.1,  // robots.txt: 10s crawl-delay
   'cdli.earth':               2,    // Cuneiform Digital Library — open access
@@ -302,35 +302,48 @@ async function main() {
 
   console.log(`[archive-ocr] Domain breakdown: ${Object.entries(byDomain).map(([d, p]) => `${d}:${p.length}`).join(', ')}`);
 
-  // Process all domains in parallel — each domain processes sequentially at its own rate
+  // Process all domains in parallel — each domain runs multiple concurrent workers.
+  // The token bucket ensures we stay within rate limits even with concurrency.
+  const DOMAIN_CONCURRENCY = 5; // Workers per domain (token bucket throttles them)
+  let circuitBroken = new Set(); // Domains that hit circuit breaker
+
   const domainWorkers = Object.entries(byDomain).map(async ([domain, domainPages]) => {
-    for (const page of domainPages) {
-      const result = await archivePage(page, db);
-      processed++;
+    if (!domainStats[domain]) domainStats[domain] = { ok: 0, fail: 0 };
+    let idx = 0;
 
-      if (!domainStats[domain]) domainStats[domain] = { ok: 0, fail: 0 };
+    async function worker() {
+      while (idx < domainPages.length && !circuitBroken.has(domain)) {
+        const page = domainPages[idx++];
+        if (!page) break;
 
-      if (result.ok) {
-        archived++;
-        totalBytes += result.bytes;
-        domainStats[domain].ok++;
-        touchedBookIds.add(page.book_id);
-      } else {
-        failed++;
-        domainStats[domain].fail++;
-        if (failed <= 10) console.error(`  FAIL [${domain}]: ${result.error}`);
-        // Circuit breaker: if 5 consecutive failures on a domain, skip it
-        if (domainStats[domain].fail >= 5 && domainStats[domain].ok === 0) {
-          console.warn(`  [${domain}] Circuit breaker: 5 failures with 0 successes, skipping domain`);
-          break;
+        const result = await archivePage(page, db);
+        processed++;
+
+        if (result.ok) {
+          archived++;
+          totalBytes += result.bytes;
+          domainStats[domain].ok++;
+          touchedBookIds.add(page.book_id);
+        } else {
+          failed++;
+          domainStats[domain].fail++;
+          if (failed <= 10) console.error(`  FAIL [${domain}]: ${result.error}`);
+          if (domainStats[domain].fail >= 5 && domainStats[domain].ok === 0) {
+            console.warn(`  [${domain}] Circuit breaker: 5 failures with 0 successes, skipping domain`);
+            circuitBroken.add(domain);
+            break;
+          }
+        }
+
+        if (processed % 100 === 0) {
+          const mb = (totalBytes / (1024 * 1024)).toFixed(1);
+          console.log(`  ${processed}/${pages.length} processed, ${archived} archived (${mb} MB), ${failed} failed`);
         }
       }
-
-      if (processed % 100 === 0) {
-        const mb = (totalBytes / (1024 * 1024)).toFixed(1);
-        console.log(`  ${processed}/${pages.length} processed, ${archived} archived (${mb} MB), ${failed} failed`);
-      }
     }
+
+    const workerCount = Math.min(DOMAIN_CONCURRENCY, domainPages.length);
+    await Promise.all(Array.from({ length: workerCount }, worker));
   });
 
   await Promise.all(domainWorkers);
