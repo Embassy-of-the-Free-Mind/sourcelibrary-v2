@@ -37,7 +37,7 @@ export async function generateMetadata({ params }: Props): Promise<Metadata> {
   try {
     const db = await Promise.race([
       getDb(),
-      new Promise<never>((_, reject) => setTimeout(() => reject(new Error('DB timeout')), 5000)),
+      new Promise<never>((_, reject) => setTimeout(() => reject(new Error('DB timeout')), 15000)),
     ]);
     const collection = await db.collection('collections').findOne({ slug: id });
 

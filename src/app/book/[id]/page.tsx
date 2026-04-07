@@ -61,7 +61,7 @@ interface PageProps {
 const getCachedBookLookup = cache(async (id: string) => {
   const db = await Promise.race([
     getDb(),
-    new Promise<never>((_, reject) => setTimeout(() => reject(new Error('DB timeout')), 5000)),
+    new Promise<never>((_, reject) => setTimeout(() => reject(new Error('DB timeout')), 15000)),
   ]);
   return findBookByIdOrSlug(db, id, {
     chapters: 0,
