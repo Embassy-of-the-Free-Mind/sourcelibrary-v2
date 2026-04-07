@@ -60,7 +60,6 @@ async function fetchProviderStats(): Promise<ProviderStats[]> {
       .select('image_source_provider, language, thumbnail, thumbnail_blob')
       .eq('visible', true)
       .gt('pages_count', 0)
-      .gt('pages_translated', 0)
       .not('image_source_provider', 'is', null)
       .range(offset, offset + limit - 1)
   );
