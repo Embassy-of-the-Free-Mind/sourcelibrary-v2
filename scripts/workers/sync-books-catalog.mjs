@@ -156,6 +156,34 @@ if (batch.length > 0) {
   }
 }
 
+// On full sync, clean up stale rows (books no longer visible in MongoDB)
+if (FULL_MODE && synced > 0) {
+  const visibleIds = new Set();
+  const idCursor = db.collection('books').find({ visible: true }, { projection: { id: 1 } }).batchSize(1000);
+  for await (const doc of idCursor) visibleIds.add(doc.id);
+
+  let sbIds = [];
+  let offset = 0;
+  while (true) {
+    const { data } = await supabase.from('books_catalog').select('id').range(offset, offset + 999);
+    if (!data || data.length === 0) break;
+    sbIds.push(...data.map(d => d.id));
+    offset += data.length;
+    if (data.length < 1000) break;
+  }
+
+  const stale = sbIds.filter(id => !visibleIds.has(id));
+  if (stale.length > 0) {
+    let deleted = 0;
+    for (let i = 0; i < stale.length; i += 100) {
+      const batch = stale.slice(i, i + 100);
+      const { error } = await supabase.from('books_catalog').delete().in('id', batch);
+      if (!error) deleted += batch.length;
+    }
+    console.log(`[${new Date().toISOString()}] books_catalog: cleaned ${deleted} stale rows`);
+  }
+}
+
 await mongoClient.close();
 const elapsed = ((Date.now() - start) / 1000).toFixed(1);
 
