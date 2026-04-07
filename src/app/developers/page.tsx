@@ -1,6 +1,7 @@
 import { Metadata } from 'next';
 import Link from 'next/link';
 import ContentPageLayout, { ContentHeader } from '@/components/layout/ContentPageLayout';
+import ApiKeyRequestForm from '@/components/developers/ApiKeyRequestForm';
 
 export const metadata: Metadata = {
   title: 'Developers - Source Library',
@@ -357,6 +358,19 @@ source-library search "alchemy" --json | jq .results`}
             backpressure controls. Live counts, diagrams, cost breakdowns.
           </p>
         </Link>
+      </section>
+
+      {/* API Key Request */}
+      <section className="mb-16">
+        <h2 className="text-2xl font-semibold text-primary mb-2">Dataset API</h2>
+        <p className="text-secondary mb-6 max-w-2xl">
+          Need bulk access to the full corpus for research or integration?
+          Request an API key and we&apos;ll review it within 24 hours.
+          The MCP server above doesn&apos;t require a key.
+        </p>
+        <div className="bg-white rounded-xl border border-border-light p-6 md:p-8">
+          <ApiKeyRequestForm />
+        </div>
       </section>
 
       {/* Links */}
