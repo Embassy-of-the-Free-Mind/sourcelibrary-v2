@@ -1343,7 +1343,7 @@ async function main() {
   // Score books that have summaries but no quality_score. Runs on chapters_complete
   // books and also catches older books that were never scored.
   let qualityScored = 0;
-  const QUALITY_LIMIT = 20;
+  const QUALITY_LIMIT = 100;
   if (RUN_PHASE_7_5) {
     console.log('\n=== Phase 7.5: Quality Scoring ===');
 
@@ -1407,7 +1407,7 @@ Guidelines:
 - Scholarly value: primary sources > derivative compilations, major authors > anonymous fragments`;
 
         const model = getClient().getGenerativeModel({
-          model: 'gemini-3-flash-preview',
+          model: LITE_MODEL,
           generationConfig: { temperature: 0.1, maxOutputTokens: 2048, responseMimeType: 'application/json' },
         });
 
@@ -1448,14 +1448,14 @@ Guidelines:
               quality_assessment: {
                 ai_scores: aiScores, ai_total: aiTotal,
                 mechanical_adjustments: adjustments, mechanical_total: mechTotal,
-                final_score: finalScore, model: 'gemini-3-flash-preview',
+                final_score: finalScore, model: LITE_MODEL,
                 scored_at: new Date(),
               },
               updated_at: new Date(),
             }}
           );
           await logUsage(db, {
-            type: 'quality-scoring', mode: 'realtime', model: 'gemini-3-flash-preview',
+            type: 'quality-scoring', mode: 'realtime', model: LITE_MODEL,
             book_id: book.id, book_title: title,
             input_tokens: usageMeta?.promptTokenCount || 0,
             output_tokens: usageMeta?.candidatesTokenCount || 0,
@@ -1464,8 +1464,6 @@ Guidelines:
         }
         qualityScored++;
         console.log(`  [${qualityScored}] ${title} — score: ${finalScore} (AI: ${aiTotal} + mech: ${mechTotal})`);
-
-        await new Promise(r => setTimeout(r, 300));
       } catch (err) {
         console.error(`  ERROR scoring "${title}": ${err.message}`);
         errors.push(`quality-score ${book.id}: ${err.message}`);
