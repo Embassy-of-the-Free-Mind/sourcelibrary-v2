@@ -1,7 +1,7 @@
 'use client';
 
 import { useState, useCallback, useRef, useEffect } from 'react';
-import { Search, X, LayoutGrid, List } from 'lucide-react';
+import { Search, X, LayoutGrid, List, Download } from 'lucide-react';
 import CollectionBookCard from '@/components/CollectionBookCard';
 import CollectionListView from '@/components/collections/CollectionListView';
 import CatalogPagination from '@/components/collections/CatalogPagination';
@@ -169,7 +169,7 @@ export default function CatalogBrowser({ initialBooks, initialTotal, languages }
     <div>
       {/* Controls */}
       <div className="flex flex-wrap items-end justify-between gap-4 mb-6">
-        <div>
+        <div className="flex items-center gap-3">
           <p className="text-sm text-muted">
             {query || language ? (
               `${total.toLocaleString()} of ${initialTotal.toLocaleString()} books`
@@ -177,6 +177,14 @@ export default function CatalogBrowser({ initialBooks, initialTotal, languages }
               `${total.toLocaleString()} books`
             )}
           </p>
+          <a
+            href={`/api/catalog/csv${language ? `?language=${encodeURIComponent(language)}` : ''}`}
+            className="inline-flex items-center gap-1.5 text-xs text-muted hover:text-accent-rust transition-colors"
+            title="Download catalog as CSV"
+          >
+            <Download className="w-3.5 h-3.5" />
+            CSV
+          </a>
         </div>
 
         <div className="flex flex-wrap items-center gap-3">
