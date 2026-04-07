@@ -61,7 +61,7 @@ interface PageProps {
 const getCachedBookLookup = cache(async (id: string) => {
   const db = await Promise.race([
     getDb(),
-    new Promise<never>((_, reject) => setTimeout(() => reject(new Error('DB timeout')), 5000)),
+    new Promise<never>((_, reject) => setTimeout(() => reject(new Error('DB timeout')), 10000)),
   ]);
   return findBookByIdOrSlug(db, id, {
     chapters: 0,
@@ -212,7 +212,7 @@ async function getBook(id: string): Promise<{ book: Book; pages: Page[]; totalBo
           page_type: 1,
           split_from_spread: 1,
         },
-        maxTimeMS: 5000,
+        maxTimeMS: 10000,
       })
       .sort({ page_number: 1 })
       .limit(110) // slight over-fetch to account for digitizer-inserts filtered below
@@ -251,7 +251,7 @@ async function getBook(id: string): Promise<{ book: Book; pages: Page[]; totalBo
     db.collection('pages')
       .findOne(
         { book_id: bookId, 'translation.data': { $exists: true, $ne: '' } },
-        { sort: { page_number: 1 }, projection: { _id: 0, 'translation.data': 1, page_number: 1 }, maxTimeMS: 3000 },
+        { sort: { page_number: 1 }, projection: { _id: 0, 'translation.data': 1, page_number: 1 }, maxTimeMS: 8000 },
       )
       .catch(() => null),
   ]);
