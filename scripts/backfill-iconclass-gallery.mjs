@@ -197,12 +197,12 @@ async function flushBatch(db, batch) {
       )
     );
 
-    // Update the source page's detected_images array
+    // Update the source page's detected_images array (best-effort — some pages have sparse arrays)
     ops.push(
       db.collection('pages').updateOne(
-        { id: item.pageId },
+        { id: item.pageId, [`detected_images.${item.detectionIndex}`]: { $ne: null } },
         { $set: { [`detected_images.${item.detectionIndex}.metadata.iconclass`]: item.codes } }
-      )
+      ).catch(() => {}) // Skip silently if page array is sparse
     );
   }
 
