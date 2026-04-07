@@ -1,5 +1,6 @@
 import { NextRequest, NextResponse } from 'next/server';
 import { getDb } from '@/lib/mongodb';
+import { browseBooks, type SortOption } from '@/lib/books-catalog';
 
 export const maxDuration = 30;
 
@@ -7,11 +8,13 @@ export const maxDuration = 30;
  * GET /api/collections/[id]
  *
  * Get collection metadata and its books with pagination/sorting.
+ * Books are served from Supabase (fast) with MongoDB fallback.
  *
  * Query params:
  *   - mode: 'manifest' returns lightweight data for all books (client-side filter/sort)
  *   - sort: 'year_asc' (default), 'year_desc', 'title', 'author', 'recent', 'popular', 'relevance'
  *   - language: filter by language
+ *   - q: search query (title/author)
  *   - limit: max results (default 60, max 200)
  *   - offset: pagination offset
  */
@@ -31,121 +34,94 @@ export async function GET(
 
     const db = await getDb();
 
-    // Get collection metadata (slug stored as "slug" field)
+    // Get collection metadata from MongoDB (small doc, fast)
     const collection = await db.collection('collections').findOne({ slug: id });
     if (!collection) {
       return NextResponse.json({ error: 'Collection not found' }, { status: 404 });
     }
 
-    // Art-only collections filter by resource_type.
-    // Book collections include both books AND artworks (mixed content).
     const isArtCollection = collection.collection_type === 'visual_art';
+    const { _id, ...collectionClean } = collection;
 
-    const filter: Record<string, unknown> = isArtCollection
-      ? { collections: id, resource_type: { $exists: true } }
-      : {
-          collections: id,
-          $or: [
-            { visible: true, pages_count: { $gt: 0 }, pages_translated: { $gt: 0 } },
-            { resource_type: { $exists: true } },
-          ],
-        };
+    // Map API sort params to Supabase sort options
+    const sortMap: Record<string, SortOption> = {
+      year_asc: 'year_asc',
+      year_desc: 'year_desc',
+      title: 'title',
+      author: 'author',
+      recent: 'recent',
+      last_translated: 'last_translated',
+      popular: 'popular',
+      relevance: 'quality', // collection_scores not in Supabase; quality_score is closest proxy
+    };
+    const sbSort = sortMap[sort] || 'year_asc';
 
-    // Manifest mode: return lightweight data for all books in one shot.
-    // Enables instant client-side search/sort/filter. ~50-100KB for 2,000 books.
+    // Manifest mode: return all books for client-side filter/sort
     if (mode === 'manifest') {
-      const manifestProjection = {
-        _id: 0, id: 1, slug: 1, title: 1, display_title: 1, author: 1, year: 1,
-        language: 1, pages_count: 1, pages_ocr: 1, pages_translated: 1, pages_blank: 1,
-        published: 1, read_count: 1, thumbnail: 1, thumbnail_blob: 1,
-        is_first_translation: 1, ft_disposition: 1,
-        created_at: 1, last_translation_at: 1,
-        resource_type: 1, medium: 1, enrichment: 1,
-      };
-      // Include relevance score for this collection
-      const manifestProjectionWithScore = {
-        ...manifestProjection,
-        [`collection_scores.${id}.relevance`]: 1,
-      };
-      const allBooks = await db.collection('books')
-        .find(filter, { projection: manifestProjectionWithScore, maxTimeMS: 15000 })
-        .toArray();
+      const { books: sbBooks, total } = await browseBooks({
+        collection: id,
+        hasTranslation: !isArtCollection,
+        sort: sbSort,
+        limit: 1000, // manifest wants everything
+      });
 
-      // Flatten relevance score to top level
-      const books = allBooks.map(({ collection_scores, ...rest }) => ({
-        ...rest,
-        relevance: collection_scores?.[id]?.relevance ?? 0,
+      const books = sbBooks.map(b => ({
+        id: b.id, slug: b.slug, title: b.title, display_title: b.display_title,
+        author: b.author, year: b.year, language: b.language,
+        pages_count: b.pages_count, pages_ocr: b.pages_ocr,
+        pages_translated: b.pages_translated, pages_blank: b.pages_blank,
+        published: b.published, read_count: b.read_count,
+        thumbnail: b.thumbnail, thumbnail_blob: b.thumbnail_blob,
+        is_first_translation: b.is_first_translation,
+        created_at: null, last_translation_at: null,
+        resource_type: null, medium: null, enrichment: null,
+        relevance: b.quality_score || 0,
       }));
 
-      return NextResponse.json({
-        books,
-        total: books.length,
-      });
+      return NextResponse.json({ books, total });
     }
 
-    if (language) filter.language = language;
-    if (q) {
-      const escaped = q.replace(/[.*+?^${}()|[\]\\]/g, '\\$&');
-      filter.$or = [
-        { title: { $regex: escaped, $options: 'i' } },
-        { display_title: { $regex: escaped, $options: 'i' } },
-        { author: { $regex: escaped, $options: 'i' } },
-      ];
-    }
+    // Standard paginated query via Supabase
+    const { books: sbBooks, total } = await browseBooks({
+      collection: id,
+      hasTranslation: !isArtCollection,
+      language: language || undefined,
+      search: q || undefined,
+      sort: sbSort,
+      offset,
+      limit,
+    });
 
-    // Sort — use 'published' for date sorts (artworks don't have 'year')
-    const sortMap: Record<string, Record<string, 1 | -1>> = {
-      year_asc: { published: 1, title: 1 },
-      year_desc: { published: -1, title: 1 },
-      title: { title: 1 },
-      author: { author: 1, title: 1 },
-      recent: { created_at: -1 },
-      last_translated: { last_translation_at: -1, title: 1 },
-      popular: { read_count: -1, title: 1 },
-      relevance: { [`collection_scores.${id}.relevance`]: -1, read_count: -1 },
-    };
-    const sortObj = sortMap[sort] || sortMap.year_asc;
+    const books = sbBooks.map(b => ({
+      id: b.id, slug: b.slug, title: b.title, display_title: b.display_title,
+      author: b.author, year: b.year, language: b.language,
+      pages_count: b.pages_count, pages_ocr: b.pages_ocr,
+      pages_translated: b.pages_translated, pages_blank: b.pages_blank,
+      photo: b.photo, categories: b.categories,
+      thumbnail: b.thumbnail, thumbnail_blob: b.thumbnail_blob,
+      published: b.published, read_count: b.read_count,
+      is_first_translation: b.is_first_translation,
+    }));
 
-    const projection = {
-      _id: 0, id: 1, slug: 1, title: 1, display_title: 1, author: 1, year: 1,
-      language: 1, pages_count: 1, pages_ocr: 1, pages_translated: 1, pages_blank: 1,
-      photo: 1, categories: 1, thumbnail: 1, thumbnail_blob: 1, published: 1, read_count: 1,
-      resource_type: 1, medium: 1, 'enrichment.subject': 1, 'enrichment.genre': 1,
-      is_first_translation: 1, ft_disposition: 1,
-    };
+    // Highlights: top 5 by quality score
+    const { books: highlightBooks } = await browseBooks({
+      collection: id,
+      hasTranslation: !isArtCollection,
+      sort: 'quality',
+      limit: 5,
+    });
 
-    const highlightProjection = {
-      ...projection,
-      reading_summary: 1,
-      read_count: 1,
-      quality_score: 1,
-    };
-
-    const total = (q || language)
-      ? await db.collection('books').countDocuments(filter, { maxTimeMS: 10000 })
-      : (collection.book_count as number) || 0;
-
-    const [books, highlights] = await Promise.all([
-      db.collection('books')
-        .find(filter, { projection, maxTimeMS: 15000 })
-        .sort(sortObj)
-        .skip(offset)
-        .limit(limit)
-        .toArray(),
-      // Top 5: art collections use main filter; book collections prefer translated books (not artworks)
-      db.collection('books')
-        .find(
-          isArtCollection
-            ? { collections: id, resource_type: { $exists: true } }
-            : { collections: id, visible: true, pages_translated: { $gt: 0 }, resource_type: { $exists: false } },
-          { projection: highlightProjection, maxTimeMS: 10000 },
-        )
-        .sort(isArtCollection ? { title: 1 } : { quality_score: -1, read_count: -1, pages_translated: -1 })
-        .limit(5)
-        .toArray(),
-    ]);
-
-    const { _id, ...collectionClean } = collection;
+    const highlights = highlightBooks.map(b => ({
+      id: b.id, slug: b.slug, title: b.title, display_title: b.display_title,
+      author: b.author, year: b.year, language: b.language,
+      pages_count: b.pages_count, pages_ocr: b.pages_ocr,
+      pages_translated: b.pages_translated, pages_blank: b.pages_blank,
+      photo: b.photo, categories: b.categories,
+      thumbnail: b.thumbnail, thumbnail_blob: b.thumbnail_blob,
+      published: b.published, read_count: b.read_count,
+      is_first_translation: b.is_first_translation,
+      quality_score: b.quality_score,
+    }));
 
     return NextResponse.json({
       collection: collectionClean,
