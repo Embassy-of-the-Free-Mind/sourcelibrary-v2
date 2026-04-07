@@ -389,6 +389,7 @@ async function searchGallery(db: any, query: string, queryRegex: RegExp, limit: 
             },
           },
         },
+        { $match: { $or: [{ thumbnail_url: { $ne: null } }, { extracted_url: { $ne: null } }] } },
         { $limit: limit },
         { $project: { page_id: 1, detection_index: 1, description: 1, type: 1, thumbnail_url: 1, extracted_url: 1, book_id: 1, book_title: 1, gallery_quality: 1 } },
       ], { maxTimeMS: 3000 }).toArray();
@@ -404,6 +405,8 @@ async function searchGallery(db: any, query: string, queryRegex: RegExp, limit: 
               { 'metadata.subjects': queryRegex },
               { 'metadata.figures': queryRegex },
             ],
+            // Exclude images without thumbnails
+            $and: [{ $or: [{ thumbnail_url: { $ne: null } }, { extracted_url: { $ne: null } }] }],
           },
           { projection: { page_id: 1, detection_index: 1, description: 1, type: 1, thumbnail_url: 1, extracted_url: 1, book_id: 1, book_title: 1, gallery_quality: 1 } }
         )
