@@ -336,6 +336,101 @@ source-library search "alchemy" --json | jq .results`}
         </div>
       </section>
 
+      {/* Scholarly Standards */}
+      <section className="mb-16">
+        <h2 className="text-2xl font-semibold text-primary mb-2">Scholarly Standards</h2>
+        <p className="text-secondary mb-6 max-w-2xl">
+          Every book is available through two open standards used by digital humanities tools.
+          IIIF serves page images; DTS serves structured text. Both are machine-readable.
+        </p>
+
+        <div className="grid md:grid-cols-2 gap-6">
+          {/* DTS */}
+          <div className="bg-white rounded-xl border border-border-light overflow-hidden">
+            <div className="bg-stone-50 px-4 py-3 border-b border-border-light">
+              <h3 className="font-semibold text-primary">Distributed Text Services (DTS) v1.0</h3>
+              <p className="text-secondary text-sm mt-1">Navigate, cite, and retrieve text passages</p>
+            </div>
+            <div className="p-4 space-y-2">
+              <div className="overflow-x-auto">
+                <table className="w-full text-sm">
+                  <tbody className="divide-y divide-stone-100">
+                    <tr>
+                      <td className="py-2 pr-3"><span className="px-2 py-0.5 bg-green-100 text-green-700 text-xs font-mono rounded">GET</span></td>
+                      <td className="py-2 pr-4 font-mono text-primary whitespace-nowrap">/api/dts</td>
+                      <td className="py-2 text-secondary">Entry point</td>
+                    </tr>
+                    <tr>
+                      <td className="py-2 pr-3"><span className="px-2 py-0.5 bg-green-100 text-green-700 text-xs font-mono rounded">GET</span></td>
+                      <td className="py-2 pr-4 font-mono text-primary whitespace-nowrap">/api/dts/collection</td>
+                      <td className="py-2 text-secondary">Browse collections and books</td>
+                    </tr>
+                    <tr>
+                      <td className="py-2 pr-3"><span className="px-2 py-0.5 bg-green-100 text-green-700 text-xs font-mono rounded">GET</span></td>
+                      <td className="py-2 pr-4 font-mono text-primary whitespace-nowrap">/api/dts/navigation</td>
+                      <td className="py-2 text-secondary">Chapters and pages per book</td>
+                    </tr>
+                    <tr>
+                      <td className="py-2 pr-3"><span className="px-2 py-0.5 bg-green-100 text-green-700 text-xs font-mono rounded">GET</span></td>
+                      <td className="py-2 pr-4 font-mono text-primary whitespace-nowrap">/api/dts/document</td>
+                      <td className="py-2 text-secondary">Retrieve text by page, chapter, or range</td>
+                    </tr>
+                  </tbody>
+                </table>
+              </div>
+              <div className="bg-stone-900 rounded-lg p-3 space-y-1">
+                <code className="text-stone-400 text-xs block"># Get chapter 3 in English</code>
+                <code className="text-stone-300 text-sm block">GET /api/dts/document?resource=&#123;bookId&#125;&amp;ref=ch3&amp;edition=translation</code>
+              </div>
+              <p className="text-xs text-muted pt-1">
+                <a href="https://distributed-text-services.github.io/specifications/" target="_blank" rel="noopener noreferrer" className="text-accent-rust hover:underline">DTS v1.0 Specification</a>
+              </p>
+            </div>
+          </div>
+
+          {/* IIIF */}
+          <div className="bg-white rounded-xl border border-border-light overflow-hidden">
+            <div className="bg-stone-50 px-4 py-3 border-b border-border-light">
+              <h3 className="font-semibold text-primary">IIIF Presentation 3.0 + Content Search 2.0</h3>
+              <p className="text-secondary text-sm mt-1">Page images, facsimile viewing, full-text search</p>
+            </div>
+            <div className="p-4 space-y-2">
+              <div className="overflow-x-auto">
+                <table className="w-full text-sm">
+                  <tbody className="divide-y divide-stone-100">
+                    <tr>
+                      <td className="py-2 pr-3"><span className="px-2 py-0.5 bg-green-100 text-green-700 text-xs font-mono rounded">GET</span></td>
+                      <td className="py-2 pr-4 font-mono text-primary whitespace-nowrap">/api/iiif/:id/manifest</td>
+                      <td className="py-2 text-secondary">IIIF manifest with canvases and metadata</td>
+                    </tr>
+                    <tr>
+                      <td className="py-2 pr-3"><span className="px-2 py-0.5 bg-green-100 text-green-700 text-xs font-mono rounded">GET</span></td>
+                      <td className="py-2 pr-4 font-mono text-primary whitespace-nowrap">/api/iiif/:id/search</td>
+                      <td className="py-2 text-secondary">Search OCR and translation text within a book</td>
+                    </tr>
+                    <tr>
+                      <td className="py-2 pr-3"><span className="px-2 py-0.5 bg-green-100 text-green-700 text-xs font-mono rounded">GET</span></td>
+                      <td className="py-2 pr-4 font-mono text-primary whitespace-nowrap">/api/iiif/:id/autocomplete</td>
+                      <td className="py-2 text-secondary">Term completion for search</td>
+                    </tr>
+                  </tbody>
+                </table>
+              </div>
+              <div className="bg-stone-900 rounded-lg p-3 space-y-1">
+                <code className="text-stone-400 text-xs block"># Search for &quot;mercury&quot; within a book</code>
+                <code className="text-stone-300 text-sm block">GET /api/iiif/&#123;bookId&#125;/search?q=mercury</code>
+              </div>
+              <p className="text-xs text-muted pt-1">
+                Manifests work with{' '}
+                <a href="https://projectmirador.org/" target="_blank" rel="noopener noreferrer" className="text-accent-rust hover:underline">Mirador</a>,{' '}
+                <a href="https://universalviewer.io/" target="_blank" rel="noopener noreferrer" className="text-accent-rust hover:underline">Universal Viewer</a>, and any IIIF client.{' '}
+                <a href="https://iiif.io/api/presentation/3.0/" target="_blank" rel="noopener noreferrer" className="text-accent-rust hover:underline">Spec</a>
+              </p>
+            </div>
+          </div>
+        </div>
+      </section>
+
       {/* LLMs.txt + Pipeline */}
       <section className="mb-16 space-y-4">
         <a

@@ -213,6 +213,26 @@ GET /api/dts/document?resource={book_id}&ref=1&mediaType=text/html   # HTML form
 
 Returns JSON-LD (Collection/Navigation) or plain text/HTML (Document). Complements our IIIF manifests (image layer) with a text layer for structured citation.
 
+### IIIF Content Search API 2.0
+
+Search within a book's OCR and translation text. Results are IIIF Annotations with TextQuoteSelector highlights, compatible with Mirador and Universal Viewer.
+
+**Search within a book:**
+```
+GET /api/iiif/{book_id}/search?q=mercury           # Search OCR + translation text
+GET /api/iiif/{book_id}/search?q=prima+materia      # Multi-word search
+```
+
+**Autocomplete:**
+```
+GET /api/iiif/{book_id}/autocomplete?q=merc         # Term completion
+```
+
+**IIIF Manifest (includes SearchService2):**
+```
+GET /api/iiif/{book_id}/manifest                    # Full IIIF Presentation 3.0 manifest
+```
+
 ## Citation Format
 
 All published editions have DOIs via Zenodo. When citing Source Library translations:
