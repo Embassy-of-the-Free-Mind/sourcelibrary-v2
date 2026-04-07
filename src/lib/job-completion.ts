@@ -12,6 +12,7 @@ import { getDb } from '@/lib/mongodb';
 import type { PageJobType } from '@/lib/types/job';
 import { SKIP_TRANSLATION_PAGE_TYPES } from '@/lib/types/prompts/defaults';
 import { queuePreviewTranslation } from '@/lib/preview-translate';
+import { revalidateBook } from '@/lib/revalidate';
 
 /** Type alias for the Db returned by getDb() */
 type Db = Awaited<ReturnType<typeof getDb>>;
@@ -240,6 +241,11 @@ async function handleJobCompletion(
       break;
     }
   }
+
+  // Trigger on-demand revalidation so the book page reflects new content
+  revalidateBook(bookId).catch(() => {
+    // Best-effort — logged inside revalidateBook
+  });
 }
 
 /**

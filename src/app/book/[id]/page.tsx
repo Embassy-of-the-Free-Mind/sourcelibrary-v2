@@ -39,8 +39,8 @@ import { formatAuthor } from '@/lib/utils';
 import AuthorName from '@/components/AuthorName';
 import SiteHeader from '@/components/layout/SiteHeader';
 
-// ISR: rebuild at most every hour (requires no searchParams/headers() usage)
-export const revalidate = 600;
+// Static until on-demand revalidation. Pipeline calls /api/admin/revalidate-book after OCR/translation/enrichment.
+export const revalidate = false;
 
 // Run SSR near the database to cut cross-region latency (~200ms RTT savings)
 export const preferredRegion = 'fra1';

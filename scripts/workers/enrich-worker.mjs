@@ -37,6 +37,15 @@
 import { MongoClient } from 'mongodb';
 import { GoogleGenerativeAI } from '@google/generative-ai';
 
+/** Trigger on-demand revalidation for a book page after enrichment completes. */
+async function revalidateBookPage(bookId) {
+  try {
+    const headers = { 'Content-Type': 'application/json' };
+    if (process.env.REVALIDATE_SECRET) headers['x-revalidate-secret'] = process.env.REVALIDATE_SECRET;
+    await fetch(`https://sourcelibrary.org/api/admin/revalidate-book/${bookId}`, { method: 'POST', headers });
+  } catch { /* best-effort */ }
+}
+
 // ── Config ──
 const MONGODB_URI = process.env.MONGODB_URI;
 const DEFAULT_MODEL = 'gemini-3-flash-preview';
@@ -1272,6 +1281,7 @@ async function main() {
         await enrichBook(db, book);
 
         await setPipelineStatus(db, book.id, 'summary_indexed', { 'pipeline_auto.retry_count': 0 });
+        revalidateBookPage(book.id).catch(() => {});
         enriched++;
       } catch (err) {
         const retries = book.pipeline_auto?.retry_count || 0;
@@ -1321,6 +1331,7 @@ async function main() {
         await extractChaptersForBook(db, book.id);
 
         await setPipelineStatus(db, book.id, 'chapters_complete', { 'pipeline_auto.retry_count': 0 });
+        revalidateBookPage(book.id).catch(() => {});
         chaptersExtracted++;
       } catch (err) {
         if (err.message?.includes('429') || err.message?.includes('RESOURCE_EXHAUSTED')) rotateKey();

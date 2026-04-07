@@ -54,6 +54,15 @@ if (API_KEYS.length === 0) {
   process.exit(1);
 }
 
+/** Trigger on-demand revalidation for a book page after translation completes. */
+async function revalidateBookPage(bookId) {
+  try {
+    const headers = { 'Content-Type': 'application/json' };
+    if (process.env.REVALIDATE_SECRET) headers['x-revalidate-secret'] = process.env.REVALIDATE_SECRET;
+    await fetch(`https://sourcelibrary.org/api/admin/revalidate-book/${bookId}`, { method: 'POST', headers });
+  } catch { /* best-effort */ }
+}
+
 let currentKeyIndex = 0;
 function getClient() {
   return new GoogleGenerativeAI(API_KEYS[currentKeyIndex % API_KEYS.length]);
@@ -707,6 +716,9 @@ async function processBook(db, book, job, globalCounter, deadline) {
       label,
       bookId: book.id,
     });
+
+    // Trigger on-demand revalidation so the book page reflects new translations
+    revalidateBookPage(book.id).catch(() => {});
   } else {
     // Circuit breaker: if 0 pages translated this run AND the book was already attempted before,
     // it's stuck (e.g. Gemini safety filters blocking all pages). Mark needs_attention instead of spinning.
