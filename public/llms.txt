@@ -180,6 +180,39 @@ GET /books
 
 Returns all books in the library with metadata.
 
+### Distributed Text Services (DTS) API
+
+Source Library implements the [DTS v1.0 specification](https://distributed-text-services.github.io/specifications/) for standards-compliant text citation and passage retrieval.
+
+**Entry point:**
+```
+GET /api/dts
+```
+
+**Browse collections and books:**
+```
+GET /api/dts/collection                    # Root: all collections
+GET /api/dts/collection?id=alchemy         # Books in alchemy collection
+GET /api/dts/collection?id={book_id}       # Single book metadata with citation structure
+```
+
+**Navigate citation structure:**
+```
+GET /api/dts/navigation?resource={book_id}&down=1     # Chapters (or pages if no chapters)
+GET /api/dts/navigation?resource={book_id}&ref=ch3    # Info about chapter 3
+GET /api/dts/navigation?resource={book_id}&ref=ch3&down=1  # Pages in chapter 3
+```
+
+**Retrieve text passages:**
+```
+GET /api/dts/document?resource={book_id}&ref=42              # Page 42 (original language)
+GET /api/dts/document?resource={book_id}&ref=ch1&edition=translation  # Chapter 1 translation
+GET /api/dts/document?resource={book_id}&start=10&end=20     # Page range
+GET /api/dts/document?resource={book_id}&ref=1&mediaType=text/html   # HTML format
+```
+
+Returns JSON-LD (Collection/Navigation) or plain text/HTML (Document). Complements our IIIF manifests (image layer) with a text layer for structured citation.
+
 ## Citation Format
 
 All published editions have DOIs via Zenodo. When citing Source Library translations:
