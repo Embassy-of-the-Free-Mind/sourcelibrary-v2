@@ -11,6 +11,17 @@ import sharp from 'sharp';
 import { storagePut } from '@/lib/storage';
 import { images } from '@/lib/api-client/images';
 
+const GALLERY_IIIF_WIDTH = 4000; // Request high-res from IIIF sources
+
+/**
+ * Upgrade an IIIF URL to request a higher-resolution image.
+ * Handles /full/1000,/ and /full/pct:50/ and /full/max/ styles.
+ */
+function upgradeIiifUrl(url: string, width: number): string {
+  if (!url.includes('/full/')) return url;
+  return url.replace(/\/full\/(full|max|\d+,|pct:\d+)\//, `/full/${width},/`);
+}
+
 interface GenerateGalleryImagesInput {
   sourceImageUrl: string;
   bbox: { x: number; y: number; width: number; height: number };
@@ -38,8 +49,20 @@ export async function generateGalleryImages(
 ): Promise<GenerateGalleryImagesResult> {
   const { sourceImageUrl, bbox, rotation = 0, bookId, pageId, detectionIndex } = input;
 
-  // Fetch source image
-  const rawBuffer = await images.fetchBuffer(sourceImageUrl);
+  // Try IIIF high-res first, fall back to original URL
+  const isIiif = sourceImageUrl.includes('/full/') || sourceImageUrl.includes('/iiif/');
+  let rawBuffer: Buffer;
+  if (isIiif) {
+    const hiresUrl = upgradeIiifUrl(sourceImageUrl, GALLERY_IIIF_WIDTH);
+    try {
+      rawBuffer = await images.fetchBuffer(hiresUrl, { timeout: 30000 });
+    } catch {
+      // IIIF upgrade failed (404, timeout, etc.) — fall back to original
+      rawBuffer = await images.fetchBuffer(sourceImageUrl);
+    }
+  } else {
+    rawBuffer = await images.fetchBuffer(sourceImageUrl);
+  }
 
   // Get original dimensions for bbox normalization
   const rawMeta = await sharp(rawBuffer).metadata();
@@ -65,8 +88,8 @@ export async function generateGalleryImages(
   }
 
   // Downscale oversized images before cropping to avoid memory/timeout issues
-  // Max 3000px on longest side — plenty for gallery quality
-  const MAX_DIM = 3000;
+  // Max 4000px on longest side — matches hires endpoint quality
+  const MAX_DIM = 4000;
   let imageBuffer = rawBuffer;
   let imgWidth = origWidth;
   let imgHeight = origHeight;
