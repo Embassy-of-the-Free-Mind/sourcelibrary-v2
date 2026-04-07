@@ -61,17 +61,17 @@ export default function robots(): MetadataRoute.Robots {
       // GPTBot, Claude-Web, etc. — access the structured API
       {
         userAgent: 'GPTBot',
-        allow: ['/api/search', '/api/books/', '/llms.txt', '/terms'],
+        allow: ['/api/search', '/api/books/', '/llms.txt', '/terms', '/developers'],
         disallow: '/',
       },
       {
         userAgent: 'Claude-Web',
-        allow: ['/api/search', '/api/books/', '/llms.txt', '/terms'],
+        allow: ['/api/search', '/api/books/', '/llms.txt', '/terms', '/developers'],
         disallow: '/',
       },
       {
         userAgent: 'Anthropic-AI',
-        allow: ['/api/search', '/api/books/', '/llms.txt', '/terms'],
+        allow: ['/api/search', '/api/books/', '/llms.txt', '/terms', '/developers'],
         disallow: '/',
       },
     ],
