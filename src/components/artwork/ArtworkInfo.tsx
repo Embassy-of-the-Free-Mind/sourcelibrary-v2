@@ -63,6 +63,7 @@ export default function ArtworkInfo({ book, collections, prevWork, nextWork }: A
   const enrichCrossRefs = enrichment?.cross_references || [];
   const enrichFigures = enrichment?.figures_depicted || [];
   const enrichSymbols = enrichment?.symbols || [];
+  const enrichIconclass = enrichment?.iconclass || [];
   const archivedFullUrl = (book as any).archived_full_url || '';
   const fullWidth = (book as any).full_width || commonsWidth;
   const fullHeight = (book as any).full_height || commonsHeight;
@@ -203,13 +204,26 @@ export default function ArtworkInfo({ book, collections, prevWork, nextWork }: A
             </div>
 
             {/* Figures & Symbols */}
-            {(enrichFigures.length > 0 || enrichSymbols.length > 0) && (
+            {(enrichFigures.length > 0 || enrichSymbols.length > 0 || enrichIconclass.length > 0) && (
               <div className="flex flex-wrap gap-1.5 mt-5 pt-5 border-t" style={{ borderColor: 'var(--border-light)' }}>
                 {enrichFigures.map((f: string) => (
                   <span key={f} className="px-2 py-0.5 text-xs rounded-full border" style={{ borderColor: 'var(--border-light)', color: 'var(--text-secondary)' }}>{f}</span>
                 ))}
                 {enrichSymbols.map((s: string) => (
                   <span key={s} className="px-2 py-0.5 text-xs rounded-full border italic" style={{ borderColor: 'var(--border-light)', color: 'var(--text-muted)' }}>{s}</span>
+                ))}
+                {enrichIconclass.map((code: string) => (
+                  <a
+                    key={code}
+                    href={`https://iconclass.org/${encodeURIComponent(code)}`}
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    className="px-2 py-0.5 text-xs rounded-full border font-mono hover:opacity-80 transition-opacity"
+                    style={{ borderColor: 'var(--accent-primary)', color: 'var(--accent-primary)' }}
+                    title={`Iconclass: ${code}`}
+                  >
+                    {code}
+                  </a>
                 ))}
               </div>
             )}

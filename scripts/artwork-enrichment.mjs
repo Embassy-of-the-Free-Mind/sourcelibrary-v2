@@ -96,7 +96,8 @@ Analyze this artwork image and return JSON with these fields:
   "inscriptions_language": "The language of the inscription (e.g., 'Latin', 'Dutch', 'German', 'French', 'Italian'). Null if no inscription.",
   "has_readable_text": true,
   "figures_depicted": ["Named figures, historical persons, or figure types (e.g., 'Mercury', 'alchemist', 'Hermes Trismegistus')"],
-  "symbols": ["Identifiable symbols with specific iconographic meaning (e.g., 'caduceus', 'ouroboros', 'pelican-in-her-piety'). NOT generic items like 'tree' or 'building'."]
+  "symbols": ["Identifiable symbols with specific iconographic meaning (e.g., 'caduceus', 'ouroboros', 'pelican-in-her-piety'). NOT generic items like 'tree' or 'building'."],
+  "iconclass": ["2-5 Iconclass codes (iconclass.org) describing the image subjects. Use the most specific code that applies. Examples: '49E39' = alchemy, '92B' = Bacchus, '31A1' = canon/proportions, '61B2(MELANCHOLY)' = personification of Melancholy, '25F23(LION)' = lion. Top-level: 0=Abstract, 1=Religion, 2=Nature, 3=Human, 4=Society, 5=Ideas, 6=History, 7=Bible, 8=Literature, 9=Classical Myth. Key branches: 11H=saints, 14=astrology, 25F=animals, 25FF=fabulous animals, 31A=human figure, 48C=emblems/allegories, 49E39=alchemy, 61B2=personifications, 83=Greek/Roman lit, 92=classical gods, 97=Ovid metamorphoses."]
 }
 
 AVAILABLE COLLECTIONS:
@@ -214,6 +215,9 @@ async function main() {
       if (enrichment.inscriptions) {
         console.log(`  Inscriptions: ${enrichment.inscriptions.substring(0, 100)}...`);
       }
+      if (enrichment.iconclass?.length > 0) {
+        console.log(`  Iconclass: ${enrichment.iconclass.join(', ')}`);
+      }
       if (enrichment.cross_references?.length > 0) {
         console.log(`  Cross-refs: ${enrichment.cross_references.map(r => r.text_or_author).join(', ')}`);
       }
@@ -238,6 +242,7 @@ async function main() {
             has_readable_text: !!enrichment.has_readable_text,
             figures_depicted: enrichment.figures_depicted || [],
             symbols: enrichment.symbols || [],
+            iconclass: enrichment.iconclass || [],
             model: 'gemini-3.1-flash-lite-preview',
             enriched_at: new Date(),
           },
