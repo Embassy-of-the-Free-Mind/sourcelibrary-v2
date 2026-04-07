@@ -5,7 +5,7 @@ import ContentPageLayout, { ContentHeader } from '@/components/layout/ContentPag
 import ResearchClient from '@/components/research/ResearchClient';
 import type { CuratorSessionListItem } from '@/lib/api-client/types/research';
 
-export const revalidate = 600;
+export const revalidate = 86400;
 
 export const metadata: Metadata = {
   title: 'Research Sessions - Source Library',

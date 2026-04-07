@@ -6,7 +6,7 @@ export const metadata: Metadata = {
   robots: 'noindex',
 };
 
-export const revalidate = 600;
+export const revalidate = 86400;
 
 export default function TaxonomyPage() {
   return (

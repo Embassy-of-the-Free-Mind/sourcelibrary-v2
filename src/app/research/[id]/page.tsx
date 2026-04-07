@@ -7,7 +7,7 @@ import ConversationView from '@/components/research/ConversationView';
 import type { CuratorSession, BookRef } from '@/lib/api-client/types/research';
 import Link from 'next/link';
 
-export const revalidate = 600;
+export const revalidate = 86400;
 
 interface PageProps {
   params: Promise<{ id: string }>;

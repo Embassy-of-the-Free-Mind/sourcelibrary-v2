@@ -4,7 +4,7 @@ import ContentPageLayout, { ContentHeader } from '@/components/layout/ContentPag
 import { getDb } from '@/lib/mongodb';
 
 // ISR: rebuild every 6 hours. Allow 60s for first-hit generation.
-export const revalidate = 600;
+export const revalidate = 86400;
 export const maxDuration = 60;
 
 export const metadata: Metadata = {

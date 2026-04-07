@@ -7,7 +7,7 @@ export const metadata: Metadata = {
   description: 'The circle of scholars and readers translating the Western esoteric tradition.',
 };
 
-export const revalidate = 600;
+export const revalidate = 86400;
 
 interface MemberProfile {
   name: string;

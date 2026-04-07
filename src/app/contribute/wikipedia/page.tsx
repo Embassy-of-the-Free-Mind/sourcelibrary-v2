@@ -20,7 +20,7 @@ export const metadata: Metadata = {
 };
 
 // Dynamic — DB queries are too slow for build-time prerendering
-export const revalidate = 600;
+export const revalidate = 86400;
 
 // Config: which books to feature and where to post
 const FEATURED_BOOKS: {
