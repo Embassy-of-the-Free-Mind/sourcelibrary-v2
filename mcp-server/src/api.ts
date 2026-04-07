@@ -101,6 +101,7 @@ export async function searchLibrary(args: {
     url: r.page_number
       ? `https://sourcelibrary.org/book/${r.slug || r.book_id || r.id}?page=${r.page_number}`
       : `https://sourcelibrary.org/book/${r.slug || r.book_id || r.id}`,
+    iiif_manifest: `https://sourcelibrary.org/api/iiif/${r.book_id || r.id}/manifest`,
   }));
 
   return {
@@ -248,6 +249,8 @@ export async function getBook(args: { book_id: string }) {
     chapters: result.chapters,
     image_source: result.image_source,
     url: `https://sourcelibrary.org/book/${result.slug || result.id}`,
+    iiif_manifest: `https://sourcelibrary.org/api/iiif/${result.id}/manifest`,
+    dts_resource: `https://sourcelibrary.org/api/dts/collection?id=${result.id}`,
   };
 }
 

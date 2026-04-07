@@ -414,6 +414,22 @@ export async function GET(
       });
     }
 
+    // Content Search service (only if book has OCR)
+    if (book.pages_ocr > 0) {
+      manifest.service = [
+        {
+          id: `${BASE}/api/iiif/${id}/search`,
+          type: 'SearchService2',
+          service: [
+            {
+              id: `${BASE}/api/iiif/${id}/autocomplete`,
+              type: 'AutoCompleteService2',
+            },
+          ],
+        },
+      ];
+    }
+
     if (structures) {
       manifest.structures = structures;
     }
