@@ -18,8 +18,8 @@ import { MongoClient } from 'mongodb';
 // ---------------------------------------------------------------------------
 
 const ENDPOINTS = [
-  { name: 'home', url: 'https://sourcelibrary.org/' },
-  { name: 'book_page', url: 'https://sourcelibrary.org/book/de-voluptate-marsilio-ficino' },
+  // /api/health bypasses Cloudflare JS challenge (no browser required)
+  { name: 'health', url: 'https://sourcelibrary.org/api/health' },
   { name: 'api', url: 'https://sourcelibrary.org/api/books?limit=1' },
 ];
 
