@@ -20,6 +20,10 @@
     {
       "path": "/api/cron/warm",
       "schedule": "*/5 * * * *"
+    },
+    {
+      "path": "/api/cron/latency-trend",
+      "schedule": "0 * * * *"
     }
   ]
 }

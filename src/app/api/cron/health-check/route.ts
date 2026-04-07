@@ -23,6 +23,7 @@ interface HealthIssue {
 
 export async function GET() {
   const issues: HealthIssue[] = [];
+  const latencies: Record<string, number> = {};
   const t0 = Date.now();
 
   // 1. DB connectivity + latency
@@ -32,6 +33,7 @@ export async function GET() {
     const t1 = Date.now();
     await db.command({ ping: 1 });
     const pingMs = Date.now() - t1;
+    latencies.db_ping = pingMs;
     if (pingMs > THRESHOLDS.ping) {
       issues.push({ check: 'ping', detail: `${pingMs}ms (threshold: ${THRESHOLDS.ping}ms)`, severity: 'critical' });
     }
@@ -48,6 +50,7 @@ export async function GET() {
     const t2 = Date.now();
     await db.collection('books').findOne({}, { projection: { id: 1 }, maxTimeMS: 5000 } as any);
     const findMs = Date.now() - t2;
+    latencies.books_findOne = findMs;
     if (findMs > THRESHOLDS.findOne) {
       issues.push({ check: 'books_findOne', detail: `${findMs}ms (threshold: ${THRESHOLDS.findOne}ms)`, severity: 'warning' });
     }
@@ -124,6 +127,7 @@ export async function GET() {
       cron: 'health-check',
       timestamp: new Date(),
       duration_ms: duration,
+      latencies,
       status: status === 'healthy' ? 'success' : status === 'degraded' ? 'partial' : 'failed',
       failed: status === 'down',
       actions: { issues_found: issues.length },
