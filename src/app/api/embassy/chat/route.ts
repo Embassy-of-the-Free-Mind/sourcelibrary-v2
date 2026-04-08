@@ -5,6 +5,10 @@ import { ObjectId } from 'mongodb';
 import { generateLibrarianResponse, streamLibrarianResponse } from '@/lib/embassy/librarian';
 import { z } from 'zod';
 
+// Enable streaming on Vercel serverless (prevents response buffering)
+export const dynamic = 'force-dynamic';
+export const maxDuration = 60;
+
 const messageSchema = z.object({
   role: z.enum(['user', 'assistant']),
   content: z.string().min(1).max(10000),
@@ -153,8 +157,9 @@ export async function POST(request: NextRequest) {
       return new Response(readable, {
         headers: {
           'Content-Type': 'text/event-stream',
-          'Cache-Control': 'no-cache',
+          'Cache-Control': 'no-cache, no-transform',
           'Connection': 'keep-alive',
+          'X-Accel-Buffering': 'no',
         },
       });
     } catch (error) {
