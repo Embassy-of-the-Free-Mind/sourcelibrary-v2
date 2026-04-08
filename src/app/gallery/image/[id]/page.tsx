@@ -40,9 +40,20 @@ import { sendGAEvent } from '@/lib/ga';
 /** In-memory cache for prefetched gallery image API responses */
 const prefetchCache = new Map<string, Promise<GalleryImageDetail>>();
 
+/** Convert a URL to the same proxy URL that ImageWithMagnifier will render */
+function getDisplayUrl(url: string): string {
+  if (url.startsWith('/api/')) return url;
+  return `/api/image?url=${encodeURIComponent(url)}&w=400&q=70`;
+}
+
 function prefetchApiResponse(id: string) {
   if (prefetchCache.has(id)) return;
-  const promise = gallery.get(id);
+  const promise = gallery.get(id).then(detail => {
+    // Preload the display URL (proxy) that ImageWithMagnifier will actually render
+    const img = new window.Image();
+    img.src = getDisplayUrl(detail.imageUrl);
+    return detail;
+  });
   prefetchCache.set(id, promise);
   // Evict after 2 minutes to avoid stale data
   setTimeout(() => prefetchCache.delete(id), 120000);
@@ -261,15 +272,16 @@ export default function ImageDetailPage({
       // Fetch from prefetch cache (usually already resolved)
       const json = await getCachedOrFetch(imgId);
 
-      // Preload the actual image pixels before showing anything
+      // Preload the display URL (proxy) that ImageWithMagnifier will actually render
+      const displayUrl = getDisplayUrl(json.imageUrl);
       await new Promise<void>((resolve) => {
         const preload = new window.Image();
         preload.onload = () => resolve();
         preload.onerror = () => resolve();
-        preload.src = json.imageUrl;
+        preload.src = displayUrl;
       });
 
-      // Now update data and fade in — image is already cached
+      // Now update data and fade in — image is already in browser cache
       isNavigatingRef.current = true;
       setImageId(imgId);
       setData(json);
