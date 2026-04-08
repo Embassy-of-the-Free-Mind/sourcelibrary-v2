@@ -13,6 +13,10 @@ routes = [
 binding = "BUCKET"
 bucket_name = "sourcelibrary"
 
+# Images binding — transform R2 images without subrequests (avoids 9401 loop)
+[images]
+binding = "IMAGES"
+
 # Environment variables
 [vars]
 MAX_WIDTH = "4000"
