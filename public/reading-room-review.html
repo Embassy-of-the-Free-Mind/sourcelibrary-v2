@@ -1,0 +1,306 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Reading Room Hero — Image Review</title>
+<style>
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+  body { background: #1a1612; color: #fff; font-family: system-ui, sans-serif; overflow: hidden; height: 100vh; }
+
+  .viewer {
+    position: relative;
+    width: 100%;
+    height: 100vh;
+    display: flex;
+    flex-direction: column;
+  }
+
+  .image-container {
+    flex: 1;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    overflow: hidden;
+    position: relative;
+  }
+
+  .image-container img {
+    max-width: 100%;
+    max-height: 100%;
+    object-fit: contain;
+  }
+
+  /* Hero preview overlay */
+  .hero-preview {
+    position: absolute;
+    bottom: 0;
+    left: 0;
+    right: 0;
+    background: linear-gradient(to top, rgba(26,22,18,0.95) 0%, rgba(26,22,18,0.6) 60%, transparent 100%);
+    padding: 60px 48px 32px;
+    pointer-events: none;
+    opacity: 0;
+    transition: opacity 0.3s;
+  }
+  .hero-preview.visible { opacity: 1; }
+  .hero-preview h1 { font-size: 42px; font-weight: 500; margin-bottom: 8px; font-family: Georgia, serif; }
+  .hero-preview p { font-size: 15px; color: rgba(255,255,255,0.6); max-width: 520px; line-height: 1.6; }
+
+  .controls {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 16px 24px;
+    background: #111;
+    border-top: 1px solid #333;
+  }
+
+  .nav-btn {
+    background: #333;
+    border: none;
+    color: #fff;
+    padding: 10px 20px;
+    border-radius: 6px;
+    cursor: pointer;
+    font-size: 14px;
+  }
+  .nav-btn:hover { background: #444; }
+  .nav-btn:disabled { opacity: 0.3; cursor: default; }
+
+  .info {
+    text-align: center;
+    flex: 1;
+  }
+  .info .counter { font-size: 13px; color: #888; margin-bottom: 4px; }
+  .info .label { font-size: 16px; font-weight: 600; }
+  .info .source { font-size: 12px; color: #666; margin-top: 2px; }
+  .info .category {
+    display: inline-block;
+    font-size: 10px;
+    padding: 2px 8px;
+    border-radius: 10px;
+    margin-top: 4px;
+  }
+  .cat-collection { background: #2a4a2a; color: #8f8; }
+  .cat-generated { background: #4a2a4a; color: #f8f; }
+
+  .toggle-hero {
+    position: absolute;
+    top: 16px;
+    right: 16px;
+    background: rgba(0,0,0,0.6);
+    border: 1px solid #555;
+    color: #fff;
+    padding: 6px 12px;
+    border-radius: 4px;
+    cursor: pointer;
+    font-size: 12px;
+    z-index: 10;
+  }
+
+  .keyboard-hint {
+    position: absolute;
+    top: 16px;
+    left: 16px;
+    font-size: 11px;
+    color: #555;
+    z-index: 10;
+  }
+</style>
+</head>
+<body>
+<div class="viewer">
+  <div class="keyboard-hint">Arrow keys or swipe to navigate. H to toggle hero overlay.</div>
+  <button class="toggle-hero" onclick="toggleHero()">Toggle Hero Overlay (H)</button>
+
+  <div class="image-container" id="imageContainer">
+    <img id="mainImage" src="" alt="">
+    <div class="hero-preview" id="heroPreview">
+      <h1>The Reading Room</h1>
+      <p>Ask the Librarian about any text in the collection — alchemy, Hermetica, Kabbalah, astrology, natural philosophy.</p>
+    </div>
+  </div>
+
+  <div class="controls">
+    <button class="nav-btn" id="prevBtn" onclick="navigate(-1)">&#8592; Previous</button>
+    <div class="info">
+      <div class="counter" id="counter"></div>
+      <div class="label" id="label"></div>
+      <div class="source" id="source"></div>
+      <div id="categoryBadge"></div>
+    </div>
+    <button class="nav-btn" id="nextBtn" onclick="navigate(1)">Next &#8594;</button>
+  </div>
+</div>
+
+<script>
+const images = [
+  // === FROM THE COLLECTION ===
+  {
+    url: "https://images.sourcelibrary.org/gallery/6953a91277f38f6761bd545d/6953a91277f38f6761bd5460-0.jpg?v=1771876240457",
+    label: "Vatican Library Interior",
+    source: "Ephraem Syri Opera Omnia (1746)",
+    category: "collection"
+  },
+  {
+    url: "https://images.sourcelibrary.org/gallery/c87fadfa-1543-44b9-a138-573c144246e6/6959af9b1dfc1806c080b964-0.jpg",
+    label: "Alchemists Before a Library of Books",
+    source: "Musaeum Hermeticum (1677)",
+    category: "collection"
+  },
+  {
+    url: "https://images.sourcelibrary.org/gallery/93c0e5f5-40e5-4f9a-b07b-1d67ed2d05a2/69504445618fd88f7039b9ca-0.jpg?v=1771875355128",
+    label: "Bookshop Interior",
+    source: "Orbis Sensualium Pictus (1659)",
+    category: "collection"
+  },
+  {
+    url: "https://images.sourcelibrary.org/gallery/93c0e5f5-40e5-4f9a-b07b-1d67ed2d05a2/69504445618fd88f7039b9d2-0.jpg?v=1771875355823",
+    label: "Scholar in Study",
+    source: "Orbis Sensualium Pictus (1659)",
+    category: "collection"
+  },
+  {
+    url: "https://images.sourcelibrary.org/gallery/699065a1726f64800c10bff7/699065a2726f64800c10c039-0.jpg",
+    label: "Plato & Socrates at Writing Desk",
+    source: "Texts on Prognostication (medieval MS)",
+    category: "collection"
+  },
+  {
+    url: "https://images.sourcelibrary.org/gallery/699067d3249ce014347d422a/699067d3249ce014347d422d-0.jpg",
+    label: "Bernardus Silvester Writing",
+    source: "Bodleian Library MS. Digby 46",
+    category: "collection"
+  },
+  {
+    url: "https://images.sourcelibrary.org/gallery/6953cc7577f38f6761be2918/6953cc7577f38f6761be292b-0.jpg?v=1773156772100",
+    label: "St. Augustine as Scribe (quality: 1.0)",
+    source: "Illuminated Manuscripts in Classical and Medieval Times",
+    category: "collection"
+  },
+  {
+    url: "https://images.sourcelibrary.org/gallery/69904fba7d19f3f2aac1d6ad/69904fba7d19f3f2aac1d6c3-0.jpg?v=1773156889561",
+    label: "Athanasius Kircher in Library",
+    source: "China Illustrata (1667)",
+    category: "collection"
+  },
+  {
+    url: "https://images.sourcelibrary.org/gallery/6953e28477f38f6761be9922/6953e28477f38f6761be999b-0.jpg?v=1771876338032",
+    label: "Confucius in Library",
+    source: "Confucius Sinarum Philosophus (1687)",
+    category: "collection"
+  },
+  {
+    url: "https://images.sourcelibrary.org/gallery/699246b5bc722ec0ee811a16/699246b6bc722ec0ee811bc7-0.jpg",
+    label: "Man in Library with Globe",
+    source: "Sacred Books of the East, Vol. 33",
+    category: "collection"
+  },
+
+  // === WINNER: Grand Monastic Library (original A) ===
+  {
+    url: "https://mule-router-assets.muleusercontent.com/router_public/production/ephemeral/80dae038-9182-46f3-908c-39b7eee559f8/result_00.png",
+    label: "Grand Monastic Library (A) — ORIGINAL PICK",
+    source: "AI Generated — Wan2.6",
+    category: "generated"
+  },
+
+  // === ROUND 2: Grand Library + Librarian Figure ===
+  {
+    url: "https://mule-router-assets.muleusercontent.com/router_public/production/ephemeral/debed43d-3425-4fbf-b929-4172b8e4388c/result_00.png",
+    label: "Grand Library + Librarian (A)",
+    source: "AI Generated — Wan2.6 (full scene)",
+    category: "generated"
+  },
+  {
+    url: "https://mule-router-assets.muleusercontent.com/router_public/production/ephemeral/debed43d-3425-4fbf-b929-4172b8e4388c/result_01.png",
+    label: "Grand Library + Librarian (B)",
+    source: "AI Generated — Wan2.6 (full scene)",
+    category: "generated"
+  },
+  {
+    url: "https://mule-router-assets.muleusercontent.com/router_public/production/ephemeral/debed43d-3425-4fbf-b929-4172b8e4388c/result_02.png",
+    label: "Grand Library + Librarian (C)",
+    source: "AI Generated — Wan2.6 (full scene)",
+    category: "generated"
+  },
+  {
+    url: "https://mule-router-assets.muleusercontent.com/router_public/production/ephemeral/debed43d-3425-4fbf-b929-4172b8e4388c/result_03.png",
+    label: "Grand Library + Librarian (D)",
+    source: "AI Generated — Wan2.6 (full scene)",
+    category: "generated"
+  },
+
+  // === LIBRARIAN FIGURES (for compositing onto Library A) ===
+  {
+    url: "https://mule-router-assets.muleusercontent.com/router_public/production/ephemeral/df40baa5-e2b1-4ea2-84e9-fe6bc1686acf/result_00.png",
+    label: "Librarian Figure (A) — for compositing",
+    source: "AI Generated — dark bg for removal",
+    category: "generated"
+  },
+  {
+    url: "https://mule-router-assets.muleusercontent.com/router_public/production/ephemeral/df40baa5-e2b1-4ea2-84e9-fe6bc1686acf/result_01.png",
+    label: "Librarian Figure (B) — for compositing",
+    source: "AI Generated — dark bg for removal",
+    category: "generated"
+  },
+  {
+    url: "https://mule-router-assets.muleusercontent.com/router_public/production/ephemeral/df40baa5-e2b1-4ea2-84e9-fe6bc1686acf/result_02.png",
+    label: "Librarian Figure (C) — for compositing",
+    source: "AI Generated — dark bg for removal",
+    category: "generated"
+  },
+  {
+    url: "https://mule-router-assets.muleusercontent.com/router_public/production/ephemeral/df40baa5-e2b1-4ea2-84e9-fe6bc1686acf/result_03.png",
+    label: "Librarian Figure (D) — for compositing",
+    source: "AI Generated — dark bg for removal",
+    category: "generated"
+  },
+];
+
+let current = 0;
+let heroVisible = false;
+
+function render() {
+  const img = images[current];
+  document.getElementById('mainImage').src = img.url;
+  document.getElementById('counter').textContent = `${current + 1} / ${images.length}`;
+  document.getElementById('label').textContent = img.label;
+  document.getElementById('source').textContent = img.source;
+  document.getElementById('categoryBadge').innerHTML =
+    `<span class="category ${img.category === 'collection' ? 'cat-collection' : 'cat-generated'}">${img.category === 'collection' ? 'FROM COLLECTION' : 'AI GENERATED'}</span>`;
+  document.getElementById('prevBtn').disabled = current === 0;
+  document.getElementById('nextBtn').disabled = current === images.length - 1;
+}
+
+function navigate(dir) {
+  current = Math.max(0, Math.min(images.length - 1, current + dir));
+  render();
+}
+
+function toggleHero() {
+  heroVisible = !heroVisible;
+  document.getElementById('heroPreview').classList.toggle('visible', heroVisible);
+}
+
+document.addEventListener('keydown', (e) => {
+  if (e.key === 'ArrowLeft') navigate(-1);
+  if (e.key === 'ArrowRight') navigate(1);
+  if (e.key === 'h' || e.key === 'H') toggleHero();
+});
+
+// Touch swipe
+let touchStartX = 0;
+document.getElementById('imageContainer').addEventListener('touchstart', (e) => {
+  touchStartX = e.touches[0].clientX;
+});
+document.getElementById('imageContainer').addEventListener('touchend', (e) => {
+  const diff = touchStartX - e.changedTouches[0].clientX;
+  if (Math.abs(diff) > 50) navigate(diff > 0 ? 1 : -1);
+});
+
+render();
+</script>
+</body>
+</html>

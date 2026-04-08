@@ -34,7 +34,6 @@ interface FeaturedPassage {
 }
 
 interface ReadingRoomClientProps {
-  heroImages: { url: string; key: string }[];
   featuredPassage: FeaturedPassage | null;
 }
 
@@ -52,7 +51,7 @@ function timeAgo(dateStr: string): string {
   return d.toLocaleDateString('en-US', { month: 'short', day: 'numeric' });
 }
 
-export default function ReadingRoomClient({ heroImages, featuredPassage }: ReadingRoomClientProps) {
+export default function ReadingRoomClient({ featuredPassage }: ReadingRoomClientProps) {
   const { data: session, status } = useSession();
   const [messages, setMessages] = useState<Message[]>([]);
   const [input, setInput] = useState('');
@@ -112,7 +111,7 @@ export default function ReadingRoomClient({ heroImages, featuredPassage }: Readi
         if (res.status === 401) {
           setMessages(prev => [...prev, {
             role: 'assistant',
-            content: 'Please [sign in](/auth/signin?callbackUrl=/embassy) to talk with the Librarian. It\'s free — just create an account or sign in with Google.',
+            content: 'Please [sign in](/auth/signin?callbackUrl=/reading-room) to talk with the Librarian. It\'s free — just create an account or sign in with Google.',
           }]);
         } else {
           setMessages(prev => [...prev, {
@@ -203,25 +202,18 @@ export default function ReadingRoomClient({ heroImages, featuredPassage }: Readi
   return (
     <div className="min-h-screen bg-[#fdfcf9]">
       <SiteHeader variant="dark" />
-      {/* Hero with gallery art */}
+      {/* Hero with reading room painting */}
       <div className="relative bg-[#1a1612] overflow-hidden">
-        {/* Gallery image mosaic */}
-        {heroImages.length > 0 && (
-          <div className="absolute inset-0 grid grid-cols-3 sm:grid-cols-6 opacity-20">
-            {heroImages.map((img) => (
-              <div key={img.key} className="relative overflow-hidden">
-                {/* eslint-disable-next-line @next/next/no-img-element */}
-                <img
-                  src={img.url}
-                  alt=""
-                  className="absolute inset-0 w-full h-full object-cover"
-                  loading="eager"
-                />
-              </div>
-            ))}
-          </div>
-        )}
-        <div className="absolute inset-0 bg-gradient-to-b from-black/60 via-[#1a1612]/50 to-[#1a1612]" />
+        <div className="absolute inset-0">
+          {/* eslint-disable-next-line @next/next/no-img-element */}
+          <img
+            src="https://images.sourcelibrary.org/artwork/reading-room-hero.png"
+            alt=""
+            className="absolute inset-0 w-full h-full object-cover opacity-40"
+            loading="eager"
+          />
+        </div>
+        <div className="absolute inset-0 bg-gradient-to-b from-black/50 via-[#1a1612]/40 to-[#1a1612]" />
 
         <div className="relative max-w-[1200px] mx-auto px-6 md:px-12 pt-10 pb-12">
           <h1
@@ -392,7 +384,7 @@ export default function ReadingRoomClient({ heroImages, featuredPassage }: Readi
 
                 {!isSignedIn && status !== 'loading' && (
                   <p className="mt-2 text-[12px] text-[#8a8480] font-sans">
-                    <Link href="/auth/signin?callbackUrl=/embassy" className="text-[#9e4a3a] hover:underline">
+                    <Link href="/auth/signin?callbackUrl=/reading-room" className="text-[#9e4a3a] hover:underline">
                       Sign in
                     </Link>
                     {' '}to talk with the Librarian. Free — no membership required.
@@ -419,7 +411,7 @@ export default function ReadingRoomClient({ heroImages, featuredPassage }: Readi
                   {threads.map((thread) => (
                     <Link
                       key={thread.id}
-                      href={`/embassy/thread/${thread.id}`}
+                      href={`/reading-room/thread/${thread.id}`}
                       className="block py-3 border-b border-[#e8e4dc] hover:bg-[#f5f0e8]/50 transition-colors -mx-2 px-2 rounded"
                     >
                       <p className="text-sm font-body text-[#1a1612] line-clamp-2 leading-snug mb-1">

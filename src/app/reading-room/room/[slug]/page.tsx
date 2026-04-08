@@ -177,13 +177,13 @@ export default function RoomPage({ params }: { params: Promise<{ slug: string }>
   if (error) {
     return (
       <div className="min-h-screen bg-[#fdfcf9]">
-        <SiteHeader variant="light" breadcrumbs={[{ label: 'The Embassy', href: '/embassy' }]} />
+        <SiteHeader variant="light" breadcrumbs={[{ label: 'Reading Room', href: '/reading-room' }]} />
         <div className="max-w-[680px] mx-auto px-6 py-16 text-center">
           <h1 className="text-2xl font-serif text-[#1a1612] mb-4" style={{ fontWeight: 400 }}>
             {error}
           </h1>
-          <Link href="/embassy" className="text-sm text-[#9e4a3a] hover:underline font-sans">
-            Return to the Embassy
+          <Link href="/reading-room" className="text-sm text-[#9e4a3a] hover:underline font-sans">
+            Return to the Reading Room
           </Link>
         </div>
       </div>
@@ -192,14 +192,14 @@ export default function RoomPage({ params }: { params: Promise<{ slug: string }>
 
   return (
     <div className="min-h-screen bg-[#fdfcf9] flex flex-col">
-      <SiteHeader variant="light" breadcrumbs={[{ label: 'The Embassy', href: '/embassy' }]} />
+      <SiteHeader variant="light" breadcrumbs={[{ label: 'Reading Room', href: '/reading-room' }]} />
 
       {/* Room header */}
       <div className="border-b border-[#e8e4dc] bg-white">
         <div className="max-w-[800px] mx-auto px-6 py-4">
           <div className="flex items-center gap-3">
             <Link
-              href="/embassy"
+              href="/reading-room"
               className="text-[#8a8480] hover:text-[#6b6560] transition-colors"
               aria-label="Back to Embassy"
             >
@@ -285,7 +285,7 @@ export default function RoomPage({ params }: { params: Promise<{ slug: string }>
             </form>
           ) : (
             <p className="text-center text-[13px] text-[#8a8480] font-sans py-2">
-              <Link href={`/auth/signin?callbackUrl=/embassy/room/${slug}`} className="text-[#9e4a3a] hover:underline">
+              <Link href={`/auth/signin?callbackUrl=/reading-room/room/${slug}`} className="text-[#9e4a3a] hover:underline">
                 Sign in
               </Link>
               {' '}to join the conversation.

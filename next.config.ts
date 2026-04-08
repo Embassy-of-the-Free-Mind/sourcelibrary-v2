@@ -127,6 +127,22 @@ const nextConfig: NextConfig = {
         destination: '/shwep',
         permanent: false,
       },
+      // Embassy → Reading Room rename
+      {
+        source: '/embassy',
+        destination: '/reading-room',
+        permanent: true,
+      },
+      {
+        source: '/embassy/thread/:id',
+        destination: '/reading-room/thread/:id',
+        permanent: true,
+      },
+      {
+        source: '/embassy/room/:slug',
+        destination: '/reading-room/room/:slug',
+        permanent: true,
+      },
     ];
   },
 };
