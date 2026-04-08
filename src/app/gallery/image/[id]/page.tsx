@@ -37,36 +37,28 @@ import SimilarImages from '@/components/gallery/SimilarImages';
 import { useSession } from 'next-auth/react';
 import { sendGAEvent } from '@/lib/ga';
 
-/** Build a GalleryImageDetail from cached GalleryItem list data (no API call needed) */
-function detailFromListItem(item: GalleryItem, bookId: string, bookSlug?: string): GalleryImageDetail {
-  const id = `${item.pageId}-${item.detectionIndex}`;
-  return {
-    id,
-    pageId: item.pageId,
-    detectionIndex: item.detectionIndex,
-    imageUrl: item.extractedUrl || item.imageUrl,
-    fullPageUrl: item.imageUrl, // best we have from the list
-    extractedUrl: item.extractedUrl,
-    thumbnailUrl: item.thumbnailUrl,
-    rotation: item.rotation ?? 0,
-    description: item.description,
-    type: item.type,
-    galleryQuality: item.galleryQuality ?? null,
-    museumDescription: item.museumDescription ?? null,
-    metadata: item.metadata ?? null,
-    bbox: item.bbox,
-    book: {
-      id: bookId,
-      slug: bookSlug,
-      title: item.bookTitle,
-      author: item.author,
-      year: item.year,
-    },
-    pageNumber: item.pageNumber,
-    readUrl: `/book/${bookSlug || bookId}/page/${item.pageId}`,
-    galleryUrl: `/gallery?bookId=${bookId}`,
-    citation: `${item.author || ''}, "${item.bookTitle}", p. ${item.pageNumber}, Source Library`,
-  };
+/** In-memory cache for prefetched gallery image API responses + pixels */
+const prefetchCache = new Map<string, Promise<GalleryImageDetail>>();
+
+function prefetchImage(id: string) {
+  if (prefetchCache.has(id)) return;
+  const promise = gallery.get(id).then(detail => {
+    // Also preload the actual image pixels
+    const img = new window.Image();
+    img.src = detail.imageUrl;
+    return detail;
+  });
+  prefetchCache.set(id, promise);
+  // Evict after 60s to avoid stale data
+  setTimeout(() => prefetchCache.delete(id), 60000);
+}
+
+async function getCachedOrFetch(id: string): Promise<GalleryImageDetail> {
+  const cached = prefetchCache.get(id);
+  if (cached) return cached;
+  const promise = gallery.get(id);
+  prefetchCache.set(id, promise);
+  return promise;
 }
 
 export default function ImageDetailPage({
@@ -104,17 +96,18 @@ export default function ImageDetailPage({
   const [pageImageAspect, setPageImageAspect] = useState<string>('3/4');
   const [showInfo, setShowInfo] = useState(false);
 
-  // Navigation state — store full GalleryItem data for instant navigation
-  const [bookImages, setBookImages] = useState<GalleryItem[]>([]);
+  // Navigation state
+  const [bookImageIds, setBookImageIds] = useState<string[]>([]);
+  const [bookThumbnails, setBookThumbnails] = useState<Map<string, { thumb: string; desc: string }>>(new Map());
   const [currentIndex, setCurrentIndex] = useState(-1);
   const [imageOpacity, setImageOpacity] = useState(1);
 
   // Ref to prevent stale closures in keyboard handler
-  const navRef = useRef({ bookImages: [] as GalleryItem[], currentIndex: -1 });
+  const navRef = useRef({ bookImageIds: [] as string[], currentIndex: -1 });
   const isNavigatingRef = useRef(false);
   useEffect(() => {
-    navRef.current = { bookImages, currentIndex };
-  }, [bookImages, currentIndex]);
+    navRef.current = { bookImageIds, currentIndex };
+  }, [bookImageIds, currentIndex]);
 
   // Resolve params
   useEffect(() => {
@@ -183,21 +176,30 @@ export default function ImageDetailPage({
       maxPerBook: 500,
       minQuality: 0,
     }).then(res => {
-      // Store full GalleryItem data for instant navigation (no API call needed)
       const items = [...res.items].sort((a, b) => a.pageNumber - b.pageNumber);
-      setBookImages(items);
-      const idx = items.findIndex(item => `${item.pageId}-${item.detectionIndex}` === imageId);
+      const ids = items.map(item => `${item.pageId}-${item.detectionIndex}`);
+      const thumbs = new Map<string, { thumb: string; desc: string }>();
+      items.forEach(item => {
+        const id = `${item.pageId}-${item.detectionIndex}`;
+        thumbs.set(id, { thumb: item.thumbnailUrl || item.extractedUrl || item.imageUrl, desc: item.description });
+      });
+      setBookImageIds(ids);
+      setBookThumbnails(thumbs);
+      const idx = ids.indexOf(imageId!);
       setCurrentIndex(idx >= 0 ? idx : 0);
+      // Prefetch adjacent images
+      if (idx > 0) prefetchImage(ids[idx - 1]);
+      if (idx < ids.length - 1) prefetchImage(ids[idx + 1]);
     });
   }, [data?.book?.id]); // eslint-disable-line react-hooks/exhaustive-deps
 
   // Update currentIndex when imageId changes (after navigation)
   useEffect(() => {
-    if (bookImages.length > 0 && imageId) {
-      const idx = bookImages.findIndex(item => `${item.pageId}-${item.detectionIndex}` === imageId);
+    if (bookImageIds.length > 0 && imageId) {
+      const idx = bookImageIds.indexOf(imageId);
       if (idx >= 0) setCurrentIndex(idx);
     }
-  }, [imageId, bookImages]);
+  }, [imageId, bookImageIds]);
 
   // Load natural aspect ratio for bbox editor
   useEffect(() => {
@@ -211,18 +213,16 @@ export default function ImageDetailPage({
     img.src = data.fullPageUrl;
   }, [data?.fullPageUrl]);
 
-  // Prefetch adjacent images for instant navigation
+  // Prefetch adjacent API responses + image pixels
   useEffect(() => {
-    if (bookImages.length === 0 || currentIndex < 0) return;
+    if (bookImageIds.length === 0 || currentIndex < 0) return;
     for (const offset of [-1, 1]) {
       const idx = currentIndex + offset;
-      if (idx >= 0 && idx < bookImages.length) {
-        const item = bookImages[idx];
-        const img = new window.Image();
-        img.src = item.extractedUrl || item.imageUrl;
+      if (idx >= 0 && idx < bookImageIds.length) {
+        prefetchImage(bookImageIds[idx]);
       }
     }
-  }, [currentIndex, bookImages]);
+  }, [currentIndex, bookImageIds]);
 
   // Keyboard navigation
   useEffect(() => {
@@ -230,7 +230,7 @@ export default function ImageDetailPage({
       // Don't intercept when typing in inputs
       if (e.target instanceof HTMLInputElement || e.target instanceof HTMLTextAreaElement) return;
 
-      const { bookImages: imgs, currentIndex: idx } = navRef.current;
+      const { bookImageIds: imgs, currentIndex: idx } = navRef.current;
 
       if (e.key === 'ArrowLeft' && idx > 0) {
         e.preventDefault();
@@ -244,12 +244,10 @@ export default function ImageDetailPage({
     return () => window.removeEventListener('keydown', handleKeyDown);
   }, []); // eslint-disable-line react-hooks/exhaustive-deps
 
-  // Navigation — use cached list data for instant display, no API call needed
+  // Navigation — fade out, fetch from prefetch cache, preload pixels, fade in
   const navigateTo = useCallback(async (index: number) => {
-    if (index < 0 || index >= navRef.current.bookImages.length) return;
-    const item = navRef.current.bookImages[index];
-    const imgId = `${item.pageId}-${item.detectionIndex}`;
-    const imgUrl = item.extractedUrl || item.imageUrl;
+    if (index < 0 || index >= navRef.current.bookImageIds.length) return;
+    const imgId = navRef.current.bookImageIds[index];
 
     // Fade out
     setImageOpacity(0);
@@ -266,26 +264,29 @@ export default function ImageDetailPage({
     setBrightness(100);
     setContrast(100);
 
-    // Build detail from cached list data — no API call
-    const bookId = data?.book?.id || item.bookId;
-    const bookSlug = data?.book?.slug;
-    const detail = detailFromListItem(item, bookId, bookSlug);
+    try {
+      // Fetch from prefetch cache (usually already resolved)
+      const json = await getCachedOrFetch(imgId);
 
-    // Preload the actual image pixels before showing anything
-    await new Promise<void>((resolve) => {
-      const preload = new window.Image();
-      preload.onload = () => resolve();
-      preload.onerror = () => resolve();
-      preload.src = imgUrl;
-    });
+      // Preload the actual image pixels before showing anything
+      await new Promise<void>((resolve) => {
+        const preload = new window.Image();
+        preload.onload = () => resolve();
+        preload.onerror = () => resolve();
+        preload.src = json.imageUrl;
+      });
 
-    // Show immediately with cached data — no background fetch needed
-    isNavigatingRef.current = true;
-    setImageId(imgId);
-    setData(detail);
-    sendGAEvent({ action: 'view_item', category: 'gallery', label: imgId, content_type: 'image' });
-    requestAnimationFrame(() => setImageOpacity(1));
-  }, [data?.book?.id, data?.book?.slug]);
+      // Now update data and fade in — image is already cached
+      isNavigatingRef.current = true;
+      setImageId(imgId);
+      setData(json);
+      sendGAEvent({ action: 'view_item', category: 'gallery', label: imgId, content_type: 'image' });
+      requestAnimationFrame(() => setImageOpacity(1));
+    } catch {
+      // On error, fade back in with old content
+      setImageOpacity(1);
+    }
+  }, []);
 
 
   // Save handlers (unchanged)
@@ -609,7 +610,7 @@ export default function ImageDetailPage({
   }
 
   const hasPrev = currentIndex > 0;
-  const hasNext = currentIndex < bookImages.length - 1;
+  const hasNext = currentIndex < bookImageIds.length - 1;
 
   return (
     <div className="bg-black text-white max-w-[100vw] overflow-x-hidden">
@@ -625,9 +626,9 @@ export default function ImageDetailPage({
             </nav>
 
             {/* Counter */}
-            {bookImages.length > 1 && (
+            {bookImageIds.length > 1 && (
               <span className="text-stone-500 text-sm tabular-nums">
-                {currentIndex + 1} / {bookImages.length}
+                {currentIndex + 1} / {bookImageIds.length}
               </span>
             )}
 
@@ -1123,33 +1124,34 @@ export default function ImageDetailPage({
                 </div>
 
                 {/* More pictures from this book */}
-                {bookImages.length > 1 && (
+                {bookImageIds.length > 1 && (
                   <div className="bg-stone-800 rounded-lg p-5">
                     <div className="flex items-center justify-between mb-3">
                       <h3 className="text-base font-medium text-stone-300">More pictures from this book</h3>
                       <Link href={data.galleryUrl} className="text-sm text-accent-gold hover:text-accent-gold">See all</Link>
                     </div>
                     <div className="grid grid-cols-3 gap-2">
-                      {bookImages
-                        .filter(item => `${item.pageId}-${item.detectionIndex}` !== imageId)
+                      {bookImageIds
+                        .filter(id => id !== imageId)
                         .slice(0, 3)
-                        .map((item) => {
-                          const itemId = `${item.pageId}-${item.detectionIndex}`;
+                        .map((id) => {
+                          const info = bookThumbnails.get(id);
+                          if (!info) return null;
                           return (
                             <Link
-                              key={itemId}
-                              href={`/gallery/image/${itemId}`}
+                              key={id}
+                              href={`/gallery/image/${id}`}
                               onClick={(e) => {
                                 e.preventDefault();
-                                const idx = bookImages.findIndex(bi => `${bi.pageId}-${bi.detectionIndex}` === itemId);
+                                const idx = bookImageIds.indexOf(id);
                                 if (idx >= 0) navigateTo(idx);
                               }}
                               className="group relative aspect-square bg-stone-700 rounded overflow-hidden"
-                              title={item.description}
+                              title={info.desc}
                             >
                               <Image
-                                src={item.thumbnailUrl || item.imageUrl}
-                                alt={item.description}
+                                src={info.thumb}
+                                alt={info.desc}
                                 fill
                                 sizes="120px"
                                 className="object-cover group-hover:scale-105 transition-transform duration-200"
