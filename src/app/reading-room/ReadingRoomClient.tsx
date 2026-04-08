@@ -203,29 +203,29 @@ export default function ReadingRoomClient({ featuredPassage }: ReadingRoomClient
     <div className="min-h-screen bg-[#fdfcf9]">
       <SiteHeader variant="dark" />
       {/* Hero with reading room painting */}
-      <div className="relative bg-[#1a1612] overflow-hidden">
+      <div className="relative bg-[#0e0c0a] overflow-hidden min-h-[360px] sm:min-h-[420px]">
         <div className="absolute inset-0">
           {/* eslint-disable-next-line @next/next/no-img-element */}
           <img
             src="https://images.sourcelibrary.org/artwork/reading-room-hero.png"
-            alt=""
-            className="absolute inset-0 w-full h-full object-cover opacity-40"
+            alt="A grand monastic library with vaulted ceilings, galleries of books, and warm candlelight"
+            className="absolute inset-0 w-full h-full object-cover opacity-80"
             loading="eager"
           />
         </div>
-        <div className="absolute inset-0 bg-gradient-to-b from-black/50 via-[#1a1612]/40 to-[#1a1612]" />
+        <div className="absolute inset-0 bg-gradient-to-r from-black/80 via-black/40 to-transparent" />
+        <div className="absolute inset-0 bg-gradient-to-b from-transparent via-transparent to-[#0e0c0a]/90" />
 
-        <div className="relative max-w-[1200px] mx-auto px-6 md:px-12 pt-10 pb-12">
+        <div className="relative max-w-[1200px] mx-auto px-6 md:px-12 pt-14 sm:pt-20 pb-14">
           <h1
-            className="text-4xl sm:text-5xl text-white font-display mb-3"
+            className="text-4xl sm:text-5xl md:text-6xl text-white font-display mb-3 drop-shadow-lg"
             style={{ fontWeight: 500 }}
           >
             The Reading Room
           </h1>
-          <p className="text-white/60 text-base font-body leading-relaxed max-w-[560px]">
+          <p className="text-white/80 text-base sm:text-lg font-body leading-relaxed max-w-[480px] drop-shadow-sm">
             Ask the Librarian about any text in the collection — alchemy, Hermetica,
-            Kabbalah, astrology, natural philosophy. Thousands of rare books, many translated
-            into English for the first time.
+            Kabbalah, astrology, natural philosophy.
           </p>
 
           {/* Featured passage */}
