@@ -755,19 +755,25 @@ async function processBook(db, book, job, globalCounter, deadline) {
     // Trigger on-demand revalidation so the book page reflects new translations
     revalidateBookPage(book.id).catch(() => {});
   } else {
-    // Circuit breaker: if 0 pages translated this run AND the book was already attempted before,
-    // it's stuck (e.g. Gemini safety filters blocking all pages). Mark needs_attention instead of spinning.
-    if (translated === 0 && book.last_translation_at) {
+    // Circuit breaker: park problematic books instead of grinding forever.
+    // Triggers: (a) 0 pages on retry, or (b) >50% error rate on retry with many failures.
+    const errorRate = (translated + failed) > 0 ? failed / (translated + failed) : 0;
+    const isHighErrorRetry = book.last_translation_at && failed >= 10 && errorRate > 0.5;
+    if ((translated === 0 && book.last_translation_at) || isHighErrorRetry) {
+      const reason = translated === 0
+        ? 'Translation made zero progress on consecutive attempts'
+        : `High error rate: ${failed} failures / ${translated + failed} attempts (${(errorRate * 100).toFixed(0)}%) across multiple runs`;
       await db.collection('books').updateOne(
         { id: book.id },
         { $set: {
           'pipeline_auto.status': 'needs_attention',
-          'pipeline_auto.attention_reason': 'Translation made zero progress on consecutive attempts',
+          'pipeline_auto.attention_reason': reason,
+          pages_translated: newCompleted,
           updated_at: new Date(),
         }, $unset: { job: '' } },
       );
-      await db.collection('jobs').updateOne({ id: job.id }, { $set: { status: 'failed', error: 'zero-progress-circuit-breaker', updated_at: new Date() } });
-      console.log(`  [${label}] Circuit breaker: 0 pages on retry, marking needs_attention`);
+      await db.collection('jobs').updateOne({ id: job.id }, { $set: { status: 'failed', error: translated === 0 ? 'zero-progress-circuit-breaker' : 'high-error-rate-circuit-breaker', updated_at: new Date() } });
+      console.log(`  [${label}] Circuit breaker: ${reason.slice(0, 80)}, marking needs_attention`);
     } else {
       // Park this book — it got its 200-page chunk, let other books go first.
       // Status moves to translate_partial so it's no longer picked up as translate_submitted.

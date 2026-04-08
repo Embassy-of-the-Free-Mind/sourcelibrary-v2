@@ -1539,22 +1539,37 @@ NO explanation, just the JSON array.`;
 
       const validSlugs = new Set(collections.map(c => c.slug));
 
-      // Find books that have content but haven't been classified yet
-      const unclassifiedBooks = await db.collection('books')
-        .find({
-          collection_scores: { $exists: false },
-          pages_count: { $gt: 0 },
-          hidden: { $ne: true },
-          $or: [
-            { 'reading_summary.overview': { $exists: true, $ne: '' } },
-            { description: { $exists: true, $ne: '' } },
-          ],
-        })
-        .project({
-          id: 1, title: 1, display_title: 1, author: 1, year: 1, language: 1, categories: 1,
-        })
-        .limit(COLLECTION_LIMIT)
-        .toArray();
+      // Find books that have content but haven't been classified yet.
+      // CANNOT use collection_scores: { $exists: false } in the DB query — Atlas times out
+      // even with pipeline_auto.status index. Fetch by status (indexed), filter client-side.
+      const CANDIDATE_STATUSES = [
+        'visual_complete', 'translate_complete', 'enriched', 'chapters',
+        'chapters_complete', 'summary_indexed', 'complete',
+      ];
+      let unclassifiedBooks = [];
+
+      for (const status of CANDIDATE_STATUSES) {
+        if (unclassifiedBooks.length >= COLLECTION_LIMIT) break;
+        const batch = await db.collection('books')
+          .find({
+            'pipeline_auto.status': status,
+            pages_count: { $gt: 0 },
+            hidden: { $ne: true },
+          })
+          .project({
+            id: 1, title: 1, display_title: 1, author: 1, year: 1, language: 1, categories: 1,
+            collection_scores: 1,
+          })
+          .limit(500)
+          .maxTimeMS(15_000)
+          .toArray()
+          .catch(() => []);
+        const unclassified = batch
+          .filter(b => !b.collection_scores)
+          .map(({ collection_scores, ...rest }) => rest);
+        unclassifiedBooks.push(...unclassified);
+      }
+      unclassifiedBooks = unclassifiedBooks.slice(0, COLLECTION_LIMIT);
 
       console.log(`  Unclassified books found: ${unclassifiedBooks.length}`);
 
