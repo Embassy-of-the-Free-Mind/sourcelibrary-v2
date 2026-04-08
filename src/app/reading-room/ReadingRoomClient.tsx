@@ -112,7 +112,7 @@ export default function ReadingRoomClient({ heroImages, featuredPassage }: Readi
         if (res.status === 401) {
           setMessages(prev => [...prev, {
             role: 'assistant',
-            content: 'Please [sign in](/auth/signin?callbackUrl=/embassy) to talk with the Librarian. It\'s free — just create an account or sign in with Google.',
+            content: 'Please [sign in](/auth/signin?callbackUrl=/reading-room) to talk with the Librarian. It\'s free — just create an account or sign in with Google.',
           }]);
         } else {
           setMessages(prev => [...prev, {
@@ -392,7 +392,7 @@ export default function ReadingRoomClient({ heroImages, featuredPassage }: Readi
 
                 {!isSignedIn && status !== 'loading' && (
                   <p className="mt-2 text-[12px] text-[#8a8480] font-sans">
-                    <Link href="/auth/signin?callbackUrl=/embassy" className="text-[#9e4a3a] hover:underline">
+                    <Link href="/auth/signin?callbackUrl=/reading-room" className="text-[#9e4a3a] hover:underline">
                       Sign in
                     </Link>
                     {' '}to talk with the Librarian. Free — no membership required.
@@ -419,7 +419,7 @@ export default function ReadingRoomClient({ heroImages, featuredPassage }: Readi
                   {threads.map((thread) => (
                     <Link
                       key={thread.id}
-                      href={`/embassy/thread/${thread.id}`}
+                      href={`/reading-room/thread/${thread.id}`}
                       className="block py-3 border-b border-[#e8e4dc] hover:bg-[#f5f0e8]/50 transition-colors -mx-2 px-2 rounded"
                     >
                       <p className="text-sm font-body text-[#1a1612] line-clamp-2 leading-snug mb-1">
