@@ -1,4 +1,5 @@
 import { getDb } from '@/lib/mongodb';
+import { supabase } from '@/lib/supabase';
 import { Book } from '@/lib/types';
 import { type CollectionForGrid } from '@/components/book/BookLibrary';
 import { sortCollections, withTimeout } from '@/lib/collections-utils';
@@ -324,9 +325,44 @@ async function getCollectionShowcase() {
 const FALLBACK_COUNTS = { totalBooks: 13058, translatedToEnglish: 5190, firstTranslationCount: 4087, authorCount: 3200, languageCount: 50 };
 
 async function getBookCounts(): Promise<{ totalBooks: number; translatedToEnglish: number; firstTranslationCount: number; authorCount: number; languageCount: number }> {
+  // 1. Try Supabase (fast Postgres counts, synced every 2h)
+  try {
+    const [totalRes, translatedRes, firstTransRes] = await Promise.all([
+      supabase.from('books_catalog').select('id', { count: 'exact', head: true })
+        .eq('visible', true).gt('pages_translated', 0),
+      supabase.from('books_catalog').select('id', { count: 'exact', head: true })
+        .eq('visible', true).gte('translation_pct', 90),
+      supabase.from('books_catalog').select('id', { count: 'exact', head: true })
+        .eq('visible', true).eq('is_first_translation', true).gt('pages_translated', 0),
+    ]);
+
+    if (totalRes.count && totalRes.count > 0) {
+      // Author/language distinct counts via MongoDB cache (PostgREST can't COUNT DISTINCT efficiently)
+      let authorCount = FALLBACK_COUNTS.authorCount;
+      let languageCount = FALLBACK_COUNTS.languageCount;
+      try {
+        const db = await getDb();
+        const cached = await db.collection('system_config').findOne(
+          { _id: 'homepage_stats' } as any,
+          { maxTimeMS: 2000 }
+        );
+        if (cached?.authorCount) authorCount = cached.authorCount;
+        if (cached?.languageCount) languageCount = cached.languageCount;
+      } catch { /* MongoDB unavailable — use fallback */ }
+
+      return {
+        totalBooks: totalRes.count,
+        translatedToEnglish: translatedRes.count ?? FALLBACK_COUNTS.translatedToEnglish,
+        firstTranslationCount: firstTransRes.count ?? FALLBACK_COUNTS.firstTranslationCount,
+        authorCount,
+        languageCount,
+      };
+    }
+  } catch { /* Supabase unreachable — try MongoDB */ }
+
+  // 2. Fallback: MongoDB system_config cache
   try {
     const db = await getDb();
-    // Try system_config cache first (written by cron or on-demand, <1ms)
     const cached = await db.collection('system_config').findOne(
       { _id: 'homepage_stats' } as any,
       { maxTimeMS: 2000 }
@@ -340,9 +376,8 @@ async function getBookCounts(): Promise<{ totalBooks: number; translatedToEnglis
         languageCount: cached.languageCount ?? FALLBACK_COUNTS.languageCount,
       };
     }
-  } catch {
-    // DB unreachable — use hardcoded fallback
-  }
+  } catch { /* DB unreachable */ }
+
   return FALLBACK_COUNTS;
 }
 
