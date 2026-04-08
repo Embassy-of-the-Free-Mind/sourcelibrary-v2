@@ -354,6 +354,25 @@ export default function GalleryClient({ initialData, initialCollections, bookCol
             <SlidersHorizontal className="w-4 h-4" />
             Filters
           </button>
+
+          {/* Image Wall link */}
+          <Link
+            href="/gallery/wall"
+            className="flex items-center gap-1.5 px-3 py-2 text-sm rounded-lg border border-stone-300 bg-white text-stone-600 hover:bg-stone-50 transition-colors"
+          >
+            <svg width="16" height="16" viewBox="0 0 16 16" fill="none" className="w-4 h-4">
+              <rect x="1" y="1" width="4" height="4" rx="0.5" fill="currentColor" opacity="0.6" />
+              <rect x="6" y="1" width="4" height="4" rx="0.5" fill="currentColor" opacity="0.4" />
+              <rect x="11" y="1" width="4" height="4" rx="0.5" fill="currentColor" opacity="0.7" />
+              <rect x="1" y="6" width="4" height="4" rx="0.5" fill="currentColor" opacity="0.5" />
+              <rect x="6" y="6" width="4" height="4" rx="0.5" fill="currentColor" opacity="0.8" />
+              <rect x="11" y="6" width="4" height="4" rx="0.5" fill="currentColor" opacity="0.3" />
+              <rect x="1" y="11" width="4" height="4" rx="0.5" fill="currentColor" opacity="0.7" />
+              <rect x="6" y="11" width="4" height="4" rx="0.5" fill="currentColor" opacity="0.5" />
+              <rect x="11" y="11" width="4" height="4" rx="0.5" fill="currentColor" opacity="0.6" />
+            </svg>
+            Wall
+          </Link>
         </div>
 
         {/* Active Filters / Book Info */}
