@@ -24,9 +24,13 @@ if (!SUPABASE_ANON_KEY && typeof window === 'undefined') {
 }
 
 // Read-only anon client (safe for server + client)
-export const supabase: SupabaseClient = createClient(SUPABASE_URL, SUPABASE_ANON_KEY, {
-  auth: { persistSession: false },
-});
+// Use a placeholder key during build to avoid crash — requests will fail but build succeeds.
+// At runtime on Vercel, the real key is always available.
+export const supabase: SupabaseClient = createClient(
+  SUPABASE_URL,
+  SUPABASE_ANON_KEY || 'build-placeholder',
+  { auth: { persistSession: false } },
+);
 
 // Service-role client for writes (server-only, optional)
 export const supabaseAdmin: SupabaseClient | null = SUPABASE_SERVICE_ROLE_KEY
