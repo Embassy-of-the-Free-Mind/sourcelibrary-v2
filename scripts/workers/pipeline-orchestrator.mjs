@@ -1220,7 +1220,8 @@ async function submitOcrDirectly(db, book, { modelOverride, maxPages } = {}) {
     return { submitted: 0, jobName: null, alreadyDone: false, skippedDuplicate: true };
   }
 
-  // Find pages needing OCR
+  // Find pages needing OCR — only pages with R2 images (archived_photo or cropped_photo).
+  // Pages without R2 URLs are not ready for OCR (archiving incomplete).
   const pages = await db.collection('pages')
     .find({
       book_id: book.id,
@@ -1231,6 +1232,8 @@ async function submitOcrDirectly(db, book, { modelOverride, maxPages } = {}) {
       ],
       $and: [{
         $or: [
+          { archived_photo: { $exists: true, $regex: /^https?:\/\// } },
+          { cropped_photo: { $exists: true, $nin: [null, ''] } },
           { photo: { $exists: true, $ne: null } },
           { photo_original: { $exists: true, $ne: null } },
         ]
@@ -1243,6 +1246,16 @@ async function submitOcrDirectly(db, book, { modelOverride, maxPages } = {}) {
 
   if (pages.length === 0) {
     return { submitted: 0, jobName: null, alreadyDone: true };
+  }
+
+  // Warn if many pages lack R2 URLs — archiving may be incomplete
+  const pagesWithR2 = pages.filter(p =>
+    (p.cropped_photo) ||
+    (p.archived_photo && /^https?:\/\//.test(p.archived_photo))
+  );
+  if (pagesWithR2.length < pages.length) {
+    const noR2 = pages.length - pagesWithR2.length;
+    console.log(`    WARNING: ${noR2}/${pages.length} pages lack R2 URLs — archiving may be incomplete`);
   }
 
   // Guard: skip pages that are unsplit spreads (have no crop but book needs splitting)
@@ -1877,14 +1890,34 @@ async function run() {
             },
           }},
           { $sort: { _priority: 1, hidden: 1 } },
-          { $project: { id: 1 } },
+          { $project: { id: 1, pages_count: 1 } },
           { $limit: ARCHIVE_LIMIT },
         ])
         .toArray();
 
       let archiveCompleted = 0;
       for (const book of archivingBooks) {
-        const remaining = await db.collection('pages').countDocuments({
+        // Count pages that have a valid R2 archive URL (not failed, not missing)
+        const archivedPages = await db.collection('pages').countDocuments({
+          book_id: book.id,
+          archived_photo: { $exists: true, $regex: /^https?:\/\// },
+        });
+
+        // Also count pages with cropped photos (split pages already on R2)
+        const croppedPages = await db.collection('pages').countDocuments({
+          book_id: book.id,
+          cropped_photo: { $exists: true, $nin: [null, ''] },
+        });
+
+        // A book is archive-complete when every page has either archived_photo or cropped_photo on R2.
+        // Use pages_count as the target (avoids slow full-collection scans).
+        const totalPages = book.pages_count || 0;
+        const coveredPages = archivedPages + croppedPages; // May double-count, but that's fine (>= is the check)
+        const remaining = Math.max(0, totalPages - coveredPages);
+
+        // Legacy fallback: for archivable sources, also check the old way
+        // (pages from non-archivable sources that were never expected to be archived)
+        const remainingArchivable = remaining > 0 ? await db.collection('pages').countDocuments({
           book_id: book.id,
           $or: [
             { archived_photo: { $exists: false } },
@@ -1896,9 +1929,9 @@ async function run() {
               { photo_original: { $regex: ARCHIVABLE_SOURCES } },
             ],
           }],
-        });
+        }) : 0;
 
-        if (remaining === 0) {
+        if (remaining === 0 || (remainingArchivable === 0 && coveredPages > 0)) {
           if (!DRY_RUN) {
             await setPipelineStatus(db, book.id, 'archive_complete', { retry_count: 0 });
 
