@@ -880,6 +880,7 @@ export default function SearchPage() {
             <p className="text-sm text-secondary italic leading-relaxed"
                dangerouslySetInnerHTML={{
                  __html: aiNarration
+                   .replace(/&/g, '&amp;').replace(/</g, '&lt;').replace(/>/g, '&gt;')
                    .replace(/\*([^*]+)\*/g, '<em>$1</em>')
                    + (aiStreaming ? '<span class="inline-block w-1.5 h-4 bg-accent-rust/40 animate-pulse ml-0.5 align-text-bottom"></span>' : '')
                }}
