@@ -79,8 +79,8 @@ export default function BookOverview({ bookId, bookSlug, bookTitle, pages }: Boo
       collectionColumns: cols,
       collectionTileSize: 256,
       collectionTileMargin: 16,
-      defaultZoomLevel: 0,
-      minZoomLevel: 0.1,
+      // Let OSD calculate the right zoom to fit all items
+      minZoomLevel: 0.01,
       maxZoomLevel: 10,
       visibilityRatio: 0.3,
       constrainDuringPan: false,
@@ -96,10 +96,10 @@ export default function BookOverview({ bookId, bookSlug, bookTitle, pages }: Boo
         dblClickToZoom: true,
         flickEnabled: true,
       },
-      // Crossfade for smooth loading
       placeholderFillStyle: '#1a1a1a',
-      crossOriginPolicy: 'Anonymous',
+      crossOriginPolicy: false as any,
       loadTilesWithAjax: false,
+      debugMode: false,
     });
 
     viewerRef.current = viewer;
@@ -109,13 +109,29 @@ export default function BookOverview({ bookId, bookSlug, bookTitle, pages }: Boo
       setZoomLevel(event.zoom);
     });
 
-    // Track loading
+    // Track loading — collection mode fires 'open' per tile source
+    let openCount = 0;
     viewer.addHandler('open', () => {
-      setLoading(false);
+      openCount++;
+      if (openCount >= 1) setLoading(false);
     });
 
-    // After a short delay, mark as loaded (collection mode doesn't always fire 'open')
-    setTimeout(() => setLoading(false), 1500);
+    // Handle tile load errors
+    viewer.addHandler('open-failed', (event: any) => {
+      console.warn('[BookOverview] Failed to open tile source:', event);
+    });
+
+    viewer.addHandler('tile-load-failed', (event: any) => {
+      console.warn('[BookOverview] Failed to load tile:', event);
+    });
+
+    // Fallback: remove loading after 3s
+    setTimeout(() => setLoading(false), 3000);
+
+    // Go home after a brief delay to ensure layout is computed
+    setTimeout(() => {
+      viewer.viewport.goHome();
+    }, 500);
 
     // Add click handler — find which page was clicked
     viewer.addHandler('canvas-click', (event: any) => {
