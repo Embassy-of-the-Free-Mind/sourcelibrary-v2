@@ -42,37 +42,69 @@ export default function IdentifyPage() {
   const [loading, setLoading] = useState(false);
   const [result, setResult] = useState<Result | null>(null);
   const [error, setError] = useState<string | null>(null);
+  const lastFileRef = useRef<File | null>(null);
   const fileInputRef = useRef<HTMLInputElement>(null);
   const cameraInputRef = useRef<HTMLInputElement>(null);
 
-  const handleFile = useCallback(async (file: File) => {
-    // Preview
-    const reader = new FileReader();
-    reader.onload = (e) => setImage(e.target?.result as string);
-    reader.readAsDataURL(file);
-
-    // Submit
+  const submitFile = useCallback(async (file: File) => {
     setLoading(true);
     setError(null);
     setResult(null);
 
+    // Compress large images client-side (phone cameras produce 5-10MB files)
+    let imageFile = file;
+    if (file.size > 3 * 1024 * 1024) {
+      try {
+        const bitmap = await createImageBitmap(file);
+        const scale = Math.min(1, 2000 / Math.max(bitmap.width, bitmap.height));
+        const canvas = new OffscreenCanvas(bitmap.width * scale, bitmap.height * scale);
+        const ctx = canvas.getContext('2d')!;
+        ctx.drawImage(bitmap, 0, 0, canvas.width, canvas.height);
+        const blob = await canvas.convertToBlob({ type: 'image/jpeg', quality: 0.85 });
+        imageFile = new File([blob], 'photo.jpg', { type: 'image/jpeg' });
+      } catch {
+        // Fall through with original file if compression fails
+      }
+    }
+
     const formData = new FormData();
-    formData.append('image', file);
+    formData.append('image', imageFile);
 
     try {
       const res = await fetch('/api/identify', { method: 'POST', body: formData });
-      const data = await res.json();
+      let data;
+      try {
+        data = await res.json();
+      } catch {
+        setError(`Server error (${res.status}) — try again`);
+        return;
+      }
       if (!res.ok) {
-        setError(data.error || 'Failed to identify');
+        setError(data.detail || data.error || `Failed to identify (${res.status})`);
       } else {
         setResult(data);
       }
     } catch {
-      setError('Network error — please try again');
+      setError('Network error — check your connection and try again');
     } finally {
       setLoading(false);
     }
   }, []);
+
+  const handleFile = useCallback(async (file: File) => {
+    lastFileRef.current = file;
+    // Preview
+    const reader = new FileReader();
+    reader.onload = (e) => setImage(e.target?.result as string);
+    reader.readAsDataURL(file);
+    submitFile(file);
+  }, [submitFile]);
+
+  const retry = useCallback(() => {
+    if (lastFileRef.current) {
+      submitFile(lastFileRef.current);
+    }
+  }, [submitFile]);
 
   const handleInputChange = useCallback((e: React.ChangeEvent<HTMLInputElement>) => {
     const file = e.target.files?.[0];
@@ -172,8 +204,15 @@ export default function IdentifyPage() {
 
         {/* Error */}
         {error && (
-          <div className="rounded-lg bg-red-50 border border-red-200 p-4 text-sm text-red-800">
-            {error}
+          <div className="rounded-lg bg-red-50 border border-red-200 p-4 text-sm text-red-800 space-y-2">
+            <p>{error}</p>
+            <button
+              onClick={retry}
+              disabled={loading}
+              className="text-accent-rust font-medium hover:underline cursor-pointer disabled:opacity-50"
+            >
+              Try again
+            </button>
           </div>
         )}
 

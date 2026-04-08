@@ -3,6 +3,10 @@ import { getNextApiKey } from '@/lib/gemini-client';
 import { getDb } from '@/lib/mongodb';
 
 export const maxDuration = 30;
+export const dynamic = 'force-dynamic';
+
+// Max image size: 4MB (Vercel serverless body limit is 4.5MB)
+const MAX_IMAGE_BYTES = 4 * 1024 * 1024;
 
 const IDENTIFY_PROMPT = `You are an art historian identifying a physical artwork or book page from a photograph taken in a museum or library.
 
@@ -48,6 +52,13 @@ export async function POST(request: NextRequest) {
       return NextResponse.json({ error: 'No image provided' }, { status: 400 });
     }
 
+    if (file.size > MAX_IMAGE_BYTES) {
+      return NextResponse.json(
+        { error: `Image too large (${(file.size / 1024 / 1024).toFixed(1)}MB). Maximum is 4MB.` },
+        { status: 400 },
+      );
+    }
+
     // Convert to base64
     const bytes = await file.arrayBuffer();
     const base64 = Buffer.from(bytes).toString('base64');
@@ -76,19 +87,24 @@ export async function POST(request: NextRequest) {
     if (!resp.ok) {
       const err = await resp.text();
       console.error('[identify] Gemini error:', resp.status, err);
-      return NextResponse.json({ error: 'Vision API failed' }, { status: 502 });
+      const detail = resp.status === 429 ? 'Rate limited — try again in a moment' : `Vision API error (${resp.status})`;
+      return NextResponse.json({ error: detail }, { status: 502 });
     }
 
     const geminiData = await resp.json();
     const text = geminiData.candidates?.[0]?.content?.parts?.[0]?.text || '';
 
     // Parse JSON from response
-    const jsonMatch = text.match(/```(?:json)?\s*([\s\S]*?)```/) || [null, text];
+    if (!text) {
+      return NextResponse.json({ error: 'Vision API returned empty response — try a different image' }, { status: 502 });
+    }
+    const jsonMatch = text.match(/```(?:json)?\s*([\s\S]*?)```/);
+    const jsonStr = (jsonMatch?.[1] || text).trim();
     let identification: IdentifyResult;
     try {
-      identification = JSON.parse(jsonMatch[1].trim());
+      identification = JSON.parse(jsonStr);
     } catch {
-      return NextResponse.json({ error: 'Failed to parse vision response', raw: text.substring(0, 500) }, { status: 500 });
+      return NextResponse.json({ error: 'Could not parse vision response — try a clearer image', detail: text.substring(0, 300) }, { status: 500 });
     }
 
     // Search the library for matches
