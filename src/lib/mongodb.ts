@@ -1,4 +1,4 @@
-import { MongoClient, Db } from 'mongodb';
+import { MongoClient, Db, ReadPreference } from 'mongodb';
 
 const uri = process.env.MONGODB_URI;
 const dbName = process.env.MONGODB_DB;
@@ -130,6 +130,23 @@ export async function getDb(): Promise<Db> {
   );
   const { db } = await Promise.race([connectToDatabase(), timeout]);
   return db;
+}
+
+/**
+ * Returns a Db handle that routes reads to secondary replicas.
+ * Use for all user-facing read queries (browse, search, book detail)
+ * to isolate readers from pipeline write pressure on the primary.
+ */
+export async function getReadDb(): Promise<Db> {
+  const skipKey = 'SKIP_DB_AT_BUILD';
+  if (process.env[skipKey] === '1' || !process.env.MONGODB_URI) {
+    return buildStubDb();
+  }
+  const timeout = new Promise<never>((_, reject) =>
+    setTimeout(() => reject(new Error('DB connection timeout')), 60000)
+  );
+  const { client } = await Promise.race([connectToDatabase(), timeout]);
+  return client.db(dbName!, { readPreference: ReadPreference.SECONDARY_PREFERRED });
 }
 
 /** Force-close cached connection and reconnect. Use after catching a connection timeout. */
