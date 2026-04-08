@@ -1154,33 +1154,32 @@ async function uploadBatchFile(jsonlContent, displayName, apiKey) {
  * Tries all API keys on quota exhaustion (429).
  */
 async function createBatchJobFromFile(model, fileName, displayName, preferredKeyIndex = 0) {
-  for (let ki = preferredKeyIndex; ki < GEMINI_BATCH_KEYS.length; ki++) {
-    const apiKey = getGeminiApiKey(ki);
-    const response = await fetch(
-      `${GEMINI_API_BASE}/models/${model}:batchGenerateContent?key=${apiKey}`,
-      {
-        method: 'POST',
-        headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify({
-          batch: {
-            display_name: displayName,
-            input_config: { file_name: fileName },
-          },
-        }),
-      }
-    );
-
-    if (response.ok) {
-      const result = await response.json();
-      return { name: result.name, state: result.state || 'JOB_STATE_PENDING', keyIndex: ki };
+  // IMPORTANT: Only use the key that uploaded the file. Other keys can't see it (404).
+  // If this key hits 429, throw so the caller can re-upload with a different key.
+  const apiKey = getGeminiApiKey(preferredKeyIndex);
+  const response = await fetch(
+    `${GEMINI_API_BASE}/models/${model}:batchGenerateContent?key=${apiKey}`,
+    {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify({
+        batch: {
+          display_name: displayName,
+          input_config: { file_name: fileName },
+        },
+      }),
     }
+  );
 
-    const errorText = await response.text();
-    console.log(`    Key ${ki} failed for file batch (${response.status}): ${errorText.substring(0, 100)}`);
-    if (response.status === 429) continue;
-    throw new Error(`File batch create failed (${response.status}): ${errorText.substring(0, 200)}`);
+  if (response.ok) {
+    const result = await response.json();
+    return { name: result.name, state: result.state || 'JOB_STATE_PENDING', keyIndex: preferredKeyIndex };
   }
-  throw new Error('ALL_KEYS_QUOTA_EXHAUSTED');
+
+  const errorText = await response.text();
+  console.log(`    Key ${preferredKeyIndex} failed for file batch (${response.status}): ${errorText.substring(0, 100)}`);
+  // Throw on any error — caller must re-upload with a different key on 429
+  throw new Error(`File batch create failed (${response.status}): ${errorText.substring(0, 200)}`);
 }
 
 async function getOcrPromptFromDb(db) {
@@ -1364,16 +1363,16 @@ Output structure:
       const jsonlSizeMB = (Buffer.byteLength(jsonlContent) / 1024 / 1024).toFixed(1);
       console.log(`    JSONL size: ${jsonlSizeMB} MB for ${chunk.length} pages`);
 
-      // Upload JSONL to Gemini File API — try all keys on quota exhaustion
-      let fileResult;
+      // Upload JSONL + create batch — both must use the same key (files are key-scoped).
+      // If batch creation hits 429, re-upload with the next key and retry.
       let uploadKeyIndex = -1;
       for (let uki = 0; uki < GEMINI_BATCH_KEYS.length; uki++) {
         const uploadKey = getGeminiApiKey(uki);
+        let fileResult;
         try {
           fileResult = await uploadBatchFile(jsonlContent, displayName, uploadKey);
           uploadKeyIndex = uki;
           console.log(`    Uploaded file: ${fileResult.name} (key ${uki})`);
-          break;
         } catch (uploadErr) {
           if (uploadErr.message.includes('429') || uploadErr.message.includes('quota')) {
             console.log(`    Upload key ${uki} quota exhausted, trying next...`);
@@ -1381,19 +1380,27 @@ Output structure:
           }
           throw uploadErr;
         }
-      }
-      if (!fileResult) throw new Error('ALL_KEYS_QUOTA_EXHAUSTED');
 
-      // Create batch job from the uploaded file — must use same key that uploaded it
-      batchJob = await createBatchJobFromFile(ocrModel, fileResult.name, displayName, uploadKeyIndex);
-
-      // Clean up uploaded file immediately — Gemini copies it into the batch job,
-      // so the source file is no longer needed. Prevents hitting 20GB storage quota.
-      try {
-        await fetch(`https://generativelanguage.googleapis.com/v1beta/${fileResult.name}?key=${getGeminiApiKey(uploadKeyIndex)}`, { method: 'DELETE' });
-      } catch (cleanupErr) {
-        console.log(`    Warning: file cleanup failed: ${cleanupErr.message}`);
+        try {
+          batchJob = await createBatchJobFromFile(ocrModel, fileResult.name, displayName, uploadKeyIndex);
+          // Clean up uploaded file — Gemini copies it into the batch job
+          try {
+            await fetch(`https://generativelanguage.googleapis.com/v1beta/${fileResult.name}?key=${uploadKey}`, { method: 'DELETE' });
+          } catch (cleanupErr) {
+            console.log(`    Warning: file cleanup failed: ${cleanupErr.message}`);
+          }
+          break; // success
+        } catch (batchErr) {
+          // Clean up the orphaned file
+          try { await fetch(`https://generativelanguage.googleapis.com/v1beta/${fileResult.name}?key=${uploadKey}`, { method: 'DELETE' }); } catch (_) {}
+          if (batchErr.message.includes('429') || batchErr.message.includes('quota')) {
+            console.log(`    Batch create key ${uki} quota exhausted, re-uploading with next key...`);
+            continue;
+          }
+          throw batchErr;
+        }
       }
+      if (!batchJob) throw new Error('ALL_KEYS_QUOTA_EXHAUSTED');
     } else {
       // Inline: small batch, embed base64 directly in request body
       const inlineRequests = chunk.map(item => ({
@@ -1627,15 +1634,15 @@ async function submitImageExtractionBatch(db, book, candidatePages) {
       }));
       const jsonlContent = jsonlLines.join('\n');
 
-      let fileResult;
+      // Upload + create batch with same key (files are key-scoped)
       let uploadKeyIndex = -1;
       for (let uki = 0; uki < GEMINI_BATCH_KEYS.length; uki++) {
         const uploadKey = getGeminiApiKey(uki);
+        let fileResult;
         try {
           fileResult = await uploadBatchFile(jsonlContent, displayName, uploadKey);
           uploadKeyIndex = uki;
           console.log(`    Uploaded file: ${fileResult.name} (key ${uki})`);
-          break;
         } catch (uploadErr) {
           if (uploadErr.message.includes('429') || uploadErr.message.includes('quota')) {
             console.log(`    Upload key ${uki} quota exhausted, trying next...`);
@@ -1643,16 +1650,25 @@ async function submitImageExtractionBatch(db, book, candidatePages) {
           }
           throw uploadErr;
         }
-      }
-      if (!fileResult) throw new Error('ALL_KEYS_QUOTA_EXHAUSTED');
 
-      batchJob = await createBatchJobFromFile(IMAGE_EXTRACTION_MODEL, fileResult.name, displayName, uploadKeyIndex);
-
-      try {
-        await fetch(`https://generativelanguage.googleapis.com/v1beta/${fileResult.name}?key=${getGeminiApiKey(uploadKeyIndex)}`, { method: 'DELETE' });
-      } catch (cleanupErr) {
-        console.log(`    Warning: file cleanup failed: ${cleanupErr.message}`);
+        try {
+          batchJob = await createBatchJobFromFile(IMAGE_EXTRACTION_MODEL, fileResult.name, displayName, uploadKeyIndex);
+          try {
+            await fetch(`https://generativelanguage.googleapis.com/v1beta/${fileResult.name}?key=${uploadKey}`, { method: 'DELETE' });
+          } catch (cleanupErr) {
+            console.log(`    Warning: file cleanup failed: ${cleanupErr.message}`);
+          }
+          break;
+        } catch (batchErr) {
+          try { await fetch(`https://generativelanguage.googleapis.com/v1beta/${fileResult.name}?key=${uploadKey}`, { method: 'DELETE' }); } catch (_) {}
+          if (batchErr.message.includes('429') || batchErr.message.includes('quota')) {
+            console.log(`    Batch create key ${uki} quota exhausted, re-uploading with next key...`);
+            continue;
+          }
+          throw batchErr;
+        }
       }
+      if (!batchJob) throw new Error('ALL_KEYS_QUOTA_EXHAUSTED');
     } else {
       const inlineRequests = chunk.map(item => ({
         request: {
