@@ -3,37 +3,6 @@ import ReadingRoomClient from './ReadingRoomClient';
 
 export const revalidate = false; // 24h ISR
 
-async function getHeroImages(): Promise<{ url: string; key: string }[]> {
-  try {
-    const { db } = await connectToDatabase();
-
-    const images = await db.collection('gallery_images').aggregate([
-      {
-        $match: {
-          gallery_quality: { $gte: 0.8 },
-          type: { $in: ['engraving', 'woodcut', 'diagram', 'illustration', 'painting'] },
-          thumbnail_url: { $exists: true, $ne: '' },
-        },
-      },
-      { $sample: { size: 12 } },
-      {
-        $project: {
-          thumbnail_url: 1,
-          _id: 1,
-        },
-      },
-    ], { maxTimeMS: 5000 }).toArray();
-
-    return images.map((img) => ({
-      url: img.thumbnail_url as string,
-      key: img._id.toString(),
-    }));
-  } catch (err) {
-    console.error('[reading-room] Failed to load hero images:', err);
-    return [];
-  }
-}
-
 async function getFeaturedPassage() {
   try {
     const { db } = await connectToDatabase();
@@ -110,14 +79,10 @@ async function getFeaturedPassage() {
 }
 
 export default async function ReadingRoomPage() {
-  const [heroImages, featuredPassage] = await Promise.all([
-    getHeroImages(),
-    getFeaturedPassage(),
-  ]);
+  const featuredPassage = await getFeaturedPassage();
 
   return (
     <ReadingRoomClient
-      heroImages={heroImages}
       featuredPassage={featuredPassage}
     />
   );

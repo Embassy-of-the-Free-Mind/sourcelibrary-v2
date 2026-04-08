@@ -34,7 +34,6 @@ interface FeaturedPassage {
 }
 
 interface ReadingRoomClientProps {
-  heroImages: { url: string; key: string }[];
   featuredPassage: FeaturedPassage | null;
 }
 
@@ -52,7 +51,7 @@ function timeAgo(dateStr: string): string {
   return d.toLocaleDateString('en-US', { month: 'short', day: 'numeric' });
 }
 
-export default function ReadingRoomClient({ heroImages, featuredPassage }: ReadingRoomClientProps) {
+export default function ReadingRoomClient({ featuredPassage }: ReadingRoomClientProps) {
   const { data: session, status } = useSession();
   const [messages, setMessages] = useState<Message[]>([]);
   const [input, setInput] = useState('');
@@ -203,25 +202,18 @@ export default function ReadingRoomClient({ heroImages, featuredPassage }: Readi
   return (
     <div className="min-h-screen bg-[#fdfcf9]">
       <SiteHeader variant="dark" />
-      {/* Hero with gallery art */}
+      {/* Hero with reading room painting */}
       <div className="relative bg-[#1a1612] overflow-hidden">
-        {/* Gallery image mosaic */}
-        {heroImages.length > 0 && (
-          <div className="absolute inset-0 grid grid-cols-3 sm:grid-cols-6 opacity-20">
-            {heroImages.map((img) => (
-              <div key={img.key} className="relative overflow-hidden">
-                {/* eslint-disable-next-line @next/next/no-img-element */}
-                <img
-                  src={img.url}
-                  alt=""
-                  className="absolute inset-0 w-full h-full object-cover"
-                  loading="eager"
-                />
-              </div>
-            ))}
-          </div>
-        )}
-        <div className="absolute inset-0 bg-gradient-to-b from-black/60 via-[#1a1612]/50 to-[#1a1612]" />
+        <div className="absolute inset-0">
+          {/* eslint-disable-next-line @next/next/no-img-element */}
+          <img
+            src="https://images.sourcelibrary.org/artwork/reading-room-hero.png"
+            alt=""
+            className="absolute inset-0 w-full h-full object-cover opacity-40"
+            loading="eager"
+          />
+        </div>
+        <div className="absolute inset-0 bg-gradient-to-b from-black/50 via-[#1a1612]/40 to-[#1a1612]" />
 
         <div className="relative max-w-[1200px] mx-auto px-6 md:px-12 pt-10 pb-12">
           <h1
