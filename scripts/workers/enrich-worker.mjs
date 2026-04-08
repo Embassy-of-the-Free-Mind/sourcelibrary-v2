@@ -69,8 +69,8 @@ const RUN_PHASE_7 = phaseArg === 'all' || phaseArg === '7';
 const RUN_PHASE_7_5 = phaseArg === 'all' || phaseArg === '7.5';
 const RUN_PHASE_7_6 = phaseArg === 'all' || phaseArg === '7.6';
 const limitArg = args.find(a => a.startsWith('--limit='))?.split('=')[1];
-const PHASE_6_LIMIT = limitArg ? parseInt(limitArg) : 30;
-const PHASE_7_LIMIT = limitArg ? parseInt(limitArg) : 50;
+const PHASE_6_LIMIT = limitArg ? parseInt(limitArg) : 100;
+const PHASE_7_LIMIT = limitArg ? parseInt(limitArg) : 100;
 const SINGLE_BOOK = args.find(a => a.startsWith('--book='))?.split('=')[1];
 
 // ── Gemini API keys ──
