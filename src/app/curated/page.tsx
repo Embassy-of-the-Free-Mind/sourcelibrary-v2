@@ -6,7 +6,7 @@ import SignUpCTA from '@/components/auth/SignUpCTA';
 import { sanitizeThumbnail } from '@/lib/collections-utils';
 import type { Metadata } from 'next';
 
-export const revalidate = 86400;
+export const revalidate = false;
 
 export const metadata: Metadata = {
   title: 'Curated Collections | Source Library',

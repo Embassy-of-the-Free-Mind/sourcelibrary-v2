@@ -17,7 +17,7 @@ import { firstTranslationBadge } from '@/lib/first-translation-labels';
 import { browseBooks } from '@/lib/books-catalog';
 
 // ISR: rebuild at most every 10 minutes
-export const revalidate = 86400;
+export const revalidate = false;
 export const dynamicParams = true;
 export const maxDuration = 60;
 export async function generateStaticParams() {

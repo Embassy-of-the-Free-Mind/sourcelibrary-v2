@@ -7,7 +7,7 @@ import { isInnerCircle } from '@/lib/auth-helpers';
 import SiteHeader from '@/components/layout/SiteHeader';
 import { sanitizeThumbnail } from '@/lib/collections-utils';
 
-export const revalidate = 86400;
+export const revalidate = false;
 export const dynamicParams = true;
 
 interface PageProps {

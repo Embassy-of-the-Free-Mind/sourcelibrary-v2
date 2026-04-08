@@ -3,7 +3,7 @@ import SiteHeader from '@/components/layout/SiteHeader';
 import CatalogBrowser from '@/components/catalog/CatalogBrowser';
 import { browseBooks, getLanguageCounts } from '@/lib/books-catalog';
 
-export const revalidate = 86400;
+export const revalidate = false;
 
 export const metadata: Metadata = {
   title: 'Catalog - Source Library',

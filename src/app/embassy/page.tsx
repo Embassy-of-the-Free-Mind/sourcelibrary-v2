@@ -1,7 +1,7 @@
 import { connectToDatabase } from '@/lib/mongodb';
 import ReadingRoomClient from './ReadingRoomClient';
 
-export const revalidate = 86400; // 24h ISR
+export const revalidate = false; // 24h ISR
 
 async function getHeroImages(): Promise<{ url: string; key: string }[]> {
   try {

@@ -5,7 +5,7 @@ import { ArrowLeft, BookOpen } from 'lucide-react';
 import { getDb } from '@/lib/mongodb';
 import { sanitizeThumbnail } from '@/lib/collections-utils';
 
-export const revalidate = 86400;
+export const revalidate = false;
 
 export const metadata: Metadata = {
   title: 'The Contemplative Traditions - Source Library',

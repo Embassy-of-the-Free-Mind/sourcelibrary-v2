@@ -12,7 +12,7 @@ export const metadata: Metadata = {
   description: 'Renaissance paintings and prints cross-referenced with the philosophical texts that inspired them.',
 };
 
-export const revalidate = 86400;
+export const revalidate = false;
 
 interface ArtCollection {
   slug: string;
