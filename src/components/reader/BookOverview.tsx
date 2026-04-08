@@ -2,7 +2,6 @@
 
 import { useEffect, useRef, useState, useCallback, useMemo } from 'react';
 import { useRouter } from 'next/navigation';
-import { getPageThumbUrl } from '@/lib/utils';
 
 interface OverviewPage {
   id: string;
@@ -25,211 +24,432 @@ interface BookOverviewProps {
   pages: OverviewPage[];
 }
 
+// Get the fastest available thumbnail URL — direct R2, no proxy
+function getDirectThumbUrl(page: OverviewPage): string | null {
+  // Prefer pre-computed R2 thumbnails (tiny, fast, no proxy)
+  if (page.thumbnail_blob) return page.thumbnail_blob;
+  if (page.thumbnail) return page.thumbnail;
+  // Fall back to archived photo (larger but direct)
+  if (page.archived_photo) return page.archived_photo;
+  if (page.display_photo) return page.display_photo;
+  if (page.cropped_photo) return page.cropped_photo;
+  if (page.photo) return page.photo;
+  if (page.photo_original) return page.photo_original;
+  return null;
+}
+
+// Layout constants
+const THUMB_W = 120;
+const THUMB_H = 160;
+const GAP = 12;
+const MIN_ZOOM = 0.15;
+const MAX_ZOOM = 4;
+const ZOOM_SPEED = 0.002;
+
 export default function BookOverview({ bookId, bookSlug, bookTitle, pages }: BookOverviewProps) {
+  const canvasRef = useRef<HTMLCanvasElement>(null);
   const containerRef = useRef<HTMLDivElement>(null);
-  const viewerRef = useRef<any>(null);
-  const homeZoomRef = useRef<number>(1);
-  const [loading, setLoading] = useState(true);
-  const [zoomPercent, setZoomPercent] = useState(100);
-  const [hoveredPage, setHoveredPage] = useState<number | null>(null);
-  const [tooltipPos, setTooltipPos] = useState({ x: 0, y: 0 });
   const router = useRouter();
 
-  const bookPath = `/book/${bookSlug || bookId}`;
+  // Camera state (not React state — updated every frame)
+  const camRef = useRef({ x: 0, y: 0, zoom: 1 });
+  const dirtyRef = useRef(true);
+  const rafRef = useRef(0);
 
-  // Filter to pages that have images — memoize to stabilize reference
+  // Interaction state
+  const dragRef = useRef<{ sx: number; sy: number; cx: number; cy: number } | null>(null);
+  const [hoveredPage, setHoveredPage] = useState<number | null>(null);
+  const [zoomPercent, setZoomPercent] = useState(100);
+  const [loadedCount, setLoadedCount] = useState(0);
+
+  // Image cache — lazy loaded
+  const imageCache = useRef<Map<string, HTMLImageElement | 'loading' | 'error'>>(new Map());
+
+  // Filter pages with images
   const pagesWithImages = useMemo(() =>
-    pages.filter(p => getPageThumbUrl(p as Record<string, any>) !== null),
+    pages.filter(p => getDirectThumbUrl(p) !== null),
     [pages],
   );
 
-  const initViewer = useCallback(async () => {
-    if (!containerRef.current || pagesWithImages.length === 0) return;
+  // Compute grid layout
+  const layout = useMemo(() => {
+    const count = pagesWithImages.length;
+    const cols = Math.min(Math.ceil(Math.sqrt(count * 1.5)), 20);
+    const rows = Math.ceil(count / cols);
+    const cellW = THUMB_W + GAP;
+    const cellH = THUMB_H + GAP;
+    const totalW = cols * cellW;
+    const totalH = rows * cellH;
 
-    const OpenSeadragon = (await import('openseadragon')).default;
+    const positions = pagesWithImages.map((_, i) => ({
+      col: i % cols,
+      row: Math.floor(i / cols),
+      x: (i % cols) * cellW,
+      y: Math.floor(i / cols) * cellH,
+    }));
 
-    // Clean up any existing viewer
-    if (viewerRef.current) {
-      viewerRef.current.destroy();
-      viewerRef.current = null;
-    }
+    return { cols, rows, cellW, cellH, totalW, totalH, positions };
+  }, [pagesWithImages]);
 
-    // Calculate grid layout for collection mode
-    const cols = Math.min(Math.ceil(Math.sqrt(pagesWithImages.length * 1.5)), 12);
-    const rows = Math.ceil(pagesWithImages.length / cols);
+  // Calculate initial zoom to fit all content
+  const getHomeZoom = useCallback(() => {
+    const canvas = canvasRef.current;
+    if (!canvas) return 1;
+    const scaleX = canvas.width / (layout.totalW + GAP * 2);
+    const scaleY = canvas.height / (layout.totalH + GAP * 2);
+    return Math.min(scaleX, scaleY, 1);
+  }, [layout]);
 
-    const tileSources = pagesWithImages.map((page) => {
-      const thumbUrl = getPageThumbUrl(page as Record<string, any>);
-      return {
-        type: 'image' as const,
-        url: thumbUrl!,
-      };
-    });
+  // Load an image lazily — only when it's in the viewport
+  const loadImage = useCallback((url: string) => {
+    if (imageCache.current.has(url)) return;
+    imageCache.current.set(url, 'loading');
+    const img = new Image();
+    img.crossOrigin = 'anonymous';
+    img.onload = () => {
+      imageCache.current.set(url, img);
+      setLoadedCount(c => c + 1);
+      dirtyRef.current = true;
+    };
+    img.onerror = () => {
+      imageCache.current.set(url, 'error');
+    };
+    img.src = url;
+  }, []);
 
-    const viewer = OpenSeadragon({
-      element: containerRef.current,
-      tileSources: tileSources as any,
-      showNavigationControl: false,
-      showNavigator: false,
-      showSequenceControl: false,
-      showZoomControl: false,
-      showHomeControl: false,
-      showFullPageControl: false,
-      collectionMode: true,
-      collectionRows: rows,
-      collectionColumns: cols,
-      collectionTileSize: 256,
-      collectionTileMargin: 16,
-      // Let OSD calculate the right home zoom; constrain so user can't lose the content
-      visibilityRatio: 0.8,
-      constrainDuringPan: true,
-      animationTime: 0.3,
-      springStiffness: 10,
-      gestureSettingsMouse: {
-        clickToZoom: false,
-        dblClickToZoom: true,
-        scrollToZoom: true,
-      },
-      gestureSettingsTouch: {
-        pinchToZoom: true,
-        dblClickToZoom: true,
-        flickEnabled: true,
-      },
-      placeholderFillStyle: '#1a1a1a',
-      crossOriginPolicy: false as any,
-      loadTilesWithAjax: false,
-      debugMode: false,
-    });
+  // Hit test — which page index is at screen position (sx, sy)?
+  const hitTest = useCallback((sx: number, sy: number): number => {
+    const canvas = canvasRef.current;
+    if (!canvas) return -1;
+    const cam = camRef.current;
+    // Screen → world coords
+    const wx = (sx - canvas.width / 2) / cam.zoom + cam.x;
+    const wy = (sy - canvas.height / 2) / cam.zoom + cam.y;
+    // Which cell?
+    const col = Math.floor(wx / layout.cellW);
+    const row = Math.floor(wy / layout.cellH);
+    if (col < 0 || row < 0 || col >= layout.cols) return -1;
+    const idx = row * layout.cols + col;
+    if (idx < 0 || idx >= pagesWithImages.length) return -1;
+    // Check within the thumbnail (not the gap)
+    const localX = wx - col * layout.cellW;
+    const localY = wy - row * layout.cellH;
+    if (localX < 0 || localX > THUMB_W || localY < 0 || localY > THUMB_H) return -1;
+    return idx;
+  }, [layout, pagesWithImages.length]);
 
-    viewerRef.current = viewer;
+  // Render loop
+  useEffect(() => {
+    const canvas = canvasRef.current;
+    const container = containerRef.current;
+    if (!canvas || !container) return;
 
-    // Capture home zoom once layout is ready, normalize all zoom display to it
-    const captureHomeZoom = () => {
-      const home = viewer.viewport.getHomeZoom();
-      if (home > 0) homeZoomRef.current = home;
+    const ctx = canvas.getContext('2d')!;
+    const dpr = window.devicePixelRatio || 1;
+
+    const resize = () => {
+      canvas.width = container.clientWidth * dpr;
+      canvas.height = container.clientHeight * dpr;
+      canvas.style.width = `${container.clientWidth}px`;
+      canvas.style.height = `${container.clientHeight}px`;
+      ctx.setTransform(dpr, 0, 0, dpr, 0, 0);
+      dirtyRef.current = true;
+    };
+    resize();
+
+    // Set initial camera to center the grid
+    const homeZoom = getHomeZoom();
+    camRef.current = {
+      x: layout.totalW / 2,
+      y: layout.totalH / 2,
+      zoom: homeZoom,
+    };
+    setZoomPercent(100);
+
+    const render = () => {
+      if (!dirtyRef.current) {
+        rafRef.current = requestAnimationFrame(render);
+        return;
+      }
+      dirtyRef.current = false;
+
+      const cam = camRef.current;
+      const w = canvas.width / dpr;
+      const h = canvas.height / dpr;
+
+      ctx.clearRect(0, 0, w, h);
+      ctx.fillStyle = '#0a0a0a';
+      ctx.fillRect(0, 0, w, h);
+
+      // Viewport bounds in world coords
+      const vpLeft = cam.x - w / (2 * cam.zoom);
+      const vpRight = cam.x + w / (2 * cam.zoom);
+      const vpTop = cam.y - h / (2 * cam.zoom);
+      const vpBottom = cam.y + h / (2 * cam.zoom);
+
+      // Only render visible cells
+      const colStart = Math.max(0, Math.floor(vpLeft / layout.cellW));
+      const colEnd = Math.min(layout.cols - 1, Math.ceil(vpRight / layout.cellW));
+      const rowStart = Math.max(0, Math.floor(vpTop / layout.cellH));
+      const rowEnd = Math.min(layout.rows - 1, Math.ceil(vpBottom / layout.cellH));
+
+      ctx.save();
+      // Transform: world → screen
+      ctx.translate(w / 2, h / 2);
+      ctx.scale(cam.zoom, cam.zoom);
+      ctx.translate(-cam.x, -cam.y);
+
+      for (let row = rowStart; row <= rowEnd; row++) {
+        for (let col = colStart; col <= colEnd; col++) {
+          const idx = row * layout.cols + col;
+          if (idx >= pagesWithImages.length) continue;
+
+          const page = pagesWithImages[idx];
+          const px = col * layout.cellW;
+          const py = row * layout.cellH;
+          const url = getDirectThumbUrl(page)!;
+
+          // Draw placeholder
+          ctx.fillStyle = '#1a1a1a';
+          ctx.fillRect(px, py, THUMB_W, THUMB_H);
+
+          // Load + draw image
+          const cached = imageCache.current.get(url);
+          if (!cached) {
+            loadImage(url);
+          } else if (cached instanceof HTMLImageElement) {
+            // Draw maintaining aspect ratio, centered in cell
+            const imgAR = cached.naturalWidth / cached.naturalHeight;
+            const cellAR = THUMB_W / THUMB_H;
+            let dw: number, dh: number, dx: number, dy: number;
+            if (imgAR > cellAR) {
+              dw = THUMB_W;
+              dh = THUMB_W / imgAR;
+              dx = px;
+              dy = py + (THUMB_H - dh) / 2;
+            } else {
+              dh = THUMB_H;
+              dw = THUMB_H * imgAR;
+              dx = px + (THUMB_W - dw) / 2;
+              dy = py;
+            }
+            ctx.drawImage(cached, dx, dy, dw, dh);
+          }
+
+          // Page number label — only show when zoomed in enough
+          if (cam.zoom > 0.4) {
+            const fontSize = Math.max(8, Math.min(11, 11 / cam.zoom));
+            ctx.font = `${fontSize}px system-ui, sans-serif`;
+            ctx.fillStyle = 'rgba(255,255,255,0.5)';
+            ctx.textAlign = 'center';
+            ctx.fillText(`${page.page_number}`, px + THUMB_W / 2, py + THUMB_H + fontSize + 1);
+          }
+        }
+      }
+
+      ctx.restore();
+      rafRef.current = requestAnimationFrame(render);
     };
 
-    // Track zoom level — normalize so "fit all" = 100%
-    viewer.addHandler('zoom', (event: any) => {
-      const pct = Math.round((event.zoom / homeZoomRef.current) * 100);
-      setZoomPercent(pct);
-    });
+    rafRef.current = requestAnimationFrame(render);
 
-    // Track loading — collection mode fires 'open' per tile source
-    let openCount = 0;
-    viewer.addHandler('open', () => {
-      openCount++;
-      if (openCount >= 1) {
-        setLoading(false);
-        captureHomeZoom();
-      }
-    });
+    // --- Interaction handlers ---
+    const onWheel = (e: WheelEvent) => {
+      e.preventDefault();
+      const cam = camRef.current;
+      const delta = -e.deltaY * ZOOM_SPEED;
+      const newZoom = Math.min(MAX_ZOOM, Math.max(MIN_ZOOM, cam.zoom * (1 + delta)));
 
-    // Handle tile load errors
-    viewer.addHandler('open-failed', (event: any) => {
-      console.warn('[BookOverview] Failed to open tile source:', event);
-    });
+      // Zoom toward cursor
+      const rect = canvas.getBoundingClientRect();
+      const mx = e.clientX - rect.left;
+      const my = e.clientY - rect.top;
+      const wx = (mx - canvas.width / dpr / 2) / cam.zoom + cam.x;
+      const wy = (my - canvas.height / dpr / 2) / cam.zoom + cam.y;
 
-    // Fallback: remove loading after 3s, capture home zoom
-    setTimeout(() => {
-      setLoading(false);
-      captureHomeZoom();
-    }, 3000);
+      cam.x = wx - (mx - canvas.width / dpr / 2) / newZoom;
+      cam.y = wy - (my - canvas.height / dpr / 2) / newZoom;
+      cam.zoom = newZoom;
 
-    // Add click handler — find which page was clicked
-    viewer.addHandler('canvas-click', (event: any) => {
-      // Don't handle if it was a drag
-      if (event.quick) {
-        const viewportPoint = viewer.viewport.pointFromPixel(event.position);
+      setZoomPercent(Math.round((newZoom / homeZoom) * 100));
+      dirtyRef.current = true;
+    };
 
-        // Find which item was clicked by checking bounds
-        const tiledImage = viewer.world.getItemCount();
-        for (let i = 0; i < tiledImage; i++) {
-          const item = viewer.world.getItemAt(i);
-          if (item) {
-            const bounds = item.getBounds();
-            if (viewportPoint.x >= bounds.x &&
-                viewportPoint.x <= bounds.x + bounds.width &&
-                viewportPoint.y >= bounds.y &&
-                viewportPoint.y <= bounds.y + bounds.height) {
-              const page = pagesWithImages[i];
-              if (page) {
-                router.push(`${bookPath}/page/${page.id}`);
-              }
-              break;
-            }
-          }
+    const onMouseDown = (e: MouseEvent) => {
+      dragRef.current = { sx: e.clientX, sy: e.clientY, cx: camRef.current.x, cy: camRef.current.y };
+      canvas.style.cursor = 'grabbing';
+    };
+
+    const onMouseMove = (e: MouseEvent) => {
+      const rect = canvas.getBoundingClientRect();
+      const sx = (e.clientX - rect.left) * dpr;
+      const sy = (e.clientY - rect.top) * dpr;
+
+      if (dragRef.current) {
+        const cam = camRef.current;
+        const dx = (e.clientX - dragRef.current.sx) / cam.zoom;
+        const dy = (e.clientY - dragRef.current.sy) / cam.zoom;
+        cam.x = dragRef.current.cx - dx;
+        cam.y = dragRef.current.cy - dy;
+        dirtyRef.current = true;
+      } else {
+        // Hover detection
+        const idx = hitTest(sx / dpr, sy / dpr);
+        if (idx >= 0) {
+          setHoveredPage(pagesWithImages[idx].page_number);
+          canvas.style.cursor = 'pointer';
+        } else {
+          setHoveredPage(null);
+          canvas.style.cursor = 'grab';
         }
       }
-    });
+    };
 
-    // Mouse move for hover tooltip
-    (viewer as any).addHandler('canvas-move', (event: any) => {
-      // Not available in touch
-      if (!event.position) return;
-      const viewportPoint = viewer.viewport.pointFromPixel(event.position);
-
-      let found = false;
-      const itemCount = viewer.world.getItemCount();
-      for (let i = 0; i < itemCount; i++) {
-        const item = viewer.world.getItemAt(i);
-        if (item) {
-          const bounds = item.getBounds();
-          if (viewportPoint.x >= bounds.x &&
-              viewportPoint.x <= bounds.x + bounds.width &&
-              viewportPoint.y >= bounds.y &&
-              viewportPoint.y <= bounds.y + bounds.height) {
-            setHoveredPage(pagesWithImages[i]?.page_number ?? null);
-            setTooltipPos({
-              x: event.position.x + (containerRef.current?.getBoundingClientRect().left ?? 0),
-              y: event.position.y + (containerRef.current?.getBoundingClientRect().top ?? 0),
-            });
-            found = true;
-            break;
+    const onMouseUp = (e: MouseEvent) => {
+      if (dragRef.current) {
+        const moved = Math.abs(e.clientX - dragRef.current.sx) + Math.abs(e.clientY - dragRef.current.sy);
+        if (moved < 5) {
+          // Click — navigate to page
+          const rect = canvas.getBoundingClientRect();
+          const sx = (e.clientX - rect.left);
+          const sy = (e.clientY - rect.top);
+          const idx = hitTest(sx, sy);
+          if (idx >= 0) {
+            const page = pagesWithImages[idx];
+            const bookPath = `/book/${bookSlug || bookId}`;
+            router.push(`${bookPath}/page/${page.id}`);
           }
         }
+        dragRef.current = null;
+        canvas.style.cursor = 'grab';
       }
-      if (!found) {
-        setHoveredPage(null);
-      }
-    });
+    };
 
-    // Clear hover on exit
-    (viewer as any).addHandler('canvas-exit', () => {
+    const onMouseLeave = () => {
+      dragRef.current = null;
       setHoveredPage(null);
-    });
-  }, [pagesWithImages, bookPath, router]);
+      canvas.style.cursor = 'grab';
+    };
 
-  useEffect(() => {
-    initViewer();
+    // Touch support
+    let lastTouchDist = 0;
+    let lastTouchCenter = { x: 0, y: 0 };
+
+    const onTouchStart = (e: TouchEvent) => {
+      if (e.touches.length === 1) {
+        const t = e.touches[0];
+        dragRef.current = { sx: t.clientX, sy: t.clientY, cx: camRef.current.x, cy: camRef.current.y };
+      } else if (e.touches.length === 2) {
+        const t0 = e.touches[0], t1 = e.touches[1];
+        lastTouchDist = Math.hypot(t1.clientX - t0.clientX, t1.clientY - t0.clientY);
+        lastTouchCenter = { x: (t0.clientX + t1.clientX) / 2, y: (t0.clientY + t1.clientY) / 2 };
+        dragRef.current = null;
+      }
+    };
+
+    const onTouchMove = (e: TouchEvent) => {
+      e.preventDefault();
+      if (e.touches.length === 1 && dragRef.current) {
+        const t = e.touches[0];
+        const cam = camRef.current;
+        const dx = (t.clientX - dragRef.current.sx) / cam.zoom;
+        const dy = (t.clientY - dragRef.current.sy) / cam.zoom;
+        cam.x = dragRef.current.cx - dx;
+        cam.y = dragRef.current.cy - dy;
+        dirtyRef.current = true;
+      } else if (e.touches.length === 2) {
+        const t0 = e.touches[0], t1 = e.touches[1];
+        const dist = Math.hypot(t1.clientX - t0.clientX, t1.clientY - t0.clientY);
+        const scale = dist / lastTouchDist;
+        const cam = camRef.current;
+        cam.zoom = Math.min(MAX_ZOOM, Math.max(MIN_ZOOM, cam.zoom * scale));
+        lastTouchDist = dist;
+        setZoomPercent(Math.round((cam.zoom / homeZoom) * 100));
+        dirtyRef.current = true;
+      }
+    };
+
+    const onTouchEnd = (e: TouchEvent) => {
+      if (e.changedTouches.length === 1 && dragRef.current) {
+        const t = e.changedTouches[0];
+        const moved = Math.abs(t.clientX - dragRef.current.sx) + Math.abs(t.clientY - dragRef.current.sy);
+        if (moved < 10) {
+          const rect = canvas.getBoundingClientRect();
+          const sx = t.clientX - rect.left;
+          const sy = t.clientY - rect.top;
+          const idx = hitTest(sx, sy);
+          if (idx >= 0) {
+            const page = pagesWithImages[idx];
+            const bookPath = `/book/${bookSlug || bookId}`;
+            router.push(`${bookPath}/page/${page.id}`);
+          }
+        }
+      }
+      dragRef.current = null;
+    };
+
+    canvas.addEventListener('wheel', onWheel, { passive: false });
+    canvas.addEventListener('mousedown', onMouseDown);
+    canvas.addEventListener('mousemove', onMouseMove);
+    canvas.addEventListener('mouseup', onMouseUp);
+    canvas.addEventListener('mouseleave', onMouseLeave);
+    canvas.addEventListener('touchstart', onTouchStart, { passive: true });
+    canvas.addEventListener('touchmove', onTouchMove, { passive: false });
+    canvas.addEventListener('touchend', onTouchEnd);
+
+    const resizeObs = new ResizeObserver(resize);
+    resizeObs.observe(container);
 
     return () => {
-      if (viewerRef.current) {
-        viewerRef.current.destroy();
-        viewerRef.current = null;
-      }
+      cancelAnimationFrame(rafRef.current);
+      canvas.removeEventListener('wheel', onWheel);
+      canvas.removeEventListener('mousedown', onMouseDown);
+      canvas.removeEventListener('mousemove', onMouseMove);
+      canvas.removeEventListener('mouseup', onMouseUp);
+      canvas.removeEventListener('mouseleave', onMouseLeave);
+      canvas.removeEventListener('touchstart', onTouchStart);
+      canvas.removeEventListener('touchmove', onTouchMove);
+      canvas.removeEventListener('touchend', onTouchEnd);
+      resizeObs.disconnect();
     };
-  }, [initViewer]);
+  // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [pagesWithImages, layout, getHomeZoom, hitTest, loadImage]);
 
   const handleZoomIn = () => {
-    viewerRef.current?.viewport.zoomBy(1.5);
+    const cam = camRef.current;
+    cam.zoom = Math.min(MAX_ZOOM, cam.zoom * 1.5);
+    const homeZoom = getHomeZoom();
+    setZoomPercent(Math.round((cam.zoom / homeZoom) * 100));
+    dirtyRef.current = true;
   };
 
   const handleZoomOut = () => {
-    viewerRef.current?.viewport.zoomBy(0.67);
+    const cam = camRef.current;
+    cam.zoom = Math.max(MIN_ZOOM, cam.zoom * 0.67);
+    const homeZoom = getHomeZoom();
+    setZoomPercent(Math.round((cam.zoom / homeZoom) * 100));
+    dirtyRef.current = true;
   };
 
   const handleFitAll = () => {
-    viewerRef.current?.viewport.goHome();
+    const homeZoom = getHomeZoom();
+    camRef.current = { x: layout.totalW / 2, y: layout.totalH / 2, zoom: homeZoom };
+    setZoomPercent(100);
+    dirtyRef.current = true;
   };
 
+  const bookPath = `/book/${bookSlug || bookId}`;
+
   return (
-    <div className="relative w-full h-[calc(100vh-56px)] bg-[#0a0a0a]">
+    <div ref={containerRef} className="relative w-full h-[calc(100vh-56px)] bg-[#0a0a0a]">
       {/* Page count — top-left */}
       <div className="absolute top-4 left-4 z-20 px-3 py-1.5 rounded-full
         bg-black/60 backdrop-blur-md border border-white/10 text-white/70 text-sm
         pointer-events-none select-none">
         {pagesWithImages.length} pages
+        {loadedCount < pagesWithImages.length && (
+          <span className="text-white/40 ml-1.5">· {loadedCount} loaded</span>
+        )}
       </div>
 
       {/* Book title — top-center */}
@@ -241,34 +461,14 @@ export default function BookOverview({ bookId, bookSlug, bookTitle, pages }: Boo
         </div>
       )}
 
-      {/* Loading overlay */}
-      {loading && (
-        <div className="absolute inset-0 z-30 flex items-center justify-center bg-[#0a0a0a]">
-          <div className="flex flex-col items-center gap-3">
-            <div className="w-8 h-8 border-2 border-white/20 border-t-white/60 rounded-full animate-spin" />
-            <span className="text-white/50 text-sm">Loading {pagesWithImages.length} pages...</span>
-          </div>
-        </div>
-      )}
-
-      {/* OSD container */}
-      <div
-        ref={containerRef}
-        className="w-full h-full"
-        style={{ cursor: hoveredPage !== null ? 'pointer' : 'grab' }}
-      />
+      {/* Canvas */}
+      <canvas ref={canvasRef} className="w-full h-full" style={{ cursor: 'grab' }} />
 
       {/* Hover tooltip */}
       {hoveredPage !== null && (
-        <div
-          className="fixed z-50 px-2 py-1 rounded bg-black/80 backdrop-blur-sm
-            border border-white/20 text-white text-xs pointer-events-none
-            -translate-x-1/2 -translate-y-full"
-          style={{
-            left: tooltipPos.x,
-            top: tooltipPos.y - 12,
-          }}
-        >
+        <div className="absolute top-4 right-4 z-20 px-3 py-1.5 rounded-full
+          bg-black/60 backdrop-blur-md border border-white/10 text-white/80 text-sm
+          pointer-events-none select-none">
           Page {hoveredPage}
         </div>
       )}
