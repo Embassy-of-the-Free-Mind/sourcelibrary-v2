@@ -109,7 +109,7 @@ export const DELETE = withAuth(async (request, session, context) => {
     // SOFT DELETE by default - archive to deleted_books collection
     if (!confirmPermanent) {
       // Get all pages for archival
-      const pages = await db.collection('pages').find({ book_id: bookId }).toArray();
+      const pages = await db.collection('pages').find({ book_id: bookId }).maxTimeMS(30000).toArray();
 
       // Archive book with its pages
       await db.collection('deleted_books').insertOne({
