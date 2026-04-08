@@ -287,8 +287,9 @@ export default function ImageDetailPage({
     requestAnimationFrame(() => setImageOpacity(1));
 
     // Fetch full detail in background for admin fields (highResUrl, confidence, etc.)
+    // Preserve imageUrl to avoid a visible reload — the cached version is already displayed
     gallery.get(imgId).then(full => {
-      setData(prev => prev?.id === imgId ? full : prev);
+      setData(prev => prev?.id === imgId ? { ...full, imageUrl: prev.imageUrl } : prev);
     }).catch(() => {});
   }, [data?.book?.id, data?.book?.slug]);
 
