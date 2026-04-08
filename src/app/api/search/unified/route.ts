@@ -341,6 +341,24 @@ async function searchIndex(db: any, query: string, limit: number) {
       'index.concepts': 1, 'index.people': 1, 'index.places': 1, 'index.keywords': 1,
     }).limit(limit).maxTimeMS(7000).toArray();
 
+    // Merge full index from dedicated collection
+    const fallbackBookIds = books.map((b: any) => b.id || b._id?.toString()).filter(Boolean);
+    if (fallbackBookIds.length > 0) {
+      const indexDocs = await db.collection('book_indexes')
+        .find({ book_id: { $in: fallbackBookIds } }, { projection: { _id: 0 }, maxTimeMS: 5000 })
+        .toArray().catch(() => []);
+      const indexMap = new Map(indexDocs.map((d: any) => [d.book_id, d]));
+      for (const book of books) {
+        const bookId = book.id || book._id?.toString();
+        const indexDoc = indexMap.get(bookId);
+        if (indexDoc) {
+          // eslint-disable-next-line @typescript-eslint/no-unused-vars
+          const { book_id: _, ...indexFields } = indexDoc as any;
+          (book as any).index = { ...(book as any).index, ...indexFields };
+        }
+      }
+    }
+
     for (const book of books) {
       const allEntries = [
         ...(book.index?.concepts || []).map((e: any) => ({ ...e, type: 'concept' as const })),

@@ -25,6 +25,15 @@ export const POST = withAuth(async (request, session, context) => {
       return NextResponse.json({ error: 'Book not found' }, { status: 404 });
     }
 
+    // Merge full index from dedicated collection
+    const indexDoc = await db.collection('book_indexes').findOne(
+      { book_id: bookId },
+      { projection: { _id: 0, book_id: 0 }, maxTimeMS: 5000 }
+    ).catch(() => null);
+    if (indexDoc) {
+      (book as any).index = { ...(book as any).index, ...indexDoc };
+    }
+
     // Get pages for context — only fields needed for front matter generation
     const pages = await db.collection('pages')
       .find(

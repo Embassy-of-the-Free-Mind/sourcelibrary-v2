@@ -259,6 +259,17 @@ async function getBook(id: string): Promise<{ book: Book; pages: Page[]; totalBo
       .catch(() => null),
   ]);
 
+  // Fetch full index data from dedicated collection (keeps book docs small)
+  const bookIndexDoc = await db.collection('book_indexes').findOne(
+    { book_id: bookId },
+    { projection: { _id: 0, book_id: 0 }, maxTimeMS: 5000 }
+  ).catch(() => null);
+
+  // Merge index data back onto book for rendering (if found in dedicated collection)
+  if (bookIndexDoc) {
+    (book as any).index = { ...(book as any).index, ...bookIndexDoc };
+  }
+
   // Serialize MongoDB objects to plain JavaScript objects
   const serializedBook = JSON.parse(JSON.stringify(book));
   const serializedPages = JSON.parse(JSON.stringify(pagesRaw));

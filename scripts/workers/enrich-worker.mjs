@@ -876,8 +876,22 @@ async function enrichBook(db, book) {
     totalPages: pages.length,
   };
 
-  // Save to DB
-  const updateData = { index, updated_at: new Date() };
+  // Save to DB — write index to dedicated collection (keeps book docs small)
+  await db.collection('book_indexes').replaceOne(
+    { book_id: bookId },
+    { book_id: bookId, ...index },
+    { upsert: true }
+  );
+
+  // Write a lightweight marker to the book doc (generatedAt only, not the full index)
+  const updateData = {
+    'index.generatedAt': index.generatedAt,
+    'index.pagesCovered': index.pagesCovered,
+    'index.totalPages': index.totalPages,
+    updated_at: new Date(),
+  };
+
+  const unsetFields = { enrichment_stale: '' };
 
   if (bookSummary.brief) {
     updateData.summary = {
@@ -898,7 +912,7 @@ async function enrichBook(db, book) {
 
   await db.collection('books').updateOne(
     { id: bookId },
-    { $set: updateData, $unset: { enrichment_stale: '' } }
+    { $set: updateData, $unset: unsetFields }
   );
 
   // Log Gemini usage for batch extractions
@@ -1120,10 +1134,12 @@ async function extractChaptersForBook(db, bookId) {
     }
   }
 
-  // Section hints from book index
+  // Section hints from book index (check dedicated collection first, then inline fallback)
+  const bookIndexDoc = await db.collection('book_indexes').findOne({ book_id: bookId }).catch(() => null);
+  const indexData = bookIndexDoc || book.index || {};
   const sectionHints = [];
-  if (book.index?.sectionSummaries) {
-    for (const section of book.index.sectionSummaries) {
+  if (indexData.sectionSummaries) {
+    for (const section of indexData.sectionSummaries) {
       if (section.title && section.startPage) {
         sectionHints.push({ title: section.title, startPage: section.startPage, endPage: section.endPage || section.startPage });
       }
