@@ -1,23 +1,22 @@
 #!/usr/bin/env node
 /**
  * Backfill Iconclass codes for gallery images using Gemini 3.1 Flash Lite.
- * Lightweight: sends the extracted image crop + existing metadata, asks only for codes.
- * Updates both pages.detected_images[].metadata.iconclass AND gallery_images.metadata.iconclass.
- *
- * Cost: ~400 tokens/image * 70K images * $0.075/M tokens ≈ $2.10
+ * Concurrent: runs CONCURRENCY parallel Gemini calls for speed.
+ * Batch pagination to avoid Atlas cursor timeouts.
  *
  * Usage:
  *   set -a; source .env.production.local; set +a
- *   node scripts/backfill-iconclass-gallery.mjs [--dry-run] [--limit 100] [--min-quality 0.7]
+ *   node scripts/backfill-iconclass-gallery.mjs [--dry-run] [--limit 100] [--concurrency 10]
  */
 import { MongoClient } from 'mongodb';
 import { GoogleGenAI } from '@google/genai';
 
 const DRY_RUN = process.argv.includes('--dry-run');
 const LIMIT = parseInt(process.argv.find((_, i, a) => a[i - 1] === '--limit') || '100000');
+const CONCURRENCY = parseInt(process.argv.find((_, i, a) => a[i - 1] === '--concurrency') || '10');
 const MIN_QUALITY = parseFloat(process.argv.find((_, i, a) => a[i - 1] === '--min-quality') || '0.5');
 const MODEL = 'gemini-3.1-flash-lite-preview';
-const BATCH_SIZE = 20; // Process in batches, write updates together
+const PAGE_SIZE = 200;
 
 const PROMPT = `Classify this illustration from a historical book using Iconclass codes (iconclass.org). Return 2-5 codes, most specific first.
 
@@ -30,6 +29,47 @@ Tags: subjects={subjects}, figures={figures}, symbols={symbols}.
 
 Return ONLY a JSON array of codes. Example: ["49E39","25FF41"]`;
 
+function buildPrompt(img) {
+  const meta = img.metadata || {};
+  return PROMPT
+    .replace('{description}', (img.description || '').substring(0, 100))
+    .replace('{bookTitle}', (img.book_title || '').substring(0, 60))
+    .replace('{year}', img.book_year || '?')
+    .replace('{type}', img.type || '?')
+    .replace('{subjects}', (meta.subjects || []).join(', ') || 'none')
+    .replace('{figures}', (meta.figures || []).join(', ') || 'none')
+    .replace('{symbols}', (meta.symbols || []).join(', ') || 'none');
+}
+
+async function classifyImage(genai, img) {
+  if (!img.extracted_url) return null;
+
+  const prompt = buildPrompt(img);
+
+  const imgRes = await fetch(img.extracted_url, { signal: AbortSignal.timeout(10000) });
+  if (!imgRes.ok) return null;
+  const imgBuffer = Buffer.from(await imgRes.arrayBuffer());
+
+  const result = await genai.models.generateContent({
+    model: MODEL,
+    contents: [{
+      parts: [
+        { text: prompt },
+        { inlineData: { mimeType: 'image/jpeg', data: imgBuffer.toString('base64') } },
+      ],
+    }],
+    config: { temperature: 0.1, maxOutputTokens: 256 },
+  });
+
+  const text = result.text.replace(/```json\n?/g, '').replace(/```\n?/g, '').trim();
+  const tokens = result.usageMetadata?.totalTokenCount || 400;
+  const match = text.match(/\[[\s\S]*\]/);
+  if (!match) return { tokens };
+
+  const codes = JSON.parse(match[0]).filter(c => typeof c === 'string' && c.length > 0);
+  return codes.length > 0 ? { codes, tokens } : { tokens };
+}
+
 async function main() {
   const client = new MongoClient(process.env.MONGODB_URI);
   await client.connect();
@@ -37,143 +77,111 @@ async function main() {
 
   const genai = new GoogleGenAI({ apiKey: process.env.GEMINI_API_KEY });
 
-  // Use batch pagination instead of cursor to avoid Atlas cursor timeout.
-  // Each batch fetches PAGE_SIZE docs, processes them, then fetches the next batch.
-  const PAGE_SIZE = 200;
   const query = {
     extracted_url: { $ne: null },
     gallery_quality: { $gte: MIN_QUALITY },
-    $or: [
-      { 'metadata.iconclass': { $exists: false } },
-      { 'metadata.iconclass': { $size: 0 } },
-    ],
-  };
-  const projection = {
-    id: 1, page_id: 1, book_id: 1, detection_index: 1,
-    extracted_url: 1, description: 1, type: 1,
-    book_title: 1, book_year: 1,
-    metadata: 1, gallery_quality: 1,
+    'metadata.iconclass': { $exists: false },
   };
 
-  // Count total to process
-  const totalToProcess = await db.collection('gallery_images').countDocuments(query, { maxTimeMS: 30000 });
-  console.log(`${DRY_RUN ? 'DRY RUN — ' : ''}Backfilling ${totalToProcess} gallery images (min quality: ${MIN_QUALITY})\n`);
+  console.log(`${DRY_RUN ? 'DRY RUN — ' : ''}Concurrency: ${CONCURRENCY} | Model: ${MODEL}\n`);
 
   let success = 0, errors = 0, totalTokens = 0, processed = 0;
-  let pageOffset = 0;
 
   while (processed < LIMIT) {
-    // Fetch a batch — re-query each time since processed docs no longer match the filter
-    const pageDocs = await db.collection('gallery_images')
-      .find(query, { projection })
+    // Re-query each batch (processed docs no longer match since iconclass is now set)
+    const batch = await db.collection('gallery_images')
+      .find(query, {
+        projection: {
+          id: 1, page_id: 1, book_id: 1, detection_index: 1,
+          extracted_url: 1, description: 1, type: 1,
+          book_title: 1, book_year: 1, metadata: 1, gallery_quality: 1,
+        },
+      })
       .sort({ gallery_quality: -1 })
-      .limit(Math.min(PAGE_SIZE, LIMIT - processed))
+      .limit(PAGE_SIZE)
+      .maxTimeMS(60000)
       .toArray();
 
-    if (pageDocs.length === 0) break;
-    console.log(`\n  [Fetched batch of ${pageDocs.length} images]`);
+    if (batch.length === 0) {
+      console.log('\nNo more images to process.');
+      break;
+    }
+    console.log(`\n  [Batch: ${batch.length} images, processed so far: ${processed}]`);
 
-    const batch = [];
+    // Process batch with concurrency pool
+    const writeOps = [];
 
-  for (const img of pageDocs) {
-    processed++;
-    const label = `[${processed}] q=${img.gallery_quality} ${img.type} — ${(img.description || '').substring(0, 50)}`;
+    for (let i = 0; i < batch.length; i += CONCURRENCY) {
+      const chunk = batch.slice(i, i + CONCURRENCY);
 
-    try {
-      if (!img.extracted_url) {
-        errors++;
-        continue;
-      }
+      const results = await Promise.allSettled(
+        chunk.map(async (img) => {
+          try {
+            return { img, result: await classifyImage(genai, img) };
+          } catch (err) {
+            return { img, error: err.message };
+          }
+        })
+      );
 
-      const meta = img.metadata || {};
-      const prompt = PROMPT
-        .replace('{description}', (img.description || '').substring(0, 100))
-        .replace('{bookTitle}', (img.book_title || '').substring(0, 60))
-        .replace('{year}', img.book_year || '?')
-        .replace('{type}', img.type || '?')
-        .replace('{subjects}', (meta.subjects || []).join(', ') || 'none')
-        .replace('{figures}', (meta.figures || []).join(', ') || 'none')
-        .replace('{symbols}', (meta.symbols || []).join(', ') || 'none');
+      for (const r of results) {
+        processed++;
+        if (r.status === 'rejected' || r.value.error) {
+          errors++;
+          continue;
+        }
 
-      // Fetch image
-      const imgRes = await fetch(img.extracted_url, { signal: AbortSignal.timeout(15000) });
-      if (!imgRes.ok) {
-        errors++;
-        continue;
-      }
-      const imgBuffer = Buffer.from(await imgRes.arrayBuffer());
+        const { img, result } = r.value;
+        if (!result) { errors++; continue; }
 
-      const result = await genai.models.generateContent({
-        model: MODEL,
-        contents: [{
-          parts: [
-            { text: prompt },
-            { inlineData: { mimeType: 'image/jpeg', data: imgBuffer.toString('base64') } },
-          ],
-        }],
-        config: { temperature: 0.1, maxOutputTokens: 256 },
-      });
+        totalTokens += result.tokens || 0;
 
-      const text = result.text.replace(/```json\n?/g, '').replace(/```\n?/g, '').trim();
-      totalTokens += (result.usageMetadata?.totalTokenCount || 400);
+        if (result.codes) {
+          success++;
+          const label = `[${processed}] ${img.type} — ${(img.description || '').substring(0, 45)}`;
+          console.log(`${label} → ${result.codes.join(', ')}`);
 
-      const match = text.match(/\[[\s\S]*\]/);
-      if (!match) {
-        errors++;
-        continue;
-      }
-
-      const codes = JSON.parse(match[0]).filter(c => typeof c === 'string' && c.length > 0);
-      if (codes.length === 0) {
-        errors++;
-        continue;
-      }
-
-      console.log(`${label} → ${codes.join(', ')}`);
-      success++;
-
-      if (!DRY_RUN) {
-        batch.push({
-          pageId: img.page_id,
-          galleryId: img.id,
-          detectionIndex: img.detection_index,
-          codes,
-        });
-
-        // Flush batch
-        if (batch.length >= BATCH_SIZE) {
-          await flushBatch(db, batch);
-          batch.length = 0;
+          if (!DRY_RUN) {
+            writeOps.push({
+              galleryId: img.id,
+              pageId: img.page_id,
+              detectionIndex: img.detection_index,
+              codes: result.codes,
+            });
+          }
+        } else {
+          errors++;
         }
       }
+    }
 
-      // Rate limit
-      await new Promise(r => setTimeout(r, 500));
-    } catch (err) {
-      console.log(`${label} — ERROR: ${err.message?.substring(0, 80)}`);
-      errors++;
-      if (err.message?.includes('429') || err.message?.includes('quota')) {
-        console.log('  Rate limited — waiting 60s...');
-        await new Promise(r => setTimeout(r, 60000));
-      } else {
-        await new Promise(r => setTimeout(r, 500));
+    // Batch write all results for this page
+    if (writeOps.length > 0) {
+      const ops = [];
+      for (const item of writeOps) {
+        ops.push(
+          db.collection('gallery_images').updateOne(
+            { id: item.galleryId },
+            { $set: { 'metadata.iconclass': item.codes, updated_at: new Date() } }
+          )
+        );
+        ops.push(
+          db.collection('pages').updateOne(
+            { id: item.pageId, [`detected_images.${item.detectionIndex}`]: { $ne: null } },
+            { $set: { [`detected_images.${item.detectionIndex}.metadata.iconclass`]: item.codes } }
+          ).catch(() => {})
+        );
       }
+      await Promise.all(ops);
+      console.log(`  [wrote ${writeOps.length} updates]`);
+      writeOps.length = 0;
     }
 
-    // Progress every 100
-    if (processed % 100 === 0) {
-      const cost = totalTokens * 0.000000075;
-      console.log(`\n  --- Progress: ${success}/${processed} success, ${errors} errors, $${cost.toFixed(4)} ---\n`);
-    }
+    // Progress
+    const cost = totalTokens * 0.000000075;
+    const rate = processed > 0 ? (success / (processed / CONCURRENCY) * CONCURRENCY).toFixed(0) : 0;
+    console.log(`  --- ${success} success, ${errors} errors, $${cost.toFixed(4)} ---`);
   }
-
-  // Flush remaining in this batch
-  if (batch.length > 0) {
-    await flushBatch(db, batch);
-    batch.length = 0;
-  }
-
-  } // end while
 
   console.log('\n=== SUMMARY ===');
   console.log(`Success: ${success}/${processed}`);
@@ -183,31 +191,6 @@ async function main() {
   console.log(`Cost: $${cost.toFixed(4)}`);
 
   await client.close();
-}
-
-async function flushBatch(db, batch) {
-  const ops = [];
-
-  for (const item of batch) {
-    // Update gallery_images (flat collection)
-    ops.push(
-      db.collection('gallery_images').updateOne(
-        { id: item.galleryId },
-        { $set: { 'metadata.iconclass': item.codes, updated_at: new Date() } }
-      )
-    );
-
-    // Update the source page's detected_images array (best-effort — some pages have sparse arrays)
-    ops.push(
-      db.collection('pages').updateOne(
-        { id: item.pageId, [`detected_images.${item.detectionIndex}`]: { $ne: null } },
-        { $set: { [`detected_images.${item.detectionIndex}.metadata.iconclass`]: item.codes } }
-      ).catch(() => {}) // Skip silently if page array is sparse
-    );
-  }
-
-  await Promise.all(ops);
-  console.log(`  [flushed ${batch.length} updates]`);
 }
 
 main().catch(e => { console.error(e); process.exit(1); });
