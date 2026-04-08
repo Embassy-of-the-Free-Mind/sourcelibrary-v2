@@ -28,8 +28,9 @@ interface BookOverviewProps {
 export default function BookOverview({ bookId, bookSlug, bookTitle, pages }: BookOverviewProps) {
   const containerRef = useRef<HTMLDivElement>(null);
   const viewerRef = useRef<any>(null);
+  const homeZoomRef = useRef<number>(1);
   const [loading, setLoading] = useState(true);
-  const [zoomLevel, setZoomLevel] = useState(1);
+  const [zoomPercent, setZoomPercent] = useState(100);
   const [hoveredPage, setHoveredPage] = useState<number | null>(null);
   const [tooltipPos, setTooltipPos] = useState({ x: 0, y: 0 });
   const router = useRouter();
@@ -79,11 +80,9 @@ export default function BookOverview({ bookId, bookSlug, bookTitle, pages }: Boo
       collectionColumns: cols,
       collectionTileSize: 256,
       collectionTileMargin: 16,
-      // Let OSD calculate the right zoom to fit all items
-      minZoomLevel: 0.01,
-      maxZoomLevel: 10,
-      visibilityRatio: 0.3,
-      constrainDuringPan: false,
+      // Let OSD calculate the right home zoom; constrain so user can't lose the content
+      visibilityRatio: 0.8,
+      constrainDuringPan: true,
       animationTime: 0.3,
       springStiffness: 10,
       gestureSettingsMouse: {
@@ -104,16 +103,26 @@ export default function BookOverview({ bookId, bookSlug, bookTitle, pages }: Boo
 
     viewerRef.current = viewer;
 
-    // Track zoom level
+    // Capture home zoom once layout is ready, normalize all zoom display to it
+    const captureHomeZoom = () => {
+      const home = viewer.viewport.getHomeZoom();
+      if (home > 0) homeZoomRef.current = home;
+    };
+
+    // Track zoom level — normalize so "fit all" = 100%
     viewer.addHandler('zoom', (event: any) => {
-      setZoomLevel(event.zoom);
+      const pct = Math.round((event.zoom / homeZoomRef.current) * 100);
+      setZoomPercent(pct);
     });
 
     // Track loading — collection mode fires 'open' per tile source
     let openCount = 0;
     viewer.addHandler('open', () => {
       openCount++;
-      if (openCount >= 1) setLoading(false);
+      if (openCount >= 1) {
+        setLoading(false);
+        captureHomeZoom();
+      }
     });
 
     // Handle tile load errors
@@ -121,17 +130,11 @@ export default function BookOverview({ bookId, bookSlug, bookTitle, pages }: Boo
       console.warn('[BookOverview] Failed to open tile source:', event);
     });
 
-    viewer.addHandler('tile-load-failed', (event: any) => {
-      console.warn('[BookOverview] Failed to load tile:', event);
-    });
-
-    // Fallback: remove loading after 3s
-    setTimeout(() => setLoading(false), 3000);
-
-    // Go home after a brief delay to ensure layout is computed
+    // Fallback: remove loading after 3s, capture home zoom
     setTimeout(() => {
-      viewer.viewport.goHome();
-    }, 500);
+      setLoading(false);
+      captureHomeZoom();
+    }, 3000);
 
     // Add click handler — find which page was clicked
     viewer.addHandler('canvas-click', (event: any) => {
@@ -285,8 +288,8 @@ export default function BookOverview({ bookId, bookSlug, bookTitle, pages }: Boo
           </svg>
         </button>
 
-        <span className="text-white/50 text-xs w-10 text-center tabular-nums select-none">
-          {Math.round(zoomLevel * 100)}%
+        <span className="text-white/50 text-xs w-12 text-center tabular-nums select-none">
+          {zoomPercent}%
         </span>
 
         <button
