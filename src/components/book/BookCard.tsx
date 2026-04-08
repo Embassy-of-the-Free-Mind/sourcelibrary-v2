@@ -1,6 +1,6 @@
 'use client';
 
-import { useState, useRef, useEffect, Suspense } from 'react';
+import { useState, useRef, useEffect } from 'react';
 import Link from 'next/link';
 import Image from 'next/image';
 import { Book as BookIcon } from 'lucide-react';
@@ -17,7 +17,7 @@ interface BookCardProps {
   priority?: boolean; // For first few cards to load eagerly
 }
 
-function BookCardImpl({ book, priority = false }: BookCardProps) {
+export default function BookCard({ book, priority = false }: BookCardProps) {
   const [imageLoaded, setImageLoaded] = useState(false);
   const [imageError, setImageError] = useState(false);
   const [useFallback, setUseFallback] = useState(false);
@@ -49,8 +49,9 @@ function BookCardImpl({ book, priority = false }: BookCardProps) {
     ? book.thumbnail_blob : null;
   let thumbnailUrl = useFallback && fallbackUrl ? fallbackUrl : primaryUrl;
 
-  // When edge resize is on, convert R2 URLs to use ?preset=card (400px, WebP/AVIF auto)
-  if (edgeResizeEnabled && thumbnailUrl) {
+  // When edge resize is on, convert full-res R2 URLs to use ?preset=card (400px, WebP/AVIF auto)
+  // Only resize archived originals — not pre-generated thumbnails or blob URLs
+  if (edgeResizeEnabled && thumbnailUrl && thumbnailUrl.includes('/archived/')) {
     thumbnailUrl = edgeResize(thumbnailUrl, 'card');
   }
 
@@ -232,10 +233,3 @@ function BookCardImpl({ book, priority = false }: BookCardProps) {
   );
 }
 
-export default function BookCard(props: BookCardProps) {
-  return (
-    <Suspense fallback={<div className="aspect-[3/4] bg-stone-100 rounded-lg animate-pulse" />}>
-      <BookCardImpl {...props} />
-    </Suspense>
-  );
-}

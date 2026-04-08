@@ -1,6 +1,6 @@
 'use client';
 
-import { useSearchParams } from 'next/navigation';
+import { useState, useEffect } from 'react';
 
 /**
  * Feature flag: use Cloudflare edge image resizing instead of pre-generated variants.
@@ -11,8 +11,13 @@ import { useSearchParams } from 'next/navigation';
  *
  * Test: sourcelibrary.org/browse?resize=1
  * Rollback: remove ?resize=1 (falls back to pre-generated images)
+ *
+ * Uses window.location instead of useSearchParams to avoid Suspense boundary requirement.
  */
 export function useEdgeResize(): boolean {
-  const params = useSearchParams();
-  return params?.get('resize') === '1';
+  const [enabled, setEnabled] = useState(false);
+  useEffect(() => {
+    setEnabled(new URLSearchParams(window.location.search).get('resize') === '1');
+  }, []);
+  return enabled;
 }
