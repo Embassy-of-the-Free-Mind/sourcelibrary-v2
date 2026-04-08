@@ -104,37 +104,46 @@ export async function POST(request: NextRequest) {
 
   // Streaming response via TransformStream (flush-friendly on Vercel)
   if (stream) {
-    try {
-      const { stream: textStream, sources, getFullText } = await streamLibrarianResponse(message, history);
+    const encoder = new TextEncoder();
+    const { readable, writable } = new TransformStream();
+    const writer = writable.getWriter();
 
-      const encoder = new TextEncoder();
-      const { readable, writable } = new TransformStream();
-      const writer = writable.getWriter();
+    // Start piping immediately — search + stream happen in background
+    const pipePromise = (async () => {
+      try {
+        // Send threadId immediately so client knows the connection is live
+        await writer.write(encoder.encode(`data: ${JSON.stringify({ type: 'threadId', threadId: activeThreadId })}\n\n`));
+        // Send a status event so the UI can show "Searching..."
+        await writer.write(encoder.encode(`data: ${JSON.stringify({ type: 'status', text: 'Searching the collection...' })}\n\n`));
 
-      // Pipe chunks in the background — the Response starts flushing immediately
-      const pipePromise = (async () => {
-        try {
-          await writer.write(encoder.encode(`data: ${JSON.stringify({ type: 'threadId', threadId: activeThreadId })}\n\n`));
+        // Now do the slow search + Gemini init
+        const { stream: textStream, sources, getFullText } = await streamLibrarianResponse(message, history);
 
-          for await (const chunk of textStream) {
-            await writer.write(encoder.encode(`data: ${JSON.stringify({ type: 'chunk', text: chunk })}\n\n`));
-          }
-
-          await writer.write(encoder.encode(`data: ${JSON.stringify({ type: 'done' })}\n\n`));
-          await writer.close();
-        } catch (err) {
-          console.error('[Embassy] Stream error:', err);
-          try {
-            await writer.write(encoder.encode(`data: ${JSON.stringify({ type: 'error', message: 'The Librarian was interrupted.' })}\n\n`));
-            await writer.close();
-          } catch { /* already closed */ }
+        for await (const chunk of textStream) {
+          await writer.write(encoder.encode(`data: ${JSON.stringify({ type: 'chunk', text: chunk })}\n\n`));
         }
-      })();
+
+        await writer.write(encoder.encode(`data: ${JSON.stringify({ type: 'done' })}\n\n`));
+        await writer.close();
+
+        // Return data needed for after() DB writes
+        return { getFullText, sources };
+      } catch (err) {
+        console.error('[Embassy] Stream error:', err);
+        try {
+          await writer.write(encoder.encode(`data: ${JSON.stringify({ type: 'error', message: 'The Librarian was interrupted. Please try again.' })}\n\n`));
+          await writer.close();
+        } catch { /* already closed */ }
+        return null;
+      }
+    })();
 
       // Defer DB writes to after the response is sent
       after(async () => {
-        await pipePromise; // Ensure streaming finished
-        const fullText = getFullText();
+        const result = await pipePromise;
+        if (!result) return; // Stream errored
+        const fullText = result.getFullText();
+        const sources = result.sources;
         const aiMessageTime = new Date();
 
         try {
@@ -162,21 +171,14 @@ export async function POST(request: NextRequest) {
         }
       });
 
-      return new Response(readable, {
-        headers: {
-          'Content-Type': 'text/event-stream',
-          'Cache-Control': 'no-cache, no-transform',
-          'Connection': 'keep-alive',
-          'X-Accel-Buffering': 'no',
-        },
-      });
-    } catch (error) {
-      console.error('[Embassy] Stream init error:', error);
-      return NextResponse.json(
-        { error: 'The Librarian is momentarily away. Please try again.' },
-        { status: 500 },
-      );
-    }
+    return new Response(readable, {
+      headers: {
+        'Content-Type': 'text/event-stream',
+        'Cache-Control': 'no-cache, no-transform',
+        'Connection': 'keep-alive',
+        'X-Accel-Buffering': 'no',
+      },
+    });
   }
 
   // Non-streaming response (fallback)
