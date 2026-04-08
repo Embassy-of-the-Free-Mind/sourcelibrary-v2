@@ -148,29 +148,40 @@ async function main() {
   console.log(`Processing batch of ${BATCH_SIZE} at concurrency ${CONCURRENCY}`);
   if (DRY_RUN) console.log('DRY RUN — no writes');
 
-  // Fetch a batch of gallery images that need hires
+  // Strategy: find pages that have R2 archived images AND detected_images,
+  // then match against gallery_images that need hires. This avoids fetching
+  // gallery_images for pages without R2 sources (which would just skip).
+  const pages = await db.collection('pages')
+    .find({
+      'detected_images.0': { $exists: true },
+      $or: [
+        { archived_photo: { $regex: '^https://images\\.sourcelibrary\\.org/' } },
+        { cropped_photo: { $regex: '^https://images\\.sourcelibrary\\.org/' } },
+      ],
+    })
+    .project({ id: 1, archived_photo: 1, cropped_photo: 1 })
+    .limit(BATCH_SIZE * 2)  // Overfetch since not all will need hires
+    .toArray();
+
+  const pageMap = new Map(pages.map(p => [p.id, p]));
+  const pageIds = pages.map(p => p.id);
+
+  // Now find gallery_images for these pages that still need hires
   const batch = await db.collection('gallery_images')
     .find({
+      page_id: { $in: pageIds },
       $or: [{ hires_url: { $exists: false } }, { hires_url: null }],
       bbox: { $exists: true },
     })
-    .sort({ gallery_quality: -1 })  // Best images first
+    .sort({ gallery_quality: -1 })
     .limit(BATCH_SIZE)
     .toArray();
 
   if (batch.length === 0) {
-    console.log('Nothing to do!');
+    console.log('Nothing to do — all images with R2 sources have hires!');
     await client.close();
     return;
   }
-
-  // Fetch all relevant pages in bulk
-  const pageIds = [...new Set(batch.map(g => g.page_id))];
-  const pages = await db.collection('pages')
-    .find({ id: { $in: pageIds } })
-    .project({ id: 1, archived_photo: 1, cropped_photo: 1 })
-    .toArray();
-  const pageMap = new Map(pages.map(p => [p.id, p]));
 
   console.log(`Batch: ${batch.length} images, ${pageIds.length} unique pages, ${pages.length} pages found`);
 
