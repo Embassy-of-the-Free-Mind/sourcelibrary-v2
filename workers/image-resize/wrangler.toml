@@ -1,0 +1,22 @@
+name = "sourcelibrary-image-resize"
+main = "src/index.ts"
+compatibility_date = "2024-12-01"
+
+# Route: intercept all requests to images.sourcelibrary.org
+# This replaces the default R2 custom domain serving
+routes = [
+  { pattern = "images.sourcelibrary.org/*", zone_name = "sourcelibrary.org" }
+]
+
+# R2 bucket binding — allows direct object access without S3 credentials
+[[r2_buckets]]
+binding = "BUCKET"
+bucket_name = "sourcelibrary"
+
+# Environment variables
+[vars]
+MAX_WIDTH = "4000"
+MAX_HEIGHT = "4000"
+DEFAULT_QUALITY = "80"
+CACHE_TTL_RESIZED = "2592000"   # 30 days
+CACHE_TTL_ORIGINAL = "86400"    # 1 day
