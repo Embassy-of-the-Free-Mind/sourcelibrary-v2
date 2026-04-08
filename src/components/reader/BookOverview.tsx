@@ -24,19 +24,27 @@ interface BookOverviewProps {
   pages: OverviewPage[];
 }
 
-// Get the fastest available thumbnail URL — direct R2, no proxy
-function getDirectThumbUrl(page: OverviewPage): string | null {
-  // Prefer pre-computed R2 thumbnails (tiny, fast, no proxy)
+// Two-tier image URLs: fast thumbnail for overview, high-res for zoom
+function getThumbUrl(page: OverviewPage): string | null {
   if (page.thumbnail_blob) return page.thumbnail_blob;
   if (page.thumbnail) return page.thumbnail;
-  // Fall back to archived photo (larger but direct)
+  if (page.archived_photo) return page.archived_photo;
+  if (page.photo) return page.photo;
+  return null;
+}
+
+function getHiresUrl(page: OverviewPage): string | null {
+  // Best available high-res: archived R2 > display > original > photo
   if (page.archived_photo) return page.archived_photo;
   if (page.display_photo) return page.display_photo;
   if (page.cropped_photo) return page.cropped_photo;
-  if (page.photo) return page.photo;
   if (page.photo_original) return page.photo_original;
+  if (page.photo) return page.photo;
   return null;
 }
+
+// Zoom threshold: above this, load high-res for visible pages
+const HIRES_ZOOM_THRESHOLD = 1.5;
 
 // Layout constants
 const THUMB_W = 120;
@@ -67,7 +75,7 @@ export default function BookOverview({ bookId, bookSlug, bookTitle, pages }: Boo
 
   // Filter pages with images
   const pagesWithImages = useMemo(() =>
-    pages.filter(p => getDirectThumbUrl(p) !== null),
+    pages.filter(p => getThumbUrl(p) !== null),
     [pages],
   );
 
@@ -207,19 +215,38 @@ export default function BookOverview({ bookId, bookSlug, bookTitle, pages }: Boo
           const page = pagesWithImages[idx];
           const px = col * layout.cellW;
           const py = row * layout.cellH;
-          const url = getDirectThumbUrl(page)!;
+          const thumbUrl = getThumbUrl(page)!;
+          const hiresUrl = getHiresUrl(page);
+          const useHires = cam.zoom > homeZoom * HIRES_ZOOM_THRESHOLD && hiresUrl && hiresUrl !== thumbUrl;
 
           // Draw placeholder
           ctx.fillStyle = '#1a1a1a';
           ctx.fillRect(px, py, THUMB_W, THUMB_H);
 
-          // Load + draw image
-          const cached = imageCache.current.get(url);
-          if (!cached) {
-            loadImage(url);
-          } else if (cached instanceof HTMLImageElement) {
+          // Determine best available image: prefer hires if zoomed in and loaded
+          let drawImg: HTMLImageElement | null = null;
+
+          // Always ensure thumbnail is loading/loaded
+          const thumbCached = imageCache.current.get(thumbUrl);
+          if (!thumbCached) {
+            loadImage(thumbUrl);
+          } else if (thumbCached instanceof HTMLImageElement) {
+            drawImg = thumbCached;
+          }
+
+          // If zoomed in enough, try to load and use high-res
+          if (useHires) {
+            const hiresCached = imageCache.current.get(hiresUrl!);
+            if (!hiresCached) {
+              loadImage(hiresUrl!);
+            } else if (hiresCached instanceof HTMLImageElement) {
+              drawImg = hiresCached; // Override thumbnail with high-res
+            }
+          }
+
+          if (drawImg) {
             // Draw maintaining aspect ratio, centered in cell
-            const imgAR = cached.naturalWidth / cached.naturalHeight;
+            const imgAR = drawImg.naturalWidth / drawImg.naturalHeight;
             const cellAR = THUMB_W / THUMB_H;
             let dw: number, dh: number, dx: number, dy: number;
             if (imgAR > cellAR) {
@@ -233,7 +260,7 @@ export default function BookOverview({ bookId, bookSlug, bookTitle, pages }: Boo
               dx = px + (THUMB_W - dw) / 2;
               dy = py;
             }
-            ctx.drawImage(cached, dx, dy, dw, dh);
+            ctx.drawImage(drawImg, dx, dy, dw, dh);
           }
 
           // Page number label — only show when zoomed in enough
