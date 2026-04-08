@@ -1002,18 +1002,31 @@ function shouldRun(phase) {
 
 // ── Gemini Batch API helpers (direct OCR submission, no Vercel) ──
 
-// All keys for rotation — try each until one works (batch jobs are per-key)
-// KEY_2 moved to end: frequently quota-exhausted, let healthy keys go first
-const GEMINI_BATCH_KEYS = [
+// All keys for rotation — deduplicated, round-robin across projects to maximize throughput.
+// Batch quotas are per-project, so spreading evenly doubles capacity.
+const GEMINI_BATCH_KEYS = [...new Set([
   process.env.GEMINI_API_KEY_TIER3,
   process.env.GEMINI_API_KEY,
   process.env.GEMINI_API_KEY_2,
-].filter(k => !!k);
+].filter(k => !!k))];
 
-function getGeminiApiKey(keyIndex = 0) {
-  const key = GEMINI_BATCH_KEYS[keyIndex] || GEMINI_BATCH_KEYS[0];
+let _batchKeyCounter = 0;
+function getGeminiApiKey(keyIndex) {
+  if (keyIndex !== undefined) {
+    const key = GEMINI_BATCH_KEYS[keyIndex] || GEMINI_BATCH_KEYS[0];
+    if (!key) throw new Error('No GEMINI_API_KEY found in env');
+    return key;
+  }
+  // Round-robin: spread load evenly across projects
+  const key = GEMINI_BATCH_KEYS[_batchKeyCounter % GEMINI_BATCH_KEYS.length];
+  _batchKeyCounter++;
   if (!key) throw new Error('No GEMINI_API_KEY found in env');
   return key;
+}
+
+// Get next key index for round-robin upload+create pairing
+function nextBatchKeyIndex() {
+  return _batchKeyCounter % GEMINI_BATCH_KEYS.length;
 }
 
 function getPageImageUrl(page) {
@@ -1060,8 +1073,10 @@ async function downloadImagesParallel(pages, concurrency) {
 }
 
 async function createBatchJobInline(model, requests, displayName) {
-  // Try each API key — rotate on quota exhaustion (429)
-  for (let ki = 0; ki < GEMINI_BATCH_KEYS.length; ki++) {
+  // Round-robin start key, try each on quota exhaustion (429)
+  const startKey = nextBatchKeyIndex();
+  for (let attempt = 0; attempt < GEMINI_BATCH_KEYS.length; attempt++) {
+    const ki = (startKey + attempt) % GEMINI_BATCH_KEYS.length;
     const apiKey = getGeminiApiKey(ki);
     const response = await fetch(
       `${GEMINI_API_BASE}/models/${model}:batchGenerateContent?key=${apiKey}`,
@@ -1364,9 +1379,11 @@ Output structure:
       console.log(`    JSONL size: ${jsonlSizeMB} MB for ${chunk.length} pages`);
 
       // Upload JSONL + create batch — both must use the same key (files are key-scoped).
-      // If batch creation hits 429, re-upload with the next key and retry.
+      // Round-robin start key across projects to spread load evenly.
       let uploadKeyIndex = -1;
-      for (let uki = 0; uki < GEMINI_BATCH_KEYS.length; uki++) {
+      const startKey = nextBatchKeyIndex();
+      for (let attempt = 0; attempt < GEMINI_BATCH_KEYS.length; attempt++) {
+        const uki = (startKey + attempt) % GEMINI_BATCH_KEYS.length;
         const uploadKey = getGeminiApiKey(uki);
         let fileResult;
         try {
@@ -1391,7 +1408,6 @@ Output structure:
           }
           break; // success
         } catch (batchErr) {
-          // Clean up the orphaned file
           try { await fetch(`https://generativelanguage.googleapis.com/v1beta/${fileResult.name}?key=${uploadKey}`, { method: 'DELETE' }); } catch (_) {}
           if (batchErr.message.includes('429') || batchErr.message.includes('quota')) {
             console.log(`    Batch create key ${uki} quota exhausted, re-uploading with next key...`);
@@ -1634,9 +1650,11 @@ async function submitImageExtractionBatch(db, book, candidatePages) {
       }));
       const jsonlContent = jsonlLines.join('\n');
 
-      // Upload + create batch with same key (files are key-scoped)
+      // Upload + create batch with same key (files are key-scoped). Round-robin across projects.
       let uploadKeyIndex = -1;
-      for (let uki = 0; uki < GEMINI_BATCH_KEYS.length; uki++) {
+      const imgStartKey = nextBatchKeyIndex();
+      for (let attempt = 0; attempt < GEMINI_BATCH_KEYS.length; attempt++) {
+        const uki = (imgStartKey + attempt) % GEMINI_BATCH_KEYS.length;
         const uploadKey = getGeminiApiKey(uki);
         let fileResult;
         try {
