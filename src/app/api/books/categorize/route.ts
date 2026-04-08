@@ -208,8 +208,11 @@ export const POST = withAuth(async (request, session) => {
   try {
     const db = await getDb();
 
-    // Get all books
-    const books = await db.collection('books').find({}).toArray();
+    // Get all visible books with only the fields needed for categorization
+    const books = await db.collection('books').find(
+      { visible: true, pages_count: { $gt: 0 } },
+      { projection: { id: 1, title: 1, display_title: 1, author: 1, summary: 1, 'index.keywords': 1, 'index.concepts': 1, categories: 1 } }
+    ).toArray();
 
     const results: { id: string; title: string; categories: string[]; updated: boolean }[] = [];
 
@@ -260,7 +263,10 @@ export const GET = withAuth(async (request, session) => {
   try {
     const db = await getDb();
 
-    const books = await db.collection('books').find({}).toArray();
+    const books = await db.collection('books').find(
+      { visible: true, pages_count: { $gt: 0 } },
+      { projection: { id: 1, title: 1, display_title: 1, author: 1, summary: 1, 'index.keywords': 1, 'index.concepts': 1, categories: 1 } }
+    ).toArray();
 
     const results = books.map(book => {
       const suggestedCategories = categorizeBook(book as unknown as Parameters<typeof categorizeBook>[0]);
