@@ -62,6 +62,11 @@ function transformBook(book) {
     collection_relevance: book.collection_relevance || null,
     image_source_provider: book.image_source?.provider || null,
     contributing_library: book.image_source?.contributing_library || null,
+    // Pre-computed translation percentage for fast homepage stats queries
+    translation_pct: (() => {
+      const denom = (book.pages_ocr || 0) - (book.pages_blank || 0);
+      return denom > 0 ? Math.round(((book.pages_translated || 0) / denom) * 10000) / 100 : 0;
+    })(),
   };
 }
 
