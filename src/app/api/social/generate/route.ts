@@ -70,6 +70,17 @@ async function fetchResearchContext(
       ),
   ]);
 
+  // Merge full index from dedicated collection
+  if (bookDoc) {
+    const indexDoc = await db.collection('book_indexes').findOne(
+      { book_id: bookId },
+      { projection: { _id: 0, book_id: 0 }, maxTimeMS: 5000 }
+    ).catch(() => null);
+    if (indexDoc) {
+      (bookDoc as any).index = { ...(bookDoc as any).index, ...indexDoc };
+    }
+  }
+
   const context: TweetGenerationInput['researchContext'] = {};
 
   // Page translation

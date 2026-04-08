@@ -79,6 +79,15 @@ export async function GET(
       ? 'private, no-cache'
       : 'public, max-age=60, stale-while-revalidate=300';
 
+    // Merge full index data from dedicated collection (heavy fields moved out of book docs)
+    const indexDoc = await db.collection('book_indexes').findOne(
+      { book_id: bookId },
+      { projection: { _id: 0, book_id: 0 }, maxTimeMS: 5000 }
+    ).catch(() => null);
+    if (indexDoc) {
+      (book as any).index = { ...(book as any).index, ...indexDoc };
+    }
+
     return NextResponse.json({ ...book, pages }, {
       headers: { 'Cache-Control': cacheControl }
     });

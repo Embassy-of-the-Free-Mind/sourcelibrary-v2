@@ -168,12 +168,65 @@ async function run() {
   const elapsed = ((Date.now() - start) / 1000).toFixed(1);
   console.log(`[enrichment-snapshot] Done in ${elapsed}s`);
 
+  // ── Library snapshot ──
+  // Cached totals for /status quick checks. Avoids 11s full-collection aggregates.
+  await computeLibrarySnapshot(db);
+
   // ── Data page snapshot ──
   // Computes stats for /data page (languages, centuries, categories, providers).
   // Same connection, avoids a separate cron entry.
   await computeDataPageSnapshot(db);
 
   await client.close();
+}
+
+/**
+ * Compute and cache library-level totals in system_config._id: 'library_snapshot'.
+ * Used by /status and other quick health checks to avoid 11s full-collection aggregates.
+ */
+async function computeLibrarySnapshot(db) {
+  const t0 = Date.now();
+  console.log(`[library-snapshot] Starting...`);
+
+  const [totals] = await db.collection('books').aggregate([
+    { $match: { hidden: { $ne: true } } },
+    { $group: {
+      _id: null,
+      books: { $sum: 1 },
+      pages: { $sum: { $ifNull: ['$pages_count', 0] } },
+      pages_ocr: { $sum: { $ifNull: ['$pages_ocr', 0] } },
+      pages_translated: { $sum: { $ifNull: ['$pages_translated', 0] } },
+      pages_blank: { $sum: { $ifNull: ['$pages_blank', 0] } },
+    }}
+  ], { maxTimeMS: 60000 }).toArray();
+
+  const t = totals || { books: 0, pages: 0, pages_ocr: 0, pages_translated: 0, pages_blank: 0 };
+
+  const readable = await db.collection('books').countDocuments({
+    hidden: { $ne: true },
+    pages_ocr: { $gte: 1 },
+    $expr: { $gte: ['$pages_translated', { $multiply: [{ $subtract: [{ $ifNull: ['$pages_ocr', 0] }, { $ifNull: ['$pages_blank', 0] }] }, 0.9] }] },
+  });
+
+  const snapshot = {
+    _id: 'library_snapshot',
+    updated_at: new Date(),
+    computation_ms: Date.now() - t0,
+    books: t.books,
+    pages: t.pages,
+    pages_ocr: t.pages_ocr,
+    pages_translated: t.pages_translated,
+    pages_blank: t.pages_blank,
+    readable,
+  };
+
+  await db.collection('system_config').replaceOne(
+    { _id: 'library_snapshot' },
+    snapshot,
+    { upsert: true }
+  );
+
+  console.log(`[library-snapshot] Done in ${((Date.now() - t0) / 1000).toFixed(1)}s — ${t.books} books, ${t.pages} pages`);
 }
 
 /**

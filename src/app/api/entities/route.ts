@@ -143,6 +143,20 @@ export const POST = withAuth(async (request, session) => {
 
     console.log(`Syncing entities from ${books.length} books...`);
 
+    // Merge full index from dedicated collection for each book
+    const bookIds = books.map(b => b.id).filter(Boolean);
+    const indexDocs = await db.collection('book_indexes')
+      .find({ book_id: { $in: bookIds } }, { projection: { _id: 0 }, maxTimeMS: 10000 })
+      .toArray();
+    const indexMap = new Map(indexDocs.map(d => [d.book_id, d]));
+    for (const book of books) {
+      const indexDoc = indexMap.get(book.id);
+      if (indexDoc) {
+        const { book_id: _, ...indexFields } = indexDoc;
+        (book as any).index = { ...(book as any).index, ...indexFields };
+      }
+    }
+
     // Load alias resolver to merge variant names into canonical entities
     const aliasResolver = await loadAliasResolver(db);
     console.log(`Loaded ${aliasResolver.size} alias mappings`);

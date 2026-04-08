@@ -98,6 +98,15 @@ export async function GET(
       return NextResponse.json({ error: 'Book not found' }, { status: 404 });
     }
 
+    // Merge full index from dedicated collection
+    const indexDoc = await db.collection('book_indexes').findOne(
+      { book_id: id },
+      { projection: { _id: 0, book_id: 0 }, maxTimeMS: 5000 }
+    ).catch(() => null);
+    if (indexDoc) {
+      (book as any).index = { ...(book as any).index, ...indexDoc };
+    }
+
     // Get pages — image URLs + just enough OCR/translation to know if they exist.
     // We include ocr.language for the annotation language tag, and a single char
     // of ocr.data / translation.data via $substr to detect existence without
