@@ -8,6 +8,8 @@ import { generateUniqueBookSlug } from '@/lib/slugify';
 import { queuePreviewOcr } from '@/lib/preview-ocr';
 import { normalizeTitle, normalizeAuthor, sourceFingerprint, checkDuplicate } from '@/lib/dedup';
 
+export const maxDuration = 300;
+
 interface IIIFCanvas {
   '@id'?: string;
   label?: string;

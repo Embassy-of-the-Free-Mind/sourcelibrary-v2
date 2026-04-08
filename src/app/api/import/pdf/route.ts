@@ -13,6 +13,8 @@ import { join } from 'path';
 import { storagePut } from '@/lib/storage';
 import { normalizeTitle, normalizeAuthor, sourceFingerprint, checkDuplicate } from '@/lib/dedup';
 
+export const maxDuration = 300;
+
 /**
  * Import a book from a PDF URL
  *
