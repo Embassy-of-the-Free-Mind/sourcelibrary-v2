@@ -58,9 +58,11 @@ export async function GET(request: NextRequest) {
       return NextResponse.json(await semanticGallerySearch(searchParams, searchQuery));
     }
 
-    const limit = Math.min(parseInt(searchParams.get('limit') || '24'), 200);
-    const offset = parseInt(searchParams.get('offset') || '0');
     const bookId = searchParams.get('bookId') || searchParams.get('book');
+    // Allow higher limit when fetching all images for a single book (for navigation)
+    const maxLimit = bookId ? 1000 : 200;
+    const limit = Math.min(parseInt(searchParams.get('limit') || '24'), maxLimit);
+    const offset = parseInt(searchParams.get('offset') || '0');
     const collectionSlug = searchParams.get('collection');
     const libraryFilter = searchParams.get('library');
     const imageType = searchParams.get('type');
