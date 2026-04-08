@@ -832,6 +832,27 @@ async function BookInfo({ id }: { id: string }) {
 
       {/* Stats + Pages Grid */}
       <main className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-12 space-y-6">
+        {/* Section header with Overview link */}
+        {pages.length > 0 && (
+          <div className="flex items-center justify-between">
+            <h2 className="text-lg font-semibold" style={{ color: 'var(--text-primary)' }}>
+              <FileText className="w-4 h-4 inline-block mr-2 -mt-0.5 opacity-60" />
+              Pages
+            </h2>
+            <Link
+              href={`/book/${book.slug || book.id}/overview`}
+              className="text-sm text-stone-400 hover:text-accent-gold transition-colors flex items-center gap-1.5"
+            >
+              <svg width="14" height="14" viewBox="0 0 14 14" fill="none" className="opacity-70">
+                <rect x="1" y="1" width="5" height="5" rx="0.5" stroke="currentColor" strokeWidth="1.2" />
+                <rect x="8" y="1" width="5" height="5" rx="0.5" stroke="currentColor" strokeWidth="1.2" />
+                <rect x="1" y="8" width="5" height="5" rx="0.5" stroke="currentColor" strokeWidth="1.2" />
+                <rect x="8" y="8" width="5" height="5" rx="0.5" stroke="currentColor" strokeWidth="1.2" />
+              </svg>
+              Overview
+            </Link>
+          </div>
+        )}
         {(() => {
           const membersOnlyUntil = (book as unknown as { members_only_until?: string }).members_only_until;
           if (membersOnlyUntil && new Date(membersOnlyUntil) > new Date()) {
