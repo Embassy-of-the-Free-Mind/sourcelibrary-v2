@@ -105,7 +105,7 @@ export default function BookOverview({ bookId, bookSlug, bookTitle, pages }: Boo
     if (imageCache.current.has(url)) return;
     imageCache.current.set(url, 'loading');
     const img = new Image();
-    img.crossOrigin = 'anonymous';
+    // No crossOrigin — R2 doesn't send CORS headers, and we don't need canvas pixel reads
     img.onload = () => {
       imageCache.current.set(url, img);
       setLoadedCount(c => c + 1);
