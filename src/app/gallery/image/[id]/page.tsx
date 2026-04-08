@@ -279,18 +279,12 @@ export default function ImageDetailPage({
       preload.src = imgUrl;
     });
 
-    // Show immediately with cached data
+    // Show immediately with cached data — no background fetch needed
     isNavigatingRef.current = true;
     setImageId(imgId);
     setData(detail);
     sendGAEvent({ action: 'view_item', category: 'gallery', label: imgId, content_type: 'image' });
     requestAnimationFrame(() => setImageOpacity(1));
-
-    // Fetch full detail in background for admin fields (highResUrl, confidence, etc.)
-    // Preserve imageUrl to avoid a visible reload — the cached version is already displayed
-    gallery.get(imgId).then(full => {
-      setData(prev => prev?.id === imgId ? { ...full, imageUrl: prev.imageUrl } : prev);
-    }).catch(() => {});
   }, [data?.book?.id, data?.book?.slug]);
 
 
