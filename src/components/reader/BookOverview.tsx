@@ -43,15 +43,15 @@ function getHiresUrl(page: OverviewPage): string | null {
   return null;
 }
 
-// Zoom threshold: above this, load high-res for visible pages
-const HIRES_ZOOM_THRESHOLD = 1.5;
+// Zoom threshold relative to home: above this, load high-res for visible pages
+const HIRES_ZOOM_THRESHOLD = 2;
 
-// Layout constants
-const THUMB_W = 120;
-const THUMB_H = 160;
-const GAP = 12;
-const MIN_ZOOM = 0.15;
-const MAX_ZOOM = 4;
+// Layout constants — world-space sizes (large so hi-res images render crisply when zoomed)
+const THUMB_W = 400;
+const THUMB_H = 560;
+const GAP = 24;
+const MIN_ZOOM = 0.03;
+const MAX_ZOOM = 2;
 const ZOOM_SPEED = 0.002;
 
 export default function BookOverview({ bookId, bookSlug, bookTitle, pages }: BookOverviewProps) {
@@ -263,13 +263,13 @@ export default function BookOverview({ bookId, bookSlug, bookTitle, pages }: Boo
             ctx.drawImage(drawImg, dx, dy, dw, dh);
           }
 
-          // Page number label — only show when zoomed in enough
-          if (cam.zoom > 0.4) {
-            const fontSize = Math.max(8, Math.min(11, 11 / cam.zoom));
+          // Page number label — only show when zoomed in enough to read
+          if (cam.zoom > 0.08) {
+            const fontSize = Math.min(20, Math.max(10, 14 / Math.max(cam.zoom, 0.1)));
             ctx.font = `${fontSize}px system-ui, sans-serif`;
             ctx.fillStyle = 'rgba(255,255,255,0.5)';
             ctx.textAlign = 'center';
-            ctx.fillText(`${page.page_number}`, px + THUMB_W / 2, py + THUMB_H + fontSize + 1);
+            ctx.fillText(`${page.page_number}`, px + THUMB_W / 2, py + THUMB_H + fontSize + 2);
           }
         }
       }
