@@ -37,20 +37,15 @@ import SimilarImages from '@/components/gallery/SimilarImages';
 import { useSession } from 'next-auth/react';
 import { sendGAEvent } from '@/lib/ga';
 
-/** In-memory cache for prefetched gallery image API responses + pixels */
+/** In-memory cache for prefetched gallery image API responses */
 const prefetchCache = new Map<string, Promise<GalleryImageDetail>>();
 
-function prefetchImage(id: string) {
+function prefetchApiResponse(id: string) {
   if (prefetchCache.has(id)) return;
-  const promise = gallery.get(id).then(detail => {
-    // Also preload the actual image pixels
-    const img = new window.Image();
-    img.src = detail.imageUrl;
-    return detail;
-  });
+  const promise = gallery.get(id);
   prefetchCache.set(id, promise);
-  // Evict after 60s to avoid stale data
-  setTimeout(() => prefetchCache.delete(id), 60000);
+  // Evict after 2 minutes to avoid stale data
+  setTimeout(() => prefetchCache.delete(id), 120000);
 }
 
 async function getCachedOrFetch(id: string): Promise<GalleryImageDetail> {
@@ -187,9 +182,6 @@ export default function ImageDetailPage({
       setBookThumbnails(thumbs);
       const idx = ids.indexOf(imageId!);
       setCurrentIndex(idx >= 0 ? idx : 0);
-      // Prefetch adjacent images
-      if (idx > 0) prefetchImage(ids[idx - 1]);
-      if (idx < ids.length - 1) prefetchImage(ids[idx + 1]);
     });
   }, [data?.book?.id]); // eslint-disable-line react-hooks/exhaustive-deps
 
@@ -213,15 +205,16 @@ export default function ImageDetailPage({
     img.src = data.fullPageUrl;
   }, [data?.fullPageUrl]);
 
-  // Prefetch adjacent API responses + image pixels
+  // Prefetch next image's API response (delayed to avoid competing with current load)
   useEffect(() => {
     if (bookImageIds.length === 0 || currentIndex < 0) return;
-    for (const offset of [-1, 1]) {
-      const idx = currentIndex + offset;
-      if (idx >= 0 && idx < bookImageIds.length) {
-        prefetchImage(bookImageIds[idx]);
-      }
-    }
+    const timer = setTimeout(() => {
+      // Prefetch next (most common navigation direction)
+      if (currentIndex < bookImageIds.length - 1) prefetchApiResponse(bookImageIds[currentIndex + 1]);
+      // Prefetch prev after a longer delay
+      if (currentIndex > 0) prefetchApiResponse(bookImageIds[currentIndex - 1]);
+    }, 500);
+    return () => clearTimeout(timer);
   }, [currentIndex, bookImageIds]);
 
   // Keyboard navigation
