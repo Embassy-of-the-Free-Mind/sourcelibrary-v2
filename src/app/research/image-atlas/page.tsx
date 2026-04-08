@@ -2,7 +2,7 @@ import { Metadata } from 'next';
 import ImageConstellationViz from '@/components/research/ImageConstellationViz';
 import dataRaw from '@/data/image-constellation.json';
 
-export const revalidate = 86400;
+export const revalidate = false;
 
 export const metadata: Metadata = {
   title: 'Image Atlas — Source Library',

@@ -4,7 +4,7 @@ import SiteHeader from '@/components/layout/SiteHeader';
 import BookMapLoader from '@/components/explore/BookMapLoader';
 import type { BookLocation } from '@/components/explore/BookMap';
 
-export const revalidate = 86400;
+export const revalidate = false;
 export const maxDuration = 60;
 
 export const metadata: Metadata = {

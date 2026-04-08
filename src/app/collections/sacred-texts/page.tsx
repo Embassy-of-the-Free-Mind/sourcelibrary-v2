@@ -7,7 +7,7 @@ import { getDb } from '@/lib/mongodb';
 import SignUpCTA from '@/components/auth/SignUpCTA';
 import { sanitizeThumbnail } from '@/lib/collections-utils';
 
-export const revalidate = 86400;
+export const revalidate = false;
 
 export const metadata: Metadata = {
   title: 'Sacred Texts - Source Library',

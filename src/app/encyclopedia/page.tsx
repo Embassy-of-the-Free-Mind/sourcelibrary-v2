@@ -6,7 +6,7 @@ import { supabase } from '@/lib/supabase';
 import { ENTITY_TYPE_STYLES, type EntityType } from '@/lib/style-constants';
 import EncyclopediaFilters from './EncyclopediaFilters';
 
-export const revalidate = 86400;
+export const revalidate = false;
 export const maxDuration = 30;
 
 const TYPE_ICONS = {

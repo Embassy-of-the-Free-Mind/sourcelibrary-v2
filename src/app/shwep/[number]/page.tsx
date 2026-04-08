@@ -4,7 +4,7 @@ import Link from 'next/link';
 import { getEpisodeData, getAllEpisodeNumbers } from '../shwep-data';
 import type { MatchedBook } from '../shwep-data';
 
-export const revalidate = 86400;
+export const revalidate = false;
 
 interface Props {
   params: Promise<{ number: string }>;
