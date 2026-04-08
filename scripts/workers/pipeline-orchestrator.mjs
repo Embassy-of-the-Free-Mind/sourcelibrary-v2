@@ -2972,20 +2972,25 @@ Reply with ONLY: {"is_spread": true} or {"is_spread": false}` },
           { $limit: effectiveLimit }
         ]).toArray() : [];
 
-        // If no fresh books, only re-queue >90% translated partials (near-complete cleanup)
+        // If no fresh books, re-queue partially-translated books (gap-fill)
+        // Includes books at ANY pipeline stage with incomplete translation — not just translate_partial.
+        // Books at chapters_complete/complete often have untranslated pages from batch failures or splits.
         let partialBooks = [];
         if (freshBooks.length === 0 && effectiveLimit > 0) {
           partialBooks = await db.collection('books').aggregate([
-            { $match: { 'pipeline_auto.status': 'translate_partial' } },
+            { $match: {
+              'pipeline_auto.status': { $in: ['translate_partial', 'translate_complete', 'chapters_complete', 'complete'] },
+              pages_ocr: { $gt: 0 },
+            }},
             { $addFields: { _denominator: { $subtract: [{ $ifNull: ['$pages_ocr', 0] }, { $ifNull: ['$pages_blank', 0] }] } } },
-            { $match: { _denominator: { $gt: 0 }, $expr: { $gte: [{ $divide: ['$pages_translated', '$_denominator'] }, 0.9] } } },
+            { $match: { _denominator: { $gt: 0 }, $expr: { $lt: [{ $divide: [{ $ifNull: ['$pages_translated', 0] }, '$_denominator'] }, 0.9] } } },
             { $project: { id: 1, title: 1, pages_count: 1, language: 1, 'pipeline_auto.retry_count': 1, 'image_source.provider': 1 } },
             { $addFields: { _isBph: { $cond: [{ $eq: ['$image_source.provider', 'bph'] }, 0, 1] } } },
             { $sort: { _isBph: 1, pages_translated: -1 } },
             { $limit: effectiveLimit },
           ]).toArray();
           if (partialBooks.length > 0) {
-            console.log(`  No fresh books — re-queuing ${partialBooks.length} near-complete (>90%) partials`);
+            console.log(`  No fresh books — gap-filling ${partialBooks.length} under-translated books`);
           }
         }
 
