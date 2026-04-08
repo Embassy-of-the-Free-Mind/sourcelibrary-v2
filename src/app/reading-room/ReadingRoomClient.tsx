@@ -200,7 +200,7 @@ export default function ReadingRoomClient({ featuredPassage }: ReadingRoomClient
   const isSignedIn = status !== 'loading' && !!session?.user;
 
   return (
-    <div className="min-h-screen bg-[#fdfcf9]">
+    <div className="min-h-screen bg-[#f5f0e8]">
       <SiteHeader variant="dark" />
       {/* Hero with reading room painting */}
       <div className="relative bg-[#0e0c0a] overflow-hidden min-h-[360px] sm:min-h-[420px]">
@@ -252,8 +252,17 @@ export default function ReadingRoomClient({ featuredPassage }: ReadingRoomClient
         </div>
       </div>
 
-      {/* Main content */}
-      <div className="max-w-[1200px] mx-auto px-6 md:px-12 py-8 md:py-12">
+      {/* Main content — painting continues as background */}
+      <div className="relative">
+        <div className="absolute inset-0">
+          {/* eslint-disable-next-line @next/next/no-img-element */}
+          <img
+            src="https://images.sourcelibrary.org/artwork/reading-room-hero.png"
+            alt=""
+            className="absolute inset-0 w-full h-full object-cover opacity-[0.06]"
+          />
+        </div>
+        <div className="relative max-w-[1200px] mx-auto px-6 md:px-12 py-8 md:py-12">
         <div className="flex flex-col lg:flex-row gap-8 lg:gap-12">
 
           {/* Chat area */}
@@ -444,6 +453,7 @@ export default function ReadingRoomClient({ featuredPassage }: ReadingRoomClient
               </div>
             </div>
           </div>
+        </div>
         </div>
       </div>
     </div>
