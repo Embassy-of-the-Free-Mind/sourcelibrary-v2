@@ -8,8 +8,6 @@ import type { Book } from '@/lib/types';
 import { recordLoadingMetric } from '@/lib/analytics';
 import { bookUrl } from '@/lib/slugify';
 import { firstTranslationBadge } from '@/lib/first-translation-labels';
-import { edgeResize } from '@/lib/utils';
-import { useEdgeResize } from '@/lib/use-edge-resize';
 import AuthorName from '@/components/AuthorName';
 
 interface BookCardProps {
@@ -40,19 +38,11 @@ function BookCardImpl({ book, priority = false }: BookCardProps) {
     };
   }, []);
 
-  // Edge resize: use Cloudflare Worker for on-demand resizing (WebP/AVIF auto)
-  const edgeResizeEnabled = useEdgeResize();
-
   // Prefer full-res thumbnail over 150px thumbnail_blob, with fallback on error
-  let primaryUrl = book.thumbnail || book.thumbnail_blob;
+  const primaryUrl = book.thumbnail || book.thumbnail_blob;
   const fallbackUrl = book.thumbnail && book.thumbnail_blob && book.thumbnail !== book.thumbnail_blob
     ? book.thumbnail_blob : null;
-  let thumbnailUrl = useFallback && fallbackUrl ? fallbackUrl : primaryUrl;
-
-  // When edge resize is on, convert R2 URLs to use ?preset=card (400px, WebP/AVIF auto)
-  if (edgeResizeEnabled && thumbnailUrl) {
-    thumbnailUrl = edgeResize(thumbnailUrl, 'card');
-  }
+  const thumbnailUrl = useFallback && fallbackUrl ? fallbackUrl : primaryUrl;
 
   // Determine image source type for analytics
   const getImageSource = (): 'r2' | 'ia' | 'local' | 'other' => {

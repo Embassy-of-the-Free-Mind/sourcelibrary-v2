@@ -26,45 +26,6 @@ export function isUsableImageUrl(url: string | undefined | null): url is string 
   return !!url && (url.startsWith('http://') || url.startsWith('https://'));
 }
 
-const R2_HOST = 'images.sourcelibrary.org';
-
-/**
- * Convert an R2 image URL to use edge resizing via the Cloudflare Worker.
- * Appends ?preset= or ?w=&q= to the URL. Only works for images on our R2 domain.
- * Falls through to the original URL if not an R2 URL.
- */
-export function edgeResize(url: string, preset: 'thumb' | 'card' | 'display'): string;
-export function edgeResize(url: string, opts: { width: number; quality?: number }): string;
-export function edgeResize(url: string, presetOrOpts: string | { width: number; quality?: number }): string {
-  if (!url.includes(R2_HOST)) return url; // Not an R2 URL — can't edge-resize
-  const base = url.split('?')[0]; // Strip any existing params
-  if (typeof presetOrOpts === 'string') {
-    return `${base}?preset=${presetOrOpts}`;
-  }
-  const q = presetOrOpts.quality || 80;
-  return `${base}?w=${presetOrOpts.width}&q=${q}`;
-}
-
-/**
- * Get the full-res R2 URL for a page image.
- * Used as the source for edge resizing — we need the full-res original,
- * not the pre-generated display or thumb variant.
- */
-export function getPageFullUrl(page: Record<string, any>): string | null {
-  // Split-from-spread pages: photo is already the cropped full-res
-  if (page.split_from_spread && isUsableImageUrl(page.photo)) return page.photo;
-
-  // New path convention: look for -full.jpg variant
-  const newPathMatch = page.photo?.match(/^(https:\/\/images\.sourcelibrary\.org\/pages\/[^/]+\/(?:sp[a-z0-9]*-?)?\d{4,})(?:-full)?\.jpg$/);
-  if (newPathMatch) return `${newPathMatch[1]}-full.jpg`;
-
-  // Archived photo is typically full-res
-  if (isUsableImageUrl(page.archived_photo) && page.archived_photo.includes(R2_HOST)) return page.archived_photo;
-
-  // Fall back to best available
-  return getPageImageUrl(page);
-}
-
 export function isArchiveFailed(photo: string | undefined | null): boolean {
   return typeof photo === 'string' && photo.startsWith('failed:');
 }
@@ -133,20 +94,7 @@ export function getPageImageUrl(page: Record<string, any>): string | null {
  * variant is generated from the full spread, not the cropped half.
  */
 // eslint-disable-next-line @typescript-eslint/no-explicit-any
-export function getPageDisplayUrl(page: Record<string, any>, width = 1200, quality = 80, useEdgeResize = false): string | null {
-  // Edge resize path: use full-res R2 URL with ?preset=display
-  if (useEdgeResize) {
-    // Split pages with crop coords can't use edge resize (need server-side crop)
-    if (page.crop?.xStart !== undefined && !page.split_from_spread) {
-      const baseUrl = page.archived_photo || page.photo_original || page.photo;
-      if (!baseUrl || isArchiveFailed(baseUrl)) return null;
-      return `/api/image?url=${encodeURIComponent(baseUrl)}&w=${width}&q=${quality}&cx=${page.crop.xStart}&cw=${page.crop.xEnd}`;
-    }
-    const fullUrl = getPageFullUrl(page);
-    if (fullUrl && fullUrl.includes(R2_HOST)) return edgeResize(fullUrl, 'display');
-    // Fall through to legacy if no R2 URL available
-  }
-
+export function getPageDisplayUrl(page: Record<string, any>, width = 1200, quality = 80): string | null {
   // Split-from-spread pages have clean photo — use directly
   if (page.split_from_spread && isUsableImageUrl(page.photo)) return page.photo;
 
@@ -175,18 +123,7 @@ export function getPageDisplayUrl(page: Record<string, any>, width = 1200, quali
  * Prefers pre-rendered thumbnail from R2 CDN.
  */
 // eslint-disable-next-line @typescript-eslint/no-explicit-any
-export function getPageThumbUrl(page: Record<string, any>, useEdgeResize = false): string | null {
-  // Edge resize path: use full-res R2 URL with ?preset=thumb
-  if (useEdgeResize) {
-    if (page.crop?.xStart !== undefined && !page.split_from_spread) {
-      const baseUrl = page.archived_photo || page.photo_original || page.photo;
-      if (!baseUrl || isArchiveFailed(baseUrl)) return null;
-      return `/api/image?url=${encodeURIComponent(baseUrl)}&w=150&q=60&cx=${page.crop.xStart}&cw=${page.crop.xEnd}`;
-    }
-    const fullUrl = getPageFullUrl(page);
-    if (fullUrl && fullUrl.includes(R2_HOST)) return edgeResize(fullUrl, 'thumb');
-  }
-
+export function getPageThumbUrl(page: Record<string, any>): string | null {
   // Split-from-spread pages have clean photo/thumbnail — skip legacy fallback chain
   if (page.split_from_spread) {
     if (isUsableImageUrl(page.thumbnail)) return page.thumbnail;
