@@ -2766,13 +2766,27 @@ Reply with ONLY: {"is_spread": true} or {"is_spread": false}` },
       const readyForMetadata = await db.collection('books')
         .find({ 'pipeline_auto.status': 'ocr_complete' })
         .sort({ hidden: 1 })
-        .project({ id: 1, title: 1, author: 1, published: 1, language: 1, place_of_publication: 1, publisher: 1, 'pipeline_auto.retry_count': 1, 'ai_metadata.enriched_at': 1 })
+        .project({ id: 1, title: 1, author: 1, published: 1, language: 1, place_of_publication: 1, publisher: 1, pages_count: 1, pages_ocr: 1, 'pipeline_auto.retry_count': 1, 'ai_metadata.enriched_at': 1 })
         .limit(METADATA_ENRICH_LIMIT)
         .toArray();
 
-      console.log(`  Books ready for metadata: ${readyForMetadata.length}`);
-
+      // Gate: reject books with <10% OCR coverage — send back for full OCR
+      const filtered = [];
       for (const book of readyForMetadata) {
+        const ocrPct = book.pages_count > 0 ? (book.pages_ocr || 0) / book.pages_count : 0;
+        if (ocrPct < 0.1 && book.pages_count > 50) {
+          if (!DRY_RUN) {
+            await setPipelineStatus(db, book.id, 'archive_complete', { retry_count: 0 });
+          }
+          console.log(`  Low OCR gate: ${book.title?.slice(0, 50)} — ${book.pages_ocr}/${book.pages_count} (${(ocrPct * 100).toFixed(0)}%), sent back for full OCR`);
+          continue;
+        }
+        filtered.push(book);
+      }
+
+      console.log(`  Books ready for metadata: ${filtered.length}${readyForMetadata.length > filtered.length ? ` (${readyForMetadata.length - filtered.length} sent back for OCR)` : ''}`);
+
+      for (const book of filtered) {
         try {
           if (book.ai_metadata?.enriched_at) {
             if (!DRY_RUN) {
