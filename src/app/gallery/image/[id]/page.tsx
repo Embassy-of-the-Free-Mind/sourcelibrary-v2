@@ -32,17 +32,41 @@ import ImageWithMagnifier from '@/components/ui/ImageWithMagnifier';
 import LikeButton from '@/components/ui/LikeButton';
 import { BookLoader } from '@/components/ui/BookLoader';
 import { gallery } from '@/lib/api-client';
-import type { GalleryImageDetail, ImageMetadata } from '@/lib/api-client';
+import type { GalleryImageDetail, GalleryItem, ImageMetadata } from '@/lib/api-client';
 import SimilarImages from '@/components/gallery/SimilarImages';
 import { useSession } from 'next-auth/react';
 import { sendGAEvent } from '@/lib/ga';
 
-interface BookImage {
-  id: string;
-  pageNumber: number;
-  imageUrl: string;
-  description: string;
-  thumbnailUrl?: string;
+/** Build a GalleryImageDetail from cached GalleryItem list data (no API call needed) */
+function detailFromListItem(item: GalleryItem, bookId: string, bookSlug?: string): GalleryImageDetail {
+  const id = `${item.pageId}-${item.detectionIndex}`;
+  return {
+    id,
+    pageId: item.pageId,
+    detectionIndex: item.detectionIndex,
+    imageUrl: item.extractedUrl || item.imageUrl,
+    fullPageUrl: item.imageUrl, // best we have from the list
+    extractedUrl: item.extractedUrl,
+    thumbnailUrl: item.thumbnailUrl,
+    rotation: item.rotation ?? 0,
+    description: item.description,
+    type: item.type,
+    galleryQuality: item.galleryQuality ?? null,
+    museumDescription: item.museumDescription ?? null,
+    metadata: item.metadata ?? null,
+    bbox: item.bbox,
+    book: {
+      id: bookId,
+      slug: bookSlug,
+      title: item.bookTitle,
+      author: item.author,
+      year: item.year,
+    },
+    pageNumber: item.pageNumber,
+    readUrl: `/book/${bookSlug || bookId}/page/${item.pageId}`,
+    galleryUrl: `/gallery?bookId=${bookId}`,
+    citation: `${item.author || ''}, "${item.bookTitle}", p. ${item.pageNumber}, Source Library`,
+  };
 }
 
 export default function ImageDetailPage({
@@ -80,13 +104,13 @@ export default function ImageDetailPage({
   const [pageImageAspect, setPageImageAspect] = useState<string>('3/4');
   const [showInfo, setShowInfo] = useState(false);
 
-  // Navigation state
-  const [bookImages, setBookImages] = useState<BookImage[]>([]);
+  // Navigation state — store full GalleryItem data for instant navigation
+  const [bookImages, setBookImages] = useState<GalleryItem[]>([]);
   const [currentIndex, setCurrentIndex] = useState(-1);
   const [imageOpacity, setImageOpacity] = useState(1);
 
   // Ref to prevent stale closures in keyboard handler
-  const navRef = useRef({ bookImages: [] as BookImage[], currentIndex: -1 });
+  const navRef = useRef({ bookImages: [] as GalleryItem[], currentIndex: -1 });
   const isNavigatingRef = useRef(false);
   useEffect(() => {
     navRef.current = { bookImages, currentIndex };
@@ -159,17 +183,10 @@ export default function ImageDetailPage({
       maxPerBook: 500,
       minQuality: 0,
     }).then(res => {
-      const items: BookImage[] = res.items.map(item => ({
-        id: `${item.pageId}-${item.detectionIndex}`,
-        pageNumber: item.pageNumber,
-        imageUrl: item.extractedUrl || item.imageUrl,
-        description: item.description,
-        thumbnailUrl: item.thumbnailUrl,
-      }));
-      // Sort by page number
-      items.sort((a, b) => a.pageNumber - b.pageNumber);
+      // Store full GalleryItem data for instant navigation (no API call needed)
+      const items = [...res.items].sort((a, b) => a.pageNumber - b.pageNumber);
       setBookImages(items);
-      const idx = items.findIndex(img => img.id === imageId);
+      const idx = items.findIndex(item => `${item.pageId}-${item.detectionIndex}` === imageId);
       setCurrentIndex(idx >= 0 ? idx : 0);
     });
   }, [data?.book?.id]); // eslint-disable-line react-hooks/exhaustive-deps
@@ -177,7 +194,7 @@ export default function ImageDetailPage({
   // Update currentIndex when imageId changes (after navigation)
   useEffect(() => {
     if (bookImages.length > 0 && imageId) {
-      const idx = bookImages.findIndex(img => img.id === imageId);
+      const idx = bookImages.findIndex(item => `${item.pageId}-${item.detectionIndex}` === imageId);
       if (idx >= 0) setCurrentIndex(idx);
     }
   }, [imageId, bookImages]);
@@ -193,6 +210,19 @@ export default function ImageDetailPage({
     };
     img.src = data.fullPageUrl;
   }, [data?.fullPageUrl]);
+
+  // Prefetch adjacent images for instant navigation
+  useEffect(() => {
+    if (bookImages.length === 0 || currentIndex < 0) return;
+    for (const offset of [-1, 1]) {
+      const idx = currentIndex + offset;
+      if (idx >= 0 && idx < bookImages.length) {
+        const item = bookImages[idx];
+        const img = new window.Image();
+        img.src = item.extractedUrl || item.imageUrl;
+      }
+    }
+  }, [currentIndex, bookImages]);
 
   // Keyboard navigation
   useEffect(() => {
@@ -214,10 +244,12 @@ export default function ImageDetailPage({
     return () => window.removeEventListener('keydown', handleKeyDown);
   }, []); // eslint-disable-line react-hooks/exhaustive-deps
 
-  // Navigation — fade out, preload next image, fade in only when ready
+  // Navigation — use cached list data for instant display, no API call needed
   const navigateTo = useCallback(async (index: number) => {
     if (index < 0 || index >= navRef.current.bookImages.length) return;
-    const img = navRef.current.bookImages[index];
+    const item = navRef.current.bookImages[index];
+    const imgId = `${item.pageId}-${item.detectionIndex}`;
+    const imgUrl = item.extractedUrl || item.imageUrl;
 
     // Fade out
     setImageOpacity(0);
@@ -225,7 +257,7 @@ export default function ImageDetailPage({
 
     // Update URL and reset editing state while screen is black
     setCurrentIndex(index);
-    window.history.replaceState(null, '', `/gallery/image/${img.id}`);
+    window.history.replaceState(null, '', `/gallery/image/${imgId}`);
     setEditingTitle(false);
     setEditingQuality(false);
     setEditingDescription(false);
@@ -234,29 +266,26 @@ export default function ImageDetailPage({
     setBrightness(100);
     setContrast(100);
 
-    try {
-      // Fetch new image data
-      const json = await gallery.get(img.id);
+    // Build detail from cached list data — no API call
+    const bookId = data?.book?.id || item.bookId;
+    const bookSlug = data?.book?.slug;
+    const detail = detailFromListItem(item, bookId, bookSlug);
 
-      // Preload the actual image pixels before showing anything
-      await new Promise<void>((resolve) => {
-        const preload = new window.Image();
-        preload.onload = () => resolve();
-        preload.onerror = () => resolve();
-        preload.src = json.imageUrl;
-      });
+    // Preload the actual image pixels before showing anything
+    await new Promise<void>((resolve) => {
+      const preload = new window.Image();
+      preload.onload = () => resolve();
+      preload.onerror = () => resolve();
+      preload.src = imgUrl;
+    });
 
-      // Now update data and fade in — image is already cached
-      isNavigatingRef.current = true;
-      setImageId(img.id);
-      setData(json);
-      sendGAEvent({ action: 'view_item', category: 'gallery', label: img.id, content_type: 'image' });
-      requestAnimationFrame(() => setImageOpacity(1));
-    } catch {
-      // On error, fade back in with old content
-      setImageOpacity(1);
-    }
-  }, []);
+    // Show immediately with cached data — no background fetch needed
+    isNavigatingRef.current = true;
+    setImageId(imgId);
+    setData(detail);
+    sendGAEvent({ action: 'view_item', category: 'gallery', label: imgId, content_type: 'image' });
+    requestAnimationFrame(() => setImageOpacity(1));
+  }, [data?.book?.id, data?.book?.slug]);
 
 
   // Save handlers (unchanged)
@@ -748,7 +777,7 @@ export default function ImageDetailPage({
           <div className="absolute bottom-0 left-0 right-0 z-20 px-5 pb-5 pt-24 bg-gradient-to-t from-black/70 via-black/40 to-transparent">
             <h1 className="text-xl sm:text-2xl md:text-3xl font-serif text-white leading-snug line-clamp-2">{data.description}</h1>
             <p className="text-base sm:text-lg text-white/60 mt-1.5">
-              {data.book.title}{data.book.author && data.book.author !== 'Various' ? ` \u2014 ${data.book.author}` : ''}{data.book.year ? ` (${data.book.year})` : ''} \u00b7 p.{data.pageNumber}
+              {data.book.title}{data.book.author && data.book.author !== 'Various' ? ` \u2014 ${data.book.author}` : ''}{data.book.year ? ` (${data.book.year})` : ''}, p.{data.pageNumber}
             </p>
           </div>
         </div>
@@ -1102,30 +1131,33 @@ export default function ImageDetailPage({
                     </div>
                     <div className="grid grid-cols-3 gap-2">
                       {bookImages
-                        .filter(img => img.id !== imageId)
+                        .filter(item => `${item.pageId}-${item.detectionIndex}` !== imageId)
                         .slice(0, 3)
-                        .map((img) => (
-                          <Link
-                            key={img.id}
-                            href={`/gallery/image/${img.id}`}
-                            onClick={(e) => {
-                              e.preventDefault();
-                              const idx = bookImages.findIndex(bi => bi.id === img.id);
-                              if (idx >= 0) navigateTo(idx);
-                            }}
-                            className="group relative aspect-square bg-stone-700 rounded overflow-hidden"
-                            title={img.description}
-                          >
-                            <Image
-                              src={img.thumbnailUrl || img.imageUrl}
-                              alt={img.description}
-                              fill
-                              sizes="120px"
-                              className="object-cover group-hover:scale-105 transition-transform duration-200"
-                              unoptimized
-                            />
-                          </Link>
-                        ))}
+                        .map((item) => {
+                          const itemId = `${item.pageId}-${item.detectionIndex}`;
+                          return (
+                            <Link
+                              key={itemId}
+                              href={`/gallery/image/${itemId}`}
+                              onClick={(e) => {
+                                e.preventDefault();
+                                const idx = bookImages.findIndex(bi => `${bi.pageId}-${bi.detectionIndex}` === itemId);
+                                if (idx >= 0) navigateTo(idx);
+                              }}
+                              className="group relative aspect-square bg-stone-700 rounded overflow-hidden"
+                              title={item.description}
+                            >
+                              <Image
+                                src={item.thumbnailUrl || item.imageUrl}
+                                alt={item.description}
+                                fill
+                                sizes="120px"
+                                className="object-cover group-hover:scale-105 transition-transform duration-200"
+                                unoptimized
+                              />
+                            </Link>
+                          );
+                        })}
                     </div>
                   </div>
                 )}

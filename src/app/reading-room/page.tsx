@@ -116,14 +116,10 @@ async function getFeaturedPassage() {
 }
 
 export default async function ReadingRoomPage() {
-  const [heroImages, featuredPassage] = await Promise.all([
-    getHeroImages(),
-    getFeaturedPassage(),
-  ]);
+  const featuredPassage = await getFeaturedPassage();
 
   return (
     <ReadingRoomClient
-      heroImages={heroImages}
       featuredPassage={featuredPassage}
     />
   );

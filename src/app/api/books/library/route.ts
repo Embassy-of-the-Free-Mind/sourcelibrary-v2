@@ -1,5 +1,5 @@
 import { NextRequest, NextResponse } from 'next/server';
-import { getDb } from '@/lib/mongodb';
+import { getReadDb } from '@/lib/mongodb';
 import { buildBookSearchStage } from '@/lib/atlas-search';
 
 export const dynamic = 'force-dynamic';
@@ -66,7 +66,7 @@ export async function GET(request: NextRequest) {
       }
     }
 
-    const db = await getDb();
+    const db = await getReadDb();
 
     // When a search term is present, use Atlas Search ($search must be first stage).
     // Language, category, firstTranslation are pushed as Atlas Search filters.

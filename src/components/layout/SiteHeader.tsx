@@ -12,7 +12,7 @@ const NAV_LINKS = [
   { label: 'Browse', href: '/browse' },
   { label: 'Timeline', href: '/timeline' },
   { label: 'Libraries', href: '/libraries' },
-  { label: 'Reading Room', href: '/embassy' },
+  { label: 'Reading Room', href: '/reading-room' },
 ];
 
 interface Breadcrumb {

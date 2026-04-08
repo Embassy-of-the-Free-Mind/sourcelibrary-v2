@@ -1,6 +1,6 @@
 import { NextRequest, NextResponse } from 'next/server';
 import { revalidatePath } from 'next/cache';
-import { getDb } from '@/lib/mongodb';
+import { getDb, getReadDb } from '@/lib/mongodb';
 import { ObjectId } from 'mongodb';
 import { logAuditEvent } from '@/lib/audit-logger';
 import { withAuth } from '@/lib/auth-helpers';
@@ -18,7 +18,8 @@ export async function GET(
     const { searchParams } = new URL(request.url);
     const includeFull = searchParams.get('full') === 'true';
     const pagesMode = searchParams.get('pages') || 'default'; // 'nav' for minimal, 'default' for standard
-    const db = await getDb();
+    // Use secondary reads for public GETs; admin full-view still reads primary for freshness
+    const db = includeFull ? await getDb() : await getReadDb();
 
     // Book projection: nav mode only needs fields the reader uses
     const bookProjection = pagesMode === 'nav' ? {
@@ -109,7 +110,7 @@ export const DELETE = withAuth(async (request, session, context) => {
     // SOFT DELETE by default - archive to deleted_books collection
     if (!confirmPermanent) {
       // Get all pages for archival
-      const pages = await db.collection('pages').find({ book_id: bookId }).toArray();
+      const pages = await db.collection('pages').find({ book_id: bookId }).maxTimeMS(30000).toArray();
 
       // Archive book with its pages
       await db.collection('deleted_books').insertOne({

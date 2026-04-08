@@ -2,12 +2,12 @@ import { Suspense } from 'react';
 import Link from 'next/link';
 import SiteHeader from '@/components/layout/SiteHeader';
 import { User, MapPin, Lightbulb, BookOpen, ArrowRight, Search, ChevronLeft, ChevronRight } from 'lucide-react';
-import { getDb } from '@/lib/mongodb';
-import type { Sort } from 'mongodb';
+import { supabase } from '@/lib/supabase';
 import { ENTITY_TYPE_STYLES, type EntityType } from '@/lib/style-constants';
 import EncyclopediaFilters from './EncyclopediaFilters';
+import { unstable_cache } from 'next/cache';
 
-export const revalidate = 86400;
+export const revalidate = false;
 export const maxDuration = 30;
 
 const TYPE_ICONS = {
@@ -37,91 +37,105 @@ interface SearchParams {
   page?: string;
 }
 
-async function getEntities(searchParams: SearchParams) {
+async function getEntitiesRaw(searchParams: SearchParams) {
   try {
-  const db = await getDb();
+    const type = searchParams.type && searchParams.type !== 'all' ? searchParams.type : null;
+    const minBooks = parseInt(searchParams.min_books || '2') || 2;
+    const query = searchParams.q?.trim() || null;
+    const letter = searchParams.letter?.trim().toUpperCase() || null;
+    const sortMode = searchParams.sort || 'relevance';
+    const page = Math.max(1, parseInt(searchParams.page || '1') || 1);
+    const offset = (page - 1) * PER_PAGE;
 
-  const type = searchParams.type && searchParams.type !== 'all' ? searchParams.type : null;
-  const minBooks = parseInt(searchParams.min_books || '2') || 2;
-  const query = searchParams.q?.trim() || null;
-  const letter = searchParams.letter?.trim().toUpperCase() || null;
-  const sortMode = searchParams.sort || 'relevance';
-  const page = Math.max(1, parseInt(searchParams.page || '1') || 1);
-  const offset = (page - 1) * PER_PAGE;
+    // Build Supabase query for entities
+    let baseQuery = supabase
+      .from('entities')
+      .select('id, name, type, book_count, total_mentions, description, wikidata_birth_date, wikidata_death_date', { count: 'exact' })
+      .gte('book_count', minBooks);
 
-  const filter: Record<string, unknown> = {
-    book_count: { $gte: minBooks },
-  };
-  if (type) filter.type = type;
-  if (query) {
-    filter.$or = [
-      { name: { $regex: query.replace(/[.*+?^${}()|[\]\\]/g, '\\$&'), $options: 'i' } },
-      { aliases: { $regex: query.replace(/[.*+?^${}()|[\]\\]/g, '\\$&'), $options: 'i' } },
-    ];
-  }
-  if (letter && !query) {
-    filter.name = { $regex: `^${letter}`, $options: 'i' };
-  }
+    if (type) baseQuery = baseQuery.eq('type', type);
+    if (query) baseQuery = baseQuery.ilike('name', `%${query}%`);
+    if (letter && !query) baseQuery = baseQuery.ilike('name', `${letter}%`);
 
-  const [entities, total, stats, letterCounts] = await Promise.all([
-    db.collection('entities')
-      .find(filter)
-      .maxTimeMS(10000)
-      .sort(sortMode === 'alpha' ? { name: 1 } : { book_count: -1, total_mentions: -1 })
-      .skip(offset)
-      .limit(PER_PAGE)
-      .project({
-        name: 1, type: 1, book_count: 1, total_mentions: 1, description: 1,
-        wikidata_birth_date: 1, wikidata_death_date: 1,
-        books: { $slice: 3 },
-      })
-      .toArray(),
-    db.collection('entities').countDocuments(filter),
-    db.collection('entities').aggregate([
-      { $match: { book_count: { $gte: minBooks }, ...(query ? { $or: [{ name: { $regex: query.replace(/[.*+?^${}()|[\]\\]/g, '\\$&'), $options: 'i' } }, { aliases: { $regex: query.replace(/[.*+?^${}()|[\]\\]/g, '\\$&'), $options: 'i' } }] } : {}), ...(letter && !query ? { name: { $regex: `^${letter}`, $options: 'i' } } : {}) } },
-      { $group: { _id: '$type', count: { $sum: 1 } } },
-    ], { maxTimeMS: 20000 }).toArray(),
-    // Get letter distribution for the A-Z bar (without letter filter applied)
-    db.collection('entities').aggregate([
-      { $match: { book_count: { $gte: minBooks }, ...(type ? { type } : {}), ...(query ? { $or: [{ name: { $regex: query.replace(/[.*+?^${}()|[\]\\]/g, '\\$&'), $options: 'i' } }, { aliases: { $regex: query.replace(/[.*+?^${}()|[\]\\]/g, '\\$&'), $options: 'i' } }] } : {}) } },
-      { $project: { firstLetter: { $toUpper: { $substrCP: ['$name', 0, 1] } } } },
-      { $group: { _id: '$firstLetter', count: { $sum: 1 } } },
-    ], { maxTimeMS: 20000 }).toArray(),
-  ]);
+    if (sortMode === 'alpha') {
+      baseQuery = baseQuery.order('name', { ascending: true });
+    } else {
+      baseQuery = baseQuery.order('book_count', { ascending: false }).order('total_mentions', { ascending: false });
+    }
 
-  const statsByType = stats.reduce((acc: Record<string, number>, s) => {
-    acc[s._id as string] = s.count as number;
-    return acc;
-  }, {} as Record<string, number>);
+    baseQuery = baseQuery.range(offset, offset + PER_PAGE - 1);
 
-  const letterMap = letterCounts.reduce((acc: Record<string, number>, l) => {
-    acc[l._id as string] = l.count as number;
-    return acc;
-  }, {} as Record<string, number>);
+    // Stats query: count by type (with same filters except type)
+    let statsQuery = supabase
+      .from('entities')
+      .select('type', { count: 'exact' })
+      .gte('book_count', minBooks);
+    if (query) statsQuery = statsQuery.ilike('name', `%${query}%`);
+    if (letter && !query) statsQuery = statsQuery.ilike('name', `${letter}%`);
 
-  return {
-    entities: entities.map(e => ({
-      _id: e._id.toString(),
-      name: e.name as string,
-      type: e.type as 'person' | 'place' | 'concept',
-      book_count: (e.book_count || 0) as number,
-      total_mentions: (e.total_mentions || 0) as number,
-      description: (e.description || null) as string | null,
-      wikidata_birth_date: (e.wikidata_birth_date || undefined) as string | undefined,
-      wikidata_death_date: (e.wikidata_death_date || undefined) as string | undefined,
-      books: (e.books || []) as Array<{ book_id: string; book_title: string }>,
-    })),
-    total,
-    page,
-    totalPages: Math.ceil(total / PER_PAGE),
-    stats: {
-      total: (statsByType.person || 0) + (statsByType.place || 0) + (statsByType.concept || 0),
-      people: statsByType.person || 0,
-      places: statsByType.place || 0,
-      concepts: statsByType.concept || 0,
-    },
-    letterMap,
-  };
+    // Run queries in parallel
+    const [entitiesResult, personCount, placeCount, conceptCount] = await Promise.all([
+      baseQuery,
+      supabase.from('entities').select('id', { count: 'exact', head: true }).gte('book_count', minBooks).eq('type', 'person')
+        .then(r => r.count || 0),
+      supabase.from('entities').select('id', { count: 'exact', head: true }).gte('book_count', minBooks).eq('type', 'place')
+        .then(r => r.count || 0),
+      supabase.from('entities').select('id', { count: 'exact', head: true }).gte('book_count', minBooks).eq('type', 'concept')
+        .then(r => r.count || 0),
+    ]);
+
+    const entities = entitiesResult.data || [];
+    const total = entitiesResult.count || 0;
+
+    // Letter distribution: fetch first letters for the A-Z bar
+    // Use a lightweight query — just get distinct first letters with counts
+    // For now, use a simpler approach: fetch all first letters
+    let letterQuery = supabase
+      .from('entities')
+      .select('name')
+      .gte('book_count', minBooks);
+    if (type) letterQuery = letterQuery.eq('type', type);
+    if (query) letterQuery = letterQuery.ilike('name', `%${query}%`);
+
+    // Paginate to get all names for letter counting (Supabase 1000-row limit)
+    const letterMap: Record<string, number> = {};
+    let letterOffset = 0;
+    while (true) {
+      const { data } = await letterQuery.range(letterOffset, letterOffset + 999);
+      if (!data || data.length === 0) break;
+      for (const row of data) {
+        const firstLetter = (row.name as string)?.[0]?.toUpperCase();
+        if (firstLetter && /[A-Z]/.test(firstLetter)) {
+          letterMap[firstLetter] = (letterMap[firstLetter] || 0) + 1;
+        }
+      }
+      if (data.length < 1000) break;
+      letterOffset += 1000;
+    }
+
+    return {
+      entities: entities.map(e => ({
+        _id: e.id as string,
+        name: e.name as string,
+        type: e.type as 'person' | 'place' | 'concept',
+        book_count: (e.book_count || 0) as number,
+        total_mentions: (e.total_mentions || 0) as number,
+        description: (e.description || null) as string | null,
+        wikidata_birth_date: (e.wikidata_birth_date || undefined) as string | undefined,
+        wikidata_death_date: (e.wikidata_death_date || undefined) as string | undefined,
+        books: [] as Array<{ book_id: string; book_title: string }>,
+      })),
+      total,
+      page,
+      totalPages: Math.ceil(total / PER_PAGE),
+      stats: {
+        total: (personCount as number) + (placeCount as number) + (conceptCount as number),
+        people: personCount as number,
+        places: placeCount as number,
+        concepts: conceptCount as number,
+      },
+      letterMap,
+    };
   } catch (err) {
     console.error('Encyclopedia data fetch failed:', err);
     return {
@@ -133,6 +147,17 @@ async function getEntities(searchParams: SearchParams) {
       letterMap: {},
     };
   }
+}
+
+// Cache encyclopedia queries so Supabase fetch() calls don't make the page dynamic
+async function getEntities(params: SearchParams) {
+  const cacheKey = JSON.stringify(params);
+  const cached = unstable_cache(
+    () => getEntitiesRaw(params),
+    ['encyclopedia', cacheKey],
+    { revalidate: false },
+  );
+  return cached();
 }
 
 export default async function EncyclopediaPage({
@@ -316,21 +341,6 @@ export default async function EncyclopediaPage({
                         {' '}&middot;{' '}
                         {entity.total_mentions} mention{entity.total_mentions !== 1 ? 's' : ''}
                       </p>
-                      <div className="mt-2 flex flex-wrap gap-1">
-                        {entity.books.slice(0, 2).map((book) => (
-                          <span
-                            key={book.book_id}
-                            className="inline-block px-2 py-0.5 bg-stone-100 text-stone-600 text-xs rounded truncate max-w-[150px]"
-                          >
-                            {book.book_title}
-                          </span>
-                        ))}
-                        {entity.books.length > 2 && (
-                          <span className="inline-block px-2 py-0.5 text-stone-400 text-xs">
-                            +{entity.books.length - 2} more
-                          </span>
-                        )}
-                      </div>
                     </div>
                     <ArrowRight className="w-4 h-4 text-stone-400 group-hover:text-accent-rust group-hover:translate-x-1 transition-all" />
                   </div>

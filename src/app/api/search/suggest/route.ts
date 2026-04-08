@@ -1,5 +1,5 @@
 import { NextRequest, NextResponse } from 'next/server';
-import { getDb } from '@/lib/mongodb';
+import { getReadDb } from '@/lib/mongodb';
 import { findSuggestions } from '@/lib/fuzzy';
 
 // In-memory cache backed by system_config snapshot.
@@ -15,7 +15,7 @@ async function getVocabulary(): Promise<string[]> {
     return vocabularyCache;
   }
 
-  const db = await getDb();
+  const db = await getReadDb();
 
   // Read pre-computed vocabulary from system_config (single doc, <50ms).
   // Falls back to a lightweight titles-only query if snapshot doesn't exist yet.

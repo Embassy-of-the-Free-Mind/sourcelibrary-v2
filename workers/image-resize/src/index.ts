@@ -28,6 +28,7 @@
 
 export interface Env {
   BUCKET: R2Bucket;
+  IMAGES: any; // Cloudflare Images binding
   MAX_WIDTH: string;
   MAX_HEIGHT: string;
   DEFAULT_QUALITY: string;
@@ -216,40 +217,49 @@ async function serveResized(
     return new Response('Not found', { status: 404 });
   }
 
-  // Use cf.image to resize. This fetches the origin URL (this worker, no params)
-  // to get the original, then applies transforms at the edge.
+  // Use the Images binding to transform directly from R2 stream.
+  // No subrequest, no origin fetch, no 9401 loop.
   try {
-    const originUrl = `https://images.sourcelibrary.org/${r2Key}`;
-
-    const imageOptions: Record<string, unknown> = {
-      fit: params.fit,
-      quality: params.quality,
-      format: params.format,
-    };
-    if (params.width) imageOptions.width = params.width;
-    if (params.height) imageOptions.height = params.height;
-
-    const resizedResponse = await fetch(originUrl, {
-      cf: {
-        image: imageOptions,
-        cacheTtl: cacheTtl,
-        cacheEverything: true,
-      },
-    });
-
-    if (!resizedResponse.ok) {
-      // If image resizing returns 9xxx errors, it means the feature isn't enabled
-      if (resizedResponse.status >= 9000) {
-        throw new Error(`Image Resizing not enabled: ${resizedResponse.status}`);
-      }
-      throw new Error(`cf.image returned ${resizedResponse.status}`);
+    const object = await env.BUCKET.get(r2Key);
+    if (!object) {
+      return new Response('Not found', { status: 404 });
     }
 
-    // Build the response with cache headers
+    // Determine output format
+    const formatMap: Record<string, string> = {
+      jpeg: 'image/jpeg',
+      webp: 'image/webp',
+      avif: 'image/avif',
+    };
+    let outputFormat = formatMap[params.format] || 'image/jpeg';
+    if (params.format === 'auto') {
+      // Auto-negotiate: prefer avif > webp > jpeg based on Accept header
+      const accept = request.headers.get('Accept') || '';
+      if (accept.includes('image/avif')) outputFormat = 'image/avif';
+      else if (accept.includes('image/webp')) outputFormat = 'image/webp';
+      else outputFormat = 'image/jpeg';
+    }
+
+    // Build transform options
+    const transformOpts: Record<string, unknown> = {};
+    if (params.width) transformOpts.width = params.width;
+    if (params.height) transformOpts.height = params.height;
+    transformOpts.fit = params.fit;
+
+    // Transform via Images binding: input(stream) → transform → output
+    const transformed = await env.IMAGES
+      .input(object.body)
+      .transform(transformOpts)
+      .output({ format: outputFormat, quality: params.quality });
+
+    const resizedResponse = transformed.response();
+
+    // Build response with cache headers
     const responseHeaders = new Headers(resizedResponse.headers);
     responseHeaders.set('Cache-Control', `public, max-age=${cacheTtl}, immutable`);
     responseHeaders.set('CDN-Cache-Control', `public, max-age=${cacheTtl}`);
     responseHeaders.set('X-Resize', buildResizeHeader(params));
+    responseHeaders.set('Content-Type', outputFormat);
     responseHeaders.set('Vary', 'Accept');
     responseHeaders.set('Access-Control-Allow-Origin', '*');
 
@@ -263,9 +273,9 @@ async function serveResized(
 
     return response;
   } catch (err) {
-    // cf.image not available — serve the original with a header indicating
-    // resize was requested but unavailable. The client still gets an image.
-    console.error('cf.image resize failed, serving original:', err);
+    // Images binding not available — serve the original
+    const errMsg = err instanceof Error ? err.message : String(err);
+    console.error('Images transform failed, serving original:', errMsg);
 
     const object = await env.BUCKET.get(r2Key);
     if (!object) {
@@ -274,6 +284,7 @@ async function serveResized(
 
     const headers = buildHeaders(object, cacheTtl);
     headers.set('X-Resize', 'unavailable');
+    headers.set('X-Resize-Error', errMsg.slice(0, 200));
     return new Response(object.body, { headers });
   }
 }

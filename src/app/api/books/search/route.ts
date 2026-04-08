@@ -1,12 +1,9 @@
 import { NextRequest, NextResponse } from 'next/server';
-import { getDb, forceReconnect, isConnectionError } from '@/lib/mongodb';
+import { getReadDb, forceReconnect, isConnectionError } from '@/lib/mongodb';
 import { buildBookSearchStage } from '@/lib/atlas-search';
+import { searchBookIds } from '@/lib/books-catalog';
 
 export const dynamic = 'force-dynamic';
-
-function escapeRegex(str: string): string {
-  return str.replace(/[.*+?^${}()|[\]\\]/g, '\\$&');
-}
 
 /** Race a promise against a timeout. Returns the result or throws on timeout. */
 function withTimeout<T>(promise: Promise<T>, ms: number, label: string): Promise<T> {
@@ -33,7 +30,7 @@ export async function GET(request: NextRequest) {
   }
 
   try {
-    let db = await withTimeout(getDb(), 8000, 'getDb');
+    let db = await withTimeout(getReadDb(), 8000, 'getReadDb');
     const projection = { _id: 1, id: 1, title: 1, display_title: 1, author: 1 };
 
     let books: Record<string, unknown>[];
@@ -53,29 +50,31 @@ export async function GET(request: NextRequest) {
       );
       total = -1; // Skip expensive count — hasMore uses result length instead
     } catch (searchErr) {
-      // If connection is stale, force reconnect and try regex fallback
+      // If connection is stale, force reconnect
       if (isConnectionError(searchErr)) {
         db = await withTimeout(forceReconnect(), 8000, 'forceReconnect');
       }
 
-      // Fallback: regex search (skip countDocuments — it's a full collection scan)
-      const queryRegex = new RegExp(escapeRegex(query), 'i');
-      const filter = {
-        visible: true,
-        pages_count: { $gt: 0 },
-        $or: [
-          { title: queryRegex },
-          { display_title: queryRegex },
-          { author: queryRegex },
-        ],
-      };
-      const fallbackBooks = await withTimeout(
-        db.collection('books').find(filter, { projection }).limit(limit).skip(skip).toArray(),
+      // Fallback: Supabase trigram search (fast, indexed) instead of MongoDB regex
+      const matchingIds = await withTimeout(
+        searchBookIds(query, { limit: skip + limit }),
         8000,
-        'regex fallback',
+        'Supabase fallback',
       );
-      books = fallbackBooks;
-      total = -1; // Unknown — avoid expensive countDocuments
+      const pageIds = matchingIds.slice(skip, skip + limit);
+      if (pageIds.length > 0) {
+        books = await withTimeout(
+          db.collection('books').find(
+            { id: { $in: pageIds } },
+            { projection },
+          ).toArray(),
+          8000,
+          'Supabase ID lookup',
+        );
+      } else {
+        books = [];
+      }
+      total = -1;
     }
 
     const response = NextResponse.json({

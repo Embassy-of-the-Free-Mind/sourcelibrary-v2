@@ -90,7 +90,7 @@ export const GET = withAuth(async (request, session) => {
       (query.$and as Record<string, unknown>[]).push({ book_id: bookId });
     }
 
-    const total = await db.collection('pages').countDocuments(query);
+    const total = await db.collection('pages').countDocuments(query, { maxTimeMS: 15000 });
 
     const pages = await db.collection('pages').aggregate([
       { $match: query },
@@ -121,7 +121,7 @@ export const GET = withAuth(async (request, session) => {
           'book.author': 1
         }
       }
-    ]).toArray();
+    ], { maxTimeMS: 15000 }).toArray();
 
     // Get unique books for filter (from pages with image tags)
     const books = await db.collection('pages').aggregate([
@@ -145,9 +145,9 @@ export const GET = withAuth(async (request, session) => {
       { $unwind: '$book' },
       { $project: { id: '$_id', title: '$book.title' } },
       { $sort: { title: 1 } }
-    ]).toArray();
+    ], { maxTimeMS: 15000 }).toArray();
 
-    // Count by page-level review status
+    // Count by page-level review status — run in parallel with timeouts
     const imageTagQuery = {
       $or: [
         { 'ocr.data': { $regex: '<image-desc>', $options: 'i' } },
@@ -155,20 +155,20 @@ export const GET = withAuth(async (request, session) => {
       ]
     };
 
-    const pendingCount = await db.collection('pages').countDocuments({
-      ...imageTagQuery,
-      manually_reviewed: { $ne: true }
-    });
-
-    const approvedCount = await db.collection('pages').countDocuments({
-      manually_reviewed: true,
-      manually_skipped: { $ne: true }
-    });
-
-    const rejectedCount = await db.collection('pages').countDocuments({
-      manually_reviewed: true,
-      manually_skipped: true
-    });
+    const [pendingCount, approvedCount, rejectedCount] = await Promise.all([
+      db.collection('pages').countDocuments({
+        ...imageTagQuery,
+        manually_reviewed: { $ne: true }
+      }, { maxTimeMS: 15000 }).catch(() => -1),
+      db.collection('pages').countDocuments({
+        manually_reviewed: true,
+        manually_skipped: { $ne: true }
+      }, { maxTimeMS: 15000 }).catch(() => -1),
+      db.collection('pages').countDocuments({
+        manually_reviewed: true,
+        manually_skipped: true
+      }, { maxTimeMS: 15000 }).catch(() => -1),
+    ]);
 
     return NextResponse.json({
       pages: pages.map(p => ({

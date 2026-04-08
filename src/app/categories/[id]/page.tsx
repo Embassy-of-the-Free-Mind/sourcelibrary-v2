@@ -25,7 +25,7 @@ interface Book {
 }
 
 // ISR: rebuild at most every hour
-export const revalidate = 86400;
+export const revalidate = false;
 export const dynamicParams = true;
 export async function generateStaticParams() {
   return []; // All paths generated on demand via ISR
