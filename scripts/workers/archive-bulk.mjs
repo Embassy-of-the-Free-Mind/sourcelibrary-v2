@@ -297,9 +297,10 @@ async function processBook(book, db) {
         { book_id: book.id, archived_photo: { $exists: true, $nin: [null, ''] } },
         { maxTimeMS: 10000 }
       );
+      const archiveStatus = archivedCount >= book.pages_count ? 'archive_complete' : 'archive_partial';
       await db.collection('books').updateOne(
         { id: book.id },
-        { $set: { pages_archived: archivedCount, updated_at: new Date() } }
+        { $set: { pages_archived: archivedCount, archive_status: archiveStatus, updated_at: new Date() } }
       );
     }
 
