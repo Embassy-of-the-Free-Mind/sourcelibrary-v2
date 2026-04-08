@@ -184,10 +184,11 @@ export function proxy(request: NextRequest) {
       if (!isNaN(pageNum) && pageNum > 0) {
         const url = request.nextUrl.clone();
         url.pathname = '/api/redirect/book-page';
-        url.searchParams.set('book', segment);
-        url.searchParams.set('n', String(pageNum));
-        url.searchParams.delete('page');
-        return NextResponse.rewrite(url);
+        url.search = '';
+        const headers = new Headers(request.headers);
+        headers.set('x-redirect-book', segment);
+        headers.set('x-redirect-page', String(pageNum));
+        return NextResponse.rewrite(url, { request: { headers } });
       }
     }
 

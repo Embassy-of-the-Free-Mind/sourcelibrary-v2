@@ -862,10 +862,10 @@ export default function TranslationEditor({
                 <ChevronLeft className="w-4 h-4" aria-hidden="true" />
               </button>
               <div className="flex flex-col items-center px-1 sm:px-2">
-                <span className="text-sm font-medium" style={{ color: 'var(--text-muted)' }} aria-label={`Page ${currentIndex + 1} of ${pages.length}`}>{currentIndex + 1}/{pages.length}</span>
-                {page.page_number != null && (
+                <span className="text-sm font-medium" style={{ color: 'var(--text-muted)' }} aria-label={`Page ${currentIndex + 1} of ${pages.length}`}>p. {currentIndex + 1}/{pages.length}</span>
+                {/* {page.page_number != null && (
                   <span className="text-[10px] leading-tight" style={{ color: 'var(--text-muted)' }}>p. {page.page_number}</span>
-                )}
+                )} */}
               </div>
               <button
                 onClick={() => nextPage && onNavigate(nextPage.id)}
@@ -1381,23 +1381,23 @@ export default function TranslationEditor({
                   <div className="flex-1 overflow-auto p-4 min-h-0" data-reader-panel>
                     {translationText ? (
                       <>
-                      <HighlightSelection
-                        bookId={book.id}
-                        pageId={page.id}
-                        pageNumber={page.page_number}
-                        bookTitle={book.display_title || book.title}
-                        bookAuthor={book.author}
-                        bookYear={book.published}
-                        doi={book.doi}
-                      >
-                        <NotesRenderer text={translationText} showNotes={showNotes} showMetadata={false} columns={page.columns} pageType={page.page_type} />
-                      </HighlightSelection>
-                      <TranslationFeedbackPrompt
-                        bookId={book.id}
-                        bookTitle={book.display_title || book.title}
-                        pageNumber={page.page_number}
-                        pageId={page.id}
-                      />
+                        <HighlightSelection
+                          bookId={book.id}
+                          pageId={page.id}
+                          pageNumber={page.page_number}
+                          bookTitle={book.display_title || book.title}
+                          bookAuthor={book.author}
+                          bookYear={book.published}
+                          doi={book.doi}
+                        >
+                          <NotesRenderer text={translationText} showNotes={showNotes} showMetadata={false} columns={page.columns} pageType={page.page_type} />
+                        </HighlightSelection>
+                        <TranslationFeedbackPrompt
+                          bookId={book.id}
+                          bookTitle={book.display_title || book.title}
+                          pageNumber={page.page_number}
+                          pageId={page.id}
+                        />
                       </>
                     ) : (book.language === 'English' && ocrText) ? (
                       <HighlightSelection

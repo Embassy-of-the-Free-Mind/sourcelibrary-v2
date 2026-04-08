@@ -85,11 +85,11 @@ export default function ResearchPage() {
 
         <div className="grid md:grid-cols-2 gap-6 mb-16">
           <InfoCard
-            title="Book metadata"
+            title="Book Metadata"
             text="Language, date, source institution, page count, translation completeness, image count, and source attribution with links to the digitizing library."
           />
           <InfoCard
-            title="First Translation badge"
+            title="First Translation Badge"
             text="When verified, shows whether this is the first-ever English translation, with reasoning and the catalog sources searched."
           />
           <InfoCard
@@ -97,15 +97,15 @@ export default function ResearchPage() {
             text="AI-generated reading overview, plus extracted indexes of people, places, concepts, and vocabulary terms."
           />
           <InfoCard
-            title="Chapter navigation"
+            title="Chapter Navigation"
             text="Table of contents extracted from the text, linked to specific pages for quick navigation."
           />
           <InfoCard
-            title="DOI citations"
+            title="DOI Citations"
             text="Published editions receive DOIs via Zenodo with auto-generated Chicago, MLA, and BibTeX citations."
           />
           <InfoCard
-            title="Image gallery"
+            title="Image Gallery"
             text="Detected illustrations, emblems, and diagrams with bounding boxes, descriptions, and quality scores."
           />
         </div>
@@ -212,7 +212,7 @@ export default function ResearchPage() {
                 <Cpu className="w-5 h-5 text-blue-600" />
               </div>
               <div>
-                <h3 className="font-semibold text-primary">All other sources</h3>
+                <h3 className="font-semibold text-primary">All Other Sources</h3>
                 <p className="text-xs font-mono text-muted">gemini-3.1-flash-lite-preview</p>
               </div>
             </div>

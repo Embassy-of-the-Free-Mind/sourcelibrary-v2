@@ -68,9 +68,9 @@ async function getFeaturedCollections() {
   // Fetch highlighted books by ID (these are curated, high-quality picks)
   const highlightedBooks = allHighlightedIds.length > 0
     ? await db.collection('books').aggregate([
-        { $match: { $or: [{ id: { $in: allHighlightedIds } }, { _id: { $in: allHighlightedIds } }], visible: true, pages_count: { $gt: 0 }, pages_translated: { $gt: 0 } } },
-        { $project: bookProjection },
-      ], { maxTimeMS: 8000 }).toArray()
+      { $match: { $or: [{ id: { $in: allHighlightedIds } }, { _id: { $in: allHighlightedIds } }], visible: true, pages_count: { $gt: 0 }, pages_translated: { $gt: 0 } } },
+      { $project: bookProjection },
+    ], { maxTimeMS: 8000 }).toArray()
     : [];
 
   // Index highlighted books by their ID for fast lookup
@@ -724,7 +724,7 @@ export default async function HomePage() {
                 className="text-2xl md:text-3xl lg:text-4xl font-display mb-5 leading-snug"
                 style={{ color: '#f5f0e8' }}
               >
-                Help recover the lost intellectual heritage of humanity
+                Help recover the lost intellectual heritage of humanity.
               </h2>
             </div>
 
@@ -746,21 +746,21 @@ export default async function HomePage() {
                     className="inline-flex items-center justify-center gap-2 px-8 py-3.5 rounded-full text-sm font-medium transition-all hover:brightness-110"
                     style={{ background: 'var(--accent-rust)', color: '#fff' }}
                   >
-                    How to support
+                    How to Support?
                   </Link>
                   <Link
                     href="/auth/signin"
                     className="inline-flex items-center justify-center gap-2 px-8 py-3.5 rounded-full text-sm font-medium transition-all hover:brightness-110"
                     style={{ background: 'rgba(255,255,255,0.08)', color: '#a09a90' }}
                   >
-                    Create a free account
+                    Create a Free Account
                   </Link>
                 </div>
               </div>
             </div>
 
             {/* Other ways to participate */}
-            <div className="grid grid-cols-1 sm:grid-cols-3 gap-6 max-w-3xl mx-auto">
+            <div className="grid grid-cols-1 sm:grid-cols-2 gap-6 max-w-2xl mx-auto">
               <Link
                 href="/contribute"
                 className="rounded-lg p-5 text-center hover:brightness-110 transition-all"

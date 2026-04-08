@@ -10,7 +10,7 @@ const nextConfig: NextConfig = {
   },
   images: {
     formats: ['image/avif', 'image/webp'],
-    qualities: [75, 85, 90],
+    qualities: [75, 80, 85, 90],
     remotePatterns: [
       // Cloudflare R2 (primary image storage)
       { protocol: 'https', hostname: 'images.sourcelibrary.org' },

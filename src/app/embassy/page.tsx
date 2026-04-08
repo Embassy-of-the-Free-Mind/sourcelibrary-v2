@@ -8,6 +8,9 @@ async function getHeroImages(): Promise<{ url: string; key: string }[]> {
     const { db } = await connectToDatabase();
 
     const images = await db.collection('gallery_images').aggregate([
+      // Sample first so MongoDB uses its fast random-cursor optimization,
+      // then filter — avoids a full scan of all matching documents.
+      { $sample: { size: 200 } },
       {
         $match: {
           gallery_quality: { $gte: 0.8 },
@@ -15,14 +18,14 @@ async function getHeroImages(): Promise<{ url: string; key: string }[]> {
           thumbnail_url: { $exists: true, $ne: '' },
         },
       },
-      { $sample: { size: 12 } },
+      { $limit: 12 },
       {
         $project: {
           thumbnail_url: 1,
           _id: 1,
         },
       },
-    ], { maxTimeMS: 5000 }).toArray();
+    ], { maxTimeMS: 8000 }).toArray();
 
     return images.map((img) => ({
       url: img.thumbnail_url as string,
@@ -38,25 +41,35 @@ async function getFeaturedPassage() {
   try {
     const { db } = await connectToDatabase();
 
-    // Get random translated pages with decent length
-    const results = await db.collection('pages').aggregate([
-      {
-        $match: {
-          'translation.data': { $exists: true, $ne: '' },
-          page_number: { $gte: 3, $lte: 200 },
-        },
-      },
-      { $sample: { size: 30 } },
-      {
-        $project: {
-          book_id: 1,
-          page_number: 1,
-          'translation.data': 1,
-        },
-      },
+    // Step 1: pick a random translated book from the (small) books collection.
+    // `pages_translated` is a cached counter kept in sync by the pipeline —
+    // querying it is fast and index-friendly.
+    const books = await db.collection('books').aggregate([
+      { $match: { pages_translated: { $gt: 20 } } },
+      { $sample: { size: 1 } },
+      { $project: { title: 1, display_title: 1, author: 1, year: 1, slug: 1, id: 1 } },
     ], { maxTimeMS: 5000 }).toArray();
 
+    if (!books.length) return null;
+    const book = books[0];
+
+    // Step 2: fetch translated pages for just that book — hits the book_id index.
+    const results = await db.collection('pages').find(
+      {
+        book_id: book.id,
+        'translation.data': { $exists: true, $ne: '' },
+        page_number: { $gte: 3, $lte: 200 },
+      },
+      {
+        projection: { book_id: 1, page_number: 1, 'translation.data': 1 },
+        maxTimeMS: 5000,
+      }
+    ).toArray();
+
     // Find a passage that reads well as a quote
+    // Shuffle so we don't always pick the earliest page
+    results.sort(() => Math.random() - 0.5);
+
     let bestPage = null;
     for (const page of results) {
       const text = (page.translation?.data || '').trim();
@@ -74,13 +87,6 @@ async function getFeaturedPassage() {
     }
 
     if (!bestPage) return null;
-
-    const book = await db.collection('books').findOne(
-      { id: bestPage.book_id },
-      { projection: { title: 1, display_title: 1, author: 1, year: 1, slug: 1, id: 1 }, maxTimeMS: 3000 }
-    );
-
-    if (!book) return null;
 
     // Clean and truncate the excerpt
     let excerpt = (bestPage.translation?.data || '').trim();

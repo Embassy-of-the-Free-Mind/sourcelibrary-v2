@@ -160,6 +160,10 @@ export default function HeroSection() {
       {/* Scroll indicator */}
       <a
         href="#library"
+        onClick={(e) => {
+          e.preventDefault();
+          document.getElementById('library')?.scrollIntoView({ behavior: 'smooth' });
+        }}
         className="absolute bottom-8 left-1/2 -translate-x-1/2 z-20 flex flex-col items-center gap-2 group"
         aria-label="Scroll to library"
       >

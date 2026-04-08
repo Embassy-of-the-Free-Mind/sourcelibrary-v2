@@ -8,8 +8,8 @@ import { findBookByIdOrSlug } from '@/lib/book-lookup';
  * (no searchParams dependency).
  */
 export async function GET(request: NextRequest) {
-  const bookIdOrSlug = request.nextUrl.searchParams.get('book');
-  const pageNum = parseInt(request.nextUrl.searchParams.get('n') || '', 10);
+  const bookIdOrSlug = request.headers.get('x-redirect-book');
+  const pageNum = parseInt(request.headers.get('x-redirect-page') || '', 10);
 
   if (!bookIdOrSlug) {
     return NextResponse.redirect(new URL('/', request.url), 302);
