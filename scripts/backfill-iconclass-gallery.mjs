@@ -1,23 +1,23 @@
 #!/usr/bin/env node
 /**
  * Backfill Iconclass codes for gallery images using Gemini 3.1 Flash Lite.
- * Lightweight: sends the extracted image crop + existing metadata, asks only for codes.
- * Updates both pages.detected_images[].metadata.iconclass AND gallery_images.metadata.iconclass.
+ * 10 concurrent Gemini calls.
  *
- * Cost: ~400 tokens/image * 70K images * $0.075/M tokens ≈ $2.10
+ * Strategy: Paginate by _id (no $exists, no $size — just forward scan).
+ * Skip docs that already have iconclass codes in application code.
  *
  * Usage:
  *   set -a; source .env.production.local; set +a
- *   node scripts/backfill-iconclass-gallery.mjs [--dry-run] [--limit 100] [--min-quality 0.7]
+ *   node scripts/backfill-iconclass-gallery.mjs [--dry-run] [--limit 100] [--concurrency 10]
  */
-import { MongoClient } from 'mongodb';
+import { MongoClient, ObjectId } from 'mongodb';
 import { GoogleGenAI } from '@google/genai';
 
 const DRY_RUN = process.argv.includes('--dry-run');
 const LIMIT = parseInt(process.argv.find((_, i, a) => a[i - 1] === '--limit') || '100000');
-const MIN_QUALITY = parseFloat(process.argv.find((_, i, a) => a[i - 1] === '--min-quality') || '0.5');
+const CONCURRENCY = parseInt(process.argv.find((_, i, a) => a[i - 1] === '--concurrency') || '10');
 const MODEL = 'gemini-3.1-flash-lite-preview';
-const BATCH_SIZE = 20; // Process in batches, write updates together
+const PAGE_SIZE = 500; // Fetch more, skip already-tagged in app code
 
 const PROMPT = `Classify this illustration from a historical book using Iconclass codes (iconclass.org). Return 2-5 codes, most specific first.
 
@@ -30,169 +30,160 @@ Tags: subjects={subjects}, figures={figures}, symbols={symbols}.
 
 Return ONLY a JSON array of codes. Example: ["49E39","25FF41"]`;
 
+function buildPrompt(img) {
+  const meta = img.metadata || {};
+  return PROMPT
+    .replace('{description}', (img.description || '').substring(0, 100))
+    .replace('{bookTitle}', (img.book_title || '').substring(0, 60))
+    .replace('{year}', img.book_year || '?')
+    .replace('{type}', img.type || '?')
+    .replace('{subjects}', (meta.subjects || []).join(', ') || 'none')
+    .replace('{figures}', (meta.figures || []).join(', ') || 'none')
+    .replace('{symbols}', (meta.symbols || []).join(', ') || 'none');
+}
+
+async function classifyImage(genai, img) {
+  if (!img.extracted_url) return null;
+  const prompt = buildPrompt(img);
+  const imgRes = await fetch(img.extracted_url, { signal: AbortSignal.timeout(10000) });
+  if (!imgRes.ok) return null;
+  const imgBuffer = Buffer.from(await imgRes.arrayBuffer());
+
+  const result = await genai.models.generateContent({
+    model: MODEL,
+    contents: [{ parts: [
+      { text: prompt },
+      { inlineData: { mimeType: 'image/jpeg', data: imgBuffer.toString('base64') } },
+    ]}],
+    config: { temperature: 0.1, maxOutputTokens: 256 },
+  });
+
+  const text = result.text.replace(/```json\n?/g, '').replace(/```\n?/g, '').trim();
+  const tokens = result.usageMetadata?.totalTokenCount || 400;
+  const match = text.match(/\[[\s\S]*\]/);
+  if (!match) return { tokens };
+  const codes = JSON.parse(match[0]).filter(c => typeof c === 'string' && c.length > 0);
+  return codes.length > 0 ? { codes, tokens } : { tokens };
+}
+
 async function main() {
   const client = new MongoClient(process.env.MONGODB_URI);
   await client.connect();
   const db = client.db('bookstore');
-
   const genai = new GoogleGenAI({ apiKey: process.env.GEMINI_API_KEY });
 
-  // Find gallery images without iconclass codes, with extracted URLs
-  const cursor = db.collection('gallery_images')
-    .find({
-      extracted_url: { $ne: null },
-      gallery_quality: { $gte: MIN_QUALITY },
-      $or: [
-        { 'metadata.iconclass': { $exists: false } },
-        { 'metadata.iconclass': { $size: 0 } },
-      ],
-    }, {
-      projection: {
-        id: 1, page_id: 1, book_id: 1, detection_index: 1,
-        extracted_url: 1, description: 1, type: 1,
-        book_title: 1, book_year: 1,
-        metadata: 1, gallery_quality: 1,
-      },
-    })
-    .sort({ gallery_quality: -1 }) // Best images first
-    .limit(LIMIT);
+  console.log(`${DRY_RUN ? 'DRY RUN — ' : ''}Concurrency: ${CONCURRENCY} | Model: ${MODEL}\n`);
 
-  console.log(`${DRY_RUN ? 'DRY RUN — ' : ''}Backfilling Iconclass codes (min quality: ${MIN_QUALITY})\n`);
+  let success = 0, errors = 0, skipped = 0, totalTokens = 0;
+  let lastId = null; // For _id-based pagination
 
-  let success = 0, errors = 0, totalTokens = 0, processed = 0;
+  while (success + errors < LIMIT) {
+    // Paginate forward by _id — no $exists, no sort, just scan
+    const filter = lastId
+      ? { _id: { $gt: lastId }, extracted_url: { $ne: null } }
+      : { extracted_url: { $ne: null } };
 
-  const batch = [];
+    const batch = await db.collection('gallery_images')
+      .find(filter, {
+        projection: {
+          _id: 1, id: 1, page_id: 1, book_id: 1, detection_index: 1,
+          extracted_url: 1, description: 1, type: 1,
+          book_title: 1, book_year: 1, metadata: 1, gallery_quality: 1,
+        },
+      })
+      .sort({ _id: 1 })
+      .limit(PAGE_SIZE)
+      .maxTimeMS(15000)
+      .toArray();
 
-  for await (const img of cursor) {
-    processed++;
-    const label = `[${processed}] q=${img.gallery_quality} ${img.type} — ${(img.description || '').substring(0, 50)}`;
+    if (batch.length === 0) {
+      console.log('\nReached end of collection.');
+      break;
+    }
 
-    try {
-      if (!img.extracted_url) {
-        errors++;
-        continue;
-      }
+    lastId = batch[batch.length - 1]._id;
 
-      const meta = img.metadata || {};
-      const prompt = PROMPT
-        .replace('{description}', (img.description || '').substring(0, 100))
-        .replace('{bookTitle}', (img.book_title || '').substring(0, 60))
-        .replace('{year}', img.book_year || '?')
-        .replace('{type}', img.type || '?')
-        .replace('{subjects}', (meta.subjects || []).join(', ') || 'none')
-        .replace('{figures}', (meta.figures || []).join(', ') || 'none')
-        .replace('{symbols}', (meta.symbols || []).join(', ') || 'none');
+    // Filter to untagged in app code
+    const needsClassification = batch.filter(img => {
+      const ic = img.metadata?.iconclass;
+      return !ic || ic.length === 0;
+    });
 
-      // Fetch image
-      const imgRes = await fetch(img.extracted_url, { signal: AbortSignal.timeout(15000) });
-      if (!imgRes.ok) {
-        errors++;
-        continue;
-      }
-      const imgBuffer = Buffer.from(await imgRes.arrayBuffer());
+    skipped += batch.length - needsClassification.length;
 
-      const result = await genai.models.generateContent({
-        model: MODEL,
-        contents: [{
-          parts: [
-            { text: prompt },
-            { inlineData: { mimeType: 'image/jpeg', data: imgBuffer.toString('base64') } },
-          ],
-        }],
-        config: { temperature: 0.1, maxOutputTokens: 256 },
-      });
+    if (needsClassification.length === 0) {
+      continue; // All already tagged, fetch next page
+    }
 
-      const text = result.text.replace(/```json\n?/g, '').replace(/```\n?/g, '').trim();
-      totalTokens += (result.usageMetadata?.totalTokenCount || 400);
+    console.log(`  [Page: ${batch.length} fetched, ${needsClassification.length} need codes, ${skipped} skipped so far]`);
 
-      const match = text.match(/\[[\s\S]*\]/);
-      if (!match) {
-        errors++;
-        continue;
-      }
+    // Process with concurrency
+    const writeOps = [];
 
-      const codes = JSON.parse(match[0]).filter(c => typeof c === 'string' && c.length > 0);
-      if (codes.length === 0) {
-        errors++;
-        continue;
-      }
+    for (let i = 0; i < needsClassification.length; i += CONCURRENCY) {
+      const chunk = needsClassification.slice(i, i + CONCURRENCY);
 
-      console.log(`${label} → ${codes.join(', ')}`);
-      success++;
+      const results = await Promise.allSettled(
+        chunk.map(async (img) => {
+          try {
+            return { img, result: await classifyImage(genai, img) };
+          } catch (err) {
+            return { img, error: err.message };
+          }
+        })
+      );
 
-      if (!DRY_RUN) {
-        batch.push({
-          pageId: img.page_id,
-          galleryId: img.id,
-          detectionIndex: img.detection_index,
-          codes,
-        });
+      for (const r of results) {
+        if (r.status === 'rejected' || r.value.error) {
+          errors++;
+          continue;
+        }
+        const { img, result } = r.value;
+        if (!result) { errors++; continue; }
+        totalTokens += result.tokens || 0;
 
-        // Flush batch
-        if (batch.length >= BATCH_SIZE) {
-          await flushBatch(db, batch);
-          batch.length = 0;
+        if (result.codes) {
+          success++;
+          console.log(`[${success}] ${img.type} — ${(img.description || '').substring(0, 45)} → ${result.codes.join(', ')}`);
+          if (!DRY_RUN) {
+            writeOps.push({
+              galleryId: img.id,
+              pageId: img.page_id,
+              detectionIndex: img.detection_index,
+              codes: result.codes,
+            });
+          }
+        } else {
+          errors++;
         }
       }
-
-      // Rate limit
-      await new Promise(r => setTimeout(r, 500));
-    } catch (err) {
-      console.log(`${label} — ERROR: ${err.message?.substring(0, 80)}`);
-      errors++;
-      if (err.message?.includes('429') || err.message?.includes('quota')) {
-        console.log('  Rate limited — waiting 60s...');
-        await new Promise(r => setTimeout(r, 60000));
-      } else {
-        await new Promise(r => setTimeout(r, 500));
-      }
     }
 
-    // Progress every 100
-    if (processed % 100 === 0) {
-      const cost = totalTokens * 0.000000075;
-      console.log(`\n  --- Progress: ${success}/${processed} success, ${errors} errors, $${cost.toFixed(4)} ---\n`);
+    // Batch write
+    if (writeOps.length > 0) {
+      const ops = writeOps.flatMap(item => [
+        db.collection('gallery_images').updateOne(
+          { id: item.galleryId },
+          { $set: { 'metadata.iconclass': item.codes, updated_at: new Date() } }
+        ),
+        db.collection('pages').updateOne(
+          { id: item.pageId, [`detected_images.${item.detectionIndex}`]: { $ne: null } },
+          { $set: { [`detected_images.${item.detectionIndex}.metadata.iconclass`]: item.codes } }
+        ).catch(() => {}),
+      ]);
+      await Promise.all(ops);
+      console.log(`  [wrote ${writeOps.length} updates | ${success} success, ${errors} errors, $${(totalTokens * 0.000000075).toFixed(4)}]`);
     }
-  }
-
-  // Flush remaining
-  if (batch.length > 0) {
-    await flushBatch(db, batch);
   }
 
   console.log('\n=== SUMMARY ===');
-  console.log(`Success: ${success}/${processed}`);
+  console.log(`Success: ${success}`);
   console.log(`Errors: ${errors}`);
+  console.log(`Skipped (already tagged): ${skipped}`);
   console.log(`Total tokens: ${totalTokens.toLocaleString()}`);
-  const cost = totalTokens * 0.000000075;
-  console.log(`Cost: $${cost.toFixed(4)}`);
+  console.log(`Cost: $${(totalTokens * 0.000000075).toFixed(4)}`);
 
   await client.close();
-}
-
-async function flushBatch(db, batch) {
-  const ops = [];
-
-  for (const item of batch) {
-    // Update gallery_images (flat collection)
-    ops.push(
-      db.collection('gallery_images').updateOne(
-        { id: item.galleryId },
-        { $set: { 'metadata.iconclass': item.codes, updated_at: new Date() } }
-      )
-    );
-
-    // Update the source page's detected_images array
-    ops.push(
-      db.collection('pages').updateOne(
-        { id: item.pageId },
-        { $set: { [`detected_images.${item.detectionIndex}.metadata.iconclass`]: item.codes } }
-      )
-    );
-  }
-
-  await Promise.all(ops);
-  console.log(`  [flushed ${batch.length} updates]`);
 }
 
 main().catch(e => { console.error(e); process.exit(1); });
