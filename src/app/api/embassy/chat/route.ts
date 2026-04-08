@@ -1,11 +1,11 @@
 import { NextRequest, NextResponse } from 'next/server';
+import { after } from 'next/server';
 import { auth } from '@/lib/auth';
 import { getDb } from '@/lib/mongodb';
 import { ObjectId } from 'mongodb';
 import { generateLibrarianResponse, streamLibrarianResponse } from '@/lib/embassy/librarian';
 import { z } from 'zod';
 
-// Enable streaming on Vercel serverless (prevents response buffering)
 export const dynamic = 'force-dynamic';
 export const maxDuration = 60;
 
@@ -102,56 +102,64 @@ export async function POST(request: NextRequest) {
     });
   }
 
-  // Streaming response
+  // Streaming response via TransformStream (flush-friendly on Vercel)
   if (stream) {
     try {
       const { stream: textStream, sources, getFullText } = await streamLibrarianResponse(message, history);
 
       const encoder = new TextEncoder();
-      const readable = new ReadableStream({
-        async start(controller) {
-          try {
-            // Send threadId first
-            controller.enqueue(encoder.encode(`data: ${JSON.stringify({ type: 'threadId', threadId: activeThreadId })}\n\n`));
+      const { readable, writable } = new TransformStream();
+      const writer = writable.getWriter();
 
-            // Stream text chunks
-            for await (const chunk of textStream) {
-              controller.enqueue(encoder.encode(`data: ${JSON.stringify({ type: 'chunk', text: chunk })}\n\n`));
-            }
+      // Pipe chunks in the background — the Response starts flushing immediately
+      const pipePromise = (async () => {
+        try {
+          await writer.write(encoder.encode(`data: ${JSON.stringify({ type: 'threadId', threadId: activeThreadId })}\n\n`));
 
-            const fullText = getFullText();
-            const aiMessageTime = new Date();
-
-            // Save AI response to DB
-            await db.collection('embassy_messages').insertOne({
-              threadId: new ObjectId(activeThreadId),
-              authorType: 'ai',
-              authorName: 'The Librarian',
-              content: fullText,
-              sources: sources.map(s => ({
-                bookId: s.book_id,
-                bookTitle: s.bookTitle,
-                bookAuthor: s.bookAuthor,
-                pageNumber: s.page_number,
-                bookSlug: s.bookSlug,
-              })),
-              createdAt: aiMessageTime,
-            });
-
-            await db.collection('embassy_threads').updateOne(
-              { _id: new ObjectId(activeThreadId) },
-              { $set: { lastMessageAt: aiMessageTime }, $inc: { messageCount: 2 } },
-            );
-
-            // Signal done
-            controller.enqueue(encoder.encode(`data: ${JSON.stringify({ type: 'done' })}\n\n`));
-            controller.close();
-          } catch (err) {
-            console.error('[Embassy] Stream error:', err);
-            controller.enqueue(encoder.encode(`data: ${JSON.stringify({ type: 'error', message: 'The Librarian was interrupted.' })}\n\n`));
-            controller.close();
+          for await (const chunk of textStream) {
+            await writer.write(encoder.encode(`data: ${JSON.stringify({ type: 'chunk', text: chunk })}\n\n`));
           }
-        },
+
+          await writer.write(encoder.encode(`data: ${JSON.stringify({ type: 'done' })}\n\n`));
+          await writer.close();
+        } catch (err) {
+          console.error('[Embassy] Stream error:', err);
+          try {
+            await writer.write(encoder.encode(`data: ${JSON.stringify({ type: 'error', message: 'The Librarian was interrupted.' })}\n\n`));
+            await writer.close();
+          } catch { /* already closed */ }
+        }
+      })();
+
+      // Defer DB writes to after the response is sent
+      after(async () => {
+        await pipePromise; // Ensure streaming finished
+        const fullText = getFullText();
+        const aiMessageTime = new Date();
+
+        try {
+          await db.collection('embassy_messages').insertOne({
+            threadId: new ObjectId(activeThreadId),
+            authorType: 'ai',
+            authorName: 'The Librarian',
+            content: fullText,
+            sources: sources.map(s => ({
+              bookId: s.book_id,
+              bookTitle: s.bookTitle,
+              bookAuthor: s.bookAuthor,
+              pageNumber: s.page_number,
+              bookSlug: s.bookSlug,
+            })),
+            createdAt: aiMessageTime,
+          });
+
+          await db.collection('embassy_threads').updateOne(
+            { _id: new ObjectId(activeThreadId) },
+            { $set: { lastMessageAt: aiMessageTime }, $inc: { messageCount: 2 } },
+          );
+        } catch (err) {
+          console.error('[Embassy] Failed to save AI response:', err);
+        }
       });
 
       return new Response(readable, {
