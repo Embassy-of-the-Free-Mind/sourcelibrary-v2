@@ -359,6 +359,37 @@ async function writePageTranslation(db, page, text, book) {
   );
 }
 
+// ── Bulk-write multiple page translations in one round trip ──
+// Reduces write amplification: 1 bulkWrite triggers fewer index updates than N updateOne calls
+async function bulkWritePageTranslations(db, entries, book) {
+  if (entries.length === 0) return;
+  if (entries.length === 1) {
+    return writePageTranslation(db, entries[0].page, entries[0].text, book);
+  }
+  const now = new Date();
+  const model = getModelForBook(book);
+  const ops = entries.map(({ page, text }) => ({
+    updateOne: {
+      filter: { id: page.id },
+      update: {
+        $set: {
+          translation: {
+            data: text,
+            content_hash: contentHash(text),
+            language: 'English',
+            model,
+            updated_at: now,
+            source: 'ai',
+            prompt_version: PROMPT_VERSION,
+          },
+          updated_at: now,
+        },
+      },
+    },
+  }));
+  await db.collection('pages').bulkWrite(ops, { ordered: false });
+}
+
 // ── Process one book (sequential batches for context) ──
 async function processBook(db, book, job, globalCounter, deadline) {
   const label = (book.title || book.id).substring(0, 50);
@@ -562,10 +593,12 @@ async function processBook(db, book, job, globalCounter, deadline) {
         }
 
         let batchTranslated = 0;
+        // Collect successful translations for bulk write (reduces write amplification)
+        const bulkEntries = [];
         for (const page of batch) {
           const translatedText = result.translations.get(page.page_number);
           if (translatedText) {
-            await writePageTranslation(db, page, translatedText, book);
+            bulkEntries.push({ page, text: translatedText });
             prevTranslation = translatedText;
             batchTranslated++;
             translated++;
@@ -609,6 +642,11 @@ async function processBook(db, book, job, globalCounter, deadline) {
               failed++;
             }
           }
+        }
+
+        // Bulk-write all successfully parsed translations in one round trip
+        if (bulkEntries.length > 0) {
+          await bulkWritePageTranslations(db, bulkEntries, book);
         }
 
         // Log batch usage

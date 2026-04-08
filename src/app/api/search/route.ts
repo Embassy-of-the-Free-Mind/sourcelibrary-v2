@@ -1,16 +1,13 @@
 import { NextRequest, NextResponse } from 'next/server';
-import { getDb } from '@/lib/mongodb';
+import { getReadDb } from '@/lib/mongodb';
 import { Book } from '@/lib/types';
 import type { SearchResult, SearchResponse } from '@/lib/api-client/types/search';
 import { buildBookSearchStage, buildPageSearchStage, type BookSearchFilters } from '@/lib/atlas-search';
+import { searchBookIds } from '@/lib/books-catalog';
 
 export const preferredRegion = 'fra1';
 
 const MAX_PAGE_RESULTS = 10;
-
-function escapeRegex(str: string): string {
-  return str.replace(/[.*+?^${}()|[\]\\]/g, '\\$&');
-}
 
 /** Strip XML/HTML tags and clean up OCR artifacts for display */
 function cleanText(text: string): string {
@@ -73,12 +70,9 @@ export async function GET(request: NextRequest) {
       }, { status: 400 });
     }
 
-    const db = await getDb();
+    const db = await getReadDb();
     const results: SearchResult[] = [];
     const seenBooks = new Set<string>();
-
-    // Build regex for fallback text search
-    const queryRegex = new RegExp(escapeRegex(query), 'i');
 
     // Helper: build common book-level filters (language, category, year, etc.)
     function buildBookFilters(): Record<string, unknown> {
@@ -183,18 +177,12 @@ export async function GET(request: NextRequest) {
 
           return await db.collection('books').aggregate(pipeline, { maxTimeMS: 5000 }).toArray();
         } catch {
+          // Fallback: Supabase trigram search instead of MongoDB regex
+          const matchingIds = await searchBookIds(query, { limit });
+          if (matchingIds.length === 0) return [];
           const bookFilters = buildBookFilters();
           return await db.collection('books')
-            .find({
-              $or: [
-                { title: queryRegex },
-                { display_title: queryRegex },
-                { english_title: queryRegex },
-                { author: queryRegex },
-                { 'reading_summary.overview': queryRegex },
-              ],
-              ...bookFilters,
-            })
+            .find({ id: { $in: matchingIds }, ...bookFilters })
             .limit(limit)
             .toArray();
         }
@@ -400,15 +388,8 @@ export async function GET(request: NextRequest) {
     if (year && !bookId) {
       const yearNum = parseInt(year);
       if (!isNaN(yearNum)) {
-        const nearbyYears: number[] = [];
-        for (let y = yearNum - 5; y <= yearNum + 5; y++) {
-          if (y !== yearNum && y > 1400) nearbyYears.push(y);
-        }
-
-        const nearbyPattern = new RegExp(`\\b(${nearbyYears.join('|')})\\b`);
-
         // Use Atlas Search for nearby books with year range filter
-        let nearbyBooks;
+        let nearbyBooks: Record<string, unknown>[];
         try {
           const nearbyFilters: BookSearchFilters = {
             yearFrom: yearNum - 5,
@@ -430,24 +411,24 @@ export async function GET(request: NextRequest) {
 
           nearbyBooks = await db.collection('books').aggregate(nearbyPipeline, { maxTimeMS: 5000 }).toArray();
         } catch {
-          // Fallback: regex
-          const nearbyFilter: Record<string, unknown> = {
-            $or: [
-              { title: queryRegex },
-              { display_title: queryRegex },
-              { author: queryRegex },
-              { 'reading_summary.overview': queryRegex },
-            ],
-            published: { $regex: nearbyPattern },
-          };
-          if (seenBooks.size > 0) nearbyFilter.id = { $nin: Array.from(seenBooks) };
-          if (language) nearbyFilter.language = language;
-          if (category) nearbyFilter.categories = category;
+          // Fallback: Supabase trigram search + MongoDB filter for nearby years
+          const matchingIds = await searchBookIds(query, { limit: 50 });
+          if (matchingIds.length > 0) {
+            const nearbyFilter: Record<string, unknown> = {
+              id: { $in: matchingIds },
+              year: { $gte: yearNum - 5, $lte: yearNum + 5, $ne: yearNum },
+            };
+            if (seenBooks.size > 0) nearbyFilter.id = { $in: matchingIds.filter(id => !seenBooks.has(id)) };
+            if (language) nearbyFilter.language = language;
+            if (category) nearbyFilter.categories = category;
 
-          nearbyBooks = await db.collection('books')
-            .find(nearbyFilter)
-            .limit(10)
-            .toArray();
+            nearbyBooks = await db.collection('books')
+              .find(nearbyFilter)
+              .limit(10)
+              .toArray();
+          } else {
+            nearbyBooks = [];
+          }
         }
 
         nearby = nearbyBooks.map(book => bookToResult(book as unknown as Book));

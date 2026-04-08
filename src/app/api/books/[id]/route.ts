@@ -1,6 +1,6 @@
 import { NextRequest, NextResponse } from 'next/server';
 import { revalidatePath } from 'next/cache';
-import { getDb } from '@/lib/mongodb';
+import { getDb, getReadDb } from '@/lib/mongodb';
 import { ObjectId } from 'mongodb';
 import { logAuditEvent } from '@/lib/audit-logger';
 import { withAuth } from '@/lib/auth-helpers';
@@ -18,7 +18,8 @@ export async function GET(
     const { searchParams } = new URL(request.url);
     const includeFull = searchParams.get('full') === 'true';
     const pagesMode = searchParams.get('pages') || 'default'; // 'nav' for minimal, 'default' for standard
-    const db = await getDb();
+    // Use secondary reads for public GETs; admin full-view still reads primary for freshness
+    const db = includeFull ? await getDb() : await getReadDb();
 
     // Book projection: nav mode only needs fields the reader uses
     const bookProjection = pagesMode === 'nav' ? {
