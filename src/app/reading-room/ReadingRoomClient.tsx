@@ -60,6 +60,7 @@ export default function ReadingRoomClient({ featuredPassage }: ReadingRoomClient
   const [threads, setThreads] = useState<ThreadPreview[]>([]);
   const [visibility, setVisibility] = useState<'public' | 'private'>('public');
   const messagesEndRef = useRef<HTMLDivElement>(null);
+  const chatContainerRef = useRef<HTMLDivElement>(null);
   const inputRef = useRef<HTMLTextAreaElement>(null);
 
   useEffect(() => {
@@ -69,8 +70,15 @@ export default function ReadingRoomClient({ featuredPassage }: ReadingRoomClient
       .catch(() => {});
   }, []);
 
+  // Auto-scroll chat container to bottom on new content (including streaming chunks)
   useEffect(() => {
-    messagesEndRef.current?.scrollIntoView({ behavior: 'smooth' });
+    const container = chatContainerRef.current;
+    if (!container) return;
+    // Only auto-scroll if user is near the bottom (not scrolled up to read history)
+    const isNearBottom = container.scrollHeight - container.scrollTop - container.clientHeight < 150;
+    if (isNearBottom) {
+      container.scrollTop = container.scrollHeight;
+    }
   }, [messages]);
 
   const handleInputChange = (e: React.ChangeEvent<HTMLTextAreaElement>) => {
@@ -145,12 +153,25 @@ export default function ReadingRoomClient({ featuredPassage }: ReadingRoomClient
                 const event = JSON.parse(line.slice(6));
                 if (event.type === 'threadId' && !threadId) {
                   setThreadId(event.threadId);
+                } else if (event.type === 'status') {
+                  // Show status text (e.g. "Searching the collection...") as a temporary assistant message
+                  setMessages(prev => {
+                    const updated = [...prev];
+                    const last = updated[updated.length - 1];
+                    if (last?.role === 'assistant' && !last.content) {
+                      updated[updated.length - 1] = { ...last, content: `*${event.text}*` };
+                    }
+                    return updated;
+                  });
                 } else if (event.type === 'chunk') {
                   setMessages(prev => {
                     const updated = [...prev];
                     const last = updated[updated.length - 1];
                     if (last?.role === 'assistant') {
-                      updated[updated.length - 1] = { ...last, content: last.content + event.text };
+                      // Replace status text on first real chunk
+                      const isStatus = last.content.startsWith('*') && last.content.endsWith('*');
+                      const newContent = isStatus ? event.text : last.content + event.text;
+                      updated[updated.length - 1] = { ...last, content: newContent };
                     }
                     return updated;
                   });
@@ -269,7 +290,7 @@ export default function ReadingRoomClient({ featuredPassage }: ReadingRoomClient
           <div className="flex-1 min-w-0">
             <div className="border border-[#e8e4dc] rounded-lg bg-white overflow-hidden shadow-sm">
               {/* Messages */}
-              <div className="min-h-[300px] max-h-[600px] overflow-y-auto p-6 space-y-6">
+              <div ref={chatContainerRef} className="min-h-[300px] max-h-[600px] overflow-y-auto p-6 space-y-6">
                 {messages.length === 0 && (
                   <div className="text-center py-8">
                     <div className="text-[#c9a86c] text-3xl mb-3" style={{ fontFamily: 'serif' }}>
@@ -329,17 +350,13 @@ export default function ReadingRoomClient({ featuredPassage }: ReadingRoomClient
                   </div>
                 ))}
 
-                {sending && (
+                {sending && !(messages.length > 0 && messages[messages.length - 1]?.role === 'assistant') && (
                   <div className="flex gap-3">
                     <div className="flex-shrink-0 w-8 h-8 rounded-full bg-[#f5f0e8] flex items-center justify-center text-[#c9a86c] text-sm" style={{ fontFamily: 'serif' }}>
                       &#x2609;
                     </div>
                     <div className="bg-[#f5f0e8] rounded-2xl rounded-bl-sm px-4 py-3">
-                      <div className="flex gap-1.5 items-center h-5">
-                        <div className="w-1.5 h-1.5 bg-[#c9a86c] rounded-full animate-bounce" style={{ animationDelay: '0ms' }} />
-                        <div className="w-1.5 h-1.5 bg-[#c9a86c] rounded-full animate-bounce" style={{ animationDelay: '150ms' }} />
-                        <div className="w-1.5 h-1.5 bg-[#c9a86c] rounded-full animate-bounce" style={{ animationDelay: '300ms' }} />
-                      </div>
+                      <p className="text-[13px] text-[#8a8480] font-body italic">Searching the collection...</p>
                     </div>
                   </div>
                 )}
