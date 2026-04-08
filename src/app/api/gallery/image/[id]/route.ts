@@ -90,9 +90,9 @@ export async function GET(
           id,
           pageId,
           detectionIndex,
-          imageUrl: galleryDoc.extracted_url || galleryDoc.thumbnail_url || galleryDoc.image_url,
+          imageUrl: galleryDoc.hires_url || galleryDoc.extracted_url || galleryDoc.thumbnail_url || galleryDoc.image_url,
           fullPageUrl: galleryDoc.image_url,
-          highResUrl: galleryDoc.extracted_url || galleryDoc.image_url,
+          highResUrl: galleryDoc.hires_url || galleryDoc.extracted_url || galleryDoc.image_url,
           extractedUrl: galleryDoc.extracted_url ?? null,
           thumbnailUrl: galleryDoc.thumbnail_url ?? null,
           rotation: galleryDoc.rotation ?? 0,
@@ -140,9 +140,9 @@ export async function GET(
           id,
           pageId,
           detectionIndex,
-          imageUrl: galleryDoc.extracted_url || galleryDoc.thumbnail_url || galleryDoc.image_url,
+          imageUrl: galleryDoc.hires_url || galleryDoc.extracted_url || galleryDoc.thumbnail_url || galleryDoc.image_url,
           fullPageUrl: galleryDoc.image_url,
-          highResUrl: galleryDoc.extracted_url || galleryDoc.image_url,
+          highResUrl: galleryDoc.hires_url || galleryDoc.extracted_url || galleryDoc.image_url,
           extractedUrl: galleryDoc.extracted_url ?? null,
           thumbnailUrl: galleryDoc.thumbnail_url ?? null,
           rotation: galleryDoc.rotation ?? 0,
@@ -185,9 +185,9 @@ export async function GET(
           id,
           pageId,
           detectionIndex,
-          imageUrl: galleryDoc.extracted_url || galleryDoc.thumbnail_url || galleryDoc.image_url,
+          imageUrl: galleryDoc.hires_url || galleryDoc.extracted_url || galleryDoc.thumbnail_url || galleryDoc.image_url,
           fullPageUrl: galleryDoc.image_url,
-          highResUrl: galleryDoc.extracted_url || galleryDoc.image_url,
+          highResUrl: galleryDoc.hires_url || galleryDoc.extracted_url || galleryDoc.image_url,
           extractedUrl: galleryDoc.extracted_url ?? null,
           thumbnailUrl: galleryDoc.thumbnail_url ?? null,
           rotation: galleryDoc.rotation ?? 0,
@@ -277,8 +277,8 @@ export async function GET(
       highResUrl = `/api/crop-image?${highResCropParams}`;
     }
 
-    // Prefer pre-generated extracted_url, fall back to on-the-fly crop, then raw page
-    const croppedUrl = detection.extracted_url || cropUrl || imageUrl;
+    // Prefer highest-resolution pre-generated crop, fall back to standard crop, then on-the-fly
+    const croppedUrl = detection.hires_url || detection.extracted_url || cropUrl || imageUrl;
 
     // Build the response
     const response = {
@@ -290,7 +290,7 @@ export async function GET(
       // Image URLs
       imageUrl: croppedUrl,
       fullPageUrl: imageUrl,
-      highResUrl: highResUrl, // For magnifier/high-resolution viewing
+      highResUrl: detection.hires_url || highResUrl, // For magnifier/high-resolution viewing
       extractedUrl: detection.extracted_url ?? null,
       thumbnailUrl: detection.thumbnail_url ?? null,
       hiresUrl: detection.hires_url ?? null, // Cached high-res download (4000px crop in R2)
