@@ -1,5 +1,6 @@
 import { NextRequest, NextResponse } from 'next/server';
 import { getDb } from '@/lib/mongodb';
+import { supabase } from '@/lib/supabase';
 import { withAuth } from '@/lib/auth-helpers';
 import { loadAliasResolver } from '@/lib/entity-aliases';
 import { buildEntityListJsonLd } from '@/lib/jsonld';
@@ -46,70 +47,66 @@ export async function GET(request: NextRequest) {
     const limit = Math.min(parseInt(searchParams.get('limit') || '50'), 200);
     const offset = parseInt(searchParams.get('offset') || '0');
 
-    const db = await getDb();
-
-    // Build query
-    const filter: Record<string, unknown> = {};
-
-    if (type) {
-      filter.type = type;
-    }
-
-    if (query) {
-      filter.$or = [
-        { name: { $regex: query, $options: 'i' } },
-        { aliases: { $regex: query, $options: 'i' } }
-      ];
-    }
-
+    // Use Supabase for text search (trigram index, instant counts)
+    // Fall back to MongoDB only for book_id filter (needs array lookup)
     if (bookId) {
-      filter['books.book_id'] = bookId;
+      // book_id filter requires MongoDB (array field lookup)
+      const db = await getDb();
+      const filter: Record<string, unknown> = { 'books.book_id': bookId };
+      if (type) filter.type = type;
+      if (minBooks > 1) filter.book_count = { $gte: minBooks };
+
+      const [total, entities] = await Promise.all([
+        db.collection('entities').countDocuments(filter, { maxTimeMS: 10000 }),
+        db.collection('entities')
+          .find(filter)
+          .sort({ book_count: -1, total_mentions: -1 })
+          .skip(offset)
+          .limit(limit)
+          .maxTimeMS(10000)
+          .toArray(),
+      ]);
+
+      const format = searchParams.get('format');
+      if (format === 'jsonld') {
+        const jsonLd = buildEntityListJsonLd(entities.map(e => ({
+          name: e.name as string, type: e.type as 'person' | 'place' | 'concept',
+          aliases: e.aliases as string[] | undefined, description: e.description as string | undefined,
+          wikipedia_url: e.wikipedia_url as string | undefined, wikidata_id: e.wikidata_id as string | undefined,
+          wikidata_birth_date: e.wikidata_birth_date as string | undefined, wikidata_death_date: e.wikidata_death_date as string | undefined,
+          wikidata_coordinates: e.wikidata_coordinates as { lat: number; lng: number } | undefined,
+          books: e.books as Array<{ book_id: string; book_title: string; book_author: string }>,
+        })));
+        return new Response(JSON.stringify(jsonLd, null, 2), {
+          headers: { 'Content-Type': 'application/ld+json; charset=utf-8', 'Access-Control-Allow-Origin': '*' },
+        });
+      }
+      return NextResponse.json({ entities, total, limit, offset, hasMore: offset + entities.length < total });
     }
 
-    if (minBooks > 1) {
-      filter.book_count = { $gte: minBooks };
-    }
+    // Supabase path: text search with trigram index
+    let supaQuery = supabase
+      .from('entities')
+      .select('*', { count: 'exact' });
 
-    // Get total count
-    const total = await db.collection('entities').countDocuments(filter);
+    if (type) supaQuery = supaQuery.eq('type', type);
+    if (query) supaQuery = supaQuery.ilike('name', `%${query}%`);
+    if (minBooks > 1) supaQuery = supaQuery.gte('book_count', minBooks);
 
-    // Get entities sorted by book_count (most connected first)
-    const entities = await db.collection('entities')
-      .find(filter)
-      .sort({ book_count: -1, total_mentions: -1 })
-      .skip(offset)
-      .limit(limit)
-      .toArray();
+    supaQuery = supaQuery
+      .order('book_count', { ascending: false })
+      .order('total_mentions', { ascending: false })
+      .range(offset, offset + limit - 1);
 
-    // JSON-LD format
-    const format = searchParams.get('format');
-    if (format === 'jsonld') {
-      const jsonLd = buildEntityListJsonLd(entities.map(e => ({
-        name: e.name as string,
-        type: e.type as 'person' | 'place' | 'concept',
-        aliases: e.aliases as string[] | undefined,
-        description: e.description as string | undefined,
-        wikipedia_url: e.wikipedia_url as string | undefined,
-        wikidata_id: e.wikidata_id as string | undefined,
-        wikidata_birth_date: e.wikidata_birth_date as string | undefined,
-        wikidata_death_date: e.wikidata_death_date as string | undefined,
-        wikidata_coordinates: e.wikidata_coordinates as { lat: number; lng: number } | undefined,
-        books: e.books as Array<{ book_id: string; book_title: string; book_author: string }>,
-      })));
-      return new Response(JSON.stringify(jsonLd, null, 2), {
-        headers: {
-          'Content-Type': 'application/ld+json; charset=utf-8',
-          'Access-Control-Allow-Origin': '*',
-        },
-      });
-    }
+    const { data: entities, count: total, error } = await supaQuery;
+    if (error) throw error;
 
     return NextResponse.json({
-      entities,
-      total,
+      entities: entities || [],
+      total: total || 0,
       limit,
       offset,
-      hasMore: offset + entities.length < total
+      hasMore: offset + (entities?.length || 0) < (total || 0),
     });
   } catch (error) {
     console.error('Error fetching entities:', error);
