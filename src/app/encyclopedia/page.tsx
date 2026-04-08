@@ -5,6 +5,7 @@ import { User, MapPin, Lightbulb, BookOpen, ArrowRight, Search, ChevronLeft, Che
 import { supabase } from '@/lib/supabase';
 import { ENTITY_TYPE_STYLES, type EntityType } from '@/lib/style-constants';
 import EncyclopediaFilters from './EncyclopediaFilters';
+import { unstable_cache } from 'next/cache';
 
 export const revalidate = false;
 export const maxDuration = 30;
@@ -36,7 +37,7 @@ interface SearchParams {
   page?: string;
 }
 
-async function getEntities(searchParams: SearchParams) {
+async function getEntitiesRaw(searchParams: SearchParams) {
   try {
     const type = searchParams.type && searchParams.type !== 'all' ? searchParams.type : null;
     const minBooks = parseInt(searchParams.min_books || '2') || 2;
@@ -146,6 +147,17 @@ async function getEntities(searchParams: SearchParams) {
       letterMap: {},
     };
   }
+}
+
+// Cache encyclopedia queries so Supabase fetch() calls don't make the page dynamic
+async function getEntities(params: SearchParams) {
+  const cacheKey = JSON.stringify(params);
+  const cached = unstable_cache(
+    () => getEntitiesRaw(params),
+    ['encyclopedia', cacheKey],
+    { revalidate: false },
+  );
+  return cached();
 }
 
 export default async function EncyclopediaPage({
