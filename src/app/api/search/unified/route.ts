@@ -1,7 +1,8 @@
 import { NextRequest, NextResponse } from 'next/server';
 import { getDb } from '@/lib/mongodb';
-import { buildBookSearchStage, type BookSearchFilters } from '@/lib/atlas-search';
+import type { BookSearchFilters } from '@/lib/atlas-search';
 import type { SearchResult } from '@/lib/api-client/types/search';
+import { searchBookIds } from '@/lib/books-catalog';
 
 const ENTITIES_SEARCH_INDEX = 'entities_search';
 const GALLERY_SEARCH_INDEX = 'gallery_search';
@@ -124,52 +125,30 @@ async function searchBooks(
     'reading_summary.overview': 1,
   };
 
+  // Supabase trigram search (fast, always warm — no cold-start penalty)
+  const matchingIds = await searchBookIds(query, { limit: (limit + 1) * 2 });
+
   let books;
-
-  try {
-    // Use Atlas Search with autocomplete + fuzzy for instant prefix matching
-    // eslint-disable-next-line @typescript-eslint/no-explicit-any
-    const pipeline: any[] = [
-      buildBookSearchStage(query, searchFilters, { autocomplete: true, fuzzy: true }),
-    ];
-
-    // Post-filter for fields not in Atlas Search index
-    const postMatch: Record<string, unknown> = {};
-    if (library) postMatch['image_source.provider'] = library;
-    if (Object.keys(postMatch).length > 0) {
-      pipeline.push({ $limit: limit * 3 });
-      pipeline.push({ $match: postMatch });
-    }
-
-    // Fetch one extra to detect if there are more results
-    pipeline.push({ $limit: limit + 1 });
-    pipeline.push({ $project: bookProjection });
-
-    books = await db.collection('books').aggregate(pipeline, { maxTimeMS: 5000 }).toArray();
-  } catch {
-    // Fallback to regex if Atlas Search index not available
-    const regexFilter: Record<string, unknown> = {
-      $or: [
-        { title: queryRegex },
-        { display_title: queryRegex },
-        { english_title: queryRegex },
-        { author: queryRegex },
-        { 'reading_summary.overview': queryRegex },
-      ],
+  if (matchingIds.length > 0) {
+    const filter: Record<string, unknown> = {
+      id: { $in: matchingIds },
       visible: true,
       pages_count: { $gt: 0 },
     };
-    if (searchFilters.language) regexFilter.language = searchFilters.language;
-    if (searchFilters.category) regexFilter.categories = searchFilters.category;
-    if (searchFilters.isFirstTranslation) regexFilter.is_first_translation = true;
-    if (searchFilters.hasTranslation) regexFilter.pages_translated = { $gt: 0 };
-    if (library) regexFilter['image_source.provider'] = library;
+    if (searchFilters.language) filter.language = searchFilters.language;
+    if (searchFilters.category) filter.categories = searchFilters.category;
+    if (searchFilters.isFirstTranslation) filter.is_first_translation = true;
+    if (searchFilters.hasTranslation) filter.pages_translated = { $gt: 0 };
+    if (library) filter['image_source.provider'] = library;
 
     books = await db.collection('books')
-      .find(regexFilter)
+      .find(filter)
       .project(bookProjection)
       .limit(limit + 1)
+      .maxTimeMS(5000)
       .toArray();
+  } else {
+    books = [];
   }
 
   // Author alias expansion: if results are sparse and query matches an entity alias,
