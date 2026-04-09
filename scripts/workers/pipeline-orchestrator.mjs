@@ -127,6 +127,9 @@ let PREVIEW_LIMIT = 20; // Books per run to queue preview OCR
 const MAX_RETRIES = 3;
 const ENROLL_WINDOW_DAYS = 14;
 
+// Art/visual object providers — these are not text books and should never enter the pipeline
+const ART_PROVIDERS = ['wikimedia_commons', 'rijksmuseum', 'met', 'cleveland'];
+
 // Delay between API calls (ms) to avoid overwhelming production
 const API_DELAY_MS = 500;
 
@@ -1840,6 +1843,7 @@ async function run() {
         .find({
           pipeline_auto: { $exists: false },
           created_at: { $gte: cutoff },
+          'image_source.provider': { $nin: ART_PROVIDERS },
         })
         .project({ id: 1 })
         .limit(ENROLL_LIMIT)
