@@ -48,9 +48,9 @@ async function main() {
     books.countDocuments({ translation_verification: { $exists: true } }),
   ]);
 
-  // Approximate >90% from the enrichment snapshot if available
+  // Use enrichment snapshot for >90% (avoids slow $expr collection scan)
   const enrichSnap = await db.collection('system_config').findOne({ _id: 'enrichment_snapshot' });
-  const slOver90 = enrichSnap?.translation?.books_over_90 || 0;
+  const slOver90 = enrichSnap?.milestones?.over_90_pct || 0;
 
   const snapshot = {
     date: new Date().toISOString().split('T')[0], // YYYY-MM-DD

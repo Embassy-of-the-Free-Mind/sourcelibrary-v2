@@ -119,7 +119,7 @@ async function getLiveStats(): Promise<LiveStats | null> {
       db.collection('system_config').findOne({ _id: 'enrichment_snapshot' as any }),
     ]);
 
-    const over90 = (enrichSnap as any)?.translation?.books_over_90 || 0;
+    const over90 = (enrichSnap as any)?.milestones?.over_90_pct || 0;
 
     return {
       total_books: total,
