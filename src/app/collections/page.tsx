@@ -51,6 +51,7 @@ async function fetchCollections(): Promise<CollectionDoc[]> {
     }).toArray(),
     db.collection('collections').aggregate<{ _id: string; count: number }>([
       { $match: { parent: { $exists: true }, visible: true } },
+      { $unwind: { path: '$parent', preserveNullAndEmptyArrays: false } },
       { $group: { _id: '$parent', count: { $sum: 1 } } },
     ]).toArray(),
   ]);
