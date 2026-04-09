@@ -84,7 +84,7 @@ export default function EditorialSpread({ collection, books }: EditorialSpreadPr
           <div className="max-w-7xl mx-auto px-6 md:px-12 py-6">
             <div className="flex gap-4 overflow-x-auto pb-2 scrollbar-thin">
               {books.slice(0, 8).map((book) => {
-                const thumb = book.thumbnail || book.thumbnail_blob;
+                const thumb = book.thumbnail_blob || book.thumbnail;
                 return (
                   <Link key={book.id} href={bookUrl(book)} className="group flex-shrink-0">
                     <div className="w-[100px] md:w-[120px] aspect-[3/4] relative rounded-lg overflow-hidden bg-white/5 border border-white/10 group-hover:border-accent-gold/50 transition-all">

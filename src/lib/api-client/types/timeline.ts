@@ -23,6 +23,7 @@ export interface TimelineBook {
   year: number;
   language?: string;
   thumbnail?: string;
+  thumbnail_blob?: string;
   pages_count?: number;
   pages_translated?: number;
   published?: string;

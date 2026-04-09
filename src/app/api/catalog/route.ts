@@ -12,7 +12,7 @@ export async function GET() {
       .find({}, {
         projection: {
           id: 1, title: 1, display_title: 1, author: 1, published: 1,
-          language: 1, tenant: 1, thumbnail: 1, pages_count: 1,
+          language: 1, tenant: 1, thumbnail: 1, thumbnail_blob: 1, pages_count: 1,
           'reading_summary.overview': 1,
         },
       })

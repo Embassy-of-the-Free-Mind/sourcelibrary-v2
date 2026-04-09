@@ -217,7 +217,7 @@ async function fetchClusterData(slug: string) {
     .find({ visible: true, 'taxonomy.cluster': clusterName }, {
       projection: {
         _id: 0, id: 1, slug: 1, title: 1, display_title: 1, author: 1, language: 1,
-        pages_count: 1, pages_translated: 1, read_count: 1, thumbnail: 1, 'taxonomy.subcluster': 1,
+        pages_count: 1, pages_translated: 1, read_count: 1, thumbnail: 1, thumbnail_blob: 1, 'taxonomy.subcluster': 1,
       },
     })
     .sort({ pages_translated: -1, title: 1 })

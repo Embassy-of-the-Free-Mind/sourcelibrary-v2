@@ -221,9 +221,9 @@ function ReadingHistoryCard({
       >
         {/* Cover */}
         <div className="relative w-14 h-[72px] flex-shrink-0 bg-stone-100 rounded overflow-hidden">
-          {book.thumbnail && !imageError ? (
+          {(book.thumbnail_blob || book.thumbnail) && !imageError ? (
             <Image
-              src={book.thumbnail}
+              src={(book.thumbnail_blob || book.thumbnail)!}
               alt={displayTitle}
               fill
               className="object-cover opacity-90 group-hover:opacity-100 transition-opacity"

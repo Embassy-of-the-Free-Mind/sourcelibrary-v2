@@ -225,7 +225,7 @@ export default function GuidePage({ params }: GuidePageProps) {
         <div className="max-w-2xl mx-auto px-4">
           <div className="flex flex-col sm:flex-row gap-8 items-start">
             {/* Poster Image */}
-            {book.thumbnail && (
+            {(book.thumbnail_blob || book.thumbnail) && (
               <Link
                 href={`/book/${bookId}`}
                 className="flex-shrink-0 mx-auto sm:mx-0 hover:opacity-90 transition-opacity"
@@ -235,7 +235,7 @@ export default function GuidePage({ params }: GuidePageProps) {
                   style={{ border: '1px solid var(--border-light)' }}
                 >
                   <Image
-                    src={book.thumbnail}
+                    src={(book.thumbnail_blob || book.thumbnail)!}
                     alt={book.display_title || book.title}
                     fill
                     sizes="160px"
@@ -246,7 +246,7 @@ export default function GuidePage({ params }: GuidePageProps) {
             )}
 
             {/* Title and Meta */}
-            <div className={`flex-1 ${book.thumbnail ? 'text-left' : 'text-center'}`}>
+            <div className={`flex-1 ${(book.thumbnail_blob || book.thumbnail) ? 'text-left' : 'text-center'}`}>
               <h1
                 className="text-3xl sm:text-4xl leading-tight"
                 style={{ color: 'var(--text-primary)' }}

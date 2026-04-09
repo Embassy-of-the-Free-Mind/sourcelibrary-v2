@@ -1104,9 +1104,9 @@ export default function ImageDetailPage({
               <div className="space-y-5 min-w-0">
                 <div className="bg-stone-800 rounded-lg overflow-hidden">
                   <Link href={data.readUrl} className="block group">
-                    {data.book.thumbnail && (
+                    {(data.book.thumbnail_blob || data.book.thumbnail) && (
                       <div className="relative w-full aspect-[3/4] bg-stone-900">
-                        <Image src={data.book.thumbnail} alt={data.book.title} fill sizes="(max-width: 768px) 90vw, 300px" className="object-cover group-hover:opacity-90 transition-opacity" unoptimized />
+                        <Image src={(data.book.thumbnail_blob || data.book.thumbnail)!} alt={data.book.title} fill sizes="(max-width: 768px) 90vw, 300px" className="object-cover group-hover:opacity-90 transition-opacity" unoptimized />
                       </div>
                     )}
                     <div className="p-5">

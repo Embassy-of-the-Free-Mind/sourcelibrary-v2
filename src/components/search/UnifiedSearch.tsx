@@ -375,7 +375,7 @@ export default function UnifiedSearch() {
                           className={`flex items-center gap-3 px-2 py-2 rounded-lg transition-colors ${activeIndex === itemIndex ? 'bg-accent-gold/8' : 'hover:bg-accent-gold/8'
                             }`}
                         >
-                          {book.thumbnail || book.thumbnail_blob ? (
+                          {book.thumbnail_blob || book.thumbnail ? (
                             <div className="w-8 h-10 rounded overflow-hidden flex-shrink-0 bg-stone-100">
                               <Image
                                 src={book.thumbnail_blob || book.thumbnail!}

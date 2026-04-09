@@ -19,6 +19,7 @@ export interface ReadingHistoryEntry {
     year?: number;
     language?: string;
     thumbnail?: string;
+    thumbnail_blob?: string;
     slug?: string;
     pages_count?: number;
     pages_translated?: number;
