@@ -25,8 +25,6 @@ const STATUS_TO_STAGE: Record<string, string> = {
   ocr_submitted: 'ocr',
   ocr_complete: 'ocr',
   metadata_enriched: 'metadata',
-  ft_verifying: 'ft-verify',
-  ft_verified: 'ft-verify',
   translate_submitted: 'translate',
   translate_complete: 'translate',
   enriching: 'enrich',

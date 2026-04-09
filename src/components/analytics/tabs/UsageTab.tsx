@@ -195,7 +195,7 @@ function PipelineFunnel({ funnel }: { funnel: Array<{ status: string; count: num
   const pipeline = [
     'queued', 'archiving', 'archive_complete',
     'ocr_submitted', 'ocr_complete',
-    'metadata_enriched', 'ft_verifying', 'ft_verified',
+    'metadata_enriched',
     'translate_submitted', 'translate_complete',
     'enriching', 'enriched',
     'chapters', 'chapters_complete',
@@ -230,7 +230,6 @@ function PipelineFunnel({ funnel }: { funnel: Array<{ status: string; count: num
   const active = [
     { label: 'Archiving', count: c('archiving') },
     { label: 'OCR running', count: c('ocr_submitted') },
-    { label: 'FT verifying', count: c('ft_verifying') },
     { label: 'Translating', count: c('translate_submitted') },
     { label: 'Enriching', count: c('enriching') },
     { label: 'Chapters', count: c('chapters') },

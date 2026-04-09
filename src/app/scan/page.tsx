@@ -1279,8 +1279,6 @@ function formatPipelineStatus(status?: string): string {
     ocr_submitted: 'OCR in progress',
     ocr_complete: 'OCR done',
     metadata_enriched: 'Enriched',
-    ft_verifying: 'Verifying',
-    ft_verified: 'Verified',
     translate_submitted: 'Translating',
     translate_complete: 'Translated',
     enriching: 'Enriching',

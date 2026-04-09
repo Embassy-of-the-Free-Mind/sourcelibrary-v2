@@ -200,7 +200,7 @@ export default function PipelineTab({ hours }: PipelineTabProps) {
         const statusOrder = [
           'queued', 'archiving', 'archive_complete',
           'ocr_submitted', 'ocr_complete',
-          'metadata_enriched', 'ft_verifying', 'ft_verified',
+          'metadata_enriched',
           'translate_submitted', 'translate_partial', 'translate_complete',
           'enriching', 'enriched', 'chapters', 'chapters_complete',
           'images_submitted', 'images_complete', 'visual_complete',
@@ -222,7 +222,7 @@ export default function PipelineTab({ hours }: PipelineTabProps) {
         const statusColors: Record<string, string> = {
           queued: '#94a3b8', archiving: '#94a3b8', archive_complete: '#94a3b8',
           ocr_submitted: '#3b82f6', ocr_complete: '#3b82f6',
-          metadata_enriched: '#8b5cf6', ft_verifying: '#8b5cf6', ft_verified: '#8b5cf6',
+          metadata_enriched: '#8b5cf6',
           translate_submitted: '#f59e0b', translate_complete: '#f59e0b',
           enriching: '#10b981', enriched: '#10b981',
           chapters: '#06b6d4', chapters_complete: '#06b6d4',

@@ -240,7 +240,7 @@ async function probeDbHealth(db) {
         // Clear book.job references AND roll back pipeline status so books can be re-submitted
         await db.collection('books').updateMany(
           { 'pipeline_auto.status': 'translate_submitted' },
-          { $set: { 'pipeline_auto.status': 'metadata_enriched', updated_at: new Date() }, $unset: { job: '' } },
+          { $set: { 'pipeline_auto.status': 'ocr_complete', updated_at: new Date() }, $unset: { job: '' } },
         );
         await db.collection('books').updateMany(
           { 'pipeline_auto.status': 'ocr_submitted' },
@@ -1845,31 +1845,37 @@ async function run() {
           created_at: { $gte: cutoff },
           'image_source.provider': { $nin: ART_PROVIDERS },
         })
-        .project({ id: 1 })
+        .project({ id: 1, language: 1 })
         .limit(ENROLL_LIMIT)
         .toArray();
 
       if (DRY_RUN) {
         console.log(`  Would enroll ${newBooks.length} books`);
       } else {
+        const ENGLISH_VARIANTS_ENROLL = ['english', 'eng', 'en'];
+        let ftFlagged = 0;
         for (const book of newBooks) {
+          const lang = (book.language || '').toLowerCase();
+          const likelyFT = lang && !ENGLISH_VARIANTS_ENROLL.includes(lang);
+          const updates = {
+            pipeline_auto: {
+              status: 'queued',
+              source: 'cron',
+              queued_at: new Date(),
+              last_updated: new Date(),
+              retry_count: 0,
+              likely_first_translation: likelyFT,
+            },
+            updated_at: new Date(),
+          };
           await db.collection('books').updateOne(
             { id: book.id },
-            {
-              $set: {
-                pipeline_auto: {
-                  status: 'queued',
-                  source: 'cron',
-                  queued_at: new Date(),
-                  last_updated: new Date(),
-                  retry_count: 0,
-                },
-                updated_at: new Date(),
-              },
-            }
+            { $set: updates }
           );
           log.enrolled++;
+          if (likelyFT) ftFlagged++;
         }
+        console.log(`  FT-flagged: ${ftFlagged}/${log.enrolled}`);
       }
       console.log(`  Enrolled: ${log.enrolled}`);
     }
@@ -2188,244 +2194,508 @@ Reply with ONLY: {"is_spread": true} or {"is_spread": false}` },
       console.log(`  Split checked: ${splitChecked}, flagged for splitting: ${splitFlagged}`);
     }
 
-    // ── Phase 1.5: Preview OCR+Translation for first 25 pages via Lambda ──
-    // Sends first 25 pages to Lambda OCR queue for fast turnaround.
-    // When preview OCR completes, job-completion.ts on Vercel auto-triggers
-    // preview translation — giving readers content within minutes, not hours.
-    // Prioritizes first English translations.
+    // ── Phase 1.5: Preview OCR — first 25 pages via inline Gemini ──
+    // OCRs the title page, TOC, and opening pages directly via Gemini realtime API.
+    // Purpose: get text for AI metadata classification (Phase 1.6) before full OCR.
+    // Prioritizes likely first translations (flagged at enrollment).
     if (shouldRun(1.5)) {
-      console.log('\n--- Phase 1.5: Preview OCR (first 25 pages via Lambda) ---');
+      console.log('\n--- Phase 1.5: Preview OCR (inline Gemini, first 25 pages) ---');
 
-      if (!SQS_OCR_QUEUE_URL) {
-        console.log('  SKIP: SQS_PAGE_OCR_QUEUE_URL not configured');
-      } else {
-        const sqsClient = new SQSClient({ region: process.env.AWS_REGION || 'eu-central-1' });
-
-        // Find archive_complete books that haven't had preview OCR yet.
-        // Priority: confirmed first translations > non-English (likely first translations) > English
-        const ENGLISH_VARIANTS = ['english', 'eng', 'en'];
-        const readyForPreview = await db.collection('books')
-          .aggregate([
-            { $match: {
-              'pipeline_auto.status': 'archive_complete',
-              'pipeline_auto.split_checked': true,
-              preview_ocr_queued_at: { $exists: false },
-            }},
-            { $addFields: {
-              _priority: {
-                $switch: {
-                  branches: [
-                    { case: { $eq: ['$image_source.provider', 'bph'] }, then: -1 }, // BPH priority until backlog cleared
-                  { case: { $eq: ['$is_first_translation', true] }, then: 0 },
-                    { case: { $in: [{ $toLower: { $ifNull: ['$language', ''] } }, ENGLISH_VARIANTS] }, then: 2 },
-                  ],
-                  default: 1,  // Non-English = likely first translation
-                },
-              },
-            }},
-            { $sort: { _priority: 1, hidden: 1 } },
-            { $project: { id: 1, title: 1, language: 1 } },
-            { $limit: PREVIEW_LIMIT },
-          ])
-          .toArray();
-
-        console.log(`  Books ready for preview: ${readyForPreview.length}`);
-
-        for (const book of readyForPreview) {
-          try {
-            const label = (book.title || '').substring(0, 50);
-
-            // Get first 25 pages with archived/cropped images only.
-            // Lambda can't reliably fetch from archive.org/gallica (rate limits, 403s).
-            const pages = await db.collection('pages')
-              .find({
-                book_id: book.id,
-                $and: [
-                  { $or: [
-                    { cropped_photo: { $exists: true, $nin: [null, ''] } },
-                    { archived_photo: { $regex: /^https?:\/\// } },
-                  ]},
-                  { $or: [
-                    { 'ocr.data': { $exists: false } },
-                    { 'ocr.data': null },
-                    { 'ocr.data': '' },
-                  ]},
-                ],
-              })
-              .sort({ page_number: 1 })
-              .limit(PREVIEW_PAGE_COUNT)
-              .project({ id: 1 })
-              .toArray();
-
-            if (pages.length === 0) {
-              console.log(`  No pages for preview: ${label}`);
-              continue;
-            }
-
-            if (DRY_RUN) {
-              console.log(`  Would queue preview: ${label} — ${pages.length} pages`);
-              continue;
-            }
-
-            const pageIds = pages.map(p => p.id);
-            const jobId = nanoid(12);
-
-            // Create job record with preview flag — triggers auto-translation on completion
-            await db.collection('jobs').insertOne({
-              id: jobId,
-              type: 'ocr',
-              book_id: book.id,
-              book_title: book.title,
-              status: 'pending',
-              progress: { total: pageIds.length, completed: 0, failed: 0 },
-              config: {
-                page_ids: pageIds,
-                preview: true,
-              },
-              initiated_by: 'pipeline_preview',
-              created_at: new Date(),
-              updated_at: new Date(),
-            });
-
-            // Flag book so we don't re-queue, and set active job for completion tracking
-            await db.collection('books').updateOne(
-              { id: book.id },
-              { $set: { preview_ocr_queued_at: new Date(), job: { type: 'realtime', job_id: jobId } } },
-            );
-
-            // Enqueue pages to Lambda OCR queue (standard, not FIFO)
-            for (let i = 0; i < pageIds.length; i += 10) {
-              const batch = pageIds.slice(i, i + 10);
-              const entries = batch.map((pageId, idx) => ({
-                Id: `msg-${idx}`,
-                MessageBody: JSON.stringify({ bookId: book.id, pageId, jobId }),
-              }));
-
-              await sqsClient.send(new SendMessageBatchCommand({
-                QueueUrl: SQS_OCR_QUEUE_URL,
-                Entries: entries,
-              }));
-            }
-
-            log.preview_queued++;
-            console.log(`  Preview queued: ${label} — ${pageIds.length} pages (job ${jobId})`);
-
-            await sleep(200);
-          } catch (err) {
-            log.errors.push(`Preview ${book.id}: ${err.message}`);
-          }
-        }
-        console.log(`  Preview OCR queued: ${log.preview_queued}`);
-      }
-    }
-
-    // ── Phase 1.7: Preview Translation — translate preview-OCR'd pages inline via Vercel API ──
-    // Calls /api/process for each page. No SQS queue (222K backlog makes it useless for previews).
-    // ~25 pages × ~5s each = ~2 minutes per book. Processes up to 5 books per run.
-    if (shouldRun(1.7)) {
-      console.log('\n--- Phase 1.7: Preview Translation (inline via Vercel API) ---');
-
-      const PREVIEW_TRANSLATE_LIMIT = 50;
-
-      const readyForPreviewTranslate = await db.collection('books')
+      const readyForPreview = await db.collection('books')
         .find({
-          preview_ocr_queued_at: { $exists: true },
-          preview_translate_queued_at: { $exists: false },
-          language: { $nin: ['English', 'english', 'eng', 'en', 'ENG'] },
+          'pipeline_auto.status': 'archive_complete',
+          'pipeline_auto.split_checked': true,
+          'pipeline_auto.preview_ocr_done': { $ne: true },
         })
-        .sort({ is_first_translation: -1 })
-        .project({ id: 1, title: 1, language: 1 })
-        .limit(PREVIEW_TRANSLATE_LIMIT)
+        .sort({ 'pipeline_auto.likely_first_translation': -1, hidden: 1 })
+        .project({ id: 1, title: 1, language: 1, needs_splitting: 1 })
+        .limit(PREVIEW_LIMIT)
         .toArray();
 
-      console.log(`  Books ready for preview translation: ${readyForPreviewTranslate.length}`);
+      console.log(`  Books ready for preview OCR: ${readyForPreview.length}`);
 
-      for (const book of readyForPreviewTranslate) {
+      const previewOcrPrompt = await getOcrPromptFromDb(db);
+      const previewApiKey = process.env.GEMINI_API_KEY_TIER3 || process.env.GEMINI_API_KEY;
+      const previewModel = OCR_MODEL_LITE;
+      let previewDone = 0;
+
+      for (const book of readyForPreview) {
         try {
           const label = (book.title || '').substring(0, 50);
 
-          const pages = await db.collection('pages')
+          // Get first 25 pages needing OCR with R2 images
+          const previewPages = await db.collection('pages')
             .find({
               book_id: book.id,
-              'ocr.data': { $exists: true, $nin: [null, ''] },
-              page_type: { $nin: SKIP_TRANSLATION_PAGE_TYPES },
               $or: [
-                { 'translation.data': { $exists: false } },
-                { 'translation.data': null },
-                { 'translation.data': '' },
+                { 'ocr.data': { $exists: false } },
+                { 'ocr.data': null },
+                { 'ocr.data': '' },
               ],
+              $and: [{
+                $or: [
+                  { cropped_photo: { $exists: true, $nin: [null, ''] } },
+                  { archived_photo: { $regex: /^https?:\/\// } },
+                ]
+              }],
             })
             .sort({ page_number: 1 })
             .limit(PREVIEW_PAGE_COUNT)
-            .project({ id: 1 })
+            .project({ _id: 0, id: 1, page_number: 1, photo: 1, photo_original: 1, archived_photo: 1, cropped_photo: 1, crop: 1 })
             .toArray();
 
-          if (pages.length === 0) {
-            await db.collection('books').updateOne(
-              { id: book.id },
-              { $set: { preview_translate_queued_at: new Date() } },
-            );
-            console.log(`  Already translated: ${label}`);
+          if (previewPages.length === 0) {
+            // All pages already have OCR — skip preview
+            if (!DRY_RUN) {
+              await db.collection('books').updateOne(
+                { id: book.id },
+                { $set: { 'pipeline_auto.preview_ocr_done': true, updated_at: new Date() } }
+              );
+            }
             continue;
           }
 
           if (DRY_RUN) {
-            console.log(`  Would translate: ${label} — ${pages.length} pages`);
+            console.log(`  Would preview OCR: ${label} — ${previewPages.length} pages`);
             continue;
           }
 
-          console.log(`  Translating: ${label} — ${pages.length} pages...`);
-          let pagesDone = 0;
-          let pagesErr = 0;
+          // Download images
+          const downloaded = await downloadImagesParallel(previewPages, IMAGE_CONCURRENCY);
+          if (downloaded.length < 3) {
+            console.log(`  Too few images for preview: ${label} (${downloaded.length})`);
+            continue;
+          }
 
-          for (const page of pages) {
-            try {
-              const res = await fetch(`${BASE_URL}/api/process`, {
+          // OCR each page via Gemini realtime (one call per page, parallel batches of 5)
+          let pagesOcrd = 0;
+          for (let i = 0; i < downloaded.length; i += 5) {
+            const batch = downloaded.slice(i, i + 5);
+            const results = await Promise.allSettled(batch.map(async ({ pageId, image }) => {
+              const url = `${GEMINI_API_BASE}/models/${previewModel}:generateContent?key=${previewApiKey}`;
+              const response = await fetch(url, {
                 method: 'POST',
-                headers: headers(),
+                headers: { 'Content-Type': 'application/json' },
                 body: JSON.stringify({
-                  pageId: page.id,
-                  bookId: book.id,
-                  action: 'translate',
+                  contents: [{
+                    role: 'user',
+                    parts: [
+                      { inlineData: { mimeType: image.mimeType, data: image.data } },
+                      { text: previewOcrPrompt },
+                    ],
+                  }],
+                  safetySettings: [
+                    { category: 'HARM_CATEGORY_HARASSMENT', threshold: 'BLOCK_NONE' },
+                    { category: 'HARM_CATEGORY_HATE_SPEECH', threshold: 'BLOCK_NONE' },
+                    { category: 'HARM_CATEGORY_SEXUALLY_EXPLICIT', threshold: 'BLOCK_NONE' },
+                    { category: 'HARM_CATEGORY_DANGEROUS_CONTENT', threshold: 'BLOCK_NONE' },
+                  ],
+                  generationConfig: { temperature: 0.1, maxOutputTokens: 8192 },
                 }),
               });
 
-              if (res.ok) {
-                pagesDone++;
-              } else {
-                pagesErr++;
-                if (res.status === 429) {
-                  console.log('    Rate limited — waiting 10s...');
-                  await sleep(10000);
-                }
+              if (!response.ok) {
+                const errText = await response.text();
+                throw new Error(`Gemini ${response.status}: ${errText.substring(0, 100)}`);
               }
-              await sleep(500);
-            } catch (err) {
-              pagesErr++;
-            }
+
+              const data = await response.json();
+              const text = data.candidates?.[0]?.content?.parts?.[0]?.text || '';
+              const usage = data.usageMetadata || {};
+
+              if (text) {
+                await db.collection('pages').updateOne(
+                  { id: pageId },
+                  { $set: {
+                    'ocr.data': text,
+                    'ocr.model': previewModel,
+                    'ocr.prompt_version': OCR_PROMPT_VERSION,
+                    'ocr.updated_at': new Date(),
+                    'ocr.source': 'pipeline_preview',
+                    updated_at: new Date(),
+                  }}
+                );
+                pagesOcrd++;
+              }
+
+              // Log usage (fire-and-forget)
+              const inputTokens = usage.promptTokenCount || 0;
+              const outputTokens = usage.candidatesTokenCount || 0;
+              const costUsd = (inputTokens / 1_000_000) * 0.075 + (outputTokens / 1_000_000) * 0.30;
+              db.collection('gemini_usage').insertOne({
+                type: 'ocr',
+                mode: 'realtime',
+                model: previewModel,
+                book_id: book.id,
+                page_ids: [pageId],
+                input_tokens: inputTokens,
+                output_tokens: outputTokens,
+                cost_usd: costUsd,
+                status: 'success',
+                endpoint: 'hetzner/pipeline-preview-ocr',
+                timestamp: new Date(),
+              }).catch(() => {});
+            }));
+
+            // Brief pause between batches
+            await sleep(200);
           }
 
-          await db.collection('books').updateOne(
-            { id: book.id },
-            { $set: { preview_translate_queued_at: new Date(), updated_at: new Date() } },
-          );
-
-          const translatedCount = await db.collection('pages').countDocuments({
+          // Update book: mark preview done, sync OCR count
+          const ocrCount = await db.collection('pages').countDocuments({
             book_id: book.id,
-            'translation.data': { $exists: true, $nin: [null, ''] },
+            'ocr.data': { $exists: true, $ne: '', $not: { $eq: null } },
           });
           await db.collection('books').updateOne(
             { id: book.id },
-            { $set: { pages_translated: translatedCount } },
+            { $set: {
+              'pipeline_auto.preview_ocr_done': true,
+              pages_ocr: ocrCount,
+              updated_at: new Date(),
+            }}
           );
 
-          log.preview_queued++;
-          console.log(`  Done: ${label} — ${pagesDone} ok, ${pagesErr} errors`);
+          previewDone++;
+          console.log(`  Preview OCR done: ${label} — ${pagesOcrd}/${downloaded.length} pages`);
         } catch (err) {
-          log.errors.push(`Preview translate ${book.id}: ${err.message}`);
+          log.errors.push(`Preview OCR ${book.id}: ${err.message}`);
         }
       }
-      console.log(`  Preview translations done: ${log.preview_queued}`);
+      console.log(`  Preview OCR completed: ${previewDone} books`);
+    }
+
+    // ── Phase 1.6: AI metadata classification ──
+    // Reads preview OCR text (title page, TOC) and calls Gemini to classify:
+    // language, description, display_title, categories, source_work_dates, FT pre-screen.
+    // Also does catalog cross-reference (USTC/EFM) for year/place/publisher.
+    // Writes ai_metadata and updates book fields at medium+ confidence.
+    if (shouldRun(1.6) || shouldRun(1.5)) {
+      console.log('\n--- Phase 1.6: AI metadata classification ---');
+
+      const metadataApiKey = process.env.GEMINI_API_KEY_TIER3 || process.env.GEMINI_API_KEY;
+      const metadataModel = 'gemini-3-flash-preview';
+      const MAX_METADATA_OCR_PAGES = 25;
+      const MAX_TEXT_PER_PAGE = 2000;
+      const METADATA_CATEGORIES = [
+        'alchemy', 'hermeticism', 'jewish-kabbalah', 'christian-cabala', 'neoplatonism',
+        'rosicrucianism', 'freemasonry', 'natural-philosophy', 'astrology', 'natural-magic',
+        'ritual-magic', 'theurgy', 'mysticism', 'theology', 'medicine', 'gnosticism',
+        'theosophy', 'pythagoreanism', 'divination', 'ars-notoria', 'paracelsian',
+        'spiritual-alchemy', 'christian-mysticism', 'prisca-theologia', 'florentine-platonism',
+        'astronomy', 'mathematics', 'botany', 'chemistry', 'geography', 'history',
+        'law', 'literature', 'linguistics', 'music', 'architecture', 'art',
+        'military', 'politics', 'philosophy',
+        'sufism', 'vedanta', 'buddhism', 'daoism', 'biblical-studies',
+      ];
+
+      // Find books with preview OCR done but no AI metadata yet
+      const readyForMetadata = await db.collection('books')
+        .find({
+          'pipeline_auto.status': 'archive_complete',
+          'pipeline_auto.preview_ocr_done': true,
+          'ai_metadata.enriched_at': { $exists: false },
+        })
+        .sort({ 'pipeline_auto.likely_first_translation': -1, hidden: 1 })
+        .project({ id: 1, title: 1, display_title: 1, author: 1, language: 1, published: 1, year: 1,
+                   description: 1, categories: 1, is_first_translation: 1, source_work_dates: 1,
+                   field_provenance: 1, subject_keywords: 1 })
+        .limit(METADATA_ENRICH_LIMIT)
+        .toArray();
+
+      console.log(`  Books ready for AI metadata: ${readyForMetadata.length}`);
+      let metadataEnriched = 0;
+
+      for (const book of readyForMetadata) {
+        try {
+          const label = (book.title || '').substring(0, 50);
+
+          // Fetch first N OCR pages
+          const ocrPages = await db.collection('pages')
+            .find(
+              { book_id: book.id, 'ocr.data': { $exists: true, $ne: '' } },
+              { projection: { page_number: 1, 'ocr.data': 1 } }
+            )
+            .sort({ page_number: 1 })
+            .limit(MAX_METADATA_OCR_PAGES)
+            .toArray();
+
+          if (ocrPages.length < 3) {
+            console.log(`  Too few OCR pages for metadata: ${label} (${ocrPages.length})`);
+            continue;
+          }
+
+          if (DRY_RUN) {
+            console.log(`  Would classify: ${label} — ${ocrPages.length} pages`);
+            continue;
+          }
+
+          const ocrSamples = ocrPages.map(p => ({
+            pageNumber: p.page_number,
+            text: (p.ocr?.data || '').substring(0, MAX_TEXT_PER_PAGE),
+          }));
+
+          const ocrSection = `\n\nHere is the OCR text from ${ocrSamples.length} pages of this book:\n\n` +
+            ocrSamples.map(s => `--- Page ${s.pageNumber} ---\n${s.text}`).join('\n\n');
+
+          const classifyPrompt = `You are a rare books librarian and translation scholar examining transcribed text from a historical book.
+
+Book metadata:
+- Title: "${book.display_title || book.title || 'Unknown'}"
+- Author: ${book.author || 'Unknown'}
+- Current language field: ${book.language || 'Unknown'}
+- Published: ${book.published || 'Unknown'}
+- Year: ${book.year || 'Unknown'}
+${ocrSection}
+
+Based on this text and metadata, classify the book. Respond with JSON only — no markdown fences, no explanation.
+
+{
+  "language": "<primary language of the text>",
+  "author": "<detected author name from title page. null if not identifiable>",
+  "secondary_languages": ["<any other languages present>"],
+  "script": "<writing system: Latin alphabet, Fraktur, Greek, Chinese characters, Hebrew, Arabic, Devanagari, etc.>",
+  "categories": ["<1-4 subject tags from EXACTLY this list: ${METADATA_CATEGORIES.join(', ')}>"],
+  "estimated_year": "<best estimate of publication year as number. null if impossible>",
+  "estimated_century": "<e.g. '17th century' — fallback if exact year unclear>",
+  "description": "<1-2 sentence scholarly description. No em-dashes. No filler.>",
+  "display_title": "<Clear English title. Must be ENTIRELY in English — no foreign words. null for English books.>",
+  "confidence": "<high, medium, or low>",
+  "subject_keywords": ["<3-5 subject keywords>"],
+  "first_translation": {
+    "status": "<confirmed_first, likely_first, uncertain, has_partial, has_translation, not_applicable>",
+    "reasoning": "<1-2 sentences>",
+    "known_translations": ["<any known English translations>"],
+    "confidence": "<high, medium, or low>"
+  },
+  "source_work_dates": {
+    "layers": [{ "type": "<composition|translation|compilation|commentary|redaction|edition|abridgement>", "date": "<year string>", "date_display": "<human readable>", "date_precision": "<exact|decade|century|millennium>", "author": "<person>", "work_title": "<if different>", "language": "<language>", "notes": "<brief>" }],
+    "confidence": "<high|medium|low>",
+    "reasoning": "<1-2 sentences>"
+  }
+}
+
+Rules:
+- For language, identify the LANGUAGE OF THE TEXT, not library annotations
+- For categories, use ONLY exact slugs from the list above
+- Most pre-1800 non-English texts were NEVER translated to English
+- If the book IS in English, set first_translation status to "not_applicable"
+- For display_title: conventional English names when they exist, literal translation otherwise. No shelfmarks, library names, or edition info.
+- For source_work_dates: empty layers [] if book IS the original work. Include composition/translation layers for older works.`;
+
+          const startTime = Date.now();
+          const url = `${GEMINI_API_BASE}/models/${metadataModel}:generateContent?key=${metadataApiKey}`;
+          const response = await fetch(url, {
+            method: 'POST',
+            headers: { 'Content-Type': 'application/json' },
+            body: JSON.stringify({
+              contents: [{ role: 'user', parts: [{ text: classifyPrompt }] }],
+              safetySettings: [
+                { category: 'HARM_CATEGORY_HARASSMENT', threshold: 'BLOCK_NONE' },
+                { category: 'HARM_CATEGORY_HATE_SPEECH', threshold: 'BLOCK_NONE' },
+                { category: 'HARM_CATEGORY_SEXUALLY_EXPLICIT', threshold: 'BLOCK_NONE' },
+                { category: 'HARM_CATEGORY_DANGEROUS_CONTENT', threshold: 'BLOCK_NONE' },
+              ],
+              generationConfig: {
+                temperature: 0.1,
+                maxOutputTokens: 8192,
+                responseMimeType: 'application/json',
+              },
+            }),
+          });
+
+          const durationMs = Date.now() - startTime;
+
+          if (!response.ok) {
+            const errText = await response.text();
+            throw new Error(`Gemini ${response.status}: ${errText.substring(0, 200)}`);
+          }
+
+          const data = await response.json();
+          const rawText = (data.candidates?.[0]?.content?.parts?.[0]?.text || '').trim();
+          const usage = data.usageMetadata || {};
+          const inputTokens = usage.promptTokenCount || 0;
+          const outputTokens = usage.candidatesTokenCount || 0;
+
+          let parsed;
+          try {
+            parsed = JSON.parse(rawText);
+          } catch {
+            const jsonMatch = rawText.match(/\{[\s\S]*\}/);
+            if (jsonMatch) {
+              parsed = JSON.parse(jsonMatch[0]);
+            } else {
+              throw new Error('Failed to parse JSON response');
+            }
+          }
+
+          // Build updates — only apply at medium+ confidence
+          const confidence = parsed.confidence || 'low';
+          const now = new Date();
+          const changes = [];
+          const updates = { updated_at: now };
+
+          if (confidence !== 'low') {
+            // Language: update if Unknown
+            const currentLang = book.language || 'Unknown';
+            const aiLang = parsed.language || '';
+            if (aiLang && currentLang === 'Unknown') {
+              updates.language = aiLang;
+              updates.language_source = 'gemini_text';
+              updates.language_confidence = confidence;
+              changes.push({ field: 'language', previous: currentLang, new_value: aiLang });
+            } else if (aiLang && aiLang.toLowerCase() !== currentLang.toLowerCase() && confidence === 'high') {
+              updates.ai_detected_language = aiLang;
+            }
+
+            // Author: update if Unknown/missing
+            const currentAuthor = book.author || 'Unknown';
+            const aiAuthor = parsed.author || '';
+            if (aiAuthor && (currentAuthor === 'Unknown' || !currentAuthor)) {
+              updates.author = aiAuthor;
+              changes.push({ field: 'author', previous: currentAuthor, new_value: aiAuthor });
+            }
+
+            // Year: set if missing
+            if (!book.year && parsed.estimated_year) {
+              const year = parseInt(String(parsed.estimated_year));
+              if (!isNaN(year) && year > 0 && year < 2100) {
+                updates.year = year;
+                changes.push({ field: 'year', previous: null, new_value: year });
+                if (!book.published || book.published === 'Unknown') {
+                  updates.published = String(year);
+                }
+              }
+            }
+
+            // Categories: merge with existing
+            if (parsed.categories?.length > 0) {
+              const existing = book.categories || [];
+              const merged = [...new Set([...existing, ...parsed.categories])];
+              if (merged.length !== existing.length) {
+                updates.categories = merged;
+                changes.push({ field: 'categories', previous: existing, new_value: merged });
+              }
+            }
+
+            // Description: set if missing
+            if (parsed.description && !book.description) {
+              updates.description = parsed.description;
+              changes.push({ field: 'description', previous: null, new_value: parsed.description });
+            }
+
+            // Display title: set if missing and non-English
+            const effectiveLang = (updates.language || book.language || '').toLowerCase();
+            if (parsed.display_title && !book.display_title && effectiveLang !== 'english') {
+              updates.display_title = parsed.display_title;
+              changes.push({ field: 'display_title', previous: null, new_value: parsed.display_title });
+            }
+
+            // Subject keywords
+            if (parsed.subject_keywords?.length > 0) {
+              updates.subject_keywords = parsed.subject_keywords;
+            }
+
+            // First translation: derive boolean + refine pipeline flag
+            if (parsed.first_translation?.status) {
+              const isFirst = ['confirmed_first', 'likely_first'].includes(parsed.first_translation.status);
+              updates.is_first_translation = isFirst;
+              updates['pipeline_auto.likely_first_translation'] = isFirst;
+              changes.push({ field: 'is_first_translation', previous: book.is_first_translation ?? null, new_value: isFirst });
+            }
+
+            // Source work dates
+            if (parsed.source_work_dates?.layers?.length > 0 && !book.source_work_dates) {
+              const validTypes = ['composition', 'translation', 'compilation', 'commentary', 'redaction', 'edition', 'abridgement', 'adaptation'];
+              const validPrecisions = ['exact', 'decade', 'century', 'millennium'];
+              const validLayers = parsed.source_work_dates.layers.filter(l =>
+                l.type && l.date && l.date_display && l.date_precision &&
+                validTypes.includes(l.type.split('|')[0].trim()) &&
+                validPrecisions.includes(l.date_precision)
+              );
+              if (validLayers.length > 0) {
+                updates.source_work_dates = validLayers;
+                updates.source_work_dates_meta = {
+                  enriched_at: now, model: metadataModel,
+                  confidence: parsed.source_work_dates.confidence || 'medium',
+                  source: 'ai_enrichment',
+                  reasoning: parsed.source_work_dates.reasoning || '',
+                };
+              }
+            }
+
+            // Field provenance
+            const provenance = book.field_provenance || {};
+            const aiSource = { source: 'ai_enrichment', model: metadataModel, date: now, confidence, pages_checked: ocrSamples.length };
+            if (updates.language) provenance.language = { ...aiSource, previous_value: book.language };
+            if (updates.author) provenance.author = { ...aiSource, previous_value: book.author };
+            if (updates.is_first_translation !== undefined) provenance.is_first_translation = aiSource;
+            if (updates.year) provenance.year = { ...aiSource, previous_value: null };
+            if (updates.categories) provenance.categories = { ...aiSource, previous_value: book.categories || [] };
+            if (updates.display_title) provenance.display_title = aiSource;
+            if (updates.description) provenance.description = aiSource;
+            if (updates.subject_keywords) provenance.subject_keywords = aiSource;
+            updates.field_provenance = provenance;
+          }
+
+          // Always save ai_metadata (even at low confidence)
+          updates.ai_metadata = {
+            ...parsed,
+            model: metadataModel,
+            pages_checked: ocrSamples.length,
+            enriched_at: now,
+            enrichment_method: 'text',
+            changes,
+          };
+
+          await db.collection('books').updateOne({ id: book.id }, { $set: updates });
+
+          // Also run catalog cross-reference (folded from old Phase 3.5)
+          try {
+            const catalogResult = await verifyMetadataInline(db, book);
+            if (catalogResult.applied > 0) {
+              console.log(`    [catalog] ${book.id}: applied ${catalogResult.applied} fields from ${catalogResult.source}`);
+            }
+          } catch (catalogErr) {
+            // Non-fatal — catalog lookup is best-effort
+          }
+
+          // Log usage
+          const costUsd = (inputTokens / 1_000_000) * 0.50 + (outputTokens / 1_000_000) * 3.00;
+          db.collection('gemini_usage').insertOne({
+            type: 'metadata_enrichment',
+            mode: 'realtime',
+            model: metadataModel,
+            book_id: book.id,
+            book_title: book.display_title || book.title,
+            input_tokens: inputTokens,
+            output_tokens: outputTokens,
+            cost_usd: costUsd,
+            duration_ms: durationMs,
+            status: 'success',
+            endpoint: 'hetzner/pipeline-metadata',
+            timestamp: now,
+          }).catch(() => {});
+
+          // Log to audit_log if changes were made
+          if (changes.length > 0) {
+            db.collection('audit_log').insertOne({
+              action: 'book_metadata_updated',
+              book_id: book.id,
+              book_title: book.display_title || book.title,
+              metadata: { source: 'ai_enrichment', model: metadataModel, confidence, changes },
+              created_at: now,
+            }).catch(() => {});
+          }
+
+          metadataEnriched++;
+          console.log(`  Classified: ${label} — ${confidence} confidence, ${changes.length} fields updated`);
+
+          await sleep(API_DELAY_MS);
+        } catch (err) {
+          log.errors.push(`Metadata ${book.id}: ${err.message}`);
+        }
+      }
+      console.log(`  AI metadata classified: ${metadataEnriched} books`);
     }
 
     // ── Phase 2: Submit OCR via Gemini Batch API (archive_complete -> ocr_submitted) ──
@@ -2799,84 +3069,42 @@ Reply with ONLY: {"is_spread": true} or {"is_spread": false}` },
       }
     }
 
-    // ── Phase 3.5: Metadata enrichment (ocr_complete -> metadata_enriched) ──
+    // ── Phase 3.5: OCR quality gate (ocr_complete → low-OCR books sent back) ──
+    // AI metadata classification now runs at Phase 1.6 (before full OCR).
+    // This phase only checks OCR coverage and rejects books with <10%.
     if (shouldRun(3.5) || shouldRun(3)) {
-      console.log('\n--- Phase 3.5: Metadata enrichment ---');
+      console.log('\n--- Phase 3.5: OCR quality gate ---');
 
-      const readyForMetadata = await db.collection('books')
+      const readyBooks = await db.collection('books')
         .find({ 'pipeline_auto.status': 'ocr_complete' })
         .sort({ hidden: 1 })
-        .project({ id: 1, title: 1, author: 1, published: 1, language: 1, place_of_publication: 1, publisher: 1, pages_count: 1, pages_ocr: 1, 'pipeline_auto.retry_count': 1, 'ai_metadata.enriched_at': 1 })
+        .project({ id: 1, title: 1, pages_count: 1, pages_ocr: 1 })
         .limit(METADATA_ENRICH_LIMIT)
         .toArray();
 
-      // Gate: reject books with <10% OCR coverage — send back for full OCR
-      const filtered = [];
-      for (const book of readyForMetadata) {
+      let gateRejected = 0;
+      for (const book of readyBooks) {
         const ocrPct = book.pages_count > 0 ? (book.pages_ocr || 0) / book.pages_count : 0;
         if (ocrPct < 0.1 && book.pages_count > 50) {
           if (!DRY_RUN) {
             await setPipelineStatus(db, book.id, 'archive_complete', { retry_count: 0 });
           }
-          console.log(`  Low OCR gate: ${book.title?.slice(0, 50)} — ${book.pages_ocr}/${book.pages_count} (${(ocrPct * 100).toFixed(0)}%), sent back for full OCR`);
-          continue;
-        }
-        filtered.push(book);
-      }
-
-      console.log(`  Books ready for metadata: ${filtered.length}${readyForMetadata.length > filtered.length ? ` (${readyForMetadata.length - filtered.length} sent back for OCR)` : ''}`);
-
-      for (const book of filtered) {
-        try {
-          if (book.ai_metadata?.enriched_at) {
-            if (!DRY_RUN) {
-              await setPipelineStatus(db, book.id, 'metadata_enriched', { retry_count: 0 });
-            }
-            log.metadata_skipped++;
-            continue;
-          }
-
-          if (DRY_RUN) {
-            console.log(`  Would enrich metadata: ${book.title}`);
-            continue;
-          }
-
-          // Inline catalog lookup + apply (no Vercel dependency)
-          const result = await verifyMetadataInline(db, book);
-          if (result.applied > 0) {
-            console.log(`  [metadata] ${book.id}: applied ${result.applied} fields from ${result.source} (${result.confidence}% confidence)`);
-          }
-
-          await setPipelineStatus(db, book.id, 'metadata_enriched', { retry_count: 0 });
-          log.metadata_enriched++;
-        } catch (err) {
-          const retries = book.pipeline_auto?.retry_count || 0;
-          if (retries >= MAX_RETRIES) {
-            // Non-blocking: skip on persistent failure
-            if (!DRY_RUN) {
-              await setPipelineStatus(db, book.id, 'metadata_enriched', { retry_count: 0 });
-            }
-            log.metadata_skipped++;
-          } else {
-            if (!DRY_RUN) {
-              await setPipelineStatus(db, book.id, 'ocr_complete', { retry_count: retries + 1 });
-            }
-          }
-          log.errors.push(`Metadata ${book.id}: ${err.message}`);
+          console.log(`  Low OCR gate: ${book.title?.slice(0, 50)} — ${book.pages_ocr}/${book.pages_count} (${(ocrPct * 100).toFixed(0)}%), sent back`);
+          gateRejected++;
         }
       }
-      console.log(`  Metadata enriched: ${log.metadata_enriched}, skipped: ${log.metadata_skipped}`);
+      console.log(`  OCR gate: ${readyBooks.length} checked, ${gateRejected} rejected`);
     }
 
-    // ── Phase 3.7: Transliteration for non-Latin books (inline, runs on metadata_enriched books) ──
+    // ── Phase 3.7: Transliteration for non-Latin books (inline, runs on ocr_complete books) ──
     // Not a pipeline state — just enriches pages before translation. Cheap & fast (text-only, lite model).
     if (shouldRun(3.7) || shouldRun(3.5) || shouldRun(3)) {
       console.log('\n--- Phase 3.7: Transliteration (non-Latin books) ---');
 
-      // Find metadata_enriched books with non-Latin languages
+      // Find ocr_complete books with non-Latin languages
       const nonLatinBooks = await db.collection('books')
         .find({
-          'pipeline_auto.status': 'metadata_enriched',
+          'pipeline_auto.status': 'ocr_complete',
           language: { $regex: new RegExp(`^(${[...NON_LATIN_LANGUAGES].join('|')})$`, 'i') },
         })
         .sort({ hidden: 1 })
@@ -2975,7 +3203,7 @@ Reply with ONLY: {"is_spread": true} or {"is_spread": false}` },
           );
           // Reset affected books so they can be re-dispatched
           const rollbackMap = {
-            'translate_submitted': 'metadata_enriched',
+            'translate_submitted': 'ocr_complete',
             'images_submitted': 'chapters_complete',
           };
           for (const [from, to] of Object.entries(rollbackMap)) {
@@ -3000,7 +3228,7 @@ Reply with ONLY: {"is_spread": true} or {"is_spread": false}` },
       // These get stranded when jobs are cancelled without rolling back pipeline status.
       if (!DRY_RUN) {
         const orphanStates = [
-          { from: 'translate_submitted', to: 'metadata_enriched' },
+          { from: 'translate_submitted', to: 'ocr_complete' },
           { from: 'ocr_submitted', to: 'archive_complete' },
           { from: 'images_submitted', to: 'chapters_complete' },
         ];
@@ -3043,7 +3271,7 @@ Reply with ONLY: {"is_spread": true} or {"is_spread": false}` },
 
         // Fresh books first (never translated), then re-queue partially-translated books
         const freshBooks = effectiveLimit > 0 ? await db.collection('books').aggregate([
-          { $match: { 'pipeline_auto.status': { $in: ['metadata_enriched', 'ft_verified'] } } },
+          { $match: { 'pipeline_auto.status': { $in: ['ocr_complete'] } } },
           { $addFields: { _speedTier: { $switch: {
             branches: [
               { case: { $in: ['$language', ['Latin', 'German', 'French', 'Italian', 'Dutch', 'Spanish', 'Portuguese', 'English', 'Czech', 'Polish', 'Swedish', 'Danish']] }, then: 0 },
@@ -3153,7 +3381,7 @@ Reply with ONLY: {"is_spread": true} or {"is_spread": false}` },
             if (retries >= MAX_RETRIES) {
               await markFailed(db, book.id, `Translate dispatch: ${err.message}`, retries);
             } else {
-              await setPipelineStatus(db, book.id, 'metadata_enriched', { retry_count: retries + 1 });
+              await setPipelineStatus(db, book.id, 'ocr_complete', { retry_count: retries + 1 });
             }
             log.errors.push(`Translate ${book.id}: ${err.message}`);
           }
@@ -3201,13 +3429,13 @@ Reply with ONLY: {"is_spread": true} or {"is_spread": false}` },
             });
             if (job) {
               // Lambda job finished but pages remain — send back to Phase 4 for direct translation
-              if (!DRY_RUN) await setPipelineStatus(db, book.id, 'metadata_enriched');
+              if (!DRY_RUN) await setPipelineStatus(db, book.id, 'ocr_complete');
               log.translate_advanced++;
               console.log(`  Recycling to Phase 4: ${book.title} (${remaining} pages remain after Lambda job)`);
             }
           } else {
             // No job ID — orphaned state, recycle
-            if (!DRY_RUN) await setPipelineStatus(db, book.id, 'metadata_enriched');
+            if (!DRY_RUN) await setPipelineStatus(db, book.id, 'ocr_complete');
             log.translate_advanced++;
             console.log(`  Recycling orphan: ${book.title} (${remaining} pages remain, no job ID)`);
           }
@@ -3645,7 +3873,7 @@ Reply with ONLY: {"is_spread": true} or {"is_spread": false}` },
 
       const rollbackMap = {
         'ocr_submitted': 'archive_complete',
-        'translate_submitted': 'metadata_enriched',
+        'translate_submitted': 'ocr_complete',
         'images_submitted': 'chapters_complete',
         'summarizing': 'translate_complete',
         'chapters': 'summary_indexed',
@@ -3907,7 +4135,7 @@ Reply with ONLY: {"is_spread": true} or {"is_spread": false}` },
     console.log(`\n=== ACTIONS (${(duration / 1000).toFixed(0)}s) ===`);
     console.log(`  Enrolled: ${log.enrolled} | Archived: ${log.archived}`);
     console.log(`  Preview queued: ${log.preview_queued} | OCR submitted: ${log.ocr_submitted} | OCR advanced: ${log.ocr_advanced}`);
-    console.log(`  Metadata: ${log.metadata_enriched} enriched, ${log.metadata_skipped} skipped`);
+    console.log(`  Metadata: ${log.metadata_enriched} enriched`);
     console.log(`  Translate submitted: ${log.translate_submitted} | Translate advanced: ${log.translate_advanced}`);
     console.log(`  Enriched: ${log.enriched} | Chapters: ${log.chapters_extracted} (${log.chapters_skipped} skipped)`);
     console.log(`  Images submitted: ${log.images_submitted} | Images advanced: ${log.images_advanced}`);
