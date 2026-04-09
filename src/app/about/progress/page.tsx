@@ -104,13 +104,9 @@ async function getLiveStats(): Promise<LiveStats | null> {
     const db = await getDb();
     const col = db.collection('books');
 
-    const [total, translated, over90, firstTrans, verified, langs] = await Promise.all([
+    const [total, translated, firstTrans, verified, langs, enrichSnap] = await Promise.all([
       col.countDocuments({ pages_count: { $gt: 0 } }),
       col.countDocuments({ pages_translated: { $gt: 0 } }),
-      col.countDocuments({
-        $expr: { $gte: ['$pages_translated', { $multiply: ['$pages_count', 0.9] }] },
-        pages_count: { $gt: 0 },
-      }),
       col.countDocuments({ is_first_translation: true }),
       col.countDocuments({ translation_verification: { $exists: true } }),
       col.aggregate([
@@ -119,7 +115,11 @@ async function getLiveStats(): Promise<LiveStats | null> {
         { $sort: { count: -1 } },
         { $limit: 10 },
       ], { maxTimeMS: 15000 }).toArray(),
+      // Use enrichment snapshot for >90% count (avoids slow $expr scan)
+      db.collection('system_config').findOne({ _id: 'enrichment_snapshot' as any }),
     ]);
+
+    const over90 = (enrichSnap as any)?.translation?.books_over_90 || 0;
 
     return {
       total_books: total,

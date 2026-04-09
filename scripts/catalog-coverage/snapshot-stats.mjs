@@ -38,17 +38,19 @@ async function main() {
 
   // Live Source Library stats
   const books = db.collection('books');
-  const [slBooks, slWithPages, slTranslated, slOver90, slFirstTrans, slVerified] = await Promise.all([
+  // Avoid $expr for >90% — it requires a full collection scan.
+  // Instead, use the system_config snapshot if available, or skip.
+  const [slBooks, slWithPages, slTranslated, slFirstTrans, slVerified] = await Promise.all([
     books.countDocuments({}),
     books.countDocuments({ pages_count: { $gt: 0 } }),
     books.countDocuments({ pages_translated: { $gt: 0 } }),
-    books.countDocuments({
-      $expr: { $gte: ['$pages_translated', { $multiply: ['$pages_count', 0.9] }] },
-      pages_count: { $gt: 0 },
-    }),
     books.countDocuments({ is_first_translation: true }),
     books.countDocuments({ translation_verification: { $exists: true } }),
   ]);
+
+  // Approximate >90% from the enrichment snapshot if available
+  const enrichSnap = await db.collection('system_config').findOne({ _id: 'enrichment_snapshot' });
+  const slOver90 = enrichSnap?.translation?.books_over_90 || 0;
 
   const snapshot = {
     date: new Date().toISOString().split('T')[0], // YYYY-MM-DD
