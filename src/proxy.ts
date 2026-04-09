@@ -149,8 +149,56 @@ function logBotAccess(request: NextRequest, action: string) {
   }
 }
 
+// --- Embed CORS allowlist ---
+// Domains allowed to call /api/collections/* and /api/books/* cross-origin
+// (used by the public embed.js script on partner Webflow sites).
+// Swap this lookup to a DB query when the tenant system is ready.
+function getAllowedEmbedOrigins(): Set<string> {
+  const raw = process.env.EMBED_ALLOWED_ORIGINS || '';
+  return new Set(
+    raw.split(',').map(s => s.trim().toLowerCase()).filter(Boolean)
+  );
+}
+
+function getCorsHeaders(origin: string): Record<string, string> {
+  return {
+    'Access-Control-Allow-Origin': origin,
+    'Access-Control-Allow-Methods': 'GET, OPTIONS',
+    'Access-Control-Allow-Headers': 'Content-Type',
+    'Access-Control-Max-Age': '86400',
+  };
+}
+
 export function proxy(request: NextRequest) {
   const { pathname } = request.nextUrl;
+
+  // --- Embed CORS: allow partner Webflow sites to call collection/book APIs ---
+  const isEmbedRoute =
+    pathname.startsWith('/api/collections') || pathname.startsWith('/api/books');
+
+  if (isEmbedRoute) {
+    const origin = request.headers.get('origin') || '';
+    const originHost = origin.replace(/^https?:\/\//, '').toLowerCase();
+    const allowed = getAllowedEmbedOrigins();
+
+    if (origin && allowed.has(originHost)) {
+      // Handle OPTIONS preflight immediately
+      if (request.method === 'OPTIONS') {
+        return new NextResponse(null, {
+          status: 204,
+          headers: getCorsHeaders(origin),
+        });
+      }
+
+      // Pass through with CORS headers attached
+      const response = NextResponse.next();
+      const cors = getCorsHeaders(origin);
+      for (const [key, value] of Object.entries(cors)) {
+        response.headers.set(key, value);
+      }
+      return response;
+    }
+  }
 
   // Redirect www to non-www (SEO: canonical domain)
   const host = request.headers.get('host') || '';
@@ -254,12 +302,34 @@ export function proxy(request: NextRequest) {
   const requestHeaders = new Headers(request.headers);
   requestHeaders.set('x-site-mode', isSociety ? 'society' : 'library');
 
-  // Pass the modified headers to the request
-  return NextResponse.next({
-    request: {
-      headers: requestHeaders,
-    },
+  const response = NextResponse.next({
+    request: { headers: requestHeaders },
   });
+
+  // --- X-Frame-Options ---
+  // /book/* and /collections/* are embeddable by allowlisted partner origins (and localhost for dev).
+  // Everything else gets DENY to prevent clickjacking.
+  const isEmbeddablePath =
+    pathname.startsWith('/book/') ||
+    pathname.startsWith('/collections/');
+
+  if (isEmbeddablePath) {
+    const frameOrigin = request.headers.get('origin') ||
+      (request.headers.get('referer') || '').replace(/^(https?:\/\/[^/]+).*/, '$1');
+    const frameHost = frameOrigin.replace(/^https?:\/\//, '').split('/')[0].toLowerCase();
+    // const isLocalhost = frameHost.startsWith('localhost') || frameHost.startsWith('127.0.0.1');
+    const isLocalhost = frameHost.startsWith('localhost');
+    const isAllowed = isLocalhost || getAllowedEmbedOrigins().has(frameHost);
+
+    if (!isAllowed) {
+      response.headers.set('X-Frame-Options', 'DENY');
+    }
+    // If allowed: no X-Frame-Options header → browser permits the iframe
+  } else {
+    response.headers.set('X-Frame-Options', 'DENY');
+  }
+
+  return response;
 }
 
 export const config = {

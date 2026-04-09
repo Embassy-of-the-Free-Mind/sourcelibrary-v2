@@ -77,7 +77,8 @@ const nextConfig: NextConfig = {
         source: '/(.*)',
         headers: [
           { key: 'X-Content-Type-Options', value: 'nosniff' },
-          { key: 'X-Frame-Options', value: 'DENY' },
+          // X-Frame-Options is handled dynamically in proxy.ts so that
+          // /book/* and /collections/* can be embedded by allowlisted partners.
           { key: 'X-XSS-Protection', value: '1; mode=block' },
           { key: 'Referrer-Policy', value: 'strict-origin-when-cross-origin' },
           { key: 'Permissions-Policy', value: 'camera=(), microphone=(), geolocation=()' },
@@ -85,6 +86,14 @@ const nextConfig: NextConfig = {
             key: 'Strict-Transport-Security',
             value: 'max-age=63072000; includeSubDomains; preload',
           },
+        ],
+      },
+      {
+        // Short TTL for embed scripts so partner sites pick up fixes within minutes.
+        // stale-while-revalidate means no latency hit during revalidation.
+        source: '/embed/:path*',
+        headers: [
+          { key: 'Cache-Control', value: 'public, max-age=300, stale-while-revalidate=3600' },
         ],
       },
     ];

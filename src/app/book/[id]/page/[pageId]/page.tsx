@@ -3,6 +3,7 @@ import { getDb } from '@/lib/mongodb';
 import { findBookByIdOrSlug } from '@/lib/book-lookup';
 import type { Book, Page } from '@/lib/types';
 import PageEditorClient from './PageEditorClient';
+import EmbedNavigationReporter from '@/components/embed/EmbedNavigationReporter';
 
 // Static until on-demand revalidation. Pipeline calls /api/admin/revalidate-book after OCR/translation/enrichment.
 export const revalidate = false;
@@ -55,10 +56,13 @@ export default async function PageEditorPage({ params }: PageProps) {
   const book = bookResult.book as unknown as Book;
 
   return (
-    <PageEditorClient
-      initialBook={book}
-      initialPage={currentPage as unknown as Page}
-      initialPageList={navPages as unknown as Page[]}
-    />
+    <>
+      <EmbedNavigationReporter book={book.slug || book.id} page={pageId} />
+      <PageEditorClient
+        initialBook={book}
+        initialPage={currentPage as unknown as Page}
+        initialPageList={navPages as unknown as Page[]}
+      />
+    </>
   );
 }

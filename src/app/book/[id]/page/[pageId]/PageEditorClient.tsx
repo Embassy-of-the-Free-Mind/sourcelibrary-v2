@@ -211,7 +211,14 @@ export default function PageEditorClient({
     const vSuffix = pinnedVersion ? `?v=${encodeURIComponent(pinnedVersion)}` : '';
     window.history.pushState(null, '', `/book/${book.id}/page/${newPageId}${vSuffix}`);
     window.scrollTo({ top: 0, behavior: 'instant' });
-  }, [book.id, pinnedVersion]);
+    // Notify embed.js host frame (no-op when not in an iframe)
+    if (window.self !== window.top) {
+      window.parent.postMessage(
+        { type: 'sl-navigate', book: book.slug || book.id, page: newPageId },
+        '*'
+      );
+    }
+  }, [book.id, book.slug, pinnedVersion]);
 
   const currentIndex = pageList.findIndex(p => p.id === currentPageId);
 

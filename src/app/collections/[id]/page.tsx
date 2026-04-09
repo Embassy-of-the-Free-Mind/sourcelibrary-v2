@@ -12,6 +12,7 @@ import CollectionAllBooks from '@/components/collections/CollectionAllBooks';
 import ExhibitionLayout from '@/components/collections/ExhibitionLayout';
 import SignUpCTA from '@/components/auth/SignUpCTA';
 import { bookUrl } from '@/lib/slugify';
+import EmbedNavigationReporter from '@/components/embed/EmbedNavigationReporter';
 import { bookTitle, sanitizeThumbnail, withTimeout } from '@/lib/collections-utils';
 import { firstTranslationBadge } from '@/lib/first-translation-labels';
 import { browseBooks } from '@/lib/books-catalog';
@@ -579,6 +580,7 @@ export default async function CollectionDetailPage({ params }: Props) {
 
   return (
     <div className="min-h-screen bg-cream">
+      <EmbedNavigationReporter />
       <SiteHeader variant="dark" />
       <CollectionSchema
         slug={id}

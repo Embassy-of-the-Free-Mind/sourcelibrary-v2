@@ -32,6 +32,7 @@ import { BookShare } from '@/components/ui/ShareButton';
 import LikeButton from '@/components/ui/LikeButton';
 import CiteButton from '@/components/ui/CiteButton';
 import { AuthCheck } from '@/components/auth/AuthCheck';
+import EmbedNavigationReporter from '@/components/embed/EmbedNavigationReporter';
 import SignUpCTA from '@/components/auth/SignUpCTA';
 import { authorUrl } from '@/lib/slugify';
 import { firstTranslationBadge, firstTranslationDescription } from '@/lib/first-translation-labels';
@@ -409,6 +410,7 @@ async function BookInfo({ id }: { id: string }) {
 
   return (
     <>
+      <EmbedNavigationReporter book={book.slug || book.id} />
       {/* Schema.org JSON-LD for Google Scholar */}
       <SchemaOrgMetadata
         book={book}
