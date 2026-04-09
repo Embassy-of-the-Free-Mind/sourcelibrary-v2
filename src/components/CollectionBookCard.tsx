@@ -4,7 +4,7 @@ import { useState } from 'react';
 import Link from 'next/link';
 import Image from 'next/image';
 import { BookOpen, Calendar, FileText } from 'lucide-react';
-import { cn } from '@/lib/utils';
+import { cn, getBookThumbnailUrl } from '@/lib/utils';
 import { firstTranslationBadge } from '@/lib/first-translation-labels';
 import AuthorName from '@/components/AuthorName';
 
@@ -41,9 +41,10 @@ export default function CollectionBookCard({ book, priority = false }: Collectio
   const [useFallback, setUseFallback] = useState(false);
 
   const pageCount = book.pages_count || book.pages || 0;
-  const fallbackUrl = book.thumbnail_blob && book.thumbnail_blob !== book.thumbnail
-    ? book.thumbnail_blob : null;
-  const thumbnailUrl = useFallback && fallbackUrl ? fallbackUrl : book.thumbnail;
+  const primaryUrl = getBookThumbnailUrl(book);
+  const fallbackUrl = book.thumbnail && book.thumbnail_blob && book.thumbnail !== book.thumbnail_blob
+    ? book.thumbnail : null;
+  const thumbnailUrl = useFallback && fallbackUrl ? fallbackUrl : primaryUrl;
 
   return (
     <Link

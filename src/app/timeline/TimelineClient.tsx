@@ -453,7 +453,7 @@ export default function TimelineClient({ initialData }: Props) {
                       year: book.year,
                       pages_count: book.pages_count,
                       pages_translated: book.pages_translated,
-                      thumbnail: book.thumbnail,
+                      thumbnail: book.thumbnail_blob || book.thumbnail,
                       language: book.language,
                     }}
                     priority={i < 5}

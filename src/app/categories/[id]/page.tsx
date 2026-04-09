@@ -18,6 +18,7 @@ interface Book {
   language: string;
   published: string;
   thumbnail?: string;
+  thumbnail_blob?: string;
   pages_count?: number;
   pages_translated?: number;
   translation_percent?: number;
@@ -147,9 +148,9 @@ export default async function CategoryPage({ params }: CategoryPageProps) {
                 >
                   {/* Thumbnail */}
                   <div className="aspect-[3/2] bg-stone-100 relative overflow-hidden">
-                    {book.thumbnail ? (
+                    {(book.thumbnail_blob || book.thumbnail) ? (
                       <Image
-                        src={book.thumbnail}
+                        src={(book.thumbnail_blob || book.thumbnail)!}
                         alt={book.title}
                         fill
                         className="object-cover group-hover:scale-105 transition-transform duration-300"

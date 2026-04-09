@@ -26,6 +26,11 @@ export function isUsableImageUrl(url: string | undefined | null): url is string 
   return !!url && (url.startsWith('http://') || url.startsWith('https://'));
 }
 
+/** Return the best book thumbnail URL, preferring R2 (thumbnail_blob) over external hotlinks. */
+export function getBookThumbnailUrl(book: { thumbnail?: string | null; thumbnail_blob?: string | null }): string | null {
+  return book.thumbnail_blob || book.thumbnail || null;
+}
+
 export function isArchiveFailed(photo: string | undefined | null): boolean {
   return typeof photo === 'string' && photo.startsWith('failed:');
 }

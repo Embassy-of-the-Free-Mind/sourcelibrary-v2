@@ -356,7 +356,7 @@ export default function CollectionAllBooks({
                 pages_count: book.pages_count,
                 pages_ocr: book.pages_ocr,
                 pages_translated: book.pages_translated,
-                thumbnail: book.thumbnail || book.thumbnail_blob || book.photo,
+                thumbnail: book.thumbnail_blob || book.thumbnail || book.photo,
                 thumbnail_blob: book.thumbnail_blob,
                 language: book.language,
                 published: book.published,

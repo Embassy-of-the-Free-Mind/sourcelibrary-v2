@@ -104,6 +104,7 @@ interface CuratedHighlight {
   // Added during merge with book data
   slug?: string;
   thumbnail?: string;
+  thumbnail_blob?: string;
   is_first_translation?: boolean;
   ft_disposition?: string;
   language?: string;
@@ -390,7 +391,7 @@ async function fetchCollectionData(id: string) {
 
   // Sanitize thumbnails to prevent /api/image wrapper URLs from crashing Next.js Image
   const sanitizeBookThumbs = (items: Record<string, unknown>[]) =>
-    items.map(b => ({ ...b, thumbnail: sanitizeThumbnail(b.thumbnail as string) }));
+    items.map(b => ({ ...b, thumbnail: sanitizeThumbnail(b.thumbnail_blob as string) || sanitizeThumbnail(b.thumbnail as string) }));
 
   // Merge curated highlights with live book data (thumbnails, slugs, first-translation status)
   const curatedBookMap = new Map(
@@ -406,7 +407,7 @@ async function fetchCollectionData(id: string) {
         author: (book.author as string) || h.author,
         year: (book.year as number) || h.year,
         slug: book.slug as string | undefined,
-        thumbnail: sanitizeThumbnail(book.thumbnail as string),
+        thumbnail: sanitizeThumbnail(book.thumbnail_blob as string) || sanitizeThumbnail(book.thumbnail as string),
         is_first_translation: book.is_first_translation as boolean | undefined,
         ft_disposition: (book.translation_verification as Record<string, unknown> | undefined)?.disposition as string | undefined,
         language: book.language as string | undefined,
@@ -459,7 +460,7 @@ async function fetchCollectionData(id: string) {
       );
       exhibitionBooks = exBooks.map(b => ({
         ...b,
-        thumbnail: sanitizeThumbnail(b.thumbnail as string) || sanitizeThumbnail(b.thumbnail_blob as string),
+        thumbnail: sanitizeThumbnail(b.thumbnail_blob as string) || sanitizeThumbnail(b.thumbnail as string),
         ft_disposition: (b.translation_verification as Record<string, unknown> | undefined)?.disposition as string | undefined,
       })) as unknown as BookItem[];
     }
@@ -739,9 +740,9 @@ export default async function CollectionDetailPage({ params }: Props) {
               >
                 <div className="w-40 sm:w-48 flex-shrink-0 mx-auto sm:mx-0">
                   <div className="aspect-[3/4] relative rounded-lg overflow-hidden bg-white shadow-lg group-hover:shadow-xl transition-shadow">
-                    {featured.thumbnail ? (
+                    {(featured.thumbnail_blob || featured.thumbnail) ? (
                       <Image
-                        src={featured.thumbnail}
+                        src={(featured.thumbnail_blob || featured.thumbnail)!}
                         alt={featured.title || ''}
                         fill
                         className="object-cover group-hover:scale-105 transition-transform duration-500"
