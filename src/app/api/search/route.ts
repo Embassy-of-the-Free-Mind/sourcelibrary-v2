@@ -2,7 +2,7 @@ import { NextRequest, NextResponse } from 'next/server';
 import { getReadDb } from '@/lib/mongodb';
 import { Book } from '@/lib/types';
 import type { SearchResult, SearchResponse } from '@/lib/api-client/types/search';
-import { buildBookSearchStage, buildPageSearchStage, type BookSearchFilters } from '@/lib/atlas-search';
+import { buildPageSearchStage } from '@/lib/atlas-search';
 import { searchBookIds } from '@/lib/books-catalog';
 
 export const preferredRegion = 'fra1';
@@ -140,52 +140,18 @@ export async function GET(request: NextRequest) {
     const hasBookLevelFilters = !!(language || category || dateFrom || dateTo || hasDoi === 'true' || hasTranslation === 'true' || firstTranslation === 'true' || year || yearFrom || yearTo || library);
 
     const [bookDocs, pageDocs] = await Promise.all([
-      // --- Book search via Atlas Search (skip when searching within a specific book or pages_only mode) ---
+      // --- Book search via Supabase trigram (fast, no cold-start penalty) ---
       (async () => {
         if (bookId || pagesOnly) return [];
-        try {
-          const searchFilters: BookSearchFilters = {};
-          if (language) searchFilters.language = language;
-          if (category) searchFilters.category = category;
-          if (firstTranslation === 'true') searchFilters.isFirstTranslation = true;
-          if (hasTranslation === 'true') searchFilters.hasTranslation = true;
-          if (year) {
-            const yearNum = parseInt(year);
-            if (!isNaN(yearNum)) searchFilters.yearExact = yearNum;
-          } else {
-            if (yearFrom) { const n = parseInt(yearFrom); if (!isNaN(n)) searchFilters.yearFrom = n; }
-            if (yearTo) { const n = parseInt(yearTo); if (!isNaN(n)) searchFilters.yearTo = n; }
-          }
-
-          // eslint-disable-next-line @typescript-eslint/no-explicit-any
-          const pipeline: any[] = [buildBookSearchStage(query, searchFilters, { fuzzy: true })];
-
-          // Post-filters for fields not in the Atlas Search index
-          const postMatch: Record<string, unknown> = {};
-          if (hasDoi === 'true') postMatch.doi = { $exists: true, $ne: null };
-          if (library) postMatch['image_source.provider'] = library;
-          if (dateFrom || dateTo) {
-            postMatch.published = {};
-            if (dateFrom) (postMatch.published as Record<string, string>).$gte = dateFrom;
-            if (dateTo) (postMatch.published as Record<string, string>).$lte = dateTo;
-          }
-          if (Object.keys(postMatch).length > 0) {
-            pipeline.push({ $limit: Math.max(limit * 3, 60) });
-            pipeline.push({ $match: postMatch });
-          }
-          pipeline.push({ $limit: limit });
-
-          return await db.collection('books').aggregate(pipeline, { maxTimeMS: 5000 }).toArray();
-        } catch {
-          // Fallback: Supabase trigram search instead of MongoDB regex
-          const matchingIds = await searchBookIds(query, { limit });
-          if (matchingIds.length === 0) return [];
-          const bookFilters = buildBookFilters();
-          return await db.collection('books')
-            .find({ id: { $in: matchingIds }, ...bookFilters })
-            .limit(limit)
-            .toArray();
-        }
+        const matchingIds = await searchBookIds(query, { limit: limit * 2 });
+        if (matchingIds.length === 0) return [];
+        const bookFilters = buildBookFilters();
+        return await db.collection('books')
+          .find({ id: { $in: matchingIds }, ...bookFilters })
+          .project({ id: 1, slug: 1, title: 1, display_title: 1, author: 1, thumbnail: 1, thumbnail_blob: 1, language: 1, published: 1, pages_count: 1, pages_translated: 1, doi: 1, categories: 1, is_first_translation: 1, quality_score: 1, summary: 1, reading_summary: 1 })
+          .limit(limit)
+          .maxTimeMS(5000)
+          .toArray();
       })(),
 
       // --- Page content search (aggregation pipeline truncates text for snippets) ---
@@ -388,47 +354,24 @@ export async function GET(request: NextRequest) {
     if (year && !bookId) {
       const yearNum = parseInt(year);
       if (!isNaN(yearNum)) {
-        // Use Atlas Search for nearby books with year range filter
+        // Find nearby books via Supabase + MongoDB filter for year range
         let nearbyBooks: Record<string, unknown>[];
-        try {
-          const nearbyFilters: BookSearchFilters = {
-            yearFrom: yearNum - 5,
-            yearTo: yearNum + 5,
+        const matchingIds = await searchBookIds(query, { limit: 50 });
+        if (matchingIds.length > 0) {
+          const nearbyFilter: Record<string, unknown> = {
+            id: { $in: matchingIds.filter(id => !seenBooks.has(id)) },
+            year: { $gte: yearNum - 5, $lte: yearNum + 5, $ne: yearNum },
           };
-          if (language) nearbyFilters.language = language;
-          if (category) nearbyFilters.category = category;
+          if (language) nearbyFilter.language = language;
+          if (category) nearbyFilter.categories = category;
 
-          // eslint-disable-next-line @typescript-eslint/no-explicit-any
-          const nearbyPipeline: any[] = [
-            buildBookSearchStage(query, nearbyFilters),
-            { $limit: 20 },
-          ];
-          // Exclude exact year and already-seen books
-          const nearbyExclude: Record<string, unknown> = { year: { $ne: yearNum } };
-          if (seenBooks.size > 0) nearbyExclude.id = { $nin: Array.from(seenBooks) };
-          nearbyPipeline.push({ $match: nearbyExclude });
-          nearbyPipeline.push({ $limit: 10 });
-
-          nearbyBooks = await db.collection('books').aggregate(nearbyPipeline, { maxTimeMS: 5000 }).toArray();
-        } catch {
-          // Fallback: Supabase trigram search + MongoDB filter for nearby years
-          const matchingIds = await searchBookIds(query, { limit: 50 });
-          if (matchingIds.length > 0) {
-            const nearbyFilter: Record<string, unknown> = {
-              id: { $in: matchingIds },
-              year: { $gte: yearNum - 5, $lte: yearNum + 5, $ne: yearNum },
-            };
-            if (seenBooks.size > 0) nearbyFilter.id = { $in: matchingIds.filter(id => !seenBooks.has(id)) };
-            if (language) nearbyFilter.language = language;
-            if (category) nearbyFilter.categories = category;
-
-            nearbyBooks = await db.collection('books')
-              .find(nearbyFilter)
-              .limit(10)
-              .toArray();
-          } else {
-            nearbyBooks = [];
-          }
+          nearbyBooks = await db.collection('books')
+            .find(nearbyFilter)
+            .limit(10)
+            .maxTimeMS(5000)
+            .toArray();
+        } else {
+          nearbyBooks = [];
         }
 
         nearby = nearbyBooks.map(book => bookToResult(book as unknown as Book));
