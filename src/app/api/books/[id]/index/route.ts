@@ -5,6 +5,7 @@ import { logGeminiCall } from '@/lib/gemini-logger';
 import { withAuth } from '@/lib/auth-helpers';
 import { loadAliasResolver } from '@/lib/entity-aliases';
 import { getChapterTexts, type ChapterText } from '@/lib/chapter-text';
+import { getBookIndex } from '@/lib/book-index';
 
 export const maxDuration = 300;
 
@@ -1121,8 +1122,10 @@ export async function GET(
     }
 
     // Return cached index if it exists — regeneration only via POST
-    if (book.index && book.index.generatedAt) {
-      return NextResponse.json(book.index);
+    // Check book_indexes collection first (migrated), then fall back to inline
+    const existingIndex = await getBookIndex(id);
+    if (existingIndex && existingIndex.generatedAt) {
+      return NextResponse.json(existingIndex);
     }
 
     // No index exists yet — generate one
