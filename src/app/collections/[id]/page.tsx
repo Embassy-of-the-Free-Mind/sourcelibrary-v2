@@ -271,7 +271,6 @@ async function fetchCollectionData(id: string) {
     try {
       const { books: sbBooks } = await browseBooks({
         collection: id,
-        hasTranslation: !isArtCollection,
         sort: 'popular',
         limit: COMPACT_LIMIT,
       });
