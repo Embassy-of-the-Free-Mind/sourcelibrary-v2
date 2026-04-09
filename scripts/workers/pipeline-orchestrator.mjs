@@ -2450,6 +2450,7 @@ Reply with ONLY: {"is_spread": true} or {"is_spread": false}` },
             { $match: {
               'pipeline_auto.status': 'archive_complete',
               'pipeline_auto.split_checked': true,
+              'pipeline_auto.recitation_blocked': { $ne: true },
               pages_ocr: { $in: [0, null, undefined] }, // No OCR yet
             }},
             { $addFields: {
@@ -2513,6 +2514,7 @@ Reply with ONLY: {"is_spread": true} or {"is_spread": false}` },
           { $match: {
             'pipeline_auto.status': 'archive_complete',
             'pipeline_auto.split_checked': true,
+            'pipeline_auto.recitation_blocked': { $ne: true },
             pages_ocr: { $gt: 0 }, // Already has some OCR (preview pass done)
           }},
           { $addFields: {
