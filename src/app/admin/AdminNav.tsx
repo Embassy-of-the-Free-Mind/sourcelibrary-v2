@@ -30,6 +30,7 @@ const adminLinks: NavItem[] = [
   },
   { href: '/admin/kdp', label: 'Publishing' },
   { href: '/admin/members', label: 'Members' },
+  { href: '/admin/api-keys', label: 'API Keys' },
   { href: '/analytics', label: 'Analytics' },
   { href: '/admin/errors', label: 'Errors' },
   { href: '/admin/system-map', label: 'System Map' },
