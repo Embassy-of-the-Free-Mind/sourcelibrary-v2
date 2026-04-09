@@ -1,6 +1,7 @@
 'use client';
 
 import { useState, useEffect, useCallback } from 'react';
+import Link from 'next/link';
 
 interface KeyRequest {
   _id: string;
@@ -116,7 +117,15 @@ export default function ApiKeysAdminPage() {
 
   return (
     <div className="max-w-5xl mx-auto px-4 py-8">
-      <h1 className="text-2xl font-bold text-stone-900 mb-6">API Keys</h1>
+      <div className="flex items-center justify-between mb-6">
+        <h1 className="text-2xl font-bold text-stone-900">API Keys</h1>
+        <Link
+          href="/admin/api-keys/usage"
+          className="px-3 py-1.5 bg-stone-100 text-stone-600 text-sm rounded-lg hover:bg-stone-200 transition-colors"
+        >
+          Usage Dashboard
+        </Link>
+      </div>
 
       {/* Tabs */}
       <div className="flex gap-1 mb-6 border-b border-stone-200">
@@ -146,7 +155,7 @@ export default function ApiKeysAdminPage() {
         >
           {actionResult.type === 'success' && actionResult.message.includes('sl_data_') ? (
             <div>
-              <p className="font-medium mb-1">Key minted — copy it now (shown once):</p>
+              <p className="font-medium mb-1">Key minted and emailed to the requester:</p>
               <code className="block bg-green-100 p-2 rounded text-xs break-all select-all">
                 {actionResult.message.split(': ').slice(1).join(': ')}
               </code>
