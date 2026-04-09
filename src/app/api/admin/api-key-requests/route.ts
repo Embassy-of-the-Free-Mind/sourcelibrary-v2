@@ -2,6 +2,7 @@ import { NextRequest, NextResponse } from 'next/server';
 import { withAdminAuth } from '@/lib/auth-helpers';
 import { generateApiKey } from '@/lib/dataset/api-keys';
 import { DatasetTier, DATASET_TIERS } from '@/lib/dataset/types';
+import { sendApiKeyEmail } from '@/lib/membership-email';
 import { getDb } from '@/lib/mongodb';
 import { ObjectId } from 'mongodb';
 
@@ -123,14 +124,22 @@ export const POST = withAdminAuth(async (request: NextRequest, session) => {
     },
   );
 
+  // Email the key to the requester (fire-and-forget)
+  sendApiKeyEmail(
+    keyRequest.email,
+    keyRequest.name,
+    key,
+    DATASET_TIERS[selectedTier].name,
+  ).catch(err => console.error('[api-keys] Failed to send key email:', err));
+
   return NextResponse.json({
     status: 'approved',
     request_id,
-    key, // Admin copies this and sends to the requester
+    key,
     prefix: doc.key_prefix,
     tier: selectedTier,
     name: keyName,
     email: keyRequest.email,
-    message: 'Key minted. Send it to the requester — it cannot be retrieved again.',
+    message: 'Key minted and emailed to the requester.',
   });
 });

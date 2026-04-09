@@ -1,6 +1,65 @@
 import { Resend } from 'resend';
 
 /**
+ * Send the API key to a developer whose request was approved.
+ */
+export async function sendApiKeyEmail(
+  email: string,
+  name: string,
+  apiKey: string,
+  tier: string,
+): Promise<void> {
+  if (!process.env.RESEND_API_KEY) return;
+
+  const resend = new Resend(process.env.RESEND_API_KEY);
+  const firstName = name.split(' ')[0] || 'there';
+
+  await resend.emails.send({
+    from: process.env.EMAIL_FROM || 'Source Library <noreply@sourcelibrary.org>',
+    to: email,
+    subject: 'Your Source Library API Key',
+    html: `
+      <div style="font-family: Georgia, 'Times New Roman', serif; max-width: 520px; margin: 0 auto; padding: 40px 24px; color: #1a1612;">
+        <div style="text-align: center; margin-bottom: 32px;">
+          <img src="https://sourcelibrary.org/brand/svg/icon-only--black-on-white.svg" alt="Source Library" width="48" height="48" style="margin-bottom: 16px;" />
+          <h1 style="font-size: 24px; font-weight: 400; margin: 0; letter-spacing: -0.01em;">
+            Source Library API
+          </h1>
+        </div>
+
+        <div style="line-height: 1.8; font-size: 15px; color: #1a1612;">
+          <p>Hi ${firstName},</p>
+          <p>
+            Your API key request has been approved. Here is your key &mdash;
+            save it somewhere safe, as it cannot be retrieved again.
+          </p>
+        </div>
+
+        <div style="background: #f5f0e8; border-radius: 8px; padding: 20px 24px; margin: 20px 0 28px; font-family: monospace; font-size: 14px; word-break: break-all; color: #1a1612; letter-spacing: 0.02em;">
+          ${apiKey}
+        </div>
+
+        <div style="line-height: 1.8; font-size: 15px; color: #1a1612;">
+          <p style="margin: 0 0 8px;"><strong>Tier:</strong> ${tier}</p>
+          <p>
+            Include your key in the <code style="background: #f5f0e8; padding: 2px 6px; border-radius: 4px; font-size: 13px;">Authorization</code>
+            header as a Bearer token. Full documentation is at
+            <a href="https://sourcelibrary.org/developers" style="color: #9e4a3a; text-decoration: none;">sourcelibrary.org/developers</a>.
+          </p>
+        </div>
+
+        <div style="margin-top: 36px; padding-top: 20px; border-top: 1px solid #e8e4dc; line-height: 1.7; font-size: 14px; color: #8a8480;">
+          <p style="margin: 0;">The Source Library team</p>
+          <p style="margin: 8px 0 0; font-size: 12px;">
+            <a href="https://sourcelibrary.org" style="color: #8a8480;">sourcelibrary.org</a>
+          </p>
+        </div>
+      </div>
+    `,
+  });
+}
+
+/**
  * Send a welcome email when someone joins the Ficino Society (free).
  * Tone: welcome to the circle, here's where to go.
  */
