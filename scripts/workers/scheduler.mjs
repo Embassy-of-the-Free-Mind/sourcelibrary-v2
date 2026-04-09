@@ -144,6 +144,7 @@ const WORKERS = [
 // - prewarm-browse.mjs (HTTP revalidation)
 // - pipeline-health-alert.mjs (reads only, runs daily)
 // - embedding-server.mjs (long-running, Supabase not Atlas)
+// - snapshot-stats.mjs (daily 4:30am, catalog coverage + SL progress snapshot)
 // These keep their own cron lines.
 
 // ── Health grades ranked for comparison ──

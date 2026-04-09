@@ -1,7 +1,7 @@
 import { Metadata } from 'next';
 import { getDb } from '@/lib/mongodb';
 import ContentPageLayout, { SubPageHeader } from '@/components/layout/ContentPageLayout';
-import { BarChart3, BookOpen, Languages, Globe2, Scan } from 'lucide-react';
+import { BarChart3, BookOpen, Languages, Globe2, Scan, Sparkles, Library } from 'lucide-react';
 
 export const metadata: Metadata = {
   title: 'Progress | Source Library',
@@ -88,6 +88,52 @@ async function getCoverageData(): Promise<CoverageData | null> {
   }
 }
 
+// ── Live Source Library Stats ─────────────────────────────────────────
+
+interface LiveStats {
+  total_books: number;
+  books_translated: number;
+  books_over_90: number;
+  first_translations: number;
+  verified_total: number;
+  top_languages: { language: string; count: number }[];
+}
+
+async function getLiveStats(): Promise<LiveStats | null> {
+  try {
+    const db = await getDb();
+    const col = db.collection('books');
+
+    const [total, translated, firstTrans, verified, langs, enrichSnap] = await Promise.all([
+      col.countDocuments({ pages_count: { $gt: 0 } }),
+      col.countDocuments({ pages_translated: { $gt: 0 } }),
+      col.countDocuments({ is_first_translation: true }),
+      col.countDocuments({ translation_verification: { $exists: true } }),
+      col.aggregate([
+        { $match: { pages_translated: { $gt: 0 }, pages_count: { $gt: 0 } } },
+        { $group: { _id: '$language', count: { $sum: 1 } } },
+        { $sort: { count: -1 } },
+        { $limit: 10 },
+      ], { maxTimeMS: 15000 }).toArray(),
+      // Use enrichment snapshot for >90% count (avoids slow $expr scan)
+      db.collection('system_config').findOne({ _id: 'enrichment_snapshot' as any }),
+    ]);
+
+    const over90 = (enrichSnap as any)?.milestones?.over_90_pct || 0;
+
+    return {
+      total_books: total,
+      books_translated: translated,
+      books_over_90: over90,
+      first_translations: firstTrans,
+      verified_total: verified,
+      top_languages: langs.map(l => ({ language: l._id as string, count: l.count })),
+    };
+  } catch {
+    return null;
+  }
+}
+
 // ── Components ────────────────────────────────────────────────────────
 
 function ProgressBar({ value, max, color = 'bg-amber-600' }: { value: number; max: number; color?: string }) {
@@ -127,7 +173,7 @@ function fmt(n: number): string {
 // ── Page ──────────────────────────────────────────────────────────────
 
 export default async function ProgressPage() {
-  const data = await getCoverageData();
+  const [data, live] = await Promise.all([getCoverageData(), getLiveStats()]);
 
   if (!data) {
     return (
@@ -200,6 +246,59 @@ export default async function ProgressPage() {
           </div>
         </div>
       </section>
+
+      {/* Source Library contribution */}
+      {live && (
+        <section className="bg-white rounded-xl border border-border-light p-6 mb-6">
+          <div className="flex items-center gap-3 mb-4">
+            <div className="p-2 bg-purple-100 rounded-lg">
+              <Sparkles className="w-5 h-5 text-purple-700" />
+            </div>
+            <h2 className="text-xl font-semibold text-primary">Source Library&apos;s Contribution</h2>
+          </div>
+
+          <p className="text-secondary mb-6">
+            Source Library is working through this corpus — scanning, OCR&apos;ing, and translating books that have
+            never before been available in English. Many of these are first-ever English translations of texts that
+            have waited centuries to be read.
+          </p>
+
+          <div className="grid grid-cols-2 md:grid-cols-4 gap-4 mb-6">
+            <div className="text-center">
+              <div className="text-2xl font-semibold text-primary">{fmt(live.total_books)}</div>
+              <div className="text-xs text-stone-500 mt-1">Books digitized</div>
+            </div>
+            <div className="text-center">
+              <div className="text-2xl font-semibold text-primary">{fmt(live.books_translated)}</div>
+              <div className="text-xs text-stone-500 mt-1">With translation</div>
+            </div>
+            <div className="text-center">
+              <div className="text-2xl font-semibold text-primary">{fmt(live.books_over_90)}</div>
+              <div className="text-xs text-stone-500 mt-1">Over 90% translated</div>
+            </div>
+            <div className="text-center">
+              <div className="text-2xl font-semibold text-amber-700 font-bold">{fmt(live.first_translations)}</div>
+              <div className="text-xs text-stone-500 mt-1">First English translations</div>
+            </div>
+          </div>
+
+          {live.top_languages.length > 0 && (
+            <div className="border-t border-stone-100 pt-4">
+              <h3 className="text-sm font-medium text-stone-500 mb-3 flex items-center gap-2">
+                <Library className="w-3.5 h-3.5" />
+                Translated from
+              </h3>
+              <div className="flex flex-wrap gap-2">
+                {live.top_languages.map(l => (
+                  <span key={l.language} className="px-3 py-1 bg-stone-100 rounded-full text-xs text-stone-600">
+                    {l.language} <span className="text-stone-400">({fmt(l.count)})</span>
+                  </span>
+                ))}
+              </div>
+            </div>
+          )}
+        </section>
+      )}
 
       {/* Language breakdown */}
       <section className="bg-white rounded-xl border border-border-light p-6 mb-6">
