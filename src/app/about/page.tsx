@@ -185,6 +185,12 @@ export default function AboutPage() {
             Browse the Library
           </Link>
           <Link
+            href="/about/progress"
+            className="px-5 py-2.5 bg-white border border-stone-300 text-stone-700 rounded-full hover:bg-stone-50 transition-colors"
+          >
+            Our Progress
+          </Link>
+          <Link
             href="/about/sources"
             className="px-5 py-2.5 bg-white border border-stone-300 text-stone-700 rounded-full hover:bg-stone-50 transition-colors"
           >
