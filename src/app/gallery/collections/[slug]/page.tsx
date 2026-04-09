@@ -1,45 +1,24 @@
 import { Metadata } from 'next';
 import { notFound } from 'next/navigation';
-import Link from 'next/link';
-import { Image as ImageIcon, Layers } from 'lucide-react';
+import { cache } from 'react';
+import { Image as ImageIcon } from 'lucide-react';
 import SiteHeader from '@/components/layout/SiteHeader';
 import { getDb } from '@/lib/mongodb';
 import CollectionImageCard, { CollectionImageProps } from './CollectionImageCard';
 
-export const revalidate = false;
+export const revalidate = 86400;
 
 interface PageProps {
   params: Promise<{ slug: string }>;
 }
 
-export async function generateMetadata({ params }: PageProps): Promise<Metadata> {
-  const { slug } = await params;
-  const db = await getDb();
-  const collection = await db.collection('gallery_collections').findOne({ slug });
-
-  if (!collection) {
-    return { title: 'Collection Not Found | Source Library' };
-  }
-
-  return {
-    title: `${collection.title} | Gallery | Source Library`,
-    description: collection.description as string,
-    openGraph: {
-      title: `${collection.title} | Source Library Gallery`,
-      description: collection.description as string,
-    },
-    twitter: {
-      card: 'summary_large_image',
-      title: `${collection.title} | Source Library Gallery`,
-      description: collection.description as string,
-    },
-  };
-}
-
-async function getCollection(slug: string) {
+const getCollectionData = cache(async (slug: string) => {
   try {
     const db = await getDb();
-    const collection = await db.collection('gallery_collections').findOne({ slug });
+    const collection = await db.collection('gallery_collections').findOne(
+      { slug },
+      { projection: { title: 1, description: 1, image_ids: 1 } }
+    );
     if (!collection) return null;
 
     const imageIds = (collection.image_ids as string[]) || [];
@@ -54,7 +33,36 @@ async function getCollection(slug: string) {
   } catch {
     return null;
   }
+});
+
+export async function generateMetadata({ params }: PageProps): Promise<Metadata> {
+  const { slug } = await params;
+  const data = await getCollectionData(slug);
+
+  if (!data) {
+    return { title: 'Collection Not Found | Source Library' };
+  }
+
+  return {
+    title: `${data.title} | Gallery | Source Library`,
+    description: data.description,
+    openGraph: {
+      title: `${data.title} | Source Library Gallery`,
+      description: data.description,
+    },
+    twitter: {
+      card: 'summary_large_image',
+      title: `${data.title} | Source Library Gallery`,
+      description: data.description,
+    },
+  };
 }
+
+const IMAGE_PROJECTION = {
+  id: 1, thumbnail_url: 1, extracted_url: 1, image_url: 1,
+  book_title: 1, description: 1, type: 1, gallery_quality: 1,
+  _id: 0,
+};
 
 // eslint-disable-next-line @typescript-eslint/no-explicit-any
 async function resolveImages(db: any, imageIds: string[]): Promise<CollectionImageProps[]> {
@@ -62,19 +70,11 @@ async function resolveImages(db: any, imageIds: string[]): Promise<CollectionIma
 
   const docs = await db
     .collection('gallery_images')
-    .find({ id: { $in: imageIds } })
+    .find({ id: { $in: imageIds } }, { projection: IMAGE_PROJECTION })
     .toArray();
 
   // eslint-disable-next-line @typescript-eslint/no-explicit-any
   const docMap = new Map<string, any>(docs.map((d: any) => [d.id, d]));
-
-  // Batch-fetch like counts for all images
-  const likeDocs = await db.collection('likes').aggregate([
-    { $match: { target_type: 'image', target_id: { $in: imageIds } } },
-    { $group: { _id: '$target_id', count: { $sum: 1 } } },
-  ]).toArray();
-  // eslint-disable-next-line @typescript-eslint/no-explicit-any
-  const likesMap = new Map<string, number>(likeDocs.map((ld: any) => [ld._id as string, ld.count as number]));
 
   const results: CollectionImageProps[] = [];
   for (const id of imageIds) {
@@ -89,7 +89,6 @@ async function resolveImages(db: any, imageIds: string[]): Promise<CollectionIma
       thumbnailUrl: doc.thumbnail_url,
       extractedUrl: doc.extracted_url,
       galleryQuality: doc.gallery_quality,
-      likeCount: likesMap.get(doc.id) ?? 0,
     });
   }
   return results;
@@ -97,7 +96,7 @@ async function resolveImages(db: any, imageIds: string[]): Promise<CollectionIma
 
 export default async function CollectionDetailPage({ params }: PageProps) {
   const { slug } = await params;
-  const data = await getCollection(slug);
+  const data = await getCollectionData(slug);
 
   if (!data) {
     notFound();
@@ -122,7 +121,7 @@ export default async function CollectionDetailPage({ params }: PageProps) {
         ) : (
           <div className="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-5 gap-4">
             {data.items.map((item, i) => (
-              <CollectionImageCard key={item.id} item={item} priority={i < 10} />
+              <CollectionImageCard key={item.id} item={item} priority={i < 6} />
             ))}
           </div>
         )}
