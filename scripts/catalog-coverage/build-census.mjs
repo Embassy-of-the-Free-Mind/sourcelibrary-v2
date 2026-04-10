@@ -241,51 +241,39 @@ async function buildCensusView() {
     for (const { surname } of surnames) {
       if (!surname || surname.length < 2) continue;
 
+      // Use % operator (GIN-indexed) for surname, not similarity() (full scan)
       const { rowCount } = await client.query(`
         INSERT INTO translation_census_matches
         SELECT DISTINCT ON (w.author_surname, w.work_key)
-          w.author_surname,
-          w.work_key,
-          w.language,
-          w.english_title AS ustc_english_title,
-          w.std_title AS ustc_std_title,
-          w.author,
-          w.year,
-          w.edition_count,
-          c.english_title AS catalog_english_title,
-          c.translator,
-          c.pub_year AS translation_year,
-          c.source AS catalog_source,
-          c.completeness,
+          w.author_surname, w.work_key, w.language,
+          w.english_title, w.std_title, w.author, w.year, w.edition_count,
+          c.english_title, c.translator, c.pub_year, c.source, c.completeness,
           similarity(w.author_surname, $1) AS surname_score,
           GREATEST(
-            similarity(lower(w.english_title), lower(regexp_replace(c.english_title, '[^a-z0-9 ]', '', 'g'))),
-            CASE WHEN c.canonical_work != '' THEN similarity(w.work_key, lower(regexp_replace(c.canonical_work, '[^a-z0-9 ]', '', 'g'))) ELSE 0 END,
-            CASE WHEN c.original_title != '' THEN similarity(w.work_key, lower(regexp_replace(c.original_title, '[^a-z0-9 ]', '', 'g'))) ELSE 0 END
+            similarity(lower(w.english_title), c.eng_norm),
+            CASE WHEN c.work_norm != '' THEN similarity(w.work_key, c.work_norm) ELSE 0 END,
+            CASE WHEN c.orig_norm != '' THEN similarity(w.work_key, c.orig_norm) ELSE 0 END
           ) AS match_score
-        FROM ustc_distinct_works w
+        FROM (
+          -- Pre-filter works using GIN index: % operator is index-friendly
+          SELECT * FROM ustc_distinct_works
+          WHERE author_surname = $1
+             OR author_surname LIKE $1 || '%'
+             OR author_surname % $1
+        ) w
         CROSS JOIN (
-          SELECT * FROM translation_catalogs
+          SELECT english_title, translator, pub_year, source, completeness,
+            lower(regexp_replace(english_title, '[^a-z0-9 ]', '', 'g')) AS eng_norm,
+            lower(regexp_replace(coalesce(canonical_work, ''), '[^a-z0-9 ]', '', 'g')) AS work_norm,
+            lower(regexp_replace(coalesce(original_title, ''), '[^a-z0-9 ]', '', 'g')) AS orig_norm
+          FROM translation_catalogs
           WHERE author_surname_lower = $1
             AND english_title IS NOT NULL AND english_title != ''
         ) c
-        WHERE (
-          w.author_surname = $1
-          OR w.author_surname LIKE $1 || '%'
-          OR $1 LIKE w.author_surname || '%'
-          OR similarity(w.author_surname, $1) > 0.4
-        )
-        AND (
-          similarity(lower(w.english_title), lower(regexp_replace(c.english_title, '[^a-z0-9 ]', '', 'g'))) > 0.2
-          OR (c.canonical_work != '' AND similarity(w.work_key, lower(regexp_replace(c.canonical_work, '[^a-z0-9 ]', '', 'g'))) > 0.25)
-          OR (c.original_title != '' AND similarity(w.work_key, lower(regexp_replace(c.original_title, '[^a-z0-9 ]', '', 'g'))) > 0.25)
-        )
-        ORDER BY w.author_surname, w.work_key,
-          GREATEST(
-            similarity(lower(w.english_title), lower(regexp_replace(c.english_title, '[^a-z0-9 ]', '', 'g'))),
-            CASE WHEN c.canonical_work != '' THEN similarity(w.work_key, lower(regexp_replace(c.canonical_work, '[^a-z0-9 ]', '', 'g'))) ELSE 0 END,
-            CASE WHEN c.original_title != '' THEN similarity(w.work_key, lower(regexp_replace(c.original_title, '[^a-z0-9 ]', '', 'g'))) ELSE 0 END
-          ) DESC
+        WHERE similarity(lower(w.english_title), c.eng_norm) > 0.2
+           OR (c.work_norm != '' AND similarity(w.work_key, c.work_norm) > 0.25)
+           OR (c.orig_norm != '' AND similarity(w.work_key, c.orig_norm) > 0.25)
+        ORDER BY w.author_surname, w.work_key, match_score DESC
       `, [surname]);
 
       totalMatches += rowCount || 0;
