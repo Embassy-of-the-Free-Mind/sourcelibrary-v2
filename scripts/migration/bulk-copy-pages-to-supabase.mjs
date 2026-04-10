@@ -159,7 +159,7 @@ async function upsertBatchRest(rows) {
       'Content-Type': 'application/json',
       apikey: SUPABASE_SERVICE_KEY,
       Authorization: `Bearer ${SUPABASE_SERVICE_KEY}`,
-      Prefer: 'resolution=merge-duplicates,return=minimal',
+      Prefer: 'resolution=ignore-duplicates,return=minimal',
     },
     body: JSON.stringify(rows),
     signal: AbortSignal.timeout(120000),
