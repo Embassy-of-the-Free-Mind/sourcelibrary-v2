@@ -31,7 +31,7 @@ const VERBOSE = process.argv.includes('--verbose') || process.argv.includes('-v'
 
 // Global Atlas connection budget. With capped pools (maxPoolSize 5-20 per worker),
 // actual peak is well under Atlas M10 limits. 60 leaves headroom for Vercel SSR/ISR.
-const MAX_CONNECTIONS = 60;
+const MAX_CONNECTIONS = 65;
 
 // ── Worker Definitions ──
 // Each worker has:
@@ -56,6 +56,56 @@ const WORKERS = [
     healthMin: 'degraded',
     log: '/var/log/sourcelibrary/pipeline.log',
   },
+  {
+    name: 'pipeline-enroll',
+    cmd: 'node scripts/workers/pipeline-orchestrator.mjs --phase 0',
+    lock: '/tmp/sl-enroll.lock',
+    connections: 5,
+    tier: 1,
+    interval: 600,      // every 10 min
+    healthMin: 'degraded',
+    log: '/var/log/sourcelibrary/enroll.log',
+  },
+  {
+    name: 'pipeline-archive-check',
+    cmd: 'node scripts/workers/pipeline-orchestrator.mjs --phase 1',
+    lock: '/tmp/sl-archive-check.lock',
+    connections: 5,
+    tier: 1,
+    interval: 600,      // every 10 min
+    healthMin: 'degraded',
+    log: '/var/log/sourcelibrary/archive-check.log',
+  },
+  {
+    name: 'pipeline-preview-ocr',
+    cmd: 'node scripts/workers/pipeline-orchestrator.mjs --phase 1.5',
+    lock: '/tmp/sl-preview-ocr.lock',
+    connections: 5,
+    tier: 1,
+    interval: 120,      // every 2 min
+    healthMin: 'degraded',
+    log: '/var/log/sourcelibrary/preview-ocr.log',
+  },
+  {
+    name: 'pipeline-ocr-submit',
+    cmd: 'node scripts/workers/pipeline-orchestrator.mjs --phase 2',
+    lock: '/tmp/sl-ocr-submit.lock',
+    connections: 5,
+    tier: 1,
+    interval: 600,      // every 10 min
+    healthMin: 'degraded',
+    log: '/var/log/sourcelibrary/ocr-submit.log',
+  },
+  {
+    name: 'pipeline-ocr-complete',
+    cmd: 'node scripts/workers/pipeline-orchestrator.mjs --phase 3',
+    lock: '/tmp/sl-ocr-complete.lock',
+    connections: 5,
+    tier: 1,
+    interval: 600,      // every 10 min
+    healthMin: 'degraded',
+    log: '/var/log/sourcelibrary/ocr-complete.log',
+  },
 
   // Tier 2: Translation — the heaviest single worker
   {
@@ -68,6 +118,16 @@ const WORKERS = [
     healthMin: 'healthy',
     log: '/var/log/sourcelibrary/translate.log',
   },
+  {
+    name: 'pipeline-translate-complete',
+    cmd: 'node scripts/workers/pipeline-orchestrator.mjs --phase 5',
+    lock: '/tmp/sl-translate-complete.lock',
+    connections: 5,
+    tier: 2,
+    interval: 300,      // every 5 min
+    healthMin: 'degraded',
+    log: '/var/log/sourcelibrary/translate-complete.log',
+  },
 
   // Tier 3: Batch collection — lightweight, collects Gemini results
   {
@@ -79,6 +139,38 @@ const WORKERS = [
     interval: 600,      // every 10 min
     healthMin: 'critical', // always run — finishes in-flight batch jobs
     log: '/var/log/sourcelibrary/collector.log',
+  },
+
+  // Tier 3: Enrichment — Gemini API bound, moderate Atlas reads
+  {
+    name: 'enrich-worker',
+    cmd: 'node scripts/workers/enrich-worker.mjs',
+    lock: '/tmp/sl-enrich.lock',
+    connections: 5,
+    tier: 3,
+    interval: 300,      // every 5 min
+    healthMin: 'degraded',
+    log: '/var/log/sourcelibrary/enrich.log',
+  },
+  {
+    name: 'enrich-scoring',
+    cmd: 'node scripts/workers/enrich-worker.mjs --phase=7.5 --limit=50',
+    lock: '/tmp/sl-enrich-scoring.lock',
+    connections: 5,
+    tier: 3,
+    interval: 300,      // every 5 min
+    healthMin: 'healthy',
+    log: '/var/log/sourcelibrary/enrich-scoring.log',
+  },
+  {
+    name: 'enrich-collections',
+    cmd: 'node scripts/workers/enrich-worker.mjs --phase=7.6 --limit=100',
+    lock: '/tmp/sl-enrich-collections.lock',
+    connections: 5,
+    tier: 3,
+    interval: 300,      // every 5 min
+    healthMin: 'healthy',
+    log: '/var/log/sourcelibrary/enrich-collections.log',
   },
 
   // Tier 4: Archiving — I/O bound (HTTP downloads), light on Atlas
@@ -94,7 +186,7 @@ const WORKERS = [
   },
   {
     name: 'archive-bulk',
-    cmd: 'node scripts/workers/archive-bulk.mjs --limit=100 --concurrency=6',
+    cmd: 'node scripts/workers/archive-bulk.mjs --limit=100 --concurrency=3',
     lock: '/tmp/sl-archive-bulk.lock',
     connections: 5,
     tier: 4,
@@ -125,26 +217,19 @@ const WORKERS = [
     log: '/var/log/sourcelibrary/display-backfill.log',
   },
 
-  // Tier 6: Sync — infrequent, moderate load
-  {
-    name: 'sync-worker',
-    cmd: 'node scripts/workers/sync-worker.mjs',
-    lock: '/tmp/sl-sync.lock',
-    connections: 5,
-    tier: 6,
-    interval: 7200,     // every 2 hours
-    healthMin: 'healthy',
-    log: '/var/log/sourcelibrary/sync.log',
-  },
 ];
 
-// Workers NOT managed by the scheduler (HTTP-only, no Atlas load):
+// Workers NOT managed by the scheduler (HTTP-only, no Atlas load, or staggered independently):
+// - sync-worker.mjs (staggered at 0 */2 in crontab — precise timing needed)
 // - cron-caller.mjs (social-post, social-reset, daily-pipeline-report)
 // - warm-author-pages.mjs (HTTP revalidation)
 // - prewarm-browse.mjs (HTTP revalidation)
 // - pipeline-health-alert.mjs (reads only, runs daily)
 // - embedding-server.mjs (long-running, Supabase not Atlas)
 // - snapshot-stats.mjs (daily 4:30am, catalog coverage + SL progress snapshot)
+// - enrichment-snapshot.mjs (staggered at :15 odd hours)
+// - supabase-sync.mjs (staggered at :30 even hours)
+// - sync-books-catalog.mjs (staggered at :45 odd hours)
 // These keep their own cron lines.
 
 // ── Health grades ranked for comparison ──
