@@ -192,10 +192,14 @@ async function submitFeedback(args: Record<string, unknown>) {
 
 // ── Tool definitions ───────────────────────────────────────────────
 
+// Shared annotation for all read-only tools
+const READ_ONLY = { readOnlyHint: true, destructiveHint: false, idempotentHint: true, openWorldHint: false };
+
 const TOOLS: Tool[] = [
   {
     name: 'search_library',
     description: 'Full-text search across Source Library\'s 5,000+ rare historical books. Searches titles, authors, translations, and OCR text. Returns matching books and page snippets with citation URLs.',
+    annotations: { title: 'Search Library', ...READ_ONLY },
     inputSchema: {
       type: 'object' as const,
       properties: {
@@ -213,6 +217,7 @@ const TOOLS: Tool[] = [
   {
     name: 'search_translations',
     description: 'Search inside translated page text across the entire library. THE tool for finding what historical authors wrote about a topic. Returns passage snippets with page numbers and citation URLs.',
+    annotations: { title: 'Search Translations', ...READ_ONLY },
     inputSchema: {
       type: 'object' as const,
       properties: {
@@ -228,6 +233,7 @@ const TOOLS: Tool[] = [
   {
     name: 'search_within_book',
     description: 'Search inside a specific book\'s pages (OCR and translations). Returns matching pages with snippets.',
+    annotations: { title: 'Search Within Book', ...READ_ONLY },
     inputSchema: {
       type: 'object' as const,
       properties: {
@@ -240,6 +246,7 @@ const TOOLS: Tool[] = [
   {
     name: 'list_books',
     description: 'Browse the full collection with filters. Returns books with title, author, language, year, and translation progress.',
+    annotations: { title: 'List Books', ...READ_ONLY },
     inputSchema: {
       type: 'object' as const,
       properties: {
@@ -253,6 +260,7 @@ const TOOLS: Tool[] = [
   {
     name: 'get_book',
     description: 'Get detailed metadata about a book: summary, chapters, DOI, page counts. Use before reading with get_book_text.',
+    annotations: { title: 'Get Book', ...READ_ONLY },
     inputSchema: {
       type: 'object' as const,
       properties: { book_id: { type: 'string', description: 'The book ID' } },
@@ -262,6 +270,7 @@ const TOOLS: Tool[] = [
   {
     name: 'get_book_text',
     description: 'Read a book. Use chapter param to read one chapter at a time (includes [Page N] markers for citation). Or use from/to for page ranges. Call get_book first for the chapter list.',
+    annotations: { title: 'Read Book Text', ...READ_ONLY },
     inputSchema: {
       type: 'object' as const,
       properties: {
@@ -279,6 +288,7 @@ const TOOLS: Tool[] = [
   {
     name: 'get_quote',
     description: 'Get exact text of a single page for quoting, with citation URL. ALWAYS use before putting text in quotation marks.',
+    annotations: { title: 'Get Quote', ...READ_ONLY },
     inputSchema: {
       type: 'object' as const,
       properties: {
@@ -291,6 +301,7 @@ const TOOLS: Tool[] = [
   {
     name: 'search_images',
     description: 'Search 50,000+ historical illustrations, emblems, engravings, and diagrams. Filter by type, subject, figure, symbol, year.',
+    annotations: { title: 'Search Images', ...READ_ONLY },
     inputSchema: {
       type: 'object' as const,
       properties: {
@@ -305,6 +316,7 @@ const TOOLS: Tool[] = [
   {
     name: 'submit_feedback',
     description: 'Submit feedback, bug reports, or feature requests to the Source Library team.',
+    annotations: { title: 'Submit Feedback', readOnlyHint: false, destructiveHint: false, idempotentHint: false, openWorldHint: false },
     inputSchema: {
       type: 'object' as const,
       properties: {
