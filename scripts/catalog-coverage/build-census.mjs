@@ -26,12 +26,12 @@ const PG_URL = process.env.SUPABASE_DB_URL;
 if (!MONGO_URI) { console.error('MONGODB_URI required'); process.exit(1); }
 if (!PG_URL) { console.error('SUPABASE_DB_URL required'); process.exit(1); }
 
+// Use session mode (port 5432) for DDL — transaction pooler (6543) doesn't
+// support SET, prepared statements, or materialized views properly.
+const sessionUrl = PG_URL.replace(':6543/', ':5432/');
 const pool = new pg.Pool({
-  connectionString: PG_URL,
+  connectionString: sessionUrl,
   ssl: { rejectUnauthorized: false },
-  // 10 minute statement timeout for heavy materialized view builds
-  statement_timeout: 600000,
-  query_timeout: 600000,
 });
 
 async function run() {
