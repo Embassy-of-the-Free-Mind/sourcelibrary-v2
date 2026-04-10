@@ -239,48 +239,40 @@ async function main() {
   let copied = 0;
   let skipped = 0;
   errors = 0; // reset global
-  const CONCURRENCY = parseInt(args.find(a => a.startsWith('--concurrency='))?.split('=')[1] || '10', 10);
-  let inflight = [];
-  let batch = [];
+  const CONCURRENCY = parseInt(args.find(a => a.startsWith('--concurrency='))?.split('=')[1] || '20', 10);
+  const BUFFER_SIZE = BATCH_SIZE * CONCURRENCY; // Pre-buffer this many rows from cursor
   const startTime = Date.now();
 
-  for await (const doc of cursor) {
-    if (!doc.id || !doc.book_id) {
-      skipped++;
-      continue;
+  let done = false;
+  while (!done) {
+    // Phase 1: Pre-buffer rows from MongoDB cursor (sequential, fast)
+    const buffer = [];
+    for (let i = 0; i < BUFFER_SIZE && !done; i++) {
+      const doc = await cursor.next();
+      if (!doc) { done = true; break; }
+      if (!doc.id || !doc.book_id) { skipped++; continue; }
+      buffer.push(flattenPage(doc));
     }
+    if (buffer.length === 0) break;
 
-    batch.push(flattenPage(doc));
-
-    if (batch.length >= BATCH_SIZE) {
-      const currentBatch = batch;
-      batch = [];
-      inflight.push(upsertWithRetry(currentBatch));
-
-      // When we hit concurrency limit, wait for all to complete
-      if (inflight.length >= CONCURRENCY) {
-        const results = await Promise.all(inflight);
-        copied += results.reduce((a, b) => a + b, 0);
-        inflight = [];
-
-        // Progress
-        const elapsed = ((Date.now() - startTime) / 1000).toFixed(0);
-        const rate = (copied / (elapsed || 1)).toFixed(0);
-        const pct = ((copied / total) * 100).toFixed(1);
-        process.stdout.write(`\r  ${copied.toLocaleString()} / ${total.toLocaleString()} (${pct}%) — ${rate} rows/s — ${errors} errors`);
-
-        if (LIMIT && copied >= LIMIT) {
-          console.log(`\nReached limit of ${LIMIT}`);
-          break;
-        }
-      }
+    // Phase 2: Split into batches and blast in parallel
+    const batches = [];
+    for (let i = 0; i < buffer.length; i += BATCH_SIZE) {
+      batches.push(buffer.slice(i, i + BATCH_SIZE));
     }
-  }
-
-  // Drain inflight
-  if (inflight.length > 0) {
-    const results = await Promise.all(inflight);
+    const results = await Promise.all(batches.map(b => upsertWithRetry(b)));
     copied += results.reduce((a, b) => a + b, 0);
+
+    // Progress
+    const elapsed = ((Date.now() - startTime) / 1000).toFixed(0);
+    const rate = (copied / (elapsed || 1)).toFixed(0);
+    const pct = ((copied / total) * 100).toFixed(1);
+    process.stdout.write(`\r  ${copied.toLocaleString()} / ${total.toLocaleString()} (${pct}%) — ${rate} rows/s — ${errors} errors`);
+
+    if (LIMIT && copied >= LIMIT) {
+      console.log(`\nReached limit of ${LIMIT}`);
+      break;
+    }
   }
 
   // Flush remaining
