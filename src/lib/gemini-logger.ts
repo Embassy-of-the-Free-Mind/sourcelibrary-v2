@@ -2,10 +2,11 @@
  * Gemini API Usage Logger
  *
  * Logs all Gemini API calls (realtime and batch) for auditing.
- * Stores in MongoDB `gemini_usage` collection.
+ * Primary store: Supabase `gemini_usage` table (since 2026-04-10, issue #567 Phase 3).
+ * Falls back to MongoDB if Supabase service key unavailable.
  *
  * This is the SINGLE source of truth for AI cost/usage tracking.
- * The `cost_tracking` collection is deprecated — all new writes go here.
+ * The `cost_tracking` collection is deprecated.
  *
  * Usage:
  *   import { logGeminiCall, logBatchSubmission, logBatchResult } from '@/lib/gemini-logger';
@@ -54,6 +55,7 @@
  */
 
 import { getDb } from './mongodb';
+import { supabaseAdmin, supabase } from './supabase';
 
 // Pricing per 1M tokens (as of Jan 2025)
 const MODEL_PRICING: Record<string, { input: number; output: number }> = {
@@ -200,39 +202,34 @@ export async function logGeminiCall(params: {
       ...(params.pages_per_request && params.pages_per_request > 1 && { pages_per_request: params.pages_per_request }),
     };
 
-    await db.collection('gemini_usage').insertOne(log);
-
-    // Dual-write to Supabase (fire-and-forget, non-blocking)
-    try {
-      const { supabaseAdmin } = await import('./supabase');
-      if (supabaseAdmin) {
-        supabaseAdmin.from('gemini_usage').insert({
-          id: log.id,
-          timestamp: log.timestamp,
-          type: log.type,
-          mode: log.mode || null,
-          model: log.model || null,
-          book_id: log.book_id || null,
-          book_title: log.book_title || null,
-          page_count: log.page_count || 0,
-          input_tokens: log.input_tokens || 0,
-          output_tokens: log.output_tokens || 0,
-          cost_usd: log.cost_usd || 0,
-          status: log.status || null,
-          error_message: log.error_message || null,
-          error_category: log.error_category || null,
-          duration_ms: log.duration_ms || null,
-          prompt_version: log.prompt_version || null,
-          job_id: log.job_id || null,
-          batch_job_id: log.batch_job_id || null,
-          endpoint: log.endpoint || null,
-          completed_at: null,
-        }).then(({ error }) => {
-          if (error) console.warn('[gemini-logger] Supabase write failed:', error.message);
-        });
-      }
-    } catch {
-      // Supabase dual-write is best-effort
+    // Write to Supabase (primary store since 2026-04-10, issue #567 Phase 3)
+    if (supabaseAdmin) {
+      const { error } = await supabaseAdmin.from('gemini_usage').insert({
+        id: log.id,
+        timestamp: log.timestamp,
+        type: log.type,
+        mode: log.mode || null,
+        model: log.model || null,
+        book_id: log.book_id || null,
+        book_title: log.book_title || null,
+        page_count: log.page_count || 0,
+        input_tokens: log.input_tokens || 0,
+        output_tokens: log.output_tokens || 0,
+        cost_usd: log.cost_usd || 0,
+        status: log.status || null,
+        error_message: log.error_message || null,
+        error_category: log.error_category || null,
+        duration_ms: log.duration_ms || null,
+        prompt_version: log.prompt_version || null,
+        job_id: log.job_id || null,
+        batch_job_id: log.batch_job_id || null,
+        endpoint: log.endpoint || null,
+        completed_at: null,
+      });
+      if (error) console.warn('[gemini-logger] Supabase write failed:', error.message);
+    } else {
+      // Fallback: write to MongoDB if Supabase service key unavailable (e.g., build time)
+      await db.collection('gemini_usage').insertOne(log);
     }
   } catch (error) {
     // Don't let logging failures break the main flow
@@ -274,48 +271,65 @@ export async function logBatchResult(params: {
   error_message?: string;
 }): Promise<void> {
   try {
-    const db = await getDb();
+    if (supabaseAdmin) {
+      // Find the pending entry on Supabase
+      const { data: existing } = await supabaseAdmin
+        .from('gemini_usage')
+        .select('id, model')
+        .eq('batch_job_id', params.batch_job_id)
+        .eq('status', 'pending')
+        .limit(1)
+        .single();
 
-    // Find the pending log entry
-    const existing = await db.collection('gemini_usage').findOne({
-      batch_job_id: params.batch_job_id,
-      status: 'pending',
-    });
+      if (existing) {
+        const cost = calculateCost(
+          existing.model || 'gemini-3-flash-preview',
+          params.input_tokens,
+          params.output_tokens,
+          true
+        );
 
-    if (existing) {
-      // Update existing entry
-      const cost = calculateCost(
-        existing.model,
-        params.input_tokens,
-        params.output_tokens,
-        true
-      );
-
-      await db.collection('gemini_usage').updateOne(
-        { _id: existing._id },
-        {
-          $set: {
+        await supabaseAdmin
+          .from('gemini_usage')
+          .update({
             input_tokens: params.input_tokens,
             output_tokens: params.output_tokens,
             cost_usd: cost,
             status: params.status,
             error_message: params.error_message,
-            completed_at: new Date(),
-          },
-        }
-      );
+            completed_at: new Date().toISOString(),
+          })
+          .eq('id', existing.id);
+      } else {
+        // Create new entry if pending not found
+        await logGeminiCall({
+          type: 'ocr',
+          mode: 'batch',
+          model: 'gemini-3-flash-preview',
+          batch_job_id: params.batch_job_id,
+          input_tokens: params.input_tokens,
+          output_tokens: params.output_tokens,
+          status: params.status,
+          error_message: params.error_message,
+        });
+      }
     } else {
-      // Create new entry if pending not found (e.g., from script without submission log)
-      await logGeminiCall({
-        type: 'ocr', // Default, could be improved
-        mode: 'batch',
-        model: 'gemini-3-flash-preview', // Default
+      // Fallback to MongoDB if Supabase unavailable
+      const db = await getDb();
+      const existing = await db.collection('gemini_usage').findOne({
         batch_job_id: params.batch_job_id,
-        input_tokens: params.input_tokens,
-        output_tokens: params.output_tokens,
-        status: params.status,
-        error_message: params.error_message,
+        status: 'pending',
       });
+
+      if (existing) {
+        const cost = calculateCost(existing.model, params.input_tokens, params.output_tokens, true);
+        await db.collection('gemini_usage').updateOne(
+          { _id: existing._id },
+          { $set: { input_tokens: params.input_tokens, output_tokens: params.output_tokens, cost_usd: cost, status: params.status, error_message: params.error_message, completed_at: new Date() } },
+        );
+      } else {
+        await logGeminiCall({ type: 'ocr', mode: 'batch', model: 'gemini-3-flash-preview', batch_job_id: params.batch_job_id, input_tokens: params.input_tokens, output_tokens: params.output_tokens, status: params.status, error_message: params.error_message });
+      }
     }
   } catch (error) {
     console.error('[gemini-logger] Failed to log batch result:', error);
@@ -337,66 +351,37 @@ export async function getUsageSummary(params: {
   by_type: Record<string, { calls: number; cost: number }>;
   by_model: Record<string, { calls: number; cost: number }>;
 }> {
-  const db = await getDb();
+  const client = supabaseAdmin || supabase;
 
-  const match: Record<string, unknown> = {};
-  if (params.startDate || params.endDate) {
-    match.timestamp = {};
-    if (params.startDate) (match.timestamp as Record<string, Date>).$gte = params.startDate;
-    if (params.endDate) (match.timestamp as Record<string, Date>).$lte = params.endDate;
+  // Note: PostgREST defaults to 1000 rows. For book-scoped queries this is fine.
+  // For time-range queries across all books, use dashboard_usage view instead.
+  let query = client.from('gemini_usage').select('type, model, input_tokens, output_tokens, cost_usd').limit(50000);
+  if (params.startDate) query = query.gte('timestamp', params.startDate.toISOString());
+  if (params.endDate) query = query.lte('timestamp', params.endDate.toISOString());
+  if (params.book_id) query = query.eq('book_id', params.book_id);
+
+  const { data: rows } = await query;
+
+  const byType: Record<string, { calls: number; cost: number }> = {};
+  const byModel: Record<string, { calls: number; cost: number }> = {};
+  let total_calls = 0, total_input_tokens = 0, total_output_tokens = 0, total_cost_usd = 0;
+
+  for (const r of rows || []) {
+    total_calls++;
+    total_input_tokens += r.input_tokens || 0;
+    total_output_tokens += r.output_tokens || 0;
+    total_cost_usd += r.cost_usd || 0;
+
+    const t = r.type || 'unknown';
+    if (!byType[t]) byType[t] = { calls: 0, cost: 0 };
+    byType[t].calls++;
+    byType[t].cost += r.cost_usd || 0;
+
+    const m = r.model || 'unknown';
+    if (!byModel[m]) byModel[m] = { calls: 0, cost: 0 };
+    byModel[m].calls++;
+    byModel[m].cost += r.cost_usd || 0;
   }
-  if (params.book_id) {
-    match.book_id = params.book_id;
-  }
 
-  const results = await db.collection('gemini_usage').aggregate([
-    { $match: match },
-    {
-      $group: {
-        _id: null,
-        total_calls: { $sum: 1 },
-        total_input_tokens: { $sum: '$input_tokens' },
-        total_output_tokens: { $sum: '$output_tokens' },
-        total_cost_usd: { $sum: '$cost_usd' },
-      },
-    },
-  ]).toArray();
-
-  const byType = await db.collection('gemini_usage').aggregate([
-    { $match: match },
-    {
-      $group: {
-        _id: '$type',
-        calls: { $sum: 1 },
-        cost: { $sum: '$cost_usd' },
-      },
-    },
-  ]).toArray();
-
-  const byModel = await db.collection('gemini_usage').aggregate([
-    { $match: match },
-    {
-      $group: {
-        _id: '$model',
-        calls: { $sum: 1 },
-        cost: { $sum: '$cost_usd' },
-      },
-    },
-  ]).toArray();
-
-  const summary = results[0] || {
-    total_calls: 0,
-    total_input_tokens: 0,
-    total_output_tokens: 0,
-    total_cost_usd: 0,
-  };
-
-  return {
-    total_calls: summary.total_calls,
-    total_input_tokens: summary.total_input_tokens,
-    total_output_tokens: summary.total_output_tokens,
-    total_cost_usd: summary.total_cost_usd,
-    by_type: Object.fromEntries(byType.map(r => [r._id, { calls: r.calls, cost: r.cost }])),
-    by_model: Object.fromEntries(byModel.map(r => [r._id, { calls: r.calls, cost: r.cost }])),
-  };
+  return { total_calls, total_input_tokens, total_output_tokens, total_cost_usd, by_type: byType, by_model: byModel };
 }
