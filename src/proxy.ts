@@ -316,10 +316,8 @@ export function proxy(request: NextRequest) {
   if (isEmbeddablePath) {
     const frameOrigin = request.headers.get('origin') ||
       (request.headers.get('referer') || '').replace(/^(https?:\/\/[^/]+).*/, '$1');
-    const frameHost = frameOrigin.replace(/^https?:\/\//, '').split('/')[0].toLowerCase();
-    // const isLocalhost = frameHost.startsWith('localhost') || frameHost.startsWith('127.0.0.1');
-    const isLocalhost = frameHost.startsWith('localhost');
-    const isAllowed = isLocalhost || getAllowedEmbedOrigins().has(frameHost);
+    const frameHost = frameOrigin.replace(/^https?:\/\//, '').split('/')[0].toLowerCase();    
+    const isAllowed = getAllowedEmbedOrigins().has(frameHost);
 
     if (!isAllowed) {
       response.headers.set('X-Frame-Options', 'DENY');
