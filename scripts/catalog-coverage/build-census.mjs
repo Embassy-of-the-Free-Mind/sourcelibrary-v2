@@ -26,13 +26,26 @@ const PG_URL = process.env.SUPABASE_DB_URL;
 if (!MONGO_URI) { console.error('MONGODB_URI required'); process.exit(1); }
 if (!PG_URL) { console.error('SUPABASE_DB_URL required'); process.exit(1); }
 
-// Use session mode (port 5432) for DDL — transaction pooler (6543) doesn't
-// support SET, prepared statements, or materialized views properly.
+// Use session mode (port 5432) with a single Client (not Pool) —
+// SET statement_timeout persists on the connection, and the transaction
+// pooler (6543) doesn't support SET at all.
 const sessionUrl = PG_URL.replace(':6543/', ':5432/');
-const pool = new pg.Pool({
+const pgClient = new pg.Client({
   connectionString: sessionUrl,
   ssl: { rejectUnauthorized: false },
 });
+
+// Wrap pgClient to match pool.connect() interface used below
+const pool = {
+  connect: async () => {
+    if (!pgClient._connected) {
+      await pgClient.connect();
+      pgClient._connected = true;
+    }
+    return { query: (...args) => pgClient.query(...args), release: () => {} };
+  },
+  end: () => pgClient.end(),
+};
 
 async function run() {
   const mongo = new MongoClient(MONGO_URI);
@@ -152,8 +165,8 @@ async function syncCatalogs(db) {
 async function buildCensusView() {
   const client = await pool.connect();
   try {
-    // Set generous timeout for heavy queries
-    await client.query("SET statement_timeout = '600s'");
+    // Disable statement timeout — the works dedup query takes 5-10 min
+    await client.query("SET statement_timeout = '0'");
 
     console.log('  Creating translation_census_by_language materialized view...');
 
@@ -170,7 +183,6 @@ async function buildCensusView() {
       // on Supabase shared infra. We use CREATE TABLE ... AS SELECT
       // which may be faster, and set a very long timeout.
       console.log('  Building ustc_distinct_works table (this takes several minutes)...');
-      await client.query("SET statement_timeout = '900s'");
       await client.query('DROP MATERIALIZED VIEW IF EXISTS translation_census_by_language CASCADE');
       await client.query('DROP TABLE IF EXISTS translation_census_matches CASCADE');
       await client.query('DROP MATERIALIZED VIEW IF EXISTS ustc_distinct_works CASCADE');
@@ -206,7 +218,6 @@ async function buildCensusView() {
         CREATE INDEX IF NOT EXISTS idx_udw_lang ON ustc_distinct_works (language);
         CREATE INDEX IF NOT EXISTS idx_udw_surname_trgm ON ustc_distinct_works USING gin (author_surname gin_trgm_ops);
       `);
-      await client.query("SET statement_timeout = '600s'");
     }
 
     const { rows: [{ count: workCount }] } = await client.query('SELECT count(*) FROM ustc_distinct_works');
