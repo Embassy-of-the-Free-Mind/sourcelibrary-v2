@@ -19,6 +19,7 @@ interface BookRef {
   year?: number;
   language?: string;
   thumbnail?: string;
+  thumbnail_blob?: string;
   is_first_translation?: boolean;
   ft_disposition?: string;
 }
@@ -196,9 +197,9 @@ function SectionsBlock({ sections, books }: {
                 >
                   <div className="w-16 sm:w-20 flex-shrink-0">
                     <div className="aspect-[3/4] relative rounded-lg overflow-hidden bg-warm">
-                      {book.thumbnail ? (
+                      {(book.thumbnail_blob || book.thumbnail) ? (
                         <Image
-                          src={book.thumbnail}
+                          src={(book.thumbnail_blob || book.thumbnail)!}
                           alt={bookTitle(book)}
                           fill
                           className="object-cover group-hover:scale-105 transition-transform duration-300"

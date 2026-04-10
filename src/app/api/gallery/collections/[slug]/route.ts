@@ -36,6 +36,8 @@ export async function GET(
       book_collection_slug: collection.book_collection_slug || undefined,
       imageCount: imageIds.length,
       items,
+    }, {
+      headers: { 'Cache-Control': 'public, max-age=300, stale-while-revalidate=3600' },
     });
   } catch (error) {
     console.error('Get collection error:', error);

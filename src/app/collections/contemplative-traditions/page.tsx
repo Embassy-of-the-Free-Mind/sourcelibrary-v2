@@ -94,6 +94,7 @@ interface TraditionCollection {
     author: string;
     year: number | null;
     thumbnail: string | null;
+    thumbnail_blob?: string | null;
   }[];
 }
 
@@ -143,7 +144,7 @@ function TraditionCard({ tradition }: { tradition: TraditionCollection }) {
 
   // Pick a thumbnail from sample books
   const heroThumb = tradition.sample_books
-    .map(b => sanitizeThumbnail(b.thumbnail))
+    .map(b => sanitizeThumbnail(b.thumbnail_blob || b.thumbnail))
     .find((t): t is string => !!t);
 
   return (
@@ -179,7 +180,7 @@ function TraditionCard({ tradition }: { tradition: TraditionCollection }) {
         <div className="bg-white px-6 py-4 border-t border-stone-100">
           <div className="flex gap-3 overflow-hidden">
             {tradition.sample_books.slice(0, 5).map(book => {
-              const thumb = sanitizeThumbnail(book.thumbnail);
+              const thumb = sanitizeThumbnail(book.thumbnail_blob || book.thumbnail);
               return (
                 <div key={book.id} className="w-16 flex-shrink-0">
                   <div className="aspect-[3/4] relative rounded-lg overflow-hidden bg-stone-100">

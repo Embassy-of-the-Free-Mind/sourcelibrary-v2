@@ -30,6 +30,7 @@ interface PopularBook {
   published?: string;
   language?: string;
   thumbnail?: string;
+  thumbnail_blob?: string;
   featured_images?: FeaturedImage[];
   likeCount: number;
 }
@@ -259,7 +260,7 @@ export default function FavoritesPage() {
           <div className="grid gap-5 grid-cols-1 sm:grid-cols-2">
             {books.map((book, i) => {
               const imgs = book.featured_images || [];
-              const heroUrl = imgs[0]?.url || book.thumbnail;
+              const heroUrl = imgs[0]?.url || book.thumbnail_blob || book.thumbnail;
 
               return (
                 <Link

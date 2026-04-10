@@ -876,10 +876,10 @@ function langSpeedTier(lang) {
 // ── Self-dispatch: create jobs for books that need translation ──
 // Eliminates the gap between translate-worker finishing and Phase 4 dispatching new books.
 async function selfDispatch(db, limit) {
-  // Find fresh books (metadata_enriched/ft_verified) — sorted by language speed tier
+  // Find fresh books (ocr_complete) — sorted by language speed tier
   // so each batch is homogeneous (all fast or all slow books together).
   const fresh = await db.collection('books').aggregate([
-    { $match: { 'pipeline_auto.status': { $in: ['metadata_enriched', 'ft_verified'] } } },
+    { $match: { 'pipeline_auto.status': { $in: ['ocr_complete'] } } },
     { $addFields: { _speedTier: { $switch: {
       branches: [
         { case: { $in: ['$language', ['Latin', 'German', 'French', 'Italian', 'Dutch', 'Spanish', 'Portuguese', 'English', 'Czech', 'Polish', 'Swedish', 'Danish']] }, then: 0 },
@@ -1082,7 +1082,7 @@ async function main() {
     }
   }
 
-  // Self-dispatch: fill remaining slots with fresh books from metadata_enriched/ft_verified.
+  // Self-dispatch: fill remaining slots with fresh books (ocr_complete).
   if (books.length < CONCURRENCY) {
     const needed = CONCURRENCY - books.length;
     const dispatched = await selfDispatch(db, needed);
@@ -1136,10 +1136,10 @@ async function main() {
         );
         console.log(`  [${(book.title || '').substring(0, 40)}] Re-linked orphan job ${jobId}`);
       } else {
-        console.log(`  [${(book.title || '').substring(0, 40)}] No job found, rolling back to metadata_enriched`);
+        console.log(`  [${(book.title || '').substring(0, 40)}] No job found, rolling back to ocr_complete`);
         await db.collection('books').updateOne(
           { id: book.id },
-          { $set: { 'pipeline_auto.status': 'metadata_enriched', updated_at: new Date() }, $unset: { job: '' } },
+          { $set: { 'pipeline_auto.status': 'ocr_complete', updated_at: new Date() }, $unset: { job: '' } },
         );
         return zero;
       }
@@ -1149,7 +1149,7 @@ async function main() {
       console.log(`  [${(book.title || '').substring(0, 40)}] Job ${jobId} is ${job?.status || 'missing'}, resetting`);
       await db.collection('books').updateOne(
         { id: book.id },
-        { $set: { 'pipeline_auto.status': 'metadata_enriched', updated_at: new Date() }, $unset: { job: '' } },
+        { $set: { 'pipeline_auto.status': 'ocr_complete', updated_at: new Date() }, $unset: { job: '' } },
       );
       return zero;
     }

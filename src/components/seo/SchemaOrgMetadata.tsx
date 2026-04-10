@@ -72,9 +72,9 @@ export default function SchemaOrgMetadata({
       },
     }),
     ...(pageCount > 0 && { numberOfPages: pageCount }),
-    ...(book.thumbnail && {
-      image: book.thumbnail,
-      thumbnailUrl: book.thumbnail,
+    ...((book.thumbnail_blob || book.thumbnail) && {
+      image: book.thumbnail_blob || book.thumbnail,
+      thumbnailUrl: book.thumbnail_blob || book.thumbnail,
     }),
     ...(book.categories && book.categories.length > 0 && {
       genre: book.categories,
@@ -153,7 +153,7 @@ export default function SchemaOrgMetadata({
     description: getDescription(book, translatedCount, pageCount),
     url: pageUrl,
     mainEntity: translationWork ? { '@id': `${baseUrl}/book/${bookPath}#translation` } : { '@id': `${baseUrl}/book/${bookPath}#original` },
-    ...(book.thumbnail && { thumbnailUrl: book.thumbnail }),
+    ...((book.thumbnail_blob || book.thumbnail) && { thumbnailUrl: book.thumbnail_blob || book.thumbnail }),
   };
 
   // Breadcrumb navigation

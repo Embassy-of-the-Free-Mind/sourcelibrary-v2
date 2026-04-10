@@ -16,6 +16,7 @@ export interface MatchedBook {
   pages_translated?: number;
   pages_blank?: number;
   thumbnail?: string;
+  thumbnail_blob?: string;
   overview?: string;
   url: string;
 }

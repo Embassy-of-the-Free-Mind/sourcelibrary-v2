@@ -1,19 +1,8 @@
 import { NextRequest, NextResponse } from 'next/server';
-import { getReadDb, forceReconnect, isConnectionError } from '@/lib/mongodb';
-import { buildBookSearchStage } from '@/lib/atlas-search';
+import { getReadDb } from '@/lib/mongodb';
 import { searchBookIds } from '@/lib/books-catalog';
 
 export const dynamic = 'force-dynamic';
-
-/** Race a promise against a timeout. Returns the result or throws on timeout. */
-function withTimeout<T>(promise: Promise<T>, ms: number, label: string): Promise<T> {
-  return Promise.race([
-    promise,
-    new Promise<never>((_, reject) =>
-      setTimeout(() => reject(new Error(`${label} timed out after ${ms}ms`)), ms),
-    ),
-  ]);
-}
 
 export async function GET(request: NextRequest) {
   const { searchParams } = new URL(request.url);
@@ -30,51 +19,17 @@ export async function GET(request: NextRequest) {
   }
 
   try {
-    let db = await withTimeout(getReadDb(), 8000, 'getReadDb');
-    const projection = { _id: 1, id: 1, title: 1, display_title: 1, author: 1 };
+    // Supabase trigram search (fast, always warm — no cold-start penalty)
+    const matchingIds = await searchBookIds(query, { limit: skip + limit });
+    const pageIds = matchingIds.slice(skip, skip + limit);
 
-    let books: Record<string, unknown>[];
-    let total: number;
-
-    try {
-      // Atlas Search — no $facet (causes Atlas timeouts on large collections)
-      books = await withTimeout(
-        db.collection('books').aggregate([
-          buildBookSearchStage(query),
-          { $skip: skip },
-          { $limit: limit },
-          { $project: projection },
-        ], { maxTimeMS: 5000 }).toArray(),
-        8000,
-        'Atlas Search',
-      );
-      total = -1; // Skip expensive count — hasMore uses result length instead
-    } catch (searchErr) {
-      // If connection is stale, force reconnect
-      if (isConnectionError(searchErr)) {
-        db = await withTimeout(forceReconnect(), 8000, 'forceReconnect');
-      }
-
-      // Fallback: Supabase trigram search (fast, indexed) instead of MongoDB regex
-      const matchingIds = await withTimeout(
-        searchBookIds(query, { limit: skip + limit }),
-        8000,
-        'Supabase fallback',
-      );
-      const pageIds = matchingIds.slice(skip, skip + limit);
-      if (pageIds.length > 0) {
-        books = await withTimeout(
-          db.collection('books').find(
-            { id: { $in: pageIds } },
-            { projection },
-          ).toArray(),
-          8000,
-          'Supabase ID lookup',
-        );
-      } else {
-        books = [];
-      }
-      total = -1;
+    let books: Record<string, unknown>[] = [];
+    if (pageIds.length > 0) {
+      const db = await getReadDb();
+      books = await db.collection('books').find(
+        { id: { $in: pageIds } },
+        { projection: { _id: 1, id: 1, title: 1, display_title: 1, author: 1 } },
+      ).maxTimeMS(5000).toArray();
     }
 
     const response = NextResponse.json({
@@ -87,14 +42,13 @@ export async function GET(request: NextRequest) {
         author: b.author,
       })),
       pagination: {
-        total,
+        total: -1,
         limit,
         skip,
-        hasMore: total === -1 ? books.length === limit : skip + books.length < total,
+        hasMore: books.length === limit,
       },
     });
 
-    // Cache successful responses at the edge for 60s
     response.headers.set('Cache-Control', 'public, s-maxage=60, stale-while-revalidate=300');
     return response;
   } catch (error) {

@@ -55,9 +55,7 @@ export type PipelineAutoStatus =
   | 'archive_complete'
   | 'ocr_submitted'
   | 'ocr_complete'
-  | 'metadata_enriched'
-  | 'ft_verifying'
-  | 'ft_verified'
+  | 'metadata_enriched' // legacy — books processed before Phase 1.6 migration
   | 'translate_submitted'
   | 'translate_complete'
   | 'enriching'
