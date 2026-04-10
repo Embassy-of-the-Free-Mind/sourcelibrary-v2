@@ -2,7 +2,7 @@ import { Metadata } from 'next';
 import Link from 'next/link';
 import Image from 'next/image';
 import SiteHeader from '@/components/layout/SiteHeader';
-import { getDb } from '@/lib/mongodb';
+import { getReadDb } from '@/lib/mongodb';
 import { notFound, redirect } from 'next/navigation';
 import { bookUrl, authorSlug, authorUrl } from '@/lib/slugify';
 import { VISUAL_RESOURCE_TYPES } from '@/lib/books-catalog';
@@ -196,7 +196,7 @@ export default async function ArtistPage({ params }: ArtistPageProps) {
     redirect(`/artist/${authorSlug(decoded)}`);
   }
 
-  const db = await getDb();
+  const db = await getReadDb();
   const data = await loadArtistData(db, name);
   if (!data) notFound();
 

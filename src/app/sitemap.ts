@@ -1,5 +1,5 @@
 import { MetadataRoute } from 'next';
-import { getDb } from '@/lib/mongodb';
+import { getReadDb } from '@/lib/mongodb';
 
 // Next.js metadata files (sitemap.ts) are statically generated at build time.
 // Each DB query is independently wrapped so a single timeout doesn't kill the whole sitemap.
@@ -183,11 +183,11 @@ export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
   // Helper: run a DB query with independent error handling
   async function safeQuery<T>(
     label: string,
-    fn: (db: Awaited<ReturnType<typeof getDb>>) => Promise<T>,
+    fn: (db: Awaited<ReturnType<typeof getReadDb>>) => Promise<T>,
     fallback: T,
   ): Promise<T> {
     try {
-      const dbPromise = getDb();
+      const dbPromise = getReadDb();
       const timeoutPromise = new Promise<never>((_, reject) =>
         setTimeout(() => reject(new Error(`${label}: DB connection timeout`)), 20000)
       );

@@ -1,12 +1,12 @@
 import { NextRequest, NextResponse } from 'next/server';
-import { getDb } from '@/lib/mongodb';
+import { getReadDb } from '@/lib/mongodb';
 import { ContributeBook } from '@/lib/api-client';
 
 export const dynamic = 'force-dynamic';
 
 export async function GET(request: NextRequest) {
   try {
-    const db = await getDb();
+    const db = await getReadDb();
 
     const searchParams = request.nextUrl.searchParams;
     const type = searchParams.get('type') || 'ocr';

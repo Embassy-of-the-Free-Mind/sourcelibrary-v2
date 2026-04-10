@@ -1,6 +1,6 @@
 import { Metadata } from 'next';
 import Link from 'next/link';
-import { getDb } from '@/lib/mongodb';
+import { getReadDb } from '@/lib/mongodb';
 import ContentPageLayout, { ContentHeader } from '@/components/layout/ContentPageLayout';
 import { CenturyChart } from './DataCharts';
 
@@ -104,7 +104,7 @@ const EMPTY_DATA: LibraryData = {
  * Never runs heavy aggregations inline — that's done by POST /api/admin/data-snapshot.
  */
 async function fetchLibraryData(): Promise<LibraryData> {
-  const db = await getDb();
+  const db = await getReadDb();
   const config = db.collection('system_config');
 
   // Try dedicated data page snapshot first

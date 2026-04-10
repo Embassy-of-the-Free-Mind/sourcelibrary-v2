@@ -1,5 +1,5 @@
 import { NextRequest, NextResponse } from 'next/server';
-import { getDb } from '@/lib/mongodb';
+import { getReadDb } from '@/lib/mongodb';
 
 export const dynamic = 'force-dynamic';
 
@@ -10,7 +10,7 @@ export async function GET(request: NextRequest) {
     const language = searchParams.get('language') || '';
     const collection = searchParams.get('collection') || '';
 
-    const db = await getDb();
+    const db = await getReadDb();
 
     // Base filter: has year, not hidden
     const baseMatch: Record<string, unknown> = {

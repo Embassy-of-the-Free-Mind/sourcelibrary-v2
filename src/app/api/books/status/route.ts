@@ -1,5 +1,5 @@
 import { NextResponse } from 'next/server';
-import { getDb } from '@/lib/mongodb';
+import { getReadDb } from '@/lib/mongodb';
 
 interface BookStatus {
   id: string;
@@ -19,7 +19,7 @@ interface BookStatus {
 // GET /api/books/status - Get summary readiness status for all books
 export async function GET() {
   try {
-    const db = await getDb();
+    const db = await getReadDb();
 
     // Aggregate book data with page counts
     const books = await db.collection('books').aggregate([

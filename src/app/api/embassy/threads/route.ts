@@ -1,5 +1,5 @@
 import { NextRequest, NextResponse } from 'next/server';
-import { getDb } from '@/lib/mongodb';
+import { getReadDb } from '@/lib/mongodb';
 
 /**
  * GET /api/embassy/threads — List public Embassy threads (activity feed).
@@ -10,7 +10,7 @@ export async function GET(request: NextRequest) {
   const limit = Math.min(parseInt(url.searchParams.get('limit') || '20'), 50);
   const offset = parseInt(url.searchParams.get('offset') || '0');
 
-  const db = await getDb();
+  const db = await getReadDb();
 
   const threads = await db.collection('embassy_threads')
     .find({ visibility: 'public', messageCount: { $gte: 2 } }) // Only show threads with at least one exchange

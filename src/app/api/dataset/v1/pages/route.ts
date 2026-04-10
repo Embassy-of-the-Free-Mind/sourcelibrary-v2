@@ -1,5 +1,5 @@
 import { NextRequest, NextResponse } from 'next/server';
-import { getDb } from '@/lib/mongodb';
+import { getReadDb } from '@/lib/mongodb';
 import { validateApiKey } from '@/lib/dataset/api-keys';
 import { logAccess, getDailyPageCount } from '@/lib/dataset/access-logger';
 import { DatasetPageRecord } from '@/lib/dataset/types';
@@ -69,7 +69,7 @@ export async function GET(request: NextRequest) {
     }
   }
 
-  const db = await getDb();
+  const db = await getReadDb();
 
   // Build book filter
   const bookFilter: any = { visible: true };

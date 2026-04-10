@@ -1,5 +1,5 @@
 import { NextRequest, NextResponse } from 'next/server';
-import { getDb } from '@/lib/mongodb';
+import { getReadDb } from '@/lib/mongodb';
 import { Document } from 'mongodb';
 
 /**
@@ -185,7 +185,7 @@ function buildQuery(from?: string, until?: string, set?: string): Document {
 // ─── Verb handlers ───
 
 async function handleIdentify(now: string): Promise<NextResponse> {
-  const db = await getDb();
+  const db = await getReadDb();
   const earliest = await db.collection('books').findOne(
     { pages_count: { $gt: 0 } },
     { sort: { created_at: 1 }, projection: { created_at: 1 }, maxTimeMS: 15000 }
@@ -231,7 +231,7 @@ function handleListMetadataFormats(now: string): NextResponse {
 }
 
 async function handleListSets(now: string): Promise<NextResponse> {
-  const db = await getDb();
+  const db = await getReadDb();
   const categories = await db.collection('books').distinct('categories', { pages_count: { $gt: 0 } });
   const sets = categories
     .filter(Boolean)
@@ -280,7 +280,7 @@ async function handleListRecords(
     set = params.get('set') || undefined;
   }
 
-  const db = await getDb();
+  const db = await getReadDb();
   const query = buildQuery(from, until, set);
   const total = await db.collection('books').countDocuments(query, { maxTimeMS: 30000 });
 
@@ -326,7 +326,7 @@ async function handleGetRecord(now: string, params: URLSearchParams): Promise<Ne
   const parts = identifier.split(':');
   const bookId = parts.length === 3 ? parts[2] : parts[parts.length - 1];
 
-  const db = await getDb();
+  const db = await getReadDb();
   const book = await db.collection('books').findOne({
     $or: [{ id: bookId }, { slug: bookId }],
   });

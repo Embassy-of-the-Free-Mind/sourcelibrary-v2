@@ -1,5 +1,5 @@
 import { NextResponse } from 'next/server';
-import { getDb } from '@/lib/mongodb';
+import { getReadDb } from '@/lib/mongodb';
 import { SHWEP_PERIODS, getAllTags } from '@/data/shwep-episodes';
 
 export const dynamic = 'force-dynamic';
@@ -26,7 +26,7 @@ interface MatchedBook {
  */
 export async function GET() {
   try {
-    const db = await getDb();
+    const db = await getReadDb();
     const allTags = getAllTags();
 
     // Build regex patterns for each tag to match against author and title fields

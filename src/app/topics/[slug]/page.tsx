@@ -1,4 +1,4 @@
-import { getDb } from '@/lib/mongodb';
+import { getReadDb } from '@/lib/mongodb';
 import Link from 'next/link';
 import Image from 'next/image';
 import { Metadata } from 'next';
@@ -79,7 +79,7 @@ export async function generateMetadata({ params }: Props): Promise<Metadata> {
   // Fall back to old cluster slug
   let match;
   try {
-    const db = await getDb();
+    const db = await getReadDb();
     const allClusters = await db.collection('books').aggregate([
       { $match: { visible: true, 'taxonomy.cluster': { $exists: true, $ne: null } } },
       { $group: { _id: '$taxonomy.cluster' } },
@@ -105,7 +105,7 @@ export async function generateMetadata({ params }: Props): Promise<Metadata> {
 // ─── Data fetching ───────────────────────────────────────────────
 
 async function fetchFacetData(facetId: string, valueId: string) {
-  const db = await getDb();
+  const db = await getReadDb();
   const facet = FACETS.find((f) => f.id === facetId)!;
   const value = facet.values.find((v) => v.id === valueId)!;
 
@@ -201,7 +201,7 @@ async function fetchFacetData(facetId: string, valueId: string) {
 }
 
 async function fetchClusterData(slug: string) {
-  const db = await getDb();
+  const db = await getReadDb();
 
   const allClusters = await db.collection('books').aggregate([
     { $match: { visible: true, 'taxonomy.cluster': { $exists: true, $ne: null } } },

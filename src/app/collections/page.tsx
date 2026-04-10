@@ -1,4 +1,4 @@
-import { getDb } from '@/lib/mongodb';
+import { getReadDb } from '@/lib/mongodb';
 import Link from 'next/link';
 import Image from 'next/image';
 import ContentPageLayout, { ContentHeader } from '@/components/layout/ContentPageLayout';
@@ -41,7 +41,7 @@ interface CollectionDoc {
 }
 
 async function fetchCollections(): Promise<CollectionDoc[]> {
-  const db = await getDb();
+  const db = await getReadDb();
   const [docs, childCounts] = await Promise.all([
     db.collection('collections').find({
       parent: { $exists: false },
@@ -67,7 +67,7 @@ async function fetchCollections(): Promise<CollectionDoc[]> {
 
 async function fetchTimelineDecades(): Promise<{ decades: DecadeBucket[]; total: number }> {
   try {
-    const db = await getDb();
+    const db = await getReadDb();
     const pipeline = [
       { $match: { year: { $exists: true, $ne: null }, visible: true } },
       { $project: { year: 1, language: { $ifNull: ['$language', 'Unknown'] } } },

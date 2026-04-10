@@ -1,7 +1,7 @@
 import { Metadata } from 'next';
 import ContentPageLayout, { ContentHeader } from '@/components/layout/ContentPageLayout';
 import { WikipediaPlaybook, TalkPagePost } from './WikipediaPlaybook';
-import { getDb } from '@/lib/mongodb';
+import { getReadDb } from '@/lib/mongodb';
 
 export const metadata: Metadata = {
   title: 'Wikipedia Contributions - Source Library',
@@ -169,7 +169,7 @@ const FEATURED_BOOKS: {
 ];
 
 async function getBookStats() {
-  const db = await getDb();
+  const db = await getReadDb();
   const slugs = FEATURED_BOOKS.map(b => b.slug);
 
   const books = await db.collection('books').find(

@@ -1,6 +1,6 @@
 import { Suspense } from 'react';
 import { Metadata } from 'next';
-import { getDb } from '@/lib/mongodb';
+import { getReadDb } from '@/lib/mongodb';
 import ContentPageLayout, { ContentHeader } from '@/components/layout/ContentPageLayout';
 import ResearchClient from '@/components/research/ResearchClient';
 import type { CuratorSessionListItem } from '@/lib/api-client/types/research';
@@ -40,7 +40,7 @@ export default async function ResearchPage() {
 
 async function fetchInitialData() {
   try {
-    const db = await getDb();
+    const db = await getReadDb();
     const collection = db.collection('curator_sessions');
 
     const [sessions, total, themesAgg, typesAgg] = await Promise.all([

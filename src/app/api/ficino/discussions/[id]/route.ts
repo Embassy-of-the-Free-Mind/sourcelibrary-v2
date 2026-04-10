@@ -1,6 +1,6 @@
 import { NextRequest, NextResponse } from 'next/server';
 import { auth } from '@/lib/auth';
-import { getDb } from '@/lib/mongodb';
+import { getReadDb } from '@/lib/mongodb';
 import { ObjectId } from 'mongodb';
 
 /**
@@ -15,7 +15,7 @@ export async function GET(
     return NextResponse.json({ error: 'Sign in required' }, { status: 401 });
   }
 
-  const db = await getDb();
+  const db = await getReadDb();
   const user = await db.collection('users').findOne(
     { _id: session.user.id as any },
     { projection: { membership: 1 } }

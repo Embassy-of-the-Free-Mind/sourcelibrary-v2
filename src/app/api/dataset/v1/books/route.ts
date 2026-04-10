@@ -1,5 +1,5 @@
 import { NextRequest, NextResponse } from 'next/server';
-import { getDb } from '@/lib/mongodb';
+import { getReadDb } from '@/lib/mongodb';
 import { validateApiKey } from '@/lib/dataset/api-keys';
 
 export const maxDuration = 15;
@@ -46,7 +46,7 @@ export async function GET(request: NextRequest) {
     );
   }
 
-  const db = await getDb();
+  const db = await getReadDb();
   const filter: any = { visible: true, pages_count: { $gt: 0 } };
   if (language) filter.language = language;
   if (cluster) filter['taxonomy.cluster'] = cluster;

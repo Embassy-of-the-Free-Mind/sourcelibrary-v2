@@ -1,5 +1,5 @@
 import { NextRequest, NextResponse } from 'next/server';
-import { getDb } from '@/lib/mongodb';
+import { getReadDb } from '@/lib/mongodb';
 import { validateTranslation, ValidationIssue } from '@/lib/validateTranslation';
 import { withAuth } from '@/lib/auth-helpers';
 
@@ -13,7 +13,7 @@ interface PageIssue {
 export const GET = withAuth(async (request, session, context) => {
   try {
     const { id } = await context.params;
-    const db = await getDb();
+    const db = await getReadDb();
 
     // Get book to verify it exists
     const book = await db.collection('books').findOne({ id });

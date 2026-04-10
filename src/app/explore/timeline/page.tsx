@@ -1,5 +1,5 @@
 import { Metadata } from 'next';
-import { getDb } from '@/lib/mongodb';
+import { getReadDb } from '@/lib/mongodb';
 import TimelineLoader from '@/components/explore/TimelineLoader';
 
 // ISR: rebuild every 6 hours. Allow 60s for first-hit generation.
@@ -45,7 +45,7 @@ function languageToTradition(lang: string | undefined | null): string | null {
 }
 
 async function fetchTimelineData() {
-  const db = await getDb();
+  const db = await getReadDb();
 
   // Fetch entities with their book_ids for tradition lookup
   const entities = await db

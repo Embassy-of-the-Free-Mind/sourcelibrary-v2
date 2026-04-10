@@ -1,5 +1,5 @@
 import { NextResponse } from 'next/server';
-import { getDb } from '@/lib/mongodb';
+import { getReadDb } from '@/lib/mongodb';
 
 export const dynamic = 'force-dynamic';
 export const maxDuration = 10;
@@ -19,7 +19,7 @@ export async function GET() {
   // 1. MongoDB ping
   let db;
   try {
-    db = await getDb();
+    db = await getReadDb();
     const t = Date.now();
     await db.command({ ping: 1 });
     latency.db_ping = Date.now() - t;

@@ -1,12 +1,12 @@
 import { NextResponse } from 'next/server';
-import { getDb } from '@/lib/mongodb';
+import { getReadDb } from '@/lib/mongodb';
 import { withAuth } from '@/lib/auth-helpers';
 
 export const dynamic = 'force-dynamic';
 
 export const GET = withAuth(async (request, session) => {
   try {
-    const db = await getDb();
+    const db = await getReadDb();
 
     const books = await db.collection('books').aggregate([
       {

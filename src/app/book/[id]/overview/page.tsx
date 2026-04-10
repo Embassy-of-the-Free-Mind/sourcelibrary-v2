@@ -1,5 +1,5 @@
 import { notFound } from 'next/navigation';
-import { getDb } from '@/lib/mongodb';
+import { getReadDb } from '@/lib/mongodb';
 import { findBookByIdOrSlug } from '@/lib/book-lookup';
 import type { Metadata } from 'next';
 import BookOverview from '@/components/reader/BookOverview';
@@ -46,7 +46,7 @@ const PAGE_PROJECTION = {
 
 export async function generateMetadata({ params }: PageProps): Promise<Metadata> {
   const { id } = await params;
-  const db = await getDb();
+  const db = await getReadDb();
   const result = await findBookByIdOrSlug(db, id, { _id: 0, title: 1, display_title: 1 });
   if (!result) return { title: 'Book Not Found - Source Library' };
   const title = result.book.display_title || result.book.title;
@@ -60,7 +60,7 @@ export default async function BookOverviewPage({ params }: PageProps) {
   const { id } = await params;
 
   const db = await Promise.race([
-    getDb(),
+    getReadDb(),
     new Promise<never>((_, reject) => setTimeout(() => reject(new Error('DB timeout')), 15000)),
   ]);
 

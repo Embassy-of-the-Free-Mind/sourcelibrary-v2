@@ -6,7 +6,7 @@
  */
 
 import { NextRequest, NextResponse } from 'next/server';
-import { getDb } from '@/lib/mongodb';
+import { getReadDb } from '@/lib/mongodb';
 import { selectImagesForPosts, buildCropUrl } from '@/lib/social-image-selector';
 import { withAuth } from '@/lib/auth-helpers';
 
@@ -32,7 +32,7 @@ export const GET = withAuth(async (request: NextRequest) => {
     const excludeRecent = searchParams.get('excludeRecent') !== 'false';
     const recentDays = parseInt(searchParams.get('recentDays') || '30');
 
-    const db = await getDb();
+    const db = await getReadDb();
 
     const candidates = await selectImagesForPosts(db, count, {
       minGalleryQuality: minQuality,

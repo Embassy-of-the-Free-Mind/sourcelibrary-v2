@@ -1,7 +1,7 @@
 import { Metadata } from 'next';
 import Link from 'next/link';
 import ContentPageLayout, { ContentHeader } from '@/components/layout/ContentPageLayout';
-import { getDb } from '@/lib/mongodb';
+import { getReadDb } from '@/lib/mongodb';
 
 export const metadata: Metadata = {
   title: 'How Processing Works | Source Library',
@@ -18,7 +18,7 @@ export const maxDuration = 60;
 
 async function getStats() {
   try {
-    const db = await getDb();
+    const db = await getReadDb();
     const books = db.collection('books');
 
     const maxTimeMS = 45000;

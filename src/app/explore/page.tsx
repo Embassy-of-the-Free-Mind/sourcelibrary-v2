@@ -4,7 +4,7 @@ import ExploreStats from '@/components/explore/ExploreStats';
 import CenturyHeatmap from '@/components/explore/CenturyHeatmap';
 import ExploreNav from '@/components/explore/ExploreNav';
 import DataSources from '@/components/explore/DataSources';
-import { getDb } from '@/lib/mongodb';
+import { getReadDb } from '@/lib/mongodb';
 
 export const revalidate = 86400;
 export const maxDuration = 30;
@@ -21,7 +21,7 @@ export const metadata: Metadata = {
 
 async function fetchExploreStats() {
   try {
-    const db = await getDb();
+    const db = await getReadDb();
 
     // Use estimatedDocumentCount (instant, uses collection metadata)
     // and a single aggregation for all entity stats to avoid multiple slow scans

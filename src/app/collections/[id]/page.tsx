@@ -4,7 +4,7 @@ import Image from 'next/image';
 import { Metadata } from 'next';
 import { ArrowLeft, BookOpen, Images, Library } from 'lucide-react';
 import SiteHeader from '@/components/layout/SiteHeader';
-import { getDb } from '@/lib/mongodb';
+import { getReadDb } from '@/lib/mongodb';
 import { notFound } from 'next/navigation';
 import { unstable_noStore } from 'next/cache';
 import CollectionSchema from '@/components/seo/CollectionSchema';
@@ -36,7 +36,7 @@ export async function generateMetadata({ params }: Props): Promise<Metadata> {
   const { id } = await params;
   try {
     const db = await Promise.race([
-      getDb(),
+      getReadDb(),
       new Promise<never>((_, reject) => setTimeout(() => reject(new Error('DB timeout')), 15000)),
     ]);
     const collection = await db.collection('collections').findOne({ slug: id });
@@ -194,9 +194,9 @@ const COMPACT_LIMIT = 14;
  *  The /api/image wrapper crashes Next.js Image during SSR. */
 
 async function fetchCollectionData(id: string) {
-  // Wrap getDb() in a timeout — when MongoDB Atlas is overloaded, the connection
+  // Wrap getReadDb() in a timeout — when MongoDB Atlas is overloaded, the connection
   // itself can hang for 60+ seconds. Better to fail fast and let ISR retry.
-  const db = await withTimeout(getDb(), 10000, null as unknown as Awaited<ReturnType<typeof getDb>>);
+  const db = await withTimeout(getReadDb(), 10000, null as unknown as Awaited<ReturnType<typeof getReadDb>>);
   if (!db) throw new Error('DB connection timeout');
 
   const collection = await withTimeout(

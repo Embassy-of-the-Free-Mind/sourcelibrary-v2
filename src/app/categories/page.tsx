@@ -2,7 +2,7 @@ import { Metadata } from 'next';
 import Link from 'next/link';
 import { BookOpen, ChevronRight } from 'lucide-react';
 import SiteHeader from '@/components/layout/SiteHeader';
-import { getDb } from '@/lib/mongodb';
+import { getReadDb } from '@/lib/mongodb';
 import { LIBRARY_CATEGORIES, CategoryWithCount } from '@/app/api/categories/route';
 
 // ISR: rebuild every 6 hours. Categories change rarely.
@@ -23,7 +23,7 @@ async function getCategoriesWithCounts(): Promise<CategoryWithCount[]> {
   let countMap = new Map<string, number>();
 
   try {
-    const db = await getDb();
+    const db = await getReadDb();
     const categoryCounts = await db.collection('books').aggregate([
       { $match: { visible: true, categories: { $exists: true } } },
       { $unwind: '$categories' },

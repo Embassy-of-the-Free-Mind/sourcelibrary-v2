@@ -1,4 +1,4 @@
-import { getDb } from '@/lib/mongodb';
+import { getReadDb } from '@/lib/mongodb';
 import Link from 'next/link';
 import Image from 'next/image';
 import ContentPageLayout, { ContentHeader } from '@/components/layout/ContentPageLayout';
@@ -35,7 +35,7 @@ interface FacetGroup {
 }
 
 async function fetchFacetCounts(): Promise<{ groups: FacetGroup[]; totalBooks: number }> {
-  const db = await getDb();
+  const db = await getReadDb();
   const maxTimeMS = 30000;
   const baseMatch = { faceted_tags: { $exists: true }, visible: true };
 
@@ -78,7 +78,7 @@ async function fetchFacetCounts(): Promise<{ groups: FacetGroup[]; totalBooks: n
 
 /** Single aggregation: all domain co-occurrences in one pass */
 async function fetchDomainCrossTab(): Promise<Map<string, SubDomain[]>> {
-  const db = await getDb();
+  const db = await getReadDb();
   // Efficient: project array as two copies, unwind both, filter out self-pairs
   const results = await db.collection('books').aggregate([
     { $match: { 'faceted_tags.knowledge_domain.1': { $exists: true }, visible: true } },

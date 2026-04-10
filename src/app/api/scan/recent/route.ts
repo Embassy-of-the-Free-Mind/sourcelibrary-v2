@@ -1,7 +1,7 @@
 export const dynamic = 'force-dynamic';
 
 import { NextResponse } from 'next/server';
-import { getDb } from '@/lib/mongodb';
+import { getReadDb } from '@/lib/mongodb';
 
 /**
  * GET /api/scan/recent
@@ -11,7 +11,7 @@ import { getDb } from '@/lib/mongodb';
  */
 export async function GET() {
   try {
-    const db = await getDb();
+    const db = await getReadDb();
 
     const books = await db.collection('books')
       .find({

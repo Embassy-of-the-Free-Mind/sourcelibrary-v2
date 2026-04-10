@@ -1,4 +1,4 @@
-import { getDb } from '@/lib/mongodb';
+import { getReadDb } from '@/lib/mongodb';
 import Link from 'next/link';
 import Image from 'next/image';
 import SiteHeader from '@/components/layout/SiteHeader';
@@ -51,7 +51,7 @@ function getHeroImage(col: CuratedCollection): string | undefined {
 }
 
 async function fetchCuratedCollections() {
-  const db = await getDb();
+  const db = await getReadDb();
   const docs = await db
     .collection('collections')
     .find({ type: 'curated' })

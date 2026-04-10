@@ -2,7 +2,7 @@ import { Metadata } from 'next';
 import Link from 'next/link';
 import Image from 'next/image';
 import { ArrowLeft, BookOpen } from 'lucide-react';
-import { getDb } from '@/lib/mongodb';
+import { getReadDb } from '@/lib/mongodb';
 import { sanitizeThumbnail } from '@/lib/collections-utils';
 
 export const revalidate = false;
@@ -103,7 +103,7 @@ interface TraditionCollection {
 async function getTraditions(): Promise<{ traditions: TraditionCollection[]; totalBooks: number }> {
   try {
     const db = await Promise.race([
-      getDb(),
+      getReadDb(),
       new Promise<never>((_, reject) => setTimeout(() => reject(new Error('DB timeout')), 10000)),
     ]);
 

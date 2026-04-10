@@ -1,5 +1,5 @@
 import { Suspense } from 'react';
-import { getDb } from '@/lib/mongodb';
+import { getReadDb } from '@/lib/mongodb';
 import ContentPageLayout, { ContentHeader } from '@/components/layout/ContentPageLayout';
 import TimelineClient from './TimelineClient';
 import type { Metadata } from 'next';
@@ -21,7 +21,7 @@ async function fetchTimelineData(): Promise<TimelineOverview> {
   };
 
   try {
-    const db = await getDb();
+    const db = await getReadDb();
 
     // Try pre-computed cache first (seeded by scripts/seed-timeline-filters.mjs)
     // eslint-disable-next-line @typescript-eslint/no-explicit-any
