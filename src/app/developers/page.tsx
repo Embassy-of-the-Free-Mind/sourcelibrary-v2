@@ -51,6 +51,18 @@ export default function DevelopersPage() {
         <div className="space-y-4 mb-8">
           <div className="bg-white rounded-xl border border-border-light overflow-hidden">
             <div className="bg-stone-100 px-4 py-2 border-b border-border-light">
+              <span className="text-sm font-medium text-stone-700">Claude Chat / Cowork / any remote MCP client</span>
+            </div>
+            <pre className="p-4 text-sm overflow-x-auto bg-stone-900 text-stone-100">
+{`https://sourcelibrary.org/api/mcp`}
+            </pre>
+            <div className="px-4 pb-3 text-xs text-stone-400">
+              Add as a remote MCP server &mdash; no install needed. Works in Claude Chat, Cowork, and any client that supports Streamable HTTP.
+            </div>
+          </div>
+
+          <div className="bg-white rounded-xl border border-border-light overflow-hidden">
+            <div className="bg-stone-100 px-4 py-2 border-b border-border-light">
               <span className="text-sm font-medium text-stone-700">Claude Code</span>
             </div>
             <pre className="p-4 text-sm overflow-x-auto bg-stone-900 text-stone-100">
