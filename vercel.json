@@ -1,5 +1,6 @@
 {
   "regions": ["fra1"],
+  "ignoreCommand": "git diff HEAD^ HEAD --quiet -- src/ public/ next.config.ts vercel.json package.json package-lock.json",
   "crons": [
     {
       "path": "/api/cron/social-post",
