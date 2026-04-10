@@ -41,6 +41,8 @@ export async function GET(
     }
 
     const isArtCollection = collection.collection_type === 'visual_art';
+    // Show all books (not just translated) for art collections or collections with few translated books
+    const skipTranslationFilter = isArtCollection || collection.show_all_books === true;
     const { _id, ...collectionClean } = collection;
 
     // Map API sort params to Supabase sort options
@@ -60,7 +62,7 @@ export async function GET(
     if (mode === 'manifest') {
       const { books: sbBooks, total } = await browseBooks({
         collection: id,
-        hasTranslation: !isArtCollection,
+        hasTranslation: !skipTranslationFilter,
         sort: sbSort,
         limit: 1000, // manifest wants everything
       });
@@ -84,7 +86,7 @@ export async function GET(
     // Standard paginated query via Supabase
     const { books: sbBooks, total } = await browseBooks({
       collection: id,
-      hasTranslation: !isArtCollection,
+      hasTranslation: !skipTranslationFilter,
       language: language || undefined,
       search: q || undefined,
       sort: sbSort,
@@ -106,7 +108,7 @@ export async function GET(
     // Highlights: top 5 by quality score
     const { books: highlightBooks } = await browseBooks({
       collection: id,
-      hasTranslation: !isArtCollection,
+      hasTranslation: !skipTranslationFilter,
       sort: 'quality',
       limit: 5,
     });
