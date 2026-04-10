@@ -1,5 +1,5 @@
 import { Metadata } from 'next';
-import { getDb } from '@/lib/mongodb';
+import { getReadDb } from '@/lib/mongodb';
 import { findBookByIdOrSlug } from '@/lib/book-lookup';
 import { Book, Page } from '@/lib/types';
 
@@ -21,7 +21,7 @@ const PAGE_META_PROJECTION = {
 
 async function getPageData(bookId: string, pageId: string): Promise<{ book: Book | null; page: Page | null }> {
   try {
-    const db = await getDb();
+    const db = await getReadDb();
     const [bookResult, page] = await Promise.all([
       findBookByIdOrSlug(db, bookId, BOOK_META_PROJECTION),
       db.collection('pages').findOne({ id: pageId }, { projection: PAGE_META_PROJECTION }),

@@ -1,5 +1,5 @@
 import { Metadata } from 'next';
-import { getDb } from '@/lib/mongodb';
+import { getReadDb } from '@/lib/mongodb';
 import { notFound } from 'next/navigation';
 import Link from 'next/link';
 import type { Book } from '@/lib/types';
@@ -16,7 +16,7 @@ interface PageProps {
 }
 
 async function getWorkEditions(workId: string) {
-  const db = await getDb();
+  const db = await getReadDb();
   const editions = await db.collection('books').find(
     { work_id: workId, visible: true },
     {

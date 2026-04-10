@@ -1,5 +1,5 @@
 import { Metadata } from 'next';
-import { getDb } from '@/lib/mongodb';
+import { getReadDb } from '@/lib/mongodb';
 import SiteHeader from '@/components/layout/SiteHeader';
 import BookMapLoader from '@/components/explore/BookMapLoader';
 import type { BookLocation } from '@/components/explore/BookMap';
@@ -22,7 +22,7 @@ export const metadata: Metadata = {
 };
 
 async function fetchMapData() {
-  const db = await getDb();
+  const db = await getReadDb();
 
   // Read pre-computed map data from system_config (fast single-doc read)
   const cached = await db

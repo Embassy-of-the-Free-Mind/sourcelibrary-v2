@@ -10,7 +10,7 @@
  */
 
 import { NextRequest, NextResponse } from 'next/server';
-import { getDb } from '@/lib/mongodb';
+import { getReadDb } from '@/lib/mongodb';
 
 const BASE = 'https://sourcelibrary.org';
 
@@ -57,7 +57,7 @@ export async function GET(
       );
     }
 
-    const db = await getDb();
+    const db = await getReadDb();
 
     // Fetch only the field we need
     const projection =

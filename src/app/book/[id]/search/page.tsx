@@ -1,5 +1,5 @@
 import { Metadata } from 'next';
-import { getDb } from '@/lib/mongodb';
+import { getReadDb } from '@/lib/mongodb';
 import { bookUrl } from '@/lib/slugify';
 import BookSearchResults from './BookSearchResults';
 
@@ -14,7 +14,7 @@ interface Props {
 export async function generateMetadata({ params, searchParams }: Props): Promise<Metadata> {
   const { id } = await params;
   const { q } = await searchParams;
-  const db = await getDb();
+  const db = await getReadDb();
   const book = await db.collection('books').findOne(
     { id },
     { projection: { title: 1, display_title: 1 } }
@@ -29,7 +29,7 @@ export async function generateMetadata({ params, searchParams }: Props): Promise
 export default async function BookSearchPage({ params, searchParams }: Props) {
   const { id: bookId } = await params;
   const { q } = await searchParams;
-  const db = await getDb();
+  const db = await getReadDb();
 
   const book = await db.collection('books').findOne(
     { id: bookId },

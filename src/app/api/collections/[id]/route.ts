@@ -1,5 +1,5 @@
 import { NextRequest, NextResponse } from 'next/server';
-import { getDb } from '@/lib/mongodb';
+import { getReadDb } from '@/lib/mongodb';
 import { browseBooks, type SortOption } from '@/lib/books-catalog';
 
 export const maxDuration = 30;
@@ -32,7 +32,7 @@ export async function GET(
     const limit = Math.min(parseInt(searchParams.get('limit') || '60'), 200);
     const offset = parseInt(searchParams.get('offset') || '0');
 
-    const db = await getDb();
+    const db = await getReadDb();
 
     // Get collection metadata from MongoDB (small doc, fast)
     const collection = await db.collection('collections').findOne({ slug: id });

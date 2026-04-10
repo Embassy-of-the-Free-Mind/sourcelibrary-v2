@@ -1,5 +1,5 @@
 import { NextRequest, NextResponse } from 'next/server';
-import { getDb } from '@/lib/mongodb';
+import { getReadDb } from '@/lib/mongodb';
 import { findBookByIdOrSlug } from '@/lib/book-lookup';
 
 /**
@@ -15,7 +15,7 @@ export async function GET(request: NextRequest) {
     return NextResponse.redirect(new URL('/', request.url), 302);
   }
 
-  const db = await getDb();
+  const db = await getReadDb();
   const result = await findBookByIdOrSlug(db, bookIdOrSlug, { id: 1, slug: 1 });
 
   if (!result) {

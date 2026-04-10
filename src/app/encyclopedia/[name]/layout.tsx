@@ -1,6 +1,6 @@
 import { cache } from 'react';
 import { Metadata } from 'next';
-import { getDb } from '@/lib/mongodb';
+import { getReadDb } from '@/lib/mongodb';
 import { ObjectId } from 'mongodb';
 import EntitySchema from '@/components/seo/EntitySchema';
 
@@ -25,7 +25,7 @@ export interface SharedConnection {
 // Shared books data — which related entities appear in which of the same books
 export const getSharedBooks = cache(async (name: string): Promise<SharedConnection[] | null> => {
   try {
-    const db = await getDb();
+    const db = await getReadDb();
     const entity = await db.collection('entities').findOne(
       { name: { $regex: `^${name.replace(/[.*+?^${}()|[\]\\]/g, '\\$&')}$`, $options: 'i' } },
       { sort: { book_count: -1 } }
@@ -73,7 +73,7 @@ export const getSharedBooks = cache(async (name: string): Promise<SharedConnecti
 // Shared cached fetch — used by both layout (metadata/schema) and page (rendering)
 export const getEntity = cache(async (name: string) => {
   try {
-    const db = await getDb();
+    const db = await getReadDb();
     const entity = await db.collection('entities').findOne(
       { name: { $regex: `^${name.replace(/[.*+?^${}()|[\]\\]/g, '\\$&')}$`, $options: 'i' } },
       { sort: { book_count: -1 } }

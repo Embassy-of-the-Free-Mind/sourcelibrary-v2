@@ -13,7 +13,7 @@
  */
 
 import { ImageResponse } from 'next/og';
-import { getDb } from '@/lib/mongodb';
+import { getReadDb } from '@/lib/mongodb';
 import { getPageImageUrl } from '@/lib/utils';
 
 export const alt = 'Image from Source Library';
@@ -61,7 +61,7 @@ async function getImageData(id: string): Promise<{ page: PageWithBook; detection
     const [, pageId, indexStr] = match;
     const index = parseInt(indexStr, 10);
 
-    const db = await getDb();
+    const db = await getReadDb();
     const pages = await db.collection('pages').aggregate([
       { $match: { id: pageId } },
       {

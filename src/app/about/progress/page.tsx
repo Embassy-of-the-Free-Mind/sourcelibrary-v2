@@ -1,5 +1,5 @@
 import { Metadata } from 'next';
-import { getDb } from '@/lib/mongodb';
+import { getReadDb } from '@/lib/mongodb';
 import { supabase } from '@/lib/supabase';
 import Link from 'next/link';
 import ContentPageLayout, { SubPageHeader } from '@/components/layout/ContentPageLayout';
@@ -89,7 +89,7 @@ async function getCoverageData(): Promise<CoverageData | null> {
 /** Fallback: read from MongoDB catalog_coverage_meta if Supabase RPC fails */
 async function getCoverageDataFallback(): Promise<CoverageData | null> {
   try {
-    const db = await getDb();
+    const db = await getReadDb();
     const meta = await db.collection('catalog_coverage_meta').findOne({ _id: 'latest_build' as any });
     if (!meta) return null;
 

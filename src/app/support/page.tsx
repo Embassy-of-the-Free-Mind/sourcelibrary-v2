@@ -1,7 +1,7 @@
 import Link from 'next/link';
 import { Metadata } from 'next';
 import SiteHeader from '@/components/layout/SiteHeader';
-import { getDb } from '@/lib/mongodb';
+import { getReadDb } from '@/lib/mongodb';
 
 export const revalidate = 600;
 export const maxDuration = 60;
@@ -60,7 +60,7 @@ function formatStat(n: number): string {
 
 async function fetchStats() {
   try {
-    const db = await getDb();
+    const db = await getReadDb();
     const books = db.collection('books');
     const match = { visible: true, pages_count: { $gt: 0 } };
 

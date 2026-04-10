@@ -1,5 +1,5 @@
 import { NextRequest, NextResponse } from 'next/server';
-import { getDb } from '@/lib/mongodb';
+import { getReadDb } from '@/lib/mongodb';
 import { getOcrPrompt } from '@/lib/prompts';
 import { withAuth } from '@/lib/auth-helpers';
 
@@ -8,7 +8,7 @@ export const GET = withAuth(async (request, session, context) => {
   try {
     const { id } = await context.params;
 
-    const db = await getDb();
+    const db = await getReadDb();
     const experiment = await db.collection('ocr_experiments').findOne({ id });
 
     if (!experiment) {

@@ -1,5 +1,5 @@
 import { Suspense } from 'react';
-import { getDb } from '@/lib/mongodb';
+import { getReadDb } from '@/lib/mongodb';
 import GalleryClient from '@/components/gallery/GalleryClient';
 import SignUpCTA from '@/components/auth/SignUpCTA';
 import type { GalleryResponse } from '@/lib/api-client/types/gallery';
@@ -47,7 +47,7 @@ export default async function GalleryPage() {
  */
 async function fetchInitialGalleryData(): Promise<GalleryResponse> {
   try {
-    const db = await getDb();
+    const db = await getReadDb();
     const limit = 24;
     const minQuality = 0.7;
     const maxPerBook = 3;
@@ -152,7 +152,7 @@ async function fetchInitialGalleryData(): Promise<GalleryResponse> {
  */
 async function fetchBookCollections() {
   try {
-    const db = await getDb();
+    const db = await getReadDb();
     const collections = await db.collection('collections')
       .find({ book_count: { $gte: 1 } })
       .sort({ parent: 1, order: 1, name: 1 })
@@ -170,7 +170,7 @@ async function fetchBookCollections() {
  */
 async function fetchFeaturedCollections() {
   try {
-    const db = await getDb();
+    const db = await getReadDb();
     const collections = await db.collection('gallery_collections')
       .find({})
       .sort({ featured: -1, sort_order: 1 })

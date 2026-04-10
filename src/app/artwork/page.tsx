@@ -2,7 +2,7 @@ import { Metadata } from 'next';
 import Link from 'next/link';
 import Image from 'next/image';
 import { redirect } from 'next/navigation';
-import { getDb } from '@/lib/mongodb';
+import { getReadDb } from '@/lib/mongodb';
 import { isInnerCircle } from '@/lib/auth-helpers';
 import SiteHeader from '@/components/layout/SiteHeader';
 import { sanitizeThumbnail } from '@/lib/collections-utils';
@@ -24,7 +24,7 @@ interface ArtCollection {
 }
 
 async function getData() {
-  const db = await getDb();
+  const db = await getReadDb();
 
   // Only query the small collections table (19 docs) — fast and reliable.
   // Skip the expensive books aggregation that was causing timeouts.

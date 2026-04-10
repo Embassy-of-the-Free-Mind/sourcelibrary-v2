@@ -1,4 +1,4 @@
-import { getDb } from '@/lib/mongodb';
+import { getReadDb } from '@/lib/mongodb';
 import Link from 'next/link';
 import type { Metadata } from 'next';
 
@@ -17,7 +17,7 @@ interface MemberProfile {
 }
 
 async function getMembers(): Promise<MemberProfile[]> {
-  const db = await getDb();
+  const db = await getReadDb();
   const members = await db.collection('users').find(
     {
       $or: [

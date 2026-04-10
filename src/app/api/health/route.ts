@@ -1,5 +1,5 @@
 import { NextResponse } from 'next/server';
-import { getDb } from '@/lib/mongodb';
+import { getReadDb } from '@/lib/mongodb';
 
 export const dynamic = 'force-dynamic';
 export const maxDuration = 30;
@@ -10,7 +10,7 @@ export const maxDuration = 30;
  */
 export async function GET() {
   try {
-    const db = await getDb();
+    const db = await getReadDb();
     // Minimal ping — don't query a large collection
     await db.command({ ping: 1 });
 

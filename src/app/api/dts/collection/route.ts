@@ -16,7 +16,7 @@
  */
 
 import { NextRequest, NextResponse } from 'next/server';
-import { getDb } from '@/lib/mongodb';
+import { getReadDb } from '@/lib/mongodb';
 
 const BASE = 'https://sourcelibrary.org';
 const PAGE_SIZE = 50;
@@ -121,7 +121,7 @@ export async function GET(request: NextRequest) {
     const page = Math.max(1, parseInt(searchParams.get('page') || '1', 10));
     const nav = searchParams.get('nav') || 'children';
 
-    const db = await getDb();
+    const db = await getReadDb();
 
     // No id → return root collection
     if (!id) {

@@ -3,7 +3,7 @@ import Link from 'next/link';
 import Image from 'next/image';
 import { BookOpen, Book as BookIcon } from 'lucide-react';
 import SiteHeader from '@/components/layout/SiteHeader';
-import { getDb } from '@/lib/mongodb';
+import { getReadDb } from '@/lib/mongodb';
 import { LIBRARY_CATEGORIES } from '@/app/api/categories/route';
 import { notFound } from 'next/navigation';
 import CategorySchema from '@/components/seo/CategorySchema';
@@ -42,7 +42,7 @@ function getCategory(id: string) {
 
 async function getCategoryBooks(id: string): Promise<Book[]> {
   try {
-    const db = await getDb();
+    const db = await getReadDb();
     // Use cached pages_translated on books — no $lookup against 9.5M pages collection
     const books = await db.collection('books').find(
       { categories: id, visible: true, pages_translated: { $gt: 0 } },

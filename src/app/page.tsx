@@ -1,4 +1,4 @@
-import { getDb } from '@/lib/mongodb';
+import { getReadDb } from '@/lib/mongodb';
 import { supabase } from '@/lib/supabase';
 import { Book } from '@/lib/types';
 import { type CollectionForGrid } from '@/components/book/BookLibrary';
@@ -40,7 +40,7 @@ const BOOK_PROJECTION = {
 // ---------- Data fetching ----------
 
 async function getFeaturedCollections() {
-  const db = await getDb();
+  const db = await getReadDb();
 
   // Pick 1 random collection with enough books for the editorial spread
   const collections = await db.collection('collections').aggregate([
@@ -153,7 +153,7 @@ async function getFeaturedCollections() {
 }
 
 async function getRemainingCollections(): Promise<CollectionForGrid[]> {
-  const db = await getDb();
+  const db = await getReadDb();
   const docs = await db.collection('collections').find({ parent: { $exists: false }, type: { $ne: 'curated' }, visible: true, 'highlighted_books.0': { $exists: true } }).toArray();
 
   const result = docs.map(({ _id, ...rest }) => {
@@ -231,7 +231,7 @@ async function getRemainingCollections(): Promise<CollectionForGrid[]> {
 }
 
 async function getDiscoverBooks(): Promise<Book[]> {
-  const db = await getDb();
+  const db = await getReadDb();
 
   // $sample FIRST so MongoDB uses fast random cursor (O(1) when size < 5% of collection).
   // $match after $sample filters the random sample down.
@@ -247,7 +247,7 @@ async function getDiscoverBooks(): Promise<Book[]> {
 }
 
 async function getCollectionShowcase() {
-  const db = await getDb();
+  const db = await getReadDb();
 
   // $sample FIRST (before $match) so MongoDB uses fast random cursor algorithm.
   // When $sample is after $match, Mongo scans all matching docs first → 22s on 77k docs.
@@ -341,7 +341,7 @@ async function getBookCounts(): Promise<{ totalBooks: number; translatedToEnglis
       let authorCount = FALLBACK_COUNTS.authorCount;
       let languageCount = FALLBACK_COUNTS.languageCount;
       try {
-        const db = await getDb();
+        const db = await getReadDb();
         const cached = await db.collection('system_config').findOne(
           { _id: 'homepage_stats' } as any,
           { maxTimeMS: 2000 }
@@ -362,7 +362,7 @@ async function getBookCounts(): Promise<{ totalBooks: number; translatedToEnglis
 
   // 2. Fallback: MongoDB system_config cache
   try {
-    const db = await getDb();
+    const db = await getReadDb();
     const cached = await db.collection('system_config').findOne(
       { _id: 'homepage_stats' } as any,
       { maxTimeMS: 2000 }

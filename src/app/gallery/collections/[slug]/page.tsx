@@ -3,7 +3,7 @@ import { notFound } from 'next/navigation';
 import { cache } from 'react';
 import { Image as ImageIcon } from 'lucide-react';
 import SiteHeader from '@/components/layout/SiteHeader';
-import { getDb } from '@/lib/mongodb';
+import { getReadDb } from '@/lib/mongodb';
 import CollectionImageCard, { CollectionImageProps } from './CollectionImageCard';
 
 export const revalidate = 86400;
@@ -14,7 +14,7 @@ interface PageProps {
 
 const getCollectionData = cache(async (slug: string) => {
   try {
-    const db = await getDb();
+    const db = await getReadDb();
     const collection = await db.collection('gallery_collections').findOne(
       { slug },
       { projection: { title: 1, description: 1, image_ids: 1 } }

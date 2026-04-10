@@ -1,5 +1,5 @@
 import { NextRequest, NextResponse } from 'next/server';
-import { getDb } from '@/lib/mongodb';
+import { getReadDb } from '@/lib/mongodb';
 import { Book, Page, TranslationEdition } from '@/lib/types';
 import { getShortUrl } from '@/lib/shortlinks';
 import { markForExport } from '@/lib/provenance';
@@ -139,7 +139,7 @@ export async function GET(request: NextRequest, context: RouteContext) {
       return NextResponse.json({ error: 'Invalid page number' }, { status: 400 });
     }
 
-    const db = await getDb();
+    const db = await getReadDb();
 
     // Get book by id, slug, or _id
     let book = await db.collection('books').findOne({ id: bookId }) as unknown as Book | null;

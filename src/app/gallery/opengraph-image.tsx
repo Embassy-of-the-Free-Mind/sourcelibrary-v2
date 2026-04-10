@@ -1,5 +1,5 @@
 import { ImageResponse } from 'next/og';
-import { getDb } from '@/lib/mongodb';
+import { getReadDb } from '@/lib/mongodb';
 
 export const dynamic = 'force-dynamic';
 export const alt = 'Image Gallery - Source Library';
@@ -16,7 +16,7 @@ export const contentType = 'image/png';
  */
 async function getFeaturedImages(): Promise<string[]> {
   try {
-    const db = await getDb();
+    const db = await getReadDb();
     const results = await db.collection('pages').aggregate([
       {
         $match: {

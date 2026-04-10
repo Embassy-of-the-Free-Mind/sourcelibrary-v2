@@ -1,7 +1,7 @@
 import { NextResponse } from 'next/server';
 import { auth } from '@/lib/auth';
 import { getMembership } from '@/lib/membership';
-import { getDb } from '@/lib/mongodb';
+import { getReadDb } from '@/lib/mongodb';
 
 export async function GET() {
   const session = await auth();
@@ -11,7 +11,7 @@ export async function GET() {
 
   const [membership, db] = await Promise.all([
     getMembership(session.user.id),
-    getDb(),
+    getReadDb(),
   ]);
 
   // Check if they've joined the Society (free) — separate from financial contribution

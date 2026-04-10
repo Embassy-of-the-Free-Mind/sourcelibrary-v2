@@ -1,5 +1,5 @@
 import { NextRequest, NextResponse } from 'next/server';
-import { getDb } from '@/lib/mongodb';
+import { getReadDb } from '@/lib/mongodb';
 
 // In-memory cache for global stats (called on every page load via footer)
 let globalStatsCache: { data: Record<string, unknown>; timestamp: number } | null = null;
@@ -18,7 +18,7 @@ export async function GET(request: NextRequest) {
     const { searchParams } = new URL(request.url);
     const bookId = searchParams.get('book_id');
 
-    const db = await getDb();
+    const db = await getReadDb();
 
     if (bookId) {
       // Get stats for specific book

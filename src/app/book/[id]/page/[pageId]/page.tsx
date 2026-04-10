@@ -1,5 +1,5 @@
 import { notFound } from 'next/navigation';
-import { getDb } from '@/lib/mongodb';
+import { getReadDb } from '@/lib/mongodb';
 import { findBookByIdOrSlug } from '@/lib/book-lookup';
 import type { Book, Page } from '@/lib/types';
 import PageEditorClient from './PageEditorClient';
@@ -20,7 +20,7 @@ const BOOK_NAV_PROJECTION = {
 
 export default async function PageEditorPage({ params }: PageProps) {
   const { id, pageId } = await params;
-  const db = await getDb();
+  const db = await getReadDb();
 
   // Step 1: Get current page (fast indexed lookup by id, gives us book_id for nav)
   const currentPage = await db.collection('pages').findOne(

@@ -1,5 +1,5 @@
 import { NextRequest, NextResponse } from 'next/server';
-import { getDb } from '@/lib/mongodb';
+import { getReadDb } from '@/lib/mongodb';
 import { generateQueryEmbedding, cosineSimilarity } from '@/lib/embeddings';
 
 export const maxDuration = 30;
@@ -79,7 +79,7 @@ export async function GET(request: NextRequest) {
     if (includeArchive) minQuality = 0.5;
     if (searchParams.get('minQuality')) minQuality = parseFloat(searchParams.get('minQuality')!);
 
-    const db = await getDb();
+    const db = await getReadDb();
 
     // Check if gallery_images collection exists and has data
     const galleryCount = await db.collection('gallery_images').estimatedDocumentCount();
@@ -273,7 +273,7 @@ export async function GET(request: NextRequest) {
 /**
  * Get filter options from gallery_images (cached for 30 min)
  */
-async function getGalleryFilters(db: Awaited<ReturnType<typeof getDb>>) {
+async function getGalleryFilters(db: Awaited<ReturnType<typeof getReadDb>>) {
   if (cachedFilters && (Date.now() - cachedFilters.timestamp) < FILTER_CACHE_TTL_MS) {
     return cachedFilters.data;
   }
@@ -310,7 +310,7 @@ async function getGalleryFilters(db: Awaited<ReturnType<typeof getDb>>) {
 /**
  * Get book info for book-filtered gallery views
  */
-async function getBookInfo(db: Awaited<ReturnType<typeof getDb>>, bookId: string) {
+async function getBookInfo(db: Awaited<ReturnType<typeof getReadDb>>, bookId: string) {
   const book = await db.collection('books').findOne({ id: bookId });
   if (!book) return null;
 
@@ -347,7 +347,7 @@ async function semanticGallerySearch(searchParams: URLSearchParams, query: strin
   const offset = parseInt(searchParams.get('offset') || '0');
   const imageType = searchParams.get('type');
 
-  const db = await getDb();
+  const db = await getReadDb();
   const queryEmbedding = await generateQueryEmbedding(query);
 
   const candidates = await db
@@ -422,7 +422,7 @@ async function semanticGallerySearch(searchParams: URLSearchParams, query: strin
 /**
  * Legacy aggregation pipeline — used as fallback when gallery_images collection is empty.
  */
-async function legacyGalleryQuery(db: Awaited<ReturnType<typeof getDb>>, searchParams: URLSearchParams) {
+async function legacyGalleryQuery(db: Awaited<ReturnType<typeof getReadDb>>, searchParams: URLSearchParams) {
   const limit = Math.min(parseInt(searchParams.get('limit') || '24'), 200);
   const offset = parseInt(searchParams.get('offset') || '0');
   const bookId = searchParams.get('bookId') || searchParams.get('book');

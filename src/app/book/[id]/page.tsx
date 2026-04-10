@@ -1,6 +1,6 @@
 import { Suspense, cache } from 'react';
 import { Metadata } from 'next';
-import { getDb } from '@/lib/mongodb';
+import { getReadDb } from '@/lib/mongodb';
 import { notFound } from 'next/navigation';
 import Link from 'next/link';
 import { Book, Page, TranslationEdition } from '@/lib/types';
@@ -86,7 +86,7 @@ const getCachedBookLookup = cache(async (id: string): Promise<{
 
   // Fall back to Atlas (slower but has everything)
   const db = await Promise.race([
-    getDb(),
+    getReadDb(),
     new Promise<never>((_, reject) => setTimeout(() => reject(new Error('DB timeout')), 15000)),
   ]);
   const result = await findBookByIdOrSlug(db, id, {
@@ -210,7 +210,7 @@ async function getBook(id: string): Promise<{ book: Book; pages: Page[]; totalBo
   // ALL Atlas queries in parallel — including a full book refetch for fields not in the catalog.
   const [result, db] = await Promise.all([
     getCachedBookLookup(id),
-    getDb(),
+    getReadDb(),
   ]);
 
   if (!result) return null;

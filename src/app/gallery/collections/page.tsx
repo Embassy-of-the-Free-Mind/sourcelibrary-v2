@@ -3,7 +3,7 @@ import Link from 'next/link';
 import Image from 'next/image';
 import { Image as ImageIcon, Layers } from 'lucide-react';
 import SiteHeader from '@/components/layout/SiteHeader';
-import { getDb } from '@/lib/mongodb';
+import { getReadDb } from '@/lib/mongodb';
 
 export const revalidate = 86400;
 
@@ -33,7 +33,7 @@ interface CollectionListItem {
 
 async function getCollections(): Promise<CollectionListItem[]> {
   try {
-    const db = await getDb();
+    const db = await getReadDb();
 
     const collections = await db
       .collection('gallery_collections')

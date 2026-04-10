@@ -1,11 +1,11 @@
 import { NextRequest, NextResponse } from 'next/server';
-import { getDb } from '@/lib/mongodb';
+import { getReadDb } from '@/lib/mongodb';
 import { withAuth } from '@/lib/auth-helpers';
 
 // GET /api/comparisons/stats - Get win rates between experiments
 export const GET = withAuth(async (request, session) => {
   try {
-    const db = await getDb();
+    const db = await getReadDb();
     const { searchParams } = new URL(request.url);
     const experimentA = searchParams.get('experiment_a');
     const experimentB = searchParams.get('experiment_b');

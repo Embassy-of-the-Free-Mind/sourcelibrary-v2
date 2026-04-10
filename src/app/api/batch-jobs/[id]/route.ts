@@ -1,5 +1,5 @@
 import { NextRequest, NextResponse } from 'next/server';
-import { getDb } from '@/lib/mongodb';
+import { getReadDb } from '@/lib/mongodb';
 import { withAuth } from '@/lib/auth-helpers';
 
 /**
@@ -10,7 +10,7 @@ export const GET = withAuth(async (request, session, context) => {
   try {
     const { id } = await context.params;
 
-    const db = await getDb();
+    const db = await getReadDb();
     const job = await db.collection('batch_jobs').findOne({ id });
 
     if (!job) {

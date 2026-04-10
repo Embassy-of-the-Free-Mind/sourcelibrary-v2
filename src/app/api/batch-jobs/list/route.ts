@@ -1,5 +1,5 @@
 import { NextRequest, NextResponse } from 'next/server';
-import { getDb } from '@/lib/mongodb';
+import { getReadDb } from '@/lib/mongodb';
 import type { BatchJob } from '@/lib/types/batch-job';
 import { withAuth } from '@/lib/auth-helpers';
 
@@ -16,7 +16,7 @@ export const GET = withAuth(async (request, session) => {
     const { searchParams } = new URL(request.url);
     const limit = parseInt(searchParams.get('limit') || '100');
 
-    const db = await getDb();
+    const db = await getReadDb();
 
     // Only fetch PARENT jobs (for UI display)
     // Child jobs are tracked internally but not shown in the main list

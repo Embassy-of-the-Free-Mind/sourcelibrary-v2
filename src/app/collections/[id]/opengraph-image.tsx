@@ -1,4 +1,4 @@
-import { getDb } from '@/lib/mongodb';
+import { getReadDb } from '@/lib/mongodb';
 import { generateBrandedOGImage, OG_SIZE, OG_CONTENT_TYPE } from '@/lib/og-image';
 
 export const alt = 'Collection - Source Library';
@@ -10,7 +10,7 @@ export default async function Image({ params }: { params: Promise<{ id: string }
 
   try {
     const db = await Promise.race([
-      getDb(),
+      getReadDb(),
       new Promise<never>((_, reject) => setTimeout(() => reject(new Error('timeout')), 5000)),
     ]);
     const collection = await db.collection('collections').findOne(

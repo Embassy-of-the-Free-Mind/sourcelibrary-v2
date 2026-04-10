@@ -1,5 +1,5 @@
 import { NextResponse } from 'next/server';
-import { getDb } from '@/lib/mongodb';
+import { getReadDb } from '@/lib/mongodb';
 import { supabase } from '@/lib/supabase';
 import { withAuth } from '@/lib/auth-helpers';
 
@@ -25,7 +25,7 @@ export const GET = withAuth(async () => {
       return NextResponse.json(cache.data);
     }
 
-    const db = await getDb();
+    const db = await getReadDb();
 
     // All queries use book-level cached counts (fast, no pages scan)
     const [

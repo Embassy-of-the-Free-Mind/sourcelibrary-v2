@@ -1,11 +1,11 @@
 import { NextResponse } from 'next/server';
-import { getDb } from '@/lib/mongodb';
+import { getReadDb } from '@/lib/mongodb';
 
 export const dynamic = 'force-dynamic';
 
 export async function GET() {
   try {
-    const db = await getDb();
+    const db = await getReadDb();
 
     // Get all books with projection (use cached pages_count and reading_summary)
     const books = await db.collection('books')

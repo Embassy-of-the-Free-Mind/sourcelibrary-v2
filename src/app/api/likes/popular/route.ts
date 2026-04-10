@@ -5,7 +5,7 @@
  */
 
 import { NextRequest, NextResponse } from 'next/server';
-import { getDb } from '@/lib/mongodb';
+import { getReadDb } from '@/lib/mongodb';
 import { LikeTargetType } from '@/lib/types';
 import { buildCropUrl } from '@/lib/social-image-selector';
 
@@ -43,7 +43,7 @@ export async function GET(request: NextRequest) {
     const limit = Math.min(parseInt(searchParams.get('limit') || '20'), 50);
     const minLikes = parseInt(searchParams.get('min_likes') || '1');
 
-    const db = await getDb();
+    const db = await getReadDb();
 
     // Get most liked targets
     const popularPipeline = [

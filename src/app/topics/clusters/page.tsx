@@ -1,4 +1,4 @@
-import { getDb } from '@/lib/mongodb';
+import { getReadDb } from '@/lib/mongodb';
 import Link from 'next/link';
 import Image from 'next/image';
 import ContentPageLayout, { ContentHeader } from '@/components/layout/ContentPageLayout';
@@ -33,7 +33,7 @@ interface TopicSummary {
 }
 
 async function fetchTopics(): Promise<{ topics: TopicSummary[]; totalBooks: number }> {
-  const db = await getDb();
+  const db = await getReadDb();
 
   const pipeline = [
     {

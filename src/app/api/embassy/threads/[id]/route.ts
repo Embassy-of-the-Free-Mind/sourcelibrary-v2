@@ -1,5 +1,5 @@
 import { NextRequest, NextResponse } from 'next/server';
-import { getDb } from '@/lib/mongodb';
+import { getReadDb } from '@/lib/mongodb';
 import { ObjectId } from 'mongodb';
 
 /**
@@ -16,7 +16,7 @@ export async function GET(
     return NextResponse.json({ error: 'Invalid thread ID' }, { status: 400 });
   }
 
-  const db = await getDb();
+  const db = await getReadDb();
 
   const thread = await db.collection('embassy_threads').findOne({
     _id: new ObjectId(id),

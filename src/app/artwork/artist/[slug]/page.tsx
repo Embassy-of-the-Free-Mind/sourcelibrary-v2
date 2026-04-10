@@ -2,7 +2,7 @@ import { Metadata } from 'next';
 import Link from 'next/link';
 import Image from 'next/image';
 import { notFound, redirect } from 'next/navigation';
-import { getDb } from '@/lib/mongodb';
+import { getReadDb } from '@/lib/mongodb';
 import { isInnerCircle } from '@/lib/auth-helpers';
 import SiteHeader from '@/components/layout/SiteHeader';
 import { sanitizeThumbnail } from '@/lib/collections-utils';
@@ -22,7 +22,7 @@ function isNonArtist(name: string): boolean {
 }
 
 async function getArtist(slug: string) {
-  const db = await getDb();
+  const db = await getReadDb();
 
   // Slug can be "Leonardo-da-Vinci" (dashes) or "Leonardo%20da%20Vinci" (encoded)
   const artistName = decodeURIComponent(slug).replace(/-/g, ' ');

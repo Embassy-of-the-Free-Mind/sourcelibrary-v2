@@ -1,6 +1,6 @@
 import { Metadata } from 'next';
 import { notFound, redirect } from 'next/navigation';
-import { getDb } from '@/lib/mongodb';
+import { getReadDb } from '@/lib/mongodb';
 import { isInnerCircle } from '@/lib/auth-helpers';
 import { Book } from '@/lib/types';
 import SiteHeader from '@/components/layout/SiteHeader';
@@ -14,7 +14,7 @@ interface PageProps {
 }
 
 async function getArtwork(slug: string) {
-  const db = await getDb();
+  const db = await getReadDb();
 
   // Try exact slug match, then with art- prefix
   const slugsToTry = [slug, `art-${slug}`];

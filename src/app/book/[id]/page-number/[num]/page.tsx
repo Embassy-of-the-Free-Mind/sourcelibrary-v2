@@ -1,5 +1,5 @@
 import { notFound, redirect } from 'next/navigation';
-import { getDb } from '@/lib/mongodb';
+import { getReadDb } from '@/lib/mongodb';
 import { findBookByIdOrSlug } from '@/lib/book-lookup';
 
 interface Props {
@@ -14,7 +14,7 @@ export default async function PageNumberRedirect({ params }: Props) {
     notFound();
   }
 
-  const db = await getDb();
+  const db = await getReadDb();
 
   // Resolve slug/id/ObjectId to actual book
   const result = await findBookByIdOrSlug(db, id, { id: 1, slug: 1 });
