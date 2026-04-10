@@ -151,7 +151,8 @@ interface CenturyProgress {
 
 interface LiveStats {
   total_books: number;
-  books_translated: number;
+  translated_by_sl: number;
+  english_digitized: number;
   books_over_90: number;
   first_translations: number;
   by_language: LanguageProgress[];
@@ -166,8 +167,9 @@ async function getLiveStats(): Promise<LiveStats | null> {
     const d = data as any;
     return {
       total_books: Number(d.totals?.total_books || 0),
-      books_translated: Number(d.totals?.books_translated || 0),
-      books_over_90: Number(d.totals?.books_over_90 || 0),
+      translated_by_sl: Number(d.totals?.translated_by_sl || 0),
+      english_digitized: Number(d.totals?.english_digitized || 0),
+      books_over_90: Number(d.totals?.over_90_translated || 0),
       first_translations: Number(d.totals?.first_translations || 0),
       by_language: (d.by_language || []).map((l: any) => ({
         language: l.language,
@@ -179,7 +181,7 @@ async function getLiveStats(): Promise<LiveStats | null> {
       by_century: (d.by_century || []).map((c: any) => ({
         century_start: Number(c.century_start),
         total: Number(c.total),
-        translated: Number(c.translated),
+        translated: Number(c.translated_by_sl ?? c.translated ?? 0),
         over_90: Number(c.over_90),
         first_trans: Number(c.first_trans),
       })),
@@ -313,27 +315,27 @@ export default async function ProgressPage() {
           </div>
 
           <p className="text-secondary mb-6">
-            Source Library is working through this corpus — scanning, OCR&apos;ing, and translating books that have
-            never before been available in English. Many of these are first-ever English translations of texts that
-            have waited centuries to be read.
+            Source Library translates historical texts into English — many for the first time ever.
+            Using AI-assisted OCR and translation, we&apos;re making texts readable that have waited
+            centuries to be understood outside their original languages.
           </p>
 
           <div className="grid grid-cols-2 md:grid-cols-4 gap-4 mb-6">
             <div className="text-center">
-              <div className="text-2xl font-semibold text-primary">{fmt(live.total_books)}</div>
-              <div className="text-xs text-stone-500 mt-1">Books digitized</div>
+              <div className="text-2xl font-semibold text-amber-700">{fmt(live.first_translations)}</div>
+              <div className="text-xs text-stone-500 mt-1">First English translations</div>
             </div>
             <div className="text-center">
-              <div className="text-2xl font-semibold text-primary">{fmt(live.books_translated)}</div>
-              <div className="text-xs text-stone-500 mt-1">With translation</div>
+              <div className="text-2xl font-semibold text-primary">{fmt(live.translated_by_sl)}</div>
+              <div className="text-xs text-stone-500 mt-1">Books translated</div>
             </div>
             <div className="text-center">
               <div className="text-2xl font-semibold text-primary">{fmt(live.books_over_90)}</div>
-              <div className="text-xs text-stone-500 mt-1">Over 90% translated</div>
+              <div className="text-xs text-stone-500 mt-1">Over 90% complete</div>
             </div>
             <div className="text-center">
-              <div className="text-2xl font-semibold text-amber-700 font-bold">{fmt(live.first_translations)}</div>
-              <div className="text-xs text-stone-500 mt-1">First English translations</div>
+              <div className="text-2xl font-semibold text-stone-400">{fmt(live.english_digitized)}</div>
+              <div className="text-xs text-stone-500 mt-1">English books digitized</div>
             </div>
           </div>
 
