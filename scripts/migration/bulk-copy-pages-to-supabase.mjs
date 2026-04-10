@@ -114,7 +114,7 @@ let pgPool = null;
 
 function getPgPool() {
   if (!pgPool) {
-    pgPool = new pg.Pool({ connectionString: SUPABASE_DB_URL, max: 4, statement_timeout: 300000 });
+    pgPool = new pg.Pool({ connectionString: SUPABASE_DB_URL, max: 4 });
   }
   return pgPool;
 }
