@@ -387,7 +387,14 @@ async function bulkWritePageTranslations(db, entries, book) {
       },
     },
   }));
-  await db.collection('pages').bulkWrite(ops, { ordered: false });
+  // Throttle writes to avoid IOPS spikes on Atlas M30
+  const CHUNK_SIZE = 25;
+  const CHUNK_DELAY_MS = 200;
+  for (let i = 0; i < ops.length; i += CHUNK_SIZE) {
+    const chunk = ops.slice(i, i + CHUNK_SIZE);
+    await db.collection('pages').bulkWrite(chunk, { ordered: false });
+    if (i + CHUNK_SIZE < ops.length) await new Promise(r => setTimeout(r, CHUNK_DELAY_MS));
+  }
 }
 
 // ── Process one book (sequential batches for context) ──
