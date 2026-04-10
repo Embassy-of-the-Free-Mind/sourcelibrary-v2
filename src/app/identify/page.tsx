@@ -372,9 +372,11 @@ export default function IdentifyPage() {
               </div>
             ) : (
               <div className="card p-5 text-center">
-                <p className="text-secondary">No matches found in the library.</p>
+                <p className="text-secondary">Not found in Source Library</p>
                 <p className="text-sm text-muted mt-1">
-                  This work may not be in Source Library yet.
+                  We searched {result.identification.medium === 'book' || result.identification.medium === 'manuscript'
+                    ? 'our book collection' : 'our books and artworks'} but couldn&apos;t find this specific work.
+                  The identification above is our best analysis of the image itself.
                 </p>
               </div>
             )}

@@ -142,24 +142,50 @@ export async function POST(request: NextRequest) {
     // eslint-disable-next-line @typescript-eslint/no-explicit-any
     const matches: any[] = [];
 
-    // Strategy 1: Artist + title regex (strongest signal)
+    // Collect all names to search — from artist, publisher, and all inscription names
+    const allNames: string[] = [];
     if (identification.artist) {
-      const artistLast = identification.artist.split(/\s+/).pop() || identification.artist;
-      const artistRegex = artistLast.replace(/[.*+?^${}()|[\]\\]/g, '\\$&');
-      const artistQuery: Record<string, unknown> = {
-        author: { $regex: artistRegex, $options: 'i' },
+      // Extract individual names from "Engraver (after Designer)" pattern
+      const nameStr = identification.artist.replace(/\(after\s+/i, ', ').replace(/\)/, '');
+      for (const part of nameStr.split(/[,&]+/)) {
+        const words = part.trim().split(/\s+/);
+        // Add full name and surname
+        if (words.length > 0) {
+          allNames.push(words[words.length - 1]); // surname
+          if (words.length > 1) allNames.push(words.join(' ')); // full name
+        }
+      }
+    }
+    if (identification.publisher) {
+      for (const part of identification.publisher.split(/[,&]+/)) {
+        const words = part.trim().split(/\s+/).filter(w => w.length > 2);
+        if (words.length > 0) allNames.push(words[words.length - 1]);
+      }
+    }
+    // Deduplicate and filter short/common words
+    const nameSet = [...new Set(allNames.map(n => n.toLowerCase()))].filter(n => n.length > 2);
+
+    // Strategy 1: Search by all names across author + commons metadata (for artworks)
+    if (nameSet.length > 0) {
+      const nameRegex = nameSet.map(n => n.replace(/[.*+?^${}()|[\]\\]/g, '\\$&')).join('|');
+      const nameQuery = {
         $or: [
-          { pages_count: { $gt: 0 } },
-          { resource_type: { $exists: true } },
+          { author: { $regex: nameRegex, $options: 'i' } },
+          { commons_title: { $regex: nameRegex, $options: 'i' } },
+          { commons_artist_html: { $regex: nameRegex, $options: 'i' } },
+          { english_title: { $regex: nameRegex, $options: 'i' } },
+        ],
+        $and: [
+          { $or: [{ pages_count: { $gt: 0 } }, { resource_type: { $exists: true } }] },
         ],
       };
 
       const artistBooks = await books
-        .find(artistQuery, {
+        .find(nameQuery, {
           projection: {
-            _id: 0, id: 1, slug: 1, title: 1, display_title: 1, author: 1,
-            published: 1, thumbnail: 1, thumbnail_blob: 1, resource_type: 1,
-            'enrichment.subject': 1, 'enrichment.inscriptions': 1,
+            _id: 0, id: 1, slug: 1, title: 1, display_title: 1, english_title: 1,
+            author: 1, published: 1, thumbnail: 1, thumbnail_blob: 1, resource_type: 1,
+            commons_title: 1, 'enrichment.subject': 1, 'enrichment.inscriptions': 1,
           },
           maxTimeMS: 8000,
         })
@@ -167,15 +193,15 @@ export async function POST(request: NextRequest) {
         .toArray()
         .catch(() => []);
 
-      // Score each match by how many search terms appear in its fields
+      // Score each match by how many search terms + title words appear in its fields
       const terms = identification.search_terms || [];
       const scored = artistBooks.map(book => {
         const haystack = [
-          book.title, book.display_title, book.author,
-          book.enrichment?.subject, book.enrichment?.inscriptions,
+          book.title, book.display_title, book.english_title, book.author,
+          book.commons_title, book.enrichment?.subject, book.enrichment?.inscriptions,
         ].filter(Boolean).join(' ').toLowerCase();
 
-        let score = 10; // Base score for artist match
+        let score = 10; // Base score for name match
         for (const term of terms) {
           if (haystack.includes(term.toLowerCase())) score += 5;
         }
@@ -186,12 +212,23 @@ export async function POST(request: NextRequest) {
             if (haystack.includes(w)) score += 3;
           }
         }
+        // Subject match bonus (important for artworks)
+        if (identification.subject) {
+          const subjectWords = identification.subject.toLowerCase().split(/\s+/).filter(w => w.length > 4);
+          for (const w of subjectWords) {
+            if (haystack.includes(w)) score += 3;
+          }
+        }
         // Inscription match bonus
         if (identification.inscriptions && book.enrichment?.inscriptions) {
           const inscWords = identification.inscriptions.toLowerCase().split(/\s+/).filter(w => w.length > 4).slice(0, 10);
           for (const w of inscWords) {
             if (book.enrichment.inscriptions.toLowerCase().includes(w)) score += 4;
           }
+        }
+        // Medium match bonus — if both are prints, paintings, etc.
+        if (identification.medium && book.resource_type === identification.medium) {
+          score += 8;
         }
         return { ...book, _score: score };
       });
@@ -216,6 +253,8 @@ export async function POST(request: NextRequest) {
               $or: [
                 { title: { $regex: termRegex, $options: 'i' } },
                 { display_title: { $regex: termRegex, $options: 'i' } },
+                { english_title: { $regex: termRegex, $options: 'i' } },
+                { commons_title: { $regex: termRegex, $options: 'i' } },
                 { 'enrichment.subject': { $regex: termRegex, $options: 'i' } },
                 { 'enrichment.inscriptions': { $regex: termRegex, $options: 'i' } },
               ],
