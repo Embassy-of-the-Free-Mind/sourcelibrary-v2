@@ -26,7 +26,13 @@ const PG_URL = process.env.SUPABASE_DB_URL;
 if (!MONGO_URI) { console.error('MONGODB_URI required'); process.exit(1); }
 if (!PG_URL) { console.error('SUPABASE_DB_URL required'); process.exit(1); }
 
-const pool = new pg.Pool({ connectionString: PG_URL, ssl: { rejectUnauthorized: false } });
+const pool = new pg.Pool({
+  connectionString: PG_URL,
+  ssl: { rejectUnauthorized: false },
+  // 10 minute statement timeout for heavy materialized view builds
+  statement_timeout: 600000,
+  query_timeout: 600000,
+});
 
 async function run() {
   const mongo = new MongoClient(MONGO_URI);
