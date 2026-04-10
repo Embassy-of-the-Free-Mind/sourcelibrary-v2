@@ -569,6 +569,7 @@ if (newDocs.length === 0) {
 const pagesWithOcrData = allExistingPages.filter(p => p.ocr?.data);
 if (pagesWithOcrData.length > 0) {
   await db.collection('page_revisions').insertOne({
+    id: `split-${book.id}-${Date.now()}`,
     book_id: book.id,
     type: 'pre-split-snapshot',
     page_count: allExistingPages.length,
