@@ -380,25 +380,6 @@ function createServer() {
   return server;
 }
 
-// ── Stateless transport: one server + transport per request ────────
-
-async function handleMcpRequest(req: Request): Promise<Response> {
-  const transport = new WebStandardStreamableHTTPServerTransport({
-    sessionIdGenerator: undefined, // Stateless — no sessions needed for serverless
-    enableJsonResponse: true,      // Return JSON instead of SSE streams
-  });
-
-  const server = createServer();
-  await server.connect(transport);
-
-  try {
-    return await transport.handleRequest(req);
-  } finally {
-    await transport.close();
-    await server.close();
-  }
-}
-
 // ── Next.js route handlers ─────────────────────────────────────────
 
 export async function GET(req: Request) {
@@ -422,31 +403,24 @@ export async function POST(req: Request) {
   try {
     const body = await req.json();
 
-    // For initialize requests, create a fresh server+transport
-    if (isInitializeRequest(body)) {
-      const transport = new WebStandardStreamableHTTPServerTransport({
-        sessionIdGenerator: undefined,
-        enableJsonResponse: true,
-      });
-      const server = createServer();
-      await server.connect(transport);
-      try {
-        return await transport.handleRequest(req, { parsedBody: body });
-      } finally {
-        await transport.close();
-        await server.close();
-      }
+    // Ensure Accept header includes text/event-stream — the SDK requires it,
+    // but some clients (Claude Chat) only send application/json
+    const accept = req.headers.get('accept') || '';
+    let fixedReq = req;
+    if (!accept.includes('text/event-stream')) {
+      const headers = new Headers(req.headers);
+      headers.set('accept', 'application/json, text/event-stream');
+      fixedReq = new Request(req.url, { method: req.method, headers });
     }
 
-    // For all other requests (tool calls, etc.), also stateless
     const transport = new WebStandardStreamableHTTPServerTransport({
-      sessionIdGenerator: undefined,
+      sessionIdGenerator: undefined, // Stateless for serverless
       enableJsonResponse: true,
     });
     const server = createServer();
     await server.connect(transport);
     try {
-      return await transport.handleRequest(req, { parsedBody: body });
+      return await transport.handleRequest(fixedReq, { parsedBody: body });
     } finally {
       await transport.close();
       await server.close();
