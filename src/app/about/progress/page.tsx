@@ -1,5 +1,6 @@
 import { Metadata } from 'next';
 import { getDb } from '@/lib/mongodb';
+import { supabase } from '@/lib/supabase';
 import ContentPageLayout, { SubPageHeader } from '@/components/layout/ContentPageLayout';
 import { BarChart3, BookOpen, Languages, Globe2, Scan, Sparkles, Library } from 'lucide-react';
 
@@ -39,6 +40,54 @@ interface CoverageData {
 
 async function getCoverageData(): Promise<CoverageData | null> {
   try {
+    // Query coverage stats directly from Supabase ustc_editions
+    const { data: langRows, error } = await supabase.rpc('get_coverage_stats');
+
+    if (error || !langRows) {
+      // Fallback to MongoDB catalog_coverage_meta
+      return getCoverageDataFallback();
+    }
+
+    const languages: LanguageStat[] = (langRows as any[])
+      .map((r: any) => ({
+        language: r.language,
+        editions: Number(r.editions),
+        with_scan: Number(r.with_scan),
+        pct_scanned: Number(r.editions) > 0 ? (Number(r.with_scan) / Number(r.editions) * 100) : 0,
+        with_translation: Number(r.with_translation),
+        pct_translated: Number(r.editions) > 0 ? (Number(r.with_translation) / Number(r.editions) * 100) : 0,
+        in_source_library: Number(r.in_sl),
+        distinct_works: 0,
+      }))
+      .sort((a, b) => b.editions - a.editions);
+
+    const totals = languages.reduce((acc, l) => ({
+      editions: acc.editions + l.editions,
+      scanned: acc.scanned + l.with_scan,
+      translated: acc.translated + l.with_translation,
+      in_sl: acc.in_sl + l.in_source_library,
+    }), { editions: 0, scanned: 0, translated: 0, in_sl: 0 });
+
+    return {
+      built_at: new Date().toISOString(),
+      total_editions: totals.editions,
+      total_works: 0,
+      total_scanned: totals.scanned,
+      total_translated: totals.translated,
+      total_in_sl: totals.in_sl,
+      pct_scanned: totals.editions > 0 ? (totals.scanned / totals.editions * 100) : 0,
+      pct_translated: totals.editions > 0 ? (totals.translated / totals.editions * 100) : 0,
+      languages,
+      source_count: 13,
+    };
+  } catch {
+    return getCoverageDataFallback();
+  }
+}
+
+/** Fallback: read from MongoDB catalog_coverage_meta if Supabase RPC fails */
+async function getCoverageDataFallback(): Promise<CoverageData | null> {
+  try {
     const db = await getDb();
     const meta = await db.collection('catalog_coverage_meta').findOne({ _id: 'latest_build' as any });
     if (!meta) return null;
@@ -52,7 +101,7 @@ async function getCoverageData(): Promise<CoverageData | null> {
         pct_scanned: s.editions > 0 ? ((s.scans || 0) / s.editions * 100) : 0,
         with_translation: s.translations || 0,
         pct_translated: s.editions > 0 ? ((s.translations || 0) / s.editions * 100) : 0,
-        in_source_library: s.inSourceLibrary || 0,
+        in_source_library: s.inSL || 0,
         distinct_works: s.distinctWorks || 0,
       }))
       .sort((a, b) => b.editions - a.editions);
@@ -65,12 +114,6 @@ async function getCoverageData(): Promise<CoverageData | null> {
       works: acc.works + l.distinct_works,
     }), { editions: 0, scanned: 0, translated: 0, in_sl: 0, works: 0 });
 
-    // Count scan sources
-    const sourceCount = await db.collection('import_candidates')
-      .distinct('source')
-      .then(s => s.length)
-      .catch(() => 11);
-
     return {
       built_at: meta.built_at || meta.updatedAt || '',
       total_editions: totals.editions,
@@ -81,7 +124,53 @@ async function getCoverageData(): Promise<CoverageData | null> {
       pct_scanned: totals.editions > 0 ? (totals.scanned / totals.editions * 100) : 0,
       pct_translated: totals.editions > 0 ? (totals.translated / totals.editions * 100) : 0,
       languages,
-      source_count: sourceCount,
+      source_count: 13,
+    };
+  } catch {
+    return null;
+  }
+}
+
+// ── Live Source Library Stats ─────────────────────────────────────────
+
+interface LiveStats {
+  total_books: number;
+  books_translated: number;
+  books_over_90: number;
+  first_translations: number;
+  verified_total: number;
+  top_languages: { language: string; count: number }[];
+}
+
+async function getLiveStats(): Promise<LiveStats | null> {
+  try {
+    const db = await getDb();
+    const col = db.collection('books');
+
+    const [total, translated, firstTrans, verified, langs, enrichSnap] = await Promise.all([
+      col.countDocuments({ pages_count: { $gt: 0 } }),
+      col.countDocuments({ pages_translated: { $gt: 0 } }),
+      col.countDocuments({ is_first_translation: true }),
+      col.countDocuments({ translation_verification: { $exists: true } }),
+      col.aggregate([
+        { $match: { pages_translated: { $gt: 0 }, pages_count: { $gt: 0 } } },
+        { $group: { _id: '$language', count: { $sum: 1 } } },
+        { $sort: { count: -1 } },
+        { $limit: 10 },
+      ], { maxTimeMS: 15000 }).toArray(),
+      // Use enrichment snapshot for >90% count (avoids slow $expr scan)
+      db.collection('system_config').findOne({ _id: 'enrichment_snapshot' as any }),
+    ]);
+
+    const over90 = (enrichSnap as any)?.milestones?.over_90_pct || 0;
+
+    return {
+      total_books: total,
+      books_translated: translated,
+      books_over_90: over90,
+      first_translations: firstTrans,
+      verified_total: verified,
+      top_languages: langs.map(l => ({ language: l._id as string, count: l.count })),
     };
   } catch {
     return null;
