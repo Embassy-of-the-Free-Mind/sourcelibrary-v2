@@ -16,6 +16,7 @@
  */
 
 import { MongoClient } from 'mongodb';
+import pg from 'pg';
 
 const SUPABASE_URL = 'https://ykhxaecbbxaaqlujuzde.supabase.co';
 const SUPABASE_KEY = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6InlraHhhZWNiYnhhYXFsdWp1emRlIiwicm9sZSI6ImFub24iLCJpYXQiOjE3NjUwNjExMDEsImV4cCI6MjA4MDYzNzEwMX0.O2chfnHGQWLOaVSFQ-F6UJMlya9EzPbsUh848SEOPj4';
@@ -490,28 +491,7 @@ async function fetchYearRange(language, yearStart, yearEnd) {
   return results;
 }
 
-async function buildCoverage(db, scanLookup, translationLookup, slLookup, authorAliases) {
-  const col = db.collection('catalog_coverage');
-
-  // Create indexes
-  if (!DRY_RUN) {
-    console.log('\nCreating indexes...');
-    // Only create the indexes we actually need (see issue #332 for cleanup rationale)
-    const indexes = [
-      [{ ustc_id: 1 }, { unique: true }],
-      [{ language: 1, year: 1 }],
-      [{ source_library_id: 1 }, { sparse: true }],
-      [{ author_surname: 1, year: 1 }],
-      [{ work_cluster_id: 1 }],
-      [{ has_iiif_scan: 1, has_english_translation: 1, language: 1 }],
-      // Skipped: text_search (432MB, 60x slower than author_surname fallback)
-      // Skipped: has_iiif_scan_1, has_english_translation_1 (redundant with compound)
-    ];
-    for (const [key, opts] of indexes) {
-      try { await col.createIndex(key, opts || {}); } catch (e) { console.error(`  Index ${JSON.stringify(key)}: ${e.message.slice(0, 60)}`); }
-    }
-  }
-
+async function buildCoverage(db, pgClient, scanLookup, translationLookup, slLookup, authorAliases) {
   const languages = LANG_FILTER ? [LANG_FILTER] : ['Latin', 'German', 'French', 'Italian', 'Dutch', 'Spanish', 'Portuguese', 'English', 'Greek'];
 
   let totalProcessed = 0;
@@ -597,30 +577,48 @@ async function buildCoverage(db, scanLookup, translationLookup, slLookup, author
 
       langEditions += docs.length;
 
-      // Bulk upsert
+      // Batch UPDATE to Supabase Postgres
       if (!DRY_RUN && docs.length > 0) {
-        const ops = docs.map(d => ({
-          updateOne: {
-            filter: { ustc_id: d.ustc_id },
-            update: { $set: d },
-            upsert: true,
-          }
-        }));
-        // Write in chunks of 500 with retry on timeout
-        for (let i = 0; i < ops.length; i += 500) {
-          const chunk = ops.slice(i, i + 500);
-          for (let attempt = 0; attempt < 3; attempt++) {
-            try {
-              await col.bulkWrite(chunk, { ordered: false });
-              break;
-            } catch (err) {
-              const msg = String(err.message || err);
-              if (attempt < 2 && (msg.includes('timed out') || msg.includes('ECONNRESET') || msg.includes('PoolCleared') || msg.includes('pool was cleared') || msg.includes('ENOTFOUND') || msg.includes('ResetPool'))) {
-                console.error(`\n  Write error, retry ${attempt + 1}/3: ${msg.slice(0, 100)}`);
-                await new Promise(r => setTimeout(r, 5000 * (attempt + 1)));
-              } else {
-                throw err;
-              }
+        // Use unnest arrays for efficient batch update (no param count limit)
+        const sns = [], scans = [], trans = [], inSls = [], scanSrcs = [], sqs = [], slIds = [], wcIds = [], slPcts = [];
+        for (const d of docs) {
+          sns.push(typeof d.ustc_id === 'number' ? d.ustc_id : parseInt(d.ustc_id) || 0);
+          scans.push(d.has_iiif_scan);
+          trans.push(d.has_english_translation);
+          inSls.push(d.in_source_library);
+          scanSrcs.push(d.scan_sources?.length ? `{${d.scan_sources.join(',')}}` : null);
+          sqs.push(d.scan_quality);
+          slIds.push(d.source_library_id);
+          wcIds.push(d.work_cluster_id);
+          slPcts.push(d.sl_translation_percent);
+        }
+
+        const sql = `
+          UPDATE ustc_editions SET
+            has_iiif_scan = v.has_scan,
+            has_english_translation = v.has_trans,
+            in_source_library = v.in_sl,
+            scan_quality = v.sq,
+            source_library_id = v.sl_id,
+            work_cluster_id = v.wc_id,
+            sl_translation_percent = v.sl_pct,
+            coverage_built_at = NOW()
+          FROM unnest($1::integer[], $2::boolean[], $3::boolean[], $4::boolean[], $5::text[], $6::text[], $7::text[], $8::smallint[])
+            AS v(sn, has_scan, has_trans, in_sl, sq, sl_id, wc_id, sl_pct)
+          WHERE ustc_editions.sn = v.sn
+        `;
+
+        for (let attempt = 0; attempt < 3; attempt++) {
+          try {
+            await pgClient.query(sql, [sns, scans, trans, inSls, sqs, slIds, wcIds, slPcts]);
+            break;
+          } catch (err) {
+            const msg = String(err.message || err);
+            if (attempt < 2 && (msg.includes('timeout') || msg.includes('ECONNRESET'))) {
+              console.error(`\n  PG write error, retry ${attempt + 1}/3: ${msg.slice(0, 100)}`);
+              await new Promise(r => setTimeout(r, 3000 * (attempt + 1)));
+            } else {
+              throw err;
             }
           }
         }
@@ -640,57 +638,49 @@ async function buildCoverage(db, scanLookup, translationLookup, slLookup, author
     totalInSL += langSL;
   }
 
-  // Compute work-level stats
+  // Compute work-level stats from Supabase
   let worksStats = null;
   if (!DRY_RUN) {
     console.log('\nComputing work-level stats...');
-    const worksResult = await col.aggregate([
-      {
-        $group: {
-          _id: '$work_cluster_id',
-          any_scan: { $max: { $cond: ['$has_iiif_scan', 1, 0] } },
-          any_translation: { $max: { $cond: ['$has_english_translation', 1, 0] } },
-          any_sl: { $max: { $cond: ['$in_source_library', 1, 0] } },
-        }
-      },
-      {
-        $group: {
-          _id: null,
-          total_works: { $sum: 1 },
-          works_with_scan: { $sum: '$any_scan' },
-          works_with_translation: { $sum: '$any_translation' },
-          works_in_sl: { $sum: '$any_sl' },
-          works_scanned_not_translated: {
-            $sum: { $cond: [{ $and: [{ $eq: ['$any_scan', 1] }, { $eq: ['$any_translation', 0] }] }, 1, 0] }
-          },
-          works_neither: {
-            $sum: { $cond: [{ $and: [{ $eq: ['$any_scan', 0] }, { $eq: ['$any_translation', 0] }] }, 1, 0] }
-          },
-        }
-      },
-    ], { allowDiskUse: true }).toArray();
-    worksStats = worksResult[0] || {};
-    delete worksStats._id;
+    const worksResult = await pgClient.query(`
+      SELECT
+        count(DISTINCT work_cluster_id) AS total_works,
+        count(DISTINCT work_cluster_id) FILTER (WHERE has_iiif_scan) AS works_with_scan,
+        count(DISTINCT work_cluster_id) FILTER (WHERE has_english_translation) AS works_with_translation,
+        count(DISTINCT work_cluster_id) FILTER (WHERE in_source_library) AS works_in_sl,
+        count(DISTINCT work_cluster_id) FILTER (WHERE has_iiif_scan AND NOT has_english_translation) AS works_scanned_not_translated,
+        count(DISTINCT work_cluster_id) FILTER (WHERE NOT has_iiif_scan AND NOT has_english_translation) AS works_neither
+      FROM ustc_editions
+      WHERE work_cluster_id IS NOT NULL
+    `);
+    worksStats = worksResult.rows[0] || {};
+    // Convert bigint strings to numbers
+    for (const k of Object.keys(worksStats)) worksStats[k] = Number(worksStats[k]);
     console.log(`  ${worksStats.total_works?.toLocaleString()} distinct works, ${worksStats.works_with_scan?.toLocaleString()} scanned, ${worksStats.works_with_translation?.toLocaleString()} translated`);
   }
 
-  // Store build metadata
+  // Store build metadata in MongoDB (still needed for progress page until fully migrated)
   if (!DRY_RUN) {
-    await db.collection('catalog_coverage_meta').updateOne(
-      { _id: 'latest_build' },
-      { $set: {
-        built_at: new Date(),
-        year_range: [YEAR_MIN, YEAR_MAX],
-        languages: LANG_FILTER ? [LANG_FILTER] : languages,
-        total_editions: totalProcessed,
-        total_with_scan: totalWithScan,
-        total_with_translation: totalWithTranslation,
-        total_in_source_library: totalInSL,
-        stats,
-        works: worksStats,
-      }},
-      { upsert: true }
-    );
+    try {
+      await db.collection('catalog_coverage_meta').updateOne(
+        { _id: 'latest_build' },
+        { $set: {
+          built_at: new Date(),
+          year_range: [YEAR_MIN, YEAR_MAX],
+          languages: LANG_FILTER ? [LANG_FILTER] : languages,
+          total_editions: totalProcessed,
+          total_with_scan: totalWithScan,
+          total_with_translation: totalWithTranslation,
+          total_in_source_library: totalInSL,
+          stats,
+          works: worksStats,
+          storage: 'supabase',
+        }},
+        { upsert: true }
+      );
+    } catch (err) {
+      console.error(`  MongoDB meta write failed (non-fatal): ${err.message?.slice(0, 100)}`);
+    }
   }
 
   return { totalProcessed, totalWithScan, totalWithTranslation, totalInSL, stats };
@@ -706,26 +696,33 @@ async function main() {
 
   const uri = process.env.MONGODB_URI;
   if (!uri) { console.error('MONGODB_URI required'); process.exit(1); }
+  const pgUrl = process.env.SUPABASE_DB_URL;
+  if (!pgUrl) { console.error('SUPABASE_DB_URL required'); process.exit(1); }
+
   const client = new MongoClient(uri, {
     maxPoolSize: 3,
     serverSelectionTimeoutMS: 30_000,
     connectTimeoutMS: 30_000,
-    socketTimeoutMS: 120_000,  // 2min — needed for streaming 664K candidates
+    socketTimeoutMS: 120_000,
     maxIdleTimeMS: 120_000,
   });
   await client.connect();
   const db = client.db('bookstore');
 
+  const pgClient = new pg.Client(pgUrl);
+  await pgClient.connect();
+  console.log('Connected to Supabase Postgres');
+
   try {
-    // Phase 1: Load lookups
+    // Phase 1: Load lookups from MongoDB (scans, translations, SL books, aliases)
     const authorAliases = await loadAuthorAliasMap(db);
     const scanLookup = await loadScanLookup(db);
     const translationLookup = await loadTranslationLookup(db);
     const slLookup = await loadSourceLibraryLookup(db);
 
-    // Phase 2: Build coverage
+    // Phase 2: Build coverage — reads USTC from Supabase REST, writes results to Supabase Postgres
     const start = Date.now();
-    const results = await buildCoverage(db, scanLookup, translationLookup, slLookup, authorAliases);
+    const results = await buildCoverage(db, pgClient, scanLookup, translationLookup, slLookup, authorAliases);
     const elapsed = ((Date.now() - start) / 1000).toFixed(0);
 
     // Summary
@@ -740,6 +737,7 @@ async function main() {
     if (DRY_RUN) console.log('  (DRY RUN — nothing written)');
   } finally {
     await client.close();
+    await pgClient.end();
   }
 }
 
