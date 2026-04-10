@@ -2107,6 +2107,7 @@ async function run() {
             _priority: {
               $switch: {
                 branches: [
+                  { case: { $gte: [{ $ifNull: ['$pipeline_priority', 0] }, 1] }, then: -10 }, // Manual priority boost
                   { case: { $eq: ['$image_source.provider', 'bph'] }, then: -1 }, // BPH priority until backlog cleared
                   { case: { $eq: ['$is_first_translation', true] }, then: 0 },
                   { case: { $in: [{ $toLower: { $ifNull: ['$language', ''] } }, ENGLISH_VARIANTS_P1] }, then: 2 },
@@ -2138,6 +2139,7 @@ async function run() {
             _priority: {
               $switch: {
                 branches: [
+                  { case: { $gte: [{ $ifNull: ['$pipeline_priority', 0] }, 1] }, then: -10 }, // Manual priority boost
                   { case: { $eq: ['$image_source.provider', 'bph'] }, then: -1 }, // BPH priority until backlog cleared
                   { case: { $eq: ['$is_first_translation', true] }, then: 0 },
                   { case: { $in: [{ $toLower: { $ifNull: ['$language', ''] } }, ENGLISH_VARIANTS_P1] }, then: 2 },
@@ -2944,7 +2946,8 @@ Rules:
               _priority: {
                 $switch: {
                   branches: [
-                    { case: { $eq: ['$image_source.provider', 'bph'] }, then: -1 }, // BPH priority until backlog cleared
+                    { case: { $gte: [{ $ifNull: ['$pipeline_priority', 0] }, 1] }, then: -10 }, // Manual priority boost
+                  { case: { $eq: ['$image_source.provider', 'bph'] }, then: -1 }, // BPH priority until backlog cleared
                   { case: { $eq: ['$is_first_translation', true] }, then: 0 },
                     { case: { $in: [{ $toLower: { $ifNull: ['$language', ''] } }, ENGLISH_VARIANTS_P2] }, then: 2 },
                   ],
@@ -3008,6 +3011,7 @@ Rules:
             _priority: {
               $switch: {
                 branches: [
+                  { case: { $gte: [{ $ifNull: ['$pipeline_priority', 0] }, 1] }, then: -10 }, // Manual priority boost
                   { case: { $eq: ['$image_source.provider', 'bph'] }, then: -1 }, // BPH priority until backlog cleared
                   { case: { $eq: ['$is_first_translation', true] }, then: 0 },
                   { case: { $in: [{ $toLower: { $ifNull: ['$language', ''] } }, ENGLISH_VARIANTS_P2] }, then: 2 },
