@@ -179,40 +179,69 @@ async function buildCensusView() {
     ).catch(() => ({ rows: [{ count: '0' }] }));
 
     if (parseInt(matViews[0]?.count || '0') === 0) {
-      // The CREATE MATERIALIZED VIEW for 1.6M grouped rows can timeout
-      // on Supabase shared infra. We use CREATE TABLE ... AS SELECT
-      // which may be faster, and set a very long timeout.
-      console.log('  Building ustc_distinct_works table (this takes several minutes)...');
+      // Build in language chunks to stay under Supabase timeout
+      console.log('  Building ustc_distinct_works table by language chunks...');
       await client.query('DROP MATERIALIZED VIEW IF EXISTS translation_census_by_language CASCADE');
       await client.query('DROP TABLE IF EXISTS translation_census_matches CASCADE');
       await client.query('DROP MATERIALIZED VIEW IF EXISTS ustc_distinct_works CASCADE');
       await client.query('DROP TABLE IF EXISTS ustc_distinct_works CASCADE');
 
+      // Create empty table
       await client.query(`
-        CREATE TABLE ustc_distinct_works AS
-        SELECT
-          MIN(e.id) AS sample_id,
-          regexp_replace(lower(
-            CASE WHEN position(',' IN ue.author_1) > 0
-                 THEN left(ue.author_1, position(',' IN ue.author_1) - 1)
-                 ELSE split_part(ue.author_1, ' ', 1)
-            END
-          ), '[^a-z ]', '', 'g') AS author_surname,
-          lower(regexp_replace(e.std_title, '[^a-z0-9 ]', '', 'g')) AS work_key,
-          e.detected_language AS language,
-          MIN(e.english_title) AS english_title,
-          MIN(e.std_title) AS std_title,
-          MIN(ue.author_1) AS author,
-          MIN(ue.year) AS year,
-          count(*) AS edition_count
-        FROM ustc_enrichments e
-        JOIN ustc_editions ue ON ue.id = e.id
-        WHERE e.std_title IS NOT NULL
-          AND e.std_title != ''
-          AND ue.year BETWEEN 1450 AND 1700
-        GROUP BY author_surname, work_key, e.detected_language;
+        CREATE TABLE ustc_distinct_works (
+          sample_id int,
+          author_surname text,
+          work_key text,
+          language text,
+          english_title text,
+          std_title text,
+          author text,
+          year int,
+          edition_count int
+        );
       `);
 
+      // Get languages to process in chunks
+      const { rows: langs } = await client.query(`
+        SELECT DISTINCT e.detected_language AS lang, count(*) AS cnt
+        FROM ustc_enrichments e
+        JOIN ustc_editions ue ON ue.id = e.id
+        WHERE e.std_title IS NOT NULL AND e.std_title != '' AND ue.year BETWEEN 1450 AND 1700
+        GROUP BY e.detected_language
+        ORDER BY cnt DESC
+      `);
+
+      for (const { lang, cnt } of langs) {
+        if (!lang) continue;
+        console.log(`    ${lang}: ${parseInt(cnt).toLocaleString()} enrichments...`);
+        await client.query(`
+          INSERT INTO ustc_distinct_works
+          SELECT
+            MIN(e.id) AS sample_id,
+            regexp_replace(lower(
+              CASE WHEN position(',' IN ue.author_1) > 0
+                   THEN left(ue.author_1, position(',' IN ue.author_1) - 1)
+                   ELSE split_part(ue.author_1, ' ', 1)
+              END
+            ), '[^a-z ]', '', 'g') AS author_surname,
+            lower(regexp_replace(e.std_title, '[^a-z0-9 ]', '', 'g')) AS work_key,
+            e.detected_language AS language,
+            MIN(e.english_title) AS english_title,
+            MIN(e.std_title) AS std_title,
+            MIN(ue.author_1) AS author,
+            MIN(ue.year) AS year,
+            count(*) AS edition_count
+          FROM ustc_enrichments e
+          JOIN ustc_editions ue ON ue.id = e.id
+          WHERE e.std_title IS NOT NULL
+            AND e.std_title != ''
+            AND ue.year BETWEEN 1450 AND 1700
+            AND e.detected_language = $1
+          GROUP BY author_surname, work_key, e.detected_language
+        `, [lang]);
+      }
+
+      console.log('  Creating indexes...');
       await client.query(`
         CREATE INDEX IF NOT EXISTS idx_udw_surname ON ustc_distinct_works (author_surname);
         CREATE INDEX IF NOT EXISTS idx_udw_lang ON ustc_distinct_works (language);
