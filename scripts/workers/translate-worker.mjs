@@ -25,6 +25,7 @@ import { MongoClient } from 'mongodb';
 import { GoogleGenerativeAI } from '@google/generative-ai';
 import { createHash } from 'crypto';
 import { nanoid } from 'nanoid';
+import { logUsage } from './lib/supabase-usage-logger.mjs';
 
 // ── Config ──
 const CONCURRENCY = 40;          // Max books translating simultaneously
@@ -512,14 +513,14 @@ async function processBook(db, book, job, globalCounter, deadline) {
         await writePageTranslation(db, page, result.text, book);
 
         const cost = calculateCost(result.inputTokens, result.outputTokens, getModelForBook(book));
-        await db.collection('gemini_usage').insertOne({
+        await logUsage({
           type: 'translation', mode: 'realtime', model: getModelForBook(book),
           book_id: book.id, page_ids: [page.id],
           input_tokens: result.inputTokens, output_tokens: result.outputTokens,
           cost_usd: cost, status: 'success', duration_ms: result.durationMs,
           prompt_version: PROMPT_VERSION, endpoint: 'worker/hetzner-translate',
-          batch_size: 1, timestamp: new Date(),
-        });
+          batch_size: 1,
+        }, db);
 
         translated++;
         globalCounter.count++;
@@ -566,13 +567,13 @@ async function processBook(db, book, job, globalCounter, deadline) {
             }
             consecutiveErrors = Math.max(0, consecutiveErrors - 1); // don't count toward circuit breaker
           }
-          await db.collection('gemini_usage').insertOne({
+          await logUsage({
             type: 'translation', mode: 'realtime', model: getModelForBook(book),
             book_id: book.id, page_ids: [page.id],
             input_tokens: 0, output_tokens: 0, status: 'failed',
             error_message: msg.substring(0, 500), endpoint: 'worker/hetzner-translate',
-            batch_size: 1, timestamp: new Date(),
-          });
+            batch_size: 1,
+          }, db);
         }
       }
     } else {
@@ -651,7 +652,7 @@ async function processBook(db, book, job, globalCounter, deadline) {
 
         // Log batch usage
         const cost = calculateCost(result.inputTokens, result.outputTokens, getModelForBook(book));
-        await db.collection('gemini_usage').insertOne({
+        await logUsage({
           type: 'translation', mode: 'realtime', model: getModelForBook(book),
           book_id: book.id, page_ids: batch.map(p => p.id),
           input_tokens: result.inputTokens, output_tokens: result.outputTokens,
@@ -659,8 +660,7 @@ async function processBook(db, book, job, globalCounter, deadline) {
           duration_ms: result.durationMs, prompt_version: PROMPT_VERSION,
           endpoint: 'worker/hetzner-translate-batch',
           batch_size: batch.length, pages_parsed: result.translations.size,
-          timestamp: new Date(),
-        });
+        }, db);
 
         consecutiveErrors = 0;
         totalInputTokens += result.inputTokens;

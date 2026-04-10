@@ -18,6 +18,7 @@
 
 import { MongoClient } from 'mongodb';
 import { randomBytes } from 'crypto';
+import { logUsageAsync } from './lib/supabase-usage-logger.mjs';
 
 /**
  * Save current page content as a revision before overwriting.
@@ -543,8 +544,8 @@ async function processOneJob(db, job) {
       }
     );
 
-    // Log to gemini_usage
-    await db.collection('gemini_usage').insertOne({
+    // Log to Supabase gemini_usage (non-blocking)
+    logUsageAsync({
       type: job.type || 'ocr',
       mode: 'batch',
       model: job.model,
@@ -555,8 +556,7 @@ async function processOneJob(db, job) {
       cost_usd: costUsd,
       status: 'success',
       batch_job_id: jobIdStr,
-      timestamp: now,
-    }).catch(() => {}); // non-blocking
+    }, db);
 
     return {
       status: 'collected',

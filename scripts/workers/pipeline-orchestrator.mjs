@@ -27,6 +27,7 @@ import { S3Client, PutObjectCommand } from '@aws-sdk/client-s3';
 import { createHash } from 'crypto';
 import { execFile } from 'child_process';
 import { promisify } from 'util';
+import { logUsage, logUsageAsync } from './lib/supabase-usage-logger.mjs';
 const execFileAsync = promisify(execFile);
 
 // ── Config ──
@@ -599,19 +600,12 @@ async function transliteratePage(db, page, sourceScript) {
 
   // Log usage (fire-and-forget)
   const costUsd = (inputTokens / 1_000_000) * 0.10 + (outputTokens / 1_000_000) * 0.40;
-  db.collection('gemini_usage').insertOne({
-    type: 'transliterate',
-    mode: 'realtime',
-    model: TRANSLITERATION_MODEL,
-    book_id: page.book_id,
-    page_ids: [page.id],
-    input_tokens: inputTokens,
-    output_tokens: outputTokens,
-    cost_usd: costUsd,
-    status: 'success',
-    endpoint: 'hetzner/pipeline-orchestrator',
-    timestamp: new Date(),
-  }).catch(() => {});
+  logUsageAsync({
+    type: 'transliterate', mode: 'realtime', model: TRANSLITERATION_MODEL,
+    book_id: page.book_id, page_ids: [page.id],
+    input_tokens: inputTokens, output_tokens: outputTokens,
+    cost_usd: costUsd, status: 'success', endpoint: 'hetzner/pipeline-orchestrator',
+  }, db);
 
   return { inputTokens, outputTokens, costUsd };
 }
@@ -739,19 +733,12 @@ async function translatePage(db, page, sourceLanguage, previousTranslation) {
 
   // Log usage (fire-and-forget)
   const costUsd = (inputTokens / 1_000_000) * 0.50 + (outputTokens / 1_000_000) * 3.00;
-  db.collection('gemini_usage').insertOne({
-    type: 'translation',
-    mode: 'realtime',
-    model: TRANSLATE_MODEL,
-    book_id: page.book_id,
-    page_ids: [page.id],
-    input_tokens: inputTokens,
-    output_tokens: outputTokens,
-    cost_usd: costUsd,
-    status: 'success',
-    endpoint: 'hetzner/pipeline-orchestrator',
-    timestamp: new Date(),
-  }).catch(() => {});
+  logUsageAsync({
+    type: 'translation', mode: 'realtime', model: TRANSLATE_MODEL,
+    book_id: page.book_id, page_ids: [page.id],
+    input_tokens: inputTokens, output_tokens: outputTokens,
+    cost_usd: costUsd, status: 'success', endpoint: 'hetzner/pipeline-orchestrator',
+  }, db);
 
   return { text, inputTokens, outputTokens, costUsd };
 }
@@ -1473,24 +1460,15 @@ Output structure:
     childJobIds.push(childJobId);
     totalSubmitted += chunk.length;
 
-    // Log to gemini_usage
-    await db.collection('gemini_usage').insertOne({
-      type: 'ocr',
-      mode: 'batch',
-      model: ocrModel,
-      book_id: book.id,
-      book_title: book.title,
-      page_ids: chunk.map(c => c.pageId),
-      page_count: chunk.length,
-      batch_job_id: childJobId,
-      gemini_job_name: batchJob.name,
-      input_tokens: 0,
-      output_tokens: 0,
-      status: 'submitted',
+    // Log to Supabase gemini_usage
+    await logUsage({
+      type: 'ocr', mode: 'batch', model: ocrModel,
+      book_id: book.id, book_title: book.title,
+      page_ids: chunk.map(c => c.pageId), page_count: chunk.length,
+      batch_job_id: childJobId, gemini_job_name: batchJob.name,
+      input_tokens: 0, output_tokens: 0, status: 'submitted',
       endpoint: 'hetzner/pipeline-orchestrator',
-      submission_method: useFileBased ? 'file' : 'inline',
-      timestamp: new Date(),
-    });
+    }, db);
   }
 
   // Create parent job if multiple children
@@ -1740,24 +1718,15 @@ async function submitImageExtractionBatch(db, book, candidatePages) {
     childJobIds.push(childJobId);
     totalSubmitted += chunk.length;
 
-    // Log to gemini_usage
-    await db.collection('gemini_usage').insertOne({
-      type: 'image_extraction',
-      mode: 'batch',
-      model: IMAGE_EXTRACTION_MODEL,
-      book_id: book.id,
-      book_title: book.title,
-      page_ids: chunk.map(c => c.pageId),
-      page_count: chunk.length,
-      batch_job_id: childJobId,
-      gemini_job_name: batchJob.name,
-      input_tokens: 0,
-      output_tokens: 0,
-      status: 'submitted',
+    // Log to Supabase gemini_usage
+    await logUsage({
+      type: 'image_extraction', mode: 'batch', model: IMAGE_EXTRACTION_MODEL,
+      book_id: book.id, book_title: book.title,
+      page_ids: chunk.map(c => c.pageId), page_count: chunk.length,
+      batch_job_id: childJobId, gemini_job_name: batchJob.name,
+      input_tokens: 0, output_tokens: 0, status: 'submitted',
       endpoint: 'hetzner/pipeline-orchestrator',
-      submission_method: useFileBased ? 'file' : 'inline',
-      timestamp: new Date(),
-    });
+    }, db);
   }
 
   // Create parent job if multiple children
@@ -1948,25 +1917,15 @@ async function submitCrossBookImageBatches(db, bookItems) {
     totalSubmitted += chunk.length;
     batchCount++;
 
-    // Log to gemini_usage (one entry per batch, listing all book IDs)
-    await db.collection('gemini_usage').insertOne({
-      type: 'image_extraction',
-      mode: 'batch',
-      model: IMAGE_EXTRACTION_MODEL,
+    // Log to Supabase gemini_usage (one entry per batch, listing all book IDs)
+    await logUsage({
+      type: 'image_extraction', mode: 'batch', model: IMAGE_EXTRACTION_MODEL,
       book_id: chunkBookIds[0],
-      book_ids: chunkBookIds,
-      page_ids: chunk.map(c => c.pageId),
-      page_count: chunk.length,
-      batch_job_id: childJobId,
-      gemini_job_name: batchJob.name,
-      input_tokens: 0,
-      output_tokens: 0,
-      status: 'submitted',
+      page_ids: chunk.map(c => c.pageId), page_count: chunk.length,
+      batch_job_id: childJobId, gemini_job_name: batchJob.name,
+      input_tokens: 0, output_tokens: 0, status: 'submitted',
       endpoint: 'hetzner/pipeline-orchestrator',
-      submission_method: 'file',
-      cross_book: true,
-      timestamp: new Date(),
-    });
+    }, db);
   }
 
   // Create parent job if multiple children
@@ -2537,19 +2496,12 @@ Reply with ONLY: {"is_spread": true} or {"is_spread": false}` },
               const inputTokens = usage.promptTokenCount || 0;
               const outputTokens = usage.candidatesTokenCount || 0;
               const costUsd = (inputTokens / 1_000_000) * 0.075 + (outputTokens / 1_000_000) * 0.30;
-              db.collection('gemini_usage').insertOne({
-                type: 'ocr',
-                mode: 'realtime',
-                model: previewModel,
-                book_id: book.id,
-                page_ids: [pageId],
-                input_tokens: inputTokens,
-                output_tokens: outputTokens,
-                cost_usd: costUsd,
-                status: 'success',
-                endpoint: 'hetzner/pipeline-preview-ocr',
-                timestamp: new Date(),
-              }).catch(() => {});
+              logUsageAsync({
+                type: 'ocr', mode: 'realtime', model: previewModel,
+                book_id: book.id, page_ids: [pageId],
+                input_tokens: inputTokens, output_tokens: outputTokens,
+                cost_usd: costUsd, status: 'success', endpoint: 'hetzner/pipeline-preview-ocr',
+              }, db);
             }));
 
             // Brief pause between batches
@@ -2876,20 +2828,13 @@ Rules:
 
           // Log usage
           const costUsd = (inputTokens / 1_000_000) * 0.50 + (outputTokens / 1_000_000) * 3.00;
-          db.collection('gemini_usage').insertOne({
-            type: 'metadata_enrichment',
-            mode: 'realtime',
-            model: metadataModel,
-            book_id: book.id,
-            book_title: book.display_title || book.title,
-            input_tokens: inputTokens,
-            output_tokens: outputTokens,
-            cost_usd: costUsd,
-            duration_ms: durationMs,
-            status: 'success',
+          logUsageAsync({
+            type: 'metadata_enrichment', mode: 'realtime', model: metadataModel,
+            book_id: book.id, book_title: book.display_title || book.title,
+            input_tokens: inputTokens, output_tokens: outputTokens,
+            cost_usd: costUsd, duration_ms: durationMs, status: 'success',
             endpoint: 'hetzner/pipeline-metadata',
-            timestamp: now,
-          }).catch(() => {});
+          }, db);
 
           // Log to audit_log if changes were made
           if (changes.length > 0) {

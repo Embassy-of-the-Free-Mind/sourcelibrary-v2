@@ -1,5 +1,6 @@
 import { NextResponse } from 'next/server';
 import { getDb } from '@/lib/mongodb';
+import { supabase } from '@/lib/supabase';
 import { withAuth } from '@/lib/auth-helpers';
 
 export const maxDuration = 60;
@@ -171,23 +172,20 @@ export const GET = withAuth(async () => {
         .limit(20)
         .toArray(),
 
-      // 7. Cost per translated page (last 30 days)
-      db.collection('gemini_usage').aggregate([
-        {
-          $match: {
-            type: { $in: ['translate', 'translation'] },
-            status: 'success',
-            timestamp: { $gte: new Date(Date.now() - 30 * 24 * 60 * 60 * 1000) },
-          },
-        },
-        {
-          $group: {
-            _id: null,
-            total_cost: { $sum: { $ifNull: ['$cost_usd', 0] } },
-            pages: { $sum: 1 },
-          },
-        },
-      ]).toArray(),
+      // 7. Cost per translated page (last 30 days) — from Supabase dashboard_usage view
+      (async () => {
+        const cutoff = new Date(Date.now() - 30 * 24 * 60 * 60 * 1000).toISOString().slice(0, 10);
+        const { data } = await supabase
+          .from('dashboard_usage')
+          .select('total_cost, success_count, type')
+          .in('type', ['translate', 'translation'])
+          .gte('day', cutoff);
+        const rows = data || [];
+        return [{
+          total_cost: rows.reduce((s, r) => s + (Number(r.total_cost) || 0), 0),
+          pages: rows.reduce((s, r) => s + (Number(r.success_count) || 0), 0),
+        }];
+      })(),
 
       // 8. Active pipeline jobs
       db.collection('jobs').aggregate([

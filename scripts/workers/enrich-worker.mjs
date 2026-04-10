@@ -36,6 +36,7 @@
 
 import { MongoClient } from 'mongodb';
 import { GoogleGenerativeAI } from '@google/generative-ai';
+import { logUsage as logUsageToSupabase } from './lib/supabase-usage-logger.mjs';
 
 /** Trigger on-demand revalidation for a book page after enrichment completes. */
 async function revalidateBookPage(bookId) {
@@ -103,13 +104,10 @@ function computeCost(model, inputTokens, outputTokens) {
 }
 
 async function logUsage(db, params) {
-  const id = `gu_${Date.now()}_${Math.random().toString(36).slice(2, 8)}`;
-  await db.collection('gemini_usage').insertOne({
-    id,
-    timestamp: new Date(),
+  await logUsageToSupabase({
     ...params,
     cost_usd: computeCost(params.model, params.input_tokens, params.output_tokens),
-  });
+  }, db);
 }
 
 // ── Pipeline status helpers ──
