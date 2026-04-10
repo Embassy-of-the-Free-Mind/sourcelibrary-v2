@@ -11,6 +11,7 @@ import { sendWriteResult } from '@/lib/sqs-client';
 import { retryDbWrite } from '@/lib/retry-utils';
 import { contentHash } from '@/lib/steganographia';
 import { getTranslationPrompt } from '@/lib/prompts';
+import { syncPageUpdate } from '@/lib/supabase-page-writer';
 import type { PromptReference } from '@/lib/types';
 
 /**
@@ -215,27 +216,28 @@ export async function processTranslationPage(message: PageProcessingMessage) {
     // DIRECT WRITE: Save translation to page — required for FIFO context chain.
     // The next page in the queue reads this translation for continuity.
     const translationMeta = extractTranslationMetadata(finalTranslation);
+    const translationSetPayload = {
+      translation: {
+        data: finalTranslation,
+        content_hash: contentHash(finalTranslation),
+        language: 'English',
+        model: modelId,
+        updated_at: new Date(),
+        source: 'ai',
+        prompt_version: `v${promptRef.version}`,
+        prompt_hash: promptRef.content_hash,
+        prompt_id: promptRef.id,
+        prompt_name: promptRef.name,
+      },
+      ...translationMeta,
+      updated_at: new Date()
+    };
     await retryDbWrite(() => pages.updateOne(
       { id: pageId },
-      {
-        $set: {
-          translation: {
-            data: finalTranslation,
-            content_hash: contentHash(finalTranslation),
-            language: 'English',
-            model: modelId,
-            updated_at: new Date(),
-            source: 'ai',
-            prompt_version: `v${promptRef.version}`,
-            prompt_hash: promptRef.content_hash,
-            prompt_id: promptRef.id,
-            prompt_name: promptRef.name,
-          },
-          ...translationMeta,
-          updated_at: new Date()
-        }
-      }
+      { $set: translationSetPayload }
     ), `save translation for page ${pageId}`, 3, '[TRANS]');
+    // Dual-write to Supabase (fire-and-forget)
+    syncPageUpdate(pageId, translationSetPayload);
 
     // Defer logging + completion check to write queue
     await sendWriteResult({

@@ -26,6 +26,7 @@ import { GoogleGenerativeAI } from '@google/generative-ai';
 import { createHash } from 'crypto';
 import { nanoid } from 'nanoid';
 import { logUsage } from './lib/supabase-usage-logger.mjs';
+import { syncPageUpdate, syncPageBatch } from './lib/supabase-page-writer.mjs';
 
 // ── Config ──
 const CONCURRENCY = 40;          // Max books translating simultaneously
@@ -341,23 +342,21 @@ function effectiveBatchSize(pages, maxBatchSize) {
 
 // ── Write a single page translation to DB ──
 async function writePageTranslation(db, page, text, book) {
-  await db.collection('pages').updateOne(
-    { id: page.id },
-    {
-      $set: {
-        translation: {
-          data: text,
-          content_hash: contentHash(text),
-          language: 'English',
-          model: getModelForBook(book),
-          updated_at: new Date(),
-          source: 'ai',
-          prompt_version: PROMPT_VERSION,
-        },
-        updated_at: new Date(),
-      },
+  const setPayload = {
+    translation: {
+      data: text,
+      content_hash: contentHash(text),
+      language: 'English',
+      model: getModelForBook(book),
+      updated_at: new Date(),
+      source: 'ai',
+      prompt_version: PROMPT_VERSION,
     },
-  );
+    updated_at: new Date(),
+  };
+  await db.collection('pages').updateOne({ id: page.id }, { $set: setPayload });
+  // Dual-write to Supabase (fire-and-forget)
+  syncPageUpdate(page.id, setPayload);
 }
 
 // ── Bulk-write multiple page translations in one round trip ──
@@ -396,6 +395,14 @@ async function bulkWritePageTranslations(db, entries, book) {
     await db.collection('pages').bulkWrite(chunk, { ordered: false });
     if (i + CHUNK_SIZE < ops.length) await new Promise(r => setTimeout(r, CHUNK_DELAY_MS));
   }
+  // Dual-write to Supabase (fire-and-forget)
+  syncPageBatch(entries.map(({ page, text }) => ({
+    pageId: page.id,
+    mongoSet: {
+      translation: { data: text, language: 'English', model, updated_at: now, source: 'ai', prompt_version: PROMPT_VERSION },
+      updated_at: now,
+    },
+  })));
 }
 
 // ── Process one book (sequential batches for context) ──

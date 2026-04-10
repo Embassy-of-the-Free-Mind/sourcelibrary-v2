@@ -19,6 +19,7 @@
 import { MongoClient } from 'mongodb';
 import { randomBytes } from 'crypto';
 import { logUsageAsync } from './lib/supabase-usage-logger.mjs';
+import { syncPageBatch } from './lib/supabase-page-writer.mjs';
 
 /**
  * Save current page content as a revision before overwriting.
@@ -475,6 +476,11 @@ async function processOneJob(db, job) {
         failCount += (chunk.length - chunkResult.matchedCount);
         if (i + CHUNK_SIZE < bulkOps.length) await new Promise(r => setTimeout(r, CHUNK_DELAY_MS));
       }
+      // Dual-write to Supabase (fire-and-forget)
+      syncPageBatch(bulkOps.map(op => ({
+        pageId: op.updateOne.filter.id,
+        mongoSet: op.updateOne.update.$set,
+      })));
     }
 
     // Insert gallery_images for image extraction jobs (upsert to avoid dupes on re-collection)
