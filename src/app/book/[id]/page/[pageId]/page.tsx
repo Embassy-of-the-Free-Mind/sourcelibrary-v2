@@ -4,8 +4,8 @@ import { findBookByIdOrSlug } from '@/lib/book-lookup';
 import type { Book, Page } from '@/lib/types';
 import PageEditorClient from './PageEditorClient';
 
-// Static until on-demand revalidation. Pipeline calls /api/admin/revalidate-book after OCR/translation/enrichment.
-export const revalidate = false;
+// ISR: 24h background revalidation. Pipeline also calls /api/admin/revalidate-book for immediate updates.
+export const revalidate = 86400;
 
 interface PageProps {
   params: Promise<{ id: string; pageId: string }>;

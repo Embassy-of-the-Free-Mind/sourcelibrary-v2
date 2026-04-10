@@ -3,8 +3,8 @@ import { getDb } from '@/lib/mongodb';
 import { bookUrl } from '@/lib/slugify';
 import BookSearchResults from './BookSearchResults';
 
-// Static until on-demand revalidation. Pipeline calls /api/admin/revalidate-book after OCR/translation/enrichment.
-export const revalidate = false;
+// ISR: 24h background revalidation. Pipeline also calls /api/admin/revalidate-book for immediate updates.
+export const revalidate = 86400;
 
 interface Props {
   params: Promise<{ id: string }>;

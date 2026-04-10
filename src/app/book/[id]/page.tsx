@@ -39,8 +39,10 @@ import { formatAuthor } from '@/lib/utils';
 import AuthorName from '@/components/AuthorName';
 import SiteHeader from '@/components/layout/SiteHeader';
 
-// Static until on-demand revalidation. Pipeline calls /api/admin/revalidate-book after OCR/translation/enrichment.
-export const revalidate = false;
+// ISR: serve cached HTML, revalidate in background every 24h.
+// Pipeline also calls /api/admin/revalidate-book for immediate updates after OCR/translation/enrichment.
+// Using 86400 instead of false so pages self-heal after deploys (which purge the cache).
+export const revalidate = 86400;
 
 // Run SSR near the database to cut cross-region latency (~200ms RTT savings)
 export const preferredRegion = 'fra1';
