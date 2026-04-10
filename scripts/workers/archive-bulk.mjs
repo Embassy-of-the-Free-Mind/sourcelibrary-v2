@@ -158,14 +158,17 @@ async function processBook(book, db) {
   const iaId = book.ia_identifier || book.image_source?.identifier;
   if (!iaId) { stats.booksSkipped++; return; }
 
-  const pages = await db.collection('pages')
+  const pagesCol = book._pagesCol || 'pages';
+  const booksCol = book._booksCol || 'books';
+
+  const pages = await db.collection(pagesCol)
     .find({ book_id: book.id, $or: [{ archived_photo: { $exists: false } }, { archived_photo: null }, { archived_photo: '' }] },
       { projection: { _id: 1, id: 1, book_id: 1, page_number: 1, photo: 1, photo_original: 1 } })
     .sort({ page_number: 1 }).toArray();
 
   if (pages.length === 0) { stats.booksSkipped++; return; }
 
-  const allPages = await db.collection('pages')
+  const allPages = await db.collection(pagesCol)
     .find({ book_id: book.id }, { projection: { _id: 1, id: 1, book_id: 1, page_number: 1, photo: 1, photo_original: 1 } })
     .sort({ page_number: 1 }).toArray();
 
@@ -249,7 +252,7 @@ async function processBook(book, db) {
           if (urls.width) dimFields.image_width = urls.width;
           if (urls.height) dimFields.image_height = urls.height;
 
-          await db.collection('pages').updateOne(
+          await db.collection(pagesCol).updateOne(
             { _id: page._id },
             { $set: {
               archived_photo: urls.archived,
@@ -277,7 +280,7 @@ async function processBook(book, db) {
 
     // Smoke test: verify page 1's display_photo actually resolves
     if (archived > 0) {
-      const check = await db.collection('pages').findOne(
+      const check = await db.collection(pagesCol).findOne(
         { book_id: book.id, display_photo: { $exists: true, $ne: null } },
         { projection: { display_photo: 1 }, sort: { page_number: 1 }, maxTimeMS: 5000 }
       );
@@ -293,12 +296,12 @@ async function processBook(book, db) {
 
     // Sync pages_archived counter on this book (#497)
     if (archived > 0) {
-      const archivedCount = await db.collection('pages').countDocuments(
+      const archivedCount = await db.collection(pagesCol).countDocuments(
         { book_id: book.id, archived_photo: { $exists: true, $nin: [null, ''] } },
         { maxTimeMS: 10000 }
       );
       const archiveStatus = archivedCount >= book.pages_count ? 'archive_complete' : 'archive_partial';
-      await db.collection('books').updateOne(
+      await db.collection(booksCol).updateOne(
         { id: book.id },
         { $set: { pages_archived: archivedCount, archive_status: archiveStatus, updated_at: new Date() } }
       );
@@ -310,7 +313,7 @@ async function processBook(book, db) {
 
     // Mark 401/403 books so we don't retry them every 10 minutes
     if (err.message?.includes('HTTP 401') || err.message?.includes('HTTP 403')) {
-      await db.collection('books').updateOne(
+      await db.collection(booksCol).updateOne(
         { id: book.id },
         { $set: {
           'archive_metadata.blocked': true,
@@ -371,10 +374,44 @@ async function main() {
     ])
     .toArray();
 
-  console.log(`[archive-bulk] Found ${iaBooks.length} IA books to archive`);
+  // Also include warehouse IA books — prioritize likely first translations
+  const warehouseIaBooks = await db.collection('books_warehouse')
+    .aggregate([
+      { $match: {
+        pages_count: { $gt: 0 },
+        $expr: { $lt: [{ $ifNull: ['$pages_archived', 0] }, '$pages_count'] },
+        'archive_metadata.blocked': { $ne: true },
+        $or: [
+          { ia_identifier: { $exists: true, $ne: null, $ne: '' } },
+          { 'image_source.provider': 'internet_archive' },
+        ],
+      }},
+      { $addFields: {
+        _priority: {
+          $switch: {
+            branches: [
+              { case: { $eq: ['$is_first_translation', true] }, then: 0 },
+              { case: { $in: [{ $toLower: { $ifNull: ['$language', ''] } }, ENGLISH_VARIANTS] }, then: 2 },
+            ],
+            default: 1,
+          },
+        },
+      }},
+      { $sort: { _priority: 1 } },
+      { $project: { id: 1, title: 1, ia_identifier: 1, image_source: 1, pages_count: 1, language: 1 } },
+      { $limit: BOOK_LIMIT },
+    ])
+    .toArray()
+    .catch(() => []);
+
+  // Tag warehouse books with their collection names
+  warehouseIaBooks.forEach(b => { b._pagesCol = 'pages_warehouse'; b._booksCol = 'books_warehouse'; });
+  iaBooks.push(...warehouseIaBooks);
+
+  console.log(`[archive-bulk] Found ${iaBooks.length - warehouseIaBooks.length} live + ${warehouseIaBooks.length} warehouse IA books to archive`);
 
   if (DRY_RUN) {
-    iaBooks.forEach((b, i) => console.log(`  ${i + 1}. ${b.title?.slice(0, 60)} (${b.pages_count || '?'} pages, ${b.language || '?'})`));
+    iaBooks.forEach((b, i) => console.log(`  ${i + 1}. ${b._booksCol === 'books_warehouse' ? '[WH] ' : ''}${b.title?.slice(0, 60)} (${b.pages_count || '?'} pages, ${b.language || '?'})`));
     await client.close();
     return;
   }
