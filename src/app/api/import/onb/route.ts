@@ -1,6 +1,6 @@
 import { NextResponse } from 'next/server';
 import { importBookFromIIIF } from '@/lib/import-utils';
-import { withAuth } from '@/lib/auth-helpers';
+import { withCuratorAuth } from '@/lib/auth-helpers';
 
 export const maxDuration = 300;
 
@@ -24,7 +24,7 @@ export const maxDuration = 300;
  *   ABO:  https://iiif.onb.ac.at/presentation/ABO/{z_id}/manifest
  *   REPO: https://iiif.onb.ac.at/presentation/REPO/{numeric_id}/manifest
  */
-export const POST = withAuth(async (request, session) => {
+export const POST = withCuratorAuth(async (request, session) => {
   try {
     const body = await request.json();
     const { z_id, collection, title, display_title, author, language, published, categories, work_id } = body;

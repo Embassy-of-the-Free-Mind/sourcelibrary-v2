@@ -3,7 +3,7 @@ import { getDb } from '@/lib/mongodb';
 import { ObjectId } from 'mongodb';
 import { notifyBookImport } from '@/lib/indexnow';
 import { logAuditEvent } from '@/lib/audit-logger';
-import { withAuth } from '@/lib/auth-helpers';
+import { withCuratorAuth } from '@/lib/auth-helpers';
 import { generateUniqueBookSlug } from '@/lib/slugify';
 import { queuePreviewOcr } from '@/lib/preview-ocr';
 import { execFileSync } from 'child_process';
@@ -43,7 +43,7 @@ export const maxDuration = 300;
  *   catalog_metadata?: object,   // Full original catalog record for provenance
  * }
  */
-export const POST = withAuth(async (request) => {
+export const POST = withCuratorAuth(async (request) => {
   const tmpDir = mkdtempSync(join(tmpdir(), 'sl-pdf-'));
 
   try {

@@ -1,6 +1,6 @@
 import { NextResponse } from 'next/server';
 import { importBookFromIIIF } from '@/lib/import-utils';
-import { withAuth } from '@/lib/auth-helpers';
+import { withCuratorAuth } from '@/lib/auth-helpers';
 
 export const maxDuration = 300;
 
@@ -23,7 +23,7 @@ export const maxDuration = 300;
  * Getty uses UUID-based IIIF v3 manifests. Manifest URLs vary by collection.
  * Provide manifest_url directly, or object_id for lookup.
  */
-export const POST = withAuth(async (request, session) => {
+export const POST = withCuratorAuth(async (request, session) => {
   try {
     const body = await request.json();
     const { object_id, manifest_url, title, display_title, author, language, published, categories, work_id } = body;
