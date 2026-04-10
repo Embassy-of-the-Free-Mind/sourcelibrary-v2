@@ -115,8 +115,12 @@ async function main() {
   await client.connect();
   const db = client.db('bookstore');
 
+  console.log('Connected to MongoDB');
+
   const filter = BOOK_ID ? { book_id: BOOK_ID } : {};
-  const total = await db.collection('pages').countDocuments(filter);
+  const total = BOOK_ID
+    ? await db.collection('pages').countDocuments(filter)
+    : await db.collection('pages').estimatedDocumentCount();
   console.log(`Total pages in MongoDB: ${total.toLocaleString()}`);
 
   if (DRY_RUN) {
