@@ -3494,6 +3494,16 @@ Rules:
               .toArray();
 
             if (pages.length === 0) {
+              // Guard: don't mark translate_complete if OCR isn't done yet
+              // (preview OCR does 25 pages, translate-worker translates them, but full OCR hasn't run)
+              const totalOcr = book.pages_ocr || 0;
+              const totalPages = book.pages_count || 0;
+              if (totalOcr < totalPages * 0.8 && totalPages > 30) {
+                // OCR is incomplete — send back to archive_complete for full OCR
+                if (!DRY_RUN) await setPipelineStatus(db, book.id, 'archive_complete');
+                console.log(`  OCR incomplete (${totalOcr}/${totalPages}), recycling for full OCR: ${book.title}`);
+                continue;
+              }
               if (!DRY_RUN) await setPipelineStatus(db, book.id, 'translate_complete');
               log.translate_advanced++;
               console.log(`  No pages need translation: ${book.title}`);
