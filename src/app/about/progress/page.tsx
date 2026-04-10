@@ -133,44 +133,56 @@ async function getCoverageDataFallback(): Promise<CoverageData | null> {
 
 // ── Live Source Library Stats ─────────────────────────────────────────
 
+interface LanguageProgress {
+  language: string;
+  total: number;
+  translated: number;
+  over_90: number;
+  first_trans: number;
+}
+
+interface CenturyProgress {
+  century_start: number;
+  total: number;
+  translated: number;
+  over_90: number;
+  first_trans: number;
+}
+
 interface LiveStats {
   total_books: number;
   books_translated: number;
   books_over_90: number;
   first_translations: number;
-  verified_total: number;
-  top_languages: { language: string; count: number }[];
+  by_language: LanguageProgress[];
+  by_century: CenturyProgress[];
 }
 
 async function getLiveStats(): Promise<LiveStats | null> {
   try {
-    const db = await getDb();
-    const col = db.collection('books');
+    const { data, error } = await supabase.rpc('get_sl_progress');
+    if (error || !data) return null;
 
-    const [total, translated, firstTrans, verified, langs, enrichSnap] = await Promise.all([
-      col.countDocuments({ pages_count: { $gt: 0 } }),
-      col.countDocuments({ pages_translated: { $gt: 0 } }),
-      col.countDocuments({ is_first_translation: true }),
-      col.countDocuments({ translation_verification: { $exists: true } }),
-      col.aggregate([
-        { $match: { pages_translated: { $gt: 0 }, pages_count: { $gt: 0 } } },
-        { $group: { _id: '$language', count: { $sum: 1 } } },
-        { $sort: { count: -1 } },
-        { $limit: 10 },
-      ], { maxTimeMS: 15000 }).toArray(),
-      // Use enrichment snapshot for >90% count (avoids slow $expr scan)
-      db.collection('system_config').findOne({ _id: 'enrichment_snapshot' as any }),
-    ]);
-
-    const over90 = (enrichSnap as any)?.milestones?.over_90_pct || 0;
-
+    const d = data as any;
     return {
-      total_books: total,
-      books_translated: translated,
-      books_over_90: over90,
-      first_translations: firstTrans,
-      verified_total: verified,
-      top_languages: langs.map(l => ({ language: l._id as string, count: l.count })),
+      total_books: Number(d.totals?.total_books || 0),
+      books_translated: Number(d.totals?.books_translated || 0),
+      books_over_90: Number(d.totals?.books_over_90 || 0),
+      first_translations: Number(d.totals?.first_translations || 0),
+      by_language: (d.by_language || []).map((l: any) => ({
+        language: l.language,
+        total: Number(l.total),
+        translated: Number(l.translated),
+        over_90: Number(l.over_90),
+        first_trans: Number(l.first_trans),
+      })),
+      by_century: (d.by_century || []).map((c: any) => ({
+        century_start: Number(c.century_start),
+        total: Number(c.total),
+        translated: Number(c.translated),
+        over_90: Number(c.over_90),
+        first_trans: Number(c.first_trans),
+      })),
     };
   } catch {
     return null;
@@ -325,18 +337,73 @@ export default async function ProgressPage() {
             </div>
           </div>
 
-          {live.top_languages.length > 0 && (
+          {/* By Language */}
+          {live.by_language.length > 0 && (
             <div className="border-t border-stone-100 pt-4">
               <h3 className="text-sm font-medium text-stone-500 mb-3 flex items-center gap-2">
                 <Library className="w-3.5 h-3.5" />
-                Translated from
+                By source language
               </h3>
-              <div className="flex flex-wrap gap-2">
-                {live.top_languages.map(l => (
-                  <span key={l.language} className="px-3 py-1 bg-stone-100 rounded-full text-xs text-stone-600">
-                    {l.language} <span className="text-stone-400">({fmt(l.count)})</span>
-                  </span>
-                ))}
+              <div className="overflow-x-auto">
+                <table className="w-full text-sm">
+                  <thead>
+                    <tr className="border-b border-stone-200 text-left">
+                      <th className="py-1.5 pr-3 font-medium text-stone-400 text-xs">Language</th>
+                      <th className="py-1.5 pr-3 font-medium text-stone-400 text-xs text-right">Books</th>
+                      <th className="py-1.5 pr-3 font-medium text-stone-400 text-xs text-right">Translated</th>
+                      <th className="py-1.5 font-medium text-stone-400 text-xs text-right">First English</th>
+                    </tr>
+                  </thead>
+                  <tbody>
+                    {live.by_language.filter(l => l.total >= 10 && l.language !== 'Unknown').map(l => (
+                      <tr key={l.language} className="border-b border-stone-50">
+                        <td className="py-1.5 pr-3 text-primary">{l.language}</td>
+                        <td className="py-1.5 pr-3 text-right text-secondary">{fmt(l.total)}</td>
+                        <td className="py-1.5 pr-3 text-right text-secondary">{fmt(l.translated)}</td>
+                        <td className="py-1.5 text-right font-medium text-amber-700">{fmt(l.first_trans)}</td>
+                      </tr>
+                    ))}
+                  </tbody>
+                </table>
+              </div>
+            </div>
+          )}
+
+          {/* By Century */}
+          {live.by_century.length > 0 && (
+            <div className="border-t border-stone-100 pt-4 mt-4">
+              <h3 className="text-sm font-medium text-stone-500 mb-3 flex items-center gap-2">
+                <BarChart3 className="w-3.5 h-3.5" />
+                By century
+              </h3>
+              <div className="overflow-x-auto">
+                <table className="w-full text-sm">
+                  <thead>
+                    <tr className="border-b border-stone-200 text-left">
+                      <th className="py-1.5 pr-3 font-medium text-stone-400 text-xs">Period</th>
+                      <th className="py-1.5 pr-3 font-medium text-stone-400 text-xs text-right">Books</th>
+                      <th className="py-1.5 pr-3 font-medium text-stone-400 text-xs text-right">Translated</th>
+                      <th className="py-1.5 font-medium text-stone-400 text-xs text-right">First English</th>
+                    </tr>
+                  </thead>
+                  <tbody>
+                    {live.by_century.filter(c => c.total >= 5).map(c => {
+                      const label = c.century_start < 0
+                        ? `${Math.abs(c.century_start)}s BCE`
+                        : c.century_start < 100
+                          ? '1st century'
+                          : `${c.century_start}s`;
+                      return (
+                        <tr key={c.century_start} className="border-b border-stone-50">
+                          <td className="py-1.5 pr-3 text-primary">{label}</td>
+                          <td className="py-1.5 pr-3 text-right text-secondary">{fmt(c.total)}</td>
+                          <td className="py-1.5 pr-3 text-right text-secondary">{fmt(c.translated)}</td>
+                          <td className="py-1.5 text-right font-medium text-amber-700">{fmt(c.first_trans)}</td>
+                        </tr>
+                      );
+                    })}
+                  </tbody>
+                </table>
               </div>
             </div>
           )}
