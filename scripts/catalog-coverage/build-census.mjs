@@ -164,8 +164,10 @@ async function buildCensusView() {
       "SELECT count(*) FROM pg_matviews WHERE matviewname = 'ustc_distinct_works'"
     ).catch(() => ({ rows: [{ count: '0' }] }));
 
-    if (parseInt(matViews[0]?.count || '0') === 0 || forceRebuild) {
+    const rebuildWorks = process.argv.includes('--rebuild-works');
+    if (parseInt(matViews[0]?.count || '0') === 0 || rebuildWorks) {
       console.log('  Building ustc_distinct_works (this takes a few minutes)...');
+      console.log('  WARNING: This may timeout on Supabase shared infra. Use --rebuild-works only if needed.');
       await client.query('DROP MATERIALIZED VIEW IF EXISTS translation_census_by_language CASCADE');
       await client.query('DROP TABLE IF EXISTS translation_census_matches CASCADE');
       await client.query('DROP MATERIALIZED VIEW IF EXISTS ustc_distinct_works CASCADE');
