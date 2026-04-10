@@ -177,52 +177,6 @@ async function getLiveStats(): Promise<LiveStats | null> {
   }
 }
 
-// ── Live Source Library Stats ─────────────────────────────────────────
-
-interface LiveStats {
-  total_books: number;
-  books_translated: number;
-  books_over_90: number;
-  first_translations: number;
-  verified_total: number;
-  top_languages: { language: string; count: number }[];
-}
-
-async function getLiveStats(): Promise<LiveStats | null> {
-  try {
-    const db = await getDb();
-    const col = db.collection('books');
-
-    const [total, translated, firstTrans, verified, langs, enrichSnap] = await Promise.all([
-      col.countDocuments({ pages_count: { $gt: 0 } }),
-      col.countDocuments({ pages_translated: { $gt: 0 } }),
-      col.countDocuments({ is_first_translation: true }),
-      col.countDocuments({ translation_verification: { $exists: true } }),
-      col.aggregate([
-        { $match: { pages_translated: { $gt: 0 }, pages_count: { $gt: 0 } } },
-        { $group: { _id: '$language', count: { $sum: 1 } } },
-        { $sort: { count: -1 } },
-        { $limit: 10 },
-      ], { maxTimeMS: 15000 }).toArray(),
-      // Use enrichment snapshot for >90% count (avoids slow $expr scan)
-      db.collection('system_config').findOne({ _id: 'enrichment_snapshot' as any }),
-    ]);
-
-    const over90 = (enrichSnap as any)?.milestones?.over_90_pct || 0;
-
-    return {
-      total_books: total,
-      books_translated: translated,
-      books_over_90: over90,
-      first_translations: firstTrans,
-      verified_total: verified,
-      top_languages: langs.map(l => ({ language: l._id as string, count: l.count })),
-    };
-  } catch {
-    return null;
-  }
-}
-
 // ── Components ────────────────────────────────────────────────────────
 
 function ProgressBar({ value, max, color = 'bg-amber-600' }: { value: number; max: number; color?: string }) {
