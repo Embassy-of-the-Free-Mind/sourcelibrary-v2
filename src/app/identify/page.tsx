@@ -17,6 +17,8 @@ interface Match {
   resource_type?: string;
   subject?: string;
   score: number;
+  visual_similarity?: number;
+  match_source?: 'text' | 'visual';
   page_number?: number;
   page_score?: number;
 }
@@ -44,6 +46,7 @@ interface Identification {
 interface Result {
   identification: Identification;
   matches: Match[];
+  visual_search?: boolean;
   page?: { book_id: string; page_number: number; score: number } | null;
 }
 
@@ -317,9 +320,14 @@ export default function IdentifyPage() {
             {/* Matches */}
             {result.matches.length > 0 ? (
               <div>
-                <h2 className="text-lg font-display font-semibold text-primary mb-3">
-                  {result.matches.length === 1 ? 'Match Found' : `${result.matches.length} Possible Matches`}
-                </h2>
+                <div className="flex items-center gap-2 mb-3">
+                  <h2 className="text-lg font-display font-semibold text-primary">
+                    {result.matches.length === 1 ? 'Match Found' : `${result.matches.length} Possible Matches`}
+                  </h2>
+                  {result.visual_search && (
+                    <span className="text-[10px] text-blue-600 bg-blue-50 rounded px-1.5 py-0.5">visual search</span>
+                  )}
+                </div>
                 <div className="space-y-2">
                   {result.matches.map((match, i) => {
                     const pageUrl = match.page_number
@@ -351,7 +359,12 @@ export default function IdentifyPage() {
                         {match.author && (
                           <p className="text-sm text-secondary mt-0.5">{match.author}</p>
                         )}
-                        <div className="flex items-center gap-2 mt-1 text-xs text-muted">
+                        <div className="flex items-center gap-2 mt-1 text-xs text-muted flex-wrap">
+                          {match.visual_similarity && (
+                            <span className="font-medium text-blue-700 bg-blue-50 rounded px-1.5 py-0.5">
+                              {Math.round(match.visual_similarity * 100)}% visual match
+                            </span>
+                          )}
                           {match.published && <span>{match.published}</span>}
                           {match.resource_type && (
                             <span className="capitalize">{match.resource_type}</span>

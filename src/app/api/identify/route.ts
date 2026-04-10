@@ -1,12 +1,16 @@
 import { NextRequest, NextResponse } from 'next/server';
 import { getNextApiKey } from '@/lib/gemini-client';
 import { getDb } from '@/lib/mongodb';
+import { supabase } from '@/lib/supabase';
 
 export const maxDuration = 30;
 export const dynamic = 'force-dynamic';
 
 // Max image size: 4MB (Vercel serverless body limit is 4.5MB)
 const MAX_IMAGE_BYTES = 4 * 1024 * 1024;
+
+// CLIP server on Hetzner for visual similarity search
+const CLIP_URL = process.env.CLIP_URL || 'http://46.224.122.120:3457';
 
 const IDENTIFY_PROMPT = `You are an art historian identifying a physical artwork or book page from a photograph taken in a museum or library.
 
@@ -93,10 +97,12 @@ export async function POST(request: NextRequest) {
     const base64 = Buffer.from(bytes).toString('base64');
     const mimeType = file.type || 'image/jpeg';
 
-    // Call Gemini vision
+    // Run Gemini vision + CLIP visual search in parallel
     const apiKey = getNextApiKey();
     const model = 'gemini-3.1-flash-lite-preview';
-    const resp = await fetch(
+
+    // Promise 1: Gemini structured identification
+    const geminiPromise = fetch(
       `https://generativelanguage.googleapis.com/v1beta/models/${model}:generateContent?key=${apiKey}`,
       {
         method: 'POST',
@@ -112,6 +118,52 @@ export async function POST(request: NextRequest) {
         }),
       },
     );
+
+    // Promise 2: CLIP visual similarity search (non-blocking — fails gracefully)
+    interface ClipMatch {
+      id: string;
+      source_type: string;
+      book_id: string;
+      image_url: string;
+      title: string;
+      author: string;
+      resource_type: string;
+      thumbnail_url: string;
+      similarity: number;
+    }
+    const clipPromise: Promise<ClipMatch[]> = (async () => {
+      try {
+        // Encode uploaded image via CLIP server
+        const clipResp = await fetch(`${CLIP_URL}/embed-image`, {
+          method: 'POST',
+          headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify({ base64, mime_type: mimeType }),
+          signal: AbortSignal.timeout(8000),
+        });
+        if (!clipResp.ok) return [];
+        const { embedding } = await clipResp.json();
+        if (!embedding) return [];
+
+        // Search Supabase for visual matches
+        const { data, error } = await supabase.rpc('match_clip_images', {
+          query_embedding: embedding,
+          match_threshold: 0.25,
+          match_count: 20,
+        });
+        if (error) {
+          console.error('[identify] CLIP search error:', error.message);
+          return [];
+        }
+        return (data || []) as ClipMatch[];
+      } catch (e) {
+        // CLIP search is optional — don't fail the whole request
+        console.warn('[identify] CLIP search unavailable:', e instanceof Error ? e.message : String(e));
+        return [];
+      }
+    })();
+
+    // Wait for both
+    const [resp, clipMatches] = await Promise.all([geminiPromise, clipPromise]);
 
     if (!resp.ok) {
       const err = await resp.text();
@@ -409,22 +461,54 @@ export async function POST(request: NextRequest) {
       }
     }
 
+    // Merge CLIP visual matches into text matches
+    // CLIP matches come from Supabase with book_id — merge by boosting existing or adding new
+    const existingMatchIds = new Set(matches.map(m => m.id));
+    for (const cm of clipMatches) {
+      const visualScore = Math.round(cm.similarity * 40); // Scale 0-1 to 0-40 score
+      const existing = matches.find(m => m.id === cm.book_id);
+      if (existing) {
+        // Boost existing text match with visual similarity
+        existing._score += visualScore;
+        existing._visual_similarity = cm.similarity;
+      } else if (!existingMatchIds.has(cm.book_id)) {
+        // Add as new match from visual search only
+        matches.push({
+          id: cm.book_id,
+          title: cm.title,
+          author: cm.author,
+          resource_type: cm.resource_type,
+          thumbnail: cm.thumbnail_url,
+          _score: visualScore,
+          _visual_similarity: cm.similarity,
+          _match_source: 'visual',
+        });
+        existingMatchIds.add(cm.book_id);
+      }
+    }
+
+    // Re-sort after merging CLIP results
+    matches.sort((a, b) => b._score - a._score);
+
     // Sort page matches by score and attach to book results
     pageMatches.sort((a, b) => b.score - a.score);
     const bestPage = pageMatches[0] || null;
 
     return NextResponse.json({
       identification,
-      matches: matches.slice(0, 10).map(({ _score, enrichment, ...rest }) => {
+      matches: matches.slice(0, 10).map(({ _score, _visual_similarity, _match_source, enrichment, commons_title, english_title, ...rest }) => {
         // Attach page match if this book has one
         const pm = pageMatches.find(p => p.bookId === rest.id);
         return {
           ...rest,
           score: _score,
+          visual_similarity: _visual_similarity || undefined,
+          match_source: _match_source || 'text',
           subject: enrichment?.subject,
           ...(pm ? { page_number: pm.pageNumber, page_score: pm.score } : {}),
         };
       }),
+      visual_search: clipMatches.length > 0,
       page: bestPage ? {
         book_id: bestPage.bookId,
         page_number: bestPage.pageNumber,
