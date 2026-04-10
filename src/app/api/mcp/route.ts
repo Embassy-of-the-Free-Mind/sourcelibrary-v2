@@ -403,15 +403,11 @@ export async function POST(req: Request) {
   try {
     const body = await req.json();
 
-    // Ensure Accept header includes text/event-stream — the SDK requires it,
-    // but some clients (Claude Chat) only send application/json
-    const accept = req.headers.get('accept') || '';
-    let fixedReq = req;
-    if (!accept.includes('text/event-stream')) {
-      const headers = new Headers(req.headers);
-      headers.set('accept', 'application/json, text/event-stream');
-      fixedReq = new Request(req.url, { method: req.method, headers });
-    }
+    // Always set the Accept header the SDK requires — clients send varying
+    // combinations (just application/json, just text/event-stream, or neither)
+    const headers = new Headers(req.headers);
+    headers.set('accept', 'application/json, text/event-stream');
+    const fixedReq = new Request(req.url, { method: req.method, headers });
 
     const transport = new WebStandardStreamableHTTPServerTransport({
       sessionIdGenerator: undefined, // Stateless for serverless
