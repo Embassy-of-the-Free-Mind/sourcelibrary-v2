@@ -19,20 +19,24 @@
  */
 
 import { MongoClient } from 'mongodb';
+import pg from 'pg';
 
 const MONGODB_URI = process.env.MONGODB_URI;
+const SUPABASE_DB_URL = process.env.SUPABASE_DB_URL;
+// Fallback to REST if no direct DB URL
 const SUPABASE_URL = process.env.SUPABASE_URL || 'https://ykhxaecbbxaaqlujuzde.supabase.co';
 const SUPABASE_SERVICE_KEY = process.env.SUPABASE_SERVICE_ROLE_KEY;
+const USE_DIRECT_PG = !!SUPABASE_DB_URL;
 
 if (!MONGODB_URI) { console.error('Missing MONGODB_URI'); process.exit(1); }
-if (!SUPABASE_SERVICE_KEY) { console.error('Missing SUPABASE_SERVICE_ROLE_KEY'); process.exit(1); }
+if (!SUPABASE_DB_URL && !SUPABASE_SERVICE_KEY) { console.error('Missing SUPABASE_DB_URL or SUPABASE_SERVICE_ROLE_KEY'); process.exit(1); }
 
 const args = process.argv.slice(2);
 const DRY_RUN = args.includes('--dry-run');
 const LIMIT = parseInt(args.find(a => a.startsWith('--limit='))?.split('=')[1] || '0', 10);
 const BOOK_ID = args.find(a => a.startsWith('--book='))?.split('=')[1];
 const SKIP_EXISTING = args.includes('--skip-existing');
-const BATCH_SIZE = parseInt(args.find(a => a.startsWith('--batch='))?.split('=')[1] || '100', 10);
+const BATCH_SIZE = parseInt(args.find(a => a.startsWith('--batch='))?.split('=')[1] || (USE_DIRECT_PG ? '500' : '100'), 10);
 
 /**
  * Flatten a MongoDB page document to Supabase row format.
@@ -88,11 +92,66 @@ function flattenPage(doc) {
   };
 }
 
+// Column list for INSERT
+const COLS = [
+  'id', 'book_id', 'page_number',
+  'photo', 'photo_original', 'archived_photo', 'cropped_photo', 'crop',
+  'ocr_data', 'ocr_model', 'ocr_language', 'ocr_source', 'ocr_prompt_version',
+  'ocr_batch_job_id', 'ocr_input_tokens', 'ocr_output_tokens', 'ocr_updated_at',
+  'translation_data', 'translation_model', 'translation_language', 'translation_source_language',
+  'translation_source', 'translation_prompt_version', 'translation_batch_job_id',
+  'translation_input_tokens', 'translation_output_tokens', 'translation_updated_at',
+  'translation_recitation_blocked', 'translation_safety_blocked', 'translation_safety_reason',
+  'page_type', 'columns', 'script_type',
+  'detected_images', 'image_extraction_updated_at',
+  'created_at', 'updated_at',
+];
+
+// Columns to update on conflict (everything except id, book_id, page_number)
+const UPDATE_COLS = COLS.filter(c => !['id', 'book_id', 'page_number'].includes(c));
+
+let pgPool = null;
+
+function getPgPool() {
+  if (!pgPool) {
+    pgPool = new pg.Pool({ connectionString: SUPABASE_DB_URL, max: 4, statement_timeout: 300000 });
+  }
+  return pgPool;
+}
+
 /**
- * Upsert a batch to Supabase via REST API.
- * Uses Prefer: resolution=merge-duplicates for ON CONFLICT DO UPDATE.
+ * Upsert a batch using direct Postgres (much faster, no statement timeout issues).
  */
-async function upsertBatch(rows) {
+async function upsertBatchPg(rows) {
+  const pool = getPgPool();
+  // Build a multi-row INSERT ON CONFLICT
+  const values = [];
+  const params = [];
+  let paramIdx = 1;
+  for (const row of rows) {
+    const rowParams = [];
+    for (const col of COLS) {
+      let val = row[col];
+      // JSONB columns need JSON.stringify
+      if ((col === 'crop' || col === 'detected_images') && val !== null && typeof val === 'object') {
+        val = JSON.stringify(val);
+      }
+      params.push(val ?? null);
+      rowParams.push(`$${paramIdx++}`);
+    }
+    values.push(`(${rowParams.join(',')})`);
+  }
+
+  const updateSet = UPDATE_COLS.map(c => `${c} = EXCLUDED.${c}`).join(', ');
+  const sql = `INSERT INTO pages (${COLS.join(',')}) VALUES ${values.join(',')} ON CONFLICT (id) DO UPDATE SET ${updateSet}`;
+
+  await pool.query(sql, params);
+}
+
+/**
+ * Upsert via REST API (fallback when no direct PG connection).
+ */
+async function upsertBatchRest(rows) {
   const resp = await fetch(`${SUPABASE_URL}/rest/v1/pages`, {
     method: 'POST',
     headers: {
@@ -100,16 +159,19 @@ async function upsertBatch(rows) {
       apikey: SUPABASE_SERVICE_KEY,
       Authorization: `Bearer ${SUPABASE_SERVICE_KEY}`,
       Prefer: 'resolution=merge-duplicates,return=minimal',
-      'x-connection-encrypted': 'true',
     },
     body: JSON.stringify(rows),
-    signal: AbortSignal.timeout(120000), // 2 min timeout
+    signal: AbortSignal.timeout(120000),
   });
-
   if (!resp.ok) {
     const text = await resp.text().catch(() => '');
     throw new Error(`Supabase upsert failed (${resp.status}): ${text.substring(0, 500)}`);
   }
+}
+
+async function upsertBatch(rows) {
+  if (USE_DIRECT_PG) return upsertBatchPg(rows);
+  return upsertBatchRest(rows);
 }
 
 async function main() {
@@ -206,8 +268,10 @@ async function main() {
 
   const elapsed = ((Date.now() - startTime) / 1000).toFixed(0);
   console.log(`\n\nDone: ${copied.toLocaleString()} copied, ${skipped} skipped, ${errors} errors in ${elapsed}s`);
+  console.log(`Mode: ${USE_DIRECT_PG ? 'direct Postgres' : 'REST API'}, batch size: ${BATCH_SIZE}`);
 
   await client.close();
+  if (pgPool) await pgPool.end();
 }
 
 main().catch(err => { console.error(err); process.exit(1); });
