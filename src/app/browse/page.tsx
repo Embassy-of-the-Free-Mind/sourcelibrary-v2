@@ -70,6 +70,28 @@ export default function BrowsePage() {
         </div>
       </section>
 
+      {/* By Artist */}
+      <section className="mb-12">
+        <h2 className="text-xl font-display mb-4" style={{ color: 'var(--text-primary)' }}>
+          By Artist
+        </h2>
+        <p className="text-sm mb-4" style={{ color: 'var(--text-muted)' }}>
+          Painters, engravers, and printmakers in the collection.
+        </p>
+        <div className="flex flex-wrap gap-2">
+          {LETTERS.map(letter => (
+            <Link
+              key={letter}
+              href={`/browse/artists/${letter}`}
+              className="w-10 h-10 flex items-center justify-center rounded-lg text-sm font-medium transition-colors hover:opacity-80"
+              style={{ background: 'var(--bg-warm)', color: 'var(--text-primary)', border: '1px solid var(--border-light)' }}
+            >
+              {letter}
+            </Link>
+          ))}
+        </div>
+      </section>
+
       {/* By Period */}
       <section className="mb-12">
         <h2 className="text-xl font-display mb-4" style={{ color: 'var(--text-primary)' }}>

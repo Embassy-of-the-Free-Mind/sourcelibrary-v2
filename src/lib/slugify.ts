@@ -145,3 +145,9 @@ export function authorUrl(author: string): string | null {
   if (!author || author === 'Unknown' || author === 'Anonymous') return null;
   return `/author/${authorSlug(author)}`;
 }
+
+/** Artist page URL — same slug logic as authors */
+export function artistUrl(artist: string): string | null {
+  if (!artist || artist === 'Unknown' || artist === 'Anonymous') return null;
+  return `/artist/${authorSlug(artist)}`;
+}

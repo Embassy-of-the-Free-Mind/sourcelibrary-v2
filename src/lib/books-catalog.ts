@@ -223,6 +223,47 @@ export async function browseAuthors(letter: string): Promise<{ name: string; cou
     .sort((a, b) => a.name.localeCompare(b.name));
 }
 
+/** Visual resource types that identify an artist (vs text author) */
+export const VISUAL_RESOURCE_TYPES = ['painting', 'drawing', 'print', 'fresco', 'engraving', 'woodcut'];
+
+/**
+ * Browse artists by letter prefix.
+ * Artists are authors of visual works (paintings, prints, drawings, etc.).
+ * Returns alphabetically sorted list of { name, count }.
+ */
+export async function browseArtists(letter: string): Promise<{ name: string; count: number }[]> {
+  const allRows: { author: string | null }[] = [];
+  const PAGE = 1000;
+  let offset = 0;
+
+  // eslint-disable-next-line no-constant-condition
+  while (true) {
+    const { data, error } = await supabase
+      .from('books_catalog')
+      .select('author')
+      .eq('visible', true)
+      .gt('pages_count', 0)
+      .in('resource_type', VISUAL_RESOURCE_TYPES)
+      .ilike('author', `${letter}%`)
+      .range(offset, offset + PAGE - 1);
+
+    if (error) throw new Error(`browseArtists query failed: ${error.message}`);
+    if (!data || data.length === 0) break;
+    allRows.push(...data);
+    if (data.length < PAGE) break;
+    offset += PAGE;
+  }
+
+  const counts = new Map<string, number>();
+  for (const row of allRows) {
+    if (row.author) counts.set(row.author, (counts.get(row.author) || 0) + 1);
+  }
+
+  return [...counts.entries()]
+    .map(([name, count]) => ({ name, count }))
+    .sort((a, b) => a.name.localeCompare(b.name));
+}
+
 /**
  * Search books by title/author text — returns matching book IDs.
  *

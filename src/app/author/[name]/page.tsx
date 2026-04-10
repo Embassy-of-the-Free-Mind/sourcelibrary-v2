@@ -4,8 +4,9 @@ import Image from 'next/image';
 import SiteHeader from '@/components/layout/SiteHeader';
 import { getDb } from '@/lib/mongodb';
 import { notFound, redirect } from 'next/navigation';
-import { bookUrl, authorSlug } from '@/lib/slugify';
+import { bookUrl, authorSlug, artistUrl } from '@/lib/slugify';
 import { firstTranslationBadge } from '@/lib/first-translation-labels';
+import { VISUAL_RESOURCE_TYPES } from '@/lib/books-catalog';
 import { ObjectId, type Db } from 'mongodb';
 
 // ISR: 24h background revalidation (survives deploys better than revalidate=false)
@@ -102,7 +103,7 @@ const BOOK_PROJECTION = {
   author_entity_id: 1, language: 1, published: 1, thumbnail: 1, thumbnail_blob: 1,
   pages_count: 1, pages_ocr: 1, pages_translated: 1, pages_blank: 1, year: 1,
   summary: 1, is_first_translation: 1, ft_disposition: 1,
-  publisher: 1, place_of_publication: 1,
+  publisher: 1, place_of_publication: 1, resource_type: 1,
   'image_source.contributing_library': 1, 'image_source.provider_name': 1,
 };
 
@@ -296,6 +297,9 @@ export default async function AuthorPage({ params }: AuthorPageProps) {
     .filter(a => a && a !== authorName && !nameVariants.some(v => v.toLowerCase() === a.toLowerCase()));
   const allVariants = [...nameVariants, ...bookVariants].slice(0, 8);
 
+  // Check if this author also has visual works (show artist page link)
+  const hasVisualWorks = books.some((b: any) => b.resource_type && VISUAL_RESOURCE_TYPES.includes(b.resource_type));
+
   // Language breakdown for stats
   const langCounts = new Map<string, number>();
   for (const b of books) {
@@ -356,6 +360,14 @@ export default async function AuthorPage({ params }: AuthorPageProps) {
 
           {/* External links */}
           <div className="flex flex-wrap gap-2 mt-5">
+            {hasVisualWorks && artistUrl(authorName) && (
+              <Link
+                href={artistUrl(authorName)!}
+                className="inline-block px-3 py-1.5 text-sm bg-accent-rust/20 text-accent-gold hover:bg-accent-rust/30 rounded-full transition-colors"
+              >
+                Artist page
+              </Link>
+            )}
             {encyclopediaEntity && (
               <Link
                 href={`/encyclopedia/${encodeURIComponent(encyclopediaEntity.name)}`}
