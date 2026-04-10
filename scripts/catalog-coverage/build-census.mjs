@@ -160,20 +160,24 @@ async function buildCensusView() {
     // Step 1: Rebuild distinct works view (always rebuild to pick up fixes)
     const forceRebuild = process.argv.includes('--force') || process.argv.includes('--rebuild');
 
+    // Check if table or materialized view exists
     const { rows: matViews } = await client.query(
-      "SELECT count(*) FROM pg_matviews WHERE matviewname = 'ustc_distinct_works'"
+      "SELECT count(*) FROM information_schema.tables WHERE table_name = 'ustc_distinct_works'"
     ).catch(() => ({ rows: [{ count: '0' }] }));
 
-    const rebuildWorks = process.argv.includes('--rebuild-works');
-    if (parseInt(matViews[0]?.count || '0') === 0 || rebuildWorks) {
-      console.log('  Building ustc_distinct_works (this takes a few minutes)...');
-      console.log('  WARNING: This may timeout on Supabase shared infra. Use --rebuild-works only if needed.');
+    if (parseInt(matViews[0]?.count || '0') === 0) {
+      // The CREATE MATERIALIZED VIEW for 1.6M grouped rows can timeout
+      // on Supabase shared infra. We use CREATE TABLE ... AS SELECT
+      // which may be faster, and set a very long timeout.
+      console.log('  Building ustc_distinct_works table (this takes several minutes)...');
+      await client.query("SET statement_timeout = '900s'");
       await client.query('DROP MATERIALIZED VIEW IF EXISTS translation_census_by_language CASCADE');
       await client.query('DROP TABLE IF EXISTS translation_census_matches CASCADE');
       await client.query('DROP MATERIALIZED VIEW IF EXISTS ustc_distinct_works CASCADE');
+      await client.query('DROP TABLE IF EXISTS ustc_distinct_works CASCADE');
 
       await client.query(`
-        CREATE MATERIALIZED VIEW ustc_distinct_works AS
+        CREATE TABLE ustc_distinct_works AS
         SELECT
           MIN(e.id) AS sample_id,
           regexp_replace(lower(
@@ -202,6 +206,7 @@ async function buildCensusView() {
         CREATE INDEX IF NOT EXISTS idx_udw_lang ON ustc_distinct_works (language);
         CREATE INDEX IF NOT EXISTS idx_udw_surname_trgm ON ustc_distinct_works USING gin (author_surname gin_trgm_ops);
       `);
+      await client.query("SET statement_timeout = '600s'");
     }
 
     const { rows: [{ count: workCount }] } = await client.query('SELECT count(*) FROM ustc_distinct_works');
