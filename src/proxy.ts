@@ -317,7 +317,10 @@ export function proxy(request: NextRequest) {
     const frameOrigin = request.headers.get('origin') ||
       (request.headers.get('referer') || '').replace(/^(https?:\/\/[^/]+).*/, '$1');
     const frameHost = frameOrigin.replace(/^https?:\/\//, '').split('/')[0].toLowerCase();    
-    const isAllowed = getAllowedEmbedOrigins().has(frameHost);
+    const requestHost = (request.headers.get('host') || '').toLowerCase();
+    const isAllowed =
+      getAllowedEmbedOrigins().has(frameHost) ||
+      frameHost === requestHost; // in-iframe nav (SL → SL same-origin referer)
 
     if (!isAllowed) {
       response.headers.set('X-Frame-Options', 'DENY');
