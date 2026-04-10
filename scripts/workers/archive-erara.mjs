@@ -307,12 +307,14 @@ async function main() {
   await client.connect();
   const db = client.db('bookstore');
 
-  // Find e-rara books in archiving status
+  // Find e-rara books that need archiving — any pipeline status, not just 'archiving'.
+  // Many e-rara books sailed past the archiving stage before this worker existed.
   // Priority: smaller books first (faster throughput), then first translations
   const eraraBooks = await db.collection('books')
     .find({
       'image_source.provider': 'e-rara',
-      'pipeline_auto.status': 'archiving',
+      pages_count: { $gt: 0 },
+      pages_archived: { $not: { $gte: 1 } },  // No pages archived yet (null, 0, or missing)
     })
     .sort({ pages_count: 1 })  // Small books first — clear the queue faster
     .project({ id: 1, title: 1, image_source: 1, pages_count: 1, language: 1, is_first_translation: 1 })
