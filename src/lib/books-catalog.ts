@@ -34,6 +34,31 @@ export interface CatalogBook {
   collections: string[];
 }
 
+/** Extended book detail from Supabase — includes fields for the /book/[id] page shell. */
+export interface CatalogBookDetail extends CatalogBook {
+  contributing_library: string | null;
+  summary_text: string | null;
+  publisher: string | null;
+  place_published: string | null;
+  doi: string | null;
+  work_id: string | null;
+  resource_type: string | null;
+  source_url: string | null;
+  provider_name: string | null;
+  image_attribution: string | null;
+  image_license: string | null;
+  cover_image: string | null;
+  dedication: string | null;
+  subtitle: string | null;
+  source_work_dates: Array<{ type: string; date_display: string; author?: string }> | null;
+  ft_disposition: string | null;
+  ft_reasoning: string | null;
+  description: string | null;
+  subject_keywords: string[] | null;
+  created_at: string | null;
+  updated_at: string | null;
+}
+
 const BOOK_SELECT = 'id, slug, title, display_title, author, year, language, published, pages_count, pages_ocr, pages_translated, pages_blank, photo, thumbnail, thumbnail_blob, read_count, is_first_translation, quality_score, image_source_provider, categories, collections';
 
 export type SortOption = 'popular' | 'title' | 'author' | 'year_asc' | 'year_desc' | 'recent' | 'last_translated' | 'quality';
@@ -249,4 +274,66 @@ export async function getCategoryCounts(): Promise<Map<string, number>> {
     }
   }
   return counts;
+}
+
+// All fields needed for the book detail page shell
+const BOOK_DETAIL_SELECT = [
+  BOOK_SELECT,
+  'contributing_library',
+  'summary_text',
+  'publisher',
+  'place_published',
+  'doi',
+  'work_id',
+  'resource_type',
+  'source_url',
+  'provider_name',
+  'image_attribution',
+  'image_license',
+  'cover_image',
+  'dedication',
+  'subtitle',
+  'source_work_dates',
+  'ft_disposition',
+  'ft_reasoning',
+  'description',
+  'subject_keywords',
+  'created_at',
+  'updated_at',
+].join(', ');
+
+/**
+ * Fetch a single book by slug or id from Supabase books_catalog.
+ *
+ * Used by /book/[id] for fast cold renders (<50ms vs 1-5s from Atlas).
+ * Returns null if not found. Falls through to Atlas in the caller.
+ *
+ * Lookup order matches findBookByIdOrSlug: slug first, then id.
+ */
+export async function getBookDetail(idOrSlug: string): Promise<{ book: CatalogBookDetail; matchedBySlug: boolean } | null> {
+  // Try slug first (the common case for SEO URLs)
+  const { data: bySlug } = await supabase
+    .from('books_catalog')
+    .select(BOOK_DETAIL_SELECT)
+    .eq('slug', idOrSlug)
+    .limit(1)
+    .maybeSingle();
+
+  if (bySlug) {
+    return { book: bySlug as unknown as CatalogBookDetail, matchedBySlug: true };
+  }
+
+  // Fall back to id
+  const { data: byId } = await supabase
+    .from('books_catalog')
+    .select(BOOK_DETAIL_SELECT)
+    .eq('id', idOrSlug)
+    .limit(1)
+    .maybeSingle();
+
+  if (byId) {
+    return { book: byId as unknown as CatalogBookDetail, matchedBySlug: false };
+  }
+
+  return null;
 }
