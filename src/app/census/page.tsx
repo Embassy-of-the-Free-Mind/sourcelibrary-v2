@@ -1,7 +1,6 @@
 import { Metadata } from 'next';
 import Link from 'next/link';
 import { supabase } from '@/lib/supabase';
-import { getDb } from '@/lib/mongodb';
 import ContentPageLayout, { SubPageHeader } from '@/components/layout/ContentPageLayout';
 import { BookOpen, Languages, Search, BarChart3, Sparkles, ExternalLink } from 'lucide-react';
 import CensusSearch from './CensusSearch';
@@ -38,119 +37,85 @@ interface CensusData {
 
 async function getCensusData(): Promise<CensusData | null> {
   try {
-    // 1. Get USTC coverage stats from Supabase
-    const { data: coverageRows } = await supabase.rpc('get_coverage_stats');
+    // Primary source: Supabase materialized view via RPC
+    // Built by scripts/catalog-coverage/build-census.mjs
+    const [censusResult, slResult] = await Promise.all([
+      supabase.rpc('get_translation_census'),
+      supabase.rpc('get_sl_progress'),
+    ]);
 
-    // 2. Get live SL stats
-    const { data: slProgress } = await supabase.rpc('get_sl_progress');
+    const census = censusResult.data as any;
+    const slData = slResult.data as any;
 
-    // 3. Load pre-computed census results (from analysis scripts)
-    // These contain the detailed per-language work-level estimates
-    let censusJson: any = null;
-    try {
-      const db = await getDb();
-      censusJson = await db.collection('system_config').findOne({ _id: 'census_data' as any });
-    } catch { /* census data may not be in DB yet */ }
+    if (census?.totals && census?.by_language) {
+      // Live census data from materialized view
+      const languages: CensusLanguage[] = (census.by_language as any[])
+        .filter((l: any) => parseInt(l.total_works) >= 500)
+        .map((l: any) => ({
+          language: l.language || 'Unknown',
+          editions: Number(l.total_editions),
+          distinct_works: Number(l.total_works),
+          estimated_translated: Number(l.works_with_translation),
+          pct_works_translated: Number(l.pct_works_translated),
+          top_untranslated: [], // populated separately if needed
+        }));
 
-    // If no DB census data, use the coverage stats directly
-    const languages: CensusLanguage[] = [];
-
-    // Pre-computed census data (from scripts/analysis/translation-census-all-languages.mjs)
-    // These are the best estimates of work-level translation rates
-    const CENSUS_ESTIMATES: Record<string, { works: number; translated: number; topUntranslated: { surname: string; works: number }[] }> = censusJson?.languages || {
-      Latin: {
-        works: 362263, translated: 3501,
-        topUntranslated: [
-          { surname: 'Martini', works: 1299 }, { surname: 'Fabricius', works: 763 },
-          { surname: 'Bartolus de Saxoferrato', works: 477 }, { surname: 'Goclenius', works: 565 },
-        ],
-      },
-      German: {
-        works: 124394, translated: 1032,
-        topUntranslated: [
-          { surname: 'Sachs', works: 628 }, { surname: 'Spangenberg', works: 554 },
-          { surname: 'Olearius', works: 448 }, { surname: 'Dach', works: 384 },
-        ],
-      },
-      French: {
-        works: 65266, translated: 1223,
-        topUntranslated: [
-          { surname: 'Corneille', works: 377 }, { surname: 'Ronsard', works: 187 },
-          { surname: 'Du Moulin', works: 246 }, { surname: 'Arnauld', works: 314 },
-        ],
-      },
-      Italian: {
-        works: 70284, translated: 642,
-        topUntranslated: [
-          { surname: 'Croce', works: 909 }, { surname: 'Segneri', works: 291 },
-          { surname: 'Cicognini', works: 304 }, { surname: 'Aretino', works: 168 },
-        ],
-      },
-      Dutch: {
-        works: 29649, translated: 683,
-        topUntranslated: [
-          { surname: 'Vondel', works: 293 }, { surname: 'Cats', works: 173 },
-          { surname: 'Teellinck', works: 212 }, { surname: 'Goes', works: 279 },
-        ],
-      },
-      Spanish: {
-        works: 37484, translated: 323,
-        topUntranslated: [
-          { surname: 'Calderon de la Barca', works: 294 }, { surname: 'Vega Carpio', works: 178 },
-          { surname: 'Guevara', works: 130 }, { surname: 'Salazar', works: 213 },
-        ],
-      },
-      Portuguese: {
-        works: 3795, translated: 36,
-        topUntranslated: [
-          { surname: 'Vieira', works: 87 }, { surname: 'Camoes', works: 25 },
-          { surname: 'Carvalho', works: 79 }, { surname: 'Almeida', works: 47 },
-        ],
-      },
-    };
-
-    if (coverageRows) {
-      for (const row of coverageRows as any[]) {
-        const lang = row.language;
-        const census = CENSUS_ESTIMATES[lang];
-        if (!census) continue;
-
-        languages.push({
-          language: lang,
-          editions: Number(row.editions),
-          distinct_works: census.works,
-          estimated_translated: census.translated,
-          pct_works_translated: census.works > 0
-            ? +((census.translated / census.works) * 100).toFixed(2)
-            : 0,
-          top_untranslated: census.topUntranslated,
-        });
-      }
+      const t = census.totals;
+      return {
+        total_editions: Number(t.total_editions),
+        total_works: Number(t.total_works),
+        total_translated: Number(t.works_with_translation),
+        pct_translated: Number(t.pct_works_translated),
+        catalog_records: 13862,
+        languages,
+        sl_first_translations: Number(slData?.totals?.first_translations || 0),
+        sl_books_translated: Number(slData?.totals?.translated_by_sl || 0),
+      };
     }
 
-    // Sort by editions descending
-    languages.sort((a, b) => b.editions - a.editions);
-
-    const totalWorks = languages.reduce((s, l) => s + l.distinct_works, 0);
-    const totalTranslated = languages.reduce((s, l) => s + l.estimated_translated, 0);
-    const totalEditions = languages.reduce((s, l) => s + l.editions, 0);
-
-    const slData = slProgress as any;
-
-    return {
-      total_editions: totalEditions,
-      total_works: totalWorks,
-      total_translated: totalTranslated,
-      pct_translated: totalWorks > 0 ? +((totalTranslated / totalWorks) * 100).toFixed(2) : 0,
-      catalog_records: 13862,
-      languages,
-      sl_first_translations: Number(slData?.totals?.first_translations || 0),
-      sl_books_translated: Number(slData?.totals?.translated_by_sl || 0),
-    };
+    // Fallback: use coverage stats RPC (edition-level, less precise)
+    // This is the surname-level matching — honest about its limitations
+    console.warn('Translation census RPC not available — falling back to coverage stats');
+    return getCensusFromCoverageStats(slData);
   } catch (err) {
     console.error('Census data load error:', err);
     return null;
   }
+}
+
+async function getCensusFromCoverageStats(slData: any): Promise<CensusData | null> {
+  // Falls back to edition-level coverage stats from get_coverage_stats()
+  // These use surname-level matching (less precise) and count editions not works
+  const { data: coverageRows, error } = await supabase.rpc('get_coverage_stats');
+  if (error || !coverageRows) return null;
+
+  const languages: CensusLanguage[] = (coverageRows as any[])
+    .filter((r: any) => Number(r.editions) >= 1000)
+    .map((r: any) => ({
+      language: r.language,
+      editions: Number(r.editions),
+      distinct_works: 0, // not available in this mode
+      estimated_translated: Number(r.with_translation),
+      pct_works_translated: Number(r.editions) > 0
+        ? +((Number(r.with_translation) / Number(r.editions)) * 100).toFixed(1)
+        : 0,
+      top_untranslated: [],
+    }))
+    .sort((a, b) => b.editions - a.editions);
+
+  const totalEditions = languages.reduce((s, l) => s + l.editions, 0);
+  const totalTranslated = languages.reduce((s, l) => s + l.estimated_translated, 0);
+
+  return {
+    total_editions: totalEditions,
+    total_works: 0, // not available in fallback
+    total_translated: totalTranslated,
+    pct_translated: totalEditions > 0 ? +((totalTranslated / totalEditions) * 100).toFixed(1) : 0,
+    catalog_records: 13862,
+    languages,
+    sl_first_translations: Number(slData?.totals?.first_translations || 0),
+    sl_books_translated: Number(slData?.totals?.translated_by_sl || 0),
+  };
 }
 
 // ── Helpers ──────────────────────────────────────────────────────────
@@ -184,7 +149,11 @@ export default async function CensusPage() {
     );
   }
 
-  const gap = data.total_works - data.total_translated;
+  // Work-level data available when census view exists, otherwise edition-level
+  const hasWorkData = data.total_works > 0;
+  const denominator = hasWorkData ? data.total_works : data.total_editions;
+  const gap = denominator - data.total_translated;
+  const unitLabel = hasWorkData ? 'works' : 'editions';
 
   return (
     <ContentPageLayout maxWidth="narrow" bg="bg-stone-50">
@@ -200,19 +169,27 @@ export default async function CensusPage() {
             {data.pct_translated}%
           </div>
           <p className="text-secondary text-lg">
-            of pre-1700 European works have a known English translation
+            of pre-1700 European {unitLabel} have a known English translation
           </p>
+          {!hasWorkData && (
+            <p className="text-xs text-stone-400 mt-2">
+              Counted at the edition level. The true figure at the work level is likely lower
+              &mdash; one translated work covers many editions.
+            </p>
+          )}
         </div>
 
-        <div className="grid grid-cols-2 md:grid-cols-4 gap-4 mb-8">
+        <div className={`grid grid-cols-2 ${hasWorkData ? 'md:grid-cols-4' : 'md:grid-cols-3'} gap-4 mb-8`}>
           <div className="text-center">
             <div className="text-2xl font-semibold text-primary">{fmt(data.total_editions)}</div>
             <div className="text-xs text-stone-500 mt-0.5">editions cataloged</div>
           </div>
-          <div className="text-center">
-            <div className="text-2xl font-semibold text-primary">{fmt(data.total_works)}</div>
-            <div className="text-xs text-stone-500 mt-0.5">distinct works</div>
-          </div>
+          {hasWorkData && (
+            <div className="text-center">
+              <div className="text-2xl font-semibold text-primary">{fmt(data.total_works)}</div>
+              <div className="text-xs text-stone-500 mt-0.5">distinct works</div>
+            </div>
+          )}
           <div className="text-center">
             <div className="text-2xl font-semibold text-emerald-700">{fmt(data.total_translated)}</div>
             <div className="text-xs text-stone-500 mt-0.5">with English translation</div>
@@ -223,7 +200,7 @@ export default async function CensusPage() {
           </div>
         </div>
 
-        <ProgressBar value={data.total_translated} max={data.total_works} color="bg-emerald-600" />
+        <ProgressBar value={data.total_translated} max={denominator} color="bg-emerald-600" />
         <div className="flex justify-between text-xs text-stone-400 mt-1.5">
           <span>0%</span>
           <span>{data.pct_translated}% translated</span>
@@ -243,14 +220,25 @@ export default async function CensusPage() {
           <p>
             Between the invention of the printing press (c. 1450) and 1700, European presses
             produced over {fmt(data.total_editions)} recorded editions in Latin, German, French,
-            Italian, Dutch, Spanish, Portuguese, and other languages. These represent roughly {fmt(data.total_works)} distinct
-            works &mdash; the intellectual output of the Renaissance, Reformation, and Scientific Revolution.
+            Italian, Dutch, Spanish, Portuguese, and other languages.
+            {hasWorkData && <> These represent roughly {fmt(data.total_works)} distinct works &mdash;</>}
+            {' '}The intellectual output of the Renaissance, Reformation, and Scientific Revolution.
           </p>
           <p>
-            Of these, only about {fmt(data.total_translated)} have a known English translation.
-            That&apos;s {data.pct_translated}%. The other {(100 - data.pct_translated).toFixed(1)}% &mdash;
-            roughly {fmt(gap)} works &mdash; remain inaccessible to English readers.
+            Of these, {hasWorkData ? 'only about' : 'roughly'} {fmt(data.total_translated)} {unitLabel} have
+            a known English translation. That&apos;s {data.pct_translated}%.
+            The other {(100 - data.pct_translated).toFixed(1)}% &mdash;
+            roughly {fmt(gap)} {unitLabel} &mdash; remain inaccessible to English readers.
           </p>
+          {!hasWorkData && (
+            <p className="text-stone-400 italic">
+              Note: These counts are at the edition level. Multiple editions of the same work
+              (e.g. 14 printings of Cicero&apos;s <em>De Officiis</em>) are each counted separately.
+              An author-level match also means all editions by that author are marked as &ldquo;translated&rdquo;
+              even if only one of their works has a translation. The true percentage of distinct
+              works translated is lower &mdash; likely between 1% and 4%.
+            </p>
+          )}
           <p>
             This census is built by joining the <a href="https://www.ustc.ac.uk" className="text-amber-700 hover:underline" target="_blank" rel="noopener noreferrer">Universal Short Title Catalogue</a> ({fmt(data.total_editions)} editions) against {fmt(data.catalog_records)} known
             English translations from UNESCO Index Translationum, Open Library, HathiTrust,
@@ -293,11 +281,11 @@ export default async function CensusPage() {
                 <h3 className="font-medium text-primary">{lang.language}</h3>
                 <div className="text-sm">
                   <span className="text-emerald-700 font-medium">{fmt(lang.estimated_translated)}</span>
-                  <span className="text-stone-400"> / {fmt(lang.distinct_works)} works</span>
+                  <span className="text-stone-400"> / {fmt(hasWorkData ? lang.distinct_works : lang.editions)} {unitLabel}</span>
                   <span className="text-stone-400 ml-1">({lang.pct_works_translated}%)</span>
                 </div>
               </div>
-              <ProgressBar value={lang.estimated_translated} max={lang.distinct_works} color="bg-emerald-600" />
+              <ProgressBar value={lang.estimated_translated} max={hasWorkData ? lang.distinct_works : lang.editions} color="bg-emerald-600" />
 
               {/* Top untranslated authors */}
               {lang.top_untranslated.length > 0 && (
