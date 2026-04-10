@@ -73,6 +73,7 @@ const nextConfig: NextConfig = {
   },
   async headers() {
     return [
+      // Security headers (all routes)
       {
         source: '/(.*)',
         headers: [
@@ -86,6 +87,63 @@ const nextConfig: NextConfig = {
             value: 'max-age=63072000; includeSubDomains; preload',
           },
         ],
+      },
+      // CDN-Cache-Control for Cloudflare edge caching.
+      // Cloudflare strips this header before sending to browsers —
+      // it only controls Cloudflare's edge cache behavior.
+      // Admin/auth/API routes are excluded by Cloudflare Cache Rules (bypass).
+      {
+        source: '/book/:path*',
+        headers: [{ key: 'CDN-Cache-Control', value: 'public, max-age=86400, stale-while-revalidate=3600' }],
+      },
+      {
+        source: '/collections/:path*',
+        headers: [{ key: 'CDN-Cache-Control', value: 'public, max-age=86400, stale-while-revalidate=3600' }],
+      },
+      {
+        source: '/author/:path*',
+        headers: [{ key: 'CDN-Cache-Control', value: 'public, max-age=86400, stale-while-revalidate=3600' }],
+      },
+      {
+        source: '/browse/:path*',
+        headers: [{ key: 'CDN-Cache-Control', value: 'public, max-age=86400, stale-while-revalidate=3600' }],
+      },
+      {
+        source: '/encyclopedia/:path*',
+        headers: [{ key: 'CDN-Cache-Control', value: 'public, max-age=86400, stale-while-revalidate=3600' }],
+      },
+      {
+        source: '/gallery/:path*',
+        headers: [{ key: 'CDN-Cache-Control', value: 'public, max-age=86400, stale-while-revalidate=3600' }],
+      },
+      {
+        source: '/explore/:path*',
+        headers: [{ key: 'CDN-Cache-Control', value: 'public, max-age=86400, stale-while-revalidate=3600' }],
+      },
+      {
+        source: '/libraries/:path*',
+        headers: [{ key: 'CDN-Cache-Control', value: 'public, max-age=86400, stale-while-revalidate=3600' }],
+      },
+      {
+        source: '/languages/:path*',
+        headers: [{ key: 'CDN-Cache-Control', value: 'public, max-age=86400, stale-while-revalidate=3600' }],
+      },
+      {
+        source: '/artwork/:path*',
+        headers: [{ key: 'CDN-Cache-Control', value: 'public, max-age=86400, stale-while-revalidate=3600' }],
+      },
+      // Prevent Cloudflare from caching admin/auth routes
+      {
+        source: '/admin/:path*',
+        headers: [{ key: 'CDN-Cache-Control', value: 'private, no-store' }],
+      },
+      {
+        source: '/auth/:path*',
+        headers: [{ key: 'CDN-Cache-Control', value: 'private, no-store' }],
+      },
+      {
+        source: '/account',
+        headers: [{ key: 'CDN-Cache-Control', value: 'private, no-store' }],
       },
     ];
   },
