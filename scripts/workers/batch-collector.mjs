@@ -464,9 +464,16 @@ async function processOneJob(db, job) {
     }
 
     if (bulkOps.length > 0) {
-      const bulkResult = await db.collection('pages').bulkWrite(bulkOps, { ordered: false });
-      successCount = bulkResult.matchedCount;
-      failCount += (bulkOps.length - bulkResult.matchedCount);
+      // Throttle writes to avoid IOPS spikes on Atlas (3K ceiling on M30)
+      const CHUNK_SIZE = 25;
+      const CHUNK_DELAY_MS = 200; // ~125 writes/s max
+      for (let i = 0; i < bulkOps.length; i += CHUNK_SIZE) {
+        const chunk = bulkOps.slice(i, i + CHUNK_SIZE);
+        const chunkResult = await db.collection('pages').bulkWrite(chunk, { ordered: false });
+        successCount += chunkResult.matchedCount;
+        failCount += (chunk.length - chunkResult.matchedCount);
+        if (i + CHUNK_SIZE < bulkOps.length) await new Promise(r => setTimeout(r, CHUNK_DELAY_MS));
+      }
     }
 
     // Insert gallery_images for image extraction jobs (upsert to avoid dupes on re-collection)
