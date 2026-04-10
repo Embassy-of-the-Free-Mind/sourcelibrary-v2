@@ -582,7 +582,7 @@ async function buildCoverage(db, pgClient, scanLookup, translationLookup, slLook
         // Use unnest arrays for efficient batch update (no param count limit)
         const sns = [], scans = [], trans = [], inSls = [], scanSrcs = [], sqs = [], slIds = [], wcIds = [], slPcts = [];
         for (const d of docs) {
-          sns.push(d.ustc_id);
+          sns.push(typeof d.ustc_id === 'number' ? d.ustc_id : parseInt(d.ustc_id) || 0);
           scans.push(d.has_iiif_scan);
           trans.push(d.has_english_translation);
           inSls.push(d.in_source_library);
@@ -603,7 +603,7 @@ async function buildCoverage(db, pgClient, scanLookup, translationLookup, slLook
             work_cluster_id = v.wc_id,
             sl_translation_percent = v.sl_pct,
             coverage_built_at = NOW()
-          FROM unnest($1::text[], $2::boolean[], $3::boolean[], $4::boolean[], $5::text[], $6::text[], $7::text[], $8::smallint[])
+          FROM unnest($1::integer[], $2::boolean[], $3::boolean[], $4::boolean[], $5::text[], $6::text[], $7::text[], $8::smallint[])
             AS v(sn, has_scan, has_trans, in_sl, sq, sl_id, wc_id, sl_pct)
           WHERE ustc_editions.sn = v.sn
         `;
