@@ -36,7 +36,8 @@ const DRY_RUN = args.includes('--dry-run');
 const LIMIT = parseInt(args.find(a => a.startsWith('--limit='))?.split('=')[1] || '0', 10);
 const BOOK_ID = args.find(a => a.startsWith('--book='))?.split('=')[1];
 const SKIP_EXISTING = args.includes('--skip-existing');
-const BATCH_SIZE = parseInt(args.find(a => a.startsWith('--batch='))?.split('=')[1] || (USE_DIRECT_PG ? '500' : '100'), 10);
+const BATCH_SIZE = parseInt(args.find(a => a.startsWith('--batch='))?.split('=')[1] || '100', 10);
+const FORCE_REST = args.includes('--rest');
 
 /**
  * Flatten a MongoDB page document to Supabase row format.
@@ -170,7 +171,7 @@ async function upsertBatchRest(rows) {
 }
 
 async function upsertBatch(rows) {
-  if (USE_DIRECT_PG) return upsertBatchPg(rows);
+  if (USE_DIRECT_PG && !FORCE_REST) return upsertBatchPg(rows);
   return upsertBatchRest(rows);
 }
 
