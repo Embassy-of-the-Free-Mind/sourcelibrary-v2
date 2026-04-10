@@ -146,18 +146,28 @@ export default function ScanPage() {
       uploadStatusRef.current = { ...uploadStatusRef.current, [item.pageId]: 'uploading' };
       setUploadStatus(prev => ({ ...prev, [item.pageId]: 'uploading' }));
 
-      try {
-        const resized = await resizeForUpload(item.file);
-        const formData = new FormData();
-        formData.append('bookId', currentBookId);
-        formData.append('files', resized);
+      let uploaded = false;
+      for (let attempt = 0; attempt < 3; attempt++) {
+        try {
+          const resized = await resizeForUpload(item.file);
+          const formData = new FormData();
+          formData.append('bookId', currentBookId);
+          formData.append('files', resized);
 
-        const res = await fetch('/api/scan/upload', { method: 'POST', body: formData });
-        if (!res.ok) throw new Error(`Upload failed (${res.status})`);
+          const res = await fetch('/api/scan/upload', { method: 'POST', body: formData });
+          if (!res.ok) throw new Error(`Upload failed (${res.status})`);
 
-        uploadStatusRef.current = { ...uploadStatusRef.current, [item.pageId]: 'uploaded' };
-        setUploadStatus(prev => ({ ...prev, [item.pageId]: 'uploaded' }));
-      } catch {
+          uploadStatusRef.current = { ...uploadStatusRef.current, [item.pageId]: 'uploaded' };
+          setUploadStatus(prev => ({ ...prev, [item.pageId]: 'uploaded' }));
+          uploaded = true;
+          break;
+        } catch {
+          if (attempt < 2) {
+            await new Promise(r => setTimeout(r, 1000 * (attempt + 1)));
+          }
+        }
+      }
+      if (!uploaded) {
         uploadStatusRef.current = { ...uploadStatusRef.current, [item.pageId]: 'failed' };
         setUploadStatus(prev => ({ ...prev, [item.pageId]: 'failed' }));
       }
