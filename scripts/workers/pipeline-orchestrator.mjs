@@ -1005,13 +1005,15 @@ function shouldRun(phase) {
 
 // ── Gemini Batch API helpers (direct OCR submission, no Vercel) ──
 
-// All keys for rotation — deduplicated, round-robin across projects to maximize throughput.
-// Batch quotas are per-project, so spreading evenly doubles capacity.
+// Two GCP projects, two unique keys. GEMINI_API_KEY_TIER3 === GEMINI_API_KEY_2 (same project B).
+// Deduplicated to avoid wasting retry attempts on the same project.
+// Batch rate limits are per-project AND per-endpoint (File API upload vs batchGenerateContent).
 const GEMINI_BATCH_KEYS = [...new Set([
   process.env.GEMINI_API_KEY_TIER3,
   process.env.GEMINI_API_KEY,
   process.env.GEMINI_API_KEY_2,
 ].filter(k => !!k))];
+console.log(`  Batch API: ${GEMINI_BATCH_KEYS.length} unique keys (from ${[process.env.GEMINI_API_KEY_TIER3, process.env.GEMINI_API_KEY, process.env.GEMINI_API_KEY_2].filter(Boolean).length} env vars)`);
 
 let _batchKeyCounter = 0;
 function getGeminiApiKey(keyIndex) {
@@ -1395,7 +1397,7 @@ Output structure:
           console.log(`    Uploaded file: ${fileResult.name} (key ${uki})`);
         } catch (uploadErr) {
           if (uploadErr.message.includes('429') || uploadErr.message.includes('quota')) {
-            console.log(`    Upload key ${uki} quota exhausted, trying next...`);
+            console.log(`    Upload key ${uki} FILE API quota exhausted, trying next...`);
             continue;
           }
           throw uploadErr;
@@ -1413,7 +1415,7 @@ Output structure:
         } catch (batchErr) {
           try { await fetch(`https://generativelanguage.googleapis.com/v1beta/${fileResult.name}?key=${uploadKey}`, { method: 'DELETE' }); } catch (_) {}
           if (batchErr.message.includes('429') || batchErr.message.includes('quota')) {
-            console.log(`    Batch create key ${uki} quota exhausted, re-uploading with next key...`);
+            console.log(`    Batch create key ${uki} BATCH CREATION quota exhausted, re-uploading with next key...`);
             continue;
           }
           throw batchErr;
@@ -1666,7 +1668,7 @@ async function submitImageExtractionBatch(db, book, candidatePages) {
           console.log(`    Uploaded file: ${fileResult.name} (key ${uki})`);
         } catch (uploadErr) {
           if (uploadErr.message.includes('429') || uploadErr.message.includes('quota')) {
-            console.log(`    Upload key ${uki} quota exhausted, trying next...`);
+            console.log(`    Upload key ${uki} FILE API quota exhausted, trying next...`);
             continue;
           }
           throw uploadErr;
@@ -1683,7 +1685,7 @@ async function submitImageExtractionBatch(db, book, candidatePages) {
         } catch (batchErr) {
           try { await fetch(`https://generativelanguage.googleapis.com/v1beta/${fileResult.name}?key=${uploadKey}`, { method: 'DELETE' }); } catch (_) {}
           if (batchErr.message.includes('429') || batchErr.message.includes('quota')) {
-            console.log(`    Batch create key ${uki} quota exhausted, re-uploading with next key...`);
+            console.log(`    Batch create key ${uki} BATCH CREATION quota exhausted, re-uploading with next key...`);
             continue;
           }
           throw batchErr;
@@ -2586,7 +2588,7 @@ Reply with ONLY: {"is_spread": true} or {"is_spread": false}` },
         } catch (err) {
           const msg = err.message || String(err);
           if (msg.includes('ALL_KEYS_QUOTA_EXHAUSTED')) {
-            console.log(`  All Gemini keys quota exhausted — stopping OCR submissions`);
+            console.log(`  All Gemini keys quota exhausted — stopping OCR submissions (${GEMINI_BATCH_KEYS.length} unique keys tried, check File API + batch creation limits separately)`);
             log.errors.push('OCR: All API keys quota exhausted');
             break; // Stop trying more books
           } else if (msg.includes('image downloads failed')) {
