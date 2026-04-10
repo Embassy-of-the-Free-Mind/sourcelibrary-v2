@@ -32,7 +32,7 @@ const DRY_RUN = args.includes('--dry-run');
 const LIMIT = parseInt(args.find(a => a.startsWith('--limit='))?.split('=')[1] || '0', 10);
 const BOOK_ID = args.find(a => a.startsWith('--book='))?.split('=')[1];
 const SKIP_EXISTING = args.includes('--skip-existing');
-const BATCH_SIZE = parseInt(args.find(a => a.startsWith('--batch='))?.split('=')[1] || '2000', 10);
+const BATCH_SIZE = parseInt(args.find(a => a.startsWith('--batch='))?.split('=')[1] || '500', 10);
 
 /**
  * Flatten a MongoDB page document to Supabase row format.
