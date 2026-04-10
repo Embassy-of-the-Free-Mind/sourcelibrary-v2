@@ -1,0 +1,38 @@
+name: Post-deploy cache warm
+
+# Runs after a push to main that changes app files (i.e., triggers a Vercel deploy).
+# Waits for Vercel to finish building, then warms the top pages so the ISR + Cloudflare
+# caches are populated immediately instead of waiting for organic traffic.
+
+on:
+  push:
+    branches: [main]
+    paths:
+      - 'src/**'
+      - 'public/**'
+      - 'next.config.ts'
+      - 'vercel.json'
+      - 'package.json'
+      - 'package-lock.json'
+
+jobs:
+  warm:
+    runs-on: ubuntu-latest
+    # Wait for Vercel to finish deploying (~2-4 min typically)
+    steps:
+      - name: Wait for Vercel deploy
+        run: sleep 180
+
+      - name: Warm cache
+        run: |
+          STATUS=$(curl -s -o /dev/null -w "%{http_code}" -X POST \
+            https://sourcelibrary.org/api/deploy-warm \
+            -H "Authorization: Bearer ${{ secrets.CRON_SECRET }}" \
+            -H "Content-Type: application/json" \
+            --max-time 290)
+          echo "Warm endpoint returned: $STATUS"
+          if [ "$STATUS" = "200" ]; then
+            echo "Cache warming complete"
+          else
+            echo "Warning: warm endpoint returned $STATUS (non-fatal)"
+          fi
