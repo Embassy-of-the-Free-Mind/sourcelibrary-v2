@@ -73,9 +73,17 @@ export const POST = withAuth(async (request, session) => {
       };
     }> = [];
 
+    // Check for pages that were already split (have child pages)
+    const existingChildren = await db.collection('pages')
+      .find({ split_from: { $in: pageIds } })
+      .project({ split_from: 1 })
+      .toArray();
+    const alreadySplitIds = new Set(existingChildren.map(c => c.split_from));
+
     for (const split of splits) {
       const page = pages.find(p => p.id === split.pageId);
       if (!page || !page.photo) continue;
+      if (alreadySplitIds.has(page.id)) continue; // Skip already-split pages
 
       // Add 1% overlap (10 on 0-1000 scale) on each side
       const overlap = 10;

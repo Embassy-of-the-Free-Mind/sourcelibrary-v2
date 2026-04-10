@@ -42,6 +42,12 @@ export const POST = withAuth(async (request, session, context) => {
       return NextResponse.json({ error: 'Page has no image' }, { status: 400 });
     }
 
+    // Idempotency: check if this page was already split (has a child page)
+    const existingChild = await db.collection('pages').findOne({ split_from: pageId });
+    if (existingChild) {
+      return NextResponse.json({ error: 'Page already split', existingChildPage: existingChild.page_number }, { status: 409 });
+    }
+
     // Get the book to find all pages and determine next page number
     const book = await db.collection('books').findOne({ id: currentPage.book_id });
     if (!book) {
