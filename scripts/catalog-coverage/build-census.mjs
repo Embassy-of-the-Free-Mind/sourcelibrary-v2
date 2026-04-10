@@ -199,9 +199,15 @@ async function buildCensusView() {
     console.log(`  Distinct works: ${parseInt(workCount).toLocaleString()}`);
 
     // Now: match works against translation catalogs
-    // Use a two-pass approach:
-    // Pass 1: exact author_surname match + title similarity
-    // This avoids full trigram cross-join (too expensive at scale)
+    // Surname matching uses trigram similarity (not exact) because USTC uses
+    // Latin forms (Ficinus) while catalogs use English (Ficino).
+    // Title matching uses trigram similarity on english_title, canonical_work,
+    // and original_title.
+
+    // First, create a GIN index on the distinct works author_surname for trigram
+    await client.query(`
+      CREATE INDEX IF NOT EXISTS idx_udw_surname_trgm ON ustc_distinct_works USING gin (author_surname gin_trgm_ops);
+    `);
 
     await client.query(`
       DROP MATERIALIZED VIEW IF EXISTS translation_census_matches CASCADE;
@@ -236,19 +242,27 @@ async function buildCensusView() {
         c.pub_year AS translation_year,
         c.source AS catalog_source,
         c.completeness,
-        -- Match quality score
+        similarity(w.author_surname, c.surname) AS surname_score,
+        -- Match quality score (best of title matches)
         GREATEST(
-          similarity(w.english_title, c.eng_title_norm),
+          similarity(lower(w.english_title), c.eng_title_norm),
           CASE WHEN c.work_norm != '' THEN similarity(w.work_key, c.work_norm) ELSE 0 END,
           CASE WHEN c.orig_title_norm != '' THEN similarity(w.work_key, c.orig_title_norm) ELSE 0 END
         ) AS match_score
       FROM ustc_distinct_works w
       JOIN catalog_normalized c
-        ON c.surname = w.author_surname
+        ON (
+          -- Surname match: exact, prefix, or trigram similar
+          c.surname = w.author_surname
+          OR w.author_surname LIKE c.surname || '%'
+          OR c.surname LIKE w.author_surname || '%'
+          OR similarity(w.author_surname, c.surname) > 0.4
+        )
         AND (
-          similarity(lower(w.english_title), c.eng_title_norm) > 0.25
-          OR (c.work_norm != '' AND similarity(w.work_key, c.work_norm) > 0.3)
-          OR (c.orig_title_norm != '' AND similarity(w.work_key, c.orig_title_norm) > 0.3)
+          -- Title match: at least one title field is similar
+          similarity(lower(w.english_title), c.eng_title_norm) > 0.2
+          OR (c.work_norm != '' AND similarity(w.work_key, c.work_norm) > 0.25)
+          OR (c.orig_title_norm != '' AND similarity(w.work_key, c.orig_title_norm) > 0.25)
         )
       ORDER BY w.author_surname, w.work_key, match_score DESC;
     `);
