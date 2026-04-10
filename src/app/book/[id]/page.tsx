@@ -5,6 +5,7 @@ import { notFound } from 'next/navigation';
 import Link from 'next/link';
 import { Book, Page, TranslationEdition } from '@/lib/types';
 import { findBookByIdOrSlug } from '@/lib/book-lookup';
+import { getBookDetail } from '@/lib/books-catalog';
 import { Calendar, Globe, FileText, BookText, BookMarked, Images } from 'lucide-react';
 import ArtworkInfo from '@/components/artwork/ArtworkInfo';
 import SearchPanel from '@/components/search/SearchPanel';
@@ -58,14 +59,37 @@ interface PageProps {
 }
 
 // Cached book lookup — deduplicates between generateMetadata and BookInfo
-// within a single server render. Uses the broader projection from getBook
-// so the result is reusable by both code paths.
-const getCachedBookLookup = cache(async (id: string) => {
+// within a single server render.
+//
+// Tries Supabase first (<50ms) for the book shell, then falls back to Atlas.
+// When Supabase succeeds, getBook() can start ALL Atlas queries in parallel
+// (pages, gallery, collections, full book refetch) instead of waiting for the
+// book lookup before starting page queries.
+const getCachedBookLookup = cache(async (id: string): Promise<{
+  book: Record<string, unknown>;
+  matchedBySlug: boolean;
+  fromCatalog: boolean;
+} | null> => {
+  // Try Supabase first — instant lookup from the books_catalog mirror
+  try {
+    const catalogResult = await getBookDetail(id);
+    if (catalogResult) {
+      return {
+        book: catalogResult.book as unknown as Record<string, unknown>,
+        matchedBySlug: catalogResult.matchedBySlug,
+        fromCatalog: true,
+      };
+    }
+  } catch {
+    // Supabase down — fall through to Atlas
+  }
+
+  // Fall back to Atlas (slower but has everything)
   const db = await Promise.race([
     getDb(),
     new Promise<never>((_, reject) => setTimeout(() => reject(new Error('DB timeout')), 15000)),
   ]);
-  return findBookByIdOrSlug(db, id, {
+  const result = await findBookByIdOrSlug(db, id, {
     chapters: 0,
     reading_sections: 0,
     pipeline: 0,
@@ -77,6 +101,8 @@ const getCachedBookLookup = cache(async (id: string) => {
     'index.concepts': 0,
     'index.keyTerms': 0,
   });
+  if (!result) return null;
+  return { book: result.book as Record<string, unknown>, matchedBySlug: result.matchedBySlug, fromCatalog: false };
 });
 
 // Lightweight book fetch for metadata — reuses cached lookup
@@ -180,21 +206,40 @@ interface BookCollectionPreview { slug: string; name: string; subtitle?: string;
 
 async function getBook(id: string): Promise<{ book: Book; pages: Page[]; totalBooks: number; galleryImages: GalleryImagePreview[]; galleryImageCount: number; bookCollections: BookCollectionPreview[]; translatedExcerpt: string | null; excerptPageNumber: number | null; matchedBySlug: boolean } | null> {
   // Reuse the cached book lookup (shared with generateMetadata — saves a full DB round trip)
+  // When Supabase serves the lookup (<50ms), we get the bookId instantly and can start
+  // ALL Atlas queries in parallel — including a full book refetch for fields not in the catalog.
   const [result, db] = await Promise.all([
     getCachedBookLookup(id),
     getDb(),
   ]);
 
   if (!result) return null;
-  const { book, matchedBySlug } = result;
+  const { book: quickBook, matchedBySlug, fromCatalog } = result;
 
   // Use the book's id field, or fall back to _id string
-  const bookId = book.id || book._id?.toString();
+  const bookId = (quickBook.id || quickBook._id?.toString()) as string;
 
-  // Inclusion projection — only fetch fields the book detail UI actually uses
-  // Status dots need .updated_at; image count needs array length via .type
+  // When the lookup came from Supabase catalog, we need to fetch the full book from Atlas
+  // for fields not in the catalog (editions, translation_verification, index, etc.).
+  // This runs in parallel with pages/gallery/collections — no sequential bottleneck.
+  const fullBookPromise = fromCatalog
+    ? findBookByIdOrSlug(db, bookId, {
+        chapters: 0,
+        reading_sections: 0,
+        pipeline: 0,
+        pipeline_auto: 0,
+        split_check: 0,
+        'index.sectionSummaries': 0,
+        'index.people': 0,
+        'index.places': 0,
+        'index.concepts': 0,
+        'index.keyTerms': 0,
+      }).catch(() => null)
+    : Promise.resolve(null); // Already have full book from Atlas
+
   // All queries have maxTimeMS to fail fast during DB degradation
-  const [pagesRaw, totalBooks, galleryImagesRaw, galleryImageCount, bookCollectionsRaw, excerptPageRaw] = await Promise.all([
+  const [fullBookResult, pagesRaw, totalBooks, galleryImagesRaw, galleryImageCount, bookCollectionsRaw, excerptPageRaw] = await Promise.all([
+    fullBookPromise,
     // Drop $ne filter — it prevents use of the {book_id,page_number} compound
     // index and forces a collection scan. Filter digitizer-inserts in JS instead.
     db.collection('pages')
@@ -242,10 +287,10 @@ async function getBook(id: string): Promise<{ book: Book; pages: Page[]; totalBo
       )
       .catch(() => 0),
     // Collections this book belongs to
-    book.collections?.length
+    (quickBook.collections as string[] | undefined)?.length
       ? db.collection('collections')
           .find(
-            { slug: { $in: book.collections }, visible: true },
+            { slug: { $in: quickBook.collections as string[] }, visible: true },
             { projection: { _id: 0, slug: 1, name: 1, subtitle: 1, color: 1, book_count: 1, featured_images: 1 }, maxTimeMS: 5000 },
           )
           .sort({ order: 1 })
@@ -260,6 +305,10 @@ async function getBook(id: string): Promise<{ book: Book; pages: Page[]; totalBo
       )
       .catch(() => null),
   ]);
+
+  // Use the full Atlas book when available (has editions, translation_verification, etc.)
+  // Fall back to the catalog book (Supabase) if Atlas fetch failed
+  const book = fullBookResult?.book ?? quickBook;
 
   // Fetch full index data from dedicated collection (keeps book docs small)
   const bookIndexDoc = await db.collection('book_indexes').findOne(

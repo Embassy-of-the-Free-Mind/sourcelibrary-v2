@@ -32,6 +32,17 @@ const BATCH_SIZE = 200;
 
 const supabase = createClient(SUPABASE_URL, SUPABASE_SERVICE_KEY, { auth: { persistSession: false } });
 
+function extractSummaryText(book) {
+  // Priority: index.bookSummary.brief > reading_summary.overview > summary.data
+  const indexBrief = book.index?.bookSummary?.brief;
+  if (indexBrief) return indexBrief;
+  const readingOverview = book.reading_summary?.overview;
+  if (readingOverview) return readingOverview;
+  if (typeof book.summary === 'string') return book.summary;
+  if (book.summary?.data) return book.summary.data;
+  return null;
+}
+
 function transformBook(book) {
   return {
     id: book.id,
@@ -62,7 +73,26 @@ function transformBook(book) {
     collection_relevance: book.collection_relevance || null,
     image_source_provider: book.image_source?.provider || null,
     contributing_library: book.image_source?.contributing_library || null,
-    // Computed columns (require ALTER TABLE first — see issue #xxx)
+    // Book detail fields (for serving /book/[id] from Supabase)
+    summary_text: extractSummaryText(book),
+    publisher: book.publisher || null,
+    place_published: book.place_published || null,
+    doi: book.doi || null,
+    work_id: book.work_id || null,
+    resource_type: book.resource_type || null,
+    source_url: book.image_source?.source_url || null,
+    provider_name: book.image_source?.provider_name || null,
+    image_attribution: book.image_source?.attribution || null,
+    image_license: book.image_source?.license || null,
+    cover_image: book.cover_image || null,
+    dedication: book.dedication || null,
+    subtitle: book.subtitle || null,
+    source_work_dates: Array.isArray(book.source_work_dates) ? book.source_work_dates : null,
+    ft_disposition: book.translation_verification?.disposition || null,
+    ft_reasoning: book.translation_verification?.reasoning || null,
+    description: book.ai_metadata?.description || book.description || null,
+    subject_keywords: Array.isArray(book.subject_keywords) ? book.subject_keywords : null,
+    // Computed columns
     translation_pct: (() => {
       const denom = (book.pages_count || 0) - (book.pages_blank || 0);
       return denom > 0 ? Math.round(((book.pages_translated || 0) / denom) * 100) : 0;
@@ -115,8 +145,19 @@ const projection = {
   categories: 1, collections: 1, collection_relevance: 1,
   'image_source.provider': 1,
   'image_source.contributing_library': 1,
+  'image_source.source_url': 1,
+  'image_source.provider_name': 1,
+  'image_source.attribution': 1,
+  'image_source.license': 1,
   'pipeline_auto.status': 1,
   needs_splitting: 1,
+  // Book detail fields
+  summary: 1, 'index.bookSummary.brief': 1, 'reading_summary.overview': 1,
+  publisher: 1, place_published: 1, doi: 1, work_id: 1,
+  resource_type: 1, cover_image: 1, dedication: 1, subtitle: 1,
+  source_work_dates: 1,
+  'translation_verification.disposition': 1, 'translation_verification.reasoning': 1,
+  'ai_metadata.description': 1, description: 1, subject_keywords: 1,
 };
 
 const cursor = db.collection('books')
