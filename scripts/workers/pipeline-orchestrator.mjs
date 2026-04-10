@@ -3108,15 +3108,25 @@ Rules:
             } else {
               // All batch_jobs have been collected ('saved'), so remaining pages genuinely failed
               const loopCount = (book.pipeline_auto?.ocr_loop_count || 0) + 1;
-              if (loopCount > MAX_RETRIES) {
+              const totalPages = await db.collection('pages').countDocuments({ book_id: book.id });
+              const failRate = totalPages > 0 ? remainingOcr / totalPages : 1;
+
+              if (loopCount > MAX_RETRIES || (remainingOcr <= 20 && failRate < 0.05)) {
+                // Accept small gaps (<5% or ≤20 pages) — retrying burns batch quota for pages
+                // that likely fail for structural reasons (RECITATION, bad scan, blank)
                 if (!DRY_RUN) {
-                  await setPipelineStatus(db, book.id, 'needs_attention', {
-                    error: `OCR looped ${loopCount} times with ${remainingOcr} pages still un-OCR'd`,
-                    ocr_loop_count: loopCount,
-                  });
+                  if (loopCount > MAX_RETRIES) {
+                    await setPipelineStatus(db, book.id, 'needs_attention', {
+                      error: `OCR looped ${loopCount} times with ${remainingOcr} pages still un-OCR'd`,
+                      ocr_loop_count: loopCount,
+                    });
+                    log.needs_attention++;
+                    log.errors.push(`OCR circuit breaker ${book.id}: looped ${loopCount}x, ${remainingOcr} pages remaining`);
+                  } else {
+                    await setPipelineStatus(db, book.id, 'ocr_complete', { ocr_loop_count: loopCount });
+                    console.log(`  OCR accepting ${remainingOcr} gaps (${(failRate*100).toFixed(1)}%): ${book.title}`);
+                  }
                 }
-                log.needs_attention++;
-                log.errors.push(`OCR circuit breaker ${book.id}: looped ${loopCount}x, ${remainingOcr} pages remaining`);
               } else {
                 if (!DRY_RUN) {
                   await setPipelineStatus(db, book.id, 'archive_complete', { ocr_loop_count: loopCount });
