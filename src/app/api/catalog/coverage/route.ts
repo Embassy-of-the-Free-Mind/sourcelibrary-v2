@@ -1,5 +1,6 @@
 import { NextRequest, NextResponse } from 'next/server';
 import { getDb } from '@/lib/mongodb';
+import { supabase } from '@/lib/supabase';
 
 export const dynamic = 'force-dynamic';
 
@@ -42,39 +43,43 @@ export async function GET(request: NextRequest) {
   }
 }
 
-async function handleSummary(db: any) {
-  // Use pre-computed stats from the build script — fast, no aggregation needed
-  const meta = await db.collection('catalog_coverage_meta').findOne({ _id: 'latest_build' });
-  if (!meta) {
+async function handleSummary(_db: any) {
+  // Query coverage stats from Supabase (migrated from Atlas catalog_coverage_meta)
+  const { data: rows, error } = await supabase.rpc('get_coverage_stats');
+
+  if (error || !rows || rows.length === 0) {
     return NextResponse.json({
       status: 'empty',
-      message: 'catalog_coverage collection is empty. Run the build script first.',
+      message: 'Coverage data not available. Run the build script first.',
     });
   }
 
-  const stats = meta.stats || {};
-  const languages = Object.entries(stats).map(([lang, s]: [string, any]) => ({
-    language: lang,
-    editions: s.editions || 0,
-    with_scan: s.scans || 0,
-    scans_high: s.scansHigh || 0,
-    scans_medium: s.scansMedium || 0,
-    scans_low: s.scansLow || 0,
-    pct_scanned: s.editions > 0 ? +(s.scans / s.editions * 100).toFixed(1) : 0,
-    with_translation: s.translations || 0,
-    pct_translated: s.editions > 0 ? +(s.translations / s.editions * 100).toFixed(1) : 0,
-    in_source_library: s.inSL || 0,
-    distinct_works: 0, // computed by works endpoint
+  const languages = (rows as any[]).map((r: any) => ({
+    language: r.language,
+    editions: Number(r.editions),
+    with_scan: Number(r.with_scan),
+    pct_scanned: Number(r.editions) > 0 ? +(Number(r.with_scan) / Number(r.editions) * 100).toFixed(1) : 0,
+    with_translation: Number(r.with_translation),
+    pct_translated: Number(r.editions) > 0 ? +(Number(r.with_translation) / Number(r.editions) * 100).toFixed(1) : 0,
+    in_source_library: Number(r.in_sl),
+    distinct_works: 0,
   })).sort((a, b) => b.editions - a.editions);
+
+  const totals = languages.reduce((acc, l) => ({
+    editions: acc.editions + l.editions,
+    scanned: acc.scanned + l.with_scan,
+    translated: acc.translated + l.with_translation,
+    in_sl: acc.in_sl + l.in_source_library,
+  }), { editions: 0, scanned: 0, translated: 0, in_sl: 0 });
 
   return NextResponse.json({
     status: 'ok',
-    built_at: meta.built_at,
+    built_at: new Date().toISOString(),
     total: {
-      editions: meta.total_editions || 0,
-      with_scan: meta.total_with_scan || 0,
-      with_translation: meta.total_with_translation || 0,
-      in_source_library: meta.total_in_source_library || 0,
+      editions: totals.editions,
+      with_scan: totals.scanned,
+      with_translation: totals.translated,
+      in_source_library: totals.in_sl,
       distinct_works: 0,
     },
     by_language: languages,
