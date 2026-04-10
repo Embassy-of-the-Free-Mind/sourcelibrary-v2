@@ -239,6 +239,8 @@ async function main() {
   let copied = 0;
   let skipped = 0;
   errors = 0; // reset global
+  const CONCURRENCY = parseInt(args.find(a => a.startsWith('--concurrency='))?.split('=')[1] || '10', 10);
+  let inflight = [];
   let batch = [];
   const startTime = Date.now();
 
@@ -251,20 +253,34 @@ async function main() {
     batch.push(flattenPage(doc));
 
     if (batch.length >= BATCH_SIZE) {
-      copied += await upsertWithRetry(batch);
+      const currentBatch = batch;
       batch = [];
+      inflight.push(upsertWithRetry(currentBatch));
 
-      // Progress
-      const elapsed = ((Date.now() - startTime) / 1000).toFixed(0);
-      const rate = (copied / (elapsed || 1)).toFixed(0);
-      const pct = ((copied / total) * 100).toFixed(1);
-      process.stdout.write(`\r  ${copied.toLocaleString()} / ${total.toLocaleString()} (${pct}%) — ${rate} rows/s — ${errors} errors`);
+      // When we hit concurrency limit, wait for all to complete
+      if (inflight.length >= CONCURRENCY) {
+        const results = await Promise.all(inflight);
+        copied += results.reduce((a, b) => a + b, 0);
+        inflight = [];
 
-      if (LIMIT && copied >= LIMIT) {
-        console.log(`\nReached limit of ${LIMIT}`);
-        break;
+        // Progress
+        const elapsed = ((Date.now() - startTime) / 1000).toFixed(0);
+        const rate = (copied / (elapsed || 1)).toFixed(0);
+        const pct = ((copied / total) * 100).toFixed(1);
+        process.stdout.write(`\r  ${copied.toLocaleString()} / ${total.toLocaleString()} (${pct}%) — ${rate} rows/s — ${errors} errors`);
+
+        if (LIMIT && copied >= LIMIT) {
+          console.log(`\nReached limit of ${LIMIT}`);
+          break;
+        }
       }
     }
+  }
+
+  // Drain inflight
+  if (inflight.length > 0) {
+    const results = await Promise.all(inflight);
+    copied += results.reduce((a, b) => a + b, 0);
   }
 
   // Flush remaining
