@@ -16,30 +16,59 @@ Analyze this photograph and extract identifying information. The image may be:
 - A book cover or spine
 - A detail/close-up of any of the above
 
+CRITICAL: Read ALL text in the image FIRST, before making any attributions. Inscriptions on prints and engravings contain authoritative information about who made the work:
+- "invenit" / "inv." / "pinxit" = the designer/painter (the creative author)
+- "fecit" / "fe." / "sculpsit" / "sc." / "incidit" / "del." = the engraver
+- "excudit" / "exc." / "excud." = the publisher/printer
+- Signatures, monograms, and dates are also authoritative
+These inscriptions OVERRIDE any guess based on visual style. Never attribute a work to an artist based on style alone when inscriptions name specific people.
+
 Return JSON with these fields:
 {
-  "artist": "Artist name if identifiable (from style, signature, or monogram). Null if unknown.",
+  "artist": "Primary creator. Use inscriptions first: 'invenit' names the designer, 'fecit'/'sculpsit' names the engraver. Format: 'Engraver (after Designer)' when both are named. Only fall back to style-based guesses if no inscriptions name the creator. Null if truly unknown.",
   "title": "Best guess at the title of this specific work. Null if unknown.",
   "inscriptions": "ALL visible text — transcribe every inscription, caption, verse, label, publisher line, plate number. Preserve line breaks. Null if none.",
-  "subject": "Brief description of what is depicted (e.g., 'Saint John with eagle', 'alchemical laboratory', 'title page of a Latin treatise').",
+  "publisher": "Person or firm named with 'excudit'/'exc.' in inscriptions. Null if none.",
+  "subject": "Brief description of what is depicted (e.g., 'Saint John with eagle', 'alchemical laboratory', 'Allegory of Arithmetic'). Use the inscriptions and any Latin/vernacular text to inform the subject — do not guess the iconography when the text tells you.",
   "medium": "print | painting | drawing | manuscript | book | photograph | unknown",
   "period_guess": "Approximate century or date range (e.g., '16th century', 'c. 1580').",
-  "search_terms": ["Array of 3-5 key search terms to find this work in a library catalog — include artist surname, key figures, distinctive words from inscriptions"]
+  "confidence": "high | medium | low — high if inscriptions name the creator or the work is well-known; medium if attribution is from style/iconography; low if guessing",
+  "confidence_reason": "One sentence explaining what evidence supports your identification (e.g., 'Inscriptions name Drebbel as engraver and Klobius as designer' or 'Attributed by style — no inscriptions visible').",
+  "alternative_identifications": [
+    {
+      "artist": "Alternative artist attribution if plausible",
+      "title": "Alternative title",
+      "reasoning": "Why this is a possibility"
+    }
+  ],
+  "search_terms": ["Array of 3-5 key search terms to find this work in a library catalog — include all names from inscriptions (invenit, fecit, excudit), key figures, distinctive words from inscriptions"]
 }
 
 RULES:
-- Be SPECIFIC. Identify the actual scene, figures, and any text.
-- Transcribe ALL visible text, even partially legible text (use [?] for uncertain characters).
-- If you recognize the artist's style or monogram, name them.
+- Read and transcribe ALL visible text FIRST, even partially legible text (use [?] for uncertain characters).
+- Use inscriptions as the primary evidence for attribution — they are more reliable than visual style.
+- Be SPECIFIC about the subject. Identify the actual scene, figures, and any allegorical meaning.
+- Include ALL names found in inscriptions in search_terms, not just the artist.
+- If there are multiple plausible identifications, list alternatives ranked by likelihood.
 - Return valid JSON only. No markdown, no commentary.`;
+
+interface AlternativeIdentification {
+  artist?: string | null;
+  title?: string | null;
+  reasoning?: string;
+}
 
 interface IdentifyResult {
   artist?: string | null;
   title?: string | null;
   inscriptions?: string | null;
+  publisher?: string | null;
   subject?: string | null;
   medium?: string;
   period_guess?: string;
+  confidence?: 'high' | 'medium' | 'low';
+  confidence_reason?: string;
+  alternative_identifications?: AlternativeIdentification[];
   search_terms?: string[];
 }
 

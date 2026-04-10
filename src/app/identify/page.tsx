@@ -21,13 +21,23 @@ interface Match {
   page_score?: number;
 }
 
+interface AlternativeIdentification {
+  artist?: string | null;
+  title?: string | null;
+  reasoning?: string;
+}
+
 interface Identification {
   artist?: string | null;
   title?: string | null;
   inscriptions?: string | null;
+  publisher?: string | null;
   subject?: string | null;
   medium?: string;
   period_guess?: string;
+  confidence?: 'high' | 'medium' | 'low';
+  confidence_reason?: string;
+  alternative_identifications?: AlternativeIdentification[];
   search_terms?: string[];
 }
 
@@ -221,7 +231,23 @@ export default function IdentifyPage() {
           <div className="space-y-6">
             {/* What Gemini saw */}
             <div className="card p-5 space-y-3">
-              <h2 className="text-lg font-display font-semibold text-primary">Analysis</h2>
+              <div className="flex items-center justify-between">
+                <h2 className="text-lg font-display font-semibold text-primary">Analysis</h2>
+                {result.identification.confidence && (
+                  <span className={`text-xs font-medium px-2 py-0.5 rounded-full ${
+                    result.identification.confidence === 'high'
+                      ? 'bg-green-100 text-green-800'
+                      : result.identification.confidence === 'medium'
+                        ? 'bg-amber-100 text-amber-800'
+                        : 'bg-stone-100 text-stone-600'
+                  }`}>
+                    {result.identification.confidence} confidence
+                  </span>
+                )}
+              </div>
+              {result.identification.confidence_reason && (
+                <p className="text-xs text-muted italic">{result.identification.confidence_reason}</p>
+              )}
               <dl className="text-sm space-y-2">
                 {result.identification.artist && (
                   <div>
@@ -255,6 +281,12 @@ export default function IdentifyPage() {
                     )}
                   </div>
                 )}
+                {result.identification.publisher && (
+                  <div>
+                    <dt className="text-muted text-xs uppercase tracking-wider">Publisher</dt>
+                    <dd className="text-secondary">{result.identification.publisher}</dd>
+                  </div>
+                )}
                 {result.identification.inscriptions && (
                   <div>
                     <dt className="text-muted text-xs uppercase tracking-wider">Inscriptions</dt>
@@ -264,6 +296,22 @@ export default function IdentifyPage() {
                   </div>
                 )}
               </dl>
+
+              {/* Alternative identifications */}
+              {result.identification.alternative_identifications && result.identification.alternative_identifications.length > 0 && (
+                <div className="pt-3 border-t border-border-light">
+                  <h3 className="text-xs uppercase tracking-wider text-muted mb-2">Other possibilities</h3>
+                  <div className="space-y-2">
+                    {result.identification.alternative_identifications.map((alt, i) => (
+                      <div key={i} className="text-sm bg-stone-50 rounded-lg p-3">
+                        {alt.artist && <p className="font-medium text-primary">{alt.artist}</p>}
+                        {alt.title && <p className="text-secondary">{alt.title}</p>}
+                        {alt.reasoning && <p className="text-xs text-muted mt-1">{alt.reasoning}</p>}
+                      </div>
+                    ))}
+                  </div>
+                </div>
+              )}
             </div>
 
             {/* Matches */}
