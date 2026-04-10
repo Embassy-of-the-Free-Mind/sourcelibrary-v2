@@ -151,33 +151,29 @@ async function buildCensusView() {
 
     console.log('  Creating translation_census_by_language materialized view...');
 
-    // Step 1: Create distinct works view (if not exists, reuse from previous run)
-    const { rows: existingWorks } = await client.query(
-      "SELECT count(*) FROM information_schema.tables WHERE table_name = 'ustc_distinct_works' AND table_type = 'VIEW'"
-    ).catch(() => ({ rows: [{ count: '0' }] }));
+    // Step 1: Rebuild distinct works view (always rebuild to pick up fixes)
+    const forceRebuild = process.argv.includes('--force') || process.argv.includes('--rebuild');
 
-    // Check if it's a materialized view instead
     const { rows: matViews } = await client.query(
       "SELECT count(*) FROM pg_matviews WHERE matviewname = 'ustc_distinct_works'"
     ).catch(() => ({ rows: [{ count: '0' }] }));
 
-    if (parseInt(matViews[0]?.count || '0') === 0) {
+    if (parseInt(matViews[0]?.count || '0') === 0 || forceRebuild) {
       console.log('  Building ustc_distinct_works (this takes a few minutes)...');
       await client.query('DROP MATERIALIZED VIEW IF EXISTS translation_census_by_language CASCADE');
-      await client.query('DROP MATERIALIZED VIEW IF EXISTS translation_census_matches CASCADE');
+      await client.query('DROP TABLE IF EXISTS translation_census_matches CASCADE');
       await client.query('DROP MATERIALIZED VIEW IF EXISTS ustc_distinct_works CASCADE');
 
       await client.query(`
         CREATE MATERIALIZED VIEW ustc_distinct_works AS
         SELECT
           MIN(e.id) AS sample_id,
-          lower(regexp_replace(
+          regexp_replace(lower(
             CASE WHEN position(',' IN ue.author_1) > 0
                  THEN left(ue.author_1, position(',' IN ue.author_1) - 1)
                  ELSE split_part(ue.author_1, ' ', 1)
-            END,
-            '[^a-z ]', '', 'g'
-          )) AS author_surname,
+            END
+          ), '[^a-z ]', '', 'g') AS author_surname,
           lower(regexp_replace(e.std_title, '[^a-z0-9 ]', '', 'g')) AS work_key,
           e.detected_language AS language,
           MIN(e.english_title) AS english_title,
@@ -270,9 +266,9 @@ async function buildCensusView() {
           WHERE author_surname_lower = $1
             AND english_title IS NOT NULL AND english_title != ''
         ) c
-        WHERE similarity(lower(w.english_title), c.eng_norm) > 0.2
-           OR (c.work_norm != '' AND similarity(w.work_key, c.work_norm) > 0.25)
-           OR (c.orig_norm != '' AND similarity(w.work_key, c.orig_norm) > 0.25)
+        WHERE similarity(lower(w.english_title), c.eng_norm) > 0.3
+           OR (c.work_norm != '' AND similarity(w.work_key, c.work_norm) > 0.3)
+           OR (c.orig_norm != '' AND similarity(w.work_key, c.orig_norm) > 0.3)
         ORDER BY w.author_surname, w.work_key, match_score DESC
       `, [surname]);
 
@@ -363,45 +359,63 @@ async function createCensusRPC() {
       $$;
     `);
 
-    // Also: a search function for the census page
+    // Search function — searches matches table (17K, fast) first,
+    // then enrichments for untranslated works
     await client.query(`
       CREATE OR REPLACE FUNCTION search_translation_census(query text, max_results int DEFAULT 30)
       RETURNS json
       LANGUAGE sql
       STABLE
       AS $$
-        WITH search_results AS (
+        WITH
+        -- First: search translated works (small table, fast)
+        translated AS (
           SELECT
-            w.author_surname,
-            w.work_key,
-            w.language,
-            w.english_title AS ustc_english_title,
-            w.std_title,
-            w.author,
-            w.year,
-            w.edition_count,
-            m.catalog_english_title,
-            m.translator,
-            m.translation_year,
-            m.catalog_source,
-            m.match_score,
-            m.completeness,
-            CASE WHEN m.author_surname IS NOT NULL THEN 'translated' ELSE 'untranslated' END AS status
-          FROM ustc_distinct_works w
-          LEFT JOIN translation_census_matches m
-            ON m.author_surname = w.author_surname AND m.work_key = w.work_key
-          WHERE w.author_surname % lower(query)
-             OR lower(w.english_title) ILIKE '%' || lower(query) || '%'
-             OR lower(w.std_title) ILIKE '%' || lower(query) || '%'
-          ORDER BY
-            CASE WHEN m.author_surname IS NOT NULL THEN 0 ELSE 1 END,
-            similarity(w.author_surname, lower(query)) DESC,
-            w.edition_count DESC
+            author_surname, work_key, language,
+            ustc_english_title, ustc_std_title AS std_title,
+            author, year, edition_count,
+            catalog_english_title, translator, translation_year,
+            catalog_source, match_score, completeness,
+            'translated'::text AS status
+          FROM translation_census_matches
+          WHERE author_surname ILIKE '%' || lower(query) || '%'
+             OR catalog_english_title ILIKE '%' || lower(query) || '%'
+             OR ustc_std_title ILIKE '%' || lower(query) || '%'
+          ORDER BY match_score DESC, edition_count DESC
           LIMIT max_results
+        ),
+        -- Then: search enrichments for untranslated (use ILIKE on indexed fields)
+        untranslated AS (
+          SELECT
+            '' AS author_surname, '' AS work_key,
+            e.detected_language AS language,
+            e.english_title AS ustc_english_title,
+            e.std_title,
+            ue.author_1 AS author,
+            ue.year, 1 AS edition_count,
+            NULL::text AS catalog_english_title, NULL::text AS translator,
+            NULL::text AS translation_year, NULL::text AS catalog_source,
+            NULL::real AS match_score, NULL::text AS completeness,
+            'untranslated'::text AS status
+          FROM ustc_enrichments e
+          JOIN ustc_editions ue ON ue.id = e.id
+          WHERE (e.english_title ILIKE '%' || query || '%'
+                 OR e.original_author ILIKE '%' || query || '%')
+            AND ue.year BETWEEN 1450 AND 1700
+            AND NOT EXISTS (
+              SELECT 1 FROM translated t
+              WHERE t.std_title = e.std_title
+            )
+          LIMIT (max_results - (SELECT count(*) FROM translated))
+        ),
+        combined AS (
+          SELECT * FROM translated
+          UNION ALL
+          SELECT * FROM untranslated
         )
         SELECT json_build_object(
-          'results', (SELECT coalesce(json_agg(row_to_json(r)), '[]'::json) FROM search_results r),
-          'total', (SELECT count(*) FROM search_results)
+          'results', (SELECT coalesce(json_agg(row_to_json(r)), '[]'::json) FROM combined r),
+          'total', (SELECT count(*) FROM combined)
         );
       $$;
     `);
