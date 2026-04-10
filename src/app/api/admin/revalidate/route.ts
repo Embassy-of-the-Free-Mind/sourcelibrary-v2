@@ -1,6 +1,7 @@
 import { NextRequest, NextResponse } from 'next/server';
 import { revalidatePath } from 'next/cache';
 import { getDb } from '@/lib/mongodb';
+import { purgeCloudflareUrls } from '@/lib/cloudflare-cache';
 
 export const dynamic = 'force-dynamic';
 export const maxDuration = 60;
@@ -80,6 +81,11 @@ export async function POST(request: NextRequest) {
         revalidated.push(path);
       }
     } catch { /* ignore */ }
+  }
+
+  // Purge Cloudflare edge cache for all revalidated paths
+  if (revalidated.length > 0) {
+    await purgeCloudflareUrls(revalidated);
   }
 
   return NextResponse.json({
