@@ -146,131 +146,178 @@ async function syncCatalogs(db) {
 async function buildCensusView() {
   const client = await pool.connect();
   try {
-    // Drop old view if exists
-    await client.query('DROP MATERIALIZED VIEW IF EXISTS translation_census_by_language CASCADE');
-
-    // The core matching logic:
-    // For each USTC enrichment, check if there's a translation_catalog entry where:
-    //   - Author surname matches (exact or very close)
-    //   - AND either:
-    //     a. english_title is similar (trigram similarity > 0.3), OR
-    //     b. canonical_work matches the std_title (for original-language matching), OR
-    //     c. original_title matches the std_title
-    //
-    // We do this as a lateral join to avoid N×M explosion, grouped by language.
-    //
-    // Key insight: we match at the WORK level by deduplicating on
-    // (author_surname, normalized english_title) — so multiple editions
-    // of the same work count once.
+    // Set generous timeout for heavy queries
+    await client.query("SET statement_timeout = '600s'");
 
     console.log('  Creating translation_census_by_language materialized view...');
 
-    // First: create a helper view of distinct works from USTC enrichments
-    await client.query(`
-      DROP MATERIALIZED VIEW IF EXISTS ustc_distinct_works CASCADE;
+    // Step 1: Create distinct works view (if not exists, reuse from previous run)
+    const { rows: existingWorks } = await client.query(
+      "SELECT count(*) FROM information_schema.tables WHERE table_name = 'ustc_distinct_works' AND table_type = 'VIEW'"
+    ).catch(() => ({ rows: [{ count: '0' }] }));
 
-      CREATE MATERIALIZED VIEW ustc_distinct_works AS
-      SELECT
-        MIN(e.id) AS sample_id,
-        -- Normalize: lowercase, strip punctuation for grouping
-        lower(regexp_replace(
-          CASE WHEN position(',' IN ue.author_1) > 0
-               THEN left(ue.author_1, position(',' IN ue.author_1) - 1)
-               ELSE split_part(ue.author_1, ' ', 1)
-          END,
-          '[^a-z ]', '', 'g'
-        )) AS author_surname,
-        lower(regexp_replace(e.std_title, '[^a-z0-9 ]', '', 'g')) AS work_key,
-        e.detected_language AS language,
-        MIN(e.english_title) AS english_title,
-        MIN(e.std_title) AS std_title,
-        MIN(ue.author_1) AS author,
-        MIN(ue.year) AS year,
-        count(*) AS edition_count
-      FROM ustc_enrichments e
-      JOIN ustc_editions ue ON ue.id = e.id
-      WHERE e.std_title IS NOT NULL
-        AND e.std_title != ''
-        AND ue.year BETWEEN 1450 AND 1700
-      GROUP BY author_surname, work_key, e.detected_language;
-    `);
+    // Check if it's a materialized view instead
+    const { rows: matViews } = await client.query(
+      "SELECT count(*) FROM pg_matviews WHERE matviewname = 'ustc_distinct_works'"
+    ).catch(() => ({ rows: [{ count: '0' }] }));
+
+    if (parseInt(matViews[0]?.count || '0') === 0) {
+      console.log('  Building ustc_distinct_works (this takes a few minutes)...');
+      await client.query('DROP MATERIALIZED VIEW IF EXISTS translation_census_by_language CASCADE');
+      await client.query('DROP MATERIALIZED VIEW IF EXISTS translation_census_matches CASCADE');
+      await client.query('DROP MATERIALIZED VIEW IF EXISTS ustc_distinct_works CASCADE');
+
+      await client.query(`
+        CREATE MATERIALIZED VIEW ustc_distinct_works AS
+        SELECT
+          MIN(e.id) AS sample_id,
+          lower(regexp_replace(
+            CASE WHEN position(',' IN ue.author_1) > 0
+                 THEN left(ue.author_1, position(',' IN ue.author_1) - 1)
+                 ELSE split_part(ue.author_1, ' ', 1)
+            END,
+            '[^a-z ]', '', 'g'
+          )) AS author_surname,
+          lower(regexp_replace(e.std_title, '[^a-z0-9 ]', '', 'g')) AS work_key,
+          e.detected_language AS language,
+          MIN(e.english_title) AS english_title,
+          MIN(e.std_title) AS std_title,
+          MIN(ue.author_1) AS author,
+          MIN(ue.year) AS year,
+          count(*) AS edition_count
+        FROM ustc_enrichments e
+        JOIN ustc_editions ue ON ue.id = e.id
+        WHERE e.std_title IS NOT NULL
+          AND e.std_title != ''
+          AND ue.year BETWEEN 1450 AND 1700
+        GROUP BY author_surname, work_key, e.detected_language;
+      `);
+
+      await client.query(`
+        CREATE INDEX IF NOT EXISTS idx_udw_surname ON ustc_distinct_works (author_surname);
+        CREATE INDEX IF NOT EXISTS idx_udw_lang ON ustc_distinct_works (language);
+        CREATE INDEX IF NOT EXISTS idx_udw_surname_trgm ON ustc_distinct_works USING gin (author_surname gin_trgm_ops);
+      `);
+    }
 
     const { rows: [{ count: workCount }] } = await client.query('SELECT count(*) FROM ustc_distinct_works');
     console.log(`  Distinct works: ${parseInt(workCount).toLocaleString()}`);
 
-    // Now: match works against translation catalogs
-    // Surname matching uses trigram similarity (not exact) because USTC uses
-    // Latin forms (Ficinus) while catalogs use English (Ficino).
-    // Title matching uses trigram similarity on english_title, canonical_work,
-    // and original_title.
+    // Step 2: Build matches table iteratively (avoids cross-join timeout)
+    // Process one catalog surname at a time
+    console.log('  Building matches table (iterative by catalog surname)...');
 
-    // First, create a GIN index on the distinct works author_surname for trigram
+    await client.query('DROP TABLE IF EXISTS translation_census_matches CASCADE');
     await client.query(`
-      CREATE INDEX IF NOT EXISTS idx_udw_surname_trgm ON ustc_distinct_works USING gin (author_surname gin_trgm_ops);
+      CREATE TABLE translation_census_matches (
+        author_surname text,
+        work_key text,
+        language text,
+        ustc_english_title text,
+        ustc_std_title text,
+        author text,
+        year int,
+        edition_count int,
+        catalog_english_title text,
+        translator text,
+        translation_year text,
+        catalog_source text,
+        completeness text,
+        surname_score real,
+        match_score real
+      );
     `);
 
-    await client.query(`
-      DROP MATERIALIZED VIEW IF EXISTS translation_census_matches CASCADE;
+    // Get distinct catalog surnames
+    const { rows: surnames } = await client.query(`
+      SELECT DISTINCT author_surname_lower AS surname
+      FROM translation_catalogs
+      WHERE author_surname_lower IS NOT NULL AND author_surname_lower != ''
+    `);
+    console.log(`  Processing ${surnames.length} catalog surnames...`);
 
-      CREATE MATERIALIZED VIEW translation_census_matches AS
-      WITH catalog_normalized AS (
-        SELECT
-          id,
-          author_surname_lower AS surname,
-          lower(regexp_replace(english_title, '[^a-z0-9 ]', '', 'g')) AS eng_title_norm,
-          lower(regexp_replace(coalesce(canonical_work, ''), '[^a-z0-9 ]', '', 'g')) AS work_norm,
-          lower(regexp_replace(coalesce(original_title, ''), '[^a-z0-9 ]', '', 'g')) AS orig_title_norm,
-          source,
-          english_title,
-          translator,
-          pub_year,
-          completeness
-        FROM translation_catalogs
-        WHERE english_title IS NOT NULL AND english_title != ''
-      )
-      SELECT DISTINCT ON (w.author_surname, w.work_key)
-        w.author_surname,
-        w.work_key,
-        w.language,
-        w.english_title AS ustc_english_title,
-        w.std_title AS ustc_std_title,
-        w.author,
-        w.year,
-        w.edition_count,
-        c.english_title AS catalog_english_title,
-        c.translator,
-        c.pub_year AS translation_year,
-        c.source AS catalog_source,
-        c.completeness,
-        similarity(w.author_surname, c.surname) AS surname_score,
-        -- Match quality score (best of title matches)
-        GREATEST(
-          similarity(lower(w.english_title), c.eng_title_norm),
-          CASE WHEN c.work_norm != '' THEN similarity(w.work_key, c.work_norm) ELSE 0 END,
-          CASE WHEN c.orig_title_norm != '' THEN similarity(w.work_key, c.orig_title_norm) ELSE 0 END
-        ) AS match_score
-      FROM ustc_distinct_works w
-      JOIN catalog_normalized c
-        ON (
-          -- Surname match: exact, prefix, or trigram similar
-          c.surname = w.author_surname
-          OR w.author_surname LIKE c.surname || '%'
-          OR c.surname LIKE w.author_surname || '%'
-          OR similarity(w.author_surname, c.surname) > 0.4
+    let totalMatches = 0;
+    let processed = 0;
+    for (const { surname } of surnames) {
+      if (!surname || surname.length < 2) continue;
+
+      const { rowCount } = await client.query(`
+        INSERT INTO translation_census_matches
+        SELECT DISTINCT ON (w.author_surname, w.work_key)
+          w.author_surname,
+          w.work_key,
+          w.language,
+          w.english_title AS ustc_english_title,
+          w.std_title AS ustc_std_title,
+          w.author,
+          w.year,
+          w.edition_count,
+          c.english_title AS catalog_english_title,
+          c.translator,
+          c.pub_year AS translation_year,
+          c.source AS catalog_source,
+          c.completeness,
+          similarity(w.author_surname, $1) AS surname_score,
+          GREATEST(
+            similarity(lower(w.english_title), lower(regexp_replace(c.english_title, '[^a-z0-9 ]', '', 'g'))),
+            CASE WHEN c.canonical_work != '' THEN similarity(w.work_key, lower(regexp_replace(c.canonical_work, '[^a-z0-9 ]', '', 'g'))) ELSE 0 END,
+            CASE WHEN c.original_title != '' THEN similarity(w.work_key, lower(regexp_replace(c.original_title, '[^a-z0-9 ]', '', 'g'))) ELSE 0 END
+          ) AS match_score
+        FROM ustc_distinct_works w
+        CROSS JOIN (
+          SELECT * FROM translation_catalogs
+          WHERE author_surname_lower = $1
+            AND english_title IS NOT NULL AND english_title != ''
+        ) c
+        WHERE (
+          w.author_surname = $1
+          OR w.author_surname LIKE $1 || '%'
+          OR $1 LIKE w.author_surname || '%'
+          OR similarity(w.author_surname, $1) > 0.4
         )
         AND (
-          -- Title match: at least one title field is similar
-          similarity(lower(w.english_title), c.eng_title_norm) > 0.2
-          OR (c.work_norm != '' AND similarity(w.work_key, c.work_norm) > 0.25)
-          OR (c.orig_title_norm != '' AND similarity(w.work_key, c.orig_title_norm) > 0.25)
+          similarity(lower(w.english_title), lower(regexp_replace(c.english_title, '[^a-z0-9 ]', '', 'g'))) > 0.2
+          OR (c.canonical_work != '' AND similarity(w.work_key, lower(regexp_replace(c.canonical_work, '[^a-z0-9 ]', '', 'g'))) > 0.25)
+          OR (c.original_title != '' AND similarity(w.work_key, lower(regexp_replace(c.original_title, '[^a-z0-9 ]', '', 'g'))) > 0.25)
         )
-      ORDER BY w.author_surname, w.work_key, match_score DESC;
+        ORDER BY w.author_surname, w.work_key,
+          GREATEST(
+            similarity(lower(w.english_title), lower(regexp_replace(c.english_title, '[^a-z0-9 ]', '', 'g'))),
+            CASE WHEN c.canonical_work != '' THEN similarity(w.work_key, lower(regexp_replace(c.canonical_work, '[^a-z0-9 ]', '', 'g'))) ELSE 0 END,
+            CASE WHEN c.original_title != '' THEN similarity(w.work_key, lower(regexp_replace(c.original_title, '[^a-z0-9 ]', '', 'g'))) ELSE 0 END
+          ) DESC
+      `, [surname]);
+
+      totalMatches += rowCount || 0;
+      processed++;
+      if (processed % 200 === 0) {
+        console.log(`  ${processed}/${surnames.length} surnames, ${totalMatches.toLocaleString()} matches so far`);
+      }
+    }
+
+    console.log(`  Raw matches: ${totalMatches.toLocaleString()}`);
+
+    // Deduplicate: keep best match per (author_surname, work_key)
+    const { rows: [{ count: beforeDedup }] } = await client.query('SELECT count(*) FROM translation_census_matches');
+    await client.query(`
+      DELETE FROM translation_census_matches a
+      USING translation_census_matches b
+      WHERE a.ctid < b.ctid
+        AND a.author_surname = b.author_surname
+        AND a.work_key = b.work_key;
+    `);
+    const { rows: [{ count: afterDedup }] } = await client.query('SELECT count(*) FROM translation_census_matches');
+    console.log(`  After dedup: ${parseInt(afterDedup).toLocaleString()} (was ${parseInt(beforeDedup).toLocaleString()})`);
+
+    // Create indexes
+    await client.query(`
+      CREATE INDEX IF NOT EXISTS idx_census_matches_surname ON translation_census_matches (author_surname);
+      CREATE INDEX IF NOT EXISTS idx_census_matches_lang ON translation_census_matches (language);
+      CREATE INDEX IF NOT EXISTS idx_census_matches_key ON translation_census_matches (author_surname, work_key);
     `);
 
-    const { rows: [{ count: matchCount }] } = await client.query('SELECT count(*) FROM translation_census_matches');
-    console.log(`  Work-level matches: ${parseInt(matchCount).toLocaleString()}`);
-
-    // Finally: the summary view by language
+    // Step 3: Summary view by language
+    await client.query('DROP MATERIALIZED VIEW IF EXISTS translation_census_by_language CASCADE');
     await client.query(`
       CREATE MATERIALIZED VIEW translation_census_by_language AS
       SELECT
@@ -287,18 +334,11 @@ async function buildCensusView() {
         ON m.author_surname = w.author_surname AND m.work_key = w.work_key
       GROUP BY w.language
       ORDER BY total_works DESC;
-    `);
 
-    // Create indexes on materialized views
-    await client.query(`
       CREATE UNIQUE INDEX IF NOT EXISTS idx_census_lang ON translation_census_by_language (language);
-      CREATE INDEX IF NOT EXISTS idx_census_matches_surname ON translation_census_matches (author_surname);
-      CREATE INDEX IF NOT EXISTS idx_census_matches_lang ON translation_census_matches (language);
-      CREATE INDEX IF NOT EXISTS idx_udw_surname ON ustc_distinct_works (author_surname);
-      CREATE INDEX IF NOT EXISTS idx_udw_lang ON ustc_distinct_works (language);
     `);
 
-    console.log('  Materialized views created with indexes');
+    console.log('  Census views created with indexes');
   } finally {
     client.release();
   }
