@@ -1777,6 +1777,217 @@ async function submitImageExtractionBatch(db, book, candidatePages) {
   return { submitted: totalSubmitted, jobName: firstJobName || parentJobId, childCount: childJobIds.length, method };
 }
 
+// Build per-page prompt with book context baked in
+function buildPagePrompt(book) {
+  const contextParts = [];
+  if (book.title) contextParts.push(`Book: "${book.title}"`);
+  if (book.author) contextParts.push(`Author: ${book.author}`);
+  if (book.year) contextParts.push(`Year: ${book.year}`);
+  if (book.language) contextParts.push(`Language: ${book.language}`);
+  if (book.subjects?.length) contextParts.push(`Subjects: ${book.subjects.join(', ')}`);
+  const contextPrefix = contextParts.length > 0
+    ? `BOOK CONTEXT (use this to inform your analysis — identify figures, symbols, and traditions specific to this work):\n${contextParts.join(' | ')}\n\n`
+    : '';
+  return contextPrefix + IMAGE_EXTRACTION_PROMPT;
+}
+
+// Cross-book batch submission: pools pages from multiple books into shared 150-page batches.
+// Each page carries its own book-specific prompt. Reduces batch creation count by ~60%.
+async function submitCrossBookImageBatches(db, bookItems) {
+  // bookItems: [{ book, candidatePages }]
+  // Returns { submitted, batchCount, bookIds }
+
+  // Guard: skip books with active batch_jobs
+  const filteredItems = [];
+  for (const item of bookItems) {
+    const activeBatch = await db.collection('batch_jobs').countDocuments({
+      $or: [
+        { book_id: item.book.id },
+        { book_ids: item.book.id },
+      ],
+      type: 'image_extraction',
+      status: { $in: ['pending', 'processing', 'JOB_STATE_PENDING', 'JOB_STATE_RUNNING'] },
+    });
+    if (activeBatch > 0) {
+      console.log(`    Skipping ${item.book.title}: ${activeBatch} active image extraction batch jobs`);
+      continue;
+    }
+    filteredItems.push(item);
+  }
+
+  if (filteredItems.length === 0) return { submitted: 0, batchCount: 0, bookIds: [] };
+
+  // Download images for all books, building per-page items with book context
+  const allDownloaded = []; // { pageId, image, prompt, bookId }
+  const bookMap = new Map(); // bookId -> book (for logging)
+
+  for (const { book, candidatePages } of filteredItems) {
+    bookMap.set(book.id, book);
+
+    const pages = await db.collection('pages')
+      .find({ id: { $in: candidatePages.map(p => p.id) } })
+      .project({ _id: 0, id: 1, page_number: 1, photo: 1, photo_original: 1, archived_photo: 1, cropped_photo: 1, crop: 1 })
+      .toArray();
+
+    if (pages.length === 0) continue;
+
+    console.log(`    Downloading ${pages.length} images for ${book.title}...`);
+    const downloaded = await downloadImagesParallel(pages, IMAGE_CONCURRENCY);
+    if (downloaded.length === 0) {
+      console.log(`    WARNING: All ${pages.length} image downloads failed for ${book.title}`);
+      continue;
+    }
+    console.log(`    Downloaded ${downloaded.length}/${pages.length} images for ${book.title}`);
+
+    const prompt = buildPagePrompt(book);
+    for (const item of downloaded) {
+      allDownloaded.push({ pageId: item.pageId, image: item.image, prompt, bookId: book.id });
+    }
+  }
+
+  if (allDownloaded.length === 0) return { submitted: 0, batchCount: 0, bookIds: [] };
+
+  console.log(`  Cross-book pool: ${allDownloaded.length} pages from ${bookMap.size} books`);
+
+  // Split into shared batches of IMAGE_EXTRACTION_BATCH_SIZE (150)
+  const parentJobId = nanoid();
+  const childJobIds = [];
+  let totalSubmitted = 0;
+  let batchCount = 0;
+
+  for (let j = 0; j < allDownloaded.length; j += IMAGE_EXTRACTION_BATCH_SIZE) {
+    const chunk = allDownloaded.slice(j, j + IMAGE_EXTRACTION_BATCH_SIZE);
+    const childJobId = nanoid();
+    const chunkBookIds = [...new Set(chunk.map(c => c.bookId))];
+    const displayName = `pipeline-images-cross-${chunkBookIds.length}books-${childJobId}`;
+
+    console.log(`    Building JSONL for ${chunk.length} pages (cross-book batch, ${chunkBookIds.length} books)...`);
+    const jsonlLines = chunk.map(item => JSON.stringify({
+      request: {
+        contents: [{
+          parts: [
+            { text: item.prompt },
+            { inlineData: { mimeType: item.image.mimeType, data: item.image.data } },
+          ],
+        }],
+        safetySettings: [
+          { category: 'HARM_CATEGORY_HARASSMENT', threshold: 'BLOCK_NONE' },
+          { category: 'HARM_CATEGORY_HATE_SPEECH', threshold: 'BLOCK_NONE' },
+          { category: 'HARM_CATEGORY_SEXUALLY_EXPLICIT', threshold: 'BLOCK_NONE' },
+          { category: 'HARM_CATEGORY_DANGEROUS_CONTENT', threshold: 'BLOCK_NONE' },
+          { category: 'HARM_CATEGORY_CIVIC_INTEGRITY', threshold: 'BLOCK_NONE' },
+        ],
+        generationConfig: {
+          temperature: 0.1,
+          maxOutputTokens: 2048,
+          thinkingConfig: { thinkingBudget: 0 },
+        },
+      },
+      metadata: { key: item.pageId },
+    }));
+    const jsonlContent = jsonlLines.join('\n');
+
+    // Upload + create batch with same key (files are key-scoped). Round-robin across projects.
+    let batchJob = null;
+    const imgStartKey = nextBatchKeyIndex();
+    for (let attempt = 0; attempt < GEMINI_BATCH_KEYS.length; attempt++) {
+      const uki = (imgStartKey + attempt) % GEMINI_BATCH_KEYS.length;
+      const uploadKey = getGeminiApiKey(uki);
+      let fileResult;
+      try {
+        fileResult = await uploadBatchFile(jsonlContent, displayName, uploadKey);
+        console.log(`    Uploaded file: ${fileResult.name} (key ${uki})`);
+      } catch (uploadErr) {
+        if (uploadErr.message.includes('429') || uploadErr.message.includes('quota')) {
+          console.log(`    Upload key ${uki} quota exhausted, trying next...`);
+          continue;
+        }
+        throw uploadErr;
+      }
+
+      try {
+        batchJob = await createBatchJobFromFile(IMAGE_EXTRACTION_MODEL, fileResult.name, displayName, uki);
+        try {
+          await fetch(`https://generativelanguage.googleapis.com/v1beta/${fileResult.name}?key=${uploadKey}`, { method: 'DELETE' });
+        } catch (cleanupErr) {
+          console.log(`    Warning: file cleanup failed: ${cleanupErr.message}`);
+        }
+        break;
+      } catch (batchErr) {
+        try { await fetch(`https://generativelanguage.googleapis.com/v1beta/${fileResult.name}?key=${uploadKey}`, { method: 'DELETE' }); } catch (_) {}
+        if (batchErr.message.includes('429') || batchErr.message.includes('quota')) {
+          console.log(`    Batch create key ${uki} quota exhausted, re-uploading with next key...`);
+          continue;
+        }
+        throw batchErr;
+      }
+    }
+    if (!batchJob) throw new Error('ALL_KEYS_QUOTA_EXHAUSTED');
+
+    // Record in batch_jobs — use book_ids array for cross-book, book_id for backward compat
+    await db.collection('batch_jobs').insertOne({
+      id: childJobId,
+      parent_job_id: parentJobId,
+      job_name: batchJob.name,
+      type: 'image_extraction',
+      book_id: chunkBookIds[0], // backward compat — first book
+      book_ids: chunkBookIds,   // all books in this batch
+      page_ids: chunk.map(c => c.pageId),
+      page_count: chunk.length,
+      status: 'pending',
+      model: IMAGE_EXTRACTION_MODEL,
+      submission_method: 'file',
+      cross_book: true,
+      created_at: new Date(),
+      updated_at: new Date(),
+    });
+
+    childJobIds.push(childJobId);
+    totalSubmitted += chunk.length;
+    batchCount++;
+
+    // Log to gemini_usage (one entry per batch, listing all book IDs)
+    await db.collection('gemini_usage').insertOne({
+      type: 'image_extraction',
+      mode: 'batch',
+      model: IMAGE_EXTRACTION_MODEL,
+      book_id: chunkBookIds[0],
+      book_ids: chunkBookIds,
+      page_ids: chunk.map(c => c.pageId),
+      page_count: chunk.length,
+      batch_job_id: childJobId,
+      gemini_job_name: batchJob.name,
+      input_tokens: 0,
+      output_tokens: 0,
+      status: 'submitted',
+      endpoint: 'hetzner/pipeline-orchestrator',
+      submission_method: 'file',
+      cross_book: true,
+      timestamp: new Date(),
+    });
+  }
+
+  // Create parent job if multiple children
+  if (childJobIds.length > 1) {
+    const allBookIds = [...bookMap.keys()];
+    await db.collection('batch_jobs').insertOne({
+      id: parentJobId,
+      type: 'image_extraction',
+      book_id: allBookIds[0],
+      book_ids: allBookIds,
+      child_job_ids: childJobIds,
+      total_pages: totalSubmitted,
+      status: 'pending',
+      model: IMAGE_EXTRACTION_MODEL,
+      cross_book: true,
+      created_at: new Date(),
+      updated_at: new Date(),
+    });
+  }
+
+  return { submitted: totalSubmitted, batchCount, bookIds: [...bookMap.keys()] };
+}
+
 // ── Main ──
 
 async function run() {
@@ -3404,9 +3615,12 @@ Reply with ONLY: {"is_spread": true} or {"is_spread": false}` },
 
           console.log(`  Books ready for image extraction: ${readyForImages.length}`);
 
+          // Gather candidate pages from all books, then pool into cross-book batches
+          const bookItems = []; // { book, candidatePages } for cross-book batching
+          const smallBooks = []; // books with ≤ IMAGE_EXTRACTION_INLINE_SIZE pages — keep per-book inline
+
           for (const book of readyForImages) {
             try {
-              // Find candidate pages (same filter as Lambda path)
               const bookPages = await db.collection('pages')
                 .find({
                   book_id: book.id,
@@ -3429,7 +3643,21 @@ Reply with ONLY: {"is_spread": true} or {"is_spread": false}` },
                 continue;
               }
 
-              const result = await submitImageExtractionBatch(db, book, bookPages);
+              // Small books (≤20 pages) use per-book inline path
+              if (bookPages.length <= IMAGE_EXTRACTION_INLINE_SIZE) {
+                smallBooks.push({ book, candidatePages: bookPages });
+              } else {
+                bookItems.push({ book, candidatePages: bookPages });
+              }
+            } catch (err) {
+              log.errors.push(`Images candidate scan ${book.id}: ${err.message}`);
+            }
+          }
+
+          // Submit small books via per-book inline path (no cross-book pooling needed)
+          for (const { book, candidatePages } of smallBooks) {
+            try {
+              const result = await submitImageExtractionBatch(db, book, candidatePages);
               if (result.skippedDuplicate) continue;
               if (result.submitted === 0) {
                 await setPipelineStatus(db, book.id, 'images_complete');
@@ -3442,11 +3670,30 @@ Reply with ONLY: {"is_spread": true} or {"is_spread": false}` },
                 image_extraction_job_name: result.jobName,
               });
               log.images_submitted++;
-              console.log(`  Batch image extraction submitted: ${book.title} (${result.submitted} pages, ${result.childCount || 1} jobs, ${result.method})`);
-
+              console.log(`  Inline image extraction submitted: ${book.title} (${result.submitted} pages, inline)`);
               await sleep(API_DELAY_MS);
             } catch (err) {
-              log.errors.push(`Images batch submit ${book.id}: ${err.message}`);
+              log.errors.push(`Images inline submit ${book.id}: ${err.message}`);
+            }
+          }
+
+          // Submit larger books via cross-book pooled batches
+          if (bookItems.length > 0) {
+            try {
+              const result = await submitCrossBookImageBatches(db, bookItems);
+              if (result.submitted > 0) {
+                // Set all participating books to images_submitted
+                for (const bookId of result.bookIds) {
+                  await setPipelineStatus(db, bookId, 'images_submitted', {
+                    image_extraction_batch: true,
+                    cross_book_batch: true,
+                  });
+                  log.images_submitted++;
+                }
+                console.log(`  Cross-book image extraction submitted: ${result.submitted} pages from ${result.bookIds.length} books in ${result.batchCount} batches`);
+              }
+            } catch (err) {
+              log.errors.push(`Images cross-book submit: ${err.message}`);
             }
           }
         }

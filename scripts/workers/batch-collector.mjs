@@ -564,6 +564,7 @@ async function processOneJob(db, job) {
       failCount,
       recitationCount,
       bookId: job.book_id,
+      bookIds: job.book_ids || [job.book_id], // cross-book batches have book_ids array
       parentJobId: job.parent_job_id,
       type: job.type,
     };
@@ -587,7 +588,7 @@ async function processOneJob(db, job) {
           { $set: { status: 'failed', gemini_state: state, error: `Stale: PENDING for ${jobAge.toFixed(1)}h with no progress`, updated_at: new Date() } }
         );
       }
-      return { status: 'failed', state: 'STALE_PENDING', bookId: job.book_id, type: job.type };
+      return { status: 'failed', state: 'STALE_PENDING', bookId: job.book_id, bookIds: job.book_ids || [job.book_id], type: job.type };
     }
 
     // Update status to reflect current state
@@ -608,7 +609,7 @@ async function processOneJob(db, job) {
         { $set: { status: 'failed', gemini_state: state, error: `Gemini state: ${rawState}`, updated_at: new Date() } }
       );
     }
-    return { status: 'failed', state: rawState, bookId: job.book_id, type: job.type };
+    return { status: 'failed', state: rawState, bookId: job.book_id, bookIds: job.book_ids || [job.book_id], type: job.type };
   }
 }
 
@@ -775,8 +776,12 @@ async function advancePipelineStatus(db, bookId, jobType) {
   }
 
   if (jobType === 'image_extraction' && status === 'images_submitted') {
+    // Check both book_id (legacy single-book) and book_ids (cross-book batches)
     const pendingImages = await db.collection('batch_jobs').countDocuments({
-      book_id: bookId,
+      $or: [
+        { book_id: bookId },
+        { book_ids: bookId },
+      ],
       type: 'image_extraction',
       status: { $in: ['pending', 'processing', 'JOB_STATE_PENDING', 'JOB_STATE_RUNNING'] },
     });
@@ -886,12 +891,14 @@ async function run() {
       if (val.status === 'collected') {
         collected++;
         totalPagesSaved += val.successCount;
-        if (val.bookId) {
-          bookIdsToUpdate.add(val.bookId);
-          pipelineAdvances.push({ bookId: val.bookId, type: val.type });
+        // Handle cross-book batches: iterate all bookIds
+        const allBookIds = val.bookIds || (val.bookId ? [val.bookId] : []);
+        for (const bid of allBookIds) {
+          bookIdsToUpdate.add(bid);
+          pipelineAdvances.push({ bookId: bid, type: val.type });
           // Track books where all pages hit RECITATION — these need Lambda retry
           if (val.successCount === 0 && val.recitationCount > 0) {
-            recitationBooks.add(val.bookId);
+            recitationBooks.add(bid);
           }
         }
         if (val.parentJobId) parentIdsToUpdate.add(val.parentJobId);
@@ -901,8 +908,9 @@ async function run() {
         errors++;
       } else if (val.status === 'failed') {
         errors++;
-        if (val.bookId) {
-          pipelineAdvances.push({ bookId: val.bookId, type: val.type });
+        const allBookIds = val.bookIds || (val.bookId ? [val.bookId] : []);
+        for (const bid of allBookIds) {
+          pipelineAdvances.push({ bookId: bid, type: val.type });
         }
         if (errors <= 20) console.log(`  Job failed: ${val.state}`);
       }
@@ -1023,10 +1031,11 @@ async function run() {
           if (val.status === 'collected') {
             recoveredJobs++;
             recoveredPages += val.successCount;
-            if (val.bookId) {
-              bookIdsToUpdate.add(val.bookId);
-              try { await updateBookCounts(db, val.bookId); } catch (_) {}
-              try { await advancePipelineStatus(db, val.bookId, val.type); } catch (_) {}
+            const recoveredBookIds = val.bookIds || (val.bookId ? [val.bookId] : []);
+            for (const bid of recoveredBookIds) {
+              bookIdsToUpdate.add(bid);
+              try { await updateBookCounts(db, bid); } catch (_) {}
+              try { await advancePipelineStatus(db, bid, val.type); } catch (_) {}
             }
           }
         } catch (e) {
