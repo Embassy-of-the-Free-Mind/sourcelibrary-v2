@@ -8,6 +8,9 @@ import { bookUrl, authorSlug } from '@/lib/slugify';
 import { firstTranslationBadge } from '@/lib/first-translation-labels';
 import { ObjectId, type Db } from 'mongodb';
 
+// ISR: 24h background revalidation (survives deploys better than revalidate=false)
+export const revalidate = 86400;
+
 interface Book {
   id: string;
   slug?: string;
@@ -77,9 +80,7 @@ async function getPortraitUrl(db: Db, entity: AuthorEntity | null): Promise<stri
   }
 }
 
-// ISR: author pages are mostly static — revalidate weekly.
-// Use POST /api/admin/revalidate-authors to force refresh after changes.
-export const revalidate = false;
+// dynamicParams + generateStaticParams: generate on first request, not at build time
 export const dynamicParams = true;
 export async function generateStaticParams() {
   return []; // All paths generated on demand via ISR

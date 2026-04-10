@@ -4,8 +4,8 @@ import { findBookByIdOrSlug } from '@/lib/book-lookup';
 import type { Metadata } from 'next';
 import BookOverview from '@/components/reader/BookOverview';
 
-// ISR — revalidated on demand
-export const revalidate = false;
+// ISR: 24h background revalidation + on-demand via pipeline
+export const revalidate = 86400;
 export const dynamicParams = true;
 export async function generateStaticParams() {
   return [];
