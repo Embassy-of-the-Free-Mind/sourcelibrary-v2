@@ -311,7 +311,8 @@ export function proxy(request: NextRequest) {
   // Everything else gets DENY to prevent clickjacking.
   const isEmbeddablePath =
     pathname.startsWith('/book/') ||
-    pathname.startsWith('/collections/');
+    pathname.startsWith('/collections/') ||
+    pathname.startsWith('/libraries/');
 
   if (isEmbeddablePath) {
     const frameOrigin = request.headers.get('origin') ||

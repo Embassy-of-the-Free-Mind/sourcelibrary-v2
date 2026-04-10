@@ -9,19 +9,59 @@
  *   <div id="sl-embed"></div>
  *   <script
  *     src="https://sourcelibrary.org/embed.js"
+ *     data-library="bph"
  *     data-collection="alchemy"
  *     data-target="sl-embed"
  *     data-height="100vh">
  *   </script>
  *
  * Attributes:
- *   data-collection  — collection slug to embed (required)
+ *   data-collection  — collection slug to embed (e.g. "alchemy")
+ *   data-library     — library provider key to embed (e.g. "bph", "internet-archive")
  *   data-target      — id of the container div (required)
  *   data-height      — iframe height, any CSS value (default: 100vh)
  *   data-base-url    — override API/page base URL (default: https://sourcelibrary.org)
+ *
+ * At least one of data-collection or data-library is required.
  */
 (function () {
   'use strict';
+
+  // Maps providerKey → URL slug for /libraries/[slug] pages.
+  // Mirrors LIBRARY_PARTNERS in src/lib/library-partners.ts.
+  var LIBRARY_SLUGS = {
+    'internet_archive': 'internet-archive',
+    'gallica': 'gallica',
+    'mdz': 'bavarian-state-library',
+    'bodleian': 'bodleian',
+    'cambridge': 'cambridge',
+    'bph': 'bibliotheca-philosophica-hermetica',
+    'e-rara': 'e-rara',
+    'wellcome': 'wellcome-collection',
+    'hab': 'hab-wolfenbuettel',
+    'vatican': 'vatican-library',
+    'google_books': 'google-books',
+    'hathi_trust': 'hathi-trust',
+    'europeana': 'europeana',
+    'manchester': 'manchester',
+    'allard_pierson': 'allard-pierson',
+    'laurenziana': 'laurenziana',
+    'leiden': 'leiden',
+    'e-codices': 'e-codices',
+    'chester_beatty': 'chester-beatty',
+    'ndl_japan': 'ndl-japan',
+    'cmc_kloss': 'kloss-collection',
+    'loc': 'library-of-congress',
+    'bl': 'british-library',
+    'sbb': 'sbb-berlin',
+    'onb': 'austrian-national-library',
+    'yale_beinecke': 'yale-beinecke',
+    'harvard': 'harvard-houghton',
+    'penn_colenda': 'penn-schoenberg',
+    'huntington': 'huntington',
+    'getty': 'getty',
+    'kyoto_rmda': 'kyoto',
+  };
 
   // --- Config ---
   var script = document.currentScript ||
@@ -32,11 +72,13 @@
 
   var BASE_URL = (script.getAttribute('data-base-url') || 'https://sourcelibrary.org').replace(/\/$/, '');
   var COLLECTION = script.getAttribute('data-collection') || '';
+  var LIBRARY_KEY = script.getAttribute('data-library') || '';
+  var LIBRARY_SLUG = LIBRARY_KEY ? (LIBRARY_SLUGS[LIBRARY_KEY] || LIBRARY_KEY) : '';
   var TARGET_ID = script.getAttribute('data-target') || 'sl-embed';
   var HEIGHT = script.getAttribute('data-height') || '100vh';
 
-  if (!COLLECTION) {
-    console.error('[SourceLibrary] data-collection is required on the embed script tag.');
+  if (!COLLECTION && !LIBRARY_SLUG) {
+    console.error('[SourceLibrary] data-collection or data-library is required on the embed script tag.');
     return;
   }
 
@@ -86,6 +128,9 @@
     }
     if (book) {
       return BASE_URL + '/book/' + encodeURIComponent(book);
+    }
+    if (LIBRARY_SLUG) {
+      return BASE_URL + '/libraries/' + encodeURIComponent(LIBRARY_SLUG) + '?view=books';
     }
     return BASE_URL + '/collections/' + encodeURIComponent(COLLECTION);
   }
