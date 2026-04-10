@@ -175,6 +175,32 @@ async function upsertBatch(rows) {
   return upsertBatchRest(rows);
 }
 
+let errors = 0;
+
+/**
+ * Upsert with exponential split on failure.
+ * If a batch of 100 times out, split into 2×50, then 4×25, etc.
+ * Returns count of successfully copied rows.
+ */
+async function upsertWithRetry(rows, depth = 0) {
+  try {
+    await upsertBatch(rows);
+    return rows.length;
+  } catch (err) {
+    if (depth >= 4 || rows.length <= 1) {
+      // Give up on these rows
+      errors += rows.length;
+      if (errors <= 20) console.error(`  Giving up on ${rows.length} rows at depth ${depth}: ${err.message}`);
+      return 0;
+    }
+    // Split in half and retry
+    const mid = Math.ceil(rows.length / 2);
+    const left = await upsertWithRetry(rows.slice(0, mid), depth + 1);
+    const right = await upsertWithRetry(rows.slice(mid), depth + 1);
+    return left + right;
+  }
+}
+
 async function main() {
   const client = new MongoClient(MONGODB_URI);
   await client.connect();
@@ -212,7 +238,7 @@ async function main() {
 
   let copied = 0;
   let skipped = 0;
-  let errors = 0;
+  errors = 0; // reset global
   let batch = [];
   const startTime = Date.now();
 
@@ -225,23 +251,7 @@ async function main() {
     batch.push(flattenPage(doc));
 
     if (batch.length >= BATCH_SIZE) {
-      try {
-        await upsertBatch(batch);
-        copied += batch.length;
-      } catch (err) {
-        errors++;
-        console.error(`Batch error at ${copied}: ${err.message}`);
-        // Retry individual rows on batch failure
-        for (const row of batch) {
-          try {
-            await upsertBatch([row]);
-            copied++;
-          } catch (rowErr) {
-            errors++;
-            if (errors <= 10) console.error(`  Row error ${row.id}: ${rowErr.message}`);
-          }
-        }
-      }
+      copied += await upsertWithRetry(batch);
       batch = [];
 
       // Progress
@@ -259,12 +269,7 @@ async function main() {
 
   // Flush remaining
   if (batch.length > 0) {
-    try {
-      await upsertBatch(batch);
-      copied += batch.length;
-    } catch (err) {
-      console.error(`Final batch error: ${err.message}`);
-    }
+    copied += await upsertWithRetry(batch);
   }
 
   const elapsed = ((Date.now() - startTime) / 1000).toFixed(0);
