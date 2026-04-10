@@ -1,6 +1,7 @@
 import { Metadata } from 'next';
 import { getDb } from '@/lib/mongodb';
 import { supabase } from '@/lib/supabase';
+import Link from 'next/link';
 import ContentPageLayout, { SubPageHeader } from '@/components/layout/ContentPageLayout';
 import { BarChart3, BookOpen, Languages, Globe2, Scan, Sparkles, Library } from 'lucide-react';
 
@@ -445,6 +446,17 @@ export default async function ProgressPage() {
             </tbody>
           </table>
         </div>
+      </section>
+
+      {/* Census link */}
+      <section className="bg-amber-50 rounded-xl border border-amber-200/50 p-6 mb-6">
+        <p className="text-secondary text-sm">
+          Want to know which specific works have been translated?{' '}
+          <Link href="/census" className="text-amber-700 font-medium hover:underline">
+            Search the Translation Census
+          </Link>{' '}
+          &mdash; the first comprehensive record of the Renaissance translation gap.
+        </p>
       </section>
 
       {/* Data sources */}
