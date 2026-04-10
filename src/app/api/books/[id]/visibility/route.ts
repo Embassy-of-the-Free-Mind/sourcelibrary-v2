@@ -1,6 +1,6 @@
 import { NextRequest, NextResponse } from 'next/server';
 import { getDb } from '@/lib/mongodb';
-import { withAdminAuth } from '@/lib/auth-helpers';
+import { withCuratorAuth } from '@/lib/auth-helpers';
 
 /**
  * POST /api/books/[id]/visibility
@@ -8,7 +8,7 @@ import { withAdminAuth } from '@/lib/auth-helpers';
  * Toggle book visibility for curation.
  * Body: { hidden: boolean, reason?: string }
  */
-export const POST = withAdminAuth(async (
+export const POST = withCuratorAuth(async (
   request: NextRequest,
 ) => {
   try {
