@@ -80,10 +80,11 @@ async function probePaths(paths: string[]): Promise<ProbeResult[]> {
 }
 
 function summarizeCategory(results: ProbeResult[]): CategoryStats {
+  // HIT, PRERENDER, STALE, REVALIDATED are all "warm" — served fast without cold render
   return {
-    hit: results.filter(r => r.cache === 'HIT').length,
-    miss: results.filter(r => r.cache === 'MISS' || r.cache === 'PRERENDER' || !r.cache).length,
-    stale: results.filter(r => r.cache === 'STALE' || r.cache === 'REVALIDATED').length,
+    hit: results.filter(r => ['HIT', 'PRERENDER', 'STALE', 'REVALIDATED'].includes(r.cache || '')).length,
+    miss: results.filter(r => r.cache === 'MISS' || !r.cache).length,
+    stale: 0,
     total: results.length,
   };
 }
@@ -165,7 +166,7 @@ export const POST = withAdminAuth(async () => {
 
   // Aggregate
   const allResults = [...staticResults, ...collectionResults, ...subResults, ...bookResults];
-  const hits = allResults.filter(r => r.cache === 'HIT').length;
+  const hits = allResults.filter(r => ['HIT', 'PRERENDER', 'STALE', 'REVALIDATED'].includes(r.cache || '')).length;
   const total = allResults.length;
   const warmth = total > 0 ? Math.round((hits / total) * 100) : 0;
 
@@ -174,7 +175,7 @@ export const POST = withAdminAuth(async () => {
     warmth,
     total,
     hits,
-    misses: allResults.filter(r => r.cache === 'MISS' || r.cache === 'PRERENDER' || !r.cache).length,
+    misses: allResults.filter(r => r.cache === 'MISS' || !r.cache).length,
     stale: allResults.filter(r => r.cache === 'STALE' || r.cache === 'REVALIDATED').length,
     errors: allResults.filter(r => r.status === 0 || r.status >= 400).length,
     by_category: {
