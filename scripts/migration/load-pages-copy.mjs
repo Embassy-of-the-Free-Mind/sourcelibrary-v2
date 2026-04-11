@@ -25,7 +25,7 @@ const inputFile = args.find(a => !a.startsWith('--')) || '/tmp/pages-dump.jsonl'
 const SKIP = parseInt(args.find(a => a.startsWith('--skip='))?.split('=')[1] || '0', 10);
 const LIMIT = parseInt(args.find(a => a.startsWith('--limit='))?.split('=')[1] || '0', 10);
 const DROP_INDEX = !args.includes('--no-drop-index');
-const BATCH = 500; // rows per multi-row INSERT
+const BATCH = parseInt(args.find(a => a.startsWith('--batch='))?.split('=')[1] || '50', 10);
 
 const COLS = [
   'id', 'book_id', 'page_number',
