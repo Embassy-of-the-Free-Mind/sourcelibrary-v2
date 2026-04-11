@@ -1254,6 +1254,20 @@ async function submitOcrDirectly(db, book, { modelOverride, maxPages } = {}) {
     return { submitted: 0, jobName: null, alreadyDone: true };
   }
 
+  // Minimum batch size gate — don't burn a batch API call for a handful of pages.
+  // Small batches (1-20 pages) are usually RECITATION/failure retries that won't succeed.
+  // Skip them and let them accumulate or get accepted as gaps in Phase 3.
+  const MIN_BATCH_PAGES = 25;
+  if (pages.length < MIN_BATCH_PAGES && !maxPages) {
+    // Exception: if this is the entire book (small book), submit anyway
+    const totalBookPages = book.pages_count || 0;
+    const ocrDone = book.pages_ocr || 0;
+    if (ocrDone > 0 && pages.length < MIN_BATCH_PAGES) {
+      console.log(`    Skipping small retry batch: ${pages.length} pages remaining (min ${MIN_BATCH_PAGES})`);
+      return { submitted: 0, jobName: null, skippedSmallBatch: true };
+    }
+  }
+
   // Warn if many pages lack R2 URLs — archiving may be incomplete
   const pagesWithR2 = pages.filter(p =>
     (p.cropped_photo) ||
@@ -1499,7 +1513,7 @@ Output structure:
  * Cost: ~50% discount vs Lambda realtime. Throughput: ~200+ books/hr vs ~50.
  */
 const IMAGE_EXTRACTION_MODEL = 'gemini-3-flash-preview'; // Vision task — bbox accuracy critical
-const IMAGE_EXTRACTION_BATCH_SIZE = 150; // Pages per file-based batch (same as OCR)
+const IMAGE_EXTRACTION_BATCH_SIZE = 250; // Pages per file-based batch — match OCR to reduce batch creation count
 const IMAGE_EXTRACTION_INLINE_SIZE = 20;
 
 const IMAGE_EXTRACTION_PROMPT = `You are a museum curator analyzing a historical book page scan. Extract only significant illustrations — skip decorative elements like ornaments, borders, printer's marks, and initials.
@@ -1572,6 +1586,12 @@ async function submitImageExtractionBatch(db, book, candidatePages) {
     .toArray();
 
   if (pages.length === 0) return { submitted: 0 };
+
+  // Minimum batch size — don't burn a batch API call for a handful of pages
+  if (pages.length < 25) {
+    console.log(`    Skipping small image batch: ${pages.length} pages (min 25)`);
+    return { submitted: 0, skippedSmallBatch: true };
+  }
 
   console.log(`    Downloading ${pages.length} images for image extraction...`);
   const downloaded = await downloadImagesParallel(pages, IMAGE_CONCURRENCY);
