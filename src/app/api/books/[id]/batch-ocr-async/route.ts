@@ -31,6 +31,7 @@ const DEFAULT_API_KEY = process.env.GEMINI_API_KEY_TIER3 || process.env.GEMINI_A
 const BATCH_API_KEYS = [
   process.env.GEMINI_API_KEY_TIER3,
   process.env.GEMINI_API_KEY_2,
+  process.env.GEMINI_API_KEY_3,
   process.env.GEMINI_API_KEY,
 ].filter((k): k is string => !!k);
 // Deduplicate

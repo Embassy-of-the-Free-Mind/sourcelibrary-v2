@@ -16,6 +16,7 @@ const GEMINI_API_BASE = 'https://generativelanguage.googleapis.com/v1beta';
 const ALL_KEYS = [
   process.env.GEMINI_API_KEY_TIER3,
   process.env.GEMINI_API_KEY_2,
+  process.env.GEMINI_API_KEY_3,
   process.env.GEMINI_API_KEY,
 ].filter(Boolean);
 
