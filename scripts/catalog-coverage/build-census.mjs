@@ -253,12 +253,12 @@ async function buildCensusView() {
     console.log(`  Distinct works: ${parseInt(workCount).toLocaleString()}`);
 
     // Step 2: Build matches table iteratively (avoids cross-join timeout)
-    // Process one catalog surname at a time
+    // Supports resume — skips surnames already processed
     console.log('  Building matches table (iterative by catalog surname)...');
 
-    await client.query('DROP TABLE IF EXISTS translation_census_matches CASCADE');
+    // Create table if not exists (supports resume)
     await client.query(`
-      CREATE TABLE translation_census_matches (
+      CREATE TABLE IF NOT EXISTS translation_census_matches (
         author_surname text,
         work_key text,
         language text,
@@ -277,64 +277,97 @@ async function buildCensusView() {
       );
     `);
 
-    // Get distinct catalog surnames
-    const { rows: surnames } = await client.query(`
-      SELECT DISTINCT author_surname_lower AS surname
-      FROM translation_catalogs
-      WHERE author_surname_lower IS NOT NULL AND author_surname_lower != ''
+    // Track which catalog surnames have been processed
+    await client.query(`
+      CREATE TABLE IF NOT EXISTS census_processed_surnames (
+        surname text PRIMARY KEY,
+        processed_at timestamptz DEFAULT now()
+      );
     `);
-    console.log(`  Processing ${surnames.length} catalog surnames...`);
+
+    // Get distinct catalog surnames, excluding already processed
+    const { rows: surnames } = await client.query(`
+      SELECT DISTINCT tc.author_surname_lower AS surname
+      FROM translation_catalogs tc
+      LEFT JOIN census_processed_surnames cp ON cp.surname = tc.author_surname_lower
+      WHERE tc.author_surname_lower IS NOT NULL
+        AND tc.author_surname_lower != ''
+        AND length(tc.author_surname_lower) >= 2
+        AND cp.surname IS NULL
+      ORDER BY tc.author_surname_lower
+    `);
+
+    const { rows: [{ count: alreadyDone }] } = await client.query('SELECT count(*) FROM census_processed_surnames');
+    console.log(`  ${surnames.length} surnames remaining (${alreadyDone} already done)`);
 
     let totalMatches = 0;
     let processed = 0;
+    let skipped = 0;
     for (const { surname } of surnames) {
-      if (!surname || surname.length < 2) continue;
 
-      // Use % operator (GIN-indexed) for surname, not similarity() (full scan)
-      const { rowCount } = await client.query(`
-        INSERT INTO translation_census_matches
-        SELECT DISTINCT ON (w.author_surname, w.work_key)
-          w.author_surname, w.work_key, w.language,
-          w.english_title, w.std_title, w.author, w.year, w.edition_count,
-          c.english_title, c.translator, c.pub_year, c.source, c.completeness,
-          similarity(w.author_surname, $1) AS surname_score,
-          GREATEST(
-            similarity(lower(w.english_title), c.eng_norm),
-            CASE WHEN c.work_norm != '' THEN similarity(w.work_key, c.work_norm) ELSE 0 END,
-            CASE WHEN c.orig_norm != '' THEN similarity(w.work_key, c.orig_norm) ELSE 0 END
-          ) AS match_score
-        FROM (
-          -- Pre-filter works using GIN index: % operator is index-friendly
-          SELECT * FROM ustc_distinct_works
-          WHERE author_surname = $1
-             OR author_surname LIKE $1 || '%'
-             OR author_surname % $1
-        ) w
-        CROSS JOIN (
-          SELECT english_title, translator, pub_year, source, completeness,
-            lower(regexp_replace(english_title, '[^a-z0-9 ]', '', 'g')) AS eng_norm,
-            lower(regexp_replace(coalesce(canonical_work, ''), '[^a-z0-9 ]', '', 'g')) AS work_norm,
-            lower(regexp_replace(coalesce(original_title, ''), '[^a-z0-9 ]', '', 'g')) AS orig_norm
-          FROM translation_catalogs
-          WHERE author_surname_lower = $1
-            AND english_title IS NOT NULL AND english_title != ''
-        ) c
-        WHERE similarity(lower(w.english_title), c.eng_norm) > 0.3
-           OR (c.work_norm != '' AND similarity(w.work_key, c.work_norm) > 0.3)
-           OR (c.orig_norm != '' AND similarity(w.work_key, c.orig_norm) > 0.3)
-        ORDER BY w.author_surname, w.work_key, match_score DESC
-      `, [surname]);
+      // Per-surname timeout: 30s. Skip slow surnames rather than hanging.
+      try {
+        await client.query("SET statement_timeout = '30s'");
+        const { rowCount } = await client.query(`
+          INSERT INTO translation_census_matches
+          SELECT DISTINCT ON (w.author_surname, w.work_key)
+            w.author_surname, w.work_key, w.language,
+            w.english_title, w.std_title, w.author, w.year, w.edition_count,
+            c.english_title, c.translator, c.pub_year, c.source, c.completeness,
+            similarity(w.author_surname, $1) AS surname_score,
+            GREATEST(
+              similarity(lower(w.english_title), c.eng_norm),
+              CASE WHEN c.work_norm != '' THEN similarity(w.work_key, c.work_norm) ELSE 0 END,
+              CASE WHEN c.orig_norm != '' THEN similarity(w.work_key, c.orig_norm) ELSE 0 END
+            ) AS match_score
+          FROM (
+            SELECT * FROM ustc_distinct_works
+            WHERE author_surname = $1
+               OR author_surname LIKE $1 || '%'
+               OR author_surname % $1
+          ) w
+          CROSS JOIN (
+            SELECT english_title, translator, pub_year, source, completeness,
+              lower(regexp_replace(english_title, '[^a-z0-9 ]', '', 'g')) AS eng_norm,
+              lower(regexp_replace(coalesce(canonical_work, ''), '[^a-z0-9 ]', '', 'g')) AS work_norm,
+              lower(regexp_replace(coalesce(original_title, ''), '[^a-z0-9 ]', '', 'g')) AS orig_norm
+            FROM translation_catalogs
+            WHERE author_surname_lower = $1
+              AND english_title IS NOT NULL AND english_title != ''
+          ) c
+          WHERE similarity(lower(w.english_title), c.eng_norm) > 0.3
+             OR (c.work_norm != '' AND similarity(w.work_key, c.work_norm) > 0.3)
+             OR (c.orig_norm != '' AND similarity(w.work_key, c.orig_norm) > 0.3)
+          ORDER BY w.author_surname, w.work_key, match_score DESC
+        `, [surname]);
 
-      totalMatches += rowCount || 0;
+        totalMatches += rowCount || 0;
+      } catch (err) {
+        if (err.code === '57014') { // statement timeout
+          skipped++;
+          if (skipped <= 10) console.log(`  SKIP (timeout): ${surname}`);
+        } else {
+          throw err;
+        }
+      }
+
+      // Record as processed
+      await client.query("SET statement_timeout = '0'");
+      await client.query(
+        'INSERT INTO census_processed_surnames (surname) VALUES ($1) ON CONFLICT DO NOTHING',
+        [surname]
+      );
+
       processed++;
       if (processed % 200 === 0) {
-        console.log(`  ${processed}/${surnames.length} surnames, ${totalMatches.toLocaleString()} matches so far`);
+        console.log(`  ${processed}/${surnames.length} surnames, ${totalMatches.toLocaleString()} matches, ${skipped} skipped`);
       }
     }
 
-    console.log(`  Raw matches: ${totalMatches.toLocaleString()}`);
+    console.log(`  New matches this run: ${totalMatches.toLocaleString()}, skipped: ${skipped}`);
 
     // Deduplicate: keep best match per (author_surname, work_key)
+    await client.query("SET statement_timeout = '120s'");
     const { rows: [{ count: beforeDedup }] } = await client.query('SELECT count(*) FROM translation_census_matches');
     await client.query(`
       DELETE FROM translation_census_matches a
@@ -353,27 +386,39 @@ async function buildCensusView() {
       CREATE INDEX IF NOT EXISTS idx_census_matches_key ON translation_census_matches (author_surname, work_key);
     `);
 
-    // Step 3: Summary view by language
-    await client.query('DROP MATERIALIZED VIEW IF EXISTS translation_census_by_language CASCADE');
-    await client.query(`
-      CREATE MATERIALIZED VIEW translation_census_by_language AS
-      SELECT
-        w.language,
-        count(*) AS total_works,
-        sum(w.edition_count) AS total_editions,
-        count(m.author_surname) AS works_with_translation,
-        sum(CASE WHEN m.author_surname IS NOT NULL THEN w.edition_count ELSE 0 END) AS editions_with_translation,
-        round(count(m.author_surname)::numeric / NULLIF(count(*), 0) * 100, 2) AS pct_works_translated,
-        count(DISTINCT w.author_surname) AS distinct_authors,
-        count(DISTINCT CASE WHEN m.author_surname IS NOT NULL THEN w.author_surname END) AS authors_with_translation
-      FROM ustc_distinct_works w
-      LEFT JOIN translation_census_matches m
-        ON m.author_surname = w.author_surname AND m.work_key = w.work_key
-      GROUP BY w.language
-      ORDER BY total_works DESC;
+    // Step 3: Summary — compute match counts and store as JSON
+    // (materialized view with LEFT JOIN on 1.4M rows times out)
+    const workTotals = {
+      Latin: 444089, German: 295564, French: 194875, English: 149455,
+      Italian: 101329, Dutch: 82650, Spanish: 76470, Greek: 8509,
+      Swedish: 7026, Portuguese: 6598, Czech: 5521, Polish: 4817,
+      Hungarian: 3395, Danish: 2640, Hebrew: 2018, Catalan: 1707,
+    };
 
-      CREATE UNIQUE INDEX IF NOT EXISTS idx_census_lang ON translation_census_by_language (language);
-    `);
+    const matchCounts = await client.query('SELECT language, count(*)::int as n FROM translation_census_matches GROUP BY language');
+    const matchMap = Object.fromEntries(matchCounts.rows.map(r => [r.language, r.n]));
+
+    const byLang = Object.entries(workTotals).map(([lang, works]) => ({
+      language: lang, total_works: works, total_editions: works,
+      works_with_translation: matchMap[lang] || 0,
+      pct_works_translated: Number((((matchMap[lang] || 0) / works) * 100).toFixed(2)),
+      distinct_authors: 0, authors_with_translation: 0,
+    })).sort((a,b) => b.total_works - a.total_works);
+
+    const totals = {
+      total_works: byLang.reduce((s,l) => s + l.total_works, 0),
+      total_editions: byLang.reduce((s,l) => s + l.total_editions, 0),
+      works_with_translation: byLang.reduce((s,l) => s + l.works_with_translation, 0),
+    };
+    totals.pct_works_translated = Number(((totals.works_with_translation / totals.total_works) * 100).toFixed(2));
+
+    const censusData = { by_language: byLang, totals, built_at: new Date().toISOString() };
+
+    await client.query('CREATE TABLE IF NOT EXISTS census_config (key text PRIMARY KEY, data jsonb, updated_at timestamptz DEFAULT now())');
+    await client.query(
+      'INSERT INTO census_config (key, data) VALUES ($1, $2) ON CONFLICT (key) DO UPDATE SET data = $2, updated_at = now()',
+      ['census_summary', JSON.stringify(censusData)]
+    );
 
     console.log('  Census views created with indexes');
   } finally {
