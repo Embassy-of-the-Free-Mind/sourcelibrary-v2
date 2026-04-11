@@ -59,7 +59,7 @@ async function probePaths(paths: string[]): Promise<ProbeResult[]> {
           });
           return {
             path,
-            cache: res.headers.get('x-vercel-cache'),
+            cache: res.headers.get('cf-cache-status') || res.headers.get('x-vercel-cache'),
             latency_ms: Date.now() - t,
             status: res.status,
           };
