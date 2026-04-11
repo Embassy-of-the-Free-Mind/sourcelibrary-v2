@@ -68,7 +68,8 @@ const ALL_KEYS = [
 ].filter(Boolean);
 
 // SDK clients — one per unique key for batch job inspection
-const SDK_CLIENTS = [...new Set(ALL_KEYS)].map(key => new GoogleGenAI({ apiKey: key }));
+const UNIQUE_KEYS = [...new Set(ALL_KEYS)];
+const SDK_CLIENTS = UNIQUE_KEYS.map(key => new GoogleGenAI({ apiKey: key }));
 
 if (!MONGODB_URI) { console.error('MONGODB_URI not set'); process.exit(1); }
 if (ALL_KEYS.length === 0) { console.error('No GEMINI_API_KEY* set'); process.exit(1); }
@@ -207,57 +208,49 @@ function parseMultiPageOcr(text) {
 
 // ── Gemini API ──
 
+/**
+ * Get batch job data via SDK. Tries all keys (jobs are key-scoped).
+ * Returns { sdkJob, apiKey, keyIndex } or null if not found.
+ * The apiKey is needed for result file download (SDK download doesn't work for batch results).
+ */
 async function getJobData(jobName) {
-  // Use raw REST — the response format is relied upon by extractResults() downstream.
-  // SDK is used for list/cancel operations only.
-  for (const key of ALL_KEYS) {
+  for (let i = 0; i < SDK_CLIENTS.length; i++) {
     try {
-      const url = `${GEMINI_API_BASE}/${jobName}?key=${key}`;
-      const resp = await fetch(url);
-      if (resp.ok) return { data: await resp.json(), key };
-      const errText = await resp.text();
-      if (resp.status === 404 || errText.includes('not found')) continue;
-    } catch (_) { /* try next key */ }
+      const sdkJob = await SDK_CLIENTS[i].batches.get({ name: jobName });
+      if (sdkJob) return { sdkJob, apiKey: UNIQUE_KEYS[i], keyIndex: i };
+    } catch (e) {
+      const msg = e.message || '';
+      if (msg.includes('not found') || msg.includes('NOT_FOUND') || msg.includes('404')) continue;
+      // Other errors (network, etc) — try next key
+    }
   }
   return null;
 }
 
-function getJobState(geminiData) {
-  return geminiData.metadata?.state || geminiData.state || 'UNKNOWN';
+/**
+ * Get job state from SDK response. SDK normalizes to JOB_STATE_* already.
+ */
+function getJobState(sdkJob) {
+  return sdkJob.state || 'UNKNOWN';
 }
 
-function normalizeState(state) {
-  const map = {
-    'BATCH_STATE_SUCCEEDED': 'JOB_STATE_SUCCEEDED',
-    'BATCH_STATE_PENDING': 'JOB_STATE_PENDING',
-    'BATCH_STATE_RUNNING': 'JOB_STATE_RUNNING',
-    'BATCH_STATE_FAILED': 'JOB_STATE_FAILED',
-    'BATCH_STATE_CANCELLED': 'JOB_STATE_CANCELLED',
-    'SUCCEEDED': 'JOB_STATE_SUCCEEDED',
-    'PENDING': 'JOB_STATE_PENDING',
-    'RUNNING': 'JOB_STATE_RUNNING',
-    'FAILED': 'JOB_STATE_FAILED',
-    'CANCELLED': 'JOB_STATE_CANCELLED',
-  };
-  return map[state] || state;
-}
-
-async function extractResults(geminiData, apiKey) {
-  // File-based output
-  const responsesFile = geminiData.metadata?.output?.responsesFile || geminiData.metadata?.destFile;
-  if (responsesFile) {
+/**
+ * Download and parse batch results. Uses raw fetch because SDK files.download()
+ * doesn't work for batch result files.
+ */
+async function extractResults(sdkJob, apiKey) {
+  // File-based output — SDK returns dest.fileName
+  const fileName = sdkJob.dest?.fileName;
+  if (fileName) {
     const fileResp = await fetch(
-      `https://generativelanguage.googleapis.com/download/v1beta/${responsesFile}:download?alt=media&key=${apiKey}`
+      `${GEMINI_API_BASE}/${fileName}:download?alt=media&key=${apiKey}`
     );
     if (!fileResp.ok) throw new Error(`Failed to download results file: ${await fileResp.text()}`);
     const text = await fileResp.text();
     return text.trim().split('\n').filter(l => l.trim()).map(l => JSON.parse(l));
   }
-  // Inline responses (check multiple possible locations)
-  const inline =
-    geminiData.metadata?.output?.inlinedResponses?.inlinedResponses ||
-    geminiData.response?.inlinedResponses ||
-    geminiData.dest?.inlinedResponses;
+  // Inline responses
+  const inline = sdkJob.dest?.inlinedResponses;
   return inline || [];
 }
 
@@ -269,16 +262,14 @@ async function processOneJob(db, job) {
 
   const result = await getJobData(jobName);
   if (!result) return { status: 'not_found', jobName };
-  const { data: geminiData, key: workingKey } = result;
-  const rawState = getJobState(geminiData);
-  const state = normalizeState(rawState);
+  const { sdkJob, apiKey: workingKey } = result;
+  const state = getJobState(sdkJob);
 
   if (state === 'JOB_STATE_SUCCEEDED') {
-    const stats = geminiData.metadata?.batchStats || {};
-    console.log(`  Collecting: ${job.book_id} | ${job.type} | ${stats.successfulRequestCount || '?'}/${stats.requestCount || '?'} pages | ${rawState}`);
+    console.log(`  Collecting: ${job.book_id} | ${job.type} | ${state}`);
     if (DRY_RUN) return { status: 'would_collect', bookId: job.book_id };
 
-    const responses = await extractResults(geminiData, workingKey);
+    const responses = await extractResults(sdkJob, workingKey);
     let successCount = 0;
     let failCount = 0;
     const now = new Date();
@@ -583,11 +574,15 @@ async function processOneJob(db, job) {
     };
 
   } else if (state === 'JOB_STATE_PENDING' || state === 'JOB_STATE_RUNNING') {
-    // Check for stale jobs — if PENDING for >24 hours with no progress, cancel and let orchestrator retry
-    // Note: Flash Lite batches routinely take 8-9h. Previous 6h timeout was killing valid jobs.
-    const STALE_HOURS = 24;
+    // Stale detection: 24h flat timeout for PENDING, or 12h with no progress for RUNNING
     const jobAge = (Date.now() - new Date(job.created_at).getTime()) / 3600000;
-    if (state === 'JOB_STATE_PENDING' && jobAge > STALE_HOURS) {
+    const stats = sdkJob.batchStats || {};
+    const pendingCount = parseInt(stats.pendingRequestCount || '0');
+    const totalCount = parseInt(stats.requestCount || '0');
+    const hasProgress = totalCount > 0 && pendingCount < totalCount;
+    const isStale = (state === 'JOB_STATE_PENDING' && jobAge > 24)
+      || (state === 'JOB_STATE_RUNNING' && jobAge > 12 && !hasProgress);
+    if (isStale) {
       console.log(`  Stale PENDING job (${jobAge.toFixed(1)}h old): ${job.job_name || job.gemini_job_name} — cancelling`);
       if (!DRY_RUN) {
         // Cancel the Gemini job via SDK
@@ -621,10 +616,10 @@ async function processOneJob(db, job) {
     if (!DRY_RUN) {
       await db.collection('batch_jobs').updateOne(
         { _id: job._id },
-        { $set: { status: 'failed', gemini_state: state, error: `Gemini state: ${rawState}`, updated_at: new Date() } }
+        { $set: { status: 'failed', gemini_state: state, error: `Gemini state: ${state}`, updated_at: new Date() } }
       );
     }
-    return { status: 'failed', state: rawState, bookId: job.book_id, bookIds: job.book_ids || [job.book_id], type: job.type };
+    return { status: 'failed', state, bookId: job.book_id, bookIds: job.book_ids || [job.book_id], type: job.type };
   }
 }
 
@@ -1164,10 +1159,9 @@ async function run() {
       );
 
       if (!result) continue;
-      const state = getJobState(result.data);
-      const normalized = normalizeState(state);
+      const state = getJobState(result.sdkJob);
 
-      if (normalized !== 'JOB_STATE_SUCCEEDED') continue;
+      if (state !== 'JOB_STATE_SUCCEEDED') continue;
 
       // This job actually succeeded on Gemini! Re-process it.
       console.log(`  [recovery] FOUND: ${job.book_id} | ${job.job_name} | ${job.page_count} pages`);
