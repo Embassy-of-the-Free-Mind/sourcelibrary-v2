@@ -42,7 +42,7 @@ const SQS_IMAGE_EXTRACTION_QUEUE_URL = process.env.SQS_PAGE_IMAGE_EXTRACTION_QUE
 // Gemini Batch API config (for direct OCR submission, bypassing Vercel)
 const GEMINI_API_BASE = 'https://generativelanguage.googleapis.com/v1beta';
 const OCR_MODEL_FLASH = 'gemini-3-flash-preview';
-const OCR_MODEL_LITE = 'gemini-3.1-flash-lite-preview';
+const OCR_MODEL_LITE = 'gemini-2.0-flash-lite'; // Temporary fallback — gemini-3.1-flash-lite-preview 429'd on batch creation since 2026-04-10
 function getOcrModelForBook(book) {
   // A/B tested 2026-03-28: lite produces identical OCR on BPH books (2-4% char diff,
   // indistinguishable from normal variation). 50% cost savings, 5-7x faster.
