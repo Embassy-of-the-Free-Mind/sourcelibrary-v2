@@ -1079,12 +1079,27 @@ async function main() {
       book_id: { $nin: [...bookIds] },
     }).sort({ created_at: 1 }).limit(CONCURRENCY - books.length).project({ book_id: 1 }).toArray();
     if (orphanJobs.length > 0) {
+      // Exclude books that are already translated or past translation
+      const DONE_STATUSES = ['needs_attention', 'complete', 'failed', 'translate_complete', 'summarizing', 'summary_indexed', 'chapters', 'chapters_complete'];
+      const orphanBookIds = orphanJobs.map(j => j.book_id);
       const orphanBooks = await db.collection('books')
-        .find({ id: { $in: orphanJobs.map(j => j.book_id) }, 'pipeline_auto.status': { $nin: ['needs_attention', 'complete', 'failed'] } })
+        .find({ id: { $in: orphanBookIds }, 'pipeline_auto.status': { $nin: DONE_STATUSES } })
         .project(proj).toArray();
+      const resumedIds = new Set(orphanBooks.map(b => b.id));
       books = [...books, ...orphanBooks.filter(b => !bookIds.has(b.id))].slice(0, CONCURRENCY);
       if (orphanBooks.length > 0) {
         console.log(`[TRANSLATE] Resumed ${orphanBooks.length} books with orphaned jobs`);
+      }
+      // Cancel orphan jobs for books that are already done (prevents infinite re-link loop)
+      const staleOrphanIds = orphanBookIds.filter(id => !resumedIds.has(id));
+      if (staleOrphanIds.length > 0) {
+        const cancelled = await db.collection('jobs').updateMany(
+          { type: 'translation', status: { $in: ['pending', 'processing'] }, book_id: { $in: staleOrphanIds } },
+          { $set: { status: 'cancelled', cancelled_at: new Date(), cancel_reason: 'orphan-book-already-done' } },
+        );
+        if (cancelled.modifiedCount > 0) {
+          console.log(`[TRANSLATE] Cancelled ${cancelled.modifiedCount} orphan jobs for already-done books`);
+        }
       }
     }
   }
