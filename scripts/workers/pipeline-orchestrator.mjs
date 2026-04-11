@@ -112,7 +112,7 @@ const ONLY_PHASE = phaseIdx >= 0 ? parseFloat(args[phaseIdx + 1]) : null;
 let ENROLL_LIMIT = 100;
 let ARCHIVE_LIMIT = 500;
 let OCR_SUBMIT_LIMIT = 200;
-const MAX_ACTIVE_BATCH_OCR = 500; // Gemini Batch API is resilient
+const MAX_ACTIVE_BATCH_OCR = 60; // Gemini concurrent batch limit is 100 total (OCR + images). Keep headroom for image extraction.
 let METADATA_ENRICH_LIMIT = 50;
 let TRANSLATE_SUBMIT_LIMIT = 50;
 let MAX_INFLIGHT_TRANSLATIONS = 60; // Total books in translate_submitted — caps concurrent workers
