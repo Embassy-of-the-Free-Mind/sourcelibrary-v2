@@ -89,7 +89,7 @@ const WORKERS = [
   {
     name: 'pipeline-ocr-submit',
     cmd: 'node scripts/workers/pipeline-orchestrator.mjs --phase 2',
-    lock: '/tmp/sl-ocr-submit.lock',
+    lock: '/tmp/sl-pipeline.lock', // Share lock with main orchestrator — both run phase 2 (OCR submit)
     connections: 5,
     tier: 1,
     interval: 600,      // every 10 min
