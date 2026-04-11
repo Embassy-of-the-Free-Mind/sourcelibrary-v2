@@ -18,6 +18,7 @@
 
 import { MongoClient } from 'mongodb';
 import { randomBytes } from 'crypto';
+import { GoogleGenAI } from '@google/genai';
 import { logUsageAsync } from './lib/supabase-usage-logger.mjs';
 
 /**
@@ -65,6 +66,9 @@ const ALL_KEYS = [
   ...Array.from({ length: 9 }, (_, i) => process.env[`GEMINI_API_KEY_${i + 2}`]),
   process.env.GEMINI_API_KEY_TIER3,
 ].filter(Boolean);
+
+// SDK clients — one per unique key for batch job inspection
+const SDK_CLIENTS = [...new Set(ALL_KEYS)].map(key => new GoogleGenAI({ apiKey: key }));
 
 if (!MONGODB_URI) { console.error('MONGODB_URI not set'); process.exit(1); }
 if (ALL_KEYS.length === 0) { console.error('No GEMINI_API_KEY* set'); process.exit(1); }
@@ -204,6 +208,8 @@ function parseMultiPageOcr(text) {
 // ── Gemini API ──
 
 async function getJobData(jobName) {
+  // Use raw REST — the response format is relied upon by extractResults() downstream.
+  // SDK is used for list/cancel operations only.
   for (const key of ALL_KEYS) {
     try {
       const url = `${GEMINI_API_BASE}/${jobName}?key=${key}`;
@@ -584,10 +590,12 @@ async function processOneJob(db, job) {
     if (state === 'JOB_STATE_PENDING' && jobAge > STALE_HOURS) {
       console.log(`  Stale PENDING job (${jobAge.toFixed(1)}h old): ${job.job_name || job.gemini_job_name} — cancelling`);
       if (!DRY_RUN) {
-        // Cancel the Gemini job
+        // Cancel the Gemini job via SDK
         try {
-          const cancelUrl = `${GEMINI_API_BASE}/${job.job_name || job.gemini_job_name}:cancel?key=${ALL_KEYS[0]}`;
-          await fetch(cancelUrl, { method: 'POST' });
+          const jobName = job.job_name || job.gemini_job_name;
+          for (const client of SDK_CLIENTS) {
+            try { await client.batches.cancel({ name: jobName }); break; } catch (_) { /* try next key */ }
+          }
         } catch (_) { /* best effort */ }
 
         await db.collection('batch_jobs').updateOne(
