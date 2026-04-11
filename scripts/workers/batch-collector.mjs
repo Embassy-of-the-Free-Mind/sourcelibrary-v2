@@ -822,6 +822,128 @@ async function advancePipelineStatus(db, bookId, jobType) {
   }
 }
 
+// ── Batch Health Probe ──
+
+/**
+ * Reconcile DB batch_jobs state with real Gemini-side state.
+ * - Counts active jobs on each Gemini key via SDK batches.list()
+ * - Detects DB zombies (pending in DB, no gemini_job_name)
+ * - Detects Gemini orphans (active on Gemini, not tracked in DB) and cancels them
+ * - Computes recent completion velocity
+ * - Returns metrics for logging and system_config persistence
+ */
+async function reconcileBatchState(db) {
+  const activeStates = new Set(['JOB_STATE_PENDING', 'JOB_STATE_RUNNING']);
+  const result = {
+    geminiActive: 0,
+    geminiActiveByKey: [],
+    dbActive: 0,
+    dbZombies: 0,
+    orphansCancelled: 0,
+    recentCompletions1h: 0,
+    recentCompletions6h: 0,
+    recentPagesSaved1h: 0,
+    recentPagesSaved6h: 0,
+    healthy: true,
+    issues: [],
+  };
+
+  // 1. Count real Gemini active jobs per key
+  const geminiJobNames = new Set();
+  for (let i = 0; i < SDK_CLIENTS.length; i++) {
+    let keyActive = 0;
+    try {
+      const pager = await SDK_CLIENTS[i].batches.list({ config: { pageSize: 100 } });
+      let consecutiveInactive = 0;
+      for await (const job of pager) {
+        if (activeStates.has(job.state)) {
+          keyActive++;
+          if (job.name) geminiJobNames.add(job.name);
+          consecutiveInactive = 0;
+        } else {
+          consecutiveInactive++;
+          if (consecutiveInactive >= 50) break;
+        }
+      }
+    } catch (err) {
+      result.issues.push(`Key ${i} list failed: ${err.message?.substring(0, 80)}`);
+    }
+    result.geminiActiveByKey.push(keyActive);
+    result.geminiActive += keyActive;
+  }
+
+  // 2. Count DB active jobs and detect zombies
+  const dbActiveJobs = await db.collection('batch_jobs').find({
+    status: { $in: ['pending', 'processing', 'JOB_STATE_PENDING', 'JOB_STATE_RUNNING'] },
+  }).project({ _id: 1, job_name: 1, gemini_job_name: 1, status: 1, created_at: 1 }).toArray();
+
+  result.dbActive = dbActiveJobs.length;
+
+  // Zombies: in DB as active but no job_name (never submitted to Gemini)
+  const zombies = dbActiveJobs.filter(j => !j.job_name && !j.gemini_job_name);
+  result.dbZombies = zombies.length;
+
+  // Auto-cancel DB zombies older than 1 hour
+  if (zombies.length > 0) {
+    const oneHourAgo = new Date(Date.now() - 3600000);
+    const staleZombies = zombies.filter(z => new Date(z.created_at) < oneHourAgo);
+    if (staleZombies.length > 0) {
+      await db.collection('batch_jobs').updateMany(
+        { _id: { $in: staleZombies.map(z => z._id) } },
+        { $set: { status: 'cancelled', cancelled_at: new Date(), cancel_reason: 'batch-health: zombie (no gemini_job_name, >1h old)' } }
+      );
+      result.dbZombies = staleZombies.length;
+      result.issues.push(`Auto-cancelled ${staleZombies.length} DB zombie jobs`);
+    }
+  }
+
+  // 3. Detect Gemini orphans (active on Gemini, not in DB) and cancel them
+  const dbJobNames = new Set(dbActiveJobs.map(j => j.job_name || j.gemini_job_name).filter(Boolean));
+  const orphanNames = [...geminiJobNames].filter(name => !dbJobNames.has(name));
+  if (orphanNames.length > 0) {
+    for (const name of orphanNames) {
+      for (const client of SDK_CLIENTS) {
+        try { await client.batches.cancel({ name }); result.orphansCancelled++; break; } catch (_) {}
+      }
+    }
+    if (result.orphansCancelled > 0) {
+      result.issues.push(`Cancelled ${result.orphansCancelled} Gemini orphans`);
+    }
+  }
+
+  // 4. Recent completion velocity
+  const now = Date.now();
+  result.recentCompletions1h = await db.collection('batch_jobs').countDocuments({
+    status: { $in: ['completed', 'saved'] }, updated_at: { $gte: new Date(now - 3600000) }
+  });
+  result.recentCompletions6h = await db.collection('batch_jobs').countDocuments({
+    status: { $in: ['completed', 'saved'] }, updated_at: { $gte: new Date(now - 6 * 3600000) }
+  });
+  result.recentPagesSaved1h = await db.collection('pages').countDocuments({
+    'ocr.updated_at': { $gte: new Date(now - 3600000) }
+  });
+  result.recentPagesSaved6h = await db.collection('pages').countDocuments({
+    'ocr.updated_at': { $gte: new Date(now - 6 * 3600000) }
+  });
+
+  // 5. Health assessment
+  if (result.geminiActive > 80) {
+    result.healthy = false;
+    result.issues.push(`Gemini active jobs (${result.geminiActive}) near limit (100)`);
+  }
+  if (result.dbZombies > 10) {
+    result.healthy = false;
+    result.issues.push(`${result.dbZombies} DB zombie jobs`);
+  }
+  if (result.geminiActive > 0 && result.recentCompletions1h === 0 && result.recentPagesSaved1h === 0) {
+    // Jobs are active but nothing completing — possible freeze
+    result.healthy = false;
+    result.issues.push(`${result.geminiActive} Gemini jobs active but 0 completions in last hour`);
+  }
+
+  return result;
+}
+
 // ── Main ──
 
 async function run() {
@@ -837,6 +959,21 @@ async function run() {
     await client.close();
     process.exit(0);
   }
+
+  // ── Batch Health Probe: reconcile DB vs Gemini state ──
+  // Runs every collector cycle. Detects orphans (in Gemini but not DB, or vice versa),
+  // auto-cancels Gemini orphans, and writes metrics for the enrichment snapshot.
+  const batchHealth = await reconcileBatchState(db);
+  console.log(`[batch-health] Gemini active: ${batchHealth.geminiActive} | DB active: ${batchHealth.dbActive} | Orphans cancelled: ${batchHealth.orphansCancelled}`);
+
+  // Persist batch health for /status and enrichment snapshot
+  try {
+    await db.collection('system_config').updateOne(
+      { _id: 'batch_health' },
+      { $set: { ...batchHealth, updated_at: new Date() } },
+      { upsert: true }
+    );
+  } catch (_) { /* non-blocking */ }
 
   // Find all pending/processing batch jobs
   const pendingJobs = await db.collection('batch_jobs')
@@ -1152,6 +1289,7 @@ async function run() {
     nameless_reaped: namelessReaped,
     zombies_reaped: zombiesReaped,
     ghosts_cleaned: ghostsCleaned,
+    batch_health: batchHealth,
   }, errorMessages);
 
   await client.close();
