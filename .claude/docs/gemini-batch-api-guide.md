@@ -159,7 +159,7 @@ const zombieResult = await db.collection('jobs').updateMany(
 | Zombie reaper threshold | 6 hours | collector:1061 |
 | File cleanup age | 1 hour | collector:1158 |
 | Write throttle | 25 ops per 200ms | collector bulk writes |
-| Unique API keys | 2 (deduped from 3 env vars) | orchestrator:998 |
+| Unique API keys | 3 (deduped from 4 env vars) | orchestrator:998 |
 | Hallucination guard | Skip >25KB output | collector |
 | Default OCR model (non-BPH) | gemini-3.1-flash-lite-preview | ai-models.ts |
 | Default OCR model (BPH) | gemini-3-flash-preview | ai-models.ts |
@@ -188,19 +188,21 @@ const zombieResult = await db.collection('jobs').updateMany(
 ### 1. The "Both Projects Blocked" Deadlock
 When Project A is 429'd on File uploads and Project B on batch creation (or vice versa), there's no working path. The pipeline just stops until one project's cooldown expires (12-24h).
 
-**Possible mitigation:** Add a third GCP project. The code already supports N keys via `new Set()` dedup. Just add another env var.
+**Status: MITIGATED (2026-04-11).** Third GCP project (`GEMINI_API_KEY_3`) added. All 3 projects would need to be blocked simultaneously, which is much less likely.
 
 ### 2. Batch Creation Limit (~700/project)
-This is the single biggest throughput bottleneck. At 250 pages/batch and 700 creations/project/day, that's ~350K pages/day across 2 projects. Sounds like a lot, but burst imports can hit it.
+This is the single biggest throughput bottleneck. At 250 pages/batch and 700 creations/project/day, that's ~525K pages/day across 3 projects. Sounds like a lot, but burst imports can hit it.
 
 **Mitigations already in place:**
 - OCR batch size raised to 250 (from 75)
 - Cross-book pooling for images
 - Min-batch-size gate (won't submit tiny batches)
+- 3 GCP projects for round-robin (added 2026-04-11)
 
-**Possible improvement:** Could the OCR batch size go even higher? The current 250 limit was chosen to stay under the ~20MB JSONL file limit for text-only OCR. Image-heavy books might need smaller batches.
+### ~~3. OOM on Large Book JSONL Construction~~
+**Status: FIXED (2026-04-11).** Books with 250+ large images (e.g. Patrologia Graeca, 500 pages) caused `Invalid string length` / heap OOM when building the JSONL string in memory. Fix: `buildJsonlFile()` streams JSONL lines to a temp file one at a time, freeing each image buffer after serialization. Upload uses `fs.createReadStream()` for streaming upload. Peak memory is now ~1 image + 1 JSON line, not 250 images + full JSONL string.
 
-### 3. 24-Hour Stale Timeout Is Very Long
+### 4. 24-Hour Stale Timeout Is Very Long
 A batch job stuck in PENDING for 24 hours before the collector cancels it means that book is blocked for a full day. Flash Lite can be slow, but 24h is conservative.
 
 **Trade-off:** Lower it to 12h and you risk cancelling jobs that would have completed. Gemini's SLA is "within 24 hours." The current 24h timeout matches the SLA exactly — which means in practice, some jobs are cancelled just as they'd complete.

@@ -27,6 +27,9 @@ import { S3Client, PutObjectCommand } from '@aws-sdk/client-s3';
 import { createHash } from 'crypto';
 import { execFile } from 'child_process';
 import { promisify } from 'util';
+import fs from 'fs';
+import os from 'os';
+import path from 'path';
 import { logUsage, logUsageAsync } from './lib/supabase-usage-logger.mjs';
 const execFileAsync = promisify(execFile);
 
@@ -1104,11 +1107,36 @@ async function createBatchJobInline(model, requests, displayName) {
 }
 
 /**
- * Upload JSONL content to Gemini File API for file-based batch submission.
- * Uses resumable upload protocol. Returns { name, uri } of uploaded file.
+ * Build JSONL as a temp file, writing one line at a time to avoid holding
+ * the entire string in memory. Frees each image buffer after serialization.
+ * Returns { filePath, fileSize } — caller must delete the file after upload.
  */
-async function uploadBatchFile(jsonlContent, displayName, apiKey) {
-  const contentLength = Buffer.byteLength(jsonlContent);
+function buildJsonlFile(chunk, requestBuilder) {
+  const tmpFile = path.join(os.tmpdir(), `sl-batch-${nanoid()}.jsonl`);
+  const fd = fs.openSync(tmpFile, 'w');
+  let totalBytes = 0;
+  for (let i = 0; i < chunk.length; i++) {
+    const line = JSON.stringify(requestBuilder(chunk[i]));
+    const buf = Buffer.from(line + (i < chunk.length - 1 ? '\n' : ''));
+    fs.writeSync(fd, buf);
+    totalBytes += buf.byteLength;
+    // Free the base64 image data immediately to reduce memory pressure
+    if (chunk[i].image) chunk[i].image.data = null;
+  }
+  fs.closeSync(fd);
+  return { filePath: tmpFile, fileSize: totalBytes };
+}
+
+/**
+ * Upload a file to Gemini File API for file-based batch submission.
+ * Uses resumable upload protocol with file streaming (no full-file buffer).
+ * Accepts either a file path (string) or content string for backwards compat.
+ */
+async function uploadBatchFile(filePathOrContent, displayName, apiKey) {
+  const isFilePath = typeof filePathOrContent === 'string' && fs.existsSync(filePathOrContent);
+  const contentLength = isFilePath
+    ? fs.statSync(filePathOrContent).size
+    : Buffer.byteLength(filePathOrContent);
 
   // Step 1: Start resumable upload (text/plain as workaround for Gemini JSONL bug)
   const startResponse = await fetch(
@@ -1134,7 +1162,8 @@ async function uploadBatchFile(jsonlContent, displayName, apiKey) {
   const uploadUrl = startResponse.headers.get('X-Goog-Upload-URL');
   if (!uploadUrl) throw new Error('No upload URL returned from File API');
 
-  // Step 2: Upload the content
+  // Step 2: Upload — stream from file or send string directly
+  const body = isFilePath ? fs.createReadStream(filePathOrContent) : filePathOrContent;
   const uploadResponse = await fetch(uploadUrl, {
     method: 'PUT',
     headers: {
@@ -1142,7 +1171,8 @@ async function uploadBatchFile(jsonlContent, displayName, apiKey) {
       'X-Goog-Upload-Command': 'upload, finalize',
       'X-Goog-Upload-Offset': '0',
     },
-    body: jsonlContent,
+    body,
+    duplex: 'half', // Required for streaming request bodies in Node 18+
   });
 
   if (!uploadResponse.ok) {
@@ -1357,9 +1387,9 @@ Output structure:
     let batchJob;
 
     if (useFileBased) {
-      // File-based: build JSONL, upload, submit one batch job per chunk
+      // File-based: stream JSONL to temp file to avoid OOM on large books
       console.log(`    Building JSONL for ${chunk.length} pages (file-based)...`);
-      const jsonlLines = chunk.map(item => JSON.stringify({
+      const { filePath: jsonlFile, fileSize } = buildJsonlFile(chunk, (item) => ({
         request: {
           contents: [{
             parts: [
@@ -1382,8 +1412,7 @@ Output structure:
         },
         metadata: { key: item.pageId },
       }));
-      const jsonlContent = jsonlLines.join('\n');
-      const jsonlSizeMB = (Buffer.byteLength(jsonlContent) / 1024 / 1024).toFixed(1);
+      const jsonlSizeMB = (fileSize / 1024 / 1024).toFixed(1);
       console.log(`    JSONL size: ${jsonlSizeMB} MB for ${chunk.length} pages`);
 
       // Upload JSONL + create batch — both must use the same key (files are key-scoped).
@@ -1395,7 +1424,7 @@ Output structure:
         const uploadKey = getGeminiApiKey(uki);
         let fileResult;
         try {
-          fileResult = await uploadBatchFile(jsonlContent, displayName, uploadKey);
+          fileResult = await uploadBatchFile(jsonlFile, displayName, uploadKey);
           uploadKeyIndex = uki;
           console.log(`    Uploaded file: ${fileResult.name} (key ${uki})`);
         } catch (uploadErr) {
@@ -1424,6 +1453,8 @@ Output structure:
           throw batchErr;
         }
       }
+      // Clean up temp JSONL file
+      try { fs.unlinkSync(jsonlFile); } catch (_) {}
       if (!batchJob) throw new Error('ALL_KEYS_QUOTA_EXHAUSTED');
     } else {
       // Inline: small batch, embed base64 directly in request body
@@ -1630,7 +1661,7 @@ async function submitImageExtractionBatch(db, book, candidatePages) {
 
     if (useFileBased) {
       console.log(`    Building JSONL for ${chunk.length} pages (image extraction, file-based)...`);
-      const jsonlLines = chunk.map(item => JSON.stringify({
+      const { filePath: jsonlFile, fileSize } = buildJsonlFile(chunk, (item) => ({
         request: {
           contents: [{
             parts: [
@@ -1653,7 +1684,7 @@ async function submitImageExtractionBatch(db, book, candidatePages) {
         },
         metadata: { key: item.pageId },
       }));
-      const jsonlContent = jsonlLines.join('\n');
+      console.log(`    JSONL size: ${(fileSize / 1024 / 1024).toFixed(1)} MB for ${chunk.length} pages`);
 
       // Upload + create batch with same key (files are key-scoped). Round-robin across projects.
       let uploadKeyIndex = -1;
@@ -1663,7 +1694,7 @@ async function submitImageExtractionBatch(db, book, candidatePages) {
         const uploadKey = getGeminiApiKey(uki);
         let fileResult;
         try {
-          fileResult = await uploadBatchFile(jsonlContent, displayName, uploadKey);
+          fileResult = await uploadBatchFile(jsonlFile, displayName, uploadKey);
           uploadKeyIndex = uki;
           console.log(`    Uploaded file: ${fileResult.name} (key ${uki})`);
         } catch (uploadErr) {
@@ -1691,6 +1722,7 @@ async function submitImageExtractionBatch(db, book, candidatePages) {
           throw batchErr;
         }
       }
+      try { fs.unlinkSync(jsonlFile); } catch (_) {}
       if (!batchJob) throw new Error('ALL_KEYS_QUOTA_EXHAUSTED');
     } else {
       const inlineRequests = chunk.map(item => ({
@@ -1855,7 +1887,7 @@ async function submitCrossBookImageBatches(db, bookItems) {
     const displayName = `pipeline-images-cross-${chunkBookIds.length}books-${childJobId}`;
 
     console.log(`    Building JSONL for ${chunk.length} pages (cross-book batch, ${chunkBookIds.length} books)...`);
-    const jsonlLines = chunk.map(item => JSON.stringify({
+    const { filePath: jsonlFile, fileSize } = buildJsonlFile(chunk, (item) => ({
       request: {
         contents: [{
           parts: [
@@ -1878,7 +1910,7 @@ async function submitCrossBookImageBatches(db, bookItems) {
       },
       metadata: { key: item.pageId },
     }));
-    const jsonlContent = jsonlLines.join('\n');
+    console.log(`    JSONL size: ${(fileSize / 1024 / 1024).toFixed(1)} MB for ${chunk.length} pages`);
 
     // Upload + create batch with same key (files are key-scoped). Round-robin across projects.
     let batchJob = null;
@@ -1888,7 +1920,7 @@ async function submitCrossBookImageBatches(db, bookItems) {
       const uploadKey = getGeminiApiKey(uki);
       let fileResult;
       try {
-        fileResult = await uploadBatchFile(jsonlContent, displayName, uploadKey);
+        fileResult = await uploadBatchFile(jsonlFile, displayName, uploadKey);
         console.log(`    Uploaded file: ${fileResult.name} (key ${uki})`);
       } catch (uploadErr) {
         if (uploadErr.message.includes('429') || uploadErr.message.includes('quota')) {
@@ -1915,6 +1947,7 @@ async function submitCrossBookImageBatches(db, bookItems) {
         throw batchErr;
       }
     }
+    try { fs.unlinkSync(jsonlFile); } catch (_) {}
     if (!batchJob) throw new Error('ALL_KEYS_QUOTA_EXHAUSTED');
 
     // Record in batch_jobs — use book_ids array for cross-book, book_id for backward compat
