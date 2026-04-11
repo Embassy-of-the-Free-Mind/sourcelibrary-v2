@@ -992,15 +992,17 @@ function shouldRun(phase) {
 
 // ── Gemini Batch API helpers (direct OCR submission, no Vercel) ──
 
-// Two GCP projects, two unique keys. GEMINI_API_KEY_TIER3 === GEMINI_API_KEY_2 (same project B).
+// Three GCP projects. GEMINI_API_KEY_TIER3 === GEMINI_API_KEY_2 (same project B).
+// GEMINI_API_KEY_3 is a third project (breaks the "both projects blocked" deadlock).
 // Deduplicated to avoid wasting retry attempts on the same project.
 // Batch rate limits are per-project AND per-endpoint (File API upload vs batchGenerateContent).
 const GEMINI_BATCH_KEYS = [...new Set([
   process.env.GEMINI_API_KEY_TIER3,
   process.env.GEMINI_API_KEY,
   process.env.GEMINI_API_KEY_2,
+  process.env.GEMINI_API_KEY_3,
 ].filter(k => !!k))];
-console.log(`  Batch API: ${GEMINI_BATCH_KEYS.length} unique keys (from ${[process.env.GEMINI_API_KEY_TIER3, process.env.GEMINI_API_KEY, process.env.GEMINI_API_KEY_2].filter(Boolean).length} env vars)`);
+console.log(`  Batch API: ${GEMINI_BATCH_KEYS.length} unique keys`);
 
 let _batchKeyCounter = 0;
 function getGeminiApiKey(keyIndex) {

@@ -61,6 +61,7 @@ const KEY_ARG = getArg('key');
 const uniqueKeys = [...new Set([
   process.env.GEMINI_API_KEY_TIER3,
   process.env.GEMINI_API_KEY_2,
+  process.env.GEMINI_API_KEY_3,
   process.env.GEMINI_API_KEY,
 ].filter(Boolean))];
 const NUM_KEYS = uniqueKeys.length;
