@@ -28,14 +28,26 @@ interface LatencyTrend {
   computed_at: string;
 }
 
+interface CategoryStats {
+  hit: number;
+  miss: number;
+  stale: number;
+  total: number;
+}
+
 interface CacheProbe {
   probed_at: string;
+  warmth?: number;
   total: number;
   hits: number;
   misses: number;
   stale: number;
-  revalidated: number;
-  hit_rate: number;
+  revalidated?: number;
+  errors?: number;
+  hit_rate?: number;
+  by_category?: Record<string, CategoryStats>;
+  slowest?: { path: string; ms: number; cache: string | null }[];
+  failed?: { path: string; status: number; error?: string }[];
 }
 
 interface PipelineInfo {
@@ -291,26 +303,40 @@ export default async function StatusPage() {
             )}
           </Section>
 
-          {/* Cache */}
-          <Section title="Cache">
+          {/* Cache Warmth */}
+          <Section title="Cache Warmth">
             {cache ? (
               <>
+                <WarmthGauge warmth={cache.warmth ?? (cache.hit_rate != null ? Math.round(cache.hit_rate * 100) : 0)} />
                 <Row
-                  label="Hit Rate"
-                  value={`${Math.round(cache.hit_rate * 100)}% (${cache.hits}/${cache.total})`}
-                  state={cache.hit_rate >= 0.5 ? 'ok' : cache.hit_rate >= 0.25 ? 'degraded' : 'down'}
+                  label="Overall"
+                  value={`${cache.hits} hit / ${cache.misses} miss / ${cache.stale} stale`}
+                  state={
+                    (cache.warmth ?? (cache.hit_rate != null ? cache.hit_rate * 100 : 0)) >= 50 ? 'ok'
+                    : (cache.warmth ?? 0) >= 25 ? 'degraded'
+                    : 'down'
+                  }
                 />
-                <Row
-                  label="Breakdown"
-                  value={`${cache.hits} hit / ${cache.misses} miss / ${cache.stale} stale / ${cache.revalidated} revalidated`}
-                  state="ok"
-                />
+                {cache.by_category && Object.entries(cache.by_category).map(([cat, stats]) => {
+                  const pct = stats.total > 0 ? Math.round((stats.hit / stats.total) * 100) : 0;
+                  return (
+                    <Row
+                      key={cat}
+                      label={cat.replace(/_/g, ' ')}
+                      value={`${pct}% (${stats.hit}/${stats.total})`}
+                      state={pct >= 50 ? 'ok' : pct >= 25 ? 'degraded' : 'down'}
+                    />
+                  );
+                })}
+                {cache.errors != null && cache.errors > 0 && (
+                  <Row label="Errors" value={String(cache.errors)} state="degraded" />
+                )}
                 <div style={{ fontSize: 11, color: '#6b7280' }}>
                   Last probed: {formatTime(cache.probed_at)}
                 </div>
               </>
             ) : (
-              <div style={{ color: '#6b7280', fontSize: 12 }}>No cache probe data available</div>
+              <div style={{ color: '#6b7280', fontSize: 12 }}>No cache probe data yet — run POST /api/admin/cache-probe</div>
             )}
           </Section>
 
@@ -362,6 +388,31 @@ export default async function StatusPage() {
           <span style={{ margin: '0 8px' }}>|</span>
           Powered by Vercel + MongoDB Atlas
         </div>
+      </div>
+    </div>
+  );
+}
+
+function WarmthGauge({ warmth }: { warmth: number }) {
+  const color = warmth >= 70 ? '#22c55e' : warmth >= 40 ? '#eab308' : '#ef4444';
+  return (
+    <div style={{ marginBottom: 8 }}>
+      <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'baseline', marginBottom: 6 }}>
+        <span style={{ fontSize: 28, fontWeight: 700, color }}>{warmth}%</span>
+        <span style={{ fontSize: 11, color: '#6b7280' }}>
+          {warmth >= 70 ? 'Hot' : warmth >= 40 ? 'Warming' : 'Cold'}
+        </span>
+      </div>
+      <div style={{ width: '100%', height: 6, borderRadius: 3, backgroundColor: '#1f1f1f', overflow: 'hidden' }}>
+        <div
+          style={{
+            width: `${Math.min(warmth, 100)}%`,
+            height: '100%',
+            borderRadius: 3,
+            backgroundColor: color,
+            transition: 'width 0.5s ease',
+          }}
+        />
       </div>
     </div>
   );
