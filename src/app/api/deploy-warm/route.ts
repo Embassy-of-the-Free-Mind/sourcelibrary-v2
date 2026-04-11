@@ -93,6 +93,31 @@ export async function POST(request: NextRequest) {
   const baseUrl = 'https://sourcelibrary.org';
   const started = Date.now();
 
+  // 0. Purge Cloudflare cache so users see fresh content after deploy
+  let cfPurged = false;
+  const cfZoneId = process.env.CLOUDFLARE_ZONE_ID;
+  const cfToken = process.env.CLOUDFLARE_API_TOKEN;
+  if (cfZoneId && cfToken) {
+    try {
+      const purgeRes = await fetch(
+        `https://api.cloudflare.com/client/v4/zones/${cfZoneId}/purge_cache`,
+        {
+          method: 'POST',
+          headers: {
+            'Authorization': `Bearer ${cfToken}`,
+            'Content-Type': 'application/json',
+          },
+          body: JSON.stringify({ purge_everything: true }),
+          signal: AbortSignal.timeout(10_000),
+        }
+      );
+      const purgeData = await purgeRes.json();
+      cfPurged = purgeData.success === true;
+    } catch {
+      // Non-fatal — warming still proceeds
+    }
+  }
+
   // 1. Warm APIs (keep serverless hot)
   const apiResults = await warmBatch(baseUrl, API_ENDPOINTS, 3, 10_000);
 
@@ -156,6 +181,7 @@ export async function POST(request: NextRequest) {
   const failed = allResults.filter(r => r.status === 0 || r.status >= 400);
 
   return NextResponse.json({
+    cf_purged: cfPurged,
     warmed: allResults.length,
     failed: failed.length,
     books: bookPaths.length,
