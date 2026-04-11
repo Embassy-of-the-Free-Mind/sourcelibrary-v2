@@ -1066,6 +1066,28 @@ async function run() {
     console.error(`[recovery] Sweep error: ${e.message}`);
   }
 
+  // ── Nameless Batch Job Reaper: kill batch_jobs created but never submitted to Gemini ──
+  // These have no job_name/gemini_job_name — the Gemini API call failed after the DB insert.
+  // They block active-job counts and never resolve. Reap after 30 minutes.
+  let namelessReaped = 0;
+  try {
+    const thirtyMinAgo = new Date(Date.now() - 30 * 60 * 1000);
+    const namelessResult = await db.collection('batch_jobs').updateMany(
+      {
+        status: { $in: ['pending', 'processing'] },
+        created_at: { $lt: thirtyMinAgo },
+        $and: [
+          { $or: [{ job_name: { $exists: false } }, { job_name: null }, { job_name: '' }] },
+          { $or: [{ gemini_job_name: { $exists: false } }, { gemini_job_name: null }, { gemini_job_name: '' }] },
+        ],
+        parent_job_id: { $exists: false }, // Don't reap parent jobs (they never have job_name)
+      },
+      { $set: { status: 'failed', error: 'Nameless: created in DB but never submitted to Gemini', updated_at: new Date() } }
+    );
+    namelessReaped = namelessResult.modifiedCount;
+    if (namelessReaped > 0) console.log(`\n[nameless-reaper] Failed ${namelessReaped} batch jobs with no Gemini job name (>30min old)`);
+  } catch (e) { console.error(`[nameless-reaper] Error: ${e.message}`); }
+
   // ── Zombie Reaper: cancel stale processing jobs (>6h no update) ──
   let zombiesReaped = 0;
   try {
@@ -1110,6 +1132,7 @@ async function run() {
   console.log(`Books updated: ${bookIdsToUpdate.size}`);
   if (recitationBooks.size > 0) console.log(`RECITATION resets: ${recitationBooks.size}`);
   if (recoveredJobs > 0) console.log(`Recovery: ${recoveredJobs} jobs (${recoveredPages} pages)`);
+  if (namelessReaped > 0) console.log(`Nameless reaped: ${namelessReaped}`);
   if (zombiesReaped > 0) console.log(`Zombies reaped: ${zombiesReaped}`);
   if (ghostsCleaned > 0) console.log(`Ghosts cleaned: ${ghostsCleaned}`);
   console.log(`Total time: ${totalElapsed}s`);
@@ -1126,6 +1149,7 @@ async function run() {
     parents_updated: parentIdsToUpdate.size,
     recovered_jobs: recoveredJobs,
     recovered_pages: recoveredPages,
+    nameless_reaped: namelessReaped,
     zombies_reaped: zombiesReaped,
     ghosts_cleaned: ghostsCleaned,
   }, errorMessages);
