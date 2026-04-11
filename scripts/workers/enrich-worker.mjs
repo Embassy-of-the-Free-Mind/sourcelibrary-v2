@@ -70,8 +70,9 @@ const RUN_PHASE_7 = phaseArg === 'all' || phaseArg === '7';
 const RUN_PHASE_7_5 = phaseArg === 'all' || phaseArg === '7.5';
 const RUN_PHASE_7_6 = phaseArg === 'all' || phaseArg === '7.6';
 const limitArg = args.find(a => a.startsWith('--limit='))?.split('=')[1];
-const PHASE_6_LIMIT = limitArg ? parseInt(limitArg) : 100;
-const PHASE_7_LIMIT = limitArg ? parseInt(limitArg) : 100;
+const PHASE_6_LIMIT = limitArg ? parseInt(limitArg) : 200;
+const PHASE_7_LIMIT = limitArg ? parseInt(limitArg) : 200;
+const BOOK_CONCURRENCY = 4; // Process multiple books in parallel within each phase
 const SINGLE_BOOK = args.find(a => a.startsWith('--book='))?.split('=')[1];
 
 // ── Gemini API keys ──
@@ -1144,8 +1145,8 @@ async function extractChaptersForBook(db, bookId) {
     }
   }
 
-  // Call Gemini
-  const modelId = DEFAULT_MODEL;
+  // Call Gemini — flash-lite is sufficient for structured chapter extraction
+  const modelId = LITE_MODEL;
   const model = getClient().getGenerativeModel({ model: modelId });
   const prompt = buildExtractionPrompt(
     book.display_title || book.title,
@@ -1286,27 +1287,32 @@ async function main() {
 
     console.log(`  Books ready: ${books.length}`);
 
-    for (const book of books) {
-      try {
-        if (DRY_RUN) { console.log(`  Would enrich: ${book.title}`); continue; }
-
-        await setPipelineStatus(db, book.id, 'summarizing');
-
-        await enrichBook(db, book);
-
-        await setPipelineStatus(db, book.id, 'summary_indexed', { 'pipeline_auto.retry_count': 0 });
-        revalidateBookPage(book.id).catch(() => {});
-        enriched++;
-      } catch (err) {
-        const retries = book.pipeline_auto?.retry_count || 0;
-        if (retries >= MAX_RETRIES) {
-          await markFailed(db, book.id, `Summary+Index: ${err.message}`, retries);
-        } else {
-          await setPipelineStatus(db, book.id, 'translate_complete', { 'pipeline_auto.retry_count': retries + 1 });
+    if (DRY_RUN) {
+      for (const book of books) console.log(`  Would enrich: ${book.title}`);
+    } else {
+      const queue = [...books];
+      const workers = Array.from({ length: Math.min(BOOK_CONCURRENCY, queue.length) }, async () => {
+        while (queue.length > 0) {
+          const book = queue.shift();
+          try {
+            await setPipelineStatus(db, book.id, 'summarizing');
+            await enrichBook(db, book);
+            await setPipelineStatus(db, book.id, 'summary_indexed', { 'pipeline_auto.retry_count': 0 });
+            revalidateBookPage(book.id).catch(() => {});
+            enriched++;
+          } catch (err) {
+            const retries = book.pipeline_auto?.retry_count || 0;
+            if (retries >= MAX_RETRIES) {
+              await markFailed(db, book.id, `Summary+Index: ${err.message}`, retries);
+            } else {
+              await setPipelineStatus(db, book.id, 'translate_complete', { 'pipeline_auto.retry_count': retries + 1 });
+            }
+            errors.push(`Summary+Index ${book.id}: ${err.message}`);
+            console.error(`  ERROR [${book.title}]:`, err.message);
+          }
         }
-        errors.push(`Summary+Index ${book.id}: ${err.message}`);
-        console.error(`  ERROR [${book.title}]:`, err.message);
-      }
+      });
+      await Promise.all(workers);
     }
     console.log(`  Enriched: ${enriched}`);
   }
@@ -1330,36 +1336,40 @@ async function main() {
 
     console.log(`  Books ready: ${books.length}`);
 
-    for (const book of books) {
-      try {
-        if ((book.pages_count || 0) < 10) {
-          if (!DRY_RUN) await setPipelineStatus(db, book.id, 'chapters_complete', { 'pipeline_auto.retry_count': 0 });
-          console.log(`  Skipped (< 10 pages): ${book.title}`);
-          continue;
+    if (DRY_RUN) {
+      for (const book of books) console.log(`  Would extract chapters: ${book.title}`);
+    } else {
+      const chQueue = [...books];
+      const chWorkers = Array.from({ length: Math.min(BOOK_CONCURRENCY, chQueue.length) }, async () => {
+        while (chQueue.length > 0) {
+          const book = chQueue.shift();
+          try {
+            if ((book.pages_count || 0) < 10) {
+              await setPipelineStatus(db, book.id, 'chapters_complete', { 'pipeline_auto.retry_count': 0 });
+              console.log(`  Skipped (< 10 pages): ${book.title}`);
+              continue;
+            }
+
+            await setPipelineStatus(db, book.id, 'chapters');
+            await extractChaptersForBook(db, book.id);
+            await setPipelineStatus(db, book.id, 'chapters_complete', { 'pipeline_auto.retry_count': 0 });
+            revalidateBookPage(book.id).catch(() => {});
+            chaptersExtracted++;
+          } catch (err) {
+            if (err.message?.includes('429') || err.message?.includes('RESOURCE_EXHAUSTED')) rotateKey();
+
+            const retries = book.pipeline_auto?.retry_count || 0;
+            if (retries >= MAX_RETRIES) {
+              await setPipelineStatus(db, book.id, 'chapters_complete', { 'pipeline_auto.retry_count': 0 });
+            } else {
+              await setPipelineStatus(db, book.id, 'summary_indexed', { 'pipeline_auto.retry_count': retries + 1 });
+            }
+            errors.push(`Chapters ${book.id}: ${err.message}`);
+            console.error(`  ERROR [${book.title}]:`, err.message);
+          }
         }
-
-        if (DRY_RUN) { console.log(`  Would extract chapters: ${book.title}`); continue; }
-
-        await setPipelineStatus(db, book.id, 'chapters');
-
-        await extractChaptersForBook(db, book.id);
-
-        await setPipelineStatus(db, book.id, 'chapters_complete', { 'pipeline_auto.retry_count': 0 });
-        revalidateBookPage(book.id).catch(() => {});
-        chaptersExtracted++;
-      } catch (err) {
-        if (err.message?.includes('429') || err.message?.includes('RESOURCE_EXHAUSTED')) rotateKey();
-
-        const retries = book.pipeline_auto?.retry_count || 0;
-        if (retries >= MAX_RETRIES) {
-          // Non-critical, skip
-          if (!DRY_RUN) await setPipelineStatus(db, book.id, 'chapters_complete', { 'pipeline_auto.retry_count': 0 });
-        } else {
-          if (!DRY_RUN) await setPipelineStatus(db, book.id, 'summary_indexed', { 'pipeline_auto.retry_count': retries + 1 });
-        }
-        errors.push(`Chapters ${book.id}: ${err.message}`);
-        console.error(`  ERROR [${book.title}]:`, err.message);
-      }
+      });
+      await Promise.all(chWorkers);
     }
     console.log(`  Chapters extracted: ${chaptersExtracted}`);
   }
