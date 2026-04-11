@@ -2567,7 +2567,7 @@ Reply with ONLY: {"is_spread": true} or {"is_spread": false}` },
       console.log('\n--- Phase 1.6: AI metadata classification ---');
 
       const metadataApiKey = process.env.GEMINI_API_KEY_TIER3 || process.env.GEMINI_API_KEY;
-      const metadataModel = 'gemini-3-flash-preview';
+      const metadataModel = OCR_MODEL_LITE; // flash-lite is sufficient for structured metadata extraction
       const MAX_METADATA_OCR_PAGES = 25;
       const MAX_TEXT_PER_PAGE = 2000;
       const METADATA_CATEGORIES = [
