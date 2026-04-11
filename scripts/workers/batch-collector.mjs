@@ -791,7 +791,7 @@ async function advancePipelineStatus(db, bookId, jobType) {
     }
   }
 
-  if (jobType === 'image_extraction' && status === 'images_submitted') {
+  if (jobType === 'image_extraction' && (status === 'images_submitted' || status === 'chapters_complete')) {
     // Check both book_id (legacy single-book) and book_ids (cross-book batches)
     const pendingImages = await db.collection('batch_jobs').countDocuments({
       $or: [
@@ -818,7 +818,7 @@ async function advancePipelineStatus(db, bookId, jobType) {
           },
         }
       );
-      console.log(`  Pipeline: ${bookId} images_submitted -> images_complete (${imgCount} images)`);
+      console.log(`  Pipeline: ${bookId} ${status} -> images_complete (${imgCount} images)`);
     }
   }
 }

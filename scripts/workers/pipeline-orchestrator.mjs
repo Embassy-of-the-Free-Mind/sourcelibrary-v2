@@ -3807,15 +3807,15 @@ Rules:
 
       if (USE_BATCH) {
         // ── Batch API path: submit via Gemini Batch API (same as OCR) ──
-        // Re-use geminiActiveJobs if available from Phase 2, otherwise query fresh
-        const geminiJobsForImages = geminiActiveJobs !== null ? geminiActiveJobs : await getActiveGeminiJobCount();
+        // Image extraction has its own budget — don't block on OCR's Gemini total.
+        // The Gemini API returns 429 on actual quota exhaustion, handled by key rotation.
         const activeBatchImageJobs = await db.collection('batch_jobs').countDocuments({
           type: 'image_extraction',
           status: { $in: ['pending', 'processing', 'JOB_STATE_PENDING', 'JOB_STATE_RUNNING'] },
         });
-        console.log(`  Active batch image jobs: ${activeBatchImageJobs}/${MAX_ACTIVE_IMAGE_JOBS} | Gemini total: ${geminiJobsForImages}/80`);
+        console.log(`  Active batch image jobs: ${activeBatchImageJobs}/${MAX_ACTIVE_IMAGE_JOBS}`);
 
-        if (activeBatchImageJobs < MAX_ACTIVE_IMAGE_JOBS && geminiJobsForImages < 80) {
+        if (activeBatchImageJobs < MAX_ACTIVE_IMAGE_JOBS) {
           const IMAGE_CANDIDATE_PAGE_TYPES = ['illustration', 'diagram', 'map', 'frontispiece', 'mixed'];
 
           const readyForImages = await db.collection('books')
