@@ -7,14 +7,14 @@
  *
  * Architecture:
  * - Picks up books in 'translate_submitted' status that have a job
- * - Translates pages in batches of BATCH_SIZE (default 5) for throughput
+ * - Translates pages in batches of BATCH_SIZE (default 8) for throughput
  * - Falls back to single-page on batch parse failures or errors
  * - Runs multiple books concurrently (up to CONCURRENCY cap)
  * - Writes translations + progress directly to MongoDB
  * - Rotates Gemini API keys on rate limit errors
  *
  * CLI flags:
- *   --batch-size=N   Pages per API call (default 5, set to 1 for single-page)
+ *   --batch-size=N   Pages per API call (default 8, set to 1 for single-page)
  *   --single-page    Force single-page mode (equivalent to --batch-size=1)
  *
  * The orchestrator (Phase 4) creates jobs and sets status to translate_submitted.
@@ -32,9 +32,9 @@ const CONCURRENCY = 40;          // Max books translating simultaneously
 const PAGES_PER_RUN = 8000;      // Global page cap per run (prevent runaway costs)
 const MAX_CONSECUTIVE_ERRORS = 5; // Per-book error threshold before giving up
 const RATE_LIMIT_BACKOFF_MS = 15000;
-const BATCH_SIZE = parseInt(process.argv.find(a => a.startsWith('--batch-size='))?.split('=')[1] || '5', 10);
+const BATCH_SIZE = parseInt(process.argv.find(a => a.startsWith('--batch-size='))?.split('=')[1] || '8', 10);
 const SINGLE_PAGE = process.argv.includes('--single-page');
-const MAX_BATCH_OCR_CHARS = 15000; // If total OCR text exceeds this, reduce batch size
+const MAX_BATCH_OCR_CHARS = 20000; // If total OCR text exceeds this, reduce batch size
 const MODEL_FLASH = 'gemini-3-flash-preview';
 const MODEL_LITE = 'gemini-3.1-flash-lite-preview';
 function getModelForBook(book) {
@@ -390,7 +390,7 @@ async function bulkWritePageTranslations(db, entries, book) {
   }));
   // Throttle writes to avoid IOPS spikes on Atlas M30
   const CHUNK_SIZE = 25;
-  const CHUNK_DELAY_MS = 200;
+  const CHUNK_DELAY_MS = 50;
   for (let i = 0; i < ops.length; i += CHUNK_SIZE) {
     const chunk = ops.slice(i, i + CHUNK_SIZE);
     await db.collection('pages').bulkWrite(chunk, { ordered: false });
