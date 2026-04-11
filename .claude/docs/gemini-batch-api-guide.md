@@ -299,20 +299,25 @@ The MEMORY.md index references these files as if they exist, but most were never
 | 2026-04-09 | Both projects rate-limited simultaneously | Different endpoints blocked on different projects | Wait for reset (no code fix possible) | — |
 | 2026-04-10 | Zombie jobs blocking pipeline | Jobs created in MongoDB without Gemini submission | Zombie reaper | #741 |
 | 2026-04-10 | OCR batch size tuning | 700 creation limit hit too fast at 75 pages/batch | Raise to 250 | commit fa38d0cc |
+| 2026-04-11 | Third GCP project added | Two-project deadlock | `GEMINI_API_KEY_3` across all files | PR #964 |
+| 2026-04-11 | OOM on large book JSONL | 250 pages × large images exceeds heap | Streaming JSONL via temp files | commit 3175df7b |
+| 2026-04-11 | Nameless batch jobs (DB-only) | Phantom jobs from failed submissions | 30-min reaper in collector | commit 04c5b4b2 |
+| 2026-04-11 | Duplicate OCR submissions | Race between orchestrator and phase-2 worker (different locks) | Shared lock file | commit e326b01b |
 
 ---
 
 ## Recommendations for Reliability Improvements
 
-**High impact, low effort:**
-1. **Paginate file cleanup** — add `nextPageToken` loop to `cleanupStaleFiles()` so it handles >100 ghost files
+**Done (2026-04-11 session):**
+1. ~~Paginate file cleanup~~ — DONE, `nextPageToken` loop added
+2. ~~Add a third GCP project~~ — DONE, `GEMINI_API_KEY_3` added across all files
+3. ~~OOM on large JSONL~~ — DONE, streaming to temp files
+4. ~~Nameless batch job reaper~~ — DONE, 30-min timeout
+5. ~~Duplicate OCR submission race~~ — DONE, shared lock file
+
+**Remaining:**
+1. **Migrate to `@google/genai` SDK** — SDK has `batches.get()`, `batches.list()`, `batches.cancel()`, `batches.delete()`. Current raw fetch code manually handles key rotation, state normalization, error parsing. SDK migration would reduce bugs from Gemini API format changes. Medium effort, worth a dedicated session.
 2. **Tighten stale detection** — check `stats.successCount` during RUNNING state, not just flat 24h clock
-3. **Create missing memory files** — 10 entries in MEMORY.md point to nonexistent files
-
-**Medium impact, medium effort:**
-4. **Add a third GCP project** — breaks the "both projects blocked" deadlock for $0 (free tier)
-5. **Batch translation with 5-page context windows** — Issue #217, could save 50% on translation costs while preserving quality
-
-**Low priority but worth tracking:**
-6. **Monitor RECITATION rates by model version** — newer Gemini versions may handle historical texts better
-7. **Structured logging for rate limits** — distinguish File API vs. batch creation 429s in a queryable format
+3. **Batch translation with 5-page context windows** — Issue #217, could save 50% on translation costs
+4. **Monitor RECITATION rates by model version** — newer Gemini versions may handle historical texts better
+5. **Investigate Key2 high cancellation rate** — 105/190 jobs cancelled (55%). May be orphan cleanup from PR #969.
