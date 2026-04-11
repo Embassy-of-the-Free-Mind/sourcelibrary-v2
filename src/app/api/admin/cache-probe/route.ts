@@ -52,10 +52,10 @@ async function probePaths(paths: string[]): Promise<ProbeResult[]> {
       batch.map(async (path) => {
         const t = Date.now();
         try {
+          // GET not HEAD — Vercel only returns accurate x-vercel-cache on GET
           const res = await fetch(`${BASE_URL}${path}`, {
-            method: 'HEAD',
             headers: { 'User-Agent': 'SourceLibrary-CacheProbe/1.0' },
-            signal: AbortSignal.timeout(10_000),
+            signal: AbortSignal.timeout(15_000),
           });
           return {
             path,
