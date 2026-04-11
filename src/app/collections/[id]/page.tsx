@@ -340,10 +340,10 @@ async function fetchCollectionData(id: string) {
           if (bookIds.length === 0) return [];
           return db.collection('gallery_images')
             .find({
-              book_id: { $in: bookIds },
+              book_id: { $in: bookIds.slice(0, 200) },
               gallery_quality: { $gte: 0.8 },
               type: { $nin: ['decorative', 'symbol', 'musical_score', 'printer_device', 'printer_mark', 'ornament', 'border'] },
-            })
+            }, { maxTimeMS: 3000 })
             .sort({ gallery_quality: -1 })
             .limit(60)
             .toArray();
