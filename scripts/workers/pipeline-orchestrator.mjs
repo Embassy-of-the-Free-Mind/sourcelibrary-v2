@@ -24,6 +24,7 @@ import { MongoClient, ObjectId } from 'mongodb';
 import { nanoid } from 'nanoid';
 import { SQSClient, SendMessageBatchCommand } from '@aws-sdk/client-sqs';
 import { S3Client, PutObjectCommand } from '@aws-sdk/client-s3';
+import { GoogleGenAI } from '@google/genai';
 import { createHash } from 'crypto';
 import { execFile } from 'child_process';
 import { promisify } from 'util';
@@ -1005,6 +1006,9 @@ const GEMINI_BATCH_KEYS = [...new Set([
 ].filter(k => !!k))];
 console.log(`  Batch API: ${GEMINI_BATCH_KEYS.length} unique keys`);
 
+// SDK clients — one per GCP project key for proper rate limit isolation
+const GEMINI_SDK_CLIENTS = GEMINI_BATCH_KEYS.map(key => new GoogleGenAI({ apiKey: key }));
+
 let _batchKeyCounter = 0;
 function getGeminiApiKey(keyIndex) {
   if (keyIndex !== undefined) {
@@ -1019,9 +1023,47 @@ function getGeminiApiKey(keyIndex) {
   return key;
 }
 
+function getSdkClient(keyIndex) {
+  if (keyIndex !== undefined) return GEMINI_SDK_CLIENTS[keyIndex] || GEMINI_SDK_CLIENTS[0];
+  return GEMINI_SDK_CLIENTS[_batchKeyCounter % GEMINI_SDK_CLIENTS.length];
+}
+
 // Get next key index for round-robin upload+create pairing
 function nextBatchKeyIndex() {
   return _batchKeyCounter % GEMINI_BATCH_KEYS.length;
+}
+
+/**
+ * Count active batch jobs across all Gemini projects using SDK batches.list().
+ * Returns the real Gemini-side count, not our DB's potentially stale count.
+ * Jobs are key-scoped, so we must query each key separately.
+ *
+ * Note: batches.list() returns ALL historical jobs (newest first). We page through
+ * until we've seen enough non-active jobs to be confident we've counted all active ones.
+ * Active jobs (PENDING/RUNNING) are typically at the front of the list.
+ */
+async function getActiveGeminiJobCount() {
+  let total = 0;
+  const activeStates = new Set(['JOB_STATE_PENDING', 'JOB_STATE_RUNNING']);
+  for (let i = 0; i < GEMINI_SDK_CLIENTS.length; i++) {
+    try {
+      const pager = await GEMINI_SDK_CLIENTS[i].batches.list({ config: { pageSize: 100 } });
+      let consecutiveInactive = 0;
+      for await (const job of pager) {
+        if (activeStates.has(job.state)) {
+          total++;
+          consecutiveInactive = 0;
+        } else {
+          consecutiveInactive++;
+          // If we've seen 50 consecutive non-active jobs, all active ones are likely counted
+          if (consecutiveInactive >= 50) break;
+        }
+      }
+    } catch (err) {
+      console.log(`    Warning: batches.list failed for key ${i}: ${err.message?.substring(0, 100)}`);
+    }
+  }
+  return total;
 }
 
 function getPageImageUrl(page) {
@@ -1068,38 +1110,37 @@ async function downloadImagesParallel(pages, concurrency) {
 }
 
 async function createBatchJobInline(model, requests, displayName) {
+  // Convert raw REST request format to SDK InlinedRequest format
+  const sdkRequests = requests.map(r => ({
+    contents: r.request.contents,
+    config: {
+      safetySettings: r.request.safetySettings,
+      temperature: r.request.generationConfig?.temperature,
+      maxOutputTokens: r.request.generationConfig?.maxOutputTokens,
+      thinkingConfig: r.request.generationConfig?.thinkingConfig,
+    },
+    metadata: r.metadata,
+  }));
+
   // Round-robin start key, try each on quota exhaustion (429)
   const startKey = nextBatchKeyIndex();
-  for (let attempt = 0; attempt < GEMINI_BATCH_KEYS.length; attempt++) {
-    const ki = (startKey + attempt) % GEMINI_BATCH_KEYS.length;
-    const apiKey = getGeminiApiKey(ki);
-    const response = await fetch(
-      `${GEMINI_API_BASE}/models/${model}:batchGenerateContent?key=${apiKey}`,
-      {
-        method: 'POST',
-        headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify({
-          batch: {
-            display_name: displayName,
-            input_config: {
-              requests: { requests },
-            },
-          },
-        }),
+  for (let attempt = 0; attempt < GEMINI_SDK_CLIENTS.length; attempt++) {
+    const ki = (startKey + attempt) % GEMINI_SDK_CLIENTS.length;
+    try {
+      const batchJob = await GEMINI_SDK_CLIENTS[ki].batches.create({
+        model,
+        src: sdkRequests,
+        config: { displayName },
+      });
+      return { name: batchJob.name, state: batchJob.state || 'JOB_STATE_PENDING', keyIndex: ki };
+    } catch (err) {
+      const msg = err.message || '';
+      console.log(`    Key ${ki} failed: ${msg.substring(0, 150)}`);
+      if (msg.includes('429') || msg.includes('quota') || msg.includes('RESOURCE_EXHAUSTED')) {
+        continue;
       }
-    );
-
-    if (response.ok) {
-      const result = await response.json();
-      return { name: result.name, state: result.state || 'JOB_STATE_PENDING' };
+      throw err;
     }
-
-    const errorText = await response.text();
-    console.log(`    Key ${ki} failed (${response.status}): ${errorText.substring(0, 100)}`);
-    if (response.status === 429) {
-      continue;
-    }
-    throw new Error(`Batch create failed (${response.status}): ${errorText.substring(0, 200)}`);
   }
   throw new Error('ALL_KEYS_QUOTA_EXHAUSTED');
 }
@@ -1126,97 +1167,33 @@ function buildJsonlFile(chunk, requestBuilder) {
 }
 
 /**
- * Upload a file to Gemini File API for file-based batch submission.
- * Uses resumable upload protocol with file streaming (no full-file buffer).
- * Accepts either a file path (string) or content string for backwards compat.
+ * Upload a file to Gemini File API using SDK.
+ * Accepts a file path (string). Returns { name, uri }.
  */
-async function uploadBatchFile(filePathOrContent, displayName, apiKey) {
-  const isFilePath = typeof filePathOrContent === 'string' && fs.existsSync(filePathOrContent);
-  const contentLength = isFilePath
-    ? fs.statSync(filePathOrContent).size
-    : Buffer.byteLength(filePathOrContent);
-
-  // Step 1: Start resumable upload (text/plain as workaround for Gemini JSONL bug)
-  const startResponse = await fetch(
-    `https://generativelanguage.googleapis.com/upload/v1beta/files?key=${apiKey}`,
-    {
-      method: 'POST',
-      headers: {
-        'Content-Type': 'application/json',
-        'X-Goog-Upload-Protocol': 'resumable',
-        'X-Goog-Upload-Command': 'start',
-        'X-Goog-Upload-Header-Content-Length': contentLength.toString(),
-        'X-Goog-Upload-Header-Content-Type': 'text/plain',
-      },
-      body: JSON.stringify({ file: { displayName } }),
-    }
-  );
-
-  if (!startResponse.ok) {
-    const error = await startResponse.text();
-    throw new Error(`File upload start failed: ${error.substring(0, 200)}`);
-  }
-
-  const uploadUrl = startResponse.headers.get('X-Goog-Upload-URL');
-  if (!uploadUrl) throw new Error('No upload URL returned from File API');
-
-  // Step 2: Upload — stream from file or send string directly
-  const body = isFilePath ? fs.createReadStream(filePathOrContent) : filePathOrContent;
-  const uploadResponse = await fetch(uploadUrl, {
-    method: 'PUT',
-    headers: {
-      'Content-Type': 'text/plain',
-      'X-Goog-Upload-Command': 'upload, finalize',
-      'X-Goog-Upload-Offset': '0',
-    },
-    body,
-    duplex: 'half', // Required for streaming request bodies in Node 18+
+async function uploadBatchFile(filePath, displayName, keyIndex) {
+  const client = getSdkClient(keyIndex);
+  const file = await client.files.upload({
+    file: filePath,
+    config: { mimeType: 'text/plain', displayName },
   });
-
-  if (!uploadResponse.ok) {
-    const error = await uploadResponse.text();
-    throw new Error(`File upload failed: ${error.substring(0, 200)}`);
+  if (!file?.name) {
+    throw new Error(`File upload response missing 'name': ${JSON.stringify(file).substring(0, 200)}`);
   }
-
-  const fileInfo = await uploadResponse.json();
-  if (!fileInfo.file?.name) {
-    throw new Error(`File upload response missing 'file.name': ${JSON.stringify(fileInfo).substring(0, 200)}`);
-  }
-
-  return { name: fileInfo.file.name, uri: fileInfo.file.uri };
+  return { name: file.name, uri: file.uri };
 }
 
 /**
- * Create a batch job from an uploaded JSONL file.
- * Tries all API keys on quota exhaustion (429).
+ * Create a batch job from an uploaded JSONL file using SDK.
+ * IMPORTANT: Only use the key that uploaded the file. Other keys can't see it (404).
  */
 async function createBatchJobFromFile(model, fileName, displayName, preferredKeyIndex = 0) {
-  // IMPORTANT: Only use the key that uploaded the file. Other keys can't see it (404).
-  // If this key hits 429, throw so the caller can re-upload with a different key.
-  const apiKey = getGeminiApiKey(preferredKeyIndex);
-  const response = await fetch(
-    `${GEMINI_API_BASE}/models/${model}:batchGenerateContent?key=${apiKey}`,
-    {
-      method: 'POST',
-      headers: { 'Content-Type': 'application/json' },
-      body: JSON.stringify({
-        batch: {
-          display_name: displayName,
-          input_config: { file_name: fileName },
-        },
-      }),
-    }
-  );
-
-  if (response.ok) {
-    const result = await response.json();
-    return { name: result.name, state: result.state || 'JOB_STATE_PENDING', keyIndex: preferredKeyIndex };
-  }
-
-  const errorText = await response.text();
-  console.log(`    Key ${preferredKeyIndex} failed for file batch (${response.status}): ${errorText.substring(0, 100)}`);
-  // Throw on any error — caller must re-upload with a different key on 429
-  throw new Error(`File batch create failed (${response.status}): ${errorText.substring(0, 200)}`);
+  const client = getSdkClient(preferredKeyIndex);
+  const batchJob = await client.batches.create({
+    model,
+    src: { fileName },
+    config: { displayName },
+  });
+  return { name: batchJob.name, state: batchJob.state || 'JOB_STATE_PENDING', keyIndex: preferredKeyIndex };
 }
 
 async function getOcrPromptFromDb(db) {
@@ -1419,14 +1396,14 @@ Output structure:
       const startKey = nextBatchKeyIndex();
       for (let attempt = 0; attempt < GEMINI_BATCH_KEYS.length; attempt++) {
         const uki = (startKey + attempt) % GEMINI_BATCH_KEYS.length;
-        const uploadKey = getGeminiApiKey(uki);
         let fileResult;
         try {
-          fileResult = await uploadBatchFile(jsonlFile, displayName, uploadKey);
+          fileResult = await uploadBatchFile(jsonlFile, displayName, uki);
           uploadKeyIndex = uki;
           console.log(`    Uploaded file: ${fileResult.name} (key ${uki})`);
         } catch (uploadErr) {
-          if (uploadErr.message.includes('429') || uploadErr.message.includes('quota')) {
+          const msg = uploadErr.message || '';
+          if (msg.includes('429') || msg.includes('quota') || msg.includes('RESOURCE_EXHAUSTED')) {
             console.log(`    Upload key ${uki} FILE API quota exhausted, trying next...`);
             continue;
           }
@@ -1436,15 +1413,14 @@ Output structure:
         try {
           batchJob = await createBatchJobFromFile(ocrModel, fileResult.name, displayName, uploadKeyIndex);
           // Clean up uploaded file — Gemini copies it into the batch job
-          try {
-            await fetch(`https://generativelanguage.googleapis.com/v1beta/${fileResult.name}?key=${uploadKey}`, { method: 'DELETE' });
-          } catch (cleanupErr) {
+          try { await getSdkClient(uki).files.delete({ name: fileResult.name }); } catch (cleanupErr) {
             console.log(`    Warning: file cleanup failed: ${cleanupErr.message}`);
           }
           break; // success
         } catch (batchErr) {
-          try { await fetch(`https://generativelanguage.googleapis.com/v1beta/${fileResult.name}?key=${uploadKey}`, { method: 'DELETE' }); } catch (_) {}
-          if (batchErr.message.includes('429') || batchErr.message.includes('quota')) {
+          try { await getSdkClient(uki).files.delete({ name: fileResult.name }); } catch (_) {}
+          const msg = batchErr.message || '';
+          if (msg.includes('429') || msg.includes('quota') || msg.includes('RESOURCE_EXHAUSTED')) {
             console.log(`    Batch create key ${uki} BATCH CREATION quota exhausted, re-uploading with next key...`);
             continue;
           }
@@ -1689,14 +1665,14 @@ async function submitImageExtractionBatch(db, book, candidatePages) {
       const imgStartKey = nextBatchKeyIndex();
       for (let attempt = 0; attempt < GEMINI_BATCH_KEYS.length; attempt++) {
         const uki = (imgStartKey + attempt) % GEMINI_BATCH_KEYS.length;
-        const uploadKey = getGeminiApiKey(uki);
         let fileResult;
         try {
-          fileResult = await uploadBatchFile(jsonlFile, displayName, uploadKey);
+          fileResult = await uploadBatchFile(jsonlFile, displayName, uki);
           uploadKeyIndex = uki;
           console.log(`    Uploaded file: ${fileResult.name} (key ${uki})`);
         } catch (uploadErr) {
-          if (uploadErr.message.includes('429') || uploadErr.message.includes('quota')) {
+          const msg = uploadErr.message || '';
+          if (msg.includes('429') || msg.includes('quota') || msg.includes('RESOURCE_EXHAUSTED')) {
             console.log(`    Upload key ${uki} FILE API quota exhausted, trying next...`);
             continue;
           }
@@ -1705,15 +1681,14 @@ async function submitImageExtractionBatch(db, book, candidatePages) {
 
         try {
           batchJob = await createBatchJobFromFile(IMAGE_EXTRACTION_MODEL, fileResult.name, displayName, uploadKeyIndex);
-          try {
-            await fetch(`https://generativelanguage.googleapis.com/v1beta/${fileResult.name}?key=${uploadKey}`, { method: 'DELETE' });
-          } catch (cleanupErr) {
+          try { await getSdkClient(uki).files.delete({ name: fileResult.name }); } catch (cleanupErr) {
             console.log(`    Warning: file cleanup failed: ${cleanupErr.message}`);
           }
           break;
         } catch (batchErr) {
-          try { await fetch(`https://generativelanguage.googleapis.com/v1beta/${fileResult.name}?key=${uploadKey}`, { method: 'DELETE' }); } catch (_) {}
-          if (batchErr.message.includes('429') || batchErr.message.includes('quota')) {
+          try { await getSdkClient(uki).files.delete({ name: fileResult.name }); } catch (_) {}
+          const msg = batchErr.message || '';
+          if (msg.includes('429') || msg.includes('quota') || msg.includes('RESOURCE_EXHAUSTED')) {
             console.log(`    Batch create key ${uki} BATCH CREATION quota exhausted, re-uploading with next key...`);
             continue;
           }
@@ -1915,13 +1890,13 @@ async function submitCrossBookImageBatches(db, bookItems) {
     const imgStartKey = nextBatchKeyIndex();
     for (let attempt = 0; attempt < GEMINI_BATCH_KEYS.length; attempt++) {
       const uki = (imgStartKey + attempt) % GEMINI_BATCH_KEYS.length;
-      const uploadKey = getGeminiApiKey(uki);
       let fileResult;
       try {
-        fileResult = await uploadBatchFile(jsonlFile, displayName, uploadKey);
+        fileResult = await uploadBatchFile(jsonlFile, displayName, uki);
         console.log(`    Uploaded file: ${fileResult.name} (key ${uki})`);
       } catch (uploadErr) {
-        if (uploadErr.message.includes('429') || uploadErr.message.includes('quota')) {
+        const msg = uploadErr.message || '';
+        if (msg.includes('429') || msg.includes('quota') || msg.includes('RESOURCE_EXHAUSTED')) {
           console.log(`    Upload key ${uki} quota exhausted, trying next...`);
           continue;
         }
@@ -1930,15 +1905,14 @@ async function submitCrossBookImageBatches(db, bookItems) {
 
       try {
         batchJob = await createBatchJobFromFile(IMAGE_EXTRACTION_MODEL, fileResult.name, displayName, uki);
-        try {
-          await fetch(`https://generativelanguage.googleapis.com/v1beta/${fileResult.name}?key=${uploadKey}`, { method: 'DELETE' });
-        } catch (cleanupErr) {
+        try { await getSdkClient(uki).files.delete({ name: fileResult.name }); } catch (cleanupErr) {
           console.log(`    Warning: file cleanup failed: ${cleanupErr.message}`);
         }
         break;
       } catch (batchErr) {
-        try { await fetch(`https://generativelanguage.googleapis.com/v1beta/${fileResult.name}?key=${uploadKey}`, { method: 'DELETE' }); } catch (_) {}
-        if (batchErr.message.includes('429') || batchErr.message.includes('quota')) {
+        try { await getSdkClient(uki).files.delete({ name: fileResult.name }); } catch (_) {}
+        const msg = batchErr.message || '';
+        if (msg.includes('429') || msg.includes('quota') || msg.includes('RESOURCE_EXHAUSTED')) {
           console.log(`    Batch create key ${uki} quota exhausted, re-uploading with next key...`);
           continue;
         }
@@ -2911,6 +2885,9 @@ Rules:
       console.log(`  AI metadata classified: ${metadataEnriched} books`);
     }
 
+    // Shared Gemini active job count — queried once, reused by OCR (Phase 2) and image extraction (Phase 5)
+    let geminiActiveJobs = null;
+
     // ── Phase 2: Submit OCR via Gemini Batch API (archive_complete -> ocr_submitted) ──
     // Two-pass strategy:
     //   Pass 1 ("preview"): First 25 pages of first-translation books — gives readers content fast
@@ -2918,13 +2895,17 @@ Rules:
     if (shouldRun(2)) {
       console.log('\n--- Phase 2: OCR submission ---');
 
+      // Check real Gemini-side active job count (not just DB) to enforce hard limit
+      geminiActiveJobs = await getActiveGeminiJobCount();
       const activeBatchOcr = await db.collection('batch_jobs').countDocuments({
         type: 'ocr',
         status: { $in: ['pending', 'processing', 'JOB_STATE_PENDING', 'JOB_STATE_RUNNING'] },
       });
-      console.log(`  Active OCR batch jobs: ${activeBatchOcr}/${MAX_ACTIVE_BATCH_OCR}`);
+      console.log(`  Active Gemini jobs (real): ${geminiActiveJobs}/80 | DB OCR jobs: ${activeBatchOcr}/${MAX_ACTIVE_BATCH_OCR}`);
 
-      const ocrLimit = activeBatchOcr >= MAX_ACTIVE_BATCH_OCR ? 0 : OCR_SUBMIT_LIMIT;
+      // Use the HIGHER of DB count and Gemini count to be safe — either limit can block
+      const effectiveActive = Math.max(geminiActiveJobs, activeBatchOcr);
+      const ocrLimit = effectiveActive >= MAX_ACTIVE_BATCH_OCR ? 0 : OCR_SUBMIT_LIMIT;
 
       const ENGLISH_VARIANTS_P2 = ['english', 'eng', 'en'];
       const PREVIEW_PAGES = 25;
@@ -3826,13 +3807,15 @@ Rules:
 
       if (USE_BATCH) {
         // ── Batch API path: submit via Gemini Batch API (same as OCR) ──
+        // Re-use geminiActiveJobs if available from Phase 2, otherwise query fresh
+        const geminiJobsForImages = geminiActiveJobs !== null ? geminiActiveJobs : await getActiveGeminiJobCount();
         const activeBatchImageJobs = await db.collection('batch_jobs').countDocuments({
           type: 'image_extraction',
           status: { $in: ['pending', 'processing', 'JOB_STATE_PENDING', 'JOB_STATE_RUNNING'] },
         });
-        console.log(`  Active batch image jobs: ${activeBatchImageJobs}/${MAX_ACTIVE_IMAGE_JOBS}`);
+        console.log(`  Active batch image jobs: ${activeBatchImageJobs}/${MAX_ACTIVE_IMAGE_JOBS} | Gemini total: ${geminiJobsForImages}/80`);
 
-        if (activeBatchImageJobs < MAX_ACTIVE_IMAGE_JOBS) {
+        if (activeBatchImageJobs < MAX_ACTIVE_IMAGE_JOBS && geminiJobsForImages < 80) {
           const IMAGE_CANDIDATE_PAGE_TYPES = ['illustration', 'diagram', 'map', 'frontispiece', 'mixed'];
 
           const readyForImages = await db.collection('books')
