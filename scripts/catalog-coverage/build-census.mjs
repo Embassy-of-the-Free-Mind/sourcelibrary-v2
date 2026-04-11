@@ -321,10 +321,11 @@ async function buildCensusView() {
               CASE WHEN c.orig_norm != '' THEN similarity(w.work_key, c.orig_norm) ELSE 0 END
             ) AS match_score
           FROM (
+            -- Use B-tree index only (exact + prefix). The % trigram operator
+            -- is too slow on 1.4M rows per query on Supabase.
             SELECT * FROM ustc_distinct_works
             WHERE author_surname = $1
                OR author_surname LIKE $1 || '%'
-               OR author_surname % $1
           ) w
           CROSS JOIN (
             SELECT english_title, translator, pub_year, source, completeness,
