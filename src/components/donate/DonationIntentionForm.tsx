@@ -3,11 +3,12 @@
 import { useState, type FormEvent } from 'react';
 
 const AMOUNT_OPTIONS = [
-  { value: 'under-100', label: 'Under $100' },
-  { value: '100-500', label: '$100 - $500' },
-  { value: '500-1000', label: '$500 - $1,000' },
+  { value: 'under-1000', label: 'Under $1,000' },
   { value: '1000-5000', label: '$1,000 - $5,000' },
-  { value: '5000-plus', label: '$5,000+' },
+  { value: '5000-10000', label: '$5,000 - $10,000' },
+  { value: '10000-25000', label: '$10,000 - $25,000' },
+  { value: '25000-50000', label: '$25,000 - $50,000' },
+  { value: '50000-plus', label: '$50,000+' },
 ];
 
 const ROUTE_OPTIONS = [
