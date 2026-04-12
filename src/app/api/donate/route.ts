@@ -3,7 +3,7 @@ import { supabaseAdmin } from '@/lib/supabase';
 import { Resend } from 'resend';
 
 const VALID_ROUTES = ['naf', 'efm', 'undecided'] as const;
-const VALID_AMOUNTS = ['under-100', '100-500', '500-1000', '1000-5000', '5000-plus', ''] as const;
+const VALID_AMOUNTS = ['under-1000', '1000-5000', '5000-10000', '10000-25000', '25000-50000', '50000-plus', ''] as const;
 
 interface DonationIntention {
   name: string;

@@ -162,7 +162,7 @@ export default async function SupportPage() {
                   Original &middot; Oppenheim, 1618
                 </span>
               </div>
-              <Link href="/book/atalanta-fleeing-new-chemical-emblems-of-the-secrets-of-maier">
+              <Link href="/book/atalanta-fleeing-new-chemical-emblems-of-the-secrets-of-maier/page/19">
                 <img
                   src="https://images.sourcelibrary.org/pages/69520c46ab34727b1f044141/0019.jpg"
                   alt="Emblem I from Atalanta Fugiens — Boreas carrying the philosophical embryo"
@@ -202,7 +202,7 @@ export default async function SupportPage() {
                 </div>
                 <div className="mt-6 pt-4 border-t border-stone-100">
                   <Link
-                    href="/book/atalanta-fleeing-new-chemical-emblems-of-the-secrets-of-maier"
+                    href="/book/atalanta-fleeing-new-chemical-emblems-of-the-secrets-of-maier/page/19"
                     className="text-accent-rust hover:text-accent-gold-dark text-sm font-medium"
                   >
                     Read all 50 emblems &rarr;
@@ -261,29 +261,34 @@ export default async function SupportPage() {
                 </p>
               </div>
 
-              <div className="mt-6 flex flex-wrap gap-4 text-sm">
-                <span className="text-stone-400">Or donate directly:</span>
+              <div className="mt-8 grid grid-cols-1 sm:grid-cols-3 gap-3">
                 <a
                   href={DONORPERFECT_URL}
                   target="_blank"
                   rel="noopener noreferrer"
-                  className="text-accent-rust hover:text-accent-gold-dark underline"
+                  className="bg-[#faf8f5] rounded-xl border border-stone-200 p-4 hover:border-stone-400 transition-colors block text-center"
                 >
-                  NAF (US)
+                  <span className="block text-xs font-medium text-stone-400 uppercase tracking-wider mb-1">US Tax-Deductible</span>
+                  <span className="block text-sm font-semibold text-stone-900">Donate via NAF</span>
+                  <span className="block text-xs text-stone-500 mt-1">501(c)(3)</span>
                 </a>
                 <a
                   href={MOLLIE_URL}
                   target="_blank"
                   rel="noopener noreferrer"
-                  className="text-accent-rust hover:text-accent-gold-dark underline"
+                  className="bg-[#faf8f5] rounded-xl border border-stone-200 p-4 hover:border-stone-400 transition-colors block text-center"
                 >
-                  EFM (International)
+                  <span className="block text-xs font-medium text-stone-400 uppercase tracking-wider mb-1">International</span>
+                  <span className="block text-sm font-semibold text-stone-900">Donate via EFM</span>
+                  <span className="block text-xs text-stone-500 mt-1">ANBI-registered</span>
                 </a>
                 <a
                   href={`mailto:${CONTACT_EMAIL}?subject=Source%20Library%20%E2%80%94%20Donation%20Inquiry`}
-                  className="text-accent-rust hover:text-accent-gold-dark underline"
+                  className="bg-[#faf8f5] rounded-xl border border-stone-200 p-4 hover:border-stone-400 transition-colors block text-center"
                 >
-                  Wire / Large Gifts
+                  <span className="block text-xs font-medium text-stone-400 uppercase tracking-wider mb-1">Large Gifts</span>
+                  <span className="block text-sm font-semibold text-stone-900">Contact Us</span>
+                  <span className="block text-xs text-stone-500 mt-1">Wire, stock, DAF</span>
                 </a>
               </div>
             </div>
