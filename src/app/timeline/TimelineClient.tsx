@@ -204,7 +204,8 @@ export default function TimelineClient({ initialData }: Props) {
     }
   }, [selectedDecade, loadingBooks, books.length]);
 
-  const maxCount = useMemo(() => Math.max(...filteredDecades.map(d => d.count), 1), [filteredDecades]);
+  // Use sqrt scale so outlier decades (e.g. Sumerian texts) don't crush everything
+  const maxSqrt = useMemo(() => Math.max(...filteredDecades.map(d => Math.sqrt(d.count)), 1), [filteredDecades]);
 
   // Group decades by era for bracket labels
   const eraGroups = useMemo(() => {
@@ -375,7 +376,7 @@ export default function TimelineClient({ initialData }: Props) {
               <DecadeBar
                 key={d.decade}
                 bucket={d}
-                maxCount={maxCount}
+                maxSqrt={maxSqrt}
                 isSelected={d.decade === selectedDecade}
                 era={getEraForDecade(d.decade)}
                 onClick={() => {
@@ -392,14 +393,18 @@ export default function TimelineClient({ initialData }: Props) {
           {/* Decade tick labels along x-axis */}
           <div className="flex mt-1.5" style={{ minWidth: Math.max(filteredDecades.length * 14, 600) }}>
             {filteredDecades.map((d, i) => {
-              // Show label every ~50 years, or every century if dense
-              const step = filteredDecades.length > 40 ? 5 : 3;
-              const showLabel = d.decade % (step * 10) === 0;
+              // Compute label interval based on pixel density
+              // Each bar is ~14px min, so show labels spaced >=60px apart
+              const barWidth = Math.max(14, 600 / filteredDecades.length);
+              const labelEvery = Math.max(1, Math.ceil(60 / barWidth)); // bars between labels
+              const centuryStep = labelEvery <= 3 ? 50 : labelEvery <= 6 ? 100 : 200;
+              const absDecade = Math.abs(d.decade);
+              const showLabel = absDecade % centuryStep === 0;
               return (
                 <div key={d.decade} className="flex-1 text-center" style={{ minWidth: 8 }}>
                   {showLabel && (
-                    <span className="text-[9px] text-stone-400 font-mono">
-                      {d.decade < 0 ? `${Math.abs(d.decade)}BC` : d.decade}
+                    <span className="text-[9px] text-stone-400 font-mono whitespace-nowrap">
+                      {d.decade < 0 ? `${Math.abs(d.decade)} BC` : d.decade}
                     </span>
                   )}
                 </div>
@@ -590,19 +595,19 @@ export default function TimelineClient({ initialData }: Props) {
 
 function DecadeBar({
   bucket,
-  maxCount,
+  maxSqrt,
   isSelected,
   era,
   onClick,
 }: {
   bucket: DecadeBucket;
-  maxCount: number;
+  maxSqrt: number;
   isSelected: boolean;
   era?: Era;
   onClick: () => void;
 }) {
   const [hovered, setHovered] = useState(false);
-  const heightPct = Math.max(1.5, (bucket.count / maxCount) * 100);
+  const heightPct = Math.max(1.5, (Math.sqrt(bucket.count) / maxSqrt) * 100);
   const top3 = bucket.languages.slice(0, 3);
   const rest = bucket.count - top3.reduce((s, l) => s + l.count, 0);
 
