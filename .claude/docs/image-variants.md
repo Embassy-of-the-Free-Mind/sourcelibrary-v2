@@ -18,7 +18,9 @@ Gallery images follow the same convention under `gallery/{bookId}/{imageId}`:
 - `{id}.jpg` — 1200px display
 - `{id}-thumb.jpg` — 300px thumbnail (gallery thumbs are larger than page thumbs)
 
-Legacy images under `archived/{bookId}/{num}.jpg` are full-res originals (pre-convention).
+Legacy paths (both have corresponding `/pages/` variants — `getBookThumbnailUrl()` rewrites automatically):
+- `archived/{bookId}/{num}.jpg` — full-res originals (pre-convention)
+- `thumbnails/{bookId}/{num}.jpg` — small standalone thumbnails (pre-convention, ~37% of books)
 
 ## Path Helpers
 
