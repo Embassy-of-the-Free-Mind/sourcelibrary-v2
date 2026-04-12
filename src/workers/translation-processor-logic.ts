@@ -143,10 +143,12 @@ export async function processTranslationPage(message: PageProcessingMessage) {
     await retryDbWrite(() => pages.updateOne(
       { id: pageId },
       { $set: {
-        'translation.data': marker,
-        'translation.language': 'English',
-        'translation.source': 'system',
-        'translation.updated_at': new Date(),
+        translation: {
+          data: marker,
+          language: 'English',
+          source: 'system',
+          updated_at: new Date(),
+        },
         updated_at: new Date(),
       }}
     ), `write blank marker for page ${pageId}`, 3, '[TRANS]');
