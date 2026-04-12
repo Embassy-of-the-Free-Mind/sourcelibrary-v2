@@ -5,7 +5,7 @@ import ApiKeyRequestForm from '@/components/developers/ApiKeyRequestForm';
 
 export const metadata: Metadata = {
   title: 'Connect to Source Library - Source Library',
-  description: 'Give Claude access to 5,000+ rare historical texts. Connect in 30 seconds — search, read, and cite with page-level precision.',
+  description: 'Give Claude access to 10,000+ rare historical texts. Connect in 30 seconds — search, read, and cite with page-level precision.',
   alternates: {
     canonical: '/developers',
   },
@@ -17,7 +17,7 @@ export default function DevelopersPage() {
       header={
         <ContentHeader
           title="Connect to Source Library"
-          subtitle="Give Claude direct access to 5,000+ rare historical texts — translated into English for the first time."
+          subtitle="Give Claude direct access to 10,000+ rare historical texts — translated into English for the first time."
         />
       }
     >

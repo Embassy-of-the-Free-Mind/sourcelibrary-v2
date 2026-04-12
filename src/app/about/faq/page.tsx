@@ -111,7 +111,7 @@ const faqs: FAQItem[] = [
         <p>
           The economics are prohibitive. Professional scholarly translation from Latin, Greek,
           or Arabic costs $0.20&ndash;$0.30 per word. An average book in the collection runs
-          50,000&ndash;80,000 words. Even for the 8,000+ books currently visible, that&apos;s
+          50,000&ndash;80,000 words. Even for the 10,000+ books currently visible, that&apos;s
           roughly <strong>$100&ndash;$200 million</strong> and over <strong>1,000 translator-years</strong> of
           full-time work &mdash; assuming you could find enough specialists in medieval Latin
           paleography, polytonic Greek, classical Arabic, and early modern German to even

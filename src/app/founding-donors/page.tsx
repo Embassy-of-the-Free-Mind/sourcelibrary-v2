@@ -58,11 +58,11 @@ export default function FoundingDonorsPage() {
         <h3 className="font-serif text-2xl text-primary pt-12 mb-6">Where we are today</h3>
 
         <div className="grid grid-cols-2 md:grid-cols-3 gap-4 mb-8">
-          {/* Stats last verified 2026-03-31 */}
+          {/* Stats last verified 2026-04-12 */}
           {[
-            { number: '9,000+', label: 'Books in collection' },
-            { number: '2,600+', label: 'Books fully translated' },
-            { number: '1M+', label: 'Pages translated' },
+            { number: '10,000+', label: 'Books in collection' },
+            { number: '9,300+', label: 'Books fully translated' },
+            { number: '3M+', label: 'Pages translated' },
             { number: '100+', label: 'Source languages' },
             { number: '< 5,000', label: 'Perseus + Loeb + Sacred-texts combined' },
             { number: 'Free', label: 'Open access to all' },

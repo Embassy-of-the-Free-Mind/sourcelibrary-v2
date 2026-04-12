@@ -10,7 +10,7 @@ export const maxDuration = 60;
 export const metadata: Metadata = {
   title: 'Dataset — Source Library',
   description:
-    'Structured parallel-text training data from 5,000+ historical texts in 90+ languages. Page-aligned OCR, English translations, and scholarly metadata.',
+    'Structured parallel-text training data from 10,000+ historical texts in 90+ languages. Page-aligned OCR, English translations, and scholarly metadata.',
   alternates: { canonical: '/dataset' },
   openGraph: {
     title: 'Dataset — Source Library',
