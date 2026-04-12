@@ -71,10 +71,12 @@ async function main() {
         filter: { _id: page._id },
         update: {
           $set: {
-            'translation.data': marker,
-            'translation.language': 'English',
-            'translation.source': 'system',
-            'translation.updated_at': new Date(),
+            translation: {
+              data: marker,
+              language: 'English',
+              source: 'system',
+              updated_at: new Date(),
+            },
             updated_at: new Date(),
           },
         },
