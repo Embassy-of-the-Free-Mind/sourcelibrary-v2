@@ -44,9 +44,14 @@ function getModelForBook(book) {
 const PROMPT_VERSION = 'v10';
 
 // ── Gemini API keys ──
+// Exclude GEMINI_API_KEY_4 (free tier, 15 RPM) — too slow for sustained translation throughput.
+// It stays available for enrichment workers that make fewer calls.
 const API_KEYS = [
   process.env.GEMINI_API_KEY,
-  ...Array.from({ length: 9 }, (_, i) => process.env[`GEMINI_API_KEY_${i + 2}`]),
+  ...Array.from({ length: 9 }, (_, i) => {
+    if (i + 2 === 4) return null; // Skip KEY_4 (free tier)
+    return process.env[`GEMINI_API_KEY_${i + 2}`];
+  }),
   process.env.GEMINI_API_KEY_TIER3,
 ].filter(Boolean);
 
