@@ -135,7 +135,21 @@ export async function processTranslationPage(message: PageProcessingMessage) {
   // wasn't written yet (e.g., write-processor hadn't run).
   const effectivePageType = page.page_type || extractPageType(page.ocr.data);
   if (effectivePageType && SKIP_TRANSLATION_PAGE_TYPES.includes(effectivePageType)) {
-    console.log(`[TRANS] Skipping page ${pageId} (page_type: ${effectivePageType})`);
+    console.log(`[TRANS] Skipping page ${pageId} (page_type: ${effectivePageType}), writing marker`);
+    // Write a marker to translation.data so this page counts as "translated"
+    // in pages_translated. Without this, blank pages create a permanent gap
+    // that requires pages_blank subtraction everywhere.
+    const marker = `[${effectivePageType.charAt(0).toUpperCase() + effectivePageType.slice(1)} page — no translatable content]`;
+    await retryDbWrite(() => pages.updateOne(
+      { id: pageId },
+      { $set: {
+        'translation.data': marker,
+        'translation.language': 'English',
+        'translation.source': 'system',
+        'translation.updated_at': new Date(),
+        updated_at: new Date(),
+      }}
+    ), `write blank marker for page ${pageId}`, 3, '[TRANS]');
     await sendWriteResult({
       type: 'translation',
       bookId, pageId, jobId, targetPageIds,
