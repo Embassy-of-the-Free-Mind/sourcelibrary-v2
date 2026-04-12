@@ -8,11 +8,33 @@ Every book has a `thumbnail` field (URL) used as its cover image across the site
 
 | Field | Type | Description |
 |-------|------|-------------|
-| `thumbnail` | string | Current cover URL (http/https only — never relative paths) |
-| `thumbnail_blob` | string | Pre-generated 150px JPEG on Vercel Blob (fast CDN fallback) |
+| `thumbnail` | string | Current cover URL — often full-res R2, sometimes external (http/https only) |
+| `thumbnail_blob` | string | R2 CDN URL — often the `-thumb.jpg` (150px) variant |
 | `thumbnail_source` | string | How the cover was selected: `auto`, `auto_upgrade`, `manual` |
 
-**Critical rule:** `thumbnail` must always be a direct `http(s)` URL. Never store `/api/image?url=...` proxy wrapper URLs — they crash Next.js `<Image>` during SSR. The `/api/image` route is for client-side rendering only.
+**Critical rules:**
+- `thumbnail` must always be a direct `http(s)` URL. Never store `/api/image?url=...` proxy wrapper URLs — they crash Next.js `<Image>` during SSR.
+- These fields are **not standardized** — the same field might contain `-full.jpg`, `.jpg`, or `-thumb.jpg` depending on when/how the book was archived. Always use `getBookThumbnailUrl()` in UI code.
+
+## Image Variants
+
+R2 stores three resolution variants per page image (see `.claude/docs/image-variants.md` for full docs):
+
+| Variant | Suffix | Size | Use case |
+|---------|--------|------|----------|
+| Full | `-full.jpg` | Original | OCR, zoom, download |
+| Display | `.jpg` | 1200px | Cards, grids, heroes |
+| Thumb | `-thumb.jpg` | 150px | Tiny previews, search |
+
+**In UI code, always use:**
+```ts
+import { getBookThumbnailUrl } from '@/lib/utils';
+
+getBookThumbnailUrl(book)            // → 1200px display (default, for cards/grids)
+getBookThumbnailUrl(book, 'thumb')   // → 150px (for tiny previews only)
+```
+
+Never use `thumbnail_blob || thumbnail` directly — it often resolves to the 150px thumb.
 
 ---
 
@@ -186,6 +208,9 @@ Collection cards were using low-res `thumbnail_url` (200px) instead of `extracte
 | Collection hero images | `src/app/page.tsx` — `getFeaturedCollections()`, `getRemainingCollections()` |
 | Page thumbnail display | `src/components/reader/PageThumbnail.tsx` |
 | Book card display | `src/components/book/BookCard.tsx` |
+| URL variant resolver | `src/lib/utils.ts` — `getBookThumbnailUrl()` |
+| R2 path convention | `src/lib/storage.ts` — `pagePaths()`, `galleryPaths()` |
+| Image variant docs | `.claude/docs/image-variants.md` |
 
 ## Ad-Hoc Fix Scripts
 
