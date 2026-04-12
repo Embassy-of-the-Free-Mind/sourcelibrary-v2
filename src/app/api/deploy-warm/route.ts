@@ -3,6 +3,7 @@ import { revalidatePath } from 'next/cache';
 import { getDb } from '@/lib/mongodb';
 import { purgeCloudflareUrls } from '@/lib/cloudflare-cache';
 
+export const dynamic = 'force-dynamic';
 export const maxDuration = 300;
 export const preferredRegion = 'fra1';
 
