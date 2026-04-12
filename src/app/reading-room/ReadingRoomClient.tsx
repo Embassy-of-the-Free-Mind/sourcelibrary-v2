@@ -494,10 +494,10 @@ export default function ReadingRoomClient({ featuredPassage }: ReadingRoomClient
                 <div ref={chatContainerRef} className="min-h-[300px] max-h-[600px] overflow-y-auto p-6 space-y-6">
                   {messages.length === 0 && (
                     <div className="text-center py-8">
-                      <div className="text-[#c9a86c] text-3xl mb-3" style={{ fontFamily: 'serif' }}>&#x2609;</div>
+                      <img src="/brand/png/logo-compact--black-on-transparent--96h.png" alt="" className="w-10 h-10 mx-auto mb-3 opacity-40" />
                       <p className="text-[#8a8480] text-sm font-body max-w-[400px] mx-auto leading-relaxed">
                         The Librarian searches the collection, Wikipedia, and semantic search
-                        to find answers in over 5,000 rare books.
+                        to find answers in over 10,000 rare books.
                       </p>
                       <p className="text-[#8a8480]/50 text-xs font-body mt-1.5">
                         Responses may contain errors &mdash; always verify against the source page.
