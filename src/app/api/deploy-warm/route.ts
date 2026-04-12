@@ -103,23 +103,28 @@ export async function POST(request: NextRequest) {
   const baseUrl = 'https://sourcelibrary.org';
   const started = Date.now();
 
+  // ?check mode: skip revalidation + CF purge, just warm and report cache status
+  const url = new URL(request.url);
+  const checkOnly = url.searchParams.has('check');
+
   // 0. Purge Cloudflare for static pages + all collections on deploy.
   //    Books are purged daily via /api/cron/warm (not on every deploy).
-  const cfPurgePaths = [...STATIC_PAGES];
+  let cfPurged = 0;
+  if (!checkOnly) {
+    const cfPurgePaths = [...STATIC_PAGES];
+    let collectionSlugsForPurge: string[] = [];
+    try {
+      const db = await getDb();
+      const collections = await db.collection('collections')
+        .find({ visible: { $ne: false } }, { projection: { slug: 1 }, maxTimeMS: 5000 })
+        .toArray();
+      collectionSlugsForPurge = collections.map(c => c.slug as string).filter(Boolean);
+      cfPurgePaths.push(...collectionSlugsForPurge.map(s => `/collections/${s}`));
+    } catch { /* proceed with static-only purge */ }
 
-  // Add all collection paths to the purge list
-  let collectionSlugsForPurge: string[] = [];
-  try {
-    const db = await getDb();
-    const collections = await db.collection('collections')
-      .find({ visible: { $ne: false } }, { projection: { slug: 1 }, maxTimeMS: 5000 })
-      .toArray();
-    collectionSlugsForPurge = collections.map(c => c.slug as string).filter(Boolean);
-    cfPurgePaths.push(...collectionSlugsForPurge.map(s => `/collections/${s}`));
-  } catch { /* proceed with static-only purge */ }
-
-  await purgeCloudflareUrls(cfPurgePaths);
-  const cfPurged = cfPurgePaths.length;
+    await purgeCloudflareUrls(cfPurgePaths);
+    cfPurged = cfPurgePaths.length;
+  }
 
   // 1. Collect all paths we'll warm (need them for revalidation first)
   let collectionSlugs: string[] = [];
@@ -167,8 +172,11 @@ export async function POST(request: NextRequest) {
   // 2. Revalidate all ISR-cached pages so Next.js drops stale HTML
   //    Without this, warming re-caches old HTML that references deleted JS chunks,
   //    causing raw RSC payload to render instead of the page.
-  for (const path of allContentPaths) {
-    revalidatePath(path);
+  //    Skip in ?check mode — just report current warmth without invalidating.
+  if (!checkOnly) {
+    for (const path of allContentPaths) {
+      revalidatePath(path);
+    }
   }
 
   // 3. Warm APIs (keep serverless hot)
@@ -197,8 +205,9 @@ export async function POST(request: NextRequest) {
   }, {} as Record<string, number>);
 
   return NextResponse.json({
+    mode: checkOnly ? 'check' : 'deploy',
     cf_purged: cfPurged,
-    revalidated: allContentPaths.length,
+    revalidated: checkOnly ? 0 : allContentPaths.length,
     warmed: allResults.length,
     failed: failed.length,
     cache_warmth: cacheStats,
