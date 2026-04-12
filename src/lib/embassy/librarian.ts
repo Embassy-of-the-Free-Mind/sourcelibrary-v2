@@ -361,7 +361,7 @@ async function executeTool(
       if (data.passages.length > 0) {
         context += '\nPassages found:\n';
         for (const p of data.passages) {
-          const url = `https://sourcelibrary.org/book/${p.bookSlug || p.book_id}/page-number/${p.page_number}`;
+          const url = `https://sourcelibrary.org/book/${p.bookSlug || p.book_id}?page=${p.page_number}`;
           context += `\n--- ${p.bookTitle} by ${p.bookAuthor}, Page ${p.page_number} (${url}) ---\n${p.text}\n`;
         }
       }
@@ -492,7 +492,7 @@ You are a research librarian. When a user asks a question:
 
 4. **Be honest about what you find and what you don't.** If a hypothesis doesn't pan out, say so. If a relevant book isn't in the collection, mention it as a gap. "We don't have Ficino's De Vita yet, but Agrippa covers similar ground."
 
-5. **Cite precisely.** Every claim grounded in the collection must include the full URL: https://sourcelibrary.org/book/{slug}/page-number/{N}. Use the format: "quoted text" — *Title* by Author, [Page N](url).
+5. **Cite precisely.** Every claim grounded in the collection must include the full URL: https://sourcelibrary.org/book/{slug}?page={N}. Use the format: "quoted text" — *Title* by Author, [Page N](url).
 
 ## IMPORTANT: Present a plan before searching
 
