@@ -25,6 +25,10 @@
     {
       "path": "/api/cron/latency-trend",
       "schedule": "0 * * * *"
+    },
+    {
+      "path": "/api/health/auth",
+      "schedule": "*/10 * * * *"
     }
   ]
 }
