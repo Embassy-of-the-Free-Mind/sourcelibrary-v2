@@ -99,9 +99,11 @@ function SourceCardRow({ sources }: { sources: SourceCard[] }) {
           ? `/book/${s.bookSlug}${s.pageNumber ? `?page=${s.pageNumber}` : ''}`
           : `/book/${s.bookId}${s.pageNumber ? `?page=${s.pageNumber}` : ''}`;
         return (
-          <Link
+          <a
             key={`${s.bookId}-${s.pageNumber}-${i}`}
-            href={url}
+            href={`https://sourcelibrary.org${url}`}
+            target="_blank"
+            rel="noopener noreferrer"
             className={`flex-shrink-0 w-[200px] rounded-lg border p-2.5 transition-colors ${
               s.inCollection
                 ? 'border-[#e8e4dc] bg-white hover:border-[#c9a86c] hover:bg-[#faf8f4]'
@@ -123,7 +125,7 @@ function SourceCardRow({ sources }: { sources: SourceCard[] }) {
             {!s.inCollection && (
               <p className="text-[9px] text-[#b0a89c] font-sans mt-1">Not yet in collection</p>
             )}
-          </Link>
+          </a>
         );
       })}
     </div>
@@ -545,18 +547,13 @@ export default function ReadingRoomClient({ featuredPassage }: ReadingRoomClient
                           {/* Response text */}
                           {assistant.content && (
                             <div className="bg-[#f5f0e8] text-[#1a1612] rounded-2xl rounded-bl-sm px-4 py-3">
-                              <div className="prose prose-sm max-w-none font-body text-[15px] leading-relaxed prose-a:text-[#9e4a3a] prose-a:underline prose-a:underline-offset-2 prose-a:decoration-[#9e4a3a]/30 hover:prose-a:decoration-[#9e4a3a] prose-blockquote:border-l-[#c9a86c] prose-blockquote:text-[#444] prose-strong:text-[#1a1612]">
+                              <div className="prose prose-sm max-w-none font-body text-[15px] leading-relaxed prose-p:mb-3 prose-p:mt-0 prose-headings:mb-2 prose-headings:mt-4 prose-ul:my-2 prose-li:my-0.5 prose-a:text-[#9e4a3a] prose-a:underline prose-a:underline-offset-2 prose-a:decoration-[#9e4a3a]/30 hover:prose-a:decoration-[#9e4a3a] prose-blockquote:border-l-[#c9a86c] prose-blockquote:text-[#444] prose-strong:text-[#1a1612]">
                                 <ReactMarkdown
                                   remarkPlugins={[remarkGfm]}
                                   components={{
-                                    a: ({ href, children }) => {
-                                      const isInternal = href?.includes('sourcelibrary.org') || href?.startsWith('/');
-                                      if (isInternal && href) {
-                                        const path = href.replace('https://sourcelibrary.org', '');
-                                        return <Link href={path}>{children}</Link>;
-                                      }
-                                      return <a href={href} target="_blank" rel="noopener noreferrer">{children}</a>;
-                                    },
+                                    a: ({ href, children }) => (
+                                      <a href={href} target="_blank" rel="noopener noreferrer">{children}</a>
+                                    ),
                                   }}
                                 >{assistant.content}</ReactMarkdown>
                               </div>
