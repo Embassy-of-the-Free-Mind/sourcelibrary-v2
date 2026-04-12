@@ -336,7 +336,8 @@ function isNonLatin(language) {
 function isDigitizerOcr(ocrData) {
   if (!ocrData) return false;
   const start = ocrData.substring(0, 1500);
-  return /google\s+logo|digitized\s+by\s+google|this\s+is\s+a\s+digital\s+copy/i.test(start) ||
+  return /google\s+logo|digitized\s+by\s+google|scanned\s+by\s+google|this\s+is\s+a\s+digital\s+copy/i.test(start) ||
+    /preserved\s+for\s+generations\s+on\s+library\s+shelves/i.test(start) ||
     /inserted\s+by\s+the\s+internet|internet\s+archive|digitization\s+(credit|notice)/i.test(start) ||
     /not\s+part\s+of\s+the\s+original\s+book|scanner\s+barcode/i.test(start) ||
     /ex[\s\-.]?libris|bookplate|library\s+stamp/i.test(start);
@@ -4120,17 +4121,11 @@ Rules:
           ).sort({ page_number: 1 }).toArray();
 
           for (const page of edgePages) {
-            const ocr = (page.ocr?.data || '').substring(0, 1500);
-            const isDigitizerPage =
-              /google\s+logo|digitized\s+by\s+google|this\s+is\s+a\s+digital\s+copy/i.test(ocr) ||
-              /inserted\s+by\s+the\s+internet|internet\s+archive|digitization\s+(credit|notice)/i.test(ocr) ||
-              /not\s+part\s+of\s+the\s+original\s+book|scanner\s+barcode/i.test(ocr);
-
-            if (isDigitizerPage && page.page_type !== 'digitizer-notice') {
+            if (isDigitizerOcr(page.ocr?.data) && page.page_type !== 'digitizer-insert') {
               await db.collection('pages').updateOne(
                 { id: page.id },
                 { $set: {
-                  page_type: 'digitizer-notice',
+                  page_type: 'digitizer-insert',
                   hidden: true,
                   updated_at: new Date(),
                   'field_provenance.page_type': {
