@@ -1,4 +1,5 @@
 import { NextRequest, NextResponse } from 'next/server';
+import { revalidatePath } from 'next/cache';
 import { getDb } from '@/lib/mongodb';
 
 export const maxDuration = 300;
@@ -118,13 +119,7 @@ export async function POST(request: NextRequest) {
     }
   }
 
-  // 1. Warm APIs (keep serverless hot)
-  const apiResults = await warmBatch(baseUrl, API_ENDPOINTS, 3, 10_000);
-
-  // 2. Warm static pages
-  const staticResults = await warmBatch(baseUrl, STATIC_PAGES, 5);
-
-  // 3. Warm all visible collections
+  // 1. Collect all paths we'll warm (need them for revalidation first)
   let collectionSlugs: string[] = [];
   try {
     const db = await getDb();
@@ -138,13 +133,7 @@ export async function POST(request: NextRequest) {
       'rosicrucianism', 'sacred-texts', 'astrology', 'natural-philosophy',
     ];
   }
-  const collectionResults = await warmBatch(
-    baseUrl,
-    collectionSlugs.map(s => `/collections/${s}`),
-    3
-  );
 
-  // 4. Warm top 100 books (most-translated, largest — these are the ones people read)
   let bookPaths: string[] = [];
   try {
     const db = await getDb();
@@ -165,23 +154,42 @@ export async function POST(request: NextRequest) {
   } catch {
     // Skip book warming on DB failure — static pages are the priority
   }
+
+  const collectionPaths = collectionSlugs.map(s => `/collections/${s}`);
+  const browsePaths = BROWSE_LETTERS.flatMap(l => [
+    `/browse/titles/${l}`,
+    `/browse/authors/${l}`,
+  ]);
+  const allContentPaths = [...STATIC_PAGES, ...collectionPaths, ...bookPaths, ...browsePaths];
+
+  // 2. Revalidate all ISR-cached pages so Next.js drops stale HTML
+  //    Without this, warming re-caches old HTML that references deleted JS chunks,
+  //    causing raw RSC payload to render instead of the page.
+  for (const path of allContentPaths) {
+    revalidatePath(path);
+  }
+
+  // 3. Warm APIs (keep serverless hot)
+  const apiResults = await warmBatch(baseUrl, API_ENDPOINTS, 3, 10_000);
+
+  // 4. Warm static pages (now regenerated with current deployment chunks)
+  const staticResults = await warmBatch(baseUrl, STATIC_PAGES, 5);
+
+  // 5. Warm collection pages
+  const collectionResults = await warmBatch(baseUrl, collectionPaths, 3);
+
+  // 6. Warm top 100 books
   const bookResults = await warmBatch(baseUrl, bookPaths, 5, 30_000);
 
-  // 5. Warm browse A-Z pages
-  const browseResults = await warmBatch(
-    baseUrl,
-    BROWSE_LETTERS.flatMap(l => [
-      `/browse/titles/${l}`,
-      `/browse/authors/${l}`,
-    ]),
-    4
-  );
+  // 7. Warm browse A-Z pages
+  const browseResults = await warmBatch(baseUrl, browsePaths, 4);
 
   const allResults = [...apiResults, ...staticResults, ...collectionResults, ...bookResults, ...browseResults];
   const failed = allResults.filter(r => r.status === 0 || r.status >= 400);
 
   return NextResponse.json({
     cf_purged: cfPurged,
+    revalidated: allContentPaths.length,
     warmed: allResults.length,
     failed: failed.length,
     books: bookPaths.length,
