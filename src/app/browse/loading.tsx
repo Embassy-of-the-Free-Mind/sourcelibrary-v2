@@ -5,27 +5,48 @@ export default function BrowseLoading() {
     <div className="min-h-screen bg-cream">
       <SiteHeader variant="light" />
 
-      <div className="max-w-7xl mx-auto px-4 sm:px-6 py-8">
-        <div className="h-10 w-48 bg-stone-200 rounded animate-pulse mb-6" />
+      <div className="max-w-4xl mx-auto px-6 md:px-12 py-12 md:py-20">
+        <div className="h-10 w-48 bg-stone-200 rounded animate-pulse mb-2" />
+        <div className="h-5 w-80 bg-stone-100 rounded animate-pulse mb-12" />
 
-        {/* Letter nav */}
-        <div className="flex gap-2 flex-wrap mb-8">
-          {Array.from({ length: 26 }).map((_, i) => (
-            <div key={i} className="h-8 w-8 bg-stone-200 rounded animate-pulse" />
-          ))}
+        {/* By Title section */}
+        <div className="mb-10">
+          <div className="h-6 w-24 bg-stone-200 rounded animate-pulse mb-4" />
+          <div className="flex flex-wrap gap-2">
+            {Array.from({ length: 26 }).map((_, i) => (
+              <div key={i} className="h-8 w-8 bg-stone-200 rounded animate-pulse" />
+            ))}
+          </div>
         </div>
 
-        {/* Book list */}
-        <div className="space-y-3">
-          {Array.from({ length: 20 }).map((_, i) => (
-            <div key={i} className="flex gap-4 items-center">
-              <div className="h-12 w-9 bg-stone-200 rounded animate-pulse flex-shrink-0" />
-              <div className="flex-1 space-y-1">
-                <div className="h-4 w-2/3 bg-stone-200 rounded animate-pulse" />
-                <div className="h-3 w-1/3 bg-stone-100 rounded animate-pulse" />
-              </div>
-            </div>
-          ))}
+        {/* By Author section */}
+        <div className="mb-10">
+          <div className="h-6 w-28 bg-stone-200 rounded animate-pulse mb-4" />
+          <div className="flex flex-wrap gap-2">
+            {Array.from({ length: 26 }).map((_, i) => (
+              <div key={i} className="h-8 w-8 bg-stone-200 rounded animate-pulse" />
+            ))}
+          </div>
+        </div>
+
+        {/* By Artist section */}
+        <div className="mb-10">
+          <div className="h-6 w-24 bg-stone-200 rounded animate-pulse mb-4" />
+          <div className="flex flex-wrap gap-2">
+            {Array.from({ length: 26 }).map((_, i) => (
+              <div key={i} className="h-8 w-8 bg-stone-200 rounded animate-pulse" />
+            ))}
+          </div>
+        </div>
+
+        {/* By Period section */}
+        <div>
+          <div className="h-6 w-28 bg-stone-200 rounded animate-pulse mb-4" />
+          <div className="grid grid-cols-2 sm:grid-cols-4 gap-3">
+            {Array.from({ length: 8 }).map((_, i) => (
+              <div key={i} className="h-16 bg-stone-200 rounded-lg animate-pulse" />
+            ))}
+          </div>
         </div>
       </div>
     </div>

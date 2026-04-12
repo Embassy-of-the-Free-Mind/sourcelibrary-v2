@@ -9,11 +9,12 @@
  *
  * Usage:
  *   set -a; source .env.production.local; set +a; node scripts/maintenance/smart-cover-selection.mjs
- *   --dry-run       Preview changes
- *   --limit N       Process first N books
- *   --book-id ID    Process single book
- *   --skip-manual   Skip books with thumbnail_source: 'manual'
- *   --force         Re-evaluate all books (not just page-1 covers)
+ *   --dry-run         Preview changes
+ *   --limit N         Process first N books
+ *   --book-id ID      Process single book
+ *   --collection SLUG Process books in a specific collection
+ *   --skip-manual     Skip books with thumbnail_source: 'manual'
+ *   --force           Re-evaluate all books (not just page-1 covers)
  */
 
 import { MongoClient } from 'mongodb';
@@ -30,9 +31,12 @@ const BOOK_ID = (() => {
   const idx = process.argv.indexOf('--book-id');
   return idx !== -1 ? process.argv[idx + 1] : null;
 })();
-
 const PROVIDER = (() => {
   const idx = process.argv.indexOf('--provider');
+  return idx !== -1 ? process.argv[idx + 1] : null;
+})();
+const COLLECTION = (() => {
+  const idx = process.argv.indexOf('--collection');
   return idx !== -1 ? process.argv[idx + 1] : null;
 })();
 
@@ -59,6 +63,7 @@ function getPageImageUrl(page) {
 console.log(`\n=== Smart Cover Selection (OCR-based) ===`);
 console.log(`Mode: ${DRY_RUN ? 'DRY RUN' : 'LIVE'}${FORCE ? ' (force re-evaluate all)' : ''}`);
 if (BOOK_ID) console.log(`Book: ${BOOK_ID}`);
+if (COLLECTION) console.log(`Collection: ${COLLECTION}`);
 if (LIMIT) console.log(`Limit: ${LIMIT}`);
 
 const bookQuery = BOOK_ID
@@ -70,6 +75,9 @@ if (!BOOK_ID && SKIP_MANUAL) {
 }
 if (!BOOK_ID && PROVIDER) {
   bookQuery['image_source.provider'] = PROVIDER;
+}
+if (!BOOK_ID && COLLECTION) {
+  bookQuery.collections = COLLECTION;
 }
 
 const allBooks = await db.collection('books')
@@ -92,7 +100,7 @@ for (let i = 0; i < allBooks.length; i += BATCH_SIZE) {
   // Get first SCAN_PAGES pages with OCR text for scoring
   const allPages = await db.collection('pages')
     .find(
-      { book_id: { $in: batchBookIds }, page_number: { $lte: SCAN_PAGES } },
+      { book_id: { $in: batchBookIds }, page_number: { $lte: SCAN_PAGES }, hidden: { $ne: true } },
       {
         projection: {
           book_id: 1, page_number: 1, page_type: 1,

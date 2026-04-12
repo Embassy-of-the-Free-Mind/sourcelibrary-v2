@@ -45,7 +45,14 @@ export function scorePageForCover(page, options = {}) {
 
   // === NEGATIVE signals ===
 
-  if (pageType === 'blank') return { score: -100, reason: 'blank' };
+  // Blank pages — check both field and OCR content patterns
+  if (pageType === 'blank' || (!pageType && (
+    ocr.includes('blank page') || ocr.includes('this page is blank') ||
+    ocr.includes('blank, aged') || ocr.includes('blank, textured') ||
+    ocr.includes('blank, dark')
+  ))) {
+    return { score: -100, reason: 'blank' };
+  }
   if (pageType === 'digitizer-notice' || pageType === 'digitizer-insert') {
     return { score: -90, reason: 'digitizer-notice' };
   }
@@ -57,7 +64,9 @@ export function scorePageForCover(page, options = {}) {
       ocr.includes('leather-bound') || ocr.includes('leather bound') ||
       ((ocr.includes('blind-stamp') || ocr.includes('blind stamp')) && ocr.includes('cover')) ||
       ocr.includes('textured surface') || ocr.includes('inside cover') ||
-      ocr.includes('endpaper') || (ocr.includes('marbled') && pageNum <= 3)) {
+      ocr.includes('endpaper') || ocr.includes('marbled paper') ||
+      ocr.includes('cover material') || ocr.includes('cover interior') ||
+      (ocr.includes('marbled') && pageNum <= 3)) {
     return { score: -80, reason: 'physical book photo' };
   }
 
@@ -85,9 +94,9 @@ export function scorePageForCover(page, options = {}) {
   const hasExLibris = ocr.includes('ex-libris') || ocr.includes('exlibris') || ocr.includes('ex libris') ||
       ocr.includes('bookplate') || (ocr.includes('ownership') && ocr.includes('stamp')) ||
       ocr.includes('library stamp') || ocr.includes('library sticker') ||
-      (ocr.includes('library of') && pageNum <= 5) ||
-      (ocr.includes('botanical garden') && pageNum <= 5) ||
-      (ocr.includes('book fund') && pageNum <= 5);
+      ocr.includes('library of the') || (ocr.includes('botanical garden') && pageNum <= 5) ||
+      ocr.includes('book fund') || ocr.includes('university library') ||
+      (ocr.includes('library') && ocr.includes('accession'));
   if (hasExLibris && pageType !== 'title-page') {
     return { score: -60, reason: 'ex-libris/bookplate' };
   }
@@ -135,10 +144,9 @@ export function scorePageForCover(page, options = {}) {
       .filter(w => w.length > 3);
     if (titleWords.length > 0) {
       const matchCount = titleWords.filter(w => ocr.includes(w)).length;
-      const matchRatio = matchCount / titleWords.length;
-      if (matchRatio >= 0.5) {
-        score += 10;
-        reason += ' (title match)';
+      if (matchCount >= Math.min(2, titleWords.length)) {
+        score += 30;
+        if (!reason.includes('title')) reason += ' +title-match';
       }
     }
   }
@@ -158,6 +166,9 @@ export function scorePageForCover(page, options = {}) {
   if (pageType === 'illustration') {
     if (ocr.includes('photograph') && (ocr.includes('fore-edge') || (ocr.includes('book') && ocr.includes('closed')))) {
       return { score: -80, reason: 'physical book photo' };
+    }
+    if (hasExLibris) {
+      return { score: -60, reason: 'bookplate illustration' };
     }
     score += 60; reason = 'illustration';
   }

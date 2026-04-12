@@ -131,11 +131,8 @@ export async function GET() {
     // Skip book warming on DB failure
   }
 
-  // Purge top books from Cloudflare so daily warm serves fresh content
-  if (bookPaths.length > 0) {
-    await purgeCloudflareUrls(bookPaths);
-  }
-
+  // No CF purge needed — stale-while-revalidate=1y means CF serves cached
+  // content while fetching fresh in background. Warming Vercel ISR is enough.
   const bookResults = await warmBatch(baseUrl, bookPaths, 5, 30_000);
 
   // 5. Warm browse A-Z pages
