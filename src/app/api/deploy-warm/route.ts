@@ -103,11 +103,23 @@ export async function POST(request: NextRequest) {
   const baseUrl = 'https://sourcelibrary.org';
   const started = Date.now();
 
-  // 0. Selective Cloudflare purge — only static pages that change on every deploy.
-  //    Collection/book pages have 24h CF TTL and don't need purging on deploy.
-  //    Use POST /api/admin/revalidate to purge specific pages when needed.
-  await purgeCloudflareUrls(STATIC_PAGES);
-  const cfPurged = STATIC_PAGES.length;
+  // 0. Purge Cloudflare for static pages + all collections on deploy.
+  //    Books are purged daily via /api/cron/warm (not on every deploy).
+  const cfPurgePaths = [...STATIC_PAGES];
+
+  // Add all collection paths to the purge list
+  let collectionSlugsForPurge: string[] = [];
+  try {
+    const db = await getDb();
+    const collections = await db.collection('collections')
+      .find({ visible: { $ne: false } }, { projection: { slug: 1 }, maxTimeMS: 5000 })
+      .toArray();
+    collectionSlugsForPurge = collections.map(c => c.slug as string).filter(Boolean);
+    cfPurgePaths.push(...collectionSlugsForPurge.map(s => `/collections/${s}`));
+  } catch { /* proceed with static-only purge */ }
+
+  await purgeCloudflareUrls(cfPurgePaths);
+  const cfPurged = cfPurgePaths.length;
 
   // 1. Collect all paths we'll warm (need them for revalidation first)
   let collectionSlugs: string[] = [];
