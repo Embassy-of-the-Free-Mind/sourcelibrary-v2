@@ -212,7 +212,7 @@ export default function BetaLandingPage() {
             >
               Source Library uses AI to translate thousands of rare historical texts
               in early science, philosophy, medicine, alchemy, and theology into modern English.
-              Over 9,000 books. 3 million pages. Thousands of books free and open.
+              Over 10,000 books. 3 million pages. Thousands of books free and open.
               Register for free to access the full collection.
             </p>
 
@@ -305,7 +305,7 @@ export default function BetaLandingPage() {
               className="text-3xl md:text-4xl lg:text-5xl text-stone-900 mb-4"
               style={{ fontWeight: 400 }}
             >
-              29,000+ illustrations extracted
+              85,000+ illustrations extracted
             </h2>
             <p
               className="text-lg text-stone-600 max-w-2xl mx-auto font-body"
@@ -355,7 +355,7 @@ export default function BetaLandingPage() {
           <div className="grid grid-cols-2 md:grid-cols-5 gap-8 text-center">
             {/* Stats last verified 2026-03-31. 9,344 visible books, 1M+ translated pages. */}
             {[
-              { number: '9,000+', label: 'Rare books' },
+              { number: '10,000+', label: 'Rare books' },
               { number: '3M+', label: 'Pages scanned' },
               { number: '1M+', label: 'Pages translated' },
               { number: '100+', label: 'Languages' },
@@ -393,7 +393,7 @@ export default function BetaLandingPage() {
           >
             Source Library is live and growing every day.
             Thousands of books are completely open, no account needed.
-            Register for free to unlock the full collection of over 9,000 texts.
+            Register for free to unlock the full collection of over 10,000 texts.
             No payment required, ever.
           </p>
 

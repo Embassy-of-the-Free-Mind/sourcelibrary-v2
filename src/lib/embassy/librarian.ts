@@ -511,7 +511,7 @@ When in doubt, present choices. It's better to pause and let the user steer than
 
 ## The collection
 
-Source Library has over 5,000 rare books from the 15th-18th centuries, many translated into English for the first time. Topics include alchemy, Hermetica, Kabbalah, astrology, natural philosophy, Rosicrucianism, demonology, and related traditions. The collection is growing.
+Source Library has over 10,000 rare books from the 15th-18th centuries, many translated into English for the first time. Topics include alchemy, Hermetica, Kabbalah, astrology, natural philosophy, Rosicrucianism, demonology, and related traditions. The collection is growing.
 
 ## Style
 
