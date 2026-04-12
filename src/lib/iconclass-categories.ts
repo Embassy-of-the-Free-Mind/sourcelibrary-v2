@@ -94,6 +94,34 @@ export function getParentCode(code: string): string | null {
   return code[0];
 }
 
+/** Slugify a label for URL use. */
+export function slugify(text: string): string {
+  return text
+    .toLowerCase()
+    .replace(/[^a-z0-9]+/g, '-')
+    .replace(/^-+|-+$/g, '');
+}
+
+/** Build a subject browser URL: /browse/subjects/26-meteorological-phenomena */
+export function subjectUrl(code: string, label?: string | null): string {
+  if (label) {
+    return `/browse/subjects/${code}-${slugify(label)}`;
+  }
+  return `/browse/subjects/${code}`;
+}
+
+/** Extract the Iconclass code from a slug like "26-meteorological-phenomena" → "26" */
+export function parseSubjectSlug(segments: string[]): string {
+  // Join segments and extract the code prefix (everything before the first dash
+  // that follows the Iconclass code pattern: digits, uppercase letters, parens)
+  const joined = segments.join('/');
+  // Iconclass codes: start with digit, may contain uppercase letters, digits, parens, plus
+  const match = joined.match(/^([0-9][0-9A-Z()+ ]*?)(?:-[a-z]|$)/);
+  if (match) return match[1];
+  // Fallback: just return first segment as-is (handles bare codes like "26")
+  return segments[0];
+}
+
 /** Build breadcrumb path from a code. */
 export function buildIconclassPath(code: string): Array<{ code: string; label: string }> {
   const path: Array<{ code: string; label: string }> = [];
