@@ -3,6 +3,7 @@
  *
  * Picks the best cover by analyzing OCR text content — not just page_type,
  * but the actual descriptions, meta tags, and transcribed text.
+ * Parses <page-type> tags from OCR when page_type field is null.
  *
  * Cost: FREE
  *
@@ -17,6 +18,7 @@
  */
 
 import { MongoClient } from 'mongodb';
+import { scorePageForCover } from '../lib/cover-scoring.mjs';
 
 const DRY_RUN = process.argv.includes('--dry-run');
 const SKIP_MANUAL = process.argv.includes('--skip-manual');
@@ -39,198 +41,13 @@ const COLLECTION = (() => {
 })();
 
 const SCAN_PAGES = 20;
-const BATCH_SIZE = 50; // smaller batches since we fetch more OCR data
+const BATCH_SIZE = 50;
 
 const client = new MongoClient(process.env.MONGODB_URI, {
   serverSelectionTimeoutMS: 30000, connectTimeoutMS: 30000, socketTimeoutMS: 60000,
 });
 await client.connect();
 const db = client.db('bookstore');
-
-/**
- * Extract page type from OCR text <page-type> tag.
- * Falls back to the page_type field on the document.
- */
-function getPageType(page) {
-  if (page.page_type) return page.page_type;
-  const ocr = (page.ocr_text || '').toLowerCase();
-  const match = ocr.match(/<page-type>([^<]+)<\/page-type>/);
-  return match ? match[1].trim() : null;
-}
-
-/**
- * Score a page as a potential cover based on OCR content analysis.
- * Returns { score, reason }.
- */
-function scorePage(page, bookTitle) {
-  const ocr = (page.ocr_text || '').toLowerCase();
-  const pageType = getPageType(page);
-  const pageNum = page.page_number;
-  let score = 0;
-  let reason = pageType || 'unknown';
-
-  // === NEGATIVE signals: things that make terrible covers ===
-
-  // Blank pages — check both field and OCR content
-  if (pageType === 'blank' || (!pageType && (
-    ocr.includes('blank page') || ocr.includes('this page is blank') ||
-    ocr.includes('blank, aged') || ocr.includes('blank, textured') ||
-    ocr.includes('blank, dark')
-  ))) {
-    return { score: -100, reason: 'blank' };
-  }
-
-  // Book binding / cover photos / endpapers (external shots of the physical book)
-  if (ocr.includes('front cover') || (ocr.includes('external') && ocr.includes('cover')) ||
-      (ocr.includes('binding') && ocr.includes('spine')) || ocr.includes('fore-edge') ||
-      ocr.includes('closed book') || ocr.includes('book block') ||
-      ocr.includes('leather-bound') || ocr.includes('leather bound') ||
-      ocr.includes('textured surface') || ocr.includes('inside cover') ||
-      ocr.includes('endpaper') || ocr.includes('marbled paper') ||
-      ocr.includes('cover material') || ocr.includes('cover interior') ||
-      ((ocr.includes('blind-stamp') || ocr.includes('blind stamp')) && ocr.includes('cover'))) {
-    return { score: -80, reason: 'physical book photo' };
-  }
-
-  // Digitizer inserts and digital portal pages
-  if (ocr.includes('digitized by') || ocr.includes('google books') ||
-      ocr.includes('google logo') ||
-      (ocr.includes('internet archive') && ocr.includes('logo')) ||
-      ocr.includes('proquest') || ocr.includes('early european books') ||
-      ocr.includes('hathitrust') || ocr.includes('scan sheet') ||
-      ocr.includes('e-rara.ch') || ocr.includes('www.e-rara') ||
-      ocr.includes('gallica.bnf') || ocr.includes('mdz-nbn') ||
-      ocr.includes('digital.staatsbibliothek') || ocr.includes('daten.digitale-sammlungen')) {
-    return { score: -70, reason: 'digitizer insert' };
-  }
-
-  // BPH pelican bookplate (Embassy of the Free Mind / Bibliotheca Philosophica Hermetica)
-  const isBphBookplate = (ocr.includes('pelican') && (ocr.includes('piety') || ocr.includes('nest') || ocr.includes('young') || ocr.includes('hermetica'))) ||
-      ocr.includes('philosophia hermetica') || ocr.includes('philosophica hermetica');
-  if (isBphBookplate && pageType !== 'title-page') {
-    return { score: -65, reason: 'BPH pelican bookplate' };
-  }
-
-  // Ex-libris / bookplates / library stamps — broad detection
-  const hasExLibris = ocr.includes('ex-libris') || ocr.includes('exlibris') || ocr.includes('ex libris') ||
-      ocr.includes('bookplate') || (ocr.includes('ownership') && ocr.includes('stamp')) ||
-      ocr.includes('library stamp') || ocr.includes('library sticker') ||
-      ocr.includes('library of the') || ocr.includes('botanical garden') ||
-      ocr.includes('book fund') || ocr.includes('university library') ||
-      (ocr.includes('library') && ocr.includes('accession'));
-  if (hasExLibris && pageType !== 'title-page') {
-    return { score: -60, reason: 'ex-libris/bookplate' };
-  }
-
-  // Bleed-through / ghosting pages
-  if (ocr.includes('bleed-through') || ocr.includes('ghosting') ||
-      ocr.includes('mirrored impression')) {
-    return { score: -50, reason: 'bleed-through' };
-  }
-
-  // Tables of contents, indices
-  if (pageType === 'toc' || pageType === 'index') return { score: -20, reason: pageType };
-
-  // Colophon
-  if (pageType === 'colophon') return { score: -10, reason: 'colophon' };
-
-  // === POSITIVE signals: things that make great covers ===
-
-  // Title pages with actual title text (centered headings in OCR)
-  const hasHeadings = (ocr.match(/^#+ .+/gm) || []).length;
-  const isTitlePage = pageType === 'title-page';
-  const looksLikeTitlePage = !isTitlePage && hasHeadings >= 3;
-
-  if (isTitlePage) {
-    score += 80;
-    reason = 'title-page';
-  } else if (looksLikeTitlePage) {
-    score += 70;
-    reason = 'likely title-page (headings)';
-  }
-
-  if (isTitlePage || looksLikeTitlePage) {
-    // Bonus: publisher marks / imprints (Latin publishing terms)
-    if (ocr.includes('excudebat') || ocr.includes('typis') || ocr.includes('apud') ||
-        ocr.includes('impensis') || ocr.includes('sumptibus') || ocr.includes('officina') ||
-        ocr.includes('printed by') || ocr.includes('published by') || ocr.includes('printed for')) {
-      score += 15;
-      reason = (isTitlePage ? 'title-page' : 'likely title-page') + ' with imprint';
-    }
-
-    // Bonus: decorative elements described in OCR
-    if (ocr.includes('decorative') || ocr.includes('ornamental') || ocr.includes('border') ||
-        ocr.includes('frame') || ocr.includes('vignette') || ocr.includes('woodcut') ||
-        ocr.includes('architectural') || ocr.includes('printer\'s mark') ||
-        ocr.includes('printer\'s device') || ocr.includes('colophon device')) {
-      score += 20;
-      reason = 'decorated title-page';
-    }
-  }
-
-  // Frontispieces — but distinguish real frontispieces from binding photos
-  if (pageType === 'frontispiece') {
-    // Check if it's actually a physical cover photo mislabeled as frontispiece
-    if (ocr.includes('cover') && (ocr.includes('leather') || ocr.includes('binding') || ocr.includes('marbled'))) {
-      return { score: -80, reason: 'binding photo (mislabeled frontispiece)' };
-    }
-
-    score += 90;
-    reason = 'frontispiece';
-
-    // Bonus for engravings / allegorical imagery
-    if (ocr.includes('engrav') || ocr.includes('allegor') || ocr.includes('portrait') ||
-        ocr.includes('emblem') || ocr.includes('woodcut')) {
-      score += 15;
-      reason = 'frontispiece with engraving';
-    }
-  }
-
-  // Illustrations
-  if (pageType === 'illustration') {
-    // Skip if it's a photo of the physical book
-    if (ocr.includes('photograph') && (ocr.includes('fore-edge') || (ocr.includes('book') && ocr.includes('closed')))) {
-      return { score: -80, reason: 'physical book photo' };
-    }
-    // Skip if it's actually a bookplate with an engraving
-    if (hasExLibris) {
-      return { score: -60, reason: 'bookplate illustration' };
-    }
-    score += 60;
-    reason = 'illustration';
-  }
-
-  // Dedication pages — sometimes nice but not ideal
-  if (pageType === 'dedication') {
-    score += 15;
-    reason = 'dedication';
-  }
-
-  // Plain text — lowest priority
-  if (pageType === 'text' && score === 0) {
-    score += 5;
-    reason = 'text';
-  }
-
-  // === Title-match bonus ===
-  // If the book's actual title appears in this page's OCR, it's very likely the real title page
-  if (bookTitle) {
-    const titleWords = bookTitle.toLowerCase().split(/\s+/).filter(w => w.length > 4);
-    const matchCount = titleWords.filter(w => ocr.includes(w)).length;
-    if (titleWords.length > 0 && matchCount >= Math.min(2, titleWords.length)) {
-      score += 30;
-      if (!reason.includes('title')) reason += ' +title-match';
-    }
-  }
-
-  // === Position bonuses ===
-  // Slight preference for earlier pages (covers are usually in first 10)
-  if (pageNum <= 5) score += 5;
-  else if (pageNum <= 10) score += 3;
-  else if (pageNum > 15) score -= 3;
-
-  return { score, reason };
-}
 
 function getPageImageUrl(page) {
   const isUsable = (u) => u && (u.startsWith('http://') || u.startsWith('https://'));
@@ -295,11 +112,9 @@ for (let i = 0; i < allBooks.length; i += BATCH_SIZE) {
     .sort({ book_id: 1, page_number: 1 })
     .toArray();
 
-  // Extract OCR text (first 800 chars for scoring) and group by book
+  // Group by book — keep ocr.data intact for the shared scorer
   const pagesByBook = new Map();
   for (const p of allPages) {
-    p.ocr_text = (p.ocr?.data || '').substring(0, 800);
-    delete p.ocr;
     if (!pagesByBook.has(p.book_id)) pagesByBook.set(p.book_id, []);
     pagesByBook.get(p.book_id).push(p);
   }
@@ -311,10 +126,10 @@ for (let i = 0; i < allBooks.length; i += BATCH_SIZE) {
     if (!pages || pages.length === 0) { noData++; continue; }
     checked++;
 
-    // Score all pages, passing book title for title-match bonus
+    // Score all pages using shared scoring module
     const scored = pages
       .map(p => {
-        const { score, reason } = scorePage(p, book.title);
+        const { score, reason } = scorePageForCover(p, { bookTitle: book.title });
         return { page: p, score, reason };
       })
       .sort((a, b) => b.score - a.score);

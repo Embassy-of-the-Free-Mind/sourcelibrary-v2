@@ -34,6 +34,7 @@ vi.mock('@/lib/mongodb', async () => {
   const { getTestDb } = await import('../setup');
   return {
     getDb: vi.fn().mockImplementation(async () => getTestDb()),
+    getReadDb: vi.fn().mockImplementation(async () => getTestDb()),
     connectToDatabase: vi.fn(),
     isConnectionError: vi.fn().mockReturnValue(false),
   };
