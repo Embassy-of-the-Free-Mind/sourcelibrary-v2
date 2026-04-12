@@ -1,13 +1,15 @@
 import { Metadata } from 'next';
 import Link from 'next/link';
 import Image from 'next/image';
-import { notFound } from 'next/navigation';
+import { notFound, redirect } from 'next/navigation';
 import SiteHeader from '@/components/layout/SiteHeader';
 import { getReadDb } from '@/lib/mongodb';
 import {
   ICONCLASS_DIVISIONS,
   getIconclassLabel,
   buildIconclassPath,
+  subjectUrl,
+  parseSubjectSlug,
 } from '@/lib/iconclass-categories';
 
 export const revalidate = 86400;
@@ -77,18 +79,18 @@ async function getImagesForCode(db: any, code: string, limit = 48): Promise<Gall
 
 export async function generateMetadata({ params }: Props): Promise<Metadata> {
   const { code: codeSegments } = await params;
-  const code = codeSegments.join('');
+  const code = parseSubjectSlug(codeSegments);
   const label = getIconclassLabel(code) || `Iconclass ${code}`;
   return {
     title: `${label} | Browse by Subject | Source Library`,
     description: `Browse ${label} illustrations and artworks in the Source Library collection, classified with Iconclass code ${code}.`,
-    alternates: { canonical: `/browse/subjects/${code}` },
+    alternates: { canonical: subjectUrl(code, label) },
   };
 }
 
 export default async function SubjectCategoryPage({ params }: Props) {
   const { code: codeSegments } = await params;
-  const code = codeSegments.join('');
+  const code = parseSubjectSlug(codeSegments);
 
   let db;
   try {
@@ -101,10 +103,17 @@ export default async function SubjectCategoryPage({ params }: Props) {
   if (!nodes) notFound();
 
   const node = nodes[code];
+  const label = getIconclassLabel(code) || node?.label || `Iconclass ${code}`;
+
+  // Redirect bare codes to slugified URL (e.g. /26 → /26-meteorological-phenomena)
+  const rawPath = codeSegments.join('/');
+  const expectedSlug = subjectUrl(code, label).replace('/browse/subjects/', '');
+  if (rawPath !== expectedSlug && label !== `Iconclass ${code}`) {
+    redirect(subjectUrl(code, label));
+  }
 
   // Build breadcrumb path
   const path = buildIconclassPath(code);
-  const label = getIconclassLabel(code) || node?.label || `Iconclass ${code}`;
 
   // Determine if this is a category page (has children) or a leaf (show images)
   const hasChildren = node && node.children.length > 0;
@@ -139,7 +148,7 @@ export default async function SubjectCategoryPage({ params }: Props) {
               {p.code === code ? (
                 <span style={{ color: 'var(--text-primary)' }}>{p.label}</span>
               ) : (
-                <Link href={`/browse/subjects/${p.code}`} className="hover:underline">{p.label}</Link>
+                <Link href={subjectUrl(p.code, p.label)} className="hover:underline">{p.label}</Link>
               )}
             </span>
           ))}
@@ -187,7 +196,7 @@ export default async function SubjectCategoryPage({ params }: Props) {
               {children.map(child => (
                 <Link
                   key={child.code}
-                  href={`/browse/subjects/${child.code}`}
+                  href={subjectUrl(child.code, child.label)}
                   className="group relative rounded-xl overflow-hidden transition-shadow hover:shadow-lg"
                   style={{ background: 'var(--bg-warm)', border: '1px solid var(--border-light)' }}
                 >

@@ -3,7 +3,7 @@ import Link from 'next/link';
 import Image from 'next/image';
 import SiteHeader from '@/components/layout/SiteHeader';
 import { getReadDb } from '@/lib/mongodb';
-import { ICONCLASS_DIVISIONS } from '@/lib/iconclass-categories';
+import { ICONCLASS_DIVISIONS, subjectUrl } from '@/lib/iconclass-categories';
 
 export const revalidate = 86400;
 
@@ -72,7 +72,7 @@ export default async function SubjectsPage() {
               return (
                 <Link
                   key={div.code}
-                  href={`/browse/subjects/${div.code}`}
+                  href={subjectUrl(div.code, node.label || div.label)}
                   className="group relative rounded-xl overflow-hidden transition-shadow hover:shadow-lg"
                   style={{ background: 'var(--bg-warm)', border: '1px solid var(--border-light)' }}
                 >
