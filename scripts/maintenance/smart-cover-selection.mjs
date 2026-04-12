@@ -8,11 +8,12 @@
  *
  * Usage:
  *   set -a; source .env.production.local; set +a; node scripts/maintenance/smart-cover-selection.mjs
- *   --dry-run       Preview changes
- *   --limit N       Process first N books
- *   --book-id ID    Process single book
- *   --skip-manual   Skip books with thumbnail_source: 'manual'
- *   --force         Re-evaluate all books (not just page-1 covers)
+ *   --dry-run         Preview changes
+ *   --limit N         Process first N books
+ *   --book-id ID      Process single book
+ *   --collection SLUG Process books in a specific collection
+ *   --skip-manual     Skip books with thumbnail_source: 'manual'
+ *   --force           Re-evaluate all books (not just page-1 covers)
  */
 
 import { MongoClient } from 'mongodb';
@@ -28,9 +29,12 @@ const BOOK_ID = (() => {
   const idx = process.argv.indexOf('--book-id');
   return idx !== -1 ? process.argv[idx + 1] : null;
 })();
-
 const PROVIDER = (() => {
   const idx = process.argv.indexOf('--provider');
+  return idx !== -1 ? process.argv[idx + 1] : null;
+})();
+const COLLECTION = (() => {
+  const idx = process.argv.indexOf('--collection');
   return idx !== -1 ? process.argv[idx + 1] : null;
 })();
 
@@ -44,33 +48,54 @@ await client.connect();
 const db = client.db('bookstore');
 
 /**
+ * Extract page type from OCR text <page-type> tag.
+ * Falls back to the page_type field on the document.
+ */
+function getPageType(page) {
+  if (page.page_type) return page.page_type;
+  const ocr = (page.ocr_text || '').toLowerCase();
+  const match = ocr.match(/<page-type>([^<]+)<\/page-type>/);
+  return match ? match[1].trim() : null;
+}
+
+/**
  * Score a page as a potential cover based on OCR content analysis.
  * Returns { score, reason }.
  */
-function scorePage(page) {
+function scorePage(page, bookTitle) {
   const ocr = (page.ocr_text || '').toLowerCase();
-  const pageType = page.page_type;
+  const pageType = getPageType(page);
   const pageNum = page.page_number;
   let score = 0;
   let reason = pageType || 'unknown';
 
   // === NEGATIVE signals: things that make terrible covers ===
 
-  // Blank pages
-  if (pageType === 'blank' && !ocr.includes('title')) return { score: -100, reason: 'blank' };
+  // Blank pages — check both field and OCR content
+  if (pageType === 'blank' || (!pageType && (
+    ocr.includes('blank page') || ocr.includes('this page is blank') ||
+    ocr.includes('blank, aged') || ocr.includes('blank, textured') ||
+    ocr.includes('blank, dark')
+  ))) {
+    return { score: -100, reason: 'blank' };
+  }
 
-  // Book binding / cover photos (external shots of the physical book)
-  if (ocr.includes('front cover') || ocr.includes('external') && ocr.includes('cover') ||
-      ocr.includes('binding') && ocr.includes('spine') || ocr.includes('fore-edge') ||
+  // Book binding / cover photos / endpapers (external shots of the physical book)
+  if (ocr.includes('front cover') || (ocr.includes('external') && ocr.includes('cover')) ||
+      (ocr.includes('binding') && ocr.includes('spine')) || ocr.includes('fore-edge') ||
       ocr.includes('closed book') || ocr.includes('book block') ||
       ocr.includes('leather-bound') || ocr.includes('leather bound') ||
-      (ocr.includes('blind-stamp') || ocr.includes('blind stamp')) && ocr.includes('cover')) {
+      ocr.includes('textured surface') || ocr.includes('inside cover') ||
+      ocr.includes('endpaper') || ocr.includes('marbled paper') ||
+      ocr.includes('cover material') || ocr.includes('cover interior') ||
+      ((ocr.includes('blind-stamp') || ocr.includes('blind stamp')) && ocr.includes('cover'))) {
     return { score: -80, reason: 'physical book photo' };
   }
 
   // Digitizer inserts and digital portal pages
   if (ocr.includes('digitized by') || ocr.includes('google books') ||
-      ocr.includes('internet archive') && ocr.includes('logo') ||
+      ocr.includes('google logo') ||
+      (ocr.includes('internet archive') && ocr.includes('logo')) ||
       ocr.includes('proquest') || ocr.includes('early european books') ||
       ocr.includes('hathitrust') || ocr.includes('scan sheet') ||
       ocr.includes('e-rara.ch') || ocr.includes('www.e-rara') ||
@@ -86,11 +111,13 @@ function scorePage(page) {
     return { score: -65, reason: 'BPH pelican bookplate' };
   }
 
-  // Ex-libris / bookplates — but only if the page is PRIMARILY a bookplate,
-  // not a title page that happens to have a small ownership inscription
+  // Ex-libris / bookplates / library stamps — broad detection
   const hasExLibris = ocr.includes('ex-libris') || ocr.includes('exlibris') || ocr.includes('ex libris') ||
       ocr.includes('bookplate') || (ocr.includes('ownership') && ocr.includes('stamp')) ||
-      ocr.includes('library stamp') || ocr.includes('library sticker');
+      ocr.includes('library stamp') || ocr.includes('library sticker') ||
+      ocr.includes('library of the') || ocr.includes('botanical garden') ||
+      ocr.includes('book fund') || ocr.includes('university library') ||
+      (ocr.includes('library') && ocr.includes('accession'));
   if (hasExLibris && pageType !== 'title-page') {
     return { score: -60, reason: 'ex-libris/bookplate' };
   }
@@ -112,7 +139,7 @@ function scorePage(page) {
   // Title pages with actual title text (centered headings in OCR)
   const hasHeadings = (ocr.match(/^#+ .+/gm) || []).length;
   const isTitlePage = pageType === 'title-page';
-  const looksLikeTitlePage = !pageType && hasHeadings >= 3;
+  const looksLikeTitlePage = !isTitlePage && hasHeadings >= 3;
 
   if (isTitlePage) {
     score += 80;
@@ -162,8 +189,12 @@ function scorePage(page) {
   // Illustrations
   if (pageType === 'illustration') {
     // Skip if it's a photo of the physical book
-    if (ocr.includes('photograph') && (ocr.includes('fore-edge') || ocr.includes('book') && ocr.includes('closed'))) {
+    if (ocr.includes('photograph') && (ocr.includes('fore-edge') || (ocr.includes('book') && ocr.includes('closed')))) {
       return { score: -80, reason: 'physical book photo' };
+    }
+    // Skip if it's actually a bookplate with an engraving
+    if (hasExLibris) {
+      return { score: -60, reason: 'bookplate illustration' };
     }
     score += 60;
     reason = 'illustration';
@@ -179,6 +210,17 @@ function scorePage(page) {
   if (pageType === 'text' && score === 0) {
     score += 5;
     reason = 'text';
+  }
+
+  // === Title-match bonus ===
+  // If the book's actual title appears in this page's OCR, it's very likely the real title page
+  if (bookTitle) {
+    const titleWords = bookTitle.toLowerCase().split(/\s+/).filter(w => w.length > 4);
+    const matchCount = titleWords.filter(w => ocr.includes(w)).length;
+    if (titleWords.length > 0 && matchCount >= Math.min(2, titleWords.length)) {
+      score += 30;
+      if (!reason.includes('title')) reason += ' +title-match';
+    }
   }
 
   // === Position bonuses ===
@@ -204,6 +246,7 @@ function getPageImageUrl(page) {
 console.log(`\n=== Smart Cover Selection (OCR-based) ===`);
 console.log(`Mode: ${DRY_RUN ? 'DRY RUN' : 'LIVE'}${FORCE ? ' (force re-evaluate all)' : ''}`);
 if (BOOK_ID) console.log(`Book: ${BOOK_ID}`);
+if (COLLECTION) console.log(`Collection: ${COLLECTION}`);
 if (LIMIT) console.log(`Limit: ${LIMIT}`);
 
 const bookQuery = BOOK_ID
@@ -215,6 +258,9 @@ if (!BOOK_ID && SKIP_MANUAL) {
 }
 if (!BOOK_ID && PROVIDER) {
   bookQuery['image_source.provider'] = PROVIDER;
+}
+if (!BOOK_ID && COLLECTION) {
+  bookQuery.collections = COLLECTION;
 }
 
 const allBooks = await db.collection('books')
@@ -237,7 +283,7 @@ for (let i = 0; i < allBooks.length; i += BATCH_SIZE) {
   // Get first SCAN_PAGES pages with OCR text for scoring
   const allPages = await db.collection('pages')
     .find(
-      { book_id: { $in: batchBookIds }, page_number: { $lte: SCAN_PAGES } },
+      { book_id: { $in: batchBookIds }, page_number: { $lte: SCAN_PAGES }, hidden: { $ne: true } },
       {
         projection: {
           book_id: 1, page_number: 1, page_type: 1,
@@ -265,10 +311,10 @@ for (let i = 0; i < allBooks.length; i += BATCH_SIZE) {
     if (!pages || pages.length === 0) { noData++; continue; }
     checked++;
 
-    // Score all pages
+    // Score all pages, passing book title for title-match bonus
     const scored = pages
       .map(p => {
-        const { score, reason } = scorePage(p);
+        const { score, reason } = scorePage(p, book.title);
         return { page: p, score, reason };
       })
       .sort((a, b) => b.score - a.score);
