@@ -242,7 +242,6 @@ export async function browseArtists(letter: string): Promise<{ name: string; cou
       .from('books_catalog')
       .select('author')
       .eq('visible', true)
-      .gt('pages_count', 0)
       .in('resource_type', VISUAL_RESOURCE_TYPES)
       .ilike('author', `${letter}%`)
       .range(offset, offset + PAGE - 1);
