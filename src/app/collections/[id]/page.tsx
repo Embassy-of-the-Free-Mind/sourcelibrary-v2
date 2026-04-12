@@ -685,7 +685,9 @@ export default async function CollectionDetailPage({ params }: Props) {
             <div className="grid gap-4 grid-cols-2 lg:grid-cols-4">
               {childCollections.map((child) => {
                 const hero = child.featured_images?.find(
-                  (img) => img.thumbnail_url || img.extracted_url || img.image_url
+                  (img) => img.thumbnail_url || img.extracted_url
+                ) || child.featured_images?.find(
+                  (img) => img.image_url
                 );
                 const heroUrl = hero?.thumbnail_url || hero?.extracted_url || hero?.image_url;
                 return (

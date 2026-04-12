@@ -104,8 +104,11 @@ async function fetchTimelineDecades(): Promise<{ decades: DecadeBucket[]; total:
 }
 
 function CollectionCard({ col, priority = false }: { col: CollectionDoc; priority?: boolean }) {
+  // Prefer images with proper gallery crops (thumbnail/extracted) over raw page URLs
   const hero = col.featured_images?.find(
-    img => img.thumbnail_url || img.extracted_url || img.image_url
+    img => img.thumbnail_url || img.extracted_url
+  ) || col.featured_images?.find(
+    img => img.image_url
   );
   // Prefer thumbnail for card grids — extracted images are ~2MB vs ~38KB thumbnails
   const heroUrl = hero?.thumbnail_url || hero?.extracted_url || hero?.image_url;
