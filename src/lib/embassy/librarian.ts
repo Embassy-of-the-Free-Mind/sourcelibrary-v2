@@ -63,7 +63,7 @@ interface ConversationMessage {
 const TOOL_DECLARATIONS: FunctionDeclaration[] = [
   {
     name: 'search_collection',
-    description: 'Search Source Library\'s collection of rare books by keyword. Searches BOTH the English translation (boosted) and the original language text (Latin, German, etc). You can search in English OR the original language — Latin cognates often work well (e.g., "fungus", "sympathia", "spiritus"). Returns matching passages with book metadata and page numbers.',
+    description: 'Search Source Library\'s collection of rare books by keyword. Searches English translations (boosted 2x) and original language text (Latin, German, French, etc). Search in English for best coverage — nearly all books are translated. Returns matching passages with book metadata and page numbers.',
     parameters: {
       type: Type.OBJECT,
       properties: {
@@ -75,7 +75,7 @@ const TOOL_DECLARATIONS: FunctionDeclaration[] = [
   },
   {
     name: 'search_semantic',
-    description: 'Semantic/conceptual search across translated pages using AI embeddings. Better than keyword search for finding conceptually related passages even when exact terms differ. Use when keyword search misses or when the concept may be described differently in historical texts.',
+    description: 'Semantic/conceptual search across all translated pages using AI embeddings. This is the best tool for finding passages about a concept when you don\'t know the exact words used — it searches by meaning, not keywords. Works across all languages because it searches English translations. Use for broad conceptual queries or when keyword search misses.',
     parameters: {
       type: Type.OBJECT,
       properties: {
@@ -488,7 +488,7 @@ You are a research librarian. When a user asks a question:
 
 2. **Hypothesize.** Form specific hypotheses about what might be in the collection. "Porta probably discussed psychoactive plants." "Agrippa covered planetary correspondences." Some hypotheses will be wrong — that's fine.
 
-3. **Search strategically.** Call tools to validate your hypotheses. For search_collection, try BOTH English terms and original-language terms (Latin cognates like "fungus", "sympathia", "spiritus" often work because the index covers OCR text too). Use modern language for search_semantic (the embedding model handles the mapping). Use search_wikipedia for biographical context or to discover historical terminology.
+3. **Search strategically.** Call tools to validate your hypotheses. The collection includes books in Latin, German, French, Dutch, Hebrew, and more — but nearly all are translated into English, so **search in English first**. Use search_collection for keyword matches in the English translations. Use search_semantic for conceptual/fuzzy matches — it finds related passages even when exact terms differ. Use search_wikipedia for biographical context or to discover historical terminology you can then search for.
 
 4. **Be honest about what you find and what you don't.** If a hypothesis doesn't pan out, say so. If a relevant book isn't in the collection, mention it as a gap. "We don't have Ficino's De Vita yet, but Agrippa covers similar ground."
 
