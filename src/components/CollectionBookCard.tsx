@@ -4,7 +4,7 @@ import { useState } from 'react';
 import Link from 'next/link';
 import Image from 'next/image';
 import { BookOpen, Calendar, FileText } from 'lucide-react';
-import { cn, getBookThumbnailUrl } from '@/lib/utils';
+import { cn } from '@/lib/utils';
 import { firstTranslationBadge } from '@/lib/first-translation-labels';
 import AuthorName from '@/components/AuthorName';
 
@@ -41,10 +41,15 @@ export default function CollectionBookCard({ book, priority = false }: Collectio
   const [useFallback, setUseFallback] = useState(false);
 
   const pageCount = book.pages_count || book.pages || 0;
-  const primaryUrl = getBookThumbnailUrl(book);
-  const fallbackUrl = book.thumbnail && book.thumbnail_blob && book.thumbnail !== book.thumbnail_blob
-    ? book.thumbnail : null;
-  const thumbnailUrl = useFallback && fallbackUrl ? fallbackUrl : primaryUrl;
+  // Prefer full-res R2 image for card-sized display; -thumb variants are too small for grid cards.
+  // thumbnail often has full-res R2 URLs; thumbnail_blob often has -thumb variants.
+  const isR2 = (url?: string | null) => !!url && url.includes('images.sourcelibrary.org');
+  const fullResUrl = isR2(book.thumbnail) ? book.thumbnail : null;
+  const primaryUrl = fullResUrl || book.thumbnail_blob || book.thumbnail || null;
+  const fallbackUrl = primaryUrl === fullResUrl
+    ? (book.thumbnail_blob || book.thumbnail || null)
+    : (book.thumbnail || null);
+  const thumbnailUrl = useFallback && fallbackUrl && fallbackUrl !== primaryUrl ? fallbackUrl : primaryUrl;
 
   return (
     <Link
