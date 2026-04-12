@@ -204,8 +204,15 @@ export default function TimelineClient({ initialData }: Props) {
     }
   }, [selectedDecade, loadingBooks, books.length]);
 
-  // Use sqrt scale so outlier decades (e.g. Sumerian texts) don't crush everything
-  const maxSqrt = useMemo(() => Math.max(...filteredDecades.map(d => Math.sqrt(d.count)), 1), [filteredDecades]);
+  // Breakline scaling: cap at a threshold so outlier decades don't crush everything
+  // Bars above the cap get a jagged break and a count label
+  const barCap = useMemo(() => {
+    if (filteredDecades.length === 0) return 1;
+    const counts = filteredDecades.map(d => d.count).sort((a, b) => a - b);
+    const p90 = counts[Math.floor(counts.length * 0.9)] || 1;
+    // Cap at 1.5x the P90 — anything above gets a breakline
+    return Math.max(p90 * 1.5, 10);
+  }, [filteredDecades]);
 
   // Group decades by era for bracket labels
   const eraGroups = useMemo(() => {
@@ -376,7 +383,7 @@ export default function TimelineClient({ initialData }: Props) {
               <DecadeBar
                 key={d.decade}
                 bucket={d}
-                maxSqrt={maxSqrt}
+                barCap={barCap}
                 isSelected={d.decade === selectedDecade}
                 era={getEraForDecade(d.decade)}
                 onClick={() => {
@@ -595,19 +602,21 @@ export default function TimelineClient({ initialData }: Props) {
 
 function DecadeBar({
   bucket,
-  maxSqrt,
+  barCap,
   isSelected,
   era,
   onClick,
 }: {
   bucket: DecadeBucket;
-  maxSqrt: number;
+  barCap: number;
   isSelected: boolean;
   era?: Era;
   onClick: () => void;
 }) {
   const [hovered, setHovered] = useState(false);
-  const heightPct = Math.max(1.5, (Math.sqrt(bucket.count) / maxSqrt) * 100);
+  const isClipped = bucket.count > barCap;
+  // Clipped bars fill to 100%, normal bars scale linearly against the cap
+  const heightPct = isClipped ? 100 : Math.max(1.5, (bucket.count / barCap) * 100);
   const top3 = bucket.languages.slice(0, 3);
   const rest = bucket.count - top3.reduce((s, l) => s + l.count, 0);
 
@@ -619,6 +628,16 @@ function DecadeBar({
       onMouseEnter={() => setHovered(true)}
       onMouseLeave={() => setHovered(false)}
     >
+      {/* Count label above clipped bars */}
+      {isClipped && (
+        <div
+          className="absolute left-1/2 -translate-x-1/2 text-[8px] font-mono text-stone-500 whitespace-nowrap z-10"
+          style={{ bottom: `calc(${heightPct}% + 10px)` }}
+        >
+          {bucket.count}
+        </div>
+      )}
+
       {/* Tooltip */}
       {hovered && (
         <div className="absolute bottom-full left-1/2 -translate-x-1/2 mb-2 z-20 pointer-events-none">
@@ -645,6 +664,30 @@ function DecadeBar({
 
       {/* Bar — positioned at the bottom */}
       <div className="absolute bottom-0 left-0 right-0 flex flex-col justify-end" style={{ height: '100%' }}>
+        {/* Breakline zigzag for clipped bars */}
+        {isClipped && (
+          <svg
+            className="absolute left-0 right-0"
+            style={{ top: `${100 - heightPct}%`, transform: 'translateY(-3px)' }}
+            height="8"
+            preserveAspectRatio="none"
+            viewBox="0 0 20 8"
+          >
+            <path
+              d="M0,4 L2,1 L4,7 L6,1 L8,7 L10,1 L12,7 L14,1 L16,7 L18,1 L20,4"
+              fill="none"
+              stroke="#faf8f4"
+              strokeWidth="2.5"
+            />
+            <path
+              d="M0,4 L2,1 L4,7 L6,1 L8,7 L10,1 L12,7 L14,1 L16,7 L18,1 L20,4"
+              fill="none"
+              stroke="var(--border-light)"
+              strokeWidth="1"
+            />
+          </svg>
+        )}
+
         <div
           className={`rounded-t-sm overflow-hidden transition-all duration-200 ${
             isSelected
