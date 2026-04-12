@@ -1,6 +1,7 @@
 import { Metadata } from 'next';
 import { getReadDb } from '@/lib/mongodb';
 import SiteHeader from '@/components/layout/SiteHeader';
+import ExploreTabBar from '@/components/explore/ExploreTabBar';
 import BookMapLoader from '@/components/explore/BookMapLoader';
 import type { BookLocation } from '@/components/explore/BookMap';
 
@@ -98,7 +99,12 @@ export default async function MapPage() {
     return (
       <>
         <SiteHeader />
-        <BookMapLoader locations={data.locations} stats={data.stats} />
+        <div className="relative">
+          <div className="absolute top-3 left-3 z-[1000]">
+            <ExploreTabBar />
+          </div>
+          <BookMapLoader locations={data.locations} stats={data.stats} />
+        </div>
       </>
     );
   } catch (err) {
