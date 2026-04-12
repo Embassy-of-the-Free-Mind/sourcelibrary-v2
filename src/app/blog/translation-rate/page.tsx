@@ -5,7 +5,7 @@ import BlogComments from '@/components/blog/BlogComments';
 
 export const metadata: Metadata = {
   title: 'How Many Renaissance Books Get Translated Each Year? - Research Notes - Source Library',
-  description: 'We queried 13,862 records from the UNESCO Index Translationum and 11 other translation catalogs to measure the annual rate of new English translations of early modern texts. The answer is smaller than anyone guesses.',
+  description: 'We queried 23,700+ records from the UNESCO Index Translationum, Library of Congress, and 20+ other translation catalogs to measure the annual rate of new English translations of early modern texts. The answer is smaller than anyone guesses.',
   openGraph: {
     title: 'How Many Renaissance Books Get Translated Each Year?',
     description: 'We queried 13,862 records from the UNESCO Index Translationum and 11 other translation catalogs. The answer is smaller than anyone guesses.',
@@ -46,7 +46,9 @@ export default function TranslationRatePage() {
           In a{' '}
           <Link href="/blog/counting-the-gap" className="text-accent-rust hover:text-accent-rust underline">previous post</Link>,
           we counted how much of the Renaissance has been translated into English.
-          The answer was roughly 7%. That raised an obvious follow-up: at the current rate,
+          The answer was under 1% at the work level (our{' '}
+          <Link href="/census" className="text-accent-rust hover:text-accent-rust underline">live census</Link>{' '}
+          has the current figure). That raised an obvious follow-up: at the current rate,
           how long would it take to finish?
         </p>
 
