@@ -27,7 +27,15 @@ async function fetchTimelineData(): Promise<TimelineOverview> {
     // eslint-disable-next-line @typescript-eslint/no-explicit-any
     const cached = await db.collection('system_config').findOne({ _id: 'timeline_overview' } as any);
     if (cached && cached.data?.decades?.length > 0) {
-      return cached.data as TimelineOverview;
+      // Refresh the total count live — cached snapshots go stale
+      const liveTotal = await db.collection('books').countDocuments({
+        year: { $exists: true, $ne: null },
+        visible: true,
+        pages_count: { $gt: 0 },
+      }, { maxTimeMS: 5000 }).catch(() => 0);
+      const data = cached.data as TimelineOverview;
+      if (liveTotal > 0) data.summary.total = liveTotal;
+      return data;
     }
 
     // Fallback: live aggregation with generous timeout

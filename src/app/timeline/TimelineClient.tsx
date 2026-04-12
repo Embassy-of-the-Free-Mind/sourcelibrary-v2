@@ -389,8 +389,26 @@ export default function TimelineClient({ initialData }: Props) {
             ))}
           </div>
 
+          {/* Decade tick labels along x-axis */}
+          <div className="flex mt-1.5" style={{ minWidth: Math.max(filteredDecades.length * 14, 600) }}>
+            {filteredDecades.map((d, i) => {
+              // Show label every ~50 years, or every century if dense
+              const step = filteredDecades.length > 40 ? 5 : 3;
+              const showLabel = d.decade % (step * 10) === 0;
+              return (
+                <div key={d.decade} className="flex-1 text-center" style={{ minWidth: 8 }}>
+                  {showLabel && (
+                    <span className="text-[9px] text-stone-400 font-mono">
+                      {d.decade < 0 ? `${Math.abs(d.decade)}BC` : d.decade}
+                    </span>
+                  )}
+                </div>
+              );
+            })}
+          </div>
+
           {/* Era labels along x-axis */}
-          <div className="flex mt-3 border-t border-[var(--accent-gold)]/20 pt-2" style={{ minWidth: Math.max(filteredDecades.length * 14, 600) }}>
+          <div className="flex mt-1 border-t border-[var(--accent-gold)]/20 pt-2" style={{ minWidth: Math.max(filteredDecades.length * 14, 600) }}>
             {eraGroups.map(({ era, span }) => (
               <button
                 key={era.name}
@@ -600,7 +618,12 @@ function DecadeBar({
       {hovered && (
         <div className="absolute bottom-full left-1/2 -translate-x-1/2 mb-2 z-20 pointer-events-none">
           <div className="bg-[#1a1612] text-white text-xs rounded-lg px-3 py-2.5 whitespace-nowrap shadow-lg">
-            <div className="font-serif text-sm mb-1">{formatDecadeLabel(bucket.decade)}</div>
+            <div className="font-serif text-sm mb-1">
+              {formatDecadeLabel(bucket.decade)}
+              <span className="text-stone-400 font-sans text-[10px] ml-1.5">
+                ({bucket.decade}&ndash;{bucket.decade + 9})
+              </span>
+            </div>
             {era && (
               <div className="text-stone-400 text-[10px] mb-1.5">{era.label}</div>
             )}
