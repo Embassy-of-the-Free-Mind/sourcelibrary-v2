@@ -1,6 +1,7 @@
 import { Suspense } from 'react';
 import { getReadDb } from '@/lib/mongodb';
 import ContentPageLayout, { ContentHeader } from '@/components/layout/ContentPageLayout';
+import ExploreTabBar from '@/components/explore/ExploreTabBar';
 import TimelineClient from './TimelineClient';
 import type { Metadata } from 'next';
 import type { TimelineOverview, DecadeBucket } from '@/lib/api-client/types/timeline';
@@ -118,7 +119,11 @@ export default async function TimelinePage() {
         <ContentHeader
           title="Timeline"
           subtitle={`${data.summary.total.toLocaleString()} texts from antiquity to the Enlightenment — browse the tradition by era`}
-        />
+        >
+          <div className="mt-5">
+            <ExploreTabBar />
+          </div>
+        </ContentHeader>
       }
       maxWidth="wide"
     >
