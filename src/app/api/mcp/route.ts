@@ -401,6 +401,23 @@ export async function GET(req: Request) {
 
 export async function POST(req: Request) {
   try {
+    // Check for Bearer token — if missing, return 401 to trigger OAuth flow
+    const auth = req.headers.get('authorization');
+    if (!auth || !auth.startsWith('Bearer ')) {
+      return new Response(JSON.stringify({
+        jsonrpc: '2.0',
+        error: { code: -32000, message: 'Authentication required' },
+        id: null,
+      }), {
+        status: 401,
+        headers: {
+          'Content-Type': 'application/json',
+          'WWW-Authenticate': 'Bearer resource_metadata="https://sourcelibrary.org/.well-known/oauth-protected-resource"',
+          'Access-Control-Allow-Origin': '*',
+        },
+      });
+    }
+
     const body = await req.json();
 
     // Always set the Accept header the SDK requires — clients send varying
@@ -444,7 +461,8 @@ export async function OPTIONS() {
     headers: {
       'Access-Control-Allow-Origin': '*',
       'Access-Control-Allow-Methods': 'GET, POST, DELETE, OPTIONS',
-      'Access-Control-Allow-Headers': 'Content-Type, MCP-Session-Id, MCP-Protocol-Version',
+      'Access-Control-Allow-Headers': 'Content-Type, Authorization, MCP-Session-Id, MCP-Protocol-Version',
+      'Access-Control-Expose-Headers': 'WWW-Authenticate',
     },
   });
 }
