@@ -28,6 +28,7 @@ interface Book {
   thumbnail_blob?: string;
   pages_count?: number;
   resource_type?: string;
+  source_url?: string;
 }
 
 interface GalleryImage {
@@ -96,13 +97,14 @@ interface ArtistPageProps {
 const BOOK_PROJECTION = {
   _id: 0, id: 1, slug: 1, title: 1, display_title: 1, author: 1,
   author_entity_id: 1, language: 1, published: 1, thumbnail: 1, thumbnail_blob: 1,
-  pages_count: 1, year: 1, resource_type: 1,
+  pages_count: 1, year: 1, resource_type: 1, source_url: 1,
 };
 
 async function loadArtistData(db: Db, slug: string): Promise<{
   artistName: string;
   entity: ArtistEntity | null;
   books: Book[];
+  totalWorks: number;
   galleryImages: GalleryImage[];
   hasAuthorPage: boolean;
 } | null> {
@@ -126,24 +128,29 @@ async function loadArtistData(db: Db, slug: string): Promise<{
 
   if (!artistName) return null;
 
-  // Find all books by this author
-  const allBooks = await db.collection('books').find(
-    { author: artistName, visible: true },
+  // Count visual works to verify this is an artist
+  const visualCount = await db.collection('books').countDocuments(
+    { author: artistName, visible: true, resource_type: { $in: VISUAL_RESOURCE_TYPES } },
+    { maxTimeMS: 10000 }
+  );
+
+  if (visualCount === 0) return null;
+
+  // Fetch visual works (limited to 60 for performance)
+  const visualBooks = await db.collection('books').find(
+    { author: artistName, visible: true, resource_type: { $in: VISUAL_RESOURCE_TYPES } },
     { projection: BOOK_PROJECTION }
-  ).sort({ year: 1, title: 1 }).toArray() as unknown as (Book & { author_entity_id?: string })[];
+  ).sort({ year: 1, title: 1 }).limit(60).toArray() as unknown as (Book & { author_entity_id?: string })[];
 
-  // Check if this author has any visual works
-  const visualBooks = allBooks.filter(b => b.resource_type && VISUAL_RESOURCE_TYPES.includes(b.resource_type));
-  const textBooks = allBooks.filter(b => !b.resource_type || !VISUAL_RESOURCE_TYPES.includes(b.resource_type));
-
-  if (visualBooks.length === 0) {
-    // Not an artist — no visual works at all
-    return null;
-  }
+  // Check if this author also has text works (for cross-link)
+  const textCount = await db.collection('books').countDocuments(
+    { author: artistName, visible: true, $or: [{ resource_type: { $exists: false } }, { resource_type: { $nin: VISUAL_RESOURCE_TYPES } }] },
+    { maxTimeMS: 10000 }
+  );
 
   // Resolve entity
   let entity: ArtistEntity | null = null;
-  const entityBookId = allBooks.find((b: any) => b.author_entity_id)?.author_entity_id;
+  const entityBookId = visualBooks.find((b: any) => b.author_entity_id)?.author_entity_id;
   if (entityBookId) {
     try {
       entity = await db.collection('entities').findOne(
@@ -154,7 +161,7 @@ async function loadArtistData(db: Db, slug: string): Promise<{
   }
 
   // Fetch gallery images for this artist's books
-  const bookIds = allBooks.map(b => b.id);
+  const bookIds = visualBooks.map(b => b.id);
   const galleryImages = await db.collection('gallery_images').find(
     { book_id: { $in: bookIds }, book_visible: true, extracted_url: { $exists: true, $ne: null } },
     { projection: { page_id: 1, book_id: 1, page_number: 1, image_url: 1, thumbnail_url: 1, extracted_url: 1, description: 1, type: 1, gallery_quality: 1, book_title: 1, book_year: 1, extracted_width: 1, extracted_height: 1 } }
@@ -166,8 +173,9 @@ async function loadArtistData(db: Db, slug: string): Promise<{
     artistName: displayName,
     entity,
     books: visualBooks as Book[],
+    totalWorks: visualCount,
     galleryImages,
-    hasAuthorPage: textBooks.length > 0,
+    hasAuthorPage: textCount > 0,
   };
 }
 
@@ -201,7 +209,7 @@ export default async function ArtistPage({ params }: ArtistPageProps) {
   const data = await loadArtistData(db, name);
   if (!data) notFound();
 
-  const { artistName, entity, books, galleryImages, hasAuthorPage } = data;
+  const { artistName, entity, books, totalWorks, galleryImages, hasAuthorPage } = data;
 
   const years = books.map(b => b.published).filter(Boolean).map(p => parseInt(p)).filter(y => !isNaN(y));
   const yearRange = years.length > 0
@@ -276,7 +284,7 @@ export default async function ArtistPage({ params }: ArtistPageProps) {
             {/* Stats row */}
             <div className="flex flex-wrap items-center gap-4 mt-5 text-sm">
               <span className="text-accent-gold font-medium">
-                {books.length} work{books.length !== 1 ? 's' : ''}
+                {totalWorks} work{totalWorks !== 1 ? 's' : ''}
               </span>
               {galleryImages.length > 0 && (
                 <span className="text-stone-400">
@@ -375,41 +383,59 @@ export default async function ArtistPage({ params }: ArtistPageProps) {
       )}
 
       {/* Works bibliography */}
-      <main className="max-w-6xl mx-auto px-6 md:px-12 py-8 md:py-12">
-        <h2 className="text-lg font-display mb-4" style={{ color: 'var(--text-primary)' }}>
-          Works in Collection
-        </h2>
-        <div className="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-5 gap-4">
-          {books.map(book => (
-            <Link key={book.id} href={bookUrl(book)} className="group">
-              <div className="aspect-[3/4] relative rounded overflow-hidden bg-stone-200">
-                {getBookThumbnailUrl(book) ? (
-                  <Image
-                    src={getBookThumbnailUrl(book)!}
-                    alt={book.display_title || book.title}
-                    fill
-                    className="object-cover group-hover:scale-105 transition-transform duration-300"
-                    sizes="(max-width: 640px) 50vw, (max-width: 1024px) 33vw, 20vw"
-                  />
-                ) : (
-                  <div className="w-full h-full flex items-center justify-center p-3">
-                    <p className="text-[10px] text-center" style={{ color: 'var(--text-faint)' }}>
+      {(() => {
+        const shown = books.slice(0, 60);
+        const remaining = books.length - shown.length;
+        return (
+          <main className="max-w-6xl mx-auto px-6 md:px-12 py-8 md:py-12">
+            <h2 className="text-lg font-display mb-4" style={{ color: 'var(--text-primary)' }}>
+              Works in Collection
+              {remaining > 0 && (
+                <span className="text-sm font-normal ml-2" style={{ color: 'var(--text-muted)' }}>
+                  showing {shown.length} of {books.length}
+                </span>
+              )}
+            </h2>
+            <div className="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-5 gap-4">
+              {shown.map(book => {
+                const isStub = !book.pages_count;
+                const href = isStub && book.source_url ? book.source_url : bookUrl(book);
+                const isExternal = isStub && book.source_url;
+                const LinkOrA = isExternal ? 'a' : Link;
+                const extraProps = isExternal ? { target: '_blank', rel: 'noopener noreferrer' } : {};
+                return (
+                  <LinkOrA key={book.id} href={href} className="group" {...extraProps}>
+                    <div className="aspect-[3/4] relative rounded overflow-hidden bg-stone-200">
+                      {getBookThumbnailUrl(book) ? (
+                        <Image
+                          src={getBookThumbnailUrl(book)!}
+                          alt={book.display_title || book.title}
+                          fill
+                          className="object-cover group-hover:scale-105 transition-transform duration-300"
+                          sizes="(max-width: 640px) 50vw, (max-width: 1024px) 33vw, 20vw"
+                        />
+                      ) : (
+                        <div className="w-full h-full flex items-center justify-center p-3">
+                          <p className="text-[10px] text-center" style={{ color: 'var(--text-faint)' }}>
+                            {book.display_title || book.title}
+                          </p>
+                        </div>
+                      )}
+                    </div>
+                    <p className="text-xs mt-1.5 font-medium line-clamp-2" style={{ color: 'var(--text-primary)', fontFamily: 'var(--font-serif)' }}>
                       {book.display_title || book.title}
                     </p>
-                  </div>
-                )}
-              </div>
-              <p className="text-xs mt-1.5 font-medium line-clamp-2" style={{ color: 'var(--text-primary)', fontFamily: 'var(--font-serif)' }}>
-                {book.display_title || book.title}
-              </p>
-              <p className="text-[10px]" style={{ color: 'var(--text-muted)' }}>
-                {book.year || book.published || ''}
-                {book.resource_type && <span className="ml-1 opacity-60">· {book.resource_type}</span>}
-              </p>
-            </Link>
-          ))}
-        </div>
-      </main>
+                    <p className="text-[10px]" style={{ color: 'var(--text-muted)' }}>
+                      {book.year || book.published || ''}
+                      {book.resource_type && <span className="ml-1 opacity-60">· {book.resource_type}</span>}
+                    </p>
+                  </LinkOrA>
+                );
+              })}
+            </div>
+          </main>
+        );
+      })()}
     </div>
   );
 }
