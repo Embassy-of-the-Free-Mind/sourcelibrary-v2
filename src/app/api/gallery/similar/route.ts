@@ -2,14 +2,17 @@ import { NextRequest, NextResponse } from 'next/server';
 import { Db } from 'mongodb';
 import { getDb } from '@/lib/mongodb';
 import { cosineSimilarity } from '@/lib/embeddings';
+import { supabase } from '@/lib/supabase';
 
 export const preferredRegion = 'fra1';
 
 /**
  * GET /api/gallery/similar?id={pageId}-{detectionIndex}&limit=12
  *
- * Find gallery images similar to the given image using text embeddings.
- * Falls back to metadata-based matching when no embedding exists.
+ * Find gallery images similar to the given image using:
+ *   1. CLIP visual embeddings (Supabase pgvector) — best for visual similarity
+ *   2. Text embeddings (MongoDB gallery_embeddings) — semantic/descriptive similarity
+ *   3. Metadata fallback (shared subjects/type) — always available
  *
  * Response is cached 24 hours — similarity is stable.
  */
@@ -25,10 +28,26 @@ export async function GET(request: NextRequest) {
 
     const db = await getDb();
 
-    // Try embedding-based similarity first
+    // Strategy 1: CLIP visual similarity via Supabase pgvector
+    const clipResults = await clipSimilarity(id, limit);
+    if (clipResults && clipResults.length > 0) {
+      const resolved = await resolveGalleryItems(
+        db,
+        clipResults.map((r) => r.id),
+        clipResults.map((r) => ({ id: r.id, similarity: r.similarity }))
+      );
+      if (resolved.length >= 3) {
+        const response = NextResponse.json({ items: resolved, total: resolved.length, method: 'clip' });
+        response.headers.set('Cache-Control', 'public, s-maxage=86400, stale-while-revalidate=3600');
+        return response;
+      }
+    }
+
+    // Strategy 2: Text embedding similarity
     const targetEmb = await db.collection('gallery_embeddings').findOne({ id });
 
     let results;
+    let method: string;
 
     if (targetEmb) {
       results = await embeddingSimilarity(
@@ -36,14 +55,16 @@ export async function GET(request: NextRequest) {
         targetEmb as unknown as { id: string; book_id: string; embedding: number[] },
         limit
       );
+      method = 'embedding';
     } else {
       results = await metadataFallback(db, id, limit);
+      method = 'metadata';
     }
 
     const response = NextResponse.json({
       items: results,
       total: results.length,
-      method: targetEmb ? 'embedding' : 'metadata',
+      method,
     });
 
     // Cache 24 hours
@@ -56,6 +77,56 @@ export async function GET(request: NextRequest) {
       { error: error instanceof Error ? error.message : 'Unknown error' },
       { status: 500 }
     );
+  }
+}
+
+/**
+ * CLIP visual similarity via Supabase pgvector.
+ * Finds the target image's CLIP embedding, then queries for nearest neighbors.
+ */
+async function clipSimilarity(galleryId: string, limit: number) {
+  try {
+    // Look up the target image's CLIP embedding
+    const { data: target } = await supabase
+      .from('clip_embeddings')
+      .select('embedding, book_id')
+      .eq('id', `gallery-${galleryId}`)
+      .single();
+
+    if (!target?.embedding) return null;
+
+    // Query nearest neighbors via pgvector, excluding same book for diversity
+    const { data: matches } = await supabase.rpc('match_clip_images', {
+      query_embedding: target.embedding,
+      match_threshold: 0.2,
+      match_count: limit * 3, // fetch extra for diversity filtering
+    });
+
+    if (!matches || matches.length === 0) return null;
+
+    // Filter: only gallery images, exclude same book, max 2 per book
+    const byBook = new Map<string, number>();
+    const results: Array<{ id: string; similarity: number }> = [];
+
+    for (const m of matches) {
+      if (m.source_type !== 'gallery_image') continue;
+      if (m.book_id === target.book_id) continue;
+
+      const bookCount = byBook.get(m.book_id) ?? 0;
+      if (bookCount >= 2) continue;
+      byBook.set(m.book_id, bookCount + 1);
+
+      // Strip 'gallery-' prefix to get the gallery image ID
+      const galleryImageId = m.id.replace(/^gallery-/, '');
+      results.push({ id: galleryImageId, similarity: m.similarity });
+
+      if (results.length >= limit) break;
+    }
+
+    return results;
+  } catch {
+    // CLIP not available — fall through to other methods
+    return null;
   }
 }
 
