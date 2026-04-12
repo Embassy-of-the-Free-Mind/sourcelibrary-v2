@@ -919,36 +919,90 @@ function nextBatchKeyIndex() {
 }
 
 /**
- * Count active batch jobs across all Gemini projects using SDK batches.list().
- * Returns the real Gemini-side count, not our DB's potentially stale count.
- * Jobs are key-scoped, so we must query each key separately.
- *
- * Note: batches.list() returns ALL historical jobs (newest first). We page through
- * until we've seen enough non-active jobs to be confident we've counted all active ones.
- * Active jobs (PENDING/RUNNING) are typically at the front of the list.
+ * Per-key active job counts from Gemini. Refreshed by getGeminiKeyLoads().
+ * Used by getLeastLoadedKey() to route submissions to the least-loaded project.
  */
-async function getActiveGeminiJobCount() {
-  let total = 0;
+const _geminiKeyLoads = new Array(GEMINI_SDK_CLIENTS.length).fill(0);
+let _geminiKeyLoadsAt = 0; // timestamp of last refresh
+
+const MAX_ACTIVE_PER_KEY = 30; // Hard cap per GCP project — Gemini stalls above this
+
+/**
+ * Query real Gemini-side active job counts per key.
+ * Returns { total, perKey: number[] }. Also updates the cached _geminiKeyLoads.
+ */
+async function getGeminiKeyLoads() {
   const activeStates = new Set(['JOB_STATE_PENDING', 'JOB_STATE_RUNNING']);
+  let total = 0;
   for (let i = 0; i < GEMINI_SDK_CLIENTS.length; i++) {
+    let count = 0;
     try {
       const pager = await GEMINI_SDK_CLIENTS[i].batches.list({ config: { pageSize: 100 } });
       let consecutiveInactive = 0;
       for await (const job of pager) {
         if (activeStates.has(job.state)) {
-          total++;
+          count++;
           consecutiveInactive = 0;
         } else {
           consecutiveInactive++;
-          // If we've seen 50 consecutive non-active jobs, all active ones are likely counted
           if (consecutiveInactive >= 50) break;
         }
       }
     } catch (err) {
       console.log(`    Warning: batches.list failed for key ${i}: ${err.message?.substring(0, 100)}`);
+      count = MAX_ACTIVE_PER_KEY; // Assume full if we can't check — don't submit blindly
+    }
+    _geminiKeyLoads[i] = count;
+    total += count;
+  }
+  _geminiKeyLoadsAt = Date.now();
+  return { total, perKey: [..._geminiKeyLoads] };
+}
+
+/** Backwards-compatible wrapper. */
+async function getActiveGeminiJobCount() {
+  const { total } = await getGeminiKeyLoads();
+  return total;
+}
+
+/**
+ * Pick the key with the fewest active jobs that's still under the per-key cap.
+ * Returns keyIndex or -1 if all keys are saturated.
+ * Uses cached counts (updated every submission cycle) + local tracking.
+ */
+function getLeastLoadedKey() {
+  let bestKey = -1;
+  let bestCount = Infinity;
+  for (let i = 0; i < _geminiKeyLoads.length; i++) {
+    if (_geminiKeyLoads[i] < MAX_ACTIVE_PER_KEY && _geminiKeyLoads[i] < bestCount) {
+      bestCount = _geminiKeyLoads[i];
+      bestKey = i;
     }
   }
-  return total;
+  return bestKey;
+}
+
+/**
+ * Record that we just submitted a job on keyIndex.
+ * Increments the local cache so subsequent getLeastLoadedKey() calls see it
+ * without needing a full Gemini re-query.
+ */
+function recordSubmission(keyIndex) {
+  if (keyIndex >= 0 && keyIndex < _geminiKeyLoads.length) {
+    _geminiKeyLoads[keyIndex]++;
+  }
+}
+
+/**
+ * Check if we can submit more jobs. Returns false if all keys are saturated.
+ * Refreshes Gemini counts if cache is stale (>2 min old).
+ */
+async function canSubmitMore() {
+  // Refresh real counts every 2 minutes to stay in sync with Gemini completions
+  if (Date.now() - _geminiKeyLoadsAt > 120_000) {
+    await getGeminiKeyLoads();
+  }
+  return getLeastLoadedKey() >= 0;
 }
 
 function getPageImageUrl(page) {
@@ -1007,8 +1061,9 @@ async function createBatchJobInline(model, requests, displayName) {
     metadata: r.metadata,
   }));
 
-  // Round-robin start key, try each on quota exhaustion (429)
-  const startKey = nextBatchKeyIndex();
+  // Least-loaded key first, then try others on quota exhaustion (429)
+  const bestKey = getLeastLoadedKey();
+  const startKey = bestKey >= 0 ? bestKey : nextBatchKeyIndex();
   for (let attempt = 0; attempt < GEMINI_SDK_CLIENTS.length; attempt++) {
     const ki = (startKey + attempt) % GEMINI_SDK_CLIENTS.length;
     try {
@@ -1017,11 +1072,13 @@ async function createBatchJobInline(model, requests, displayName) {
         src: sdkRequests,
         config: { displayName },
       });
+      recordSubmission(ki);
       return { name: batchJob.name, state: batchJob.state || 'JOB_STATE_PENDING', keyIndex: ki };
     } catch (err) {
       const msg = err.message || '';
       console.log(`    Key ${ki} failed: ${msg.substring(0, 150)}`);
       if (msg.includes('429') || msg.includes('quota') || msg.includes('RESOURCE_EXHAUSTED')) {
+        _geminiKeyLoads[ki] = MAX_ACTIVE_PER_KEY; // Mark as full
         continue;
       }
       throw err;
@@ -1278,7 +1335,8 @@ Output structure:
       // Upload JSONL + create batch — both must use the same key (files are key-scoped).
       // Round-robin start key across projects to spread load evenly.
       let uploadKeyIndex = -1;
-      const startKey = nextBatchKeyIndex();
+      const bestKey = getLeastLoadedKey();
+      const startKey = bestKey >= 0 ? bestKey : nextBatchKeyIndex();
       for (let attempt = 0; attempt < GEMINI_BATCH_KEYS.length; attempt++) {
         const uki = (startKey + attempt) % GEMINI_BATCH_KEYS.length;
         let fileResult;
@@ -1290,6 +1348,7 @@ Output structure:
           const msg = uploadErr.message || '';
           if (msg.includes('429') || msg.includes('quota') || msg.includes('RESOURCE_EXHAUSTED')) {
             console.log(`    Upload key ${uki} FILE API quota exhausted, trying next...`);
+            _geminiKeyLoads[uki] = MAX_ACTIVE_PER_KEY;
             continue;
           }
           throw uploadErr;
@@ -1297,7 +1356,7 @@ Output structure:
 
         try {
           batchJob = await createBatchJobFromFile(ocrModel, fileResult.name, displayName, uploadKeyIndex);
-          // Clean up uploaded file — Gemini copies it into the batch job
+          recordSubmission(uki);
           try { await getSdkClient(uki).files.delete({ name: fileResult.name }); } catch (cleanupErr) {
             console.log(`    Warning: file cleanup failed: ${cleanupErr.message}`);
           }
@@ -1307,6 +1366,7 @@ Output structure:
           const msg = batchErr.message || '';
           if (msg.includes('429') || msg.includes('quota') || msg.includes('RESOURCE_EXHAUSTED')) {
             console.log(`    Batch create key ${uki} BATCH CREATION quota exhausted, re-uploading with next key...`);
+            _geminiKeyLoads[uki] = MAX_ACTIVE_PER_KEY;
             continue;
           }
           throw batchErr;
@@ -1547,7 +1607,8 @@ async function submitImageExtractionBatch(db, book, candidatePages) {
 
       // Upload + create batch with same key (files are key-scoped). Round-robin across projects.
       let uploadKeyIndex = -1;
-      const imgStartKey = nextBatchKeyIndex();
+      const imgBestKey = getLeastLoadedKey();
+      const imgStartKey = imgBestKey >= 0 ? imgBestKey : nextBatchKeyIndex();
       for (let attempt = 0; attempt < GEMINI_BATCH_KEYS.length; attempt++) {
         const uki = (imgStartKey + attempt) % GEMINI_BATCH_KEYS.length;
         let fileResult;
@@ -1566,6 +1627,7 @@ async function submitImageExtractionBatch(db, book, candidatePages) {
 
         try {
           batchJob = await createBatchJobFromFile(IMAGE_EXTRACTION_MODEL, fileResult.name, displayName, uploadKeyIndex);
+          recordSubmission(uki);
           try { await getSdkClient(uki).files.delete({ name: fileResult.name }); } catch (cleanupErr) {
             console.log(`    Warning: file cleanup failed: ${cleanupErr.message}`);
           }
@@ -1575,6 +1637,7 @@ async function submitImageExtractionBatch(db, book, candidatePages) {
           const msg = batchErr.message || '';
           if (msg.includes('429') || msg.includes('quota') || msg.includes('RESOURCE_EXHAUSTED')) {
             console.log(`    Batch create key ${uki} BATCH CREATION quota exhausted, re-uploading with next key...`);
+            _geminiKeyLoads[uki] = MAX_ACTIVE_PER_KEY;
             continue;
           }
           throw batchErr;
@@ -1770,11 +1833,12 @@ async function submitCrossBookImageBatches(db, bookItems) {
     }));
     console.log(`    JSONL size: ${(fileSize / 1024 / 1024).toFixed(1)} MB for ${chunk.length} pages`);
 
-    // Upload + create batch with same key (files are key-scoped). Round-robin across projects.
+    // Upload + create batch with same key (files are key-scoped). Least-loaded key first.
     let batchJob = null;
-    const imgStartKey = nextBatchKeyIndex();
+    const crossBestKey = getLeastLoadedKey();
+    const crossStartKey = crossBestKey >= 0 ? crossBestKey : nextBatchKeyIndex();
     for (let attempt = 0; attempt < GEMINI_BATCH_KEYS.length; attempt++) {
-      const uki = (imgStartKey + attempt) % GEMINI_BATCH_KEYS.length;
+      const uki = (crossStartKey + attempt) % GEMINI_BATCH_KEYS.length;
       let fileResult;
       try {
         fileResult = await uploadBatchFile(jsonlFile, displayName, uki);
@@ -1783,6 +1847,7 @@ async function submitCrossBookImageBatches(db, bookItems) {
         const msg = uploadErr.message || '';
         if (msg.includes('429') || msg.includes('quota') || msg.includes('RESOURCE_EXHAUSTED')) {
           console.log(`    Upload key ${uki} quota exhausted, trying next...`);
+          _geminiKeyLoads[uki] = MAX_ACTIVE_PER_KEY;
           continue;
         }
         throw uploadErr;
@@ -1790,6 +1855,7 @@ async function submitCrossBookImageBatches(db, bookItems) {
 
       try {
         batchJob = await createBatchJobFromFile(IMAGE_EXTRACTION_MODEL, fileResult.name, displayName, uki);
+        recordSubmission(uki);
         try { await getSdkClient(uki).files.delete({ name: fileResult.name }); } catch (cleanupErr) {
           console.log(`    Warning: file cleanup failed: ${cleanupErr.message}`);
         }
@@ -1799,6 +1865,7 @@ async function submitCrossBookImageBatches(db, bookItems) {
         const msg = batchErr.message || '';
         if (msg.includes('429') || msg.includes('quota') || msg.includes('RESOURCE_EXHAUSTED')) {
           console.log(`    Batch create key ${uki} quota exhausted, re-uploading with next key...`);
+          _geminiKeyLoads[uki] = MAX_ACTIVE_PER_KEY;
           continue;
         }
         throw batchErr;
@@ -2825,17 +2892,20 @@ Rules:
     if (shouldRun(2)) {
       console.log('\n--- Phase 2: OCR submission ---');
 
-      // Check real Gemini-side active job count (not just DB) to enforce hard limit
-      geminiActiveJobs = await getActiveGeminiJobCount();
+      // Check real Gemini-side active job count per key for load-aware routing
+      const keyLoads = await getGeminiKeyLoads();
+      geminiActiveJobs = keyLoads.total;
       const activeBatchOcr = await db.collection('batch_jobs').countDocuments({
         type: 'ocr',
         status: { $in: ['pending', 'processing', 'JOB_STATE_PENDING', 'JOB_STATE_RUNNING'] },
       });
-      console.log(`  Active Gemini jobs (real): ${geminiActiveJobs}/80 | DB OCR jobs: ${activeBatchOcr}/${MAX_ACTIVE_BATCH_OCR}`);
+      console.log(`  Gemini per-key: [${keyLoads.perKey.join(', ')}] (cap ${MAX_ACTIVE_PER_KEY}/key) | Total: ${geminiActiveJobs} | DB: ${activeBatchOcr}`);
 
-      // Use the HIGHER of DB count and Gemini count to be safe — either limit can block
-      const effectiveActive = Math.max(geminiActiveJobs, activeBatchOcr);
-      const ocrLimit = effectiveActive >= MAX_ACTIVE_BATCH_OCR ? 0 : OCR_SUBMIT_LIMIT;
+      // Gate: if no key has room, don't even query candidates
+      const ocrLimit = getLeastLoadedKey() >= 0 ? OCR_SUBMIT_LIMIT : 0;
+      if (ocrLimit === 0) {
+        console.log(`  All keys at/above ${MAX_ACTIVE_PER_KEY} — skipping OCR submissions this cycle`);
+      }
 
       const ENGLISH_VARIANTS_P2 = ['english', 'eng', 'en'];
       const PREVIEW_PAGES = 25;
@@ -2875,6 +2945,10 @@ Rules:
         }
 
         for (const book of previewCandidates) {
+          if (!await canSubmitMore()) {
+            console.log(`  All keys saturated (${_geminiKeyLoads.join('/')}) — stopping OCR submissions`);
+            break;
+          }
           try {
             const label = (book.title || '').substring(0, 50);
             if (DRY_RUN) { console.log(`  Would preview OCR: ${label}`); continue; }
@@ -2940,6 +3014,10 @@ Rules:
       }
 
       for (const book of readyForOcr) {
+        if (!await canSubmitMore()) {
+          console.log(`  All keys saturated (${_geminiKeyLoads.join('/')}) — stopping OCR submissions`);
+          break;
+        }
         const retries = book.pipeline_auto?.retry_count || 0;
         try {
           const label = (book.title || '').substring(0, 50);
