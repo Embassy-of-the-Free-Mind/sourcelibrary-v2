@@ -131,14 +131,52 @@ async function clipSimilarity(galleryId: string, limit: number) {
 }
 
 /**
- * Embedding-based similarity: cosine rank all candidates in memory.
+ * Embedding-based similarity via Supabase pgvector.
+ * Falls back to MongoDB brute-force cosine if Supabase is unavailable.
  */
 async function embeddingSimilarity(
   db: Db,
   targetEmb: { id: string; book_id: string; embedding: number[] },
   limit: number
 ) {
-  // Fetch candidates (exclude same book for diversity)
+  // Try Supabase pgvector first
+  try {
+    const { data: matches, error } = await supabase.rpc('match_gallery_text', {
+      query_embedding: JSON.stringify(targetEmb.embedding),
+      match_threshold: 0.2,
+      match_count: limit * 3,
+      exclude_book_id: targetEmb.book_id,
+    });
+
+    if (!error && matches && matches.length > 0) {
+      const byBook = new Map<string, number>();
+      const topIds: string[] = [];
+      const scored = matches.map((m: { id: string; page_id: string; book_id: string; detection_index: number; similarity: number }) => ({
+        id: m.id,
+        pageId: m.page_id,
+        bookId: m.book_id,
+        detectionIndex: m.detection_index,
+        similarity: m.similarity,
+      }));
+
+      for (const item of scored) {
+        if (topIds.length >= limit) break;
+        if (item.id === targetEmb.id) continue;
+        const count = byBook.get(item.bookId) ?? 0;
+        if (count >= 2) continue;
+        byBook.set(item.bookId, count + 1);
+        topIds.push(item.id);
+      }
+
+      if (topIds.length > 0) {
+        return resolveGalleryItems(db, topIds, scored);
+      }
+    }
+  } catch {
+    // Fall through to MongoDB
+  }
+
+  // Fallback: MongoDB brute-force cosine
   const candidates = await db
     .collection('gallery_embeddings')
     .find(
@@ -148,7 +186,6 @@ async function embeddingSimilarity(
     .limit(500)
     .toArray();
 
-  // Score and rank
   const scored = candidates
     .map((c) => ({
       id: c.id as string,
@@ -159,7 +196,6 @@ async function embeddingSimilarity(
     }))
     .sort((a, b) => b.similarity - a.similarity);
 
-  // Diversity: max 2 per book
   const byBook = new Map<string, number>();
   const topIds: string[] = [];
   for (const item of scored) {
@@ -170,7 +206,6 @@ async function embeddingSimilarity(
     topIds.push(item.id);
   }
 
-  // Resolve to full gallery items
   return resolveGalleryItems(db, topIds, scored);
 }
 
