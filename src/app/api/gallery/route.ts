@@ -1,5 +1,6 @@
 import { NextRequest, NextResponse } from 'next/server';
 import { getReadDb } from '@/lib/mongodb';
+import { supabase } from '@/lib/supabase';
 import { generateQueryEmbedding, cosineSimilarity } from '@/lib/embeddings';
 
 export const maxDuration = 30;
@@ -340,7 +341,8 @@ async function getBookInfo(db: Awaited<ReturnType<typeof getReadDb>>, bookId: st
 }
 
 /**
- * Semantic gallery search: embed query, then cosine rank gallery embeddings.
+ * Semantic gallery search: embed query, then find similar via Supabase pgvector.
+ * Falls back to MongoDB brute-force cosine if Supabase is unavailable.
  */
 async function semanticGallerySearch(searchParams: URLSearchParams, query: string) {
   const limit = Math.min(parseInt(searchParams.get('limit') || '50'), 200);
@@ -350,21 +352,47 @@ async function semanticGallerySearch(searchParams: URLSearchParams, query: strin
   const db = await getReadDb();
   const queryEmbedding = await generateQueryEmbedding(query);
 
-  const candidates = await db
-    .collection('gallery_embeddings')
-    .find({}, { projection: { id: 1, page_id: 1, book_id: 1, detection_index: 1, embedding: 1 } })
-    .limit(1000)
-    .toArray();
+  // Try Supabase pgvector first (instant HNSW search)
+  let scored: Array<{ id: string; pageId: string; bookId: string; detectionIndex: number; similarity: number }> = [];
 
-  const scored = candidates
-    .map(c => ({
-      id: c.id as string,
-      pageId: c.page_id as string,
-      bookId: c.book_id as string,
-      detectionIndex: c.detection_index as number,
-      similarity: cosineSimilarity(queryEmbedding, c.embedding as number[]),
-    }))
-    .sort((a, b) => b.similarity - a.similarity);
+  try {
+    const { data: matches, error } = await supabase.rpc('match_gallery_text', {
+      query_embedding: JSON.stringify(queryEmbedding),
+      match_threshold: 0.15,
+      match_count: offset + limit + 50, // fetch enough for pagination + filtering
+    });
+
+    if (!error && matches && matches.length > 0) {
+      scored = matches.map((m: { id: string; page_id: string; book_id: string; detection_index: number; similarity: number }) => ({
+        id: m.id,
+        pageId: m.page_id,
+        bookId: m.book_id,
+        detectionIndex: m.detection_index,
+        similarity: m.similarity,
+      }));
+    }
+  } catch {
+    // Supabase unavailable — fall through
+  }
+
+  // Fallback: MongoDB brute-force cosine
+  if (scored.length === 0) {
+    const candidates = await db
+      .collection('gallery_embeddings')
+      .find({}, { projection: { id: 1, page_id: 1, book_id: 1, detection_index: 1, embedding: 1 } })
+      .limit(1000)
+      .toArray();
+
+    scored = candidates
+      .map(c => ({
+        id: c.id as string,
+        pageId: c.page_id as string,
+        bookId: c.book_id as string,
+        detectionIndex: c.detection_index as number,
+        similarity: cosineSimilarity(queryEmbedding, c.embedding as number[]),
+      }))
+      .sort((a, b) => b.similarity - a.similarity);
+  }
 
   const total = scored.length;
   const page = scored.slice(offset, offset + limit);
