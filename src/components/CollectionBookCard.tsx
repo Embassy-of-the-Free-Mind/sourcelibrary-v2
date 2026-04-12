@@ -41,15 +41,20 @@ export default function CollectionBookCard({ book, priority = false }: Collectio
   const [useFallback, setUseFallback] = useState(false);
 
   const pageCount = book.pages_count || book.pages || 0;
-  // Prefer full-res R2 image for card-sized display; -thumb variants are too small for grid cards.
-  // thumbnail often has full-res R2 URLs; thumbnail_blob often has -thumb variants.
-  const isR2 = (url?: string | null) => !!url && url.includes('images.sourcelibrary.org');
-  const fullResUrl = isR2(book.thumbnail) ? book.thumbnail : null;
-  const primaryUrl = fullResUrl || book.thumbnail_blob || book.thumbnail || null;
-  const fallbackUrl = primaryUrl === fullResUrl
-    ? (book.thumbnail_blob || book.thumbnail || null)
-    : (book.thumbnail || null);
-  const thumbnailUrl = useFallback && fallbackUrl && fallbackUrl !== primaryUrl ? fallbackUrl : primaryUrl;
+
+  // For card-sized display, use the 1200px display variant instead of -thumb (150px).
+  // R2 convention: pages/{bookId}/{num}-thumb.jpg → pages/{bookId}/{num}.jpg (display)
+  //                pages/{bookId}/{num}-full.jpg → pages/{bookId}/{num}.jpg (display)
+  const toDisplayUrl = (url?: string | null): string | null => {
+    if (!url || !url.includes('images.sourcelibrary.org/pages/')) return url || null;
+    return url.replace(/-thumb\.jpg$/, '.jpg').replace(/-full\.jpg$/, '.jpg');
+  };
+
+  const bestUrl = toDisplayUrl(book.thumbnail) || toDisplayUrl(book.thumbnail_blob);
+  const primaryUrl = bestUrl || book.thumbnail || book.thumbnail_blob || null;
+  const fallbackUrl = book.thumbnail_blob && book.thumbnail_blob !== primaryUrl
+    ? book.thumbnail_blob : (book.thumbnail !== primaryUrl ? book.thumbnail : null);
+  const thumbnailUrl = useFallback && fallbackUrl ? fallbackUrl : primaryUrl;
 
   return (
     <Link
