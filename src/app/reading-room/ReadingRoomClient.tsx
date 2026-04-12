@@ -4,6 +4,7 @@ import { useState, useEffect, useRef, useCallback } from 'react';
 import { useSession } from 'next-auth/react';
 import Link from 'next/link';
 import ReactMarkdown from 'react-markdown';
+import remarkGfm from 'remark-gfm';
 import SiteHeader from '@/components/layout/SiteHeader';
 
 // ── Types ─────────────────────────────────────────────────────────────
@@ -381,15 +382,21 @@ export default function ReadingRoomClient({ featuredPassage }: ReadingRoomClient
     setSending(false);
   };
 
+  const pendingChoiceRef = useRef<string | null>(null);
+
   const handleChoiceClick = (choice: string) => {
+    pendingChoiceRef.current = choice;
     setInput(choice);
-    inputRef.current?.focus();
-    // Auto-submit
-    setTimeout(() => {
+  };
+
+  // Auto-submit when input is set from a choice click
+  useEffect(() => {
+    if (pendingChoiceRef.current && input === pendingChoiceRef.current && !sending) {
+      pendingChoiceRef.current = null;
       const form = inputRef.current?.closest('form');
       if (form) form.requestSubmit();
-    }, 50);
-  };
+    }
+  }, [input, sending]);
 
   const handleKeyDown = (e: React.KeyboardEvent<HTMLTextAreaElement>) => {
     if (e.key === 'Enter' && !e.shiftKey) {
@@ -524,7 +531,7 @@ export default function ReadingRoomClient({ featuredPassage }: ReadingRoomClient
                               </button>
                               {showThinking && (
                                 <div className="mt-1 text-[13px] text-[#8a8480] font-body italic leading-relaxed bg-[#faf8f4] rounded px-3 py-2 border-l-2 border-[#e8e4dc]">
-                                  <ReactMarkdown>{assistant.thinking}</ReactMarkdown>
+                                  <ReactMarkdown remarkPlugins={[remarkGfm]}>{assistant.thinking}</ReactMarkdown>
                                 </div>
                               )}
                             </div>
@@ -536,8 +543,20 @@ export default function ReadingRoomClient({ featuredPassage }: ReadingRoomClient
                           {/* Response text */}
                           {assistant.content && (
                             <div className="bg-[#f5f0e8] text-[#1a1612] rounded-2xl rounded-bl-sm px-4 py-3">
-                              <div className="prose prose-sm max-w-none font-body text-[15px] leading-relaxed prose-a:text-[#9e4a3a] prose-a:no-underline hover:prose-a:underline prose-blockquote:border-l-[#c9a86c] prose-blockquote:text-[#444] prose-strong:text-[#1a1612]">
-                                <ReactMarkdown>{assistant.content}</ReactMarkdown>
+                              <div className="prose prose-sm max-w-none font-body text-[15px] leading-relaxed prose-a:text-[#9e4a3a] prose-a:underline prose-a:underline-offset-2 prose-a:decoration-[#9e4a3a]/30 hover:prose-a:decoration-[#9e4a3a] prose-blockquote:border-l-[#c9a86c] prose-blockquote:text-[#444] prose-strong:text-[#1a1612]">
+                                <ReactMarkdown
+                                  remarkPlugins={[remarkGfm]}
+                                  components={{
+                                    a: ({ href, children }) => {
+                                      const isInternal = href?.includes('sourcelibrary.org') || href?.startsWith('/');
+                                      if (isInternal && href) {
+                                        const path = href.replace('https://sourcelibrary.org', '');
+                                        return <Link href={path}>{children}</Link>;
+                                      }
+                                      return <a href={href} target="_blank" rel="noopener noreferrer">{children}</a>;
+                                    },
+                                  }}
+                                >{assistant.content}</ReactMarkdown>
                               </div>
                             </div>
                           )}

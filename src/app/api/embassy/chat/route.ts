@@ -11,7 +11,7 @@ export const maxDuration = 60;
 
 const messageSchema = z.object({
   role: z.enum(['user', 'assistant']),
-  content: z.string().min(1).max(10000),
+  content: z.string().max(10000), // Allow empty for assistant messages (e.g., choices-only responses)
 });
 
 const chatRequestSchema = z.object({
