@@ -229,9 +229,13 @@ export const VISUAL_RESOURCE_TYPES = ['painting', 'drawing', 'print', 'fresco', 
 /**
  * Browse artists by letter prefix.
  * Artists are authors of visual works (paintings, prints, drawings, etc.).
- * Returns alphabetically sorted list of { name, count }.
+ *
+ * Groups by authorSlug to merge name variants ("Hendrick Goltzius",
+ * "Goltzius, Hendrick", etc.) into a single entry. Uses the most common
+ * variant as the display name. Filters by letter on the display name.
  */
 export async function browseArtists(letter: string): Promise<{ name: string; count: number }[]> {
+  // Fetch ALL visible visual works (no letter filter — we filter after grouping)
   const allRows: { author: string | null }[] = [];
   const PAGE = 1000;
   let offset = 0;
@@ -243,7 +247,6 @@ export async function browseArtists(letter: string): Promise<{ name: string; cou
       .select('author')
       .eq('visible', true)
       .in('resource_type', VISUAL_RESOURCE_TYPES)
-      .ilike('author', `${letter}%`)
       .range(offset, offset + PAGE - 1);
 
     if (error) throw new Error(`browseArtists query failed: ${error.message}`);
@@ -253,14 +256,34 @@ export async function browseArtists(letter: string): Promise<{ name: string; cou
     offset += PAGE;
   }
 
-  const counts = new Map<string, number>();
+  // Group by slug to merge name variants
+  const { authorSlug } = await import('@/lib/slugify');
+  const slugGroups = new Map<string, Map<string, number>>();
   for (const row of allRows) {
-    if (row.author) counts.set(row.author, (counts.get(row.author) || 0) + 1);
+    if (!row.author || row.author === 'Unknown' || row.author === 'Anonymous') continue;
+    const slug = authorSlug(row.author);
+    if (!slugGroups.has(slug)) slugGroups.set(slug, new Map());
+    const variants = slugGroups.get(slug)!;
+    variants.set(row.author, (variants.get(row.author) || 0) + 1);
   }
 
-  return [...counts.entries()]
-    .map(([name, count]) => ({ name, count }))
-    .sort((a, b) => a.name.localeCompare(b.name));
+  // Pick the most common variant as display name, sum all counts
+  const results: { name: string; count: number }[] = [];
+  for (const [, variants] of slugGroups) {
+    let bestName = '';
+    let bestCount = 0;
+    let total = 0;
+    for (const [name, count] of variants) {
+      total += count;
+      if (count > bestCount) { bestName = name; bestCount = count; }
+    }
+    // Filter by letter on display name
+    if (bestName.toUpperCase().startsWith(letter.toUpperCase())) {
+      results.push({ name: bestName, count: total });
+    }
+  }
+
+  return results.sort((a, b) => a.name.localeCompare(b.name));
 }
 
 /**
