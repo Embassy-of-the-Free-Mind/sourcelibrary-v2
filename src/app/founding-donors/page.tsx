@@ -61,7 +61,7 @@ export default function FoundingDonorsPage() {
           {/* Stats last verified 2026-04-12 */}
           {[
             { number: '10,000+', label: 'Books in collection' },
-            { number: '9,300+', label: 'Books fully translated' },
+            { number: '10,000+', label: 'Books fully translated' },
             { number: '3M+', label: 'Pages translated' },
             { number: '100+', label: 'Source languages' },
             { number: '< 5,000', label: 'Perseus + Loeb + Sacred-texts combined' },
