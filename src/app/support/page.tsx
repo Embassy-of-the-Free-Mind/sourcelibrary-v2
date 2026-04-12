@@ -1,6 +1,7 @@
 import Link from 'next/link';
 import { Metadata } from 'next';
 import SiteHeader from '@/components/layout/SiteHeader';
+import DonationIntentionForm from '@/components/donate/DonationIntentionForm';
 import { getReadDb } from '@/lib/mongodb';
 
 export const revalidate = 600;
@@ -217,96 +218,70 @@ export default async function SupportPage() {
         </div>
       </section>
 
-      {/* How to Donate — Two Routes */}
+      {/* Donation Intention Form */}
       <section className="bg-white py-16 md:py-24">
         <div className="px-6 md:px-12 max-w-5xl mx-auto">
-          <h2 className="text-3xl md:text-4xl text-stone-900 mb-4 leading-tight font-display">
-            How to Donate
-          </h2>
-          <p className="text-lg text-stone-600 mb-12 max-w-3xl">
-            There are two ways to support Source Library, depending on your location and needs.
-          </p>
+          <div className="grid grid-cols-1 lg:grid-cols-2 gap-12 lg:gap-16 items-start">
+            <div>
+              <h2 className="text-3xl md:text-4xl text-stone-900 mb-4 leading-tight font-display">
+                Support This Work
+              </h2>
+              <p className="text-lg text-stone-600 leading-relaxed mb-6">
+                Tell us a little about yourself and we'll personally guide you through the donation process. Every gift — of any size — makes a difference.
+              </p>
 
-          <div className="grid grid-cols-1 md:grid-cols-2 gap-8">
-            {/* US Donors — NAF */}
-            <div className="bg-[#faf8f5] rounded-2xl border border-stone-200 p-8 flex flex-col">
-              <div className="flex items-center gap-3 mb-4">
-                <span className="inline-flex items-center justify-center w-10 h-10 rounded-full bg-stone-200 text-stone-600 text-lg font-semibold shrink-0">
-                  US
-                </span>
-                <h3 className="text-xl font-semibold text-stone-900">
-                  US Tax-Deductible Donation
-                </h3>
+              <div className="space-y-6 text-stone-600 text-sm leading-relaxed">
+                <div className="flex gap-3">
+                  <span className="inline-flex items-center justify-center w-8 h-8 rounded-full bg-stone-100 text-stone-500 text-xs font-semibold shrink-0 mt-0.5">US</span>
+                  <div>
+                    <strong className="text-stone-900">US donors</strong> can give tax-deductibly through the{' '}
+                    <strong>Netherland-America Foundation</strong> (NAF), a 501(c)(3) public charity.
+                  </div>
+                </div>
+                <div className="flex gap-3">
+                  <span className="inline-flex items-center justify-center w-8 h-8 rounded-full bg-stone-100 text-stone-500 text-xs font-semibold shrink-0 mt-0.5">EU</span>
+                  <div>
+                    <strong className="text-stone-900">European and international donors</strong> can contribute directly to the Embassy of the Free Mind (ANBI-registered).
+                  </div>
+                </div>
               </div>
-              <p className="text-stone-600 text-sm leading-relaxed mb-4">
-                For US-based donors and companies seeking tax benefits. Donations are processed through the{' '}
-                <strong>Netherland-America Foundation</strong> (NAF), a 501(c)(3) public charity (EIN: 13-2989216).
-              </p>
-              <p className="text-stone-500 text-xs leading-relaxed mb-6">
-                Tax-deductible to the full extent permitted by US law. Please write &ldquo;Source Library&rdquo; in the comments field.
-              </p>
-              <div className="mt-auto">
+
+              <div className="mt-8 bg-[#faf8f5] rounded-xl border border-stone-200 p-5">
+                <h3 className="text-sm font-semibold text-stone-900 mb-2">Tax Benefits</h3>
+                <p className="text-stone-600 text-xs leading-relaxed">
+                  EFM is a registered non-profit (ANBI, Netherlands). US donors giving through the NAF receive full 501(c)(3) tax benefits. Donation receipts are available upon request or automatically via Stripe.
+                </p>
+              </div>
+
+              <div className="mt-6 flex flex-wrap gap-4 text-sm">
+                <span className="text-stone-400">Or donate directly:</span>
                 <a
                   href={DONORPERFECT_URL}
                   target="_blank"
                   rel="noopener noreferrer"
-                  className="block w-full text-center bg-stone-900 text-white py-3 px-6 rounded-full hover:bg-stone-800 transition-colors text-base font-medium"
+                  className="text-accent-rust hover:text-accent-gold-dark underline"
                 >
-                  Donate via NAF
+                  NAF (US)
                 </a>
-              </div>
-            </div>
-
-            {/* International Donors — EFM / Mollie */}
-            <div className="bg-[#faf8f5] rounded-2xl border border-stone-200 p-8 flex flex-col">
-              <div className="flex items-center gap-3 mb-4">
-                <span className="inline-flex items-center justify-center w-10 h-10 rounded-full bg-stone-200 text-stone-600 text-lg font-semibold shrink-0">
-                  EU
-                </span>
-                <h3 className="text-xl font-semibold text-stone-900">
-                  Direct Donation via EFM
-                </h3>
-              </div>
-              <p className="text-stone-600 text-sm leading-relaxed mb-4">
-                For European and international donors. Your contribution goes directly to the Embassy of the Free Mind, earmarked for Source Library.
-              </p>
-              <p className="text-stone-500 text-xs leading-relaxed mb-2">
-                Please include <strong>&ldquo;Source Library&rdquo;</strong> in the description of your donation so we can allocate your contribution correctly.
-              </p>
-              <p className="text-stone-500 text-xs leading-relaxed mb-6">
-                Donation confirmations and receipts are available upon request.
-              </p>
-              <div className="mt-auto">
                 <a
                   href={MOLLIE_URL}
                   target="_blank"
                   rel="noopener noreferrer"
-                  className="block w-full text-center bg-stone-900 text-white py-3 px-6 rounded-full hover:bg-stone-800 transition-colors text-base font-medium"
+                  className="text-accent-rust hover:text-accent-gold-dark underline"
                 >
-                  Donate via EFM
+                  EFM (International)
+                </a>
+                <a
+                  href={`mailto:${CONTACT_EMAIL}?subject=Source%20Library%20%E2%80%94%20Donation%20Inquiry`}
+                  className="text-accent-rust hover:text-accent-gold-dark underline"
+                >
+                  Wire / Large Gifts
                 </a>
               </div>
             </div>
-          </div>
 
-          {/* Tax Benefits */}
-          <div className="mt-10 bg-[#faf8f5] rounded-xl border border-stone-200 p-6">
-            <h3 className="text-base font-semibold text-stone-900 mb-2">Tax Benefits</h3>
-            <p className="text-stone-600 text-sm leading-relaxed">
-              The Embassy of the Free Mind is a registered non-profit organization (ANBI-registered in the Netherlands). Your donation may be tax-deductible depending on your country of residence. US donors giving through the Netherland-America Foundation receive full 501(c)(3) tax benefits.
-            </p>
+            <DonationIntentionForm />
           </div>
-
-          {/* Large gifts */}
-          <p className="text-stone-500 text-sm mt-8 text-center">
-            For wire transfers, stock gifts, or donations over $10,000,{' '}
-            <a
-              href={`mailto:${CONTACT_EMAIL}?subject=Source%20Library%20%E2%80%94%20Large%20Gift%20Inquiry`}
-              className="text-accent-rust hover:text-accent-gold-dark underline"
-            >
-              contact us directly
-            </a>.
-          </p>
         </div>
       </section>
 
