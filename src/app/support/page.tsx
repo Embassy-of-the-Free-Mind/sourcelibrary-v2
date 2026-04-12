@@ -151,7 +151,7 @@ export default async function SupportPage() {
             What this looks like
           </h2>
           <p className="text-lg text-gray-600 mb-10 max-w-3xl">
-            The opening of the <em>Pimander</em> — the foundational text of the Hermetic tradition — translated by Marsilio Ficino in 1481. This Venice edition had never been rendered into English until Source Library.
+            The first emblem from Michael Maier&apos;s <em>Atalanta Fugiens</em> (1618) — a masterpiece of alchemical art combining engravings, music, and poetry. Each emblem encodes a secret of nature. This edition from the Biblioth&egrave;que nationale de France had never been fully translated into English.
           </p>
 
           <div className="grid grid-cols-1 lg:grid-cols-2 gap-6 lg:gap-8">
@@ -159,13 +159,13 @@ export default async function SupportPage() {
             <div className="rounded-xl overflow-hidden border border-stone-200 bg-stone-50">
               <div className="px-4 py-3 bg-stone-100 border-b border-stone-200">
                 <span className="text-xs font-medium text-stone-500 uppercase tracking-wider">
-                  Original &middot; Venice, 1481
+                  Original &middot; Oppenheim, 1618
                 </span>
               </div>
-              <Link href="/book/corpus-hermeticum-pimander-1481-venice-edition-hermes-trismegistus">
+              <Link href="/book/atalanta-fleeing-new-chemical-emblems-of-the-secrets-of-maier">
                 <img
-                  src="https://images.sourcelibrary.org/pages/694f3d6cbe37f451a5324e10/0015.jpg"
-                  alt="Opening page of Ficino's 1481 Latin translation of the Pimander"
+                  src="https://images.sourcelibrary.org/pages/69520c46ab34727b1f044141/0019.jpg"
+                  alt="Emblem I from Atalanta Fugiens — Boreas carrying the philosophical embryo"
                   className="w-full h-auto"
                   loading="lazy"
                 />
@@ -180,24 +180,32 @@ export default async function SupportPage() {
                 </span>
               </div>
               <div className="p-6 md:p-8 flex-1 flex flex-col">
-                <h3 className="text-base font-semibold text-stone-900 mb-1 uppercase tracking-wide">
-                  The Book of Mercury Trismegistus
+                <h3 className="text-xs font-medium text-stone-400 mb-2 uppercase tracking-wider">
+                  Emblem I &middot; On the Secrets of Nature
                 </h3>
-                <p className="text-xs text-stone-500 mb-6 uppercase tracking-wide">
-                  On the Power and Wisdom of God, translated from Greek into Latin by Marsilio Ficino the Florentine to Cosimo de&apos; Medici, Father of his Country
-                </p>
-                <h4 className="text-sm font-semibold text-stone-700 mb-4 uppercase tracking-wide">
-                  The Pimander begins.
+                <h4 className="text-xl md:text-2xl font-display text-stone-900 mb-6">
+                  The wind has carried him in his belly.
                 </h4>
-                <blockquote className="text-stone-700 text-base md:text-lg leading-relaxed flex-1 font-serif italic">
-                  &ldquo;When I was meditating on the nature of things and raising the sharp point of my mind toward the heavens, the senses of my body were now put to sleep — just as it usually happens to those who are heavy with sleep due to fullness or exhaustion. Suddenly, I seemed to see someone of immense bodily stature, who, calling me by name, cried out in this manner: &lsquo;What is it, O Mercury, that you wish to hear and see, and having seen, to learn and know?&rsquo;&rdquo;
-                </blockquote>
+                <div className="text-stone-700 text-base md:text-lg leading-relaxed flex-1 font-serif space-y-4">
+                  <p className="italic">
+                    The embryo which is enclosed in the windy womb of Boreas,
+                    <br />
+                    If it should once be born alive into this light;
+                    <br />
+                    He alone can surpass all the labors of Heroes
+                    <br />
+                    By art, by hand, by a strong body, and by his mind.
+                  </p>
+                  <p className="text-sm text-stone-500 not-italic">
+                    Hermes, that most diligent investigator of every natural secret, in his Emerald Tablet wrote not without mystery to posterity: &ldquo;The wind has carried him in his belly&rdquo; — as if to say that he whose father is the Sun, and whose mother is the Moon, must, before he can be brought into the light, be carried by windy vapors...
+                  </p>
+                </div>
                 <div className="mt-6 pt-4 border-t border-stone-100">
                   <Link
-                    href="/book/corpus-hermeticum-pimander-1481-venice-edition-hermes-trismegistus"
+                    href="/book/atalanta-fleeing-new-chemical-emblems-of-the-secrets-of-maier"
                     className="text-accent-rust hover:text-accent-gold-dark text-sm font-medium"
                   >
-                    Read the full text &rarr;
+                    Read all 50 emblems &rarr;
                   </Link>
                 </div>
               </div>
