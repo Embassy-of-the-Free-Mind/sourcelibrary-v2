@@ -7,6 +7,7 @@ import { notFound, redirect } from 'next/navigation';
 import { bookUrl, authorSlug, authorUrl } from '@/lib/slugify';
 import { VISUAL_RESOURCE_TYPES } from '@/lib/books-catalog';
 import { ObjectId, type Db } from 'mongodb';
+import { getBookThumbnailUrl } from '@/lib/utils';
 
 export const revalidate = 86400;
 export const dynamicParams = true;
@@ -382,9 +383,9 @@ export default async function ArtistPage({ params }: ArtistPageProps) {
           {books.map(book => (
             <Link key={book.id} href={bookUrl(book)} className="group">
               <div className="aspect-[3/4] relative rounded overflow-hidden bg-stone-200">
-                {(book.thumbnail_blob || book.thumbnail) ? (
+                {getBookThumbnailUrl(book) ? (
                   <Image
-                    src={(book.thumbnail_blob || book.thumbnail)!}
+                    src={getBookThumbnailUrl(book)!}
                     alt={book.display_title || book.title}
                     fill
                     className="object-cover group-hover:scale-105 transition-transform duration-300"

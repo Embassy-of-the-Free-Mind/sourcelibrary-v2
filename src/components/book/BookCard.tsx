@@ -39,10 +39,9 @@ export default function BookCard({ book, priority = false }: BookCardProps) {
     };
   }, []);
 
-  // Prefer R2 (thumbnail_blob) over external hotlinks, with fallback on error
-  const primaryUrl = getBookThumbnailUrl(book);
-  const fallbackUrl = book.thumbnail && book.thumbnail_blob && book.thumbnail !== book.thumbnail_blob
-    ? book.thumbnail : null;
+  // Use 1200px display variant for card-sized display, fall back to thumb
+  const primaryUrl = getBookThumbnailUrl(book, 'display');
+  const fallbackUrl = getBookThumbnailUrl(book, 'thumb');
   const thumbnailUrl = useFallback && fallbackUrl ? fallbackUrl : primaryUrl;
 
   // Determine image source type for analytics

@@ -7,6 +7,7 @@ import { BookOpen, ArrowRight, Quote, Clock, Users, Sparkles } from 'lucide-reac
 import { bookUrl } from '@/lib/slugify';
 import { firstTranslationBadge } from '@/lib/first-translation-labels';
 import AuthorName from '@/components/AuthorName';
+import { getBookThumbnailUrl } from '@/lib/utils';
 
 // ─── Types ──────────────────────────────────────────────────────
 
@@ -197,9 +198,9 @@ function SectionsBlock({ sections, books }: {
                 >
                   <div className="w-16 sm:w-20 flex-shrink-0">
                     <div className="aspect-[3/4] relative rounded-lg overflow-hidden bg-warm">
-                      {(book.thumbnail_blob || book.thumbnail) ? (
+                      {getBookThumbnailUrl(book) ? (
                         <Image
-                          src={(book.thumbnail_blob || book.thumbnail)!}
+                          src={getBookThumbnailUrl(book)!}
                           alt={bookTitle(book)}
                           fill
                           className="object-cover group-hover:scale-105 transition-transform duration-300"
