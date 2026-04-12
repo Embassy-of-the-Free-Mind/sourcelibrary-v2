@@ -42,7 +42,11 @@ export function getBookThumbnailUrl(
   book: { thumbnail?: string | null; thumbnail_blob?: string | null },
   size: 'display' | 'thumb' = 'display'
 ): string | null {
-  const raw = book.thumbnail_blob || book.thumbnail || null;
+  // For display size, prefer the archived page image (higher res) over the tiny blob thumbnail.
+  // For thumb size, prefer the blob (small, fast).
+  const raw = size === 'display'
+    ? (book.thumbnail || book.thumbnail_blob || null)
+    : (book.thumbnail_blob || book.thumbnail || null);
   if (!raw) return null;
 
   // Only rewrite R2 /pages/ URLs where we know the variant convention exists
