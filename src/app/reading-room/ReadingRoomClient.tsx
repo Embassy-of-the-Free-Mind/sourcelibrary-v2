@@ -516,9 +516,11 @@ export default function ReadingRoomClient({ featuredPassage }: ReadingRoomClient
                     const assistant = msg as AssistantMessage;
                     return (
                       <div key={i} className="flex gap-3">
-                        <div className="flex-shrink-0 w-8 h-8 rounded-full bg-[#f5f0e8] flex items-center justify-center text-[#c9a86c] text-sm" style={{ fontFamily: 'serif' }}>
-                          &#x2609;
-                        </div>
+                        <img
+                          src="/brand/png/logo-compact--black-on-transparent--96h.png"
+                          alt="Librarian"
+                          className="flex-shrink-0 w-10 h-10 rounded-full"
+                        />
                         <div className="max-w-[85%] min-w-0">
                           {/* Thinking (collapsible) */}
                           {assistant.thinking && (

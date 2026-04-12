@@ -150,7 +150,6 @@ export async function POST(request: NextRequest) {
             break;
 
           case 'text':
-            // Send as 'chunk' for backward compat with the existing UI
             fullText += step.text || '';
             await send({ type: 'chunk', text: step.text });
             break;
