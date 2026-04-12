@@ -1,6 +1,7 @@
 import { NextRequest, NextResponse } from 'next/server';
 import { revalidatePath } from 'next/cache';
 import { getDb } from '@/lib/mongodb';
+import { purgeCloudflareUrls } from '@/lib/cloudflare-cache';
 
 export const maxDuration = 300;
 export const preferredRegion = 'fra1';
@@ -102,30 +103,11 @@ export async function POST(request: NextRequest) {
   const baseUrl = 'https://sourcelibrary.org';
   const started = Date.now();
 
-  // 0. Purge Cloudflare cache so users see fresh content after deploy
-  let cfPurged = false;
-  const cfZoneId = process.env.CLOUDFLARE_ZONE_ID;
-  const cfToken = process.env.CLOUDFLARE_API_TOKEN;
-  if (cfZoneId && cfToken) {
-    try {
-      const purgeRes = await fetch(
-        `https://api.cloudflare.com/client/v4/zones/${cfZoneId}/purge_cache`,
-        {
-          method: 'POST',
-          headers: {
-            'Authorization': `Bearer ${cfToken}`,
-            'Content-Type': 'application/json',
-          },
-          body: JSON.stringify({ purge_everything: true }),
-          signal: AbortSignal.timeout(10_000),
-        }
-      );
-      const purgeData = await purgeRes.json();
-      cfPurged = purgeData.success === true;
-    } catch {
-      // Non-fatal — warming still proceeds
-    }
-  }
+  // 0. Selective Cloudflare purge — only static pages that change on every deploy.
+  //    Collection/book pages have 24h CF TTL and don't need purging on deploy.
+  //    Use POST /api/admin/revalidate to purge specific pages when needed.
+  await purgeCloudflareUrls(STATIC_PAGES);
+  const cfPurged = STATIC_PAGES.length;
 
   // 1. Collect all paths we'll warm (need them for revalidation first)
   let collectionSlugs: string[] = [];
