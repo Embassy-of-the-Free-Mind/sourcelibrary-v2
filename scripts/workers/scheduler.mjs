@@ -173,6 +173,18 @@ const WORKERS = [
     log: '/var/log/sourcelibrary/enrich-collections.log',
   },
 
+  // Tier 3: Image extraction — realtime Gemini vision, parallel books
+  {
+    name: 'image-extract-worker',
+    cmd: 'node scripts/workers/image-extract-worker.mjs',
+    lock: '/tmp/sl-image-extract.lock',
+    connections: 5,
+    tier: 3,
+    interval: 300,      // every 5 min
+    healthMin: 'degraded',
+    log: '/var/log/sourcelibrary/image-extract.log',
+  },
+
   // Tier 4: Archiving — I/O bound (HTTP downloads), light on Atlas
   {
     name: 'archive-ocr',
