@@ -383,7 +383,21 @@ function createServer() {
 // ── Next.js route handlers ─────────────────────────────────────────
 
 export async function GET(req: Request) {
-  // SSE stream not supported in stateless mode — return method info
+  // Check for Bearer token on GET too — Claude may probe with GET first
+  const auth = req.headers.get('authorization');
+  if (!auth || !auth.startsWith('Bearer ')) {
+    return new Response(JSON.stringify({
+      error: 'Authentication required',
+    }), {
+      status: 401,
+      headers: {
+        'Content-Type': 'application/json',
+        'WWW-Authenticate': 'Bearer resource_metadata="https://sourcelibrary.org/.well-known/oauth-protected-resource"',
+        'Access-Control-Allow-Origin': '*',
+      },
+    });
+  }
+
   return new Response(JSON.stringify({
     name: 'source-library',
     version: '4.2.0',
