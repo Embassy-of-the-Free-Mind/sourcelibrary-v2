@@ -107,24 +107,15 @@ export async function POST(request: NextRequest) {
   const url = new URL(request.url);
   const checkOnly = url.searchParams.has('check');
 
-  // 0. Purge Cloudflare for static pages + all collections on deploy.
-  //    Books are purged daily via /api/cron/warm (not on every deploy).
-  let cfPurged = 0;
-  if (!checkOnly) {
-    const cfPurgePaths = [...STATIC_PAGES];
-    let collectionSlugsForPurge: string[] = [];
-    try {
-      const db = await getDb();
-      const collections = await db.collection('collections')
-        .find({ visible: { $ne: false } }, { projection: { slug: 1 }, maxTimeMS: 5000 })
-        .toArray();
-      collectionSlugsForPurge = collections.map(c => c.slug as string).filter(Boolean);
-      cfPurgePaths.push(...collectionSlugsForPurge.map(s => `/collections/${s}`));
-    } catch { /* proceed with static-only purge */ }
-
-    await purgeCloudflareUrls(cfPurgePaths);
-    cfPurged = cfPurgePaths.length;
-  }
+  // Cloudflare is NOT purged on deploy. All pages have
+  // stale-while-revalidate=1y so CF always serves cached content
+  // (possibly stale briefly) while fetching fresh in the background.
+  // No visitor ever sees a cold page.
+  //
+  // To force-refresh specific pages:
+  //   POST /api/admin/revalidate { paths: ["/collections/alchemy"] }
+  // Books are refreshed daily at 4am UTC via /api/cron/warm.
+  const cfPurged = 0;
 
   // 1. Collect all paths we'll warm (need them for revalidation first)
   let collectionSlugs: string[] = [];
