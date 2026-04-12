@@ -56,6 +56,10 @@ export default function robots(): MetadataRoute.Robots {
         userAgent: 'FacebookBot',
         disallow: '/',
       },
+      {
+        userAgent: 'Applebot',
+        disallow: '/',
+      },
 
       // AI assistants: welcome to use the API and llms.txt
       // GPTBot, Claude-Web, etc. — access the structured API
