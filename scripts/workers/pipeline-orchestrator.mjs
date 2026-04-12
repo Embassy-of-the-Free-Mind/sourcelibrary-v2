@@ -990,7 +990,11 @@ async function markFailed(db, bookId, error, retryCount) {
   await setPipelineStatus(db, bookId, 'failed', { error, retry_count: retryCount });
 }
 
+// Phases paused via DB (system_config.processing_control.paused_phases)
+let PAUSED_PHASES = new Set();
+
 function shouldRun(phase) {
+  if (PAUSED_PHASES.has(phase)) return false;
   return ONLY_PHASE === null || ONLY_PHASE === phase;
 }
 
@@ -2004,6 +2008,31 @@ async function run() {
   const healthGrade = await probeDbHealth(db);
   if (healthGrade === 'critical') {
     console.log('[pipeline-orchestrator] DB critical — running with minimum limits. Will skip heavy phases.');
+  }
+
+  // DB-driven limit overrides — allows tuning without code deploys
+  // Set via: db.system_config.updateOne({_id:'processing_control'}, {$set:{
+  //   paused_phases: [2],           // pause specific phases (e.g. OCR=2)
+  //   limit_overrides: { MAX_ACTIVE_IMAGE_JOBS: 80, IMAGE_SUBMIT_LIMIT: 100 }
+  // }})
+  if (control?.paused_phases?.length > 0) {
+    PAUSED_PHASES = new Set(control.paused_phases);
+    console.log(`[config] Paused phases: ${[...PAUSED_PHASES].join(', ')}`);
+  }
+  if (control?.limit_overrides) {
+    const overrides = control.limit_overrides;
+    const applied = [];
+    if (overrides.OCR_SUBMIT_LIMIT != null) { OCR_SUBMIT_LIMIT = overrides.OCR_SUBMIT_LIMIT; applied.push(`OCR_SUBMIT_LIMIT=${OCR_SUBMIT_LIMIT}`); }
+    if (overrides.MAX_ACTIVE_BATCH_OCR != null) { /* const, skip */ }
+    if (overrides.IMAGE_SUBMIT_LIMIT != null) { IMAGE_SUBMIT_LIMIT = overrides.IMAGE_SUBMIT_LIMIT; applied.push(`IMAGE_SUBMIT_LIMIT=${IMAGE_SUBMIT_LIMIT}`); }
+    if (overrides.MAX_ACTIVE_IMAGE_JOBS != null) { MAX_ACTIVE_IMAGE_JOBS = overrides.MAX_ACTIVE_IMAGE_JOBS; applied.push(`MAX_ACTIVE_IMAGE_JOBS=${MAX_ACTIVE_IMAGE_JOBS}`); }
+    if (overrides.TRANSLATE_SUBMIT_LIMIT != null) { TRANSLATE_SUBMIT_LIMIT = overrides.TRANSLATE_SUBMIT_LIMIT; applied.push(`TRANSLATE_SUBMIT_LIMIT=${TRANSLATE_SUBMIT_LIMIT}`); }
+    if (overrides.ENROLL_LIMIT != null) { ENROLL_LIMIT = overrides.ENROLL_LIMIT; applied.push(`ENROLL_LIMIT=${ENROLL_LIMIT}`); }
+    if (overrides.METADATA_ENRICH_LIMIT != null) { METADATA_ENRICH_LIMIT = overrides.METADATA_ENRICH_LIMIT; applied.push(`METADATA_ENRICH_LIMIT=${METADATA_ENRICH_LIMIT}`); }
+    if (overrides.ENRICH_LIMIT != null) { ENRICH_LIMIT = overrides.ENRICH_LIMIT; applied.push(`ENRICH_LIMIT=${ENRICH_LIMIT}`); }
+    if (overrides.CHAPTER_LIMIT != null) { CHAPTER_LIMIT = overrides.CHAPTER_LIMIT; applied.push(`CHAPTER_LIMIT=${CHAPTER_LIMIT}`); }
+    if (overrides.FINALIZE_LIMIT != null) { FINALIZE_LIMIT = overrides.FINALIZE_LIMIT; applied.push(`FINALIZE_LIMIT=${FINALIZE_LIMIT}`); }
+    if (applied.length > 0) console.log(`[config] Limit overrides: ${applied.join(', ')}`);
   }
 
   const log = {
