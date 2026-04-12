@@ -4,8 +4,8 @@ import ContentPageLayout, { ContentHeader } from '@/components/layout/ContentPag
 import ApiKeyRequestForm from '@/components/developers/ApiKeyRequestForm';
 
 export const metadata: Metadata = {
-  title: 'Developers - Source Library',
-  description: 'Search, read, and cite 1,200+ rare historical texts from the terminal or via MCP. 8 research tools, CLI + MCP server, no API key needed.',
+  title: 'Connect to Source Library - Source Library',
+  description: 'Give Claude access to 5,000+ rare historical texts. Connect in 30 seconds — search, read, and cite with page-level precision.',
   alternates: {
     canonical: '/developers',
   },
@@ -16,68 +16,58 @@ export default function DevelopersPage() {
     <ContentPageLayout
       header={
         <ContentHeader
-          title="For Developers & AI"
-          subtitle="Search, read, and cite rare historical texts via MCP, CLI, or REST. No API key needed."
+          title="Connect to Source Library"
+          subtitle="Give Claude direct access to 5,000+ rare historical texts — translated into English for the first time."
         />
       }
     >
-      {/* Use case */}
+      {/* Quick connect */}
       <section className="mb-16">
-        <div className="bg-white rounded-xl border border-border-light p-6 md:p-8">
-          <h2 className="text-lg font-semibold text-primary mb-3">What you can build</h2>
-          <p className="text-secondary mb-4">
-            A researcher studying Renaissance natural philosophy wants to trace how the concept of
-            &ldquo;spiritus mundi&rdquo; evolves from Ficino through Agrippa to Fludd. With the MCP server
-            connected to Claude, they search across all three authors&apos; translated works in a single
-            conversation, pull exact passages with page citations, and compile a comparative analysis
-            with DOI-backed references &mdash; work that would take days in a physical archive.
-          </p>
-          <p className="text-secondary">
-            The same tools work for building research apps, enriching datasets with primary source
-            references, or giving AI systems grounded access to pre-modern texts that aren&apos;t in
-            their training data.
-          </p>
-        </div>
-      </section>
+        <div className="bg-white rounded-xl border-2 border-accent-rust/20 p-6 md:p-8">
+          <h2 className="text-xl font-semibold text-primary mb-1">Connect in 30 seconds</h2>
+          <p className="text-secondary mb-6">No API key, no install, no account needed.</p>
 
-      {/* MCP Server */}
-      <section className="mb-16">
-        <h2 className="text-2xl font-semibold text-primary mb-2">MCP Server</h2>
-        <p className="text-secondary mb-6 max-w-2xl">
-          Gives Claude (and any MCP client) direct access to the full collection &mdash;
-          search, read, quote, and browse 50,000+ illustrations. One command to install.
-        </p>
+          <div className="space-y-6">
+            {/* Claude Chat */}
+            <div>
+              <h3 className="text-sm font-semibold text-stone-700 mb-3">Claude Chat &amp; Cowork</h3>
+              <ol className="space-y-2 text-sm text-secondary">
+                <li className="flex gap-3">
+                  <span className="flex-shrink-0 w-6 h-6 rounded-full bg-accent-rust/10 text-accent-rust text-xs font-bold flex items-center justify-center">1</span>
+                  <span>Open <strong>Customize</strong> (click your profile icon in Claude)</span>
+                </li>
+                <li className="flex gap-3">
+                  <span className="flex-shrink-0 w-6 h-6 rounded-full bg-accent-rust/10 text-accent-rust text-xs font-bold flex items-center justify-center">2</span>
+                  <span>Go to <strong>Connectors</strong>, click <strong>+</strong>, then <strong>Add custom connector</strong></span>
+                </li>
+                <li className="flex gap-3">
+                  <span className="flex-shrink-0 w-6 h-6 rounded-full bg-accent-rust/10 text-accent-rust text-xs font-bold flex items-center justify-center">3</span>
+                  <span>Paste the URL below and click <strong>Add</strong></span>
+                </li>
+              </ol>
+              <div className="mt-3 bg-stone-900 rounded-lg p-4">
+                <code className="text-stone-100 text-sm select-all">https://sourcelibrary.org/api/mcp</code>
+              </div>
+            </div>
 
-        <div className="space-y-4 mb-8">
-          <div className="bg-white rounded-xl border border-border-light overflow-hidden">
-            <div className="bg-stone-100 px-4 py-2 border-b border-border-light">
-              <span className="text-sm font-medium text-stone-700">Claude Chat / Cowork / any remote MCP client</span>
-            </div>
-            <pre className="p-4 text-sm overflow-x-auto bg-stone-900 text-stone-100">
-{`https://sourcelibrary.org/api/mcp`}
-            </pre>
-            <div className="px-4 pb-3 text-xs text-stone-400">
-              Add as a remote MCP server &mdash; no install needed. Works in Claude Chat, Cowork, and any client that supports Streamable HTTP.
-            </div>
-          </div>
-
-          <div className="bg-white rounded-xl border border-border-light overflow-hidden">
-            <div className="bg-stone-100 px-4 py-2 border-b border-border-light">
-              <span className="text-sm font-medium text-stone-700">Claude Code</span>
-            </div>
-            <pre className="p-4 text-sm overflow-x-auto bg-stone-900 text-stone-100">
+            {/* Claude Code */}
+            <div>
+              <h3 className="text-sm font-semibold text-stone-700 mb-2">Claude Code</h3>
+              <pre className="p-3 text-sm overflow-x-auto bg-stone-900 text-stone-100 rounded-lg">
 {`claude mcp add source-library -- npx -y @source-library/mcp-server`}
-            </pre>
-          </div>
-
-          <div className="bg-white rounded-xl border border-border-light overflow-hidden">
-            <div className="bg-stone-100 px-4 py-2 border-b border-border-light flex items-center justify-between">
-              <span className="text-sm font-medium text-stone-700">Claude Desktop</span>
-              <span className="text-xs text-muted">
-                macOS: ~/Library/Application Support/Claude/ &nbsp;&bull;&nbsp; Windows: %APPDATA%\Claude\
-              </span>
+              </pre>
             </div>
-            <pre className="p-4 text-sm overflow-x-auto bg-stone-900 text-stone-100">
+
+            {/* Claude Desktop */}
+            <details className="group">
+              <summary className="text-sm font-semibold text-stone-700 cursor-pointer hover:text-accent-rust">
+                Claude Desktop &mdash; click to expand
+              </summary>
+              <div className="mt-2 text-xs text-muted mb-2">
+                Add to <code>claude_desktop_config.json</code> &mdash;
+                macOS: ~/Library/Application Support/Claude/ &nbsp;&bull;&nbsp; Windows: %APPDATA%\Claude\
+              </div>
+              <pre className="p-3 text-sm overflow-x-auto bg-stone-900 text-stone-100 rounded-lg">
 {`{
   "mcpServers": {
     "source-library": {
@@ -86,32 +76,70 @@ export default function DevelopersPage() {
     }
   }
 }`}
-            </pre>
+              </pre>
+            </details>
           </div>
         </div>
+      </section>
 
-        <div className="flex flex-wrap gap-3 mb-10">
-          <a
-            href="https://www.npmjs.com/package/@source-library/mcp-server"
-            target="_blank"
-            rel="noopener noreferrer"
-            className="inline-flex items-center gap-2 px-5 py-2.5 bg-stone-900 text-white rounded-full hover:bg-stone-800 transition-colors text-sm"
-          >
-            npm package
-          </a>
-          <a
-            href="https://github.com/Embassy-of-the-Free-Mind/sourcelibrary-v2/tree/main/mcp-server"
-            target="_blank"
-            rel="noopener noreferrer"
-            className="inline-flex items-center gap-2 px-5 py-2.5 bg-white border border-stone-300 text-stone-700 rounded-full hover:bg-stone-50 transition-colors text-sm"
-          >
-            View source
-          </a>
+      {/* What can you do */}
+      <section className="mb-16">
+        <h2 className="text-2xl font-semibold text-primary mb-6">What can you do with it?</h2>
+
+        <div className="grid md:grid-cols-2 gap-5">
+          <div className="bg-white rounded-xl border border-border-light p-6">
+            <h3 className="font-semibold text-primary mb-2">Trace ideas across centuries</h3>
+            <p className="text-secondary text-sm mb-4">
+              Search for a concept like &ldquo;prima materia&rdquo; or &ldquo;harmony of the spheres&rdquo;
+              and find every author who discussed it &mdash; with exact page citations.
+            </p>
+            <p className="text-stone-700 text-sm italic border-l-2 border-accent-rust/30 pl-3">
+              &ldquo;Search for references to the philosopher&apos;s stone across the collection. How does the concept change from the 15th to 17th century?&rdquo;
+            </p>
+          </div>
+
+          <div className="bg-white rounded-xl border border-border-light p-6">
+            <h3 className="font-semibold text-primary mb-2">Read rare books in English</h3>
+            <p className="text-secondary text-sm mb-4">
+              Read full chapters of Latin, German, and Greek texts in English translation.
+              Every passage includes a citation URL linking back to the original facsimile page.
+            </p>
+            <p className="text-stone-700 text-sm italic border-l-2 border-accent-rust/30 pl-3">
+              &ldquo;Read chapter 1 of Fludd&apos;s History of Both Worlds. What is his cosmological framework?&rdquo;
+            </p>
+          </div>
+
+          <div className="bg-white rounded-xl border border-border-light p-6">
+            <h3 className="font-semibold text-primary mb-2">Browse historical illustrations</h3>
+            <p className="text-secondary text-sm mb-4">
+              Search 50,000+ cataloged images &mdash; alchemical emblems, astronomical diagrams,
+              anatomical woodcuts, Kabbalistic trees &mdash; by subject, symbol, or figure.
+            </p>
+            <p className="text-stone-700 text-sm italic border-l-2 border-accent-rust/30 pl-3">
+              &ldquo;Find all alchemical emblems depicting the ouroboros. What texts are they from?&rdquo;
+            </p>
+          </div>
+
+          <div className="bg-white rounded-xl border border-border-light p-6">
+            <h3 className="font-semibold text-primary mb-2">Quote with precision</h3>
+            <p className="text-secondary text-sm mb-4">
+              Get exact text for any page with a citation URL and DOI.
+              Claude will copy text verbatim &mdash; no paraphrasing, no hallucination.
+            </p>
+            <p className="text-stone-700 text-sm italic border-l-2 border-accent-rust/30 pl-3">
+              &ldquo;What does Copernicus say about the Sun&apos;s centrality in De Revolutionibus? Give me the exact passage with citation.&rdquo;
+            </p>
+          </div>
         </div>
+      </section>
 
-        {/* Tools */}
-        <h3 className="text-lg font-semibold text-primary mb-4">Tools</h3>
-        <div className="overflow-x-auto mb-10">
+      {/* Tools reference */}
+      <section className="mb-16">
+        <h2 className="text-2xl font-semibold text-primary mb-2">9 research tools</h2>
+        <p className="text-secondary mb-6 max-w-2xl">
+          All tools work automatically &mdash; just ask Claude a question and it picks the right ones.
+        </p>
+        <div className="overflow-x-auto">
           <table className="w-full text-sm">
             <tbody className="divide-y divide-stone-100">
               <tr>
@@ -146,38 +174,87 @@ export default function DevelopersPage() {
                 <td className="py-2.5 pr-4 font-mono text-accent-rust whitespace-nowrap">search_images</td>
                 <td className="py-2.5 text-secondary">Search 50,000+ historical illustrations by subject, symbol, type</td>
               </tr>
+              <tr>
+                <td className="py-2.5 pr-4 font-mono text-accent-rust whitespace-nowrap">submit_feedback</td>
+                <td className="py-2.5 text-secondary">Send feedback or bug reports to the Source Library team</td>
+              </tr>
             </tbody>
           </table>
         </div>
-
-        {/* Try it */}
-        <h3 className="text-lg font-semibold text-primary mb-4">Try asking Claude</h3>
-        <div className="space-y-2 mb-8">
-          <p className="text-stone-700 text-sm italic border-l-2 border-accent-rust/30 pl-4">
-            &ldquo;Search for references to &lsquo;prima materia&rsquo; across the collection. Which authors discuss it, and how do their treatments differ?&rdquo;
-          </p>
-          <p className="text-stone-700 text-sm italic border-l-2 border-accent-rust/30 pl-4">
-            &ldquo;Read the full translation of Fludd&apos;s History of Both Worlds, pages 1&ndash;50. Summarize the cosmological framework.&rdquo;
-          </p>
-          <p className="text-stone-700 text-sm italic border-l-2 border-accent-rust/30 pl-4">
-            &ldquo;What does Copernicus say about the Sun&apos;s centrality in De Revolutionibus? Find the key passages with citation URLs.&rdquo;
-          </p>
-          <p className="text-stone-700 text-sm italic border-l-2 border-accent-rust/30 pl-4">
-            &ldquo;Find all alchemical emblems depicting the ouroboros. What texts are they from?&rdquo;
-          </p>
-        </div>
       </section>
 
-      {/* CLI */}
+      {/* For developers - collapsed technical details */}
       <section className="mb-16">
-        <h2 className="text-2xl font-semibold text-primary mb-2">Command Line</h2>
-        <p className="text-secondary mb-6 max-w-2xl">
-          Same tools as the MCP server, but standalone with colored terminal output.
-          Add <code className="text-accent-rust">--json</code> for scripts.
-        </p>
+        <h2 className="text-2xl font-semibold text-primary mb-6">For developers</h2>
 
-        <div className="bg-white rounded-xl border border-border-light overflow-hidden mb-8">
-          <pre className="p-4 text-sm overflow-x-auto bg-stone-900 text-stone-100">
+        <div className="space-y-4">
+          {/* REST API */}
+          <details className="group bg-white rounded-xl border border-border-light overflow-hidden">
+            <summary className="px-6 py-4 cursor-pointer hover:bg-stone-50 transition-colors">
+              <span className="font-semibold text-primary">REST API</span>
+              <span className="text-secondary text-sm ml-2">&mdash; direct HTTP access, no authentication</span>
+            </summary>
+            <div className="px-6 pb-6 border-t border-border-light pt-4">
+              <div className="bg-stone-100 rounded-lg px-4 py-2 mb-4 inline-block">
+                <code className="text-stone-700">Base URL: <span className="text-accent-rust">https://sourcelibrary.org/api</span></code>
+              </div>
+              <div className="overflow-x-auto">
+                <table className="w-full text-sm">
+                  <tbody className="divide-y divide-stone-100">
+                    <tr>
+                      <td className="py-2.5 pr-3"><span className="px-2 py-0.5 bg-green-100 text-green-700 text-xs font-mono rounded">GET</span></td>
+                      <td className="py-2.5 pr-4 font-mono text-primary whitespace-nowrap">/search?q=...</td>
+                      <td className="py-2.5 text-secondary">Full-text search</td>
+                    </tr>
+                    <tr>
+                      <td className="py-2.5 pr-3"><span className="px-2 py-0.5 bg-green-100 text-green-700 text-xs font-mono rounded">GET</span></td>
+                      <td className="py-2.5 pr-4 font-mono text-primary whitespace-nowrap">/books/:id</td>
+                      <td className="py-2.5 text-secondary">Book metadata, summary, DOI</td>
+                    </tr>
+                    <tr>
+                      <td className="py-2.5 pr-3"><span className="px-2 py-0.5 bg-green-100 text-green-700 text-xs font-mono rounded">GET</span></td>
+                      <td className="py-2.5 pr-4 font-mono text-primary whitespace-nowrap">/books/:id/text</td>
+                      <td className="py-2.5 text-secondary">Read pages (OCR, translation, or both)</td>
+                    </tr>
+                    <tr>
+                      <td className="py-2.5 pr-3"><span className="px-2 py-0.5 bg-green-100 text-green-700 text-xs font-mono rounded">GET</span></td>
+                      <td className="py-2.5 pr-4 font-mono text-primary whitespace-nowrap">/books/:id/quote?page=N</td>
+                      <td className="py-2.5 text-secondary">Single-page text for verbatim quoting</td>
+                    </tr>
+                    <tr>
+                      <td className="py-2.5 pr-3"><span className="px-2 py-0.5 bg-green-100 text-green-700 text-xs font-mono rounded">GET</span></td>
+                      <td className="py-2.5 pr-4 font-mono text-primary whitespace-nowrap">/books/:id/search?q=...</td>
+                      <td className="py-2.5 text-secondary">Search within a book</td>
+                    </tr>
+                    <tr>
+                      <td className="py-2.5 pr-3"><span className="px-2 py-0.5 bg-green-100 text-green-700 text-xs font-mono rounded">GET</span></td>
+                      <td className="py-2.5 pr-4 font-mono text-primary whitespace-nowrap">/books/library</td>
+                      <td className="py-2.5 text-secondary">Browse with filters</td>
+                    </tr>
+                    <tr>
+                      <td className="py-2.5 pr-3"><span className="px-2 py-0.5 bg-green-100 text-green-700 text-xs font-mono rounded">GET</span></td>
+                      <td className="py-2.5 pr-4 font-mono text-primary whitespace-nowrap">/gallery</td>
+                      <td className="py-2.5 text-secondary">Search 50,000+ illustrations</td>
+                    </tr>
+                    <tr>
+                      <td className="py-2.5 pr-3"><span className="px-2 py-0.5 bg-green-100 text-green-700 text-xs font-mono rounded">GET</span></td>
+                      <td className="py-2.5 pr-4 font-mono text-primary whitespace-nowrap">/catalog/csv</td>
+                      <td className="py-2.5 text-secondary">Full catalog download</td>
+                    </tr>
+                  </tbody>
+                </table>
+              </div>
+            </div>
+          </details>
+
+          {/* CLI */}
+          <details className="group bg-white rounded-xl border border-border-light overflow-hidden">
+            <summary className="px-6 py-4 cursor-pointer hover:bg-stone-50 transition-colors">
+              <span className="font-semibold text-primary">Command Line</span>
+              <span className="text-secondary text-sm ml-2">&mdash; standalone terminal tool with colored output</span>
+            </summary>
+            <div className="px-6 pb-6 border-t border-border-light pt-4">
+              <pre className="p-4 text-sm overflow-x-auto bg-stone-900 text-stone-100 rounded-lg">
 {`# Install
 npm install -g @source-library/mcp-server
 
@@ -190,290 +267,58 @@ source-library translations "harmony of the spheres"
 # Read a book
 source-library text fludd-utriusque --from=1 --to=50
 
-# Get exact text for quoting
-source-library quote fludd-utriusque 57
-
-# Browse illustrations
-source-library images --subject=alchemy --type=emblem
-
 # JSON output for piping
 source-library search "alchemy" --json | jq .results`}
-          </pre>
-        </div>
-      </section>
-
-      {/* REST API */}
-      <section className="mb-16">
-        <h2 className="text-2xl font-semibold text-primary mb-2">REST API</h2>
-        <p className="text-secondary mb-4 max-w-2xl">
-          Direct HTTP access, no authentication. The MCP server and CLI use these same endpoints.
-        </p>
-
-        <div className="bg-stone-100 rounded-lg px-4 py-2 mb-6 inline-block">
-          <code className="text-stone-700">Base URL: <span className="text-accent-rust">https://sourcelibrary.org/api</span></code>
-        </div>
-
-        <div className="space-y-6">
-          <div className="bg-white rounded-xl border border-border-light overflow-hidden">
-            <div className="bg-stone-50 px-4 py-3 border-b border-border-light">
-              <div className="flex items-center gap-2">
-                <span className="px-2 py-0.5 bg-green-100 text-green-700 text-xs font-mono rounded">GET</span>
-                <code className="text-primary">/search</code>
-              </div>
-              <p className="text-secondary text-sm mt-1">Full-text search across books and page content</p>
+              </pre>
             </div>
-            <div className="p-4">
-              <table className="w-full text-sm">
-                <tbody>
-                  <tr className="border-b border-stone-100">
-                    <td className="py-2 font-mono text-accent-rust">q</td>
-                    <td className="py-2 text-muted">string</td>
-                    <td className="py-2 text-secondary">Search query (required)</td>
-                  </tr>
-                  <tr className="border-b border-stone-100">
-                    <td className="py-2 font-mono text-accent-rust">language</td>
-                    <td className="py-2 text-muted">string</td>
-                    <td className="py-2 text-secondary">Filter by language</td>
-                  </tr>
-                  <tr className="border-b border-stone-100">
-                    <td className="py-2 font-mono text-accent-rust">year_from / year_to</td>
-                    <td className="py-2 text-muted">number</td>
-                    <td className="py-2 text-secondary">Publication year range</td>
-                  </tr>
-                  <tr>
-                    <td className="py-2 font-mono text-accent-rust">sort</td>
-                    <td className="py-2 text-muted">string</td>
-                    <td className="py-2 text-secondary">relevance, date_asc, date_desc, title</td>
-                  </tr>
-                </tbody>
-              </table>
-              <div className="mt-4 bg-stone-900 rounded-lg p-3">
-                <code className="text-stone-300 text-sm">GET /search?q=philosopher&apos;s stone&amp;language=Latin</code>
-              </div>
-            </div>
-          </div>
+          </details>
 
-          <div className="bg-white rounded-xl border border-border-light overflow-hidden">
-            <div className="bg-stone-50 px-4 py-3 border-b border-border-light">
-              <div className="flex items-center gap-2">
-                <span className="px-2 py-0.5 bg-green-100 text-green-700 text-xs font-mono rounded">GET</span>
-                <code className="text-primary">/books/:id/text</code>
-              </div>
-              <p className="text-secondary text-sm mt-1">Get full book text (OCR, translation, or both) in a single call</p>
-            </div>
-            <div className="p-4">
-              <table className="w-full text-sm">
-                <tbody>
-                  <tr className="border-b border-stone-100">
-                    <td className="py-2 font-mono text-accent-rust">content</td>
-                    <td className="py-2 text-muted">string</td>
-                    <td className="py-2 text-secondary">ocr, translation, or both (default)</td>
-                  </tr>
-                  <tr className="border-b border-stone-100">
-                    <td className="py-2 font-mono text-accent-rust">from / to</td>
-                    <td className="py-2 text-muted">number</td>
-                    <td className="py-2 text-secondary">Page range (inclusive)</td>
-                  </tr>
-                  <tr>
-                    <td className="py-2 font-mono text-accent-rust">format</td>
-                    <td className="py-2 text-muted">string</td>
-                    <td className="py-2 text-secondary">json (structured) or plain (concatenated text)</td>
-                  </tr>
-                </tbody>
-              </table>
-              <div className="mt-4 bg-stone-900 rounded-lg p-3">
-                <code className="text-stone-300 text-sm">GET /books/fludd-utriusque/text?content=translation&amp;from=1&amp;to=50</code>
-              </div>
-            </div>
-          </div>
-
-          <div className="overflow-x-auto">
-            <table className="w-full text-sm">
-              <tbody className="divide-y divide-stone-100">
-                <tr>
-                  <td className="py-2.5 pr-3"><span className="px-2 py-0.5 bg-green-100 text-green-700 text-xs font-mono rounded">GET</span></td>
-                  <td className="py-2.5 pr-4 font-mono text-primary whitespace-nowrap">/books/:id</td>
-                  <td className="py-2.5 text-secondary">Book metadata, summary, DOI</td>
-                </tr>
-                <tr>
-                  <td className="py-2.5 pr-3"><span className="px-2 py-0.5 bg-green-100 text-green-700 text-xs font-mono rounded">GET</span></td>
-                  <td className="py-2.5 pr-4 font-mono text-primary whitespace-nowrap">/books/library</td>
-                  <td className="py-2.5 text-secondary">Browse with language/category/collection filters</td>
-                </tr>
-                <tr>
-                  <td className="py-2.5 pr-3"><span className="px-2 py-0.5 bg-green-100 text-green-700 text-xs font-mono rounded">GET</span></td>
-                  <td className="py-2.5 pr-4 font-mono text-primary whitespace-nowrap">/books/:id/search</td>
-                  <td className="py-2.5 text-secondary">Search within a book&apos;s pages</td>
-                </tr>
-                <tr>
-                  <td className="py-2.5 pr-3"><span className="px-2 py-0.5 bg-green-100 text-green-700 text-xs font-mono rounded">GET</span></td>
-                  <td className="py-2.5 pr-4 font-mono text-primary whitespace-nowrap">/books/:id/quote</td>
-                  <td className="py-2.5 text-secondary">Single-page text for verbatim quoting</td>
-                </tr>
-                <tr>
-                  <td className="py-2.5 pr-3"><span className="px-2 py-0.5 bg-green-100 text-green-700 text-xs font-mono rounded">GET</span></td>
-                  <td className="py-2.5 pr-4 font-mono text-primary whitespace-nowrap">/gallery</td>
-                  <td className="py-2.5 text-secondary">Search 50,000+ historical illustrations</td>
-                </tr>
-                <tr>
-                  <td className="py-2.5 pr-3"><span className="px-2 py-0.5 bg-green-100 text-green-700 text-xs font-mono rounded">GET</span></td>
-                  <td className="py-2.5 pr-4 font-mono text-primary whitespace-nowrap">/catalog/csv</td>
-                  <td className="py-2.5 text-secondary">Download the full catalog as CSV</td>
-                </tr>
-              </tbody>
-            </table>
-          </div>
-        </div>
-      </section>
-
-      {/* Citations */}
-      <section className="mb-16">
-        <h2 className="text-2xl font-semibold text-primary mb-4">Citation URLs</h2>
-        <p className="text-secondary mb-6">
-          Every page includes a citation URL linking directly to the source. Published editions have DOIs via Zenodo.
-        </p>
-        <div className="bg-white rounded-xl border border-border-light p-6 space-y-4">
-          <div>
-            <span className="text-sm font-medium text-muted">Page</span>
-            <p className="font-mono text-stone-700 text-sm">https://sourcelibrary.org/book/fludd-utriusque?page=57</p>
-          </div>
-          <div>
-            <span className="text-sm font-medium text-muted">Book</span>
-            <p className="font-mono text-stone-700 text-sm">https://sourcelibrary.org/book/fludd-utriusque</p>
-          </div>
-          <div>
-            <span className="text-sm font-medium text-muted">With DOI</span>
-            <p className="font-mono text-stone-700 text-sm">Author, Title, trans. Source Library (Year), p. N. DOI: 10.5281/zenodo.xxxxx</p>
-          </div>
-        </div>
-      </section>
-
-      {/* Scholarly Standards */}
-      <section className="mb-16">
-        <h2 className="text-2xl font-semibold text-primary mb-2">Scholarly Standards</h2>
-        <p className="text-secondary mb-6 max-w-2xl">
-          Every book is available through two open standards used by digital humanities tools.
-          IIIF serves page images; DTS serves structured text. Both are machine-readable.
-        </p>
-
-        <div className="grid md:grid-cols-2 gap-6">
-          {/* DTS */}
-          <div className="bg-white rounded-xl border border-border-light overflow-hidden">
-            <div className="bg-stone-50 px-4 py-3 border-b border-border-light">
-              <h3 className="font-semibold text-primary">Distributed Text Services (DTS) v1.0</h3>
-              <p className="text-secondary text-sm mt-1">Navigate, cite, and retrieve text passages</p>
-            </div>
-            <div className="p-4 space-y-2">
-              <div className="overflow-x-auto">
-                <table className="w-full text-sm">
-                  <tbody className="divide-y divide-stone-100">
-                    <tr>
-                      <td className="py-2 pr-3"><span className="px-2 py-0.5 bg-green-100 text-green-700 text-xs font-mono rounded">GET</span></td>
-                      <td className="py-2 pr-4 font-mono text-primary whitespace-nowrap">/api/dts</td>
-                      <td className="py-2 text-secondary">Entry point</td>
-                    </tr>
-                    <tr>
-                      <td className="py-2 pr-3"><span className="px-2 py-0.5 bg-green-100 text-green-700 text-xs font-mono rounded">GET</span></td>
-                      <td className="py-2 pr-4 font-mono text-primary whitespace-nowrap">/api/dts/collection</td>
-                      <td className="py-2 text-secondary">Browse collections and books</td>
-                    </tr>
-                    <tr>
-                      <td className="py-2 pr-3"><span className="px-2 py-0.5 bg-green-100 text-green-700 text-xs font-mono rounded">GET</span></td>
-                      <td className="py-2 pr-4 font-mono text-primary whitespace-nowrap">/api/dts/navigation</td>
-                      <td className="py-2 text-secondary">Chapters and pages per book</td>
-                    </tr>
-                    <tr>
-                      <td className="py-2 pr-3"><span className="px-2 py-0.5 bg-green-100 text-green-700 text-xs font-mono rounded">GET</span></td>
-                      <td className="py-2 pr-4 font-mono text-primary whitespace-nowrap">/api/dts/document</td>
-                      <td className="py-2 text-secondary">Retrieve text by page, chapter, or range</td>
-                    </tr>
-                  </tbody>
-                </table>
-              </div>
-              <div className="bg-stone-900 rounded-lg p-3 space-y-1">
-                <code className="text-stone-400 text-xs block"># Get chapter 3 in English</code>
-                <code className="text-stone-300 text-sm block">GET /api/dts/document?resource=&#123;bookId&#125;&amp;ref=ch3&amp;edition=translation</code>
-              </div>
-              <p className="text-xs text-muted pt-1">
-                <a href="https://distributed-text-services.github.io/specifications/" target="_blank" rel="noopener noreferrer" className="text-accent-rust hover:underline">DTS v1.0 Specification</a>
+          {/* Scholarly Standards */}
+          <details className="group bg-white rounded-xl border border-border-light overflow-hidden">
+            <summary className="px-6 py-4 cursor-pointer hover:bg-stone-50 transition-colors">
+              <span className="font-semibold text-primary">Scholarly Standards</span>
+              <span className="text-secondary text-sm ml-2">&mdash; IIIF, DTS, DOI citations</span>
+            </summary>
+            <div className="px-6 pb-6 border-t border-border-light pt-4">
+              <p className="text-secondary text-sm mb-4">
+                Every book is available through IIIF (page images) and DTS (structured text).
+                Published editions have DOIs via Zenodo.
               </p>
+              <div className="grid md:grid-cols-3 gap-4 text-sm">
+                <div>
+                  <span className="text-xs font-medium text-muted">Page citation</span>
+                  <p className="font-mono text-stone-700 text-xs break-all">sourcelibrary.org/book/fludd-utriusque?page=57</p>
+                </div>
+                <div>
+                  <span className="text-xs font-medium text-muted">IIIF manifest</span>
+                  <p className="font-mono text-stone-700 text-xs break-all">sourcelibrary.org/api/iiif/:id/manifest</p>
+                </div>
+                <div>
+                  <span className="text-xs font-medium text-muted">DTS entry point</span>
+                  <p className="font-mono text-stone-700 text-xs break-all">sourcelibrary.org/api/dts</p>
+                </div>
+              </div>
             </div>
-          </div>
+          </details>
 
-          {/* IIIF */}
-          <div className="bg-white rounded-xl border border-border-light overflow-hidden">
-            <div className="bg-stone-50 px-4 py-3 border-b border-border-light">
-              <h3 className="font-semibold text-primary">IIIF Presentation 3.0 + Content Search 2.0</h3>
-              <p className="text-secondary text-sm mt-1">Page images, facsimile viewing, full-text search</p>
-            </div>
-            <div className="p-4 space-y-2">
-              <div className="overflow-x-auto">
-                <table className="w-full text-sm">
-                  <tbody className="divide-y divide-stone-100">
-                    <tr>
-                      <td className="py-2 pr-3"><span className="px-2 py-0.5 bg-green-100 text-green-700 text-xs font-mono rounded">GET</span></td>
-                      <td className="py-2 pr-4 font-mono text-primary whitespace-nowrap">/api/iiif/:id/manifest</td>
-                      <td className="py-2 text-secondary">IIIF manifest with canvases and metadata</td>
-                    </tr>
-                    <tr>
-                      <td className="py-2 pr-3"><span className="px-2 py-0.5 bg-green-100 text-green-700 text-xs font-mono rounded">GET</span></td>
-                      <td className="py-2 pr-4 font-mono text-primary whitespace-nowrap">/api/iiif/:id/search</td>
-                      <td className="py-2 text-secondary">Search OCR and translation text within a book</td>
-                    </tr>
-                    <tr>
-                      <td className="py-2 pr-3"><span className="px-2 py-0.5 bg-green-100 text-green-700 text-xs font-mono rounded">GET</span></td>
-                      <td className="py-2 pr-4 font-mono text-primary whitespace-nowrap">/api/iiif/:id/autocomplete</td>
-                      <td className="py-2 text-secondary">Term completion for search</td>
-                    </tr>
-                  </tbody>
-                </table>
-              </div>
-              <div className="bg-stone-900 rounded-lg p-3 space-y-1">
-                <code className="text-stone-400 text-xs block"># Search for &quot;mercury&quot; within a book</code>
-                <code className="text-stone-300 text-sm block">GET /api/iiif/&#123;bookId&#125;/search?q=mercury</code>
-              </div>
-              <p className="text-xs text-muted pt-1">
-                Manifests work with{' '}
-                <a href="https://projectmirador.org/" target="_blank" rel="noopener noreferrer" className="text-accent-rust hover:underline">Mirador</a>,{' '}
-                <a href="https://universalviewer.io/" target="_blank" rel="noopener noreferrer" className="text-accent-rust hover:underline">Universal Viewer</a>, and any IIIF client.{' '}
-                <a href="https://iiif.io/api/presentation/3.0/" target="_blank" rel="noopener noreferrer" className="text-accent-rust hover:underline">Spec</a>
-              </p>
-            </div>
-          </div>
+          {/* LLMs.txt */}
+          <a
+            href="/llms.txt"
+            className="block bg-white rounded-xl border border-border-light px-6 py-4 hover:border-accent-rust/30 hover:shadow-sm transition-all"
+          >
+            <span className="font-semibold text-primary">/llms.txt</span>
+            <span className="text-secondary text-sm ml-2">&mdash; full API docs formatted for LLM consumption</span>
+          </a>
         </div>
       </section>
 
-      {/* LLMs.txt + Pipeline */}
-      <section className="mb-16 space-y-4">
-        <a
-          href="/llms.txt"
-          className="block bg-white rounded-xl border border-border-light p-6 hover:border-accent-rust/30 hover:shadow-sm transition-all"
-        >
-          <h3 className="text-lg font-semibold text-primary mb-1">/llms.txt</h3>
-          <p className="text-secondary text-sm">
-            Complete API documentation formatted for LLM consumption.
-          </p>
-        </a>
-
-        <Link
-          href="/developers/pipeline"
-          className="block bg-white rounded-xl border border-border-light p-6 hover:border-accent-rust/30 hover:shadow-sm transition-all"
-        >
-          <h3 className="text-lg font-semibold text-primary mb-1">Pipeline Architecture</h3>
-          <p className="text-secondary text-sm">
-            How books flow through 10 processing stages: Lambda workers, SQS queues, Gemini AI,
-            backpressure controls. Live counts, diagrams, cost breakdowns.
-          </p>
-        </Link>
-      </section>
-
-      {/* API Key Request */}
+      {/* Dataset API */}
       <section className="mb-16">
         <h2 className="text-2xl font-semibold text-primary mb-2">Dataset API</h2>
         <p className="text-secondary mb-6 max-w-2xl">
           Need bulk access to the full corpus for research or integration?
           Request an API key and we&apos;ll review it within 24 hours.
-          The MCP server above doesn&apos;t require a key.
+          Everything above doesn&apos;t require a key.
         </p>
         <div className="bg-white rounded-xl border border-border-light p-6 md:p-8">
           <ApiKeyRequestForm />
@@ -489,12 +334,14 @@ source-library search "alchemy" --json | jq .results`}
           >
             Browse the Library
           </Link>
-          <Link
-            href="/blog/mcp-server"
+          <a
+            href="https://www.npmjs.com/package/@source-library/mcp-server"
+            target="_blank"
+            rel="noopener noreferrer"
             className="px-5 py-2.5 bg-white border border-stone-300 text-stone-700 rounded-full hover:bg-stone-50 transition-colors"
           >
-            Read the announcement
-          </Link>
+            npm package
+          </a>
           <a
             href="https://github.com/Embassy-of-the-Free-Mind/sourcelibrary-v2"
             target="_blank"
