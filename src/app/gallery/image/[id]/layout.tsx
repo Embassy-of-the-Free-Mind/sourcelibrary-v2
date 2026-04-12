@@ -89,7 +89,10 @@ const getImageData = cache(async (id: string): Promise<{ page: PageWithBook; det
 
     if (index < 0 || index >= detections.length) return null;
 
-    return { page, detection: detections[index], detectionIndex: index };
+    const detection = detections[index];
+    if (!detection) return null;
+
+    return { page, detection, detectionIndex: index };
   } catch {
     return null;
   }
