@@ -70,6 +70,26 @@ const server = http.createServer(async (req, res) => {
     return;
   }
 
+  // Proxy /clip/* requests to the CLIP server on port 3457
+  if (req.url?.startsWith('/clip/')) {
+    const clipPath = req.url.replace('/clip', '');
+    try {
+      const clipResp = await fetch(`http://localhost:3457${clipPath}`, {
+        method: req.method,
+        headers: { 'Content-Type': 'application/json' },
+        body: req.method === 'POST' ? await readBody(req) : undefined,
+        signal: AbortSignal.timeout(30000),
+      });
+      const data = await clipResp.text();
+      res.writeHead(clipResp.status, { 'Content-Type': 'application/json' });
+      res.end(data);
+    } catch (e) {
+      res.writeHead(502, { 'Content-Type': 'application/json' });
+      res.end(JSON.stringify({ error: 'CLIP server unavailable: ' + e.message }));
+    }
+    return;
+  }
+
   res.writeHead(404);
   res.end('Not found');
 });
