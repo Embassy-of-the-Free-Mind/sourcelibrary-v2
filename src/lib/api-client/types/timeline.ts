@@ -35,3 +35,21 @@ export interface TimelineDrilldown {
   total: number;
   offset: number;
 }
+
+export interface TimelineArtItem {
+  id: string;
+  imageUrl: string;
+  thumbnailUrl?: string;
+  extractedUrl?: string;
+  description: string;
+  museumDescription?: string;
+  type?: string;
+  author: string;
+  bookTitle: string;
+  bookId: string;
+  bookSlug?: string;
+  year?: number;
+  pageId: string;
+  detectionIndex: number;
+  galleryQuality?: number;
+}

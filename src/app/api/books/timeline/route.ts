@@ -21,16 +21,78 @@ export async function GET(request: NextRequest) {
     if (language) baseMatch.language = language;
     if (collection) baseMatch.categories = collection;
 
-    // Drill-down mode: return books for a specific decade
+    // Drill-down mode: return books or art for a specific decade
     if (decade) {
       const decadeNum = parseInt(decade);
       if (isNaN(decadeNum)) {
         return NextResponse.json({ error: 'Invalid decade' }, { status: 400 });
       }
 
+      const mode = searchParams.get('mode') || 'books';
       const limit = Math.min(parseInt(searchParams.get('limit') || '30'), 100);
       const offset = Math.max(parseInt(searchParams.get('offset') || '0'), 0);
 
+      // Art mode: one best image per author from gallery_images
+      if (mode === 'art') {
+        const artMatch: Record<string, unknown> = {
+          book_year: { $gte: decadeNum, $lt: decadeNum + 10 },
+          book_visible: true,
+          gallery_quality: { $gte: 0.6 },
+        };
+
+        // Aggregate: group by author, pick the best image per author
+        const artPipeline = [
+          { $match: artMatch },
+          { $sort: { gallery_quality: -1 as const } },
+          {
+            $group: {
+              _id: '$book_author',
+              doc: { $first: '$$ROOT' },
+            },
+          },
+          { $replaceRoot: { newRoot: '$doc' } },
+          { $sort: { book_year: 1 as const, gallery_quality: -1 as const } },
+          { $skip: offset },
+          { $limit: limit },
+        ];
+
+        const countPipeline = [
+          { $match: artMatch },
+          { $group: { _id: '$book_author' } },
+          { $count: 'total' },
+        ];
+
+        const [artItems, countResult] = await Promise.all([
+          db.collection('gallery_images').aggregate(artPipeline, { maxTimeMS: 10000 }).toArray(),
+          db.collection('gallery_images').aggregate(countPipeline, { maxTimeMS: 10000 }).toArray(),
+        ]);
+
+        const total = countResult[0]?.total || 0;
+
+        const mapped = artItems.map(item => ({
+          id: item.id || `${item.page_id}-${item.detection_index}`,
+          imageUrl: item.image_url,
+          thumbnailUrl: item.thumbnail_url,
+          extractedUrl: item.extracted_url,
+          description: item.description,
+          museumDescription: item.museum_description,
+          type: item.type,
+          author: item.book_author || 'Unknown',
+          bookTitle: item.book_title,
+          bookId: item.book_id,
+          bookSlug: item.book_slug,
+          year: item.book_year,
+          pageId: item.page_id,
+          detectionIndex: item.detection_index,
+          galleryQuality: item.gallery_quality,
+        }));
+
+        return NextResponse.json({ decade: decadeNum, art: mapped, total, offset, mode: 'art' }, {
+          headers: { 'Cache-Control': 'public, s-maxage=300, stale-while-revalidate=600' },
+        });
+      }
+
+      // Books mode (default)
       const decadeMatch = {
         ...baseMatch,
         year: { $gte: decadeNum, $lt: decadeNum + 10 },
