@@ -1,15 +1,46 @@
 'use client';
 
-import { useState, useEffect, useRef } from 'react';
+import { useState, useEffect, useRef, useCallback } from 'react';
 import { useSession } from 'next-auth/react';
 import Link from 'next/link';
 import ReactMarkdown from 'react-markdown';
 import SiteHeader from '@/components/layout/SiteHeader';
 
-interface Message {
-  role: 'user' | 'assistant';
+// ── Types ─────────────────────────────────────────────────────────────
+
+interface SourceCard {
+  bookId: string;
+  bookTitle: string;
+  bookAuthor: string;
+  bookSlug?: string;
+  pageNumber?: number;
+  snippet?: string;
+  inCollection: boolean;
+}
+
+interface SearchStep {
+  name: string;
+  query: string;
+  summary?: string;
+  found?: number;
+  status: 'searching' | 'done';
+}
+
+interface AssistantMessage {
+  role: 'assistant';
+  thinking?: string;
+  steps: SearchStep[];
+  content: string;
+  sources: SourceCard[];
+  choices?: { text: string; options: string[] };
+}
+
+interface UserMessage {
+  role: 'user';
   content: string;
 }
+
+type Message = UserMessage | AssistantMessage;
 
 interface ThreadPreview {
   id: string;
@@ -18,10 +49,7 @@ interface ThreadPreview {
   messageCount: number;
   createdAt: string;
   lastMessageAt: string;
-  preview: {
-    question: string;
-    answer: string;
-  };
+  preview: { question: string; answer: string };
 }
 
 interface FeaturedPassage {
@@ -51,6 +79,88 @@ function timeAgo(dateStr: string): string {
   return d.toLocaleDateString('en-US', { month: 'short', day: 'numeric' });
 }
 
+const TOOL_LABELS: Record<string, string> = {
+  search_collection: 'Searching the collection',
+  search_semantic: 'Semantic search',
+  search_wikipedia: 'Checking Wikipedia',
+  get_book_page: 'Reading a page',
+  present_choices: 'Thinking...',
+};
+
+// ── Source Card Component ─────────────────────────────────────────────
+
+function SourceCardRow({ sources }: { sources: SourceCard[] }) {
+  if (sources.length === 0) return null;
+  return (
+    <div className="mt-3 flex gap-2 overflow-x-auto pb-1 -mx-1 px-1">
+      {sources.map((s, i) => {
+        const url = s.bookSlug
+          ? `/book/${s.bookSlug}${s.pageNumber ? `?page=${s.pageNumber}` : ''}`
+          : `/book/${s.bookId}${s.pageNumber ? `?page=${s.pageNumber}` : ''}`;
+        return (
+          <Link
+            key={`${s.bookId}-${s.pageNumber}-${i}`}
+            href={url}
+            className={`flex-shrink-0 w-[200px] rounded-lg border p-2.5 transition-colors ${
+              s.inCollection
+                ? 'border-[#e8e4dc] bg-white hover:border-[#c9a86c] hover:bg-[#faf8f4]'
+                : 'border-dashed border-[#d4d0c8] bg-[#f9f7f3] opacity-60'
+            }`}
+          >
+            <p className="text-[12px] font-body text-[#1a1612] font-medium leading-tight line-clamp-2">
+              {s.bookTitle}
+            </p>
+            <p className="text-[10px] text-[#8a8480] font-body mt-0.5">
+              {s.bookAuthor}
+              {s.pageNumber ? ` · p. ${s.pageNumber}` : ''}
+            </p>
+            {s.snippet && (
+              <p className="text-[10px] text-[#6b6560] font-body mt-1 line-clamp-2 italic leading-relaxed">
+                {s.snippet}
+              </p>
+            )}
+            {!s.inCollection && (
+              <p className="text-[9px] text-[#b0a89c] font-sans mt-1">Not yet in collection</p>
+            )}
+          </Link>
+        );
+      })}
+    </div>
+  );
+}
+
+// ── Search Steps Component ────────────────────────────────────────────
+
+function SearchSteps({ steps }: { steps: SearchStep[] }) {
+  if (steps.length === 0) return null;
+  return (
+    <div className="space-y-1 mb-2">
+      {steps.map((step, i) => (
+        <div key={i} className="flex items-center gap-2 text-[12px] font-sans text-[#8a8480]">
+          <span className={`inline-block w-3.5 text-center ${step.status === 'done' ? (step.found && step.found > 0 ? 'text-[#6b8f5e]' : 'text-[#b0a89c]') : 'text-[#c9a86c]'}`}>
+            {step.status === 'searching' ? (
+              <span className="inline-block animate-pulse">...</span>
+            ) : step.found && step.found > 0 ? (
+              <span>&#x2713;</span>
+            ) : (
+              <span>&#x2717;</span>
+            )}
+          </span>
+          <span>
+            {TOOL_LABELS[step.name] || step.name}
+            {step.query && <span className="text-[#b0a89c]"> &ldquo;{step.query.slice(0, 50)}{step.query.length > 50 ? '...' : ''}&rdquo;</span>}
+            {step.status === 'done' && step.summary && (
+              <span className="text-[#6b6560]"> &mdash; {step.summary}</span>
+            )}
+          </span>
+        </div>
+      ))}
+    </div>
+  );
+}
+
+// ── Main Component ────────────────────────────────────────────────────
+
 export default function ReadingRoomClient({ featuredPassage }: ReadingRoomClientProps) {
   const { data: session, status } = useSession();
   const [messages, setMessages] = useState<Message[]>([]);
@@ -58,11 +168,15 @@ export default function ReadingRoomClient({ featuredPassage }: ReadingRoomClient
   const [sending, setSending] = useState(false);
   const [threadId, setThreadId] = useState<string | null>(null);
   const [threads, setThreads] = useState<ThreadPreview[]>([]);
+  const [myThreads, setMyThreads] = useState<ThreadPreview[]>([]);
+  const [sidebarTab, setSidebarTab] = useState<'recent' | 'mine'>('recent');
   const [visibility, setVisibility] = useState<'public' | 'private'>('public');
-  const messagesEndRef = useRef<HTMLDivElement>(null);
+  const [showThinking, setShowThinking] = useState(false);
   const chatContainerRef = useRef<HTMLDivElement>(null);
   const inputRef = useRef<HTMLTextAreaElement>(null);
+  const abortRef = useRef<AbortController | null>(null);
 
+  // Fetch public threads
   useEffect(() => {
     fetch('/api/embassy/threads?limit=10')
       .then(r => r.json())
@@ -70,15 +184,22 @@ export default function ReadingRoomClient({ featuredPassage }: ReadingRoomClient
       .catch(() => {});
   }, []);
 
-  // Auto-scroll chat container to bottom on new content (including streaming chunks)
+  // Fetch user's own threads when signed in
+  useEffect(() => {
+    if (status === 'authenticated') {
+      fetch('/api/embassy/threads?mine=true&limit=20')
+        .then(r => r.json())
+        .then(data => { if (data.threads) setMyThreads(data.threads); })
+        .catch(() => {});
+    }
+  }, [status]);
+
+  // Auto-scroll
   useEffect(() => {
     const container = chatContainerRef.current;
     if (!container) return;
-    // Only auto-scroll if user is near the bottom (not scrolled up to read history)
     const isNearBottom = container.scrollHeight - container.scrollTop - container.clientHeight < 150;
-    if (isNearBottom) {
-      container.scrollTop = container.scrollHeight;
-    }
+    if (isNearBottom) container.scrollTop = container.scrollHeight;
   }, [messages]);
 
   const handleInputChange = (e: React.ChangeEvent<HTMLTextAreaElement>) => {
@@ -87,19 +208,39 @@ export default function ReadingRoomClient({ featuredPassage }: ReadingRoomClient
     e.target.style.height = Math.min(e.target.scrollHeight, 200) + 'px';
   };
 
+  // Update the last assistant message immutably
+  const updateLastAssistant = useCallback((updater: (msg: AssistantMessage) => AssistantMessage) => {
+    setMessages(prev => {
+      const updated = [...prev];
+      const last = updated[updated.length - 1];
+      if (last?.role === 'assistant') {
+        updated[updated.length - 1] = updater(last as AssistantMessage);
+      }
+      return updated;
+    });
+  }, []);
+
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
     const trimmed = input.trim();
     if (!trimmed || sending) return;
 
-    const userMessage: Message = { role: 'user', content: trimmed };
-    setMessages(prev => [...prev, userMessage]);
+    setMessages(prev => [...prev, { role: 'user', content: trimmed }]);
     setInput('');
     setSending(true);
+    if (inputRef.current) inputRef.current.style.height = 'auto';
 
-    if (inputRef.current) {
-      inputRef.current.style.height = 'auto';
-    }
+    // Create empty assistant message
+    const emptyAssistant: AssistantMessage = {
+      role: 'assistant',
+      steps: [],
+      content: '',
+      sources: [],
+    };
+    setMessages(prev => [...prev, emptyAssistant]);
+
+    const abort = new AbortController();
+    abortRef.current = abort;
 
     try {
       const res = await fetch('/api/embassy/chat', {
@@ -108,101 +249,146 @@ export default function ReadingRoomClient({ featuredPassage }: ReadingRoomClient
         body: JSON.stringify({
           threadId,
           message: trimmed,
-          history: messages,
+          history: messages.map(m => ({
+            role: m.role,
+            content: m.role === 'user' ? m.content : (m as AssistantMessage).content,
+          })),
           visibility,
           stream: true,
         }),
+        signal: abort.signal,
       });
 
       if (!res.ok) {
         const err = await res.json().catch(() => ({}));
         if (res.status === 401) {
-          setMessages(prev => [...prev, {
-            role: 'assistant',
+          updateLastAssistant(m => ({
+            ...m,
             content: 'Please [sign in](/auth/signin?callbackUrl=/reading-room) to talk with the Librarian. It\'s free — just create an account or sign in with Google.',
-          }]);
+          }));
         } else {
-          setMessages(prev => [...prev, {
-            role: 'assistant',
-            content: err.error || 'Something went wrong. Please try again.',
-          }]);
+          updateLastAssistant(m => ({ ...m, content: err.error || 'Something went wrong. Please try again.' }));
         }
         setSending(false);
         return;
       }
 
-      if (res.headers.get('content-type')?.includes('text/event-stream')) {
-        setMessages(prev => [...prev, { role: 'assistant', content: '' }]);
+      const reader = res.body?.getReader();
+      const decoder = new TextDecoder();
+      let buffer = '';
 
-        const reader = res.body?.getReader();
-        const decoder = new TextDecoder();
-        let buffer = '';
+      if (reader) {
+        while (true) {
+          const { done, value } = await reader.read();
+          if (done) break;
 
-        if (reader) {
-          while (true) {
-            const { done, value } = await reader.read();
-            if (done) break;
+          buffer += decoder.decode(value, { stream: true });
+          const lines = buffer.split('\n');
+          buffer = lines.pop() || '';
 
-            buffer += decoder.decode(value, { stream: true });
-            const lines = buffer.split('\n');
-            buffer = lines.pop() || '';
+          for (const line of lines) {
+            if (!line.startsWith('data: ')) continue;
+            try {
+              const event = JSON.parse(line.slice(6));
 
-            for (const line of lines) {
-              if (!line.startsWith('data: ')) continue;
-              try {
-                const event = JSON.parse(line.slice(6));
-                if (event.type === 'threadId' && !threadId) {
-                  setThreadId(event.threadId);
-                } else if (event.type === 'status') {
-                  // Show status text (e.g. "Searching the collection...") as a temporary assistant message
-                  setMessages(prev => {
-                    const updated = [...prev];
-                    const last = updated[updated.length - 1];
-                    if (last?.role === 'assistant' && !last.content) {
-                      updated[updated.length - 1] = { ...last, content: `*${event.text}*` };
-                    }
-                    return updated;
-                  });
-                } else if (event.type === 'chunk') {
-                  setMessages(prev => {
-                    const updated = [...prev];
-                    const last = updated[updated.length - 1];
-                    if (last?.role === 'assistant') {
-                      // Replace status text on first real chunk
-                      const isStatus = last.content.startsWith('*') && last.content.endsWith('*');
-                      const newContent = isStatus ? event.text : last.content + event.text;
-                      updated[updated.length - 1] = { ...last, content: newContent };
-                    }
-                    return updated;
-                  });
-                } else if (event.type === 'error') {
-                  setMessages(prev => {
-                    const updated = [...prev];
-                    updated[updated.length - 1] = { role: 'assistant', content: event.message };
-                    return updated;
-                  });
-                }
-              } catch {
-                // Skip malformed events
+              switch (event.type) {
+                case 'threadId':
+                  if (!threadId) setThreadId(event.threadId);
+                  break;
+
+                case 'thinking':
+                  updateLastAssistant(m => ({
+                    ...m,
+                    thinking: (m.thinking || '') + (event.text || ''),
+                  }));
+                  break;
+
+                case 'tool_call':
+                  updateLastAssistant(m => ({
+                    ...m,
+                    steps: [...m.steps, {
+                      name: event.name,
+                      query: event.query || '',
+                      status: 'searching' as const,
+                    }],
+                  }));
+                  break;
+
+                case 'tool_result':
+                  updateLastAssistant(m => ({
+                    ...m,
+                    steps: m.steps.map((s, i) =>
+                      i === m.steps.length - 1 && s.status === 'searching'
+                        ? { ...s, status: 'done' as const, summary: event.summary, found: event.found }
+                        : s
+                    ),
+                  }));
+                  break;
+
+                case 'choices':
+                  updateLastAssistant(m => ({
+                    ...m,
+                    choices: { text: event.text, options: event.options },
+                  }));
+                  break;
+
+                case 'chunk':
+                  updateLastAssistant(m => ({
+                    ...m,
+                    content: m.content + (event.text || ''),
+                  }));
+                  break;
+
+                case 'sources':
+                  updateLastAssistant(m => ({
+                    ...m,
+                    sources: (event.sources || []).map((s: Record<string, unknown>) => ({
+                      bookId: s.book_id,
+                      bookTitle: s.bookTitle,
+                      bookAuthor: s.bookAuthor,
+                      bookSlug: s.bookSlug,
+                      pageNumber: s.pageNumber,
+                      snippet: s.snippet,
+                      inCollection: s.inCollection !== false,
+                    })),
+                  }));
+                  break;
+
+                case 'error':
+                  updateLastAssistant(m => ({ ...m, content: event.message || 'Something went wrong.' }));
+                  break;
               }
-            }
+            } catch { /* skip malformed */ }
           }
         }
-      } else {
-        const data = await res.json();
-        if (data.threadId && !threadId) {
-          setThreadId(data.threadId);
-        }
-        setMessages(prev => [...prev, { role: 'assistant', content: data.message.content }]);
       }
-    } catch {
-      setMessages(prev => [...prev, {
-        role: 'assistant',
-        content: 'The Librarian seems to be away. Please try again in a moment.',
-      }]);
+    } catch (err) {
+      if ((err as Error).name !== 'AbortError') {
+        updateLastAssistant(m => ({
+          ...m,
+          content: 'The Librarian seems to be away. Please try again in a moment.',
+        }));
+      }
     }
 
+    abortRef.current = null;
     setSending(false);
+  };
+
+  const handleStop = () => {
+    abortRef.current?.abort();
+    abortRef.current = null;
+    setSending(false);
+  };
+
+  const handleChoiceClick = (choice: string) => {
+    setInput(choice);
+    inputRef.current?.focus();
+    // Auto-submit
+    setTimeout(() => {
+      const form = inputRef.current?.closest('form');
+      if (form) form.requestSubmit();
+    }, 50);
   };
 
   const handleKeyDown = (e: React.KeyboardEvent<HTMLTextAreaElement>) => {
@@ -223,7 +409,7 @@ export default function ReadingRoomClient({ featuredPassage }: ReadingRoomClient
   return (
     <div className="min-h-screen bg-[#f5f0e8]">
       <SiteHeader variant="dark" />
-      {/* Hero with reading room painting */}
+      {/* Hero */}
       <div className="relative bg-[#0e0c0a] overflow-hidden min-h-[360px] sm:min-h-[420px]">
         <div className="absolute inset-0">
           {/* eslint-disable-next-line @next/next/no-img-element */}
@@ -238,10 +424,7 @@ export default function ReadingRoomClient({ featuredPassage }: ReadingRoomClient
         <div className="absolute inset-0 bg-gradient-to-b from-transparent via-transparent to-[#0e0c0a]/90" />
 
         <div className="relative max-w-[1200px] mx-auto px-6 md:px-12 pt-14 sm:pt-20 pb-14">
-          <h1
-            className="text-4xl sm:text-5xl md:text-6xl text-white font-display mb-3 drop-shadow-lg"
-            style={{ fontWeight: 500 }}
-          >
+          <h1 className="text-4xl sm:text-5xl md:text-6xl text-white font-display mb-3 drop-shadow-lg" style={{ fontWeight: 500 }}>
             The Reading Room
           </h1>
           <p className="text-white/80 text-base sm:text-lg font-body leading-relaxed max-w-[480px] drop-shadow-sm">
@@ -249,16 +432,12 @@ export default function ReadingRoomClient({ featuredPassage }: ReadingRoomClient
             Kabbalah, astrology, natural philosophy.
           </p>
 
-          {/* Featured passage */}
           {featuredPassage && (
             <div className="mt-8 max-w-[560px]">
               <p className="text-[11px] text-white/40 tracking-[0.15em] uppercase font-sans mb-2">
                 The Librarian is reading
               </p>
-              <Link
-                href={`/book/${featuredPassage.bookSlug}?page=${featuredPassage.pageNumber}`}
-                className="block group"
-              >
+              <Link href={`/book/${featuredPassage.bookSlug}?page=${featuredPassage.pageNumber}`} className="block group">
                 <blockquote className="text-white/70 text-[15px] font-body leading-relaxed italic border-l-2 border-[#c9a86c]/40 pl-4">
                   &ldquo;{featuredPassage.text}&rdquo;
                 </blockquote>
@@ -273,204 +452,269 @@ export default function ReadingRoomClient({ featuredPassage }: ReadingRoomClient
         </div>
       </div>
 
-      {/* Main content — painting continues as background */}
+      {/* Main content */}
       <div className="relative">
         <div className="absolute inset-0">
           {/* eslint-disable-next-line @next/next/no-img-element */}
-          <img
-            src="https://images.sourcelibrary.org/artwork/reading-room-hero.png"
-            alt=""
-            className="absolute inset-0 w-full h-full object-cover opacity-[0.06]"
-          />
+          <img src="https://images.sourcelibrary.org/artwork/reading-room-hero.png" alt="" className="absolute inset-0 w-full h-full object-cover opacity-[0.06]" />
         </div>
         <div className="relative max-w-[1200px] mx-auto px-6 md:px-12 py-8 md:py-12">
-        <div className="flex flex-col lg:flex-row gap-8 lg:gap-12">
+          <div className="flex flex-col lg:flex-row gap-8 lg:gap-12">
 
-          {/* Chat area */}
-          <div className="flex-1 min-w-0">
-            <div className="border border-[#e8e4dc] rounded-lg bg-white overflow-hidden shadow-sm">
-              {/* Messages */}
-              <div ref={chatContainerRef} className="min-h-[300px] max-h-[600px] overflow-y-auto p-6 space-y-6">
-                {messages.length === 0 && (
-                  <div className="text-center py-8">
-                    <div className="text-[#c9a86c] text-3xl mb-3" style={{ fontFamily: 'serif' }}>
-                      &#x2609;
-                    </div>
-                    <p className="text-[#8a8480] text-sm font-body max-w-[400px] mx-auto leading-relaxed">
-                      The Librarian searches the translated texts in the collection.
-                      Ask about an author, a tradition, a symbol, or a passage.
-                    </p>
-                    <p className="text-[#8a8480]/50 text-xs font-body mt-1.5">
-                      Responses may contain errors &mdash; always verify against the source page.
-                    </p>
-                    <div className="flex flex-wrap justify-center gap-2 mt-5">
-                      {[
-                        'What did Agrippa write about planetary seals?',
-                        'Tell me about the Emerald Tablet',
-                        'Who was Marsilio Ficino?',
-                        'What is the Philosopher\'s Stone?',
-                      ].map((suggestion) => (
-                        <button
-                          key={suggestion}
-                          onClick={() => {
-                            setInput(suggestion);
-                            inputRef.current?.focus();
-                          }}
-                          className="px-3 py-1.5 text-xs text-[#6b6560] border border-[#e8e4dc] rounded-full hover:bg-[#f5f0e8] hover:text-[#444] transition-colors font-sans"
-                        >
-                          {suggestion}
-                        </button>
-                      ))}
-                    </div>
-                  </div>
-                )}
-
-                {messages.map((msg, i) => (
-                  <div key={i} className={`flex gap-3 ${msg.role === 'user' ? 'justify-end' : ''}`}>
-                    {msg.role === 'assistant' && (
-                      <div className="flex-shrink-0 w-8 h-8 rounded-full bg-[#f5f0e8] flex items-center justify-center text-[#c9a86c] text-sm" style={{ fontFamily: 'serif' }}>
-                        &#x2609;
+            {/* Chat area */}
+            <div className="flex-1 min-w-0">
+              <div className="border border-[#e8e4dc] rounded-lg bg-white overflow-hidden shadow-sm">
+                {/* Messages */}
+                <div ref={chatContainerRef} className="min-h-[300px] max-h-[600px] overflow-y-auto p-6 space-y-6">
+                  {messages.length === 0 && (
+                    <div className="text-center py-8">
+                      <div className="text-[#c9a86c] text-3xl mb-3" style={{ fontFamily: 'serif' }}>&#x2609;</div>
+                      <p className="text-[#8a8480] text-sm font-body max-w-[400px] mx-auto leading-relaxed">
+                        The Librarian searches the collection, Wikipedia, and semantic search
+                        to find answers in over 5,000 rare books.
+                      </p>
+                      <p className="text-[#8a8480]/50 text-xs font-body mt-1.5">
+                        Responses may contain errors &mdash; always verify against the source page.
+                      </p>
+                      <div className="flex flex-wrap justify-center gap-2 mt-5">
+                        {[
+                          'Are there any books about magic mushrooms?',
+                          'What did Agrippa write about planetary seals?',
+                          'What books explore resonance as magic?',
+                          'Who was Marsilio Ficino?',
+                        ].map((suggestion) => (
+                          <button
+                            key={suggestion}
+                            onClick={() => { setInput(suggestion); inputRef.current?.focus(); }}
+                            className="px-3 py-1.5 text-xs text-[#6b6560] border border-[#e8e4dc] rounded-full hover:bg-[#f5f0e8] hover:text-[#444] transition-colors font-sans"
+                          >
+                            {suggestion}
+                          </button>
+                        ))}
                       </div>
-                    )}
-                    <div
-                      className={`max-w-[85%] ${
-                        msg.role === 'user'
-                          ? 'bg-[#1a1612] text-white rounded-2xl rounded-br-sm px-4 py-3'
-                          : 'bg-[#f5f0e8] text-[#1a1612] rounded-2xl rounded-bl-sm px-4 py-3'
-                      }`}
-                    >
-                      {msg.role === 'assistant' ? (
-                        <div className="prose prose-sm max-w-none font-body text-[15px] leading-relaxed prose-a:text-[#9e4a3a] prose-a:no-underline hover:prose-a:underline prose-blockquote:border-l-[#c9a86c] prose-blockquote:text-[#444] prose-strong:text-[#1a1612]">
-                          <ReactMarkdown>{msg.content}</ReactMarkdown>
+                    </div>
+                  )}
+
+                  {messages.map((msg, i) => {
+                    if (msg.role === 'user') {
+                      return (
+                        <div key={i} className="flex gap-3 justify-end">
+                          <div className="max-w-[85%] bg-[#1a1612] text-white rounded-2xl rounded-br-sm px-4 py-3">
+                            <p className="text-[15px] font-body leading-relaxed whitespace-pre-wrap">{msg.content}</p>
+                          </div>
                         </div>
-                      ) : (
-                        <p className="text-[15px] font-body leading-relaxed whitespace-pre-wrap">{msg.content}</p>
+                      );
+                    }
+
+                    const assistant = msg as AssistantMessage;
+                    return (
+                      <div key={i} className="flex gap-3">
+                        <div className="flex-shrink-0 w-8 h-8 rounded-full bg-[#f5f0e8] flex items-center justify-center text-[#c9a86c] text-sm" style={{ fontFamily: 'serif' }}>
+                          &#x2609;
+                        </div>
+                        <div className="max-w-[85%] min-w-0">
+                          {/* Thinking (collapsible) */}
+                          {assistant.thinking && (
+                            <div className="mb-2">
+                              <button
+                                onClick={() => setShowThinking(!showThinking)}
+                                className="text-[11px] text-[#b0a89c] hover:text-[#8a8480] font-sans transition-colors"
+                              >
+                                {showThinking ? 'Hide reasoning' : 'Show reasoning'}
+                              </button>
+                              {showThinking && (
+                                <div className="mt-1 text-[13px] text-[#8a8480] font-body italic leading-relaxed bg-[#faf8f4] rounded px-3 py-2 border-l-2 border-[#e8e4dc]">
+                                  <ReactMarkdown>{assistant.thinking}</ReactMarkdown>
+                                </div>
+                              )}
+                            </div>
+                          )}
+
+                          {/* Search steps */}
+                          <SearchSteps steps={assistant.steps} />
+
+                          {/* Response text */}
+                          {assistant.content && (
+                            <div className="bg-[#f5f0e8] text-[#1a1612] rounded-2xl rounded-bl-sm px-4 py-3">
+                              <div className="prose prose-sm max-w-none font-body text-[15px] leading-relaxed prose-a:text-[#9e4a3a] prose-a:no-underline hover:prose-a:underline prose-blockquote:border-l-[#c9a86c] prose-blockquote:text-[#444] prose-strong:text-[#1a1612]">
+                                <ReactMarkdown>{assistant.content}</ReactMarkdown>
+                              </div>
+                            </div>
+                          )}
+
+                          {/* Choice chips */}
+                          {assistant.choices && (
+                            <div className="mt-3">
+                              {assistant.choices.text && (
+                                <p className="text-[13px] text-[#6b6560] font-body mb-2 italic">{assistant.choices.text}</p>
+                              )}
+                              <div className="flex flex-wrap gap-2">
+                                {assistant.choices.options.map((opt) => (
+                                  <button
+                                    key={opt}
+                                    onClick={() => handleChoiceClick(opt)}
+                                    className="px-3 py-1.5 text-[13px] text-[#1a1612] border border-[#c9a86c] rounded-full hover:bg-[#c9a86c] hover:text-white transition-colors font-body"
+                                  >
+                                    {opt}
+                                  </button>
+                                ))}
+                              </div>
+                            </div>
+                          )}
+
+                          {/* Source cards */}
+                          <SourceCardRow sources={assistant.sources} />
+
+                          {/* Loading state: no content yet and still sending */}
+                          {!assistant.content && !assistant.thinking && assistant.steps.length === 0 && sending && i === messages.length - 1 && (
+                            <div className="bg-[#f5f0e8] rounded-2xl rounded-bl-sm px-4 py-3">
+                              <p className="text-[13px] text-[#8a8480] font-body italic animate-pulse">Thinking...</p>
+                            </div>
+                          )}
+                        </div>
+                      </div>
+                    );
+                  })}
+
+                  <div />
+                </div>
+
+                {/* Input area */}
+                <div className="border-t border-[#e8e4dc] p-4">
+                  <form onSubmit={handleSubmit} className="flex gap-3 items-end">
+                    <textarea
+                      ref={inputRef}
+                      value={input}
+                      onChange={handleInputChange}
+                      onKeyDown={handleKeyDown}
+                      placeholder={isSignedIn ? 'Ask the Librarian...' : 'Sign in to ask the Librarian...'}
+                      disabled={!isSignedIn && status !== 'loading'}
+                      rows={1}
+                      className="flex-1 resize-none border border-[#e8e4dc] rounded-lg px-4 py-2.5 text-[15px] font-body text-[#1a1612] placeholder-[#8a8480] focus:outline-none focus:border-[#c9a86c] transition-colors bg-transparent disabled:opacity-50"
+                    />
+                    {sending ? (
+                      <button
+                        type="button"
+                        onClick={handleStop}
+                        className="flex-shrink-0 px-5 py-2.5 bg-[#9e4a3a] text-white rounded-lg text-sm font-sans hover:bg-[#8b3d30] transition-colors"
+                      >
+                        Stop
+                      </button>
+                    ) : (
+                      <button
+                        type="submit"
+                        disabled={!input.trim() || (!isSignedIn && status !== 'loading')}
+                        className="flex-shrink-0 px-5 py-2.5 bg-[#1a1612] text-white rounded-lg text-sm font-sans hover:bg-[#2a2622] disabled:opacity-30 transition-colors"
+                      >
+                        Send
+                      </button>
+                    )}
+                  </form>
+
+                  <div className="flex items-center justify-between mt-2">
+                    <div className="flex items-center gap-3">
+                      {messages.length > 0 && (
+                        <button onClick={startNewThread} className="text-[11px] text-[#8a8480] hover:text-[#6b6560] transition-colors font-sans">
+                          New conversation
+                        </button>
                       )}
                     </div>
-                  </div>
-                ))}
-
-                {sending && !(messages.length > 0 && messages[messages.length - 1]?.role === 'assistant') && (
-                  <div className="flex gap-3">
-                    <div className="flex-shrink-0 w-8 h-8 rounded-full bg-[#f5f0e8] flex items-center justify-center text-[#c9a86c] text-sm" style={{ fontFamily: 'serif' }}>
-                      &#x2609;
-                    </div>
-                    <div className="bg-[#f5f0e8] rounded-2xl rounded-bl-sm px-4 py-3">
-                      <p className="text-[13px] text-[#8a8480] font-body italic">Searching the collection...</p>
-                    </div>
-                  </div>
-                )}
-
-                <div ref={messagesEndRef} />
-              </div>
-
-              {/* Input area */}
-              <div className="border-t border-[#e8e4dc] p-4">
-                <form onSubmit={handleSubmit} className="flex gap-3 items-end">
-                  <textarea
-                    ref={inputRef}
-                    value={input}
-                    onChange={handleInputChange}
-                    onKeyDown={handleKeyDown}
-                    placeholder={isSignedIn ? 'Ask the Librarian...' : 'Sign in to ask the Librarian...'}
-                    disabled={!isSignedIn && status !== 'loading'}
-                    rows={1}
-                    className="flex-1 resize-none border border-[#e8e4dc] rounded-lg px-4 py-2.5 text-[15px] font-body text-[#1a1612] placeholder-[#8a8480] focus:outline-none focus:border-[#c9a86c] transition-colors bg-transparent disabled:opacity-50"
-                  />
-                  <button
-                    type="submit"
-                    disabled={!input.trim() || sending || (!isSignedIn && status !== 'loading')}
-                    className="flex-shrink-0 px-5 py-2.5 bg-[#1a1612] text-white rounded-lg text-sm font-sans hover:bg-[#2a2622] disabled:opacity-30 transition-colors"
-                  >
-                    Send
-                  </button>
-                </form>
-
-                <div className="flex items-center justify-between mt-2">
-                  <div className="flex items-center gap-3">
-                    {messages.length > 0 && (
+                    {isSignedIn && (
                       <button
-                        onClick={startNewThread}
-                        className="text-[11px] text-[#8a8480] hover:text-[#6b6560] transition-colors font-sans"
+                        onClick={() => setVisibility(v => v === 'public' ? 'private' : 'public')}
+                        className="text-[11px] text-[#8a8480] hover:text-[#6b6560] transition-colors font-sans flex items-center gap-1"
                       >
-                        New conversation
+                        <span>{visibility === 'public' ? 'Public' : 'Private'}</span>
+                        <span className="text-[9px]">{visibility === 'public' ? '(visible to others)' : '(only you)'}</span>
                       </button>
                     )}
                   </div>
+
+                  {!isSignedIn && status !== 'loading' && (
+                    <p className="mt-2 text-[12px] text-[#8a8480] font-sans">
+                      <Link href="/auth/signin?callbackUrl=/reading-room" className="text-[#9e4a3a] hover:underline">
+                        Sign in
+                      </Link>
+                      {' '}to talk with the Librarian. Free — no membership required.
+                    </p>
+                  )}
+                </div>
+              </div>
+            </div>
+
+            {/* Sidebar */}
+            <div className="lg:w-[300px] flex-shrink-0">
+              <div className="lg:sticky lg:top-8">
+                {/* Tab toggle */}
+                <div className="flex gap-4 mb-4">
+                  <button
+                    onClick={() => setSidebarTab('recent')}
+                    className={`text-[11px] tracking-[0.2em] uppercase font-sans transition-colors ${
+                      sidebarTab === 'recent' ? 'text-[#1a1612]' : 'text-[#b0a89c] hover:text-[#8a8480]'
+                    }`}
+                  >
+                    Recent
+                  </button>
                   {isSignedIn && (
                     <button
-                      onClick={() => setVisibility(v => v === 'public' ? 'private' : 'public')}
-                      className="text-[11px] text-[#8a8480] hover:text-[#6b6560] transition-colors font-sans flex items-center gap-1"
+                      onClick={() => setSidebarTab('mine')}
+                      className={`text-[11px] tracking-[0.2em] uppercase font-sans transition-colors ${
+                        sidebarTab === 'mine' ? 'text-[#1a1612]' : 'text-[#b0a89c] hover:text-[#8a8480]'
+                      }`}
                     >
-                      <span>{visibility === 'public' ? 'Public' : 'Private'}</span>
-                      <span className="text-[9px]">{visibility === 'public' ? '(visible to others)' : '(only you)'}</span>
+                      My Conversations
                     </button>
                   )}
                 </div>
 
-                {!isSignedIn && status !== 'loading' && (
-                  <p className="mt-2 text-[12px] text-[#8a8480] font-sans">
-                    <Link href="/auth/signin?callbackUrl=/reading-room" className="text-[#9e4a3a] hover:underline">
-                      Sign in
+                {(() => {
+                  const displayThreads = sidebarTab === 'mine' ? myThreads : threads;
+                  if (displayThreads.length === 0) {
+                    return (
+                      <p className="text-[#8a8480] text-sm font-body">
+                        {sidebarTab === 'mine'
+                          ? 'No conversations yet. Ask the Librarian something!'
+                          : 'No conversations yet. Be the first to ask the Librarian something.'}
+                      </p>
+                    );
+                  }
+                  return (
+                    <div className="space-y-0">
+                      {displayThreads.map((thread) => (
+                        <Link
+                          key={thread.id}
+                          href={`/reading-room/thread/${thread.id}`}
+                          className="block py-3 border-b border-[#e8e4dc] hover:bg-[#f5f0e8]/50 transition-colors -mx-2 px-2 rounded"
+                        >
+                          <p className="text-sm font-body text-[#1a1612] line-clamp-2 leading-snug mb-1">
+                            {thread.preview.question}
+                          </p>
+                          <p className="text-[12px] text-[#8a8480] font-body line-clamp-2 leading-relaxed mb-1">
+                            {thread.preview.answer}
+                          </p>
+                          <p className="text-[10px] text-[#8a8480] font-sans">
+                            {thread.creatorName} &middot; {timeAgo(thread.lastMessageAt)}
+                            {thread.messageCount > 2 && <span> &middot; {thread.messageCount} messages</span>}
+                          </p>
+                        </Link>
+                      ))}
+                    </div>
+                  );
+                })()}
+
+                <div className="mt-8 pt-6 border-t border-[#e8e4dc]">
+                  <div className="space-y-2">
+                    <Link href="/ficino-society" className="block text-sm text-[#444] hover:text-[#9e4a3a] transition-colors font-body">
+                      The Ficino Society
                     </Link>
-                    {' '}to talk with the Librarian. Free — no membership required.
-                  </p>
-                )}
-              </div>
-            </div>
-          </div>
-
-          {/* Sidebar */}
-          <div className="lg:w-[300px] flex-shrink-0">
-            <div className="lg:sticky lg:top-8">
-              {/* Recent conversations */}
-              <h2 className="text-[11px] text-[#6b6560] tracking-[0.2em] uppercase font-sans mb-4">
-                Recent Conversations
-              </h2>
-
-              {threads.length === 0 ? (
-                <p className="text-[#8a8480] text-sm font-body">
-                  No conversations yet. Be the first to ask the Librarian something.
-                </p>
-              ) : (
-                <div className="space-y-0">
-                  {threads.map((thread) => (
-                    <Link
-                      key={thread.id}
-                      href={`/reading-room/thread/${thread.id}`}
-                      className="block py-3 border-b border-[#e8e4dc] hover:bg-[#f5f0e8]/50 transition-colors -mx-2 px-2 rounded"
-                    >
-                      <p className="text-sm font-body text-[#1a1612] line-clamp-2 leading-snug mb-1">
-                        {thread.preview.question}
-                      </p>
-                      <p className="text-[12px] text-[#8a8480] font-body line-clamp-2 leading-relaxed mb-1">
-                        {thread.preview.answer}
-                      </p>
-                      <p className="text-[10px] text-[#8a8480] font-sans">
-                        {thread.creatorName} &middot; {timeAgo(thread.lastMessageAt)}
-                        {thread.messageCount > 2 && (
-                          <span> &middot; {thread.messageCount} messages</span>
-                        )}
-                      </p>
+                    <Link href="/collections" className="block text-sm text-[#444] hover:text-[#9e4a3a] transition-colors font-body">
+                      Browse the Collection
                     </Link>
-                  ))}
-                </div>
-              )}
-
-              {/* Quick links */}
-              <div className="mt-8 pt-6 border-t border-[#e8e4dc]">
-                <div className="space-y-2">
-                  <Link href="/ficino-society" className="block text-sm text-[#444] hover:text-[#9e4a3a] transition-colors font-body">
-                    The Ficino Society
-                  </Link>
-                  <Link href="/collections" className="block text-sm text-[#444] hover:text-[#9e4a3a] transition-colors font-body">
-                    Browse the Collection
-                  </Link>
+                  </div>
                 </div>
               </div>
             </div>
           </div>
-        </div>
         </div>
       </div>
     </div>
