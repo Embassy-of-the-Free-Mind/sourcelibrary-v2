@@ -613,35 +613,36 @@ function DecadeBar({
   era?: Era;
   onClick: () => void;
 }) {
-  const [hovered, setHovered] = useState(false);
+  const barRef = useRef<HTMLDivElement>(null);
+  const [tooltipPos, setTooltipPos] = useState<{ x: number; y: number } | null>(null);
   const isClipped = bucket.count > barCap;
   // Clipped bars fill to 100%, normal bars scale linearly against the cap
   const heightPct = isClipped ? 100 : Math.max(1.5, (bucket.count / barCap) * 100);
   const top3 = bucket.languages.slice(0, 3);
   const rest = bucket.count - top3.reduce((s, l) => s + l.count, 0);
 
+  const handleMouseEnter = useCallback(() => {
+    if (!barRef.current) return;
+    const rect = barRef.current.getBoundingClientRect();
+    setTooltipPos({ x: rect.left + rect.width / 2, y: rect.top });
+  }, []);
+
   return (
     <div
+      ref={barRef}
       className="flex-1 relative cursor-pointer group"
       style={{ minWidth: 8, height: '100%' }}
       onClick={onClick}
-      onMouseEnter={() => setHovered(true)}
-      onMouseLeave={() => setHovered(false)}
+      onMouseEnter={handleMouseEnter}
+      onMouseLeave={() => setTooltipPos(null)}
     >
-      {/* Count label above clipped bars */}
-      {isClipped && (
+      {/* Tooltip — fixed position to escape overflow:hidden */}
+      {tooltipPos && (
         <div
-          className="absolute left-1/2 -translate-x-1/2 text-[8px] font-mono text-stone-500 whitespace-nowrap z-10"
-          style={{ bottom: `calc(${heightPct}% + 10px)` }}
+          className="fixed z-50 pointer-events-none"
+          style={{ left: tooltipPos.x, top: tooltipPos.y, transform: 'translate(-50%, -100%)' }}
         >
-          {bucket.count}
-        </div>
-      )}
-
-      {/* Tooltip */}
-      {hovered && (
-        <div className="absolute bottom-full left-1/2 -translate-x-1/2 mb-2 z-20 pointer-events-none">
-          <div className="bg-[#1a1612] text-white text-xs rounded-lg px-3 py-2.5 whitespace-nowrap shadow-lg">
+          <div className="bg-[#1a1612] text-white text-xs rounded-lg px-3 py-2.5 whitespace-nowrap shadow-lg mb-2">
             <div className="font-serif text-sm mb-1">
               {formatDecadeLabel(bucket.decade)}
               <span className="text-stone-400 font-sans text-[10px] ml-1.5">
