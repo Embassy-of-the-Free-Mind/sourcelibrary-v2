@@ -70,19 +70,23 @@ export const POST = withAdminAuth(async (request, session) => {
   // just those new phases without redoing OCR/translation/summary.
   let enrollStatus: PipelineAutoStatus = 'queued';
 
+  // Artworks (paintings, prints, etc.) have no text — skip them entirely
+  const ARTWORK_TYPES = ['painting', 'print', 'drawing', 'fresco', 'papyrus_fragment', 'object'];
+  const artworkFilter = { resource_type: { $nin: ARTWORK_TYPES } };
+
   if (bookIds?.length) {
-    // Enroll specific books
+    // Enroll specific books (allow explicit artwork enrollment if intentional)
     query = { id: { $in: bookIds } };
   } else if (reEnrollCompleted) {
     // Backfill completed books through new pipeline phases (chapters, images)
-    query = { 'pipeline_auto.status': 'complete' };
+    query = { 'pipeline_auto.status': 'complete', ...artworkFilter };
     enrollStatus = 'enriched';
   } else if (reEnrollFailed) {
     // Re-enroll failed books
-    query = { 'pipeline_auto.status': 'failed' };
+    query = { 'pipeline_auto.status': 'failed', ...artworkFilter };
   } else {
     // Enroll all books without pipeline_auto
-    query = { pipeline_auto: { $exists: false } };
+    query = { pipeline_auto: { $exists: false }, ...artworkFilter };
   }
 
   const books = await db.collection('books')

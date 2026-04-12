@@ -1989,6 +1989,26 @@ async function run() {
       console.log(`  Enrolled: ${log.enrolled}`);
     }
 
+    // Artwork resource types — these skip the book pipeline entirely (no text to OCR/translate)
+    const ARTWORK_TYPES = ['painting', 'print', 'drawing', 'fresco', 'papyrus_fragment', 'object'];
+
+    // ── Phase 0: Skip artworks that somehow entered the pipeline ──
+    if (shouldRun(1)) {
+      const artworks = await db.collection('books').find({
+        'pipeline_auto.status': { $in: ['queued', 'archiving', 'archive_complete'] },
+        resource_type: { $in: ARTWORK_TYPES },
+      }).project({ id: 1, title: 1 }).toArray();
+      if (artworks.length > 0) {
+        console.log(`\n--- Phase 0: Skipping ${artworks.length} artworks ---`);
+        if (!DRY_RUN) {
+          for (const art of artworks) {
+            await setPipelineStatus(db, art.id, 'complete', { skipped: 'artwork' });
+            console.log(`  Skipped artwork: ${art.title}`);
+          }
+        }
+      }
+    }
+
     // ── Phase 1: Archive check (queued/archiving -> archive_complete) ──
     if (shouldRun(1)) {
       console.log('\n--- Phase 1: Archive check ---');
@@ -1998,7 +2018,7 @@ async function run() {
       const ENGLISH_VARIANTS_P1 = ['english', 'eng', 'en'];
       const queuedBooks = await db.collection('books')
         .aggregate([
-          { $match: { 'pipeline_auto.status': 'queued' } },
+          { $match: { 'pipeline_auto.status': 'queued', resource_type: { $nin: ARTWORK_TYPES } } },
           { $addFields: {
             _priority: {
               $switch: {
