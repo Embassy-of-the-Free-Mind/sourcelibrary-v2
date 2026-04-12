@@ -193,6 +193,49 @@ async function main() {
     }
   }
 
+  // Fetch labels from Iconclass API for all nodes that don't have one
+  const unlabeled = Object.keys(nodes).filter(code => !nodes[code].label);
+  if (unlabeled.length > 0) {
+    console.log(`\nFetching labels from iconclass.org for ${unlabeled.length} codes (10 concurrent)...`);
+    let fetched = 0;
+    const CONCURRENCY = 10;
+
+    for (let i = 0; i < unlabeled.length; i += CONCURRENCY) {
+      const batch = unlabeled.slice(i, i + CONCURRENCY);
+      const results = await Promise.allSettled(
+        batch.map(async (code) => {
+          const controller = new AbortController();
+          const timeout = setTimeout(() => controller.abort(), 10000);
+          try {
+            const res = await fetch(
+              `https://iconclass.org/${encodeURIComponent(code)}.json`,
+              { signal: controller.signal }
+            );
+            clearTimeout(timeout);
+            if (!res.ok) return null;
+            const data = await res.json();
+            return { code, label: data.txt?.en || null };
+          } catch {
+            clearTimeout(timeout);
+            return null;
+          }
+        })
+      );
+
+      for (const r of results) {
+        if (r.status === 'fulfilled' && r.value?.label) {
+          nodes[r.value.code].label = r.value.label;
+          fetched++;
+        }
+      }
+
+      if ((i + CONCURRENCY) % 50 === 0 || i + CONCURRENCY >= unlabeled.length) {
+        console.log(`  ${Math.min(i + CONCURRENCY, unlabeled.length)}/${unlabeled.length} checked, ${fetched} resolved`);
+      }
+    }
+    console.log(`  Resolved ${fetched}/${unlabeled.length} labels`);
+  }
+
   const treeDoc = {
     _id: 'iconclass_tree',
     nodes,
