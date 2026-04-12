@@ -249,7 +249,13 @@ This per-sentence view enables a potential future feature: within-page trust col
 
 The Gemini Lite result demonstrates a critical caveat: high consistency does not guarantee accuracy. A model can consistently produce the wrong text — "confidently hallucinating" — if it settles on a stable but incorrect mode. Consistency is a necessary but not sufficient condition for quality. We recommend pairing consistency scores with at least one cross-model comparison to detect this failure mode.
 
-### 6.2 The Informed Confabulation Phenomenon
+### 6.2 Model Scale Does Not Help
+
+Our five-model comparison on the Bodleian manuscript reveals a striking convergence: Gemini Flash (26.8%), Gemini Pro (27.0%), and Claude Opus (27.3%) all cluster within a half-point of each other. Claude Sonnet scores slightly lower (21.5%), and Gemini Lite scores higher (36.7%) but produces nonsense. The near-identical performance of models spanning different architectures, training corpora, and parameter counts (from Flash's ~30B to Opus's estimated 200B+) suggests that the difficulty lies in the visual perception task, not in language modeling capacity.
+
+This has a practical implication: for manuscript OCR, using a larger or more expensive model provides no improvement in self-consistency. The bottleneck is the model's ability to decode unfamiliar handwriting from pixel patterns, not its ability to generate plausible text — which all models do equally well.
+
+### 6.3 The Informed Confabulation Phenomenon
 
 Leonardo's manuscripts reveal a distinctive failure pattern we call "informed confabulation." The model:
 1. Correctly identifies the visual subject matter (optics, water dynamics, anatomy)
@@ -258,19 +264,101 @@ Leonardo's manuscripts reveal a distinctive failure pattern we call "informed co
 
 This is not random hallucination — the model demonstrates genuine understanding of what Leonardo *writes about*. But it cannot read what he *actually wrote*. The text is sampled from a learned distribution of "plausible Leonardo Italian about [topic]" rather than decoded from the image pixels.
 
-### 6.3 Implications for Digital Libraries
+The embedding–Jaccard gap quantifies this precisely: 82–84% embedding similarity (same semantic territory) combined with 6–8% Jaccard similarity (completely different words). The run length variation is equally diagnostic: on printed text, output length varies by ±2–10%, while on Leonardo it varies by up to ±130%. A model that is genuinely reading would produce a deterministic amount of text; a model that is generating produces an amount that depends on its sampling trajectory.
 
-[TODO]
+### 6.4 Can Reasoning Help?
 
-### 6.4 Limitations
+An untested but promising direction is applying reasoning-capable models (e.g., models with extended "thinking" chains) to difficult manuscripts. The hypothesis: a model that reasons step-by-step — "this is mirror-script, so I need to mentally reverse each letterform; the first character appears to be a reversed 'd', which in mirror would be..." — might achieve better grounding than a model that attempts direct visual-to-text mapping.
 
-[TODO]
+This is analogous to how a human paleographer approaches difficult text: not by recognizing words holistically, but by decomposing individual letterforms, comparing them to known exemplars, and reasoning about abbreviation conventions. Reasoning models could potentially:
+
+1. **Decompose the task**: Identify script type → establish letter mapping → decode character by character
+2. **Cross-reference visual evidence**: "The downstroke suggests 'l' but the ascender is too short — more likely 't' in this scribal hand"
+3. **Apply paleographic knowledge**: "This abbreviation mark over 'q' typically expands to 'que' in 15th-century Italian"
+4. **Self-verify**: "The decoded sentence mentions optics, consistent with the diagram on this folio — but let me re-check the third word..."
+
+If reasoning improves *consistency* (not just apparent quality), it would provide strong evidence that the model has achieved genuine visual grounding rather than more sophisticated confabulation. Conversely, if a reasoning model produces equally fluent but equally inconsistent transcriptions, it would demonstrate that the failure is in visual perception, not reasoning.
+
+[TODO: Experiment — test Gemini 2.5 Pro "thinking" mode and Claude with extended thinking on the same corpus. Measure whether reasoning improves self-consistency scores.]
+
+### 6.5 Multi-Run Consensus as Enhancement
+
+Self-consistency scoring is diagnostic — it tells you *how reliable* a transcription is. But the same multi-run data can be used constructively: rather than discarding all but the "best" run, we can build a consensus transcription that extracts maximal signal from N independent readings.
+
+**Word-level majority voting.** Given N transcription runs, align them at the word or token level and keep words that appear in a majority of runs. Words that appear in only one or two runs out of five are likely hallucinated; words that appear in all five are likely genuinely read. This is the OCR analogue of Wang et al.'s [2023] self-consistency decoding for chain-of-thought reasoning.
+
+**Confidence-annotated output.** Rather than producing a single clean transcription, output each word or phrase with its agreement count:
+
+```
+<high-confidence>per uedere</high-confidence> <low-confidence>rāgi luminoso</low-confidence>
+<high-confidence>d'esso</high-confidence> <uncertain>corpo celeste</uncertain>
+```
+
+This preserves the fragments the model can genuinely read while honestly marking what it cannot. For digital libraries, this is arguably more useful than either a clean-but-unreliable transcription or no transcription at all.
+
+**Error bounds from variance.** With N=5 runs, we can compute not just mean consistency but variance and confidence intervals. A page with mean embedding consistency of 85% ± 2% is a different proposition from one at 85% ± 15%. The former suggests a stable partial reading; the latter suggests high model uncertainty. Standard error of the mean across the $\binom{N}{2}$ pairwise scores provides a natural confidence interval for the consistency estimate itself.
+
+**Practical protocol for difficult manuscripts.** We propose a three-stage pipeline for manuscripts in the "yellow zone" (30–80% consistency):
+1. **Run N=5 independent transcriptions** at temperature > 0
+2. **Compute per-sentence consistency** using embedding similarity
+3. **Build a consensus transcription**: keep sentences with >90% agreement verbatim, mark 70–90% agreement sentences as approximate, and replace <70% agreement sections with `[uncertain — N variant readings available]`
+4. **Store all N runs** so that future improvements (better models, reasoning, fine-tuning) can be retroactively evaluated against the same visual evidence
+
+This approach converts the consistency measurement from a passive quality label into an active transcription enhancement tool.
+
+### 6.6 Training Data Contamination
+
+A confound we have not yet controlled for: if a text appears in the model's training data, consistency might be inflated by memorization rather than visual reading. The model may produce a consistent transcription because it recognizes which book this is and recites the known text, not because it decodes the pixels.
+
+This motivates a 2×2 experimental design:
+
+|  | Famous text | Obscure text |
+|--|-------------|--------------|
+| **Printed** | Vitruvius *De architectura* (many editions, widely cited) | Drebbel *Tractatus duo* (obscure, few editions) |
+| **Manuscript** | Bodleian Timaeus (Plato — famous text, unfamiliar hand) | [TBD — manuscript of an obscure text] |
+
+If consistency is driven by genuine reading, printed texts should score high regardless of fame. If driven by memorization, famous printed texts should score higher than obscure ones. For manuscripts, the prediction is cleaner: if the model is reciting memorized text, a famous text in an unfamiliar manuscript hand should still score high (it "knows" the text); if it is genuinely reading, the unfamiliar hand should degrade performance regardless of the text's fame.
+
+[TODO: Run this 2×2 experiment. Find an obscure manuscript in our corpus.]
+
+### 6.7 Implications for Digital Libraries
+
+For a digital library like Source Library, processing 17,000+ books at scale, these findings have immediate practical consequences:
+
+1. **Honest communication**: Printed books (the majority of the collection) can be presented with high confidence. Manuscripts should carry visible trust indicators warning users that the transcription is approximate.
+
+2. **Triage**: Self-consistency scoring can automatically identify the ~5% of books that need human review, rather than requiring expert evaluation of the entire collection.
+
+3. **Cost-effective quality**: Running 5 OCR passes costs 5× a single pass, but for manuscripts that would otherwise require expensive human transcription, the cost of consensus-building is negligible compared to expert paleographic labor.
+
+4. **Progressive improvement**: By storing all N runs, the library accumulates a dataset that can be used to evaluate future models. When a new model is released, it can be tested against the same images without re-running the full pipeline.
+
+### 6.8 Limitations
+
+1. **Small corpus**: Our results are based on a limited number of pages from a small number of sources. The findings on Leonardo are based on one book; generalization to other Leonardo manuscripts, or to other mirror-script traditions, remains to be demonstrated.
+
+2. **Jaccard as baseline**: Our initial N=2 results used Jaccard similarity, which we have shown to be a poor metric for OCR consistency. The N=5 embedding results are more reliable but cover fewer sources. We need to re-run the full corpus comparison (all models, manuscript baseline) with embedding metrics.
+
+3. **No ground truth**: We measure consistency but not accuracy. The Gemini Lite result (high consistency, low quality) demonstrates that consistency alone is insufficient. A ground truth evaluation using known transcriptions (e.g., Richter's published translations of Leonardo) would strengthen our claims.
+
+4. **Embedding model confound**: We use Gemini embeddings to evaluate Gemini OCR output. If the embedding model shares biases with the OCR model (e.g., both represent "plausible Italian about optics" similarly), the embedding scores could overestimate semantic consistency. Cross-family evaluation (e.g., using OpenAI embeddings to evaluate Gemini OCR) would address this.
+
+5. **Temperature dependence**: We test at default temperature settings. Systematic variation of temperature would help characterize the relationship between sampling diversity and consistency scores.
 
 ---
 
 ## 7. Conclusion
 
-[TODO]
+Multimodal LLMs have made historical document transcription accessible at scale, but their reliability varies enormously by text type. We have shown that run-to-run self-consistency, measured via embedding cosine similarity, provides a practical reference-free quality signal that can be deployed without ground truth or language-specific resources.
+
+Our key findings:
+1. **Embedding similarity is the right metric** for OCR consistency — Jaccard word overlap conflates formatting noise with genuine divergence, depressing printed text scores to 55–62% while embedding similarity correctly registers them at 99%.
+2. **All frontier models converge** on manuscripts at ~27% Jaccard consistency, regardless of model size or architecture. The bottleneck is visual perception, not language modeling.
+3. **The embedding–Jaccard gap** is itself a diagnostic: a large gap (76+ percentage points on Leonardo vs. 40 on printed text) signals informed confabulation — semantic coherence without textual fidelity.
+4. **Sentence-level analysis** reveals which specific passages a model can and cannot read, enabling within-page trust annotation.
+5. **Multi-run consensus** can transform consistency measurement from a passive quality label into an active transcription enhancement tool.
+
+For digital libraries processing historical documents at scale, these methods enable honest communication of AI reliability to scholars — telling readers not just what the AI transcribed, but how much they should trust it.
 
 ---
 
