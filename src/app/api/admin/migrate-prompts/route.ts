@@ -1,6 +1,6 @@
 import { NextRequest, NextResponse } from 'next/server';
 import { getDb } from '@/lib/mongodb';
-import { DEFAULT_PROMPTS, LATIN_PROMPTS, GERMAN_PROMPTS } from '@/lib/types';
+import { DEFAULT_PROMPTS, LATIN_PROMPTS, GERMAN_PROMPTS, ARABIC_PROMPTS, HEBREW_PROMPTS } from '@/lib/types';
 import { withAdminAuth } from '@/lib/auth-helpers';
 import { promptContentHash } from '@/lib/prompts';
 
@@ -67,6 +67,30 @@ export const POST = withAdminAuth(async (request, session) => {
         type: 'translation',
         content: GERMAN_PROMPTS.translation,
         description: 'German translation with XML annotations (v2)',
+      },
+      {
+        name: 'Arabic OCR',
+        type: 'ocr',
+        content: ARABIC_PROMPTS.ocr,
+        description: 'Arabic manuscript/printed book OCR with script identification',
+      },
+      {
+        name: 'Arabic Translation',
+        type: 'translation',
+        content: ARABIC_PROMPTS.translation,
+        description: 'Arabic to English translation for Islamic/esoteric texts',
+      },
+      {
+        name: 'Hebrew OCR',
+        type: 'ocr',
+        content: HEBREW_PROMPTS.ocr,
+        description: 'Hebrew manuscript/printed book OCR with nikud and Rashi script',
+      },
+      {
+        name: 'Hebrew Translation',
+        type: 'translation',
+        content: HEBREW_PROMPTS.translation,
+        description: 'Hebrew/Aramaic to English translation for Kabbalistic/mystical texts',
       },
     ];
 
