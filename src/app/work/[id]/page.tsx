@@ -4,6 +4,7 @@ import { notFound } from 'next/navigation';
 import Link from 'next/link';
 import type { Book } from '@/lib/types';
 import ContentPageLayout, { ContentHeader } from '@/components/layout/ContentPageLayout';
+import { getBookThumbnailUrl } from '@/lib/utils';
 
 export const revalidate = false;
 export const dynamicParams = true;
@@ -103,7 +104,7 @@ export default async function WorkPage({ params }: PageProps) {
         <div className="grid gap-4">
           {editions.map((book) => {
             const provider = (book as unknown as { image_source?: { provider_name?: string } }).image_source?.provider_name;
-            const thumb = book.thumbnail_blob || book.thumbnail;
+            const thumb = getBookThumbnailUrl(book);
             const displayTitle = book.display_title || book.title;
             const pagesOcr = book.pages_ocr || 0;
             const pagesTranslated = book.pages_translated || 0;

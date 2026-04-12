@@ -12,6 +12,7 @@ import CollectionBookCard from '@/components/CollectionBookCard';
 import CollectionFilters from '@/components/collections/CollectionFilters';
 import { bookTitle } from '@/lib/collections-utils';
 import BphCatalogBrowser from '@/components/libraries/BphCatalogBrowser';
+import { getBookThumbnailUrl } from '@/lib/utils';
 
 const PER_PAGE = 60;
 
@@ -388,7 +389,7 @@ export default async function LibraryDetailPage({ params, searchParams }: Props)
                     pages_count: book.pages_count,
                     pages_ocr: book.pages_ocr,
                     pages_translated: book.pages_translated,
-                    thumbnail: book.thumbnail_blob || book.thumbnail || book.photo,
+                    thumbnail: getBookThumbnailUrl(book) || book.photo || undefined,
                     thumbnail_blob: book.thumbnail_blob,
                     language: book.language,
                     published: book.published,
@@ -474,7 +475,7 @@ export default async function LibraryDetailPage({ params, searchParams }: Props)
                         pages_count: book.pages_count,
                         pages_ocr: book.pages_ocr,
                         pages_translated: book.pages_translated,
-                        thumbnail: book.thumbnail_blob || book.thumbnail || book.photo,
+                        thumbnail: getBookThumbnailUrl(book) || book.photo || undefined,
                         thumbnail_blob: book.thumbnail_blob,
                         language: book.language,
                         published: book.published,

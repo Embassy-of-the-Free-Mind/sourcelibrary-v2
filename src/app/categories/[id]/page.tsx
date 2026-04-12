@@ -8,6 +8,7 @@ import { LIBRARY_CATEGORIES } from '@/app/api/categories/route';
 import { notFound } from 'next/navigation';
 import CategorySchema from '@/components/seo/CategorySchema';
 import { bookUrl } from '@/lib/slugify';
+import { getBookThumbnailUrl } from '@/lib/utils';
 
 interface Book {
   id: string;
@@ -148,9 +149,9 @@ export default async function CategoryPage({ params }: CategoryPageProps) {
                 >
                   {/* Thumbnail */}
                   <div className="aspect-[3/2] bg-stone-100 relative overflow-hidden">
-                    {(book.thumbnail_blob || book.thumbnail) ? (
+                    {getBookThumbnailUrl(book) ? (
                       <Image
-                        src={(book.thumbnail_blob || book.thumbnail)!}
+                        src={getBookThumbnailUrl(book)!}
                         alt={book.title}
                         fill
                         className="object-cover group-hover:scale-105 transition-transform duration-300"

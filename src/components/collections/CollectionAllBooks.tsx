@@ -7,6 +7,7 @@ import CollectionBookCard from '@/components/CollectionBookCard';
 import CollectionListView from '@/components/collections/CollectionListView';
 import CatalogPagination from '@/components/collections/CatalogPagination';
 import { bookTitle } from '@/lib/collections-utils';
+import { getBookThumbnailUrl } from '@/lib/utils';
 
 const PER_PAGE = 60;
 
@@ -356,7 +357,7 @@ export default function CollectionAllBooks({
                 pages_count: book.pages_count,
                 pages_ocr: book.pages_ocr,
                 pages_translated: book.pages_translated,
-                thumbnail: book.thumbnail_blob || book.thumbnail || book.photo,
+                thumbnail: getBookThumbnailUrl(book) || book.photo || undefined,
                 thumbnail_blob: book.thumbnail_blob,
                 language: book.language,
                 published: book.published,
@@ -379,10 +380,10 @@ export default function CollectionAllBooks({
                 <div className="absolute top-0 left-0 right-0 flex">
                   {compactBooks.slice(0, 5).map((b) => (
                     <div key={b.id} className="flex-1 aspect-square relative opacity-15 group-hover:opacity-25 transition-opacity">
-                      {(b.thumbnail || b.thumbnail_blob) && (
+                      {getBookThumbnailUrl(b) && (
                         // eslint-disable-next-line @next/next/no-img-element
                         <img
-                          src={b.thumbnail || b.thumbnail_blob || ''}
+                          src={getBookThumbnailUrl(b)!}
                           alt=""
                           className="absolute inset-0 w-full h-full object-cover"
                         />

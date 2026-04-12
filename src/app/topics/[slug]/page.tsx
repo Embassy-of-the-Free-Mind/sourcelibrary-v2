@@ -7,6 +7,7 @@ import SiteHeader from '@/components/layout/SiteHeader';
 import { notFound } from 'next/navigation';
 import { bookUrl } from '@/lib/slugify';
 import { FACETS, facetDbField } from '@/lib/taxonomy/faceted-vocabulary';
+import { getBookThumbnailUrl } from '@/lib/utils';
 
 export const revalidate = false;
 
@@ -259,7 +260,7 @@ async function fetchClusterData(slug: string) {
 
 function BookCard({ book }: { book: BookItem }) {
   const title = book.display_title || book.title;
-  const thumb = book.thumbnail_blob || (book.thumbnail?.startsWith('http') ? book.thumbnail : null);
+  const thumb = getBookThumbnailUrl(book);
   const pagesOcr = book.pages_ocr || book.pages_count || 0;
   const denom = Math.max(pagesOcr - (book.pages_blank || 0), 1);
   const translationPercent =

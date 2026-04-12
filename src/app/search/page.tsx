@@ -29,6 +29,7 @@ import { SEARCH_TYPE_STYLES, type SearchIndexType } from '@/lib/style-constants'
 import { BookLoader } from '@/components/ui/BookLoader';
 import { LIBRARY_PARTNERS } from '@/lib/library-partners';
 import BookCard from '@/components/book/BookCard';
+import { getBookThumbnailUrl } from '@/lib/utils';
 
 // How many results to show in unified view per section
 const PREVIEW_BOOKS = 5;
@@ -943,7 +944,7 @@ export default function SearchPage() {
           <div className="space-y-3">
             <p className="text-sm text-muted">Related results from AI-expanded search:</p>
             {aiResults.map(result => {
-              const cover = result.thumbnail || (result as any).thumbnail_blob;
+              const cover = getBookThumbnailUrl({ thumbnail: result.thumbnail, thumbnail_blob: (result as any).thumbnail_blob });
               const text = result.snippet || result.summary;
               return (
                 <Link
@@ -1116,7 +1117,7 @@ export default function SearchPage() {
             <h2 className="text-sm font-medium text-muted uppercase tracking-wide mb-4">Related in the Library</h2>
             <div className="space-y-3">
               {aiResults.map(result => {
-                const cover = result.thumbnail || (result as any).thumbnail_blob;
+                const cover = getBookThumbnailUrl({ thumbnail: result.thumbnail, thumbnail_blob: (result as any).thumbnail_blob });
                 const text = result.snippet || result.summary;
                 return (
                   <Link
@@ -1154,7 +1155,7 @@ export default function SearchPage() {
 // ==================== RESULT CARDS ====================
 
 function BookResultCard({ result, query }: { result: SearchResult; query: string }) {
-  const cover = result.thumbnail || (result as any).thumbnail_blob;
+  const cover = getBookThumbnailUrl({ thumbnail: result.thumbnail, thumbnail_blob: (result as any).thumbnail_blob });
   const text = result.snippet || result.summary;
   const [imgError, setImgError] = useState(false);
 

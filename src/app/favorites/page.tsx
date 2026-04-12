@@ -7,6 +7,7 @@ import { Heart, BookOpen, FileText, Image as ImageIcon, User, TrendingUp } from 
 import SiteHeader from '@/components/layout/SiteHeader';
 import { BookLoader } from '@/components/ui/BookLoader';
 import { likes } from '@/lib/api-client';
+import { getBookThumbnailUrl } from '@/lib/utils';
 
 const VISITOR_ID_KEY = 'sl_visitor_id';
 
@@ -260,7 +261,7 @@ export default function FavoritesPage() {
           <div className="grid gap-5 grid-cols-1 sm:grid-cols-2">
             {books.map((book, i) => {
               const imgs = book.featured_images || [];
-              const heroUrl = imgs[0]?.url || book.thumbnail_blob || book.thumbnail;
+              const heroUrl = imgs[0]?.url || getBookThumbnailUrl(book);
 
               return (
                 <Link

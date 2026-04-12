@@ -9,6 +9,7 @@ import { firstTranslationBadge } from '@/lib/first-translation-labels';
 import AuthorBibliography from '@/components/browse/AuthorBibliography';
 import { VISUAL_RESOURCE_TYPES } from '@/lib/books-catalog';
 import { ObjectId, type Db } from 'mongodb';
+import { getBookThumbnailUrl } from '@/lib/utils';
 
 // ISR: 24h background revalidation (survives deploys better than revalidate=false)
 export const revalidate = 86400;
@@ -414,7 +415,7 @@ export default async function AuthorPage({ params }: AuthorPageProps) {
 
       {/* Title page gallery */}
       {(() => {
-        const thumbBooks = books.filter(b => b.thumbnail_blob || b.thumbnail);
+        const thumbBooks = books.filter(b => getBookThumbnailUrl(b));
         if (thumbBooks.length === 0) return null;
         const shown = thumbBooks.slice(0, 8);
         return (
@@ -425,7 +426,7 @@ export default async function AuthorPage({ params }: AuthorPageProps) {
                   <Link key={book.id} href={bookUrl(book)} className="shrink-0 group">
                     <div className="w-24 h-32 relative rounded overflow-hidden bg-stone-200">
                       <Image
-                        src={(book.thumbnail_blob || book.thumbnail)!}
+                        src={getBookThumbnailUrl(book)!}
                         alt={book.display_title || book.title}
                         fill
                         className="object-cover group-hover:scale-105 transition-transform duration-300"
@@ -448,7 +449,7 @@ export default async function AuthorPage({ params }: AuthorPageProps) {
         <AuthorBibliography books={books.map(b => ({
           ...b,
           display_title: b.display_title || undefined,
-          thumbnail: b.thumbnail_blob || b.thumbnail || undefined,
+          thumbnail: getBookThumbnailUrl(b) || undefined,
           thumbnail_blob: b.thumbnail_blob || undefined,
         }))} />
       </main>

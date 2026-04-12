@@ -13,6 +13,7 @@ import ExhibitionLayout from '@/components/collections/ExhibitionLayout';
 import SignUpCTA from '@/components/auth/SignUpCTA';
 import { bookUrl } from '@/lib/slugify';
 import { bookTitle, sanitizeThumbnail, withTimeout } from '@/lib/collections-utils';
+import { getBookThumbnailUrl } from '@/lib/utils';
 import { firstTranslationBadge } from '@/lib/first-translation-labels';
 import { browseBooks } from '@/lib/books-catalog';
 
@@ -552,7 +553,7 @@ export default async function CollectionDetailPage({ params }: Props) {
   type ArtPreview = { id: string; slug?: string; title: string; display_title?: string; author?: string; thumbnail?: string; thumbnail_blob?: string; resource_type?: string; enrichment?: { subject?: string }; commons_width?: number; commons_height?: number };
   let artworkPreviewImages: ArtPreview[] = [];
   if (isArtCollection && diverseGalleryImages.length === 0) {
-    const artPool = (books as ArtPreview[]).filter(a => sanitizeThumbnail(a.thumbnail_blob || a.thumbnail || ''));
+    const artPool = (books as ArtPreview[]).filter(a => getBookThumbnailUrl(a));
     // Shuffle for variety on each ISR build
     for (let i = artPool.length - 1; i > 0; i--) {
       const j = Math.floor(Math.random() * (i + 1));
@@ -618,7 +619,7 @@ export default async function CollectionDetailPage({ params }: Props) {
         ) : artworkPreviewImages.length > 0 ? (
           <div className="absolute inset-0 grid grid-cols-3 sm:grid-cols-6 opacity-30">
             {artworkPreviewImages.slice(0, 6).map((art) => {
-              const src = sanitizeThumbnail(art.thumbnail_blob || art.thumbnail || '');
+              const src = getBookThumbnailUrl(art);
               if (!src) return null;
               return (
                 <div key={art.id} className="relative overflow-hidden">
@@ -740,9 +741,9 @@ export default async function CollectionDetailPage({ params }: Props) {
               >
                 <div className="w-40 sm:w-48 flex-shrink-0 mx-auto sm:mx-0">
                   <div className="aspect-[3/4] relative rounded-lg overflow-hidden bg-white shadow-lg group-hover:shadow-xl transition-shadow">
-                    {(featured.thumbnail_blob || featured.thumbnail) ? (
+                    {getBookThumbnailUrl(featured) ? (
                       <Image
-                        src={(featured.thumbnail_blob || featured.thumbnail)!}
+                        src={getBookThumbnailUrl(featured)!}
                         alt={featured.title || ''}
                         fill
                         className="object-cover group-hover:scale-105 transition-transform duration-500"
@@ -871,7 +872,7 @@ export default async function CollectionDetailPage({ params }: Props) {
             </p>
             <div className="grid grid-cols-3 sm:grid-cols-4 lg:grid-cols-5 gap-4">
               {artworkPreviewImages.map((art) => {
-                const thumb = sanitizeThumbnail(art.thumbnail_blob || art.thumbnail || '');
+                const thumb = getBookThumbnailUrl(art);
                 return (
                   <Link
                     key={art.id}
@@ -942,7 +943,7 @@ export default async function CollectionDetailPage({ params }: Props) {
             </p>
             <div className="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-4 xl:grid-cols-5 gap-4">
               {artworks.slice(0, 15).map((art: { id: string; slug?: string; title: string; display_title?: string; author?: string; published?: string; resource_type?: string; medium?: string; thumbnail?: string; thumbnail_blob?: string; enrichment?: { subject?: string; genre?: string }; commons_width?: number; commons_height?: number }) => {
-                const thumb = sanitizeThumbnail(art.thumbnail_blob || art.thumbnail || '');
+                const thumb = getBookThumbnailUrl(art);
                 const isPortrait = (art.commons_height || 0) > (art.commons_width || 0);
                 return (
                   <Link

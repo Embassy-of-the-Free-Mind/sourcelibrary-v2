@@ -26,9 +26,40 @@ export function isUsableImageUrl(url: string | undefined | null): url is string 
   return !!url && (url.startsWith('http://') || url.startsWith('https://'));
 }
 
-/** Return the best book thumbnail URL, preferring R2 (thumbnail_blob) over external hotlinks. */
-export function getBookThumbnailUrl(book: { thumbnail?: string | null; thumbnail_blob?: string | null }): string | null {
-  return book.thumbnail_blob || book.thumbnail || null;
+/**
+ * Return the best book image URL for the given display context.
+ *
+ * R2 image variants (see src/lib/storage.ts for path helpers):
+ *   - `-full.jpg`  — original resolution (OCR, zoom, download)
+ *   - `.jpg`       — 1200px display variant (browser display, cards)
+ *   - `-thumb.jpg` — 150px thumbnail (tiny previews, search dropdowns)
+ *
+ * @param size 'display' (default, 1200px) | 'thumb' (150px)
+ *   - Use 'display' for any UI element >100px (book cards, grids, heroes)
+ *   - Use 'thumb' for tiny previews (<100px, search results, list rows)
+ */
+export function getBookThumbnailUrl(
+  book: { thumbnail?: string | null; thumbnail_blob?: string | null },
+  size: 'display' | 'thumb' = 'display'
+): string | null {
+  const raw = book.thumbnail_blob || book.thumbnail || null;
+  if (!raw) return null;
+
+  // Only rewrite R2 /pages/ URLs where we know the variant convention exists
+  if (!raw.includes('images.sourcelibrary.org/pages/')) return raw;
+
+  if (size === 'display') {
+    // Rewrite -thumb.jpg or -full.jpg → .jpg (1200px display variant)
+    return raw.replace(/-thumb\.jpg$/, '.jpg').replace(/-full\.jpg$/, '.jpg');
+  }
+  // size === 'thumb': ensure we get the -thumb variant
+  if (raw.endsWith('-thumb.jpg')) return raw;
+  if (raw.endsWith('-full.jpg')) return raw.replace(/-full\.jpg$/, '-thumb.jpg');
+  // bare .jpg (display) → -thumb.jpg
+  if (raw.endsWith('.jpg') && !raw.endsWith('-thumb.jpg')) {
+    return raw.replace(/\.jpg$/, '-thumb.jpg');
+  }
+  return raw;
 }
 
 export function isArchiveFailed(photo: string | undefined | null): boolean {
