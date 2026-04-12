@@ -39,16 +39,25 @@ without us doing anything.
 
 **Implication:** Check `gemini_usage` for cached token counts on recent batch jobs.
 
-## Experiments to Run
+## Experiment Results
 
-### Experiment A: Large Batch Size (1,000 pages)
-- Submit a single OCR batch with 1,000 pages across multiple books
-- Compare: throughput, completion time, error rate vs 250-page batches
-- Watch for File API upload size limits
+### Experiment B: Implicit Cache Detection (2026-04-12) — CONFIRMED
+Ran `scripts/experiments/check-implicit-caching.mjs` against all 3 keys.
 
-### Experiment B: Implicit Cache Detection
-- Check recent batch job results for `cachedContentTokenCount` in usage metadata
-- If present, we're already getting implicit caching for free
+**Key1 results:** Implicit caching IS active. 339 tokens cached out of 1,554 prompt tokens
+per request (~22%). The `cachedContentTokenCount` field is present. Also includes
+`cacheTokensDetails` and `promptTokensDetails` breakdowns.
+
+**Key2 results:** No caching detected. All responses show `cached=NONE`. Key2 is newer
+(added 2026-04-11) and may not have enough repeated prompts to trigger implicit caching,
+or the model version/prompt structure differs.
+
+**Takeaway:** We're already getting free implicit caching on ~22% of our OCR prompt tokens.
+No code change needed. Larger batches with identical prompts may increase the cache hit rate.
+
+### Experiment A: Large Batch Size (1,000 pages) — NOT YET RUN
+Script ready at `scripts/experiments/batch-size-experiment.mjs`. Blocked by Gemini quota
+exhaustion (all 3 keys 429'd as of 2026-04-12). Will run when quota recovers.
 
 ### Experiment C: Batch Translation with 5-Page Context Windows
 - Group 5 consecutive pages into a single request (OCR text only, no images)
