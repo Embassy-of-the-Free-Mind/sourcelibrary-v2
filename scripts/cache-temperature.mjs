@@ -12,7 +12,9 @@
  */
 
 const BASE_URL = process.env.BASE_URL || 'https://sourcelibrary.org';
+const IMAGES_URL = 'https://images.sourcelibrary.org';
 const CONCURRENCY = 10;
+const IMAGE_CONCURRENCY = 20; // images are lightweight HEAD requests
 const TIMEOUT = 12_000;
 const STORE = process.argv.includes('--store');
 
@@ -63,6 +65,89 @@ async function fetchCollectionSlugs() {
   } catch {
     return [];
   }
+}
+
+async function fetchImageUrls() {
+  const urls = new Set();
+  try {
+    // 1. Homepage recent books — thumbnails
+    const recentRes = await fetch(`${BASE_URL}/api/books?limit=12&sort=created_at&order=desc`, {
+      signal: AbortSignal.timeout(10_000),
+    });
+    const recentData = await recentRes.json();
+    const recentBooks = Array.isArray(recentData) ? recentData : recentData.books || [];
+    for (const b of recentBooks) {
+      if (b.thumbnail?.includes('images.sourcelibrary.org')) urls.add(b.thumbnail);
+    }
+
+    // 2. Canonical book thumbnails via browse API (includes thumbnail field)
+    try {
+      const browseRes = await fetch(`${BASE_URL}/api/books/browse?limit=100&sort=featured`, {
+        signal: AbortSignal.timeout(10_000),
+      });
+      if (browseRes.ok) {
+        const browseData = await browseRes.json();
+        const books = Array.isArray(browseData) ? browseData : browseData.books || [];
+        for (const b of books) {
+          if (b.thumbnail?.includes('images.sourcelibrary.org')) urls.add(b.thumbnail);
+        }
+      }
+    } catch { /* skip */ }
+
+    // 3. Collection hero images (fetched from API)
+    const colRes = await fetch(`${BASE_URL}/api/collections`, {
+      signal: AbortSignal.timeout(10_000),
+    });
+    const colData = await colRes.json();
+    const collections = Array.isArray(colData) ? colData : colData.collections || [];
+    for (const c of collections) {
+      const img = c.hero_image || c.featured_image;
+      if (img?.includes('images.sourcelibrary.org')) urls.add(img);
+    }
+  } catch (e) {
+    process.stderr.write(`  Warning: image URL fetch error: ${e.message}\n`);
+  }
+  return [...urls];
+}
+
+async function probeImage(url) {
+  const t = Date.now();
+  try {
+    // Must use GET, not HEAD — R2 custom domains always return DYNAMIC for HEAD
+    const res = await fetch(url, {
+      headers: { 'User-Agent': 'SourceLibrary-CacheProbe/1.0' },
+      signal: AbortSignal.timeout(TIMEOUT),
+    });
+    // Consume body to complete the request (warms cache)
+    await res.arrayBuffer();
+    return {
+      path: url.replace(IMAGES_URL, ''),
+      cache: res.headers.get('cf-cache-status'),
+      latency_ms: Date.now() - t,
+      status: res.status,
+    };
+  } catch (e) {
+    return {
+      path: url.replace(IMAGES_URL, ''),
+      cache: null,
+      latency_ms: Date.now() - t,
+      status: 0,
+      error: e.message?.slice(0, 120),
+    };
+  }
+}
+
+async function probeImageBatch(urls) {
+  const results = [];
+  for (let i = 0; i < urls.length; i += IMAGE_CONCURRENCY) {
+    const batch = urls.slice(i, i + IMAGE_CONCURRENCY);
+    const batchResults = await Promise.all(batch.map(probeImage));
+    results.push(...batchResults);
+    const done = Math.min(i + IMAGE_CONCURRENCY, urls.length);
+    process.stderr.write(`\r  Probed ${done}/${urls.length}`);
+  }
+  process.stderr.write('\n');
+  return results;
 }
 
 // Sub-collections from DB (hardcoded — /api/collections doesn't return them)
@@ -183,13 +268,21 @@ async function main() {
   console.log(`Books (${CANONICAL_BOOKS.length})...`);
   const bookResults = await probeBatch(CANONICAL_BOOKS);
 
-  // Aggregate
+  // 5. R2 image warmup (thumbnails + collection hero images)
+  console.log('Fetching image URLs...');
+  const imageUrls = await fetchImageUrls();
+  console.log(`R2 images (${imageUrls.length})...`);
+  const imageResults = await probeImageBatch(imageUrls);
+
+  // Aggregate (pages only — images reported separately)
   const allResults = [...staticResults, ...collectionResults, ...subResults, ...bookResults];
-    // HIT = edge cached, PRERENDER = statically built, STALE = serving stale while revalidating
+  // HIT = edge cached, PRERENDER = statically built, STALE = serving stale while revalidating
   // All three are "warm" — the page is served fast without a cold render
-const hits = allResults.filter(r => r.cache === 'HIT' || r.cache === 'PRERENDER' || r.cache === 'STALE' || r.cache === 'REVALIDATED').length;
+  const hits = allResults.filter(r => r.cache === 'HIT' || r.cache === 'PRERENDER' || r.cache === 'STALE' || r.cache === 'REVALIDATED').length;
   const total = allResults.length;
   const warmth = total > 0 ? Math.round((hits / total) * 100) : 0;
+
+  const imgSummary = summarize(imageResults);
 
   const data = {
     probed_at: new Date().toISOString(),
@@ -204,6 +297,7 @@ const hits = allResults.filter(r => r.cache === 'HIT' || r.cache === 'PRERENDER'
       collections: summarize(collectionResults),
       subcollections: summarize(subResults),
       books: summarize(bookResults),
+      r2_images: imgSummary,
     },
     slowest: allResults
       .filter(r => !r.error)
