@@ -9,8 +9,8 @@ export const dynamic = 'force-dynamic';
 // Max image size: 4MB (Vercel serverless body limit is 4.5MB)
 const MAX_IMAGE_BYTES = 4 * 1024 * 1024;
 
-// CLIP server on Hetzner for visual similarity search
-const CLIP_URL = process.env.CLIP_URL || 'http://46.224.122.120:3457';
+// CLIP server on Hetzner, proxied through the text embedding server (port 3456)
+const CLIP_URL = process.env.CLIP_URL || 'http://46.224.122.120:3456/clip';
 
 const IDENTIFY_PROMPT = `You are an art historian identifying a physical artwork or book page from a photograph taken in a museum or library.
 
@@ -202,7 +202,8 @@ export async function POST(request: NextRequest) {
     // Uses grounding to verify/correct the identification against museum catalogs
     const verifyPromise: Promise<{ corrected_artist?: string; corrected_title?: string; sources?: WebSource[]; catalog_numbers?: string[] } | null> = (async () => {
       try {
-        const verifyModel = 'gemini-2.5-flash-preview-05-20';
+        // google_search grounding requires gemini-2.5-flash (v3 models don't support it yet)
+        const verifyModel = 'gemini-2.5-flash';
         const searchQuery = [
           identification.artist,
           identification.title,
@@ -240,7 +241,7 @@ Return JSON only:
               tools: [{ google_search: {} }],
               generationConfig: { temperature: 0.1 },
             }),
-            signal: AbortSignal.timeout(12000),
+            signal: AbortSignal.timeout(20000),
           },
         );
 
