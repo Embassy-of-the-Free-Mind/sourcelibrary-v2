@@ -556,7 +556,10 @@ export async function* streamAgenticResponse(
   const semanticCache = new Map<string, Array<{ book_id: string; bookTitle: string; bookAuthor: string; bookSlug?: string; page_number: number; snippet: string; score: number }>>();
 
   for (let round = 0; round < MAX_ROUNDS; round++) {
-    const response = await ai.models.generateContent({
+    // Stream every round. Gemini sends text chunks first, then function calls.
+    // We yield text chunks immediately (token-by-token). If function calls appear,
+    // those text chunks were "thinking". If no function calls, they were the response.
+    const stream = await ai.models.generateContentStream({
       model: MODEL,
       contents,
       config: {
@@ -565,34 +568,33 @@ export async function* streamAgenticResponse(
       },
     });
 
-    const candidate = response.candidates?.[0];
-    if (!candidate?.content?.parts) break;
-
-    // Add model response to conversation
-    contents.push({
-      role: 'model',
-      parts: candidate.content.parts as Array<Record<string, unknown>>,
-    });
-
-    // Process parts: text chunks and function calls
+    const allParts: Array<Record<string, unknown>> = [];
     // eslint-disable-next-line @typescript-eslint/no-explicit-any
-    const functionCalls = candidate.content.parts.filter((p: any) => p.functionCall);
-    // eslint-disable-next-line @typescript-eslint/no-explicit-any
-    const textParts = candidate.content.parts.filter((p: any) => p.text);
+    const functionCalls: Array<any> = [];
 
-    // Emit any thinking/text from this round
-    for (const part of textParts) {
-      const text = (part as { text: string }).text;
-      if (text.trim()) {
-        if (functionCalls.length > 0) {
-          yield { type: 'thinking', text };
-        } else {
-          yield { type: 'text', text };
+    for await (const chunk of stream) {
+      const candidate = chunk.candidates?.[0];
+      if (!candidate?.content?.parts) continue;
+
+      for (const part of candidate.content.parts) {
+        // eslint-disable-next-line @typescript-eslint/no-explicit-any
+        const p = part as any;
+        allParts.push(p);
+        if (p.functionCall) {
+          functionCalls.push(p);
+        } else if (p.text?.trim()) {
+          // Stream text immediately — arrives token-by-token
+          yield { type: 'text', text: p.text };
         }
       }
     }
 
-    // No function calls = final response, we're done
+    if (allParts.length === 0) break;
+
+    // Add model response to conversation history
+    contents.push({ role: 'model', parts: allParts });
+
+    // No function calls = final response (text was already streamed)
     if (functionCalls.length === 0) break;
 
     // Execute tools and stream results
