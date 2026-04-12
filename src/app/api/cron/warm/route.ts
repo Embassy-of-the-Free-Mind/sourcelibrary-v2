@@ -1,5 +1,6 @@
 import { NextResponse } from 'next/server';
 import { getDb } from '@/lib/mongodb';
+import { purgeCloudflareUrls } from '@/lib/cloudflare-cache';
 
 export const maxDuration = 300;
 export const preferredRegion = 'fra1';
@@ -107,6 +108,8 @@ export async function GET() {
   );
 
   // 4. Warm top 50 books (most-translated = most likely to be visited)
+  //    Daily cron also purges book pages from Cloudflare so users see fresh content
+  //    after pipeline updates (OCR, translations, enrichment).
   let bookPaths: string[] = [];
   try {
     const db = await getDb();
@@ -127,6 +130,9 @@ export async function GET() {
   } catch {
     // Skip book warming on DB failure
   }
+
+  // No CF purge needed — stale-while-revalidate=1y means CF serves cached
+  // content while fetching fresh in background. Warming Vercel ISR is enough.
   const bookResults = await warmBatch(baseUrl, bookPaths, 5, 30_000);
 
   // 5. Warm browse A-Z pages

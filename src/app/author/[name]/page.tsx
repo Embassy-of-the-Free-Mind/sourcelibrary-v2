@@ -6,6 +6,7 @@ import { getReadDb } from '@/lib/mongodb';
 import { notFound, redirect } from 'next/navigation';
 import { bookUrl, authorSlug, artistUrl } from '@/lib/slugify';
 import { firstTranslationBadge } from '@/lib/first-translation-labels';
+import AuthorBibliography from '@/components/browse/AuthorBibliography';
 import { VISUAL_RESOURCE_TYPES } from '@/lib/books-catalog';
 import { ObjectId, type Db } from 'mongodb';
 
@@ -442,83 +443,14 @@ export default async function AuthorPage({ params }: AuthorPageProps) {
         );
       })()}
 
-      {/* Content — bibliography table */}
+      {/* Content — bibliography with grid/list toggle */}
       <main className="max-w-6xl mx-auto px-6 md:px-12 py-8 md:py-12">
-        <div className="overflow-x-auto">
-          <table className="w-full text-left">
-            <thead>
-              <tr className="border-b text-xs uppercase tracking-wide" style={{ borderColor: 'var(--border-medium)', color: 'var(--text-muted)' }}>
-                <th className="pb-3 pr-4 font-medium">Title</th>
-                <th className="pb-3 pr-4 font-medium w-16">Year</th>
-                <th className="pb-3 pr-4 font-medium hidden md:table-cell w-24">Language</th>
-                <th className="pb-3 pr-4 font-medium hidden lg:table-cell">Publisher</th>
-                <th className="pb-3 font-medium hidden sm:table-cell w-20 text-right">Pages</th>
-              </tr>
-            </thead>
-            <tbody className="divide-y" style={{ borderColor: 'var(--border-light)' }}>
-              {books.map(book => {
-                const pct = book.translation_percent ?? 0;
-                const hasOriginalTitle = book.display_title && book.title !== book.display_title;
-                const publisher = book.publisher?.split('|')[0]?.trim();
-                const place = book.place_of_publication;
-
-                return (
-                  <tr key={book.id} className="group hover:bg-warm/50 transition-colors">
-                    <td className="py-3 pr-4">
-                      <Link href={bookUrl(book)} className="block">
-                        <span
-                          className="text-sm font-medium line-clamp-1"
-                          style={{ color: 'var(--text-primary)', fontFamily: 'var(--font-serif)' }}
-                        >
-                          {book.display_title || book.title}
-                        </span>
-                        {book.is_first_translation && (
-                          <span className="inline-block ml-2 bg-accent-gold/15 text-[10px] px-1.5 py-0.5 rounded-full font-medium align-middle" style={{ color: 'var(--accent-gold-dark)' }}>
-                            {firstTranslationBadge(book.ft_disposition, book.language)}
-                          </span>
-                        )}
-                        {hasOriginalTitle && (
-                          <span className="block text-xs mt-0.5 line-clamp-1 italic" style={{ color: 'var(--text-faint)' }}>
-                            {book.title}
-                          </span>
-                        )}
-                      </Link>
-                    </td>
-                    <td className="py-3 pr-4 text-sm tabular-nums" style={{ color: 'var(--text-muted)' }}>
-                      <Link href={bookUrl(book)} className="block">
-                        {book.year || book.published || '—'}
-                      </Link>
-                    </td>
-                    <td className="py-3 pr-4 hidden md:table-cell">
-                      <Link href={bookUrl(book)} className="block">
-                        <span className="text-xs px-2 py-0.5 rounded" style={{ color: 'var(--text-muted)', background: 'var(--bg-warm)' }}>
-                          {book.language || '—'}
-                        </span>
-                      </Link>
-                    </td>
-                    <td className="py-3 pr-4 hidden lg:table-cell">
-                      <Link href={bookUrl(book)} className="block text-xs line-clamp-1" style={{ color: 'var(--text-faint)' }}>
-                        {publisher || '—'}
-                        {place && publisher && <span className="text-[10px]"> ({place})</span>}
-                      </Link>
-                    </td>
-                    <td className="py-3 hidden sm:table-cell text-right">
-                      <Link href={bookUrl(book)} className="block text-sm tabular-nums" style={{ color: 'var(--text-muted)' }}>
-                        {book.pages_count || '—'}
-                        {pct > 0 && pct < 95 && (
-                          <span className="text-[10px] ml-1" style={{ color: 'var(--accent-gold-dark)' }}>{pct}%</span>
-                        )}
-                        {pct >= 95 && (
-                          <span className="text-[10px] ml-1" style={{ color: 'var(--status-success)' }}>done</span>
-                        )}
-                      </Link>
-                    </td>
-                  </tr>
-                );
-              })}
-            </tbody>
-          </table>
-        </div>
+        <AuthorBibliography books={books.map(b => ({
+          ...b,
+          display_title: b.display_title || undefined,
+          thumbnail: b.thumbnail_blob || b.thumbnail || undefined,
+          thumbnail_blob: b.thumbnail_blob || undefined,
+        }))} />
       </main>
     </div>
   );

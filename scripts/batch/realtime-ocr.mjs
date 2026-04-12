@@ -185,6 +185,15 @@ function extractPageType(text) {
   return match ? match[1].toLowerCase().trim() : null;
 }
 
+function isDigitizerNotice(text) {
+  if (!text) return false;
+  const start = text.substring(0, 1500);
+  return /google\s+logo|digitized\s+by\s+google|scanned\s+by\s+google|this\s+is\s+a\s+digital\s+copy/i.test(start) ||
+    /preserved\s+for\s+generations\s+on\s+library\s+shelves/i.test(start) ||
+    /inserted\s+by\s+the\s+internet|internet\s+archive|digitization\s+(credit|notice)/i.test(start) ||
+    /not\s+part\s+of\s+the\s+original\s+book|scanner\s+barcode/i.test(start);
+}
+
 function extractColumns(text) {
   const match = text.match(/<columns>\s*(\d+)\s*<\/columns>/i);
   if (!match) return null;
@@ -256,7 +265,7 @@ async function processPage(page, promptText, db) {
             source: 'ai',
             prompt_version: TARGET_PROMPT,
           },
-          ...(pageType && { page_type: pageType }),
+          ...(isDigitizerNotice(result.text) ? { page_type: 'digitizer-insert', hidden: true } : pageType ? { page_type: pageType } : {}),
           ...(columns && { columns }),
           ...(detectedImages.length > 0 && { detected_images: detectedImages }),
           updated_at: new Date(),

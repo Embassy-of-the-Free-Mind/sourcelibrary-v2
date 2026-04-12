@@ -72,7 +72,7 @@ const RUN_PHASE_7_6 = phaseArg === 'all' || phaseArg === '7.6';
 const limitArg = args.find(a => a.startsWith('--limit='))?.split('=')[1];
 const PHASE_6_LIMIT = limitArg ? parseInt(limitArg) : 200;
 const PHASE_7_LIMIT = limitArg ? parseInt(limitArg) : 200;
-const BOOK_CONCURRENCY = 4; // Process multiple books in parallel within each phase
+const BOOK_CONCURRENCY = parseInt(process.env.ENRICH_CONCURRENCY || '8'); // Process multiple books in parallel within each phase
 const SINGLE_BOOK = args.find(a => a.startsWith('--book='))?.split('=')[1];
 
 // ── Gemini API keys ──

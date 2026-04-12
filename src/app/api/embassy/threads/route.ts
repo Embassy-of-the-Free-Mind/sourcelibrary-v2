@@ -1,19 +1,33 @@
 import { NextRequest, NextResponse } from 'next/server';
 import { getReadDb } from '@/lib/mongodb';
+import { auth } from '@/lib/auth';
 
 /**
- * GET /api/embassy/threads — List public Embassy threads (activity feed).
- * No auth required — public threads are visible to everyone.
+ * GET /api/embassy/threads — List Embassy threads.
+ * ?mine=true — list the current user's threads (auth required)
+ * Default — list public threads (no auth required)
  */
 export async function GET(request: NextRequest) {
   const url = new URL(request.url);
   const limit = Math.min(parseInt(url.searchParams.get('limit') || '20'), 50);
   const offset = parseInt(url.searchParams.get('offset') || '0');
+  const mine = url.searchParams.get('mine') === 'true';
 
   const db = await getReadDb();
 
+  let filter: Record<string, unknown>;
+  if (mine) {
+    const session = await auth();
+    if (!session?.user?.id) {
+      return NextResponse.json({ threads: [] });
+    }
+    filter = { creatorId: session.user.id, messageCount: { $gte: 2 } };
+  } else {
+    filter = { visibility: 'public', messageCount: { $gte: 2 } };
+  }
+
   const threads = await db.collection('embassy_threads')
-    .find({ visibility: 'public', messageCount: { $gte: 2 } }) // Only show threads with at least one exchange
+    .find(filter)
     .sort({ lastMessageAt: -1 })
     .skip(offset)
     .limit(limit)

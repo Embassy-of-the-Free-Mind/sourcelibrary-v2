@@ -432,6 +432,26 @@ async function processBook(db, book, job, globalCounter, deadline) {
     .limit(200) // Cap per book per run — large books don't monopolize a worker slot
     .toArray();
 
+  // ── Detect blank pages missing page_type (pre-pipeline OCR) ──
+  // Some older OCR outputs have <lang>None</lang> or "Blank page" in meta but never set page_type.
+  // Filter them out and backfill page_type so they're skipped in future runs too.
+  const blankFromOcr = pages.filter(p => {
+    if (p.page_type) return false; // already classified
+    const ocr = p.ocr?.data || '';
+    return /<lang>\s*None\s*<\/lang>/i.test(ocr) && /blank\s+page/i.test(ocr);
+  });
+  if (blankFromOcr.length > 0) {
+    const blankIds = blankFromOcr.map(p => p.id);
+    await db.collection('pages').updateMany(
+      { id: { $in: blankIds } },
+      { $set: { page_type: 'blank', updated_at: new Date() } },
+    );
+    console.log(`  [${label}] Backfilled ${blankFromOcr.length} blank pages (missing page_type)`);
+    // Remove from translation queue
+    const blankIdSet = new Set(blankIds);
+    pages.splice(0, pages.length, ...pages.filter(p => !blankIdSet.has(p.id)));
+  }
+
   if (pages.length === 0) {
     // Book is fully translated — advance pipeline
     await db.collection('jobs').updateOne(

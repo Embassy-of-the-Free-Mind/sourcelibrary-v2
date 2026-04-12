@@ -110,13 +110,44 @@ export async function getPrompt(
 }
 
 /**
+ * Map of book languages to their DB prompt names.
+ * When a book's language matches, we look up the language-specific OCR prompt.
+ * Falls back to the default Standard OCR prompt if no match or not found.
+ */
+const LANGUAGE_OCR_PROMPT_NAMES: Record<string, string> = {
+  arabic: 'Arabic OCR',
+  hebrew: 'Hebrew OCR',
+  latin: 'Latin OCR (Neo-Latin)',
+  german: 'German OCR (Fraktur)',
+};
+
+/**
  * Get OCR prompt from DB (or hardcoded fallback).
  * Always uses auto-detect for language — Gemini 3 Flash detects reliably,
  * and the language hint was propagating bad metadata (e.g. "Unknown").
+ *
+ * If `language` is provided, looks up a language-specific prompt from DB first.
+ * Falls back to the default Standard OCR prompt if no language match or not found.
  */
 export async function getOcrPrompt(
-  options?: { name?: string; id?: string; customText?: string }
+  options?: { name?: string; id?: string; customText?: string; language?: string }
 ): Promise<PromptLookupResult> {
+  // Try language-specific prompt if language is provided (and no explicit name/id/custom)
+  if (options?.language && !options.name && !options.id && !options.customText) {
+    const langKey = options.language.toLowerCase();
+    const promptName = LANGUAGE_OCR_PROMPT_NAMES[langKey];
+    if (promptName) {
+      const langResult = await getPrompt('ocr', { name: promptName });
+      // Only use if we found a real DB prompt (not hardcoded fallback)
+      if (langResult.reference.id !== 'hardcoded') {
+        return {
+          text: langResult.text,
+          reference: langResult.reference,
+        };
+      }
+    }
+  }
+
   const result = await getPrompt('ocr', options);
   const languageInstruction = `**Source language:** Detect the primary language from the text. Pages may contain multiple languages — transcribe all of them. Report the primary language in the <language> tag (e.g. <language>Latin</language>).`;
   return {
@@ -128,7 +159,19 @@ export async function getOcrPrompt(
 }
 
 /**
- * Get translation prompt with language variables replaced
+ * Map of book languages to their DB translation prompt names.
+ */
+const LANGUAGE_TRANSLATION_PROMPT_NAMES: Record<string, string> = {
+  arabic: 'Arabic Translation',
+  hebrew: 'Hebrew Translation',
+  latin: 'Latin Translation (Neo-Latin)',
+  german: 'German Translation (Early Modern)',
+};
+
+/**
+ * Get translation prompt with language variables replaced.
+ * If sourceLanguage matches a language-specific prompt in DB, uses that instead
+ * of the default Standard Translation prompt.
  */
 export async function getTranslationPrompt(
   sourceLanguage: string,
@@ -147,6 +190,21 @@ export async function getTranslationPrompt(
         version: 0,
       },
     };
+  }
+
+  // Try language-specific prompt if no explicit name/id/custom
+  if (!options?.name && !options?.id && !options?.customText) {
+    const langKey = sourceLanguage.toLowerCase();
+    const promptName = LANGUAGE_TRANSLATION_PROMPT_NAMES[langKey];
+    if (promptName) {
+      const langResult = await getPrompt('translation', { name: promptName });
+      if (langResult.reference.id !== 'hardcoded') {
+        return {
+          text: langResult.text,
+          reference: langResult.reference,
+        };
+      }
+    }
   }
 
   const result = await getPrompt('translation', options);

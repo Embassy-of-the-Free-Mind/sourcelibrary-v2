@@ -103,11 +103,19 @@ export async function POST(request: NextRequest) {
   const baseUrl = 'https://sourcelibrary.org';
   const started = Date.now();
 
-  // 0. Selective Cloudflare purge — only static pages that change on every deploy.
-  //    Collection/book pages have 24h CF TTL and don't need purging on deploy.
-  //    Use POST /api/admin/revalidate to purge specific pages when needed.
-  await purgeCloudflareUrls(STATIC_PAGES);
-  const cfPurged = STATIC_PAGES.length;
+  // ?check mode: skip revalidation + CF purge, just warm and report cache status
+  const url = new URL(request.url);
+  const checkOnly = url.searchParams.has('check');
+
+  // Cloudflare is NOT purged on deploy. All pages have
+  // stale-while-revalidate=1y so CF always serves cached content
+  // (possibly stale briefly) while fetching fresh in the background.
+  // No visitor ever sees a cold page.
+  //
+  // To force-refresh specific pages:
+  //   POST /api/admin/revalidate { paths: ["/collections/alchemy"] }
+  // Books are refreshed daily at 4am UTC via /api/cron/warm.
+  const cfPurged = 0;
 
   // 1. Collect all paths we'll warm (need them for revalidation first)
   let collectionSlugs: string[] = [];
@@ -155,8 +163,11 @@ export async function POST(request: NextRequest) {
   // 2. Revalidate all ISR-cached pages so Next.js drops stale HTML
   //    Without this, warming re-caches old HTML that references deleted JS chunks,
   //    causing raw RSC payload to render instead of the page.
-  for (const path of allContentPaths) {
-    revalidatePath(path);
+  //    Skip in ?check mode — just report current warmth without invalidating.
+  if (!checkOnly) {
+    for (const path of allContentPaths) {
+      revalidatePath(path);
+    }
   }
 
   // 3. Warm APIs (keep serverless hot)
@@ -185,8 +196,9 @@ export async function POST(request: NextRequest) {
   }, {} as Record<string, number>);
 
   return NextResponse.json({
+    mode: checkOnly ? 'check' : 'deploy',
     cf_purged: cfPurged,
-    revalidated: allContentPaths.length,
+    revalidated: checkOnly ? 0 : allContentPaths.length,
     warmed: allResults.length,
     failed: failed.length,
     cache_warmth: cacheStats,

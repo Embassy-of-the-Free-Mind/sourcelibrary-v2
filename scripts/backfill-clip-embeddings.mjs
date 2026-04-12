@@ -11,6 +11,7 @@
  * Options:
  *   --artworks-only    Only embed artworks (resource_type exists)
  *   --covers-only      Only embed book covers
+ *   --gallery-only     Only embed gallery images from image extraction
  *   --limit N          Process at most N items
  *   --dry-run          Count what would be embedded, don't embed
  *   --clip-url URL     CLIP server URL (default: http://localhost:3457)
@@ -24,6 +25,7 @@ const { Client: PgClient } = pg;
 const CLIP_URL = process.env.CLIP_URL || process.argv.find(a => a.startsWith('--clip-url='))?.split('=')[1] || 'http://localhost:3457';
 const ARTWORKS_ONLY = process.argv.includes('--artworks-only');
 const COVERS_ONLY = process.argv.includes('--covers-only');
+const GALLERY_ONLY = process.argv.includes('--gallery-only');
 const DRY_RUN = process.argv.includes('--dry-run');
 const LIMIT = parseInt(process.argv.find(a => a.startsWith('--limit='))?.split('=')[1] || '0') || 0;
 
@@ -47,18 +49,23 @@ async function main() {
   const db = mongo.db('bookstore');
   const books = db.collection('books');
 
-  // Connect to Supabase Postgres
-  const pgClient = new PgClient({
-    host: process.env.PGHOST || 'db.ykhxaecbbxaaqlujuzde.supabase.co',
-    port: parseInt(process.env.PGPORT || '5432'),
-    user: process.env.PGUSER || 'postgres',
-    password: process.env.PGPASSWORD,
-    database: process.env.PGDATABASE || 'postgres',
-    ssl: { rejectUnauthorized: false },
-  });
-
-  if (!process.env.PGPASSWORD) {
-    console.error('Missing PGPASSWORD — set via .env.production.local or SUPABASE_DB_URL');
+  // Connect to Supabase Postgres (support SUPABASE_DB_URL or individual PG* vars)
+  let pgClient;
+  if (process.env.SUPABASE_DB_URL) {
+    // Use direct port 5432 instead of pooler port 6543 for long-running scripts
+    const connStr = process.env.SUPABASE_DB_URL.replace(':6543/', ':5432/');
+    pgClient = new PgClient({ connectionString: connStr, ssl: { rejectUnauthorized: false } });
+  } else if (process.env.PGPASSWORD) {
+    pgClient = new PgClient({
+      host: process.env.PGHOST || 'db.ykhxaecbbxaaqlujuzde.supabase.co',
+      port: parseInt(process.env.PGPORT || '5432'),
+      user: process.env.PGUSER || 'postgres',
+      password: process.env.PGPASSWORD,
+      database: process.env.PGDATABASE || 'postgres',
+      ssl: { rejectUnauthorized: false },
+    });
+  } else {
+    console.error('Missing SUPABASE_DB_URL or PGPASSWORD');
     process.exit(1);
   }
 
@@ -74,7 +81,7 @@ async function main() {
   const items = [];
 
   // Phase 1: Artworks (resource_type exists, have a thumbnail or commons image)
-  if (!COVERS_ONLY) {
+  if (!COVERS_ONLY && !GALLERY_ONLY) {
     const artworks = await books.find(
       {
         resource_type: { $exists: true },
@@ -115,7 +122,7 @@ async function main() {
   }
 
   // Phase 2: Book covers (non-artwork books with thumbnails)
-  if (!ARTWORKS_ONLY) {
+  if (!ARTWORKS_ONLY && !GALLERY_ONLY) {
     const coverQuery = {
       resource_type: { $exists: false },
       pages_count: { $gt: 0 },
@@ -153,6 +160,39 @@ async function main() {
     }
     console.log(`Book covers to embed: ${coverItems.length}`);
     items.push(...coverItems);
+  }
+
+  // Phase 3: Gallery images from image extraction pipeline
+  if (!ARTWORKS_ONLY && !COVERS_ONLY) {
+    const galleryImages = await db.collection('gallery_images').find(
+      { image_url: { $exists: true, $ne: null } },
+      {
+        projection: {
+          id: 1, book_id: 1, book_title: 1, book_author: 1,
+          image_url: 1, type: 1, description: 1,
+        },
+      },
+    ).toArray();
+
+    const galleryItems = [];
+    for (const g of galleryImages) {
+      const id = `gallery-${g.id}`;
+      if (existingIds.has(id)) continue;
+      if (!g.image_url) continue;
+
+      galleryItems.push({
+        id,
+        source_type: 'gallery_image',
+        book_id: g.book_id,
+        image_url: g.image_url,
+        title: g.description || g.book_title,
+        author: g.book_author,
+        resource_type: g.type || null,
+        thumbnail_url: g.image_url,
+      });
+    }
+    console.log(`Gallery images to embed: ${galleryItems.length}`);
+    items.push(...galleryItems);
   }
 
   const total = LIMIT > 0 ? Math.min(items.length, LIMIT) : items.length;
