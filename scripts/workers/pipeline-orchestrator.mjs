@@ -18,6 +18,7 @@
  *   set -a; source .env.production.local; set +a; node scripts/workers/pipeline-orchestrator.mjs
  *   node scripts/workers/pipeline-orchestrator.mjs --dry-run
  *   node scripts/workers/pipeline-orchestrator.mjs --phase 2  # run only phase 2 (OCR submit)
+ *   node scripts/workers/pipeline-orchestrator.mjs --phase 8.9 --book=BOOK_ID  # run a specific phase on one book
  */
 
 import { MongoClient, ObjectId } from 'mongodb';
@@ -111,6 +112,12 @@ const args = process.argv.slice(2);
 const DRY_RUN = args.includes('--dry-run');
 const phaseIdx = args.indexOf('--phase');
 const ONLY_PHASE = phaseIdx >= 0 ? parseFloat(args[phaseIdx + 1]) : null;
+const bookArg = args.find(a => a.startsWith('--book='));
+const BOOK_OVERRIDE = bookArg ? bookArg.split('=')[1] : null;
+if (BOOK_OVERRIDE && ONLY_PHASE === null) {
+  console.error('--book requires --phase to be specified');
+  process.exit(1);
+}
 
 // Submission limits — defaults, may be reduced by DB health probe
 let ENROLL_LIMIT = 100;
@@ -750,7 +757,7 @@ async function translatePage(db, page, sourceLanguage, previousTranslation) {
 // Sources whose pages need archiving
 const ARCHIVABLE_SOURCES = /archive\.org|gallica\.bnf\.fr|digitale-sammlungen\.de|digi\.vatlib\.it|diglib\.hab\.de|e-rara|wellcomecollection|cudl\.lib\.cam|digital\.bodleian|cdli\.earth|contentdm\.oclc\.org|digitalcollections\.manchester|viewer\.cbl\.ie|universiteitleiden|digi\.ub\.uni-heidelberg|iiif\.qdl\.qa|permalinkbnd\.bnportugal/;
 
-console.log(`[pipeline-orchestrator] Base URL: ${BASE_URL} | Dry run: ${DRY_RUN}${ONLY_PHASE !== null ? ` | Phase: ${ONLY_PHASE}` : ''}`);
+console.log(`[pipeline-orchestrator] Base URL: ${BASE_URL} | Dry run: ${DRY_RUN}${ONLY_PHASE !== null ? ` | Phase: ${ONLY_PHASE}` : ''}${BOOK_OVERRIDE ? ` | Book override: ${BOOK_OVERRIDE}` : ''}`);
 
 // ── Helpers ──
 
@@ -2035,6 +2042,40 @@ async function run() {
     if (applied.length > 0) console.log(`[config] Limit overrides: ${applied.join(', ')}`);
   }
 
+  // ── Book override: --book=ID runs a single book through any phase ──
+  let _overrideBook = null;
+  if (BOOK_OVERRIDE) {
+    // Look up by id field first, fall back to _id (ObjectId)
+    _overrideBook = await db.collection('books').findOne({ id: BOOK_OVERRIDE });
+    if (!_overrideBook) {
+      try {
+        _overrideBook = await db.collection('books').findOne({ _id: new ObjectId(BOOK_OVERRIDE) });
+      } catch { /* not a valid ObjectId, that's fine */ }
+    }
+    if (!_overrideBook) {
+      console.error(`[pipeline-orchestrator] Book not found: ${BOOK_OVERRIDE}`);
+      await client.close();
+      process.exit(1);
+    }
+    console.log(`\n[OVERRIDE] Running phase ${ONLY_PHASE} on book: ${_overrideBook.title} (${_overrideBook.id || _overrideBook._id})`);
+    console.log(`  Current pipeline status: ${_overrideBook.pipeline_auto?.status || 'none'}`);
+  }
+
+  /**
+   * Replace a phase's normal book query results with the override book.
+   * Re-fetches with the given projection to match what the phase expects.
+   * Usage: `books = await applyBookOverride(db, books, { id: 1, title: 1 });`
+   */
+  async function applyBookOverride(db, normalBooks, projection) {
+    if (!BOOK_OVERRIDE) return normalBooks;
+    const bookId = _overrideBook.id || _overrideBook._id.toString();
+    const book = await db.collection('books').findOne(
+      { $or: [{ id: bookId }, { _id: _overrideBook._id }] },
+      projection ? { projection } : undefined
+    );
+    return book ? [book] : [];
+  }
+
   const log = {
     enrolled: 0,
     archived: 0,
@@ -2067,7 +2108,7 @@ async function run() {
     if (shouldRun(0)) {
       console.log('\n--- Phase 0: Auto-enroll ---');
       const cutoff = new Date(Date.now() - ENROLL_WINDOW_DAYS * 24 * 60 * 60 * 1000);
-      const newBooks = await db.collection('books')
+      let newBooks = await db.collection('books')
         .find({
           pipeline_auto: { $exists: false },
           created_at: { $gte: cutoff },
@@ -2076,6 +2117,7 @@ async function run() {
         .project({ id: 1, language: 1 })
         .limit(ENROLL_LIMIT)
         .toArray();
+      if (BOOK_OVERRIDE) newBooks = await applyBookOverride(db, newBooks, { id: 1, language: 1 });
 
       if (DRY_RUN) {
         console.log(`  Would enroll ${newBooks.length} books`);
@@ -2115,7 +2157,7 @@ async function run() {
       // Move queued -> archiving
       // Priority: confirmed first translations > non-English (likely first) > English
       const ENGLISH_VARIANTS_P1 = ['english', 'eng', 'en'];
-      const queuedBooks = await db.collection('books')
+      let queuedBooks = await db.collection('books')
         .aggregate([
           { $match: { 'pipeline_auto.status': 'queued' } },
           { $addFields: {
@@ -2136,6 +2178,7 @@ async function run() {
           { $limit: ARCHIVE_LIMIT },
         ])
         .toArray();
+      if (BOOK_OVERRIDE) queuedBooks = await applyBookOverride(db, queuedBooks, { id: 1 });
 
       if (!DRY_RUN) {
         for (const book of queuedBooks) {
@@ -2147,7 +2190,7 @@ async function run() {
 
       // Check archiving books for completion
       // Priority: confirmed first translations > non-English > English
-      const archivingBooks = await db.collection('books')
+      let archivingBooks = await db.collection('books')
         .aggregate([
           { $match: { 'pipeline_auto.status': 'archiving' } },
           { $addFields: {
@@ -2168,6 +2211,7 @@ async function run() {
           { $limit: ARCHIVE_LIMIT },
         ])
         .toArray();
+      if (BOOK_OVERRIDE) archivingBooks = await applyBookOverride(db, archivingBooks, { id: 1, pages_count: 1 });
 
       let archiveCompleted = 0;
       for (const book of archivingBooks) {
@@ -2244,7 +2288,7 @@ async function run() {
       const ASPECT_RATIO_THRESHOLD = 1.2; // Width/height > 1.2 = likely spread
 
       // Find archive_complete books that haven't been split-checked yet
-      const candidates = await db.collection('books')
+      let candidates = await db.collection('books')
         .find({
           'pipeline_auto.status': 'archive_complete',
           'pipeline_auto.split_checked': { $ne: true },
@@ -2253,6 +2297,7 @@ async function run() {
         .project({ id: 1, title: 1, pages_count: 1 })
         .limit(SPLIT_LIMIT)
         .toArray();
+      if (BOOK_OVERRIDE) candidates = await applyBookOverride(db, candidates, { id: 1, title: 1, pages_count: 1 });
 
       console.log(`  Candidates for split check: ${candidates.length}`);
 
@@ -2431,7 +2476,7 @@ Reply with ONLY: {"is_spread": true} or {"is_spread": false}` },
     if (shouldRun(1.5)) {
       console.log('\n--- Phase 1.5: Preview OCR (inline Gemini, first 25 pages) ---');
 
-      const readyForPreview = await db.collection('books')
+      let readyForPreview = await db.collection('books')
         .find({
           'pipeline_auto.status': 'archive_complete',
           'pipeline_auto.split_checked': true,
@@ -2441,6 +2486,7 @@ Reply with ONLY: {"is_spread": true} or {"is_spread": false}` },
         .project({ id: 1, title: 1, language: 1, needs_splitting: 1 })
         .limit(PREVIEW_LIMIT)
         .toArray();
+      if (BOOK_OVERRIDE) readyForPreview = await applyBookOverride(db, readyForPreview, { id: 1, title: 1, language: 1, needs_splitting: 1 });
 
       console.log(`  Books ready for preview OCR: ${readyForPreview.length}`);
 
@@ -2612,7 +2658,7 @@ Reply with ONLY: {"is_spread": true} or {"is_spread": false}` },
       ];
 
       // Find books with preview OCR done but no AI metadata yet
-      const readyForMetadata = await db.collection('books')
+      let readyForMetadata = await db.collection('books')
         .find({
           'pipeline_auto.status': 'archive_complete',
           'pipeline_auto.preview_ocr_done': true,
@@ -2624,6 +2670,7 @@ Reply with ONLY: {"is_spread": true} or {"is_spread": false}` },
                    field_provenance: 1, subject_keywords: 1 })
         .limit(METADATA_ENRICH_LIMIT)
         .toArray();
+      if (BOOK_OVERRIDE) readyForMetadata = await applyBookOverride(db, readyForMetadata, { id: 1, title: 1, display_title: 1, author: 1, language: 1, published: 1, year: 1, description: 1, categories: 1, is_first_translation: 1, source_work_dates: 1, field_provenance: 1, subject_keywords: 1 });
 
       console.log(`  Books ready for AI metadata: ${readyForMetadata.length}`);
       let metadataEnriched = 0;
@@ -2942,7 +2989,7 @@ Rules:
       // --- Pass 1: Preview OCR (first 25 pages) for books that haven't had any OCR yet ---
       // Prioritize first-translation books. This spreads OCR across many books fast.
       if (ocrLimit > 0) {
-        const previewCandidates = await db.collection('books')
+        let previewCandidates = await db.collection('books')
           .aggregate([
             { $match: {
               'pipeline_auto.status': 'archive_complete',
@@ -2968,6 +3015,7 @@ Rules:
             { $limit: ocrLimit },
           ])
           .toArray();
+        if (BOOK_OVERRIDE) previewCandidates = await applyBookOverride(db, previewCandidates, { id: 1, title: 1, author: 1, year: 1, pages_count: 1, needs_splitting: 1, pipeline_auto: 1 });
 
         if (previewCandidates.length > 0) {
           console.log(`  Preview pass: ${previewCandidates.length} books (first ${PREVIEW_PAGES} pages each)`);
@@ -3007,7 +3055,7 @@ Rules:
       }
 
       // --- Pass 2: Full OCR for books that already have some OCR (preview done, or partial) ---
-      const readyForOcr = ocrLimit > 0 ? await db.collection('books')
+      let readyForOcr = ocrLimit > 0 ? await db.collection('books')
         .aggregate([
           { $match: {
             'pipeline_auto.status': 'archive_complete',
@@ -3033,6 +3081,7 @@ Rules:
           { $limit: ocrLimit },
         ])
         .toArray() : [];
+      if (BOOK_OVERRIDE) readyForOcr = await applyBookOverride(db, readyForOcr, { id: 1, title: 1, author: 1, year: 1, pages_count: 1, needs_splitting: 1, pipeline_auto: 1 });
 
       if (readyForOcr.length > 0) {
         console.log(`  Full pass: ${readyForOcr.length} books (all remaining pages)`);
@@ -3103,10 +3152,11 @@ Rules:
     if (shouldRun(3)) {
       console.log('\n--- Phase 3: OCR completion check ---');
 
-      const ocrPending = await db.collection('books')
+      let ocrPending = await db.collection('books')
         .find({ 'pipeline_auto.status': 'ocr_submitted' })
         .project({ id: 1, title: 1, 'pipeline_auto.ocr_job_name': 1, 'pipeline_auto.ocr_job_id': 1, 'pipeline_auto.ocr_loop_count': 1 })
         .toArray();
+      if (BOOK_OVERRIDE) ocrPending = await applyBookOverride(db, ocrPending, { id: 1, title: 1, pipeline_auto: 1 });
 
       console.log(`  Books waiting for OCR: ${ocrPending.length}`);
 
@@ -3243,7 +3293,7 @@ Rules:
 
       const SPLIT_BATCH_LIMIT = 10; // Books per cycle (each book is heavy: downloads + crops + uploads)
 
-      const readyForSplit = await db.collection('books')
+      let readyForSplit = await db.collection('books')
         .find({
           'pipeline_auto.status': 'ocr_complete',
           needs_splitting: true,
@@ -3253,6 +3303,7 @@ Rules:
         .project({ id: 1, title: 1, pages_count: 1, 'pipeline_auto.split_retry_count': 1 })
         .limit(SPLIT_BATCH_LIMIT)
         .toArray();
+      if (BOOK_OVERRIDE) readyForSplit = await applyBookOverride(db, readyForSplit, { id: 1, title: 1, pages_count: 1, pipeline_auto: 1 });
 
       console.log(`  Books ready for split: ${readyForSplit.length}`);
 
@@ -3310,12 +3361,13 @@ Rules:
     if (shouldRun(3.5) || shouldRun(3)) {
       console.log('\n--- Phase 3.5: OCR quality gate ---');
 
-      const readyBooks = await db.collection('books')
+      let readyBooks = await db.collection('books')
         .find({ 'pipeline_auto.status': 'ocr_complete' })
         .sort({ hidden: 1 })
         .project({ id: 1, title: 1, pages_count: 1, pages_ocr: 1 })
         .limit(METADATA_ENRICH_LIMIT)
         .toArray();
+      if (BOOK_OVERRIDE) readyBooks = await applyBookOverride(db, readyBooks, { id: 1, title: 1, pages_count: 1, pages_ocr: 1 });
 
       let gateRejected = 0;
       for (const book of readyBooks) {
@@ -3337,7 +3389,7 @@ Rules:
       console.log('\n--- Phase 3.7: Transliteration (non-Latin books) ---');
 
       // Find ocr_complete books with non-Latin languages
-      const nonLatinBooks = await db.collection('books')
+      let nonLatinBooks = await db.collection('books')
         .find({
           'pipeline_auto.status': 'ocr_complete',
           language: { $regex: new RegExp(`^(${[...NON_LATIN_LANGUAGES].join('|')})$`, 'i') },
@@ -3346,6 +3398,7 @@ Rules:
         .project({ id: 1, title: 1, language: 1 })
         .limit(TRANSLITERATE_LIMIT)
         .toArray();
+      if (BOOK_OVERRIDE) nonLatinBooks = await applyBookOverride(db, nonLatinBooks, { id: 1, title: 1, language: 1 });
 
       console.log(`  Non-Latin books ready for transliteration: ${nonLatinBooks.length}`);
 
@@ -3505,7 +3558,7 @@ Rules:
         }
 
         // Fresh books first (never translated), then re-queue partially-translated books
-        const freshBooks = effectiveLimit > 0 ? await db.collection('books').aggregate([
+        let freshBooks = effectiveLimit > 0 ? await db.collection('books').aggregate([
           { $match: { 'pipeline_auto.status': { $in: ['ocr_complete'] } } },
           { $addFields: { _speedTier: { $switch: {
             branches: [
@@ -3521,6 +3574,7 @@ Rules:
           { $project: { id: 1, title: 1, pages_count: 1, language: 1, 'pipeline_auto.retry_count': 1, 'image_source.provider': 1 } },
           { $limit: effectiveLimit }
         ]).toArray() : [];
+        if (BOOK_OVERRIDE) freshBooks = await applyBookOverride(db, freshBooks, { id: 1, title: 1, pages_count: 1, language: 1, pipeline_auto: 1, image_source: 1 });
 
         // If no fresh books, re-queue partially-translated books (gap-fill)
         // Includes books at ANY pipeline stage with incomplete translation — not just translate_partial.
@@ -3539,6 +3593,7 @@ Rules:
             { $sort: { _isBph: 1, pages_translated: -1 } },
             { $limit: effectiveLimit },
           ]).toArray();
+          if (BOOK_OVERRIDE) partialBooks = await applyBookOverride(db, partialBooks, { id: 1, title: 1, pages_count: 1, language: 1, pipeline_auto: 1 });
           if (partialBooks.length > 0) {
             console.log(`  No fresh books — gap-filling ${partialBooks.length} under-translated books`);
           }
@@ -3640,10 +3695,11 @@ Rules:
     if (shouldRun(5)) {
       console.log('\n--- Phase 5: Legacy translation completion check ---');
 
-      const translatePending = await db.collection('books')
+      let translatePending = await db.collection('books')
         .find({ 'pipeline_auto.status': 'translate_submitted' })
         .project({ id: 1, title: 1, 'pipeline_auto.translate_job_id': 1, 'pipeline_auto.translate_job_name': 1 })
         .toArray();
+      if (BOOK_OVERRIDE) translatePending = await applyBookOverride(db, translatePending, { id: 1, title: 1, pipeline_auto: 1 });
 
       console.log(`  Books in translate_submitted (legacy): ${translatePending.length}`);
 
@@ -3699,12 +3755,13 @@ Rules:
     } else if (shouldRun(6)) {
       console.log('\n--- Phase 6: Summary + Index ---');
 
-      const readyForEnrich = await db.collection('books')
+      let readyForEnrich = await db.collection('books')
         .find({ 'pipeline_auto.status': 'translate_complete' })
         .sort({ hidden: 1 })
         .project({ id: 1, title: 1, 'pipeline_auto.retry_count': 1 })
         .limit(ENRICH_LIMIT)
         .toArray();
+      if (BOOK_OVERRIDE) readyForEnrich = await applyBookOverride(db, readyForEnrich, { id: 1, title: 1, pipeline_auto: 1 });
 
       console.log(`  Books ready for summary + index: ${readyForEnrich.length}`);
 
@@ -3761,12 +3818,13 @@ Rules:
     } else if (shouldRun(7)) {
       console.log('\n--- Phase 7: Chapter extraction ---');
 
-      const readyForChapters = await db.collection('books')
+      let readyForChapters = await db.collection('books')
         .find({ 'pipeline_auto.status': 'summary_indexed' })
         .sort({ hidden: 1 })
         .project({ id: 1, title: 1, pages_count: 1, 'pipeline_auto.retry_count': 1 })
         .limit(CHAPTER_LIMIT)
         .toArray();
+      if (BOOK_OVERRIDE) readyForChapters = await applyBookOverride(db, readyForChapters, { id: 1, title: 1, pages_count: 1, pipeline_auto: 1 });
 
       console.log(`  Books ready for chapters: ${readyForChapters.length}`);
 
@@ -3847,12 +3905,13 @@ Rules:
         if (activeBatchImageJobs < MAX_ACTIVE_IMAGE_JOBS) {
           const IMAGE_CANDIDATE_PAGE_TYPES = ['illustration', 'diagram', 'map', 'frontispiece', 'mixed'];
 
-          const readyForImages = await db.collection('books')
+          let readyForImages = await db.collection('books')
             .find({ 'pipeline_auto.status': 'chapters_complete' })
             .sort({ processing_priority: -1, hidden: 1 })
             .project({ id: 1, title: 1, author: 1, year: 1, language: 1, subjects: 1 })
             .limit(IMAGE_SUBMIT_LIMIT)
             .toArray();
+          if (BOOK_OVERRIDE) readyForImages = await applyBookOverride(db, readyForImages, { id: 1, title: 1, author: 1, year: 1, language: 1, subjects: 1 });
 
           // Catch-up: books processed outside pipeline with OCR but no image extraction
           const remainingSlots = IMAGE_SUBMIT_LIMIT - readyForImages.length;
@@ -3975,12 +4034,13 @@ Rules:
           const IMAGE_CANDIDATE_PAGE_TYPES = ['illustration', 'diagram', 'map', 'frontispiece', 'mixed'];
           const sqsClient = new SQSClient({ region: process.env.AWS_REGION || 'eu-central-1' });
 
-          const readyForImages = await db.collection('books')
+          let readyForImages = await db.collection('books')
             .find({ 'pipeline_auto.status': 'chapters_complete' })
             .sort({ processing_priority: -1, hidden: 1 })
             .project({ id: 1, title: 1 })
             .limit(IMAGE_SUBMIT_LIMIT)
             .toArray();
+          if (BOOK_OVERRIDE) readyForImages = await applyBookOverride(db, readyForImages, { id: 1, title: 1 });
 
           const remainingSlots = IMAGE_SUBMIT_LIMIT - readyForImages.length;
           if (remainingSlots > 0) {
@@ -4076,10 +4136,11 @@ Rules:
       }
 
       // Check completed image extraction — both batch API and Lambda/SQS paths
-      const imagesPending = await db.collection('books')
+      let imagesPending = await db.collection('books')
         .find({ 'pipeline_auto.status': 'images_submitted' })
         .project({ id: 1, pipeline_auto: 1 })
         .toArray();
+      if (BOOK_OVERRIDE) imagesPending = await applyBookOverride(db, imagesPending, { id: 1, pipeline_auto: 1 });
 
       for (const book of imagesPending) {
         const isBatch = book.pipeline_auto?.image_extraction_batch;
@@ -4143,7 +4204,7 @@ Rules:
       console.log('\n--- Phase 8.5: Staleness detection ---');
 
       const staleThreshold = new Date(Date.now() - 48 * 60 * 60 * 1000);
-      const staleBooks = await db.collection('books')
+      let staleBooks = await db.collection('books')
         .find({
           'pipeline_auto.status': { $in: ['ocr_submitted', 'translate_submitted', 'images_submitted', 'summarizing', 'chapters'] },
           'pipeline_auto.last_updated': { $lt: staleThreshold },
@@ -4151,6 +4212,7 @@ Rules:
         .project({ id: 1, title: 1, pipeline_auto: 1 })
         .limit(50)
         .toArray();
+      if (BOOK_OVERRIDE) staleBooks = await applyBookOverride(db, staleBooks, { id: 1, title: 1, pipeline_auto: 1 });
 
       console.log(`  Stale books: ${staleBooks.length}`);
 
@@ -4212,12 +4274,13 @@ Rules:
     if (shouldRun(8.9) || shouldRun(9)) {
       console.log('\n--- Phase 8.9: Cover selection + page cleanup ---');
 
-      const coverBooks = await db.collection('books')
+      let coverBooks = await db.collection('books')
         .find({ 'pipeline_auto.status': 'images_complete' })
         .sort({ hidden: 1 })
         .project({ id: 1, title: 1, thumbnail: 1, thumbnail_source: 1 })
         .limit(50)
         .toArray();
+      if (BOOK_OVERRIDE) coverBooks = await applyBookOverride(db, coverBooks, { id: 1, title: 1, thumbnail: 1, thumbnail_source: 1 });
 
       console.log(`  Books needing cover selection: ${coverBooks.length}`);
       let coversSelected = 0;
@@ -4306,12 +4369,13 @@ Rules:
     if (shouldRun(9)) {
       console.log('\n--- Phase 9: Finalize ---');
 
-      const readyToFinalize = await db.collection('books')
+      let readyToFinalize = await db.collection('books')
         .find({ 'pipeline_auto.status': 'cover_selected' })
         .sort({ hidden: 1 })
         .project({ id: 1, title: 1, pages_count: 1, language: 1 })
         .limit(FINALIZE_LIMIT)
         .toArray();
+      if (BOOK_OVERRIDE) readyToFinalize = await applyBookOverride(db, readyToFinalize, { id: 1, title: 1, pages_count: 1, language: 1 });
 
       console.log(`  Books ready to finalize: ${readyToFinalize.length}`);
 
