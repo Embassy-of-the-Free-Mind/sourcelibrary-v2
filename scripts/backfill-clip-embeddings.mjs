@@ -49,18 +49,23 @@ async function main() {
   const db = mongo.db('bookstore');
   const books = db.collection('books');
 
-  // Connect to Supabase Postgres
-  const pgClient = new PgClient({
-    host: process.env.PGHOST || 'db.ykhxaecbbxaaqlujuzde.supabase.co',
-    port: parseInt(process.env.PGPORT || '5432'),
-    user: process.env.PGUSER || 'postgres',
-    password: process.env.PGPASSWORD,
-    database: process.env.PGDATABASE || 'postgres',
-    ssl: { rejectUnauthorized: false },
-  });
-
-  if (!process.env.PGPASSWORD) {
-    console.error('Missing PGPASSWORD — set via .env.production.local or SUPABASE_DB_URL');
+  // Connect to Supabase Postgres (support SUPABASE_DB_URL or individual PG* vars)
+  let pgClient;
+  if (process.env.SUPABASE_DB_URL) {
+    // Use direct port 5432 instead of pooler port 6543 for long-running scripts
+    const connStr = process.env.SUPABASE_DB_URL.replace(':6543/', ':5432/');
+    pgClient = new PgClient({ connectionString: connStr, ssl: { rejectUnauthorized: false } });
+  } else if (process.env.PGPASSWORD) {
+    pgClient = new PgClient({
+      host: process.env.PGHOST || 'db.ykhxaecbbxaaqlujuzde.supabase.co',
+      port: parseInt(process.env.PGPORT || '5432'),
+      user: process.env.PGUSER || 'postgres',
+      password: process.env.PGPASSWORD,
+      database: process.env.PGDATABASE || 'postgres',
+      ssl: { rejectUnauthorized: false },
+    });
+  } else {
+    console.error('Missing SUPABASE_DB_URL or PGPASSWORD');
     process.exit(1);
   }
 
