@@ -76,7 +76,8 @@ function thematicRelevance(image, collectionKeywords) {
 async function run() {
   const client = await MongoClient.connect(process.env.MONGODB_URI, {
     serverSelectionTimeoutMS: 30000,
-    socketTimeoutMS: 60000,
+    socketTimeoutMS: 120000,
+    maxIdleTimeMS: 60000,
   });
   const db = client.db('bookstore');
 
@@ -195,6 +196,9 @@ async function run() {
     for (const img of candidates) {
       img._relevance = thematicRelevance(img, colKeywords);
       img._total_score = (img._quality_score || 0) + img._relevance;
+      // Strong bonus for images with proper gallery crops (thumbnail/extracted).
+      // Raw page URLs show full scans including margins, bookplates, ex-libris.
+      if (img.thumbnail_url || img.extracted_url) img._total_score += 20;
     }
     candidates.sort((a, b) => b._total_score - a._total_score);
 
@@ -239,14 +243,28 @@ async function run() {
 
   console.log(`Reordered ${reordered} collections to avoid duplicate thumbnails`);
 
-  // Phase 3: Write to DB
+  // Phase 3: Write to DB with a fresh connection (long query phase can stale the first)
   if (!DRY_RUN) {
-    for (const col of pending) {
-      await db.collection('collections').updateOne(
-        { slug: col.slug },
-        { $set: { featured_images: col.images } }
-      );
+    await client.close();
+    const writeClient = await MongoClient.connect(process.env.MONGODB_URI, {
+      serverSelectionTimeoutMS: 30000,
+      socketTimeoutMS: 60000,
+    });
+    const writeDb = writeClient.db('bookstore');
+    const ops = pending.map(col => ({
+      updateOne: {
+        filter: { slug: col.slug },
+        update: { $set: { featured_images: col.images } },
+      },
+    }));
+    // Batch in chunks of 50 to avoid timeout
+    for (let i = 0; i < ops.length; i += 50) {
+      const chunk = ops.slice(i, i + 50);
+      await writeDb.collection('collections').bulkWrite(chunk, { ordered: false });
+      console.log(`  Written ${Math.min(i + 50, ops.length)}/${ops.length}`);
     }
+    await writeClient.close();
+    return { populated, noImages, noBooks, reordered };
   }
 
   console.log('\n--- Results ---');
