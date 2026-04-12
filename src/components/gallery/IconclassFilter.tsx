@@ -1,6 +1,7 @@
 'use client';
 
 import { useState } from 'react';
+import Link from 'next/link';
 
 /**
  * Iconclass top-level categories for gallery filtering.
@@ -171,6 +172,15 @@ export default function IconclassFilter({ value, onChange, compact = false }: Ic
           </button>
         )}
       </div>
+
+      {/* Browse all subjects link */}
+      <Link
+        href="/browse/subjects"
+        className="text-xs hover:underline"
+        style={{ color: 'var(--text-muted)' }}
+      >
+        Browse all subjects →
+      </Link>
 
       {/* Show active code as linked badge */}
       {value && (
