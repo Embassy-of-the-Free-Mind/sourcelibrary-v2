@@ -56,15 +56,22 @@ function extractTerms(translationText: string): Array<{ term: string; definition
     // Skip very short/generic terms
     if (term.length < 3) continue;
 
-    // Get surrounding context (sentence containing the term)
+    // Get surrounding context (sentence containing the term), stripping the definition
+    // so the context doesn't give away the answer
     const termIdx = translationText.indexOf(match[0]);
     const contextStart = Math.max(0, translationText.lastIndexOf('.', termIdx) + 1);
     const contextEnd = translationText.indexOf('.', termIdx + match[0].length);
-    const context = translationText
+    let context = translationText
       .slice(contextStart, contextEnd > 0 ? contextEnd + 1 : contextStart + 200)
-      .replace(/<[^>]+>/g, '') // strip all tags
+      .replace(/<[^>]+>[^<]*<\/[^>]+>/g, '') // strip tag pairs and their content (definitions)
+      .replace(/<[^>]+>/g, '') // strip remaining tags
+      .replace(/\s{2,}/g, ' ')
       .trim()
       .substring(0, 200);
+    // If the definition text still appears in context, redact it
+    if (definition.length > 10 && context.toLowerCase().includes(definition.toLowerCase().substring(0, 30))) {
+      context = context.replace(new RegExp(definition.replace(/[.*+?^${}()|[\]\\]/g, '\\$&').substring(0, 40), 'i'), '...');
+    }
 
     results.push({ term, definition, context });
   }
@@ -72,18 +79,85 @@ function extractTerms(translationText: string): Array<{ term: string; definition
   return results;
 }
 
+// Topics map to collection slugs in the database
+const TOPICS: Record<string, { label: string; description: string; collections: string[] }> = {
+  alchemy: {
+    label: 'Alchemy',
+    description: 'The art of transformation — prima materia, the philosopher\'s stone, and the Great Work',
+    collections: ['alchemy', 'alchemical-emblems'],
+  },
+  hermetica: {
+    label: 'Hermetica',
+    description: 'The teachings of Hermes Trismegistus and the Hermetic tradition',
+    collections: ['hermetica', 'neoplatonism'],
+  },
+  kabbalah: {
+    label: 'Kabbalah',
+    description: 'Jewish mystical tradition — the sefirot, the Tree of Life, and divine emanation',
+    collections: ['kabbalah', 'christian-kabbalah'],
+  },
+  astrology: {
+    label: 'Astrology & Astronomy',
+    description: 'Celestial influences, planetary spheres, and the music of the heavens',
+    collections: ['astrology', 'astronomy'],
+  },
+  magic: {
+    label: 'Magic & Divination',
+    description: 'Natural magic, ceremonial practice, and the hidden forces of nature',
+    collections: ['magic', 'divination', 'natural-magic'],
+  },
+  medicine: {
+    label: 'Medicine & Natural Philosophy',
+    description: 'Humors, signatures, Paracelsian medicine, and the book of nature',
+    collections: ['medicine', 'natural-philosophy', 'paracelsus'],
+  },
+  philosophy: {
+    label: 'Philosophy',
+    description: 'Neoplatonism, Aristotelian thought, Renaissance humanism',
+    collections: ['philosophy', 'neoplatonism', 'renaissance-philosophy'],
+  },
+  rosicrucianism: {
+    label: 'Rosicrucianism',
+    description: 'The Rosicrucian manifestos and the invisible brotherhood',
+    collections: ['rosicrucianism', 'freemasonry'],
+  },
+};
+
 export async function GET(request: NextRequest) {
   try {
     const { searchParams } = new URL(request.url);
     const count = Math.min(parseInt(searchParams.get('count') || '10'), 50);
-    const language = searchParams.get('language'); // filter by book language
+    const language = searchParams.get('language');
+    const topic = searchParams.get('topic');
+
+    // If no topic specified and no count, return available topics
+    if (searchParams.get('topics') === 'true') {
+      return NextResponse.json({ topics: Object.entries(TOPICS).map(([id, t]) => ({ id, ...t })) });
+    }
 
     const db = await getReadDb();
+
+    // If topic specified, first get book IDs from that collection
+    let topicBookIds: string[] | null = null;
+    if (topic && TOPICS[topic]) {
+      const collSlugs = TOPICS[topic].collections;
+      const collections = await db.collection('collections')
+        .find({ slug: { $in: collSlugs } })
+        .project({ 'books': 1 })
+        .toArray();
+      topicBookIds = collections.flatMap(c => (c.books || []).map((b: { book_id?: string }) => b.book_id)).filter(Boolean);
+      if (!topicBookIds.length) {
+        return NextResponse.json({ terms: [], total: 0 });
+      }
+    }
 
     // Build query — find pages with <term> tags that also have adjacent <note> or <gloss>
     const query: Record<string, unknown> = {
       'translation.data': { $regex: '<term>.*?</term>\\s*<(?:note|gloss)>' },
     };
+    if (topicBookIds) {
+      query.book_id = { $in: topicBookIds };
+    }
 
     // Get pages — we'll fetch more than needed since not all terms parse cleanly
     const pages = await db.collection('pages')
@@ -95,8 +169,14 @@ export async function GET(request: NextRequest) {
 
     // Also try pages with inline definitions (term; definition pattern)
     if (pages.length < count * 3) {
+      const inlineQuery: Record<string, unknown> = {
+        'translation.data': { $regex: '<term>[^<]*[:;][^<]*</term>' },
+      };
+      if (topicBookIds) {
+        inlineQuery.book_id = { $in: topicBookIds };
+      }
       const inlinePages = await db.collection('pages')
-        .find({ 'translation.data': { $regex: '<term>[^<]*[:;][^<]*</term>' } })
+        .find(inlineQuery)
         .project({ book_id: 1, page_number: 1, 'translation.data': 1 })
         .limit(count * 5)
         .maxTimeMS(10000)
