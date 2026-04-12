@@ -46,20 +46,28 @@ const API_ENDPOINTS = [
   '/api/books/search?q=test&limit=1',
 ];
 
+interface WarmResult {
+  path: string;
+  status: number;
+  ms: number;
+  cache: string; // x-vercel-cache header: HIT, MISS, STALE, PRERENDER, etc.
+}
+
 async function warmUrl(
   baseUrl: string,
   path: string,
   timeout = 25_000
-): Promise<{ path: string; status: number; ms: number }> {
+): Promise<WarmResult> {
   const t = Date.now();
   try {
     const res = await fetch(`${baseUrl}${path}`, {
       headers: { 'X-Warm-Ping': '1' },
       signal: AbortSignal.timeout(timeout),
     });
-    return { path, status: res.status, ms: Date.now() - t };
+    const cache = res.headers.get('x-vercel-cache') || res.headers.get('cf-cache-status') || '';
+    return { path, status: res.status, ms: Date.now() - t, cache };
   } catch {
-    return { path, status: 0, ms: Date.now() - t };
+    return { path, status: 0, ms: Date.now() - t, cache: '' };
   }
 }
 
@@ -68,8 +76,8 @@ async function warmBatch(
   paths: string[],
   concurrency: number,
   timeout?: number
-): Promise<{ path: string; status: number; ms: number }[]> {
-  const results: { path: string; status: number; ms: number }[] = [];
+): Promise<WarmResult[]> {
+  const results: WarmResult[] = [];
   for (let i = 0; i < paths.length; i += concurrency) {
     const batch = paths.slice(i, i + concurrency);
     const batchResults = await Promise.all(
@@ -187,11 +195,19 @@ export async function POST(request: NextRequest) {
   const allResults = [...apiResults, ...staticResults, ...collectionResults, ...bookResults, ...browseResults];
   const failed = allResults.filter(r => r.status === 0 || r.status >= 400);
 
+  // Cache warmth summary
+  const cacheStats = allResults.reduce((acc, r) => {
+    const key = r.cache || 'unknown';
+    acc[key] = (acc[key] || 0) + 1;
+    return acc;
+  }, {} as Record<string, number>);
+
   return NextResponse.json({
     cf_purged: cfPurged,
     revalidated: allContentPaths.length,
     warmed: allResults.length,
     failed: failed.length,
+    cache_warmth: cacheStats,
     books: bookPaths.length,
     collections: collectionSlugs.length,
     duration_ms: Date.now() - started,
