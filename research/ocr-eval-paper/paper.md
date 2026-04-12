@@ -127,11 +127,13 @@ $$SC(I) = \frac{1}{\binom{N}{2}} \sum_{i < j} \text{sim}(T_i, T_j)$$
 
 where $\text{sim}$ is a text similarity function. We evaluate multiple similarity functions:
 
-- **Jaccard similarity** on word sets (baseline, crude)
-- **BERTScore** (embedding-based, handles paraphrases)
-- **Character Error Rate** between pairs (standard OCR metric applied pairwise)
+- **Jaccard similarity** on word sets (baseline, crude — penalizes formatting variation)
+- **Embedding cosine similarity** using Gemini's `gemini-embedding-001` model (768-dim vectors, analogous to BERTScore but using the same model family as the OCR engine)
+- **Character Error Rate** (CER) between pairs (standard OCR metric applied pairwise)
 
-In practice, $N = 2$ provides a useful signal and $N = 5$ provides robust estimates. We strip all metadata tags, diagram descriptions, and model commentary before comparison, retaining only the transcribed text content.
+Jaccard operates on word-set overlap and is sensitive to formatting noise (tag variation, whitespace, punctuation). Embedding similarity captures semantic equivalence — two transcriptions that say the same thing in slightly different formatting score ~1.0, while transcriptions that discuss the same topic with different specific text score lower. CER provides a character-level edit distance measure.
+
+In practice, $N = 2$ provides a useful signal and $N = 5$ provides robust estimates. We strip all metadata tags, diagram descriptions (`[...]`), and model commentary before comparison, retaining only the transcribed text content. Texts are truncated to 8,000 characters before embedding to stay within model limits.
 
 ### 4.2 Trust Taxonomy
 
@@ -159,18 +161,37 @@ All models are tested via API with default temperature settings. No few-shot exa
 
 ## 5. Results
 
-[TODO: Full results tables from eval data]
+### 5.1 Consistency by Text Type and Metric (N=5, Gemini 3 Flash)
 
-### 5.1 Consistency by Text Type
+The choice of similarity metric dramatically affects apparent consistency scores. Jaccard word similarity is depressed by formatting noise, while embedding cosine similarity captures semantic equivalence:
 
-| Text Type | Mean SC (Jaccard, N=2) | Range |
-|-----------|----------------------|-------|
+| Text Type | Jaccard | Embedding | CER | Run Length Variation |
+|-----------|---------|-----------|-----|---------------------|
+| Printed Latin (Vitruvius p25) | 55.3% | **99.0%** | 15.1% | 404–489 chars (±10%) |
+| Printed Latin (Vitruvius p33) | 61.6% | **99.1%** | 5.2% | 1,578–1,633 chars (±2%) |
+| Leonardo mirror-script (p49) | 7.5% | **82.2%** | 80.0% | 314–2,939 chars (±**130%**) |
+| Leonardo mirror-script (p53) | 5.7% | **84.5%** | 73.2% | 1,736–3,485 chars (±33%) |
+
+The embedding metric reveals a nuanced picture that Jaccard obscures:
+- **Printed text at 99%:** The model produces semantically identical transcriptions — minor formatting differences (tag placement, whitespace) drive Jaccard down to 55–62% but have no semantic impact.
+- **Leonardo at 82–84%:** The model produces *topically coherent but textually different* output. An embedding score of 82% means the runs discuss the same subject matter (optics, water dynamics) but use different specific words, sentences, and even paragraph structures. This is the quantitative signature of informed confabulation.
+
+The run length variation provides additional diagnostic value: printed text varies by ±2–10% in character count, while Leonardo varies by up to ±130% — the model doesn't even decide how much text to produce consistently.
+
+### 5.2 Prior Results: Consistency by Text Type (N=2, Jaccard only)
+
+Earlier experiments with N=2 and Jaccard-only scoring across a broader set of text types:
+
+| Text Type | Mean SC (Jaccard) | Range |
+|-----------|-------------------|-------|
 | Printed Latin | 95.5% | 93–98% |
-| Handwritten manuscript (Bodleian) | 22.4% | 18–27% |
+| Handwritten manuscript (Bodleian Timaeus) | 22.4% | 18–27% |
 | Leonardo mirror-script (flipped) | 13.4% | 11–15% |
 | Leonardo mirror-script (unflipped) | 2.1% | 0–4% |
 
-### 5.2 Consistency by Model (Bodleian Manuscript)
+Note: N=2 Jaccard scores are higher than N=5 scores because with only 2 runs, there is one pair; with 5 runs, there are 10 pairs, and the mean includes more divergent comparisons.
+
+### 5.3 Consistency by Model (Bodleian Manuscript, N=2, Jaccard)
 
 | Model | Consistency |
 |-------|-------------|
@@ -180,19 +201,44 @@ All models are tested via API with default temperature settings. No few-shot exa
 | Gemini 3 Flash | 26.8% |
 | Claude Sonnet 4 | 21.5% |
 
-*Gemini Lite achieves highest consistency but produces the lowest quality text (pseudo-Latin nonsense), demonstrating that consistency without accuracy is meaningless. [TODO: Formalize this with a quality-adjusted consistency metric]
+*Gemini Lite achieves highest consistency but produces the lowest quality text (pseudo-Latin nonsense), demonstrating that consistency without accuracy is meaningless. This motivates pairing self-consistency with cross-model agreement as a secondary quality check.
 
-### 5.3 Resolution Sensitivity
+### 5.4 The Embedding–Jaccard Gap as a Diagnostic
+
+The gap between embedding and Jaccard scores is itself informative:
+
+| Text Type | Embedding | Jaccard | Gap |
+|-----------|-----------|---------|-----|
+| Printed Latin | 99.0% | 58.5% | 40.5 pp (formatting noise) |
+| Leonardo mirror-script | 83.4% | 6.6% | 76.8 pp (semantic coherence + textual divergence) |
+
+For printed text, the gap is entirely attributable to formatting noise — the transcriptions are the same text with minor presentation differences. For Leonardo, the gap reveals the informed confabulation phenomenon: high semantic similarity (same topics) combined with low lexical similarity (different words).
+
+A large embedding–Jaccard gap on material that *should* have consistent formatting (no tables, no complex layout) is a strong signal of confabulation.
+
+### 5.5 Sentence-Level Consistency
+
+Per-sentence analysis reveals that consistency is not uniform within a page — even on difficult material, some fragments may be consistently decoded while others diverge completely.
+
+| Text Type | Total Sentences | Consistent (>90%) | Mean Sentence SC |
+|-----------|----------------|-------------------|------------------|
+| Printed Latin (Vitruvius p25) | 5 | 5 (100%) | 98.1% |
+| Leonardo mirror-script (p49) | 6 | 1 (17%) | 74.1% |
+
+On printed text, every sentence achieves >97% embedding consistency — the model reads each one identically across runs. On Leonardo's mirror-script, only one "sentence" exceeds 90%, and it is a two-word fragment ("bon cole"). The remaining sentences cluster at 63–75%, producing recognizable Italian word fragments ("rāgi", "uedere", "d'esso lūinoso") that appear to be partial visual decodings of letter-like shapes rather than genuine transcription.
+
+This per-sentence view enables a potential future feature: within-page trust coloring, where individual sentences are highlighted green, yellow, or red based on their consistency score. A scholar could then see at a glance which specific passages are reliable and which require expert verification.
+
+### 5.6 Resolution Sensitivity
 
 [TODO: Full resolution comparison data]
 
-### 5.4 The Leonardo Case: Informed Confabulation
+### 5.7 The Leonardo Case: Informed Confabulation
 
-[TODO: Detailed analysis of mirror-script behavior, including:
+[TODO: Detailed analysis including:
 - Run-to-run text comparison showing completely different passages
 - Cross-model disagreement
 - Flipping experiment
-- The 512px anomaly (more confident at lower resolution)
 - Comparison with Richter's published translations where available]
 
 ---
