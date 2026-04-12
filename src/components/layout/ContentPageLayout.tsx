@@ -88,10 +88,13 @@ interface ContentPageLayoutProps {
    *  narrow: 672px — focused reading, forms
    *  standard: 1024px — most content pages (default)
    *  wide: 1280px — browse, multi-column
+   *  full: no max-width, edge-to-edge
    */
-  maxWidth?: 'narrow' | 'standard' | 'wide';
+  maxWidth?: 'narrow' | 'standard' | 'wide' | 'full';
   /** Background color — defaults to stone-50 */
   bg?: string;
+  /** Remove padding from main content area (e.g. for full-bleed maps) */
+  noPadding?: boolean;
 }
 
 export default function ContentPageLayout({
@@ -100,18 +103,21 @@ export default function ContentPageLayout({
   className = '',
   maxWidth = 'standard',
   bg = 'bg-stone-50',
+  noPadding = false,
 }: ContentPageLayoutProps) {
   const widthClass =
-    maxWidth === 'narrow'
-      ? 'max-w-[var(--container-narrow)]'
-      : maxWidth === 'wide'
-        ? 'max-w-[var(--container-wide)]'
-        : 'max-w-[var(--container-standard)]';
+    maxWidth === 'full'
+      ? ''
+      : maxWidth === 'narrow'
+        ? 'max-w-[var(--container-narrow)]'
+        : maxWidth === 'wide'
+          ? 'max-w-[var(--container-wide)]'
+          : 'max-w-[var(--container-standard)]';
 
   return (
     <div className={`min-h-screen ${bg}`}>
       {header}
-      <main className={`${widthClass} mx-auto px-6 py-12 ${className}`}>
+      <main className={`${widthClass} ${widthClass ? 'mx-auto' : ''} ${noPadding ? '' : 'px-6 py-12'} ${className}`}>
         {children}
       </main>
     </div>
