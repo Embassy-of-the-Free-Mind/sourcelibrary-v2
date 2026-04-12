@@ -165,7 +165,12 @@ export async function POST(request: NextRequest) {
   //    causing raw RSC payload to render instead of the page.
   //    Skip in ?check mode — just report current warmth without invalidating.
   if (!checkOnly) {
-    for (const path of allContentPaths) {
+    // Revalidate entire route segments — covers ALL books/collections/browse,
+    // not just the ones we warm. Prevents stale RSC on the long tail.
+    revalidatePath('/book', 'layout');
+    revalidatePath('/collections', 'layout');
+    revalidatePath('/browse', 'layout');
+    for (const path of STATIC_PAGES) {
       revalidatePath(path);
     }
   }
