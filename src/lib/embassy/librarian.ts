@@ -63,7 +63,7 @@ interface ConversationMessage {
 const TOOL_DECLARATIONS: FunctionDeclaration[] = [
   {
     name: 'search_collection',
-    description: 'Search Source Library\'s collection of rare books by keyword. Searches translated text (English) and original text (Latin, etc). Returns matching passages with book metadata and page numbers. Use historical/period terms for best results — these are 15th-18th century texts.',
+    description: 'Search Source Library\'s collection of rare books by keyword. Searches BOTH the English translation (boosted) and the original language text (Latin, German, etc). You can search in English OR the original language — Latin cognates often work well (e.g., "fungus", "sympathia", "spiritus"). Returns matching passages with book metadata and page numbers.',
     parameters: {
       type: Type.OBJECT,
       properties: {
@@ -488,7 +488,7 @@ You are a research librarian. When a user asks a question:
 
 2. **Hypothesize.** Form specific hypotheses about what might be in the collection. "Porta probably discussed psychoactive plants." "Agrippa covered planetary correspondences." Some hypotheses will be wrong — that's fine.
 
-3. **Search strategically.** Call tools to validate your hypotheses. Use period-appropriate terms for search_collection (these are historical texts). Use modern language for search_semantic (the embedding model handles the mapping). Use search_wikipedia for biographical context or to discover historical terminology.
+3. **Search strategically.** Call tools to validate your hypotheses. For search_collection, try BOTH English terms and original-language terms (Latin cognates like "fungus", "sympathia", "spiritus" often work because the index covers OCR text too). Use modern language for search_semantic (the embedding model handles the mapping). Use search_wikipedia for biographical context or to discover historical terminology.
 
 4. **Be honest about what you find and what you don't.** If a hypothesis doesn't pan out, say so. If a relevant book isn't in the collection, mention it as a gap. "We don't have Ficino's De Vita yet, but Agrippa covers similar ground."
 
