@@ -86,3 +86,5 @@ split-review.html
 input.json
 supabase/.temp/
 .wrangler/
+scripts/eval/leonardo-eval-results/*.json
+scripts/eval/leonardo-eval-results/*.jpg

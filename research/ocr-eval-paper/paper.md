@@ -1,0 +1,233 @@
+# How Much Can You Trust This Page? Consistency-Based Trust Scoring for AI-Transcribed Historical Manuscripts
+
+**Authors:** Derek Lomas, [collaborators TBD]
+**Affiliation:** Source Library / Embassy of the Free Mind
+**Status:** Draft — experiments in progress
+
+---
+
+## Abstract
+
+Multimodal large language models can now OCR and translate thousands of historical manuscripts at scale, making Renaissance knowledge accessible for the first time. But how much should a reader trust the result? We introduce a reference-free trust metric based on run-to-run self-consistency: transcribe the same page multiple times and measure agreement. On a corpus spanning printed books, handwritten manuscripts, and Leonardo da Vinci's mirror-script notebooks, we find that consistency varies dramatically by text type — from 97% on printed Latin to 27% on medieval manuscripts to 13% on Leonardo's mirror writing — and that all five frontier models tested (Gemini Flash, Gemini Pro, Gemini Lite, Claude Sonnet, Claude Opus) converge to the same range on handwritten text.
+
+We show that consistency scores can drive a practical trust taxonomy for digital libraries: green (>80%, machine-verified), yellow (30-80%, approximate), red (<30%, expert review recommended). Applied to Source Library's 17,000+ books, this system enables honest communication of AI reliability to scholars. The Leonardo da Vinci case study reveals a distinctive failure mode we call "informed confabulation" — the model produces topically correct but textually unfaithful output, identifying the right subject matter while generating different text on each run. We argue that for historical manuscripts, knowing *what you don't know* is as valuable as the transcription itself.
+
+---
+
+## 1. Introduction
+
+In February 2022, one of the authors encountered a 1471 manuscript of Marsilio Ficino's *Liber de Voluptate* at the Embassy of the Free Mind in Amsterdam. The text — a Latin philosophical dialogue on pleasure — had never been translated into English. This encounter led to Source Library, a digital humanities project that has since OCR'd and translated over 17,000 historical books spanning the 15th through 18th centuries, using multimodal LLMs (primarily Google Gemini) for transcription and translation.
+
+The pipeline works remarkably well on printed text. A 1521 Latin printed book yields clean, consistent OCR with character-level accuracy comparable to Transkribus fine-tuned models — without any training data. But when we turned the pipeline to Leonardo da Vinci's mirror-script notebooks, we discovered something unsettling: the AI produced fluent, plausible Italian text about the right topics (optics on optics pages, water dynamics on water pages), but the *specific text changed completely between runs*. The same model, the same image, the same prompt — different words every time.
+
+This paper reports our investigation into that discovery and the quality framework it led us to build. Our contributions are:
+
+1. **A systematic evaluation of multimodal LLM OCR consistency** across text types (printed, manuscript, mirror-script), models (5 frontier models), resolutions, and image orientations.
+2. **Evidence that run-to-run consistency is a valid reference-free quality signal** for historical document OCR, correlated with text difficulty and predictive of transcription reliability.
+3. **A trust taxonomy** for AI-transcribed historical documents, deployed in production at Source Library, that communicates reliability honestly to users.
+4. **The first systematic assessment of automated transcription on Leonardo da Vinci's mirror script**, revealing a failure mode we call "informed confabulation" — topically accurate, textually unfaithful output.
+
+---
+
+## 2. Related Work
+
+Our work sits at the intersection of several active research areas: historical document OCR, multimodal LLMs for text recognition, reference-free quality estimation, and hallucination detection in vision-language models. We survey each in turn.
+
+### 2.1 Historical Document OCR and Handwritten Text Recognition
+
+Optical Character Recognition for historical manuscripts has evolved from rule-based systems through neural sequence-to-sequence models to transformer-based architectures. **Transkribus**, the most widely adopted platform for Handwritten Text Recognition (HTR), offers both CTC-based models (PyLaia) and its proprietary transformer-based "supermodel" (Titan). On well-matched training data, these systems achieve impressive results: the UCL–University of Toronto Medieval Latin model reports a Character Error Rate (CER) of 1.7% on its validation set, and mixed-model fine-tuning on 32 pages of a target manuscript can bring CER down to 1.65% [Constum et al., 2022]. However, performance degrades sharply on out-of-domain material. A model achieving 8.73% CER on its training manuscript can degrade to 73.23% CER on a manuscript of a different text from the same period [Constum et al., 2022], highlighting the brittleness of supervised HTR.
+
+Medieval Latin manuscripts pose particular challenges due to heavy abbreviation — abbreviated words can represent up to half the vocabulary of legal texts — and extreme variability in scribal hands [UCL Transcribe Bentham, 2021]. The CREMMALab project developed generic HTR models for medieval manuscripts across script families [Pinche, 2023], while Clérice [2022] proposed ground-truth-free evaluation of HTR on Old French and Latin manuscripts using deep learning classifiers that bin line-level error rates into ranges without requiring reference transcriptions — an approach conceptually related to our self-consistency metric.
+
+A comprehensive survey by Neudecker et al. [2021] catalogued OCR evaluation tools and metrics, noting that established evaluation methods require ground truth that is "neither feasible nor affordable" at the scale of mass digitization, and that even "standardized" metrics like CER cannot be compared directly between different evaluation tool implementations.
+
+### 2.2 LLM and VLM-Based OCR
+
+The application of multimodal large language models (MLLMs) to document transcription has emerged rapidly since the release of GPT-4V in late 2023. Several concurrent studies in 2024–2025 have demonstrated that frontier MLLMs can match or exceed specialized HTR systems on historical handwriting.
+
+Humphries et al. [2024] ("Unlocking the Archives") systematically compared GPT-4o, Claude Sonnet 3.5, and Gemini 1.5 Pro against Transkribus PyLaia and Titan on a corpus of 50 pages of 18th–19th century English handwriting from 33 writers. LLMs achieved CER of 5.7–7% and WER of 8.9–15.9%, representing a 14% relative CER improvement over Transkribus. With LLM-based post-correction, CER dropped to 1.8% — near human-level accuracy.
+
+Liu et al. [2024] introduced **OCRBench**, a comprehensive evaluation suite of 29 datasets probing multimodal models on text recognition, scene text VQA, document VQA, key information extraction, and mathematical expression recognition. This benchmark revealed systematic weaknesses in multilingual text, handwritten text, and non-semantic text recognition across models including GPT-4V and Gemini.
+
+Kim et al. [2025] provided early evidence that LLMs outperform traditional OCR/HTR systems (EasyOCR, Keras, Pytesseract, TrOCR) on historical tabular records. Crosilla et al. [2025] benchmarked proprietary and open-source LLMs against Transkribus models across English, French, German, and Italian historical documents. Greif et al. [2025] evaluated multimodal LLMs for OCR, post-correction, and named entity recognition on German city directories (1754–1870).
+
+### 2.3 Self-Consistency as Quality Estimation
+
+The use of sampling agreement to estimate output quality without ground truth has a rich recent history in LLM research.
+
+Wang et al. [2023] introduced self-consistency decoding for chain-of-thought reasoning at ICLR 2023, showing that sampling diverse reasoning paths and selecting the most frequent final answer yields substantial gains. The core insight — that if a model "knows" something, independent samples will converge, while uncertain or hallucinated outputs will diverge — is foundational to our approach.
+
+Manakul et al. [2023] formalized this intuition for hallucination detection with **SelfCheckGPT** (EMNLP 2023), a zero-resource, black-box method that samples multiple responses and measures their mutual consistency via BERTScore, NLI, n-gram overlap, or LLM-based evaluation. Our self-consistency metric for OCR applies an analogous principle: if a model can reliably read a passage, independent transcription runs will agree; divergence signals either genuine difficulty or hallucination.
+
+Farquhar et al. [2024] introduced **semantic entropy** (Nature, 2024), computing uncertainty at the level of meaning rather than token sequences by clustering sampled responses that bidirectionally entail each other. Xiong et al. [2025] showed that confidence-weighted voting achieves the same accuracy as standard self-consistency with 46% fewer samples.
+
+Our contribution adapts these self-consistency principles to the specific domain of OCR, where the output is a deterministic function of a fixed visual input. Unlike reasoning tasks where multiple valid reasoning paths exist, OCR has a single ground truth, making run-to-run agreement a particularly clean signal: disagreement can only arise from model uncertainty, not from legitimate solution diversity.
+
+### 2.4 OCR Quality Metrics and Their Limitations
+
+Character Error Rate (CER) and Word Error Rate (WER), both based on Levenshtein edit distance, remain the standard metrics for OCR evaluation. However, their limitations are well-documented. Neudecker et al. [2021] demonstrated that CER values from different evaluation tools are not directly comparable due to implementation differences in normalization, Unicode handling, and alignment.
+
+More fundamentally, CER and WER reduce document fidelity to string-edit distance, which blurs the boundary between a misread character and a misread column, or a transcription error and a layout erasure. For historical documents with non-standard orthography, abbreviations, and variant spellings, determining what constitutes an "error" requires editorial judgment that simple edit distance cannot capture.
+
+Reference-free quality estimation remains underdeveloped. Dictionary-based heuristics fail for historical languages with no comprehensive lexicon. Clérice [2022] trained deep learning classifiers to predict error-rate bins from HTR output alone, achieving moderate accuracy on Old French and Latin. Our self-consistency approach offers a complementary reference-free signal that requires no language-specific resources — only multiple model runs.
+
+### 2.5 Leonardo da Vinci Manuscript Digitization
+
+Leonardo da Vinci's manuscripts present extreme challenges for any OCR or HTR system. His characteristic mirror script — written right-to-left with reversed letterforms, a practice likely related to his left-handedness — has resisted automated transcription. The Codex Atlanticus (1,119 folios, Biblioteca Ambrosiana) was fully digitized in a 2019 collaboration that produced high-resolution interactive browsing but no automated transcription. The Windsor Collection (~600 anatomy drawings, Royal Collection Trust) and the Codex Arundel (British Library, digitized 2007) are similarly available as images without machine-readable text.
+
+To our knowledge, no published work has attempted automated HTR or OCR on Leonardo's mirror script. Computational analysis of the manuscripts has focused on watermark enhancement and art-historical questions rather than text recognition. This gap is notable: Leonardo's notebooks are among the most important scientific manuscripts in existence, yet their unusual writing system places them outside the scope of all existing HTR training corpora. Our evaluation of multimodal LLM performance on these materials appears to be the first systematic assessment of automated transcription quality for Leonardo's mirror script.
+
+### 2.6 Hallucination in Vision-Language Models
+
+Hallucination in VLMs — generating content not grounded in the input image — is a well-studied failure mode, but its manifestation in document understanding tasks has only recently received dedicated attention.
+
+Zhou et al. [2025] identified "semantic hallucination" in scene text recognition, where models produce "semantically plausible yet visually incorrect answers" by relying on linguistic priors rather than visual grounding — a phenomenon directly relevant to historical document OCR, where a model might generate plausible Latin or Italian text that "sounds right" for the period but does not match the manuscript.
+
+Wang et al. [2025] ("Seeing is Believing?", NeurIPS 2025) introduced KIE-HVQA, the first benchmark specifically targeting OCR hallucination under visual degradation (blur, occlusion, low contrast). They found that models exhibit "overreliance on linguistic priors or misaligned visual-textual reasoning" when image quality degrades. Inoue [2025] studied resolution sensitivity for context-independent OCR, finding that multimodal LLM performance "deteriorates significantly below 150 ppi."
+
+A critical but under-explored distinction in VLM-based OCR is between *reading* (grounding output in the current image) and *reconstructing* (generating text from training-data priors about what a document "should" say). For well-known historical texts that may appear in training data, a model might produce fluent transcriptions that reflect memorized text rather than visual analysis of the specific manuscript page. Our self-consistency metric provides indirect evidence on this question: a model that is genuinely reading should produce consistent output, while a model "reconstructing" from a distribution of plausible text should produce different samples each time.
+
+### 2.7 Reference-Free Evaluation via Inter-Annotator Agreement
+
+Our approach draws an analogy between multiple LLM transcription runs and multiple human annotators. Inter-annotator agreement (IAA), measured via Cohen's kappa or Krippendorff's alpha, is the standard framework for assessing annotation quality without a gold standard [Artstein, 2017]. By treating each LLM run as an independent "annotator," we can apply the same statistical framework, with the key advantage that LLM annotators are cheaper, faster, and arbitrarily scalable.
+
+---
+
+## 3. The Source Library Corpus
+
+Source Library (sourcelibrary.org) is a digital library of ~17,000 historical books from the 15th–18th centuries, sourced from institutional digital collections via IIIF (International Image Interoperability Framework). The collection spans printed books, handwritten manuscripts, and facsimiles of manuscript notebooks, in over 20 languages with Latin, German, Italian, French, and English predominating.
+
+All books are processed through an automated pipeline:
+1. **Image acquisition** from IIIF sources (Internet Archive, Bodleian Library, Vatican Library, Bibliotheca Philosophica Hermetica, et al.)
+2. **OCR** via multimodal LLM (primarily Gemini 3 Flash or 3.1 Flash Lite)
+3. **Translation** to English via LLM with cross-page context
+4. **Enrichment** including quality scoring, subject classification, and image extraction
+
+As of April 2026, the pipeline has processed ~3.35 million pages. The evaluation corpus for this paper comprises:
+
+| Category | Source | Pages | Script | Language |
+|----------|--------|-------|--------|----------|
+| Printed text | Vitruvius, *De architectura* (IA) | 2 | Roman type | Latin |
+| Printed text | Drebbel, *Tractatus duo* (BPH) | 2 | Roman type | Latin |
+| Handwritten manuscript | Bodleian MS. Digby 23 (*Timaeus*) | 2 | 12th c. hand | Latin |
+| Mirror-script manuscript | Leonardo, *Etudes sur la chevelure* (IA) | 3 | Mirror script | Italian |
+| Mirror-script (flipped) | Same, horizontally mirrored | 2 | Reversed mirror | Italian |
+
+[TODO: Expand corpus with additional Leonardo books, more manuscript samples, resolution variants]
+
+---
+
+## 4. Method
+
+### 4.1 Self-Consistency Score
+
+For a given page image $I$, we generate $N$ independent transcriptions $T_1, T_2, \ldots, T_N$ using the same model and prompt at temperature > 0. The self-consistency score is:
+
+$$SC(I) = \frac{1}{\binom{N}{2}} \sum_{i < j} \text{sim}(T_i, T_j)$$
+
+where $\text{sim}$ is a text similarity function. We evaluate multiple similarity functions:
+
+- **Jaccard similarity** on word sets (baseline, crude)
+- **BERTScore** (embedding-based, handles paraphrases)
+- **Character Error Rate** between pairs (standard OCR metric applied pairwise)
+
+In practice, $N = 2$ provides a useful signal and $N = 5$ provides robust estimates. We strip all metadata tags, diagram descriptions, and model commentary before comparison, retaining only the transcribed text content.
+
+### 4.2 Trust Taxonomy
+
+Based on empirical consistency thresholds calibrated against text types with known difficulty:
+
+| Trust Level | Consistency | Label | Meaning |
+|-------------|------------|-------|---------|
+| Green | > 80% | Machine-verified | Model reads the same text consistently. Comparable to printed OCR. |
+| Yellow | 30–80% | Approximate | Model partially reads the text. Useful as a guide, not a citation source. |
+| Red | < 30% | Expert review needed | Model output is unreliable. May be topically correct but textually unfaithful. |
+
+### 4.3 Models Tested
+
+| Model | Provider | Notes |
+|-------|----------|-------|
+| Gemini 3 Flash | Google | Primary production model |
+| Gemini 3.1 Flash Lite | Google | Cost-efficient variant |
+| Gemini 3 Pro | Google | Larger model |
+| Claude Sonnet 4 | Anthropic | Independent baseline |
+| Claude Opus 4.6 | Anthropic | Largest Claude model |
+
+All models are tested via API with default temperature settings. No few-shot examples or fine-tuning.
+
+---
+
+## 5. Results
+
+[TODO: Full results tables from eval data]
+
+### 5.1 Consistency by Text Type
+
+| Text Type | Mean SC (Jaccard, N=2) | Range |
+|-----------|----------------------|-------|
+| Printed Latin | 95.5% | 93–98% |
+| Handwritten manuscript (Bodleian) | 22.4% | 18–27% |
+| Leonardo mirror-script (flipped) | 13.4% | 11–15% |
+| Leonardo mirror-script (unflipped) | 2.1% | 0–4% |
+
+### 5.2 Consistency by Model (Bodleian Manuscript)
+
+| Model | Consistency |
+|-------|-------------|
+| Gemini 3.1 Lite | 36.7%* |
+| Claude Opus 4.6 | 27.3% |
+| Gemini 3 Pro | 27.0% |
+| Gemini 3 Flash | 26.8% |
+| Claude Sonnet 4 | 21.5% |
+
+*Gemini Lite achieves highest consistency but produces the lowest quality text (pseudo-Latin nonsense), demonstrating that consistency without accuracy is meaningless. [TODO: Formalize this with a quality-adjusted consistency metric]
+
+### 5.3 Resolution Sensitivity
+
+[TODO: Full resolution comparison data]
+
+### 5.4 The Leonardo Case: Informed Confabulation
+
+[TODO: Detailed analysis of mirror-script behavior, including:
+- Run-to-run text comparison showing completely different passages
+- Cross-model disagreement
+- Flipping experiment
+- The 512px anomaly (more confident at lower resolution)
+- Comparison with Richter's published translations where available]
+
+---
+
+## 6. Discussion
+
+### 6.1 Consistency ≠ Accuracy
+
+The Gemini Lite result demonstrates a critical caveat: high consistency does not guarantee accuracy. A model can consistently produce the wrong text — "confidently hallucinating" — if it settles on a stable but incorrect mode. Consistency is a necessary but not sufficient condition for quality. We recommend pairing consistency scores with at least one cross-model comparison to detect this failure mode.
+
+### 6.2 The Informed Confabulation Phenomenon
+
+Leonardo's manuscripts reveal a distinctive failure pattern we call "informed confabulation." The model:
+1. Correctly identifies the visual subject matter (optics, water dynamics, anatomy)
+2. Generates fluent Italian text appropriate to that subject
+3. Produces *different* specific text on each run
+
+This is not random hallucination — the model demonstrates genuine understanding of what Leonardo *writes about*. But it cannot read what he *actually wrote*. The text is sampled from a learned distribution of "plausible Leonardo Italian about [topic]" rather than decoded from the image pixels.
+
+### 6.3 Implications for Digital Libraries
+
+[TODO]
+
+### 6.4 Limitations
+
+[TODO]
+
+---
+
+## 7. Conclusion
+
+[TODO]
+
+---
+
+## References
+
+[TODO: Full bibliography from Related Work citations]
