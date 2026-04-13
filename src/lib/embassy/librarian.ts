@@ -2,28 +2,30 @@ import { getDb } from '@/lib/mongodb';
 import { GoogleGenAI, Type, type FunctionDeclaration } from '@google/genai';
 import { buildBookSearchStage, buildPageSearchStage } from '@/lib/atlas-search';
 import { supabase } from '@/lib/supabase';
+import { ObjectId } from 'mongodb';
 
 /**
- * The Librarian — Agentic AI assistant for the Embassy Reading Room.
+ * The Librarian — Research agent for the Embassy Reading Room.
  *
- * Architecture: reason-first, search-second.
- * Gemini reasons about the user's question, then calls tools iteratively
- * to search the collection, Wikipedia, and semantic search. Each step is
- * streamed to the client as a structured event.
+ * Architecture: reason-first, search-second, accumulate findings.
+ * Gemini reasons about the user's question, calls tools iteratively,
+ * and builds up a persistent research notebook across the conversation.
  *
  * Tools:
  *   - search_collection: Atlas Search on books + pages (keyword)
  *   - search_semantic: pgvector hybrid search on Supabase (conceptual)
- *   - search_wikipedia: Wikipedia REST API for historical/biographical context
+ *   - search_wikipedia: Wikipedia REST API for context
  *   - get_book_page: Read a specific translated page
- *   - present_choices: Offer the user branching options before searching
+ *   - read_nearby_pages: Read a range of pages around a finding
+ *   - add_to_notebook: Save a finding to the persistent research notebook
+ *   - present_choices: Offer branching options (rarely used)
  */
 
 const MODEL = 'gemini-3-flash-preview';
-const MAX_ROUNDS = 6;
+const MAX_ROUNDS = 12;
 const TEMPERATURE = 0.7;
 
-// ── Types ──────────────────────────────────────���──────────────────────
+// ── Types ─────────────────────────────────────────────────────────────
 
 export interface SourceCard {
   book_id: string;
@@ -33,17 +35,33 @@ export interface SourceCard {
   pageNumber?: number;
   snippet?: string;
   thumbnail?: string;
-  inCollection: boolean; // false = "ghost card"
+  inCollection: boolean;
+}
+
+export interface NotebookFinding {
+  quote: string;
+  note: string;
+  source: {
+    bookId: string;
+    bookTitle: string;
+    bookAuthor: string;
+    bookSlug?: string;
+    pageNumber: number;
+  };
+  addedAt: Date;
+}
+
+export interface ResearchNotebook {
+  threadId: ObjectId;
+  topic?: string;
+  findings: NotebookFinding[];
+  bibliography: Array<{ bookId: string; bookSlug?: string; title: string; author: string; relevance: string }>;
+  synthesis?: string;
+  updatedAt: Date;
 }
 
 export interface LibrarianStep {
-  type: 'thinking' | 'tool_call' | 'tool_result' | 'choices' | 'text' | 'sources';
-  // thinking: text is the reasoning
-  // tool_call: name + query describe what's being searched
-  // tool_result: name + summary + found (count)
-  // choices: options array for branching
-  // text: response text chunk
-  // sources: source cards array
+  type: 'thinking' | 'tool_call' | 'tool_result' | 'choices' | 'text' | 'sources' | 'notebook_update';
   text?: string;
   name?: string;
   query?: string;
@@ -51,6 +69,7 @@ export interface LibrarianStep {
   found?: number;
   options?: string[];
   sources?: SourceCard[];
+  notebook?: { findingCount: number; topic?: string };
 }
 
 interface ConversationMessage {
@@ -58,7 +77,45 @@ interface ConversationMessage {
   content: string;
 }
 
-// ── Tool Declarations ───────────────────────────��─────────────────────
+// ── Research Notebook ─────────────────────────────────────────────────
+
+async function loadNotebook(threadId: string): Promise<ResearchNotebook | null> {
+  const db = await getDb();
+  return db.collection('research_notebooks').findOne({ threadId: new ObjectId(threadId) }) as Promise<ResearchNotebook | null>;
+}
+
+async function saveNotebookFinding(threadId: string, finding: NotebookFinding, topic?: string): Promise<number> {
+  const db = await getDb();
+  const result = await db.collection('research_notebooks').findOneAndUpdate(
+    { threadId: new ObjectId(threadId) },
+    {
+      $push: { findings: finding as any },
+      $set: { updatedAt: new Date(), ...(topic ? { topic } : {}) },
+      $setOnInsert: { threadId: new ObjectId(threadId), bibliography: [], createdAt: new Date() },
+    },
+    { upsert: true, returnDocument: 'after' },
+  );
+  return result?.findings?.length || 1;
+}
+
+function formatNotebookForPrompt(notebook: ResearchNotebook | null): string {
+  if (!notebook || notebook.findings.length === 0) return '';
+
+  let text = `\n## Your Research Notebook (${notebook.findings.length} findings so far)\n`;
+  if (notebook.topic) text += `**Topic:** ${notebook.topic}\n\n`;
+
+  for (let i = 0; i < notebook.findings.length; i++) {
+    const f = notebook.findings[i];
+    const url = `https://sourcelibrary.org/book/${f.source.bookSlug || f.source.bookId}?page=${f.source.pageNumber}`;
+    text += `${i + 1}. "${f.quote.slice(0, 200)}${f.quote.length > 200 ? '...' : ''}" — *${f.source.bookTitle}* by ${f.source.bookAuthor}, [Page ${f.source.pageNumber}](${url})\n`;
+    if (f.note) text += `   *Note:* ${f.note}\n`;
+  }
+
+  text += `\nBuild on these findings. Don't repeat searches you've already done. Suggest new angles or deeper dives.\n`;
+  return text;
+}
+
+// ── Tool Declarations ─────────────────────────────────────────────────
 
 const TOOL_DECLARATIONS: FunctionDeclaration[] = [
   {
@@ -108,6 +165,37 @@ const TOOL_DECLARATIONS: FunctionDeclaration[] = [
     },
   },
   {
+    name: 'read_nearby_pages',
+    description: 'Read several pages around a finding to get more context. Returns up to 5 consecutive translated pages. Use when a single page isn\'t enough to understand a passage or argument.',
+    parameters: {
+      type: Type.OBJECT,
+      properties: {
+        book_id: { type: Type.STRING, description: 'Book ID' },
+        center_page: { type: Type.NUMBER, description: 'The page number to center on' },
+        range: { type: Type.NUMBER, description: 'Pages before and after to include (default 2, max 3)' },
+      },
+      required: ['book_id', 'center_page'],
+    },
+  },
+  {
+    name: 'add_to_notebook',
+    description: 'Save an important finding to the persistent research notebook. Use when you find a quote or passage that is directly relevant to the user\'s research question. The notebook persists across messages so the user can build up a body of research. Include a brief analytical note explaining why this finding matters.',
+    parameters: {
+      type: Type.OBJECT,
+      properties: {
+        quote: { type: Type.STRING, description: 'The relevant quote or passage (verbatim from the text)' },
+        note: { type: Type.STRING, description: 'Your analytical note — why this finding matters, how it connects to the research question' },
+        book_id: { type: Type.STRING, description: 'Book ID' },
+        book_title: { type: Type.STRING, description: 'Book title' },
+        book_author: { type: Type.STRING, description: 'Book author' },
+        book_slug: { type: Type.STRING, description: 'Book slug for URL' },
+        page_number: { type: Type.NUMBER, description: 'Page number' },
+        topic: { type: Type.STRING, description: 'Research topic (set on first finding, updates the notebook title)' },
+      },
+      required: ['quote', 'note', 'book_id', 'book_title', 'book_author', 'page_number'],
+    },
+  },
+  {
     name: 'present_choices',
     description: 'RARELY USED. Only for genuinely ambiguous questions where the user could mean completely different things (e.g., "mercury" = element vs planet vs god). Most questions should just be answered directly — share your thinking as text and start searching.',
     parameters: {
@@ -133,7 +221,6 @@ async function executeSearchCollection(query: string, searchBooks = true): Promi
 }> {
   const db = await getDb();
 
-  // Search pages via Atlas Search
   const searchStage = buildPageSearchStage(query);
   const pages = await db.collection('pages')
     .aggregate([
@@ -143,7 +230,6 @@ async function executeSearchCollection(query: string, searchBooks = true): Promi
     ])
     .toArray();
 
-  // Deduplicate: max 2 pages per book
   const perBook = new Map<string, number>();
   const deduped = pages.filter(p => {
     const count = perBook.get(p.book_id) || 0;
@@ -152,7 +238,6 @@ async function executeSearchCollection(query: string, searchBooks = true): Promi
     return true;
   }).slice(0, 8);
 
-  // Enrich with book metadata
   const bookIds = [...new Set(deduped.map(p => p.book_id))];
   const bookDocs = bookIds.length > 0
     ? await db.collection('books')
@@ -181,24 +266,13 @@ async function executeSearchCollection(query: string, searchBooks = true): Promi
     };
   });
 
-  // Search books by title/author
   let books: Array<{ id: string; title: string; author?: string; year?: number; slug?: string }> = [];
   if (searchBooks) {
     const bookSearchStage = buildBookSearchStage(query, { hasTranslation: true }, { fuzzy: true });
     const bookResults = await db.collection('books')
-      .aggregate([
-        bookSearchStage,
-        { $limit: 5 },
-        { $project: { id: 1, title: 1, display_title: 1, author: 1, year: 1, slug: 1 } },
-      ])
+      .aggregate([bookSearchStage, { $limit: 5 }, { $project: { id: 1, title: 1, display_title: 1, author: 1, year: 1, slug: 1 } }])
       .toArray();
-    books = bookResults.map(b => ({
-      id: b.id,
-      title: b.display_title || b.title,
-      author: b.author,
-      year: b.year,
-      slug: b.slug,
-    }));
+    books = bookResults.map(b => ({ id: b.id, title: b.display_title || b.title, author: b.author, year: b.year, slug: b.slug }));
   }
 
   return { passages, books };
@@ -207,7 +281,6 @@ async function executeSearchCollection(query: string, searchBooks = true): Promi
 async function executeSearchSemantic(query: string): Promise<
   Array<{ book_id: string; bookTitle: string; bookAuthor: string; bookSlug?: string; page_number: number; snippet: string; score: number }>
 > {
-  // Generate embedding via Hetzner
   const embedUrl = process.env.EMBED_URL || 'http://46.224.122.120:3456';
   let queryEmbedding: number[] | null = null;
   try {
@@ -224,113 +297,91 @@ async function executeSearchSemantic(query: string): Promise<
   } catch { /* embedding server unavailable */ }
 
   if (!queryEmbedding) {
-    // Fall back to keyword search on Supabase
     const { data } = await supabase
       .from('page_translations')
       .select('page_id, book_id, page_number, translation, book_title, book_author')
       .textSearch('tsv', query, { type: 'websearch' })
       .limit(8);
-
     return (data || []).map(r => ({
-      book_id: r.book_id,
-      bookTitle: r.book_title || 'Unknown',
-      bookAuthor: r.book_author || 'Unknown',
-      page_number: r.page_number,
-      snippet: (r.translation || '').slice(0, 500),
-      score: 1,
+      book_id: r.book_id, bookTitle: r.book_title || 'Unknown', bookAuthor: r.book_author || 'Unknown',
+      page_number: r.page_number, snippet: (r.translation || '').slice(0, 500), score: 1,
     }));
   }
 
   const { data } = await supabase.rpc('hybrid_search', {
-    query_text: query,
-    query_embedding: JSON.stringify(queryEmbedding),
-    match_count: 8,
-    keyword_weight: 0.3,
-    semantic_weight: 0.7,
+    query_text: query, query_embedding: JSON.stringify(queryEmbedding),
+    match_count: 8, keyword_weight: 0.3, semantic_weight: 0.7,
   });
 
   return (data || []).map((r: Record<string, unknown>) => ({
-    book_id: r.book_id as string,
-    bookTitle: (r.book_title as string) || 'Unknown',
-    bookAuthor: (r.book_author as string) || 'Unknown',
-    bookSlug: undefined, // Supabase doesn't have slug, we'll resolve later
-    page_number: r.page_number as number,
-    snippet: ((r.translation as string) || '').slice(0, 500),
+    book_id: r.book_id as string, bookTitle: (r.book_title as string) || 'Unknown',
+    bookAuthor: (r.book_author as string) || 'Unknown', bookSlug: undefined,
+    page_number: r.page_number as number, snippet: ((r.translation as string) || '').slice(0, 500),
     score: Number(r.score) || 0,
   }));
 }
 
 async function executeSearchWikipedia(query: string): Promise<{ title: string; summary: string; url: string } | null> {
   try {
-    const searchUrl = `https://en.wikipedia.org/api/rest_v1/page/summary/${encodeURIComponent(query)}`;
-    const res = await fetch(searchUrl, {
+    const res = await fetch(`https://en.wikipedia.org/api/rest_v1/page/summary/${encodeURIComponent(query)}`, {
       headers: { 'User-Agent': 'SourceLibrary/1.0 (https://sourcelibrary.org)' },
       signal: AbortSignal.timeout(5000),
     });
-
     if (res.ok) {
       const data = await res.json();
-      return {
-        title: data.title,
-        summary: data.extract?.slice(0, 1500) || '',
-        url: data.content_urls?.desktop?.page || '',
-      };
+      return { title: data.title, summary: data.extract?.slice(0, 1500) || '', url: data.content_urls?.desktop?.page || '' };
     }
 
-    // If direct lookup fails, try search
-    const searchApiUrl = `https://en.wikipedia.org/w/api.php?action=query&list=search&srsearch=${encodeURIComponent(query)}&srlimit=3&format=json&origin=*`;
-    const searchRes = await fetch(searchApiUrl, {
-      headers: { 'User-Agent': 'SourceLibrary/1.0 (https://sourcelibrary.org)' },
-      signal: AbortSignal.timeout(5000),
-    });
-
+    const searchRes = await fetch(
+      `https://en.wikipedia.org/w/api.php?action=query&list=search&srsearch=${encodeURIComponent(query)}&srlimit=3&format=json&origin=*`,
+      { headers: { 'User-Agent': 'SourceLibrary/1.0 (https://sourcelibrary.org)' }, signal: AbortSignal.timeout(5000) },
+    );
     if (!searchRes.ok) return null;
     const searchData = await searchRes.json();
-    const firstResult = searchData?.query?.search?.[0];
-    if (!firstResult) return null;
+    const first = searchData?.query?.search?.[0];
+    if (!first) return null;
 
-    // Fetch summary for the first result
     const summaryRes = await fetch(
-      `https://en.wikipedia.org/api/rest_v1/page/summary/${encodeURIComponent(firstResult.title)}`,
-      {
-        headers: { 'User-Agent': 'SourceLibrary/1.0 (https://sourcelibrary.org)' },
-        signal: AbortSignal.timeout(5000),
-      },
+      `https://en.wikipedia.org/api/rest_v1/page/summary/${encodeURIComponent(first.title)}`,
+      { headers: { 'User-Agent': 'SourceLibrary/1.0 (https://sourcelibrary.org)' }, signal: AbortSignal.timeout(5000) },
     );
     if (!summaryRes.ok) return null;
     const summaryData = await summaryRes.json();
-    return {
-      title: summaryData.title,
-      summary: summaryData.extract?.slice(0, 1500) || '',
-      url: summaryData.content_urls?.desktop?.page || '',
-    };
-  } catch {
-    return null;
-  }
+    return { title: summaryData.title, summary: summaryData.extract?.slice(0, 1500) || '', url: summaryData.content_urls?.desktop?.page || '' };
+  } catch { return null; }
 }
 
 async function executeGetBookPage(bookId: string, pageNumber: number): Promise<{
-  text: string;
-  originalText?: string;
-  bookTitle: string;
-  bookAuthor: string;
-  bookSlug?: string;
+  text: string; originalText?: string; bookTitle: string; bookAuthor: string; bookSlug?: string;
 } | null> {
   const db = await getDb();
   const page = await db.collection('pages').findOne(
     { book_id: bookId, page_number: pageNumber },
-    { projection: { 'translation.data': 1, 'ocr.data': 1, book_id: 1, page_number: 1 } },
+    { projection: { 'translation.data': 1, 'ocr.data': 1 } },
   );
   if (!page) return null;
+  const book = await db.collection('books').findOne({ id: bookId }, { projection: { title: 1, display_title: 1, author: 1, slug: 1 } });
+  return {
+    text: page.translation?.data || '', originalText: page.ocr?.data?.slice(0, 800),
+    bookTitle: book?.display_title || book?.title || 'Unknown', bookAuthor: book?.author || 'Unknown', bookSlug: book?.slug,
+  };
+}
 
-  const book = await db.collection('books').findOne(
-    { id: bookId },
-    { projection: { title: 1, display_title: 1, author: 1, slug: 1 } },
-  );
+async function executeReadNearbyPages(bookId: string, centerPage: number, range = 2): Promise<{
+  pages: Array<{ page_number: number; text: string }>; bookTitle: string; bookAuthor: string; bookSlug?: string;
+}> {
+  const db = await getDb();
+  const r = Math.min(range, 3);
+  const pages = await db.collection('pages')
+    .find({ book_id: bookId, page_number: { $gte: centerPage - r, $lte: centerPage + r } })
+    .project({ page_number: 1, 'translation.data': 1 })
+    .sort({ page_number: 1 })
+    .toArray();
+
+  const book = await db.collection('books').findOne({ id: bookId }, { projection: { title: 1, display_title: 1, author: 1, slug: 1 } });
 
   return {
-    text: page.translation?.data || '',
-    originalText: page.ocr?.data?.slice(0, 800),
+    pages: pages.map(p => ({ page_number: p.page_number, text: (p.translation?.data || '').slice(0, 1000) })),
     bookTitle: book?.display_title || book?.title || 'Unknown',
     bookAuthor: book?.author || 'Unknown',
     bookSlug: book?.slug,
@@ -342,6 +393,7 @@ async function executeGetBookPage(bookId: string, pageNumber: number): Promise<{
 async function executeTool(
   name: string,
   args: Record<string, unknown>,
+  threadId?: string,
 ): Promise<{ result: unknown; step: LibrarianStep }> {
   switch (name) {
     case 'search_collection': {
@@ -350,7 +402,6 @@ async function executeTool(
       const data = await executeSearchCollection(query, searchBooks);
       const totalFound = data.passages.length + data.books.length;
 
-      // Build context for Gemini
       let context = '';
       if (data.books.length > 0) {
         context += 'Books found:\n';
@@ -365,69 +416,35 @@ async function executeTool(
           context += `\n--- ${p.bookTitle} by ${p.bookAuthor}, Page ${p.page_number} (${url}) ---\n${p.text}\n`;
         }
       }
-      if (totalFound === 0) {
-        context = 'No results found for this query.';
-      }
+      if (totalFound === 0) context = 'No results found for this query.';
 
       return {
         result: { found: totalFound, context },
-        step: {
-          type: 'tool_result',
-          name: 'search_collection',
-          query,
-          found: totalFound,
-          summary: totalFound > 0
-            ? `Found ${data.passages.length} passages across ${data.books.length} books`
-            : 'No results',
-        },
+        step: { type: 'tool_result', name: 'search_collection', query, found: totalFound,
+          summary: totalFound > 0 ? `Found ${data.passages.length} passages across ${data.books.length} books` : 'No results' },
       };
     }
 
     case 'search_semantic': {
       const query = args.query as string;
       const results = await executeSearchSemantic(query);
-
-      let context = '';
-      if (results.length > 0) {
-        context = 'Semantic search results:\n';
-        for (const r of results) {
-          context += `\n--- ${r.bookTitle} by ${r.bookAuthor}, Page ${r.page_number} (score: ${r.score.toFixed(2)}) ---\n${r.snippet}\n`;
-        }
-      } else {
-        context = 'No semantic matches found.';
+      let context = results.length > 0 ? 'Semantic search results:\n' : 'No semantic matches found.';
+      for (const r of results) {
+        context += `\n--- ${r.bookTitle} by ${r.bookAuthor}, Page ${r.page_number} (score: ${r.score.toFixed(2)}) ---\n${r.snippet}\n`;
       }
-
       return {
         result: { found: results.length, context },
-        step: {
-          type: 'tool_result',
-          name: 'search_semantic',
-          query,
-          found: results.length,
-          summary: results.length > 0
-            ? `Found ${results.length} conceptually related passages`
-            : 'No semantic matches',
-        },
+        step: { type: 'tool_result', name: 'search_semantic', query, found: results.length,
+          summary: results.length > 0 ? `Found ${results.length} conceptually related passages` : 'No semantic matches' },
       };
     }
 
     case 'search_wikipedia': {
       const query = args.query as string;
       const result = await executeSearchWikipedia(query);
-
       return {
-        result: result
-          ? { found: 1, title: result.title, summary: result.summary, url: result.url }
-          : { found: 0, summary: 'No Wikipedia article found.' },
-        step: {
-          type: 'tool_result',
-          name: 'search_wikipedia',
-          query,
-          found: result ? 1 : 0,
-          summary: result
-            ? `Found: ${result.title}`
-            : 'No article found',
-        },
+        result: result ? { found: 1, title: result.title, summary: result.summary, url: result.url } : { found: 0, summary: 'No Wikipedia article found.' },
+        step: { type: 'tool_result', name: 'search_wikipedia', query, found: result ? 1 : 0, summary: result ? `Found: ${result.title}` : 'No article found' },
       };
     }
 
@@ -435,20 +452,50 @@ async function executeTool(
       const bookId = args.book_id as string;
       const pageNumber = args.page_number as number;
       const result = await executeGetBookPage(bookId, pageNumber);
-
       return {
-        result: result
-          ? { found: 1, text: result.text, originalText: result.originalText, bookTitle: result.bookTitle }
-          : { found: 0, text: 'Page not found.' },
-        step: {
-          type: 'tool_result',
-          name: 'get_book_page',
-          query: `${bookId} p.${pageNumber}`,
-          found: result ? 1 : 0,
-          summary: result
-            ? `Read page ${pageNumber} of ${result.bookTitle}`
-            : 'Page not found',
+        result: result ? { found: 1, text: result.text, originalText: result.originalText, bookTitle: result.bookTitle } : { found: 0, text: 'Page not found.' },
+        step: { type: 'tool_result', name: 'get_book_page', query: `p.${pageNumber}`, found: result ? 1 : 0,
+          summary: result ? `Read page ${pageNumber} of ${result.bookTitle}` : 'Page not found' },
+      };
+    }
+
+    case 'read_nearby_pages': {
+      const bookId = args.book_id as string;
+      const centerPage = args.center_page as number;
+      const range = (args.range as number) || 2;
+      const result = await executeReadNearbyPages(bookId, centerPage, range);
+      let context = `Pages from ${result.bookTitle}:\n`;
+      for (const p of result.pages) {
+        context += `\n--- Page ${p.page_number} ---\n${p.text}\n`;
+      }
+      return {
+        result: { found: result.pages.length, context, bookTitle: result.bookTitle },
+        step: { type: 'tool_result', name: 'read_nearby_pages', query: `pp.${centerPage - range}-${centerPage + range}`,
+          found: result.pages.length, summary: `Read ${result.pages.length} pages from ${result.bookTitle}` },
+      };
+    }
+
+    case 'add_to_notebook': {
+      if (!threadId) {
+        return { result: { error: 'No thread ID — cannot save to notebook' }, step: { type: 'tool_result', name: 'add_to_notebook', summary: 'No thread', found: 0 } };
+      }
+      const finding: NotebookFinding = {
+        quote: args.quote as string,
+        note: args.note as string,
+        source: {
+          bookId: args.book_id as string,
+          bookTitle: args.book_title as string,
+          bookAuthor: args.book_author as string,
+          bookSlug: args.book_slug as string | undefined,
+          pageNumber: args.page_number as number,
         },
+        addedAt: new Date(),
+      };
+      const count = await saveNotebookFinding(threadId, finding, args.topic as string | undefined);
+      return {
+        result: { saved: true, findingCount: count },
+        step: { type: 'notebook_update', name: 'add_to_notebook', summary: `Saved finding #${count}`,
+          notebook: { findingCount: count, topic: args.topic as string | undefined } },
       };
     }
 
@@ -457,114 +504,99 @@ async function executeTool(
       const options = args.options as string[];
       return {
         result: { status: 'choices_presented', note: 'The user will select an option. Wait for their response.' },
-        step: {
-          type: 'choices',
-          text: preamble,
-          options,
-        },
+        step: { type: 'choices', text: preamble, options },
       };
     }
 
     default:
-      return {
-        result: { error: `Unknown tool: ${name}` },
-        step: { type: 'tool_result', name, summary: 'Unknown tool', found: 0 },
-      };
+      return { result: { error: `Unknown tool: ${name}` }, step: { type: 'tool_result', name, summary: 'Unknown tool', found: 0 } };
   }
 }
 
-// ── System Prompt ─���────────────────────���──────────────────────────────
+// ── System Prompt ─────────────────────────────────────────────────────
 
-function buildSystemPrompt(): string {
-  return `You are the Librarian of the Embassy of the Free Mind — a digital scholarly institution dedicated to the Western esoteric tradition. You have deep knowledge of alchemy, Hermetica, Kabbalah, astrology, natural philosophy, Rosicrucianism, and the intellectual history of the Renaissance and early modern period.
+function buildSystemPrompt(notebookContext: string): string {
+  return `You are the Librarian of the Embassy of the Free Mind — a research agent for scholars exploring the Western esoteric tradition. You have deep knowledge of alchemy, Hermetica, Kabbalah, astrology, natural philosophy, Rosicrucianism, and the intellectual history of the Renaissance and early modern period.
 
 You are warm, knowledgeable, and genuinely enthusiastic about these texts. You speak like a learned scholar who loves sharing discoveries.
 
+## Your role
+
+You are a research agent, not just a Q&A chatbot. You help users conduct real research across the collection. You accumulate findings, build on prior discoveries, and produce work the user can use.
+
 ## Your approach
 
-You are a research librarian. When a user asks a question:
+1. **Think first.** Use your training knowledge to reason about the question. What historical concepts, authors, or traditions are relevant?
 
-1. **Think first.** Use your training knowledge to reason about what the user is really asking. What historical concepts, authors, or traditions are relevant? What terms would appear in 15th-18th century texts?
+2. **Search strategically.** The collection includes books in Latin, German, French, Dutch, Hebrew, and more — nearly all translated into English. **Search in English first.** Use search_collection for keywords, search_semantic for concepts, search_wikipedia for context.
 
-2. **Hypothesize.** Form specific hypotheses about what might be in the collection. "Porta probably discussed psychoactive plants." "Agrippa covered planetary correspondences." Some hypotheses will be wrong — that's fine.
+3. **Go deep.** When you find something promising, use read_nearby_pages to get more context. Follow threads across books. Don't stop at the first result.
 
-3. **Search strategically.** Call tools to validate your hypotheses. The collection includes books in Latin, German, French, Dutch, Hebrew, and more — but nearly all are translated into English, so **search in English first**. Use search_collection for keyword matches in the English translations. Use search_semantic for conceptual/fuzzy matches — it finds related passages even when exact terms differ. Use search_wikipedia for biographical context or to discover historical terminology you can then search for.
+4. **Save important findings.** Use add_to_notebook for quotes and passages directly relevant to the research question. Include analytical notes explaining why each finding matters. The notebook persists across messages — it's the user's accumulating body of research.
 
-4. **Be honest about what you find and what you don't.** If a hypothesis doesn't pan out, say so. If a relevant book isn't in the collection, mention it as a gap. "We don't have Ficino's De Vita yet, but Agrippa covers similar ground."
+5. **Be honest about gaps.** If a hypothesis doesn't pan out, say so. If a relevant book isn't in the collection, mention it.
 
-5. **Cite precisely.** Every claim grounded in the collection must include the full URL: https://sourcelibrary.org/book/{slug}?page={N}. Use the format: "quoted text" — *Title* by Author, [Page N](url).
+6. **Cite precisely.** Every claim from the collection must include the full URL: https://sourcelibrary.org/book/{slug}?page={N}. Format: "quoted text" — *Title* by Author, [Page N](url).
 
+7. **Suggest next steps.** After answering, proactively suggest what to explore next based on what you've found and what's still unexplored.
+${notebookContext}
 ## Share your thinking naturally
 
-For broad or exploratory questions, respond with a brief, conversational message sharing your initial thinking — what you know about the topic, what directions you could search. Then go ahead and search the most promising direction. The user can redirect you if needed.
-
-For example, if asked "are there books about magic mushrooms?", respond with something like:
-"Fascinating question — mushrooms in the early modern period appear mainly in herbals and natural philosophy. The term 'magic mushrooms' is modern, but I know the collection has several herbals that discuss fungi and their properties. Let me search for what we have..."
-
-Then immediately call search tools. Don't wait for permission — just share your thinking and start working.
+For broad or exploratory questions, share your initial thinking conversationally — what you know, what directions you could search. Then search immediately. Don't wait for permission.
 
 ## When to use present_choices (rarely)
 
-Only use present_choices when the question genuinely splits into 2-3 completely different research directions that would waste time if you guessed wrong. Keep it to 2-3 options, never 4+. Most questions should just be answered — share your thinking as text and search.
-
-Examples where choices ARE warranted:
-- "Tell me about mercury" → the element vs. the planet vs. the god (genuinely different searches)
-
-Examples where choices are NOT needed (just search):
-- "What books explore resonance as magic?" → you know enough to search directly
-- "Are there books about magic mushrooms?" → search herbals and natural philosophy
-- "Tell me about the Emerald Tablet" → search for it
+Only when the question genuinely splits into 2-3 completely different research directions. Most questions should just be answered directly.
 
 ## The collection
 
-Source Library has over 10,000 rare books from the 15th-18th centuries, many translated into English for the first time. Topics include alchemy, Hermetica, Kabbalah, astrology, natural philosophy, Rosicrucianism, demonology, and related traditions. The collection is growing.
+Source Library has over 10,000 rare books from the 15th-18th centuries, many translated into English for the first time. Topics include alchemy, Hermetica, Kabbalah, astrology, natural philosophy, Rosicrucianism, demonology, and related traditions.
 
 ## Style
 
-- Conversational but substantive — reading room conversation, not a lecture
+- Conversational but substantive — a research conversation, not a lecture
 - Use markdown for readability
-- Keep responses focused — cite 2-4 key passages rather than dumping everything
-- When you're speaking from general knowledge vs. from specific texts, make it clear`;
+- Cite 2-4 key passages rather than dumping everything
+- Make clear when speaking from general knowledge vs. specific texts`;
 }
 
-// ── Agentic Streaming ────────────���────────────────────────────────────
+// ── Agentic Streaming ─────────────────────────────────────────────────
 
 /**
  * Stream an agentic Librarian response.
  * Yields LibrarianStep events as the Librarian thinks, searches, and responds.
+ * threadId enables persistent research notebook across messages.
  */
 export async function* streamAgenticResponse(
   userMessage: string,
   history: ConversationMessage[] = [],
+  threadId?: string,
 ): AsyncGenerator<LibrarianStep> {
   const apiKey = process.env.GEMINI_API_KEY;
   if (!apiKey) throw new Error('GEMINI_API_KEY not set');
 
   const ai = new GoogleGenAI({ apiKey });
-  const systemPrompt = buildSystemPrompt();
 
-  // Build conversation history for Gemini
+  // Load research notebook if thread exists
+  const notebook = threadId ? await loadNotebook(threadId) : null;
+  const notebookContext = formatNotebookForPrompt(notebook);
+  const systemPrompt = buildSystemPrompt(notebookContext);
+
   const contents: Array<{ role: string; parts: Array<Record<string, unknown>> }> = [
     { role: 'user', parts: [{ text: systemPrompt }] },
-    { role: 'model', parts: [{ text: 'I understand. I\'m the Librarian, ready to help visitors explore the collection using my tools and knowledge.' }] },
-    // Prior conversation turns
+    { role: 'model', parts: [{ text: 'I understand. I\'m the Librarian — ready to help with research across the collection.' }] },
     ...history.map(msg => ({
       role: msg.role === 'user' ? 'user' : 'model',
       parts: [{ text: msg.content }],
     })),
-    // Current message
     { role: 'user', parts: [{ text: userMessage }] },
   ];
 
   const allSources: SourceCard[] = [];
-  // Cache search results to avoid double-execution for source cards
   const searchCache = new Map<string, { passages: Array<{ book_id: string; bookTitle: string; bookAuthor: string; bookSlug?: string; page_number: number; text: string }>; books: Array<{ id: string; title: string; author?: string; year?: number; slug?: string }> }>();
   const semanticCache = new Map<string, Array<{ book_id: string; bookTitle: string; bookAuthor: string; bookSlug?: string; page_number: number; snippet: string; score: number }>>();
 
   for (let round = 0; round < MAX_ROUNDS; round++) {
-    // Stream every round. Gemini sends text chunks first, then function calls.
-    // We yield text chunks immediately (token-by-token). If function calls appear,
-    // those text chunks were "thinking". If no function calls, they were the response.
     const stream = await ai.models.generateContentStream({
       model: MODEL,
       contents,
@@ -581,7 +613,6 @@ export async function* streamAgenticResponse(
     for await (const chunk of stream) {
       const candidate = chunk.candidates?.[0];
       if (!candidate?.content?.parts) continue;
-
       for (const part of candidate.content.parts) {
         // eslint-disable-next-line @typescript-eslint/no-explicit-any
         const p = part as any;
@@ -589,85 +620,53 @@ export async function* streamAgenticResponse(
         if (p.functionCall) {
           functionCalls.push(p);
         } else if (p.text?.trim()) {
-          // Stream text immediately — arrives token-by-token
           yield { type: 'text', text: p.text };
         }
       }
     }
 
     if (allParts.length === 0) break;
-
-    // Add model response to conversation history
     contents.push({ role: 'model', parts: allParts });
 
-    // No function calls = final response (text was already streamed)
     if (functionCalls.length === 0) break;
 
-    // Execute tools and stream results
     const responseParts: Array<Record<string, unknown>> = [];
 
     for (const part of functionCalls) {
       const fc = (part as { functionCall: { name: string; args: Record<string, unknown> } }).functionCall;
 
-      // Emit tool_call event (what's being searched)
-      yield {
-        type: 'tool_call',
-        name: fc.name,
-        query: (fc.args?.query as string) || (fc.args?.preamble as string) || '',
-      };
+      yield { type: 'tool_call', name: fc.name, query: (fc.args?.query as string) || (fc.args?.quote as string)?.slice(0, 50) || '' };
 
-      // Execute the tool
-      const { result, step } = await executeTool(fc.name, fc.args || {});
-
-      // Emit the result
+      const { result, step } = await executeTool(fc.name, fc.args || {}, threadId);
       yield step;
 
-      // If it's present_choices, stop and wait for user
       if (fc.name === 'present_choices') {
-        if (allSources.length > 0) {
-          yield { type: 'sources', sources: allSources };
-        }
+        if (allSources.length > 0) yield { type: 'sources', sources: allSources };
         responseParts.push({ functionResponse: { name: fc.name, response: result } });
         contents.push({ role: 'user', parts: responseParts });
         return;
       }
 
-      // Collect source cards from search results
+      // Collect source cards
       if (fc.name === 'search_collection') {
         const cacheKey = fc.args?.query as string;
-        // The executeTool already ran the search — extract structured data from the result
         const data = searchCache.get(cacheKey) || await executeSearchCollection(cacheKey, fc.args?.search_books !== false);
         searchCache.set(cacheKey, data);
         for (const p of data.passages) {
           if (!allSources.some(s => s.book_id === p.book_id && s.pageNumber === p.page_number)) {
-            allSources.push({
-              book_id: p.book_id,
-              bookTitle: p.bookTitle,
-              bookAuthor: p.bookAuthor,
-              bookSlug: p.bookSlug,
-              pageNumber: p.page_number,
-              snippet: p.text.slice(0, 200),
-              inCollection: true,
-            });
+            allSources.push({ book_id: p.book_id, bookTitle: p.bookTitle, bookAuthor: p.bookAuthor, bookSlug: p.bookSlug,
+              pageNumber: p.page_number, snippet: p.text.slice(0, 200), inCollection: true });
           }
         }
       }
-
       if (fc.name === 'search_semantic') {
         const cacheKey = fc.args?.query as string;
         const results = semanticCache.get(cacheKey) || await executeSearchSemantic(cacheKey);
         semanticCache.set(cacheKey, results);
         for (const r of results) {
           if (!allSources.some(s => s.book_id === r.book_id && s.pageNumber === r.page_number)) {
-            allSources.push({
-              book_id: r.book_id,
-              bookTitle: r.bookTitle,
-              bookAuthor: r.bookAuthor,
-              bookSlug: r.bookSlug,
-              pageNumber: r.page_number,
-              snippet: r.snippet.slice(0, 200),
-              inCollection: true,
-            });
+            allSources.push({ book_id: r.book_id, bookTitle: r.bookTitle, bookAuthor: r.bookAuthor, bookSlug: r.bookSlug,
+              pageNumber: r.page_number, snippet: r.snippet.slice(0, 200), inCollection: true });
           }
         }
       }
@@ -675,11 +674,9 @@ export async function* streamAgenticResponse(
       responseParts.push({ functionResponse: { name: fc.name, response: result } });
     }
 
-    // Add tool responses to conversation
     contents.push({ role: 'user', parts: responseParts });
   }
 
-  // Emit source cards at the end
   if (allSources.length > 0) {
     yield { type: 'sources', sources: deduplicateSources(allSources) };
   }
