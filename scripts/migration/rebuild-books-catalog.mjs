@@ -1,39 +1,33 @@
 #!/usr/bin/env node
 /**
- * Sync books metadata from MongoDB → Supabase books_catalog.
+ * Rebuild books_catalog in Supabase from MongoDB.
  *
- * Mirrors the fields needed by the browse/library API so it can
- * read from Postgres instead of MongoDB. Only visible books with
- * pages are synced (~9K books, runs in seconds).
+ * This is a one-shot repair script. It:
+ * 1. Reads ALL visible books from MongoDB
+ * 2. Upserts them into Supabase (no deletion)
+ * 3. Reports final counts
  *
- * Modes:
- *   --full   Sync all visible books (first run or rebuild)
- *   (default) Incremental — sync books updated since last sync
+ * Safe to run multiple times — upsert is idempotent.
  *
- * Runs on Hetzner as part of supabase-sync.mjs, or standalone.
- *
- * Env: MONGODB_URI, SUPABASE_URL, SUPABASE_SERVICE_ROLE_KEY
+ * Usage: set -a; source .env.production.local; set +a; node scripts/migration/rebuild-books-catalog.mjs
  */
 
 import { MongoClient } from 'mongodb';
 import { createClient } from '@supabase/supabase-js';
 
 const MONGODB_URI = process.env.MONGODB_URI;
-const SUPABASE_URL = process.env.SUPABASE_URL || 'https://ykhxaecbbxaaqlujuzde.supabase.co';
-const SUPABASE_SERVICE_KEY = process.env.SUPABASE_SERVICE_ROLE_KEY;
+const SUPABASE_URL = (process.env.SUPABASE_URL || 'https://ykhxaecbbxaaqlujuzde.supabase.co').trim();
+const SUPABASE_SERVICE_KEY = (process.env.SUPABASE_SERVICE_ROLE_KEY || '').trim();
 
 if (!MONGODB_URI || !SUPABASE_SERVICE_KEY) {
   console.error('Missing MONGODB_URI or SUPABASE_SERVICE_ROLE_KEY');
   process.exit(1);
 }
 
-const FULL_MODE = process.argv.includes('--full');
 const BATCH_SIZE = 200;
-
 const supabase = createClient(SUPABASE_URL, SUPABASE_SERVICE_KEY, { auth: { persistSession: false } });
 
 function extractSummaryText(book) {
-  // Priority: index.bookSummary.brief > reading_summary.overview > summary.data
   const indexBrief = book.index?.bookSummary?.brief;
   if (indexBrief) return indexBrief;
   const readingOverview = book.reading_summary?.overview;
@@ -73,7 +67,6 @@ function transformBook(book) {
     collection_relevance: book.collection_relevance || null,
     image_source_provider: book.image_source?.provider || null,
     contributing_library: book.image_source?.contributing_library || null,
-    // Book detail fields (for serving /book/[id] from Supabase)
     summary_text: extractSummaryText(book),
     publisher: book.publisher || null,
     place_published: book.place_published || null,
@@ -92,7 +85,6 @@ function transformBook(book) {
     ft_reasoning: book.translation_verification?.reasoning || null,
     description: book.ai_metadata?.description || book.description || null,
     subject_keywords: Array.isArray(book.subject_keywords) ? book.subject_keywords : null,
-    // Computed columns
     translation_pct: (() => {
       const denom = (book.pages_count || 0) - (book.pages_blank || 0);
       return denom > 0 ? Math.round(((book.pages_translated || 0) / denom) * 100) : 0;
@@ -104,35 +96,6 @@ function transformBook(book) {
     pipeline_status: book.pipeline_auto?.status || null,
     needs_splitting: book.needs_splitting === true,
   };
-}
-
-async function getLastSyncTime() {
-  const { data } = await supabase
-    .from('books_catalog')
-    .select('updated_at')
-    .order('updated_at', { ascending: false })
-    .limit(1);
-  return data?.[0]?.updated_at ? new Date(data[0].updated_at) : null;
-}
-
-// ── Main ─────────────────────────────────────────────────────────────
-
-const start = Date.now();
-const mongoClient = new MongoClient(MONGODB_URI, { maxPoolSize: 2 });
-await mongoClient.connect();
-const db = mongoClient.db('bookstore');
-
-// Sync all visible books (not just those with pages) — browse/language pages need all of them
-let query = { visible: true };
-
-if (!FULL_MODE) {
-  const lastSync = await getLastSyncTime();
-  if (lastSync) {
-    query.updated_at = { $gt: lastSync };
-    console.log(`Incremental from: ${lastSync.toISOString()}`);
-  } else {
-    console.log('No existing data — doing full sync');
-  }
 }
 
 const projection = {
@@ -151,7 +114,6 @@ const projection = {
   'image_source.license': 1,
   'pipeline_auto.status': 1,
   needs_splitting: 1,
-  // Book detail fields
   summary: 1, 'index.bookSummary.brief': 1, 'reading_summary.overview': 1,
   publisher: 1, place_published: 1, doi: 1, work_id: 1,
   resource_type: 1, cover_image: 1, dedication: 1, subtitle: 1,
@@ -160,8 +122,16 @@ const projection = {
   'ai_metadata.description': 1, description: 1, subject_keywords: 1,
 };
 
+const start = Date.now();
+const mongoClient = new MongoClient(MONGODB_URI, { maxPoolSize: 2 });
+await mongoClient.connect();
+const db = mongoClient.db('bookstore');
+
+const expectedCount = await db.collection('books').countDocuments({ visible: true });
+console.log(`MongoDB visible books: ${expectedCount}`);
+
 const cursor = db.collection('books')
-  .find(query, { projection })
+  .find({ visible: true }, { projection })
   .batchSize(BATCH_SIZE);
 
 let synced = 0;
@@ -176,12 +146,15 @@ for await (const book of cursor) {
       .from('books_catalog')
       .upsert(batch, { onConflict: 'id' });
     if (error) {
-      console.error(`Batch error: ${error.message}`);
+      console.error(`Batch error at ${synced}: ${error.message}`);
       errors += batch.length;
     } else {
       synced += batch.length;
     }
     batch = [];
+    if (synced % 2000 === 0) {
+      console.log(`  ...${synced} synced`);
+    }
   }
 }
 
@@ -197,53 +170,19 @@ if (batch.length > 0) {
   }
 }
 
-// On full sync, clean up stale rows (books no longer visible in MongoDB)
-// Safety: verify cursor consistency before deleting anything
-if (FULL_MODE && synced > 0) {
-  const visibleIds = new Set();
-  const idCursor = db.collection('books').find({ visible: true }, { projection: { id: 1 } }).batchSize(1000);
-  for await (const doc of idCursor) visibleIds.add(doc.id);
-
-  // Cross-check: cursor count should roughly match countDocuments
-  const expectedCount = await db.collection('books').countDocuments({ visible: true });
-  const cursorCount = visibleIds.size;
-  const drift = Math.abs(expectedCount - cursorCount);
-  const driftPct = expectedCount > 0 ? (drift / expectedCount * 100).toFixed(1) : 0;
-
-  if (drift > 100 || driftPct > 5) {
-    console.warn(`[${new Date().toISOString()}] books_catalog: SKIPPING cleanup — cursor returned ${cursorCount} but countDocuments says ${expectedCount} (drift: ${drift}, ${driftPct}%). Concurrent writes likely.`);
-  } else {
-    let sbIds = [];
-    let offset = 0;
-    while (true) {
-      const { data } = await supabase.from('books_catalog').select('id').range(offset, offset + 999);
-      if (!data || data.length === 0) break;
-      sbIds.push(...data.map(d => d.id));
-      offset += data.length;
-      if (data.length < 1000) break;
-    }
-
-    const stale = sbIds.filter(id => !visibleIds.has(id));
-
-    // Safety cap: never delete more than 50 rows or 1% of Supabase total
-    const maxDelete = Math.max(50, Math.floor(sbIds.length * 0.01));
-    if (stale.length > maxDelete) {
-      console.warn(`[${new Date().toISOString()}] books_catalog: SKIPPING cleanup — ${stale.length} stale rows exceeds safety cap of ${maxDelete}. Investigate before running manually.`);
-    } else if (stale.length > 0) {
-      let deleted = 0;
-      for (let i = 0; i < stale.length; i += 100) {
-        const batch = stale.slice(i, i + 100);
-        const { error } = await supabase.from('books_catalog').delete().in('id', batch);
-        if (!error) deleted += batch.length;
-      }
-      console.log(`[${new Date().toISOString()}] books_catalog: cleaned ${deleted} stale rows (cursor: ${cursorCount}, expected: ${expectedCount})`);
-    }
-  }
-}
-
 await mongoClient.close();
 const elapsed = ((Date.now() - start) / 1000).toFixed(1);
 
-if (synced > 0 || errors > 0) {
-  console.log(`[${new Date().toISOString()}] books_catalog: ${synced} synced, ${errors} errors (${elapsed}s)`);
+// Verify
+const { count: sbCount } = await supabase.from('books_catalog').select('*', { count: 'exact', head: true });
+const { count: sbTranslated } = await supabase.from('books_catalog').select('*', { count: 'exact', head: true }).gt('pages_translated', 0);
+
+console.log(`\nRebuild complete in ${elapsed}s:`);
+console.log(`  MongoDB visible: ${expectedCount}`);
+console.log(`  Synced: ${synced}, Errors: ${errors}`);
+console.log(`  Supabase total: ${sbCount}`);
+console.log(`  Supabase translated>0: ${sbTranslated}`);
+
+if (Math.abs(synced - expectedCount) > 10) {
+  console.warn(`\n⚠ Synced count (${synced}) differs from expected (${expectedCount}) — concurrent writes may have occurred during rebuild.`);
 }
