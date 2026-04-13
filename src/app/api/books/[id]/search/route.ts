@@ -18,9 +18,19 @@ function escapeRegex(str: string): string {
   return str.replace(/[.*+?^${}()|[\]\\]/g, '\\$&');
 }
 
+/** Strip XML/HTML tags and clean up formatting artifacts */
+function cleanText(text: string): string {
+  return text
+    .replace(/<[^>]+>/g, '')
+    .replace(/\*\*([^*]+)\*\*/g, '$1')
+    .replace(/\s+/g, ' ')
+    .trim();
+}
+
 function generateSnippet(text: string, query: string, contextChars: number = 80): SearchMatch[] {
   const matches: SearchMatch[] = [];
-  const lowerText = text.toLowerCase();
+  const cleaned = cleanText(text);
+  const lowerText = cleaned.toLowerCase();
   const lowerQuery = query.toLowerCase();
   const words = lowerQuery.split(/\s+/).filter(w => w.length > 0);
 
@@ -43,10 +53,10 @@ function generateSnippet(text: string, query: string, contextChars: number = 80)
 
   for (const pos of snippetPositions) {
     const start = Math.max(0, pos - contextChars);
-    const end = Math.min(text.length, pos + contextChars + query.length);
-    let snippet = text.slice(start, end);
+    const end = Math.min(cleaned.length, pos + contextChars + query.length);
+    let snippet = cleaned.slice(start, end);
     if (start > 0) snippet = '...' + snippet;
-    if (end < text.length) snippet = snippet + '...';
+    if (end < cleaned.length) snippet = snippet + '...';
     matches.push({ field: 'ocr', snippet, position: pos });
   }
 

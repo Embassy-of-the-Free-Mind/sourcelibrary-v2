@@ -102,7 +102,7 @@ const STAGES = [
     icon: '1',
     summary: 'Books arrive from digital libraries worldwide',
     detail:
-      'We import from 13 digital library sources including Internet Archive, Gallica (BnF), the Bavarian State Library, Wellcome Collection, and e-rara. Each import fetches metadata and high-resolution page images via IIIF manifests.',
+      'We import from over 20 digital library sources worldwide, including Internet Archive, Gallica (BnF), the Bavarian State Library, Wellcome Collection, e-rara, and university collections across Europe and Asia. Each import fetches metadata and high-resolution page images via IIIF manifests.',
   },
   {
     name: 'Archive',
@@ -118,7 +118,7 @@ const STAGES = [
     icon: '3',
     summary: 'AI reads historical typefaces and handwriting',
     detail:
-      'Gemini vision models extract text from page images, handling blackletter (Fraktur), early modern Latin abbreviations, ligatures, and multi-column layouts. Language-specific prompts improve accuracy for Latin, German, and other languages. Pages are classified by type (text, illustration, title page, table of contents).',
+      'Gemini vision models extract text from page images, handling blackletter (Fraktur), early modern Latin abbreviations, ligatures, and multi-column layouts. A universal prompt calibrated across scripts and languages handles everything from Latin to Arabic to Sanskrit. Pages are classified by type (text, illustration, title page, table of contents).',
   },
   {
     name: 'Translation',
@@ -295,8 +295,8 @@ export default async function ProcessingPage() {
             description="When a page has been manually edited by a human, reprocessing automatically creates a backup snapshot first. Manual corrections are never silently overwritten by automation."
           />
           <QualityCard
-            title="Language-specific prompts"
-            description="Latin, German (Fraktur), and standard OCR each use specialized prompts tuned for their specific challenges: abbreviation expansion, blackletter character sets, and period-appropriate conventions."
+            title="Universal OCR prompt"
+            description="A single calibrated prompt handles all scripts and languages — from Latin and Fraktur to Arabic, Sanskrit, and Armenian. Trained on thousands of historical pages to handle abbreviations, ligatures, and period-appropriate conventions."
           />
           <QualityCard
             title="Open standards"

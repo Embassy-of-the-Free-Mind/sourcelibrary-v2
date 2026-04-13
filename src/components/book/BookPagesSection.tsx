@@ -10,10 +10,8 @@ import { queueBooks } from '@/lib/api-client/queues';
 import { getPageThumbUrl } from '@/lib/utils';
 import { AuthCheck } from '@/components/auth/AuthCheck';
 import BookPagesStats from './BookPagesStats';
-import BookPagesActions from './BookPagesActions';
 import JobStatusBanner from './JobStatusBanner';
-import ProcessingPanel from './ProcessingPanel';
-import ReorderModePanel from './ReorderModePanel';
+import DownloadButton from '@/components/ui/DownloadButton';
 import PagesGrid from './PagesGrid';
 
 interface BookPagesSectionProps {
@@ -512,7 +510,7 @@ export default function BookPagesSection({ bookId, bookTitle, pages: initialPage
 
   return (
     <div className="space-y-6">
-      {/* Stats Bar & Actions — inner_circle only */}
+      {/* Stats Bar — inner_circle only */}
       <AuthCheck role="inner_circle">
         <div className="bg-white rounded-xl border border-stone-200 p-4">
           <div className="flex items-center justify-between">
@@ -523,21 +521,10 @@ export default function BookPagesSection({ bookId, bookTitle, pages: initialPage
               lastOcrDate={lastOcrDate}
               lastTranslationDate={lastTranslationDate}
             />
-            <BookPagesActions
+            <DownloadButton
               bookId={bookId}
-              batchMode={batchMode}
-              reorderMode={reorderMode}
-              currentJob={currentJob}
-              checkingJob={checkingActiveJob}
-              orderChanged={orderChanged}
-              savingOrder={savingOrder}
-              pagesWithOcr={pagesWithOcr}
-              pagesWithTranslation={pagesWithTranslation}
-              onBatchClick={() => { if (!allPagesFetched) fetchRemainingPages(); setBatchMode(true); }}
-              onReorderClick={enterReorderMode}
-              onExitBatch={exitBatchMode}
-              onExitReorder={exitReorderMode}
-              onSaveOrder={savePageOrder}
+              hasTranslations={pagesWithTranslation > 0}
+              hasOcr={pagesWithOcr > 0}
             />
           </div>
         </div>
@@ -557,54 +544,16 @@ export default function BookPagesSection({ bookId, bookTitle, pages: initialPage
         />
       )}
 
-      {/* Processing Controls */}
-      {batchMode && (
-        <ProcessingPanel
-          action={action}
-          overwriteMode={overwriteMode}
-          selectedCount={selectedCount}
-          showPromptSettings={showPromptSettings}
-          selectedPromptIds={selectedPromptIds}
-          editedPrompts={editedPrompts}
-          prompts={prompts}
-          promptsLoading={promptsLoading}
-          currentJob={currentJob}
-          queueing={queueing}
-          brightness={brightness}
-          previewUrl={(() => {
-            if (action !== 'adjust_images' || selectedPages.size === 0) return null;
-            const firstId = Array.from(selectedPages)[0];
-            const page = pages.find(p => p.id === firstId);
-            if (!page) return null;
-            const baseUrl = page.split_from_spread ? page.photo : (page.photo_original || page.photo);
-            if (!baseUrl) return null;
-            return `/api/image?url=${encodeURIComponent(baseUrl)}&w=200&q=70`;
-          })()}
-          onActionChange={setAction}
-          onOverwriteModeChange={setOverwriteMode}
-          onSelectAll={selectAll}
-          onClearSelection={clearSelection}
-          onTogglePromptSettings={() => setShowPromptSettings(!showPromptSettings)}
-          onSelectPrompt={handleSelectPrompt}
-          onEditPrompt={(a, value) => setEditedPrompts(prev => ({ ...prev, [a]: value }))}
-          onStartProcess={runBatchProcess}
-          onBrightnessChange={setBrightness}
-        />
-      )}
-
-      {/* Reorder Mode Info */}
-      {reorderMode && <ReorderModePanel />}
-
       {/* Pages Grid — hide leading blank pages in normal browsing mode */}
       <PagesGrid
-        pages={batchMode || reorderMode ? pages : (() => {
+        pages={(() => {
           // Skip leading blank pages (before first substantive content)
           const firstSubstantive = pages.findIndex(p => p.page_type !== 'blank');
           return firstSubstantive > 0 ? pages.slice(firstSubstantive) : pages;
         })()}
         bookId={bookId}
-        batchMode={batchMode}
-        reorderMode={reorderMode}
+        batchMode={false}
+        reorderMode={false}
         selectedPages={selectedPages}
         settingCover={settingCover}
         visibleCount={visibleCount}

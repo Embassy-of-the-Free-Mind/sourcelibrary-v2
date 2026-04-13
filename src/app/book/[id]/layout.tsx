@@ -11,8 +11,12 @@ export default function BookLayout({
   const pathname = usePathname();
 
   useEffect(() => {
-    // Scroll to top when navigating to a new book page
-    window.scrollTo({ top: 0, behavior: 'instant' });
+    // Scroll to top when navigating between different book routes (e.g. book detail → page view)
+    // Page-to-page navigation within the reader handles its own scrolling
+    // to position at the text section on mobile
+    if (!pathname.includes('/page/')) {
+      window.scrollTo({ top: 0, behavior: 'instant' });
+    }
   }, [pathname]);
 
   return children;

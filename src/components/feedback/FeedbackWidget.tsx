@@ -2,14 +2,19 @@
 
 import { useState, useEffect, useRef } from 'react';
 import { createPortal } from 'react-dom';
+import { useSession } from 'next-auth/react';
 
 export default function FeedbackWidget({ className, style, initialMessage, label }: { className?: string; style?: React.CSSProperties; initialMessage?: string; label?: string }) {
+  const { data: session } = useSession();
   const [open, setOpen] = useState(false);
   const [message, setMessage] = useState('');
   const [name, setName] = useState('');
   const [status, setStatus] = useState<'idle' | 'sending' | 'sent' | 'error'>('idle');
   const [mounted, setMounted] = useState(false);
   const buttonRef = useRef<HTMLButtonElement>(null);
+
+  const signedInName = session?.user?.name || '';
+  const signedInEmail = session?.user?.email || '';
 
   useEffect(() => { setMounted(true); }, []);
 
@@ -22,7 +27,8 @@ export default function FeedbackWidget({ className, style, initialMessage, label
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify({
           message: message.trim(),
-          name: name.trim() || null,
+          name: signedInName || name.trim() || null,
+          email: signedInEmail || null,
           page: typeof window !== 'undefined' ? window.location.pathname : null,
         }),
       });
@@ -67,13 +73,17 @@ export default function FeedbackWidget({ className, style, initialMessage, label
               autoFocus
             />
 
-            <input
-              type="text"
-              value={name}
-              onChange={(e) => setName(e.target.value)}
-              placeholder="Your name (optional)"
-              className="w-full px-3 py-2 mt-3 rounded-lg border border-stone-300 text-sm text-stone-800 placeholder-stone-400 focus:outline-none focus:border-accent-gold"
-            />
+            {signedInName ? (
+              <p className="text-xs text-stone-500 mt-3">Sending as {signedInName}</p>
+            ) : (
+              <input
+                type="text"
+                value={name}
+                onChange={(e) => setName(e.target.value)}
+                placeholder="Your name (optional)"
+                className="w-full px-3 py-2 mt-3 rounded-lg border border-stone-300 text-sm text-stone-800 placeholder-stone-400 focus:outline-none focus:border-accent-gold"
+              />
+            )}
 
             <div className="flex items-center justify-between mt-4">
               <p className="text-xs text-stone-400">
