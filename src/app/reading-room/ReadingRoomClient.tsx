@@ -514,7 +514,7 @@ export default function ReadingRoomClient({ featuredPassage }: ReadingRoomClient
                       </p>
                       <div className="flex flex-wrap justify-center gap-2 mt-5">
                         {[
-                          'What do these texts say about the world soul?',
+                          'Was there any conception of artificial intelligence?',
                           'What did Agrippa write about planetary seals?',
                           'How did alchemists describe the philosopher\'s stone?',
                           'Who was Marsilio Ficino?',
