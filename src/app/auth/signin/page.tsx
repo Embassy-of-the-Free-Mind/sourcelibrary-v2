@@ -20,20 +20,15 @@ function SignInContent() {
     setLoading(true);
     setEmailError('');
     try {
-      // Auth.js v5 requires CSRF double-submit: fetch token first (sets cookie),
-      // then POST to signin endpoint with that token in the body.
-      const csrfRes = await fetch('/api/auth/csrf');
-      const { csrfToken } = await csrfRes.json();
-      const res = await fetch('/api/auth/signin/nodemailer', {
-        method: 'POST',
-        headers: { 'Content-Type': 'application/x-www-form-urlencoded' },
-        body: new URLSearchParams({ email, csrfToken, callbackUrl }),
-        redirect: 'follow',
+      const result = await signIn('nodemailer', {
+        email,
+        callbackUrl,
+        redirect: false,
       });
-      if (res.ok || res.redirected) {
-        setEmailSent(true);
-      } else {
+      if (result?.error) {
         setEmailError('Could not send sign-in link. Please try again.');
+      } else {
+        setEmailSent(true);
       }
     } catch {
       setEmailError('Could not send sign-in link. Please try again.');
