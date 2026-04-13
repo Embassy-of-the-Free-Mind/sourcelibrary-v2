@@ -322,7 +322,7 @@ async function getCollectionShowcase() {
   return JSON.parse(JSON.stringify(items));
 }
 
-const FALLBACK_COUNTS = { totalBooks: 9924, translatedToEnglish: 9054, firstTranslationCount: 5454, authorCount: 3200, languageCount: 50 };
+const FALLBACK_COUNTS = { totalBooks: 10002, translatedToEnglish: 10002, firstTranslationCount: 5454, authorCount: 3200, languageCount: 50 };
 
 async function getBookCounts(): Promise<{ totalBooks: number; translatedToEnglish: number; firstTranslationCount: number; authorCount: number; languageCount: number }> {
   // 1. Try Supabase (fast Postgres counts, synced every 2h)
