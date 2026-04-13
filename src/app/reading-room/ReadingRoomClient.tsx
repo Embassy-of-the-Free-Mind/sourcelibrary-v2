@@ -514,9 +514,9 @@ export default function ReadingRoomClient({ featuredPassage }: ReadingRoomClient
                       </p>
                       <div className="flex flex-wrap justify-center gap-2 mt-5">
                         {[
-                          'Are there any books about magic mushrooms?',
+                          'What do these texts say about the world soul?',
                           'What did Agrippa write about planetary seals?',
-                          'What books explore resonance as magic?',
+                          'How did alchemists describe the philosopher\'s stone?',
                           'Who was Marsilio Ficino?',
                         ].map((suggestion) => (
                           <button
