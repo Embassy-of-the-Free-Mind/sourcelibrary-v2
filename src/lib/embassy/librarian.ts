@@ -401,44 +401,74 @@ async function executeReadNearbyPages(bookId: string, centerPage: number, range 
 }
 
 async function executeSearchImages(query: string, bookId?: string): Promise<
-  Array<{ id: string; imageUrl: string; description: string; bookTitle: string; bookAuthor: string; bookSlug?: string; pageNumber: number; type?: string; subjects?: string[] }>
+  Array<{ id: string; imageUrl: string; description: string; bookTitle: string; bookAuthor: string; bookSlug?: string; pageNumber: number; type?: string }>
 > {
+  // Use CLIP visual search via the gallery API for text-to-image matching
   const db = await getDb();
-  const filter: Record<string, unknown> = { gallery_quality: { $gte: 0.7 } };
+  const CLIP_URL = process.env.CLIP_URL || 'http://46.224.122.120:3456/clip';
 
-  if (bookId) {
-    filter.book_id = bookId;
+  // Try CLIP text-to-image search first
+  let clipIds = new Map<string, number>();
+  try {
+    const resp = await fetch(`${CLIP_URL}/embed-text`, {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify({ text: query }),
+      signal: AbortSignal.timeout(5000),
+    });
+    if (resp.ok) {
+      const { embedding } = await resp.json();
+      if (embedding) {
+        const { data } = await supabase.rpc('match_clip_images', {
+          query_embedding: embedding,
+          match_threshold: 0.20,
+          match_count: 8,
+        });
+        if (data) {
+          for (const match of data) {
+            if (match.source_type === 'gallery_image' && match.id) {
+              clipIds.set(match.id, match.similarity);
+            }
+          }
+        }
+      }
+    }
+  } catch { /* CLIP unavailable — fall back to text search */ }
+
+  // Fetch gallery_images by CLIP IDs or text search fallback
+  let images;
+  if (clipIds.size > 0) {
+    const ids = [...clipIds.keys()].map(id => new ObjectId(id));
+    images = await db.collection('gallery_images')
+      .find({ _id: { $in: ids } })
+      .project({ image_url: 1, description: 1, museum_description: 1, book_id: 1, book_title: 1, book_author: 1, book_slug: 1, page_number: 1, type: 1 })
+      .toArray();
+  } else {
+    // Text search fallback
+    const filter: Record<string, unknown> = { gallery_quality: { $gte: 0.7 } };
+    if (bookId) filter.book_id = bookId;
+    const regex = query.split(/\s+/).map(w => `(?=.*${w.replace(/[.*+?^${}()|[\]\\]/g, '\\$&')})`).join('');
+    images = await db.collection('gallery_images')
+      .find({ ...filter, $or: [
+        { description: { $regex: regex, $options: 'i' } },
+        { museum_description: { $regex: regex, $options: 'i' } },
+        { 'metadata.subjects': { $regex: regex, $options: 'i' } },
+      ]})
+      .sort({ gallery_quality: -1 })
+      .limit(6)
+      .project({ image_url: 1, description: 1, museum_description: 1, book_id: 1, book_title: 1, book_author: 1, book_slug: 1, page_number: 1, type: 1 })
+      .toArray();
   }
 
-  // Text search on gallery_images collection
-  const regex = query.split(/\s+/).map(w => `(?=.*${w.replace(/[.*+?^${}()|[\]\\]/g, '\\$&')})`).join('');
-  const textFilter = {
-    $or: [
-      { description: { $regex: regex, $options: 'i' } },
-      { museum_description: { $regex: regex, $options: 'i' } },
-      { 'metadata.subjects': { $regex: regex, $options: 'i' } },
-      { 'metadata.figures': { $regex: regex, $options: 'i' } },
-      { 'metadata.symbols': { $regex: regex, $options: 'i' } },
-    ],
-  };
-
-  const images = await db.collection('gallery_images')
-    .find({ ...filter, ...textFilter })
-    .sort({ gallery_quality: -1 })
-    .limit(6)
-    .project({ image_url: 1, description: 1, museum_description: 1, book_id: 1, book_title: 1, book_author: 1, book_slug: 1, page_number: 1, type: 1, 'metadata.subjects': 1 })
-    .toArray();
-
-  return images.map(img => ({
+  return images.slice(0, 6).map(img => ({
     id: img._id.toString(),
     imageUrl: img.image_url,
-    description: img.museum_description || img.description || '',
+    description: (img.museum_description || img.description || '').slice(0, 300),
     bookTitle: img.book_title || 'Unknown',
     bookAuthor: img.book_author || 'Unknown',
     bookSlug: img.book_slug,
     pageNumber: img.page_number,
     type: img.type,
-    subjects: img.metadata?.subjects,
   }));
 }
 
@@ -616,7 +646,7 @@ You are a research agent, not just a Q&A chatbot. You help users conduct real re
 
 5. **Be honest about gaps.** If a hypothesis doesn't pan out, say so. If a relevant book isn't in the collection, mention it.
 
-6. **Cite precisely.** Every claim from the collection must include the full URL: https://sourcelibrary.org/book/{slug}?page={N}. Format: "quoted text" — *Title* by Author, [Page N](url).
+6. **Cite precisely.** Every claim from the collection must include the full URL: https://sourcelibrary.org/book/{slug}?page={N}. Format: "quoted text" — *Title* by Author, [Page N](url). **CRITICAL: Only link to books and pages that appeared in your tool results.** Never invent or guess a URL — if you didn't find it via a tool, don't link to it. You may mention books from your general knowledge but clearly note they aren't in the collection.
 
 7. **Suggest next steps.** After answering, proactively suggest what to explore next based on what you've found and what's still unexplored.
 ${notebookContext}
