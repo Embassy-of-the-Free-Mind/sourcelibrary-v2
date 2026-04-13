@@ -42,7 +42,7 @@ In February 2022, one of the authors encountered a 1497 edition of Ficino's \emp
 
 The pipeline works remarkably well on printed text. But when we turned it to Leonardo da Vinci's mirror-script notebooks, the AI produced fluent Italian about the right topics---but the \emph{specific text changed completely between runs}. Same model, same image, same prompt---different words every time.
 
-\textbf{Contributions:} (1)~The first systematic evaluation of multimodal LLM OCR consistency across 5 models, 10 preprocessing methods, and 8 Leonardo codices. (2)~A measured ${\sim}$20-point calibration gap between self-consistency and expert accuracy, quantifying when to distrust the metric. (3)~Per-sentence trust annotation that reveals \emph{zero} reliable sentences on Leonardo---invisible to page-level scores. (4)~``Informed confabulation'' as a named failure mode for VLM-based manuscript OCR.
+\textbf{Contributions:} (1)~Systematic evaluation of VLM OCR consistency across 5 models, 10 preprocessing methods, and 8 Leonardo codices. (2)~A ${\sim}$20-point calibration gap between self-consistency and expert accuracy. (3)~Per-sentence trust labels revealing \emph{zero} reliable sentences on Leonardo. (4)~``Informed confabulation'' as a named failure mode.
 
 % --- Figure 1: Core contrast ---
 \begin{figure}[H]
@@ -64,13 +64,13 @@ The pipeline works remarkably well on printed text. But when we turned it to Leo
 % ============================================================================
 \section{Related Work}
 
-\textbf{Historical OCR.} Transkribus achieves CER of 1.7\% on matched training data but degrades to 73\% out-of-domain~\cite{constum2022}. Cl\'erice~\cite{clerice2022} proposed ground-truth-free HTR evaluation. Neudecker et al.~\cite{neudecker2021} noted that ground truth is ``neither feasible nor affordable'' at scale.
+\textbf{Historical OCR.} Transkribus achieves 1.7\% CER on matched training data but 73\% out-of-domain~\cite{constum2022}. Ground truth is ``neither feasible nor affordable'' at scale~\cite{neudecker2021}.
 
-\textbf{LLM-based OCR.} Humphries et al.~\cite{humphries2024} showed GPT-4o, Claude, and Gemini achieve CER of 5.7--7\% on 18th--19th c.\ handwriting, outperforming Transkribus by 14\%. Liu et al.~\cite{liu2024} introduced OCRBench, revealing weaknesses in handwritten text.
+\textbf{LLM-based OCR.} Humphries et al.~\cite{humphries2024} showed GPT-4o, Claude, and Gemini achieve 5.7--7\% CER on 18th--19th c.\ handwriting, outperforming Transkribus. Liu et al.~\cite{liu2024} introduced OCRBench, revealing VLM weaknesses on handwritten text.
 
-\textbf{Self-consistency.} Wang et al.~\cite{wang2023} introduced self-consistency decoding (ICLR 2023). Manakul et al.~\cite{manakul2023} formalized this for hallucination detection with SelfCheckGPT (EMNLP 2023). Farquhar et al.~\cite{farquhar2024} introduced semantic entropy (Nature 2024). We adapt these to OCR, where the output is a deterministic function of a fixed image---making disagreement a particularly clean signal.
+\textbf{Self-consistency.} Wang et al.~\cite{wang2023} introduced self-consistency decoding. Manakul et al.~\cite{manakul2023} formalized hallucination detection via SelfCheckGPT. Farquhar et al.~\cite{farquhar2024} introduced semantic entropy. We adapt these to OCR, where the input is a fixed image---making disagreement a clean signal of perceptual failure.
 
-\textbf{VLM hallucination.} Zhou et al.~\cite{zhou2025} identified ``semantic hallucination'' in scene text. Wang et al.~\cite{wang2025} benchmarked OCR hallucination under degradation (NeurIPS 2025). No prior work has attempted automated transcription of Leonardo's mirror script.
+\textbf{VLM hallucination.} Zhou et al.~\cite{zhou2025} identified ``semantic hallucination'' in scene text; Wang et al.~\cite{wang2025} benchmarked OCR hallucination under degradation. No prior work has attempted automated transcription of Leonardo's mirror script.
 
 % ============================================================================
 \section{Method}
@@ -106,7 +106,7 @@ The pipeline works remarkably well on printed text. But when we turned it to Leo
 \label{fig:method}
 \end{figure}
 
-\textbf{Corpus.} Source Library contains ${\sim}$17,000 books and 3.35M processed pages. Our evaluation corpus: 50 pages across 13 sources---printed Latin and Italian (Vitruvius, Drebbel, Trattato della pittura, Del moto), a 12th c.\ manuscript (Bodleian Timaeus), and 7 Leonardo mirror-script codices (optics, anatomy, geometry, botany, physiognomy, architecture, flight). Richter's \emph{Literary Works of Leonardo}~\cite{richter1883} provides ground truth.
+\textbf{Corpus.} Source Library contains ${\sim}$17,000 books and 3.35M processed pages. Our evaluation corpus: 50 pages across 12 sources---4 printed (Vitruvius 1521, Drebbel 1621, Trattato della pittura 1651, Del moto e misura dell'acqua), 1 medieval manuscript (Bodleian Timaeus, 12th~c.), and 7 Leonardo mirror-script codices (optics, anatomy, geometry, botany, physiognomy, architecture, flight). Ground truth: Richter's \emph{Literary Works}~\cite{richter1883} (OCR'd from our library) and Ravaisson-Mollien's diplomatic transcriptions~\cite{ravaisson1881}.
 
 \textbf{Self-consistency score.} For page image $I$, generate $N$ transcriptions $T_1,\ldots,T_N$ and compute:
 $$\textrm{SC}(I) = \frac{2}{N(N{-}1)} \sum_{i<j} \textrm{sim}(T_i, T_j)$$
@@ -140,7 +140,19 @@ The embedding--Jaccard \textbf{gap} is diagnostic: 40~pp on printed text (format
 
 \subsection{All Frontier Models Converge}
 
-Five models on the Bodleian manuscript ($N{=}2$, Jaccard): Gemini Lite 36.7\%*, Opus 27.3\%, Pro 27.0\%, Flash 26.8\%, Sonnet 21.5\%. (*Lite produces pseudo-Latin nonsense.) Models spanning different architectures converge within half a point. The bottleneck is visual perception, not language modeling.
+Five models on the Bodleian manuscript ($N{=}2$, Jaccard word overlap): Gemini Lite 36.7\%*, Opus 27.3\%, Pro 27.0\%, Flash 26.8\%, Sonnet 21.5\%. (*Lite scores highest but produces pseudo-Latin nonsense---consistency without accuracy.) Models spanning different architectures and training corpora converge within a half-point band on manuscript text, while all scoring $>$95\% on printed pages. The bottleneck is visual perception, not language modeling.
+
+\subsection{Confabulation in Practice}
+
+Three independent runs on the same Leonardo page (p49), first sentence:
+
+{\small
+\noindent\textbf{Run 1}: \emph{``Se l'aria fussi di djsparata densita non per questo l'onbra di qualunque corpo\ldots''}\\
+\textbf{Run 2}: \emph{``Se la onbra fia d'una medesima oscurit\`a in tutta la sua lugneza\ldots''}\\
+\textbf{Run 3}: \emph{``Ogni corpo opaco che si muoue infrallochio el lume de fiamelle\ldots''}
+}
+
+\noindent All three produce grammatically plausible Italian about shadow and light---but with completely different sentences. The model generates topically appropriate text without reading specific words from the page.
 
 \subsection{Image Preprocessing}
 
@@ -298,33 +310,33 @@ Second, a \textbf{copying confound test}: Ravaisson-Mollien pages show the manus
 
 \textbf{What should practitioners do?} For printed text ($>$95\% of most historical collections): use single-run OCR with confidence. For manuscripts: (1)~run $N{=}5$ passes, (2)~compute per-sentence consistency, (3)~present trust-annotated output where green sentences can be cited and yellow/red sentences are flagged for expert review. This costs 5$\times$ a single OCR pass---negligible versus paleographic labor---and transforms consistency from a passive label into an active transcription tool.
 
-\textbf{Temperature and self-consistency.} A natural question: would near-deterministic sampling ($T\to0$) produce a single consistent transcription that matches expert text? The answer is that $T{=}0$ trivially maximizes self-consistency (the model generates the same text every run) without improving accuracy. A model that confabulates the same plausible Italian five times scores 100\% self-consistency and 0\% accuracy. Our 20-point calibration gap would simply collapse to a 100\% vs.\ 65\% gap---widening the discrepancy, not resolving it. Temperature controls variance; it does not fix the underlying perceptual bottleneck.
+\textbf{Temperature.} Setting $T{=}0$ trivially maximizes self-consistency without improving accuracy---the model confabulates the same text every run. The calibration gap widens ($100\%$ vs.\ $65\%$), not resolves. Temperature controls variance, not the perceptual bottleneck.
 
-\textbf{Training data contamination.} Could the model be reproducing memorized transcriptions rather than decoding pixels? Three observations argue against strong contamination: (1)~self-consistency is uniform across all 8 codices regardless of how widely a folio has been published---text density dominates, not fame; (2)~our Ravaisson-Mollien copying confound showed the model achieves 97\% word overlap \emph{only} when the printed transcription is visible on the same page---when restricted to the facsimile alone, it cannot produce text; and (3)~Richter vocabulary comparison found only 2 of 21 core optics terms in AI output. If the model were reproducing memorized Richter text, we would expect higher overlap.
+\textbf{Training data contamination.} Three observations argue against memorized transcriptions driving output: (1)~consistency is uniform across 8 codices regardless of folio fame---text density dominates; (2)~the Ravaisson-Mollien confound shows the model reads printed text when visible but cannot transcribe the facsimile alone; (3)~only 2/21 Richter vocabulary terms appear in AI output.
 
-\textbf{Other limitations.} Small corpus (50 pages). Richter comparison limited to 2 pages. Gemini embeddings evaluate Gemini OCR (potential same-family bias). Trust thresholds (90\%/70\%) are empirically motivated but not validated against human judgments of transcription quality.
+\textbf{Limitations.} Small corpus (50 pages). Richter comparison limited to 2 pages. Gemini embeddings evaluate Gemini OCR (same-family bias). Trust thresholds empirically motivated but not validated against expert judgments.
 
 % ============================================================================
 \section{Conclusion}
 
-Self-consistency via embedding similarity provides a practical, reference-free quality signal for AI-transcribed historical documents---but one that overestimates accuracy by ${\sim}$20 points on difficult manuscripts. Key findings: all frontier models converge on manuscripts; image preprocessing outperforms reasoning; consistency tracks text density, not topic; and on Leonardo's mirror-script, not a single sentence is reliably transcribed. For Leonardo's notebooks, the AI knows what he writes about, but cannot yet read what he wrote.
+Self-consistency via embedding similarity provides a practical, reference-free quality signal for AI-transcribed historical documents---but overestimates accuracy by ${\sim}$20 points on difficult manuscripts. All frontier models converge; preprocessing outperforms reasoning; consistency tracks text density, not topic; and on Leonardo, not a single sentence is reliably transcribed. The AI knows what he writes about, but cannot read what he wrote.
 
 % ============================================================================
-{\small
+\vspace{-0.5em}
+{\scriptsize
 \bibliographystyle{plain}
 \begin{thebibliography}{11}
+\setlength{\itemsep}{-1pt}
 \bibitem{constum2022} T.~Constum et al. Impact of training set size on HTR for medieval Latin manuscripts. \emph{DAS}, 2022.
-\bibitem{clerice2022} T.~Cl\'erice. Evaluating deep learning for word segmentation of scripta continua. \emph{JOCCH}, 15(3), 2022.
 \bibitem{neudecker2021} C.~Neudecker et al. A survey of OCR evaluation tools and metrics. \emph{HIP}, 2021.
 \bibitem{humphries2024} D.~Humphries et al. Unlocking the archives: Using LLMs to transcribe handwritten historical documents. \emph{arXiv:2407.12437}, 2024.
 \bibitem{liu2024} Y.~Liu et al. OCRBench: On the hidden mystery of OCR in large multimodal models. \emph{arXiv:2305.07895}, 2024.
-\bibitem{wang2023} X.~Wang et al. Self-consistency improves chain of thought reasoning in language models. \emph{ICLR}, 2023.
+\bibitem{wang2023} X.~Wang et al. Self-consistency improves chain of thought reasoning. \emph{ICLR}, 2023.
 \bibitem{manakul2023} P.~Manakul et al. SelfCheckGPT: Zero-resource hallucination detection. \emph{EMNLP}, 2023.
 \bibitem{farquhar2024} S.~Farquhar et al. Detecting hallucinations in LLMs using semantic entropy. \emph{Nature}, 630:625--630, 2024.
 \bibitem{zhou2025} Y.~Zhou et al. Semantic hallucination in scene text recognition. 2025.
 \bibitem{wang2025} Z.~Wang et al. Seeing is believing? OCR hallucination under visual degradation. \emph{NeurIPS}, 2025.
-\bibitem{ravaisson1881} C.~Ravaisson-Mollien. \emph{Les Manuscrits de L\'eonard de Vinci}. 6~vols. Paris: Quantin, 1881--1891.
-
+\bibitem{ravaisson1881} C.~Ravaisson-Mollien. \emph{Les Manuscrits de L\'eonard de Vinci}. 6~vols. Quantin, 1881--1891.
 \bibitem{richter1883} J.~P.~Richter. \emph{The Literary Works of Leonardo da Vinci}. Sampson Low, 1883.
 \end{thebibliography}
 }
