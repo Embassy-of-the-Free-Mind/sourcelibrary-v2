@@ -54,7 +54,7 @@ export default function TenThousandBooksPage() {
       <article className="prose-content max-w-none">
         {/* Lede */}
         <p className="text-xl text-secondary leading-relaxed mb-8 font-body">
-          Source Library passed 10,000 books this week.
+          Source Library has passed 10,000 books.
         </p>
 
         <p className="text-secondary leading-relaxed mb-10 font-body">
@@ -63,9 +63,9 @@ export default function TenThousandBooksPage() {
           <a href="https://embassyofthefreemind.com" className="text-accent-rust hover:text-accent-rust underline">
             Embassy of the Free Mind
           </a>{' '}
-          in Amsterdam. Now there are 10,263 works, spanning Sumerian tablets to nineteenth-century
-          Sanskrit, nearly all OCR&apos;d and translated into English. About 95% of the pages are done.
-          The pipeline translates roughly 700 new pages a day.
+          in Amsterdam. The collection now holds 10,263 works, spanning Sumerian tablets to
+          nineteenth-century Sanskrit, nearly all OCR&apos;d and translated into English. About 95%
+          of the pages are done. The pipeline translates roughly 700 new pages a day.
         </p>
 
         {/* Hero image */}
@@ -91,7 +91,7 @@ export default function TenThousandBooksPage() {
           </h2>
 
           <p className="text-secondary leading-relaxed mb-6 font-body">
-            I wanted the 10,000th book to mean something, so I picked one. Symphorien Champier&apos;s{' '}
+            We wanted the 10,000th book to mean something, so we chose one. Symphorien Champier&apos;s{' '}
             <a
               href="https://sourcelibrary.org/book/four-volumes-of-divine-and-human-marvels-champier"
               className="text-accent-rust hover:text-accent-rust underline"
@@ -113,8 +113,8 @@ export default function TenThousandBooksPage() {
           </p>
 
           <p className="text-secondary leading-relaxed mb-6 font-body">
-            The physical copy lives at the Bibliotheca Philosophica Hermetica &mdash; the same library
-            where this project started. That felt right.
+            The physical copy resides at the Bibliotheca Philosophica Hermetica &mdash; the same
+            library where this project began. That felt appropriate.
           </p>
         </section>
 
@@ -337,12 +337,12 @@ export default function TenThousandBooksPage() {
               union catalog
             </Link>{' '}
             behind Source Library tracks over 700,000 digitized pre-modern editions. We have translated
-            about 1.4% of them. The{' '}
+            approximately 1.4% of them. The{' '}
             <Link href="/blog/untranslated-renaissance" className="text-accent-rust hover:text-accent-rust underline">
               translation census
             </Link>{' '}
             estimates that roughly 99% of Renaissance texts have never been translated into English
-            at all. So 10,000 is a start.
+            at all. Ten thousand is a beginning.
           </p>
         </section>
 
@@ -351,14 +351,14 @@ export default function TenThousandBooksPage() {
         {/* Closing */}
         <section className="mb-16">
           <p className="text-secondary leading-relaxed mb-6 font-body">
-            The constraint now is not technical. Models are fast enough and cheap enough. The
+            The constraint is no longer technical. Models are fast enough and cheap enough. The
             constraint is curatorial &mdash; deciding what to translate next, in what order, and
-            how to make it findable once it arrives. That is a good problem to have. A year ago
-            the constraint was whether this was possible at all.
+            how to make it findable once it arrives. A year ago the question was whether this
+            was possible at all.
           </p>
 
           <p className="text-secondary leading-relaxed mb-10 font-body">
-            Champier&apos;s book sat in a library in Amsterdam for five centuries. Now you can{' '}
+            Champier&apos;s book sat in a library in Amsterdam for five centuries. Now anyone can{' '}
             <a
               href="https://sourcelibrary.org/book/four-volumes-of-divine-and-human-marvels-champier"
               className="text-accent-rust hover:text-accent-rust underline"
