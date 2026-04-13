@@ -45,9 +45,10 @@ getBookThumbnailUrl(book, 'thumb')      // → 150px thumb variant
 ```
 
 The function:
-1. Takes `thumbnail_blob` or `thumbnail` from the book object
-2. If it's an R2 `/pages/` URL, rewrites the suffix to the requested variant
-3. For non-R2 URLs (Internet Archive, external), returns as-is
+1. For `display`: prefers `thumbnail` (high-res archived page) over `thumbnail_blob` (tiny ~150px pre-generated)
+2. For `thumb`: prefers `thumbnail_blob` (small, fast) over `thumbnail`
+3. If it's an R2 `/pages/` URL, rewrites the suffix to the requested variant
+4. For non-R2 URLs (Internet Archive, external, `book-thumbnails/`, `archived/`), returns as-is
 
 **Never use `thumbnail_blob || thumbnail` directly in UI code.** Always go through `getBookThumbnailUrl()`.
 
@@ -57,11 +58,12 @@ Books have two thumbnail URL fields:
 
 | Field | Typical content | Notes |
 |-------|----------------|-------|
-| `thumbnail` | Full-res or display R2 URL, or external hotlink | Set during archiving |
-| `thumbnail_blob` | Usually the `-thumb.jpg` variant | Set during archiving |
+| `thumbnail` | Full-res archived page image (`archived/{id}/{num}.jpg`) | Higher quality, larger file |
+| `thumbnail_blob` | Small pre-generated thumbnail (`book-thumbnails/{id}.jpg`, ~8KB, ~150px) | Fast but low-res |
 
-These fields are not standardized — the same field might contain a `-full.jpg`, `.jpg`, or `-thumb.jpg` URL
-depending on when and how the book was archived. That's why `getBookThumbnailUrl()` normalizes at runtime.
+`thumbnail_blob` is typically ~8KB / ~150px. Using it for card grids (200-400px) causes visible blurriness.
+`thumbnail` is the archived page image, typically 50-200KB at full page resolution.
+`getBookThumbnailUrl()` picks the right one based on the requested size.
 
 ## Provenance Marks
 

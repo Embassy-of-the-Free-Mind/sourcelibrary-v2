@@ -26,7 +26,7 @@ export interface SharedConnection {
 export const getSharedBooks = cache(async (name: string): Promise<SharedConnection[] | null> => {
   try {
     const db = await getReadDb();
-    // Exact match uses name index (2ms). Regex fallback scans 625K docs (20s).
+    // Try exact match first (uses index, 2ms) before falling back to case-insensitive regex (20s full scan)
     const entity = await db.collection('entities').findOne(
       { name },
       { sort: { book_count: -1 } }
@@ -78,7 +78,7 @@ export const getSharedBooks = cache(async (name: string): Promise<SharedConnecti
 export const getEntity = cache(async (name: string) => {
   try {
     const db = await getReadDb();
-    // Exact match uses name index (2ms). Regex fallback scans 625K docs (20s).
+    // Try exact match first (uses index, 2ms) before falling back to case-insensitive regex (20s full scan)
     const entity = await db.collection('entities').findOne(
       { name },
       { sort: { book_count: -1 } }
