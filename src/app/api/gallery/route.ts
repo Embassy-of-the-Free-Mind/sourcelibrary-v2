@@ -5,6 +5,47 @@ import { generateQueryEmbedding, cosineSimilarity } from '@/lib/embeddings';
 
 export const maxDuration = 30;
 
+const CLIP_URL = process.env.CLIP_URL || 'http://46.224.122.120:3456/clip';
+
+/**
+ * Get CLIP text embedding for a query, then search clip_embeddings via Supabase.
+ * Returns gallery_image IDs with visual similarity scores.
+ * Fails silently — CLIP search is a boost, not required.
+ */
+async function clipTextSearch(query: string, limit: number): Promise<Map<string, number>> {
+  const results = new Map<string, number>();
+  try {
+    // Encode query text via CLIP server
+    const resp = await fetch(`${CLIP_URL}/embed-text`, {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify({ text: query }),
+      signal: AbortSignal.timeout(5000),
+    });
+    if (!resp.ok) return results;
+    const { embedding } = await resp.json();
+    if (!embedding) return results;
+
+    // Search Supabase clip_embeddings
+    const { data, error } = await supabase.rpc('match_clip_images', {
+      query_embedding: embedding,
+      match_threshold: 0.20,
+      match_count: limit,
+    });
+    if (error || !data) return results;
+
+    for (const match of data) {
+      // Only gallery images (not artworks or book covers)
+      if (match.source_type === 'gallery_image' && match.id) {
+        results.set(match.id, match.similarity);
+      }
+    }
+  } catch {
+    // CLIP server down or slow — not critical
+  }
+  return results;
+}
+
 /**
  * Escape special regex characters and build a diacritics-insensitive pattern.
  * e.g. "durer" matches "Dürer", "albrecht" matches "Albrecht".
@@ -164,18 +205,51 @@ export async function GET(request: NextRequest) {
       ? { _id: 0, score: { $meta: 'textScore' } }
       : { _id: 0 };
 
+    // Fire CLIP visual search in parallel with MongoDB text search
+    const clipPromise = searchQuery
+      ? clipTextSearch(searchQuery, Math.max(limit * 2, 60))
+      : Promise.resolve(new Map<string, number>());
+
     // countDocuments with compound filters takes 20s+ on Atlas (no covering index).
     // Strategy: run find first, then only count if we need pagination info.
     // For first page with full results, total = offset + items.length (or +1 if full page).
-    const items = await db.collection('gallery_images')
-      .find(filter, { projection })
-      .sort(sortOrder)
-      .skip(offset)
-      .limit(limit + 1) // fetch one extra to know if there are more
-      .toArray();
+    const [textItems, clipScores] = await Promise.all([
+      db.collection('gallery_images')
+        .find(filter, { projection })
+        .sort(sortOrder)
+        .skip(offset)
+        .limit(limit + 1) // fetch one extra to know if there are more
+        .toArray(),
+      clipPromise,
+    ]);
+
+    let items = textItems;
+
+    // Merge CLIP visual results with text results
+    if (clipScores.size > 0) {
+      const textIds = new Set(items.map(doc => `${doc.page_id}-${doc.detection_index}`));
+
+      // Find CLIP-only matches (visually relevant but not in text results)
+      const clipOnlyIds = [...clipScores.keys()].filter(id => !textIds.has(id));
+
+      if (clipOnlyIds.length > 0) {
+        // Fetch full docs for CLIP-only matches
+        const clipDocs = await db.collection('gallery_images')
+          .find({
+            id: { $in: clipOnlyIds },
+            gallery_quality: { $gte: minQuality },
+            book_visible: true,
+            extracted_url: { $ne: null },
+          }, { projection: { _id: 0 } })
+          .toArray();
+
+        // Append CLIP-only results after text results
+        items = [...items, ...clipDocs];
+      }
+    }
 
     const hasMore = items.length > limit;
-    if (hasMore) items.pop(); // remove the extra probe item
+    if (hasMore) items.splice(limit); // trim to limit
 
     // Avoid countDocuments entirely — derive total from what we know
     let total: number;
@@ -213,6 +287,7 @@ export async function GET(request: NextRequest) {
     const mappedItems = items.map(doc => {
       const likeKey = `${doc.page_id}-${doc.detection_index}`;
       const likeData = likesMap[likeKey];
+      const clipScore = clipScores.get(doc.id || likeKey);
       return {
         pageId: doc.page_id,
         bookId: doc.book_id,
@@ -233,6 +308,7 @@ export async function GET(request: NextRequest) {
         museumDescription: doc.museum_description,
         metadata: doc.metadata,
         firstSyncedAt: doc.first_synced_at || doc.updated_at || null,
+        ...(clipScore !== undefined && { visualSimilarity: clipScore }),
         likeCount: likeData?.count ?? 0,
         likedByVisitor: likeData?.liked ?? false,
       };
