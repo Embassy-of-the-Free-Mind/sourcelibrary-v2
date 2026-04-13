@@ -3107,7 +3107,7 @@ Rules:
     // they must be promoted to the live collection before OCR can run.
     // The old Vercel cron that did this was archived — this replaces it.
     if (shouldRun(2)) {
-      const PROMOTE_LIMIT = 20; // Conservative: each book copies all pages (can be hundreds)
+      const PROMOTE_LIMIT = 50; // Each book copies all pages — keep moderate to avoid Atlas spikes
       const ENGLISH_VARIANTS_WH = ['english', 'eng', 'en'];
       const promoteCandidates = await db.collection('books_warehouse')
         .aggregate([
@@ -3139,15 +3139,30 @@ Rules:
             const book = await db.collection('books_warehouse').findOne({ id: candidate.id });
             if (!book) continue;
 
-            // Upsert to live
-            await db.collection('books').replaceOne({ id: candidate.id }, book, { upsert: true });
+            // Check if book already exists in live (can have different _id)
+            const existingLive = await db.collection('books').findOne({ id: candidate.id }, { projection: { _id: 1 } });
+            if (existingLive) {
+              // Update in place, preserving live _id
+              const { _id, ...bookWithoutId } = book;
+              await db.collection('books').updateOne({ id: candidate.id }, { $set: bookWithoutId });
+            } else {
+              // Fresh insert
+              await db.collection('books').insertOne(book);
+            }
 
-            // Move pages in bulk
+            // Move pages — handle _id conflicts by stripping _id for upserts matched by book_id+page_number
             const pages = await db.collection('pages_warehouse').find({ book_id: candidate.id }).toArray();
             if (pages.length > 0) {
-              const bulkOps = pages.map(page => ({
-                replaceOne: { filter: { _id: page._id }, replacement: page, upsert: true },
-              }));
+              const bulkOps = pages.map(page => {
+                const { _id, ...pageWithoutId } = page;
+                return {
+                  updateOne: {
+                    filter: { book_id: page.book_id, page_number: page.page_number },
+                    update: { $set: pageWithoutId },
+                    upsert: true,
+                  },
+                };
+              });
               await db.collection('pages').bulkWrite(bulkOps, { ordered: false });
             }
 
