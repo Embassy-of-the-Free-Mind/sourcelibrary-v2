@@ -1,8 +1,9 @@
 # How Much Can You Trust This Page? Consistency-Based Trust Scoring for AI-Transcribed Historical Manuscripts
 
-**Authors:** Derek Lomas, [collaborators TBD]
-**Affiliation:** Source Library / Embassy of the Free Mind
-**Status:** Preprint draft
+**Derek Lomas**
+Source Library / Embassy of the Free Mind
+
+*April 2026 — Preprint*
 
 ---
 
@@ -129,11 +130,11 @@ Total: 50 pages tested across 13 sources, with N=3–5 independent OCR runs per 
 
 ### 4.1 Self-Consistency Score
 
-For a given page image $I$, we generate $N$ independent transcriptions $T_1, T_2, \ldots, T_N$ using the same model and prompt at temperature > 0. The self-consistency score is:
+For a given page image *I*, we generate *N* independent transcriptions *T1, T2, ..., TN* using the same model and prompt at temperature > 0. The self-consistency score is the mean pairwise similarity across all N-choose-2 pairs:
 
-$$SC(I) = \frac{1}{\binom{N}{2}} \sum_{i < j} \text{sim}(T_i, T_j)$$
+> SC(I) = mean over all pairs (i, j) of sim(Ti, Tj)
 
-where $\text{sim}$ is a text similarity function. We evaluate multiple similarity functions:
+where *sim* is a text similarity function. We evaluate multiple similarity functions:
 
 - **Jaccard similarity** on word sets (baseline, crude — penalizes formatting variation)
 - **Embedding cosine similarity** using Gemini's `gemini-embedding-001` model (768-dim vectors, analogous to BERTScore but using the same model family as the OCR engine)
@@ -383,7 +384,7 @@ Self-consistency scoring is diagnostic — it tells you *how reliable* a transcr
 
 This preserves the fragments the model can genuinely read while honestly marking what it cannot. For digital libraries, this is arguably more useful than either a clean-but-unreliable transcription or no transcription at all.
 
-**Error bounds from variance.** With N=5 runs, we can compute not just mean consistency but variance and confidence intervals. A page with mean embedding consistency of 85% ± 2% is a different proposition from one at 85% ± 15%. The former suggests a stable partial reading; the latter suggests high model uncertainty. Standard error of the mean across the $\binom{N}{2}$ pairwise scores provides a natural confidence interval for the consistency estimate itself.
+**Error bounds from variance.** With N=5 runs, we can compute not just mean consistency but variance and confidence intervals. A page with mean embedding consistency of 85% ± 2% is a different proposition from one at 85% ± 15%. The former suggests a stable partial reading; the latter suggests high model uncertainty. Standard error of the mean across the N-choose-2 pairwise scores provides a natural confidence interval for the consistency estimate itself.
 
 **Practical protocol for difficult manuscripts.** We propose a three-stage pipeline for manuscripts in the "yellow zone" (30–80% consistency):
 1. **Run N=5 independent transcriptions** at temperature > 0
@@ -408,7 +409,7 @@ On printed text, 14 of 15 sentences are reliably transcribed (green). On Leonard
 
 This demonstrates the power of per-sentence trust annotation: a page-level score of 82.9% might suggest acceptable quality, but the sentence-level breakdown reveals that the *entire transcription* is approximate. For scholars, this distinction matters — no individual sentence can be cited with confidence.
 
-### 6.6.1 The Printed Leonardo Control
+### 6.7 The Printed Leonardo Control
 
 The *Trattato della pittura* (1651 editio princeps) provides a natural control: Leonardo's own text about painting, but printed in standard Italian type. Results:
 
@@ -420,7 +421,7 @@ The *Trattato della pittura* (1651 editio princeps) provides a natural control: 
 
 Printed Leonardo text scores 98–99.6% — identical to other printed Latin texts. This proves conclusively that the model understands Leonardo's subject matter perfectly well. The failure on manuscripts is purely a handwriting perception problem, not a content understanding problem.
 
-### 6.7 Training Data Contamination
+### 6.8 Training Data Contamination
 
 A confound we have not yet controlled for: if a text appears in the model's training data, consistency might be inflated by memorization rather than visual reading. The model may produce a consistent transcription because it recognizes which book this is and recites the known text, not because it decodes the pixels.
 
@@ -435,7 +436,7 @@ If consistency is driven by genuine reading, printed texts should score high reg
 
 This experiment remains future work pending the identification of an obscure manuscript text in our corpus.
 
-### 6.8 Implications for Digital Libraries
+### 6.9 Implications for Digital Libraries
 
 For a digital library like Source Library, processing 17,000+ books at scale, these findings have immediate practical consequences:
 
@@ -447,7 +448,7 @@ For a digital library like Source Library, processing 17,000+ books at scale, th
 
 4. **Progressive improvement**: By storing all N runs, the library accumulates a dataset that can be used to evaluate future models. When a new model is released, it can be tested against the same images without re-running the full pipeline.
 
-### 6.9 Limitations
+### 6.10 Limitations
 
 1. **Small corpus**: Our results are based on a limited number of pages from a small number of sources. The findings on Leonardo are based on one book; generalization to other Leonardo manuscripts, or to other mirror-script traditions, remains to be demonstrated.
 
