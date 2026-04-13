@@ -4,6 +4,7 @@ import { useState, useEffect } from 'react';
 import Link from 'next/link';
 import { useRouter } from 'next/navigation';
 import { Search, Home, BookOpen } from 'lucide-react';
+import FeedbackWidget from '@/components/feedback/FeedbackWidget';
 
 const QUOTES = [
   { text: 'The lips of Wisdom are closed, except to the ears of Understanding.', source: 'The Kybalion' },
@@ -82,9 +83,11 @@ export default function NotFound() {
 
         <p className="text-xs text-faint">
           Something broken?{' '}
-          <Link href="mailto:derek@sourcelibrary.org" className="text-accent-rust/70 hover:text-accent-rust underline">
-            Let us know
-          </Link>
+          <FeedbackWidget
+            label="Let us know"
+            initialMessage="I hit a 404 on: "
+            className="text-accent-rust/70 hover:text-accent-rust underline"
+          />
         </p>
       </div>
     </div>
