@@ -229,6 +229,36 @@ export async function processImageExtractionPage(message: PageProcessingMessage)
 // checkJobCompletion is now handled by the Writer Lambda via shared job-completion.ts
 
 /**
+ * Adjust gallery_quality based on scan resolution.
+ * The AI scores artistic merit; this adjusts for display-worthiness
+ * based on the effective pixel dimensions of the extracted illustration.
+ */
+function adjustForScanQuality(
+  aiQuality: number,
+  page: Page,
+  bbox: { x: number; y: number; width: number; height: number }
+): number {
+  const pageW = page.image_width;
+  const pageH = page.image_height;
+  if (!pageW || !pageH) return aiQuality; // no dimensions — trust AI score as-is
+
+  const effectiveW = pageW * bbox.width;
+  const effectiveH = pageH * bbox.height;
+  const effectivePixels = effectiveW * effectiveH;
+
+  let adjustment = 0;
+  if (effectivePixels < 50_000) {
+    adjustment = -0.2;       // ~225×225 or smaller — very low res
+  } else if (effectivePixels < 150_000) {
+    adjustment = -0.1;       // ~390×390 — mediocre scan
+  } else if (effectivePixels > 1_000_000) {
+    adjustment = 0.05;       // 1000×1000+ — high-res bonus
+  }
+
+  return Math.max(0, Math.min(1, aiQuality + adjustment));
+}
+
+/**
  * Build gallery_images documents for the write queue.
  * Reads book metadata for denormalization, but does NOT write to MongoDB.
  * The Writer Lambda performs the actual deleteMany + insertMany.
@@ -257,6 +287,12 @@ async function buildGalleryDocs(
         if (!['vision_model', 'manual', 'ocr_tag'].includes(img.detection_source || '')) return null;
         if ((img.gallery_quality || 0) < 0.5) return null;
 
+        const adjustedQuality = adjustForScanQuality(
+          img.gallery_quality || 0, page, img.bbox
+        );
+        // Re-check threshold after adjustment — low-res scans may drop below 0.5
+        if (adjustedQuality < 0.5) return null;
+
         return {
           id: `${pageId}-${idx}`,
           page_id: pageId,
@@ -270,7 +306,7 @@ async function buildGalleryDocs(
           type: img.type || null,
           bbox: img.bbox,
           rotation: img.rotation || null,
-          gallery_quality: img.gallery_quality || 0,
+          gallery_quality: adjustedQuality,
           confidence: img.confidence || null,
           museum_description: img.museum_description || null,
           detection_source: img.detection_source || null,
