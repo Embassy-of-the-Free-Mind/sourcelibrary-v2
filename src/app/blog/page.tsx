@@ -25,6 +25,15 @@ interface BlogPost {
 
 const posts: BlogPost[] = [
   {
+    slug: 'word-alignment',
+    title: 'Can AI Show You Exactly Which Latin Words Became Which English Words?',
+    subtitle: 'Two approaches to word-level alignment between 15th-century Latin and English translation. Interactive demo inside.',
+    date: '13 April 2026',
+    readTime: '5 min read',
+    tag: 'Interactive',
+    tagColor: 'bg-amber-50 text-amber-700',
+  },
+  {
     slug: 'rashi-ocr',
     title: 'The Rashi Problem: When AI OCR Hallucinates in Hebrew',
     subtitle: 'Gemini reads Arabic, Sanskrit, and Chinese fine. On Rashi script it hallucinates — and our quality metrics gave it a passing grade.',
