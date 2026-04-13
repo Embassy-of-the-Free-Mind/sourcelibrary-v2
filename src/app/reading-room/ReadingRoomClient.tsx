@@ -672,6 +672,15 @@ export default function ReadingRoomClient({ featuredPassage }: ReadingRoomClient
                           New conversation
                         </button>
                       )}
+                      {threadId && messages.some(m => m.role === 'assistant' && (m as AssistantMessage).notebookCount) && (
+                        <a
+                          href={`/api/embassy/threads/${threadId}/notebook`}
+                          download
+                          className="text-[11px] text-[#6b8f5e] hover:text-[#4a6b40] transition-colors font-sans"
+                        >
+                          Export research
+                        </a>
+                      )}
                     </div>
                     {isSignedIn && (
                       <button
