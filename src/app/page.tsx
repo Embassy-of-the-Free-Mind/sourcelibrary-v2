@@ -322,10 +322,37 @@ async function getCollectionShowcase() {
   return JSON.parse(JSON.stringify(items));
 }
 
-const FALLBACK_COUNTS = { totalBooks: 10002, translatedToEnglish: 10002, firstTranslationCount: 5454, authorCount: 3200, languageCount: 50, artworkCount: 50000 };
+const FALLBACK_COUNTS = { totalBooks: 11040, translatedToEnglish: 10142, firstTranslationCount: 5716, authorCount: 4740, languageCount: 123, artworkCount: 50000 };
 
 async function getBookCounts(): Promise<{ totalBooks: number; translatedToEnglish: number; firstTranslationCount: number; authorCount: number; languageCount: number; artworkCount: number }> {
-  // 1. Try Supabase (fast Postgres counts, synced every 2h)
+  // 1. MongoDB system_config cache (updated by update-homepage-stats.mjs cron)
+  // Preferred over Supabase because it uses the >=90% "readable" threshold which
+  // Supabase books_catalog cannot compute (no column-to-column comparison in PostgREST).
+  try {
+    const db = await getReadDb();
+    const [cached, artworkCount] = await Promise.all([
+      db.collection('system_config').findOne(
+        { _id: 'homepage_stats' } as any,
+        { maxTimeMS: 2000 }
+      ),
+      db.collection('gallery_images').countDocuments(
+        { gallery_quality: { $gte: 0.7 } },
+        { maxTimeMS: 3000 },
+      ).catch(() => FALLBACK_COUNTS.artworkCount),
+    ]);
+    if (cached?.totalBooks) {
+      return {
+        totalBooks: cached.totalBooks,
+        translatedToEnglish: cached.translatedToEnglish,
+        firstTranslationCount: cached.firstTranslationCount,
+        authorCount: cached.authorCount ?? FALLBACK_COUNTS.authorCount,
+        languageCount: cached.languageCount ?? FALLBACK_COUNTS.languageCount,
+        artworkCount,
+      };
+    }
+  } catch { /* DB unreachable — try Supabase */ }
+
+  // 2. Supabase fallback (fast but uses pages_translated > 0, not >=90% threshold)
   try {
     const [totalRes, firstTransRes] = await Promise.all([
       supabase.from('books_catalog').select('id', { count: 'exact', head: true })
@@ -335,58 +362,16 @@ async function getBookCounts(): Promise<{ totalBooks: number; translatedToEnglis
     ]);
 
     if (totalRes.count && totalRes.count > 0) {
-      // Author/language distinct counts via MongoDB cache (PostgREST can't COUNT DISTINCT efficiently)
-      let authorCount = FALLBACK_COUNTS.authorCount;
-      let languageCount = FALLBACK_COUNTS.languageCount;
-      try {
-        const db = await getReadDb();
-        const cached = await db.collection('system_config').findOne(
-          { _id: 'homepage_stats' } as any,
-          { maxTimeMS: 2000 }
-        );
-        if (cached?.authorCount) authorCount = cached.authorCount;
-        if (cached?.languageCount) languageCount = cached.languageCount;
-      } catch { /* MongoDB unavailable — use fallback */ }
-
-      // Artwork count from MongoDB (gallery_images with quality >= 0.7)
-      let artworkCount = FALLBACK_COUNTS.artworkCount;
-      try {
-        const db = await getReadDb();
-        artworkCount = await db.collection('gallery_images').countDocuments(
-          { gallery_quality: { $gte: 0.7 } },
-          { maxTimeMS: 3000 },
-        );
-      } catch { /* use fallback */ }
-
       return {
         totalBooks: totalRes.count,
         translatedToEnglish: totalRes.count,
         firstTranslationCount: firstTransRes.count ?? FALLBACK_COUNTS.firstTranslationCount,
-        authorCount,
-        languageCount,
-        artworkCount,
+        authorCount: FALLBACK_COUNTS.authorCount,
+        languageCount: FALLBACK_COUNTS.languageCount,
+        artworkCount: FALLBACK_COUNTS.artworkCount,
       };
     }
-  } catch { /* Supabase unreachable — try MongoDB */ }
-
-  // 2. Fallback: MongoDB system_config cache
-  try {
-    const db = await getReadDb();
-    const cached = await db.collection('system_config').findOne(
-      { _id: 'homepage_stats' } as any,
-      { maxTimeMS: 2000 }
-    );
-    if (cached?.totalBooks) {
-      return {
-        totalBooks: cached.totalBooks,
-        translatedToEnglish: cached.translatedToEnglish,
-        firstTranslationCount: cached.firstTranslationCount,
-        authorCount: cached.authorCount ?? FALLBACK_COUNTS.authorCount,
-        languageCount: cached.languageCount ?? FALLBACK_COUNTS.languageCount,
-        artworkCount: cached.artworkCount ?? FALLBACK_COUNTS.artworkCount,
-      };
-    }
-  } catch { /* DB unreachable */ }
+  } catch { /* Supabase unreachable */ }
 
   return FALLBACK_COUNTS;
 }

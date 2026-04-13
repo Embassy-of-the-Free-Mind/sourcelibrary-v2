@@ -17,9 +17,17 @@ const books = db.collection('books');
 const filter = { hidden: { $ne: true }, pages_count: { $gt: 0 } };
 const translatedFilter = { ...filter, pages_translated: { $gt: 0 } };
 
+// "Readable" = >=90% of OCR pages translated (excluding blank pages)
+// This matches the definition used in /progress and pipeline milestones
+const readableFilter = {
+  ...filter,
+  pages_translated: { $gt: 0 },
+  $expr: { $gte: ['$pages_translated', { $multiply: [{ $subtract: [{ $ifNull: ['$pages_ocr', 0] }, { $ifNull: ['$pages_blank', 0] }] }, 0.9] }] },
+};
+
 const [totalBooks, translatedToEnglish, firstTranslationCount, authorCount, languageCount] = await Promise.all([
   books.countDocuments(filter),
-  books.countDocuments(translatedFilter),
+  books.countDocuments(readableFilter),
   books.countDocuments({ ...translatedFilter, is_first_translation: true }),
   books.distinct('author', translatedFilter).then(a => a.length),
   books.distinct('language', translatedFilter).then(l => l.filter(x => x && !x.includes(',') && !x.includes(' and ')).length),
