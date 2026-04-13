@@ -125,7 +125,7 @@ export async function POST(request: NextRequest) {
     try {
       await send({ type: 'threadId', threadId: activeThreadId });
 
-      for await (const step of streamAgenticResponse(message, history)) {
+      for await (const step of streamAgenticResponse(message, history, activeThreadId)) {
         switch (step.type) {
           case 'thinking':
             await send({ type: 'thinking', text: step.text });
@@ -157,6 +157,10 @@ export async function POST(request: NextRequest) {
           case 'sources':
             allSources = step.sources || [];
             await send({ type: 'sources', sources: step.sources });
+            break;
+
+          case 'notebook_update':
+            await send({ type: 'notebook_update', notebook: step.notebook });
             break;
         }
       }

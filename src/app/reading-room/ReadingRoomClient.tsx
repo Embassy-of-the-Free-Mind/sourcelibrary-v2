@@ -51,6 +51,8 @@ interface AssistantMessage {
   content: string;
   sources: SourceCard[];
   choices?: { text: string; options: string[] };
+  notebookCount?: number;
+  notebookTopic?: string;
 }
 
 interface UserMessage {
@@ -374,6 +376,14 @@ export default function ReadingRoomClient({ featuredPassage }: ReadingRoomClient
                   }));
                   break;
 
+                case 'notebook_update':
+                  updateLastAssistant(m => ({
+                    ...m,
+                    notebookCount: event.notebook?.findingCount,
+                    notebookTopic: event.notebook?.topic || m.notebookTopic,
+                  }));
+                  break;
+
                 case 'error':
                   updateLastAssistant(m => ({ ...m, content: event.message || 'Something went wrong.' }));
                   break;
@@ -599,6 +609,15 @@ export default function ReadingRoomClient({ featuredPassage }: ReadingRoomClient
 
                           {/* Source cards */}
                           <SourceCardRow sources={assistant.sources} />
+
+                          {/* Notebook indicator */}
+                          {assistant.notebookCount && assistant.notebookCount > 0 && (
+                            <div className="mt-2 flex items-center gap-1.5 text-[11px] text-[#6b8f5e] font-sans">
+                              <span>&#x1F4D3;</span>
+                              <span>{assistant.notebookCount} finding{assistant.notebookCount > 1 ? 's' : ''} saved to research notebook</span>
+                              {assistant.notebookTopic && <span className="text-[#8a8480]">&#x2014; {assistant.notebookTopic}</span>}
+                            </div>
+                          )}
 
                           {/* Loading state: no content yet and still sending */}
                           {!assistant.content && !assistant.thinking && assistant.steps.length === 0 && sending && i === messages.length - 1 && (
