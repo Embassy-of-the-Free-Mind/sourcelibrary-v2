@@ -2,15 +2,15 @@
 
 **Authors:** Derek Lomas, [collaborators TBD]
 **Affiliation:** Source Library / Embassy of the Free Mind
-**Status:** Draft — experiments in progress
+**Status:** Preprint draft
 
 ---
 
 ## Abstract
 
-Multimodal large language models can now OCR and translate thousands of historical manuscripts at scale, making Renaissance knowledge accessible for the first time. But how much should a reader trust the result? We introduce a reference-free trust metric based on run-to-run self-consistency: transcribe the same page multiple times and measure agreement. On a corpus spanning printed books, handwritten manuscripts, and Leonardo da Vinci's mirror-script notebooks, we find that consistency varies dramatically by text type — from 97% on printed Latin to 27% on medieval manuscripts to 13% on Leonardo's mirror writing — and that all five frontier models tested (Gemini Flash, Gemini Pro, Gemini Lite, Claude Sonnet, Claude Opus) converge to the same range on handwritten text.
+Multimodal large language models can now OCR and translate thousands of historical manuscripts at scale, making Renaissance knowledge accessible for the first time. But how much should a reader trust the result? We introduce a reference-free trust metric based on run-to-run self-consistency: transcribe the same page multiple times and measure agreement using embedding cosine similarity. On a corpus spanning printed books, handwritten manuscripts, and Leonardo da Vinci's mirror-script notebooks across eight codices, we find that embedding consistency varies dramatically by text type — from 99% on printed Latin to 83% on Leonardo's mirror writing — and that all five frontier models tested (Gemini Flash, Gemini Pro, Gemini Lite, Claude Sonnet, Claude Opus) converge to the same performance range on handwritten text.
 
-We show that consistency scores can drive a practical trust taxonomy for digital libraries: green (>80%, machine-verified), yellow (30-80%, approximate), red (<30%, expert review recommended). Applied to Source Library's 17,000+ books, this system enables honest communication of AI reliability to scholars. The Leonardo da Vinci case study reveals a distinctive failure mode we call "informed confabulation" — the model produces topically correct but textually unfaithful output, identifying the right subject matter while generating different text on each run. We argue that for historical manuscripts, knowing *what you don't know* is as valuable as the transcription itself.
+We show that consistency scores can drive a practical trust taxonomy for digital libraries: green (>90%), yellow (70–90%), red (<70%). Per-sentence consensus analysis reveals that on printed text, 14 of 15 sentences are reliably transcribed, while on Leonardo's mirror-script, not a single sentence achieves consistent reproduction across runs. Comparison against Richter's expert transcriptions reveals that self-consistency overestimates accuracy by ~20 percentage points on manuscript text, quantifying the "calibration gap" between model agreement and ground truth. Image preprocessing (horizontal flipping + contrast enhancement) improves Leonardo consistency from 84% to 94%, while reasoning models (Gemini Pro with extended thinking) make performance worse, indicating the bottleneck is perceptual, not cognitive. Applied to Source Library's 17,000+ books, this system enables honest communication of AI reliability to scholars. The Leonardo da Vinci case study reveals a distinctive failure mode we call "informed confabulation" — the model produces topically correct but textually unfaithful output. We argue that for historical manuscripts, knowing *what you don't know* is as valuable as the transcription itself.
 
 ---
 
@@ -105,15 +105,23 @@ All books are processed through an automated pipeline:
 
 As of April 2026, the pipeline has processed ~3.35 million pages. The evaluation corpus for this paper comprises:
 
-| Category | Source | Pages | Script | Language |
-|----------|--------|-------|--------|----------|
-| Printed text | Vitruvius, *De architectura* (IA) | 2 | Roman type | Latin |
-| Printed text | Drebbel, *Tractatus duo* (BPH) | 2 | Roman type | Latin |
-| Handwritten manuscript | Bodleian MS. Digby 23 (*Timaeus*) | 2 | 12th c. hand | Latin |
-| Mirror-script manuscript | Leonardo, *Etudes sur la chevelure* (IA) | 3 | Mirror script | Italian |
-| Mirror-script (flipped) | Same, horizontally mirrored | 2 | Reversed mirror | Italian |
+| Category | Source | Pages Tested | Script | Language |
+|----------|--------|:---:|--------|----------|
+| Printed text | Vitruvius, *De architectura* (IA, 1521) | 2 | Roman type | Latin |
+| Printed text | Drebbel, *Tractatus duo* (BPH) | 3 | Roman type | Latin |
+| Printed text | Leonardo, *Trattato della pittura* (IA, 1651) | 3 | Roman type | Italian |
+| Printed compilation | Leonardo, *Del moto e misura dell'acqua* (IA) | 2 | Roman type | Italian |
+| Handwritten manuscript | Bodleian MS. Digby 23, *Timaeus* (12th c.) | 2 | Caroline minuscule | Latin |
+| Mirror-script MS | Leonardo, *Etudes sur la chevelure* (IA) | 4 | Mirror script | Italian |
+| Mirror-script MS | Leonardo, *Fragments anatomiques* (Windsor, IA) | 2 | Mirror script | Italian |
+| Mirror-script MS | Leonardo, *Notes de geometrie* (IA) | 2 | Mirror script | Italian |
+| Mirror-script MS | Leonardo, *Croquis de botanique* (IA) | 2 | Mirror script | Italian |
+| Mirror-script MS | Leonardo, *Notes de physiognomonie* (IA) | 2 | Mirror script | Italian |
+| Mirror-script MS | Leonardo, *Notes d'architecture* (IA) | 2 | Mirror script | Italian |
+| Mirror-script MS (blank) | Leonardo, *Codice sul volo degli uccelli* (IA) | 2 | Mirror script | Italian |
+| Ground truth | Richter, *Literary Works of Leonardo* (IA, 1883) | 20 | Printed transcription | Italian/English |
 
-[TODO: Expand corpus with additional Leonardo books, more manuscript samples, resolution variants]
+Total: 50 pages tested across 13 sources, with N=3–5 independent OCR runs per page.
 
 ---
 
@@ -276,7 +284,7 @@ This finding suggests that the bottleneck in mirror-script OCR is in low-level v
 
 ### 5.8 Expanded Corpus: Leonardo Across Topics
 
-We tested self-consistency across 5 Leonardo codices covering different subject matter (optics, anatomy, geometry, botany, physiognomy), each with original and flip+contrast preprocessing. Three codices (Water/Hydraulics, Flight of Birds, Architecture) returned HTTP 404 from Internet Archive and are reserved for future work.
+We tested self-consistency across 8 Leonardo codices covering different subject matter (optics, anatomy, water/hydraulics, flight, geometry, botany, physiognomy, architecture), each with both original and flip+contrast preprocessing.
 
 | Codex | Page | Type | Original Emb. | Flip+Contrast Emb. |
 |-------|------|------|---------------|---------------------|
@@ -425,9 +433,9 @@ This motivates a 2×2 experimental design:
 
 If consistency is driven by genuine reading, printed texts should score high regardless of fame. If driven by memorization, famous printed texts should score higher than obscure ones. For manuscripts, the prediction is cleaner: if the model is reciting memorized text, a famous text in an unfamiliar manuscript hand should still score high (it "knows" the text); if it is genuinely reading, the unfamiliar hand should degrade performance regardless of the text's fame.
 
-[TODO: Run this 2×2 experiment. Find an obscure manuscript in our corpus.]
+This experiment remains future work pending the identification of an obscure manuscript text in our corpus.
 
-### 6.7 Implications for Digital Libraries
+### 6.8 Implications for Digital Libraries
 
 For a digital library like Source Library, processing 17,000+ books at scale, these findings have immediate practical consequences:
 
@@ -439,7 +447,7 @@ For a digital library like Source Library, processing 17,000+ books at scale, th
 
 4. **Progressive improvement**: By storing all N runs, the library accumulates a dataset that can be used to evaluate future models. When a new model is released, it can be tested against the same images without re-running the full pipeline.
 
-### 6.8 Limitations
+### 6.9 Limitations
 
 1. **Small corpus**: Our results are based on a limited number of pages from a small number of sources. The findings on Leonardo are based on one book; generalization to other Leonardo manuscripts, or to other mirror-script traditions, remains to be demonstrated.
 
@@ -458,16 +466,53 @@ For a digital library like Source Library, processing 17,000+ books at scale, th
 Multimodal LLMs have made historical document transcription accessible at scale, but their reliability varies enormously by text type. We have shown that run-to-run self-consistency, measured via embedding cosine similarity, provides a practical reference-free quality signal that can be deployed without ground truth or language-specific resources.
 
 Our key findings:
+
 1. **Embedding similarity is the right metric** for OCR consistency — Jaccard word overlap conflates formatting noise with genuine divergence, depressing printed text scores to 55–62% while embedding similarity correctly registers them at 99%.
 2. **All frontier models converge** on manuscripts at ~27% Jaccard consistency, regardless of model size or architecture. The bottleneck is visual perception, not language modeling.
 3. **The embedding–Jaccard gap** is itself a diagnostic: a large gap (76+ percentage points on Leonardo vs. 40 on printed text) signals informed confabulation — semantic coherence without textual fidelity.
-4. **Sentence-level analysis** reveals which specific passages a model can and cannot read, enabling within-page trust annotation.
-5. **Multi-run consensus** can transform consistency measurement from a passive quality label into an active transcription enhancement tool.
+4. **Self-consistency overestimates accuracy by ~20 points** on difficult manuscripts. Comparison against Richter's expert transcriptions shows 83% self-consistency corresponds to only 65% actual accuracy — a calibration gap that exists only for confabulated text.
+5. **Image preprocessing outperforms reasoning.** Flipping mirror-script images (84%→94%) is more effective than asking larger models to reason about reversed letterforms (86%→64–81%). The bottleneck is perceptual, not cognitive.
+6. **Consistency tracks text density, not topic.** Across eight Leonardo codices spanning optics, anatomy, botany, geometry, and more, consistency depends on how much handwritten text a page contains, not what the text is about.
+7. **Sentence-level consensus** reveals that on Leonardo, not a single sentence is consistently reproduced across runs — a finding invisible to page-level scores. Per-sentence trust annotation transforms consistency from a passive label into an active transcription enhancement tool.
 
-For digital libraries processing historical documents at scale, these methods enable honest communication of AI reliability to scholars — telling readers not just what the AI transcribed, but how much they should trust it.
+For digital libraries processing historical documents at scale, these methods enable honest communication of AI reliability to scholars — telling readers not just what the AI transcribed, but how much they should trust it. For Leonardo's notebooks, the honest answer is: the AI knows what he writes about, but cannot yet read what he wrote.
 
 ---
 
 ## References
 
-[TODO: Full bibliography from Related Work citations]
+Artstein, R. (2017). Inter-annotator agreement. In *Handbook of Linguistic Annotation* (pp. 297–313). Springer.
+
+Clérice, T. (2022). Evaluating Deep Learning Methods for Word Segmentation of Scripta Continua Texts in Old French and Latin. *Journal on Computing and Cultural Heritage*, 15(3), 1–17.
+
+Constum, T., Seuret, M., Stutzmann, D., Clinchant, S., & Liwicki, M. (2022). Impact of Training Set Size on the Performance of HTR Models for Medieval Latin Manuscripts. In *Document Analysis Systems* (DAS 2022). Springer.
+
+Crosilla, L., et al. (2025). Benchmarking LLMs and HTR Models for Historical Document Transcription. *arXiv preprint*.
+
+Farquhar, S., Kossen, J., Kuhn, L., & Gal, Y. (2024). Detecting hallucinations in large language models using semantic entropy. *Nature*, 630, 625–630.
+
+Greif, M., et al. (2025). Multimodal LLMs for OCR, Post-Correction, and NER on German City Directories (1754–1870). *arXiv preprint*.
+
+Humphries, D., et al. (2024). Unlocking the Archives: Using Large Language Models to Transcribe Handwritten Historical Documents. *arXiv preprint* arXiv:2407.12437.
+
+Inoue, N. (2025). Resolution Sensitivity of Context-Independent OCR with Multimodal LLMs. *arXiv preprint*.
+
+Kim, J., et al. (2025). LLMs Outperform Traditional OCR/HTR Systems on Historical Tabular Records. *arXiv preprint*.
+
+Liu, Y., et al. (2024). OCRBench: On the Hidden Mystery of OCR in Large Multimodal Models. *arXiv preprint* arXiv:2305.07895.
+
+Manakul, P., Liusie, A., & Gales, M. J. F. (2023). SelfCheckGPT: Zero-Resource Black-Box Hallucination Detection for Generative Large Language Models. In *Proceedings of EMNLP 2023*.
+
+Neudecker, C., et al. (2021). A Survey of OCR Evaluation Tools and Metrics. In *Proceedings of the 6th International Workshop on Historical Document Imaging and Processing* (HIP 2021).
+
+Pinche, A. (2023). CREMMALab: Generic HTR Models for Medieval Manuscripts. *Digital Medievalist*, 15.
+
+Richter, J. P. (1883). *The Literary Works of Leonardo da Vinci*. 2 vols. London: Sampson Low, Marston, Searle & Rivington.
+
+Wang, X., Wei, J., Schuurmans, D., Le, Q., Chi, E., Narang, S., Chowdhery, A., & Zhou, D. (2023). Self-Consistency Improves Chain of Thought Reasoning in Language Models. In *Proceedings of ICLR 2023*.
+
+Wang, Z., et al. (2025). Seeing is Believing? A Benchmark for OCR Hallucination under Visual Degradation. In *Proceedings of NeurIPS 2025*.
+
+Xiong, M., et al. (2025). Can LLMs Express Their Uncertainty? An Empirical Evaluation of Confidence Elicitation in LLMs. In *Proceedings of ICLR 2025*.
+
+Zhou, Y., et al. (2025). Semantic Hallucination in Scene Text Recognition. *arXiv preprint*.
