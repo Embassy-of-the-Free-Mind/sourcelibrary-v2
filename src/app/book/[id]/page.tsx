@@ -588,29 +588,19 @@ async function BookInfo({ id }: { id: string }) {
                 </div>
               )}
 
-              {/* Source attribution — always visible */}
-              {(book.image_source?.provider_name || book.image_source?.contributing_library) && (
-                <p className="text-xs text-stone-500 mt-3">
-                  Images:{' '}
-                  {book.image_source.source_url ? (
-                    <a href={book.image_source.source_url} target="_blank" rel="noopener noreferrer" className="hover:text-stone-300 transition-colors">
-                      {book.image_source.attribution || book.image_source.contributing_library || book.image_source.provider_name}
-                    </a>
-                  ) : (
-                    <span>{book.image_source.attribution || book.image_source.contributing_library || book.image_source.provider_name}</span>
-                  )}
-                </p>
-              )}
-
-              {/* Translation credit */}
-              {translatedCount > 0 && (
-                <p className="text-xs text-stone-500 mt-2">
-                  Translated by Source Library AI{' '}
-                  <span className="text-stone-600">&middot;</span>{' '}
-                  <Link href="/about/research" className="hover:text-stone-300 transition-colors underline underline-offset-2">
-                    How our translations work
-                  </Link>
-                </p>
+              {/* Collections */}
+              {bookCollections.length > 0 && (
+                <div className="flex flex-wrap items-center gap-2 mt-3">
+                  {bookCollections.map(col => (
+                    <Link
+                      key={col.slug}
+                      href={`/collections/${col.slug}`}
+                      className="text-xs text-stone-400 hover:text-white bg-white/5 hover:bg-white/10 px-2.5 py-1 rounded-full transition-colors"
+                    >
+                      {col.name}
+                    </Link>
+                  ))}
+                </div>
               )}
 
               {/* Dedication */}
@@ -691,15 +681,14 @@ async function BookInfo({ id }: { id: string }) {
                 <SearchPanel bookId={book.id} />
               </div>
 
-              {/* Bibliographic Info */}
-              <BibliographicInfo book={book} pagesCount={pages.length} />
-
-              {/* Related Editions (WEMI work_id linking) */}
-              {(book as unknown as { work_id?: string }).work_id && (
-                <Suspense fallback={null}>
-                  <RelatedEditions bookId={book.id} workId={(book as unknown as { work_id?: string }).work_id!} />
-                </Suspense>
-              )}
+              {/* Bibliographic Info (includes related editions, attribution) */}
+              <BibliographicInfo book={book} pagesCount={pages.length} hasTranslations={translatedCount > 0}>
+                {(book as unknown as { work_id?: string }).work_id && (
+                  <Suspense fallback={null}>
+                    <RelatedEditions bookId={book.id} workId={(book as unknown as { work_id?: string }).work_id!} />
+                  </Suspense>
+                )}
+              </BibliographicInfo>
 
               {/* Cross-reference: artworks by this author (pre-computed) */}
               {(book as any).author_cross_ref && (

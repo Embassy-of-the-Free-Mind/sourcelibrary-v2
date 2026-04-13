@@ -151,7 +151,7 @@ export default function SearchPanel({ bookId, className = '' }: SearchPanelProps
           value={query}
           onChange={(e) => setQuery(e.target.value)}
           placeholder="Search pages..."
-          className="bg-transparent text-white placeholder-white/50 outline-none text-sm w-48"
+          className="bg-transparent text-white placeholder-white/50 outline-none text-sm w-64 sm:w-80"
           autoFocus
         />
         {query && (

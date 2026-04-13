@@ -109,9 +109,11 @@ function getCatalogLabel(source: string): string {
 interface BibliographicInfoProps {
   book: Book;
   pagesCount: number;
+  hasTranslations?: boolean;
+  children?: React.ReactNode;
 }
 
-export default function BibliographicInfo({ book, pagesCount }: BibliographicInfoProps) {
+export default function BibliographicInfo({ book, pagesCount, hasTranslations, children }: BibliographicInfoProps) {
   const router = useRouter();
   const [expanded, setExpanded] = useState(false);
   const [copied, setCopied] = useState(false);
@@ -471,6 +473,21 @@ export default function BibliographicInfo({ book, pagesCount }: BibliographicInf
             </div>
           ) : null}
 
+          {/* Translation credit */}
+          {hasTranslations && (
+            <div className="mt-4 pt-4 border-t border-stone-700">
+              <div className="flex gap-2 text-sm">
+                <span className="text-stone-500 w-24 flex-shrink-0">Translation:</span>
+                <span className="text-stone-200">
+                  Source Library AI{' '}
+                  <a href="/about/research" className="text-accent-gold hover:text-accent-gold/80 text-xs ml-1">
+                    How our translations work
+                  </a>
+                </span>
+              </div>
+            </div>
+          )}
+
           {/* Data Provenance */}
           {book.field_provenance && Object.keys(book.field_provenance).length > 0 && (
             <div className="mt-4 pt-4 border-t border-stone-700">
@@ -537,6 +554,9 @@ export default function BibliographicInfo({ book, pagesCount }: BibliographicInf
               )}
             </div>
           )}
+
+          {/* Extra content (e.g. related editions) */}
+          {children}
 
           {/* Copy citation button */}
           <div className="mt-4 pt-3 border-t border-stone-700">
