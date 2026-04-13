@@ -21,7 +21,7 @@ const MAX_PAGES_PER_DOMAIN = 5000;  // Prevent one domain from crowding out othe
 // Per-domain rate limits (requests per second) — be a good citizen
 const DOMAIN_RATE_LIMITS = {
   'archive.org':              15,    // IA is permissive, no crawl-delay
-  'digitale-sammlungen.de':   8,    // MDZ: open robots.txt
+  'digitale-sammlungen.de':   2,    // MDZ: reduced from 8 — was triggering rate limits
   'wellcomecollection.org':   6,    // No explicit policy
   'digital.bodleian.ox.ac.uk':4,    // No explicit policy, conservative
   'cudl.lib.cam.ac.uk':      4,    // No explicit policy, conservative
@@ -88,17 +88,35 @@ const r2 = new S3Client({
 const BUCKET = process.env.R2_BUCKET_NAME || 'sourcelibrary-images';
 const R2_PUBLIC_URL = process.env.R2_PUBLIC_URL || 'https://images.sourcelibrary.org';
 
-async function downloadImage(url) {
-  const controller = new AbortController();
-  const timeout = setTimeout(() => controller.abort(), 60_000); // 60s for full-res images
-  try {
-    const res = await fetch(url, { signal: controller.signal });
-    if (!res.ok) throw new Error(`HTTP ${res.status}`);
-    const buffer = Buffer.from(await res.arrayBuffer());
-    const mimeType = res.headers.get('content-type') || 'image/jpeg';
-    return { buffer, mimeType };
-  } finally {
-    clearTimeout(timeout);
+async function downloadImage(url, retries = 2) {
+  for (let attempt = 0; attempt <= retries; attempt++) {
+    const controller = new AbortController();
+    const timeout = setTimeout(() => controller.abort(), 60_000); // 60s for full-res images
+    try {
+      const res = await fetch(url, { signal: controller.signal });
+      if (res.status === 429 || res.status === 503) {
+        clearTimeout(timeout);
+        if (attempt < retries) {
+          const delay = (attempt + 1) * 3000; // 3s, 6s backoff
+          await new Promise(r => setTimeout(r, delay));
+          continue;
+        }
+      }
+      if (!res.ok) throw new Error(`HTTP ${res.status}`);
+      const buffer = Buffer.from(await res.arrayBuffer());
+      const mimeType = res.headers.get('content-type') || 'image/jpeg';
+      return { buffer, mimeType };
+    } catch (err) {
+      clearTimeout(timeout);
+      if (attempt < retries && (err.name === 'AbortError' || err.message?.includes('fetch failed'))) {
+        const delay = (attempt + 1) * 3000;
+        await new Promise(r => setTimeout(r, delay));
+        continue;
+      }
+      throw err;
+    } finally {
+      clearTimeout(timeout);
+    }
   }
 }
 
@@ -373,8 +391,16 @@ async function main() {
           failed++;
           domainStats[domain].fail++;
           if (failed <= 10) console.error(`  FAIL [${domain}]: ${result.error}`);
-          if (domainStats[domain].fail >= 5 && domainStats[domain].ok === 0) {
+          const ds = domainStats[domain];
+          if (ds.fail >= 5 && ds.ok === 0) {
             console.warn(`  [${domain}] Circuit breaker: 5 failures with 0 successes, skipping domain`);
+            circuitBroken.add(domain);
+            break;
+          }
+          // Ratio-based breaker: if >50 attempts and >90% failure, stop wasting time
+          const total = ds.ok + ds.fail;
+          if (total >= 50 && ds.fail / total > 0.9) {
+            console.warn(`  [${domain}] Circuit breaker: ${ds.fail}/${total} failed (${(ds.fail/total*100).toFixed(0)}%), skipping domain`);
             circuitBroken.add(domain);
             break;
           }

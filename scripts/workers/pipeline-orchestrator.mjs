@@ -4424,7 +4424,9 @@ Rules:
           source: 'hetzner-worker',
         }),
         db.collection('cron_runs').insertOne({
+          task: 'pipeline-orchestrator',
           cron: 'pipeline-orchestrator-worker',
+          started_at: new Date(startTime),
           timestamp: new Date(),
           duration_ms: duration,
           status: log.errors.length > 0 ? 'partial' : 'success',
@@ -4466,7 +4468,9 @@ Rules:
     // Write failure record
     try {
       await db.collection('cron_runs').insertOne({
+        task: 'pipeline-orchestrator',
         cron: 'pipeline-orchestrator-worker',
+        started_at: new Date(startTime),
         timestamp: new Date(),
         duration_ms: Date.now() - startTime,
         status: 'failed',
