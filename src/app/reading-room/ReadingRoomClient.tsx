@@ -512,7 +512,7 @@ export default function ReadingRoomClient({ featuredPassage }: ReadingRoomClient
             <div className="flex-1 min-w-0">
               <div className="border border-[#e8e4dc] rounded-lg bg-white overflow-hidden shadow-sm">
                 {/* Messages */}
-                <div ref={chatContainerRef} className="min-h-[300px] max-h-[600px] overflow-y-auto p-6 space-y-6">
+                <div ref={chatContainerRef} className="min-h-[300px] max-h-[70vh] overflow-y-auto p-6 space-y-6">
                   {messages.length === 0 && (
                     <div className="text-center py-8">
                       <img src="/brand/png/logo-compact--black-on-transparent--96h.png" alt="" className="w-10 h-10 mx-auto mb-3 opacity-40" />
@@ -585,12 +585,18 @@ export default function ReadingRoomClient({ featuredPassage }: ReadingRoomClient
                           {/* Response text */}
                           {assistant.content && (
                             <div className="bg-[#f5f0e8] text-[#1a1612] rounded-2xl rounded-bl-sm px-4 py-3">
-                              <div className="prose prose-sm max-w-none font-body text-[15px] leading-relaxed prose-p:mb-3 prose-p:mt-0 prose-headings:mb-2 prose-headings:mt-4 prose-ul:my-2 prose-li:my-0.5 prose-a:text-[#9e4a3a] prose-a:underline prose-a:underline-offset-2 prose-a:decoration-[#9e4a3a]/30 hover:prose-a:decoration-[#9e4a3a] prose-blockquote:border-l-[#c9a86c] prose-blockquote:text-[#444] prose-strong:text-[#1a1612]">
+                              <div className="prose prose-sm max-w-none font-body text-[15px] leading-relaxed prose-p:mb-4 prose-p:mt-0 prose-h3:text-base prose-h3:font-semibold prose-h3:mt-5 prose-h3:mb-2 prose-h2:text-lg prose-h2:mt-6 prose-h2:mb-3 prose-headings:text-[#1a1612] prose-ul:my-3 prose-ol:my-3 prose-li:my-1 prose-a:text-[#9e4a3a] prose-a:underline prose-a:underline-offset-2 prose-a:decoration-[#9e4a3a]/30 hover:prose-a:decoration-[#9e4a3a] prose-blockquote:border-l-[#c9a86c] prose-blockquote:text-[#444] prose-blockquote:my-4 prose-blockquote:italic prose-strong:text-[#1a1612] prose-hr:my-4 prose-img:rounded-lg prose-img:shadow-md prose-img:my-4 prose-img:max-h-[300px] prose-img:w-auto">
                                 <ReactMarkdown
                                   remarkPlugins={[remarkGfm]}
                                   components={{
                                     a: ({ href, children }) => (
                                       <a href={href} target="_blank" rel="noopener noreferrer">{children}</a>
+                                    ),
+                                    img: ({ src, alt }) => (
+                                      <a href={src as string} target="_blank" rel="noopener noreferrer">
+                                        {/* eslint-disable-next-line @next/next/no-img-element */}
+                                        <img src={src as string} alt={(alt as string) || ''} className="rounded-lg shadow-md max-h-[300px] w-auto cursor-pointer hover:shadow-lg transition-shadow" loading="lazy" />
+                                      </a>
                                     ),
                                   }}
                                 >{ensureParagraphBreaks(linkifySourceUrls(assistant.content))}</ReactMarkdown>
