@@ -322,9 +322,9 @@ async function getCollectionShowcase() {
   return JSON.parse(JSON.stringify(items));
 }
 
-const FALLBACK_COUNTS = { totalBooks: 10002, translatedToEnglish: 10002, firstTranslationCount: 5454, authorCount: 3200, languageCount: 50 };
+const FALLBACK_COUNTS = { totalBooks: 10002, translatedToEnglish: 10002, firstTranslationCount: 5454, authorCount: 3200, languageCount: 50, artworkCount: 50000 };
 
-async function getBookCounts(): Promise<{ totalBooks: number; translatedToEnglish: number; firstTranslationCount: number; authorCount: number; languageCount: number }> {
+async function getBookCounts(): Promise<{ totalBooks: number; translatedToEnglish: number; firstTranslationCount: number; authorCount: number; languageCount: number; artworkCount: number }> {
   // 1. Try Supabase (fast Postgres counts, synced every 2h)
   try {
     const [totalRes, firstTransRes] = await Promise.all([
@@ -348,12 +348,23 @@ async function getBookCounts(): Promise<{ totalBooks: number; translatedToEnglis
         if (cached?.languageCount) languageCount = cached.languageCount;
       } catch { /* MongoDB unavailable — use fallback */ }
 
+      // Artwork count from MongoDB (gallery_images with quality >= 0.7)
+      let artworkCount = FALLBACK_COUNTS.artworkCount;
+      try {
+        const db = await getReadDb();
+        artworkCount = await db.collection('gallery_images').countDocuments(
+          { gallery_quality: { $gte: 0.7 } },
+          { maxTimeMS: 3000 },
+        );
+      } catch { /* use fallback */ }
+
       return {
         totalBooks: totalRes.count,
         translatedToEnglish: totalRes.count,
         firstTranslationCount: firstTransRes.count ?? FALLBACK_COUNTS.firstTranslationCount,
         authorCount,
         languageCount,
+        artworkCount,
       };
     }
   } catch { /* Supabase unreachable — try MongoDB */ }
@@ -372,6 +383,7 @@ async function getBookCounts(): Promise<{ totalBooks: number; translatedToEnglis
         firstTranslationCount: cached.firstTranslationCount,
         authorCount: cached.authorCount ?? FALLBACK_COUNTS.authorCount,
         languageCount: cached.languageCount ?? FALLBACK_COUNTS.languageCount,
+        artworkCount: cached.artworkCount ?? FALLBACK_COUNTS.artworkCount,
       };
     }
   } catch { /* DB unreachable */ }
@@ -502,6 +514,8 @@ export default async function HomePage() {
                   <Link href="/search?has_translation=true" className="hover:text-accent-rust transition-colors">{counts.translatedToEnglish.toLocaleString('en-US')} translated books and manuscripts</Link>
                   {' '}&middot;{' '}
                   <Link href="/search?first_translation=true" className="hover:text-accent-rust transition-colors">{counts.firstTranslationCount.toLocaleString('en-US')} for the first time</Link>
+                  {' '}&middot;{' '}
+                  <Link href="/gallery" className="hover:text-accent-rust transition-colors">{counts.artworkCount.toLocaleString('en-US')} illustrations</Link>
                 </p>
               </div>
               <Link
