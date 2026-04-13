@@ -194,13 +194,14 @@ export default function ReadingRoomClient({ featuredPassage }: ReadingRoomClient
   const [sidebarTab, setSidebarTab] = useState<'recent' | 'mine'>('recent');
   const [visibility, setVisibility] = useState<'public' | 'private'>('public');
   const [showThinking, setShowThinking] = useState(false);
+  const [visibleThreads, setVisibleThreads] = useState(5);
   const chatContainerRef = useRef<HTMLDivElement>(null);
   const inputRef = useRef<HTMLTextAreaElement>(null);
   const abortRef = useRef<AbortController | null>(null);
 
   // Fetch public threads
   useEffect(() => {
-    fetch('/api/embassy/threads?limit=10')
+    fetch('/api/embassy/threads?limit=50')
       .then(r => r.json())
       .then(data => { if (data.threads) setThreads(data.threads); })
       .catch(() => {});
@@ -711,7 +712,7 @@ export default function ReadingRoomClient({ featuredPassage }: ReadingRoomClient
                 {/* Tab toggle */}
                 <div className="flex gap-4 mb-4">
                   <button
-                    onClick={() => setSidebarTab('recent')}
+                    onClick={() => { setSidebarTab('recent'); setVisibleThreads(5); }}
                     className={`text-[11px] tracking-[0.2em] uppercase font-sans transition-colors ${
                       sidebarTab === 'recent' ? 'text-[#1a1612]' : 'text-[#b0a89c] hover:text-[#8a8480]'
                     }`}
@@ -720,7 +721,7 @@ export default function ReadingRoomClient({ featuredPassage }: ReadingRoomClient
                   </button>
                   {isSignedIn && (
                     <button
-                      onClick={() => setSidebarTab('mine')}
+                      onClick={() => { setSidebarTab('mine'); setVisibleThreads(5); }}
                       className={`text-[11px] tracking-[0.2em] uppercase font-sans transition-colors ${
                         sidebarTab === 'mine' ? 'text-[#1a1612]' : 'text-[#b0a89c] hover:text-[#8a8480]'
                       }`}
@@ -731,8 +732,8 @@ export default function ReadingRoomClient({ featuredPassage }: ReadingRoomClient
                 </div>
 
                 {(() => {
-                  const displayThreads = sidebarTab === 'mine' ? myThreads : threads;
-                  if (displayThreads.length === 0) {
+                  const allThreads = sidebarTab === 'mine' ? myThreads : threads;
+                  if (allThreads.length === 0) {
                     return (
                       <p className="text-[#8a8480] text-sm font-body">
                         {sidebarTab === 'mine'
@@ -741,6 +742,8 @@ export default function ReadingRoomClient({ featuredPassage }: ReadingRoomClient
                       </p>
                     );
                   }
+                  const displayThreads = allThreads.slice(0, visibleThreads);
+                  const hasMore = allThreads.length > visibleThreads;
                   return (
                     <div className="space-y-0">
                       {displayThreads.map((thread) => (
@@ -761,6 +764,14 @@ export default function ReadingRoomClient({ featuredPassage }: ReadingRoomClient
                           </p>
                         </Link>
                       ))}
+                      {hasMore && (
+                        <button
+                          onClick={() => setVisibleThreads(v => v + 10)}
+                          className="block w-full py-2 mt-1 text-[11px] text-[#8a8480] hover:text-[#6b6560] transition-colors font-sans text-center"
+                        >
+                          Show more ({allThreads.length - visibleThreads} remaining)
+                        </button>
+                      )}
                     </div>
                   );
                 })()}
