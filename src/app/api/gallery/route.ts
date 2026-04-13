@@ -8,8 +8,6 @@ const CLIP_URL = process.env.CLIP_URL || 'http://46.224.122.120:3456/clip';
 
 export const maxDuration = 30;
 
-const CLIP_URL = process.env.CLIP_URL || 'http://46.224.122.120:3456/clip';
-
 /**
  * Get CLIP text embedding for a query, then search clip_embeddings via Supabase.
  * Returns gallery_image IDs with visual similarity scores.
