@@ -3166,9 +3166,11 @@ Rules:
               await db.collection('pages').bulkWrite(bulkOps, { ordered: false });
             }
 
-            // Delete from warehouse after live write succeeds
-            await db.collection('pages_warehouse').deleteMany({ book_id: candidate.id });
-            await db.collection('books_warehouse').deleteOne({ id: candidate.id });
+            // Mark warehouse copy as promoted but keep it (permanent backup)
+            await db.collection('books_warehouse').updateOne(
+              { id: candidate.id },
+              { $set: { promoted_at: new Date(), promoted_to: 'live' } }
+            );
 
             promoted++;
           } catch (err) {
