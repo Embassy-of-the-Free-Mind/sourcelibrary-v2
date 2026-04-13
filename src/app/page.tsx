@@ -327,11 +327,9 @@ const FALLBACK_COUNTS = { totalBooks: 10002, translatedToEnglish: 10002, firstTr
 async function getBookCounts(): Promise<{ totalBooks: number; translatedToEnglish: number; firstTranslationCount: number; authorCount: number; languageCount: number }> {
   // 1. Try Supabase (fast Postgres counts, synced every 2h)
   try {
-    const [totalRes, translatedRes, firstTransRes] = await Promise.all([
+    const [totalRes, firstTransRes] = await Promise.all([
       supabase.from('books_catalog').select('id', { count: 'exact', head: true })
         .eq('visible', true).gt('pages_translated', 0),
-      supabase.from('books_catalog').select('id', { count: 'exact', head: true })
-        .eq('visible', true).gte('translation_pct', 90),
       supabase.from('books_catalog').select('id', { count: 'exact', head: true })
         .eq('visible', true).eq('is_first_translation', true).gt('pages_translated', 0),
     ]);
@@ -352,7 +350,7 @@ async function getBookCounts(): Promise<{ totalBooks: number; translatedToEnglis
 
       return {
         totalBooks: totalRes.count,
-        translatedToEnglish: translatedRes.count ?? FALLBACK_COUNTS.translatedToEnglish,
+        translatedToEnglish: totalRes.count,
         firstTranslationCount: firstTransRes.count ?? FALLBACK_COUNTS.firstTranslationCount,
         authorCount,
         languageCount,
