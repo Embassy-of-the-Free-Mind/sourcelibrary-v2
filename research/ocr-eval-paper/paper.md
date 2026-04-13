@@ -299,6 +299,23 @@ Two patterns emerge:
 
 This finding motivates a two-stage pipeline: (1) classify each page as text-heavy vs. diagram-dominant using a quick vision check, then (2) apply flip+contrast only to text-heavy pages before OCR.
 
+### 5.9 Ground Truth: Self-Consistency vs. Accuracy
+
+Richter's *Literary Works of Leonardo da Vinci* (1883) provides expert transcriptions of specific Leonardo manuscript passages. Our library contains both Richter's printed transcriptions (1,208 pages, OCR'd) and the original manuscripts, enabling a direct comparison between self-consistency and accuracy.
+
+We ran N=5 fresh OCR passes on Leonardo pages 49 and 53, then measured both self-consistency (embedding similarity between runs) and accuracy (embedding similarity between runs and Richter's expert transcription):
+
+| Leonardo Page | Self-Consistency | vs Richter (mean) | vs Richter (best) | Gap |
+|--------------|-----------------|-------------------|-------------------|-----|
+| p49 (optics) | 83.0% | **64.9%** | 73.1% | **18.1 pp** |
+| p53 (optics) | 87.8% | **67.0%** | 74.9% | **20.8 pp** |
+
+**Self-consistency overestimates quality by ~18–21 percentage points.** The model agrees with itself (83–88%) far more than it agrees with the expert (65–67%). This quantifies the confabulation problem: the model generates plausible Italian about the correct topic, which is self-consistent in semantic space, but does not match the actual text Leonardo wrote.
+
+The best-match Richter page (p16 in both cases) contains related optics content, confirming the model identifies the correct subject domain. But a 73–75% embedding match to the ground truth — compared to 99% for printed text — means the transcription is in the semantic neighborhood without being textually faithful.
+
+This result has a direct practical implication: **self-consistency scores should be calibrated downward for difficult manuscripts.** A self-consistency score of 83% on a manuscript corresponds to roughly 65% accuracy against expert transcription — a 20-point calibration gap. On printed text, where self-consistency is 99% and accuracy is presumably comparable, no such correction is needed.
+
 ---
 
 ## 6. Discussion
@@ -422,7 +439,7 @@ For a digital library like Source Library, processing 17,000+ books at scale, th
 
 2. **Jaccard as baseline**: Our initial N=2 results used Jaccard similarity, which we have shown to be a poor metric for OCR consistency. The N=5 embedding results are more reliable but cover fewer sources. We need to re-run the full corpus comparison (all models, manuscript baseline) with embedding metrics.
 
-3. **No ground truth yet**: We measure consistency but not accuracy. The Gemini Lite result (high consistency, low quality) demonstrates that consistency alone is insufficient. A ground truth evaluation using Richter's published transcriptions of Leonardo — available in our own library as *The Literary Works of Leonardo da Vinci* (1,208 pages, OCR'd) — is planned. This would allow us to compare AI transcriptions against expert human readings of the same manuscript pages, providing the first direct measurement of VLM mirror-script accuracy.
+3. **Limited ground truth**: Our Richter comparison (Section 5.9) provides the first accuracy measurement, showing a ~20-point calibration gap between self-consistency and expert accuracy. However, this comparison is limited to two pages from one manuscript. A comprehensive accuracy evaluation would require page-level alignment between Richter's transcriptions and specific manuscript folios across multiple codices — work that requires paleographic expertise to establish the folio correspondences.
 
 4. **Embedding model confound**: We use Gemini embeddings to evaluate Gemini OCR output. If the embedding model shares biases with the OCR model (e.g., both represent "plausible Italian about optics" similarly), the embedding scores could overestimate semantic consistency. Cross-family evaluation (e.g., using OpenAI embeddings to evaluate Gemini OCR) would address this.
 
