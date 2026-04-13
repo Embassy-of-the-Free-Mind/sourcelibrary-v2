@@ -33,9 +33,11 @@ const RETRY_DELAY = 5000;
 
 // ── Leonardo Codices by Topic ───────────────────────────────────────────────
 
-function iaIiif(iaId, pageNum) {
+function iaIiif(iaId, pageNum, opts = {}) {
   const pad = String(pageNum).padStart(4, '0');
-  return `https://iiif.archive.org/image/iiif/3/${iaId}%2F${iaId}_jp2.zip%2F${iaId}_jp2%2F${iaId}_${pad}.jp2/full/max/0/default.jpg`;
+  const ext = opts.ext || 'jp2';
+  const innerName = opts.innerName || iaId;
+  return `https://iiif.archive.org/image/iiif/3/${iaId}%2F${innerName}_${ext}.zip%2F${innerName}_${ext}%2F${innerName}_${pad}.${ext}/full/max/0/default.jpg`;
 }
 
 const CORPUS = [
@@ -62,6 +64,7 @@ const CORPUS = [
     topic: 'water',
     type: 'mirror-script',
     ia_id: 'delmotoemisurad00leongoog',
+    iiif_opts: { ext: 'tif' },  // Google-scanned, TIF not JP2
     pages: [20, 40, 60, 80],
   },
   {
@@ -70,6 +73,7 @@ const CORPUS = [
     topic: 'flight',
     type: 'mirror-script',
     ia_id: 'IManoscrittiDiLeonardoDaVinci',
+    iiif_opts: { innerName: 'I_manoscritti_di_Leonardo_da_Vinci' },  // Different internal name
     pages: [15, 25, 35, 45],
   },
   {
@@ -101,7 +105,7 @@ const CORPUS = [
     label: 'Leonardo: Architecture/Fortifications',
     topic: 'architecture',
     type: 'mirror-script',
-    ia_id: 'notesetcroquis00leon',  // if this doesn't work, try notesetcroquisar00leon
+    ia_id: 'notesetcroquisar00leon',  // corrected: was notesetcroquis00leon
     pages: [10, 20, 30, 40],
   },
 
@@ -316,7 +320,7 @@ async function main() {
     for (const pageNum of source.pages.slice(0, 2)) {  // 2 pages per source
       const url = source.r2
         ? source.r2(pageNum)
-        : iaIiif(source.ia_id, pageNum);
+        : iaIiif(source.ia_id, pageNum, source.iiif_opts);
 
       console.log(`  Page ${pageNum}:`);
 
