@@ -8,7 +8,9 @@
 \usepackage{tikz}
 \usepackage{caption}
 \usepackage{subcaption}
+\usepackage{float}
 \usetikzlibrary{positioning,arrows.meta,shapes.geometric,calc,decorations.pathreplacing}
+\captionsetup{font=small,labelfont=bf}
 
 \hypersetup{colorlinks=true,linkcolor=blue!60!black,citecolor=blue!60!black,urlcolor=blue!60!black}
 
@@ -28,9 +30,7 @@
 \thispagestyle{empty}
 
 \begin{abstract}
-\noindent Multimodal large language models can now OCR and translate thousands of historical manuscripts at scale. But how much should a reader trust the result? We introduce a reference-free trust metric based on run-to-run self-consistency: transcribe the same page multiple times and measure agreement using embedding cosine similarity. On a corpus of 50 pages spanning printed books and Leonardo da Vinci's mirror-script notebooks across eight codices, embedding consistency varies from 99\% on printed Latin to 83\% on Leonardo's mirror writing, and all five frontier models tested converge to the same range on handwritten text.
-
-Per-sentence consensus reveals that on printed text, 14/15 sentences are reliably transcribed; on Leonardo's mirror-script, \emph{not a single sentence} is consistent across runs. Comparison against Richter's expert transcriptions shows self-consistency overestimates accuracy by ${\sim}$20 percentage points on manuscript text. Image preprocessing (flipping + contrast) improves consistency from 84\% to 94\%, while reasoning models make performance \emph{worse}---the bottleneck is perceptual, not cognitive. The Leonardo case reveals ``informed confabulation'': topically correct but textually unfaithful output. For historical manuscripts, knowing \emph{what you don't know} is as valuable as the transcription itself.
+\noindent Multimodal LLMs can now OCR historical manuscripts at scale---but how much should a reader trust the result? We introduce a reference-free trust metric based on run-to-run self-consistency: transcribe the same page $N{=}5$ times and measure embedding cosine similarity between runs. On 50 pages spanning printed books and Leonardo da Vinci's mirror-script notebooks, consistency varies from 99\% on printed text to 83\% on Leonardo, with all five frontier models converging to the same range. Comparison against expert transcriptions reveals a ${\sim}$20-point ``calibration gap'': the model agrees with itself far more than with the ground truth. Per-sentence analysis shows that on Leonardo, \emph{not a single sentence} is reliably reproduced---a finding invisible to page-level scores. Image preprocessing (flipping + contrast) improves consistency from 84\% to 94\%, while reasoning models make it \emph{worse}. We identify ``informed confabulation''---topically correct but textually unfaithful output---and propose trust labels that let scholars judge reliability at a glance.
 \end{abstract}
 
 \keywords{OCR, historical manuscripts, self-consistency, trust scoring, Leonardo da Vinci, VLM hallucination, digital humanities}
@@ -42,24 +42,24 @@ In February 2022, one of the authors encountered a 1497 edition of Ficino's \emp
 
 The pipeline works remarkably well on printed text. But when we turned it to Leonardo da Vinci's mirror-script notebooks, the AI produced fluent Italian about the right topics---but the \emph{specific text changed completely between runs}. Same model, same image, same prompt---different words every time.
 
-\textbf{Contributions:} (1)~Systematic evaluation of LLM OCR consistency across text types, models, and preprocessing. (2)~Evidence that self-consistency overestimates accuracy by ${\sim}$20 points on manuscripts. (3)~A trust taxonomy and consensus tool for digital libraries. (4)~The first assessment of automated transcription on Leonardo's mirror script, revealing ``informed confabulation.''
+\textbf{Contributions:} (1)~The first systematic evaluation of multimodal LLM OCR consistency across 5 models, 10 preprocessing methods, and 8 Leonardo codices. (2)~A measured ${\sim}$20-point calibration gap between self-consistency and expert accuracy, quantifying when to distrust the metric. (3)~Per-sentence trust annotation that reveals \emph{zero} reliable sentences on Leonardo---invisible to page-level scores. (4)~``Informed confabulation'' as a named failure mode for VLM-based manuscript OCR.
 
 % --- Figure 1: Core contrast ---
-\begin{figure*}[t]
+\begin{figure}[H]
 \centering
-\begin{subfigure}[t]{0.48\textwidth}
+\begin{subfigure}[t]{0.48\columnwidth}
 \centering
 \includegraphics[width=\linewidth]{figures/vitruvius-p33.jpg}
-\caption{Vitruvius, \emph{De architectura} (1521). Printed Latin. \textbf{99.1\%} embedding consistency. Five runs produce the same text.}
+\caption{Printed Latin (1521).\\Consistency: \textbf{99.1\%}}
 \end{subfigure}\hfill
-\begin{subfigure}[t]{0.48\textwidth}
+\begin{subfigure}[t]{0.48\columnwidth}
 \centering
 \includegraphics[width=\linewidth]{figures/leonardo-p49.jpg}
-\caption{Leonardo, \emph{\'Etudes sur la chevelure} (c.\,1490). Mirror-script. \textbf{82.2\%} embedding consistency. Run lengths: 314--2,939 characters.}
+\caption{Mirror-script (c.\,1490).\\Consistency: \textbf{82.2\%}}
 \end{subfigure}
-\caption{The core contrast. Printed text is read identically across runs (left). Leonardo's mirror-script produces topically related but textually different output each time (right)---``informed confabulation.''}
+\caption{The core contrast. Printed text (a) produces identical output across 5 runs. Leonardo's mirror-script (b) produces different text each time.}
 \label{fig:contrast}
-\end{figure*}
+\end{figure}
 
 % ============================================================================
 \section{Related Work}
@@ -76,50 +76,40 @@ The pipeline works remarkably well on printed text. But when we turned it to Leo
 \section{Method}
 
 % --- Figure 2: Method overview ---
-\begin{figure}[t]
+\begin{figure}[H]
 \centering
 \begin{tikzpicture}[
-    node distance=0.5cm,
-    box/.style={draw, rounded corners, fill=#1, minimum width=2.8cm, minimum height=0.6cm, font=\scriptsize, align=center},
-    arr/.style={-{Stealth[length=4pt]}, thick, gray!70},
+    node distance=0.35cm,
+    box/.style={draw, rounded corners, fill=#1, minimum width=2.5cm, minimum height=0.5cm, font=\tiny, align=center},
+    arr/.style={-{Stealth[length=3pt]}, thick, gray!70},
 ]
-% Pipeline
-\node[box=blue!10] (img) {Page Image\\(IIIF source)};
-\node[box=orange!10, below=of img] (ocr) {$N{=}5$ OCR Runs\\(Gemini Flash)};
-\node[box=yellow!10, below=of ocr] (embed) {Embed each run\\(gemini-embedding-001)};
-\node[box=green!10, below=of embed] (pair) {Pairwise cosine\\similarity};
-\node[box=purple!10, below=of pair] (score) {Self-Consistency\\Score};
+\node[box=blue!10] (img) {Page Image};
+\node[box=orange!10, below=of img] (ocr) {$N{=}5$ OCR Runs};
+\node[box=yellow!10, below=of ocr] (embed) {Embed each run};
+\node[box=green!10, below=of embed] (pair) {Pairwise cosine sim.};
+\node[box=purple!10, below=of pair] (score) {SC Score};
 
 \draw[arr] (img) -- (ocr);
 \draw[arr] (ocr) -- (embed);
 \draw[arr] (embed) -- (pair);
 \draw[arr] (pair) -- (score);
 
-% Trust output
-\node[box=green!25, right=0.6cm of score, minimum width=1.8cm] (green) {\textcolor{green!50!black}{\textbf{Green}} $>$90\%};
-\node[box=yellow!30, above=0.15cm of green, minimum width=1.8cm] (yellow) {\textcolor{orange!70!black}{\textbf{Yellow}} 70--90\%};
-\node[box=red!15, below=0.15cm of green, minimum width=1.8cm] (red) {\textcolor{red!60!black}{\textbf{Red}} $<$70\%};
+\node[box=green!25, right=0.4cm of score, minimum width=1.4cm] (green) {\textcolor{green!50!black}{\textbf{G}} $>$90};
+\node[box=yellow!30, above=0.1cm of green, minimum width=1.4cm] (yellow) {\textcolor{orange!70!black}{\textbf{Y}} 70--90};
+\node[box=red!15, below=0.1cm of green, minimum width=1.4cm] (red) {\textcolor{red!60!black}{\textbf{R}} $<$70};
 
 \draw[arr] (score) -- (green);
 \draw[arr] (score) |- (yellow);
 \draw[arr] (score) |- (red);
-
-% Optional: preprocessing
-\node[box=cyan!10, left=0.6cm of ocr, minimum width=2cm] (pre) {Preprocess?\\(flip, contrast)};
-\draw[arr, dashed] (pre) -- (ocr);
-
-% Optional: ground truth
-\node[box=gray!10, left=0.6cm of pair, minimum width=2cm] (gt) {Ground truth\\(Richter)};
-\draw[arr, dashed] (gt) -- (pair);
 \end{tikzpicture}
-\caption{Method overview. Each page is OCR'd $N{=}5$ times, embedded, and scored by pairwise cosine similarity. Optional: image preprocessing before OCR; ground-truth comparison via Richter.}
+\caption{Method: OCR $N{=}5$ times, embed, score pairwise cosine similarity, classify into trust bands.}
 \label{fig:method}
 \end{figure}
 
 \textbf{Corpus.} Source Library contains ${\sim}$17,000 books and 3.35M processed pages. Our evaluation corpus: 50 pages across 13 sources---printed Latin and Italian (Vitruvius, Drebbel, Trattato della pittura, Del moto), a 12th c.\ manuscript (Bodleian Timaeus), and 7 Leonardo mirror-script codices (optics, anatomy, geometry, botany, physiognomy, architecture, flight). Richter's \emph{Literary Works of Leonardo}~\cite{richter1883} provides ground truth.
 
 \textbf{Self-consistency score.} For page image $I$, generate $N$ transcriptions $T_1,\ldots,T_N$ and compute:
-$$\textrm{SC}(I) = \frac{1}{\binom{N}{2}} \sum_{i<j} \textrm{sim}(T_i, T_j)$$
+$$\textrm{SC}(I) = \frac{2}{N(N{-}1)} \sum_{i<j} \textrm{sim}(T_i, T_j)$$
 We compare: \emph{Jaccard} (word-set overlap), \emph{embedding cosine} (Gemini \texttt{embedding-001}, 768-dim), and \emph{CER}. We use $N{=}5$ and strip metadata tags before comparison.
 
 \textbf{Models.} Gemini 3 Flash, 3.1 Flash Lite, 3 Pro; Claude Sonnet 4, Opus 4.6. Default temperature, no few-shot.
@@ -129,7 +119,7 @@ We compare: \emph{Jaccard} (word-set overlap), \emph{embedding cosine} (Gemini \
 
 \subsection{Embedding Similarity Is the Right Metric}
 
-\begin{table}[t]
+\begin{table}[H]
 \small
 \centering
 \caption{Consistency by metric ($N{=}5$, Gemini Flash).}
@@ -155,58 +145,52 @@ Five models on the Bodleian manuscript ($N{=}2$, Jaccard): Gemini Lite 36.7\%*, 
 \subsection{Image Preprocessing}
 
 % --- Figure 3: Preprocessing comparison ---
-\begin{figure}[t]
+\begin{figure}[H]
 \centering
 \begin{subfigure}[t]{0.48\columnwidth}
 \centering
 \includegraphics[width=\linewidth]{figures/leonardo-p49.jpg}
-\caption{Original mirror-script\\Embedding: 84.0\%}
+\caption{Original: 84.0\%}
 \end{subfigure}\hfill
 \begin{subfigure}[t]{0.48\columnwidth}
 \centering
 \includegraphics[width=\linewidth]{figures/leonardo-p49-processed.jpg}
-\caption{Flipped + contrast\\Embedding: \textbf{94.4\%}}
+\caption{Flip+contrast: \textbf{94.4\%}}
 \end{subfigure}
-\caption{Best preprocessing: horizontal flip + grayscale + contrast enhancement. Closes half the gap to printed text (84\%$\to$94\% vs.\ 99\% printed baseline).}
+\caption{Best preprocessing closes half the gap to printed text (84\%$\to$94\% vs.\ 99\% baseline).}
 \label{fig:preprocess-images}
 \end{figure}
 
 Ten methods tested on Leonardo p49 (Fig.~\ref{fig:preprocess-images},~\ref{fig:preprocess-chart}). \textbf{Flip + contrast} achieves 94.4\%---closing half the gap to printed text. Binarization and denoising \emph{hurt}: the model needs rich grayscale data. On diagram pages, flipping can introduce hallucinated text (98.8\%$\to$88.8\%), motivating selective preprocessing.
 
-\begin{figure}[t]
+\begin{figure}[H]
 \centering
 \begin{tikzpicture}[
-    bar/.style={fill=#1, minimum height=0.28cm, anchor=west},
-    lbl/.style={anchor=east, font=\scriptsize},
+    bar/.style={fill=#1, minimum height=0.22cm, anchor=west},
+    lbl/.style={anchor=east, font=\tiny},
 ]
-\def\s{0.06}
-\node[lbl] at (-0.1, 3.1) {Flip+contrast};
-\node[bar=blue!60, minimum width=94.4*\s cm] at (0, 3.1) {};
-\node[font=\scriptsize, anchor=west] at (94.4*\s+0.05, 3.1) {\textbf{94.4}};
-
-\node[lbl] at (-0.1, 2.5) {Flip only};
-\node[bar=blue!45, minimum width=94.1*\s cm] at (0, 2.5) {};
-\node[font=\scriptsize, anchor=west] at (94.1*\s+0.05, 2.5) {94.1};
-
-\node[lbl] at (-0.1, 1.9) {Contrast only};
-\node[bar=blue!35, minimum width=90.4*\s cm] at (0, 1.9) {};
-\node[font=\scriptsize, anchor=west] at (90.4*\s+0.05, 1.9) {90.4};
-
-\node[lbl] at (-0.1, 1.3) {Binarize (adpt.)};
-\node[bar=gray!30, minimum width=85.6*\s cm] at (0, 1.3) {};
-\node[font=\scriptsize, anchor=west] at (85.6*\s+0.05, 1.3) {85.6};
-
-\node[lbl] at (-0.1, 0.7) {\textit{Original}};
-\node[bar=gray!40, minimum width=84.0*\s cm] at (0, 0.7) {};
-\node[font=\scriptsize, anchor=west] at (84.0*\s+0.05, 0.7) {84.0};
-
-\node[lbl] at (-0.1, 0.1) {Denoise};
-\node[bar=red!30, minimum width=76.1*\s cm] at (0, 0.1) {};
-\node[font=\scriptsize, anchor=west] at (76.1*\s+0.05, 0.1) {76.1};
-
-\draw[dashed, gray!60] (99*\s, -0.15) -- (99*\s, 3.5) node[above, font=\tiny\itshape] {printed: 99\%};
+\def\s{0.055}
+\node[lbl] at (-0.1, 2.5) {Flip+contr.};
+\node[bar=blue!60, minimum width=94.4*\s cm] at (0, 2.5) {};
+\node[font=\tiny, anchor=west] at (94.4*\s+0.03, 2.5) {\textbf{94.4}};
+\node[lbl] at (-0.1, 2.0) {Flip};
+\node[bar=blue!45, minimum width=94.1*\s cm] at (0, 2.0) {};
+\node[font=\tiny, anchor=west] at (94.1*\s+0.03, 2.0) {94.1};
+\node[lbl] at (-0.1, 1.5) {Contrast};
+\node[bar=blue!35, minimum width=90.4*\s cm] at (0, 1.5) {};
+\node[font=\tiny, anchor=west] at (90.4*\s+0.03, 1.5) {90.4};
+\node[lbl] at (-0.1, 1.0) {\textit{Original}};
+\node[bar=gray!40, minimum width=84.0*\s cm] at (0, 1.0) {};
+\node[font=\tiny, anchor=west] at (84.0*\s+0.03, 1.0) {84.0};
+\node[lbl] at (-0.1, 0.5) {Binarize};
+\node[bar=red!20, minimum width=80.7*\s cm] at (0, 0.5) {};
+\node[font=\tiny, anchor=west] at (80.7*\s+0.03, 0.5) {80.7};
+\node[lbl] at (-0.1, 0.0) {Denoise};
+\node[bar=red!30, minimum width=76.1*\s cm] at (0, 0.0) {};
+\node[font=\tiny, anchor=west] at (76.1*\s+0.03, 0.0) {76.1};
+\draw[dashed, gray!60] (99*\s, -0.2) -- (99*\s, 2.8) node[above, font=\tiny\itshape] {printed};
 \end{tikzpicture}
-\caption{Embedding consistency (\%) by preprocessing method on Leonardo p49. Dashed line = printed text baseline.}
+\caption{Embedding consistency (\%) by preprocessing. Dashed = printed baseline.}
 \label{fig:preprocess-chart}
 \end{figure}
 
@@ -217,27 +201,21 @@ Gemini Pro with extended thinking (4,096--8,192 tokens): embedding drops from Fl
 \subsection{Consistency Tracks Text Density, Not Topic}
 
 % --- Figure 4: Consistency bands ---
-\begin{figure}[t]
+\begin{figure}[H]
 \centering
 \begin{tikzpicture}[
-    band/.style={draw, rounded corners=3pt, minimum width=4.5cm, minimum height=0.55cm, font=\scriptsize, align=center},
-    note/.style={font=\tiny\itshape, gray!70},
+    band/.style={draw, rounded corners=2pt, minimum width=3.8cm, minimum height=0.4cm, font=\tiny, align=center},
 ]
-\node[band, fill=green!20] (p) at (0, 2.4) {Printed text: 98--100\%};
-\node[band, fill=green!12] (b) at (0, 1.6) {Blank / diagram: 98--100\%};
-\node[band, fill=yellow!20] (l) at (0, 0.8) {Labels / captions: 97--99\%};
+\node[band, fill=green!20] (p) at (0, 1.8) {Printed: 98--100\%};
+\node[band, fill=green!12] (b) at (0, 1.2) {Blank/diagram: 98--100\%};
+\node[band, fill=yellow!20] (l) at (0, 0.6) {Labels: 97--99\%};
 \node[band, fill=orange!15] (t) at (0, 0.0) {Text-heavy MS: 77--93\%};
-\node[band, fill=red!10] (m) at (0, -0.8) {Bodleian MS (Jaccard): 19--27\%};
-
-\draw[decorate, decoration={brace, amplitude=4pt, mirror}, thick, green!50!black]
-    (2.6, 2.7) -- (2.6, 1.3) node[midway, right=5pt, font=\scriptsize] {reading};
-\draw[decorate, decoration={brace, amplitude=4pt, mirror}, thick, red!50!black]
-    (2.6, 0.3) -- (2.6, -1.1) node[midway, right=5pt, font=\scriptsize] {confabulating};
-
-\node[note, anchor=west] at (-2.8, -1.5) {8 codices: optics, anatomy, botany, geometry...};
-\node[note, anchor=west] at (-2.8, -1.8) {Topic makes no difference; text density does.};
+\draw[decorate, decoration={brace, amplitude=3pt, mirror}, thick, green!50!black]
+    (2.2, 2.0) -- (2.2, 1.0) node[midway, right=3pt, font=\tiny] {reading};
+\draw[decorate, decoration={brace, amplitude=3pt, mirror}, thick, red!50!black]
+    (2.2, 0.4) -- (2.2, -0.2) node[midway, right=3pt, font=\tiny] {confabulating};
 \end{tikzpicture}
-\caption{Embedding consistency bands by page content type across 8 Leonardo codices. Subject matter is irrelevant; visual complexity determines consistency.}
+\caption{Consistency bands across 8 codices. Topic is irrelevant; text density determines consistency.}
 \label{fig:bands}
 \end{figure}
 
@@ -246,30 +224,22 @@ Across 8 codices (optics, anatomy, water, flight, geometry, botany, physiognomy,
 \subsection{Sentence-Level: Zero Green on Leonardo}
 
 % --- Figure 5: Sentence-level comparison ---
-\begin{figure}[t]
+\begin{figure}[H]
 \centering
 \begin{tikzpicture}[
-    cell/.style={minimum width=0.25cm, minimum height=0.35cm},
+    cell/.style={minimum width=0.2cm, minimum height=0.28cm},
 ]
-% Vitruvius
-\node[font=\scriptsize\bfseries, anchor=east] at (-0.2, 1.0) {Vitruvius (printed)};
-\node[font=\tiny, anchor=east] at (-0.2, 0.6) {Trust: 95.5\%};
-\foreach \i in {1,...,14} {
-    \node[cell, fill=green!40] at (\i*0.3, 1.0) {};
-}
-\node[cell, fill=yellow!50] at (15*0.3, 1.0) {};
-\node[font=\tiny, anchor=west] at (15*0.3+0.3, 1.0) {14 green, 1 yellow};
+\node[font=\tiny\bfseries, anchor=east] at (-0.1, 0.7) {Printed};
+\foreach \i in {1,...,14} { \node[cell, fill=green!40] at (\i*0.24, 0.7) {}; }
+\node[cell, fill=yellow!50] at (15*0.24, 0.7) {};
+\node[font=\tiny, anchor=west] at (15*0.24+0.2, 0.7) {14G 1Y};
 
-% Leonardo
-\node[font=\scriptsize\bfseries, anchor=east] at (-0.2, -0.0) {Leonardo (mirror)};
-\node[font=\tiny, anchor=east] at (-0.2, -0.4) {Trust: 82.9\%};
-\foreach \i in {1,...,14} {
-    \node[cell, fill=yellow!50] at (\i*0.3, 0.0) {};
-}
-\node[cell, fill=red!40] at (15*0.3, 0.0) {};
-\node[font=\tiny, anchor=west] at (15*0.3+0.3, 0.0) {\textbf{0 green}, 14 yellow, 1 red};
+\node[font=\tiny\bfseries, anchor=east] at (-0.1, 0.0) {Leonardo};
+\foreach \i in {1,...,14} { \node[cell, fill=yellow!50] at (\i*0.24, 0.0) {}; }
+\node[cell, fill=red!40] at (15*0.24, 0.0) {};
+\node[font=\tiny, anchor=west] at (15*0.24+0.2, 0.0) {\textbf{0G} 14Y 1R};
 \end{tikzpicture}
-\caption{Per-sentence trust ($N{=}5$). Each cell = one sentence. On Leonardo, \textbf{not a single sentence} is reliably reproduced across runs. The page-level score (82.9\%) hides this.}
+\caption{Per-sentence trust. Each cell = one sentence. On Leonardo, \textbf{zero} sentences are green.}
 \label{fig:sentences}
 \end{figure}
 
@@ -278,37 +248,20 @@ Per-sentence consensus ($N{=}5$): Vitruvius (printed) scores 95.5\% trust with 1
 \subsection{The Calibration Gap}
 
 % --- Figure 6: Calibration gap ---
-\begin{figure}[t]
+\begin{figure}[H]
 \centering
-\begin{tikzpicture}[scale=0.85]
-\def\s{0.06}
-% Axis
-\draw[-{Stealth[length=3pt]}, gray] (48*\s,0) -- (103*\s,0);
+\begin{tikzpicture}[scale=0.8]
+\def\s{0.055}
+\draw[-{Stealth[length=2pt]}, gray] (48*\s,0) -- (103*\s,0);
 \foreach \x in {50,60,70,80,90,100}
-    \draw (\x*\s, -0.08) -- (\x*\s, 0.08) node[below=2pt, font=\tiny] {\x\%};
-
-% Printed
-\fill[green!50!black] (99*\s, 2.2) circle (3.5pt);
-\node[font=\scriptsize, anchor=west] at (99*\s+0.12, 2.2) {Printed};
-\node[font=\tiny, gray, anchor=west] at (99*\s+0.12, 1.9) {self $\approx$ accuracy};
-
-% Leonardo self
-\fill[orange!70!black] (83*\s, 1.1) circle (3.5pt);
-\node[font=\scriptsize, anchor=west] at (83*\s+0.12, 1.1) {Leonardo (self)};
-
-% Leonardo accuracy
-\fill[red!60!black] (65*\s, 0.4) circle (3.5pt);
-\node[font=\scriptsize, anchor=west] at (65*\s+0.12, 0.4) {Leonardo (vs.\ Richter)};
-
-% Gap bracket
-\draw[decorate, decoration={brace, amplitude=3pt}, thick, red!60]
-    (83*\s, 0.55) -- (83*\s, 0.95);
-\draw[decorate, decoration={brace, amplitude=3pt, mirror}, thick, red!60]
-    (65*\s, 0.55) -- (65*\s, 0.95);
-\draw[thick, red!40] (65*\s, 0.75) -- (83*\s, 0.75);
-\node[font=\tiny\bfseries, fill=white, inner sep=1pt] at (74*\s, 0.75) {${\sim}$20pp};
+    \draw (\x*\s, -0.06) -- (\x*\s, 0.06) node[below=1pt, font=\tiny] {\x};
+\fill[green!50!black] (99*\s, 1.6) circle (3pt) node[right=2pt, font=\tiny] {Printed (self$\approx$acc.)};
+\fill[orange!70!black] (83*\s, 0.9) circle (3pt) node[right=2pt, font=\tiny] {Leonardo (self)};
+\fill[red!60!black] (65*\s, 0.3) circle (3pt) node[right=2pt, font=\tiny] {Leonardo (vs Richter)};
+\draw[<->, thick, red!50] (65*\s, 0.55) -- (83*\s, 0.55);
+\node[font=\tiny\bfseries, fill=white, inner sep=1pt] at (74*\s, 0.55) {20pp};
 \end{tikzpicture}
-\caption{The calibration gap. Self-consistency (83\%) overestimates accuracy (65\%) by ${\sim}$20 points on Leonardo manuscripts. No gap on printed text.}
+\caption{Self-consistency (83\%) overestimates accuracy (65\%) by ${\sim}$20pp on manuscripts. No gap on printed text.}
 \label{fig:gap}
 \end{figure}
 
@@ -316,19 +269,19 @@ Against Richter's expert transcriptions~\cite{richter1883}: self-consistency is 
 
 \subsection{Printed Leonardo Control}
 
-\begin{figure}[t]
+\begin{figure}[H]
 \centering
 \begin{subfigure}[t]{0.48\columnwidth}
 \centering
 \includegraphics[width=\linewidth]{figures/trattato-p30.jpg}
-\caption{Printed \emph{Trattato} (1651)\\Embedding: \textbf{99.6\%}}
+\caption{Printed (1651): \textbf{99.6\%}}
 \end{subfigure}\hfill
 \begin{subfigure}[t]{0.48\columnwidth}
 \centering
 \includegraphics[width=\linewidth]{figures/anatomy-p25.jpg}
-\caption{MS Anatomy (Windsor)\\Embedding: \textbf{77.8\%}}
+\caption{Manuscript: \textbf{77.8\%}}
 \end{subfigure}
-\caption{Same author, different media. The model reads printed Leonardo at 99.6\% but scores only 77.8\% on his manuscripts. The failure is purely handwriting perception.}
+\caption{Same author, different media. The model reads printed Leonardo perfectly but cannot decode his handwriting.}
 \label{fig:printed-vs-ms}
 \end{figure}
 
@@ -337,13 +290,11 @@ The \emph{Trattato della pittura} (1651)---Leonardo's text in printed form---sco
 % ============================================================================
 \section{Discussion}
 
-\textbf{Informed confabulation} is not random hallucination---the model demonstrates genuine understanding of what Leonardo writes \emph{about}. But it samples text from a learned distribution of ``plausible Italian about [topic]'' rather than decoding the image. The embedding--Jaccard gap (77~pp) quantifies this; run length variation ($\pm$130\%) confirms it.
+\textbf{Informed confabulation} is not random hallucination. On an optics page, five runs all discuss light, shadow, and visual rays---but with entirely different sentences. Run~1: ``\emph{Ogn' azione ne' nostri sensi \`e fatta per via d'alcuna linia.}'' Run~2: ``\emph{Li simulacri si passano l'uno per l'piracolo.}'' Both are plausible 15th-century Italian about optics. Neither can be verified against the image. The embedding--Jaccard gap (77~pp) quantifies this; run length variation ($\pm$130\%) confirms it. The model is not reading---it is performing Leonardo.
 
-\textbf{Consensus as enhancement.} Multi-run data can build confidence-annotated transcriptions: keep consistent fragments, mark uncertain ones. This transforms consistency from a passive label into an active tool---preserving what the model \emph{can} read while honestly marking what it cannot.
+\textbf{What should practitioners do?} For printed text ($>$95\% of most historical collections): use single-run OCR with confidence. For manuscripts: (1)~run $N{=}5$ passes, (2)~compute per-sentence consistency, (3)~present trust-annotated output where green sentences can be cited and yellow/red sentences are flagged for expert review. This costs 5$\times$ a single OCR pass---negligible versus paleographic labor---and transforms consistency from a passive label into an active transcription tool.
 
-\textbf{For digital libraries} processing at scale: printed books ($>$95\% of most collections) are production-quality. The ${\sim}$5\% of manuscripts need trust indicators. Self-consistency scoring automates triage at negligible cost versus expert review.
-
-\textbf{Limitations.} Small corpus (50 pages). Richter comparison limited to 2 pages. Gemini embeddings evaluate Gemini OCR (potential bias). Training data contamination and temperature dependence remain unexplored.
+\textbf{Limitations.} Small corpus (50 pages). Richter comparison limited to 2 pages. Gemini embeddings evaluate Gemini OCR (potential same-family bias). Training data contamination and temperature dependence remain unexplored. The trust taxonomy thresholds (90\%/70\%) are empirically motivated but not formally validated against human judgments of transcription quality.
 
 % ============================================================================
 \section{Conclusion}
