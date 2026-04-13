@@ -126,7 +126,7 @@ export default function ThreadPage({ params }: { params: Promise<{ id: string }>
             <div key={msg.id} className="flex gap-3">
               {msg.authorType === 'ai' ? (
                 <img
-                  src="/brand/png/logo-compact--black-on-transparent--96h.png"
+                  src="/brand/png/icon-only--black-on-transparent--96h.png"
                   alt="Librarian"
                   className="flex-shrink-0 w-10 h-10 rounded-full"
                 />
