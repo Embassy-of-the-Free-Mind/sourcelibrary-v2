@@ -1457,6 +1457,196 @@ Output structure:
   return { submitted: totalSubmitted, jobName: firstJobName || parentJobId, childCount: childJobIds.length, method };
 }
 
+// ── Cross-book OCR pooling (#1082) ──
+// Pools pages from multiple small books into shared OCR batches.
+// Reduces batch creation count — one 500-page batch instead of 20 separate ones.
+// Each page carries its own book-specific prompt (title/author/year context).
+// Collector already supports book_ids arrays and metadata.key matching.
+const CROSS_BOOK_OCR_THRESHOLD = 250; // Books with fewer pages go into cross-book pool
+
+async function submitCrossBookOcrBatches(db, books) {
+  const ocrModel = OCR_MODEL_LITE;
+  const basePrompt = await getOcrPromptFromDb(db);
+
+  // Guard: skip books with active batch_jobs or needs_splitting
+  const eligible = [];
+  for (const book of books) {
+    if (book.needs_splitting) continue; // Spread books need special prompt, keep per-book
+    const activeBatch = await db.collection('batch_jobs').countDocuments({
+      $or: [{ book_id: book.id }, { book_ids: book.id }],
+      type: 'ocr',
+      status: { $in: ['pending', 'processing', 'JOB_STATE_PENDING', 'JOB_STATE_RUNNING'] },
+    });
+    if (activeBatch > 0) {
+      console.log(`    Skipping ${(book.title || '').substring(0, 40)}: active OCR batch exists`);
+      continue;
+    }
+    eligible.push(book);
+  }
+  if (eligible.length === 0) return { submitted: 0, batchCount: 0, bookIds: [] };
+
+  // Gather pages from all eligible books
+  const allDownloaded = []; // { pageId, image, prompt, bookId }
+  const bookMap = new Map();
+
+  for (const book of eligible) {
+    if (allDownloaded.length >= OCR_FILE_BATCH_SIZE) break;
+
+    const remaining = OCR_FILE_BATCH_SIZE - allDownloaded.length;
+    const pages = await db.collection('pages')
+      .find({
+        book_id: book.id,
+        $or: [{ 'ocr.data': { $exists: false } }, { 'ocr.data': null }, { 'ocr.data': '' }],
+        $and: [{
+          $or: [
+            { archived_photo: { $exists: true, $regex: /^https?:\/\// } },
+            { cropped_photo: { $exists: true, $nin: [null, ''] } },
+            { photo: { $exists: true, $ne: null } },
+          ]
+        }]
+      })
+      .sort({ page_number: 1 })
+      .limit(remaining)
+      .project({ _id: 0, id: 1, page_number: 1, photo: 1, photo_original: 1, archived_photo: 1, cropped_photo: 1, crop: 1 })
+      .toArray();
+
+    if (pages.length === 0) continue;
+
+    // Build book-specific prompt with provenance context
+    let prompt = basePrompt;
+    const yearStr = book.year ? `Published ${book.year}.` : '';
+    const copyrightNote = book.year && book.year < 1930 ? 'This work is in the public domain.' : '';
+    if (yearStr || book.title) {
+      prompt += `\n\n**Document context:** "${book.title || 'Unknown'}" by ${book.author || 'Unknown'}. ${yearStr} ${copyrightNote}`.trim();
+    }
+
+    console.log(`    Downloading ${pages.length} images for ${(book.title || '').substring(0, 40)}...`);
+    const downloaded = await downloadImagesParallel(pages, IMAGE_CONCURRENCY);
+    if (downloaded.length === 0) {
+      console.log(`    WARNING: All ${pages.length} downloads failed for ${(book.title || '').substring(0, 40)}`);
+      continue;
+    }
+    console.log(`    Downloaded ${downloaded.length}/${pages.length} for ${(book.title || '').substring(0, 40)}`);
+
+    bookMap.set(book.id, book);
+    for (const item of downloaded) {
+      allDownloaded.push({ pageId: item.pageId, image: item.image, prompt, bookId: book.id });
+    }
+  }
+
+  if (allDownloaded.length === 0) return { submitted: 0, batchCount: 0, bookIds: [] };
+  console.log(`  Cross-book OCR pool: ${allDownloaded.length} pages from ${bookMap.size} books`);
+
+  // Build and submit a single cross-book batch
+  const childJobId = nanoid();
+  const chunkBookIds = [...bookMap.keys()];
+  const displayName = `pipeline-ocr-cross-${chunkBookIds.length}books-${childJobId}`;
+
+  console.log(`    Building JSONL for ${allDownloaded.length} pages (cross-book OCR, ${chunkBookIds.length} books)...`);
+  const { filePath: jsonlFile, fileSize } = buildJsonlFile(allDownloaded, (item) => ({
+    request: {
+      contents: [{
+        parts: [
+          { text: item.prompt },
+          { inlineData: { mimeType: item.image.mimeType, data: item.image.data } },
+        ],
+      }],
+      safetySettings: [
+        { category: 'HARM_CATEGORY_HARASSMENT', threshold: 'BLOCK_NONE' },
+        { category: 'HARM_CATEGORY_HATE_SPEECH', threshold: 'BLOCK_NONE' },
+        { category: 'HARM_CATEGORY_SEXUALLY_EXPLICIT', threshold: 'BLOCK_NONE' },
+        { category: 'HARM_CATEGORY_DANGEROUS_CONTENT', threshold: 'BLOCK_NONE' },
+        { category: 'HARM_CATEGORY_CIVIC_INTEGRITY', threshold: 'BLOCK_NONE' },
+      ],
+      generationConfig: {
+        temperature: 0.1,
+        maxOutputTokens: 16384,
+        thinkingConfig: { thinkingBudget: 0 },
+      },
+    },
+    metadata: { key: item.pageId },
+  }));
+  console.log(`    JSONL size: ${(fileSize / 1024 / 1024).toFixed(1)} MB for ${allDownloaded.length} pages`);
+
+  // Upload + create batch with key rotation (same pattern as image extraction)
+  let batchJob = null;
+  const bestKey = getLeastLoadedKey();
+  const startKey = bestKey >= 0 ? bestKey : nextBatchKeyIndex();
+  for (let attempt = 0; attempt < GEMINI_BATCH_KEYS.length; attempt++) {
+    const uki = (startKey + attempt) % GEMINI_BATCH_KEYS.length;
+    let fileResult;
+    try {
+      fileResult = await uploadBatchFile(jsonlFile, displayName, uki);
+      console.log(`    Uploaded file: ${fileResult.name} (key ${uki})`);
+    } catch (uploadErr) {
+      const msg = uploadErr.message || '';
+      if (msg.includes('429') || msg.includes('quota') || msg.includes('RESOURCE_EXHAUSTED')) {
+        console.log(`    Upload key ${uki} FILE API quota exhausted, trying next...`);
+        _geminiKeyLoads[uki] = MAX_ACTIVE_PER_KEY;
+        continue;
+      }
+      throw uploadErr;
+    }
+    try {
+      batchJob = await createBatchJobFromFile(ocrModel, fileResult.name, displayName, uki);
+      recordSubmission(uki);
+      try { await getSdkClient(uki).files.delete({ name: fileResult.name }); } catch (_) {}
+      break;
+    } catch (batchErr) {
+      try { await getSdkClient(uki).files.delete({ name: fileResult.name }); } catch (_) {}
+      const msg = batchErr.message || '';
+      if (msg.includes('429') || msg.includes('quota') || msg.includes('RESOURCE_EXHAUSTED')) {
+        console.log(`    Batch create key ${uki} quota exhausted, trying next...`);
+        _geminiKeyLoads[uki] = MAX_ACTIVE_PER_KEY;
+        continue;
+      }
+      throw batchErr;
+    }
+  }
+  try { fs.unlinkSync(jsonlFile); } catch (_) {}
+  if (!batchJob) throw new Error('ALL_KEYS_QUOTA_EXHAUSTED');
+
+  // Record in batch_jobs with book_ids array
+  await db.collection('batch_jobs').insertOne({
+    id: childJobId,
+    job_name: batchJob.name,
+    gemini_job_name: batchJob.name,
+    type: 'ocr',
+    book_id: chunkBookIds[0],
+    book_ids: chunkBookIds,
+    page_ids: allDownloaded.map(d => d.pageId),
+    page_count: allDownloaded.length,
+    status: 'pending',
+    model: ocrModel,
+    prompt_version: OCR_PROMPT_VERSION,
+    submission_method: 'file',
+    cross_book: true,
+    created_at: new Date(),
+    updated_at: new Date(),
+  });
+
+  // Mark all pooled books as ocr_submitted
+  for (const bookId of chunkBookIds) {
+    await db.collection('books').updateOne(
+      { id: bookId },
+      { $set: { 'pipeline_auto.preview_batch_at': new Date() } }
+    );
+  }
+
+  // Log usage
+  await logUsage({
+    type: 'ocr', mode: 'batch', model: ocrModel,
+    book_id: chunkBookIds[0],
+    page_ids: allDownloaded.map(d => d.pageId), page_count: allDownloaded.length,
+    batch_job_id: childJobId, gemini_job_name: batchJob.name,
+    input_tokens: 0, output_tokens: 0, status: 'submitted',
+    endpoint: 'hetzner/pipeline-orchestrator',
+  }, db);
+
+  console.log(`  Cross-book OCR submitted: ${allDownloaded.length} pages from ${chunkBookIds.length} books — ${batchJob.name}`);
+  return { submitted: allDownloaded.length, batchCount: 1, bookIds: chunkBookIds };
+}
+
 /**
  * Submit image extraction via Gemini Batch API.
  * Mirrors submitOcrDirectly() but uses the image extraction prompt instead of OCR.
@@ -3037,7 +3227,34 @@ Rules:
           console.log(`  Preview pass: ${previewCandidates.length} books (first ${PREVIEW_PAGES} pages each)`);
         }
 
-        for (const book of previewCandidates) {
+        // Split into small books (cross-book pool) vs large/spread books (per-book)
+        const smallBooks = previewCandidates.filter(b => !b.needs_splitting && (b.pages_count || 0) < CROSS_BOOK_OCR_THRESHOLD);
+        const largeOrSpreadBooks = previewCandidates.filter(b => b.needs_splitting || (b.pages_count || 0) >= CROSS_BOOK_OCR_THRESHOLD);
+
+        // Cross-book pooling for small books — one batch instead of many
+        if (smallBooks.length > 0 && !DRY_RUN && await canSubmitMore()) {
+          try {
+            console.log(`  Cross-book pool: ${smallBooks.length} small books (<${CROSS_BOOK_OCR_THRESHOLD} pages)`);
+            const crossResult = await submitCrossBookOcrBatches(db, smallBooks);
+            if (crossResult.submitted > 0) {
+              log.ocr_submitted += crossResult.bookIds.length;
+            }
+          } catch (err) {
+            const msg = err.message || String(err);
+            if (msg === 'ALL_KEYS_QUOTA_EXHAUSTED') {
+              console.log(`  All keys quota exhausted during cross-book OCR`);
+            } else {
+              console.error(`  Cross-book OCR error: ${msg.substring(0, 120)}`);
+              // Fall back to per-book submission for these books
+              largeOrSpreadBooks.push(...smallBooks);
+            }
+          }
+        } else if (DRY_RUN && smallBooks.length > 0) {
+          console.log(`  Would cross-book pool: ${smallBooks.length} small books`);
+        }
+
+        // Per-book submission for large books and spread books
+        for (const book of largeOrSpreadBooks) {
           if (!await canSubmitMore()) {
             console.log(`  All keys saturated (${_geminiKeyLoads.join('/')}) — stopping OCR submissions`);
             break;
