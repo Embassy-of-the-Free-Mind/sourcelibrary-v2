@@ -226,7 +226,7 @@ async function main() {
   // Exclude Gallica (429s from Hetzner, archived locally via archive-gallica.mjs on Mac).
   // Exclude IA (handled by archive-bulk.mjs via JP2 zip download, much faster).
   // Prioritize providers that are NOT yet fully archived (IIIF, Cambridge, etc.)
-  const PRIORITY_PROVIDERS = ['iiif', 'cambridge', 'vatican', 'loc', 'wellcome', 'heidelberg', 'bl'];
+  const PRIORITY_PROVIDERS = ['iiif', 'bsb', 'cambridge', 'vatican', 'loc', 'wellcome', 'heidelberg', 'bl'];
   const priorityBooks = await db.collection('books')
     .find(
       {
@@ -259,7 +259,7 @@ async function main() {
 
   // Also include warehouse books from Hetzner-safe providers
   // Priority: likely first translations (non-English) first
-  const HETZNER_SAFE_PROVIDERS = [...PRIORITY_PROVIDERS, 'mdz', 'cmc_kloss', 'bodleian', 'penn_colenda', 'kyoto_rmda', 'ndl'];
+  const HETZNER_SAFE_PROVIDERS = [...PRIORITY_PROVIDERS, 'mdz', 'cmc_kloss', 'bodleian', 'penn_colenda', 'kyoto_rmda', 'ndl', 'bsb'];
   const warehouseBooks = await db.collection('books_warehouse')
     .find(
       {
