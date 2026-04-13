@@ -373,15 +373,21 @@ This underscores a key insight: self-consistency measures \emph{agreement among 
 
 \subsection{Training Data Contamination}
 
-Could the model be reproducing memorized transcriptions rather than decoding pixels? Three converging observations argue against strong contamination:
+Could the model be reproducing memorized transcriptions rather than decoding pixels? This question is sharpened by the fact that a substantial portion of Leonardo's manuscripts \emph{have} been transcribed and published in forms almost certainly present in LLM training corpora. Richter's \emph{Literary Works} (1883) is on Project Gutenberg; Ravaisson-Mollien's six-volume diplomatic transcription (1881--1891) is on the Internet Archive; MacCurdy's \emph{Notebooks of Leonardo da Vinci} (1938) has been widely reprinted and digitized. Between these sources and the e-Leo digital archive~\cite{eleo}, transcriptions exist for roughly 60--70\% of Leonardo's ${\sim}$7,000 manuscript pages. The model almost certainly has access to Leonardo's actual words as text---the question is whether it can connect those words to specific page images.
+
+The answer appears to be no. Four observations converge:
 
 \begin{enumerate}
-\item \textbf{Text density dominates fame.} Self-consistency is uniform across all 8 codices regardless of how widely a folio has been published or discussed. Pages from Leonardo's most famous notebooks score the same as pages from obscure codices---what matters is how much handwritten text the page contains, not how many times it has appeared in scholarly literature.
+\item \textbf{Vocabulary mismatch despite available ground truth.} Richter's transcription of the optics passages we tested is freely available online. Yet only 2 of 21 core optics terms from Richter appear in the AI output (``corpo'' and ``ombra''---common Italian words). The 19 absent terms (\emph{simulacri}, \emph{spiraculi}, \emph{spetie}, \emph{piramidi}, etc.) are distinctively Leonardian and appear in multiple online sources. The model has these words in its training data but does not produce them when looking at the manuscript.
 
-\item \textbf{The Ravaisson-Mollien confound.} The model achieves 97\% word overlap with Ravaisson-Mollien's printed transcription \emph{only} when the printed text is visible on the same page. When restricted to the manuscript facsimile alone, it produces descriptions rather than text. If the model had memorized the transcription from training data, it would reproduce it regardless of whether the print was visible.
+\item \textbf{Text density dominates fame.} Self-consistency is uniform across all 8 codices regardless of how widely a folio has been published. Pages from Leonardo's most cited notebooks score the same as obscure codices---what matters is how much handwritten text the page contains, not how much scholarship surrounds it.
 
-\item \textbf{Vocabulary mismatch.} Only 2 of 21 core optics terms from Richter's expert transcription appear in the AI output (``corpo'' and ``ombra''---both common Italian words that would appear in any text about physics). The 19 absent terms (\emph{simulacri}, \emph{spiraculi}, \emph{spetie}, etc.) are distinctively Leonardian. If the model were drawing from memorized Richter text, we would expect higher vocabulary overlap.
+\item \textbf{The Ravaisson-Mollien confound.} The model achieves 97\% word overlap with the printed transcription \emph{only} when the print is visible on the same page. When restricted to the facsimile alone, it cannot produce text. If the model had memorized the transcription and could match it to the page image, it would reproduce it regardless of whether the print was visible.
+
+\item \textbf{Style, not content, is the tell.} The AI produces normalized modern Italian (``\emph{Ogn' azione ne' nostri sensi}'') rather than Leonardo's distinctive orthography (``\emph{Prosspectiua. eragione. dimostratiua}''). A model retrieving memorized Richter text would reproduce Richter's faithfully preserved archaic spellings. Instead, the output reads like a modern Italian summary of Leonardo's topics---consistent with generation from training priors \emph{about} Leonardo, not retrieval of his actual words.
 \end{enumerate}
+
+The contamination picture is thus nuanced: the model knows Leonardo's topics and even his vocabulary from training data, but cannot perform the crucial mapping from \emph{this specific page image} to \emph{this specific passage}. The visual decoding step---reading reversed letterforms from 500-year-old ink on parchment---remains the binding constraint.
 
 \subsection{Limitations}
 
