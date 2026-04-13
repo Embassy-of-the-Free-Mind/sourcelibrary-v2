@@ -546,7 +546,20 @@ IMPORTANT: Use the actual quotes provided above. Don't invent new ones.`;
   const jsonMatch = responseText.match(/\{[\s\S]*\}/);
   if (!jsonMatch) throw new Error('Failed to parse book summary JSON');
 
-  const parsed = JSON.parse(jsonMatch[0]);
+  let parsed;
+  try {
+    parsed = JSON.parse(jsonMatch[0]);
+  } catch (parseErr) {
+    // Try to fix common Gemini JSON issues: trailing commas, unescaped newlines
+    const cleaned = jsonMatch[0]
+      .replace(/,\s*([}\]])/g, '$1')           // trailing commas
+      .replace(/[\x00-\x1f]/g, ' ');            // control characters
+    try {
+      parsed = JSON.parse(cleaned);
+    } catch {
+      throw new Error(`JSON parse failed: ${parseErr.message} — raw: ${jsonMatch[0].substring(0, 200)}`);
+    }
+  }
 
   const ensureString = (val) => {
     if (typeof val === 'string') return val;
