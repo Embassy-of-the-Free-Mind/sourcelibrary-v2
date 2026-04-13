@@ -55,9 +55,9 @@ function getOcrModelForBook(book) {
 const OCR_MODEL = OCR_MODEL_FLASH; // Legacy fallback for recitation retry path
 const OCR_PROMPT_VERSION = 'v10'; // Read from DB at runtime; this label is for batch_jobs metadata only
 const OCR_INLINE_BATCH_SIZE = 20;  // Pages per inline batch (base64 in body, ~20MB limit)
-const OCR_FILE_BATCH_SIZE = 250;   // Pages per file-based batch (JSONL uploaded to File API) — raised from 75 to reduce batch creation count (700/project 429 cap)
+const OCR_FILE_BATCH_SIZE = 500;   // Pages per file-based batch — raised from 250 to 500 (issue #1078). Google recommends 1K-5K. File API tested at 707MB/480 pages. Streaming JSONL keeps memory low.
 const IMAGE_CONCURRENCY = 20;     // Parallel image downloads per book
-const MAX_PAGES_PER_BOOK = 500;   // Max pages to OCR per book
+const MAX_PAGES_PER_BOOK = 1000;  // Max pages to OCR per book — raised from 500 to match larger batch size
 
 // R2 config for split image uploads (mirrors batch-split-bph.mjs)
 const R2_BUCKET = process.env.R2_BUCKET_NAME || 'sourcelibrary';
