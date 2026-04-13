@@ -3,6 +3,9 @@ import { getReadDb } from '@/lib/mongodb';
 import { supabase } from '@/lib/supabase';
 import { generateQueryEmbedding, cosineSimilarity } from '@/lib/embeddings';
 
+// CLIP server on Hetzner for visual text→image search
+const CLIP_URL = process.env.CLIP_URL || 'http://46.224.122.120:3456/clip';
+
 export const maxDuration = 30;
 
 /**
@@ -51,10 +54,15 @@ export async function GET(request: NextRequest) {
   try {
     const { searchParams } = new URL(request.url);
 
-    // Semantic search mode — uses embeddings
+    // Visual search mode — uses CLIP image embeddings (text→image)
+    const visual = searchParams.get('visual') === 'true';
+    // Semantic search mode — uses text embeddings
     const semantic = searchParams.get('semantic') === 'true';
     const searchQuery = searchParams.get('q');
 
+    if (visual && searchQuery) {
+      return NextResponse.json(await clipGallerySearch(searchParams, searchQuery));
+    }
     if (semantic && searchQuery) {
       return NextResponse.json(await semanticGallerySearch(searchParams, searchQuery));
     }
@@ -637,5 +645,117 @@ async function legacyGalleryQuery(db: Awaited<ReturnType<typeof getReadDb>>, sea
     offset,
     bookInfo,
     filters: { types, subjects, yearRange },
+  };
+}
+
+/**
+ * CLIP visual search: encode text query via CLIP text encoder,
+ * search against CLIP image embeddings in Supabase.
+ * Returns gallery items ranked by visual similarity.
+ */
+async function clipGallerySearch(searchParams: URLSearchParams, query: string) {
+  const limit = Math.min(parseInt(searchParams.get('limit') || '50'), 200);
+  const offset = parseInt(searchParams.get('offset') || '0');
+
+  // Encode text via CLIP
+  let embedding: number[] | null = null;
+  try {
+    const clipResp = await fetch(`${CLIP_URL}/embed-text`, {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify({ text: query }),
+      signal: AbortSignal.timeout(5000),
+    });
+    if (clipResp.ok) {
+      const data = await clipResp.json();
+      embedding = data.embedding;
+    }
+  } catch {
+    // Fall through to semantic search fallback
+  }
+
+  if (!embedding) {
+    // Fall back to text-embedding semantic search
+    return semanticGallerySearch(searchParams, query);
+  }
+
+  // Search Supabase CLIP embeddings
+  const { data: matches, error } = await supabase.rpc('match_clip_text', {
+    query_embedding: embedding,
+    match_threshold: 0.18,
+    match_count: offset + limit + 20,
+  });
+
+  if (error || !matches || matches.length === 0) {
+    return { items: [], total: 0, limit, offset, visual: true, bookInfo: null, filters: { types: [], subjects: [], yearRange: {} } };
+  }
+
+  const total = matches.length;
+  const page = (matches as Array<{
+    id: string; source_type: string; book_id: string; image_url: string;
+    thumbnail_url: string; title: string; author: string; resource_type: string;
+    similarity: number;
+  }>).slice(offset, offset + limit);
+
+  // Resolve full gallery metadata from MongoDB for gallery_image entries
+  const db = await getReadDb();
+  const galleryIds = page.filter(m => m.source_type === 'gallery_image').map(m => m.id.replace('gallery-', ''));
+  const galleryDocs = galleryIds.length > 0
+    ? await db.collection('gallery_images').find({ id: { $in: galleryIds } }, { projection: { _id: 0 } }).toArray()
+    : [];
+  const galleryMap = new Map(galleryDocs.map(d => [d.id as string, d]));
+
+  const items = page.map(m => {
+    // For gallery images, use full metadata from MongoDB
+    if (m.source_type === 'gallery_image') {
+      const doc = galleryMap.get(m.id.replace('gallery-', ''));
+      if (doc) {
+        return {
+          pageId: doc.page_id,
+          bookId: doc.book_id,
+          pageNumber: doc.page_number,
+          detectionIndex: doc.detection_index,
+          imageUrl: doc.extracted_url || doc.thumbnail_url || doc.image_url,
+          bookTitle: doc.book_title,
+          author: doc.book_author,
+          year: doc.book_year,
+          description: doc.description || '',
+          type: doc.type,
+          extractedUrl: doc.extracted_url,
+          thumbnailUrl: doc.thumbnail_url,
+          galleryQuality: doc.gallery_quality,
+          museumDescription: doc.museum_description,
+          metadata: doc.metadata,
+          similarity: Math.round(m.similarity * 1000) / 1000,
+        };
+      }
+    }
+    // For artworks and book covers, use Supabase data directly
+    return {
+      pageId: null,
+      bookId: m.book_id,
+      pageNumber: null,
+      detectionIndex: null,
+      imageUrl: m.thumbnail_url || m.image_url,
+      bookTitle: m.title,
+      author: m.author,
+      year: null,
+      description: m.title || '',
+      type: m.resource_type,
+      extractedUrl: m.image_url,
+      thumbnailUrl: m.thumbnail_url,
+      galleryQuality: null,
+      similarity: Math.round(m.similarity * 1000) / 1000,
+    };
+  });
+
+  return {
+    items,
+    total,
+    limit,
+    offset,
+    visual: true,
+    bookInfo: null,
+    filters: { types: [], subjects: [], yearRange: {} },
   };
 }
