@@ -2,7 +2,7 @@ import { Metadata } from 'next';
 import Link from 'next/link';
 import ContentPageLayout, { ContentHeader } from '@/components/layout/ContentPageLayout';
 import BlogComments from '@/components/blog/BlogComments';
-import InputWidget from '@/components/InputWidget';
+
 
 export const metadata: Metadata = {
   title: 'The World\'s Largest Collection of Translated Ancient and Early Modern Texts — Source Library',
@@ -564,7 +564,7 @@ export default function WorldsLargestCollectionPage() {
         </section>
 
         <BlogComments slug="worlds-largest-collection" />
-        <InputWidget />
+
       </article>
     </ContentPageLayout>
   );
