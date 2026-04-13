@@ -17,7 +17,7 @@ We show that consistency scores can drive a practical trust taxonomy for digital
 
 ## 1. Introduction
 
-In February 2022, one of the authors encountered a 1471 manuscript of Marsilio Ficino's *Liber de Voluptate* at the Embassy of the Free Mind in Amsterdam. The text — a Latin philosophical dialogue on pleasure — had never been translated into English. This encounter led to Source Library, a digital humanities project that has since OCR'd and translated over 17,000 historical books spanning the 15th through 18th centuries, using multimodal LLMs (primarily Google Gemini) for transcription and translation.
+In February 2022, one of the authors encountered a 1497 edition of Ficino's *De Mysteriis* at the Embassy of the Free Mind in Amsterdam. Bound within it was his *Liber de Voluptate* — a Latin philosophical dialogue on pleasure that had never been translated into English. This encounter led to Source Library, a digital humanities project that has since OCR'd and translated over 17,000 historical books spanning the 15th through 18th centuries, using multimodal LLMs (primarily Google Gemini) for transcription and translation.
 
 The pipeline works remarkably well on printed text. A 1521 Latin printed book yields clean, consistent OCR with character-level accuracy comparable to Transkribus fine-tuned models — without any training data. But when we turned the pipeline to Leonardo da Vinci's mirror-script notebooks, we discovered something unsettling: the AI produced fluent, plausible Italian text about the right topics (optics on optics pages, water dynamics on water pages), but the *specific text changed completely between runs*. The same model, the same image, the same prompt — different words every time.
 

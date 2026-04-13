@@ -4,7 +4,7 @@
 
 ---
 
-In February 2022, one of us encountered a 1471 manuscript at the Embassy of the Free Mind in Amsterdam — Marsilio Ficino's *Liber de Voluptate*, never translated into English. This encounter led to Source Library, a project that has since OCR'd and translated over 17,000 historical books using multimodal AI.
+In February 2022, one of us encountered a 1497 edition of Ficino's *De Mysteriis* at the Embassy of the Free Mind in Amsterdam. Bound within it was his *Liber de Voluptate* — a Latin dialogue on pleasure, never translated into English. This encounter led to Source Library, a project that has since OCR'd and translated over 17,000 historical books using multimodal AI.
 
 The pipeline works remarkably well on printed text. A 1521 Latin book yields clean, consistent transcriptions with near-human accuracy — no training data, no fine-tuning, just a frontier model and a good prompt.
 
