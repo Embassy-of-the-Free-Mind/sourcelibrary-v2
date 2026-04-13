@@ -1,8 +1,12 @@
 import { NextRequest, NextResponse } from 'next/server';
 import { getDb } from '@/lib/mongodb';
+import { supabase } from '@/lib/supabase';
 import type { BookSearchFilters } from '@/lib/atlas-search';
 import type { SearchResult } from '@/lib/api-client/types/search';
 import { searchBookIds } from '@/lib/books-catalog';
+
+// CLIP server on Hetzner for visual text→image search
+const CLIP_URL = process.env.CLIP_URL || 'http://46.224.122.120:3456/clip';
 
 const ENTITIES_SEARCH_INDEX = 'entities_search';
 const GALLERY_SEARCH_INDEX = 'gallery_search';
@@ -73,21 +77,22 @@ export async function GET(request: NextRequest) {
     if (firstTranslation) searchFilters.isFirstTranslation = true;
     if (hasTranslation) searchFilters.hasTranslation = true;
 
-    // Run book, index, and gallery search in parallel (each handles its own errors)
-    const [booksResult, indexResult, galleryResult] = await Promise.all([
+    // Run book, index, gallery, and visual search in parallel
+    const [booksResult, indexResult, galleryResult, visualResult] = await Promise.all([
       searchBooks(db, query, queryRegex, limit, searchFilters, library),
       searchIndex(db, query, limit).catch((err) => {
         console.error('Index search error:', err);
         return { results: [] as IndexResult[], total: 0 };
       }),
       searchGallery(db, query, queryRegex, galleryLimit),
+      searchVisual(query, galleryLimit),
     ]);
 
     // Log search query (fire-and-forget)
     db.collection('analytics_events').insertOne({
       event: 'search_query',
       query,
-      results_count: booksResult.total + indexResult.total + galleryResult.total,
+      results_count: booksResult.total + indexResult.total + galleryResult.total + visualResult.total,
       filters: { language, category, library, source: 'unified' },
       timestamp: new Date(),
       ip: request.headers.get('x-forwarded-for')?.split(',')[0]?.trim() || 'unknown',
@@ -99,6 +104,7 @@ export async function GET(request: NextRequest) {
       books: booksResult,
       index: indexResult,
       gallery: galleryResult,
+      visual: visualResult,
     }, {
       headers: {
         'Cache-Control': 'no-store',
@@ -427,6 +433,60 @@ async function searchGallery(db: any, query: string, queryRegex: RegExp, limit: 
     };
   } catch (err) {
     console.error('Gallery search error:', err);
+    return { results: [], total: 0 };
+  }
+}
+
+/**
+ * CLIP visual search: encode text query via CLIP, search against image embeddings.
+ * Finds images by what they look like, not just their metadata.
+ */
+async function searchVisual(query: string, limit: number): Promise<{ results: GalleryResult[]; total: number }> {
+  try {
+    // Encode text via CLIP text encoder
+    const clipResp = await fetch(`${CLIP_URL}/embed-text`, {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify({ text: query }),
+      signal: AbortSignal.timeout(4000),
+    });
+    if (!clipResp.ok) return { results: [], total: 0 };
+    const { embedding } = await clipResp.json();
+    if (!embedding) return { results: [], total: 0 };
+
+    // Search Supabase CLIP embeddings
+    const { data, error } = await supabase.rpc('match_clip_text', {
+      query_embedding: embedding,
+      match_threshold: 0.22,
+      match_count: limit * 2,
+    });
+    if (error || !data) return { results: [], total: 0 };
+
+    // Deduplicate by book (max 2 per book)
+    const byBook = new Map<string, number>();
+    const deduped = (data as Array<{
+      id: string; book_id: string; image_url: string; thumbnail_url: string;
+      title: string; author: string; resource_type: string; similarity: number;
+    }>).filter(m => {
+      const count = byBook.get(m.book_id) || 0;
+      if (count >= 2) return false;
+      byBook.set(m.book_id, count + 1);
+      return true;
+    }).slice(0, limit);
+
+    return {
+      results: deduped.map(m => ({
+        id: m.id,
+        imageUrl: m.thumbnail_url || m.image_url || '',
+        description: m.title || '',
+        type: m.resource_type || undefined,
+        bookTitle: m.title || '',
+        bookId: m.book_id || '',
+        similarity: m.similarity,
+      })),
+      total: deduped.length,
+    };
+  } catch {
     return { results: [], total: 0 };
   }
 }
