@@ -165,6 +165,18 @@ const TOOL_DECLARATIONS: FunctionDeclaration[] = [
     },
   },
   {
+    name: 'search_images',
+    description: 'Search the gallery of extracted illustrations, engravings, woodcuts, and diagrams from books in the collection. Returns image URLs, descriptions, and source book metadata. Use when the user asks about visual content, illustrations, or when showing an image would enhance the response.',
+    parameters: {
+      type: Type.OBJECT,
+      properties: {
+        query: { type: Type.STRING, description: 'Search query — describe what you\'re looking for (e.g., "alchemical furnace", "tree of life diagram", "planetary seal")' },
+        book_id: { type: Type.STRING, description: 'Optional: limit to images from a specific book' },
+      },
+      required: ['query'],
+    },
+  },
+  {
     name: 'read_nearby_pages',
     description: 'Read several pages around a finding to get more context. Returns up to 5 consecutive translated pages. Use when a single page isn\'t enough to understand a passage or argument.',
     parameters: {
@@ -388,6 +400,48 @@ async function executeReadNearbyPages(bookId: string, centerPage: number, range 
   };
 }
 
+async function executeSearchImages(query: string, bookId?: string): Promise<
+  Array<{ id: string; imageUrl: string; description: string; bookTitle: string; bookAuthor: string; bookSlug?: string; pageNumber: number; type?: string; subjects?: string[] }>
+> {
+  const db = await getDb();
+  const filter: Record<string, unknown> = { gallery_quality: { $gte: 0.7 } };
+
+  if (bookId) {
+    filter.book_id = bookId;
+  }
+
+  // Text search on gallery_images collection
+  const regex = query.split(/\s+/).map(w => `(?=.*${w.replace(/[.*+?^${}()|[\]\\]/g, '\\$&')})`).join('');
+  const textFilter = {
+    $or: [
+      { description: { $regex: regex, $options: 'i' } },
+      { museum_description: { $regex: regex, $options: 'i' } },
+      { 'metadata.subjects': { $regex: regex, $options: 'i' } },
+      { 'metadata.figures': { $regex: regex, $options: 'i' } },
+      { 'metadata.symbols': { $regex: regex, $options: 'i' } },
+    ],
+  };
+
+  const images = await db.collection('gallery_images')
+    .find({ ...filter, ...textFilter })
+    .sort({ gallery_quality: -1 })
+    .limit(6)
+    .project({ image_url: 1, description: 1, museum_description: 1, book_id: 1, book_title: 1, book_author: 1, book_slug: 1, page_number: 1, type: 1, 'metadata.subjects': 1 })
+    .toArray();
+
+  return images.map(img => ({
+    id: img._id.toString(),
+    imageUrl: img.image_url,
+    description: img.museum_description || img.description || '',
+    bookTitle: img.book_title || 'Unknown',
+    bookAuthor: img.book_author || 'Unknown',
+    bookSlug: img.book_slug,
+    pageNumber: img.page_number,
+    type: img.type,
+    subjects: img.metadata?.subjects,
+  }));
+}
+
 // ── Tool Router ───────────────────────────────────────────────────────
 
 async function executeTool(
@@ -472,6 +526,32 @@ async function executeTool(
         result: { found: result.pages.length, context, bookTitle: result.bookTitle },
         step: { type: 'tool_result', name: 'read_nearby_pages', query: `pp.${centerPage - range}-${centerPage + range}`,
           found: result.pages.length, summary: `Read ${result.pages.length} pages from ${result.bookTitle}` },
+      };
+    }
+
+    case 'search_images': {
+      const query = args.query as string;
+      const bookId = args.book_id as string | undefined;
+      const images = await executeSearchImages(query, bookId);
+
+      let context = '';
+      if (images.length > 0) {
+        context = 'Images found:\n';
+        for (const img of images) {
+          const url = `https://sourcelibrary.org/gallery/image/${img.id}`;
+          context += `\n- **${img.type || 'Image'}** from *${img.bookTitle}* by ${img.bookAuthor}, Page ${img.pageNumber}\n`;
+          context += `  Description: ${img.description.slice(0, 300)}\n`;
+          context += `  Gallery: ${url}\n`;
+          context += `  Image: ${img.imageUrl}\n`;
+        }
+      } else {
+        context = 'No matching images found in the gallery.';
+      }
+
+      return {
+        result: { found: images.length, context, images: images.map(i => ({ id: i.id, url: i.imageUrl, description: i.description.slice(0, 100), bookTitle: i.bookTitle })) },
+        step: { type: 'tool_result', name: 'search_images', query, found: images.length,
+          summary: images.length > 0 ? `Found ${images.length} illustrations` : 'No images found' },
       };
     }
 
