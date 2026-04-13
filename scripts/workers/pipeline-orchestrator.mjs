@@ -2195,6 +2195,36 @@ async function run() {
         }
       }
       console.log(`  Archive completed: ${archiveCompleted}/${archivingBooks.length}`);
+
+      // Also check warehouse books for archive completion
+      // Archive workers update pages_archived on warehouse books, but Phase 1 only checks live.
+      // Use pages_archived >= pages_count as a fast check (no per-page queries needed).
+      const WAREHOUSE_ARCHIVE_CHECK_LIMIT = 200;
+      const warehouseArchiving = await db.collection('books_warehouse')
+        .find({
+          'pipeline_auto.status': 'archiving',
+          pages_count: { $gt: 0 },
+          pages_archived: { $exists: true, $gt: 0 },
+        })
+        .project({ id: 1, title: 1, pages_count: 1, pages_archived: 1 })
+        .limit(WAREHOUSE_ARCHIVE_CHECK_LIMIT)
+        .toArray();
+
+      let warehouseCompleted = 0;
+      for (const book of warehouseArchiving) {
+        if (book.pages_archived >= book.pages_count) {
+          if (!DRY_RUN) {
+            await db.collection('books_warehouse').updateOne(
+              { id: book.id },
+              { $set: { 'pipeline_auto.status': 'archive_complete', 'pipeline_auto.last_updated': new Date() } }
+            );
+          }
+          warehouseCompleted++;
+        }
+      }
+      if (warehouseCompleted > 0 || warehouseArchiving.length > 0) {
+        console.log(`  Warehouse archive check: ${warehouseCompleted}/${warehouseArchiving.length} completed (${await db.collection('books_warehouse').countDocuments({ 'pipeline_auto.status': 'archiving' })} total archiving)`);
+      }
     }
 
     // ── Phase 1.25: Split detection for spread scans ──
@@ -2880,6 +2910,69 @@ Rules:
         }
       }
       console.log(`  AI metadata classified: ${metadataEnriched} books`);
+    }
+
+    // ── Phase 1.95: Warehouse promotion (books_warehouse -> live books) ──
+    // Books sit in warehouse during archiving to reduce Atlas load. Once archive_complete,
+    // they must be promoted to the live collection before OCR can run.
+    // The old Vercel cron that did this was archived — this replaces it.
+    if (shouldRun(2)) {
+      const PROMOTE_LIMIT = 20; // Conservative: each book copies all pages (can be hundreds)
+      const ENGLISH_VARIANTS_WH = ['english', 'eng', 'en'];
+      const promoteCandidates = await db.collection('books_warehouse')
+        .aggregate([
+          { $match: { 'pipeline_auto.status': 'archive_complete' } },
+          { $addFields: {
+            _priority: {
+              $switch: {
+                branches: [
+                  { case: { $gte: [{ $ifNull: ['$pipeline_priority', 0] }, 1] }, then: -10 },
+                  { case: { $eq: ['$is_first_translation', true] }, then: 0 },
+                  { case: { $in: [{ $toLower: { $ifNull: ['$language', ''] } }, ENGLISH_VARIANTS_WH] }, then: 2 },
+                ],
+                default: 1,
+              },
+            },
+          }},
+          { $sort: { _priority: 1 } },
+          { $project: { id: 1, title: 1, pages_count: 1 } },
+          { $limit: PROMOTE_LIMIT },
+        ])
+        .toArray();
+
+      if (promoteCandidates.length > 0) {
+        console.log(`\n--- Phase 1.95: Warehouse promotion ---`);
+        console.log(`  Candidates: ${promoteCandidates.length} (of ${await db.collection('books_warehouse').countDocuments({ 'pipeline_auto.status': 'archive_complete' })} total)`);
+        let promoted = 0;
+        for (const candidate of promoteCandidates) {
+          try {
+            const book = await db.collection('books_warehouse').findOne({ id: candidate.id });
+            if (!book) continue;
+
+            // Upsert to live
+            await db.collection('books').replaceOne({ id: candidate.id }, book, { upsert: true });
+
+            // Move pages in bulk
+            const pages = await db.collection('pages_warehouse').find({ book_id: candidate.id }).toArray();
+            if (pages.length > 0) {
+              const bulkOps = pages.map(page => ({
+                replaceOne: { filter: { _id: page._id }, replacement: page, upsert: true },
+              }));
+              await db.collection('pages').bulkWrite(bulkOps, { ordered: false });
+            }
+
+            // Delete from warehouse after live write succeeds
+            await db.collection('pages_warehouse').deleteMany({ book_id: candidate.id });
+            await db.collection('books_warehouse').deleteOne({ id: candidate.id });
+
+            promoted++;
+          } catch (err) {
+            log.errors.push(`Promote ${candidate.id}: ${err.message}`);
+            console.error(`  ERROR promoting ${candidate.title?.slice(0, 60)}: ${err.message}`);
+          }
+        }
+        console.log(`  Promoted: ${promoted} books to live collection`);
+      }
     }
 
     // Shared Gemini active job count — queried once, reused by OCR (Phase 2) and image extraction (Phase 5)
