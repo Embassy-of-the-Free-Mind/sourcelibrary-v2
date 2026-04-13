@@ -46,6 +46,7 @@ export async function generateMetadata({ params }: PageProps): Promise<Metadata>
   return {
     title: `${data.title} | Gallery | Source Library`,
     description: data.description,
+    alternates: { canonical: `/gallery/collections/${slug}` },
     openGraph: {
       title: `${data.title} | Source Library Gallery`,
       description: data.description,

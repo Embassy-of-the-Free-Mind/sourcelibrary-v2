@@ -67,6 +67,7 @@ export async function generateMetadata({ params }: CategoryPageProps): Promise<M
   return {
     title: `${category.name} — Source Library`,
     description: `Browse ${category.description.toLowerCase()} in Source Library's collection of rare historical texts, digitized and translated with AI.`,
+    alternates: { canonical: `/categories/${id}` },
     openGraph: {
       title: `${category.name} — Source Library`,
       description: category.description,

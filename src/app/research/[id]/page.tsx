@@ -32,6 +32,7 @@ export async function generateMetadata({ params }: PageProps): Promise<Metadata>
   return {
     title,
     description: `Curator research session from ${new Date(session.date as string).toLocaleDateString()} exploring ${(session.themes as string[])?.join(', ') || 'various topics'}.`,
+    alternates: { canonical: `/research/${id}` },
   };
 }
 

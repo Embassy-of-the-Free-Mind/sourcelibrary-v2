@@ -80,5 +80,7 @@ export default function robots(): MetadataRoute.Robots {
       },
     ],
     sitemap: `${baseUrl}/sitemap.xml`,
+    // Note: Next.js generateSitemaps() automatically creates a sitemap index
+    // at /sitemap.xml that references /sitemap/0.xml, /sitemap/1.xml, etc.
   };
 }
