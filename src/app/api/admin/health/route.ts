@@ -2,6 +2,7 @@ import { NextResponse } from 'next/server';
 import { getDb } from '@/lib/mongodb';
 import { withAdminAuth } from '@/lib/auth-helpers';
 import { QUEUE_URLS, getQueueDepth } from '@/lib/sqs-client';
+import { getSupabaseSyncHealth } from '@/lib/supabase-health';
 
 export const maxDuration = 30;
 
@@ -85,6 +86,7 @@ export const GET = withAdminAuth(async () => {
     systemConfig,
     sqsDepths,
     recentCronRuns,
+    supabaseSync,
   ] = await Promise.all([
     // Active Lambda jobs
     db.collection('jobs').aggregate([
@@ -135,6 +137,9 @@ export const GET = withAdminAuth(async () => {
         last_run: { $max: '$timestamp' },
       }},
     ]).toArray(),
+
+    // Supabase sync health
+    getSupabaseSyncHealth().catch(() => null),
   ]);
 
   // --- 2. Active jobs ---
@@ -225,6 +230,13 @@ export const GET = withAdminAuth(async () => {
     last_4h: cronSummary,
     total_failures: cronFailures,
   };
+
+  // --- 9. Supabase sync ---
+  if (supabaseSync) {
+    checks.supabase_sync = { ...supabaseSync } as CheckResult;
+  } else {
+    checks.supabase_sync = { status: 'warning', error: 'sync_health RPC unavailable' };
+  }
 
   // --- Overall health ---
   const hasAnyCritical = Object.values(checks).some(c => c.status === 'critical');
