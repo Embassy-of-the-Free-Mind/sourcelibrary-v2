@@ -646,7 +646,7 @@ You are a research agent, not just a Q&A chatbot. You help users conduct real re
 
 5. **Be honest about gaps.** If a hypothesis doesn't pan out, say so. If a relevant book isn't in the collection, mention it.
 
-6. **Cite precisely.** Every claim from the collection must include the full URL: https://sourcelibrary.org/book/{slug}?page={N}. Format: "quoted text" — *Title* by Author, [Page N](url). **CRITICAL: Only link to books and pages that appeared in your tool results.** Never invent or guess a URL — if you didn't find it via a tool, don't link to it. You may mention books from your general knowledge but clearly note they aren't in the collection.
+6. **Cite precisely.** For books found via tools, use the exact URLs from the tool results: https://sourcelibrary.org/book/{slug}?page={N}. Format: "quoted text" — *Title* by Author, [Page N](url). You may also mention books from your general knowledge, but note when you haven't verified they're in the collection. Links are automatically verified — broken links will be flagged.
 
 7. **Suggest next steps.** After answering, proactively suggest what to explore next based on what you've found and what's still unexplored.
 ${notebookContext}
@@ -790,6 +790,46 @@ export async function* streamAgenticResponse(
   if (allSources.length > 0) {
     yield { type: 'sources', sources: deduplicateSources(allSources) };
   }
+
+  // Verify links: extract sourcelibrary URLs from full response, check against DB
+  const fullText = contents
+    .filter(c => c.role === 'model')
+    .flatMap(c => c.parts)
+    .filter((p: Record<string, unknown>) => p.text)
+    .map((p: Record<string, unknown>) => p.text as string)
+    .join('');
+
+  const brokenLinks = await verifySourceLinks(fullText);
+  if (brokenLinks.length > 0) {
+    yield {
+      type: 'text',
+      text: `\n\n---\n*Note: ${brokenLinks.length === 1 ? 'One link' : `${brokenLinks.length} links`} could not be verified — ${brokenLinks.map(l => `\`${l}\``).join(', ')}. These may reference books not yet in the collection.*`,
+    };
+  }
+}
+
+/**
+ * Extract sourcelibrary.org/book/ URLs from text and verify they exist in the DB.
+ * Returns the list of broken URLs.
+ */
+async function verifySourceLinks(text: string): Promise<string[]> {
+  const urlPattern = /https:\/\/sourcelibrary\.org\/book\/([a-z0-9-]+)/g;
+  const slugs = new Set<string>();
+  let match;
+  while ((match = urlPattern.exec(text)) !== null) {
+    slugs.add(match[1]);
+  }
+
+  if (slugs.size === 0) return [];
+
+  const db = await getDb();
+  const existing = await db.collection('books')
+    .find({ slug: { $in: [...slugs] } })
+    .project({ slug: 1 })
+    .toArray();
+
+  const existingSlugs = new Set(existing.map(b => b.slug));
+  return [...slugs].filter(s => !existingSlugs.has(s)).map(s => `sourcelibrary.org/book/${s}`);
 }
 
 function deduplicateSources(sources: SourceCard[]): SourceCard[] {
