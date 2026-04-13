@@ -229,17 +229,54 @@ On printed text, every sentence achieves >97% embedding consistency — the mode
 
 This per-sentence view enables a potential future feature: within-page trust coloring, where individual sentences are highlighted green, yellow, or red based on their consistency score. A scholar could then see at a glance which specific passages are reliable and which require expert verification.
 
-### 5.6 Resolution Sensitivity
+### 5.6 Image Preprocessing
 
-[TODO: Full resolution comparison data]
+We tested 10 image preprocessing methods on Leonardo mirror-script (p49) to determine whether visual transformations could improve OCR consistency. Each method was tested with N=3 runs using Gemini Flash.
 
-### 5.7 The Leonardo Case: Informed Confabulation
+| Method | Jaccard | Embedding | Notes |
+|--------|---------|-----------|-------|
+| Original | 5.2% | 84.0% | Baseline |
+| **Flip (horizontal)** | **15.9%** | **94.1%** | Mirror → normal orientation |
+| Contrast (grayscale + normalize + sharpen) | 6.3% | 90.4% | Helps without flipping |
+| **Flip + contrast** | **17.8%** | **94.4%** | **Best overall** |
+| Flip + binarize | 11.2% | 93.8% | Binarization loses info |
+| Binarize (adaptive) | 9.1% | 85.6% | Slight improvement |
+| Binarize (Otsu) | 6.0% | 80.7% | Loses too much detail |
+| Denoise (median) | 5.0% | 76.1% | Much worse — blurs text |
+| Invert (negate) | 4.9% | 81.4% | No help |
+| Crop (center 70%) | 7.0% | 78.9% | Loses marginal notes |
 
-[TODO: Detailed analysis including:
-- Run-to-run text comparison showing completely different passages
-- Cross-model disagreement
-- Flipping experiment
-- Comparison with Richter's published translations where available]
+Key findings:
+1. **Flipping is the single most effective intervention**, boosting embedding consistency from 84% to 94% — a 10-point gain. This confirms the model can partially read Leonardo's letterforms but struggles with their reversed orientation.
+2. **Contrast enhancement helps independently** (84% → 90%), suggesting the model benefits from clearer visual separation between ink and parchment.
+3. **Binarization and denoising hurt** — these destroy subtle visual information the model uses. The model performs better with rich grayscale data than with binary black/white.
+4. **Combined flip + contrast achieves 94.4%** — approaching the printed text baseline of 99%. However, this does not mean the transcription is *accurate*; the Jaccard score of 17.8% (vs. 58% for printed) shows the text is still substantially different between runs.
+
+The preprocessing results suggest that mirror-script OCR failure is partially an orientation problem and partially a handwriting recognition problem. Flipping solves the orientation issue, closing about half the gap to printed text on the embedding metric.
+
+### 5.7 Reasoning Models
+
+We tested whether reasoning — via Gemini 3 Pro with extended thinking — could improve OCR consistency on Leonardo's mirror-script. Five conditions were tested on pages 49 and 53:
+
+| Condition | p49 Embedding | p53 Embedding | p49 Output Range |
+|-----------|--------------|--------------|------------------|
+| Flash (standard prompt) | 86.0% | 86.6% | 1,639–2,736 chars |
+| Pro (standard prompt) | 74.1% | 85.3% | 18–559 chars |
+| Pro (reasoning prompt) | 65.0% | 81.3% | 0–4,665 chars |
+| Pro (thinking=4096) | 64.2% | N/A* | 0–1,280 chars |
+| Pro (thinking=8192) | 81.1% | 69.7% | 0–1,320 chars |
+
+*Pro with thinking=4096 produced 0 chars on all 3 runs of p53.
+
+**Reasoning makes Leonardo OCR worse, not better.** The larger Pro model is slower (up to 150s vs. 35–60s for Flash), frequently times out, and produces dramatically less text — often zero characters. When it does produce text, consistency is lower than Flash across all conditions.
+
+The reasoning prompt, which instructs the model to decompose mirror-script letter-by-letter, appears to cause the model to over-constrain itself: rather than producing fluent (if unreliable) Italian, it produces almost nothing, apparently recognizing that it cannot confidently decode individual letterforms. This is arguably more honest behavior — the model "knows what it doesn't know" — but it does not produce useful transcriptions.
+
+This finding suggests that the bottleneck in mirror-script OCR is in low-level visual perception (recognizing reversed letterforms from pixel patterns), not in high-level reasoning about what the text should say. Reasoning cannot compensate for perception failure.
+
+### 5.8 Expanded Corpus: Leonardo Across Topics
+
+[TODO: Results from testing across 8 Leonardo codices — anatomy, water, flight, geometry, botany, physiognomy, architecture, optics — to determine whether consistency varies by subject matter or visual complexity]
 
 ---
 
@@ -266,20 +303,18 @@ This is not random hallucination — the model demonstrates genuine understandin
 
 The embedding–Jaccard gap quantifies this precisely: 82–84% embedding similarity (same semantic territory) combined with 6–8% Jaccard similarity (completely different words). The run length variation is equally diagnostic: on printed text, output length varies by ±2–10%, while on Leonardo it varies by up to ±130%. A model that is genuinely reading would produce a deterministic amount of text; a model that is generating produces an amount that depends on its sampling trajectory.
 
-### 6.4 Can Reasoning Help?
+### 6.4 Reasoning Does Not Help
 
-An untested but promising direction is applying reasoning-capable models (e.g., models with extended "thinking" chains) to difficult manuscripts. The hypothesis: a model that reasons step-by-step — "this is mirror-script, so I need to mentally reverse each letterform; the first character appears to be a reversed 'd', which in mirror would be..." — might achieve better grounding than a model that attempts direct visual-to-text mapping.
+We tested whether reasoning — Gemini 3 Pro with extended thinking budgets (4,096 and 8,192 tokens) and a detailed paleographic reasoning prompt — could improve OCR consistency on Leonardo's mirror-script. The hypothesis was that step-by-step letter decomposition might ground the model better than direct visual-to-text mapping.
 
-This is analogous to how a human paleographer approaches difficult text: not by recognizing words holistically, but by decomposing individual letterforms, comparing them to known exemplars, and reasoning about abbreviation conventions. Reasoning models could potentially:
+The results are unambiguous: **reasoning makes performance worse** (Section 5.7). Pro with thinking produces less text, lower consistency, and frequent empty outputs. The reasoning prompt causes the model to over-constrain itself — recognizing that it cannot confidently decode individual reversed letterforms, it produces almost nothing.
 
-1. **Decompose the task**: Identify script type → establish letter mapping → decode character by character
-2. **Cross-reference visual evidence**: "The downstroke suggests 'l' but the ascender is too short — more likely 't' in this scribal hand"
-3. **Apply paleographic knowledge**: "This abbreviation mark over 'q' typically expands to 'que' in 15th-century Italian"
-4. **Self-verify**: "The decoded sentence mentions optics, consistent with the diagram on this folio — but let me re-check the third word..."
+This reveals something important about the failure mode. A reasoning model that "tries harder" to read mirror-script discovers that it *genuinely cannot* decode the letterforms. Flash, which does not reason about the task, defaults to generating plausible Italian from visual context cues (subject matter, diagram type). The reasoning model's failure is arguably more honest: it knows what it doesn't know. But it does not produce useful transcriptions.
 
-If reasoning improves *consistency* (not just apparent quality), it would provide strong evidence that the model has achieved genuine visual grounding rather than more sophisticated confabulation. Conversely, if a reasoning model produces equally fluent but equally inconsistent transcriptions, it would demonstrate that the failure is in visual perception, not reasoning.
-
-[TODO: Experiment — test Gemini 2.5 Pro "thinking" mode and Claude with extended thinking on the same corpus. Measure whether reasoning improves self-consistency scores.]
+The implication is that the bottleneck in mirror-script OCR is **perceptual, not cognitive**. No amount of reasoning about what the text "should say" can compensate for the inability to decode reversed letterforms from pixel patterns. Improvement will require either:
+1. **Better visual features** — fine-tuning on mirror-script exemplars to build letter-level recognition
+2. **External preprocessing** — our flip+contrast results (Section 5.6) show that transforming the image before the model sees it is more effective than asking the model to transform its interpretation after seeing it
+3. **Specialized HTR models** — trained specifically on Leonardo's hand, as no general-purpose model has this in its training distribution
 
 ### 6.5 Multi-Run Consensus as Enhancement
 
