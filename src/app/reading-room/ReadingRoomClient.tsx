@@ -5,7 +5,7 @@ import { useSession } from 'next-auth/react';
 import Link from 'next/link';
 import ReactMarkdown from 'react-markdown';
 import remarkGfm from 'remark-gfm';
-import remarkBreaks from 'remark-breaks';
+// remarkBreaks removed — we use ensureParagraphBreaks() instead for proper spacing
 import SiteHeader from '@/components/layout/SiteHeader';
 
 /**
@@ -17,11 +17,21 @@ function linkifySourceUrls(text: string): string {
   // Don't linkify URLs that are already inside markdown link syntax [text](url)
   return text.replace(
     /(?<!\]\()https:\/\/sourcelibrary\.org\/book\/([a-z0-9-]+)(?:\?page=(\d+))?/g,
-    (match, slug, page) => {
+    (match, _slug, page) => {
       const label = page ? `View source (p. ${page})` : 'View in collection';
       return `[${label}](${match})`;
     },
   );
+}
+
+/**
+ * Ensure proper markdown paragraph breaks.
+ * Gemini's streaming often outputs single \n between paragraphs.
+ * Standard markdown needs \n\n for a paragraph break.
+ * This converts single \n to \n\n EXCEPT inside lists, blockquotes, and code blocks.
+ */
+function ensureParagraphBreaks(text: string): string {
+  return text.replace(/([^\n])\n(?!\n)(?![-*>|`\d])/g, '$1\n\n');
 }
 
 // ── Types ─────────────────────────────────────────────────────────────
@@ -577,13 +587,13 @@ export default function ReadingRoomClient({ featuredPassage }: ReadingRoomClient
                             <div className="bg-[#f5f0e8] text-[#1a1612] rounded-2xl rounded-bl-sm px-4 py-3">
                               <div className="prose prose-sm max-w-none font-body text-[15px] leading-relaxed prose-p:mb-3 prose-p:mt-0 prose-headings:mb-2 prose-headings:mt-4 prose-ul:my-2 prose-li:my-0.5 prose-a:text-[#9e4a3a] prose-a:underline prose-a:underline-offset-2 prose-a:decoration-[#9e4a3a]/30 hover:prose-a:decoration-[#9e4a3a] prose-blockquote:border-l-[#c9a86c] prose-blockquote:text-[#444] prose-strong:text-[#1a1612]">
                                 <ReactMarkdown
-                                  remarkPlugins={[remarkGfm, remarkBreaks]}
+                                  remarkPlugins={[remarkGfm]}
                                   components={{
                                     a: ({ href, children }) => (
                                       <a href={href} target="_blank" rel="noopener noreferrer">{children}</a>
                                     ),
                                   }}
-                                >{linkifySourceUrls(assistant.content)}</ReactMarkdown>
+                                >{ensureParagraphBreaks(linkifySourceUrls(assistant.content))}</ReactMarkdown>
                               </div>
                             </div>
                           )}
