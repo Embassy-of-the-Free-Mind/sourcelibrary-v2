@@ -35,12 +35,12 @@ const RESULTS_DIR = path.join(__dirname, 'leonardo-eval-results');
 fs.mkdirSync(RESULTS_DIR, { recursive: true });
 
 const EMBEDDING_MODEL = 'gemini-embedding-001';
-const OCR_MODEL = 'gemini-2.5-flash-preview-04-17';
+const OCR_MODEL = 'gemini-3-flash-preview';
 const RETRY_MAX = 3;
 const RETRY_DELAY = 5000;
 
 // Temperatures to sweep
-const TEMPERATURES = [0.0, 0.3, 0.7, 1.0, 1.5, 2.0];
+const TEMPERATURES = [0.01, 0.3, 0.7, 1.0, 1.5, 2.0];
 const N_PER_TEMP = 3;
 
 // ── Test pages ───────────────────────────────────────────────────────────────

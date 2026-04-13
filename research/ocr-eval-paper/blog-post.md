@@ -94,6 +94,26 @@ We built a consensus tool that takes 5 OCR runs and annotates each sentence as g
 
 On printed text, 14 of 15 sentences are reliably transcribed. On Leonardo, **not a single sentence is consistently reproduced across runs**. The 82.9% trust score is misleading — it reflects topical coherence, not textual fidelity.
 
+## The Strongest Evidence Yet: A Copying Confound
+
+We turned to *Les Manuscrits de Léonard de Vinci* by Ravaisson-Mollien (Paris, 1881), the gold-standard scholarly edition. Ravaisson-Mollien transcribed all of Leonardo's Institut de France manuscripts and published them as facing-page editions: facsimile on the left, printed Italian transcription on the right — sometimes on the same page.
+
+This gave us an unplanned experiment.
+
+**The copying confound test**: Ravaisson-Mollien pages often show both the manuscript facsimile *and* the printed transcription on the same page. When we asked the model to transcribe only the handwritten portion, something unexpected happened: on pages where the printed answer was visible, the model achieved 97% word overlap with the transcription — but when we forced it to use only the manuscript facsimile, it produced descriptions like "dense cursive handwriting in sepia-toned ink" rather than actual Italian text.
+
+The model wasn't reading the mirror-script. It was reading the printed answer.
+
+**Stylistic mismatch**: Even setting aside the confound, the stylistic evidence is damning. Leonardo actually wrote:
+> *"Prosspectiua. eragione. dimostratiua, perla quale. lassperientia chonferma"*
+> (periods between words, archaic spelling, unique orthography)
+
+The AI produces:
+> *"Ogn' azione ne' nostri sensi è fatta per via d'alcuna linia"*
+> (normalized modern Italian, correct grammar, wrong words)
+
+A model genuinely decoding pixels would reproduce Leonardo's idiosyncratic periods-between-words style and archaic spellings. Instead it generates Italian *about* Leonardo's topics, in the style of texts *about* Leonardo. This is the clearest evidence that training data priors, not visual perception, are driving the output.
+
 ## What This Means for Digital Libraries
 
 For Source Library's 17,000+ books, these findings have immediate implications:
