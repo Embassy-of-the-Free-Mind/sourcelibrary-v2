@@ -697,7 +697,7 @@ async function BookInfo({ id }: { id: string }) {
               </div>
 
               {/* Bibliographic Info (includes related editions, attribution) */}
-              <BibliographicInfo book={book} pagesCount={pages.length} hasTranslations={translatedCount > 0}>
+              <BibliographicInfo book={book} pagesCount={totalPages} hasTranslations={translatedCount > 0}>
                 {(book as unknown as { work_id?: string }).work_id && (
                   <Suspense fallback={null}>
                     <RelatedEditions bookId={book.id} workId={(book as unknown as { work_id?: string }).work_id!} />
