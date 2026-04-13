@@ -70,10 +70,13 @@ const RUN_PHASE_7 = phaseArg === 'all' || phaseArg === '7';
 const RUN_PHASE_7_5 = phaseArg === 'all' || phaseArg === '7.5';
 const RUN_PHASE_7_6 = phaseArg === 'all' || phaseArg === '7.6';
 const limitArg = args.find(a => a.startsWith('--limit='))?.split('=')[1];
-const PHASE_6_LIMIT = limitArg ? parseInt(limitArg) : 200;
-const PHASE_7_LIMIT = limitArg ? parseInt(limitArg) : 200;
-const BOOK_CONCURRENCY = parseInt(process.env.ENRICH_CONCURRENCY || '8'); // Process multiple books in parallel within each phase
+const PHASE_6_LIMIT = limitArg ? parseInt(limitArg) : 30;
+const PHASE_7_LIMIT = limitArg ? parseInt(limitArg) : 30;
+const BOOK_CONCURRENCY = parseInt(process.env.ENRICH_CONCURRENCY || '8');
 const SINGLE_BOOK = args.find(a => a.startsWith('--book='))?.split('=')[1];
+const MAX_RUNTIME_MS = 90 * 60 * 1000; // 90 min hard cap — prevents 12h runs blocking the scheduler
+const PROCESS_START = Date.now();
+const PER_BOOK_TIMEOUT_MS = 10 * 60 * 1000; // 10 min per book max
 
 // ── Gemini API keys ──
 const API_KEYS = [
@@ -1290,10 +1293,29 @@ async function main() {
       const book = await db.collection('books').findOne({ id: SINGLE_BOOK });
       books = book ? [book] : [];
     } else {
+      // Recover orphaned books stuck in 'summarizing' for >30min (crashed workers)
+      const orphanCutoff = new Date(Date.now() - 30 * 60 * 1000);
+      const orphans = await db.collection('books')
+        .find({
+          'pipeline_auto.status': 'summarizing',
+          'pipeline_auto.last_updated': { $lt: orphanCutoff },
+        })
+        .project({ id: 1 })
+        .toArray();
+      if (orphans.length > 0) {
+        const orphanIds = orphans.map(b => b.id);
+        await db.collection('books').updateMany(
+          { id: { $in: orphanIds } },
+          { $set: { 'pipeline_auto.status': 'translate_complete', 'pipeline_auto.last_updated': new Date() } }
+        );
+        console.log(`  Recovered ${orphans.length} orphaned summarizing books`);
+      }
+
+      // Priority: first translations first, then by retry count (fewer retries first)
       books = await db.collection('books')
         .find({ 'pipeline_auto.status': 'translate_complete' })
-        .sort({ hidden: 1 })
-        .project({ id: 1, title: 1, display_title: 1, author: 1, language: 1, year: 1, chapters: 1, 'pipeline_auto.retry_count': 1, 'image_source.provider': 1 })
+        .sort({ is_first_translation: -1, 'pipeline_auto.retry_count': 1 })
+        .project({ id: 1, title: 1, display_title: 1, author: 1, language: 1, year: 1, chapters: 1, 'pipeline_auto.retry_count': 1, 'image_source.provider': 1, pages_count: 1 })
         .limit(PHASE_6_LIMIT)
         .toArray();
     }
@@ -1306,10 +1328,21 @@ async function main() {
       const queue = [...books];
       const workers = Array.from({ length: Math.min(BOOK_CONCURRENCY, queue.length) }, async () => {
         while (queue.length > 0) {
+          // Hard cap: stop accepting new books after MAX_RUNTIME_MS
+          if (Date.now() - PROCESS_START > MAX_RUNTIME_MS) {
+            console.log(`  Runtime limit reached (${Math.round(MAX_RUNTIME_MS / 60000)}min) — stopping Phase 6`);
+            queue.length = 0;
+            break;
+          }
           const book = queue.shift();
           try {
             await setPipelineStatus(db, book.id, 'summarizing');
-            await enrichBook(db, book);
+            // Per-book timeout: scale with page count (min 5 min, max 20 min)
+            const bookTimeout = Math.max(5 * 60000, Math.min(20 * 60000, (book.pages_count || 200) * 3000));
+            const result = await Promise.race([
+              enrichBook(db, book),
+              new Promise((_, reject) => setTimeout(() => reject(new Error(`Timeout after ${Math.round(bookTimeout / 60000)}min (${book.pages_count || '?'} pages)`)), bookTimeout)),
+            ]);
             await setPipelineStatus(db, book.id, 'summary_indexed', { 'pipeline_auto.retry_count': 0 });
             revalidateBookPage(book.id).catch(() => {});
             enriched++;

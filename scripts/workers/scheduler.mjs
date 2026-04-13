@@ -144,7 +144,7 @@ const WORKERS = [
   // Tier 3: Enrichment — Gemini API bound, moderate Atlas reads
   {
     name: 'enrich-worker',
-    cmd: 'node scripts/workers/enrich-worker.mjs',
+    cmd: 'node scripts/workers/enrich-worker.mjs --limit=30',
     lock: '/tmp/sl-enrich.lock',
     connections: 5,
     tier: 3,
