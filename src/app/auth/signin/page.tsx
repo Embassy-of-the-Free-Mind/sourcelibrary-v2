@@ -134,7 +134,7 @@ function SignInContent() {
           </button>
         </form>
 
-        <p className="mt-4 text-center text-xs" style={{ color: 'var(--text-faint)' }}>
+        <p className="mt-6 text-center text-xs" style={{ color: 'var(--text-faint)' }}>
           By signing in, you agree to our{' '}
           <Link href="/terms" className="underline hover:opacity-80">terms of service</Link>
           {' '}and{' '}
