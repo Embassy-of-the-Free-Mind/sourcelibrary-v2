@@ -202,6 +202,10 @@ export default function ReadingRoomClient({ featuredPassage }: ReadingRoomClient
   const [threads, setThreads] = useState<ThreadPreview[]>([]);
   const [myThreads, setMyThreads] = useState<ThreadPreview[]>([]);
   const [sidebarTab, setSidebarTab] = useState<'recent' | 'mine'>('recent');
+  // Default to "My Conversations" once signed in
+  useEffect(() => {
+    if (status === 'authenticated') setSidebarTab('mine');
+  }, [status]);
   const [visibility, setVisibility] = useState<'public' | 'private'>('public');
   const [showThinking, setShowThinking] = useState(false);
   const [visibleThreads, setVisibleThreads] = useState(5);
