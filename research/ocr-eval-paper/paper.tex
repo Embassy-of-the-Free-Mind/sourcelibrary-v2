@@ -292,6 +292,8 @@ The \emph{Trattato della pittura} (1651)---Leonardo's text in printed form---sco
 
 \textbf{Informed confabulation} is not random hallucination---but neither is it faithful reading. On an optics page, five runs all discuss light, shadow, and visual rays, with different sentences each time. Direct vocabulary comparison against Richter's expert transcriptions of the same folios reveals that only 2 of 21 key optics terms (``corpo,'' ``ombra'') appear in the AI output. Core Leonardian vocabulary---\emph{simulacri}, \emph{spiraculi}, \emph{spetie}, \emph{ochio}, \emph{piramidi}---is absent. The AI produces grammatically correct 15th-century Italian about the right topic, but with the wrong words. Embedding similarity to Richter (79.8\%) is lower than between two different Richter pages on the same topic (85.4\%), confirming the model is in the semantic neighborhood but not reading the actual text.
 
+A telling stylistic mismatch reinforces this. Ravaisson-Mollien's diplomatic transcriptions~\cite{ravaisson1881} reveal that Leonardo wrote in a distinctive punctuated style with archaic spelling: ``\emph{Prosspectiua. eragione. dimostratiua, perla quale. lassperientia chonferma tutte. lechose.}'' The AI instead produces normalized modern Italian: ``\emph{Ogn' azione ne' nostri sensi \`e fatta per via d'alcuna linia.}'' The model generates text in the \emph{style of training data about Leonardo}, not in Leonardo's own orthographic style---further evidence of generation from priors rather than visual decoding.
+
 \textbf{What should practitioners do?} For printed text ($>$95\% of most historical collections): use single-run OCR with confidence. For manuscripts: (1)~run $N{=}5$ passes, (2)~compute per-sentence consistency, (3)~present trust-annotated output where green sentences can be cited and yellow/red sentences are flagged for expert review. This costs 5$\times$ a single OCR pass---negligible versus paleographic labor---and transforms consistency from a passive label into an active transcription tool.
 
 \textbf{Limitations.} Small corpus (50 pages). Richter comparison limited to 2 pages. Gemini embeddings evaluate Gemini OCR (potential same-family bias). Training data contamination and temperature dependence remain unexplored. The trust taxonomy thresholds (90\%/70\%) are empirically motivated but not formally validated against human judgments of transcription quality.
@@ -315,6 +317,8 @@ Self-consistency via embedding similarity provides a practical, reference-free q
 \bibitem{farquhar2024} S.~Farquhar et al. Detecting hallucinations in LLMs using semantic entropy. \emph{Nature}, 630:625--630, 2024.
 \bibitem{zhou2025} Y.~Zhou et al. Semantic hallucination in scene text recognition. 2025.
 \bibitem{wang2025} Z.~Wang et al. Seeing is believing? OCR hallucination under visual degradation. \emph{NeurIPS}, 2025.
+\bibitem{ravaisson1881} C.~Ravaisson-Mollien. \emph{Les Manuscrits de L\'eonard de Vinci}. 6~vols. Paris: Quantin, 1881--1891.
+
 \bibitem{richter1883} J.~P.~Richter. \emph{The Literary Works of Leonardo da Vinci}. Sampson Low, 1883.
 \end{thebibliography}
 }
