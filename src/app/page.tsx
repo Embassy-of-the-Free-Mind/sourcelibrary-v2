@@ -322,24 +322,18 @@ async function getCollectionShowcase() {
   return JSON.parse(JSON.stringify(items));
 }
 
-const FALLBACK_COUNTS = { totalBooks: 11040, translatedToEnglish: 10142, firstTranslationCount: 5716, authorCount: 4740, languageCount: 123, artworkCount: 50000 };
+const FALLBACK_COUNTS = { totalBooks: 11040, translatedToEnglish: 10142, firstTranslationCount: 5716, authorCount: 4740, languageCount: 123 };
 
-async function getBookCounts(): Promise<{ totalBooks: number; translatedToEnglish: number; firstTranslationCount: number; authorCount: number; languageCount: number; artworkCount: number }> {
+async function getBookCounts(): Promise<{ totalBooks: number; translatedToEnglish: number; firstTranslationCount: number; authorCount: number; languageCount: number }> {
   // 1. MongoDB system_config cache (updated by update-homepage-stats.mjs cron)
   // Preferred over Supabase because it uses the >=90% "readable" threshold which
   // Supabase books_catalog cannot compute (no column-to-column comparison in PostgREST).
   try {
     const db = await getReadDb();
-    const [cached, artworkCount] = await Promise.all([
-      db.collection('system_config').findOne(
-        { _id: 'homepage_stats' } as any,
-        { maxTimeMS: 2000 }
-      ),
-      db.collection('gallery_images').countDocuments(
-        { gallery_quality: { $gte: 0.7 } },
-        { maxTimeMS: 3000 },
-      ).catch(() => FALLBACK_COUNTS.artworkCount),
-    ]);
+    const cached = await db.collection('system_config').findOne(
+      { _id: 'homepage_stats' } as any,
+      { maxTimeMS: 2000 }
+    );
     if (cached?.totalBooks) {
       return {
         totalBooks: cached.totalBooks,
@@ -347,7 +341,6 @@ async function getBookCounts(): Promise<{ totalBooks: number; translatedToEnglis
         firstTranslationCount: cached.firstTranslationCount,
         authorCount: cached.authorCount ?? FALLBACK_COUNTS.authorCount,
         languageCount: cached.languageCount ?? FALLBACK_COUNTS.languageCount,
-        artworkCount,
       };
     }
   } catch { /* DB unreachable — try Supabase */ }
@@ -362,13 +355,24 @@ async function getBookCounts(): Promise<{ totalBooks: number; translatedToEnglis
     ]);
 
     if (totalRes.count && totalRes.count > 0) {
+      let authorCount = FALLBACK_COUNTS.authorCount;
+      let languageCount = FALLBACK_COUNTS.languageCount;
+      try {
+        const db = await getReadDb();
+        const cached = await db.collection('system_config').findOne(
+          { _id: 'homepage_stats' } as any,
+          { maxTimeMS: 2000 }
+        );
+        if (cached?.authorCount) authorCount = cached.authorCount;
+        if (cached?.languageCount) languageCount = cached.languageCount;
+      } catch { /* MongoDB unavailable — use fallback */ }
+
       return {
         totalBooks: totalRes.count,
         translatedToEnglish: totalRes.count,
         firstTranslationCount: firstTransRes.count ?? FALLBACK_COUNTS.firstTranslationCount,
-        authorCount: FALLBACK_COUNTS.authorCount,
-        languageCount: FALLBACK_COUNTS.languageCount,
-        artworkCount: FALLBACK_COUNTS.artworkCount,
+        authorCount,
+        languageCount,
       };
     }
   } catch { /* Supabase unreachable */ }
@@ -499,8 +503,6 @@ export default async function HomePage() {
                   <Link href="/search?has_translation=true" className="hover:text-accent-rust transition-colors">{counts.translatedToEnglish.toLocaleString('en-US')} translated books and manuscripts</Link>
                   {' '}&middot;{' '}
                   <Link href="/search?first_translation=true" className="hover:text-accent-rust transition-colors">{counts.firstTranslationCount.toLocaleString('en-US')} for the first time</Link>
-                  {' '}&middot;{' '}
-                  <Link href="/gallery" className="hover:text-accent-rust transition-colors">{counts.artworkCount.toLocaleString('en-US')} illustrations</Link>
                 </p>
               </div>
               <Link

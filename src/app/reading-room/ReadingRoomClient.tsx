@@ -202,6 +202,10 @@ export default function ReadingRoomClient({ featuredPassage }: ReadingRoomClient
   const [threads, setThreads] = useState<ThreadPreview[]>([]);
   const [myThreads, setMyThreads] = useState<ThreadPreview[]>([]);
   const [sidebarTab, setSidebarTab] = useState<'recent' | 'mine'>('recent');
+  // Default to "My Conversations" once signed in
+  useEffect(() => {
+    if (status === 'authenticated') setSidebarTab('mine');
+  }, [status]);
   const [visibility, setVisibility] = useState<'public' | 'private'>('public');
   const [showThinking, setShowThinking] = useState(false);
   const [visibleThreads, setVisibleThreads] = useState(5);
@@ -515,7 +519,7 @@ export default function ReadingRoomClient({ featuredPassage }: ReadingRoomClient
                 <div ref={chatContainerRef} className="min-h-[300px] max-h-[70vh] overflow-y-auto p-6 space-y-6">
                   {messages.length === 0 && (
                     <div className="text-center py-8">
-                      <img src="/brand/png/logo-compact--black-on-transparent--96h.png" alt="" className="w-10 h-10 mx-auto mb-3 opacity-40" />
+                      <img src="/brand/png/icon-only--black-on-transparent--96h.png" alt="" className="w-10 h-10 mx-auto mb-3 opacity-40" />
                       <p className="text-[#8a8480] text-sm font-body max-w-[400px] mx-auto leading-relaxed">
                         The Librarian searches the collection, Wikipedia, and semantic search
                         to find answers in over 10,000 rare books.
@@ -557,7 +561,7 @@ export default function ReadingRoomClient({ featuredPassage }: ReadingRoomClient
                     return (
                       <div key={i} className="flex gap-3">
                         <img
-                          src="/brand/png/logo-compact--black-on-transparent--96h.png"
+                          src="/brand/png/icon-only--black-on-transparent--96h.png"
                           alt="Librarian"
                           className="flex-shrink-0 w-10 h-10 rounded-full"
                         />
