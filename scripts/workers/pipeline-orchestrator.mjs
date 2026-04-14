@@ -994,13 +994,19 @@ function recordSubmission(keyIndex) {
 }
 
 /**
- * Check if we can submit more jobs. Returns false if all keys are saturated.
+ * Check if we can submit more jobs. Returns false if all keys are saturated
+ * OR if total active jobs across all keys exceeds MAX_ACTIVE_BATCH_OCR.
  * Refreshes Gemini counts if cache is stale (>2 min old).
  */
 async function canSubmitMore() {
   // Refresh real counts every 2 minutes to stay in sync with Gemini completions
   if (Date.now() - _geminiKeyLoadsAt > 120_000) {
     await getGeminiKeyLoads();
+  }
+  // Global cap: don't exceed MAX_ACTIVE_BATCH_OCR across all keys
+  const totalActive = _geminiKeyLoads.reduce((sum, n) => sum + n, 0);
+  if (totalActive >= MAX_ACTIVE_BATCH_OCR) {
+    return false;
   }
   return getLeastLoadedKey() >= 0;
 }
