@@ -275,6 +275,7 @@ async function fetchCollectionData(id: string) {
         collection: id,
         sort: 'popular',
         limit: COMPACT_LIMIT,
+        skipCount: true, // collection.book_count is cached — skip expensive Supabase count
       });
       return sbBooks.map(b => ({
         id: b.id, slug: b.slug, title: b.title, display_title: b.display_title,
