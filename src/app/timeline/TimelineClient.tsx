@@ -65,7 +65,7 @@ const ERAS: Era[] = [
     name: 'modern',
     label: 'Modern',
     from: 1800,
-    to: 2100,
+    to: 1930,
     color: '#8a8480',
     description: 'Revival and scholarship — the Golden Dawn, Theosophy, and the academic study of Western esotericism.',
   },
@@ -137,7 +137,8 @@ export default function TimelineClient({ initialData }: Props) {
 
   // Filter decades by language and/or era
   const filteredDecades = useMemo(() => {
-    let decades = overviewData.decades;
+    // Cap at 1930 — the library focuses on pre-modern texts
+    let decades = overviewData.decades.filter(d => d.decade < 1930);
 
     if (language) {
       decades = decades
@@ -260,7 +261,7 @@ export default function TimelineClient({ initialData }: Props) {
       <div className="flex flex-wrap gap-2 justify-center">
         {ERAS.filter(era => {
           // Only show eras that have data
-          return overviewData.decades.some(d => d.decade >= era.from && d.decade < era.to);
+          return overviewData.decades.some(d => d.decade < 1930 && d.decade >= era.from && d.decade < era.to);
         }).map(era => {
           const isActive = selectedEraName === era.name;
           const eraCount = overviewData.decades
