@@ -193,9 +193,33 @@ function SearchSteps({ steps }: { steps: SearchStep[] }) {
 
 // ── Main Component ────────────────────────────────────────────────────
 
+const ALL_SUGGESTIONS = [
+  'Was there any conception of artificial intelligence?',
+  'What did Agrippa write about planetary seals?',
+  'How did alchemists describe the philosopher\'s stone?',
+  'Who was Marsilio Ficino?',
+  'What do these texts say about the world soul?',
+  'What books explore resonance as magic?',
+  'Tell me about the Emerald Tablet',
+  'What did alchemists believe about gold?',
+  'How did Renaissance scholars understand the cosmos?',
+  'What is the Kabbalah\'s tree of life?',
+  'Did any of these authors write about dreams?',
+  'What did Paracelsus teach about medicine?',
+  'How were demons understood in early modern Europe?',
+  'What instruments did astrologers use?',
+  'What is the relationship between music and magic?',
+];
+
+function pickSuggestions(count: number): string[] {
+  const shuffled = [...ALL_SUGGESTIONS].sort(() => Math.random() - 0.5);
+  return shuffled.slice(0, count);
+}
+
 export default function ReadingRoomClient({ featuredPassage }: ReadingRoomClientProps) {
   const { data: session, status } = useSession();
   const [messages, setMessages] = useState<Message[]>([]);
+  const [suggestions] = useState(() => pickSuggestions(4));
   const [input, setInput] = useState('');
   const [sending, setSending] = useState(false);
   const [threadId, setThreadId] = useState<string | null>(null);
@@ -479,8 +503,8 @@ export default function ReadingRoomClient({ featuredPassage }: ReadingRoomClient
             The Reading Room
           </h1>
           <p className="text-white/80 text-base sm:text-lg font-body leading-relaxed max-w-[480px] drop-shadow-sm">
-            Ask the Librarian about any text in the collection — alchemy, Hermetica,
-            Kabbalah, astrology, natural philosophy.
+            Your research agent for over 10,000 rare books. Ask a question, and the Librarian
+            will search the collection, cross-reference sources, and build up findings you can export.
           </p>
 
           {featuredPassage && (
@@ -528,12 +552,7 @@ export default function ReadingRoomClient({ featuredPassage }: ReadingRoomClient
                         Responses may contain errors &mdash; always verify against the source page.
                       </p>
                       <div className="flex flex-wrap justify-center gap-2 mt-5">
-                        {[
-                          'Was there any conception of artificial intelligence?',
-                          'What did Agrippa write about planetary seals?',
-                          'How did alchemists describe the philosopher\'s stone?',
-                          'Who was Marsilio Ficino?',
-                        ].map((suggestion) => (
+                        {suggestions.map((suggestion) => (
                           <button
                             key={suggestion}
                             onClick={() => { setInput(suggestion); inputRef.current?.focus(); }}
