@@ -322,9 +322,9 @@ async function getCollectionShowcase() {
   return JSON.parse(JSON.stringify(items));
 }
 
-const FALLBACK_COUNTS = { totalBooks: 10293, translatedToEnglish: 10345, firstTranslationCount: 5787, authorCount: 4781, languageCount: 123, artworkCount: 6507 };
+const FALLBACK_COUNTS = { totalBooks: 10293, translatedToEnglish: 10345, firstTranslationCount: 5787, authorCount: 4781, languageCount: 123, artworkCount: 6507, illustrationCount: 87025 };
 
-async function getBookCounts(): Promise<{ totalBooks: number; translatedToEnglish: number; firstTranslationCount: number; authorCount: number; languageCount: number; artworkCount: number }> {
+async function getBookCounts(): Promise<{ totalBooks: number; translatedToEnglish: number; firstTranslationCount: number; authorCount: number; languageCount: number; artworkCount: number; illustrationCount: number }> {
   // 1. MongoDB system_config cache (updated by update-homepage-stats.mjs cron)
   // Preferred over Supabase because it uses the >=90% "readable" threshold which
   // Supabase books_catalog cannot compute (no column-to-column comparison in PostgREST).
@@ -342,6 +342,7 @@ async function getBookCounts(): Promise<{ totalBooks: number; translatedToEnglis
         authorCount: cached.authorCount ?? FALLBACK_COUNTS.authorCount,
         languageCount: cached.languageCount ?? FALLBACK_COUNTS.languageCount,
         artworkCount: cached.artworkCount ?? FALLBACK_COUNTS.artworkCount,
+        illustrationCount: cached.illustrationCount ?? FALLBACK_COUNTS.illustrationCount,
       };
     }
   } catch { /* DB unreachable — try Supabase */ }
@@ -375,6 +376,7 @@ async function getBookCounts(): Promise<{ totalBooks: number; translatedToEnglis
         authorCount,
         languageCount,
         artworkCount: FALLBACK_COUNTS.artworkCount,
+        illustrationCount: FALLBACK_COUNTS.illustrationCount,
       };
     }
   } catch { /* Supabase unreachable */ }
@@ -508,7 +510,13 @@ export default async function HomePage() {
                   {counts.artworkCount > 0 && (
                     <>
                       {' '}&middot;{' '}
-                      <Link href="/gallery" className="hover:text-accent-rust transition-colors">{counts.artworkCount.toLocaleString('en-US')} artworks</Link>
+                      <Link href="/artwork" className="hover:text-accent-rust transition-colors">{counts.artworkCount.toLocaleString('en-US')} artworks</Link>
+                    </>
+                  )}
+                  {counts.illustrationCount > 0 && (
+                    <>
+                      {' '}&middot;{' '}
+                      <Link href="/browse/subjects" className="hover:text-accent-rust transition-colors">{counts.illustrationCount.toLocaleString('en-US')} illustrations</Link>
                     </>
                   )}
                 </p>

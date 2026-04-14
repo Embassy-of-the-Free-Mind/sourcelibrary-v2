@@ -28,16 +28,17 @@ const readableFilter = {
 // Visual artworks (standalone art entries with resource_type like print, painting, etc.)
 const artworkFilter = { visible: true, resource_type: { $in: ['drawing', 'fresco', 'object', 'painting', 'print'] } };
 
-const [totalBooks, translatedToEnglish, firstTranslationCount, authorCount, languageCount, artworkCount] = await Promise.all([
+const [totalBooks, translatedToEnglish, firstTranslationCount, authorCount, languageCount, artworkCount, illustrationCount] = await Promise.all([
   books.countDocuments(filter),
   books.countDocuments(readableFilter),
   books.countDocuments({ ...translatedFilter, is_first_translation: true }),
   books.distinct('author', translatedFilter).then(a => a.length),
   books.distinct('language', translatedFilter).then(l => l.filter(x => x && !x.includes(',') && !x.includes(' and ')).length),
   books.countDocuments(artworkFilter),
+  db.collection('gallery_images').countDocuments({}),
 ]);
 
-const stats = { totalBooks, translatedToEnglish, firstTranslationCount, authorCount, languageCount, artworkCount, updatedAt: new Date() };
+const stats = { totalBooks, translatedToEnglish, firstTranslationCount, authorCount, languageCount, artworkCount, illustrationCount, updatedAt: new Date() };
 
 await db.collection('system_config').updateOne(
   { _id: 'homepage_stats' },
