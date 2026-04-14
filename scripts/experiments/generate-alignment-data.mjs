@@ -20,17 +20,20 @@ const OUTPUT_PATH = path.join(__dirname, 'alignment-results.json');
 const genAI = new GoogleGenerativeAI(process.env.GEMINI_API_KEY);
 
 function stripTags(text) {
-  // Remove XML-style metadata tags but keep the actual content
-  return text
+  // Remove metadata block tags entirely (content not useful for alignment)
+  let cleaned = text
     .replace(/<lang>[^<]*<\/lang>\n?/g, '')
     .replace(/<page-type>[^<]*<\/page-type>\n?/g, '')
     .replace(/<page-num>[^<]*<\/page-num>\n?/g, '')
     .replace(/<sig>[^<]*<\/sig>\n?/g, '')
-    .replace(/<meta>[^<]*<\/meta>\n?\n?/g, '')
-    .replace(/<margin>[^<]*<\/margin>/g, '')
-    .replace(/<note>[^<]*<\/note>/g, '')
-    .replace(/<unclear>[^<]*<\/unclear>/g, (m) => m.replace(/<\/?unclear>/g, ''))
-    .trim();
+    .replace(/<meta>[\s\S]*?<\/meta>\n?\n?/g, '')
+    .replace(/<note>[\s\S]*?<\/note>/g, '');
+
+  // Strip ALL remaining XML tags but keep inner text
+  cleaned = cleaned.replace(/<[^>]+>/g, '');
+
+  // Clean up excessive whitespace
+  return cleaned.replace(/\n{3,}/g, '\n\n').trim();
 }
 
 const ALIGNMENT_PROMPT = `You are a Latin-English word alignment expert. Given a Latin source text and its English translation, produce a JSON array of alignment links.
