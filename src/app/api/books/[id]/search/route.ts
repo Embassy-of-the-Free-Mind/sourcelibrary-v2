@@ -1,5 +1,6 @@
 import { NextRequest, NextResponse } from 'next/server';
 import { getDb } from '@/lib/mongodb';
+import { buildPageSearchStage } from '@/lib/atlas-search';
 
 interface SearchMatch {
   field: 'ocr' | 'translation';
@@ -23,9 +24,7 @@ function generateSnippet(text: string, query: string, contextChars: number = 80)
   const lowerQuery = query.toLowerCase();
   const words = lowerQuery.split(/\s+/).filter(w => w.length > 0);
 
-  // Find all positions where query words appear
   const positions: number[] = [];
-
   for (const word of words) {
     let pos = 0;
     while ((pos = lowerText.indexOf(word, pos)) !== -1) {
@@ -34,16 +33,10 @@ function generateSnippet(text: string, query: string, contextChars: number = 80)
     }
   }
 
-  // Dedupe and sort positions
   const uniquePositions = [...new Set(positions)].sort((a, b) => a - b);
-
-  // Generate snippets for first few matches (limit to 3 per field)
   const snippetPositions: number[] = [];
   for (const pos of uniquePositions) {
-    // Skip if too close to an existing snippet
-    if (snippetPositions.some(p => Math.abs(p - pos) < contextChars * 2)) {
-      continue;
-    }
+    if (snippetPositions.some(p => Math.abs(p - pos) < contextChars * 2)) continue;
     snippetPositions.push(pos);
     if (snippetPositions.length >= 3) break;
   }
@@ -51,18 +44,10 @@ function generateSnippet(text: string, query: string, contextChars: number = 80)
   for (const pos of snippetPositions) {
     const start = Math.max(0, pos - contextChars);
     const end = Math.min(text.length, pos + contextChars + query.length);
-
     let snippet = text.slice(start, end);
-
-    // Add ellipsis
     if (start > 0) snippet = '...' + snippet;
     if (end < text.length) snippet = snippet + '...';
-
-    matches.push({
-      field: 'ocr', // Will be set by caller
-      snippet,
-      position: pos
-    });
+    matches.push({ field: 'ocr', snippet, position: pos });
   }
 
   return matches;
@@ -84,66 +69,86 @@ export async function GET(
     const trimmedQuery = query.trim();
     const db = await getDb();
 
-    // Use regex search with book_id filter — fast because book_id index narrows
-    // to just this book's pages (~300 docs) before regex runs.
-    // $text search is NOT used here because the pages text index lacks a book_id
-    // prefix, so $text + book_id filter scans the entire 420k+ page index.
-    const regex = new RegExp(escapeRegex(trimmedQuery), 'i');
+    // Try Atlas Search first (stemming, relevance ranking, highlights)
+    // Falls back to regex if Atlas Search index is unavailable
+    let pages: Record<string, unknown>[];
+    let usedAtlas = false;
 
-    const pages = await db.collection('pages')
-      .find({
-        book_id: bookId,
-        $or: [
-          { 'ocr.data': { $regex: regex } },
-          { 'translation.data': { $regex: regex } }
-        ]
-      }, {
-        projection: {
-          id: 1,
-          page_number: 1,
-          'ocr.data': 1,
-          'translation.data': 1
-        }
-      })
-      .sort({ page_number: 1 })
-      .limit(50)
-      .toArray();
+    try {
+      pages = await db.collection('pages').aggregate([
+        buildPageSearchStage(trimmedQuery, bookId),
+        { $sort: { page_number: 1 } },
+        { $limit: 50 },
+        {
+          $project: {
+            id: 1,
+            page_number: 1,
+            book_id: 1,
+            'ocr.data': 1,
+            'translation.data': 1,
+            highlights: { $meta: 'searchHighlights' },
+          },
+        },
+      ], { maxTimeMS: 10000 }).toArray();
+      usedAtlas = true;
+    } catch {
+      // Fallback: regex search (no stemming but always works)
+      const regex = new RegExp(escapeRegex(trimmedQuery), 'i');
+      pages = await db.collection('pages')
+        .find({
+          book_id: bookId,
+          $or: [
+            { 'ocr.data': { $regex: regex } },
+            { 'translation.data': { $regex: regex } }
+          ]
+        }, {
+          projection: { id: 1, page_number: 1, 'ocr.data': 1, 'translation.data': 1 }
+        })
+        .sort({ page_number: 1 })
+        .limit(50)
+        .toArray();
+    }
 
-    // Generate results with snippets
     const results: SearchResult[] = [];
 
     for (const page of pages) {
       const matches: SearchMatch[] = [];
 
-      // Search in OCR text
-      if (page.ocr?.data) {
-        const ocrMatches = generateSnippet(page.ocr.data, trimmedQuery);
-        matches.push(...ocrMatches.map(m => ({ ...m, field: 'ocr' as const })));
-      }
-
-      // Search in translation
-      if (page.translation?.data) {
-        const translationMatches = generateSnippet(page.translation.data, trimmedQuery);
-        matches.push(...translationMatches.map(m => ({ ...m, field: 'translation' as const })));
+      if (usedAtlas && Array.isArray(page.highlights) && page.highlights.length > 0) {
+        // Use Atlas Search highlights
+        for (const hl of page.highlights as Array<{ path: string; texts: Array<{ value: string; type: string }> }>) {
+          const field: 'ocr' | 'translation' = hl.path === 'translation.data' ? 'translation' : 'ocr';
+          const snippet = hl.texts.map(t => t.value).join('');
+          matches.push({ field, snippet, position: 0 });
+        }
+      } else {
+        // Fallback: generate snippets from raw text
+        const ocr = page.ocr as { data?: string } | undefined;
+        const translation = page.translation as { data?: string } | undefined;
+        if (ocr?.data) {
+          const ocrMatches = generateSnippet(ocr.data, trimmedQuery);
+          matches.push(...ocrMatches.map(m => ({ ...m, field: 'ocr' as const })));
+        }
+        if (translation?.data) {
+          const translationMatches = generateSnippet(translation.data, trimmedQuery);
+          matches.push(...translationMatches.map(m => ({ ...m, field: 'translation' as const })));
+        }
       }
 
       if (matches.length > 0) {
         results.push({
-          pageId: page.id,
-          pageNumber: page.page_number,
+          pageId: page.id as string,
+          pageNumber: page.page_number as number,
           matches
         });
       }
     }
 
-    // Count pages with OCR vs translation matches
     let ocrPages = 0;
     let translationPages = 0;
     for (const result of results) {
-      const hasOcr = result.matches.some(m => m.field === 'ocr');
-      const hasTranslation = result.matches.some(m => m.field === 'translation');
-      if (hasOcr) ocrPages++;
-      if (hasTranslation) translationPages++;
+      if (result.matches.some(m => m.field === 'ocr')) ocrPages++;
+      if (result.matches.some(m => m.field === 'translation')) translationPages++;
     }
 
     // Log search query (fire-and-forget)
