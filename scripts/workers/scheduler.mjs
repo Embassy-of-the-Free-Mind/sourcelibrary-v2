@@ -238,6 +238,7 @@ const WORKERS = [
 // - prewarm-browse.mjs (HTTP revalidation)
 // - pipeline-health-alert.mjs (reads only, runs daily)
 // - embedding-server.mjs (long-running, Supabase not Atlas)
+// - embed-gemini.mjs (cron */4h, Supabase+Gemini API, no Atlas load)
 // - snapshot-stats.mjs (daily 4:30am, catalog coverage + SL progress snapshot)
 // - enrichment-snapshot.mjs (staggered at :15 odd hours)
 // - supabase-sync.mjs (staggered at :30 even hours)
