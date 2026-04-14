@@ -55,7 +55,7 @@ function getOcrModelForBook(book) {
 const OCR_MODEL = OCR_MODEL_FLASH; // Legacy fallback for recitation retry path
 const OCR_PROMPT_VERSION = 'v10'; // Read from DB at runtime; this label is for batch_jobs metadata only
 const OCR_INLINE_BATCH_SIZE = 20;  // Pages per inline batch (base64 in body, ~20MB limit)
-const OCR_FILE_BATCH_SIZE = 500;   // Pages per file-based batch — raised from 250 to 500 (issue #1078). Google recommends 1K-5K. File API tested at 707MB/480 pages. Streaming JSONL keeps memory low.
+const OCR_FILE_BATCH_SIZE = 1000;  // Pages per file-based batch. With 1500px resize, 1000 pages = ~500MB JSONL (well under 2GB File API limit). Google recommends 1K-5K. Experiment 2026-04-13: identical OCR quality at 1500px vs full-res.
 const CROSS_BOOK_BATCH_SIZE = 250; // Smaller batches for cross-book OCR — 500-page cross-book batches have 24% success vs 51% single-book. Half size = less blast radius on Gemini cancellation.
 const IMAGE_CONCURRENCY = 20;     // Parallel image downloads per book
 const MAX_PAGES_PER_BOOK = 1000;  // Max pages to OCR per book — raised from 500 to match larger batch size
@@ -1018,22 +1018,36 @@ function getPageImageUrl(page) {
   return page.photo_original || page.photo || null;
 }
 
-async function fetchImageBase64(url) {
+/**
+ * Fetch image and return as base64. If maxDim is set, resize to fit within that
+ * dimension (for OCR batches — reduces JSONL size 6x, same quality).
+ * Experiment 2026-04-13: 1500px resize produced identical OCR to full-res on BPH images.
+ */
+async function fetchImageBase64(url, { maxDim } = {}) {
   try {
     const response = await fetch(url, { signal: AbortSignal.timeout(30000) });
     if (!response.ok) return null;
-    const buffer = await response.arrayBuffer();
-    const contentType = response.headers.get('content-type') || 'image/jpeg';
-    return {
-      data: Buffer.from(buffer).toString('base64'),
-      mimeType: contentType.split(';')[0].trim(),
-    };
+    let buf = Buffer.from(await response.arrayBuffer());
+    let mimeType = (response.headers.get('content-type') || 'image/jpeg').split(';')[0].trim();
+
+    if (maxDim && buf.length > 100_000) { // Only resize images > 100KB
+      try {
+        const sharp = (await import('sharp')).default;
+        buf = await sharp(buf)
+          .resize({ width: maxDim, height: maxDim, fit: 'inside', withoutEnlargement: true })
+          .jpeg({ quality: 80 })
+          .toBuffer();
+        mimeType = 'image/jpeg';
+      } catch { /* resize failed, use original */ }
+    }
+
+    return { data: buf.toString('base64'), mimeType };
   } catch {
     return null;
   }
 }
 
-async function downloadImagesParallel(pages, concurrency) {
+async function downloadImagesParallel(pages, concurrency, { maxDim } = {}) {
   const results = [];
   for (let i = 0; i < pages.length; i += concurrency) {
     const chunk = pages.slice(i, i + concurrency);
@@ -1041,7 +1055,7 @@ async function downloadImagesParallel(pages, concurrency) {
       chunk.map(async (page) => {
         const url = getPageImageUrl(page);
         if (!url || (!url.startsWith('http://') && !url.startsWith('https://'))) return null;
-        const image = await fetchImageBase64(url);
+        const image = await fetchImageBase64(url, { maxDim });
         if (!image) return null;
         return { pageId: page.id, image };
       })
@@ -1248,8 +1262,8 @@ async function submitOcrDirectly(db, book, { modelOverride, maxPages } = {}) {
     }
   }
 
-  console.log(`    Downloading ${pages.length} images...`);
-  const downloaded = await downloadImagesParallel(pages, IMAGE_CONCURRENCY);
+  console.log(`    Downloading ${pages.length} images (resize to 1500px for OCR)...`);
+  const downloaded = await downloadImagesParallel(pages, IMAGE_CONCURRENCY, { maxDim: 1500 });
   if (downloaded.length === 0) {
     throw new Error(`All ${pages.length} image downloads failed`);
   }
@@ -1528,8 +1542,8 @@ async function submitCrossBookOcrBatches(db, books) {
       prompt += `\n\n**Document context:** "${book.title || 'Unknown'}" by ${book.author || 'Unknown'}. ${yearStr} ${copyrightNote}`.trim();
     }
 
-    console.log(`    Downloading ${pages.length} images for ${(book.title || '').substring(0, 40)}...`);
-    const downloaded = await downloadImagesParallel(pages, IMAGE_CONCURRENCY);
+    console.log(`    Downloading ${pages.length} images for ${(book.title || '').substring(0, 40)} (resize 1500px)...`);
+    const downloaded = await downloadImagesParallel(pages, IMAGE_CONCURRENCY, { maxDim: 1500 });
     if (downloaded.length === 0) {
       console.log(`    WARNING: All ${pages.length} downloads failed for ${(book.title || '').substring(0, 40)}`);
       continue;

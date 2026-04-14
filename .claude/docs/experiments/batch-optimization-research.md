@@ -55,15 +55,103 @@ or the model version/prompt structure differs.
 **Takeaway:** We're already getting free implicit caching on ~22% of our OCR prompt tokens.
 No code change needed. Larger batches with identical prompts may increase the cache hit rate.
 
-### Experiment A: Large Batch Size (1,000 pages) — NOT YET RUN
-Script ready at `scripts/experiments/batch-size-experiment.mjs`. Blocked by Gemini quota
-exhaustion (all 3 keys 429'd as of 2026-04-12). Will run when quota recovers.
+### Experiment A: Large Batch Size — COMPLETED (2026-04-13)
+
+Two parallel experiments on Paracelsus *Opera* (BPH, large images):
+
+| | Full-res (680 pages) | Resized 1500px (1000 pages) |
+|---|---|---|
+| JSONL size | 1,864 MB | **467 MB** |
+| Upload time | 14s | **7s** |
+| Total submit time | 158s | **97s** |
+| Gemini processing time | **2.2 hours** | 4.3 hours |
+| Avg image size | 2,145 KB | **358 KB (83% smaller)** |
+| OCR quality | Excellent | **Identical** |
+| Failures | 0/680 | 0/1000 |
+| Implicit caching | None (Key3 too new) | None (Key3 too new) |
+
+**Key findings:**
+1. **1500px resize produces identical OCR quality.** Both transcribed early modern German
+   (Paracelsus) accurately — same handling of "vnnd", "Nymph", "Siderifchen" etc.
+2. **File API hard limit is 2GB** (2,147,483,648 bytes). Full-res 750 pages = 2,068 MB
+   (over limit). With resize, 1,000 pages = 467 MB (way under).
+3. **With resize, 4,000+ pages per batch is feasible** (staying under 2GB).
+4. **Resized batch took 2x longer to process** (4.3h vs 2.2h) despite smaller file.
+   Likely queue depth, not systematic — Gemini processes requests, not bytes.
+5. **Prompt tokens nearly identical** (1,124 vs 1,136). Gemini internally resizes anyway,
+   so we're only saving upload bandwidth and JSONL size, not token cost.
+
+**Action taken:** Added `sharp` resize (1500px, quality 80) to orchestrator's OCR download
+path. Raised `OCR_FILE_BATCH_SIZE` from 500 to 1000. Image extraction paths unchanged
+(need full resolution for bbox accuracy).
+
+**Earlier run (480 pages, no resize):**
+Also tested with 480 pages from mixed books at full resolution. JSONL 707 MB, uploaded in
+10s. Confirmed File API handles large files fine. Main issue was download failures from
+expired source URLs (316/796 failed) — archiver must complete before OCR.
 
 ### Experiment C: Batch Translation with 5-Page Context Windows
 - Group 5 consecutive pages into a single request (OCR text only, no images)
 - Each request includes translation of pages N-4 through N with full context
 - Compare translation quality vs realtime translate-worker
 - This doesn't need context caching — just larger individual requests
+
+## OCR Speed Optimization Plan
+
+### The Goal
+Process 19,846 warehouse books (6.3M pages) as fast as possible. Priority: 6,804 first
+English translations. Current OCR rate: ~920 pages/hr ($0.45/day). Target: 10,000+ pages/hr.
+
+### Current Bottlenecks (ranked by impact)
+
+| # | Bottleneck | Current | Limit | Fix |
+|---|-----------|---------|-------|-----|
+| 1 | **Batch creation rate limit** | ~700 batches/project/day | 3 projects × 700 = 2,100/day | Increase batch size from 250→1,000 = 4x fewer creations |
+| 2 | **Batch size** | 250 pages/batch | Google recommends 1,000-5,000 | Raise to 1,000. JSONL ~1.4 GB (under 2GB File API limit) |
+| 3 | **Archiving must complete first** | Pages need `archived_photo` or valid `photo` URL | Source URLs expire | Run archiver ahead of OCR; use `archived_photo` (R2, permanent) |
+| 4 | **Orchestrator runs every 5 min** | Submits `ocr_submit` limit (200) pages/run | 200 × 12/hr = 2,400 pages/hr | Raise to 500 or 1,000/run |
+| 5 | **3 GCP projects** | Round-robin | Per-project quotas independent | Could add more projects (free tier) |
+| 6 | **Queue starvation** | Pipeline only promotes `draft` → `archive_complete` gradually | Warehouse books not auto-promoted | Bulk promote warehouse books to `archive_complete` |
+
+### Quick Wins (implement now)
+
+1. **Raise batch size to 1,000** (pending Experiment A results)
+   - Change `MAX_PAGES_PER_BATCH` from 250 to 1,000
+   - 4x fewer batch creation API calls = 4x throughput ceiling
+   - Already verified: File API accepts 707 MB, should handle ~1.4 GB
+
+2. **Raise `ocr_submit` limit** from 200 to 500-1,000 pages/run
+   - Orchestrator submits more pages per 5-min cycle
+   - With 1,000-page batches: 1 batch/run = 1,000 pages every 5 min = 12,000/hr
+
+3. **Prioritize archived pages** for OCR
+   - Use `archived_photo` (R2) instead of `photo` (source URL) in batch JSONL
+   - Permanent URLs, no download failures
+   - Need to check if orchestrator already does this
+
+4. **Bulk promote warehouse first-translation books**
+   - Query: `books_warehouse` where `is_first_translation: true` or language not English
+   - Promote to `books` with status `draft` → archiver picks them up
+
+### Theoretical Maximum
+
+With 3 GCP projects, 1,000-page batches:
+- Batch creation: 3 × 700/day = 2,100 batches/day
+- Pages: 2,100 × 1,000 = **2.1M pages/day** (~87,500/hr)
+- At $0.02/1K pages = ~$42/day
+- 6.3M warehouse pages = **3 days** at full speed
+
+This is the ceiling. Actual speed depends on Gemini's dynamic capacity allocation.
+
+### Cost Model
+
+| Batch size | Batches/day (3 keys) | Pages/day | Cost/day | Days for 6.3M |
+|-----------|---------------------|-----------|----------|---------------|
+| 250 (current) | 2,100 | 525K | ~$10 | 12 days |
+| 1,000 | 2,100 | 2.1M | ~$42 | 3 days |
+| 5,000 | 2,100 | 10.5M | ~$210 | 0.6 days |
+
+Batch API is 50% off vs realtime. Cost = ~$0.02 per 1K input tokens (flash-lite).
 
 ## Sources
 - [Gemini Batch API docs](https://ai.google.dev/gemini-api/docs/batch-api)
