@@ -98,13 +98,16 @@ export async function browseBooks(opts: {
   sort?: SortOption;
   offset?: number;
   limit?: number;
+  /** Skip count: 'exact' to avoid expensive seq scans on large collections.
+   *  Callers that already have a cached count (e.g. collection pages) should set this. */
+  skipCount?: boolean;
 }): Promise<{ books: CatalogBook[]; total: number }> {
   const limit = opts.limit || 60;
   const offset = opts.offset || 0;
 
   let query = supabase
     .from('books_catalog')
-    .select(BOOK_SELECT, { count: 'exact' })
+    .select(BOOK_SELECT, opts.skipCount ? { count: 'planned' } : { count: 'exact' })
     .eq('visible', true);
 
   if (opts.hasPages !== false) query = query.gt('pages_count', 0);
