@@ -43,8 +43,8 @@ const PROVIDER_URLS: Record<string, string> = {
 
 /* ── helpers ── */
 
-function formatNumber(n: number): string {
-  return n.toLocaleString('en-US');
+function formatNumber(n: number | undefined | null): string {
+  return (n ?? 0).toLocaleString('en-US');
 }
 
 function pct(part: number, whole: number): string {

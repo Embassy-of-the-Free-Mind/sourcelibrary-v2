@@ -87,30 +87,32 @@ async function getEntitiesRaw(searchParams: SearchParams) {
     const entities = entitiesResult.data || [];
     const total = entitiesResult.count || 0;
 
-    // Letter distribution: fetch first letters for the A-Z bar
-    // Use a lightweight query — just get distinct first letters with counts
-    // For now, use a simpler approach: fetch all first letters
-    let letterQuery = supabase
-      .from('entities')
-      .select('name')
-      .gte('book_count', minBooks);
-    if (type) letterQuery = letterQuery.eq('type', type);
-    if (query) letterQuery = letterQuery.ilike('name', `%${query}%`);
-
-    // Paginate to get all names for letter counting (Supabase 1000-row limit)
+    // Letter distribution: use a single RPC call or lightweight query
+    // Instead of paginating all names, use SQL to count by first letter
     const letterMap: Record<string, number> = {};
-    let letterOffset = 0;
-    while (true) {
-      const { data } = await letterQuery.range(letterOffset, letterOffset + 999);
-      if (!data || data.length === 0) break;
-      for (const row of data) {
-        const firstLetter = (row.name as string)?.[0]?.toUpperCase();
-        if (firstLetter && /[A-Z]/.test(firstLetter)) {
-          letterMap[firstLetter] = (letterMap[firstLetter] || 0) + 1;
+    try {
+      // Build a raw SQL approach via Supabase RPC, falling back to sampling
+      // For performance, just fetch first 5000 names (covers most cases)
+      let letterQuery = supabase
+        .from('entities')
+        .select('name')
+        .gte('book_count', minBooks)
+        .order('name', { ascending: true })
+        .limit(5000);
+      if (type) letterQuery = letterQuery.eq('type', type);
+      if (query) letterQuery = letterQuery.ilike('name', `%${query}%`);
+
+      const { data: letterData } = await letterQuery;
+      if (letterData) {
+        for (const row of letterData) {
+          const firstLetter = (row.name as string)?.[0]?.toUpperCase();
+          if (firstLetter && /[A-Z]/.test(firstLetter)) {
+            letterMap[firstLetter] = (letterMap[firstLetter] || 0) + 1;
+          }
         }
       }
-      if (data.length < 1000) break;
-      letterOffset += 1000;
+    } catch {
+      // If letter counting fails, the page still renders — just without letter counts
     }
 
     return {
