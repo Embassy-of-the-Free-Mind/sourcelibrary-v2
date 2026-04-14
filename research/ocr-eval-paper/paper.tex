@@ -399,6 +399,16 @@ The contamination picture is thus nuanced: the model knows Leonardo's topics and
 
 Our corpus is small (50 pages) and concentrated on one author's manuscripts. The Richter accuracy comparison is limited to 2 pages, and a larger page-aligned study against complete diplomatic editions would strengthen the calibration gap measurement. We use Gemini embeddings to evaluate Gemini OCR output, introducing potential same-family bias; cross-family evaluation (e.g., OpenAI embeddings on Gemini OCR) would control for this. The trust band thresholds (90\%/70\%) are empirically motivated by the gap between printed and manuscript scores but have not been validated against expert paleographic judgments of transcription quality. Finally, our evaluation is limited to Italian mirror-script; other challenging scripts (Arabic, Chinese calligraphy, medieval abbreviations) may exhibit different failure patterns.
 
+\subsection{Future Work}
+
+\begin{enumerate}
+\item \textbf{Expand the calibration gap.} Page-align Ravaisson-Mollien's diplomatic transcriptions against the corresponding manuscript folios for 20+ pages across multiple codices. This would move the calibration gap from a 2-page observation to a statistically robust estimate.
+\item \textbf{Cross-family embedding evaluation.} Repeat the consistency analysis using OpenAI or Cohere embeddings to control for same-family bias in the Gemini-on-Gemini setup.
+\item \textbf{Validate trust thresholds.} Recruit 3--5 paleographers to rate a sample of 50 AI transcriptions (spanning green/yellow/red bands) for accuracy, then compute the ROC curve for the 90\%/70\% thresholds.
+\item \textbf{Test on other manuscript traditions.} Apply the method to Arabic naskh, medieval Latin secretary hand, and Chinese calligraphy to determine whether the consistency-accuracy relationship and text density law generalize beyond Leonardo.
+\item \textbf{N saturation analysis.} Formally test consistency stabilization across $N{=}2,3,5,7,10$ to determine the minimum number of runs needed for reliable triage vs.\ precise measurement.
+\end{enumerate}
+
 % ============================================================================
 \section{Conclusion}
 

@@ -239,7 +239,18 @@ Our evaluation has significant limitations. The corpus is small: 8 pages across 
 
 We ran an ablation experiment with four conditions on Abhidharmako\'sa p.\,21: (A)~Direct, (B)~CoT-Hindi, (C)~CoT-Generic (``analyze the Sanskrit grammar step by step''), (D)~CoT-Latin (wrong cognate control). Results: CoT-Generic achieved 95.7\% consistency vs.\ CoT-Hindi's 94.7\%---\textbf{the generic chain-of-thought matches or exceeds the Hindi-specific prompt}. CoT-Hindi and CoT-Generic produce nearly identical translations (96.9\% cross-similarity). This suggests that most of the CoT improvement comes from the general instruction to reason before translating, not from Hindi-specific knowledge. The cognate priming effect, if it exists, is smaller than the generic CoT effect and may be limited to the domain-specific cases (performing arts, philosophy) where Hindi vocabulary directly overlaps with the source text.
 
-The LLM judge (Gemini evaluating Gemini translations) introduces same-family bias and cannot verify Sanskrit fidelity at the word level---a Sanskritist's evaluation is essential. The judge scales differed between Sanskrit (1--5) and Chinese (/10) experiments, an inconsistency that should be unified. A full study needs: (a)~larger corpus across domains, (b)~multiple models, (c)~human expert evaluation, (d)~COMET comparison against existing translations, and (e)~the ablation experiment described above.
+The LLM judge (Gemini evaluating Gemini translations) introduces same-family bias and cannot verify Sanskrit fidelity at the word level---a Sanskritist's evaluation is essential. The judge scales differed between Sanskrit (1--5) and Chinese (/10) experiments, an inconsistency that should be unified.
+
+\subsection{Future Work}
+
+\begin{enumerate}
+\item \textbf{COMET comparison against Pruden.} Compare all pipeline outputs against Pruden's English translation of the Abhidharmako\'sa (1988--90) using COMET and BLEURT. This would provide the first reference-based measurement alongside our reference-free metrics.
+\item \textbf{Human expert evaluation.} Recruit 2--3 Sanskritists to blind-rate a sample of 20 translations (5 per pipeline $\times$ 4 domains) for fidelity, terminology accuracy, and scholarly usefulness. This is the only way to validate the LLM-as-judge scores.
+\item \textbf{Isolate the cognate effect.} Expand the ablation to 20+ pages across domains. The current single-page ablation cannot distinguish signal from noise. If CoT-Hindi consistently outperforms CoT-Generic on philosophy/performing arts but not on Vedic/astronomy, the domain-dependent hypothesis is confirmed.
+\item \textbf{Test other language families.} Run the same three-pipeline comparison on Latin$\to$Italian$\to$English (theological vs.\ scientific Latin), Classical Arabic$\to$MSA$\to$English, and Ancient Greek$\to$Modern Greek$\to$English. The domain-dependency prediction is testable: Italian should help on Aquinas but not on Copernicus.
+\item \textbf{Scale the corpus.} Test on 50+ pages per domain, 3+ models (Gemini, Claude, GPT-4), with unified judge scales. This would support statistical significance testing on the observed differences.
+\item \textbf{Include literary Sanskrit (\emph{k\=avya}).} Literary/poetic Sanskrit is the domain where both Sanskrit and Hindi literary traditions are richest---a missing test case that could show the strongest cognate priming effect.
+\end{enumerate}
 
 % ============================================================================
 \section{Conclusion}
