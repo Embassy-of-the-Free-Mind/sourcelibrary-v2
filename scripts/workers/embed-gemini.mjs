@@ -244,6 +244,51 @@ await mongoClient.close();
 const elapsed = ((Date.now() - start) / 1000).toFixed(1);
 console.log(`\nDone: ${embedded.toLocaleString()} embedded, ${skipped} skipped, ${errors} errors, ${elapsed}s`);
 
+// After a large full backfill, rebuild the HNSW index if it's missing
+if (FULL_MODE && embedded > 10000) {
+  await rebuildHnswIndex();
+}
+
+// ── HNSW index rebuild ──────────────────────────────────────────────
+
+async function rebuildHnswIndex() {
+  const pgUrl = process.env.SUPABASE_DB_URL;
+  if (!pgUrl) {
+    console.log('\nSUPABASE_DB_URL not set — skipping HNSW index rebuild.');
+    console.log('Run manually: CREATE INDEX idx_pt_embedding ON page_translations USING hnsw (embedding vector_cosine_ops) WITH (m=16, ef_construction=64);');
+    return;
+  }
+
+  try {
+    const { default: pg } = await import('pg');
+    const client = new pg.Client({ connectionString: pgUrl, ssl: { rejectUnauthorized: false } });
+    await client.connect();
+
+    // Check if index already exists
+    const { rows } = await client.query(
+      "SELECT 1 FROM pg_indexes WHERE tablename = 'page_translations' AND indexname = 'idx_pt_embedding'"
+    );
+
+    if (rows.length > 0) {
+      console.log('\nHNSW index already exists — skipping rebuild.');
+      await client.end();
+      return;
+    }
+
+    console.log('\nRebuilding HNSW index (this may take hours for millions of vectors)...');
+    // Set a long statement timeout for index creation
+    await client.query('SET statement_timeout = 0');
+    await client.query(
+      'CREATE INDEX idx_pt_embedding ON page_translations USING hnsw (embedding vector_cosine_ops) WITH (m=16, ef_construction=64)'
+    );
+    console.log('HNSW index rebuilt successfully.');
+    await client.end();
+  } catch (e) {
+    console.error('HNSW index rebuild failed:', e.message);
+    console.log('Run manually: CREATE INDEX idx_pt_embedding ON page_translations USING hnsw (embedding vector_cosine_ops) WITH (m=16, ef_construction=64);');
+  }
+}
+
 // ── Batch processor ──────────────────────────────────────────────────
 
 async function processBatch(items) {
