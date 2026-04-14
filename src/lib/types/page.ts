@@ -60,6 +60,7 @@ export interface Page {
   photo_original?: string;      // Original S3 URL before cropping
   cropped_photo?: string;       // Local path to cropped image
   archived_photo?: string;      // Full-res archived JPEG in R2
+  enhanced_photo?: string;      // Contrast/brightness-enhanced copy of archived_photo in R2
   display_photo?: string;       // 1200px display-size JPEG in R2 (with provenance marks baked in)
   thumbnail_blob?: string;      // Pre-generated 150px JPEG thumbnail in R2
   crop?: CropData;              // Crop coordinates used
@@ -246,4 +247,19 @@ export interface DetectedImage {
   metadata?: ImageMetadata;     // Structured tags for search/filtering
   museum_description?: string;  // 2-3 sentence museum-style label
   job_id?: string;              // Processing job that produced this detection
+}
+
+/**
+ * Get the best available image URL for a page.
+ * Prefers enhanced > cropped > archived > photo_original > photo.
+ * For split-from-spread pages, uses photo directly (skip legacy fallback).
+ */
+export function pageImageUrl(page: Partial<Page>): string {
+  if ((page as any).split_from_spread) return page.photo || '';
+  return (page as any).enhanced_photo
+    || (page as any).cropped_photo
+    || page.archived_photo
+    || page.photo_original
+    || page.photo
+    || '';
 }

@@ -92,7 +92,7 @@ export const POST = withAdminAuth(async (request: NextRequest) => {
           book_id: '$book_id',
           page_number: '$page_number',
           detection_index: '$detection_index',
-          image_url: { $ifNull: ['$cropped_photo', { $ifNull: ['$archived_photo', { $ifNull: ['$photo_original', '$photo'] }] }] },
+          image_url: { $ifNull: ['$enhanced_photo', { $ifNull: ['$cropped_photo', { $ifNull: ['$archived_photo', { $ifNull: ['$photo_original', '$photo'] }] }] }] },
           thumbnail_url: '$detected_images.thumbnail_url',
           extracted_url: '$detected_images.extracted_url',
           description: { $ifNull: ['$detected_images.description', ''] },

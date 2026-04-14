@@ -249,7 +249,7 @@ async function buildGalleryDocs(
       { projection: { display_title: 1, title: 1, author: 1, year: 1, language: 1, visible: 1, hidden: 1 } }
     );
 
-    const imageUrl = page.cropped_photo || page.archived_photo || page.photo_original || page.photo || '';
+    const imageUrl = (page as any).enhanced_photo || page.cropped_photo || page.archived_photo || page.photo_original || page.photo || '';
 
     const docs = images
       .map((img, idx) => {
