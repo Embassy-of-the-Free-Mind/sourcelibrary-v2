@@ -108,7 +108,7 @@ async function getTraditions(): Promise<{ traditions: TraditionCollection[]; tot
     .filter((r): r is PromiseFulfilledResult<TraditionCollection> => r.status === 'fulfilled')
     .map(r => r.value);
 
-  const totalBooks = enriched.reduce((sum, t) => sum + t.scripture_count, 0);
+  const totalBooks = enriched.reduce((sum, t) => sum + t.book_count, 0);
 
   return { traditions: enriched, totalBooks };
   } catch (e) {
@@ -142,9 +142,7 @@ function TraditionCard({ tradition }: { tradition: TraditionCollection }) {
 
       <div className="absolute inset-0 flex flex-col justify-end p-3 sm:p-4">
         <p className="text-white/50 text-xs mb-1 hidden sm:block">
-          {tradition.scripture_count > 0
-            ? `${tradition.scripture_count} core texts`
-            : `${tradition.book_count} texts`}
+          {tradition.book_count} {tradition.book_count === 1 ? 'text' : 'texts'}
         </p>
         <h2 className="font-serif text-sm sm:text-base lg:text-lg text-white font-semibold leading-tight line-clamp-2 group-hover:text-accent-gold transition-colors">
           {tradition.name}
