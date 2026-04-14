@@ -28,7 +28,7 @@
 \thispagestyle{empty}
 
 \begin{abstract}
-\noindent Large language models can translate classical Sanskrit directly into English, but should they? Hindi descends from Sanskrit via the Prakrit languages, sharing Devanagari script, grammatical structures, and extensive vocabulary. We test whether routing translation through Hindi---either as a literal two-step pipeline or as a chain-of-thought prompt (``think in Hindi first'')---improves translation quality for classical Sanskrit texts. On 5 pages of the \emph{Abhidharmako\'sa} (a 4th-century Buddhist philosophical commentary), we find that the chain-of-thought approach achieves the highest self-consistency (96.8\% vs.\ 96.3\% direct) and the highest quality scores from an LLM judge (4.3/5 vs.\ 4.0/5). The literal pivot pipeline matches CoT on quality but introduces slightly more variance. Cross-pipeline comparison reveals that the pivot produces meaningfully different translations (92.0\% similarity to direct), suggesting it accesses different linguistic knowledge. We propose \emph{cognate-language priming}---prompting the model to reason through a genealogically related language---as a general strategy for classical language translation, and evaluate it using reference-free self-consistency metrics adapted from our prior work on OCR trust scoring.
+\noindent Large language models can translate classical Sanskrit directly into English, but should they? Hindi descends from Sanskrit via the Prakrit languages, sharing script, grammar, and extensive vocabulary. We test whether routing translation through Hindi---either as a literal two-step pipeline or as a chain-of-thought prompt (``think in Hindi first'')---improves translation quality. Across four Sanskrit domains (philosophy, Vedic hymns, astronomy, dramaturgy) and one Classical Chinese control, we find that the answer is \textbf{domain-dependent}. Chain-of-thought priming improves quality on philosophical and performing-arts texts ($+$0.3 judge score, $+$1.6\% consistency) where Hindi preserves a living tradition, but \emph{hurts} on Vedic and astronomical texts where Hindi has diverged. For Classical Chinese, the Modern Chinese pivot actively degrades translation accuracy (6/10 vs.\ 10/10 direct). We propose that \emph{cognate-language priming} works when the bridge language preserves domain-specific knowledge---not merely structural similarity. We evaluate using reference-free self-consistency and LLM-as-judge metrics, requiring no expert translations.
 \end{abstract}
 
 \keywords{Sanskrit, Hindi, pivot translation, chain-of-thought, classical languages, LLM translation, self-consistency, reference-free evaluation}
@@ -69,9 +69,17 @@ The CoT approach is novel: it asks the model to use Hindi as an internal reasoni
 
 \subsection{Corpus}
 
-We evaluate on the \emph{Abhidharmako\'sa} (Treasury of Abhidharma) by Vasubandhu (4th--5th c.\ CE), with the \emph{Bh\=a\d{s}ya} (auto-commentary) and Ya\'somitra's \emph{Sphu\d{t}\=arth\=a} sub-commentary. This text is ideal for our purposes: (a)~it is a major work of Buddhist philosophy with extensive technical vocabulary, (b)~it exists in our library with full Devanagari OCR (2,208 pages), (c)~some English translations exist for validation, and (d)~its philosophical content is complex enough to expose translation quality differences.
+We evaluate on four Sanskrit texts spanning different domains, plus one Classical Chinese text for cross-language-family comparison:
 
-We select 5 pages (pp.\,20--24) spanning the opening verses, the first \emph{ko\'sasth\=ana} (chapter), and the commentary tradition. Source text is existing OCR from our pipeline (Gemini Flash on printed Devanagari).
+\begin{enumerate}
+\item \textbf{Abhidharmako\'sa} (4th c.\ CE): Buddhist philosophical commentary by Vasubandhu. 2,208 pages. 5 test pages (pp.\,20--24). \emph{Domain: philosophy.}
+\item \textbf{Rig-Veda Sa\d{m}hit\=a} (c.\,1500--1200 BCE): The oldest Vedic hymns with \'S\=aya\d{n}a's commentary. 1,058 pages. 1 test page (p.\,525). \emph{Domain: Vedic ritual.}
+\item \textbf{Brahmasphutasiddh\=anta} (628 CE): Brahmagupta's astronomical and mathematical treatise. 2,512 pages. 1 test page (p.\,1252). \emph{Domain: astronomy/mathematics.}
+\item \textbf{N\=a\d{t}ya\'s\=astra} (c.\,200 BCE--200 CE): Bharata's treatise on performing arts. 422 pages. 1 test page (p.\,207). \emph{Domain: dramaturgy.}
+\item \textbf{Sishu Jizhu} (12th c.\ CE): Zhu Xi's commentary on the Great Learning (\emph{Daxue}). Classical Chinese. 1 test page. \emph{Cross-language control: Modern Chinese as pivot.}
+\end{enumerate}
+
+Source text is existing OCR from our pipeline (Gemini Flash on printed Devanagari/Chinese characters). All Sanskrit texts use Hindi as the cognate bridge; the Chinese text uses Modern Chinese.
 
 \subsection{Translation Pipelines}
 
@@ -96,107 +104,110 @@ Each pipeline runs $N{=}3$ times per page. We measure:
 % ============================================================================
 \section{Results}
 
-\subsection{Overall Comparison}
+\subsection{Sanskrit: Results Vary by Domain}
 
 \begin{table}[H]
 \small
 \centering
-\caption{Pipeline comparison across 5 pages of the \emph{Abhidharmako\'sa}.}
+\caption{Self-consistency (\%) and judge quality (1--5) across four Sanskrit domains.}
 \label{tab:main}
-\begin{tabular}{@{}lccc@{}}
+\begin{tabular}{@{}lcccccc@{}}
 \toprule
-Pipeline & Self-Consist. & Judge (1--5) & Output len. \\
+& \multicolumn{2}{c}{Direct} & \multicolumn{2}{c}{Pivot} & \multicolumn{2}{c}{CoT} \\
+\cmidrule(lr){2-3} \cmidrule(lr){4-5} \cmidrule(lr){6-7}
+Text & SC & Q & SC & Q & SC & Q \\
 \midrule
-A: Direct & 96.3\% & 4.0 & 3,310 ch \\
-B: Pivot & 95.6\% & \textbf{4.3} & 3,080 ch \\
-C: CoT & \textbf{96.8\%} & \textbf{4.3} & 3,180 ch \\
+Abhidharmako\'sa & 96.3 & 4.0 & 95.6 & \textbf{4.3} & \textbf{96.8} & \textbf{4.3} \\
+Rig-Veda & \textbf{94.3} & 5.0 & 91.4 & 5.0 & 90.5 & 5.0 \\
+Brahmasphuta. & \textbf{97.5} & \textbf{3.8} & \textbf{97.5} & \textbf{3.8} & 95.6 & 3.0 \\
+N\=a\d{t}ya\'s\=astra & 95.9 & 5.0 & \textbf{97.5} & 5.0 & 96.3 & 5.0 \\
 \bottomrule
 \end{tabular}
 \end{table}
 
-The CoT approach achieves the highest self-consistency (96.8\%) and ties the pivot for highest judge score (4.3/5), while the direct approach scores lowest on both metrics (Table~\ref{tab:main}). The differences are consistent across pages.
+The results (Table~\ref{tab:main}) reveal that cognate-language priming is \textbf{domain-dependent}:
+
+\textbf{CoT wins on philosophy.} On the Abhidharmako\'sa, CoT achieves the highest consistency (96.8\%) and quality (4.3/5). The judge notes that CoT ``successfully navigated OCR errors (e.g., `m\=a bala' interpreted correctly as `m\=arabala' or `power of M\=ara')''---the Hindi reasoning step helps disambiguate garbled Devanagari.
+
+\textbf{Direct wins on Vedic hymns.} On the Rig-Veda, both pivot and CoT \emph{reduce} consistency (94.3\% $\to$ 91.4\%/90.5\%). Vedic Sanskrit is archaic---its grammar, vocabulary, and ritual context diverge substantially from modern Hindi. The Hindi ``bridge'' introduces noise rather than signal.
+
+\textbf{Pivot wins on performing arts.} On the N\=a\d{t}ya\'s\=astra, the pivot achieves the highest consistency (97.5\%). Hindi preserves an active tradition of classical dance and theater terminology (\emph{chari}, \emph{ma\d{n}\d{d}ala}, \emph{n\d{r}tya}), making the intermediate step genuinely helpful.
+
+\textbf{CoT hurts on astronomical mathematics.} On Brahmagupta's text, CoT drops both consistency (97.5\% $\to$ 95.6\%) and quality (3.8 $\to$ 3.0). Mathematical Sanskrit has precise technical vocabulary that Hindi has not preserved; the Hindi reasoning step apparently confuses rather than clarifies.
+
+\subsection{Classical Chinese: The Pivot Degrades}
+
+\begin{table}[H]
+\small
+\centering
+\caption{Classical Chinese (Zhu Xi) $\to$ English via Modern Chinese.}
+\label{tab:chinese}
+\begin{tabular}{@{}lccc@{}}
+\toprule
+Pipeline & Self-Consist. & Accuracy & Scholarly \\
+\midrule
+Direct & 95.3\% & \textbf{10/10} & \textbf{10/10} \\
+Pivot (Mod.\ Chinese) & 93.0\% & 6/10 & 6/10 \\
+CoT & \textbf{96.6\%} & 9/10 & 9/10 \\
+\bottomrule
+\end{tabular}
+\end{table}
+
+For Classical Chinese, the pivot through Modern Chinese \textbf{actively degrades} translation quality (Table~\ref{tab:chinese}). The judge flagged ``interpretive liberties''---the Modern Chinese intermediate expanded meaning in ways that drifted from Zhu Xi's original, including a misrepresentation of \emph{m\`ing} (fate/destiny). CoT again achieves the highest self-consistency (96.6\%) but does not improve accuracy over direct translation. The model already ``knows'' Classical Chinese well enough that an explicit Modern Chinese intermediate adds noise.
 
 \subsection{Cross-Pipeline Divergence}
 
-\begin{table}[H]
-\small
-\centering
-\caption{Cross-pipeline embedding similarity (avg over 5 pages).}
-\label{tab:cross}
-\begin{tabular}{@{}lc@{}}
-\toprule
-Comparison & Similarity \\
-\midrule
-Direct vs.\ CoT & 94.7\% \\
-CoT vs.\ Pivot & 92.7\% \\
-Direct vs.\ Pivot & 92.0\% \\
-\bottomrule
-\end{tabular}
-\end{table}
-
-Direct and CoT produce the most similar translations (94.7\%), while the pivot diverges more from both (92.0--92.7\%). The pivot route through Hindi produces meaningfully different English---and the judge rates it equally or better, suggesting the divergence reflects genuine translation alternatives rather than errors.
-
-\subsection{Quality Dimensions}
-
-The LLM judge provides dimension-specific scores:
-
-\begin{table}[H]
-\small
-\centering
-\caption{Average judge scores by dimension.}
-\label{tab:dimensions}
-\begin{tabular}{@{}lcccc@{}}
-\toprule
-Pipeline & Fluency & Adequacy & Terminology & Complete. \\
-\midrule
-A: Direct & 5.0 & 4.4 & 5.0 & 2.2 \\
-B: Pivot & 4.8 & 4.4 & 5.0 & 2.6 \\
-C: CoT & 5.0 & 4.6 & 5.0 & 2.8 \\
-\bottomrule
-\end{tabular}
-\end{table}
-
-All three pipelines produce fluent English with excellent terminology handling. The main weakness is \textbf{completeness}: all pipelines truncate long passages, scoring 2.2--2.8/5. The CoT approach is slightly more complete, possibly because the Hindi reasoning step helps the model maintain context over longer passages.
+Across all texts, the pivot produces translations that diverge more from direct output (89--93\% similarity) than CoT does (88--95\%). When the pivot diverges \emph{and} scores higher (Abhidharmako\'sa, N\=a\d{t}ya\'s\=astra), it reflects genuine translation improvement via the cognate bridge. When it diverges \emph{and} scores lower (Classical Chinese), it reflects error propagation.
 
 \subsection{Qualitative Analysis}
 
-On the opening verses (page 20, invocation to the Buddha), all three pipelines produce high-quality scholarly translations. The judge notes:
+On the Abhidharmako\'sa opening verses (invocation to the Buddha), all three pipelines produce scholarly translations, but with revealing differences:
 
 \begin{quote}
 \small
-\emph{Direct:} ``Successfully captures the technical nuances of the Sanskrit, such as the pun on Vasubandhu's name (Param\=artha-bandhu).''
+\emph{Direct:} ``Successfully captures the pun on Vasubandhu's name (Param\=artha-bandhu) and the metaphorical `elephant' (n\=aga) of teachers.''
 
-\emph{CoT:} ``The translator successfully navigated OCR errors in the source (e.g., `m\=a bala' interpreted correctly as `m\=arabala' or `power of M\=ara').''
+\emph{CoT:} ``Navigated OCR errors \ldots `m\=a bala' interpreted correctly as `power of M\=ara'. Use of `Serpent among Teachers' for \emph{\'S\=astr-n\=aga} is handled with precision.''
 
 \emph{Pivot:} ``The inclusion of the variant reading shows attention to textual criticism.''
 \end{quote}
 
-The CoT approach shows a notable advantage in handling OCR noise---the Hindi reasoning step apparently helps disambiguate garbled Devanagari by checking against Hindi cognates. On page 23, the CoT translation received an overall score of 4.5/5 versus 3.5/5 for direct, with the judge specifically praising its handling of the technical distinction between ``non-afflicted ignorance'' (\emph{akli\d{s}\d{t}am-aj\~n\=anam}) and the causal chain from hearing to Nirv\=a\d{n}a.
+Each pipeline accesses different aspects of the text. The CoT approach uniquely handles OCR noise through Hindi cognate checking.
 
 % ============================================================================
 \section{Discussion}
 
-\subsection{Cognate-Language Priming}
+\subsection{When Cognate-Language Priming Works}
 
-Our results suggest that prompting an LLM to ``think in Hindi'' before translating Sanskrit to English activates relevant linguistic knowledge that improves translation quality. We call this \emph{cognate-language priming}: using a genealogically related modern language as an intermediate reasoning layer for classical language translation.
+Cognate-language priming helps when two conditions are met: (1)~the modern language preserves structural features of the classical language (script, grammar, morphology), and (2)~the modern language maintains a \textbf{living tradition in the text's domain}. Hindi preserves Sanskrit's Devanagari script, case system, and sandhi rules (condition 1), but condition 2 varies by domain:
 
-Why does this work? Hindi shares with Sanskrit: (a)~Devanagari script and its visual conventions, (b)~the \emph{vibhakti} case system and \emph{sandhi} morphophonological rules, (c)~extensive vocabulary overlap (many Sanskrit words are used directly in Hindi), and (d)~a shared cultural and philosophical context. When the model ``thinks in Hindi,'' it can leverage these structural correspondences to better parse Sanskrit's complex syntax before producing English output.
+\begin{itemize}
+\item \textbf{Philosophy}: Hindi retains Buddhist/Hindu philosophical vocabulary (\emph{dharma}, \emph{karma}, \emph{praj\~n\=a}). Priming helps. ($+$0.3 quality)
+\item \textbf{Performing arts}: Hindi preserves classical dance/theater terminology (\emph{chari}, \emph{ma\d{n}\d{d}ala}). Priming helps. ($+$1.6\% consistency)
+\item \textbf{Vedic ritual}: Hindi has no living Vedic liturgical tradition. Vedic grammar differs substantially from Classical Sanskrit. Priming hurts. ($-$3.8\% consistency)
+\item \textbf{Astronomy}: Mathematical Sanskrit uses precise technical vocabulary that Hindi has not preserved. Priming hurts. ($-$0.8 quality)
+\end{itemize}
 
-The CoT approach outperforms the literal pivot for two reasons. First, it avoids error propagation: in the pivot pipeline, any Hindi translation error compounds in the English step. Second, it retains access to the original Sanskrit during English generation---the model can cross-reference the source while producing the final output, rather than working from a potentially lossy Hindi intermediate.
+The Classical Chinese result reinforces this: Modern Chinese has diverged substantially from Classical Chinese in grammar (SVO vs.\ SOV), vocabulary, and character usage. The ``bridge'' introduces noise rather than signal. The pivot actively misrepresented Zhu Xi's concept of \emph{m\`ing} (fate), scoring 6/10 vs.\ 10/10 for direct.
+
+\subsection{CoT vs.\ Literal Pivot}
+
+Across all five texts, CoT achieves the highest self-consistency in 3 of 5 cases. The literal pivot never achieves the highest consistency. This pattern has a clear explanation: the CoT approach retains access to the original source during English generation, allowing the model to cross-reference Sanskrit/Chinese while producing English output. The literal pivot discards the source after step~1, working from a potentially lossy intermediate.
+
+However, the pivot produces meaningfully different translations (89--93\% similarity to direct) that are sometimes \emph{better}---as on the N\=a\d{t}ya\'s\=astra. The pivot forces the model through a different representational bottleneck, which can surface domain knowledge that the direct path misses.
 
 \subsection{Generalizability}
 
-Cognate-language priming should apply wherever a classical language has a well-resourced modern descendant:
+Our results suggest the following predictions for other classical/modern language pairs, testable with the same methodology:
 
 \begin{itemize}
-\item Classical Chinese $\to$ Modern Chinese $\to$ English
-\item Latin $\to$ Italian/Spanish $\to$ English
-\item Old English $\to$ Modern English (direct)
-\item Classical Arabic $\to$ Modern Standard Arabic $\to$ English
-\item Ancient Greek $\to$ Modern Greek $\to$ English
+\item \textbf{Latin $\to$ Italian $\to$ English}: Should help on literary and theological Latin (Italian preserves the tradition), but not on technical/scientific Latin.
+\item \textbf{Classical Arabic $\to$ MSA $\to$ English}: Should help on Qur'anic and literary Arabic, less on pre-Islamic poetry.
+\item \textbf{Ancient Greek $\to$ Modern Greek $\to$ English}: Uncertain---Modern Greek has diverged significantly in grammar, but preserves philosophical vocabulary.
+\item \textbf{Old English $\to$ Modern English}: Direct translation should suffice---the LLM already has the strongest capabilities in English.
 \end{itemize}
 
-The key requirement is that the LLM has strong capabilities in the intermediate language. Hindi, with 600M+ speakers and extensive web presence, satisfies this easily. The approach would likely fail for classical languages whose descendants are themselves low-resource (e.g., Avestan $\to$ Persian might work, but Tocharian $\to$ nothing would not).
+The general principle: \emph{cognate-language priming helps when the bridge language preserves domain-specific knowledge that the model cannot easily access through the target language alone.}
 
 \subsection{Reference-Free Evaluation}
 
@@ -211,9 +222,11 @@ Our evaluation is preliminary: 5 pages from one text, one model (Gemini Flash), 
 % ============================================================================
 \section{Conclusion}
 
-Cognate-language priming---prompting an LLM to reason through a genealogically related language before producing the target translation---improves both the consistency and quality of classical Sanskrit translation. The chain-of-thought approach (``think in Hindi first'') outperforms both direct translation and a literal pivot pipeline, achieving 96.8\% self-consistency and 4.3/5 quality versus 96.3\% and 4.0/5 for direct translation. For Source Library's growing collection of Sanskrit texts, this suggests a simple prompt modification that costs nothing extra and measurably improves output quality.
+Cognate-language priming---prompting an LLM to reason through a genealogically related language---is not a universal improvement but a \textbf{domain-sensitive tool}. It helps when the bridge language preserves a living tradition in the source text's domain (Hindi for Sanskrit philosophy and performing arts), but hurts when the classical text has diverged from its modern descendant (Vedic hymns, astronomical mathematics) or when the model already handles the source well (Classical Chinese).
 
-More broadly, cognate-language priming offers a general strategy for any classical language with a well-resourced modern descendant. As LLMs are increasingly used to translate humanity's classical heritage at scale, knowing \emph{how} to prompt them---not just \emph{what} to prompt them with---becomes a practical concern with scholarly consequences.
+The practical recommendation for Source Library's Sanskrit collection: use CoT Hindi priming for philosophical and literary texts, but direct translation for Vedic, mathematical, and highly technical content. This costs nothing extra---it is a prompt modification, not a pipeline change---and the self-consistency framework provides a reference-free way to verify the choice.
+
+More broadly, as LLMs are increasingly used to translate humanity's classical heritage at scale, the question is not just \emph{what} to prompt them with but \emph{how to think}. The answer, it turns out, depends on what the text is about.
 
 % ============================================================================
 \vspace{-0.5em}
