@@ -303,11 +303,24 @@ export async function searchBookIds(
 ): Promise<string[]> {
   const limit = opts?.limit || 500;
 
+  // Build OR filter: exact phrase match + word-level AND matches
+  // "mathematical magick" should match "Mathematicall Magick" by matching each word
+  const words = text.trim().split(/\s+/).filter(w => w.length >= 2);
+  const phraseFilters = `title.ilike.%${text}%,display_title.ilike.%${text}%,author.ilike.%${text}%`;
+
+  let orFilter = phraseFilters;
+  if (words.length >= 2) {
+    // Add word-level AND: title contains ALL words (handles spelling variants)
+    const titleAnds = words.map(w => `title.ilike.%${w}%`).join(',');
+    const displayAnds = words.map(w => `display_title.ilike.%${w}%`).join(',');
+    orFilter += `,and(${titleAnds}),and(${displayAnds})`;
+  }
+
   let query = supabase
     .from('books_catalog')
     .select('id')
     .gt('pages_count', 0)
-    .or(`title.ilike.%${text}%,display_title.ilike.%${text}%,author.ilike.%${text}%`)
+    .or(orFilter)
     .limit(limit);
 
   if (!opts?.includeHidden) query = query.eq('visible', true);
