@@ -255,6 +255,11 @@ function adjustForScanQuality(
     adjustment = 0.05;       // 1000×1000+ — high-res bonus
   }
 
+  // Enhanced scans have been contrast/brightness corrected — illustrations render better
+  if (page.enhanced_photo) {
+    adjustment += 0.03;
+  }
+
   return Math.max(0, Math.min(1, aiQuality + adjustment));
 }
 
