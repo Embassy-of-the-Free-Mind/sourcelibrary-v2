@@ -46,60 +46,123 @@ Rules:
 - Skip headings/chapter markers — focus on body text
 - Be precise with character offsets — they must exactly match the substrings
 
-Return ONLY a JSON array, no markdown fencing, no explanation. Each element:
-{
-  "en": [startChar, endChar],
-  "src": [startChar, endChar],
-  "en_text": "the english words",
-  "src_text": "the latin words",
-  "weight": 0.4 | 0.7 | 1.0
-}`;
+Return a JSON array. Use this COMPACT format — single-letter keys to minimize output size:
+[{"e":[0,5],"s":[0,5],"et":"english","st":"latin","w":1.0}]
+
+Keys: e=english offsets, s=source offsets, et=english text, st=source text, w=weight.
+Keep strings short — just the aligned words, no extra context.`;
+
+// Split text into ~500 char chunks at sentence boundaries
+function splitIntoChunks(srcText, transText, maxLen = 500) {
+  const chunks = [];
+  let srcStart = 0;
+  let transStart = 0;
+
+  // Simple sentence splitter: find period/newline near maxLen
+  function findBreak(text, from, maxLen) {
+    const end = Math.min(from + maxLen, text.length);
+    if (end >= text.length) return text.length;
+    // Look for sentence boundary
+    for (let i = end; i > from + maxLen * 0.5; i--) {
+      if (text[i] === '.' || text[i] === '\n') return i + 1;
+    }
+    // Fall back to space
+    for (let i = end; i > from + maxLen * 0.5; i--) {
+      if (text[i] === ' ') return i + 1;
+    }
+    return end;
+  }
+
+  while (srcStart < srcText.length && transStart < transText.length) {
+    const srcEnd = findBreak(srcText, srcStart, maxLen);
+    const transEnd = findBreak(transText, transStart, maxLen);
+    chunks.push({
+      src: srcText.substring(srcStart, srcEnd),
+      srcOffset: srcStart,
+      trans: transText.substring(transStart, transEnd),
+      transOffset: transStart,
+    });
+    srcStart = srcEnd;
+    transStart = transEnd;
+  }
+  return chunks;
+}
 
 async function generateLLMAlignment(sourceText, translationText) {
-  const model = genAI.getGenerativeModel({ model: 'gemini-2.5-flash' });
-
-  const prompt = `${ALIGNMENT_PROMPT}
-
-LATIN SOURCE:
-${sourceText}
-
-ENGLISH TRANSLATION:
-${translationText}`;
-
-  const result = await model.generateContent({
-    contents: [{ role: 'user', parts: [{ text: prompt }] }],
+  const model = genAI.getGenerativeModel({
+    model: 'gemini-3-flash-preview',
     generationConfig: {
       temperature: 0.1,
-      maxOutputTokens: 65536,
+      maxOutputTokens: 16384,
+      responseMimeType: 'application/json',
     },
   });
 
-  const text = result.response.text().trim();
-  // Strip markdown fencing if present
-  const jsonStr = text.replace(/^```json?\n?/m, '').replace(/\n?```$/m, '').trim();
+  const chunks = splitIntoChunks(sourceText, translationText, 300);
+  const allLinks = [];
 
-  try {
-    const links = JSON.parse(jsonStr);
-    // Validate and fix offsets
-    return links.filter(link => {
-      const enSlice = translationText.substring(link.en[0], link.en[1]);
-      const srcSlice = sourceText.substring(link.src[0], link.src[1]);
-      // Allow some tolerance — LLM offsets can be slightly off
-      if (!enSlice || !srcSlice) return false;
-      return true;
-    }).map(link => ({
-      en: link.en,
-      src: link.src,
-      en_text: link.en_text,
-      src_text: link.src_text,
-      weight: link.weight,
-      method: 'llm',
-    }));
-  } catch (e) {
-    console.error('Failed to parse LLM response:', e.message);
-    console.error('Response was:', jsonStr.substring(0, 500));
-    return [];
+  for (let ci = 0; ci < chunks.length; ci++) {
+    const chunk = chunks[ci];
+    const prompt = `${ALIGNMENT_PROMPT}
+
+IMPORTANT: Return character offsets relative to these exact text excerpts (starting at 0).
+
+LATIN SOURCE:
+${chunk.src}
+
+ENGLISH TRANSLATION:
+${chunk.trans}`;
+
+    let text;
+    for (let attempt = 0; attempt < 3; attempt++) {
+      try {
+        const result = await model.generateContent(prompt);
+        text = result.response.text().trim();
+        JSON.parse(text); // validate
+        break;
+      } catch (e) {
+        if (attempt === 2) {
+          console.error(`  Chunk ${ci + 1}/${chunks.length} failed after 3 attempts:`, e.message);
+          text = null;
+          break;
+        }
+        // wait briefly before retry
+        await new Promise(r => setTimeout(r, 1000));
+      }
+    }
+    try {
+      if (!text) continue;
+      const links = JSON.parse(text);
+
+      for (const link of links) {
+        // Support both compact (e/s/et/st/w) and full format
+        const enRange = link.e || link.en;
+        const srcRange = link.s || link.src;
+        const enText = link.et || link.en_text;
+        const srcText = link.st || link.src_text;
+        const weight = link.w ?? link.weight ?? 0.7;
+
+        if (!enRange || !srcRange) continue;
+        const enSlice = chunk.trans.substring(enRange[0], enRange[1]);
+        const srcSlice = chunk.src.substring(srcRange[0], srcRange[1]);
+        if (!enSlice || !srcSlice) continue;
+
+        allLinks.push({
+          en: [enRange[0] + chunk.transOffset, enRange[1] + chunk.transOffset],
+          src: [srcRange[0] + chunk.srcOffset, srcRange[1] + chunk.srcOffset],
+          en_text: enText || enSlice,
+          src_text: srcText || srcSlice,
+          weight,
+          method: 'llm',
+        });
+      }
+      console.log(`  Chunk ${ci + 1}/${chunks.length}: ${links.length} links`);
+    } catch (e) {
+      console.error(`  Chunk ${ci + 1}/${chunks.length} failed:`, e.message);
+    }
   }
+
+  return allLinks;
 }
 
 // Simple word-level embedding similarity placeholder

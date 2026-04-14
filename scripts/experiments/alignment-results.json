@@ -1,5 +1,5 @@
 {
-  "generated": "2026-04-12T23:43:49.916Z",
+  "generated": "2026-04-14T20:19:09.174Z",
   "pages": [
     {
       "id": "ficino-de-voluptate-p6",
@@ -13,12 +13,12 @@
         "llm": [
           {
             "en": [
-              140,
-              145
+              0,
+              5
             ],
             "src": [
-              78,
-              83
+              0,
+              5
             ],
             "en_text": "Plato",
             "src_text": "PLATO",
@@ -27,12 +27,12 @@
           },
           {
             "en": [
-              147,
-              156
+              7,
+              16
             ],
             "src": [
-              84,
-              90
+              6,
+              12
             ],
             "en_text": "therefore",
             "src_text": "igitur",
@@ -41,40 +41,96 @@
           },
           {
             "en": [
-              158,
-              219
+              18,
+              26
             ],
             "src": [
-              91,
-              130
+              35,
+              49
             ],
-            "en_text": "(to begin with him as the leader of these philosophers)",
-            "src_text": "(ut ab eorum principe initium faciam)",
+            "en_text": "to begin",
+            "src_text": "initium faciam",
             "weight": 1,
             "method": "llm"
           },
           {
             "en": [
-              221,
-              237
+              27,
+              35
             ],
             "src": [
-              131,
-              133
+              17,
+              25
             ],
-            "en_text": "when he had divided",
-            "src_text": "cū",
+            "en_text": "with him",
+            "src_text": "ab eorum",
             "weight": 0.7,
             "method": "llm"
           },
           {
             "en": [
-              238,
-              246
+              36,
+              49
             ],
             "src": [
-              134,
-              140
+              26,
+              34
+            ],
+            "en_text": "as the leader",
+            "src_text": "principe",
+            "weight": 1,
+            "method": "llm"
+          },
+          {
+            "en": [
+              50,
+              72
+            ],
+            "src": [
+              20,
+              25
+            ],
+            "en_text": "of these philosophers",
+            "src_text": "eorum",
+            "weight": 0.4,
+            "method": "llm"
+          },
+          {
+            "en": [
+              75,
+              79
+            ],
+            "src": [
+              51,
+              53
+            ],
+            "en_text": "when",
+            "src_text": "cū",
+            "weight": 1,
+            "method": "llm"
+          },
+          {
+            "en": [
+              80,
+              94
+            ],
+            "src": [
+              76,
+              89
+            ],
+            "en_text": "he had divided",
+            "src_text": "distribuisset",
+            "weight": 1,
+            "method": "llm"
+          },
+          {
+            "en": [
+              95,
+              103
+            ],
+            "src": [
+              54,
+              60
             ],
             "en_text": "the soul",
             "src_text": "animum",
@@ -83,12 +139,12 @@
           },
           {
             "en": [
-              247,
-              261
+              104,
+              120
             ],
             "src": [
-              141,
-              154
+              61,
+              75
             ],
             "en_text": "into two parts",
             "src_text": "in duas partes",
@@ -97,1398 +153,40 @@
           },
           {
             "en": [
-              221,
-              237
+              121,
+              127
             ],
             "src": [
-              160,
-              171
+              96,
+              104
             ],
-            "en_text": "when he had divided",
-            "src_text": "distribuisset",
+            "en_text": "namely",
+            "src_text": "scilicet",
             "weight": 1,
             "method": "llm"
           },
           {
             "en": [
-              263,
-              293
+              128,
+              136
             ],
             "src": [
-              173,
-              197
-            ],
-            "en_text": "namely, the mind and the senses",
-            "src_text": "mente scilicet, ac sen-\nsum",
-            "weight": 1,
-            "method": "llm"
-          },
-          {
-            "en": [
-              295,
-              305
-            ],
-            "src": [
-              220,
-              229
-            ],
-            "en_text": "attributed",
-            "src_text": "attribuit",
-            "weight": 1,
-            "method": "llm"
-          },
-          {
-            "en": [
-              306,
-              314
-            ],
-            "src": [
-              206,
-              214
-            ],
-            "en_text": "gladness",
-            "src_text": "læticiam",
-            "weight": 1,
-            "method": "llm"
-          },
-          {
-            "en": [
-              315,
-              318
-            ],
-            "src": [
-              215,
-              216
-            ],
-            "en_text": "and",
-            "src_text": "&",
-            "weight": 1,
-            "method": "llm"
-          },
-          {
-            "en": [
-              319,
-              322
-            ],
-            "src": [
-              217,
-              224
-            ],
-            "en_text": "joy",
-            "src_text": "gaudium",
-            "weight": 1,
-            "method": "llm"
-          },
-          {
-            "en": [
-              323,
-              333
-            ],
-            "src": [
-              199,
-              204
-            ],
-            "en_text": "to the mind",
-            "src_text": "menti",
-            "weight": 1,
-            "method": "llm"
-          },
-          {
-            "en": [
-              335,
-              338
-            ],
-            "src": [
-              229,
-              230
-            ],
-            "en_text": "and",
-            "src_text": ",",
-            "weight": 0.4,
-            "method": "llm"
-          },
-          {
-            "en": [
-              339,
-              346
-            ],
-            "src": [
-              238,
-              247
-            ],
-            "en_text": "pleasure",
-            "src_text": "uoluptatem",
-            "weight": 1,
-            "method": "llm"
-          },
-          {
-            "en": [
-              347,
-              359
-            ],
-            "src": [
-              230,
-              237
-            ],
-            "en_text": "to the senses",
-            "src_text": "sensibus",
-            "weight": 1,
-            "method": "llm"
-          },
-          {
-            "en": [
-              361,
-              368
-            ],
-            "src": [
-              249,
-              254
-            ],
-            "en_text": "However",
-            "src_text": "Verum",
-            "weight": 1,
-            "method": "llm"
-          },
-          {
-            "en": [
-              370,
-              379
-            ],
-            "src": [
-              275,
-              280
-            ],
-            "en_text": "he thinks",
-            "src_text": "putat",
-            "weight": 1,
-            "method": "llm"
-          },
-          {
-            "en": [
-              380,
-              394
-            ],
-            "src": [
-              256,
-              268
-            ],
-            "en_text": "these first two",
-            "src_text": "prima duo hæc",
-            "weight": 1,
-            "method": "llm"
-          },
-          {
-            "en": [
-              395,
-              400
-            ],
-            "src": [
-              269,
-              276
-            ],
-            "en_text": "differ",
-            "src_text": "differre",
-            "weight": 1,
-            "method": "llm"
-          },
-          {
-            "en": [
-              401,
-              418
-            ],
-            "src": [
-              262,
-              268
-            ],
-            "en_text": "from one another",
-            "src_text": "īter se",
-            "weight": 1,
-            "method": "llm"
-          },
-          {
-            "en": [
-              420,
-              427
-            ],
-            "src": [
-              282,
-              286
-            ],
-            "en_text": "because",
-            "src_text": "quod",
-            "weight": 1,
-            "method": "llm"
-          },
-          {
-            "en": [
-              428,
-              431
-            ],
-            "src": [
-              287,
-              291
-            ],
-            "en_text": "all",
-            "src_text": "omne",
-            "weight": 1,
-            "method": "llm"
-          },
-          {
-            "en": [
-              432,
-              435
-            ],
-            "src": [
-              292,
-              299
-            ],
-            "en_text": "joy",
-            "src_text": "gaudium",
-            "weight": 1,
-            "method": "llm"
-          },
-          {
-            "en": [
-              436,
-              454
-            ],
-            "src": [
-              300,
-              313
-            ],
-            "en_text": "is worthy of praise",
-            "src_text": "laude sit dignū",
-            "weight": 1,
-            "method": "llm"
-          },
-          {
-            "en": [
-              456,
-              463
-            ],
-            "src": [
-              322,
-              326
-            ],
-            "en_text": "whereas",
-            "src_text": "uero",
-            "weight": 0.7,
-            "method": "llm"
-          },
-          {
-            "en": [
-              464,
-              472
-            ],
-            "src": [
-              314,
-              321
-            ],
-            "en_text": "gladness",
-            "src_text": "læticia",
-            "weight": 1,
-            "method": "llm"
-          },
-          {
-            "en": [
-              473,
-              495
-            ],
-            "src": [
-              327,
-              340
-            ],
-            "en_text": "is partly to be praised",
-            "src_text": "partim lau-\ndanda",
-            "weight": 1,
-            "method": "llm"
-          },
-          {
-            "en": [
-              496,
-              499
-            ],
-            "src": [
-              340,
-              341
-            ],
-            "en_text": "and",
-            "src_text": ",",
-            "weight": 0.4,
-            "method": "llm"
-          },
-          {
-            "en": [
-              500,
-              519
-            ],
-            "src": [
-              341,
-              359
-            ],
-            "en_text": "partly to be blamed",
-            "src_text": "partim uituperanda sit",
-            "weight": 1,
-            "method": "llm"
-          },
-          {
-            "en": [
-              521,
-              524
-            ],
-            "src": [
-              365,
-              369
-            ],
-            "en_text": "For",
-            "src_text": "enim",
-            "weight": 1,
-            "method": "llm"
-          },
-          {
-            "en": [
-              525,
-              534
-            ],
-            "src": [
-              360,
-              364
-            ],
-            "en_text": "he defines",
-            "src_text": "Esse",
-            "weight": 0.7,
-            "method": "llm"
-          },
-          {
-            "en": [
-              535,
-              543
-            ],
-            "src": [
-              370,
-              378
-            ],
-            "en_text": "gladness",
-            "src_text": "lætitiam",
-            "weight": 1,
-            "method": "llm"
-          },
-          {
-            "en": [
-              544,
-              564
-            ],
-            "src": [
-              394,
-              400
-            ],
-            "en_text": "as a certain elevation",
-            "src_text": "quandam",
-            "weight": 1,
-            "method": "llm"
-          },
-          {
-            "en": [
-              544,
-              564
-            ],
-            "src": [
-              408,
-              417
-            ],
-            "en_text": "as a certain elevation",
-            "src_text": "elationem",
-            "weight": 1,
-            "method": "llm"
-          },
-          {
-            "en": [
-              565,
-              575
-            ],
-            "src": [
-              401,
-              407
-            ],
-            "en_text": "of the mind",
-            "src_text": "mentis",
-            "weight": 1,
-            "method": "llm"
-          },
-          {
-            "en": [
-              576,
-              591
-            ],
-            "src": [
-              385,
-              393
-            ],
-            "en_text": "in the possession",
-            "src_text": "pos-\nsessione",
-            "weight": 1,
-            "method": "llm"
-          },
-          {
-            "en": [
-              592,
-              609
-            ],
-            "src": [
-              379,
-              393
-            ],
-            "en_text": "of some good things",
-            "src_text": "ī bonis alicuius pos-\nsessione",
-            "weight": 1,
-            "method": "llm"
-          },
-          {
-            "en": [
-              611,
-              616
-            ],
-            "src": [
-              419,
-              422
-            ],
-            "en_text": "which",
-            "src_text": "quæ",
-            "weight": 1,
-            "method": "llm"
-          },
-          {
-            "en": [
-              617,
-              624
-            ],
-            "src": [
-              423,
-              428
-            ],
-            "en_text": "tamen",
-            "src_text": "tamen",
-            "weight": 1,
-            "method": "llm"
-          },
-          {
-            "en": [
-              625,
-              635
-            ],
-            "src": [
-              457,
-              462
-            ],
-            "en_text": "is able to",
-            "src_text": "queat",
-            "weight": 1,
-            "method": "llm"
-          },
-          {
-            "en": [
-              636,
-              647
-            ],
-            "src": [
-              438,
-              450
-            ],
-            "en_text": "both exceed",
-            "src_text": "excede-\nre pariter",
-            "weight": 1,
-            "method": "llm"
-          },
-          {
-            "en": [
-              648,
-              651
-            ],
-            "src": [
-              451,
-              454
-            ],
-            "en_text": "and",
-            "src_text": "atq;",
-            "weight": 1,
-            "method": "llm"
-          },
-          {
-            "en": [
-              652,
-              659
-            ],
-            "src": [
-              455,
-              461
-            ],
-            "en_text": "preserve",
-            "src_text": "seruare",
-            "weight": 1,
-            "method": "llm"
-          },
-          {
-            "en": [
-              660,
-              670
-            ],
-            "src": [
-              429,
-              437
-            ],
-            "en_text": "moderation",
-            "src_text": "modestiam",
-            "weight": 1,
-            "method": "llm"
-          },
-          {
-            "en": [
-              672,
-              675
-            ],
-            "src": [
-              464,
-              471
-            ],
-            "en_text": "Joy",
-            "src_text": "gaudium",
-            "weight": 1,
-            "method": "llm"
-          },
-          {
-            "en": [
-              678,
-              685
-            ],
-            "src": [
-              472,
-              476
-            ],
-            "en_text": "however",
-            "src_text": "uero",
-            "weight": 1,
-            "method": "llm"
-          },
-          {
-            "en": [
-              687,
-              706
-            ],
-            "src": [
-              477,
-              486
-            ],
-            "en_text": "is that very delight",
-            "src_text": "illam ipsam",
-            "weight": 1,
-            "method": "llm"
-          },
-          {
-            "en": [
-              687,
-              706
-            ],
-            "src": [
-              520,
-              531
-            ],
-            "en_text": "is that very delight",
-            "src_text": "iocunditatem",
-            "weight": 1,
-            "method": "llm"
-          },
-          {
-            "en": [
-              707,
-              712
-            ],
-            "src": [
-              488,
-              491
-            ],
-            "en_text": "which",
-            "src_text": "quæ",
-            "weight": 1,
-            "method": "llm"
-          },
-          {
-            "en": [
-              713,
-              724
-            ],
-            "src": [
-              510,
-              519
-            ],
-            "en_text": "is received",
-            "src_text": "suscipitur",
-            "weight": 1,
-            "method": "llm"
-          },
-          {
-            "en": [
-              725,
-              742
-            ],
-            "src": [
-              492,
-              506
-            ],
-            "en_text": "from contemplation",
-            "src_text": "ex contē-\nplatione",
-            "weight": 1,
-            "method": "llm"
-          },
-          {
-            "en": [
-              743,
-              745
-            ],
-            "src": [
-              507,
-              510
-            ],
-            "en_text": "or",
-            "src_text": "aut",
-            "weight": 1,
-            "method": "llm"
-          },
-          {
-            "en": [
-              746,
-              765
-            ],
-            "src": [
-              511,
-              519
-            ],
-            "en_text": "some other practice",
-            "src_text": "alio quopiam usu",
-            "weight": 1,
-            "method": "llm"
-          },
-          {
-            "en": [
-              766,
-              779
-            ],
-            "src": [
-              511,
-              519
-            ],
-            "en_text": "of the virtues",
-            "src_text": "uirtutum usu",
-            "weight": 1,
-            "method": "llm"
-          },
-          {
-            "en": [
-              781,
-              787
-            ],
-            "src": [
-              533,
-              538
-            ],
-            "en_text": "And so",
-            "src_text": "Itaq;",
-            "weight": 1,
-            "method": "llm"
-          },
-          {
-            "en": [
-              789,
-              804
-            ],
-            "src": [
-              549,
-              557
-            ],
-            "en_text": "in the Phaedrus",
-            "src_text": "in phædro",
-            "weight": 1,
-            "method": "llm"
-          },
-          {
-            "en": [
-              807,
-              819
-            ],
-            "src": [
-              559,
-              562
-            ],
-            "en_text": "when he spoke",
-            "src_text": "cum",
-            "weight": 1,
-            "method": "llm"
-          },
-          {
-            "en": [
-              807,
-              819
-            ],
-            "src": [
-              600,
-              609
-            ],
-            "en_text": "when he spoke",
-            "src_text": "loqueretur",
-            "weight": 1,
-            "method": "llm"
-          },
-          {
-            "en": [
-              820,
-              848
-            ],
-            "src": [
-              563,
-              586
-            ],
-            "en_text": "of that first and true life",
-            "src_text": "de prima illa, ac uera uita",
-            "weight": 1,
-            "method": "llm"
-          },
-          {
-            "en": [
-              849,
-              869
-            ],
-            "src": [
-              587,
-              590
-            ],
-            "en_text": "which the soul enjoys",
-            "src_text": "qua",
-            "weight": 1,
-            "method": "llm"
-          },
-          {
-            "en": [
-              849,
-              869
-            ],
-            "src": [
-              591,
-              596
-            ],
-            "en_text": "which the soul enjoys",
-            "src_text": "animus",
-            "weight": 1,
-            "method": "llm"
-          },
-          {
-            "en": [
-              849,
-              869
-            ],
-            "src": [
-              597,
-              603
-            ],
-            "en_text": "which the soul enjoys",
-            "src_text": "fruitur",
-            "weight": 1,
-            "method": "llm"
-          },
-          {
-            "en": [
-              870,
-              890
-            ],
-            "src": [
-              591,
-              603
-            ],
-            "en_text": "in the heavenly seats",
-            "src_text": "in cælorum\nsedibus",
-            "weight": 1,
-            "method": "llm"
-          },
-          {
-            "en": [
-              892,
-              899
-            ],
-            "src": [
-              610,
-              613
-            ],
-            "en_text": "he says",
-            "src_text": "ait",
-            "weight": 1,
-            "method": "llm"
-          },
-          {
-            "en": [
-              905,
-              918
-            ],
-            "src": [
-              629,
-              637
-            ],
-            "en_text": "it is \"nourished",
-            "src_text": "nutritur",
-            "weight": 1,
-            "method": "llm"
-          },
-          {
-            "en": [
-              919,
-              938
-            ],
-            "src": [
-              615,
-              628
-            ],
-            "en_text": "by the contemplation",
-            "src_text": "ueritatis contē-\nplatione",
-            "weight": 1,
-            "method": "llm"
-          },
-          {
-            "en": [
-              939,
-              947
-            ],
-            "src": [
-              615,
-              622
-            ],
-            "en_text": "of truth",
-            "src_text": "ueritatis",
-            "weight": 1,
-            "method": "llm"
-          },
-          {
-            "en": [
-              949,
-              963
-            ],
-            "src": [
-              638,
-              646
-            ],
-            "en_text": "and it rejoices.\"",
-            "src_text": "& gaudet",
-            "weight": 1,
-            "method": "llm"
-          },
-          {
-            "en": [
-              965,
-              979
-            ],
-            "src": [
-              648,
-              652
-            ],
-            "en_text": "For this reason",
-            "src_text": "unde",
-            "weight": 0.7,
-            "method": "llm"
-          },
-          {
-            "en": [
-              981,
-              999
-            ],
-            "src": [
-              653,
-              663
-            ],
-            "en_text": "he frequently calls",
-            "src_text": "sæpenumero",
-            "weight": 1,
-            "method": "llm"
-          },
-          {
-            "en": [
-              981,
-              999
-            ],
-            "src": [
-              679,
-              685
-            ],
-            "en_text": "he frequently calls",
-            "src_text": "uocitat",
-            "weight": 1,
-            "method": "llm"
-          },
-          {
-            "en": [
-              1000,
-              1003
-            ],
-            "src": [
-              664,
-              671
-            ],
-            "en_text": "joy",
-            "src_text": "gaudium",
-            "weight": 1,
-            "method": "llm"
-          },
-          {
-            "en": [
-              1004,
-              1019
-            ],
-            "src": [
-              672,
-              679
-            ],
-            "en_text": "the \"nourishment",
-            "src_text": "alimoniam",
-            "weight": 1,
-            "method": "llm"
-          },
-          {
-            "en": [
-              1020,
-              1030
-            ],
-            "src": [
-              664,
-              671
-            ],
-            "en_text": "of the mind.\"",
-            "src_text": "mentis",
-            "weight": 1,
-            "method": "llm"
-          },
-          {
-            "en": [
-              1032,
-              1035
-            ],
-            "src": [
-              687,
-              689
-            ],
-            "en_text": "For",
-            "src_text": "nā",
-            "weight": 1,
-            "method": "llm"
-          },
-          {
-            "en": [
-              1036,
-              1044
-            ],
-            "src": [
-              706,
-              710
-            ],
-            "en_text": "he wants",
-            "src_text": "uult",
-            "weight": 1,
-            "method": "llm"
-          },
-          {
-            "en": [
-              1045,
-              1057
-            ],
-            "src": [
-              690,
-              695
-            ],
-            "en_text": "truth itself",
-            "src_text": "ipsam",
-            "weight": 1,
-            "method": "llm"
-          },
-          {
-            "en": [
-              1045,
-              1057
-            ],
-            "src": [
-              716,
-              724
-            ],
-            "en_text": "truth itself",
-            "src_text": "ueritatem",
-            "weight": 1,
-            "method": "llm"
-          },
-          {
-            "en": [
-              1058,
-              1074
-            ],
-            "src": [
-              696,
-              705
-            ],
-            "en_text": "to be like a field",
-            "src_text": "agro similem",
-            "weight": 1,
-            "method": "llm"
-          },
-          {
-            "en": [
-              1058,
-              1074
-            ],
-            "src": [
-              711,
-              715
-            ],
-            "en_text": "to be like a field",
-            "src_text": "esse",
-            "weight": 1,
-            "method": "llm"
-          },
-          {
-            "en": [
-              1076,
-              1079
-            ],
-            "src": [
-              732,
-              736
-            ],
-            "en_text": "and",
-            "src_text": "uero",
-            "weight": 0.7,
-            "method": "llm"
-          },
-          {
-            "en": [
-              1080,
-              1095
-            ],
-            "src": [
-              749,
-              762
-            ],
-            "en_text": "the contemplation",
-            "src_text": "cō-\ntemplationem",
-            "weight": 1,
-            "method": "llm"
-          },
-          {
-            "en": [
-              1096,
-              1110
-            ],
-            "src": [
-              737,
-              748
-            ],
-            "en_text": "of that truth",
-            "src_text": "ueritatis ipsius",
-            "weight": 1,
-            "method": "llm"
-          },
-          {
-            "en": [
-              1111,
-              1132
-            ],
-            "src": [
-              725,
-              731
-            ],
-            "en_text": "to be like the fruits",
-            "src_text": "frugibus",
-            "weight": 0.7,
-            "method": "llm"
-          },
-          {
-            "en": [
-              1133,
-              1146
-            ],
-            "src": [
-              696,
-              700
-            ],
-            "en_text": "of that field",
-            "src_text": "agro",
-            "weight": 0.4,
-            "method": "llm"
-          },
-          {
-            "en": [
-              1148,
-              1152
-            ],
-            "src": [
-              764,
-              770
-            ],
-            "en_text": "Then",
-            "src_text": "deinde",
-            "weight": 1,
-            "method": "llm"
-          },
-          {
-            "en": [
-              1154,
-              1168
-            ],
-            "src": [
-              763,
-              771
-            ],
-            "en_text": "the nourishment",
-            "src_text": "Alimoniæ",
-            "weight": 1,
-            "method": "llm"
-          },
-          {
-            "en": [
-              1169,
-              1174
-            ],
-            "src": [
-              772,
-              775
-            ],
-            "en_text": "which",
-            "src_text": "quæ",
-            "weight": 1,
-            "method": "llm"
-          },
-          {
-            "en": [
-              1175,
-              1184
-            ],
-            "src": [
-              787,
-              793
-            ],
-            "en_text": "is taken",
-            "src_text": "capitur",
-            "weight": 1,
-            "method": "llm"
-          },
-          {
-            "en": [
-              1185,
-              1199
-            ],
-            "src": [
-              776,
-              786
-            ],
-            "en_text": "from these two",
-            "src_text": "ex iis duobus",
-            "weight": 1,
-            "method": "llm"
-          },
-          {
-            "en": [
-              1200,
-              1209
-            ],
-            "src": [
-              794,
-              801
-            ],
-            "en_text": "is the joy",
-            "src_text": "gaudium",
-            "weight": 1,
-            "method": "llm"
-          },
-          {
-            "en": [
-              1210,
-              1218
-            ],
-            "src": [
-              803,
-              806
-            ],
-            "en_text": "by which",
-            "src_text": "quo",
-            "weight": 1,
-            "method": "llm"
-          },
-          {
-            "en": [
-              1219,
-              1227
-            ],
-            "src": [
-              807,
-              811
+              90,
+              95
             ],
             "en_text": "the mind",
-            "src_text": "mens",
+            "src_text": "mente",
             "weight": 1,
             "method": "llm"
           },
           {
             "en": [
-              1228,
-              1245
+              137,
+              140
             ],
             "src": [
-              829,
-              838
-            ],
-            "en_text": "thoroughly enjoys",
-            "src_text": "perfruatur",
-            "weight": 1,
-            "method": "llm"
-          },
-          {
-            "en": [
-              1246,
-              1261
-            ],
-            "src": [
-              819,
-              829
-            ],
-            "en_text": "the contemplation",
-            "src_text": "contemplatione",
-            "weight": 1,
-            "method": "llm"
-          },
-          {
-            "en": [
-              1262,
-              1270
-            ],
-            "src": [
-              812,
-              819
-            ],
-            "en_text": "of truth",
-            "src_text": "ueritatis",
-            "weight": 1,
-            "method": "llm"
-          },
-          {
-            "en": [
-              1272,
-              1286
-            ],
-            "src": [
-              840,
-              849
-            ],
-            "en_text": "For this reason",
-            "src_text": "Quapropter",
-            "weight": 1,
-            "method": "llm"
-          },
-          {
-            "en": [
-              1288,
-              1309
-            ],
-            "src": [
-              853,
-              867
-            ],
-            "en_text": "in the same Phaedrus",
-            "src_text": "in eodem phædro",
-            "weight": 1,
-            "method": "llm"
-          },
-          {
-            "en": [
-              1311,
-              1330
-            ],
-            "src": [
-              868,
-              871
-            ],
-            "en_text": "when he was disputing",
-            "src_text": "cum",
-            "weight": 1,
-            "method": "llm"
-          },
-          {
-            "en": [
-              1311,
-              1330
-            ],
-            "src": [
-              927,
-              936
-            ],
-            "en_text": "when he was disputing",
-            "src_text": "disputaret",
-            "weight": 1,
-            "method": "llm"
-          },
-          {
-            "en": [
-              1331,
-              1348
-            ],
-            "src": [
-              872,
-              885
-            ],
-            "en_text": "about those shadows",
-            "src_text": "de iis tenebris",
-            "weight": 1,
-            "method": "llm"
-          },
-          {
-            "en": [
-              1349,
-              1359
-            ],
-            "src": [
-              887,
-              893
-            ],
-            "en_text": "into which",
-            "src_text": "in quas",
-            "weight": 1,
-            "method": "llm"
-          },
-          {
-            "en": [
-              1360,
-              1368
-            ],
-            "src": [
-              894,
-              900
-            ],
-            "en_text": "the soul",
-            "src_text": "animus",
-            "weight": 1,
-            "method": "llm"
-          },
-          {
-            "en": [
-              1369,
-              1389
-            ],
-            "src": [
-              910,
-              918
-            ],
-            "en_text": "has been pressed down",
-            "src_text": "depressus",
-            "weight": 1,
-            "method": "llm"
-          },
-          {
-            "en": [
-              1390,
-              1393
-            ],
-            "src": [
-              919,
-              921
+              106,
+              108
             ],
             "en_text": "and",
             "src_text": "ac",
@@ -1497,1566 +195,68 @@
           },
           {
             "en": [
-              1394,
-              1403
+              141,
+              151
             ],
             "src": [
-              922,
-              926
+              109,
+              115
             ],
-            "en_text": "submerged",
-            "src_text": "demersus est",
+            "en_text": "the senses",
+            "src_text": "sensum",
             "weight": 1,
             "method": "llm"
           },
           {
             "en": [
-              1404,
-              1436
+              155,
+              165
             ],
             "src": [
-              901,
-              909
+              143,
+              152
             ],
-            "en_text": "from the highest and true light",
-            "src_text": "e summa, ac uera lu-\nce",
+            "en_text": "attributed",
+            "src_text": "attribuit",
             "weight": 1,
             "method": "llm"
           },
           {
             "en": [
-              1438,
-              1445
+              166,
+              174
             ],
             "src": [
-              939,
-              944
+              123,
+              131
             ],
-            "en_text": "he says",
-            "src_text": "inquit",
+            "en_text": "gladness",
+            "src_text": "læticiam",
             "weight": 1,
             "method": "llm"
           },
           {
             "en": [
-              1447,
-              1467
+              674,
+              677
             ],
             "src": [
-              945,
-              963
+              550,
+              557
             ],
-            "en_text": "\"There is much effort",
-            "src_text": "multus inest conatus",
+            "en_text": "Joy",
+            "src_text": "gaudium",
             "weight": 1,
             "method": "llm"
           },
           {
             "en": [
-              1468,
-              1474
+              680,
+              687
             ],
             "src": [
-              984,
-              991
-            ],
-            "en_text": "to see",
-            "src_text": "intueri",
-            "weight": 1,
-            "method": "llm"
-          },
-          {
-            "en": [
-              1475,
-              1502
-            ],
-            "src": [
-              964,
-              983
-            ],
-            "en_text": "where the field of truth is",
-            "src_text": "ueritatis campus, quonam sit",
-            "weight": 1,
-            "method": "llm"
-          },
-          {
-            "en": [
-              1504,
-              1507
-            ],
-            "src": [
-              993,
-              996
-            ],
-            "en_text": "for",
-            "src_text": "nam",
-            "weight": 1,
-            "method": "llm"
-          },
-          {
-            "en": [
-              1508,
-              1524
-            ],
-            "src": [
-              997,
-              1006
-            ],
-            "en_text": "the suitable food",
-            "src_text": "conueniens",
-            "weight": 1,
-            "method": "llm"
-          },
-          {
-            "en": [
-              1508,
-              1524
-            ],
-            "src": [
-              1014,
-              1019
-            ],
-            "en_text": "the suitable food",
-            "src_text": "cibus",
-            "weight": 1,
-            "method": "llm"
-          },
-          {
-            "en": [
-              1525,
-              1535
-            ],
-            "src": [
-              1007,
-              1013
-            ],
-            "en_text": "of the soul",
-            "src_text": "animæ",
-            "weight": 1,
-            "method": "llm"
-          },
-          {
-            "en": [
-              1536,
-              1552
-            ],
-            "src": [
-              1020,
-              1032
-            ],
-            "en_text": "comes from there",
-            "src_text": "ex illo extitit",
-            "weight": 1,
-            "method": "llm"
-          },
-          {
-            "en": [
-              1553,
-              1556
-            ],
-            "src": [
-              1033,
-              1034
-            ],
-            "en_text": "and",
-            "src_text": "&",
-            "weight": 1,
-            "method": "llm"
-          },
-          {
-            "en": [
-              1557,
-              1579
-            ],
-            "src": [
-              1035,
-              1047
-            ],
-            "en_text": "the nature of the wings",
-            "src_text": "alarum natura",
-            "weight": 1,
-            "method": "llm"
-          },
-          {
-            "en": [
-              1580,
-              1588
-            ],
-            "src": [
-              1049,
-              1052
-            ],
-            "en_text": "by which",
-            "src_text": "qua",
-            "weight": 1,
-            "method": "llm"
-          },
-          {
-            "en": [
-              1589,
-              1597
-            ],
-            "src": [
-              1053,
-              1058
-            ],
-            "en_text": "the soul",
-            "src_text": "anima",
-            "weight": 1,
-            "method": "llm"
-          },
-          {
-            "en": [
-              1598,
-              1609
-            ],
-            "src": [
-              1059,
-              1067
-            ],
-            "en_text": "is raised up",
-            "src_text": "eleuatur",
-            "weight": 1,
-            "method": "llm"
-          },
-          {
-            "en": [
-              1610,
-              1629
-            ],
-            "src": [
-              1068,
-              1077
-            ],
-            "en_text": "is nourished by this.\"",
-            "src_text": "hac aliter",
-            "weight": 0.7,
-            "method": "llm"
-          },
-          {
-            "en": [
-              1631,
-              1636
-            ],
-            "src": [
-              1079,
-              1084
-            ],
-            "en_text": "Plato",
-            "src_text": "plato",
-            "weight": 1,
-            "method": "llm"
-          },
-          {
-            "en": [
-              1637,
-              1642
-            ],
-            "src": [
-              1085,
-              1090
-            ],
-            "en_text": "calls",
-            "src_text": "uocat",
-            "weight": 1,
-            "method": "llm"
-          },
-          {
-            "en": [
-              1643,
-              1655
-            ],
-            "src": [
-              1078,
-              1082
-            ],
-            "en_text": "these \"wings\"",
-            "src_text": "Alas",
-            "weight": 1,
-            "method": "llm"
-          },
-          {
-            "en": [
-              1656,
-              1669
-            ],
-            "src": [
-              1092,
-              1097
-            ],
-            "en_text": "those by which",
-            "src_text": "quibus",
-            "weight": 1,
-            "method": "llm"
-          },
-          {
-            "en": [
-              1670,
-              1678
-            ],
-            "src": [
-              1098,
-              1104
-            ],
-            "en_text": "the soul",
-            "src_text": "animus",
-            "weight": 1,
-            "method": "llm"
-          },
-          {
-            "en": [
-              1679,
-              1689
-            ],
-            "src": [
-              1144,
-              1150
-            ],
-            "en_text": "flies back",
-            "src_text": "reuolat",
-            "weight": 1,
-            "method": "llm"
-          },
-          {
-            "en": [
-              1690,
-              1707
-            ],
-            "src": [
-              1105,
-              1113
-            ],
-            "en_text": "to the things above",
-            "src_text": "ad supera",
-            "weight": 1,
-            "method": "llm"
-          },
-          {
-            "en": [
-              1708,
-              1718
-            ],
-            "src": [
-              1115,
-              1119
-            ],
-            "en_text": "from where",
-            "src_text": "unde",
-            "weight": 1,
-            "method": "llm"
-          },
-          {
-            "en": [
-              1719,
-              1734
-            ],
-            "src": [
-              1134,
-              1143
-            ],
-            "en_text": "it had descended",
-            "src_text": "descenderat",
-            "weight": 1,
-            "method": "llm"
-          },
-          {
-            "en": [
-              1735,
-              1748
-            ],
-            "src": [
-              1120,
-              1122
-            ],
-            "en_text": "on account of",
-            "src_text": "ob",
-            "weight": 1,
-            "method": "llm"
-          },
-          {
-            "en": [
-              1749,
-              1759
-            ],
-            "src": [
-              1123,
-              1133
-            ],
-            "en_text": "the thought",
-            "src_text": "terrenarum rerum cogitationē",
-            "weight": 1,
-            "method": "llm"
-          },
-          {
-            "en": [
-              1760,
-              1776
-            ],
-            "src": [
-              1123,
-              1133
-            ],
-            "en_text": "of earthly things",
-            "src_text": "terrenarum rerum cogitationē",
-            "weight": 1,
-            "method": "llm"
-          },
-          {
-            "en": [
-              1778,
-              1783
-            ],
-            "src": [
-              1154,
-              1157
-            ],
-            "en_text": "Since",
-            "src_text": "cum",
-            "weight": 0.7,
-            "method": "llm"
-          },
-          {
-            "en": [
-              1784,
-              1788
-            ],
-            "src": [
-              1152,
-              1154
-            ],
-            "en_text": "this",
-            "src_text": "id",
-            "weight": 1,
-            "method": "llm"
-          },
-          {
-            "en": [
-              1789,
-              1804
-            ],
-            "src": [
-              1190,
-              1203
-            ],
-            "en_text": "can be achieved",
-            "src_text": "consequi possit",
-            "weight": 1,
-            "method": "llm"
-          },
-          {
-            "en": [
-              1805,
-              1823
-            ],
-            "src": [
-              1162,
-              1176
-            ],
-            "en_text": "through two virtues",
-            "src_text": "duabus uirtutibus",
-            "weight": 1,
-            "method": "llm"
-          },
-          {
-            "en": [
-              1825,
-              1848
-            ],
-            "src": [
-              1178,
-              1190
-            ],
-            "en_text": "namely, the contemplative",
-            "src_text": "contemplatiua, ui-\ndelicet",
-            "weight": 1,
-            "method": "llm"
-          },
-          {
-            "en": [
-              1849,
-              1863
-            ],
-            "src": [
-              1191,
-              1199
-            ],
-            "en_text": "and the moral",
-            "src_text": "atq; morali",
-            "weight": 1,
-            "method": "llm"
-          },
-          {
-            "en": [
-              1865,
-              1870
-            ],
-            "src": [
-              1205,
-              1210
-            ],
-            "en_text": "Plato",
-            "src_text": "plato",
-            "weight": 1,
-            "method": "llm"
-          },
-          {
-            "en": [
-              1871,
-              1882
-            ],
-            "src": [
-              1243,
-              1252
-            ],
-            "en_text": "understands",
-            "src_text": "intelligit",
-            "weight": 1,
-            "method": "llm"
-          },
-          {
-            "en": [
-              1883,
-              1902
-            ],
-            "src": [
-              1204,
-              1210
-            ],
-            "en_text": "these same virtues",
-            "src_text": "easdem plato",
-            "weight": 1,
-            "method": "llm"
-          },
-          {
-            "en": [
-              1883,
-              1902
-            ],
-            "src": [
-              1224,
-              1231
-            ],
-            "en_text": "these same virtues",
-            "src_text": "uirtutes",
-            "weight": 1,
-            "method": "llm"
-          },
-          {
-            "en": [
-              1904,
-              1924
-            ],
-            "src": [
-              1212,
-              1227
-            ],
-            "en_text": "(as I interpret him)",
-            "src_text": "ut ego interpretor",
-            "weight": 1,
-            "method": "llm"
-          },
-          {
-            "en": [
-              1925,
-              1942
-            ],
-            "src": [
-              1238,
-              1242
-            ],
-            "en_text": "to be the \"wings\"",
-            "src_text": "alas",
-            "weight": 0.7,
-            "method": "llm"
-          },
-          {
-            "en": [
-              1943,
-              1960
-            ],
-            "src": [
-              1232,
-              1242
-            ],
-            "en_text": "of the soul itself",
-            "src_text": "animæ ipsius alas",
-            "weight": 1,
-            "method": "llm"
-          },
-          {
-            "en": [
-              1962,
-              1967
-            ],
-            "src": [
-              1253,
-              1257
-            ],
-            "en_text": "These",
-            "src_text": "quas",
-            "weight": 1,
-            "method": "llm"
-          },
-          {
-            "en": [
-              1968,
-              1976
-            ],
-            "src": [
-              1232,
-              1237
-            ],
-            "en_text": "the soul",
-            "src_text": "animæ",
-            "weight": 0.4,
-            "method": "llm"
-          },
-          {
-            "en": [
-              1977,
-              1985
-            ],
-            "src": [
-              1286,
-              1294
-            ],
-            "en_text": "recovers",
-            "src_text": "recuperet",
-            "weight": 1,
-            "method": "llm"
-          },
-          {
-            "en": [
-              1986,
-              2005
-            ],
-            "src": [
-              1275,
-              1285
-            ],
-            "en_text": "by the contemplation",
-            "src_text": "contemplatione",
-            "weight": 1,
-            "method": "llm"
-          },
-          {
-            "en": [
-              2006,
-              2014
-            ],
-            "src": [
-              1258,
-              1265
-            ],
-            "en_text": "of truth",
-            "src_text": "ueritatis",
-            "weight": 1,
-            "method": "llm"
-          },
-          {
-            "en": [
-              2015,
-              2032
-            ],
-            "src": [
-              1266,
-              1274
-            ],
-            "en_text": "and divine things",
-            "src_text": "diuinarumq; rerum",
-            "weight": 1,
-            "method": "llm"
-          },
-          {
-            "en": [
-              2034,
-              2041
-            ],
-            "src": [
-              1296,
-              1306
-            ],
-            "en_text": "just as",
-            "src_text": "quemadmodum",
-            "weight": 1,
-            "method": "llm"
-          },
-          {
-            "en": [
-              2042,
-              2056
-            ],
-            "src": [
-              1324,
-              1331
-            ],
-            "en_text": "it had lost them",
-            "src_text": "amiserat",
-            "weight": 1,
-            "method": "llm"
-          },
-          {
-            "en": [
-              2057,
-              2074
-            ],
-            "src": [
-              1314,
-              1323
-            ],
-            "en_text": "through the desire",
-            "src_text": "appetitione",
-            "weight": 1,
-            "method": "llm"
-          },
-          {
-            "en": [
-              2075,
-              2097
-            ],
-            "src": [
-              1307,
-              1313
-            ],
-            "en_text": "for these earthly things",
-            "src_text": "horum",
-            "weight": 1,
-            "method": "llm"
-          },
-          {
-            "en": [
-              2075,
-              2097
-            ],
-            "src": [
-              1314,
-              1323
-            ],
-            "en_text": "for these earthly things",
-            "src_text": "terrenorū",
-            "weight": 1,
-            "method": "llm"
-          },
-          {
-            "en": [
-              2099,
-              2103
-            ],
-            "src": [
-              1333,
-              1336
-            ],
-            "en_text": "When",
-            "src_text": "Cum",
-            "weight": 1,
-            "method": "llm"
-          },
-          {
-            "en": [
-              2105,
-              2111
-            ],
-            "src": [
-              1337,
-              1341
-            ],
-            "en_text": "indeed",
-            "src_text": "uero",
-            "weight": 1,
-            "method": "llm"
-          },
-          {
-            "en": [
-              2113,
-              2138
-            ],
-            "src": [
-              1378,
-              1391
-            ],
-            "en_text": "having recovered its wings",
-            "src_text": "recuperatis alis",
-            "weight": 1,
-            "method": "llm"
-          },
-          {
-            "en": [
-              2139,
-              2157
-            ],
-            "src": [
-              1342,
-              1345
-            ],
-            "en_text": "through the practice",
-            "src_text": "per",
-            "weight": 1,
-            "method": "llm"
-          },
-          {
-            "en": [
-              2139,
-              2157
-            ],
-            "src": [
-              1368,
-              1377
-            ],
-            "en_text": "through the practice",
-            "src_text": "exercitationem",
-            "weight": 1,
-            "method": "llm"
-          },
-          {
-            "en": [
-              2158,
-              2204
-            ],
-            "src": [
-              1346,
-              1367
-            ],
-            "en_text": "of both natural and moral philosophy",
-            "src_text": "utriusq; philosophiæ naturalis pariter & mora-\nlis",
-            "weight": 1,
-            "method": "llm"
-          },
-          {
-            "en": [
-              2206,
-              2222
-            ],
-            "src": [
-              1402,
-              1412
-            ],
-            "en_text": "it has flown back",
-            "src_text": "reuolauerit",
-            "weight": 1,
-            "method": "llm"
-          },
-          {
-            "en": [
-              2223,
-              2236
-            ],
-            "src": [
-              1392,
-              1401
-            ],
-            "en_text": "to the heavens",
-            "src_text": "ad superos",
-            "weight": 1,
-            "method": "llm"
-          },
-          {
-            "en": [
-              2238,
-              2247
-            ],
-            "src": [
-              1428,
-              1433
-            ],
-            "en_text": "he thinks",
-            "src_text": "putat",
-            "weight": 1,
-            "method": "llm"
-          },
-          {
-            "en": [
-              2248,
-              2260
-            ],
-            "src": [
-              1434,
-              1443
-            ],
-            "en_text": "two rewards",
-            "src_text": "duo præmia",
-            "weight": 1,
-            "method": "llm"
-          },
-          {
-            "en": [
-              2261,
-              2270
-            ],
-            "src": [
-              1444,
-              1449
-            ],
-            "en_text": "are given",
-            "src_text": "reddi",
-            "weight": 1,
-            "method": "llm"
-          },
-          {
-            "en": [
-              2271,
-              2291
-            ],
-            "src": [
-              1414,
-              1427
-            ],
-            "en_text": "to the returning soul",
-            "src_text": "redeunti\nanimo",
-            "weight": 1,
-            "method": "llm"
-          },
-          {
-            "en": [
-              2293,
-              2299
-            ],
-            "src": [
-              1452,
-              1464
-            ],
-            "en_text": "one is",
-            "src_text": "unum quidem esse",
-            "weight": 1,
-            "method": "llm"
-          },
-          {
-            "en": [
-              2300,
-              2315
-            ],
-            "src": [
-              1475,
-              1488
-            ],
-            "en_text": "the contemplation",
-            "src_text": "contē-\nplationem",
-            "weight": 1,
-            "method": "llm"
-          },
-          {
-            "en": [
-              2316,
-              2327
-            ],
-            "src": [
-              1465,
-              1474
-            ],
-            "en_text": "of divinity",
-            "src_text": "diuinitatis",
-            "weight": 1,
-            "method": "llm"
-          },
-          {
-            "en": [
-              2329,
-              2338
-            ],
-            "src": [
-              1490,
-              1497
-            ],
-            "en_text": "The other",
-            "src_text": "Alterum",
-            "weight": 1,
-            "method": "llm"
-          },
-          {
-            "en": [
-              2339,
-              2358
-            ],
-            "src": [
-              1498,
-              1512
-            ],
-            "en_text": "is a certain perfect",
-            "src_text": "perfectum quoddam",
-            "weight": 1,
-            "method": "llm"
-          },
-          {
-            "en": [
-              2359,
-              2362
-            ],
-            "src": [
-              1513,
-              1516
-            ],
-            "en_text": "and",
-            "src_text": "atq;",
-            "weight": 1,
-            "method": "llm"
-          },
-          {
-            "en": [
-              2363,
-              2376
-            ],
-            "src": [
-              1517,
-              1531
-            ],
-            "en_text": "absolute joy",
-            "src_text": "absolutum gaudiū",
-            "weight": 1,
-            "method": "llm"
-          },
-          {
-            "en": [
-              2378,
-              2383
-            ],
-            "src": [
-              1533,
-              1536
-            ],
-            "en_text": "which",
-            "src_text": "quo",
-            "weight": 1,
-            "method": "llm"
-          },
-          {
-            "en": [
-              2384,
-              2392
-            ],
-            "src": [
-              1559,
-              1565
-            ],
-            "en_text": "the soul",
-            "src_text": "animus",
-            "weight": 1,
-            "method": "llm"
-          },
-          {
-            "en": [
-              2393,
-              2399
-            ],
-            "src": [
-              1566,
-              1575
-            ],
-            "en_text": "enjoys",
-            "src_text": "perfruatur",
-            "weight": 1,
-            "method": "llm"
-          },
-          {
-            "en": [
-              2400,
-              2420
-            ],
-            "src": [
-              1537,
-              1542
-            ],
-            "en_text": "in that very knowledge",
-            "src_text": "in ea",
-            "weight": 1,
-            "method": "llm"
-          },
-          {
-            "en": [
-              2400,
-              2420
-            ],
-            "src": [
-              1543,
-              1547
-            ],
-            "en_text": "in that very knowledge",
-            "src_text": "ipsa",
-            "weight": 1,
-            "method": "llm"
-          },
-          {
-            "en": [
-              2400,
-              2420
-            ],
-            "src": [
-              1550,
-              1558
-            ],
-            "en_text": "in that very knowledge",
-            "src_text": "cognitione",
-            "weight": 1,
-            "method": "llm"
-          },
-          {
-            "en": [
-              2421,
-              2427
-            ],
-            "src": [
-              1548,
-              1551
-            ],
-            "en_text": "of God",
-            "src_text": "dei",
-            "weight": 1,
-            "method": "llm"
-          },
-          {
-            "en": [
-              2429,
-              2434
-            ],
-            "src": [
-              1590,
-              1595
-            ],
-            "en_text": "Plato",
-            "src_text": "Plato",
-            "weight": 1,
-            "method": "llm"
-          },
-          {
-            "en": [
-              2435,
-              2440
-            ],
-            "src": [
-              1604,
-              1611
-            ],
-            "en_text": "calls",
-            "src_text": "appellat",
-            "weight": 1,
-            "method": "llm"
-          },
-          {
-            "en": [
-              2441,
-              2451
-            ],
-            "src": [
-              1577,
-              1587
-            ],
-            "en_text": "the former",
-            "src_text": "Illud quidem",
-            "weight": 1,
-            "method": "llm"
-          },
-          {
-            "en": [
-              2452,
-              2462
-            ],
-            "src": [
-              1588,
-              1596
-            ],
-            "en_text": "\"ambrosia\"",
-            "src_text": "ambrosiam",
-            "weight": 1,
-            "method": "llm"
-          },
-          {
-            "en": [
-              2463,
-              2476
-            ],
-            "src": [
-              1597,
-              1600
-            ],
-            "en_text": "and the latter",
-            "src_text": "hoc",
-            "weight": 1,
-            "method": "llm"
-          },
-          {
-            "en": [
-              2477,
-              2485
-            ],
-            "src": [
-              1601,
-              1606
-            ],
-            "en_text": "\"nectar\"",
-            "src_text": "nectar",
-            "weight": 1,
-            "method": "llm"
-          },
-          {
-            "en": [
-              2486,
-              2501
-            ],
-            "src": [
-              1598,
-              1606
-            ],
-            "en_text": "in the Phaedrus",
-            "src_text": "in phædro",
-            "weight": 1,
-            "method": "llm"
-          },
-          {
-            "en": [
-              2502,
-              2517
-            ],
-            "src": [
-              1612,
-              1621
-            ],
-            "en_text": "with these words",
-            "src_text": "his uerbis",
-            "weight": 1,
-            "method": "llm"
-          },
-          {
-            "en": [
-              2520,
-              2528
-            ],
-            "src": [
-              1639,
-              1644
-            ],
-            "en_text": "The soul",
-            "src_text": "anima",
-            "weight": 1,
-            "method": "llm"
-          },
-          {
-            "en": [
-              2529,
-              2534
-            ],
-            "src": [
-              1623,
-              1626
-            ],
-            "en_text": "which",
-            "src_text": "quæ",
-            "weight": 1,
-            "method": "llm"
-          },
-          {
-            "en": [
-              2535,
-              2552
-            ],
-            "src": [
-              1627,
-              1638
-            ],
-            "en_text": "has truly beheld",
-            "src_text": "uere ē speculata",
-            "weight": 1,
-            "method": "llm"
-          },
-          {
-            "en": [
-              2553,
-              2570
-            ],
-            "src": [
-              1645,
-              1657
-            ],
-            "en_text": "and been nourished",
-            "src_text": "atq; iis nutrita",
-            "weight": 1,
-            "method": "llm"
-          },
-          {
-            "en": [
-              2571,
-              2585
-            ],
-            "src": [
-              1649,
-              1652
-            ],
-            "en_text": "by these things",
-            "src_text": "iis",
-            "weight": 1,
-            "method": "llm"
-          },
-          {
-            "en": [
-              2587,
-              2601
-            ],
-            "src": [
-              1658,
-              1670
-            ],
-            "en_text": "entering again",
-            "src_text": "subiens rursus",
-            "weight": 1,
-            "method": "llm"
-          },
-          {
-            "en": [
-              2602,
-              2619
-            ],
-            "src": [
-              1671,
-              1680
-            ],
-            "en_text": "within the heaven",
-            "src_text": "ītra cælum",
-            "weight": 1,
-            "method": "llm"
-          },
-          {
-            "en": [
-              2620,
-              2632
-            ],
-            "src": [
-              1681,
-              1695
-            ],
-            "en_text": "returns home.",
-            "src_text": "domum reuertitur",
-            "weight": 1,
-            "method": "llm"
-          },
-          {
-            "en": [
-              2634,
-              2642
-            ],
-            "src": [
-              1697,
-              1706
-            ],
-            "en_text": "But when",
-            "src_text": "Cum autem",
-            "weight": 1,
-            "method": "llm"
-          },
-          {
-            "en": [
-              2643,
-              2657
-            ],
-            "src": [
-              1715,
-              1721
-            ],
-            "en_text": "the charioteer",
-            "src_text": "auriga",
-            "weight": 1,
-            "method": "llm"
-          },
-          {
-            "en": [
-              2658,
-              2670
-            ],
-            "src": [
-              1707,
-              1714
-            ],
-            "en_text": "has returned",
-            "src_text": "redierit",
-            "weight": 1,
-            "method": "llm"
-          },
-          {
-            "en": [
-              2672,
-              2690
-            ],
-            "src": [
-              1730,
-              1741
-            ],
-            "en_text": "standing the horses",
-            "src_text": "sistens equos",
-            "weight": 1,
-            "method": "llm"
-          },
-          {
-            "en": [
-              2691,
-              2703
-            ],
-            "src": [
-              1722,
-              1729
-            ],
-            "en_text": "at the manger",
-            "src_text": "ad præsepe",
-            "weight": 1,
-            "method": "llm"
-          },
-          {
-            "en": [
-              2705,
-              2724
-            ],
-            "src": [
-              1742,
-              1748
-            ],
-            "en_text": "he sets before them",
-            "src_text": "obiicit",
-            "weight": 0.7,
-            "method": "llm"
-          },
-          {
-            "en": [
-              2725,
-              2733
-            ],
-            "src": [
-              1749,
-              1758
-            ],
-            "en_text": "ambrosia",
-            "src_text": "ambrosiam",
-            "weight": 1,
-            "method": "llm"
-          },
-          {
-            "en": [
-              2735,
-              2738
-            ],
-            "src": [
-              1759,
-              1760
-            ],
-            "en_text": "and",
-            "src_text": "&",
-            "weight": 1,
-            "method": "llm"
-          },
-          {
-            "en": [
-              2739,
-              2746
-            ],
-            "src": [
-              1761,
-              1770
-            ],
-            "en_text": "over it",
-            "src_text": "super ipsam",
-            "weight": 1,
-            "method": "llm"
-          },
-          {
-            "en": [
-              2747,
-              2753
-            ],
-            "src": [
-              1771,
-              1776
-            ],
-            "en_text": "nectar",
-            "src_text": "nectar",
-            "weight": 1,
-            "method": "llm"
-          },
-          {
-            "en": [
-              2754,
-              2762
-            ],
-            "src": [
-              1777,
-              1784
-            ],
-            "en_text": "to drink.\"",
-            "src_text": "potandum",
-            "weight": 1,
-            "method": "llm"
-          },
-          {
-            "en": [
-              2764,
-              2796
-            ],
-            "src": [
-              1793,
-              1806
-            ],
-            "en_text": "Following the manner of Pythagoras",
-            "src_text": "more pythagoræ",
-            "weight": 1,
-            "method": "llm"
-          },
-          {
-            "en": [
-              2798,
-              2806
-            ],
-            "src": [
-              1816,
-              1821
-            ],
-            "en_text": "he calls",
-            "src_text": "uocat",
-            "weight": 1,
-            "method": "llm"
-          },
-          {
-            "en": [
-              2807,
-              2822
-            ],
-            "src": [
-              1786,
-              1792
-            ],
-            "en_text": "the \"charioteer\"",
-            "src_text": "Aurigam",
-            "weight": 1,
-            "method": "llm"
-          },
-          {
-            "en": [
-              2823,
-              2829
-            ],
-            "src": [
-              1807,
-              1815
-            ],
-            "en_text": "reason.",
-            "src_text": "rationem",
-            "weight": 1,
-            "method": "llm"
-          },
-          {
-            "en": [
-              2831,
-              2842
-            ],
-            "src": [
-              1823,
-              1828
-            ],
-            "en_text": "The \"horses,\"",
-            "src_text": "equos",
-            "weight": 1,
-            "method": "llm"
-          },
-          {
-            "en": [
-              2844,
-              2851
-            ],
-            "src": [
-              1829,
-              1833
+              558,
+              562
             ],
             "en_text": "however",
             "src_text": "uero",
@@ -3065,128 +265,1528 @@
           },
           {
             "en": [
-              2853,
-              2856
+              693,
+              702
             ],
             "src": [
-              1833,
-              1834
+              563,
+              574
             ],
-            "en_text": "are",
-            "src_text": " ",
+            "en_text": "that very",
+            "src_text": "illam ipsam",
+            "weight": 1,
+            "method": "llm"
+          },
+          {
+            "en": [
+              703,
+              710
+            ],
+            "src": [
+              642,
+              654
+            ],
+            "en_text": "delight",
+            "src_text": "iocunditatem",
+            "weight": 1,
+            "method": "llm"
+          },
+          {
+            "en": [
+              711,
+              716
+            ],
+            "src": [
+              576,
+              579
+            ],
+            "en_text": "which",
+            "src_text": "quæ",
+            "weight": 1,
+            "method": "llm"
+          },
+          {
+            "en": [
+              717,
+              728
+            ],
+            "src": [
+              631,
+              641
+            ],
+            "en_text": "is received",
+            "src_text": "suscipitur",
+            "weight": 1,
+            "method": "llm"
+          },
+          {
+            "en": [
+              729,
+              733
+            ],
+            "src": [
+              580,
+              582
+            ],
+            "en_text": "from",
+            "src_text": "ex",
+            "weight": 1,
+            "method": "llm"
+          },
+          {
+            "en": [
+              734,
+              747
+            ],
+            "src": [
+              583,
+              599
+            ],
+            "en_text": "contemplation",
+            "src_text": "contē-\nplatione",
+            "weight": 1,
+            "method": "llm"
+          },
+          {
+            "en": [
+              748,
+              750
+            ],
+            "src": [
+              601,
+              604
+            ],
+            "en_text": "or",
+            "src_text": "aut",
+            "weight": 1,
+            "method": "llm"
+          },
+          {
+            "en": [
+              751,
+              761
+            ],
+            "src": [
+              605,
+              617
+            ],
+            "en_text": "some other",
+            "src_text": "alio quopiam",
+            "weight": 1,
+            "method": "llm"
+          },
+          {
+            "en": [
+              762,
+              770
+            ],
+            "src": [
+              627,
+              630
+            ],
+            "en_text": "practice",
+            "src_text": "usu",
+            "weight": 1,
+            "method": "llm"
+          },
+          {
+            "en": [
+              771,
+              785
+            ],
+            "src": [
+              618,
+              626
+            ],
+            "en_text": "of the virtues",
+            "src_text": "uirtutum",
+            "weight": 1,
+            "method": "llm"
+          },
+          {
+            "en": [
+              785,
+              791
+            ],
+            "src": [
+              814,
+              818
+            ],
+            "en_text": "And so",
+            "src_text": "unde",
+            "weight": 1,
+            "method": "llm"
+          },
+          {
+            "en": [
+              854,
+              859
+            ],
+            "src": [
+              977,
+              980
+            ],
+            "en_text": "which",
+            "src_text": "quæ",
+            "weight": 1,
+            "method": "llm"
+          },
+          {
+            "en": [
+              864,
+              868
+            ],
+            "src": [
+              1016,
+              1020
+            ],
+            "en_text": "soul",
+            "src_text": "mens",
+            "weight": 0.7,
+            "method": "llm"
+          },
+          {
+            "en": [
+              870,
+              876
+            ],
+            "src": [
+              1046,
+              1056
+            ],
+            "en_text": "enjoys",
+            "src_text": "perfruitur",
+            "weight": 1,
+            "method": "llm"
+          },
+          {
+            "en": [
+              918,
+              927
+            ],
+            "src": [
+              959,
+              967
+            ],
+            "en_text": "nourished",
+            "src_text": "Alimoniæ",
+            "weight": 0.7,
+            "method": "llm"
+          },
+          {
+            "en": [
+              928,
+              948
+            ],
+            "src": [
+              1031,
+              1045
+            ],
+            "en_text": "by the contemplation",
+            "src_text": "contemplatione",
+            "weight": 1,
+            "method": "llm"
+          },
+          {
+            "en": [
+              949,
+              957
+            ],
+            "src": [
+              1021,
+              1030
+            ],
+            "en_text": "of truth",
+            "src_text": "ueritatis",
+            "weight": 1,
+            "method": "llm"
+          },
+          {
+            "en": [
+              959,
+              962
+            ],
+            "src": [
+              1069,
+              1070
+            ],
+            "en_text": "and",
+            "src_text": "&",
+            "weight": 1,
+            "method": "llm"
+          },
+          {
+            "en": [
+              966,
+              974
+            ],
+            "src": [
+              1003,
+              1010
+            ],
+            "en_text": "rejoices",
+            "src_text": "gaudium",
+            "weight": 0.7,
+            "method": "llm"
+          },
+          {
+            "en": [
+              977,
+              992
+            ],
+            "src": [
+              1058,
+              1068
+            ],
+            "en_text": "For this reason",
+            "src_text": "Quapropter",
+            "weight": 1,
+            "method": "llm"
+          },
+          {
+            "en": [
+              997,
+              1007
+            ],
+            "src": [
+              819,
+              830
+            ],
+            "en_text": "frequently",
+            "src_text": "sæpenumero",
+            "weight": 1,
+            "method": "llm"
+          },
+          {
+            "en": [
+              1008,
+              1013
+            ],
+            "src": [
+              856,
+              863
+            ],
+            "en_text": "calls",
+            "src_text": "uocitat",
+            "weight": 1,
+            "method": "llm"
+          },
+          {
+            "en": [
+              1014,
+              1017
+            ],
+            "src": [
+              831,
+              838
+            ],
+            "en_text": "joy",
+            "src_text": "gaudium",
+            "weight": 1,
+            "method": "llm"
+          },
+          {
+            "en": [
+              1023,
+              1034
+            ],
+            "src": [
+              846,
+              855
+            ],
+            "en_text": "nourishment",
+            "src_text": "alimoniam",
+            "weight": 1,
+            "method": "llm"
+          },
+          {
+            "en": [
+              1035,
+              1046
+            ],
+            "src": [
+              839,
+              845
+            ],
+            "en_text": "of the mind",
+            "src_text": "mentis",
+            "weight": 1,
+            "method": "llm"
+          },
+          {
+            "en": [
+              1056,
+              1058
+            ],
+            "src": [
+              1082,
+              1088
+            ],
+            "en_text": "he",
+            "src_text": "phædro",
             "weight": 0.4,
             "method": "llm"
           },
           {
             "en": [
-              2857,
-              2872
+              1059,
+              1064
             ],
             "src": [
-              1834,
-              1841
+              1213,
+              1220
             ],
-            "en_text": "the other parts",
-            "src_text": "cæteras",
+            "en_text": "wants",
+            "src_text": "conatus",
+            "weight": 0.4,
+            "method": "llm"
+          },
+          {
+            "en": [
+              1065,
+              1070
+            ],
+            "src": [
+              1221,
+              1230
+            ],
+            "en_text": "truth",
+            "src_text": "ueritatis",
             "weight": 1,
             "method": "llm"
           },
           {
             "en": [
-              2857,
-              2872
+              1091,
+              1096
             ],
             "src": [
-              1848,
-              1854
+              1231,
+              1237
             ],
-            "en_text": "the other parts",
-            "src_text": "partes",
+            "en_text": "field",
+            "src_text": "campus",
             "weight": 1,
             "method": "llm"
           },
           {
             "en": [
-              2873,
-              2884
+              1107,
+              1120
             ],
             "src": [
-              1855,
-              1864
+              1250,
+              1257
             ],
-            "en_text": "and natures",
-            "src_text": "atq; naturas",
+            "en_text": "contemplation",
+            "src_text": "intueri",
+            "weight": 0.7,
+            "method": "llm"
+          },
+          {
+            "en": [
+              1129,
+              1134
+            ],
+            "src": [
+              1221,
+              1230
+            ],
+            "en_text": "truth",
+            "src_text": "ueritatis",
             "weight": 1,
             "method": "llm"
           },
           {
             "en": [
-              2885,
-              2895
+              1150,
+              1156
             ],
             "src": [
-              1842,
-              1847
+              1287,
+              1302
             ],
-            "en_text": "of the soul",
-            "src_text": "animi",
+            "en_text": "fruits",
+            "src_text": "ex illo extitit",
+            "weight": 0.4,
+            "method": "llm"
+          },
+          {
+            "en": [
+              1165,
+              1170
+            ],
+            "src": [
+              1231,
+              1237
+            ],
+            "en_text": "field",
+            "src_text": "campus",
             "weight": 1,
             "method": "llm"
           },
           {
             "en": [
-              2896,
-              2901
+              1182,
+              1193
             ],
             "src": [
-              1866,
-              1868
+              1281,
+              1286
+            ],
+            "en_text": "nourishment",
+            "src_text": "cibus",
+            "weight": 1,
+            "method": "llm"
+          },
+          {
+            "en": [
+              1194,
+              1199
+            ],
+            "src": [
+              1321,
+              1324
             ],
             "en_text": "which",
-            "src_text": "q̄",
+            "src_text": "qua",
+            "weight": 0.7,
+            "method": "llm"
+          },
+          {
+            "en": [
+              1203,
+              1213
+            ],
+            "src": [
+              1287,
+              1289
+            ],
+            "en_text": "taken from",
+            "src_text": "ex",
+            "weight": 0.7,
+            "method": "llm"
+          },
+          {
+            "en": [
+              1231,
+              1234
+            ],
+            "src": [
+              1263,
+              1273
+            ],
+            "en_text": "joy",
+            "src_text": "conueniens",
+            "weight": 0.4,
+            "method": "llm"
+          },
+          {
+            "en": [
+              1248,
+              1252
+            ],
+            "src": [
+              1118,
+              1124
+            ],
+            "en_text": "mind",
+            "src_text": "animus",
             "weight": 1,
             "method": "llm"
           },
           {
             "en": [
-              2902,
-              2908
+              1253,
+              1270
+            ],
+            "src": [
+              1331,
+              1339
+            ],
+            "en_text": "thoroughly enjoys",
+            "src_text": "eleuatur",
+            "weight": 0.4,
+            "method": "llm"
+          },
+          {
+            "en": [
+              1275,
+              1288
+            ],
+            "src": [
+              1250,
+              1257
+            ],
+            "en_text": "contemplation",
+            "src_text": "intueri",
+            "weight": 0.7,
+            "method": "llm"
+          },
+          {
+            "en": [
+              1292,
+              1297
+            ],
+            "src": [
+              1221,
+              1230
+            ],
+            "en_text": "truth",
+            "src_text": "ueritatis",
+            "weight": 1,
+            "method": "llm"
+          },
+          {
+            "en": [
+              1300,
+              1315
+            ],
+            "src": [
+              1453,
+              1461
+            ],
+            "en_text": "For this reason",
+            "src_text": "id autem",
+            "weight": 0.7,
+            "method": "llm"
+          },
+          {
+            "en": [
+              1329,
+              1338
+            ],
+            "src": [
+              1546,
+              1551
+            ],
+            "en_text": "Phaedrus",
+            "src_text": "plato",
+            "weight": 0.4,
+            "method": "llm"
+          },
+          {
+            "en": [
+              1352,
+              1361
+            ],
+            "src": [
+              1560,
+              1571
+            ],
+            "en_text": "disputing",
+            "src_text": "interpretor",
+            "weight": 0.4,
+            "method": "llm"
+          },
+          {
+            "en": [
+              1368,
+              1381
+            ],
+            "src": [
+              1403,
+              1419
+            ],
+            "en_text": "those shadows",
+            "src_text": "terrenarum rerum",
+            "weight": 0.4,
+            "method": "llm"
+          },
+          {
+            "en": [
+              1382,
+              1392
+            ],
+            "src": [
+              1370,
+              1376
+            ],
+            "en_text": "into which",
+            "src_text": "quibus",
+            "weight": 0.7,
+            "method": "llm"
+          },
+          {
+            "en": [
+              1397,
+              1401
+            ],
+            "src": [
+              1377,
+              1383
+            ],
+            "en_text": "soul",
+            "src_text": "animus",
+            "weight": 1,
+            "method": "llm"
+          },
+          {
+            "en": [
+              1411,
+              1437
+            ],
+            "src": [
+              1432,
+              1443
+            ],
+            "en_text": "pressed down and submerged",
+            "src_text": "descenderat",
+            "weight": 0.7,
+            "method": "llm"
+          },
+          {
+            "en": [
+              1447,
+              1454
+            ],
+            "src": [
+              1384,
+              1393
+            ],
+            "en_text": "highest",
+            "src_text": "ad supera",
+            "weight": 0.7,
+            "method": "llm"
+          },
+          {
+            "en": [
+              1474,
+              1478
+            ],
+            "src": [
+              1600,
+              1610
+            ],
+            "en_text": "says",
+            "src_text": "intelligit",
+            "weight": 0.4,
+            "method": "llm"
+          },
+          {
+            "en": [
+              1495,
+              1508
+            ],
+            "src": [
+              1522,
+              1538
+            ],
+            "en_text": "effort to see",
+            "src_text": "consequi possit",
+            "weight": 0.4,
+            "method": "llm"
+          },
+          {
+            "en": [
+              1509,
+              1514
+            ],
+            "src": [
+              1612,
+              1616
+            ],
+            "en_text": "where",
+            "src_text": "quas",
+            "weight": 0.4,
+            "method": "llm"
+          },
+          {
+            "en": [
+              1528,
+              1533
+            ],
+            "src": [
+              1617,
+              1626
+            ],
+            "en_text": "truth",
+            "src_text": "ueritatis",
+            "weight": 1,
+            "method": "llm"
+          },
+          {
+            "en": [
+              1567,
+              1571
+            ],
+            "src": [
+              1581,
+              1587
+            ],
+            "en_text": "soul",
+            "src_text": "animæ",
+            "weight": 1,
+            "method": "llm"
+          },
+          {
+            "en": [
+              1578,
+              1589
+            ],
+            "src": [
+              1395,
+              1399
+            ],
+            "en_text": "from there",
+            "src_text": "unde",
+            "weight": 0.7,
+            "method": "llm"
+          },
+          {
+            "en": [
+              1572,
+              1577
+            ],
+            "src": [
+              1444,
+              1451
+            ],
+            "en_text": "comes",
+            "src_text": "reuolat",
+            "weight": 0.4,
+            "method": "llm"
+          },
+          {
+            "en": [
+              1555,
+              1559
+            ],
+            "src": [
+              1595,
+              1599
+            ],
+            "en_text": "food",
+            "src_text": "alas",
+            "weight": 0.4,
+            "method": "llm"
+          },
+          {
+            "en": [
+              1613,
+              1618
+            ],
+            "src": [
+              1817,
+              1821
+            ],
+            "en_text": "wings",
+            "src_text": "alis",
+            "weight": 1,
+            "method": "llm"
+          },
+          {
+            "en": [
+              1632,
+              1636
+            ],
+            "src": [
+              1859,
+              1864
+            ],
+            "en_text": "soul",
+            "src_text": "animo",
+            "weight": 0.7,
+            "method": "llm"
+          },
+          {
+            "en": [
+              1672,
+              1683
             ],
             "src": [
               1869,
+              1874
+            ],
+            "en_text": "Plato calls",
+            "src_text": "putat",
+            "weight": 0.7,
+            "method": "llm"
+          },
+          {
+            "en": [
+              1684,
+              1689
+            ],
+            "src": [
+              1688,
+              1693
+            ],
+            "en_text": "these",
+            "src_text": "horum",
+            "weight": 0.7,
+            "method": "llm"
+          },
+          {
+            "en": [
+              1691,
+              1696
+            ],
+            "src": [
+              1817,
+              1821
+            ],
+            "en_text": "wings",
+            "src_text": "alis",
+            "weight": 1,
+            "method": "llm"
+          },
+          {
+            "en": [
+              1717,
+              1721
+            ],
+            "src": [
+              1859,
+              1864
+            ],
+            "en_text": "soul",
+            "src_text": "animo",
+            "weight": 1,
+            "method": "llm"
+          },
+          {
+            "en": [
+              1722,
+              1732
+            ],
+            "src": [
+              1833,
+              1844
+            ],
+            "en_text": "flies back",
+            "src_text": "reuolauerit",
+            "weight": 1,
+            "method": "llm"
+          },
+          {
+            "en": [
+              1733,
+              1753
+            ],
+            "src": [
+              1822,
+              1832
+            ],
+            "en_text": "to the things above",
+            "src_text": "ad superos",
+            "weight": 1,
+            "method": "llm"
+          },
+          {
+            "en": [
+              1768,
+              1781
+            ],
+            "src": [
+              1717,
+              1725
+            ],
+            "en_text": "had descended",
+            "src_text": "amiserat",
+            "weight": 0.4,
+            "method": "llm"
+          },
+          {
+            "en": [
+              1782,
+              1807
+            ],
+            "src": [
+              1694,
+              1705
+            ],
+            "en_text": "on account of the thought",
+            "src_text": "appetitione",
+            "weight": 0.7,
+            "method": "llm"
+          },
+          {
+            "en": [
+              1811,
+              1825
+            ],
+            "src": [
+              1706,
+              1715
+            ],
+            "en_text": "earthly things",
+            "src_text": "terrenorū",
+            "weight": 1,
+            "method": "llm"
+          },
+          {
+            "en": [
+              1827,
+              1832
+            ],
+            "src": [
+              1989,
+              1992
+            ],
+            "en_text": "Since",
+            "src_text": "quo",
+            "weight": 0.4,
+            "method": "llm"
+          },
+          {
+            "en": [
+              1833,
+              1837
+            ],
+            "src": [
+              1980,
+              1986
+            ],
+            "en_text": "this",
+            "src_text": "gaudiū",
+            "weight": 0.4,
+            "method": "llm"
+          },
+          {
+            "en": [
+              1838,
+              1853
+            ],
+            "src": [
+              2026,
+              2036
+            ],
+            "en_text": "can be achieved",
+            "src_text": "perfruatur",
+            "weight": 0.4,
+            "method": "llm"
+          },
+          {
+            "en": [
+              1854,
+              1861
+            ],
+            "src": [
+              1993,
+              1995
+            ],
+            "en_text": "through",
+            "src_text": "in",
+            "weight": 0.7,
+            "method": "llm"
+          },
+          {
+            "en": [
+              1862,
               1873
             ],
-            "en_text": "reason",
+            "src": [
+              1937,
+              1954
+            ],
+            "en_text": "two virtues",
+            "src_text": "Alterum perfectum",
+            "weight": 0.4,
+            "method": "llm"
+          },
+          {
+            "en": [
+              1886,
+              1899
+            ],
+            "src": [
+              2120,
+              2129
+            ],
+            "en_text": "contemplative",
+            "src_text": "speculata",
+            "weight": 0.7,
+            "method": "llm"
+          },
+          {
+            "en": [
+              1908,
+              1913
+            ],
+            "src": [
+              1970,
+              1979
+            ],
+            "en_text": "moral",
+            "src_text": "absolutum",
+            "weight": 0.4,
+            "method": "llm"
+          },
+          {
+            "en": [
+              1914,
+              1919
+            ],
+            "src": [
+              2072,
+              2077
+            ],
+            "en_text": "Plato",
+            "src_text": "Plato",
+            "weight": 1,
+            "method": "llm"
+          },
+          {
+            "en": [
+              1920,
+              1931
+            ],
+            "src": [
+              2088,
+              2096
+            ],
+            "en_text": "understands",
+            "src_text": "appellat",
+            "weight": 0.7,
+            "method": "llm"
+          },
+          {
+            "en": [
+              1932,
+              1937
+            ],
+            "src": [
+              2097,
+              2100
+            ],
+            "en_text": "these",
+            "src_text": "his",
+            "weight": 0.7,
+            "method": "llm"
+          },
+          {
+            "en": [
+              1938,
+              1942
+            ],
+            "src": [
+              2038,
+              2043
+            ],
+            "en_text": "same",
+            "src_text": "Illud",
+            "weight": 0.4,
+            "method": "llm"
+          },
+          {
+            "en": [
+              1943,
+              1950
+            ],
+            "src": [
+              2147,
+              2154
+            ],
+            "en_text": "virtues",
+            "src_text": "nutrita",
+            "weight": 0.4,
+            "method": "llm"
+          },
+          {
+            "en": [
+              1983,
+              1988
+            ],
+            "src": [
+              2051,
+              2071
+            ],
+            "en_text": "wings",
+            "src_text": "ambrosiam hoc nectar",
+            "weight": 0.4,
+            "method": "llm"
+          },
+          {
+            "en": [
+              1997,
+              2001
+            ],
+            "src": [
+              2130,
+              2135
+            ],
+            "en_text": "soul",
+            "src_text": "anima",
+            "weight": 1,
+            "method": "llm"
+          },
+          {
+            "en": [
+              2002,
+              2008
+            ],
+            "src": [
+              1999,
+              2003
+            ],
+            "en_text": "itself",
+            "src_text": "ipsa",
+            "weight": 0.7,
+            "method": "llm"
+          },
+          {
+            "en": [
+              2010,
+              2015
+            ],
+            "src": [
+              2389,
+              2393
+            ],
+            "en_text": "These",
             "src_text": "illa",
             "weight": 0.7,
             "method": "llm"
           },
           {
             "en": [
-              2909,
-              2914
+              2016,
+              2024
             ],
             "src": [
-              1874,
-              1879
+              2359,
+              2364
             ],
-            "en_text": "leads.",
-            "src_text": "ducat",
+            "en_text": "the soul",
+            "src_text": "animi",
             "weight": 1,
             "method": "llm"
           },
           {
             "en": [
-              2916,
-              2924
+              2025,
+              2033
             ],
             "src": [
-              1881,
-              1887
+              2394,
+              2399
             ],
-            "en_text": "the rest",
-            "src_text": "reliqua",
+            "en_text": "recovers",
+            "src_text": "ducat",
+            "weight": 0.4,
+            "method": "llm"
+          },
+          {
+            "en": [
+              2034,
+              2081
+            ],
+            "src": [
+              2258,
+              2290
+            ],
+            "en_text": "by the contemplation of truth and divine things",
+            "src_text": "ambrosiam, & super ipsam nectar",
+            "weight": 0.4,
+            "method": "llm"
+          },
+          {
+            "en": [
+              2083,
+              2151
+            ],
+            "src": [
+              2340,
+              2371
+            ],
+            "en_text": "just as it had lost them through the desire for these earthly things",
+            "src_text": "equos uero cæteras animi partes",
+            "weight": 0.4,
+            "method": "llm"
+          },
+          {
+            "en": [
+              2153,
+              2165
+            ],
+            "src": [
+              2203,
+              2208
+            ],
+            "en_text": "When, indeed",
+            "src_text": "autem",
+            "weight": 0.7,
+            "method": "llm"
+          },
+          {
+            "en": [
+              2167,
+              2183
+            ],
+            "src": [
+              2250,
+              2257
+            ],
+            "en_text": "having recovered",
+            "src_text": "obiicit",
+            "weight": 0.4,
+            "method": "llm"
+          },
+          {
+            "en": [
+              2184,
+              2193
+            ],
+            "src": [
+              2340,
+              2345
+            ],
+            "en_text": "its wings",
+            "src_text": "equos",
+            "weight": 0.4,
+            "method": "llm"
+          },
+          {
+            "en": [
+              2194,
+              2241
+            ],
+            "src": [
+              2309,
+              2323
+            ],
+            "en_text": "through the practice of both natural and moral",
+            "src_text": "more pythagoræ",
+            "weight": 0.4,
+            "method": "llm"
+          },
+          {
+            "en": [
+              2242,
+              2252
+            ],
+            "src": [
+              2324,
+              2332
+            ],
+            "en_text": "philosophy",
+            "src_text": "rationem",
+            "weight": 0.4,
+            "method": "llm"
+          },
+          {
+            "en": [
+              2257,
+              2271
+            ],
+            "src": [
+              2209,
+              2217
+            ],
+            "en_text": "has flown back",
+            "src_text": "redierit",
             "weight": 1,
+            "method": "llm"
+          },
+          {
+            "en": [
+              2272,
+              2286
+            ],
+            "src": [
+              2225,
+              2235
+            ],
+            "en_text": "to the heavens",
+            "src_text": "ad præsepe",
+            "weight": 0.7,
+            "method": "llm"
+          },
+          {
+            "en": [
+              2288,
+              2297
+            ],
+            "src": [
+              2333,
+              2338
+            ],
+            "en_text": "he thinks",
+            "src_text": "uocat",
+            "weight": 0.7,
+            "method": "llm"
+          },
+          {
+            "en": [
+              2298,
+              2309
+            ],
+            "src": [
+              2401,
+              2408
+            ],
+            "en_text": "two rewards",
+            "src_text": "reliqua",
+            "weight": 0.4,
+            "method": "llm"
+          },
+          {
+            "en": [
+              2337,
+              2341
+            ],
+            "src": [
+              2443,
+              2448
+            ],
+            "en_text": "soul",
+            "src_text": "anima",
+            "weight": 1,
+            "method": "llm"
+          },
+          {
+            "en": [
+              2440,
+              2444
+            ],
+            "src": [
+              2443,
+              2448
+            ],
+            "en_text": "soul",
+            "src_text": "anima",
+            "weight": 1,
+            "method": "llm"
+          },
+          {
+            "en": [
+              2425,
+              2428
+            ],
+            "src": [
+              2450,
+              2457
+            ],
+            "en_text": "joy",
+            "src_text": "gaudium",
+            "weight": 1,
+            "method": "llm"
+          },
+          {
+            "en": [
+              2445,
+              2451
+            ],
+            "src": [
+              2469,
+              2477
+            ],
+            "en_text": "enjoys",
+            "src_text": "voluptas",
+            "weight": 0.7,
+            "method": "llm"
+          },
+          {
+            "en": [
+              2354,
+              2367
+            ],
+            "src": [
+              2479,
+              2487
+            ],
+            "en_text": "contemplation",
+            "src_text": "ambrosia",
+            "weight": 0.4,
+            "method": "llm"
+          },
+          {
+            "en": [
+              2371,
+              2378
+            ],
+            "src": [
+              2489,
+              2495
+            ],
+            "en_text": "divinity",
+            "src_text": "nectar",
+            "weight": 0.4,
+            "method": "llm"
+          },
+          {
+            "en": [
+              2478,
+              2481
+            ],
+            "src": [
+              2489,
+              2495
+            ],
+            "en_text": "God",
+            "src_text": "nectar",
+            "weight": 0.4,
+            "method": "llm"
+          },
+          {
+            "en": [
+              2404,
+              2411
+            ],
+            "src": [
+              2459,
+              2467
+            ],
+            "en_text": "perfect",
+            "src_text": "laetitia",
+            "weight": 0.4,
+            "method": "llm"
+          },
+          {
+            "en": [
+              2416,
+              2424
+            ],
+            "src": [
+              2459,
+              2467
+            ],
+            "en_text": "absolute",
+            "src_text": "laetitia",
+            "weight": 0.4,
+            "method": "llm"
+          },
+          {
+            "en": [
+              2327,
+              2336
+            ],
+            "src": [
+              2443,
+              2448
+            ],
+            "en_text": "returning",
+            "src_text": "anima",
+            "weight": 0.4,
+            "method": "llm"
+          },
+          {
+            "en": [
+              2314,
+              2319
+            ],
+            "src": [
+              2443,
+              2448
+            ],
+            "en_text": "given",
+            "src_text": "anima",
+            "weight": 0.4,
+            "method": "llm"
+          },
+          {
+            "en": [
+              2465,
+              2474
+            ],
+            "src": [
+              2479,
+              2495
+            ],
+            "en_text": "knowledge",
+            "src_text": "ambrosia, nectar",
+            "weight": 0.4,
             "method": "llm"
           }
         ],
@@ -4956,26 +3556,40 @@
         "llm": [
           {
             "en": [
-              12,
-              28
+              14,
+              18
             ],
             "src": [
-              32,
-              47
+              3,
+              9
             ],
-            "en_text": "holy [voice] cry out",
-            "src_text": "sancto clamasse",
-            "weight": 0.7,
+            "en_text": "holy",
+            "src_text": "sancto",
+            "weight": 1,
             "method": "llm"
           },
           {
             "en": [
-              31,
-              37
+              27,
+              34
             ],
             "src": [
-              49,
-              57
+              10,
+              18
+            ],
+            "en_text": "cry out",
+            "src_text": "clamasse",
+            "weight": 1,
+            "method": "llm"
+          },
+          {
+            "en": [
+              37,
+              43
+            ],
+            "src": [
+              20,
+              28
             ],
             "en_text": "Sprout",
             "src_text": "pululate",
@@ -4984,12 +3598,12 @@
           },
           {
             "en": [
-              39,
-              43
+              45,
+              49
             ],
             "src": [
-              59,
-              68
+              30,
+              40
             ],
             "en_text": "grow",
             "src_text": "adolescite",
@@ -4998,12 +3612,12 @@
           },
           {
             "en": [
-              49,
-              58
+              55,
+              64
             ],
             "src": [
-              70,
-              79
+              42,
+              51
             ],
             "en_text": "propagate",
             "src_text": "propagate",
@@ -5012,408 +3626,1472 @@
           },
           {
             "en": [
-              59,
+              65,
               68
             ],
             "src": [
-              80,
-              96
+              52,
+              60
             ],
-            "en_text": "all seeds",
-            "src_text": "uniuersa germina",
+            "en_text": "all",
+            "src_text": "uniuersa",
             "weight": 1,
             "method": "llm"
           },
           {
             "en": [
               69,
-              81
+              74
             ],
             "src": [
-              98,
-              111
+              61,
+              68
             ],
-            "en_text": "and my works",
-            "src_text": "atq; opera mea",
+            "en_text": "seeds",
+            "src_text": "germina",
             "weight": 1,
             "method": "llm"
           },
           {
             "en": [
-              84,
-              119
+              75,
+              78
             ],
             "src": [
-              113,
-              128
+              70,
+              75
             ],
-            "en_text": "which is much like the Mosaic saying",
-            "src_text": "quàm id Mosaicum",
+            "en_text": "and",
+            "src_text": "atq;",
+            "weight": 1,
+            "method": "llm"
+          },
+          {
+            "en": [
+              79,
+              81
+            ],
+            "src": [
+              82,
+              85
+            ],
+            "en_text": "my",
+            "src_text": "mea",
+            "weight": 1,
+            "method": "llm"
+          },
+          {
+            "en": [
+              82,
+              87
+            ],
+            "src": [
+              76,
+              81
+            ],
+            "en_text": "works",
+            "src_text": "opera",
+            "weight": 1,
+            "method": "llm"
+          },
+          {
+            "en": [
+              90,
+              108
+            ],
+            "src": [
+              87,
+              94
+            ],
+            "en_text": "which is much like",
+            "src_text": "quàm id",
             "weight": 0.7,
             "method": "llm"
           },
           {
             "en": [
-              122,
-              177
+              113,
+              119
             ],
             "src": [
-              130,
-              176
+              95,
+              103
             ],
-            "en_text": "\"Increase and multiply, and fill the earth.\"",
-            "src_text": "Crescite & multiplicamini, & replete terram.",
+            "en_text": "Mosaic",
+            "src_text": "Mosaicum",
             "weight": 1,
             "method": "llm"
           },
           {
             "en": [
-              179,
-              205
+              129,
+              137
+            ],
+            "src": [
+              105,
+              113
+            ],
+            "en_text": "Increase",
+            "src_text": "Crescite",
+            "weight": 1,
+            "method": "llm"
+          },
+          {
+            "en": [
+              138,
+              141
+            ],
+            "src": [
+              114,
+              115
+            ],
+            "en_text": "and",
+            "src_text": "&",
+            "weight": 1,
+            "method": "llm"
+          },
+          {
+            "en": [
+              142,
+              150
+            ],
+            "src": [
+              116,
+              130
+            ],
+            "en_text": "multiply",
+            "src_text": "multiplicamini",
+            "weight": 1,
+            "method": "llm"
+          },
+          {
+            "en": [
+              152,
+              155
+            ],
+            "src": [
+              132,
+              133
+            ],
+            "en_text": "and",
+            "src_text": "&",
+            "weight": 1,
+            "method": "llm"
+          },
+          {
+            "en": [
+              156,
+              160
+            ],
+            "src": [
+              134,
+              141
+            ],
+            "en_text": "fill",
+            "src_text": "replete",
+            "weight": 1,
+            "method": "llm"
+          },
+          {
+            "en": [
+              161,
+              170
+            ],
+            "src": [
+              142,
+              148
+            ],
+            "en_text": "the earth",
+            "src_text": "terram",
+            "weight": 1,
+            "method": "llm"
+          },
+          {
+            "en": [
+              173,
+              177
             ],
             "src": [
               178,
+              181
+            ],
+            "en_text": "Soon",
+            "src_text": "Mox",
+            "weight": 1,
+            "method": "llm"
+          },
+          {
+            "en": [
+              178,
+              185
+            ],
+            "src": [
+              182,
+              191
+            ],
+            "en_text": "Mercury",
+            "src_text": "Mercurius",
+            "weight": 1,
+            "method": "llm"
+          },
+          {
+            "en": [
+              186,
+              195
+            ],
+            "src": [
+              196,
+              204
+            ],
+            "en_text": "instructs",
+            "src_text": "instruit",
+            "weight": 1,
+            "method": "llm"
+          },
+          {
+            "en": [
+              196,
+              198
+            ],
+            "src": [
+              192,
+              195
+            ],
+            "en_text": "us",
+            "src_text": "nos",
+            "weight": 1,
+            "method": "llm"
+          },
+          {
+            "en": [
+              199,
               205
             ],
-            "en_text": "Soon Mercury instructs us",
-            "src_text": "Mox Mercurius nos instruit",
-            "weight": 1,
+            "src": [
+              206,
+              209
+            ],
+            "en_text": "on how",
+            "src_text": "quâ",
+            "weight": 0.7,
             "method": "llm"
           },
           {
             "en": [
               206,
-              334
+              213
             ],
             "src": [
-              207,
-              235
+              217,
+              223
             ],
-            "en_text": "on how the way to the Mind lies open",
-            "src_text": "quâ pateat aditus ad mentẽ",
+            "en_text": "the way",
+            "src_text": "aditus",
             "weight": 1,
             "method": "llm"
           },
           {
             "en": [
-              336,
-              390
+              214,
+              216
             ],
             "src": [
-              237,
-              285
+              224,
+              226
             ],
-            "en_text": "and what evil error finally leads us away from it",
-            "src_text": "& quis nos ab ea tandem malus auferat error",
+            "en_text": "to",
+            "src_text": "ad",
             "weight": 1,
             "method": "llm"
           },
           {
             "en": [
-              392,
-              461
+              217,
+              225
             ],
             "src": [
-              287,
-              332
+              227,
+              232
             ],
-            "en_text": "he shows to whom the Mind is present as a bountiful giver of goods",
-            "src_text": "& quibus mens abunde bonorũ largitrix assit",
+            "en_text": "the Mind",
+            "src_text": "mentẽ",
+            "weight": 1,
+            "method": "llm"
+          },
+          {
+            "en": [
+              485,
+              489
+            ],
+            "src": [
+              516,
+              522
+            ],
+            "en_text": "Mind",
+            "src_text": "mentis",
             "weight": 0.7,
             "method": "llm"
           },
           {
             "en": [
-              463,
-              498
+              464,
+              466
             ],
             "src": [
-              334,
-              354
+              545,
+              550
             ],
-            "en_text": "and from whom it is likewise absent",
-            "src_text": "quibus ue pariter absit",
-            "weight": 1,
+            "en_text": "he",
+            "src_text": "Moses",
+            "weight": 0.4,
             "method": "llm"
           },
           {
             "en": [
+              440,
+              445
+            ],
+            "src": [
+              568,
+              571
+            ],
+            "en_text": "leads",
+            "src_text": "dux",
+            "weight": 0.4,
+            "method": "llm"
+          },
+          {
+            "en": [
+              516,
+              521
+            ],
+            "src": [
+              651,
+              657
+            ],
+            "en_text": "giver",
+            "src_text": "pascit",
+            "weight": 0.4,
+            "method": "llm"
+          },
+          {
+            "en": [
+              525,
+              530
+            ],
+            "src": [
+              583,
+              589
+            ],
+            "en_text": "goods",
+            "src_text": "gregis",
+            "weight": 0.4,
+            "method": "llm"
+          },
+          {
+            "en": [
+              467,
+              472
+            ],
+            "src": [
+              733,
+              743
+            ],
+            "en_text": "shows",
+            "src_text": "collaudans",
+            "weight": 0.4,
+            "method": "llm"
+          },
+          {
+            "en": [
+              401,
+              410
+            ],
+            "src": [
+              508,
+              515
+            ],
+            "en_text": "lies open",
+            "src_text": "purgatæ",
+            "weight": 0.4,
+            "method": "llm"
+          },
+          {
+            "en": [
+              421,
+              431
+            ],
+            "src": [
+              476,
+              487
+            ],
+            "en_text": "evil error",
+            "src_text": "oppositisq;",
+            "weight": 0.4,
+            "method": "llm"
+          },
+          {
+            "en": [
+              432,
+              439
+            ],
+            "src": [
+              530,
+              543
+            ],
+            "en_text": "finally",
+            "src_text": "redintegramur",
+            "weight": 0.4,
+            "method": "llm"
+          },
+          {
+            "en": [
+              506,
+              515
+            ],
+            "src": [
+              698,
+              709
+            ],
+            "en_text": "bountiful",
+            "src_text": "gratiarumq;",
+            "weight": 0.4,
+            "method": "llm"
+          },
+          {
+            "en": [
+              561,
+              568
+            ],
+            "src": [
               500,
-              615
+              506
+            ],
+            "en_text": "absent",
+            "src_text": "priorẽ",
+            "weight": 0.4,
+            "method": "llm"
+          },
+          {
+            "en": [
+              567,
+              569
             ],
             "src": [
-              356,
-              459
+              791,
+              799
             ],
-            "en_text": "He explains how, just as we fall by certain steps from an intellectual and immortal nature and degenerate into decaying things",
-            "src_text": "& quo pacto quemadmodũ certis gradibus ab intellectuali immortaliq; natura labimur, degeneramusq; ad caduca",
+            "en_text": "He",
+            "src_text": "Pymandri",
             "weight": 0.7,
             "method": "llm"
           },
           {
             "en": [
-              617,
+              570,
+              578
+            ],
+            "src": [
+              800,
+              805
+            ],
+            "en_text": "explains",
+            "src_text": "summa",
+            "weight": 0.7,
+            "method": "llm"
+          },
+          {
+            "en": [
+              580,
+              583
+            ],
+            "src": [
+              787,
+              790
+            ],
+            "en_text": "how",
+            "src_text": "Hæc",
+            "weight": 0.4,
+            "method": "llm"
+          },
+          {
+            "en": [
+              595,
+              599
+            ],
+            "src": [
+              800,
+              805
+            ],
+            "en_text": "fall",
+            "src_text": "summa",
+            "weight": 0.4,
+            "method": "llm"
+          },
+          {
+            "en": [
+              603,
+              616
+            ],
+            "src": [
+              800,
+              805
+            ],
+            "en_text": "certain steps",
+            "src_text": "summa",
+            "weight": 0.4,
+            "method": "llm"
+          },
+          {
+            "en": [
+              625,
+              637
+            ],
+            "src": [
+              800,
+              805
+            ],
+            "en_text": "intellectual",
+            "src_text": "summa",
+            "weight": 0.4,
+            "method": "llm"
+          },
+          {
+            "en": [
+              642,
+              657
+            ],
+            "src": [
+              800,
+              805
+            ],
+            "en_text": "immortal nature",
+            "src_text": "summa",
+            "weight": 0.4,
+            "method": "llm"
+          },
+          {
+            "en": [
+              662,
+              672
+            ],
+            "src": [
+              800,
+              805
+            ],
+            "en_text": "degenerate",
+            "src_text": "summa",
+            "weight": 0.4,
+            "method": "llm"
+          },
+          {
+            "en": [
+              678,
+              693
+            ],
+            "src": [
+              800,
+              805
+            ],
+            "en_text": "decaying things",
+            "src_text": "summa",
+            "weight": 0.4,
+            "method": "llm"
+          },
+          {
+            "en": [
+              707,
               715
             ],
             "src": [
-              461,
-              546
+              777,
+              785
             ],
-            "en_text": "we are also restored to that prior state of a purified mind by certain opposite steps.",
-            "src_text": "ita quoq; certis oppositisq; gradibus in priorẽ purgatæ mentis statum redintegramur.",
-            "weight": 1,
-            "method": "llm"
-          },
-          {
-            "en": [
-              717,
-              776
-            ],
-            "src": [
-              548,
-              595
-            ],
-            "en_text": "Let Moses be the leader of the Hebrew flock by divine decree",
-            "src_text": "Moses diuino instituto dux sit Hebræi gregis",
-            "weight": 1,
-            "method": "llm"
-          },
-          {
-            "en": [
-              778,
-              831
-            ],
-            "src": [
-              597,
-              613
-            ],
-            "en_text": "and let Mercury be the leader of the Egyptian flock.",
-            "src_text": "Mercurius Aegyptij",
+            "en_text": "restored",
+            "src_text": "assurgit",
             "weight": 0.7,
             "method": "llm"
           },
           {
             "en": [
-              833,
-              901
+              724,
+              735
             ],
             "src": [
-              615,
-              678
+              800,
+              805
             ],
-            "en_text": "Now, by holy instruction, he feeds his flock, living an active life",
-            "src_text": "et nunc sancta institutione gregem suum pascit, actiuam uitam uiuens",
-            "weight": 1,
+            "en_text": "prior state",
+            "src_text": "summa",
+            "weight": 0.4,
             "method": "llm"
           },
           {
             "en": [
-              903,
-              1016
+              741,
+              754
             ],
             "src": [
-              680,
-              788
+              800,
+              805
             ],
-            "en_text": "but then, praising the Father of all things with hymns and thanksgivings, he rises into the light of the contemplative life.",
-            "src_text": "nunc uero hymnis gratiarumq; actionibus rerũ patrem collaudans, in contemplationis uitam lumenq; assurgit.",
-            "weight": 1,
+            "en_text": "purified mind",
+            "src_text": "summa",
+            "weight": 0.4,
             "method": "llm"
           },
           {
             "en": [
-              1018,
-              1053
+              758,
+              780
             ],
             "src": [
-              790,
-              813
+              777,
+              785
             ],
-            "en_text": "This is the summary of the Pymander.",
-            "src_text": "Hæc Pymandri summa est.",
-            "weight": 1,
+            "en_text": "certain opposite steps",
+            "src_text": "assurgit",
+            "weight": 0.4,
             "method": "llm"
           },
           {
             "en": [
-              1095,
+              787,
+              792
+            ],
+            "src": [
+              998,
+              1011
+            ],
+            "en_text": "Moses",
+            "src_text": "seated figure",
+            "weight": 0.7,
+            "method": "llm"
+          },
+          {
+            "en": [
+              800,
+              806
+            ],
+            "src": [
+              973,
+              985
+            ],
+            "en_text": "leader",
+            "src_text": "drop cap 'C'",
+            "weight": 0.4,
+            "method": "llm"
+          },
+          {
+            "en": [
+              814,
+              826
+            ],
+            "src": [
+              998,
+              1011
+            ],
+            "en_text": "Hebrew flock",
+            "src_text": "seated figure",
+            "weight": 0.4,
+            "method": "llm"
+          },
+          {
+            "en": [
+              830,
+              843
+            ],
+            "src": [
+              954,
+              964
+            ],
+            "en_text": "divine decree",
+            "src_text": "ornamental",
+            "weight": 0.4,
+            "method": "llm"
+          },
+          {
+            "en": [
+              853,
+              860
+            ],
+            "src": [
+              1024,
+              1041
+            ],
+            "en_text": "Mercury",
+            "src_text": "scholar or scribe",
+            "weight": 0.7,
+            "method": "llm"
+          },
+          {
+            "en": [
+              868,
+              874
+            ],
+            "src": [
+              973,
+              985
+            ],
+            "en_text": "leader",
+            "src_text": "drop cap 'C'",
+            "weight": 0.4,
+            "method": "llm"
+          },
+          {
+            "en": [
+              882,
+              896
+            ],
+            "src": [
+              1024,
+              1041
+            ],
+            "en_text": "Egyptian flock",
+            "src_text": "scholar or scribe",
+            "weight": 0.4,
+            "method": "llm"
+          },
+          {
+            "en": [
+              906,
+              922
+            ],
+            "src": [
+              1075,
+              1080
+            ],
+            "en_text": "holy instruction",
+            "src_text": "books",
+            "weight": 0.7,
+            "method": "llm"
+          },
+          {
+            "en": [
+              927,
+              932
+            ],
+            "src": [
+              1043,
+              1050
+            ],
+            "en_text": "feeds",
+            "src_text": "working",
+            "weight": 0.4,
+            "method": "llm"
+          },
+          {
+            "en": [
+              937,
+              942
+            ],
+            "src": [
+              998,
+              1011
+            ],
+            "en_text": "flock",
+            "src_text": "seated figure",
+            "weight": 0.4,
+            "method": "llm"
+          },
+          {
+            "en": [
+              954,
+              965
+            ],
+            "src": [
+              1043,
+              1060
+            ],
+            "en_text": "active life",
+            "src_text": "working at a desk",
+            "weight": 0.7,
+            "method": "llm"
+          },
+          {
+            "en": [
+              977,
+              985
+            ],
+            "src": [
+              998,
+              1011
+            ],
+            "en_text": "praising",
+            "src_text": "seated figure",
+            "weight": 0.4,
+            "method": "llm"
+          },
+          {
+            "en": [
+              990,
+              1010
+            ],
+            "src": [
+              998,
+              1011
+            ],
+            "en_text": "Father of all things",
+            "src_text": "seated figure",
+            "weight": 0.4,
+            "method": "llm"
+          },
+          {
+            "en": [
+              1016,
+              1021
+            ],
+            "src": [
+              1075,
+              1080
+            ],
+            "en_text": "hymns",
+            "src_text": "books",
+            "weight": 0.4,
+            "method": "llm"
+          },
+          {
+            "en": [
+              1026,
+              1039
+            ],
+            "src": [
+              1075,
+              1080
+            ],
+            "en_text": "thanksgivings",
+            "src_text": "books",
+            "weight": 0.4,
+            "method": "llm"
+          },
+          {
+            "en": [
+              1059,
+              1064
+            ],
+            "src": [
+              954,
+              964
+            ],
+            "en_text": "light",
+            "src_text": "ornamental",
+            "weight": 0.4,
+            "method": "llm"
+          },
+          {
+            "en": [
+              1072,
+              1085
+            ],
+            "src": [
+              1116,
+              1125
+            ],
+            "en_text": "contemplative",
+            "src_text": "cogitarẽ",
+            "weight": 0.7,
+            "method": "llm"
+          },
+          {
+            "en": [
+              1086,
+              1090
+            ],
+            "src": [
+              1109,
+              1115
+            ],
+            "en_text": "life",
+            "src_text": "natura",
+            "weight": 0.4,
+            "method": "llm"
+          },
+          {
+            "en": [
+              1092,
+              1096
+            ],
+            "src": [
+              1374,
+              1378
+            ],
+            "en_text": "This",
+            "src_text": "hunc",
+            "weight": 0.4,
+            "method": "llm"
+          },
+          {
+            "en": [
+              1097,
+              1099
+            ],
+            "src": [
+              1277,
+              1281
+            ],
+            "en_text": "is",
+            "src_text": "sunt",
+            "weight": 0.4,
+            "method": "llm"
+          },
+          {
+            "en": [
+              1104,
+              1111
+            ],
+            "src": [
+              1379,
+              1384
+            ],
+            "en_text": "summary",
+            "src_text": "modum",
+            "weight": 0.4,
+            "method": "llm"
+          },
+          {
+            "en": [
+              1119,
+              1127
+            ],
+            "src": [
+              1313,
+              1320
+            ],
+            "en_text": "Pymander",
+            "src_text": "quendã",
+            "weight": 0.7,
+            "method": "llm"
+          },
+          {
+            "en": [
+              1133,
               1141
             ],
             "src": [
-              990,
-              1017
+              1313,
+              1320
             ],
-            "en_text": "WHILE I WAS REFLECTING on the nature of things",
-            "src_text": "Cum de rerum natura cogitarẽ",
-            "weight": 1,
+            "en_text": "PYMANDER",
+            "src_text": "quendã",
+            "weight": 0.7,
             "method": "llm"
           },
           {
             "en": [
-              1143,
-              1198
+              1145,
+              1152
             ],
             "src": [
-              1019,
-              1050
+              1357,
+              1363
             ],
-            "en_text": "and raising the sharp edge of my mind to higher realms",
-            "src_text": "ac mentis aciẽ ad superna erigerẽ",
-            "weight": 1,
+            "en_text": "MERCURY",
+            "src_text": "nomine",
+            "weight": 0.4,
             "method": "llm"
           },
           {
             "en": [
-              1200,
-              1250
+              1153,
+              1165
             ],
             "src": [
-              1052,
-              1080
+              1357,
+              1363
             ],
-            "en_text": "my bodily senses were already lulled to sleep",
-            "src_text": "sopitis iam corporis sensibus",
-            "weight": 1,
+            "en_text": "TRISMEGISTUS",
+            "src_text": "nomine",
+            "weight": 0.4,
             "method": "llm"
           },
           {
             "en": [
-              1251,
-              1353
+              1173,
+              1178
             ],
             "src": [
-              1082,
-              1170
+              1329,
+              1340
             ],
-            "en_text": "just as usually happens to those who are weighed down by sleep due to fullness or exhaustion.",
-            "src_text": "quemadmodũ accidere solet ijs, qui ob saturitatem uel defatigationem somno grauati, sunt",
-            "weight": 1,
+            "en_text": "POWER",
+            "src_text": "magnitudine",
+            "weight": 0.7,
             "method": "llm"
           },
           {
             "en": [
-              1355,
-              1414
+              1183,
+              1189
             ],
             "src": [
-              1172,
+              1129,
+              1140
+            ],
+            "en_text": "WISDOM",
+            "src_text": "mentis aciẽ",
+            "weight": 0.7,
+            "method": "llm"
+          },
+          {
+            "en": [
+              1193,
+              1196
+            ],
+            "src": [
+              1144,
+              1151
+            ],
+            "en_text": "GOD",
+            "src_text": "superna",
+            "weight": 0.7,
+            "method": "llm"
+          },
+          {
+            "en": [
+              1198,
+              1206
+            ],
+            "src": [
+              1290,
+              1294
+            ],
+            "en_text": "MARSILIO",
+            "src_text": "mihi",
+            "weight": 0.4,
+            "method": "llm"
+          },
+          {
+            "en": [
+              1207,
+              1213
+            ],
+            "src": [
+              1290,
+              1294
+            ],
+            "en_text": "FICINO",
+            "src_text": "mihi",
+            "weight": 0.4,
+            "method": "llm"
+          },
+          {
+            "en": [
+              1217,
+              1225
+            ],
+            "src": [
+              1218,
+              1221
+            ],
+            "en_text": "FLORENCE",
+            "src_text": "ijs",
+            "weight": 0.4,
+            "method": "llm"
+          },
+          {
+            "en": [
+              1227,
               1237
             ],
-            "en_text": "Suddenly, I seemed to see someone of immense bodily size",
-            "src_text": "subitò mihi uisus sum cernere quendã immensa magnitudine corporis",
+            "src": [
+              1364,
+              1370
+            ],
+            "en_text": "TRANSLATOR",
+            "src_text": "uocans",
+            "weight": 0.4,
+            "method": "llm"
+          },
+          {
+            "en": [
+              1284,
+              1294
+            ],
+            "src": [
+              1622,
+              1627
+            ],
+            "en_text": "ornamental",
+            "src_text": "Cupio",
+            "weight": 0.4,
+            "method": "llm"
+          },
+          {
+            "en": [
+              1295,
+              1302
+            ],
+            "src": [
+              1622,
+              1627
+            ],
+            "en_text": "woodcut",
+            "src_text": "Cupio",
+            "weight": 0.4,
+            "method": "llm"
+          },
+          {
+            "en": [
+              1303,
+              1311
+            ],
+            "src": [
+              1622,
+              1627
+            ],
+            "en_text": "drop cap",
+            "src_text": "Cupio",
+            "weight": 0.7,
+            "method": "llm"
+          },
+          {
+            "en": [
+              1312,
+              1315
+            ],
+            "src": [
+              1622,
+              1627
+            ],
+            "en_text": "'C'",
+            "src_text": "Cupio",
             "weight": 1,
             "method": "llm"
           },
           {
             "en": [
-              1416,
-              1471
+              1316,
+              1325
             ],
             "src": [
-              1239,
-              1285
+              1577,
+              1581
             ],
-            "en_text": "who, calling me by name, cried out in this manner",
-            "src_text": "qui me nomine uocans, in hunc modum clamaret",
+            "en_text": "featuring",
+            "src_text": "uide",
+            "weight": 0.4,
+            "method": "llm"
+          },
+          {
+            "en": [
+              1328,
+              1334
+            ],
+            "src": [
+              1500,
+              1503
+            ],
+            "en_text": "seated",
+            "src_text": "ego",
+            "weight": 0.7,
+            "method": "llm"
+          },
+          {
+            "en": [
+              1335,
+              1341
+            ],
+            "src": [
+              1500,
+              1503
+            ],
+            "en_text": "figure",
+            "src_text": "ego",
+            "weight": 0.7,
+            "method": "llm"
+          },
+          {
+            "en": [
+              1343,
+              1351
+            ],
+            "src": [
+              1527,
+              1533
+            ],
+            "en_text": "possibly",
+            "src_text": "inquit",
+            "weight": 0.4,
+            "method": "llm"
+          },
+          {
+            "en": [
+              1354,
+              1361
+            ],
+            "src": [
+              1500,
+              1503
+            ],
+            "en_text": "scholar",
+            "src_text": "ego",
+            "weight": 0.7,
+            "method": "llm"
+          },
+          {
+            "en": [
+              1365,
+              1371
+            ],
+            "src": [
+              1500,
+              1503
+            ],
+            "en_text": "scribe",
+            "src_text": "ego",
+            "weight": 0.7,
+            "method": "llm"
+          },
+          {
+            "en": [
+              1373,
+              1380
+            ],
+            "src": [
+              1463,
+              1470
+            ],
+            "en_text": "working",
+            "src_text": "discere",
+            "weight": 0.4,
+            "method": "llm"
+          },
+          {
+            "en": [
+              1386,
+              1390
+            ],
+            "src": [
+              1463,
+              1470
+            ],
+            "en_text": "desk",
+            "src_text": "discere",
+            "weight": 0.4,
+            "method": "llm"
+          },
+          {
+            "en": [
+              1394,
+              1399
+            ],
+            "src": [
+              1463,
+              1470
+            ],
+            "en_text": "table",
+            "src_text": "discere",
+            "weight": 0.4,
+            "method": "llm"
+          },
+          {
+            "en": [
+              1405,
+              1410
+            ],
+            "src": [
+              1463,
+              1470
+            ],
+            "en_text": "books",
+            "src_text": "discere",
+            "weight": 0.4,
+            "method": "llm"
+          },
+          {
+            "en": [
+              1432,
+              1433
+            ],
+            "src": [
+              1713,
+              1716
+            ],
+            "en_text": "I",
+            "src_text": "ego",
+            "weight": 1,
+            "method": "llm"
+          },
+          {
+            "en": [
+              1507,
+              1511
+            ],
+            "src": [
+              1693,
+              1698
+            ],
+            "en_text": "mind",
+            "src_text": "mente",
             "weight": 1,
             "method": "llm"
           },
           {
             "en": [
               1474,
-              1543
+              1477
             ],
             "src": [
-              1287,
-              1344
+              1711,
+              1712
             ],
-            "en_text": "\"What is it, O Mercury , that you desire to both hear and behold?",
-            "src_text": "Quid est ô Mercuri, quod et audire & intueri desideras?",
+            "en_text": "and",
+            "src_text": "&",
             "weight": 1,
             "method": "llm"
           },
           {
             "en": [
-              1544,
-              1600
+              1426,
+              1431
             ],
             "src": [
-              1346,
-              1386
+              1673,
+              1675
             ],
-            "en_text": "What is it that you wish to learn and understand?\"",
-            "src_text": "quid est qd discere atque intelligere cupis?",
-            "weight": 1,
+            "en_text": "WHILE",
+            "src_text": "Ad",
+            "weight": 0.4,
             "method": "llm"
           },
           {
             "en": [
-              1602,
-              1630
+              1434,
+              1448
             ],
             "src": [
-              1388,
-              1412
+              1743,
+              1749
             ],
-            "en_text": "Then I said: \"Who are you?\"",
-            "src_text": "Tum ego: Quisnam es inqua?",
-            "weight": 1,
+            "en_text": "WAS REFLECTING",
+            "src_text": "erudiã",
+            "weight": 0.4,
             "method": "llm"
           },
           {
             "en": [
-              1631,
-              1691
+              1456,
+              1472
             ],
             "src": [
-              1414,
-              1459
+              1723,
+              1730
             ],
-            "en_text": "He replied: \"I am Pymander, the Mind of divine power.",
-            "src_text": "Sum inquit ille Pymander, mens diuinæ potentiæ.",
-            "weight": 1,
+            "en_text": "nature of things",
+            "src_text": "cunctis",
+            "weight": 0.4,
             "method": "llm"
           },
           {
             "en": [
-              1692,
-              1751
+              1478,
+              1506
             ],
             "src": [
-              1461,
-              1507
+              1686,
+              1689
             ],
-            "en_text": "See what you wish, for I will be with you everywhere.\"",
-            "src_text": "ac tu uide quid uelis, ipse uero tibi ubiq; adero.",
-            "weight": 1,
+            "en_text": "raising the sharp edge of my",
+            "src_text": "Tua",
+            "weight": 0.4,
             "method": "llm"
           },
           {
             "en": [
-              1752,
-              1818
+              1515,
+              1528
             ],
             "src": [
-              1509,
-              1564
+              1731,
+              1742
             ],
-            "en_text": "I said: \"I desire to learn the nature of things and to know God.\"",
-            "src_text": "Cupio inquã rerũ naturã discere, deumq; cognoscere.",
-            "weight": 1,
+            "en_text": "higher realms",
+            "src_text": "quæ optaris",
+            "weight": 0.4,
             "method": "llm"
           },
           {
             "en": [
-              1819,
-              1913
+              1533,
+              1547
             ],
             "src": [
-              1566,
-              1647
+              1690,
+              1692
             ],
-            "en_text": "To this he replied: \"Embrace me in your mind, and I will instruct you in all that you hope for.\"",
-            "src_text": "Ad hæc ille: Tua me mente cõplectere, & ego te in cunctis quæ optaris erudiã.",
-            "weight": 1,
+            "en_text": "bodily senses",
+            "src_text": "me",
+            "weight": 0.4,
+            "method": "llm"
+          },
+          {
+            "en": [
+              1548,
+              1576
+            ],
+            "src": [
+              1699,
+              1709
+            ],
+            "en_text": "were already lulled to sleep",
+            "src_text": "cõplectere",
+            "weight": 0.4,
+            "method": "llm"
+          },
+          {
+            "en": [
+              1578,
+              1601
+            ],
+            "src": [
+              1673,
+              1684
+            ],
+            "en_text": "just as usually happens",
+            "src_text": "Ad hæc ille",
+            "weight": 0.4,
+            "method": "llm"
+          },
+          {
+            "en": [
+              1605,
+              1618
+            ],
+            "src": [
+              1717,
+              1719
+            ],
+            "en_text": "those who are",
+            "src_text": "te",
+            "weight": 0.4,
+            "method": "llm"
+          },
+          {
+            "en": [
+              1619,
+              1640
+            ],
+            "src": [
+              1699,
+              1709
+            ],
+            "en_text": "weighed down by sleep",
+            "src_text": "cõplectere",
+            "weight": 0.4,
+            "method": "llm"
+          },
+          {
+            "en": [
+              1648,
+              1670
+            ],
+            "src": [
+              1723,
+              1730
+            ],
+            "en_text": "fullness or exhaustion",
+            "src_text": "cunctis",
+            "weight": 0.4,
             "method": "llm"
           }
         ],

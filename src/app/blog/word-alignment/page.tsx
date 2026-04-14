@@ -92,7 +92,7 @@ export default function WordAlignmentPage() {
         </h2>
 
         <p className="text-secondary leading-relaxed mb-6">
-          We asked Gemini 2.5 Flash to read both the Latin source and English translation and
+          We asked Gemini 3 Flash to read both the Latin source and English translation and
           produce a mapping between them: which character ranges in the English correspond to which
           character ranges in the Latin, with a confidence weight. The model understands Latin grammar
           &mdash; it knows that &ldquo;animum in duas partes distribuisset&rdquo; maps to &ldquo;when
