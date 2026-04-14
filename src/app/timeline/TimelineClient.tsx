@@ -107,11 +107,22 @@ export default function TimelineClient({ initialData }: Props) {
   const selectedEraName = searchParams.get('era') || '';
   const offset = parseInt(searchParams.get('offset') || '0');
 
+  const [overviewData, setOverviewData] = useState<TimelineOverview>(initialData);
   const [books, setBooks] = useState<TimelineBook[]>([]);
   const [artItems, setArtItems] = useState<TimelineArtItem[]>([]);
   const [booksTotal, setBooksTotal] = useState(0);
   const [loadingBooks, setLoadingBooks] = useState(false);
   const [viewMode, setViewMode] = useState<'books' | 'art'>('books');
+
+  // Client-side fallback: if SSR returned empty data, fetch from API
+  useEffect(() => {
+    if (overviewData.decades.length === 0) {
+      fetch('/api/books/timeline')
+        .then(r => r.ok ? r.json() : null)
+        .then(data => { if (data?.decades?.length > 0) setOverviewData(data); })
+        .catch(() => {});
+    }
+  }, []); // eslint-disable-line react-hooks/exhaustive-deps
 
   const detailRef = useRef<HTMLDivElement>(null);
 
@@ -126,7 +137,7 @@ export default function TimelineClient({ initialData }: Props) {
 
   // Filter decades by language and/or era
   const filteredDecades = useMemo(() => {
-    let decades = initialData.decades;
+    let decades = overviewData.decades;
 
     if (language) {
       decades = decades
@@ -146,7 +157,7 @@ export default function TimelineClient({ initialData }: Props) {
     }
 
     return decades;
-  }, [initialData.decades, language, selectedEraName]);
+  }, [overviewData.decades, language, selectedEraName]);
 
   const filteredSummary = useMemo(() => {
     const total = filteredDecades.reduce((sum, d) => sum + d.count, 0);
@@ -238,8 +249,8 @@ export default function TimelineClient({ initialData }: Props) {
 
   // Top languages for the legend
   const legendLanguages = useMemo(() => {
-    return initialData.summary.topLanguages.slice(0, 6);
-  }, [initialData.summary.topLanguages]);
+    return overviewData.summary.topLanguages.slice(0, 6);
+  }, [overviewData.summary.topLanguages]);
 
   const selectedEra = selectedDecade !== null ? getEraForDecade(selectedDecade) : null;
 
@@ -249,10 +260,10 @@ export default function TimelineClient({ initialData }: Props) {
       <div className="flex flex-wrap gap-2 justify-center">
         {ERAS.filter(era => {
           // Only show eras that have data
-          return initialData.decades.some(d => d.decade >= era.from && d.decade < era.to);
+          return overviewData.decades.some(d => d.decade >= era.from && d.decade < era.to);
         }).map(era => {
           const isActive = selectedEraName === era.name;
-          const eraCount = initialData.decades
+          const eraCount = overviewData.decades
             .filter(d => d.decade >= era.from && d.decade < era.to)
             .reduce((sum, d) => sum + d.count, 0);
 
@@ -320,7 +331,7 @@ export default function TimelineClient({ initialData }: Props) {
         <FilterDropdown
           label="Language"
           value={language}
-          options={initialData.filters.languages}
+          options={overviewData.filters.languages}
           onChange={v => updateParams({ language: v || null, decade: null, offset: null })}
         />
         {language && (
@@ -353,7 +364,7 @@ export default function TimelineClient({ initialData }: Props) {
               {l.lang}
             </button>
           ))}
-          {initialData.summary.topLanguages.length > 6 && (
+          {overviewData.summary.topLanguages.length > 6 && (
             <span className="flex items-center gap-1.5">
               <span className="w-2.5 h-2.5 rounded-sm inline-block" style={{ backgroundColor: DEFAULT_COLOR }} />
               Other

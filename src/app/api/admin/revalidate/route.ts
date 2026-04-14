@@ -62,7 +62,7 @@ export async function POST(request: NextRequest) {
       '/', '/collections', '/browse', '/gallery', '/libraries',
       '/languages', '/about', '/embassy', '/blog', '/artwork',
       '/encyclopedia', '/explore', '/categories', '/catalog',
-      '/taxonomy', '/search',
+      '/taxonomy', '/search', '/timeline',
     ];
     for (const path of staticPaths) {
       revalidatePath(path);
