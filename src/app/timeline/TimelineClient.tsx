@@ -20,11 +20,15 @@ interface Era {
   description: string;
 }
 
+// Timeline range: classical antiquity through the early modern period
+const TIMELINE_YEAR_MIN = -800;
+const TIMELINE_YEAR_MAX = 1930;
+
 const ERAS: Era[] = [
   {
     name: 'antiquity',
     label: 'Antiquity',
-    from: -3000,
+    from: -800,
     to: 500,
     color: 'var(--accent-sage)',
     description: 'The classical foundations — Hermes Trismegistus, Plato, the Neoplatonists, and the Corpus Hermeticum.',
@@ -137,8 +141,8 @@ export default function TimelineClient({ initialData }: Props) {
 
   // Filter decades by language and/or era
   const filteredDecades = useMemo(() => {
-    // Cap at 1930 — the library focuses on pre-modern texts
-    let decades = overviewData.decades.filter(d => d.decade < 1930);
+    // Show only the core range: classical antiquity through the early modern period
+    let decades = overviewData.decades.filter(d => d.decade >= TIMELINE_YEAR_MIN && d.decade < TIMELINE_YEAR_MAX);
 
     if (language) {
       decades = decades
@@ -261,7 +265,7 @@ export default function TimelineClient({ initialData }: Props) {
       <div className="flex flex-wrap gap-2 justify-center">
         {ERAS.filter(era => {
           // Only show eras that have data
-          return overviewData.decades.some(d => d.decade < 1930 && d.decade >= era.from && d.decade < era.to);
+          return overviewData.decades.some(d => d.decade >= TIMELINE_YEAR_MIN && d.decade < TIMELINE_YEAR_MAX && d.decade >= era.from && d.decade < era.to);
         }).map(era => {
           const isActive = selectedEraName === era.name;
           const eraCount = overviewData.decades
