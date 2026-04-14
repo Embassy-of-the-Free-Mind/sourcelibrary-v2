@@ -101,6 +101,8 @@ Each pipeline runs $N{=}3$ times per page. We measure:
 
 \textbf{LLM-as-judge.} An independent Gemini call rates each translation on fluency, adequacy, terminology, completeness, and overall quality (1--5 scale), given the source text but no reference translation. This is a GEMBA-style~\cite{kocmi2023} reference-free evaluation.
 
+\textbf{Why not BLEU?} Traditional MT metrics (BLEU, chrF, COMET) require reference translations. For most classical Sanskrit texts, no English reference exists; where one does (e.g., Pruden's Abhidharmako\'sa), BLEU penalizes valid alternative phrasings. In our data, ``obeisance to the Buddha'' and ``salutations to the Buddha'' are equally correct translations of \emph{namo buddh\=aya}, but each scores zero n-gram overlap against the other. Classical language translation is closer to literary translation than to the MT shared tasks where BLEU was designed---there are many valid renderings of any passage. Self-consistency and LLM-as-judge avoid this problem by evaluating internal agreement and source fidelity without committing to a single reference.
+
 % ============================================================================
 \section{Results}
 
@@ -127,13 +129,29 @@ N\=a\d{t}ya\'s\=astra & 95.9 & 5.0 & \textbf{97.5} & 5.0 & 96.3 & 5.0 \\
 
 The results (Table~\ref{tab:main}) reveal that cognate-language priming is \textbf{domain-dependent}:
 
-\textbf{CoT wins on philosophy.} On the Abhidharmako\'sa, CoT achieves the highest consistency (96.8\%) and quality (4.3/5). The judge notes that CoT ``successfully navigated OCR errors (e.g., `m\=a bala' interpreted correctly as `m\=arabala' or `power of M\=ara')''---the Hindi reasoning step helps disambiguate garbled Devanagari.
+\textbf{CoT wins on philosophy.} On the Abhidharmako\'sa, CoT achieves the highest consistency (96.8\%) and quality (4.3/5). Compare the opening invocation across pipelines:
 
-\textbf{Direct wins on Vedic hymns.} On the Rig-Veda, both pivot and CoT \emph{reduce} consistency (94.3\% $\to$ 91.4\%/90.5\%). Vedic Sanskrit is archaic---its grammar, vocabulary, and ritual context diverge substantially from modern Hindi. The Hindi ``bridge'' introduces noise rather than signal.
+{\small
+\noindent\textbf{Source:} \emph{o\d{m} namo buddh\=aya $\cdot$ namo m\=a balapramathan\=aya}\\
+\textbf{Direct:} ``Om, obeisance to the Buddha. Obeisance to the crusher of the power of M\=ara.''\\
+\textbf{CoT:} ``Om, salutations to the Buddha. Salutations to the destroyer of the power of Mara.''\\
+\textbf{Pivot:} ``Om, salutations to the Buddha. Salutations to the one who crushed the army of Mara.''
+}
 
-\textbf{Pivot wins on performing arts.} On the N\=a\d{t}ya\'s\=astra, the pivot achieves the highest consistency (97.5\%). Hindi preserves an active tradition of classical dance and theater terminology (\emph{chari}, \emph{ma\d{n}\d{d}ala}, \emph{n\d{r}tya}), making the intermediate step genuinely helpful.
+\noindent All three are correct, but the judge notes that CoT ``successfully navigated OCR errors (e.g., `m\=a bala' interpreted correctly as `m\=arabala')''---the Hindi reasoning step helps disambiguate garbled Devanagari by checking against Hindi cognates. On the dense commentary pages (pp.\,23--24), CoT scored 4.5/5 where direct scored 3.5/5, with the judge praising its handling of \emph{akli\d{s}\d{t}am-aj\~n\=anam} (``non-afflicted ignorance'').
 
-\textbf{CoT hurts on astronomical mathematics.} On Brahmagupta's text, CoT drops both consistency (97.5\% $\to$ 95.6\%) and quality (3.8 $\to$ 3.0). Mathematical Sanskrit has precise technical vocabulary that Hindi has not preserved; the Hindi reasoning step apparently confuses rather than clarifies.
+\textbf{Direct wins on Vedic hymns.} On the Rig-Veda, both pivot and CoT \emph{reduce} consistency (94.3\% $\to$ 91.4\%/90.5\%). Vedic Sanskrit is archaic---its grammar, vocabulary, and ritual context diverge substantially from modern Hindi. The source text (\'S\=aya\d{n}a's commentary on \emph{S\=ukta} 53) contains Vedic etymologies like ``\emph{Rasanavat\={\i}}, meaning `possessed of sound'\,''---terms Hindi has no living tradition for. The Hindi ``bridge'' introduces noise rather than signal.
+
+\textbf{Pivot wins on performing arts.} On the N\=a\d{t}ya\'s\=astra (Chapter 12, \emph{ma\d{n}\d{d}ala}s from combined \emph{c\=ar\={\i}}s), the pivot achieves the highest consistency (97.5\%). The Hindi intermediate is revealing:
+
+{\small
+\noindent\textbf{Hindi:} \emph{``\d{s}astro\d{m} ke prayoga ke vi\d{s}aya me\d{m} mai\d{m}ne in c\=ariy\=o\d{m} k\=a vidhip\=urvaka var\d{n}ana kiy\=a hai. Ab yah\=a\d{m} c\=ariy\=o\d{m} ke sa\d{m}yoga se utpanna hone v\=ale ma\d{n}\d{d}al\=o\d{m} ke vi\d{s}aya me\d{m} j\=aniye.''}\\
+\textbf{English:} ``I have methodically described these \emph{charis} regarding the use of weapons. Now, learn about the \emph{mandalas} arising from the combination of \emph{charis}.''
+}
+
+\noindent Hindi preserves the Sanskrit dance terminology (\emph{c\=ar\={\i}}, \emph{ma\d{n}\d{d}ala}) as loanwords in active use, making the intermediate step a genuine bridge rather than a lossy transformation.
+
+\textbf{CoT hurts on astronomical mathematics.} On Brahmagupta's \emph{Brahmasphutasiddh\=anta} (Chapter on the elevation of the Moon's horns), CoT drops both consistency (97.5\% $\to$ 95.6\%) and quality (3.8 $\to$ 3.0). Mathematical Sanskrit uses precise technical terms (\emph{candra\'s\d{r}\.ngonnata}, ``elevation of lunar horns''; \emph{upapatti}, ``demonstration/proof'') that Hindi has not preserved in their technical senses. The judge flagged CoT's output as ``omitting key mathematical derivations.''
 
 \subsection{Classical Chinese: The Pivot Degrades}
 
