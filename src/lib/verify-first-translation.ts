@@ -650,7 +650,184 @@ Important: Be precise about matching. A translation of a different work by the s
   return prompt;
 }
 
-// ── Main Verification Function ────────────────────────────────────────
+// ── Metadata-only Verification (no DB read/write) ────────────────────
+
+export interface VerificationMetadata {
+  title: string;
+  author: string;
+  language: string;
+  year?: number | string;
+  display_title?: string;
+  original_language?: string;
+  published?: string;
+  ai_metadata?: Record<string, unknown>;
+  translation_verification?: Record<string, unknown>;
+  ocrSamples?: string[];
+}
+
+/**
+ * Core FT verification using Gemini + tool calling.
+ * Accepts metadata directly — no DB read/write. Caller handles persistence.
+ * Used by both the book-level wrapper and pre-import candidate verification.
+ */
+export async function verifyFirstTranslationFromMetadata(
+  db: Db,
+  metadata: VerificationMetadata,
+): Promise<VerificationResult & { tokens?: { input: number; output: number }; durationMs?: number }> {
+  const startTime = Date.now();
+
+  // Build prompt from metadata
+  const bookLike = {
+    title: metadata.title,
+    display_title: metadata.display_title,
+    author: metadata.author,
+    language: metadata.language,
+    original_language: metadata.original_language,
+    year: metadata.year,
+    published: metadata.published || metadata.year,
+    ai_metadata: metadata.ai_metadata,
+    translation_verification: metadata.translation_verification,
+  };
+  const systemPrompt = buildPrompt(bookLike, metadata.ocrSamples || []);
+
+  const apiKey = process.env.GEMINI_API_KEY;
+  if (!apiKey) return { success: false, error: 'GEMINI_API_KEY not set' };
+
+  const ai = new GoogleGenAI({ apiKey });
+
+  const toolsCalled: string[] = [];
+  let totalInputTokens = 0;
+  let totalOutputTokens = 0;
+  let determination: Record<string, unknown> | null = null;
+
+  const contents: Array<{ role: string; parts: Array<Record<string, unknown>> }> = [
+    { role: 'user', parts: [{ text: systemPrompt }] },
+  ];
+
+  try {
+    for (let round = 0; round < MAX_ROUNDS; round++) {
+      const response = await ai.models.generateContent({
+        model: MODEL,
+        contents,
+        config: {
+          tools: [{ functionDeclarations: TOOL_DECLARATIONS }],
+          temperature: TEMPERATURE,
+        },
+      });
+
+      const usage = response.usageMetadata || {};
+      totalInputTokens += (usage.promptTokenCount || 0);
+      totalOutputTokens += (usage.candidatesTokenCount || 0);
+
+      const candidate = response.candidates?.[0];
+      if (!candidate?.content?.parts) break;
+
+      contents.push({
+        role: 'model',
+        parts: candidate.content.parts as Array<Record<string, unknown>>,
+      });
+
+      // eslint-disable-next-line @typescript-eslint/no-explicit-any
+      const functionCalls = candidate.content.parts.filter(
+        (p: any) => p.functionCall,
+      );
+
+      if (functionCalls.length === 0) break;
+
+      const responseParts: Array<Record<string, unknown>> = [];
+
+      for (const part of functionCalls) {
+        const fc = part.functionCall as { name: string; args: Record<string, unknown> };
+        toolsCalled.push(fc.name);
+
+        const result = await executeTool(db, fc.name, fc.args || {});
+
+        if (fc.name === 'make_determination') {
+          determination = result;
+        }
+
+        responseParts.push({
+          functionResponse: { name: fc.name, response: result },
+        });
+      }
+
+      contents.push({ role: 'user', parts: responseParts });
+
+      if (determination) break;
+
+      if (round >= 4 && !determination) {
+        contents.push({
+          role: 'user',
+          parts: [{ text: 'You have done enough searching. Now call make_determination with your verdict based on the evidence gathered so far.' }],
+        });
+      }
+    }
+
+    const durationMs = Date.now() - startTime;
+
+    if (!determination) {
+      return { success: false, error: 'Model did not call make_determination' };
+    }
+
+    const translations = (determination.translations_found as Array<Record<string, unknown>> || []).map(t => ({
+      english_title: (t.english_title as string) || '',
+      translator: t.translator as string | undefined,
+      pub_year: t.pub_year as string | undefined,
+      publisher: t.publisher as string | undefined,
+      completeness: (t.completeness as 'complete' | 'partial' | 'excerpts' | 'unknown') || 'unknown',
+      evidence_source: (t.evidence_source as string) || 'unknown',
+      url: t.url as string | undefined,
+    }));
+
+    const disposition = determination.disposition as TranslationVerification['disposition'];
+    const confidence = determination.confidence as TranslationVerification['confidence'];
+    const reasoning = (determination.reasoning as string) || '';
+
+    const inputCost = (totalInputTokens / 1_000_000) * 0.50;
+    const outputCost = (totalOutputTokens / 1_000_000) * 3.00;
+    const costUsd = Math.round((inputCost + outputCost) * 1_000_000) / 1_000_000;
+
+    const normalizedDisposition = (() => {
+      const d = (disposition as string) || '';
+      if (d === 'first_translation') return 'confirmed_first' as const;
+      if (d === 'first_full_translation') return 'first_complete_translation' as const;
+      if (d === 'translation_exists') return 'translation_found' as const;
+      if (['confirmed_first', 'first_from_source', 'first_complete_translation', 'first_modern_translation', 'translation_found', 'needs_review'].includes(d)) return d as typeof disposition;
+      return 'needs_review' as const;
+    })();
+
+    const verification: TranslationVerification = {
+      disposition: normalizedDisposition,
+      confidence,
+      reasoning,
+      translations_found: translations,
+      tools_called: toolsCalled,
+      verified_at: new Date(),
+      model: MODEL,
+      cost_usd: costUsd,
+      source: 'catalog_and_llm',
+      stage: 2,
+    };
+
+    const isFirstTranslation = ['confirmed_first', 'first_from_source', 'first_complete_translation', 'first_modern_translation'].includes(normalizedDisposition);
+
+    return {
+      success: true,
+      verification,
+      is_first_translation: isFirstTranslation,
+      tokens: { input: totalInputTokens, output: totalOutputTokens },
+      durationMs,
+    };
+  } catch (error) {
+    return {
+      success: false,
+      error: error instanceof Error ? error.message : 'Verification failed',
+      durationMs: Date.now() - startTime,
+    };
+  }
+}
+
+// ── Main Verification Function (book-level wrapper) ──────────────────
 
 export async function verifyFirstTranslation(
   db: Db,
@@ -698,225 +875,80 @@ export async function verifyFirstTranslation(
     .toArray();
   const ocrSamples = pages.map(p => (p.ocr?.data || '') as string).filter(Boolean);
 
-  // Build prompt
-  const systemPrompt = buildPrompt(book, ocrSamples);
+  // Delegate to metadata-based verification
+  const result = await verifyFirstTranslationFromMetadata(db, {
+    title: book.title as string,
+    display_title: book.display_title as string,
+    author: book.author as string,
+    language: book.language as string,
+    original_language: book.original_language as string,
+    year: book.year as number,
+    published: book.published as string,
+    ai_metadata: book.ai_metadata as Record<string, unknown>,
+    translation_verification: book.translation_verification as Record<string, unknown>,
+    ocrSamples,
+  });
 
-  // Set up Gemini with function calling
-  const apiKey = process.env.GEMINI_API_KEY;
-  if (!apiKey) return { success: false, error: 'GEMINI_API_KEY not set' };
+  if (!result.success || !result.verification) return result;
 
-  const ai = new GoogleGenAI({ apiKey });
+  const { verification, is_first_translation: isFirstTranslation } = result;
+  const durationMs = Date.now() - startTime;
 
-  const toolsCalled: string[] = [];
-  let totalInputTokens = 0;
-  let totalOutputTokens = 0;
-  let determination: Record<string, unknown> | null = null;
+  // Persist to database (skip in dry-run mode)
+  if (!options?.dryRun) {
+    const previousVerification = book.translation_verification;
+    const previousIsFirst = book.is_first_translation;
 
-  // Conversation history for multi-turn
-  const contents: Array<{ role: string; parts: Array<Record<string, unknown>> }> = [
-    { role: 'user', parts: [{ text: systemPrompt }] },
-  ];
-
-  try {
-    for (let round = 0; round < MAX_ROUNDS; round++) {
-      const response = await ai.models.generateContent({
-        model: MODEL,
-        contents,
-        config: {
-          tools: [{ functionDeclarations: TOOL_DECLARATIONS }],
-          temperature: TEMPERATURE,
+    await db.collection(booksCol).updateOne(
+      { id: bookId },
+      {
+        $set: {
+          translation_verification: verification,
+          is_first_translation: isFirstTranslation,
         },
-      });
+      },
+    );
 
-      const usage = response.usageMetadata || {};
-      totalInputTokens += (usage.promptTokenCount || 0);
-      totalOutputTokens += (usage.candidatesTokenCount || 0);
-
-      const candidate = response.candidates?.[0];
-      if (!candidate?.content?.parts) break;
-
-      // Add model response to conversation
-      contents.push({
-        role: 'model',
-        parts: candidate.content.parts as Array<Record<string, unknown>>,
-      });
-
-      // Check for function calls
-      // eslint-disable-next-line @typescript-eslint/no-explicit-any
-      const functionCalls = candidate.content.parts.filter(
-        (p: any) => p.functionCall,
-      );
-
-      if (functionCalls.length === 0) {
-        // Model finished without calling make_determination — try to extract from text
-        break;
-      }
-
-      // Execute function calls and build responses
-      const responseParts: Array<Record<string, unknown>> = [];
-
-      for (const part of functionCalls) {
-        const fc = part.functionCall as { name: string; args: Record<string, unknown> };
-        toolsCalled.push(fc.name);
-
-        const result = await executeTool(db, fc.name, fc.args || {});
-
-        if (fc.name === 'make_determination') {
-          determination = result;
-        }
-
-        responseParts.push({
-          functionResponse: {
-            name: fc.name,
-            response: result,
-          },
-        });
-      }
-
-      contents.push({ role: 'user', parts: responseParts });
-
-      // If determination was made, we're done
-      if (determination) break;
-
-      // After 5 rounds of searching, nudge the model to make a determination
-      if (round >= 4 && !determination) {
-        contents.push({
-          role: 'user',
-          parts: [{ text: 'You have done enough searching. Now call make_determination with your verdict based on the evidence gathered so far.' }],
-        });
-      }
-    }
-
-    const durationMs = Date.now() - startTime;
-
-    // If no determination was made via tool call, the verification failed
-    if (!determination) {
-      return { success: false, error: 'Model did not call make_determination' };
-    }
-
-    // Build verification result
-    const translations = (determination.translations_found as Array<Record<string, unknown>> || []).map(t => ({
-      english_title: (t.english_title as string) || '',
-      translator: t.translator as string | undefined,
-      pub_year: t.pub_year as string | undefined,
-      publisher: t.publisher as string | undefined,
-      completeness: (t.completeness as 'complete' | 'partial' | 'excerpts' | 'unknown') || 'unknown',
-      evidence_source: (t.evidence_source as string) || 'unknown',
-      url: t.url as string | undefined,
-    }));
-
-    const disposition = determination.disposition as TranslationVerification['disposition'];
-    const confidence = determination.confidence as TranslationVerification['confidence'];
-    const reasoning = (determination.reasoning as string) || '';
-
-    // Calculate cost
-    const inputCost = (totalInputTokens / 1_000_000) * 0.50;
-    const outputCost = (totalOutputTokens / 1_000_000) * 3.00;
-    const costUsd = Math.round((inputCost + outputCost) * 1_000_000) / 1_000_000;
-
-    // Normalize disposition to standard values (model may return old names)
-    const normalizedDisposition = (() => {
-      const d = (disposition as string) || '';
-      if (d === 'first_translation') return 'confirmed_first' as const;
-      if (d === 'first_full_translation') return 'first_complete_translation' as const;
-      if (d === 'translation_exists') return 'translation_found' as const;
-      if (['confirmed_first', 'first_from_source', 'first_complete_translation', 'first_modern_translation', 'translation_found', 'needs_review'].includes(d)) return d as typeof disposition;
-      return 'needs_review' as const;
-    })();
-
-    const verification: TranslationVerification = {
-      disposition: normalizedDisposition,
-      confidence,
-      reasoning,
-      translations_found: translations,
-      tools_called: toolsCalled,
-      verified_at: new Date(),
-      model: MODEL,
-      cost_usd: costUsd,
-      source: 'catalog_and_llm',
-      stage: 2,
-    };
-
-    const isFirstTranslation = ['confirmed_first', 'first_from_source', 'first_complete_translation', 'first_modern_translation'].includes(normalizedDisposition);
-
-    // Persist to database (skip in dry-run mode)
-    if (!options?.dryRun) {
-      const previousVerification = book.translation_verification;
-      const previousIsFirst = book.is_first_translation;
-
-      await db.collection(booksCol).updateOne(
-        { id: bookId },
-        {
-          $set: {
-            translation_verification: verification,
-            is_first_translation: isFirstTranslation,
-          },
-        },
-      );
-
-      // Log to gemini_usage
-      await logGeminiCall({
-        type: 'ft_verification',
-        mode: 'realtime',
-        model: MODEL,
-        book_id: bookId,
-        book_title: (book.display_title || book.title) as string,
-        input_tokens: totalInputTokens,
-        output_tokens: totalOutputTokens,
-        status: 'success',
-        duration_ms: durationMs,
-        endpoint: 'lib/verify-first-translation',
-      });
-
-      // Log metadata change
-      const changes: Array<{ field: string; previous: unknown; new_value: unknown }> = [];
-      if (JSON.stringify(previousVerification) !== JSON.stringify(verification)) {
-        changes.push({
-          field: 'translation_verification',
-          previous: previousVerification ?? null,
-          new_value: { disposition, confidence, translations_found: translations.length },
-        });
-      }
-      if (previousIsFirst !== isFirstTranslation) {
-        changes.push({
-          field: 'is_first_translation',
-          previous: previousIsFirst ?? null,
-          new_value: isFirstTranslation,
-        });
-      }
-      if (changes.length > 0) {
-        await logMetadataChange(db, {
-          book_id: bookId,
-          source: 'ai_enrichment',
-          model: MODEL,
-          changes,
-          note: `FT verification: ${disposition} (${confidence}) — ${toolsCalled.length} tools called`,
-        });
-      }
-    }
-
-    return { success: true, verification, is_first_translation: isFirstTranslation };
-  } catch (error) {
-    const durationMs = Date.now() - startTime;
-
-    // Log failed attempt
+    // Log to gemini_usage
     await logGeminiCall({
       type: 'ft_verification',
       mode: 'realtime',
       model: MODEL,
       book_id: bookId,
       book_title: (book.display_title || book.title) as string,
-      input_tokens: totalInputTokens,
-      output_tokens: totalOutputTokens,
-      status: 'failed',
-      error_message: error instanceof Error ? error.message : 'unknown',
+      input_tokens: result.tokens?.input || 0,
+      output_tokens: result.tokens?.output || 0,
+      status: 'success',
       duration_ms: durationMs,
       endpoint: 'lib/verify-first-translation',
     });
 
-    return {
-      success: false,
-      error: error instanceof Error ? error.message : 'Verification failed',
-    };
+    // Log metadata change
+    const changes: Array<{ field: string; previous: unknown; new_value: unknown }> = [];
+    if (JSON.stringify(previousVerification) !== JSON.stringify(verification)) {
+      changes.push({
+        field: 'translation_verification',
+        previous: previousVerification ?? null,
+        new_value: { disposition: verification.disposition, confidence: verification.confidence, translations_found: verification.translations_found.length },
+      });
+    }
+    if (previousIsFirst !== isFirstTranslation) {
+      changes.push({
+        field: 'is_first_translation',
+        previous: previousIsFirst ?? null,
+        new_value: isFirstTranslation,
+      });
+    }
+    if (changes.length > 0) {
+      await logMetadataChange(db, {
+        book_id: bookId,
+        source: 'ai_enrichment',
+        model: MODEL,
+        changes,
+        note: `FT verification: ${verification.disposition} (${verification.confidence}) — ${verification.tools_called.length} tools called`,
+      });
+    }
   }
+
+  return { success: true, verification, is_first_translation: isFirstTranslation };
 }
