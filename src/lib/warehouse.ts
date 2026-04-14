@@ -81,9 +81,11 @@ export async function promoteFromWarehouse(db: Db, bookId: string): Promise<bool
     await db.collection('pages').bulkWrite(bulkOps, { ordered: false });
   }
 
-  // Delete from warehouse only after live write succeeds
-  await db.collection('pages_warehouse').deleteMany({ book_id: bookId });
-  await db.collection('books_warehouse').deleteOne({ id: bookId });
+  // Mark warehouse copy as promoted but keep it (permanent backup)
+  await db.collection('books_warehouse').updateOne(
+    { id: bookId },
+    { $set: { promoted_at: new Date(), promoted_to: 'live' } }
+  );
 
   return true;
 }
@@ -103,6 +105,72 @@ export async function findBookAnywhere(
   const warehouse = await db.collection('books_warehouse').findOne({ id: bookId }, opts);
   if (warehouse) return { book: warehouse, isWarehouse: true };
   return null;
+}
+
+/**
+ * Soft-delete a book: archives to deleted_books, then removes from live.
+ * ALWAYS use this instead of raw deleteOne/deleteMany on books.
+ * Returns the deleted book document for verification.
+ */
+export async function softDeleteBook(
+  db: Db,
+  bookId: string,
+  reason: string
+): Promise<Document | null> {
+  const book = await db.collection('books').findOne({ id: bookId });
+  if (!book) return null;
+
+  // Archive to deleted_books with metadata
+  await db.collection('deleted_books').replaceOne(
+    { id: bookId },
+    {
+      ...book,
+      deleted_at: new Date(),
+      deletion_reason: reason,
+    },
+    { upsert: true }
+  );
+
+  // Remove pages and book from live AFTER archive succeeds
+  await db.collection('pages').deleteMany({ book_id: bookId });
+  await db.collection('books').deleteOne({ id: bookId });
+
+  // Audit log
+  await db.collection('audit_log').insertOne({
+    action: 'soft_delete_book',
+    book_id: bookId,
+    title: book.title,
+    reason,
+    timestamp: new Date(),
+  });
+
+  return book;
+}
+
+/**
+ * Soft-delete multiple books. Archives each to deleted_books before removing.
+ * NEVER use raw deleteMany({ status: ... }) on the books collection.
+ * Always pass an explicit list of IDs.
+ */
+export async function softDeleteBooks(
+  db: Db,
+  bookIds: string[],
+  reason: string
+): Promise<{ deleted: number; failed: string[] }> {
+  let deleted = 0;
+  const failed: string[] = [];
+
+  for (const id of bookIds) {
+    try {
+      const result = await softDeleteBook(db, id, reason);
+      if (result) deleted++;
+      else failed.push(id);
+    } catch (err) {
+      failed.push(id);
+    }
+  }
+
+  return { deleted, failed };
 }
 
 /**
