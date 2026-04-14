@@ -41,22 +41,31 @@ async function getCollections(): Promise<CollectionListItem[]> {
       .sort({ sort_order: 1, created_at: -1 })
       .toArray();
 
-    // Resolve cover images
-    const coverIds = collections
-      .map((c) => c.cover_image_id as string)
-      .filter(Boolean);
+    // Collect all candidate image IDs: cover_image_id + first image_id as fallback
+    const allCandidateIds = new Set<string>();
+    for (const c of collections) {
+      if (c.cover_image_id) allCandidateIds.add(c.cover_image_id as string);
+      const ids = c.image_ids as string[] | undefined;
+      if (ids?.[0]) allCandidateIds.add(ids[0]);
+    }
 
-  const coverImages = await resolveCoverImages(db, coverIds);
+    const coverImages = await resolveCoverImages(db, [...allCandidateIds]);
 
-    return collections.map((c) => ({
-      id: c.id as string,
-      slug: c.slug as string,
-      title: c.title as string,
-      description: c.description as string,
-      imageCount: (c.image_ids as string[])?.length || 0,
-      featured: c.featured as boolean,
-      coverImage: coverImages.get(c.cover_image_id as string) || null,
-    }));
+    return collections.map((c) => {
+      const ids = c.image_ids as string[] | undefined;
+      const coverImage = coverImages.get(c.cover_image_id as string)
+        || (ids?.[0] ? coverImages.get(ids[0]) : null)
+        || null;
+      return {
+        id: c.id as string,
+        slug: c.slug as string,
+        title: c.title as string,
+        description: c.description as string,
+        imageCount: ids?.length || 0,
+        featured: c.featured as boolean,
+        coverImage,
+      };
+    });
   } catch {
     // DB unavailable (e.g. build time) — return empty list
     return [];
