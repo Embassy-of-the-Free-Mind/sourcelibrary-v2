@@ -3207,6 +3207,28 @@ Rules:
     if (shouldRun(2)) {
       console.log('\n--- Phase 2: OCR submission ---');
 
+      // Work-ID dedup: skip books if another copy of the same work is already complete
+      async function filterDuplicateWorks(db, candidates) {
+        const withWorkId = candidates.filter(b => b.work_id);
+        if (withWorkId.length === 0) return candidates;
+
+        const workIds = [...new Set(withWorkId.map(b => b.work_id))];
+        const completedWorks = await db.collection('books').distinct('work_id', {
+          work_id: { $in: workIds },
+          'pipeline_auto.status': { $in: ['complete', 'translate_complete', 'chapters_complete', 'images_complete', 'enriched'] },
+          hidden: { $ne: true },
+        });
+        const completedSet = new Set(completedWorks);
+
+        if (completedSet.size > 0) {
+          const before = candidates.length;
+          candidates = candidates.filter(b => !b.work_id || !completedSet.has(b.work_id));
+          const skipped = before - candidates.length;
+          if (skipped > 0) console.log(`  Work-ID dedup: skipped ${skipped} books (completed copy exists)`);
+        }
+        return candidates;
+      }
+
       // Check real Gemini-side active job count per key for load-aware routing
       const keyLoads = await getGeminiKeyLoads();
       geminiActiveJobs = keyLoads.total;
@@ -3250,18 +3272,20 @@ Rules:
               },
             }},
             { $sort: { _priority: 1, hidden: 1 } },
-            { $project: { id: 1, title: 1, author: 1, year: 1, pages_count: 1, needs_splitting: 1, 'pipeline_auto.retry_count': 1, 'pipeline_auto.split_checked': 1 } },
+            { $project: { id: 1, title: 1, author: 1, year: 1, pages_count: 1, needs_splitting: 1, work_id: 1, 'pipeline_auto.retry_count': 1, 'pipeline_auto.split_checked': 1 } },
             { $limit: ocrLimit },
           ])
           .toArray();
 
-        if (previewCandidates.length > 0) {
-          console.log(`  Preview pass: ${previewCandidates.length} books (first ${PREVIEW_PAGES} pages each)`);
+        const dedupedPreview = await filterDuplicateWorks(db, previewCandidates);
+
+        if (dedupedPreview.length > 0) {
+          console.log(`  Preview pass: ${dedupedPreview.length} books (first ${PREVIEW_PAGES} pages each)`);
         }
 
         // Split into small books (cross-book pool) vs large/spread books (per-book)
-        const smallBooks = previewCandidates.filter(b => !b.needs_splitting && (b.pages_count || 0) < CROSS_BOOK_OCR_THRESHOLD);
-        const largeOrSpreadBooks = previewCandidates.filter(b => b.needs_splitting || (b.pages_count || 0) >= CROSS_BOOK_OCR_THRESHOLD);
+        const smallBooks = dedupedPreview.filter(b => !b.needs_splitting && (b.pages_count || 0) < CROSS_BOOK_OCR_THRESHOLD);
+        const largeOrSpreadBooks = dedupedPreview.filter(b => b.needs_splitting || (b.pages_count || 0) >= CROSS_BOOK_OCR_THRESHOLD);
 
         // Cross-book pooling for small books — one batch instead of many
         if (smallBooks.length > 0 && !DRY_RUN && await canSubmitMore()) {
@@ -3346,16 +3370,18 @@ Rules:
             },
           }},
           { $sort: { _priority: 1, hidden: 1 } },
-          { $project: { id: 1, title: 1, author: 1, year: 1, pages_count: 1, needs_splitting: 1, 'pipeline_auto.retry_count': 1, 'pipeline_auto.recitation_retry': 1, 'pipeline_auto.split_checked': 1 } },
+          { $project: { id: 1, title: 1, author: 1, year: 1, pages_count: 1, needs_splitting: 1, work_id: 1, 'pipeline_auto.retry_count': 1, 'pipeline_auto.recitation_retry': 1, 'pipeline_auto.split_checked': 1 } },
           { $limit: ocrLimit },
         ])
         .toArray() : [];
 
-      if (readyForOcr.length > 0) {
-        console.log(`  Full pass: ${readyForOcr.length} books (all remaining pages)`);
+      const dedupedFull = await filterDuplicateWorks(db, readyForOcr);
+
+      if (dedupedFull.length > 0) {
+        console.log(`  Full pass: ${dedupedFull.length} books (all remaining pages)`);
       }
 
-      for (const book of readyForOcr) {
+      for (const book of dedupedFull) {
         if (!await canSubmitMore()) {
           console.log(`  All keys saturated (${_geminiKeyLoads.join('/')}) — stopping OCR submissions`);
           break;
