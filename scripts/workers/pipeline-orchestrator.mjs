@@ -3161,7 +3161,23 @@ Rules:
               const { _id, ...bookWithoutId } = book;
               await db.collection('books').updateOne({ id: candidate.id }, { $set: bookWithoutId });
             } else {
-              // Fresh insert
+              // Fresh insert — deduplicate slug to avoid E11000 on books_slug_idx
+              if (book.slug) {
+                const slugConflict = await db.collection('books').findOne(
+                  { slug: book.slug, id: { $ne: book.id } },
+                  { projection: { _id: 1 } }
+                );
+                if (slugConflict) {
+                  let suffix = 2;
+                  while (suffix < 100) {
+                    const candidate = `${book.slug}-${suffix}`;
+                    const exists = await db.collection('books').findOne({ slug: candidate }, { projection: { _id: 1 } });
+                    if (!exists) { book.slug = candidate; break; }
+                    suffix++;
+                  }
+                  console.log(`    Slug conflict resolved: ${book.slug}`);
+                }
+              }
               await db.collection('books').insertOne(book);
             }
 

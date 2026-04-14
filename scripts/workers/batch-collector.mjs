@@ -619,10 +619,21 @@ async function processOneJob(db, job) {
 
   } else {
     // Failed / cancelled / expired
+    const isCancelled = state === 'JOB_STATE_CANCELLED';
+    const jobAge = (Date.now() - new Date(job.created_at).getTime()) / 3600000;
+    if (isCancelled) {
+      console.log(`  GEMINI_CANCELLED: ${job.book_id || 'cross-book'} | age ${jobAge.toFixed(1)}h | ${jobName}`);
+    }
     if (!DRY_RUN) {
       await db.collection('batch_jobs').updateOne(
         { _id: job._id },
-        { $set: { status: 'failed', gemini_state: state, error: `Gemini state: ${state}`, updated_at: new Date() } }
+        { $set: {
+          status: 'failed',
+          gemini_state: state,
+          error: `Gemini state: ${state}`,
+          job_age_hours: parseFloat(jobAge.toFixed(1)),
+          updated_at: new Date(),
+        } }
       );
     }
     return { status: 'failed', state, bookId: job.book_id, bookIds: job.book_ids || [job.book_id], type: job.type };
@@ -841,6 +852,7 @@ async function reconcileBatchState(db) {
     dbActive: 0,
     dbZombies: 0,
     orphansCancelled: 0,
+    ghostsDetected: 0,
     recentCompletions1h: 0,
     recentCompletions6h: 0,
     recentPagesSaved1h: 0,
@@ -909,6 +921,28 @@ async function reconcileBatchState(db) {
     }
     if (result.orphansCancelled > 0) {
       result.issues.push(`Cancelled ${result.orphansCancelled} Gemini orphans`);
+    }
+  }
+
+  // 3b. Detect ghost jobs: named in DB but not found on Gemini (404)
+  // These sit in pending forever because processOneJob returns 'not_found' which wasn't handled.
+  // Now processOneJob marks them failed, but reconcile also catches stragglers.
+  const namedDbJobs = dbActiveJobs.filter(j => j.job_name || j.gemini_job_name);
+  const ghostJobs = namedDbJobs.filter(j => {
+    const name = j.job_name || j.gemini_job_name;
+    return !geminiJobNames.has(name);
+  });
+  result.ghostsDetected = ghostJobs.length;
+  if (ghostJobs.length > 0) {
+    // Only auto-fail ghosts older than 30 minutes (give fresh jobs time to appear on Gemini)
+    const thirtyMinAgo = new Date(Date.now() - 30 * 60000);
+    const staleGhosts = ghostJobs.filter(g => new Date(g.created_at) < thirtyMinAgo);
+    if (staleGhosts.length > 0) {
+      await db.collection('batch_jobs').updateMany(
+        { _id: { $in: staleGhosts.map(g => g._id) } },
+        { $set: { status: 'failed', error: 'Ghost: named in DB but 404 on all Gemini keys', updated_at: new Date() } }
+      );
+      result.issues.push(`Auto-failed ${staleGhosts.length} ghost jobs (named but 404 on Gemini)`);
     }
   }
 
@@ -1018,6 +1052,7 @@ async function run() {
   let errors = 0;
   let stillPending = 0;
   let totalPagesSaved = 0;
+  let notFoundCount = 0;
   const bookIdsToUpdate = new Set();
   const parentIdsToUpdate = new Set();
   const pipelineAdvances = []; // { bookId, type } pairs for pipeline status updates
@@ -1058,7 +1093,25 @@ async function run() {
       } else if (val.status === 'pending') {
         stillPending++;
       } else if (val.status === 'not_found') {
-        errors++;
+        notFoundCount++;
+        // Job has a gemini_job_name but Gemini returns 404 on all keys — it's gone.
+        // Mark as failed so it doesn't sit in pending forever.
+        const jobToFail = batch[j];
+        if (jobToFail && !DRY_RUN) {
+          try {
+            await db.collection('batch_jobs').updateOne(
+              { _id: jobToFail._id },
+              { $set: { status: 'failed', error: 'Gemini 404: job no longer exists on any key', updated_at: new Date() } }
+            );
+            console.log(`  NOT_FOUND -> failed: ${jobToFail.gemini_job_name || jobToFail.job_name} (book: ${jobToFail.book_id})`);
+            // Track for pipeline advance so book can be requeued
+            const allBookIds = jobToFail.book_ids || (jobToFail.book_id ? [jobToFail.book_id] : []);
+            for (const bid of allBookIds) {
+              bookIdsToUpdate.add(bid);
+              pipelineAdvances.push({ bookId: bid, type: jobToFail.type });
+            }
+          } catch (e) { console.error(`  Failed to mark 404 job: ${e.message}`); }
+        }
       } else if (val.status === 'failed') {
         errors++;
         const allBookIds = val.bookIds || (val.bookId ? [val.bookId] : []);
@@ -1271,6 +1324,7 @@ async function run() {
   if (recoveredJobs > 0) console.log(`Recovery: ${recoveredJobs} jobs (${recoveredPages} pages)`);
   if (namelessReaped > 0) console.log(`Nameless reaped: ${namelessReaped}`);
   if (zombiesReaped > 0) console.log(`Zombies reaped: ${zombiesReaped}`);
+  if (notFoundCount > 0) console.log(`Gemini 404 (gone): ${notFoundCount}`);
   if (ghostsCleaned > 0) console.log(`Ghosts cleaned: ${ghostsCleaned}`);
   console.log(`Total time: ${totalElapsed}s`);
 
