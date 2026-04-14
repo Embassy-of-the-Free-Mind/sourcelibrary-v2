@@ -108,6 +108,7 @@ export const POST = withAdminAuth(async (request: NextRequest) => {
           book_author: '$book.author',
           book_year: '$book.year',
           book_language: '$book.language',
+          book_visible: { $ifNull: ['$book.visible', false] },
           book_hidden: '$book.hidden',
           book_provider: '$book.image_source.provider',
           book_rank: '$book_rank',

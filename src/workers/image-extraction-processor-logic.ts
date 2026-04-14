@@ -246,7 +246,7 @@ async function buildGalleryDocs(
     // Fetch book metadata for denormalization
     const book = await db.collection('books').findOne(
       { id: bookId },
-      { projection: { display_title: 1, title: 1, author: 1, year: 1, language: 1 } }
+      { projection: { display_title: 1, title: 1, author: 1, year: 1, language: 1, visible: 1, hidden: 1 } }
     );
 
     const imageUrl = page.cropped_photo || page.archived_photo || page.photo_original || page.photo || '';
@@ -279,6 +279,8 @@ async function buildGalleryDocs(
           book_author: book?.author || null,
           book_year: book?.year || null,
           book_language: book?.language || null,
+          book_visible: book?.visible ?? false,
+          book_hidden: book?.hidden || null,
           book_rank: 0,
           updated_at: new Date(),
         };
