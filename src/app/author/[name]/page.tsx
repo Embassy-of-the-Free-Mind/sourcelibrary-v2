@@ -2,11 +2,17 @@ import { Metadata } from 'next';
 import Link from 'next/link';
 import Image from 'next/image';
 import SiteHeader from '@/components/layout/SiteHeader';
-import { getDb } from '@/lib/mongodb';
+import { getReadDb } from '@/lib/mongodb';
 import { notFound, redirect } from 'next/navigation';
-import { bookUrl, authorSlug } from '@/lib/slugify';
+import { bookUrl, authorSlug, artistUrl } from '@/lib/slugify';
 import { firstTranslationBadge } from '@/lib/first-translation-labels';
+import AuthorBibliography from '@/components/browse/AuthorBibliography';
+import { VISUAL_RESOURCE_TYPES } from '@/lib/books-catalog';
 import { ObjectId, type Db } from 'mongodb';
+import { getBookThumbnailUrl } from '@/lib/utils';
+
+// ISR: 24h background revalidation (survives deploys better than revalidate=false)
+export const revalidate = 86400;
 
 interface Book {
   id: string;
@@ -18,6 +24,7 @@ interface Book {
   published: string;
   year?: number;
   thumbnail?: string;
+  thumbnail_blob?: string;
   pages_count?: number;
   pages_ocr?: number;
   pages_translated?: number;
@@ -76,9 +83,7 @@ async function getPortraitUrl(db: Db, entity: AuthorEntity | null): Promise<stri
   }
 }
 
-// ISR: author pages are mostly static — revalidate weekly.
-// Use POST /api/admin/revalidate-authors to force refresh after changes.
-export const revalidate = false;
+// dynamicParams + generateStaticParams: generate on first request, not at build time
 export const dynamicParams = true;
 export async function generateStaticParams() {
   return []; // All paths generated on demand via ISR
@@ -97,10 +102,10 @@ interface AuthorPageProps {
  */
 const BOOK_PROJECTION = {
   _id: 0, id: 1, slug: 1, title: 1, display_title: 1, author: 1,
-  author_entity_id: 1, language: 1, published: 1, thumbnail: 1,
+  author_entity_id: 1, language: 1, published: 1, thumbnail: 1, thumbnail_blob: 1,
   pages_count: 1, pages_ocr: 1, pages_translated: 1, pages_blank: 1, year: 1,
   summary: 1, is_first_translation: 1, ft_disposition: 1,
-  publisher: 1, place_of_publication: 1,
+  publisher: 1, place_of_publication: 1, resource_type: 1,
   'image_source.contributing_library': 1, 'image_source.provider_name': 1,
 };
 
@@ -250,7 +255,7 @@ export default async function AuthorPage({ params }: AuthorPageProps) {
     redirect(`/author/${authorSlug(decoded)}`);
   }
 
-  const db = await getDb();
+  const db = await getReadDb();
   const data = await loadAuthorData(db, name);
   if (!data) notFound();
 
@@ -293,6 +298,9 @@ export default async function AuthorPage({ params }: AuthorPageProps) {
   const bookVariants = [...new Set(books.map(b => b.author))]
     .filter(a => a && a !== authorName && !nameVariants.some(v => v.toLowerCase() === a.toLowerCase()));
   const allVariants = [...nameVariants, ...bookVariants].slice(0, 8);
+
+  // Check if this author also has visual works (show artist page link)
+  const hasVisualWorks = books.some((b: any) => b.resource_type && VISUAL_RESOURCE_TYPES.includes(b.resource_type));
 
   // Language breakdown for stats
   const langCounts = new Map<string, number>();
@@ -354,6 +362,14 @@ export default async function AuthorPage({ params }: AuthorPageProps) {
 
           {/* External links */}
           <div className="flex flex-wrap gap-2 mt-5">
+            {hasVisualWorks && artistUrl(authorName) && (
+              <Link
+                href={artistUrl(authorName)!}
+                className="inline-block px-3 py-1.5 text-sm bg-accent-rust/20 text-accent-gold hover:bg-accent-rust/30 rounded-full transition-colors"
+              >
+                Artist page
+              </Link>
+            )}
             {encyclopediaEntity && (
               <Link
                 href={`/encyclopedia/${encodeURIComponent(encyclopediaEntity.name)}`}
@@ -399,7 +415,7 @@ export default async function AuthorPage({ params }: AuthorPageProps) {
 
       {/* Title page gallery */}
       {(() => {
-        const thumbBooks = books.filter(b => b.thumbnail);
+        const thumbBooks = books.filter(b => getBookThumbnailUrl(b));
         if (thumbBooks.length === 0) return null;
         const shown = thumbBooks.slice(0, 8);
         return (
@@ -410,7 +426,7 @@ export default async function AuthorPage({ params }: AuthorPageProps) {
                   <Link key={book.id} href={bookUrl(book)} className="shrink-0 group">
                     <div className="w-24 h-32 relative rounded overflow-hidden bg-stone-200">
                       <Image
-                        src={book.thumbnail!}
+                        src={getBookThumbnailUrl(book)!}
                         alt={book.display_title || book.title}
                         fill
                         className="object-cover group-hover:scale-105 transition-transform duration-300"
@@ -428,83 +444,14 @@ export default async function AuthorPage({ params }: AuthorPageProps) {
         );
       })()}
 
-      {/* Content — bibliography table */}
+      {/* Content — bibliography with grid/list toggle */}
       <main className="max-w-6xl mx-auto px-6 md:px-12 py-8 md:py-12">
-        <div className="overflow-x-auto">
-          <table className="w-full text-left">
-            <thead>
-              <tr className="border-b text-xs uppercase tracking-wide" style={{ borderColor: 'var(--border-medium)', color: 'var(--text-muted)' }}>
-                <th className="pb-3 pr-4 font-medium">Title</th>
-                <th className="pb-3 pr-4 font-medium w-16">Year</th>
-                <th className="pb-3 pr-4 font-medium hidden md:table-cell w-24">Language</th>
-                <th className="pb-3 pr-4 font-medium hidden lg:table-cell">Publisher</th>
-                <th className="pb-3 font-medium hidden sm:table-cell w-20 text-right">Pages</th>
-              </tr>
-            </thead>
-            <tbody className="divide-y" style={{ borderColor: 'var(--border-light)' }}>
-              {books.map(book => {
-                const pct = book.translation_percent ?? 0;
-                const hasOriginalTitle = book.display_title && book.title !== book.display_title;
-                const publisher = book.publisher?.split('|')[0]?.trim();
-                const place = book.place_of_publication;
-
-                return (
-                  <tr key={book.id} className="group hover:bg-warm/50 transition-colors">
-                    <td className="py-3 pr-4">
-                      <Link href={bookUrl(book)} className="block">
-                        <span
-                          className="text-sm font-medium line-clamp-1"
-                          style={{ color: 'var(--text-primary)', fontFamily: 'var(--font-serif)' }}
-                        >
-                          {book.display_title || book.title}
-                        </span>
-                        {book.is_first_translation && (
-                          <span className="inline-block ml-2 bg-accent-gold/15 text-[10px] px-1.5 py-0.5 rounded-full font-medium align-middle" style={{ color: 'var(--accent-gold-dark)' }}>
-                            {firstTranslationBadge(book.ft_disposition, book.language)}
-                          </span>
-                        )}
-                        {hasOriginalTitle && (
-                          <span className="block text-xs mt-0.5 line-clamp-1 italic" style={{ color: 'var(--text-faint)' }}>
-                            {book.title}
-                          </span>
-                        )}
-                      </Link>
-                    </td>
-                    <td className="py-3 pr-4 text-sm tabular-nums" style={{ color: 'var(--text-muted)' }}>
-                      <Link href={bookUrl(book)} className="block">
-                        {book.year || book.published || '—'}
-                      </Link>
-                    </td>
-                    <td className="py-3 pr-4 hidden md:table-cell">
-                      <Link href={bookUrl(book)} className="block">
-                        <span className="text-xs px-2 py-0.5 rounded" style={{ color: 'var(--text-muted)', background: 'var(--bg-warm)' }}>
-                          {book.language || '—'}
-                        </span>
-                      </Link>
-                    </td>
-                    <td className="py-3 pr-4 hidden lg:table-cell">
-                      <Link href={bookUrl(book)} className="block text-xs line-clamp-1" style={{ color: 'var(--text-faint)' }}>
-                        {publisher || '—'}
-                        {place && publisher && <span className="text-[10px]"> ({place})</span>}
-                      </Link>
-                    </td>
-                    <td className="py-3 hidden sm:table-cell text-right">
-                      <Link href={bookUrl(book)} className="block text-sm tabular-nums" style={{ color: 'var(--text-muted)' }}>
-                        {book.pages_count || '—'}
-                        {pct > 0 && pct < 95 && (
-                          <span className="text-[10px] ml-1" style={{ color: 'var(--accent-gold-dark)' }}>{pct}%</span>
-                        )}
-                        {pct >= 95 && (
-                          <span className="text-[10px] ml-1" style={{ color: 'var(--status-success)' }}>done</span>
-                        )}
-                      </Link>
-                    </td>
-                  </tr>
-                );
-              })}
-            </tbody>
-          </table>
-        </div>
+        <AuthorBibliography books={books.map(b => ({
+          ...b,
+          display_title: b.display_title || undefined,
+          thumbnail: getBookThumbnailUrl(b) || undefined,
+          thumbnail_blob: b.thumbnail_blob || undefined,
+        }))} />
       </main>
     </div>
   );

@@ -191,7 +191,7 @@ export default function FeaturedCollectionNoon({ items }: { items: NoonFeaturedC
           ) : books.length > 0 ? (
             <div className="lg:col-span-3 grid grid-cols-4 sm:grid-cols-5 gap-3">
               {books.map((book) => {
-                const thumb = book.thumbnail || book.thumbnail_blob;
+                const thumb = book.thumbnail_blob || book.thumbnail;
                 return (
                   <Link key={book.id} href={bookUrl(book)} className="group">
                     <div className="aspect-[3/4] relative rounded-lg overflow-hidden bg-white/5 border border-white/10 group-hover:border-white/30 transition-all">

@@ -180,6 +180,44 @@ export function withInnerCircleAuth(
 }
 
 /**
+ * Wrapper for API routes requiring curator or admin role.
+ * Curators can import books and edit metadata. Admins can do everything curators can.
+ * Returns 401 if not authenticated, 403 if not curator/admin.
+ */
+export function withCuratorAuth(
+  handler: (request: NextRequest, session: Session, context?: any) => Promise<NextResponse>
+): (request: NextRequest, context?: any) => Promise<NextResponse> {
+  return async (request: NextRequest, context?: any) => {
+    // Check for CRON_SECRET bearer token (internal service-to-service calls)
+    const cronSecret = process.env.CRON_SECRET;
+    const authHeader = request.headers.get('authorization');
+    if (cronSecret && authHeader === `Bearer ${cronSecret}`) {
+      const cronSession: Session = {
+        user: { name: 'Pipeline Cron', email: 'cron@sourcelibrary.org', role: 'admin' } as any,
+        expires: new Date(Date.now() + 3600000).toISOString(),
+      };
+      return handler(request, cronSession, context);
+    }
+
+    const session = await auth();
+    if (!session?.user) {
+      return NextResponse.json(
+        { error: 'Unauthorized - Authentication required' },
+        { status: 401 }
+      );
+    }
+    const role = (session.user as any).role;
+    if (role !== 'admin' && role !== 'curator') {
+      return NextResponse.json(
+        { error: 'Forbidden - Curator access required' },
+        { status: 403 }
+      );
+    }
+    return handler(request, session, context);
+  };
+}
+
+/**
  * Wrapper for API routes requiring admin role.
  * Accepts NextAuth admin sessions OR CRON_SECRET bearer tokens
  * (pipeline crons need to call admin routes too).

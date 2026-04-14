@@ -1,5 +1,5 @@
 import { NextResponse } from 'next/server';
-import { getDb } from '@/lib/mongodb';
+import { getDb, getReadDb } from '@/lib/mongodb';
 import { LIBRARY_CATEGORIES } from '../../categories/route';
 import { withAuth } from '@/lib/auth-helpers';
 
@@ -209,10 +209,27 @@ export const POST = withAuth(async (request, session) => {
     const db = await getDb();
 
     // Get all visible books with only the fields needed for categorization
+    const readDb = await getReadDb();
     const books = await db.collection('books').find(
       { visible: true, pages_count: { $gt: 0 } },
-      { projection: { id: 1, title: 1, display_title: 1, author: 1, summary: 1, 'index.keywords': 1, 'index.concepts': 1, categories: 1 } }
+      { projection: { id: 1, title: 1, display_title: 1, author: 1, summary: 1, categories: 1 } }
     ).toArray();
+
+    // Fetch index keywords/concepts from book_indexes collection
+    const bookIds = books.map(b => b.id).filter(Boolean);
+    const indexDocs = await readDb.collection('book_indexes').find(
+      { book_id: { $in: bookIds } },
+      { projection: { book_id: 1, keywords: 1, concepts: 1 } }
+    ).toArray();
+    const indexMap = new Map(indexDocs.map(d => [d.book_id, d]));
+
+    // Merge index data onto books for categorization
+    for (const book of books) {
+      const idx = indexMap.get(book.id);
+      if (idx) {
+        book.index = { keywords: idx.keywords, concepts: idx.concepts };
+      }
+    }
 
     const results: { id: string; title: string; categories: string[]; updated: boolean }[] = [];
 

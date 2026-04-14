@@ -1,7 +1,8 @@
 import Link from 'next/link';
 import { Metadata } from 'next';
 import SiteHeader from '@/components/layout/SiteHeader';
-import { getDb } from '@/lib/mongodb';
+import DonationIntentionForm from '@/components/donate/DonationIntentionForm';
+import { getReadDb } from '@/lib/mongodb';
 
 export const revalidate = 600;
 export const maxDuration = 60;
@@ -60,7 +61,7 @@ function formatStat(n: number): string {
 
 async function fetchStats() {
   try {
-    const db = await getDb();
+    const db = await getReadDb();
     const books = db.collection('books');
     const match = { visible: true, pages_count: { $gt: 0 } };
 
@@ -150,7 +151,7 @@ export default async function SupportPage() {
             What this looks like
           </h2>
           <p className="text-lg text-gray-600 mb-10 max-w-3xl">
-            The opening of the <em>Pimander</em> — the foundational text of the Hermetic tradition — translated by Marsilio Ficino in 1481. This Venice edition had never been rendered into English until Source Library.
+            The first emblem from Michael Maier&apos;s <em>Atalanta Fugiens</em> (1618) — a masterpiece of alchemical art combining engravings, music, and poetry. Each emblem encodes a secret of nature. This edition from the Biblioth&egrave;que nationale de France had never been fully translated into English.
           </p>
 
           <div className="grid grid-cols-1 lg:grid-cols-2 gap-6 lg:gap-8">
@@ -158,13 +159,13 @@ export default async function SupportPage() {
             <div className="rounded-xl overflow-hidden border border-stone-200 bg-stone-50">
               <div className="px-4 py-3 bg-stone-100 border-b border-stone-200">
                 <span className="text-xs font-medium text-stone-500 uppercase tracking-wider">
-                  Original &middot; Venice, 1481
+                  Original &middot; Oppenheim, 1618
                 </span>
               </div>
-              <Link href="/book/corpus-hermeticum-pimander-1481-venice-edition-hermes-trismegistus">
+              <Link href="/book/atalanta-fleeing-new-chemical-emblems-of-the-secrets-of-maier/page/19">
                 <img
-                  src="https://images.sourcelibrary.org/pages/694f3d6cbe37f451a5324e10/0015.jpg"
-                  alt="Opening page of Ficino's 1481 Latin translation of the Pimander"
+                  src="https://images.sourcelibrary.org/pages/69520c46ab34727b1f044141/0019.jpg"
+                  alt="Emblem I from Atalanta Fugiens — Boreas carrying the philosophical embryo"
                   className="w-full h-auto"
                   loading="lazy"
                 />
@@ -179,24 +180,32 @@ export default async function SupportPage() {
                 </span>
               </div>
               <div className="p-6 md:p-8 flex-1 flex flex-col">
-                <h3 className="text-base font-semibold text-stone-900 mb-1 uppercase tracking-wide">
-                  The Book of Mercury Trismegistus
+                <h3 className="text-xs font-medium text-stone-400 mb-2 uppercase tracking-wider">
+                  Emblem I &middot; On the Secrets of Nature
                 </h3>
-                <p className="text-xs text-stone-500 mb-6 uppercase tracking-wide">
-                  On the Power and Wisdom of God, translated from Greek into Latin by Marsilio Ficino the Florentine to Cosimo de&apos; Medici, Father of his Country
-                </p>
-                <h4 className="text-sm font-semibold text-stone-700 mb-4 uppercase tracking-wide">
-                  The Pimander begins.
+                <h4 className="text-xl md:text-2xl font-display text-stone-900 mb-6">
+                  The wind has carried him in his belly.
                 </h4>
-                <blockquote className="text-stone-700 text-base md:text-lg leading-relaxed flex-1 font-serif italic">
-                  &ldquo;When I was meditating on the nature of things and raising the sharp point of my mind toward the heavens, the senses of my body were now put to sleep — just as it usually happens to those who are heavy with sleep due to fullness or exhaustion. Suddenly, I seemed to see someone of immense bodily stature, who, calling me by name, cried out in this manner: &lsquo;What is it, O Mercury, that you wish to hear and see, and having seen, to learn and know?&rsquo;&rdquo;
-                </blockquote>
+                <div className="text-stone-700 text-base md:text-lg leading-relaxed flex-1 font-serif space-y-4">
+                  <p className="italic">
+                    The embryo which is enclosed in the windy womb of Boreas,
+                    <br />
+                    If it should once be born alive into this light;
+                    <br />
+                    He alone can surpass all the labors of Heroes
+                    <br />
+                    By art, by hand, by a strong body, and by his mind.
+                  </p>
+                  <p className="text-sm text-stone-500 not-italic">
+                    Hermes, that most diligent investigator of every natural secret, in his Emerald Tablet wrote not without mystery to posterity: &ldquo;The wind has carried him in his belly&rdquo; — as if to say that he whose father is the Sun, and whose mother is the Moon, must, before he can be brought into the light, be carried by windy vapors...
+                  </p>
+                </div>
                 <div className="mt-6 pt-4 border-t border-stone-100">
                   <Link
-                    href="/book/corpus-hermeticum-pimander-1481-venice-edition-hermes-trismegistus"
+                    href="/book/atalanta-fleeing-new-chemical-emblems-of-the-secrets-of-maier/page/19"
                     className="text-accent-rust hover:text-accent-gold-dark text-sm font-medium"
                   >
-                    Read the full text &rarr;
+                    Read all 50 emblems &rarr;
                   </Link>
                 </div>
               </div>
@@ -217,96 +226,75 @@ export default async function SupportPage() {
         </div>
       </section>
 
-      {/* How to Donate — Two Routes */}
+      {/* Donation Intention Form */}
       <section className="bg-white py-16 md:py-24">
         <div className="px-6 md:px-12 max-w-5xl mx-auto">
-          <h2 className="text-3xl md:text-4xl text-stone-900 mb-4 leading-tight font-display">
-            How to Donate
-          </h2>
-          <p className="text-lg text-stone-600 mb-12 max-w-3xl">
-            There are two ways to support Source Library, depending on your location and needs.
-          </p>
+          <div className="grid grid-cols-1 lg:grid-cols-2 gap-12 lg:gap-16 items-start">
+            <div>
+              <h2 className="text-3xl md:text-4xl text-stone-900 mb-4 leading-tight font-display">
+                Support This Work
+              </h2>
+              <p className="text-lg text-stone-600 leading-relaxed mb-6">
+                Tell us a little about yourself and we'll personally guide you through the donation process. Every gift — of any size — makes a difference.
+              </p>
 
-          <div className="grid grid-cols-1 md:grid-cols-2 gap-8">
-            {/* US Donors — NAF */}
-            <div className="bg-[#faf8f5] rounded-2xl border border-stone-200 p-8 flex flex-col">
-              <div className="flex items-center gap-3 mb-4">
-                <span className="inline-flex items-center justify-center w-10 h-10 rounded-full bg-stone-200 text-stone-600 text-lg font-semibold shrink-0">
-                  US
-                </span>
-                <h3 className="text-xl font-semibold text-stone-900">
-                  US Tax-Deductible Donation
-                </h3>
+              <div className="space-y-6 text-stone-600 text-sm leading-relaxed">
+                <div className="flex gap-3">
+                  <span className="inline-flex items-center justify-center w-8 h-8 rounded-full bg-stone-100 text-stone-500 text-xs font-semibold shrink-0 mt-0.5">US</span>
+                  <div>
+                    <strong className="text-stone-900">US donors</strong> can give tax-deductibly through the{' '}
+                    <strong>Netherland-America Foundation</strong> (NAF), a 501(c)(3) public charity.
+                  </div>
+                </div>
+                <div className="flex gap-3">
+                  <span className="inline-flex items-center justify-center w-8 h-8 rounded-full bg-stone-100 text-stone-500 text-xs font-semibold shrink-0 mt-0.5">EU</span>
+                  <div>
+                    <strong className="text-stone-900">European and international donors</strong> can contribute directly to the Embassy of the Free Mind (ANBI-registered).
+                  </div>
+                </div>
               </div>
-              <p className="text-stone-600 text-sm leading-relaxed mb-4">
-                For US-based donors and companies seeking tax benefits. Donations are processed through the{' '}
-                <strong>Netherland-America Foundation</strong> (NAF), a 501(c)(3) public charity (EIN: 13-2989216).
-              </p>
-              <p className="text-stone-500 text-xs leading-relaxed mb-6">
-                Tax-deductible to the full extent permitted by US law. Please write &ldquo;Source Library&rdquo; in the comments field.
-              </p>
-              <div className="mt-auto">
+
+              <div className="mt-8 bg-[#faf8f5] rounded-xl border border-stone-200 p-5">
+                <h3 className="text-sm font-semibold text-stone-900 mb-2">Tax Benefits</h3>
+                <p className="text-stone-600 text-xs leading-relaxed">
+                  EFM is a registered non-profit (ANBI, Netherlands). US donors giving through the NAF receive full 501(c)(3) tax benefits. Donation receipts are available upon request or automatically via Stripe.
+                </p>
+              </div>
+
+              <div className="mt-8 grid grid-cols-1 sm:grid-cols-3 gap-3">
                 <a
                   href={DONORPERFECT_URL}
                   target="_blank"
                   rel="noopener noreferrer"
-                  className="block w-full text-center bg-stone-900 text-white py-3 px-6 rounded-full hover:bg-stone-800 transition-colors text-base font-medium"
+                  className="bg-[#faf8f5] rounded-xl border border-stone-200 p-4 hover:border-stone-400 transition-colors block text-center"
                 >
-                  Donate via NAF
+                  <span className="block text-xs font-medium text-stone-400 uppercase tracking-wider mb-1">US Tax-Deductible</span>
+                  <span className="block text-sm font-semibold text-stone-900">Donate via NAF</span>
+                  <span className="block text-xs text-stone-500 mt-1">501(c)(3)</span>
                 </a>
-              </div>
-            </div>
-
-            {/* International Donors — EFM / Mollie */}
-            <div className="bg-[#faf8f5] rounded-2xl border border-stone-200 p-8 flex flex-col">
-              <div className="flex items-center gap-3 mb-4">
-                <span className="inline-flex items-center justify-center w-10 h-10 rounded-full bg-stone-200 text-stone-600 text-lg font-semibold shrink-0">
-                  EU
-                </span>
-                <h3 className="text-xl font-semibold text-stone-900">
-                  Direct Donation via EFM
-                </h3>
-              </div>
-              <p className="text-stone-600 text-sm leading-relaxed mb-4">
-                For European and international donors. Your contribution goes directly to the Embassy of the Free Mind, earmarked for Source Library.
-              </p>
-              <p className="text-stone-500 text-xs leading-relaxed mb-2">
-                Please include <strong>&ldquo;Source Library&rdquo;</strong> in the description of your donation so we can allocate your contribution correctly.
-              </p>
-              <p className="text-stone-500 text-xs leading-relaxed mb-6">
-                Donation confirmations and receipts are available upon request.
-              </p>
-              <div className="mt-auto">
                 <a
                   href={MOLLIE_URL}
                   target="_blank"
                   rel="noopener noreferrer"
-                  className="block w-full text-center bg-stone-900 text-white py-3 px-6 rounded-full hover:bg-stone-800 transition-colors text-base font-medium"
+                  className="bg-[#faf8f5] rounded-xl border border-stone-200 p-4 hover:border-stone-400 transition-colors block text-center"
                 >
-                  Donate via EFM
+                  <span className="block text-xs font-medium text-stone-400 uppercase tracking-wider mb-1">International</span>
+                  <span className="block text-sm font-semibold text-stone-900">Donate via EFM</span>
+                  <span className="block text-xs text-stone-500 mt-1">ANBI-registered</span>
+                </a>
+                <a
+                  href={`mailto:${CONTACT_EMAIL}?subject=Source%20Library%20%E2%80%94%20Donation%20Inquiry`}
+                  className="bg-[#faf8f5] rounded-xl border border-stone-200 p-4 hover:border-stone-400 transition-colors block text-center"
+                >
+                  <span className="block text-xs font-medium text-stone-400 uppercase tracking-wider mb-1">Large Gifts</span>
+                  <span className="block text-sm font-semibold text-stone-900">Contact Us</span>
+                  <span className="block text-xs text-stone-500 mt-1">Wire, stock, DAF</span>
                 </a>
               </div>
             </div>
-          </div>
 
-          {/* Tax Benefits */}
-          <div className="mt-10 bg-[#faf8f5] rounded-xl border border-stone-200 p-6">
-            <h3 className="text-base font-semibold text-stone-900 mb-2">Tax Benefits</h3>
-            <p className="text-stone-600 text-sm leading-relaxed">
-              The Embassy of the Free Mind is a registered non-profit organization (ANBI-registered in the Netherlands). Your donation may be tax-deductible depending on your country of residence. US donors giving through the Netherland-America Foundation receive full 501(c)(3) tax benefits.
-            </p>
+            <DonationIntentionForm />
           </div>
-
-          {/* Large gifts */}
-          <p className="text-stone-500 text-sm mt-8 text-center">
-            For wire transfers, stock gifts, or donations over $10,000,{' '}
-            <a
-              href={`mailto:${CONTACT_EMAIL}?subject=Source%20Library%20%E2%80%94%20Large%20Gift%20Inquiry`}
-              className="text-accent-rust hover:text-accent-gold-dark underline"
-            >
-              contact us directly
-            </a>.
-          </p>
         </div>
       </section>
 

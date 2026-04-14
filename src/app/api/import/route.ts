@@ -3,7 +3,7 @@ import { getDb } from '@/lib/mongodb';
 import { ObjectId } from 'mongodb';
 import fs from 'fs';
 import path from 'path';
-import { withAuth } from '@/lib/auth-helpers';
+import { withCuratorAuth } from '@/lib/auth-helpers';
 import { generateUniqueBookSlug } from '@/lib/slugify';
 
 /**
@@ -21,7 +21,7 @@ import { generateUniqueBookSlug } from '@/lib/slugify';
  *   ia_identifier?: string
  * }
  */
-export const POST = withAuth(async (request, session) => {
+export const POST = withCuratorAuth(async (request, session) => {
   try {
     const body = await request.json();
     const {

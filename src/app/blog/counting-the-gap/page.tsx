@@ -41,6 +41,17 @@ export default function CountingTheGapPage() {
       </div>
 
       <article className="prose-content max-w-none">
+        {/* Update banner */}
+        <div className="bg-amber-50 border border-amber-200/50 rounded-lg p-4 mb-10">
+          <p className="text-sm text-stone-700 leading-relaxed">
+            <strong>Update (April 2026):</strong> The census described below is now live at{' '}
+            <Link href="/census" className="text-accent-rust hover:underline">/census</Link>.
+            With work-level matching (not edition-level), the number is lower than our first estimate:
+            under 1% of pre-1700 works have a known English translation, not the 4.5% we initially reported.
+            The methodology below describes how we got here; the live census reflects the corrected figures.
+          </p>
+        </div>
+
         <p className="text-xl text-secondary leading-relaxed mb-8 font-body">
           This morning I was writing a blog post about{' '}
           <Link href="/blog/origin-story" className="text-accent-rust hover:text-accent-rust underline">where Source Library came from</Link>.
@@ -191,37 +202,38 @@ export default function CountingTheGapPage() {
           </h2>
 
           <p className="text-secondary leading-relaxed mb-6 font-body">
-            We&apos;re turning this into a{' '}
-            <a href="https://github.com/Embassy-of-the-Free-Mind/sourcelibrary-v2/issues/187" className="text-accent-rust hover:text-accent-rust underline">public, living census</a>{' '}
-            &mdash; a searchable database where you can look up any pre-modern author or work and see whether an English translation exists. Every scholar who reports a missing translation makes the data better. Every new translation we complete updates the count.
+            <strong className="text-stone-800">Update:</strong> The census is now live at{' '}
+            <Link href="/census" className="text-accent-rust hover:text-accent-rust underline">sourcelibrary.org/census</Link>.
+            You can search any pre-modern author or title and see whether a known English translation exists.
+            The data draws from 23,700+ catalog records across the Library of Congress, UNESCO, Open Library,
+            HathiTrust, and 20+ other sources &mdash; matched at the work level against 1.4 million USTC editions.
           </p>
 
           <p className="text-secondary leading-relaxed mb-6 font-body">
-            We&apos;re also writing this up as an{' '}
-            <a href="https://github.com/Embassy-of-the-Free-Mind/sourcelibrary-v2/blob/dev/prototype/papers/translation-census-draft.md" className="text-accent-rust hover:text-accent-rust underline">academic paper</a>{' '}
-            &mdash; the methodology, the data sources, the known limitations, the whole thing. The draft is open source. If you spot an error, tell us.
+            The work-level matching gave us a more precise &mdash; and more sobering &mdash; number than the edition-level
+            estimates above. At the work level, under 1% of pre-1700 European works have a known English translation.
+            Source Library&apos;s 6,000+ first translations represent a significant fraction of the total.
           </p>
 
           <p className="text-secondary leading-relaxed font-body">
-            And we&apos;re continuing to translate. Source Library has 5,000 books with translations and nearly 2,000 first English translations. Today we started linking our IIIF discovery data &mdash; 93,000 digitized books from e-rara alone &mdash; to the USTC, so we can see exactly which digitized books have never been translated. The gap between &ldquo;digitized&rdquo; and &ldquo;translated&rdquo; is approximately 700,000 books. The images are already online. They just need someone &mdash; or something &mdash; to read them.
+            Source Library now has nearly 10,000 books with translations and over 6,000 verified first English translations.
+            The gap between &ldquo;digitized&rdquo; and &ldquo;translated&rdquo; remains vast &mdash; hundreds of thousands of scanned books
+            waiting to be read for the first time in centuries. The images are already online.
+            They just need someone &mdash; or something &mdash; to read them.
           </p>
         </section>
 
         {/* === CTA === */}
         <div className="bg-warm rounded-xl p-6 md:p-8 border border-border-light mb-8">
           <p className="font-serif text-lg text-primary mb-3">Read more</p>
-          <div className="grid md:grid-cols-3 gap-3">
-            <Link href="/blog/untranslated-renaissance" className="block bg-white rounded-lg p-4 border border-border-light hover:border-accent-rust/30 transition-colors group">
-              <p className="font-medium text-sm text-stone-800 group-hover:text-accent-rust transition-colors">The full methodology</p>
-              <p className="text-xs text-muted mt-1">How we counted, and what we know we&apos;re missing</p>
-            </Link>
-            <Link href="/blog/origin-story" className="block bg-white rounded-lg p-4 border border-border-light hover:border-accent-rust/30 transition-colors group">
-              <p className="font-medium text-sm text-stone-800 group-hover:text-accent-rust transition-colors">Where Source Library came from</p>
-              <p className="text-xs text-muted mt-1">One untranslated Ficino manuscript</p>
+          <div className="grid md:grid-cols-2 gap-3">
+            <Link href="/census" className="block bg-white rounded-lg p-4 border border-border-light hover:border-accent-rust/30 transition-colors group">
+              <p className="font-medium text-sm text-stone-800 group-hover:text-accent-rust transition-colors">The Translation Census</p>
+              <p className="text-xs text-muted mt-1">Search the live database: has it been translated?</p>
             </Link>
             <Link href="/blog/first-translations" className="block bg-white rounded-lg p-4 border border-border-light hover:border-accent-rust/30 transition-colors group">
-              <p className="font-medium text-sm text-stone-800 group-hover:text-accent-rust transition-colors">2,000 first translations</p>
-              <p className="text-xs text-muted mt-1">What we&apos;ve translated so far</p>
+              <p className="font-medium text-sm text-stone-800 group-hover:text-accent-rust transition-colors">6,000 first translations</p>
+              <p className="text-xs text-muted mt-1">What Source Library has contributed so far</p>
             </Link>
           </div>
         </div>

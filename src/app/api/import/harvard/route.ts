@@ -1,6 +1,6 @@
 import { NextResponse } from 'next/server';
 import { importBookFromIIIF } from '@/lib/import-utils';
-import { withAuth } from '@/lib/auth-helpers';
+import { withCuratorAuth } from '@/lib/auth-helpers';
 
 export const maxDuration = 300;
 
@@ -22,7 +22,7 @@ export const maxDuration = 300;
  * IIIF v2 manifest: https://iiif.lib.harvard.edu/manifests/drs:{drs_id}
  * Viewer: https://id.lib.harvard.edu/curiosity/{drs_id}
  */
-export const POST = withAuth(async (request, session) => {
+export const POST = withCuratorAuth(async (request, session) => {
   try {
     const body = await request.json();
     const { drs_id, title, display_title, author, language, published, categories, work_id } = body;

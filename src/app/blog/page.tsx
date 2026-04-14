@@ -25,6 +25,26 @@ interface BlogPost {
 
 const posts: BlogPost[] = [
   {
+    slug: '10000-books',
+    title: '10,000 Books',
+    subtitle: 'Source Library passes 10,000 translated historical texts. The symbolic 10,000th: a 1517 Renaissance encyclopedia from the BPH, in English for the first time.',
+    date: '13 April 2026',
+    readTime: '5 min read',
+    tag: 'Milestone',
+    tagColor: 'bg-accent-gold/10 text-accent-gold-dark',
+    image: 'https://images.sourcelibrary.org/archived/6909aba7cf28baa1b4caef69/5.jpg',
+    imageAlt: 'Woodcut dedication page from Champier\'s Four Volumes of Divine and Human Marvels, 1517',
+  },
+  {
+    slug: 'word-alignment',
+    title: 'Can AI Show You Exactly Which Latin Words Became Which English Words?',
+    subtitle: 'Two approaches to word-level alignment between 15th-century Latin and English translation. Interactive demo inside.',
+    date: '13 April 2026',
+    readTime: '5 min read',
+    tag: 'Interactive',
+    tagColor: 'bg-amber-50 text-amber-700',
+  },
+  {
     slug: 'rashi-ocr',
     title: 'The Rashi Problem: When AI OCR Hallucinates in Hebrew',
     subtitle: 'Gemini reads Arabic, Sanskrit, and Chinese fine. On Rashi script it hallucinates — and our quality metrics gave it a passing grade.',

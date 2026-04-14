@@ -1,4 +1,4 @@
-import { getDb } from '@/lib/mongodb';
+import { getReadDb } from '@/lib/mongodb';
 import { auth } from '@/lib/auth';
 import { redirect } from 'next/navigation';
 import Link from 'next/link';
@@ -57,7 +57,7 @@ function bookTitle(book: { display_title?: string; title: string }): string {
 }
 
 async function getFeaturedCollection(): Promise<FeaturedCollectionItem | null> {
-  const db = await getDb();
+  const db = await getReadDb();
 
   // Get a well-populated collection
   const collections = await db
@@ -181,7 +181,7 @@ async function getFeaturedCollection(): Promise<FeaturedCollectionItem | null> {
 }
 
 async function getMultipleFeaturedCollections(): Promise<FeaturedCollectionItem[]> {
-  const db = await getDb();
+  const db = await getReadDb();
 
   const collections = await db
     .collection('collections')
@@ -241,7 +241,7 @@ async function getMultipleFeaturedCollections(): Promise<FeaturedCollectionItem[
 }
 
 async function getCollectionSummaries(): Promise<CollectionSummary[]> {
-  const db = await getDb();
+  const db = await getReadDb();
   const docs = await db.collection('collections').find(
     { parent: { $exists: false }, type: { $ne: 'curated' }, visible: true, book_count: { $gte: 5 } },
     { projection: { _id: 0, slug: 1, name: 1, subtitle: 1, book_count: 1, featured_images: 1, languages: 1 } }

@@ -3,7 +3,7 @@ import SiteHeader from '@/components/layout/SiteHeader';
 import CatalogBrowser from '@/components/catalog/CatalogBrowser';
 import { browseBooks, getLanguageCounts } from '@/lib/books-catalog';
 
-export const revalidate = false;
+export const revalidate = 86400;
 
 export const metadata: Metadata = {
   title: 'Catalog - Source Library',
@@ -12,10 +12,11 @@ export const metadata: Metadata = {
 };
 
 export default async function CatalogPage() {
-  const [{ books, total }, languages] = await Promise.all([
-    browseBooks({ hasTranslation: true, sort: 'popular', limit: 60 }),
-    getLanguageCounts({}),
+  const [browseResult, languages] = await Promise.all([
+    browseBooks({ hasTranslation: true, sort: 'popular', limit: 60 }).catch(() => ({ books: [], total: 0 })),
+    getLanguageCounts({}).catch(() => []),
   ]);
+  const { books, total } = browseResult;
 
   return (
     <>

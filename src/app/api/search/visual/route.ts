@@ -1,0 +1,120 @@
+import { NextRequest, NextResponse } from 'next/server';
+import { supabase } from '@/lib/supabase';
+
+export const maxDuration = 15;
+
+// CLIP server on Hetzner, proxied through the text embedding server
+const CLIP_URL = process.env.CLIP_URL || 'http://46.224.122.120:3456/clip';
+
+/**
+ * GET /api/search/visual?q=ouroboros&limit=20
+ *
+ * Text-to-image search using CLIP embeddings.
+ * Encodes the text query via CLIP text encoder, then searches
+ * against CLIP image embeddings in Supabase for visual matches.
+ *
+ * This finds images by what they LOOK like, not just their metadata.
+ * "skeleton playing music" finds skeleton images even if no metadata says "skeleton".
+ */
+export async function GET(request: NextRequest) {
+  const { searchParams } = new URL(request.url);
+  const query = searchParams.get('q')?.trim();
+  const limit = Math.min(parseInt(searchParams.get('limit') || '24'), 100);
+  const offset = parseInt(searchParams.get('offset') || '0');
+  const threshold = parseFloat(searchParams.get('threshold') || '0.20');
+
+  if (!query || query.length < 2) {
+    return NextResponse.json({ results: [], query: '', total: 0 });
+  }
+
+  try {
+    // Encode text query via CLIP text encoder on Hetzner
+    const clipResp = await fetch(`${CLIP_URL}/embed-text`, {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify({ text: query }),
+      signal: AbortSignal.timeout(5000),
+    });
+
+    if (!clipResp.ok) {
+      return NextResponse.json(
+        { error: 'Visual search unavailable', results: [], query, total: 0 },
+        { status: 502 },
+      );
+    }
+
+    const { embedding } = await clipResp.json();
+    if (!embedding) {
+      return NextResponse.json(
+        { error: 'Failed to encode query', results: [], query, total: 0 },
+        { status: 502 },
+      );
+    }
+
+    // Search Supabase for visually matching images
+    const { data, error } = await supabase.rpc('match_clip_text', {
+      query_embedding: embedding,
+      match_threshold: threshold,
+      match_count: offset + limit + 10,
+    });
+
+    if (error) {
+      console.error('[visual-search] Supabase error:', error.message);
+      return NextResponse.json(
+        { error: 'Search failed', results: [], query, total: 0 },
+        { status: 500 },
+      );
+    }
+
+    const matches = (data || []) as Array<{
+      id: string;
+      source_type: string;
+      book_id: string;
+      image_url: string;
+      title: string;
+      author: string;
+      resource_type: string;
+      thumbnail_url: string;
+      similarity: number;
+    }>;
+
+    // Deduplicate by book — max 3 per book for diversity
+    const byBook = new Map<string, number>();
+    const deduped = matches.filter(m => {
+      const count = byBook.get(m.book_id) || 0;
+      if (count >= 3) return false;
+      byBook.set(m.book_id, count + 1);
+      return true;
+    });
+
+    const page = deduped.slice(offset, offset + limit);
+
+    return NextResponse.json({
+      results: page.map(m => ({
+        id: m.id,
+        sourceType: m.source_type,
+        bookId: m.book_id,
+        imageUrl: m.thumbnail_url || m.image_url,
+        fullImageUrl: m.image_url,
+        title: m.title,
+        author: m.author,
+        resourceType: m.resource_type,
+        similarity: Math.round(m.similarity * 1000) / 1000,
+      })),
+      query,
+      total: deduped.length,
+      limit,
+      offset,
+      mode: 'visual',
+    }, {
+      headers: { 'Cache-Control': 'public, s-maxage=300, stale-while-revalidate=600' },
+    });
+  } catch (error) {
+    const msg = error instanceof Error ? error.message : String(error);
+    console.error('[visual-search] Error:', msg);
+    return NextResponse.json(
+      { error: 'Visual search failed', results: [], query, total: 0 },
+      { status: 500 },
+    );
+  }
+}

@@ -16,6 +16,7 @@ const GEMINI_API_BASE = 'https://generativelanguage.googleapis.com/v1beta';
 const ALL_KEYS = [
   process.env.GEMINI_API_KEY_TIER3,
   process.env.GEMINI_API_KEY_2,
+  process.env.GEMINI_API_KEY_3,
   process.env.GEMINI_API_KEY,
 ].filter(Boolean);
 
@@ -33,6 +34,16 @@ const CONCURRENCY = concIdx >= 0 ? parseInt(args[concIdx + 1], 10) : 10;
 function extractPageType(text) {
   const match = text.match(/<page-type>\s*(.*?)\s*<\/page-type>/i);
   return match ? match[1].toLowerCase().trim() : null;
+}
+
+/** Detect Google Books, IA, or other digitizer notice pages from OCR text (pages 1-3 only). */
+function isDigitizerNotice(text) {
+  if (!text) return false;
+  const start = text.substring(0, 1500);
+  return /google\s+logo|digitized\s+by\s+google|scanned\s+by\s+google|this\s+is\s+a\s+digital\s+copy/i.test(start) ||
+    /preserved\s+for\s+generations\s+on\s+library\s+shelves/i.test(start) ||
+    /inserted\s+by\s+the\s+internet|internet\s+archive|digitization\s+(credit|notice)/i.test(start) ||
+    /not\s+part\s+of\s+the\s+original\s+book|scanner\s+barcode/i.test(start);
 }
 
 function extractColumns(text) {
@@ -222,7 +233,13 @@ async function processOneJob(db, job) {
           updated_at: now,
         };
         if (isMultiPage) setObj['ocr.pages_per_request'] = job.pages_per_request;
-        if (pageType) setObj.page_type = pageType;
+        // Auto-detect digitizer notice pages (Google Books, IA inserts)
+        if (isDigitizerNotice(text)) {
+          setObj.page_type = 'digitizer-insert';
+          setObj.hidden = true;
+        } else if (pageType) {
+          setObj.page_type = pageType;
+        }
         if (columns) setObj.columns = columns;
         if (detectedImages.length > 0) setObj.detected_images = detectedImages;
 

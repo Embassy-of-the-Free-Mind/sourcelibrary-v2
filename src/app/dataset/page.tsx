@@ -1,7 +1,7 @@
 import { Metadata } from 'next';
 import Link from 'next/link';
 import ContentPageLayout, { ContentHeader } from '@/components/layout/ContentPageLayout';
-import { getDb } from '@/lib/mongodb';
+import { getReadDb } from '@/lib/mongodb';
 
 // ISR: rebuild every 6 hours. Allow 60s for first-hit generation.
 export const revalidate = false;
@@ -10,7 +10,7 @@ export const maxDuration = 60;
 export const metadata: Metadata = {
   title: 'Dataset — Source Library',
   description:
-    'Structured parallel-text training data from 5,000+ historical texts in 90+ languages. Page-aligned OCR, English translations, and scholarly metadata.',
+    'Structured parallel-text training data from 10,000+ historical texts in 90+ languages. Page-aligned OCR, English translations, and scholarly metadata.',
   alternates: { canonical: '/dataset' },
   openGraph: {
     title: 'Dataset — Source Library',
@@ -24,7 +24,7 @@ function formatNumber(n: number): string {
 }
 
 async function fetchDatasetStats() {
-  const db = await getDb();
+  const db = await getReadDb();
 
   try {
     const books = db.collection('books');

@@ -1,5 +1,5 @@
 import { NextRequest, NextResponse } from 'next/server';
-import { getDb } from '@/lib/mongodb';
+import { getReadDb } from '@/lib/mongodb';
 import { decodeShortlink } from '@/lib/shortlinks';
 import { Page } from '@/lib/types';
 
@@ -21,7 +21,7 @@ export async function GET(request: NextRequest, context: RouteContext) {
     const { bookId, pageNumber } = decodeShortlink(code);
 
     // Look up the page to get its ID
-    const db = await getDb();
+    const db = await getReadDb();
     const page = await db.collection('pages').findOne({
       book_id: bookId,
       page_number: pageNumber,

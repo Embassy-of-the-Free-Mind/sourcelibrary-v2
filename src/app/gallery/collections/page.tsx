@@ -3,9 +3,9 @@ import Link from 'next/link';
 import Image from 'next/image';
 import { Image as ImageIcon, Layers } from 'lucide-react';
 import SiteHeader from '@/components/layout/SiteHeader';
-import { getDb } from '@/lib/mongodb';
+import { getReadDb } from '@/lib/mongodb';
 
-export const revalidate = false;
+export const revalidate = 86400;
 
 export const metadata: Metadata = {
   title: 'Curated Collections | Gallery | Source Library',
@@ -33,11 +33,11 @@ interface CollectionListItem {
 
 async function getCollections(): Promise<CollectionListItem[]> {
   try {
-    const db = await getDb();
+    const db = await getReadDb();
 
     const collections = await db
       .collection('gallery_collections')
-      .find({})
+      .find({}, { projection: { id: 1, slug: 1, title: 1, description: 1, image_ids: 1, featured: 1, cover_image_id: 1 } })
       .sort({ sort_order: 1, created_at: -1 })
       .toArray();
 

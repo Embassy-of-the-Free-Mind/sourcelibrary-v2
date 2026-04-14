@@ -1,5 +1,5 @@
 import { NextRequest, NextResponse } from 'next/server';
-import { getDb } from '@/lib/mongodb';
+import { getReadDb } from '@/lib/mongodb';
 import { withAuth } from '@/lib/auth-helpers';
 
 /**
@@ -26,7 +26,7 @@ export const GET = withAuth(async (request: NextRequest) => {
     const bookId = searchParams.get('book_id');
     const groupBy = searchParams.get('group_by');
 
-    const db = await getDb();
+    const db = await getReadDb();
 
     // Build match query
     const match: Record<string, unknown> = {

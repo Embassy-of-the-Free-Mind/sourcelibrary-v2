@@ -11,6 +11,7 @@ import { sendWriteResult } from '@/lib/sqs-client';
 import { retryDbWrite } from '@/lib/retry-utils';
 import { contentHash } from '@/lib/steganographia';
 import { getTranslationPrompt } from '@/lib/prompts';
+import { syncPageUpdate } from '@/lib/supabase-page-writer';
 import type { PromptReference } from '@/lib/types';
 
 /**
@@ -134,7 +135,23 @@ export async function processTranslationPage(message: PageProcessingMessage) {
   // wasn't written yet (e.g., write-processor hadn't run).
   const effectivePageType = page.page_type || extractPageType(page.ocr.data);
   if (effectivePageType && SKIP_TRANSLATION_PAGE_TYPES.includes(effectivePageType)) {
-    console.log(`[TRANS] Skipping page ${pageId} (page_type: ${effectivePageType})`);
+    console.log(`[TRANS] Skipping page ${pageId} (page_type: ${effectivePageType}), writing marker`);
+    // Write a marker to translation.data so this page counts as "translated"
+    // in pages_translated. Without this, blank pages create a permanent gap
+    // that requires pages_blank subtraction everywhere.
+    const marker = `[${effectivePageType.charAt(0).toUpperCase() + effectivePageType.slice(1)} page — no translatable content]`;
+    await retryDbWrite(() => pages.updateOne(
+      { id: pageId },
+      { $set: {
+        translation: {
+          data: marker,
+          language: 'English',
+          source: 'system',
+          updated_at: new Date(),
+        },
+        updated_at: new Date(),
+      }}
+    ), `write blank marker for page ${pageId}`, 3, '[TRANS]');
     await sendWriteResult({
       type: 'translation',
       bookId, pageId, jobId, targetPageIds,
@@ -215,27 +232,28 @@ export async function processTranslationPage(message: PageProcessingMessage) {
     // DIRECT WRITE: Save translation to page — required for FIFO context chain.
     // The next page in the queue reads this translation for continuity.
     const translationMeta = extractTranslationMetadata(finalTranslation);
+    const translationSetPayload = {
+      translation: {
+        data: finalTranslation,
+        content_hash: contentHash(finalTranslation),
+        language: 'English',
+        model: modelId,
+        updated_at: new Date(),
+        source: 'ai',
+        prompt_version: `v${promptRef.version}`,
+        prompt_hash: promptRef.content_hash,
+        prompt_id: promptRef.id,
+        prompt_name: promptRef.name,
+      },
+      ...translationMeta,
+      updated_at: new Date()
+    };
     await retryDbWrite(() => pages.updateOne(
       { id: pageId },
-      {
-        $set: {
-          translation: {
-            data: finalTranslation,
-            content_hash: contentHash(finalTranslation),
-            language: 'English',
-            model: modelId,
-            updated_at: new Date(),
-            source: 'ai',
-            prompt_version: `v${promptRef.version}`,
-            prompt_hash: promptRef.content_hash,
-            prompt_id: promptRef.id,
-            prompt_name: promptRef.name,
-          },
-          ...translationMeta,
-          updated_at: new Date()
-        }
-      }
+      { $set: translationSetPayload }
     ), `save translation for page ${pageId}`, 3, '[TRANS]');
+    // Dual-write to Supabase (fire-and-forget)
+    syncPageUpdate(pageId, translationSetPayload);
 
     // Defer logging + completion check to write queue
     await sendWriteResult({

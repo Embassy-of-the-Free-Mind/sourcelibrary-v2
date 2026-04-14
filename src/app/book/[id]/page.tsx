@@ -1,11 +1,12 @@
 import { Suspense, cache } from 'react';
 import { Metadata } from 'next';
-import { getDb } from '@/lib/mongodb';
+import { getReadDb } from '@/lib/mongodb';
 import { notFound } from 'next/navigation';
 import Link from 'next/link';
 import { Book, Page, TranslationEdition } from '@/lib/types';
 import { findBookByIdOrSlug } from '@/lib/book-lookup';
-import { Calendar, Globe, FileText, BookText, BookMarked, Images } from 'lucide-react';
+import { getBookDetail } from '@/lib/books-catalog';
+import { Calendar, Globe, FileText, BookMarked, Images } from 'lucide-react';
 import ArtworkInfo from '@/components/artwork/ArtworkInfo';
 import SearchPanel from '@/components/search/SearchPanel';
 import BookPagesSection from '@/components/book/BookPagesSection';
@@ -13,6 +14,7 @@ import EarlyAccessGate from '@/components/book/EarlyAccessGate';
 import BookDedication from '@/components/book/BookDedication';
 import BookHistory from '@/components/book/BookHistory';
 import BookIndex from '@/components/book/BookIndex';
+import ChaptersDropdown from '@/components/book/ChaptersDropdown';
 import BookAnalytics from '@/components/book/BookAnalytics';
 import CoverImagePicker from '@/components/book/CoverImagePicker';
 import DownloadButton from '@/components/ui/DownloadButton';
@@ -40,8 +42,10 @@ import { formatAuthor } from '@/lib/utils';
 import AuthorName from '@/components/AuthorName';
 import SiteHeader from '@/components/layout/SiteHeader';
 
-// Static until on-demand revalidation. Pipeline calls /api/admin/revalidate-book after OCR/translation/enrichment.
-export const revalidate = false;
+// ISR: serve cached HTML, revalidate in background every 24h.
+// Pipeline also calls /api/admin/revalidate-book for immediate updates after OCR/translation/enrichment.
+// Using 86400 instead of false so pages self-heal after deploys (which purge the cache).
+export const revalidate = 86400;
 
 // Run SSR near the database to cut cross-region latency (~200ms RTT savings)
 export const preferredRegion = 'fra1';
@@ -57,15 +61,37 @@ interface PageProps {
 }
 
 // Cached book lookup — deduplicates between generateMetadata and BookInfo
-// within a single server render. Uses the broader projection from getBook
-// so the result is reusable by both code paths.
-const getCachedBookLookup = cache(async (id: string) => {
+// within a single server render.
+//
+// Tries Supabase first (<50ms) for the book shell, then falls back to Atlas.
+// When Supabase succeeds, getBook() can start ALL Atlas queries in parallel
+// (pages, gallery, collections, full book refetch) instead of waiting for the
+// book lookup before starting page queries.
+const getCachedBookLookup = cache(async (id: string): Promise<{
+  book: Record<string, unknown>;
+  matchedBySlug: boolean;
+  fromCatalog: boolean;
+} | null> => {
+  // Try Supabase first — instant lookup from the books_catalog mirror
+  try {
+    const catalogResult = await getBookDetail(id);
+    if (catalogResult) {
+      return {
+        book: catalogResult.book as unknown as Record<string, unknown>,
+        matchedBySlug: catalogResult.matchedBySlug,
+        fromCatalog: true,
+      };
+    }
+  } catch {
+    // Supabase down — fall through to Atlas
+  }
+
+  // Fall back to Atlas (slower but has everything)
   const db = await Promise.race([
-    getDb(),
+    getReadDb(),
     new Promise<never>((_, reject) => setTimeout(() => reject(new Error('DB timeout')), 15000)),
   ]);
-  return findBookByIdOrSlug(db, id, {
-    chapters: 0,
+  const result = await findBookByIdOrSlug(db, id, {
     reading_sections: 0,
     pipeline: 0,
     pipeline_auto: 0,
@@ -76,6 +102,8 @@ const getCachedBookLookup = cache(async (id: string) => {
     'index.concepts': 0,
     'index.keyTerms': 0,
   });
+  if (!result) return null;
+  return { book: result.book as Record<string, unknown>, matchedBySlug: result.matchedBySlug, fromCatalog: false };
 });
 
 // Lightweight book fetch for metadata — reuses cached lookup
@@ -177,23 +205,41 @@ export async function generateMetadata({ params }: PageProps): Promise<Metadata>
 interface GalleryImagePreview { id: string; extracted_url?: string; thumbnail_url?: string; image_url?: string; description?: string; type?: string; page_number?: number; gallery_quality?: number }
 interface BookCollectionPreview { slug: string; name: string; subtitle?: string; color?: string; book_count?: number; featured_images?: Array<{ extracted_url?: string; thumbnail_url?: string; image_url?: string }> }
 
-async function getBook(id: string): Promise<{ book: Book; pages: Page[]; totalBooks: number; galleryImages: GalleryImagePreview[]; galleryImageCount: number; bookCollections: BookCollectionPreview[]; translatedExcerpt: string | null; excerptPageNumber: number | null; matchedBySlug: boolean } | null> {
+async function getBook(id: string): Promise<{ book: Book; pages: Page[]; totalBooks: number; galleryImages: GalleryImagePreview[]; galleryImageCount: number; bookCollections: BookCollectionPreview[]; matchedBySlug: boolean } | null> {
   // Reuse the cached book lookup (shared with generateMetadata — saves a full DB round trip)
+  // When Supabase serves the lookup (<50ms), we get the bookId instantly and can start
+  // ALL Atlas queries in parallel — including a full book refetch for fields not in the catalog.
   const [result, db] = await Promise.all([
     getCachedBookLookup(id),
-    getDb(),
+    getReadDb(),
   ]);
 
   if (!result) return null;
-  const { book, matchedBySlug } = result;
+  const { book: quickBook, matchedBySlug, fromCatalog } = result;
 
   // Use the book's id field, or fall back to _id string
-  const bookId = book.id || book._id?.toString();
+  const bookId = (quickBook.id || quickBook._id?.toString()) as string;
 
-  // Inclusion projection — only fetch fields the book detail UI actually uses
-  // Status dots need .updated_at; image count needs array length via .type
+  // When the lookup came from Supabase catalog, we need to fetch the full book from Atlas
+  // for fields not in the catalog (editions, translation_verification, index, etc.).
+  // This runs in parallel with pages/gallery/collections — no sequential bottleneck.
+  const fullBookPromise = fromCatalog
+    ? findBookByIdOrSlug(db, bookId, {
+        reading_sections: 0,
+        pipeline: 0,
+        pipeline_auto: 0,
+        split_check: 0,
+        'index.sectionSummaries': 0,
+        'index.people': 0,
+        'index.places': 0,
+        'index.concepts': 0,
+        'index.keyTerms': 0,
+      }).catch(() => null)
+    : Promise.resolve(null); // Already have full book from Atlas
+
   // All queries have maxTimeMS to fail fast during DB degradation
-  const [pagesRaw, totalBooks, galleryImagesRaw, galleryImageCount, bookCollectionsRaw, excerptPageRaw] = await Promise.all([
+  const [fullBookResult, pagesRaw, totalBooks, galleryImagesRaw, galleryImageCount, bookCollectionsRaw] = await Promise.all([
+    fullBookPromise,
     // Drop $ne filter — it prevents use of the {book_id,page_number} compound
     // index and forces a collection scan. Filter digitizer-inserts in JS instead.
     db.collection('pages')
@@ -241,24 +287,21 @@ async function getBook(id: string): Promise<{ book: Book; pages: Page[]; totalBo
       )
       .catch(() => 0),
     // Collections this book belongs to
-    book.collections?.length
+    (quickBook.collections as string[] | undefined)?.length
       ? db.collection('collections')
           .find(
-            { slug: { $in: book.collections }, visible: true },
+            { slug: { $in: quickBook.collections as string[] }, visible: true },
             { projection: { _id: 0, slug: 1, name: 1, subtitle: 1, color: 1, book_count: 1, featured_images: 1 }, maxTimeMS: 5000 },
           )
           .sort({ order: 1 })
           .toArray()
           .catch(() => [])
       : Promise.resolve([]),
-    // First non-blank translated page for excerpt preview
-    db.collection('pages')
-      .findOne(
-        { book_id: bookId, 'translation.data': { $exists: true, $ne: '' } },
-        { sort: { page_number: 1 }, projection: { _id: 0, 'translation.data': 1, page_number: 1 }, maxTimeMS: 3000 },
-      )
-      .catch(() => null),
   ]);
+
+  // Use the full Atlas book when available (has editions, translation_verification, etc.)
+  // Fall back to the catalog book (Supabase) if Atlas fetch failed
+  const book = fullBookResult?.book ?? quickBook;
 
   // Fetch full index data from dedicated collection (keeps book docs small)
   const bookIndexDoc = await db.collection('book_indexes').findOne(
@@ -277,30 +320,7 @@ async function getBook(id: string): Promise<{ book: Book; pages: Page[]; totalBo
   const galleryImages = JSON.parse(JSON.stringify(galleryImagesRaw)) as GalleryImagePreview[];
   const bookCollections = JSON.parse(JSON.stringify(bookCollectionsRaw)) as BookCollectionPreview[];
 
-  // Extract and truncate translated excerpt at a sentence boundary
-  let translatedExcerpt: string | null = null;
-  let excerptPageNumber: number | null = null;
-  if (excerptPageRaw?.translation?.data) {
-    const raw = excerptPageRaw.translation.data as string;
-    // Strip XML/HTML tags that translation data may contain
-    const cleaned = raw.replace(/<[^>]+>/g, '').replace(/\s+/g, ' ').trim();
-    if (cleaned.length > 0) {
-      excerptPageNumber = excerptPageRaw.page_number ?? null;
-      if (cleaned.length <= 300) {
-        translatedExcerpt = cleaned;
-      } else {
-        // Find the last sentence boundary before 300 chars
-        const truncated = cleaned.slice(0, 350);
-        const lastPeriod = truncated.lastIndexOf('. ', 300);
-        const lastQuestion = truncated.lastIndexOf('? ', 300);
-        const lastExclaim = truncated.lastIndexOf('! ', 300);
-        const boundary = Math.max(lastPeriod, lastQuestion, lastExclaim);
-        translatedExcerpt = boundary > 80 ? truncated.slice(0, boundary + 1) : cleaned.slice(0, 300) + '...';
-      }
-    }
-  }
-
-  return { book: serializedBook as Book, pages: serializedPages as Page[], totalBooks, galleryImages, galleryImageCount, bookCollections, translatedExcerpt, excerptPageNumber, matchedBySlug };
+  return { book: serializedBook as Book, pages: serializedPages as Page[], totalBooks, galleryImages, galleryImageCount, bookCollections, matchedBySlug };
 }
 
 // Skeleton for book info while loading
@@ -363,7 +383,7 @@ async function BookInfo({ id }: { id: string }) {
     notFound();
   }
 
-  const { book, pages, totalBooks, galleryImages, galleryImageCount, bookCollections, translatedExcerpt, excerptPageNumber } = data;
+  const { book, pages, totalBooks, galleryImages, galleryImageCount, bookCollections } = data;
 
   // Empty shell books (0 pages from failed imports) should 404
   // But visual art (paintings, prints, etc.) legitimately has no page documents
@@ -570,29 +590,19 @@ async function BookInfo({ id }: { id: string }) {
                 </div>
               )}
 
-              {/* Source attribution — always visible */}
-              {(book.image_source?.provider_name || book.image_source?.contributing_library) && (
-                <p className="text-xs text-stone-500 mt-3">
-                  Images:{' '}
-                  {book.image_source.source_url ? (
-                    <a href={book.image_source.source_url} target="_blank" rel="noopener noreferrer" className="hover:text-stone-300 transition-colors">
-                      {book.image_source.attribution || book.image_source.contributing_library || book.image_source.provider_name}
-                    </a>
-                  ) : (
-                    <span>{book.image_source.attribution || book.image_source.contributing_library || book.image_source.provider_name}</span>
-                  )}
-                </p>
-              )}
-
-              {/* Translation credit */}
-              {translatedCount > 0 && (
-                <p className="text-xs text-stone-500 mt-2">
-                  Translated by Source Library AI{' '}
-                  <span className="text-stone-600">&middot;</span>{' '}
-                  <Link href="/about/research" className="hover:text-stone-300 transition-colors underline underline-offset-2">
-                    How our translations work
-                  </Link>
-                </p>
+              {/* Collections */}
+              {bookCollections.length > 0 && (
+                <div className="flex flex-wrap items-center gap-2 mt-3">
+                  {bookCollections.map(col => (
+                    <Link
+                      key={col.slug}
+                      href={`/collections/${col.slug}`}
+                      className="text-xs text-stone-400 hover:text-white bg-white/5 hover:bg-white/10 px-2.5 py-1 rounded-full transition-colors"
+                    >
+                      {col.name}
+                    </Link>
+                  ))}
+                </div>
               )}
 
               {/* Dedication */}
@@ -673,15 +683,14 @@ async function BookInfo({ id }: { id: string }) {
                 <SearchPanel bookId={book.id} />
               </div>
 
-              {/* Bibliographic Info */}
-              <BibliographicInfo book={book} pagesCount={pages.length} />
-
-              {/* Related Editions (WEMI work_id linking) */}
-              {(book as unknown as { work_id?: string }).work_id && (
-                <Suspense fallback={null}>
-                  <RelatedEditions bookId={book.id} workId={(book as unknown as { work_id?: string }).work_id!} />
-                </Suspense>
-              )}
+              {/* Bibliographic Info (includes related editions, attribution) */}
+              <BibliographicInfo book={book} pagesCount={pages.length} hasTranslations={translatedCount > 0}>
+                {(book as unknown as { work_id?: string }).work_id && (
+                  <Suspense fallback={null}>
+                    <RelatedEditions bookId={book.id} workId={(book as unknown as { work_id?: string }).work_id!} />
+                  </Suspense>
+                )}
+              </BibliographicInfo>
 
               {/* Cross-reference: artworks by this author (pre-computed) */}
               {(book as any).author_cross_ref && (
@@ -747,24 +756,13 @@ async function BookInfo({ id }: { id: string }) {
               )}
             </div>
 
-            {/* Translated Excerpt */}
-            {translatedExcerpt && (
-              <div className="card p-6 mt-6">
-                <h2 className="text-lg font-semibold mb-3" style={{ color: 'var(--text-primary)' }}>
-                  <BookText className="w-4 h-4 inline-block mr-2 -mt-0.5 opacity-60" />
-                  From the Translation
-                </h2>
-                <blockquote className="border-l-3 border-accent-gold/40 pl-4 italic text-secondary leading-relaxed">
-                  {translatedExcerpt}
-                </blockquote>
-                <Link
-                  href={`/book/${book.slug || book.id}${excerptPageNumber ? `/page-number/${excerptPageNumber}` : ''}`}
-                  className="inline-block mt-3 text-sm text-accent-rust hover:text-accent-gold-dark transition-colors"
-                >
-                  Continue reading &rarr;
-                </Link>
-              </div>
-            )}
+            {/* Chapters & Sections */}
+            {book.chapters?.length ? (
+              <ChaptersDropdown
+                chapters={book.chapters as { title: string; titleEn?: string; pageNumber: number; level: number }[]}
+                bookSlug={book.slug || book.id}
+              />
+            ) : null}
 
             {/* Editions Panel */}
             {book.editions?.length ? (

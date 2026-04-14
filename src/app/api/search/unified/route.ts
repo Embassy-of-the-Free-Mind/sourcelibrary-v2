@@ -1,7 +1,12 @@
 import { NextRequest, NextResponse } from 'next/server';
 import { getDb } from '@/lib/mongodb';
-import { buildBookSearchStage, type BookSearchFilters } from '@/lib/atlas-search';
+import { supabase } from '@/lib/supabase';
+import type { BookSearchFilters } from '@/lib/atlas-search';
 import type { SearchResult } from '@/lib/api-client/types/search';
+import { searchBookIds } from '@/lib/books-catalog';
+
+// CLIP server on Hetzner for visual text→image search
+const CLIP_URL = process.env.CLIP_URL || 'http://46.224.122.120:3456/clip';
 
 const ENTITIES_SEARCH_INDEX = 'entities_search';
 const GALLERY_SEARCH_INDEX = 'gallery_search';
@@ -72,21 +77,22 @@ export async function GET(request: NextRequest) {
     if (firstTranslation) searchFilters.isFirstTranslation = true;
     if (hasTranslation) searchFilters.hasTranslation = true;
 
-    // Run book, index, and gallery search in parallel (each handles its own errors)
-    const [booksResult, indexResult, galleryResult] = await Promise.all([
+    // Run book, index, gallery, and visual search in parallel
+    const [booksResult, indexResult, galleryResult, visualResult] = await Promise.all([
       searchBooks(db, query, queryRegex, limit, searchFilters, library),
       searchIndex(db, query, limit).catch((err) => {
         console.error('Index search error:', err);
         return { results: [] as IndexResult[], total: 0 };
       }),
       searchGallery(db, query, queryRegex, galleryLimit),
+      searchVisual(query, galleryLimit),
     ]);
 
     // Log search query (fire-and-forget)
     db.collection('analytics_events').insertOne({
       event: 'search_query',
       query,
-      results_count: booksResult.total + indexResult.total + galleryResult.total,
+      results_count: booksResult.total + indexResult.total + galleryResult.total + visualResult.total,
       filters: { language, category, library, source: 'unified' },
       timestamp: new Date(),
       ip: request.headers.get('x-forwarded-for')?.split(',')[0]?.trim() || 'unknown',
@@ -98,6 +104,7 @@ export async function GET(request: NextRequest) {
       books: booksResult,
       index: indexResult,
       gallery: galleryResult,
+      visual: visualResult,
     }, {
       headers: {
         'Cache-Control': 'no-store',
@@ -124,52 +131,30 @@ async function searchBooks(
     'reading_summary.overview': 1,
   };
 
+  // Supabase trigram search (fast, always warm — no cold-start penalty)
+  const matchingIds = await searchBookIds(query, { limit: (limit + 1) * 2 });
+
   let books;
-
-  try {
-    // Use Atlas Search with autocomplete + fuzzy for instant prefix matching
-    // eslint-disable-next-line @typescript-eslint/no-explicit-any
-    const pipeline: any[] = [
-      buildBookSearchStage(query, searchFilters, { autocomplete: true, fuzzy: true }),
-    ];
-
-    // Post-filter for fields not in Atlas Search index
-    const postMatch: Record<string, unknown> = {};
-    if (library) postMatch['image_source.provider'] = library;
-    if (Object.keys(postMatch).length > 0) {
-      pipeline.push({ $limit: limit * 3 });
-      pipeline.push({ $match: postMatch });
-    }
-
-    // Fetch one extra to detect if there are more results
-    pipeline.push({ $limit: limit + 1 });
-    pipeline.push({ $project: bookProjection });
-
-    books = await db.collection('books').aggregate(pipeline, { maxTimeMS: 5000 }).toArray();
-  } catch {
-    // Fallback to regex if Atlas Search index not available
-    const regexFilter: Record<string, unknown> = {
-      $or: [
-        { title: queryRegex },
-        { display_title: queryRegex },
-        { english_title: queryRegex },
-        { author: queryRegex },
-        { 'reading_summary.overview': queryRegex },
-      ],
+  if (matchingIds.length > 0) {
+    const filter: Record<string, unknown> = {
+      id: { $in: matchingIds },
       visible: true,
       pages_count: { $gt: 0 },
     };
-    if (searchFilters.language) regexFilter.language = searchFilters.language;
-    if (searchFilters.category) regexFilter.categories = searchFilters.category;
-    if (searchFilters.isFirstTranslation) regexFilter.is_first_translation = true;
-    if (searchFilters.hasTranslation) regexFilter.pages_translated = { $gt: 0 };
-    if (library) regexFilter['image_source.provider'] = library;
+    if (searchFilters.language) filter.language = searchFilters.language;
+    if (searchFilters.category) filter.categories = searchFilters.category;
+    if (searchFilters.isFirstTranslation) filter.is_first_translation = true;
+    if (searchFilters.hasTranslation) filter.pages_translated = { $gt: 0 };
+    if (library) filter['image_source.provider'] = library;
 
     books = await db.collection('books')
-      .find(regexFilter)
+      .find(filter)
       .project(bookProjection)
       .limit(limit + 1)
+      .maxTimeMS(5000)
       .toArray();
+  } else {
+    books = [];
   }
 
   // Author alias expansion: if results are sparse and query matches an entity alias,
@@ -448,6 +433,60 @@ async function searchGallery(db: any, query: string, queryRegex: RegExp, limit: 
     };
   } catch (err) {
     console.error('Gallery search error:', err);
+    return { results: [], total: 0 };
+  }
+}
+
+/**
+ * CLIP visual search: encode text query via CLIP, search against image embeddings.
+ * Finds images by what they look like, not just their metadata.
+ */
+async function searchVisual(query: string, limit: number): Promise<{ results: GalleryResult[]; total: number }> {
+  try {
+    // Encode text via CLIP text encoder
+    const clipResp = await fetch(`${CLIP_URL}/embed-text`, {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify({ text: query }),
+      signal: AbortSignal.timeout(4000),
+    });
+    if (!clipResp.ok) return { results: [], total: 0 };
+    const { embedding } = await clipResp.json();
+    if (!embedding) return { results: [], total: 0 };
+
+    // Search Supabase CLIP embeddings
+    const { data, error } = await supabase.rpc('match_clip_text', {
+      query_embedding: embedding,
+      match_threshold: 0.22,
+      match_count: limit * 2,
+    });
+    if (error || !data) return { results: [], total: 0 };
+
+    // Deduplicate by book (max 2 per book)
+    const byBook = new Map<string, number>();
+    const deduped = (data as Array<{
+      id: string; book_id: string; image_url: string; thumbnail_url: string;
+      title: string; author: string; resource_type: string; similarity: number;
+    }>).filter(m => {
+      const count = byBook.get(m.book_id) || 0;
+      if (count >= 2) return false;
+      byBook.set(m.book_id, count + 1);
+      return true;
+    }).slice(0, limit);
+
+    return {
+      results: deduped.map(m => ({
+        id: m.id,
+        imageUrl: m.thumbnail_url || m.image_url || '',
+        description: m.title || '',
+        type: m.resource_type || undefined,
+        bookTitle: m.title || '',
+        bookId: m.book_id || '',
+        similarity: m.similarity,
+      })),
+      total: deduped.length,
+    };
+  } catch {
     return { results: [], total: 0 };
   }
 }

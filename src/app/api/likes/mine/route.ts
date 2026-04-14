@@ -5,7 +5,7 @@
  */
 
 import { NextRequest, NextResponse } from 'next/server';
-import { getDb } from '@/lib/mongodb';
+import { getReadDb } from '@/lib/mongodb';
 import { LikeTargetType } from '@/lib/types';
 import { buildCropUrl } from '@/lib/social-image-selector';
 
@@ -33,7 +33,7 @@ export async function GET(request: NextRequest) {
 
     const limit = Math.min(parseInt(searchParams.get('limit') || '100'), 5000);
 
-    const db = await getDb();
+    const db = await getReadDb();
 
     const myLikes = await db.collection('likes')
       .find({ visitor_id: visitorId, target_type: targetType })

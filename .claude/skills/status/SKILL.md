@@ -17,7 +17,7 @@ async function status() {
   await client.connect();
   const db = client.db('bookstore');
 
-  const [totals, readable, firstTranslations, jobs, paused, failed24h, recentTranslations] = await Promise.all([
+  const [totals, readable, firstTranslations, jobs, paused, failed24h, recentTranslations, batchHealth] = await Promise.all([
     // Totals from book-level caches (fast)
     db.collection('books').aggregate([
       { $match: { hidden: { $ne: true } } },
@@ -65,6 +65,9 @@ async function status() {
       status: 'success',
       timestamp: { $gte: new Date(Date.now() - 3600000) }
     }),
+
+    // Batch API health (written by batch-collector every 10 min)
+    db.collection('system_config').findOne({ _id: 'batch_health' }),
   ]);
 
   const t = totals[0] || { books: 0, pages: 0, ocr: 0, translated: 0 };
@@ -87,6 +90,16 @@ async function status() {
   console.log(`  Translation rate: ~${recentTranslations}/hr`);
   if (paused?.paused) console.log('  *** PIPELINE PAUSED ***');
   if (paused?.paused_phases?.length) console.log(`  Paused phases: ${paused.paused_phases.join(', ')}`);
+  console.log('');
+  if (batchHealth) {
+    const age = ((Date.now() - new Date(batchHealth.updated_at).getTime()) / 60000).toFixed(0);
+    console.log(`Batch API (${age}m ago):`);
+    console.log(`  Gemini: ${batchHealth.geminiActive} active (${batchHealth.geminiActiveByKey?.join('/')}) | DB: ${batchHealth.dbActive}`);
+    console.log(`  OCR pages: ${batchHealth.recentPagesSaved1h}/1h, ${batchHealth.recentPagesSaved6h}/6h`);
+    if (!batchHealth.healthy) console.log(`  *** ISSUES: ${batchHealth.issues?.join('; ')} ***`);
+  } else {
+    console.log('Batch API: no health data (collector not run yet?)');
+  }
 
   await client.close();
 }
@@ -108,6 +121,9 @@ Coverage: OCR 15.4% | Translation 9.9%
 
 Pipeline: 103 processing, 102 queued, 0 failed (24h)
   Translation rate: ~450/hr
+
+Batch API (5m ago): Gemini 12 active (4/4/4) | DB 12
+  OCR pages: 1,200/1h, 8,400/6h
 ```
 
 Keep it tight. If something looks wrong (high failures, pipeline paused, zero throughput), call it out. Otherwise just report the numbers.

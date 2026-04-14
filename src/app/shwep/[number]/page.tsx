@@ -171,9 +171,9 @@ function BookCard({ book }: { book: MatchedBook }) {
       className="flex gap-5 p-5 rounded-xl bg-white border border-stone-200 shadow-sm hover:shadow-md hover:border-accent-rust/30 transition-all group"
     >
       {/* Thumbnail */}
-      {book.thumbnail ? (
+      {(book.thumbnail_blob || book.thumbnail) ? (
         <img
-          src={book.thumbnail}
+          src={book.thumbnail_blob || book.thumbnail}
           alt=""
           className="w-20 h-28 object-cover rounded-lg shadow-sm shrink-0 bg-stone-100 group-hover:shadow-md transition-shadow"
           loading="lazy"

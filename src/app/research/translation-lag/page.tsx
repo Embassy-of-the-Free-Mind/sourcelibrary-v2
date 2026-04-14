@@ -1,5 +1,5 @@
 import { Metadata } from 'next';
-import { getDb } from '@/lib/mongodb';
+import { getReadDb } from '@/lib/mongodb';
 import ContentPageLayout, { ContentHeader } from '@/components/layout/ContentPageLayout';
 import TranslationLagViz from '@/components/research/TranslationLagViz';
 
@@ -26,7 +26,7 @@ interface LagDataPoint {
 }
 
 async function fetchLagData(): Promise<LagDataPoint[]> {
-  const db = await getDb();
+  const db = await getReadDb();
   const books = await db.collection('books').find(
     {
       visible: true,

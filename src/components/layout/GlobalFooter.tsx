@@ -25,6 +25,8 @@ const NAV_COLUMNS = [
     title: 'About',
     links: [
       { label: 'About', href: '/about' },
+      { label: 'Translation Census', href: '/census' },
+      { label: 'Progress', href: '/about/progress' },
       { label: 'Research Notes', href: '/blog' },
       { label: 'Privacy', href: '/privacy' },
       { label: 'Cookie Settings', href: '#cookie-settings' },

@@ -1,6 +1,6 @@
 import { NextRequest, NextResponse } from 'next/server';
 import { importBookFromIIIF } from '@/lib/import-utils';
-import { withAuth } from '@/lib/auth-helpers';
+import { withCuratorAuth } from '@/lib/auth-helpers';
 
 export const maxDuration = 300;
 
@@ -21,7 +21,7 @@ export const maxDuration = 300;
  * The manuscript ID is normalized: dots become periods in the URL,
  * e.g. "Pal.lat.235" → "MSS_Pal.lat.235" in the IIIF manifest path.
  */
-export const POST = withAuth(async (request, session) => {
+export const POST = withCuratorAuth(async (request, session) => {
   try {
     const body = await request.json();
     const { mss_id, title, display_title, author, language, published, categories, work_id } = body;

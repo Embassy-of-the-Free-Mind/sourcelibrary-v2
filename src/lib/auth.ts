@@ -68,7 +68,7 @@ const WELCOME_HTML = `
 
 // Helper: check user role from admin_users whitelist
 // Returns 'admin', 'inner_circle', or null
-async function getUserRole(email: string): Promise<'admin' | 'inner_circle' | null> {
+async function getUserRole(email: string): Promise<'admin' | 'curator' | 'inner_circle' | null> {
   try {
     const client = await clientPromise;
     const db = client.db(dbName);
@@ -77,8 +77,10 @@ async function getUserRole(email: string): Promise<'admin' | 'inner_circle' | nu
       active: true,
     });
     if (!entry) return null;
+    if (entry.role === 'inner_circle') return 'inner_circle';
+    if (entry.role === 'curator') return 'curator';
     // Default to 'admin' for existing entries without a role field (backward compat)
-    return entry.role === 'inner_circle' ? 'inner_circle' : 'admin';
+    return 'admin';
   } catch (error) {
     console.error('[auth] Error checking user role:', error);
     return null;

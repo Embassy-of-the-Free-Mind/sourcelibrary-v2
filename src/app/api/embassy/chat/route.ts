@@ -3,7 +3,7 @@ import { after } from 'next/server';
 import { auth } from '@/lib/auth';
 import { getDb } from '@/lib/mongodb';
 import { ObjectId } from 'mongodb';
-import { generateLibrarianResponse, streamLibrarianResponse } from '@/lib/embassy/librarian';
+import { streamAgenticResponse, type LibrarianStep, type SourceCard } from '@/lib/embassy/librarian';
 import { z } from 'zod';
 
 export const dynamic = 'force-dynamic';
@@ -11,7 +11,7 @@ export const maxDuration = 60;
 
 const messageSchema = z.object({
   role: z.enum(['user', 'assistant']),
-  content: z.string().min(1).max(10000),
+  content: z.string().max(10000), // Allow empty for assistant messages (e.g., choices-only responses)
 });
 
 const chatRequestSchema = z.object({
@@ -24,9 +24,18 @@ const chatRequestSchema = z.object({
 
 /**
  * POST /api/embassy/chat — Send a message to the Librarian.
- * Creates or continues a thread. Returns the AI response.
- * Supports streaming via SSE when stream=true.
- * Auth required.
+ * Creates or continues a thread. Returns the AI response as structured SSE events.
+ *
+ * SSE event types:
+ *   threadId   — thread identifier (sent first)
+ *   thinking   — Librarian's reasoning before searching
+ *   tool_call  — search step starting (name + query)
+ *   tool_result — search step completed (name + summary + found count)
+ *   choices    — branching options for the user to select
+ *   chunk      — response text chunk
+ *   sources    — source cards array
+ *   done       — stream complete
+ *   error      — something went wrong
  */
 export async function POST(request: NextRequest) {
   const session = await auth();
@@ -67,7 +76,6 @@ export async function POST(request: NextRequest) {
     }
     activeThreadId = threadId;
 
-    // Save user message
     await db.collection('embassy_messages').insertOne({
       threadId: new ObjectId(threadId),
       authorType: 'human',
@@ -91,7 +99,6 @@ export async function POST(request: NextRequest) {
     });
     activeThreadId = result.insertedId.toString();
 
-    // Save user message
     await db.collection('embassy_messages').insertOne({
       threadId: result.insertedId,
       authorType: 'human',
@@ -102,119 +109,112 @@ export async function POST(request: NextRequest) {
     });
   }
 
-  // Streaming response via TransformStream (flush-friendly on Vercel)
-  if (stream) {
-    const encoder = new TextEncoder();
-    const { readable, writable } = new TransformStream();
-    const writer = writable.getWriter();
+  // Always stream — the agentic response is inherently step-by-step
+  const encoder = new TextEncoder();
+  const { readable, writable } = new TransformStream();
+  const writer = writable.getWriter();
 
-    // Start piping immediately — search + stream happen in background
-    const pipePromise = (async () => {
-      try {
-        // Send threadId immediately so client knows the connection is live
-        await writer.write(encoder.encode(`data: ${JSON.stringify({ type: 'threadId', threadId: activeThreadId })}\n\n`));
-        // Send a status event so the UI can show "Searching..."
-        await writer.write(encoder.encode(`data: ${JSON.stringify({ type: 'status', text: 'Searching the collection...' })}\n\n`));
+  const send = (event: Record<string, unknown>) =>
+    writer.write(encoder.encode(`data: ${JSON.stringify(event)}\n\n`));
 
-        // Now do the slow search + Gemini init
-        const { stream: textStream, sources, getFullText } = await streamLibrarianResponse(message, history);
+  // Collect full text + sources for DB write
+  let fullText = '';
+  let allSources: SourceCard[] = [];
 
-        for await (const chunk of textStream) {
-          await writer.write(encoder.encode(`data: ${JSON.stringify({ type: 'chunk', text: chunk })}\n\n`));
+  const pipePromise = (async () => {
+    try {
+      await send({ type: 'threadId', threadId: activeThreadId });
+
+      for await (const step of streamAgenticResponse(message, history, activeThreadId)) {
+        switch (step.type) {
+          case 'thinking':
+            await send({ type: 'thinking', text: step.text });
+            break;
+
+          case 'tool_call':
+            await send({ type: 'tool_call', name: step.name, query: step.query });
+            break;
+
+          case 'tool_result':
+            await send({
+              type: 'tool_result',
+              name: step.name,
+              query: step.query,
+              summary: step.summary,
+              found: step.found,
+            });
+            break;
+
+          case 'choices':
+            await send({ type: 'choices', text: step.text, options: step.options });
+            break;
+
+          case 'text':
+            fullText += step.text || '';
+            await send({ type: 'chunk', text: step.text });
+            break;
+
+          case 'sources':
+            allSources = step.sources || [];
+            await send({ type: 'sources', sources: step.sources });
+            break;
+
+          case 'notebook_update':
+            await send({ type: 'notebook_update', notebook: step.notebook });
+            break;
         }
-
-        await writer.write(encoder.encode(`data: ${JSON.stringify({ type: 'done' })}\n\n`));
-        await writer.close();
-
-        // Return data needed for after() DB writes
-        return { getFullText, sources };
-      } catch (err) {
-        console.error('[Embassy] Stream error:', err);
-        try {
-          await writer.write(encoder.encode(`data: ${JSON.stringify({ type: 'error', message: 'The Librarian was interrupted. Please try again.' })}\n\n`));
-          await writer.close();
-        } catch { /* already closed */ }
-        return null;
       }
-    })();
 
-      // Defer DB writes to after the response is sent
-      after(async () => {
-        const result = await pipePromise;
-        if (!result) return; // Stream errored
-        const fullText = result.getFullText();
-        const sources = result.sources;
-        const aiMessageTime = new Date();
+      await send({ type: 'done' });
+      await writer.close();
+    } catch (err) {
+      console.error('[Embassy] Agentic stream error:', err);
+      try {
+        await send({ type: 'error', message: 'The Librarian was interrupted. Please try again.' });
+        await writer.close();
+      } catch { /* already closed */ }
+    }
+  })();
 
-        try {
-          await db.collection('embassy_messages').insertOne({
-            threadId: new ObjectId(activeThreadId),
-            authorType: 'ai',
-            authorName: 'The Librarian',
-            content: fullText,
-            sources: sources.map(s => ({
-              bookId: s.book_id,
-              bookTitle: s.bookTitle,
-              bookAuthor: s.bookAuthor,
-              pageNumber: s.page_number,
-              bookSlug: s.bookSlug,
-            })),
-            createdAt: aiMessageTime,
-          });
-
-          await db.collection('embassy_threads').updateOne(
-            { _id: new ObjectId(activeThreadId) },
-            { $set: { lastMessageAt: aiMessageTime }, $inc: { messageCount: 2 } },
-          );
-        } catch (err) {
-          console.error('[Embassy] Failed to save AI response:', err);
-        }
-      });
-
-    return new Response(readable, {
-      headers: {
-        'Content-Type': 'text/event-stream',
-        'Cache-Control': 'no-cache, no-transform',
-        'Connection': 'keep-alive',
-        'X-Accel-Buffering': 'no',
-      },
-    });
-  }
-
-  // Non-streaming response (fallback)
-  try {
-    const { content: aiResponse, sources } = await generateLibrarianResponse(message, history);
+  // Defer DB writes
+  after(async () => {
+    await pipePromise;
+    if (!fullText && allSources.length === 0) return;
     const aiMessageTime = new Date();
 
-    await db.collection('embassy_messages').insertOne({
-      threadId: new ObjectId(activeThreadId),
-      authorType: 'ai',
-      authorName: 'The Librarian',
-      content: aiResponse,
-      sources: sources.map(s => ({
-        bookId: s.book_id,
-        bookTitle: s.bookTitle,
-        bookAuthor: s.bookAuthor,
-        pageNumber: s.page_number,
-        bookSlug: s.bookSlug,
-      })),
-      createdAt: aiMessageTime,
-    });
+    try {
+      await db.collection('embassy_messages').insertOne({
+        threadId: new ObjectId(activeThreadId),
+        authorType: 'ai',
+        authorName: 'The Librarian',
+        content: fullText,
+        sources: allSources.map(s => ({
+          bookId: s.book_id,
+          bookTitle: s.bookTitle,
+          bookAuthor: s.bookAuthor,
+          pageNumber: s.pageNumber,
+          bookSlug: s.bookSlug,
+          snippet: s.snippet,
+          inCollection: s.inCollection,
+        })),
+        createdAt: aiMessageTime,
+      });
 
-    await db.collection('embassy_threads').updateOne(
-      { _id: new ObjectId(activeThreadId) },
-      { $set: { lastMessageAt: aiMessageTime }, $inc: { messageCount: 2 } },
-    );
+      await db.collection('embassy_threads').updateOne(
+        { _id: new ObjectId(activeThreadId) },
+        { $set: { lastMessageAt: aiMessageTime }, $inc: { messageCount: 2 } },
+      );
+    } catch (err) {
+      console.error('[Embassy] Failed to save AI response:', err);
+    }
+  });
 
-    return NextResponse.json({
-      threadId: activeThreadId,
-      message: { role: 'assistant', content: aiResponse },
-    });
-  } catch (error) {
-    console.error('[Embassy] Librarian error:', error);
-    return NextResponse.json(
-      { error: 'The Librarian is momentarily away. Please try again.' },
-      { status: 500 },
-    );
-  }
+  return new Response(readable, {
+    headers: {
+      'Content-Type': 'text/event-stream',
+      'Cache-Control': 'no-cache, no-transform',
+      'Connection': 'keep-alive',
+      'X-Accel-Buffering': 'no',
+    },
+  });
 }

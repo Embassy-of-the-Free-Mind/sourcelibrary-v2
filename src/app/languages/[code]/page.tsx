@@ -3,7 +3,7 @@ import Link from 'next/link';
 import Image from 'next/image';
 import { BookOpen, Images } from 'lucide-react';
 import SiteHeader from '@/components/layout/SiteHeader';
-import { getDb } from '@/lib/mongodb';
+import { getReadDb } from '@/lib/mongodb';
 import { browseBooks, countBooks } from '@/lib/books-catalog';
 import { notFound } from 'next/navigation';
 import CollectionBookCard from '@/components/CollectionBookCard';
@@ -135,7 +135,7 @@ async function fetchLanguageData(langName: string, sort: string, offset: number,
   let galleryImages: unknown[] = [];
   if (sampleBookIds.length > 0) {
     try {
-      const db = await getDb();
+      const db = await getReadDb();
       galleryImages = await db.collection('gallery_images').aggregate([
         { $match: {
           book_id: { $in: sampleBookIds },
@@ -286,7 +286,7 @@ export default async function LanguageDetailPage({ params, searchParams }: Props
                 pages_count: book.pages_count,
                 pages_ocr: book.pages_ocr,
                 pages_translated: book.pages_translated,
-                thumbnail: book.thumbnail || book.thumbnail_blob || book.photo,
+                thumbnail: book.thumbnail_blob || book.thumbnail || book.photo,
                 thumbnail_blob: book.thumbnail_blob,
                 language: book.language,
                 published: book.published,

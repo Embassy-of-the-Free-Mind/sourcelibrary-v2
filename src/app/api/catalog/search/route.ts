@@ -1,5 +1,5 @@
 import { NextRequest, NextResponse } from 'next/server';
-import { getDb } from '@/lib/mongodb';
+import { getReadDb } from '@/lib/mongodb';
 
 export const dynamic = 'force-dynamic';
 
@@ -38,7 +38,7 @@ export async function GET(request: NextRequest) {
   }
 
   try {
-    const db = await getDb();
+    const db = await getReadDb();
 
     // Split query into words and search for all of them
     const words = query.split(/\s+/).filter(w => w.length >= 2);

@@ -1,5 +1,5 @@
 import { NextResponse } from 'next/server';
-import { getDb } from '@/lib/mongodb';
+import { getReadDb } from '@/lib/mongodb';
 
 export const dynamic = 'force-dynamic';
 
@@ -11,7 +11,7 @@ interface Contribution {
 
 export async function GET() {
   try {
-    const db = await getDb();
+    const db = await getReadDb();
 
     // Get aggregated contributor stats
     const stats = await db.collection('contributions').aggregate([

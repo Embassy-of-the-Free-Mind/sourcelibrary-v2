@@ -2,10 +2,13 @@
 
 import { useState, useCallback, useEffect, useRef, useMemo } from 'react';
 import { useRouter, useSearchParams } from 'next/navigation';
-import { ChevronDown, X } from 'lucide-react';
+import { ChevronDown, X, BookOpen, Image as ImageIcon } from 'lucide-react';
+import Image from 'next/image';
+import Link from 'next/link';
 import { BookLoader } from '@/components/ui/BookLoader';
 import CollectionBookCard from '@/components/CollectionBookCard';
-import type { TimelineOverview, TimelineBook, DecadeBucket } from '@/lib/api-client/types/timeline';
+import { formatAuthor } from '@/lib/utils';
+import type { TimelineOverview, TimelineBook, TimelineArtItem, DecadeBucket } from '@/lib/api-client/types/timeline';
 
 /* ── Historical eras ── */
 interface Era {
@@ -105,8 +108,10 @@ export default function TimelineClient({ initialData }: Props) {
   const offset = parseInt(searchParams.get('offset') || '0');
 
   const [books, setBooks] = useState<TimelineBook[]>([]);
+  const [artItems, setArtItems] = useState<TimelineArtItem[]>([]);
   const [booksTotal, setBooksTotal] = useState(0);
   const [loadingBooks, setLoadingBooks] = useState(false);
+  const [viewMode, setViewMode] = useState<'books' | 'art'>('books');
 
   const detailRef = useRef<HTMLDivElement>(null);
 
@@ -155,10 +160,11 @@ export default function TimelineClient({ initialData }: Props) {
     };
   }, [filteredDecades]);
 
-  // Fetch books when decade selected
+  // Fetch books or art when decade selected
   useEffect(() => {
     if (selectedDecade === null) {
       setBooks([]);
+      setArtItems([]);
       setBooksTotal(0);
       return;
     }
@@ -170,19 +176,26 @@ export default function TimelineClient({ initialData }: Props) {
       offset: String(offset),
     });
     if (language) qs.set('language', language);
+    if (viewMode === 'art') qs.set('mode', 'art');
 
     fetch(`/api/books/timeline?${qs}`)
       .then(r => r.json())
       .then(d => {
         if (!cancelled) {
-          setBooks(d.books || []);
+          if (viewMode === 'art') {
+            setArtItems(d.art || []);
+            setBooks([]);
+          } else {
+            setBooks(d.books || []);
+            setArtItems([]);
+          }
           setBooksTotal(d.total || 0);
         }
       })
       .finally(() => { if (!cancelled) setLoadingBooks(false); });
 
     return () => { cancelled = true; };
-  }, [selectedDecade, offset, language]);
+  }, [selectedDecade, offset, language, viewMode]);
 
   // Scroll to detail panel when books load
   useEffect(() => {
@@ -191,7 +204,15 @@ export default function TimelineClient({ initialData }: Props) {
     }
   }, [selectedDecade, loadingBooks, books.length]);
 
-  const maxCount = useMemo(() => Math.max(...filteredDecades.map(d => d.count), 1), [filteredDecades]);
+  // Breakline scaling: cap at a threshold so outlier decades don't crush everything
+  // Bars above the cap get a jagged break and a count label
+  const barCap = useMemo(() => {
+    if (filteredDecades.length === 0) return 1;
+    const counts = filteredDecades.map(d => d.count).sort((a, b) => a - b);
+    const p90 = counts[Math.floor(counts.length * 0.9)] || 1;
+    // Cap at 1.5x the P90 — anything above gets a breakline
+    return Math.max(p90 * 1.5, 10);
+  }, [filteredDecades]);
 
   // Group decades by era for bracket labels
   const eraGroups = useMemo(() => {
@@ -362,7 +383,7 @@ export default function TimelineClient({ initialData }: Props) {
               <DecadeBar
                 key={d.decade}
                 bucket={d}
-                maxCount={maxCount}
+                barCap={barCap}
                 isSelected={d.decade === selectedDecade}
                 era={getEraForDecade(d.decade)}
                 onClick={() => {
@@ -376,8 +397,30 @@ export default function TimelineClient({ initialData }: Props) {
             ))}
           </div>
 
+          {/* Decade tick labels along x-axis */}
+          <div className="flex mt-1.5" style={{ minWidth: Math.max(filteredDecades.length * 14, 600) }}>
+            {filteredDecades.map((d, i) => {
+              // Compute label interval based on pixel density
+              // Each bar is ~14px min, so show labels spaced >=60px apart
+              const barWidth = Math.max(14, 600 / filteredDecades.length);
+              const labelEvery = Math.max(1, Math.ceil(60 / barWidth)); // bars between labels
+              const centuryStep = labelEvery <= 3 ? 50 : labelEvery <= 6 ? 100 : 200;
+              const absDecade = Math.abs(d.decade);
+              const showLabel = absDecade % centuryStep === 0;
+              return (
+                <div key={d.decade} className="flex-1 text-center" style={{ minWidth: 8 }}>
+                  {showLabel && (
+                    <span className="text-[9px] text-stone-400 font-mono whitespace-nowrap">
+                      {d.decade < 0 ? `${Math.abs(d.decade)} BC` : d.decade}
+                    </span>
+                  )}
+                </div>
+              );
+            })}
+          </div>
+
           {/* Era labels along x-axis */}
-          <div className="flex mt-3 border-t border-[var(--accent-gold)]/20 pt-2" style={{ minWidth: Math.max(filteredDecades.length * 14, 600) }}>
+          <div className="flex mt-1 border-t border-[var(--accent-gold)]/20 pt-2" style={{ minWidth: Math.max(filteredDecades.length * 14, 600) }}>
             {eraGroups.map(({ era, span }) => (
               <button
                 key={era.name}
@@ -405,24 +448,53 @@ export default function TimelineClient({ initialData }: Props) {
         </div>
       </div>
 
-      {/* ── Book detail panel ── */}
+      {/* ── Detail panel ── */}
       {selectedDecade !== null && (
         <div ref={detailRef} className="pt-2">
           <div className="flex items-center justify-between mb-6">
-            <h2 className="text-2xl font-serif text-stone-900">
-              {formatDecadeLabel(selectedDecade)}
-              {selectedEra && (
-                <span
-                  className="ml-3 text-sm font-sans font-normal"
-                  style={{ color: selectedEra.color }}
-                >
-                  {selectedEra.label}
+            <div className="flex items-center gap-4">
+              <h2 className="text-2xl font-serif text-stone-900">
+                {formatDecadeLabel(selectedDecade)}
+                {selectedEra && (
+                  <span
+                    className="ml-3 text-sm font-sans font-normal"
+                    style={{ color: selectedEra.color }}
+                  >
+                    {selectedEra.label}
+                  </span>
+                )}
+                <span className="ml-3 text-base font-sans font-normal text-stone-500">
+                  {booksTotal.toLocaleString()} {viewMode === 'art' ? (booksTotal === 1 ? 'artist' : 'artists') : (booksTotal === 1 ? 'text' : 'texts')}
                 </span>
-              )}
-              <span className="ml-3 text-base font-sans font-normal text-stone-500">
-                {booksTotal.toLocaleString()} {booksTotal === 1 ? 'text' : 'texts'}
-              </span>
-            </h2>
+              </h2>
+
+              {/* Books / Art toggle */}
+              <div className="flex rounded-lg border border-stone-200 overflow-hidden text-sm">
+                <button
+                  onClick={() => { setViewMode('books'); updateParams({ offset: null }); }}
+                  className={`flex items-center gap-1.5 px-3 py-1.5 transition-colors ${
+                    viewMode === 'books'
+                      ? 'bg-stone-800 text-white'
+                      : 'bg-white text-stone-500 hover:text-stone-700 hover:bg-stone-50'
+                  }`}
+                >
+                  <BookOpen className="w-3.5 h-3.5" />
+                  Books
+                </button>
+                <button
+                  onClick={() => { setViewMode('art'); updateParams({ offset: null }); }}
+                  className={`flex items-center gap-1.5 px-3 py-1.5 transition-colors ${
+                    viewMode === 'art'
+                      ? 'bg-stone-800 text-white'
+                      : 'bg-white text-stone-500 hover:text-stone-700 hover:bg-stone-50'
+                  }`}
+                >
+                  <ImageIcon className="w-3.5 h-3.5" />
+                  Art
+                </button>
+              </div>
+            </div>
+
             <button
               onClick={() => updateParams({ decade: null, offset: null })}
               className="text-stone-400 hover:text-stone-600 p-1"
@@ -436,6 +508,40 @@ export default function TimelineClient({ initialData }: Props) {
             <div className="flex justify-center py-16">
               <BookLoader size="sm" />
             </div>
+          ) : viewMode === 'art' ? (
+            artItems.length === 0 ? (
+              <p className="text-center py-12 text-stone-500 font-body">No illustrations found for this decade.</p>
+            ) : (
+              <>
+                <div className="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-4 xl:grid-cols-5 gap-4">
+                  {artItems.map((item, i) => (
+                    <TimelineArtCard key={item.id} item={item} priority={i < 5} />
+                  ))}
+                </div>
+
+                {booksTotal > PER_PAGE && (
+                  <div className="flex items-center justify-center gap-4 mt-8">
+                    <button
+                      onClick={() => updateParams({ offset: String(Math.max(0, offset - PER_PAGE)) })}
+                      disabled={offset === 0}
+                      className="px-4 py-2 text-sm border border-stone-200 rounded-lg disabled:opacity-40 hover:bg-stone-50 transition-colors"
+                    >
+                      Previous
+                    </button>
+                    <span className="text-sm text-stone-500 font-body">
+                      {offset + 1}&ndash;{Math.min(offset + PER_PAGE, booksTotal)} of {booksTotal}
+                    </span>
+                    <button
+                      onClick={() => updateParams({ offset: String(offset + PER_PAGE) })}
+                      disabled={offset + PER_PAGE >= booksTotal}
+                      className="px-4 py-2 text-sm border border-stone-200 rounded-lg disabled:opacity-40 hover:bg-stone-50 transition-colors"
+                    >
+                      Next
+                    </button>
+                  </div>
+                )}
+              </>
+            )
           ) : books.length === 0 ? (
             <p className="text-center py-12 text-stone-500 font-body">No texts found for this decade.</p>
           ) : (
@@ -454,6 +560,7 @@ export default function TimelineClient({ initialData }: Props) {
                       pages_count: book.pages_count,
                       pages_translated: book.pages_translated,
                       thumbnail: book.thumbnail,
+                      thumbnail_blob: book.thumbnail_blob,
                       language: book.language,
                     }}
                     priority={i < 5}
@@ -495,35 +602,53 @@ export default function TimelineClient({ initialData }: Props) {
 
 function DecadeBar({
   bucket,
-  maxCount,
+  barCap,
   isSelected,
   era,
   onClick,
 }: {
   bucket: DecadeBucket;
-  maxCount: number;
+  barCap: number;
   isSelected: boolean;
   era?: Era;
   onClick: () => void;
 }) {
-  const [hovered, setHovered] = useState(false);
-  const heightPct = Math.max(1.5, (bucket.count / maxCount) * 100);
+  const barRef = useRef<HTMLDivElement>(null);
+  const [tooltipPos, setTooltipPos] = useState<{ x: number; y: number } | null>(null);
+  const isClipped = bucket.count > barCap;
+  // Clipped bars fill to 100%, normal bars scale linearly against the cap
+  const heightPct = isClipped ? 100 : Math.max(1.5, (bucket.count / barCap) * 100);
   const top3 = bucket.languages.slice(0, 3);
   const rest = bucket.count - top3.reduce((s, l) => s + l.count, 0);
 
+  const handleMouseEnter = useCallback(() => {
+    if (!barRef.current) return;
+    const rect = barRef.current.getBoundingClientRect();
+    setTooltipPos({ x: rect.left + rect.width / 2, y: rect.top });
+  }, []);
+
   return (
     <div
+      ref={barRef}
       className="flex-1 relative cursor-pointer group"
       style={{ minWidth: 8, height: '100%' }}
       onClick={onClick}
-      onMouseEnter={() => setHovered(true)}
-      onMouseLeave={() => setHovered(false)}
+      onMouseEnter={handleMouseEnter}
+      onMouseLeave={() => setTooltipPos(null)}
     >
-      {/* Tooltip */}
-      {hovered && (
-        <div className="absolute bottom-full left-1/2 -translate-x-1/2 mb-2 z-20 pointer-events-none">
-          <div className="bg-[#1a1612] text-white text-xs rounded-lg px-3 py-2.5 whitespace-nowrap shadow-lg">
-            <div className="font-serif text-sm mb-1">{formatDecadeLabel(bucket.decade)}</div>
+      {/* Tooltip — fixed position to escape overflow:hidden */}
+      {tooltipPos && (
+        <div
+          className="fixed z-50 pointer-events-none"
+          style={{ left: tooltipPos.x, top: tooltipPos.y, transform: 'translate(-50%, -100%)' }}
+        >
+          <div className="bg-[#1a1612] text-white text-xs rounded-lg px-3 py-2.5 whitespace-nowrap shadow-lg mb-2">
+            <div className="font-serif text-sm mb-1">
+              {formatDecadeLabel(bucket.decade)}
+              <span className="text-stone-400 font-sans text-[10px] ml-1.5">
+                ({bucket.decade}&ndash;{bucket.decade + 9})
+              </span>
+            </div>
             {era && (
               <div className="text-stone-400 text-[10px] mb-1.5">{era.label}</div>
             )}
@@ -540,6 +665,30 @@ function DecadeBar({
 
       {/* Bar — positioned at the bottom */}
       <div className="absolute bottom-0 left-0 right-0 flex flex-col justify-end" style={{ height: '100%' }}>
+        {/* Breakline zigzag for clipped bars */}
+        {isClipped && (
+          <svg
+            className="absolute left-0 right-0"
+            style={{ top: `${100 - heightPct}%`, transform: 'translateY(-3px)' }}
+            height="8"
+            preserveAspectRatio="none"
+            viewBox="0 0 20 8"
+          >
+            <path
+              d="M0,4 L2,1 L4,7 L6,1 L8,7 L10,1 L12,7 L14,1 L16,7 L18,1 L20,4"
+              fill="none"
+              stroke="#faf8f4"
+              strokeWidth="2.5"
+            />
+            <path
+              d="M0,4 L2,1 L4,7 L6,1 L8,7 L10,1 L12,7 L14,1 L16,7 L18,1 L20,4"
+              fill="none"
+              stroke="var(--border-light)"
+              strokeWidth="1"
+            />
+          </svg>
+        )}
+
         <div
           className={`rounded-t-sm overflow-hidden transition-all duration-200 ${
             isSelected
@@ -597,6 +746,60 @@ function FilterDropdown({
         ))}
       </select>
       <ChevronDown className="absolute right-2 top-1/2 -translate-y-1/2 w-4 h-4 text-stone-400 pointer-events-none" />
+    </div>
+  );
+}
+
+function TimelineArtCard({ item, priority = false }: { item: TimelineArtItem; priority?: boolean }) {
+  const [imageError, setImageError] = useState(false);
+  const displayUrl = item.thumbnailUrl || item.extractedUrl || item.imageUrl;
+  const galleryImageId = `${item.pageId}-${item.detectionIndex}`;
+  const authorDisplay = item.author && item.author !== 'Unknown' && item.author !== 'Various'
+    ? formatAuthor(item.author).name
+    : null;
+
+  return (
+    <div className="group rounded-lg overflow-hidden bg-white border border-stone-200/60 hover:shadow-md transition-all hover:-translate-y-0.5">
+      <Link href={`/gallery/image/${galleryImageId}`} className="block relative aspect-square bg-stone-100">
+        {!imageError ? (
+          <Image
+            src={displayUrl}
+            alt={item.description}
+            fill
+            quality={85}
+            className="object-cover group-hover:scale-105 transition-transform duration-300"
+            sizes="(max-width: 640px) 50vw, (max-width: 768px) 33vw, (max-width: 1024px) 25vw, 20vw"
+            onError={() => setImageError(true)}
+            unoptimized={!item.thumbnailUrl && !item.extractedUrl}
+            priority={priority}
+            loading={priority ? 'eager' : 'lazy'}
+          />
+        ) : (
+          <div className="absolute inset-0 flex items-center justify-center text-stone-300">
+            <ImageIcon className="w-8 h-8" />
+          </div>
+        )}
+
+        {item.type && (
+          <span className="absolute top-1.5 right-1.5 px-1.5 py-0.5 rounded text-[10px] bg-black/60 text-white capitalize">
+            {item.type}
+          </span>
+        )}
+      </Link>
+
+      <div className="p-2.5">
+        {authorDisplay && (
+          <p className="text-sm font-serif text-stone-900 truncate">{authorDisplay}</p>
+        )}
+        <p className="text-xs text-stone-500 truncate mt-0.5">
+          {item.bookTitle}{item.year ? `, ${item.year}` : ''}
+        </p>
+        {item.description && (
+          <p className="text-xs text-stone-400 line-clamp-2 mt-1 leading-relaxed">
+            {item.description}
+          </p>
+        )}
+      </div>
     </div>
   );
 }

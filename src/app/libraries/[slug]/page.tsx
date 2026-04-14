@@ -3,7 +3,7 @@ import Link from 'next/link';
 import Image from 'next/image';
 import { BookOpen, ExternalLink, Images, Library } from 'lucide-react';
 import SiteHeader from '@/components/layout/SiteHeader';
-import { getDb } from '@/lib/mongodb';
+import { getReadDb } from '@/lib/mongodb';
 import { supabase } from '@/lib/supabase';
 import { browseBooks, getLanguageCounts } from '@/lib/books-catalog';
 import { notFound } from 'next/navigation';
@@ -12,6 +12,7 @@ import CollectionBookCard from '@/components/CollectionBookCard';
 import CollectionFilters from '@/components/collections/CollectionFilters';
 import { bookTitle } from '@/lib/collections-utils';
 import BphCatalogBrowser from '@/components/libraries/BphCatalogBrowser';
+import { getBookThumbnailUrl } from '@/lib/utils';
 
 const PER_PAGE = 60;
 
@@ -100,7 +101,7 @@ async function fetchLibraryData(providerKey: string, sort: string, language: str
   let galleryImages: unknown[] = [];
   if (sampleBookIds.length > 0) {
     try {
-      const db = await getDb();
+      const db = await getReadDb();
       galleryImages = await db.collection('gallery_images').aggregate([
         { $match: {
           book_id: { $in: sampleBookIds },
@@ -154,7 +155,7 @@ async function fetchLibraryData(providerKey: string, sort: string, language: str
 /** Build a UBN → { id, slug } map for BPH books on Source Library */
 async function fetchBphDigitizedMap(): Promise<Record<string, { id: string; slug: string }>> {
   try {
-    const db = await getDb();
+    const db = await getReadDb();
     const bphBooks = await db.collection('books').find(
       { 'image_source.provider': 'bph', 'dublin_core.dc_identifier': { $exists: true } },
       { projection: { id: 1, slug: 1, 'dublin_core.dc_identifier': 1 }, maxTimeMS: 15_000 }
@@ -388,7 +389,7 @@ export default async function LibraryDetailPage({ params, searchParams }: Props)
                     pages_count: book.pages_count,
                     pages_ocr: book.pages_ocr,
                     pages_translated: book.pages_translated,
-                    thumbnail: book.thumbnail || book.thumbnail_blob || book.photo,
+                    thumbnail: getBookThumbnailUrl(book) || book.photo || undefined,
                     thumbnail_blob: book.thumbnail_blob,
                     language: book.language,
                     published: book.published,
@@ -474,7 +475,7 @@ export default async function LibraryDetailPage({ params, searchParams }: Props)
                         pages_count: book.pages_count,
                         pages_ocr: book.pages_ocr,
                         pages_translated: book.pages_translated,
-                        thumbnail: book.thumbnail || book.thumbnail_blob || book.photo,
+                        thumbnail: getBookThumbnailUrl(book) || book.photo || undefined,
                         thumbnail_blob: book.thumbnail_blob,
                         language: book.language,
                         published: book.published,

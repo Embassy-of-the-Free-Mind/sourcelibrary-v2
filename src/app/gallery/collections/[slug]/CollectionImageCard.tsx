@@ -72,7 +72,6 @@ export default function CollectionImageCard({ item, priority = false }: { item: 
           <LikeButton
             targetType="image"
             targetId={item.id}
-            initialCount={item.likeCount ?? 0}
             size="sm"
             showCount={true}
           />

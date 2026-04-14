@@ -1,5 +1,5 @@
 import { NextResponse } from 'next/server';
-import { getDb } from '@/lib/mongodb';
+import { getReadDb } from '@/lib/mongodb';
 
 export const dynamic = 'force-dynamic';
 export const maxDuration = 15;
@@ -11,7 +11,7 @@ export const maxDuration = 15;
  * Returns corpus statistics for the marketing page and API consumers.
  */
 export async function GET() {
-  const db = await getDb();
+  const db = await getReadDb();
   const books = db.collection('books');
   const visible = { visible: true };
 

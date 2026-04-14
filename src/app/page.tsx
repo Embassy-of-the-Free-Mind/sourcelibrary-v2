@@ -1,4 +1,4 @@
-import { getDb } from '@/lib/mongodb';
+import { getReadDb } from '@/lib/mongodb';
 import { supabase } from '@/lib/supabase';
 import { Book } from '@/lib/types';
 import { type CollectionForGrid } from '@/components/book/BookLibrary';
@@ -40,7 +40,7 @@ const BOOK_PROJECTION = {
 // ---------- Data fetching ----------
 
 async function getFeaturedCollections() {
-  const db = await getDb();
+  const db = await getReadDb();
 
   // Pick 1 random collection with enough books for the editorial spread
   const collections = await db.collection('collections').aggregate([
@@ -153,7 +153,7 @@ async function getFeaturedCollections() {
 }
 
 async function getRemainingCollections(): Promise<CollectionForGrid[]> {
-  const db = await getDb();
+  const db = await getReadDb();
   const docs = await db.collection('collections').find({ parent: { $exists: false }, type: { $ne: 'curated' }, visible: true, 'highlighted_books.0': { $exists: true } }).toArray();
 
   const result = docs.map(({ _id, ...rest }) => {
@@ -231,7 +231,7 @@ async function getRemainingCollections(): Promise<CollectionForGrid[]> {
 }
 
 async function getDiscoverBooks(): Promise<Book[]> {
-  const db = await getDb();
+  const db = await getReadDb();
 
   // $sample FIRST so MongoDB uses fast random cursor (O(1) when size < 5% of collection).
   // $match after $sample filters the random sample down.
@@ -247,7 +247,7 @@ async function getDiscoverBooks(): Promise<Book[]> {
 }
 
 async function getCollectionShowcase() {
-  const db = await getDb();
+  const db = await getReadDb();
 
   // $sample FIRST (before $match) so MongoDB uses fast random cursor algorithm.
   // When $sample is after $match, Mongo scans all matching docs first → 22s on 77k docs.
@@ -322,47 +322,14 @@ async function getCollectionShowcase() {
   return JSON.parse(JSON.stringify(items));
 }
 
-const FALLBACK_COUNTS = { totalBooks: 13058, translatedToEnglish: 5190, firstTranslationCount: 4087, authorCount: 3200, languageCount: 50 };
+const FALLBACK_COUNTS = { totalBooks: 11040, translatedToEnglish: 10142, firstTranslationCount: 5716, authorCount: 4740, languageCount: 123 };
 
 async function getBookCounts(): Promise<{ totalBooks: number; translatedToEnglish: number; firstTranslationCount: number; authorCount: number; languageCount: number }> {
-  // 1. Try Supabase (fast Postgres counts, synced every 2h)
+  // 1. MongoDB system_config cache (updated by update-homepage-stats.mjs cron)
+  // Preferred over Supabase because it uses the >=90% "readable" threshold which
+  // Supabase books_catalog cannot compute (no column-to-column comparison in PostgREST).
   try {
-    const [totalRes, translatedRes, firstTransRes] = await Promise.all([
-      supabase.from('books_catalog').select('id', { count: 'exact', head: true })
-        .eq('visible', true).gt('pages_translated', 0),
-      supabase.from('books_catalog').select('id', { count: 'exact', head: true })
-        .eq('visible', true).gte('translation_pct', 90),
-      supabase.from('books_catalog').select('id', { count: 'exact', head: true })
-        .eq('visible', true).eq('is_first_translation', true).gt('pages_translated', 0),
-    ]);
-
-    if (totalRes.count && totalRes.count > 0) {
-      // Author/language distinct counts via MongoDB cache (PostgREST can't COUNT DISTINCT efficiently)
-      let authorCount = FALLBACK_COUNTS.authorCount;
-      let languageCount = FALLBACK_COUNTS.languageCount;
-      try {
-        const db = await getDb();
-        const cached = await db.collection('system_config').findOne(
-          { _id: 'homepage_stats' } as any,
-          { maxTimeMS: 2000 }
-        );
-        if (cached?.authorCount) authorCount = cached.authorCount;
-        if (cached?.languageCount) languageCount = cached.languageCount;
-      } catch { /* MongoDB unavailable — use fallback */ }
-
-      return {
-        totalBooks: totalRes.count,
-        translatedToEnglish: translatedRes.count ?? FALLBACK_COUNTS.translatedToEnglish,
-        firstTranslationCount: firstTransRes.count ?? FALLBACK_COUNTS.firstTranslationCount,
-        authorCount,
-        languageCount,
-      };
-    }
-  } catch { /* Supabase unreachable — try MongoDB */ }
-
-  // 2. Fallback: MongoDB system_config cache
-  try {
-    const db = await getDb();
+    const db = await getReadDb();
     const cached = await db.collection('system_config').findOne(
       { _id: 'homepage_stats' } as any,
       { maxTimeMS: 2000 }
@@ -376,7 +343,39 @@ async function getBookCounts(): Promise<{ totalBooks: number; translatedToEnglis
         languageCount: cached.languageCount ?? FALLBACK_COUNTS.languageCount,
       };
     }
-  } catch { /* DB unreachable */ }
+  } catch { /* DB unreachable — try Supabase */ }
+
+  // 2. Supabase fallback (fast but uses pages_translated > 0, not >=90% threshold)
+  try {
+    const [totalRes, firstTransRes] = await Promise.all([
+      supabase.from('books_catalog').select('id', { count: 'exact', head: true })
+        .eq('visible', true).gt('pages_translated', 0),
+      supabase.from('books_catalog').select('id', { count: 'exact', head: true })
+        .eq('visible', true).eq('is_first_translation', true).gt('pages_translated', 0),
+    ]);
+
+    if (totalRes.count && totalRes.count > 0) {
+      let authorCount = FALLBACK_COUNTS.authorCount;
+      let languageCount = FALLBACK_COUNTS.languageCount;
+      try {
+        const db = await getReadDb();
+        const cached = await db.collection('system_config').findOne(
+          { _id: 'homepage_stats' } as any,
+          { maxTimeMS: 2000 }
+        );
+        if (cached?.authorCount) authorCount = cached.authorCount;
+        if (cached?.languageCount) languageCount = cached.languageCount;
+      } catch { /* MongoDB unavailable — use fallback */ }
+
+      return {
+        totalBooks: totalRes.count,
+        translatedToEnglish: totalRes.count,
+        firstTranslationCount: firstTransRes.count ?? FALLBACK_COUNTS.firstTranslationCount,
+        authorCount,
+        languageCount,
+      };
+    }
+  } catch { /* Supabase unreachable */ }
 
   return FALLBACK_COUNTS;
 }

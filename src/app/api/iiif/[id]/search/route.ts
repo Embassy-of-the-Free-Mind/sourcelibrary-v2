@@ -11,7 +11,7 @@
  */
 
 import { NextRequest, NextResponse } from 'next/server';
-import { getDb } from '@/lib/mongodb';
+import { getReadDb } from '@/lib/mongodb';
 import { isBot, isTrustedBot, botMaxPage } from '@/lib/bot-gate';
 
 const BASE = 'https://sourcelibrary.org';
@@ -83,7 +83,7 @@ export async function GET(request: NextRequest, { params }: RouteContext) {
       );
     }
 
-    const db = await getDb();
+    const db = await getReadDb();
 
     const book = await db.collection('books').findOne(
       { $or: [{ id }, { slug: id }] },

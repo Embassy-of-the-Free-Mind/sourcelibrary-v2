@@ -1,5 +1,5 @@
 import { NextResponse } from 'next/server';
-import { getDb } from '@/lib/mongodb';
+import { getReadDb } from '@/lib/mongodb';
 
 export const dynamic = 'force-dynamic';
 export const preferredRegion = 'fra1';
@@ -16,7 +16,7 @@ function escapeXml(text: string): string {
 }
 
 export async function GET() {
-  const db = await getDb();
+  const db = await getReadDb();
 
   // Find the 50 most recent high-quality gallery images from materialized collection
   const rawImages = await db.collection('gallery_images')

@@ -167,6 +167,12 @@ async function processBook(r2, db, book) {
 
   await parallelMap(pages, async (page) => {
     try {
+      // Skip pages already created by a previous split run
+      if (page.split_from || page.split_from_spread) {
+        singleCount++;
+        return;
+      }
+
       const buf = await fetchImage(page.photo);
       const pageMeta = await sharp(buf).metadata();
       const pageRatio = (pageMeta.width || 1) / (pageMeta.height || 1);

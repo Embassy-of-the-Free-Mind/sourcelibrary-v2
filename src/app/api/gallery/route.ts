@@ -1,8 +1,51 @@
 import { NextRequest, NextResponse } from 'next/server';
-import { getDb } from '@/lib/mongodb';
+import { getReadDb } from '@/lib/mongodb';
+import { supabase } from '@/lib/supabase';
 import { generateQueryEmbedding, cosineSimilarity } from '@/lib/embeddings';
 
+// CLIP server on Hetzner for visual text→image search
+const CLIP_URL = process.env.CLIP_URL || 'http://46.224.122.120:3456/clip';
+
 export const maxDuration = 30;
+
+/**
+ * Get CLIP text embedding for a query, then search clip_embeddings via Supabase.
+ * Returns gallery_image IDs with visual similarity scores.
+ * Fails silently — CLIP search is a boost, not required.
+ */
+async function clipTextSearch(query: string, limit: number): Promise<Map<string, number>> {
+  const results = new Map<string, number>();
+  try {
+    // Encode query text via CLIP server
+    const resp = await fetch(`${CLIP_URL}/embed-text`, {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify({ text: query }),
+      signal: AbortSignal.timeout(5000),
+    });
+    if (!resp.ok) return results;
+    const { embedding } = await resp.json();
+    if (!embedding) return results;
+
+    // Search Supabase clip_embeddings
+    const { data, error } = await supabase.rpc('match_clip_images', {
+      query_embedding: embedding,
+      match_threshold: 0.20,
+      match_count: limit,
+    });
+    if (error || !data) return results;
+
+    for (const match of data) {
+      // Only gallery images (not artworks or book covers)
+      if (match.source_type === 'gallery_image' && match.id) {
+        results.set(match.id, match.similarity);
+      }
+    }
+  } catch {
+    // CLIP server down or slow — not critical
+  }
+  return results;
+}
 
 /**
  * Escape special regex characters and build a diacritics-insensitive pattern.
@@ -50,10 +93,15 @@ export async function GET(request: NextRequest) {
   try {
     const { searchParams } = new URL(request.url);
 
-    // Semantic search mode — uses embeddings
+    // Visual search mode — uses CLIP image embeddings (text→image)
+    const visual = searchParams.get('visual') === 'true';
+    // Semantic search mode — uses text embeddings
     const semantic = searchParams.get('semantic') === 'true';
     const searchQuery = searchParams.get('q');
 
+    if (visual && searchQuery) {
+      return NextResponse.json(await clipGallerySearch(searchParams, searchQuery));
+    }
     if (semantic && searchQuery) {
       return NextResponse.json(await semanticGallerySearch(searchParams, searchQuery));
     }
@@ -79,7 +127,7 @@ export async function GET(request: NextRequest) {
     if (includeArchive) minQuality = 0.5;
     if (searchParams.get('minQuality')) minQuality = parseFloat(searchParams.get('minQuality')!);
 
-    const db = await getDb();
+    const db = await getReadDb();
 
     // Check if gallery_images collection exists and has data
     const galleryCount = await db.collection('gallery_images').estimatedDocumentCount();
@@ -163,18 +211,51 @@ export async function GET(request: NextRequest) {
       ? { _id: 0, score: { $meta: 'textScore' } }
       : { _id: 0 };
 
+    // Fire CLIP visual search in parallel with MongoDB text search
+    const clipPromise = searchQuery
+      ? clipTextSearch(searchQuery, Math.max(limit * 2, 60))
+      : Promise.resolve(new Map<string, number>());
+
     // countDocuments with compound filters takes 20s+ on Atlas (no covering index).
     // Strategy: run find first, then only count if we need pagination info.
     // For first page with full results, total = offset + items.length (or +1 if full page).
-    const items = await db.collection('gallery_images')
-      .find(filter, { projection })
-      .sort(sortOrder)
-      .skip(offset)
-      .limit(limit + 1) // fetch one extra to know if there are more
-      .toArray();
+    const [textItems, clipScores] = await Promise.all([
+      db.collection('gallery_images')
+        .find(filter, { projection })
+        .sort(sortOrder)
+        .skip(offset)
+        .limit(limit + 1) // fetch one extra to know if there are more
+        .toArray(),
+      clipPromise,
+    ]);
+
+    let items = textItems;
+
+    // Merge CLIP visual results with text results
+    if (clipScores.size > 0) {
+      const textIds = new Set(items.map(doc => `${doc.page_id}-${doc.detection_index}`));
+
+      // Find CLIP-only matches (visually relevant but not in text results)
+      const clipOnlyIds = [...clipScores.keys()].filter(id => !textIds.has(id));
+
+      if (clipOnlyIds.length > 0) {
+        // Fetch full docs for CLIP-only matches
+        const clipDocs = await db.collection('gallery_images')
+          .find({
+            id: { $in: clipOnlyIds },
+            gallery_quality: { $gte: minQuality },
+            book_visible: true,
+            extracted_url: { $ne: null },
+          }, { projection: { _id: 0 } })
+          .toArray();
+
+        // Append CLIP-only results after text results
+        items = [...items, ...clipDocs];
+      }
+    }
 
     const hasMore = items.length > limit;
-    if (hasMore) items.pop(); // remove the extra probe item
+    if (hasMore) items.splice(limit); // trim to limit
 
     // Avoid countDocuments entirely — derive total from what we know
     let total: number;
@@ -212,6 +293,7 @@ export async function GET(request: NextRequest) {
     const mappedItems = items.map(doc => {
       const likeKey = `${doc.page_id}-${doc.detection_index}`;
       const likeData = likesMap[likeKey];
+      const clipScore = clipScores.get(doc.id || likeKey);
       return {
         pageId: doc.page_id,
         bookId: doc.book_id,
@@ -232,6 +314,7 @@ export async function GET(request: NextRequest) {
         museumDescription: doc.museum_description,
         metadata: doc.metadata,
         firstSyncedAt: doc.first_synced_at || doc.updated_at || null,
+        ...(clipScore !== undefined && { visualSimilarity: clipScore }),
         likeCount: likeData?.count ?? 0,
         likedByVisitor: likeData?.liked ?? false,
       };
@@ -273,7 +356,7 @@ export async function GET(request: NextRequest) {
 /**
  * Get filter options from gallery_images (cached for 30 min)
  */
-async function getGalleryFilters(db: Awaited<ReturnType<typeof getDb>>) {
+async function getGalleryFilters(db: Awaited<ReturnType<typeof getReadDb>>) {
   if (cachedFilters && (Date.now() - cachedFilters.timestamp) < FILTER_CACHE_TTL_MS) {
     return cachedFilters.data;
   }
@@ -310,7 +393,7 @@ async function getGalleryFilters(db: Awaited<ReturnType<typeof getDb>>) {
 /**
  * Get book info for book-filtered gallery views
  */
-async function getBookInfo(db: Awaited<ReturnType<typeof getDb>>, bookId: string) {
+async function getBookInfo(db: Awaited<ReturnType<typeof getReadDb>>, bookId: string) {
   const book = await db.collection('books').findOne({ id: bookId });
   if (!book) return null;
 
@@ -340,31 +423,58 @@ async function getBookInfo(db: Awaited<ReturnType<typeof getDb>>, bookId: string
 }
 
 /**
- * Semantic gallery search: embed query, then cosine rank gallery embeddings.
+ * Semantic gallery search: embed query, then find similar via Supabase pgvector.
+ * Falls back to MongoDB brute-force cosine if Supabase is unavailable.
  */
 async function semanticGallerySearch(searchParams: URLSearchParams, query: string) {
   const limit = Math.min(parseInt(searchParams.get('limit') || '50'), 200);
   const offset = parseInt(searchParams.get('offset') || '0');
   const imageType = searchParams.get('type');
 
-  const db = await getDb();
+  const db = await getReadDb();
   const queryEmbedding = await generateQueryEmbedding(query);
 
-  const candidates = await db
-    .collection('gallery_embeddings')
-    .find({}, { projection: { id: 1, page_id: 1, book_id: 1, detection_index: 1, embedding: 1 } })
-    .limit(1000)
-    .toArray();
+  // Try Supabase pgvector first (instant HNSW search)
+  let scored: Array<{ id: string; pageId: string; bookId: string; detectionIndex: number; similarity: number }> = [];
 
-  const scored = candidates
-    .map(c => ({
-      id: c.id as string,
-      pageId: c.page_id as string,
-      bookId: c.book_id as string,
-      detectionIndex: c.detection_index as number,
-      similarity: cosineSimilarity(queryEmbedding, c.embedding as number[]),
-    }))
-    .sort((a, b) => b.similarity - a.similarity);
+  try {
+    const { data: matches, error } = await supabase.rpc('match_gallery_text', {
+      query_embedding: JSON.stringify(queryEmbedding),
+      match_threshold: 0.15,
+      match_count: offset + limit + 50, // fetch enough for pagination + filtering
+    });
+
+    if (!error && matches && matches.length > 0) {
+      scored = matches.map((m: { id: string; page_id: string; book_id: string; detection_index: number; similarity: number }) => ({
+        id: m.id,
+        pageId: m.page_id,
+        bookId: m.book_id,
+        detectionIndex: m.detection_index,
+        similarity: m.similarity,
+      }));
+    }
+  } catch {
+    // Supabase unavailable — fall through
+  }
+
+  // Fallback: MongoDB brute-force cosine
+  if (scored.length === 0) {
+    const candidates = await db
+      .collection('gallery_embeddings')
+      .find({}, { projection: { id: 1, page_id: 1, book_id: 1, detection_index: 1, embedding: 1 } })
+      .limit(1000)
+      .toArray();
+
+    scored = candidates
+      .map(c => ({
+        id: c.id as string,
+        pageId: c.page_id as string,
+        bookId: c.book_id as string,
+        detectionIndex: c.detection_index as number,
+        similarity: cosineSimilarity(queryEmbedding, c.embedding as number[]),
+      }))
+      .sort((a, b) => b.similarity - a.similarity);
+  }
 
   const total = scored.length;
   const page = scored.slice(offset, offset + limit);
@@ -422,7 +532,7 @@ async function semanticGallerySearch(searchParams: URLSearchParams, query: strin
 /**
  * Legacy aggregation pipeline — used as fallback when gallery_images collection is empty.
  */
-async function legacyGalleryQuery(db: Awaited<ReturnType<typeof getDb>>, searchParams: URLSearchParams) {
+async function legacyGalleryQuery(db: Awaited<ReturnType<typeof getReadDb>>, searchParams: URLSearchParams) {
   const limit = Math.min(parseInt(searchParams.get('limit') || '24'), 200);
   const offset = parseInt(searchParams.get('offset') || '0');
   const bookId = searchParams.get('bookId') || searchParams.get('book');
@@ -609,5 +719,117 @@ async function legacyGalleryQuery(db: Awaited<ReturnType<typeof getDb>>, searchP
     offset,
     bookInfo,
     filters: { types, subjects, yearRange },
+  };
+}
+
+/**
+ * CLIP visual search: encode text query via CLIP text encoder,
+ * search against CLIP image embeddings in Supabase.
+ * Returns gallery items ranked by visual similarity.
+ */
+async function clipGallerySearch(searchParams: URLSearchParams, query: string) {
+  const limit = Math.min(parseInt(searchParams.get('limit') || '50'), 200);
+  const offset = parseInt(searchParams.get('offset') || '0');
+
+  // Encode text via CLIP
+  let embedding: number[] | null = null;
+  try {
+    const clipResp = await fetch(`${CLIP_URL}/embed-text`, {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify({ text: query }),
+      signal: AbortSignal.timeout(5000),
+    });
+    if (clipResp.ok) {
+      const data = await clipResp.json();
+      embedding = data.embedding;
+    }
+  } catch {
+    // Fall through to semantic search fallback
+  }
+
+  if (!embedding) {
+    // Fall back to text-embedding semantic search
+    return semanticGallerySearch(searchParams, query);
+  }
+
+  // Search Supabase CLIP embeddings
+  const { data: matches, error } = await supabase.rpc('match_clip_text', {
+    query_embedding: embedding,
+    match_threshold: 0.18,
+    match_count: offset + limit + 20,
+  });
+
+  if (error || !matches || matches.length === 0) {
+    return { items: [], total: 0, limit, offset, visual: true, bookInfo: null, filters: { types: [], subjects: [], yearRange: {} } };
+  }
+
+  const total = matches.length;
+  const page = (matches as Array<{
+    id: string; source_type: string; book_id: string; image_url: string;
+    thumbnail_url: string; title: string; author: string; resource_type: string;
+    similarity: number;
+  }>).slice(offset, offset + limit);
+
+  // Resolve full gallery metadata from MongoDB for gallery_image entries
+  const db = await getReadDb();
+  const galleryIds = page.filter(m => m.source_type === 'gallery_image').map(m => m.id.replace('gallery-', ''));
+  const galleryDocs = galleryIds.length > 0
+    ? await db.collection('gallery_images').find({ id: { $in: galleryIds } }, { projection: { _id: 0 } }).toArray()
+    : [];
+  const galleryMap = new Map(galleryDocs.map(d => [d.id as string, d]));
+
+  const items = page.map(m => {
+    // For gallery images, use full metadata from MongoDB
+    if (m.source_type === 'gallery_image') {
+      const doc = galleryMap.get(m.id.replace('gallery-', ''));
+      if (doc) {
+        return {
+          pageId: doc.page_id,
+          bookId: doc.book_id,
+          pageNumber: doc.page_number,
+          detectionIndex: doc.detection_index,
+          imageUrl: doc.extracted_url || doc.thumbnail_url || doc.image_url,
+          bookTitle: doc.book_title,
+          author: doc.book_author,
+          year: doc.book_year,
+          description: doc.description || '',
+          type: doc.type,
+          extractedUrl: doc.extracted_url,
+          thumbnailUrl: doc.thumbnail_url,
+          galleryQuality: doc.gallery_quality,
+          museumDescription: doc.museum_description,
+          metadata: doc.metadata,
+          similarity: Math.round(m.similarity * 1000) / 1000,
+        };
+      }
+    }
+    // For artworks and book covers, use Supabase data directly
+    return {
+      pageId: null,
+      bookId: m.book_id,
+      pageNumber: null,
+      detectionIndex: null,
+      imageUrl: m.thumbnail_url || m.image_url,
+      bookTitle: m.title,
+      author: m.author,
+      year: null,
+      description: m.title || '',
+      type: m.resource_type,
+      extractedUrl: m.image_url,
+      thumbnailUrl: m.thumbnail_url,
+      galleryQuality: null,
+      similarity: Math.round(m.similarity * 1000) / 1000,
+    };
+  });
+
+  return {
+    items,
+    total,
+    limit,
+    offset,
+    visual: true,
+    bookInfo: null,
+    filters: { types: [], subjects: [], yearRange: {} },
   };
 }

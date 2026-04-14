@@ -2,7 +2,7 @@ import { Metadata } from 'next';
 import Link from 'next/link';
 import ContentPageLayout, { ContentHeader } from '@/components/layout/ContentPageLayout';
 import PipelineDiagram, { type StageData } from '@/components/pipeline/PipelineDiagram';
-import { getDb } from '@/lib/mongodb';
+import { getReadDb } from '@/lib/mongodb';
 
 export const metadata: Metadata = {
   title: 'Pipeline Architecture | Source Library',
@@ -25,8 +25,6 @@ const STATUS_TO_STAGE: Record<string, string> = {
   ocr_submitted: 'ocr',
   ocr_complete: 'ocr',
   metadata_enriched: 'metadata',
-  ft_verifying: 'ft-verify',
-  ft_verified: 'ft-verify',
   translate_submitted: 'translate',
   translate_complete: 'translate',
   enriching: 'enrich',
@@ -44,7 +42,7 @@ const STATUS_TO_STAGE: Record<string, string> = {
 
 async function getPipelineStats() {
   try {
-    const db = await getDb();
+    const db = await getReadDb();
     const books = db.collection('books');
 
     const maxTimeMS = 45000;

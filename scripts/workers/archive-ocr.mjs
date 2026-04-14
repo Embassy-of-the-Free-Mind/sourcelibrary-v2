@@ -21,7 +21,7 @@ const MAX_PAGES_PER_DOMAIN = 5000;  // Prevent one domain from crowding out othe
 // Per-domain rate limits (requests per second) — be a good citizen
 const DOMAIN_RATE_LIMITS = {
   'archive.org':              15,    // IA is permissive, no crawl-delay
-  'digitale-sammlungen.de':   8,    // MDZ: open robots.txt
+  'digitale-sammlungen.de':   2,    // MDZ: reduced from 8 — was triggering rate limits
   'wellcomecollection.org':   6,    // No explicit policy
   'digital.bodleian.ox.ac.uk':4,    // No explicit policy, conservative
   'cudl.lib.cam.ac.uk':      4,    // No explicit policy, conservative
@@ -88,17 +88,35 @@ const r2 = new S3Client({
 const BUCKET = process.env.R2_BUCKET_NAME || 'sourcelibrary-images';
 const R2_PUBLIC_URL = process.env.R2_PUBLIC_URL || 'https://images.sourcelibrary.org';
 
-async function downloadImage(url) {
-  const controller = new AbortController();
-  const timeout = setTimeout(() => controller.abort(), 60_000); // 60s for full-res images
-  try {
-    const res = await fetch(url, { signal: controller.signal });
-    if (!res.ok) throw new Error(`HTTP ${res.status}`);
-    const buffer = Buffer.from(await res.arrayBuffer());
-    const mimeType = res.headers.get('content-type') || 'image/jpeg';
-    return { buffer, mimeType };
-  } finally {
-    clearTimeout(timeout);
+async function downloadImage(url, retries = 2) {
+  for (let attempt = 0; attempt <= retries; attempt++) {
+    const controller = new AbortController();
+    const timeout = setTimeout(() => controller.abort(), 60_000); // 60s for full-res images
+    try {
+      const res = await fetch(url, { signal: controller.signal });
+      if (res.status === 429 || res.status === 503) {
+        clearTimeout(timeout);
+        if (attempt < retries) {
+          const delay = (attempt + 1) * 3000; // 3s, 6s backoff
+          await new Promise(r => setTimeout(r, delay));
+          continue;
+        }
+      }
+      if (!res.ok) throw new Error(`HTTP ${res.status}`);
+      const buffer = Buffer.from(await res.arrayBuffer());
+      const mimeType = res.headers.get('content-type') || 'image/jpeg';
+      return { buffer, mimeType };
+    } catch (err) {
+      clearTimeout(timeout);
+      if (attempt < retries && (err.name === 'AbortError' || err.message?.includes('fetch failed'))) {
+        const delay = (attempt + 1) * 3000;
+        await new Promise(r => setTimeout(r, delay));
+        continue;
+      }
+      throw err;
+    } finally {
+      clearTimeout(timeout);
+    }
   }
 }
 
@@ -150,6 +168,9 @@ async function archivePage(page, db) {
   const domain = getDomain(sourceUrl);
   await waitForToken(domain);
 
+  // Use the correct pages collection (pages or pages_warehouse)
+  const pagesCol = page._collection || 'pages';
+
   try {
     // Try full-res first, fall back to original URL if it fails (some sources reject /full/full/)
     let result;
@@ -171,7 +192,7 @@ async function archivePage(page, db) {
     if (urls.width) dimFields.image_width = urls.width;
     if (urls.height) dimFields.image_height = urls.height;
 
-    await db.collection('pages').updateOne(
+    await db.collection(pagesCol).updateOne(
       { _id: page._id },
       {
         $set: {
@@ -223,7 +244,7 @@ async function main() {
   // Exclude Gallica (429s from Hetzner, archived locally via archive-gallica.mjs on Mac).
   // Exclude IA (handled by archive-bulk.mjs via JP2 zip download, much faster).
   // Prioritize providers that are NOT yet fully archived (IIIF, Cambridge, etc.)
-  const PRIORITY_PROVIDERS = ['iiif', 'cambridge', 'vatican', 'loc', 'wellcome', 'heidelberg', 'bl'];
+  const PRIORITY_PROVIDERS = ['iiif', 'bsb', 'cambridge', 'vatican', 'loc', 'wellcome', 'heidelberg', 'bl'];
   const priorityBooks = await db.collection('books')
     .find(
       {
@@ -254,8 +275,39 @@ async function main() {
     .toArray()
     .catch(() => []) : [];
 
-  const books = [...priorityBooks, ...otherBooks];
-  console.log(`[archive-ocr] Checking ${priorityBooks.length} priority + ${otherBooks.length} other books`);
+  // Also include warehouse books from Hetzner-safe providers
+  // Priority: likely first translations (non-English) first
+  const HETZNER_SAFE_PROVIDERS = [...PRIORITY_PROVIDERS, 'mdz', 'cmc_kloss', 'bodleian', 'penn_colenda', 'kyoto_rmda', 'ndl', 'bsb'];
+  const warehouseBooks = await db.collection('books_warehouse')
+    .find(
+      {
+        pages_count: { $gt: 0 },
+        'archive_metadata.blocked': { $ne: true },
+        'image_source.provider': { $in: HETZNER_SAFE_PROVIDERS },
+      },
+      { projection: { id: 1, title: 1, 'image_source.provider': 1, language: 1, is_first_translation: 1 } }
+    )
+    .limit(2000)
+    .maxTimeMS(60_000)
+    .toArray()
+    .catch(() => []);
+
+  // Sort warehouse: likely first translations first (non-English = likely first)
+  const ENGLISH_VARIANTS = ['english', 'eng', 'en'];
+  warehouseBooks.sort((a, b) => {
+    const aEng = ENGLISH_VARIANTS.includes((a.language || '').toLowerCase());
+    const bEng = ENGLISH_VARIANTS.includes((b.language || '').toLowerCase());
+    if (a.is_first_translation && !b.is_first_translation) return -1;
+    if (!a.is_first_translation && b.is_first_translation) return 1;
+    if (!aEng && bEng) return -1;
+    if (aEng && !bEng) return 1;
+    return 0;
+  });
+  // Tag warehouse books so we know which collections to query
+  warehouseBooks.forEach(b => { b._warehouse = true; });
+
+  const books = [...priorityBooks, ...otherBooks, ...warehouseBooks];
+  console.log(`[archive-ocr] Checking ${priorityBooks.length} priority + ${otherBooks.length} other + ${warehouseBooks.length} warehouse books`);
 
   if (books.length === 0) {
     console.log(`[archive-ocr] No books with pages found`);
@@ -268,7 +320,8 @@ async function main() {
   const pagesPerBook = Math.ceil(MAX_PAGES / books.length);
   for (const book of books) {
     if (pages.length >= MAX_PAGES) break;
-    const bookPages = await db.collection('pages')
+    const pagesCol = book._warehouse ? 'pages_warehouse' : 'pages';
+    const bookPages = await db.collection(pagesCol)
       .find(
         {
           book_id: book.id,
@@ -285,6 +338,8 @@ async function main() {
       .maxTimeMS(10_000)
       .toArray()
       .catch(() => []);
+    // Tag pages with their collection for archivePage to write to the right place
+    if (book._warehouse) bookPages.forEach(p => { p._collection = 'pages_warehouse'; });
     pages.push(...bookPages);
   }
 
@@ -336,8 +391,16 @@ async function main() {
           failed++;
           domainStats[domain].fail++;
           if (failed <= 10) console.error(`  FAIL [${domain}]: ${result.error}`);
-          if (domainStats[domain].fail >= 5 && domainStats[domain].ok === 0) {
+          const ds = domainStats[domain];
+          if (ds.fail >= 5 && ds.ok === 0) {
             console.warn(`  [${domain}] Circuit breaker: 5 failures with 0 successes, skipping domain`);
+            circuitBroken.add(domain);
+            break;
+          }
+          // Ratio-based breaker: if >50 attempts and >90% failure, stop wasting time
+          const total = ds.ok + ds.fail;
+          if (total >= 50 && ds.fail / total > 0.9) {
+            console.warn(`  [${domain}] Circuit breaker: ${ds.fail}/${total} failed (${(ds.fail/total*100).toFixed(0)}%), skipping domain`);
             circuitBroken.add(domain);
             break;
           }
@@ -362,20 +425,25 @@ async function main() {
   console.log(`[archive-ocr] Per-domain: ${Object.entries(domainStats).map(([d, s]) => `${d}:${s.ok}ok/${s.fail}fail`).join(', ')}`);
 
   // Sync pages_archived counter on touched books (#497)
+  // Track which books are warehouse vs live
+  const warehouseBookIds = new Set(books.filter(b => b._warehouse).map(b => b.id));
   if (touchedBookIds.size > 0) {
     let synced = 0;
     for (const bookId of touchedBookIds) {
-      const archivedCount = await db.collection('pages').countDocuments(
+      const isWarehouse = warehouseBookIds.has(bookId);
+      const pagesCol = isWarehouse ? 'pages_warehouse' : 'pages';
+      const booksCol = isWarehouse ? 'books_warehouse' : 'books';
+      const archivedCount = await db.collection(pagesCol).countDocuments(
         { book_id: bookId, archived_photo: { $exists: true, $nin: [null, ''] } },
         { maxTimeMS: 10000 }
       );
-      await db.collection('books').updateOne(
+      await db.collection(booksCol).updateOne(
         { id: bookId },
         { $set: { pages_archived: archivedCount, updated_at: new Date() } }
       );
       synced++;
     }
-    console.log(`[archive-ocr] Synced pages_archived on ${synced} books`);
+    console.log(`[archive-ocr] Synced pages_archived on ${synced} books (${[...touchedBookIds].filter(id => warehouseBookIds.has(id)).length} warehouse)`);
   }
 
   // Log to cron_runs for monitoring

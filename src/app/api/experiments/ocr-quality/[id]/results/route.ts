@@ -1,5 +1,5 @@
 import { NextRequest, NextResponse } from 'next/server';
-import { getDb } from '@/lib/mongodb';
+import { getReadDb } from '@/lib/mongodb';
 import { withAuth } from '@/lib/auth-helpers';
 
 // ELO rating calculation
@@ -66,7 +66,7 @@ function normalCDF(z: number): number {
 export const GET = withAuth(async (request, session, context) => {
   try {
     const { id } = await context.params;
-    const db = await getDb();
+    const db = await getReadDb();
 
     // Get experiment (for condition labels)
     const experiment = await db.collection('ocr_experiments').findOne({ id });

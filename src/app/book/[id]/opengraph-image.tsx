@@ -1,5 +1,5 @@
 import { ImageResponse } from 'next/og';
-import { getDb } from '@/lib/mongodb';
+import { getReadDb } from '@/lib/mongodb';
 import { findBookByIdOrSlug } from '@/lib/book-lookup';
 import { Book } from '@/lib/types';
 
@@ -12,7 +12,7 @@ export const contentType = 'image/png';
 
 async function getBookForOG(id: string): Promise<Book | null> {
   try {
-    const db = await getDb();
+    const db = await getReadDb();
     const result = await findBookByIdOrSlug(db, id, {
       _id: 0, id: 1, title: 1, display_title: 1, author: 1,
       published: 1, language: 1, thumbnail: 1, slug: 1,

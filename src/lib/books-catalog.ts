@@ -34,6 +34,31 @@ export interface CatalogBook {
   collections: string[];
 }
 
+/** Extended book detail from Supabase — includes fields for the /book/[id] page shell. */
+export interface CatalogBookDetail extends CatalogBook {
+  contributing_library: string | null;
+  summary_text: string | null;
+  publisher: string | null;
+  place_published: string | null;
+  doi: string | null;
+  work_id: string | null;
+  resource_type: string | null;
+  source_url: string | null;
+  provider_name: string | null;
+  image_attribution: string | null;
+  image_license: string | null;
+  cover_image: string | null;
+  dedication: string | null;
+  subtitle: string | null;
+  source_work_dates: Array<{ type: string; date_display: string; author?: string }> | null;
+  ft_disposition: string | null;
+  ft_reasoning: string | null;
+  description: string | null;
+  subject_keywords: string[] | null;
+  created_at: string | null;
+  updated_at: string | null;
+}
+
 const BOOK_SELECT = 'id, slug, title, display_title, author, year, language, published, pages_count, pages_ocr, pages_translated, pages_blank, photo, thumbnail, thumbnail_blob, read_count, is_first_translation, quality_score, image_source_provider, categories, collections';
 
 export type SortOption = 'popular' | 'title' | 'author' | 'year_asc' | 'year_desc' | 'recent' | 'last_translated' | 'quality';
@@ -198,6 +223,69 @@ export async function browseAuthors(letter: string): Promise<{ name: string; cou
     .sort((a, b) => a.name.localeCompare(b.name));
 }
 
+/** Visual resource types that identify an artist (vs text author) */
+export const VISUAL_RESOURCE_TYPES = ['painting', 'drawing', 'print', 'fresco', 'engraving', 'woodcut'];
+
+/**
+ * Browse artists by letter prefix.
+ * Artists are authors of visual works (paintings, prints, drawings, etc.).
+ *
+ * Groups by authorSlug to merge name variants ("Hendrick Goltzius",
+ * "Goltzius, Hendrick", etc.) into a single entry. Uses the most common
+ * variant as the display name. Filters by letter on the display name.
+ */
+export async function browseArtists(letter: string): Promise<{ name: string; count: number }[]> {
+  // Fetch ALL visible visual works (no letter filter — we filter after grouping)
+  const allRows: { author: string | null }[] = [];
+  const PAGE = 1000;
+  let offset = 0;
+
+  // eslint-disable-next-line no-constant-condition
+  while (true) {
+    const { data, error } = await supabase
+      .from('books_catalog')
+      .select('author')
+      .eq('visible', true)
+      .in('resource_type', VISUAL_RESOURCE_TYPES)
+      .range(offset, offset + PAGE - 1);
+
+    if (error) throw new Error(`browseArtists query failed: ${error.message}`);
+    if (!data || data.length === 0) break;
+    allRows.push(...data);
+    if (data.length < PAGE) break;
+    offset += PAGE;
+  }
+
+  // Group by slug to merge name variants
+  const { authorSlug } = await import('@/lib/slugify');
+  const slugGroups = new Map<string, Map<string, number>>();
+  for (const row of allRows) {
+    if (!row.author || row.author === 'Unknown' || row.author === 'Anonymous') continue;
+    const slug = authorSlug(row.author);
+    if (!slugGroups.has(slug)) slugGroups.set(slug, new Map());
+    const variants = slugGroups.get(slug)!;
+    variants.set(row.author, (variants.get(row.author) || 0) + 1);
+  }
+
+  // Pick the most common variant as display name, sum all counts
+  const results: { name: string; count: number }[] = [];
+  for (const [, variants] of slugGroups) {
+    let bestName = '';
+    let bestCount = 0;
+    let total = 0;
+    for (const [name, count] of variants) {
+      total += count;
+      if (count > bestCount) { bestName = name; bestCount = count; }
+    }
+    // Filter by letter on display name
+    if (bestName.toUpperCase().startsWith(letter.toUpperCase())) {
+      results.push({ name: bestName, count: total });
+    }
+  }
+
+  return results.sort((a, b) => a.name.localeCompare(b.name));
+}
+
 /**
  * Search books by title/author text — returns matching book IDs.
  *
@@ -215,11 +303,24 @@ export async function searchBookIds(
 ): Promise<string[]> {
   const limit = opts?.limit || 500;
 
+  // Build OR filter: exact phrase match + word-level AND matches
+  // "mathematical magick" should match "Mathematicall Magick" by matching each word
+  const words = text.trim().split(/\s+/).filter(w => w.length >= 2);
+  const phraseFilters = `title.ilike.%${text}%,display_title.ilike.%${text}%,author.ilike.%${text}%`;
+
+  let orFilter = phraseFilters;
+  if (words.length >= 2) {
+    // Add word-level AND: title contains ALL words (handles spelling variants)
+    const titleAnds = words.map(w => `title.ilike.%${w}%`).join(',');
+    const displayAnds = words.map(w => `display_title.ilike.%${w}%`).join(',');
+    orFilter += `,and(${titleAnds}),and(${displayAnds})`;
+  }
+
   let query = supabase
     .from('books_catalog')
     .select('id')
     .gt('pages_count', 0)
-    .or(`title.ilike.%${text}%,display_title.ilike.%${text}%,author.ilike.%${text}%`)
+    .or(orFilter)
     .limit(limit);
 
   if (!opts?.includeHidden) query = query.eq('visible', true);
@@ -249,4 +350,66 @@ export async function getCategoryCounts(): Promise<Map<string, number>> {
     }
   }
   return counts;
+}
+
+// All fields needed for the book detail page shell
+const BOOK_DETAIL_SELECT = [
+  BOOK_SELECT,
+  'contributing_library',
+  'summary_text',
+  'publisher',
+  'place_published',
+  'doi',
+  'work_id',
+  'resource_type',
+  'source_url',
+  'provider_name',
+  'image_attribution',
+  'image_license',
+  'cover_image',
+  'dedication',
+  'subtitle',
+  'source_work_dates',
+  'ft_disposition',
+  'ft_reasoning',
+  'description',
+  'subject_keywords',
+  'created_at',
+  'updated_at',
+].join(', ');
+
+/**
+ * Fetch a single book by slug or id from Supabase books_catalog.
+ *
+ * Used by /book/[id] for fast cold renders (<50ms vs 1-5s from Atlas).
+ * Returns null if not found. Falls through to Atlas in the caller.
+ *
+ * Lookup order matches findBookByIdOrSlug: slug first, then id.
+ */
+export async function getBookDetail(idOrSlug: string): Promise<{ book: CatalogBookDetail; matchedBySlug: boolean } | null> {
+  // Try slug first (the common case for SEO URLs)
+  const { data: bySlug } = await supabase
+    .from('books_catalog')
+    .select(BOOK_DETAIL_SELECT)
+    .eq('slug', idOrSlug)
+    .limit(1)
+    .maybeSingle();
+
+  if (bySlug) {
+    return { book: bySlug as unknown as CatalogBookDetail, matchedBySlug: true };
+  }
+
+  // Fall back to id
+  const { data: byId } = await supabase
+    .from('books_catalog')
+    .select(BOOK_DETAIL_SELECT)
+    .eq('id', idOrSlug)
+    .limit(1)
+    .maybeSingle();
+
+  if (byId) {
+    return { book: byId as unknown as CatalogBookDetail, matchedBySlug: false };
+  }
+
+  return null;
 }

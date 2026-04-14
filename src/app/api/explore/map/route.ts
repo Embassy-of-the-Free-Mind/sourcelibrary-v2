@@ -1,5 +1,5 @@
 import { NextResponse } from 'next/server';
-import { getDb } from '@/lib/mongodb';
+import { getReadDb } from '@/lib/mongodb';
 
 export const dynamic = 'force-dynamic';
 
@@ -11,7 +11,7 @@ export const dynamic = 'force-dynamic';
  */
 export async function GET() {
   try {
-    const db = await getDb();
+    const db = await getReadDb();
 
     // Get all entities with coordinates — lookup books for century data
     const entities = await db.collection('entities').aggregate([

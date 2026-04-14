@@ -4,7 +4,7 @@ import Image from 'next/image';
 import { Metadata } from 'next';
 import { ArrowLeft, BookOpen, Images, Library } from 'lucide-react';
 import SiteHeader from '@/components/layout/SiteHeader';
-import { getDb } from '@/lib/mongodb';
+import { getReadDb } from '@/lib/mongodb';
 import { notFound } from 'next/navigation';
 import { unstable_noStore } from 'next/cache';
 import CollectionSchema from '@/components/seo/CollectionSchema';
@@ -14,11 +14,12 @@ import SignUpCTA from '@/components/auth/SignUpCTA';
 import { bookUrl } from '@/lib/slugify';
 import EmbedNavigationReporter from '@/components/embed/EmbedNavigationReporter';
 import { bookTitle, sanitizeThumbnail, withTimeout } from '@/lib/collections-utils';
+import { getBookThumbnailUrl } from '@/lib/utils';
 import { firstTranslationBadge } from '@/lib/first-translation-labels';
 import { browseBooks } from '@/lib/books-catalog';
 
-// ISR: rebuild at most every 10 minutes
-export const revalidate = false;
+// ISR: rebuild at most once per day
+export const revalidate = 86400;
 export const dynamicParams = true;
 export const maxDuration = 60;
 export async function generateStaticParams() {
@@ -37,7 +38,7 @@ export async function generateMetadata({ params }: Props): Promise<Metadata> {
   const { id } = await params;
   try {
     const db = await Promise.race([
-      getDb(),
+      getReadDb(),
       new Promise<never>((_, reject) => setTimeout(() => reject(new Error('DB timeout')), 15000)),
     ]);
     const collection = await db.collection('collections').findOne({ slug: id });
@@ -105,6 +106,7 @@ interface CuratedHighlight {
   // Added during merge with book data
   slug?: string;
   thumbnail?: string;
+  thumbnail_blob?: string;
   is_first_translation?: boolean;
   ft_disposition?: string;
   language?: string;
@@ -194,9 +196,9 @@ const COMPACT_LIMIT = 14;
  *  The /api/image wrapper crashes Next.js Image during SSR. */
 
 async function fetchCollectionData(id: string) {
-  // Wrap getDb() in a timeout — when MongoDB Atlas is overloaded, the connection
+  // Wrap getReadDb() in a timeout — when MongoDB Atlas is overloaded, the connection
   // itself can hang for 60+ seconds. Better to fail fast and let ISR retry.
-  const db = await withTimeout(getDb(), 10000, null as unknown as Awaited<ReturnType<typeof getDb>>);
+  const db = await withTimeout(getReadDb(), 10000, null as unknown as Awaited<ReturnType<typeof getReadDb>>);
   if (!db) throw new Error('DB connection timeout');
 
   const collection = await withTimeout(
@@ -272,7 +274,6 @@ async function fetchCollectionData(id: string) {
     try {
       const { books: sbBooks } = await browseBooks({
         collection: id,
-        hasTranslation: !isArtCollection,
         sort: 'popular',
         limit: COMPACT_LIMIT,
       });
@@ -341,10 +342,10 @@ async function fetchCollectionData(id: string) {
           if (bookIds.length === 0) return [];
           return db.collection('gallery_images')
             .find({
-              book_id: { $in: bookIds },
+              book_id: { $in: bookIds.slice(0, 200) },
               gallery_quality: { $gte: 0.8 },
               type: { $nin: ['decorative', 'symbol', 'musical_score', 'printer_device', 'printer_mark', 'ornament', 'border'] },
-            })
+            }, { maxTimeMS: 3000 })
             .sort({ gallery_quality: -1 })
             .limit(60)
             .toArray();
@@ -392,7 +393,7 @@ async function fetchCollectionData(id: string) {
 
   // Sanitize thumbnails to prevent /api/image wrapper URLs from crashing Next.js Image
   const sanitizeBookThumbs = (items: Record<string, unknown>[]) =>
-    items.map(b => ({ ...b, thumbnail: sanitizeThumbnail(b.thumbnail as string) }));
+    items.map(b => ({ ...b, thumbnail: sanitizeThumbnail(b.thumbnail_blob as string) || sanitizeThumbnail(b.thumbnail as string) }));
 
   // Merge curated highlights with live book data (thumbnails, slugs, first-translation status)
   const curatedBookMap = new Map(
@@ -408,7 +409,7 @@ async function fetchCollectionData(id: string) {
         author: (book.author as string) || h.author,
         year: (book.year as number) || h.year,
         slug: book.slug as string | undefined,
-        thumbnail: sanitizeThumbnail(book.thumbnail as string),
+        thumbnail: sanitizeThumbnail(book.thumbnail_blob as string) || sanitizeThumbnail(book.thumbnail as string),
         is_first_translation: book.is_first_translation as boolean | undefined,
         ft_disposition: (book.translation_verification as Record<string, unknown> | undefined)?.disposition as string | undefined,
         language: book.language as string | undefined,
@@ -461,7 +462,7 @@ async function fetchCollectionData(id: string) {
       );
       exhibitionBooks = exBooks.map(b => ({
         ...b,
-        thumbnail: sanitizeThumbnail(b.thumbnail as string) || sanitizeThumbnail(b.thumbnail_blob as string),
+        thumbnail: sanitizeThumbnail(b.thumbnail_blob as string) || sanitizeThumbnail(b.thumbnail as string),
         ft_disposition: (b.translation_verification as Record<string, unknown> | undefined)?.disposition as string | undefined,
       })) as unknown as BookItem[];
     }
@@ -553,7 +554,7 @@ export default async function CollectionDetailPage({ params }: Props) {
   type ArtPreview = { id: string; slug?: string; title: string; display_title?: string; author?: string; thumbnail?: string; thumbnail_blob?: string; resource_type?: string; enrichment?: { subject?: string }; commons_width?: number; commons_height?: number };
   let artworkPreviewImages: ArtPreview[] = [];
   if (isArtCollection && diverseGalleryImages.length === 0) {
-    const artPool = (books as ArtPreview[]).filter(a => sanitizeThumbnail(a.thumbnail_blob || a.thumbnail || ''));
+    const artPool = (books as ArtPreview[]).filter(a => getBookThumbnailUrl(a));
     // Shuffle for variety on each ISR build
     for (let i = artPool.length - 1; i > 0; i--) {
       const j = Math.floor(Math.random() * (i + 1));
@@ -620,7 +621,7 @@ export default async function CollectionDetailPage({ params }: Props) {
         ) : artworkPreviewImages.length > 0 ? (
           <div className="absolute inset-0 grid grid-cols-3 sm:grid-cols-6 opacity-30">
             {artworkPreviewImages.slice(0, 6).map((art) => {
-              const src = sanitizeThumbnail(art.thumbnail_blob || art.thumbnail || '');
+              const src = getBookThumbnailUrl(art);
               if (!src) return null;
               return (
                 <div key={art.id} className="relative overflow-hidden">
@@ -687,7 +688,9 @@ export default async function CollectionDetailPage({ params }: Props) {
             <div className="grid gap-4 grid-cols-2 lg:grid-cols-4">
               {childCollections.map((child) => {
                 const hero = child.featured_images?.find(
-                  (img) => img.thumbnail_url || img.extracted_url || img.image_url
+                  (img) => img.thumbnail_url || img.extracted_url
+                ) || child.featured_images?.find(
+                  (img) => img.image_url
                 );
                 const heroUrl = hero?.thumbnail_url || hero?.extracted_url || hero?.image_url;
                 return (
@@ -742,9 +745,9 @@ export default async function CollectionDetailPage({ params }: Props) {
               >
                 <div className="w-40 sm:w-48 flex-shrink-0 mx-auto sm:mx-0">
                   <div className="aspect-[3/4] relative rounded-lg overflow-hidden bg-white shadow-lg group-hover:shadow-xl transition-shadow">
-                    {featured.thumbnail ? (
+                    {getBookThumbnailUrl(featured) ? (
                       <Image
-                        src={featured.thumbnail}
+                        src={getBookThumbnailUrl(featured)!}
                         alt={featured.title || ''}
                         fill
                         className="object-cover group-hover:scale-105 transition-transform duration-500"
@@ -873,7 +876,7 @@ export default async function CollectionDetailPage({ params }: Props) {
             </p>
             <div className="grid grid-cols-3 sm:grid-cols-4 lg:grid-cols-5 gap-4">
               {artworkPreviewImages.map((art) => {
-                const thumb = sanitizeThumbnail(art.thumbnail_blob || art.thumbnail || '');
+                const thumb = getBookThumbnailUrl(art);
                 return (
                   <Link
                     key={art.id}
@@ -944,7 +947,7 @@ export default async function CollectionDetailPage({ params }: Props) {
             </p>
             <div className="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-4 xl:grid-cols-5 gap-4">
               {artworks.slice(0, 15).map((art: { id: string; slug?: string; title: string; display_title?: string; author?: string; published?: string; resource_type?: string; medium?: string; thumbnail?: string; thumbnail_blob?: string; enrichment?: { subject?: string; genre?: string }; commons_width?: number; commons_height?: number }) => {
-                const thumb = sanitizeThumbnail(art.thumbnail_blob || art.thumbnail || '');
+                const thumb = getBookThumbnailUrl(art);
                 const isPortrait = (art.commons_height || 0) > (art.commons_width || 0);
                 return (
                   <Link

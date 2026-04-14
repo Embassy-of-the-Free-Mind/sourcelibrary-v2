@@ -3,6 +3,7 @@ import Image from 'next/image';
 import { BookOpen, Paintbrush } from 'lucide-react';
 import { sanitizeThumbnail } from '@/lib/collections-utils';
 import { authorUrl } from '@/lib/slugify';
+import { getBookThumbnailUrl } from '@/lib/utils';
 
 export interface CrossRefItem {
   slug: string;
@@ -59,7 +60,7 @@ export default function AuthorCrossReference({ author, crossRef, context }: Prop
         <div className="grid grid-cols-3 sm:grid-cols-4 lg:grid-cols-6 gap-3">
           {items.map((a) => {
             const isPortrait = (a.commons_width || 1) < (a.commons_height || 1);
-            const thumb = sanitizeThumbnail(a.thumbnail_blob || a.thumbnail || '');
+            const thumb = getBookThumbnailUrl(a);
             return (
               <Link key={a.slug} href={`/artwork/${a.slug}`} className="group block">
                 <div className={`relative overflow-hidden rounded-sm bg-stone-100 ${isPortrait ? 'aspect-[3/4]' : 'aspect-[4/3]'}`}>
@@ -107,7 +108,7 @@ export default function AuthorCrossReference({ author, crossRef, context }: Prop
       </div>
       <div className="space-y-3">
         {items.map((b) => {
-          const thumb = sanitizeThumbnail(b.thumbnail_blob || b.thumbnail || '');
+          const thumb = getBookThumbnailUrl(b);
           return (
             <Link
               key={b.slug}

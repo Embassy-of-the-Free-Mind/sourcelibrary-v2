@@ -29,6 +29,7 @@ import { SEARCH_TYPE_STYLES, type SearchIndexType } from '@/lib/style-constants'
 import { BookLoader } from '@/components/ui/BookLoader';
 import { LIBRARY_PARTNERS } from '@/lib/library-partners';
 import BookCard from '@/components/book/BookCard';
+import { getBookThumbnailUrl } from '@/lib/utils';
 
 // How many results to show in unified view per section
 const PREVIEW_BOOKS = 5;
@@ -105,6 +106,11 @@ export default function SearchPage() {
   const [browseSortBy, setBrowseSortBy] = useState<string>(
     searchParams.get('sort') || 'recent-translation'
   );
+
+  // Browse gallery state (images tab in browse mode)
+  const [browseImages, setBrowseImages] = useState<GalleryItem[]>([]);
+  const [browseImageTotal, setBrowseImageTotal] = useState(0);
+  const [browseImageLoading, setBrowseImageLoading] = useState(false);
 
   // Suggestions
   const [suggestion, setSuggestion] = useState<string | null>(null);
@@ -415,12 +421,39 @@ export default function SearchPage() {
   }, [language, category, collection, library, browseSortBy, offset, firstTranslation, hasTranslation, resultsPerPage]);
 
   useEffect(() => {
-    if (isBrowseMode) {
+    if (isBrowseMode && viewMode !== 'images') {
       performBrowse();
-      updateUrl('', 'unified', offset);
+      updateUrl('', viewMode, offset);
     }
   // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [isBrowseMode, language, category, collection, library, browseSortBy, offset, firstTranslation, hasTranslation]);
+  }, [isBrowseMode, language, category, collection, library, browseSortBy, offset, firstTranslation, hasTranslation, viewMode]);
+
+  // Browse gallery: load images when in browse mode + images tab
+  const performBrowseGallery = useCallback(async () => {
+    setBrowseImageLoading(true);
+    try {
+      const data = await galleryApi.list({
+        limit: resultsPerPage,
+        offset,
+        maxPerBook: 2,
+      });
+      setBrowseImages(data.items || []);
+      setBrowseImageTotal(data.total || 0);
+    } catch {
+      setBrowseImages([]);
+      setBrowseImageTotal(0);
+    } finally {
+      setBrowseImageLoading(false);
+    }
+  }, [offset, resultsPerPage]);
+
+  useEffect(() => {
+    if (isBrowseMode && viewMode === 'images') {
+      performBrowseGallery();
+      updateUrl('', 'images', offset);
+    }
+  // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [isBrowseMode, viewMode, offset, resultsPerPage]);
 
   // Fuzzy suggestions on zero results
   const totalResults = bookTotal + indexTotal + imageTotal;
@@ -531,39 +564,43 @@ export default function SearchPage() {
             )}
           </div>
 
-          {/* Mode tabs — hidden in browse mode */}
-          {!isBrowseMode && (
-            <div className="mt-3 flex gap-1 border-b border-border-light -mx-4 px-4">
-              {([
-                { mode: 'unified' as ViewMode, label: 'All', icon: Search },
-                { mode: 'books' as ViewMode, label: 'Books', icon: Book },
-                { mode: 'index' as ViewMode, label: 'Index', icon: Lightbulb },
-                { mode: 'images' as ViewMode, label: 'Images', icon: ImageIcon },
-              ] as const).map(({ mode, label, icon: Icon }) => (
-                <button
-                  key={mode}
-                  onClick={() => { setViewMode(mode); setOffset(0); }}
-                  className={`flex items-center gap-1.5 px-4 py-2.5 text-sm font-medium border-b-2 transition-colors ${
-                    viewMode === mode
-                      ? 'border-accent-rust text-accent-rust'
-                      : 'border-transparent text-muted hover:text-secondary hover:border-border-medium'
-                  }`}
-                >
-                  <Icon className="w-4 h-4" />
-                  {label}
-                  {mode === 'books' && bookTotal > 0 && viewMode !== 'unified' && (
-                    <span className="text-xs text-muted">({bookTotal})</span>
-                  )}
-                  {mode === 'index' && indexTotal > 0 && viewMode !== 'unified' && (
-                    <span className="text-xs text-muted">({indexTotal})</span>
-                  )}
-                  {mode === 'images' && imageTotal > 0 && viewMode !== 'unified' && (
-                    <span className="text-xs text-muted">({imageTotal})</span>
-                  )}
-                </button>
-              ))}
-            </div>
-          )}
+          {/* Mode tabs */}
+          <div className="mt-3 flex gap-1 border-b border-border-light -mx-4 px-4">
+            {(isBrowseMode
+              ? [
+                  { mode: 'unified' as ViewMode, label: 'Books', icon: Book },
+                  { mode: 'images' as ViewMode, label: 'Images', icon: ImageIcon },
+                ]
+              : [
+                  { mode: 'unified' as ViewMode, label: 'All', icon: Search },
+                  { mode: 'books' as ViewMode, label: 'Books', icon: Book },
+                  { mode: 'index' as ViewMode, label: 'Index', icon: Lightbulb },
+                  { mode: 'images' as ViewMode, label: 'Images', icon: ImageIcon },
+                ]
+            ).map(({ mode, label, icon: Icon }) => (
+              <button
+                key={mode}
+                onClick={() => { setViewMode(mode); setOffset(0); }}
+                className={`flex items-center gap-1.5 px-4 py-2.5 text-sm font-medium border-b-2 transition-colors ${
+                  viewMode === mode
+                    ? 'border-accent-rust text-accent-rust'
+                    : 'border-transparent text-muted hover:text-secondary hover:border-border-medium'
+                }`}
+              >
+                <Icon className="w-4 h-4" />
+                {label}
+                {!isBrowseMode && mode === 'books' && bookTotal > 0 && viewMode !== 'unified' && (
+                  <span className="text-xs text-muted">({bookTotal})</span>
+                )}
+                {!isBrowseMode && mode === 'index' && indexTotal > 0 && viewMode !== 'unified' && (
+                  <span className="text-xs text-muted">({indexTotal})</span>
+                )}
+                {!isBrowseMode && mode === 'images' && imageTotal > 0 && viewMode !== 'unified' && (
+                  <span className="text-xs text-muted">({imageTotal})</span>
+                )}
+              </button>
+            ))}
+          </div>
 
           {/* Index type filter pills (index drill-down mode) */}
           {viewMode === 'index' && (
@@ -759,8 +796,64 @@ export default function SearchPage() {
 
       {/* Results */}
       <main className="max-w-5xl mx-auto px-4 py-8">
-        {/* Browse mode — shown when no query */}
-        {isBrowseMode && (
+        {/* Browse gallery — shown when no query + images tab */}
+        {isBrowseMode && viewMode === 'images' && (
+          <div>
+            <div className="mb-4 flex items-center justify-between flex-wrap gap-2">
+              {!browseImageLoading && browseImageTotal > 0 && (
+                <div className="text-muted">
+                  <span className="font-medium text-primary">{browseImageTotal.toLocaleString()}</span> images
+                  {browseImageTotal > resultsPerPage && (
+                    <span className="ml-2 text-faint">
+                      (showing {offset + 1}&ndash;{Math.min(offset + resultsPerPage, browseImageTotal)})
+                    </span>
+                  )}
+                </div>
+              )}
+              <div className="flex items-center gap-4">
+                <div className="flex items-center gap-2 text-sm text-muted">
+                  <span>Show</span>
+                  <select
+                    value={resultsPerPage}
+                    onChange={(e) => { setResultsPerPage(Number(e.target.value)); setOffset(0); }}
+                    className="px-2 py-1 border border-border-medium rounded-md bg-white text-sm focus:outline-none focus:ring-2 focus:ring-accent-rust/30"
+                  >
+                    {RESULTS_PER_PAGE_OPTIONS.map((n) => (
+                      <option key={n} value={n}>{n}</option>
+                    ))}
+                  </select>
+                  <span>per page</span>
+                </div>
+                <Link href="/gallery/wall" className="text-sm text-accent-rust hover:underline">
+                  Gallery Wall
+                </Link>
+              </div>
+            </div>
+
+            {browseImageLoading && <div className="py-8"><BookLoader size="xs" /></div>}
+
+            {!browseImageLoading && browseImages.length > 0 && (
+              <div className="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-5 gap-4">
+                {browseImages.map((item, idx) => (
+                  <ImageResultCard key={`${item.pageId}-${item.detectionIndex}-${idx}`} item={item} query="" large />
+                ))}
+              </div>
+            )}
+
+            {!browseImageLoading && browseImages.length === 0 && (
+              <div className="text-center py-16">
+                <ImageIcon className="w-16 h-16 text-border-medium mx-auto mb-4" />
+                <h2 className="text-2xl font-serif font-medium text-primary mb-2">No images found</h2>
+                <p className="text-base text-muted">Try searching for a subject, figure, or symbol.</p>
+              </div>
+            )}
+
+            <Pagination total={browseImageTotal} offset={offset} setOffset={setOffset} loading={browseImageLoading} pageSize={resultsPerPage} />
+          </div>
+        )}
+
+        {/* Browse mode — shown when no query + books tab */}
+        {isBrowseMode && viewMode !== 'images' && (
           <div>
             {/* Collection pills */}
             {collectionsList.length > 0 && (
@@ -943,7 +1036,7 @@ export default function SearchPage() {
           <div className="space-y-3">
             <p className="text-sm text-muted">Related results from AI-expanded search:</p>
             {aiResults.map(result => {
-              const cover = result.thumbnail || (result as any).thumbnail_blob;
+              const cover = getBookThumbnailUrl({ thumbnail: result.thumbnail, thumbnail_blob: (result as any).thumbnail_blob });
               const text = result.snippet || result.summary;
               return (
                 <Link
@@ -1092,13 +1185,18 @@ export default function SearchPage() {
         {viewMode === 'images' && query.length >= 2 && (
           <>
             {!loading && (
-              <div className="mb-6 text-muted">
-                Found <span className="font-medium text-primary">{imageTotal}</span> images for &ldquo;{query}&rdquo;
-                {imageTotal > resultsPerPage && (
-                  <span className="ml-2 text-faint">
-                    (showing {offset + 1}&ndash;{Math.min(offset + resultsPerPage, imageTotal)})
-                  </span>
-                )}
+              <div className="mb-6 flex items-center justify-between flex-wrap gap-2">
+                <div className="text-muted">
+                  Found <span className="font-medium text-primary">{imageTotal}</span> images for &ldquo;{query}&rdquo;
+                  {imageTotal > resultsPerPage && (
+                    <span className="ml-2 text-faint">
+                      (showing {offset + 1}&ndash;{Math.min(offset + resultsPerPage, imageTotal)})
+                    </span>
+                  )}
+                </div>
+                <Link href="/gallery/wall" className="text-sm text-accent-rust hover:underline">
+                  Gallery Wall
+                </Link>
               </div>
             )}
             {loading && <div className="py-4"><BookLoader size="xs" /></div>}
@@ -1116,7 +1214,7 @@ export default function SearchPage() {
             <h2 className="text-sm font-medium text-muted uppercase tracking-wide mb-4">Related in the Library</h2>
             <div className="space-y-3">
               {aiResults.map(result => {
-                const cover = result.thumbnail || (result as any).thumbnail_blob;
+                const cover = getBookThumbnailUrl({ thumbnail: result.thumbnail, thumbnail_blob: (result as any).thumbnail_blob });
                 const text = result.snippet || result.summary;
                 return (
                   <Link
@@ -1154,7 +1252,7 @@ export default function SearchPage() {
 // ==================== RESULT CARDS ====================
 
 function BookResultCard({ result, query }: { result: SearchResult; query: string }) {
-  const cover = result.thumbnail || (result as any).thumbnail_blob;
+  const cover = getBookThumbnailUrl({ thumbnail: result.thumbnail, thumbnail_blob: (result as any).thumbnail_blob });
   const text = result.snippet || result.summary;
   const [imgError, setImgError] = useState(false);
 

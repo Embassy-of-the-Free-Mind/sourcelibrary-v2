@@ -14,26 +14,46 @@ interface Match {
   published?: string;
   thumbnail?: string;
   thumbnail_blob?: string;
+  match_image?: string;
   resource_type?: string;
   subject?: string;
   score: number;
+  visual_similarity?: number;
+  match_source?: 'text' | 'visual';
   page_number?: number;
   page_score?: number;
+}
+
+interface AlternativeIdentification {
+  artist?: string | null;
+  title?: string | null;
+  reasoning?: string;
 }
 
 interface Identification {
   artist?: string | null;
   title?: string | null;
   inscriptions?: string | null;
+  publisher?: string | null;
   subject?: string | null;
   medium?: string;
   period_guess?: string;
+  confidence?: 'high' | 'medium' | 'low';
+  confidence_reason?: string;
+  alternative_identifications?: AlternativeIdentification[];
   search_terms?: string[];
+  // From Google Search verification
+  verified_artist?: string;
+  verified_title?: string;
+  catalog_numbers?: string[];
+  web_sources?: { title: string; url: string }[];
 }
 
 interface Result {
   identification: Identification;
   matches: Match[];
+  visual_search?: boolean;
+  verified?: boolean;
   page?: { book_id: string; page_number: number; score: number } | null;
 }
 
@@ -221,18 +241,54 @@ export default function IdentifyPage() {
           <div className="space-y-6">
             {/* What Gemini saw */}
             <div className="card p-5 space-y-3">
-              <h2 className="text-lg font-display font-semibold text-primary">Analysis</h2>
+              <div className="flex items-center justify-between">
+                <h2 className="text-lg font-display font-semibold text-primary">Analysis</h2>
+                {result.identification.confidence && (
+                  <span className={`text-xs font-medium px-2 py-0.5 rounded-full ${
+                    result.identification.confidence === 'high'
+                      ? 'bg-green-100 text-green-800'
+                      : result.identification.confidence === 'medium'
+                        ? 'bg-amber-100 text-amber-800'
+                        : 'bg-stone-100 text-stone-600'
+                  }`}>
+                    {result.identification.confidence} confidence
+                  </span>
+                )}
+              </div>
+              {result.identification.confidence_reason && (
+                <p className="text-xs text-muted italic">{result.identification.confidence_reason}</p>
+              )}
               <dl className="text-sm space-y-2">
-                {result.identification.artist && (
+                {(result.identification.artist || result.identification.verified_artist) && (
                   <div>
                     <dt className="text-muted text-xs uppercase tracking-wider">Artist</dt>
-                    <dd className="text-primary font-medium">{result.identification.artist}</dd>
+                    {result.identification.verified_artist ? (
+                      <dd>
+                        <span className="text-primary font-medium">{result.identification.verified_artist}</span>
+                        {result.identification.artist && result.identification.artist !== result.identification.verified_artist && (
+                          <span className="text-xs text-muted ml-2 line-through">{result.identification.artist}</span>
+                        )}
+                        <span className="text-[10px] text-green-700 bg-green-50 rounded px-1 py-0.5 ml-1.5">verified</span>
+                      </dd>
+                    ) : (
+                      <dd className="text-primary font-medium">{result.identification.artist}</dd>
+                    )}
                   </div>
                 )}
-                {result.identification.title && (
+                {(result.identification.title || result.identification.verified_title) && (
                   <div>
                     <dt className="text-muted text-xs uppercase tracking-wider">Title</dt>
-                    <dd className="text-primary">{result.identification.title}</dd>
+                    {result.identification.verified_title ? (
+                      <dd>
+                        <span className="text-primary">{result.identification.verified_title}</span>
+                        {result.identification.title && result.identification.title !== result.identification.verified_title && (
+                          <span className="text-xs text-muted ml-2 line-through">{result.identification.title}</span>
+                        )}
+                        <span className="text-[10px] text-green-700 bg-green-50 rounded px-1 py-0.5 ml-1.5">verified</span>
+                      </dd>
+                    ) : (
+                      <dd className="text-primary">{result.identification.title}</dd>
+                    )}
                   </div>
                 )}
                 {result.identification.subject && (
@@ -255,6 +311,12 @@ export default function IdentifyPage() {
                     )}
                   </div>
                 )}
+                {result.identification.publisher && (
+                  <div>
+                    <dt className="text-muted text-xs uppercase tracking-wider">Publisher</dt>
+                    <dd className="text-secondary">{result.identification.publisher}</dd>
+                  </div>
+                )}
                 {result.identification.inscriptions && (
                   <div>
                     <dt className="text-muted text-xs uppercase tracking-wider">Inscriptions</dt>
@@ -264,14 +326,67 @@ export default function IdentifyPage() {
                   </div>
                 )}
               </dl>
+
+              {/* Catalog numbers */}
+              {result.identification.catalog_numbers && result.identification.catalog_numbers.length > 0 && (
+                <div className="pt-3 border-t border-border-light">
+                  <h3 className="text-xs uppercase tracking-wider text-muted mb-1">Catalog references</h3>
+                  <div className="flex flex-wrap gap-1.5">
+                    {result.identification.catalog_numbers.map((num, i) => (
+                      <span key={i} className="text-xs bg-stone-100 text-stone-700 rounded px-2 py-0.5 font-mono">{num}</span>
+                    ))}
+                  </div>
+                </div>
+              )}
+
+              {/* Web sources from Google Search verification */}
+              {result.identification.web_sources && result.identification.web_sources.length > 0 && (
+                <div className="pt-3 border-t border-border-light">
+                  <h3 className="text-xs uppercase tracking-wider text-muted mb-1">Sources</h3>
+                  <div className="space-y-1">
+                    {result.identification.web_sources.map((src, i) => (
+                      <a
+                        key={i}
+                        href={src.url}
+                        target="_blank"
+                        rel="noopener noreferrer"
+                        className="block text-xs text-blue-700 hover:text-blue-900 hover:underline truncate"
+                      >
+                        {src.title || src.url}
+                      </a>
+                    ))}
+                  </div>
+                </div>
+              )}
+
+              {/* Alternative identifications */}
+              {result.identification.alternative_identifications && result.identification.alternative_identifications.length > 0 && (
+                <div className="pt-3 border-t border-border-light">
+                  <h3 className="text-xs uppercase tracking-wider text-muted mb-2">Other possibilities</h3>
+                  <div className="space-y-2">
+                    {result.identification.alternative_identifications.map((alt, i) => (
+                      <div key={i} className="text-sm bg-stone-50 rounded-lg p-3">
+                        {alt.artist && <p className="font-medium text-primary">{alt.artist}</p>}
+                        {alt.title && <p className="text-secondary">{alt.title}</p>}
+                        {alt.reasoning && <p className="text-xs text-muted mt-1">{alt.reasoning}</p>}
+                      </div>
+                    ))}
+                  </div>
+                </div>
+              )}
             </div>
 
             {/* Matches */}
             {result.matches.length > 0 ? (
               <div>
-                <h2 className="text-lg font-display font-semibold text-primary mb-3">
-                  {result.matches.length === 1 ? 'Match Found' : `${result.matches.length} Possible Matches`}
-                </h2>
+                <div className="flex items-center gap-2 mb-3">
+                  <h2 className="text-lg font-display font-semibold text-primary">
+                    {result.matches.length === 1 ? 'Match Found' : `${result.matches.length} Possible Matches`}
+                  </h2>
+                  {result.visual_search && (
+                    <span className="text-[10px] text-blue-600 bg-blue-50 rounded px-1.5 py-0.5">visual search</span>
+                  )}
+                </div>
                 <div className="space-y-2">
                   {result.matches.map((match, i) => {
                     const pageUrl = match.page_number
@@ -283,11 +398,11 @@ export default function IdentifyPage() {
                       href={pageUrl}
                       className="flex gap-4 p-3 rounded-lg bg-white border border-border-light hover:border-accent-rust/30 hover:shadow-sm transition-all group"
                     >
-                      {(match.thumbnail_blob || match.thumbnail) && (
+                      {(match.match_image || match.thumbnail_blob || match.thumbnail) && (
                         <div className="w-16 h-20 flex-shrink-0 rounded overflow-hidden bg-stone-100">
                           {/* eslint-disable-next-line @next/next/no-img-element */}
                           <img
-                            src={match.thumbnail_blob || match.thumbnail || ''}
+                            src={match.match_image || match.thumbnail_blob || match.thumbnail || ''}
                             alt=""
                             className="w-full h-full object-cover"
                           />
@@ -303,7 +418,12 @@ export default function IdentifyPage() {
                         {match.author && (
                           <p className="text-sm text-secondary mt-0.5">{match.author}</p>
                         )}
-                        <div className="flex items-center gap-2 mt-1 text-xs text-muted">
+                        <div className="flex items-center gap-2 mt-1 text-xs text-muted flex-wrap">
+                          {match.visual_similarity && (
+                            <span className="font-medium text-blue-700 bg-blue-50 rounded px-1.5 py-0.5">
+                              {Math.round(match.visual_similarity * 100)}% visual match
+                            </span>
+                          )}
                           {match.published && <span>{match.published}</span>}
                           {match.resource_type && (
                             <span className="capitalize">{match.resource_type}</span>
@@ -324,9 +444,11 @@ export default function IdentifyPage() {
               </div>
             ) : (
               <div className="card p-5 text-center">
-                <p className="text-secondary">No matches found in the library.</p>
+                <p className="text-secondary">Not found in Source Library</p>
                 <p className="text-sm text-muted mt-1">
-                  This work may not be in Source Library yet.
+                  We searched {result.identification.medium === 'book' || result.identification.medium === 'manuscript'
+                    ? 'our book collection' : 'our books and artworks'} but couldn&apos;t find this specific work.
+                  The identification above is our best analysis of the image itself.
                 </p>
               </div>
             )}

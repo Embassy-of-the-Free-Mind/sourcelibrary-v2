@@ -1,12 +1,12 @@
 import { notFound } from 'next/navigation';
-import { getDb } from '@/lib/mongodb';
+import { getReadDb } from '@/lib/mongodb';
 import { findBookByIdOrSlug } from '@/lib/book-lookup';
 import type { Book, Page } from '@/lib/types';
 import PageEditorClient from './PageEditorClient';
 import EmbedNavigationReporter from '@/components/embed/EmbedNavigationReporter';
 
-// Static until on-demand revalidation. Pipeline calls /api/admin/revalidate-book after OCR/translation/enrichment.
-export const revalidate = false;
+// ISR: 24h background revalidation. Pipeline also calls /api/admin/revalidate-book for immediate updates.
+export const revalidate = 86400;
 
 interface PageProps {
   params: Promise<{ id: string; pageId: string }>;
@@ -21,7 +21,7 @@ const BOOK_NAV_PROJECTION = {
 
 export default async function PageEditorPage({ params }: PageProps) {
   const { id, pageId } = await params;
-  const db = await getDb();
+  const db = await getReadDb();
 
   // Step 1: Get current page (fast indexed lookup by id, gives us book_id for nav)
   const currentPage = await db.collection('pages').findOne(

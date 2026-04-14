@@ -1,6 +1,6 @@
 import { Metadata } from 'next';
 import Link from 'next/link';
-import { getDb } from '@/lib/mongodb';
+import { getReadDb } from '@/lib/mongodb';
 import SiteHeader from '@/components/layout/SiteHeader';
 
 // ISR: rebuild every 6 hours. Allow 60s for first-hit generation.
@@ -17,7 +17,7 @@ export const metadata: Metadata = {
 
 async function getStats() {
   try {
-    const db = await getDb();
+    const db = await getReadDb();
     // Use fast queries: estimatedDocumentCount + dashboard_snapshot (avoid distinct + countDocuments)
     const [snapshot, totalPages, galleryCount] = await Promise.all([
       db.collection('system_config').findOne({ _id: 'dashboard_snapshot' as unknown as import('mongodb').ObjectId }),
@@ -40,7 +40,7 @@ async function getStats() {
 
 async function getGalleryImages() {
   try {
-    const db = await getDb();
+    const db = await getReadDb();
     const images = await db.collection('gallery_images')
       .find(
         { gallery_quality: { $gte: 0.8 }, book_rank: { $lte: 1 } },

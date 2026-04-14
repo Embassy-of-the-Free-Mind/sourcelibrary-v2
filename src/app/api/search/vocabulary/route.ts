@@ -1,5 +1,5 @@
 import { NextResponse } from 'next/server';
-import { getDb } from '@/lib/mongodb';
+import { getReadDb } from '@/lib/mongodb';
 
 export const preferredRegion = 'fra1';
 
@@ -18,7 +18,7 @@ export async function GET() {
   const now = Date.now();
 
   if (!cachedVocabulary || now - cacheTimestamp > CACHE_TTL) {
-    const db = await getDb();
+    const db = await getReadDb();
     const books = await db.collection('books')
       .find(
         { visible: true, pages_count: { $gt: 0 } },

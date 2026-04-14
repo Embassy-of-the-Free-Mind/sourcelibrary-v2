@@ -18,6 +18,9 @@
 
 import { MongoClient } from 'mongodb';
 import { randomBytes } from 'crypto';
+import { GoogleGenAI } from '@google/genai';
+import { logUsageAsync } from './lib/supabase-usage-logger.mjs';
+import { syncPageBatch } from './lib/supabase-page-writer.mjs';
 
 /**
  * Save current page content as a revision before overwriting.
@@ -64,6 +67,10 @@ const ALL_KEYS = [
   ...Array.from({ length: 9 }, (_, i) => process.env[`GEMINI_API_KEY_${i + 2}`]),
   process.env.GEMINI_API_KEY_TIER3,
 ].filter(Boolean);
+
+// SDK clients — one per unique key for batch job inspection
+const UNIQUE_KEYS = [...new Set(ALL_KEYS)];
+const SDK_CLIENTS = UNIQUE_KEYS.map(key => new GoogleGenAI({ apiKey: key }));
 
 if (!MONGODB_URI) { console.error('MONGODB_URI not set'); process.exit(1); }
 if (ALL_KEYS.length === 0) { console.error('No GEMINI_API_KEY* set'); process.exit(1); }
@@ -202,55 +209,49 @@ function parseMultiPageOcr(text) {
 
 // ── Gemini API ──
 
+/**
+ * Get batch job data via SDK. Tries all keys (jobs are key-scoped).
+ * Returns { sdkJob, apiKey, keyIndex } or null if not found.
+ * The apiKey is needed for result file download (SDK download doesn't work for batch results).
+ */
 async function getJobData(jobName) {
-  for (const key of ALL_KEYS) {
+  for (let i = 0; i < SDK_CLIENTS.length; i++) {
     try {
-      const url = `${GEMINI_API_BASE}/${jobName}?key=${key}`;
-      const resp = await fetch(url);
-      if (resp.ok) return { data: await resp.json(), key };
-      const errText = await resp.text();
-      if (resp.status === 404 || errText.includes('not found')) continue;
-    } catch (_) { /* try next key */ }
+      const sdkJob = await SDK_CLIENTS[i].batches.get({ name: jobName });
+      if (sdkJob) return { sdkJob, apiKey: UNIQUE_KEYS[i], keyIndex: i };
+    } catch (e) {
+      const msg = e.message || '';
+      if (msg.includes('not found') || msg.includes('NOT_FOUND') || msg.includes('404')) continue;
+      // Other errors (network, etc) — try next key
+    }
   }
   return null;
 }
 
-function getJobState(geminiData) {
-  return geminiData.metadata?.state || geminiData.state || 'UNKNOWN';
+/**
+ * Get job state from SDK response. SDK normalizes to JOB_STATE_* already.
+ */
+function getJobState(sdkJob) {
+  return sdkJob.state || 'UNKNOWN';
 }
 
-function normalizeState(state) {
-  const map = {
-    'BATCH_STATE_SUCCEEDED': 'JOB_STATE_SUCCEEDED',
-    'BATCH_STATE_PENDING': 'JOB_STATE_PENDING',
-    'BATCH_STATE_RUNNING': 'JOB_STATE_RUNNING',
-    'BATCH_STATE_FAILED': 'JOB_STATE_FAILED',
-    'BATCH_STATE_CANCELLED': 'JOB_STATE_CANCELLED',
-    'SUCCEEDED': 'JOB_STATE_SUCCEEDED',
-    'PENDING': 'JOB_STATE_PENDING',
-    'RUNNING': 'JOB_STATE_RUNNING',
-    'FAILED': 'JOB_STATE_FAILED',
-    'CANCELLED': 'JOB_STATE_CANCELLED',
-  };
-  return map[state] || state;
-}
-
-async function extractResults(geminiData, apiKey) {
-  // File-based output
-  const responsesFile = geminiData.metadata?.output?.responsesFile || geminiData.metadata?.destFile;
-  if (responsesFile) {
+/**
+ * Download and parse batch results. Uses raw fetch because SDK files.download()
+ * doesn't work for batch result files.
+ */
+async function extractResults(sdkJob, apiKey) {
+  // File-based output — SDK returns dest.fileName
+  const fileName = sdkJob.dest?.fileName;
+  if (fileName) {
     const fileResp = await fetch(
-      `https://generativelanguage.googleapis.com/download/v1beta/${responsesFile}:download?alt=media&key=${apiKey}`
+      `${GEMINI_API_BASE}/${fileName}:download?alt=media&key=${apiKey}`
     );
     if (!fileResp.ok) throw new Error(`Failed to download results file: ${await fileResp.text()}`);
     const text = await fileResp.text();
     return text.trim().split('\n').filter(l => l.trim()).map(l => JSON.parse(l));
   }
-  // Inline responses (check multiple possible locations)
-  const inline =
-    geminiData.metadata?.output?.inlinedResponses?.inlinedResponses ||
-    geminiData.response?.inlinedResponses ||
-    geminiData.dest?.inlinedResponses;
+  // Inline responses
+  const inline = sdkJob.dest?.inlinedResponses;
   return inline || [];
 }
 
@@ -262,16 +263,14 @@ async function processOneJob(db, job) {
 
   const result = await getJobData(jobName);
   if (!result) return { status: 'not_found', jobName };
-  const { data: geminiData, key: workingKey } = result;
-  const rawState = getJobState(geminiData);
-  const state = normalizeState(rawState);
+  const { sdkJob, apiKey: workingKey } = result;
+  const state = getJobState(sdkJob);
 
   if (state === 'JOB_STATE_SUCCEEDED') {
-    const stats = geminiData.metadata?.batchStats || {};
-    console.log(`  Collecting: ${job.book_id} | ${job.type} | ${stats.successfulRequestCount || '?'}/${stats.requestCount || '?'} pages | ${rawState}`);
+    console.log(`  Collecting: ${job.book_id} | ${job.type} | ${state}`);
     if (DRY_RUN) return { status: 'would_collect', bookId: job.book_id };
 
-    const responses = await extractResults(geminiData, workingKey);
+    const responses = await extractResults(sdkJob, workingKey);
     let successCount = 0;
     let failCount = 0;
     const now = new Date();
@@ -464,9 +463,21 @@ async function processOneJob(db, job) {
     }
 
     if (bulkOps.length > 0) {
-      const bulkResult = await db.collection('pages').bulkWrite(bulkOps, { ordered: false });
-      successCount = bulkResult.matchedCount;
-      failCount += (bulkOps.length - bulkResult.matchedCount);
+      // Throttle writes to avoid IOPS spikes on Atlas (3K ceiling on M30)
+      const CHUNK_SIZE = 25;
+      const CHUNK_DELAY_MS = 200; // ~125 writes/s max
+      for (let i = 0; i < bulkOps.length; i += CHUNK_SIZE) {
+        const chunk = bulkOps.slice(i, i + CHUNK_SIZE);
+        const chunkResult = await db.collection('pages').bulkWrite(chunk, { ordered: false });
+        successCount += chunkResult.matchedCount;
+        failCount += (chunk.length - chunkResult.matchedCount);
+        if (i + CHUNK_SIZE < bulkOps.length) await new Promise(r => setTimeout(r, CHUNK_DELAY_MS));
+      }
+      // Dual-write to Supabase (fire-and-forget)
+      syncPageBatch(bulkOps.map(op => ({
+        pageId: op.updateOne.filter.id,
+        mongoSet: op.updateOne.update.$set,
+      })));
     }
 
     // Insert gallery_images for image extraction jobs (upsert to avoid dupes on re-collection)
@@ -543,8 +554,8 @@ async function processOneJob(db, job) {
       }
     );
 
-    // Log to gemini_usage
-    await db.collection('gemini_usage').insertOne({
+    // Log to Supabase gemini_usage (non-blocking)
+    logUsageAsync({
       type: job.type || 'ocr',
       mode: 'batch',
       model: job.model,
@@ -555,8 +566,7 @@ async function processOneJob(db, job) {
       cost_usd: costUsd,
       status: 'success',
       batch_job_id: jobIdStr,
-      timestamp: now,
-    }).catch(() => {}); // non-blocking
+    }, db);
 
     return {
       status: 'collected',
@@ -564,22 +574,29 @@ async function processOneJob(db, job) {
       failCount,
       recitationCount,
       bookId: job.book_id,
+      bookIds: job.book_ids || [job.book_id], // cross-book batches have book_ids array
       parentJobId: job.parent_job_id,
       type: job.type,
     };
 
   } else if (state === 'JOB_STATE_PENDING' || state === 'JOB_STATE_RUNNING') {
-    // Check for stale jobs — if PENDING for >24 hours with no progress, cancel and let orchestrator retry
-    // Note: Flash Lite batches routinely take 8-9h. Previous 6h timeout was killing valid jobs.
-    const STALE_HOURS = 24;
+    // Stale detection: 24h flat timeout for PENDING, or 12h with no progress for RUNNING
     const jobAge = (Date.now() - new Date(job.created_at).getTime()) / 3600000;
-    if (state === 'JOB_STATE_PENDING' && jobAge > STALE_HOURS) {
+    const stats = sdkJob.batchStats || {};
+    const pendingCount = parseInt(stats.pendingRequestCount || '0');
+    const totalCount = parseInt(stats.requestCount || '0');
+    const hasProgress = totalCount > 0 && pendingCount < totalCount;
+    const isStale = (state === 'JOB_STATE_PENDING' && jobAge > 24)
+      || (state === 'JOB_STATE_RUNNING' && jobAge > 12 && !hasProgress);
+    if (isStale) {
       console.log(`  Stale PENDING job (${jobAge.toFixed(1)}h old): ${job.job_name || job.gemini_job_name} — cancelling`);
       if (!DRY_RUN) {
-        // Cancel the Gemini job
+        // Cancel the Gemini job via SDK
         try {
-          const cancelUrl = `${GEMINI_API_BASE}/${job.job_name || job.gemini_job_name}:cancel?key=${ALL_KEYS[0]}`;
-          await fetch(cancelUrl, { method: 'POST' });
+          const jobName = job.job_name || job.gemini_job_name;
+          for (const client of SDK_CLIENTS) {
+            try { await client.batches.cancel({ name: jobName }); break; } catch (_) { /* try next key */ }
+          }
         } catch (_) { /* best effort */ }
 
         await db.collection('batch_jobs').updateOne(
@@ -587,7 +604,7 @@ async function processOneJob(db, job) {
           { $set: { status: 'failed', gemini_state: state, error: `Stale: PENDING for ${jobAge.toFixed(1)}h with no progress`, updated_at: new Date() } }
         );
       }
-      return { status: 'failed', state: 'STALE_PENDING', bookId: job.book_id, type: job.type };
+      return { status: 'failed', state: 'STALE_PENDING', bookId: job.book_id, bookIds: job.book_ids || [job.book_id], type: job.type };
     }
 
     // Update status to reflect current state
@@ -605,10 +622,10 @@ async function processOneJob(db, job) {
     if (!DRY_RUN) {
       await db.collection('batch_jobs').updateOne(
         { _id: job._id },
-        { $set: { status: 'failed', gemini_state: state, error: `Gemini state: ${rawState}`, updated_at: new Date() } }
+        { $set: { status: 'failed', gemini_state: state, error: `Gemini state: ${state}`, updated_at: new Date() } }
       );
     }
-    return { status: 'failed', state: rawState, bookId: job.book_id, type: job.type };
+    return { status: 'failed', state, bookId: job.book_id, bookIds: job.book_ids || [job.book_id], type: job.type };
   }
 }
 
@@ -774,9 +791,13 @@ async function advancePipelineStatus(db, bookId, jobType) {
     }
   }
 
-  if (jobType === 'image_extraction' && status === 'images_submitted') {
+  if (jobType === 'image_extraction' && (status === 'images_submitted' || status === 'chapters_complete')) {
+    // Check both book_id (legacy single-book) and book_ids (cross-book batches)
     const pendingImages = await db.collection('batch_jobs').countDocuments({
-      book_id: bookId,
+      $or: [
+        { book_id: bookId },
+        { book_ids: bookId },
+      ],
       type: 'image_extraction',
       status: { $in: ['pending', 'processing', 'JOB_STATE_PENDING', 'JOB_STATE_RUNNING'] },
     });
@@ -797,9 +818,131 @@ async function advancePipelineStatus(db, bookId, jobType) {
           },
         }
       );
-      console.log(`  Pipeline: ${bookId} images_submitted -> images_complete (${imgCount} images)`);
+      console.log(`  Pipeline: ${bookId} ${status} -> images_complete (${imgCount} images)`);
     }
   }
+}
+
+// ── Batch Health Probe ──
+
+/**
+ * Reconcile DB batch_jobs state with real Gemini-side state.
+ * - Counts active jobs on each Gemini key via SDK batches.list()
+ * - Detects DB zombies (pending in DB, no gemini_job_name)
+ * - Detects Gemini orphans (active on Gemini, not tracked in DB) and cancels them
+ * - Computes recent completion velocity
+ * - Returns metrics for logging and system_config persistence
+ */
+async function reconcileBatchState(db) {
+  const activeStates = new Set(['JOB_STATE_PENDING', 'JOB_STATE_RUNNING']);
+  const result = {
+    geminiActive: 0,
+    geminiActiveByKey: [],
+    dbActive: 0,
+    dbZombies: 0,
+    orphansCancelled: 0,
+    recentCompletions1h: 0,
+    recentCompletions6h: 0,
+    recentPagesSaved1h: 0,
+    recentPagesSaved6h: 0,
+    healthy: true,
+    issues: [],
+  };
+
+  // 1. Count real Gemini active jobs per key
+  const geminiJobNames = new Set();
+  for (let i = 0; i < SDK_CLIENTS.length; i++) {
+    let keyActive = 0;
+    try {
+      const pager = await SDK_CLIENTS[i].batches.list({ config: { pageSize: 100 } });
+      let consecutiveInactive = 0;
+      for await (const job of pager) {
+        if (activeStates.has(job.state)) {
+          keyActive++;
+          if (job.name) geminiJobNames.add(job.name);
+          consecutiveInactive = 0;
+        } else {
+          consecutiveInactive++;
+          if (consecutiveInactive >= 50) break;
+        }
+      }
+    } catch (err) {
+      result.issues.push(`Key ${i} list failed: ${err.message?.substring(0, 80)}`);
+    }
+    result.geminiActiveByKey.push(keyActive);
+    result.geminiActive += keyActive;
+  }
+
+  // 2. Count DB active jobs and detect zombies
+  const dbActiveJobs = await db.collection('batch_jobs').find({
+    status: { $in: ['pending', 'processing', 'JOB_STATE_PENDING', 'JOB_STATE_RUNNING'] },
+  }).project({ _id: 1, job_name: 1, gemini_job_name: 1, status: 1, created_at: 1 }).toArray();
+
+  result.dbActive = dbActiveJobs.length;
+
+  // Zombies: in DB as active but no job_name (never submitted to Gemini)
+  const zombies = dbActiveJobs.filter(j => !j.job_name && !j.gemini_job_name);
+  result.dbZombies = zombies.length;
+
+  // Auto-cancel DB zombies older than 1 hour
+  if (zombies.length > 0) {
+    const oneHourAgo = new Date(Date.now() - 3600000);
+    const staleZombies = zombies.filter(z => new Date(z.created_at) < oneHourAgo);
+    if (staleZombies.length > 0) {
+      await db.collection('batch_jobs').updateMany(
+        { _id: { $in: staleZombies.map(z => z._id) } },
+        { $set: { status: 'cancelled', cancelled_at: new Date(), cancel_reason: 'batch-health: zombie (no gemini_job_name, >1h old)' } }
+      );
+      result.dbZombies = staleZombies.length;
+      result.issues.push(`Auto-cancelled ${staleZombies.length} DB zombie jobs`);
+    }
+  }
+
+  // 3. Detect Gemini orphans (active on Gemini, not in DB) and cancel them
+  const dbJobNames = new Set(dbActiveJobs.map(j => j.job_name || j.gemini_job_name).filter(Boolean));
+  const orphanNames = [...geminiJobNames].filter(name => !dbJobNames.has(name));
+  if (orphanNames.length > 0) {
+    for (const name of orphanNames) {
+      for (const client of SDK_CLIENTS) {
+        try { await client.batches.cancel({ name }); result.orphansCancelled++; break; } catch (_) {}
+      }
+    }
+    if (result.orphansCancelled > 0) {
+      result.issues.push(`Cancelled ${result.orphansCancelled} Gemini orphans`);
+    }
+  }
+
+  // 4. Recent completion velocity
+  const now = Date.now();
+  result.recentCompletions1h = await db.collection('batch_jobs').countDocuments({
+    status: { $in: ['completed', 'saved'] }, updated_at: { $gte: new Date(now - 3600000) }
+  });
+  result.recentCompletions6h = await db.collection('batch_jobs').countDocuments({
+    status: { $in: ['completed', 'saved'] }, updated_at: { $gte: new Date(now - 6 * 3600000) }
+  });
+  result.recentPagesSaved1h = await db.collection('pages').countDocuments({
+    'ocr.updated_at': { $gte: new Date(now - 3600000) }
+  });
+  result.recentPagesSaved6h = await db.collection('pages').countDocuments({
+    'ocr.updated_at': { $gte: new Date(now - 6 * 3600000) }
+  });
+
+  // 5. Health assessment
+  if (result.geminiActive > 80) {
+    result.healthy = false;
+    result.issues.push(`Gemini active jobs (${result.geminiActive}) near limit (100)`);
+  }
+  if (result.dbZombies > 10) {
+    result.healthy = false;
+    result.issues.push(`${result.dbZombies} DB zombie jobs`);
+  }
+  if (result.geminiActive > 0 && result.recentCompletions1h === 0 && result.recentPagesSaved1h === 0) {
+    // Jobs are active but nothing completing — possible freeze
+    result.healthy = false;
+    result.issues.push(`${result.geminiActive} Gemini jobs active but 0 completions in last hour`);
+  }
+
+  return result;
 }
 
 // ── Main ──
@@ -817,6 +960,21 @@ async function run() {
     await client.close();
     process.exit(0);
   }
+
+  // ── Batch Health Probe: reconcile DB vs Gemini state ──
+  // Runs every collector cycle. Detects orphans (in Gemini but not DB, or vice versa),
+  // auto-cancels Gemini orphans, and writes metrics for the enrichment snapshot.
+  const batchHealth = await reconcileBatchState(db);
+  console.log(`[batch-health] Gemini active: ${batchHealth.geminiActive} | DB active: ${batchHealth.dbActive} | Orphans cancelled: ${batchHealth.orphansCancelled}`);
+
+  // Persist batch health for /status and enrichment snapshot
+  try {
+    await db.collection('system_config').updateOne(
+      { _id: 'batch_health' },
+      { $set: { ...batchHealth, updated_at: new Date() } },
+      { upsert: true }
+    );
+  } catch (_) { /* non-blocking */ }
 
   // Find all pending/processing batch jobs
   const pendingJobs = await db.collection('batch_jobs')
@@ -886,12 +1044,14 @@ async function run() {
       if (val.status === 'collected') {
         collected++;
         totalPagesSaved += val.successCount;
-        if (val.bookId) {
-          bookIdsToUpdate.add(val.bookId);
-          pipelineAdvances.push({ bookId: val.bookId, type: val.type });
+        // Handle cross-book batches: iterate all bookIds
+        const allBookIds = val.bookIds || (val.bookId ? [val.bookId] : []);
+        for (const bid of allBookIds) {
+          bookIdsToUpdate.add(bid);
+          pipelineAdvances.push({ bookId: bid, type: val.type });
           // Track books where all pages hit RECITATION — these need Lambda retry
           if (val.successCount === 0 && val.recitationCount > 0) {
-            recitationBooks.add(val.bookId);
+            recitationBooks.add(bid);
           }
         }
         if (val.parentJobId) parentIdsToUpdate.add(val.parentJobId);
@@ -901,8 +1061,9 @@ async function run() {
         errors++;
       } else if (val.status === 'failed') {
         errors++;
-        if (val.bookId) {
-          pipelineAdvances.push({ bookId: val.bookId, type: val.type });
+        const allBookIds = val.bookIds || (val.bookId ? [val.bookId] : []);
+        for (const bid of allBookIds) {
+          pipelineAdvances.push({ bookId: bid, type: val.type });
         }
         if (errors <= 20) console.log(`  Job failed: ${val.state}`);
       }
@@ -1004,10 +1165,9 @@ async function run() {
       );
 
       if (!result) continue;
-      const state = getJobState(result.data);
-      const normalized = normalizeState(state);
+      const state = getJobState(result.sdkJob);
 
-      if (normalized !== 'JOB_STATE_SUCCEEDED') continue;
+      if (state !== 'JOB_STATE_SUCCEEDED') continue;
 
       // This job actually succeeded on Gemini! Re-process it.
       console.log(`  [recovery] FOUND: ${job.book_id} | ${job.job_name} | ${job.page_count} pages`);
@@ -1023,10 +1183,11 @@ async function run() {
           if (val.status === 'collected') {
             recoveredJobs++;
             recoveredPages += val.successCount;
-            if (val.bookId) {
-              bookIdsToUpdate.add(val.bookId);
-              try { await updateBookCounts(db, val.bookId); } catch (_) {}
-              try { await advancePipelineStatus(db, val.bookId, val.type); } catch (_) {}
+            const recoveredBookIds = val.bookIds || (val.bookId ? [val.bookId] : []);
+            for (const bid of recoveredBookIds) {
+              bookIdsToUpdate.add(bid);
+              try { await updateBookCounts(db, bid); } catch (_) {}
+              try { await advancePipelineStatus(db, bid, val.type); } catch (_) {}
             }
           }
         } catch (e) {
@@ -1041,6 +1202,28 @@ async function run() {
   } catch (e) {
     console.error(`[recovery] Sweep error: ${e.message}`);
   }
+
+  // ── Nameless Batch Job Reaper: kill batch_jobs created but never submitted to Gemini ──
+  // These have no job_name/gemini_job_name — the Gemini API call failed after the DB insert.
+  // They block active-job counts and never resolve. Reap after 30 minutes.
+  let namelessReaped = 0;
+  try {
+    const thirtyMinAgo = new Date(Date.now() - 30 * 60 * 1000);
+    const namelessResult = await db.collection('batch_jobs').updateMany(
+      {
+        status: { $in: ['pending', 'processing'] },
+        created_at: { $lt: thirtyMinAgo },
+        $and: [
+          { $or: [{ job_name: { $exists: false } }, { job_name: null }, { job_name: '' }] },
+          { $or: [{ gemini_job_name: { $exists: false } }, { gemini_job_name: null }, { gemini_job_name: '' }] },
+        ],
+        parent_job_id: { $exists: false }, // Don't reap parent jobs (they never have job_name)
+      },
+      { $set: { status: 'failed', error: 'Nameless: created in DB but never submitted to Gemini', updated_at: new Date() } }
+    );
+    namelessReaped = namelessResult.modifiedCount;
+    if (namelessReaped > 0) console.log(`\n[nameless-reaper] Failed ${namelessReaped} batch jobs with no Gemini job name (>30min old)`);
+  } catch (e) { console.error(`[nameless-reaper] Error: ${e.message}`); }
 
   // ── Zombie Reaper: cancel stale processing jobs (>6h no update) ──
   let zombiesReaped = 0;
@@ -1086,6 +1269,7 @@ async function run() {
   console.log(`Books updated: ${bookIdsToUpdate.size}`);
   if (recitationBooks.size > 0) console.log(`RECITATION resets: ${recitationBooks.size}`);
   if (recoveredJobs > 0) console.log(`Recovery: ${recoveredJobs} jobs (${recoveredPages} pages)`);
+  if (namelessReaped > 0) console.log(`Nameless reaped: ${namelessReaped}`);
   if (zombiesReaped > 0) console.log(`Zombies reaped: ${zombiesReaped}`);
   if (ghostsCleaned > 0) console.log(`Ghosts cleaned: ${ghostsCleaned}`);
   console.log(`Total time: ${totalElapsed}s`);
@@ -1102,8 +1286,10 @@ async function run() {
     parents_updated: parentIdsToUpdate.size,
     recovered_jobs: recoveredJobs,
     recovered_pages: recoveredPages,
+    nameless_reaped: namelessReaped,
     zombies_reaped: zombiesReaped,
     ghosts_cleaned: ghostsCleaned,
+    batch_health: batchHealth,
   }, errorMessages);
 
   await client.close();
@@ -1135,19 +1321,24 @@ async function cleanupStaleFiles() {
   for (let ki = 0; ki < ALL_KEYS.length; ki++) {
     const apiKey = ALL_KEYS[ki];
     try {
-      const res = await fetch("https://generativelanguage.googleapis.com/v1beta/files?key=" + apiKey + "&pageSize=100");
-      if (!res.ok) continue;
-      const data = await res.json();
-      const files = data.files || [];
       const oneHourAgo = new Date(Date.now() - 60 * 60 * 1000);
-      for (const f of files) {
-        if (new Date(f.createTime) < oneHourAgo) {
-          try {
-            await fetch("https://generativelanguage.googleapis.com/v1beta/" + f.name + "?key=" + apiKey, { method: "DELETE" });
-            totalDeleted++;
-          } catch (cleanErr) { /* ignore */ }
+      let pageToken = null;
+      do {
+        const url = "https://generativelanguage.googleapis.com/v1beta/files?key=" + apiKey + "&pageSize=100" + (pageToken ? "&pageToken=" + pageToken : "");
+        const res = await fetch(url);
+        if (!res.ok) break;
+        const data = await res.json();
+        const files = data.files || [];
+        for (const f of files) {
+          if (new Date(f.createTime) < oneHourAgo) {
+            try {
+              await fetch("https://generativelanguage.googleapis.com/v1beta/" + f.name + "?key=" + apiKey, { method: "DELETE" });
+              totalDeleted++;
+            } catch (cleanErr) { /* ignore */ }
+          }
         }
-      }
+        pageToken = data.nextPageToken || null;
+      } while (pageToken);
     } catch (listErr) { /* ignore */ }
   }
   if (totalDeleted > 0) console.log("[batch-collector] Deleted " + totalDeleted + " stale files");

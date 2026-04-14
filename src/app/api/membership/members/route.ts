@@ -1,12 +1,12 @@
 import { NextResponse } from 'next/server';
-import { getDb } from '@/lib/mongodb';
+import { getReadDb } from '@/lib/mongodb';
 
 /**
  * Public endpoint: returns all visible Ficino Society members.
  * Only shows members who have opted in (visible: true, the default).
  */
 export async function GET() {
-  const db = await getDb();
+  const db = await getReadDb();
 
   // Include both free members (joined) and financial contributors (active)
   const members = await db.collection('users').find(

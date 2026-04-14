@@ -1,6 +1,7 @@
 import { Db } from 'mongodb';
 import { getGeminiClient, reportRateLimitError } from './gemini-client';
 import { TaskType } from '@google/generative-ai';
+import { supabase } from './supabase';
 
 const EMBEDDING_MODEL = 'text-embedding-004';
 const EMBEDDING_DIMENSIONS = 768;
@@ -159,9 +160,8 @@ export interface SimilarImageResult {
 
 /**
  * Find images most similar to a target embedding.
- * Two-stage: fetch candidates from DB, then cosine rank in memory.
- *
- * With 500 candidates × 768 dims, the cosine computation takes <5ms.
+ * Primary: Supabase pgvector (HNSW index, instant at any scale).
+ * Fallback: MongoDB brute-force cosine (for embeddings not yet migrated).
  */
 export async function findSimilarImages(
   db: Db,
@@ -171,11 +171,46 @@ export async function findSimilarImages(
   const {
     excludeBookId,
     excludeId,
-    candidateLimit = 500,
     limit = 12,
   } = options;
 
-  // Fetch candidate embeddings
+  // Try Supabase pgvector first
+  try {
+    const { data: matches, error } = await supabase.rpc('match_gallery_text', {
+      query_embedding: JSON.stringify(targetEmbedding),
+      match_threshold: 0.2,
+      match_count: limit * 3, // fetch extra for diversity filtering
+      exclude_book_id: excludeBookId || null,
+    });
+
+    if (!error && matches && matches.length > 0) {
+      // Deduplicate by book — max 2 per book for diversity
+      const byBook = new Map<string, number>();
+      const results: SimilarImageResult[] = [];
+
+      for (const m of matches) {
+        if (results.length >= limit) break;
+        if (excludeId && m.id === excludeId) continue;
+        const bookCount = byBook.get(m.book_id) ?? 0;
+        if (bookCount >= 2) continue;
+        byBook.set(m.book_id, bookCount + 1);
+        results.push({
+          id: m.id,
+          page_id: m.page_id,
+          book_id: m.book_id,
+          detection_index: m.detection_index,
+          similarity: m.similarity,
+        });
+      }
+
+      if (results.length > 0) return results;
+    }
+  } catch {
+    // Supabase unavailable — fall through to MongoDB
+  }
+
+  // Fallback: MongoDB brute-force cosine
+  const { candidateLimit = 500 } = options;
   const filter: Record<string, unknown> = {};
   if (excludeBookId) filter.book_id = { $ne: excludeBookId };
   if (excludeId) filter.id = { $ne: excludeId };
@@ -186,7 +221,6 @@ export async function findSimilarImages(
     .limit(candidateLimit)
     .toArray();
 
-  // Score all candidates
   const scored = candidates.map(c => ({
     id: c.id as string,
     page_id: c.page_id as string,
@@ -195,10 +229,8 @@ export async function findSimilarImages(
     similarity: cosineSimilarity(targetEmbedding, c.embedding as number[]),
   }));
 
-  // Sort by similarity descending, take top N
   scored.sort((a, b) => b.similarity - a.similarity);
 
-  // Deduplicate by book — max 2 per book for diversity
   const byBook = new Map<string, number>();
   const results: SimilarImageResult[] = [];
 

@@ -1,5 +1,5 @@
 import { NextResponse } from 'next/server';
-import { getDb } from '@/lib/mongodb';
+import { getReadDb } from '@/lib/mongodb';
 
 export const dynamic = 'force-dynamic'; // Skip prerender — MongoDB times out during build
 
@@ -16,7 +16,7 @@ export const dynamic = 'force-dynamic'; // Skip prerender — MongoDB times out 
  * NDE's crawler periodically fetches this URL after registration.
  */
 export async function GET() {
-  const db = await getDb();
+  const db = await getReadDb();
   const books = db.collection('books');
 
   // Live stats for the BPH subset

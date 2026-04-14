@@ -1,5 +1,5 @@
 import { ImageResponse } from 'next/og';
-import { getDb } from '@/lib/mongodb';
+import { getReadDb } from '@/lib/mongodb';
 import { findBookByIdOrSlug } from '@/lib/book-lookup';
 import { Book, Page } from '@/lib/types';
 
@@ -20,7 +20,7 @@ const OG_PAGE_PROJECTION = {
 
 async function getPageData(bookId: string, pageId: string): Promise<{ book: Book | null; page: Page | null }> {
   try {
-    const db = await getDb();
+    const db = await getReadDb();
 
     const [bookResult, page] = await Promise.all([
       findBookByIdOrSlug(db, bookId, OG_BOOK_PROJECTION),

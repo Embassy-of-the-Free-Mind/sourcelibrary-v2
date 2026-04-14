@@ -1,6 +1,6 @@
 import { NextResponse } from 'next/server';
 import { importBookFromIIIF } from '@/lib/import-utils';
-import { withAuth } from '@/lib/auth-helpers';
+import { withCuratorAuth } from '@/lib/auth-helpers';
 
 export const maxDuration = 300;
 
@@ -22,7 +22,7 @@ export const maxDuration = 300;
  * IIIF v2 manifest: https://colenda.library.upenn.edu/items/ark:/81431/{ark_id}/manifest
  * Browse: https://colenda.library.upenn.edu/catalog/ark:/81431/{ark_id}
  */
-export const POST = withAuth(async (request, session) => {
+export const POST = withCuratorAuth(async (request, session) => {
   try {
     const body = await request.json();
     const { ark_id, title, display_title, author, language, published, categories, work_id } = body;

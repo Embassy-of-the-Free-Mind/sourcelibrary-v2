@@ -1,5 +1,5 @@
 import { NextRequest, NextResponse } from 'next/server';
-import { getDb } from '@/lib/mongodb';
+import { getReadDb } from '@/lib/mongodb';
 import { FACETS, facetDbField } from '@/lib/taxonomy/faceted-vocabulary';
 
 /**
@@ -24,7 +24,7 @@ import { FACETS, facetDbField } from '@/lib/taxonomy/faceted-vocabulary';
  */
 export async function GET(request: NextRequest) {
   const { searchParams } = new URL(request.url);
-  const db = await getDb();
+  const db = await getReadDb();
 
   const countsOnly = searchParams.get('counts') === 'true';
 

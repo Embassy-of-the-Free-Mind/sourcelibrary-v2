@@ -124,7 +124,7 @@ export default function PressReleasePage() {
         {/* Lede */}
         <p className="text-xl text-secondary leading-relaxed mb-4 font-body italic">
           Drawing on the nearly 28,000 works of the Bibliotheca Philosophica Hermetica, the Embassy
-          announces a public beta of a digital library with more than 5,000 books translated into
+          announces a public beta of a digital library with more than 10,000 books translated into
           English, many for the first time.
         </p>
         <p className="text-lg text-accent-rust font-serif mb-10">

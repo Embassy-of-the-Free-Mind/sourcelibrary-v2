@@ -115,6 +115,7 @@ export const GET = withAuth(async (request, session) => {
               year: 1,
               language: 1,
               thumbnail: 1,
+              thumbnail_blob: 1,
               slug: 1,
               pages_count: 1,
               pages_translated: 1,

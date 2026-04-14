@@ -1,5 +1,5 @@
 import { NextRequest, NextResponse } from 'next/server';
-import { getDb } from '@/lib/mongodb';
+import { getReadDb } from '@/lib/mongodb';
 import { LIBRARY_CATEGORIES } from '../route';
 
 // GET /api/categories/[id] - Get books in a category
@@ -9,7 +9,7 @@ export async function GET(
 ) {
   try {
     const { id } = await params;
-    const db = await getDb();
+    const db = await getReadDb();
 
     // Find the category
     const category = LIBRARY_CATEGORIES.find(c => c.id === id);

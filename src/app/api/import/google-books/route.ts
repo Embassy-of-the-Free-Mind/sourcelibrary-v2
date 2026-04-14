@@ -3,7 +3,7 @@ import { getDb } from '@/lib/mongodb';
 import { ObjectId } from 'mongodb';
 import { notifyBookImport } from '@/lib/indexnow';
 import { logAuditEvent } from '@/lib/audit-logger';
-import { withAuth } from '@/lib/auth-helpers';
+import { withCuratorAuth } from '@/lib/auth-helpers';
 import { generateUniqueBookSlug } from '@/lib/slugify';
 import { queuePreviewOcr } from '@/lib/preview-ocr';
 import { normalizeTitle, normalizeAuthor, sourceFingerprint, checkDuplicate } from '@/lib/dedup';
@@ -28,7 +28,7 @@ export const maxDuration = 300;
  * books are mirrored on Internet Archive with identifiers like `bub_gb_<id>`.
  * This route checks IA for the mirror and imports from there.
  */
-export const POST = withAuth(async (request, session) => {
+export const POST = withCuratorAuth(async (request, session) => {
   try {
     const body = await request.json();
     const {

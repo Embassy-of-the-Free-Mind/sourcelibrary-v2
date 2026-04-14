@@ -8,7 +8,7 @@
 
 import { cache } from 'react';
 import { Metadata } from 'next';
-import { getDb } from '@/lib/mongodb';
+import { getReadDb } from '@/lib/mongodb';
 import GalleryImageSchema from '@/components/seo/GalleryImageSchema';
 
 interface PageWithBook {
@@ -68,7 +68,7 @@ const getImageData = cache(async (id: string): Promise<{ page: PageWithBook; det
     const [, pageId, indexStr] = match;
     const index = parseInt(indexStr, 10);
 
-    const db = await getDb();
+    const db = await getReadDb();
     const pages = await db.collection('pages').aggregate([
       { $match: { id: pageId } },
       {
@@ -89,7 +89,10 @@ const getImageData = cache(async (id: string): Promise<{ page: PageWithBook; det
 
     if (index < 0 || index >= detections.length) return null;
 
-    return { page, detection: detections[index], detectionIndex: index };
+    const detection = detections[index];
+    if (!detection) return null;
+
+    return { page, detection, detectionIndex: index };
   } catch {
     return null;
   }

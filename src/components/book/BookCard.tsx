@@ -8,6 +8,7 @@ import type { Book } from '@/lib/types';
 import { recordLoadingMetric } from '@/lib/analytics';
 import { bookUrl } from '@/lib/slugify';
 import { firstTranslationBadge } from '@/lib/first-translation-labels';
+import { getBookThumbnailUrl } from '@/lib/utils';
 import AuthorName from '@/components/AuthorName';
 
 interface BookCardProps {
@@ -38,10 +39,9 @@ export default function BookCard({ book, priority = false }: BookCardProps) {
     };
   }, []);
 
-  // Prefer full-res thumbnail over 150px thumbnail_blob, with fallback on error
-  const primaryUrl = book.thumbnail || book.thumbnail_blob;
-  const fallbackUrl = book.thumbnail && book.thumbnail_blob && book.thumbnail !== book.thumbnail_blob
-    ? book.thumbnail_blob : null;
+  // Use 1200px display variant for card-sized display, fall back to thumb
+  const primaryUrl = getBookThumbnailUrl(book, 'display');
+  const fallbackUrl = getBookThumbnailUrl(book, 'thumb');
   const thumbnailUrl = useFallback && fallbackUrl ? fallbackUrl : primaryUrl;
 
   // Determine image source type for analytics

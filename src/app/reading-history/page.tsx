@@ -8,6 +8,7 @@ import SiteHeader from '@/components/layout/SiteHeader';
 import { readingHistory, type ReadingHistoryEntry } from '@/lib/api-client';
 import { BookLoader } from '@/components/ui/BookLoader';
 import { bookUrl } from '@/lib/slugify';
+import { getBookThumbnailUrl } from '@/lib/utils';
 
 function timeAgo(dateStr: string): string {
   const now = Date.now();
@@ -221,9 +222,9 @@ function ReadingHistoryCard({
       >
         {/* Cover */}
         <div className="relative w-14 h-[72px] flex-shrink-0 bg-stone-100 rounded overflow-hidden">
-          {book.thumbnail && !imageError ? (
+          {getBookThumbnailUrl(book, 'thumb') && !imageError ? (
             <Image
-              src={book.thumbnail}
+              src={getBookThumbnailUrl(book, 'thumb')!}
               alt={displayTitle}
               fill
               className="object-cover opacity-90 group-hover:opacity-100 transition-opacity"

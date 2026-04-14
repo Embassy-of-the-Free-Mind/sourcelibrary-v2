@@ -1,6 +1,6 @@
 import { notFound } from 'next/navigation';
 import { Metadata } from 'next';
-import { getDb } from '@/lib/mongodb';
+import { getReadDb } from '@/lib/mongodb';
 import ContentPageLayout from '@/components/layout/ContentPageLayout';
 import { SubPageHeader } from '@/components/layout/ContentPageLayout';
 import ConversationView from '@/components/research/ConversationView';
@@ -17,7 +17,7 @@ export async function generateMetadata({ params }: PageProps): Promise<Metadata>
   const { id } = await params;
   let session;
   try {
-    const db = await getDb();
+    const db = await getReadDb();
     session = await db.collection('curator_sessions').findOne(
       { id },
       { projection: { title: 1, themes: 1, date: 1 } }
@@ -32,6 +32,7 @@ export async function generateMetadata({ params }: PageProps): Promise<Metadata>
   return {
     title,
     description: `Curator research session from ${new Date(session.date as string).toLocaleDateString()} exploring ${(session.themes as string[])?.join(', ') || 'various topics'}.`,
+    alternates: { canonical: `/research/${id}` },
   };
 }
 
@@ -51,7 +52,7 @@ const TYPE_LABELS: Record<string, string> = {
 
 export default async function ResearchSessionPage({ params }: PageProps) {
   const { id } = await params;
-  const db = await getDb();
+  const db = await getReadDb();
   const doc = await db.collection('curator_sessions').findOne({ id });
 
   if (!doc) notFound();

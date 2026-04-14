@@ -1,11 +1,11 @@
 import { cache } from 'react';
 import { Metadata } from 'next';
-import { getDb } from '@/lib/mongodb';
+import { getReadDb } from '@/lib/mongodb';
 import { ObjectId } from 'mongodb';
 import EntitySchema from '@/components/seo/EntitySchema';
 
-// ISR: rebuild at most every 24 hours (entity data changes rarely)
-export const revalidate = false;
+// ISR: 24h background revalidation
+export const revalidate = 86400;
 export const dynamicParams = true;
 export async function generateStaticParams() {
   return []; // All paths generated on demand via ISR
@@ -25,8 +25,12 @@ export interface SharedConnection {
 // Shared books data — which related entities appear in which of the same books
 export const getSharedBooks = cache(async (name: string): Promise<SharedConnection[] | null> => {
   try {
-    const db = await getDb();
+    const db = await getReadDb();
+    // Try exact match first (uses index, 2ms) before falling back to case-insensitive regex (20s full scan)
     const entity = await db.collection('entities').findOne(
+      { name },
+      { sort: { book_count: -1 } }
+    ) ?? await db.collection('entities').findOne(
       { name: { $regex: `^${name.replace(/[.*+?^${}()|[\]\\]/g, '\\$&')}$`, $options: 'i' } },
       { sort: { book_count: -1 } }
     );
@@ -73,8 +77,12 @@ export const getSharedBooks = cache(async (name: string): Promise<SharedConnecti
 // Shared cached fetch — used by both layout (metadata/schema) and page (rendering)
 export const getEntity = cache(async (name: string) => {
   try {
-    const db = await getDb();
+    const db = await getReadDb();
+    // Try exact match first (uses index, 2ms) before falling back to case-insensitive regex (20s full scan)
     const entity = await db.collection('entities').findOne(
+      { name },
+      { sort: { book_count: -1 } }
+    ) ?? await db.collection('entities').findOne(
       { name: { $regex: `^${name.replace(/[.*+?^${}()|[\]\\]/g, '\\$&')}$`, $options: 'i' } },
       { sort: { book_count: -1 } }
     );

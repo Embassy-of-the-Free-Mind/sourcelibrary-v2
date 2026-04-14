@@ -11,6 +11,7 @@ import { tmpdir } from 'os';
 import { join } from 'path';
 import { images } from '@/lib/api-client';
 import { markForExport } from '@/lib/provenance';
+import { getBookIndex } from '@/lib/book-index';
 
 // Base URL for source links - update when we have a custom domain
 const BASE_URL = process.env.NEXT_PUBLIC_BASE_URL || 'https://sourcelibrary.org';
@@ -2470,9 +2471,10 @@ export async function GET(request: NextRequest, { params }: RouteParams) {
           edition = editions[0] || null;
         }
 
-        // Get book index (stored directly on book.index)
-        const typedBook = book as unknown as Book & {
-          index?: {
+        // Get book index from dedicated collection (or inline fallback)
+        const indexData = await getBookIndex((book as unknown as Book).id);
+        if (indexData) {
+          const idx = indexData as unknown as {
             vocabulary?: ConceptEntry[];
             keywords?: ConceptEntry[];
             people?: ConceptEntry[];
@@ -2480,26 +2482,23 @@ export async function GET(request: NextRequest, { params }: RouteParams) {
             concepts?: ConceptEntry[];
             bookSummary?: { brief?: string; abstract?: string; detailed?: string };
           };
-        };
-
-        if (typedBook.index) {
           bookIndex = {
-            vocabulary: typedBook.index.vocabulary || [],
-            keywords: typedBook.index.keywords || [],
-            people: typedBook.index.people || [],
-            places: typedBook.index.places || [],
-            concepts: typedBook.index.concepts || [],
+            vocabulary: idx.vocabulary || [],
+            keywords: idx.keywords || [],
+            people: idx.people || [],
+            places: idx.places || [],
+            concepts: idx.concepts || [],
           };
 
-          // Book summary is also in the index object
-          if (typedBook.index.bookSummary) {
+          if (idx.bookSummary) {
             bookSummary = {
-              brief: typedBook.index.bookSummary.brief,
-              abstract: typedBook.index.bookSummary.abstract,
-              detailed: typedBook.index.bookSummary.detailed,
+              brief: idx.bookSummary.brief,
+              abstract: idx.bookSummary.abstract,
+              detailed: idx.bookSummary.detailed,
             };
           }
         }
+        const typedBook = book as unknown as Book & { summary?: { data?: string } | string };
 
         // Fallback: Check book.summary for older format
         if (!bookSummary && typedBook.summary) {

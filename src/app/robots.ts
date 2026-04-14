@@ -56,25 +56,31 @@ export default function robots(): MetadataRoute.Robots {
         userAgent: 'FacebookBot',
         disallow: '/',
       },
+      {
+        userAgent: 'Applebot',
+        disallow: '/',
+      },
 
       // AI assistants: welcome to use the API and llms.txt
       // GPTBot, Claude-Web, etc. — access the structured API
       {
         userAgent: 'GPTBot',
-        allow: ['/api/search', '/api/books/', '/llms.txt', '/terms', '/developers'],
+        allow: ['/api/search', '/api/books/', '/api/mcp', '/llms.txt', '/terms', '/developers'],
         disallow: '/',
       },
       {
         userAgent: 'Claude-Web',
-        allow: ['/api/search', '/api/books/', '/llms.txt', '/terms', '/developers'],
+        allow: ['/api/search', '/api/books/', '/api/mcp', '/llms.txt', '/terms', '/developers'],
         disallow: '/',
       },
       {
         userAgent: 'Anthropic-AI',
-        allow: ['/api/search', '/api/books/', '/llms.txt', '/terms', '/developers'],
+        allow: ['/api/search', '/api/books/', '/api/mcp', '/llms.txt', '/terms', '/developers'],
         disallow: '/',
       },
     ],
     sitemap: `${baseUrl}/sitemap.xml`,
+    // Note: Next.js generateSitemaps() automatically creates a sitemap index
+    // at /sitemap.xml that references /sitemap/0.xml, /sitemap/1.xml, etc.
   };
 }

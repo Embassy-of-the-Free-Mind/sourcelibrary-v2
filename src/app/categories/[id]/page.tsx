@@ -3,11 +3,12 @@ import Link from 'next/link';
 import Image from 'next/image';
 import { BookOpen, Book as BookIcon } from 'lucide-react';
 import SiteHeader from '@/components/layout/SiteHeader';
-import { getDb } from '@/lib/mongodb';
+import { getReadDb } from '@/lib/mongodb';
 import { LIBRARY_CATEGORIES } from '@/app/api/categories/route';
 import { notFound } from 'next/navigation';
 import CategorySchema from '@/components/seo/CategorySchema';
 import { bookUrl } from '@/lib/slugify';
+import { getBookThumbnailUrl } from '@/lib/utils';
 
 interface Book {
   id: string;
@@ -18,6 +19,7 @@ interface Book {
   language: string;
   published: string;
   thumbnail?: string;
+  thumbnail_blob?: string;
   pages_count?: number;
   pages_translated?: number;
   translation_percent?: number;
@@ -41,7 +43,7 @@ function getCategory(id: string) {
 
 async function getCategoryBooks(id: string): Promise<Book[]> {
   try {
-    const db = await getDb();
+    const db = await getReadDb();
     // Use cached pages_translated on books — no $lookup against 9.5M pages collection
     const books = await db.collection('books').find(
       { categories: id, visible: true, pages_translated: { $gt: 0 } },
@@ -65,6 +67,7 @@ export async function generateMetadata({ params }: CategoryPageProps): Promise<M
   return {
     title: `${category.name} — Source Library`,
     description: `Browse ${category.description.toLowerCase()} in Source Library's collection of rare historical texts, digitized and translated with AI.`,
+    alternates: { canonical: `/categories/${id}` },
     openGraph: {
       title: `${category.name} — Source Library`,
       description: category.description,
@@ -147,9 +150,9 @@ export default async function CategoryPage({ params }: CategoryPageProps) {
                 >
                   {/* Thumbnail */}
                   <div className="aspect-[3/2] bg-stone-100 relative overflow-hidden">
-                    {book.thumbnail ? (
+                    {getBookThumbnailUrl(book) ? (
                       <Image
-                        src={book.thumbnail}
+                        src={getBookThumbnailUrl(book)!}
                         alt={book.title}
                         fill
                         className="object-cover group-hover:scale-105 transition-transform duration-300"

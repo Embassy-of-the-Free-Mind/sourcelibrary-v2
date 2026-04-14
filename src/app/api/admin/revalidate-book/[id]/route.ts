@@ -2,6 +2,7 @@ import { NextRequest, NextResponse } from 'next/server';
 import { revalidatePath } from 'next/cache';
 import { getDb } from '@/lib/mongodb';
 import { findBookByIdOrSlug } from '@/lib/book-lookup';
+import { purgeCloudflareUrls } from '@/lib/cloudflare-cache';
 
 export const dynamic = 'force-dynamic';
 
@@ -36,6 +37,9 @@ export async function POST(
 
   // Revalidate individual page routes via layout invalidation
   revalidatePath(`/book/${slug}`, 'layout');
+
+  // Purge Cloudflare edge cache for these paths too
+  await purgeCloudflareUrls([`/book/${slug}`, `/book/${slug}/search`, `/book/${id}`]);
 
   return NextResponse.json({
     success: true,

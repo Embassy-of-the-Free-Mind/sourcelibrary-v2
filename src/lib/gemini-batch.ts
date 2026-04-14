@@ -88,6 +88,7 @@ export function getAllApiKeys(): string[] {
   const keys: string[] = [];
   if (process.env.GEMINI_API_KEY_TIER3) keys.push(process.env.GEMINI_API_KEY_TIER3);
   if (process.env.GEMINI_API_KEY_2) keys.push(process.env.GEMINI_API_KEY_2);
+  if (process.env.GEMINI_API_KEY_3) keys.push(process.env.GEMINI_API_KEY_3);
   if (process.env.GEMINI_API_KEY) keys.push(process.env.GEMINI_API_KEY);
   // Deduplicate (some keys may be the same)
   return [...new Set(keys)];

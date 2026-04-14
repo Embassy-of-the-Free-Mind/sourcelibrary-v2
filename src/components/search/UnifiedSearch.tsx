@@ -9,6 +9,7 @@ import { useDebouncedCallback } from 'use-debounce';
 import { search as searchApi } from '@/lib/api-client';
 import { bookUrl } from '@/lib/slugify';
 import type { UnifiedSearchResponse } from '@/lib/api-client';
+import { getBookThumbnailUrl } from '@/lib/utils';
 import HighlightedText from './HighlightedText';
 import { ENTITY_TYPE_STYLES, type EntityType } from '@/lib/style-constants';
 
@@ -375,10 +376,10 @@ export default function UnifiedSearch() {
                           className={`flex items-center gap-3 px-2 py-2 rounded-lg transition-colors ${activeIndex === itemIndex ? 'bg-accent-gold/8' : 'hover:bg-accent-gold/8'
                             }`}
                         >
-                          {book.thumbnail || book.thumbnail_blob ? (
+                          {getBookThumbnailUrl(book, 'thumb') ? (
                             <div className="w-8 h-10 rounded overflow-hidden flex-shrink-0 bg-stone-100">
                               <Image
-                                src={book.thumbnail_blob || book.thumbnail!}
+                                src={getBookThumbnailUrl(book, 'thumb')!}
                                 alt={book.display_title || book.title}
                                 width={32}
                                 height={40}

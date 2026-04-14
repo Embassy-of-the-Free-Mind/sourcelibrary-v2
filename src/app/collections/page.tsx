@@ -1,12 +1,12 @@
-import { getDb } from '@/lib/mongodb';
+import { getReadDb } from '@/lib/mongodb';
 import Link from 'next/link';
 import Image from 'next/image';
 import ContentPageLayout, { ContentHeader } from '@/components/layout/ContentPageLayout';
-import { sortCollections } from '@/lib/collections-utils';
+import { sortCollections, sanitizeThumbnail } from '@/lib/collections-utils';
 import EraTimeline, { type DecadeBucket } from '@/components/collections/EraTimeline';
 import type { Metadata } from 'next';
 
-export const revalidate = false;
+export const revalidate = 86400;
 
 export const metadata: Metadata = {
   title: 'Collections | Source Library',
@@ -41,7 +41,7 @@ interface CollectionDoc {
 }
 
 async function fetchCollections(): Promise<CollectionDoc[]> {
-  const db = await getDb();
+  const db = await getReadDb();
   const [docs, childCounts] = await Promise.all([
     db.collection('collections').find({
       parent: { $exists: false },
@@ -51,6 +51,7 @@ async function fetchCollections(): Promise<CollectionDoc[]> {
     }).toArray(),
     db.collection('collections').aggregate<{ _id: string; count: number }>([
       { $match: { parent: { $exists: true }, visible: true } },
+      { $unwind: { path: '$parent', preserveNullAndEmptyArrays: false } },
       { $group: { _id: '$parent', count: { $sum: 1 } } },
     ]).toArray(),
   ]);
@@ -64,9 +65,19 @@ async function fetchCollections(): Promise<CollectionDoc[]> {
   return sortCollections(all);
 }
 
+async function fetchCuratedCollections(): Promise<CollectionDoc[]> {
+  const db = await getReadDb();
+  const docs = await db.collection('collections')
+    .find({ type: 'curated', published: true })
+    .sort({ book_count: -1, name: 1 })
+    .toArray();
+
+  return docs.map(({ _id, ...rest }) => rest) as unknown as CollectionDoc[];
+}
+
 async function fetchTimelineDecades(): Promise<{ decades: DecadeBucket[]; total: number }> {
   try {
-    const db = await getDb();
+    const db = await getReadDb();
     const pipeline = [
       { $match: { year: { $exists: true, $ne: null }, visible: true } },
       { $project: { year: 1, language: { $ifNull: ['$language', 'Unknown'] } } },
@@ -103,8 +114,11 @@ async function fetchTimelineDecades(): Promise<{ decades: DecadeBucket[]; total:
 }
 
 function CollectionCard({ col, priority = false }: { col: CollectionDoc; priority?: boolean }) {
+  // Prefer images with proper gallery crops (thumbnail/extracted) over raw page URLs
   const hero = col.featured_images?.find(
-    img => img.thumbnail_url || img.extracted_url || img.image_url
+    img => img.thumbnail_url || img.extracted_url
+  ) || col.featured_images?.find(
+    img => img.image_url
   );
   // Prefer thumbnail for card grids — extracted images are ~2MB vs ~38KB thumbnails
   const heroUrl = hero?.thumbnail_url || hero?.extracted_url || hero?.image_url;
@@ -145,33 +159,65 @@ function CollectionCard({ col, priority = false }: { col: CollectionDoc; priorit
 
 
 
+function CuratedCard({ col, priority = false }: { col: CollectionDoc; priority?: boolean }) {
+  const hero = col.featured_images?.find(
+    img => img.thumbnail_url || img.extracted_url
+  ) || col.featured_images?.find(
+    img => img.image_url
+  );
+  const raw = hero?.thumbnail_url || hero?.extracted_url || hero?.image_url;
+  const heroUrl = sanitizeThumbnail(raw);
+
+  return (
+    <Link
+      href={`/collections/${col.slug}`}
+      className="group relative block overflow-hidden rounded-lg aspect-[3/2]"
+    >
+      {heroUrl ? (
+        <Image
+          src={heroUrl}
+          alt={`Illustration from ${col.name}`}
+          fill
+          sizes="(max-width: 640px) 100vw, 33vw"
+          className="object-cover transition-transform duration-500 ease-out group-hover:scale-105"
+          unoptimized
+          priority={priority}
+          loading={priority ? 'eager' : 'lazy'}
+        />
+      ) : (
+        <div className="absolute inset-0 bg-warm" />
+      )}
+      <div className="absolute inset-0 bg-gradient-to-t from-[rgba(26,22,18,0.85)] via-[rgba(26,22,18,0.35)] to-transparent" />
+      <div className="absolute inset-0 flex flex-col justify-end p-4 sm:p-5">
+        <h3 className="font-serif text-base sm:text-lg text-white font-semibold leading-tight mb-1 group-hover:text-accent-gold transition-colors">
+          {col.name}
+        </h3>
+        {col.subtitle && (
+          <p className="text-xs sm:text-sm text-white/60 leading-relaxed line-clamp-2">
+            {col.subtitle}
+          </p>
+        )}
+      </div>
+    </Link>
+  );
+}
+
 export default async function CollectionsPage() {
-  const [categories, timeline] = await Promise.all([
+  const [categories, curated, timeline] = await Promise.all([
     fetchCollections(),
+    fetchCuratedCollections(),
     fetchTimelineDecades(),
   ]);
-  const totalBooks = categories.reduce((s, c) => s + c.book_count, 0);
 
   return (
     <ContentPageLayout
       header={
         <ContentHeader
           title="Collections"
-          subtitle={`${totalBooks.toLocaleString()} books organized into ${categories.length} thematic collections spanning three millennia of human knowledge.`}
+          subtitle="10,000+ books across three millennia of human knowledge."
         />
       }
     >
-
-      {/* Link to curated exhibitions */}
-      <div className="mb-8">
-        <Link
-          href="/curated"
-          className="group inline-flex items-center gap-2 text-sm text-accent-rust hover:text-accent-rust/80 transition-colors"
-        >
-          Browse curated exhibitions
-          <span className="group-hover:translate-x-0.5 transition-transform">&rarr;</span>
-        </Link>
-      </div>
 
       {/* Category collections */}
       <div className="grid gap-4 grid-cols-2 lg:grid-cols-4">
@@ -179,6 +225,26 @@ export default async function CollectionsPage() {
           <CollectionCard key={col.slug} col={col} priority={i < 8} />
         ))}
       </div>
+
+      {/* Curated exhibitions */}
+      {curated.length > 0 && (
+        <div className="mt-12">
+          <div className="flex items-baseline justify-between mb-4">
+            <h2 className="font-display text-2xl text-primary">Curated Exhibitions</h2>
+            <Link
+              href="/curated"
+              className="text-sm text-accent-rust hover:text-accent-rust/80 transition-colors"
+            >
+              View all &rarr;
+            </Link>
+          </div>
+          <div className="grid gap-4 grid-cols-1 sm:grid-cols-2 lg:grid-cols-3">
+            {curated.map((col, i) => (
+              <CuratedCard key={col.slug} col={col} priority={i < 3} />
+            ))}
+          </div>
+        </div>
+      )}
 
       {/* Era timeline — full-bleed dark section */}
       <EraTimeline decades={timeline.decades} total={timeline.total} />

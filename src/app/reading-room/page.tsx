@@ -41,9 +41,36 @@ async function getFeaturedPassage() {
   try {
     const { db } = await connectToDatabase();
 
-    // Step 1: pick a random translated book from the (small) books collection.
-    // `pages_translated` is a cached counter kept in sync by the pipeline —
-    // querying it is fast and index-friendly.
+    // First try: pick from research notebook findings (real, curated quotes from conversations)
+    const notebooks = await db.collection('research_notebooks').aggregate([
+      { $match: { 'findings.0': { $exists: true } } },
+      { $unwind: '$findings' },
+      { $match: { 'findings.quote': { $exists: true } } },
+      { $sample: { size: 1 } },
+      { $project: { finding: '$findings' } },
+    ], { maxTimeMS: 3000 }).toArray();
+
+    if (notebooks.length > 0) {
+      const f = notebooks[0].finding;
+      let text = (f.quote || '').trim().replace(/<[^>]+>/g, '').trim();
+      if (text.length > 280) {
+        const truncated = text.slice(0, 300);
+        const cut = Math.max(truncated.lastIndexOf('.'), truncated.lastIndexOf('?'), truncated.lastIndexOf('!'));
+        text = cut > 80 ? truncated.slice(0, cut + 1) : truncated.slice(0, 280) + '...';
+      }
+      if (text.length >= 60) {
+        return {
+          text,
+          bookTitle: f.source.bookTitle,
+          bookAuthor: f.source.bookAuthor,
+          bookYear: null,
+          bookSlug: f.source.bookSlug || f.source.bookId,
+          pageNumber: f.source.pageNumber,
+        };
+      }
+    }
+
+    // Fallback: random translated page from a well-translated book
     const books = await db.collection('books').aggregate([
       { $match: { pages_translated: { $gt: 20 } } },
       { $sample: { size: 1 } },
@@ -53,7 +80,6 @@ async function getFeaturedPassage() {
     if (!books.length) return null;
     const book = books[0];
 
-    // Step 2: fetch translated pages for just that book — hits the book_id index.
     const results = await db.collection('pages').find(
       {
         book_id: book.id,
@@ -66,38 +92,26 @@ async function getFeaturedPassage() {
       }
     ).toArray();
 
-    // Find a passage that reads well as a quote
-    // Shuffle so we don't always pick the earliest page
     results.sort(() => Math.random() - 0.5);
 
     let bestPage = null;
     for (const page of results) {
       const text = (page.translation?.data || '').trim();
       if (text.length < 80 || text.length > 600) continue;
-      // Skip structural/metadata pages
       if (text.includes('<pb') || text.includes('<gap')) continue;
       if ((text.match(/</g) || []).length > 3) continue;
       if (/^\d/.test(text) || /^(chapter|section|part|index|table|page|finis)/i.test(text)) continue;
-      // Prefer pages that start with a capital letter (natural prose)
-      if (/^[A-Z]/.test(text)) {
-        bestPage = page;
-        break;
-      }
+      if (/dedicated|preface|foreword|table of contents|bibliography/i.test(text.slice(0, 50))) continue;
+      if (/^[A-Z]/.test(text)) { bestPage = page; break; }
       if (!bestPage) bestPage = page;
     }
 
     if (!bestPage) return null;
 
-    // Clean and truncate the excerpt
-    let excerpt = (bestPage.translation?.data || '').trim();
-    excerpt = excerpt.replace(/<[^>]+>/g, '').trim();
-
+    let excerpt = (bestPage.translation?.data || '').trim().replace(/<[^>]+>/g, '').trim();
     if (excerpt.length > 280) {
       const truncated = excerpt.slice(0, 300);
-      const lastPeriod = truncated.lastIndexOf('.');
-      const lastQuestion = truncated.lastIndexOf('?');
-      const lastExclaim = truncated.lastIndexOf('!');
-      const cutPoint = Math.max(lastPeriod, lastQuestion, lastExclaim);
+      const cutPoint = Math.max(truncated.lastIndexOf('.'), truncated.lastIndexOf('?'), truncated.lastIndexOf('!'));
       excerpt = cutPoint > 80 ? truncated.slice(0, cutPoint + 1) : truncated.slice(0, 280) + '...';
     }
 

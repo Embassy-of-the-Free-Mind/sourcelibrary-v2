@@ -1,6 +1,7 @@
 import { Metadata } from 'next';
-import { getDb } from '@/lib/mongodb';
-import SiteHeader from '@/components/layout/SiteHeader';
+import { getReadDb } from '@/lib/mongodb';
+import ContentPageLayout, { ContentHeader } from '@/components/layout/ContentPageLayout';
+import ExploreTabBar from '@/components/explore/ExploreTabBar';
 import BookMapLoader from '@/components/explore/BookMapLoader';
 import type { BookLocation } from '@/components/explore/BookMap';
 
@@ -22,7 +23,7 @@ export const metadata: Metadata = {
 };
 
 async function fetchMapData() {
-  const db = await getDb();
+  const db = await getReadDb();
 
   // Read pre-computed map data from system_config (fast single-doc read)
   const cached = await db
@@ -95,21 +96,42 @@ async function fetchMapData() {
 export default async function MapPage() {
   try {
     const data = await fetchMapData();
+    const locationCount = data.stats.total_locations;
     return (
-      <>
-        <SiteHeader />
+      <ContentPageLayout
+        header={
+          <ContentHeader
+            title="Map"
+            subtitle={`${locationCount.toLocaleString()} locations across Europe and beyond — publication cities, birthplaces, and institutions`}
+          >
+            <div className="mt-5">
+              <ExploreTabBar />
+            </div>
+          </ContentHeader>
+        }
+        maxWidth="full"
+        noPadding
+      >
         <BookMapLoader locations={data.locations} stats={data.stats} />
-      </>
+      </ContentPageLayout>
     );
   } catch (err) {
     console.error('Map page error:', err);
     return (
-      <>
-        <SiteHeader />
+      <ContentPageLayout
+        header={
+          <ContentHeader title="Map" subtitle="Map data is temporarily unavailable. Please try again shortly." >
+            <div className="mt-5">
+              <ExploreTabBar />
+            </div>
+          </ContentHeader>
+        }
+        maxWidth="full"
+      >
         <div className="min-h-[60vh] flex items-center justify-center">
-          <p className="text-stone-500">Map data is temporarily unavailable. Please try again shortly.</p>
+          <p className="text-stone-500">Map data is temporarily unavailable.</p>
         </div>
-      </>
+      </ContentPageLayout>
     );
   }
 }

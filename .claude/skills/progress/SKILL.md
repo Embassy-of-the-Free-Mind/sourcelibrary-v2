@@ -223,6 +223,30 @@ if (control?.paused) console.log('PIPELINE PAUSED');
 if (control?.paused_phases?.length) console.log('Paused phases: ' + control.paused_phases.join(', '));
 ```
 
+### 10. Batch API Health (IMPORTANT)
+
+The batch-collector writes `system_config._id: 'batch_health'` every 10 minutes with real Gemini-side state. **Always read this.**
+
+```javascript
+const batchHealth = await db.collection('system_config').findOne({ _id: 'batch_health' });
+if (batchHealth) {
+  const age = ((Date.now() - new Date(batchHealth.updated_at).getTime()) / 60000).toFixed(0);
+  console.log(`Batch health (${age}m old):`);
+  console.log(`  Gemini active: ${batchHealth.geminiActive} (by key: ${batchHealth.geminiActiveByKey?.join(', ')})`);
+  console.log(`  DB active: ${batchHealth.dbActive} | Zombies: ${batchHealth.dbZombies}`);
+  console.log(`  Completions: ${batchHealth.recentCompletions1h}/1h, ${batchHealth.recentCompletions6h}/6h`);
+  console.log(`  OCR pages saved: ${batchHealth.recentPagesSaved1h}/1h, ${batchHealth.recentPagesSaved6h}/6h`);
+  console.log(`  Healthy: ${batchHealth.healthy}`);
+  if (batchHealth.issues?.length) console.log(`  Issues: ${batchHealth.issues.join('; ')}`);
+}
+```
+
+**Key signals:**
+- `healthy: false` = something needs attention. Check `issues` array.
+- `geminiActive > 0` but `recentCompletions1h === 0` = pipeline may be frozen
+- `dbZombies > 0` = jobs created but never submitted (auto-cleaned if >1h old)
+- `orphansCancelled > 0` = drift detected and auto-fixed
+
 ## Output Format
 
 Present results as a concise status report:
@@ -279,6 +303,12 @@ Throughput (verified from pages):
 Spot check (5 random processing jobs):
   "Book Title" — 45/50 pages translated (job says 43/50)
   "Book Title" — 0/30 pages translated (job says 0/30) STUCK
+
+Batch API Health (updated Xm ago):
+  Gemini active: X (key0: X, key1: X, key2: X)  ← real Gemini state
+  DB active: X | Zombies: X
+  Completions: X/1h, X/6h | OCR pages: X/1h, X/6h
+  Status: HEALTHY  (or: ISSUES — list problems)
 
 Pauses: none (or list)
 ```

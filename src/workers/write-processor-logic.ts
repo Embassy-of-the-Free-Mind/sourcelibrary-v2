@@ -19,6 +19,7 @@ import { getDb } from '@/lib/mongodb';
 import { logGeminiCall } from '@/lib/gemini-logger';
 import { retryDbWrite } from '@/lib/retry-utils';
 import { checkJobCompletion } from '@/lib/job-completion';
+import { syncPageUpdate } from '@/lib/supabase-page-writer';
 import type { PageJobType } from '@/lib/types/job';
 import type {
   WriteResultMessage,
@@ -70,28 +71,29 @@ async function processOcrResult(db: Awaited<ReturnType<typeof getDb>>, message: 
   } else if (message.data) {
     // Save OCR result to page
     const { text, language, model, promptVersion, promptId, promptHash, pageType, columns, scriptType, detectedImages } = message.data;
+    const ocrSetPayload = {
+      ocr: {
+        data: text,
+        language,
+        model,
+        updated_at: new Date(),
+        source: 'ai',
+        prompt_version: promptVersion,
+        ...(promptId && { prompt_id: promptId }),
+        ...(promptHash && { prompt_hash: promptHash }),
+      },
+      ...(pageType && { page_type: pageType }),
+      ...(columns && { columns }),
+      ...(scriptType && { script_type: scriptType }),
+      ...(detectedImages && detectedImages.length > 0 && { detected_images: detectedImages }),
+      updated_at: new Date()
+    };
     await retryDbWrite(() => db.collection('pages').updateOne(
       { id: pageId },
-      {
-        $set: {
-          ocr: {
-            data: text,
-            language,
-            model,
-            updated_at: new Date(),
-            source: 'ai',
-            prompt_version: promptVersion,
-            ...(promptId && { prompt_id: promptId }),
-            ...(promptHash && { prompt_hash: promptHash }),
-          },
-          ...(pageType && { page_type: pageType }),
-          ...(columns && { columns }),
-          ...(scriptType && { script_type: scriptType }),
-          ...(detectedImages && detectedImages.length > 0 && { detected_images: detectedImages }),
-          updated_at: new Date()
-        }
-      }
+      { $set: ocrSetPayload }
     ), `save OCR for page ${pageId}`, 3, LOG_PREFIX);
+    // Dual-write to Supabase (fire-and-forget)
+    syncPageUpdate(pageId, ocrSetPayload);
   }
 
   // Log Gemini usage (non-blocking)
@@ -159,6 +161,8 @@ async function processImageExtractionResult(db: Awaited<ReturnType<typeof getDb>
       { id: pageId },
       { $set: imageSetFields }
     ), `save image extraction for page ${pageId}`, 3, LOG_PREFIX);
+    // Dual-write to Supabase (fire-and-forget)
+    syncPageUpdate(pageId, imageSetFields);
 
     // Upsert gallery images (non-fatal — gallery is a cache)
     if (galleryDocs && galleryDocs.length > 0) {

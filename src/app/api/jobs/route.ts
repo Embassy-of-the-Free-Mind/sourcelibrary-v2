@@ -1,5 +1,5 @@
 import { NextRequest, NextResponse } from 'next/server';
-import { getDb } from '@/lib/mongodb';
+import { getReadDb } from '@/lib/mongodb';
 import { withAuth } from '@/lib/auth-helpers';
 
 
@@ -12,7 +12,7 @@ export const GET = withAuth(async (request, session) => {
     const bookId = searchParams.get('book_id');
     const limit = parseInt(searchParams.get('limit') || '50', 10);
 
-    const db = await getDb();
+    const db = await getReadDb();
 
     const query: Record<string, unknown> = {};
     if (status) query.status = status;

@@ -24,9 +24,14 @@ import { MongoClient, ObjectId } from 'mongodb';
 import { nanoid } from 'nanoid';
 import { SQSClient, SendMessageBatchCommand } from '@aws-sdk/client-sqs';
 import { S3Client, PutObjectCommand } from '@aws-sdk/client-s3';
+import { GoogleGenAI } from '@google/genai';
 import { createHash } from 'crypto';
 import { execFile } from 'child_process';
 import { promisify } from 'util';
+import fs from 'fs';
+import os from 'os';
+import path from 'path';
+import { logUsage, logUsageAsync } from './lib/supabase-usage-logger.mjs';
 const execFileAsync = promisify(execFile);
 
 // ── Config ──
@@ -50,9 +55,9 @@ function getOcrModelForBook(book) {
 const OCR_MODEL = OCR_MODEL_FLASH; // Legacy fallback for recitation retry path
 const OCR_PROMPT_VERSION = 'v10'; // Read from DB at runtime; this label is for batch_jobs metadata only
 const OCR_INLINE_BATCH_SIZE = 20;  // Pages per inline batch (base64 in body, ~20MB limit)
-const OCR_FILE_BATCH_SIZE = 75;    // Pages per file-based batch (JSONL uploaded to File API) — reduced from 150 to avoid "Invalid string length" on 500+ page books
+const OCR_FILE_BATCH_SIZE = 500;   // Pages per file-based batch — raised from 250 to 500 (issue #1078). Google recommends 1K-5K. File API tested at 707MB/480 pages. Streaming JSONL keeps memory low.
 const IMAGE_CONCURRENCY = 20;     // Parallel image downloads per book
-const MAX_PAGES_PER_BOOK = 500;   // Max pages to OCR per book
+const MAX_PAGES_PER_BOOK = 1000;  // Max pages to OCR per book — raised from 500 to match larger batch size
 
 // R2 config for split image uploads (mirrors batch-split-bph.mjs)
 const R2_BUCKET = process.env.R2_BUCKET_NAME || 'sourcelibrary';
@@ -111,7 +116,7 @@ const ONLY_PHASE = phaseIdx >= 0 ? parseFloat(args[phaseIdx + 1]) : null;
 let ENROLL_LIMIT = 100;
 let ARCHIVE_LIMIT = 500;
 let OCR_SUBMIT_LIMIT = 200;
-const MAX_ACTIVE_BATCH_OCR = 500; // Gemini Batch API is resilient
+const MAX_ACTIVE_BATCH_OCR = 60; // Gemini concurrent batch limit is 100 total (OCR + images). Keep headroom for image extraction.
 let METADATA_ENRICH_LIMIT = 50;
 let TRANSLATE_SUBMIT_LIMIT = 50;
 let MAX_INFLIGHT_TRANSLATIONS = 60; // Total books in translate_submitted — caps concurrent workers
@@ -126,6 +131,9 @@ const PREVIEW_PAGE_COUNT = 25;
 let PREVIEW_LIMIT = 20; // Books per run to queue preview OCR
 const MAX_RETRIES = 3;
 const ENROLL_WINDOW_DAYS = 14;
+
+// Art/visual object providers — these are not text books and should never enter the pipeline
+const ART_PROVIDERS = ['wikimedia_commons', 'rijksmuseum', 'met', 'cleveland'];
 
 // Delay between API calls (ms) to avoid overwhelming production
 const API_DELAY_MS = 500;
@@ -237,7 +245,7 @@ async function probeDbHealth(db) {
         // Clear book.job references AND roll back pipeline status so books can be re-submitted
         await db.collection('books').updateMany(
           { 'pipeline_auto.status': 'translate_submitted' },
-          { $set: { 'pipeline_auto.status': 'metadata_enriched', updated_at: new Date() }, $unset: { job: '' } },
+          { $set: { 'pipeline_auto.status': 'ocr_complete', updated_at: new Date() }, $unset: { job: '' } },
         );
         await db.collection('books').updateMany(
           { 'pipeline_auto.status': 'ocr_submitted' },
@@ -328,134 +336,15 @@ function isNonLatin(language) {
 function isDigitizerOcr(ocrData) {
   if (!ocrData) return false;
   const start = ocrData.substring(0, 1500);
-  return /google\s+logo|digitized\s+by\s+google|this\s+is\s+a\s+digital\s+copy/i.test(start) ||
+  return /google\s+logo|digitized\s+by\s+google|scanned\s+by\s+google|this\s+is\s+a\s+digital\s+copy/i.test(start) ||
+    /preserved\s+for\s+generations\s+on\s+library\s+shelves/i.test(start) ||
     /inserted\s+by\s+the\s+internet|internet\s+archive|digitization\s+(credit|notice)/i.test(start) ||
     /not\s+part\s+of\s+the\s+original\s+book|scanner\s+barcode/i.test(start) ||
     /ex[\s\-.]?libris|bookplate|library\s+stamp/i.test(start);
 }
 
-/**
- * Score a page as a potential book cover using OCR content analysis.
- * Detects binding photos, digitizer inserts, bookplates (incl. BPH pelican),
- * and prefers decorated title pages with woodcuts/borders/printer's marks.
- *
- * @param {Object} page - Page document with page_number, page_type, ocr.data
- * @returns {{ score: number, reason: string }}
- */
-function scorePageForCover(page) {
-  const ocr = (page.ocr?.data || '').substring(0, 800).toLowerCase();
-  const pageType = page.page_type;
-  const pageNum = page.page_number;
-  let score = 0;
-  let reason = pageType || 'unknown';
-
-  // Skip hidden pages
-  if (page.hidden) return { score: -200, reason: 'hidden' };
-
-  // --- NEGATIVE signals ---
-
-  if (pageType === 'blank') return { score: -100, reason: 'blank' };
-  if (pageType === 'digitizer-notice') return { score: -90, reason: 'digitizer-notice' };
-
-  // Book binding / cover photos
-  if (ocr.includes('front cover') || (ocr.includes('external') && ocr.includes('cover')) ||
-      (ocr.includes('binding') && ocr.includes('spine')) || ocr.includes('fore-edge') ||
-      ocr.includes('closed book') || ocr.includes('book block') ||
-      ocr.includes('leather-bound') || ocr.includes('leather bound') ||
-      ((ocr.includes('blind-stamp') || ocr.includes('blind stamp')) && ocr.includes('cover'))) {
-    return { score: -80, reason: 'physical book photo' };
-  }
-
-  // Digitizer inserts and portal pages
-  if (ocr.includes('digitized by') || (ocr.includes('google') && ocr.includes('logo')) ||
-      (ocr.includes('internet archive') && ocr.includes('logo')) ||
-      ocr.includes('proquest') || ocr.includes('early european books') ||
-      ocr.includes('hathitrust') || ocr.includes('scan sheet') ||
-      ocr.includes('e-rara.ch') || ocr.includes('www.e-rara') ||
-      ocr.includes('gallica.bnf') || ocr.includes('mdz-nbn') ||
-      ocr.includes('digital.staatsbibliothek') || ocr.includes('daten.digitale-sammlungen')) {
-    return { score: -70, reason: 'digitizer insert' };
-  }
-
-  // BPH pelican bookplate
-  const isBphBookplate = (ocr.includes('pelican') && (ocr.includes('piety') || ocr.includes('nest') || ocr.includes('young') || ocr.includes('hermetica'))) ||
-      ocr.includes('philosophia hermetica') || ocr.includes('philosophica hermetica');
-  if (isBphBookplate && pageType !== 'title-page') {
-    return { score: -65, reason: 'BPH pelican bookplate' };
-  }
-
-  // Ex-libris / bookplates (but allow on title pages with small inscriptions)
-  const hasExLibris = ocr.includes('ex-libris') || ocr.includes('exlibris') || ocr.includes('ex libris') ||
-      ocr.includes('bookplate') || (ocr.includes('ownership') && ocr.includes('stamp')) ||
-      ocr.includes('library stamp') || ocr.includes('library sticker');
-  if (hasExLibris && pageType !== 'title-page') {
-    return { score: -60, reason: 'ex-libris/bookplate' };
-  }
-
-  // Bleed-through / ghosting
-  if (ocr.includes('bleed-through') || ocr.includes('ghosting') || ocr.includes('mirrored impression')) {
-    return { score: -50, reason: 'bleed-through' };
-  }
-
-  if (pageType === 'toc' || pageType === 'index') return { score: -20, reason: pageType };
-  if (pageType === 'colophon') return { score: -10, reason: 'colophon' };
-
-  // --- POSITIVE signals ---
-
-  const hasHeadings = (ocr.match(/^#+ .+/gm) || []).length;
-  const isTitlePage = pageType === 'title-page';
-  const looksLikeTitlePage = !pageType && hasHeadings >= 3;
-
-  if (isTitlePage) { score += 80; reason = 'title-page'; }
-  else if (looksLikeTitlePage) { score += 70; reason = 'likely title-page'; }
-
-  if (isTitlePage || looksLikeTitlePage) {
-    // Publisher imprint bonus
-    if (ocr.includes('excudebat') || ocr.includes('typis') || ocr.includes('apud') ||
-        ocr.includes('impensis') || ocr.includes('sumptibus') || ocr.includes('officina') ||
-        ocr.includes('printed by') || ocr.includes('published by') || ocr.includes('printed for')) {
-      score += 15;
-      reason = (isTitlePage ? 'title-page' : 'likely title-page') + ' with imprint';
-    }
-    // Decorative elements bonus
-    if (ocr.includes('decorative') || ocr.includes('ornamental') || ocr.includes('border') ||
-        ocr.includes('frame') || ocr.includes('vignette') || ocr.includes('woodcut') ||
-        ocr.includes('architectural') || ocr.includes("printer's mark") ||
-        ocr.includes("printer's device")) {
-      score += 20;
-      reason = 'decorated title-page';
-    }
-  }
-
-  // Frontispieces — but not binding photos mislabeled as frontispiece
-  if (pageType === 'frontispiece') {
-    if (ocr.includes('cover') && (ocr.includes('leather') || ocr.includes('binding') || ocr.includes('marbled'))) {
-      return { score: -80, reason: 'binding photo (mislabeled frontispiece)' };
-    }
-    score += 90; reason = 'frontispiece';
-    if (ocr.includes('engrav') || ocr.includes('allegor') || ocr.includes('portrait') ||
-        ocr.includes('emblem') || ocr.includes('woodcut')) {
-      score += 15; reason = 'frontispiece with engraving';
-    }
-  }
-
-  if (pageType === 'illustration') {
-    if (ocr.includes('photograph') && (ocr.includes('fore-edge') || (ocr.includes('book') && ocr.includes('closed')))) {
-      return { score: -80, reason: 'physical book photo' };
-    }
-    score += 60; reason = 'illustration';
-  }
-
-  if (pageType === 'dedication') { score += 15; reason = 'dedication'; }
-  if (pageType === 'text' && score === 0) { score += 5; reason = 'text'; }
-
-  // Position bonus
-  if (pageNum <= 5) score += 5;
-  else if (pageNum <= 10) score += 3;
-  else if (pageNum > 15) score -= 3;
-
-  return { score, reason };
-}
+// Cover scoring — imported from shared module
+import { scorePageForCover } from '../lib/cover-scoring.mjs';
 
 /**
  * Select the best cover page for a book from its first N pages.
@@ -466,7 +355,7 @@ function scorePageForCover(page) {
  * @param {number} maxPages - Max pages to consider (default 20)
  * @returns {Promise<{page: Object, score: number, reason: string} | null>}
  */
-async function selectBestCoverPage(db, bookId, maxPages = 20) {
+async function selectBestCoverPage(db, bookId, maxPages = 20, bookTitle = null) {
   const pages = await db.collection('pages').find(
     { book_id: bookId, page_number: { $lte: maxPages } },
     { projection: {
@@ -479,7 +368,7 @@ async function selectBestCoverPage(db, bookId, maxPages = 20) {
   if (!pages.length) return null;
 
   const scored = pages
-    .map(p => ({ page: p, ...scorePageForCover(p) }))
+    .map(p => ({ page: p, ...scorePageForCover(p, { bookTitle }) }))
     .sort((a, b) => b.score - a.score);
 
   const best = scored[0];
@@ -596,19 +485,12 @@ async function transliteratePage(db, page, sourceScript) {
 
   // Log usage (fire-and-forget)
   const costUsd = (inputTokens / 1_000_000) * 0.10 + (outputTokens / 1_000_000) * 0.40;
-  db.collection('gemini_usage').insertOne({
-    type: 'transliterate',
-    mode: 'realtime',
-    model: TRANSLITERATION_MODEL,
-    book_id: page.book_id,
-    page_ids: [page.id],
-    input_tokens: inputTokens,
-    output_tokens: outputTokens,
-    cost_usd: costUsd,
-    status: 'success',
-    endpoint: 'hetzner/pipeline-orchestrator',
-    timestamp: new Date(),
-  }).catch(() => {});
+  logUsageAsync({
+    type: 'transliterate', mode: 'realtime', model: TRANSLITERATION_MODEL,
+    book_id: page.book_id, page_ids: [page.id],
+    input_tokens: inputTokens, output_tokens: outputTokens,
+    cost_usd: costUsd, status: 'success', endpoint: 'hetzner/pipeline-orchestrator',
+  }, db);
 
   return { inputTokens, outputTokens, costUsd };
 }
@@ -736,19 +618,12 @@ async function translatePage(db, page, sourceLanguage, previousTranslation) {
 
   // Log usage (fire-and-forget)
   const costUsd = (inputTokens / 1_000_000) * 0.50 + (outputTokens / 1_000_000) * 3.00;
-  db.collection('gemini_usage').insertOne({
-    type: 'translation',
-    mode: 'realtime',
-    model: TRANSLATE_MODEL,
-    book_id: page.book_id,
-    page_ids: [page.id],
-    input_tokens: inputTokens,
-    output_tokens: outputTokens,
-    cost_usd: costUsd,
-    status: 'success',
-    endpoint: 'hetzner/pipeline-orchestrator',
-    timestamp: new Date(),
-  }).catch(() => {});
+  logUsageAsync({
+    type: 'translation', mode: 'realtime', model: TRANSLATE_MODEL,
+    book_id: page.book_id, page_ids: [page.id],
+    input_tokens: inputTokens, output_tokens: outputTokens,
+    cost_usd: costUsd, status: 'success', endpoint: 'hetzner/pipeline-orchestrator',
+  }, db);
 
   return { text, inputTokens, outputTokens, costUsd };
 }
@@ -996,19 +871,28 @@ async function markFailed(db, bookId, error, retryCount) {
   await setPipelineStatus(db, bookId, 'failed', { error, retry_count: retryCount });
 }
 
+// Phases paused via DB (system_config.processing_control.paused_phases)
+let PAUSED_PHASES = new Set();
+
 function shouldRun(phase) {
+  if (PAUSED_PHASES.has(phase)) return false;
   return ONLY_PHASE === null || ONLY_PHASE === phase;
 }
 
 // ── Gemini Batch API helpers (direct OCR submission, no Vercel) ──
 
-// All keys for rotation — deduplicated, round-robin across projects to maximize throughput.
-// Batch quotas are per-project, so spreading evenly doubles capacity.
+// Multiple GCP projects, deduplicated to avoid wasting retry attempts on the same project.
+// Batch rate limits are per-project AND per-endpoint (File API upload vs batchGenerateContent).
+// Scans GEMINI_API_KEY, GEMINI_API_KEY_2 through _10, and GEMINI_API_KEY_TIER3.
 const GEMINI_BATCH_KEYS = [...new Set([
   process.env.GEMINI_API_KEY_TIER3,
   process.env.GEMINI_API_KEY,
-  process.env.GEMINI_API_KEY_2,
+  ...Array.from({ length: 9 }, (_, i) => process.env[`GEMINI_API_KEY_${i + 2}`]),
 ].filter(k => !!k))];
+console.log(`  Batch API: ${GEMINI_BATCH_KEYS.length} unique keys`);
+
+// SDK clients — one per GCP project key for proper rate limit isolation
+const GEMINI_SDK_CLIENTS = GEMINI_BATCH_KEYS.map(key => new GoogleGenAI({ apiKey: key }));
 
 let _batchKeyCounter = 0;
 function getGeminiApiKey(keyIndex) {
@@ -1024,9 +908,107 @@ function getGeminiApiKey(keyIndex) {
   return key;
 }
 
+function getSdkClient(keyIndex) {
+  if (keyIndex !== undefined) return GEMINI_SDK_CLIENTS[keyIndex] || GEMINI_SDK_CLIENTS[0];
+  return GEMINI_SDK_CLIENTS[_batchKeyCounter % GEMINI_SDK_CLIENTS.length];
+}
+
 // Get next key index for round-robin upload+create pairing
 function nextBatchKeyIndex() {
   return _batchKeyCounter % GEMINI_BATCH_KEYS.length;
+}
+
+/**
+ * Per-key active job counts from Gemini. Refreshed by getGeminiKeyLoads().
+ * Used by getLeastLoadedKey() to route submissions to the least-loaded project.
+ */
+const _geminiKeyLoads = new Array(GEMINI_SDK_CLIENTS.length).fill(0);
+let _geminiKeyLoadsAt = 0; // timestamp of last refresh
+
+const MAX_ACTIVE_PER_KEY = 30; // Hard cap per GCP project — Gemini stalls above this
+
+/**
+ * Query real Gemini-side active job counts per key.
+ * Returns { total, perKey: number[] }. Also updates the cached _geminiKeyLoads.
+ */
+async function getGeminiKeyLoads() {
+  const activeStates = new Set(['JOB_STATE_PENDING', 'JOB_STATE_RUNNING']);
+  let total = 0;
+  for (let i = 0; i < GEMINI_SDK_CLIENTS.length; i++) {
+    let count = 0;
+    try {
+      const pager = await GEMINI_SDK_CLIENTS[i].batches.list({ config: { pageSize: 100 } });
+      let consecutiveInactive = 0;
+      for await (const job of pager) {
+        if (activeStates.has(job.state)) {
+          count++;
+          consecutiveInactive = 0;
+        } else {
+          consecutiveInactive++;
+          if (consecutiveInactive >= 50) break;
+        }
+      }
+    } catch (err) {
+      console.log(`    Warning: batches.list failed for key ${i}: ${err.message?.substring(0, 100)}`);
+      count = MAX_ACTIVE_PER_KEY; // Assume full if we can't check — don't submit blindly
+    }
+    _geminiKeyLoads[i] = count;
+    total += count;
+  }
+  _geminiKeyLoadsAt = Date.now();
+  return { total, perKey: [..._geminiKeyLoads] };
+}
+
+/** Backwards-compatible wrapper. */
+async function getActiveGeminiJobCount() {
+  const { total } = await getGeminiKeyLoads();
+  return total;
+}
+
+/**
+ * Pick the key with the fewest active jobs that's still under the per-key cap.
+ * Returns keyIndex or -1 if all keys are saturated.
+ * Uses cached counts (updated every submission cycle) + local tracking.
+ */
+function getLeastLoadedKey() {
+  let bestKey = -1;
+  let bestCount = Infinity;
+  for (let i = 0; i < _geminiKeyLoads.length; i++) {
+    if (_geminiKeyLoads[i] < MAX_ACTIVE_PER_KEY && _geminiKeyLoads[i] < bestCount) {
+      bestCount = _geminiKeyLoads[i];
+      bestKey = i;
+    }
+  }
+  return bestKey;
+}
+
+/**
+ * Record that we just submitted a job on keyIndex.
+ * Increments the local cache so subsequent getLeastLoadedKey() calls see it
+ * without needing a full Gemini re-query.
+ */
+function recordSubmission(keyIndex) {
+  if (keyIndex >= 0 && keyIndex < _geminiKeyLoads.length) {
+    _geminiKeyLoads[keyIndex]++;
+  }
+}
+
+/**
+ * Check if we can submit more jobs. Returns false if all keys are saturated
+ * OR if total active jobs across all keys exceeds MAX_ACTIVE_BATCH_OCR.
+ * Refreshes Gemini counts if cache is stale (>2 min old).
+ */
+async function canSubmitMore() {
+  // Refresh real counts every 2 minutes to stay in sync with Gemini completions
+  if (Date.now() - _geminiKeyLoadsAt > 120_000) {
+    await getGeminiKeyLoads();
+  }
+  // Global cap: don't exceed MAX_ACTIVE_BATCH_OCR across all keys
+  const totalActive = _geminiKeyLoads.reduce((sum, n) => sum + n, 0);
+  if (totalActive >= MAX_ACTIVE_BATCH_OCR) {
+    return false;
+  }
+  return getLeastLoadedKey() >= 0;
 }
 
 function getPageImageUrl(page) {
@@ -1073,128 +1055,93 @@ async function downloadImagesParallel(pages, concurrency) {
 }
 
 async function createBatchJobInline(model, requests, displayName) {
-  // Round-robin start key, try each on quota exhaustion (429)
-  const startKey = nextBatchKeyIndex();
-  for (let attempt = 0; attempt < GEMINI_BATCH_KEYS.length; attempt++) {
-    const ki = (startKey + attempt) % GEMINI_BATCH_KEYS.length;
-    const apiKey = getGeminiApiKey(ki);
-    const response = await fetch(
-      `${GEMINI_API_BASE}/models/${model}:batchGenerateContent?key=${apiKey}`,
-      {
-        method: 'POST',
-        headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify({
-          batch: {
-            display_name: displayName,
-            input_config: {
-              requests: { requests },
-            },
-          },
-        }),
+  // Convert raw REST request format to SDK InlinedRequest format
+  const sdkRequests = requests.map(r => ({
+    contents: r.request.contents,
+    config: {
+      safetySettings: r.request.safetySettings,
+      temperature: r.request.generationConfig?.temperature,
+      maxOutputTokens: r.request.generationConfig?.maxOutputTokens,
+      thinkingConfig: r.request.generationConfig?.thinkingConfig,
+    },
+    metadata: r.metadata,
+  }));
+
+  // Least-loaded key first, then try others on quota exhaustion (429)
+  const bestKey = getLeastLoadedKey();
+  const startKey = bestKey >= 0 ? bestKey : nextBatchKeyIndex();
+  for (let attempt = 0; attempt < GEMINI_SDK_CLIENTS.length; attempt++) {
+    const ki = (startKey + attempt) % GEMINI_SDK_CLIENTS.length;
+    try {
+      const batchJob = await GEMINI_SDK_CLIENTS[ki].batches.create({
+        model,
+        src: sdkRequests,
+        config: { displayName },
+      });
+      recordSubmission(ki);
+      return { name: batchJob.name, state: batchJob.state || 'JOB_STATE_PENDING', keyIndex: ki };
+    } catch (err) {
+      const msg = err.message || '';
+      console.log(`    Key ${ki} failed: ${msg.substring(0, 150)}`);
+      if (msg.includes('429') || msg.includes('quota') || msg.includes('RESOURCE_EXHAUSTED')) {
+        _geminiKeyLoads[ki] = MAX_ACTIVE_PER_KEY; // Mark as full
+        continue;
       }
-    );
-
-    if (response.ok) {
-      const result = await response.json();
-      return { name: result.name, state: result.state || 'JOB_STATE_PENDING' };
+      throw err;
     }
-
-    const errorText = await response.text();
-    console.log(`    Key ${ki} failed (${response.status}): ${errorText.substring(0, 100)}`);
-    if (response.status === 429) {
-      continue;
-    }
-    throw new Error(`Batch create failed (${response.status}): ${errorText.substring(0, 200)}`);
   }
   throw new Error('ALL_KEYS_QUOTA_EXHAUSTED');
 }
 
 /**
- * Upload JSONL content to Gemini File API for file-based batch submission.
- * Uses resumable upload protocol. Returns { name, uri } of uploaded file.
+ * Build JSONL as a temp file, writing one line at a time to avoid holding
+ * the entire string in memory. Frees each image buffer after serialization.
+ * Returns { filePath, fileSize } — caller must delete the file after upload.
  */
-async function uploadBatchFile(jsonlContent, displayName, apiKey) {
-  const contentLength = Buffer.byteLength(jsonlContent);
-
-  // Step 1: Start resumable upload (text/plain as workaround for Gemini JSONL bug)
-  const startResponse = await fetch(
-    `https://generativelanguage.googleapis.com/upload/v1beta/files?key=${apiKey}`,
-    {
-      method: 'POST',
-      headers: {
-        'Content-Type': 'application/json',
-        'X-Goog-Upload-Protocol': 'resumable',
-        'X-Goog-Upload-Command': 'start',
-        'X-Goog-Upload-Header-Content-Length': contentLength.toString(),
-        'X-Goog-Upload-Header-Content-Type': 'text/plain',
-      },
-      body: JSON.stringify({ file: { displayName } }),
-    }
-  );
-
-  if (!startResponse.ok) {
-    const error = await startResponse.text();
-    throw new Error(`File upload start failed: ${error.substring(0, 200)}`);
+function buildJsonlFile(chunk, requestBuilder) {
+  const tmpFile = path.join(os.tmpdir(), `sl-batch-${nanoid()}.jsonl`);
+  const fd = fs.openSync(tmpFile, 'w');
+  let totalBytes = 0;
+  for (let i = 0; i < chunk.length; i++) {
+    const line = JSON.stringify(requestBuilder(chunk[i]));
+    const buf = Buffer.from(line + (i < chunk.length - 1 ? '\n' : ''));
+    fs.writeSync(fd, buf);
+    totalBytes += buf.byteLength;
+    // Free the base64 image data immediately to reduce memory pressure
+    if (chunk[i].image) chunk[i].image.data = null;
   }
-
-  const uploadUrl = startResponse.headers.get('X-Goog-Upload-URL');
-  if (!uploadUrl) throw new Error('No upload URL returned from File API');
-
-  // Step 2: Upload the content
-  const uploadResponse = await fetch(uploadUrl, {
-    method: 'PUT',
-    headers: {
-      'Content-Type': 'text/plain',
-      'X-Goog-Upload-Command': 'upload, finalize',
-      'X-Goog-Upload-Offset': '0',
-    },
-    body: jsonlContent,
-  });
-
-  if (!uploadResponse.ok) {
-    const error = await uploadResponse.text();
-    throw new Error(`File upload failed: ${error.substring(0, 200)}`);
-  }
-
-  const fileInfo = await uploadResponse.json();
-  if (!fileInfo.file?.name) {
-    throw new Error(`File upload response missing 'file.name': ${JSON.stringify(fileInfo).substring(0, 200)}`);
-  }
-
-  return { name: fileInfo.file.name, uri: fileInfo.file.uri };
+  fs.closeSync(fd);
+  return { filePath: tmpFile, fileSize: totalBytes };
 }
 
 /**
- * Create a batch job from an uploaded JSONL file.
- * Tries all API keys on quota exhaustion (429).
+ * Upload a file to Gemini File API using SDK.
+ * Accepts a file path (string). Returns { name, uri }.
+ */
+async function uploadBatchFile(filePath, displayName, keyIndex) {
+  const client = getSdkClient(keyIndex);
+  const file = await client.files.upload({
+    file: filePath,
+    config: { mimeType: 'text/plain', displayName },
+  });
+  if (!file?.name) {
+    throw new Error(`File upload response missing 'name': ${JSON.stringify(file).substring(0, 200)}`);
+  }
+  return { name: file.name, uri: file.uri };
+}
+
+/**
+ * Create a batch job from an uploaded JSONL file using SDK.
+ * IMPORTANT: Only use the key that uploaded the file. Other keys can't see it (404).
  */
 async function createBatchJobFromFile(model, fileName, displayName, preferredKeyIndex = 0) {
-  // IMPORTANT: Only use the key that uploaded the file. Other keys can't see it (404).
-  // If this key hits 429, throw so the caller can re-upload with a different key.
-  const apiKey = getGeminiApiKey(preferredKeyIndex);
-  const response = await fetch(
-    `${GEMINI_API_BASE}/models/${model}:batchGenerateContent?key=${apiKey}`,
-    {
-      method: 'POST',
-      headers: { 'Content-Type': 'application/json' },
-      body: JSON.stringify({
-        batch: {
-          display_name: displayName,
-          input_config: { file_name: fileName },
-        },
-      }),
-    }
-  );
-
-  if (response.ok) {
-    const result = await response.json();
-    return { name: result.name, state: result.state || 'JOB_STATE_PENDING', keyIndex: preferredKeyIndex };
-  }
-
-  const errorText = await response.text();
-  console.log(`    Key ${preferredKeyIndex} failed for file batch (${response.status}): ${errorText.substring(0, 100)}`);
-  // Throw on any error — caller must re-upload with a different key on 429
-  throw new Error(`File batch create failed (${response.status}): ${errorText.substring(0, 200)}`);
+  const client = getSdkClient(preferredKeyIndex);
+  const batchJob = await client.batches.create({
+    model,
+    src: { fileName },
+    config: { displayName },
+  });
+  return { name: batchJob.name, state: batchJob.state || 'JOB_STATE_PENDING', keyIndex: preferredKeyIndex };
 }
 
 async function getOcrPromptFromDb(db) {
@@ -1260,6 +1207,20 @@ async function submitOcrDirectly(db, book, { modelOverride, maxPages } = {}) {
 
   if (pages.length === 0) {
     return { submitted: 0, jobName: null, alreadyDone: true };
+  }
+
+  // Minimum batch size gate — don't burn a batch API call for a handful of pages.
+  // Small batches (1-20 pages) are usually RECITATION/failure retries that won't succeed.
+  // Skip them and let them accumulate or get accepted as gaps in Phase 3.
+  const MIN_BATCH_PAGES = 25;
+  if (pages.length < MIN_BATCH_PAGES && !maxPages) {
+    // Exception: if this is the entire book (small book), submit anyway
+    const totalBookPages = book.pages_count || 0;
+    const ocrDone = book.pages_ocr || 0;
+    if (ocrDone > 0 && pages.length < MIN_BATCH_PAGES) {
+      console.log(`    Skipping small retry batch: ${pages.length} pages remaining (min ${MIN_BATCH_PAGES})`);
+      return { submitted: 0, jobName: null, skippedSmallBatch: true };
+    }
   }
 
   // Warn if many pages lack R2 URLs — archiving may be incomplete
@@ -1349,9 +1310,9 @@ Output structure:
     let batchJob;
 
     if (useFileBased) {
-      // File-based: build JSONL, upload, submit one batch job per chunk
+      // File-based: stream JSONL to temp file to avoid OOM on large books
       console.log(`    Building JSONL for ${chunk.length} pages (file-based)...`);
-      const jsonlLines = chunk.map(item => JSON.stringify({
+      const { filePath: jsonlFile, fileSize } = buildJsonlFile(chunk, (item) => ({
         request: {
           contents: [{
             parts: [
@@ -1374,25 +1335,26 @@ Output structure:
         },
         metadata: { key: item.pageId },
       }));
-      const jsonlContent = jsonlLines.join('\n');
-      const jsonlSizeMB = (Buffer.byteLength(jsonlContent) / 1024 / 1024).toFixed(1);
+      const jsonlSizeMB = (fileSize / 1024 / 1024).toFixed(1);
       console.log(`    JSONL size: ${jsonlSizeMB} MB for ${chunk.length} pages`);
 
       // Upload JSONL + create batch — both must use the same key (files are key-scoped).
       // Round-robin start key across projects to spread load evenly.
       let uploadKeyIndex = -1;
-      const startKey = nextBatchKeyIndex();
+      const bestKey = getLeastLoadedKey();
+      const startKey = bestKey >= 0 ? bestKey : nextBatchKeyIndex();
       for (let attempt = 0; attempt < GEMINI_BATCH_KEYS.length; attempt++) {
         const uki = (startKey + attempt) % GEMINI_BATCH_KEYS.length;
-        const uploadKey = getGeminiApiKey(uki);
         let fileResult;
         try {
-          fileResult = await uploadBatchFile(jsonlContent, displayName, uploadKey);
+          fileResult = await uploadBatchFile(jsonlFile, displayName, uki);
           uploadKeyIndex = uki;
           console.log(`    Uploaded file: ${fileResult.name} (key ${uki})`);
         } catch (uploadErr) {
-          if (uploadErr.message.includes('429') || uploadErr.message.includes('quota')) {
-            console.log(`    Upload key ${uki} quota exhausted, trying next...`);
+          const msg = uploadErr.message || '';
+          if (msg.includes('429') || msg.includes('quota') || msg.includes('RESOURCE_EXHAUSTED')) {
+            console.log(`    Upload key ${uki} FILE API quota exhausted, trying next...`);
+            _geminiKeyLoads[uki] = MAX_ACTIVE_PER_KEY;
             continue;
           }
           throw uploadErr;
@@ -1400,22 +1362,24 @@ Output structure:
 
         try {
           batchJob = await createBatchJobFromFile(ocrModel, fileResult.name, displayName, uploadKeyIndex);
-          // Clean up uploaded file — Gemini copies it into the batch job
-          try {
-            await fetch(`https://generativelanguage.googleapis.com/v1beta/${fileResult.name}?key=${uploadKey}`, { method: 'DELETE' });
-          } catch (cleanupErr) {
+          recordSubmission(uki);
+          try { await getSdkClient(uki).files.delete({ name: fileResult.name }); } catch (cleanupErr) {
             console.log(`    Warning: file cleanup failed: ${cleanupErr.message}`);
           }
           break; // success
         } catch (batchErr) {
-          try { await fetch(`https://generativelanguage.googleapis.com/v1beta/${fileResult.name}?key=${uploadKey}`, { method: 'DELETE' }); } catch (_) {}
-          if (batchErr.message.includes('429') || batchErr.message.includes('quota')) {
-            console.log(`    Batch create key ${uki} quota exhausted, re-uploading with next key...`);
+          try { await getSdkClient(uki).files.delete({ name: fileResult.name }); } catch (_) {}
+          const msg = batchErr.message || '';
+          if (msg.includes('429') || msg.includes('quota') || msg.includes('RESOURCE_EXHAUSTED')) {
+            console.log(`    Batch create key ${uki} BATCH CREATION quota exhausted, re-uploading with next key...`);
+            _geminiKeyLoads[uki] = MAX_ACTIVE_PER_KEY;
             continue;
           }
           throw batchErr;
         }
       }
+      // Clean up temp JSONL file
+      try { fs.unlinkSync(jsonlFile); } catch (_) {}
       if (!batchJob) throw new Error('ALL_KEYS_QUOTA_EXHAUSTED');
     } else {
       // Inline: small batch, embed base64 directly in request body
@@ -1468,24 +1432,15 @@ Output structure:
     childJobIds.push(childJobId);
     totalSubmitted += chunk.length;
 
-    // Log to gemini_usage
-    await db.collection('gemini_usage').insertOne({
-      type: 'ocr',
-      mode: 'batch',
-      model: ocrModel,
-      book_id: book.id,
-      book_title: book.title,
-      page_ids: chunk.map(c => c.pageId),
-      page_count: chunk.length,
-      batch_job_id: childJobId,
-      gemini_job_name: batchJob.name,
-      input_tokens: 0,
-      output_tokens: 0,
-      status: 'submitted',
+    // Log to Supabase gemini_usage
+    await logUsage({
+      type: 'ocr', mode: 'batch', model: ocrModel,
+      book_id: book.id, book_title: book.title,
+      page_ids: chunk.map(c => c.pageId), page_count: chunk.length,
+      batch_job_id: childJobId, gemini_job_name: batchJob.name,
+      input_tokens: 0, output_tokens: 0, status: 'submitted',
       endpoint: 'hetzner/pipeline-orchestrator',
-      submission_method: useFileBased ? 'file' : 'inline',
-      timestamp: new Date(),
-    });
+    }, db);
   }
 
   // Create parent job if multiple children
@@ -1508,6 +1463,196 @@ Output structure:
   return { submitted: totalSubmitted, jobName: firstJobName || parentJobId, childCount: childJobIds.length, method };
 }
 
+// ── Cross-book OCR pooling (#1082) ──
+// Pools pages from multiple small books into shared OCR batches.
+// Reduces batch creation count — one 500-page batch instead of 20 separate ones.
+// Each page carries its own book-specific prompt (title/author/year context).
+// Collector already supports book_ids arrays and metadata.key matching.
+const CROSS_BOOK_OCR_THRESHOLD = 250; // Books with fewer pages go into cross-book pool
+
+async function submitCrossBookOcrBatches(db, books) {
+  const ocrModel = OCR_MODEL_LITE;
+  const basePrompt = await getOcrPromptFromDb(db);
+
+  // Guard: skip books with active batch_jobs or needs_splitting
+  const eligible = [];
+  for (const book of books) {
+    if (book.needs_splitting) continue; // Spread books need special prompt, keep per-book
+    const activeBatch = await db.collection('batch_jobs').countDocuments({
+      $or: [{ book_id: book.id }, { book_ids: book.id }],
+      type: 'ocr',
+      status: { $in: ['pending', 'processing', 'JOB_STATE_PENDING', 'JOB_STATE_RUNNING'] },
+    });
+    if (activeBatch > 0) {
+      console.log(`    Skipping ${(book.title || '').substring(0, 40)}: active OCR batch exists`);
+      continue;
+    }
+    eligible.push(book);
+  }
+  if (eligible.length === 0) return { submitted: 0, batchCount: 0, bookIds: [] };
+
+  // Gather pages from all eligible books
+  const allDownloaded = []; // { pageId, image, prompt, bookId }
+  const bookMap = new Map();
+
+  for (const book of eligible) {
+    if (allDownloaded.length >= OCR_FILE_BATCH_SIZE) break;
+
+    const remaining = OCR_FILE_BATCH_SIZE - allDownloaded.length;
+    const pages = await db.collection('pages')
+      .find({
+        book_id: book.id,
+        $or: [{ 'ocr.data': { $exists: false } }, { 'ocr.data': null }, { 'ocr.data': '' }],
+        $and: [{
+          $or: [
+            { archived_photo: { $exists: true, $regex: /^https?:\/\// } },
+            { cropped_photo: { $exists: true, $nin: [null, ''] } },
+            { photo: { $exists: true, $ne: null } },
+          ]
+        }]
+      })
+      .sort({ page_number: 1 })
+      .limit(remaining)
+      .project({ _id: 0, id: 1, page_number: 1, photo: 1, photo_original: 1, archived_photo: 1, cropped_photo: 1, crop: 1 })
+      .toArray();
+
+    if (pages.length === 0) continue;
+
+    // Build book-specific prompt with provenance context
+    let prompt = basePrompt;
+    const yearStr = book.year ? `Published ${book.year}.` : '';
+    const copyrightNote = book.year && book.year < 1930 ? 'This work is in the public domain.' : '';
+    if (yearStr || book.title) {
+      prompt += `\n\n**Document context:** "${book.title || 'Unknown'}" by ${book.author || 'Unknown'}. ${yearStr} ${copyrightNote}`.trim();
+    }
+
+    console.log(`    Downloading ${pages.length} images for ${(book.title || '').substring(0, 40)}...`);
+    const downloaded = await downloadImagesParallel(pages, IMAGE_CONCURRENCY);
+    if (downloaded.length === 0) {
+      console.log(`    WARNING: All ${pages.length} downloads failed for ${(book.title || '').substring(0, 40)}`);
+      continue;
+    }
+    console.log(`    Downloaded ${downloaded.length}/${pages.length} for ${(book.title || '').substring(0, 40)}`);
+
+    bookMap.set(book.id, book);
+    for (const item of downloaded) {
+      allDownloaded.push({ pageId: item.pageId, image: item.image, prompt, bookId: book.id });
+    }
+  }
+
+  if (allDownloaded.length === 0) return { submitted: 0, batchCount: 0, bookIds: [] };
+  console.log(`  Cross-book OCR pool: ${allDownloaded.length} pages from ${bookMap.size} books`);
+
+  // Build and submit a single cross-book batch
+  const childJobId = nanoid();
+  const chunkBookIds = [...bookMap.keys()];
+  const displayName = `pipeline-ocr-cross-${chunkBookIds.length}books-${childJobId}`;
+
+  console.log(`    Building JSONL for ${allDownloaded.length} pages (cross-book OCR, ${chunkBookIds.length} books)...`);
+  const { filePath: jsonlFile, fileSize } = buildJsonlFile(allDownloaded, (item) => ({
+    request: {
+      contents: [{
+        parts: [
+          { text: item.prompt },
+          { inlineData: { mimeType: item.image.mimeType, data: item.image.data } },
+        ],
+      }],
+      safetySettings: [
+        { category: 'HARM_CATEGORY_HARASSMENT', threshold: 'BLOCK_NONE' },
+        { category: 'HARM_CATEGORY_HATE_SPEECH', threshold: 'BLOCK_NONE' },
+        { category: 'HARM_CATEGORY_SEXUALLY_EXPLICIT', threshold: 'BLOCK_NONE' },
+        { category: 'HARM_CATEGORY_DANGEROUS_CONTENT', threshold: 'BLOCK_NONE' },
+        { category: 'HARM_CATEGORY_CIVIC_INTEGRITY', threshold: 'BLOCK_NONE' },
+      ],
+      generationConfig: {
+        temperature: 0.1,
+        maxOutputTokens: 16384,
+        thinkingConfig: { thinkingBudget: 0 },
+      },
+    },
+    metadata: { key: item.pageId },
+  }));
+  console.log(`    JSONL size: ${(fileSize / 1024 / 1024).toFixed(1)} MB for ${allDownloaded.length} pages`);
+
+  // Upload + create batch with key rotation (same pattern as image extraction)
+  let batchJob = null;
+  const bestKey = getLeastLoadedKey();
+  const startKey = bestKey >= 0 ? bestKey : nextBatchKeyIndex();
+  for (let attempt = 0; attempt < GEMINI_BATCH_KEYS.length; attempt++) {
+    const uki = (startKey + attempt) % GEMINI_BATCH_KEYS.length;
+    let fileResult;
+    try {
+      fileResult = await uploadBatchFile(jsonlFile, displayName, uki);
+      console.log(`    Uploaded file: ${fileResult.name} (key ${uki})`);
+    } catch (uploadErr) {
+      const msg = uploadErr.message || '';
+      if (msg.includes('429') || msg.includes('quota') || msg.includes('RESOURCE_EXHAUSTED')) {
+        console.log(`    Upload key ${uki} FILE API quota exhausted, trying next...`);
+        _geminiKeyLoads[uki] = MAX_ACTIVE_PER_KEY;
+        continue;
+      }
+      throw uploadErr;
+    }
+    try {
+      batchJob = await createBatchJobFromFile(ocrModel, fileResult.name, displayName, uki);
+      recordSubmission(uki);
+      try { await getSdkClient(uki).files.delete({ name: fileResult.name }); } catch (_) {}
+      break;
+    } catch (batchErr) {
+      try { await getSdkClient(uki).files.delete({ name: fileResult.name }); } catch (_) {}
+      const msg = batchErr.message || '';
+      if (msg.includes('429') || msg.includes('quota') || msg.includes('RESOURCE_EXHAUSTED')) {
+        console.log(`    Batch create key ${uki} quota exhausted, trying next...`);
+        _geminiKeyLoads[uki] = MAX_ACTIVE_PER_KEY;
+        continue;
+      }
+      throw batchErr;
+    }
+  }
+  try { fs.unlinkSync(jsonlFile); } catch (_) {}
+  if (!batchJob) throw new Error('ALL_KEYS_QUOTA_EXHAUSTED');
+
+  // Record in batch_jobs with book_ids array
+  await db.collection('batch_jobs').insertOne({
+    id: childJobId,
+    job_name: batchJob.name,
+    gemini_job_name: batchJob.name,
+    type: 'ocr',
+    book_id: chunkBookIds[0],
+    book_ids: chunkBookIds,
+    page_ids: allDownloaded.map(d => d.pageId),
+    page_count: allDownloaded.length,
+    status: 'pending',
+    model: ocrModel,
+    prompt_version: OCR_PROMPT_VERSION,
+    submission_method: 'file',
+    cross_book: true,
+    created_at: new Date(),
+    updated_at: new Date(),
+  });
+
+  // Mark all pooled books as ocr_submitted
+  for (const bookId of chunkBookIds) {
+    await db.collection('books').updateOne(
+      { id: bookId },
+      { $set: { 'pipeline_auto.preview_batch_at': new Date() } }
+    );
+  }
+
+  // Log usage
+  await logUsage({
+    type: 'ocr', mode: 'batch', model: ocrModel,
+    book_id: chunkBookIds[0],
+    page_ids: allDownloaded.map(d => d.pageId), page_count: allDownloaded.length,
+    batch_job_id: childJobId, gemini_job_name: batchJob.name,
+    input_tokens: 0, output_tokens: 0, status: 'submitted',
+    endpoint: 'hetzner/pipeline-orchestrator',
+  }, db);
+
+  console.log(`  Cross-book OCR submitted: ${allDownloaded.length} pages from ${chunkBookIds.length} books — ${batchJob.name}`);
+  return { submitted: allDownloaded.length, batchCount: 1, bookIds: chunkBookIds };
+}
+
 /**
  * Submit image extraction via Gemini Batch API.
  * Mirrors submitOcrDirectly() but uses the image extraction prompt instead of OCR.
@@ -1516,7 +1661,7 @@ Output structure:
  * Cost: ~50% discount vs Lambda realtime. Throughput: ~200+ books/hr vs ~50.
  */
 const IMAGE_EXTRACTION_MODEL = 'gemini-3-flash-preview'; // Vision task — bbox accuracy critical
-const IMAGE_EXTRACTION_BATCH_SIZE = 150; // Pages per file-based batch (same as OCR)
+const IMAGE_EXTRACTION_BATCH_SIZE = 250; // Pages per file-based batch — match OCR to reduce batch creation count
 const IMAGE_EXTRACTION_INLINE_SIZE = 20;
 
 const IMAGE_EXTRACTION_PROMPT = `You are a museum curator analyzing a historical book page scan. Extract only significant illustrations — skip decorative elements like ornaments, borders, printer's marks, and initials.
@@ -1590,6 +1735,12 @@ async function submitImageExtractionBatch(db, book, candidatePages) {
 
   if (pages.length === 0) return { submitted: 0 };
 
+  // Minimum batch size — don't burn a batch API call for a handful of pages
+  if (pages.length < 25) {
+    console.log(`    Skipping small image batch: ${pages.length} pages (min 25)`);
+    return { submitted: 0, skippedSmallBatch: true };
+  }
+
   console.log(`    Downloading ${pages.length} images for image extraction...`);
   const downloaded = await downloadImagesParallel(pages, IMAGE_CONCURRENCY);
   if (downloaded.length === 0) {
@@ -1625,7 +1776,7 @@ async function submitImageExtractionBatch(db, book, candidatePages) {
 
     if (useFileBased) {
       console.log(`    Building JSONL for ${chunk.length} pages (image extraction, file-based)...`);
-      const jsonlLines = chunk.map(item => JSON.stringify({
+      const { filePath: jsonlFile, fileSize } = buildJsonlFile(chunk, (item) => ({
         request: {
           contents: [{
             parts: [
@@ -1648,22 +1799,23 @@ async function submitImageExtractionBatch(db, book, candidatePages) {
         },
         metadata: { key: item.pageId },
       }));
-      const jsonlContent = jsonlLines.join('\n');
+      console.log(`    JSONL size: ${(fileSize / 1024 / 1024).toFixed(1)} MB for ${chunk.length} pages`);
 
       // Upload + create batch with same key (files are key-scoped). Round-robin across projects.
       let uploadKeyIndex = -1;
-      const imgStartKey = nextBatchKeyIndex();
+      const imgBestKey = getLeastLoadedKey();
+      const imgStartKey = imgBestKey >= 0 ? imgBestKey : nextBatchKeyIndex();
       for (let attempt = 0; attempt < GEMINI_BATCH_KEYS.length; attempt++) {
         const uki = (imgStartKey + attempt) % GEMINI_BATCH_KEYS.length;
-        const uploadKey = getGeminiApiKey(uki);
         let fileResult;
         try {
-          fileResult = await uploadBatchFile(jsonlContent, displayName, uploadKey);
+          fileResult = await uploadBatchFile(jsonlFile, displayName, uki);
           uploadKeyIndex = uki;
           console.log(`    Uploaded file: ${fileResult.name} (key ${uki})`);
         } catch (uploadErr) {
-          if (uploadErr.message.includes('429') || uploadErr.message.includes('quota')) {
-            console.log(`    Upload key ${uki} quota exhausted, trying next...`);
+          const msg = uploadErr.message || '';
+          if (msg.includes('429') || msg.includes('quota') || msg.includes('RESOURCE_EXHAUSTED')) {
+            console.log(`    Upload key ${uki} FILE API quota exhausted, trying next...`);
             continue;
           }
           throw uploadErr;
@@ -1671,21 +1823,23 @@ async function submitImageExtractionBatch(db, book, candidatePages) {
 
         try {
           batchJob = await createBatchJobFromFile(IMAGE_EXTRACTION_MODEL, fileResult.name, displayName, uploadKeyIndex);
-          try {
-            await fetch(`https://generativelanguage.googleapis.com/v1beta/${fileResult.name}?key=${uploadKey}`, { method: 'DELETE' });
-          } catch (cleanupErr) {
+          recordSubmission(uki);
+          try { await getSdkClient(uki).files.delete({ name: fileResult.name }); } catch (cleanupErr) {
             console.log(`    Warning: file cleanup failed: ${cleanupErr.message}`);
           }
           break;
         } catch (batchErr) {
-          try { await fetch(`https://generativelanguage.googleapis.com/v1beta/${fileResult.name}?key=${uploadKey}`, { method: 'DELETE' }); } catch (_) {}
-          if (batchErr.message.includes('429') || batchErr.message.includes('quota')) {
-            console.log(`    Batch create key ${uki} quota exhausted, re-uploading with next key...`);
+          try { await getSdkClient(uki).files.delete({ name: fileResult.name }); } catch (_) {}
+          const msg = batchErr.message || '';
+          if (msg.includes('429') || msg.includes('quota') || msg.includes('RESOURCE_EXHAUSTED')) {
+            console.log(`    Batch create key ${uki} BATCH CREATION quota exhausted, re-uploading with next key...`);
+            _geminiKeyLoads[uki] = MAX_ACTIVE_PER_KEY;
             continue;
           }
           throw batchErr;
         }
       }
+      try { fs.unlinkSync(jsonlFile); } catch (_) {}
       if (!batchJob) throw new Error('ALL_KEYS_QUOTA_EXHAUSTED');
     } else {
       const inlineRequests = chunk.map(item => ({
@@ -1735,24 +1889,15 @@ async function submitImageExtractionBatch(db, book, candidatePages) {
     childJobIds.push(childJobId);
     totalSubmitted += chunk.length;
 
-    // Log to gemini_usage
-    await db.collection('gemini_usage').insertOne({
-      type: 'image_extraction',
-      mode: 'batch',
-      model: IMAGE_EXTRACTION_MODEL,
-      book_id: book.id,
-      book_title: book.title,
-      page_ids: chunk.map(c => c.pageId),
-      page_count: chunk.length,
-      batch_job_id: childJobId,
-      gemini_job_name: batchJob.name,
-      input_tokens: 0,
-      output_tokens: 0,
-      status: 'submitted',
+    // Log to Supabase gemini_usage
+    await logUsage({
+      type: 'image_extraction', mode: 'batch', model: IMAGE_EXTRACTION_MODEL,
+      book_id: book.id, book_title: book.title,
+      page_ids: chunk.map(c => c.pageId), page_count: chunk.length,
+      batch_job_id: childJobId, gemini_job_name: batchJob.name,
+      input_tokens: 0, output_tokens: 0, status: 'submitted',
       endpoint: 'hetzner/pipeline-orchestrator',
-      submission_method: useFileBased ? 'file' : 'inline',
-      timestamp: new Date(),
-    });
+    }, db);
   }
 
   // Create parent job if multiple children
@@ -1772,6 +1917,211 @@ async function submitImageExtractionBatch(db, book, candidatePages) {
 
   const method = useFileBased ? 'file-based' : 'inline';
   return { submitted: totalSubmitted, jobName: firstJobName || parentJobId, childCount: childJobIds.length, method };
+}
+
+// Build per-page prompt with book context baked in
+function buildPagePrompt(book) {
+  const contextParts = [];
+  if (book.title) contextParts.push(`Book: "${book.title}"`);
+  if (book.author) contextParts.push(`Author: ${book.author}`);
+  if (book.year) contextParts.push(`Year: ${book.year}`);
+  if (book.language) contextParts.push(`Language: ${book.language}`);
+  if (book.subjects?.length) contextParts.push(`Subjects: ${book.subjects.join(', ')}`);
+  const contextPrefix = contextParts.length > 0
+    ? `BOOK CONTEXT (use this to inform your analysis — identify figures, symbols, and traditions specific to this work):\n${contextParts.join(' | ')}\n\n`
+    : '';
+  return contextPrefix + IMAGE_EXTRACTION_PROMPT;
+}
+
+// Cross-book batch submission: pools pages from multiple books into shared 150-page batches.
+// Each page carries its own book-specific prompt. Reduces batch creation count by ~60%.
+async function submitCrossBookImageBatches(db, bookItems) {
+  // bookItems: [{ book, candidatePages }]
+  // Returns { submitted, batchCount, bookIds }
+
+  // Guard: skip books with active batch_jobs
+  const filteredItems = [];
+  for (const item of bookItems) {
+    const activeBatch = await db.collection('batch_jobs').countDocuments({
+      $or: [
+        { book_id: item.book.id },
+        { book_ids: item.book.id },
+      ],
+      type: 'image_extraction',
+      status: { $in: ['pending', 'processing', 'JOB_STATE_PENDING', 'JOB_STATE_RUNNING'] },
+    });
+    if (activeBatch > 0) {
+      console.log(`    Skipping ${item.book.title}: ${activeBatch} active image extraction batch jobs`);
+      continue;
+    }
+    filteredItems.push(item);
+  }
+
+  if (filteredItems.length === 0) return { submitted: 0, batchCount: 0, bookIds: [] };
+
+  // Download images for all books, building per-page items with book context
+  const allDownloaded = []; // { pageId, image, prompt, bookId }
+  const bookMap = new Map(); // bookId -> book (for logging)
+
+  for (const { book, candidatePages } of filteredItems) {
+    bookMap.set(book.id, book);
+
+    const pages = await db.collection('pages')
+      .find({ id: { $in: candidatePages.map(p => p.id) } })
+      .project({ _id: 0, id: 1, page_number: 1, photo: 1, photo_original: 1, archived_photo: 1, cropped_photo: 1, crop: 1 })
+      .toArray();
+
+    if (pages.length === 0) continue;
+
+    console.log(`    Downloading ${pages.length} images for ${book.title}...`);
+    const downloaded = await downloadImagesParallel(pages, IMAGE_CONCURRENCY);
+    if (downloaded.length === 0) {
+      console.log(`    WARNING: All ${pages.length} image downloads failed for ${book.title}`);
+      continue;
+    }
+    console.log(`    Downloaded ${downloaded.length}/${pages.length} images for ${book.title}`);
+
+    const prompt = buildPagePrompt(book);
+    for (const item of downloaded) {
+      allDownloaded.push({ pageId: item.pageId, image: item.image, prompt, bookId: book.id });
+    }
+  }
+
+  if (allDownloaded.length === 0) return { submitted: 0, batchCount: 0, bookIds: [] };
+
+  console.log(`  Cross-book pool: ${allDownloaded.length} pages from ${bookMap.size} books`);
+
+  // Split into shared batches of IMAGE_EXTRACTION_BATCH_SIZE (150)
+  const parentJobId = nanoid();
+  const childJobIds = [];
+  let totalSubmitted = 0;
+  let batchCount = 0;
+
+  for (let j = 0; j < allDownloaded.length; j += IMAGE_EXTRACTION_BATCH_SIZE) {
+    const chunk = allDownloaded.slice(j, j + IMAGE_EXTRACTION_BATCH_SIZE);
+    const childJobId = nanoid();
+    const chunkBookIds = [...new Set(chunk.map(c => c.bookId))];
+    const displayName = `pipeline-images-cross-${chunkBookIds.length}books-${childJobId}`;
+
+    console.log(`    Building JSONL for ${chunk.length} pages (cross-book batch, ${chunkBookIds.length} books)...`);
+    const { filePath: jsonlFile, fileSize } = buildJsonlFile(chunk, (item) => ({
+      request: {
+        contents: [{
+          parts: [
+            { text: item.prompt },
+            { inlineData: { mimeType: item.image.mimeType, data: item.image.data } },
+          ],
+        }],
+        safetySettings: [
+          { category: 'HARM_CATEGORY_HARASSMENT', threshold: 'BLOCK_NONE' },
+          { category: 'HARM_CATEGORY_HATE_SPEECH', threshold: 'BLOCK_NONE' },
+          { category: 'HARM_CATEGORY_SEXUALLY_EXPLICIT', threshold: 'BLOCK_NONE' },
+          { category: 'HARM_CATEGORY_DANGEROUS_CONTENT', threshold: 'BLOCK_NONE' },
+          { category: 'HARM_CATEGORY_CIVIC_INTEGRITY', threshold: 'BLOCK_NONE' },
+        ],
+        generationConfig: {
+          temperature: 0.1,
+          maxOutputTokens: 2048,
+          thinkingConfig: { thinkingBudget: 0 },
+        },
+      },
+      metadata: { key: item.pageId },
+    }));
+    console.log(`    JSONL size: ${(fileSize / 1024 / 1024).toFixed(1)} MB for ${chunk.length} pages`);
+
+    // Upload + create batch with same key (files are key-scoped). Least-loaded key first.
+    let batchJob = null;
+    const crossBestKey = getLeastLoadedKey();
+    const crossStartKey = crossBestKey >= 0 ? crossBestKey : nextBatchKeyIndex();
+    for (let attempt = 0; attempt < GEMINI_BATCH_KEYS.length; attempt++) {
+      const uki = (crossStartKey + attempt) % GEMINI_BATCH_KEYS.length;
+      let fileResult;
+      try {
+        fileResult = await uploadBatchFile(jsonlFile, displayName, uki);
+        console.log(`    Uploaded file: ${fileResult.name} (key ${uki})`);
+      } catch (uploadErr) {
+        const msg = uploadErr.message || '';
+        if (msg.includes('429') || msg.includes('quota') || msg.includes('RESOURCE_EXHAUSTED')) {
+          console.log(`    Upload key ${uki} quota exhausted, trying next...`);
+          _geminiKeyLoads[uki] = MAX_ACTIVE_PER_KEY;
+          continue;
+        }
+        throw uploadErr;
+      }
+
+      try {
+        batchJob = await createBatchJobFromFile(IMAGE_EXTRACTION_MODEL, fileResult.name, displayName, uki);
+        recordSubmission(uki);
+        try { await getSdkClient(uki).files.delete({ name: fileResult.name }); } catch (cleanupErr) {
+          console.log(`    Warning: file cleanup failed: ${cleanupErr.message}`);
+        }
+        break;
+      } catch (batchErr) {
+        try { await getSdkClient(uki).files.delete({ name: fileResult.name }); } catch (_) {}
+        const msg = batchErr.message || '';
+        if (msg.includes('429') || msg.includes('quota') || msg.includes('RESOURCE_EXHAUSTED')) {
+          console.log(`    Batch create key ${uki} quota exhausted, re-uploading with next key...`);
+          _geminiKeyLoads[uki] = MAX_ACTIVE_PER_KEY;
+          continue;
+        }
+        throw batchErr;
+      }
+    }
+    try { fs.unlinkSync(jsonlFile); } catch (_) {}
+    if (!batchJob) throw new Error('ALL_KEYS_QUOTA_EXHAUSTED');
+
+    // Record in batch_jobs — use book_ids array for cross-book, book_id for backward compat
+    await db.collection('batch_jobs').insertOne({
+      id: childJobId,
+      parent_job_id: parentJobId,
+      job_name: batchJob.name,
+      type: 'image_extraction',
+      book_id: chunkBookIds[0], // backward compat — first book
+      book_ids: chunkBookIds,   // all books in this batch
+      page_ids: chunk.map(c => c.pageId),
+      page_count: chunk.length,
+      status: 'pending',
+      model: IMAGE_EXTRACTION_MODEL,
+      submission_method: 'file',
+      cross_book: true,
+      created_at: new Date(),
+      updated_at: new Date(),
+    });
+
+    childJobIds.push(childJobId);
+    totalSubmitted += chunk.length;
+    batchCount++;
+
+    // Log to Supabase gemini_usage (one entry per batch, listing all book IDs)
+    await logUsage({
+      type: 'image_extraction', mode: 'batch', model: IMAGE_EXTRACTION_MODEL,
+      book_id: chunkBookIds[0],
+      page_ids: chunk.map(c => c.pageId), page_count: chunk.length,
+      batch_job_id: childJobId, gemini_job_name: batchJob.name,
+      input_tokens: 0, output_tokens: 0, status: 'submitted',
+      endpoint: 'hetzner/pipeline-orchestrator',
+    }, db);
+  }
+
+  // Create parent job if multiple children
+  if (childJobIds.length > 1) {
+    const allBookIds = [...bookMap.keys()];
+    await db.collection('batch_jobs').insertOne({
+      id: parentJobId,
+      type: 'image_extraction',
+      book_id: allBookIds[0],
+      book_ids: allBookIds,
+      child_job_ids: childJobIds,
+      total_pages: totalSubmitted,
+      status: 'pending',
+      model: IMAGE_EXTRACTION_MODEL,
+      cross_book: true,
+      created_at: new Date(),
+      updated_at: new Date(),
+    });
+  }
+
+  return { submitted: totalSubmitted, batchCount, bookIds: [...bookMap.keys()] };
 }
 
 // ── Main ──
@@ -1802,6 +2152,31 @@ async function run() {
   const healthGrade = await probeDbHealth(db);
   if (healthGrade === 'critical') {
     console.log('[pipeline-orchestrator] DB critical — running with minimum limits. Will skip heavy phases.');
+  }
+
+  // DB-driven limit overrides — allows tuning without code deploys
+  // Set via: db.system_config.updateOne({_id:'processing_control'}, {$set:{
+  //   paused_phases: [2],           // pause specific phases (e.g. OCR=2)
+  //   limit_overrides: { MAX_ACTIVE_IMAGE_JOBS: 80, IMAGE_SUBMIT_LIMIT: 100 }
+  // }})
+  if (control?.paused_phases?.length > 0) {
+    PAUSED_PHASES = new Set(control.paused_phases);
+    console.log(`[config] Paused phases: ${[...PAUSED_PHASES].join(', ')}`);
+  }
+  if (control?.limit_overrides) {
+    const overrides = control.limit_overrides;
+    const applied = [];
+    if (overrides.OCR_SUBMIT_LIMIT != null) { OCR_SUBMIT_LIMIT = overrides.OCR_SUBMIT_LIMIT; applied.push(`OCR_SUBMIT_LIMIT=${OCR_SUBMIT_LIMIT}`); }
+    if (overrides.MAX_ACTIVE_BATCH_OCR != null) { /* const, skip */ }
+    if (overrides.IMAGE_SUBMIT_LIMIT != null) { IMAGE_SUBMIT_LIMIT = overrides.IMAGE_SUBMIT_LIMIT; applied.push(`IMAGE_SUBMIT_LIMIT=${IMAGE_SUBMIT_LIMIT}`); }
+    if (overrides.MAX_ACTIVE_IMAGE_JOBS != null) { MAX_ACTIVE_IMAGE_JOBS = overrides.MAX_ACTIVE_IMAGE_JOBS; applied.push(`MAX_ACTIVE_IMAGE_JOBS=${MAX_ACTIVE_IMAGE_JOBS}`); }
+    if (overrides.TRANSLATE_SUBMIT_LIMIT != null) { TRANSLATE_SUBMIT_LIMIT = overrides.TRANSLATE_SUBMIT_LIMIT; applied.push(`TRANSLATE_SUBMIT_LIMIT=${TRANSLATE_SUBMIT_LIMIT}`); }
+    if (overrides.ENROLL_LIMIT != null) { ENROLL_LIMIT = overrides.ENROLL_LIMIT; applied.push(`ENROLL_LIMIT=${ENROLL_LIMIT}`); }
+    if (overrides.METADATA_ENRICH_LIMIT != null) { METADATA_ENRICH_LIMIT = overrides.METADATA_ENRICH_LIMIT; applied.push(`METADATA_ENRICH_LIMIT=${METADATA_ENRICH_LIMIT}`); }
+    if (overrides.ENRICH_LIMIT != null) { ENRICH_LIMIT = overrides.ENRICH_LIMIT; applied.push(`ENRICH_LIMIT=${ENRICH_LIMIT}`); }
+    if (overrides.CHAPTER_LIMIT != null) { CHAPTER_LIMIT = overrides.CHAPTER_LIMIT; applied.push(`CHAPTER_LIMIT=${CHAPTER_LIMIT}`); }
+    if (overrides.FINALIZE_LIMIT != null) { FINALIZE_LIMIT = overrides.FINALIZE_LIMIT; applied.push(`FINALIZE_LIMIT=${FINALIZE_LIMIT}`); }
+    if (applied.length > 0) console.log(`[config] Limit overrides: ${applied.join(', ')}`);
   }
 
   const log = {
@@ -1840,34 +2215,61 @@ async function run() {
         .find({
           pipeline_auto: { $exists: false },
           created_at: { $gte: cutoff },
+          'image_source.provider': { $nin: ART_PROVIDERS },
         })
-        .project({ id: 1 })
+        .project({ id: 1, language: 1 })
         .limit(ENROLL_LIMIT)
         .toArray();
 
       if (DRY_RUN) {
         console.log(`  Would enroll ${newBooks.length} books`);
       } else {
+        const ENGLISH_VARIANTS_ENROLL = ['english', 'eng', 'en'];
+        let ftFlagged = 0;
         for (const book of newBooks) {
+          const lang = (book.language || '').toLowerCase();
+          const likelyFT = lang && !ENGLISH_VARIANTS_ENROLL.includes(lang);
+          const updates = {
+            pipeline_auto: {
+              status: 'queued',
+              source: 'cron',
+              queued_at: new Date(),
+              last_updated: new Date(),
+              retry_count: 0,
+              likely_first_translation: likelyFT,
+            },
+            updated_at: new Date(),
+          };
           await db.collection('books').updateOne(
             { id: book.id },
-            {
-              $set: {
-                pipeline_auto: {
-                  status: 'queued',
-                  source: 'cron',
-                  queued_at: new Date(),
-                  last_updated: new Date(),
-                  retry_count: 0,
-                },
-                updated_at: new Date(),
-              },
-            }
+            { $set: updates }
           );
           log.enrolled++;
+          if (likelyFT) ftFlagged++;
         }
+        console.log(`  FT-flagged: ${ftFlagged}/${log.enrolled}`);
       }
       console.log(`  Enrolled: ${log.enrolled}`);
+    }
+
+    // Artwork resource types — these skip the book pipeline entirely (no text to OCR/translate)
+    const ARTWORK_TYPES = ['painting', 'print', 'drawing', 'fresco', 'papyrus_fragment', 'object'];
+
+    // ── Phase 0: Skip artworks that somehow entered the pipeline ──
+    if (shouldRun(1)) {
+      const artworks = await db.collection('books').find({
+        'pipeline_auto.status': { $in: ['queued', 'archiving', 'archive_complete'] },
+        resource_type: { $in: ARTWORK_TYPES },
+      }).project({ id: 1, title: 1 }).toArray();
+      if (artworks.length > 0) {
+        console.log(`\n--- Phase 0: Skipping ${artworks.length} artworks ---`);
+        if (!DRY_RUN) {
+          for (const art of artworks) {
+            await setPipelineStatus(db, art.id, 'complete', { skipped: 'artwork' });
+            console.log(`  Skipped artwork: ${art.title}`);
+          }
+        }
+      }
     }
 
     // ── Phase 1: Archive check (queued/archiving -> archive_complete) ──
@@ -1879,11 +2281,12 @@ async function run() {
       const ENGLISH_VARIANTS_P1 = ['english', 'eng', 'en'];
       const queuedBooks = await db.collection('books')
         .aggregate([
-          { $match: { 'pipeline_auto.status': 'queued' } },
+          { $match: { 'pipeline_auto.status': 'queued', resource_type: { $nin: ARTWORK_TYPES } } },
           { $addFields: {
             _priority: {
               $switch: {
                 branches: [
+                  { case: { $gte: [{ $ifNull: ['$pipeline_priority', 0] }, 1] }, then: -10 }, // Manual priority boost
                   { case: { $eq: ['$image_source.provider', 'bph'] }, then: -1 }, // BPH priority until backlog cleared
                   { case: { $eq: ['$is_first_translation', true] }, then: 0 },
                   { case: { $in: [{ $toLower: { $ifNull: ['$language', ''] } }, ENGLISH_VARIANTS_P1] }, then: 2 },
@@ -1915,6 +2318,7 @@ async function run() {
             _priority: {
               $switch: {
                 branches: [
+                  { case: { $gte: [{ $ifNull: ['$pipeline_priority', 0] }, 1] }, then: -10 }, // Manual priority boost
                   { case: { $eq: ['$image_source.provider', 'bph'] }, then: -1 }, // BPH priority until backlog cleared
                   { case: { $eq: ['$is_first_translation', true] }, then: 0 },
                   { case: { $in: [{ $toLower: { $ifNull: ['$language', ''] } }, ENGLISH_VARIANTS_P1] }, then: 2 },
@@ -1987,6 +2391,36 @@ async function run() {
         }
       }
       console.log(`  Archive completed: ${archiveCompleted}/${archivingBooks.length}`);
+
+      // Also check warehouse books for archive completion
+      // Archive workers update pages_archived on warehouse books, but Phase 1 only checks live.
+      // Use pages_archived >= pages_count as a fast check (no per-page queries needed).
+      const WAREHOUSE_ARCHIVE_CHECK_LIMIT = 200;
+      const warehouseArchiving = await db.collection('books_warehouse')
+        .find({
+          'pipeline_auto.status': 'archiving',
+          pages_count: { $gt: 0 },
+          pages_archived: { $exists: true, $gt: 0 },
+        })
+        .project({ id: 1, title: 1, pages_count: 1, pages_archived: 1 })
+        .limit(WAREHOUSE_ARCHIVE_CHECK_LIMIT)
+        .toArray();
+
+      let warehouseCompleted = 0;
+      for (const book of warehouseArchiving) {
+        if (book.pages_archived >= book.pages_count) {
+          if (!DRY_RUN) {
+            await db.collection('books_warehouse').updateOne(
+              { id: book.id },
+              { $set: { 'pipeline_auto.status': 'archive_complete', 'pipeline_auto.last_updated': new Date() } }
+            );
+          }
+          warehouseCompleted++;
+        }
+      }
+      if (warehouseCompleted > 0 || warehouseArchiving.length > 0) {
+        console.log(`  Warehouse archive check: ${warehouseCompleted}/${warehouseArchiving.length} completed (${await db.collection('books_warehouse').countDocuments({ 'pipeline_auto.status': 'archiving' })} total archiving)`);
+      }
     }
 
     // ── Phase 1.25: Split detection for spread scans ──
@@ -2184,245 +2618,578 @@ Reply with ONLY: {"is_spread": true} or {"is_spread": false}` },
       console.log(`  Split checked: ${splitChecked}, flagged for splitting: ${splitFlagged}`);
     }
 
-    // ── Phase 1.5: Preview OCR+Translation for first 25 pages via Lambda ──
-    // Sends first 25 pages to Lambda OCR queue for fast turnaround.
-    // When preview OCR completes, job-completion.ts on Vercel auto-triggers
-    // preview translation — giving readers content within minutes, not hours.
-    // Prioritizes first English translations.
+    // ── Phase 1.5: Preview OCR — first 25 pages via inline Gemini ──
+    // OCRs the title page, TOC, and opening pages directly via Gemini realtime API.
+    // Purpose: get text for AI metadata classification (Phase 1.6) before full OCR.
+    // Prioritizes likely first translations (flagged at enrollment).
     if (shouldRun(1.5)) {
-      console.log('\n--- Phase 1.5: Preview OCR (first 25 pages via Lambda) ---');
+      console.log('\n--- Phase 1.5: Preview OCR (inline Gemini, first 25 pages) ---');
 
-      if (!SQS_OCR_QUEUE_URL) {
-        console.log('  SKIP: SQS_PAGE_OCR_QUEUE_URL not configured');
-      } else {
-        const sqsClient = new SQSClient({ region: process.env.AWS_REGION || 'eu-central-1' });
-
-        // Find archive_complete books that haven't had preview OCR yet.
-        // Priority: confirmed first translations > non-English (likely first translations) > English
-        const ENGLISH_VARIANTS = ['english', 'eng', 'en'];
-        const readyForPreview = await db.collection('books')
-          .aggregate([
-            { $match: {
-              'pipeline_auto.status': 'archive_complete',
-              'pipeline_auto.split_checked': true,
-              preview_ocr_queued_at: { $exists: false },
-            }},
-            { $addFields: {
-              _priority: {
-                $switch: {
-                  branches: [
-                    { case: { $eq: ['$image_source.provider', 'bph'] }, then: -1 }, // BPH priority until backlog cleared
-                  { case: { $eq: ['$is_first_translation', true] }, then: 0 },
-                    { case: { $in: [{ $toLower: { $ifNull: ['$language', ''] } }, ENGLISH_VARIANTS] }, then: 2 },
-                  ],
-                  default: 1,  // Non-English = likely first translation
-                },
-              },
-            }},
-            { $sort: { _priority: 1, hidden: 1 } },
-            { $project: { id: 1, title: 1, language: 1 } },
-            { $limit: PREVIEW_LIMIT },
-          ])
-          .toArray();
-
-        console.log(`  Books ready for preview: ${readyForPreview.length}`);
-
-        for (const book of readyForPreview) {
-          try {
-            const label = (book.title || '').substring(0, 50);
-
-            // Get first 25 pages with archived/cropped images only.
-            // Lambda can't reliably fetch from archive.org/gallica (rate limits, 403s).
-            const pages = await db.collection('pages')
-              .find({
-                book_id: book.id,
-                $and: [
-                  { $or: [
-                    { cropped_photo: { $exists: true, $nin: [null, ''] } },
-                    { archived_photo: { $regex: /^https?:\/\// } },
-                  ]},
-                  { $or: [
-                    { 'ocr.data': { $exists: false } },
-                    { 'ocr.data': null },
-                    { 'ocr.data': '' },
-                  ]},
-                ],
-              })
-              .sort({ page_number: 1 })
-              .limit(PREVIEW_PAGE_COUNT)
-              .project({ id: 1 })
-              .toArray();
-
-            if (pages.length === 0) {
-              console.log(`  No pages for preview: ${label}`);
-              continue;
-            }
-
-            if (DRY_RUN) {
-              console.log(`  Would queue preview: ${label} — ${pages.length} pages`);
-              continue;
-            }
-
-            const pageIds = pages.map(p => p.id);
-            const jobId = nanoid(12);
-
-            // Create job record with preview flag — triggers auto-translation on completion
-            await db.collection('jobs').insertOne({
-              id: jobId,
-              type: 'ocr',
-              book_id: book.id,
-              book_title: book.title,
-              status: 'pending',
-              progress: { total: pageIds.length, completed: 0, failed: 0 },
-              config: {
-                page_ids: pageIds,
-                preview: true,
-              },
-              initiated_by: 'pipeline_preview',
-              created_at: new Date(),
-              updated_at: new Date(),
-            });
-
-            // Flag book so we don't re-queue, and set active job for completion tracking
-            await db.collection('books').updateOne(
-              { id: book.id },
-              { $set: { preview_ocr_queued_at: new Date(), job: { type: 'realtime', job_id: jobId } } },
-            );
-
-            // Enqueue pages to Lambda OCR queue (standard, not FIFO)
-            for (let i = 0; i < pageIds.length; i += 10) {
-              const batch = pageIds.slice(i, i + 10);
-              const entries = batch.map((pageId, idx) => ({
-                Id: `msg-${idx}`,
-                MessageBody: JSON.stringify({ bookId: book.id, pageId, jobId }),
-              }));
-
-              await sqsClient.send(new SendMessageBatchCommand({
-                QueueUrl: SQS_OCR_QUEUE_URL,
-                Entries: entries,
-              }));
-            }
-
-            log.preview_queued++;
-            console.log(`  Preview queued: ${label} — ${pageIds.length} pages (job ${jobId})`);
-
-            await sleep(200);
-          } catch (err) {
-            log.errors.push(`Preview ${book.id}: ${err.message}`);
-          }
-        }
-        console.log(`  Preview OCR queued: ${log.preview_queued}`);
-      }
-    }
-
-    // ── Phase 1.7: Preview Translation — translate preview-OCR'd pages inline via Vercel API ──
-    // Calls /api/process for each page. No SQS queue (222K backlog makes it useless for previews).
-    // ~25 pages × ~5s each = ~2 minutes per book. Processes up to 5 books per run.
-    if (shouldRun(1.7)) {
-      console.log('\n--- Phase 1.7: Preview Translation (inline via Vercel API) ---');
-
-      const PREVIEW_TRANSLATE_LIMIT = 50;
-
-      const readyForPreviewTranslate = await db.collection('books')
+      const readyForPreview = await db.collection('books')
         .find({
-          preview_ocr_queued_at: { $exists: true },
-          preview_translate_queued_at: { $exists: false },
-          language: { $nin: ['English', 'english', 'eng', 'en', 'ENG'] },
+          'pipeline_auto.status': 'archive_complete',
+          'pipeline_auto.split_checked': true,
+          'pipeline_auto.preview_ocr_done': { $ne: true },
         })
-        .sort({ is_first_translation: -1 })
-        .project({ id: 1, title: 1, language: 1 })
-        .limit(PREVIEW_TRANSLATE_LIMIT)
+        .sort({ 'pipeline_auto.likely_first_translation': -1, hidden: 1 })
+        .project({ id: 1, title: 1, language: 1, needs_splitting: 1 })
+        .limit(PREVIEW_LIMIT)
         .toArray();
 
-      console.log(`  Books ready for preview translation: ${readyForPreviewTranslate.length}`);
+      console.log(`  Books ready for preview OCR: ${readyForPreview.length}`);
 
-      for (const book of readyForPreviewTranslate) {
+      const previewOcrPrompt = await getOcrPromptFromDb(db);
+      const previewApiKey = process.env.GEMINI_API_KEY_TIER3 || process.env.GEMINI_API_KEY;
+      const previewModel = OCR_MODEL_LITE;
+      let previewDone = 0;
+
+      for (const book of readyForPreview) {
         try {
           const label = (book.title || '').substring(0, 50);
 
-          const pages = await db.collection('pages')
+          // Get first 25 pages needing OCR with R2 images
+          const previewPages = await db.collection('pages')
             .find({
               book_id: book.id,
-              'ocr.data': { $exists: true, $nin: [null, ''] },
-              page_type: { $nin: SKIP_TRANSLATION_PAGE_TYPES },
               $or: [
-                { 'translation.data': { $exists: false } },
-                { 'translation.data': null },
-                { 'translation.data': '' },
+                { 'ocr.data': { $exists: false } },
+                { 'ocr.data': null },
+                { 'ocr.data': '' },
               ],
+              $and: [{
+                $or: [
+                  { cropped_photo: { $exists: true, $nin: [null, ''] } },
+                  { archived_photo: { $regex: /^https?:\/\// } },
+                ]
+              }],
             })
             .sort({ page_number: 1 })
             .limit(PREVIEW_PAGE_COUNT)
-            .project({ id: 1 })
+            .project({ _id: 0, id: 1, page_number: 1, photo: 1, photo_original: 1, archived_photo: 1, cropped_photo: 1, crop: 1 })
             .toArray();
 
-          if (pages.length === 0) {
-            await db.collection('books').updateOne(
-              { id: book.id },
-              { $set: { preview_translate_queued_at: new Date() } },
-            );
-            console.log(`  Already translated: ${label}`);
+          if (previewPages.length === 0) {
+            // All pages already have OCR — skip preview
+            if (!DRY_RUN) {
+              await db.collection('books').updateOne(
+                { id: book.id },
+                { $set: { 'pipeline_auto.preview_ocr_done': true, updated_at: new Date() } }
+              );
+            }
             continue;
           }
 
           if (DRY_RUN) {
-            console.log(`  Would translate: ${label} — ${pages.length} pages`);
+            console.log(`  Would preview OCR: ${label} — ${previewPages.length} pages`);
             continue;
           }
 
-          console.log(`  Translating: ${label} — ${pages.length} pages...`);
-          let pagesDone = 0;
-          let pagesErr = 0;
+          // Download images
+          const downloaded = await downloadImagesParallel(previewPages, IMAGE_CONCURRENCY);
+          if (downloaded.length < 3) {
+            console.log(`  Too few images for preview: ${label} (${downloaded.length})`);
+            continue;
+          }
 
-          for (const page of pages) {
-            try {
-              const res = await fetch(`${BASE_URL}/api/process`, {
+          // OCR each page via Gemini realtime (one call per page, parallel batches of 5)
+          let pagesOcrd = 0;
+          for (let i = 0; i < downloaded.length; i += 5) {
+            const batch = downloaded.slice(i, i + 5);
+            const results = await Promise.allSettled(batch.map(async ({ pageId, image }) => {
+              const url = `${GEMINI_API_BASE}/models/${previewModel}:generateContent?key=${previewApiKey}`;
+              const response = await fetch(url, {
                 method: 'POST',
-                headers: headers(),
+                headers: { 'Content-Type': 'application/json' },
                 body: JSON.stringify({
-                  pageId: page.id,
-                  bookId: book.id,
-                  action: 'translate',
+                  contents: [{
+                    role: 'user',
+                    parts: [
+                      { inlineData: { mimeType: image.mimeType, data: image.data } },
+                      { text: previewOcrPrompt },
+                    ],
+                  }],
+                  safetySettings: [
+                    { category: 'HARM_CATEGORY_HARASSMENT', threshold: 'BLOCK_NONE' },
+                    { category: 'HARM_CATEGORY_HATE_SPEECH', threshold: 'BLOCK_NONE' },
+                    { category: 'HARM_CATEGORY_SEXUALLY_EXPLICIT', threshold: 'BLOCK_NONE' },
+                    { category: 'HARM_CATEGORY_DANGEROUS_CONTENT', threshold: 'BLOCK_NONE' },
+                  ],
+                  generationConfig: { temperature: 0.1, maxOutputTokens: 8192 },
                 }),
               });
 
-              if (res.ok) {
-                pagesDone++;
-              } else {
-                pagesErr++;
-                if (res.status === 429) {
-                  console.log('    Rate limited — waiting 10s...');
-                  await sleep(10000);
-                }
+              if (!response.ok) {
+                const errText = await response.text();
+                throw new Error(`Gemini ${response.status}: ${errText.substring(0, 100)}`);
               }
-              await sleep(500);
-            } catch (err) {
-              pagesErr++;
-            }
+
+              const data = await response.json();
+              const text = data.candidates?.[0]?.content?.parts?.[0]?.text || '';
+              const usage = data.usageMetadata || {};
+
+              if (text) {
+                await db.collection('pages').updateOne(
+                  { id: pageId },
+                  { $set: {
+                    'ocr.data': text,
+                    'ocr.model': previewModel,
+                    'ocr.prompt_version': OCR_PROMPT_VERSION,
+                    'ocr.updated_at': new Date(),
+                    'ocr.source': 'pipeline_preview',
+                    updated_at: new Date(),
+                  }}
+                );
+                pagesOcrd++;
+              }
+
+              // Log usage (fire-and-forget)
+              const inputTokens = usage.promptTokenCount || 0;
+              const outputTokens = usage.candidatesTokenCount || 0;
+              const costUsd = (inputTokens / 1_000_000) * 0.075 + (outputTokens / 1_000_000) * 0.30;
+              logUsageAsync({
+                type: 'ocr', mode: 'realtime', model: previewModel,
+                book_id: book.id, page_ids: [pageId],
+                input_tokens: inputTokens, output_tokens: outputTokens,
+                cost_usd: costUsd, status: 'success', endpoint: 'hetzner/pipeline-preview-ocr',
+              }, db);
+            }));
+
+            // Brief pause between batches
+            await sleep(200);
           }
 
-          await db.collection('books').updateOne(
-            { id: book.id },
-            { $set: { preview_translate_queued_at: new Date(), updated_at: new Date() } },
-          );
-
-          const translatedCount = await db.collection('pages').countDocuments({
+          // Update book: mark preview done, sync OCR count
+          const ocrCount = await db.collection('pages').countDocuments({
             book_id: book.id,
-            'translation.data': { $exists: true, $nin: [null, ''] },
+            'ocr.data': { $exists: true, $ne: '', $not: { $eq: null } },
           });
           await db.collection('books').updateOne(
             { id: book.id },
-            { $set: { pages_translated: translatedCount } },
+            { $set: {
+              'pipeline_auto.preview_ocr_done': true,
+              pages_ocr: ocrCount,
+              updated_at: new Date(),
+            }}
           );
 
-          log.preview_queued++;
-          console.log(`  Done: ${label} — ${pagesDone} ok, ${pagesErr} errors`);
+          previewDone++;
+          console.log(`  Preview OCR done: ${label} — ${pagesOcrd}/${downloaded.length} pages`);
         } catch (err) {
-          log.errors.push(`Preview translate ${book.id}: ${err.message}`);
+          log.errors.push(`Preview OCR ${book.id}: ${err.message}`);
         }
       }
-      console.log(`  Preview translations done: ${log.preview_queued}`);
+      console.log(`  Preview OCR completed: ${previewDone} books`);
     }
+
+    // ── Phase 1.6: AI metadata classification ──
+    // Reads preview OCR text (title page, TOC) and calls Gemini to classify:
+    // language, description, display_title, categories, source_work_dates, FT pre-screen.
+    // Also does catalog cross-reference (USTC/EFM) for year/place/publisher.
+    // Writes ai_metadata and updates book fields at medium+ confidence.
+    if (shouldRun(1.6) || shouldRun(1.5)) {
+      console.log('\n--- Phase 1.6: AI metadata classification ---');
+
+      const metadataApiKey = process.env.GEMINI_API_KEY_TIER3 || process.env.GEMINI_API_KEY;
+      const metadataModel = OCR_MODEL_LITE; // flash-lite is sufficient for structured metadata extraction
+      const MAX_METADATA_OCR_PAGES = 25;
+      const MAX_TEXT_PER_PAGE = 2000;
+      const METADATA_CATEGORIES = [
+        'alchemy', 'hermeticism', 'jewish-kabbalah', 'christian-cabala', 'neoplatonism',
+        'rosicrucianism', 'freemasonry', 'natural-philosophy', 'astrology', 'natural-magic',
+        'ritual-magic', 'theurgy', 'mysticism', 'theology', 'medicine', 'gnosticism',
+        'theosophy', 'pythagoreanism', 'divination', 'ars-notoria', 'paracelsian',
+        'spiritual-alchemy', 'christian-mysticism', 'prisca-theologia', 'florentine-platonism',
+        'astronomy', 'mathematics', 'botany', 'chemistry', 'geography', 'history',
+        'law', 'literature', 'linguistics', 'music', 'architecture', 'art',
+        'military', 'politics', 'philosophy',
+        'sufism', 'vedanta', 'buddhism', 'daoism', 'biblical-studies',
+      ];
+
+      // Find books with preview OCR done but no AI metadata yet
+      const readyForMetadata = await db.collection('books')
+        .find({
+          'pipeline_auto.status': 'archive_complete',
+          'pipeline_auto.preview_ocr_done': true,
+          'ai_metadata.enriched_at': { $exists: false },
+        })
+        .sort({ 'pipeline_auto.likely_first_translation': -1, hidden: 1 })
+        .project({ id: 1, title: 1, display_title: 1, author: 1, language: 1, published: 1, year: 1,
+                   description: 1, categories: 1, is_first_translation: 1, source_work_dates: 1,
+                   field_provenance: 1, subject_keywords: 1 })
+        .limit(METADATA_ENRICH_LIMIT)
+        .toArray();
+
+      console.log(`  Books ready for AI metadata: ${readyForMetadata.length}`);
+      let metadataEnriched = 0;
+
+      for (const book of readyForMetadata) {
+        try {
+          const label = (book.title || '').substring(0, 50);
+
+          // Fetch first N OCR pages
+          const ocrPages = await db.collection('pages')
+            .find(
+              { book_id: book.id, 'ocr.data': { $exists: true, $ne: '' } },
+              { projection: { page_number: 1, 'ocr.data': 1 } }
+            )
+            .sort({ page_number: 1 })
+            .limit(MAX_METADATA_OCR_PAGES)
+            .toArray();
+
+          if (ocrPages.length < 3) {
+            console.log(`  Too few OCR pages for metadata: ${label} (${ocrPages.length})`);
+            continue;
+          }
+
+          if (DRY_RUN) {
+            console.log(`  Would classify: ${label} — ${ocrPages.length} pages`);
+            continue;
+          }
+
+          const ocrSamples = ocrPages.map(p => ({
+            pageNumber: p.page_number,
+            text: (p.ocr?.data || '').substring(0, MAX_TEXT_PER_PAGE),
+          }));
+
+          const ocrSection = `\n\nHere is the OCR text from ${ocrSamples.length} pages of this book:\n\n` +
+            ocrSamples.map(s => `--- Page ${s.pageNumber} ---\n${s.text}`).join('\n\n');
+
+          const classifyPrompt = `You are a rare books librarian and translation scholar examining transcribed text from a historical book.
+
+Book metadata:
+- Title: "${book.display_title || book.title || 'Unknown'}"
+- Author: ${book.author || 'Unknown'}
+- Current language field: ${book.language || 'Unknown'}
+- Published: ${book.published || 'Unknown'}
+- Year: ${book.year || 'Unknown'}
+${ocrSection}
+
+Based on this text and metadata, classify the book. Respond with JSON only — no markdown fences, no explanation.
+
+{
+  "language": "<primary language of the text>",
+  "author": "<detected author name from title page. null if not identifiable>",
+  "secondary_languages": ["<any other languages present>"],
+  "script": "<writing system: Latin alphabet, Fraktur, Greek, Chinese characters, Hebrew, Arabic, Devanagari, etc.>",
+  "categories": ["<1-4 subject tags from EXACTLY this list: ${METADATA_CATEGORIES.join(', ')}>"],
+  "estimated_year": "<best estimate of publication year as number. null if impossible>",
+  "estimated_century": "<e.g. '17th century' — fallback if exact year unclear>",
+  "description": "<1-2 sentence scholarly description. No em-dashes. No filler.>",
+  "display_title": "<Clear English title. Must be ENTIRELY in English — no foreign words. null for English books.>",
+  "confidence": "<high, medium, or low>",
+  "subject_keywords": ["<3-5 subject keywords>"],
+  "first_translation": {
+    "status": "<confirmed_first, likely_first, uncertain, has_partial, has_translation, not_applicable>",
+    "reasoning": "<1-2 sentences>",
+    "known_translations": ["<any known English translations>"],
+    "confidence": "<high, medium, or low>"
+  },
+  "source_work_dates": {
+    "layers": [{ "type": "<composition|translation|compilation|commentary|redaction|edition|abridgement>", "date": "<year string>", "date_display": "<human readable>", "date_precision": "<exact|decade|century|millennium>", "author": "<person>", "work_title": "<if different>", "language": "<language>", "notes": "<brief>" }],
+    "confidence": "<high|medium|low>",
+    "reasoning": "<1-2 sentences>"
+  }
+}
+
+Rules:
+- For language, identify the LANGUAGE OF THE TEXT, not library annotations
+- For categories, use ONLY exact slugs from the list above
+- Most pre-1800 non-English texts were NEVER translated to English
+- If the book IS in English, set first_translation status to "not_applicable"
+- For display_title: conventional English names when they exist, literal translation otherwise. No shelfmarks, library names, or edition info.
+- For source_work_dates: empty layers [] if book IS the original work. Include composition/translation layers for older works.`;
+
+          const startTime = Date.now();
+          const url = `${GEMINI_API_BASE}/models/${metadataModel}:generateContent?key=${metadataApiKey}`;
+          const response = await fetch(url, {
+            method: 'POST',
+            headers: { 'Content-Type': 'application/json' },
+            body: JSON.stringify({
+              contents: [{ role: 'user', parts: [{ text: classifyPrompt }] }],
+              safetySettings: [
+                { category: 'HARM_CATEGORY_HARASSMENT', threshold: 'BLOCK_NONE' },
+                { category: 'HARM_CATEGORY_HATE_SPEECH', threshold: 'BLOCK_NONE' },
+                { category: 'HARM_CATEGORY_SEXUALLY_EXPLICIT', threshold: 'BLOCK_NONE' },
+                { category: 'HARM_CATEGORY_DANGEROUS_CONTENT', threshold: 'BLOCK_NONE' },
+              ],
+              generationConfig: {
+                temperature: 0.1,
+                maxOutputTokens: 8192,
+                responseMimeType: 'application/json',
+              },
+            }),
+          });
+
+          const durationMs = Date.now() - startTime;
+
+          if (!response.ok) {
+            const errText = await response.text();
+            throw new Error(`Gemini ${response.status}: ${errText.substring(0, 200)}`);
+          }
+
+          const data = await response.json();
+          const rawText = (data.candidates?.[0]?.content?.parts?.[0]?.text || '').trim();
+          const usage = data.usageMetadata || {};
+          const inputTokens = usage.promptTokenCount || 0;
+          const outputTokens = usage.candidatesTokenCount || 0;
+
+          let parsed;
+          try {
+            parsed = JSON.parse(rawText);
+          } catch {
+            const jsonMatch = rawText.match(/\{[\s\S]*\}/);
+            if (jsonMatch) {
+              parsed = JSON.parse(jsonMatch[0]);
+            } else {
+              throw new Error('Failed to parse JSON response');
+            }
+          }
+
+          // Build updates — only apply at medium+ confidence
+          const confidence = parsed.confidence || 'low';
+          const now = new Date();
+          const changes = [];
+          const updates = { updated_at: now };
+
+          if (confidence !== 'low') {
+            // Language: update if Unknown
+            const currentLang = book.language || 'Unknown';
+            const aiLang = parsed.language || '';
+            if (aiLang && currentLang === 'Unknown') {
+              updates.language = aiLang;
+              updates.language_source = 'gemini_text';
+              updates.language_confidence = confidence;
+              changes.push({ field: 'language', previous: currentLang, new_value: aiLang });
+            } else if (aiLang && aiLang.toLowerCase() !== currentLang.toLowerCase() && confidence === 'high') {
+              updates.ai_detected_language = aiLang;
+            }
+
+            // Author: update if Unknown/missing
+            const currentAuthor = book.author || 'Unknown';
+            const aiAuthor = parsed.author || '';
+            if (aiAuthor && (currentAuthor === 'Unknown' || !currentAuthor)) {
+              updates.author = aiAuthor;
+              changes.push({ field: 'author', previous: currentAuthor, new_value: aiAuthor });
+            }
+
+            // Year: set if missing
+            if (!book.year && parsed.estimated_year) {
+              const year = parseInt(String(parsed.estimated_year));
+              if (!isNaN(year) && year > 0 && year < 2100) {
+                updates.year = year;
+                changes.push({ field: 'year', previous: null, new_value: year });
+                if (!book.published || book.published === 'Unknown') {
+                  updates.published = String(year);
+                }
+              }
+            }
+
+            // Categories: merge with existing
+            if (parsed.categories?.length > 0) {
+              const existing = book.categories || [];
+              const merged = [...new Set([...existing, ...parsed.categories])];
+              if (merged.length !== existing.length) {
+                updates.categories = merged;
+                changes.push({ field: 'categories', previous: existing, new_value: merged });
+              }
+            }
+
+            // Description: set if missing
+            if (parsed.description && !book.description) {
+              updates.description = parsed.description;
+              changes.push({ field: 'description', previous: null, new_value: parsed.description });
+            }
+
+            // Display title: set if missing and non-English
+            const effectiveLang = (updates.language || book.language || '').toLowerCase();
+            if (parsed.display_title && !book.display_title && effectiveLang !== 'english') {
+              updates.display_title = parsed.display_title;
+              changes.push({ field: 'display_title', previous: null, new_value: parsed.display_title });
+            }
+
+            // Subject keywords
+            if (parsed.subject_keywords?.length > 0) {
+              updates.subject_keywords = parsed.subject_keywords;
+            }
+
+            // First translation: derive boolean + refine pipeline flag
+            if (parsed.first_translation?.status) {
+              const isFirst = ['confirmed_first', 'likely_first'].includes(parsed.first_translation.status);
+              updates.is_first_translation = isFirst;
+              updates['pipeline_auto.likely_first_translation'] = isFirst;
+              changes.push({ field: 'is_first_translation', previous: book.is_first_translation ?? null, new_value: isFirst });
+            }
+
+            // Source work dates
+            if (parsed.source_work_dates?.layers?.length > 0 && !book.source_work_dates) {
+              const validTypes = ['composition', 'translation', 'compilation', 'commentary', 'redaction', 'edition', 'abridgement', 'adaptation'];
+              const validPrecisions = ['exact', 'decade', 'century', 'millennium'];
+              const validLayers = parsed.source_work_dates.layers.filter(l =>
+                l.type && l.date && l.date_display && l.date_precision &&
+                validTypes.includes(l.type.split('|')[0].trim()) &&
+                validPrecisions.includes(l.date_precision)
+              );
+              if (validLayers.length > 0) {
+                updates.source_work_dates = validLayers;
+                updates.source_work_dates_meta = {
+                  enriched_at: now, model: metadataModel,
+                  confidence: parsed.source_work_dates.confidence || 'medium',
+                  source: 'ai_enrichment',
+                  reasoning: parsed.source_work_dates.reasoning || '',
+                };
+              }
+            }
+
+            // Field provenance
+            const provenance = book.field_provenance || {};
+            const aiSource = { source: 'ai_enrichment', model: metadataModel, date: now, confidence, pages_checked: ocrSamples.length };
+            if (updates.language) provenance.language = { ...aiSource, previous_value: book.language };
+            if (updates.author) provenance.author = { ...aiSource, previous_value: book.author };
+            if (updates.is_first_translation !== undefined) provenance.is_first_translation = aiSource;
+            if (updates.year) provenance.year = { ...aiSource, previous_value: null };
+            if (updates.categories) provenance.categories = { ...aiSource, previous_value: book.categories || [] };
+            if (updates.display_title) provenance.display_title = aiSource;
+            if (updates.description) provenance.description = aiSource;
+            if (updates.subject_keywords) provenance.subject_keywords = aiSource;
+            updates.field_provenance = provenance;
+          }
+
+          // Always save ai_metadata (even at low confidence)
+          updates.ai_metadata = {
+            ...parsed,
+            model: metadataModel,
+            pages_checked: ocrSamples.length,
+            enriched_at: now,
+            enrichment_method: 'text',
+            changes,
+          };
+
+          await db.collection('books').updateOne({ id: book.id }, { $set: updates });
+
+          // Also run catalog cross-reference (folded from old Phase 3.5)
+          try {
+            const catalogResult = await verifyMetadataInline(db, book);
+            if (catalogResult.applied > 0) {
+              console.log(`    [catalog] ${book.id}: applied ${catalogResult.applied} fields from ${catalogResult.source}`);
+            }
+          } catch (catalogErr) {
+            // Non-fatal — catalog lookup is best-effort
+          }
+
+          // Log usage
+          const costUsd = (inputTokens / 1_000_000) * 0.50 + (outputTokens / 1_000_000) * 3.00;
+          logUsageAsync({
+            type: 'metadata_enrichment', mode: 'realtime', model: metadataModel,
+            book_id: book.id, book_title: book.display_title || book.title,
+            input_tokens: inputTokens, output_tokens: outputTokens,
+            cost_usd: costUsd, duration_ms: durationMs, status: 'success',
+            endpoint: 'hetzner/pipeline-metadata',
+          }, db);
+
+          // Log to audit_log if changes were made
+          if (changes.length > 0) {
+            db.collection('audit_log').insertOne({
+              action: 'book_metadata_updated',
+              book_id: book.id,
+              book_title: book.display_title || book.title,
+              metadata: { source: 'ai_enrichment', model: metadataModel, confidence, changes },
+              created_at: now,
+            }).catch(() => {});
+          }
+
+          metadataEnriched++;
+          console.log(`  Classified: ${label} — ${confidence} confidence, ${changes.length} fields updated`);
+
+          await sleep(API_DELAY_MS);
+        } catch (err) {
+          log.errors.push(`Metadata ${book.id}: ${err.message}`);
+        }
+      }
+      console.log(`  AI metadata classified: ${metadataEnriched} books`);
+    }
+
+    // ── Phase 1.95: Warehouse promotion (books_warehouse -> live books) ──
+    // Books sit in warehouse during archiving to reduce Atlas load. Once archive_complete,
+    // they must be promoted to the live collection before OCR can run.
+    // The old Vercel cron that did this was archived — this replaces it.
+    if (shouldRun(2)) {
+      const PROMOTE_LIMIT = 50; // Each book copies all pages — keep moderate to avoid Atlas spikes
+      const ENGLISH_VARIANTS_WH = ['english', 'eng', 'en'];
+      const promoteCandidates = await db.collection('books_warehouse')
+        .aggregate([
+          { $match: { 'pipeline_auto.status': 'archive_complete' } },
+          { $addFields: {
+            _priority: {
+              $switch: {
+                branches: [
+                  { case: { $gte: [{ $ifNull: ['$pipeline_priority', 0] }, 1] }, then: -10 },
+                  { case: { $eq: ['$is_first_translation', true] }, then: 0 },
+                  { case: { $in: [{ $toLower: { $ifNull: ['$language', ''] } }, ENGLISH_VARIANTS_WH] }, then: 2 },
+                ],
+                default: 1,
+              },
+            },
+          }},
+          { $sort: { _priority: 1 } },
+          { $project: { id: 1, title: 1, pages_count: 1 } },
+          { $limit: PROMOTE_LIMIT },
+        ])
+        .toArray();
+
+      if (promoteCandidates.length > 0) {
+        console.log(`\n--- Phase 1.95: Warehouse promotion ---`);
+        console.log(`  Candidates: ${promoteCandidates.length} (of ${await db.collection('books_warehouse').countDocuments({ 'pipeline_auto.status': 'archive_complete' })} total)`);
+        let promoted = 0;
+        for (const candidate of promoteCandidates) {
+          try {
+            const book = await db.collection('books_warehouse').findOne({ id: candidate.id });
+            if (!book) continue;
+
+            // Check if book already exists in live (can have different _id)
+            const existingLive = await db.collection('books').findOne({ id: candidate.id }, { projection: { _id: 1 } });
+            if (existingLive) {
+              // Update in place, preserving live _id
+              const { _id, ...bookWithoutId } = book;
+              await db.collection('books').updateOne({ id: candidate.id }, { $set: bookWithoutId });
+            } else {
+              // Fresh insert
+              await db.collection('books').insertOne(book);
+            }
+
+            // Move pages — handle _id conflicts by stripping _id for upserts matched by book_id+page_number
+            const pages = await db.collection('pages_warehouse').find({ book_id: candidate.id }).toArray();
+            if (pages.length > 0) {
+              const bulkOps = pages.map(page => {
+                const { _id, ...pageWithoutId } = page;
+                return {
+                  updateOne: {
+                    filter: { book_id: page.book_id, page_number: page.page_number },
+                    update: { $set: pageWithoutId },
+                    upsert: true,
+                  },
+                };
+              });
+              await db.collection('pages').bulkWrite(bulkOps, { ordered: false });
+            }
+
+            // Mark warehouse copy as promoted but keep it (permanent backup)
+            await db.collection('books_warehouse').updateOne(
+              { id: candidate.id },
+              { $set: { promoted_at: new Date(), promoted_to: 'live' } }
+            );
+
+            promoted++;
+          } catch (err) {
+            log.errors.push(`Promote ${candidate.id}: ${err.message}`);
+            console.error(`  ERROR promoting ${candidate.title?.slice(0, 60)}: ${err.message}`);
+          }
+        }
+        console.log(`  Promoted: ${promoted} books to live collection`);
+      }
+    }
+
+    // Shared Gemini active job count — queried once, reused by OCR (Phase 2) and image extraction (Phase 5)
+    let geminiActiveJobs = null;
 
     // ── Phase 2: Submit OCR via Gemini Batch API (archive_complete -> ocr_submitted) ──
     // Two-pass strategy:
@@ -2431,13 +3198,20 @@ Reply with ONLY: {"is_spread": true} or {"is_spread": false}` },
     if (shouldRun(2)) {
       console.log('\n--- Phase 2: OCR submission ---');
 
+      // Check real Gemini-side active job count per key for load-aware routing
+      const keyLoads = await getGeminiKeyLoads();
+      geminiActiveJobs = keyLoads.total;
       const activeBatchOcr = await db.collection('batch_jobs').countDocuments({
         type: 'ocr',
         status: { $in: ['pending', 'processing', 'JOB_STATE_PENDING', 'JOB_STATE_RUNNING'] },
       });
-      console.log(`  Active OCR batch jobs: ${activeBatchOcr}/${MAX_ACTIVE_BATCH_OCR}`);
+      console.log(`  Gemini per-key: [${keyLoads.perKey.join(', ')}] (cap ${MAX_ACTIVE_PER_KEY}/key) | Total: ${geminiActiveJobs} | DB: ${activeBatchOcr}`);
 
-      const ocrLimit = activeBatchOcr >= MAX_ACTIVE_BATCH_OCR ? 0 : OCR_SUBMIT_LIMIT;
+      // Gate: if no key has room, don't even query candidates
+      const ocrLimit = getLeastLoadedKey() >= 0 ? OCR_SUBMIT_LIMIT : 0;
+      if (ocrLimit === 0) {
+        console.log(`  All keys at/above ${MAX_ACTIVE_PER_KEY} — skipping OCR submissions this cycle`);
+      }
 
       const ENGLISH_VARIANTS_P2 = ['english', 'eng', 'en'];
       const PREVIEW_PAGES = 25;
@@ -2450,13 +3224,15 @@ Reply with ONLY: {"is_spread": true} or {"is_spread": false}` },
             { $match: {
               'pipeline_auto.status': 'archive_complete',
               'pipeline_auto.split_checked': true,
+              'pipeline_auto.recitation_blocked': { $ne: true },
               pages_ocr: { $in: [0, null, undefined] }, // No OCR yet
             }},
             { $addFields: {
               _priority: {
                 $switch: {
                   branches: [
-                    { case: { $eq: ['$image_source.provider', 'bph'] }, then: -1 }, // BPH priority until backlog cleared
+                    { case: { $gte: [{ $ifNull: ['$pipeline_priority', 0] }, 1] }, then: -10 }, // Manual priority boost
+                  { case: { $eq: ['$image_source.provider', 'bph'] }, then: -1 }, // BPH priority until backlog cleared
                   { case: { $eq: ['$is_first_translation', true] }, then: 0 },
                     { case: { $in: [{ $toLower: { $ifNull: ['$language', ''] } }, ENGLISH_VARIANTS_P2] }, then: 2 },
                   ],
@@ -2474,7 +3250,38 @@ Reply with ONLY: {"is_spread": true} or {"is_spread": false}` },
           console.log(`  Preview pass: ${previewCandidates.length} books (first ${PREVIEW_PAGES} pages each)`);
         }
 
-        for (const book of previewCandidates) {
+        // Split into small books (cross-book pool) vs large/spread books (per-book)
+        const smallBooks = previewCandidates.filter(b => !b.needs_splitting && (b.pages_count || 0) < CROSS_BOOK_OCR_THRESHOLD);
+        const largeOrSpreadBooks = previewCandidates.filter(b => b.needs_splitting || (b.pages_count || 0) >= CROSS_BOOK_OCR_THRESHOLD);
+
+        // Cross-book pooling for small books — one batch instead of many
+        if (smallBooks.length > 0 && !DRY_RUN && await canSubmitMore()) {
+          try {
+            console.log(`  Cross-book pool: ${smallBooks.length} small books (<${CROSS_BOOK_OCR_THRESHOLD} pages)`);
+            const crossResult = await submitCrossBookOcrBatches(db, smallBooks);
+            if (crossResult.submitted > 0) {
+              log.ocr_submitted += crossResult.bookIds.length;
+            }
+          } catch (err) {
+            const msg = err.message || String(err);
+            if (msg === 'ALL_KEYS_QUOTA_EXHAUSTED') {
+              console.log(`  All keys quota exhausted during cross-book OCR`);
+            } else {
+              console.error(`  Cross-book OCR error: ${msg.substring(0, 120)}`);
+              // Fall back to per-book submission for these books
+              largeOrSpreadBooks.push(...smallBooks);
+            }
+          }
+        } else if (DRY_RUN && smallBooks.length > 0) {
+          console.log(`  Would cross-book pool: ${smallBooks.length} small books`);
+        }
+
+        // Per-book submission for large books and spread books
+        for (const book of largeOrSpreadBooks) {
+          if (!await canSubmitMore()) {
+            console.log(`  All keys saturated (${_geminiKeyLoads.join('/')}) — stopping OCR submissions`);
+            break;
+          }
           try {
             const label = (book.title || '').substring(0, 50);
             if (DRY_RUN) { console.log(`  Would preview OCR: ${label}`); continue; }
@@ -2513,12 +3320,14 @@ Reply with ONLY: {"is_spread": true} or {"is_spread": false}` },
           { $match: {
             'pipeline_auto.status': 'archive_complete',
             'pipeline_auto.split_checked': true,
+            'pipeline_auto.recitation_blocked': { $ne: true },
             pages_ocr: { $gt: 0 }, // Already has some OCR (preview pass done)
           }},
           { $addFields: {
             _priority: {
               $switch: {
                 branches: [
+                  { case: { $gte: [{ $ifNull: ['$pipeline_priority', 0] }, 1] }, then: -10 }, // Manual priority boost
                   { case: { $eq: ['$image_source.provider', 'bph'] }, then: -1 }, // BPH priority until backlog cleared
                   { case: { $eq: ['$is_first_translation', true] }, then: 0 },
                   { case: { $in: [{ $toLower: { $ifNull: ['$language', ''] } }, ENGLISH_VARIANTS_P2] }, then: 2 },
@@ -2538,6 +3347,10 @@ Reply with ONLY: {"is_spread": true} or {"is_spread": false}` },
       }
 
       for (const book of readyForOcr) {
+        if (!await canSubmitMore()) {
+          console.log(`  All keys saturated (${_geminiKeyLoads.join('/')}) — stopping OCR submissions`);
+          break;
+        }
         const retries = book.pipeline_auto?.retry_count || 0;
         try {
           const label = (book.title || '').substring(0, 50);
@@ -2580,7 +3393,7 @@ Reply with ONLY: {"is_spread": true} or {"is_spread": false}` },
         } catch (err) {
           const msg = err.message || String(err);
           if (msg.includes('ALL_KEYS_QUOTA_EXHAUSTED')) {
-            console.log(`  All Gemini keys quota exhausted — stopping OCR submissions`);
+            console.log(`  All Gemini keys quota exhausted — stopping OCR submissions (${GEMINI_BATCH_KEYS.length} unique keys tried, check File API + batch creation limits separately)`);
             log.errors.push('OCR: All API keys quota exhausted');
             break; // Stop trying more books
           } else if (msg.includes('image downloads failed')) {
@@ -2670,15 +3483,25 @@ Reply with ONLY: {"is_spread": true} or {"is_spread": false}` },
             } else {
               // All batch_jobs have been collected ('saved'), so remaining pages genuinely failed
               const loopCount = (book.pipeline_auto?.ocr_loop_count || 0) + 1;
-              if (loopCount > MAX_RETRIES) {
+              const totalPages = await db.collection('pages').countDocuments({ book_id: book.id });
+              const failRate = totalPages > 0 ? remainingOcr / totalPages : 1;
+
+              if (loopCount > MAX_RETRIES || (remainingOcr <= 20 && failRate < 0.05)) {
+                // Accept small gaps (<5% or ≤20 pages) — retrying burns batch quota for pages
+                // that likely fail for structural reasons (RECITATION, bad scan, blank)
                 if (!DRY_RUN) {
-                  await setPipelineStatus(db, book.id, 'needs_attention', {
-                    error: `OCR looped ${loopCount} times with ${remainingOcr} pages still un-OCR'd`,
-                    ocr_loop_count: loopCount,
-                  });
+                  if (loopCount > MAX_RETRIES) {
+                    await setPipelineStatus(db, book.id, 'needs_attention', {
+                      error: `OCR looped ${loopCount} times with ${remainingOcr} pages still un-OCR'd`,
+                      ocr_loop_count: loopCount,
+                    });
+                    log.needs_attention++;
+                    log.errors.push(`OCR circuit breaker ${book.id}: looped ${loopCount}x, ${remainingOcr} pages remaining`);
+                  } else {
+                    await setPipelineStatus(db, book.id, 'ocr_complete', { ocr_loop_count: loopCount });
+                    console.log(`  OCR accepting ${remainingOcr} gaps (${(failRate*100).toFixed(1)}%): ${book.title}`);
+                  }
                 }
-                log.needs_attention++;
-                log.errors.push(`OCR circuit breaker ${book.id}: looped ${loopCount}x, ${remainingOcr} pages remaining`);
               } else {
                 if (!DRY_RUN) {
                   await setPipelineStatus(db, book.id, 'archive_complete', { ocr_loop_count: loopCount });
@@ -2696,7 +3519,7 @@ Reply with ONLY: {"is_spread": true} or {"is_spread": false}` },
               // cover immediately instead of waiting for the full pipeline to complete.
               if (book.thumbnail_source !== 'manual') {
                 try {
-                  const coverResult = await selectBestCoverPage(db, book.id);
+                  const coverResult = await selectBestCoverPage(db, book.id, 20, book.title);
                   if (coverResult) {
                     await db.collection('books').updateOne(
                       { id: book.id },
@@ -2793,84 +3616,42 @@ Reply with ONLY: {"is_spread": true} or {"is_spread": false}` },
       }
     }
 
-    // ── Phase 3.5: Metadata enrichment (ocr_complete -> metadata_enriched) ──
+    // ── Phase 3.5: OCR quality gate (ocr_complete → low-OCR books sent back) ──
+    // AI metadata classification now runs at Phase 1.6 (before full OCR).
+    // This phase only checks OCR coverage and rejects books with <10%.
     if (shouldRun(3.5) || shouldRun(3)) {
-      console.log('\n--- Phase 3.5: Metadata enrichment ---');
+      console.log('\n--- Phase 3.5: OCR quality gate ---');
 
-      const readyForMetadata = await db.collection('books')
+      const readyBooks = await db.collection('books')
         .find({ 'pipeline_auto.status': 'ocr_complete' })
         .sort({ hidden: 1 })
-        .project({ id: 1, title: 1, author: 1, published: 1, language: 1, place_of_publication: 1, publisher: 1, pages_count: 1, pages_ocr: 1, 'pipeline_auto.retry_count': 1, 'ai_metadata.enriched_at': 1 })
+        .project({ id: 1, title: 1, pages_count: 1, pages_ocr: 1 })
         .limit(METADATA_ENRICH_LIMIT)
         .toArray();
 
-      // Gate: reject books with <10% OCR coverage — send back for full OCR
-      const filtered = [];
-      for (const book of readyForMetadata) {
+      let gateRejected = 0;
+      for (const book of readyBooks) {
         const ocrPct = book.pages_count > 0 ? (book.pages_ocr || 0) / book.pages_count : 0;
         if (ocrPct < 0.1 && book.pages_count > 50) {
           if (!DRY_RUN) {
             await setPipelineStatus(db, book.id, 'archive_complete', { retry_count: 0 });
           }
-          console.log(`  Low OCR gate: ${book.title?.slice(0, 50)} — ${book.pages_ocr}/${book.pages_count} (${(ocrPct * 100).toFixed(0)}%), sent back for full OCR`);
-          continue;
-        }
-        filtered.push(book);
-      }
-
-      console.log(`  Books ready for metadata: ${filtered.length}${readyForMetadata.length > filtered.length ? ` (${readyForMetadata.length - filtered.length} sent back for OCR)` : ''}`);
-
-      for (const book of filtered) {
-        try {
-          if (book.ai_metadata?.enriched_at) {
-            if (!DRY_RUN) {
-              await setPipelineStatus(db, book.id, 'metadata_enriched', { retry_count: 0 });
-            }
-            log.metadata_skipped++;
-            continue;
-          }
-
-          if (DRY_RUN) {
-            console.log(`  Would enrich metadata: ${book.title}`);
-            continue;
-          }
-
-          // Inline catalog lookup + apply (no Vercel dependency)
-          const result = await verifyMetadataInline(db, book);
-          if (result.applied > 0) {
-            console.log(`  [metadata] ${book.id}: applied ${result.applied} fields from ${result.source} (${result.confidence}% confidence)`);
-          }
-
-          await setPipelineStatus(db, book.id, 'metadata_enriched', { retry_count: 0 });
-          log.metadata_enriched++;
-        } catch (err) {
-          const retries = book.pipeline_auto?.retry_count || 0;
-          if (retries >= MAX_RETRIES) {
-            // Non-blocking: skip on persistent failure
-            if (!DRY_RUN) {
-              await setPipelineStatus(db, book.id, 'metadata_enriched', { retry_count: 0 });
-            }
-            log.metadata_skipped++;
-          } else {
-            if (!DRY_RUN) {
-              await setPipelineStatus(db, book.id, 'ocr_complete', { retry_count: retries + 1 });
-            }
-          }
-          log.errors.push(`Metadata ${book.id}: ${err.message}`);
+          console.log(`  Low OCR gate: ${book.title?.slice(0, 50)} — ${book.pages_ocr}/${book.pages_count} (${(ocrPct * 100).toFixed(0)}%), sent back`);
+          gateRejected++;
         }
       }
-      console.log(`  Metadata enriched: ${log.metadata_enriched}, skipped: ${log.metadata_skipped}`);
+      console.log(`  OCR gate: ${readyBooks.length} checked, ${gateRejected} rejected`);
     }
 
-    // ── Phase 3.7: Transliteration for non-Latin books (inline, runs on metadata_enriched books) ──
+    // ── Phase 3.7: Transliteration for non-Latin books (inline, runs on ocr_complete books) ──
     // Not a pipeline state — just enriches pages before translation. Cheap & fast (text-only, lite model).
     if (shouldRun(3.7) || shouldRun(3.5) || shouldRun(3)) {
       console.log('\n--- Phase 3.7: Transliteration (non-Latin books) ---');
 
-      // Find metadata_enriched books with non-Latin languages
+      // Find ocr_complete books with non-Latin languages
       const nonLatinBooks = await db.collection('books')
         .find({
-          'pipeline_auto.status': 'metadata_enriched',
+          'pipeline_auto.status': 'ocr_complete',
           language: { $regex: new RegExp(`^(${[...NON_LATIN_LANGUAGES].join('|')})$`, 'i') },
         })
         .sort({ hidden: 1 })
@@ -2969,7 +3750,7 @@ Reply with ONLY: {"is_spread": true} or {"is_spread": false}` },
           );
           // Reset affected books so they can be re-dispatched
           const rollbackMap = {
-            'translate_submitted': 'metadata_enriched',
+            'translate_submitted': 'ocr_complete',
             'images_submitted': 'chapters_complete',
           };
           for (const [from, to] of Object.entries(rollbackMap)) {
@@ -2994,7 +3775,7 @@ Reply with ONLY: {"is_spread": true} or {"is_spread": false}` },
       // These get stranded when jobs are cancelled without rolling back pipeline status.
       if (!DRY_RUN) {
         const orphanStates = [
-          { from: 'translate_submitted', to: 'metadata_enriched' },
+          { from: 'translate_submitted', to: 'ocr_complete' },
           { from: 'ocr_submitted', to: 'archive_complete' },
           { from: 'images_submitted', to: 'chapters_complete' },
         ];
@@ -3037,7 +3818,7 @@ Reply with ONLY: {"is_spread": true} or {"is_spread": false}` },
 
         // Fresh books first (never translated), then re-queue partially-translated books
         const freshBooks = effectiveLimit > 0 ? await db.collection('books').aggregate([
-          { $match: { 'pipeline_auto.status': { $in: ['metadata_enriched', 'ft_verified'] } } },
+          { $match: { 'pipeline_auto.status': { $in: ['ocr_complete'] } } },
           { $addFields: { _speedTier: { $switch: {
             branches: [
               { case: { $in: ['$language', ['Latin', 'German', 'French', 'Italian', 'Dutch', 'Spanish', 'Portuguese', 'English', 'Czech', 'Polish', 'Swedish', 'Danish']] }, then: 0 },
@@ -3098,6 +3879,16 @@ Reply with ONLY: {"is_spread": true} or {"is_spread": false}` },
               .toArray();
 
             if (pages.length === 0) {
+              // Guard: don't mark translate_complete if OCR isn't done yet
+              // (preview OCR does 25 pages, translate-worker translates them, but full OCR hasn't run)
+              const totalOcr = book.pages_ocr || 0;
+              const totalPages = book.pages_count || 0;
+              if (totalOcr < totalPages * 0.8 && totalPages > 30) {
+                // OCR is incomplete — send back to archive_complete for full OCR
+                if (!DRY_RUN) await setPipelineStatus(db, book.id, 'archive_complete');
+                console.log(`  OCR incomplete (${totalOcr}/${totalPages}), recycling for full OCR: ${book.title}`);
+                continue;
+              }
               if (!DRY_RUN) await setPipelineStatus(db, book.id, 'translate_complete');
               log.translate_advanced++;
               console.log(`  No pages need translation: ${book.title}`);
@@ -3147,7 +3938,7 @@ Reply with ONLY: {"is_spread": true} or {"is_spread": false}` },
             if (retries >= MAX_RETRIES) {
               await markFailed(db, book.id, `Translate dispatch: ${err.message}`, retries);
             } else {
-              await setPipelineStatus(db, book.id, 'metadata_enriched', { retry_count: retries + 1 });
+              await setPipelineStatus(db, book.id, 'ocr_complete', { retry_count: retries + 1 });
             }
             log.errors.push(`Translate ${book.id}: ${err.message}`);
           }
@@ -3195,13 +3986,13 @@ Reply with ONLY: {"is_spread": true} or {"is_spread": false}` },
             });
             if (job) {
               // Lambda job finished but pages remain — send back to Phase 4 for direct translation
-              if (!DRY_RUN) await setPipelineStatus(db, book.id, 'metadata_enriched');
+              if (!DRY_RUN) await setPipelineStatus(db, book.id, 'ocr_complete');
               log.translate_advanced++;
               console.log(`  Recycling to Phase 4: ${book.title} (${remaining} pages remain after Lambda job)`);
             }
           } else {
             // No job ID — orphaned state, recycle
-            if (!DRY_RUN) await setPipelineStatus(db, book.id, 'metadata_enriched');
+            if (!DRY_RUN) await setPipelineStatus(db, book.id, 'ocr_complete');
             log.translate_advanced++;
             console.log(`  Recycling orphan: ${book.title} (${remaining} pages remain, no job ID)`);
           }
@@ -3357,6 +4148,8 @@ Reply with ONLY: {"is_spread": true} or {"is_spread": false}` },
 
       if (USE_BATCH) {
         // ── Batch API path: submit via Gemini Batch API (same as OCR) ──
+        // Image extraction has its own budget — don't block on OCR's Gemini total.
+        // The Gemini API returns 429 on actual quota exhaustion, handled by key rotation.
         const activeBatchImageJobs = await db.collection('batch_jobs').countDocuments({
           type: 'image_extraction',
           status: { $in: ['pending', 'processing', 'JOB_STATE_PENDING', 'JOB_STATE_RUNNING'] },
@@ -3398,9 +4191,12 @@ Reply with ONLY: {"is_spread": true} or {"is_spread": false}` },
 
           console.log(`  Books ready for image extraction: ${readyForImages.length}`);
 
+          // Gather candidate pages from all books, then pool into cross-book batches
+          const bookItems = []; // { book, candidatePages } for cross-book batching
+          const smallBooks = []; // books with ≤ IMAGE_EXTRACTION_INLINE_SIZE pages — keep per-book inline
+
           for (const book of readyForImages) {
             try {
-              // Find candidate pages (same filter as Lambda path)
               const bookPages = await db.collection('pages')
                 .find({
                   book_id: book.id,
@@ -3423,7 +4219,21 @@ Reply with ONLY: {"is_spread": true} or {"is_spread": false}` },
                 continue;
               }
 
-              const result = await submitImageExtractionBatch(db, book, bookPages);
+              // Small books (≤20 pages) use per-book inline path
+              if (bookPages.length <= IMAGE_EXTRACTION_INLINE_SIZE) {
+                smallBooks.push({ book, candidatePages: bookPages });
+              } else {
+                bookItems.push({ book, candidatePages: bookPages });
+              }
+            } catch (err) {
+              log.errors.push(`Images candidate scan ${book.id}: ${err.message}`);
+            }
+          }
+
+          // Submit small books via per-book inline path (no cross-book pooling needed)
+          for (const { book, candidatePages } of smallBooks) {
+            try {
+              const result = await submitImageExtractionBatch(db, book, candidatePages);
               if (result.skippedDuplicate) continue;
               if (result.submitted === 0) {
                 await setPipelineStatus(db, book.id, 'images_complete');
@@ -3436,11 +4246,30 @@ Reply with ONLY: {"is_spread": true} or {"is_spread": false}` },
                 image_extraction_job_name: result.jobName,
               });
               log.images_submitted++;
-              console.log(`  Batch image extraction submitted: ${book.title} (${result.submitted} pages, ${result.childCount || 1} jobs, ${result.method})`);
-
+              console.log(`  Inline image extraction submitted: ${book.title} (${result.submitted} pages, inline)`);
               await sleep(API_DELAY_MS);
             } catch (err) {
-              log.errors.push(`Images batch submit ${book.id}: ${err.message}`);
+              log.errors.push(`Images inline submit ${book.id}: ${err.message}`);
+            }
+          }
+
+          // Submit larger books via cross-book pooled batches
+          if (bookItems.length > 0) {
+            try {
+              const result = await submitCrossBookImageBatches(db, bookItems);
+              if (result.submitted > 0) {
+                // Set all participating books to images_submitted
+                for (const bookId of result.bookIds) {
+                  await setPipelineStatus(db, bookId, 'images_submitted', {
+                    image_extraction_batch: true,
+                    cross_book_batch: true,
+                  });
+                  log.images_submitted++;
+                }
+                console.log(`  Cross-book image extraction submitted: ${result.submitted} pages from ${result.bookIds.length} books in ${result.batchCount} batches`);
+              }
+            } catch (err) {
+              log.errors.push(`Images cross-book submit: ${err.message}`);
             }
           }
         }
@@ -3639,7 +4468,7 @@ Reply with ONLY: {"is_spread": true} or {"is_spread": false}` },
 
       const rollbackMap = {
         'ocr_submitted': 'archive_complete',
-        'translate_submitted': 'metadata_enriched',
+        'translate_submitted': 'ocr_complete',
         'images_submitted': 'chapters_complete',
         'summarizing': 'translate_complete',
         'chapters': 'summary_indexed',
@@ -3723,17 +4552,11 @@ Reply with ONLY: {"is_spread": true} or {"is_spread": false}` },
           ).sort({ page_number: 1 }).toArray();
 
           for (const page of edgePages) {
-            const ocr = (page.ocr?.data || '').substring(0, 1500);
-            const isDigitizerPage =
-              /google\s+logo|digitized\s+by\s+google|this\s+is\s+a\s+digital\s+copy/i.test(ocr) ||
-              /inserted\s+by\s+the\s+internet|internet\s+archive|digitization\s+(credit|notice)/i.test(ocr) ||
-              /not\s+part\s+of\s+the\s+original\s+book|scanner\s+barcode/i.test(ocr);
-
-            if (isDigitizerPage && page.page_type !== 'digitizer-notice') {
+            if (isDigitizerOcr(page.ocr?.data) && page.page_type !== 'digitizer-insert') {
               await db.collection('pages').updateOne(
                 { id: page.id },
                 { $set: {
-                  page_type: 'digitizer-notice',
+                  page_type: 'digitizer-insert',
                   hidden: true,
                   updated_at: new Date(),
                   'field_provenance.page_type': {
@@ -3754,7 +4577,7 @@ Reply with ONLY: {"is_spread": true} or {"is_spread": false}` },
           }
 
           // Smart OCR-based cover selection
-          const coverResult = await selectBestCoverPage(db, book.id);
+          const coverResult = await selectBestCoverPage(db, book.id, 20, book.title);
           if (coverResult && coverResult.url !== book.thumbnail) {
             await db.collection('books').updateOne(
               { id: book.id },
@@ -3901,7 +4724,7 @@ Reply with ONLY: {"is_spread": true} or {"is_spread": false}` },
     console.log(`\n=== ACTIONS (${(duration / 1000).toFixed(0)}s) ===`);
     console.log(`  Enrolled: ${log.enrolled} | Archived: ${log.archived}`);
     console.log(`  Preview queued: ${log.preview_queued} | OCR submitted: ${log.ocr_submitted} | OCR advanced: ${log.ocr_advanced}`);
-    console.log(`  Metadata: ${log.metadata_enriched} enriched, ${log.metadata_skipped} skipped`);
+    console.log(`  Metadata: ${log.metadata_enriched} enriched`);
     console.log(`  Translate submitted: ${log.translate_submitted} | Translate advanced: ${log.translate_advanced}`);
     console.log(`  Enriched: ${log.enriched} | Chapters: ${log.chapters_extracted} (${log.chapters_skipped} skipped)`);
     console.log(`  Images submitted: ${log.images_submitted} | Images advanced: ${log.images_advanced}`);
@@ -3934,7 +4757,9 @@ Reply with ONLY: {"is_spread": true} or {"is_spread": false}` },
           source: 'hetzner-worker',
         }),
         db.collection('cron_runs').insertOne({
+          task: 'pipeline-orchestrator',
           cron: 'pipeline-orchestrator-worker',
+          started_at: new Date(startTime),
           timestamp: new Date(),
           duration_ms: duration,
           status: log.errors.length > 0 ? 'partial' : 'success',
@@ -3976,7 +4801,9 @@ Reply with ONLY: {"is_spread": true} or {"is_spread": false}` },
     // Write failure record
     try {
       await db.collection('cron_runs').insertOne({
+        task: 'pipeline-orchestrator',
         cron: 'pipeline-orchestrator-worker',
+        started_at: new Date(startTime),
         timestamp: new Date(),
         duration_ms: Date.now() - startTime,
         status: 'failed',

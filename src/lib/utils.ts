@@ -26,6 +26,67 @@ export function isUsableImageUrl(url: string | undefined | null): url is string 
   return !!url && (url.startsWith('http://') || url.startsWith('https://'));
 }
 
+/**
+ * Return the best book image URL for the given display context.
+ *
+ * R2 image variants (see src/lib/storage.ts for path helpers):
+ *   - `-full.jpg`  — original resolution (OCR, zoom, download)
+ *   - `.jpg`       — 1200px display variant (browser display, cards)
+ *   - `-thumb.jpg` — 150px thumbnail (tiny previews, search dropdowns)
+ *
+ * @param size 'display' (default, 1200px) | 'thumb' (150px)
+ *   - Use 'display' for any UI element >100px (book cards, grids, heroes)
+ *   - Use 'thumb' for tiny previews (<100px, search results, list rows)
+ */
+export function getBookThumbnailUrl(
+  book: { thumbnail?: string | null; thumbnail_blob?: string | null },
+  size: 'display' | 'thumb' = 'display'
+): string | null {
+  // For display size, prefer the archived page image (higher res) over the tiny blob thumbnail.
+  // For thumb size, prefer the blob (small, fast).
+  const raw = size === 'display'
+    ? (book.thumbnail || book.thumbnail_blob || null)
+    : (book.thumbnail_blob || book.thumbnail || null);
+  if (!raw) return null;
+
+  if (!raw.includes('images.sourcelibrary.org/')) return raw;
+
+  // Rewrite legacy /thumbnails/{bookId}/{num}.jpg → /pages/{bookId}/{0num}.jpg
+  // The /thumbnails/ path has only small images, but /pages/ has all three variants.
+  const thumbMatch = raw.match(/\/thumbnails\/([^/]+)\/(\d+)\.jpg$/);
+  if (thumbMatch) {
+    const [, bookId, num] = thumbMatch;
+    const padded = num.padStart(4, '0');
+    const suffix = size === 'thumb' ? '-thumb.jpg' : '.jpg';
+    return `https://images.sourcelibrary.org/pages/${bookId}/${padded}${suffix}`;
+  }
+
+  // Rewrite /archived/{bookId}/{num}.jpg → /pages/{bookId}/{0num}.jpg
+  const archivedMatch = raw.match(/\/archived\/([^/]+)\/(\d+)\.jpg$/);
+  if (archivedMatch) {
+    const [, bookId, num] = archivedMatch;
+    const padded = num.padStart(4, '0');
+    const suffix = size === 'thumb' ? '-thumb.jpg' : '.jpg';
+    return `https://images.sourcelibrary.org/pages/${bookId}/${padded}${suffix}`;
+  }
+
+  // Standard /pages/ URLs — rewrite suffix to requested variant
+  if (!raw.includes('/pages/')) return raw;
+
+  if (size === 'display') {
+    // Rewrite -thumb.jpg or -full.jpg → .jpg (1200px display variant)
+    return raw.replace(/-thumb\.jpg$/, '.jpg').replace(/-full\.jpg$/, '.jpg');
+  }
+  // size === 'thumb': ensure we get the -thumb variant
+  if (raw.endsWith('-thumb.jpg')) return raw;
+  if (raw.endsWith('-full.jpg')) return raw.replace(/-full\.jpg$/, '-thumb.jpg');
+  // bare .jpg (display) → -thumb.jpg
+  if (raw.endsWith('.jpg') && !raw.endsWith('-thumb.jpg')) {
+    return raw.replace(/\.jpg$/, '-thumb.jpg');
+  }
+  return raw;
+}
+
 export function isArchiveFailed(photo: string | undefined | null): boolean {
   return typeof photo === 'string' && photo.startsWith('failed:');
 }

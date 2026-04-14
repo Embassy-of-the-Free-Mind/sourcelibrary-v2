@@ -22,17 +22,17 @@ export default async function RelatedEditions({ bookId, workId }: RelatedEdition
   ).size;
 
   return (
-    <Link
-      href={`/work/${workId}`}
-      className="mt-6 flex items-center gap-2.5 px-4 py-3 rounded-lg border border-stone-200 hover:border-stone-300 hover:bg-stone-50 transition-all group"
-    >
-      <Library className="w-4 h-4 text-stone-400 group-hover:text-stone-600 flex-shrink-0" />
-      <span className="text-sm text-stone-600 group-hover:text-stone-800">
-        <strong className="font-semibold">{related.length}</strong>{' '}
-        other edition{related.length !== 1 ? 's' : ''}{' '}
-        across {libraryCount} {libraryCount === 1 ? 'library' : 'libraries'}
-      </span>
-      <span className="ml-auto text-stone-400 group-hover:text-stone-600 text-sm">&rarr;</span>
-    </Link>
+    <div className="mt-4 pt-4 border-t border-stone-700">
+      <div className="flex gap-2 text-sm">
+        <span className="text-stone-500 w-24 flex-shrink-0">Editions:</span>
+        <Link
+          href={`/work/${workId}`}
+          className="text-accent-gold hover:text-accent-gold/80 flex items-center gap-1.5 transition-colors"
+        >
+          {related.length} other edition{related.length !== 1 ? 's' : ''}{' '}
+          across {libraryCount} {libraryCount === 1 ? 'library' : 'libraries'}
+        </Link>
+      </div>
+    </div>
   );
 }

@@ -23,6 +23,7 @@ export interface TimelineBook {
   year: number;
   language?: string;
   thumbnail?: string;
+  thumbnail_blob?: string;
   pages_count?: number;
   pages_translated?: number;
   published?: string;
@@ -33,4 +34,22 @@ export interface TimelineDrilldown {
   books: TimelineBook[];
   total: number;
   offset: number;
+}
+
+export interface TimelineArtItem {
+  id: string;
+  imageUrl: string;
+  thumbnailUrl?: string;
+  extractedUrl?: string;
+  description: string;
+  museumDescription?: string;
+  type?: string;
+  author: string;
+  bookTitle: string;
+  bookId: string;
+  bookSlug?: string;
+  year?: number;
+  pageId: string;
+  detectionIndex: number;
+  galleryQuality?: number;
 }

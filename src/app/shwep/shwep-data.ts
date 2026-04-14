@@ -1,4 +1,4 @@
-import { getDb } from '@/lib/mongodb';
+import { getReadDb } from '@/lib/mongodb';
 import { ObjectId } from 'mongodb';
 import { SHWEP_PERIODS } from '@/data/shwep-episodes';
 import { EPISODE_DESCRIPTIONS } from '@/data/shwep-descriptions';
@@ -16,6 +16,7 @@ export interface MatchedBook {
   pages_translated?: number;
   pages_blank?: number;
   thumbnail?: string;
+  thumbnail_blob?: string;
   overview?: string;
   url: string;
 }
@@ -141,7 +142,7 @@ function enrichEpisodes(bookMap: Map<string, MatchedBook>) {
 }
 
 export async function getShwepIndexData(): Promise<ShwepIndexData> {
-  const db = await getDb();
+  const db = await getReadDb();
   const bookMap = await fetchMatchedBooks(db);
   const enrichedPeriods = enrichEpisodes(bookMap);
 
@@ -220,7 +221,7 @@ export async function getEpisodeData(episodeNumber: number): Promise<EnrichedEpi
 
   let books: MatchedBook[] = [];
   if (bookIds && bookIds.length > 0) {
-    const db = await getDb();
+    const db = await getReadDb();
     const objectIds = bookIds.map(id => {
       try { return new ObjectId(id); } catch { return null; }
     }).filter((id): id is ObjectId => id !== null);

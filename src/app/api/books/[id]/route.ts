@@ -3,7 +3,7 @@ import { revalidatePath } from 'next/cache';
 import { getDb, getReadDb } from '@/lib/mongodb';
 import { ObjectId } from 'mongodb';
 import { logAuditEvent } from '@/lib/audit-logger';
-import { withAuth } from '@/lib/auth-helpers';
+import { withAdminAuth, withCuratorAuth } from '@/lib/auth-helpers';
 import { logMetadataChange, diffBookFields } from '@/lib/book-changelog';
 import { findBookByIdOrSlug } from '@/lib/book-lookup';
 
@@ -97,7 +97,7 @@ export async function GET(
   }
 }
 
-export const DELETE = withAuth(async (request, session, context) => {
+export const DELETE = withAdminAuth(async (request, session, context) => {
   try {
     const { id } = await context.params;
     const { searchParams } = new URL(request.url);
@@ -213,7 +213,7 @@ export const DELETE = withAuth(async (request, session, context) => {
   }
 });
 
-export const PATCH = withAuth(async (request, session, context) => {
+export const PATCH = withCuratorAuth(async (request, session, context) => {
   try {
     const { id } = await context.params;
     const body = await request.json();

@@ -140,6 +140,7 @@ export interface GalleryImageDetail {
     year?: number;
     doi?: string;
     thumbnail?: string;
+    thumbnail_blob?: string;
   };
   pageNumber: number;
   readUrl: string;

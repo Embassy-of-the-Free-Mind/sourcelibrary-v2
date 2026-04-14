@@ -1,4 +1,4 @@
-import { getDb } from '@/lib/mongodb';
+import { getReadDb } from '@/lib/mongodb';
 import Link from 'next/link';
 import Image from 'next/image';
 import { Metadata } from 'next';
@@ -7,6 +7,7 @@ import SiteHeader from '@/components/layout/SiteHeader';
 import { notFound } from 'next/navigation';
 import { bookUrl } from '@/lib/slugify';
 import { FACETS, facetDbField } from '@/lib/taxonomy/faceted-vocabulary';
+import { getBookThumbnailUrl } from '@/lib/utils';
 
 export const revalidate = false;
 
@@ -79,7 +80,7 @@ export async function generateMetadata({ params }: Props): Promise<Metadata> {
   // Fall back to old cluster slug
   let match;
   try {
-    const db = await getDb();
+    const db = await getReadDb();
     const allClusters = await db.collection('books').aggregate([
       { $match: { visible: true, 'taxonomy.cluster': { $exists: true, $ne: null } } },
       { $group: { _id: '$taxonomy.cluster' } },
@@ -105,7 +106,7 @@ export async function generateMetadata({ params }: Props): Promise<Metadata> {
 // ─── Data fetching ───────────────────────────────────────────────
 
 async function fetchFacetData(facetId: string, valueId: string) {
-  const db = await getDb();
+  const db = await getReadDb();
   const facet = FACETS.find((f) => f.id === facetId)!;
   const value = facet.values.find((v) => v.id === valueId)!;
 
@@ -201,7 +202,7 @@ async function fetchFacetData(facetId: string, valueId: string) {
 }
 
 async function fetchClusterData(slug: string) {
-  const db = await getDb();
+  const db = await getReadDb();
 
   const allClusters = await db.collection('books').aggregate([
     { $match: { visible: true, 'taxonomy.cluster': { $exists: true, $ne: null } } },
@@ -217,7 +218,7 @@ async function fetchClusterData(slug: string) {
     .find({ visible: true, 'taxonomy.cluster': clusterName }, {
       projection: {
         _id: 0, id: 1, slug: 1, title: 1, display_title: 1, author: 1, language: 1,
-        pages_count: 1, pages_translated: 1, read_count: 1, thumbnail: 1, 'taxonomy.subcluster': 1,
+        pages_count: 1, pages_translated: 1, read_count: 1, thumbnail: 1, thumbnail_blob: 1, 'taxonomy.subcluster': 1,
       },
     })
     .sort({ pages_translated: -1, title: 1 })
@@ -259,7 +260,7 @@ async function fetchClusterData(slug: string) {
 
 function BookCard({ book }: { book: BookItem }) {
   const title = book.display_title || book.title;
-  const thumb = book.thumbnail_blob || (book.thumbnail?.startsWith('http') ? book.thumbnail : null);
+  const thumb = getBookThumbnailUrl(book);
   const pagesOcr = book.pages_ocr || book.pages_count || 0;
   const denom = Math.max(pagesOcr - (book.pages_blank || 0), 1);
   const translationPercent =

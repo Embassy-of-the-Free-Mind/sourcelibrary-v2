@@ -32,6 +32,17 @@ const BATCH_SIZE = 200;
 
 const supabase = createClient(SUPABASE_URL, SUPABASE_SERVICE_KEY, { auth: { persistSession: false } });
 
+function extractSummaryText(book) {
+  // Priority: index.bookSummary.brief > reading_summary.overview > summary.data
+  const indexBrief = book.index?.bookSummary?.brief;
+  if (indexBrief) return indexBrief;
+  const readingOverview = book.reading_summary?.overview;
+  if (readingOverview) return readingOverview;
+  if (typeof book.summary === 'string') return book.summary;
+  if (book.summary?.data) return book.summary.data;
+  return null;
+}
+
 function transformBook(book) {
   return {
     id: book.id,
@@ -62,7 +73,26 @@ function transformBook(book) {
     collection_relevance: book.collection_relevance || null,
     image_source_provider: book.image_source?.provider || null,
     contributing_library: book.image_source?.contributing_library || null,
-    // Computed columns (require ALTER TABLE first — see issue #xxx)
+    // Book detail fields (for serving /book/[id] from Supabase)
+    summary_text: extractSummaryText(book),
+    publisher: book.publisher || null,
+    place_published: book.place_published || null,
+    doi: book.doi || null,
+    work_id: book.work_id || null,
+    resource_type: book.resource_type || null,
+    source_url: book.image_source?.source_url || null,
+    provider_name: book.image_source?.provider_name || null,
+    image_attribution: book.image_source?.attribution || null,
+    image_license: book.image_source?.license || null,
+    cover_image: book.cover_image || null,
+    dedication: book.dedication || null,
+    subtitle: book.subtitle || null,
+    source_work_dates: Array.isArray(book.source_work_dates) ? book.source_work_dates : null,
+    ft_disposition: book.translation_verification?.disposition || null,
+    ft_reasoning: book.translation_verification?.reasoning || null,
+    description: book.ai_metadata?.description || book.description || null,
+    subject_keywords: Array.isArray(book.subject_keywords) ? book.subject_keywords : null,
+    // Computed columns
     translation_pct: (() => {
       const denom = (book.pages_count || 0) - (book.pages_blank || 0);
       return denom > 0 ? Math.round(((book.pages_translated || 0) / denom) * 100) : 0;
@@ -115,8 +145,19 @@ const projection = {
   categories: 1, collections: 1, collection_relevance: 1,
   'image_source.provider': 1,
   'image_source.contributing_library': 1,
+  'image_source.source_url': 1,
+  'image_source.provider_name': 1,
+  'image_source.attribution': 1,
+  'image_source.license': 1,
   'pipeline_auto.status': 1,
   needs_splitting: 1,
+  // Book detail fields
+  summary: 1, 'index.bookSummary.brief': 1, 'reading_summary.overview': 1,
+  publisher: 1, place_published: 1, doi: 1, work_id: 1,
+  resource_type: 1, cover_image: 1, dedication: 1, subtitle: 1,
+  source_work_dates: 1,
+  'translation_verification.disposition': 1, 'translation_verification.reasoning': 1,
+  'ai_metadata.description': 1, description: 1, subject_keywords: 1,
 };
 
 const cursor = db.collection('books')
@@ -157,30 +198,46 @@ if (batch.length > 0) {
 }
 
 // On full sync, clean up stale rows (books no longer visible in MongoDB)
+// Safety: verify cursor consistency before deleting anything
 if (FULL_MODE && synced > 0) {
   const visibleIds = new Set();
   const idCursor = db.collection('books').find({ visible: true }, { projection: { id: 1 } }).batchSize(1000);
   for await (const doc of idCursor) visibleIds.add(doc.id);
 
-  let sbIds = [];
-  let offset = 0;
-  while (true) {
-    const { data } = await supabase.from('books_catalog').select('id').range(offset, offset + 999);
-    if (!data || data.length === 0) break;
-    sbIds.push(...data.map(d => d.id));
-    offset += data.length;
-    if (data.length < 1000) break;
-  }
+  // Cross-check: cursor count should roughly match countDocuments
+  const expectedCount = await db.collection('books').countDocuments({ visible: true });
+  const cursorCount = visibleIds.size;
+  const drift = Math.abs(expectedCount - cursorCount);
+  const driftPct = expectedCount > 0 ? (drift / expectedCount * 100).toFixed(1) : 0;
 
-  const stale = sbIds.filter(id => !visibleIds.has(id));
-  if (stale.length > 0) {
-    let deleted = 0;
-    for (let i = 0; i < stale.length; i += 100) {
-      const batch = stale.slice(i, i + 100);
-      const { error } = await supabase.from('books_catalog').delete().in('id', batch);
-      if (!error) deleted += batch.length;
+  if (drift > 100 || driftPct > 5) {
+    console.warn(`[${new Date().toISOString()}] books_catalog: SKIPPING cleanup — cursor returned ${cursorCount} but countDocuments says ${expectedCount} (drift: ${drift}, ${driftPct}%). Concurrent writes likely.`);
+  } else {
+    let sbIds = [];
+    let offset = 0;
+    while (true) {
+      const { data } = await supabase.from('books_catalog').select('id').range(offset, offset + 999);
+      if (!data || data.length === 0) break;
+      sbIds.push(...data.map(d => d.id));
+      offset += data.length;
+      if (data.length < 1000) break;
     }
-    console.log(`[${new Date().toISOString()}] books_catalog: cleaned ${deleted} stale rows`);
+
+    const stale = sbIds.filter(id => !visibleIds.has(id));
+
+    // Safety cap: never delete more than 50 rows or 1% of Supabase total
+    const maxDelete = Math.max(50, Math.floor(sbIds.length * 0.01));
+    if (stale.length > maxDelete) {
+      console.warn(`[${new Date().toISOString()}] books_catalog: SKIPPING cleanup — ${stale.length} stale rows exceeds safety cap of ${maxDelete}. Investigate before running manually.`);
+    } else if (stale.length > 0) {
+      let deleted = 0;
+      for (let i = 0; i < stale.length; i += 100) {
+        const batch = stale.slice(i, i + 100);
+        const { error } = await supabase.from('books_catalog').delete().in('id', batch);
+        if (!error) deleted += batch.length;
+      }
+      console.log(`[${new Date().toISOString()}] books_catalog: cleaned ${deleted} stale rows (cursor: ${cursorCount}, expected: ${expectedCount})`);
+    }
   }
 }
 

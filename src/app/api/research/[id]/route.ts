@@ -1,5 +1,5 @@
 import { NextRequest, NextResponse } from 'next/server';
-import { getDb } from '@/lib/mongodb';
+import { getReadDb } from '@/lib/mongodb';
 
 export const maxDuration = 15;
 
@@ -22,7 +22,7 @@ export async function GET(
     const page = Math.max(1, parseInt(searchParams.get('page') || '1'));
     const perPage = Math.min(parseInt(searchParams.get('per_page') || '50'), 200);
 
-    const db = await getDb();
+    const db = await getReadDb();
     const session = await db.collection('curator_sessions').findOne({ id });
 
     if (!session) {

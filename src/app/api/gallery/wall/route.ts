@@ -1,5 +1,5 @@
 import { NextResponse } from 'next/server';
-import { getDb } from '@/lib/mongodb';
+import { getReadDb } from '@/lib/mongodb';
 
 export const dynamic = 'force-dynamic';
 export const maxDuration = 30;
@@ -22,7 +22,7 @@ export const maxDuration = 30;
  */
 export async function GET() {
   try {
-    const db = await getDb();
+    const db = await getReadDb();
 
     // Cap at 20K images with quality filter for manageable payload
     const LIMIT = 20_000;

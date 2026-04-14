@@ -7,14 +7,14 @@
  *
  * Architecture:
  * - Picks up books in 'translate_submitted' status that have a job
- * - Translates pages in batches of BATCH_SIZE (default 5) for throughput
+ * - Translates pages in batches of BATCH_SIZE (default 8) for throughput
  * - Falls back to single-page on batch parse failures or errors
  * - Runs multiple books concurrently (up to CONCURRENCY cap)
  * - Writes translations + progress directly to MongoDB
  * - Rotates Gemini API keys on rate limit errors
  *
  * CLI flags:
- *   --batch-size=N   Pages per API call (default 5, set to 1 for single-page)
+ *   --batch-size=N   Pages per API call (default 8, set to 1 for single-page)
  *   --single-page    Force single-page mode (equivalent to --batch-size=1)
  *
  * The orchestrator (Phase 4) creates jobs and sets status to translate_submitted.
@@ -25,15 +25,17 @@ import { MongoClient } from 'mongodb';
 import { GoogleGenerativeAI } from '@google/generative-ai';
 import { createHash } from 'crypto';
 import { nanoid } from 'nanoid';
+import { logUsage } from './lib/supabase-usage-logger.mjs';
+import { syncPageUpdate, syncPageBatch } from './lib/supabase-page-writer.mjs';
 
 // ── Config ──
 const CONCURRENCY = 40;          // Max books translating simultaneously
 const PAGES_PER_RUN = 8000;      // Global page cap per run (prevent runaway costs)
 const MAX_CONSECUTIVE_ERRORS = 5; // Per-book error threshold before giving up
 const RATE_LIMIT_BACKOFF_MS = 15000;
-const BATCH_SIZE = parseInt(process.argv.find(a => a.startsWith('--batch-size='))?.split('=')[1] || '5', 10);
+const BATCH_SIZE = parseInt(process.argv.find(a => a.startsWith('--batch-size='))?.split('=')[1] || '8', 10);
 const SINGLE_PAGE = process.argv.includes('--single-page');
-const MAX_BATCH_OCR_CHARS = 15000; // If total OCR text exceeds this, reduce batch size
+const MAX_BATCH_OCR_CHARS = 20000; // If total OCR text exceeds this, reduce batch size
 const MODEL_FLASH = 'gemini-3-flash-preview';
 const MODEL_LITE = 'gemini-3.1-flash-lite-preview';
 function getModelForBook(book) {
@@ -43,9 +45,14 @@ function getModelForBook(book) {
 const PROMPT_VERSION = 'v10';
 
 // ── Gemini API keys ──
+// Exclude GEMINI_API_KEY_4 (free tier, 15 RPM) — too slow for sustained translation throughput.
+// It stays available for enrichment workers that make fewer calls.
 const API_KEYS = [
   process.env.GEMINI_API_KEY,
-  ...Array.from({ length: 9 }, (_, i) => process.env[`GEMINI_API_KEY_${i + 2}`]),
+  ...Array.from({ length: 9 }, (_, i) => {
+    if (i + 2 === 4) return null; // Skip KEY_4 (free tier)
+    return process.env[`GEMINI_API_KEY_${i + 2}`];
+  }),
   process.env.GEMINI_API_KEY_TIER3,
 ].filter(Boolean);
 
@@ -101,7 +108,7 @@ async function getEnglishModernizationPromptFromDb(db) {
 }
 
 // ── Skip these page types (no translatable content) ──
-const SKIP_PAGE_TYPES = ['blank', 'digitizer-notice', 'illustration', 'map', 'diagram'];
+const SKIP_PAGE_TYPES = ['blank', 'digitizer-notice'];
 // Pages with very short OCR get excluded from batches (translated single-page instead).
 // Short pages in batches cause the model to produce minimal responses without XML tags.
 const MIN_OCR_CHARS_FOR_BATCH = 200;
@@ -340,23 +347,21 @@ function effectiveBatchSize(pages, maxBatchSize) {
 
 // ── Write a single page translation to DB ──
 async function writePageTranslation(db, page, text, book) {
-  await db.collection('pages').updateOne(
-    { id: page.id },
-    {
-      $set: {
-        translation: {
-          data: text,
-          content_hash: contentHash(text),
-          language: 'English',
-          model: getModelForBook(book),
-          updated_at: new Date(),
-          source: 'ai',
-          prompt_version: PROMPT_VERSION,
-        },
-        updated_at: new Date(),
-      },
+  const setPayload = {
+    translation: {
+      data: text,
+      content_hash: contentHash(text),
+      language: 'English',
+      model: getModelForBook(book),
+      updated_at: new Date(),
+      source: 'ai',
+      prompt_version: PROMPT_VERSION,
     },
-  );
+    updated_at: new Date(),
+  };
+  await db.collection('pages').updateOne({ id: page.id }, { $set: setPayload });
+  // Dual-write to Supabase (fire-and-forget)
+  syncPageUpdate(page.id, setPayload);
 }
 
 // ── Bulk-write multiple page translations in one round trip ──
@@ -387,7 +392,22 @@ async function bulkWritePageTranslations(db, entries, book) {
       },
     },
   }));
-  await db.collection('pages').bulkWrite(ops, { ordered: false });
+  // Throttle writes to avoid IOPS spikes on Atlas M30
+  const CHUNK_SIZE = 25;
+  const CHUNK_DELAY_MS = 50;
+  for (let i = 0; i < ops.length; i += CHUNK_SIZE) {
+    const chunk = ops.slice(i, i + CHUNK_SIZE);
+    await db.collection('pages').bulkWrite(chunk, { ordered: false });
+    if (i + CHUNK_SIZE < ops.length) await new Promise(r => setTimeout(r, CHUNK_DELAY_MS));
+  }
+  // Dual-write to Supabase (fire-and-forget)
+  syncPageBatch(entries.map(({ page, text }) => ({
+    pageId: page.id,
+    mongoSet: {
+      translation: { data: text, language: 'English', model, updated_at: now, source: 'ai', prompt_version: PROMPT_VERSION },
+      updated_at: now,
+    },
+  })));
 }
 
 // ── Process one book (sequential batches for context) ──
@@ -411,6 +431,26 @@ async function processBook(db, book, job, globalCounter, deadline) {
     .project({ id: 1, page_number: 1, 'ocr.data': 1, page_type: 1 })
     .limit(200) // Cap per book per run — large books don't monopolize a worker slot
     .toArray();
+
+  // ── Detect blank pages missing page_type (pre-pipeline OCR) ──
+  // Some older OCR outputs have <lang>None</lang> or "Blank page" in meta but never set page_type.
+  // Filter them out and backfill page_type so they're skipped in future runs too.
+  const blankFromOcr = pages.filter(p => {
+    if (p.page_type) return false; // already classified
+    const ocr = p.ocr?.data || '';
+    return /<lang>\s*None\s*<\/lang>/i.test(ocr) && /blank\s+page/i.test(ocr);
+  });
+  if (blankFromOcr.length > 0) {
+    const blankIds = blankFromOcr.map(p => p.id);
+    await db.collection('pages').updateMany(
+      { id: { $in: blankIds } },
+      { $set: { page_type: 'blank', updated_at: new Date() } },
+    );
+    console.log(`  [${label}] Backfilled ${blankFromOcr.length} blank pages (missing page_type)`);
+    // Remove from translation queue
+    const blankIdSet = new Set(blankIds);
+    pages.splice(0, pages.length, ...pages.filter(p => !blankIdSet.has(p.id)));
+  }
 
   if (pages.length === 0) {
     // Book is fully translated — advance pipeline
@@ -512,14 +552,14 @@ async function processBook(db, book, job, globalCounter, deadline) {
         await writePageTranslation(db, page, result.text, book);
 
         const cost = calculateCost(result.inputTokens, result.outputTokens, getModelForBook(book));
-        await db.collection('gemini_usage').insertOne({
+        await logUsage({
           type: 'translation', mode: 'realtime', model: getModelForBook(book),
           book_id: book.id, page_ids: [page.id],
           input_tokens: result.inputTokens, output_tokens: result.outputTokens,
           cost_usd: cost, status: 'success', duration_ms: result.durationMs,
           prompt_version: PROMPT_VERSION, endpoint: 'worker/hetzner-translate',
-          batch_size: 1, timestamp: new Date(),
-        });
+          batch_size: 1,
+        }, db);
 
         translated++;
         globalCounter.count++;
@@ -566,13 +606,13 @@ async function processBook(db, book, job, globalCounter, deadline) {
             }
             consecutiveErrors = Math.max(0, consecutiveErrors - 1); // don't count toward circuit breaker
           }
-          await db.collection('gemini_usage').insertOne({
+          await logUsage({
             type: 'translation', mode: 'realtime', model: getModelForBook(book),
             book_id: book.id, page_ids: [page.id],
             input_tokens: 0, output_tokens: 0, status: 'failed',
             error_message: msg.substring(0, 500), endpoint: 'worker/hetzner-translate',
-            batch_size: 1, timestamp: new Date(),
-          });
+            batch_size: 1,
+          }, db);
         }
       }
     } else {
@@ -651,7 +691,7 @@ async function processBook(db, book, job, globalCounter, deadline) {
 
         // Log batch usage
         const cost = calculateCost(result.inputTokens, result.outputTokens, getModelForBook(book));
-        await db.collection('gemini_usage').insertOne({
+        await logUsage({
           type: 'translation', mode: 'realtime', model: getModelForBook(book),
           book_id: book.id, page_ids: batch.map(p => p.id),
           input_tokens: result.inputTokens, output_tokens: result.outputTokens,
@@ -659,8 +699,7 @@ async function processBook(db, book, job, globalCounter, deadline) {
           duration_ms: result.durationMs, prompt_version: PROMPT_VERSION,
           endpoint: 'worker/hetzner-translate-batch',
           batch_size: batch.length, pages_parsed: result.translations.size,
-          timestamp: new Date(),
-        });
+        }, db);
 
         consecutiveErrors = 0;
         totalInputTokens += result.inputTokens;
@@ -876,10 +915,10 @@ function langSpeedTier(lang) {
 // ── Self-dispatch: create jobs for books that need translation ──
 // Eliminates the gap between translate-worker finishing and Phase 4 dispatching new books.
 async function selfDispatch(db, limit) {
-  // Find fresh books (metadata_enriched/ft_verified) — sorted by language speed tier
+  // Find fresh books (ocr_complete) — sorted by language speed tier
   // so each batch is homogeneous (all fast or all slow books together).
   const fresh = await db.collection('books').aggregate([
-    { $match: { 'pipeline_auto.status': { $in: ['metadata_enriched', 'ft_verified'] } } },
+    { $match: { 'pipeline_auto.status': { $in: ['ocr_complete'] } } },
     { $addFields: { _speedTier: { $switch: {
       branches: [
         { case: { $in: ['$language', ['Latin', 'German', 'French', 'Italian', 'Dutch', 'Spanish', 'Portuguese', 'English', 'Czech', 'Polish', 'Swedish', 'Danish']] }, then: 0 },
@@ -1072,17 +1111,32 @@ async function main() {
       book_id: { $nin: [...bookIds] },
     }).sort({ created_at: 1 }).limit(CONCURRENCY - books.length).project({ book_id: 1 }).toArray();
     if (orphanJobs.length > 0) {
+      // Exclude books that are already translated or past translation
+      const DONE_STATUSES = ['needs_attention', 'complete', 'failed', 'translate_complete', 'summarizing', 'summary_indexed', 'chapters', 'chapters_complete'];
+      const orphanBookIds = orphanJobs.map(j => j.book_id);
       const orphanBooks = await db.collection('books')
-        .find({ id: { $in: orphanJobs.map(j => j.book_id) }, 'pipeline_auto.status': { $nin: ['needs_attention', 'complete', 'failed'] } })
+        .find({ id: { $in: orphanBookIds }, 'pipeline_auto.status': { $nin: DONE_STATUSES } })
         .project(proj).toArray();
+      const resumedIds = new Set(orphanBooks.map(b => b.id));
       books = [...books, ...orphanBooks.filter(b => !bookIds.has(b.id))].slice(0, CONCURRENCY);
       if (orphanBooks.length > 0) {
         console.log(`[TRANSLATE] Resumed ${orphanBooks.length} books with orphaned jobs`);
       }
+      // Cancel orphan jobs for books that are already done (prevents infinite re-link loop)
+      const staleOrphanIds = orphanBookIds.filter(id => !resumedIds.has(id));
+      if (staleOrphanIds.length > 0) {
+        const cancelled = await db.collection('jobs').updateMany(
+          { type: 'translation', status: { $in: ['pending', 'processing'] }, book_id: { $in: staleOrphanIds } },
+          { $set: { status: 'cancelled', cancelled_at: new Date(), cancel_reason: 'orphan-book-already-done' } },
+        );
+        if (cancelled.modifiedCount > 0) {
+          console.log(`[TRANSLATE] Cancelled ${cancelled.modifiedCount} orphan jobs for already-done books`);
+        }
+      }
     }
   }
 
-  // Self-dispatch: fill remaining slots with fresh books from metadata_enriched/ft_verified.
+  // Self-dispatch: fill remaining slots with fresh books (ocr_complete).
   if (books.length < CONCURRENCY) {
     const needed = CONCURRENCY - books.length;
     const dispatched = await selfDispatch(db, needed);
@@ -1136,10 +1190,10 @@ async function main() {
         );
         console.log(`  [${(book.title || '').substring(0, 40)}] Re-linked orphan job ${jobId}`);
       } else {
-        console.log(`  [${(book.title || '').substring(0, 40)}] No job found, rolling back to metadata_enriched`);
+        console.log(`  [${(book.title || '').substring(0, 40)}] No job found, rolling back to ocr_complete`);
         await db.collection('books').updateOne(
           { id: book.id },
-          { $set: { 'pipeline_auto.status': 'metadata_enriched', updated_at: new Date() }, $unset: { job: '' } },
+          { $set: { 'pipeline_auto.status': 'ocr_complete', updated_at: new Date() }, $unset: { job: '' } },
         );
         return zero;
       }
@@ -1149,7 +1203,7 @@ async function main() {
       console.log(`  [${(book.title || '').substring(0, 40)}] Job ${jobId} is ${job?.status || 'missing'}, resetting`);
       await db.collection('books').updateOne(
         { id: book.id },
-        { $set: { 'pipeline_auto.status': 'metadata_enriched', updated_at: new Date() }, $unset: { job: '' } },
+        { $set: { 'pipeline_auto.status': 'ocr_complete', updated_at: new Date() }, $unset: { job: '' } },
       );
       return zero;
     }
