@@ -2,13 +2,12 @@
 # Daily backup of books collection from MongoDB Atlas to Hetzner
 # Cron: 0 4 * * * /root/sourcelibrary/scripts/workers/backup-books.sh
 #
-# Keeps 7 days of gzipped mongodump archives.
-# Restore: mongodump --uri="$MONGODB_URI" --db=bookstore --collection=books --gzip --dir=/root/backups/books-YYYY-MM-DD
+# Append-only: each day's dump is kept forever (~500MB/day, ~180GB/year).
+# Restore: mongorestore --uri="$MONGODB_URI" --db=bookstore --gzip --dir=/root/backups/books-YYYY-MM-DD/bookstore
 
 set -euo pipefail
 
 BACKUP_DIR="/root/backups"
-RETENTION_DAYS=7
 DATE=$(date +%Y-%m-%d)
 DUMP_DIR="$BACKUP_DIR/books-$DATE"
 LOG="/var/log/sourcelibrary/backup-books.log"
@@ -43,9 +42,7 @@ fi
 # Also dump deleted_books
 mongodump --uri="$MONGODB_URI" --db=bookstore --collection=deleted_books --gzip --out="$DUMP_DIR" >> "$LOG" 2>&1 || true
 
-# Clean up old backups
-find "$BACKUP_DIR" -maxdepth 1 -name "books-*" -type d -mtime +$RETENTION_DAYS -exec rm -rf {} \; 2>/dev/null
-log "Cleanup complete (retention: ${RETENTION_DAYS}d)"
+# No cleanup — append-only archive
 
 # Report
 TOTAL=$(ls -d "$BACKUP_DIR"/books-* 2>/dev/null | wc -l)
