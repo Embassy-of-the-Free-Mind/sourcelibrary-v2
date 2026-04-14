@@ -56,6 +56,7 @@ const OCR_MODEL = OCR_MODEL_FLASH; // Legacy fallback for recitation retry path
 const OCR_PROMPT_VERSION = 'v10'; // Read from DB at runtime; this label is for batch_jobs metadata only
 const OCR_INLINE_BATCH_SIZE = 20;  // Pages per inline batch (base64 in body, ~20MB limit)
 const OCR_FILE_BATCH_SIZE = 500;   // Pages per file-based batch — raised from 250 to 500 (issue #1078). Google recommends 1K-5K. File API tested at 707MB/480 pages. Streaming JSONL keeps memory low.
+const CROSS_BOOK_BATCH_SIZE = 250; // Smaller batches for cross-book OCR — 500-page cross-book batches have 24% success vs 51% single-book. Half size = less blast radius on Gemini cancellation.
 const IMAGE_CONCURRENCY = 20;     // Parallel image downloads per book
 const MAX_PAGES_PER_BOOK = 1000;  // Max pages to OCR per book — raised from 500 to match larger batch size
 
@@ -1424,6 +1425,7 @@ Output structure:
       model: ocrModel,
       prompt_version: OCR_PROMPT_VERSION,
       submission_method: useFileBased ? 'file' : 'inline',
+      key_index: batchJob.keyIndex,
       force: false,
       created_at: new Date(),
       updated_at: new Date(),
@@ -1496,9 +1498,9 @@ async function submitCrossBookOcrBatches(db, books) {
   const bookMap = new Map();
 
   for (const book of eligible) {
-    if (allDownloaded.length >= OCR_FILE_BATCH_SIZE) break;
+    if (allDownloaded.length >= CROSS_BOOK_BATCH_SIZE) break;
 
-    const remaining = OCR_FILE_BATCH_SIZE - allDownloaded.length;
+    const remaining = CROSS_BOOK_BATCH_SIZE - allDownloaded.length;
     const pages = await db.collection('pages')
       .find({
         book_id: book.id,
@@ -1626,16 +1628,21 @@ async function submitCrossBookOcrBatches(db, books) {
     model: ocrModel,
     prompt_version: OCR_PROMPT_VERSION,
     submission_method: 'file',
+    key_index: batchJob.keyIndex,
     cross_book: true,
     created_at: new Date(),
     updated_at: new Date(),
   });
 
-  // Mark all pooled books as ocr_submitted
+  // Mark all pooled books as ocr_submitted so they don't get re-submitted
   for (const bookId of chunkBookIds) {
     await db.collection('books').updateOne(
       { id: bookId },
-      { $set: { 'pipeline_auto.preview_batch_at': new Date() } }
+      { $set: {
+        'pipeline_auto.status': 'ocr_submitted',
+        'pipeline_auto.preview_batch_at': new Date(),
+        'pipeline_auto.last_updated': new Date(),
+      } }
     );
   }
 
@@ -1882,6 +1889,7 @@ async function submitImageExtractionBatch(db, book, candidatePages) {
       status: 'pending',
       model: IMAGE_EXTRACTION_MODEL,
       submission_method: useFileBased ? 'file' : 'inline',
+      key_index: batchJob.keyIndex,
       created_at: new Date(),
       updated_at: new Date(),
     });
@@ -2083,6 +2091,7 @@ async function submitCrossBookImageBatches(db, bookItems) {
       status: 'pending',
       model: IMAGE_EXTRACTION_MODEL,
       submission_method: 'file',
+      key_index: batchJob.keyIndex,
       cross_book: true,
       created_at: new Date(),
       updated_at: new Date(),
