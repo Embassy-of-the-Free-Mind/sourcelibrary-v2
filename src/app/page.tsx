@@ -504,7 +504,7 @@ export default async function HomePage() {
                   Collections
                 </h2>
                 <p className="text-muted mt-2">
-                  <Link href="/search?has_translation=true" className="hover:text-accent-rust transition-colors">{counts.translatedToEnglish.toLocaleString('en-US')} translated books and manuscripts</Link>
+                  <Link href="/search?has_translation=true" className="hover:text-accent-rust transition-colors">{counts.translatedToEnglish.toLocaleString('en-US')} translations</Link>
                   {' '}&middot;{' '}
                   <Link href="/search?first_translation=true" className="hover:text-accent-rust transition-colors">{counts.firstTranslationCount.toLocaleString('en-US')} for the first time</Link>
                   {counts.artworkCount > 0 && (
