@@ -2,15 +2,20 @@
 # Daily backup of books collection from MongoDB Atlas to Hetzner
 # Cron: 0 4 * * * /root/sourcelibrary/scripts/workers/backup-books.sh
 #
-# Append-only: each day's dump is kept forever (~500MB/day, ~180GB/year).
-# Restore: mongorestore --uri="$MONGODB_URI" --db=bookstore --gzip --dir=/root/backups/books-YYYY-MM-DD/bookstore
+# Strategy:
+#   - /root/backups/books-latest/  — overwritten daily, always current (fast restore)
+#   - /root/backups/books-weekly/  — snapshot every Sunday, kept forever (point-in-time)
+#
+# Only backs up book metadata (books, books_warehouse, deleted_books).
+# Images live on R2; pages can be re-OCR'd from R2 if needed.
+#
+# Restore: mongorestore --uri="$MONGODB_URI" --db=bookstore --gzip --dir=/root/backups/books-latest/bookstore
 
 set -euo pipefail
 
 BACKUP_DIR="/root/backups"
-DATE=$(date +%Y-%m-%d)
-DUMP_DIR="$BACKUP_DIR/books-$DATE"
 LOG="/var/log/sourcelibrary/backup-books.log"
+DAY_OF_WEEK=$(date +%u)  # 1=Monday, 7=Sunday
 
 log() { echo "[$(date -Is)] $1" >> "$LOG"; }
 
@@ -23,27 +28,27 @@ mkdir -p "$BACKUP_DIR"
 
 log "Starting books backup"
 
-# Dump books collection
-if mongodump --uri="$MONGODB_URI" --db=bookstore --collection=books --gzip --out="$DUMP_DIR" >> "$LOG" 2>&1; then
-  SIZE=$(du -sh "$DUMP_DIR" | cut -f1)
-  log "Backup complete: $DUMP_DIR ($SIZE)"
+# Always overwrite the latest snapshot
+LATEST_DIR="$BACKUP_DIR/books-latest"
+rm -rf "$LATEST_DIR"
+
+if mongodump --uri="$MONGODB_URI" --db=bookstore --collection=books --gzip --out="$LATEST_DIR" >> "$LOG" 2>&1; then
+  SIZE=$(du -sh "$LATEST_DIR" | cut -f1)
+  log "Books backup complete ($SIZE)"
 else
   log "ERROR: mongodump failed"
   exit 1
 fi
 
-# Also dump books_warehouse for completeness
-if mongodump --uri="$MONGODB_URI" --db=bookstore --collection=books_warehouse --gzip --out="$DUMP_DIR" >> "$LOG" 2>&1; then
-  log "Warehouse backup complete"
-else
-  log "WARNING: warehouse dump failed (non-fatal)"
+mongodump --uri="$MONGODB_URI" --db=bookstore --collection=books_warehouse --gzip --out="$LATEST_DIR" >> "$LOG" 2>&1 || log "WARNING: warehouse dump failed"
+mongodump --uri="$MONGODB_URI" --db=bookstore --collection=deleted_books --gzip --out="$LATEST_DIR" >> "$LOG" 2>&1 || true
+
+# On Sundays, copy to a weekly snapshot for point-in-time history
+if [ "$DAY_OF_WEEK" = "7" ]; then
+  WEEKLY_DIR="$BACKUP_DIR/books-weekly-$(date +%Y-%m-%d)"
+  cp -r "$LATEST_DIR" "$WEEKLY_DIR"
+  log "Weekly snapshot saved: $WEEKLY_DIR"
 fi
 
-# Also dump deleted_books
-mongodump --uri="$MONGODB_URI" --db=bookstore --collection=deleted_books --gzip --out="$DUMP_DIR" >> "$LOG" 2>&1 || true
-
-# No cleanup — append-only archive
-
-# Report
-TOTAL=$(ls -d "$BACKUP_DIR"/books-* 2>/dev/null | wc -l)
-log "Done. $TOTAL backups on disk."
+WEEKLY_COUNT=$(ls -d "$BACKUP_DIR"/books-weekly-* 2>/dev/null | wc -l)
+log "Done. Latest updated, $WEEKLY_COUNT weekly snapshots on disk."
