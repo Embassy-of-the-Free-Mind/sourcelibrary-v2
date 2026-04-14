@@ -49,6 +49,7 @@ next-env.d.ts
 data/
 !src/app/data/
 !src/data/
+!public/data/
 src/data/*
 !src/data/concept-diffusion.json
 !src/data/concept-diffusion-research.json
