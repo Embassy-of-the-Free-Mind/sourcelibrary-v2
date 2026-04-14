@@ -322,9 +322,9 @@ async function getCollectionShowcase() {
   return JSON.parse(JSON.stringify(items));
 }
 
-const FALLBACK_COUNTS = { totalBooks: 11040, translatedToEnglish: 10142, firstTranslationCount: 5716, authorCount: 4740, languageCount: 123 };
+const FALLBACK_COUNTS = { totalBooks: 10293, translatedToEnglish: 10345, firstTranslationCount: 5787, authorCount: 4781, languageCount: 123, artworkCount: 6507 };
 
-async function getBookCounts(): Promise<{ totalBooks: number; translatedToEnglish: number; firstTranslationCount: number; authorCount: number; languageCount: number }> {
+async function getBookCounts(): Promise<{ totalBooks: number; translatedToEnglish: number; firstTranslationCount: number; authorCount: number; languageCount: number; artworkCount: number }> {
   // 1. MongoDB system_config cache (updated by update-homepage-stats.mjs cron)
   // Preferred over Supabase because it uses the >=90% "readable" threshold which
   // Supabase books_catalog cannot compute (no column-to-column comparison in PostgREST).
@@ -341,6 +341,7 @@ async function getBookCounts(): Promise<{ totalBooks: number; translatedToEnglis
         firstTranslationCount: cached.firstTranslationCount,
         authorCount: cached.authorCount ?? FALLBACK_COUNTS.authorCount,
         languageCount: cached.languageCount ?? FALLBACK_COUNTS.languageCount,
+        artworkCount: cached.artworkCount ?? FALLBACK_COUNTS.artworkCount,
       };
     }
   } catch { /* DB unreachable — try Supabase */ }
@@ -373,6 +374,7 @@ async function getBookCounts(): Promise<{ totalBooks: number; translatedToEnglis
         firstTranslationCount: firstTransRes.count ?? FALLBACK_COUNTS.firstTranslationCount,
         authorCount,
         languageCount,
+        artworkCount: FALLBACK_COUNTS.artworkCount,
       };
     }
   } catch { /* Supabase unreachable */ }
@@ -503,6 +505,12 @@ export default async function HomePage() {
                   <Link href="/search?has_translation=true" className="hover:text-accent-rust transition-colors">{counts.translatedToEnglish.toLocaleString('en-US')} translated books and manuscripts</Link>
                   {' '}&middot;{' '}
                   <Link href="/search?first_translation=true" className="hover:text-accent-rust transition-colors">{counts.firstTranslationCount.toLocaleString('en-US')} for the first time</Link>
+                  {counts.artworkCount > 0 && (
+                    <>
+                      {' '}&middot;{' '}
+                      <Link href="/gallery" className="hover:text-accent-rust transition-colors">{counts.artworkCount.toLocaleString('en-US')} artworks</Link>
+                    </>
+                  )}
                 </p>
               </div>
               <Link

@@ -14,7 +14,7 @@ const client = await MongoClient.connect(uri);
 const db = client.db('bookstore');
 const books = db.collection('books');
 
-const filter = { hidden: { $ne: true }, pages_count: { $gt: 0 } };
+const filter = { visible: true, pages_count: { $gt: 0 } };
 const translatedFilter = { ...filter, pages_translated: { $gt: 0 } };
 
 // "Readable" = >=90% of OCR pages translated (excluding blank pages)
@@ -25,15 +25,19 @@ const readableFilter = {
   $expr: { $gte: ['$pages_translated', { $multiply: [{ $subtract: [{ $ifNull: ['$pages_ocr', 0] }, { $ifNull: ['$pages_blank', 0] }] }, 0.9] }] },
 };
 
-const [totalBooks, translatedToEnglish, firstTranslationCount, authorCount, languageCount] = await Promise.all([
+// Visual artworks (standalone art entries with resource_type like print, painting, etc.)
+const artworkFilter = { visible: true, resource_type: { $in: ['drawing', 'fresco', 'object', 'painting', 'print'] } };
+
+const [totalBooks, translatedToEnglish, firstTranslationCount, authorCount, languageCount, artworkCount] = await Promise.all([
   books.countDocuments(filter),
   books.countDocuments(readableFilter),
   books.countDocuments({ ...translatedFilter, is_first_translation: true }),
   books.distinct('author', translatedFilter).then(a => a.length),
   books.distinct('language', translatedFilter).then(l => l.filter(x => x && !x.includes(',') && !x.includes(' and ')).length),
+  books.countDocuments(artworkFilter),
 ]);
 
-const stats = { totalBooks, translatedToEnglish, firstTranslationCount, authorCount, languageCount, updatedAt: new Date() };
+const stats = { totalBooks, translatedToEnglish, firstTranslationCount, authorCount, languageCount, artworkCount, updatedAt: new Date() };
 
 await db.collection('system_config').updateOne(
   { _id: 'homepage_stats' },
