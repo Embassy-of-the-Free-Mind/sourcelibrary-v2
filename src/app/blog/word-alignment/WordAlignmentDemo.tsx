@@ -249,7 +249,7 @@ export function WordAlignmentDemo() {
   }
 
   const methodDescriptions: Record<Method, { label: string; sublabel: string }> = {
-    llm: { label: 'LLM Alignment', sublabel: `Gemini 2.5 Flash \u00b7 ${links.length} links` },
+    llm: { label: 'LLM Alignment', sublabel: `Gemini 3 Flash \u00b7 ${links.length} links` },
     embedding: { label: 'Embedding Similarity', sublabel: `Cognate heuristic \u00b7 ${links.length} links` },
   };
 
