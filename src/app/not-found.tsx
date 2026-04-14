@@ -7,11 +7,56 @@ import { Search, Home, BookOpen } from 'lucide-react';
 import FeedbackWidget from '@/components/feedback/FeedbackWidget';
 
 const QUOTES = [
-  { text: 'The lips of Wisdom are closed, except to the ears of Understanding.', source: 'The Kybalion' },
-  { text: 'Nature is the living visible garment of God.', source: 'Goethe' },
-  { text: 'All that we see or seem is but a dream within a dream.', source: 'Poe' },
-  { text: 'The universe is not only queerer than we suppose, but queerer than we can suppose.', source: 'Haldane' },
-  { text: 'As above, so below; as below, so above.', source: 'Hermes Trismegistus' },
+  {
+    text: 'The lips of Wisdom are closed, except to the ears of Understanding.',
+    source: 'The Kybalion',
+    href: '/book/the-kybalion-a-study-of-the-hermetic-philosophy-of-ancient-initiates?page=19',
+  },
+  {
+    text: 'We have given you, O Adam, no fixed seat, no form of your own, no specific duty, so that whatever seat, whatever appearance, and whatever duty you yourself desire, you may have according to your own wish and decision.',
+    source: 'Pico della Mirandola, Oration on the Dignity of Man',
+    href: '/book/oration-on-the-dignity-of-man-mirandola?page=2',
+  },
+  {
+    text: 'I must enter the cloud and admit the coincidence of opposites, beyond all reason, and seek the truth where impossibility presents itself.',
+    source: 'Nicholas of Cusa, De Visione Dei',
+    href: '/book/de-visione-dei-cusa?page=16',
+  },
+  {
+    text: 'The divine light is always present, always offers itself, and always calls and knocks at the doors of our senses.',
+    source: 'Giordano Bruno, Of Heroic Frenzies',
+    href: '/book/of-heroic-frenzies-bruno?page=20',
+  },
+  {
+    text: 'He who does not understand, should either be silent or learn.',
+    source: 'John Dee, The Hieroglyphic Monad',
+    href: '/book/the-hieroglyphic-monad-dee?page=2',
+  },
+  {
+    text: 'It is a most certain truth that what is above is nothing other than that which is below, and vice versa.',
+    source: 'Sendivogius, New Chemical Light',
+    href: '/book/new-chemical-light-sendivogius?page=37',
+  },
+  {
+    text: 'I compare the whole of philosophy, astrology, and theology to a precious tree that grows in a beautiful paradise.',
+    source: 'Jacob Boehme, Aurora (Dawn Rising)',
+    href: '/book/dawn-rising-boehme?page=9',
+  },
+  {
+    text: 'The Sky is one, of one and the same essence and substance, both that which is below and that which is above.',
+    source: 'Khunrath, Amphitheatre of Eternal Wisdom',
+    href: '/book/amphitheater-of-eternal-wisdom-khunrath?page=301',
+  },
+  {
+    text: 'You are inside the wall of Paradise, where the highest spirit of reason guards the gate.',
+    source: 'Nicholas of Cusa, De Visione Dei',
+    href: '/book/de-visione-dei-cusa?page=16',
+  },
+  {
+    text: 'The Physician is not to burn, but to test all things; once the impurity is removed, the three Substances remain.',
+    source: 'Paracelsus, Opus Paramirum',
+    href: '/book/paramirum-works-paracelsus?page=105',
+  },
 ];
 
 export default function NotFound() {
@@ -37,10 +82,10 @@ export default function NotFound() {
         <h2 className="text-2xl font-serif font-semibold text-primary mb-3">
           Lost in the Stacks
         </h2>
-        <p className="text-muted mb-8 italic">
-          &ldquo;{quote.text}&rdquo;
-          <span className="block text-faint text-sm mt-1 not-italic">&mdash; {quote.source}</span>
-        </p>
+        <Link href={quote.href} className="block text-muted mb-8 italic hover:text-secondary transition-colors group">
+          <span>&ldquo;{quote.text}&rdquo;</span>
+          <span className="block text-faint text-sm mt-1 not-italic group-hover:text-accent-rust/70 transition-colors">&mdash; {quote.source}</span>
+        </Link>
 
         <div className="bg-white rounded-xl border border-light p-6 mb-6">
           <form onSubmit={handleSearch} className="mb-5">
