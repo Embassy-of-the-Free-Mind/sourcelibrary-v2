@@ -35,7 +35,7 @@ const HAS_DIGITAL = args.includes('--has-digital');
 const LIMIT = parseInt(args.find(a => a.startsWith('--limit='))?.split('=')[1] || '0') || Infinity;
 const TIER = args.find(a => a.startsWith('--tier='))?.split('=')[1] || 'all';
 const CONCURRENCY = parseInt(args.find(a => a.startsWith('--concurrency='))?.split('=')[1] || '3');
-const DELAY_MS = 1500;
+const DELAY_MS = parseInt(args.find(a => a.startsWith('--delay='))?.split('=')[1] || '500');
 
 // ── Tier 1: Local cross-ref ─────────────────────────────────────────
 
