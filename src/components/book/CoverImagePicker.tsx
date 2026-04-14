@@ -78,10 +78,10 @@ export default function CoverImagePicker({ bookId, currentThumbnail, currentThum
 
       // For the main thumbnail, prefer cropped_photo (split pages) > archived_photo > direct source URL.
       // NEVER store /api/image?url= wrappers — they crash Next.js Image during SSR.
-      const typedPageWithCrop = page as Page & { archived_photo?: string; cropped_photo?: string };
+      const typedPageWithCrop = page as Page & { archived_photo?: string; cropped_photo?: string; enhanced_photo?: string };
       const directUrl = page.split_from_spread
         ? page.photo
-        : (typedPageWithCrop.cropped_photo || typedPage.archived_photo || page.photo_original || page.photo);
+        : (typedPageWithCrop.enhanced_photo || typedPageWithCrop.cropped_photo || typedPage.archived_photo || page.photo_original || page.photo);
       if (directUrl) {
         updates.thumbnail = directUrl;
       }

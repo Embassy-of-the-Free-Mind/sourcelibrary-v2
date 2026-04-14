@@ -179,7 +179,7 @@ export default async function ImageLayout({
   if (!data) return <div className="min-h-screen bg-black">{children}</div>;
 
   const { page, detection } = data;
-  const imageUrl = page.cropped_photo || page.archived_photo || page.photo;
+  const imageUrl = (page as any).enhanced_photo || page.cropped_photo || page.archived_photo || page.photo;
 
   return (
     <div className="min-h-screen bg-black">

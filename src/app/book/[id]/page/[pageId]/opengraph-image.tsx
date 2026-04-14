@@ -43,7 +43,7 @@ export default async function Image({ params }: { params: Promise<{ id: string; 
   const title = book?.display_title || book?.title || 'Unknown Title';
   const author = book?.author || 'Unknown Author';
   const pageNum = page?.page_number || '?';
-  const imageUrl = page?.compressed_photo || page?.archived_photo || page?.photo;
+  const imageUrl = (page as any)?.enhanced_photo || page?.compressed_photo || page?.archived_photo || page?.photo;
 
   // Truncate title if too long
   const displayTitle = title.length > 50 ? title.substring(0, 47) + '...' : title;
