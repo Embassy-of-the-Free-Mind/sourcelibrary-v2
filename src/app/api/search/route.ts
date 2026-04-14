@@ -7,7 +7,7 @@ import { searchBookIds } from '@/lib/books-catalog';
 
 export const preferredRegion = 'fra1';
 
-const MAX_PAGE_RESULTS = 10;
+const MAX_PAGE_RESULTS = 25;
 
 /** Strip XML/HTML tags and clean up OCR artifacts for display */
 function cleanText(text: string): string {
@@ -56,7 +56,7 @@ export async function GET(request: NextRequest) {
     const firstTranslation = searchParams.get('first_translation');
     const library = searchParams.get('library');
     const bookId = searchParams.get('book_id'); // Filter to specific book
-    const searchContent = searchParams.get('search_content') === 'true'; // Default false (page search is slow on 300K+ docs)
+    const searchContent = searchParams.get('search_content') !== 'false'; // Default true — only skip page search if explicitly disabled
     const pagesOnly = searchParams.get('pages_only') === 'true'; // Return only page-level results (for MCP passage search)
     const sortBy = searchParams.get('sort') || 'relevance'; // relevance | date_asc | date_desc | title
     const limit = Math.min(parseInt(searchParams.get('limit') || '20'), 100);

@@ -306,7 +306,7 @@ export async function searchBookIds(
   // Build OR filter: exact phrase match + word-level AND matches
   // "mathematical magick" should match "Mathematicall Magick" by matching each word
   const words = text.trim().split(/\s+/).filter(w => w.length >= 2);
-  const phraseFilters = `title.ilike.%${text}%,display_title.ilike.%${text}%,author.ilike.%${text}%`;
+  const phraseFilters = `title.ilike.%${text}%,display_title.ilike.%${text}%,author.ilike.%${text}%,summary_text.ilike.%${text}%,description.ilike.%${text}%`;
 
   let orFilter = phraseFilters;
   if (words.length >= 2) {
