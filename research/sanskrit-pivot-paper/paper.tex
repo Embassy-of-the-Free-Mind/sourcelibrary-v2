@@ -36,9 +36,9 @@
 % ============================================================================
 \section{Introduction}
 
-Sanskrit is the classical language of South Asia---the vehicle for the Vedas, the \emph{Mah\=abh\=arata}, the philosophical commentaries of Vasubandhu and \'Sa\.nkara, and a vast scientific literature spanning astronomy, medicine, and mathematics. Roughly 30 million texts survive, but only a fraction have been translated into English~\cite{pollock2003}. Large language models offer the possibility of translating this literature at scale, but the quality of direct Sanskrit-to-English translation remains uncertain.
+Sanskrit is the classical language of South Asia---the vehicle for the Vedas, the \emph{Mah\=abh\=arata}, the philosophical commentaries of Vasubandhu and \'Sa\.nkara, and a vast scientific literature spanning astronomy, medicine, and mathematics. Roughly 30 million physical manuscripts survive in India alone~\cite{pollock2006}, though the number of distinct works is much smaller. Only a fraction have been translated into English. Large language models offer the possibility of translating this literature at scale, but the quality of direct Sanskrit-to-English translation remains uncertain.
 
-Hindi, spoken by over 600 million people, descends from Sanskrit through the Prakrit languages (c.\,600 BCE--1000 CE). The two languages share Devanagari script, the \emph{vibhakti} case system, \emph{sandhi} rules, and extensive vocabulary---a Hindi speaker recognizes many Sanskrit words on sight. This genealogical proximity raises a natural question: \textbf{does routing LLM translation through Hindi improve the quality of Sanskrit-to-English translation?}
+Hindi, spoken by over 600 million people, descends from Sanskrit not directly but through the Prakrit vernaculars and the Apabhra\d{m}\'sa dialects (c.\,600 BCE--1200 CE), with modern Hindi standardized from Kha\d{r}\={\i}bol\={\i} in the 19th century. The relationship is analogous to Italian's relationship to literary Latin: substantial vocabulary overlap (especially \emph{tatsama} loanwords borrowed directly from Sanskrit) and shared Devanagari script, but with significant grammatical divergence---Hindi has reduced the case system from 8 \emph{vibhakti}s to 2, largely lost productive \emph{sandhi}, and shifted to SOV word order with postpositions. Despite these divergences, a Hindi speaker recognizes many Sanskrit words, particularly in philosophical, religious, and performing-arts contexts. This partial proximity raises a natural question: \textbf{does routing LLM translation through Hindi improve the quality of Sanskrit-to-English translation?}
 
 This question has precedent in machine translation research. Pivot translation through an intermediate language is a well-studied strategy for low-resource language pairs~\cite{wu2007,cheng2017,leng2024}, and Hindi has been explored as a bridge for Sanskrit~\cite{dwivedi2023}. However, prior work used traditional NMT systems, not LLMs---and the LLM case is fundamentally different, because the ``pivot'' can be implemented as a \emph{prompt strategy} rather than a literal pipeline.
 
@@ -235,7 +235,11 @@ The self-consistency metric, adapted from our OCR trust scoring work, measures h
 
 \subsection{Limitations}
 
-Our evaluation is preliminary: 5 pages from one text, one model (Gemini Flash), one language pair. The Abhidharma\-ko\'sa is a well-known text that may be partially in training data. The LLM judge has its own biases and cannot verify Sanskrit fidelity at the word level. We did not test with human evaluators. A full study would need: (a)~diverse texts (Vedic, literary, scientific, legal), (b)~multiple models, (c)~human evaluation on a subset, (d)~comparison against existing expert translations where available, and (e)~the cognate priming strategy tested on other language families.
+Our evaluation has significant limitations. The corpus is small: 8 pages across 4 Sanskrit texts and 1 Chinese text, with $N{=}3$ runs per condition---too few for statistical significance testing on the observed differences. The Abhidharmako\'sa is a reconstructed text (the Sanskrit original was largely lost; the current edition draws on fragments and back-translation from Chinese/Tibetan), which introduces provenance confounds. An expert English translation exists (Pruden 1988--90, from La Vall\'ee Poussin's French); we did not compare against it, but COMET-based comparison should be attempted.
+
+Critically, we have not ablated the Hindi effect from generic chain-of-thought reasoning. The CoT prompt mentions Hindi; it is unclear whether the improvement comes from Hindi-specific knowledge or simply from the instruction to ``think first, then translate.'' A control condition (``analyze the grammar step by step'' with no language mention) is needed to isolate the cognate priming effect.
+
+The LLM judge (Gemini evaluating Gemini translations) introduces same-family bias and cannot verify Sanskrit fidelity at the word level---a Sanskritist's evaluation is essential. The judge scales differed between Sanskrit (1--5) and Chinese (/10) experiments, an inconsistency that should be unified. A full study needs: (a)~larger corpus across domains, (b)~multiple models, (c)~human expert evaluation, (d)~COMET comparison against existing translations, and (e)~the ablation experiment described above.
 
 % ============================================================================
 \section{Conclusion}
@@ -252,7 +256,7 @@ More broadly, as LLMs are increasingly used to translate humanity's classical he
 \bibliographystyle{plain}
 \begin{thebibliography}{20}
 \setlength{\itemsep}{-1pt}
-\bibitem{pollock2003} S.~Pollock. \emph{The Language of the Gods in the World of Men}. UC Press, 2003.
+\bibitem{pollock2006} S.~Pollock. \emph{The Language of the Gods in the World of Men}. UC Press, 2006.
 \bibitem{wu2007} H.~Wu, H.~Wang. Pivot language approach for phrase-based statistical MT. \emph{Machine Translation}, 21(3), 2007.
 \bibitem{cheng2017} Y.~Cheng et al. Neural machine translation with pivot languages. \emph{arXiv:1611.04928}, 2017.
 \bibitem{leng2024} Y.~Leng et al. Neural MT between low-resource languages with synthetic pivoting. \emph{LREC-COLING}, 2024.

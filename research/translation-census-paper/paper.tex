@@ -90,23 +90,26 @@ The scale increases dramatically when we include manuscripts:
 \begin{table}[H]
 \small
 \centering
-\caption{Estimated translation gap by language tradition.}
+\caption{Estimated translation gap by tradition. Percentages are rough estimates based on catalogue analysis and existing translation series; methodology notes below.}
 \label{tab:gap}
-\begin{tabular}{@{}lrr@{}}
+\begin{tabular}{@{}lrl@{}}
 \toprule
-Tradition & Surviving corpus & \% translated \\
+Tradition & Surviving corpus & Translated to English \\
 \midrule
-Latin (classical) & 150M words & $\sim$5--10\% \\
-Latin (medieval+) & billions of words & $<$1\% \\
-Sanskrit & 30M manuscripts & $\ll$1\% \\
-Arabic & 3--7M manuscripts & $\ll$1\% \\
-Classical Chinese & 5B+ characters & $<$5\% \\
-Ancient Greek & 150M words (ant.) & $\sim$10\% \\
+Latin (classical, to 600) & 150M words & 30--50\%$^a$ \\
+Latin (medieval/early mod.) & billions of words & $<$1\%$^b$ \\
+Sanskrit & 30M MSS$^c$ & $\ll$1\% \\
+Arabic & 3--7M MSS & $\ll$1\% \\
+Classical Chinese & 5B+ characters & $<$5\%$^d$ \\
+Ancient Greek (classical) & 150M words & 30--50\%$^a$ \\
 \bottomrule
 \end{tabular}
 \end{table}
 
-For every major classical tradition, the fraction translated into English is in the low single digits (Table~\ref{tab:gap}). For manuscript cultures, it is well under 1\%. The ``canon'' that shapes modern understanding of pre-modern thought is drawn from an extraordinarily narrow sample.
+{\footnotesize \noindent $^a$Canonical authors well covered by Loeb, Bud\'e, Tusculum, Oxford Medieval Texts, Penguin Classics, DOML, I Tatti Renaissance Library, and individual scholarly editions. The 30--50\% estimate applies to \emph{surviving works}, not words or pages. $^b$The vast post-600~CE Latin corpus (millions of sermons, legal texts, scientific treatises, administrative documents) has received very little systematic English translation. $^c$Pingree's estimate is of physical manuscripts, not distinct works; many are copies. The number of distinct Sanskrit works is unknown but far smaller. $^d$Major philosophical and literary works are translated; technical, administrative, and local texts mostly are not.}
+
+\smallskip
+For the canonical classical authors (to ${\sim}$600~CE), existing translation series provide reasonable coverage---perhaps 30--50\% of surviving works in English. But this is the tip of the iceberg. The vast post-classical corpus---medieval Latin, early modern vernacular scholarship, manuscript traditions in Sanskrit, Arabic, and Chinese---remains overwhelmingly untranslated. The ``canon'' that shapes modern understanding of pre-modern thought is drawn from an extraordinarily narrow sample.
 
 % ============================================================================
 \section{Source Library: A Case Study in AI Translation at Scale}
@@ -145,7 +148,7 @@ Armenian & 71 & 30,523 & 68 \\
 \end{tabular}
 \end{table}
 
-Of the 12,877 books with content, ${\sim}$9,100 are non-English texts that have been translated to English---the vast majority for the first time. The peak of the collection falls in the 17th century (1,510 books from 1600--1649), reflecting the explosion of print culture in early modern Europe.
+Of the 12,877 books with content, ${\sim}$9,100 are non-English texts that have been translated to English. We believe the majority are first English translations---most are obscure early modern texts unlikely to have attracted human translators---but we have not systematically checked against existing translation databases (Index Translationum, WorldCat). Some well-known works in our collection certainly have prior translations. The claim is strongest for the ``long tail'' of non-canonical texts. The peak of the collection falls in the 17th century (1,510 books from 1600--1649), reflecting the explosion of print culture in early modern Europe.
 
 \subsection{What Gets Translated First}
 
@@ -180,7 +183,7 @@ At 17,000 books imported, Source Library has processed roughly 1.5\% of its iden
 
 Before 2023, the bottleneck for translating historical texts was \textbf{linguistic capacity}: finding a scholar who could read 16th-century Latin and produce fluent English. This was expensive (hundreds of dollars per page), slow (months per book), and scarce (a few hundred qualified translators worldwide for any given classical language).
 
-AI has effectively removed this bottleneck. Multimodal LLMs (Gemini, Claude, GPT-4) can translate printed historical text at ${\sim}$\$0.002 per page with quality that, for printed text, approaches human expert level~\cite{humphries2024,volk2024}. The cost reduction is roughly \textbf{five orders of magnitude}---from \$100/page to \$0.002/page.
+AI has substantially reduced this bottleneck. Multimodal LLMs (Gemini, Claude, GPT-4) can translate printed historical text at ${\sim}$\$0.002 per page with quality that, for well-represented languages like Latin and German, is often serviceable for discovery and first-pass comprehension~\cite{humphries2024,volk2024}. This is not the same as scholarly translation: AI output lacks textual criticism, source identification, historical commentary, and the decades of training that inform expert judgment. But for the millions of texts that will \emph{never} receive scholarly attention, AI translation provides access where none existed. The marginal cost reduction---from hundreds of dollars per page for expert translation to fractions of a cent---changes the economics of what is feasible to translate.
 
 The new bottlenecks are:
 

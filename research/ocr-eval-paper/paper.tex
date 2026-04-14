@@ -126,7 +126,9 @@ We evaluate three similarity functions: (a)~\emph{Jaccard} (word-set intersectio
 
 \textbf{OCR prompt.} Each page is transcribed with a minimal prompt: \emph{``Transcribe this historical manuscript page to plain text. Preserve original spelling. Mark illegible text with $\langle$unclear$\rangle$...$\langle$/unclear$\rangle$. Do NOT add interpretive notes or reconstruct text you cannot read.''} For Leonardo pages, we add: \emph{``The text is written in mirror-script (right to left). Transcribe it as normal left-to-right Italian.''} No few-shot examples are provided.
 
-\textbf{Models.} Gemini 3 Flash, 3.1 Flash Lite, 3 Pro; Claude Sonnet 4, Opus 4.6. All at default temperature, no system prompts beyond the OCR instruction.
+\textbf{Models.} Gemini 3 Flash, 3.1 Flash Lite, 3 Pro; Claude Sonnet 4, Opus 4.6. All at default temperature ($T{\approx}1.0$), no system prompts beyond the OCR instruction.
+
+\textbf{Choice of $N{=}5$.} We use five runs as a practical trade-off between statistical stability and cost. With $N{=}5$, there are $\binom{5}{2}{=}10$ pairwise comparisons per page; informal testing showed that mean similarity stabilizes within ${\pm}1$pp between $N{=}3$ and $N{=}7$. For triage purposes (green vs.\ yellow), $N{=}3$ may suffice; for precise calibration gap measurement, $N{=}5$ or higher is preferable.
 
 % ============================================================================
 \section{Results}
@@ -154,7 +156,7 @@ The embedding--Jaccard \textbf{gap} is diagnostic: 40~pp on printed text (format
 
 \subsection{All Frontier Models Converge}
 
-Five models on the Bodleian manuscript ($N{=}2$, Jaccard word overlap): Gemini Lite 36.7\%*, Opus 27.3\%, Pro 27.0\%, Flash 26.8\%, Sonnet 21.5\%. (*Lite scores highest but produces pseudo-Latin nonsense---consistency without accuracy.) Models spanning different architectures and training corpora converge within a half-point band on manuscript text, while all scoring $>$95\% on printed pages. The bottleneck is visual perception, not language modeling.
+Five models on the Bodleian manuscript ($N{=}2$, Jaccard word overlap---an early experiment before we adopted embedding similarity): Gemini Lite 36.7\%*, Opus 27.3\%, Pro 27.0\%, Flash 26.8\%, Sonnet 21.5\%. (*Lite scores highest but produces pseudo-Latin nonsense---consistency without accuracy.) Models spanning different architectures converge within a half-point band on manuscript text, while all scoring $>$95\% on printed pages. The convergence suggests the bottleneck is visual perception, not language modeling. A more rigorous cross-model comparison using embedding similarity at $N{=}5$ is needed to confirm this finding.
 
 \subsection{Confabulation in Practice}
 
@@ -312,11 +314,11 @@ Per-sentence consensus ($N{=}5$): Vitruvius (printed) scores 95.5\% trust with 1
 \label{fig:gap}
 \end{figure}
 
-We compared AI OCR output against Richter's published expert transcriptions of the same Leonardo folios~\cite{richter1883}. Richter's \emph{Literary Works of Leonardo da Vinci} (1883) contains Italian transcriptions of hundreds of Leonardo passages, organized by topic. We OCR'd Richter's volumes through our standard pipeline, then extracted the optics passages and compared them against fresh AI OCR of the corresponding manuscript pages.
+We compared AI OCR output against Richter's published expert transcriptions~\cite{richter1883}. Richter's \emph{Literary Works of Leonardo da Vinci} (1883) contains Italian transcriptions of hundreds of Leonardo passages. We OCR'd Richter's volumes through our standard pipeline, then compared optics passages against fresh AI OCR of two corresponding manuscript pages (pp.\,49 and 53).
 
-The result: self-consistency across 5 runs is 83--88\%, but accuracy against Richter is only 65--67\%---a \textbf{${\sim}$20-point overestimate} (Fig.~\ref{fig:gap}). The model agrees with itself far more than it agrees with the expert. This happens because the runs share a common bias: they all generate plausible Italian about the same topic, drawing from the same training distribution, so they agree with each other---but not with the actual text on the page.
+On these two pages, self-consistency across 5 runs is 83--88\%, but accuracy against Richter is only 65--67\%---a gap of ${\sim}$\textbf{18--20 percentage points} (Fig.~\ref{fig:gap}). \emph{Caveat:} this gap is measured on only 2 pages and may not generalize; the true gap could be larger or smaller on other folios, codices, or hands. What the measurement does establish is that a gap \emph{exists}: the model agrees with itself far more than with the expert, because the runs share a common bias---they all generate plausible Italian about the same topic from the same training distribution.
 
-An important control: embedding similarity between two \emph{different} Richter pages on the same topic (optics) is 85.4\%---higher than AI-vs-Richter at 79.8\%. The AI is in the semantic neighborhood but further from the real text than expert pages are from each other.
+An informative control: embedding similarity between two \emph{different} Richter pages on the same topic (optics) is 85.4\%---higher than AI-vs-Richter at 79.8\%. The AI is in the semantic neighborhood but further from the real text than expert pages are from each other.
 
 \subsection{Printed Leonardo Control}
 
