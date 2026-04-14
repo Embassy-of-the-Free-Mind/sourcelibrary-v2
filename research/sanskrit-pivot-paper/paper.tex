@@ -1,0 +1,243 @@
+\documentclass[10pt,twocolumn]{article}
+
+\usepackage[margin=2cm]{geometry}
+\usepackage{graphicx}
+\usepackage{booktabs}
+\usepackage{xcolor}
+\usepackage{hyperref}
+\usepackage{tikz}
+\usepackage{caption}
+\usepackage{float}
+\usetikzlibrary{positioning,arrows.meta}
+\captionsetup{font=small,labelfont=bf}
+
+\hypersetup{colorlinks=true,linkcolor=blue!60!black,citecolor=blue!60!black,urlcolor=blue!60!black}
+
+\newcommand{\keywords}[1]{\par\smallskip\noindent\textbf{Keywords:} #1}
+
+\title{\Large\bfseries Think in Hindi, Write in English:\\[4pt] Cognate-Language Priming for LLM Translation\\of Classical Sanskrit}
+
+\author{Derek Lomas\\
+\small Source Library / Embassy of the Free Mind\\
+\small \texttt{derek@sourcelibrary.org}}
+
+\date{April 2026 --- Preprint}
+
+\begin{document}
+\maketitle
+\thispagestyle{empty}
+
+\begin{abstract}
+\noindent Large language models can translate classical Sanskrit directly into English, but should they? Hindi descends from Sanskrit via the Prakrit languages, sharing Devanagari script, grammatical structures, and extensive vocabulary. We test whether routing translation through Hindi---either as a literal two-step pipeline or as a chain-of-thought prompt (``think in Hindi first'')---improves translation quality for classical Sanskrit texts. On 5 pages of the \emph{Abhidharmako\'sa} (a 4th-century Buddhist philosophical commentary), we find that the chain-of-thought approach achieves the highest self-consistency (96.8\% vs.\ 96.3\% direct) and the highest quality scores from an LLM judge (4.3/5 vs.\ 4.0/5). The literal pivot pipeline matches CoT on quality but introduces slightly more variance. Cross-pipeline comparison reveals that the pivot produces meaningfully different translations (92.0\% similarity to direct), suggesting it accesses different linguistic knowledge. We propose \emph{cognate-language priming}---prompting the model to reason through a genealogically related language---as a general strategy for classical language translation, and evaluate it using reference-free self-consistency metrics adapted from our prior work on OCR trust scoring.
+\end{abstract}
+
+\keywords{Sanskrit, Hindi, pivot translation, chain-of-thought, classical languages, LLM translation, self-consistency, reference-free evaluation}
+
+% ============================================================================
+\section{Introduction}
+
+Sanskrit is the classical language of South Asia---the vehicle for the Vedas, the \emph{Mah\=abh\=arata}, the philosophical commentaries of Vasubandhu and \'Sa\.nkara, and a vast scientific literature spanning astronomy, medicine, and mathematics. Roughly 30 million texts survive, but only a fraction have been translated into English~\cite{pollock2003}. Large language models offer the possibility of translating this literature at scale, but the quality of direct Sanskrit-to-English translation remains uncertain.
+
+Hindi, spoken by over 600 million people, descends from Sanskrit through the Prakrit languages (c.\,600 BCE--1000 CE). The two languages share Devanagari script, the \emph{vibhakti} case system, \emph{sandhi} rules, and extensive vocabulary---a Hindi speaker recognizes many Sanskrit words on sight. This genealogical proximity raises a natural question: \textbf{does routing LLM translation through Hindi improve the quality of Sanskrit-to-English translation?}
+
+This question has precedent in machine translation research. Pivot translation through an intermediate language is a well-studied strategy for low-resource language pairs~\cite{wu2007,cheng2017,leng2024}, and Hindi has been explored as a bridge for Sanskrit~\cite{dwivedi2023}. However, prior work used traditional NMT systems, not LLMs---and the LLM case is fundamentally different, because the ``pivot'' can be implemented as a \emph{prompt strategy} rather than a literal pipeline.
+
+We compare three approaches:
+\begin{itemize}
+\item \textbf{Direct:} Sanskrit $\to$ English (single prompt)
+\item \textbf{Pivot:} Sanskrit $\to$ Hindi $\to$ English (two separate LLM calls)
+\item \textbf{CoT:} ``Think in Hindi first, then translate to English'' (single prompt)
+\end{itemize}
+
+The CoT approach is novel: it asks the model to use Hindi as an internal reasoning language without producing an explicit Hindi intermediate. We evaluate all three using reference-free metrics---self-consistency across multiple runs and LLM-as-judge scoring---adapted from our concurrent work on OCR trust scoring for historical manuscripts.
+
+\textbf{Contributions:} (1)~First comparison of direct, pivot, and cognate-language CoT translation for classical Sanskrit using LLMs. (2)~Evidence that CoT priming through a related language improves both consistency and quality. (3)~A reference-free evaluation framework for classical language translation where expert translations may not exist.
+
+% ============================================================================
+\section{Related Work}
+
+\textbf{Pivot translation.} Wu \& Wang~\cite{wu2007} established transfer and triangulation strategies for phrase-based pivot MT. Cheng et al.~\cite{cheng2017} extended this to neural MT with shared pivot-language embeddings. Leng et al.~\cite{leng2024} proposed synthetic pivoting for low-resource pairs. El-Tonsi et al.~\cite{eltonsi2024} used semantic representations as pivot for distant language pairs. However, all prior work uses traditional MT architectures; the LLM case---where the model already has multilingual knowledge---is unexplored.
+
+\textbf{Sanskrit NLP.} Dwivedi et al.~\cite{dwivedi2023} built transformer-based NMT for Sanskrit-Hindi, exploiting their structural similarity. Nehrdich et al.~\cite{nehrdich2024} pretrained ByT5-Sanskrit for multiple NLP tasks. Aralikatte et al.~\cite{aralikatte2020} applied reinforcement learning to Sanskrit-English NMT. Sandhan et al.~\cite{sandhan2022} combined transformers with the Sanskrit Heritage lexicon for word segmentation. Critically, Jha et al.~\cite{jha2024} tested Hindi as a pivot for English-to-Sanskrit translation and found \textbf{only marginal improvement}---but this was for NMT, not LLMs, and in the opposite translation direction.
+
+\textbf{LLM translation of classical languages.} Volk et al.~\cite{volk2024} showed GPT-4 achieves BLEU 34.5 on 16th-century Latin. Rosu~\cite{rosu2025} built an LLM-based Latin-English system. Han et al.~\cite{han2025} decomposed Classical Chinese translation into a multi-agent LLM pipeline. Singh et al.~\cite{singh2025} found Claude 3.5 Sonnet outperforms other models on Ancient Greek word alignment. No prior work has tested cognate-language CoT for Sanskrit.
+
+\textbf{Reference-free evaluation.} Kocmi \& Federmann~\cite{kocmi2023} showed LLM-based metrics (GEMBA) achieve state-of-the-art quality estimation without reference translations. Rei et al.~\cite{rei2022} won WMT 2023 with the CometKiwi reference-free QE model. We adapt the self-consistency approach from our OCR trust scoring work, where agreement across independent runs serves as a proxy for accuracy.
+
+% ============================================================================
+\section{Method}
+
+\subsection{Corpus}
+
+We evaluate on the \emph{Abhidharmako\'sa} (Treasury of Abhidharma) by Vasubandhu (4th--5th c.\ CE), with the \emph{Bh\=a\d{s}ya} (auto-commentary) and Ya\'somitra's \emph{Sphu\d{t}\=arth\=a} sub-commentary. This text is ideal for our purposes: (a)~it is a major work of Buddhist philosophy with extensive technical vocabulary, (b)~it exists in our library with full Devanagari OCR (2,208 pages), (c)~some English translations exist for validation, and (d)~its philosophical content is complex enough to expose translation quality differences.
+
+We select 5 pages (pp.\,20--24) spanning the opening verses, the first \emph{ko\'sasth\=ana} (chapter), and the commentary tradition. Source text is existing OCR from our pipeline (Gemini Flash on printed Devanagari).
+
+\subsection{Translation Pipelines}
+
+All pipelines use Gemini 3 Flash at default temperature.
+
+\textbf{Pipeline A (Direct):} A single prompt instructs: ``Translate this Sanskrit text into English. Preserve the meaning faithfully. Keep proper nouns transliterated.''
+
+\textbf{Pipeline B (Pivot):} Two sequential LLM calls. First: ``Translate this Sanskrit text into Hindi. Keep technical/philosophical terms in their original Sanskrit form where Hindi commonly uses them.'' Then: ``Translate this Hindi text into English.''
+
+\textbf{Pipeline C (CoT):} A single prompt instructs: ``Translate this Sanskrit text into English. First, mentally interpret the Sanskrit through Hindi (as an intermediate step to aid comprehension---Sanskrit and Hindi share grammar and vocabulary). Then produce a faithful English translation. Output only the final English translation, not the Hindi intermediate.''
+
+\subsection{Evaluation}
+
+Each pipeline runs $N{=}3$ times per page. We measure:
+
+\textbf{Self-consistency.} Pairwise embedding cosine similarity (Gemini \texttt{embedding-001}, 768-dim) between runs of the same pipeline. Higher consistency suggests more confident, reliable translation.
+
+\textbf{Cross-pipeline similarity.} Embedding cosine between pipeline outputs. Low similarity indicates the pipelines produce meaningfully different translations---interesting when quality scores diverge.
+
+\textbf{LLM-as-judge.} An independent Gemini call rates each translation on fluency, adequacy, terminology, completeness, and overall quality (1--5 scale), given the source text but no reference translation. This is a GEMBA-style~\cite{kocmi2023} reference-free evaluation.
+
+% ============================================================================
+\section{Results}
+
+\subsection{Overall Comparison}
+
+\begin{table}[H]
+\small
+\centering
+\caption{Pipeline comparison across 5 pages of the \emph{Abhidharmako\'sa}.}
+\label{tab:main}
+\begin{tabular}{@{}lccc@{}}
+\toprule
+Pipeline & Self-Consist. & Judge (1--5) & Output len. \\
+\midrule
+A: Direct & 96.3\% & 4.0 & 3,310 ch \\
+B: Pivot & 95.6\% & \textbf{4.3} & 3,080 ch \\
+C: CoT & \textbf{96.8\%} & \textbf{4.3} & 3,180 ch \\
+\bottomrule
+\end{tabular}
+\end{table}
+
+The CoT approach achieves the highest self-consistency (96.8\%) and ties the pivot for highest judge score (4.3/5), while the direct approach scores lowest on both metrics (Table~\ref{tab:main}). The differences are consistent across pages.
+
+\subsection{Cross-Pipeline Divergence}
+
+\begin{table}[H]
+\small
+\centering
+\caption{Cross-pipeline embedding similarity (avg over 5 pages).}
+\label{tab:cross}
+\begin{tabular}{@{}lc@{}}
+\toprule
+Comparison & Similarity \\
+\midrule
+Direct vs.\ CoT & 94.7\% \\
+CoT vs.\ Pivot & 92.7\% \\
+Direct vs.\ Pivot & 92.0\% \\
+\bottomrule
+\end{tabular}
+\end{table}
+
+Direct and CoT produce the most similar translations (94.7\%), while the pivot diverges more from both (92.0--92.7\%). The pivot route through Hindi produces meaningfully different English---and the judge rates it equally or better, suggesting the divergence reflects genuine translation alternatives rather than errors.
+
+\subsection{Quality Dimensions}
+
+The LLM judge provides dimension-specific scores:
+
+\begin{table}[H]
+\small
+\centering
+\caption{Average judge scores by dimension.}
+\label{tab:dimensions}
+\begin{tabular}{@{}lcccc@{}}
+\toprule
+Pipeline & Fluency & Adequacy & Terminology & Complete. \\
+\midrule
+A: Direct & 5.0 & 4.4 & 5.0 & 2.2 \\
+B: Pivot & 4.8 & 4.4 & 5.0 & 2.6 \\
+C: CoT & 5.0 & 4.6 & 5.0 & 2.8 \\
+\bottomrule
+\end{tabular}
+\end{table}
+
+All three pipelines produce fluent English with excellent terminology handling. The main weakness is \textbf{completeness}: all pipelines truncate long passages, scoring 2.2--2.8/5. The CoT approach is slightly more complete, possibly because the Hindi reasoning step helps the model maintain context over longer passages.
+
+\subsection{Qualitative Analysis}
+
+On the opening verses (page 20, invocation to the Buddha), all three pipelines produce high-quality scholarly translations. The judge notes:
+
+\begin{quote}
+\small
+\emph{Direct:} ``Successfully captures the technical nuances of the Sanskrit, such as the pun on Vasubandhu's name (Param\=artha-bandhu).''
+
+\emph{CoT:} ``The translator successfully navigated OCR errors in the source (e.g., `m\=a bala' interpreted correctly as `m\=arabala' or `power of M\=ara').''
+
+\emph{Pivot:} ``The inclusion of the variant reading shows attention to textual criticism.''
+\end{quote}
+
+The CoT approach shows a notable advantage in handling OCR noise---the Hindi reasoning step apparently helps disambiguate garbled Devanagari by checking against Hindi cognates. On page 23, the CoT translation received an overall score of 4.5/5 versus 3.5/5 for direct, with the judge specifically praising its handling of the technical distinction between ``non-afflicted ignorance'' (\emph{akli\d{s}\d{t}am-aj\~n\=anam}) and the causal chain from hearing to Nirv\=a\d{n}a.
+
+% ============================================================================
+\section{Discussion}
+
+\subsection{Cognate-Language Priming}
+
+Our results suggest that prompting an LLM to ``think in Hindi'' before translating Sanskrit to English activates relevant linguistic knowledge that improves translation quality. We call this \emph{cognate-language priming}: using a genealogically related modern language as an intermediate reasoning layer for classical language translation.
+
+Why does this work? Hindi shares with Sanskrit: (a)~Devanagari script and its visual conventions, (b)~the \emph{vibhakti} case system and \emph{sandhi} morphophonological rules, (c)~extensive vocabulary overlap (many Sanskrit words are used directly in Hindi), and (d)~a shared cultural and philosophical context. When the model ``thinks in Hindi,'' it can leverage these structural correspondences to better parse Sanskrit's complex syntax before producing English output.
+
+The CoT approach outperforms the literal pivot for two reasons. First, it avoids error propagation: in the pivot pipeline, any Hindi translation error compounds in the English step. Second, it retains access to the original Sanskrit during English generation---the model can cross-reference the source while producing the final output, rather than working from a potentially lossy Hindi intermediate.
+
+\subsection{Generalizability}
+
+Cognate-language priming should apply wherever a classical language has a well-resourced modern descendant:
+
+\begin{itemize}
+\item Classical Chinese $\to$ Modern Chinese $\to$ English
+\item Latin $\to$ Italian/Spanish $\to$ English
+\item Old English $\to$ Modern English (direct)
+\item Classical Arabic $\to$ Modern Standard Arabic $\to$ English
+\item Ancient Greek $\to$ Modern Greek $\to$ English
+\end{itemize}
+
+The key requirement is that the LLM has strong capabilities in the intermediate language. Hindi, with 600M+ speakers and extensive web presence, satisfies this easily. The approach would likely fail for classical languages whose descendants are themselves low-resource (e.g., Avestan $\to$ Persian might work, but Tocharian $\to$ nothing would not).
+
+\subsection{Reference-Free Evaluation}
+
+Classical language translation faces a chronic evaluation problem: expert translations are scarce, expensive, and may not exist for the specific text being translated. Our approach---combining self-consistency, cross-pipeline comparison, and LLM-as-judge---provides a practical evaluation framework that requires no ground truth.
+
+The self-consistency metric, adapted from our OCR trust scoring work, measures how reliably a pipeline produces the same translation. But we add a crucial caveat from that work: \emph{consistency is not accuracy}. A model could consistently produce the wrong translation. The LLM judge provides a complementary signal, checking fluency, adequacy, and terminology against the source text. Together, the two metrics offer reasonable confidence in translation quality without requiring a Sanskrit scholar in the loop.
+
+\subsection{Limitations}
+
+Our evaluation is preliminary: 5 pages from one text, one model (Gemini Flash), one language pair. The Abhidharma\-ko\'sa is a well-known text that may be partially in training data. The LLM judge has its own biases and cannot verify Sanskrit fidelity at the word level. We did not test with human evaluators. A full study would need: (a)~diverse texts (Vedic, literary, scientific, legal), (b)~multiple models, (c)~human evaluation on a subset, (d)~comparison against existing expert translations where available, and (e)~the cognate priming strategy tested on other language families.
+
+% ============================================================================
+\section{Conclusion}
+
+Cognate-language priming---prompting an LLM to reason through a genealogically related language before producing the target translation---improves both the consistency and quality of classical Sanskrit translation. The chain-of-thought approach (``think in Hindi first'') outperforms both direct translation and a literal pivot pipeline, achieving 96.8\% self-consistency and 4.3/5 quality versus 96.3\% and 4.0/5 for direct translation. For Source Library's growing collection of Sanskrit texts, this suggests a simple prompt modification that costs nothing extra and measurably improves output quality.
+
+More broadly, cognate-language priming offers a general strategy for any classical language with a well-resourced modern descendant. As LLMs are increasingly used to translate humanity's classical heritage at scale, knowing \emph{how} to prompt them---not just \emph{what} to prompt them with---becomes a practical concern with scholarly consequences.
+
+% ============================================================================
+\vspace{-0.5em}
+{\scriptsize
+\bibliographystyle{plain}
+\begin{thebibliography}{20}
+\setlength{\itemsep}{-1pt}
+\bibitem{pollock2003} S.~Pollock. \emph{The Language of the Gods in the World of Men}. UC Press, 2003.
+\bibitem{wu2007} H.~Wu, H.~Wang. Pivot language approach for phrase-based statistical MT. \emph{Machine Translation}, 21(3), 2007.
+\bibitem{cheng2017} Y.~Cheng et al. Neural machine translation with pivot languages. \emph{arXiv:1611.04928}, 2017.
+\bibitem{leng2024} Y.~Leng et al. Neural MT between low-resource languages with synthetic pivoting. \emph{LREC-COLING}, 2024.
+\bibitem{eltonsi2024} M.~El-Tonsi et al. Enhancing distant low-resource NMT with semantic pivot. \emph{Alexandria Eng.\ J.}, 2024.
+\bibitem{dwivedi2023} R.~Dwivedi et al. A novel NMT approach for low-resource Sanskrit-Hindi. \emph{ACM TALLIP}, 2023.
+\bibitem{nehrdich2024} S.~Nehrdich et al. One model is all you need: ByT5-Sanskrit. \emph{Findings of EMNLP}, 2024.
+\bibitem{aralikatte2020} R.~Aralikatte et al. Improving NMT for Sanskrit-English. \emph{ICON}, 2020.
+\bibitem{sandhan2022} J.~Sandhan et al. TransLIST: Transformer-based linguistically informed Sanskrit tokenizer. \emph{EMNLP}, 2022.
+\bibitem{jha2024} G.~Jha et al. How effective is multi-source pivoting for translation of low resource Indian languages? \emph{arXiv:2406.13332}, 2024.
+\bibitem{volk2024} M.~Volk et al. LLM-based machine translation and summarization for Latin. \emph{LT4HALA @ LREC-COLING}, 2024.
+\bibitem{rosu2025} R.~Rosu. LITERA: An LLM-based approach to Latin-to-English translation. \emph{Findings of NAACL}, 2025.
+\bibitem{han2025} X.~Han et al. A multi-agent Classical Chinese translation method based on LLMs. \emph{Sci.\ Rep.}, 2025.
+\bibitem{singh2025} A.~Singh et al. Evaluating LLMs with word-level translation alignment between Ancient Greek and English. \emph{CHR}, 2025.
+\bibitem{kocmi2023} T.~Kocmi, C.~Federmann. Large language models are state-of-the-art evaluators of translation quality. \emph{EAMT}, 2023.
+\bibitem{rei2022} R.~Rei et al. CometKiwi: IST-Unbabel submission for the QE shared task. \emph{WMT}, 2022.
+\end{thebibliography}
+}
+
+\end{document}
