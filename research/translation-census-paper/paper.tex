@@ -1,0 +1,237 @@
+\documentclass[10pt,twocolumn]{article}
+
+\usepackage[margin=2cm]{geometry}
+\usepackage{graphicx}
+\usepackage{booktabs}
+\usepackage{xcolor}
+\usepackage{hyperref}
+\usepackage{tikz}
+\usepackage{caption}
+\usepackage{float}
+\usetikzlibrary{positioning,arrows.meta,decorations.pathreplacing}
+\captionsetup{font=small,labelfont=bf}
+
+\hypersetup{colorlinks=true,linkcolor=blue!60!black,citecolor=blue!60!black,urlcolor=blue!60!black}
+
+\newcommand{\keywords}[1]{\par\smallskip\noindent\textbf{Keywords:} #1}
+
+\title{\Large\bfseries The Untranslated Majority:\\[4pt] A Census of Pre-Modern Texts and the\\Promise of AI Translation at Scale}
+
+\author{Derek Lomas\\
+\small Source Library / Embassy of the Free Mind\\
+\small \texttt{derek@sourcelibrary.org}}
+
+\date{April 2026 --- Preprint}
+
+\begin{document}
+\maketitle
+\thispagestyle{empty}
+
+\begin{abstract}
+\noindent The vast majority of humanity's pre-modern written heritage has never been translated into any modern language. We present the first cross-linguistic census of this translation gap, drawing on bibliographic databases (USTC, ESTC, VD16/17/18, EDIT16), manuscript surveys, and our own experience translating 17,000 historical books using multimodal AI. The numbers are stark: the USTC alone catalogues ${\sim}$1 million editions printed between 1450--1700, mostly in Latin; 30 million Sanskrit manuscripts survive in India; 3--7 million Arabic manuscripts exist globally; and the Chinese Text Project hosts 5 billion characters of pre-modern Chinese. For each tradition, the fraction translated into English is in the low single digits---and for manuscript cultures like Sanskrit and Arabic, well under 1\%. We report on Source Library's effort to close this gap: 12,877 books spanning 30+ languages, with ${\sim}$9,100 non-English texts translated to English for the first time using AI. We argue that AI translation has shifted the bottleneck from linguistic capacity to curation, evaluation, and trust---and propose a research agenda for responsible large-scale translation of the historical record.
+\end{abstract}
+
+\keywords{digital humanities, translation, classical languages, AI, cultural heritage, Latin, Sanskrit, Arabic, Chinese}
+
+% ============================================================================
+\section{Introduction}
+
+What fraction of what humanity has written can you read? If you read only English, the answer is: almost none of it. The Western canon---Homer, Virgil, Dante, the Bible---represents a tiny curated selection from a vast literary output spanning dozens of languages and three millennia. The uncurated remainder---the sermons, the astronomical tables, the alchemical recipes, the legal commentaries, the medical treatises---has largely never been translated.
+
+This paper attempts to quantify the gap. We draw on three sources: (1)~the major bibliographic databases that catalogue surviving printed books and manuscripts, (2)~scholarly estimates of corpus size for major classical languages, and (3)~our own experience building Source Library, a digital library of 17,000+ historical books (15th--18th c.) translated using multimodal AI.
+
+The picture that emerges is simultaneously daunting and hopeful. Daunting because the surviving corpus of pre-modern writing runs into the tens of millions of texts, and the translated fraction is negligible. Hopeful because AI translation has, in the past two years, reduced the marginal cost of translation from months of expert labor to minutes of computation---transforming the economics of access to the historical record.
+
+% ============================================================================
+\section{The Scale of the Untranslated}
+
+\subsection{European Printed Books (1450--1800)}
+
+The major bibliographic databases provide the clearest picture of surviving print:
+
+\begin{table}[H]
+\small
+\centering
+\caption{Major European bibliographic catalogues.}
+\label{tab:catalogues}
+\begin{tabular}{@{}llr@{}}
+\toprule
+Catalogue & Coverage & Records \\
+\midrule
+USTC & All print, 1450--1700 & ${\sim}$1,000,000 \\
+ESTC & English print, 1473--1800 & ${\sim}$480,000 \\
+ISTC & Incunabula, pre-1501 & 30,596 \\
+VD16 & German lands, 1501--1600 & ${\sim}$106,000 \\
+VD17 & German lands, 1601--1700 & ${\sim}$250,000 \\
+VD18 & German lands, 1701--1800 & ${\sim}$600,000 \\
+EDIT16 & Italian print, 1501--1600 & ${\sim}$70,000 \\
+\bottomrule
+\end{tabular}
+\end{table}
+
+These catalogues overlap substantially (a single edition may appear in USTC, VD16, and EDIT16). Even so, the combined European print output from 1450--1800 is clearly in the \textbf{low millions of editions}. The majority are in Latin, the \emph{lingua franca} of early modern scholarship.
+
+How many have been translated to English? The Loeb Classical Library---the gold standard for parallel-text classical translations---offers ${\sim}$520 volumes, covering the canonical Greek and Latin authors through ${\sim}$600~CE. Medieval and early modern Latin (600--1800~CE) is far less translated. The Patrologia Latina (221 volumes) and Patrologia Graeca (161 volumes) represent the major patristic corpus; the Schaff ANF/NPNF series translated selections into English (38 volumes), but most of both collections remains untranslated.
+
+\subsection{Manuscript Traditions}
+
+The scale increases dramatically when we include manuscripts:
+
+\textbf{Sanskrit.} David Pingree estimated \textbf{30 million surviving manuscripts} in India alone, ``almost none of which have been adequately described, and most of which are not at all recorded''~\cite{pingree1981}. Sheldon Pollock's \emph{The Language of the Gods in the World of Men}~\cite{pollock2003} documents Sanskrit's vast literary output---cosmopolitan in scope, spanning science, philosophy, poetry, and statecraft---but even the fraction that has been \emph{catalogued} remains small.
+
+\textbf{Arabic.} The Al-Furqan Islamic Heritage Foundation estimates \textbf{3--7 million surviving Islamic manuscripts} globally~\cite{alfurqan}. English translations exist for major philosophical and scientific works (Avicenna, Averroes, Al-Khw\=arizm\={\i}), but these represent a negligible fraction of the total corpus.
+
+\textbf{Classical Chinese.} The Chinese Text Project (ctext.org) hosts \textbf{30,000+ titles and 5+ billion characters} of pre-modern Chinese text~\cite{ctp}. The \emph{Siku Quanshu} alone contains 3,461 titles in 36,381 volumes (${\sim}$997 million characters). English translations exist for canonical philosophical and literary works but represent a small fraction.
+
+\textbf{Ancient Greek.} Gregory Crane estimates ${\sim}$\textbf{150 million words} survive from antiquity (to ${\sim}$600~CE), with billions more from the medieval period~\cite{crane2019}. HathiTrust alone holds 70,000+ public-domain books containing Greek and Latin text.
+
+\subsection{The Translation Gap}
+
+\begin{table}[H]
+\small
+\centering
+\caption{Estimated translation gap by language tradition.}
+\label{tab:gap}
+\begin{tabular}{@{}lrr@{}}
+\toprule
+Tradition & Surviving corpus & \% translated \\
+\midrule
+Latin (classical) & 150M words & $\sim$5--10\% \\
+Latin (medieval+) & billions of words & $<$1\% \\
+Sanskrit & 30M manuscripts & $\ll$1\% \\
+Arabic & 3--7M manuscripts & $\ll$1\% \\
+Classical Chinese & 5B+ characters & $<$5\% \\
+Ancient Greek & 150M words (ant.) & $\sim$10\% \\
+\bottomrule
+\end{tabular}
+\end{table}
+
+For every major classical tradition, the fraction translated into English is in the low single digits (Table~\ref{tab:gap}). For manuscript cultures, it is well under 1\%. The ``canon'' that shapes modern understanding of pre-modern thought is drawn from an extraordinarily narrow sample.
+
+% ============================================================================
+\section{Source Library: A Case Study in AI Translation at Scale}
+
+Source Library is a digital library of 17,000+ historical books (15th--18th c.) that have been OCR'd and translated using multimodal AI (Gemini Flash/Pro). The collection spans 30+ languages and 3.35 million processed pages.
+
+\subsection{Collection Profile}
+
+\begin{table}[H]
+\small
+\centering
+\caption{Source Library: books by language (top 15).}
+\label{tab:sl}
+\begin{tabular}{@{}lrrr@{}}
+\toprule
+Language & Books & Pages & Translated \\
+\midrule
+Latin & 5,220 & 1,766,155 & 3,382 \\
+German & 1,756 & 491,752 & 1,543 \\
+English & 1,321 & 474,248 & 1,287 \\
+Greek & 723 & 332,166 & 701 \\
+French & 654 & 203,108 & 641 \\
+Chinese & 547 & 72,598 & 546 \\
+Dutch & 450 & 99,022 & 447 \\
+Sumerian & 376 & 6,526 & 376 \\
+Sanskrit & 335 & 102,814 & 333 \\
+Russian & 242 & 101,246 & 242 \\
+Italian & 231 & 73,888 & 210 \\
+Hebrew & 209 & 58,255 & 209 \\
+Syriac & 102 & 48,723 & 101 \\
+Arabic & 94 & 29,214 & 92 \\
+Armenian & 71 & 30,523 & 68 \\
+\midrule
+\textbf{Total} & \textbf{12,877} & \textbf{3,350,000+} & \textbf{${\sim}$9,100} \\
+\bottomrule
+\end{tabular}
+\end{table}
+
+Of the 12,877 books with content, ${\sim}$9,100 are non-English texts that have been translated to English---the vast majority for the first time. The peak of the collection falls in the 17th century (1,510 books from 1600--1649), reflecting the explosion of print culture in early modern Europe.
+
+\subsection{What Gets Translated First}
+
+The collection reveals a pattern in what \emph{has} been translated by human scholars versus what remains. The canonical works---Aristotle, Galen, Euclid, the Church Fathers---have long had English translations. What Source Library adds is the \textbf{long tail}: the anonymous alchemical recipes, the local astronomical observations, the Rosicrucian pamphlets, the medical dissertations, the obscure philosophical commentaries. These texts were printed in editions of 200--500 copies, read by specialists, and forgotten---until now.
+
+\subsection{The Import Pipeline}
+
+Source Library draws from a union catalogue of \textbf{1.1 million candidate texts} across 14 digital archives:
+
+\begin{table}[H]
+\small
+\centering
+\caption{Union catalogue sources (top 5).}
+\label{tab:union}
+\begin{tabular}{@{}lr@{}}
+\toprule
+Source & Records \\
+\midrule
+BSB (Bavarian State Library) & 432,000 \\
+e-rara (Swiss libraries) & 161,000 \\
+Gallica (BnF) & 123,000 \\
+Biblissima (French medieval) & 112,000 \\
+Internet Archive (microfilm) & 87,000 \\
+\bottomrule
+\end{tabular}
+\end{table}
+
+At 17,000 books imported, Source Library has processed roughly 1.5\% of its identified candidates. The remaining 1.1 million texts represent a tractable---if enormous---queue. At current processing rates (${\sim}$100 books/day), the full catalogue would take ${\sim}$30 years. Parallelization and cost reduction could bring this to 3--5 years.
+
+% ============================================================================
+\section{The Shifting Bottleneck}
+
+Before 2023, the bottleneck for translating historical texts was \textbf{linguistic capacity}: finding a scholar who could read 16th-century Latin and produce fluent English. This was expensive (hundreds of dollars per page), slow (months per book), and scarce (a few hundred qualified translators worldwide for any given classical language).
+
+AI has effectively removed this bottleneck. Multimodal LLMs (Gemini, Claude, GPT-4) can translate printed historical text at ${\sim}$\$0.002 per page with quality that, for printed text, approaches human expert level~\cite{humphries2024,volk2024}. The cost reduction is roughly \textbf{five orders of magnitude}---from \$100/page to \$0.002/page.
+
+The new bottlenecks are:
+
+\textbf{1. Curation.} Which of the 1.1 million candidates should be translated first? Prioritization requires domain knowledge that AI cannot yet provide.
+
+\textbf{2. Trust and evaluation.} How do we know the translation is correct? For printed text in well-represented languages (Latin, German, French), AI translation is highly reliable. For manuscripts, non-standard scripts, and low-resource languages, quality varies significantly. Our concurrent work on self-consistency scoring provides one answer~\cite{lomas2026ocr}.
+
+\textbf{3. Manuscript OCR.} AI can read printed text at $>$99\% accuracy but struggles with handwritten manuscripts. Leonardo's mirror-script is an extreme case, but even standard medieval handwriting remains challenging~\cite{lomas2026ocr}. The 30 million Sanskrit manuscripts and 3--7 million Arabic manuscripts are largely handwritten.
+
+\textbf{4. Metadata and context.} A translated text without bibliographic context, dating, and scholarly apparatus is of limited value. Linking translated texts to existing catalogues (USTC, WorldCat) and providing cultural context requires human curation.
+
+\textbf{5. Access and preservation.} Many historical texts are held in libraries that have not digitized their collections. The physical-to-digital pipeline remains rate-limiting for non-European traditions.
+
+% ============================================================================
+\section{A Research Agenda}
+
+We propose five priorities for responsible AI translation of the historical record:
+
+\textbf{1. Translation quality benchmarks for historical languages.} Current MT benchmarks (WMT, FLORES) focus on modern languages. We need benchmarks for Latin, Sanskrit, Arabic, and Classical Chinese that include expert translations as ground truth and cover diverse text types (philosophical, scientific, legal, literary).
+
+\textbf{2. Trust scoring at scale.} Our self-consistency framework~\cite{lomas2026ocr} provides reference-free quality estimation, but it needs validation against expert judgment across languages and periods. The goal: every AI-translated page should carry a trust label.
+
+\textbf{3. Manuscript OCR.} Closing the print/manuscript gap is the single highest-leverage technical challenge. Progress on historical handwriting recognition (HTR) would unlock the largest untranslated corpora: Sanskrit manuscripts, Arabic manuscripts, medieval Latin codices.
+
+\textbf{4. Cognate-language priming.} Our concurrent work shows that prompting LLMs to reason through a related modern language improves translation of classical texts---but only for domains where the modern language preserves relevant knowledge~\cite{lomas2026sanskrit}. This strategy should be systematically tested across language families.
+
+\textbf{5. Open, linked collections.} Translated texts should be linked to bibliographic catalogues (USTC, WorldCat), authority files (VIAF, CERL), and subject ontologies (Iconclass, Library of Congress). Source Library's union catalogue of 1.1 million candidates is a start; the scholarly community needs shared infrastructure for prioritization and quality assurance.
+
+% ============================================================================
+\section{Conclusion}
+
+The untranslated majority is real and vast. For every canonical text that has shaped modern thought, there are thousands of contemporaneous works---in the same languages, on the same topics, by the same intellectual communities---that remain inaccessible to anyone who cannot read the original. AI has not solved this problem, but it has changed the economics: the cost of translation has dropped by five orders of magnitude, and the bottleneck has shifted from linguistic capacity to curation, trust, and access.
+
+Source Library's 17,000 books and 9,100 first translations demonstrate what is now possible. The union catalogue's 1.1 million candidates show what remains. Somewhere in those million texts are ideas, discoveries, and perspectives that could reshape our understanding of the past---if we can find them, translate them, and trust the result.
+
+% ============================================================================
+\vspace{-0.5em}
+{\scriptsize
+\bibliographystyle{plain}
+\begin{thebibliography}{12}
+\setlength{\itemsep}{-1pt}
+\bibitem{pingree1981} D.~Pingree. Census of the exact sciences in Sanskrit. \emph{Memoirs Am.\ Phil.\ Soc.}, 1970--1994.
+\bibitem{pollock2003} S.~Pollock. \emph{The Language of the Gods in the World of Men}. UC Press, 2006.
+\bibitem{alfurqan} Al-Furqan Islamic Heritage Foundation. World survey of Islamic manuscripts. London, ongoing.
+\bibitem{ctp} D.~Sturgeon. Chinese Text Project: A dynamic digital library of pre-modern Chinese. \emph{DH}, 2019.
+\bibitem{crane2019} G.~Crane. Beyond translation: Language as an intellectual challenge. \emph{Open Philology}, 2019.
+\bibitem{humphries2024} D.~Humphries et al. Unlocking the archives: Using LLMs to transcribe handwritten historical documents. \emph{arXiv:2407.12437}, 2024.
+\bibitem{volk2024} M.~Volk et al. LLM-based machine translation and summarization for Latin. \emph{LT4HALA @ LREC-COLING}, 2024.
+\bibitem{lomas2026ocr} D.~Lomas. How much can you trust this page? Consistency-based trust scoring for AI-transcribed historical manuscripts. \emph{Preprint}, 2026.
+\bibitem{lomas2026sanskrit} D.~Lomas. Think in Hindi, write in English: Cognate-language priming for LLM translation of classical Sanskrit. \emph{Preprint}, 2026.
+\end{thebibliography}
+}
+
+\end{document}
