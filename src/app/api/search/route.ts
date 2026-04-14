@@ -255,7 +255,7 @@ export async function GET(request: NextRequest) {
           // Prefer translation highlights over OCR
           const translationHL = highlights.find(h => h.path === 'translation.data');
           const hl = translationHL || highlights[0];
-          snippet = hl.texts.map(t => t.value).join('');
+          snippet = cleanText(hl.texts.map(t => t.value).join(''));
           snippetType = hl.path === 'translation.data' ? 'translation' : 'ocr';
         } else {
           // Fallback to full text extraction
