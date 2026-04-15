@@ -80,6 +80,32 @@ export const POST = withAdminAuth(async (request: NextRequest) => {
 });
 
 /**
+ * PATCH /api/admin/api-keys — Rename an API key
+ *
+ * Body: { key_id: string, name: string }
+ */
+export const PATCH = withAdminAuth(async (request: NextRequest) => {
+  const body = await request.json();
+  const { key_id, name } = body;
+
+  if (!key_id || !name) {
+    return NextResponse.json({ error: 'key_id and name are required' }, { status: 400 });
+  }
+
+  const db = await getDb();
+  const result = await db.collection('api_keys').updateOne(
+    { _id: key_id as any },
+    { $set: { name } }
+  );
+
+  if (result.matchedCount === 0) {
+    return NextResponse.json({ error: 'Key not found' }, { status: 404 });
+  }
+
+  return NextResponse.json({ updated: true, name });
+});
+
+/**
  * DELETE /api/admin/api-keys — Revoke any API key (admin override)
  *
  * Body: { key_id: string }

@@ -30,12 +30,25 @@ interface ApiKey {
   last_used_at: string | null;
 }
 
+const TIERS = ['explorer', 'language', 'domain', 'full', 'enterprise'] as const;
+
 export default function ApiKeysAdminPage() {
   const [requests, setRequests] = useState<KeyRequest[]>([]);
   const [keys, setKeys] = useState<ApiKey[]>([]);
   const [tab, setTab] = useState<'pending' | 'reviewed' | 'keys'>('pending');
   const [loading, setLoading] = useState(true);
   const [actionResult, setActionResult] = useState<{ type: 'success' | 'error'; message: string } | null>(null);
+
+  // Generate key form
+  const [showGenerate, setShowGenerate] = useState(false);
+  const [genName, setGenName] = useState('');
+  const [genEmail, setGenEmail] = useState('');
+  const [genTier, setGenTier] = useState<string>('explorer');
+  const [generating, setGenerating] = useState(false);
+
+  // Inline rename
+  const [editingId, setEditingId] = useState<string | null>(null);
+  const [editName, setEditName] = useState('');
 
   const fetchData = useCallback(async () => {
     setLoading(true);
@@ -49,7 +62,6 @@ export default function ApiKeysAdminPage() {
         const res = await fetch(`/api/admin/api-key-requests?status=${status}`);
         const data = await res.json();
         setRequests(data.requests || []);
-        // Also fetch denied for the reviewed tab
         if (tab === 'reviewed') {
           const res2 = await fetch('/api/admin/api-key-requests?status=denied');
           const data2 = await res2.json();
@@ -115,16 +127,77 @@ export default function ApiKeysAdminPage() {
     }
   }
 
+  async function handleGenerate(e: React.FormEvent) {
+    e.preventDefault();
+    if (!genName || !genEmail) return;
+    setGenerating(true);
+    setActionResult(null);
+    try {
+      const res = await fetch('/api/admin/api-keys', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ name: genName, user_id: genEmail, tier: genTier }),
+      });
+      const data = await res.json();
+      if (!res.ok) {
+        setActionResult({ type: 'error', message: data.error });
+      } else {
+        setActionResult({
+          type: 'success',
+          message: `Key created for ${genEmail}: ${data.key}`,
+        });
+        setGenName('');
+        setGenEmail('');
+        setGenTier('explorer');
+        setShowGenerate(false);
+        fetchData();
+      }
+    } catch {
+      setActionResult({ type: 'error', message: 'Network error' });
+    }
+    setGenerating(false);
+  }
+
+  async function handleRename(keyId: string) {
+    if (!editName.trim()) return;
+    try {
+      const res = await fetch('/api/admin/api-keys', {
+        method: 'PATCH',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ key_id: keyId, name: editName.trim() }),
+      });
+      if (res.ok) {
+        setEditingId(null);
+        fetchData();
+      } else {
+        const data = await res.json();
+        setActionResult({ type: 'error', message: data.error || 'Failed to rename' });
+      }
+    } catch {
+      setActionResult({ type: 'error', message: 'Network error' });
+    }
+  }
+
   return (
     <div className="max-w-5xl mx-auto px-4 py-8">
       <div className="flex items-center justify-between mb-6">
         <h1 className="text-2xl font-bold text-stone-900">API Keys</h1>
-        <Link
-          href="/admin/api-keys/usage"
-          className="px-3 py-1.5 bg-stone-100 text-stone-600 text-sm rounded-lg hover:bg-stone-200 transition-colors"
-        >
-          Usage Dashboard
-        </Link>
+        <div className="flex gap-2">
+          {tab === 'keys' && (
+            <button
+              onClick={() => setShowGenerate(!showGenerate)}
+              className="px-3 py-1.5 bg-stone-800 text-white text-sm rounded-lg hover:bg-stone-900 transition-colors"
+            >
+              {showGenerate ? 'Cancel' : 'Generate Key'}
+            </button>
+          )}
+          <Link
+            href="/admin/api-keys/usage"
+            className="px-3 py-1.5 bg-stone-100 text-stone-600 text-sm rounded-lg hover:bg-stone-200 transition-colors"
+          >
+            Usage Dashboard
+          </Link>
+        </div>
       </div>
 
       {/* Tabs */}
@@ -132,7 +205,7 @@ export default function ApiKeysAdminPage() {
         {(['pending', 'reviewed', 'keys'] as const).map(t => (
           <button
             key={t}
-            onClick={() => setTab(t)}
+            onClick={() => { setTab(t); setShowGenerate(false); }}
             className={`px-4 py-2 text-sm font-medium border-b-2 transition-colors ${
               tab === t
                 ? 'border-stone-800 text-stone-900'
@@ -143,6 +216,47 @@ export default function ApiKeysAdminPage() {
           </button>
         ))}
       </div>
+
+      {/* Generate key form */}
+      {showGenerate && (
+        <form onSubmit={handleGenerate} className="mb-6 bg-white rounded-xl border border-stone-200 p-5">
+          <h2 className="text-sm font-medium text-stone-900 mb-4">Generate New API Key</h2>
+          <div className="grid grid-cols-1 sm:grid-cols-3 gap-3 mb-3">
+            <input
+              type="text"
+              placeholder="Name"
+              value={genName}
+              onChange={e => setGenName(e.target.value)}
+              required
+              className="px-3 py-2 text-sm rounded-lg border border-stone-200 outline-none focus:border-stone-400"
+            />
+            <input
+              type="email"
+              placeholder="Email"
+              value={genEmail}
+              onChange={e => setGenEmail(e.target.value)}
+              required
+              className="px-3 py-2 text-sm rounded-lg border border-stone-200 outline-none focus:border-stone-400"
+            />
+            <select
+              value={genTier}
+              onChange={e => setGenTier(e.target.value)}
+              className="px-3 py-2 text-sm rounded-lg border border-stone-200 outline-none focus:border-stone-400 bg-white"
+            >
+              {TIERS.map(t => (
+                <option key={t} value={t}>{t}</option>
+              ))}
+            </select>
+          </div>
+          <button
+            type="submit"
+            disabled={generating || !genName || !genEmail}
+            className="px-4 py-2 bg-green-600 text-white text-sm rounded-lg hover:bg-green-700 transition-colors disabled:opacity-50"
+          >
+            {generating ? 'Generating...' : 'Generate & Show Key'}
+          </button>
+        </form>
+      )}
 
       {/* Action result banner */}
       {actionResult && (
@@ -155,7 +269,7 @@ export default function ApiKeysAdminPage() {
         >
           {actionResult.type === 'success' && actionResult.message.includes('sl_data_') ? (
             <div>
-              <p className="font-medium mb-1">Key minted and emailed to the requester:</p>
+              <p className="font-medium mb-1">Key created — copy it now, it will not be shown again:</p>
               <code className="block bg-green-100 p-2 rounded text-xs break-all select-all">
                 {actionResult.message.split(': ').slice(1).join(': ')}
               </code>
@@ -176,6 +290,7 @@ export default function ApiKeysAdminPage() {
               <tr>
                 <th className="text-left px-4 py-3 font-medium text-stone-600">Name</th>
                 <th className="text-left px-4 py-3 font-medium text-stone-600">User</th>
+                <th className="text-left px-4 py-3 font-medium text-stone-600">Prefix</th>
                 <th className="text-left px-4 py-3 font-medium text-stone-600">Tier</th>
                 <th className="text-left px-4 py-3 font-medium text-stone-600">Status</th>
                 <th className="text-left px-4 py-3 font-medium text-stone-600">Last Used</th>
@@ -184,11 +299,38 @@ export default function ApiKeysAdminPage() {
             </thead>
             <tbody className="divide-y divide-stone-100">
               {keys.length === 0 ? (
-                <tr><td colSpan={6} className="px-4 py-8 text-center text-stone-400">No keys yet</td></tr>
+                <tr><td colSpan={7} className="px-4 py-8 text-center text-stone-400">No keys yet</td></tr>
               ) : keys.map(k => (
                 <tr key={k._id}>
-                  <td className="px-4 py-3 text-stone-900">{k.name}</td>
+                  <td className="px-4 py-3 text-stone-900">
+                    {editingId === k._id ? (
+                      <form
+                        onSubmit={e => { e.preventDefault(); handleRename(k._id); }}
+                        className="flex items-center gap-1"
+                      >
+                        <input
+                          type="text"
+                          value={editName}
+                          onChange={e => setEditName(e.target.value)}
+                          className="px-2 py-1 text-sm rounded border border-stone-300 outline-none focus:border-stone-500 w-40"
+                          autoFocus
+                          onKeyDown={e => { if (e.key === 'Escape') setEditingId(null); }}
+                        />
+                        <button type="submit" className="text-xs text-green-600 hover:text-green-800 px-1">Save</button>
+                        <button type="button" onClick={() => setEditingId(null)} className="text-xs text-stone-400 hover:text-stone-600 px-1">Cancel</button>
+                      </form>
+                    ) : (
+                      <span
+                        className="cursor-pointer hover:underline"
+                        title="Click to rename"
+                        onClick={() => { setEditingId(k._id); setEditName(k.name); }}
+                      >
+                        {k.name}
+                      </span>
+                    )}
+                  </td>
                   <td className="px-4 py-3 text-stone-600 font-mono text-xs">{k.user_id}</td>
+                  <td className="px-4 py-3 text-stone-500 font-mono text-xs">{k.key_prefix}</td>
                   <td className="px-4 py-3">
                     <span className="px-2 py-0.5 bg-stone-100 text-stone-700 text-xs rounded">{k.tier}</span>
                   </td>
