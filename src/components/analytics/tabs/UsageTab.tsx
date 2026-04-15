@@ -700,13 +700,18 @@ function ModelPromptUsage({ modelUsage, promptUsage }: { modelUsage: UsageStats[
 }
 
 function CostBreakdown({ costStats }: { costStats: NonNullable<UsageStats['costStats']> }) {
-  const chartData = costStats.costByDay.map(d => ({
+  const costChartData = costStats.costByDay.map(d => ({
     x: new Date(d.date).toLocaleDateString('en-US', { month: 'short', day: 'numeric' }),
     y: d.cost,
   }));
 
+  const requestsChartData = costStats.costByDay.map(d => ({
+    x: new Date(d.date).toLocaleDateString('en-US', { month: 'short', day: 'numeric' }),
+    y: d.requests,
+  }));
+
   return (
-    <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
+    <div className="space-y-6">
       <div className="p-6 rounded-xl" style={{ background: 'var(--bg-white)', border: '1px solid var(--border-light)' }}>
         <h2 className="text-lg font-medium mb-4 flex items-center gap-2" style={{ color: 'var(--text-primary)' }}>
           <DollarSign className="w-5 h-5" style={{ color: '#22c55e' }} />
@@ -731,17 +736,31 @@ function CostBreakdown({ costStats }: { costStats: NonNullable<UsageStats['costS
         </div>
       </div>
       {costStats.costByDay.length > 0 && (
-        <div className="p-6 rounded-xl" style={{ background: 'var(--bg-white)', border: '1px solid var(--border-light)' }}>
-          <h2 className="text-lg font-medium mb-4 flex items-center gap-2" style={{ color: 'var(--text-primary)' }}>
-            <Coins className="w-5 h-5" style={{ color: '#22c55e' }} />
-            Daily Cost
-          </h2>
-          <AreaChart
-            data={chartData}
-            color="#22c55e"
-            yLabel={(v) => formatCost(v)}
-            height={192}
-          />
+        <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
+          <div className="p-6 rounded-xl" style={{ background: 'var(--bg-white)', border: '1px solid var(--border-light)' }}>
+            <h2 className="text-lg font-medium mb-4 flex items-center gap-2" style={{ color: 'var(--text-primary)' }}>
+              <Coins className="w-5 h-5" style={{ color: '#22c55e' }} />
+              Daily Cost
+            </h2>
+            <AreaChart
+              data={costChartData}
+              color="#22c55e"
+              yLabel={(v) => formatCost(v)}
+              height={192}
+            />
+          </div>
+          <div className="p-6 rounded-xl" style={{ background: 'var(--bg-white)', border: '1px solid var(--border-light)' }}>
+            <h2 className="text-lg font-medium mb-4 flex items-center gap-2" style={{ color: 'var(--text-primary)' }}>
+              <ListChecks className="w-5 h-5" style={{ color: 'var(--accent-violet)' }} />
+              Daily Gemini Requests
+            </h2>
+            <AreaChart
+              data={requestsChartData}
+              color="var(--accent-violet, #8b5cf6)"
+              yLabel={(v) => v >= 1000 ? `${(v / 1000).toFixed(1)}k` : String(Math.round(v))}
+              height={192}
+            />
+          </div>
         </div>
       )}
     </div>
