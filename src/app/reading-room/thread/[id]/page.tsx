@@ -1,6 +1,6 @@
 'use client';
 
-import { useState, useEffect, useCallback, use } from 'react';
+import { useState, useEffect, useCallback, useRef, use } from 'react';
 import Link from 'next/link';
 import SiteHeader from '@/components/layout/SiteHeader';
 import ReactMarkdown from 'react-markdown';
@@ -41,8 +41,19 @@ interface PodcastData {
   generatedAt: string;
   topic: string;
   findingCount: number;
+  format: string;
   script?: string;
+  published?: boolean;
 }
+
+type PodcastFormat = 'deep-dive' | 'brief' | 'critique' | 'guided-reading';
+
+const FORMAT_OPTIONS: { value: PodcastFormat; label: string; desc: string }[] = [
+  { value: 'deep-dive', label: 'Deep Dive', desc: 'Two hosts explore findings in depth' },
+  { value: 'brief', label: 'The Brief', desc: '2-minute summary' },
+  { value: 'critique', label: 'The Critique', desc: 'Critical analysis of sources' },
+  { value: 'guided-reading', label: 'Guided Reading', desc: 'Commentary for reading alongside' },
+];
 
 function formatDate(dateStr: string): string {
   const d = new Date(dateStr);
@@ -54,7 +65,7 @@ function formatDate(dateStr: string): string {
   });
 }
 
-// ── Podcast Player ────────────────────────────────────────────────────
+// ── Transcript ────────────────────────────────────────────────────────
 
 function formatTranscript(script: string): { speaker: string; text: string }[] {
   return script
@@ -64,26 +75,151 @@ function formatTranscript(script: string): { speaker: string; text: string }[] {
       const colonIdx = line.indexOf(':');
       const speaker = line.slice(0, colonIdx).trim();
       const text = line.slice(colonIdx + 1).trim()
-        // Strip audio tags for display
         .replace(/\[(laughs|whispers|enthusiasm|thoughtful|determination)\]/gi, '');
       return { speaker, text };
     })
     .filter(entry => entry.text.length > 0);
 }
 
+// ── Interactive Mini-Chat ─────────────────────────────────────────────
+
+function AskWhileListening({ threadId }: { threadId: string }) {
+  const [open, setOpen] = useState(false);
+  const [question, setQuestion] = useState('');
+  const [answer, setAnswer] = useState('');
+  const [loading, setLoading] = useState(false);
+  const inputRef = useRef<HTMLInputElement>(null);
+
+  useEffect(() => {
+    if (open && inputRef.current) inputRef.current.focus();
+  }, [open]);
+
+  const handleAsk = useCallback(async () => {
+    if (!question.trim() || loading) return;
+    setLoading(true);
+    setAnswer('');
+
+    try {
+      const res = await fetch('/api/embassy/chat', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({
+          threadId,
+          message: question,
+        }),
+      });
+
+      if (!res.ok) {
+        setAnswer('Could not reach the Librarian. Please try again.');
+        return;
+      }
+
+      // Read SSE stream for text chunks
+      const reader = res.body?.getReader();
+      if (!reader) return;
+      const decoder = new TextDecoder();
+      let accumulated = '';
+
+      while (true) {
+        const { done, value } = await reader.read();
+        if (done) break;
+        const chunk = decoder.decode(value, { stream: true });
+        // Parse SSE events
+        for (const line of chunk.split('\n')) {
+          if (line.startsWith('data: ')) {
+            try {
+              const event = JSON.parse(line.slice(6));
+              if (event.type === 'chunk' && event.text) {
+                accumulated += event.text;
+                setAnswer(accumulated);
+              }
+            } catch { /* skip malformed */ }
+          }
+        }
+      }
+    } catch {
+      setAnswer('Network error — please try again.');
+    } finally {
+      setLoading(false);
+    }
+  }, [question, loading, threadId]);
+
+  if (!open) {
+    return (
+      <button
+        onClick={() => setOpen(true)}
+        className="mt-3 text-[12px] text-[#9e4a3a] font-sans hover:underline flex items-center gap-1"
+      >
+        <svg className="w-3.5 h-3.5" fill="none" viewBox="0 0 24 24" strokeWidth={1.5} stroke="currentColor">
+          <path strokeLinecap="round" strokeLinejoin="round" d="M8.625 12a.375.375 0 11-.75 0 .375.375 0 01.75 0zm4.125 0a.375.375 0 11-.75 0 .375.375 0 01.75 0zm4.125 0a.375.375 0 11-.75 0 .375.375 0 01.75 0z" />
+          <path strokeLinecap="round" strokeLinejoin="round" d="M12 2.25c-5.385 0-9.75 4.365-9.75 9.75s4.365 9.75 9.75 9.75 9.75-4.365 9.75-9.75S17.385 2.25 12 2.25z" />
+        </svg>
+        Ask a question while listening
+      </button>
+    );
+  }
+
+  return (
+    <div className="mt-3 p-3 bg-white rounded-lg border border-[#e0d9cc]">
+      <div className="flex gap-2">
+        <input
+          ref={inputRef}
+          type="text"
+          value={question}
+          onChange={e => setQuestion(e.target.value)}
+          onKeyDown={e => e.key === 'Enter' && handleAsk()}
+          placeholder="Ask the Librarian about what you're hearing..."
+          className="flex-1 text-sm font-body px-3 py-2 border border-[#ddd] rounded-lg focus:outline-none focus:border-[#9e4a3a] text-[#1a1612]"
+          disabled={loading}
+        />
+        <button
+          onClick={handleAsk}
+          disabled={loading || !question.trim()}
+          className="px-3 py-2 bg-[#1a1612] text-white rounded-lg text-sm font-sans hover:bg-[#2a2622] disabled:opacity-50"
+        >
+          {loading ? '...' : 'Ask'}
+        </button>
+        <button
+          onClick={() => { setOpen(false); setAnswer(''); setQuestion(''); }}
+          className="px-2 py-2 text-[#8a8480] hover:text-[#444] text-sm"
+        >
+          x
+        </button>
+      </div>
+      {answer && (
+        <div className="mt-3 text-[13px] font-body leading-relaxed text-[#333] prose prose-sm max-w-none prose-a:text-[#9e4a3a] prose-a:underline">
+          <ReactMarkdown remarkPlugins={[remarkGfm]}>
+            {ensureParagraphBreaks(linkifySourceUrls(answer))}
+          </ReactMarkdown>
+        </div>
+      )}
+    </div>
+  );
+}
+
+// ── Podcast Player ────────────────────────────────────────────────────
+
 function PodcastPlayer({ threadId }: { threadId: string }) {
-  const [podcast, setPodcast] = useState<PodcastData | null>(null);
+  const [podcasts, setPodcasts] = useState<Record<string, PodcastData>>({});
+  const [selectedFormat, setSelectedFormat] = useState<PodcastFormat>('deep-dive');
   const [generating, setGenerating] = useState(false);
   const [error, setError] = useState<string | null>(null);
   const [checked, setChecked] = useState(false);
   const [showTranscript, setShowTranscript] = useState(false);
 
-  // Check for existing podcast on mount
+  const activePodcast = podcasts[selectedFormat] || null;
+
+  // Load all existing podcasts on mount
   useEffect(() => {
-    fetch(`/api/embassy/threads/${threadId}/podcast`)
-      .then(r => r.ok ? r.json() : null)
+    fetch(`/api/embassy/threads/${threadId}/podcast?all=true`)
+      .then(r => r.ok ? r.json() : { podcasts: {} })
       .then(data => {
-        if (data?.podcast) setPodcast(data.podcast);
+        setPodcasts(data.podcasts || {});
+        // Select first available format
+        const available = Object.keys(data.podcasts || {});
+        if (available.length > 0) {
+          setSelectedFormat(available[0] as PodcastFormat);
+        }
         setChecked(true);
       })
       .catch(() => setChecked(true));
@@ -95,97 +231,162 @@ function PodcastPlayer({ threadId }: { threadId: string }) {
     try {
       const res = await fetch(`/api/embassy/threads/${threadId}/podcast`, {
         method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ format: selectedFormat }),
       });
       const data = await res.json();
       if (!res.ok) {
         setError(data.error || 'Generation failed');
         return;
       }
-      setPodcast(data.podcast);
+      setPodcasts(prev => ({ ...prev, [selectedFormat]: data.podcast }));
     } catch {
       setError('Network error — please try again');
     } finally {
       setGenerating(false);
     }
-  }, [threadId]);
+  }, [threadId, selectedFormat]);
+
+  const handlePublish = useCallback(async (publish: boolean) => {
+    await fetch(`/api/embassy/threads/${threadId}/podcast`, {
+      method: 'PATCH',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify({ format: selectedFormat, published: publish }),
+    });
+    setPodcasts(prev => ({
+      ...prev,
+      [selectedFormat]: { ...prev[selectedFormat], published: publish },
+    }));
+  }, [threadId, selectedFormat]);
 
   if (!checked) return null;
 
-  // Already have a podcast — show player
-  if (podcast) {
-    return (
-      <div className="mt-8 p-5 bg-[#f5f0e8] rounded-xl border border-[#e0d9cc]">
-        <div className="flex items-center gap-2 mb-3">
-          <svg className="w-5 h-5 text-[#9e4a3a]" fill="none" viewBox="0 0 24 24" strokeWidth={1.5} stroke="currentColor">
-            <path strokeLinecap="round" strokeLinejoin="round" d="M19.114 5.636a9 9 0 010 12.728M16.463 8.288a5.25 5.25 0 010 7.424M6.75 8.25l4.72-4.72a.75.75 0 011.28.53v15.88a.75.75 0 01-1.28.53l-4.72-4.72H4.51c-.88 0-1.704-.507-1.938-1.354A9.01 9.01 0 012.25 12c0-.83.112-1.633.322-2.396C2.806 8.756 3.63 8.25 4.51 8.25H6.75z" />
-          </svg>
-          <p className="text-sm font-sans font-medium text-[#1a1612]">
-            Deep Dive — {podcast.topic}
-          </p>
-        </div>
-        <audio
-          controls
-          src={podcast.audioUrl}
-          className="w-full"
-          preload="metadata"
-        />
-        <div className="flex items-center justify-between mt-2">
-          <p className="text-[11px] text-[#8a8480] font-sans">
-            Generated from {podcast.findingCount} research findings
-          </p>
-          {podcast.script && (
+  return (
+    <div className="mt-8">
+      {/* Format selector */}
+      <div className="flex gap-1.5 mb-3 overflow-x-auto pb-1">
+        {FORMAT_OPTIONS.map(opt => {
+          const hasEpisode = !!podcasts[opt.value];
+          return (
             <button
-              onClick={() => setShowTranscript(!showTranscript)}
-              className="text-[11px] text-[#9e4a3a] font-sans hover:underline"
+              key={opt.value}
+              onClick={() => { setSelectedFormat(opt.value); setShowTranscript(false); }}
+              className={`flex-shrink-0 px-3 py-1.5 rounded-full text-[12px] font-sans transition-colors ${
+                selectedFormat === opt.value
+                  ? 'bg-[#1a1612] text-white'
+                  : hasEpisode
+                    ? 'bg-[#f5f0e8] text-[#1a1612] hover:bg-[#ebe5d8]'
+                    : 'bg-[#f5f0e8]/50 text-[#8a8480] hover:bg-[#f5f0e8]'
+              }`}
+              title={opt.desc}
             >
-              {showTranscript ? 'Hide transcript' : 'Show transcript'}
+              {opt.label}
+              {hasEpisode && selectedFormat !== opt.value && (
+                <span className="ml-1 w-1.5 h-1.5 bg-[#9e4a3a] rounded-full inline-block" />
+              )}
             </button>
+          );
+        })}
+      </div>
+
+      {/* Active podcast or generate prompt */}
+      {activePodcast ? (
+        <div className="p-5 bg-[#f5f0e8] rounded-xl border border-[#e0d9cc]">
+          <div className="flex items-center justify-between mb-3">
+            <div className="flex items-center gap-2">
+              <svg className="w-5 h-5 text-[#9e4a3a]" fill="none" viewBox="0 0 24 24" strokeWidth={1.5} stroke="currentColor">
+                <path strokeLinecap="round" strokeLinejoin="round" d="M19.114 5.636a9 9 0 010 12.728M16.463 8.288a5.25 5.25 0 010 7.424M6.75 8.25l4.72-4.72a.75.75 0 011.28.53v15.88a.75.75 0 01-1.28.53l-4.72-4.72H4.51c-.88 0-1.704-.507-1.938-1.354A9.01 9.01 0 012.25 12c0-.83.112-1.633.322-2.396C2.806 8.756 3.63 8.25 4.51 8.25H6.75z" />
+              </svg>
+              <p className="text-sm font-sans font-medium text-[#1a1612]">
+                {FORMAT_OPTIONS.find(f => f.value === selectedFormat)?.label} — {activePodcast.topic}
+              </p>
+            </div>
+            <button
+              onClick={() => handlePublish(!activePodcast.published)}
+              className={`text-[11px] font-sans px-2 py-0.5 rounded ${
+                activePodcast.published
+                  ? 'bg-[#9e4a3a]/10 text-[#9e4a3a]'
+                  : 'bg-[#e8e4dc] text-[#6b6560] hover:bg-[#ddd]'
+              }`}
+              title={activePodcast.published ? 'Published to podcast feed' : 'Publish to podcast feed'}
+            >
+              {activePodcast.published ? 'Published' : 'Publish'}
+            </button>
+          </div>
+          <audio
+            controls
+            src={activePodcast.audioUrl}
+            className="w-full"
+            preload="metadata"
+          />
+          <div className="flex items-center justify-between mt-2">
+            <p className="text-[11px] text-[#8a8480] font-sans">
+              {activePodcast.findingCount} findings
+              {activePodcast.published && (
+                <span className="ml-2">
+                  <a
+                    href="/api/podcast/feed.xml"
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    className="text-[#9e4a3a] hover:underline"
+                  >
+                    RSS feed
+                  </a>
+                </span>
+              )}
+            </p>
+            {activePodcast.script && (
+              <button
+                onClick={() => setShowTranscript(!showTranscript)}
+                className="text-[11px] text-[#9e4a3a] font-sans hover:underline"
+              >
+                {showTranscript ? 'Hide transcript' : 'Show transcript'}
+              </button>
+            )}
+          </div>
+          {showTranscript && activePodcast.script && (
+            <div className="mt-3 pt-3 border-t border-[#e0d9cc] space-y-2 max-h-[400px] overflow-y-auto">
+              {formatTranscript(activePodcast.script).map((entry, i) => (
+                <p key={i} className="text-[13px] font-body leading-relaxed text-[#333]">
+                  <span className="font-semibold text-[#1a1612]">{entry.speaker}:</span>{' '}
+                  {entry.text}
+                </p>
+              ))}
+            </div>
+          )}
+
+          {/* Interactive mode */}
+          <AskWhileListening threadId={threadId} />
+        </div>
+      ) : (
+        <div className="p-5 bg-[#f5f0e8]/50 rounded-xl border border-[#e0d9cc] border-dashed text-center">
+          <p className="text-sm font-sans font-medium text-[#1a1612] mb-1">
+            {FORMAT_OPTIONS.find(f => f.value === selectedFormat)?.label}
+          </p>
+          <p className="text-[13px] text-[#6b6560] font-body mb-3">
+            {FORMAT_OPTIONS.find(f => f.value === selectedFormat)?.desc}
+          </p>
+          <button
+            onClick={handleGenerate}
+            disabled={generating}
+            className="inline-flex items-center gap-2 px-5 py-2.5 bg-[#1a1612] text-white rounded-lg text-sm font-sans hover:bg-[#2a2622] transition-colors disabled:opacity-50 disabled:cursor-not-allowed"
+          >
+            {generating ? (
+              <>
+                <svg className="w-4 h-4 animate-spin" fill="none" viewBox="0 0 24 24">
+                  <circle className="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" strokeWidth="4" />
+                  <path className="opacity-75" fill="currentColor" d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4z" />
+                </svg>
+                Generating...
+              </>
+            ) : (
+              'Generate'
+            )}
+          </button>
+          {error && (
+            <p className="text-xs text-red-600 font-sans mt-2">{error}</p>
           )}
         </div>
-        {showTranscript && podcast.script && (
-          <div className="mt-3 pt-3 border-t border-[#e0d9cc] space-y-2 max-h-[400px] overflow-y-auto">
-            {formatTranscript(podcast.script).map((entry, i) => (
-              <p key={i} className="text-[13px] font-body leading-relaxed text-[#333]">
-                <span className="font-semibold text-[#1a1612]">{entry.speaker}:</span>{' '}
-                {entry.text}
-              </p>
-            ))}
-          </div>
-        )}
-      </div>
-    );
-  }
-
-  // No podcast yet — show generate button
-  return (
-    <div className="mt-8 p-5 bg-[#f5f0e8]/50 rounded-xl border border-[#e0d9cc] border-dashed text-center">
-      <p className="text-sm text-[#6b6560] font-body mb-3">
-        Turn this research into a podcast episode
-      </p>
-      <button
-        onClick={handleGenerate}
-        disabled={generating}
-        className="inline-flex items-center gap-2 px-5 py-2.5 bg-[#1a1612] text-white rounded-lg text-sm font-sans hover:bg-[#2a2622] transition-colors disabled:opacity-50 disabled:cursor-not-allowed"
-      >
-        {generating ? (
-          <>
-            <svg className="w-4 h-4 animate-spin" fill="none" viewBox="0 0 24 24">
-              <circle className="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" strokeWidth="4" />
-              <path className="opacity-75" fill="currentColor" d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4z" />
-            </svg>
-            Generating podcast...
-          </>
-        ) : (
-          <>
-            <svg className="w-4 h-4" fill="none" viewBox="0 0 24 24" strokeWidth={1.5} stroke="currentColor">
-              <path strokeLinecap="round" strokeLinejoin="round" d="M19.114 5.636a9 9 0 010 12.728M16.463 8.288a5.25 5.25 0 010 7.424M6.75 8.25l4.72-4.72a.75.75 0 011.28.53v15.88a.75.75 0 01-1.28.53l-4.72-4.72H4.51c-.88 0-1.704-.507-1.938-1.354A9.01 9.01 0 012.25 12c0-.83.112-1.633.322-2.396C2.806 8.756 3.63 8.25 4.51 8.25H6.75z" />
-            </svg>
-            Generate Deep Dive
-          </>
-        )}
-      </button>
-      {error && (
-        <p className="text-xs text-red-600 font-sans mt-2">{error}</p>
       )}
     </div>
   );
@@ -313,7 +514,7 @@ export default function ThreadPage({ params }: { params: Promise<{ id: string }>
           ))}
         </div>
 
-        {/* Podcast player / generator */}
+        {/* Podcast section */}
         <PodcastPlayer threadId={id} />
 
         <div className="mt-12 pt-8 border-t border-[#e8e4dc] text-center">
