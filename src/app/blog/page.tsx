@@ -25,6 +25,17 @@ interface BlogPost {
 
 const posts: BlogPost[] = [
   {
+    slug: 'singularity-1486',
+    title: 'The Singularity Was Published in 1486',
+    subtitle: 'Transhumanism, panpsychism, and the planetary mind — in the original Latin and German. The source code for ideas we think are modern.',
+    date: '15 April 2026',
+    readTime: '12 min read',
+    tag: 'Deep dive',
+    tagColor: 'bg-accent-rust/10 text-accent-rust',
+    image: 'https://images.sourcelibrary.org/archived/6fc11c7d-782a-47c3-a855-f3b4415e797b/10.jpg',
+    imageAlt: 'Page from Kepler\'s Harmonices Mundi showing geometric diagrams of planetary harmony, 1619',
+  },
+  {
     slug: '10000-books',
     title: '10,000 Books',
     subtitle: 'Source Library passes 10,000 translated historical texts. The symbolic 10,000th: a 1517 Renaissance encyclopedia from the BPH, in English for the first time.',
