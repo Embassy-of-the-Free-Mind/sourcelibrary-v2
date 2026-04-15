@@ -25,7 +25,7 @@ export default function SignUpCTA({ variant = 'section' }: SignUpCTAProps) {
           className="text-sm font-medium hover:underline"
           style={{ color: 'var(--accent-gold)' }}
         >
-          Sign in with Google or email
+          Sign in with email
         </Link>
       </div>
     );
@@ -62,7 +62,7 @@ export default function SignUpCTA({ variant = 'section' }: SignUpCTAProps) {
           Create free account
         </Link>
         <p className="text-xs mt-5" style={{ color: '#6b6560' }}>
-          Sign in with Google or email &middot; No spam, ever
+          Sign in with email &middot; No spam, ever
         </p>
       </div>
     </section>
