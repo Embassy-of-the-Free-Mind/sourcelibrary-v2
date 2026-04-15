@@ -19,8 +19,20 @@ const TTS_MODEL = 'gemini-2.5-flash-preview-tts';
 // Two hosts for the podcast
 const HOST_A = 'Elena';
 const HOST_B = 'Marcus';
-const VOICE_A = 'Kore';    // Female voice
-const VOICE_B = 'Puck';    // Male voice
+const VOICE_A = 'Kore';    // Female scholarly voice
+const VOICE_B = 'Puck';    // Male scholarly voice
+
+// Gemini TTS audio tags for natural delivery
+const AUDIO_TAG_GUIDE = `
+Audio delivery tags (use sparingly for naturalness):
+- [laughs] — brief, genuine laughter at a surprising discovery
+- [enthusiasm] — when revealing something exciting
+- [thoughtful] — when considering a complex idea
+- [whispers] — for dramatic effect when quoting something secret or forbidden
+- Short affirmations: "Mm-hmm", "Right", "Exactly", "Oh interesting"
+- Disfluencies: "I mean...", "So like...", "Wait, actually..."
+- False starts: beginning a thought, pausing, restarting with better framing
+`.trim();
 
 interface NotebookFinding {
   quote: string;
@@ -74,6 +86,7 @@ export async function generatePodcast(
         podcast: {
           audioUrl: url,
           r2Key: key,
+          script,
           generatedAt: new Date(),
           topic,
           findingCount: findings.length,
@@ -87,6 +100,10 @@ export async function generatePodcast(
 
 /**
  * Stage 1: Generate a two-host conversation script from findings.
+ *
+ * Multi-pass pipeline (inspired by NotebookLM's internal process):
+ *   Pass 1: Generate a draft script
+ *   Pass 2: Critique and revise for naturalness, pacing, and citation quality
  */
 async function generateScript(
   ai: GoogleGenAI,
@@ -102,7 +119,8 @@ async function generateScript(
     })
     .join('\n\n');
 
-  const prompt = `You are a scriptwriter for a scholarly podcast called "Source Library Deep Dive." Write a natural two-person conversation between ${HOST_A} (lead host, enthusiastic and knowledgeable) and ${HOST_B} (co-host, asks good questions and makes connections).
+  // Pass 1: Draft script
+  const draftPrompt = `You are a scriptwriter for "Source Library Deep Dive," a scholarly podcast about rare books and the Western esoteric tradition. Write a natural two-person conversation between ${HOST_A} (lead host, enthusiastic and deeply knowledgeable) and ${HOST_B} (co-host, asks sharp questions and draws unexpected connections).
 
 ## Topic: ${topic}
 
@@ -112,29 +130,57 @@ ${findingsText}
 
 ## Guidelines:
 - This is a 3-5 minute podcast episode (roughly 600-900 words of dialogue)
-- Open with a brief, engaging hook about the topic — don't say "welcome to the show"
-- Weave the actual quotes from the sources into the conversation naturally — paraphrase some, quote others directly
-- Always name the book and author when citing: "In Agrippa's Three Books of Occult Philosophy..."
-- ${HOST_A} drives the narrative arc; ${HOST_B} asks clarifying questions and draws connections
-- End with a thought-provoking takeaway, not a summary
-- Tone: two scholars at a coffee shop, genuinely excited about what they've found
-- Do NOT use sound effects, music cues, or stage directions
-- Format each line as: SpeakerName: dialogue text
+- Open with an engaging hook — jump straight into why this matters, don't say "welcome to the show"
+- **Cite sources in speech naturally:** "In Agrippa's Three Books of Occult Philosophy, on page 42, he writes..." or "Ficino puts it beautifully in De Voluptate..." — always name the book and author, mention page numbers when quoting directly
+- Weave actual quotes into conversation — paraphrase some, read others aloud with gravity
+- ${HOST_A} drives the narrative arc and reveals findings; ${HOST_B} reacts genuinely, asks clarifying questions, and connects ideas across sources
+- **Sound like real people:** Include natural disfluencies — "I mean...", "Wait, actually...", "Hmm", false starts, brief laughter at surprising discoveries, short affirmations ("Right", "Exactly", "Oh that's fascinating")
+- ${HOST_B} should occasionally interrupt or finish ${HOST_A}'s thought
+- End with a thought-provoking insight or open question, not a summary
+- Tone: two scholars at a wine bar, genuinely excited about what they've found in old books
+
+${AUDIO_TAG_GUIDE}
 
 ## Output format:
-Write ONLY the dialogue, one line per speaker turn. Example:
+Write ONLY the dialogue, one line per speaker turn:
 ${HOST_A}: So I've been digging into something fascinating...
 ${HOST_B}: Oh? What did you find?`;
 
-  const response = await ai.models.generateContent({
+  const draftResponse = await ai.models.generateContent({
     model: SCRIPT_MODEL,
-    contents: prompt,
-    config: { temperature: 0.8 },
+    contents: draftPrompt,
+    config: { temperature: 0.85 },
   });
 
-  const text = response.text;
-  if (!text) throw new Error('Script generation returned empty response');
-  return text;
+  const draft = draftResponse.text;
+  if (!draft) throw new Error('Script draft returned empty response');
+
+  // Pass 2: Critique and revise
+  const critiquePrompt = `You are a podcast director reviewing a script for "Source Library Deep Dive." Your job is to make it sound MORE natural and engaging, not less.
+
+## Original script:
+${draft}
+
+## Critique checklist — fix these issues:
+1. **Robotic turns:** If any line sounds like an AI wrote it (too formal, too complete, no hesitation), rewrite it with natural speech patterns. Real people don't speak in perfect paragraphs.
+2. **Missing reactions:** After a surprising quote or revelation, ${HOST_B} should react before ${HOST_A} continues. Add brief interjections: "Wait, really?", "Hmm, that's...", "[laughs] Of course they did."
+3. **Citation quality:** Every direct quote MUST name the book and author. Page numbers should be mentioned naturally: "on page 42" or "a few pages later." If a citation is vague, make it specific.
+4. **Pacing:** The opening should grab attention in the first 2 lines. The middle should build. The ending should land with weight, not trail off.
+5. **Audio tags:** Add [enthusiasm], [thoughtful], [laughs], or [whispers] where they'd enhance delivery. Use sparingly — max 6-8 tags total.
+6. **Length:** Keep it at 600-900 words. Cut filler if it's too long, add depth if too short.
+
+## Output:
+Write the REVISED script only. Same format (SpeakerName: dialogue), no commentary.`;
+
+  const revisedResponse = await ai.models.generateContent({
+    model: SCRIPT_MODEL,
+    contents: critiquePrompt,
+    config: { temperature: 0.7 },
+  });
+
+  const revised = revisedResponse.text;
+  if (!revised) throw new Error('Script revision returned empty response');
+  return revised;
 }
 
 /**
@@ -226,6 +272,7 @@ export async function getPodcastForThread(threadId: string): Promise<{
   generatedAt: Date;
   topic: string;
   findingCount: number;
+  script?: string;
 } | null> {
   const db = await getDb();
   const thread = await db.collection('embassy_threads').findOne(

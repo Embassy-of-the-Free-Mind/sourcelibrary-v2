@@ -74,6 +74,7 @@ export async function POST(
     return NextResponse.json({
       podcast: {
         audioUrl: result.audioUrl,
+        script: result.script,
         generatedAt: new Date(),
         topic,
         findingCount: notebook.findings.length,
