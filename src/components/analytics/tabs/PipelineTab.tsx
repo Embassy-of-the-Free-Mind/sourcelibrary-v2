@@ -75,7 +75,7 @@ export default function PipelineTab({ hours }: PipelineTabProps) {
         .animate-loading-bar { animation: loading-bar 2s ease-in-out infinite; }
       `}</style>
       <p className="text-center text-sm" style={{ color: 'var(--text-muted)' }}>
-        {slow ? 'Still loading — pipeline queries can be slow on Atlas...' : 'Loading pipeline data...'}
+        {slow ? 'Still loading — large time ranges can be slow...' : 'Loading pipeline data...'}
       </p>
     </div>
   );
