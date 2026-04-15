@@ -83,9 +83,9 @@ export default function GlobalFooter() {
               unoptimized
             />
           </Link>
-          <p className="font-serif italic text-white/50 text-lg">
+          <Link href="/about" className="font-serif italic text-white/50 text-lg hover:text-white/70 transition-colors">
             ad fontes
-          </p>
+          </Link>
         </div>
 
         {/* Zone 2: Navigation Columns */}

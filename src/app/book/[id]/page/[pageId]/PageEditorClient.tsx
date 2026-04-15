@@ -210,6 +210,16 @@ export default function PageEditorClient({
     setCurrentPageId(newPageId);
     const vSuffix = pinnedVersion ? `?v=${encodeURIComponent(pinnedVersion)}` : '';
     window.history.pushState(null, '', `/book/${book.id}/page/${newPageId}${vSuffix}`);
+    // On mobile (< lg breakpoint), scroll to the text panels instead of the top
+    // so readers land on the content, not the image
+    const isMobile = window.innerWidth < 1024;
+    if (isMobile) {
+      const textSection = document.getElementById('reader-text');
+      if (textSection) {
+        textSection.scrollIntoView({ behavior: 'instant' });
+        return;
+      }
+    }
     window.scrollTo({ top: 0, behavior: 'instant' });
   }, [book.id, pinnedVersion]);
 

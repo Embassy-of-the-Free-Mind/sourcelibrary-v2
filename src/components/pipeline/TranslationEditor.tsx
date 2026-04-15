@@ -862,10 +862,7 @@ export default function TranslationEditor({
                 <ChevronLeft className="w-4 h-4" aria-hidden="true" />
               </button>
               <div className="flex flex-col items-center px-1 sm:px-2">
-                <span className="text-sm font-medium" style={{ color: 'var(--text-muted)' }} aria-label={`Page ${currentIndex + 1} of ${pages.length}`}>p. {currentIndex + 1}/{pages.length}</span>
-                {/* {page.page_number != null && (
-                  <span className="text-[10px] leading-tight" style={{ color: 'var(--text-muted)' }}>p. {page.page_number}</span>
-                )} */}
+                <span className="text-sm font-medium" style={{ color: 'var(--text-muted)' }} aria-label={`Page ${currentIndex + 1} of ${pages.length}`}>{currentIndex + 1}/{pages.length}</span>
               </div>
               <button
                 onClick={() => nextPage && onNavigate(nextPage.id)}
@@ -1023,6 +1020,7 @@ export default function TranslationEditor({
               {/* Like + Share + Cite */}
               <div className="flex items-center">
                 <LikeButton
+                  key={page.id}
                   targetType="page"
                   targetId={page.id}
                   bookId={book.id}
@@ -1181,7 +1179,7 @@ export default function TranslationEditor({
 
               {/* OCR Panel */}
               {showOcrPanel && (
-                <div className={`w-full ${panelWidth} flex flex-col min-h-[50vh] shrink-0 lg:min-h-0 lg:shrink lg:flex-1`} style={{ background: 'var(--bg-cream)', borderRight: '1px solid var(--border-light)' }}>
+                <div id="reader-text" className={`w-full ${panelWidth} flex flex-col min-h-[50vh] shrink-0 lg:min-h-0 lg:shrink lg:flex-1`} style={{ background: 'var(--bg-cream)', borderRight: '1px solid var(--border-light)' }}>
                   <div className="px-4 py-2 flex items-center justify-between flex-shrink-0" style={{ borderBottom: '1px solid var(--border-light)' }}>
                     <div className="flex items-center gap-2">
                       <span className="text-xs font-medium uppercase tracking-wide" style={{ color: 'var(--text-muted)' }}>
@@ -1320,7 +1318,7 @@ export default function TranslationEditor({
 
               {/* Translation Panel */}
               {showTranslationPanel && (
-                <div className={`w-full ${panelWidth} flex flex-col min-h-[50vh] shrink-0 lg:min-h-0 lg:shrink lg:flex-1`} style={{ background: 'var(--bg-white)' }}>
+                <div id={showOcrPanel ? undefined : 'reader-text'} className={`w-full ${panelWidth} flex flex-col min-h-[50vh] shrink-0 lg:min-h-0 lg:shrink lg:flex-1`} style={{ background: 'var(--bg-white)' }}>
                   <div className="px-4 py-2 flex items-center justify-between flex-shrink-0" style={{ borderBottom: '1px solid var(--border-light)' }}>
                     <div className="flex items-center gap-2">
                       <span className="text-xs font-medium uppercase tracking-wide" style={{ color: 'var(--text-muted)' }}>
@@ -1671,6 +1669,7 @@ export default function TranslationEditor({
             {/* Like Button */}
             <div className="p-1 rounded-lg hover:bg-stone-100 transition-all">
               <LikeButton
+                key={`mobile-${page.id}`}
                 targetType="page"
                 targetId={page.id}
                 bookId={book.id}

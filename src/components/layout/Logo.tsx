@@ -46,7 +46,7 @@ export default function Logo({ white, compact, mini }: LogoProps) {
         <circle cx="12" cy="12" r="4" stroke={strokeColor} strokeWidth="1" />
       </svg>
       <span
-        className={`${textSize} uppercase tracking-wider ${mini ? 'hidden sm:inline' : ''}`}
+        className={`${textSize} uppercase tracking-wider hidden sm:inline`}
       >
         <span className="font-semibold">Source</span>
         <span className="font-light">Library</span>

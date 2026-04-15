@@ -543,6 +543,21 @@ async function BookInfo({ id }: { id: string }) {
                 )}
               </div>
 
+              {/* Collections */}
+              {(book as unknown as { collections?: string[] }).collections && (book as unknown as { collections?: string[] }).collections!.length > 0 && (
+                <div className="flex flex-wrap items-center justify-center sm:justify-start gap-2 mt-3">
+                  {(book as unknown as { collections?: string[] }).collections!.map((slug: string) => (
+                    <Link
+                      key={slug}
+                      href={`/collections/${slug}`}
+                      className="inline-flex items-center gap-1 px-2.5 py-0.5 bg-white/10 hover:bg-white/20 text-stone-300 rounded-full text-xs transition-colors"
+                    >
+                      {slug.replace(/-/g, ' ').replace(/\b\w/g, c => c.toUpperCase())}
+                    </Link>
+                  ))}
+                </div>
+              )}
+
               {book.is_first_translation && (
                 <div className="mt-3">
                   <details className="group">
@@ -682,7 +697,7 @@ async function BookInfo({ id }: { id: string }) {
               </div>
 
               {/* Bibliographic Info (includes related editions, attribution) */}
-              <BibliographicInfo book={book} pagesCount={pages.length} hasTranslations={translatedCount > 0}>
+              <BibliographicInfo book={book} pagesCount={totalPages} hasTranslations={translatedCount > 0}>
                 {(book as unknown as { work_id?: string }).work_id && (
                   <Suspense fallback={null}>
                     <RelatedEditions bookId={book.id} workId={(book as unknown as { work_id?: string }).work_id!} />
