@@ -9,14 +9,12 @@ interface Topic {
   description: string;
 }
 
-interface TermQuestion {
-  term: string;
-  definition: string;
-  originalContext?: string;
+interface QuestionBase {
+  mode: 'vocab' | 'date' | 'author' | 'tradition';
   bookId: string;
   bookTitle: string;
   bookAuthor: string;
-  bookDate?: string;
+  bookDate?: string | number;
   bookLanguage?: string;
   pageNumber: number;
   slug?: string;
@@ -24,7 +22,31 @@ interface TermQuestion {
   correctIndex: number;
 }
 
+interface VocabQuestion extends QuestionBase {
+  mode: 'vocab';
+  term: string;
+  definition: string;
+  originalContext?: string;
+}
+
+interface PassageQuestion extends QuestionBase {
+  mode: 'date' | 'author' | 'tradition';
+  passage: string;
+  collection?: string;
+}
+
+type Question = VocabQuestion | PassageQuestion;
+
+type QuizMode = 'mixed' | 'vocab' | 'date' | 'author' | 'tradition';
 type QuizState = 'topics' | 'loading' | 'question' | 'answered' | 'complete';
+
+const QUIZ_MODES: { id: QuizMode; label: string; description: string }[] = [
+  { id: 'mixed', label: 'Mixed', description: 'A bit of everything — vocabulary, dates, authors, and traditions' },
+  { id: 'vocab', label: 'Vocabulary', description: 'Technical terms from alchemical, Hermetic, and philosophical texts' },
+  { id: 'date', label: 'Dating', description: 'When was this written? Place passages in their historical decade' },
+  { id: 'author', label: 'Attribution', description: 'Who wrote this? Match passages to their authors' },
+  { id: 'tradition', label: 'Tradition', description: 'Which tradition does this belong to? Identify the school of thought' },
+];
 
 const FALLBACK_TOPICS: Topic[] = [
   { id: 'alchemy', label: 'Alchemy', description: 'The art of transformation — prima materia, the philosopher\'s stone, and the Great Work' },
@@ -37,10 +59,18 @@ const FALLBACK_TOPICS: Topic[] = [
   { id: 'rosicrucianism', label: 'Rosicrucianism', description: 'The Rosicrucian manifestos and the invisible brotherhood' },
 ];
 
+const MODE_PROMPTS: Record<string, string> = {
+  vocab: 'What does this term mean?',
+  date: 'When was this written?',
+  author: 'Who wrote this?',
+  tradition: 'What tradition is this from?',
+};
+
 export default function LearnQuiz() {
   const [topics, setTopics] = useState<Topic[]>(FALLBACK_TOPICS);
   const [activeTopic, setActiveTopic] = useState<string | null>(null);
-  const [questions, setQuestions] = useState<TermQuestion[]>([]);
+  const [activeMode, setActiveMode] = useState<QuizMode>('mixed');
+  const [questions, setQuestions] = useState<Question[]>([]);
   const [currentIdx, setCurrentIdx] = useState(0);
   const [selected, setSelected] = useState<number | null>(null);
   const [state, setState] = useState<QuizState>('topics');
@@ -50,7 +80,6 @@ export default function LearnQuiz() {
   const [totalAnswered, setTotalAnswered] = useState(0);
   const [error, setError] = useState<string | null>(null);
 
-  // Load persisted stats on mount
   useEffect(() => {
     const saved = localStorage.getItem('sl-learn-stats');
     if (saved) {
@@ -60,27 +89,26 @@ export default function LearnQuiz() {
         setBestStreak(stats.bestStreak || 0);
       } catch { /* ignore */ }
     }
-    // Fetch topics from API (fallback already set)
     fetch('/api/learn?topics=true')
       .then(r => r.json())
       .then(data => { if (data.topics?.length) setTopics(data.topics); })
       .catch(() => { /* use fallback */ });
   }, []);
 
-  const fetchQuestions = useCallback(async (topic?: string) => {
+  const fetchQuestions = useCallback(async (topic?: string, mode: QuizMode = 'mixed') => {
     setState('loading');
     setError(null);
     try {
-      const params = new URLSearchParams({ count: '10' });
+      const params = new URLSearchParams({ count: '10', mode });
       if (topic) params.set('topic', topic);
       const res = await fetch(`/api/learn?${params}`);
       if (!res.ok) throw new Error('Failed to load');
       const data = await res.json();
-      if (!data.terms?.length) {
-        setError('No vocabulary terms found for this topic yet. Try another.');
+      if (!data.questions?.length) {
+        setError('No questions found for this combination. Try another topic or mode.');
         return;
       }
-      setQuestions(data.terms);
+      setQuestions(data.questions);
       setCurrentIdx(0);
       setSelected(null);
       setState('question');
@@ -89,11 +117,12 @@ export default function LearnQuiz() {
     }
   }, []);
 
-  const handleTopicSelect = (topicId: string | null) => {
+  const handleStart = (topicId: string | null, mode: QuizMode) => {
     setActiveTopic(topicId);
+    setActiveMode(mode);
     setScore(0);
     setStreak(0);
-    fetchQuestions(topicId || undefined);
+    fetchQuestions(topicId || undefined, mode);
   };
 
   const handleSelect = (idx: number) => {
@@ -107,17 +136,12 @@ export default function LearnQuiz() {
       setScore(s => s + 1);
       const newStreak = streak + 1;
       setStreak(newStreak);
-      if (newStreak > bestStreak) setBestStreak(newStreak);
-      localStorage.setItem('sl-learn-stats', JSON.stringify({
-        totalAnswered: newTotal,
-        bestStreak: Math.max(newStreak, bestStreak),
-      }));
+      const newBest = Math.max(newStreak, bestStreak);
+      setBestStreak(newBest);
+      localStorage.setItem('sl-learn-stats', JSON.stringify({ totalAnswered: newTotal, bestStreak: newBest }));
     } else {
       setStreak(0);
-      localStorage.setItem('sl-learn-stats', JSON.stringify({
-        totalAnswered: newTotal,
-        bestStreak,
-      }));
+      localStorage.setItem('sl-learn-stats', JSON.stringify({ totalAnswered: newTotal, bestStreak }));
     }
   };
 
@@ -134,7 +158,7 @@ export default function LearnQuiz() {
   const handleNewRound = () => {
     setScore(0);
     setStreak(0);
-    fetchQuestions(activeTopic || undefined);
+    fetchQuestions(activeTopic || undefined, activeMode);
   };
 
   const handleBackToTopics = () => {
@@ -146,39 +170,61 @@ export default function LearnQuiz() {
     setError(null);
   };
 
-  // ── Topic selection screen ──
+  // ── Topic + mode selection screen ──
   if (state === 'topics') {
     return (
       <div className="max-w-2xl mx-auto py-8 md:py-12">
         <p className="text-secondary font-body text-lg mb-8 leading-relaxed">
-          Test your knowledge of historical terminology drawn from primary sources
-          in the Western esoteric tradition. Choose a topic or dive into everything.
+          Test your knowledge of historical texts from the Western esoteric tradition.
+          Choose a quiz type, then pick a topic or dive into everything.
         </p>
 
         {totalAnswered > 0 && (
           <div className="flex items-center gap-6 text-sm text-muted mb-8">
-            <span>{totalAnswered} terms studied</span>
+            <span>{totalAnswered} questions answered</span>
             <span>Best streak: {bestStreak}</span>
           </div>
         )}
 
-        <div className="grid gap-3">
-          {/* "All topics" option */}
-          <button
-            onClick={() => handleTopicSelect(null)}
-            className="text-left p-5 rounded-lg border border-border-light bg-white hover:border-accent-rust/40 hover:bg-accent-rust/[0.02] transition-colors"
-          >
-            <h3 className="font-serif text-xl text-primary mb-1">All Topics</h3>
-            <p className="text-sm text-muted">A mix of vocabulary from across the entire collection</p>
-          </button>
+        {/* Quiz mode selector */}
+        <h2 className="font-serif text-2xl text-primary mb-4">Quiz Type</h2>
+        <div className="grid gap-2 mb-10">
+          {QUIZ_MODES.map(m => (
+            <button
+              key={m.id}
+              onClick={() => setActiveMode(m.id)}
+              className={`text-left p-4 rounded-lg border transition-colors ${
+                activeMode === m.id
+                  ? 'border-accent-rust bg-accent-rust/[0.04]'
+                  : 'border-border-light bg-white hover:border-accent-rust/40'
+              }`}
+            >
+              <div className="flex items-center gap-3">
+                <div className={`w-2 h-2 rounded-full ${activeMode === m.id ? 'bg-accent-rust' : 'bg-stone-300'}`} />
+                <h3 className="font-medium text-primary">{m.label}</h3>
+              </div>
+              <p className="text-sm text-muted ml-5">{m.description}</p>
+            </button>
+          ))}
+        </div>
 
+        {/* Topic selector */}
+        <h2 className="font-serif text-2xl text-primary mb-4">Topic</h2>
+        <div className="grid gap-2">
+          <button
+            onClick={() => handleStart(null, activeMode)}
+            className="text-left p-4 rounded-lg border border-border-light bg-white hover:border-accent-rust/40 hover:bg-accent-rust/[0.02] transition-colors"
+          >
+            <h3 className="font-serif text-lg text-primary">All Topics</h3>
+            <p className="text-sm text-muted">A mix from across the entire collection</p>
+          </button>
           {topics.map(topic => (
             <button
               key={topic.id}
-              onClick={() => handleTopicSelect(topic.id)}
-              className="text-left p-5 rounded-lg border border-border-light bg-white hover:border-accent-rust/40 hover:bg-accent-rust/[0.02] transition-colors"
+              onClick={() => handleStart(topic.id, activeMode)}
+              className="text-left p-4 rounded-lg border border-border-light bg-white hover:border-accent-rust/40 hover:bg-accent-rust/[0.02] transition-colors"
             >
-              <h3 className="font-serif text-xl text-primary mb-1">{topic.label}</h3>
+              <h3 className="font-serif text-lg text-primary">{topic.label}</h3>
               <p className="text-sm text-muted">{topic.description}</p>
             </button>
           ))}
@@ -194,9 +240,9 @@ export default function LearnQuiz() {
         <p className="text-secondary mb-6">{error}</p>
         <div className="flex items-center justify-center gap-4">
           <button onClick={handleBackToTopics} className="text-muted hover:text-primary transition-colors">
-            Back to topics
+            Back
           </button>
-          <button onClick={() => fetchQuestions(activeTopic || undefined)} className="text-accent-rust hover:underline">
+          <button onClick={() => fetchQuestions(activeTopic || undefined, activeMode)} className="text-accent-rust hover:underline">
             Try again
           </button>
         </div>
@@ -224,9 +270,10 @@ export default function LearnQuiz() {
   // ── Round complete ──
   if (state === 'complete') {
     const topicLabel = activeTopic ? topics.find(t => t.id === activeTopic)?.label : 'All Topics';
+    const modeLabel = QUIZ_MODES.find(m => m.id === activeMode)?.label || 'Mixed';
     return (
       <div className="max-w-xl mx-auto py-16 text-center">
-        <p className="text-sm text-muted uppercase tracking-wide mb-2">{topicLabel}</p>
+        <p className="text-sm text-muted uppercase tracking-wide mb-2">{modeLabel} · {topicLabel}</p>
         <h2 className="font-serif text-3xl text-primary mb-4">Round Complete</h2>
         <div className="text-6xl font-serif text-accent-rust mb-2">{score}/{questions.length}</div>
         <p className="text-secondary mb-8">
@@ -265,6 +312,7 @@ export default function LearnQuiz() {
   const bookHref = q.slug ? `/book/${q.slug}` : `/book/${q.bookId}`;
   const isCorrect = selected === q.correctIndex;
   const topicLabel = activeTopic ? topics.find(t => t.id === activeTopic)?.label : 'All Topics';
+  const isVocab = q.mode === 'vocab';
 
   return (
     <div className="max-w-2xl mx-auto py-8 md:py-12">
@@ -291,30 +339,54 @@ export default function LearnQuiz() {
         )}
       </div>
 
-      {/* Term */}
-      <div className="mb-8">
-        <p className="text-sm text-muted uppercase tracking-wide mb-2">
-          What does this term mean?
-        </p>
-        <h2 className="font-serif text-3xl md:text-4xl text-primary italic">
-          {q.term}
-        </h2>
-      </div>
+      {/* Prompt */}
+      <p className="text-sm text-muted uppercase tracking-wide mb-2">
+        {MODE_PROMPTS[q.mode]}
+      </p>
 
-      {/* Context with source attribution */}
-      {q.originalContext && (
-        <div className="bg-white border border-border-light rounded-lg p-4 mb-8">
-          <div className="text-sm text-secondary font-body leading-relaxed">
-            &ldquo;...{q.originalContext}...&rdquo;
+      {/* Vocab: show term prominently */}
+      {isVocab && (
+        <h2 className="font-serif text-3xl md:text-4xl text-primary italic mb-8">
+          {(q as VocabQuestion).term}
+        </h2>
+      )}
+
+      {/* Passage (for non-vocab, or as context for vocab) */}
+      {isVocab ? (
+        (q as VocabQuestion).originalContext ? (
+          <div className="bg-white border border-border-light rounded-lg p-4 mb-8">
+            <div className="text-sm text-secondary font-body leading-relaxed">
+              &ldquo;...{(q as VocabQuestion).originalContext}...&rdquo;
+            </div>
+            <div className="mt-2 pt-2 border-t border-border-light flex items-center justify-between">
+              <span className="text-xs text-muted truncate mr-2">
+                {q.bookAuthor}, <em>{q.bookTitle}</em>{q.bookDate ? ` (${q.bookDate})` : ''}, p.{q.pageNumber}
+              </span>
+              <Link href={`${bookHref}?page=${q.pageNumber}`} className="text-xs text-accent-rust hover:underline whitespace-nowrap">
+                Read
+              </Link>
+            </div>
           </div>
-          <div className="mt-2 pt-2 border-t border-border-light flex items-center justify-between">
+        ) : null
+      ) : (
+        <div className="bg-white border border-border-light rounded-lg p-5 mb-8">
+          <div className="text-[15px] text-secondary font-body leading-relaxed">
+            &ldquo;{(q as PassageQuestion).passage}&rdquo;
+          </div>
+          <div className="mt-3 pt-3 border-t border-border-light flex items-center justify-between">
             <span className="text-xs text-muted truncate mr-2">
-              {q.bookAuthor}, <em>{q.bookTitle}</em>{q.bookDate ? ` (${q.bookDate})` : ''}, p.{q.pageNumber}
+              {/* For author mode, don't show the author — that's the answer */}
+              {q.mode === 'author' ? (
+                <><em>{q.bookTitle}</em>, p.{q.pageNumber}</>
+              ) : q.mode === 'date' ? (
+                // For date mode, don't show the date
+                <>{q.bookAuthor}, <em>{q.bookTitle}</em>, p.{q.pageNumber}</>
+              ) : (
+                // For tradition mode, show author + title but not collection
+                <>{q.bookAuthor}, <em>{q.bookTitle}</em>{q.bookDate ? ` (${q.bookDate})` : ''}, p.{q.pageNumber}</>
+              )}
             </span>
-            <Link
-              href={`${bookHref}?page=${q.pageNumber}`}
-              className="text-xs text-accent-rust hover:underline whitespace-nowrap"
-            >
+            <Link href={`${bookHref}?page=${q.pageNumber}`} className="text-xs text-accent-rust hover:underline whitespace-nowrap">
               Read
             </Link>
           </div>
@@ -347,14 +419,35 @@ export default function LearnQuiz() {
         })}
       </div>
 
-      {/* Post-answer: next button */}
+      {/* Post-answer: reveal + next */}
       {state === 'answered' && (
-        <button
-          onClick={handleNext}
-          className="w-full bg-[#1a1612] text-white py-3 rounded-lg font-medium hover:bg-[#2a1f17] transition-colors"
-        >
-          {currentIdx + 1 >= questions.length ? 'See results' : 'Next'}
-        </button>
+        <div className="space-y-4">
+          {/* For non-vocab modes, reveal the full source after answering */}
+          {!isVocab && (
+            <div className="flex items-start gap-3 bg-warm rounded-lg p-4 border border-border-light">
+              <div className="flex-1 min-w-0">
+                <p className="text-sm font-medium text-primary truncate">{q.bookTitle}</p>
+                <p className="text-xs text-muted">
+                  {q.bookAuthor}{q.bookDate ? `, ${q.bookDate}` : ''}
+                  {q.bookLanguage ? ` · ${q.bookLanguage}` : ''}
+                </p>
+              </div>
+              <Link
+                href={`${bookHref}?page=${q.pageNumber}`}
+                className="text-sm text-accent-rust hover:underline whitespace-nowrap"
+              >
+                Read in context
+              </Link>
+            </div>
+          )}
+
+          <button
+            onClick={handleNext}
+            className="w-full bg-[#1a1612] text-white py-3 rounded-lg font-medium hover:bg-[#2a1f17] transition-colors"
+          >
+            {currentIdx + 1 >= questions.length ? 'See results' : 'Next'}
+          </button>
+        </div>
       )}
     </div>
   );
