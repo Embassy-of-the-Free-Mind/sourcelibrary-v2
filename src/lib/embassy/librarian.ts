@@ -478,7 +478,7 @@ async function executeTool(
   name: string,
   args: Record<string, unknown>,
   threadId?: string,
-): Promise<{ result: unknown; step: LibrarianStep }> {
+): Promise<{ result: unknown; step: LibrarianStep; sources?: SourceCard[] }> {
   switch (name) {
     case 'search_collection': {
       const query = args.query as string;
@@ -502,10 +502,16 @@ async function executeTool(
       }
       if (totalFound === 0) context = 'No results found for this query.';
 
+      const sources: SourceCard[] = data.passages.map(p => ({
+        book_id: p.book_id, bookTitle: p.bookTitle, bookAuthor: p.bookAuthor, bookSlug: p.bookSlug,
+        pageNumber: p.page_number, snippet: p.text.slice(0, 200), inCollection: true,
+      }));
+
       return {
         result: { found: totalFound, context },
         step: { type: 'tool_result', name: 'search_collection', query, found: totalFound,
           summary: totalFound > 0 ? `Found ${data.passages.length} passages across ${data.books.length} books` : 'No results' },
+        sources,
       };
     }
 
@@ -516,10 +522,17 @@ async function executeTool(
       for (const r of results) {
         context += `\n--- ${r.bookTitle} by ${r.bookAuthor}, Page ${r.page_number} (score: ${r.score.toFixed(2)}) ---\n${r.snippet}\n`;
       }
+
+      const sources: SourceCard[] = results.map(r => ({
+        book_id: r.book_id, bookTitle: r.bookTitle, bookAuthor: r.bookAuthor, bookSlug: r.bookSlug,
+        pageNumber: r.page_number, snippet: r.snippet.slice(0, 200), inCollection: true,
+      }));
+
       return {
         result: { found: results.length, context },
         step: { type: 'tool_result', name: 'search_semantic', query, found: results.length,
           summary: results.length > 0 ? `Found ${results.length} conceptually related passages` : 'No semantic matches' },
+        sources,
       };
     }
 
@@ -703,8 +716,18 @@ export async function* streamAgenticResponse(
   ];
 
   const allSources: SourceCard[] = [];
-  const searchCache = new Map<string, { passages: Array<{ book_id: string; bookTitle: string; bookAuthor: string; bookSlug?: string; page_number: number; text: string }>; books: Array<{ id: string; title: string; author?: string; year?: number; slug?: string }> }>();
-  const semanticCache = new Map<string, Array<{ book_id: string; bookTitle: string; bookAuthor: string; bookSlug?: string; page_number: number; snippet: string; score: number }>>();
+  const seenSourceKeys = new Set<string>();
+
+  function collectSources(sources?: SourceCard[]) {
+    if (!sources) return;
+    for (const s of sources) {
+      const key = `${s.book_id}:${s.pageNumber || 0}`;
+      if (!seenSourceKeys.has(key)) {
+        seenSourceKeys.add(key);
+        allSources.push(s);
+      }
+    }
+  }
 
   for (let round = 0; round < MAX_ROUNDS; round++) {
     const stream = await ai.models.generateContentStream({
@@ -740,45 +763,34 @@ export async function* streamAgenticResponse(
 
     if (functionCalls.length === 0) break;
 
-    const responseParts: Array<Record<string, unknown>> = [];
-
+    // Emit tool_call events for all pending calls
     for (const part of functionCalls) {
       const fc = (part as { functionCall: { name: string; args: Record<string, unknown> } }).functionCall;
-
       yield { type: 'tool_call', name: fc.name, query: (fc.args?.query as string) || (fc.args?.quote as string)?.slice(0, 50) || '' };
+    }
 
-      const { result, step } = await executeTool(fc.name, fc.args || {}, threadId);
+    // Execute all tools in parallel
+    const toolResults = await Promise.all(
+      functionCalls.map(part => {
+        const fc = (part as { functionCall: { name: string; args: Record<string, unknown> } }).functionCall;
+        return executeTool(fc.name, fc.args || {}, threadId);
+      }),
+    );
+
+    const responseParts: Array<Record<string, unknown>> = [];
+
+    for (let i = 0; i < functionCalls.length; i++) {
+      const fc = (functionCalls[i] as { functionCall: { name: string; args: Record<string, unknown> } }).functionCall;
+      const { result, step, sources } = toolResults[i];
+
       yield step;
+      collectSources(sources);
 
       if (fc.name === 'present_choices') {
         if (allSources.length > 0) yield { type: 'sources', sources: allSources };
         responseParts.push({ functionResponse: { name: fc.name, response: result } });
         contents.push({ role: 'user', parts: responseParts });
         return;
-      }
-
-      // Collect source cards
-      if (fc.name === 'search_collection') {
-        const cacheKey = fc.args?.query as string;
-        const data = searchCache.get(cacheKey) || await executeSearchCollection(cacheKey, fc.args?.search_books !== false);
-        searchCache.set(cacheKey, data);
-        for (const p of data.passages) {
-          if (!allSources.some(s => s.book_id === p.book_id && s.pageNumber === p.page_number)) {
-            allSources.push({ book_id: p.book_id, bookTitle: p.bookTitle, bookAuthor: p.bookAuthor, bookSlug: p.bookSlug,
-              pageNumber: p.page_number, snippet: p.text.slice(0, 200), inCollection: true });
-          }
-        }
-      }
-      if (fc.name === 'search_semantic') {
-        const cacheKey = fc.args?.query as string;
-        const results = semanticCache.get(cacheKey) || await executeSearchSemantic(cacheKey);
-        semanticCache.set(cacheKey, results);
-        for (const r of results) {
-          if (!allSources.some(s => s.book_id === r.book_id && s.pageNumber === r.page_number)) {
-            allSources.push({ book_id: r.book_id, bookTitle: r.bookTitle, bookAuthor: r.bookAuthor, bookSlug: r.bookSlug,
-              pageNumber: r.page_number, snippet: r.snippet.slice(0, 200), inCollection: true });
-          }
-        }
       }
 
       responseParts.push({ functionResponse: { name: fc.name, response: result } });
