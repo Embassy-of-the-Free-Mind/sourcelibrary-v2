@@ -4,8 +4,27 @@ import Email from 'next-auth/providers/nodemailer';
 import { MongoDBAdapter } from '@auth/mongodb-adapter';
 import clientPromise from './mongodb-client';
 import { Resend } from 'resend';
+import { activatePendingMembership } from './memberships';
 
 const dbName = process.env.MONGODB_DB || 'bookstore';
+
+// --- Role system ---
+// Replaces the old admin | curator | inner_circle | reader system.
+// superadmin: platform owner, cross-tenant (tenantId: null in memberships)
+// admin:      tenant-scoped, manages users + settings
+// editor:     tenant-scoped, manages content + triggers pipeline
+// reader:     authenticated, read + personal data
+export type Role = 'superadmin' | 'admin' | 'editor' | 'reader';
+export const ROLE_LEVEL: Record<Role, number> = {
+  reader: 1,
+  editor: 2,
+  admin: 3,
+  superadmin: 4,
+};
+
+// TODO: Remove getUserRole — replaced by memberships collection + ROLE_LEVEL system.
+// Old function queried admin_users collection with roles: admin | curator | inner_circle.
+// Kept as tombstone so reviewers can trace the change. Safe to delete after Phase 1.
 
 const WELCOME_HTML = `
 <div style="font-family: Georgia, 'Times New Roman', serif; max-width: 520px; margin: 0 auto; padding: 40px 24px; color: #1a1612;">
@@ -65,27 +84,6 @@ const WELCOME_HTML = `
   </div>
 </div>
 `;
-
-// Helper: check user role from admin_users whitelist
-// Returns 'admin', 'inner_circle', or null
-async function getUserRole(email: string): Promise<'admin' | 'curator' | 'inner_circle' | null> {
-  try {
-    const client = await clientPromise;
-    const db = client.db(dbName);
-    const entry = await db.collection('admin_users').findOne({
-      email: email.toLowerCase(),
-      active: true,
-    });
-    if (!entry) return null;
-    if (entry.role === 'inner_circle') return 'inner_circle';
-    if (entry.role === 'curator') return 'curator';
-    // Default to 'admin' for existing entries without a role field (backward compat)
-    return 'admin';
-  } catch (error) {
-    console.error('[auth] Error checking user role:', error);
-    return null;
-  }
-}
 
 // Build providers
 const providers: any[] = [];
@@ -196,21 +194,79 @@ export const { handlers, signIn, signOut, auth } = NextAuth({
     },
   },
   callbacks: {
-    // Allow all sign-ins — no admin whitelist restriction for readers
+    // Allow all sign-ins
     async signIn() {
       return true;
     },
     async jwt({ token, user, trigger }) {
       if (user) {
         token.id = user.id;
-        // Check admin status on first sign-in
+
         if (user.email) {
-          token.role = (await getUserRole(user.email)) || 'reader';
+          const email = user.email.toLowerCase();
+          try {
+            const client = await clientPromise;
+            const db = client.db(dbName);
+
+            // 1. Check PLATFORM_ADMIN_EMAILS env var — bootstrap superadmin on first sign-in
+            const adminEmails = (process.env.PLATFORM_ADMIN_EMAILS || '')
+              .split(',').map(e => e.trim().toLowerCase()).filter(Boolean);
+
+            if (adminEmails.includes(email)) {
+              token.role = 'superadmin';
+              // Idempotent upsert — safe to run on every sign-in
+              await db.collection('memberships').updateOne(
+                { email, tenantId: null, role: 'superadmin' },
+                {
+                  $set: { userId: user.id },
+                  $setOnInsert: {
+                    email,
+                    tenantId: null,
+                    role: 'superadmin',
+                    status: 'active',
+                    invitedBy: null,
+                    addedAt: new Date(),
+                  },
+                },
+                { upsert: true }
+              );
+            } else {
+              // 2. Check memberships for active or pending superadmin record
+              // (covers platform admins invited via the dashboard)
+              const superRecord = await db.collection('memberships').findOne({
+                email,
+                tenantId: null,
+                role: 'superadmin',
+                status: { $in: ['active', 'pending'] },
+              });
+              if (superRecord) {
+                token.role = 'superadmin';
+                // Activate pending invite on first sign-in
+                if (superRecord.status === 'pending') {
+                  await activatePendingMembership({
+                    db,
+                    email,
+                    tenantId: null,
+                    userId: user.id!,
+                  });
+                }
+              } else {
+                token.role = 'reader';
+              }
+              // TODO (Phase 1): resolve tenant-scoped role (admin/editor) from memberships
+              // when tenantSlug is available via callbackUrl at sign-in time.
+            }
+          } catch (error) {
+            console.error('[auth] Role resolution failed:', error);
+            token.role = 'reader';
+          }
         } else {
           token.role = 'reader';
         }
       }
-      // Check membership status on sign-in and session updates
+
+      // Check ficino membership status on sign-in and session updates.
+      // Kept for future per-tenant membership tiers — returns null gracefully on empty DB.
       if (token.id && (user || trigger === 'update')) {
         try {
           const client = await clientPromise;
@@ -219,7 +275,6 @@ export const { handlers, signIn, signOut, auth } = NextAuth({
             { _id: token.id as any },
             { projection: { 'membership.active': 1, 'membership.plan': 1, 'membership.joined': 1 } }
           );
-          // Financial contributors get 'ficino', free members get 'member', others null
           if (dbUser?.membership?.active) {
             token.membership = dbUser.membership.plan || 'ficino';
           } else if (dbUser?.membership?.joined) {
@@ -231,6 +286,7 @@ export const { handlers, signIn, signOut, auth } = NextAuth({
           // Don't block auth if membership check fails
         }
       }
+
       return token;
     },
     async session({ session, token }) {
