@@ -167,14 +167,18 @@ function VoiceAgentInner() {
 
   const start = async () => {
     setAppStatus('connecting'); setErrorMsg(null); setTranscript([]); setSources([]); setVisuals([]);
-    try { await navigator.mediaDevices.getUserMedia({ audio: true }); }
-    catch (err: any) { setErrorMsg(err.name === 'NotAllowedError' ? 'Microphone access denied. Click the lock icon, allow mic, and reload.' : 'Could not access microphone.'); setAppStatus('error'); return; }
     try {
       const res = await fetch('/api/embassy/voice'); if (!res.ok) throw new Error(`Signed URL failed: ${res.status}`);
       const { signedUrl } = await res.json();
       conversation.startSession({ signedUrl });
     }
-    catch (err: any) { setErrorMsg(err.message); setAppStatus('error'); }
+    catch (err: any) {
+      const msg = err.message || String(err);
+      if (msg.includes('Permission') || msg.includes('NotAllowed') || msg.includes('permission'))
+        setErrorMsg('Microphone access needed. Your browser should prompt you — if not, click the lock icon in the address bar and allow microphone access.');
+      else setErrorMsg(msg);
+      setAppStatus('error');
+    }
   };
   const stop = () => { conversation.endSession(); setAppStatus('idle'); setAgentSpeaking(false); setHolding(false); };
 
