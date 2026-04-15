@@ -4,14 +4,13 @@ import ContentPageLayout, { ContentHeader } from '@/components/layout/ContentPag
 import { WordAlignmentDemo } from './WordAlignmentDemo';
 
 export const metadata: Metadata = {
-  title:
-    'Can AI Show You Exactly Which Latin Words Became Which English Words? - Research Notes - Source Library',
+  title: 'Reading Through the Translation - Research Notes - Source Library',
   description:
-    'We tested two approaches to word-level alignment between 15th-century Latin and English translation: LLM-generated semantic mapping and embedding-based similarity. The results reveal what AI can and cannot do with pre-modern texts.',
+    'What if you could see the original Latin behind every English sentence? An interactive exploration of translation alignment in 15th-century philosophical texts.',
   openGraph: {
-    title: 'Can AI Show You Exactly Which Latin Words Became Which English Words?',
+    title: 'Reading Through the Translation',
     description:
-      'Interactive demo: hover over Latin or English text to see translation correspondences highlighted in real time.',
+      'Hover over any English sentence to see the original Latin it came from. Click to see word-level detail.',
   },
   alternates: {
     canonical: '/blog/word-alignment',
@@ -23,10 +22,10 @@ export default function WordAlignmentPage() {
     <ContentPageLayout
       header={
         <ContentHeader
-          title="Can AI Show You Exactly Which Latin Words Became Which English Words?"
-          subtitle="Exploring word-level alignment between 15th-century Latin and AI-generated English translation"
+          title="Reading Through the Translation"
+          subtitle="What if you could see the original Latin behind every English sentence?"
         >
-          <p className="text-stone-400 text-sm mt-4">13 April 2026 &middot; 5 min read</p>
+          <p className="text-stone-400 text-sm mt-4">15 April 2026 &middot; 4 min read</p>
         </ContentHeader>
       }
       bg="bg-cream"
@@ -56,100 +55,80 @@ export default function WordAlignmentPage() {
 
       <article className="prose-content max-w-none">
         <p className="text-xl text-secondary leading-relaxed mb-8">
-          Source Library has translated over 10,000 pages of pre-modern Latin, German, Arabic, and
-          Hebrew into English. But translation is a lossy process &mdash; a single Latin word might
-          expand into a whole English phrase, or three Latin words might collapse into one. What if
-          you could see exactly which words produced which?
+          When you read a translation, you&rsquo;re trusting that someone got it right. But with
+          historical texts &mdash; where the author has been dead for five centuries and the Latin is
+          dense with abbreviations &mdash; trust isn&rsquo;t quite enough. You want to see the
+          original. Not just the whole page in a language you can&rsquo;t read, but the specific
+          sentence, the specific words, that produced the English in front of you.
         </p>
 
         <p className="text-secondary leading-relaxed mb-6">
-          Word-level alignment is a well-studied problem in computational linguistics. Google
-          Translate has done it internally for years. But the challenge with historical texts is
-          different: pre-modern Latin uses abbreviations (&ldquo;c&#x16B;&rdquo; for
-          &ldquo;cum&rdquo;), inconsistent spelling, and sentence structures that don&rsquo;t map
-          cleanly onto English. We tested two approaches on pages from Marsilio Ficino&rsquo;s{' '}
-          <em>De Voluptate</em> (1457) and the Hermetic <em>Pymander</em> in Ficino&rsquo;s 1505
-          Latin edition.
+          Source Library has AI-translated over 10,000 pages of pre-modern Latin, German, Arabic, and
+          Hebrew. Every translation sits beside its source. But until now, the connection between them
+          has been implicit &mdash; you see the Latin on one side and the English on the other, and
+          you have to hold the correspondence in your head.
         </p>
 
-        <h2 className="text-lg font-semibold text-primary mt-10 mb-4">Try it yourself</h2>
-
-        <p className="text-secondary leading-relaxed mb-6">
-          Hover over any word on either side. The corresponding text on the other side lights up
-          &mdash; brighter gold means a more direct correspondence, fainter means the meaning was
-          restructured or implied. Switch between the two methods to see how they compare.
+        <p className="text-secondary leading-relaxed mb-8">
+          Below is an experiment in making that connection explicit. Hover over any English sentence
+          to see the Latin it came from. Click a sentence pair to see the word-level detail &mdash;
+          which Latin words became which English words, and where the translator had to restructure
+          the thought to make it work in English.
         </p>
       </article>
 
-      {/* Interactive demo — breaks out of prose width */}
-      <div className="mt-8 mb-12">
+      <div className="mt-4 mb-12">
         <WordAlignmentDemo />
       </div>
 
       <article className="prose-content max-w-none">
-        <h2 className="text-lg font-semibold text-primary mt-2 mb-4">
-          Approach 1: LLM Semantic Alignment
-        </h2>
+        <h2 className="text-lg font-semibold text-primary mt-2 mb-4">Why sentence-level first</h2>
 
         <p className="text-secondary leading-relaxed mb-6">
-          We asked Gemini 3 Flash to read both the Latin source and English translation and
-          produce a mapping between them: which character ranges in the English correspond to which
-          character ranges in the Latin, with a confidence weight. The model understands Latin grammar
-          &mdash; it knows that &ldquo;animum in duas partes distribuisset&rdquo; maps to &ldquo;when
-          he had divided the soul into two parts&rdquo; even though the word order is completely
-          different. It handles abbreviations, one-to-many mappings, and implied meanings that
-          don&rsquo;t have a direct source word.
+          Early versions of this experiment started at the word level &mdash; hover one English word,
+          see scattered Latin words light up with varying opacities. It was technically impressive
+          and completely disorienting. You&rsquo;d hover &ldquo;soul&rdquo; and see
+          &ldquo;animum&rdquo; flash 400 characters away, losing all context.
         </p>
 
         <p className="text-secondary leading-relaxed mb-6">
-          The result: <strong>227 alignment links</strong> for a single page of Ficino, covering
-          virtually every content word. The main failure mode is character offset precision &mdash;
-          the LLM occasionally miscounts characters, producing spans that are off by a few
-          positions. A post-processing step could snap these to word boundaries.
+          The sentence is the natural unit of thought. When Ficino writes &ldquo;c&#x16B; animum in
+          duas partes distribuisset, mente scilicet, ac sensum,&rdquo; the whole clause produces
+          &ldquo;when he had divided the soul into two parts &mdash; namely, the mind and the
+          senses.&rdquo; You need to see the whole Latin sentence to understand what the translator
+          was working with. Word-level detail is useful <em>within</em> that context, not instead of
+          it.
         </p>
 
-        <h2 className="text-lg font-semibold text-primary mt-10 mb-4">
-          Approach 2: Embedding Similarity
-        </h2>
+        <h2 className="text-lg font-semibold text-primary mt-10 mb-4">How it works</h2>
 
         <p className="text-secondary leading-relaxed mb-6">
-          The second approach uses a simpler signal: do the Latin and English words look similar? Many
-          Latin words survive recognizably in English (&ldquo;natura&rdquo; &rarr;
-          &ldquo;nature&rdquo;, &ldquo;corpus&rdquo; &rarr; &ldquo;body&rdquo;... well, that one
-          doesn&rsquo;t). We implemented a cognate-detection heuristic as a stand-in for full
-          multilingual embedding similarity (using models like multilingual-e5, which map words from
-          all languages into the same vector space).
-        </p>
-
-        <p className="text-secondary leading-relaxed mb-6">
-          This approach finds <strong>125 links</strong> &mdash; mostly cognates and known
-          vocabulary pairs. It completely misses non-cognate translations
-          (&ldquo;c&#x16B;&rdquo; &rarr; &ldquo;when&rdquo;), word reordering, and
-          phrase-level correspondences. It also sometimes links the wrong instance of a word when it
-          appears multiple times.
-        </p>
-
-        <h2 className="text-lg font-semibold text-primary mt-10 mb-4">What we learned</h2>
-
-        <p className="text-secondary leading-relaxed mb-6">
-          LLM-based alignment is dramatically better for pre-modern texts. The model&rsquo;s
-          understanding of Latin grammar, context, and translation intent produces alignments that
-          would take a human Latinist significant effort to match. The cost is minimal &mdash; one
-          additional API call per page, which could be folded into the translation step itself.
+          The alignment is generated by Gemini 3 Flash. We give it the Latin source and the English
+          translation and ask it to pair up sentences by meaning &mdash; not by counting periods,
+          since the translator sometimes splits or merges sentences for clarity. For each sentence
+          pair, we then ask for the key word-level correspondences: which Latin words map directly to
+          which English words, and which meanings were implied or restructured.
         </p>
 
         <p className="text-secondary leading-relaxed mb-6">
-          Embedding similarity is useful as a cheap verification signal (if the embeddings say two
-          words are similar, they probably are) but insufficient as a primary alignment method for
-          historical texts. The gap between Latin and English is too wide for surface-level
-          similarity to bridge.
+          This works surprisingly well for 15th-century Latin. The model understands the grammar, the
+          abbreviations (&ldquo;c&#x16B;&rdquo; for &ldquo;cum,&rdquo; &ldquo;q&#x304;&rdquo; for
+          &ldquo;quam&rdquo;), and the philosophical vocabulary. It can tell you that
+          &ldquo;voluptatem&rdquo; becomes &ldquo;pleasure&rdquo; while &ldquo;l&aelig;ticiam&rdquo;
+          becomes &ldquo;gladness&rdquo; &mdash; a distinction Ficino considers important and that a
+          naive word matcher would miss entirely.
         </p>
+
+        <h2 className="text-lg font-semibold text-primary mt-10 mb-4">What comes next</h2>
 
         <p className="text-secondary leading-relaxed mb-12">
-          The next step would be to add alignment data to Source Library&rsquo;s translation pipeline
-          &mdash; generating it alongside each translation and storing it for interactive reading.
-          Imagine being able to trace every word in every translation back to its source, across
-          10,000+ pages of rare historical texts.
+          If this works at the page level, it could work at the library level. Source Library could
+          generate alignment data alongside every translation &mdash; baked into the reading
+          experience, not bolted on as an afterthought. A reader could move through a 400-page Latin
+          treatise in English, and at any moment trace a sentence or a word back to the original.
+          Not for the Latin scholars who can already read it, but for everyone else &mdash; the
+          people these books were never written for, who can now, for the first time, read through
+          the translation to the text behind it.
         </p>
       </article>
     </ContentPageLayout>

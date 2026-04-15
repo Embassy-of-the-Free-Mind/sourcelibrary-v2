@@ -1,193 +1,161 @@
 'use client';
 
-import { useState, useEffect, useCallback, useMemo } from 'react';
+import { useState, useEffect, useCallback } from 'react';
 
-interface AlignmentLink {
-  en: [number, number];
-  src: [number, number];
-  en_text: string;
-  src_text: string;
+interface WordLink {
+  src: string;
+  en: string;
   weight: number;
-  method: string;
+}
+
+interface SentencePair {
+  src: string;
+  en: string;
+  words: WordLink[];
 }
 
 interface AlignedPage {
   id: string;
   book: string;
   author: string;
-  page: number;
+  year: string;
   sourceLanguage: string;
-  sourceText: string;
-  translationText: string;
-  alignments: {
-    llm: AlignmentLink[];
-    embedding: AlignmentLink[];
-  };
+  sentences: SentencePair[];
 }
 
 interface AlignmentData {
-  generated: string;
   pages: AlignedPage[];
 }
 
-type Method = 'llm' | 'embedding';
-type HoverSide = 'source' | 'translation' | null;
+function SentenceRow({
+  pair,
+  index,
+  isHovered,
+  isExpanded,
+  onHover,
+  onClick,
+}: {
+  pair: SentencePair;
+  index: number;
+  isHovered: boolean;
+  isExpanded: boolean;
+  onHover: (index: number | null) => void;
+  onClick: (index: number) => void;
+}) {
+  return (
+    <div
+      className={`transition-all duration-200 ${isExpanded ? '' : 'cursor-pointer'}`}
+      onMouseEnter={() => onHover(index)}
+      onMouseLeave={() => onHover(null)}
+      onClick={() => onClick(index)}
+    >
+      <div
+        className={`grid grid-cols-1 md:grid-cols-2 gap-4 md:gap-8 py-4 px-5 rounded-xl transition-all duration-200 ${
+          isHovered || isExpanded
+            ? 'bg-amber-50/70 shadow-sm'
+            : 'hover:bg-stone-50'
+        }`}
+      >
+        {/* Latin */}
+        <div
+          className={`font-serif text-[15px] leading-[1.8] transition-colors duration-200 ${
+            isHovered || isExpanded ? 'text-stone-800' : 'text-stone-500'
+          }`}
+          lang="la"
+        >
+          {pair.src}
+        </div>
 
-function buildHighlightMap(
-  links: AlignmentLink[],
-  hoveredRange: [number, number] | null,
-  hoverSide: HoverSide,
-  textLength: number,
-  side: 'source' | 'translation'
-): Float32Array {
-  const weights = new Float32Array(textLength);
-  if (!hoveredRange || !hoverSide) return weights;
-  if (side === hoverSide) return weights;
+        {/* English */}
+        <div className="font-serif text-[15px] leading-[1.8] text-stone-800">
+          {isHovered || isExpanded ? (
+            <HighlightedEnglish text={pair.en} words={pair.words} />
+          ) : (
+            pair.en
+          )}
+        </div>
+      </div>
 
-  for (const link of links) {
-    const hoveredField = hoverSide === 'source' ? 'src' : 'en';
-    const targetField = side === 'source' ? 'src' : 'en';
-    const [hStart, hEnd] = link[hoveredField];
-    const [rStart, rEnd] = hoveredRange;
-
-    if (hStart < rEnd && hEnd > rStart) {
-      const [tStart, tEnd] = link[targetField];
-      for (let i = tStart; i < Math.min(tEnd, textLength); i++) {
-        weights[i] = Math.max(weights[i], link.weight);
-      }
-    }
-  }
-  return weights;
+      {/* Word-level drill-down */}
+      {isExpanded && pair.words.length > 0 && (
+        <div className="px-5 pb-4">
+          <div className="flex flex-wrap gap-2 pt-2 pl-1">
+            {pair.words.map((w, i) => (
+              <div
+                key={i}
+                className="flex items-center gap-1.5 px-3 py-1.5 rounded-full text-sm border transition-colors"
+                style={{
+                  borderColor: `rgba(160, 120, 40, ${0.15 + w.weight * 0.25})`,
+                  backgroundColor: `rgba(160, 120, 40, ${0.02 + w.weight * 0.06})`,
+                }}
+              >
+                <span className="font-serif italic text-stone-500">{w.src}</span>
+                <svg
+                  className="w-3 h-3 text-stone-300 flex-shrink-0"
+                  fill="none"
+                  viewBox="0 0 24 24"
+                  stroke="currentColor"
+                  strokeWidth={2}
+                >
+                  <path strokeLinecap="round" strokeLinejoin="round" d="M13 7l5 5m0 0l-5 5m5-5H6" />
+                </svg>
+                <span className="font-serif text-stone-800">{w.en}</span>
+              </div>
+            ))}
+          </div>
+          <div className="text-xs text-stone-400 mt-2 pl-1">
+            Click again to collapse
+          </div>
+        </div>
+      )}
+    </div>
+  );
 }
 
-function HighlightedText({
-  text,
-  weights,
-  onHoverRange,
-  side,
-  links,
-}: {
-  text: string;
-  weights: Float32Array;
-  onHoverRange: (range: [number, number] | null, side: HoverSide) => void;
-  side: 'source' | 'translation';
-  links: AlignmentLink[];
-}) {
-  const spans = useMemo(() => {
-    const result: { text: string; weight: number; start: number; end: number }[] = [];
-    let currentWeight = weights[0] || 0;
-    let spanStart = 0;
+function HighlightedEnglish({ text, words }: { text: string; words: WordLink[] }) {
+  if (words.length === 0) return <>{text}</>;
 
-    for (let i = 1; i <= text.length; i++) {
-      const w = i < text.length ? (weights[i] || 0) : -1;
-      if (w !== currentWeight) {
-        result.push({ text: text.substring(spanStart, i), weight: currentWeight, start: spanStart, end: i });
-        currentWeight = w;
-        spanStart = i;
-      }
+  // Find and highlight English words that have alignment links
+  const highlights = new Map<string, number>();
+  for (const w of words) {
+    // Store lowercase for matching
+    for (const token of w.en.split(/\s+/)) {
+      highlights.set(token.toLowerCase().replace(/[.,;:!?"'()]/g, ''), w.weight);
     }
-    return result;
-  }, [text, weights]);
+  }
 
-  const getWordRange = useCallback(
-    (charIndex: number): [number, number] => {
-      const field = side === 'source' ? 'src' : 'en';
-      for (const link of links) {
-        const [start, end] = link[field];
-        if (charIndex >= start && charIndex < end) return [start, end];
-      }
-      let start = charIndex;
-      let end = charIndex;
-      while (start > 0 && /\S/.test(text[start - 1])) start--;
-      while (end < text.length && /\S/.test(text[end])) end++;
-      return [start, end];
-    },
-    [links, side, text]
-  );
+  // Split text into tokens and mark which are highlighted
+  const parts: { text: string; weight: number }[] = [];
+  const regex = /(\S+)(\s*)/g;
+  let match;
+
+  while ((match = regex.exec(text)) !== null) {
+    const word = match[1];
+    const space = match[2];
+    const clean = word.toLowerCase().replace(/[.,;:!?"'()[\]]/g, '');
+    const weight = highlights.get(clean) || 0;
+    parts.push({ text: word + space, weight });
+  }
 
   return (
-    <div className="font-serif text-[15px] leading-[1.8] whitespace-pre-wrap text-stone-800">
-      {spans.map((span, i) => {
-        const isHighlighted = span.weight > 0;
-        const bgOpacity = isHighlighted ? 0.12 + span.weight * 0.48 : 0;
-
-        return (
+    <>
+      {parts.map((p, i) =>
+        p.weight > 0 ? (
           <span
             key={i}
-            className="cursor-pointer transition-all duration-100"
+            className="rounded-sm"
             style={{
-              backgroundColor: isHighlighted ? `rgba(180, 130, 50, ${bgOpacity})` : undefined,
-              borderBottom: isHighlighted
-                ? `2px solid rgba(180, 130, 50, ${0.3 + span.weight * 0.5})`
-                : '2px solid transparent',
-              borderRadius: isHighlighted ? '2px' : undefined,
-              padding: isHighlighted ? '1px 0' : undefined,
+              backgroundColor: `rgba(160, 120, 40, ${0.08 + p.weight * 0.18})`,
+              borderBottom: `2px solid rgba(160, 120, 40, ${0.2 + p.weight * 0.4})`,
             }}
-            onMouseEnter={() => onHoverRange(getWordRange(span.start), side)}
-            onMouseLeave={() => onHoverRange(null, null)}
           >
-            {span.text}
+            {p.text}
           </span>
-        );
-      })}
-    </div>
-  );
-}
-
-function AlignmentDetail({
-  links,
-  hoveredRange,
-  hoverSide,
-}: {
-  links: AlignmentLink[];
-  hoveredRange: [number, number] | null;
-  hoverSide: HoverSide;
-}) {
-  if (!hoveredRange || !hoverSide) {
-    return (
-      <div className="text-sm text-stone-400 italic text-center py-3">
-        Hover over any word to see its alignment
-      </div>
-    );
-  }
-
-  const matching = links.filter((link) => {
-    const field = hoverSide === 'source' ? 'src' : 'en';
-    const [start, end] = link[field];
-    return start < hoveredRange[1] && end > hoveredRange[0];
-  });
-
-  if (matching.length === 0) {
-    return (
-      <div className="text-sm text-stone-400 italic text-center py-3">
-        No alignment data for this text
-      </div>
-    );
-  }
-
-  return (
-    <div className="flex flex-wrap gap-3 py-2 justify-center">
-      {matching.slice(0, 6).map((link, i) => (
-        <div
-          key={i}
-          className="flex items-center gap-2 px-3 py-1.5 rounded-full border"
-          style={{
-            borderColor: `rgba(180, 130, 50, ${0.2 + link.weight * 0.4})`,
-            backgroundColor: `rgba(180, 130, 50, ${0.03 + link.weight * 0.07})`,
-          }}
-        >
-          <span className="font-serif italic text-stone-600 text-sm">{link.src_text}</span>
-          <svg className="w-3 h-3 text-stone-400 flex-shrink-0" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={2}>
-            <path strokeLinecap="round" strokeLinejoin="round" d="M13 7l5 5m0 0l-5 5m5-5H6" />
-          </svg>
-          <span className="font-serif text-stone-900 text-sm">{link.en_text}</span>
-          <span
-            className="w-1.5 h-1.5 rounded-full flex-shrink-0"
-            style={{ backgroundColor: `rgba(180, 130, 50, ${0.3 + link.weight * 0.7})` }}
-          />
-        </div>
-      ))}
-    </div>
+        ) : (
+          <span key={i}>{p.text}</span>
+        )
+      )}
+    </>
   );
 }
 
@@ -195,147 +163,102 @@ export function WordAlignmentDemo() {
   const [data, setData] = useState<AlignmentData | null>(null);
   const [loading, setLoading] = useState(true);
   const [selectedPage, setSelectedPage] = useState(0);
-  const [method, setMethod] = useState<Method>('llm');
-  const [hoveredRange, setHoveredRange] = useState<[number, number] | null>(null);
-  const [hoverSide, setHoverSide] = useState<HoverSide>(null);
+  const [hoveredSentence, setHoveredSentence] = useState<number | null>(null);
+  const [expandedSentence, setExpandedSentence] = useState<number | null>(null);
 
   useEffect(() => {
     fetch('/data/experiments/alignment-results.json')
       .then((r) => r.json())
-      .then((d) => { setData(d); setLoading(false); })
+      .then((d) => {
+        setData(d);
+        setLoading(false);
+      })
       .catch(() => setLoading(false));
   }, []);
 
-  const handleHover = useCallback((range: [number, number] | null, side: HoverSide) => {
-    setHoveredRange(range);
-    setHoverSide(side);
+  const handleHover = useCallback((index: number | null) => {
+    setHoveredSentence(index);
+  }, []);
+
+  const handleClick = useCallback((index: number) => {
+    setExpandedSentence((prev) => (prev === index ? null : index));
   }, []);
 
   if (loading) {
     return (
-      <div className="flex items-center justify-center py-20">
-        <div className="animate-pulse text-stone-400 text-sm">Loading alignment data...</div>
+      <div className="flex items-center justify-center py-16">
+        <div className="animate-pulse text-stone-400 text-sm">Loading...</div>
       </div>
     );
   }
 
   if (!data || data.pages.length === 0) {
     return (
-      <div className="flex items-center justify-center py-20">
+      <div className="flex items-center justify-center py-16">
         <div className="text-stone-400 text-sm">Alignment data unavailable.</div>
       </div>
     );
   }
 
   const page = data.pages[selectedPage];
-  const links = page.alignments[method] || [];
-
-  const srcWeights = buildHighlightMap(links, hoveredRange, hoverSide, page.sourceText.length, 'source');
-  const transWeights = buildHighlightMap(links, hoveredRange, hoverSide, page.translationText.length, 'translation');
-
-  // Also highlight the hovered side's own text
-  const srcDisplay = new Float32Array(srcWeights);
-  const transDisplay = new Float32Array(transWeights);
-
-  if (hoveredRange && hoverSide === 'source') {
-    for (let i = hoveredRange[0]; i < Math.min(hoveredRange[1], page.sourceText.length); i++) {
-      srcDisplay[i] = Math.max(srcDisplay[i], 0.4);
-    }
-  }
-  if (hoveredRange && hoverSide === 'translation') {
-    for (let i = hoveredRange[0]; i < Math.min(hoveredRange[1], page.translationText.length); i++) {
-      transDisplay[i] = Math.max(transDisplay[i], 0.4);
-    }
-  }
-
-  const methodDescriptions: Record<Method, { label: string; sublabel: string }> = {
-    llm: { label: 'LLM Alignment', sublabel: `Gemini 3 Flash \u00b7 ${links.length} links` },
-    embedding: { label: 'Embedding Similarity', sublabel: `Cognate heuristic \u00b7 ${links.length} links` },
-  };
 
   return (
     <div className="rounded-2xl border border-stone-200 bg-white overflow-hidden shadow-sm">
-      {/* Controls */}
+      {/* Header */}
       <div className="flex items-center justify-between px-5 py-3 border-b border-stone-100 bg-stone-50/50">
-        <div className="flex items-center gap-2">
-          {(['llm', 'embedding'] as Method[]).map((m) => (
-            <button
-              key={m}
-              onClick={() => { setMethod(m); setHoveredRange(null); setHoverSide(null); }}
-              className={`px-4 py-2 text-sm rounded-lg transition-all ${
-                method === m
-                  ? 'bg-stone-800 text-white shadow-sm'
-                  : 'text-stone-500 hover:text-stone-700 hover:bg-stone-100'
-              }`}
-            >
-              <span className="font-medium">{methodDescriptions[m].label}</span>
-              <span className={`ml-2 text-xs ${method === m ? 'text-stone-300' : 'text-stone-400'}`}>
-                {methodDescriptions[m].sublabel}
-              </span>
-            </button>
-          ))}
+        <div className="text-sm text-stone-500">
+          <span className="font-medium text-stone-700">{page.author}</span>
+          {', '}
+          <em>{page.book}</em>
+          {' '}({page.year})
         </div>
-
-        <select
-          value={selectedPage}
-          onChange={(e) => { setSelectedPage(Number(e.target.value)); setHoveredRange(null); setHoverSide(null); }}
-          className="text-sm border border-stone-200 rounded-lg px-3 py-1.5 bg-white text-stone-600"
-        >
-          {data.pages.map((p, i) => (
-            <option key={p.id} value={i}>
-              {p.author} &mdash; {p.book}
-            </option>
-          ))}
-        </select>
+        {data.pages.length > 1 && (
+          <select
+            value={selectedPage}
+            onChange={(e) => {
+              setSelectedPage(Number(e.target.value));
+              setHoveredSentence(null);
+              setExpandedSentence(null);
+            }}
+            className="text-sm border border-stone-200 rounded-lg px-3 py-1.5 bg-white text-stone-600"
+          >
+            {data.pages.map((p, i) => (
+              <option key={p.id} value={i}>
+                {p.author} &mdash; {p.book}
+              </option>
+            ))}
+          </select>
+        )}
       </div>
 
-      {/* Alignment detail bar */}
-      <div className="px-5 py-2 border-b border-stone-100 bg-[#fdfcfa] min-h-[52px] flex items-center">
-        <AlignmentDetail links={links} hoveredRange={hoveredRange} hoverSide={hoverSide} />
+      {/* Column headers */}
+      <div className="grid grid-cols-1 md:grid-cols-2 gap-4 md:gap-8 px-5 pt-4 pb-2">
+        <div className="text-[11px] font-semibold text-stone-400 uppercase tracking-[0.15em]">
+          {page.sourceLanguage} Source
+        </div>
+        <div className="text-[11px] font-semibold text-stone-400 uppercase tracking-[0.15em]">
+          English Translation
+        </div>
       </div>
 
-      {/* Split pane */}
-      <div className="grid grid-cols-1 md:grid-cols-2 divide-y md:divide-y-0 md:divide-x divide-stone-100">
-        <div className="p-6">
-          <div className="text-[11px] font-semibold text-stone-400 uppercase tracking-[0.15em] mb-4">
-            {page.sourceLanguage} Source
-          </div>
-          <HighlightedText
-            text={page.sourceText}
-            weights={srcDisplay}
-            onHoverRange={handleHover}
-            side="source"
-            links={links}
+      {/* Sentence pairs */}
+      <div className="divide-y divide-stone-50">
+        {page.sentences.map((pair, i) => (
+          <SentenceRow
+            key={i}
+            pair={pair}
+            index={i}
+            isHovered={hoveredSentence === i}
+            isExpanded={expandedSentence === i}
+            onHover={handleHover}
+            onClick={handleClick}
           />
-        </div>
-        <div className="p-6">
-          <div className="text-[11px] font-semibold text-stone-400 uppercase tracking-[0.15em] mb-4">
-            English Translation
-          </div>
-          <HighlightedText
-            text={page.translationText}
-            weights={transDisplay}
-            onHoverRange={handleHover}
-            side="translation"
-            links={links}
-          />
-        </div>
+        ))}
       </div>
 
-      {/* Legend */}
-      <div className="px-5 py-3 border-t border-stone-100 bg-stone-50/50 flex items-center justify-center gap-6 text-xs text-stone-400">
-        <span className="flex items-center gap-1.5">
-          <span className="inline-block w-8 h-2 rounded-full" style={{ background: 'rgba(180,130,50,0.6)' }} />
-          Direct translation
-        </span>
-        <span className="flex items-center gap-1.5">
-          <span className="inline-block w-8 h-2 rounded-full" style={{ background: 'rgba(180,130,50,0.35)' }} />
-          Contextual
-        </span>
-        <span className="flex items-center gap-1.5">
-          <span className="inline-block w-8 h-2 rounded-full" style={{ background: 'rgba(180,130,50,0.15)' }} />
-          Implied / restructured
-        </span>
+      {/* Footer hint */}
+      <div className="px-5 py-3 border-t border-stone-100 bg-stone-50/50 text-center text-xs text-stone-400">
+        Hover to see the original. Click a sentence to see word-level correspondences.
       </div>
     </div>
   );
