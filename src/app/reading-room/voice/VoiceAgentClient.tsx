@@ -242,6 +242,20 @@ function VoiceAgentInner() {
     setSources([]);
 
     try {
+      // Request mic permission first so we get a clear error
+      await navigator.mediaDevices.getUserMedia({ audio: true });
+    } catch (err: any) {
+      console.error('[voice-agent] mic error:', err);
+      setErrorMsg(
+        err.name === 'NotAllowedError'
+          ? 'Microphone access denied. Click the lock icon in your address bar, allow microphone access, and reload.'
+          : 'Could not access microphone. Please check your browser settings.',
+      );
+      setAppStatus('error');
+      return;
+    }
+
+    try {
       const res = await fetch('/api/embassy/voice');
       if (!res.ok) throw new Error('Failed to get voice session');
       const { signedUrl } = await res.json();
