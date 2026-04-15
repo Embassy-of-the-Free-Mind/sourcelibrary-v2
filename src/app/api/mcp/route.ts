@@ -389,7 +389,7 @@ function createServer() {
       // search_images: return image content blocks alongside text metadata
       if (name === 'search_images' && result && typeof result === 'object' && 'images' in result) {
         const imageResult = result as { total: unknown; showing: unknown; images: Array<{ image_url: string; description: string; book: { title: string }; url: string; [k: string]: unknown }> };
-        const content: Array<{ type: 'text'; text: string } | { type: 'image'; data: string; mimeType: string }> = [];
+        const content: Array<{ type: 'text'; text: string } | { type: 'image'; data: string; mimeType: string; annotations?: { audience: string[] } }> = [];
 
         // Text summary first
         content.push({ type: 'text' as const, text: JSON.stringify({ total: imageResult.total, showing: imageResult.showing, images: imageResult.images }, null, 2) });
@@ -400,7 +400,7 @@ function createServer() {
         for (let i = 0; i < imagesToFetch.length; i++) {
           const img = fetched[i];
           if (img) {
-            content.push({ type: 'image' as const, data: img.data, mimeType: img.mimeType });
+            content.push({ type: 'image' as const, data: img.data, mimeType: img.mimeType, annotations: { audience: ['user'] } });
             content.push({ type: 'text' as const, text: `${imagesToFetch[i].description || 'Image'}\n${imagesToFetch[i].url}` });
           }
         }
