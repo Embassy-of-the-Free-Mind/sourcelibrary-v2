@@ -348,6 +348,24 @@ async function handleToolCall(name: string, args: ToolArgs) {
   }
 }
 
+// ── Fetch image as base64 (with timeout) ───────────────────────────
+
+async function fetchImageBase64(url: string): Promise<{ data: string; mimeType: string } | null> {
+  try {
+    const resp = await fetch(url, { signal: AbortSignal.timeout(5000) });
+    if (!resp.ok) return null;
+    const contentType = resp.headers.get('content-type') || 'image/jpeg';
+    const mimeType = contentType.split(';')[0].trim();
+    const buffer = await resp.arrayBuffer();
+    // Skip images larger than 1MB to keep responses reasonable
+    if (buffer.byteLength > 1_000_000) return null;
+    const data = Buffer.from(buffer).toString('base64');
+    return { data, mimeType };
+  } catch {
+    return null;
+  }
+}
+
 // ── Create a fresh MCP server instance (stateless per-request) ─────
 
 function createServer() {
@@ -367,6 +385,29 @@ function createServer() {
     const { name, arguments: args } = request.params;
     try {
       const result = await handleToolCall(name, (args || {}) as ToolArgs);
+
+      // search_images: return image content blocks alongside text metadata
+      if (name === 'search_images' && result && typeof result === 'object' && 'images' in result) {
+        const imageResult = result as { total: unknown; showing: unknown; images: Array<{ image_url: string; description: string; book: { title: string }; url: string; [k: string]: unknown }> };
+        const content: Array<{ type: 'text'; text: string } | { type: 'image'; data: string; mimeType: string }> = [];
+
+        // Text summary first
+        content.push({ type: 'text' as const, text: JSON.stringify({ total: imageResult.total, showing: imageResult.showing, images: imageResult.images }, null, 2) });
+
+        // Fetch actual images in parallel (limit to first 5 to keep response size manageable)
+        const imagesToFetch = imageResult.images.slice(0, 5);
+        const fetched = await Promise.all(imagesToFetch.map(img => fetchImageBase64(img.image_url)));
+        for (let i = 0; i < imagesToFetch.length; i++) {
+          const img = fetched[i];
+          if (img) {
+            content.push({ type: 'image' as const, data: img.data, mimeType: img.mimeType });
+            content.push({ type: 'text' as const, text: `${imagesToFetch[i].description || 'Image'}\n${imagesToFetch[i].url}` });
+          }
+        }
+
+        return { content };
+      }
+
       const text = typeof result === 'string' ? result : JSON.stringify(result, null, 2);
       return { content: [{ type: 'text' as const, text }] };
     } catch (error) {
