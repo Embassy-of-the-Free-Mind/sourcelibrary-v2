@@ -37,7 +37,7 @@ export interface UsageStats {
   costStats?: {
     totalCost: number;
     totalTokens: number;
-    costByDay: Array<{ date: string; cost: number; tokens: number }>;
+    costByDay: Array<{ date: string; cost: number; tokens: number; requests: number }>;
     costByAction: Array<{ action: string; cost: number; count: number }>;
   };
   collectionStats?: {

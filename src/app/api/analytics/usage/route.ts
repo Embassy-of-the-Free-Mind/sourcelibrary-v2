@@ -49,7 +49,7 @@ export const GET = withAuth(async (request, session) => {
         if (!rows || rows.length === 0) return [{}];
 
         let totalCost = 0, totalTokens = 0;
-        const costByDayMap = new Map<string, { cost: number; tokens: number }>();
+        const costByDayMap = new Map<string, { cost: number; tokens: number; requests: number }>();
         const costByActionMap = new Map<string, { cost: number; count: number }>();
         const modelUsageMap = new Map<string, number>();
         let imagePages = 0;
@@ -63,9 +63,10 @@ export const GET = withAuth(async (request, session) => {
 
           // Aggregate by day
           const dayStr = row.day;
-          const existing = costByDayMap.get(dayStr) || { cost: 0, tokens: 0 };
+          const existing = costByDayMap.get(dayStr) || { cost: 0, tokens: 0, requests: 0 };
           existing.cost += cost;
           existing.tokens += tokens;
+          existing.requests += Number(row.call_count) || 0;
           costByDayMap.set(dayStr, existing);
 
           // Aggregate by type
@@ -93,7 +94,7 @@ export const GET = withAuth(async (request, session) => {
           costTotal: [{ totalCost, totalTokens }],
           costByDay: Array.from(costByDayMap.entries())
             .sort(([a], [b]) => a.localeCompare(b))
-            .map(([date, v]) => ({ _id: date, cost: v.cost, tokens: v.tokens })),
+            .map(([date, v]) => ({ _id: date, cost: v.cost, tokens: v.tokens, requests: v.requests })),
           costByAction: Array.from(costByActionMap.entries())
             .sort(([, a], [, b]) => b.cost - a.cost)
             .map(([type, v]) => ({ _id: type, cost: v.cost, count: v.count })),
@@ -222,7 +223,7 @@ export const GET = withAuth(async (request, session) => {
     const costStats = {
       totalCost: gu.costTotal?.[0]?.totalCost || 0,
       totalTokens: gu.costTotal?.[0]?.totalTokens || 0,
-      costByDay: (gu.costByDay || []).map((d: any) => ({ date: d._id, cost: d.cost || 0, tokens: d.tokens || 0 })),
+      costByDay: (gu.costByDay || []).map((d: any) => ({ date: d._id, cost: d.cost || 0, tokens: d.tokens || 0, requests: d.requests || 0 })),
       costByAction: (gu.costByAction || []).map((a: any) => ({ action: a._id || 'unknown', cost: a.cost || 0, count: a.count || 0 })),
     };
 
