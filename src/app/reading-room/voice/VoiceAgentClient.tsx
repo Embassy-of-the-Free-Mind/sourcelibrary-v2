@@ -1,7 +1,6 @@
 'use client';
 
 import { useState, useRef, useCallback, useEffect } from 'react';
-// @ts-expect-error — @elevenlabs/react types not installed
 import { ConversationProvider, useConversation } from '@elevenlabs/react';
 import SiteHeader from '@/components/layout/SiteHeader';
 import Link from 'next/link';
