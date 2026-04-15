@@ -29,9 +29,13 @@ export async function GET(
     }
 
     // If not found, try by URL-encoded name (for friendly URLs)
+    // Exact match first (indexed, 2ms) then case-insensitive fallback (625K scan, 20s)
     if (!entity) {
       const decodedName = decodeURIComponent(id);
       entity = await db.collection('entities').findOne(
+        { name: decodedName },
+        { sort: { book_count: -1 } }
+      ) ?? await db.collection('entities').findOne(
         { name: { $regex: `^${escapeRegex(decodedName)}$`, $options: 'i' } },
         { sort: { book_count: -1 } }
       );
