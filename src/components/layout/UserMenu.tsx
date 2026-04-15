@@ -23,11 +23,8 @@ export default function UserMenu({ variant = 'default' }: UserMenuProps) {
     return () => document.removeEventListener('mousedown', handleClickOutside);
   }, []);
 
-  if (status === 'loading') {
-    return null;
-  }
-
-  // Anonymous user: show sign-in link
+  // Show sign-in link for anonymous users AND during loading.
+  // This ensures the link is visible in SSR and survives hydration failures.
   if (!session) {
     const textColor = variant === 'hero' ? 'text-white/80 hover:text-white' : '';
     const textStyle = variant === 'hero' ? {} : { color: 'var(--text-muted)' };
