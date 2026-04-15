@@ -506,6 +506,15 @@ export default function ReadingRoomClient({ featuredPassage }: ReadingRoomClient
             Your research agent for over 10,000 rare books. Ask a question, and the Librarian
             will search the collection, cross-reference sources, and build up findings you can export.
           </p>
+          <Link
+            href="/reading-room/voice"
+            className="inline-flex items-center gap-2 mt-4 px-4 py-2 bg-white/10 hover:bg-white/20 text-white/80 hover:text-white text-sm rounded-lg backdrop-blur-sm border border-white/10 transition-all"
+          >
+            <svg className="w-4 h-4" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={1.5}>
+              <path strokeLinecap="round" strokeLinejoin="round" d="M12 18.75a6 6 0 006-6v-1.5m-6 7.5a6 6 0 01-6-6v-1.5m6 7.5v3.75m-3.75 0h7.5M12 15.75a3 3 0 01-3-3V4.5a3 3 0 116 0v8.25a3 3 0 01-3 3z" />
+            </svg>
+            Try voice conversation
+          </Link>
 
           {featuredPassage && (
             <div className="mt-8 max-w-[560px]">
