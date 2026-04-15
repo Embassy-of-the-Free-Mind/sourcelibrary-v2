@@ -6,11 +6,11 @@ import { WordAlignmentDemo } from './WordAlignmentDemo';
 export const metadata: Metadata = {
   title: 'Reading Through the Translation - Research Notes - Source Library',
   description:
-    'What if you could see the original Latin behind every English sentence? An interactive exploration of translation alignment in 15th-century philosophical texts.',
+    'Click any English word to see the Latin it came from. Alignment computed by multilingual BERT embeddings, not guesswork.',
   openGraph: {
     title: 'Reading Through the Translation',
     description:
-      'Hover over any English sentence to see the original Latin it came from. Click to see word-level detail.',
+      'Click any English word to see the Latin it came from.',
   },
   alternates: {
     canonical: '/blog/word-alignment',
@@ -23,9 +23,9 @@ export default function WordAlignmentPage() {
       header={
         <ContentHeader
           title="Reading Through the Translation"
-          subtitle="What if you could see the original Latin behind every English sentence?"
+          subtitle="Click any English word to see the Latin that produced it"
         >
-          <p className="text-stone-400 text-sm mt-4">15 April 2026 &middot; 4 min read</p>
+          <p className="text-stone-400 text-sm mt-4">16 April 2026</p>
         </ContentHeader>
       }
       bg="bg-cream"
@@ -36,18 +36,8 @@ export default function WordAlignmentPage() {
           href="/blog"
           className="inline-flex items-center gap-2 text-muted hover:text-secondary transition-colors"
         >
-          <svg
-            className="w-4 h-4"
-            fill="none"
-            viewBox="0 0 24 24"
-            stroke="currentColor"
-            strokeWidth={2}
-          >
-            <path
-              strokeLinecap="round"
-              strokeLinejoin="round"
-              d="M10 19l-7-7m0 0l7-7m-7 7h18"
-            />
+          <svg className="w-4 h-4" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={2}>
+            <path strokeLinecap="round" strokeLinejoin="round" d="M10 19l-7-7m0 0l7-7m-7 7h18" />
           </svg>
           All notes
         </Link>
@@ -55,82 +45,21 @@ export default function WordAlignmentPage() {
 
       <article className="prose-content max-w-none">
         <p className="text-xl text-secondary leading-relaxed mb-8">
-          When you read a translation, you&rsquo;re trusting that someone got it right. But with
-          historical texts &mdash; where the author has been dead for five centuries and the Latin is
-          dense with abbreviations &mdash; trust isn&rsquo;t quite enough. You want to see the
-          original. Not just the whole page in a language you can&rsquo;t read, but the specific
-          sentence, the specific words, that produced the English in front of you.
-        </p>
-
-        <p className="text-secondary leading-relaxed mb-6">
-          Source Library has AI-translated over 10,000 pages of pre-modern Latin, German, Arabic, and
-          Hebrew. Every translation sits beside its source. But until now, the connection between them
-          has been implicit &mdash; you see the Latin on one side and the English on the other, and
-          you have to hold the correspondence in your head.
-        </p>
-
-        <p className="text-secondary leading-relaxed mb-8">
-          Below is an experiment in making that connection explicit. Hover over any English sentence
-          to see the Latin it came from. Click a sentence pair to see the word-level detail &mdash;
-          which Latin words became which English words, and where the translator had to restructure
-          the thought to make it work in English.
+          Source Library has AI-translated over 10,000 pages of pre-modern Latin into English.
+          What if you could click any English word and see which Latin words produced it &mdash;
+          not from a model guessing after the fact, but from the actual learned relationship
+          between languages? Below is a paragraph from Ficino&rsquo;s <em>De Voluptate</em> (1457),
+          aligned using multilingual BERT embeddings via{' '}
+          <a href="https://github.com/cisnlp/simalign" className="text-accent-gold-dark hover:underline">SimAlign</a>.
+          The model maps Latin and English words into the same vector space and finds correspondences
+          by similarity &mdash; so &ldquo;animum&rdquo; lands near &ldquo;soul&rdquo; even though
+          the words look nothing alike.
         </p>
       </article>
 
       <div className="mt-4 mb-12">
         <WordAlignmentDemo />
       </div>
-
-      <article className="prose-content max-w-none">
-        <h2 className="text-lg font-semibold text-primary mt-2 mb-4">Why sentence-level first</h2>
-
-        <p className="text-secondary leading-relaxed mb-6">
-          Early versions of this experiment started at the word level &mdash; hover one English word,
-          see scattered Latin words light up with varying opacities. It was technically impressive
-          and completely disorienting. You&rsquo;d hover &ldquo;soul&rdquo; and see
-          &ldquo;animum&rdquo; flash 400 characters away, losing all context.
-        </p>
-
-        <p className="text-secondary leading-relaxed mb-6">
-          The sentence is the natural unit of thought. When Ficino writes &ldquo;c&#x16B; animum in
-          duas partes distribuisset, mente scilicet, ac sensum,&rdquo; the whole clause produces
-          &ldquo;when he had divided the soul into two parts &mdash; namely, the mind and the
-          senses.&rdquo; You need to see the whole Latin sentence to understand what the translator
-          was working with. Word-level detail is useful <em>within</em> that context, not instead of
-          it.
-        </p>
-
-        <h2 className="text-lg font-semibold text-primary mt-10 mb-4">How it works</h2>
-
-        <p className="text-secondary leading-relaxed mb-6">
-          The alignment is generated by Gemini 3 Flash. We give it the Latin source and the English
-          translation and ask it to pair up sentences by meaning &mdash; not by counting periods,
-          since the translator sometimes splits or merges sentences for clarity. For each sentence
-          pair, we then ask for the key word-level correspondences: which Latin words map directly to
-          which English words, and which meanings were implied or restructured.
-        </p>
-
-        <p className="text-secondary leading-relaxed mb-6">
-          This works surprisingly well for 15th-century Latin. The model understands the grammar, the
-          abbreviations (&ldquo;c&#x16B;&rdquo; for &ldquo;cum,&rdquo; &ldquo;q&#x304;&rdquo; for
-          &ldquo;quam&rdquo;), and the philosophical vocabulary. It can tell you that
-          &ldquo;voluptatem&rdquo; becomes &ldquo;pleasure&rdquo; while &ldquo;l&aelig;ticiam&rdquo;
-          becomes &ldquo;gladness&rdquo; &mdash; a distinction Ficino considers important and that a
-          naive word matcher would miss entirely.
-        </p>
-
-        <h2 className="text-lg font-semibold text-primary mt-10 mb-4">What comes next</h2>
-
-        <p className="text-secondary leading-relaxed mb-12">
-          If this works at the page level, it could work at the library level. Source Library could
-          generate alignment data alongside every translation &mdash; baked into the reading
-          experience, not bolted on as an afterthought. A reader could move through a 400-page Latin
-          treatise in English, and at any moment trace a sentence or a word back to the original.
-          Not for the Latin scholars who can already read it, but for everyone else &mdash; the
-          people these books were never written for, who can now, for the first time, read through
-          the translation to the text behind it.
-        </p>
-      </article>
     </ContentPageLayout>
   );
 }
