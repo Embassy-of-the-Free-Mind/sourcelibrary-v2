@@ -2,6 +2,7 @@
 
 import { useSearchParams } from 'next/navigation';
 import { Suspense, useState } from 'react';
+import { signIn } from 'next-auth/react';
 import Link from 'next/link';
 import { BookLoader } from '@/components/ui/BookLoader';
 
