@@ -1,6 +1,7 @@
 'use client';
 
 import { useState, useRef, useCallback, useEffect } from 'react';
+// @ts-expect-error — @elevenlabs/react types not installed
 import { ConversationProvider, useConversation } from '@elevenlabs/react';
 import SiteHeader from '@/components/layout/SiteHeader';
 import Link from 'next/link';
@@ -182,7 +183,7 @@ function VoiceAgentInner() {
 
   const conversation = useConversation({
     clientTools: buildClientTools(addSources),
-    onMessage: (payload) => {
+    onMessage: (payload: { role?: string; source?: string; message: string }) => {
       setTranscript((prev) => {
         const entry: TranscriptEntry = {
           role: payload.role === 'agent' || payload.source === 'ai' ? 'agent' : 'user',
@@ -201,17 +202,17 @@ function VoiceAgentInner() {
         return [...prev, entry];
       });
     },
-    onError: (message) => {
+    onError: (message: string) => {
       console.error('[voice-agent]', message);
       setErrorMsg(message || 'Connection error');
       setAppStatus('error');
     },
-    onStatusChange: ({ status }) => {
+    onStatusChange: ({ status }: { status: string }) => {
       if (status === 'connected') setAppStatus('connected');
       else if (status === 'connecting') setAppStatus('connecting');
       else if (status === 'disconnected' || status === 'disconnecting') setAppStatus('idle');
     },
-    onModeChange: ({ mode }) => {
+    onModeChange: ({ mode }: { mode: string }) => {
       setAgentSpeaking(mode === 'speaking');
     },
   });
