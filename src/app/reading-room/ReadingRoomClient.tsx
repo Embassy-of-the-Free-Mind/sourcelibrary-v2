@@ -89,6 +89,7 @@ interface FeaturedPassage {
   bookYear: number | null;
   bookSlug: string;
   pageNumber: number;
+  pageId?: string;
 }
 
 interface ReadingRoomClientProps {
@@ -512,7 +513,7 @@ export default function ReadingRoomClient({ featuredPassage }: ReadingRoomClient
               <p className="text-[11px] text-white/40 tracking-[0.15em] uppercase font-sans mb-2">
                 The Librarian is reading
               </p>
-              <Link href={`/book/${featuredPassage.bookSlug}?page=${featuredPassage.pageNumber}`} className="block group">
+              <Link href={featuredPassage.pageId ? `/book/${featuredPassage.bookSlug}/page/${featuredPassage.pageId}` : `/book/${featuredPassage.bookSlug}`} className="block group">
                 <blockquote className="text-white/70 text-[15px] font-body leading-relaxed italic border-l-2 border-[#c9a86c]/40 pl-4">
                   &ldquo;{featuredPassage.text}&rdquo;
                 </blockquote>

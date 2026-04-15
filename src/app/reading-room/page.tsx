@@ -59,13 +59,28 @@ async function getFeaturedPassage() {
         text = cut > 80 ? truncated.slice(0, cut + 1) : truncated.slice(0, 280) + '...';
       }
       if (text.length >= 60) {
+        // Resolve page _id for deep linking (notebook stores slug, pages use book.id)
+        const bookSlug = f.source.bookSlug || f.source.bookId;
+        let pageId: string | undefined;
+        const bookDoc = await db.collection('books').findOne(
+          { $or: [{ slug: bookSlug }, { id: bookSlug }] },
+          { projection: { id: 1 }, maxTimeMS: 3000 }
+        );
+        if (bookDoc) {
+          const pageDoc = await db.collection('pages').findOne(
+            { book_id: bookDoc.id, page_number: f.source.pageNumber },
+            { projection: { _id: 1 }, maxTimeMS: 3000 }
+          );
+          pageId = pageDoc?._id?.toString();
+        }
         return {
           text,
           bookTitle: f.source.bookTitle,
           bookAuthor: f.source.bookAuthor,
           bookYear: null,
-          bookSlug: f.source.bookSlug || f.source.bookId,
+          bookSlug: bookSlug,
           pageNumber: f.source.pageNumber,
+          pageId,
         };
       }
     }
@@ -122,6 +137,7 @@ async function getFeaturedPassage() {
       bookYear: book.year,
       bookSlug: book.slug || book.id,
       pageNumber: bestPage.page_number,
+      pageId: bestPage._id?.toString() || undefined,
     };
   } catch (err) {
     console.error('[reading-room] Failed to load featured passage:', err);
