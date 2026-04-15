@@ -41,6 +41,7 @@ interface PodcastData {
   generatedAt: string;
   topic: string;
   findingCount: number;
+  script?: string;
 }
 
 function formatDate(dateStr: string): string {
@@ -55,11 +56,27 @@ function formatDate(dateStr: string): string {
 
 // ── Podcast Player ────────────────────────────────────────────────────
 
+function formatTranscript(script: string): { speaker: string; text: string }[] {
+  return script
+    .split('\n')
+    .filter(line => line.includes(':'))
+    .map(line => {
+      const colonIdx = line.indexOf(':');
+      const speaker = line.slice(0, colonIdx).trim();
+      const text = line.slice(colonIdx + 1).trim()
+        // Strip audio tags for display
+        .replace(/\[(laughs|whispers|enthusiasm|thoughtful|determination)\]/gi, '');
+      return { speaker, text };
+    })
+    .filter(entry => entry.text.length > 0);
+}
+
 function PodcastPlayer({ threadId }: { threadId: string }) {
   const [podcast, setPodcast] = useState<PodcastData | null>(null);
   const [generating, setGenerating] = useState(false);
   const [error, setError] = useState<string | null>(null);
   const [checked, setChecked] = useState(false);
+  const [showTranscript, setShowTranscript] = useState(false);
 
   // Check for existing podcast on mount
   useEffect(() => {
@@ -112,9 +129,29 @@ function PodcastPlayer({ threadId }: { threadId: string }) {
           className="w-full"
           preload="metadata"
         />
-        <p className="text-[11px] text-[#8a8480] font-sans mt-2">
-          Generated from {podcast.findingCount} research findings
-        </p>
+        <div className="flex items-center justify-between mt-2">
+          <p className="text-[11px] text-[#8a8480] font-sans">
+            Generated from {podcast.findingCount} research findings
+          </p>
+          {podcast.script && (
+            <button
+              onClick={() => setShowTranscript(!showTranscript)}
+              className="text-[11px] text-[#9e4a3a] font-sans hover:underline"
+            >
+              {showTranscript ? 'Hide transcript' : 'Show transcript'}
+            </button>
+          )}
+        </div>
+        {showTranscript && podcast.script && (
+          <div className="mt-3 pt-3 border-t border-[#e0d9cc] space-y-2 max-h-[400px] overflow-y-auto">
+            {formatTranscript(podcast.script).map((entry, i) => (
+              <p key={i} className="text-[13px] font-body leading-relaxed text-[#333]">
+                <span className="font-semibold text-[#1a1612]">{entry.speaker}:</span>{' '}
+                {entry.text}
+              </p>
+            ))}
+          </div>
+        )}
       </div>
     );
   }
