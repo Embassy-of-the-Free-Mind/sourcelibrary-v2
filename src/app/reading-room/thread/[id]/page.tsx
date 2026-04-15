@@ -81,14 +81,21 @@ function formatTranscript(script: string): { speaker: string; text: string }[] {
     .filter(entry => entry.text.length > 0);
 }
 
-// ── Interactive Mini-Chat ─────────────────────────────────────────────
+// ── Interactive Mode — Ask the Hosts ──────────────────────────────────
+
+interface InteractiveExchange {
+  question: string;
+  script: string;
+  audioUrl: string | null;
+}
 
 function AskWhileListening({ threadId }: { threadId: string }) {
   const [open, setOpen] = useState(false);
   const [question, setQuestion] = useState('');
-  const [answer, setAnswer] = useState('');
+  const [exchanges, setExchanges] = useState<InteractiveExchange[]>([]);
   const [loading, setLoading] = useState(false);
   const inputRef = useRef<HTMLInputElement>(null);
+  const audioRef = useRef<HTMLAudioElement>(null);
 
   useEffect(() => {
     if (open && inputRef.current) inputRef.current.focus();
@@ -96,49 +103,38 @@ function AskWhileListening({ threadId }: { threadId: string }) {
 
   const handleAsk = useCallback(async () => {
     if (!question.trim() || loading) return;
+    const q = question.trim();
     setLoading(true);
-    setAnswer('');
+    setQuestion('');
 
     try {
-      const res = await fetch('/api/embassy/chat', {
+      const res = await fetch(`/api/embassy/threads/${threadId}/podcast/ask`, {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify({
-          threadId,
-          message: question,
-        }),
+        body: JSON.stringify({ question: q }),
       });
 
       if (!res.ok) {
-        setAnswer('Could not reach the Librarian. Please try again.');
+        const err = await res.json().catch(() => ({ error: 'Failed' }));
+        setExchanges(prev => [...prev, { question: q, script: err.error || 'Could not generate response.', audioUrl: null }]);
         return;
       }
 
-      // Read SSE stream for text chunks
-      const reader = res.body?.getReader();
-      if (!reader) return;
-      const decoder = new TextDecoder();
-      let accumulated = '';
+      const data = await res.json();
+      const exchange: InteractiveExchange = {
+        question: q,
+        script: data.script || '',
+        audioUrl: data.audioUrl || null,
+      };
+      setExchanges(prev => [...prev, exchange]);
 
-      while (true) {
-        const { done, value } = await reader.read();
-        if (done) break;
-        const chunk = decoder.decode(value, { stream: true });
-        // Parse SSE events
-        for (const line of chunk.split('\n')) {
-          if (line.startsWith('data: ')) {
-            try {
-              const event = JSON.parse(line.slice(6));
-              if (event.type === 'chunk' && event.text) {
-                accumulated += event.text;
-                setAnswer(accumulated);
-              }
-            } catch { /* skip malformed */ }
-          }
-        }
+      // Auto-play the audio response
+      if (data.audioUrl && audioRef.current) {
+        audioRef.current.src = data.audioUrl;
+        audioRef.current.play().catch(() => {});
       }
     } catch {
-      setAnswer('Network error — please try again.');
+      setExchanges(prev => [...prev, { question: q, script: 'Network error — please try again.', audioUrl: null }]);
     } finally {
       setLoading(false);
     }
@@ -151,10 +147,9 @@ function AskWhileListening({ threadId }: { threadId: string }) {
         className="mt-3 text-[12px] text-[#9e4a3a] font-sans hover:underline flex items-center gap-1"
       >
         <svg className="w-3.5 h-3.5" fill="none" viewBox="0 0 24 24" strokeWidth={1.5} stroke="currentColor">
-          <path strokeLinecap="round" strokeLinejoin="round" d="M8.625 12a.375.375 0 11-.75 0 .375.375 0 01.75 0zm4.125 0a.375.375 0 11-.75 0 .375.375 0 01.75 0zm4.125 0a.375.375 0 11-.75 0 .375.375 0 01.75 0z" />
-          <path strokeLinecap="round" strokeLinejoin="round" d="M12 2.25c-5.385 0-9.75 4.365-9.75 9.75s4.365 9.75 9.75 9.75 9.75-4.365 9.75-9.75S17.385 2.25 12 2.25z" />
+          <path strokeLinecap="round" strokeLinejoin="round" d="M12 18.75a6 6 0 006-6v-1.5m-6 7.5a6 6 0 01-6-6v-1.5m6 7.5v3.75m-3.75 0h7.5M12 15.75a3 3 0 01-3-3V4.5a3 3 0 116 0v8.25a3 3 0 01-3 3z" />
         </svg>
-        Ask a question while listening
+        Ask Elena &amp; Marcus a question
       </button>
     );
   }
@@ -168,7 +163,7 @@ function AskWhileListening({ threadId }: { threadId: string }) {
           value={question}
           onChange={e => setQuestion(e.target.value)}
           onKeyDown={e => e.key === 'Enter' && handleAsk()}
-          placeholder="Ask the Librarian about what you're hearing..."
+          placeholder="Ask Elena & Marcus anything..."
           className="flex-1 text-sm font-body px-3 py-2 border border-[#ddd] rounded-lg focus:outline-none focus:border-[#9e4a3a] text-[#1a1612]"
           disabled={loading}
         />
@@ -177,22 +172,43 @@ function AskWhileListening({ threadId }: { threadId: string }) {
           disabled={loading || !question.trim()}
           className="px-3 py-2 bg-[#1a1612] text-white rounded-lg text-sm font-sans hover:bg-[#2a2622] disabled:opacity-50"
         >
-          {loading ? '...' : 'Ask'}
+          {loading ? (
+            <svg className="w-4 h-4 animate-spin" fill="none" viewBox="0 0 24 24">
+              <circle className="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" strokeWidth="4" />
+              <path className="opacity-75" fill="currentColor" d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4z" />
+            </svg>
+          ) : 'Ask'}
         </button>
         <button
-          onClick={() => { setOpen(false); setAnswer(''); setQuestion(''); }}
+          onClick={() => { setOpen(false); setExchanges([]); setQuestion(''); }}
           className="px-2 py-2 text-[#8a8480] hover:text-[#444] text-sm"
         >
           x
         </button>
       </div>
-      {answer && (
-        <div className="mt-3 text-[13px] font-body leading-relaxed text-[#333] prose prose-sm max-w-none prose-a:text-[#9e4a3a] prose-a:underline">
-          <ReactMarkdown remarkPlugins={[remarkGfm]}>
-            {ensureParagraphBreaks(linkifySourceUrls(answer))}
-          </ReactMarkdown>
-        </div>
+      {/* Hidden audio element for playing responses */}
+      <audio ref={audioRef} className="hidden" />
+      {loading && (
+        <p className="mt-2 text-[12px] text-[#8a8480] font-sans animate-pulse">
+          Elena and Marcus are thinking...
+        </p>
       )}
+      {exchanges.map((ex, i) => (
+        <div key={i} className="mt-3 pt-3 border-t border-[#e8e4dc]">
+          <p className="text-[12px] text-[#8a8480] font-sans mb-2">You asked: &ldquo;{ex.question}&rdquo;</p>
+          <div className="space-y-1.5">
+            {formatTranscript(ex.script).map((entry, j) => (
+              <p key={j} className="text-[13px] font-body leading-relaxed text-[#333]">
+                <span className="font-semibold text-[#1a1612]">{entry.speaker}:</span>{' '}
+                {entry.text}
+              </p>
+            ))}
+          </div>
+          {ex.audioUrl && (
+            <audio controls src={ex.audioUrl} className="w-full mt-2" preload="metadata" />
+          )}
+        </div>
+      ))}
     </div>
   );
 }
