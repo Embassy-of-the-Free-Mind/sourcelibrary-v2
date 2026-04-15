@@ -6,13 +6,13 @@ import BlogComments from '@/components/blog/BlogComments';
 export const revalidate = 86400;
 
 export const metadata: Metadata = {
-  title: '10,000 Books - Source Library',
+  title: '10,000 Books - Research Notes - Source Library',
   description:
-    'Source Library has reached 10,000 books — the largest collection of AI-translated historical texts ever assembled. The symbolic 10,000th is a Renaissance encyclopedia never before available in English.',
+    'Source Library passed 10,000 books. The 10,000th: Champier\'s Four Volumes of Divine and Human Marvels (1517), a Renaissance encyclopedia never before translated into English.',
   openGraph: {
     title: '10,000 Books',
     description:
-      'Source Library has reached 10,000 books. The symbolic 10,000th: Champier\'s Four Volumes of Divine and Human Marvels (1517), translated into English for the first time.',
+      'Champier\'s Four Volumes of Divine and Human Marvels (1517), translated into English for the first time.',
     images: [
       {
         url: 'https://images.sourcelibrary.org/archived/6909aba7cf28baa1b4caef69/5.jpg',
@@ -32,9 +32,9 @@ export default function TenThousandBooksPage() {
       header={
         <ContentHeader
           title="10,000 Books"
-          subtitle="A Renaissance encyclopedia of divine and human marvels, translated into English for the first time"
+          subtitle="And the Renaissance encyclopedia that nobody translated for 509 years"
         >
-          <p className="text-stone-400 text-sm mt-4">13 April 2026 &middot; 5 min read</p>
+          <p className="text-stone-400 text-sm mt-4">13 April 2026 &middot; 4 min read</p>
         </ContentHeader>
       }
       bg="bg-cream"
@@ -54,9 +54,18 @@ export default function TenThousandBooksPage() {
       <article className="prose-content max-w-none">
         {/* Lede */}
         <p className="text-xl text-secondary leading-relaxed mb-8 font-body">
-          Source Library has passed 10,000 visible books. The collection now holds 10,263 works spanning
-          five millennia of human thought, nearly all of them OCR&apos;d and translated into English by AI.
-          This is the largest corpus of AI-translated historical texts ever assembled.
+          Source Library has passed 10,000 books.
+        </p>
+
+        <p className="text-secondary leading-relaxed mb-10 font-body">
+          Four years ago the collection was one book &mdash; Ficino&apos;s <em>Liber de Voluptate</em>,
+          untranslated for five centuries, sitting in a glass case at the{' '}
+          <a href="https://embassyofthefreemind.com" className="text-accent-rust hover:text-accent-rust underline">
+            Embassy of the Free Mind
+          </a>{' '}
+          in Amsterdam. The collection now holds 10,263 works, spanning Sumerian tablets to
+          nineteenth-century Sanskrit, nearly all OCR&apos;d and translated into English. About 95%
+          of the pages are done. The pipeline translates roughly 700 new pages a day.
         </p>
 
         {/* Hero image */}
@@ -68,56 +77,44 @@ export default function TenThousandBooksPage() {
             className="w-full max-w-2xl mx-auto rounded-lg shadow-md"
           />
           <figcaption className="text-center text-sm text-muted mt-3 italic">
-            Dedication woodcut from Symphorien Champier, <em>Mirabilium divinorum humanorumque volumina quattuor</em> (1517).
+            Symphorien Champier, <em>Mirabilium divinorum humanorumque volumina quattuor</em> (1517).
             Bibliotheca Philosophica Hermetica, Amsterdam.
           </figcaption>
         </figure>
 
         <hr className="border-border-light my-12" />
 
-        {/* The 10,000th book */}
+        {/* Champier */}
         <section className="mb-16">
           <h2 className="font-serif text-2xl md:text-3xl text-primary mb-6">
             The 10,000th book
           </h2>
 
           <p className="text-secondary leading-relaxed mb-6 font-body">
-            The symbolic 10,000th book is Symphorien Champier&apos;s{' '}
+            We wanted the 10,000th book to mean something, so we chose one. Symphorien Champier&apos;s{' '}
             <a
               href="https://sourcelibrary.org/book/four-volumes-of-divine-and-human-marvels-champier"
               className="text-accent-rust hover:text-accent-rust underline"
             >
               <em>Mirabilium divinorum humanorumque volumina quattuor</em>
             </a>{' '}
-            &mdash; &ldquo;Four Volumes of Divine and Human Marvels&rdquo; &mdash; published in Paris in 1517.
-            It has never been translated into English. Until now, its 165 pages of Latin have been
-            accessible only to specialists.
+            &mdash; &ldquo;Four Volumes of Divine and Human Marvels&rdquo; &mdash; published in 1517.
+            Never translated into English. 165 pages of Latin, accessible only to specialists for
+            five hundred and nine years.
           </p>
 
           <p className="text-secondary leading-relaxed mb-6 font-body">
-            Champier was a physician-philosopher from Lyon who moved in the intellectual orbit of
-            Giovanni Pico della Mirandola. His dedication mentions both Pico and Jacques Lef&egrave;vre
-            d&apos;&Eacute;taples by name &mdash; two of the key figures in the transmission of ancient
-            philosophy into the Renaissance mainstream. The book itself is a kind of Renaissance
-            encyclopedia: a systematic attempt to synthesize Orphic, Hermetic, Zoroastrian, Pythagorean,
-            Platonic, and Aristotelian thought into a single coherent framework. It asks what the ancients
-            actually agreed on, and where they disagreed, about the nature of divinity, the soul, and the
-            structure of the cosmos.
+            Champier was a physician from Lyon. He knew the circle around Pico della Mirandola &mdash;
+            the dedication mentions both Pico and Jacques Lef&egrave;vre d&apos;&Eacute;taples by name.
+            The book is his attempt to synthesize everything: Orphic, Hermetic, Zoroastrian, Pythagorean,
+            Platonic, Aristotelian. Four volumes asking what all these traditions actually agreed on
+            about the nature of divinity, the soul, and the cosmos. A Renaissance encyclopedia of
+            the perennial philosophy, written by someone who had met the people doing the work.
           </p>
 
           <p className="text-secondary leading-relaxed mb-6 font-body">
-            It is exactly the kind of book that Source Library was built for: a serious work of
-            intellectual history, written by someone plugged into the most important philosophical
-            networks of his era, that fell through every crack in the translation record for five
-            hundred years. The physical copy lives at the{' '}
-            <a
-              href="https://embassyofthefreemind.com"
-              className="text-accent-rust hover:text-accent-rust underline"
-            >
-              Bibliotheca Philosophica Hermetica
-            </a>{' '}
-            in Amsterdam &mdash; the same library where Source Library began, with a single untranslated
-            Ficino manuscript, in February 2022.
+            The physical copy resides at the Bibliotheca Philosophica Hermetica &mdash; the same
+            library where this project began. That felt appropriate.
           </p>
         </section>
 
@@ -300,31 +297,25 @@ export default function TenThousandBooksPage() {
 
         <hr className="border-border-light my-12" />
 
-        {/* The numbers */}
+        {/* Where things stand */}
         <section className="mb-16">
           <h2 className="font-serif text-2xl md:text-3xl text-primary mb-6">
-            The numbers
+            Where things stand
           </h2>
-
-          <p className="text-secondary leading-relaxed mb-6 font-body">
-            Of 10,263 visible books, 9,906 have at least some English translation &mdash; 99.1% of the
-            collection. 8,091 are fully translated, cover to cover. At the page level, 2.94 million of
-            3.08 million pages have been translated, a completion rate of 95.3%.
-          </p>
 
           <div className="bg-white border border-border-light rounded-xl p-6 md:p-8 my-8">
             <div className="grid grid-cols-2 md:grid-cols-4 gap-6 text-center">
               <div>
                 <p className="font-serif text-3xl md:text-4xl text-primary">10,263</p>
-                <p className="text-sm text-muted mt-1">visible books</p>
+                <p className="text-sm text-muted mt-1">books</p>
               </div>
               <div>
-                <p className="font-serif text-3xl md:text-4xl text-primary">95.3%</p>
-                <p className="text-sm text-muted mt-1">pages translated</p>
+                <p className="font-serif text-3xl md:text-4xl text-primary">8,091</p>
+                <p className="text-sm text-muted mt-1">fully translated</p>
               </div>
               <div>
                 <p className="font-serif text-3xl md:text-4xl text-primary">2.94M</p>
-                <p className="text-sm text-muted mt-1">translated pages</p>
+                <p className="text-sm text-muted mt-1">pages done</p>
               </div>
               <div>
                 <p className="font-serif text-3xl md:text-4xl text-primary">~44K</p>
@@ -334,55 +325,60 @@ export default function TenThousandBooksPage() {
           </div>
 
           <p className="text-secondary leading-relaxed mb-6 font-body">
-            The books come from digital libraries across the world: the Bibliotheca Philosophica
-            Hermetica, the Internet Archive, Gallica, e-rara, the Bayerische Staatsbibliothek,
-            HathiTrust, and dozens of others. They range from Sumerian clay tablets to
-            nineteenth-century Sanskrit treatises. The translations are produced by Google&apos;s Gemini,
-            working page by page from high-resolution scans, with the original text always displayed
-            alongside the English for verification.
+            The books come from the BPH, the Internet Archive, Gallica, e-rara, the Bayerische
+            Staatsbibliothek, HathiTrust, and about forty other digital libraries. Translations
+            are produced by Gemini, working page by page from high-resolution scans. The original
+            text is always displayed alongside the English so you can check it.
+          </p>
+
+          <p className="text-secondary leading-relaxed mb-6 font-body">
+            The{' '}
+            <Link href="/census" className="text-accent-rust hover:text-accent-rust underline">
+              union catalog
+            </Link>{' '}
+            behind Source Library tracks over 700,000 digitized pre-modern editions. We have translated
+            approximately 1.4% of them. The{' '}
+            <Link href="/blog/untranslated-renaissance" className="text-accent-rust hover:text-accent-rust underline">
+              translation census
+            </Link>{' '}
+            estimates that roughly 99% of Renaissance texts have never been translated into English
+            at all. Ten thousand is a beginning.
           </p>
         </section>
 
         <hr className="border-border-light my-12" />
 
-        {/* What comes next */}
+        {/* Closing */}
         <section className="mb-16">
-          <h2 className="font-serif text-2xl md:text-3xl text-primary mb-6">
-            What comes next
-          </h2>
-
           <p className="text-secondary leading-relaxed mb-6 font-body">
-            Ten thousand is a milestone, not a destination. The{' '}
-            <a
-              href="https://sourcelibrary.org/census"
-              className="text-accent-rust hover:text-accent-rust underline"
-            >
-              union catalog
-            </a>{' '}
-            behind Source Library tracks over 700,000 digitized editions of pre-modern texts. Most have
-            never been translated into any modern language. The gap between what exists in libraries and
-            what is actually readable by a non-specialist remains vast.
-          </p>
-
-          <p className="text-secondary leading-relaxed mb-6 font-body">
-            The pipeline that processes these books &mdash; archiving images, running OCR, translating,
-            extracting illustrations, scoring quality, assigning classifications &mdash; now handles
-            roughly 44,000 pages per day. The constraint is no longer technical. It is curatorial:
-            deciding what to translate next, in what order, and how to make it findable once it arrives.
+            The constraint is no longer technical. Models are fast enough and cheap enough. The
+            constraint is curatorial &mdash; deciding what to translate next, in what order, and
+            how to make it findable once it arrives. A year ago the question was whether this
+            was possible at all.
           </p>
 
           <p className="text-secondary leading-relaxed mb-10 font-body">
-            Champier&apos;s book sat untranslated for 509 years. Now anyone with an internet connection
-            can{' '}
+            Champier&apos;s book sat in a library in Amsterdam for five centuries. Now anyone can{' '}
             <a
               href="https://sourcelibrary.org/book/four-volumes-of-divine-and-human-marvels-champier"
               className="text-accent-rust hover:text-accent-rust underline"
             >
               read it
             </a>
-            . That sentence, repeated ten thousand times, is the whole point.
+            .
           </p>
         </section>
+
+        {/* Footer */}
+        <div className="border-t border-border-light pt-8 mt-16">
+          <p className="text-secondary text-sm leading-relaxed font-body">
+            Source Library is a project of the Embassy of the Free Mind. If you have leads on
+            untranslated texts that belong in the collection &mdash;{' '}
+            <a href="mailto:derek@sourcelibrary.org" className="text-accent-rust hover:text-accent-rust underline">
+              derek@sourcelibrary.org
+            </a>.
+          </p>
+        </div>
       </article>
 
       <BlogComments slug="10000-books" />
