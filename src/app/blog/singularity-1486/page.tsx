@@ -324,7 +324,7 @@ export default function Singularity1486Page() {
 
         <blockquote className="border-l-2 border-accent-rust/30 pl-6 my-8">
           <p className="text-secondary leading-relaxed italic font-body">
-            &ldquo;The soul is present in its entirety in every individual part at once: since the whole feels at once in each part.&rdquo;
+            &ldquo;The whole is present to each individual part at once, since the whole feels at once in each part.&rdquo;
           </p>
         </blockquote>
 
@@ -335,7 +335,7 @@ export default function Singularity1486Page() {
         </blockquote>
 
         <p className="text-secondary leading-relaxed mb-6 font-body">
-          The soul is not localised. It is not in the brain, or the heart, or any organ. It is present in its entirety in every part of the body simultaneously. And it is established <em>between</em> eternity and time &mdash; not fully in either, but bridging both. This is the philosophical architecture that Pico&rsquo;s Oration is built on: humans can &ldquo;shape themselves into whatever form they prefer&rdquo; because the soul, their essential nature, is the one thing in the cosmos that is genuinely unfixed.
+          The soul is not localised. It is not in the brain, or the heart, or any organ. It is present as a whole in every part of the body simultaneously. And it is established <em>between</em> eternity and time &mdash; not fully in either, but bridging both. This is the philosophical architecture that Pico&rsquo;s Oration is built on: humans can &ldquo;shape themselves into whatever form they prefer&rdquo; because the soul, their essential nature, is the one thing in the cosmos that is genuinely unfixed.
         </p>
 
         <p className="text-secondary leading-relaxed mb-8 font-body">
@@ -360,7 +360,7 @@ export default function Singularity1486Page() {
 
         <blockquote className="border-l-2 border-accent-rust/30 pl-6 my-8">
           <p className="text-secondary leading-relaxed italic font-body">
-            &ldquo;Just as an uneven mirror changes the rays of things according to its own figure, the human mind distorts truth by mixing its own nature with external reality.&rdquo;
+            &ldquo;Just as an uneven mirror changes the rays of things according to its own figure and section, so also the mind &mdash; when it suffers from things through the Sense &mdash; in unfolding and devising its notions, does not with the best faith insert and mingle its own nature with the nature of Things.&rdquo;
           </p>
         </blockquote>
 
@@ -400,7 +400,7 @@ export default function Singularity1486Page() {
 
         <blockquote className="border-l-2 border-accent-rust/30 pl-6 my-8">
           <p className="text-secondary leading-relaxed italic font-body">
-            &ldquo;If we know that we do not drift about as soul-less as the downy feather &hellip; how do we know it? Only because we ourselves <em>are</em> these beings.&rdquo;
+            &ldquo;But if we know that we do not drift about as soul-less as the downy feather, how do we know it? Only because we ourselves <em>are</em> these beings.&rdquo;
           </p>
         </blockquote>
 
@@ -410,7 +410,7 @@ export default function Singularity1486Page() {
 
         <blockquote className="border-l-2 border-accent-rust/30 pl-6 my-8">
           <p className="text-secondary leading-relaxed italic font-body">
-            &ldquo;Why should the delicately built forget-me-not be any less worthy of harboring a soul than the misshapen form of a dirty worm?&rdquo;
+            &ldquo;I certainly do not know what inherent privilege running and screaming would have over blooming and scenting to be the sole carriers of soul-activity and sensation; nor do I see why the delicately built and adorned form of the clean plant should be any less worthy of harboring a soul than the misshapen form of a dirty worm.&rdquo;
           </p>
         </blockquote>
 
