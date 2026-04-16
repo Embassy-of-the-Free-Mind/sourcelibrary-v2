@@ -6,109 +6,11 @@ import { ConversationProvider, useConversation } from '@elevenlabs/react';
 import SiteHeader from '@/components/layout/SiteHeader';
 import Link from 'next/link';
 
+import { buildClientTools, type SourceResult, type Visual } from '@/lib/voice/client-tools';
+
 const HERO_IMG = 'https://images.sourcelibrary.org/artwork/reading-room-hero.png';
 
-// ── Types ─────────────────────────────────────────────────────────────
-
 interface TranscriptEntry { role: 'user' | 'agent'; text: string; isFinal: boolean }
-interface SourceResult { bookId: string; title: string; author: string; slug?: string; pageNumber?: number; snippet?: string }
-interface Visual { type: 'image' | 'page'; url: string; title: string; caption?: string; bookSlug?: string; pageNumber?: number }
-
-// ── Client Tools ──────────────────────────────────────────────────────
-
-function buildClientTools(addSources: (s: SourceResult[]) => void, addVisual: (v: Visual) => void) {
-  return {
-    search_library: async ({ query }: { query: string }): Promise<string> => {
-      console.log('[voice-agent] search_library called:', query);
-      try {
-        const controller = new AbortController();
-        const timeout = setTimeout(() => controller.abort(), 10000);
-        const res = await fetch(`/api/search?q=${encodeURIComponent(query)}&limit=8&has_translation=true`, { signal: controller.signal });
-        clearTimeout(timeout);
-        if (!res.ok) return JSON.stringify({ error: `${res.status}` });
-        const data = await res.json();
-        const results = (data.results || []).slice(0, 6);
-        addSources(results.map((r: any) => ({
-          bookId: r.id || r.bookId, title: r.title || r.bookTitle, author: r.author || r.bookAuthor,
-          slug: r.slug || r.bookSlug, pageNumber: r.pageNumber || r.page_number, snippet: r.snippet,
-        })));
-        return JSON.stringify({ found: results.length, results: results.map((r: any) => ({
-          title: r.title || r.bookTitle, author: r.author || r.bookAuthor, year: r.year,
-          bookId: r.id || r.bookId, slug: r.slug || r.bookSlug,
-          pageNumber: r.pageNumber || r.page_number, snippet: (r.snippet || '').slice(0, 300),
-        })) });
-      } catch (e) { return JSON.stringify({ error: String(e) }); }
-    },
-    search_semantic: async ({ query }: { query: string }): Promise<string> => {
-      // Semantic search (Supabase hybrid_search) is currently unreliable — redirect to keyword search
-      // TODO: re-enable when Supabase RPC performance is fixed
-      console.log('[voice-agent] search_semantic redirected to keyword search:', query);
-      try {
-        const controller = new AbortController();
-        const timeout = setTimeout(() => controller.abort(), 10000);
-        const res = await fetch(`/api/search?q=${encodeURIComponent(query)}&limit=8&has_translation=true&search_content=true`, { signal: controller.signal });
-        clearTimeout(timeout);
-        if (!res.ok) throw new Error(`${res.status}`);
-        const data = await res.json();
-        const results = (data.results || []).slice(0, 6);
-        addSources(results.map((r: any) => ({
-          bookId: r.id || r.bookId, title: r.title || r.bookTitle, author: r.author || r.bookAuthor,
-          slug: r.slug || r.bookSlug, pageNumber: r.pageNumber || r.page_number, snippet: r.snippet,
-        })));
-        return JSON.stringify({ found: results.length, results: results.map((r: any) => ({
-          title: r.title || r.bookTitle, author: r.author || r.bookAuthor,
-          bookId: r.id || r.bookId, slug: r.slug || r.bookSlug,
-          pageNumber: r.pageNumber || r.page_number, snippet: (r.snippet || '').slice(0, 300),
-        })) });
-      } catch (e) {
-        // Fallback to keyword search if semantic times out
-        console.log('[voice-agent] semantic failed, falling back to keyword:', String(e));
-        try {
-          const res = await fetch(`/api/search?q=${encodeURIComponent(query)}&limit=8&has_translation=true&search_content=true`);
-          if (!res.ok) return JSON.stringify({ error: `${res.status}` });
-          const data = await res.json();
-          const results = (data.results || []).slice(0, 6);
-          addSources(results.map((r: any) => ({
-            bookId: r.id || r.bookId, title: r.title || r.bookTitle, author: r.author || r.bookAuthor,
-            slug: r.slug || r.bookSlug, pageNumber: r.pageNumber || r.page_number, snippet: r.snippet,
-          })));
-          return JSON.stringify({ found: results.length, results: results.map((r: any) => ({
-            title: r.title || r.bookTitle, author: r.author || r.bookAuthor,
-            bookId: r.id || r.bookId, slug: r.slug || r.bookSlug,
-            pageNumber: r.pageNumber || r.page_number, snippet: (r.snippet || '').slice(0, 300),
-          })) });
-        } catch (e2) { return JSON.stringify({ error: String(e2) }); }
-      }
-    },
-    read_page: async ({ book_id, page_number }: { book_id: string; page_number: number }): Promise<string> => {
-      try {
-        const res = await fetch(`/api/books/${book_id}/pages?page=${page_number}`);
-        if (!res.ok) return JSON.stringify({ error: `${res.status}` });
-        const data = await res.json();
-        const page = data.pages?.[0] || data;
-        const text = page.translation?.data || page.ocr?.data || '';
-        const imageUrl = page.compressed_photo || page.archived_photo || page.photo;
-        if (imageUrl) addVisual({ type: 'page', url: imageUrl, title: `Page ${page.page_number || page_number}`, caption: text.slice(0, 120) + (text.length > 120 ? '...' : ''), pageNumber: page.page_number || page_number });
-        return JSON.stringify({ text: text.slice(0, 2000), pageNumber: page.page_number || page_number, hasTranslation: !!page.translation?.data });
-      } catch (e) { return JSON.stringify({ error: String(e) }); }
-    },
-    search_images: async ({ query }: { query: string }): Promise<string> => {
-      try {
-        const res = await fetch(`/api/search/visual?q=${encodeURIComponent(query)}&limit=6`);
-        if (!res.ok) return JSON.stringify({ error: `${res.status}` });
-        const data = await res.json();
-        const images = (data.results || data.images || []).slice(0, 6);
-        for (const img of images) {
-          const url = img.imageUrl || img.fullImageUrl || img.image_url;
-          if (url) addVisual({ type: 'image', url, title: img.title || img.description || 'Illustration', caption: img.author, bookSlug: img.bookSlug || img.slug });
-        }
-        return JSON.stringify({ found: images.length, images: images.map((img: any) => ({
-          description: (img.title || img.description || '').slice(0, 200), bookTitle: img.book_title || img.title, subjects: img.subjects?.slice(0, 5),
-        })) });
-      } catch (e) { return JSON.stringify({ error: String(e) }); }
-    },
-  };
-}
 
 // ── Visual Lightbox ───────────────────────────────────────────────────
 
@@ -168,7 +70,7 @@ function VoiceAgentInner() {
   }, []);
 
   const conversation = useConversation({
-    clientTools: buildClientTools(addSources, addVisual),
+    clientTools: buildClientTools({ addSources, addVisual }),
     onMessage: (payload: { role?: string; source?: string; message: string }) => {
       setTranscript((prev) => {
         const entry: TranscriptEntry = { role: payload.role === 'agent' || payload.source === 'ai' ? 'agent' : 'user', text: payload.message, isFinal: true };
@@ -176,15 +78,15 @@ function VoiceAgentInner() {
         return [...prev, entry];
       });
     },
-    onError: (message: string) => { console.error('[voice-agent]', message); setErrorMsg(message || 'Connection error'); setAppStatus('error'); },
+    onError: (message: string) => { console.error('[voice-agent] error:', message, 'status was:', appStatus); setErrorMsg(message || 'Connection error'); setAppStatus('error'); },
     onStatusChange: ({ status }: { status: string }) => {
+      console.log('[voice-agent] status:', status);
       if (status === 'connected') setAppStatus('connected');
       else if (status === 'connecting') setAppStatus('connecting');
       else if (status === 'disconnected' || status === 'disconnecting') setAppStatus('idle');
     },
     onModeChange: ({ mode }: { mode: string }) => { setAgentSpeaking(mode === 'speaking'); },
-    onUnhandledClientToolCall: (params: any) => { console.warn('[voice-agent] UNHANDLED tool call:', params); },
-    onDebug: (props: any) => { if (props?.type?.includes('tool')) console.log('[voice-agent] debug:', props); },
+    onUnhandledClientToolCall: (params: any) => { console.error('[voice-agent] UNHANDLED tool call — tool name mismatch between ElevenLabs agent config and client code:', params); },
   });
 
   useEffect(() => { scrollRef.current?.scrollTo({ top: scrollRef.current.scrollHeight, behavior: 'smooth' }); }, [transcript]);
