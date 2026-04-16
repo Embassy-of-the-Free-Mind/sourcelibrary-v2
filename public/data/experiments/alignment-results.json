@@ -544,6 +544,291 @@
           ]
         }
       ]
+    },
+    {
+      "id": "aratus-phaenomena-opening",
+      "book": "Phaenomena",
+      "author": "Aratus of Soli",
+      "year": "~270 BCE",
+      "sourceLanguage": "Ancient Greek",
+      "hasTransliteration": true,
+      "sentences": [
+        {
+          "src": "Ek Διὸς ἀρχώμεσθα, τὸν οὐδέποτ' ἄνδρες ἐῶμεν ἀῤῥητον·",
+          "translit": "Ek Dios archōmestha, ton oudepot' andres eōmen arrēton·",
+          "en": "From Zeus let us begin: him let no man leave unspoken.",
+          "words": [
+            {
+              "src": "Ek",
+              "translit": "Ek",
+              "en": "From",
+              "weight": 1.0
+            },
+            {
+              "src": "Διὸς",
+              "translit": "Dios",
+              "en": "Zeus",
+              "weight": 1.0
+            },
+            {
+              "src": "ἀρχώμεσθα",
+              "translit": "archōmestha",
+              "en": "begin",
+              "weight": 1.0
+            },
+            {
+              "src": "ἀρχώμεσθα",
+              "translit": "archōmestha",
+              "en": "unspoken",
+              "weight": 1.0
+            },
+            {
+              "src": "οὐδέποτ",
+              "translit": "oudepot",
+              "en": "him",
+              "weight": 1.0
+            },
+            {
+              "src": "ἄνδρες",
+              "translit": "andres",
+              "en": "man",
+              "weight": 1.0
+            },
+            {
+              "src": "ἄνδρες",
+              "translit": "andres",
+              "en": "unspoken",
+              "weight": 1.0
+            },
+            {
+              "src": "ἐῶμεν",
+              "translit": "eōmen",
+              "en": "us",
+              "weight": 1.0
+            },
+            {
+              "src": "ἀῤῥητον",
+              "translit": "arrēton",
+              "en": "unspoken",
+              "weight": 1.0
+            }
+          ]
+        },
+        {
+          "src": "μεσταὶ δὲ Διὸς πᾶσαι μὲν ἀγυιαί, πᾶσαι δ' ἀνθρώπων ἀγοραί, μεστὴ δὲ θάλασσα καὶ λιμένες·",
+          "translit": "mestai de Dios pasai men aguiai, pasai d' anthrōpōn agorai, mestē de thalassa kai limenes·",
+          "en": "Full of Zeus are all the streets, all the marketplaces of men, full is the sea and the harbors.",
+          "words": [
+            {
+              "src": "μεσταὶ",
+              "translit": "mestai",
+              "en": "Full",
+              "weight": 1.0
+            },
+            {
+              "src": "Διὸς",
+              "translit": "Dios",
+              "en": "Zeus",
+              "weight": 1.0
+            },
+            {
+              "src": "μὲν",
+              "translit": "men",
+              "en": "of",
+              "weight": 1.0
+            },
+            {
+              "src": "ἀγυιαί",
+              "translit": "aguiai",
+              "en": "streets",
+              "weight": 1.0
+            },
+            {
+              "src": "ἀγυιαί",
+              "translit": "aguiai",
+              "en": "marketplaces",
+              "weight": 1.0
+            },
+            {
+              "src": "ἀνθρώπων",
+              "translit": "anthrōpōn",
+              "en": "men",
+              "weight": 1.0
+            },
+            {
+              "src": "ἀγοραί",
+              "translit": "agorai",
+              "en": "men",
+              "weight": 1.0
+            },
+            {
+              "src": "μεστὴ",
+              "translit": "mestē",
+              "en": "full",
+              "weight": 1.0
+            },
+            {
+              "src": "μεστὴ",
+              "translit": "mestē",
+              "en": "is",
+              "weight": 1.0
+            },
+            {
+              "src": "θάλασσα",
+              "translit": "thalassa",
+              "en": "sea",
+              "weight": 1.0
+            },
+            {
+              "src": "θάλασσα",
+              "translit": "thalassa",
+              "en": "harbors",
+              "weight": 1.0
+            },
+            {
+              "src": "καὶ",
+              "translit": "kai",
+              "en": "and",
+              "weight": 1.0
+            },
+            {
+              "src": "λιμένες",
+              "translit": "limenes",
+              "en": "marketplaces",
+              "weight": 1.0
+            },
+            {
+              "src": "λιμένες",
+              "translit": "limenes",
+              "en": "harbors",
+              "weight": 1.0
+            }
+          ]
+        },
+        {
+          "src": "πάντη δὲ Διὸς κεχρήμεθα πάντες.",
+          "translit": "pantē de Dios kechrēmetha pantes.",
+          "en": "Everywhere we all make use of Zeus.",
+          "words": [
+            {
+              "src": "πάντη",
+              "translit": "pantē",
+              "en": "Everywhere",
+              "weight": 1.0
+            },
+            {
+              "src": "Διὸς",
+              "translit": "Dios",
+              "en": "Zeus",
+              "weight": 1.0
+            },
+            {
+              "src": "κεχρήμεθα",
+              "translit": "kechrēmetha",
+              "en": "make",
+              "weight": 1.0
+            },
+            {
+              "src": "πάντες",
+              "translit": "pantes",
+              "en": "Everywhere",
+              "weight": 1.0
+            },
+            {
+              "src": "πάντες",
+              "translit": "pantes",
+              "en": "Zeus",
+              "weight": 1.0
+            }
+          ]
+        },
+        {
+          "src": "τοῦ γὰρ καὶ γένος εἰμέν·",
+          "translit": "tou gar kai genos eimen·",
+          "en": "For we are also his offspring.",
+          "words": [
+            {
+              "src": "καὶ",
+              "translit": "kai",
+              "en": "his",
+              "weight": 1.0
+            },
+            {
+              "src": "γένος",
+              "translit": "genos",
+              "en": "offspring",
+              "weight": 1.0
+            },
+            {
+              "src": "εἰμέν",
+              "translit": "eimen",
+              "en": "offspring",
+              "weight": 1.0
+            }
+          ]
+        },
+        {
+          "src": "ὁ δ' ἤπιος ἀνθρώποισιν δεξιὰ σημαίνει, λαοὺς δ' ἐπὶ ἔργον ἐγείρει μιμνήσκων βιότοιο·",
+          "translit": "o d' ēpios anthrōpoisin dexia sēmainei, laous d' epi ergon egeirei mimnēskōn biotoio·",
+          "en": "He, being kind to men, gives favorable signs, and stirs the people to work, reminding them of life.",
+          "words": [
+            {
+              "src": "σημαίνει",
+              "translit": "sēmainei",
+              "en": "men",
+              "weight": 1.0
+            },
+            {
+              "src": "σημαίνει",
+              "translit": "sēmainei",
+              "en": "signs",
+              "weight": 1.0
+            },
+            {
+              "src": "λαοὺς",
+              "translit": "laous",
+              "en": "being",
+              "weight": 1.0
+            },
+            {
+              "src": "ἐγείρει",
+              "translit": "egeirei",
+              "en": "stirs",
+              "weight": 1.0
+            },
+            {
+              "src": "ἐγείρει",
+              "translit": "egeirei",
+              "en": "reminding",
+              "weight": 1.0
+            },
+            {
+              "src": "μιμνήσκων",
+              "translit": "mimnēskōn",
+              "en": "favorable",
+              "weight": 1.0
+            },
+            {
+              "src": "μιμνήσκων",
+              "translit": "mimnēskōn",
+              "en": "them",
+              "weight": 1.0
+            },
+            {
+              "src": "μιμνήσκων",
+              "translit": "mimnēskōn",
+              "en": "life",
+              "weight": 1.0
+            },
+            {
+              "src": "βιότοιο",
+              "translit": "biotoio",
+              "en": "life",
+              "weight": 1.0
+            }
+          ]
+        }
+      ]
     }
   ]
 }

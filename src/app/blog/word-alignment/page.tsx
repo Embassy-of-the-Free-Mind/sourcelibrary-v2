@@ -48,12 +48,13 @@ export default function WordAlignmentPage() {
           Source Library has AI-translated over 10,000 pages of pre-modern Latin into English.
           What if you could click any English word and see which Latin words produced it &mdash;
           not from a model guessing after the fact, but from the actual learned relationship
-          between languages? Below is a paragraph from Ficino&rsquo;s <em>De Voluptate</em> (1457),
-          aligned using multilingual BERT embeddings via{' '}
-          <a href="https://github.com/cisnlp/simalign" className="text-accent-gold-dark hover:underline">SimAlign</a>.
-          The model maps Latin and English words into the same vector space and finds correspondences
-          by similarity &mdash; so &ldquo;animum&rdquo; lands near &ldquo;soul&rdquo; even though
-          the words look nothing alike.
+          between languages? Below are two experiments aligned using multilingual BERT embeddings
+          via{' '}
+          <a href="https://github.com/cisnlp/simalign" className="text-accent-gold-dark hover:underline">SimAlign</a>:
+          Ficino&rsquo;s Latin and the opening of Aratus&rsquo;s <em>Phaenomena</em> in
+          Ancient Greek &mdash; with transliteration. The model maps words from any script
+          into the same vector space, so &ldquo;Διὸς&rdquo; lands near &ldquo;Zeus&rdquo;
+          and &ldquo;animum&rdquo; lands near &ldquo;soul&rdquo;.
         </p>
       </article>
 
