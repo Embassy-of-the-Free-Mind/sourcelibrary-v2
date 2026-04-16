@@ -21,7 +21,10 @@ function buildClientTools(addSources: (s: SourceResult[]) => void, addVisual: (v
     search_library: async ({ query }: { query: string }): Promise<string> => {
       console.log('[voice-agent] search_library called:', query);
       try {
-        const res = await fetch(`/api/search?q=${encodeURIComponent(query)}&limit=8&has_translation=true`);
+        const controller = new AbortController();
+        const timeout = setTimeout(() => controller.abort(), 10000);
+        const res = await fetch(`/api/search?q=${encodeURIComponent(query)}&limit=8&has_translation=true`, { signal: controller.signal });
+        clearTimeout(timeout);
         if (!res.ok) return JSON.stringify({ error: `${res.status}` });
         const data = await res.json();
         const results = (data.results || []).slice(0, 6);
@@ -39,7 +42,10 @@ function buildClientTools(addSources: (s: SourceResult[]) => void, addVisual: (v
     search_semantic: async ({ query }: { query: string }): Promise<string> => {
       console.log('[voice-agent] search_semantic called:', query);
       try {
-        const res = await fetch(`/api/search/semantic?q=${encodeURIComponent(query)}&limit=8`);
+        const controller = new AbortController();
+        const timeout = setTimeout(() => controller.abort(), 8000);
+        const res = await fetch(`/api/search/semantic?q=${encodeURIComponent(query)}&limit=8`, { signal: controller.signal });
+        clearTimeout(timeout);
         if (!res.ok) return JSON.stringify({ error: `${res.status}` });
         const data = await res.json();
         const results = (data.results || []).slice(0, 6);
