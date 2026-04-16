@@ -48,7 +48,7 @@ function buildClientTools(addSources: (s: SourceResult[]) => void, addVisual: (v
         const timeout = setTimeout(() => controller.abort(), 10000);
         const res = await fetch(`/api/search?q=${encodeURIComponent(query)}&limit=8&has_translation=true&search_content=true`, { signal: controller.signal });
         clearTimeout(timeout);
-        if (!res.ok) return JSON.stringify({ error: `${res.status}` });
+        if (!res.ok) throw new Error(`${res.status}`);
         const data = await res.json();
         const results = (data.results || []).slice(0, 6);
         addSources(results.map((r: any) => ({
@@ -60,7 +60,25 @@ function buildClientTools(addSources: (s: SourceResult[]) => void, addVisual: (v
           bookId: r.id || r.bookId, slug: r.slug || r.bookSlug,
           pageNumber: r.pageNumber || r.page_number, snippet: (r.snippet || '').slice(0, 300),
         })) });
-      } catch (e) { return JSON.stringify({ error: String(e) }); }
+      } catch (e) {
+        // Fallback to keyword search if semantic times out
+        console.log('[voice-agent] semantic failed, falling back to keyword:', String(e));
+        try {
+          const res = await fetch(`/api/search?q=${encodeURIComponent(query)}&limit=8&has_translation=true&search_content=true`);
+          if (!res.ok) return JSON.stringify({ error: `${res.status}` });
+          const data = await res.json();
+          const results = (data.results || []).slice(0, 6);
+          addSources(results.map((r: any) => ({
+            bookId: r.id || r.bookId, title: r.title || r.bookTitle, author: r.author || r.bookAuthor,
+            slug: r.slug || r.bookSlug, pageNumber: r.pageNumber || r.page_number, snippet: r.snippet,
+          })));
+          return JSON.stringify({ found: results.length, results: results.map((r: any) => ({
+            title: r.title || r.bookTitle, author: r.author || r.bookAuthor,
+            bookId: r.id || r.bookId, slug: r.slug || r.bookSlug,
+            pageNumber: r.pageNumber || r.page_number, snippet: (r.snippet || '').slice(0, 300),
+          })) });
+        } catch (e2) { return JSON.stringify({ error: String(e2) }); }
+      }
     },
     read_page: async ({ book_id, page_number }: { book_id: string; page_number: number }): Promise<string> => {
       try {
