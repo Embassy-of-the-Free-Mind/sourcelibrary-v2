@@ -65,10 +65,9 @@ function buildSrcToTranslit(sentences: SentencePair[]) {
   return map;
 }
 
-export function WordAlignmentDemo() {
+export function WordAlignmentDemo({ pageIndex = 0 }: { pageIndex?: number }) {
   const [data, setData] = useState<AlignmentData | null>(null);
   const [loading, setLoading] = useState(true);
-  const [selectedPage, setSelectedPage] = useState(0);
   const [selectedEnWord, setSelectedEnWord] = useState<string | null>(null);
 
   useEffect(() => {
@@ -78,7 +77,7 @@ export function WordAlignmentDemo() {
       .catch(() => setLoading(false));
   }, []);
 
-  const page = data?.pages[selectedPage];
+  const page = data?.pages[pageIndex];
   const hasTranslit = page?.hasTransliteration;
 
   const enToSrc = useMemo(() => {
@@ -127,26 +126,13 @@ export function WordAlignmentDemo() {
   return (
     <div className="rounded-2xl border border-stone-200 bg-white overflow-hidden shadow-sm">
       {/* Header */}
-      <div className="flex items-center justify-between px-5 py-3 border-b border-stone-100 bg-stone-50/50">
+      <div className="px-5 py-3 border-b border-stone-100 bg-stone-50/50">
         <div className="text-sm text-stone-500">
           <span className="font-medium text-stone-700">{page.author}</span>
           {', '}
           <em>{page.book}</em>
           {' '}({page.year})
         </div>
-        {data.pages.length > 1 && (
-          <select
-            value={selectedPage}
-            onChange={(e) => { setSelectedPage(Number(e.target.value)); setSelectedEnWord(null); }}
-            className="text-sm border border-stone-200 rounded-lg px-3 py-1.5 bg-white text-stone-600"
-          >
-            {data.pages.map((p, i) => (
-              <option key={p.id} value={i}>
-                {p.author} &mdash; {p.book}
-              </option>
-            ))}
-          </select>
-        )}
       </div>
 
       {/* Split pane */}
