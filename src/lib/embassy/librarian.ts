@@ -293,66 +293,41 @@ async function executeSearchCollection(query: string, searchBooks = true): Promi
 async function executeSearchSemantic(query: string): Promise<
   Array<{ book_id: string; bookTitle: string; bookAuthor: string; bookSlug?: string; page_number: number; snippet: string; score: number }>
 > {
-  // Use book-level semantic search (issue #1158) — fast HNSW on ~17K vectors
-  const { semanticBookSearch } = await import('@/lib/semantic-search');
+  // Two-step search (issue #1158):
+  // Step 1: book discovery via book_embeddings (HNSW, ~17K vectors, instant)
+  // Step 2: page drill-down via match_pages_in_books (scoped to found books)
+  const { semanticBookSearch, semanticPageSearchScoped } = await import('@/lib/semantic-search');
   try {
     const books = await semanticBookSearch(query, 8);
-    return books.map(b => ({
-      book_id: b.book_id,
-      bookTitle: b.title || 'Unknown',
-      bookAuthor: b.author || 'Unknown',
-      bookSlug: undefined,
-      page_number: 0,
-      snippet: (b.summary_text || '').slice(0, 500),
-      score: b.similarity,
-    }));
+    if (books.length === 0) return [];
+
+    // Step 2: get best page citations from top books
+    const bookIds = books.map(b => b.book_id);
+    const pages = await semanticPageSearchScoped(query, bookIds, 8);
+
+    // Build a map of best page per book
+    const bestPageByBook = new Map<string, typeof pages[0]>();
+    for (const p of pages) {
+      const existing = bestPageByBook.get(p.book_id);
+      if (!existing || p.score > existing.score) bestPageByBook.set(p.book_id, p);
+    }
+
+    // Return book results, enriched with page citations where available
+    return books.map(b => {
+      const page = bestPageByBook.get(b.book_id);
+      return {
+        book_id: b.book_id,
+        bookTitle: b.title || 'Unknown',
+        bookAuthor: b.author || 'Unknown',
+        bookSlug: undefined,
+        page_number: page?.page_number || 0,
+        snippet: page?.snippet || (b.summary_text || '').slice(0, 500),
+        score: b.similarity,
+      };
+    });
   } catch {
     return [];
   }
-}
-
-// Legacy embedding-based search (kept for reference, unused)
-async function _legacyExecuteSearchSemantic(query: string): Promise<
-  Array<{ book_id: string; bookTitle: string; bookAuthor: string; bookSlug?: string; page_number: number; snippet: string; score: number }>
-> {
-  const embedUrl = process.env.EMBED_URL || 'http://46.224.122.120:3456';
-  let queryEmbedding: number[] | null = null;
-  try {
-    const res = await fetch(`${embedUrl}/embed`, {
-      method: 'POST',
-      headers: { 'Content-Type': 'application/json' },
-      body: JSON.stringify({ texts: [query], task: 'query' }),
-      signal: AbortSignal.timeout(3000),
-    });
-    if (res.ok) {
-      const data = await res.json();
-      queryEmbedding = data?.embeddings?.[0] || null;
-    }
-  } catch { /* embedding server unavailable */ }
-
-  if (!queryEmbedding) {
-    const { data } = await supabase
-      .from('page_translations')
-      .select('page_id, book_id, page_number, translation, book_title, book_author')
-      .textSearch('tsv', query, { type: 'websearch' })
-      .limit(8);
-    return (data || []).map(r => ({
-      book_id: r.book_id, bookTitle: r.book_title || 'Unknown', bookAuthor: r.book_author || 'Unknown',
-      page_number: r.page_number, snippet: (r.translation || '').slice(0, 500), score: 1,
-    }));
-  }
-
-  const { data } = await supabase.rpc('hybrid_search', {
-    query_text: query, query_embedding: JSON.stringify(queryEmbedding),
-    match_count: 8, keyword_weight: 0.3, semantic_weight: 0.7,
-  });
-
-  return (data || []).map((r: Record<string, unknown>) => ({
-    book_id: r.book_id as string, bookTitle: (r.book_title as string) || 'Unknown',
-    bookAuthor: (r.book_author as string) || 'Unknown', bookSlug: undefined,
-    page_number: r.page_number as number, snippet: ((r.translation as string) || '').slice(0, 500),
-    score: Number(r.score) || 0,
-  }));
 }
 
 async function executeSearchWikipedia(query: string): Promise<{ title: string; summary: string; url: string } | null> {

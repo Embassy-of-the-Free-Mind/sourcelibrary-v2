@@ -73,3 +73,45 @@ BEGIN
   LIMIT match_count;
 END;
 $$;
+
+-- RPC: scoped page-level semantic search within specific books (step 2)
+-- Scans only pages belonging to the given book_ids — instant for 200-500 pages.
+CREATE OR REPLACE FUNCTION match_pages_in_books(
+  query_embedding vector(768),
+  book_ids TEXT[],
+  match_threshold FLOAT DEFAULT 0.3,
+  match_count INT DEFAULT 10
+)
+RETURNS TABLE (
+  page_id TEXT,
+  book_id TEXT,
+  page_number INT,
+  translation TEXT,
+  book_title TEXT,
+  book_author TEXT,
+  book_language TEXT,
+  book_year INT,
+  similarity FLOAT
+)
+LANGUAGE plpgsql
+AS $$
+BEGIN
+  RETURN QUERY
+  SELECT
+    p.page_id,
+    p.book_id,
+    p.page_number,
+    p.translation,
+    p.book_title,
+    p.book_author,
+    p.book_language,
+    p.book_year,
+    1 - (p.embedding <=> query_embedding) AS similarity
+  FROM page_translations p
+  WHERE p.book_id = ANY(book_ids)
+    AND p.embedding IS NOT NULL
+    AND 1 - (p.embedding <=> query_embedding) > match_threshold
+  ORDER BY p.embedding <=> query_embedding
+  LIMIT match_count;
+END;
+$$;

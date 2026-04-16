@@ -101,7 +101,7 @@ export async function semanticBookSearch(
   }));
 }
 
-// ── Page-level scoped search (step 2: within a book) ────────────────
+// ── Page-level scoped search (step 2: within specific books) ────────
 
 export interface SemanticPageResult {
   page_id: string;
@@ -117,6 +117,9 @@ export interface SemanticPageResult {
 
 /**
  * Scoped page-level semantic search within specific books.
+ * Uses match_pages_in_books RPC — scans only pages for the given book_ids
+ * (200-500 pages per book, instant without a global index).
+ *
  * Used as step 2 after book discovery — never searches all pages globally.
  */
 export async function semanticPageSearchScoped(
@@ -129,54 +132,27 @@ export async function semanticPageSearchScoped(
   const queryEmbedding = await getQueryEmbedding(query);
   if (!queryEmbedding) return [];
 
-  // Use match_semantic RPC if available, otherwise direct query
-  const { data, error } = await supabase.rpc('match_semantic', {
+  const { data, error } = await supabase.rpc('match_pages_in_books', {
     query_embedding: JSON.stringify(queryEmbedding),
+    book_ids: bookIds,
     match_threshold: 0.3,
     match_count: limit,
   });
 
   if (error) {
-    console.error('[semantic-search] match_semantic error:', error.message);
+    console.error('[semantic-search] match_pages_in_books error:', error.message);
     return [];
   }
 
-  // Filter to requested books (RPC may not support book_id filter)
-  const bookIdSet = new Set(bookIds);
-  return (data || [])
-    .filter((row: any) => bookIdSet.has(row.book_id))
-    .map((row: any) => ({
-      page_id: row.page_id,
-      book_id: row.book_id,
-      page_number: row.page_number,
-      snippet: (row.translation || '').slice(0, 300),
-      score: Number(row.similarity) || 0,
-      book_title: row.book_title,
-      book_author: row.book_author,
-      book_language: row.book_language,
-      book_year: row.book_year,
-    }));
-}
-
-/**
- * @deprecated Use semanticBookSearch instead. This hits the broken hybrid_search RPC.
- */
-export async function semanticPageSearch(
-  query: string,
-  limit: number = 20,
-  opts?: { keywordWeight?: number; semanticWeight?: number }
-): Promise<SemanticPageResult[]> {
-  // Redirect to book-level search, return best page per book
-  const books = await semanticBookSearch(query, limit);
-  return books.map(b => ({
-    page_id: '',
-    book_id: b.book_id,
-    page_number: 0,
-    snippet: (b.summary_text || '').slice(0, 300),
-    score: b.similarity,
-    book_title: b.title,
-    book_author: b.author,
-    book_language: b.language,
-    book_year: b.year,
+  return (data || []).map((row: any) => ({
+    page_id: row.page_id,
+    book_id: row.book_id,
+    page_number: row.page_number,
+    snippet: (row.translation || '').slice(0, 300),
+    score: Number(row.similarity) || 0,
+    book_title: row.book_title,
+    book_author: row.book_author,
+    book_language: row.book_language,
+    book_year: row.book_year,
   }));
 }
