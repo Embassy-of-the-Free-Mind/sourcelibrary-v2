@@ -4,7 +4,7 @@ import { useState, useCallback, useRef, useEffect, useMemo } from 'react';
 import { useRouter } from 'next/navigation';
 import Link from 'next/link';
 import Image from 'next/image';
-import { Search, Book, Lightbulb, User, MapPin, BookOpen, Loader2, X, ChevronRight, ImageIcon } from 'lucide-react';
+import { Search, Book, Lightbulb, User, MapPin, BookOpen, Loader2, X, ChevronRight, ImageIcon, MessageCircle } from 'lucide-react';
 import { useDebouncedCallback } from 'use-debounce';
 import { search as searchApi } from '@/lib/api-client';
 import { bookUrl } from '@/lib/slugify';
@@ -481,7 +481,7 @@ export default function UnifiedSearch() {
                         Related
                       </span>
                     </div>
-                    {semanticResults.map((sem, idx) => {
+                    {semanticResults.slice(0, 4).map((sem, idx) => {
                       const itemIndex = semStartIndex + idx;
                       return (
                         <Link
@@ -513,6 +513,14 @@ export default function UnifiedSearch() {
                         </Link>
                       );
                     })}
+                    <Link
+                      href={`/reading-room?q=${encodeURIComponent(query)}`}
+                      onClick={() => setIsOpen(false)}
+                      className="flex items-center gap-2 px-2 py-2 mt-1 rounded-lg text-xs text-violet-600 hover:bg-violet-50 transition-colors"
+                    >
+                      <MessageCircle className="w-3.5 h-3.5" />
+                      Ask the Librarian about this
+                    </Link>
                   </div>
                 );
               })()}
