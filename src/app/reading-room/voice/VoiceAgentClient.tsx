@@ -1,6 +1,7 @@
 'use client';
 
 import { useState, useRef, useCallback, useEffect } from 'react';
+// @ts-expect-error -- @elevenlabs/react ships no bundled types; Vercel installs it at build time
 import { ConversationProvider, useConversation } from '@elevenlabs/react';
 import SiteHeader from '@/components/layout/SiteHeader';
 import Link from 'next/link';
@@ -139,20 +140,20 @@ function VoiceAgentInner() {
 
   const conversation = useConversation({
     clientTools: buildClientTools(addSources, addVisual),
-    onMessage: (payload) => {
+    onMessage: (payload: { role?: string; source?: string; message: string }) => {
       setTranscript((prev) => {
         const entry: TranscriptEntry = { role: payload.role === 'agent' || payload.source === 'ai' ? 'agent' : 'user', text: payload.message, isFinal: true };
         if (prev.length > 0 && prev[prev.length - 1].role === entry.role && !prev[prev.length - 1].isFinal) return [...prev.slice(0, -1), entry];
         return [...prev, entry];
       });
     },
-    onError: (message) => { console.error('[voice-agent]', message); setErrorMsg(message || 'Connection error'); setAppStatus('error'); },
-    onStatusChange: ({ status }) => {
+    onError: (message: string) => { console.error('[voice-agent]', message); setErrorMsg(message || 'Connection error'); setAppStatus('error'); },
+    onStatusChange: ({ status }: { status: string }) => {
       if (status === 'connected') setAppStatus('connected');
       else if (status === 'connecting') setAppStatus('connecting');
       else if (status === 'disconnected' || status === 'disconnecting') setAppStatus('idle');
     },
-    onModeChange: ({ mode }) => { setAgentSpeaking(mode === 'speaking'); },
+    onModeChange: ({ mode }: { mode: string }) => { setAgentSpeaking(mode === 'speaking'); },
   });
 
   useEffect(() => { scrollRef.current?.scrollTo({ top: scrollRef.current.scrollHeight, behavior: 'smooth' }); }, [transcript]);
