@@ -4,7 +4,7 @@ import { supabase } from '@/lib/supabase';
 import type { BookSearchFilters } from '@/lib/atlas-search';
 import type { SearchResult } from '@/lib/api-client/types/search';
 import { searchBookIds } from '@/lib/books-catalog';
-import { semanticPageSearch } from '@/lib/semantic-search';
+import { semanticBookSearch } from '@/lib/semantic-search';
 
 // CLIP server on Hetzner for visual text→image search
 const CLIP_URL = process.env.CLIP_URL || 'http://46.224.122.120:3456/clip';
@@ -99,9 +99,8 @@ export async function GET(request: NextRequest) {
       title: string;
       author: string | null;
       language: string | null;
-      snippet: string;
-      page_number: number;
-      score: number;
+      summary_snippet: string;
+      similarity: number;
     }
     const emptySemanticBooks = { results: [] as SemanticBookResult[], total: 0 };
 
@@ -116,24 +115,17 @@ export async function GET(request: NextRequest) {
       ),
       withTimeout(searchGallery(db, query, queryRegex, galleryLimit), emptyGallery, 'gallery'),
       withTimeout(searchVisual(query, galleryLimit), emptyGallery, 'visual', 5000),
-      // Semantic search: conceptual matches that keyword search misses
+      // Semantic search: book-level discovery via book_embeddings (HNSW, ~17K rows)
       withTimeout(
-        semanticPageSearch(query, 8, { keywordWeight: 0.3, semanticWeight: 0.7 })
-          .then(pages => {
-            // Dedupe by book, keep best page per book
-            const byBook = new Map<string, typeof pages[0]>();
-            for (const p of pages) {
-              const existing = byBook.get(p.book_id);
-              if (!existing || p.score > existing.score) byBook.set(p.book_id, p);
-            }
-            const results = Array.from(byBook.values()).map(p => ({
-              book_id: p.book_id,
-              title: p.book_title,
-              author: p.book_author,
-              language: p.book_language,
-              snippet: p.snippet,
-              page_number: p.page_number,
-              score: p.score,
+        semanticBookSearch(query, 8)
+          .then(books => {
+            const results = books.map(b => ({
+              book_id: b.book_id,
+              title: b.title,
+              author: b.author,
+              language: b.language,
+              summary_snippet: (b.summary_text || '').slice(0, 300),
+              similarity: b.similarity,
             }));
             return { results, total: results.length };
           })

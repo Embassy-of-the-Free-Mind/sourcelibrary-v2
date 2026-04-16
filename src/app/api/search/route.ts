@@ -4,7 +4,7 @@ import { Book } from '@/lib/types';
 import type { SearchResult, SearchResponse } from '@/lib/api-client/types/search';
 import { buildPageSearchStage } from '@/lib/atlas-search';
 import { searchBookIds } from '@/lib/books-catalog';
-import { semanticPageSearch } from '@/lib/semantic-search';
+import { semanticBookSearch } from '@/lib/semantic-search';
 
 export const preferredRegion = 'fra1';
 
@@ -223,10 +223,19 @@ export async function GET(request: NextRequest) {
       (async () => {
         if (bookId || !searchContent) return [];
         try {
-          return await semanticPageSearch(query, MAX_PAGE_RESULTS, {
-            keywordWeight: 0.3,
-            semanticWeight: 0.7,
-          });
+          const books = await semanticBookSearch(query, MAX_PAGE_RESULTS);
+          // Map book results to page-shaped results for merge compatibility
+          return books.map(b => ({
+            page_id: '',
+            book_id: b.book_id,
+            page_number: 0,
+            snippet: (b.summary_text || '').slice(0, 300),
+            score: b.similarity,
+            book_title: b.title,
+            book_author: b.author,
+            book_language: b.language,
+            book_year: b.year,
+          }));
         } catch {
           return [];
         }

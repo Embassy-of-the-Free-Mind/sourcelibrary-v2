@@ -293,6 +293,28 @@ async function executeSearchCollection(query: string, searchBooks = true): Promi
 async function executeSearchSemantic(query: string): Promise<
   Array<{ book_id: string; bookTitle: string; bookAuthor: string; bookSlug?: string; page_number: number; snippet: string; score: number }>
 > {
+  // Use book-level semantic search (issue #1158) — fast HNSW on ~17K vectors
+  const { semanticBookSearch } = await import('@/lib/semantic-search');
+  try {
+    const books = await semanticBookSearch(query, 8);
+    return books.map(b => ({
+      book_id: b.book_id,
+      bookTitle: b.title || 'Unknown',
+      bookAuthor: b.author || 'Unknown',
+      bookSlug: undefined,
+      page_number: 0,
+      snippet: (b.summary_text || '').slice(0, 500),
+      score: b.similarity,
+    }));
+  } catch {
+    return [];
+  }
+}
+
+// Legacy embedding-based search (kept for reference, unused)
+async function _legacyExecuteSearchSemantic(query: string): Promise<
+  Array<{ book_id: string; bookTitle: string; bookAuthor: string; bookSlug?: string; page_number: number; snippet: string; score: number }>
+> {
   const embedUrl = process.env.EMBED_URL || 'http://46.224.122.120:3456';
   let queryEmbedding: number[] | null = null;
   try {
