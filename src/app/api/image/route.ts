@@ -79,6 +79,10 @@ export async function GET(request: NextRequest) {
         'blob.vercel-storage.com',
         'r2.dev',                      // Cloudflare R2 (public bucket)
         'images.sourcelibrary.org',    // Cloudflare R2 (custom domain)
+        // Museum / open-access sources
+        'upload.wikimedia.org',        // Wikimedia Commons (public domain images)
+        'images.metmuseum.org',        // The Metropolitan Museum of Art
+        'openaccess-cdn.clevelandart.org', // Cleveland Museum of Art
         // IIIF sources
         'gallica.bnf.fr',
         'api.digitale-sammlungen.de',  // MDZ/BSB
