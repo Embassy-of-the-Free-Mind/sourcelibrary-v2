@@ -83,6 +83,26 @@ export default function WordAlignmentPage() {
       <div className="mb-12">
         <WordAlignmentDemo pageIndex={1} />
       </div>
+
+      <article className="prose-content max-w-none">
+        <h2 className="text-lg font-semibold text-primary mt-2 mb-3">The same text, different embeddings</h2>
+        <p className="text-secondary leading-relaxed mb-6">
+          The Ficino paragraph again, but aligned with{' '}
+          <a href="https://huggingface.co/intfloat/multilingual-e5-base" className="text-accent-gold-dark hover:underline">multilingual-e5</a>
+          {' '}instead of mBERT. This is the same embedding model Source Library already uses
+          for semantic search &mdash; it runs on our Hetzner server, so there&rsquo;d be zero
+          additional infrastructure cost. The alignment is noticeably sparser: e5 was trained
+          for passage-level similarity, not word-level alignment, so it&rsquo;s confident on
+          cognates and content words (&ldquo;partes&rdquo; &rarr; &ldquo;parts&rdquo;,
+          &ldquo;differre&rdquo; &rarr; &ldquo;differ&rdquo;) but misses the non-obvious
+          mappings that mBERT catches. Still &mdash; for a model we&rsquo;re already running,
+          the results are surprisingly usable.
+        </p>
+      </article>
+
+      <div className="mb-12">
+        <WordAlignmentDemo pageIndex={2} />
+      </div>
     </ContentPageLayout>
   );
 }
