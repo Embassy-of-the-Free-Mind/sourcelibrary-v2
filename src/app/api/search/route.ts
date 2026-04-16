@@ -113,7 +113,7 @@ export async function GET(request: NextRequest) {
     function bookToResult(typedBook: Book): SearchResult {
       const summaryText = (typedBook as any).reading_summary?.overview
         || (typeof typedBook.summary === 'string' ? typedBook.summary : typedBook.summary?.data);
-      return {
+      const result: SearchResult = {
         id: typedBook.id,
         type: 'book',
         book_id: typedBook.id,
@@ -135,6 +135,9 @@ export async function GET(request: NextRequest) {
         thumbnail_blob: (typedBook as any).thumbnail_blob,
         quality_score: (typedBook as any).quality_score,
       };
+      // Transient field for work-level dedup (stripped before response)
+      if ((typedBook as any).work_id) (result as any)._work_id = (typedBook as any).work_id;
+      return result;
     }
 
     // Run book search and page content search in parallel
@@ -149,7 +152,7 @@ export async function GET(request: NextRequest) {
         const bookFilters = buildBookFilters();
         return await db.collection('books')
           .find({ id: { $in: matchingIds }, ...bookFilters })
-          .project({ id: 1, slug: 1, title: 1, display_title: 1, author: 1, thumbnail: 1, thumbnail_blob: 1, language: 1, published: 1, pages_count: 1, pages_translated: 1, doi: 1, categories: 1, is_first_translation: 1, quality_score: 1, summary: 1, reading_summary: 1 })
+          .project({ id: 1, slug: 1, title: 1, display_title: 1, author: 1, thumbnail: 1, thumbnail_blob: 1, language: 1, published: 1, pages_count: 1, pages_translated: 1, doi: 1, categories: 1, is_first_translation: 1, quality_score: 1, summary: 1, reading_summary: 1, work_id: 1 })
           .limit(limit)
           .maxTimeMS(5000)
           .toArray();
@@ -257,7 +260,7 @@ export async function GET(request: NextRequest) {
         const pageBooks = await db.collection('books')
           .find(
             { id: { $in: pageBookIds } },
-            { projection: { id: 1, slug: 1, title: 1, display_title: 1, author: 1, thumbnail: 1, thumbnail_blob: 1, language: 1, published: 1, pages_count: 1, pages_translated: 1, doi: 1, categories: 1, hidden: 1, quality_score: 1 } }
+            { projection: { id: 1, slug: 1, title: 1, display_title: 1, author: 1, thumbnail: 1, thumbnail_blob: 1, language: 1, published: 1, pages_count: 1, pages_translated: 1, doi: 1, categories: 1, hidden: 1, quality_score: 1, work_id: 1 } }
           )
           .toArray();
         for (const b of pageBooks) {
@@ -291,7 +294,7 @@ export async function GET(request: NextRequest) {
           snippet = extractSnippet(snippetSource, query);
         }
 
-        results.push({
+        const pageResult: SearchResult = {
           id: `${book.id}-p${page.page_number}`,
           page_id: page.id as string,
           type: 'page',
@@ -312,7 +315,9 @@ export async function GET(request: NextRequest) {
           snippet_type: snippetType,
           thumbnail: (book as any).thumbnail,
           thumbnail_blob: (book as any).thumbnail_blob,
-        });
+        };
+        if ((book as any).work_id) (pageResult as any)._work_id = (book as any).work_id;
+        results.push(pageResult);
       }
     }
 
@@ -340,7 +345,7 @@ export async function GET(request: NextRequest) {
           const semBooks = await db.collection('books')
             .find(
               { id: { $in: newBookIds }, visible: true, pages_count: { $gt: 0 } },
-              { projection: { id: 1, slug: 1, title: 1, display_title: 1, author: 1, thumbnail: 1, thumbnail_blob: 1, language: 1, published: 1, pages_count: 1, pages_translated: 1, doi: 1, categories: 1, quality_score: 1 } }
+              { projection: { id: 1, slug: 1, title: 1, display_title: 1, author: 1, thumbnail: 1, thumbnail_blob: 1, language: 1, published: 1, pages_count: 1, pages_translated: 1, doi: 1, categories: 1, quality_score: 1, work_id: 1 } }
             )
             .maxTimeMS(3000)
             .toArray();
@@ -357,7 +362,7 @@ export async function GET(request: NextRequest) {
         const book = semanticBookMap.get(sem.book_id);
         if (!book) continue; // Book not visible or missing
 
-        results.push({
+        const semResult: SearchResult = {
           id: `${sem.book_id}-p${sem.page_number}`,
           page_id: sem.page_id,
           type: 'page',
@@ -378,7 +383,9 @@ export async function GET(request: NextRequest) {
           snippet_type: 'translation' as const,
           thumbnail: book.thumbnail,
           thumbnail_blob: book.thumbnail_blob,
-        });
+        };
+        if (book.work_id) (semResult as any)._work_id = book.work_id;
+        results.push(semResult);
       }
     }
 
@@ -437,8 +444,23 @@ export async function GET(request: NextRequest) {
       });
     }
 
-    // Apply offset
-    const paginatedResults = results.slice(offset, offset + limit);
+    // Dedup by work_id: keep the first (best-ranked) edition of each work.
+    // Results are already sorted by relevance, so the first hit for a work_id wins.
+    // Books without work_id are always kept (they can't be deduped).
+    const seenWorkIds = new Set<string>();
+    const dedupedResults: SearchResult[] = [];
+    for (const r of results) {
+      const workId = (r as any)._work_id as string | undefined;
+      if (workId) {
+        if (seenWorkIds.has(workId)) continue;
+        seenWorkIds.add(workId);
+      }
+      dedupedResults.push(r);
+    }
+
+    // Apply offset and strip transient fields
+    const paginatedResults = dedupedResults.slice(offset, offset + limit)
+      .map(r => { const { _work_id, ...clean } = r as any; return clean as SearchResult; });
 
     // For exact year searches, find nearby books (within 5 years)
     let nearby: SearchResult[] = [];
@@ -490,7 +512,7 @@ export async function GET(request: NextRequest) {
 
     return NextResponse.json({
       query,
-      total: results.length,
+      total: dedupedResults.length,
       offset,
       limit,
       sort: sortBy,
