@@ -2,7 +2,7 @@ import { supabase } from '@/lib/supabase';
 
 /**
  * Generate query embedding via Gemini embedding-2-preview.
- * Must use the same model as the backfill (embed-gemini.mjs).
+ * Must use the same model as the backfill (embed-gemini.mjs / backfill-book-embeddings.mjs).
  * Falls back to Hetzner e5-base if Gemini fails.
  */
 export async function getQueryEmbedding(query: string): Promise<number[] | null> {
@@ -50,6 +50,59 @@ export async function getQueryEmbedding(query: string): Promise<number[] | null>
   }
 }
 
+// ── Book-level semantic search (issue #1158) ────────────────────────
+
+export interface SemanticBookResult {
+  book_id: string;
+  title: string;
+  author: string | null;
+  year: number | null;
+  language: string | null;
+  summary_text: string | null;
+  metadata: Record<string, unknown> | null;
+  similarity: number;
+}
+
+/**
+ * Semantic book discovery via book_embeddings table (HNSW, ~17K rows).
+ * Replaces the broken hybrid_search on 3M+ page_translations.
+ */
+export async function semanticBookSearch(
+  query: string,
+  limit: number = 20,
+  opts?: { language?: string; yearMin?: number; yearMax?: number; threshold?: number }
+): Promise<SemanticBookResult[]> {
+  const queryEmbedding = await getQueryEmbedding(query);
+  if (!queryEmbedding) return [];
+
+  const { data, error } = await supabase.rpc('match_books_semantic', {
+    query_embedding: JSON.stringify(queryEmbedding),
+    match_threshold: opts?.threshold ?? 0.3,
+    match_count: limit,
+    filter_language: opts?.language ?? null,
+    filter_year_min: opts?.yearMin ?? null,
+    filter_year_max: opts?.yearMax ?? null,
+  });
+
+  if (error) {
+    console.error('[semantic-search] match_books_semantic error:', error.message);
+    return [];
+  }
+
+  return (data || []).map((row: any) => ({
+    book_id: row.book_id,
+    title: row.title,
+    author: row.author,
+    year: row.year,
+    language: row.language,
+    summary_text: row.summary_text,
+    metadata: row.metadata,
+    similarity: Number(row.similarity) || 0,
+  }));
+}
+
+// ── Page-level scoped search (step 2: within specific books) ────────
+
 export interface SemanticPageResult {
   page_id: string;
   book_id: string;
@@ -63,30 +116,31 @@ export interface SemanticPageResult {
 }
 
 /**
- * Run hybrid semantic + keyword search on page_translations.
- * Returns flat page results (not grouped by book) for easy merging.
+ * Scoped page-level semantic search within specific books.
+ * Uses match_pages_in_books RPC — scans only pages for the given book_ids
+ * (200-500 pages per book, instant without a global index).
+ *
+ * Used as step 2 after book discovery — never searches all pages globally.
  */
-export async function semanticPageSearch(
+export async function semanticPageSearchScoped(
   query: string,
-  limit: number = 20,
-  opts?: { keywordWeight?: number; semanticWeight?: number }
+  bookIds: string[],
+  limit: number = 10,
 ): Promise<SemanticPageResult[]> {
-  const keywordWeight = opts?.keywordWeight ?? 0.3;
-  const semanticWeight = opts?.semanticWeight ?? 0.7;
+  if (bookIds.length === 0) return [];
 
   const queryEmbedding = await getQueryEmbedding(query);
   if (!queryEmbedding) return [];
 
-  const { data, error } = await supabase.rpc('hybrid_search', {
-    query_text: query,
+  const { data, error } = await supabase.rpc('match_pages_in_books', {
     query_embedding: JSON.stringify(queryEmbedding),
+    book_ids: bookIds,
+    match_threshold: 0.3,
     match_count: limit,
-    keyword_weight: keywordWeight,
-    semantic_weight: semanticWeight,
   });
 
   if (error) {
-    console.error('[semantic-search] Supabase hybrid_search error:', error.message);
+    console.error('[semantic-search] match_pages_in_books error:', error.message);
     return [];
   }
 
@@ -95,7 +149,7 @@ export async function semanticPageSearch(
     book_id: row.book_id,
     page_number: row.page_number,
     snippet: (row.translation || '').slice(0, 300),
-    score: Number(row.score) || 0,
+    score: Number(row.similarity) || 0,
     book_title: row.book_title,
     book_author: row.book_author,
     book_language: row.book_language,
