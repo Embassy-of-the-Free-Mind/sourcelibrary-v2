@@ -245,9 +245,46 @@ export async function GET(request: NextRequest) {
       })(),
     ]);
 
-    // Process book results
+    // Extract the best page snippet per book from page results
+    // This gives us actual quotes to attach to book-level results
+    const bestPageQuote = new Map<string, { snippet: string; snippetType: 'translation' | 'ocr'; pageNumber: number }>();
+    if (pageDocs.length > 0) {
+      for (const page of pageDocs) {
+        const bookIdStr = page.book_id as string;
+        if (bestPageQuote.has(bookIdStr)) continue; // Keep first (highest relevance from Atlas Search)
+
+        let snippet = '';
+        let snippetType: 'translation' | 'ocr' = 'ocr';
+        const highlights = page.highlights as Array<{ path: string; texts: Array<{ value: string; type: string }> }> | undefined;
+        if (highlights && highlights.length > 0) {
+          const translationHL = highlights.find(h => h.path === 'translation.data');
+          const hl = translationHL || highlights[0];
+          snippet = cleanText(hl.texts.map(t => t.value).join(''));
+          snippetType = hl.path === 'translation.data' ? 'translation' : 'ocr';
+        } else {
+          const translationText = page.translation?.data as string || '';
+          const ocrText = page.ocr?.data as string || '';
+          const snippetSource = translationText || ocrText;
+          snippetType = translationText ? 'translation' : 'ocr';
+          snippet = extractSnippet(snippetSource, query);
+        }
+
+        if (snippet) {
+          bestPageQuote.set(bookIdStr, { snippet, snippetType, pageNumber: page.page_number as number });
+        }
+      }
+    }
+
+    // Process book results — attach page quotes when available
     for (const book of bookDocs) {
-      results.push(bookToResult(book as unknown as Book));
+      const result = bookToResult(book as unknown as Book);
+      const quote = bestPageQuote.get((book as any).id);
+      if (quote) {
+        result.snippet = quote.snippet;
+        result.snippet_type = quote.snippetType;
+        result.quote_page = quote.pageNumber;
+      }
+      results.push(result);
       seenBooks.add((book as any).id);
     }
 
@@ -275,23 +312,27 @@ export async function GET(request: NextRequest) {
         if (!book.pages_count || book.pages_count === 0) continue;
         if (!pagesOnly && seenBooks.has(book.id)) continue;
 
-        // Prefer Atlas Search highlights (faster, more precise) over full-text extraction
-        let snippet = '';
-        let snippetType: 'translation' | 'ocr' = 'ocr';
-        const highlights = page.highlights as Array<{ path: string; texts: Array<{ value: string; type: string }> }> | undefined;
-        if (highlights && highlights.length > 0) {
-          // Prefer translation highlights over OCR
-          const translationHL = highlights.find(h => h.path === 'translation.data');
-          const hl = translationHL || highlights[0];
-          snippet = cleanText(hl.texts.map(t => t.value).join(''));
-          snippetType = hl.path === 'translation.data' ? 'translation' : 'ocr';
-        } else {
-          // Fallback to full text extraction
-          const translationText = page.translation?.data as string || '';
-          const ocrText = page.ocr?.data as string || '';
-          const snippetSource = translationText || ocrText;
-          snippetType = translationText ? 'translation' : 'ocr';
-          snippet = extractSnippet(snippetSource, query);
+        const cached = bestPageQuote.get(page.book_id as string);
+        const snippet = cached && cached.pageNumber === (page.page_number as number) ? cached.snippet : '';
+        const snippetType = cached && cached.pageNumber === (page.page_number as number) ? cached.snippetType : 'ocr';
+
+        // If not cached (different page), extract fresh
+        let finalSnippet = snippet;
+        let finalSnippetType = snippetType;
+        if (!finalSnippet) {
+          const highlights = page.highlights as Array<{ path: string; texts: Array<{ value: string; type: string }> }> | undefined;
+          if (highlights && highlights.length > 0) {
+            const translationHL = highlights.find(h => h.path === 'translation.data');
+            const hl = translationHL || highlights[0];
+            finalSnippet = cleanText(hl.texts.map(t => t.value).join(''));
+            finalSnippetType = hl.path === 'translation.data' ? 'translation' : 'ocr';
+          } else {
+            const translationText = page.translation?.data as string || '';
+            const ocrText = page.ocr?.data as string || '';
+            const snippetSource = translationText || ocrText;
+            finalSnippetType = translationText ? 'translation' : 'ocr';
+            finalSnippet = extractSnippet(snippetSource, query);
+          }
         }
 
         const pageResult: SearchResult = {
@@ -311,8 +352,8 @@ export async function GET(request: NextRequest) {
           doi: book.doi,
           categories: book.categories,
           page_number: page.page_number as number,
-          snippet,
-          snippet_type: snippetType,
+          snippet: finalSnippet,
+          snippet_type: finalSnippetType,
           thumbnail: (book as any).thumbnail,
           thumbnail_blob: (book as any).thumbnail_blob,
         };
@@ -323,17 +364,10 @@ export async function GET(request: NextRequest) {
 
     // Merge semantic results (conceptual matches that keyword search missed)
     if (semanticDocs.length > 0) {
-      // Track which pages we already have from Atlas Search
-      const seenPageKeys = new Set(
-        results
-          .filter(r => r.type === 'page')
-          .map(r => `${r.book_id}-${r.page_number}`)
-      );
-
-      // Collect book IDs we need metadata for
+      // Collect book IDs we need metadata for (skip books we already have)
       const semanticBookIds = [...new Set(
         semanticDocs
-          .filter(s => !seenPageKeys.has(`${s.book_id}-${s.page_number}`))
+          .filter(s => !seenBooks.has(s.book_id))
           .map(s => s.book_id)
       )];
 
@@ -354,18 +388,16 @@ export async function GET(request: NextRequest) {
       }
 
       for (const sem of semanticDocs) {
-        const pageKey = `${sem.book_id}-${sem.page_number}`;
-        if (seenPageKeys.has(pageKey)) continue;
-        seenPageKeys.add(pageKey);
+        if (seenBooks.has(sem.book_id)) continue;
+        seenBooks.add(sem.book_id);
 
         // Use fetched book metadata, or construct minimal from semantic result
         const book = semanticBookMap.get(sem.book_id);
         if (!book) continue; // Book not visible or missing
 
         const semResult: SearchResult = {
-          id: `${sem.book_id}-p${sem.page_number}`,
-          page_id: sem.page_id,
-          type: 'page',
+          id: sem.book_id,
+          type: 'book',
           book_id: sem.book_id,
           slug: book.slug,
           title: book.title || sem.book_title,
@@ -378,9 +410,8 @@ export async function GET(request: NextRequest) {
           has_doi: !!book.doi,
           doi: book.doi,
           categories: book.categories,
-          page_number: sem.page_number,
           snippet: sem.snippet,
-          snippet_type: 'translation' as const,
+          snippet_type: 'summary' as const,
           thumbnail: book.thumbnail,
           thumbnail_blob: book.thumbnail_blob,
         };
