@@ -40,27 +40,42 @@ function buildClientTools(addSources: (s: SourceResult[]) => void, addVisual: (v
       } catch (e) { return JSON.stringify({ error: String(e) }); }
     },
     search_semantic: async ({ query }: { query: string }): Promise<string> => {
-      // Semantic search (Supabase hybrid_search) is currently unreliable — redirect to keyword search
-      // TODO: re-enable when Supabase RPC performance is fixed
-      console.log('[voice-agent] search_semantic redirected to keyword search:', query);
+      console.log('[voice-agent] search_semantic called:', query);
       try {
         const controller = new AbortController();
-        const timeout = setTimeout(() => controller.abort(), 10000);
-        const res = await fetch(`/api/search?q=${encodeURIComponent(query)}&limit=8&has_translation=true&search_content=true`, { signal: controller.signal });
+        const timeout = setTimeout(() => controller.abort(), 8000);
+        const res = await fetch(`/api/search/semantic?q=${encodeURIComponent(query)}&limit=8`, { signal: controller.signal });
         clearTimeout(timeout);
-        if (!res.ok) return JSON.stringify({ error: `${res.status}` });
+        if (!res.ok) throw new Error(`${res.status}`);
         const data = await res.json();
         const results = (data.results || []).slice(0, 6);
-        addSources(results.map((r: any) => ({
-          bookId: r.id || r.bookId, title: r.title || r.bookTitle, author: r.author || r.bookAuthor,
-          slug: r.slug || r.bookSlug, pageNumber: r.pageNumber || r.page_number, snippet: r.snippet,
-        })));
+        const sources: SourceResult[] = [];
+        for (const r of results) for (const p of (r.pages || []).slice(0, 2))
+          sources.push({ bookId: r.book_id, title: r.title, author: r.author, slug: r.slug, pageNumber: p.page_number, snippet: p.snippet });
+        addSources(sources);
         return JSON.stringify({ found: results.length, results: results.map((r: any) => ({
-          title: r.title || r.bookTitle, author: r.author || r.bookAuthor,
-          bookId: r.id || r.bookId, slug: r.slug || r.bookSlug,
-          pageNumber: r.pageNumber || r.page_number, snippet: (r.snippet || '').slice(0, 300),
+          title: r.title, author: r.author, bookId: r.book_id, slug: r.slug,
+          topPage: r.pages?.[0]?.page_number, snippet: (r.pages?.[0]?.snippet || '').slice(0, 300),
         })) });
-      } catch (e) { return JSON.stringify({ error: String(e) }); }
+      } catch (e) {
+        // Fallback to keyword search if semantic times out
+        console.log('[voice-agent] semantic failed, falling back to keyword:', String(e));
+        try {
+          const res = await fetch(`/api/search?q=${encodeURIComponent(query)}&limit=8&has_translation=true&search_content=true`);
+          if (!res.ok) return JSON.stringify({ error: `${res.status}` });
+          const data = await res.json();
+          const results = (data.results || []).slice(0, 6);
+          addSources(results.map((r: any) => ({
+            bookId: r.id || r.bookId, title: r.title || r.bookTitle, author: r.author || r.bookAuthor,
+            slug: r.slug || r.bookSlug, pageNumber: r.pageNumber || r.page_number, snippet: r.snippet,
+          })));
+          return JSON.stringify({ found: results.length, results: results.map((r: any) => ({
+            title: r.title || r.bookTitle, author: r.author || r.bookAuthor,
+            bookId: r.id || r.bookId, slug: r.slug || r.bookSlug,
+            pageNumber: r.pageNumber || r.page_number, snippet: (r.snippet || '').slice(0, 300),
+          })) });
+        } catch (e2) { return JSON.stringify({ error: String(e2) }); }
+      }
     },
     read_page: async ({ book_id, page_number }: { book_id: string; page_number: number }): Promise<string> => {
       try {
