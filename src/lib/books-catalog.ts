@@ -175,7 +175,9 @@ export async function getLanguageCounts(filter: {
   if (filter.provider) query = query.eq('image_source_provider', filter.provider);
   if (filter.collection) query = query.contains('collections', [filter.collection]);
 
-  const { data } = await query;
+  // Supabase default limit is 1000 — need explicit limit for 17K+ books.
+  // Only fetching the language column, so this is lightweight.
+  const { data } = await query.limit(20000);
   const counts = new Map<string, number>();
   for (const row of (data || [])) {
     if (row.language) counts.set(row.language, (counts.get(row.language) || 0) + 1);
