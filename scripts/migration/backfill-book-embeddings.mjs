@@ -236,39 +236,46 @@ async function main() {
 
   if (LIMIT > 0) bookIds = bookIds.slice(0, LIMIT);
 
-  // Load all book_indexes in bulk
-  console.log('Loading book_indexes...');
-  const indexDocs = await db.collection('book_indexes')
-    .find(
-      BOOK_ID ? { book_id: BOOK_ID } : {},
-      { maxTimeMS: 60000 }
-    )
-    .toArray();
-  const indexMap = new Map(indexDocs.map(d => [d.book_id, d]));
-  console.log(`Loaded ${indexMap.size} book_indexes entries`);
+  // Only project the fields we need from book_indexes (skip pageSummaries which are huge)
+  const INDEX_PROJECTION = {
+    book_id: 1,
+    bookSummary: 1,
+    sectionSummaries: { $slice: 15 },
+    'entries.term': 1, 'entries.pages': 1,
+    people: { $slice: 30 },
+    places: { $slice: 20 },
+    concepts: { $slice: 30 },
+  };
 
   const bookMap = new Map(books.map(b => [b.id, b]));
 
   if (DRY_RUN) {
-    let withIndex = 0, withoutIndex = 0;
-    for (const bookId of bookIds) {
-      if (indexMap.has(bookId)) withIndex++;
-      else withoutIndex++;
-    }
+    // For dry run, just count which books have indexes (lightweight query)
+    const indexCount = await db.collection('book_indexes')
+      .countDocuments(BOOK_ID ? { book_id: BOOK_ID } : {}, { maxTimeMS: 30000 });
     console.log(`\nDry run summary:`);
     console.log(`  ${bookIds.length} books to embed`);
-    console.log(`  ${withIndex} with book_indexes (rich embedding)`);
-    console.log(`  ${withoutIndex} without (fallback: title+desc+categories)`);
+    console.log(`  ${indexCount} with book_indexes (rich embedding)`);
+    console.log(`  ${bookIds.length - indexCount} without (fallback: title+desc+categories)`);
     await mongo.close();
     return;
   }
 
-  // Process in batches
+  // Process in batches — fetch book_indexes per batch to avoid OOM
   let embedded = 0, skipped = 0, errors = 0;
   const startTime = Date.now();
 
   for (let i = 0; i < bookIds.length; i += BATCH_SIZE) {
     const batchIds = bookIds.slice(i, i + BATCH_SIZE);
+
+    // Fetch indexes for this batch only
+    const indexDocs = await db.collection('book_indexes')
+      .find({ book_id: { $in: batchIds } })
+      .project(INDEX_PROJECTION)
+      .maxTimeMS(15000)
+      .toArray();
+    const indexMap = new Map(indexDocs.map(d => [d.book_id, d]));
+
     const batchTexts = [];
     const batchBooks = [];
 
