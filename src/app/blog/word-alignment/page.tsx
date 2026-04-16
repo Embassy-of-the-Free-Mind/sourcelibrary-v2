@@ -103,6 +103,24 @@ export default function WordAlignmentPage() {
       <div className="mb-12">
         <WordAlignmentDemo pageIndex={2} />
       </div>
+
+      <article className="prose-content max-w-none">
+        <h2 className="text-lg font-semibold text-primary mt-2 mb-3">Gemini embeddings</h2>
+        <p className="text-secondary leading-relaxed mb-6">
+          Google&rsquo;s <code className="text-xs bg-stone-100 px-1.5 py-0.5 rounded">gemini-embedding-001</code>{' '}
+          &mdash; 3,072 dimensions vs mBERT&rsquo;s 768. The richer representation catches
+          correspondences the other models miss: &ldquo;elationem&rdquo; &rarr; &ldquo;elevation&rdquo;,
+          &ldquo;modestiam&rdquo; &rarr; &ldquo;moderation&rdquo;,
+          &ldquo;suscipitur&rdquo; &rarr; &ldquo;received&rdquo;.
+          Since Source Library is already moving to Gemini embeddings for search, this alignment
+          would come essentially free &mdash; just run the same model at the word level
+          instead of the passage level.
+        </p>
+      </article>
+
+      <div className="mb-12">
+        <WordAlignmentDemo pageIndex={3} />
+      </div>
     </ContentPageLayout>
   );
 }

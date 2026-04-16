@@ -963,6 +963,225 @@
           ]
         }
       ]
+    },
+    {
+      "id": "ficino-gemini-embedding",
+      "book": "De Voluptate",
+      "author": "Marsilio Ficino",
+      "year": "1457",
+      "sourceLanguage": "Latin",
+      "method": "gemini",
+      "sentences": [
+        {
+          "src": "PLATO igitur, ut ab eorum principe initium faciam, cum animum in duas partes distribuisset, mente scilicet ac sensum, menti laeticiam & gaudium attribuit, sensibus voluptatem.",
+          "en": "Plato, therefore (to begin with him as the leader of these philosophers), when he had divided the soul into two parts — namely, the mind and the senses — attributed gladness and joy to the mind, pleasure to the senses.",
+          "words": [
+            {
+              "src": "PLATO",
+              "en": "Plato",
+              "weight": 0.822345481021973
+            },
+            {
+              "src": "eorum",
+              "en": "therefore",
+              "weight": 0.30648753187524824
+            },
+            {
+              "src": "initium",
+              "en": "begin",
+              "weight": 0.30213302048955604
+            },
+            {
+              "src": "partes",
+              "en": "divided",
+              "weight": 0.29187237580421965
+            },
+            {
+              "src": "animum",
+              "en": "soul",
+              "weight": 0.2549180848924444
+            },
+            {
+              "src": "scilicet",
+              "en": "namely",
+              "weight": 0.2866826746498441
+            },
+            {
+              "src": "mente",
+              "en": "mind",
+              "weight": 0.42223691829057985
+            },
+            {
+              "src": "sensum",
+              "en": "senses",
+              "weight": 0.4235455816665421
+            },
+            {
+              "src": "attribuit",
+              "en": "attributed",
+              "weight": 0.617116003516911
+            },
+            {
+              "src": "gaudium",
+              "en": "gladness",
+              "weight": 0.553630449639098
+            }
+          ]
+        },
+        {
+          "src": "Verum prima duo haec inter se differre putat, quod omne gaudium laude sit dignum, laeticia vero partim laudanda, partim vituperanda sit.",
+          "en": "He considers these first two to differ from each other in that all joy is worthy of praise, while gladness is partly to be praised and partly to be censured.",
+          "words": [
+            {
+              "src": "differre",
+              "en": "considers",
+              "weight": 0.25399543609951447
+            },
+            {
+              "src": "duo",
+              "en": "two",
+              "weight": 0.5011711229808562
+            },
+            {
+              "src": "dignum",
+              "en": "from",
+              "weight": 0.27498272139915025
+            },
+            {
+              "src": "haec",
+              "en": "each",
+              "weight": 0.37010235486085863
+            },
+            {
+              "src": "putat",
+              "en": "that",
+              "weight": 0.4052404275443253
+            },
+            {
+              "src": "gaudium",
+              "en": "joy",
+              "weight": 0.5106103884844588
+            },
+            {
+              "src": "laude",
+              "en": "praise",
+              "weight": 0.3642107558760592
+            },
+            {
+              "src": "partim",
+              "en": "partly",
+              "weight": 0.4468773290575885
+            },
+            {
+              "src": "quod",
+              "en": "and",
+              "weight": 0.33976306892509855
+            }
+          ]
+        },
+        {
+          "src": "Esse enim laeticiam in bonis alicuius possessione quandam mentis elationem, quae tamen modestiam excedere pariter, atque seruare queat.",
+          "en": "For he defines gladness as a certain elevation of the mind in the possession of some good things, which is able to both exceed and preserve moderation.",
+          "words": [
+            {
+              "src": "quae",
+              "en": "For",
+              "weight": 0.3204119275578401
+            },
+            {
+              "src": "seruare",
+              "en": "defines",
+              "weight": 0.29182424402702645
+            },
+            {
+              "src": "laeticiam",
+              "en": "gladness",
+              "weight": 0.36322866116514607
+            },
+            {
+              "src": "elationem",
+              "en": "elevation",
+              "weight": 0.3388855201814067
+            },
+            {
+              "src": "mentis",
+              "en": "mind",
+              "weight": 0.3474341883892851
+            },
+            {
+              "src": "possessione",
+              "en": "possession",
+              "weight": 0.692289179355432
+            },
+            {
+              "src": "bonis",
+              "en": "good",
+              "weight": 0.3090402877789922
+            },
+            {
+              "src": "Esse",
+              "en": "able",
+              "weight": 0.3105859593764466
+            },
+            {
+              "src": "atque",
+              "en": "both",
+              "weight": 0.2814366075441894
+            },
+            {
+              "src": "excedere",
+              "en": "exceed",
+              "weight": 0.5114328406647592
+            },
+            {
+              "src": "modestiam",
+              "en": "moderation",
+              "weight": 0.45440083249544605
+            }
+          ]
+        },
+        {
+          "src": "Gaudium vero illam ipsam, quae ex contē- platione, aut alio quopiam virtutum usu suscipitur iocunditatem.",
+          "en": "Joy, however, is that very delight which is received from contemplation or from some other exercise of the virtues.",
+          "words": [
+            {
+              "src": "Gaudium",
+              "en": "Joy",
+              "weight": 0.535425543272992
+            },
+            {
+              "src": "quae",
+              "en": "that",
+              "weight": 0.2855498509920118
+            },
+            {
+              "src": "vero",
+              "en": "very",
+              "weight": 0.4527701355956433
+            },
+            {
+              "src": "suscipitur",
+              "en": "received",
+              "weight": 0.2287484347523312
+            },
+            {
+              "src": "contē-",
+              "en": "contemplation",
+              "weight": 0.3178334018277742
+            },
+            {
+              "src": "quopiam",
+              "en": "the",
+              "weight": 0.3338694365228738
+            },
+            {
+              "src": "virtutum",
+              "en": "virtues",
+              "weight": 0.4806999726594996
+            }
+          ]
+        }
+      ]
     }
   ]
 }
