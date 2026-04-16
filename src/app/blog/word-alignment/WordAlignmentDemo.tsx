@@ -4,12 +4,14 @@ import { useState, useEffect, useCallback, useMemo } from 'react';
 
 interface WordLink {
   src: string;
+  translit?: string;
   en: string;
   weight: number;
 }
 
 interface SentencePair {
   src: string;
+  translit?: string;
   en: string;
   words: WordLink[];
 }
@@ -20,6 +22,7 @@ interface AlignedPage {
   author: string;
   year: string;
   sourceLanguage: string;
+  hasTransliteration?: boolean;
   sentences: SentencePair[];
 }
 
@@ -27,17 +30,21 @@ interface AlignmentData {
   pages: AlignedPage[];
 }
 
-// Build a lookup: English word (lowercase) → list of Latin words that produced it
+function cleanToken(word: string) {
+  return word.toLowerCase().replace(/[.,;:!?"'()\[\]""—–\-·']/g, '');
+}
+
+// Build lookup: English word → set of source words
 function buildEnToSrcMap(sentences: SentencePair[]) {
   const map = new Map<string, Set<string>>();
   for (const s of sentences) {
     for (const w of s.words) {
       for (const enToken of w.en.toLowerCase().split(/\s+/)) {
-        const clean = enToken.replace(/[.,;:!?"'()\[\]]/g, '');
+        const clean = cleanToken(enToken);
         if (!clean) continue;
         if (!map.has(clean)) map.set(clean, new Set());
         for (const srcToken of w.src.split(/\s+/)) {
-          map.get(clean)!.add(srcToken.toLowerCase().replace(/[.,;:!?"'()\[\]]/g, ''));
+          map.get(clean)!.add(cleanToken(srcToken));
         }
       }
     }
@@ -45,14 +52,22 @@ function buildEnToSrcMap(sentences: SentencePair[]) {
   return map;
 }
 
-function cleanToken(word: string) {
-  return word.toLowerCase().replace(/[.,;:!?"'()\[\]""—–\-]/g, '');
+// Build lookup: source word → transliteration
+function buildSrcToTranslit(sentences: SentencePair[]) {
+  const map = new Map<string, string>();
+  for (const s of sentences) {
+    for (const w of s.words) {
+      if (w.translit) {
+        map.set(cleanToken(w.src), w.translit);
+      }
+    }
+  }
+  return map;
 }
 
-export function WordAlignmentDemo() {
+export function WordAlignmentDemo({ pageIndex = 0 }: { pageIndex?: number }) {
   const [data, setData] = useState<AlignmentData | null>(null);
   const [loading, setLoading] = useState(true);
-  const [selectedPage, setSelectedPage] = useState(0);
   const [selectedEnWord, setSelectedEnWord] = useState<string | null>(null);
 
   useEffect(() => {
@@ -62,15 +77,19 @@ export function WordAlignmentDemo() {
       .catch(() => setLoading(false));
   }, []);
 
-  const page = data?.pages[selectedPage];
+  const page = data?.pages[pageIndex];
+  const hasTranslit = page?.hasTransliteration;
 
-  // Build the mapping for the current page
   const enToSrc = useMemo(() => {
     if (!page) return new Map<string, Set<string>>();
     return buildEnToSrcMap(page.sentences);
   }, [page]);
 
-  // Which Latin words should be highlighted?
+  const srcToTranslit = useMemo(() => {
+    if (!page) return new Map<string, string>();
+    return buildSrcToTranslit(page.sentences);
+  }, [page]);
+
   const highlightedSrcWords = useMemo(() => {
     if (!selectedEnWord) return new Set<string>();
     return enToSrc.get(selectedEnWord) || new Set<string>();
@@ -98,51 +117,52 @@ export function WordAlignmentDemo() {
     );
   }
 
-  // Flatten all text for rendering
   const allSrcText = page.sentences.map(s => s.src).join(' ');
+  const allTranslitText = hasTranslit ? page.sentences.map(s => s.translit || '').join(' ') : '';
   const allEnText = page.sentences.map(s => s.en).join(' ');
+
+  const gridCols = hasTranslit ? 'md:grid-cols-3' : 'md:grid-cols-2';
 
   return (
     <div className="rounded-2xl border border-stone-200 bg-white overflow-hidden shadow-sm">
       {/* Header */}
-      <div className="flex items-center justify-between px-5 py-3 border-b border-stone-100 bg-stone-50/50">
+      <div className="px-5 py-3 border-b border-stone-100 bg-stone-50/50">
         <div className="text-sm text-stone-500">
           <span className="font-medium text-stone-700">{page.author}</span>
           {', '}
           <em>{page.book}</em>
           {' '}({page.year})
         </div>
-        {data.pages.length > 1 && (
-          <select
-            value={selectedPage}
-            onChange={(e) => { setSelectedPage(Number(e.target.value)); setSelectedEnWord(null); }}
-            className="text-sm border border-stone-200 rounded-lg px-3 py-1.5 bg-white text-stone-600"
-          >
-            {data.pages.map((p, i) => (
-              <option key={p.id} value={i}>
-                {p.author} &mdash; {p.book}
-              </option>
-            ))}
-          </select>
-        )}
       </div>
 
       {/* Split pane */}
-      <div className="grid grid-cols-1 md:grid-cols-2 divide-y md:divide-y-0 md:divide-x divide-stone-100">
-        {/* Latin source */}
+      <div className={`grid grid-cols-1 ${gridCols} divide-y md:divide-y-0 md:divide-x divide-stone-100`}>
+        {/* Source */}
         <div className="p-6">
           <div className="text-[11px] font-semibold text-stone-400 uppercase tracking-[0.15em] mb-4">
-            {page.sourceLanguage} Source
+            {page.sourceLanguage}
           </div>
-          <div className="font-serif text-[15px] leading-[1.8] text-stone-500" lang="la">
-            <LatinText text={allSrcText} highlighted={highlightedSrcWords} />
+          <div className="font-serif text-[15px] leading-[1.8] text-stone-500">
+            <SourceText text={allSrcText} highlighted={highlightedSrcWords} />
           </div>
         </div>
 
-        {/* English translation */}
+        {/* Transliteration (only for Greek etc.) */}
+        {hasTranslit && (
+          <div className="p-6">
+            <div className="text-[11px] font-semibold text-stone-400 uppercase tracking-[0.15em] mb-4">
+              Transliteration
+            </div>
+            <div className="font-serif text-[15px] leading-[1.8] text-stone-400 italic">
+              <SourceText text={allTranslitText} highlighted={highlightedSrcWords} translitMap={srcToTranslit} />
+            </div>
+          </div>
+        )}
+
+        {/* English */}
         <div className="p-6">
           <div className="text-[11px] font-semibold text-stone-400 uppercase tracking-[0.15em] mb-4">
-            English Translation
+            English
           </div>
           <div className="font-serif text-[15px] leading-[1.8] text-stone-800">
             <EnglishText
@@ -157,13 +177,21 @@ export function WordAlignmentDemo() {
 
       {/* Footer */}
       <div className="px-5 py-3 border-t border-stone-100 bg-stone-50/50 text-center text-xs text-stone-400">
-        Click any English word to highlight its Latin source.
+        Click any English word to highlight its {page.sourceLanguage} source.
       </div>
     </div>
   );
 }
 
-function LatinText({ text, highlighted }: { text: string; highlighted: Set<string> }) {
+function SourceText({
+  text,
+  highlighted,
+  translitMap,
+}: {
+  text: string;
+  highlighted: Set<string>;
+  translitMap?: Map<string, string>;
+}) {
   const tokens = text.split(/(\s+)/);
 
   return (
@@ -171,7 +199,12 @@ function LatinText({ text, highlighted }: { text: string; highlighted: Set<strin
       {tokens.map((token, i) => {
         if (/^\s+$/.test(token)) return <span key={i}>{token}</span>;
         const clean = cleanToken(token);
-        const isHighlighted = highlighted.has(clean);
+        // For transliteration column, check if the source word it maps from is highlighted
+        const isHighlighted = translitMap
+          ? [...translitMap.entries()].some(([src, translit]) =>
+              cleanToken(translit) === clean && highlighted.has(src))
+            || highlighted.has(clean)
+          : highlighted.has(clean);
         return (
           <span
             key={i}
