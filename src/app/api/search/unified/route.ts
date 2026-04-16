@@ -99,12 +99,14 @@ export async function GET(request: NextRequest) {
       title: string;
       author: string | null;
       language: string | null;
+      year: number | null;
       summary_snippet: string;
+      relevance_hint: string;
       similarity: number;
     }
     const emptySemanticBooks = { results: [] as SemanticBookResult[], total: 0 };
 
-    const [booksResult, indexResult, galleryResult, visualResult, semanticResult] = await Promise.all([
+    const [booksResult, indexResult, galleryResult, visualResult, semanticResultRaw] = await Promise.all([
       withTimeout(searchBooks(db, query, queryRegex, limit, searchFilters, library), emptyBooks, 'books'),
       withTimeout(
         searchIndex(db, query, limit).catch((err) => {
@@ -117,22 +119,48 @@ export async function GET(request: NextRequest) {
       withTimeout(searchVisual(query, galleryLimit), emptyGallery, 'visual', 5000),
       // Semantic search: book-level discovery via book_embeddings (HNSW, ~17K rows)
       withTimeout(
-        semanticBookSearch(query, 8)
+        semanticBookSearch(query, 12)
           .then(books => {
-            const results = books.map(b => ({
-              book_id: b.book_id,
-              title: b.title,
-              author: b.author,
-              language: b.language,
-              summary_snippet: (b.summary_text || '').slice(0, 300),
-              similarity: b.similarity,
-            }));
+            const results = books.map(b => {
+              // Extract clean summary (strip metadata lines like "Topics:", "People:", etc.)
+              const summaryText = b.summary_text || '';
+              const lines = summaryText.split('\n');
+              const cleanLines = lines.filter(l =>
+                !l.startsWith('Topics:') && !l.startsWith('People:') &&
+                !l.startsWith('Places:') && !l.startsWith('Concepts:') &&
+                !l.startsWith('Categories:') && !l.startsWith('Chapters:') &&
+                !l.startsWith('Language:') && !l.startsWith('Published:')
+              );
+              // Skip the title line (first line) — we already show title separately
+              const snippet = cleanLines.slice(1).join(' ').trim().slice(0, 200);
+
+              // Build relevance hint from metadata
+              const meta = (b.metadata || {}) as Record<string, any>;
+              const cats = (meta.categories || []) as string[];
+              const hint = cats.slice(0, 3).join(', ');
+
+              return {
+                book_id: b.book_id,
+                title: b.title,
+                author: b.author,
+                language: b.language,
+                year: b.year,
+                summary_snippet: snippet,
+                relevance_hint: hint,
+                similarity: b.similarity,
+              };
+            });
             return { results, total: results.length };
           })
           .catch(() => emptySemanticBooks),
         emptySemanticBooks, 'semantic', 6000,
       ),
     ]);
+
+    // Dedup semantic results: remove books already in keyword results
+    const keywordBookIds = new Set(booksResult.results.map((b: any) => b.id));
+    const dedupedSemantic = semanticResultRaw.results.filter(s => !keywordBookIds.has(s.book_id));
+    const semanticResult = { results: dedupedSemantic.slice(0, 6), total: dedupedSemantic.length };
 
     // Log search query (fire-and-forget)
     db.collection('analytics_events').insertOne({

@@ -169,7 +169,8 @@ export default function UnifiedSearch() {
   }, []);
 
   const galleryResults = (results as any)?.gallery?.results || [];
-  const hasResults = results && (results.books.total > 0 || results.index.total > 0 || galleryResults.length > 0);
+  const semanticResults = results?.semantic?.results || [];
+  const hasResults = results && (results.books.total > 0 || results.index.total > 0 || galleryResults.length > 0 || semanticResults.length > 0);
   const noResults = results && !hasResults && query.length >= 2;
 
   // Fetch suggestions on zero results
@@ -202,12 +203,15 @@ export default function UnifiedSearch() {
         : `/book/${bookPath}`;
       items.push({ type: 'index', href, id: `index-${item.book_id}-${item.type}-${i}` });
     }
+    for (const sem of semanticResults) {
+      items.push({ type: 'book', href: `/book/${sem.book_id}`, id: `semantic-${sem.book_id}` });
+    }
     for (const img of galleryResults) {
       items.push({ type: 'gallery', href: `/gallery/image/${img.id}`, id: `gallery-${img.id}` });
     }
     items.push({ type: 'full-search', href: `/search?q=${encodeURIComponent(query)}`, id: 'full-search' });
     return items;
-  }, [results, hasResults, query, galleryResults]);
+  }, [results, hasResults, query, galleryResults, semanticResults]);
 
   // Reset active index when results change
   useEffect(() => {
@@ -467,9 +471,55 @@ export default function UnifiedSearch() {
                 );
               })()}
 
+              {/* Semantic — conceptually related books */}
+              {semanticResults.length > 0 && (() => {
+                const semStartIndex = results!.books.results.length + results!.index.results.length;
+                return (
+                  <div className="p-3">
+                    <div className="flex items-center justify-between mb-2 px-2">
+                      <span className="text-xs font-semibold text-stone-400 uppercase tracking-wide">
+                        Related
+                      </span>
+                    </div>
+                    {semanticResults.map((sem, idx) => {
+                      const itemIndex = semStartIndex + idx;
+                      return (
+                        <Link
+                          key={sem.book_id}
+                          id={`search-item-${itemIndex}`}
+                          href={`/book/${sem.book_id}`}
+                          onClick={() => setIsOpen(false)}
+                          role="option"
+                          aria-selected={activeIndex === itemIndex}
+                          data-search-index={itemIndex}
+                          className={`flex items-center gap-3 px-2 py-2 rounded-lg transition-colors ${activeIndex === itemIndex ? 'bg-violet-50' : 'hover:bg-violet-50'
+                            }`}
+                        >
+                          <Lightbulb className="w-4 h-4 text-violet-400 flex-shrink-0" />
+                          <div className="flex-1 min-w-0">
+                            <p className="font-medium text-stone-900 text-sm truncate">
+                              {sem.title}
+                            </p>
+                            <p className="text-xs text-stone-500 truncate">
+                              {sem.author}{sem.year ? ` · ${sem.year}` : ''}
+                              {sem.relevance_hint ? ` · ${sem.relevance_hint}` : ''}
+                            </p>
+                            {sem.summary_snippet && (
+                              <p className="text-xs text-stone-400 truncate mt-0.5">
+                                {sem.summary_snippet}
+                              </p>
+                            )}
+                          </div>
+                        </Link>
+                      );
+                    })}
+                  </div>
+                );
+              })()}
+
               {/* Gallery Images */}
               {galleryResults.length > 0 && (() => {
-                const galStartIndex = results!.books.results.length + results!.index.results.length;
+                const galStartIndex = results!.books.results.length + results!.index.results.length + semanticResults.length;
                 return (
                   <div className="p-3">
                     <div className="flex items-center justify-between mb-2 px-2">
