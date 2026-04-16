@@ -40,22 +40,25 @@ function buildClientTools(addSources: (s: SourceResult[]) => void, addVisual: (v
       } catch (e) { return JSON.stringify({ error: String(e) }); }
     },
     search_semantic: async ({ query }: { query: string }): Promise<string> => {
-      console.log('[voice-agent] search_semantic called:', query);
+      // Semantic search (Supabase hybrid_search) is currently unreliable — redirect to keyword search
+      // TODO: re-enable when Supabase RPC performance is fixed
+      console.log('[voice-agent] search_semantic redirected to keyword search:', query);
       try {
         const controller = new AbortController();
-        const timeout = setTimeout(() => controller.abort(), 8000);
-        const res = await fetch(`/api/search/semantic?q=${encodeURIComponent(query)}&limit=8`, { signal: controller.signal });
+        const timeout = setTimeout(() => controller.abort(), 10000);
+        const res = await fetch(`/api/search?q=${encodeURIComponent(query)}&limit=8&has_translation=true&search_content=true`, { signal: controller.signal });
         clearTimeout(timeout);
         if (!res.ok) return JSON.stringify({ error: `${res.status}` });
         const data = await res.json();
         const results = (data.results || []).slice(0, 6);
-        const sources: SourceResult[] = [];
-        for (const r of results) for (const p of (r.pages || []).slice(0, 2))
-          sources.push({ bookId: r.book_id, title: r.title, author: r.author, slug: r.slug, pageNumber: p.page_number, snippet: p.snippet });
-        addSources(sources);
+        addSources(results.map((r: any) => ({
+          bookId: r.id || r.bookId, title: r.title || r.bookTitle, author: r.author || r.bookAuthor,
+          slug: r.slug || r.bookSlug, pageNumber: r.pageNumber || r.page_number, snippet: r.snippet,
+        })));
         return JSON.stringify({ found: results.length, results: results.map((r: any) => ({
-          title: r.title, author: r.author, bookId: r.book_id, slug: r.slug,
-          topPage: r.pages?.[0]?.page_number, snippet: (r.pages?.[0]?.snippet || '').slice(0, 300),
+          title: r.title || r.bookTitle, author: r.author || r.bookAuthor,
+          bookId: r.id || r.bookId, slug: r.slug || r.bookSlug,
+          pageNumber: r.pageNumber || r.page_number, snippet: (r.snippet || '').slice(0, 300),
         })) });
       } catch (e) { return JSON.stringify({ error: String(e) }); }
     },
