@@ -19,6 +19,7 @@ interface Visual { type: 'image' | 'page'; url: string; title: string; caption?:
 function buildClientTools(addSources: (s: SourceResult[]) => void, addVisual: (v: Visual) => void) {
   return {
     search_library: async ({ query }: { query: string }): Promise<string> => {
+      console.log('[voice-agent] search_library called:', query);
       try {
         const res = await fetch(`/api/search?q=${encodeURIComponent(query)}&limit=8&has_translation=true`);
         if (!res.ok) return JSON.stringify({ error: `${res.status}` });
@@ -36,6 +37,7 @@ function buildClientTools(addSources: (s: SourceResult[]) => void, addVisual: (v
       } catch (e) { return JSON.stringify({ error: String(e) }); }
     },
     search_semantic: async ({ query }: { query: string }): Promise<string> => {
+      console.log('[voice-agent] search_semantic called:', query);
       try {
         const res = await fetch(`/api/search/semantic?q=${encodeURIComponent(query)}&limit=8`);
         if (!res.ok) return JSON.stringify({ error: `${res.status}` });
@@ -154,6 +156,8 @@ function VoiceAgentInner() {
       else if (status === 'disconnected' || status === 'disconnecting') setAppStatus('idle');
     },
     onModeChange: ({ mode }: { mode: string }) => { setAgentSpeaking(mode === 'speaking'); },
+    onUnhandledClientToolCall: (params: any) => { console.warn('[voice-agent] UNHANDLED tool call:', params); },
+    onDebug: (props: any) => { if (props?.type?.includes('tool')) console.log('[voice-agent] debug:', props); },
   });
 
   useEffect(() => { scrollRef.current?.scrollTo({ top: scrollRef.current.scrollHeight, behavior: 'smooth' }); }, [transcript]);
