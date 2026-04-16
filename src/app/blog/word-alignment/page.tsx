@@ -2,6 +2,7 @@ import { Metadata } from 'next';
 import Link from 'next/link';
 import ContentPageLayout, { ContentHeader } from '@/components/layout/ContentPageLayout';
 import { WordAlignmentDemo } from './WordAlignmentDemo';
+import { LiveAlignmentDemo } from './LiveAlignmentDemo';
 
 export const metadata: Metadata = {
   title: 'Reading Through the Translation - Research Notes - Source Library',
@@ -120,6 +121,26 @@ export default function WordAlignmentPage() {
 
       <div className="mb-12">
         <WordAlignmentDemo pageIndex={3} />
+      </div>
+
+      <article className="prose-content max-w-none">
+        <h2 className="text-lg font-semibold text-primary mt-2 mb-3">Live: no pre-computation</h2>
+        <p className="text-secondary leading-relaxed mb-6">
+          Everything above was pre-computed. This one isn&rsquo;t. Click any English word and
+          the embedding is computed right now via the Gemini API, compared against the source
+          words in real time. First click loads source embeddings (~200ms), then every click
+          after is instant. No batch job, no stored alignment data. This could work on every
+          translated page in the library today.
+        </p>
+      </article>
+
+      <div className="mb-12">
+        <LiveAlignmentDemo
+          sourceText="PLATO igitur, ut ab eorum principe initium faciam, cum animum in duas partes distribuisset, mente scilicet ac sensum, menti laeticiam & gaudium attribuit, sensibus voluptatem. Verum prima duo haec inter se differre putat, quod omne gaudium laude sit dignum, laeticia vero partim laudanda, partim vituperanda sit. Esse enim laeticiam in bonis alicuius possessione quandam mentis elationem, quae tamen modestiam excedere pariter, atque seruare queat. Gaudium vero illam ipsam, quae ex contemplatione, aut alio quopiam virtutum usu suscipitur iocunditatem."
+          translationText="Plato, therefore (to begin with him as the leader of these philosophers), when he had divided the soul into two parts — namely, the mind and the senses — attributed gladness and joy to the mind, pleasure to the senses. He considers these first two to differ from each other in that all joy is worthy of praise, while gladness is partly to be praised and partly to be censured. For he defines gladness as a certain elevation of the mind in the possession of some good things, which is able to both exceed and preserve moderation. Joy, however, is that very delight which is received from contemplation or from some other exercise of the virtues."
+          sourceLanguage="Latin"
+          label="Marsilio Ficino, De Voluptate (1457)"
+        />
       </div>
     </ContentPageLayout>
   );
