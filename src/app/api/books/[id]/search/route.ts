@@ -1,6 +1,7 @@
 import { NextRequest, NextResponse } from 'next/server';
 import { getDb } from '@/lib/mongodb';
 import { buildPageSearchStage } from '@/lib/atlas-search';
+import { semanticPageSearchScoped } from '@/lib/semantic-search';
 
 interface SearchMatch {
   field: 'ocr' | 'translation';
@@ -79,78 +80,109 @@ export async function GET(
     const trimmedQuery = query.trim();
     const db = await getDb();
 
-    // Try Atlas Search first (stemming, relevance ranking, highlights)
-    // Falls back to regex if Atlas Search index is unavailable
-    let pages: Record<string, unknown>[];
-    let usedAtlas = false;
+    // Run keyword search and semantic search in parallel
+    const [keywordResults, semanticResults] = await Promise.all([
+      // --- Keyword search (Atlas Search with regex fallback) ---
+      (async (): Promise<SearchResult[]> => {
+        let pages: Record<string, unknown>[];
+        let usedAtlas = false;
 
-    try {
-      pages = await db.collection('pages').aggregate([
-        buildPageSearchStage(trimmedQuery, bookId),
-        { $sort: { page_number: 1 } },
-        { $limit: 50 },
-        {
-          $project: {
-            id: 1,
-            page_number: 1,
-            book_id: 1,
-            'ocr.data': 1,
-            'translation.data': 1,
-            highlights: { $meta: 'searchHighlights' },
-          },
-        },
-      ], { maxTimeMS: 10000 }).toArray();
-      usedAtlas = true;
-    } catch {
-      // Fallback: regex search (no stemming but always works)
-      const regex = new RegExp(escapeRegex(trimmedQuery), 'i');
-      pages = await db.collection('pages')
-        .find({
-          book_id: bookId,
-          $or: [
-            { 'ocr.data': { $regex: regex } },
-            { 'translation.data': { $regex: regex } }
-          ]
-        }, {
-          projection: { id: 1, page_number: 1, 'ocr.data': 1, 'translation.data': 1 }
-        })
-        .sort({ page_number: 1 })
-        .limit(50)
-        .toArray();
-    }
-
-    const results: SearchResult[] = [];
-
-    for (const page of pages) {
-      const matches: SearchMatch[] = [];
-
-      if (usedAtlas && Array.isArray(page.highlights) && page.highlights.length > 0) {
-        // Use Atlas Search highlights
-        for (const hl of page.highlights as Array<{ path: string; texts: Array<{ value: string; type: string }> }>) {
-          const field: 'ocr' | 'translation' = hl.path === 'translation.data' ? 'translation' : 'ocr';
-          const snippet = hl.texts.map(t => t.value).join('');
-          matches.push({ field, snippet, position: 0 });
+        try {
+          pages = await db.collection('pages').aggregate([
+            buildPageSearchStage(trimmedQuery, bookId),
+            { $sort: { page_number: 1 } },
+            { $limit: 50 },
+            {
+              $project: {
+                id: 1,
+                page_number: 1,
+                book_id: 1,
+                'ocr.data': 1,
+                'translation.data': 1,
+                highlights: { $meta: 'searchHighlights' },
+              },
+            },
+          ], { maxTimeMS: 10000 }).toArray();
+          usedAtlas = true;
+        } catch {
+          const regex = new RegExp(escapeRegex(trimmedQuery), 'i');
+          pages = await db.collection('pages')
+            .find({
+              book_id: bookId,
+              $or: [
+                { 'ocr.data': { $regex: regex } },
+                { 'translation.data': { $regex: regex } }
+              ]
+            }, {
+              projection: { id: 1, page_number: 1, 'ocr.data': 1, 'translation.data': 1 }
+            })
+            .sort({ page_number: 1 })
+            .limit(50)
+            .toArray();
         }
-      } else {
-        // Fallback: generate snippets from raw text
-        const ocr = page.ocr as { data?: string } | undefined;
-        const translation = page.translation as { data?: string } | undefined;
-        if (ocr?.data) {
-          const ocrMatches = generateSnippet(ocr.data, trimmedQuery);
-          matches.push(...ocrMatches.map(m => ({ ...m, field: 'ocr' as const })));
-        }
-        if (translation?.data) {
-          const translationMatches = generateSnippet(translation.data, trimmedQuery);
-          matches.push(...translationMatches.map(m => ({ ...m, field: 'translation' as const })));
-        }
-      }
 
-      if (matches.length > 0) {
-        results.push({
-          pageId: page.id as string,
-          pageNumber: page.page_number as number,
-          matches
-        });
+        const results: SearchResult[] = [];
+        for (const page of pages) {
+          const matches: SearchMatch[] = [];
+
+          if (usedAtlas && Array.isArray(page.highlights) && page.highlights.length > 0) {
+            for (const hl of page.highlights as Array<{ path: string; texts: Array<{ value: string; type: string }> }>) {
+              const field: 'ocr' | 'translation' = hl.path === 'translation.data' ? 'translation' : 'ocr';
+              const snippet = hl.texts.map(t => t.value).join('');
+              matches.push({ field, snippet, position: 0 });
+            }
+          } else {
+            const ocr = page.ocr as { data?: string } | undefined;
+            const translation = page.translation as { data?: string } | undefined;
+            if (ocr?.data) {
+              const ocrMatches = generateSnippet(ocr.data, trimmedQuery);
+              matches.push(...ocrMatches.map(m => ({ ...m, field: 'ocr' as const })));
+            }
+            if (translation?.data) {
+              const translationMatches = generateSnippet(translation.data, trimmedQuery);
+              matches.push(...translationMatches.map(m => ({ ...m, field: 'translation' as const })));
+            }
+          }
+
+          if (matches.length > 0) {
+            results.push({
+              pageId: page.id as string,
+              pageNumber: page.page_number as number,
+              matches
+            });
+          }
+        }
+        return results;
+      })(),
+
+      // --- Semantic search (conceptual matches via page embeddings) ---
+      (async (): Promise<SearchResult[]> => {
+        try {
+          const pages = await semanticPageSearchScoped(trimmedQuery, [bookId], 10);
+          return pages
+            .filter(p => p.snippet && p.snippet.length > 20)
+            .map(p => ({
+              pageId: p.page_id,
+              pageNumber: p.page_number,
+              matches: [{
+                field: 'translation' as const,
+                snippet: p.snippet,
+                position: 0,
+              }],
+            }));
+        } catch {
+          return [];
+        }
+      })(),
+    ]);
+
+    // Merge: keyword results first, then semantic results for pages not already found
+    const seenPages = new Set(keywordResults.map(r => r.pageNumber));
+    const results: SearchResult[] = [...keywordResults];
+    for (const sem of semanticResults) {
+      if (!seenPages.has(sem.pageNumber)) {
+        results.push(sem);
+        seenPages.add(sem.pageNumber);
       }
     }
 
