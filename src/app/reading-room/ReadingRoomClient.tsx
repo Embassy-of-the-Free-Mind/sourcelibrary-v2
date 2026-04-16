@@ -2,7 +2,6 @@
 
 import { useState, useEffect, useRef, useCallback } from 'react';
 import { useSession } from 'next-auth/react';
-import { useSearchParams } from 'next/navigation';
 import Link from 'next/link';
 import ReactMarkdown from 'react-markdown';
 import remarkGfm from 'remark-gfm';
@@ -453,17 +452,17 @@ export default function ReadingRoomClient({ featuredPassage }: ReadingRoomClient
   };
 
   // Auto-fill from ?q= search param (e.g. from "Ask the Librarian" link)
-  const searchParams = useSearchParams();
   const initialQueryHandled = useRef(false);
   useEffect(() => {
     if (initialQueryHandled.current) return;
-    const q = searchParams.get('q');
+    const params = new URLSearchParams(window.location.search);
+    const q = params.get('q');
     if (q && !sending && messages.length === 0) {
       initialQueryHandled.current = true;
       pendingChoiceRef.current = q;
       setInput(q);
     }
-  }, [searchParams, sending, messages.length]);
+  }, [sending, messages.length]);
 
   const pendingChoiceRef = useRef<string | null>(null);
 
