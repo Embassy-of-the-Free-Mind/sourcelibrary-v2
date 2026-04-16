@@ -4,6 +4,7 @@ import { Book } from '@/lib/types';
 import type { SearchResult, SearchResponse } from '@/lib/api-client/types/search';
 import { buildPageSearchStage } from '@/lib/atlas-search';
 import { searchBookIds } from '@/lib/books-catalog';
+import { semanticPageSearch } from '@/lib/semantic-search';
 
 export const preferredRegion = 'fra1';
 
@@ -139,7 +140,7 @@ export async function GET(request: NextRequest) {
     // Run book search and page content search in parallel
     const hasBookLevelFilters = !!(language || category || dateFrom || dateTo || hasDoi === 'true' || hasTranslation === 'true' || firstTranslation === 'true' || year || yearFrom || yearTo || library);
 
-    const [bookDocs, pageDocs] = await Promise.all([
+    const [bookDocs, pageDocs, semanticDocs] = await Promise.all([
       // --- Book search via Supabase trigram (fast, no cold-start penalty) ---
       (async () => {
         if (bookId || pagesOnly) return [];
@@ -215,6 +216,21 @@ export async function GET(request: NextRequest) {
           return [];
         }
       })(),
+
+      // --- Semantic search via pgvector (finds conceptual matches keyword search misses) ---
+      // Runs in parallel with keyword search. Results are merged + deduped below.
+      // Skip for within-book searches (semantic doesn't filter by book_id).
+      (async () => {
+        if (bookId || !searchContent) return [];
+        try {
+          return await semanticPageSearch(query, MAX_PAGE_RESULTS, {
+            keywordWeight: 0.3,
+            semanticWeight: 0.7,
+          });
+        } catch {
+          return [];
+        }
+      })(),
     ]);
 
     // Process book results
@@ -287,6 +303,72 @@ export async function GET(request: NextRequest) {
           snippet_type: snippetType,
           thumbnail: (book as any).thumbnail,
           thumbnail_blob: (book as any).thumbnail_blob,
+        });
+      }
+    }
+
+    // Merge semantic results (conceptual matches that keyword search missed)
+    if (semanticDocs.length > 0) {
+      // Track which pages we already have from Atlas Search
+      const seenPageKeys = new Set(
+        results
+          .filter(r => r.type === 'page')
+          .map(r => `${r.book_id}-${r.page_number}`)
+      );
+
+      // Collect book IDs we need metadata for
+      const semanticBookIds = [...new Set(
+        semanticDocs
+          .filter(s => !seenPageKeys.has(`${s.book_id}-${s.page_number}`))
+          .map(s => s.book_id)
+      )];
+
+      // Fetch book metadata for semantic results (skip books we already have)
+      const semanticBookMap = new Map<string, any>();
+      if (semanticBookIds.length > 0) {
+        const newBookIds = semanticBookIds.filter(id => !seenBooks.has(id));
+        if (newBookIds.length > 0) {
+          const semBooks = await db.collection('books')
+            .find(
+              { id: { $in: newBookIds }, visible: true, pages_count: { $gt: 0 } },
+              { projection: { id: 1, slug: 1, title: 1, display_title: 1, author: 1, thumbnail: 1, thumbnail_blob: 1, language: 1, published: 1, pages_count: 1, pages_translated: 1, doi: 1, categories: 1, quality_score: 1 } }
+            )
+            .maxTimeMS(3000)
+            .toArray();
+          for (const b of semBooks) semanticBookMap.set(b.id as string, b);
+        }
+      }
+
+      for (const sem of semanticDocs) {
+        const pageKey = `${sem.book_id}-${sem.page_number}`;
+        if (seenPageKeys.has(pageKey)) continue;
+        seenPageKeys.add(pageKey);
+
+        // Use fetched book metadata, or construct minimal from semantic result
+        const book = semanticBookMap.get(sem.book_id);
+        if (!book) continue; // Book not visible or missing
+
+        results.push({
+          id: `${sem.book_id}-p${sem.page_number}`,
+          page_id: sem.page_id,
+          type: 'page',
+          book_id: sem.book_id,
+          slug: book.slug,
+          title: book.title || sem.book_title,
+          display_title: book.display_title,
+          author: book.author || sem.book_author || undefined,
+          language: book.language || sem.book_language || undefined,
+          published: book.published,
+          page_count: book.pages_count,
+          translated_count: book.pages_translated,
+          has_doi: !!book.doi,
+          doi: book.doi,
+          categories: book.categories,
+          page_number: sem.page_number,
+          snippet: sem.snippet,
+          snippet_type: 'translation' as const,
+          thumbnail: book.thumbnail,
+          thumbnail_blob: book.thumbnail_blob,
         });
       }
     }
@@ -390,6 +472,7 @@ export async function GET(request: NextRequest) {
       event: 'search_query',
       query,
       results_count: results.length,
+      semantic_count: semanticDocs.length,
       filters: { language, category, year, bookId, library, source: 'global' },
       timestamp: new Date(),
       ip: request.headers.get('x-forwarded-for')?.split(',')[0]?.trim() || 'unknown',
