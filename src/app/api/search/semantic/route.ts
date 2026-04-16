@@ -1,5 +1,6 @@
 import { NextRequest, NextResponse } from 'next/server';
 import { supabase } from '@/lib/supabase';
+import { getQueryEmbedding } from '@/lib/semantic-search';
 
 export const dynamic = 'force-dynamic';
 
@@ -114,56 +115,6 @@ export async function GET(request: NextRequest) {
       { error: 'Search failed', results: [], query },
       { status: 500 }
     );
-  }
-}
-
-/**
- * Generate query embedding via Gemini embedding-2-preview.
- * Must use the same model as the backfill (embed-gemini.mjs).
- * Falls back to Hetzner e5-base if Gemini fails.
- */
-async function getQueryEmbedding(query: string): Promise<number[] | null> {
-  const geminiKey = process.env.GEMINI_API_KEY;
-  if (geminiKey) {
-    try {
-      const res = await fetch(
-        `https://generativelanguage.googleapis.com/v1beta/models/gemini-embedding-2-preview:batchEmbedContents?key=${geminiKey}`,
-        {
-          method: 'POST',
-          headers: { 'Content-Type': 'application/json' },
-          body: JSON.stringify({
-            requests: [{
-              model: 'models/gemini-embedding-2-preview',
-              content: { parts: [{ text: query }] },
-              outputDimensionality: 768,
-            }],
-          }),
-          signal: AbortSignal.timeout(5000),
-        }
-      );
-      if (res.ok) {
-        const data = await res.json();
-        if (data?.embeddings?.[0]?.values) return data.embeddings[0].values;
-      }
-    } catch {
-      // Fall through to Hetzner fallback
-    }
-  }
-
-  // Fallback: Hetzner e5-base (for legacy embeddings or if Gemini is down)
-  const embedUrl = process.env.EMBED_URL || 'http://46.224.122.120:3456';
-  try {
-    const res = await fetch(`${embedUrl}/embed`, {
-      method: 'POST',
-      headers: { 'Content-Type': 'application/json' },
-      body: JSON.stringify({ texts: [query], task: 'query' }),
-      signal: AbortSignal.timeout(3000),
-    });
-    if (!res.ok) return null;
-    const data = await res.json();
-    return data?.embeddings?.[0] || null;
-  } catch {
-    return null;
   }
 }
 

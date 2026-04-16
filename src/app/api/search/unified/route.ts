@@ -4,6 +4,7 @@ import { supabase } from '@/lib/supabase';
 import type { BookSearchFilters } from '@/lib/atlas-search';
 import type { SearchResult } from '@/lib/api-client/types/search';
 import { searchBookIds } from '@/lib/books-catalog';
+import { semanticPageSearch } from '@/lib/semantic-search';
 
 // CLIP server on Hetzner for visual text→image search
 const CLIP_URL = process.env.CLIP_URL || 'http://46.224.122.120:3456/clip';
@@ -93,7 +94,18 @@ export async function GET(request: NextRequest) {
     const emptyIndex = { results: [] as IndexResult[], total: 0, hasMore: false };
     const emptyGallery = { results: [] as GalleryResult[], total: 0 };
 
-    const [booksResult, indexResult, galleryResult, visualResult] = await Promise.all([
+    interface SemanticBookResult {
+      book_id: string;
+      title: string;
+      author: string | null;
+      language: string | null;
+      snippet: string;
+      page_number: number;
+      score: number;
+    }
+    const emptySemanticBooks = { results: [] as SemanticBookResult[], total: 0 };
+
+    const [booksResult, indexResult, galleryResult, visualResult, semanticResult] = await Promise.all([
       withTimeout(searchBooks(db, query, queryRegex, limit, searchFilters, library), emptyBooks, 'books'),
       withTimeout(
         searchIndex(db, query, limit).catch((err) => {
@@ -104,13 +116,37 @@ export async function GET(request: NextRequest) {
       ),
       withTimeout(searchGallery(db, query, queryRegex, galleryLimit), emptyGallery, 'gallery'),
       withTimeout(searchVisual(query, galleryLimit), emptyGallery, 'visual', 5000),
+      // Semantic search: conceptual matches that keyword search misses
+      withTimeout(
+        semanticPageSearch(query, 8, { keywordWeight: 0.3, semanticWeight: 0.7 })
+          .then(pages => {
+            // Dedupe by book, keep best page per book
+            const byBook = new Map<string, typeof pages[0]>();
+            for (const p of pages) {
+              const existing = byBook.get(p.book_id);
+              if (!existing || p.score > existing.score) byBook.set(p.book_id, p);
+            }
+            const results = Array.from(byBook.values()).map(p => ({
+              book_id: p.book_id,
+              title: p.book_title,
+              author: p.book_author,
+              language: p.book_language,
+              snippet: p.snippet,
+              page_number: p.page_number,
+              score: p.score,
+            }));
+            return { results, total: results.length };
+          })
+          .catch(() => emptySemanticBooks),
+        emptySemanticBooks, 'semantic', 6000,
+      ),
     ]);
 
     // Log search query (fire-and-forget)
     db.collection('analytics_events').insertOne({
       event: 'search_query',
       query,
-      results_count: booksResult.total + indexResult.total + galleryResult.total + visualResult.total,
+      results_count: booksResult.total + indexResult.total + galleryResult.total + visualResult.total + semanticResult.total,
       filters: { language, category, library, source: 'unified' },
       timestamp: new Date(),
       ip: request.headers.get('x-forwarded-for')?.split(',')[0]?.trim() || 'unknown',
@@ -123,6 +159,7 @@ export async function GET(request: NextRequest) {
       index: indexResult,
       gallery: galleryResult,
       visual: visualResult,
+      semantic: semanticResult,
     }, {
       headers: {
         'Cache-Control': 'no-store',
