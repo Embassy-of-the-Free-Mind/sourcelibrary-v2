@@ -28,6 +28,23 @@ function cleanText(text: string): string {
     .trim();
 }
 
+/**
+ * Strip OCR metadata sections from page text before searching.
+ * These tags contain scan descriptions, not book content — matching
+ * inside them produces false positives (e.g. "life" in <image-desc>).
+ */
+function stripOcrMetadata(text: string): string {
+  return text
+    .replace(/<warning>[\s\S]*?<\/warning>/gi, '')
+    .replace(/<image-desc[\s\S]*?<\/image-desc>/gi, '')
+    .replace(/<meta>[\s\S]*?<\/meta>/gi, '')
+    .replace(/<page-type>[\s\S]*?<\/page-type>/gi, '')
+    .replace(/<language>[\s\S]*?<\/language>/gi, '')
+    .replace(/<lang>[\s\S]*?<\/lang>/gi, '')
+    .replace(/<script>[\s\S]*?<\/script>/gi, '')
+    .replace(/<note>[\s\S]*?<\/note>/gi, '');
+}
+
 function generateSnippet(text: string, query: string, contextChars: number = 80): SearchMatch[] {
   const matches: SearchMatch[] = [];
   const cleaned = cleanText(text);
@@ -80,7 +97,7 @@ export async function GET(
     const trimmedQuery = query.trim();
     const db = await getDb();
 
-    // Run keyword search and semantic search in parallel
+    // Run keyword search first, then semantic only if keyword found few results
     const [keywordResults, semanticResults] = await Promise.all([
       // --- Keyword search (Atlas Search with regex fallback) ---
       (async (): Promise<SearchResult[]> => {
@@ -129,18 +146,26 @@ export async function GET(
             for (const hl of page.highlights as Array<{ path: string; texts: Array<{ value: string; type: string }> }>) {
               const field: 'ocr' | 'translation' = hl.path === 'translation.data' ? 'translation' : 'ocr';
               const snippet = hl.texts.map(t => t.value).join('');
-              matches.push({ field, snippet, position: 0 });
+              // Skip highlights that are purely OCR metadata
+              if (stripOcrMetadata(snippet).trim().length < 10) continue;
+              matches.push({ field, snippet: cleanText(snippet), position: 0 });
             }
           } else {
             const ocr = page.ocr as { data?: string } | undefined;
             const translation = page.translation as { data?: string } | undefined;
             if (ocr?.data) {
-              const ocrMatches = generateSnippet(ocr.data, trimmedQuery);
-              matches.push(...ocrMatches.map(m => ({ ...m, field: 'ocr' as const })));
+              const stripped = stripOcrMetadata(ocr.data);
+              if (stripped.trim().length > 20) {
+                const ocrMatches = generateSnippet(stripped, trimmedQuery);
+                matches.push(...ocrMatches.map(m => ({ ...m, field: 'ocr' as const })));
+              }
             }
             if (translation?.data) {
-              const translationMatches = generateSnippet(translation.data, trimmedQuery);
-              matches.push(...translationMatches.map(m => ({ ...m, field: 'translation' as const })));
+              const stripped = stripOcrMetadata(translation.data);
+              if (stripped.trim().length > 20) {
+                const translationMatches = generateSnippet(stripped, trimmedQuery);
+                matches.push(...translationMatches.map(m => ({ ...m, field: 'translation' as const })));
+              }
             }
           }
 
@@ -176,13 +201,17 @@ export async function GET(
       })(),
     ]);
 
-    // Merge: keyword results first, then semantic results for pages not already found
+    // Merge: keyword results first, then semantic results for pages not already found.
+    // Only add semantic results when keyword returned few matches — if keyword found
+    // 10+ pages, semantic additions are redundant and add noise.
     const seenPages = new Set(keywordResults.map(r => r.pageNumber));
     const results: SearchResult[] = [...keywordResults];
-    for (const sem of semanticResults) {
-      if (!seenPages.has(sem.pageNumber)) {
-        results.push(sem);
-        seenPages.add(sem.pageNumber);
+    if (keywordResults.length < 10) {
+      for (const sem of semanticResults) {
+        if (!seenPages.has(sem.pageNumber)) {
+          results.push(sem);
+          seenPages.add(sem.pageNumber);
+        }
       }
     }
 
