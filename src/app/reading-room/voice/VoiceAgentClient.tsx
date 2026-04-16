@@ -1,7 +1,7 @@
 'use client';
 
 import { useState, useRef, useCallback, useEffect } from 'react';
-// @ts-expect-error -- @elevenlabs/react ships no bundled types; Vercel installs it at build time
+// @ts-ignore -- @elevenlabs/react has no types locally but installs fine on Vercel
 import { ConversationProvider, useConversation } from '@elevenlabs/react';
 import SiteHeader from '@/components/layout/SiteHeader';
 import Link from 'next/link';
