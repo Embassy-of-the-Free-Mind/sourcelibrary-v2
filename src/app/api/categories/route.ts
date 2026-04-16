@@ -1,5 +1,7 @@
-import { NextResponse } from 'next/server';
+import { NextRequest, NextResponse } from 'next/server';
 import { getCategoryCounts } from '@/lib/books-catalog';
+import { getTenantContextFromRequest } from '@/lib/tenant-context';
+import { getReadDb } from '@/lib/mongodb';
 
 // Predefined categories for the library's focus areas
 export const LIBRARY_CATEGORIES = [
@@ -192,11 +194,32 @@ export interface CategoryWithCount {
 const CACHE_TTL_MS = 30 * 60 * 1000;
 let cachedResult: { data: unknown; timestamp: number } | null = null;
 
-// GET /api/categories — powered by Supabase books_catalog
-export async function GET() {
+// GET /api/categories — powered by Supabase books_catalog (or MongoDB for tenant-scoped)
+export async function GET(request: NextRequest) {
   const headers = { 'Cache-Control': 'public, s-maxage=1800, stale-while-revalidate=3600' };
 
   try {
+    // Tenant-scoped: bypass Supabase (no tenant_id column) and aggregate from MongoDB
+    const { slug: tenantSlug, id: tenantId } = getTenantContextFromRequest(request);
+    if (tenantSlug) {
+      if (!tenantId) return NextResponse.json({ categories: [] });
+      const db = await getReadDb();
+      const books = await db.collection('books')
+        .find({ tenantId, visible: true, pages_count: { $gt: 0 } }, { projection: { categories: 1 } })
+        .toArray();
+      const countMap = new Map<string, number>();
+      for (const book of books) {
+        for (const cat of (book.categories as string[] | undefined) || []) {
+          countMap.set(cat, (countMap.get(cat) || 0) + 1);
+        }
+      }
+      const categories: CategoryWithCount[] = LIBRARY_CATEGORIES.map(cat => ({
+        ...cat,
+        book_count: countMap.get(cat.id) || 0,
+      })).sort((a, b) => b.book_count - a.book_count || a.name.localeCompare(b.name));
+      return NextResponse.json({ categories }, { headers: { 'Cache-Control': 'no-store' } });
+    }
+
     // Return in-memory cached result if fresh
     if (cachedResult && Date.now() - cachedResult.timestamp < CACHE_TTL_MS) {
       return NextResponse.json(cachedResult.data, { headers });

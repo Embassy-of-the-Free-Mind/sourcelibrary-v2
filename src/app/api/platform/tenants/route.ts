@@ -23,6 +23,17 @@ export const POST = withSuperadminAuth(async (req: NextRequest, session) => {
     return NextResponse.json({ error: 'Invalid slug format — lowercase letters, numbers, and hyphens only' }, { status: 400 });
   }
 
+  const RESERVED_SLUGS = new Set([
+    'platform', 'auth', 'api', 'account', 'about', 'privacy', 'terms',
+    'press-release', 'brand', 'roadmap', 'feedback', 'status', 'support',
+    'unauthorized', 'design-options', 'experiments', 'ficino-society',
+    'contribute', 'census', 'oauth', 'developers', 'founding-donors',
+    'libraries', 'blog', 'not-found', 'admin', 'search', 'analytics',
+  ]);
+  if (RESERVED_SLUGS.has(slug)) {
+    return NextResponse.json({ error: 'This slug is reserved and cannot be used' }, { status: 400 });
+  }
+
   const db = await getDb();
 
   const existing = await db.collection('tenants').findOne({ slug });

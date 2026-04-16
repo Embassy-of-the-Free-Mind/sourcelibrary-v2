@@ -9,7 +9,7 @@ import {
   Quote, User, MapPin, Lightbulb, BookOpen, Languages,
   ChevronLeft, ChevronRight, ArrowUpDown, ImageIcon, ChevronDown
 } from 'lucide-react';
-import { useSearchParams, useRouter } from 'next/navigation';
+import { useSearchParams, useRouter, useParams } from 'next/navigation';
 import SiteHeader from '@/components/layout/SiteHeader';
 import { useDebouncedCallback } from 'use-debounce';
 import { reportError } from '@/components/providers/ErrorReporter';
@@ -55,6 +55,7 @@ type ViewMode = 'unified' | 'books' | 'index' | 'images';
 
 export default function SearchPage() {
   const router = useRouter();
+  const { tenant } = useParams<{ tenant: string }>();
   const searchParams = useSearchParams();
 
   const initialMode = (searchParams.get('mode') as ViewMode) || 'unified';
@@ -346,7 +347,7 @@ export default function SearchPage() {
     if (!q && browseSortBy !== 'recent-translation') params.set('sort', browseSortBy);
     if (pageOffset > 0) params.set('offset', pageOffset.toString());
     if (resultsPerPage !== DEFAULT_RESULTS_PER_PAGE) params.set('per_page', resultsPerPage.toString());
-    router.replace(`/search?${params.toString()}`, { scroll: false });
+    router.replace(`/${tenant}/search?${params.toString()}`, { scroll: false });
   }, [router, indexType, language, category, collection, dateFrom, dateTo, hasDoi, hasTranslation, firstTranslation, library, sortBy, browseSortBy, resultsPerPage]);
 
   // Client-side search cache — avoids re-fetching on backspace/retype

@@ -1,4 +1,16 @@
 import { NextResponse, NextRequest } from 'next/server';
+import { getDb } from '@/lib/mongodb';
+
+// --- Tenant routing ---
+
+// Paths that live at the root and are never treated as tenant slugs
+const NON_TENANT_PATHS = new Set([
+  'platform', 'auth', 'api', '_next', 'account', 'about', 'privacy',
+  'terms', 'press-release', 'brand', 'roadmap', 'feedback', 'status',
+  'support', 'unauthorized', 'design-options', 'experiments',
+  'ficino-society', 'contribute', 'census', 'oauth', 'developers',
+  'founding-donors', 'libraries', 'blog', '_archived', '.well-known',
+]);
 
 // Domains that enable the Ficino Society social layer
 const SOCIETY_DOMAINS = [
@@ -169,7 +181,7 @@ function getCorsHeaders(origin: string): Record<string, string> {
   };
 }
 
-export function proxy(request: NextRequest) {
+export async function proxy(request: NextRequest) {
   const { pathname } = request.nextUrl;
 
   // --- Embed CORS: allow partner Webflow sites to call collection/book APIs ---
@@ -298,9 +310,41 @@ export function proxy(request: NextRequest) {
     }
   }
 
-  // Clone the request headers and add our custom header
+  // --- Tenant slug resolution ---
+  let tenantId: string | null = null;
+  let tenantSlug: string | null = null;
+
+  const [, firstSegment] = pathname.split('/');
+  if (
+    firstSegment &&
+    !NON_TENANT_PATHS.has(firstSegment) &&
+    !firstSegment.includes('.') &&
+    /^[a-z0-9-]+$/.test(firstSegment)
+  ) {
+    try {
+      const db = await getDb();
+      const tenant = await db.collection('tenants').findOne({
+        slug: firstSegment,
+        status: { $ne: 'deleted' },
+      });
+      if (tenant) {
+        tenantId = tenant.id as string;
+        tenantSlug = firstSegment;
+      }
+      else {
+          // Unknown slug — redirect to home
+          return NextResponse.redirect(new URL('/', request.url));
+      }
+    } catch {
+      // DB error or tenants collection doesn't exist — let the request through without tenant context
+    }
+  }
+
+  // Clone the request headers and add our custom headers
   const requestHeaders = new Headers(request.headers);
   requestHeaders.set('x-site-mode', isSociety ? 'society' : 'library');
+  if (tenantId) requestHeaders.set('x-tenant-id', tenantId);
+  if (tenantSlug) requestHeaders.set('x-tenant-slug', tenantSlug);
 
   const response = NextResponse.next({
     request: { headers: requestHeaders },
@@ -333,6 +377,9 @@ export function proxy(request: NextRequest) {
 
   return response;
 }
+
+// Next.js 16 looks for a named `middleware` export (or default) in proxy.ts
+export { proxy as middleware };
 
 export const config = {
   // Match all paths except static files

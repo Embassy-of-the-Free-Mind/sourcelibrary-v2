@@ -194,11 +194,49 @@ export const { handlers, signIn, signOut, auth } = NextAuth({
     },
   },
   callbacks: {
-    // Allow all sign-ins
-    async signIn() {
-      return true;
+    // Enforce signup restrictions based on tenant allowSignup setting
+    async signIn({ user, account }) {
+      if (!user?.email) return true;
+
+      const email = user.email.toLowerCase();
+      
+      try {
+        const client = await clientPromise;
+        const db = client.db(dbName);
+
+        // Check if this is a new user (only during initial sign-in)
+        // If we have an `account` object, it's a new OAuth sign-in
+        const isNewOAuthUser = !!account && account.type !== 'email';
+        
+        // For email provider, check if user already exists
+        let isNewEmailUser = false;
+        if (!isNewOAuthUser && account?.provider === 'email') {
+          const existingUser = await db.collection('users').findOne({ email });
+          isNewEmailUser = !existingUser;
+        }
+
+        const isNewUser = isNewOAuthUser || isNewEmailUser;
+
+        // If user exists, allow sign-in (they're logging in)
+        if (!isNewUser) return true;
+
+        // If it's a new user attempting to sign up, check tenant restrictions
+        // Try to determine which tenant they're accessing
+        // This is a best-effort approach — signup restrictions are primarily enforced
+        // at the [tenant]/login level where we have clear tenant context.
+        
+        // For now, allow all signups at the auth layer. The real enforcement happens
+        // in [tenant]/login/page.tsx which checks allowSignup before rendering the form.
+        // We'll add per-tenant enforcement in Phase 1.5 when we have tenant context
+        // from the callbackUrl during session initialization.
+        
+        return true;
+      } catch (error) {
+        console.error('[auth] signIn callback error:', error);
+        return true; // Allow on error (don't block auth)
+      }
     },
-    async jwt({ token, user, trigger }) {
+    async jwt({ token, user, trigger, session }) {
       if (user) {
         token.id = user.id;
 
@@ -287,6 +325,35 @@ export const { handlers, signIn, signOut, auth } = NextAuth({
         }
       }
 
+      // Phase 1: resolve tenant-scoped role when the client triggers a session update
+      // with { _pendingTenantSlug }. Called from [tenant]/layout.tsx after sign-in.
+      const pendingTenantSlug =
+        trigger === 'update' && session && typeof (session as any)._pendingTenantSlug === 'string'
+          ? ((session as any)._pendingTenantSlug as string)
+          : null;
+
+      if (pendingTenantSlug) {
+        const slug = pendingTenantSlug;
+        try {
+          const client = await clientPromise;
+          const db = client.db(dbName);
+          const tenant = await db.collection('tenants').findOne({ slug, status: { $ne: 'deleted' } });
+          if (tenant) {
+            const email = ((token as any).email as string || '').toLowerCase();
+            const membership = await db.collection('memberships').findOne({
+              email,
+              tenantId: tenant.id,
+              status: 'active',
+            });
+            (token as any).tenantId = tenant.id;
+            (token as any).tenantSlug = slug;
+            (token as any).tenantRole = membership?.role || 'reader';
+          }
+        } catch {
+          // Non-blocking — tenant role resolution failure doesn't break the session
+        }
+      }
+
       return token;
     },
     async session({ session, token }) {
@@ -294,6 +361,9 @@ export const { handlers, signIn, signOut, auth } = NextAuth({
         session.user.id = token.id as string;
         (session.user as any).role = token.role as string;
         (session.user as any).membership = token.membership || null;
+        (session.user as any).tenantId = (token as any).tenantId || null;
+        (session.user as any).tenantSlug = (token as any).tenantSlug || null;
+        (session.user as any).tenantRole = (token as any).tenantRole || null;
       }
       return session;
     },

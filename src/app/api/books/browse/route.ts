@@ -1,5 +1,6 @@
 import { NextRequest, NextResponse } from 'next/server';
 import { supabase } from '@/lib/supabase';
+import { getTenantContextFromRequest } from '@/lib/tenant-context';
 
 export const dynamic = 'force-dynamic';
 
@@ -30,6 +31,15 @@ export async function GET(request: NextRequest) {
   if (search.trim()) {
     const url = new URL('/api/books/library', request.url);
     url.search = searchParams.toString();
+    return NextResponse.redirect(url, 307);
+  }
+
+  // Tenant-scoped requests: Supabase has no tenant_id column — proxy to MongoDB
+  const { slug: tenantSlug } = getTenantContextFromRequest(request);
+  if (tenantSlug) {
+    const url = new URL('/api/books/library', request.url);
+    url.search = searchParams.toString();
+    url.searchParams.set('tenant_slug', tenantSlug);
     return NextResponse.redirect(url, 307);
   }
 

@@ -107,9 +107,13 @@ export async function resolveIdentity(request: NextRequest): Promise<ResolvedIde
 // --- API route wrappers ---
 
 /**
- * Unified API route wrapper with role-based access control.
+ * Unified API route wrapper with role-based access control and tenant verification.
  * Accepts CRON_SECRET bearer token for internal pipeline workers.
- * Returns 401 if not authenticated, 403 if role is insufficient.
+ * Returns 401 if not authenticated, 403 if role is insufficient or tenant mismatch.
+ *
+ * Phase 1 tenant verification:
+ * - If x-tenant-id is present (tenant-scoped route), verifies session tenantId matches
+ * - Prevents cross-tenant data access via crafted headers
  */
 export function withAuth(
   handler: (request: NextRequest, session: Session, context?: any) => Promise<NextResponse>,
@@ -141,6 +145,20 @@ export function withAuth(
         { error: 'Forbidden - Insufficient role' },
         { status: 403 }
       );
+    }
+
+    // Phase 1 tenant verification: prevent cross-tenant access
+    const headerTenantId = request.headers.get('x-tenant-id');
+    if (headerTenantId) {
+      const sessionTenantId = (session.user as any).tenantId;
+      
+      // Superadmin can access any tenant (bypass check)
+      if (userRole !== 'superadmin' && sessionTenantId && sessionTenantId !== headerTenantId) {
+        return NextResponse.json(
+          { error: 'Forbidden - Tenant mismatch' },
+          { status: 403 }
+        );
+      }
     }
 
     return handler(request, session, context);

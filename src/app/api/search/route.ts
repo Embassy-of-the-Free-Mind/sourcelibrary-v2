@@ -4,6 +4,7 @@ import { Book } from '@/lib/types';
 import type { SearchResult, SearchResponse } from '@/lib/api-client/types/search';
 import { buildPageSearchStage } from '@/lib/atlas-search';
 import { searchBookIds } from '@/lib/books-catalog';
+import { getTenantContextFromRequest } from '@/lib/tenant-context';
 
 export const preferredRegion = 'fra1';
 
@@ -74,9 +75,16 @@ export async function GET(request: NextRequest) {
     const results: SearchResult[] = [];
     const seenBooks = new Set<string>();
 
+    // Read tenant context resolved by proxy.ts
+    const { slug: tenantSlug, id: tenantId } = getTenantContextFromRequest(request);
+    if (tenantSlug && !tenantId) {
+      return NextResponse.json({ results: [], total: 0 });
+    }
+
     // Helper: build common book-level filters (language, category, year, etc.)
     function buildBookFilters(): Record<string, unknown> {
       const filters: Record<string, unknown> = { visible: true, pages_count: { $gt: 0 } };
+      if (tenantId) filters.tenantId = tenantId;
       if (language) filters.language = language;
       if (category) filters.categories = category;
       if (dateFrom || dateTo) {
