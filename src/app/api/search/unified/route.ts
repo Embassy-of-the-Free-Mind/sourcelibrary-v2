@@ -77,15 +77,33 @@ export async function GET(request: NextRequest) {
     if (firstTranslation) searchFilters.isFirstTranslation = true;
     if (hasTranslation) searchFilters.hasTranslation = true;
 
-    // Run book, index, gallery, and visual search in parallel
+    // Run book, index, gallery, and visual search in parallel.
+    // Each operation gets a hard timeout — Atlas Search $search doesn't respect maxTimeMS,
+    // and hung operations would block the entire response indefinitely.
+    const withTimeout = <T>(promise: Promise<T>, fallback: T, label: string, ms = 8000): Promise<T> =>
+      Promise.race([
+        promise,
+        new Promise<T>((resolve) => setTimeout(() => {
+          console.warn(`[unified-search] ${label} timed out after ${ms}ms`);
+          resolve(fallback);
+        }, ms)),
+      ]);
+
+    const emptyBooks = { results: [] as SearchResult[], total: 0, hasMore: false };
+    const emptyIndex = { results: [] as IndexResult[], total: 0, hasMore: false };
+    const emptyGallery = { results: [] as GalleryResult[], total: 0 };
+
     const [booksResult, indexResult, galleryResult, visualResult] = await Promise.all([
-      searchBooks(db, query, queryRegex, limit, searchFilters, library),
-      searchIndex(db, query, limit).catch((err) => {
-        console.error('Index search error:', err);
-        return { results: [] as IndexResult[], total: 0 };
-      }),
-      searchGallery(db, query, queryRegex, galleryLimit),
-      searchVisual(query, galleryLimit),
+      withTimeout(searchBooks(db, query, queryRegex, limit, searchFilters, library), emptyBooks, 'books'),
+      withTimeout(
+        searchIndex(db, query, limit).catch((err) => {
+          console.error('Index search error:', err);
+          return emptyIndex;
+        }),
+        emptyIndex, 'index',
+      ),
+      withTimeout(searchGallery(db, query, queryRegex, galleryLimit), emptyGallery, 'gallery'),
+      withTimeout(searchVisual(query, galleryLimit), emptyGallery, 'visual', 5000),
     ]);
 
     // Log search query (fire-and-forget)

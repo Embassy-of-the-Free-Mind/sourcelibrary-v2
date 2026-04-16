@@ -24,6 +24,7 @@ const ROUTES = [
   `/book/${BOOK.slug}`,
   `/book/${BOOK.slug}/page/${PAGE.id}`,
   `/search?q=${SEARCH.query}`,
+  `/api/search/unified?q=${SEARCH.query}&limit=3`,
   '/api/books/search?q=alchemy&limit=1',
   '/api/collections',
   '/api/books/timeline?era=renaissance&limit=1',
