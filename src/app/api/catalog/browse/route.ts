@@ -28,7 +28,7 @@ export async function GET(request: Request) {
     const includeLangs = searchParams.get('langs') === '1';
 
     const promises: [Promise<{ books: unknown[]; total: number }>, Promise<{ lang: string; count: number }[]> | null] = [
-      browseBooks({ hasTranslation: true, language, search, sort, offset, limit }),
+      browseBooks({ hasTranslation: true, language, search, sort, offset, limit, exactCount: true }),
       includeLangs ? getLanguageCounts({}) : null,
     ];
 

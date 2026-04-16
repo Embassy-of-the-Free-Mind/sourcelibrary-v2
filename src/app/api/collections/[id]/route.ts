@@ -65,6 +65,7 @@ export async function GET(
         hasTranslation: !skipTranslationFilter,
         sort: sbSort,
         limit: 1000, // manifest wants everything
+        exactCount: true,
       });
 
       const books = sbBooks.map(b => ({
@@ -92,6 +93,7 @@ export async function GET(
       sort: sbSort,
       offset,
       limit,
+      exactCount: true,
     });
 
     const books = sbBooks.map(b => ({

@@ -98,16 +98,23 @@ export async function browseBooks(opts: {
   sort?: SortOption;
   offset?: number;
   limit?: number;
-  /** Skip count: 'exact' to avoid expensive seq scans on large collections.
-   *  Callers that already have a cached count (e.g. collection pages) should set this. */
+  /** Skip count: use 'planned' instead of 'exact' to avoid expensive seq scans.
+   *  Default changed to 'planned' because 'exact' causes Supabase statement timeouts
+   *  on 17K+ rows with filter conditions on unindexed columns. */
   skipCount?: boolean;
+  /** Request exact count — only use for client-side paginated requests where accuracy matters. */
+  exactCount?: boolean;
 }): Promise<{ books: CatalogBook[]; total: number }> {
   const limit = opts.limit || 60;
   const offset = opts.offset || 0;
 
+  // Default to 'planned' (fast estimate) to avoid Supabase statement timeouts.
+  // Only use 'exact' when explicitly requested (e.g. client-side pagination).
+  const countMode = opts.exactCount ? 'exact' : (opts.skipCount ? 'planned' : 'estimated');
+
   let query = supabase
     .from('books_catalog')
-    .select(BOOK_SELECT, opts.skipCount ? { count: 'planned' } : { count: 'exact' })
+    .select(BOOK_SELECT, { count: countMode })
     .eq('visible', true);
 
   if (opts.hasPages !== false) query = query.gt('pages_count', 0);
