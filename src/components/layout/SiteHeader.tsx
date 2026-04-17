@@ -10,8 +10,7 @@ const NAV_LINKS = [
   { label: 'Collections', href: '/collections' },
   { label: 'Gallery', href: '/gallery' },
   { label: 'Browse', href: '/browse' },
-  { label: 'Timeline', href: '/timeline' },
-  { label: 'Libraries', href: '/libraries' },
+  { label: 'Explore', href: '/explore' },
   { label: 'Reading Room', href: '/reading-room' },
   { label: 'Podcast', href: '/podcast' },
 ];
