@@ -441,10 +441,7 @@ export async function GET(request: NextRequest) {
       const queryLower = query.toLowerCase();
 
       results.sort((a, b) => {
-        // 1. Books before pages
-        if (a.type !== b.type) return a.type === 'book' ? -1 : 1;
-
-        // 2. Title/author match (strongest signal)
+        // 1. Title/author match (strongest signal)
         const aTitle = (a.display_title || a.title).toLowerCase();
         const bTitle = (b.display_title || b.title).toLowerCase();
         const aTitleMatch = aTitle.includes(queryLower);
@@ -457,18 +454,22 @@ export async function GET(request: NextRequest) {
         const bAuthorMatch = bAuthor.includes(queryLower);
         if (aAuthorMatch !== bAuthorMatch) return aAuthorMatch ? -1 : 1;
 
-        // 3. Original language beats modern English translations
-        // A Latin "De Occulta Philosophia" should rank above an English reprint
+        // 3. Results with actual content quotes rank above summary-only results
+        const aHasQuote = (a.snippet_type === 'translation' || a.snippet_type === 'ocr') ? 1 : 0;
+        const bHasQuote = (b.snippet_type === 'translation' || b.snippet_type === 'ocr') ? 1 : 0;
+        if (aHasQuote !== bHasQuote) return bHasQuote - aHasQuote;
+
+        // 5. Original language beats modern English translations
         const aOriginal = a.language !== ENGLISH ? 1 : 0;
         const bOriginal = b.language !== ENGLISH ? 1 : 0;
         if (aOriginal !== bOriginal) return bOriginal - aOriginal;
 
-        // 4. Older editions rank higher (earlier = closer to source)
+        // 6. Older editions rank higher (earlier = closer to source)
         const aYear = parseInt(a.published?.match(/\d{3,4}/)?.[0] || '9999');
         const bYear = parseInt(b.published?.match(/\d{3,4}/)?.[0] || '9999');
         if (aYear !== bYear) return aYear - bYear;
 
-        // 5. Quality score tie-breaker
+        // 7. Quality score tie-breaker
         const aScore = (a as any).quality_score || 0;
         const bScore = (b as any).quality_score || 0;
         return bScore - aScore;
