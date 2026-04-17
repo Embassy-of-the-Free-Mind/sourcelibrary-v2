@@ -1,16 +1,24 @@
 'use client';
 
-import { useState, useRef, useEffect, useCallback } from 'react';
+import { useState, useRef, useCallback } from 'react';
 import Link from 'next/link';
 import Image from 'next/image';
 import ReactMarkdown from 'react-markdown';
 import remarkGfm from 'remark-gfm';
 import {
   Search, Book, Lightbulb, User, ImageIcon, ChevronDown,
-  Loader2, ChevronRight, Send, Square, MessageCircle,
+  Loader2, ChevronRight, Square,
 } from 'lucide-react';
+import { search as searchApi } from '@/lib/api-client';
+import type { SearchResult, IndexSearchResult } from '@/lib/api-client';
+import { getBookThumbnailUrl } from '@/lib/utils';
+import { bookUrl } from '@/lib/slugify';
+import HighlightedText from '@/components/search/HighlightedText';
+import { ENTITY_TYPE_STYLES, type EntityType } from '@/lib/style-constants';
+import SiteHeader from '@/components/layout/SiteHeader';
 
-/** Linkify bare sourcelibrary URLs in markdown output */
+// ── Helpers (same as ReadingRoomClient) ──────────────────────────────
+
 function linkifySourceUrls(text: string): string {
   return text.replace(
     /(?<!\]\()https:\/\/sourcelibrary\.org\/book\/([a-z0-9-]+)(?:\?page=(\d+))?/g,
@@ -21,7 +29,6 @@ function linkifySourceUrls(text: string): string {
   );
 }
 
-/** Ensure proper paragraph breaks — Gemini outputs single \n between paragraphs */
 function ensureParagraphBreaks(text: string): string {
   const lines = text.split('\n');
   const result: string[] = [];
@@ -39,13 +46,22 @@ function ensureParagraphBreaks(text: string): string {
   }
   return result.join('\n');
 }
-import { useDebouncedCallback } from 'use-debounce';
-import { search as searchApi } from '@/lib/api-client';
-import type { SearchResult, IndexSearchResult } from '@/lib/api-client';
-import { getBookThumbnailUrl } from '@/lib/utils';
-import { bookUrl } from '@/lib/slugify';
-import HighlightedText from '@/components/search/HighlightedText';
-import { ENTITY_TYPE_STYLES, type EntityType } from '@/lib/style-constants';
+
+const TOOL_LABELS: Record<string, string> = {
+  search_collection: 'Searching the collection',
+  search_semantic: 'Semantic search',
+  search_wikipedia: 'Checking Wikipedia',
+  get_book_page: 'Reading a page',
+  present_choices: 'Thinking...',
+};
+
+const SUGGESTIONS = [
+  'What did Paracelsus write about mercury?',
+  'How did alchemists describe the philosopher\'s stone?',
+  'Tell me about the Emerald Tablet',
+  'What is the Kabbalah\'s tree of life?',
+  'Books about Egyptian afterlife rituals',
+];
 
 // ── Types ────────────────────────────────────────────────────────────
 
@@ -64,6 +80,7 @@ interface SourceCard {
   bookSlug?: string;
   pageNumber?: number;
   snippet?: string;
+  inCollection?: boolean;
 }
 
 interface GalleryItem {
@@ -82,7 +99,7 @@ interface GalleryItem {
 export default function SearchV2Page() {
   const [query, setQuery] = useState('');
   const [submitted, setSubmitted] = useState(false);
-  const inputRef = useRef<HTMLInputElement>(null);
+  const inputRef = useRef<HTMLTextAreaElement>(null);
 
   // Librarian state
   const [librarianContent, setLibrarianContent] = useState('');
@@ -90,6 +107,7 @@ export default function SearchV2Page() {
   const [librarianSteps, setLibrarianSteps] = useState<SearchStep[]>([]);
   const [librarianSources, setLibrarianSources] = useState<SourceCard[]>([]);
   const [librarianStreaming, setLibrarianStreaming] = useState(false);
+  const [showThinking, setShowThinking] = useState(false);
   const abortRef = useRef<AbortController | null>(null);
 
   // Search agents state
@@ -103,7 +121,7 @@ export default function SearchV2Page() {
   const [agentsLoading, setAgentsLoading] = useState(false);
   const [semanticLoading, setSemanticLoading] = useState(false);
 
-  // Accordion state
+  // Accordion
   const [expandedSections, setExpandedSections] = useState<Set<string>>(new Set());
   const toggleSection = (section: string) => {
     setExpandedSections(prev => {
@@ -131,12 +149,7 @@ export default function SearchV2Page() {
       const res = await fetch('/api/embassy/chat', {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify({
-          message: q,
-          history: [],
-          visibility: 'private',
-          stream: true,
-        }),
+        body: JSON.stringify({ message: q, history: [], visibility: 'private', stream: true }),
         signal: abort.signal,
       });
 
@@ -157,7 +170,6 @@ export default function SearchV2Page() {
         while (true) {
           const { done, value } = await reader.read();
           if (done) break;
-
           buffer += decoder.decode(value, { stream: true });
           const lines = buffer.split('\n');
           buffer = lines.pop() || '';
@@ -172,11 +184,7 @@ export default function SearchV2Page() {
                   setLibrarianThinking(thinkingAccum);
                   break;
                 case 'tool_call':
-                  setLibrarianSteps(prev => [...prev, {
-                    name: event.name,
-                    query: event.query || '',
-                    status: 'searching',
-                  }]);
+                  setLibrarianSteps(prev => [...prev, { name: event.name, query: event.query || '', status: 'searching' }]);
                   break;
                 case 'tool_result':
                   setLibrarianSteps(prev => prev.map((s, i) =>
@@ -191,16 +199,13 @@ export default function SearchV2Page() {
                   break;
                 case 'sources':
                   setLibrarianSources((event.sources || []).map((s: any) => ({
-                    bookId: s.book_id,
-                    bookTitle: s.bookTitle,
-                    bookAuthor: s.bookAuthor,
-                    bookSlug: s.bookSlug,
-                    pageNumber: s.pageNumber,
-                    snippet: s.snippet,
+                    bookId: s.book_id, bookTitle: s.bookTitle, bookAuthor: s.bookAuthor,
+                    bookSlug: s.bookSlug, pageNumber: s.pageNumber, snippet: s.snippet,
+                    inCollection: s.inCollection !== false,
                   })));
                   break;
               }
-            } catch { /* skip malformed */ }
+            } catch { /* skip */ }
           }
         }
       }
@@ -209,17 +214,15 @@ export default function SearchV2Page() {
         setLibrarianContent('The Librarian seems to be away. Please try again.');
       }
     }
-
     setLibrarianStreaming(false);
   }, []);
 
-  // ── Search agents — all fire independently in parallel ──────────
+  // ── Search agents ──────────────────────────────────────────────────
 
   const startAgents = useCallback((q: string) => {
     setAgentsLoading(true);
     setSemanticLoading(true);
 
-    // Agent 1: Unified search (books + index + gallery)
     searchApi.unified(q, { limit: 6, galleryLimit: 6 })
       .then(data => {
         const books = data.books?.results || [];
@@ -227,7 +230,6 @@ export default function SearchV2Page() {
         setBookTotal(data.books?.total || 0);
         setIndexResults((data.index?.results || []).slice(0, 5));
         setIndexTotal(data.index?.total || 0);
-
         const gallery = data.gallery?.results || [];
         setImageResults(gallery.map((g: any) => {
           const parts = (g.id || '').split('-');
@@ -236,24 +238,17 @@ export default function SearchV2Page() {
           return { pageId, bookId: g.bookId || '', detectionIndex, imageUrl: g.imageUrl || '', thumbnailUrl: g.imageUrl || '', bookTitle: g.bookTitle || '', description: g.description || '', type: g.type };
         }));
         setImageTotal(data.gallery?.total || 0);
-
-        // Auto-expand books if we got results
-        if (books.length > 0) {
-          setExpandedSections(prev => new Set([...prev, 'books']));
-        }
+        if (books.length > 0) setExpandedSections(prev => new Set([...prev, 'books']));
       })
       .catch(() => {})
       .finally(() => setAgentsLoading(false));
 
-    // Agent 2: Semantic search (truly parallel, doesn't wait for unified)
     fetch(`/api/search/semantic?q=${encodeURIComponent(q)}&limit=8`)
       .then(r => r.json())
       .then(data => {
         const results = data.results || [];
         setSemanticResults(results);
-        if (results.length > 0) {
-          setExpandedSections(prev => new Set([...prev, 'semantic']));
-        }
+        if (results.length > 0) setExpandedSections(prev => new Set([...prev, 'semantic']));
       })
       .catch(() => setSemanticResults([]))
       .finally(() => setSemanticLoading(false));
@@ -265,305 +260,336 @@ export default function SearchV2Page() {
     e.preventDefault();
     const q = query.trim();
     if (q.length < 2) return;
-
     setSubmitted(true);
     setExpandedSections(new Set());
-
-    // Fire both in parallel
     startLibrarian(q);
     startAgents(q);
   };
 
-  const handleStop = () => {
-    abortRef.current?.abort();
-    setLibrarianStreaming(false);
+  const handleKeyDown = (e: React.KeyboardEvent<HTMLTextAreaElement>) => {
+    if (e.key === 'Enter' && !e.shiftKey) {
+      e.preventDefault();
+      handleSubmit(e);
+    }
   };
-
-  // ── Render ─────────────────────────────────────────────────────────
 
   const hasAgentResults = bookTotal > 0 || indexTotal > 0 || imageTotal > 0 || semanticResults.length > 0;
 
-  return (
-    <div className="min-h-screen bg-stone-50">
-      {/* Header */}
-      <div className="bg-white border-b border-stone-200">
-        <div className="max-w-3xl mx-auto px-4 py-6">
-          <Link href="/" className="text-xs text-stone-400 uppercase tracking-widest mb-4 block">
-            Source Library
-          </Link>
+  // ── Render ─────────────────────────────────────────────────────────
 
-          <form onSubmit={handleSubmit} className="relative">
-            <Search className="absolute left-4 top-1/2 -translate-y-1/2 w-5 h-5 text-stone-400" />
-            <input
+  return (
+    <div className="min-h-screen bg-[#f5f0e8]">
+      <SiteHeader />
+
+      <div className="max-w-3xl mx-auto px-4 py-8">
+        {/* Empty state — before first search */}
+        {!submitted && (
+          <div className="text-center pt-16 pb-8">
+            <img
+              src="/brand/png/icon-only--black-on-transparent--96h.png"
+              alt="Librarian"
+              className="w-16 h-16 mx-auto mb-4 opacity-60"
+            />
+            <h1 className="text-2xl font-serif text-[#1a1612] mb-2">Search the Library</h1>
+            <p className="text-[#8a8480] text-sm font-body max-w-[400px] mx-auto leading-relaxed">
+              The Librarian searches the collection, Wikipedia, and semantic search
+              to find answers in over 10,000 rare books.
+            </p>
+            <div className="flex flex-wrap justify-center gap-2 mt-6">
+              {SUGGESTIONS.map(suggestion => (
+                <button
+                  key={suggestion}
+                  onClick={() => { setQuery(suggestion); inputRef.current?.focus(); }}
+                  className="px-3 py-1.5 text-xs text-[#6b6560] border border-[#e8e4dc] rounded-full hover:bg-white hover:text-[#444] transition-colors font-sans"
+                >
+                  {suggestion}
+                </button>
+              ))}
+            </div>
+          </div>
+        )}
+
+        {/* Input — always visible */}
+        <div className="mb-6">
+          <form onSubmit={handleSubmit} className="flex gap-3 items-end">
+            <textarea
               ref={inputRef}
-              type="text"
               value={query}
               onChange={e => setQuery(e.target.value)}
-              placeholder="Ask anything about the collection..."
-              className="w-full pl-12 pr-24 py-4 bg-stone-50 border border-stone-200 rounded-2xl text-stone-900 placeholder-stone-400 focus:outline-none focus:ring-2 focus:ring-violet-200 focus:border-violet-300 text-lg"
-              autoFocus
+              onKeyDown={handleKeyDown}
+              placeholder="Ask the Librarian..."
+              rows={1}
+              className="flex-1 resize-none border border-[#e8e4dc] rounded-lg px-4 py-2.5 text-[15px] font-body text-[#1a1612] placeholder-[#8a8480] focus:outline-none focus:border-[#c9a86c] transition-colors bg-white"
             />
-            <div className="absolute right-3 top-1/2 -translate-y-1/2 flex items-center gap-2">
-              {librarianStreaming && (
-                <button
-                  type="button"
-                  onClick={handleStop}
-                  className="p-2 text-stone-400 hover:text-red-500 transition-colors"
-                  title="Stop"
-                >
-                  <Square className="w-4 h-4" />
-                </button>
-              )}
+            {librarianStreaming ? (
+              <button
+                type="button"
+                onClick={() => { abortRef.current?.abort(); setLibrarianStreaming(false); }}
+                className="flex-shrink-0 px-5 py-2.5 bg-[#9e4a3a] text-white rounded-lg text-sm font-sans hover:bg-[#8b3d30] transition-colors"
+              >
+                Stop
+              </button>
+            ) : (
               <button
                 type="submit"
                 disabled={query.trim().length < 2}
-                className="p-2 bg-violet-600 text-white rounded-xl hover:bg-violet-700 disabled:opacity-30 disabled:cursor-not-allowed transition-colors"
+                className="flex-shrink-0 px-5 py-2.5 bg-[#1a1612] text-white rounded-lg text-sm font-sans hover:bg-[#333] disabled:opacity-30 disabled:cursor-not-allowed transition-colors"
               >
-                <Send className="w-4 h-4" />
+                Search
               </button>
-            </div>
+            )}
           </form>
         </div>
-      </div>
 
-      {/* Results area */}
-      {submitted && (
-        <div className="max-w-3xl mx-auto px-4 py-6 space-y-6">
-
-          {/* Librarian answer */}
-          <div className="bg-white rounded-2xl border border-stone-200 overflow-hidden">
-            {/* Search steps */}
-            {librarianSteps.length > 0 && (
-              <div className="px-5 pt-4 pb-2 space-y-1.5">
-                {librarianSteps.map((step, i) => (
-                  <div key={i} className="flex items-center gap-2 text-xs text-stone-500">
-                    {step.status === 'searching' ? (
-                      <Loader2 className="w-3 h-3 animate-spin text-violet-500" />
-                    ) : (
-                      <div className="w-3 h-3 rounded-full bg-green-400" />
-                    )}
-                    <span className="text-stone-400">{step.name.replace(/_/g, ' ')}</span>
-                    {step.query && <span className="text-stone-600">"{step.query}"</span>}
-                    {step.found !== undefined && <span className="text-stone-400">→ {step.found} found</span>}
-                  </div>
-                ))}
-              </div>
-            )}
-
-            {/* Thinking indicator */}
-            {librarianStreaming && !librarianContent && librarianSteps.length === 0 && (
-              <div className="px-5 pt-4 pb-2 flex items-center gap-2 text-sm text-stone-400">
-                <Loader2 className="w-4 h-4 animate-spin" />
-                Searching the library...
-              </div>
-            )}
-
-            {/* Answer content — same rendering as reading room */}
-            {librarianContent && (
-              <div className="px-5 py-4">
-                <div className="prose prose-sm max-w-none text-[15px] leading-relaxed prose-p:mb-4 prose-p:mt-0 prose-h3:text-base prose-h3:font-semibold prose-h3:mt-5 prose-h3:mb-2 prose-h2:text-lg prose-h2:mt-6 prose-h2:mb-3 prose-headings:text-stone-800 prose-ul:my-3 prose-ol:my-3 prose-li:my-1 prose-a:text-[#9e4a3a] prose-a:underline prose-a:underline-offset-2 prose-a:decoration-[#9e4a3a]/30 hover:prose-a:decoration-[#9e4a3a] prose-blockquote:border-l-[#c9a86c] prose-blockquote:text-stone-600 prose-blockquote:my-4 prose-blockquote:italic prose-strong:text-stone-800 prose-hr:my-4">
-                  <ReactMarkdown
-                    remarkPlugins={[remarkGfm]}
-                    components={{
-                      a: ({ href, children }) => (
-                        <a href={href} target="_blank" rel="noopener noreferrer">{children}</a>
-                      ),
-                    }}
-                  >{ensureParagraphBreaks(linkifySourceUrls(librarianContent))}</ReactMarkdown>
-                  {librarianStreaming && (
-                    <span className="inline-block w-1.5 h-4 bg-violet-400 animate-pulse ml-0.5 align-text-bottom" />
+        {/* Librarian response */}
+        {submitted && (
+          <div className="flex gap-3 mb-8">
+            <img
+              src="/brand/png/icon-only--black-on-transparent--96h.png"
+              alt="Librarian"
+              className="flex-shrink-0 w-10 h-10 rounded-full"
+            />
+            <div className="max-w-[85%] min-w-0 flex-1">
+              {/* Thinking */}
+              {librarianThinking && (
+                <div className="mb-2">
+                  <button
+                    onClick={() => setShowThinking(!showThinking)}
+                    className="text-[11px] text-[#b0a89c] hover:text-[#8a8480] font-sans transition-colors"
+                  >
+                    {showThinking ? 'Hide reasoning' : 'Show reasoning'}
+                  </button>
+                  {showThinking && (
+                    <div className="mt-1 text-[13px] text-[#8a8480] font-body italic leading-relaxed bg-[#faf8f4] rounded px-3 py-2 border-l-2 border-[#e8e4dc]">
+                      <ReactMarkdown remarkPlugins={[remarkGfm]}>{librarianThinking}</ReactMarkdown>
+                    </div>
                   )}
                 </div>
-              </div>
+              )}
+
+              {/* Search steps */}
+              {librarianSteps.length > 0 && (
+                <div className="space-y-1 mb-2">
+                  {librarianSteps.map((step, i) => (
+                    <div key={i} className="flex items-center gap-2 text-[12px] font-sans text-[#8a8480]">
+                      <span className={`inline-block w-3.5 text-center ${step.status === 'done' ? (step.found && step.found > 0 ? 'text-[#6b8f5e]' : 'text-[#b0a89c]') : 'text-[#c9a86c]'}`}>
+                        {step.status === 'searching' ? (
+                          <span className="inline-block animate-pulse">...</span>
+                        ) : step.found && step.found > 0 ? (
+                          <span>&#x2713;</span>
+                        ) : (
+                          <span>&#x2717;</span>
+                        )}
+                      </span>
+                      <span>
+                        {TOOL_LABELS[step.name] || step.name}
+                        {step.query && <span className="text-[#b0a89c]"> &ldquo;{step.query.slice(0, 50)}{step.query.length > 50 ? '...' : ''}&rdquo;</span>}
+                        {step.status === 'done' && step.summary && (
+                          <span className="text-[#6b6560]"> &mdash; {step.summary}</span>
+                        )}
+                      </span>
+                    </div>
+                  ))}
+                </div>
+              )}
+
+              {/* Loading state */}
+              {!librarianContent && !librarianThinking && librarianSteps.length === 0 && librarianStreaming && (
+                <div className="bg-[#f5f0e8] rounded-2xl rounded-bl-sm px-4 py-3">
+                  <p className="text-[13px] text-[#8a8480] font-body italic animate-pulse">Thinking...</p>
+                </div>
+              )}
+
+              {/* Response bubble */}
+              {librarianContent && (
+                <div className="bg-white text-[#1a1612] rounded-2xl rounded-bl-sm px-4 py-3 border border-[#e8e4dc]">
+                  <div className="prose prose-sm max-w-none font-body text-[15px] leading-relaxed prose-p:mb-4 prose-p:mt-0 prose-h3:text-base prose-h3:font-semibold prose-h3:mt-5 prose-h3:mb-2 prose-h2:text-lg prose-h2:mt-6 prose-h2:mb-3 prose-headings:text-[#1a1612] prose-ul:my-3 prose-ol:my-3 prose-li:my-1 prose-a:text-[#9e4a3a] prose-a:underline prose-a:underline-offset-2 prose-a:decoration-[#9e4a3a]/30 hover:prose-a:decoration-[#9e4a3a] prose-blockquote:border-l-[#c9a86c] prose-blockquote:text-[#444] prose-blockquote:my-4 prose-blockquote:italic prose-strong:text-[#1a1612] prose-hr:my-4 prose-img:rounded-lg prose-img:shadow-md prose-img:my-4 prose-img:max-h-[300px] prose-img:w-auto">
+                    <ReactMarkdown
+                      remarkPlugins={[remarkGfm]}
+                      components={{
+                        a: ({ href, children }) => (
+                          <a href={href} target="_blank" rel="noopener noreferrer">{children}</a>
+                        ),
+                        img: ({ src, alt }) => (
+                          <a href={src as string} target="_blank" rel="noopener noreferrer">
+                            {/* eslint-disable-next-line @next/next/no-img-element */}
+                            <img src={src as string} alt={(alt as string) || ''} className="rounded-lg shadow-md max-h-[300px] w-auto cursor-pointer hover:shadow-lg transition-shadow" loading="lazy" />
+                          </a>
+                        ),
+                      }}
+                    >{ensureParagraphBreaks(linkifySourceUrls(librarianContent))}</ReactMarkdown>
+                    {librarianStreaming && (
+                      <span className="inline-block w-1.5 h-4 bg-[#c9a86c] animate-pulse ml-0.5 align-text-bottom" />
+                    )}
+                  </div>
+                </div>
+              )}
+
+              {/* Source cards */}
+              {librarianSources.length > 0 && (
+                <div className="mt-3 flex gap-2 overflow-x-auto pb-1 -mx-1 px-1">
+                  {librarianSources.map((s, i) => {
+                    const url = s.bookSlug
+                      ? `/book/${s.bookSlug}${s.pageNumber ? `?page=${s.pageNumber}` : ''}`
+                      : `/book/${s.bookId}${s.pageNumber ? `?page=${s.pageNumber}` : ''}`;
+                    return (
+                      <Link
+                        key={`${s.bookId}-${s.pageNumber}-${i}`}
+                        href={url}
+                        className={`flex-shrink-0 w-[200px] rounded-lg border p-2.5 transition-colors ${
+                          s.inCollection !== false
+                            ? 'border-[#e8e4dc] bg-white hover:border-[#c9a86c] hover:bg-[#faf8f4]'
+                            : 'border-dashed border-[#d4d0c8] bg-[#f9f7f3] opacity-60'
+                        }`}
+                      >
+                        <p className="text-[12px] font-body text-[#1a1612] font-medium leading-tight line-clamp-2">
+                          {s.bookTitle}
+                        </p>
+                        <p className="text-[10px] text-[#8a8480] font-body mt-0.5">
+                          {s.bookAuthor}
+                          {s.pageNumber ? ` · p. ${s.pageNumber}` : ''}
+                        </p>
+                        {s.snippet && (
+                          <p className="text-[10px] text-[#6b6560] font-body mt-1 line-clamp-2 italic leading-relaxed">
+                            {s.snippet}
+                          </p>
+                        )}
+                      </Link>
+                    );
+                  })}
+                </div>
+              )}
+            </div>
+          </div>
+        )}
+
+        {/* Search agents accordion — "Evidence" */}
+        {submitted && (hasAgentResults || agentsLoading || semanticLoading) && (
+          <div className="space-y-2 mt-4">
+            <p className="text-[11px] text-[#b0a89c] uppercase tracking-wide font-sans px-1">Evidence</p>
+
+            {/* Books */}
+            {(bookTotal > 0 || agentsLoading) && (
+              <AccordionSection
+                title="Books"
+                count={bookTotal}
+                icon={<Book className="w-4 h-4 text-[#9e4a3a]" />}
+                loading={agentsLoading && bookTotal === 0}
+                expanded={expandedSections.has('books')}
+                onToggle={() => toggleSection('books')}
+              >
+                <div className="space-y-1">
+                  {bookResults.slice(0, 5).map(r => (
+                    <BookResultCard key={r.id} result={r} query={query} />
+                  ))}
+                  {bookTotal > 5 && (
+                    <Link href={`/search?q=${encodeURIComponent(query)}&mode=books`} className="block text-center py-2 text-[13px] text-[#9e4a3a] hover:bg-[#faf8f4] rounded-lg transition-colors font-sans">
+                      See all {bookTotal} books →
+                    </Link>
+                  )}
+                </div>
+              </AccordionSection>
             )}
 
-            {/* Sources */}
-            {librarianSources.length > 0 && (
-              <div className="px-5 pb-4 pt-2 border-t border-stone-100">
-                <p className="text-xs text-stone-400 uppercase tracking-wide mb-2">Sources</p>
-                <div className="flex flex-wrap gap-2">
-                  {librarianSources.map((src, i) => (
+            {/* Related (semantic) */}
+            {(semanticResults.length > 0 || semanticLoading) && (
+              <AccordionSection
+                title="Related"
+                count={semanticResults.length}
+                icon={<Lightbulb className="w-4 h-4 text-[#c9a86c]" />}
+                loading={semanticLoading}
+                expanded={expandedSections.has('semantic')}
+                onToggle={() => toggleSection('semantic')}
+              >
+                <div className="space-y-1">
+                  {semanticResults.slice(0, 5).map((sem: any) => (
                     <Link
-                      key={i}
-                      href={src.pageNumber
-                        ? `/book/${src.bookSlug || src.bookId}?page=${src.pageNumber}`
-                        : `/book/${src.bookSlug || src.bookId}`
-                      }
-                      className="inline-flex items-center gap-1.5 px-3 py-1.5 bg-stone-50 hover:bg-violet-50 rounded-lg text-xs text-stone-600 hover:text-violet-700 transition-colors"
+                      key={sem.book_id}
+                      href={`/book/${sem.book_id}`}
+                      className="block p-2.5 rounded-lg hover:bg-[#faf8f4] transition-colors"
                     >
-                      <Book className="w-3 h-3" />
-                      <span className="truncate max-w-[200px]">{src.bookTitle}</span>
-                      {src.pageNumber && <span className="text-stone-400">p. {src.pageNumber}</span>}
+                      <p className="font-body font-medium text-[#1a1612] text-[14px]">{sem.title}</p>
+                      <p className="text-[11px] text-[#8a8480] font-body mt-0.5">
+                        {sem.author}{sem.year ? ` · ${sem.year}` : ''}
+                        {sem.relevance_hint && <span className="text-[#c9a86c]"> · {sem.relevance_hint}</span>}
+                      </p>
+                      {sem.summary_snippet && (
+                        <p className="text-[11px] text-[#6b6560] font-body mt-1 line-clamp-2">{sem.summary_snippet}</p>
+                      )}
                     </Link>
                   ))}
                 </div>
-              </div>
+              </AccordionSection>
             )}
 
-            {/* Continue in reading room */}
-            {librarianContent && !librarianStreaming && (
-              <div className="px-5 pb-4">
-                <Link
-                  href={`/reading-room?q=${encodeURIComponent(query)}`}
-                  className="inline-flex items-center gap-1.5 text-xs text-violet-500 hover:text-violet-700 transition-colors"
-                >
-                  <MessageCircle className="w-3.5 h-3.5" />
-                  Continue this conversation in the Reading Room
-                </Link>
-              </div>
-            )}
-          </div>
-
-          {/* Search agents accordion */}
-          {(hasAgentResults || agentsLoading || semanticLoading) && (
-            <div className="space-y-2">
-              <p className="text-xs text-stone-400 uppercase tracking-wide px-1">Evidence</p>
-
-              {/* Books */}
-              {(bookTotal > 0 || agentsLoading) && (
-                <AccordionSection
-                  title="Books"
-                  count={bookTotal}
-                  icon={<Book className="w-4 h-4 text-amber-700" />}
-                  loading={agentsLoading && bookTotal === 0}
-                  expanded={expandedSections.has('books')}
-                  onToggle={() => toggleSection('books')}
-                >
-                  <div className="space-y-2">
-                    {bookResults.slice(0, 5).map(r => (
-                      <BookCard key={r.id} result={r} query={query} />
-                    ))}
-                    {bookTotal > 5 && (
-                      <Link href={`/search?q=${encodeURIComponent(query)}&mode=books`} className="block text-center py-2 text-sm text-amber-700 hover:bg-amber-50 rounded-lg transition-colors">
-                        See all {bookTotal} books →
-                      </Link>
-                    )}
-                  </div>
-                </AccordionSection>
-              )}
-
-              {/* Related (semantic) */}
-              {(semanticResults.length > 0 || semanticLoading) && (
-                <AccordionSection
-                  title="Related"
-                  count={semanticResults.length}
-                  icon={<Lightbulb className="w-4 h-4 text-violet-500" />}
-                  loading={semanticLoading}
-                  expanded={expandedSections.has('semantic')}
-                  onToggle={() => toggleSection('semantic')}
-                >
-                  <div className="space-y-2">
-                    {semanticResults.slice(0, 5).map((sem: any) => (
-                      <Link
-                        key={sem.book_id}
-                        href={`/book/${sem.book_id}`}
-                        className="block p-3 rounded-lg hover:bg-violet-50/50 transition-colors"
-                      >
-                        <p className="font-medium text-stone-800 text-sm">{sem.title}</p>
-                        <p className="text-xs text-stone-500 mt-0.5">
-                          {sem.author}{sem.year ? ` · ${sem.year}` : ''}
-                          {sem.relevance_hint && <span className="text-violet-500"> · {sem.relevance_hint}</span>}
-                        </p>
-                        {sem.summary_snippet && (
-                          <p className="text-xs text-stone-400 mt-1 line-clamp-2">{sem.summary_snippet}</p>
-                        )}
-                      </Link>
-                    ))}
-                  </div>
-                </AccordionSection>
-              )}
-
-              {/* Concepts & People */}
-              {indexTotal > 0 && (
-                <AccordionSection
-                  title="Concepts & People"
-                  count={indexTotal}
-                  icon={<User className="w-4 h-4 text-violet-500" />}
-                  expanded={expandedSections.has('index')}
-                  onToggle={() => toggleSection('index')}
-                >
-                  <div className="space-y-2">
-                    {indexResults.slice(0, 5).map((item, idx) => (
-                      <Link
-                        key={`${item.book_id}-${item.type}-${idx}`}
-                        href={item.pages?.[0] ? `/book/${item.book_id}/guide?page=${item.pages[0]}` : `/book/${item.book_id}`}
-                        className="flex items-center gap-3 p-2 rounded-lg hover:bg-stone-50 transition-colors"
-                      >
-                        <span className={`text-[10px] px-1.5 py-0.5 rounded ${ENTITY_TYPE_STYLES[item.type as EntityType]?.badge ?? 'bg-stone-100 text-stone-700'}`}>
-                          {item.type}
-                        </span>
-                        <div className="min-w-0">
-                          <p className="text-sm font-medium text-stone-800">{item.term}</p>
-                          <p className="text-xs text-stone-500 truncate">{item.book_title}</p>
-                        </div>
-                      </Link>
-                    ))}
-                  </div>
-                </AccordionSection>
-              )}
-
-              {/* Images */}
-              {imageTotal > 0 && (
-                <AccordionSection
-                  title="Images"
-                  count={imageTotal}
-                  icon={<ImageIcon className="w-4 h-4 text-amber-600" />}
-                  expanded={expandedSections.has('images')}
-                  onToggle={() => toggleSection('images')}
-                >
-                  <div className="grid grid-cols-3 sm:grid-cols-4 md:grid-cols-6 gap-2">
-                    {imageResults.slice(0, 6).map((img, idx) => (
-                      <Link
-                        key={`${img.pageId}-${img.detectionIndex}-${idx}`}
-                        href={`/gallery/image/${img.pageId}-${img.detectionIndex}`}
-                        className="aspect-square rounded-lg overflow-hidden bg-stone-100 hover:ring-2 hover:ring-violet-300 transition-all"
-                      >
-                        <Image
-                          src={img.thumbnailUrl || img.imageUrl}
-                          alt={img.description || ''}
-                          width={120}
-                          height={120}
-                          className="w-full h-full object-cover"
-                          unoptimized
-                        />
-                      </Link>
-                    ))}
-                  </div>
-                </AccordionSection>
-              )}
-            </div>
-          )}
-        </div>
-      )}
-
-      {/* Empty state */}
-      {!submitted && (
-        <div className="max-w-3xl mx-auto px-4 py-16 text-center">
-          <p className="text-stone-400 text-lg mb-6">Ask a question about the collection</p>
-          <div className="flex flex-wrap justify-center gap-2">
-            {[
-              'What did Paracelsus write about mercury?',
-              'Books about the philosopher\'s stone',
-              'Hermes Trismegistus',
-              'Kabbalistic creation myths',
-              'Egyptian afterlife rituals',
-            ].map(suggestion => (
-              <button
-                key={suggestion}
-                onClick={() => { setQuery(suggestion); inputRef.current?.focus(); }}
-                className="px-4 py-2 bg-white border border-stone-200 rounded-full text-sm text-stone-600 hover:border-violet-300 hover:text-violet-700 transition-colors"
+            {/* Concepts & People */}
+            {indexTotal > 0 && (
+              <AccordionSection
+                title="Concepts & People"
+                count={indexTotal}
+                icon={<User className="w-4 h-4 text-[#8a8480]" />}
+                expanded={expandedSections.has('index')}
+                onToggle={() => toggleSection('index')}
               >
-                {suggestion}
-              </button>
-            ))}
+                <div className="space-y-1">
+                  {indexResults.slice(0, 5).map((item, idx) => (
+                    <Link
+                      key={`${item.book_id}-${item.type}-${idx}`}
+                      href={item.pages?.[0] ? `/book/${item.book_id}/guide?page=${item.pages[0]}` : `/book/${item.book_id}`}
+                      className="flex items-center gap-3 p-2 rounded-lg hover:bg-[#faf8f4] transition-colors"
+                    >
+                      <span className={`text-[10px] px-1.5 py-0.5 rounded ${ENTITY_TYPE_STYLES[item.type as EntityType]?.badge ?? 'bg-[#e8e4dc] text-[#6b6560]'}`}>
+                        {item.type}
+                      </span>
+                      <div className="min-w-0">
+                        <p className="text-[13px] font-body font-medium text-[#1a1612]">
+                          <HighlightedText text={item.term} query={query} />
+                        </p>
+                        <p className="text-[11px] text-[#8a8480] font-body truncate">{item.book_title}</p>
+                      </div>
+                    </Link>
+                  ))}
+                </div>
+              </AccordionSection>
+            )}
+
+            {/* Images */}
+            {imageTotal > 0 && (
+              <AccordionSection
+                title="Images"
+                count={imageTotal}
+                icon={<ImageIcon className="w-4 h-4 text-[#c9a86c]" />}
+                expanded={expandedSections.has('images')}
+                onToggle={() => toggleSection('images')}
+              >
+                <div className="grid grid-cols-3 sm:grid-cols-4 md:grid-cols-6 gap-2">
+                  {imageResults.slice(0, 6).map((img, idx) => (
+                    <Link
+                      key={`${img.pageId}-${img.detectionIndex}-${idx}`}
+                      href={`/gallery/image/${img.pageId}-${img.detectionIndex}`}
+                      className="aspect-square rounded-lg overflow-hidden bg-[#e8e4dc] hover:ring-2 hover:ring-[#c9a86c] transition-all"
+                    >
+                      <Image
+                        src={img.thumbnailUrl || img.imageUrl}
+                        alt={img.description || ''}
+                        width={120}
+                        height={120}
+                        className="w-full h-full object-cover"
+                        unoptimized
+                      />
+                    </Link>
+                  ))}
+                </div>
+              </AccordionSection>
+            )}
           </div>
-        </div>
-      )}
+        )}
+      </div>
     </div>
   );
 }
 
-// ── Accordion section component ────────────────────────────────────
+// ── Accordion ────────────────────────────────────────────────────────
 
 function AccordionSection({
   title, count, icon, loading, expanded, onToggle, children,
@@ -577,57 +603,53 @@ function AccordionSection({
   children: React.ReactNode;
 }) {
   return (
-    <div className="bg-white rounded-xl border border-stone-200 overflow-hidden">
+    <div className="bg-white rounded-xl border border-[#e8e4dc] overflow-hidden">
       <button
         onClick={onToggle}
-        className="w-full flex items-center justify-between px-4 py-3 hover:bg-stone-50/50 transition-colors"
+        className="w-full flex items-center justify-between px-4 py-3 hover:bg-[#faf8f4] transition-colors"
       >
         <div className="flex items-center gap-2">
           {icon}
-          <span className="font-medium text-stone-700 text-sm">{title}</span>
-          {loading && <Loader2 className="w-3.5 h-3.5 text-stone-400 animate-spin" />}
+          <span className="font-sans font-medium text-[#1a1612] text-[13px]">{title}</span>
+          {loading && <Loader2 className="w-3.5 h-3.5 text-[#c9a86c] animate-spin" />}
           {!loading && count !== undefined && count > 0 && (
-            <span className="text-xs text-stone-400">({count})</span>
+            <span className="text-[11px] text-[#b0a89c] font-sans">({count})</span>
           )}
         </div>
-        <ChevronDown className={`w-4 h-4 text-stone-400 transition-transform ${expanded ? 'rotate-180' : ''}`} />
+        <ChevronDown className={`w-4 h-4 text-[#b0a89c] transition-transform ${expanded ? 'rotate-180' : ''}`} />
       </button>
-      {expanded && (
-        <div className="px-4 pb-4">
-          {children}
-        </div>
-      )}
+      {expanded && <div className="px-4 pb-3">{children}</div>}
     </div>
   );
 }
 
-// ── Book result card ───────────────────────────────────────────────
+// ── Book card ────────────────────────────────────────────────────────
 
-function BookCard({ result, query }: { result: SearchResult; query: string }) {
+function BookResultCard({ result, query }: { result: SearchResult; query: string }) {
   const cover = getBookThumbnailUrl({ thumbnail: result.thumbnail, thumbnail_blob: (result as any).thumbnail_blob }, 'thumb');
   const text = result.snippet || result.summary;
 
   return (
     <Link
       href={bookUrl(result)}
-      className="flex items-start gap-3 p-3 rounded-lg hover:bg-stone-50 transition-colors"
+      className="flex items-start gap-3 p-2.5 rounded-lg hover:bg-[#faf8f4] transition-colors"
     >
       {cover ? (
-        <div className="w-10 h-14 rounded overflow-hidden flex-shrink-0 bg-stone-100">
+        <div className="w-10 h-14 rounded overflow-hidden flex-shrink-0 bg-[#e8e4dc]">
           <Image src={cover} alt="" width={40} height={56} className="w-full h-full object-cover" unoptimized />
         </div>
       ) : (
-        <Book className="w-5 h-5 text-amber-700 flex-shrink-0 mt-1" />
+        <Book className="w-5 h-5 text-[#9e4a3a] flex-shrink-0 mt-1" />
       )}
       <div className="min-w-0">
-        <h3 className="font-serif font-medium text-stone-800 text-sm leading-tight">
+        <h3 className="font-serif font-medium text-[#1a1612] text-[14px] leading-tight">
           <HighlightedText text={result.display_title || result.title} query={query} />
         </h3>
-        <p className="text-xs text-stone-500 mt-0.5">
+        <p className="text-[11px] text-[#8a8480] font-body mt-0.5">
           <HighlightedText text={result.author} query={query} />
           {result.published ? ` · ${result.published}` : ''}
         </p>
-        {text && <p className="text-xs text-stone-400 mt-1 line-clamp-2">{text}</p>}
+        {text && <p className="text-[11px] text-[#6b6560] font-body mt-1 line-clamp-2">{text}</p>}
       </div>
     </Link>
   );
