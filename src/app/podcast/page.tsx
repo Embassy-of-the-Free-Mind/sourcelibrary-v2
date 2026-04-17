@@ -1,4 +1,5 @@
 import { connectToDatabase } from '@/lib/mongodb';
+import { ObjectId } from 'mongodb';
 import SiteHeader from '@/components/layout/SiteHeader';
 import Link from 'next/link';
 
@@ -77,7 +78,7 @@ async function getEpisodes(): Promise<PodcastEpisode[]> {
     // Load notebook finding counts for book thumbnails
     const threadIds = [...new Set(episodes.map(e => e.threadId))];
     const notebooks = await db.collection('research_notebooks')
-      .find({ threadId: { $in: threadIds.map(id => new (require('mongodb').ObjectId)(id)) } })
+      .find({ threadId: { $in: threadIds.map(id => new ObjectId(id)) } })
       .project({ threadId: 1, findings: 1 })
       .toArray();
 
