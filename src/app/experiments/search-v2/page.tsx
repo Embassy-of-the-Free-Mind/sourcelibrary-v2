@@ -213,44 +213,51 @@ export default function SearchV2Page() {
     setLibrarianStreaming(false);
   }, []);
 
-  // ── Search agents ──────────────────────────────────────────────────
+  // ── Search agents — all fire independently in parallel ──────────
 
-  const startAgents = useCallback(async (q: string) => {
+  const startAgents = useCallback((q: string) => {
     setAgentsLoading(true);
     setSemanticLoading(true);
 
-    // Unified search (books + index + gallery)
-    try {
-      const data = await searchApi.unified(q, { limit: 6, galleryLimit: 6 });
-      setBookResults(data.books?.results || []);
-      setBookTotal(data.books?.total || 0);
-      setIndexResults((data.index?.results || []).slice(0, 5));
-      setIndexTotal(data.index?.total || 0);
+    // Agent 1: Unified search (books + index + gallery)
+    searchApi.unified(q, { limit: 6, galleryLimit: 6 })
+      .then(data => {
+        const books = data.books?.results || [];
+        setBookResults(books);
+        setBookTotal(data.books?.total || 0);
+        setIndexResults((data.index?.results || []).slice(0, 5));
+        setIndexTotal(data.index?.total || 0);
 
-      const gallery = data.gallery?.results || [];
-      setImageResults(gallery.map((g: any) => {
-        const parts = (g.id || '').split('-');
-        const detectionIndex = parseInt(parts.pop() || '0');
-        const pageId = parts.join('-');
-        return { pageId, bookId: g.bookId || '', detectionIndex, imageUrl: g.imageUrl || '', thumbnailUrl: g.imageUrl || '', bookTitle: g.bookTitle || '', description: g.description || '', type: g.type };
-      }));
-      setImageTotal(data.gallery?.total || 0);
-    } catch {
-      // silent
-    }
-    setAgentsLoading(false);
+        const gallery = data.gallery?.results || [];
+        setImageResults(gallery.map((g: any) => {
+          const parts = (g.id || '').split('-');
+          const detectionIndex = parseInt(parts.pop() || '0');
+          const pageId = parts.join('-');
+          return { pageId, bookId: g.bookId || '', detectionIndex, imageUrl: g.imageUrl || '', thumbnailUrl: g.imageUrl || '', bookTitle: g.bookTitle || '', description: g.description || '', type: g.type };
+        }));
+        setImageTotal(data.gallery?.total || 0);
 
-    // Semantic search (parallel)
-    try {
-      const res = await fetch(`/api/search/semantic?q=${encodeURIComponent(q)}&limit=8`);
-      const data = await res.json();
-      const keywordIds = new Set(bookResults.map((b: any) => b.id || b.book_id));
-      setSemanticResults((data.results || []).filter((s: any) => !keywordIds.has(s.book_id)));
-    } catch {
-      setSemanticResults([]);
-    }
-    setSemanticLoading(false);
-  }, [bookResults]);
+        // Auto-expand books if we got results
+        if (books.length > 0) {
+          setExpandedSections(prev => new Set([...prev, 'books']));
+        }
+      })
+      .catch(() => {})
+      .finally(() => setAgentsLoading(false));
+
+    // Agent 2: Semantic search (truly parallel, doesn't wait for unified)
+    fetch(`/api/search/semantic?q=${encodeURIComponent(q)}&limit=8`)
+      .then(r => r.json())
+      .then(data => {
+        const results = data.results || [];
+        setSemanticResults(results);
+        if (results.length > 0) {
+          setExpandedSections(prev => new Set([...prev, 'semantic']));
+        }
+      })
+      .catch(() => setSemanticResults([]))
+      .finally(() => setSemanticLoading(false));
+  }, []);
 
   // ── Submit ─────────────────────────────────────────────────────────
 
