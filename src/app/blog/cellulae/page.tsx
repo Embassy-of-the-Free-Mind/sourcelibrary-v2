@@ -59,6 +59,22 @@ export default function CellulaePage() {
           , the text describes the anatomy of the womb:
         </p>
 
+        <figure className="my-12">
+          <Link href="/book/the-secret-of-secrets-manuscript-pseudo-aristotle/page/6952306aab34727b1f0446c5">
+            {/* eslint-disable-next-line @next/next/no-img-element */}
+            <img
+              src="https://images.sourcelibrary.org/archived/6952306aab34727b1f0446a5/32.jpg"
+              alt="Page 32 of the Secretum Secretorum manuscript showing the cellulae passage in medieval Latin two-column format"
+              className="w-full max-w-lg mx-auto rounded-lg shadow-md"
+            />
+          </Link>
+          <figcaption className="text-center text-sm text-muted mt-3 italic">
+            Page 32 of the manuscript. The word <em>cellulas</em> appears in the left column, describing seven chambers of the womb.
+            Biblioth&egrave;que nationale de France.{' '}
+            <Link href="/book/the-secret-of-secrets-manuscript-pseudo-aristotle/page/6952306aab34727b1f0446c5" className="text-accent-rust hover:text-accent-rust not-italic">View in Source Library &rarr;</Link>
+          </figcaption>
+        </figure>
+
         <div className="border-l-4 border-accent-rust pl-6 my-10">
           <p className="text-lg text-secondary italic font-body leading-relaxed">
             &ldquo;It has seven cells [<em>cellulas</em>], impressed with the human figure like a coin-mold.
@@ -150,6 +166,21 @@ export default function CellulaePage() {
           <p className="text-secondary leading-relaxed mb-6 font-body">
             Then the Disciple raises an objection. If pleasure is required for conception, what about rape?
           </p>
+
+          <figure className="my-12">
+            <Link href="/book/the-secret-of-secrets-manuscript-pseudo-aristotle/page/6952306aab34727b1f0446c6">
+              {/* eslint-disable-next-line @next/next/no-img-element */}
+              <img
+                src="https://images.sourcelibrary.org/archived/6952306aab34727b1f0446a5/33.jpg"
+                alt="Page 33 of the manuscript showing the continuation of the reproductive dialogue including the rape argument and infertility discussion"
+                className="w-full max-w-lg mx-auto rounded-lg shadow-md"
+              />
+            </Link>
+            <figcaption className="text-center text-sm text-muted mt-3 italic">
+              Page 33. The rape argument and the infertility discussion that contradicts it &mdash; both on the same page.{' '}
+              <Link href="/book/the-secret-of-secrets-manuscript-pseudo-aristotle/page/6952306aab34727b1f0446c6" className="text-accent-rust hover:text-accent-rust not-italic">View in Source Library &rarr;</Link>
+            </figcaption>
+          </figure>
 
           <div className="border-l-4 border-stone-300 pl-6 my-10">
             <p className="text-lg text-secondary italic font-body leading-relaxed">
@@ -327,6 +358,21 @@ export default function CellulaePage() {
             </Link>:
           </p>
 
+          <figure className="my-12">
+            <Link href="/book/sirr-al-asrar-secret-of-secrets-pseudo-aristotle/page/69ae674a4b74f168e0c159d0">
+              {/* eslint-disable-next-line @next/next/no-img-element */}
+              <img
+                src="https://images.sourcelibrary.org/archived/69ae674a4b74f168e0c15926/170.jpg"
+                alt="Page 170 of the Arabic Sirr al-Asrar manuscript in Naskh script, written in Mosul 1193 CE, containing the Universal Soul passage"
+                className="w-full max-w-lg mx-auto rounded-lg shadow-md"
+              />
+            </Link>
+            <figcaption className="text-center text-sm text-muted mt-3 italic">
+              Page 170 of the Arabic <em>Sirr al-Asr&#x101;r</em> (1193 CE, Mosul). Where the Latin has seven chambers of the womb, the Arabic has seven powers of the Universal Soul.{' '}
+              <Link href="/book/sirr-al-asrar-secret-of-secrets-pseudo-aristotle/page/69ae674a4b74f168e0c159d0" className="text-accent-rust hover:text-accent-rust not-italic">View in Source Library &rarr;</Link>
+            </figcaption>
+          </figure>
+
           <div className="border-l-4 border-accent-rust pl-6 my-10">
             <p className="text-lg text-secondary italic font-body leading-relaxed">
               &ldquo;The Universal Soul is a spiritual power that flowed from the Intellect by the
@@ -389,6 +435,21 @@ export default function CellulaePage() {
               page 34
             </Link>, William of Conches writes:
           </p>
+
+          <figure className="my-12">
+            <Link href="/book/the-secret-of-secrets-manuscript-pseudo-aristotle/page/6952306aab34727b1f0446c7">
+              {/* eslint-disable-next-line @next/next/no-img-element */}
+              <img
+                src="https://images.sourcelibrary.org/archived/6952306aab34727b1f0446a5/34.jpg"
+                alt="Page 34 of the manuscript containing William of Conches' passage on memory and anticipation as the defining features of human cognition"
+                className="w-full max-w-lg mx-auto rounded-lg shadow-md"
+              />
+            </Link>
+            <figcaption className="text-center text-sm text-muted mt-3 italic">
+              Page 34. Two pages after the rape argument, a striking formulation of human temporal consciousness.{' '}
+              <Link href="/book/the-secret-of-secrets-manuscript-pseudo-aristotle/page/6952306aab34727b1f0446c7" className="text-accent-rust hover:text-accent-rust not-italic">View in Source Library &rarr;</Link>
+            </figcaption>
+          </figure>
 
           <div className="border-l-4 border-accent-rust pl-6 my-10">
             <p className="text-lg text-secondary italic font-body leading-relaxed">
