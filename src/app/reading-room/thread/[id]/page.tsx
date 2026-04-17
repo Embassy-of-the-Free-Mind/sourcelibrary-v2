@@ -81,6 +81,113 @@ function formatTranscript(script: string): { speaker: string; text: string }[] {
     .filter(entry => entry.text.length > 0);
 }
 
+// ── Source Cards ──────────────────────────────────────────────────────
+
+interface SourceFinding {
+  quote: string;
+  note?: string;
+  source: {
+    bookId: string;
+    bookTitle: string;
+    bookAuthor: string;
+    bookSlug?: string;
+    pageNumber: number;
+  };
+}
+
+function SourceCards({ threadId }: { threadId: string }) {
+  const [findings, setFindings] = useState<SourceFinding[]>([]);
+  const [loaded, setLoaded] = useState(false);
+  const [expanded, setExpanded] = useState(false);
+
+  useEffect(() => {
+    fetch(`/api/embassy/threads/${threadId}/notebook?format=json`)
+      .then(r => r.ok ? r.json() : null)
+      .then(data => {
+        if (data?.notebook?.findings) setFindings(data.notebook.findings);
+        setLoaded(true);
+      })
+      .catch(() => setLoaded(true));
+  }, [threadId]);
+
+  if (!loaded || findings.length === 0) return null;
+
+  // Deduplicate by book
+  const books = new Map<string, { title: string; author: string; slug?: string; pages: number[]; quotes: string[] }>();
+  for (const f of findings) {
+    const key = f.source.bookId;
+    const existing = books.get(key) || {
+      title: f.source.bookTitle,
+      author: f.source.bookAuthor,
+      slug: f.source.bookSlug,
+      pages: [],
+      quotes: [],
+    };
+    if (!existing.pages.includes(f.source.pageNumber)) {
+      existing.pages.push(f.source.pageNumber);
+    }
+    existing.quotes.push(f.quote.slice(0, 120));
+    books.set(key, existing);
+  }
+
+  const bookList = [...books.entries()];
+
+  return (
+    <div className="mt-6">
+      <button
+        onClick={() => setExpanded(!expanded)}
+        className="flex items-center gap-2 text-[12px] text-[#6b6560] font-sans tracking-wide uppercase hover:text-[#444] transition-colors"
+      >
+        <svg className={`w-3.5 h-3.5 transition-transform ${expanded ? 'rotate-90' : ''}`} fill="none" viewBox="0 0 24 24" strokeWidth={2} stroke="currentColor">
+          <path strokeLinecap="round" strokeLinejoin="round" d="M8.25 4.5l7.5 7.5-7.5 7.5" />
+        </svg>
+        Sources ({bookList.length} books, {findings.length} passages)
+      </button>
+
+      {expanded && (
+        <div className="mt-3 grid gap-3">
+          {bookList.map(([bookId, book]) => {
+            const bookUrl = `https://sourcelibrary.org/book/${book.slug || bookId}`;
+            const thumbUrl = `https://sourcelibrary.org/api/image?url=https://images.sourcelibrary.org/covers/${bookId}.jpg&w=120&q=75`;
+            return (
+              <a
+                key={bookId}
+                href={bookUrl}
+                target="_blank"
+                rel="noopener noreferrer"
+                className="flex gap-3 p-3 bg-white rounded-lg border border-[#e8e4dc] hover:border-[#c9a86c] transition-colors group"
+              >
+                {/* eslint-disable-next-line @next/next/no-img-element */}
+                <img
+                  src={thumbUrl}
+                  alt=""
+                  className="w-14 h-20 object-cover rounded flex-shrink-0 bg-[#f0ece4]"
+                  loading="lazy"
+                  onError={e => { (e.target as HTMLImageElement).style.display = 'none'; }}
+                />
+                <div className="min-w-0 flex-1">
+                  <p className="text-[13px] font-serif text-[#1a1612] leading-snug group-hover:text-[#9e4a3a] transition-colors" style={{ fontWeight: 400 }}>
+                    {book.title}
+                  </p>
+                  <p className="text-[11px] text-[#8a8480] font-sans mt-0.5">
+                    {book.author}
+                  </p>
+                  <p className="text-[11px] text-[#9e4a3a] font-sans mt-1">
+                    {book.pages.length === 1
+                      ? `Page ${book.pages[0]}`
+                      : `Pages ${book.pages.sort((a, b) => a - b).join(', ')}`
+                    }
+                  </p>
+                </div>
+              </a>
+            );
+          })}
+        </div>
+      )}
+    </div>
+  );
+}
+
 // ── Interactive Mode — Ask the Hosts ──────────────────────────────────
 
 interface InteractiveExchange {
@@ -532,6 +639,9 @@ export default function ThreadPage({ params }: { params: Promise<{ id: string }>
 
         {/* Podcast section */}
         <PodcastPlayer threadId={id} />
+
+        {/* Source books used in this research */}
+        <SourceCards threadId={id} />
 
         <div className="mt-12 pt-8 border-t border-[#e8e4dc] text-center">
           <p className="text-[#6b6560] text-sm font-body mb-3">
