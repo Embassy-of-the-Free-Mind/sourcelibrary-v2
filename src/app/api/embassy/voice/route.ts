@@ -16,7 +16,6 @@ export async function GET() {
   }
 
   try {
-    const t0 = Date.now();
     const res = await fetch(
       `https://api.elevenlabs.io/v1/convai/conversation/get-signed-url?agent_id=${agentId}`,
       {
@@ -24,11 +23,10 @@ export async function GET() {
         headers: { 'xi-api-key': apiKey },
       },
     );
-    const latency = Date.now() - t0;
 
     if (!res.ok) {
       const text = await res.text();
-      console.error(`[voice] Signed URL failed: ${res.status} (${latency}ms) agent=${agentId?.slice(0, 12)}...`, text);
+      console.error('[voice] ElevenLabs signed URL error:', res.status, text);
       return NextResponse.json(
         { error: 'Failed to get signed URL' },
         { status: res.status },
@@ -36,10 +34,9 @@ export async function GET() {
     }
 
     const data = await res.json();
-    if (latency > 2000) console.warn(`[voice] Signed URL slow: ${latency}ms — ElevenLabs may be degraded`);
     return NextResponse.json({ signedUrl: data.signed_url });
   } catch (err) {
-    console.error('[voice] Signed URL network error:', err);
+    console.error('[voice] ElevenLabs signed URL error:', err);
     return NextResponse.json(
       { error: 'Internal error' },
       { status: 500 },

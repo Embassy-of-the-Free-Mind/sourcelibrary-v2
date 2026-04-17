@@ -7,7 +7,7 @@ import { streamAgenticResponse, type LibrarianStep, type SourceCard } from '@/li
 import { z } from 'zod';
 
 export const dynamic = 'force-dynamic';
-export const maxDuration = 120;
+export const maxDuration = 60;
 
 const messageSchema = z.object({
   role: z.enum(['user', 'assistant']),
@@ -168,10 +168,9 @@ export async function POST(request: NextRequest) {
       await send({ type: 'done' });
       await writer.close();
     } catch (err) {
-      const errMsg = err instanceof Error ? `${err.message}\n${err.stack}` : String(err);
-      console.error('[Embassy] Agentic stream error:', errMsg);
+      console.error('[Embassy] Agentic stream error:', err);
       try {
-        await send({ type: 'error', message: 'The Librarian was interrupted. Please try again.', debug: errMsg });
+        await send({ type: 'error', message: 'The Librarian was interrupted. Please try again.' });
         await writer.close();
       } catch { /* already closed */ }
     }

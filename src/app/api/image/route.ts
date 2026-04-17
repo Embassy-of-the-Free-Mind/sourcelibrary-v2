@@ -109,9 +109,6 @@ export async function GET(request: NextRequest) {
             // Axios timeout includes both connection and response timeouts
             maxContentLength: Infinity,
             maxBodyLength: Infinity,
-            headers: {
-              'User-Agent': 'SourceLibrary/1.0 (https://sourcelibrary.org; contact@sourcelibrary.org)',
-            },
           });
 
           buffer = Buffer.from(response.data);
