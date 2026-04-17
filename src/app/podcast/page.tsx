@@ -172,7 +172,6 @@ export default async function PodcastPage() {
                         alt=""
                         className="w-8 h-12 object-cover rounded flex-shrink-0 bg-[#f0ece4]"
                         loading="lazy"
-                        onError={(e) => { (e.target as HTMLImageElement).style.display = 'none'; }}
                       />
                     ))}
                     {ep.bookIds.length > 5 && (
