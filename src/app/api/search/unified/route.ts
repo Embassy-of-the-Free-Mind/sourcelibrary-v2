@@ -203,7 +203,7 @@ async function searchBooks(
     id: 1, slug: 1, title: 1, display_title: 1, author: 1, language: 1, published: 1,
     pages_count: 1, pages_translated: 1, pages_ocr: 1, pages_blank: 1,
     thumbnail: 1, thumbnail_blob: 1, doi: 1, categories: 1, quality_score: 1,
-    'reading_summary.overview': 1,
+    'reading_summary.overview': 1, work_id: 1,
   };
 
   // Supabase trigram search (fast, always warm — no cold-start penalty)
@@ -294,8 +294,17 @@ async function searchBooks(
     return (b.quality_score || 0) - (a.quality_score || 0);
   });
 
-  const hasMore = books.length > limit;
-  const truncated = hasMore ? books.slice(0, limit) : books;
+  // Work-level dedup: collapse editions of the same work (keep best-ranked)
+  const seenWorkIds = new Set<string>();
+  const deduped = books.filter((b: any) => {
+    if (!b.work_id) return true; // no work_id — always keep
+    if (seenWorkIds.has(b.work_id)) return false;
+    seenWorkIds.add(b.work_id);
+    return true;
+  });
+
+  const hasMore = deduped.length > limit;
+  const truncated = hasMore ? deduped.slice(0, limit) : deduped;
 
   return {
     results: truncated.map((b: any): SearchResult => {
