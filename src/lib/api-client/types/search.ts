@@ -25,7 +25,6 @@ export interface SearchResult {
   page_number?: number;
   snippet?: string;
   snippet_type?: 'translation' | 'ocr' | 'summary';
-  quote_page?: number;
   thumbnail?: string;
   thumbnail_blob?: string;
   quality_score?: number;

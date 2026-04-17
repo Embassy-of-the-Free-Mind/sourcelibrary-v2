@@ -1038,13 +1038,10 @@ export default function SearchPage() {
             {aiResults.map(result => {
               const cover = getBookThumbnailUrl({ thumbnail: result.thumbnail, thumbnail_blob: (result as any).thumbnail_blob });
               const text = result.snippet || result.summary;
-              const isQuote = result.snippet_type === 'translation' || result.snippet_type === 'ocr';
-              const targetPage = result.type === 'page' ? result.page_number : result.quote_page;
-              const bookPath = `/book/${result.slug || result.book_id}`;
               return (
                 <Link
                   key={result.id}
-                  href={targetPage ? `${bookPath}/page-number/${targetPage}` : bookPath}
+                  href={result.type === 'page' ? `/book/${result.slug || result.book_id}/page-number/${result.page_number}` : `/book/${result.slug || result.book_id}`}
                   className="flex items-start gap-3 p-4 bg-warm rounded-lg hover:bg-warm-hover transition-colors"
                 >
                   {cover && (
@@ -1058,11 +1055,9 @@ export default function SearchPage() {
                       {result.author}{result.published ? `, ${result.published}` : ''}
                       {result.type === 'page' && result.page_number && <span> &middot; p. {result.page_number}</span>}
                     </p>
-                    {text && isQuote ? (
-                      <p className="text-xs text-secondary mt-1 line-clamp-2 italic">&ldquo;{text}&rdquo;{result.quote_page && <span className="not-italic text-muted ml-1">p. {result.quote_page}</span>}</p>
-                    ) : text ? (
+                    {text && (
                       <p className="text-xs text-secondary mt-1 line-clamp-2">{text}</p>
-                    ) : null}
+                    )}
                   </div>
                 </Link>
               );
@@ -1221,13 +1216,10 @@ export default function SearchPage() {
               {aiResults.map(result => {
                 const cover = getBookThumbnailUrl({ thumbnail: result.thumbnail, thumbnail_blob: (result as any).thumbnail_blob });
                 const text = result.snippet || result.summary;
-                const isQuote = result.snippet_type === 'translation' || result.snippet_type === 'ocr';
-                const targetPage = result.type === 'page' ? result.page_number : result.quote_page;
-                const bookPath = `/book/${result.slug || result.book_id}`;
                 return (
                   <Link
                     key={result.id}
-                    href={targetPage ? `${bookPath}/page-number/${targetPage}` : bookPath}
+                    href={result.type === 'page' ? `/book/${result.slug || result.book_id}/page-number/${result.page_number}` : `/book/${result.slug || result.book_id}`}
                     className="flex items-start gap-3 p-3 bg-warm rounded-lg hover:bg-warm-hover transition-colors"
                   >
                     {cover && (
@@ -1241,11 +1233,9 @@ export default function SearchPage() {
                         {result.author}{result.published ? `, ${result.published}` : ''}
                         {result.type === 'page' && result.page_number && <span> &middot; p. {result.page_number}</span>}
                       </p>
-                      {text && isQuote ? (
-                        <p className="text-xs text-secondary mt-1 line-clamp-2 italic">&ldquo;{text}&rdquo;{result.quote_page && <span className="not-italic text-muted ml-1">p. {result.quote_page}</span>}</p>
-                      ) : text ? (
+                      {text && (
                         <p className="text-xs text-secondary mt-1 line-clamp-2">{text}</p>
-                      ) : null}
+                      )}
                     </div>
                   </Link>
                 );
@@ -1265,13 +1255,10 @@ function BookResultCard({ result, query }: { result: SearchResult; query: string
   const cover = getBookThumbnailUrl({ thumbnail: result.thumbnail, thumbnail_blob: (result as any).thumbnail_blob });
   const text = result.snippet || result.summary;
   const [imgError, setImgError] = useState(false);
-  const bookPath = `/book/${result.slug || result.book_id}`;
-  const targetPage = result.type === 'page' ? result.page_number : result.quote_page;
-  const href = targetPage ? `${bookPath}/page-number/${targetPage}` : bookPath;
 
   return (
     <Link
-      href={href}
+      href={result.type === 'page' ? `/book/${result.slug || result.book_id}/page-number/${result.page_number}` : `/book/${result.slug || result.book_id}`}
       className="block bg-white rounded-xl border border-border-light p-4 hover:border-accent-rust/30 hover:shadow-md transition-all"
     >
       <div className="flex items-start gap-4">
@@ -1308,16 +1295,11 @@ function BookResultCard({ result, query }: { result: SearchResult; query: string
               </a>
             )}
           </div>
-          {text && (result.snippet_type === 'translation' || result.snippet_type === 'ocr') ? (
-            <p className="mt-1.5 text-sm text-secondary line-clamp-2 font-body leading-relaxed italic">
-              &ldquo;<HighlightedText text={text} query={query} />&rdquo;
-              {result.quote_page && <span className="not-italic text-muted ml-1">p. {result.quote_page}</span>}
-            </p>
-          ) : text ? (
+          {text && (
             <p className="mt-1.5 text-sm text-secondary line-clamp-2 font-body leading-relaxed">
               <HighlightedText text={text} query={query} />
             </p>
-          ) : null}
+          )}
           {result.type === 'book' && result.page_count && (
             <p className="mt-1.5 text-xs text-muted">
               {result.page_count} pages{result.translated_count ? ` · ${result.translated_count} translated` : ''}
