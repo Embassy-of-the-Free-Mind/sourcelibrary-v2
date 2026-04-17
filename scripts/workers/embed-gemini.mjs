@@ -18,7 +18,7 @@
  *   --limit N     Stop after N pages
  *   --dry-run     Count pages without embedding
  *
- * Env: MONGODB_URI, SUPABASE_URL, SUPABASE_SERVICE_ROLE_KEY, GEMINI_API_KEY
+ * Env: MONGODB_URI, SUPABASE_URL, SUPABASE_SERVICE_ROLE_KEY, SUPABASE_DB_URL, GEMINI_API_KEY
  *
  * Run on Hetzner:
  *   set -a; source .env.production.local; set +a
@@ -33,6 +33,7 @@ import { createClient } from '@supabase/supabase-js';
 const MONGODB_URI = process.env.MONGODB_URI;
 const SUPABASE_URL = (process.env.SUPABASE_URL || '').trim();
 const SUPABASE_KEY = (process.env.SUPABASE_SERVICE_ROLE_KEY || '').trim();
+const SUPABASE_DB_URL = process.env.SUPABASE_DB_URL;
 const GEMINI_KEY = process.env.GEMINI_API_KEY;
 
 if (!MONGODB_URI || !SUPABASE_KEY || !GEMINI_KEY) {
@@ -46,12 +47,40 @@ const DRY_RUN = args.includes('--dry-run');
 const BOOK_ID = args.find((_, i, a) => a[i - 1] === '--book');
 const LIMIT = parseInt(args.find((_, i, a) => a[i - 1] === '--limit') || '0') || 0;
 
-const BATCH_SIZE = 50; // Gemini batchEmbedContents limit is 100, use 50 for safety
+const EMBED_BATCH_SIZE = 50; // Gemini batchEmbedContents limit is 100, use 50 for safety
+const UPSERT_BATCH_SIZE = 10; // Small batches for Supabase — HNSW index updates are expensive
 const DIMS = 768;
 const MODEL = 'gemini-embedding-2-preview';
 const GEMINI_URL = `https://generativelanguage.googleapis.com/v1beta/models/${MODEL}:batchEmbedContents?key=${GEMINI_KEY}`;
 
+// Circuit breaker: abort if too many consecutive Supabase failures
+const MAX_CONSECUTIVE_FAILURES = 10;
+const SUPABASE_BACKOFF_BASE = 2000; // ms
+
 const supabase = createClient(SUPABASE_URL, SUPABASE_KEY, { auth: { persistSession: false } });
+
+// Direct PG client for writes (bypasses REST API 8s timeout)
+let pgClient = null;
+
+async function getPgClient() {
+  if (pgClient) return pgClient;
+  if (!SUPABASE_DB_URL) return null;
+
+  try {
+    const { default: pg } = await import('pg');
+    pgClient = new pg.Client({
+      connectionString: SUPABASE_DB_URL,
+      ssl: { rejectUnauthorized: false },
+      statement_timeout: 30000, // 30s per statement
+    });
+    await pgClient.connect();
+    console.log('Using direct PG for writes (bypasses REST API timeout)');
+    return pgClient;
+  } catch (e) {
+    console.warn(`Direct PG unavailable (${e.message}), falling back to REST API`);
+    return null;
+  }
+}
 
 // ── Gemini Embedding ────────────────────────────────────────────────
 
@@ -196,7 +225,7 @@ const cursor = db.collection('pages')
     'translation.updated_at': 1,
     'ocr.updated_at': 1,
   })
-  .batchSize(BATCH_SIZE * 2);
+  .batchSize(EMBED_BATCH_SIZE * 2);
 
 let processed = 0;
 let embedded = 0;
@@ -225,7 +254,7 @@ for await (const page of cursor) {
 
   batch.push({ page, text: textToEmbed, book, hasTranslation: translationText.length >= 20 });
 
-  if (batch.length >= BATCH_SIZE) {
+  if (batch.length >= EMBED_BATCH_SIZE) {
     await processBatch(batch);
     batch = [];
   }
@@ -241,6 +270,7 @@ for await (const page of cursor) {
 if (batch.length > 0) await processBatch(batch);
 
 await mongoClient.close();
+if (pgClient) await pgClient.end();
 const elapsed = ((Date.now() - start) / 1000).toFixed(1);
 console.log(`\nDone: ${embedded.toLocaleString()} embedded, ${skipped} skipped, ${errors} errors, ${elapsed}s`);
 
@@ -252,7 +282,7 @@ if (FULL_MODE && embedded > 10000) {
 // ── HNSW index rebuild ──────────────────────────────────────────────
 
 async function rebuildHnswIndex() {
-  const pgUrl = process.env.SUPABASE_DB_URL;
+  const pgUrl = SUPABASE_DB_URL;
   if (!pgUrl) {
     console.log('\nSUPABASE_DB_URL not set — skipping HNSW index rebuild.');
     console.log('Run manually: CREATE INDEX idx_pt_embedding ON page_translations USING hnsw (embedding vector_cosine_ops) WITH (m=16, ef_construction=64);');
@@ -289,6 +319,50 @@ async function rebuildHnswIndex() {
   }
 }
 
+// ── Supabase write (PG direct or REST fallback) ─────────────────────
+
+let consecutiveFailures = 0;
+let supabaseBackoff = 0;
+
+async function upsertToSupabase(rows) {
+  const client = await getPgClient();
+
+  if (client) {
+    // Direct PG: upsert with parameterized query, one row at a time
+    // (pg doesn't support multi-row upsert with vector columns easily)
+    for (const row of rows) {
+      await client.query(
+        `INSERT INTO page_translations (page_id, book_id, page_number, translation, embedding, book_title, book_author, book_language, book_year, updated_at)
+         VALUES ($1, $2, $3, $4, $5, $6, $7, $8, $9, $10)
+         ON CONFLICT (page_id) DO UPDATE SET
+           book_id = EXCLUDED.book_id,
+           page_number = EXCLUDED.page_number,
+           translation = EXCLUDED.translation,
+           embedding = EXCLUDED.embedding,
+           book_title = EXCLUDED.book_title,
+           book_author = EXCLUDED.book_author,
+           book_language = EXCLUDED.book_language,
+           book_year = EXCLUDED.book_year,
+           updated_at = EXCLUDED.updated_at`,
+        [
+          row.page_id, row.book_id, row.page_number,
+          row.translation, row.embedding,
+          row.book_title, row.book_author, row.book_language, row.book_year,
+          row.updated_at,
+        ]
+      );
+    }
+    return;
+  }
+
+  // REST API fallback: small batches to avoid timeout
+  const { error } = await supabase
+    .from('page_translations')
+    .upsert(rows, { onConflict: 'page_id' });
+
+  if (error) throw new Error(error.message);
+}
+
 // ── Batch processor ──────────────────────────────────────────────────
 
 async function processBatch(items) {
@@ -309,20 +383,48 @@ async function processBatch(items) {
       updated_at: item.page.translation?.updated_at || item.page.ocr?.updated_at || new Date(),
     }));
 
-    const { error } = await supabase
-      .from('page_translations')
-      .upsert(rows, { onConflict: 'page_id' });
+    // Upsert in small sub-batches to avoid overwhelming Supabase
+    let batchErrors = 0;
+    for (let i = 0; i < rows.length; i += UPSERT_BATCH_SIZE) {
+      const chunk = rows.slice(i, i + UPSERT_BATCH_SIZE);
+      try {
+        await upsertToSupabase(chunk);
+        consecutiveFailures = 0;
+        supabaseBackoff = 0;
+      } catch (e) {
+        consecutiveFailures++;
+        batchErrors += chunk.length;
+        console.error(`  Supabase upsert error (${consecutiveFailures}/${MAX_CONSECUTIVE_FAILURES}): ${e.message}`);
 
-    if (error) {
-      console.error(`  Supabase upsert error: ${error.message}`);
-      errors += items.length;
-    } else {
-      embedded += items.length;
+        // Exponential backoff on Supabase errors
+        supabaseBackoff = Math.min(SUPABASE_BACKOFF_BASE * Math.pow(2, consecutiveFailures - 1), 120000);
+        console.log(`  Backing off ${(supabaseBackoff / 1000).toFixed(0)}s...`);
+        await sleep(supabaseBackoff);
+
+        // Circuit breaker: abort if Supabase is consistently failing
+        if (consecutiveFailures >= MAX_CONSECUTIVE_FAILURES) {
+          console.error(`\nABORTING: ${MAX_CONSECUTIVE_FAILURES} consecutive Supabase failures — Supabase is overloaded.`);
+          console.error('Fix the issue and re-run. Remaining pages will be picked up on next incremental run.');
+          await mongoClient.close();
+          if (pgClient) await pgClient.end();
+          process.exit(1);
+        }
+
+        // Reconnect PG client on failure (connection may have dropped)
+        if (pgClient) {
+          try { await pgClient.end(); } catch {}
+          pgClient = null;
+        }
+        continue;
+      }
     }
+
+    errors += batchErrors;
+    embedded += items.length - batchErrors;
   } catch (e) {
     console.error(`  Error: ${e.message}`);
     if (e.message.includes('429') || e.message.includes('quota') || e.message.includes('RESOURCE_EXHAUSTED')) {
-      console.log('  Rate limited — waiting 10s...');
+      console.log('  Gemini rate limited — waiting 10s...');
       await sleep(10000);
       return processBatch(items); // Retry
     }
