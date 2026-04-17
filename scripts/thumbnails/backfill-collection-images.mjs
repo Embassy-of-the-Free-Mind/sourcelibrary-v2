@@ -251,12 +251,27 @@ async function run() {
       socketTimeoutMS: 60000,
     });
     const writeDb = writeClient.db('bookstore');
-    const ops = pending.map(col => ({
-      updateOne: {
-        filter: { slug: col.slug },
-        update: { $set: { featured_images: col.images } },
-      },
-    }));
+    // Skip manually curated collections
+    const curatedSlugs = new Set(
+      (await writeDb.collection('collections').find(
+        { featured_images_curated: true },
+        { projection: { slug: 1 } }
+      ).toArray()).map(c => c.slug)
+    );
+    const ops = pending
+      .filter(col => {
+        if (curatedSlugs.has(col.slug)) {
+          console.log(`  SKIPPED ${col.slug} (manually curated)`);
+          return false;
+        }
+        return true;
+      })
+      .map(col => ({
+        updateOne: {
+          filter: { slug: col.slug },
+          update: { $set: { featured_images: col.images, featured_images_updated: new Date() } },
+        },
+      }));
     // Batch in chunks of 50 to avoid timeout
     for (let i = 0; i < ops.length; i += 50) {
       const chunk = ops.slice(i, i + 50);
