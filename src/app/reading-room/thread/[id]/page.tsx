@@ -182,6 +182,50 @@ function SourceCards({ threadId }: { threadId: string }) {
               </a>
             );
           })}
+
+          {/* Page images from cited sources */}
+          {findings.length > 0 && (
+            <div className="mt-4 pt-4 border-t border-[#e8e4dc]">
+              <p className="text-[11px] text-[#6b6560] font-sans tracking-wide uppercase mb-3">
+                Pages cited in this episode
+              </p>
+              <div className="grid grid-cols-3 gap-2">
+                {findings.slice(0, 9).map((f, i) => {
+                  const pageNum = String(f.source.pageNumber).padStart(4, '0');
+                  const pageImgUrl = `https://images.sourcelibrary.org/pages/${f.source.bookId}/${pageNum}.jpg`;
+                  const pageUrl = `https://sourcelibrary.org/book/${f.source.bookSlug || f.source.bookId}?page=${f.source.pageNumber}`;
+                  return (
+                    <a
+                      key={`${f.source.bookId}-${f.source.pageNumber}-${i}`}
+                      href={pageUrl}
+                      target="_blank"
+                      rel="noopener noreferrer"
+                      className="group relative aspect-[3/4] overflow-hidden rounded-lg bg-[#f0ece4]"
+                    >
+                      {/* eslint-disable-next-line @next/next/no-img-element */}
+                      <img
+                        src={`https://sourcelibrary.org/api/image?url=${encodeURIComponent(pageImgUrl)}&w=300&q=75`}
+                        alt={`${f.source.bookTitle}, page ${f.source.pageNumber}`}
+                        className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-300"
+                        loading="lazy"
+                        onError={e => { (e.target as HTMLImageElement).src = `https://sourcelibrary.org/api/image?url=https://images.sourcelibrary.org/covers/${f.source.bookId}.jpg&w=300&q=75`; }}
+                      />
+                      <div className="absolute inset-0 bg-gradient-to-t from-black/70 via-transparent to-transparent opacity-0 group-hover:opacity-100 transition-opacity">
+                        <div className="absolute bottom-0 left-0 right-0 p-2">
+                          <p className="text-[10px] text-white font-sans leading-tight line-clamp-2">
+                            {f.source.bookTitle}
+                          </p>
+                          <p className="text-[9px] text-white/70 font-sans">
+                            Page {f.source.pageNumber}
+                          </p>
+                        </div>
+                      </div>
+                    </a>
+                  );
+                })}
+              </div>
+            </div>
+          )}
         </div>
       )}
     </div>
