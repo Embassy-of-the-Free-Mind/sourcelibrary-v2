@@ -17,26 +17,7 @@ function linkifySourceUrls(text: string): string {
 }
 
 function ensureParagraphBreaks(text: string): string {
-  const lines = text.split('\n');
-  const result: string[] = [];
-  let inCodeBlock = false;
-
-  for (let i = 0; i < lines.length; i++) {
-    const line = lines[i];
-    if (line.trimStart().startsWith('```')) inCodeBlock = !inCodeBlock;
-    result.push(line);
-
-    if (inCodeBlock) continue;
-    if (i === lines.length - 1) continue;
-
-    const next = lines[i + 1];
-    if (line === '' || next === '') continue;
-    if (/^(\s*[-*+>|#\d]|---)/.test(next)) continue;
-    if (/^(\s*[-*+>|#\d]|---)/.test(line)) continue;
-
-    result.push('');
-  }
-  return result.join('\n');
+  return text.replace(/([^\n])\n(?!\n)(?![-*>|`\d])/g, '$1\n\n');
 }
 
 interface ThreadMessage {

@@ -38,8 +38,8 @@ const posts: BlogPost[] = [
   {
     slug: 'word-alignment',
     title: 'Reading Through the Translation',
-    subtitle: 'What if you could see the original Latin behind every English sentence? An interactive experiment in translation transparency.',
-    date: '15 April 2026',
+    subtitle: 'Click any English word to see the Latin or Greek that produced it. On-demand alignment powered by Gemini embeddings.',
+    date: '17 April 2026',
     readTime: '4 min read',
     tag: 'Interactive',
     tagColor: 'bg-amber-50 text-amber-700',

@@ -1,13 +1,12 @@
 import { Metadata } from 'next';
 import Link from 'next/link';
 import ContentPageLayout, { ContentHeader } from '@/components/layout/ContentPageLayout';
-import { WordAlignmentDemo } from './WordAlignmentDemo';
 import { LiveAlignmentDemo } from './LiveAlignmentDemo';
 
 export const metadata: Metadata = {
   title: 'Reading Through the Translation - Research Notes - Source Library',
   description:
-    'Click any English word to see the original language word that produced it. Alignment computed by multilingual BERT embeddings via SimAlign.',
+    'Click any English word to see the original that produced it. On-demand cross-lingual alignment powered by Gemini embeddings.',
   openGraph: {
     title: 'Reading Through the Translation',
     description:
@@ -26,7 +25,7 @@ export default function WordAlignmentPage() {
           title="Reading Through the Translation"
           subtitle="Click any English word to see the original that produced it"
         >
-          <p className="text-stone-400 text-sm mt-4">16 April 2026</p>
+          <p className="text-stone-400 text-sm mt-4">17 April 2026</p>
         </ContentHeader>
       }
       bg="bg-cream"
@@ -45,103 +44,92 @@ export default function WordAlignmentPage() {
       </div>
 
       <article className="prose-content max-w-none">
-        <p className="text-xl text-secondary leading-relaxed mb-8">
-          Source Library has AI-translated over 10,000 pages of pre-modern text into English.
-          What if you could click any English word and see which original words produced it &mdash;
-          not from a model guessing after the fact, but from the actual learned relationship
-          between languages? These experiments use multilingual BERT embeddings
-          via{' '}
-          <a href="https://github.com/cisnlp/simalign" className="text-accent-gold-dark hover:underline">SimAlign</a>
-          {' '}to map words from any script into the same vector space.
-        </p>
-
-        <h2 className="text-lg font-semibold text-primary mt-10 mb-3">Latin &rarr; English</h2>
-        <p className="text-secondary leading-relaxed mb-6">
-          Ficino&rsquo;s <em>De Voluptate</em> (1457) &mdash; a treatise on the nature of pleasure.
-          The embedding model knows that &ldquo;animum&rdquo; means &ldquo;soul&rdquo; and
-          that &ldquo;laeticiam&rdquo; maps to &ldquo;gladness&rdquo; while
-          &ldquo;voluptatem&rdquo; maps to &ldquo;pleasure&rdquo; &mdash;
-          a distinction Ficino considered important.
+        <p className="text-xl text-secondary leading-relaxed mb-12">
+          Source Library has translated over 10,000 pages of Latin, Greek, Arabic, and Hebrew
+          into English. The translations are useful, but they hide the original. Click any
+          English word below, and the source word that produced it lights up on the other side.
+          The alignment is computed on-demand by{' '}
+          <a href="https://ai.google.dev/gemini-api/docs/embeddings" className="text-accent-gold-dark hover:underline">Gemini
+          embeddings</a> &mdash; the same model maps words from any language into a shared
+          vector space, so it works across scripts, centuries, and languages without
+          pre-computation.
         </p>
       </article>
 
-      <div className="mb-12">
-        <WordAlignmentDemo pageIndex={0} />
-      </div>
-
+      {/* === Ficino: pleasure vs gladness === */}
       <article className="prose-content max-w-none">
-        <h2 className="text-lg font-semibold text-primary mt-2 mb-3">Ancient Greek &rarr; Transliteration &rarr; English</h2>
-        <p className="text-secondary leading-relaxed mb-6">
-          The opening of Aratus&rsquo;s <em>Phaenomena</em> (~270 BCE) &mdash; a poem about the
-          constellations that begins with an invocation of Zeus. The same embedding model crosses
-          the script boundary: &ldquo;Διὸς&rdquo; lands near &ldquo;Zeus&rdquo;
-          and &ldquo;θάλασσα&rdquo; lands near &ldquo;sea&rdquo;, even though Greek and Latin
-          alphabets share almost no visual similarity. The transliteration column shows the
-          pronunciation.
+        <h2 className="text-lg font-semibold text-primary mb-2">
+          Two words for happiness
+        </h2>
+        <p className="text-secondary leading-relaxed mb-5">
+          Ficino&rsquo;s <em>De Voluptate</em> (1457) argues that Plato distinguished between
+          two kinds of positive feeling. Click &ldquo;gladness&rdquo; and &ldquo;joy&rdquo;
+          in the English &mdash; they come from different Latin words.
+          Click &ldquo;pleasure&rdquo; &mdash; it&rsquo;s a third.
         </p>
       </article>
 
-      <div className="mb-12">
-        <WordAlignmentDemo pageIndex={1} />
-      </div>
-
-      <article className="prose-content max-w-none">
-        <h2 className="text-lg font-semibold text-primary mt-2 mb-3">The same text, different embeddings</h2>
-        <p className="text-secondary leading-relaxed mb-6">
-          The Ficino paragraph again, but aligned with{' '}
-          <a href="https://huggingface.co/intfloat/multilingual-e5-base" className="text-accent-gold-dark hover:underline">multilingual-e5</a>
-          {' '}instead of mBERT. This is the same embedding model Source Library already uses
-          for semantic search &mdash; it runs on our Hetzner server, so there&rsquo;d be zero
-          additional infrastructure cost. The alignment is noticeably sparser: e5 was trained
-          for passage-level similarity, not word-level alignment, so it&rsquo;s confident on
-          cognates and content words (&ldquo;partes&rdquo; &rarr; &ldquo;parts&rdquo;,
-          &ldquo;differre&rdquo; &rarr; &ldquo;differ&rdquo;) but misses the non-obvious
-          mappings that mBERT catches. Still &mdash; for a model we&rsquo;re already running,
-          the results are surprisingly usable.
-        </p>
-      </article>
-
-      <div className="mb-12">
-        <WordAlignmentDemo pageIndex={2} />
-      </div>
-
-      <article className="prose-content max-w-none">
-        <h2 className="text-lg font-semibold text-primary mt-2 mb-3">Gemini embeddings</h2>
-        <p className="text-secondary leading-relaxed mb-6">
-          Google&rsquo;s <code className="text-xs bg-stone-100 px-1.5 py-0.5 rounded">gemini-embedding-001</code>{' '}
-          &mdash; 3,072 dimensions vs mBERT&rsquo;s 768. The richer representation catches
-          correspondences the other models miss: &ldquo;elationem&rdquo; &rarr; &ldquo;elevation&rdquo;,
-          &ldquo;modestiam&rdquo; &rarr; &ldquo;moderation&rdquo;,
-          &ldquo;suscipitur&rdquo; &rarr; &ldquo;received&rdquo;.
-          Since Source Library is already moving to Gemini embeddings for search, this alignment
-          would come essentially free &mdash; just run the same model at the word level
-          instead of the passage level.
-        </p>
-      </article>
-
-      <div className="mb-12">
-        <WordAlignmentDemo pageIndex={3} />
-      </div>
-
-      <article className="prose-content max-w-none">
-        <h2 className="text-lg font-semibold text-primary mt-2 mb-3">Live: no pre-computation</h2>
-        <p className="text-secondary leading-relaxed mb-6">
-          Everything above was pre-computed. This one isn&rsquo;t. Click any English word and
-          the embedding is computed right now via the Gemini API, compared against the source
-          words in real time. First click loads source embeddings (~200ms), then every click
-          after is instant. No batch job, no stored alignment data. This could work on every
-          translated page in the library today.
-        </p>
-      </article>
-
-      <div className="mb-12">
+      <div className="mb-14">
         <LiveAlignmentDemo
-          sourceText="PLATO igitur, ut ab eorum principe initium faciam, cum animum in duas partes distribuisset, mente scilicet ac sensum, menti laeticiam & gaudium attribuit, sensibus voluptatem. Verum prima duo haec inter se differre putat, quod omne gaudium laude sit dignum, laeticia vero partim laudanda, partim vituperanda sit. Esse enim laeticiam in bonis alicuius possessione quandam mentis elationem, quae tamen modestiam excedere pariter, atque seruare queat. Gaudium vero illam ipsam, quae ex contemplatione, aut alio quopiam virtutum usu suscipitur iocunditatem."
-          translationText="Plato, therefore (to begin with him as the leader of these philosophers), when he had divided the soul into two parts — namely, the mind and the senses — attributed gladness and joy to the mind, pleasure to the senses. He considers these first two to differ from each other in that all joy is worthy of praise, while gladness is partly to be praised and partly to be censured. For he defines gladness as a certain elevation of the mind in the possession of some good things, which is able to both exceed and preserve moderation. Joy, however, is that very delight which is received from contemplation or from some other exercise of the virtues."
+          sourceText="PLATO igitur, ut ab eorum principe initium faciam, cum animum in duas partes distribuisset, mente scilicet ac sensum, menti laeticiam & gaudium attribuit, sensibus voluptatem."
+          translationText="Plato, therefore (to begin with him as the leader of these philosophers), when he had divided the soul into two parts — namely, the mind and the senses — attributed gladness and joy to the mind, pleasure to the senses."
           sourceLanguage="Latin"
           label="Marsilio Ficino, De Voluptate (1457)"
         />
       </div>
+
+      {/* === Pymander: the creation vision === */}
+      <article className="prose-content max-w-none">
+        <h2 className="text-lg font-semibold text-primary mb-2">
+          Light and shadow in the Hermetic creation
+        </h2>
+        <p className="text-secondary leading-relaxed mb-5">
+          In the <em>Pymander</em>, Hermes Trismegistus describes a vision of the universe
+          being created from light and darkness. Click &ldquo;light&rdquo; to
+          find &ldquo;lumen,&rdquo; click &ldquo;shadow&rdquo; to find &ldquo;umbra.&rdquo;
+          The Latin makes the cosmic polarity sharper than the English does.
+        </p>
+      </article>
+
+      <div className="mb-14">
+        <LiveAlignmentDemo
+          sourceText="Cum haec dixisset, mutauit formam, & uniuersa subito reuelauit. Cernebam enim immensum quoddam spectaculum, omnia uidelicet in lumen conuersa, suaue nimium atque iucundum, quod intuentem me mirifice oblectabat. Paulo post umbra quaedam horrenda obliquè deorsum ferebatur."
+          translationText="When he had said these things, he changed form, and suddenly revealed all things. For I saw a certain immense spectacle, namely everything converted into light, exceedingly sweet and delightful, which as I gazed upon it wonderfully pleased me. A little later a certain dreadful shadow was carried obliquely downward."
+          sourceLanguage="Latin"
+          label="Hermes Trismegistus, Pymander (Ficino, 1505)"
+        />
+      </div>
+
+      {/* === Aratus: Greek script === */}
+      <article className="prose-content max-w-none">
+        <h2 className="text-lg font-semibold text-primary mb-2">
+          Across alphabets
+        </h2>
+        <p className="text-secondary leading-relaxed mb-5">
+          The same technique works across writing systems. Click &ldquo;Zeus&rdquo; in the
+          English and &ldquo;Διὸς&rdquo; lights up in the Greek &mdash; the model knows they
+          mean the same thing even though the scripts share no visual similarity. Click
+          &ldquo;sea&rdquo; to find &ldquo;θάλασσα.&rdquo;
+        </p>
+      </article>
+
+      <div className="mb-14">
+        <LiveAlignmentDemo
+          sourceText="Ek Διὸς ἀρχώμεσθα, τὸν οὐδέποτ' ἄνδρες ἐῶμεν ἀῤῥητον· μεσταὶ δὲ Διὸς πᾶσαι μὲν ἀγυιαί, πᾶσαι δ' ἀνθρώπων ἀγοραί, μεστὴ δὲ θάλασσα καὶ λιμένες· πάντη δὲ Διὸς κεχρήμεθα πάντες."
+          translationText="From Zeus let us begin: him let no man leave unspoken. Full of Zeus are all the streets, all the marketplaces of men, full is the sea and the harbors. Everywhere we all make use of Zeus."
+          sourceLanguage="Ancient Greek"
+          label="Aratus of Soli, Phaenomena (~270 BCE)"
+        />
+      </div>
+
+      <article className="prose-content max-w-none">
+        <p className="text-secondary leading-relaxed mb-12">
+          This works on any page in the library. The embeddings are computed the moment you
+          click &mdash; no batch job, no pre-processing. Every English word becomes a window
+          into the source text. Not for the scholars who can already read the original,
+          but for everyone else.
+        </p>
+      </article>
     </ContentPageLayout>
   );
 }

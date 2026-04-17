@@ -26,38 +26,12 @@ function linkifySourceUrls(text: string): string {
 
 /**
  * Ensure proper markdown paragraph breaks.
- * Gemini often outputs single \n between paragraphs, but standard markdown
- * needs \n\n for a visible paragraph break. Process line-by-line to avoid
- * breaking lists, blockquotes, code blocks, and headings.
+ * Gemini's streaming often outputs single \n between paragraphs.
+ * Standard markdown needs \n\n for a paragraph break.
+ * This converts single \n to \n\n EXCEPT inside lists, blockquotes, and code blocks.
  */
 function ensureParagraphBreaks(text: string): string {
-  const lines = text.split('\n');
-  const result: string[] = [];
-  let inCodeBlock = false;
-
-  for (let i = 0; i < lines.length; i++) {
-    const line = lines[i];
-    // Track fenced code blocks
-    if (line.trimStart().startsWith('```')) inCodeBlock = !inCodeBlock;
-    result.push(line);
-
-    // Don't touch anything inside code blocks
-    if (inCodeBlock) continue;
-    // Last line — nothing to pad after
-    if (i === lines.length - 1) continue;
-
-    const next = lines[i + 1];
-    // Already has a blank line after this one
-    if (line === '' || next === '') continue;
-    // Next line is a list item, blockquote, heading, hr, or table — leave it
-    if (/^(\s*[-*+>|#\d]|---)/.test(next)) continue;
-    // Current line is a list item or blockquote continuing — leave it
-    if (/^(\s*[-*+>|#\d]|---)/.test(line)) continue;
-
-    // Insert blank line for paragraph break
-    result.push('');
-  }
-  return result.join('\n');
+  return text.replace(/([^\n])\n(?!\n)(?![-*>|`\d])/g, '$1\n\n');
 }
 
 // ── Types ─────────────────────────────────────────────────────────────
@@ -451,7 +425,6 @@ export default function ReadingRoomClient({ featuredPassage }: ReadingRoomClient
                   break;
 
                 case 'error':
-                  console.error('[Librarian error]', event.debug || event.message);
                   updateLastAssistant(m => ({ ...m, content: event.message || 'Something went wrong.' }));
                   break;
               }
