@@ -168,9 +168,10 @@ export async function POST(request: NextRequest) {
       await send({ type: 'done' });
       await writer.close();
     } catch (err) {
-      console.error('[Embassy] Agentic stream error:', err);
+      const errMsg = err instanceof Error ? `${err.message}\n${err.stack}` : String(err);
+      console.error('[Embassy] Agentic stream error:', errMsg);
       try {
-        await send({ type: 'error', message: 'The Librarian was interrupted. Please try again.' });
+        await send({ type: 'error', message: 'The Librarian was interrupted. Please try again.', debug: errMsg });
         await writer.close();
       } catch { /* already closed */ }
     }
