@@ -86,6 +86,10 @@ const nextConfig: NextConfig = {
             key: 'Strict-Transport-Security',
             value: 'max-age=63072000; includeSubDomains; preload',
           },
+          // Prevent Cloudflare from serving RSC flight data as HTML.
+          // Next.js uses these headers for client-side navigation — without Vary,
+          // CF caches the RSC payload and serves it to fresh page loads as raw text.
+          { key: 'Vary', value: 'RSC, Next-Router-State-Tree, Next-Router-Prefetch' },
         ],
       },
       // CDN-Cache-Control for Cloudflare edge caching.
