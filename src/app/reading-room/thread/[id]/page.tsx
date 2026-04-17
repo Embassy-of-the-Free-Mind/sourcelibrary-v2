@@ -1,7 +1,9 @@
 'use client';
 
 import { useState, useEffect, useCallback, useRef, use } from 'react';
+import { useSession } from 'next-auth/react';
 import Link from 'next/link';
+import { useRouter } from 'next/navigation';
 import SiteHeader from '@/components/layout/SiteHeader';
 import ReactMarkdown from 'react-markdown';
 import remarkGfm from 'remark-gfm';
@@ -51,6 +53,7 @@ interface ThreadData {
   id: string;
   title: string;
   creatorName: string;
+  creatorId?: string;
   messageCount: number;
   createdAt: string;
 }
@@ -431,10 +434,13 @@ function PodcastPlayer({ threadId }: { threadId: string }) {
 
 export default function ThreadPage({ params }: { params: Promise<{ id: string }> }) {
   const { id } = use(params);
+  const { data: session } = useSession();
+  const router = useRouter();
   const [thread, setThread] = useState<ThreadData | null>(null);
   const [messages, setMessages] = useState<ThreadMessage[]>([]);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState<string | null>(null);
+  const [deleting, setDeleting] = useState(false);
 
   useEffect(() => {
     fetch(`/api/embassy/threads/${id}`)
@@ -499,9 +505,28 @@ export default function ThreadPage({ params }: { params: Promise<{ id: string }>
           >
             {thread.title}
           </h1>
-          <p className="text-[12px] text-[#8a8480] font-sans">
-            {thread.creatorName} &middot; {formatDate(thread.createdAt)}
-          </p>
+          <div className="flex items-center gap-3">
+            <p className="text-[12px] text-[#8a8480] font-sans">
+              {thread.creatorName} &middot; {formatDate(thread.createdAt)}
+            </p>
+            {session?.user?.id && thread.creatorId === session.user.id && (
+              <button
+                onClick={async () => {
+                  if (!confirm('Delete this conversation? This cannot be undone.')) return;
+                  setDeleting(true);
+                  try {
+                    const res = await fetch(`/api/embassy/threads/${id}`, { method: 'DELETE' });
+                    if (res.ok) router.push('/reading-room');
+                    else setDeleting(false);
+                  } catch { setDeleting(false); }
+                }}
+                disabled={deleting}
+                className="text-[11px] text-[#b0a89c] hover:text-[#9e4a3a] font-sans transition-colors disabled:opacity-50"
+              >
+                {deleting ? 'Deleting...' : 'Delete'}
+              </button>
+            )}
+          </div>
         </div>
 
         <div className="space-y-6">

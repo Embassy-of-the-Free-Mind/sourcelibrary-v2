@@ -7,7 +7,7 @@ import { streamAgenticResponse, type LibrarianStep, type SourceCard } from '@/li
 import { z } from 'zod';
 
 export const dynamic = 'force-dynamic';
-export const maxDuration = 60;
+export const maxDuration = 120;
 
 const messageSchema = z.object({
   role: z.enum(['user', 'assistant']),
