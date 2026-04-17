@@ -259,8 +259,11 @@ export default function CellulaePage() {
           </p>
 
           <p className="text-secondary leading-relaxed mb-6 font-body">
-            The echo reached 2012, when U.S. Representative Todd Akin stated that in cases of
-            &ldquo;legitimate rape, the female body has ways to try to shut that whole thing down.&rdquo;
+            The echo reached 2012, when U.S. Representative Todd Akin{' '}
+            <a href="https://www.washingtonpost.com/news/the-fix/wp/2012/08/19/todd-akin-gop-senate-candidate-legitimate-rape-rarely-causes-pregnancy/" className="text-accent-rust hover:text-accent-rust underline" target="_blank" rel="noopener noreferrer">
+              stated that in cases of &ldquo;legitimate rape, the female body has ways to try to shut
+              that whole thing down&rdquo;
+            </a>.
             The American College of Obstetricians and Gynecologists immediately refuted the claim.
             Historians recognized it as a direct descendant of the medieval two-seed theory &mdash; the
             same theory articulated in our manuscript, on the page after the <em>cellulae</em>.
@@ -326,106 +329,10 @@ export default function CellulaePage() {
 
         <hr className="border-border-light my-12" />
 
-        {/* V. What the Arabic Actually Says */}
+        {/* V. Between the Horror and the Beauty */}
         <section className="mb-16">
           <h2 className="font-serif text-3xl text-primary mb-6">
-            V. What the Arabic Actually Says
-          </h2>
-
-          <p className="text-secondary leading-relaxed mb-6 font-body">
-            Source Library holds an{' '}
-            <Link href="/book/sirr-al-asrar-secret-of-secrets-pseudo-aristotle" className="text-accent-rust hover:text-accent-rust underline">
-              Arabic manuscript of the <em>Kit&#x101;b Sirr al-Asr&#x101;r</em>
-            </Link>{' '}
-            &mdash; the original text from which the Latin <em>Secretum Secretorum</em> was translated.
-            It is a copy of the University of Pennsylvania&apos;s LJS 459, dated 1193 CE and written in
-            Mosul, Iraq, making it one of the earliest surviving copies of the work, produced roughly two
-            centuries after the Arabic original was composed.
-          </p>
-
-          <p className="text-secondary leading-relaxed mb-6 font-body">
-            An exhaustive search of all 265 pages confirmed what the cross-copy comparison suggested:{' '}
-            <strong>the Arabic contains none of the reproductive material found in the Latin
-            manuscript</strong>. No seven chambers of the womb. No rape argument. No infertility discussion.
-            No menstrual theory. No gender determination. The Arabic word for rape (<em>gha&#x1E63;b</em>)
-            appears zero times. The word for barrenness (<em>&#x02BF;uqm</em>) appears zero times.
-          </p>
-
-          <p className="text-secondary leading-relaxed mb-6 font-body">
-            What the Arabic does contain, in the same conceptual space, is{' '}
-            <Link href="/book/sirr-al-asrar-secret-of-secrets-pseudo-aristotle/page/69ae674a4b74f168e0c159d0" className="text-accent-rust hover:text-accent-rust underline">
-              Neoplatonic cosmology
-            </Link>:
-          </p>
-
-          <figure className="my-12">
-            <Link href="/book/sirr-al-asrar-secret-of-secrets-pseudo-aristotle/page/69ae674a4b74f168e0c159d0">
-              {/* eslint-disable-next-line @next/next/no-img-element */}
-              <img
-                src="https://images.sourcelibrary.org/archived/69ae674a4b74f168e0c15926/170.jpg"
-                alt="Page 170 of the Arabic Sirr al-Asrar manuscript in Naskh script, written in Mosul 1193 CE, containing the Universal Soul passage"
-                className="w-full max-w-lg mx-auto rounded-lg shadow-md"
-              />
-            </Link>
-            <figcaption className="text-center text-sm text-muted mt-3 italic">
-              Page 170 of the Arabic <em>Sirr al-Asr&#x101;r</em> (1193 CE, Mosul). Where the Latin has seven chambers of the womb, the Arabic has seven powers of the Universal Soul.{' '}
-              <Link href="/book/sirr-al-asrar-secret-of-secrets-pseudo-aristotle/page/69ae674a4b74f168e0c159d0" className="text-accent-rust hover:text-accent-rust not-italic">View in Source Library &rarr;</Link>
-            </figcaption>
-          </figure>
-
-          <div className="border-l-4 border-accent-rust pl-6 my-10">
-            <p className="text-lg text-secondary italic font-body leading-relaxed">
-              &ldquo;The Universal Soul is a spiritual power that flowed from the Intellect by the
-              permission of God, may His majesty be glorified. Know that it has two powers that
-              circulate through all bodies, just as the power of the sun circulates through all parts
-              of the air&hellip; perfected with seven powers: the attractive power, the retentive power,
-              the digestive power, the assimilative power, the formative power, and the growth
-              power.&rdquo;
-            </p>
-            <p className="text-sm text-muted mt-3 not-italic font-body">
-              &mdash; <em>Sirr al-Asr&#x101;r</em>, UPenn LJS 459 (1193 CE),{' '}
-              <Link href="/book/sirr-al-asrar-secret-of-secrets-pseudo-aristotle/page/69ae674a4b74f168e0c159d0" className="text-accent-rust hover:text-accent-rust not-italic underline">
-                page 170
-              </Link>
-            </p>
-          </div>
-
-          <p className="text-secondary leading-relaxed mb-6 font-body">
-            The number seven appears in both traditions &mdash; but in the Arabic, it describes powers
-            of the cosmic soul emanating from the divine Intellect. In the Latin (William of Conches,
-            not the <em>Secretum</em>), it describes physical compartments of a uterus. The entire
-            register shifted: from metaphysics to gynecology, from emanation to anatomy, from the
-            soul&apos;s descent into matter to the mechanics of where sperm lands.
-          </p>
-
-          <p className="text-secondary leading-relaxed mb-6 font-body">
-            The Arabic text is fundamentally a political-cosmological work. The soul progresses through
-            stages &mdash; sensation, perception, reason &mdash; and after death, &ldquo;if the soul
-            has been completed and perfected before parting from the body, the power of the Universal
-            Soul descends and ascends with it to the Higher Assembly&hellip; If it has not been completed,
-            it is returned to the lowest of the low.&rdquo; This is theology, not medicine. The Latin
-            tradition turned it into something else entirely.
-          </p>
-
-          <p className="text-sm text-muted mt-8 font-body">
-            <strong>Compare:</strong> Arabic{' '}
-            <Link href="/book/sirr-al-asrar-secret-of-secrets-pseudo-aristotle/page/69ae674a4b74f168e0c159d0" className="text-accent-rust hover:text-accent-rust underline">
-              page 170
-            </Link>{' '}
-            (Universal Soul) vs. Latin{' '}
-            <Link href="/book/the-secret-of-secrets-manuscript-pseudo-aristotle/page/6952306aab34727b1f0446c5" className="text-accent-rust hover:text-accent-rust underline">
-              page 32
-            </Link>{' '}
-            (seven <em>cellulae</em>).
-          </p>
-        </section>
-
-        <hr className="border-border-light my-12" />
-
-        {/* VI. Between the Horror and the Beauty */}
-        <section className="mb-16">
-          <h2 className="font-serif text-3xl text-primary mb-6">
-            VI. Between the Horror and the Beauty
+            V. Between the Horror and the Beauty
           </h2>
 
           <p className="text-secondary leading-relaxed mb-6 font-body">
@@ -479,10 +386,10 @@ export default function CellulaePage() {
 
         <hr className="border-border-light my-12" />
 
-        {/* VII. What a Library Makes Possible */}
+        {/* VI. What a Library Makes Possible */}
         <section className="mb-16">
           <h2 className="font-serif text-3xl text-primary mb-6">
-            VII. What a Library Makes Possible
+            VI. What a Library Makes Possible
           </h2>
 
           <p className="text-secondary leading-relaxed mb-6 font-body">
@@ -500,9 +407,7 @@ export default function CellulaePage() {
             spanning Latin, Arabic, and German, dated from the twelfth to the sixteenth century. By
             searching all seven for the same passages, we could determine that the <em>cellulae</em> and
             the rape argument appear in only one &mdash; and that the one is a composite codex binding
-            two different texts together. By reading the Arabic original page by page, we could confirm
-            that the entire reproductive dialogue was a Latin-world addition, absent from the Islamic
-            philosophical tradition that produced the <em>Sirr al-Asr&#x101;r</em>.
+            two different texts together.
           </p>
 
           <p className="text-secondary leading-relaxed mb-6 font-body">
@@ -543,12 +448,6 @@ export default function CellulaePage() {
                 <em>Aristotelis Secretum Secretorum</em>
               </Link>{' '}
               (15th-century Latin manuscript, including William of Conches&apos; <em>Philosophia Mundi</em>)
-            </li>
-            <li>
-              <Link href="/book/sirr-al-asrar-secret-of-secrets-pseudo-aristotle" className="text-accent-rust hover:text-accent-rust underline">
-                <em>Sirr al-Asr&#x101;r</em>
-              </Link>{' '}
-              (Arabic, UPenn LJS 459, 1193 CE, Mosul)
             </li>
           </ul>
 
