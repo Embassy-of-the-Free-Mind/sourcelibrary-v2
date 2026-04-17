@@ -1,10 +1,11 @@
 import { NextRequest, NextResponse } from 'next/server';
-import { getReadDb } from '@/lib/mongodb';
+import { getReadDb, getDb } from '@/lib/mongodb';
+import { auth } from '@/lib/auth';
 import { ObjectId } from 'mongodb';
 
 /**
  * GET /api/embassy/threads/[id] — Get a single thread with all messages.
- * Public threads visible to everyone; private threads require auth.
+ * Public threads visible to everyone; private threads require creator auth.
  */
 export async function GET(
   request: NextRequest,
@@ -26,9 +27,12 @@ export async function GET(
     return NextResponse.json({ error: 'Thread not found' }, { status: 404 });
   }
 
-  // For now, only public threads are accessible without auth
+  // Private threads require auth from the creator
   if (thread.visibility !== 'public') {
-    return NextResponse.json({ error: 'Thread not found' }, { status: 404 });
+    const session = await auth();
+    if (!session?.user?.id || thread.creatorId !== session.user.id) {
+      return NextResponse.json({ error: 'Thread not found' }, { status: 404 });
+    }
   }
 
   const messages = await db.collection('embassy_messages')
@@ -42,6 +46,7 @@ export async function GET(
       type: thread.type,
       title: thread.title,
       creatorName: thread.creatorName,
+      creatorId: thread.creatorId,
       visibility: thread.visibility,
       messageCount: thread.messageCount,
       createdAt: thread.createdAt,
@@ -56,4 +61,46 @@ export async function GET(
       createdAt: m.createdAt,
     })),
   });
+}
+
+/**
+ * DELETE /api/embassy/threads/[id] — Delete a thread and all its messages.
+ * Only the thread creator can delete.
+ */
+export async function DELETE(
+  request: NextRequest,
+  { params }: { params: Promise<{ id: string }> },
+) {
+  const { id } = await params;
+
+  if (!ObjectId.isValid(id)) {
+    return NextResponse.json({ error: 'Invalid thread ID' }, { status: 400 });
+  }
+
+  const session = await auth();
+  if (!session?.user?.id) {
+    return NextResponse.json({ error: 'Sign in required' }, { status: 401 });
+  }
+
+  const db = await getDb();
+  const thread = await db.collection('embassy_threads').findOne({
+    _id: new ObjectId(id),
+  });
+
+  if (!thread) {
+    return NextResponse.json({ error: 'Thread not found' }, { status: 404 });
+  }
+
+  if (thread.creatorId !== session.user.id) {
+    return NextResponse.json({ error: 'Not authorized' }, { status: 403 });
+  }
+
+  const oid = new ObjectId(id);
+  await Promise.all([
+    db.collection('embassy_threads').deleteOne({ _id: oid }),
+    db.collection('embassy_messages').deleteMany({ threadId: oid }),
+    db.collection('research_notebooks').deleteMany({ threadId: oid }),
+  ]);
+
+  return NextResponse.json({ deleted: true });
 }
