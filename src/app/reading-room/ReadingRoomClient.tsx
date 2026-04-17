@@ -451,6 +451,7 @@ export default function ReadingRoomClient({ featuredPassage }: ReadingRoomClient
                   break;
 
                 case 'error':
+                  console.error('[Librarian error]', event.debug || event.message);
                   updateLastAssistant(m => ({ ...m, content: event.message || 'Something went wrong.' }));
                   break;
               }
