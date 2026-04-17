@@ -176,7 +176,14 @@ function VoiceAgentInner() {
         return [...prev, entry];
       });
     },
-    onError: (message: string) => { console.error('[voice-agent]', message); setErrorMsg(message || 'Connection error'); setAppStatus('error'); },
+    onError: (message: string) => {
+      console.error('[voice-agent]', message);
+      const msg = message || 'Connection error';
+      if (msg.includes('Permission') || msg.includes('NotAllowed') || msg.includes('permission'))
+        setErrorMsg('Microphone access needed. Your browser should prompt you — if not, click the lock icon in the address bar and allow microphone access.');
+      else setErrorMsg(msg);
+      setAppStatus('error');
+    },
     onStatusChange: ({ status }: { status: string }) => {
       if (status === 'connected') setAppStatus('connected');
       else if (status === 'connecting') setAppStatus('connecting');
