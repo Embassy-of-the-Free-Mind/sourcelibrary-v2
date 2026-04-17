@@ -9,6 +9,36 @@ import {
   Search, Book, Lightbulb, User, ImageIcon, ChevronDown,
   Loader2, ChevronRight, Send, Square, MessageCircle,
 } from 'lucide-react';
+
+/** Linkify bare sourcelibrary URLs in markdown output */
+function linkifySourceUrls(text: string): string {
+  return text.replace(
+    /(?<!\]\()https:\/\/sourcelibrary\.org\/book\/([a-z0-9-]+)(?:\?page=(\d+))?/g,
+    (match, _slug, page) => {
+      const label = page ? `View source (p. ${page})` : 'View in collection';
+      return `[${label}](${match})`;
+    },
+  );
+}
+
+/** Ensure proper paragraph breaks — Gemini outputs single \n between paragraphs */
+function ensureParagraphBreaks(text: string): string {
+  const lines = text.split('\n');
+  const result: string[] = [];
+  let inCodeBlock = false;
+  for (let i = 0; i < lines.length; i++) {
+    const line = lines[i];
+    if (line.trimStart().startsWith('```')) inCodeBlock = !inCodeBlock;
+    result.push(line);
+    if (inCodeBlock || i === lines.length - 1) continue;
+    const next = lines[i + 1];
+    if (line === '' || next === '') continue;
+    if (/^(\s*[-*+>|#\d]|---)/.test(next)) continue;
+    if (/^(\s*[-*+>|#\d]|---)/.test(line)) continue;
+    result.push('');
+  }
+  return result.join('\n');
+}
 import { useDebouncedCallback } from 'use-debounce';
 import { search as searchApi } from '@/lib/api-client';
 import type { SearchResult, IndexSearchResult } from '@/lib/api-client';
@@ -321,18 +351,22 @@ export default function SearchV2Page() {
               </div>
             )}
 
-            {/* Answer content */}
+            {/* Answer content — same rendering as reading room */}
             {librarianContent && (
-              <div className="px-5 py-4 prose prose-stone prose-sm max-w-none
-                prose-p:leading-relaxed prose-a:text-violet-600 prose-a:no-underline hover:prose-a:underline
-                prose-headings:font-serif prose-headings:text-stone-800
-                prose-blockquote:border-violet-300 prose-blockquote:text-stone-600 prose-blockquote:not-italic">
-                <ReactMarkdown remarkPlugins={[remarkGfm]}>
-                  {librarianContent}
-                </ReactMarkdown>
-                {librarianStreaming && (
-                  <span className="inline-block w-1.5 h-4 bg-violet-400 animate-pulse ml-0.5 align-text-bottom" />
-                )}
+              <div className="px-5 py-4">
+                <div className="prose prose-sm max-w-none text-[15px] leading-relaxed prose-p:mb-4 prose-p:mt-0 prose-h3:text-base prose-h3:font-semibold prose-h3:mt-5 prose-h3:mb-2 prose-h2:text-lg prose-h2:mt-6 prose-h2:mb-3 prose-headings:text-stone-800 prose-ul:my-3 prose-ol:my-3 prose-li:my-1 prose-a:text-[#9e4a3a] prose-a:underline prose-a:underline-offset-2 prose-a:decoration-[#9e4a3a]/30 hover:prose-a:decoration-[#9e4a3a] prose-blockquote:border-l-[#c9a86c] prose-blockquote:text-stone-600 prose-blockquote:my-4 prose-blockquote:italic prose-strong:text-stone-800 prose-hr:my-4">
+                  <ReactMarkdown
+                    remarkPlugins={[remarkGfm]}
+                    components={{
+                      a: ({ href, children }) => (
+                        <a href={href} target="_blank" rel="noopener noreferrer">{children}</a>
+                      ),
+                    }}
+                  >{ensureParagraphBreaks(linkifySourceUrls(librarianContent))}</ReactMarkdown>
+                  {librarianStreaming && (
+                    <span className="inline-block w-1.5 h-4 bg-violet-400 animate-pulse ml-0.5 align-text-bottom" />
+                  )}
+                </div>
               </div>
             )}
 
