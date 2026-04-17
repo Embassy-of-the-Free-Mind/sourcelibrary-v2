@@ -1251,63 +1251,153 @@ export default function SearchPage() {
 
 // ==================== RESULT CARDS ====================
 
+interface PassageMatch {
+  pageNumber: number;
+  snippet: string;
+  field: string;
+}
+
+function cleanSnippet(text: string): string {
+  return text
+    .replace(/<[^>]+>/g, '')                    // strip XML/HTML tags
+    .replace(/\*\*([^*]+)\*\*/g, '$1')          // strip markdown bold
+    .replace(/original:\s*\*[^*]*\*/g, '')      // strip "original: *Latin*" annotations
+    .replace(/<-|->|##/g, '')                   // strip markdown/layout markers
+    .replace(/\s+/g, ' ')                       // collapse whitespace
+    .trim();
+}
+
 function BookResultCard({ result, query }: { result: SearchResult; query: string }) {
   const cover = getBookThumbnailUrl({ thumbnail: result.thumbnail, thumbnail_blob: (result as any).thumbnail_blob });
   const text = result.snippet || result.summary;
   const [imgError, setImgError] = useState(false);
+  const [passages, setPassages] = useState<PassageMatch[] | null>(null);
+  const [passagesLoading, setPassagesLoading] = useState(false);
+  const [passagesOpen, setPassagesOpen] = useState(false);
+  const bookPath = `/book/${result.slug || result.book_id}`;
+  const href = result.type === 'page' ? `${bookPath}/page-number/${result.page_number}` : bookPath;
+
+  const findPassages = useCallback(async (e: React.MouseEvent) => {
+    e.preventDefault();
+    e.stopPropagation();
+    if (passages) {
+      setPassagesOpen(!passagesOpen);
+      return;
+    }
+    setPassagesLoading(true);
+    setPassagesOpen(true);
+    try {
+      const res = await fetch(`/api/books/${result.book_id}/search?q=${encodeURIComponent(query)}`);
+      if (!res.ok) throw new Error('Search failed');
+      const data = await res.json();
+      const matches: PassageMatch[] = (data.results || [])
+        .slice(0, 5)
+        .map((r: any) => {
+          const best = r.matches?.find((m: any) => m.field === 'translation') || r.matches?.[0];
+          return {
+            pageNumber: r.pageNumber,
+            snippet: cleanSnippet(best?.snippet || ''),
+            field: best?.field || 'ocr',
+          };
+        })
+        .filter((m: PassageMatch) => m.snippet.length > 20);
+      setPassages(matches);
+    } catch {
+      setPassages([]);
+    } finally {
+      setPassagesLoading(false);
+    }
+  }, [result.book_id, query, passages, passagesOpen]);
 
   return (
-    <Link
-      href={result.type === 'page' ? `/book/${result.slug || result.book_id}/page-number/${result.page_number}` : `/book/${result.slug || result.book_id}`}
-      className="block bg-white rounded-xl border border-border-light p-4 hover:border-accent-rust/30 hover:shadow-md transition-all"
-    >
-      <div className="flex items-start gap-4">
-        {cover && !imgError ? (
-          <Image
-            src={cover}
-            alt=""
-            width={60}
-            height={84}
-            className="rounded shadow-sm flex-shrink-0 object-cover"
-            onError={() => setImgError(true)}
-            unoptimized
-          />
-        ) : (
-          <div className="w-[60px] h-[84px] rounded bg-warm flex items-center justify-center flex-shrink-0">
-            <Book className="w-6 h-6 text-border-medium" />
-          </div>
-        )}
-        <div className="flex-1 min-w-0">
-          <div className="flex items-start justify-between gap-3">
-            <div className="min-w-0">
-              <h3 className="text-lg font-medium text-primary line-clamp-2 font-serif leading-snug">
-                <HighlightedText text={result.display_title || result.title} query={query} />
-                {result.type === 'page' && <span className="text-muted font-normal text-sm ml-2">p. {result.page_number}</span>}
-              </h3>
-              <p className="text-sm text-secondary mt-0.5">
-                <HighlightedText text={result.author} query={query} /> · {result.published}
-              </p>
+    <div className="bg-white rounded-xl border border-border-light hover:border-accent-rust/30 hover:shadow-md transition-all">
+      <Link href={href} className="block p-4">
+        <div className="flex items-start gap-4">
+          {cover && !imgError ? (
+            <Image
+              src={cover}
+              alt=""
+              width={60}
+              height={84}
+              className="rounded shadow-sm flex-shrink-0 object-cover"
+              onError={() => setImgError(true)}
+              unoptimized
+            />
+          ) : (
+            <div className="w-[60px] h-[84px] rounded bg-warm flex items-center justify-center flex-shrink-0">
+              <Book className="w-6 h-6 text-border-medium" />
             </div>
-            {result.has_doi && result.doi && (
-              <a href={`https://doi.org/${result.doi}`} target="_blank" rel="noopener noreferrer" onClick={(e) => e.stopPropagation()}
-                className="flex items-center gap-1 px-2 py-1 bg-accent-sage/15 text-accent-sage-dark rounded text-xs font-medium hover:bg-accent-sage/25 flex-shrink-0">
-                DOI <ExternalLink className="w-3 h-3" />
-              </a>
+          )}
+          <div className="flex-1 min-w-0">
+            <div className="flex items-start justify-between gap-3">
+              <div className="min-w-0">
+                <h3 className="text-lg font-medium text-primary line-clamp-2 font-serif leading-snug">
+                  <HighlightedText text={result.display_title || result.title} query={query} />
+                  {result.type === 'page' && <span className="text-muted font-normal text-sm ml-2">p. {result.page_number}</span>}
+                </h3>
+                <p className="text-sm text-secondary mt-0.5">
+                  <HighlightedText text={result.author} query={query} /> · {result.published}
+                </p>
+              </div>
+              {result.has_doi && result.doi && (
+                <a href={`https://doi.org/${result.doi}`} target="_blank" rel="noopener noreferrer" onClick={(e) => e.stopPropagation()}
+                  className="flex items-center gap-1 px-2 py-1 bg-accent-sage/15 text-accent-sage-dark rounded text-xs font-medium hover:bg-accent-sage/25 flex-shrink-0">
+                  DOI <ExternalLink className="w-3 h-3" />
+                </a>
+              )}
+            </div>
+            {text && (
+              <p className="mt-1.5 text-sm text-secondary line-clamp-2 font-body leading-relaxed">
+                <HighlightedText text={text} query={query} />
+              </p>
             )}
+            <div className="mt-1.5 flex items-center gap-3 text-xs text-muted">
+              {result.type === 'book' && result.page_count && (
+                <span>{result.page_count} pages{result.translated_count ? ` · ${result.translated_count} translated` : ''}</span>
+              )}
+              {result.type === 'book' && result.translated_count && result.translated_count > 0 && (
+                <button
+                  onClick={findPassages}
+                  className="text-accent-rust hover:text-accent-rust-dark font-medium transition-colors"
+                >
+                  {passagesLoading ? (
+                    <span className="flex items-center gap-1"><Loader2 className="w-3 h-3 animate-spin" /> Searching...</span>
+                  ) : passagesOpen ? (
+                    <span className="flex items-center gap-1"><ChevronDown className="w-3 h-3 rotate-180 transition-transform" /> Hide passages</span>
+                  ) : (
+                    <span className="flex items-center gap-1"><Quote className="w-3 h-3" /> Find passages</span>
+                  )}
+                </button>
+              )}
+            </div>
           </div>
-          {text && (
-            <p className="mt-1.5 text-sm text-secondary line-clamp-2 font-body leading-relaxed">
-              <HighlightedText text={text} query={query} />
-            </p>
-          )}
-          {result.type === 'book' && result.page_count && (
-            <p className="mt-1.5 text-xs text-muted">
-              {result.page_count} pages{result.translated_count ? ` · ${result.translated_count} translated` : ''}
-            </p>
-          )}
         </div>
-      </div>
-    </Link>
+      </Link>
+      {passagesOpen && (
+        <div className="px-4 pb-4 -mt-1">
+          {passagesLoading ? (
+            <div className="text-xs text-muted py-2">Searching pages...</div>
+          ) : passages && passages.length > 0 ? (
+            <div className="space-y-2 border-t border-border-light pt-3">
+              {passages.map((p, i) => (
+                <Link
+                  key={i}
+                  href={`${bookPath}/page-number/${p.pageNumber}`}
+                  className="block text-sm py-1.5 px-3 rounded-lg hover:bg-warm transition-colors group"
+                >
+                  <span className="text-muted text-xs font-medium mr-2">p. {p.pageNumber}</span>
+                  <span className="text-secondary italic font-body">
+                    &ldquo;<HighlightedText text={p.snippet.slice(0, 200)} query={query} />{p.snippet.length > 200 ? '...' : ''}&rdquo;
+                  </span>
+                </Link>
+              ))}
+            </div>
+          ) : passages ? (
+            <p className="text-xs text-muted py-2 border-t border-border-light pt-3">No matching passages found in this book.</p>
+          ) : null}
+        </div>
+      )}
+    </div>
   );
 }
 
