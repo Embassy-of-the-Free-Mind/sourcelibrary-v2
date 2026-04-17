@@ -407,17 +407,16 @@ async function main() {
     .limit(BOOKS_PER_RUN)
     .toArray();
 
-  // Catch-up: books outside pipeline with OCR but no image extraction
+  // Catch-up: books that reached 'complete' or have no pipeline status but were never image-extracted
   if (books.length < BOOKS_PER_RUN) {
     const catchUp = await db.collection('books')
       .find({
-        'pipeline_auto.status': { $exists: false },
-        pages_ocr: { $gt: 0 },
         $or: [
-          { detected_images_count: { $exists: false } },
-          { detected_images_count: 0 },
+          { 'pipeline_auto.status': { $exists: false } },
+          { 'pipeline_auto.status': 'complete' },
         ],
-        'job.type': { $ne: 'image_extraction' },
+        pages_ocr: { $gt: 0 },
+        detected_images_count: { $exists: false },
       })
       .sort({ visible: -1, pages_count: -1 })
       .project({ id: 1, title: 1, author: 1, year: 1, language: 1, subjects: 1 })
@@ -425,7 +424,7 @@ async function main() {
       .toArray();
     if (catchUp.length > 0) {
       books.push(...catchUp);
-      console.log(`[IMAGE-EXTRACT] Catch-up: ${catchUp.length} pre-pipeline books`);
+      console.log(`[IMAGE-EXTRACT] Catch-up: ${catchUp.length} books (complete or pre-pipeline)`);
     }
   }
 
