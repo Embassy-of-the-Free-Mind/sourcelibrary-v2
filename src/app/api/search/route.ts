@@ -288,8 +288,8 @@ export async function GET(request: NextRequest) {
       seenBooks.add((book as any).id);
     }
 
-    // Process page results (skip if book results already fill the limit)
-    if (pageDocs.length > 0 && (bookId || results.length < limit)) {
+    // Process page results — add books discovered through content search
+    if (pageDocs.length > 0) {
       const pageBookIds = [...new Set(pageDocs.map(p => p.book_id as string))];
       const bookMap = new Map<string, Book>();
 
