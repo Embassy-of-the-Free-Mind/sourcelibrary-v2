@@ -6,10 +6,16 @@
 // ---------- Pinned collection ordering ----------
 
 export const PINNED_COLLECTION_SLUGS = [
+  // Row 1
   'natural-philosophy',
   'classical-philosophy',
   'renaissance-philosophy',
   'sacred-texts',
+  // Row 2
+  'hermetica',
+  'alchemy',
+  'mysticism',
+  'kabbalah',
 ];
 
 /** Pin specific collections first, shuffle the rest. */
