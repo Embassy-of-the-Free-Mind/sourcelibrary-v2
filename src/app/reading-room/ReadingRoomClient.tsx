@@ -36,38 +36,21 @@ function linkifySourceUrls(text: string): string {
 /**
  * Ensure proper markdown paragraph breaks.
  * Gemini often outputs single \n between paragraphs, but standard markdown
- * needs \n\n for a visible paragraph break. Process line-by-line to avoid
- * breaking lists, blockquotes, code blocks, and headings.
+ * needs \n\n for a visible paragraph break. Simple approach: double ALL
+ * single newlines, then collapse any runs of 3+ newlines back to 2.
+ * Only exception: code blocks are left untouched.
  */
 function ensureParagraphBreaks(text: string): string {
-  const lines = text.split('\n');
-  const result: string[] = [];
-  let inCodeBlock = false;
-
-  for (let i = 0; i < lines.length; i++) {
-    const line = lines[i];
-    // Track fenced code blocks
-    if (line.trimStart().startsWith('```')) inCodeBlock = !inCodeBlock;
-    result.push(line);
-
-    // Don't touch anything inside code blocks
-    if (inCodeBlock) continue;
-    // Last line — nothing to pad after
-    if (i === lines.length - 1) continue;
-
-    const next = lines[i + 1];
-    // Already has a blank line after this one
-    if (line === '' || next === '') continue;
-    // Next line is a list item, blockquote, heading, hr, or table — leave it
-    // Note: *text and **text (italics/bold) must NOT match — only */-/+ followed by space are list items
-    if (/^(\s*[-*+]\s|>\s?|#{1,6}\s|\d+\.\s|---|\|)/.test(next)) continue;
-    // Current line is a list item or blockquote continuing — leave it
-    if (/^(\s*[-*+]\s|>\s?|#{1,6}\s|\d+\.\s|---|\|)/.test(line)) continue;
-
-    // Insert blank line for paragraph break
-    result.push('');
-  }
-  return result.join('\n');
+  // Split on code fences, process only non-code sections
+  const parts = text.split(/(```[\s\S]*?```)/);
+  return parts.map((part, i) => {
+    // Odd indices are code blocks — leave them alone
+    if (i % 2 === 1) return part;
+    // Replace single \n with \n\n, then collapse triples back to doubles
+    return part
+      .replace(/([^\n])\n(?!\n)/g, '$1\n\n')
+      .replace(/\n{3,}/g, '\n\n');
+  }).join('');
 }
 
 // ── Types ─────────────────────────────────────────────────────────────
@@ -682,7 +665,7 @@ export default function ReadingRoomClient({ featuredPassage }: ReadingRoomClient
                                   remarkPlugins={[remarkGfm]}
                                   components={{
                                     a: ({ href, children }) => (
-                                      <a href={href} target="_blank" rel="noopener noreferrer">{children}</a>
+                                      <a href={href} target="_blank" rel="noopener noreferrer" className="text-[#9e4a3a] underline underline-offset-2 decoration-[#9e4a3a]/30 hover:decoration-[#9e4a3a]">{children}</a>
                                     ),
                                     img: ({ src, alt }) => (
                                       <a href={src as string} target="_blank" rel="noopener noreferrer">

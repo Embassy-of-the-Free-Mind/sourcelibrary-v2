@@ -19,26 +19,13 @@ function linkifySourceUrls(text: string): string {
 }
 
 function ensureParagraphBreaks(text: string): string {
-  const lines = text.split('\n');
-  const result: string[] = [];
-  let inCodeBlock = false;
-
-  for (let i = 0; i < lines.length; i++) {
-    const line = lines[i];
-    if (line.trimStart().startsWith('```')) inCodeBlock = !inCodeBlock;
-    result.push(line);
-
-    if (inCodeBlock) continue;
-    if (i === lines.length - 1) continue;
-
-    const next = lines[i + 1];
-    if (line === '' || next === '') continue;
-    if (/^(\s*[-*+>|#\d]|---)/.test(next)) continue;
-    if (/^(\s*[-*+>|#\d]|---)/.test(line)) continue;
-
-    result.push('');
-  }
-  return result.join('\n');
+  const parts = text.split(/(```[\s\S]*?```)/);
+  return parts.map((part, i) => {
+    if (i % 2 === 1) return part;
+    return part
+      .replace(/([^\n])\n(?!\n)/g, '$1\n\n')
+      .replace(/\n{3,}/g, '\n\n');
+  }).join('');
 }
 
 interface ThreadMessage {
