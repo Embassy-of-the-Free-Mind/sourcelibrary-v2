@@ -90,7 +90,7 @@ export default async function WorkPage({ params }: PageProps) {
     >
       <div className="prose-content max-w-none">
         {/* Stats bar */}
-        <div className="flex flex-wrap gap-6 text-sm text-stone-500 mb-10">
+        <div className="flex flex-wrap items-center gap-6 text-sm text-stone-500 mb-10">
           {earliest && latest && earliest !== latest && (
             <span>{earliest} &ndash; {latest}</span>
           )}
@@ -98,6 +98,14 @@ export default async function WorkPage({ params }: PageProps) {
           {languages.length > 0 && <span>{languages.join(', ')}</span>}
           <span>{totalPages.toLocaleString()} pages</span>
           <span>{editions.length} editions</span>
+          {editions.filter(e => (e.pages_translated || 0) > 0).length >= 2 && (
+            <Link
+              href={`/work/${id}/compare`}
+              className="ml-auto text-xs border border-stone-300 hover:border-stone-400 rounded-full px-3 py-1 text-stone-600 hover:text-stone-800 transition-colors"
+            >
+              Compare translations
+            </Link>
+          )}
         </div>
 
         {/* Editions grid */}
