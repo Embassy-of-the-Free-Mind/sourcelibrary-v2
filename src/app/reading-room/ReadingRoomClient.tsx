@@ -59,9 +59,10 @@ function ensureParagraphBreaks(text: string): string {
     // Already has a blank line after this one
     if (line === '' || next === '') continue;
     // Next line is a list item, blockquote, heading, hr, or table — leave it
-    if (/^(\s*[-*+>|#\d]|---)/.test(next)) continue;
+    // Note: *text and **text (italics/bold) must NOT match — only */-/+ followed by space are list items
+    if (/^(\s*[-*+]\s|>\s?|#{1,6}\s|\d+\.\s|---|\|)/.test(next)) continue;
     // Current line is a list item or blockquote continuing — leave it
-    if (/^(\s*[-*+>|#\d]|---)/.test(line)) continue;
+    if (/^(\s*[-*+]\s|>\s?|#{1,6}\s|\d+\.\s|---|\|)/.test(line)) continue;
 
     // Insert blank line for paragraph break
     result.push('');
