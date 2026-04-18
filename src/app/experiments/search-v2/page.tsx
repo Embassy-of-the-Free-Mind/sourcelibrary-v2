@@ -478,7 +478,7 @@ export default function SearchV2Page() {
                 expanded={expandedSections.has('books')}
                 onToggle={() => toggleSection('books')}
               >
-                <div className="space-y-1">
+                <div className="space-y-3">
                   {bookResults.slice(0, 5).map(r => (
                     <BookResultCard key={r.id} result={r} query={query} />
                   ))}
@@ -491,31 +491,40 @@ export default function SearchV2Page() {
               </AccordionSection>
             )}
 
-            {/* Related (semantic) */}
+            {/* Related in the Library (semantic) */}
             {(semanticResults.length > 0 || semanticLoading) && (
               <AccordionSection
-                title="Related"
+                title="Related in the Library"
                 count={semanticResults.length}
                 icon={<Lightbulb className="w-4 h-4 text-[#c9a86c]" />}
                 loading={semanticLoading}
                 expanded={expandedSections.has('semantic')}
                 onToggle={() => toggleSection('semantic')}
               >
-                <div className="space-y-1">
+                <div className="space-y-3">
                   {semanticResults.slice(0, 5).map((sem: any) => (
                     <Link
                       key={sem.book_id}
                       href={`/book/${sem.book_id}`}
-                      className="block p-2.5 rounded-lg hover:bg-[#faf8f4] transition-colors"
+                      className="flex items-start gap-3 p-3 bg-[#faf8f4] rounded-lg hover:bg-[#f0ece4] transition-colors"
                     >
-                      <p className="font-body font-medium text-[#1a1612] text-[14px]">{sem.title}</p>
-                      <p className="text-[11px] text-[#8a8480] font-body mt-0.5">
-                        {sem.author}{sem.year ? ` · ${sem.year}` : ''}
-                        {sem.relevance_hint && <span className="text-[#c9a86c]"> · {sem.relevance_hint}</span>}
-                      </p>
-                      {sem.summary_snippet && (
-                        <p className="text-[11px] text-[#6b6560] font-body mt-1 line-clamp-2">{sem.summary_snippet}</p>
+                      {sem.metadata?.thumbnail && (
+                        <Image src={sem.metadata.thumbnail} alt="" width={48} height={68} className="rounded shadow-sm flex-shrink-0 object-cover" unoptimized />
                       )}
+                      <div className="min-w-0 flex-1">
+                        <h3 className="font-serif font-medium text-[#1a1612] text-sm leading-tight line-clamp-1">
+                          {sem.title}
+                        </h3>
+                        <p className="text-xs text-[#8a8480] font-body mt-0.5">
+                          {sem.author}{sem.year ? `, ${sem.year}` : ''}
+                        </p>
+                        {sem.relevance_hint && (
+                          <p className="text-xs text-[#8a8480] font-body mt-0.5">{sem.relevance_hint}</p>
+                        )}
+                        {sem.summary_snippet && (
+                          <p className="text-xs text-[#6b6560] font-body mt-1 line-clamp-2">{sem.summary_snippet}</p>
+                        )}
+                      </div>
                     </Link>
                   ))}
                 </div>
@@ -626,32 +635,28 @@ function AccordionSection({
 // ── Book card ────────────────────────────────────────────────────────
 
 function BookResultCard({ result, query }: { result: SearchResult; query: string }) {
-  const cover = getBookThumbnailUrl({ thumbnail: result.thumbnail, thumbnail_blob: (result as any).thumbnail_blob }, 'thumb');
+  const cover = getBookThumbnailUrl({ thumbnail: result.thumbnail, thumbnail_blob: (result as any).thumbnail_blob });
   const text = result.snippet || result.summary;
 
   return (
     <Link
-      href={bookUrl(result)}
-      className="flex items-start gap-3 p-2.5 rounded-lg hover:bg-[#faf8f4] transition-colors"
+      href={result.type === 'page' ? `/book/${result.slug || result.book_id}/page-number/${result.page_number}` : bookUrl(result)}
+      className="flex items-start gap-3 p-3 bg-[#faf8f4] rounded-lg hover:bg-[#f0ece4] transition-colors"
     >
-      {cover ? (
-        <div className="w-10 h-14 rounded overflow-hidden flex-shrink-0 bg-[#e8e4dc]">
-          <Image src={cover} alt="" width={40} height={56} className="w-full h-full object-cover" unoptimized />
-        </div>
-      ) : (
-        <Book className="w-5 h-5 text-[#9e4a3a] flex-shrink-0 mt-1" />
+      {cover && (
+        <Image src={cover} alt="" width={48} height={68} className="rounded shadow-sm flex-shrink-0 object-cover" unoptimized />
       )}
-      <div className="min-w-0">
-        <h3 className="font-serif font-medium text-[#1a1612] text-[14px] leading-tight">
+      <div className="min-w-0 flex-1">
+        <h3 className="font-serif font-medium text-[#1a1612] text-sm leading-tight line-clamp-1">
           <HighlightedText text={result.display_title || result.title} query={query} />
         </h3>
-        <p className="text-[11px] text-[#8a8480] font-body mt-0.5">
+        <p className="text-xs text-[#8a8480] font-body mt-0.5">
           <HighlightedText text={result.author} query={query} />
-          {result.published ? ` · ${result.published}` : ''}
+          {result.published ? `, ${result.published}` : ''}
+          {result.type === 'page' && result.page_number && <span> · p. {result.page_number}</span>}
         </p>
-        {text && <p className="text-[11px] text-[#6b6560] font-body mt-1 line-clamp-2">{text}</p>}
+        {text && <p className="text-xs text-[#6b6560] font-body mt-1 line-clamp-2">{text}</p>}
       </div>
     </Link>
   );
 }
-// force rebuild 1776457309
