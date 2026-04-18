@@ -71,9 +71,9 @@ async function getPgClient() {
     pgClient = new pg.Client({
       connectionString: SUPABASE_DB_URL,
       ssl: { rejectUnauthorized: false },
-      statement_timeout: 30000, // 30s per statement
     });
     await pgClient.connect();
+    await pgClient.query('SET statement_timeout = 30000'); // PgBouncer rejects startup params — must SET after connect
     console.log('Using direct PG for writes (bypasses REST API timeout)');
     return pgClient;
   } catch (e) {
@@ -232,6 +232,8 @@ let embedded = 0;
 let skipped = 0;
 let errors = 0;
 let batch = [];
+let consecutiveFailures = 0;
+let supabaseBackoff = 0;
 
 for await (const page of cursor) {
   if (LIMIT && processed >= LIMIT) break;
@@ -320,9 +322,6 @@ async function rebuildHnswIndex() {
 }
 
 // ── Supabase write (PG direct or REST fallback) ─────────────────────
-
-let consecutiveFailures = 0;
-let supabaseBackoff = 0;
 
 async function upsertToSupabase(rows) {
   const client = await getPgClient();
