@@ -79,9 +79,9 @@ ARTWORK METADATA:
 Look at the image carefully. Return JSON with these fields:
 
 {
-  "subject": "One sentence: what is physically in the image. Name every figure, creature, object, and action you can see. Be literal. 'A nude woman straddles a broomstick, legs spread, pressing it against her vulva' — not 'an allegory of the sabbath'. 'A four-armed blue-skinned deity stands on a prostrate figure, holding a severed head and a sword' — not 'a wrathful deity'.",
-  "description": "2-3 sentences describing what a person SEES when they look at this image. What are the figures doing? What are they holding? What position are their bodies in? What are they wearing or not wearing? What colors dominate? What is in the foreground vs background? Be concrete enough that someone could find this image by searching for any visible object, body part, animal, color, or action. Do NOT interpret — describe. Do NOT use art-criticism language ('masterful', 'evocative', 'captures the essence'). Just say what is there.",
-  "significance": "1-2 sentences of historical or intellectual context. What tradition does this come from? What text, ritual, belief system, or historical moment does it connect to? Name the specific text, author, or school of thought. This applies to any tradition worldwide — Indic, Buddhist, Islamic, African, Mesoamerican, classical, etc. — not just Western. If no meaningful connection exists, set to null. Do NOT fabricate.",
+  "subject": "One sentence: what is depicted. Name every identifiable figure, creature, object, and action. If you can identify who the figures are (a specific deity, saint, mythological character, or historical person), name them. Be concrete about what they are doing and what is happening.",
+  "description": "2-3 sentences describing the image for someone who cannot see it. What do the figures look like, what are they doing, what are they holding, what are they wearing? Describe poses, gestures, facial expressions, colors, composition. Include enough physical detail that someone could find this image by searching for any object, figure, animal, or action in it. Interpretation and meaning are welcome — but ground them in what is visually present.",
+  "significance": "1-2 sentences of historical or intellectual context. What tradition, text, ritual, or belief system does this connect to? Name specific texts, authors, schools of thought, or historical events. This applies to any tradition worldwide. If no meaningful connection exists, set to null. Do NOT fabricate.",
   "genre": "portrait | allegory | religious | mythological | landscape | genre-scene | still-life | scientific | decorative | emblem | architectural | anatomical | map | botanical | ritual-object | manuscript-illumination | sculpture",
   "collections": ["Collection slugs from the list below. Be selective — 1-2 usually, rarely 3. Only assign if STRONG fit."],
   "cross_references": [
@@ -104,12 +104,13 @@ AVAILABLE COLLECTIONS:
 ${COLLECTION_LIST}
 
 RULES:
-- DESCRIBE WHAT YOU SEE. Not what it means, not what it represents — what is physically visible. A viewer should be able to picture the image from your description alone.
-- Be FRANK about bodies. Nudity, genitalia, sexual acts, violence, gore, death — describe them plainly using anatomical terms. This is a scholarly library serving researchers. 'The figure's erect penis' not 'a symbol of fertility'. 'She squats over the broomstick pressing it against her vulva' not 'she rides a broomstick'. Accurate description is essential for scholarly search and retrieval.
-- Be SPECIFIC. Name colors, positions, gestures, facial expressions, clothing, objects held. 'A skeleton wearing a crown holds an hourglass in its left hand and a scythe in its right' — not 'a memento mori figure'.
+- Be CONCRETE. Describe what you see in enough detail that someone could picture the image. Name colors, positions, gestures, expressions, clothing, objects.
+- Be FRANK. Nudity, genitalia, sexual acts, violence, death — describe them accurately using plain language. This is a scholarly library. Do not euphemize or sanitize.
+- IDENTIFY figures when possible. If a figure is recognizable as a specific deity, saint, mythological character, or historical person, name them and explain why you think so.
 - INSCRIPTIONS: Look at the ENTIRE image including margins. Prints often have 3-4+ text blocks. Transcribe all of them.
 - COLLECTIONS: Only assign if confident. Most artworks fit 1-2 collections.
 - CROSS-REFERENCES: Connect to specific texts, authors, or traditions — not vague themes. Only medium or high confidence.
+- No AI slop ('masterful', 'captivating', 'testament to', 'captures the essence').
 - Return valid JSON only. No markdown, no commentary.`;
 }
 
