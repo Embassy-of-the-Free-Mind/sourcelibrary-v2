@@ -314,7 +314,6 @@ async function executeSearchSemantic(query: string): Promise<
 
     // Look up slugs from MongoDB for proper linking
     const db = await getDb();
-    const bookIds = books.map(b => b.book_id);
     const slugDocs = bookIds.length > 0
       ? await db.collection('books')
           .find({ id: { $in: bookIds } })
@@ -685,9 +684,9 @@ Once you have a direction (from a choice or a specific question), search strateg
 **Step 5: Save and cite with links.**
 Use add_to_notebook for quotes directly relevant to the research question. The notebook persists across messages.
 
-Cite with page-level links: "quoted text" — *[Title](https://sourcelibrary.org/book/{slug})* by [Author](https://sourcelibrary.org/author/{author-name}), [Page N](https://sourcelibrary.org/book/{slug}?page={N}).
+Cite with page-level links: "quoted text" — *[Title](https://sourcelibrary.org/book/SLUG)* by [Author](https://sourcelibrary.org/author/AUTHOR-NAME), [Page N](https://sourcelibrary.org/book/SLUG?page=N).
 
-Every mention of a book should link to it. Every mention of an author should link to their author page. Every quote should cite a specific page number with a direct link. Use the URLs from tool results — they contain the correct slugs. Author page URLs use the author name in URL form: `/author/Cornelius Agrippa` → `/author/Cornelius%20Agrippa`.
+Every mention of a book should link to it. Every mention of an author should link to their author page. Every quote should cite a specific page number with a direct link. Use the URLs from tool results — they contain the correct slugs. Author page URLs use the author name in URL form: /author/Cornelius Agrippa → /author/Cornelius%20Agrippa.
 
 **Step 6: Show images and suggest next steps.**
 When search_images returns results, embed the best 1-3 images using markdown: \`![description](imageUrl)\`. After answering, suggest what to explore next.
