@@ -1037,10 +1037,10 @@ export default function SearchPage() {
               </p>
             )}
             <p className="text-muted mb-6">
-              The library focuses on Western esoteric tradition — alchemy, Hermetica, Kabbalah, natural philosophy, and early modern science.
+              Over 10,000 primary sources spanning alchemy, Hermetica, Kabbalah, natural philosophy, Sanskrit rasayana, Chinese classics, Arabic philosophy, and more.
             </p>
             <div className="flex flex-wrap justify-center gap-2">
-              {['alchemy', 'Hermes', 'Paracelsus', 'Kabbalah', 'astrology', 'Ficino'].map(term => (
+              {['alchemy', 'Hermes', 'Paracelsus', 'Kabbalah', 'rasayana', 'Ficino'].map(term => (
                 <button
                   key={term}
                   onClick={() => { setQuery(term); setOffset(0); performSearch(term, viewMode, 0); updateUrl(term, viewMode, 0); }}
