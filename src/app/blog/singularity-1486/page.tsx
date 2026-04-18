@@ -84,6 +84,9 @@ export default function Singularity1486Page() {
           <p className="text-secondary leading-relaxed italic font-body">
             &ldquo;I have set you at the center of the world so that from there you might more easily observe everything that exists in the world. I have made you neither celestial nor terrestrial, neither mortal nor immortal, so that you, like a free and glorious master, may shape yourself into whatever form you prefer. You may degenerate into lower, irrational beings, or you may be reborn by the soul&rsquo;s decision into higher, divine ones.&rdquo;
           </p>
+          <p className="text-xs text-muted mt-2 not-italic">
+            <Link href="/book/oration-on-the-dignity-of-man-mirandola?page=2" className="text-accent-rust hover:underline">Pico, <em>Oratio</em>, p. 2 &rarr;</Link>
+          </p>
         </blockquote>
 
         <p className="text-secondary leading-relaxed mb-6 font-body">
@@ -101,6 +104,9 @@ export default function Singularity1486Page() {
         <blockquote className="border-l-2 border-accent-rust/30 pl-6 my-8">
           <p className="text-secondary leading-relaxed italic font-body">
             &ldquo;O, the supreme generosity of God the Father! O, the highest and most wonderful happiness of man, to whom it is granted to possess whatever he chooses and to be whatever he wants!&rdquo;
+          </p>
+          <p className="text-xs text-muted mt-2 not-italic">
+            <Link href="/book/oration-on-the-dignity-of-man-mirandola?page=2" className="text-accent-rust hover:underline">Pico, <em>Oratio</em>, p. 2 &rarr;</Link>
           </p>
         </blockquote>
 
@@ -138,6 +144,9 @@ export default function Singularity1486Page() {
           <p className="text-secondary leading-relaxed italic font-body">
             &ldquo;In the first stage, man lives lonely in darkness; in the second, he lives socially but separated beside and among others in a light that reflects the surface of things for him; in the third, his life intertwines with that of other spirits into a higher life within the highest Spirit, and he gazes into the essence of finite things.&rdquo;
           </p>
+          <p className="text-xs text-muted mt-2 not-italic">
+            <Link href="/book/the-little-book-of-life-after-death-fechner?page=15" className="text-accent-rust hover:underline">Fechner, <em>Life After Death</em>, p. 15 &rarr;</Link>
+          </p>
         </blockquote>
 
         <p className="text-secondary leading-relaxed mb-6 font-body">
@@ -157,6 +166,9 @@ export default function Singularity1486Page() {
         <blockquote className="border-l-2 border-accent-rust/30 pl-6 my-8">
           <p className="text-secondary leading-relaxed italic font-body">
             &ldquo;This is the great justice of creation: that everyone creates for themselves the conditions of their future existence.&rdquo;
+          </p>
+          <p className="text-xs text-muted mt-2 not-italic">
+            <Link href="/book/the-little-book-of-life-after-death-fechner?page=20" className="text-accent-rust hover:underline">Fechner, <em>Life After Death</em>, p. 20 &rarr;</Link>
           </p>
         </blockquote>
 
@@ -188,6 +200,9 @@ export default function Singularity1486Page() {
           <p className="text-secondary leading-relaxed italic font-body">
             &ldquo;Only components of the spirit of the Earth and, further up, of the divine spirit, so are our bodies only components of the body of the Earth and, further up, of the divine body &mdash; of Nature.&rdquo;
           </p>
+          <p className="text-xs text-muted mt-2 not-italic">
+            <Link href="/book/zend-avesta-fechner?page=8" className="text-accent-rust hover:underline">Fechner, <em>Zend-Avesta</em>, p. 8 &rarr;</Link>
+          </p>
         </blockquote>
 
         <p className="text-secondary leading-relaxed mb-6 font-body">
@@ -203,6 +218,9 @@ export default function Singularity1486Page() {
         <blockquote className="border-l-2 border-accent-rust/30 pl-6 my-8">
           <p className="text-secondary leading-relaxed italic font-body">
             &ldquo;And if God creates spirits while we create only thoughts, He simply has spirits as His content &mdash; where we have only thoughts &mdash; within which He manifests His activity. How could He be God if there were no other kind of creation in Him than there is in us?&rdquo;
+          </p>
+          <p className="text-xs text-muted mt-2 not-italic">
+            <Link href="/book/zend-avesta-fechner?page=8" className="text-accent-rust hover:underline">Fechner, <em>Zend-Avesta</em>, p. 8 &rarr;</Link>
           </p>
         </blockquote>
 
@@ -238,6 +256,9 @@ export default function Singularity1486Page() {
           <p className="text-secondary leading-relaxed italic font-body">
             &ldquo;The movements of the heavens, therefore, are nothing other than a perpetual song &mdash; perceived by the mind, not by the ear &mdash; progressing through dissonant tensions, like certain syncopations or cadences, tending toward certain and prescribed closures, each consisting of six voices.&rdquo;
           </p>
+          <p className="text-xs text-muted mt-2 not-italic">
+            <Link href="/book/harmonices-mundi-1619-first-edition-kepler?page=295" className="text-accent-rust hover:underline">Kepler, <em>Harmonices Mundi</em>, p. 295 &rarr;</Link>
+          </p>
         </blockquote>
 
         <p className="text-secondary leading-relaxed mb-6 font-body">
@@ -252,6 +273,9 @@ export default function Singularity1486Page() {
           <p className="text-secondary leading-relaxed italic font-body">
             &ldquo;The Earth sings MI FA MI so that even from these syllables it can be seen that in this our domicile, Misery and Famine hold sway.&rdquo;
           </p>
+          <p className="text-xs text-muted mt-2 not-italic">
+            <Link href="/book/harmonices-mundi-1619-first-edition-kepler?page=290" className="text-accent-rust hover:underline">Kepler, <em>Harmonices Mundi</em>, p. 290 &rarr;</Link>
+          </p>
         </blockquote>
 
         <p className="text-secondary leading-relaxed mb-6 font-body">
@@ -265,6 +289,9 @@ export default function Singularity1486Page() {
         <blockquote className="border-l-2 border-accent-rust/30 pl-6 my-8">
           <p className="text-secondary leading-relaxed italic font-body">
             &ldquo;It is no longer a wonder, then, that man &mdash; the ape of his Creator &mdash; has finally discovered a method of singing in harmony which was unknown to the ancients. He did this so that he might play out the perpetuity of all cosmic time in a brief portion of an hour through the artful symphony of many voices, and so that he might, to some extent, taste the delight of God the Master Craftsman in His own works.&rdquo;
+          </p>
+          <p className="text-xs text-muted mt-2 not-italic">
+            <Link href="/book/harmonices-mundi-1619-first-edition-kepler?page=295" className="text-accent-rust hover:underline">Kepler, <em>Harmonices Mundi</em>, p. 295 &rarr;</Link>
           </p>
         </blockquote>
 
@@ -296,6 +323,9 @@ export default function Singularity1486Page() {
           <p className="text-secondary leading-relaxed italic font-body">
             &ldquo;Our mind, stirred by the intuition of corporeal Light as if by certain steps, may finally be absorbed into the abyss of Light.&rdquo;
           </p>
+          <p className="text-xs text-muted mt-2 not-italic">
+            <Link href="/book/the-great-art-of-light-and-shadow-kircher?page=17" className="text-accent-rust hover:underline">Kircher, <em>Ars Magna Lucis</em>, p. 17 &rarr;</Link>
+          </p>
         </blockquote>
 
         <p className="text-secondary leading-relaxed mb-6 font-body">
@@ -326,11 +356,17 @@ export default function Singularity1486Page() {
           <p className="text-secondary leading-relaxed italic font-body">
             &ldquo;The whole is present to each individual part at once, since the whole feels at once in each part.&rdquo;
           </p>
+          <p className="text-xs text-muted mt-2 not-italic">
+            <Link href="/book/platonic-theology-on-the-immortality-of-souls-1525-edition-ficino?page=168" className="text-accent-rust hover:underline">Ficino, <em>Platonic Theology</em>, p. 168 &rarr;</Link>
+          </p>
         </blockquote>
 
         <blockquote className="border-l-2 border-accent-rust/30 pl-6 my-8">
           <p className="text-secondary leading-relaxed italic font-body">
             &ldquo;Rational souls are established between eternity and time.&rdquo;
+          </p>
+          <p className="text-xs text-muted mt-2 not-italic">
+            <Link href="/book/platonic-theology-on-the-immortality-of-souls-1525-edition-ficino?page=58" className="text-accent-rust hover:underline">Ficino, <em>Platonic Theology</em>, p. 58 &rarr;</Link>
           </p>
         </blockquote>
 
@@ -362,6 +398,9 @@ export default function Singularity1486Page() {
           <p className="text-secondary leading-relaxed italic font-body">
             &ldquo;Just as an uneven mirror changes the rays of things according to its own figure and section, so also the mind &mdash; when it suffers from things through the Sense &mdash; in unfolding and devising its notions, does not with the best faith insert and mingle its own nature with the nature of Things.&rdquo;
           </p>
+          <p className="text-xs text-muted mt-2 not-italic">
+            <Link href="/book/novum-organum-bacon?page=33" className="text-accent-rust hover:underline">Bacon, <em>Novum Organum</em>, p. 33 &rarr;</Link>
+          </p>
         </blockquote>
 
         <p className="text-secondary leading-relaxed mb-6 font-body">
@@ -375,6 +414,9 @@ export default function Singularity1486Page() {
         <blockquote className="border-l-2 border-accent-rust/30 pl-6 my-8">
           <p className="text-secondary leading-relaxed italic font-body">
             &ldquo;Nature is conquered by Work.&rdquo;
+          </p>
+          <p className="text-xs text-muted mt-2 not-italic">
+            <Link href="/book/novum-organum-bacon?page=30" className="text-accent-rust hover:underline">Bacon, <em>Novum Organum</em>, p. 30 &rarr;</Link>
           </p>
         </blockquote>
 
@@ -402,6 +444,9 @@ export default function Singularity1486Page() {
           <p className="text-secondary leading-relaxed italic font-body">
             &ldquo;But if we know that we do not drift about as soul-less as the downy feather, how do we know it? Only because we ourselves <em>are</em> these beings.&rdquo;
           </p>
+          <p className="text-xs text-muted mt-2 not-italic">
+            <Link href="/book/69906315ef12272ffdc8f0a7?page=37" className="text-accent-rust hover:underline">Fechner, <em>Nanna</em>, p. 37 &rarr;</Link>
+          </p>
         </blockquote>
 
         <p className="text-secondary leading-relaxed mb-6 font-body">
@@ -411,6 +456,9 @@ export default function Singularity1486Page() {
         <blockquote className="border-l-2 border-accent-rust/30 pl-6 my-8">
           <p className="text-secondary leading-relaxed italic font-body">
             &ldquo;I certainly do not know what inherent privilege running and screaming would have over blooming and scenting to be the sole carriers of soul-activity and sensation; nor do I see why the delicately built and adorned form of the clean plant should be any less worthy of harboring a soul than the misshapen form of a dirty worm.&rdquo;
+          </p>
+          <p className="text-xs text-muted mt-2 not-italic">
+            <Link href="/book/69906315ef12272ffdc8f0a7?page=34" className="text-accent-rust hover:underline">Fechner, <em>Nanna</em>, p. 34 &rarr;</Link>
           </p>
         </blockquote>
 
