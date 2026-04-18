@@ -308,9 +308,17 @@ async function main() {
       harvested_at: new Date(),
     };
 
-    await books.insertOne(doc);
-    console.log(`  ✓ ${slug} — ${artist} — ${title.substring(0, 50)} (${obj.objectDate || '?'})`);
-    totalImported++;
+    try {
+      await books.insertOne(doc);
+      console.log(`  ✓ ${slug} — ${artist} — ${title.substring(0, 50)} (${obj.objectDate || '?'})`);
+      totalImported++;
+    } catch (err) {
+      if (err.code === 11000) {
+        totalSkipped++;
+        return;
+      }
+      throw err;
+    }
   }
 
   // ─── Explicit object IDs mode ───────────────────────────────────────────────
