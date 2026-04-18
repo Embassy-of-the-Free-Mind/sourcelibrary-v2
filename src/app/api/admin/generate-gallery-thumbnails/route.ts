@@ -111,6 +111,7 @@ export const POST = withAdminAuth(async (request, session) => {
                     [`detected_images.${idx}.thumbnail_url`]: result.thumbnailUrl,
                     [`detected_images.${idx}.extracted_width`]: result.extractedWidth,
                     [`detected_images.${idx}.extracted_height`]: result.extractedHeight,
+                    [`detected_images.${idx}.dhash`]: result.dhash,
                   }
                 }
               );

@@ -8,12 +8,7 @@ import type { ActionType } from './ProcessingPanel';
 import { prompts as promptsApi, jobs, books } from '@/lib/api-client';
 import { queueBooks } from '@/lib/api-client/queues';
 import { getPageThumbUrl } from '@/lib/utils';
-import { AuthCheck } from '@/components/auth/AuthCheck';
-import BookPagesStats from './BookPagesStats';
-import BookPagesActions from './BookPagesActions';
 import JobStatusBanner from './JobStatusBanner';
-import ProcessingPanel from './ProcessingPanel';
-import ReorderModePanel from './ReorderModePanel';
 import PagesGrid from './PagesGrid';
 
 interface BookPagesSectionProps {
@@ -21,14 +16,12 @@ interface BookPagesSectionProps {
   bookTitle?: string;
   pages: Page[];
   totalPageCount?: number;
-  totalPagesOcr?: number;
-  totalPagesTranslated?: number;
   displayBrightness?: number;
 }
 
 const PAGES_PER_LOAD = 24; // 2 rows on 12-col grid
 
-export default function BookPagesSection({ bookId, bookTitle, pages: initialPages, totalPageCount, totalPagesOcr, totalPagesTranslated, displayBrightness }: BookPagesSectionProps) {
+export default function BookPagesSection({ bookId, bookTitle, pages: initialPages, totalPageCount, displayBrightness }: BookPagesSectionProps) {
   const [pages, setPages] = useState(initialPages);
   const [allPagesFetched, setAllPagesFetched] = useState(
     !totalPageCount || initialPages.length >= totalPageCount
@@ -129,21 +122,7 @@ export default function BookPagesSection({ bookId, bookTitle, pages: initialPage
 
   const lastSelectedIndexRef = useRef<number | null>(null);
 
-  // Use book-level cached counts when available (page array may be truncated to first 100)
-  const pagesWithOcr = totalPagesOcr ?? pages.filter(p => p.ocr?.updated_at).length;
-  const pagesWithTranslation = totalPagesTranslated ?? pages.filter(p => p.translation?.updated_at).length;
   const totalPages = totalPageCount || pages.length;
-
-  // Calculate last activity dates
-  const lastOcrDate = pages
-    .filter(p => p.ocr?.updated_at)
-    .map(p => new Date(p.ocr!.updated_at!))
-    .sort((a, b) => b.getTime() - a.getTime())[0];
-
-  const lastTranslationDate = pages
-    .filter(p => p.translation?.updated_at)
-    .map(p => new Date(p.translation!.updated_at!))
-    .sort((a, b) => b.getTime() - a.getTime())[0];
 
   // Fetch current job on mount
   useEffect(() => {
@@ -512,37 +491,6 @@ export default function BookPagesSection({ bookId, bookTitle, pages: initialPage
 
   return (
     <div className="space-y-6">
-      {/* Stats Bar & Actions — inner_circle only */}
-      <AuthCheck role="inner_circle">
-        <div className="bg-white rounded-xl border border-stone-200 p-4">
-          <div className="flex items-center justify-between">
-            <BookPagesStats
-              pagesWithOcr={pagesWithOcr}
-              pagesWithTranslation={pagesWithTranslation}
-              totalPages={totalPages}
-              lastOcrDate={lastOcrDate}
-              lastTranslationDate={lastTranslationDate}
-            />
-            <BookPagesActions
-              bookId={bookId}
-              batchMode={batchMode}
-              reorderMode={reorderMode}
-              currentJob={currentJob}
-              checkingJob={checkingActiveJob}
-              orderChanged={orderChanged}
-              savingOrder={savingOrder}
-              pagesWithOcr={pagesWithOcr}
-              pagesWithTranslation={pagesWithTranslation}
-              onBatchClick={() => { if (!allPagesFetched) fetchRemainingPages(); setBatchMode(true); }}
-              onReorderClick={enterReorderMode}
-              onExitBatch={exitBatchMode}
-              onExitReorder={exitReorderMode}
-              onSaveOrder={savePageOrder}
-            />
-          </div>
-        </div>
-      </AuthCheck>
-
       {/* Job Status Banner */}
       {currentJob && (
         <JobStatusBanner
@@ -557,54 +505,16 @@ export default function BookPagesSection({ bookId, bookTitle, pages: initialPage
         />
       )}
 
-      {/* Processing Controls */}
-      {batchMode && (
-        <ProcessingPanel
-          action={action}
-          overwriteMode={overwriteMode}
-          selectedCount={selectedCount}
-          showPromptSettings={showPromptSettings}
-          selectedPromptIds={selectedPromptIds}
-          editedPrompts={editedPrompts}
-          prompts={prompts}
-          promptsLoading={promptsLoading}
-          currentJob={currentJob}
-          queueing={queueing}
-          brightness={brightness}
-          previewUrl={(() => {
-            if (action !== 'adjust_images' || selectedPages.size === 0) return null;
-            const firstId = Array.from(selectedPages)[0];
-            const page = pages.find(p => p.id === firstId);
-            if (!page) return null;
-            const baseUrl = page.split_from_spread ? page.photo : (page.photo_original || page.photo);
-            if (!baseUrl) return null;
-            return `/api/image?url=${encodeURIComponent(baseUrl)}&w=200&q=70`;
-          })()}
-          onActionChange={setAction}
-          onOverwriteModeChange={setOverwriteMode}
-          onSelectAll={selectAll}
-          onClearSelection={clearSelection}
-          onTogglePromptSettings={() => setShowPromptSettings(!showPromptSettings)}
-          onSelectPrompt={handleSelectPrompt}
-          onEditPrompt={(a, value) => setEditedPrompts(prev => ({ ...prev, [a]: value }))}
-          onStartProcess={runBatchProcess}
-          onBrightnessChange={setBrightness}
-        />
-      )}
-
-      {/* Reorder Mode Info */}
-      {reorderMode && <ReorderModePanel />}
-
       {/* Pages Grid — hide leading blank pages in normal browsing mode */}
       <PagesGrid
-        pages={batchMode || reorderMode ? pages : (() => {
+        pages={(() => {
           // Skip leading blank pages (before first substantive content)
           const firstSubstantive = pages.findIndex(p => p.page_type !== 'blank');
           return firstSubstantive > 0 ? pages.slice(firstSubstantive) : pages;
         })()}
         bookId={bookId}
-        batchMode={batchMode}
-        reorderMode={reorderMode}
+        batchMode={false}
+        reorderMode={false}
         selectedPages={selectedPages}
         settingCover={settingCover}
         visibleCount={visibleCount}

@@ -1,16 +1,16 @@
 import { Metadata } from 'next';
 import Link from 'next/link';
 import ContentPageLayout, { ContentHeader } from '@/components/layout/ContentPageLayout';
-import { WordAlignmentDemo } from './WordAlignmentDemo';
+import { LiveAlignmentDemo } from './LiveAlignmentDemo';
 
 export const metadata: Metadata = {
   title: 'Reading Through the Translation - Research Notes - Source Library',
   description:
-    'What if you could see the original Latin behind every English sentence? An interactive exploration of translation alignment in 15th-century philosophical texts.',
+    'Click any English word to see the original that produced it. On-demand cross-lingual alignment powered by Gemini embeddings.',
   openGraph: {
     title: 'Reading Through the Translation',
     description:
-      'Hover over any English sentence to see the original Latin it came from. Click to see word-level detail.',
+      'Click any English word to see the original that produced it.',
   },
   alternates: {
     canonical: '/blog/word-alignment',
@@ -23,9 +23,9 @@ export default function WordAlignmentPage() {
       header={
         <ContentHeader
           title="Reading Through the Translation"
-          subtitle="What if you could see the original Latin behind every English sentence?"
+          subtitle="Click any English word to see the original that produced it"
         >
-          <p className="text-stone-400 text-sm mt-4">15 April 2026 &middot; 4 min read</p>
+          <p className="text-stone-400 text-sm mt-4">17 April 2026</p>
         </ContentHeader>
       }
       bg="bg-cream"
@@ -36,99 +36,98 @@ export default function WordAlignmentPage() {
           href="/blog"
           className="inline-flex items-center gap-2 text-muted hover:text-secondary transition-colors"
         >
-          <svg
-            className="w-4 h-4"
-            fill="none"
-            viewBox="0 0 24 24"
-            stroke="currentColor"
-            strokeWidth={2}
-          >
-            <path
-              strokeLinecap="round"
-              strokeLinejoin="round"
-              d="M10 19l-7-7m0 0l7-7m-7 7h18"
-            />
+          <svg className="w-4 h-4" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={2}>
+            <path strokeLinecap="round" strokeLinejoin="round" d="M10 19l-7-7m0 0l7-7m-7 7h18" />
           </svg>
           All notes
         </Link>
       </div>
 
       <article className="prose-content max-w-none">
-        <p className="text-xl text-secondary leading-relaxed mb-8">
-          When you read a translation, you&rsquo;re trusting that someone got it right. But with
-          historical texts &mdash; where the author has been dead for five centuries and the Latin is
-          dense with abbreviations &mdash; trust isn&rsquo;t quite enough. You want to see the
-          original. Not just the whole page in a language you can&rsquo;t read, but the specific
-          sentence, the specific words, that produced the English in front of you.
-        </p>
-
-        <p className="text-secondary leading-relaxed mb-6">
-          Source Library has AI-translated over 10,000 pages of pre-modern Latin, German, Arabic, and
-          Hebrew. Every translation sits beside its source. But until now, the connection between them
-          has been implicit &mdash; you see the Latin on one side and the English on the other, and
-          you have to hold the correspondence in your head.
-        </p>
-
-        <p className="text-secondary leading-relaxed mb-8">
-          Below is an experiment in making that connection explicit. Hover over any English sentence
-          to see the Latin it came from. Click a sentence pair to see the word-level detail &mdash;
-          which Latin words became which English words, and where the translator had to restructure
-          the thought to make it work in English.
+        <p className="text-xl text-secondary leading-relaxed mb-12">
+          Source Library has translated over 10,000 pages of Latin, Greek, Arabic, and Hebrew
+          into English. The translations are useful, but they hide the original. Click any
+          English word below, and the source word that produced it lights up on the other side.
+          The alignment is computed on-demand by{' '}
+          <a href="https://ai.google.dev/gemini-api/docs/embeddings" className="text-accent-gold-dark hover:underline">Gemini
+          embeddings</a> &mdash; the same model maps words from any language into a shared
+          vector space, so it works across scripts, centuries, and languages without
+          pre-computation.
         </p>
       </article>
 
-      <div className="mt-4 mb-12">
-        <WordAlignmentDemo />
+      {/* === Ficino: pleasure vs gladness === */}
+      <article className="prose-content max-w-none">
+        <h2 className="text-lg font-semibold text-primary mb-2">
+          Two words for happiness
+        </h2>
+        <p className="text-secondary leading-relaxed mb-5">
+          Ficino&rsquo;s <em>De Voluptate</em> (1457) argues that Plato distinguished between
+          two kinds of positive feeling. Click &ldquo;gladness&rdquo; and &ldquo;joy&rdquo;
+          in the English &mdash; they come from different Latin words.
+          Click &ldquo;pleasure&rdquo; &mdash; it&rsquo;s a third.
+        </p>
+      </article>
+
+      <div className="mb-14">
+        <LiveAlignmentDemo
+          sourceText="PLATO igitur, ut ab eorum principe initium faciam, cum animum in duas partes distribuisset, mente scilicet ac sensum, menti laeticiam & gaudium attribuit, sensibus voluptatem."
+          translationText="Plato, therefore (to begin with him as the leader of these philosophers), when he had divided the soul into two parts — namely, the mind and the senses — attributed gladness and joy to the mind, pleasure to the senses."
+          sourceLanguage="Latin"
+          label="Marsilio Ficino, De Voluptate (1457)"
+        />
+      </div>
+
+      {/* === Pymander: the creation vision === */}
+      <article className="prose-content max-w-none">
+        <h2 className="text-lg font-semibold text-primary mb-2">
+          Light and shadow in the Hermetic creation
+        </h2>
+        <p className="text-secondary leading-relaxed mb-5">
+          In the <em>Pymander</em>, Hermes Trismegistus describes a vision of the universe
+          being created from light and darkness. Click &ldquo;light&rdquo; to
+          find &ldquo;lumen,&rdquo; click &ldquo;shadow&rdquo; to find &ldquo;umbra.&rdquo;
+          The Latin makes the cosmic polarity sharper than the English does.
+        </p>
+      </article>
+
+      <div className="mb-14">
+        <LiveAlignmentDemo
+          sourceText="Cum haec dixisset, mutauit formam, & uniuersa subito reuelauit. Cernebam enim immensum quoddam spectaculum, omnia uidelicet in lumen conuersa, suaue nimium atque iucundum, quod intuentem me mirifice oblectabat. Paulo post umbra quaedam horrenda obliquè deorsum ferebatur."
+          translationText="When he had said these things, he changed form, and suddenly revealed all things. For I saw a certain immense spectacle, namely everything converted into light, exceedingly sweet and delightful, which as I gazed upon it wonderfully pleased me. A little later a certain dreadful shadow was carried obliquely downward."
+          sourceLanguage="Latin"
+          label="Hermes Trismegistus, Pymander (Ficino, 1505)"
+        />
+      </div>
+
+      {/* === Aratus: Greek script === */}
+      <article className="prose-content max-w-none">
+        <h2 className="text-lg font-semibold text-primary mb-2">
+          Across alphabets
+        </h2>
+        <p className="text-secondary leading-relaxed mb-5">
+          The same technique works across writing systems. Click &ldquo;Zeus&rdquo; in the
+          English and &ldquo;Διὸς&rdquo; lights up in the Greek &mdash; the model knows they
+          mean the same thing even though the scripts share no visual similarity. Click
+          &ldquo;sea&rdquo; to find &ldquo;θάλασσα.&rdquo;
+        </p>
+      </article>
+
+      <div className="mb-14">
+        <LiveAlignmentDemo
+          sourceText="Ek Διὸς ἀρχώμεσθα, τὸν οὐδέποτ' ἄνδρες ἐῶμεν ἀῤῥητον· μεσταὶ δὲ Διὸς πᾶσαι μὲν ἀγυιαί, πᾶσαι δ' ἀνθρώπων ἀγοραί, μεστὴ δὲ θάλασσα καὶ λιμένες· πάντη δὲ Διὸς κεχρήμεθα πάντες."
+          translationText="From Zeus let us begin: him let no man leave unspoken. Full of Zeus are all the streets, all the marketplaces of men, full is the sea and the harbors. Everywhere we all make use of Zeus."
+          sourceLanguage="Ancient Greek"
+          label="Aratus of Soli, Phaenomena (~270 BCE)"
+        />
       </div>
 
       <article className="prose-content max-w-none">
-        <h2 className="text-lg font-semibold text-primary mt-2 mb-4">Why sentence-level first</h2>
-
-        <p className="text-secondary leading-relaxed mb-6">
-          Early versions of this experiment started at the word level &mdash; hover one English word,
-          see scattered Latin words light up with varying opacities. It was technically impressive
-          and completely disorienting. You&rsquo;d hover &ldquo;soul&rdquo; and see
-          &ldquo;animum&rdquo; flash 400 characters away, losing all context.
-        </p>
-
-        <p className="text-secondary leading-relaxed mb-6">
-          The sentence is the natural unit of thought. When Ficino writes &ldquo;c&#x16B; animum in
-          duas partes distribuisset, mente scilicet, ac sensum,&rdquo; the whole clause produces
-          &ldquo;when he had divided the soul into two parts &mdash; namely, the mind and the
-          senses.&rdquo; You need to see the whole Latin sentence to understand what the translator
-          was working with. Word-level detail is useful <em>within</em> that context, not instead of
-          it.
-        </p>
-
-        <h2 className="text-lg font-semibold text-primary mt-10 mb-4">How it works</h2>
-
-        <p className="text-secondary leading-relaxed mb-6">
-          The alignment is generated by Gemini 3 Flash. We give it the Latin source and the English
-          translation and ask it to pair up sentences by meaning &mdash; not by counting periods,
-          since the translator sometimes splits or merges sentences for clarity. For each sentence
-          pair, we then ask for the key word-level correspondences: which Latin words map directly to
-          which English words, and which meanings were implied or restructured.
-        </p>
-
-        <p className="text-secondary leading-relaxed mb-6">
-          This works surprisingly well for 15th-century Latin. The model understands the grammar, the
-          abbreviations (&ldquo;c&#x16B;&rdquo; for &ldquo;cum,&rdquo; &ldquo;q&#x304;&rdquo; for
-          &ldquo;quam&rdquo;), and the philosophical vocabulary. It can tell you that
-          &ldquo;voluptatem&rdquo; becomes &ldquo;pleasure&rdquo; while &ldquo;l&aelig;ticiam&rdquo;
-          becomes &ldquo;gladness&rdquo; &mdash; a distinction Ficino considers important and that a
-          naive word matcher would miss entirely.
-        </p>
-
-        <h2 className="text-lg font-semibold text-primary mt-10 mb-4">What comes next</h2>
-
         <p className="text-secondary leading-relaxed mb-12">
-          If this works at the page level, it could work at the library level. Source Library could
-          generate alignment data alongside every translation &mdash; baked into the reading
-          experience, not bolted on as an afterthought. A reader could move through a 400-page Latin
-          treatise in English, and at any moment trace a sentence or a word back to the original.
-          Not for the Latin scholars who can already read it, but for everyone else &mdash; the
-          people these books were never written for, who can now, for the first time, read through
-          the translation to the text behind it.
+          This works on any page in the library. The embeddings are computed the moment you
+          click &mdash; no batch job, no pre-processing. Every English word becomes a window
+          into the source text. Not for the scholars who can already read the original,
+          but for everyone else.
         </p>
       </article>
     </ContentPageLayout>

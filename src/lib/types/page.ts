@@ -247,6 +247,7 @@ export interface DetectedImage {
   metadata?: ImageMetadata;     // Structured tags for search/filtering
   museum_description?: string;  // 2-3 sentence museum-style label
   job_id?: string;              // Processing job that produced this detection
+  dhash?: string;               // 64-bit perceptual hash for duplicate detection
 }
 
 /**

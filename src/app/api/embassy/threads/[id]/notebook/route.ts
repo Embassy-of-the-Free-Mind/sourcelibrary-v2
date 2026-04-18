@@ -7,28 +7,30 @@ export const dynamic = 'force-dynamic';
 
 /**
  * GET /api/embassy/threads/[id]/notebook — Export research notebook as markdown.
- * Auth required (must be thread creator).
+ * Public threads: anyone can view. Private threads: must be thread creator.
  * ?format=json returns raw JSON, default is markdown text.
  */
 export async function GET(
   request: NextRequest,
   { params }: { params: Promise<{ id: string }> },
 ) {
-  const session = await auth();
-  if (!session?.user?.id) {
-    return NextResponse.json({ error: 'Sign in required' }, { status: 401 });
-  }
-
   const { id } = await params;
   const db = await getDb();
 
-  // Verify thread ownership
+  // Check thread exists and visibility
   const thread = await db.collection('embassy_threads').findOne({
     _id: new ObjectId(id),
-    creatorId: session.user.id,
   });
   if (!thread) {
     return NextResponse.json({ error: 'Thread not found' }, { status: 404 });
+  }
+
+  // Private threads require auth
+  if (thread.visibility !== 'public') {
+    const session = await auth();
+    if (!session?.user?.id || thread.creatorId !== session.user.id) {
+      return NextResponse.json({ error: 'Thread not found' }, { status: 404 });
+    }
   }
 
   // Load notebook

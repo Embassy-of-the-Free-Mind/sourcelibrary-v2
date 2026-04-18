@@ -4,6 +4,7 @@ import { supabase } from '@/lib/supabase';
 import type { BookSearchFilters } from '@/lib/atlas-search';
 import type { SearchResult } from '@/lib/api-client/types/search';
 import { searchBookIds } from '@/lib/books-catalog';
+import { semanticBookSearch } from '@/lib/semantic-search';
 
 // CLIP server on Hetzner for visual text→image search
 const CLIP_URL = process.env.CLIP_URL || 'http://46.224.122.120:3456/clip';
@@ -77,22 +78,95 @@ export async function GET(request: NextRequest) {
     if (firstTranslation) searchFilters.isFirstTranslation = true;
     if (hasTranslation) searchFilters.hasTranslation = true;
 
-    // Run book, index, gallery, and visual search in parallel
-    const [booksResult, indexResult, galleryResult, visualResult] = await Promise.all([
-      searchBooks(db, query, queryRegex, limit, searchFilters, library),
-      searchIndex(db, query, limit).catch((err) => {
-        console.error('Index search error:', err);
-        return { results: [] as IndexResult[], total: 0 };
-      }),
-      searchGallery(db, query, queryRegex, galleryLimit),
-      searchVisual(query, galleryLimit),
+    // Run book, index, gallery, and visual search in parallel.
+    // Each operation gets a hard timeout — Atlas Search $search doesn't respect maxTimeMS,
+    // and hung operations would block the entire response indefinitely.
+    const withTimeout = <T>(promise: Promise<T>, fallback: T, label: string, ms = 8000): Promise<T> =>
+      Promise.race([
+        promise,
+        new Promise<T>((resolve) => setTimeout(() => {
+          console.warn(`[unified-search] ${label} timed out after ${ms}ms`);
+          resolve(fallback);
+        }, ms)),
+      ]);
+
+    const emptyBooks = { results: [] as SearchResult[], total: 0, hasMore: false };
+    const emptyIndex = { results: [] as IndexResult[], total: 0, hasMore: false };
+    const emptyGallery = { results: [] as GalleryResult[], total: 0 };
+
+    interface SemanticBookResult {
+      book_id: string;
+      title: string;
+      author: string | null;
+      language: string | null;
+      year: number | null;
+      summary_snippet: string;
+      relevance_hint: string;
+      similarity: number;
+    }
+    const emptySemanticBooks = { results: [] as SemanticBookResult[], total: 0 };
+
+    const [booksResult, indexResult, galleryResult, visualResult, semanticResultRaw] = await Promise.all([
+      withTimeout(searchBooks(db, query, queryRegex, limit, searchFilters, library), emptyBooks, 'books'),
+      withTimeout(
+        searchIndex(db, query, limit).catch((err) => {
+          console.error('Index search error:', err);
+          return emptyIndex;
+        }),
+        emptyIndex, 'index',
+      ),
+      withTimeout(searchGallery(db, query, queryRegex, galleryLimit), emptyGallery, 'gallery'),
+      withTimeout(searchVisual(query, galleryLimit), emptyGallery, 'visual', 5000),
+      // Semantic search: book-level discovery via book_embeddings (HNSW, ~17K rows)
+      withTimeout(
+        semanticBookSearch(query, 12)
+          .then(books => {
+            const results = books.map(b => {
+              // Extract clean summary (strip metadata lines like "Topics:", "People:", etc.)
+              const summaryText = b.summary_text || '';
+              const lines = summaryText.split('\n');
+              const cleanLines = lines.filter(l =>
+                !l.startsWith('Topics:') && !l.startsWith('People:') &&
+                !l.startsWith('Places:') && !l.startsWith('Concepts:') &&
+                !l.startsWith('Categories:') && !l.startsWith('Chapters:') &&
+                !l.startsWith('Language:') && !l.startsWith('Published:')
+              );
+              // Skip the title line (first line) — we already show title separately
+              const snippet = cleanLines.slice(1).join(' ').trim().slice(0, 200);
+
+              // Build relevance hint from metadata
+              const meta = (b.metadata || {}) as Record<string, any>;
+              const cats = (meta.categories || []) as string[];
+              const hint = cats.slice(0, 3).join(', ');
+
+              return {
+                book_id: b.book_id,
+                title: b.title,
+                author: b.author,
+                language: b.language,
+                year: b.year,
+                summary_snippet: snippet,
+                relevance_hint: hint,
+                similarity: b.similarity,
+              };
+            });
+            return { results, total: results.length };
+          })
+          .catch(() => emptySemanticBooks),
+        emptySemanticBooks, 'semantic', 6000,
+      ),
     ]);
+
+    // Dedup semantic results: remove books already in keyword results
+    const keywordBookIds = new Set(booksResult.results.map((b: any) => b.id));
+    const dedupedSemantic = semanticResultRaw.results.filter(s => !keywordBookIds.has(s.book_id));
+    const semanticResult = { results: dedupedSemantic.slice(0, 6), total: dedupedSemantic.length };
 
     // Log search query (fire-and-forget)
     db.collection('analytics_events').insertOne({
       event: 'search_query',
       query,
-      results_count: booksResult.total + indexResult.total + galleryResult.total + visualResult.total,
+      results_count: booksResult.total + indexResult.total + galleryResult.total + visualResult.total + semanticResult.total,
       filters: { language, category, library, source: 'unified' },
       timestamp: new Date(),
       ip: request.headers.get('x-forwarded-for')?.split(',')[0]?.trim() || 'unknown',
@@ -105,6 +179,7 @@ export async function GET(request: NextRequest) {
       index: indexResult,
       gallery: galleryResult,
       visual: visualResult,
+      semantic: semanticResult,
     }, {
       headers: {
         'Cache-Control': 'no-store',
@@ -128,7 +203,7 @@ async function searchBooks(
     id: 1, slug: 1, title: 1, display_title: 1, author: 1, language: 1, published: 1,
     pages_count: 1, pages_translated: 1, pages_ocr: 1, pages_blank: 1,
     thumbnail: 1, thumbnail_blob: 1, doi: 1, categories: 1, quality_score: 1,
-    'reading_summary.overview': 1,
+    'reading_summary.overview': 1, work_id: 1,
   };
 
   // Supabase trigram search (fast, always warm — no cold-start penalty)
@@ -219,8 +294,17 @@ async function searchBooks(
     return (b.quality_score || 0) - (a.quality_score || 0);
   });
 
-  const hasMore = books.length > limit;
-  const truncated = hasMore ? books.slice(0, limit) : books;
+  // Work-level dedup: collapse editions of the same work (keep best-ranked)
+  const seenWorkIds = new Set<string>();
+  const deduped = books.filter((b: any) => {
+    if (!b.work_id) return true; // no work_id — always keep
+    if (seenWorkIds.has(b.work_id)) return false;
+    seenWorkIds.add(b.work_id);
+    return true;
+  });
+
+  const hasMore = deduped.length > limit;
+  const truncated = hasMore ? deduped.slice(0, limit) : deduped;
 
   return {
     results: truncated.map((b: any): SearchResult => {

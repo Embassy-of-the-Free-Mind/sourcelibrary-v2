@@ -37,6 +37,7 @@
 import { MongoClient } from 'mongodb';
 import { GoogleGenerativeAI } from '@google/generative-ai';
 import { logUsage as logUsageToSupabase } from './lib/supabase-usage-logger.mjs';
+import { createClient } from '@supabase/supabase-js';
 
 /** Trigger on-demand revalidation for a book page after enrichment completes. */
 async function revalidateBookPage(bookId) {
@@ -135,6 +136,120 @@ async function markFailed(db, bookId, reason, retries) {
       },
     },
   );
+}
+
+// ── Book embedding upsert (issue #1158) ──
+// After generating book_indexes, compose + embed + upsert to Supabase book_embeddings.
+// Non-blocking: failures are logged but don't fail enrichment.
+
+const SUPABASE_URL = (process.env.SUPABASE_URL || '').trim();
+const SUPABASE_SERVICE_KEY = (process.env.SUPABASE_SERVICE_ROLE_KEY || '').trim();
+const supabaseClient = SUPABASE_URL && SUPABASE_SERVICE_KEY
+  ? createClient(SUPABASE_URL, SUPABASE_SERVICE_KEY, { auth: { persistSession: false } })
+  : null;
+
+const EMBED_MODEL = 'gemini-embedding-2-preview';
+const EMBED_DIMS = 768;
+
+function composeBookEmbeddingText(book, indexData) {
+  const parts = [];
+  parts.push(`${book.display_title || book.title || 'Untitled'} by ${book.author || 'Unknown'}`);
+  if (book.language) parts.push(`Language: ${book.language}`);
+  if (book.published) parts.push(`Published: ${book.published}`);
+
+  if (indexData?.bookSummary?.detailed) {
+    parts.push(indexData.bookSummary.detailed);
+  } else if (indexData?.bookSummary?.brief) {
+    parts.push(indexData.bookSummary.brief);
+  }
+
+  if (indexData?.sectionSummaries?.length > 0) {
+    const sections = indexData.sectionSummaries.map(s => s.title || s.summary).filter(Boolean).slice(0, 15);
+    if (sections.length > 0) parts.push(`Chapters: ${sections.join('; ')}`);
+  }
+
+  if (indexData?.entries?.length > 0) {
+    const terms = indexData.entries
+      .sort((a, b) => (b.pages?.length || 0) - (a.pages?.length || 0))
+      .slice(0, 50).map(e => e.term);
+    parts.push(`Topics: ${terms.join(', ')}`);
+  }
+
+  if (indexData?.people?.length > 0) parts.push(`People: ${indexData.people.slice(0, 30).map(p => p.name).join(', ')}`);
+  if (indexData?.places?.length > 0) parts.push(`Places: ${indexData.places.slice(0, 20).map(p => p.name).join(', ')}`);
+  if (indexData?.concepts?.length > 0) parts.push(`Concepts: ${indexData.concepts.slice(0, 30).map(c => c.name).join(', ')}`);
+
+  if (book.categories?.length > 0) parts.push(`Categories: ${book.categories.join(', ')}`);
+
+  return parts.join('\n').slice(0, 8000);
+}
+
+async function upsertBookEmbedding(book, indexData) {
+  if (!supabaseClient) return;
+
+  const geminiKey = API_KEYS[0];
+  if (!geminiKey) return;
+
+  const text = composeBookEmbeddingText(book, indexData);
+  if (text.length < 10) return;
+
+  try {
+    const res = await fetch(
+      `https://generativelanguage.googleapis.com/v1beta/models/${EMBED_MODEL}:batchEmbedContents?key=${geminiKey}`,
+      {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({
+          requests: [{
+            model: `models/${EMBED_MODEL}`,
+            content: { parts: [{ text }] },
+            outputDimensionality: EMBED_DIMS,
+          }],
+        }),
+        signal: AbortSignal.timeout(10000),
+      }
+    );
+
+    if (!res.ok) {
+      console.warn(`    [embed] Gemini ${res.status} — skipping book embedding`);
+      return;
+    }
+
+    const data = await res.json();
+    const embedding = data?.embeddings?.[0]?.values;
+    if (!embedding) return;
+
+    const yearMatch = (book.published || '').match(/\d{3,4}/);
+    const { error } = await supabaseClient.from('book_embeddings').upsert({
+      book_id: book.id,
+      title: book.display_title || book.title || '',
+      author: book.author || '',
+      year: yearMatch ? parseInt(yearMatch[0]) : null,
+      language: book.language || null,
+      summary_text: text,
+      embedding: JSON.stringify(embedding),
+      metadata: {
+        has_index: true,
+        categories: book.categories || [],
+        quality_score: book.quality_score || null,
+        entity_counts: {
+          people: indexData?.people?.length || 0,
+          places: indexData?.places?.length || 0,
+          concepts: indexData?.concepts?.length || 0,
+          terms: indexData?.entries?.length || 0,
+        },
+      },
+      updated_at: new Date().toISOString(),
+    }, { onConflict: 'book_id' });
+
+    if (error) {
+      console.warn(`    [embed] Supabase upsert failed: ${error.message}`);
+    } else {
+      console.log(`    [embed] Book embedding upserted`);
+    }
+  } catch (err) {
+    console.warn(`    [embed] Failed: ${err.message}`);
+  }
 }
 
 // ══════════════════════════════════════════════════════════════════════
@@ -963,6 +1078,11 @@ async function enrichBook(db, book) {
   // Sync entities (non-blocking)
   syncBookEntities(db, bookId, bookTitle, bookAuthor, conceptIndex, book.year || null).catch(err => {
     console.error(`    Entity sync failed:`, err.message);
+  });
+
+  // Upsert book embedding to Supabase (non-blocking, issue #1158)
+  upsertBookEmbedding(book, index).catch(err => {
+    console.warn(`    [embed] Book embedding failed: ${err.message}`);
   });
 
   console.log(`    Done — ${batchExtractions.length} batches, ${groundedBatchQuotes.length} quotes, ${sectionSummaries.length} sections`);

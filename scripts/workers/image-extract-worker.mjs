@@ -20,10 +20,10 @@ import { nanoid } from 'nanoid';
 import { logUsage } from './lib/supabase-usage-logger.mjs';
 
 // ── Config ──
-const CONCURRENCY = 10;           // Books processed simultaneously
-const PAGE_CONCURRENCY = 5;       // Pages per book processed simultaneously
-const IMAGE_DOWNLOAD_CONCURRENCY = 20;
-const BOOKS_PER_RUN = 100;
+const CONCURRENCY = 25;           // Books processed simultaneously
+const PAGE_CONCURRENCY = 10;      // Pages per book processed simultaneously
+const IMAGE_DOWNLOAD_CONCURRENCY = 40;
+const BOOKS_PER_RUN = 250;
 const RUN_DEADLINE_MS = 25 * 60 * 1000; // 25 min deadline (scheduler runs every 2 min)
 const MODEL = 'gemini-3-flash-preview'; // Vision task needs accuracy
 const IMAGE_CANDIDATE_PAGE_TYPES = ['illustration', 'diagram', 'map', 'frontispiece', 'mixed'];
@@ -407,17 +407,16 @@ async function main() {
     .limit(BOOKS_PER_RUN)
     .toArray();
 
-  // Catch-up: books outside pipeline with OCR but no image extraction
+  // Catch-up: books that reached 'complete' or have no pipeline status but were never image-extracted
   if (books.length < BOOKS_PER_RUN) {
     const catchUp = await db.collection('books')
       .find({
-        'pipeline_auto.status': { $exists: false },
-        pages_ocr: { $gt: 0 },
         $or: [
-          { detected_images_count: { $exists: false } },
-          { detected_images_count: 0 },
+          { 'pipeline_auto.status': { $exists: false } },
+          { 'pipeline_auto.status': 'complete' },
         ],
-        'job.type': { $ne: 'image_extraction' },
+        pages_ocr: { $gt: 0 },
+        detected_images_count: { $exists: false },
       })
       .sort({ visible: -1, pages_count: -1 })
       .project({ id: 1, title: 1, author: 1, year: 1, language: 1, subjects: 1 })
@@ -425,7 +424,7 @@ async function main() {
       .toArray();
     if (catchUp.length > 0) {
       books.push(...catchUp);
-      console.log(`[IMAGE-EXTRACT] Catch-up: ${catchUp.length} pre-pipeline books`);
+      console.log(`[IMAGE-EXTRACT] Catch-up: ${catchUp.length} books (complete or pre-pipeline)`);
     }
   }
 

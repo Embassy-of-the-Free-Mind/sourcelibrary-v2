@@ -92,6 +92,17 @@ export interface UnifiedGalleryResult {
   bookId: string;
 }
 
+export interface SemanticSearchResult {
+  book_id: string;
+  title: string;
+  author: string | null;
+  language: string | null;
+  year: number | null;
+  summary_snippet: string;
+  relevance_hint: string;
+  similarity: number;
+}
+
 export interface UnifiedSearchResponse {
   query: string;
   books: {
@@ -106,6 +117,10 @@ export interface UnifiedSearchResponse {
   };
   gallery?: {
     results: UnifiedGalleryResult[];
+    total: number;
+  };
+  semantic?: {
+    results: SemanticSearchResult[];
     total: number;
   };
 }

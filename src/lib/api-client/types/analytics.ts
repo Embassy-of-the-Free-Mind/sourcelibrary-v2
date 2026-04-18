@@ -42,9 +42,6 @@ export interface UsageStats {
   };
   collectionStats?: {
     blobStorage: {
-      pagesWithCroppedPhoto: number;
-      pagesWithArchivedPhoto: number;
-      totalBlobPages: number;
       booksWithSplitPages: number;
     };
     byLanguage: Array<{ language: string; count: number }>;

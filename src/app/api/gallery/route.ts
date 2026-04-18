@@ -2,6 +2,7 @@ import { NextRequest, NextResponse } from 'next/server';
 import { getReadDb } from '@/lib/mongodb';
 import { supabase } from '@/lib/supabase';
 import { generateQueryEmbedding, cosineSimilarity } from '@/lib/embeddings';
+import { deduplicateByDHash } from '@/lib/dhash';
 
 // CLIP server on Hetzner for visual text→image search
 const CLIP_URL = process.env.CLIP_URL || 'http://46.224.122.120:3456/clip';
@@ -253,6 +254,10 @@ export async function GET(request: NextRequest) {
         items = [...items, ...clipDocs];
       }
     }
+
+    // Deduplicate visually identical images within the same book (e.g., repeated woodcuts)
+    // eslint-disable-next-line @typescript-eslint/no-explicit-any
+    items = deduplicateByDHash(items as any) as any;
 
     const hasMore = items.length > limit;
     if (hasMore) items.splice(limit); // trim to limit

@@ -3,13 +3,13 @@ import { Metadata } from 'next';
 
 export const metadata: Metadata = {
   title: 'Search - Source Library',
-  description: 'Search translated historical texts. Find primary sources on alchemy, Hermeticism, natural philosophy, and early modern science.',
+  description: 'Search over 10,000 translated primary sources — alchemy, Hermetica, Kabbalah, natural philosophy, Sanskrit, Chinese classics, Arabic philosophy, and more.',
   alternates: {
     canonical: '/search',
   },
   openGraph: {
     title: 'Search - Source Library',
-    description: 'Search translated historical texts. Find primary sources on alchemy, Hermeticism, natural philosophy, and early modern science.',
+    description: 'Search over 10,000 translated primary sources — alchemy, Hermetica, Kabbalah, natural philosophy, Sanskrit, Chinese classics, Arabic philosophy, and more.',
     type: 'website',
     siteName: 'Source Library',
     locale: 'en_US',
@@ -18,7 +18,7 @@ export const metadata: Metadata = {
   twitter: {
     card: 'summary',
     title: 'Search - Source Library',
-    description: 'Search translated historical texts. Find primary sources on alchemy, Hermeticism, natural philosophy, and early modern science.',
+    description: 'Search over 10,000 translated primary sources — alchemy, Hermetica, Kabbalah, natural philosophy, Sanskrit, Chinese classics, Arabic philosophy, and more.',
   },
 };
 

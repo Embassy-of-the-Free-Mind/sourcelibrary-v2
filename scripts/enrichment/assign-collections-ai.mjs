@@ -580,11 +580,17 @@ async function main() {
       ]).toArray();
 
       if (images.length > 0) {
-        await collectionsColl.updateOne(
-          { slug: col.slug },
-          { $set: { featured_images: images } }
-        );
-        console.log(`  ${col.name}: ${images.length} featured images`);
+        // Never overwrite manually curated images
+        const existing = await collectionsColl.findOne({ slug: col.slug });
+        if (existing?.featured_images_curated) {
+          console.log(`  ${col.name}: SKIPPED (manually curated)`);
+        } else {
+          await collectionsColl.updateOne(
+            { slug: col.slug },
+            { $set: { featured_images: images, featured_images_updated: new Date() } }
+          );
+          console.log(`  ${col.name}: ${images.length} featured images`);
+        }
       }
     }
   } else {

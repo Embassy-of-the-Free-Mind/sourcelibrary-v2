@@ -4,6 +4,7 @@ import CatalogBrowser from '@/components/catalog/CatalogBrowser';
 import { browseBooks, getLanguageCounts } from '@/lib/books-catalog';
 
 export const revalidate = 86400;
+export const maxDuration = 30;
 
 export const metadata: Metadata = {
   title: 'Catalog - Source Library',
@@ -13,8 +14,14 @@ export const metadata: Metadata = {
 
 export default async function CatalogPage() {
   const [browseResult, languages] = await Promise.all([
-    browseBooks({ hasTranslation: true, sort: 'popular', limit: 60 }).catch(() => ({ books: [], total: 0 })),
-    getLanguageCounts({}).catch(() => []),
+    browseBooks({ hasTranslation: true, sort: 'popular', limit: 60 }).catch((err) => {
+      console.error('[catalog] browseBooks failed:', err?.message || err);
+      return { books: [], total: 0 };
+    }),
+    getLanguageCounts({}).catch((err) => {
+      console.error('[catalog] getLanguageCounts failed:', err?.message || err);
+      return [];
+    }),
   ]);
   const { books, total } = browseResult;
 

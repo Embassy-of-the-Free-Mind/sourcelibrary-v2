@@ -1,7 +1,9 @@
 'use client';
 
-import { useState, useEffect, use } from 'react';
+import { useState, useEffect, useCallback, useRef, use } from 'react';
+import { useSession } from 'next-auth/react';
 import Link from 'next/link';
+import { useRouter } from 'next/navigation';
 import SiteHeader from '@/components/layout/SiteHeader';
 import ReactMarkdown from 'react-markdown';
 import remarkGfm from 'remark-gfm';
@@ -17,7 +19,26 @@ function linkifySourceUrls(text: string): string {
 }
 
 function ensureParagraphBreaks(text: string): string {
-  return text.replace(/([^\n])\n(?!\n)(?![-*>|`\d])/g, '$1\n\n');
+  const lines = text.split('\n');
+  const result: string[] = [];
+  let inCodeBlock = false;
+
+  for (let i = 0; i < lines.length; i++) {
+    const line = lines[i];
+    if (line.trimStart().startsWith('```')) inCodeBlock = !inCodeBlock;
+    result.push(line);
+
+    if (inCodeBlock) continue;
+    if (i === lines.length - 1) continue;
+
+    const next = lines[i + 1];
+    if (line === '' || next === '') continue;
+    if (/^(\s*[-*+>|#\d]|---)/.test(next)) continue;
+    if (/^(\s*[-*+>|#\d]|---)/.test(line)) continue;
+
+    result.push('');
+  }
+  return result.join('\n');
 }
 
 interface ThreadMessage {
@@ -32,9 +53,29 @@ interface ThreadData {
   id: string;
   title: string;
   creatorName: string;
+  creatorId?: string;
   messageCount: number;
   createdAt: string;
 }
+
+interface PodcastData {
+  audioUrl: string;
+  generatedAt: string;
+  topic: string;
+  findingCount: number;
+  format: string;
+  script?: string;
+  published?: boolean;
+}
+
+type PodcastFormat = 'deep-dive' | 'brief' | 'critique' | 'guided-reading';
+
+const FORMAT_OPTIONS: { value: PodcastFormat; label: string; desc: string }[] = [
+  { value: 'deep-dive', label: 'Deep Dive', desc: 'Two hosts explore findings in depth' },
+  { value: 'brief', label: 'The Brief', desc: '2-minute summary' },
+  { value: 'critique', label: 'The Critique', desc: 'Critical analysis of sources' },
+  { value: 'guided-reading', label: 'Guided Reading', desc: 'Commentary for reading alongside' },
+];
 
 function formatDate(dateStr: string): string {
   const d = new Date(dateStr);
@@ -46,12 +87,534 @@ function formatDate(dateStr: string): string {
   });
 }
 
+// ── Transcript ────────────────────────────────────────────────────────
+
+function formatTranscript(script: string): { speaker: string; text: string }[] {
+  return script
+    .split('\n')
+    .filter(line => line.includes(':'))
+    .map(line => {
+      const colonIdx = line.indexOf(':');
+      const speaker = line.slice(0, colonIdx).trim();
+      const text = line.slice(colonIdx + 1).trim()
+        .replace(/\[(laughs|whispers|enthusiasm|thoughtful|determination)\]/gi, '');
+      return { speaker, text };
+    })
+    .filter(entry => entry.text.length > 0);
+}
+
+// ── Source Cards ──────────────────────────────────────────────────────
+
+interface SourceFinding {
+  quote: string;
+  note?: string;
+  source: {
+    bookId: string;
+    bookTitle: string;
+    bookAuthor: string;
+    bookSlug?: string;
+    pageNumber: number;
+  };
+}
+
+interface GalleryImage {
+  id: string;
+  imageUrl: string;
+  bookTitle: string;
+  bookSlug?: string;
+  pageNumber: number;
+  description?: string;
+  type?: string;
+}
+
+function SourceCards({ threadId }: { threadId: string }) {
+  const [findings, setFindings] = useState<SourceFinding[]>([]);
+  const [galleryImages, setGalleryImages] = useState<GalleryImage[]>([]);
+  const [loaded, setLoaded] = useState(false);
+  const [expanded, setExpanded] = useState(false);
+
+  useEffect(() => {
+    fetch(`/api/embassy/threads/${threadId}/notebook?format=json`)
+      .then(r => r.ok ? r.json() : null)
+      .then(data => {
+        if (data?.notebook?.findings) {
+          setFindings(data.notebook.findings);
+          // Fetch gallery images from cited books
+          const bookIds = [...new Set(data.notebook.findings.map((f: SourceFinding) => f.source.bookId))];
+          // Fetch gallery images for each book (in parallel, up to 4 per book)
+          Promise.all(
+            bookIds.map(bid =>
+              fetch(`/api/gallery?bookId=${bid}&limit=4`)
+                .then(r => r.ok ? r.json() : null)
+                .then(d => (d?.images || []).map((img: { id: string; imageUrl: string; bookTitle: string; bookSlug?: string; pageNumber: number; description?: string; type?: string }) => ({
+                  ...img, bookId: bid,
+                })))
+                .catch(() => [])
+            )
+          ).then(results => {
+            const all = results.flat().slice(0, 12);
+            setGalleryImages(all);
+          });
+        }
+        setLoaded(true);
+      })
+      .catch(() => setLoaded(true));
+  }, [threadId]);
+
+  if (!loaded || findings.length === 0) return null;
+
+  // Deduplicate by book
+  const books = new Map<string, { title: string; author: string; slug?: string; pages: number[]; quotes: string[] }>();
+  for (const f of findings) {
+    const key = f.source.bookId;
+    const existing = books.get(key) || {
+      title: f.source.bookTitle,
+      author: f.source.bookAuthor,
+      slug: f.source.bookSlug,
+      pages: [],
+      quotes: [],
+    };
+    if (!existing.pages.includes(f.source.pageNumber)) {
+      existing.pages.push(f.source.pageNumber);
+    }
+    existing.quotes.push(f.quote.slice(0, 120));
+    books.set(key, existing);
+  }
+
+  const bookList = [...books.entries()];
+
+  return (
+    <div className="mt-6">
+      <button
+        onClick={() => setExpanded(!expanded)}
+        className="flex items-center gap-2 text-[12px] text-[#6b6560] font-sans tracking-wide uppercase hover:text-[#444] transition-colors"
+      >
+        <svg className={`w-3.5 h-3.5 transition-transform ${expanded ? 'rotate-90' : ''}`} fill="none" viewBox="0 0 24 24" strokeWidth={2} stroke="currentColor">
+          <path strokeLinecap="round" strokeLinejoin="round" d="M8.25 4.5l7.5 7.5-7.5 7.5" />
+        </svg>
+        Sources ({bookList.length} books, {findings.length} passages)
+      </button>
+
+      {expanded && (
+        <div className="mt-3 grid gap-3">
+          {bookList.map(([bookId, book]) => {
+            const bookUrl = `https://sourcelibrary.org/book/${book.slug || bookId}`;
+            const thumbUrl = `https://sourcelibrary.org/api/image?url=https://images.sourcelibrary.org/covers/${bookId}.jpg&w=120&q=75`;
+            return (
+              <a
+                key={bookId}
+                href={bookUrl}
+                target="_blank"
+                rel="noopener noreferrer"
+                className="flex gap-3 p-3 bg-white rounded-lg border border-[#e8e4dc] hover:border-[#c9a86c] transition-colors group"
+              >
+                {/* eslint-disable-next-line @next/next/no-img-element */}
+                <img
+                  src={thumbUrl}
+                  alt=""
+                  className="w-14 h-20 object-cover rounded flex-shrink-0 bg-[#f0ece4]"
+                  loading="lazy"
+                  onError={e => { (e.target as HTMLImageElement).style.display = 'none'; }}
+                />
+                <div className="min-w-0 flex-1">
+                  <p className="text-[13px] font-serif text-[#1a1612] leading-snug group-hover:text-[#9e4a3a] transition-colors" style={{ fontWeight: 400 }}>
+                    {book.title}
+                  </p>
+                  <p className="text-[11px] text-[#8a8480] font-sans mt-0.5">
+                    {book.author}
+                  </p>
+                  <p className="text-[11px] text-[#9e4a3a] font-sans mt-1">
+                    {book.pages.length === 1
+                      ? `Page ${book.pages[0]}`
+                      : `Pages ${book.pages.sort((a, b) => a - b).join(', ')}`
+                    }
+                  </p>
+                </div>
+              </a>
+            );
+          })}
+
+          {/* Gallery images from cited books */}
+          {galleryImages.length > 0 && (
+            <div className="mt-4 pt-4 border-t border-[#e8e4dc]">
+              <p className="text-[11px] text-[#6b6560] font-sans tracking-wide uppercase mb-3">
+                Illustrations from these sources
+              </p>
+              <div className="grid grid-cols-3 gap-2">
+                {galleryImages.map((img, i) => (
+                  <a
+                    key={img.id || i}
+                    href={`https://sourcelibrary.org/gallery/image/${img.id}`}
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    className="group relative aspect-square overflow-hidden rounded-lg bg-[#f0ece4]"
+                  >
+                    {/* eslint-disable-next-line @next/next/no-img-element */}
+                    <img
+                      src={`https://sourcelibrary.org/api/image?url=${encodeURIComponent(img.imageUrl)}&w=300&q=75`}
+                      alt={img.description || ''}
+                      className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-300"
+                      loading="lazy"
+                    />
+                    <div className="absolute inset-0 bg-gradient-to-t from-black/60 via-transparent to-transparent opacity-0 group-hover:opacity-100 transition-opacity">
+                      <div className="absolute bottom-0 left-0 right-0 p-2">
+                        <p className="text-[10px] text-white font-sans leading-tight line-clamp-2">
+                          {img.description || img.bookTitle}
+                        </p>
+                        {img.type && (
+                          <p className="text-[9px] text-white/70 font-sans capitalize">{img.type}</p>
+                        )}
+                      </div>
+                    </div>
+                  </a>
+                ))}
+              </div>
+            </div>
+          )}
+        </div>
+      )}
+    </div>
+  );
+}
+
+// ── Interactive Mode — Ask the Hosts ──────────────────────────────────
+
+interface InteractiveExchange {
+  question: string;
+  script: string;
+  audioUrl: string | null;
+}
+
+function AskWhileListening({ threadId }: { threadId: string }) {
+  const [open, setOpen] = useState(false);
+  const [question, setQuestion] = useState('');
+  const [exchanges, setExchanges] = useState<InteractiveExchange[]>([]);
+  const [loading, setLoading] = useState(false);
+  const inputRef = useRef<HTMLInputElement>(null);
+  const audioRef = useRef<HTMLAudioElement>(null);
+
+  useEffect(() => {
+    if (open && inputRef.current) inputRef.current.focus();
+  }, [open]);
+
+  const handleAsk = useCallback(async () => {
+    if (!question.trim() || loading) return;
+    const q = question.trim();
+    setLoading(true);
+    setQuestion('');
+
+    try {
+      const res = await fetch(`/api/embassy/threads/${threadId}/podcast/ask`, {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ question: q }),
+      });
+
+      if (!res.ok) {
+        const err = await res.json().catch(() => ({ error: 'Failed' }));
+        setExchanges(prev => [...prev, { question: q, script: err.error || 'Could not generate response.', audioUrl: null }]);
+        return;
+      }
+
+      const data = await res.json();
+      const exchange: InteractiveExchange = {
+        question: q,
+        script: data.script || '',
+        audioUrl: data.audioUrl || null,
+      };
+      setExchanges(prev => [...prev, exchange]);
+
+      // Auto-play the audio response
+      if (data.audioUrl && audioRef.current) {
+        audioRef.current.src = data.audioUrl;
+        audioRef.current.play().catch(() => {});
+      }
+    } catch {
+      setExchanges(prev => [...prev, { question: q, script: 'Network error — please try again.', audioUrl: null }]);
+    } finally {
+      setLoading(false);
+    }
+  }, [question, loading, threadId]);
+
+  if (!open) {
+    return (
+      <button
+        onClick={() => setOpen(true)}
+        className="mt-3 text-[12px] text-[#9e4a3a] font-sans hover:underline flex items-center gap-1"
+      >
+        <svg className="w-3.5 h-3.5" fill="none" viewBox="0 0 24 24" strokeWidth={1.5} stroke="currentColor">
+          <path strokeLinecap="round" strokeLinejoin="round" d="M12 18.75a6 6 0 006-6v-1.5m-6 7.5a6 6 0 01-6-6v-1.5m6 7.5v3.75m-3.75 0h7.5M12 15.75a3 3 0 01-3-3V4.5a3 3 0 116 0v8.25a3 3 0 01-3 3z" />
+        </svg>
+        Ask Elena &amp; Marcus a question
+      </button>
+    );
+  }
+
+  return (
+    <div className="mt-3 p-3 bg-white rounded-lg border border-[#e0d9cc]">
+      <div className="flex gap-2">
+        <input
+          ref={inputRef}
+          type="text"
+          value={question}
+          onChange={e => setQuestion(e.target.value)}
+          onKeyDown={e => e.key === 'Enter' && handleAsk()}
+          placeholder="Ask Elena & Marcus anything..."
+          className="flex-1 text-sm font-body px-3 py-2 border border-[#ddd] rounded-lg focus:outline-none focus:border-[#9e4a3a] text-[#1a1612]"
+          disabled={loading}
+        />
+        <button
+          onClick={handleAsk}
+          disabled={loading || !question.trim()}
+          className="px-3 py-2 bg-[#1a1612] text-white rounded-lg text-sm font-sans hover:bg-[#2a2622] disabled:opacity-50"
+        >
+          {loading ? (
+            <svg className="w-4 h-4 animate-spin" fill="none" viewBox="0 0 24 24">
+              <circle className="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" strokeWidth="4" />
+              <path className="opacity-75" fill="currentColor" d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4z" />
+            </svg>
+          ) : 'Ask'}
+        </button>
+        <button
+          onClick={() => { setOpen(false); setExchanges([]); setQuestion(''); }}
+          className="px-2 py-2 text-[#8a8480] hover:text-[#444] text-sm"
+        >
+          x
+        </button>
+      </div>
+      {/* Hidden audio element for playing responses */}
+      <audio ref={audioRef} className="hidden" />
+      {loading && (
+        <p className="mt-2 text-[12px] text-[#8a8480] font-sans animate-pulse">
+          Elena and Marcus are thinking...
+        </p>
+      )}
+      {exchanges.map((ex, i) => (
+        <div key={i} className="mt-3 pt-3 border-t border-[#e8e4dc]">
+          <p className="text-[12px] text-[#8a8480] font-sans mb-2">You asked: &ldquo;{ex.question}&rdquo;</p>
+          <div className="space-y-1.5">
+            {formatTranscript(ex.script).map((entry, j) => (
+              <p key={j} className="text-[13px] font-body leading-relaxed text-[#333]">
+                <span className="font-semibold text-[#1a1612]">{entry.speaker}:</span>{' '}
+                {entry.text}
+              </p>
+            ))}
+          </div>
+          {ex.audioUrl && (
+            <audio controls src={ex.audioUrl} className="w-full mt-2" preload="metadata" />
+          )}
+        </div>
+      ))}
+    </div>
+  );
+}
+
+// ── Podcast Player ────────────────────────────────────────────────────
+
+function PodcastPlayer({ threadId }: { threadId: string }) {
+  const [podcasts, setPodcasts] = useState<Record<string, PodcastData>>({});
+  const [selectedFormat, setSelectedFormat] = useState<PodcastFormat>('deep-dive');
+  const [generating, setGenerating] = useState(false);
+  const [error, setError] = useState<string | null>(null);
+  const [checked, setChecked] = useState(false);
+  const [showTranscript, setShowTranscript] = useState(false);
+
+  const activePodcast = podcasts[selectedFormat] || null;
+
+  // Load all existing podcasts on mount
+  useEffect(() => {
+    fetch(`/api/embassy/threads/${threadId}/podcast?all=true`)
+      .then(r => r.ok ? r.json() : { podcasts: {} })
+      .then(data => {
+        setPodcasts(data.podcasts || {});
+        // Select first available format
+        const available = Object.keys(data.podcasts || {});
+        if (available.length > 0) {
+          setSelectedFormat(available[0] as PodcastFormat);
+        }
+        setChecked(true);
+      })
+      .catch(() => setChecked(true));
+  }, [threadId]);
+
+  const handleGenerate = useCallback(async () => {
+    setGenerating(true);
+    setError(null);
+    try {
+      const res = await fetch(`/api/embassy/threads/${threadId}/podcast`, {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ format: selectedFormat }),
+      });
+      const data = await res.json();
+      if (!res.ok) {
+        setError(data.error || 'Generation failed');
+        return;
+      }
+      setPodcasts(prev => ({ ...prev, [selectedFormat]: data.podcast }));
+    } catch {
+      setError('Network error — please try again');
+    } finally {
+      setGenerating(false);
+    }
+  }, [threadId, selectedFormat]);
+
+  const handlePublish = useCallback(async (publish: boolean) => {
+    await fetch(`/api/embassy/threads/${threadId}/podcast`, {
+      method: 'PATCH',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify({ format: selectedFormat, published: publish }),
+    });
+    setPodcasts(prev => ({
+      ...prev,
+      [selectedFormat]: { ...prev[selectedFormat], published: publish },
+    }));
+  }, [threadId, selectedFormat]);
+
+  if (!checked) return null;
+
+  return (
+    <div className="mt-8">
+      {/* Format selector */}
+      <div className="flex gap-1.5 mb-3 overflow-x-auto pb-1">
+        {FORMAT_OPTIONS.map(opt => {
+          const hasEpisode = !!podcasts[opt.value];
+          return (
+            <button
+              key={opt.value}
+              onClick={() => { setSelectedFormat(opt.value); setShowTranscript(false); }}
+              className={`flex-shrink-0 px-3 py-1.5 rounded-full text-[12px] font-sans transition-colors ${
+                selectedFormat === opt.value
+                  ? 'bg-[#1a1612] text-white'
+                  : hasEpisode
+                    ? 'bg-[#f5f0e8] text-[#1a1612] hover:bg-[#ebe5d8]'
+                    : 'bg-[#f5f0e8]/50 text-[#8a8480] hover:bg-[#f5f0e8]'
+              }`}
+              title={opt.desc}
+            >
+              {opt.label}
+              {hasEpisode && selectedFormat !== opt.value && (
+                <span className="ml-1 w-1.5 h-1.5 bg-[#9e4a3a] rounded-full inline-block" />
+              )}
+            </button>
+          );
+        })}
+      </div>
+
+      {/* Active podcast or generate prompt */}
+      {activePodcast ? (
+        <div className="p-5 bg-[#f5f0e8] rounded-xl border border-[#e0d9cc]">
+          <div className="flex items-center justify-between mb-3">
+            <div className="flex items-center gap-2">
+              <svg className="w-5 h-5 text-[#9e4a3a]" fill="none" viewBox="0 0 24 24" strokeWidth={1.5} stroke="currentColor">
+                <path strokeLinecap="round" strokeLinejoin="round" d="M19.114 5.636a9 9 0 010 12.728M16.463 8.288a5.25 5.25 0 010 7.424M6.75 8.25l4.72-4.72a.75.75 0 011.28.53v15.88a.75.75 0 01-1.28.53l-4.72-4.72H4.51c-.88 0-1.704-.507-1.938-1.354A9.01 9.01 0 012.25 12c0-.83.112-1.633.322-2.396C2.806 8.756 3.63 8.25 4.51 8.25H6.75z" />
+              </svg>
+              <p className="text-sm font-sans font-medium text-[#1a1612]">
+                {FORMAT_OPTIONS.find(f => f.value === selectedFormat)?.label} — {activePodcast.topic}
+              </p>
+            </div>
+            <button
+              onClick={() => handlePublish(!activePodcast.published)}
+              className={`text-[11px] font-sans px-2 py-0.5 rounded ${
+                activePodcast.published
+                  ? 'bg-[#9e4a3a]/10 text-[#9e4a3a]'
+                  : 'bg-[#e8e4dc] text-[#6b6560] hover:bg-[#ddd]'
+              }`}
+              title={activePodcast.published ? 'Published to podcast feed' : 'Publish to podcast feed'}
+            >
+              {activePodcast.published ? 'Published' : 'Publish'}
+            </button>
+          </div>
+          <audio
+            controls
+            src={activePodcast.audioUrl}
+            className="w-full"
+            preload="metadata"
+          />
+          <div className="flex items-center justify-between mt-2">
+            <p className="text-[11px] text-[#8a8480] font-sans">
+              {activePodcast.findingCount} findings
+              {activePodcast.published && (
+                <span className="ml-2">
+                  <a
+                    href="/api/podcast/feed.xml"
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    className="text-[#9e4a3a] hover:underline"
+                  >
+                    RSS feed
+                  </a>
+                </span>
+              )}
+            </p>
+            {activePodcast.script && (
+              <button
+                onClick={() => setShowTranscript(!showTranscript)}
+                className="text-[11px] text-[#9e4a3a] font-sans hover:underline"
+              >
+                {showTranscript ? 'Hide transcript' : 'Show transcript'}
+              </button>
+            )}
+          </div>
+          {showTranscript && activePodcast.script && (
+            <div className="mt-3 pt-3 border-t border-[#e0d9cc] space-y-2 max-h-[400px] overflow-y-auto">
+              {formatTranscript(activePodcast.script).map((entry, i) => (
+                <p key={i} className="text-[13px] font-body leading-relaxed text-[#333]">
+                  <span className="font-semibold text-[#1a1612]">{entry.speaker}:</span>{' '}
+                  {entry.text}
+                </p>
+              ))}
+            </div>
+          )}
+
+          {/* Interactive mode */}
+          <AskWhileListening threadId={threadId} />
+        </div>
+      ) : (
+        <div className="p-5 bg-[#f5f0e8]/50 rounded-xl border border-[#e0d9cc] border-dashed text-center">
+          <p className="text-sm font-sans font-medium text-[#1a1612] mb-1">
+            {FORMAT_OPTIONS.find(f => f.value === selectedFormat)?.label}
+          </p>
+          <p className="text-[13px] text-[#6b6560] font-body mb-3">
+            {FORMAT_OPTIONS.find(f => f.value === selectedFormat)?.desc}
+          </p>
+          <button
+            onClick={handleGenerate}
+            disabled={generating}
+            className="inline-flex items-center gap-2 px-5 py-2.5 bg-[#1a1612] text-white rounded-lg text-sm font-sans hover:bg-[#2a2622] transition-colors disabled:opacity-50 disabled:cursor-not-allowed"
+          >
+            {generating ? (
+              <>
+                <svg className="w-4 h-4 animate-spin" fill="none" viewBox="0 0 24 24">
+                  <circle className="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" strokeWidth="4" />
+                  <path className="opacity-75" fill="currentColor" d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4z" />
+                </svg>
+                Generating...
+              </>
+            ) : (
+              'Generate'
+            )}
+          </button>
+          {error && (
+            <p className="text-xs text-red-600 font-sans mt-2">{error}</p>
+          )}
+        </div>
+      )}
+    </div>
+  );
+}
+
+// ── Thread Page ───────────────────────────────────────────────────────
+
 export default function ThreadPage({ params }: { params: Promise<{ id: string }> }) {
   const { id } = use(params);
+  const { data: session } = useSession();
+  const router = useRouter();
   const [thread, setThread] = useState<ThreadData | null>(null);
   const [messages, setMessages] = useState<ThreadMessage[]>([]);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState<string | null>(null);
+  const [deleting, setDeleting] = useState(false);
 
   useEffect(() => {
     fetch(`/api/embassy/threads/${id}`)
@@ -116,9 +679,28 @@ export default function ThreadPage({ params }: { params: Promise<{ id: string }>
           >
             {thread.title}
           </h1>
-          <p className="text-[12px] text-[#8a8480] font-sans">
-            {thread.creatorName} &middot; {formatDate(thread.createdAt)}
-          </p>
+          <div className="flex items-center gap-3">
+            <p className="text-[12px] text-[#8a8480] font-sans">
+              {thread.creatorName} &middot; {formatDate(thread.createdAt)}
+            </p>
+            {session?.user?.id && thread.creatorId === session.user.id && (
+              <button
+                onClick={async () => {
+                  if (!confirm('Delete this conversation? This cannot be undone.')) return;
+                  setDeleting(true);
+                  try {
+                    const res = await fetch(`/api/embassy/threads/${id}`, { method: 'DELETE' });
+                    if (res.ok) router.push('/reading-room');
+                    else setDeleting(false);
+                  } catch { setDeleting(false); }
+                }}
+                disabled={deleting}
+                className="text-[11px] text-[#b0a89c] hover:text-[#9e4a3a] font-sans transition-colors disabled:opacity-50"
+              >
+                {deleting ? 'Deleting...' : 'Delete'}
+              </button>
+            )}
+          </div>
         </div>
 
         <div className="space-y-6">
@@ -165,6 +747,12 @@ export default function ThreadPage({ params }: { params: Promise<{ id: string }>
             </div>
           ))}
         </div>
+
+        {/* Podcast section */}
+        <PodcastPlayer threadId={id} />
+
+        {/* Source books used in this research */}
+        <SourceCards threadId={id} />
 
         <div className="mt-12 pt-8 border-t border-[#e8e4dc] text-center">
           <p className="text-[#6b6560] text-sm font-body mb-3">

@@ -29,13 +29,12 @@ test.describe('Search', () => {
     await measurePerf(page, 'search: result cards link to books');
   });
 
-  test('search results heading appears', async ({ page }) => {
+  test('search results summary appears', async ({ page }) => {
     await page.goto(`/search?q=${SEARCH.query}`);
 
-    // Wait for results heading (indicates search completed and found results)
-    // The heading shows "{N} results" in the unified view
-    const resultsHeading = page.getByRole('heading', { name: /results/i });
-    await expect(resultsHeading).toBeVisible({ timeout: SEARCH_TIMEOUT });
-    await measurePerf(page, 'search: results heading appears');
+    // In the unified "All" view, results show as accordion sections like "Books (5)"
+    const booksSection = page.getByText(/books\s*\(\d+\)/i);
+    await expect(booksSection.first()).toBeVisible({ timeout: SEARCH_TIMEOUT });
+    await measurePerf(page, 'search: results summary appears');
   });
 });

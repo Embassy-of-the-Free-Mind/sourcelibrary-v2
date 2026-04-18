@@ -444,7 +444,7 @@ async function processBook(db, book, job, globalCounter, deadline) {
     const blankIds = blankFromOcr.map(p => p.id);
     await db.collection('pages').updateMany(
       { id: { $in: blankIds } },
-      { $set: { page_type: 'blank', updated_at: new Date() } },
+      { $set: { page_type: 'blank', updated_at: new Date(), 'translation.data': '[Blank page]', 'translation.language': 'English', 'translation.source': 'skip', 'translation.updated_at': new Date() } },
     );
     console.log(`  [${label}] Backfilled ${blankFromOcr.length} blank pages (missing page_type)`);
     // Remove from translation queue
@@ -591,13 +591,13 @@ async function processBook(db, book, job, globalCounter, deadline) {
               if (msg.includes('RECITATION')) {
                 await db.collection('pages').updateOne(
                   { _id: page._id },
-                  { $set: { 'translation.recitation_blocked': true, 'translation.recitation_at': new Date(), 'translation.safety_reason': msg.substring(0, 200) } }
+                  { $set: { 'translation.recitation_blocked': true, 'translation.recitation_at': new Date(), 'translation.safety_reason': msg.substring(0, 200), 'translation.data': '[This page could not be translated due to content recitation restrictions.]', 'translation.language': 'English', 'translation.source': 'skip', 'translation.updated_at': new Date() } }
                 );
                 console.log(`  [${label}] Page ${page.page_number} marked as RECITATION-blocked (will skip on future runs)`);
               } else {
                 await db.collection('pages').updateOne(
                   { _id: page._id },
-                  { $set: { 'translation.safety_blocked': true, 'translation.safety_blocked_at': new Date(), 'translation.safety_reason': msg.substring(0, 200) } }
+                  { $set: { 'translation.safety_blocked': true, 'translation.safety_blocked_at': new Date(), 'translation.safety_reason': msg.substring(0, 200), 'translation.data': '[This page could not be translated due to content safety restrictions.]', 'translation.language': 'English', 'translation.source': 'skip', 'translation.updated_at': new Date() } }
                 );
                 console.log(`  [${label}] Page ${page.page_number} marked as SAFETY-blocked (will skip on future runs)`);
               }
@@ -666,13 +666,13 @@ async function processBook(db, book, job, globalCounter, deadline) {
                 if (errMsg.includes('RECITATION')) {
                   await db.collection('pages').updateOne(
                     { _id: page._id },
-                    { $set: { 'translation.recitation_blocked': true, 'translation.recitation_at': new Date(), 'translation.safety_reason': errMsg.substring(0, 200) } }
+                    { $set: { 'translation.recitation_blocked': true, 'translation.recitation_at': new Date(), 'translation.safety_reason': errMsg.substring(0, 200), 'translation.data': '[This page could not be translated due to content recitation restrictions.]', 'translation.language': 'English', 'translation.source': 'skip', 'translation.updated_at': new Date() } }
                   );
                   console.log(`  [${label}] Page ${page.page_number} marked as RECITATION-blocked (will skip on future runs)`);
                 } else if (errMsg.includes('PROHIBITED') || errMsg.includes('SAFETY') || errMsg.includes('safety')) {
                   await db.collection('pages').updateOne(
                     { _id: page._id },
-                    { $set: { 'translation.safety_blocked': true, 'translation.safety_blocked_at': new Date(), 'translation.safety_reason': errMsg.substring(0, 200) } }
+                    { $set: { 'translation.safety_blocked': true, 'translation.safety_blocked_at': new Date(), 'translation.safety_reason': errMsg.substring(0, 200), 'translation.data': '[This page could not be translated due to content safety restrictions.]', 'translation.language': 'English', 'translation.source': 'skip', 'translation.updated_at': new Date() } }
                   );
                   console.log(`  [${label}] Page ${page.page_number} marked as SAFETY-blocked (will skip on future runs)`);
                 }
@@ -739,13 +739,13 @@ async function processBook(db, book, job, globalCounter, deadline) {
                 if (errMsg.includes('RECITATION')) {
                   await db.collection('pages').updateOne(
                     { _id: page._id },
-                    { $set: { 'translation.recitation_blocked': true, 'translation.recitation_at': new Date(), 'translation.safety_reason': errMsg.substring(0, 200) } }
+                    { $set: { 'translation.recitation_blocked': true, 'translation.recitation_at': new Date(), 'translation.safety_reason': errMsg.substring(0, 200), 'translation.data': '[This page could not be translated due to content recitation restrictions.]', 'translation.language': 'English', 'translation.source': 'skip', 'translation.updated_at': new Date() } }
                   );
                   console.log(`  [${label}] Page ${page.page_number} marked as RECITATION-blocked (will skip on future runs)`);
                 } else if (errMsg.includes('PROHIBITED') || errMsg.includes('SAFETY') || errMsg.includes('safety')) {
                   await db.collection('pages').updateOne(
                     { _id: page._id },
-                    { $set: { 'translation.safety_blocked': true, 'translation.safety_blocked_at': new Date(), 'translation.safety_reason': errMsg.substring(0, 200) } }
+                    { $set: { 'translation.safety_blocked': true, 'translation.safety_blocked_at': new Date(), 'translation.safety_reason': errMsg.substring(0, 200), 'translation.data': '[This page could not be translated due to content safety restrictions.]', 'translation.language': 'English', 'translation.source': 'skip', 'translation.updated_at': new Date() } }
                   );
                   console.log(`  [${label}] Page ${page.page_number} marked as SAFETY-blocked (will skip on future runs)`);
                 }

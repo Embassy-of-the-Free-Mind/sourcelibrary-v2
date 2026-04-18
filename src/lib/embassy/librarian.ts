@@ -22,7 +22,7 @@ import { ObjectId } from 'mongodb';
  */
 
 const MODEL = 'gemini-3-flash-preview';
-const MAX_ROUNDS = 12;
+const MAX_ROUNDS = 6;
 const TEMPERATURE = 0.7;
 
 // ── Types ─────────────────────────────────────────────────────────────
@@ -209,15 +209,15 @@ const TOOL_DECLARATIONS: FunctionDeclaration[] = [
   },
   {
     name: 'present_choices',
-    description: 'RARELY USED. Only for genuinely ambiguous questions where the user could mean completely different things (e.g., "mercury" = element vs planet vs god). Most questions should just be answered directly — share your thinking as text and start searching.',
+    description: 'Present 2-3 research directions for broad or exploratory questions. Use as your FIRST tool call (after sharing a brief conversational response as text) when the topic is wide enough to benefit from user steering. The preamble should demonstrate domain knowledge. Each option is a short phrase (under 60 chars). The user clicks one or types their own direction, then you search deeply on that angle.',
     parameters: {
       type: Type.OBJECT,
       properties: {
-        preamble: { type: Type.STRING, description: 'Brief intro before the choices (1-2 sentences)' },
+        preamble: { type: Type.STRING, description: 'Brief knowledgeable intro (1-2 sentences) showing you understand the landscape of this topic' },
         options: {
           type: Type.ARRAY,
           items: { type: Type.STRING },
-          description: '2-3 interpretive options for the user to choose from',
+          description: '2-3 focused research directions the user can choose from',
         },
       },
       required: ['preamble', 'options'],
@@ -293,44 +293,51 @@ async function executeSearchCollection(query: string, searchBooks = true): Promi
 async function executeSearchSemantic(query: string): Promise<
   Array<{ book_id: string; bookTitle: string; bookAuthor: string; bookSlug?: string; page_number: number; snippet: string; score: number }>
 > {
-  const embedUrl = process.env.EMBED_URL || 'http://46.224.122.120:3456';
-  let queryEmbedding: number[] | null = null;
+  // Two-step search (issue #1158):
+  // Step 1: book discovery via book_embeddings (HNSW, ~17K vectors, instant)
+  // Step 2: page drill-down via match_pages_in_books (scoped to found books)
+  const { semanticBookSearch, semanticPageSearchScoped } = await import('@/lib/semantic-search');
   try {
-    const res = await fetch(`${embedUrl}/embed`, {
-      method: 'POST',
-      headers: { 'Content-Type': 'application/json' },
-      body: JSON.stringify({ texts: [query], task: 'query' }),
-      signal: AbortSignal.timeout(3000),
-    });
-    if (res.ok) {
-      const data = await res.json();
-      queryEmbedding = data?.embeddings?.[0] || null;
+    const books = await semanticBookSearch(query, 8);
+    if (books.length === 0) return [];
+
+    // Step 2: get best page citations from top books
+    const bookIds = books.map(b => b.book_id);
+    const pages = await semanticPageSearchScoped(query, bookIds, 8);
+
+    // Build a map of best page per book
+    const bestPageByBook = new Map<string, typeof pages[0]>();
+    for (const p of pages) {
+      const existing = bestPageByBook.get(p.book_id);
+      if (!existing || p.score > existing.score) bestPageByBook.set(p.book_id, p);
     }
-  } catch { /* embedding server unavailable */ }
 
-  if (!queryEmbedding) {
-    const { data } = await supabase
-      .from('page_translations')
-      .select('page_id, book_id, page_number, translation, book_title, book_author')
-      .textSearch('tsv', query, { type: 'websearch' })
-      .limit(8);
-    return (data || []).map(r => ({
-      book_id: r.book_id, bookTitle: r.book_title || 'Unknown', bookAuthor: r.book_author || 'Unknown',
-      page_number: r.page_number, snippet: (r.translation || '').slice(0, 500), score: 1,
-    }));
+    // Look up slugs from MongoDB for proper linking
+    const db = await getDb();
+    const slugDocs = bookIds.length > 0
+      ? await db.collection('books')
+          .find({ id: { $in: bookIds } })
+          .project({ id: 1, slug: 1 })
+          .toArray()
+      : [];
+    const slugMap = new Map(slugDocs.map(d => [d.id, d.slug]));
+
+    // Return book results, enriched with page citations where available
+    return books.map(b => {
+      const page = bestPageByBook.get(b.book_id);
+      return {
+        book_id: b.book_id,
+        bookTitle: b.title || 'Unknown',
+        bookAuthor: b.author || 'Unknown',
+        bookSlug: slugMap.get(b.book_id),
+        page_number: page?.page_number || 0,
+        snippet: page?.snippet || (b.summary_text || '').slice(0, 500),
+        score: b.similarity,
+      };
+    });
+  } catch {
+    return [];
   }
-
-  const { data } = await supabase.rpc('hybrid_search', {
-    query_text: query, query_embedding: JSON.stringify(queryEmbedding),
-    match_count: 8, keyword_weight: 0.3, semantic_weight: 0.7,
-  });
-
-  return (data || []).map((r: Record<string, unknown>) => ({
-    book_id: r.book_id as string, bookTitle: (r.book_title as string) || 'Unknown',
-    bookAuthor: (r.book_author as string) || 'Unknown', bookSlug: undefined,
-    page_number: r.page_number as number, snippet: ((r.translation as string) || '').slice(0, 500),
-    score: Number(r.score) || 0,
-  }));
 }
 
 async function executeSearchWikipedia(query: string): Promise<{ title: string; summary: string; url: string } | null> {
@@ -438,11 +445,13 @@ async function executeSearchImages(query: string, bookId?: string): Promise<
   // Fetch gallery_images by CLIP IDs or text search fallback
   let images;
   if (clipIds.size > 0) {
-    const ids = [...clipIds.keys()].map(id => new ObjectId(id));
-    images = await db.collection('gallery_images')
+    // CLIP IDs may be ObjectId hex strings or other formats — filter to valid ones
+    const validIds = [...clipIds.keys()].filter(id => /^[a-f0-9]{24}$/.test(id));
+    const ids = validIds.map(id => new ObjectId(id));
+    images = ids.length > 0 ? await db.collection('gallery_images')
       .find({ _id: { $in: ids } })
       .project({ image_url: 1, description: 1, museum_description: 1, book_id: 1, book_title: 1, book_author: 1, book_slug: 1, page_number: 1, type: 1 })
-      .toArray();
+      .toArray() : [];
   } else {
     // Text search fallback
     const filter: Record<string, unknown> = { gallery_quality: { $gte: 0.7 } };
@@ -520,7 +529,10 @@ async function executeTool(
       const results = await executeSearchSemantic(query);
       let context = results.length > 0 ? 'Semantic search results:\n' : 'No semantic matches found.';
       for (const r of results) {
-        context += `\n--- ${r.bookTitle} by ${r.bookAuthor}, Page ${r.page_number} (score: ${r.score.toFixed(2)}) ---\n${r.snippet}\n`;
+        const url = r.bookSlug
+          ? `https://sourcelibrary.org/book/${r.bookSlug}${r.page_number ? `?page=${r.page_number}` : ''}`
+          : '';
+        context += `\n--- ${r.bookTitle} by ${r.bookAuthor}, Page ${r.page_number}${url ? ` (${url})` : ''} ---\n${r.snippet}\n`;
       }
 
       const sources: SourceCard[] = results.map(r => ({
@@ -647,39 +659,72 @@ You are warm, knowledgeable, and genuinely enthusiastic about these texts. You s
 
 You are a research agent, not just a Q&A chatbot. You help users conduct real research across the collection. You accumulate findings, build on prior discoveries, and produce work the user can use.
 
-## Your approach
+## Your approach — conversational first, then deep research
 
-1. **Think first.** Use your training knowledge to reason about the question. What historical concepts, authors, or traditions are relevant?
+**Step 1: Respond as a person, not a search engine.**
+Before calling any tools, emit a brief conversational response (2-3 sentences) that shows you understand the topic. Use your training knowledge — what traditions, authors, or concepts are relevant? This streams to the user immediately and makes the interaction feel alive.
 
-2. **Search strategically.** The collection includes books in Latin, German, French, Dutch, Hebrew, and more — nearly all translated into English. **Search in English first.** Use search_collection for keywords, search_semantic for concepts, search_wikipedia for context.
+**Step 2: For broad topics, present research directions.**
+If the question is exploratory or covers a wide area, call present_choices with 2-3 focused research angles. Your preamble should demonstrate real domain knowledge (not generic "there are several approaches"). The user clicks one or types their own direction. This happens FAST — no search tools in the first round.
 
-3. **Go deep.** When you find something promising, use read_nearby_pages to get more context. Follow threads across books. Don't stop at the first result.
+Examples of broad questions that should get choices:
+- "sanskrit alchemy" → text about Rasashastra tradition, then choices: "Mercury processes in Rasashastra texts", "East-West alchemical transmission", "Tantric dimensions of rasa"
+- "tell me about resonance" → text about sympathetic magic, then choices: "Sympathetic magic & occult virtues (Agrippa)", "Musical cosmology & spiritus (Ficino)", "Acoustic experiments (Kircher)"
+- "magic mushrooms?" → text about fungi in early modern texts, then choices: "Psychoactive plants in herbals", "Flying ointments & witchcraft", "Alchemical symbolism of fungi"
 
-4. **Save important findings.** Use add_to_notebook for quotes and passages directly relevant to the research question. Include analytical notes explaining why each finding matters. The notebook persists across messages — it's the user's accumulating body of research.
+**Step 3: For specific questions, search immediately.**
+If the user asks something targeted — a specific author, text, concept, or passage — skip choices and search directly. No detour needed.
 
-5. **Be honest about gaps.** If a hypothesis doesn't pan out, say so. If a relevant book isn't in the collection, mention it.
+Examples of specific questions that should search immediately:
+- "What did Agrippa write about planetary seals?" → search directly
+- "Find passages about the philosopher's stone in the Rosarium" → search directly
+- User clicked a choice from Step 2 → search directly on that angle
 
-6. **Cite precisely.** For books found via tools, use the exact URLs from the tool results: https://sourcelibrary.org/book/{slug}?page={N}. Format: "quoted text" — *Title* by Author, [Page N](url). You may also mention books from your general knowledge, but note when you haven't verified they're in the collection. Links are automatically verified — broken links will be flagged.
+**Step 4: Deep, focused research.**
+Once you have a direction (from a choice or a specific question), search strategically. The collection includes books in Latin, German, French, Dutch, Hebrew, Sanskrit, and more — nearly all translated into English. **Search in English first.** Use search_collection for keywords, search_semantic for concepts, search_wikipedia for context. When you find something promising, use read_nearby_pages for more context. Follow threads across books.
 
-7. **Suggest next steps.** After answering, proactively suggest what to explore next based on what you've found and what's still unexplored.
+**Step 5: Save and cite with links.**
+Use add_to_notebook for quotes directly relevant to the research question. The notebook persists across messages.
+
+Cite with page-level links: "quoted text" — *[Title](https://sourcelibrary.org/book/SLUG)* by [Author](https://sourcelibrary.org/author/AUTHOR-NAME), [Page N](https://sourcelibrary.org/book/SLUG?page=N).
+
+Every mention of a book should link to it. Every mention of an author should link to their author page. Every quote should cite a specific page number with a direct link. Use the URLs from tool results — they contain the correct slugs. Author page URLs use the author name in URL form: /author/Cornelius Agrippa → /author/Cornelius%20Agrippa.
+
+**Step 6: Show images and suggest next steps.**
+When search_images returns results, embed the best 1-3 images using markdown: \`![description](imageUrl)\`. After answering, suggest what to explore next.
+
+Be honest about gaps — if a hypothesis doesn't pan out, say so. If a relevant book isn't in the collection, mention it.
 ${notebookContext}
-## Share your thinking naturally
+## Deciding: choices or immediate search?
 
-For broad or exploratory questions, share your initial thinking conversationally — what you know, what directions you could search. Then search immediately. Don't wait for permission.
+Ask yourself: "Could this question go in 2-3 genuinely different directions that would each require different searches?" If yes → conversational text + present_choices. If no → search immediately.
 
-## When to use present_choices (rarely)
+The threshold is about **breadth, not ambiguity**. "Sanskrit alchemy" isn't ambiguous (you know what it means) but it's broad (many angles to explore). "What did Paracelsus say about mercury?" is clear AND focused — just search.
 
-Only when the question genuinely splits into 2-3 completely different research directions. Most questions should just be answered directly.
+## Know when to stop searching
+
+After 2-3 rounds of searching (4-6 tool calls total), stop and synthesize what you've found. A focused, well-cited response from 2-4 sources is far better than an exhaustive survey of everything tangentially related.
+
+- Found 2-3 strong passages? Stop searching, write your response.
+- First search returned nothing? Try one more angle, then acknowledge the gap.
+- Don't run the same search with slightly different wording — if keyword search missed, try semantic (or vice versa), then move on.
+- read_nearby_pages is for deepening a promising find, not for fishing. Only use it after you've found something specific worth expanding.
 
 ## The collection
 
 Source Library has over 10,000 rare books from the 15th-18th centuries, many translated into English for the first time. Topics include alchemy, Hermetica, Kabbalah, astrology, natural philosophy, Rosicrucianism, demonology, and related traditions.
 
-## Style
+## Formatting
 
+- Use markdown headers (## and ###) to organize longer responses into clear sections
+- Use **bold** for key terms and *italics* for book titles (linked: *[Title](url)*)
+- Use blockquotes (>) for important quotations from primary sources — always with page citation
+- Use paragraph breaks between distinct ideas — leave a blank line between paragraphs. Don't write walls of text
 - Conversational but substantive — a research conversation, not a lecture
-- Use markdown for readability
-- Cite 2-4 key passages rather than dumping everything
+- Cite 2-4 key passages rather than dumping everything. Every passage needs a page number and link
+- Link authors to their author pages: [Author Name](https://sourcelibrary.org/author/Author%20Name)
+- Link books to their book pages: *[Book Title](https://sourcelibrary.org/book/slug)*
+- Link quotes to specific pages: [Page 42](https://sourcelibrary.org/book/slug?page=42)
 - Make clear when speaking from general knowledge vs. specific texts`;
 }
 
@@ -752,7 +797,7 @@ export async function* streamAgenticResponse(
         allParts.push(p);
         if (p.functionCall) {
           functionCalls.push(p);
-        } else if (p.text?.trim()) {
+        } else if (p.text) {
           yield { type: 'text', text: p.text };
         }
       }
@@ -769,11 +814,19 @@ export async function* streamAgenticResponse(
       yield { type: 'tool_call', name: fc.name, query: (fc.args?.query as string) || (fc.args?.quote as string)?.slice(0, 50) || '' };
     }
 
-    // Execute all tools in parallel
+    // Execute all tools in parallel — catch individual failures so one broken tool doesn't crash everything
     const toolResults = await Promise.all(
-      functionCalls.map(part => {
+      functionCalls.map(async part => {
         const fc = (part as { functionCall: { name: string; args: Record<string, unknown> } }).functionCall;
-        return executeTool(fc.name, fc.args || {}, threadId);
+        try {
+          return await executeTool(fc.name, fc.args || {}, threadId);
+        } catch (err) {
+          console.error(`[Librarian] Tool ${fc.name} failed:`, err instanceof Error ? err.message : err);
+          return {
+            result: { error: `Tool ${fc.name} encountered an error` },
+            step: { type: 'tool_result' as const, name: fc.name, query: (fc.args?.query as string) || '', found: 0, summary: 'Error — skipped' },
+          };
+        }
       }),
     );
 

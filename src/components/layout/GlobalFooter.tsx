@@ -16,8 +16,7 @@ const NAV_COLUMNS = [
       { label: 'Browse A–Z', href: '/browse' },
       { label: 'Gallery', href: '/gallery' },
       { label: 'Collections', href: '/collections' },
-      { label: 'Libraries', href: '/libraries' },
-      { label: 'Timeline', href: '/timeline' },
+      { label: 'Explore', href: '/explore' },
       { label: 'Search', href: '/search' },
     ],
   },
@@ -83,9 +82,9 @@ export default function GlobalFooter() {
               unoptimized
             />
           </Link>
-          <p className="font-serif italic text-white/50 text-lg">
+          <Link href="/about" className="font-serif italic text-white/50 text-lg hover:text-white/70 transition-colors">
             ad fontes
-          </p>
+          </Link>
         </div>
 
         {/* Zone 2: Navigation Columns */}

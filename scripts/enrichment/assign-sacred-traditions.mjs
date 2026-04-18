@@ -581,11 +581,16 @@ async function main() {
     ]).toArray();
 
     if (images.length > 0) {
-      await collectionsColl.updateOne(
-        { slug: t.slug },
-        { $set: { featured_images: images } }
-      );
-      console.log(`  ${t.name}: ${images.length} featured images`);
+      const existing = await collectionsColl.findOne({ slug: t.slug });
+      if (existing?.featured_images_curated) {
+        console.log(`  ${t.name}: SKIPPED (manually curated)`);
+      } else {
+        await collectionsColl.updateOne(
+          { slug: t.slug },
+          { $set: { featured_images: images, featured_images_updated: new Date() } }
+        );
+        console.log(`  ${t.name}: ${images.length} featured images`);
+      }
     }
   }
 

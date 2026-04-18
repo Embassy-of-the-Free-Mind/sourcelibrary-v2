@@ -25,6 +25,15 @@ interface BlogPost {
 
 const posts: BlogPost[] = [
   {
+    slug: 'cellulae',
+    title: 'Cellulae',
+    subtitle: 'A word on page 32 of a medieval manuscript launched modern biology. The argument on page 33 helped criminalize rape victims for eight centuries. They were written by the same man.',
+    date: '16 April 2026',
+    readTime: '12 min read',
+    tag: 'Deep dive',
+    tagColor: 'bg-accent-rust/10 text-accent-rust',
+  },
+  {
     slug: 'singularity-1486',
     title: 'The Singularity Was Published in 1486',
     subtitle: 'Transhumanism, panpsychism, and the planetary mind — in the original Latin and German. The source code for ideas we think are modern.',
@@ -49,8 +58,8 @@ const posts: BlogPost[] = [
   {
     slug: 'word-alignment',
     title: 'Reading Through the Translation',
-    subtitle: 'What if you could see the original Latin behind every English sentence? An interactive experiment in translation transparency.',
-    date: '15 April 2026',
+    subtitle: 'Click any English word to see the Latin or Greek that produced it. On-demand alignment powered by Gemini embeddings.',
+    date: '17 April 2026',
     readTime: '4 min read',
     tag: 'Interactive',
     tagColor: 'bg-amber-50 text-amber-700',

@@ -483,6 +483,7 @@ export async function PATCH(
                   [`detected_images.${detectionIndex}.thumbnail_url`]: generated.thumbnailUrl,
                   [`detected_images.${detectionIndex}.extracted_width`]: generated.extractedWidth,
                   [`detected_images.${detectionIndex}.extracted_height`]: generated.extractedHeight,
+                  [`detected_images.${detectionIndex}.dhash`]: generated.dhash,
                 }
               }
             );
@@ -494,6 +495,7 @@ export async function PATCH(
                 thumbnail_url: generated.thumbnailUrl,
                 extracted_width: generated.extractedWidth,
                 extracted_height: generated.extractedHeight,
+                dhash: generated.dhash,
                 updated_at: new Date(),
               };
               if (typeof body.galleryQuality === 'number') gallerySync.gallery_quality = Math.max(0, Math.min(1, body.galleryQuality));
