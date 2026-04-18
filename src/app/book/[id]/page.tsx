@@ -5,6 +5,7 @@ import { notFound } from 'next/navigation';
 import Link from 'next/link';
 import { Book, Page, TranslationEdition } from '@/lib/types';
 import { findBookByIdOrSlug } from '@/lib/book-lookup';
+import { deduplicateByDHash } from '@/lib/dhash';
 import { getBookDetail } from '@/lib/books-catalog';
 import { Calendar, Globe, FileText, BookMarked, Images } from 'lucide-react';
 import ArtworkInfo from '@/components/artwork/ArtworkInfo';
@@ -201,7 +202,7 @@ export async function generateMetadata({ params }: PageProps): Promise<Metadata>
   };
 }
 
-interface GalleryImagePreview { id: string; extracted_url?: string; thumbnail_url?: string; image_url?: string; description?: string; type?: string; page_number?: number; gallery_quality?: number }
+interface GalleryImagePreview { id: string; extracted_url?: string; thumbnail_url?: string; image_url?: string; description?: string; type?: string; page_number?: number; gallery_quality?: number; dhash?: string; book_id?: string }
 interface BookCollectionPreview { slug: string; name: string; subtitle?: string; color?: string; book_count?: number; featured_images?: Array<{ extracted_url?: string; thumbnail_url?: string; image_url?: string }> }
 
 async function getBook(id: string): Promise<{ book: Book; pages: Page[]; totalBooks: number; galleryImages: GalleryImagePreview[]; galleryImageCount: number; bookCollections: BookCollectionPreview[]; matchedBySlug: boolean } | null> {
@@ -272,10 +273,10 @@ async function getBook(id: string): Promise<{ book: Book; pages: Page[]; totalBo
     db.collection('gallery_images')
       .find(
         { book_id: bookId, gallery_quality: { $gte: 0.7 }, book_visible: true },
-        { projection: { _id: 0, id: 1, extracted_url: 1, thumbnail_url: 1, image_url: 1, description: 1, type: 1, page_number: 1, gallery_quality: 1 }, maxTimeMS: 5000 },
+        { projection: { _id: 0, id: 1, extracted_url: 1, thumbnail_url: 1, image_url: 1, description: 1, type: 1, page_number: 1, gallery_quality: 1, dhash: 1, book_id: 1 }, maxTimeMS: 5000 },
       )
       .sort({ gallery_quality: -1 })
-      .limit(8)
+      .limit(30) // over-fetch to allow dhash dedup to filter duplicates
       .toArray()
       .catch(() => []),
     // Separate count query for accurate image count display
@@ -316,7 +317,8 @@ async function getBook(id: string): Promise<{ book: Book; pages: Page[]; totalBo
   // Serialize MongoDB objects to plain JavaScript objects
   const serializedBook = JSON.parse(JSON.stringify(book));
   const serializedPages = JSON.parse(JSON.stringify(pagesRaw));
-  const galleryImages = JSON.parse(JSON.stringify(galleryImagesRaw)) as GalleryImagePreview[];
+  const galleryImagesParsed = JSON.parse(JSON.stringify(galleryImagesRaw)) as (GalleryImagePreview & { gallery_quality: number; book_id: string })[];
+  const galleryImages = deduplicateByDHash(galleryImagesParsed).slice(0, 8) as GalleryImagePreview[];
   const bookCollections = JSON.parse(JSON.stringify(bookCollectionsRaw)) as BookCollectionPreview[];
 
   return { book: serializedBook as Book, pages: serializedPages as Page[], totalBooks, galleryImages, galleryImageCount, bookCollections, matchedBySlug };

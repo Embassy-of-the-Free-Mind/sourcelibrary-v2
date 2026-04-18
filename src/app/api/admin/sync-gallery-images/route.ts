@@ -104,6 +104,7 @@ export const POST = withAdminAuth(async (request: NextRequest) => {
           museum_description: '$detected_images.museum_description',
           detection_source: '$detected_images.detection_source',
           metadata: '$detected_images.metadata',
+          dhash: '$detected_images.dhash',
           book_title: { $ifNull: ['$book.display_title', { $ifNull: ['$book.title', 'Unknown'] }] },
           book_author: '$book.author',
           book_year: '$book.year',

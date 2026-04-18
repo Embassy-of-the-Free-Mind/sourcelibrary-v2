@@ -316,6 +316,7 @@ async function buildGalleryDocs(
           museum_description: img.museum_description || null,
           detection_source: img.detection_source || null,
           metadata: img.metadata || null,
+          dhash: img.dhash || null,
           book_title: book?.display_title || book?.title || 'Unknown',
           book_author: book?.author || null,
           book_year: book?.year || null,

@@ -10,6 +10,7 @@
 import sharp from 'sharp';
 import { storagePut } from '@/lib/storage';
 import { images } from '@/lib/api-client/images';
+import { computeDHash } from '@/lib/dhash';
 
 const GALLERY_IIIF_WIDTH = 4000; // Request high-res from IIIF sources
 
@@ -36,6 +37,7 @@ interface GenerateGalleryImagesResult {
   thumbnailUrl: string;   // 300px thumbnail JPEG
   extractedWidth: number; // Pixel width of extracted image
   extractedHeight: number; // Pixel height of extracted image
+  dhash: string;          // 64-bit perceptual hash for dedup
 }
 
 /**
@@ -155,6 +157,9 @@ export async function generateGalleryImages(
     .jpeg({ quality: 70 })
     .toBuffer();
 
+  // Compute perceptual hash from thumbnail (small buffer = fast)
+  const dhash = await computeDHash(thumbnailBuffer);
+
   // Upload both to R2
   const blobPrefix = `gallery/${bookId}/${pageId}-${detectionIndex}`;
 
@@ -177,5 +182,6 @@ export async function generateGalleryImages(
     thumbnailUrl: thumbnailBlob.url + cacheBust,
     extractedWidth,
     extractedHeight,
+    dhash,
   };
 }
