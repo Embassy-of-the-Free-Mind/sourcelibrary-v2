@@ -194,8 +194,9 @@ export function proxy(request: NextRequest) {
 
     // Non-slug IDs → redirect to canonical slug URL.
     // Slugs contain hyphens and are >24 chars. ObjectIds are exactly 24 hex chars.
-    // Custom IDs are shorter hex strings. Both lack hyphens.
-    const looksLikeId = /^[0-9a-f]{24}$/.test(segment) || (!segment.includes('-') && /^[0-9a-f]+$/.test(segment));
+    // Custom IDs are shorter hex strings with at least one hex letter (a-f).
+    // Pure numeric strings (e.g. "13") are not valid IDs and should 404 normally.
+    const looksLikeId = /^[0-9a-f]{24}$/.test(segment) || (!segment.includes('-') && /^[0-9a-f]+$/.test(segment) && /[a-f]/.test(segment));
     if (looksLikeId) {
       const url = request.nextUrl.clone();
       url.pathname = '/api/redirect/book-slug';
