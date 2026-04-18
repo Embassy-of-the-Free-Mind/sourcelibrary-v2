@@ -22,7 +22,7 @@ import { ObjectId } from 'mongodb';
  */
 
 const MODEL = 'gemini-3-flash-preview';
-const MAX_ROUNDS = 8;
+const MAX_ROUNDS = 6;
 const TEMPERATURE = 0.7;
 
 // ── Types ─────────────────────────────────────────────────────────────
@@ -700,6 +700,15 @@ ${notebookContext}
 Ask yourself: "Could this question go in 2-3 genuinely different directions that would each require different searches?" If yes → conversational text + present_choices. If no → search immediately.
 
 The threshold is about **breadth, not ambiguity**. "Sanskrit alchemy" isn't ambiguous (you know what it means) but it's broad (many angles to explore). "What did Paracelsus say about mercury?" is clear AND focused — just search.
+
+## Know when to stop searching
+
+After 2-3 rounds of searching (4-6 tool calls total), stop and synthesize what you've found. A focused, well-cited response from 2-4 sources is far better than an exhaustive survey of everything tangentially related.
+
+- Found 2-3 strong passages? Stop searching, write your response.
+- First search returned nothing? Try one more angle, then acknowledge the gap.
+- Don't run the same search with slightly different wording — if keyword search missed, try semantic (or vice versa), then move on.
+- read_nearby_pages is for deepening a promising find, not for fishing. Only use it after you've found something specific worth expanding.
 
 ## The collection
 
