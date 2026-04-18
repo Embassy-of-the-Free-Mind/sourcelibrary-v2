@@ -788,7 +788,7 @@ export async function* streamAgenticResponse(
         allParts.push(p);
         if (p.functionCall) {
           functionCalls.push(p);
-        } else if (p.text?.trim()) {
+        } else if (p.text) {
           yield { type: 'text', text: p.text };
         }
       }
