@@ -74,6 +74,7 @@ const limitArg = args.find(a => a.startsWith('--limit='))?.split('=')[1];
 const PHASE_6_LIMIT = limitArg ? parseInt(limitArg) : 30;
 const PHASE_7_LIMIT = limitArg ? parseInt(limitArg) : 30;
 const BOOK_CONCURRENCY = parseInt(process.env.ENRICH_CONCURRENCY || '8');
+const MAX_BATCH_CONCURRENCY = 20; // Cap parallel Gemini calls per book (prevents 100+ simultaneous calls for huge books)
 const SINGLE_BOOK = args.find(a => a.startsWith('--book='))?.split('=')[1];
 const MAX_RUNTIME_MS = 90 * 60 * 1000; // 90 min hard cap — prevents 12h runs blocking the scheduler
 const PROCESS_START = Date.now();
@@ -433,11 +434,17 @@ async function processAllBatches(pages, bookTitle, bookAuthor, bookLanguage, cha
   if (pageBatches.length === 0) return [];
 
   const batchSource = chapterTexts && chapterTexts.length > 1 ? 'chapters' : 'char-count';
-  console.log(`    Processing ${pageBatches.length} batches (${batchSource}) in parallel...`);
+  console.log(`    Processing ${pageBatches.length} batches (${batchSource}), concurrency ${Math.min(pageBatches.length, MAX_BATCH_CONCURRENCY)}...`);
 
-  const results = await Promise.all(
-    pageBatches.map(batchPages => processBatch(batchPages, bookTitle, bookAuthor, bookLanguage))
-  );
+  // Process with capped concurrency to avoid 100+ simultaneous Gemini calls on huge books
+  const results = [];
+  for (let i = 0; i < pageBatches.length; i += MAX_BATCH_CONCURRENCY) {
+    const chunk = pageBatches.slice(i, i + MAX_BATCH_CONCURRENCY);
+    const chunkResults = await Promise.all(
+      chunk.map(batchPages => processBatch(batchPages, bookTitle, bookAuthor, bookLanguage))
+    );
+    results.push(...chunkResults);
+  }
   return results;
 }
 
@@ -1434,7 +1441,7 @@ async function main() {
       // Priority: first translations first, then by retry count (fewer retries first)
       books = await db.collection('books')
         .find({ 'pipeline_auto.status': 'translate_complete' })
-        .sort({ is_first_translation: -1, 'pipeline_auto.retry_count': 1 })
+        .sort({ is_first_translation: -1, pages_count: 1, 'pipeline_auto.retry_count': 1 })  // First translations first, then small books
         .project({ id: 1, title: 1, display_title: 1, author: 1, language: 1, year: 1, chapters: 1, 'pipeline_auto.retry_count': 1, 'image_source.provider': 1, pages_count: 1 })
         .limit(PHASE_6_LIMIT)
         .toArray();
