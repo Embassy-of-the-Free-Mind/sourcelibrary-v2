@@ -66,7 +66,7 @@ const ALL_COLLECTIONS = [...VISUAL_ART_COLLECTIONS, ...TOPICAL_COLLECTIONS];
 const COLLECTION_LIST = ALL_COLLECTIONS.map(c => `  - ${c.slug}: ${c.name}`).join('\n');
 
 function buildPrompt(artwork) {
-  return `You are a museum curator cataloging a work of visual art for Source Library, a digital library of Renaissance and early modern Western esoteric texts (alchemy, Hermetica, Neoplatonism, Kabbalah, Rosicrucianism, natural philosophy).
+  return `You are cataloging a work of art for Source Library, a scholarly digital library of primary sources. The collection spans all traditions worldwide: Western esotericism (alchemy, Hermetica, Kabbalah, Rosicrucianism), classical antiquity (Greek, Roman, Egyptian, Mesopotamian), world religions (Hinduism, Buddhism, Islam, Judaism, Daoism, Shinto), indigenous traditions (African, Oceanic, Mesoamerican, Native American), and early modern knowledge (anatomy, astronomy, natural philosophy, botany).
 
 ARTWORK METADATA:
 - Title: ${artwork.title || 'Unknown'}
@@ -76,39 +76,40 @@ ARTWORK METADATA:
 - Type: ${artwork.resource_type || 'Unknown'}
 - Commons categories: ${(artwork.commons_categories || []).join(', ') || 'None'}
 
-Analyze this artwork image and return JSON with these fields:
+Look at the image carefully. Return JSON with these fields:
 
 {
-  "subject": "One factual sentence: what is depicted. Be specific — name the scene, figures, or objects.",
-  "description": "2-3 sentences a museum visitor would read. What they're looking at, what's happening, notable visual details. No art-historical jargon. No AI slop ('masterful', 'captivating', 'testament to').",
-  "significance": "1-2 sentences on why this matters — its intellectual, historical, or philosophical context. Connection to specific texts, thinkers, or ideas from the Western esoteric/philosophical tradition. If no meaningful connection exists, set to null. Do NOT invent connections.",
-  "genre": "portrait | allegory | religious | mythological | landscape | genre-scene | still-life | scientific | decorative | emblem | architectural | anatomical | map | botanical",
-  "collections": ["Array of collection slugs this artwork belongs in. Choose from the list below. Be VERY selective — most artworks fit 1-2 collections, rarely 3. Only assign a collection if the artwork is a STRONG fit, not a tangential one. A map of a Dutch city does NOT belong in 'courts-of-wonder'. A portrait of a philosopher belongs in 'portraits-tradition', not also in every tradition they studied."],
+  "subject": "One sentence: what is physically in the image. Name every figure, creature, object, and action you can see. Be literal. 'A nude woman straddles a broomstick, legs spread, pressing it against her vulva' — not 'an allegory of the sabbath'. 'A four-armed blue-skinned deity stands on a prostrate figure, holding a severed head and a sword' — not 'a wrathful deity'.",
+  "description": "2-3 sentences describing what a person SEES when they look at this image. What are the figures doing? What are they holding? What position are their bodies in? What are they wearing or not wearing? What colors dominate? What is in the foreground vs background? Be concrete enough that someone could find this image by searching for any visible object, body part, animal, color, or action. Do NOT interpret — describe. Do NOT use art-criticism language ('masterful', 'evocative', 'captures the essence'). Just say what is there.",
+  "significance": "1-2 sentences of historical or intellectual context. What tradition does this come from? What text, ritual, belief system, or historical moment does it connect to? Name the specific text, author, or school of thought. This applies to any tradition worldwide — Indic, Buddhist, Islamic, African, Mesoamerican, classical, etc. — not just Western. If no meaningful connection exists, set to null. Do NOT fabricate.",
+  "genre": "portrait | allegory | religious | mythological | landscape | genre-scene | still-life | scientific | decorative | emblem | architectural | anatomical | map | botanical | ritual-object | manuscript-illumination | sculpture",
+  "collections": ["Collection slugs from the list below. Be selective — 1-2 usually, rarely 3. Only assign if STRONG fit."],
   "cross_references": [
     {
-      "text_or_author": "Specific text title or author name from the Western esoteric tradition",
+      "text_or_author": "A specific text title or author name this artwork connects to",
       "relationship": "One sentence explaining the connection",
       "confidence": "high | medium | low"
     }
   ],
-  "inscriptions": "CRITICAL: Transcribe EVERY piece of readable text on the image — ALL inscriptions, captions, verses, dedications, labels, publisher lines, plate numbers, cartouche text, and colophons. Prints and engravings often have multiple blocks of text (e.g. verses in Latin AND vernacular, publisher/excudit lines, numbering). Transcribe ALL of them, preserving line breaks and separating distinct text blocks with blank lines. If no readable text, set to null.",
-  "inscriptions_translation": "If inscriptions is non-null and NOT already in English, provide an English translation. Preserve line breaks to match the original. If inscriptions is null or already English, set to null.",
-  "inscriptions_language": "The language of the inscription (e.g., 'Latin', 'Dutch', 'German', 'French', 'Italian'). Null if no inscription.",
+  "inscriptions": "Transcribe ALL readable text on the image — titles, verses, dedications, labels, publisher lines, plate numbers, colophons. Look at the ENTIRE image including margins. Separate distinct text blocks with blank lines. If no readable text, null.",
+  "inscriptions_translation": "English translation if inscriptions exist and are not in English. Null otherwise.",
+  "inscriptions_language": "Language of the inscription (e.g. 'Latin', 'Sanskrit', 'Arabic'). Null if none.",
   "has_readable_text": true,
-  "figures_depicted": ["Named figures, historical persons, or figure types (e.g., 'Mercury', 'alchemist', 'Hermes Trismegistus')"],
-  "symbols": ["Identifiable symbols with specific iconographic meaning (e.g., 'caduceus', 'ouroboros', 'pelican-in-her-piety'). NOT generic items like 'tree' or 'building'."],
-  "iconclass": ["2-5 Iconclass codes (iconclass.org) describing the image subjects. Use the most specific code that applies. Examples: '49E39' = alchemy, '92B' = Bacchus, '31A1' = canon/proportions, '61B2(MELANCHOLY)' = personification of Melancholy, '25F23(LION)' = lion. Top-level: 0=Abstract, 1=Religion, 2=Nature, 3=Human, 4=Society, 5=Ideas, 6=History, 7=Bible, 8=Literature, 9=Classical Myth. Key branches: 11H=saints, 14=astrology, 25F=animals, 25FF=fabulous animals, 31A=human figure, 48C=emblems/allegories, 49E39=alchemy, 61B2=personifications, 83=Greek/Roman lit, 92=classical gods, 97=Ovid metamorphoses."]
+  "figures_depicted": ["Named figures, deities, historical persons, or figure types visible in the image"],
+  "symbols": ["Symbols with specific iconographic meaning (e.g. 'caduceus', 'ouroboros', 'vajra', 'ankh', 'yin-yang', 'broomstick'). NOT generic objects like 'tree' or 'building'."],
+  "iconclass": ["2-5 Iconclass codes. 0=Abstract, 1=Religion, 2=Nature, 3=Human, 4=Society, 5=Ideas, 6=History, 7=Bible, 8=Literature, 9=Classical Myth. Key: 11H=saints, 14=astrology, 25F=animals, 25FF=fabulous animals, 31A=human figure, 48C=emblems, 49E39=alchemy, 61B2=personifications, 92=classical gods."]
 }
 
 AVAILABLE COLLECTIONS:
 ${COLLECTION_LIST}
 
 RULES:
-- Be HONEST. If you're not confident in an identification, say so. If there's no esoteric connection, say null.
-- Be SPECIFIC. "A print depicting Mercury" not "a beautiful work showing a figure."
-- Inscriptions: transcribe EVERY piece of visible text — prints often have 3-4+ text blocks (title, verses in multiple languages, publisher lines, plate numbers). Missing any is a cataloging failure. Look at the ENTIRE image, especially bottom margins and cartouches.
-- Collections: only assign collections you're confident about. An ordinary landscape with no esoteric content should get 0 topical collections.
-- cross_references: only include if confidence is medium or high. Never fabricate.
+- DESCRIBE WHAT YOU SEE. Not what it means, not what it represents — what is physically visible. A viewer should be able to picture the image from your description alone.
+- Be FRANK about bodies. Nudity, genitalia, sexual acts, violence, gore, death — describe them plainly using anatomical terms. This is a scholarly library serving researchers. 'The figure's erect penis' not 'a symbol of fertility'. 'She squats over the broomstick pressing it against her vulva' not 'she rides a broomstick'. Accurate description is essential for scholarly search and retrieval.
+- Be SPECIFIC. Name colors, positions, gestures, facial expressions, clothing, objects held. 'A skeleton wearing a crown holds an hourglass in its left hand and a scythe in its right' — not 'a memento mori figure'.
+- INSCRIPTIONS: Look at the ENTIRE image including margins. Prints often have 3-4+ text blocks. Transcribe all of them.
+- COLLECTIONS: Only assign if confident. Most artworks fit 1-2 collections.
+- CROSS-REFERENCES: Connect to specific texts, authors, or traditions — not vague themes. Only medium or high confidence.
 - Return valid JSON only. No markdown, no commentary.`;
 }
 

@@ -998,7 +998,7 @@ export default async function CollectionDetailPage({ params }: Props) {
               })}
               {artworks.length > 15 && (
                 <Link
-                  href={`/artwork`}
+                  href={`/search?collection=${id}`}
                   className="flex items-center justify-center rounded-lg border border-dashed border-border-light hover:border-accent-rust/40 hover:bg-warm transition-all aspect-[4/3] text-sm text-muted hover:text-accent-rust"
                 >
                   +{artworks.length - 15} more works
