@@ -445,11 +445,13 @@ async function executeSearchImages(query: string, bookId?: string): Promise<
   // Fetch gallery_images by CLIP IDs or text search fallback
   let images;
   if (clipIds.size > 0) {
-    const ids = [...clipIds.keys()].map(id => new ObjectId(id));
-    images = await db.collection('gallery_images')
+    // CLIP IDs may be ObjectId hex strings or other formats — filter to valid ones
+    const validIds = [...clipIds.keys()].filter(id => /^[a-f0-9]{24}$/.test(id));
+    const ids = validIds.map(id => new ObjectId(id));
+    images = ids.length > 0 ? await db.collection('gallery_images')
       .find({ _id: { $in: ids } })
       .project({ image_url: 1, description: 1, museum_description: 1, book_id: 1, book_title: 1, book_author: 1, book_slug: 1, page_number: 1, type: 1 })
-      .toArray();
+      .toArray() : [];
   } else {
     // Text search fallback
     const filter: Record<string, unknown> = { gallery_quality: { $gte: 0.7 } };
