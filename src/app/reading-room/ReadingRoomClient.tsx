@@ -791,15 +791,18 @@ export default function ReadingRoomClient({ featuredPassage }: ReadingRoomClient
                         </a>
                       )}
                     </div>
-                    {isSignedIn && (
-                      <button
-                        onClick={() => setVisibility(v => v === 'public' ? 'private' : 'public')}
-                        className="text-[11px] text-[#8a8480] hover:text-[#6b6560] transition-colors font-sans flex items-center gap-1"
-                      >
-                        <span>{visibility === 'public' ? 'Public' : 'Private'}</span>
-                        <span className="text-[9px]">{visibility === 'public' ? '(visible to others)' : '(only you)'}</span>
-                      </button>
-                    )}
+                    <div className="flex items-center gap-3">
+                      {isSignedIn && (
+                        <button
+                          onClick={() => setVisibility(v => v === 'public' ? 'private' : 'public')}
+                          className="text-[11px] text-[#8a8480] hover:text-[#6b6560] transition-colors font-sans flex items-center gap-1"
+                        >
+                          <span>{visibility === 'public' ? 'Public' : 'Private'}</span>
+                          <span className="text-[9px]">{visibility === 'public' ? '(visible to others)' : '(only you)'}</span>
+                        </button>
+                      )}
+                      <span className="text-[9px] text-[#c0b8b0] font-mono">v4</span>
+                    </div>
                   </div>
 
                   {!isSignedIn && status !== 'loading' && (
