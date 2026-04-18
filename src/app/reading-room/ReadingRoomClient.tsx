@@ -15,13 +15,22 @@ import SiteHeader from '@/components/layout/SiteHeader';
  */
 function linkifySourceUrls(text: string): string {
   // Don't linkify URLs that are already inside markdown link syntax [text](url)
-  return text.replace(
+  let result = text.replace(
     /(?<!\]\()https:\/\/sourcelibrary\.org\/book\/([a-z0-9-]+)(?:\?page=(\d+))?/g,
     (match, _slug, page) => {
       const label = page ? `View source (p. ${page})` : 'View in collection';
       return `[${label}](${match})`;
     },
   );
+  // Linkify bare author URLs
+  result = result.replace(
+    /(?<!\]\()https:\/\/sourcelibrary\.org\/author\/([^\s)]+)/g,
+    (match, name) => {
+      const label = decodeURIComponent(name);
+      return `[${label}](${match})`;
+    },
+  );
+  return result;
 }
 
 /**
