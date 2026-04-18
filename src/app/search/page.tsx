@@ -1093,144 +1093,39 @@ export default function SearchPage() {
           </div>
         )}
 
-        {/* ==================== UNIFIED VIEW — ACCORDION AGENTS ==================== */}
+        {/* ==================== UNIFIED VIEW — FLAT RESULTS ==================== */}
         {viewMode === 'unified' && !loading && query.length >= 2 && (totalResults > 0 || semanticResults.length > 0 || semanticLoading) && (
           <div className="space-y-3">
-            {/* Books agent */}
-            {(bookTotal > 0 || loading) && (
-              <section className="border border-border-light rounded-xl overflow-hidden">
-                <button
-                  onClick={() => toggleSection('books')}
-                  className="w-full flex items-center justify-between px-5 py-3.5 bg-white hover:bg-warm/50 transition-colors"
-                >
-                  <div className="flex items-center gap-2.5">
-                    <Book className="w-5 h-5 text-accent-rust" />
-                    <span className="font-medium text-primary">Books</span>
-                    {bookTotal > 0 && <span className="text-sm text-muted">({bookTotal})</span>}
-                  </div>
-                  <ChevronDown className={`w-4 h-4 text-muted transition-transform ${expandedSections.has('books') ? 'rotate-180' : ''}`} />
-                </button>
-                {expandedSections.has('books') && (
-                  <div className="px-5 pb-4 space-y-3">
-                    {bookResults.slice(0, PREVIEW_BOOKS).map((result) => (
-                      <BookResultCard key={result.id} result={result} query={query} />
-                    ))}
-                    {bookTotal > PREVIEW_BOOKS && (
-                      <button onClick={() => drillInto('books')} className="w-full py-2.5 bg-accent-rust/8 text-accent-rust text-sm font-medium rounded-lg hover:bg-accent-rust/15 transition-colors flex items-center justify-center gap-1.5">
-                        See all {bookTotal} books <ChevronRight className="w-4 h-4" />
-                      </button>
-                    )}
-                  </div>
-                )}
-              </section>
+            {/* Semantic results first (best conceptual matches) */}
+            {semanticResults.map((sem: any) => (
+              <SemanticResultCard key={sem.book_id} result={sem} query={query} />
+            ))}
+            {semanticLoading && (
+              <div className="flex items-center gap-2 py-3 px-4 text-sm text-muted">
+                <Loader2 className="w-4 h-4 animate-spin" /> Finding related books...
+              </div>
             )}
 
-            {/* Related (semantic) agent */}
-            {(semanticResults.length > 0 || semanticLoading) && (
-              <section className="border border-violet-200 rounded-xl overflow-hidden">
-                <button
-                  onClick={() => toggleSection('semantic')}
-                  className="w-full flex items-center justify-between px-5 py-3.5 bg-white hover:bg-violet-50/50 transition-colors"
-                >
-                  <div className="flex items-center gap-2.5">
-                    <Lightbulb className="w-5 h-5 text-violet-500" />
-                    <span className="font-medium text-primary">Related</span>
-                    {semanticLoading && <Loader2 className="w-4 h-4 text-violet-400 animate-spin" />}
-                    {!semanticLoading && semanticResults.length > 0 && <span className="text-sm text-muted">({semanticResults.length})</span>}
-                  </div>
-                  <ChevronDown className={`w-4 h-4 text-muted transition-transform ${expandedSections.has('semantic') ? 'rotate-180' : ''}`} />
-                </button>
-                {expandedSections.has('semantic') && semanticResults.length > 0 && (
-                  <div className="px-5 pb-4 space-y-3">
-                    {semanticResults.map((sem: any) => (
-                      <Link
-                        key={sem.book_id}
-                        href={`/book/${sem.book_id}`}
-                        className="flex items-start gap-3 p-3 rounded-lg hover:bg-violet-50/50 transition-colors"
-                      >
-                        <div className="min-w-0">
-                          <h3 className="font-serif font-medium text-primary text-sm leading-tight">{sem.title}</h3>
-                          <p className="text-xs text-muted mt-0.5">
-                            {sem.author}{sem.year ? ` · ${sem.year}` : ''}
-                            {sem.relevance_hint ? <span className="text-violet-500"> · {sem.relevance_hint}</span> : ''}
-                          </p>
-                          {sem.summary_snippet && (
-                            <p className="text-xs text-secondary mt-1 line-clamp-2">{sem.summary_snippet}</p>
-                          )}
-                        </div>
-                      </Link>
-                    ))}
-                    <Link
-                      href={`/reading-room?q=${encodeURIComponent(query)}`}
-                      className="flex items-center justify-center gap-2 py-2.5 text-sm text-violet-600 hover:bg-violet-50 rounded-lg transition-colors"
-                    >
-                      <Quote className="w-4 h-4" />
-                      Ask the Librarian about this
-                    </Link>
-                  </div>
-                )}
-              </section>
-            )}
+            {/* Keyword book results */}
+            {bookResults.slice(0, PREVIEW_BOOKS).map((result) => (
+              <BookResultCard key={result.id} result={result} query={query} />
+            ))}
 
-            {/* Index (concepts, people, places) agent */}
-            {indexTotal > 0 && (
-              <section className="border border-border-light rounded-xl overflow-hidden">
-                <button
-                  onClick={() => toggleSection('index')}
-                  className="w-full flex items-center justify-between px-5 py-3.5 bg-white hover:bg-warm/50 transition-colors"
-                >
-                  <div className="flex items-center gap-2.5">
-                    <User className="w-5 h-5 text-violet-500" />
-                    <span className="font-medium text-primary">Concepts & People</span>
-                    <span className="text-sm text-muted">({indexTotal})</span>
-                  </div>
-                  <ChevronDown className={`w-4 h-4 text-muted transition-transform ${expandedSections.has('index') ? 'rotate-180' : ''}`} />
+            {/* "See all" + "Ask the Librarian" */}
+            <div className="flex flex-wrap gap-2">
+              {bookTotal > PREVIEW_BOOKS && (
+                <button onClick={() => drillInto('books')} className="flex-1 py-2.5 bg-accent-rust/8 text-accent-rust text-sm font-medium rounded-lg hover:bg-accent-rust/15 transition-colors flex items-center justify-center gap-1.5">
+                  See all {bookTotal} books <ChevronRight className="w-4 h-4" />
                 </button>
-                {expandedSections.has('index') && (
-                  <div className="px-5 pb-4 space-y-3">
-                    {indexResults.slice(0, PREVIEW_INDEX).map((result, idx) => (
-                      <IndexResultCard key={`${result.book_id}-${result.type}-${idx}`} result={result} query={query} />
-                    ))}
-                    {indexTotal > PREVIEW_INDEX && (
-                      <button onClick={() => drillInto('index')} className="w-full py-2.5 bg-violet-50 text-violet-600 text-sm font-medium rounded-lg hover:bg-violet-100 transition-colors flex items-center justify-center gap-1.5">
-                        See all {indexTotal} index entries <ChevronRight className="w-4 h-4" />
-                      </button>
-                    )}
-                  </div>
-                )}
-              </section>
-            )}
-
-            {/* Images agent */}
-            {imageTotal > 0 && (
-              <section className="border border-border-light rounded-xl overflow-hidden">
-                <button
-                  onClick={() => toggleSection('images')}
-                  className="w-full flex items-center justify-between px-5 py-3.5 bg-white hover:bg-warm/50 transition-colors"
-                >
-                  <div className="flex items-center gap-2.5">
-                    <ImageIcon className="w-5 h-5 text-accent-gold" />
-                    <span className="font-medium text-primary">Images</span>
-                    <span className="text-sm text-muted">({imageTotal})</span>
-                  </div>
-                  <ChevronDown className={`w-4 h-4 text-muted transition-transform ${expandedSections.has('images') ? 'rotate-180' : ''}`} />
-                </button>
-                {expandedSections.has('images') && (
-                  <div className="px-5 pb-4">
-                    <div className="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-3 lg:grid-cols-6 gap-3">
-                      {imageResults.slice(0, PREVIEW_IMAGES).map((item, idx) => (
-                        <ImageResultCard key={`${item.pageId}-${item.detectionIndex}-${idx}`} item={item} query={query} />
-                      ))}
-                    </div>
-                    {imageTotal > PREVIEW_IMAGES && (
-                      <button onClick={() => drillInto('images')} className="w-full mt-3 py-2.5 bg-accent-gold/10 text-accent-gold-dark text-sm font-medium rounded-lg hover:bg-accent-gold/20 transition-colors flex items-center justify-center gap-1.5">
-                        See all {imageTotal} images <ChevronRight className="w-4 h-4" />
-                      </button>
-                    )}
-                  </div>
-                )}
-              </section>
-            )}
+              )}
+              <Link
+                href={`/reading-room?q=${encodeURIComponent(query)}`}
+                className="flex-1 flex items-center justify-center gap-2 py-2.5 text-sm text-violet-600 bg-violet-50 hover:bg-violet-100 rounded-lg transition-colors"
+              >
+                <Quote className="w-4 h-4" />
+                Ask the Librarian
+              </Link>
+            </div>
           </div>
         )}
 
@@ -1505,6 +1400,33 @@ function BookResultCard({ result, query }: { result: SearchResult; query: string
           ) : null}
         </div>
       )}
+    </div>
+  );
+}
+
+function SemanticResultCard({ result, query }: { result: any; query: string }) {
+  return (
+    <div className="bg-white rounded-xl border border-border-light hover:border-accent-rust/30 hover:shadow-md transition-all">
+      <Link href={`/book/${result.slug || result.book_id}`} className="block p-4">
+        <div className="flex items-start gap-4">
+          <div className="w-[60px] h-[84px] rounded bg-warm flex items-center justify-center flex-shrink-0">
+            <Book className="w-6 h-6 text-border-medium" />
+          </div>
+          <div className="min-w-0 flex-1">
+            <h3 className="font-serif text-primary font-medium leading-snug">{result.title}</h3>
+            <p className="text-sm text-muted mt-0.5">
+              {result.author}{result.year ? ` · ${result.year}` : ''}
+              {result.language ? ` · ${result.language}` : ''}
+            </p>
+            {result.summary_snippet && (
+              <p className="text-sm text-secondary mt-1.5 line-clamp-2">{result.summary_snippet}</p>
+            )}
+            {result.relevance_hint && (
+              <p className="text-xs text-violet-500 mt-1">{result.relevance_hint}</p>
+            )}
+          </div>
+        </div>
+      </Link>
     </div>
   );
 }
