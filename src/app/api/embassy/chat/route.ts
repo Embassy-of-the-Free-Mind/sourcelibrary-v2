@@ -170,6 +170,15 @@ export async function POST(request: NextRequest) {
     } catch (err) {
       const errMsg = err instanceof Error ? `${err.message}\n${err.stack}` : String(err);
       console.error('[Embassy] Agentic stream error:', errMsg);
+      // Log to DB for easier debugging
+      try {
+        await db.collection('embassy_errors').insertOne({
+          threadId: activeThreadId,
+          message: message.slice(0, 500),
+          error: errMsg.slice(0, 5000),
+          createdAt: new Date(),
+        });
+      } catch { /* best effort */ }
       try {
         await send({ type: 'error', message: 'The Librarian was interrupted. Please try again.', debug: errMsg });
         await writer.close();
