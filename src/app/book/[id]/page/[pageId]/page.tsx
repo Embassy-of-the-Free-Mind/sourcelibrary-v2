@@ -54,11 +54,15 @@ export default async function PageEditorPage({ params }: PageProps) {
 
   const book = bookResult.book as unknown as Book;
 
+  // Serialize MongoDB objects (ObjectId, Date) to plain JS for client components
+  const serializedPage = JSON.parse(JSON.stringify(currentPage)) as Page;
+  const serializedNavPages = JSON.parse(JSON.stringify(navPages)) as Page[];
+
   return (
     <PageEditorClient
       initialBook={book}
-      initialPage={currentPage as unknown as Page}
-      initialPageList={navPages as unknown as Page[]}
+      initialPage={serializedPage}
+      initialPageList={serializedNavPages}
     />
   );
 }
