@@ -68,9 +68,30 @@
 - Image extraction: DONE (realtime worker cleared entire queue in 2 hours)
 - Pipeline is healthy and well-fed
 
+## Apr 15 Follow-up
+
+### Enrichment Bottleneck Fix (PR #1218)
+- 2,245 books stuck in translate_complete — only ~55/day clearing (should be ~67/hr)
+- Root cause: huge books (1,000+ pages) fired 100-169 parallel Gemini calls, causing mass timeouts
+- Fixes: MAX_BATCH_CONCURRENCY=20, small-books-first sort, scaled per-book timeout (5-20min)
+- Main already had: ENRICH_CONCURRENCY from env, 90-min runtime cap, limit=30
+
+### Warehouse Page Migration
+- 1,033 enrolled books had 0 pages — pages existed in pages_warehouse but weren't copied on promotion
+- Migrated 442,627 pages via Hetzner script (ran on server for lower Atlas latency)
+- Lesson: when promoting from warehouse, must also copy pages_warehouse → pages
+
+### Archive Status
+- archive-ocr running but 23% failure rate on MDZ (digitale-sammlungen.de blocking Hetzner IP)
+- archive-bulk broken — 20/33 books failed, 0 pages archived
+- 5,566 books in "archiving" status (legacy pipeline_status field)
+
 ## Key Lessons
 - Batch API throughput is unpredictable — jobs can sit at 0.6% processed for hours
 - Realtime API is massively underutilized at Tier 3 (30K RPM, using <500)
 - For backlog clearing, realtime wins even at 2x cost — hours vs days
 - The `job_name` vs `gemini_job_name` field mismatch is a landmine — ALWAYS check both
 - Free-tier keys help enrichment but hurt translation (15 RPM causes 429 storms)
+- Unlimited Promise.all on batches is dangerous — 169 parallel Gemini calls per book causes cascading timeouts
+- Warehouse promotion must include page migration — books without pages can't enter the pipeline
+- Process small items first when clearing backlogs — clears volume and surfaces issues faster
