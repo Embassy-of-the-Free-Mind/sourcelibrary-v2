@@ -20,10 +20,10 @@ import { nanoid } from 'nanoid';
 import { logUsage } from './lib/supabase-usage-logger.mjs';
 
 // ── Config ──
-const CONCURRENCY = 10;           // Books processed simultaneously
-const PAGE_CONCURRENCY = 5;       // Pages per book processed simultaneously
-const IMAGE_DOWNLOAD_CONCURRENCY = 20;
-const BOOKS_PER_RUN = 100;
+const CONCURRENCY = 25;           // Books processed simultaneously
+const PAGE_CONCURRENCY = 10;      // Pages per book processed simultaneously
+const IMAGE_DOWNLOAD_CONCURRENCY = 40;
+const BOOKS_PER_RUN = 250;
 const RUN_DEADLINE_MS = 25 * 60 * 1000; // 25 min deadline (scheduler runs every 2 min)
 const MODEL = 'gemini-3-flash-preview'; // Vision task needs accuracy
 const IMAGE_CANDIDATE_PAGE_TYPES = ['illustration', 'diagram', 'map', 'frontispiece', 'mixed'];
