@@ -15,13 +15,22 @@ import SiteHeader from '@/components/layout/SiteHeader';
  */
 function linkifySourceUrls(text: string): string {
   // Don't linkify URLs that are already inside markdown link syntax [text](url)
-  return text.replace(
+  let result = text.replace(
     /(?<!\]\()https:\/\/sourcelibrary\.org\/book\/([a-z0-9-]+)(?:\?page=(\d+))?/g,
     (match, _slug, page) => {
       const label = page ? `View source (p. ${page})` : 'View in collection';
       return `[${label}](${match})`;
     },
   );
+  // Linkify bare author URLs
+  result = result.replace(
+    /(?<!\]\()https:\/\/sourcelibrary\.org\/author\/([^\s)]+)/g,
+    (match, name) => {
+      const label = decodeURIComponent(name);
+      return `[${label}](${match})`;
+    },
+  );
+  return result;
 }
 
 /**
@@ -50,9 +59,10 @@ function ensureParagraphBreaks(text: string): string {
     // Already has a blank line after this one
     if (line === '' || next === '') continue;
     // Next line is a list item, blockquote, heading, hr, or table — leave it
-    if (/^(\s*[-*+>|#\d]|---)/.test(next)) continue;
+    // Note: *text and **text (italics/bold) must NOT match — only */-/+ followed by space are list items
+    if (/^(\s*[-*+]\s|>\s?|#{1,6}\s|\d+\.\s|---|\|)/.test(next)) continue;
     // Current line is a list item or blockquote continuing — leave it
-    if (/^(\s*[-*+>|#\d]|---)/.test(line)) continue;
+    if (/^(\s*[-*+]\s|>\s?|#{1,6}\s|\d+\.\s|---|\|)/.test(line)) continue;
 
     // Insert blank line for paragraph break
     result.push('');

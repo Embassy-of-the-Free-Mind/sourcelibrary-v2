@@ -312,6 +312,17 @@ async function executeSearchSemantic(query: string): Promise<
       if (!existing || p.score > existing.score) bestPageByBook.set(p.book_id, p);
     }
 
+    // Look up slugs from MongoDB for proper linking
+    const db = await getDb();
+    const bookIds = books.map(b => b.book_id);
+    const slugDocs = bookIds.length > 0
+      ? await db.collection('books')
+          .find({ id: { $in: bookIds } })
+          .project({ id: 1, slug: 1 })
+          .toArray()
+      : [];
+    const slugMap = new Map(slugDocs.map(d => [d.id, d.slug]));
+
     // Return book results, enriched with page citations where available
     return books.map(b => {
       const page = bestPageByBook.get(b.book_id);
@@ -319,7 +330,7 @@ async function executeSearchSemantic(query: string): Promise<
         book_id: b.book_id,
         bookTitle: b.title || 'Unknown',
         bookAuthor: b.author || 'Unknown',
-        bookSlug: undefined,
+        bookSlug: slugMap.get(b.book_id),
         page_number: page?.page_number || 0,
         snippet: page?.snippet || (b.summary_text || '').slice(0, 500),
         score: b.similarity,
@@ -517,7 +528,10 @@ async function executeTool(
       const results = await executeSearchSemantic(query);
       let context = results.length > 0 ? 'Semantic search results:\n' : 'No semantic matches found.';
       for (const r of results) {
-        context += `\n--- ${r.bookTitle} by ${r.bookAuthor}, Page ${r.page_number} (score: ${r.score.toFixed(2)}) ---\n${r.snippet}\n`;
+        const url = r.bookSlug
+          ? `https://sourcelibrary.org/book/${r.bookSlug}${r.page_number ? `?page=${r.page_number}` : ''}`
+          : '';
+        context += `\n--- ${r.bookTitle} by ${r.bookAuthor}, Page ${r.page_number}${url ? ` (${url})` : ''} ---\n${r.snippet}\n`;
       }
 
       const sources: SourceCard[] = results.map(r => ({
@@ -668,8 +682,12 @@ Examples of specific questions that should search immediately:
 **Step 4: Deep, focused research.**
 Once you have a direction (from a choice or a specific question), search strategically. The collection includes books in Latin, German, French, Dutch, Hebrew, Sanskrit, and more — nearly all translated into English. **Search in English first.** Use search_collection for keywords, search_semantic for concepts, search_wikipedia for context. When you find something promising, use read_nearby_pages for more context. Follow threads across books.
 
-**Step 5: Save and cite.**
-Use add_to_notebook for quotes directly relevant to the research question. The notebook persists across messages. Cite precisely: "quoted text" — *Title* by Author, [Page N](url). Use exact URLs from tool results: https://sourcelibrary.org/book/{slug}?page={N}. Links are automatically verified.
+**Step 5: Save and cite with links.**
+Use add_to_notebook for quotes directly relevant to the research question. The notebook persists across messages.
+
+Cite with page-level links: "quoted text" — *[Title](https://sourcelibrary.org/book/{slug})* by [Author](https://sourcelibrary.org/author/{author-name}), [Page N](https://sourcelibrary.org/book/{slug}?page={N}).
+
+Every mention of a book should link to it. Every mention of an author should link to their author page. Every quote should cite a specific page number with a direct link. Use the URLs from tool results — they contain the correct slugs. Author page URLs use the author name in URL form: `/author/Cornelius Agrippa` → `/author/Cornelius%20Agrippa`.
 
 **Step 6: Show images and suggest next steps.**
 When search_images returns results, embed the best 1-3 images using markdown: \`![description](imageUrl)\`. After answering, suggest what to explore next.
@@ -688,12 +706,15 @@ Source Library has over 10,000 rare books from the 15th-18th centuries, many tra
 
 ## Formatting
 
-- Use markdown headers (## and ###) to organize longer responses
-- Use **bold** for key terms and *italics* for book titles
-- Use blockquotes (>) for important quotations from primary sources
-- Use paragraph breaks between distinct ideas — don't write walls of text
+- Use markdown headers (## and ###) to organize longer responses into clear sections
+- Use **bold** for key terms and *italics* for book titles (linked: *[Title](url)*)
+- Use blockquotes (>) for important quotations from primary sources — always with page citation
+- Use paragraph breaks between distinct ideas — leave a blank line between paragraphs. Don't write walls of text
 - Conversational but substantive — a research conversation, not a lecture
-- Cite 2-4 key passages rather than dumping everything
+- Cite 2-4 key passages rather than dumping everything. Every passage needs a page number and link
+- Link authors to their author pages: [Author Name](https://sourcelibrary.org/author/Author%20Name)
+- Link books to their book pages: *[Book Title](https://sourcelibrary.org/book/slug)*
+- Link quotes to specific pages: [Page 42](https://sourcelibrary.org/book/slug?page=42)
 - Make clear when speaking from general knowledge vs. specific texts`;
 }
 
