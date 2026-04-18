@@ -107,6 +107,7 @@ export default function SearchV2Page() {
   const [librarianSteps, setLibrarianSteps] = useState<SearchStep[]>([]);
   const [librarianSources, setLibrarianSources] = useState<SourceCard[]>([]);
   const [librarianStreaming, setLibrarianStreaming] = useState(false);
+  const [librarianChoices, setLibrarianChoices] = useState<{ text: string; options: string[] } | null>(null);
   const [showThinking, setShowThinking] = useState(false);
   const abortRef = useRef<AbortController | null>(null);
 
@@ -143,6 +144,7 @@ export default function SearchV2Page() {
     setLibrarianThinking('');
     setLibrarianSteps([]);
     setLibrarianSources([]);
+    setLibrarianChoices(null);
     setLibrarianStreaming(true);
 
     try {
@@ -196,6 +198,9 @@ export default function SearchV2Page() {
                 case 'chunk':
                   contentAccum += event.text || '';
                   setLibrarianContent(contentAccum);
+                  break;
+                case 'choices':
+                  setLibrarianChoices({ text: event.text, options: event.options });
                   break;
                 case 'sources':
                   setLibrarianSources((event.sources || []).map((s: any) => ({
@@ -457,6 +462,32 @@ export default function SearchV2Page() {
                       </Link>
                     );
                   })}
+                </div>
+              )}
+
+              {/* Choice chips */}
+              {librarianChoices && (
+                <div className="mt-3">
+                  {librarianChoices.text && (
+                    <p className="text-[13px] text-[#6b6560] font-body mb-2 italic">{librarianChoices.text}</p>
+                  )}
+                  <div className="flex flex-wrap gap-2">
+                    {librarianChoices.options.map((opt) => (
+                      <button
+                        key={opt}
+                        onClick={() => {
+                          setQuery(opt);
+                          setLibrarianChoices(null);
+                          setExpandedSections(new Set());
+                          startLibrarian(opt);
+                          startAgents(opt);
+                        }}
+                        className="px-3 py-1.5 text-[13px] text-[#1a1612] border border-[#c9a86c] rounded-full hover:bg-[#c9a86c] hover:text-white transition-colors font-body"
+                      >
+                        {opt}
+                      </button>
+                    ))}
+                  </div>
                 </div>
               )}
             </div>
