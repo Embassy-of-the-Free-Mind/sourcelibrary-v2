@@ -76,16 +76,16 @@ export default function Singularity1486Page() {
 
         <blockquote className="border-l-2 border-accent-rust/30 pl-6 my-8">
           <p className="text-secondary leading-relaxed italic font-body">
-            &ldquo;We have given you, O Adam, no fixed seat, no form of your own, no specific duty, so that whatever seat, whatever appearance, and whatever duty you yourself desire, you may have according to your own wish and decision. The nature of all other creatures is defined within the bounds of laws established by us. You, however, unconstrained by any limits, shall determine your own nature by your own judgment, into whose power I have placed you.&rdquo;
+            &ldquo;We have given you, O Adam, no fixed seat, no form of your own, nor any peculiar gift, so that whatever seat, whatever form, whatever gifts you yourself shall desire, these you may have and possess according to your own wish and judgment. The nature of all other beings is limited and constrained within the laws prescribed by us. You, constrained by no limits, shall define your nature for yourself according to your own free will, in whose hand I have placed you.&rdquo;
           </p>
         </blockquote>
 
         <blockquote className="border-l-2 border-accent-rust/30 pl-6 my-8">
           <p className="text-secondary leading-relaxed italic font-body">
-            &ldquo;I have set you at the center of the world so that from there you might more easily observe everything that exists in the world. I have made you neither celestial nor terrestrial, neither mortal nor immortal, so that you, like a free and glorious master, may shape yourself into whatever form you prefer. You may degenerate into lower, irrational beings, or you may be reborn by the soul&rsquo;s decision into higher, divine ones.&rdquo;
+            &ldquo;I have set you in the center of the world so that from there you may more easily gaze upon whatever is in the world. We have made you neither heavenly nor earthly, neither mortal nor immortal, so that as if you were your own free and honorable sculptor and molder, you may fashion yourself into whatever form you shall prefer. You shall be able to degenerate into the lower things, which are brutes; you shall be able to be reborn into the higher things, which are divine, according to the judgment of your mind.&rdquo;
           </p>
           <p className="text-xs text-muted mt-2 not-italic">
-            <Link href="/book/oration-on-the-dignity-of-man-mirandola?page=2" className="text-accent-rust hover:underline">Pico, <em>Oratio</em>, p. 2 &rarr;</Link>
+            <Link href="/book/ioannis-pici-mirandulae-omnia-opera-mirandola?page=216" className="text-accent-rust hover:underline">Pico, <em>Omnia Opera</em> (1519), p. 216 &rarr;</Link>
           </p>
         </blockquote>
 
@@ -103,15 +103,15 @@ export default function Singularity1486Page() {
 
         <blockquote className="border-l-2 border-accent-rust/30 pl-6 my-8">
           <p className="text-secondary leading-relaxed italic font-body">
-            &ldquo;O, the supreme generosity of God the Father! O, the highest and most wonderful happiness of man, to whom it is granted to possess whatever he chooses and to be whatever he wants!&rdquo;
+            &ldquo;O the supreme generosity of God the Father! O the highest and wonderful happiness of man! To whom it is granted to have what he chooses, to be what he wills.&rdquo;
           </p>
           <p className="text-xs text-muted mt-2 not-italic">
-            <Link href="/book/oration-on-the-dignity-of-man-mirandola?page=2" className="text-accent-rust hover:underline">Pico, <em>Oratio</em>, p. 2 &rarr;</Link>
+            <Link href="/book/ioannis-pici-mirandulae-omnia-opera-mirandola?page=216" className="text-accent-rust hover:underline">Pico, <em>Omnia Opera</em> (1519), p. 216 &rarr;</Link>
           </p>
         </blockquote>
 
         <p className="text-secondary leading-relaxed mb-8 font-body">
-          <Link href="/book/oration-on-the-dignity-of-man-mirandola" className="text-accent-rust hover:underline">
+          <Link href="/book/ioannis-pici-mirandulae-omnia-opera-mirandola" className="text-accent-rust hover:underline">
             Read the full translation &rarr;
           </Link>
         </p>
@@ -168,7 +168,7 @@ export default function Singularity1486Page() {
             &ldquo;This is the great justice of creation: that everyone creates for themselves the conditions of their future existence.&rdquo;
           </p>
           <p className="text-xs text-muted mt-2 not-italic">
-            <Link href="/book/the-little-book-of-life-after-death-fechner?page=20" className="text-accent-rust hover:underline">Fechner, <em>Life After Death</em>, p. 20 &rarr;</Link>
+            <Link href="/book/the-little-book-of-life-after-death-fechner?page=2160" className="text-accent-rust hover:underline">Fechner, <em>Life After Death</em>, p. 20 &rarr;</Link>
           </p>
         </blockquote>
 
@@ -257,7 +257,7 @@ export default function Singularity1486Page() {
             &ldquo;The movements of the heavens, therefore, are nothing other than a perpetual song &mdash; perceived by the mind, not by the ear &mdash; progressing through dissonant tensions, like certain syncopations or cadences, tending toward certain and prescribed closures, each consisting of six voices.&rdquo;
           </p>
           <p className="text-xs text-muted mt-2 not-italic">
-            <Link href="/book/harmonices-mundi-1619-first-edition-kepler?page=295" className="text-accent-rust hover:underline">Kepler, <em>Harmonices Mundi</em>, p. 295 &rarr;</Link>
+            <Link href="/book/harmonices-mundi-1619-first-edition-kepler?page=21695" className="text-accent-rust hover:underline">Kepler, <em>Harmonices Mundi</em>, p. 295 &rarr;</Link>
           </p>
         </blockquote>
 
@@ -274,7 +274,7 @@ export default function Singularity1486Page() {
             &ldquo;The Earth sings MI FA MI so that even from these syllables it can be seen that in this our domicile, Misery and Famine hold sway.&rdquo;
           </p>
           <p className="text-xs text-muted mt-2 not-italic">
-            <Link href="/book/harmonices-mundi-1619-first-edition-kepler?page=290" className="text-accent-rust hover:underline">Kepler, <em>Harmonices Mundi</em>, p. 290 &rarr;</Link>
+            <Link href="/book/harmonices-mundi-1619-first-edition-kepler?page=21690" className="text-accent-rust hover:underline">Kepler, <em>Harmonices Mundi</em>, p. 290 &rarr;</Link>
           </p>
         </blockquote>
 
@@ -291,7 +291,7 @@ export default function Singularity1486Page() {
             &ldquo;It is no longer a wonder, then, that man &mdash; the ape of his Creator &mdash; has finally discovered a method of singing in harmony which was unknown to the ancients. He did this so that he might play out the perpetuity of all cosmic time in a brief portion of an hour through the artful symphony of many voices, and so that he might, to some extent, taste the delight of God the Master Craftsman in His own works.&rdquo;
           </p>
           <p className="text-xs text-muted mt-2 not-italic">
-            <Link href="/book/harmonices-mundi-1619-first-edition-kepler?page=295" className="text-accent-rust hover:underline">Kepler, <em>Harmonices Mundi</em>, p. 295 &rarr;</Link>
+            <Link href="/book/harmonices-mundi-1619-first-edition-kepler?page=21695" className="text-accent-rust hover:underline">Kepler, <em>Harmonices Mundi</em>, p. 295 &rarr;</Link>
           </p>
         </blockquote>
 
@@ -502,8 +502,8 @@ export default function Singularity1486Page() {
 
         <ul className="space-y-3 mb-12">
           <li className="text-secondary font-body">
-            <Link href="/book/oration-on-the-dignity-of-man-mirandola" className="text-accent-rust hover:underline">
-              Pico della Mirandola, <em>Oration on the Dignity of Man</em> (1486)
+            <Link href="/book/ioannis-pici-mirandulae-omnia-opera-mirandola" className="text-accent-rust hover:underline">
+              Pico della Mirandola, <em>Omnia Opera</em> (1519) &mdash; containing the <em>Oration</em>
             </Link>
             {' '}&mdash; the founding text of Renaissance humanism
           </li>
