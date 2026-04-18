@@ -4,7 +4,7 @@ import { Book } from '@/lib/types';
 import type { SearchResult, SearchResponse } from '@/lib/api-client/types/search';
 import { buildPageSearchStage } from '@/lib/atlas-search';
 import { searchBookIds } from '@/lib/books-catalog';
-import { semanticBookSearch } from '@/lib/semantic-search';
+import { semanticBookSearch, semanticPageSearchGlobal } from '@/lib/semantic-search';
 
 export const preferredRegion = 'fra1';
 
@@ -143,7 +143,7 @@ export async function GET(request: NextRequest) {
     // Run book search and page content search in parallel
     const hasBookLevelFilters = !!(language || category || dateFrom || dateTo || hasDoi === 'true' || hasTranslation === 'true' || firstTranslation === 'true' || year || yearFrom || yearTo || library);
 
-    const [bookDocs, pageDocs, semanticDocs] = await Promise.all([
+    const [bookDocs, pageDocs, semanticDocs, semanticPageDocs] = await Promise.all([
       // --- Book search via Supabase trigram (fast, no cold-start penalty) ---
       (async () => {
         if (bookId || pagesOnly) return [];
@@ -220,14 +220,11 @@ export async function GET(request: NextRequest) {
         }
       })(),
 
-      // --- Semantic search via pgvector (finds conceptual matches keyword search misses) ---
-      // Runs in parallel with keyword search. Results are merged + deduped below.
-      // Skip for within-book searches (semantic doesn't filter by book_id).
+      // --- Semantic book search (finds conceptually related books) ---
       (async () => {
         if (bookId || !searchContent) return [];
         try {
           const books = await semanticBookSearch(query, MAX_PAGE_RESULTS);
-          // Map book results to page-shaped results for merge compatibility
           return books.map(b => ({
             page_id: '',
             book_id: b.book_id,
@@ -239,6 +236,18 @@ export async function GET(request: NextRequest) {
             book_language: b.language,
             book_year: b.year,
           }));
+        } catch {
+          return [];
+        }
+      })(),
+
+      // --- Semantic page search (finds specific passages across all 2.6M pages) ---
+      // Catches passages buried inside large works that book-level search misses
+      // (e.g. Martial's "masturbator" epigram, Diogenes's public acts in Laertius)
+      (async () => {
+        if (bookId || !searchContent) return [];
+        try {
+          return await semanticPageSearchGlobal(query, 15);
         } catch {
           return [];
         }
@@ -386,6 +395,68 @@ export async function GET(request: NextRequest) {
         };
         if (book.work_id) (semResult as any)._work_id = book.work_id;
         results.push(semResult);
+      }
+    }
+
+    // Merge page-level semantic results (specific passages across all pages)
+    if (semanticPageDocs.length > 0) {
+      const seenPageKeys = new Set(
+        results
+          .filter(r => r.type === 'page' && r.page_number)
+          .map(r => `${r.book_id}-${r.page_number}`)
+      );
+
+      // Collect book IDs needing metadata
+      const pageBookIds = [...new Set(
+        semanticPageDocs
+          .filter(s => !seenPageKeys.has(`${s.book_id}-${s.page_number}`))
+          .map(s => s.book_id)
+      )];
+
+      const pageBookMap = new Map<string, any>();
+      if (pageBookIds.length > 0) {
+        const semPageBooks = await db.collection('books')
+          .find(
+            { id: { $in: pageBookIds }, visible: true, pages_count: { $gt: 0 } },
+            { projection: { id: 1, slug: 1, title: 1, display_title: 1, author: 1, thumbnail: 1, thumbnail_blob: 1, language: 1, published: 1, pages_count: 1, pages_translated: 1, doi: 1, categories: 1, quality_score: 1, work_id: 1 } }
+          )
+          .maxTimeMS(3000)
+          .toArray();
+        for (const b of semPageBooks) pageBookMap.set(b.id as string, b);
+      }
+
+      for (const sp of semanticPageDocs) {
+        const pageKey = `${sp.book_id}-${sp.page_number}`;
+        if (seenPageKeys.has(pageKey)) continue;
+        seenPageKeys.add(pageKey);
+
+        const book = pageBookMap.get(sp.book_id);
+        if (!book) continue;
+
+        const spResult: SearchResult = {
+          id: `${sp.book_id}-p${sp.page_number}`,
+          page_id: sp.page_id,
+          type: 'page',
+          book_id: sp.book_id,
+          slug: book.slug,
+          title: book.title || sp.book_title,
+          display_title: book.display_title,
+          author: book.author || sp.book_author || undefined,
+          language: book.language || sp.book_language || undefined,
+          published: book.published,
+          page_count: book.pages_count,
+          translated_count: book.pages_translated,
+          has_doi: !!book.doi,
+          doi: book.doi,
+          categories: book.categories,
+          page_number: sp.page_number,
+          snippet: sp.snippet,
+          snippet_type: 'translation' as const,
+          thumbnail: book.thumbnail,
+          thumbnail_blob: book.thumbnail_blob,
+        };
+        if (book.work_id) (spResult as any)._work_id = book.work_id;
+        results.push(spResult);
       }
     }
 

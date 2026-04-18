@@ -101,6 +101,45 @@ export async function semanticBookSearch(
   }));
 }
 
+// ── Global page-level semantic search ────────────────────────────────
+
+/**
+ * Global page-level semantic search via match_semantic RPC.
+ * Now that all 2.6M pages have embeddings, this finds specific passages
+ * that book-level search misses (e.g. Martial's "masturbator" epigram
+ * inside a 400-page book about Roman wit).
+ */
+export async function semanticPageSearchGlobal(
+  query: string,
+  limit: number = 15,
+): Promise<SemanticPageResult[]> {
+  const queryEmbedding = await getQueryEmbedding(query);
+  if (!queryEmbedding) return [];
+
+  const { data, error } = await supabase.rpc('match_semantic', {
+    query_embedding: JSON.stringify(queryEmbedding),
+    match_threshold: 0.3,
+    match_count: limit,
+  });
+
+  if (error) {
+    console.error('[semantic-search] match_semantic error:', error.message);
+    return [];
+  }
+
+  return (data || []).map((row: any) => ({
+    page_id: row.page_id,
+    book_id: row.book_id,
+    page_number: row.page_number,
+    snippet: (row.translation || '').slice(0, 300),
+    score: Number(row.similarity) || 0,
+    book_title: row.book_title,
+    book_author: row.book_author,
+    book_language: row.book_language,
+    book_year: row.book_year,
+  }));
+}
+
 // ── Page-level scoped search (step 2: within specific books) ────────
 
 export interface SemanticPageResult {
