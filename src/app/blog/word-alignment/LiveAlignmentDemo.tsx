@@ -230,8 +230,8 @@ function HighlightedSource({
             key={i}
             className={`transition-all duration-150 ${isHighlighted ? 'text-stone-900 font-medium' : ''}`}
             style={isHighlighted ? {
-              backgroundColor: `rgba(160, 120, 40, ${0.1 + (sim! - 0.55) * 1.5})`,
-              borderBottom: `2px solid rgba(160, 120, 40, ${0.3 + (sim! - 0.55) * 1.5})`,
+              backgroundColor: `rgba(160, 120, 40, ${Math.pow((sim! - 0.55) / 0.45, 2) * 0.35})`,
+              borderBottom: `2px solid rgba(160, 120, 40, ${Math.pow((sim! - 0.55) / 0.45, 2) * 0.7})`,
               borderRadius: '2px',
               padding: '1px 2px',
             } : undefined}
