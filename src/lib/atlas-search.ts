@@ -98,9 +98,16 @@ export function buildBookSearchStage(query: string, filters: BookSearchFilters =
  * Optionally filters by book_id (single or array via $in).
  */
 export function buildPageSearchStage(query: string, bookIds?: string | string[]): Document {
+  // Use fuzzy matching for single long words to catch morphological variants
+  // (e.g. "masturbation" matches "masturbator", "extraterrestrial" matches "extraterrestrials")
+  const words = query.trim().split(/\s+/);
+  const fuzzy = words.length === 1 && words[0].length >= 6
+    ? { maxEdits: 1, prefixLength: 4 }
+    : undefined;
+
   const should: Document[] = [
-    { text: { query, path: 'translation.data', score: { boost: { value: 2 } } } },
-    { text: { query, path: 'ocr.data' } },
+    { text: { query, path: 'translation.data', score: { boost: { value: 2 } }, ...(fuzzy && { fuzzy }) } },
+    { text: { query, path: 'ocr.data', ...(fuzzy && { fuzzy }) } },
   ];
 
   const filter: Document[] = [];
