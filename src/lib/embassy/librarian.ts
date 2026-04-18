@@ -805,11 +805,19 @@ export async function* streamAgenticResponse(
       yield { type: 'tool_call', name: fc.name, query: (fc.args?.query as string) || (fc.args?.quote as string)?.slice(0, 50) || '' };
     }
 
-    // Execute all tools in parallel
+    // Execute all tools in parallel — catch individual failures so one broken tool doesn't crash everything
     const toolResults = await Promise.all(
-      functionCalls.map(part => {
+      functionCalls.map(async part => {
         const fc = (part as { functionCall: { name: string; args: Record<string, unknown> } }).functionCall;
-        return executeTool(fc.name, fc.args || {}, threadId);
+        try {
+          return await executeTool(fc.name, fc.args || {}, threadId);
+        } catch (err) {
+          console.error(`[Librarian] Tool ${fc.name} failed:`, err instanceof Error ? err.message : err);
+          return {
+            result: { error: `Tool ${fc.name} encountered an error` },
+            step: { type: 'tool_result' as const, name: fc.name, query: (fc.args?.query as string) || '', found: 0, summary: 'Error — skipped' },
+          };
+        }
       }),
     );
 
