@@ -63,6 +63,7 @@ export async function GET(
       const { books: sbBooks, total } = await browseBooks({
         collection: id,
         hasTranslation: !skipTranslationFilter,
+        hasPages: isArtCollection ? false : undefined,
         sort: sbSort,
         limit: 1000, // manifest wants everything
         exactCount: true,
@@ -88,6 +89,7 @@ export async function GET(
     const { books: sbBooks, total } = await browseBooks({
       collection: id,
       hasTranslation: !skipTranslationFilter,
+      hasPages: isArtCollection ? false : undefined,
       language: language || undefined,
       search: q || undefined,
       sort: sbSort,
@@ -111,6 +113,7 @@ export async function GET(
     const { books: highlightBooks } = await browseBooks({
       collection: id,
       hasTranslation: !skipTranslationFilter,
+      hasPages: isArtCollection ? false : undefined,
       sort: 'quality',
       limit: 5,
     });
