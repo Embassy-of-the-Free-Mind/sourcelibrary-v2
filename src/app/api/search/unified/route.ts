@@ -231,45 +231,8 @@ async function searchBooks(
       .toArray();
   }
 
-  // Author alias expansion: if results are sparse and query matches an entity alias,
-  // include books linked to that entity (catches variant name searches like "Marsilius Ficinus")
-  // NOTE: metadata fallback (regex on categories/language/title) removed from unified endpoint
-  // for speed — semantic search covers conceptual matches that trigram misses.
-  if (books.length < limit) {
-    const seenIds = new Set(books.map((b: any) => b.id));
-    const entity = await db.collection('entities').findOne({
-      type: 'person',
-      canonical_name: { $exists: true },
-      $or: [
-        { canonical_name: queryRegex },
-        { aliases: queryRegex },
-        { name: queryRegex },
-      ],
-    }, { projection: { _id: 1 }, maxTimeMS: 1000 }).catch(() => null);
-
-    if (entity) {
-      const aliasFilter: Record<string, unknown> = {
-        author_entity_id: entity._id.toString(),
-        visible: true,
-        pages_count: { $gt: 0 },
-      };
-      if (library) aliasFilter['image_source.provider'] = library;
-
-      const aliasBooks = await db.collection('books')
-        .find(aliasFilter)
-        .project(bookProjection)
-        .limit(limit - books.length)
-        .maxTimeMS(1500)
-        .toArray();
-
-      for (const ab of aliasBooks) {
-        if (!seenIds.has(ab.id)) {
-          books.push(ab);
-          seenIds.add(ab.id);
-        }
-      }
-    }
-  }
+  // Author alias expansion removed from searchBooks for speed.
+  // Semantic search covers variant name matches better.
 
   // Canon-weighted reranking: older editions first, original language preferred
   const queryLower = query.toLowerCase();
