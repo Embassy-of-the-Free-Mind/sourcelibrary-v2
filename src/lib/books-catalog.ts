@@ -317,7 +317,9 @@ export async function searchBookIds(
 
   // Build OR filter: exact phrase match + word-level AND matches
   // "mathematical magick" should match "Mathematicall Magick" by matching each word
+  const STOPWORDS = new Set(['a', 'an', 'and', 'at', 'by', 'de', 'der', 'des', 'di', 'du', 'el', 'en', 'et', 'for', 'from', 'in', 'la', 'le', 'les', 'of', 'on', 'or', 'the', 'to', 'und', 'von', 'with']);
   const words = text.trim().split(/\s+/).filter(w => w.length >= 2);
+  const contentWords = words.filter(w => w.length >= 3 && !STOPWORDS.has(w.toLowerCase()));
   // Only ilike on indexed/short fields — summary_text and description cause
   // full-table scans and Supabase statement timeouts (no trigram indexes)
   const phraseFilters = `title.ilike.%${text}%,display_title.ilike.%${text}%,author.ilike.%${text}%`;
@@ -329,13 +331,15 @@ export async function searchBookIds(
     const displayAnds = words.map(w => `display_title.ilike.%${w}%`).join(',');
     orFilter += `,and(${titleAnds}),and(${displayAnds})`;
 
-    // Cross-field AND: each word must appear in SOME searchable field
+    // Cross-field AND: each content word must appear in SOME searchable field
     // Catches queries like "sanskrit alchemy" where "sanskrit" matches language
-    // and "alchemy" matches title. Avoids description (no trigram index → full scan).
-    const crossFieldAnd = words.map(w =>
-      `or(title.ilike.%${w}%,display_title.ilike.%${w}%,author.ilike.%${w}%,language.ilike.%${w}%)`
-    ).join(',');
-    orFilter += `,and(${crossFieldAnd})`;
+    // and "alchemy" matches title. Stopwords filtered to avoid broad scans.
+    if (contentWords.length >= 2) {
+      const crossFieldAnd = contentWords.map(w =>
+        `or(title.ilike.%${w}%,display_title.ilike.%${w}%,author.ilike.%${w}%,language.ilike.%${w}%)`
+      ).join(',');
+      orFilter += `,and(${crossFieldAnd})`;
+    }
   } else {
     // Single word: also match against language (e.g. "Sanskrit", "Arabic")
     orFilter += `,language.ilike.%${text}%`;
