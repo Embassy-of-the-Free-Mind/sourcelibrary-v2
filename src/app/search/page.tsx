@@ -287,13 +287,20 @@ export default function SearchPage() {
           const index = (data.index?.results || []).slice(0, PREVIEW_INDEX);
           const iTotal = data.index?.total || 0;
 
-          // Map unified gallery results to GalleryItem shape
+          // Map unified gallery + visual results to GalleryItem shape
+          // Merge both sources, deduped by id, gallery first (metadata search > CLIP)
           const galleryResults = data.gallery?.results || [];
-          const images: GalleryItem[] = galleryResults.map((g: any) => {
+          const visualResults = data.visual?.results || [];
+          const seenImageIds = new Set<string>();
+          const allImageResults = [...galleryResults, ...visualResults];
+          const images: GalleryItem[] = [];
+          for (const g of allImageResults) {
+            if (seenImageIds.has(g.id)) continue;
+            seenImageIds.add(g.id);
             const parts = (g.id || '').split('-');
             const detectionIndex = parseInt(parts.pop() || '0');
             const pageId = parts.join('-');
-            return {
+            images.push({
               pageId,
               bookId: g.bookId || '',
               pageNumber: 0,
@@ -304,9 +311,9 @@ export default function SearchPage() {
               author: '',
               description: g.description || '',
               type: g.type,
-            } as GalleryItem;
-          });
-          const imTotal = data.gallery?.total || 0;
+            } as GalleryItem);
+          }
+          const imTotal = (data.gallery?.total || 0) + (data.visual?.total || 0);
 
           setBookResults(books);
           setBookTotal(bTotal);
@@ -1175,6 +1182,26 @@ export default function SearchPage() {
               <button onClick={() => drillInto('books')} className="w-full py-2.5 bg-accent-rust/8 text-accent-rust text-sm font-medium rounded-lg hover:bg-accent-rust/15 transition-colors flex items-center justify-center gap-1.5">
                 See all {bookTotal} books <ChevronRight className="w-4 h-4" />
               </button>
+            )}
+
+            {/* Gallery images — inline strip */}
+            {imageResults.length > 0 && (
+              <>
+                <h2 className="text-xs font-medium text-muted uppercase tracking-wide flex items-center gap-2 mt-6">
+                  <span className="w-1.5 h-1.5 rounded-full bg-accent-gold" />
+                  Illustrations
+                </h2>
+                <div className="grid grid-cols-3 sm:grid-cols-4 md:grid-cols-6 gap-3">
+                  {imageResults.slice(0, PREVIEW_IMAGES).map((item, idx) => (
+                    <ImageResultCard key={`${item.pageId}-${item.detectionIndex}-${idx}`} item={item} query={query} />
+                  ))}
+                </div>
+                {imageTotal > PREVIEW_IMAGES && (
+                  <button onClick={() => drillInto('images')} className="w-full py-2 bg-accent-gold/8 text-accent-gold-dark text-sm font-medium rounded-lg hover:bg-accent-gold/15 transition-colors flex items-center justify-center gap-1.5">
+                    See all {imageTotal} images <ChevronRight className="w-4 h-4" />
+                  </button>
+                )}
+              </>
             )}
           </div>
         )}
