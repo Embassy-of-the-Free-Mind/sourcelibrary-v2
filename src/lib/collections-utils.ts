@@ -6,16 +6,29 @@
 // ---------- Pinned collection ordering ----------
 
 export const PINNED_COLLECTION_SLUGS = [
-  // Row 1
-  'natural-philosophy',
-  'classical-philosophy',
-  'renaissance-philosophy',
+  // Row 1 — the ancient roots
   'sacred-texts',
-  // Row 2
+  'classical-philosophy',
   'hermetica',
-  'alchemy',
   'mysticism',
+  // Row 2 — the esoteric arts
+  'alchemy',
+  'magic',
   'kabbalah',
+  'astrology',
+  // Row 3 — knowledge & world
+  'natural-philosophy',
+  'renaissance-philosophy',
+  'medicine',
+  'secret-societies',
+  // Row 4 — culture & thought
+  'theology',
+  'literature',
+  'art-illustrated',
+  'demonology',
+  // Row 5 — remaining
+  'psychology',
+  'history-political-thought',
 ];
 
 /** Pin specific collections first, shuffle the rest. */
