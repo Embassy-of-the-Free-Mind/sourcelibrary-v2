@@ -1023,51 +1023,7 @@ export default function SearchPage() {
           </div>
         )}
 
-        {/* Loading */}
-        {query.length >= 2 && loading && viewMode === 'unified' && (
-          <div className="py-8"><BookLoader size="xs" /></div>
-        )}
-
-        {/* AI narration — streams while search loads */}
-        {query.length >= 3 && (aiStreaming || aiNarration || aiNarrationHistory.length > 0) && (
-          <div className="mb-6 px-4 py-3 bg-warm rounded-lg border border-border-light space-y-3">
-            {/* Previous narrations from pill clicks */}
-            {aiNarrationHistory.map((entry, i) => (
-              <div key={i} className="text-sm text-secondary/70 italic leading-relaxed border-b border-border-light pb-2">
-                <span className="text-xs text-muted not-italic font-medium">{entry.query}:</span>{' '}
-                <span dangerouslySetInnerHTML={{
-                  __html: entry.text
-                    .replace(/&/g, '&amp;').replace(/</g, '&lt;').replace(/>/g, '&gt;')
-                    .replace(/\*([^*]+)\*/g, '<em>$1</em>')
-                }} />
-              </div>
-            ))}
-            {/* Current narration */}
-            {(aiStreaming || aiNarration) && (
-              <p className="text-sm text-secondary italic leading-relaxed"
-                 dangerouslySetInnerHTML={{
-                   __html: aiNarration
-                     .replace(/&/g, '&amp;').replace(/</g, '&lt;').replace(/>/g, '&gt;')
-                     .replace(/\*([^*]+)\*/g, '<em>$1</em>')
-                     + (aiStreaming ? '<span class="inline-block w-1.5 h-4 bg-accent-rust/40 animate-pulse ml-0.5 align-text-bottom"></span>' : '')
-                 }}
-              />
-            )}
-            {aiTerms.length > 0 && (
-              <div className="flex flex-wrap gap-1.5 mt-2">
-                {aiTerms.map(term => (
-                  <button
-                    key={term}
-                    onClick={() => { startAiStream(term, true); }}
-                    className="px-2.5 py-1 bg-white/60 text-secondary text-xs rounded-full hover:bg-accent-rust/10 hover:text-accent-rust transition-colors"
-                  >
-                    {term}
-                  </button>
-                ))}
-              </div>
-            )}
-          </div>
-        )}
+        {/* Loading — only show for drill-down modes where it may take longer */}
 
         {/* No results */}
         {noResults && !aiStreaming && aiResults.length === 0 && (
@@ -1141,70 +1097,102 @@ export default function SearchPage() {
         )}
 
         {/* ==================== UNIFIED VIEW — FLAT RESULTS ==================== */}
-        {viewMode === 'unified' && !loading && query.length >= 2 && (totalResults > 0 || semanticResults.length > 0 || semanticLoading) && (
-          <div className="space-y-3">
-            {/* Semantic results — conceptual matches */}
-            {(() => {
-              const keywordIds = new Set(bookResults.map(b => b.id || (b as any).book_id));
-              const unique = semanticResults.filter((sem: any) => !keywordIds.has(sem.book_id));
-              if (unique.length === 0 && !semanticLoading) return null;
-              return (
-                <>
-                  <h2 className="text-xs font-medium text-muted uppercase tracking-wide flex items-center gap-2">
-                    <span className="w-1.5 h-1.5 rounded-full bg-violet-400" />
-                    Conceptual matches
-                  </h2>
-                  {unique.map((sem: any) => (
-                    <SemanticResultCard key={sem.book_id} result={sem} query={query} />
+        {viewMode === 'unified' && !loading && query.length >= 2 && (totalResults > 0 || semanticResults.length > 0 || semanticLoading) && (() => {
+          const keywordIds = new Set(bookResults.map(b => b.id || (b as any).book_id));
+          const uniqueSemantic = semanticResults.filter((sem: any) => !keywordIds.has(sem.book_id));
+          const hasBoth = bookResults.length > 0 && uniqueSemantic.length > 0;
+
+          return (
+            <div className="space-y-3">
+              {/* Section label only when both types present */}
+              {hasBoth && uniqueSemantic.length > 0 && (
+                <h2 className="text-xs font-medium text-muted uppercase tracking-wide flex items-center gap-2">
+                  <span className="w-1.5 h-1.5 rounded-full bg-violet-400" />
+                  Conceptual matches
+                </h2>
+              )}
+              {uniqueSemantic.map((sem: any) => (
+                <SemanticResultCard key={sem.book_id} result={sem} query={query} />
+              ))}
+
+              {hasBoth && bookResults.length > 0 && (
+                <h2 className="text-xs font-medium text-muted uppercase tracking-wide flex items-center gap-2 mt-4">
+                  <span className="w-1.5 h-1.5 rounded-full bg-accent-rust" />
+                  Text matches
+                </h2>
+              )}
+              {bookResults.slice(0, PREVIEW_BOOKS).map((result, idx) => (
+                <BookResultCard key={result.id} result={result} query={query} autoPassages={idx === 0} />
+              ))}
+
+              {/* AI narration — positioned after results, not above */}
+              {query.length >= 3 && (aiStreaming || aiNarration || aiNarrationHistory.length > 0) && (
+                <div className="px-4 py-3 bg-warm/60 rounded-lg border border-border-light space-y-2">
+                  {aiNarrationHistory.map((entry, i) => (
+                    <div key={i} className="text-sm text-secondary/70 italic leading-relaxed border-b border-border-light pb-2">
+                      <span className="text-xs text-muted not-italic font-medium">{entry.query}:</span>{' '}
+                      <span dangerouslySetInnerHTML={{
+                        __html: entry.text
+                          .replace(/&/g, '&amp;').replace(/</g, '&lt;').replace(/>/g, '&gt;')
+                          .replace(/\*([^*]+)\*/g, '<em>$1</em>')
+                      }} />
+                    </div>
                   ))}
-                  {semanticLoading && (
-                    <div className="flex items-center gap-2 py-3 px-4 text-sm text-muted">
-                      <Loader2 className="w-4 h-4 animate-spin" /> Finding conceptual matches...
+                  {(aiStreaming || aiNarration) && (
+                    <p className="text-sm text-secondary italic leading-relaxed"
+                       dangerouslySetInnerHTML={{
+                         __html: aiNarration
+                           .replace(/&/g, '&amp;').replace(/</g, '&lt;').replace(/>/g, '&gt;')
+                           .replace(/\*([^*]+)\*/g, '<em>$1</em>')
+                           + (aiStreaming ? '<span class="inline-block w-1.5 h-4 bg-accent-rust/40 animate-pulse ml-0.5 align-text-bottom"></span>' : '')
+                       }}
+                    />
+                  )}
+                  {aiTerms.length > 0 && (
+                    <div className="flex flex-wrap gap-1.5">
+                      {aiTerms.map(term => (
+                        <button
+                          key={term}
+                          onClick={() => { startAiStream(term, true); }}
+                          className="px-2.5 py-1 bg-white/60 text-secondary text-xs rounded-full hover:bg-accent-rust/10 hover:text-accent-rust transition-colors"
+                        >
+                          {term}
+                        </button>
+                      ))}
                     </div>
                   )}
-                </>
-              );
-            })()}
-
-            {/* Keyword book results — text matches */}
-            {bookResults.length > 0 && (
-              <h2 className="text-xs font-medium text-muted uppercase tracking-wide flex items-center gap-2 mt-4">
-                <span className="w-1.5 h-1.5 rounded-full bg-accent-rust" />
-                Text matches
-              </h2>
-            )}
-            {bookResults.slice(0, PREVIEW_BOOKS).map((result) => (
-              <BookResultCard key={result.id} result={result} query={query} />
-            ))}
-
-            {/* "See all" */}
-            {bookTotal > PREVIEW_BOOKS && (
-              <button onClick={() => drillInto('books')} className="w-full py-2.5 bg-accent-rust/8 text-accent-rust text-sm font-medium rounded-lg hover:bg-accent-rust/15 transition-colors flex items-center justify-center gap-1.5">
-                See all {bookTotal} books <ChevronRight className="w-4 h-4" />
-              </button>
-            )}
-
-            {/* Gallery images — inline strip */}
-            {imageResults.length > 0 && (
-              <>
-                <h2 className="text-xs font-medium text-muted uppercase tracking-wide flex items-center gap-2 mt-6">
-                  <span className="w-1.5 h-1.5 rounded-full bg-accent-gold" />
-                  Illustrations
-                </h2>
-                <div className="grid grid-cols-3 sm:grid-cols-4 md:grid-cols-6 gap-3">
-                  {imageResults.slice(0, PREVIEW_IMAGES).map((item, idx) => (
-                    <ImageResultCard key={`${item.pageId}-${item.detectionIndex}-${idx}`} item={item} query={query} />
-                  ))}
                 </div>
-                {imageTotal > PREVIEW_IMAGES && (
-                  <button onClick={() => drillInto('images')} className="w-full py-2 bg-accent-gold/8 text-accent-gold-dark text-sm font-medium rounded-lg hover:bg-accent-gold/15 transition-colors flex items-center justify-center gap-1.5">
-                    See all {imageTotal} images <ChevronRight className="w-4 h-4" />
-                  </button>
-                )}
-              </>
-            )}
-          </div>
-        )}
+              )}
+
+              {/* "See all" — subtle inline link, not a big button */}
+              {bookTotal > PREVIEW_BOOKS && (
+                <button onClick={() => drillInto('books')} className="text-sm text-accent-rust hover:text-accent-rust-dark font-medium transition-colors flex items-center gap-1">
+                  See all {bookTotal} results <ChevronRight className="w-3.5 h-3.5" />
+                </button>
+              )}
+
+              {/* Gallery images — inline strip */}
+              {imageResults.length > 0 && (
+                <>
+                  <h2 className="text-xs font-medium text-muted uppercase tracking-wide flex items-center gap-2 mt-4">
+                    <span className="w-1.5 h-1.5 rounded-full bg-accent-gold" />
+                    Illustrations
+                  </h2>
+                  <div className="grid grid-cols-3 sm:grid-cols-4 md:grid-cols-6 gap-3">
+                    {imageResults.slice(0, PREVIEW_IMAGES).map((item, idx) => (
+                      <ImageResultCard key={`${item.pageId}-${item.detectionIndex}-${idx}`} item={item} query={query} />
+                    ))}
+                  </div>
+                  {imageTotal > PREVIEW_IMAGES && (
+                    <button onClick={() => drillInto('images')} className="text-sm text-accent-gold-dark hover:text-accent-gold font-medium transition-colors flex items-center gap-1">
+                      See all images <ChevronRight className="w-3.5 h-3.5" />
+                    </button>
+                  )}
+                </>
+              )}
+            </div>
+          );
+        })()}
 
         {/* ==================== BOOKS DRILL-DOWN ==================== */}
         {viewMode === 'books' && query.length >= 2 && (
@@ -1288,45 +1276,9 @@ export default function SearchPage() {
             <Pagination total={imageTotal} offset={offset} setOffset={setOffset} loading={loading} pageSize={resultsPerPage} />
           </>
         )}
-        {/* AI-expanded related results — shows for all searches with results */}
-        {!noResults && !loading && query.length >= 3 && !aiStreaming && aiResults.length > 0 && (
-          <section className="mt-12 pt-8 border-t border-border-light">
-            <h2 className="text-sm font-medium text-muted uppercase tracking-wide mb-4">Related in the Library</h2>
-            <div className="space-y-3">
-              {aiResults.map(result => {
-                const cover = getBookThumbnailUrl({ thumbnail: result.thumbnail, thumbnail_blob: (result as any).thumbnail_blob });
-                const text = result.snippet || result.summary;
-                return (
-                  <Link
-                    key={result.id}
-                    href={result.type === 'page' ? `/book/${result.slug || result.book_id}/page-number/${result.page_number}` : `/book/${result.slug || result.book_id}`}
-                    className="flex items-start gap-3 p-3 bg-warm rounded-lg hover:bg-warm-hover transition-colors"
-                  >
-                    {cover && (
-                      <Image src={cover} alt="" width={48} height={68} className="rounded shadow-sm flex-shrink-0 object-cover" />
-                    )}
-                    <div className="min-w-0 flex-1">
-                      <h3 className="font-serif font-medium text-primary text-sm leading-tight line-clamp-1">
-                        {result.display_title || result.title}
-                      </h3>
-                      <p className="text-xs text-muted mt-0.5">
-                        {result.author}{result.published ? `, ${result.published}` : ''}
-                        {result.type === 'page' && result.page_number && <span> &middot; p. {result.page_number}</span>}
-                      </p>
-                      {text && (
-                        <p className="text-xs text-secondary mt-1 line-clamp-2">{text}</p>
-                      )}
-                    </div>
-                  </Link>
-                );
-              })}
-            </div>
-          </section>
-        )}
-
-        {/* Ask the Librarian — bottom CTA, reading room style */}
+        {/* Ask the Librarian — bottom CTA */}
         {!noResults && !loading && query.length >= 3 && viewMode === 'unified' && (
-          <section className="mt-12 pt-8 border-t border-border-light">
+          <section className="mt-8 pt-6 border-t border-border-light">
             <Link
               href={`/reading-room?q=${encodeURIComponent(query)}`}
               className="block p-6 rounded-xl bg-gradient-to-br from-[#2c1810] to-[#1a1612] text-white hover:from-[#3a2218] hover:to-[#2c1810] transition-all group"
@@ -1371,7 +1323,7 @@ function cleanSnippet(text: string): string {
     .trim();
 }
 
-function BookResultCard({ result, query }: { result: SearchResult; query: string }) {
+function BookResultCard({ result, query, autoPassages }: { result: SearchResult; query: string; autoPassages?: boolean }) {
   const cover = getBookThumbnailUrl({ thumbnail: result.thumbnail, thumbnail_blob: (result as any).thumbnail_blob });
   const text = cleanSnippet(result.snippet || result.summary || '');
   const [imgError, setImgError] = useState(false);
@@ -1380,14 +1332,10 @@ function BookResultCard({ result, query }: { result: SearchResult; query: string
   const [passagesOpen, setPassagesOpen] = useState(false);
   const bookPath = `/book/${result.slug || result.book_id}`;
   const href = result.type === 'page' ? `${bookPath}/page-number/${result.page_number}` : bookPath;
+  const autoFired = useRef(false);
 
-  const findPassages = useCallback(async (e: React.MouseEvent) => {
-    e.preventDefault();
-    e.stopPropagation();
-    if (passages) {
-      setPassagesOpen(!passagesOpen);
-      return;
-    }
+  const fetchPassages = useCallback(async () => {
+    if (passages) return;
     setPassagesLoading(true);
     setPassagesOpen(true);
     try {
@@ -1411,7 +1359,25 @@ function BookResultCard({ result, query }: { result: SearchResult; query: string
     } finally {
       setPassagesLoading(false);
     }
-  }, [result.book_id, query, passages, passagesOpen]);
+  }, [result.book_id, query, passages]);
+
+  // Auto-fetch passages for first translated book
+  useEffect(() => {
+    if (autoPassages && !autoFired.current && result.translated_count && result.translated_count > 0) {
+      autoFired.current = true;
+      fetchPassages();
+    }
+  }, [autoPassages, result.translated_count, fetchPassages]);
+
+  const findPassages = useCallback(async (e: React.MouseEvent) => {
+    e.preventDefault();
+    e.stopPropagation();
+    if (passages) {
+      setPassagesOpen(!passagesOpen);
+      return;
+    }
+    fetchPassages();
+  }, [passages, passagesOpen, fetchPassages]);
 
   return (
     <div className="bg-white rounded-xl border border-border-light hover:border-accent-rust/30 hover:shadow-md transition-all">
@@ -1450,11 +1416,17 @@ function BookResultCard({ result, query }: { result: SearchResult; query: string
                 </a>
               )}
             </div>
-            {text && (
+            {text ? (
               <p className="mt-1.5 text-sm text-secondary line-clamp-2 font-body leading-relaxed">
                 <HighlightedText text={text} query={query} />
               </p>
-            )}
+            ) : result.categories && result.categories.length > 0 ? (
+              <div className="mt-1.5 flex flex-wrap gap-1">
+                {result.categories.slice(0, 4).map((cat: string) => (
+                  <span key={cat} className="text-xs px-2 py-0.5 bg-warm text-muted rounded-full">{cat}</span>
+                ))}
+              </div>
+            ) : null}
             <div className="mt-1.5 flex items-center gap-3 text-xs text-muted">
               {result.type === 'book' && result.page_count && (
                 <span>{result.page_count} pages{result.translated_count ? ` · ${result.translated_count} translated` : ''}</span>
