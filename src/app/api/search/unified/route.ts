@@ -209,7 +209,7 @@ async function searchBooks(
   // Supabase trigram search (fast, always warm — no cold-start penalty)
   const matchingIds = await searchBookIds(query, { limit: (limit + 1) * 2 });
 
-  let books;
+  let books: any[] = [];
   if (matchingIds.length > 0) {
     const filter: Record<string, unknown> = {
       id: { $in: matchingIds },
@@ -228,14 +228,17 @@ async function searchBooks(
       .limit(limit + 1)
       .maxTimeMS(5000)
       .toArray();
-  } else {
-    // Fallback: search categories, subject_keywords, and language in MongoDB
-    // Catches queries like "sanskrit alchemy" where words match metadata fields
+  }
+
+  // Metadata fallback: search categories, subject_keywords, and language in MongoDB
+  // Catches queries like "sanskrit alchemy" where words match metadata fields
+  // that Supabase trigram doesn't cover. Fires when results are sparse.
+  if (books.length < limit) {
     const words = query.trim().split(/\s+/).filter(w => w.length >= 2);
-    if (words.length > 0) {
+    if (words.length >= 2) {
+      const seenIds = new Set(books.map((b: any) => b.id));
       const wordRegexes = words.map(w => new RegExp(w.replace(/[.*+?^${}()|[\]\\]/g, '\\$&'), 'i'));
       const fallbackFilter: Record<string, unknown> = {
-        // Each word must match at least one metadata field
         $and: wordRegexes.map(rx => ({
           $or: [
             { categories: rx },
@@ -252,12 +255,19 @@ async function searchBooks(
       if (searchFilters.category) fallbackFilter.categories = searchFilters.category;
       if (library) fallbackFilter['image_source.provider'] = library;
 
-      books = await db.collection('books')
+      const fallbackBooks = await db.collection('books')
         .find(fallbackFilter)
         .project(bookProjection)
         .limit(limit + 1)
         .maxTimeMS(5000)
         .toArray();
+
+      for (const fb of fallbackBooks) {
+        if (!seenIds.has(fb.id)) {
+          books.push(fb);
+          seenIds.add(fb.id);
+        }
+      }
     }
   }
 
