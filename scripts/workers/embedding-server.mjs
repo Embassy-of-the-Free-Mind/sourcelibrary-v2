@@ -2,9 +2,9 @@
 /**
  * Local embedding server for semantic search.
  *
- * Runs on Hetzner, serves embeddings via HTTP. Used by:
- *   - embed-translations.mjs (backfill, local calls)
- *   - /api/search/semantic (Vercel, remote calls to Hetzner)
+ * Runs on Hetzner. Primary role: CLIP proxy (proxies /clip/* to clip-server on port 3457).
+ * Also serves e5-base text embeddings at /embed, but query-time search now uses
+ * Gemini embedding-2-preview directly — e5-base is no longer called in production.
  *
  * Model: multilingual-e5-base (768 dims, ONNX quantized)
  * Cost: $0 (runs locally on Hetzner CPU)
