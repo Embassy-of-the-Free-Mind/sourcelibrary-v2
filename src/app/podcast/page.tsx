@@ -2,6 +2,7 @@ import { connectToDatabase } from '@/lib/mongodb';
 import { ObjectId } from 'mongodb';
 import SiteHeader from '@/components/layout/SiteHeader';
 import Link from 'next/link';
+import TranscriptToggle from './TranscriptToggle';
 
 export const revalidate = 3600; // 1h ISR
 
@@ -26,6 +27,7 @@ interface PodcastEpisode {
   generatedAt: string;
   bookIds: string[];
   bookThumbs: BookThumb[];
+  script: string | null;
 }
 
 async function getEpisodes(): Promise<PodcastEpisode[]> {
@@ -63,6 +65,7 @@ async function getEpisodes(): Promise<PodcastEpisode[]> {
             generatedAt: p.generatedAt,
             bookIds: [],
             bookThumbs: [],
+            script: p.script || null,
           });
         }
       }
@@ -79,6 +82,7 @@ async function getEpisodes(): Promise<PodcastEpisode[]> {
           generatedAt: thread.podcast.generatedAt,
           bookIds: [],
           bookThumbs: [],
+          script: thread.podcast.script || null,
         });
       }
     }
@@ -234,8 +238,9 @@ export default async function PodcastPage() {
                     href={`/reading-room/thread/${ep.threadId}`}
                     className="text-[11px] text-[#9e4a3a] font-sans hover:underline"
                   >
-                    View sources & transcript
+                    View research &amp; sources
                   </Link>
+                  {ep.script && <TranscriptToggle script={ep.script} />}
                 </div>
               </article>
             ))}
