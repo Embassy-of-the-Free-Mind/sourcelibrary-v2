@@ -46,6 +46,7 @@ interface GalleryResult {
  * Designed for typeahead — no page content search (that's the slow part).
  */
 export async function GET(request: NextRequest) {
+  const t0 = Date.now();
   try {
     const { searchParams } = new URL(request.url);
     const query = searchParams.get('q') || '';
@@ -81,9 +82,9 @@ export async function GET(request: NextRequest) {
     // Run book, index, gallery, and visual search in parallel.
     // Each operation gets a hard timeout — Atlas Search $search doesn't respect maxTimeMS,
     // and hung operations would block the entire response indefinitely.
-    const withTimeout = <T>(promise: Promise<T>, fallback: T, label: string, ms = 8000): Promise<T> =>
+    const withTimeout = <T>(promise: Promise<T>, fallback: T, label: string, ms = 4000): Promise<T> =>
       Promise.race([
-        promise,
+        promise.then(r => { console.log(`[unified-search] ${label} done in ${Date.now() - t0}ms`); return r; }),
         new Promise<T>((resolve) => setTimeout(() => {
           console.warn(`[unified-search] ${label} timed out after ${ms}ms`);
           resolve(fallback);
@@ -153,7 +154,7 @@ export async function GET(request: NextRequest) {
             return { results, total: results.length };
           })
           .catch(() => emptySemanticBooks),
-        emptySemanticBooks, 'semantic', 6000,
+        emptySemanticBooks, 'semantic', 3000,
       ),
     ]);
 
@@ -226,87 +227,12 @@ async function searchBooks(
       .find(filter)
       .project(bookProjection)
       .limit(limit + 1)
-      .maxTimeMS(5000)
+      .maxTimeMS(2000)
       .toArray();
   }
 
-  // Metadata fallback: search categories, subject_keywords, and language in MongoDB
-  // Catches queries like "sanskrit alchemy" where words match metadata fields
-  // that Supabase trigram doesn't cover. Stopwords filtered to avoid broad scans.
-  if (books.length < limit) {
-    const STOPWORDS = new Set(['a', 'an', 'and', 'at', 'by', 'de', 'der', 'des', 'di', 'du', 'el', 'en', 'et', 'for', 'from', 'in', 'la', 'le', 'les', 'of', 'on', 'or', 'the', 'to', 'und', 'von', 'with']);
-    const words = query.trim().split(/\s+/).filter(w => w.length >= 3 && !STOPWORDS.has(w.toLowerCase()));
-    if (words.length >= 2) {
-      const seenIds = new Set(books.map((b: any) => b.id));
-      const wordRegexes = words.map(w => new RegExp(w.replace(/[.*+?^${}()|[\]\\]/g, '\\$&'), 'i'));
-      const fallbackFilter: Record<string, unknown> = {
-        $and: wordRegexes.map(rx => ({
-          $or: [
-            { categories: rx },
-            { subject_keywords: rx },
-            { language: rx },
-          ],
-        })),
-        visible: true,
-        pages_count: { $gt: 0 },
-      };
-      if (searchFilters.language) fallbackFilter.language = searchFilters.language;
-      if (searchFilters.category) fallbackFilter.categories = searchFilters.category;
-      if (library) fallbackFilter['image_source.provider'] = library;
-
-      const fallbackBooks = await db.collection('books')
-        .find(fallbackFilter)
-        .project(bookProjection)
-        .limit(limit + 1)
-        .maxTimeMS(3000)
-        .toArray();
-
-      for (const fb of fallbackBooks) {
-        if (!seenIds.has(fb.id)) {
-          books.push(fb);
-          seenIds.add(fb.id);
-        }
-      }
-    }
-  }
-
-  // Author alias expansion: if results are sparse and query matches an entity alias,
-  // include books linked to that entity (catches variant name searches like "Marsilius Ficinus")
-  if (books.length < limit) {
-    const seenIds = new Set(books.map((b: any) => b.id));
-    const entity = await db.collection('entities').findOne({
-      type: 'person',
-      canonical_name: { $exists: true },
-      $or: [
-        { canonical_name: queryRegex },
-        { aliases: queryRegex },
-        { name: queryRegex },
-      ],
-    }, { projection: { _id: 1 }, maxTimeMS: 2000 }).catch(() => null);
-
-    if (entity) {
-      const aliasFilter: Record<string, unknown> = {
-        author_entity_id: entity._id.toString(),
-        visible: true,
-        pages_count: { $gt: 0 },
-      };
-      if (library) aliasFilter['image_source.provider'] = library;
-
-      const aliasBooks = await db.collection('books')
-        .find(aliasFilter)
-        .project(bookProjection)
-        .limit(limit - books.length)
-        .maxTimeMS(3000)
-        .toArray();
-
-      for (const ab of aliasBooks) {
-        if (!seenIds.has(ab.id)) {
-          books.push(ab);
-          seenIds.add(ab.id);
-        }
-      }
-    }
-  }
+  // Author alias expansion removed from searchBooks for speed.
+  // Semantic search covers variant name matches better.
 
   // Canon-weighted reranking: older editions first, original language preferred
   const queryLower = query.toLowerCase();
