@@ -1096,11 +1096,8 @@ export default function SearchPage() {
         {/* ==================== UNIFIED VIEW — FLAT RESULTS ==================== */}
         {viewMode === 'unified' && !loading && query.length >= 2 && (totalResults > 0 || semanticResults.length > 0 || semanticLoading) && (
           <div className="space-y-3">
-            {/* Semantic results — only show books NOT already in keyword results */}
-            {(() => {
-              const keywordIds = new Set(bookResults.map(b => b.id || (b as any).book_id));
-              return semanticResults.filter((sem: any) => !keywordIds.has(sem.book_id));
-            })().map((sem: any) => (
+            {/* Semantic results first (best conceptual matches) */}
+            {semanticResults.map((sem: any) => (
               <SemanticResultCard key={sem.book_id} result={sem} query={query} />
             ))}
             {semanticLoading && (
@@ -1408,18 +1405,13 @@ function BookResultCard({ result, query }: { result: SearchResult; query: string
 }
 
 function SemanticResultCard({ result, query }: { result: any; query: string }) {
-  const cover = getBookThumbnailUrl({ thumbnail: result.thumbnail, thumbnail_blob: result.thumbnail_blob });
   return (
     <div className="bg-white rounded-xl border border-border-light hover:border-accent-rust/30 hover:shadow-md transition-all">
       <Link href={`/book/${result.slug || result.book_id}`} className="block p-4">
         <div className="flex items-start gap-4">
-          {cover ? (
-            <Image src={cover} alt="" width={60} height={84} className="rounded shadow-sm flex-shrink-0 object-cover w-[60px] h-[84px]" />
-          ) : (
-            <div className="w-[60px] h-[84px] rounded bg-warm flex items-center justify-center flex-shrink-0">
-              <Book className="w-6 h-6 text-border-medium" />
-            </div>
-          )}
+          <div className="w-[60px] h-[84px] rounded bg-warm flex items-center justify-center flex-shrink-0">
+            <Book className="w-6 h-6 text-border-medium" />
+          </div>
           <div className="min-w-0 flex-1">
             <h3 className="font-serif text-primary font-medium leading-snug">{result.title}</h3>
             <p className="text-sm text-muted mt-0.5">
