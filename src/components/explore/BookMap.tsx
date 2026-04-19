@@ -221,7 +221,7 @@ export default function BookMap({ locations }: BookMapProps) {
               >
                 <span className="w-2.5 h-2.5 rounded-full" style={{ background: config.color }} />
                 <span style={{ color: 'var(--text-secondary)', fontSize: '13px' }}>
-                  {type === 'publication' ? 'Published' : type === 'author_birth' ? 'Born' : 'Died'}
+                  {config.label}
                 </span>
               </button>
             );

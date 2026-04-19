@@ -1,9 +1,8 @@
 import { Metadata } from 'next';
 import Link from 'next/link';
 import Image from 'next/image';
-import { notFound, redirect } from 'next/navigation';
+import { notFound } from 'next/navigation';
 import { getReadDb } from '@/lib/mongodb';
-import { isInnerCircle } from '@/lib/auth-helpers';
 import SiteHeader from '@/components/layout/SiteHeader';
 import { sanitizeThumbnail } from '@/lib/collections-utils';
 
@@ -99,15 +98,11 @@ export async function generateMetadata({ params }: PageProps): Promise<Metadata>
   return {
     title: `${data.name} — Source Library Visual Art`,
     description: `${data.artworks.length} works by ${data.name} in Source Library.`,
-    // Artist pages are admin-only (non-admin gets redirected) — don't index
-    robots: { index: false, follow: true },
+    robots: { index: true, follow: true },
   };
 }
 
 export default async function ArtistPage({ params }: PageProps) {
-  const admin = await isInnerCircle();
-  if (!admin) redirect('/');
-
   const { slug } = await params;
   const data = await getArtist(slug);
   if (!data) notFound();
