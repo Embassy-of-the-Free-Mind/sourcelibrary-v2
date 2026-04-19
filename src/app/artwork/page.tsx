@@ -1,9 +1,7 @@
 import { Metadata } from 'next';
 import Link from 'next/link';
 import Image from 'next/image';
-import { redirect } from 'next/navigation';
 import { getReadDb } from '@/lib/mongodb';
-import { isInnerCircle } from '@/lib/auth-helpers';
 import SiteHeader from '@/components/layout/SiteHeader';
 import { sanitizeThumbnail } from '@/lib/collections-utils';
 
@@ -40,9 +38,6 @@ async function getData() {
 }
 
 export default async function ArtworkLandingPage() {
-  const admin = await isInnerCircle();
-  if (!admin) redirect('/');
-
   const { collections, totalCount } = await getData();
 
   return (
