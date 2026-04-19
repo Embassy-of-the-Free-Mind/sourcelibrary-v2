@@ -1096,8 +1096,11 @@ export default function SearchPage() {
         {/* ==================== UNIFIED VIEW — FLAT RESULTS ==================== */}
         {viewMode === 'unified' && !loading && query.length >= 2 && (totalResults > 0 || semanticResults.length > 0 || semanticLoading) && (
           <div className="space-y-3">
-            {/* Semantic results first (best conceptual matches) */}
-            {semanticResults.map((sem: any) => (
+            {/* Semantic results — only show books NOT already in keyword results */}
+            {(() => {
+              const keywordIds = new Set(bookResults.map(b => b.id || (b as any).book_id));
+              return semanticResults.filter((sem: any) => !keywordIds.has(sem.book_id));
+            })().map((sem: any) => (
               <SemanticResultCard key={sem.book_id} result={sem} query={query} />
             ))}
             {semanticLoading && (
