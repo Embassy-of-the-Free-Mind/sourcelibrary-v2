@@ -398,7 +398,7 @@ function AskWhileListening({ threadId }: { threadId: string }) {
 
 // ── Podcast Player ────────────────────────────────────────────────────
 
-function PodcastPlayer({ threadId }: { threadId: string }) {
+function PodcastPlayer({ threadId, isOwner }: { threadId: string; isOwner: boolean }) {
   const [podcasts, setPodcasts] = useState<Record<string, PodcastData>>({});
   const [selectedFormat, setSelectedFormat] = useState<PodcastFormat>('deep-dive');
   const [generating, setGenerating] = useState(false);
@@ -565,23 +565,29 @@ function PodcastPlayer({ threadId }: { threadId: string }) {
           <p className="text-[13px] text-[#6b6560] font-body mb-3">
             {FORMAT_OPTIONS.find(f => f.value === selectedFormat)?.desc}
           </p>
-          <button
-            onClick={handleGenerate}
-            disabled={generating}
-            className="inline-flex items-center gap-2 px-5 py-2.5 bg-[#1a1612] text-white rounded-lg text-sm font-sans hover:bg-[#2a2622] transition-colors disabled:opacity-50 disabled:cursor-not-allowed"
-          >
-            {generating ? (
-              <>
-                <svg className="w-4 h-4 animate-spin" fill="none" viewBox="0 0 24 24">
-                  <circle className="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" strokeWidth="4" />
-                  <path className="opacity-75" fill="currentColor" d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4z" />
-                </svg>
-                Generating...
-              </>
-            ) : (
-              'Generate'
-            )}
-          </button>
+          {isOwner ? (
+            <button
+              onClick={handleGenerate}
+              disabled={generating}
+              className="inline-flex items-center gap-2 px-5 py-2.5 bg-[#1a1612] text-white rounded-lg text-sm font-sans hover:bg-[#2a2622] transition-colors disabled:opacity-50 disabled:cursor-not-allowed"
+            >
+              {generating ? (
+                <>
+                  <svg className="w-4 h-4 animate-spin" fill="none" viewBox="0 0 24 24">
+                    <circle className="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" strokeWidth="4" />
+                    <path className="opacity-75" fill="currentColor" d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4z" />
+                  </svg>
+                  Generating...
+                </>
+              ) : (
+                'Generate'
+              )}
+            </button>
+          ) : (
+            <p className="text-[12px] text-[#8a8480] font-sans">
+              Only the thread creator can generate podcasts.
+            </p>
+          )}
           {error && (
             <p className="text-xs text-red-600 font-sans mt-2">{error}</p>
           )}
@@ -736,7 +742,7 @@ export default function ThreadPage({ params }: { params: Promise<{ id: string }>
         </div>
 
         {/* Podcast section */}
-        <PodcastPlayer threadId={id} />
+        <PodcastPlayer threadId={id} isOwner={!!session?.user?.id && session.user.id === thread.creatorId} />
 
         {/* Source books used in this research */}
         <SourceCards threadId={id} />
