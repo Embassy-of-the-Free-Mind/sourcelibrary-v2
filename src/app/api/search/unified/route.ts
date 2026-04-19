@@ -229,7 +229,36 @@ async function searchBooks(
       .maxTimeMS(5000)
       .toArray();
   } else {
-    books = [];
+    // Fallback: search categories, subject_keywords, and language in MongoDB
+    // Catches queries like "sanskrit alchemy" where words match metadata fields
+    const words = query.trim().split(/\s+/).filter(w => w.length >= 2);
+    if (words.length > 0) {
+      const wordRegexes = words.map(w => new RegExp(w.replace(/[.*+?^${}()|[\]\\]/g, '\\$&'), 'i'));
+      const fallbackFilter: Record<string, unknown> = {
+        // Each word must match at least one metadata field
+        $and: wordRegexes.map(rx => ({
+          $or: [
+            { categories: rx },
+            { subject_keywords: rx },
+            { language: rx },
+            { title: rx },
+            { display_title: rx },
+          ],
+        })),
+        visible: true,
+        pages_count: { $gt: 0 },
+      };
+      if (searchFilters.language) fallbackFilter.language = searchFilters.language;
+      if (searchFilters.category) fallbackFilter.categories = searchFilters.category;
+      if (library) fallbackFilter['image_source.provider'] = library;
+
+      books = await db.collection('books')
+        .find(fallbackFilter)
+        .project(bookProjection)
+        .limit(limit + 1)
+        .maxTimeMS(5000)
+        .toArray();
+    }
   }
 
   // Author alias expansion: if results are sparse and query matches an entity alias,
