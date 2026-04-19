@@ -68,13 +68,15 @@ export async function POST(
     }
   } catch { /* default format */ }
 
-  // Verify thread ownership
+  // Verify thread exists and user owns it
   const thread = await db.collection('embassy_threads').findOne({
     _id: new ObjectId(id),
-    creatorId: session.user.id,
   });
   if (!thread) {
     return NextResponse.json({ error: 'Thread not found' }, { status: 404 });
+  }
+  if (thread.creatorId !== session.user.id) {
+    return NextResponse.json({ error: 'Only the thread creator can generate podcasts' }, { status: 403 });
   }
 
   // Load notebook
@@ -139,13 +141,15 @@ export async function PATCH(
     return NextResponse.json({ error: 'Invalid format' }, { status: 400 });
   }
 
-  // Verify thread ownership
+  // Verify thread exists and user owns it
   const thread = await db.collection('embassy_threads').findOne({
     _id: new ObjectId(id),
-    creatorId: session.user.id,
   });
   if (!thread) {
     return NextResponse.json({ error: 'Thread not found' }, { status: 404 });
+  }
+  if (thread.creatorId !== session.user.id) {
+    return NextResponse.json({ error: 'Only the thread creator can publish podcasts' }, { status: 403 });
   }
 
   // Update published status
