@@ -1,0 +1,462 @@
+[
+  {
+    "source": "wikimedia_commons",
+    "category": "Category:Le_Carceri_d'Invenzione",
+    "collections": [
+      "visual-art",
+      "dreams-unconscious"
+    ],
+    "resource_type": "print",
+    "_note": "Piranesi — 16 Imaginary Prisons etchings (1745–61), proto-surrealist architecture of confinement"
+  },
+  {
+    "source": "wikimedia_commons",
+    "category": "Category:Le_Carceri_d'Invenzione_(first_edition,_1750)",
+    "collections": [
+      "visual-art",
+      "dreams-unconscious"
+    ],
+    "resource_type": "print",
+    "_note": "Piranesi — first edition plates, looser and more spontaneous than the 1761 reworking"
+  },
+  {
+    "source": "wikimedia_commons",
+    "category": "Category:The_Garden_of_Earthly_Delights",
+    "collections": [
+      "visual-art",
+      "dreams-unconscious"
+    ],
+    "resource_type": "painting",
+    "_note": "Bosch — triptych masterwork of paradise, erotic fantasy, and Hell"
+  },
+  {
+    "source": "wikimedia_commons",
+    "category": "Category:The_Last_Judgment_(Bosch,_Vienna)",
+    "collections": [
+      "visual-art",
+      "dreams-unconscious"
+    ],
+    "resource_type": "painting",
+    "_note": "Bosch — Vienna triptych with its nightmarish Hell panel"
+  },
+  {
+    "source": "wikimedia_commons",
+    "category": "Category:The_Temptation_of_Saint_Anthony_(Bosch)",
+    "collections": [
+      "visual-art",
+      "dreams-unconscious"
+    ],
+    "resource_type": "painting",
+    "_note": "Bosch — Lisbon triptych, hallucinatory demonic visions attacking a saint"
+  },
+  {
+    "source": "wikimedia_commons",
+    "category": "Category:Paintings_by_Hieronymus_Bosch",
+    "collections": [
+      "visual-art",
+      "dreams-unconscious"
+    ],
+    "resource_type": "painting",
+    "_note": "Bosch — full paintings category; catch-all for any Bosch panels not covered by sub-categories"
+  },
+  {
+    "source": "wikimedia_commons",
+    "category": "Category:The_Nightmare_(Fuseli)",
+    "collections": [
+      "visual-art",
+      "dreams-unconscious"
+    ],
+    "resource_type": "painting",
+    "_note": "Henry Fuseli — The Nightmare (1781), incubus on sleeping woman; defining image of the unconscious"
+  },
+  {
+    "source": "wikimedia_commons",
+    "category": "Category:Henry_Fuseli",
+    "collections": [
+      "visual-art",
+      "dreams-unconscious"
+    ],
+    "resource_type": "painting",
+    "_note": "Fuseli — broader category covers Titania, Oberon, Satan scenes, supernatural subjects"
+  },
+  {
+    "source": "wikimedia_commons",
+    "category": "Category:Los_Caprichos",
+    "collections": [
+      "visual-art",
+      "dreams-unconscious"
+    ],
+    "resource_type": "print",
+    "_note": "Goya — all 80 aquatint plates (1799); sleep, reason, monsters, witches, folly"
+  },
+  {
+    "source": "wikimedia_commons",
+    "category": "Category:Los_Desastres_de_la_Guerra",
+    "collections": [
+      "visual-art",
+      "dreams-unconscious"
+    ],
+    "resource_type": "print",
+    "_note": "Goya — Disasters of War etchings (1810–20), nightmarish violence and psychological terror"
+  },
+  {
+    "source": "wikimedia_commons",
+    "category": "Category:Los_disparates",
+    "collections": [
+      "visual-art",
+      "dreams-unconscious"
+    ],
+    "resource_type": "print",
+    "_note": "Goya — Disparates/Proverbios (1816–23), most cryptic and dreamlike of his print series"
+  },
+  {
+    "source": "wikimedia_commons",
+    "category": "Category:Un_autre_monde_(Grandville)",
+    "collections": [
+      "visual-art",
+      "dreams-unconscious"
+    ],
+    "resource_type": "illustration",
+    "_note": "Grandville — Un Autre Monde (1844), proto-surrealist fantasy illustrations; heavily cited by Breton"
+  },
+  {
+    "source": "wikimedia_commons",
+    "category": "Category:J._J._Grandville",
+    "collections": [
+      "visual-art",
+      "dreams-unconscious"
+    ],
+    "resource_type": "illustration",
+    "_note": "Grandville — broader works including Les Fleurs Animées, Métamorphoses du Jour, dream imagery"
+  },
+  {
+    "source": "wikimedia_commons",
+    "category": "Category:Odilon_Redon",
+    "collections": [
+      "visual-art",
+      "dreams-unconscious"
+    ],
+    "resource_type": "print",
+    "_note": "Redon — symbolist master: spider with human face, cyclops, floating heads, noir lithograph series"
+  },
+  {
+    "source": "wikimedia_commons",
+    "category": "Category:À_Edgar_Poe_(Redon)",
+    "collections": [
+      "visual-art",
+      "dreams-unconscious"
+    ],
+    "resource_type": "print",
+    "_note": "Redon — 1882 lithograph album dedicated to Poe, six hallucinatory plates"
+  },
+  {
+    "source": "wikimedia_commons",
+    "category": "Category:Dans_le_rêve_(Redon)",
+    "collections": [
+      "visual-art",
+      "dreams-unconscious"
+    ],
+    "resource_type": "print",
+    "_note": "Redon — Dans le Rêve (1879), first lithograph album; explicitly dream-titled series"
+  },
+  {
+    "source": "wikimedia_commons",
+    "category": "Category:Les_Origines_(Redon)",
+    "collections": [
+      "visual-art",
+      "dreams-unconscious"
+    ],
+    "resource_type": "print",
+    "_note": "Redon — Les Origines (1883), primordial creatures emerging from void"
+  },
+  {
+    "source": "wikimedia_commons",
+    "category": "Category:The_Marriage_of_Heaven_and_Hell_(Blake)",
+    "collections": [
+      "visual-art",
+      "dreams-unconscious"
+    ],
+    "resource_type": "print",
+    "_note": "William Blake — illuminated book plates (1790–93), visionary cosmology and infernal wisdom"
+  },
+  {
+    "source": "wikimedia_commons",
+    "category": "Category:Jerusalem_(Blake)",
+    "collections": [
+      "visual-art",
+      "dreams-unconscious"
+    ],
+    "resource_type": "print",
+    "_note": "Blake — Jerusalem: The Emanation of the Giant Albion (1820), 100 illuminated plates"
+  },
+  {
+    "source": "wikimedia_commons",
+    "category": "Category:Milton_a_poem_(Blake)",
+    "collections": [
+      "visual-art",
+      "dreams-unconscious"
+    ],
+    "resource_type": "print",
+    "_note": "Blake — Milton: A Poem (1810), illuminated epic; includes the famous Newton plate"
+  },
+  {
+    "source": "wikimedia_commons",
+    "category": "Category:America_a_Prophecy_(Blake)",
+    "collections": [
+      "visual-art",
+      "dreams-unconscious"
+    ],
+    "resource_type": "print",
+    "_note": "Blake — America: A Prophecy (1793), prophetic illuminated book with Orc and Urizen"
+  },
+  {
+    "source": "wikimedia_commons",
+    "category": "Category:William_Blake_prints",
+    "collections": [
+      "visual-art",
+      "dreams-unconscious"
+    ],
+    "resource_type": "print",
+    "_note": "Blake — broader print category covering standalone engravings not in illuminated books"
+  },
+  {
+    "source": "wikimedia_commons",
+    "category": "Category:Max_Klinger",
+    "collections": [
+      "visual-art",
+      "dreams-unconscious"
+    ],
+    "resource_type": "print",
+    "_note": "Klinger — proto-surrealist etching cycles (Glove, Brahms Fantasien, Paraphrase); major influence on de Chirico"
+  },
+  {
+    "source": "wikimedia_commons",
+    "category": "Category:A_Glove_(Klinger)",
+    "collections": [
+      "visual-art",
+      "dreams-unconscious"
+    ],
+    "resource_type": "print",
+    "_note": "Klinger — Paraphrase on the Finding of a Glove (1881), 10-plate dream-logic narrative cycle"
+  },
+  {
+    "source": "wikimedia_commons",
+    "category": "Category:Alfred_Kubin",
+    "collections": [
+      "visual-art",
+      "dreams-unconscious"
+    ],
+    "resource_type": "illustration",
+    "_note": "Kubin — Die andere Seite illustrations and standalone drawings; expressionist nightmare imagery"
+  },
+  {
+    "source": "wikimedia_commons",
+    "category": "Category:James_Ensor",
+    "collections": [
+      "visual-art",
+      "dreams-unconscious"
+    ],
+    "resource_type": "print",
+    "_note": "Ensor — carnival masks, skeletons, phantasmagoria; Entry of Christ into Brussels"
+  },
+  {
+    "source": "wikimedia_commons",
+    "category": "Category:Masks_in_art_by_James_Ensor",
+    "collections": [
+      "visual-art",
+      "dreams-unconscious"
+    ],
+    "resource_type": "print",
+    "_note": "Ensor — mask paintings specifically; the depersonalised face as uncanny emblem"
+  },
+  {
+    "source": "wikimedia_commons",
+    "category": "Category:Félicien_Rops",
+    "collections": [
+      "visual-art",
+      "dreams-unconscious"
+    ],
+    "resource_type": "print",
+    "_note": "Rops — decadent symbolist prints; Death, Pornocrates, Les Sataniques series"
+  },
+  {
+    "source": "wikimedia_commons",
+    "category": "Category:Gustave_Moreau",
+    "collections": [
+      "visual-art",
+      "dreams-unconscious"
+    ],
+    "resource_type": "painting",
+    "_note": "Moreau — visionary symbolist: Salome, Jupiter and Semele, The Apparition; jewel-encrusted dream worlds"
+  },
+  {
+    "source": "wikimedia_commons",
+    "category": "Category:Franz_von_Stuck",
+    "collections": [
+      "visual-art",
+      "dreams-unconscious"
+    ],
+    "resource_type": "painting",
+    "_note": "Von Stuck — The Sin, Lucifer, Wild Hunt; Munich Secession symbolist with Freudian undertones"
+  },
+  {
+    "source": "wikimedia_commons",
+    "category": "Category:Arnold_Böcklin",
+    "collections": [
+      "visual-art",
+      "dreams-unconscious"
+    ],
+    "resource_type": "painting",
+    "_note": "Böcklin — Isle of the Dead, Pan in the Reeds, symbolist mythology with death-dream atmosphere"
+  },
+  {
+    "source": "wikimedia_commons",
+    "category": "Category:Isle_of_the_Dead_(Böcklin)",
+    "collections": [
+      "visual-art",
+      "dreams-unconscious"
+    ],
+    "resource_type": "painting",
+    "_note": "Böcklin — Isle of the Dead (five versions, 1880–86); Hitler kept a copy; inspired Rachmaninoff"
+  },
+  {
+    "source": "wikimedia_commons",
+    "category": "Category:Jean_Delville",
+    "collections": [
+      "visual-art",
+      "dreams-unconscious"
+    ],
+    "resource_type": "painting",
+    "_note": "Delville — Belgian symbolist Theosophist; The Treasures of Satan, Orpheus; transcendent dream states"
+  },
+  {
+    "source": "wikimedia_commons",
+    "category": "Category:Fernand_Khnopff",
+    "collections": [
+      "visual-art",
+      "dreams-unconscious"
+    ],
+    "resource_type": "painting",
+    "_note": "Khnopff — Belgian symbolist; I Lock My Door Upon Myself, sphinxes, androgynous somnambulists"
+  },
+  {
+    "source": "wikimedia_commons",
+    "category": "Category:Edvard_Munch",
+    "collections": [
+      "visual-art",
+      "dreams-unconscious"
+    ],
+    "resource_type": "print",
+    "_note": "Munch — The Scream, Anxiety, Vampire, Separation; expressionist exteriorisation of inner states"
+  },
+  {
+    "source": "wikimedia_commons",
+    "category": "Category:The_Scream",
+    "collections": [
+      "visual-art",
+      "dreams-unconscious"
+    ],
+    "resource_type": "print",
+    "_note": "Munch — The Scream (four versions); the definitive image of existential dread"
+  },
+  {
+    "source": "wikimedia_commons",
+    "category": "Category:Francisco_de_Goya_-_The_Sleep_of_Reason_Produces_Monsters",
+    "collections": [
+      "visual-art",
+      "dreams-unconscious"
+    ],
+    "resource_type": "print",
+    "_note": "Goya — El sueño de la razón produce monstruos (Caprichos plate 43); the series' defining self-portrait"
+  },
+  {
+    "source": "wikimedia_commons",
+    "category": "Category:Black_Paintings_(Goya)",
+    "collections": [
+      "visual-art",
+      "dreams-unconscious"
+    ],
+    "resource_type": "painting",
+    "_note": "Goya — Pinturas Negras: Saturn Devouring His Son, Witches' Sabbath, Dog — late hallucinatory murals"
+  },
+  {
+    "source": "wikimedia_commons",
+    "category": "Category:Visions_of_the_Hereafter_(Bosch)",
+    "collections": [
+      "visual-art",
+      "dreams-unconscious"
+    ],
+    "resource_type": "painting",
+    "_note": "Bosch — Venice panels: tunnel of light, ascent to heaven; among earliest depictions of near-death visions"
+  },
+  {
+    "source": "wikimedia_commons",
+    "category": "Category:The_Haywain_Triptych_(Bosch)",
+    "collections": [
+      "visual-art",
+      "dreams-unconscious"
+    ],
+    "resource_type": "painting",
+    "_note": "Bosch — Haywain Triptych (Madrid); moral allegory with Heaven-Earth-Hell dream structure"
+  },
+  {
+    "source": "wikimedia_commons",
+    "category": "Category:Félicien_Rops_-_Les_Sataniques",
+    "collections": [
+      "visual-art",
+      "dreams-unconscious"
+    ],
+    "resource_type": "print",
+    "_note": "Rops — Les Sataniques (1882), six heliogravures of Satanic ritual and erotic transgression"
+  },
+  {
+    "source": "wikimedia_commons",
+    "category": "Category:Carlos_Schwabe",
+    "collections": [
+      "visual-art",
+      "dreams-unconscious"
+    ],
+    "resource_type": "illustration",
+    "_note": "Schwabe — symbolist illustrator; Death and the Gravedigger, Salomé, Le Rêve illustrations"
+  },
+  {
+    "source": "wikimedia_commons",
+    "category": "Category:Lucien_Lévy-Dhurmer",
+    "collections": [
+      "visual-art",
+      "dreams-unconscious"
+    ],
+    "resource_type": "painting",
+    "_note": "Lévy-Dhurmer — French symbolist pastels; Eve, Medusa, mysterious veiled figures in twilight"
+  },
+  {
+    "source": "wikimedia_commons",
+    "category": "Category:Giovanni_Battista_Piranesi",
+    "collections": [
+      "visual-art",
+      "dreams-unconscious"
+    ],
+    "resource_type": "print",
+    "_note": "Piranesi — broader works beyond Carceri; Roman ruins as decayed sublime dreams of empire"
+  },
+  {
+    "source": "wikimedia_commons",
+    "category": "Category:Opere_varie_di_architettura_(Piranesi)",
+    "collections": [
+      "visual-art",
+      "dreams-unconscious"
+    ],
+    "resource_type": "print",
+    "_note": "Piranesi — Opere Varie (1750), includes the first Carceri set and architectural fantasies"
+  },
+  {
+    "source": "wikimedia_commons",
+    "category": "Category:William_Blake_-_visionary_heads",
+    "collections": [
+      "visual-art",
+      "dreams-unconscious"
+    ],
+    "resource_type": "drawing",
+    "_note": "Blake — Visionary Heads (c.1819–25): spirit portraits of historical figures seen in visions"
+  }
+]

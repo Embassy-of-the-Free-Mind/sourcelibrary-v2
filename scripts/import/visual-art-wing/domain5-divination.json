@@ -1,0 +1,513 @@
+[
+  {
+    "source": "wikimedia_commons",
+    "category": "Category:Pierpont_Morgan-Bergamo_Visconti-Sforza_Tarot",
+    "collections": ["visual-art", "astrology"],
+    "resource_type": "painting",
+    "notes": "Morgan Library + Bergamo cards — core 74-card set, ~1450, Bonifacio Bembo; oldest surviving tarot"
+  },
+  {
+    "source": "wikimedia_commons",
+    "category": "Category:Cary-Yale_Visconti_Tarot",
+    "collections": ["visual-art", "astrology"],
+    "resource_type": "painting",
+    "notes": "Cary-Yale deck — 67 surviving cards, earliest of the Visconti group, Yale Beinecke"
+  },
+  {
+    "source": "wikimedia_commons",
+    "category": "Category:Visconti-Sforza_tarot_deck_cards_in_the_Pinacoteca_di_Brera",
+    "collections": ["visual-art", "astrology"],
+    "resource_type": "painting",
+    "notes": "Brera Museum cards from the Visconti-Sforza deck"
+  },
+  {
+    "source": "wikimedia_commons",
+    "category": "Category:Dames_(Visconti_Tarot)",
+    "collections": ["visual-art", "astrology"],
+    "resource_type": "painting",
+    "notes": "Court cards (Queens) from the Visconti Tarot"
+  },
+  {
+    "source": "wikimedia_commons",
+    "category": "Category:Damsels_(Visconti_Tarot)",
+    "collections": ["visual-art", "astrology"],
+    "resource_type": "painting",
+    "notes": "Page cards (Damsels) from the Visconti Tarot"
+  },
+  {
+    "source": "wikimedia_commons",
+    "category": "Category:Knaves_(Visconti_Tarot)",
+    "collections": ["visual-art", "astrology"],
+    "resource_type": "painting",
+    "notes": "Knave court cards from the Visconti Tarot"
+  },
+  {
+    "source": "wikimedia_commons",
+    "category": "Category:Tarot_de_Marseille_-_Jean_Dodal",
+    "collections": ["visual-art", "astrology"],
+    "resource_type": "print",
+    "notes": "Jean Dodal Tarot de Marseille, Lyon ~1701 — earliest well-preserved Marseille-pattern deck"
+  },
+  {
+    "source": "wikimedia_commons",
+    "category": "Category:Tarot_de_Marseille_-_Nicolas_Conver_1760",
+    "collections": ["visual-art", "astrology"],
+    "resource_type": "print",
+    "notes": "Nicolas Conver 1760 — most reprinted classical Marseille deck"
+  },
+  {
+    "source": "wikimedia_commons",
+    "category": "Category:Tarot_de_Marseille_(Single_Cards)",
+    "collections": ["visual-art", "astrology"],
+    "resource_type": "print",
+    "notes": "Individual Marseille-pattern tarot cards from various decks"
+  },
+  {
+    "source": "wikimedia_commons",
+    "category": "Category:Deck_of_cards,_BM_1904,0511.47.1-78",
+    "collections": ["visual-art", "astrology"],
+    "resource_type": "print",
+    "notes": "British Museum 78-card Tarot de Marseille deck (accession 1904)"
+  },
+  {
+    "source": "wikimedia_commons",
+    "category": "Category:Sola-Busca_tarot_deck",
+    "collections": ["visual-art", "astrology"],
+    "resource_type": "print",
+    "notes": "Sola-Busca 1491 — first complete 78-card engraved tarot; pip cards with figures; influenced Rider-Waite"
+  },
+  {
+    "source": "wikimedia_commons",
+    "category": "Category:Sola-Busca_tarot_cards_in_the_Albertina",
+    "collections": ["visual-art", "astrology"],
+    "resource_type": "print",
+    "notes": "Albertina (Vienna) holdings of the Sola-Busca tarot"
+  },
+  {
+    "source": "wikimedia_commons",
+    "category": "Category:Mantegna_Tarocchi",
+    "collections": ["visual-art", "astrology"],
+    "resource_type": "print",
+    "notes": "Full 50-print Tarocchi del Mantegna — E and S series, ~1465; planets, muses, virtues, estates of man"
+  },
+  {
+    "source": "wikimedia_commons",
+    "category": "Category:Mantegna_Tarocchi_(set_of_whole_pages)",
+    "collections": ["visual-art", "astrology"],
+    "resource_type": "print",
+    "notes": "Full-page scans of the Mantegna Tarocchi series"
+  },
+  {
+    "source": "wikimedia_commons",
+    "category": "Category:Minchiate",
+    "collections": ["visual-art", "astrology"],
+    "resource_type": "print",
+    "notes": "Minchiate — Florentine 97-card deck (~1530s); adds zodiac, 4 elements and virtues to tarot trumps"
+  },
+  {
+    "source": "wikimedia_commons",
+    "category": "Category:Minchiate_card_deck_-_Florence_-_1860-1890",
+    "collections": ["visual-art", "astrology"],
+    "resource_type": "print",
+    "notes": "Florence 1860-1890 Minchiate deck — complete, well-documented set"
+  },
+  {
+    "source": "wikimedia_commons",
+    "category": "Category:Zodiac_(Minchiate)",
+    "collections": ["visual-art", "astrology"],
+    "resource_type": "print",
+    "notes": "Zodiac trump cards from the Minchiate deck"
+  },
+  {
+    "source": "wikimedia_commons",
+    "category": "Category:Earlier_Minchiate",
+    "collections": ["visual-art", "astrology"],
+    "resource_type": "print",
+    "notes": "16th-17th century Minchiate cards — earliest surviving examples"
+  },
+  {
+    "source": "wikimedia_commons",
+    "category": "Category:The_Fortune_Teller_by_Caravaggio",
+    "collections": ["visual-art", "astrology"],
+    "resource_type": "painting",
+    "notes": "Caravaggio's Fortune Teller (~1595) — Louvre and Capitoline versions; genre-defining chiromancy scene"
+  },
+  {
+    "source": "wikimedia_commons",
+    "category": "Category:Fortune_telling_in_Flemish_genre_paintings",
+    "collections": ["visual-art", "astrology"],
+    "resource_type": "painting",
+    "notes": "Flemish genre scenes of fortune-telling; gypsies reading palms, 17th century"
+  },
+  {
+    "source": "wikimedia_commons",
+    "category": "Category:Fortune-teller_reading_palm_in_art",
+    "collections": ["visual-art", "astrology"],
+    "resource_type": "painting",
+    "notes": "Paintings and prints of palm-reading fortune-tellers across centuries"
+  },
+  {
+    "source": "wikimedia_commons",
+    "category": "Category:Indovina_by_Giovanni_Battista_Piazzetta_(1740-1745,_Accademia)",
+    "collections": ["visual-art", "astrology"],
+    "resource_type": "painting",
+    "notes": "Piazzetta's The Fortune Teller (Indovina), 1740-45, Gallerie dell'Accademia, Venice"
+  },
+  {
+    "source": "wikimedia_commons",
+    "category": "Category:L'indovino_-_Pietro_Longhi_-_Gallerie_dell'Accademia",
+    "collections": ["visual-art", "astrology"],
+    "resource_type": "painting",
+    "notes": "Pietro Longhi's The Fortune Teller — Venetian genre scene"
+  },
+  {
+    "source": "wikimedia_commons",
+    "category": "Category:Cartomancy_in_art",
+    "collections": ["visual-art", "astrology"],
+    "resource_type": "painting",
+    "notes": "Paintings depicting card-reading fortune-tellers"
+  },
+  {
+    "source": "wikimedia_commons",
+    "category": "Category:Fortune-telling_in_Russian_art",
+    "collections": ["visual-art", "astrology"],
+    "resource_type": "painting",
+    "notes": "Russian Romantic tradition of fortune-telling scenes — Bryullov, Repin et al."
+  },
+  {
+    "source": "wikimedia_commons",
+    "category": "Category:Sibyls_in_art",
+    "collections": ["visual-art", "astrology"],
+    "resource_type": "painting",
+    "notes": "Sibyls — prophetesses and oracles in Western art; top-level category"
+  },
+  {
+    "source": "wikimedia_commons",
+    "category": "Category:Sibyls_in_paintings",
+    "collections": ["visual-art", "astrology"],
+    "resource_type": "painting",
+    "notes": "Paintings of the classical Sibyls; Michelangelo, Raphael, Guercino, Domenichino et al."
+  },
+  {
+    "source": "wikimedia_commons",
+    "category": "Category:Engravings_of_Sibyls",
+    "collections": ["visual-art", "astrology"],
+    "resource_type": "print",
+    "notes": "Engraved Sibyl series — Lucas van Leyden, Maarten van Heemskerck and others"
+  },
+  {
+    "source": "wikimedia_commons",
+    "category": "Category:Woodcut_series_of_Sibyls_by_Lucas_van_Leyden",
+    "collections": ["visual-art", "astrology"],
+    "resource_type": "print",
+    "notes": "Lucas van Leyden woodcut series of the 12 Sibyls (~1512)"
+  },
+  {
+    "source": "wikimedia_commons",
+    "category": "Category:XII_Sibyllarum_Icones_Elegantissimi",
+    "collections": ["visual-art", "astrology"],
+    "resource_type": "print",
+    "notes": "XII Sibyllarum Icones Elegantissimi — Renaissance engraved Sibyl series"
+  },
+  {
+    "source": "wikimedia_commons",
+    "category": "Category:Sibyls_in_the_Nuremberg_Chronicle",
+    "collections": ["visual-art", "astrology"],
+    "resource_type": "print",
+    "notes": "Sibyl woodcuts in Hartmann Schedel's Nuremberg Chronicle (1493)"
+  },
+  {
+    "source": "wikimedia_commons",
+    "category": "Category:Sibyls_in_miniatures",
+    "collections": ["visual-art", "astrology"],
+    "resource_type": "manuscript",
+    "notes": "Illuminated manuscript depictions of the Sibyls"
+  },
+  {
+    "source": "wikimedia_commons",
+    "category": "Category:Pythia",
+    "collections": ["visual-art", "astrology"],
+    "resource_type": "painting",
+    "notes": "The Pythia — Delphic Oracle priestess in Western art"
+  },
+  {
+    "source": "wikimedia_commons",
+    "category": "Category:Sibyl_of_Delphi",
+    "collections": ["visual-art", "astrology"],
+    "resource_type": "painting",
+    "notes": "Delphic Sibyl — Michelangelo (Sistine Chapel), Raphael (Santa Maria della Pace) and others"
+  },
+  {
+    "source": "wikimedia_commons",
+    "category": "Category:Chiromancy",
+    "collections": ["visual-art", "astrology"],
+    "resource_type": "print",
+    "notes": "Palmistry and chiromancy — illustrated treatises and manuscript diagrams"
+  },
+  {
+    "source": "wikimedia_commons",
+    "category": "Category:Chiromantia_(1541)",
+    "collections": ["visual-art", "astrology"],
+    "resource_type": "print",
+    "notes": "Chiromantia (1541) — illustrated chiromancy treatise with hand diagrams"
+  },
+  {
+    "source": "wikimedia_commons",
+    "category": "Category:Palm_reading_in_art",
+    "collections": ["visual-art", "astrology"],
+    "resource_type": "painting",
+    "notes": "Artistic depictions of palm-reading across centuries"
+  },
+  {
+    "source": "wikimedia_commons",
+    "category": "Category:Zodiac_in_art",
+    "collections": ["visual-art", "astrology"],
+    "resource_type": "painting",
+    "notes": "Zodiac signs in all media — top-level category"
+  },
+  {
+    "source": "wikimedia_commons",
+    "category": "Category:Signs_of_Western_astrology_in_art",
+    "collections": ["visual-art", "astrology"],
+    "resource_type": "print",
+    "notes": "The 12 Western zodiac signs in art — Aries through Pisces"
+  },
+  {
+    "source": "wikimedia_commons",
+    "category": "Category:Homo_signorum",
+    "collections": ["visual-art", "astrology"],
+    "resource_type": "manuscript",
+    "notes": "Zodiac Man (Homo signorum) — astrological melothesia diagrams from medieval manuscripts"
+  },
+  {
+    "source": "wikimedia_commons",
+    "category": "Category:Seven_Planets_and_Constellations_series_by_Sebald_Beham",
+    "collections": ["visual-art", "astrology"],
+    "resource_type": "print",
+    "notes": "Sebald Beham engraved series of the Seven Planets with constellations"
+  },
+  {
+    "source": "wikimedia_commons",
+    "category": "Category:Paintings_of_Zodiac",
+    "collections": ["visual-art", "astrology"],
+    "resource_type": "painting",
+    "notes": "Paintings with zodiac imagery"
+  },
+  {
+    "source": "wikimedia_commons",
+    "category": "Category:Zodiac_wheels",
+    "collections": ["visual-art", "astrology"],
+    "resource_type": "manuscript",
+    "notes": "Circular zodiac wheel diagrams — medical and astrological manuscripts"
+  },
+  {
+    "source": "wikimedia_commons",
+    "category": "Category:Chinese_zodiac_in_art",
+    "collections": ["visual-art", "astrology"],
+    "resource_type": "print",
+    "notes": "Chinese 12-animal zodiac in art — East Asian divinatory calendrics"
+  },
+  {
+    "source": "wikimedia_commons",
+    "category": "Category:Astrological_manuscripts",
+    "collections": ["visual-art", "astrology"],
+    "resource_type": "manuscript",
+    "notes": "Illuminated astrological manuscripts — general parent category"
+  },
+  {
+    "source": "wikimedia_commons",
+    "category": "Category:Astrological_manuscripts_of_the_Islamic_Golden_Age",
+    "collections": ["visual-art", "astrology"],
+    "resource_type": "manuscript",
+    "notes": "Islamic astrological manuscripts — Abu Ma'shar, al-Biruni, Ibn Abi al-Rijal"
+  },
+  {
+    "source": "wikimedia_commons",
+    "category": "Category:Kitāb_Ṣuwar_al-kawākib_(al-thābitah)",
+    "collections": ["visual-art", "astrology"],
+    "resource_type": "manuscript",
+    "notes": "Al-Sufi's Book of Fixed Stars — landmark Arabic astronomical/astrological manuscript with constellation figures"
+  },
+  {
+    "source": "wikimedia_commons",
+    "category": "Category:Kitab_suwar_al-kawakib_al-thabita_(Book_of_the_Images_of_the_Fixed_Stars)_of_al-Sufi_(MET_13.160.10)",
+    "collections": ["visual-art", "astrology"],
+    "resource_type": "manuscript",
+    "notes": "Metropolitan Museum copy of al-Sufi's Book of Fixed Stars"
+  },
+  {
+    "source": "wikimedia_commons",
+    "category": "Category:Kitab_al-Bulhan",
+    "collections": ["visual-art", "astrology"],
+    "resource_type": "manuscript",
+    "notes": "Kitab al-Bulhan — richly illustrated Arabic manuscript with astrological and divinatory content (~1399)"
+  },
+  {
+    "source": "wikimedia_commons",
+    "category": "Category:De_Sphaera",
+    "collections": ["visual-art", "astrology"],
+    "resource_type": "manuscript",
+    "notes": "De Sphaera (Este codex, ~1470) — luxury illuminated astrological manuscript, Ferrara"
+  },
+  {
+    "source": "wikimedia_commons",
+    "category": "Category:Introductorius_ad_Judicia_Astrologiae_(14th_C)_-_BL_Add_MS_23770",
+    "collections": ["visual-art", "astrology"],
+    "resource_type": "manuscript",
+    "notes": "BL Add MS 23770 — 14th-century illustrated Arabic astrological judgments treatise"
+  },
+  {
+    "source": "wikimedia_commons",
+    "category": "Category:Horoscopes_of_Christ",
+    "collections": ["visual-art", "astrology"],
+    "resource_type": "manuscript",
+    "notes": "Medieval and Renaissance nativity horoscopes of Christ — unusual divinatory genre"
+  },
+  {
+    "source": "wikimedia_commons",
+    "category": "Category:Horoscope_from_\"The_book_of_birth_of_Iskandar\"",
+    "collections": ["visual-art", "astrology"],
+    "resource_type": "manuscript",
+    "notes": "Illuminated horoscope from the Book of the Birth of Iskandar — Persian astrological manuscript"
+  },
+  {
+    "source": "wikimedia_commons",
+    "category": "Category:The_book_of_birth_of_Iskandar",
+    "collections": ["visual-art", "astrology"],
+    "resource_type": "manuscript",
+    "notes": "Full Book of the Birth of Iskandar — Persian horoscope manuscript (Wellcome/BL)"
+  },
+  {
+    "source": "wikimedia_commons",
+    "category": "Category:Très_Riches_Heures_du_Duc_de_Berry",
+    "collections": ["visual-art", "astrology"],
+    "resource_type": "manuscript",
+    "notes": "Tres Riches Heures (~1412-16) — calendar illuminations with zodiac signs and labors of the months; January-December cycle"
+  },
+  {
+    "source": "wikimedia_commons",
+    "category": "Category:Manuscripts_of_the_Falnama",
+    "collections": ["visual-art", "astrology"],
+    "resource_type": "manuscript",
+    "notes": "Falnama (Book of Omens) — Safavid and Mughal large-format omen manuscripts, ~1550-1610"
+  },
+  {
+    "source": "wikimedia_commons",
+    "category": "Category:Lenormand_cards",
+    "collections": ["visual-art", "astrology"],
+    "resource_type": "print",
+    "notes": "Lenormand 36-card oracle deck — named after Marie Anne Lenormand, 19th-century French cartomancy"
+  },
+  {
+    "source": "wikimedia_commons",
+    "category": "Category:Grand_Jeu_de_l'Oracle_des_Dames_cards",
+    "collections": ["visual-art", "astrology"],
+    "resource_type": "print",
+    "notes": "Grand Jeu de l'Oracle des Dames — early 19th-century French fortune-telling card deck"
+  },
+  {
+    "source": "wikimedia_commons",
+    "category": "Category:Le_Sorti..._intitolate_giardino_di_pensieri",
+    "collections": ["visual-art", "astrology"],
+    "resource_type": "print",
+    "notes": "Le Sorti (Garden of Thoughts) 1527 — earliest printed Italian lot book with woodcuts by Marcolini"
+  },
+  {
+    "source": "wikimedia_commons",
+    "category": "Category:Sibilla_cards",
+    "collections": ["visual-art", "astrology"],
+    "resource_type": "print",
+    "notes": "Sibilla cartomancy cards — Italian oracle deck tradition featuring Sibyl figures"
+  },
+  {
+    "source": "wikimedia_commons",
+    "category": "Category:Geomancy",
+    "collections": ["visual-art", "astrology"],
+    "resource_type": "manuscript",
+    "notes": "Geomancy — dot-and-line Arabic/European divination; illustrated treatises and figures"
+  },
+  {
+    "source": "wikimedia_commons",
+    "category": "Category:Geomantic_symbols",
+    "collections": ["visual-art", "astrology"],
+    "resource_type": "print",
+    "notes": "The 16 geomantic figures (Puer, Amissio, Albus, etc.) — diagrams and manuscript illustrations"
+  },
+  {
+    "source": "wikimedia_commons",
+    "category": "Category:I_Ching_hexagrams",
+    "collections": ["visual-art", "astrology"],
+    "resource_type": "diagram",
+    "notes": "64 I Ching hexagrams — historical representations of the Yijing used in Chinese divination"
+  },
+  {
+    "source": "wikimedia_commons",
+    "category": "Category:I_Ching_trigrams",
+    "collections": ["visual-art", "astrology"],
+    "resource_type": "diagram",
+    "notes": "8 trigrams (bagua) — foundational I Ching symbols used in Chinese divination and cosmology"
+  },
+  {
+    "source": "wikimedia_commons",
+    "category": "Category:Oracle_bones",
+    "collections": ["visual-art", "astrology"],
+    "resource_type": "artifact",
+    "notes": "Chinese Shang dynasty oracle bones (jiaguwen) — turtle plastrons and ox scapulae with divination inscriptions"
+  },
+  {
+    "source": "wikimedia_commons",
+    "category": "Category:Oracle_bone_script",
+    "collections": ["visual-art", "astrology"],
+    "resource_type": "artifact",
+    "notes": "Jiaguwen — the oracle bone script; earliest attested Chinese writing used in pyromantic divination"
+  },
+  {
+    "source": "wikimedia_commons",
+    "category": "Category:Turtle_plastrons_used_as_oracle_bones",
+    "collections": ["visual-art", "astrology"],
+    "resource_type": "artifact",
+    "notes": "Turtle plastrons with divination inscriptions — Shang dynasty (~1200 BCE)"
+  },
+  {
+    "source": "wikimedia_commons",
+    "category": "Category:Ox_scapulae_used_as_oracle_bones",
+    "collections": ["visual-art", "astrology"],
+    "resource_type": "artifact",
+    "notes": "Ox shoulder blades used in scapulimancy — Shang dynasty oracle bones"
+  },
+  {
+    "source": "wikimedia_commons",
+    "category": "Category:John_Dee's_obsidian_mirror",
+    "collections": ["visual-art", "astrology"],
+    "resource_type": "artifact",
+    "notes": "Dr. John Dee's Aztec obsidian scrying mirror (British Museum) — used for angelic communication, 1580s"
+  },
+  {
+    "source": "wikimedia_commons",
+    "category": "Category:Crystal_balls_in_art",
+    "collections": ["visual-art", "astrology"],
+    "resource_type": "painting",
+    "notes": "Crystal balls and scrying globes in art"
+  },
+  {
+    "source": "wikimedia_commons",
+    "category": "Category:Codex_Borgia",
+    "collections": ["visual-art", "astrology"],
+    "resource_type": "manuscript",
+    "notes": "Codex Borgia — pre-Columbian Aztec divinatory manuscript; ritual calendar (tonalpohualli) scenes, ~1300-1500 CE"
+  },
+  {
+    "source": "wikimedia_commons",
+    "category": "Category:Figures_in_Codex_Borgia",
+    "collections": ["visual-art", "astrology"],
+    "resource_type": "manuscript",
+    "notes": "Individual deity and ritual figures from the Codex Borgia"
+  },
+  {
+    "source": "wikimedia_commons",
+    "category": "Category:Saul_and_the_Witch_of_Endor_-_Salvator_Rosa_-_Louvre_INV_584",
+    "collections": ["visual-art", "astrology"],
+    "resource_type": "painting",
+    "notes": "Salvator Rosa's Saul and the Witch of Endor (Louvre) — biblical necromancy scene"
+  }
+]

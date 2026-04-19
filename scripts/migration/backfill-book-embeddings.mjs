@@ -176,6 +176,26 @@ function composeEmbeddingText(book, indexData) {
     parts.push(`Categories: ${book.categories.join(', ')}`);
   }
 
+  // Artwork-specific metadata (commons_description, categories, medium, collections)
+  if (book.content_type === 'artwork') {
+    if (book.commons_description) {
+      parts.push(book.commons_description.slice(0, 500));
+    }
+    if (book.commons_categories) {
+      // commons_categories is a semicolon-separated string from Wikimedia
+      const cats = typeof book.commons_categories === 'string'
+        ? book.commons_categories.split('|').map(c => c.trim()).filter(Boolean).slice(0, 20)
+        : Array.isArray(book.commons_categories) ? book.commons_categories.slice(0, 20) : [];
+      if (cats.length > 0) parts.push(`Subjects: ${cats.join(', ')}`);
+    }
+    if (book.resource_type) parts.push(`Medium: ${book.resource_type}`);
+    if (book.medium) parts.push(`Material: ${book.medium}`);
+    if (book.collections?.length > 0) {
+      const collNames = book.collections.filter(c => c !== 'visual-art').map(c => c.replace(/-/g, ' '));
+      if (collNames.length > 0) parts.push(`Collections: ${collNames.join(', ')}`);
+    }
+  }
+
   // Truncate to ~8000 chars to stay well within Gemini token limits
   const text = parts.join('\n').slice(0, 8000);
   return text;
@@ -203,6 +223,9 @@ async function main() {
     description: 1, summary: 1, categories: 1, quality_score: 1,
     'reading_summary.overview': 1,
     'index.bookSummary': 1, // legacy inline fallback
+    // Artwork-specific fields for rich embedding
+    content_type: 1, resource_type: 1, medium: 1, collections: 1,
+    commons_description: 1, commons_categories: 1,
   };
 
   const books = await db.collection('books')

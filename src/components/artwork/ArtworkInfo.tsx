@@ -18,6 +18,26 @@ const TYPE_LABELS: Record<string, string> = {
   map: 'Map',
 };
 
+function ProvenanceRow({ label, value, mono, provenance }: { label: string; value: string; mono?: boolean; provenance?: 'ai' | 'source' }) {
+  return (
+    <div>
+      <span className="text-xs uppercase tracking-wider font-medium" style={{ color: 'var(--text-muted)' }}>
+        {label}
+        {provenance === 'ai' && <AiBadge />}
+      </span>
+      <p className={`mt-0.5 ${mono ? 'font-mono text-xs break-all' : ''}`}>{value}</p>
+    </div>
+  );
+}
+
+function AiBadge() {
+  return (
+    <span className="inline-flex items-center ml-1 px-1 py-px text-[9px] font-medium rounded bg-amber-100 text-amber-700 align-middle" title="AI-inferred — may require verification">
+      AI
+    </span>
+  );
+}
+
 function TypeBadge({ type }: { type: string }) {
   return (
     <span className="inline-flex items-center px-2.5 py-0.5 text-xs font-medium rounded-full border bg-white/10 border-white/20 text-stone-300">
@@ -304,60 +324,150 @@ export default function ArtworkInfo({ book, collections, prevWork, nextWork }: A
           />
         )}
 
-        {/* Provenance & Source */}
-        <div className="card p-6">
-          <h2 className="text-lg font-display font-semibold mb-4" style={{ color: 'var(--text-primary)' }}>Provenance &amp; Source</h2>
-          <div className="text-sm space-y-3" style={{ color: 'var(--text-secondary)' }}>
-            {/* Holding institution */}
-            {(book.image_source as any)?.contributing_library && (
-              <div>
-                <span className="text-xs uppercase tracking-wider font-medium" style={{ color: 'var(--text-muted)' }}>Holding Institution</span>
-                <p className="mt-0.5">{(book.image_source as any).contributing_library}</p>
-              </div>
-            )}
+        {/* Provenance & Source — expanded with Getty identifiers and AI enrichment transparency */}
+        <div className="card p-6 sm:p-8">
+          <h2 className="text-lg font-display font-semibold mb-5" style={{ color: 'var(--text-primary)' }}>Provenance &amp; Source</h2>
 
-            {/* Credit */}
-            {(book as any).commons_credit && (
-              <div>
-                <span className="text-xs uppercase tracking-wider font-medium" style={{ color: 'var(--text-muted)' }}>Credit</span>
-                <p className="mt-0.5">{(book as any).commons_credit}</p>
-              </div>
-            )}
+          <div className="grid grid-cols-1 md:grid-cols-2 gap-x-10 gap-y-4 text-sm" style={{ color: 'var(--text-secondary)' }}>
+            {/* Left column: Physical object provenance */}
+            <div className="space-y-4">
+              <p className="text-xs uppercase tracking-wider font-semibold pb-1 border-b" style={{ color: 'var(--text-muted)', borderColor: 'var(--border-light)' }}>Object</p>
 
-            {/* Digital source */}
-            <div>
-              <span className="text-xs uppercase tracking-wider font-medium" style={{ color: 'var(--text-muted)' }}>Digital Image</span>
-              <p className="mt-0.5">
-                <a href={commonsUrl} target="_blank" rel="noopener noreferrer" className="text-accent-rust hover:underline">Wikimedia Commons</a>
-                {commonsLicense && <span className="text-stone-400"> · {commonsLicense}</span>}
-              </p>
+              {(book.image_source as any)?.contributing_library && (
+                <ProvenanceRow label="Holding Institution" value={(book.image_source as any).contributing_library} />
+              )}
+              {(book as any).accession_number && (
+                <ProvenanceRow label="Accession Number" value={(book as any).accession_number} />
+              )}
+              {(book as any).department && (
+                <ProvenanceRow label="Department" value={(book as any).department} />
+              )}
+              {medium && (
+                <ProvenanceRow label="Medium" value={medium} />
+              )}
+              {enrichment?.aat_technique && (
+                <ProvenanceRow label="Technique" value={enrichment.aat_technique} provenance="ai" />
+              )}
+              {enrichment?.aat_material && (
+                <ProvenanceRow label="Support" value={enrichment.aat_material} provenance="ai" />
+              )}
+              {dimensionsDisplay && (
+                <ProvenanceRow label="Dimensions" value={dimensionsDisplay} />
+              )}
+              {enrichment?.period && (
+                <ProvenanceRow label="Period" value={enrichment.period} provenance="ai" />
+              )}
+              {enrichment?.culture && (
+                <ProvenanceRow label="Culture" value={enrichment.culture} provenance="ai" />
+              )}
+              {enrichment?.genre && (
+                <ProvenanceRow label="Genre" value={enrichment.genre} provenance="ai" />
+              )}
             </div>
 
-            {/* License details */}
-            {(book as any).commons_usage_terms && (
-              <div>
-                <span className="text-xs uppercase tracking-wider font-medium" style={{ color: 'var(--text-muted)' }}>Usage Terms</span>
-                <p className="mt-0.5">{(book as any).commons_usage_terms}</p>
-              </div>
-            )}
+            {/* Right column: Digital provenance */}
+            <div className="space-y-4">
+              <p className="text-xs uppercase tracking-wider font-semibold pb-1 border-b" style={{ color: 'var(--text-muted)', borderColor: 'var(--border-light)' }}>Digital Source</p>
 
-            {/* Harvest date */}
-            {(book as any).harvested_at && (
               <div>
-                <span className="text-xs uppercase tracking-wider font-medium" style={{ color: 'var(--text-muted)' }}>Harvested</span>
-                <p className="mt-0.5">{new Date((book as any).harvested_at).toLocaleDateString('en-US', { year: 'numeric', month: 'long', day: 'numeric' })}</p>
+                <span className="text-xs uppercase tracking-wider font-medium" style={{ color: 'var(--text-muted)' }}>Source</span>
+                <p className="mt-0.5">
+                  {commonsUrl ? (
+                    <a href={commonsUrl} target="_blank" rel="noopener noreferrer" className="text-accent-rust hover:underline">
+                      {(book.image_source as any)?.provider_name || 'Wikimedia Commons'}
+                    </a>
+                  ) : (
+                    (book.image_source as any)?.provider_name || 'Unknown'
+                  )}
+                  {commonsLicense && <span className="text-stone-400"> · {commonsLicense}</span>}
+                </p>
               </div>
-            )}
 
-            {/* Full resolution link */}
-            {(archivedFullUrl || commonsFullUrl) && (
-              <p className="pt-2">
-                <a href={archivedFullUrl || commonsFullUrl} target="_blank" rel="noopener noreferrer" className="text-accent-rust hover:underline">
-                  View full resolution{fullWidth && fullHeight ? ` (${fullWidth} × ${fullHeight})` : ''} →
-                </a>
-              </p>
-            )}
+              {(book as any).commons_credit && (
+                <ProvenanceRow label="Credit" value={(book as any).commons_credit} />
+              )}
+              {(book as any).commons_usage_terms && (
+                <ProvenanceRow label="Usage Terms" value={(book as any).commons_usage_terms} />
+              )}
+              {(commonsWidth > 0 && commonsHeight > 0) && (
+                <ProvenanceRow label="Original Resolution" value={`${commonsWidth} × ${commonsHeight} px`} />
+              )}
+              {(book as any).commons_sha1 && (
+                <ProvenanceRow label="SHA-1" value={(book as any).commons_sha1} mono />
+              )}
+              {(book as any).commons_upload_date && (
+                <ProvenanceRow label="Upload Date" value={new Date((book as any).commons_upload_date).toLocaleDateString('en-US', { year: 'numeric', month: 'long', day: 'numeric' })} />
+              )}
+              {(book as any).harvested_at && (
+                <ProvenanceRow label="Harvested" value={new Date((book as any).harvested_at).toLocaleDateString('en-US', { year: 'numeric', month: 'long', day: 'numeric' })} />
+              )}
+            </div>
           </div>
+
+          {/* Linked Data identifiers */}
+          {(enrichment?.ulan_artist || enrichment?.tgn_place || enrichment?.iconclass?.length > 0) && (
+            <div className="mt-6 pt-5 border-t" style={{ borderColor: 'var(--border-light)' }}>
+              <p className="text-xs uppercase tracking-wider font-semibold mb-3" style={{ color: 'var(--text-muted)' }}>Linked Data</p>
+              <div className="flex flex-wrap gap-2">
+                {enrichment.ulan_artist && (
+                  <a href={`https://www.getty.edu/vow/ULANFullDisplay?find=&role=&nation=&subjectid=${enrichment.ulan_artist}`}
+                    target="_blank" rel="noopener noreferrer"
+                    className="inline-flex items-center gap-1.5 px-2.5 py-1 text-xs rounded border hover:border-accent-rust/40 transition-colors"
+                    style={{ borderColor: 'var(--border-light)', color: 'var(--text-secondary)' }}>
+                    <span className="font-medium">Getty ULAN</span>
+                    <span className="font-mono opacity-60">{enrichment.ulan_artist}</span>
+                    <AiBadge />
+                  </a>
+                )}
+                {enrichment.tgn_place && (
+                  <a href={`https://www.getty.edu/vow/TGNFullDisplay?find=&place=&nation=&subjectid=${enrichment.tgn_place}`}
+                    target="_blank" rel="noopener noreferrer"
+                    className="inline-flex items-center gap-1.5 px-2.5 py-1 text-xs rounded border hover:border-accent-rust/40 transition-colors"
+                    style={{ borderColor: 'var(--border-light)', color: 'var(--text-secondary)' }}>
+                    <span className="font-medium">Getty TGN</span>
+                    <span className="font-mono opacity-60">{enrichment.tgn_place}</span>
+                    <AiBadge />
+                  </a>
+                )}
+                {enrichment.aat_technique && (
+                  <span className="inline-flex items-center gap-1.5 px-2.5 py-1 text-xs rounded border"
+                    style={{ borderColor: 'var(--border-light)', color: 'var(--text-secondary)' }}>
+                    <span className="font-medium">AAT</span>
+                    <span>{enrichment.aat_technique}</span>
+                    <AiBadge />
+                  </span>
+                )}
+                {enrichment.aat_style && (
+                  <span className="inline-flex items-center gap-1.5 px-2.5 py-1 text-xs rounded border"
+                    style={{ borderColor: 'var(--border-light)', color: 'var(--text-secondary)' }}>
+                    <span className="font-medium">AAT Style</span>
+                    <span>{enrichment.aat_style}</span>
+                    <AiBadge />
+                  </span>
+                )}
+              </div>
+            </div>
+          )}
+
+          {/* AI enrichment transparency */}
+          {enrichment?.enriched_at && (
+            <div className="mt-5 pt-4 border-t" style={{ borderColor: 'var(--border-light)' }}>
+              <p className="text-xs" style={{ color: 'var(--text-muted)' }}>
+                <AiBadge /> AI-cataloged fields generated by {enrichment.model || 'Gemini Flash'} on{' '}
+                {new Date(enrichment.enriched_at).toLocaleDateString('en-US', { year: 'numeric', month: 'long', day: 'numeric' })}.
+                Getty identifiers are AI-inferred and may require verification.
+              </p>
+            </div>
+          )}
+
+          {/* Full resolution link */}
+          {(archivedFullUrl || commonsFullUrl) && (
+            <p className="mt-4 pt-3 border-t" style={{ borderColor: 'var(--border-light)' }}>
+              <a href={archivedFullUrl || commonsFullUrl} target="_blank" rel="noopener noreferrer" className="text-accent-rust hover:underline text-sm">
+                View full resolution{fullWidth && fullHeight ? ` (${fullWidth} × ${fullHeight})` : ''} →
+              </a>
+            </p>
+          )}
         </div>
       </div>
     </>

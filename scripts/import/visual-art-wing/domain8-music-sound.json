@@ -1,0 +1,338 @@
+[
+  {
+    "source": "wikimedia_commons",
+    "category": "Category:Musurgia_Universalis",
+    "collections": ["visual-art", "music-sound"],
+    "resource_type": "print",
+    "note": "Kircher's full set of organ automata, cosmic music diagrams, and polyphonic tables"
+  },
+  {
+    "source": "wikimedia_commons",
+    "category": "Category:Syntagma_musicum",
+    "collections": ["visual-art", "music-sound"],
+    "resource_type": "print",
+    "note": "Praetorius 1619 instrument illustration plates — the definitive visual catalog of Renaissance instruments"
+  },
+  {
+    "source": "wikimedia_commons",
+    "category": "Category:Michael_Praetorius",
+    "collections": ["visual-art", "music-sound"],
+    "resource_type": "print",
+    "note": "Additional Praetorius material including Theatrum Instrumentorum plates"
+  },
+  {
+    "source": "met",
+    "search": "musicians Caravaggio",
+    "collections": ["visual-art", "music-sound"],
+    "resource_type": "painting",
+    "note": "The Musicians (I Musici) by Caravaggio, c. 1595 — CC0"
+  },
+  {
+    "source": "met",
+    "search": "lute player Caravaggio",
+    "collections": ["visual-art", "music-sound"],
+    "resource_type": "painting",
+    "note": "The Lute Player by Caravaggio — CC0 at Met"
+  },
+  {
+    "source": "wikimedia_commons",
+    "category": "Category:The_Musicians_(Caravaggio)",
+    "collections": ["visual-art", "music-sound"],
+    "resource_type": "painting",
+    "note": "Caravaggio's ensemble scene, c. 1595"
+  },
+  {
+    "source": "wikimedia_commons",
+    "category": "Category:The_Music_Lesson_(Vermeer)",
+    "collections": ["visual-art", "music-sound"],
+    "resource_type": "painting",
+    "note": "Vermeer's Lady at the Virginals with a Gentleman — canonical music-interior scene"
+  },
+  {
+    "source": "wikimedia_commons",
+    "category": "Category:Concert_scenes_in_art",
+    "collections": ["visual-art", "music-sound"],
+    "resource_type": "painting",
+    "note": "Historical concert and performance scenes across traditions"
+  },
+  {
+    "source": "wikimedia_commons",
+    "category": "Category:Musical_instruments_in_paintings",
+    "collections": ["visual-art", "music-sound"],
+    "resource_type": "painting",
+    "note": "Still-life and genre paintings foregrounding instruments"
+  },
+  {
+    "source": "wikimedia_commons",
+    "category": "Category:Lutes_in_art",
+    "collections": ["visual-art", "music-sound"],
+    "resource_type": "painting",
+    "note": "Lute-focused paintings and prints — the emblematic Renaissance instrument"
+  },
+  {
+    "source": "wikimedia_commons",
+    "category": "Category:Orpheus",
+    "collections": ["visual-art", "music-sound"],
+    "resource_type": "painting",
+    "note": "Orpheus mythology — music charming animals and the underworld"
+  },
+  {
+    "source": "wikimedia_commons",
+    "category": "Category:Orpheus_in_art",
+    "collections": ["visual-art", "music-sound"],
+    "resource_type": "painting",
+    "note": "Orpheus in Hades, Eurydice, charming beasts — core music-myth iconography"
+  },
+  {
+    "source": "wikimedia_commons",
+    "category": "Category:Angels_playing_music",
+    "collections": ["visual-art", "music-sound"],
+    "resource_type": "painting",
+    "note": "Angel musicians from medieval and Renaissance altarpieces"
+  },
+  {
+    "source": "wikimedia_commons",
+    "category": "Category:Angel_musicians",
+    "collections": ["visual-art", "music-sound"],
+    "resource_type": "painting",
+    "note": "Angelic ensembles — celestial harmony made visible"
+  },
+  {
+    "source": "wikimedia_commons",
+    "category": "Category:Neumes",
+    "collections": ["visual-art", "music-sound"],
+    "resource_type": "manuscript",
+    "note": "Medieval neumatic notation — earliest Western music notation systems"
+  },
+  {
+    "source": "wikimedia_commons",
+    "category": "Category:Musical_manuscripts",
+    "collections": ["visual-art", "music-sound"],
+    "resource_type": "manuscript",
+    "note": "Illuminated chant books, mensural notation, historical score pages"
+  },
+  {
+    "source": "wikimedia_commons",
+    "category": "Category:Gregorian_chant_manuscripts",
+    "collections": ["visual-art", "music-sound"],
+    "resource_type": "manuscript",
+    "note": "Illuminated graduals and antiphonaries — visual splendor of plainchant tradition"
+  },
+  {
+    "source": "wikimedia_commons",
+    "category": "Category:Pipe_organs_in_art",
+    "collections": ["visual-art", "music-sound"],
+    "resource_type": "print",
+    "note": "Organ illustrations in prints and paintings — architecture of sacred sound"
+  },
+  {
+    "source": "wikimedia_commons",
+    "category": "Category:Pythagoras_and_music",
+    "collections": ["visual-art", "music-sound"],
+    "resource_type": "print",
+    "note": "Blacksmith hammers, monochord experiments, harmonic ratios — founding myth of music theory"
+  },
+  {
+    "source": "wikimedia_commons",
+    "category": "Category:Musica_mundana",
+    "collections": ["visual-art", "music-sound"],
+    "resource_type": "print",
+    "note": "Music of the Spheres imagery — cosmic harmony diagrams beyond Fludd"
+  },
+  {
+    "source": "wikimedia_commons",
+    "category": "Category:Harmony_of_the_Spheres",
+    "collections": ["visual-art", "music-sound"],
+    "resource_type": "print",
+    "note": "Platonic/Pythagorean cosmic music diagrams and illustrations"
+  },
+  {
+    "source": "wikimedia_commons",
+    "category": "Category:Chladni_figures",
+    "collections": ["visual-art", "music-sound"],
+    "resource_type": "print",
+    "note": "Ernst Chladni's sand-pattern experiments — sound made visible in geometric form"
+  },
+  {
+    "source": "wikimedia_commons",
+    "category": "Category:Ernst_Chladni",
+    "collections": ["visual-art", "music-sound"],
+    "resource_type": "print",
+    "note": "Chladni's Klangfiguren plates and scientific portraits — cymatics precursor"
+  },
+  {
+    "source": "wikimedia_commons",
+    "category": "Category:Wassily_Kandinsky",
+    "collections": ["visual-art", "music-sound"],
+    "resource_type": "painting",
+    "note": "Kandinsky's synesthesia-driven abstractions — Composition series and Improvisations"
+  },
+  {
+    "source": "wikimedia_commons",
+    "category": "Category:Compositions_(Kandinsky)",
+    "collections": ["visual-art", "music-sound"],
+    "resource_type": "painting",
+    "note": "Kandinsky's Composition series — most explicit music-painting synesthesia works"
+  },
+  {
+    "source": "wikimedia_commons",
+    "category": "Category:Vanitas_with_musical_instruments",
+    "collections": ["visual-art", "music-sound"],
+    "resource_type": "painting",
+    "note": "Vanitas still lifes foregrounding musical instruments as memento mori"
+  },
+  {
+    "source": "wikimedia_commons",
+    "category": "Category:Guqin",
+    "collections": ["visual-art", "music-sound"],
+    "resource_type": "painting",
+    "note": "Guqin in Chinese painting — the literati zither as spiritual instrument"
+  },
+  {
+    "source": "wikimedia_commons",
+    "category": "Category:Guqin_in_art",
+    "collections": ["visual-art", "music-sound"],
+    "resource_type": "painting",
+    "note": "Historical depictions of guqin players in Chinese scroll painting"
+  },
+  {
+    "source": "wikimedia_commons",
+    "category": "Category:Koto_(instrument)",
+    "collections": ["visual-art", "music-sound"],
+    "resource_type": "print",
+    "note": "Koto in Japanese woodblock prints and paintings"
+  },
+  {
+    "source": "wikimedia_commons",
+    "category": "Category:Gagaku",
+    "collections": ["visual-art", "music-sound"],
+    "resource_type": "painting",
+    "note": "Japanese imperial court music (gagaku) ensemble illustrations"
+  },
+  {
+    "source": "wikimedia_commons",
+    "category": "Category:Music_in_Indian_painting",
+    "collections": ["visual-art", "music-sound"],
+    "resource_type": "painting",
+    "note": "Ragamala paintings and other Indian musical-visual traditions"
+  },
+  {
+    "source": "wikimedia_commons",
+    "category": "Category:Ragamala_paintings",
+    "collections": ["visual-art", "music-sound"],
+    "resource_type": "painting",
+    "note": "Ragamala — Indian paintings mapping musical modes to visual imagery and emotion"
+  },
+  {
+    "source": "wikimedia_commons",
+    "category": "Category:La_Danse_(Matisse)",
+    "collections": ["visual-art", "music-sound"],
+    "resource_type": "painting",
+    "note": "Matisse's Dance — movement and music unified in color and form"
+  },
+  {
+    "source": "wikimedia_commons",
+    "category": "Category:Dance_in_art",
+    "collections": ["visual-art", "music-sound"],
+    "resource_type": "painting",
+    "note": "Dance imagery across traditions — music made corporeal"
+  },
+  {
+    "source": "wikimedia_commons",
+    "category": "Category:Muses_in_art",
+    "collections": ["visual-art", "music-sound"],
+    "resource_type": "painting",
+    "note": "The Muses — Terpsichore (dance), Euterpe (music), Polyhymnia (sacred song)"
+  },
+  {
+    "source": "wikimedia_commons",
+    "category": "Category:Apollo_and_the_Muses",
+    "collections": ["visual-art", "music-sound"],
+    "resource_type": "painting",
+    "note": "Apollo Musagetes leading the Muses — divine patronage of music and poetry"
+  },
+  {
+    "source": "wikimedia_commons",
+    "category": "Category:Apollo_playing_the_lyre",
+    "collections": ["visual-art", "music-sound"],
+    "resource_type": "painting",
+    "note": "Apollo with lyre — the solar deity as musician, archetype of harmonic order"
+  },
+  {
+    "source": "wikimedia_commons",
+    "category": "Category:David_playing_the_harp",
+    "collections": ["visual-art", "music-sound"],
+    "resource_type": "painting",
+    "note": "King David as divine musician — Psalmic tradition across Jewish and Christian art"
+  },
+  {
+    "source": "wikimedia_commons",
+    "category": "Category:Tubal-cain",
+    "collections": ["visual-art", "music-sound"],
+    "resource_type": "print",
+    "note": "Tubal-cain / Jubal — biblical inventors of smithcraft and music, linked by Pythagoras legend"
+  },
+  {
+    "source": "wikimedia_commons",
+    "category": "Category:Illustrations_of_music_theory",
+    "collections": ["visual-art", "music-sound"],
+    "resource_type": "print",
+    "note": "Historical diagrams illustrating musical ratios, modes, and theoretical systems"
+  },
+  {
+    "source": "wikimedia_commons",
+    "category": "Category:Music_iconography",
+    "collections": ["visual-art", "music-sound"],
+    "resource_type": "print",
+    "note": "Broad iconographic category for music imagery across media"
+  },
+  {
+    "source": "wikimedia_commons",
+    "category": "Category:Marin_Mersenne",
+    "collections": ["visual-art", "music-sound"],
+    "resource_type": "print",
+    "note": "Mersenne portraits and Harmonicorum instrument engravings"
+  },
+  {
+    "source": "wikimedia_commons",
+    "category": "Category:Athanasius_Kircher",
+    "collections": ["visual-art", "music-sound"],
+    "resource_type": "print",
+    "note": "Kircher portraits and cross-work plates including Phonurgia Nova acoustic devices"
+  },
+  {
+    "source": "wikimedia_commons",
+    "category": "Category:Phonurgia_Nova",
+    "collections": ["visual-art", "music-sound"],
+    "resource_type": "print",
+    "note": "Kircher's acoustic trumpet, speaking tubes, and echo architecture diagrams"
+  },
+  {
+    "source": "wikimedia_commons",
+    "category": "Category:Sitar_in_art",
+    "collections": ["visual-art", "music-sound"],
+    "resource_type": "painting",
+    "note": "Sitar in Indian miniature painting — central instrument of North Indian classical tradition"
+  },
+  {
+    "source": "wikimedia_commons",
+    "category": "Category:Biwa",
+    "collections": ["visual-art", "music-sound"],
+    "resource_type": "painting",
+    "note": "Biwa lute in Japanese painting — court music and Buddhist chant instrument"
+  },
+  {
+    "source": "wikimedia_commons",
+    "category": "Category:Oud_in_art",
+    "collections": ["visual-art", "music-sound"],
+    "resource_type": "painting",
+    "note": "Oud in Islamic and Ottoman miniature painting — ancestor of the European lute"
+  },
+  {
+    "source": "wikimedia_commons",
+    "category": "Category:Concerts_in_Islamic_art",
+    "collections": ["visual-art", "music-sound"],
+    "resource_type": "painting",
+    "note": "Musical gatherings in Ottoman, Persian, and Mughal manuscript illustration"
+  }
+]

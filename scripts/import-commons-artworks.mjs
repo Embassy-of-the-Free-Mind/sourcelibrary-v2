@@ -8,9 +8,20 @@
  *   Options:
  *     --dry-run         Show what would be imported without writing to DB
  *     --category "..."  Import a single category (skip the built-in list)
+ *     --artist "..."    Artist name for --category mode (default: 'Unknown')
+ *     --type "..."      Resource type for --category mode (painting/print/drawing/object, default: 'print')
+ *     --collections "a,b,c"  Comma-separated collection slugs to assign (e.g. 'visual-art,dreams-unconscious')
+ *     --recurse         Recurse into subcategories (for --category mode)
  *     --limit N         Max items to import (default: unlimited)
  *     --skip-images     Don't download/upload images to R2 (metadata only)
  *     --force           Re-import items that already exist
+ *
+ *   Examples:
+ *     # Import Titian paintings into the Venetian Mystery collection:
+ *     node scripts/import-commons-artworks.mjs --category "Paintings by Titian" --artist "Titian" --type painting --collections "visual-art,venetian-mystery" --recurse
+ *
+ *     # Import Haeckel's Kunstformen:
+ *     node scripts/import-commons-artworks.mjs --category "Kunstformen der Natur" --artist "Ernst Haeckel" --type print --collections "visual-art,natural-philosophy"
  */
 
 import { MongoClient } from 'mongodb';
@@ -380,6 +391,10 @@ async function main() {
   const singleCategory = catIdx >= 0 ? args[catIdx + 1] : null;
   const artistIdx = args.indexOf('--artist');
   const singleArtist = artistIdx >= 0 ? args[artistIdx + 1] : null;
+  const typeIdx = args.indexOf('--type');
+  const singleType = typeIdx >= 0 ? args[typeIdx + 1] : 'print';
+  const collIdx = args.indexOf('--collections');
+  const extraCollections = collIdx >= 0 ? args[collIdx + 1].split(',').map(s => s.trim()).filter(Boolean) : [];
   const recurseFlag = args.includes('--recurse');
 
   console.log(`Mode: ${dryRun ? 'DRY RUN' : 'LIVE'} | Images: ${skipImages ? 'SKIP' : 'UPLOAD'} | Limit: ${limit === Infinity ? 'none' : limit}`);
@@ -406,7 +421,7 @@ async function main() {
 
   // Determine which categories to import
   const categories = singleCategory
-    ? [{ category: singleCategory, artist: singleArtist || 'Unknown', type: 'print', recurse: recurseFlag }]
+    ? [{ category: singleCategory, artist: singleArtist || 'Unknown', type: singleType, recurse: recurseFlag, collections: extraCollections.length > 0 ? extraCollections : undefined }]
     : IMPORT_CATEGORIES;
 
   let totalImported = 0;
@@ -506,10 +521,12 @@ async function main() {
         pages_count: 1,
         pages_ocr: 0,
         pages_translated: 0,
-        status: 'draft',
-        hidden: true, // Hidden until enriched
-        hidden_reason: 'artwork_import',
+        status: 'published',
+        hidden: false,
+        visible: true,
+        content_type: 'artwork',
         categories: [cat.type === 'painting' ? 'Visual Art — Painting' : 'Visual Art — Print'],
+        collections: [...(cat.collections || []), 'visual-art'].filter((v, i, a) => a.indexOf(v) === i),
         created_at: new Date(),
         updated_at: new Date(),
         // Commons-specific metadata
