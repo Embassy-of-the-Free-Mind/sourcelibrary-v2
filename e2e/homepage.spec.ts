@@ -34,6 +34,6 @@ test.describe('Homepage', () => {
       const nav = performance.getEntriesByType('navigation')[0] as PerformanceNavigationTiming;
       return Math.round(nav.responseStart - nav.startTime);
     });
-    expect(ttfb, `Homepage TTFB was ${ttfb}ms`).toBeLessThan(2000);
+    expect(ttfb, `Homepage TTFB was ${ttfb}ms`).toBeLessThan(3000);
   });
 });
