@@ -21,7 +21,7 @@ const UA = 'SourceLibrary/1.0 (https://sourcelibrary.org; contact@sourcelibrary.
 const COMMONS_API = 'https://commons.wikimedia.org/w/api.php';
 const R2_PREFIX = 'artwork';
 const DELAY_MS = 100; // Polite rate limit for Commons
-const DISPLAY_WIDTH = 3840; // Max thumb size Commons serves
+const DISPLAY_WIDTH = 10000; // Request original resolution — store full-res on R2
 const THUMB_WIDTH = 600; // Grid thumbnail size
 const MIN_DIMENSION = 800; // Minimum max(width, height) — reject smaller images
 
@@ -316,8 +316,8 @@ function generateId() {
   return Array.from({ length: 24 }, () => Math.floor(Math.random() * 16).toString(16)).join('');
 }
 
-/** Download image, resize, upload display + thumbnail to R2
- *  - Display: up to 3840px wide (what Commons serves as max thumb)
+/** Download image, store full-res + thumbnail to R2
+ *  - Full: original resolution, JPEG quality 92 (no resize — preserve detail)
  *  - Thumbnail: 600px wide JPEG (for collection grids)
  *  - Returns { display, thumb } URLs on R2
  */
@@ -329,10 +329,9 @@ async function uploadToR2(s3, imageUrl, key) {
   if (!res.ok) return null;
   const buffer = Buffer.from(await res.arrayBuffer());
 
-  // Resize to display size (cap at 3840px wide) and optimize JPEG
+  // Store at original resolution — no resize, only re-encode to JPEG
   const displayBuffer = await sharp(buffer)
-    .resize({ width: DISPLAY_WIDTH, withoutEnlargement: true })
-    .jpeg({ quality: 85, mozjpeg: true })
+    .jpeg({ quality: 92, mozjpeg: true })
     .toBuffer();
 
   await s3.send(new PutObjectCommand({
