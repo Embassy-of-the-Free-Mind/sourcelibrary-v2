@@ -1,5 +1,6 @@
 import { NextRequest, NextResponse } from 'next/server';
 import { semanticBookSearch } from '@/lib/semantic-search';
+import { getDb } from '@/lib/mongodb';
 
 export const dynamic = 'force-dynamic';
 
@@ -35,10 +36,36 @@ export async function GET(request: NextRequest) {
       yearMax,
     });
 
+    // Enrich with thumbnail + slug from MongoDB
+    const bookIds = books.map(b => b.book_id);
+    let thumbnailMap: Record<string, { thumbnail?: string; thumbnail_blob?: string; slug?: string }> = {};
+    if (bookIds.length > 0) {
+      try {
+        const db = await getDb();
+        const mongoBooks = await db.collection('books').find(
+          { id: { $in: bookIds } },
+          { projection: { id: 1, _id: 1, thumbnail: 1, thumbnail_blob: 1, slug: 1 } }
+        ).toArray();
+        for (const mb of mongoBooks) {
+          const bid = mb.id || mb._id?.toString();
+          if (bid) thumbnailMap[bid] = { thumbnail: mb.thumbnail, thumbnail_blob: mb.thumbnail_blob, slug: mb.slug };
+        }
+      } catch (e) {
+        // Non-fatal — results still work without thumbnails
+      }
+    }
+
+    const enriched = books.map(b => ({
+      ...b,
+      thumbnail: thumbnailMap[b.book_id]?.thumbnail || null,
+      thumbnail_blob: thumbnailMap[b.book_id]?.thumbnail_blob || null,
+      slug: thumbnailMap[b.book_id]?.slug || b.book_id,
+    }));
+
     return NextResponse.json({
-      results: books,
+      results: enriched,
       query,
-      total: books.length,
+      total: enriched.length,
       mode: 'semantic',
     }, {
       headers: { 'Cache-Control': 'public, s-maxage=300, stale-while-revalidate=600' },
