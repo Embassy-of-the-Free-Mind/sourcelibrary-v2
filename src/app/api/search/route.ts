@@ -162,21 +162,21 @@ export async function GET(request: NextRequest) {
         }
 
         // Metadata fallback: search categories/subject_keywords/language in MongoDB
-        // Only fires when Supabase found nothing (avoids slow regex on common queries)
-        if (books.length === 0) {
+        // Catches queries like "sanskrit alchemy" where words match metadata fields.
+        // Stopwords filtered. Only searches metadata fields (not title — Supabase handles that).
+        if (books.length < limit) {
           const STOPWORDS = new Set(['a', 'an', 'and', 'at', 'by', 'de', 'der', 'des', 'di', 'du', 'el', 'en', 'et', 'for', 'from', 'in', 'la', 'le', 'les', 'of', 'on', 'or', 'the', 'to', 'und', 'von', 'with']);
           const words = query.trim().split(/\s+/).filter((w: string) => w.length >= 3 && !STOPWORDS.has(w.toLowerCase()));
           if (words.length >= 2) {
+            const seenIds = new Set(books.map((b: any) => b.id));
             const wordRegexes = words.map((w: string) => new RegExp(w.replace(/[.*+?^${}()|[\]\\]/g, '\\$&'), 'i'));
-            books = await db.collection('books')
+            const fallbackBooks = await db.collection('books')
               .find({
                 $and: wordRegexes.map(rx => ({
                   $or: [
                     { categories: rx },
                     { subject_keywords: rx },
                     { language: rx },
-                    { title: rx },
-                    { display_title: rx },
                   ],
                 })),
                 ...bookFilters,
@@ -185,6 +185,12 @@ export async function GET(request: NextRequest) {
               .limit(limit)
               .maxTimeMS(3000)
               .toArray();
+
+            for (const fb of fallbackBooks) {
+              if (!seenIds.has(fb.id)) {
+                books.push(fb);
+              }
+            }
           }
         }
         return books;
