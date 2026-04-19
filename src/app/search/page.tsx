@@ -1337,14 +1337,16 @@ function cleanSnippet(text: string): string {
     .replace(/<[^>]+>/g, '')                    // strip XML/HTML tags
     .replace(/\*\*([^*]+)\*\*/g, '$1')          // strip markdown bold
     .replace(/original:\s*\*[^*]*\*/g, '')      // strip "original: *Latin*" annotations
-    .replace(/<-|->|##/g, '')                   // strip markdown/layout markers
+    .replace(/<-|->|#{1,6}\s*/g, '')            // strip markdown/layout markers
+    .replace(/\|[\s:_-]+\|/g, ' ')             // strip markdown table separators
+    .replace(/\|/g, ' ')                        // strip remaining pipe chars
     .replace(/\s+/g, ' ')                       // collapse whitespace
     .trim();
 }
 
 function BookResultCard({ result, query }: { result: SearchResult; query: string }) {
   const cover = getBookThumbnailUrl({ thumbnail: result.thumbnail, thumbnail_blob: (result as any).thumbnail_blob });
-  const text = result.snippet || result.summary;
+  const text = cleanSnippet(result.snippet || result.summary || '');
   const [imgError, setImgError] = useState(false);
   const [passages, setPassages] = useState<PassageMatch[] | null>(null);
   const [passagesLoading, setPassagesLoading] = useState(false);
