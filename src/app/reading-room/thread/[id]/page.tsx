@@ -566,6 +566,7 @@ function PodcastPlayer({ threadId, isOwner }: { threadId: string; isOwner: boole
             {FORMAT_OPTIONS.find(f => f.value === selectedFormat)?.desc}
           </p>
           {isOwner ? (
+            <>
             <button
               onClick={handleGenerate}
               disabled={generating}
@@ -586,13 +587,14 @@ function PodcastPlayer({ threadId, isOwner }: { threadId: string; isOwner: boole
             {generating && (
               <p className="text-[11px] text-[#8a8480] font-sans mt-2">This usually takes 30–60 seconds</p>
             )}
+            {error && (
+              <p className="text-xs text-red-600 font-sans mt-2">{error}</p>
+            )}
+          </>
           ) : (
             <p className="text-[12px] text-[#8a8480] font-sans">
               Only the thread creator can generate podcasts.
             </p>
-          )}
-          {error && (
-            <p className="text-xs text-red-600 font-sans mt-2">{error}</p>
           )}
         </div>
       )}
