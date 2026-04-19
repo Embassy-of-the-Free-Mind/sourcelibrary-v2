@@ -119,6 +119,10 @@ export interface UnifiedSearchResponse {
     results: UnifiedGalleryResult[];
     total: number;
   };
+  visual?: {
+    results: UnifiedGalleryResult[];
+    total: number;
+  };
   semantic?: {
     results: SemanticSearchResult[];
     total: number;
