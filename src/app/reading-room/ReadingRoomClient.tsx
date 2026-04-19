@@ -79,7 +79,7 @@ interface AssistantMessage {
   steps: SearchStep[];
   content: string;
   sources: SourceCard[];
-  choices?: { text: string; options: string[] };
+  choices?: { text: string; options: string[]; descriptions?: (string | undefined)[] };
   notebookCount?: number;
   notebookTopic?: string;
 }
@@ -409,7 +409,7 @@ export default function ReadingRoomClient({ featuredPassage }: ReadingRoomClient
                 case 'choices':
                   updateLastAssistant(m => ({
                     ...m,
-                    choices: { text: event.text, options: event.options },
+                    choices: { text: event.text, options: event.options, descriptions: event.descriptions },
                   }));
                   break;
 
@@ -703,21 +703,35 @@ export default function ReadingRoomClient({ featuredPassage }: ReadingRoomClient
 
                           {/* Research direction choices */}
                           {assistant.choices && (
-                            <div className="mt-4 space-y-2">
-                              {assistant.choices.options.map((opt) => (
-                                <button
-                                  key={opt}
-                                  onClick={() => handleChoiceClick(opt)}
-                                  className="w-full text-left group"
-                                >
-                                  <div className="flex items-center gap-3 px-4 py-3 rounded-xl border border-[#e0d9cc] bg-white hover:border-[#c9a86c] hover:bg-[#fdfcf9] transition-all">
-                                    <span className="flex-1 text-[14px] font-body text-[#1a1612] leading-snug">{opt}</span>
-                                    <span className="flex-shrink-0 text-[12px] font-sans text-[#9e4a3a] opacity-0 group-hover:opacity-100 transition-opacity">
-                                      Explore &rarr;
-                                    </span>
-                                  </div>
-                                </button>
-                              ))}
+                            <div className="mt-4 space-y-3">
+                              {assistant.choices.options.map((opt, idx) => {
+                                const desc = assistant.choices?.descriptions?.[idx];
+                                return (
+                                  <button
+                                    key={opt}
+                                    onClick={() => handleChoiceClick(opt)}
+                                    className="w-full text-left group"
+                                  >
+                                    <div className="px-4 py-3.5 rounded-xl border border-[#e0d9cc] bg-white hover:border-[#c9a86c] hover:bg-[#fdfcf9] transition-all">
+                                      {desc ? (
+                                        <>
+                                          <p className="text-[14px] font-body text-[#444] leading-relaxed mb-2.5">{desc}</p>
+                                          <span className="inline-flex items-center gap-1.5 text-[13px] font-sans font-medium text-[#9e4a3a] group-hover:underline">
+                                            {opt} <span className="text-[11px]">&rarr;</span>
+                                          </span>
+                                        </>
+                                      ) : (
+                                        <div className="flex items-center gap-3">
+                                          <span className="flex-1 text-[14px] font-body text-[#1a1612] leading-snug">{opt}</span>
+                                          <span className="flex-shrink-0 text-[12px] font-sans text-[#9e4a3a] opacity-0 group-hover:opacity-100 transition-opacity">
+                                            Explore &rarr;
+                                          </span>
+                                        </div>
+                                      )}
+                                    </div>
+                                  </button>
+                                );
+                              })}
                             </div>
                           )}
 
@@ -806,7 +820,7 @@ export default function ReadingRoomClient({ featuredPassage }: ReadingRoomClient
                           <span className="text-[9px]">{visibility === 'public' ? '(visible to others)' : '(only you)'}</span>
                         </button>
                       )}
-                      <span className="text-[9px] text-[#c0b8b0] font-mono">v4</span>
+                      <span className="text-[9px] text-[#c0b8b0] font-mono">v5</span>
                     </div>
                   </div>
 

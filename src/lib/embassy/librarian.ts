@@ -68,6 +68,7 @@ export interface LibrarianStep {
   summary?: string;
   found?: number;
   options?: string[];
+  descriptions?: (string | undefined)[];
   sources?: SourceCard[];
   notebook?: { findingCount: number; topic?: string };
 }
@@ -209,18 +210,24 @@ const TOOL_DECLARATIONS: FunctionDeclaration[] = [
   },
   {
     name: 'present_choices',
-    description: 'Present 2-3 research directions for broad or exploratory questions. Use as your FIRST tool call (after sharing a brief conversational response as text) when the topic is wide enough to benefit from user steering. The preamble should demonstrate domain knowledge. Each option is a short phrase (under 60 chars). The user clicks one or types their own direction, then you search deeply on that angle.',
+    description: 'Present 2-3 research directions for broad or exploratory questions. Use as your FIRST tool call (after sharing a brief conversational response as text) when the topic is wide enough to benefit from user steering. Each option has a short label and a 1-2 sentence description explaining what that research angle covers. The user clicks one or types their own direction.',
     parameters: {
       type: Type.OBJECT,
       properties: {
-        preamble: { type: Type.STRING, description: 'Brief knowledgeable intro (1-2 sentences) showing you understand the landscape of this topic' },
         options: {
           type: Type.ARRAY,
-          items: { type: Type.STRING },
-          description: '2-3 focused research directions the user can choose from',
+          items: {
+            type: Type.OBJECT,
+            properties: {
+              label: { type: Type.STRING, description: 'Short label for the research direction (under 60 chars)' },
+              description: { type: Type.STRING, description: '1-2 sentence explanation of what this angle covers and why it is interesting' },
+            },
+            required: ['label', 'description'],
+          },
+          description: '2-3 focused research directions with explanations',
         },
       },
-      required: ['preamble', 'options'],
+      required: ['options'],
     },
   },
 ];
@@ -635,11 +642,13 @@ async function executeTool(
     }
 
     case 'present_choices': {
-      const preamble = args.preamble as string;
-      const options = args.options as string[];
+      const rawOptions = args.options as Array<{ label: string; description: string } | string>;
+      // Support both old string[] and new {label, description}[] formats
+      const options = rawOptions.map(o => typeof o === 'string' ? o : o.label);
+      const descriptions = rawOptions.map(o => typeof o === 'string' ? undefined : o.description);
       return {
         result: { status: 'choices_presented', note: 'The user will select an option. Wait for their response.' },
-        step: { type: 'choices', text: preamble, options },
+        step: { type: 'choices', options, descriptions },
       };
     }
 
