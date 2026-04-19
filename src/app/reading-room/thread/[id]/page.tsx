@@ -373,7 +373,7 @@ function AskWhileListening({ threadId }: { threadId: string }) {
       <audio ref={audioRef} className="hidden" />
       {loading && (
         <p className="mt-2 text-[12px] text-[#8a8480] font-sans animate-pulse">
-          Elena and Marcus are thinking...
+          Elena and Marcus are thinking... <span className="opacity-60">(~15 seconds)</span>
         </p>
       )}
       {exchanges.map((ex, i) => (
@@ -566,6 +566,7 @@ function PodcastPlayer({ threadId, isOwner }: { threadId: string; isOwner: boole
             {FORMAT_OPTIONS.find(f => f.value === selectedFormat)?.desc}
           </p>
           {isOwner ? (
+            <>
             <button
               onClick={handleGenerate}
               disabled={generating}
@@ -577,19 +578,23 @@ function PodcastPlayer({ threadId, isOwner }: { threadId: string; isOwner: boole
                     <circle className="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" strokeWidth="4" />
                     <path className="opacity-75" fill="currentColor" d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4z" />
                   </svg>
-                  Generating...
+                  Elena &amp; Marcus are writing...
                 </>
               ) : (
                 'Generate'
               )}
             </button>
+            {generating && (
+              <p className="text-[11px] text-[#8a8480] font-sans mt-2">This usually takes 30–60 seconds</p>
+            )}
+            {error && (
+              <p className="text-xs text-red-600 font-sans mt-2">{error}</p>
+            )}
+          </>
           ) : (
             <p className="text-[12px] text-[#8a8480] font-sans">
               Only the thread creator can generate podcasts.
             </p>
-          )}
-          {error && (
-            <p className="text-xs text-red-600 font-sans mt-2">{error}</p>
           )}
         </div>
       )}

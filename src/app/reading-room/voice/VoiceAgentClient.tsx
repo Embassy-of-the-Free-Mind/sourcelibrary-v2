@@ -254,7 +254,7 @@ function VoiceAgentInner() {
 
         <div className="relative max-w-[1200px] mx-auto px-6 md:px-12 pt-14 sm:pt-20 pb-16 flex flex-col items-center text-center">
           <h1 className="text-4xl sm:text-5xl md:text-6xl text-white font-display mb-3 drop-shadow-lg" style={{ fontWeight: 500 }}>
-            Hermes
+            Thoth
           </h1>
           <p className="text-white/60 text-base sm:text-lg font-body leading-relaxed max-w-[520px] mb-8">
             Voice research across 10,000 rare books &mdash; alchemy, Daoist texts, Sanskrit philosophy, Sufi mysticism, Kabbalah, and more.
@@ -284,7 +284,7 @@ function VoiceAgentInner() {
               >
                 <div className={`flex flex-col items-center ${holding ? 'text-[#0e0c0a]' : pttMode && !agentSpeaking ? 'text-white/70' : 'text-[#0e0c0a]'}`}>
                   {holding ? (<><MicIcon /><span className="text-xs mt-1 font-sans font-medium">Speaking</span></>)
-                    : agentSpeaking ? (<><SpeakerIcon /><span className="text-xs mt-1 font-sans opacity-70">Hermes</span></>)
+                    : agentSpeaking ? (<><SpeakerIcon /><span className="text-xs mt-1 font-sans opacity-70">Thoth</span></>)
                       : pttMode ? (<><MicIcon /><span className="text-xs mt-1 font-sans opacity-70">Hold to talk</span></>)
                         : (<><MicIcon /><span className="text-xs mt-1 font-sans opacity-70">Listening</span></>)}
                 </div>
@@ -323,12 +323,12 @@ function VoiceAgentInner() {
                   <div className="text-center py-10">
                     <img src="/brand/png/icon-only--black-on-transparent--96h.png" alt="" className="w-10 h-10 mx-auto mb-3 opacity-30" />
                     <p className="text-[#8a8480] text-sm font-body max-w-[360px] mx-auto leading-relaxed">
-                      Hermes searches the collection as you speak &mdash; alchemy, philosophy, sacred texts, manuscripts from every tradition.
+                      Thoth searches the collection as you speak &mdash; alchemy, philosophy, sacred texts, manuscripts from every tradition.
                     </p>
                   </div>
                 )}
                 {transcript.length === 0 && appStatus === 'connected' && (
-                  <div className="text-center py-10 animate-pulse"><p className="text-[#b0a89c] text-sm font-body">Hermes is here...</p></div>
+                  <div className="text-center py-10 animate-pulse"><p className="text-[#b0a89c] text-sm font-body">Thoth is here...</p></div>
                 )}
                 {transcript.map((entry, i) => (
                   <div key={i} className={`flex gap-3 ${entry.role === 'user' ? 'justify-end' : ''}`}>
@@ -361,7 +361,7 @@ function VoiceAgentInner() {
               <p className="text-[11px] text-[#8a8480] tracking-[0.15em] uppercase font-sans">Sources found</p>
               {sources.length === 0 ? (
                 <div className="bg-white rounded-lg border border-[#e8e4dc] p-5 text-center shadow-sm">
-                  <p className="text-[#b0a89c] text-sm font-body leading-relaxed">Sources will appear here as Hermes searches the collection.</p>
+                  <p className="text-[#b0a89c] text-sm font-body leading-relaxed">Sources will appear here as Thoth searches the collection.</p>
                 </div>
               ) : (
                 <div className="space-y-2 max-h-[60vh] overflow-y-auto">
@@ -374,7 +374,7 @@ function VoiceAgentInner() {
                       </Link>
                       {appStatus === 'connected' && (
                         <button onClick={() => pushContext(`The user is now looking at "${s.title}" by ${s.author}${s.pageNumber ? `, page ${s.pageNumber}` : ''}. ${s.snippet ? `Passage: "${s.snippet.slice(0, 150)}"` : ''}`)}
-                          className="mt-2 text-[10px] text-[#c9a86c] hover:text-[#a88a4c] font-sans tracking-wide uppercase">Tell Hermes</button>
+                          className="mt-2 text-[10px] text-[#c9a86c] hover:text-[#a88a4c] font-sans tracking-wide uppercase">Tell Thoth</button>
                       )}
                     </div>
                   ))}

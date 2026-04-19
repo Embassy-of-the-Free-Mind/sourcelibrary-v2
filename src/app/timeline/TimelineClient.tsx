@@ -647,10 +647,12 @@ function DecadeBar({
     <div
       ref={barRef}
       className="flex-1 relative cursor-pointer group"
-      style={{ minWidth: 8, height: '100%' }}
+      style={{ minWidth: 10, height: '100%' }}
       onClick={onClick}
       onMouseEnter={handleMouseEnter}
       onMouseLeave={() => setTooltipPos(null)}
+      onTouchStart={handleMouseEnter}
+      onTouchEnd={() => setTimeout(() => setTooltipPos(null), 2000)}
     >
       {/* Tooltip — fixed position to escape overflow:hidden */}
       {tooltipPos && (
