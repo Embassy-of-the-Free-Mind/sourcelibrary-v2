@@ -140,9 +140,9 @@ async function fetchImageBase64(url) {
 }
 
 async function enrichArtwork(artwork) {
-  // Prefer highest resolution for better inscription reading.
-  // commons_full_url is the original upload (often 4000+ px).
-  const imageUrl = artwork.commons_full_url || artwork.thumbnail_blob || artwork.thumbnail;
+  // Prefer R2 archived images (no rate limits, fast) over external URLs.
+  // archived_full_url = full-res on R2, thumbnail_blob = display-size on R2.
+  const imageUrl = artwork.archived_full_url || artwork.thumbnail_blob || artwork.commons_full_url || artwork.thumbnail;
   if (!imageUrl) return { error: 'no_image' };
 
   const prompt = buildPrompt(artwork);
@@ -188,7 +188,8 @@ async function main() {
   const projection = {
     _id: 1, id: 1, slug: 1, title: 1, author: 1, published: 1,
     medium: 1, resource_type: 1, thumbnail_blob: 1, thumbnail: 1,
-    commons_full_url: 1, commons_categories: 1,
+    archived_full_url: 1, commons_full_url: 1, commons_categories: 1,
+    display_title: 1, 'enrichment.ulan_artist': 1,
   };
 
   // Use cursor-based iteration to avoid loading all docs into memory
