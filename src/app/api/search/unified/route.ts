@@ -154,7 +154,7 @@ export async function GET(request: NextRequest) {
             return { results, total: results.length };
           })
           .catch(() => emptySemanticBooks),
-        emptySemanticBooks, 'semantic', 6000,
+        emptySemanticBooks, 'semantic', 3000,
       ),
     ]);
 
