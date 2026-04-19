@@ -146,7 +146,7 @@ export async function POST(request: NextRequest) {
             break;
 
           case 'choices':
-            await send({ type: 'choices', text: step.text, options: step.options });
+            await send({ type: 'choices', text: step.text, options: step.options, descriptions: step.descriptions });
             break;
 
           case 'text':
