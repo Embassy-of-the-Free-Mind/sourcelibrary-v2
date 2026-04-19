@@ -2,6 +2,7 @@ import { connectToDatabase } from '@/lib/mongodb';
 import { ObjectId } from 'mongodb';
 import SiteHeader from '@/components/layout/SiteHeader';
 import Link from 'next/link';
+import TranscriptToggle from './TranscriptToggle';
 
 export const revalidate = 3600; // 1h ISR
 
@@ -20,6 +21,8 @@ interface PodcastEpisode {
   findingCount: number;
   generatedAt: string;
   bookIds: string[];
+  bookThumbnails: string[];
+  script: string | null;
 }
 
 async function getEpisodes(): Promise<PodcastEpisode[]> {
@@ -56,6 +59,8 @@ async function getEpisodes(): Promise<PodcastEpisode[]> {
             findingCount: p.findingCount || 0,
             generatedAt: p.generatedAt,
             bookIds: [],
+            bookThumbnails: [],
+            script: p.script || null,
           });
         }
       }
@@ -71,6 +76,8 @@ async function getEpisodes(): Promise<PodcastEpisode[]> {
           findingCount: thread.podcast.findingCount || 0,
           generatedAt: thread.podcast.generatedAt,
           bookIds: [],
+          bookThumbnails: [],
+          script: thread.podcast.script || null,
         });
       }
     }
@@ -84,11 +91,30 @@ async function getEpisodes(): Promise<PodcastEpisode[]> {
 
     const notebookMap = new Map(notebooks.map(n => [
       n.threadId.toString(),
-      [...new Set((n.findings || []).map((f: { source: { bookId: string } }) => f.source.bookId))],
+      [...new Set((n.findings || []).map((f: { source: { bookId: string } }) => f.source?.bookId).filter(Boolean))],
     ]));
 
     for (const ep of episodes) {
       ep.bookIds = (notebookMap.get(ep.threadId) || []) as string[];
+    }
+
+    // Look up actual thumbnails for referenced books
+    const allBookIds = [...new Set(episodes.flatMap(e => e.bookIds))];
+    if (allBookIds.length > 0) {
+      const validIds = allBookIds.filter(id => ObjectId.isValid(id));
+      const books = await db.collection('books')
+        .find({ _id: { $in: validIds.map(id => new ObjectId(id)) } })
+        .project({ _id: 1, thumbnail: 1, thumbnail_blob: 1 })
+        .toArray();
+      const thumbMap = new Map(books.map(b => [
+        b._id.toString(),
+        b.thumbnail || b.thumbnail_blob || null,
+      ]));
+      for (const ep of episodes) {
+        ep.bookThumbnails = ep.bookIds
+          .map(id => thumbMap.get(id))
+          .filter(Boolean) as string[];
+      }
     }
 
     return episodes.sort((a, b) =>
@@ -162,20 +188,20 @@ export default async function PodcastPage() {
                 className="p-5 bg-white rounded-xl border border-[#e8e4dc] hover:border-[#c9a86c] transition-colors"
               >
                 {/* Book cover thumbnails */}
-                {ep.bookIds.length > 0 && (
+                {ep.bookThumbnails.length > 0 && (
                   <div className="flex gap-1.5 mb-3 overflow-hidden">
-                    {ep.bookIds.slice(0, 5).map(bid => (
+                    {ep.bookThumbnails.slice(0, 5).map((url, idx) => (
                       // eslint-disable-next-line @next/next/no-img-element
                       <img
-                        key={bid}
-                        src={`https://sourcelibrary.org/api/image?url=https://images.sourcelibrary.org/covers/${bid}.jpg&w=60&q=75`}
+                        key={idx}
+                        src={`/api/image?url=${encodeURIComponent(url)}&w=60&q=75`}
                         alt=""
                         className="w-8 h-12 object-cover rounded flex-shrink-0 bg-[#f0ece4]"
                         loading="lazy"
                       />
                     ))}
-                    {ep.bookIds.length > 5 && (
-                      <span className="text-[10px] text-[#8a8480] font-sans self-end mb-1">+{ep.bookIds.length - 5}</span>
+                    {ep.bookThumbnails.length > 5 && (
+                      <span className="text-[10px] text-[#8a8480] font-sans self-end mb-1">+{ep.bookThumbnails.length - 5}</span>
                     )}
                   </div>
                 )}
@@ -207,8 +233,9 @@ export default async function PodcastPage() {
                     href={`/reading-room/thread/${ep.threadId}`}
                     className="text-[11px] text-[#9e4a3a] font-sans hover:underline"
                   >
-                    View sources & transcript
+                    View research &amp; sources
                   </Link>
+                  {ep.script && <TranscriptToggle script={ep.script} />}
                 </div>
               </article>
             ))}
