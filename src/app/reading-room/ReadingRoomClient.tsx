@@ -701,23 +701,23 @@ export default function ReadingRoomClient({ featuredPassage }: ReadingRoomClient
                             </div>
                           )}
 
-                          {/* Choice chips */}
+                          {/* Research direction choices */}
                           {assistant.choices && (
-                            <div className="mt-3">
-                              {assistant.choices.text && (
-                                <p className="text-[13px] text-[#6b6560] font-body mb-2 italic">{assistant.choices.text}</p>
-                              )}
-                              <div className="flex flex-wrap gap-2">
-                                {assistant.choices.options.map((opt) => (
-                                  <button
-                                    key={opt}
-                                    onClick={() => handleChoiceClick(opt)}
-                                    className="px-3 py-1.5 text-[13px] text-[#1a1612] border border-[#c9a86c] rounded-full hover:bg-[#c9a86c] hover:text-white transition-colors font-body"
-                                  >
-                                    {opt}
-                                  </button>
-                                ))}
-                              </div>
+                            <div className="mt-4 space-y-2">
+                              {assistant.choices.options.map((opt) => (
+                                <button
+                                  key={opt}
+                                  onClick={() => handleChoiceClick(opt)}
+                                  className="w-full text-left group"
+                                >
+                                  <div className="flex items-center gap-3 px-4 py-3 rounded-xl border border-[#e0d9cc] bg-white hover:border-[#c9a86c] hover:bg-[#fdfcf9] transition-all">
+                                    <span className="flex-1 text-[14px] font-body text-[#1a1612] leading-snug">{opt}</span>
+                                    <span className="flex-shrink-0 text-[12px] font-sans text-[#9e4a3a] opacity-0 group-hover:opacity-100 transition-opacity">
+                                      Explore &rarr;
+                                    </span>
+                                  </div>
+                                </button>
+                              ))}
                             </div>
                           )}
 
