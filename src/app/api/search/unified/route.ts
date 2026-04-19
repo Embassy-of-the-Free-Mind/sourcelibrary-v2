@@ -232,11 +232,11 @@ async function searchBooks(
 
   // Metadata fallback: search categories, subject_keywords, and language in MongoDB
   // Catches queries like "sanskrit alchemy" where words match metadata fields
-  // that Supabase trigram doesn't cover. Fires when results are sparse.
-  if (books.length < limit) {
-    const words = query.trim().split(/\s+/).filter(w => w.length >= 2);
+  // that Supabase trigram doesn't cover. Only fires when Supabase found nothing.
+  if (books.length === 0) {
+    const STOPWORDS = new Set(['a', 'an', 'and', 'at', 'by', 'de', 'der', 'des', 'di', 'du', 'el', 'en', 'et', 'for', 'from', 'in', 'la', 'le', 'les', 'of', 'on', 'or', 'the', 'to', 'und', 'von', 'with']);
+    const words = query.trim().split(/\s+/).filter(w => w.length >= 3 && !STOPWORDS.has(w.toLowerCase()));
     if (words.length >= 2) {
-      const seenIds = new Set(books.map((b: any) => b.id));
       const wordRegexes = words.map(w => new RegExp(w.replace(/[.*+?^${}()|[\]\\]/g, '\\$&'), 'i'));
       const fallbackFilter: Record<string, unknown> = {
         $and: wordRegexes.map(rx => ({
@@ -255,19 +255,12 @@ async function searchBooks(
       if (searchFilters.category) fallbackFilter.categories = searchFilters.category;
       if (library) fallbackFilter['image_source.provider'] = library;
 
-      const fallbackBooks = await db.collection('books')
+      books = await db.collection('books')
         .find(fallbackFilter)
         .project(bookProjection)
         .limit(limit + 1)
-        .maxTimeMS(5000)
+        .maxTimeMS(3000)
         .toArray();
-
-      for (const fb of fallbackBooks) {
-        if (!seenIds.has(fb.id)) {
-          books.push(fb);
-          seenIds.add(fb.id);
-        }
-      }
     }
   }
 
