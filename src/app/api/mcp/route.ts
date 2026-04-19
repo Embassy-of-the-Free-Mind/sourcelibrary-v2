@@ -169,19 +169,43 @@ async function searchImages(args: Record<string, unknown>) {
   if (args.year_to) params.set('yearEnd', String(args.year_to));
   if (args.book_id) params.set('bookId', String(args.book_id));
   if (args.min_quality !== undefined) params.set('minQuality', String(args.min_quality));
-  params.set('limit', String(Math.min(Number(args.limit) || 20, 50)));
+  const limit = Math.min(Number(args.limit) || 20, 50);
+  params.set('limit', String(limit));
 
-  const result = await apiGet('/gallery', params) as Record<string, unknown>;
+  // Search both gallery illustrations AND artworks (paintings/prints) in parallel
+  const artworkParams = new URLSearchParams();
+  if (args.query) artworkParams.set('q', String(args.query));
+  artworkParams.set('limit', String(limit));
+
+  const [galleryResult, artworkResult] = await Promise.all([
+    apiGet('/gallery', params) as Promise<Record<string, unknown>>,
+    args.query
+      ? (apiGet('/artwork/search', artworkParams) as Promise<Record<string, unknown>>).catch(() => ({ items: [] }))
+      : Promise.resolve({ items: [] }),
+  ]);
+
+  const galleryImages = (galleryResult.items as Array<Record<string, unknown>>)?.map((item) => ({
+    description: item.description, type: item.type, quality: item.galleryQuality,
+    book: { title: item.bookTitle, author: item.author, year: item.year },
+    page: item.pageNumber, image_url: item.imageUrl,
+    url: `https://sourcelibrary.org/gallery/image/${item.pageId}-${item.detectionIndex}`,
+    book_url: item.bookId ? `https://sourcelibrary.org/book/${item.bookId}?page=${item.pageNumber}` : undefined,
+  })) || [];
+
+  const artworks = (artworkResult.items as Array<Record<string, unknown>>)?.map((item) => ({
+    description: item.title, type: 'artwork',
+    artist: item.artist, medium: item.medium,
+    year: item.year, image_url: item.image_url,
+    url: item.url,
+  })) || [];
+
+  // Artworks first (exact matches), then gallery illustrations
+  const allImages = [...artworks, ...galleryImages].slice(0, limit);
+
   return {
-    total: result.total,
-    showing: (result.items as unknown[])?.length || 0,
-    images: (result.items as Array<Record<string, unknown>>)?.map((item) => ({
-      description: item.description, type: item.type, quality: item.galleryQuality,
-      book: { title: item.bookTitle, author: item.author, year: item.year },
-      page: item.pageNumber, image_url: item.imageUrl,
-      url: `https://sourcelibrary.org/gallery/image/${item.pageId}-${item.detectionIndex}`,
-      book_url: item.bookId ? `https://sourcelibrary.org/book/${item.bookId}?page=${item.pageNumber}` : undefined,
-    })),
+    total: (galleryResult.total as number || 0) + artworks.length,
+    showing: allImages.length,
+    images: allImages,
   };
 }
 
@@ -300,7 +324,7 @@ const TOOLS: Tool[] = [
   },
   {
     name: 'search_images',
-    description: 'Search 50,000+ historical illustrations, emblems, engravings, and diagrams. Filter by type, subject, figure, symbol, year.',
+    description: 'Search 50,000+ historical illustrations, emblems, engravings, diagrams, AND 7,500+ artworks (paintings, prints, sculptures). Filter by type, subject, figure, symbol, year.',
     annotations: { title: 'Search Images', ...READ_ONLY },
     inputSchema: {
       type: 'object' as const,
