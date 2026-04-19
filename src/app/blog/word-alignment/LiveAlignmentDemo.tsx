@@ -228,7 +228,7 @@ function HighlightedSource({
         return (
           <span
             key={i}
-            className={`transition-all duration-150 ${isHighlighted ? 'text-stone-900 font-medium' : ''}`}
+            className={`transition-all duration-150 ${isHighlighted && sim! > 0.7 ? 'text-stone-900 font-medium' : ''}`}
             style={isHighlighted ? {
               backgroundColor: `rgba(160, 120, 40, ${0.03 + Math.min(1, (sim! - 0.55) / 0.25) ** 1.5 * 0.45})`,
               borderBottom: `2px solid rgba(160, 120, 40, ${0.05 + Math.min(1, (sim! - 0.55) / 0.25) ** 1.2 * 0.95})`,
