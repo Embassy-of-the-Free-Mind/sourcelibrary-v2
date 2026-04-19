@@ -1,7 +1,6 @@
 import { Metadata } from 'next';
-import { notFound, redirect } from 'next/navigation';
+import { notFound } from 'next/navigation';
 import { getReadDb } from '@/lib/mongodb';
-import { isInnerCircle } from '@/lib/auth-helpers';
 import { Book } from '@/lib/types';
 import SiteHeader from '@/components/layout/SiteHeader';
 import ArtworkInfo from '@/components/artwork/ArtworkInfo';
@@ -84,8 +83,7 @@ export async function generateMetadata({ params }: PageProps): Promise<Metadata>
   return {
     title: `${artwork.display_title || artwork.title} — ${artwork.author} — Source Library`,
     description: (artwork as any).commons_description?.slice(0, 200) || `${artwork.title} by ${artwork.author}`,
-    // Artwork pages are admin-only (non-admin gets redirected) — don't index
-    robots: { index: false, follow: true },
+    robots: { index: true, follow: true },
     openGraph: {
       title: `${artwork.display_title || artwork.title} by ${artwork.author}`,
       images: [artwork.thumbnail_blob || artwork.thumbnail || ''],
@@ -94,9 +92,6 @@ export async function generateMetadata({ params }: PageProps): Promise<Metadata>
 }
 
 export default async function ArtworkPage({ params }: PageProps) {
-  const admin = await isInnerCircle();
-  if (!admin) redirect('/');
-
   const { slug } = await params;
   const data = await getArtwork(slug);
   if (!data) notFound();
