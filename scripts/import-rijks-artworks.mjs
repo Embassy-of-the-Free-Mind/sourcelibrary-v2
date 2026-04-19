@@ -22,7 +22,7 @@ const SEARCH_BASE = 'https://data.rijksmuseum.nl/search/collection';
 const RESOLVER = 'https://id.rijksmuseum.nl';
 const UA = 'SourceLibrary/1.0 (https://sourcelibrary.org; contact@sourcelibrary.org)';
 const R2_PREFIX = 'artwork';
-const DISPLAY_MAX = 3840;
+const DISPLAY_MAX = 99999; // Store original resolution — no downscaling
 const THUMB_WIDTH = 600;
 const DELAY_MS = 300;
 
@@ -303,9 +303,9 @@ async function uploadToR2(s3, imageUrl, key) {
   if (!res.ok) return null;
   const buffer = Buffer.from(await res.arrayBuffer());
 
+  // Store at original resolution — no resize
   const displayBuffer = await sharp(buffer)
-    .resize({ width: DISPLAY_MAX, withoutEnlargement: true })
-    .jpeg({ quality: 85, mozjpeg: true })
+    .jpeg({ quality: 92, mozjpeg: true })
     .toBuffer();
 
   await s3.send(new PutObjectCommand({
