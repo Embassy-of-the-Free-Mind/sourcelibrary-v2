@@ -162,13 +162,13 @@ export async function GET(request: NextRequest) {
         }
 
         // Metadata fallback: search categories/subject_keywords/language in MongoDB
-        // when Supabase trigram returns sparse results
-        if (books.length < limit) {
-          const words = query.trim().split(/\s+/).filter((w: string) => w.length >= 2);
+        // Only fires when Supabase found nothing (avoids slow regex on common queries)
+        if (books.length === 0) {
+          const STOPWORDS = new Set(['a', 'an', 'and', 'at', 'by', 'de', 'der', 'des', 'di', 'du', 'el', 'en', 'et', 'for', 'from', 'in', 'la', 'le', 'les', 'of', 'on', 'or', 'the', 'to', 'und', 'von', 'with']);
+          const words = query.trim().split(/\s+/).filter((w: string) => w.length >= 3 && !STOPWORDS.has(w.toLowerCase()));
           if (words.length >= 2) {
-            const seenIds = new Set(books.map((b: any) => b.id));
             const wordRegexes = words.map((w: string) => new RegExp(w.replace(/[.*+?^${}()|[\]\\]/g, '\\$&'), 'i'));
-            const fallbackBooks = await db.collection('books')
+            books = await db.collection('books')
               .find({
                 $and: wordRegexes.map(rx => ({
                   $or: [
@@ -183,14 +183,8 @@ export async function GET(request: NextRequest) {
               })
               .project(bookProjection)
               .limit(limit)
-              .maxTimeMS(5000)
+              .maxTimeMS(3000)
               .toArray();
-
-            for (const fb of fallbackBooks) {
-              if (!seenIds.has(fb.id)) {
-                books.push(fb);
-              }
-            }
           }
         }
         return books;
