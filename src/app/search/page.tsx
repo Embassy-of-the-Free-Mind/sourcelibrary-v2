@@ -132,6 +132,7 @@ export default function SearchPage() {
 
   // AI-assisted search — streaming narration + expanded terms
   const [aiNarration, setAiNarration] = useState('');
+  const [aiNarrationHistory, setAiNarrationHistory] = useState<{ query: string; text: string; terms: string[] }[]>([]);
   const [aiTerms, setAiTerms] = useState<string[]>([]);
   const [aiResults, setAiResults] = useState<SearchResult[]>([]);
   const [aiStreaming, setAiStreaming] = useState(false);
@@ -167,12 +168,26 @@ export default function SearchPage() {
   }, []);
 
   // AI-assisted search — start streaming immediately when user searches
-  const startAiStream = useCallback((q: string) => {
+  // append=true means this is a pill click — keep existing narration and add below
+  const startAiStream = useCallback((q: string, append = false) => {
     // Abort any existing stream
     aiAbortRef.current?.();
-    setAiNarration('');
-    setAiTerms([]);
-    setAiResults([]);
+
+    if (!append) {
+      // Fresh search — clear everything
+      setAiNarration('');
+      setAiTerms([]);
+      setAiResults([]);
+      setAiNarrationHistory([]);
+    } else {
+      // Pill click — save current narration to history before streaming new one
+      setAiNarrationHistory(prev => [
+        ...prev,
+        ...(aiNarration ? [{ query: query, text: aiNarration, terms: aiTerms }] : []),
+      ]);
+      setAiNarration('');
+      setAiTerms([]);
+    }
 
     if (!q || q.length < 3) return;
     setAiStreaming(true);
@@ -214,7 +229,7 @@ export default function SearchPage() {
     );
     aiAbortRef.current = abort;
   // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [bookResults]);
+  }, [bookResults, aiNarration, aiTerms, query]);
 
   const performSearch = useCallback(async (q: string, mode: ViewMode = viewMode, pageOffset = 0) => {
     if (!q || q.length < 2) {
@@ -996,22 +1011,36 @@ export default function SearchPage() {
         )}
 
         {/* AI narration — streams while search loads */}
-        {query.length >= 3 && (aiStreaming || aiNarration) && (
-          <div className="mb-6 px-4 py-3 bg-warm rounded-lg border border-border-light">
-            <p className="text-sm text-secondary italic leading-relaxed"
-               dangerouslySetInnerHTML={{
-                 __html: aiNarration
-                   .replace(/&/g, '&amp;').replace(/</g, '&lt;').replace(/>/g, '&gt;')
-                   .replace(/\*([^*]+)\*/g, '<em>$1</em>')
-                   + (aiStreaming ? '<span class="inline-block w-1.5 h-4 bg-accent-rust/40 animate-pulse ml-0.5 align-text-bottom"></span>' : '')
-               }}
-            />
+        {query.length >= 3 && (aiStreaming || aiNarration || aiNarrationHistory.length > 0) && (
+          <div className="mb-6 px-4 py-3 bg-warm rounded-lg border border-border-light space-y-3">
+            {/* Previous narrations from pill clicks */}
+            {aiNarrationHistory.map((entry, i) => (
+              <div key={i} className="text-sm text-secondary/70 italic leading-relaxed border-b border-border-light pb-2">
+                <span className="text-xs text-muted not-italic font-medium">{entry.query}:</span>{' '}
+                <span dangerouslySetInnerHTML={{
+                  __html: entry.text
+                    .replace(/&/g, '&amp;').replace(/</g, '&lt;').replace(/>/g, '&gt;')
+                    .replace(/\*([^*]+)\*/g, '<em>$1</em>')
+                }} />
+              </div>
+            ))}
+            {/* Current narration */}
+            {(aiStreaming || aiNarration) && (
+              <p className="text-sm text-secondary italic leading-relaxed"
+                 dangerouslySetInnerHTML={{
+                   __html: aiNarration
+                     .replace(/&/g, '&amp;').replace(/</g, '&lt;').replace(/>/g, '&gt;')
+                     .replace(/\*([^*]+)\*/g, '<em>$1</em>')
+                     + (aiStreaming ? '<span class="inline-block w-1.5 h-4 bg-accent-rust/40 animate-pulse ml-0.5 align-text-bottom"></span>' : '')
+                 }}
+              />
+            )}
             {aiTerms.length > 0 && (
               <div className="flex flex-wrap gap-1.5 mt-2">
                 {aiTerms.map(term => (
                   <button
                     key={term}
-                    onClick={() => { setQuery(term); setOffset(0); performSearch(term, viewMode, 0); updateUrl(term, viewMode, 0); }}
+                    onClick={() => { startAiStream(term, true); }}
                     className="px-2.5 py-1 bg-white/60 text-secondary text-xs rounded-full hover:bg-accent-rust/10 hover:text-accent-rust transition-colors"
                   >
                     {term}
@@ -1096,39 +1125,46 @@ export default function SearchPage() {
         {/* ==================== UNIFIED VIEW — FLAT RESULTS ==================== */}
         {viewMode === 'unified' && !loading && query.length >= 2 && (totalResults > 0 || semanticResults.length > 0 || semanticLoading) && (
           <div className="space-y-3">
-            {/* Semantic results — only show books NOT already in keyword results */}
+            {/* Semantic results — conceptual matches */}
             {(() => {
               const keywordIds = new Set(bookResults.map(b => b.id || (b as any).book_id));
-              return semanticResults.filter((sem: any) => !keywordIds.has(sem.book_id));
-            })().map((sem: any) => (
-              <SemanticResultCard key={sem.book_id} result={sem} query={query} />
-            ))}
-            {semanticLoading && (
-              <div className="flex items-center gap-2 py-3 px-4 text-sm text-muted">
-                <Loader2 className="w-4 h-4 animate-spin" /> Finding related books...
-              </div>
-            )}
+              const unique = semanticResults.filter((sem: any) => !keywordIds.has(sem.book_id));
+              if (unique.length === 0 && !semanticLoading) return null;
+              return (
+                <>
+                  <h2 className="text-xs font-medium text-muted uppercase tracking-wide flex items-center gap-2">
+                    <span className="w-1.5 h-1.5 rounded-full bg-violet-400" />
+                    Conceptual matches
+                  </h2>
+                  {unique.map((sem: any) => (
+                    <SemanticResultCard key={sem.book_id} result={sem} query={query} />
+                  ))}
+                  {semanticLoading && (
+                    <div className="flex items-center gap-2 py-3 px-4 text-sm text-muted">
+                      <Loader2 className="w-4 h-4 animate-spin" /> Finding conceptual matches...
+                    </div>
+                  )}
+                </>
+              );
+            })()}
 
-            {/* Keyword book results */}
+            {/* Keyword book results — text matches */}
+            {bookResults.length > 0 && (
+              <h2 className="text-xs font-medium text-muted uppercase tracking-wide flex items-center gap-2 mt-4">
+                <span className="w-1.5 h-1.5 rounded-full bg-accent-rust" />
+                Text matches
+              </h2>
+            )}
             {bookResults.slice(0, PREVIEW_BOOKS).map((result) => (
               <BookResultCard key={result.id} result={result} query={query} />
             ))}
 
-            {/* "See all" + "Ask the Librarian" */}
-            <div className="flex flex-wrap gap-2">
-              {bookTotal > PREVIEW_BOOKS && (
-                <button onClick={() => drillInto('books')} className="flex-1 py-2.5 bg-accent-rust/8 text-accent-rust text-sm font-medium rounded-lg hover:bg-accent-rust/15 transition-colors flex items-center justify-center gap-1.5">
-                  See all {bookTotal} books <ChevronRight className="w-4 h-4" />
-                </button>
-              )}
-              <Link
-                href={`/reading-room?q=${encodeURIComponent(query)}`}
-                className="flex-1 flex items-center justify-center gap-2 py-2.5 text-sm text-violet-600 bg-violet-50 hover:bg-violet-100 rounded-lg transition-colors"
-              >
-                <Quote className="w-4 h-4" />
-                Ask the Librarian
-              </Link>
-            </div>
+            {/* "See all" */}
+            {bookTotal > PREVIEW_BOOKS && (
+              <button onClick={() => drillInto('books')} className="w-full py-2.5 bg-accent-rust/8 text-accent-rust text-sm font-medium rounded-lg hover:bg-accent-rust/15 transition-colors flex items-center justify-center gap-1.5">
+                See all {bookTotal} books <ChevronRight className="w-4 h-4" />
+              </button>
+            )}
           </div>
         )}
 
@@ -1247,6 +1283,28 @@ export default function SearchPage() {
                 );
               })}
             </div>
+          </section>
+        )}
+
+        {/* Ask the Librarian — bottom CTA, reading room style */}
+        {!noResults && !loading && query.length >= 3 && viewMode === 'unified' && (
+          <section className="mt-12 pt-8 border-t border-border-light">
+            <Link
+              href={`/reading-room?q=${encodeURIComponent(query)}`}
+              className="block p-6 rounded-xl bg-gradient-to-br from-[#2c1810] to-[#1a1612] text-white hover:from-[#3a2218] hover:to-[#2c1810] transition-all group"
+            >
+              <div className="flex items-start gap-4">
+                <div className="w-10 h-10 rounded-full bg-white/10 flex items-center justify-center flex-shrink-0 group-hover:bg-white/15 transition-colors">
+                  <Quote className="w-5 h-5 text-[#c9a86c]" />
+                </div>
+                <div>
+                  <h3 className="font-serif text-lg font-medium text-white">Ask the Librarian</h3>
+                  <p className="text-sm text-white/60 mt-1 font-body leading-relaxed">
+                    Want deeper analysis? The Librarian will search across {bookTotal > 0 ? `these ${bookTotal} results` : 'the collection'}, cross-reference sources, and build a research notebook you can export.
+                  </p>
+                </div>
+              </div>
+            </Link>
           </section>
         )}
       </main>
