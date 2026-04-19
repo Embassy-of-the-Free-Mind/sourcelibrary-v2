@@ -65,14 +65,47 @@ async function fetchCollections(): Promise<CollectionDoc[]> {
   return sortCollections(all);
 }
 
-async function fetchCuratedCollections(): Promise<CollectionDoc[]> {
+// Hand-picked subcollections that serve as compelling entry points.
+// These are the "hooks" — evocative names that pull readers in.
+const CURATED_PATHWAYS = [
+  'courts-of-wonder',
+  'maps-of-the-invisible',
+  'rosicrucian-moment',
+  'grimoire-tradition',
+  'women-of-the-secret-tradition',
+  'alchemical-emblem',
+  'dance-of-death',
+  'ficinos-florence',
+  'bestiary-tradition',
+  'ancient-egyptian',
+  'art-of-memory',
+  'behmenist-underground',
+  'visions-ecstasies',
+  'yokai-oni',
+  'sumerian-mesopotamian',
+  'forbidden-books',
+  'music-of-the-spheres',
+  'rudolf-prague',
+  'jungs-library',
+  'kloss-collection',
+  'newtons-other-science',
+  'contemplative-traditions',
+  'sympathy-of-all-things',
+  'kepler-fludd-debate',
+];
+
+async function fetchCuratedPathways(): Promise<CollectionDoc[]> {
   const db = await getReadDb();
   const docs = await db.collection('collections')
-    .find({ type: 'curated', published: true })
-    .sort({ book_count: -1, name: 1 })
+    .find({ slug: { $in: CURATED_PATHWAYS } })
     .toArray();
 
-  return docs.map(({ _id, ...rest }) => rest) as unknown as CollectionDoc[];
+  // Maintain the hand-picked order
+  const bySlug = new Map(docs.map(d => [d.slug, d]));
+  return CURATED_PATHWAYS
+    .map(slug => bySlug.get(slug))
+    .filter((d): d is NonNullable<typeof d> => d != null)
+    .map(({ _id, ...rest }) => rest) as unknown as CollectionDoc[];
 }
 
 async function fetchTimelineDecades(): Promise<{ decades: DecadeBucket[]; total: number }> {
@@ -203,9 +236,9 @@ function CuratedCard({ col, priority = false }: { col: CollectionDoc; priority?:
 }
 
 export default async function CollectionsPage() {
-  const [categories, curated, timeline] = await Promise.all([
+  const [categories, pathways, timeline] = await Promise.all([
     fetchCollections(),
-    fetchCuratedCollections(),
+    fetchCuratedPathways(),
     fetchTimelineDecades(),
   ]);
 
@@ -219,27 +252,22 @@ export default async function CollectionsPage() {
       }
     >
 
-      {/* Category collections */}
+      {/* Core wings of the library */}
       <div className="grid gap-4 grid-cols-2 lg:grid-cols-4">
         {categories.map((col, i) => (
           <CollectionCard key={col.slug} col={col} priority={i < 8} />
         ))}
       </div>
 
-      {/* Curated exhibitions */}
-      {curated.length > 0 && (
+      {/* Curated pathways — the hooks */}
+      {pathways.length > 0 && (
         <div className="mt-12">
-          <div className="flex items-baseline justify-between mb-4">
-            <h2 className="font-display text-2xl text-primary">Curated Exhibitions</h2>
-            <Link
-              href="/curated"
-              className="text-sm text-accent-rust hover:text-accent-rust/80 transition-colors"
-            >
-              View all &rarr;
-            </Link>
+          <div className="mb-4">
+            <h2 className="font-display text-2xl text-primary">Curated Pathways</h2>
+            <p className="text-stone-500 mt-1 text-sm">Thematic journeys through the collection</p>
           </div>
           <div className="grid gap-4 grid-cols-1 sm:grid-cols-2 lg:grid-cols-3">
-            {curated.map((col, i) => (
+            {pathways.map((col, i) => (
               <CuratedCard key={col.slug} col={col} priority={i < 3} />
             ))}
           </div>
