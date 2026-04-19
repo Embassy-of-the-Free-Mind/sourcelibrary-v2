@@ -148,11 +148,36 @@ export async function GET(request: NextRequest) {
       (async () => {
         if (bookId || pagesOnly) return [];
         const matchingIds = await searchBookIds(query, { limit: limit * 2 });
-        if (matchingIds.length === 0) return [];
         const bookFilters = buildBookFilters();
+        const bookProjection = { id: 1, slug: 1, title: 1, display_title: 1, author: 1, thumbnail: 1, thumbnail_blob: 1, language: 1, published: 1, pages_count: 1, pages_translated: 1, doi: 1, categories: 1, is_first_translation: 1, quality_score: 1, summary: 1, reading_summary: 1, work_id: 1 };
+
+        if (matchingIds.length > 0) {
+          return await db.collection('books')
+            .find({ id: { $in: matchingIds }, ...bookFilters })
+            .project(bookProjection)
+            .limit(limit)
+            .maxTimeMS(5000)
+            .toArray();
+        }
+
+        // Fallback: search categories/subject_keywords/language in MongoDB
+        const words = query.trim().split(/\s+/).filter((w: string) => w.length >= 2);
+        if (words.length === 0) return [];
+        const wordRegexes = words.map((w: string) => new RegExp(w.replace(/[.*+?^${}()|[\]\\]/g, '\\$&'), 'i'));
         return await db.collection('books')
-          .find({ id: { $in: matchingIds }, ...bookFilters })
-          .project({ id: 1, slug: 1, title: 1, display_title: 1, author: 1, thumbnail: 1, thumbnail_blob: 1, language: 1, published: 1, pages_count: 1, pages_translated: 1, doi: 1, categories: 1, is_first_translation: 1, quality_score: 1, summary: 1, reading_summary: 1, work_id: 1 })
+          .find({
+            $and: wordRegexes.map(rx => ({
+              $or: [
+                { categories: rx },
+                { subject_keywords: rx },
+                { language: rx },
+                { title: rx },
+                { display_title: rx },
+              ],
+            })),
+            ...bookFilters,
+          })
+          .project(bookProjection)
           .limit(limit)
           .maxTimeMS(5000)
           .toArray();

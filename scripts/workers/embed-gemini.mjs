@@ -71,9 +71,9 @@ async function getPgClient() {
     pgClient = new pg.Client({
       connectionString: SUPABASE_DB_URL,
       ssl: { rejectUnauthorized: false },
-      statement_timeout: 30000, // 30s per statement
     });
     await pgClient.connect();
+    await pgClient.query('SET statement_timeout = 30000'); // PgBouncer rejects startup params — must SET after connect
     console.log('Using direct PG for writes (bypasses REST API timeout)');
     return pgClient;
   } catch (e) {
@@ -224,6 +224,8 @@ const cursor = db.collection('pages')
     'translation.data': 1,
     'translation.updated_at': 1,
     'ocr.updated_at': 1,
+    translation_summary: 1,
+    translation_keywords: 1,
   })
   .batchSize(EMBED_BATCH_SIZE * 2);
 
@@ -232,6 +234,8 @@ let embedded = 0;
 let skipped = 0;
 let errors = 0;
 let batch = [];
+let consecutiveFailures = 0;
+let supabaseBackoff = 0;
 
 for await (const page of cursor) {
   if (LIMIT && processed >= LIMIT) break;
@@ -248,9 +252,15 @@ for await (const page of cursor) {
 
   const book = await getBook(page.book_id);
 
-  // We embed whichever text is best: prefer translation, fall back to OCR
-  // (embedding both would double storage; translation captures the meaning)
-  const textToEmbed = translationText.length >= 20 ? translationText : ocrText;
+  // Compose embedding text: translation (or OCR) + structured metadata
+  // The summary and keywords sharpen the vector for concept-level matching
+  let textToEmbed = translationText.length >= 20 ? translationText : ocrText;
+
+  // Prepend metadata if available (compact, high-signal)
+  const meta = [];
+  if (page.translation_summary) meta.push(page.translation_summary);
+  if (page.translation_keywords?.length) meta.push(`Keywords: ${page.translation_keywords.join(', ')}`);
+  if (meta.length) textToEmbed = meta.join('\n') + '\n\n' + textToEmbed;
 
   batch.push({ page, text: textToEmbed, book, hasTranslation: translationText.length >= 20 });
 
@@ -320,9 +330,6 @@ async function rebuildHnswIndex() {
 }
 
 // ── Supabase write (PG direct or REST fallback) ─────────────────────
-
-let consecutiveFailures = 0;
-let supabaseBackoff = 0;
 
 async function upsertToSupabase(rows) {
   const client = await getPgClient();

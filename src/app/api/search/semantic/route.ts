@@ -38,23 +38,28 @@ export async function GET(request: NextRequest) {
 
     // Enrich with thumbnail + slug from MongoDB
     const bookIds = books.map(b => b.book_id);
-    let meta: Record<string, { thumbnail?: string; thumbnail_blob?: string; slug?: string }> = {};
+    let thumbnailMap: Record<string, { thumbnail?: string; thumbnail_blob?: string; slug?: string }> = {};
     if (bookIds.length > 0) {
       try {
         const db = await getDb();
-        const docs = await db.collection('books').find(
+        const mongoBooks = await db.collection('books').find(
           { id: { $in: bookIds } },
-          { projection: { id: 1, thumbnail: 1, thumbnail_blob: 1, slug: 1 } }
+          { projection: { id: 1, _id: 1, thumbnail: 1, thumbnail_blob: 1, slug: 1 } }
         ).toArray();
-        for (const d of docs) meta[d.id] = { thumbnail: d.thumbnail, thumbnail_blob: d.thumbnail_blob, slug: d.slug };
-      } catch { /* non-fatal */ }
+        for (const mb of mongoBooks) {
+          const bid = mb.id || mb._id?.toString();
+          if (bid) thumbnailMap[bid] = { thumbnail: mb.thumbnail, thumbnail_blob: mb.thumbnail_blob, slug: mb.slug };
+        }
+      } catch (e) {
+        // Non-fatal — results still work without thumbnails
+      }
     }
 
     const enriched = books.map(b => ({
       ...b,
-      thumbnail: meta[b.book_id]?.thumbnail || null,
-      thumbnail_blob: meta[b.book_id]?.thumbnail_blob || null,
-      slug: meta[b.book_id]?.slug || b.book_id,
+      thumbnail: thumbnailMap[b.book_id]?.thumbnail || null,
+      thumbnail_blob: thumbnailMap[b.book_id]?.thumbnail_blob || null,
+      slug: thumbnailMap[b.book_id]?.slug || b.book_id,
     }));
 
     return NextResponse.json({

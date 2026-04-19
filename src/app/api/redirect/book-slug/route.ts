@@ -29,6 +29,12 @@ export async function GET(request: NextRequest) {
     return NextResponse.next();
   }
 
+  // If the resolved slug is the same as the input (no real slug exists), pass through
+  // to avoid infinite redirect loops
+  if (slug === bookIdOrSlug) {
+    return NextResponse.next();
+  }
+
   // Redirect non-slug URL to canonical slug URL
   return NextResponse.redirect(new URL(`/book/${slug}`, request.url), 301);
 }

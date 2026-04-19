@@ -328,6 +328,17 @@ export async function searchBookIds(
     const titleAnds = words.map(w => `title.ilike.%${w}%`).join(',');
     const displayAnds = words.map(w => `display_title.ilike.%${w}%`).join(',');
     orFilter += `,and(${titleAnds}),and(${displayAnds})`;
+
+    // Cross-field AND: each word must appear in SOME searchable field
+    // Catches queries like "sanskrit alchemy" where "sanskrit" matches language
+    // and "alchemy" matches title. Avoids description (no trigram index → full scan).
+    const crossFieldAnd = words.map(w =>
+      `or(title.ilike.%${w}%,display_title.ilike.%${w}%,author.ilike.%${w}%,language.ilike.%${w}%)`
+    ).join(',');
+    orFilter += `,and(${crossFieldAnd})`;
+  } else {
+    // Single word: also match against language (e.g. "Sanskrit", "Arabic")
+    orFilter += `,language.ilike.%${text}%`;
   }
 
   let query = supabase

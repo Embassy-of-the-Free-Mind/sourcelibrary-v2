@@ -1065,7 +1065,7 @@ export default function SearchPage() {
             <p className="text-sm text-muted">Related results from AI-expanded search:</p>
             {aiResults.map(result => {
               const cover = getBookThumbnailUrl({ thumbnail: result.thumbnail, thumbnail_blob: (result as any).thumbnail_blob });
-              const text = cleanSnippet(result.snippet || result.summary || '');
+              const text = result.snippet || result.summary;
               return (
                 <Link
                   key={result.id}
@@ -1096,8 +1096,11 @@ export default function SearchPage() {
         {/* ==================== UNIFIED VIEW — FLAT RESULTS ==================== */}
         {viewMode === 'unified' && !loading && query.length >= 2 && (totalResults > 0 || semanticResults.length > 0 || semanticLoading) && (
           <div className="space-y-3">
-            {/* Semantic results first (best conceptual matches) */}
-            {semanticResults.map((sem: any) => (
+            {/* Semantic results — only show books NOT already in keyword results */}
+            {(() => {
+              const keywordIds = new Set(bookResults.map(b => b.id || (b as any).book_id));
+              return semanticResults.filter((sem: any) => !keywordIds.has(sem.book_id));
+            })().map((sem: any) => (
               <SemanticResultCard key={sem.book_id} result={sem} query={query} />
             ))}
             {semanticLoading && (
@@ -1106,11 +1109,8 @@ export default function SearchPage() {
               </div>
             )}
 
-            {/* Keyword book results — exclude any already shown as semantic results */}
-            {(() => {
-              const semanticIds = new Set(semanticResults.map((s: any) => s.book_id));
-              return bookResults.filter(r => !semanticIds.has(r.book_id)).slice(0, PREVIEW_BOOKS);
-            })().map((result) => (
+            {/* Keyword book results */}
+            {bookResults.slice(0, PREVIEW_BOOKS).map((result) => (
               <BookResultCard key={result.id} result={result} query={query} />
             ))}
 
@@ -1221,7 +1221,7 @@ export default function SearchPage() {
             <div className="space-y-3">
               {aiResults.map(result => {
                 const cover = getBookThumbnailUrl({ thumbnail: result.thumbnail, thumbnail_blob: (result as any).thumbnail_blob });
-                const text = cleanSnippet(result.snippet || result.summary || '');
+                const text = result.snippet || result.summary;
                 return (
                   <Link
                     key={result.id}
@@ -1268,16 +1268,14 @@ function cleanSnippet(text: string): string {
     .replace(/<[^>]+>/g, '')                    // strip XML/HTML tags
     .replace(/\*\*([^*]+)\*\*/g, '$1')          // strip markdown bold
     .replace(/original:\s*\*[^*]*\*/g, '')      // strip "original: *Latin*" annotations
-    .replace(/<-|->|#{1,6}\s*/g, '')            // strip markdown/layout markers
-    .replace(/\|[\s:_-]+\|/g, ' ')             // strip markdown table separators (| --- | --- |)
-    .replace(/\|/g, ' ')                        // strip remaining pipe chars from tables
+    .replace(/<-|->|##/g, '')                   // strip markdown/layout markers
     .replace(/\s+/g, ' ')                       // collapse whitespace
     .trim();
 }
 
 function BookResultCard({ result, query }: { result: SearchResult; query: string }) {
   const cover = getBookThumbnailUrl({ thumbnail: result.thumbnail, thumbnail_blob: (result as any).thumbnail_blob });
-  const text = cleanSnippet(result.snippet || result.summary || '');
+  const text = result.snippet || result.summary;
   const [imgError, setImgError] = useState(false);
   const [passages, setPassages] = useState<PassageMatch[] | null>(null);
   const [passagesLoading, setPassagesLoading] = useState(false);
@@ -1416,7 +1414,7 @@ function SemanticResultCard({ result, query }: { result: any; query: string }) {
       <Link href={`/book/${result.slug || result.book_id}`} className="block p-4">
         <div className="flex items-start gap-4">
           {cover ? (
-            <Image src={cover} alt="" width={60} height={84} className="rounded shadow-sm flex-shrink-0 object-cover w-[60px] h-[84px]" unoptimized />
+            <Image src={cover} alt="" width={60} height={84} className="rounded shadow-sm flex-shrink-0 object-cover w-[60px] h-[84px]" />
           ) : (
             <div className="w-[60px] h-[84px] rounded bg-warm flex items-center justify-center flex-shrink-0">
               <Book className="w-6 h-6 text-border-medium" />
