@@ -23,6 +23,15 @@ jobs:
       - name: Wait for Vercel deploy
         run: sleep 180
 
+      - name: Purge Cloudflare cache
+        run: |
+          RESULT=$(curl -s -X POST \
+            "https://api.cloudflare.com/client/v4/zones/${{ secrets.CF_ZONE_ID }}/purge_cache" \
+            -H "Authorization: Bearer ${{ secrets.CLOUDFLARE_API_TOKEN }}" \
+            -H "Content-Type: application/json" \
+            --data '{"purge_everything":true}')
+          echo "CF purge: $RESULT"
+
       - name: Warm cache
         run: |
           STATUS=$(curl -s -o /dev/null -w "%{http_code}" -X POST \
