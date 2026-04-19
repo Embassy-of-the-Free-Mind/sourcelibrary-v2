@@ -1,0 +1,412 @@
+[
+  {
+    "source": "wikimedia_commons",
+    "category": "Category:The_Grammar_of_Ornament",
+    "title": "The Grammar of Ornament",
+    "author": "Owen Jones",
+    "year": "1856",
+    "collections": ["visual-art", "the-cosmos"],
+    "resource_type": "print",
+    "notes": "100 chromolithographic plates surveying geometric ornament from Egyptian, Moorish, Persian, Celtic, and Renaissance traditions. Foundational reference for pattern design."
+  },
+  {
+    "source": "wikimedia_commons",
+    "category": "Category:Owen_Jones_(architect)",
+    "title": "Owen Jones — Architectural Drawings and Color Studies",
+    "author": "Owen Jones",
+    "year": "1850",
+    "collections": ["visual-art", "the-cosmos"],
+    "resource_type": "drawing",
+    "notes": "Working drawings and color studies by Owen Jones, including Alhambra documentation and pattern derivations."
+  },
+  {
+    "source": "wikimedia_commons",
+    "category": "Category:Jules_Bourgoin",
+    "title": "Arabic Geometrical Pattern and Design",
+    "author": "Jules Bourgoin",
+    "year": "1879",
+    "collections": ["visual-art", "the-cosmos"],
+    "resource_type": "print",
+    "notes": "190 plates of Islamic geometric construction — girih tiles, star polygons, and their mathematical derivations from Bourgoin's survey of Cairo monuments."
+  },
+  {
+    "source": "wikimedia_commons",
+    "category": "Category:Islamic_geometric_patterns",
+    "title": "Islamic Geometric Patterns",
+    "author": "Various",
+    "year": "1200",
+    "collections": ["visual-art", "the-cosmos"],
+    "resource_type": "photograph",
+    "notes": "Geometric tilework, muqarnas, and arabesque patterns from mosques, madrasas, and palaces across the Islamic world."
+  },
+  {
+    "source": "wikimedia_commons",
+    "category": "Category:Alhambra_tiles",
+    "title": "Alhambra Tile Patterns",
+    "author": "Unknown Nasrid artisans",
+    "year": "1350",
+    "collections": ["visual-art", "the-cosmos"],
+    "resource_type": "photograph",
+    "notes": "All 17 wallpaper symmetry groups are represented in Alhambra tilework. The most mathematically complete geometric programme in medieval architecture."
+  },
+  {
+    "source": "wikimedia_commons",
+    "category": "Category:Geometric_patterns_of_the_Alhambra",
+    "title": "Geometric Patterns of the Alhambra — Detail Studies",
+    "author": "Unknown Nasrid artisans",
+    "year": "1350",
+    "collections": ["visual-art", "the-cosmos"],
+    "resource_type": "photograph",
+    "notes": "Close-up documentation of individual panel patterns, zellij borders, and stucco geometric screens in the Alhambra."
+  },
+  {
+    "source": "wikimedia_commons",
+    "category": "Category:Islamic_art_in_the_Topkapi_Palace",
+    "title": "Topkapi Palace — Islamic Art and Geometric Ornament",
+    "author": "Various Ottoman artisans",
+    "year": "1500",
+    "collections": ["visual-art", "the-cosmos"],
+    "resource_type": "photograph",
+    "notes": "Iznik tile panels, geometric woodwork, and manuscript illumination from the imperial collections of the Topkapi Palace."
+  },
+  {
+    "source": "wikimedia_commons",
+    "category": "Category:Mysterium_Cosmographicum",
+    "title": "Mysterium Cosmographicum — Platonic Solid Nesting",
+    "author": "Johannes Kepler",
+    "year": "1596",
+    "collections": ["visual-art", "the-cosmos"],
+    "resource_type": "print",
+    "notes": "Kepler's nested polyhedra model of the solar system — the five Platonic solids enclosing the six planetary orbits. The most celebrated diagram in early modern cosmology."
+  },
+  {
+    "source": "wikimedia_commons",
+    "category": "Category:Harmonices_Mundi",
+    "title": "Harmonices Mundi — Geometric and Musical Diagrams",
+    "author": "Johannes Kepler",
+    "year": "1619",
+    "collections": ["visual-art", "the-cosmos"],
+    "resource_type": "print",
+    "notes": "Diagrams of planetary harmonies, regular tilings, and the geometry of music from Kepler's masterwork on cosmic order."
+  },
+  {
+    "source": "wikimedia_commons",
+    "category": "Category:Jain_cosmological_paintings",
+    "title": "Jain Cosmological Paintings",
+    "author": "Various Jain manuscript painters",
+    "year": "1400",
+    "collections": ["visual-art", "maps-of-the-invisible"],
+    "resource_type": "painting",
+    "notes": "Cosmological diagrams from Jain manuscripts including the Lokapurusha (cosmic man), Jambudvipa diagrams, and the concentrically mapped continents of Jain cosmology."
+  },
+  {
+    "source": "wikimedia_commons",
+    "category": "Category:Lokapurusha",
+    "title": "Lokapurusha — The Cosmic Man",
+    "author": "Various Jain manuscript painters",
+    "year": "1400",
+    "collections": ["visual-art", "maps-of-the-invisible"],
+    "resource_type": "painting",
+    "notes": "The Jain universe depicted as a human figure — the three realms (heavens, middle world, hells) mapped onto the cosmic body."
+  },
+  {
+    "source": "wikimedia_commons",
+    "category": "Category:Jambudvipa",
+    "title": "Jambudvipa — Jain World Map",
+    "author": "Various Jain manuscript painters",
+    "year": "1500",
+    "collections": ["visual-art", "maps-of-the-invisible"],
+    "resource_type": "painting",
+    "notes": "Circular cosmological maps of Jambudvipa, the central continent of Jain cosmology, with Mount Meru at center surrounded by concentric rings of landmass and ocean."
+  },
+  {
+    "source": "wikimedia_commons",
+    "category": "Category:Buddhist_cosmological_diagrams",
+    "title": "Buddhist Cosmological Diagrams",
+    "author": "Various",
+    "year": "1600",
+    "collections": ["visual-art", "maps-of-the-invisible"],
+    "resource_type": "painting",
+    "notes": "Painted diagrams of the Buddhist cosmos — Mount Meru, the four continents, the six realms of existence, and the thirty-three heavens."
+  },
+  {
+    "source": "wikimedia_commons",
+    "category": "Category:Wheel_of_life_(Tibetan_Buddhism)",
+    "title": "Bhavachakra — Tibetan Wheel of Existence",
+    "author": "Various Tibetan thangka painters",
+    "year": "1700",
+    "collections": ["visual-art", "maps-of-the-invisible"],
+    "resource_type": "painting",
+    "notes": "The Wheel of Life (Bhavachakra) held by Yama, divided into the six realms of existence with the three poisons at the hub. A complete cosmological and soteriological diagram in one image."
+  },
+  {
+    "source": "wikimedia_commons",
+    "category": "Category:Traiphum",
+    "title": "Traiphum Phra Ruang — Thai Buddhist Cosmology",
+    "author": "Various Thai manuscript painters",
+    "year": "1776",
+    "collections": ["visual-art", "maps-of-the-invisible"],
+    "resource_type": "painting",
+    "notes": "Illustrated manuscripts of the Traiphum (Three Worlds cosmology), the foundational Thai Buddhist cosmological text. Vivid depictions of Mount Meru and the layered heavens."
+  },
+  {
+    "source": "wikimedia_commons",
+    "category": "Category:Mappae_mundi",
+    "title": "Mappae Mundi — Medieval Cosmological World Maps",
+    "author": "Various medieval cartographers",
+    "year": "1200",
+    "collections": ["visual-art", "maps-of-the-invisible"],
+    "resource_type": "drawing",
+    "notes": "T-O and other medieval cosmological world maps placing Jerusalem at center, paradise at the top, and organizing geography according to sacred geometry."
+  },
+  {
+    "source": "wikimedia_commons",
+    "category": "Category:Ebstorf_map",
+    "title": "Ebstorf World Map (reconstruction)",
+    "author": "Unknown, Ebstorf monastery",
+    "year": "1234",
+    "collections": ["visual-art", "maps-of-the-invisible"],
+    "resource_type": "drawing",
+    "notes": "The largest known medieval mappa mundi — 12 feet across, the world depicted as the body of Christ with Jerusalem at the navel. Destroyed 1943; known from 19th-century color facsimile."
+  },
+  {
+    "source": "wikimedia_commons",
+    "category": "Category:Yantras",
+    "title": "Hindu Yantras — Devotional Geometric Diagrams",
+    "author": "Various",
+    "year": "1800",
+    "collections": ["visual-art", "maps-of-the-invisible"],
+    "resource_type": "painting",
+    "notes": "Sacred geometric diagrams used in Hindu worship — Sri Yantra, Kali Yantra, Navgraha Yantra, and others. Each yantra is a map of a deity's power reduced to pure geometry."
+  },
+  {
+    "source": "wikimedia_commons",
+    "category": "Category:Sri_Yantra",
+    "title": "Sri Yantra",
+    "author": "Various",
+    "year": "1800",
+    "collections": ["visual-art", "maps-of-the-invisible"],
+    "resource_type": "painting",
+    "notes": "The most celebrated of Hindu geometric diagrams — nine interlocking triangles generating 43 smaller triangles around a central point (bindu), surrounded by lotus petals and a square gateway."
+  },
+  {
+    "source": "wikimedia_commons",
+    "category": "Category:Celestial_globes",
+    "title": "Celestial Globes",
+    "author": "Various instrument makers",
+    "year": "1600",
+    "collections": ["visual-art", "the-cosmos"],
+    "resource_type": "photograph",
+    "notes": "Historical celestial globes mapping the constellations onto a sphere — the cosmos as a physical object. Includes Islamic, European, and East Asian examples."
+  },
+  {
+    "source": "wikimedia_commons",
+    "category": "Category:Armillary_spheres",
+    "title": "Armillary Spheres",
+    "author": "Various instrument makers",
+    "year": "1550",
+    "collections": ["visual-art", "the-cosmos"],
+    "resource_type": "photograph",
+    "notes": "Armillary spheres — nested metal rings representing the celestial equator, ecliptic, tropics, and meridians. Both scientific instruments and embodied cosmograms."
+  },
+  {
+    "source": "wikimedia_commons",
+    "category": "Category:Rose_windows",
+    "title": "Gothic Rose Windows",
+    "author": "Various medieval glaziers",
+    "year": "1250",
+    "collections": ["visual-art", "the-cosmos"],
+    "resource_type": "photograph",
+    "notes": "The great rose windows of Gothic cathedrals — Chartres, Notre-Dame de Paris, Reims — are the culmination of medieval geometric art, encoding cosmological order in stone and light."
+  },
+  {
+    "source": "wikimedia_commons",
+    "category": "Category:Rose_window_of_Notre-Dame_de_Paris",
+    "title": "Rose Windows of Notre-Dame de Paris",
+    "author": "Unknown medieval glaziers",
+    "year": "1260",
+    "collections": ["visual-art", "the-cosmos"],
+    "resource_type": "photograph",
+    "notes": "The three rose windows of Notre-Dame — north, south, and west — each a different geometric programme radiating from a central point."
+  },
+  {
+    "source": "wikimedia_commons",
+    "category": "Category:Vitruvian_Man",
+    "title": "Vitruvian Man",
+    "author": "Leonardo da Vinci",
+    "year": "1490",
+    "collections": ["visual-art", "the-cosmos"],
+    "resource_type": "drawing",
+    "notes": "Leonardo's diagram of ideal human proportions inscribed in circle and square — the image of man as the measure of all things and the link between earthly and cosmic geometry."
+  },
+  {
+    "source": "wikimedia_commons",
+    "category": "Category:Polyhedra_drawings_by_Leonardo_da_Vinci",
+    "title": "Leonardo da Vinci — Polyhedra Illustrations for De Divina Proportione",
+    "author": "Leonardo da Vinci",
+    "year": "1498",
+    "collections": ["visual-art", "the-cosmos"],
+    "resource_type": "drawing",
+    "notes": "Leonardo's 60 skeletal polyhedra drawn for Luca Pacioli's De Divina Proportione — the Platonic and Archimedean solids rendered in three dimensions for the first time."
+  },
+  {
+    "source": "wikimedia_commons",
+    "category": "Category:De_Divina_Proportione",
+    "title": "De Divina Proportione — Illustrations",
+    "author": "Luca Pacioli / Leonardo da Vinci",
+    "year": "1509",
+    "collections": ["visual-art", "the-cosmos"],
+    "resource_type": "print",
+    "notes": "Pacioli's treatise on the golden ratio with Leonardo's polyhedra illustrations. The foundational text on mathematical proportion in art and architecture."
+  },
+  {
+    "source": "wikimedia_commons",
+    "category": "Category:Illustrations_of_Euclid's_Elements",
+    "title": "Euclid's Elements — Historical Illustrations",
+    "author": "Various",
+    "year": "1482",
+    "collections": ["visual-art", "the-cosmos"],
+    "resource_type": "print",
+    "notes": "Geometric diagrams from early printed and manuscript editions of Euclid's Elements — the diagrams that defined visual mathematical reasoning for two millennia."
+  },
+  {
+    "source": "wikimedia_commons",
+    "category": "Category:Book_of_Kells",
+    "title": "Book of Kells — Illuminated Pages",
+    "author": "Unknown Insular monks",
+    "year": "800",
+    "collections": ["visual-art", "the-cosmos"],
+    "resource_type": "painting",
+    "notes": "The supreme achievement of Insular art — interlace knotwork, zoomorphic panels, and carpet pages of extraordinary geometric complexity. Trinity College Dublin MS 58."
+  },
+  {
+    "source": "wikimedia_commons",
+    "category": "Category:Lindisfarne_Gospels",
+    "title": "Lindisfarne Gospels — Carpet Pages",
+    "author": "Eadfrith, Bishop of Lindisfarne",
+    "year": "715",
+    "collections": ["visual-art", "the-cosmos"],
+    "resource_type": "painting",
+    "notes": "Celtic knotwork carpet pages from the Lindisfarne Gospels — interlace patterns of staggering precision drawn without a compass, each panel a meditation in geometric form."
+  },
+  {
+    "source": "wikimedia_commons",
+    "category": "Category:Penrose_tilings",
+    "title": "Penrose Tilings",
+    "author": "Roger Penrose",
+    "year": "1974",
+    "collections": ["visual-art", "the-cosmos"],
+    "resource_type": "drawing",
+    "notes": "Aperiodic tilings by Roger Penrose demonstrating quasicrystalline fivefold symmetry — patterns with local order but no global periodicity, later found in medieval Islamic geometric art."
+  },
+  {
+    "source": "wikimedia_commons",
+    "category": "Category:Platonic_solids",
+    "title": "Platonic Solids — Historical Illustrations and Models",
+    "author": "Various",
+    "year": "1500",
+    "collections": ["visual-art", "the-cosmos"],
+    "resource_type": "drawing",
+    "notes": "Visual history of the five Platonic solids from Euclid through Kepler — drawings, woodcuts, physical models, and symbolic diagrams from mathematical and cosmological traditions."
+  },
+  {
+    "source": "wikimedia_commons",
+    "category": "Category:Metatron's_Cube",
+    "title": "Metatron's Cube and Flower of Life",
+    "author": "Various",
+    "year": "1800",
+    "collections": ["visual-art", "kabbalah-sacred-geometry"],
+    "resource_type": "drawing",
+    "notes": "Sacred geometry diagrams from Western esoteric tradition — the Flower of Life, Fruit of Life, and Metatron's Cube, which contains all five Platonic solids in projection."
+  },
+  {
+    "source": "wikimedia_commons",
+    "category": "Category:Mandalas",
+    "title": "Mandalas — Cosmological Diagrams from Asian Traditions",
+    "author": "Various",
+    "year": "1600",
+    "collections": ["visual-art", "maps-of-the-invisible"],
+    "resource_type": "painting",
+    "notes": "Sacred circles from Buddhist, Hindu, and Jain traditions — Kalachakra, Womb World, Diamond World, and devotional mandalas of individual deities."
+  },
+  {
+    "source": "wikimedia_commons",
+    "category": "Category:Kalachakra_mandala",
+    "title": "Kalachakra Mandala",
+    "author": "Various Tibetan painters",
+    "year": "1700",
+    "collections": ["visual-art", "maps-of-the-invisible"],
+    "resource_type": "painting",
+    "notes": "The Wheel of Time mandala — 722 deities arranged in concentric geometric palaces. The most complex of Vajrayana cosmological diagrams, used in Dalai Lama initiation ceremonies."
+  },
+  {
+    "source": "wikimedia_commons",
+    "category": "Category:Cosmological_diagrams",
+    "title": "Pre-modern Cosmological Diagrams",
+    "author": "Various",
+    "year": "1500",
+    "collections": ["visual-art", "the-cosmos"],
+    "resource_type": "drawing",
+    "notes": "Cosmological schematics from medieval and Renaissance European sources — sphere diagrams, elemental wheels, and geometric representations of the Ptolemaic cosmos."
+  },
+  {
+    "source": "wikimedia_commons",
+    "category": "Category:Labyrinth_(design)",
+    "title": "Labyrinths — Sacred Ground Plans",
+    "author": "Various",
+    "year": "1200",
+    "collections": ["visual-art", "maps-of-the-invisible"],
+    "resource_type": "drawing",
+    "notes": "Historical labyrinth designs from Cretan coins through Chartres Cathedral — the single-path labyrinth as cosmological symbol, initiation device, and meditation tool."
+  },
+  {
+    "source": "wikimedia_commons",
+    "category": "Category:Chartres_labyrinth",
+    "title": "Chartres Labyrinth",
+    "author": "Unknown medieval mason",
+    "year": "1220",
+    "collections": ["visual-art", "maps-of-the-invisible"],
+    "resource_type": "photograph",
+    "notes": "The eleven-circuit labyrinth inlaid in the nave floor of Chartres Cathedral — 261.5 feet to walk, the same diameter as the west rose window directly above it."
+  },
+  {
+    "source": "wikimedia_commons",
+    "category": "Category:Islamic_calligraphy",
+    "title": "Islamic Calligraphy as Geometric Art",
+    "author": "Various calligraphers",
+    "year": "1400",
+    "collections": ["visual-art", "the-cosmos"],
+    "resource_type": "painting",
+    "notes": "Kufic, Thuluth, and other scripts structured by geometric grids — the word as sacred geometry. Includes square Kufic and mirrored bismillah compositions."
+  },
+  {
+    "source": "wikimedia_commons",
+    "category": "Category:Muqarnas",
+    "title": "Muqarnas — Islamic Geometric Vaulting",
+    "author": "Various Islamic architects and craftsmen",
+    "year": "1100",
+    "collections": ["visual-art", "the-cosmos"],
+    "resource_type": "photograph",
+    "notes": "Stalactite vaulting from mosques and palaces — Alhambra, Imam Mosque Isfahan, Nasir al-Mulk. Three-dimensional geometric crystallography in stone and plaster."
+  },
+  {
+    "source": "wikimedia_commons",
+    "category": "Category:Girih_tiles",
+    "title": "Girih Tiles — Islamic Quasi-Crystalline Geometry",
+    "author": "Various Islamic craftsmen",
+    "year": "1200",
+    "collections": ["visual-art", "the-cosmos"],
+    "resource_type": "photograph",
+    "notes": "The five girih tiles found at the Darb-i Imam shrine (1453) generate quasi-crystalline Penrose-type patterns — 500 years before Penrose's mathematical discovery."
+  },
+  {
+    "source": "wikimedia_commons",
+    "category": "Category:Geometric_art",
+    "title": "Geometric Art — Survey",
+    "author": "Various",
+    "year": "1000",
+    "collections": ["visual-art", "the-cosmos"],
+    "resource_type": "drawing",
+    "notes": "Survey category for geometric art across cultures and periods — useful as a fallback discovery category."
+  }
+]

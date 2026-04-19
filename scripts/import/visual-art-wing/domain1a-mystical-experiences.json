@@ -1,0 +1,796 @@
+[
+  {
+    "source": "wikimedia_commons",
+    "category": "Category:Pythia",
+    "collections": ["visual-art", "classical-mysteries"],
+    "resource_type": "painting",
+    "_note": "The Delphic Oracle — priestess of Apollo breathing vapours from the earth's fissure, channelling the god's prophecy"
+  },
+  {
+    "source": "wikimedia_commons",
+    "category": "Category:Oracle_at_Delphi",
+    "collections": ["visual-art", "classical-mysteries"],
+    "resource_type": "painting",
+    "_note": "Paintings and engravings of the most sacred oracular site of antiquity — pilgrims, laurel, tripod, the omphalos stone"
+  },
+  {
+    "source": "wikimedia_commons",
+    "category": "Category:Eleusinian_Mysteries",
+    "collections": ["visual-art", "classical-mysteries"],
+    "resource_type": "painting",
+    "_note": "The secret initiation rites of ancient Greece — Demeter, Persephone, the kykeon, the revelation of the sacred ear of wheat"
+  },
+  {
+    "source": "wikimedia_commons",
+    "category": "Category:Prometheus_in_art",
+    "collections": ["visual-art", "classical-mysteries"],
+    "resource_type": "painting",
+    "_note": "The Titan who stole divine fire for humanity — the foundational myth of knowledge as transgressive gift from the gods"
+  },
+  {
+    "source": "wikimedia_commons",
+    "category": "Category:Paintings_of_Prometheus",
+    "collections": ["visual-art", "classical-mysteries"],
+    "resource_type": "painting",
+    "_note": "Prometheus bound, Prometheus creating mankind, the eagle — Rubens, Gustave Moreau, and the Romantic tradition"
+  },
+  {
+    "source": "wikimedia_commons",
+    "category": "Category:Circe_in_art",
+    "collections": ["visual-art", "classical-mysteries"],
+    "resource_type": "painting",
+    "_note": "The divine sorceress — mixing the transformative draught, surrounded by transformed men, commanding the seas"
+  },
+  {
+    "source": "wikimedia_commons",
+    "category": "Category:Medea_in_art",
+    "collections": ["visual-art", "classical-mysteries"],
+    "resource_type": "painting",
+    "_note": "The supreme magician of antiquity — invoking Hecate, gathering herbs by moonlight, the dragon-drawn chariot"
+  },
+  {
+    "source": "wikimedia_commons",
+    "category": "Category:Apollo_and_the_Muses",
+    "collections": ["visual-art", "classical-mysteries"],
+    "resource_type": "painting",
+    "_note": "Divine inspiration personified — Apollo leading the nine Muses, the source of poetry, music, and prophecy"
+  },
+  {
+    "source": "wikimedia_commons",
+    "category": "Category:Paintings_of_Apollo",
+    "collections": ["visual-art", "classical-mysteries"],
+    "resource_type": "painting",
+    "_note": "The sun god as patron of reason and illumination — Apollo with his lyre, his laurel, his solar chariot"
+  },
+  {
+    "source": "wikimedia_commons",
+    "category": "Category:Dionysus_in_art",
+    "collections": ["visual-art", "classical-mysteries"],
+    "resource_type": "painting",
+    "_note": "The god of ecstatic dissolution — maenads, thyrsus, wine as sacrament, the divine madness that breaks the self open"
+  },
+  {
+    "source": "wikimedia_commons",
+    "category": "Category:Maenads_in_ancient_Greek_vase_paintings",
+    "collections": ["visual-art", "classical-mysteries"],
+    "resource_type": "object",
+    "_note": "Dionysiac ecstasy on Attic pottery — the bacchic frenzy, the thiasoi, women in divine possession"
+  },
+  {
+    "source": "wikimedia_commons",
+    "category": "Category:Bacchanalian_scenes",
+    "collections": ["visual-art", "classical-mysteries"],
+    "resource_type": "painting",
+    "_note": "Renaissance and Baroque bacchanalias — Titian, Poussin, Rubens depicting the ecstatic Dionysiac procession"
+  },
+  {
+    "source": "wikimedia_commons",
+    "category": "Category:Pan_(deity)_in_art",
+    "collections": ["visual-art", "classical-mysteries"],
+    "resource_type": "painting",
+    "_note": "The nature god who causes 'panic' — divine presence in wild places, piping in mountain grottoes, the numinous Pan"
+  },
+  {
+    "source": "wikimedia_commons",
+    "category": "Category:The_School_of_Athens",
+    "collections": ["visual-art", "neoplatonism", "ficinos-florence"],
+    "resource_type": "fresco",
+    "_note": "Raphael's supreme Neoplatonist programme — Plato pointing upward, Aristotle downward, the whole philosophic tradition gathered in one hall"
+  },
+  {
+    "source": "wikimedia_commons",
+    "category": "Category:Hermes_Trismegistus",
+    "collections": ["visual-art", "hermetic-image"],
+    "resource_type": "painting",
+    "_note": "Thrice-great Hermes — the legendary author of the Corpus Hermeticum, depicted in cathedral floors, frontispieces, and esoteric diagrams"
+  },
+  {
+    "source": "wikimedia_commons",
+    "category": "Category:Marsilio_Ficino",
+    "collections": ["visual-art", "neoplatonism", "ficinos-florence"],
+    "resource_type": "painting",
+    "_note": "The Florentine Neoplatonist who translated Plato and the Hermetic Corpus for the Medici — portraits and medal effigies"
+  },
+  {
+    "source": "wikimedia_commons",
+    "category": "Category:Pico_della_Mirandola",
+    "collections": ["visual-art", "neoplatonism", "ficinos-florence"],
+    "resource_type": "painting",
+    "_note": "The 'phoenix of intellect' whose 900 Theses and Oration on the Dignity of Man defined Renaissance humanism"
+  },
+  {
+    "source": "wikimedia_commons",
+    "category": "Category:Allegory_of_the_Cave",
+    "collections": ["visual-art", "neoplatonism"],
+    "resource_type": "painting",
+    "_note": "Plato's parable of liberation — prisoners chained in the cave of illusion, the philosopher's ascent toward the light of the Good"
+  },
+  {
+    "source": "wikimedia_commons",
+    "category": "Category:Sandro_Botticelli",
+    "collections": ["visual-art", "neoplatonism", "ficinos-florence"],
+    "resource_type": "painting",
+    "_note": "Botticelli's Neoplatonist programme for the Medici — Primavera, Birth of Venus, Pallas and the Centaur: the soul's journey toward beauty"
+  },
+  {
+    "source": "wikimedia_commons",
+    "category": "Category:La_Primavera_(Botticelli)",
+    "collections": ["visual-art", "neoplatonism", "ficinos-florence"],
+    "resource_type": "painting",
+    "_note": "The Graces dancing in an orange grove — Ficino's neo-Platonic emanation of Venus as Humanitas: the union of celestial and earthly love"
+  },
+  {
+    "source": "wikimedia_commons",
+    "category": "Category:The_Birth_of_Venus_(Botticelli)",
+    "collections": ["visual-art", "neoplatonism", "ficinos-florence"],
+    "resource_type": "painting",
+    "_note": "Venus Anadyomene — the goddess of divine beauty born from the sea, the Platonic form descending into matter"
+  },
+  {
+    "source": "wikimedia_commons",
+    "category": "Category:Transfiguration_of_Jesus_in_art",
+    "collections": ["visual-art", "visions-ecstasies"],
+    "resource_type": "painting",
+    "_note": "Christ's body blazing with uncreated light on Mt. Tabor — Raphael's last masterpiece, Byzantine mosaics, Theophanes the Greek"
+  },
+  {
+    "source": "wikimedia_commons",
+    "category": "Category:The_Transfiguration_(Raphael)",
+    "collections": ["visual-art", "visions-ecstasies"],
+    "resource_type": "painting",
+    "_note": "Raphael's final painting, left unfinished at his death — the divine vision above, the possessed boy below: heaven and earth"
+  },
+  {
+    "source": "wikimedia_commons",
+    "category": "Category:Ascension_of_Jesus_in_art",
+    "collections": ["visual-art", "visions-ecstasies"],
+    "resource_type": "painting",
+    "_note": "The bodily assumption of Christ into heaven — the supreme moment of human apotheosis in Christian iconography"
+  },
+  {
+    "source": "wikimedia_commons",
+    "category": "Category:Burning_bush",
+    "collections": ["visual-art", "visions-ecstasies"],
+    "resource_type": "painting",
+    "_note": "Moses before the unconsumed flame — the theophany of Sinai, the ground of being revealed, 'I am that I am'"
+  },
+  {
+    "source": "wikimedia_commons",
+    "category": "Category:Ezekiel's_vision",
+    "collections": ["visual-art", "visions-ecstasies"],
+    "resource_type": "painting",
+    "_note": "The merkavah vision — wheels within wheels, the four living creatures, the throne-chariot of God above the firmament"
+  },
+  {
+    "source": "wikimedia_commons",
+    "category": "Category:Jacob's_Dream",
+    "collections": ["visual-art", "visions-ecstasies"],
+    "resource_type": "painting",
+    "_note": "The ladder between earth and heaven — angels ascending and descending, God speaking from the top: the axis mundi"
+  },
+  {
+    "source": "wikimedia_commons",
+    "category": "Category:Jacob's_Ladder_in_art",
+    "collections": ["visual-art", "visions-ecstasies"],
+    "resource_type": "painting",
+    "_note": "Jacob's Ladder as visionary ascent — a recurring motif from Byzantine illumination through William Blake's mystical prints"
+  },
+  {
+    "source": "wikimedia_commons",
+    "category": "Category:Pentecost_in_art",
+    "collections": ["visual-art", "visions-ecstasies"],
+    "resource_type": "painting",
+    "_note": "Tongues of fire descending on the apostles — the moment the Spirit entered the world, glossolalia, the birthday of the Church"
+  },
+  {
+    "source": "wikimedia_commons",
+    "category": "Category:Stigmatization_of_Saint_Francis",
+    "collections": ["visual-art", "visions-ecstasies"],
+    "resource_type": "painting",
+    "_note": "Francis on La Verna receiving the sacred wounds from the seraph — the body itself becoming an icon of Christ's Passion"
+  },
+  {
+    "source": "wikimedia_commons",
+    "category": "Category:Saint_John_on_Patmos",
+    "collections": ["visual-art", "visions-ecstasies"],
+    "resource_type": "painting",
+    "_note": "The Beloved Disciple receiving the Apocalypse — the eagle beside him, the scroll, the cosmic visions pouring into him"
+  },
+  {
+    "source": "wikimedia_commons",
+    "category": "Category:Conversion_of_Paul_the_Apostle",
+    "collections": ["visual-art", "visions-ecstasies"],
+    "resource_type": "painting",
+    "_note": "Saul struck from his horse by the blinding light on the road to Damascus — Caravaggio's supreme study in divine interruption"
+  },
+  {
+    "source": "wikimedia_commons",
+    "category": "Category:Conversion_of_Saint_Paul_(Caravaggio)",
+    "collections": ["visual-art", "visions-ecstasies"],
+    "resource_type": "painting",
+    "_note": "Caravaggio's radical reframing — Paul fallen on his back in the dirt, the horse enormous, the light invisible: pure surrender"
+  },
+  {
+    "source": "wikimedia_commons",
+    "category": "Category:Scivias",
+    "collections": ["visual-art", "visions-ecstasies"],
+    "resource_type": "painting",
+    "_note": "Hildegard of Bingen's illuminated visions — the Cosmic Egg, the Living Light, the Virtues, the City of God seen in rapture"
+  },
+  {
+    "source": "wikimedia_commons",
+    "category": "Category:Whirling_dervishes",
+    "collections": ["visual-art", "mysticism"],
+    "resource_type": "painting",
+    "_note": "Mevlevi sema — the turning ceremony of Rumi's order: the skirted figure spinning toward fana, annihilation in God"
+  },
+  {
+    "source": "wikimedia_commons",
+    "category": "Category:Mevlevi_Order",
+    "collections": ["visual-art", "mysticism"],
+    "resource_type": "painting",
+    "_note": "Ottoman and Persian miniatures of Sufi devotion — the samaa gathering, the khanqah, dervish lodges in ecstatic prayer"
+  },
+  {
+    "source": "wikimedia_commons",
+    "category": "Category:Mi'raj_paintings",
+    "collections": ["visual-art", "mysticism"],
+    "resource_type": "painting",
+    "_note": "Muhammad's night ascent through the seven heavens — Persian and Mughal miniatures of the Prophet on Buraq, meeting the prophets"
+  },
+  {
+    "source": "wikimedia_commons",
+    "category": "Category:Miraj",
+    "collections": ["visual-art", "mysticism"],
+    "resource_type": "painting",
+    "_note": "The supreme Islamic mystical journey — the Buraq, the veil of nearness, the Lote-tree of the Boundary: depicted in Persian miniature"
+  },
+  {
+    "source": "wikimedia_commons",
+    "category": "Category:Enlightenment_of_the_Buddha",
+    "collections": ["visual-art", "mysticism"],
+    "resource_type": "painting",
+    "_note": "Shakyamuni at the Bodhi tree — Mara's armies, the earth witness gesture, the dawn of awakening: the axial moment of Buddhism"
+  },
+  {
+    "source": "wikimedia_commons",
+    "category": "Category:Vishvarupa",
+    "collections": ["visual-art", "mysticism"],
+    "resource_type": "painting",
+    "_note": "Krishna's cosmic form revealed to Arjuna in the Bhagavad Gita — 'I am time, the destroyer of worlds': the overwhelming divine vision"
+  },
+  {
+    "source": "wikimedia_commons",
+    "category": "Category:Nataraja",
+    "collections": ["visual-art", "mysticism"],
+    "resource_type": "sculpture",
+    "_note": "Shiva's cosmic dance within the ring of fire — creation and destruction in perfect rhythm, the drum and the flame, the lifted foot of release"
+  },
+  {
+    "source": "wikimedia_commons",
+    "category": "Category:Illustrations_of_the_Divine_Comedy",
+    "collections": ["visual-art", "the-cosmos"],
+    "resource_type": "drawing",
+    "_note": "Dante's ascent through the spheres — Botticelli, William Blake, Gustave Doré, John Flaxman: the Paradiso as a map of mystical states"
+  },
+  {
+    "source": "wikimedia_commons",
+    "category": "Category:Paradiso_(Divine_Comedy)_in_art",
+    "collections": ["visual-art", "the-cosmos"],
+    "resource_type": "drawing",
+    "_note": "Beatrice guiding Dante through the crystalline spheres — the beatific vision, the celestial rose, the triune light at the centre"
+  },
+  {
+    "source": "wikimedia_commons",
+    "category": "Category:Creation_of_Adam",
+    "collections": ["visual-art", "the-cosmos"],
+    "resource_type": "fresco",
+    "_note": "Michelangelo's Sistine ceiling — the gap between the divine and human finger, divine electricity about to arc through matter"
+  },
+  {
+    "source": "wikimedia_commons",
+    "category": "Category:Assumption_of_the_Virgin_Mary_in_art",
+    "collections": ["visual-art", "the-cosmos"],
+    "resource_type": "painting",
+    "_note": "Mary's bodily ascent into heaven — Titian's golden altarpiece, Correggio's dome spiralling upward, the Baroque apotheosis"
+  },
+  {
+    "source": "wikimedia_commons",
+    "category": "Category:The_Assumption_of_the_Virgin_(Titian)",
+    "collections": ["visual-art", "the-cosmos"],
+    "resource_type": "painting",
+    "_note": "Titian's 1518 revolutionary altarpiece — Mary borne upward in golden light, apostles gesturing below, God descending to meet her"
+  },
+  {
+    "source": "wikimedia_commons",
+    "category": "Category:Aurora_(Guido_Reni)",
+    "collections": ["visual-art", "the-cosmos"],
+    "resource_type": "fresco",
+    "_note": "Reni's luminous ceiling in the Casino dell'Aurora — Dawn scattering flowers before Apollo's solar chariot, the Horae dancing beside"
+  },
+  {
+    "source": "wikimedia_commons",
+    "category": "Category:Magic_circles",
+    "collections": ["visual-art", "hermetic-image"],
+    "resource_type": "drawing",
+    "_note": "Ceremonial magic circles from grimoires and ritual manuals — the protected space of conjuration, the geometry of divine names"
+  },
+  {
+    "source": "wikimedia_commons",
+    "category": "Category:Ceremonial_magic",
+    "collections": ["visual-art", "hermetic-image"],
+    "resource_type": "drawing",
+    "_note": "The art of ritual magic — Solomonic seals, goetic diagrams, the magician's wand and robe, the triangle of evocation"
+  },
+  {
+    "source": "wikimedia_commons",
+    "category": "Category:Alchemists_in_art",
+    "collections": ["visual-art", "hermetic-image"],
+    "resource_type": "painting",
+    "_note": "The alchemist at his athanor — David Teniers, Thomas Wijck, and the 17th-century tradition of the philosopher's laboratory"
+  },
+  {
+    "source": "wikimedia_commons",
+    "category": "Category:John_Dee",
+    "collections": ["visual-art", "hermetic-image"],
+    "resource_type": "painting",
+    "_note": "Elizabeth I's magus — portraits, the obsidian scrying mirror, the Enochian tablets: where court science met angelic communication"
+  },
+  {
+    "source": "wikimedia_commons",
+    "category": "Category:Faust_in_art",
+    "collections": ["visual-art", "hermetic-image"],
+    "resource_type": "painting",
+    "_note": "The magician who bargained for infinite knowledge — Rembrandt's Faust at his window, Delacroix's Goethe illustrations, the conjuration scene"
+  },
+  {
+    "source": "wikimedia_commons",
+    "category": "Category:Illustrations_of_Faust",
+    "collections": ["visual-art", "hermetic-image"],
+    "resource_type": "print",
+    "_note": "The Faust tradition in print — from 16th-century chapbook woodcuts through Delacroix, Moreau, and Art Nouveau"
+  },
+  {
+    "source": "wikimedia_commons",
+    "category": "Category:Witch_of_Endor",
+    "collections": ["visual-art", "hermetic-image"],
+    "resource_type": "painting",
+    "_note": "Saul consulting the Witch of Endor — Samuel's ghost rising from the earth: the Bible's great scene of necromantic contact with the dead"
+  },
+  {
+    "source": "wikimedia_commons",
+    "category": "Category:Visions_of_Hildegard_of_Bingen",
+    "collections": ["visual-art", "visions-ecstasies"],
+    "resource_type": "painting",
+    "_note": "Hildegard's raptures — she reports seeing not darkness but a 'Living Light' since infancy: her illuminated manuscripts record the experience"
+  },
+  {
+    "source": "wikimedia_commons",
+    "category": "Category:Liber_divinorum_operum_(Hildegard_of_Bingen)",
+    "collections": ["visual-art", "visions-ecstasies"],
+    "resource_type": "painting",
+    "_note": "The Book of Divine Works — Hildegard's third great visionary text, with 14 visions on God's plan for creation and humanity"
+  },
+  {
+    "source": "wikimedia_commons",
+    "category": "Category:Shamanism",
+    "collections": ["visual-art", "mysticism"],
+    "resource_type": "painting",
+    "_note": "The world's oldest form of mystical practice — the shaman's drum, the spirit journey to the upper and lower worlds, the helper spirits"
+  },
+  {
+    "source": "wikimedia_commons",
+    "category": "Category:Tibetan_Buddhist_thangkas",
+    "collections": ["visual-art", "mysticism"],
+    "resource_type": "painting",
+    "_note": "Thangkas as visual meditation aids — mandalas, deity visualisations, guru lineage paintings: the image as path to liberation"
+  },
+  {
+    "source": "wikimedia_commons",
+    "category": "Category:Mandala",
+    "collections": ["visual-art", "mysticism"],
+    "resource_type": "painting",
+    "_note": "The sacred map of the cosmos — Tibetan sand mandalas, Hindu yantra diagrams, medieval rose windows: the mystical circle"
+  },
+  {
+    "source": "wikimedia_commons",
+    "category": "Category:Yantra",
+    "collections": ["visual-art", "mysticism"],
+    "resource_type": "painting",
+    "_note": "Hindu geometric meditation devices — the Sri Yantra's nine interlocking triangles encoding the goddess's creative power"
+  },
+  {
+    "source": "wikimedia_commons",
+    "category": "Category:Apotheosis_in_art",
+    "collections": ["visual-art", "the-cosmos"],
+    "resource_type": "painting",
+    "_note": "Mortals becoming divine — Roman apotheosis reliefs, Baroque ceiling paintings of rulers ascending: the deification motif"
+  },
+  {
+    "source": "wikimedia_commons",
+    "category": "Category:Prophets_in_Christian_art",
+    "collections": ["visual-art", "visions-ecstasies"],
+    "resource_type": "painting",
+    "_note": "The Hebrew prophets as visionaries — Isaiah's coal from the seraph, Jeremiah's lamentations, Elijah's fiery chariot"
+  },
+  {
+    "source": "wikimedia_commons",
+    "category": "Category:Elijah_in_art",
+    "collections": ["visual-art", "visions-ecstasies"],
+    "resource_type": "painting",
+    "_note": "Elijah's rapture in the fiery chariot, his encounter with God in the still small voice on Horeb — the supreme theophany of the Hebrew Bible"
+  },
+  {
+    "source": "wikimedia_commons",
+    "category": "Category:Annunciation_paintings",
+    "collections": ["visual-art", "visions-ecstasies"],
+    "resource_type": "painting",
+    "_note": "The angel Gabriel bringing the divine message — a meditation on the moment when heaven touches earth and a human receives the Word"
+  },
+  {
+    "source": "wikimedia_commons",
+    "category": "Category:Angel_appearing_to_Hagar",
+    "collections": ["visual-art", "visions-ecstasies"],
+    "resource_type": "painting",
+    "_note": "Hagar in the wilderness, dying of thirst — the angel's appearance and the well: one of Scripture's most intimate divine encounters"
+  },
+  {
+    "source": "wikimedia_commons",
+    "category": "Category:Theophanies_in_art",
+    "collections": ["visual-art", "visions-ecstasies"],
+    "resource_type": "painting",
+    "_note": "Divine appearances in art across traditions — the many forms in which the infinite breaks into finite human experience"
+  },
+  {
+    "source": "wikimedia_commons",
+    "category": "Category:Mysticism_in_art",
+    "collections": ["visual-art", "mysticism"],
+    "resource_type": "painting",
+    "_note": "The broad category — paintings whose subject is the mystical experience itself, across Christian, Sufi, and esoteric traditions"
+  },
+  {
+    "source": "wikimedia_commons",
+    "category": "Category:Religious_ecstasy_in_art",
+    "collections": ["visual-art", "visions-ecstasies"],
+    "resource_type": "painting",
+    "_note": "Ecstatic absorption — the body overcome by divine presence: Teresa of Ávila, Philip Neri, Joseph of Cupertino levitating"
+  },
+  {
+    "source": "wikimedia_commons",
+    "category": "Category:Levitation_in_Christian_art",
+    "collections": ["visual-art", "visions-ecstasies"],
+    "resource_type": "painting",
+    "_note": "Saints lifted from the ground by divine grace — Joseph of Cupertino, Teresa of Ávila, Francis of Assisi: the body overcome by rapture"
+  },
+  {
+    "source": "wikimedia_commons",
+    "category": "Category:Neoplatonism_in_art",
+    "collections": ["visual-art", "neoplatonism"],
+    "resource_type": "painting",
+    "_note": "The visual tradition of Platonic philosophy — the One, the Intellect, the Soul: emanation diagrams and philosophical allegories"
+  },
+  {
+    "source": "wikimedia_commons",
+    "category": "Category:Dream_of_Constantine",
+    "collections": ["visual-art", "visions-ecstasies"],
+    "resource_type": "fresco",
+    "_note": "Piero della Francesca's night scene — the emperor asleep in his tent, the angel descending with blazing light: a divine dream vision"
+  },
+  {
+    "source": "wikimedia_commons",
+    "category": "Category:Perseus_in_art",
+    "collections": ["visual-art", "classical-mysteries"],
+    "resource_type": "painting",
+    "_note": "Perseus aided by divine gifts — Athena's mirror, Hermes' sandals: the hero's quest as a form of divine collaboration"
+  },
+  {
+    "source": "wikimedia_commons",
+    "category": "Category:Raphael_paintings",
+    "collections": ["visual-art", "neoplatonism", "ficinos-florence"],
+    "resource_type": "painting",
+    "_note": "Raphael's full oeuvre spans the mystical programme of the High Renaissance — Madonnas, Stanze frescoes, altarpieces of divine encounter"
+  },
+  {
+    "source": "wikimedia_commons",
+    "category": "Category:Glorification_paintings",
+    "collections": ["visual-art", "the-cosmos"],
+    "resource_type": "painting",
+    "_note": "Baroque ceiling paintings of divine glory — figures borne upward into light, clouds parting, the heavenly court receiving souls"
+  },
+  {
+    "source": "met_openaccess",
+    "object_ids": [39547],
+    "collections": ["visual-art", "mysticism"],
+    "resource_type": "sculpture",
+    "_note": "Met: Nataraja, Shiva as Lord of Dance — Chola bronze, 11th century, Tamil Nadu, CC0. The consummate icon of cosmic mystical experience."
+  },
+  {
+    "source": "met_openaccess",
+    "object_ids": [37996],
+    "collections": ["visual-art", "mysticism"],
+    "resource_type": "sculpture",
+    "_note": "Met: Standing Buddha — Gandhara, 2nd-3rd century AD. The figure of enlightenment in stone, CC0."
+  },
+  {
+    "source": "met_openaccess",
+    "object_ids": [547344],
+    "collections": ["visual-art", "visions-ecstasies"],
+    "resource_type": "painting",
+    "_note": "Met: The Annunciation — Jan van Eyck circle, 15th century. The supreme moment of divine-human contact in Flemish painting. CC0."
+  },
+  {
+    "source": "met_openaccess",
+    "object_ids": [436535],
+    "collections": ["visual-art", "visions-ecstasies"],
+    "resource_type": "painting",
+    "_note": "Met: The Vision of Saint John on Patmos — El Greco. The divine vision overwhelming the human receiver. CC0."
+  },
+  {
+    "source": "met_openaccess",
+    "object_ids": [459084],
+    "collections": ["visual-art", "visions-ecstasies"],
+    "resource_type": "painting",
+    "_note": "Met: The Repentant Magdalen — Georges de La Tour. The single candle, the skull, the book — contemplative mystical night. CC0."
+  },
+  {
+    "source": "met_openaccess",
+    "object_ids": [436105],
+    "collections": ["visual-art", "visions-ecstasies"],
+    "resource_type": "painting",
+    "_note": "Met: Self-Portrait with Saint Paul — Rembrandt. The painter as mystic scholar, meditating on conversion. CC0."
+  },
+  {
+    "source": "met_openaccess",
+    "object_ids": [437645],
+    "collections": ["visual-art", "mysticism"],
+    "resource_type": "painting",
+    "_note": "Met: The Philosopher in Meditation — school of Rembrandt. The lone scholar by the window in golden light — the contemplative life. CC0."
+  },
+  {
+    "source": "met_openaccess",
+    "object_ids": [11174],
+    "collections": ["visual-art", "mysticism"],
+    "resource_type": "sculpture",
+    "_note": "Met: Head of the Buddha — Gandhara. Serene post-enlightenment expression in schist, CC0."
+  },
+  {
+    "source": "met_openaccess",
+    "object_ids": [57684],
+    "collections": ["visual-art", "mysticism"],
+    "resource_type": "painting",
+    "_note": "Met: Cosmic Form of Vishnu (Vishvarupa) — Indian painting. The terrifying/sublime cosmic revelation of the Bhagavad Gita. CC0."
+  },
+  {
+    "source": "met_openaccess",
+    "query": "enlightenment buddha meditation",
+    "departments": ["Asian Art"],
+    "collections": ["visual-art", "mysticism"],
+    "resource_type": "sculpture",
+    "_note": "Met CC0 Buddhist meditating figures — Gandhara, Tang dynasty, Southeast Asian bronze Buddhas"
+  },
+  {
+    "source": "met_openaccess",
+    "query": "alchemist laboratory philosopher",
+    "departments": ["European Paintings", "Drawings and Prints"],
+    "date_range": "1600-1800",
+    "collections": ["visual-art", "hermetic-image"],
+    "resource_type": "painting",
+    "_note": "Met CC0 alchemist paintings — the great work in progress, the philosopher's studio, the hermetic laboratory"
+  },
+  {
+    "source": "wikimedia_commons",
+    "category": "Category:Orpheus_in_art",
+    "collections": ["visual-art", "classical-mysteries"],
+    "resource_type": "painting",
+    "_note": "Orpheus — the archetype of the mystic poet whose music moves stones and descends into Hades: foundational to the Orphic mysteries"
+  },
+  {
+    "source": "wikimedia_commons",
+    "category": "Category:Orphic_mysteries",
+    "collections": ["visual-art", "classical-mysteries"],
+    "resource_type": "object",
+    "_note": "The Orphic tradition — gold tablets for the dead, theogonic poems, the mystic who died and returned: Greek spiritual life's esoteric core"
+  },
+  {
+    "source": "wikimedia_commons",
+    "category": "Category:Gnostic_texts",
+    "collections": ["visual-art", "hermetic-image"],
+    "resource_type": "object",
+    "_note": "Gnostic manuscript pages and objects — Nag Hammadi codices, amulets, Sethian and Valentinian visual traditions"
+  },
+  {
+    "source": "wikimedia_commons",
+    "category": "Category:Sophia_(Gnosticism)_in_art",
+    "collections": ["visual-art", "hermetic-image"],
+    "resource_type": "painting",
+    "_note": "Sophia, the divine Wisdom who fell — Gnostic and Kabbalistic depictions of the fallen light longing to return to the Pleroma"
+  },
+  {
+    "source": "wikimedia_commons",
+    "category": "Category:Tree_of_life_(Kabbalah)_in_art",
+    "collections": ["visual-art", "kabbalah"],
+    "resource_type": "drawing",
+    "_note": "The Kabbalistic Sephirothic Tree — the ten emanations of Ein Sof, the map of divine unfolding and the soul's ascent"
+  },
+  {
+    "source": "wikimedia_commons",
+    "category": "Category:Sefirot",
+    "collections": ["visual-art", "kabbalah"],
+    "resource_type": "drawing",
+    "_note": "The ten divine attributes of Kabbalistic thought — diagrams, trees, and illuminated charts of the emanations from the Infinite"
+  },
+  {
+    "source": "wikimedia_commons",
+    "category": "Category:Metatron's_cube",
+    "collections": ["visual-art", "kabbalah"],
+    "resource_type": "drawing",
+    "_note": "Sacred geometry meets angelology — Metatron's cube as a map of divine emanation, containing all five Platonic solids"
+  },
+  {
+    "source": "wikimedia_commons",
+    "category": "Category:Yoga",
+    "collections": ["visual-art", "mysticism"],
+    "resource_type": "painting",
+    "_note": "Indian visual tradition of yogic practice — asana diagrams, chakra maps, the meditating Shiva as Adiyogi"
+  },
+  {
+    "source": "wikimedia_commons",
+    "category": "Category:Chakra_diagrams",
+    "collections": ["visual-art", "mysticism"],
+    "resource_type": "drawing",
+    "_note": "The chakra system — Indian subtle-body diagrams showing the seven energy centres from muladhara to sahasrara"
+  },
+  {
+    "source": "wikimedia_commons",
+    "category": "Category:Kundalini",
+    "collections": ["visual-art", "mysticism"],
+    "resource_type": "drawing",
+    "_note": "The serpent power — diagrams of kundalini rising through the sushumna nadi: the mystical physiology of Hindu awakening"
+  },
+  {
+    "source": "wikimedia_commons",
+    "category": "Category:Aztec_sun_stone",
+    "collections": ["visual-art", "the-cosmos"],
+    "resource_type": "object",
+    "_note": "The Calendar Stone — the Aztec cosmos in stone: four ages of creation, the sun god Tonatiuh at centre, the universe as ritual time"
+  },
+  {
+    "source": "wikimedia_commons",
+    "category": "Category:Palenque_sarcophagus_lid",
+    "collections": ["visual-art", "the-cosmos"],
+    "resource_type": "object",
+    "_note": "The lid of Pakal's tomb — the Maya king falling into the Underworld/rising as the Maize God: the cosmic passage of the royal soul"
+  },
+  {
+    "source": "wikimedia_commons",
+    "category": "Category:Religious_illuminated_manuscripts",
+    "collections": ["visual-art", "visions-ecstasies"],
+    "resource_type": "painting",
+    "_note": "Illuminated devotional manuscripts — Books of Hours, Apocalypse manuscripts, mystical texts with visual programmes"
+  },
+  {
+    "source": "wikimedia_commons",
+    "category": "Category:Apocalypse_illustrations",
+    "collections": ["visual-art", "visions-ecstasies"],
+    "resource_type": "painting",
+    "_note": "The Apocalypse in visual tradition — Beatus manuscripts, Dürer's woodcut series, John's visions of the Lamb, the Rider on the white horse"
+  },
+  {
+    "source": "wikimedia_commons",
+    "category": "Category:Dürer's_Apocalypse",
+    "collections": ["visual-art", "visions-ecstasies"],
+    "resource_type": "print",
+    "_note": "Dürer's 1498 woodcut Apocalypse — the Four Horsemen, the Seven Seals: visionary force that redefined print as a vehicle of the sublime"
+  },
+  {
+    "source": "wikimedia_commons",
+    "category": "Category:Paintings_of_Hermes",
+    "collections": ["visual-art", "hermetic-image", "classical-mysteries"],
+    "resource_type": "painting",
+    "_note": "Hermes as psychopomp and divine messenger — the god who crosses all boundaries, connects worlds, accompanies the soul"
+  },
+  {
+    "source": "wikimedia_commons",
+    "category": "Category:Isis_(deity)_in_art",
+    "collections": ["visual-art", "classical-mysteries"],
+    "resource_type": "painting",
+    "_note": "Isis as supreme mystic goddess — her cult spread through the Roman empire, her mysteries offered personal divine encounter"
+  },
+  {
+    "source": "wikimedia_commons",
+    "category": "Category:Osiris_in_art",
+    "collections": ["visual-art", "classical-mysteries"],
+    "resource_type": "painting",
+    "_note": "Osiris — death, resurrection, and judgement: the Egyptian god whose myth encoded the soul's transformative journey through death"
+  },
+  {
+    "source": "wikimedia_commons",
+    "category": "Category:Sufi_poetry_illustrations",
+    "collections": ["visual-art", "mysticism"],
+    "resource_type": "painting",
+    "_note": "Persian manuscript illustrations for Rumi, Hafiz, Attar — the Reed's lament, the Simurgh, the tavern of divine wine: Sufi mysticism in image"
+  },
+  {
+    "source": "wikimedia_commons",
+    "category": "Category:Conference_of_the_Birds_(Attar)_illustrations",
+    "collections": ["visual-art", "mysticism"],
+    "resource_type": "painting",
+    "_note": "Attar's Mantiq al-Tayr illuminated — the birds journeying to meet the Simurgh, only to find themselves: the supreme Sufi allegory"
+  },
+  {
+    "source": "wikimedia_commons",
+    "category": "Category:William_Blake_paintings",
+    "collections": ["visual-art", "visions-ecstasies"],
+    "resource_type": "painting",
+    "_note": "Blake's visionary mythology — Ancient of Days, Newton as the enemy of imagination, Jerusalem, Los hammering in the furnaces of creation"
+  },
+  {
+    "source": "wikimedia_commons",
+    "category": "Category:William_Blake_illustrations",
+    "collections": ["visual-art", "visions-ecstasies"],
+    "resource_type": "print",
+    "_note": "Blake's illuminated books — Songs of Innocence, The Marriage of Heaven and Hell, Milton, Jerusalem: mystical poetry made visible"
+  },
+  {
+    "source": "wikimedia_commons",
+    "category": "Category:The_Ancient_of_Days_(William_Blake)",
+    "collections": ["visual-art", "visions-ecstasies"],
+    "resource_type": "print",
+    "_note": "Blake's Urizen compassing the void — a demiurge imposing geometric reason on chaos: the image became an icon of the divine architect"
+  },
+  {
+    "source": "wikimedia_commons",
+    "category": "Category:Gustave_Moreau_paintings",
+    "collections": ["visual-art", "visions-ecstasies"],
+    "resource_type": "painting",
+    "_note": "Moreau's jewelled symbolist visions — Salome, Oedipus and the Sphinx, Galatea, Jupiter and Semele: the ancient myths as gates to the numinous"
+  },
+  {
+    "source": "wikimedia_commons",
+    "category": "Category:Jupiter_and_Semele_(Moreau)",
+    "collections": ["visual-art", "visions-ecstasies"],
+    "resource_type": "painting",
+    "_note": "Moreau's masterpiece — Semele consumed by Zeus's divine fire as she demanded to see him in his full glory: the price of direct divine encounter"
+  },
+  {
+    "source": "wikimedia_commons",
+    "category": "Category:Odilon_Redon_paintings",
+    "collections": ["visual-art", "visions-ecstasies"],
+    "resource_type": "painting",
+    "_note": "Redon's visionary Symbolism — floating eyes, Cyclops, Buddha, the solar chariot, the flower spirits: the interior world made luminous"
+  },
+  {
+    "source": "wikimedia_commons",
+    "category": "Category:Franz_von_Stuck_paintings",
+    "collections": ["visual-art", "visions-ecstasies"],
+    "resource_type": "painting",
+    "_note": "Stuck's mythological symbolism — Sin, Lucifer, Salome, the Wild Chase: the numinous-sinister strain of German Symbolism"
+  },
+  {
+    "source": "wikimedia_commons",
+    "category": "Category:Initiation_in_ancient_Greek_religion",
+    "collections": ["visual-art", "classical-mysteries"],
+    "resource_type": "object",
+    "_note": "Mystery initiation in material culture — vases, reliefs, and objects from Eleusis, Samothrace, and Dionysiac rites"
+  }
+]

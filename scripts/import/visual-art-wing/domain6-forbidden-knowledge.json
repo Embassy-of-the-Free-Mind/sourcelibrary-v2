@@ -1,0 +1,230 @@
+[
+  {
+    "source": "wikimedia_commons",
+    "category": "Category:Witches_by_Hans_Baldung",
+    "collections": ["visual-art", "art-of-altdorfer-baldung"],
+    "resource_type": "print"
+  },
+  {
+    "source": "wikimedia_commons",
+    "category": "Category:New_Year's_sheet_with_witches_(Hans_Baldung_Grien)",
+    "collections": ["visual-art", "art-of-altdorfer-baldung"],
+    "resource_type": "print"
+  },
+  {
+    "source": "wikimedia_commons",
+    "category": "Category:Weather_Witches_(Hans_Baldung_Grien)",
+    "collections": ["visual-art", "art-of-altdorfer-baldung"],
+    "resource_type": "print"
+  },
+  {
+    "source": "wikimedia_commons",
+    "category": "Category:The_Witches'_Sabbath_(Hans_Baldung_Grien,_1510)",
+    "collections": ["visual-art", "art-of-altdorfer-baldung", "witches-sabbath"],
+    "resource_type": "print"
+  },
+  {
+    "source": "wikimedia_commons",
+    "category": "Category:Goya,_El_sueño_de_la_razón_produce_monstruos",
+    "collections": ["visual-art", "the-infernal"],
+    "resource_type": "print"
+  },
+  {
+    "source": "wikimedia_commons",
+    "category": "Category:Witchcraft_in_Los_Caprichos",
+    "collections": ["visual-art", "the-infernal"],
+    "resource_type": "print"
+  },
+  {
+    "source": "wikimedia_commons",
+    "category": "Category:Los_Caprichos",
+    "collections": ["visual-art", "the-infernal"],
+    "resource_type": "print"
+  },
+  {
+    "source": "wikimedia_commons",
+    "category": "Category:Witch_trial_illustrations",
+    "collections": ["visual-art", "art-of-altdorfer-baldung"],
+    "resource_type": "print"
+  },
+  {
+    "source": "wikimedia_commons",
+    "category": "Category:Witch_trials_in_art",
+    "collections": ["visual-art", "art-of-altdorfer-baldung"],
+    "resource_type": "print"
+  },
+  {
+    "source": "wikimedia_commons",
+    "category": "Category:Broadsheets_about_witch_trials",
+    "collections": ["visual-art", "art-of-altdorfer-baldung"],
+    "resource_type": "print"
+  },
+  {
+    "source": "wikimedia_commons",
+    "category": "Category:Compendium_Maleficarum_illustrations",
+    "collections": ["visual-art", "witches-sabbath"],
+    "resource_type": "print"
+  },
+  {
+    "source": "wikimedia_commons",
+    "category": "Category:Copernican_heliocentrism",
+    "collections": ["visual-art", "the-cosmos"],
+    "resource_type": "diagram"
+  },
+  {
+    "source": "wikimedia_commons",
+    "category": "Category:De_revolutionibus_orbium_coelestium",
+    "collections": ["visual-art", "the-cosmos"],
+    "resource_type": "diagram"
+  },
+  {
+    "source": "wikimedia_commons",
+    "category": "Category:Diagrams_of_the_solar_system_before_1800",
+    "collections": ["visual-art", "the-cosmos"],
+    "resource_type": "diagram"
+  },
+  {
+    "source": "wikimedia_commons",
+    "category": "Category:Giordano_Bruno",
+    "collections": ["visual-art", "the-cosmos"],
+    "resource_type": "portrait"
+  },
+  {
+    "source": "wikimedia_commons",
+    "category": "Category:Statues_of_Giordano_Bruno",
+    "collections": ["visual-art", "the-cosmos"],
+    "resource_type": "sculpture"
+  },
+  {
+    "source": "wikimedia_commons",
+    "category": "Category:Book_burning",
+    "collections": ["visual-art", "art-of-altdorfer-baldung"],
+    "resource_type": "print"
+  },
+  {
+    "source": "wikimedia_commons",
+    "category": "Category:Book_burning_in_art",
+    "collections": ["visual-art", "art-of-altdorfer-baldung"],
+    "resource_type": "print"
+  },
+  {
+    "source": "wikimedia_commons",
+    "category": "Category:Inquisition_in_art",
+    "collections": ["visual-art", "art-of-altdorfer-baldung"],
+    "resource_type": "print"
+  },
+  {
+    "source": "wikimedia_commons",
+    "category": "Category:Auto-da-fé_in_art",
+    "collections": ["visual-art", "art-of-altdorfer-baldung"],
+    "resource_type": "print"
+  },
+  {
+    "source": "wikimedia_commons",
+    "category": "Category:Goya_and_the_Inquisition_(painting)",
+    "collections": ["visual-art", "the-infernal"],
+    "resource_type": "painting"
+  },
+  {
+    "source": "wikimedia_commons",
+    "category": "Category:Sabbath_in_art",
+    "collections": ["visual-art", "witches-sabbath"],
+    "resource_type": "print"
+  },
+  {
+    "source": "wikimedia_commons",
+    "category": "Category:Witches'_Sabbath_(Goya,_1798)",
+    "collections": ["visual-art", "witches-sabbath"],
+    "resource_type": "painting"
+  },
+  {
+    "source": "wikimedia_commons",
+    "category": "Category:Satan_adored_by_witches_(Goya)",
+    "collections": ["visual-art", "witches-sabbath"],
+    "resource_type": "painting"
+  },
+  {
+    "source": "wikimedia_commons",
+    "category": "Category:Mandragora_officinarum_in_art",
+    "collections": ["visual-art", "natural-philosophy"],
+    "resource_type": "illustration"
+  },
+  {
+    "source": "wikimedia_commons",
+    "category": "Category:Mandrake_in_art",
+    "collections": ["visual-art", "natural-philosophy"],
+    "resource_type": "illustration"
+  },
+  {
+    "source": "wikimedia_commons",
+    "category": "Category:Hortus_sanitatis_illustrations",
+    "collections": ["visual-art", "natural-philosophy"],
+    "resource_type": "illustration"
+  },
+  {
+    "source": "wikimedia_commons",
+    "category": "Category:Poisonous_plants_in_art",
+    "collections": ["visual-art", "natural-philosophy"],
+    "resource_type": "illustration"
+  },
+  {
+    "source": "wikimedia_commons",
+    "category": "Category:Aconitum_in_art",
+    "collections": ["visual-art", "natural-philosophy"],
+    "resource_type": "illustration"
+  },
+  {
+    "source": "wikimedia_commons",
+    "category": "Category:Grimoire_illustrations",
+    "collections": ["visual-art", "hermetic-image"],
+    "resource_type": "illustration"
+  },
+  {
+    "source": "wikimedia_commons",
+    "category": "Category:Magical_circles_in_art",
+    "collections": ["visual-art", "hermetic-image"],
+    "resource_type": "illustration"
+  },
+  {
+    "source": "wikimedia_commons",
+    "category": "Category:Key_of_Solomon_illustrations",
+    "collections": ["visual-art", "hermetic-image"],
+    "resource_type": "illustration"
+  },
+  {
+    "source": "wikimedia_commons",
+    "category": "Category:Sigils",
+    "collections": ["visual-art", "hermetic-image"],
+    "resource_type": "illustration"
+  },
+  {
+    "source": "wikimedia_commons",
+    "category": "Category:Baphomet",
+    "collections": ["visual-art", "hermetic-image"],
+    "resource_type": "print"
+  },
+  {
+    "source": "wikimedia_commons",
+    "category": "Category:De_occulta_philosophia_illustrations",
+    "collections": ["visual-art", "hermetic-image"],
+    "resource_type": "illustration"
+  },
+  {
+    "source": "wikimedia_commons",
+    "category": "Category:Malleus_Maleficarum",
+    "collections": ["visual-art", "witches-sabbath"],
+    "resource_type": "print"
+  },
+  {
+    "source": "wikimedia_commons",
+    "category": "Category:Burning_at_the_stake_in_art",
+    "collections": ["visual-art", "art-of-altdorfer-baldung"],
+    "resource_type": "print"
+  },
+  {
+    "source": "wikimedia_commons",
+    "category": "Category:Torture_instruments_in_art",
+    "collections": ["visual-art", "art-of-altdorfer-baldung"],
+    "resource_type": "print"
+  }
+]
