@@ -1408,13 +1408,18 @@ function BookResultCard({ result, query }: { result: SearchResult; query: string
 }
 
 function SemanticResultCard({ result, query }: { result: any; query: string }) {
+  const cover = getBookThumbnailUrl({ thumbnail: result.thumbnail, thumbnail_blob: result.thumbnail_blob });
   return (
     <div className="bg-white rounded-xl border border-border-light hover:border-accent-rust/30 hover:shadow-md transition-all">
       <Link href={`/book/${result.slug || result.book_id}`} className="block p-4">
         <div className="flex items-start gap-4">
-          <div className="w-[60px] h-[84px] rounded bg-warm flex items-center justify-center flex-shrink-0">
-            <Book className="w-6 h-6 text-border-medium" />
-          </div>
+          {cover ? (
+            <Image src={cover} alt="" width={60} height={84} className="rounded shadow-sm flex-shrink-0 object-cover w-[60px] h-[84px]" />
+          ) : (
+            <div className="w-[60px] h-[84px] rounded bg-warm flex items-center justify-center flex-shrink-0">
+              <Book className="w-6 h-6 text-border-medium" />
+            </div>
+          )}
           <div className="min-w-0 flex-1">
             <h3 className="font-serif text-primary font-medium leading-snug">{result.title}</h3>
             <p className="text-sm text-muted mt-0.5">
