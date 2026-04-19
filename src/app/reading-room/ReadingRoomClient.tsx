@@ -660,17 +660,39 @@ export default function ReadingRoomClient({ featuredPassage }: ReadingRoomClient
                           {/* Response text */}
                           {assistant.content && (
                             <div className="bg-[#f5f0e8] text-[#1a1612] rounded-2xl rounded-bl-sm px-4 py-3">
-                              <div className="prose prose-sm max-w-none font-body text-[15px] leading-relaxed prose-p:mb-4 prose-p:mt-0 prose-h3:text-base prose-h3:font-semibold prose-h3:mt-5 prose-h3:mb-2 prose-h2:text-lg prose-h2:mt-6 prose-h2:mb-3 prose-headings:text-[#1a1612] prose-ul:my-3 prose-ol:my-3 prose-li:my-1 prose-a:text-[#9e4a3a] prose-a:underline prose-a:underline-offset-2 prose-a:decoration-[#9e4a3a]/30 hover:prose-a:decoration-[#9e4a3a] prose-blockquote:border-l-[#c9a86c] prose-blockquote:text-[#444] prose-blockquote:my-4 prose-blockquote:italic prose-strong:text-[#1a1612] prose-hr:my-4 prose-img:rounded-lg prose-img:shadow-md prose-img:my-4 prose-img:max-h-[300px] prose-img:w-auto">
+                              <div className="max-w-none font-body text-[15px] leading-relaxed text-[#1a1612]">
                                 <ReactMarkdown
                                   remarkPlugins={[remarkGfm]}
                                   components={{
+                                    p: ({ children }) => (
+                                      <p className="mb-4 mt-0">{children}</p>
+                                    ),
+                                    h2: ({ children }) => (
+                                      <h2 className="text-xl font-serif mt-6 mb-3 text-[#1a1612]" style={{ fontWeight: 400 }}>{children}</h2>
+                                    ),
+                                    h3: ({ children }) => (
+                                      <h3 className="text-lg font-serif mt-5 mb-2 text-[#1a1612]" style={{ fontWeight: 400 }}>{children}</h3>
+                                    ),
                                     a: ({ href, children }) => (
                                       <a href={href} target="_blank" rel="noopener noreferrer" className="text-[#9e4a3a] underline underline-offset-2 decoration-[#9e4a3a]/30 hover:decoration-[#9e4a3a]">{children}</a>
                                     ),
+                                    blockquote: ({ children }) => (
+                                      <blockquote className="border-l-2 border-[#c9a86c] pl-4 my-4 italic text-[#444]">{children}</blockquote>
+                                    ),
+                                    ul: ({ children }) => (
+                                      <ul className="my-3 ml-4 list-disc">{children}</ul>
+                                    ),
+                                    ol: ({ children }) => (
+                                      <ol className="my-3 ml-4 list-decimal">{children}</ol>
+                                    ),
+                                    li: ({ children }) => (
+                                      <li className="my-1">{children}</li>
+                                    ),
+                                    hr: () => <hr className="my-4 border-[#e8e4dc]" />,
                                     img: ({ src, alt }) => (
                                       <a href={src as string} target="_blank" rel="noopener noreferrer">
                                         {/* eslint-disable-next-line @next/next/no-img-element */}
-                                        <img src={src as string} alt={(alt as string) || ''} className="rounded-lg shadow-md max-h-[300px] w-auto cursor-pointer hover:shadow-lg transition-shadow" loading="lazy" />
+                                        <img src={src as string} alt={(alt as string) || ''} className="rounded-lg shadow-md max-h-[300px] w-auto cursor-pointer hover:shadow-lg transition-shadow my-4" loading="lazy" />
                                       </a>
                                     ),
                                   }}
