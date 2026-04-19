@@ -505,14 +505,14 @@ export default function Timeline({ entities, stats }: TimelineProps) {
       >
         {/* Back nav */}
         <Link
-          href="/explore"
+          href="/timeline"
           className="flex items-center gap-1 text-xs hover:opacity-70 transition-opacity mr-1"
           style={{ color: 'var(--text-muted)' }}
         >
           <svg className="w-3.5 h-3.5" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={2}>
             <path strokeLinecap="round" strokeLinejoin="round" d="M15 19l-7-7 7-7" />
           </svg>
-          Explore
+          Timeline
         </Link>
 
         <span className="w-px h-5" style={{ background: 'var(--border-light)' }} />
@@ -584,7 +584,7 @@ export default function Timeline({ entities, stats }: TimelineProps) {
           {viewStart}–{viewEnd}
         </span>
 
-        <div className="ml-auto flex gap-1">
+        <div className="ml-auto flex gap-1 flex-wrap">
           <button
             onClick={() => {
               const span = viewEnd - viewStart;
@@ -592,7 +592,7 @@ export default function Timeline({ entities, stats }: TimelineProps) {
               setViewStart((s) => s - shift);
               setViewEnd((s) => s - shift);
             }}
-            className="px-1.5 py-0.5 rounded text-xs font-mono"
+            className="px-2 py-1 rounded text-xs font-mono"
             style={{ border: '1px solid var(--border-light)', color: 'var(--text-muted)' }}
             title="Pan left"
           >
@@ -605,14 +605,14 @@ export default function Timeline({ entities, stats }: TimelineProps) {
               setViewStart((s) => s + shift);
               setViewEnd((s) => s + shift);
             }}
-            className="px-1.5 py-0.5 rounded text-xs font-mono"
+            className="px-2 py-1 rounded text-xs font-mono"
             style={{ border: '1px solid var(--border-light)', color: 'var(--text-muted)' }}
             title="Pan right"
           >
             &rarr;
           </button>
 
-          <span className="w-px h-5 mx-0.5" style={{ background: 'var(--border-light)' }} />
+          <span className="w-px h-5 mx-0.5 hidden sm:block" style={{ background: 'var(--border-light)' }} />
 
           <button
             onClick={() => {
@@ -621,7 +621,7 @@ export default function Timeline({ entities, stats }: TimelineProps) {
               setViewStart(Math.round(mid - span / 2));
               setViewEnd(Math.round(mid + span / 2));
             }}
-            className="px-1.5 py-0.5 rounded text-xs font-mono"
+            className="px-2 py-1 rounded text-xs font-mono"
             style={{ border: '1px solid var(--border-light)', color: 'var(--text-muted)' }}
             title="Zoom in"
           >
@@ -634,25 +634,25 @@ export default function Timeline({ entities, stats }: TimelineProps) {
               setViewStart(Math.round(mid - span / 2));
               setViewEnd(Math.round(mid + span / 2));
             }}
-            className="px-1.5 py-0.5 rounded text-xs font-mono"
+            className="px-2 py-1 rounded text-xs font-mono"
             style={{ border: '1px solid var(--border-light)', color: 'var(--text-muted)' }}
             title="Zoom out"
           >
             &minus;
           </button>
 
-          <span className="w-px h-5 mx-0.5" style={{ background: 'var(--border-light)' }} />
+          <span className="w-px h-5 mx-0.5 hidden sm:block" style={{ background: 'var(--border-light)' }} />
 
           <button
             onClick={() => { setViewStart(-500); setViewEnd(200); }}
-            className="px-2 py-0.5 rounded text-xs"
+            className="hidden sm:inline-block px-2 py-1 rounded text-xs"
             style={{ border: '1px solid var(--border-light)', color: 'var(--text-muted)' }}
           >
             Antiquity
           </button>
           <button
             onClick={() => { setViewStart(1350); setViewEnd(1750); }}
-            className="px-2 py-0.5 rounded text-xs"
+            className="hidden sm:inline-block px-2 py-1 rounded text-xs"
             style={{ border: '1px solid var(--border-light)', color: 'var(--text-muted)' }}
           >
             Renaissance
@@ -663,7 +663,7 @@ export default function Timeline({ entities, stats }: TimelineProps) {
               setViewStart(lo - 50);
               setViewEnd(hi + 50);
             }}
-            className="px-2 py-0.5 rounded text-xs"
+            className="px-2 py-1 rounded text-xs"
             style={{ border: '1px solid var(--border-light)', color: 'var(--text-muted)' }}
           >
             All
