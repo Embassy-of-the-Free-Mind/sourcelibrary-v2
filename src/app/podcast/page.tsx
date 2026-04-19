@@ -10,6 +10,11 @@ export const metadata = {
   description: 'AI-generated scholarly podcasts exploring rare books from the 15th-18th centuries. Alchemy, Hermetica, Kabbalah, and the Western esoteric tradition — grounded in primary sources.',
 };
 
+interface BookThumb {
+  id: string;
+  thumbnail: string | null;
+}
+
 interface PodcastEpisode {
   threadId: string;
   title: string;
@@ -20,6 +25,7 @@ interface PodcastEpisode {
   findingCount: number;
   generatedAt: string;
   bookIds: string[];
+  bookThumbs: BookThumb[];
 }
 
 async function getEpisodes(): Promise<PodcastEpisode[]> {
@@ -56,6 +62,7 @@ async function getEpisodes(): Promise<PodcastEpisode[]> {
             findingCount: p.findingCount || 0,
             generatedAt: p.generatedAt,
             bookIds: [],
+            bookThumbs: [],
           });
         }
       }
@@ -71,6 +78,7 @@ async function getEpisodes(): Promise<PodcastEpisode[]> {
           findingCount: thread.podcast.findingCount || 0,
           generatedAt: thread.podcast.generatedAt,
           bookIds: [],
+          bookThumbs: [],
         });
       }
     }
@@ -89,6 +97,25 @@ async function getEpisodes(): Promise<PodcastEpisode[]> {
 
     for (const ep of episodes) {
       ep.bookIds = (notebookMap.get(ep.threadId) || []) as string[];
+    }
+
+    // Load actual thumbnail URLs for referenced books
+    const allBookIds = [...new Set(episodes.flatMap(e => e.bookIds))];
+    if (allBookIds.length > 0) {
+      const bookDocs = await db.collection('books')
+        .find({ id: { $in: allBookIds } })
+        .project({ id: 1, thumbnail: 1, thumbnail_blob: 1 })
+        .toArray();
+      const thumbMap = new Map(bookDocs.map(b => [
+        b.id,
+        (b.thumbnail_blob || b.thumbnail || null) as string | null,
+      ]));
+      for (const ep of episodes) {
+        ep.bookThumbs = ep.bookIds.map(bid => ({
+          id: bid,
+          thumbnail: thumbMap.get(bid) || null,
+        }));
+      }
     }
 
     return episodes.sort((a, b) =>
@@ -162,20 +189,20 @@ export default async function PodcastPage() {
                 className="p-5 bg-white rounded-xl border border-[#e8e4dc] hover:border-[#c9a86c] transition-colors"
               >
                 {/* Book cover thumbnails */}
-                {ep.bookIds.length > 0 && (
+                {ep.bookThumbs.filter(b => b.thumbnail).length > 0 && (
                   <div className="flex gap-1.5 mb-3 overflow-hidden">
-                    {ep.bookIds.slice(0, 5).map(bid => (
+                    {ep.bookThumbs.filter(b => b.thumbnail).slice(0, 5).map(b => (
                       // eslint-disable-next-line @next/next/no-img-element
                       <img
-                        key={bid}
-                        src={`https://sourcelibrary.org/api/image?url=https://images.sourcelibrary.org/covers/${bid}.jpg&w=60&q=75`}
+                        key={b.id}
+                        src={`/api/image?url=${encodeURIComponent(b.thumbnail!)}&w=60&q=75`}
                         alt=""
                         className="w-8 h-12 object-cover rounded flex-shrink-0 bg-[#f0ece4]"
                         loading="lazy"
                       />
                     ))}
-                    {ep.bookIds.length > 5 && (
-                      <span className="text-[10px] text-[#8a8480] font-sans self-end mb-1">+{ep.bookIds.length - 5}</span>
+                    {ep.bookThumbs.filter(b => b.thumbnail).length > 5 && (
+                      <span className="text-[10px] text-[#8a8480] font-sans self-end mb-1">+{ep.bookThumbs.filter(b => b.thumbnail).length - 5}</span>
                     )}
                   </div>
                 )}
