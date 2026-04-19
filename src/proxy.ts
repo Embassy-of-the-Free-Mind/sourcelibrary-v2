@@ -256,11 +256,23 @@ export function proxy(request: NextRequest) {
   requestHeaders.set('x-site-mode', isSociety ? 'society' : 'library');
 
   // Pass the modified headers to the request
-  return NextResponse.next({
+  const response = NextResponse.next({
     request: {
       headers: requestHeaders,
     },
   });
+
+  // Prevent Cloudflare from caching RSC flight data as HTML.
+  // CF Free plan ignores the Vary header (except Accept-Encoding), so RSC
+  // responses (text/x-component) get cached and served to browsers expecting
+  // HTML, showing raw React flight data instead of the page.
+  // CDN-Cache-Control is respected by CF but stripped before reaching the browser.
+  const isRsc = request.headers.get('rsc') === '1';
+  if (isRsc) {
+    response.headers.set('CDN-Cache-Control', 'no-store');
+  }
+
+  return response;
 }
 
 export const config = {
