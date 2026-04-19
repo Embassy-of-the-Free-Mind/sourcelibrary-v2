@@ -832,6 +832,11 @@ export default function TranslationEditor({
                 <h1 className="text-sm sm:text-base font-medium truncate" style={{ color: 'var(--text-primary)' }}>
                   {book.display_title || book.title}
                 </h1>
+                {(book.author || book.published) && (
+                  <p className="text-xs truncate" style={{ color: 'var(--text-muted)' }}>
+                    {book.author}{book.author && book.published ? ' · ' : ''}{book.published}
+                  </p>
+                )}
               </a>
             </div>
 
@@ -1551,6 +1556,11 @@ export default function TranslationEditor({
               <h1 className="text-base sm:text-xl font-medium truncate" style={{ color: 'var(--text-primary)' }}>
                 {book.display_title || book.title}
               </h1>
+              {(book.author || book.published) && (
+                <p className="text-xs truncate" style={{ color: 'var(--text-muted)' }}>
+                  {book.author}{book.author && book.published ? ' · ' : ''}{book.published}
+                </p>
+              )}
             </a>
           </div>
 
