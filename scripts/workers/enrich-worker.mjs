@@ -182,6 +182,23 @@ function composeBookEmbeddingText(book, indexData) {
 
   if (book.categories?.length > 0) parts.push(`Categories: ${book.categories.join(', ')}`);
 
+  // Artwork-specific metadata
+  if (book.content_type === 'artwork') {
+    if (book.commons_description) parts.push(book.commons_description.slice(0, 500));
+    if (book.commons_categories) {
+      const cats = typeof book.commons_categories === 'string'
+        ? book.commons_categories.split('|').map(c => c.trim()).filter(Boolean).slice(0, 20)
+        : Array.isArray(book.commons_categories) ? book.commons_categories.slice(0, 20) : [];
+      if (cats.length > 0) parts.push(`Subjects: ${cats.join(', ')}`);
+    }
+    if (book.resource_type) parts.push(`Medium: ${book.resource_type}`);
+    if (book.medium) parts.push(`Material: ${book.medium}`);
+    if (book.collections?.length > 0) {
+      const collNames = book.collections.filter(c => c !== 'visual-art').map(c => c.replace(/-/g, ' '));
+      if (collNames.length > 0) parts.push(`Collections: ${collNames.join(', ')}`);
+    }
+  }
+
   return parts.join('\n').slice(0, 8000);
 }
 
