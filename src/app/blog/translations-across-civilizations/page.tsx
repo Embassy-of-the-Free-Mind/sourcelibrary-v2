@@ -64,6 +64,23 @@ export default function TranslationsAcrossCivilizationsPage() {
 
       <article className="prose-content max-w-none">
         <p className="text-xl text-secondary leading-relaxed mb-8 font-body">
+          Something new is possible now that has never been possible before.
+          Source Library holds thousands of pre-modern texts in their original
+          languages &mdash; Greek, Latin, Sanskrit, Arabic, Chinese &mdash;
+          alongside AI translations generated directly from those originals.
+          For hundreds of these works, we also hold historical human
+          translations: the versions that shaped civilizations. Place them
+          side by side, and you can see something no single translation
+          reveals: what each translator <em>chose</em> to hear in the
+          original.
+        </p>
+
+        <p className="text-secondary leading-relaxed mb-8 font-body">
+          This is the first in a series of experiments with that
+          three-way comparison. We start with the <em>Corpus Hermeticum</em>.
+        </p>
+
+        <p className="text-secondary leading-relaxed mb-8 font-body">
           In 1463, a Greek manuscript arrived at the court of Cosimo
           de&rsquo; Medici in Florence. Cosimo ordered his best scholar,
           Marsilio Ficino, to drop everything &mdash; including Plato &mdash;
@@ -303,7 +320,7 @@ export default function TranslationsAcrossCivilizationsPage() {
             single translation can capture.
           </p>
 
-          <p className="text-secondary leading-relaxed mb-8 font-body">
+          <p className="text-secondary leading-relaxed mb-6 font-body">
             Source Library holds{' '}
             <Link
               href="/work/corpus-hermeticum"
@@ -315,6 +332,46 @@ export default function TranslationsAcrossCivilizationsPage() {
             OCR&rsquo;d, translated, and searchable. This is what a digital
             library makes possible: not just access to texts, but access to
             the history of reading them.
+          </p>
+
+          <h3 className="text-xl text-primary mt-10 mb-4">
+            Try it yourself
+          </h3>
+
+          <p className="text-secondary leading-relaxed mb-6 font-body">
+            The Corpus Hermeticum is just the beginning. Source Library holds
+            multi-edition, multi-language data for Plotinus, the Bible,
+            Aristotle, the Panchatantra, Shakuntala, and hundreds of other
+            works. Any work with a{' '}
+            <Link
+              href="/work/corpus-hermeticum/compare"
+              className="text-amber-700 hover:underline"
+            >
+              Compare translations
+            </Link>{' '}
+            button can be explored this way.
+          </p>
+
+          <p className="text-secondary leading-relaxed mb-6 font-body">
+            Pick a work you know. Find two editions in different languages.
+            Open them side by side and read the same passage through different
+            centuries, different cultures, different agendas. You will notice
+            things that no single translation could show you &mdash; because
+            every translation is a theory about what the original means, and
+            theories are most visible when you can compare them.
+          </p>
+
+          <p className="text-secondary leading-relaxed mb-8 font-body">
+            If you find a comparison that reveals something surprising,{' '}
+            <Link
+              href="https://x.com/SourceLibrary_"
+              className="text-amber-700 hover:underline"
+              target="_blank"
+              rel="noopener"
+            >
+              we&rsquo;d love to hear about it
+            </Link>
+            .
           </p>
         </div>
 
