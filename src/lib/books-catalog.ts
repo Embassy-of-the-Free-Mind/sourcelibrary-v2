@@ -331,17 +331,11 @@ export async function searchBookIds(
     const displayAnds = words.map(w => `display_title.ilike.%${w}%`).join(',');
     orFilter += `,and(${titleAnds}),and(${displayAnds})`;
 
-    // Cross-field AND: each content word must appear in SOME searchable field
-    // Catches queries like "sanskrit alchemy" where "sanskrit" matches language
-    // and "alchemy" matches title. Stopwords filtered to avoid broad scans.
-    if (contentWords.length >= 2) {
-      const crossFieldAnd = contentWords.map(w =>
-        `or(title.ilike.%${w}%,display_title.ilike.%${w}%,author.ilike.%${w}%,language.ilike.%${w}%)`
-      ).join(',');
-      orFilter += `,and(${crossFieldAnd})`;
-    }
+    // Cross-field AND removed — language.ilike causes 70s full-table scans.
+    // Semantic search covers cross-field conceptual matches (e.g. "sanskrit alchemy").
   } else {
     // Single word: also match against language (e.g. "Sanskrit", "Arabic")
+    // This is fast since it's a single ilike on an indexed field
     orFilter += `,language.ilike.%${text}%`;
   }
 
