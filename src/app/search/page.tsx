@@ -167,6 +167,14 @@ export default function SearchPage() {
     }).catch(() => {});
   }, []);
 
+  // Track current narration/terms in refs so startAiStream doesn't need them as deps
+  const aiNarrationRef = useRef(aiNarration);
+  const aiTermsRef = useRef(aiTerms);
+  const queryRef = useRef(query);
+  aiNarrationRef.current = aiNarration;
+  aiTermsRef.current = aiTerms;
+  queryRef.current = query;
+
   // AI-assisted search — start streaming immediately when user searches
   // append=true means this is a pill click — keep existing narration and add below
   const startAiStream = useCallback((q: string, append = false) => {
@@ -181,9 +189,12 @@ export default function SearchPage() {
       setAiNarrationHistory([]);
     } else {
       // Pill click — save current narration to history before streaming new one
+      const curNarration = aiNarrationRef.current;
+      const curTerms = aiTermsRef.current;
+      const curQuery = queryRef.current;
       setAiNarrationHistory(prev => [
         ...prev,
-        ...(aiNarration ? [{ query: query, text: aiNarration, terms: aiTerms }] : []),
+        ...(curNarration ? [{ query: curQuery, text: curNarration, terms: curTerms }] : []),
       ]);
       setAiNarration('');
       setAiTerms([]);
@@ -229,7 +240,7 @@ export default function SearchPage() {
     );
     aiAbortRef.current = abort;
   // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [bookResults, aiNarration, aiTerms, query]);
+  }, [bookResults]);
 
   const performSearch = useCallback(async (q: string, mode: ViewMode = viewMode, pageOffset = 0) => {
     if (!q || q.length < 2) {
