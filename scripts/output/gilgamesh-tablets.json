@@ -1,0 +1,294 @@
+[
+  {
+    "tablet": 1,
+    "title": "Tablet I: \"He who saw the Deep\"",
+    "summary": "Introduction to Gilgamesh, king of Uruk. Creation of Enkidu. The wild man and the trapper.",
+    "witnesses": [
+      {
+        "museumNo": "K.3375+",
+        "pNumber": "P273210",
+        "note": "Also contains Tablet XI (Flood). Principal MS for both.",
+        "cdliUrl": "https://cdli.earth/artifacts/273210",
+        "photoUrl": "https://cdli.earth/dl/photo/P273210.jpg",
+        "lineartUrl": "https://cdli.earth/dl/lineart/P273210_l.jpg",
+        "detailPhotoUrl": "https://cdli.earth/dl/photo/P273210_d.jpg",
+        "eblUrl": "https://www.ebl.lmu.de/fragmentarium/K.3375",
+        "atf": "",
+        "description": "Fragment of a clay tablet, upper right corner, 2 columns of inscription on either side, 49 and 51 lines + 45 and 49 lines. Neo-Assyrian. Epic of Gilgamesh, tablet 11, story of the Flood.",
+        "hasAtf": false
+      },
+      {
+        "museumNo": "K.8587",
+        "pNumber": "P396024",
+        "note": "Fragment, opening lines",
+        "cdliUrl": "https://cdli.earth/artifacts/396024",
+        "photoUrl": "https://cdli.earth/dl/photo/P396024.jpg",
+        "lineartUrl": "https://cdli.earth/dl/lineart/P396024_l.jpg",
+        "detailPhotoUrl": "https://cdli.earth/dl/photo/P396024_d.jpg",
+        "eblUrl": "https://www.ebl.lmu.de/fragmentarium/K.8587",
+        "atf": "",
+        "description": "Fragment of a clay tablet, 9 lines of inscription. Neo-Assyrian.Left-hand corner. Fragment of a mythological legend belonging to a tablet of the series. Epic of Gilgamesh, tablet 8.",
+        "hasAtf": false
+      }
+    ]
+  },
+  {
+    "tablet": 2,
+    "title": "Tablet II: Enkidu comes to Uruk",
+    "summary": "Enkidu is civilized. He challenges Gilgamesh. They become friends.",
+    "witnesses": [
+      {
+        "museumNo": "K.8590",
+        "pNumber": "P396027",
+        "note": "Neo-Assyrian, main witness",
+        "cdliUrl": "https://cdli.earth/artifacts/396027",
+        "photoUrl": "https://cdli.earth/dl/photo/P396027.jpg",
+        "lineartUrl": "https://cdli.earth/dl/lineart/P396027_l.jpg",
+        "detailPhotoUrl": "https://cdli.earth/dl/photo/P396027_d.jpg",
+        "eblUrl": "https://www.ebl.lmu.de/fragmentarium/K.8590",
+        "atf": "",
+        "description": "Fragment of a clay tablet, 24 + 24 lines of inscription. Neo-Assyrian. Upper portion, right half. Epic of Gilgamesh, tablet 7.",
+        "hasAtf": false
+      },
+      {
+        "museumNo": "Ni.2456",
+        "pNumber": "P273176",
+        "note": "Old Babylonian (Nippur)",
+        "cdliUrl": "https://cdli.earth/artifacts/273176",
+        "photoUrl": null,
+        "lineartUrl": "https://cdli.earth/dl/lineart/P273176_l.jpg",
+        "detailPhotoUrl": "https://cdli.earth/dl/photo/P273176_d.jpg",
+        "eblUrl": "https://www.ebl.lmu.de/fragmentarium/Ni.2456",
+        "atf": "",
+        "description": "Old Babylonian (Nippur)",
+        "hasAtf": false
+      }
+    ]
+  },
+  {
+    "tablet": 3,
+    "title": "Tablet III: The elders' counsel",
+    "summary": "The elders advise Gilgamesh. Ninsun prays to Shamash. Preparation for the Cedar Forest.",
+    "witnesses": [
+      {
+        "museumNo": "K.8591",
+        "pNumber": "P396028",
+        "note": "Main Nineveh witness",
+        "cdliUrl": "https://cdli.earth/artifacts/396028",
+        "photoUrl": "https://cdli.earth/dl/photo/P396028.jpg",
+        "lineartUrl": "https://cdli.earth/dl/lineart/P396028_l.jpg",
+        "detailPhotoUrl": "https://cdli.earth/dl/photo/P396028_d.jpg",
+        "eblUrl": "https://www.ebl.lmu.de/fragmentarium/K.8591",
+        "atf": "",
+        "description": "Fragment of a clay tablet, 21 lines of inscription. Neo-Assyrian.Lower portion, left half. Probably a continuation of K. 3252. Epic of Gilgamesh, tablet 4.",
+        "hasAtf": false
+      }
+    ]
+  },
+  {
+    "tablet": 4,
+    "title": "Tablet IV: Journey to the Cedar Forest",
+    "summary": "Five dream sequences on the journey. Gilgamesh and Enkidu approach Humbaba.",
+    "witnesses": [
+      {
+        "museumNo": "K.8588",
+        "pNumber": "P396025",
+        "note": "Fragments of dream sequences",
+        "cdliUrl": "https://cdli.earth/artifacts/396025",
+        "photoUrl": "https://cdli.earth/dl/photo/P396025.jpg",
+        "lineartUrl": "https://cdli.earth/dl/lineart/P396025_l.jpg",
+        "detailPhotoUrl": "https://cdli.earth/dl/photo/P396025_d.jpg",
+        "eblUrl": "https://www.ebl.lmu.de/fragmentarium/K.8588",
+        "atf": "",
+        "description": "Fragment of a clay tablet, 20 lines of inscription. Neo-Assyrian.",
+        "hasAtf": false
+      }
+    ]
+  },
+  {
+    "tablet": 5,
+    "title": "Tablet V: Battle with Humbaba",
+    "summary": "They enter the Cedar Forest. Defeat of Humbaba with Shamash's help.",
+    "witnesses": [
+      {
+        "museumNo": "K.8589",
+        "pNumber": "P396026",
+        "note": "Forest description",
+        "cdliUrl": "https://cdli.earth/artifacts/396026",
+        "photoUrl": "https://cdli.earth/dl/photo/P396026.jpg",
+        "lineartUrl": "https://cdli.earth/dl/lineart/P396026_l.jpg",
+        "detailPhotoUrl": "https://cdli.earth/dl/photo/P396026_d.jpg",
+        "eblUrl": "https://www.ebl.lmu.de/fragmentarium/K.8589",
+        "atf": "",
+        "description": "Fragment of a clay tablet, 22 + 18 lines of inscription. Neo-Assyrian. Upper portion, left half. Colophon. Epic of Gilgamesh, tablet 10.",
+        "hasAtf": false
+      },
+      {
+        "museumNo": "MS 3263",
+        "pNumber": "P461375",
+        "note": "Recently published, fills major gaps",
+        "cdliUrl": "https://cdli.earth/artifacts/461375",
+        "photoUrl": "https://cdli.earth/dl/photo/P461375.jpg",
+        "lineartUrl": "https://cdli.earth/dl/lineart/P461375_l.jpg",
+        "detailPhotoUrl": "https://cdli.earth/dl/photo/P461375_d.jpg",
+        "eblUrl": "https://www.ebl.lmu.de/fragmentarium/MS 3263",
+        "atf": "",
+        "description": "Recently published, fills major gaps",
+        "hasAtf": false
+      }
+    ]
+  },
+  {
+    "tablet": 6,
+    "title": "Tablet VI: Ishtar's proposal",
+    "summary": "Ishtar proposes to Gilgamesh. He refuses. The Bull of Heaven.",
+    "witnesses": [
+      {
+        "museumNo": "K.3382",
+        "pNumber": "P394425",
+        "note": "Well-preserved Nineveh tablet",
+        "cdliUrl": "https://cdli.earth/artifacts/394425",
+        "photoUrl": "https://cdli.earth/dl/photo/P394425.jpg",
+        "lineartUrl": "https://cdli.earth/dl/lineart/P394425_l.jpg",
+        "detailPhotoUrl": "https://cdli.earth/dl/photo/P394425_d.jpg",
+        "eblUrl": "https://www.ebl.lmu.de/fragmentarium/K.3382",
+        "atf": "",
+        "description": "Fragment of a clay tablet, 18 + 24 + 17 + 21 lines of inscription. Neo-Assyrian. Epic of Gilgamesh, tablet 10.",
+        "hasAtf": false
+      }
+    ]
+  },
+  {
+    "tablet": 7,
+    "title": "Tablet VII: Death of Enkidu",
+    "summary": "The gods decree Enkidu must die. His deathbed vision of the underworld.",
+    "witnesses": [
+      {
+        "museumNo": "K.3382",
+        "pNumber": "P394425",
+        "note": "Continuation from Tablet VI on same physical tablet",
+        "cdliUrl": "https://cdli.earth/artifacts/394425",
+        "photoUrl": "https://cdli.earth/dl/photo/P394425.jpg",
+        "lineartUrl": "https://cdli.earth/dl/lineart/P394425_l.jpg",
+        "detailPhotoUrl": "https://cdli.earth/dl/photo/P394425_d.jpg",
+        "eblUrl": "https://www.ebl.lmu.de/fragmentarium/K.3382",
+        "atf": "",
+        "description": "Fragment of a clay tablet, 18 + 24 + 17 + 21 lines of inscription. Neo-Assyrian. Epic of Gilgamesh, tablet 10.",
+        "hasAtf": false
+      }
+    ]
+  },
+  {
+    "tablet": 8,
+    "title": "Tablet VIII: Gilgamesh mourns Enkidu",
+    "summary": "Lament for Enkidu. Gilgamesh commissions a statue. The funeral.",
+    "witnesses": [
+      {
+        "museumNo": "K.2635",
+        "pNumber": "P394093",
+        "note": "Funeral preparations",
+        "cdliUrl": "https://cdli.earth/artifacts/394093",
+        "photoUrl": "https://cdli.earth/dl/photo/P394093.jpg",
+        "lineartUrl": "https://cdli.earth/dl/lineart/P394093_l.jpg",
+        "detailPhotoUrl": "https://cdli.earth/dl/photo/P394093_d.jpg",
+        "eblUrl": "https://www.ebl.lmu.de/fragmentarium/K.2635",
+        "atf": "@obverse\n1'. [...] {d?#}nin#-[x]\n2'. [...]-ti#-ia# ul mu u ŠU ZAG#-šu?#\n3'. [... m]a/l]a-a-ta iš-pa-a-ti\n4'. [...] MUL.MUL lu-uš-še-e-lu\n5'. [... IBILA?] e₂#-šar₂-ra SUKKAL DINGIR-MEŠ {d}NUSKA\n6'. [... DU]NGU ri-ih-ṣi e-li-šu₂ iš-kun\n7'. [... i]r-hi-iṣ ERIN₂-HI.A-šu₂\n8'. [... d]a/l]i-si ki-ma kar-pat pa-ha-ri pu-hur-šu ah-pi\n9'. [...] u₂#-par-ri-ir ERIN₂-HI.A-šu₂\n$ end of side\n\n@reverse\n1. [... DINGIR-ME]Š tik-li-ia\n2. [...] (x) la?#/nin?# hu-ru-gu\n3. [... d]a/l]i/i]š u₂-še-šib\n4. [...] x am-nu\n5. [... pa-(a)-ni m]ah-ru-ti\n6. [...] x am-nu\n7. [...] {d#}U#.GUR {d}NUSKA\n8. [... a?-bu?-ba?-niš? a]s?-pu-un\n9. [...] KUR-su\n10. [...] x",
+        "description": "Right hand corner of a clay tablet. Historical inscription. Neo-Assyrian.",
+        "hasAtf": true
+      }
+    ]
+  },
+  {
+    "tablet": 9,
+    "title": "Tablet IX: The quest for immortality",
+    "summary": "Gilgamesh seeks Utnapishtim. Journey through the mountains. The scorpion-people.",
+    "witnesses": [
+      {
+        "museumNo": "K.3514",
+        "pNumber": "P394444",
+        "note": "Scorpion-people passage",
+        "cdliUrl": "https://cdli.earth/artifacts/394444",
+        "photoUrl": "https://cdli.earth/dl/photo/P394444.jpg",
+        "lineartUrl": "https://cdli.earth/dl/lineart/P394444_l.jpg",
+        "detailPhotoUrl": "https://cdli.earth/dl/photo/P394444_d.jpg",
+        "eblUrl": "https://www.ebl.lmu.de/fragmentarium/K.3514",
+        "atf": "@obverse?\n1. [x x x x x] x [...]\n2. [x x x x] u₂?# ŠA₃#/U₄# x [...]\n3. [x x x] x-an-ni# [...]\n4. [(x) at?/ta?-ta?/na?]-ad-di-ma [...]\n5. [x x x] a-ta-kal [...]\n6. [x x] x-bi a[l?#/ši[t?#-t]a?#-ti [...]\n7. [x] x an?# [(x)] x [(x)] x ku?# [...]\n8. x [...]\n9. x [...]\n10. [x x x x x] x šid#/lu₂?# x (x) [...]\n11. i[na? x x x x] an mu [...]\n12. ina [x x x x x x] x [...]\n13. ina u₄?# [x x (x)] an me? [(x)] liš?#/ud?# [...]\n14. a-na x [(x)] x k[i?] x k[a?/U[RU? ...]\n15. i₃-l[i₂ x x] x [(x)] ri# [...]\n16. x [x x x] x x x x [...]\n\n@reverse?\n1'. [x x x x x] su#/lu# [...]\n2'. l[a/t[u/l[i? x x (x) l]i?-su-x [...]\n3'. l[a/t[u?/l[i? x x (x)] li-zu-b[u? ...]\n4'. ana-k[u IR₃?-k]a? DUMU {d}Š[E ...]\n5'. lu-ub#-luṭ lu-uš-lim-[ma ...]\n$ single ruling\n6'. KA.INIM.MA DINGIR.ŠA₃.DAB.B[A GUR.RU.DA.KAM?/KAM₂/KE₄]\n$ single ruling\n7'. DU₃.DU₃.BI ana DINGIR-šu₂ 14#/NIDBA?# (x) [... ZU₂.LUM.MA {zi₃}EŠA DUB-ak NINDA.I₃.DE₂.A]\n8'. LAL₃ I₃.NUN.N[A GAR-an ...]\n9'. NIG₂.NA {ši[m}LI ...]\n10'. KAŠ.SAG BA[L-qi₂ ...]\n11'. DINGIR-šu₂ [...]\n12'. E₂#/kit#/ga#/luh# [...]\n$ single ruling\n13'. EN₂ x [...]\n14'. [...]\n15'. [...]\n16'. E₂? [...]",
+        "description": "Fragment of a clay tablet, 11 lines of inscription. Neo-Assyrian.",
+        "hasAtf": true
+      }
+    ]
+  },
+  {
+    "tablet": 10,
+    "title": "Tablet X: At the edge of the world",
+    "summary": "The tavern-keeper Siduri. The ferryman Urshanabi. Crossing the Waters of Death.",
+    "witnesses": [
+      {
+        "museumNo": "K.2774",
+        "pNumber": "P394161",
+        "note": "Siduri's advice",
+        "cdliUrl": "https://cdli.earth/artifacts/394161",
+        "photoUrl": "https://cdli.earth/dl/photo/P394161.jpg",
+        "lineartUrl": "https://cdli.earth/dl/lineart/P394161_l.jpg",
+        "detailPhotoUrl": "https://cdli.earth/dl/photo/P394161_d.jpg",
+        "eblUrl": "https://www.ebl.lmu.de/fragmentarium/K.2774",
+        "atf": "",
+        "description": "Fragment of a clay tablet, 15 + 13 lines of inscription. Neo-Assyrian.Epic of Gilgamesh, tablet 12.",
+        "hasAtf": false
+      },
+      {
+        "museumNo": "K.3012",
+        "pNumber": "P394332",
+        "note": "Waters of Death crossing",
+        "cdliUrl": "https://cdli.earth/artifacts/394332",
+        "photoUrl": "https://cdli.earth/dl/photo/P394332.jpg",
+        "lineartUrl": "https://cdli.earth/dl/lineart/P394332_l.jpg",
+        "detailPhotoUrl": "https://cdli.earth/dl/photo/P394332_d.jpg",
+        "eblUrl": "https://www.ebl.lmu.de/fragmentarium/K.3012",
+        "atf": "@obverse\n1'. [...] x [...]\n2'. %sux [e₂-...] & %akk ša₂ BAD₃-{d#}[EN.ZU-na{ki}]\n3'. %sux [e₂-ki-ur₃] & %akk E₂ {d}nin-lil₂ š[a₂ NIBRU{ki}]\n4'. %sux [e₂-mi-tum-ma-a]l & %akk E₂ 2\n5'. %sux [e₂-kur]-igi-gal₂ & %akk E₂ 3\n6'. %sux [e₂-me?-b]i-še₃-du₃-a & %akk E₂ 4\n7'. %sux [e₂-ga₂]-giš-šu₂-a & %akk E₂ 5\n8'. %sux [e₂]-gašan & %akk E₂ 6\n9'. %sux [an-t]a-gal₂ & %akk ša₂ BAD₃-ku-ri-g[al-zi]\n10'. %sux [e₂-sig₂?-u]z₃ & %akk E₂ {d}s[ud₃]\n11'. %sux [e₂-dim-gal-a]n-na & %akk E₂ 2\n12'. %sux [e₂-ki-ag₂-ga₂-šu]-du# & %akk E₂ {d}[šu]-zi#-[an-na]\n13'. %sux [e₂-du₆-sag]-dil & %akk E₂# 2# [ša₂ ...]\n14'. %sux [e₂-ga₂-gi-m]ah & %akk E₂ [3 ša₂ ...]\n15'. %sux [e₂-x-(x)-r]a & %akk E₂ {d#}[...]\n16'. %sux [e₂-x-(x)-k]u₄ & %akk E₂# [...]\n17'. %sux [e₂-x-(x)]-x & %akk E₂# [...]",
+        "description": "Fragment of a clay tablet, 2 columns of inscription, 7 + 11 lines. Neo-Assyrian.",
+        "hasAtf": true
+      }
+    ]
+  },
+  {
+    "tablet": 11,
+    "title": "Tablet XI: The Flood",
+    "summary": "Utnapishtim tells the Flood story. The plant of youth. Return to Uruk.",
+    "witnesses": [
+      {
+        "museumNo": "K.3375",
+        "pNumber": "P273210",
+        "note": "The famous \"Flood Tablet\" — most complete single tablet of the epic",
+        "cdliUrl": "https://cdli.earth/artifacts/273210",
+        "photoUrl": "https://cdli.earth/dl/photo/P273210.jpg",
+        "lineartUrl": "https://cdli.earth/dl/lineart/P273210_l.jpg",
+        "detailPhotoUrl": "https://cdli.earth/dl/photo/P273210_d.jpg",
+        "eblUrl": "https://www.ebl.lmu.de/fragmentarium/K.3375",
+        "atf": "",
+        "description": "Fragment of a clay tablet, upper right corner, 2 columns of inscription on either side, 49 and 51 lines + 45 and 49 lines. Neo-Assyrian. Epic of Gilgamesh, tablet 11, story of the Flood.",
+        "hasAtf": false
+      }
+    ]
+  },
+  {
+    "tablet": 12,
+    "title": "Tablet XII: Enkidu and the Netherworld",
+    "summary": "Appendix. Enkidu's spirit describes the underworld. (Later addition, translated from Sumerian.)",
+    "witnesses": [
+      {
+        "museumNo": "K.2764",
+        "pNumber": "P394152",
+        "note": "Main witness for Tablet XII",
+        "cdliUrl": "https://cdli.earth/artifacts/394152",
+        "photoUrl": "https://cdli.earth/dl/photo/P394152.jpg",
+        "lineartUrl": "https://cdli.earth/dl/lineart/P394152_l.jpg",
+        "detailPhotoUrl": "https://cdli.earth/dl/photo/P394152_d.jpg",
+        "eblUrl": "https://www.ebl.lmu.de/fragmentarium/K.2764",
+        "atf": "@obverse\n1. EN GAL-u₂ LUGAL DINGIR-MEŠ {d}NIN.URTA iš-pu-ra-an-ni\n#tr.de: Der große Herr, der König der Götter, Ninurta, hat mich gesandt.\n2. a-na ru-be₂-e ti-ri-iṣ qa-ti-ia\n#tr.de: Dem Fürsten, meinem verlängerten Arm,\n3. a-na ma-hir {giš}haṭ-ṭi {giš}GU.ZA u₃ BALA-e\n#tr.de: dem, der Szepter, Thron und Amt empfing,\n4. a-na GIR₃.NITA₂ ša qa-ti-ia °\\° qi₂-bi-ma\n#tr.de: dem Statthalter meiner Gnaden sprich,\n5. um-ma {d}NIN.URTA EN GAL-u₂ DUMU {d}en-lil₂ [ša]r-ru-um-ma\n#tr.de: Dies (verkündet dir) Ninurta, der große Herr, der Sohn Enlils, der König:\n6. uš-šu-ša₂-ku ra-aʾ-ba-ku ze-na-ku [(u₃) š]ab-sa-ku\n#tr.de: Ich war sehr erzürnt, rasend, zornig (und) wütend.\n7. uš-šu-ša₂-ku man-nu li-[ni-i]h-ha-an-ni\n#tr.de: Wenn ich erzürnt bin, wer vermag mich da zu beruhigen?\n8. ra-aʾ-ba-ku man-nu li#-sal#-lim-an-ni\n#tr.de: Wenn ich rasend bin, wer vermag mich da zu beschwichtigen?\n9. ze-na-ku a-na E₂-ia man-nu li-še-ri-ba-an-ni\n#tr.de: Wenn ich gegenüber meinem Haus in Zorn verfallen bin, wer bringt mich in es zurück?\n10. a-bar-ša₂ a-na ba-ni-šu [b]a-ni {d}AMAR.UTU\n#tr.de: Wahrlich, seinem Erbauer, dem Erbauer Marduk\n11. a-a-in-na ta-mi-tu# [(x) x]-u₂ ki-lal-lu-ni\n#tr.de: Wo Eid/Wortlaut ... uns beide?\n12. ta-rib ni-du-ku-m[a (x x x)] x-bad# dan niš-tu-u₂\n#tr.de: Der Ersatz? (für die?), die? wir töteten un[d deren? ..]. @i{wir tranken}\n13. u₃ ina MUD₂-ša₂ u₂#/e#/kal#/ga# [x x x] x qa-ti-ni\n#tr.de: und mit deren Blut wir?] unsere Hände [@i{besudelten}]\n14. at-ta ki-i i[a?-a?-ti? x] aq-bak-ka#\n#tr.de: Du bist wie @i{i}[@i{ch} (...)] sagte ich zu dir.\n15. a-na DUMU [...] x en [x]\n#tr.de: Dem Sohn ...\n16. a-na D[UMU?.MUNUS? ...] pa [x]\n#tr.de: Der @i{T}[@i{ochter} ...]\n17. ša₂ i#-[...] x da# [x (x)]\n18. x [...] x [(x)]\n\n@reverse\n1'. maš# x [...]\n2'. a-di a#-[...] x [x (x)]\n$ single ruling\n3'. ši-pir-ti {d}ninnu!-urta# [a?-na? {m}{d}x x x]-x LUGAL# TIN#.TIR{ki} KIN-ra#\n$ single ruling\n$ 1 line blank\n@colophon\n4'. E₂.GAL {m}aš+šur-DU₃-IBIL[A LUGAL ŠU₂] LUGAL {kur}aš+šur{ki}\n$ 1 line blank\n5'. ša {d}AG u {d}taš-me-t[u₄ GEŠT]U+MIN DAGAL-tu iš-ru-ku-uš\n$ 1 line blank\n6'. i-hu-uz-zu IGI+MIN na-mi[r-tu₄ n]i-siq NAM.DUB.SAR\n$ 1 line blank\n7'. ša i-na LUGAL-MEŠ-ni a-lik mah-ri-ia [mam₂-ma š]ip-ru šu-a-tu₂ la TUK-zu\n$ 1 line blank\n8'. ne₂-me-qi₂ {d}AG ti-kip sa-an-tak-k[i m]a-la ba-aš₂-mu\n$ 1 line blank\n9'. ina DUB-MEŠ aš₂-ṭur as-niq ab-re#-e-ma\n$ 1 line blank\n10'. a-na ta-mar-ti ši-ta-as-si-ia qe₂-reb E₂.GA[L-ia] u₂#-kin\n$ end of side",
+        "description": "Fragment of a clay tablet, 17 + 9 lines of inscription. Neo-Assyrian.",
+        "hasAtf": true
+      }
+    ]
+  }
+]

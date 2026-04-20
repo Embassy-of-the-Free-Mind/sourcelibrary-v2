@@ -1,0 +1,47 @@
+[
+  {
+    "ia_identifier": "thompson-1928-gilgamesh",
+    "title": "The Epic of Gilgamish: Text, Transliteration, and Notes",
+    "author": "R. Campbell Thompson",
+    "year": "1930",
+    "original_language": "Akkadian",
+    "collections": ["middle-east-africa", "sumerian-mesopotamian", "myths-epics"],
+    "notes": "Standard Babylonian 12-tablet edition. 59 pages."
+  },
+  {
+    "ia_identifier": "cuneiformparall00rogegoog",
+    "title": "Cuneiform Parallels to the Old Testament",
+    "author": "Robert William Rogers",
+    "year": "1912",
+    "original_language": "Akkadian",
+    "collections": ["middle-east-africa", "sumerian-mesopotamian", "wisdom-debate-literature"],
+    "notes": "Anthology: Enuma Elish, Gilgamesh, Adapa, Descent of Ishtar, flood, hymns, prayers, laws. 613 pages."
+  },
+  {
+    "ia_identifier": "babylonianepicof00languoft",
+    "title": "The Babylonian Epic of Creation (Tablets from Assur)",
+    "author": "Stephen Langdon",
+    "year": "1923",
+    "original_language": "Akkadian",
+    "collections": ["middle-east-africa", "sumerian-mesopotamian", "myths-epics"],
+    "notes": "Enuma Elish from Assur tablets. 248 pages."
+  },
+  {
+    "ia_identifier": "InannasDescentToTheNetherworldCentennialSurvey",
+    "title": "Inanna's Descent to the Netherworld: A Centennial Survey",
+    "author": "Boban Dedović",
+    "year": "2014",
+    "original_language": "Sumerian",
+    "collections": ["middle-east-africa", "sumerian-mesopotamian", "myths-epics"],
+    "notes": "Survey of scholarship, artifacts, and translations of the descent myth. 135 pages."
+  },
+  {
+    "ia_identifier": "cu31924029165889",
+    "title": "The Religion of Babylonia and Assyria",
+    "author": "Morris Jastrow",
+    "year": "1898",
+    "original_language": "English",
+    "collections": ["middle-east-africa", "sumerian-mesopotamian"],
+    "notes": "Survey with translated hymns, prayers, incantations, wisdom texts. 810 pages."
+  }
+]
