@@ -178,6 +178,21 @@ const TOOL_DECLARATIONS: FunctionDeclaration[] = [
     },
   },
   {
+    name: 'search_artworks',
+    description: 'Search 18,000+ standalone artworks (paintings, prints, sculptures, engravings, manuscripts) by subject, artist, period, technique, or visual content. Unlike search_images (which finds illustrations extracted from book pages), this searches museum-quality artworks imported from Met Museum, Wikimedia Commons, Rijksmuseum, etc. Returns artwork title, artist, thumbnail, period, technique, culture, and connections to texts in the library.',
+    parameters: {
+      type: Type.OBJECT,
+      properties: {
+        query: { type: Type.STRING, description: 'Natural language search (e.g., "Piranesi prison architecture", "tarot cards medieval", "Vesalius anatomical plates")' },
+        genre: { type: Type.STRING, description: 'Optional filter: portrait, allegory, religious, mythological, scientific, emblem, anatomical, botanical, map, sculpture, manuscript-illumination' },
+        period: { type: Type.STRING, description: 'Optional filter: Renaissance, Baroque, Medieval, Edo period, Mughal, Gothic, Symbolist, etc.' },
+        culture: { type: Type.STRING, description: 'Optional filter: Italian, Japanese, Tibetan, Persian, Flemish, German, French, Indian, etc.' },
+        collection: { type: Type.STRING, description: 'Optional filter: collection slug (e.g., "dreams-unconscious", "the-cosmos", "classical-mysteries", "dance-of-death")' },
+      },
+      required: ['query'],
+    },
+  },
+  {
     name: 'read_nearby_pages',
     description: 'Read several pages around a finding to get more context. Returns up to 5 consecutive translated pages. Use when a single page isn\'t enough to understand a passage or argument.',
     parameters: {
@@ -617,6 +632,51 @@ async function executeTool(
       };
     }
 
+    case 'search_artworks': {
+      const query = args.query as string;
+      const genre = args.genre as string | undefined;
+      const period = args.period as string | undefined;
+      const culture = args.culture as string | undefined;
+      const collection = args.collection as string | undefined;
+
+      const { semanticArtworkSearch } = await import('@/lib/semantic-search');
+      const artworks = await semanticArtworkSearch(query, 8, { genre, period, culture, collection });
+
+      let context = '';
+      if (artworks.length > 0) {
+        context = 'Artworks found:\n';
+        for (const a of artworks) {
+          const slug = a.book_id; // artwork slug lookup would need DB, use book_id for now
+          context += `\n- **${a.display_title || a.title}** by ${a.author || 'Unknown artist'}`;
+          if (a.period) context += ` (${a.period})`;
+          if (a.technique) context += ` — ${a.technique}`;
+          context += `\n`;
+          if (a.summary_text) {
+            // Extract just the description part (first 2-3 lines)
+            const descLines = a.summary_text.split('\n').filter(l =>
+              !l.startsWith('Figures:') && !l.startsWith('Symbols:') &&
+              !l.startsWith('Iconclass:') && !l.startsWith('Technique:') &&
+              !l.startsWith('Collections:') && !l.startsWith('Subjects:') &&
+              !l.startsWith('Medium:') && !l.startsWith('Period:') &&
+              !l.startsWith('Culture:') && !l.startsWith('Genre:') &&
+              !l.startsWith('Related texts:') && !l.startsWith('Inscriptions:') &&
+              !l.startsWith('Material:')
+            );
+            context += `  ${descLines.slice(1, 3).join(' ').trim().slice(0, 250)}\n`;
+          }
+          if (a.thumbnail_url) context += `  Image: ${a.thumbnail_url}\n`;
+        }
+      } else {
+        context = 'No matching artworks found.';
+      }
+
+      return {
+        result: { found: artworks.length, context, artworks: artworks.slice(0, 6).map(a => ({ title: a.display_title || a.title, author: a.author, thumbnail: a.thumbnail_url, period: a.period, genre: a.genre })) },
+        step: { type: 'tool_result', name: 'search_artworks', query, found: artworks.length,
+          summary: artworks.length > 0 ? `Found ${artworks.length} artworks` : 'No artworks found' },
+      };
+    }
+
     case 'add_to_notebook': {
       if (!threadId) {
         return { result: { error: 'No thread ID — cannot save to notebook' }, step: { type: 'tool_result', name: 'add_to_notebook', summary: 'No thread', found: 0 } };
@@ -696,7 +756,7 @@ Examples of specific questions that should search immediately:
 **Step 4: Deep, focused research.**
 Once you have a direction (from a choice or a specific question), search strategically. The collection includes books in Latin, German, French, Dutch, Hebrew, Sanskrit, Arabic, Greek, and more — nearly all translated into English. **Search in English first.** Use search_collection for keywords, search_semantic for concepts, search_wikipedia for context. When you find something promising, use read_nearby_pages for more context. Follow threads across books.
 
-For visual or symbolic topics (emblems, alchemical apparatus, diagrams, seals, planetary symbols, anatomical illustrations), proactively call search_images — the collection is rich in illustrations and showing one is often worth more than describing it.
+For visual or symbolic topics (emblems, alchemical apparatus, diagrams, seals, planetary symbols, anatomical illustrations), proactively call search_images (for illustrations extracted from book pages) or search_artworks (for standalone museum artworks — paintings, prints, sculptures from Met, Rijksmuseum, Wikimedia Commons). The collection includes 18,000+ artworks spanning all cultures and periods. search_artworks supports filtering by genre, period, culture, and collection. Use it when users ask about visual art, specific artists, or when showing a painting/print would contextualize a text.
 
 **Step 5: Save and cite with links.**
 Use add_to_notebook for quotes directly relevant to the research question. The notebook persists across messages.
