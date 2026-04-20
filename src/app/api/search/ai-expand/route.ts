@@ -101,137 +101,87 @@ Raphael's fresco depicts the great philosophers of antiquity — Plato, Aristotl
           },
         });
 
+        // Simple approach: accumulate full text, stream narration chunks,
+        // parse everything structured from the complete text at the end.
         let fullText = '';
-        let sentTerms = false;
         let sentDisplay = false;
-        let hitDisplaySep = false;
-        let hitTermsSep = false;
-        let displayHint = 'books_first';
+        let inNarration = false;
 
         for await (const chunk of result.stream) {
           const text = chunk.text();
           if (!text) continue;
-
           fullText += text;
 
-          // Phase 1: Extract display hint (before ---DISPLAY---)
-          if (!hitDisplaySep && fullText.includes('---DISPLAY---')) {
-            hitDisplaySep = true;
+          // Emit display hint as soon as we see ---DISPLAY---
+          if (!sentDisplay && fullText.includes('---DISPLAY---')) {
             const displayPart = fullText.split('---DISPLAY---')[0].trim();
-            if (['images_first', 'books_first', 'not_in_collection'].includes(displayPart)) {
-              displayHint = displayPart;
-            }
-            if (!sentDisplay) {
-              controller.enqueue(encoder.encode(`event: display\ndata: ${JSON.stringify(displayHint)}\n\n`));
-              sentDisplay = true;
-            }
+            const hint = ['images_first', 'books_first', 'not_in_collection'].includes(displayPart)
+              ? displayPart : 'books_first';
+            controller.enqueue(encoder.encode(`event: display\ndata: ${JSON.stringify(hint)}\n\n`));
+            sentDisplay = true;
+            inNarration = true;
           }
 
-          // Phase 2: Stream narration (between ---DISPLAY--- and ---TERMS---)
-          if (!hitTermsSep && fullText.includes('---TERMS---')) {
-            hitTermsSep = true;
-            const afterDisplay = fullText.split('---DISPLAY---')[1] || fullText;
-            const narrationBeforeTerms = afterDisplay.split('---TERMS---')[0].trim();
-            // Send any remaining narration chunk before the terms separator
-            const chunkTermsIdx = text.indexOf('---TERMS---');
-            if (chunkTermsIdx > 0 && hitDisplaySep) {
-              const narChunk = text.slice(0, chunkTermsIdx);
-              if (narChunk.trim()) {
-                controller.enqueue(encoder.encode(`event: narration\ndata: ${JSON.stringify(narChunk)}\n\n`));
-              }
-            }
-          } else if (hitDisplaySep && !hitTermsSep) {
-            // Streaming narration — skip the ---DISPLAY--- line itself
-            const chunkDisplayIdx = text.indexOf('---DISPLAY---');
-            if (chunkDisplayIdx >= 0) {
-              const afterSep = text.slice(chunkDisplayIdx + '---DISPLAY---'.length);
+          // Stream narration chunks (between ---DISPLAY--- and ---TERMS---)
+          if (inNarration && !fullText.includes('---TERMS---')) {
+            // Only send text that's clearly narration (after ---DISPLAY---, before ---TERMS---)
+            if (!text.includes('---DISPLAY---')) {
+              controller.enqueue(encoder.encode(`event: narration\ndata: ${JSON.stringify(text)}\n\n`));
+            } else {
+              // This chunk contains ---DISPLAY--- — send only the part after it
+              const afterSep = text.split('---DISPLAY---').pop() || '';
               if (afterSep.trim()) {
                 controller.enqueue(encoder.encode(`event: narration\ndata: ${JSON.stringify(afterSep)}\n\n`));
               }
-            } else {
-              controller.enqueue(encoder.encode(`event: narration\ndata: ${JSON.stringify(text)}\n\n`));
-            }
-          } else if (!hitDisplaySep) {
-            // Haven't hit ---DISPLAY--- yet — might be old format without display hint
-            // If we see ---TERMS--- without ---DISPLAY---, treat as books_first
-            if (fullText.includes('---TERMS---')) {
-              hitTermsSep = true;
-              if (!sentDisplay) {
-                controller.enqueue(encoder.encode(`event: display\ndata: "books_first"\n\n`));
-                sentDisplay = true;
-              }
-              // Send narration before ---TERMS---
-              const narration = fullText.split('---TERMS---')[0].trim();
-              if (narration) {
-                controller.enqueue(encoder.encode(`event: narration\ndata: ${JSON.stringify(narration)}\n\n`));
-              }
             }
           }
-
-          // Phase 3: Parse terms JSON (between ---TERMS--- and ---IMAGE_TERMS---)
-          if (hitTermsSep && !sentTerms) {
-            const afterTermsSep = fullText.split('---TERMS---')[1] || '';
-            const termsOnly = afterTermsSep.split('---IMAGE_TERMS---')[0].trim();
-            if (termsOnly) {
-              try {
-                const jsonStr = termsOnly.replace(/^```(?:json)?\s*/, '').replace(/\s*```$/, '');
-                const parsed = JSON.parse(jsonStr);
-                if (Array.isArray(parsed)) {
-                  const terms = parsed.filter((t: unknown) => typeof t === 'string' && t.length >= 2).slice(0, 5);
-                  controller.enqueue(encoder.encode(`event: terms\ndata: ${JSON.stringify(terms)}\n\n`));
-                  sentTerms = true;
-                }
-              } catch {
-                // JSON not complete yet
-              }
-            }
-          }
+          if (fullText.includes('---TERMS---')) inNarration = false;
         }
 
-        // Send display hint if never sent (fallback)
+        // Parse everything from complete text
         if (!sentDisplay) {
           controller.enqueue(encoder.encode(`event: display\ndata: "books_first"\n\n`));
         }
 
-        // Final parse from complete text
-        const narrationPart = hitDisplaySep
+        // Extract narration
+        const narrationPart = fullText.includes('---DISPLAY---')
           ? (fullText.split('---DISPLAY---')[1] || '').split('---TERMS---')[0].trim()
           : fullText.split('---TERMS---')[0].trim();
+        // If narration wasn't streamed (no ---DISPLAY---), send it now
+        if (!sentDisplay && narrationPart) {
+          controller.enqueue(encoder.encode(`event: narration\ndata: ${JSON.stringify(narrationPart)}\n\n`));
+        }
 
         // Parse terms (between ---TERMS--- and ---IMAGE_TERMS---)
         let finalTerms: string[] = [];
-        if (!sentTerms && fullText.includes('---TERMS---')) {
+        if (fullText.includes('---TERMS---')) {
           const afterTerms = (fullText.split('---TERMS---')[1] || '').split('---IMAGE_TERMS---')[0].trim();
           try {
-            const jsonStr = afterTerms.replace(/^```(?:json)?\s*/, '').replace(/\s*```$/, '');
-            const parsed = JSON.parse(jsonStr);
+            const parsed = JSON.parse(afterTerms.replace(/^```(?:json)?\s*/, '').replace(/\s*```$/, ''));
             if (Array.isArray(parsed)) {
               finalTerms = parsed.filter((t: unknown) => typeof t === 'string' && t.length >= 2).slice(0, 5);
-              controller.enqueue(encoder.encode(`event: terms\ndata: ${JSON.stringify(finalTerms)}\n\n`));
             }
-          } catch {
-            controller.enqueue(encoder.encode(`event: terms\ndata: []\n\n`));
-          }
-        } else if (!sentTerms) {
-          controller.enqueue(encoder.encode(`event: terms\ndata: []\n\n`));
+          } catch { /* parse failed */ }
         }
+        controller.enqueue(encoder.encode(`event: terms\ndata: ${JSON.stringify(finalTerms)}\n\n`));
 
         // Parse image_terms (after ---IMAGE_TERMS---)
         let imageTerms: string[] = [];
         if (fullText.includes('---IMAGE_TERMS---')) {
           const afterImageSep = fullText.split('---IMAGE_TERMS---').pop()?.trim() || '';
           try {
-            const jsonStr = afterImageSep.replace(/^```(?:json)?\s*/, '').replace(/\s*```$/, '');
-            const parsed = JSON.parse(jsonStr);
+            const parsed = JSON.parse(afterImageSep.replace(/^```(?:json)?\s*/, '').replace(/\s*```$/, ''));
             if (Array.isArray(parsed)) {
               imageTerms = parsed.filter((t: unknown) => typeof t === 'string' && t.length >= 2).slice(0, 4);
-              controller.enqueue(encoder.encode(`event: image_terms\ndata: ${JSON.stringify(imageTerms)}\n\n`));
             }
           } catch { /* no image terms */ }
         }
+        if (imageTerms.length > 0) {
+          controller.enqueue(encoder.encode(`event: image_terms\ndata: ${JSON.stringify(imageTerms)}\n\n`));
+        }
 
         // Cache
-        responseCache.set(normalized, { display: displayHint, narration: narrationPart, terms: finalTerms, imageTerms, timestamp: Date.now() });
+        responseCache.set(normalized, { display: sentDisplay ? fullText.split('---DISPLAY---')[0].trim() : 'books_first', narration: narrationPart, terms: finalTerms, imageTerms, timestamp: Date.now() });
 
         controller.enqueue(encoder.encode(`event: done\ndata: {}\n\n`));
         controller.close();
