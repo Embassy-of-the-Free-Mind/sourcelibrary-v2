@@ -141,9 +141,13 @@ async function fetchImageBase64(url) {
 
 async function enrichArtwork(artwork) {
   // Prefer R2 archived images (no rate limits, fast) over external URLs.
-  // archived_full_url = full-res on R2, thumbnail_blob = display-size on R2.
-  const imageUrl = artwork.archived_full_url || artwork.thumbnail_blob || artwork.commons_full_url || artwork.thumbnail;
+  // Skip artworks that are only on external URLs — they'll 429.
+  // Run R2 archival first, then enrichment.
+  const r2Url = artwork.archived_full_url || artwork.thumbnail_blob;
+  const externalUrl = artwork.commons_full_url || artwork.thumbnail;
+  const imageUrl = r2Url || externalUrl;
   if (!imageUrl) return { error: 'no_image' };
+  if (!r2Url && externalUrl?.includes('wikimedia')) return { error: 'not_on_r2_yet' };
 
   const prompt = buildPrompt(artwork);
   const imageBase64 = await fetchImageBase64(imageUrl);
