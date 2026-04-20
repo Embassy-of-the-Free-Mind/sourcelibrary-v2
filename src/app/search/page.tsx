@@ -323,10 +323,11 @@ export default function SearchPage() {
           const index = (data.index?.results || []).slice(0, PREVIEW_INDEX);
           const iTotal = data.index?.total || 0;
 
-          // Map unified gallery + visual results to GalleryItem shape
-          // Merge both sources, deduped by id, gallery first (metadata search > CLIP)
+          // Map unified gallery + visual + artwork results to GalleryItem shape
+          // Merge all image sources, deduped by id
           const galleryResults = data.gallery?.results || [];
           const visualResults = data.visual?.results || [];
+          const artworkResults = (data as any).artworks?.results || [];
           const seenImageIds = new Set<string>();
           const allImageResults = [...galleryResults, ...visualResults];
           const images: GalleryItem[] = [];
@@ -349,7 +350,26 @@ export default function SearchPage() {
               type: g.type,
             } as GalleryItem);
           }
-          const imTotal = (data.gallery?.total || 0) + (data.visual?.total || 0);
+          // Merge artwork semantic results as image cards (they have thumbnails)
+          for (const a of artworkResults) {
+            const artId = `artwork-${a.book_id}`;
+            if (seenImageIds.has(artId)) continue;
+            seenImageIds.add(artId);
+            images.push({
+              pageId: a.book_id,
+              bookId: a.book_id,
+              pageNumber: 0,
+              detectionIndex: 0,
+              imageUrl: a.thumbnail_url || '',
+              thumbnailUrl: a.thumbnail_url || '',
+              bookTitle: a.display_title || a.title || '',
+              author: a.author || '',
+              description: a.display_title || a.title || '',
+              type: a.genre || 'artwork',
+              isArtwork: true,
+            } as GalleryItem & { isArtwork?: boolean });
+          }
+          const imTotal = (data.gallery?.total || 0) + (data.visual?.total || 0) + artworkResults.length;
 
           setBookResults(books);
           setBookTotal(bTotal);
