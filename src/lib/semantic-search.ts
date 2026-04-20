@@ -87,6 +87,109 @@ export async function semanticBookSearch(
   }));
 }
 
+// ── Artwork semantic search (separate table, 3072 dims) ──────────────
+
+export interface SemanticArtworkResult {
+  book_id: string;
+  title: string;
+  display_title: string | null;
+  author: string | null;
+  summary_text: string | null;
+  subjects: string[];
+  figures: string[];
+  symbols: string[];
+  iconclass: string[];
+  technique: string | null;
+  period: string | null;
+  culture: string | null;
+  genre: string | null;
+  collections: string[];
+  resource_type: string | null;
+  thumbnail_url: string | null;
+  similarity: number;
+}
+
+/**
+ * Full-dimensional query embedding (3072) for artwork_embeddings table.
+ * Book embeddings truncate to 768 via outputDimensionality; artworks use full 3072.
+ */
+async function getQueryEmbeddingFull(query: string): Promise<number[] | null> {
+  const geminiKey = process.env.GEMINI_API_KEY;
+  if (!geminiKey) return null;
+  try {
+    const res = await fetch(
+      `https://generativelanguage.googleapis.com/v1beta/models/gemini-embedding-2-preview:batchEmbedContents?key=${geminiKey}`,
+      {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({
+          requests: [{
+            model: 'models/gemini-embedding-2-preview',
+            content: { parts: [{ text: query }] },
+            // No outputDimensionality — full 3072 dims for artwork_embeddings
+          }],
+        }),
+        signal: AbortSignal.timeout(5000),
+      }
+    );
+    if (res.ok) {
+      const data = await res.json();
+      if (data?.embeddings?.[0]?.values) return data.embeddings[0].values;
+    }
+  } catch { /* Gemini unavailable */ }
+  return null;
+}
+
+/**
+ * Semantic artwork search via artwork_embeddings table.
+ * Separate from book search — different embedding text composition,
+ * structured metadata (subjects, figures, symbols, iconclass),
+ * and filterable by genre/period/culture/collection.
+ */
+export async function semanticArtworkSearch(
+  query: string,
+  limit: number = 20,
+  opts?: { genre?: string; period?: string; culture?: string; collection?: string; threshold?: number }
+): Promise<SemanticArtworkResult[]> {
+  const queryEmbedding = await getQueryEmbeddingFull(query);
+  if (!queryEmbedding) return [];
+
+  const { data, error } = await supabase.rpc('match_artworks_semantic', {
+    query_embedding: JSON.stringify(queryEmbedding),
+    match_threshold: opts?.threshold ?? 0.3,
+    match_count: limit,
+    filter_genre: opts?.genre ?? null,
+    filter_period: opts?.period ?? null,
+    filter_culture: opts?.culture ?? null,
+    filter_collection: opts?.collection ?? null,
+  });
+
+  if (error) {
+    console.error('[semantic-search] match_artworks_semantic error:', error.message);
+    return [];
+  }
+
+  return (data || []).map((row: any) => ({
+    book_id: row.book_id,
+    title: row.title,
+    display_title: row.display_title,
+    author: row.author,
+    summary_text: row.summary_text,
+    subjects: row.subjects || [],
+    figures: row.figures || [],
+    symbols: row.symbols || [],
+    iconclass: row.iconclass || [],
+    technique: row.technique,
+    period: row.period,
+    culture: row.culture,
+    genre: row.genre,
+    collections: row.collections || [],
+    resource_type: row.resource_type,
+    thumbnail_url: row.thumbnail_url,
+    similarity: Number(row.similarity) || 0,
+  }));
+}
+
 // ── Global page-level semantic search ────────────────────────────────
 
 /**

@@ -4,7 +4,7 @@ import { supabase } from '@/lib/supabase';
 import type { BookSearchFilters } from '@/lib/atlas-search';
 import type { SearchResult } from '@/lib/api-client/types/search';
 import { searchBookIds } from '@/lib/books-catalog';
-import { semanticBookSearch } from '@/lib/semantic-search';
+import { semanticBookSearch, semanticArtworkSearch } from '@/lib/semantic-search';
 
 // CLIP server on Hetzner for visual text→image search
 const CLIP_URL = process.env.CLIP_URL || 'http://46.224.122.120:3456/clip';
@@ -46,7 +46,6 @@ interface GalleryResult {
  * Designed for typeahead — no page content search (that's the slow part).
  */
 export async function GET(request: NextRequest) {
-  const t0 = Date.now();
   try {
     const { searchParams } = new URL(request.url);
     const query = searchParams.get('q') || '';
@@ -82,9 +81,9 @@ export async function GET(request: NextRequest) {
     // Run book, index, gallery, and visual search in parallel.
     // Each operation gets a hard timeout — Atlas Search $search doesn't respect maxTimeMS,
     // and hung operations would block the entire response indefinitely.
-    const withTimeout = <T>(promise: Promise<T>, fallback: T, label: string, ms = 4000): Promise<T> =>
+    const withTimeout = <T>(promise: Promise<T>, fallback: T, label: string, ms = 8000): Promise<T> =>
       Promise.race([
-        promise.then(r => { console.log(`[unified-search] ${label} done in ${Date.now() - t0}ms`); return r; }),
+        promise,
         new Promise<T>((resolve) => setTimeout(() => {
           console.warn(`[unified-search] ${label} timed out after ${ms}ms`);
           resolve(fallback);
@@ -107,7 +106,19 @@ export async function GET(request: NextRequest) {
     }
     const emptySemanticBooks = { results: [] as SemanticBookResult[], total: 0 };
 
-    const [booksResult, indexResult, galleryResult, visualResult, semanticResultRaw] = await Promise.all([
+    interface ArtworkSearchResult {
+      book_id: string;
+      title: string;
+      display_title: string | null;
+      author: string | null;
+      thumbnail_url: string | null;
+      genre: string | null;
+      period: string | null;
+      similarity: number;
+    }
+    const emptyArtworks = { results: [] as ArtworkSearchResult[], total: 0 };
+
+    const [booksResult, indexResult, galleryResult, visualResult, semanticResultRaw, artworkResult] = await Promise.all([
       withTimeout(searchBooks(db, query, queryRegex, limit, searchFilters, library), emptyBooks, 'books'),
       withTimeout(
         searchIndex(db, query, limit).catch((err) => {
@@ -154,7 +165,26 @@ export async function GET(request: NextRequest) {
             return { results, total: results.length };
           })
           .catch(() => emptySemanticBooks),
-        emptySemanticBooks, 'semantic', 3000,
+        emptySemanticBooks, 'semantic', 6000,
+      ),
+      // Artwork semantic search: dedicated artwork_embeddings table (3072 dims)
+      withTimeout(
+        semanticArtworkSearch(query, 8)
+          .then(artworks => ({
+            results: artworks.map(a => ({
+              book_id: a.book_id,
+              title: a.title,
+              display_title: a.display_title,
+              author: a.author,
+              thumbnail_url: a.thumbnail_url,
+              genre: a.genre,
+              period: a.period,
+              similarity: a.similarity,
+            })),
+            total: artworks.length,
+          }))
+          .catch(() => emptyArtworks),
+        emptyArtworks, 'artworks', 6000,
       ),
     ]);
 
@@ -167,7 +197,7 @@ export async function GET(request: NextRequest) {
     db.collection('analytics_events').insertOne({
       event: 'search_query',
       query,
-      results_count: booksResult.total + indexResult.total + galleryResult.total + visualResult.total + semanticResult.total,
+      results_count: booksResult.total + indexResult.total + galleryResult.total + visualResult.total + semanticResult.total + artworkResult.total,
       filters: { language, category, library, source: 'unified' },
       timestamp: new Date(),
       ip: request.headers.get('x-forwarded-for')?.split(',')[0]?.trim() || 'unknown',
@@ -181,6 +211,7 @@ export async function GET(request: NextRequest) {
       gallery: galleryResult,
       visual: visualResult,
       semantic: semanticResult,
+      artworks: artworkResult,
     }, {
       headers: {
         'Cache-Control': 'no-store',
@@ -210,7 +241,7 @@ async function searchBooks(
   // Supabase trigram search (fast, always warm — no cold-start penalty)
   const matchingIds = await searchBookIds(query, { limit: (limit + 1) * 2 });
 
-  let books: any[] = [];
+  let books;
   if (matchingIds.length > 0) {
     const filter: Record<string, unknown> = {
       id: { $in: matchingIds },
@@ -227,12 +258,49 @@ async function searchBooks(
       .find(filter)
       .project(bookProjection)
       .limit(limit + 1)
-      .maxTimeMS(2000)
+      .maxTimeMS(5000)
       .toArray();
+  } else {
+    books = [];
   }
 
-  // Author alias expansion removed from searchBooks for speed.
-  // Semantic search covers variant name matches better.
+  // Author alias expansion: if results are sparse and query matches an entity alias,
+  // include books linked to that entity (catches variant name searches like "Marsilius Ficinus")
+  if (books.length < limit) {
+    const seenIds = new Set(books.map((b: any) => b.id));
+    const entity = await db.collection('entities').findOne({
+      type: 'person',
+      canonical_name: { $exists: true },
+      $or: [
+        { canonical_name: queryRegex },
+        { aliases: queryRegex },
+        { name: queryRegex },
+      ],
+    }, { projection: { _id: 1 }, maxTimeMS: 2000 }).catch(() => null);
+
+    if (entity) {
+      const aliasFilter: Record<string, unknown> = {
+        author_entity_id: entity._id.toString(),
+        visible: true,
+        pages_count: { $gt: 0 },
+      };
+      if (library) aliasFilter['image_source.provider'] = library;
+
+      const aliasBooks = await db.collection('books')
+        .find(aliasFilter)
+        .project(bookProjection)
+        .limit(limit - books.length)
+        .maxTimeMS(3000)
+        .toArray();
+
+      for (const ab of aliasBooks) {
+        if (!seenIds.has(ab.id)) {
+          books.push(ab);
+          seenIds.add(ab.id);
+        }
+      }
+    }
+  }
 
   // Canon-weighted reranking: older editions first, original language preferred
   const queryLower = query.toLowerCase();
