@@ -4,6 +4,7 @@ import Image from 'next/image';
 import ContentPageLayout, { ContentHeader } from '@/components/layout/ContentPageLayout';
 import { sortCollections, sanitizeThumbnail } from '@/lib/collections-utils';
 import EraTimeline, { type DecadeBucket } from '@/components/collections/EraTimeline';
+import ShowMorePathways from '@/components/collections/ShowMorePathways';
 import type { Metadata } from 'next';
 
 export const revalidate = 86400;
@@ -173,7 +174,7 @@ function CollectionCard({ col, priority = false }: { col: CollectionDoc; priorit
           src={heroUrl}
           alt={`Illustration from ${col.name}`}
           fill
-          sizes="(max-width: 640px) 50vw, 25vw"
+          sizes="(max-width: 640px) 50vw, (max-width: 1024px) 33vw, 20vw"
           className="object-cover transition-transform duration-500 ease-out group-hover:scale-105"
           unoptimized
           priority={priority}
@@ -184,8 +185,8 @@ function CollectionCard({ col, priority = false }: { col: CollectionDoc; priorit
       )}
       <div className="absolute inset-0 bg-gradient-to-t from-[rgba(26,22,18,0.85)] via-[rgba(26,22,18,0.35)] to-transparent" />
       <div className="absolute inset-0 flex flex-col justify-end p-3 sm:p-4">
-        <p className="text-white/50 text-xs mb-1 hidden sm:block">
-          {col.book_count > 0 ? `${col.book_count.toLocaleString()} ${col.collection_type === 'visual_art' ? 'works' : 'books'}` : ''}
+        <p className="text-white/50 text-[11px] mb-1 hidden sm:block">
+          {col.book_count > 0 ? `${col.book_count.toLocaleString()} books` : ''}
           {col.children_count ? ` · ${col.children_count} sub-collections` : ''}
         </p>
         <h2 className="font-serif text-sm sm:text-base lg:text-lg text-white font-semibold leading-tight line-clamp-2 group-hover:text-accent-gold transition-colors">
@@ -217,7 +218,7 @@ function CuratedCard({ col, priority = false }: { col: CollectionDoc; priority?:
           src={heroUrl}
           alt={`Illustration from ${col.name}`}
           fill
-          sizes="(max-width: 640px) 100vw, 33vw"
+          sizes="(max-width: 640px) 100vw, (max-width: 1024px) 50vw, 25vw"
           className="object-cover transition-transform duration-500 ease-out group-hover:scale-105"
           unoptimized
           priority={priority}
@@ -248,8 +249,11 @@ export default async function CollectionsPage() {
     fetchTimelineDecades(),
   ]);
 
+  const INITIAL_PATHWAYS = 12;
+
   return (
     <ContentPageLayout
+      maxWidth="wide"
       header={
         <ContentHeader
           title="Collections"
@@ -259,9 +263,9 @@ export default async function CollectionsPage() {
     >
 
       {/* Core wings of the library */}
-      <div className="grid gap-4 grid-cols-2 lg:grid-cols-4">
+      <div className="grid gap-3 sm:gap-4 grid-cols-2 md:grid-cols-3 lg:grid-cols-4 xl:grid-cols-5">
         {categories.map((col, i) => (
-          <CollectionCard key={col.slug} col={col} priority={i < 8} />
+          <CollectionCard key={col.slug} col={col} priority={i < 10} />
         ))}
       </div>
 
@@ -272,11 +276,14 @@ export default async function CollectionsPage() {
             <h2 className="font-display text-2xl text-primary">Curated Pathways</h2>
             <p className="text-stone-500 mt-1 text-sm">Thematic journeys through the collection</p>
           </div>
-          <div className="grid gap-4 grid-cols-1 sm:grid-cols-2 lg:grid-cols-3">
+          <ShowMorePathways
+            initialCount={INITIAL_PATHWAYS}
+            totalCount={pathways.length}
+          >
             {pathways.map((col, i) => (
-              <CuratedCard key={col.slug} col={col} priority={i < 3} />
+              <CuratedCard key={col.slug} col={col} priority={i < 4} />
             ))}
-          </div>
+          </ShowMorePathways>
         </div>
       )}
 
