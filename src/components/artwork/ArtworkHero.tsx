@@ -12,6 +12,7 @@ interface ArtworkNavItem {
 
 interface ArtworkHeroProps {
   imageUrl: string;
+  thumbUrl?: string;
   title: string;
   fullResUrl: string;
   license: string;
@@ -20,8 +21,10 @@ interface ArtworkHeroProps {
   nextWork?: ArtworkNavItem | null;
 }
 
-export default function ArtworkHero({ imageUrl, title, fullResUrl, license, isLandscape, prevWork, nextWork }: ArtworkHeroProps) {
+export default function ArtworkHero({ imageUrl, thumbUrl, title, fullResUrl, license, isLandscape, prevWork, nextWork }: ArtworkHeroProps) {
   const [fitHeight, setFitHeight] = useState(false);
+  const hasThumb = !!thumbUrl && thumbUrl !== imageUrl;
+  const [hiResLoaded, setHiResLoaded] = useState(!hasThumb);
 
   return (
     <div className="bg-stone-900 relative">
@@ -31,15 +34,46 @@ export default function ArtworkHero({ imageUrl, title, fullResUrl, license, isLa
           className={`relative mx-auto ${fitHeight ? '' : isLandscape ? 'aspect-[16/10]' : 'aspect-[3/4]'}`}
           style={fitHeight ? { height: 'calc(100vh - 120px)' } : undefined}
         >
-          <ImageWithMagnifier
-            src={imageUrl}
-            thumbnail={imageUrl}
-            alt={title}
-            className="w-full h-full"
-            magnifierSize={240}
-            zoomLevel={3}
-            darkMode
-          />
+          {hasThumb ? (
+            <>
+              {/* Layer 1: 600px thumb — shows immediately */}
+              <div className={`absolute inset-0 transition-opacity duration-700 ${hiResLoaded ? 'opacity-0 pointer-events-none' : 'opacity-100'}`}>
+                <ImageWithMagnifier
+                  src={thumbUrl}
+                  thumbnail={thumbUrl}
+                  alt={title}
+                  className="w-full h-full"
+                  magnifierSize={240}
+                  zoomLevel={3}
+                  darkMode
+                />
+              </div>
+              {/* Layer 2: full-res — fades in over thumb */}
+              <div className={`absolute inset-0 transition-opacity duration-700 ${hiResLoaded ? 'opacity-100' : 'opacity-0'}`}>
+                <ImageWithMagnifier
+                  src={imageUrl}
+                  thumbnail={thumbUrl}
+                  highResSrc={imageUrl}
+                  alt={title}
+                  className="w-full h-full"
+                  magnifierSize={240}
+                  zoomLevel={3}
+                  darkMode
+                  onLoad={() => setHiResLoaded(true)}
+                />
+              </div>
+            </>
+          ) : (
+            <ImageWithMagnifier
+              src={imageUrl}
+              thumbnail={imageUrl}
+              alt={title}
+              className="w-full h-full"
+              magnifierSize={240}
+              zoomLevel={3}
+              darkMode
+            />
+          )}
         </div>
       </div>
 

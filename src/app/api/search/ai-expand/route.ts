@@ -3,8 +3,8 @@ import { getGeminiClient } from '@/lib/gemini-client';
 
 export const preferredRegion = 'fra1';
 
-// Cache full responses (narration + terms) to avoid repeated AI calls
-const responseCache = new Map<string, { narration: string; terms: string[]; timestamp: number }>();
+// Cache full responses (narration + terms + display hint + image terms) to avoid repeated AI calls
+const responseCache = new Map<string, { display: string; narration: string; terms: string[]; imageTerms: string[]; timestamp: number }>();
 const CACHE_TTL = 30 * 60 * 1000; // 30 minutes
 
 /**
@@ -32,8 +32,10 @@ export async function POST(request: NextRequest) {
   const cached = responseCache.get(normalized);
   if (cached && Date.now() - cached.timestamp < CACHE_TTL) {
     const lines = [
+      `event: display\ndata: ${JSON.stringify(cached.display)}\n`,
       `event: narration\ndata: ${JSON.stringify(cached.narration)}\n`,
       `event: terms\ndata: ${JSON.stringify(cached.terms)}\n`,
+      ...(cached.imageTerms.length > 0 ? [`event: image_terms\ndata: ${JSON.stringify(cached.imageTerms)}\n`] : []),
       `event: done\ndata: {}\n`,
     ].join('\n');
     return new Response(lines, {
@@ -53,101 +55,126 @@ export async function POST(request: NextRequest) {
     async start(controller) {
       try {
         const client = getGeminiClient();
-        const model = client.getGenerativeModel({ model: 'gemini-2.0-flash' });
+        // flash-lite follows structured format reliably and is 50% cheaper
+        const model = client.getGenerativeModel({ model: 'gemini-3.1-flash-lite-preview' });
 
         const result = await model.generateContentStream({
           contents: [{
             role: 'user',
             parts: [{
-              text: `You are a search guide for Source Library, a digital library of over 10,000 pre-modern primary sources spanning world traditions. The collection includes: Western alchemy and Hermetica, Kabbalah, Rosicrucianism, natural philosophy, early modern science, Sanskrit texts (rasayana, Tantra, Vedanta, Ayurveda), Chinese and Japanese classics, Arabic and Islamic philosophy, Egyptian and Near Eastern sources, Korean and Southeast Asian manuscripts, Tibetan Buddhism, and more. Languages include Latin, Greek, Arabic, Sanskrit, Hebrew, German, English, French, Italian, Dutch, Chinese, Japanese, Korean, and many others. Dates range from antiquity through the 19th century.
+              text: `Search guide for a pre-modern primary source library (10K+ books, 18K+ artworks spanning alchemy, Hermetica, Kabbalah, natural philosophy, Sanskrit, Chinese, Arabic, and more).
 
-The library DOES contain primary sources from all these traditions — never suggest otherwise.
+Query: "${query}"
 
-A user searched for "${query}".
-
-Respond in TWO parts, separated by exactly "---TERMS---" on its own line:
-
-PART 1: Write 1-2 brief, scholarly sentences (max 40 words) contextualizing this search within its tradition. Use italics for Latin/foreign terms. Be specific and knowledgeable, not generic. Don't say "Source Library" or "our collection." Write as if you're a knowledgeable librarian whispering helpful context. Assume the library has relevant sources.
-
-PART 2: After the ---TERMS--- separator, write ONLY a JSON array of 3-5 alternative search terms. Include original-language equivalents, historical spellings, key authors, or related concepts from the relevant tradition.
-
-Example response:
-The *lapis philosophorum* was the supreme goal of chrysopoeia — the art of gold-making. Geber's *Summa Perfectionis* and Ripley's *Compound of Alchemy* are foundational texts.
+Reply EXACTLY in this format (no extra text):
+DISPLAY_HINT
+---DISPLAY---
+One sentence of scholarly context (max 30 words). Use *italics* for foreign terms.
 ---TERMS---
-["lapis philosophorum", "chrysopoeia", "Geber", "George Ripley", "Summa Perfectionis"]`
+["term1","term2","term3"]
+---IMAGE_TERMS---
+["artwork1","artwork2"]
+
+DISPLAY_HINT is one of: images_first, books_first, not_in_collection
+- images_first: user wants a visual artwork/painting/diagram (e.g., "school of athens", "tree of life diagram")
+- books_first: user wants texts/concepts/authors (e.g., "alchemy", "Paracelsus", "mystical ecstasy")
+- not_in_collection: query is outside scope (modern art, pop culture). Explain what IS available.
+Default to books_first when uncertain.
+
+TERMS = 3-5 alternative book search terms (authors, titles, Latin/original-language equivalents)
+IMAGE_TERMS = 2-4 specific artworks, visual subjects, or iconographic themes that a pre-modern art collection would contain. Think of actual paintings, engravings, diagrams — not synonyms.`
             }]
           }],
           generationConfig: {
-            temperature: 0.5,
+            temperature: 0.3,
             maxOutputTokens: 300,
           },
         });
 
+        // Simple approach: accumulate full text, stream narration chunks,
+        // parse everything structured from the complete text at the end.
         let fullText = '';
-        let sentTerms = false;
-        let hitSeparator = false;
+        let sentDisplay = false;
+        let inNarration = false;
 
         for await (const chunk of result.stream) {
           const text = chunk.text();
           if (!text) continue;
-
           fullText += text;
 
-          // Check if we've just hit the separator
-          if (!hitSeparator && fullText.includes('---TERMS---')) {
-            hitSeparator = true;
-            // Send any trailing narration before the separator that wasn't sent yet
-            // (the chunk that contains "---TERMS---" may have narration text before it)
-            const separatorIdx = text.indexOf('---TERMS---');
-            if (separatorIdx > 0) {
-              controller.enqueue(encoder.encode(`event: narration\ndata: ${JSON.stringify(text.slice(0, separatorIdx))}\n\n`));
-            }
-          } else if (hitSeparator && !sentTerms) {
-            // Accumulating terms JSON — try to parse on each chunk
-            const [narration, termsSection] = fullText.split('---TERMS---');
-            const termsText = termsSection?.trim();
-            if (termsText) {
-              try {
-                const jsonStr = termsText.replace(/^```(?:json)?\s*/, '').replace(/\s*```$/, '');
-                const parsed = JSON.parse(jsonStr);
-                if (Array.isArray(parsed)) {
-                  const terms = parsed.filter((t: unknown) => typeof t === 'string' && t.length >= 2).slice(0, 5);
-                  controller.enqueue(encoder.encode(`event: terms\ndata: ${JSON.stringify(terms)}\n\n`));
-                  sentTerms = true;
-                  responseCache.set(normalized, { narration: narration.trim(), terms, timestamp: Date.now() });
-                }
-              } catch {
-                // JSON not complete yet
+          // Emit display hint as soon as we see ---DISPLAY---
+          if (!sentDisplay && fullText.includes('---DISPLAY---')) {
+            const displayPart = fullText.split('---DISPLAY---')[0].trim();
+            const hint = ['images_first', 'books_first', 'not_in_collection'].includes(displayPart)
+              ? displayPart : 'books_first';
+            controller.enqueue(encoder.encode(`event: display\ndata: ${JSON.stringify(hint)}\n\n`));
+            sentDisplay = true;
+            inNarration = true;
+          }
+
+          // Stream narration chunks (between ---DISPLAY--- and ---TERMS---)
+          if (inNarration && !fullText.includes('---TERMS---')) {
+            // Only send text that's clearly narration (after ---DISPLAY---, before ---TERMS---)
+            if (!text.includes('---DISPLAY---')) {
+              controller.enqueue(encoder.encode(`event: narration\ndata: ${JSON.stringify(text)}\n\n`));
+            } else {
+              // This chunk contains ---DISPLAY--- — send only the part after it
+              const afterSep = text.split('---DISPLAY---').pop() || '';
+              if (afterSep.trim()) {
+                controller.enqueue(encoder.encode(`event: narration\ndata: ${JSON.stringify(afterSep)}\n\n`));
               }
             }
-          } else if (!hitSeparator) {
-            // Still in narration part — stream delta
-            controller.enqueue(encoder.encode(`event: narration\ndata: ${JSON.stringify(text)}\n\n`));
           }
+          if (fullText.includes('---TERMS---')) inNarration = false;
         }
 
-        // Final attempt to parse terms if not yet sent
-        if (!sentTerms && fullText.includes('---TERMS---')) {
-          const [narration, termsSection] = fullText.split('---TERMS---');
-          const termsText = termsSection?.trim();
-          if (termsText) {
-            try {
-              const jsonStr = termsText.replace(/^```(?:json)?\s*/, '').replace(/\s*```$/, '');
-              const parsed = JSON.parse(jsonStr);
-              if (Array.isArray(parsed)) {
-                const terms = parsed.filter((t: unknown) => typeof t === 'string' && t.length >= 2).slice(0, 5);
-                controller.enqueue(encoder.encode(`event: terms\ndata: ${JSON.stringify(terms)}\n\n`));
-                responseCache.set(normalized, { narration: narration.trim(), terms, timestamp: Date.now() });
-              }
-            } catch {
-              // Parse failed, send empty terms
-              controller.enqueue(encoder.encode(`event: terms\ndata: []\n\n`));
-            }
-          }
-        } else if (!sentTerms) {
-          // No separator found — model didn't follow format. Still try to extract terms.
-          controller.enqueue(encoder.encode(`event: terms\ndata: []\n\n`));
+        // Debug: log full model output
+        console.log('[ai-expand] Full output:', JSON.stringify(fullText));
+
+        // Parse everything from complete text
+        if (!sentDisplay) {
+          controller.enqueue(encoder.encode(`event: display\ndata: "books_first"\n\n`));
         }
+
+        // Extract narration
+        const narrationPart = fullText.includes('---DISPLAY---')
+          ? (fullText.split('---DISPLAY---')[1] || '').split('---TERMS---')[0].trim()
+          : fullText.split('---TERMS---')[0].trim();
+        // If narration wasn't streamed (no ---DISPLAY---), send it now
+        if (!sentDisplay && narrationPart) {
+          controller.enqueue(encoder.encode(`event: narration\ndata: ${JSON.stringify(narrationPart)}\n\n`));
+        }
+
+        // Parse terms (between ---TERMS--- and ---IMAGE_TERMS---)
+        let finalTerms: string[] = [];
+        if (fullText.includes('---TERMS---')) {
+          const afterTerms = (fullText.split('---TERMS---')[1] || '').split('---IMAGE_TERMS---')[0].trim();
+          try {
+            const parsed = JSON.parse(afterTerms.replace(/^```(?:json)?\s*/, '').replace(/\s*```$/, ''));
+            if (Array.isArray(parsed)) {
+              finalTerms = parsed.filter((t: unknown) => typeof t === 'string' && t.length >= 2).slice(0, 5);
+            }
+          } catch { /* parse failed */ }
+        }
+        controller.enqueue(encoder.encode(`event: terms\ndata: ${JSON.stringify(finalTerms)}\n\n`));
+
+        // Parse image_terms (after ---IMAGE_TERMS---)
+        let imageTerms: string[] = [];
+        if (fullText.includes('---IMAGE_TERMS---')) {
+          const afterImageSep = fullText.split('---IMAGE_TERMS---').pop()?.trim() || '';
+          try {
+            const parsed = JSON.parse(afterImageSep.replace(/^```(?:json)?\s*/, '').replace(/\s*```$/, ''));
+            if (Array.isArray(parsed)) {
+              imageTerms = parsed.filter((t: unknown) => typeof t === 'string' && t.length >= 2).slice(0, 4);
+            }
+          } catch { /* no image terms */ }
+        }
+        if (imageTerms.length > 0) {
+          controller.enqueue(encoder.encode(`event: image_terms\ndata: ${JSON.stringify(imageTerms)}\n\n`));
+        }
+
+        // Cache
+        responseCache.set(normalized, { display: sentDisplay ? fullText.split('---DISPLAY---')[0].trim() : 'books_first', narration: narrationPart, terms: finalTerms, imageTerms, timestamp: Date.now() });
 
         controller.enqueue(encoder.encode(`event: done\ndata: {}\n\n`));
         controller.close();

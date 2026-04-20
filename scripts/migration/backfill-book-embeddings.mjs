@@ -213,7 +213,10 @@ async function main() {
   // Build filter
   const bookFilter = {
     visible: true,
-    pages_count: { $gt: 0 },
+    $or: [
+      { pages_count: { $gt: 0 } },
+      { content_type: 'artwork' },
+    ],
   };
   if (BOOK_ID) bookFilter.id = BOOK_ID;
 

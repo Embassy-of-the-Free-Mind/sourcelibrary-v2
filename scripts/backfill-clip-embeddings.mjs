@@ -103,8 +103,8 @@ async function main() {
       const id = `artwork-${a.id}`;
       if (existingIds.has(id)) continue;
 
-      // Best available image URL (prefer full resolution)
-      const imageUrl = a.commons_full_url || a.archived_full_url || a.thumbnail_blob || a.thumbnail;
+      // Best available image URL — prefer R2 (no rate limits) over external
+      const imageUrl = a.archived_full_url || a.thumbnail_blob || a.thumbnail;
       if (!imageUrl) continue;
 
       items.push({
