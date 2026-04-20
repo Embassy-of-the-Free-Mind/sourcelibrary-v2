@@ -12,6 +12,7 @@ interface ArtworkNavItem {
 
 interface ArtworkHeroProps {
   imageUrl: string;
+  thumbUrl?: string;
   title: string;
   fullResUrl: string;
   license: string;
@@ -20,11 +21,26 @@ interface ArtworkHeroProps {
   nextWork?: ArtworkNavItem | null;
 }
 
-export default function ArtworkHero({ imageUrl, title, fullResUrl, license, isLandscape, prevWork, nextWork }: ArtworkHeroProps) {
+export default function ArtworkHero({ imageUrl, thumbUrl, title, fullResUrl, license, isLandscape, prevWork, nextWork }: ArtworkHeroProps) {
   const [fitHeight, setFitHeight] = useState(false);
+  const [hiResLoaded, setHiResLoaded] = useState(!thumbUrl || thumbUrl === imageUrl);
+
+  // Progressive loading: show 600px thumb immediately, swap to full-res when ready
+  const displaySrc = hiResLoaded ? imageUrl : thumbUrl!;
 
   return (
     <div className="bg-stone-900 relative">
+      {/* Preload full-res image in background */}
+      {!hiResLoaded && (
+        // eslint-disable-next-line @next/next/no-img-element
+        <img
+          src={imageUrl}
+          alt=""
+          className="hidden"
+          onLoad={() => setHiResLoaded(true)}
+        />
+      )}
+
       {/* Image container */}
       <div className={`max-w-[var(--container-wide)] mx-auto ${fitHeight ? 'py-2' : isLandscape ? 'py-4 sm:py-8' : 'py-4 sm:py-8 max-w-3xl'}`}>
         <div
@@ -32,8 +48,9 @@ export default function ArtworkHero({ imageUrl, title, fullResUrl, license, isLa
           style={fitHeight ? { height: 'calc(100vh - 120px)' } : undefined}
         >
           <ImageWithMagnifier
-            src={imageUrl}
-            thumbnail={imageUrl}
+            src={displaySrc}
+            thumbnail={thumbUrl || imageUrl}
+            highResSrc={imageUrl}
             alt={title}
             className="w-full h-full"
             magnifierSize={240}

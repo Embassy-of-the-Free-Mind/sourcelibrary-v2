@@ -40,6 +40,7 @@ interface ArtworkInfoProps {
 
 export default function ArtworkInfo({ book, collections, prevWork, nextWork }: ArtworkInfoProps) {
   const displayImage = (book as any).thumbnail_blob || book.thumbnail || '';
+  const thumbImage = book.thumbnail || '';
   const commonsUrl = (book as any).commons_url || '';
   const commonsFullUrl = (book as any).commons_full_url || '';
   const commonsLicense = (book as any).commons_license || 'Public domain';
@@ -74,6 +75,7 @@ export default function ArtworkInfo({ book, collections, prevWork, nextWork }: A
       {displayImage && (
         <ArtworkHero
           imageUrl={displayImage}
+          thumbUrl={thumbImage}
           title={book.title}
           fullResUrl={commonsUrl || commonsFullUrl}
           license={commonsLicense}
