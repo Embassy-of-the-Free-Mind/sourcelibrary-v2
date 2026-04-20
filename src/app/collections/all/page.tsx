@@ -1,5 +1,6 @@
 import { getReadDb } from '@/lib/mongodb';
 import Link from 'next/link';
+import Image from 'next/image';
 import ContentPageLayout, { ContentHeader } from '@/components/layout/ContentPageLayout';
 import type { Metadata } from 'next';
 
@@ -11,19 +12,33 @@ export const metadata: Metadata = {
   alternates: { canonical: '/collections/all' },
 };
 
+interface FeaturedImage {
+  thumbnail_url?: string;
+  extracted_url?: string;
+  image_url?: string;
+}
+
 interface SubCollection {
   slug: string;
   name: string;
   book_count: number;
   visible: boolean;
   type?: string;
+  image?: string;
 }
 
 interface Wing {
   slug: string;
   name: string;
   book_count: number;
+  image?: string;
   children: SubCollection[];
+}
+
+function pickImage(images?: FeaturedImage[]): string | undefined {
+  if (!images?.length) return undefined;
+  const img = images[0];
+  return img.extracted_url || img.thumbnail_url || img.image_url;
 }
 
 async function fetchWings(): Promise<Wing[]> {
@@ -35,12 +50,15 @@ async function fetchWings(): Promise<Wing[]> {
     type: { $ne: 'curated' },
     collection_type: { $ne: 'visual_art' },
     visible: true,
-  }).project({ slug: 1, name: 1, book_count: 1, _id: 0 }).sort({ name: 1 }).toArray();
+  }).project({ slug: 1, name: 1, book_count: 1, featured_images: { $slice: 1 }, _id: 0 }).sort({ name: 1 }).toArray();
 
-  // Get all subcollections
+  // Get all subcollections with their first featured image
   const subs = await db.collection('collections').find({
     parent: { $exists: true },
-  }).project({ slug: 1, name: 1, book_count: 1, parent: 1, visible: 1, type: 1, _id: 0 }).toArray();
+  }).project({
+    slug: 1, name: 1, book_count: 1, parent: 1, visible: 1, type: 1,
+    featured_images: { $slice: 1 }, _id: 0,
+  }).toArray();
 
   // Build parent → children map
   const childMap = new Map<string, SubCollection[]>();
@@ -54,6 +72,7 @@ async function fetchWings(): Promise<Wing[]> {
         book_count: sub.book_count || 0,
         visible: sub.visible !== false,
         type: sub.type,
+        image: pickImage(sub.featured_images),
       });
     }
   }
@@ -67,6 +86,7 @@ async function fetchWings(): Promise<Wing[]> {
     slug: w.slug,
     name: w.name,
     book_count: w.book_count || 0,
+    image: pickImage(w.featured_images),
     children: childMap.get(w.slug) || [],
   }));
 }
@@ -96,17 +116,32 @@ export default async function AllCollectionsPage() {
       <div className="grid gap-8 grid-cols-1 md:grid-cols-2 xl:grid-cols-3">
         {wings.map(wing => (
           <div key={wing.slug} className="bg-white rounded-xl border border-stone-200 overflow-hidden">
-            {/* Wing header */}
+            {/* Wing header with image */}
             <Link
               href={`/collections/${wing.slug}`}
-              className="block px-5 py-4 bg-gradient-to-r from-[#2a1f17] to-[#3d2e22] hover:from-[#3d2e22] hover:to-[#4a3828] transition-colors"
+              className="group relative block h-28 overflow-hidden"
             >
-              <h2 className="font-serif text-lg text-white font-semibold">
-                {wing.name}
-              </h2>
-              <p className="text-white/50 text-xs mt-0.5">
-                {wing.book_count.toLocaleString()} books · {wing.children.length} sub-collections
-              </p>
+              {wing.image ? (
+                <Image
+                  src={wing.image}
+                  alt={wing.name}
+                  fill
+                  sizes="(max-width: 768px) 100vw, 33vw"
+                  className="object-cover transition-transform duration-500 group-hover:scale-105"
+                  unoptimized
+                />
+              ) : (
+                <div className="absolute inset-0 bg-gradient-to-r from-[#2a1f17] to-[#3d2e22]" />
+              )}
+              <div className="absolute inset-0 bg-gradient-to-t from-[rgba(26,22,18,0.9)] via-[rgba(26,22,18,0.4)] to-transparent" />
+              <div className="absolute inset-0 flex flex-col justify-end p-4">
+                <h2 className="font-serif text-lg text-white font-semibold group-hover:text-accent-gold transition-colors">
+                  {wing.name}
+                </h2>
+                <p className="text-white/50 text-xs mt-0.5">
+                  {wing.book_count.toLocaleString()} books · {wing.children.length} sub-collections
+                </p>
+              </div>
             </Link>
 
             {/* Subcollections */}
@@ -116,11 +151,26 @@ export default async function AllCollectionsPage() {
                   <li key={sub.slug}>
                     <Link
                       href={`/collections/${sub.slug}`}
-                      className={`flex items-center justify-between px-5 py-2.5 hover:bg-stone-50 transition-colors ${
+                      className={`flex items-center gap-3 px-4 py-2 hover:bg-stone-50 transition-colors ${
                         !sub.visible ? 'opacity-40' : ''
                       }`}
                     >
-                      <span className="text-sm text-stone-700 truncate pr-3">
+                      {/* Thumbnail */}
+                      <div className="w-8 h-8 rounded overflow-hidden flex-shrink-0 bg-stone-100">
+                        {sub.image ? (
+                          <Image
+                            src={sub.image}
+                            alt=""
+                            width={32}
+                            height={32}
+                            className="w-full h-full object-cover"
+                            unoptimized
+                          />
+                        ) : (
+                          <div className="w-full h-full bg-stone-200" />
+                        )}
+                      </div>
+                      <span className="text-sm text-stone-700 truncate flex-1">
                         {sub.name}
                         {sub.type === 'curated' && (
                           <span className="ml-1.5 text-[10px] text-accent-rust font-medium uppercase tracking-wider">
