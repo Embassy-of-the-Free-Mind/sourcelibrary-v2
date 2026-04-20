@@ -3,8 +3,8 @@ import { getGeminiClient } from '@/lib/gemini-client';
 
 export const preferredRegion = 'fra1';
 
-// Cache full responses (narration + terms + display hint) to avoid repeated AI calls
-const responseCache = new Map<string, { display: string; narration: string; terms: string[]; timestamp: number }>();
+// Cache full responses (narration + terms + display hint + image terms) to avoid repeated AI calls
+const responseCache = new Map<string, { display: string; narration: string; terms: string[]; imageTerms: string[]; timestamp: number }>();
 const CACHE_TTL = 30 * 60 * 1000; // 30 minutes
 
 /**
@@ -35,6 +35,7 @@ export async function POST(request: NextRequest) {
       `event: display\ndata: ${JSON.stringify(cached.display)}\n`,
       `event: narration\ndata: ${JSON.stringify(cached.narration)}\n`,
       `event: terms\ndata: ${JSON.stringify(cached.terms)}\n`,
+      ...(cached.imageTerms.length > 0 ? [`event: image_terms\ndata: ${JSON.stringify(cached.imageTerms)}\n`] : []),
       `event: done\ndata: {}\n`,
     ].join('\n');
     return new Response(lines, {
@@ -75,19 +76,23 @@ When uncertain, default to "books_first".
 
 PART 2 (NARRATION): After "---DISPLAY---", write 1-2 brief, scholarly sentences (max 40 words) contextualizing this search. Use italics for Latin/foreign terms. Be specific, not generic. Don't say "Source Library" or "our collection." Write as if you're a knowledgeable librarian whispering helpful context. If "not_in_collection", briefly explain what IS available that's related.
 
-PART 3 (TERMS): After "---TERMS---", write ONLY a JSON array of 3-5 alternative search terms.
+PART 3 (TERMS): After "---TERMS---", write ONLY a JSON array of 3-5 alternative search terms for BOOKS (authors, titles, concepts, original-language equivalents).
+
+PART 4 (IMAGE TERMS): After "---IMAGE_TERMS---", write ONLY a JSON array of 2-4 search terms optimized for finding IMAGES in the collection. Think about what illustrations, paintings, engravings, or diagrams would be relevant. Use descriptive visual terms (e.g., "alchemical furnace", "tree of life diagram", "portrait of Paracelsus", "ecstasy vision"). Skip this section if images aren't relevant to the query.
 
 Example response:
 images_first
 ---DISPLAY---
 Raphael's fresco depicts the great philosophers of antiquity — Plato, Aristotle, Pythagoras — in the Vatican's *Stanza della Segnatura*. Many of their works are in the collection.
 ---TERMS---
-["Raphael Vatican", "Plato Aristotle", "Stanza della Segnatura", "School of Athens fresco"]`
+["Plato Aristotle", "Stanza della Segnatura", "Raphael Vatican"]
+---IMAGE_TERMS---
+["School of Athens", "philosophers fresco", "Raphael painting"]`
             }]
           }],
           generationConfig: {
             temperature: 0.5,
-            maxOutputTokens: 300,
+            maxOutputTokens: 400,
           },
         });
 
@@ -158,21 +163,18 @@ Raphael's fresco depicts the great philosophers of antiquity — Plato, Aristotl
             }
           }
 
-          // Phase 3: Parse terms JSON
+          // Phase 3: Parse terms JSON (between ---TERMS--- and ---IMAGE_TERMS---)
           if (hitTermsSep && !sentTerms) {
-            const afterTermsSep = fullText.split('---TERMS---').pop()?.trim() || '';
-            if (afterTermsSep) {
+            const afterTermsSep = fullText.split('---TERMS---')[1] || '';
+            const termsOnly = afterTermsSep.split('---IMAGE_TERMS---')[0].trim();
+            if (termsOnly) {
               try {
-                const jsonStr = afterTermsSep.replace(/^```(?:json)?\s*/, '').replace(/\s*```$/, '');
+                const jsonStr = termsOnly.replace(/^```(?:json)?\s*/, '').replace(/\s*```$/, '');
                 const parsed = JSON.parse(jsonStr);
                 if (Array.isArray(parsed)) {
                   const terms = parsed.filter((t: unknown) => typeof t === 'string' && t.length >= 2).slice(0, 5);
                   controller.enqueue(encoder.encode(`event: terms\ndata: ${JSON.stringify(terms)}\n\n`));
                   sentTerms = true;
-                  const narrationPart = hitDisplaySep
-                    ? (fullText.split('---DISPLAY---')[1] || '').split('---TERMS---')[0].trim()
-                    : fullText.split('---TERMS---')[0].trim();
-                  responseCache.set(normalized, { display: displayHint, narration: narrationPart, terms, timestamp: Date.now() });
                 }
               } catch {
                 // JSON not complete yet
@@ -186,28 +188,45 @@ Raphael's fresco depicts the great philosophers of antiquity — Plato, Aristotl
           controller.enqueue(encoder.encode(`event: display\ndata: "books_first"\n\n`));
         }
 
-        // Final attempt to parse terms if not yet sent
+        // Final parse from complete text
+        const narrationPart = hitDisplaySep
+          ? (fullText.split('---DISPLAY---')[1] || '').split('---TERMS---')[0].trim()
+          : fullText.split('---TERMS---')[0].trim();
+
+        // Parse terms (between ---TERMS--- and ---IMAGE_TERMS---)
+        let finalTerms: string[] = [];
         if (!sentTerms && fullText.includes('---TERMS---')) {
-          const afterTermsSep = fullText.split('---TERMS---').pop()?.trim() || '';
-          if (afterTermsSep) {
-            try {
-              const jsonStr = afterTermsSep.replace(/^```(?:json)?\s*/, '').replace(/\s*```$/, '');
-              const parsed = JSON.parse(jsonStr);
-              if (Array.isArray(parsed)) {
-                const terms = parsed.filter((t: unknown) => typeof t === 'string' && t.length >= 2).slice(0, 5);
-                controller.enqueue(encoder.encode(`event: terms\ndata: ${JSON.stringify(terms)}\n\n`));
-                const narrationPart = hitDisplaySep
-                  ? (fullText.split('---DISPLAY---')[1] || '').split('---TERMS---')[0].trim()
-                  : fullText.split('---TERMS---')[0].trim();
-                responseCache.set(normalized, { display: displayHint, narration: narrationPart, terms, timestamp: Date.now() });
-              }
-            } catch {
-              controller.enqueue(encoder.encode(`event: terms\ndata: []\n\n`));
+          const afterTerms = (fullText.split('---TERMS---')[1] || '').split('---IMAGE_TERMS---')[0].trim();
+          try {
+            const jsonStr = afterTerms.replace(/^```(?:json)?\s*/, '').replace(/\s*```$/, '');
+            const parsed = JSON.parse(jsonStr);
+            if (Array.isArray(parsed)) {
+              finalTerms = parsed.filter((t: unknown) => typeof t === 'string' && t.length >= 2).slice(0, 5);
+              controller.enqueue(encoder.encode(`event: terms\ndata: ${JSON.stringify(finalTerms)}\n\n`));
             }
+          } catch {
+            controller.enqueue(encoder.encode(`event: terms\ndata: []\n\n`));
           }
         } else if (!sentTerms) {
           controller.enqueue(encoder.encode(`event: terms\ndata: []\n\n`));
         }
+
+        // Parse image_terms (after ---IMAGE_TERMS---)
+        let imageTerms: string[] = [];
+        if (fullText.includes('---IMAGE_TERMS---')) {
+          const afterImageSep = fullText.split('---IMAGE_TERMS---').pop()?.trim() || '';
+          try {
+            const jsonStr = afterImageSep.replace(/^```(?:json)?\s*/, '').replace(/\s*```$/, '');
+            const parsed = JSON.parse(jsonStr);
+            if (Array.isArray(parsed)) {
+              imageTerms = parsed.filter((t: unknown) => typeof t === 'string' && t.length >= 2).slice(0, 4);
+              controller.enqueue(encoder.encode(`event: image_terms\ndata: ${JSON.stringify(imageTerms)}\n\n`));
+            }
+          } catch { /* no image terms */ }
+        }
+
+        // Cache
+        responseCache.set(normalized, { display: displayHint, narration: narrationPart, terms: finalTerms, imageTerms, timestamp: Date.now() });
 
         controller.enqueue(encoder.encode(`event: done\ndata: {}\n\n`));
         controller.close();

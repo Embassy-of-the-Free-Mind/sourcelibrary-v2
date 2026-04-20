@@ -244,6 +244,35 @@ export default function SearchPage() {
           setDisplayHint(hint);
         }
       },
+      async (imgTerms) => {
+        // Fire supplementary gallery searches with LLM-suggested image terms
+        if (!imgTerms || imgTerms.length === 0) return;
+        const existingIds = new Set(imageResults.map(i => `${i.pageId}-${i.detectionIndex}`));
+        const newImages: GalleryItem[] = [];
+        for (const term of imgTerms.slice(0, 3)) {
+          try {
+            const data = await searchApi.unified(term, { limit: 1, galleryLimit: 4 });
+            const galleryResults = [...(data.gallery?.results || []), ...((data as any).visual?.results || [])];
+            for (const g of galleryResults) {
+              const parts = (g.id || '').split('-');
+              const detectionIndex = parseInt(parts.pop() || '0');
+              const pageId = parts.join('-');
+              const key = `${pageId}-${detectionIndex}`;
+              if (existingIds.has(key)) continue;
+              existingIds.add(key);
+              newImages.push({
+                pageId, bookId: g.bookId || '', pageNumber: 0, detectionIndex,
+                imageUrl: g.imageUrl || '', thumbnailUrl: g.imageUrl || '',
+                bookTitle: g.bookTitle || '', author: '', description: g.description || '', type: g.type,
+              } as GalleryItem);
+            }
+          } catch { /* skip failed term */ }
+        }
+        if (newImages.length > 0) {
+          setImageResults(prev => [...prev, ...newImages]);
+          setImageTotal(prev => prev + newImages.length);
+        }
+      },
     );
     aiAbortRef.current = abort;
   // eslint-disable-next-line react-hooks/exhaustive-deps

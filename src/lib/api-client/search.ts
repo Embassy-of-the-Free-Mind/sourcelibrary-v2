@@ -78,6 +78,7 @@ export const search = {
     onTerms: (terms: string[]) => void,
     onDone: () => void,
     onDisplay?: (hint: string) => void,
+    onImageTerms?: (terms: string[]) => void,
   ): (() => void) => {
     const controller = new AbortController();
 
@@ -117,6 +118,8 @@ export const search = {
                   onNarration(JSON.parse(data));
                 } else if (eventType === 'terms') {
                   onTerms(JSON.parse(data));
+                } else if (eventType === 'image_terms') {
+                  onImageTerms?.(JSON.parse(data));
                 } else if (eventType === 'done') {
                   onDone();
                 }
