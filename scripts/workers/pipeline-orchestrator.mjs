@@ -84,6 +84,84 @@ function getR2Client() {
   });
 }
 
+/**
+ * Detect and remove duplicate pages caused by overlapping BPH spread photography.
+ *
+ * BPH scans photograph overlapping page openings: the RIGHT half of spread N is
+ * the same physical page as the LEFT half of spread N+1. After splitting, this
+ * creates duplicate page records throughout the book.
+ *
+ * Detection is structural (not OCR-based): a LEFT-crop page following a RIGHT-crop
+ * page from a different spread is a duplicate. This is reliable because OCR text
+ * varies between scans of the same page.
+ */
+async function deduplicateOverlappingPages(db, bookId) {
+  const pagesCol = db.collection('pages');
+
+  // Get all pages with crop and spread info, sorted by page_number
+  const pages = await pagesCol
+    .find({ book_id: bookId }, { projection: { _id: 1, id: 1, page_number: 1, crop: 1, photo_original: 1 } })
+    .sort({ page_number: 1 })
+    .toArray();
+
+  if (pages.length === 0) return null;
+
+  // Detect structural duplicates: LEFT page following RIGHT page from different spread
+  const pageIdsToArchive = [];
+  for (let i = 1; i < pages.length; i++) {
+    const prev = pages[i - 1];
+    const curr = pages[i];
+    const prevIsRight = prev.crop && prev.crop.xStart > 0;
+    const currIsLeft = curr.crop && curr.crop.xStart === 0;
+    const differentSpread = prev.photo_original && curr.photo_original && prev.photo_original !== curr.photo_original;
+
+    if (prevIsRight && currIsLeft && differentSpread) {
+      pageIdsToArchive.push(curr.id);
+    }
+  }
+
+  if (pageIdsToArchive.length === 0) return null;
+
+  // Archive duplicate pages (preserve data for recovery)
+  const dupePages = await pagesCol.find({ id: { $in: pageIdsToArchive } }).toArray();
+  if (dupePages.length > 0) {
+    const archiveDocs = dupePages.map(p => {
+      const { _id, ...rest } = p;
+      return { ...rest, original_page_id: p.id, original_mongo_id: _id, archived_at: new Date(), archive_reason: 'duplicate_overlapping_spread', book_id: bookId };
+    });
+    await db.collection('duplicate_pages').insertMany(archiveDocs);
+  }
+
+  // Delete duplicates
+  await pagesCol.deleteMany({ id: { $in: pageIdsToArchive } });
+
+  // Renumber remaining pages sequentially
+  const remainingPages = await pagesCol
+    .find({ book_id: bookId }, { projection: { _id: 1, page_number: 1 } })
+    .sort({ page_number: 1 })
+    .toArray();
+
+  const bulkOps = [];
+  for (let i = 0; i < remainingPages.length; i++) {
+    const expected = i + 1;
+    if (remainingPages[i].page_number !== expected) {
+      bulkOps.push({ updateOne: { filter: { _id: remainingPages[i]._id }, update: { $set: { page_number: expected } } } });
+    }
+  }
+  if (bulkOps.length > 0) await pagesCol.bulkWrite(bulkOps);
+
+  // Update book-level caches
+  const newCount = remainingPages.length;
+  const ocrCount = await pagesCol.countDocuments({ book_id: bookId, 'ocr.data': { $exists: true, $ne: '' } });
+  const transCount = await pagesCol.countDocuments({ book_id: bookId, 'translation.data': { $exists: true, $ne: '' } });
+  await db.collection('books').updateOne(
+    { id: bookId },
+    { $set: { pages_count: newCount, pages_ocr: ocrCount, pages_translated: transCount, updated_at: new Date() } },
+  );
+
+  return { bookId, duplicatesFound: pageIdsToArchive.length, pagesRemoved: pageIdsToArchive.length, pagesRenumbered: bulkOps.length, newPageCount: newCount };
+}
+
 async function uploadToR2(r2, key, buffer, contentType = 'image/jpeg') {
   await r2.send(new PutObjectCommand({
     Bucket: R2_BUCKET, Key: key, Body: buffer, ContentType: contentType,
@@ -3707,6 +3785,18 @@ Rules:
           // split-book.mjs sets split_completed=true and needs_splitting=false on success
           console.log(`    Done: ${label}`);
           splitDone++;
+
+          // Dedup overlapping BPH spread pages (right side of spread N = left side of spread N+1).
+          // Uses OCR fingerprinting (first 400 chars) to detect and archive duplicates.
+          try {
+            const dedupResult = await deduplicateOverlappingPages(db, book.id);
+            if (dedupResult && dedupResult.pagesRemoved > 0) {
+              console.log(`    Dedup: removed ${dedupResult.pagesRemoved} duplicate pages (${dedupResult.newPageCount} remaining)`);
+              log.dedup_removed = (log.dedup_removed || 0) + dedupResult.pagesRemoved;
+            }
+          } catch (dedupErr) {
+            console.log(`    Dedup warning: ${dedupErr.message?.slice(0, 150)}`);
+          }
         } catch (err) {
           const msg = err.stderr || err.message || String(err);
           console.log(`    FAIL: ${label} — ${msg.slice(0, 150)}`);
