@@ -4,121 +4,48 @@ import ContentPageLayout, { ContentHeader } from '@/components/layout/ContentPag
 import BlogComments from '@/components/blog/BlogComments';
 
 export const metadata: Metadata = {
-  title: 'Interlinear Display for Ancient Texts - Research Notes - Source Library',
-  description: 'Comparing paragraph vs interlinear layouts for Sumerian and Egyptian texts. Which format better serves readers of the oldest literature on Earth?',
+  title: 'Facing Page vs Interlinear: How Should Ancient Texts Be Read? - Source Library',
+  description: 'Comparing our facing-page reader (scan + translation side by side) with interlinear display (original and translation woven line by line) for Sumerian, Akkadian, and Egyptian texts.',
   alternates: {
     canonical: '/blog/interlinear-experiment',
   },
 };
 
-// Sample data: Instructions of Shuruppag (ETCSL 5.6.1) opening lines
+// Instructions of Shuruppag opening (ETCSL 5.6.1)
 const SHURUPPAG_LINES = [
-  {
-    sumerian: 'ud re-a ud su₃-ra₂ re-a',
-    transliteration: 'ud re-a ud sù-rá re-a',
-    english: 'In those days, in those far remote days,',
-  },
-  {
-    sumerian: 'ĝi₆ re-a ĝi₆ su₃-ra₂ re-a',
-    transliteration: 'ĝi₆ re-a ĝi₆ sù-rá re-a',
-    english: 'in those nights, in those faraway nights,',
-  },
-  {
-    sumerian: 'mu re-a mu su₃-ra₂ re-a',
-    transliteration: 'mu re-a mu sù-rá re-a',
-    english: 'in those years, in those far remote years,',
-  },
-  {
-    sumerian: 'ud ul-li₂-a-ta ud ul-li₂-a-ta',
-    transliteration: 'ud ul-lí-a-ta ud ul-lí-a-ta',
-    english: 'at that time, at that time —',
-  },
-  {
-    sumerian: 'šuruppag-ke₄ dumu-ni-ra na ri-in-de₅-de₅',
-    transliteration: 'šuruppag-ke₄ dumu-ni-ra na ri-in-de₅-de₅',
-    english: 'Shuruppag gave instructions to his son,',
-  },
-  {
-    sumerian: 'šuruppag dumu ubara-tutu-ke₄',
-    transliteration: 'šuruppag dumu ubara-tutu-ke₄',
-    english: 'Shuruppag, the son of Ubara-Tutu,',
-  },
-  {
-    sumerian: 'dumu-ĝu₁₀ na de₅-de₅-ĝu₁₀ ḫe₂-dab₅',
-    transliteration: 'dumu-ĝu₁₀ na de₅-de₅-ĝu₁₀ ḫé-dab₅',
-    english: '"My son, let me give you instructions, may you pay attention!',
-  },
-  {
-    sumerian: 'zi-ud-su₃-ra₂ na de₅-de₅-ĝu₁₀ ḫe₂-dab₅',
-    transliteration: 'zi-ud-sù-rá na de₅-de₅-ĝu₁₀ ḫé-dab₅',
-    english: 'Ziusudra, let me give you instructions, may you pay attention!',
-  },
+  { original: 'ud re-a ud su₃-ra₂ re-a', english: 'In those days, in those far remote days,' },
+  { original: 'ĝi₆ re-a ĝi₆ su₃-ra₂ re-a', english: 'in those nights, in those faraway nights,' },
+  { original: 'mu re-a mu su₃-ra₂ re-a', english: 'in those years, in those far remote years,' },
+  { original: 'ud ul-li₂-a-ta ud ul-li₂-a-ta', english: 'at that time, at that time —' },
+  { original: 'šuruppag-ke₄ dumu-ni-ra na ri-in-de₅-de₅', english: 'Shuruppag gave instructions to his son,' },
+  { original: 'šuruppag dumu ubara-tutu-ke₄', english: 'Shuruppag, the son of Ubara-Tutu,' },
+  { original: 'dumu-ĝu₁₀ na de₅-de₅-ĝu₁₀ ḫe₂-dab₅', english: '"My son, let me give you instructions — pay attention!' },
+  { original: 'zi-ud-su₃-ra₂ na de₅-de₅-ĝu₁₀ ḫe₂-dab₅', english: 'Ziusudra, let me give you instructions — pay attention!' },
+  { original: 'inim-ĝu₁₀ na-ab-de₅ na de₅-de₅-ĝu₁₀ ḫe���-dab₅', english: 'Do not neglect my instructions, pay attention to my words!' },
+  { original: 'nam-ku-li na-an-ak-e', english: 'Do not commit robbery,' },
+  { original: 'igi nam-ku-li na-an-bar-re', english: 'do not look with desire,' },
+  { original: 'nam-ku-li lu₂ ḫul-ĝal₂-la-am₃', english: 'robbery is a devouring man.' },
 ];
 
-// Sample: Sinuhe opening (ORAEC) with hieroglyphic transliteration
-const SINUHE_LINES = [
-  {
-    hieroglyphs: 'jrj.pat ḥꜣ.tj-ꜥ',
-    transliteration: 'irī.pat ḥātī-ʿ',
-    german: 'Der Fürst und Graf,',
-    english: 'The prince and count,',
-  },
-  {
-    hieroglyphs: 'ḫtm.tj-bjt.j smr wꜥ.tj',
-    transliteration: 'ḫtm.tī-bītī smr wʿ.tī',
-    german: 'der Siegler des Königs von Unterägypten, der einzige Freund,',
-    english: 'the royal seal-bearer, sole companion,',
-  },
-  {
-    hieroglyphs: 'jm.j-rʾ ḫꜣs.wt nt(.j) nb.t n.t ṯnw',
-    transliteration: 'imī-rʾ ḫāswt ntī nbt nt ṯnw',
-    german: 'der Vorsteher der Fremdländer des Herrn des Ostens,',
-    english: 'the overseer of foreign lands of the lord of the east,',
-  },
-  {
-    hieroglyphs: 'rḫ.j njswt mꜣꜥ mri̯=f',
-    transliteration: 'rḫī nīswt māʿ mrī=f',
-    german: 'der wahre Bekannte des Königs, sein Geliebter,',
-    english: 'the true royal acquaintance, his beloved,',
-  },
-  {
-    hieroglyphs: 'šms.w sꜣ-nḥ.t',
-    transliteration: 'šmsw Sā-nḥt',
-    german: 'der Gefolgsmann Sinuhe.',
-    english: 'the follower, Sinuhe.',
-  },
-];
-
-// Gilgamesh Tablet I opening (Standard Babylonian, transliterated)
+// Gilgamesh Tablet XI (Flood) excerpt
 const GILGAMESH_LINES = [
-  {
-    akkadian: 'ša nag-ba i-mu-ru iš-di ma-a-ti',
-    english: 'He who saw the Deep, the foundation of the land,',
-  },
-  {
-    akkadian: 'i-du-ú [...] ka-la-ma ḫa-si-is',
-    english: 'who knew [...] was wise in all things:',
-  },
-  {
-    akkadian: 'dGIŠ-gím-maš ša nag-ba i-mu-ru iš-di ma-a-ti',
-    english: 'Gilgamesh, who saw the Deep, the foundation of the land,',
-  },
-  {
-    akkadian: 'i-du-ú [...] ka-la-ma ḫa-si-is',
-    english: 'who knew [...] was wise in all things:',
-  },
-  {
-    akkadian: '[...] mit-ḫa-riš ik-šu-du nap-ḫar šim-ti',
-    english: '[...] equally he reached the sum of wisdom.',
-  },
-  {
-    akkadian: 'ni-ṣir-ta i-mu-ur-ma ka-tim-ta ip-tu-ú',
-    english: 'He saw what was secret and uncovered what was hidden,',
-  },
-  {
-    akkadian: 'ub-la ṭe₄-e-ma ša la-am a-bu-bi',
-    english: 'he brought back a tale of the time before the Flood.',
-  },
+  { original: 'dGIŠ-gím-maš a-na ša-a-šu iz-za-kar-am a-na mUT-na-piš-tim ru-u-qí', english: 'Gilgamesh spoke to him, to Utnapishtim the Faraway:' },
+  { original: 'a-na-tal-ka mUT-na-piš-tim', english: '"I look at you, Utnapishtim,' },
+  { original: 'la-a na-ṭa-a-ta at-ta-ma ki-i ia-a-ši at-ta-ma', english: 'your form is no different — you are just like me!' },
+  { original: 'ul ta-na-an-dir at-ta-ma ki-i ia-a-ši at-ta-ma', english: 'You are not different at all — you are just like me!' },
+  { original: 'lib₃-bi ib-ni-ka a-na e-peš tu-qu-un-ti', english: 'My heart had imagined you doing battle,' },
+  { original: 'u at-ta ta-at-ti-il-ma se-ri-iš ta-na-al', english: 'but you lie here idle on your back!' },
+  { original: '[al]-ka-am-ma qí-bi-a-am lu-ud-ma-iq šu-úr-šu-ub-ta', english: 'Tell me, how did you join the Assembly of the Gods' },
+  { original: 'i-na pu-uḫ-ri-šu-nu ba-la-ṭa ta-at-ta-ṣi', english: 'and find eternal life?"' },
+];
+
+// Sinuhe opening (ORAEC)
+const SINUHE_LINES = [
+  { original: 'jrj.pat ḥꜣ.tj-ꜥ', german: 'Der Fürst und Graf,', english: 'The prince and count,' },
+  { original: 'ḫtm.tj-bjt.j smr wꜥ.tj', german: 'der Siegler des Königs, der einzige Freund,', english: 'the royal seal-bearer, sole companion,' },
+  { original: 'jm.j-rʾ ḫꜣs.wt nt nb n ṯnw', german: 'der Vorsteher der Fremdländer des Herrn des Ostens,', english: 'the overseer of foreign lands of the lord of the east,' },
+  { original: 'rḫ njswt mꜣꜥ mri̯=f', german: 'der wahre Bekannte des Königs, sein Geliebter,', english: 'the true royal acquaintance, his beloved,' },
+  { original: 'šms.w sꜣ-nḥ.t', german: 'der Gefolgsmann Sinuhe.', english: 'the follower, Sinuhe.' },
 ];
 
 export default function InterlinearExperimentPage() {
@@ -126,8 +53,8 @@ export default function InterlinearExperimentPage() {
     <ContentPageLayout
       header={
         <ContentHeader
-          title="Interlinear Display for Ancient Texts"
-          subtitle="Comparing layouts for Sumerian, Akkadian, and Egyptian"
+          title="Facing Page vs Interlinear"
+          subtitle="How should the oldest literature on Earth be read?"
         >
           <p className="text-stone-400 text-sm mt-4">20 April 2026 &middot; 8 min read</p>
         </ContentHeader>
@@ -149,146 +76,204 @@ export default function InterlinearExperimentPage() {
       <article className="prose-content max-w-none">
 
         <p>
-          Source Library holds 373 Sumerian literary texts from ETCSL and hundreds of Egyptian texts from ORAEC.
-          Both corpora include word-by-word data that could support interlinear display &mdash; showing the original,
-          transliteration, and translation aligned line-by-line. This is how scholars actually read these texts.
+          Source Library uses a <strong>facing-page reader</strong>: the original manuscript scan on the left,
+          AI translation on the right. This mirrors how scholars have read texts for centuries &mdash;
+          the Loeb Classical Library, Bud&eacute; editions, and every bilingual critical edition since Erasmus.
         </p>
 
         <p>
-          But is interlinear better for general readers? This page compares three layouts using the same source material.
+          But for ancient Near Eastern texts &mdash; Sumerian, Akkadian, Egyptian &mdash; there&apos;s a problem.
+          These languages are written in scripts most readers can&apos;t parse visually.
+          The scan of a cuneiform tablet or hieratic papyrus doesn&apos;t help you follow along the way
+          a Latin or German page does. The visual parallel breaks down.
+        </p>
+
+        <p>
+          <strong>Interlinear display</strong> solves this differently: instead of image vs text side by side,
+          it weaves the original and translation together line by line. You see the transliteration
+          (the scholarly romanization) directly above or below the English, aligned to the same poetic structure.
+        </p>
+
+        <p>The question: <em>which is better for these texts?</em></p>
+
+        <hr className="my-12 border-stone-200" />
+
+        {/* ===== SECTION 1: Facing Page ===== */}
+        <h2>The Facing-Page Approach (current)</h2>
+
+        <p className="text-sm text-stone-500 mb-4">
+          How our reader currently displays an ETCSL text. Left panel: scan or placeholder. Right panel: continuous translation.
+        </p>
+
+        <div className="border border-stone-200 rounded-lg overflow-hidden my-6">
+          <div className="grid grid-cols-1 md:grid-cols-2 divide-y md:divide-y-0 md:divide-x divide-stone-200">
+            {/* Left: simulated scan panel */}
+            <div className="bg-stone-800 p-6 flex items-center justify-center min-h-[320px]">
+              <div className="text-center">
+                <div className="text-stone-500 text-xs uppercase tracking-wider mb-2">Source Image</div>
+                <div className="bg-stone-700 rounded p-4 max-w-[200px] mx-auto">
+                  {/* eslint-disable-next-line @next/next/no-img-element */}
+                  <img
+                    src="https://cdli.earth/dl/photo/P394444.jpg"
+                    alt="Cuneiform tablet K.3514 (Gilgamesh Tablet IX)"
+                    className="w-full rounded opacity-90"
+                  />
+                </div>
+                <p className="text-stone-500 text-xs mt-2">K.3514 — Tablet IX</p>
+              </div>
+            </div>
+            {/* Right: translation panel */}
+            <div className="bg-white p-6">
+              <div className="text-stone-400 text-xs uppercase tracking-wider mb-3">Translation</div>
+              <div className="space-y-2 text-sm text-stone-700 leading-relaxed">
+                {GILGAMESH_LINES.map((line, i) => (
+                  <p key={i}>{line.english}</p>
+                ))}
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <p className="text-sm text-stone-500">
+          <strong>Strengths:</strong> You see the actual artifact. The translation reads as continuous prose.
+          Works for any text with scans. Universal layout.<br />
+          <strong>Weakness:</strong> For cuneiform/hieratic, most readers can&apos;t follow along in the scan.
+          The poetic structure (parallelism, repetition) is invisible in paragraph form.
         </p>
 
         <hr className="my-12 border-stone-200" />
 
-        {/* ===== SECTION 1: Instructions of Shuruppag ===== */}
-        <h2>1. Instructions of Shuruppag (Sumerian, c. 2600 BCE)</h2>
-        <p className="text-muted text-sm">
-          The oldest surviving wisdom text. A father&apos;s advice to his son &mdash; who happens to be Ziusudra, the Sumerian Noah.
+        {/* ===== SECTION 2: Interlinear ===== */}
+        <h2>The Interlinear Approach</h2>
+
+        <p className="text-sm text-stone-500 mb-4">
+          Same text, displayed with transliteration and translation aligned line by line.
+          No scan image &mdash; the structure itself becomes the artifact.
         </p>
 
-        <h3>Layout A: Paragraph (current)</h3>
-        <div className="bg-stone-50 border border-stone-200 rounded-lg p-6 my-6">
-          <p className="italic text-stone-600 text-sm mb-4 font-mono">
-            {SHURUPPAG_LINES.map(l => l.transliteration).join(' / ')}
-          </p>
-          <p className="text-stone-800">
-            {SHURUPPAG_LINES.map(l => l.english).join(' ')}
-          </p>
-        </div>
-
-        <h3>Layout B: Interlinear (line-by-line)</h3>
-        <div className="bg-stone-50 border border-stone-200 rounded-lg p-6 my-6 space-y-4">
-          {SHURUPPAG_LINES.map((line, i) => (
-            <div key={i} className="grid grid-cols-1 gap-0.5 pb-3 border-b border-stone-100 last:border-0 last:pb-0">
-              <span className="font-mono text-xs text-amber-700 tracking-wide">{line.transliteration}</span>
-              <span className="text-stone-800 text-sm">{line.english}</span>
+        {/* Gilgamesh interlinear */}
+        <h3>Epic of Gilgamesh, Tablet XI (Akkadian)</h3>
+        <div className="bg-stone-50 border border-stone-200 rounded-lg p-6 my-6 space-y-3">
+          {GILGAMESH_LINES.map((line, i) => (
+            <div key={i} className="pb-3 border-b border-stone-100 last:border-0 last:pb-0">
+              <div className="font-mono text-xs text-purple-800 tracking-wide">{line.original}</div>
+              <div className="text-stone-800 text-sm mt-0.5">{line.english}</div>
             </div>
           ))}
         </div>
 
-        <h3>Layout C: Three-tier interlinear</h3>
-        <div className="bg-stone-50 border border-stone-200 rounded-lg p-6 my-6">
-          <div className="overflow-x-auto">
-            <table className="w-full text-left border-collapse">
-              <tbody>
-                {SHURUPPAG_LINES.map((line, i) => (
-                  <tr key={i} className="border-b border-stone-100 last:border-0">
-                    <td className="pr-3 py-2 text-xs text-stone-400 font-mono w-8 align-top">{i + 1}</td>
-                    <td className="py-2 align-top">
-                      <div className="font-mono text-xs text-amber-800 tracking-wide">{line.sumerian}</div>
-                      <div className="text-stone-800 text-sm mt-0.5">{line.english}</div>
-                    </td>
-                  </tr>
-                ))}
-              </tbody>
-            </table>
-          </div>
+        {/* Shuruppag interlinear */}
+        <h3>Instructions of Shuruppag (Sumerian, c. 2600 BCE)</h3>
+        <div className="bg-stone-50 border border-stone-200 rounded-lg p-6 my-6 space-y-3">
+          {SHURUPPAG_LINES.map((line, i) => (
+            <div key={i} className="pb-3 border-b border-stone-100 last:border-0 last:pb-0">
+              <div className="font-mono text-xs text-amber-800 tracking-wide">{line.original}</div>
+              <div className="text-stone-800 text-sm mt-0.5">{line.english}</div>
+            </div>
+          ))}
         </div>
 
-        <hr className="my-12 border-stone-200" />
-
-        {/* ===== SECTION 2: Sinuhe ===== */}
-        <h2>2. The Tale of Sinuhe (Egyptian, c. 1875 BCE)</h2>
-        <p className="text-muted text-sm">
-          The masterpiece of Middle Egyptian literature. Here showing the opening with transliteration from ORAEC,
-          German (original academic translation), and English.
+        {/* Sinuhe — three-tier */}
+        <h3>Tale of Sinuhe (Egyptian, c. 1875 BCE)</h3>
+        <p className="text-xs text-stone-500 mb-3">
+          Three tiers: transliteration, German (source translation from ORAEC), English.
         </p>
-
-        <h3>Layout A: Paragraph</h3>
-        <div className="bg-stone-50 border border-stone-200 rounded-lg p-6 my-6">
-          <p className="italic text-stone-600 text-sm mb-4 font-mono">
-            {SINUHE_LINES.map(l => l.transliteration).join(' ')}
-          </p>
-          <p className="text-stone-800">
-            {SINUHE_LINES.map(l => l.english).join(' ')}
-          </p>
-        </div>
-
-        <h3>Layout B: Four-tier interlinear (with German intermediary)</h3>
         <div className="bg-stone-50 border border-stone-200 rounded-lg p-6 my-6 space-y-3">
           {SINUHE_LINES.map((line, i) => (
             <div key={i} className="pb-3 border-b border-stone-100 last:border-0 last:pb-0">
-              <div className="font-mono text-xs text-emerald-800 tracking-wide">{line.hieroglyphs}</div>
+              <div className="font-mono text-xs text-emerald-800 tracking-wide">{line.original}</div>
               <div className="text-xs text-stone-400 italic mt-0.5">{line.german}</div>
               <div className="text-stone-800 text-sm mt-0.5">{line.english}</div>
             </div>
           ))}
         </div>
 
-        <hr className="my-12 border-stone-200" />
-
-        {/* ===== SECTION 3: Gilgamesh ===== */}
-        <h2>3. Epic of Gilgamesh, Tablet I (Akkadian, c. 1200 BCE)</h2>
-        <p className="text-muted text-sm">
-          The opening of the Standard Babylonian version. The famous &ldquo;He who saw the Deep&rdquo; prologue.
+        <p className="text-sm text-stone-500">
+          <strong>Strengths:</strong> Poetic structure visible immediately (parallelism in Shuruppag, the anaphora in Gilgamesh).
+          Readers can notice patterns in the original even without knowing the language.
+          Takes less screen space than facing page. Better on mobile.<br />
+          <strong>Weakness:</strong> No connection to the physical artifact. Loses the materiality of clay/papyrus.
+          Transliteration may overwhelm casual readers who just want the story.
         </p>
 
-        <h3>Layout A: Paragraph</h3>
-        <div className="bg-stone-50 border border-stone-200 rounded-lg p-6 my-6">
-          <p className="text-stone-800">
-            {GILGAMESH_LINES.map(l => l.english).join(' ')}
-          </p>
-        </div>
+        <hr className="my-12 border-stone-200" />
 
-        <h3>Layout B: Bilingual interlinear</h3>
-        <div className="bg-stone-50 border border-stone-200 rounded-lg p-6 my-6 space-y-3">
-          {GILGAMESH_LINES.map((line, i) => (
-            <div key={i} className="pb-3 border-b border-stone-100 last:border-0 last:pb-0">
-              <div className="font-mono text-xs text-purple-800 tracking-wide">{line.akkadian}</div>
-              <div className="text-stone-800 text-sm mt-0.5">{line.english}</div>
+        {/* ===== SECTION 3: Hybrid ===== */}
+        <h2>The Hybrid: Tablet + Interlinear</h2>
+
+        <p className="text-sm text-stone-500 mb-4">
+          What if we combine both? Tablet photo on top (or left), interlinear below.
+          This is roughly what <Link href="/read/gilgamesh" className="text-secondary hover:underline">/read/gilgamesh</Link> does.
+        </p>
+
+        <div className="border border-stone-200 rounded-lg overflow-hidden my-6">
+          {/* Tablet photo strip */}
+          <div className="bg-stone-800 p-4 flex items-center justify-center">
+            {/* eslint-disable-next-line @next/next/no-img-element */}
+            <img
+              src="https://cdli.earth/dl/photo/P273210.jpg"
+              alt="K.3375 — The Flood Tablet (Gilgamesh XI)"
+              className="max-h-[200px] rounded shadow-lg"
+            />
+          </div>
+          {/* Interlinear below */}
+          <div className="bg-stone-50 p-6 space-y-3">
+            <div className="text-[10px] text-stone-400 uppercase tracking-wider mb-2">
+              K.3375 &mdash; Tablet XI &mdash; &ldquo;The Flood&rdquo;
             </div>
-          ))}
+            {GILGAMESH_LINES.slice(0, 4).map((line, i) => (
+              <div key={i} className="pb-2 border-b border-stone-100 last:border-0 last:pb-0">
+                <div className="font-mono text-xs text-purple-800 tracking-wide">{line.original}</div>
+                <div className="text-stone-800 text-sm mt-0.5">{line.english}</div>
+              </div>
+            ))}
+          </div>
         </div>
 
         <hr className="my-12 border-stone-200" />
 
-        {/* ===== Discussion ===== */}
+        {/* ===== Observations ===== */}
         <h2>Observations</h2>
 
-        <p><strong>Interlinear wins for poetry.</strong> Ancient Mesopotamian and Egyptian literature is overwhelmingly poetry &mdash; parallelism, repetition, line-level wordplay. The paragraph layout collapses this structure. Interlinear preserves it.</p>
+        <p>
+          <strong>For poetry (most ancient Near Eastern lit), interlinear wins.</strong> The
+          parallelism in Shuruppag, the repetition in Gilgamesh &mdash; these are structural features
+          that facing-page prose translation erases. Interlinear preserves them naturally.
+        </p>
 
-        <p><strong>The transliteration layer matters.</strong> Even readers who don&apos;t know Sumerian or Akkadian can notice patterns in the transliteration &mdash; repeated words, parallel constructions, phonetic echoes. This is invisible in paragraph mode.</p>
+        <p>
+          <strong>Facing page still wins for scanned books.</strong> For our 15,000+ books with actual
+          manuscript scans (Latin, German, Greek, Arabic), the facing-page layout is ideal.
+          The reader CAN follow along in the original. The image carries real information.
+        </p>
 
-        <p><strong>Three tiers may be too much for casual reading.</strong> The four-tier Egyptian layout (hieroglyphs + German + English) is information-dense. Two tiers (original + English) may be the sweet spot, with the third available on hover/expand.</p>
+        <p>
+          <strong>The hybrid is best for tablet literature.</strong> Show the artifact (it&apos;s beautiful,
+          it&apos;s material, it grounds the text in physical reality), but don&apos;t ask the reader to
+          &ldquo;read along&rdquo; in cuneiform. Give them the interlinear below or beside it.
+        </p>
 
-        <p><strong>Mobile is the challenge.</strong> Interlinear works beautifully on desktop but can feel cramped on narrow screens. Possible solutions: collapse to bilingual toggle, or show only the translation with &ldquo;show original&rdquo; tap targets.</p>
+        <p>
+          <strong>This suggests a rule:</strong> If the original script is readable by the likely audience
+          (Latin, Greek, German, Arabic, Hebrew), use facing page. If it&apos;s not (cuneiform, hieratic,
+          demotic), use interlinear + artifact photo.
+        </p>
 
         <h3>Next steps</h3>
         <ul>
-          <li>Build an interactive toggle (paragraph / interlinear) into the reader for ETCSL and ORAEC texts</li>
-          <li>Explore word-level alignment: hover a Sumerian word to highlight its English equivalent</li>
-          <li>Test with actual users: scholars vs general readers vs language learners</li>
-          <li>Consider Unicode hieroglyphic rendering (U+13000 block) for the Egyptian tier</li>
+          <li>Add an interlinear toggle to the reader for ETCSL and ORAEC texts</li>
+          <li>Build the <Link href="/read/gilgamesh" className="text-secondary hover:underline">tablet reader</Link> as the hybrid model for Gilgamesh, Enuma Elish, etc.</li>
+          <li>Explore word-level alignment: hover a Sumerian word to highlight its English gloss</li>
+          <li>Test: does the three-tier (original + German + English) add value, or should we collapse to two?</li>
         </ul>
 
         <hr className="my-12 border-stone-200" />
 
         <p className="text-sm text-muted">
-          Texts: <Link href="/book/the-instructions-of-shuruppag" className="text-secondary hover:underline">Instructions of Shuruppag</Link> (ETCSL 5.6.1),{' '}
-          <Link href="/book/the-eloquent-peasant" className="text-secondary hover:underline">The Eloquent Peasant</Link> (ORAEC),{' '}
-          <Link href="/book/an-old-babylonian-version-of-the-gilgamesh-epic-mesopotamian" className="text-secondary hover:underline">Epic of Gilgamesh</Link>.
-          All source data from <a href="https://etcsl.orinst.ox.ac.uk/" className="text-secondary hover:underline" target="_blank" rel="noopener">ETCSL</a> and{' '}
-          <a href="https://github.com/oraec/corpus_raw_data" className="text-secondary hover:underline" target="_blank" rel="noopener">ORAEC</a>.
+          Source texts: <Link href="/book/the-instructions-of-shuruppag" className="text-secondary hover:underline">Instructions of Shuruppag</Link> (ETCSL 5.6.1),{' '}
+          <Link href="/book/the-epic-of-gilgamish-thompson" className="text-secondary hover:underline">Epic of Gilgamesh</Link> (Thompson 1930),{' '}
+          <Link href="/book/the-eloquent-peasant" className="text-secondary hover:underline">Tale of Sinuhe</Link> (ORAEC).
+          Tablet photo: <a href="https://cdli.earth/artifacts/273210" className="text-secondary hover:underline" target="_blank" rel="noopener">CDLI P273210</a> (K.3375, British Museum).
         </p>
 
       </article>
