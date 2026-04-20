@@ -78,7 +78,12 @@ PART 2 (NARRATION): After "---DISPLAY---", write 1-2 brief, scholarly sentences 
 
 PART 3 (TERMS): After "---TERMS---", write ONLY a JSON array of 3-5 alternative search terms for BOOKS (authors, titles, concepts, original-language equivalents).
 
-PART 4 (IMAGE TERMS): After "---IMAGE_TERMS---", write ONLY a JSON array of 2-4 search terms optimized for finding IMAGES in the collection. Think about what illustrations, paintings, engravings, or diagrams would be relevant. Use descriptive visual terms (e.g., "alchemical furnace", "tree of life diagram", "portrait of Paracelsus", "ecstasy vision"). Skip this section if images aren't relevant to the query.
+PART 4 (IMAGE TERMS): After "---IMAGE_TERMS---", write ONLY a JSON array of 2-4 search terms to find IMAGES related to this query. Don't just rephrase the query — think about what specific artworks, famous paintings, engravings, diagrams, or illustrations actually depict this subject. Name specific works, artists, or iconographic subjects that a pre-modern art collection would contain. Examples:
+- "mystical ecstasy" → ["Bernini Teresa", "Hildegard visions", "stigmata", "ascension"] (specific artworks depicting ecstasy)
+- "alchemy" → ["alchemical furnace", "philosopher's stone emblem", "distillation apparatus"] (things you'd see in alchemical illustrations)
+- "Paracelsus" → ["portrait Paracelsus", "iatrochemistry laboratory", "Paracelsus woodcut"] (visual depictions of the person/practice)
+
+Skip this section entirely if images genuinely aren't relevant.
 
 Example response:
 images_first
@@ -87,7 +92,7 @@ Raphael's fresco depicts the great philosophers of antiquity — Plato, Aristotl
 ---TERMS---
 ["Plato Aristotle", "Stanza della Segnatura", "Raphael Vatican"]
 ---IMAGE_TERMS---
-["School of Athens", "philosophers fresco", "Raphael painting"]`
+["School of Athens", "Raphael philosophers", "Plato Aristotle fresco"]`
             }]
           }],
           generationConfig: {
