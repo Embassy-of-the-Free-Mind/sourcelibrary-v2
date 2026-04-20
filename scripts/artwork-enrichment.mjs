@@ -44,6 +44,14 @@ const VISUAL_ART_COLLECTIONS = [
   { slug: 'esoteric-engravers', name: 'The Esoteric Engravers' },
   { slug: 'art-of-altdorfer-baldung', name: 'Witchcraft & the Uncanny' },
   { slug: 'venetian-mystery', name: 'The Venetian Mystery' },
+  { slug: 'dreams-unconscious', name: 'Dreams & the Unconscious' },
+  { slug: 'music-sound', name: 'Music, Sound & Cosmic Harmony' },
+  { slug: 'dance-of-death', name: 'Dance of Death' },
+  { slug: 'book-of-the-dead', name: 'The Book of the Dead' },
+  { slug: 'the-infernal', name: 'The Infernal' },
+  { slug: 'yokai-oni', name: 'Yōkai & Oni' },
+  { slug: 'wrathful-deities', name: 'Wrathful Deities' },
+  { slug: 'angels-celestials', name: 'Angels & Celestials' },
 ];
 
 // Also allow assigning to topical (non-visual-art) collections when relevant
@@ -74,11 +82,13 @@ ARTWORK METADATA:
 - Date: ${artwork.published || 'Unknown'}
 - Medium: ${artwork.medium || 'Unknown'}
 - Type: ${artwork.resource_type || 'Unknown'}
-- Commons categories: ${(artwork.commons_categories || []).join(', ') || 'None'}
+- Commons categories: ${typeof artwork.commons_categories === 'string' ? artwork.commons_categories.split('|').slice(0, 10).join(', ') : Array.isArray(artwork.commons_categories) ? artwork.commons_categories.slice(0, 10).join(', ') : 'None'}
 
 Look at the image carefully. Return JSON with these fields:
 
 {
+  "display_title": "A clean, concise English title for this artwork (max 80 chars). If the existing title is a messy filename, catalog number, or foreign language, rewrite it. If it's already clean, return it unchanged. Examples: 'The Sleep of Reason Produces Monsters', 'Queen of Cups (Visconti-Sforza Tarot)', 'Anatomical Study of the Muscular System'.",
+  "corrected_author": "The artist's name in standard form (e.g. 'Francisco de Goya', 'Albrecht Dürer', 'Unknown artist'). Fix Wikipedia usernames, doubled strings, institution names that aren't artists. If the existing author is correct, return it unchanged. Null if truly unknown.",
   "subject": "One sentence: what is depicted. Name every identifiable figure, creature, object, and action. If you can identify who the figures are (a specific deity, saint, mythological character, or historical person), name them. Be concrete about what they are doing and what is happening.",
   "description": "2-3 sentences describing the image for someone who cannot see it. What do the figures look like, what are they doing, what are they holding, what are they wearing? Describe poses, gestures, facial expressions, colors, composition. Include enough physical detail that someone could find this image by searching for any object, figure, animal, or action in it. Interpretation and meaning are welcome — but ground them in what is visually present.",
   "significance": "1-2 sentences of historical or intellectual context. What tradition, text, ritual, or belief system does this connect to? Name specific texts, authors, schools of thought, or historical events. This applies to any tradition worldwide. If no meaningful connection exists, set to null. Do NOT fabricate.",
@@ -97,7 +107,15 @@ Look at the image carefully. Return JSON with these fields:
   "has_readable_text": true,
   "figures_depicted": ["Named figures, deities, historical persons, or figure types visible in the image"],
   "symbols": ["Symbols with specific iconographic meaning (e.g. 'caduceus', 'ouroboros', 'vajra', 'ankh', 'yin-yang', 'broomstick'). NOT generic objects like 'tree' or 'building'."],
-  "iconclass": ["2-5 Iconclass codes. 0=Abstract, 1=Religion, 2=Nature, 3=Human, 4=Society, 5=Ideas, 6=History, 7=Bible, 8=Literature, 9=Classical Myth. Key: 11H=saints, 14=astrology, 25F=animals, 25FF=fabulous animals, 31A=human figure, 48C=emblems, 49E39=alchemy, 61B2=personifications, 92=classical gods."]
+  "iconclass": ["2-5 Iconclass codes. 0=Abstract, 1=Religion, 2=Nature, 3=Human, 4=Society, 5=Ideas, 6=History, 7=Bible, 8=Literature, 9=Classical Myth. Key: 11H=saints, 14=astrology, 25F=animals, 25FF=fabulous animals, 31A=human figure, 48C=emblems, 49E39=alchemy, 61B2=personifications, 92=classical gods."],
+  "aat_technique": "Getty AAT preferred term for technique (e.g. 'engraving', 'etching', 'woodcut', 'oil painting', 'fresco', 'lithography', 'watercolor', 'pen and ink', 'charcoal', 'tempera', 'mezzotint', 'aquatint'). Use the most specific applicable term.",
+  "aat_material": "Getty AAT preferred term for support/material (e.g. 'laid paper', 'canvas', 'panel (wood)', 'parchment', 'vellum', 'copper (metal)', 'ivory', 'silk'). Null if unknown.",
+  "aat_style": "Getty AAT style/period term (e.g. 'Renaissance', 'Baroque', 'Mannerist', 'Gothic', 'Edo', 'Mughal', 'Symbolist', 'Pre-Raphaelite'). Use AAT's preferred form.",
+  "ulan_artist": "If you can identify the artist, provide their Getty ULAN ID as a number (e.g. 500024327 for Hendrick Goltzius, 500010141 for Albrecht Dürer, 500118936 for Francisco de Goya). Only include if confident. Null if unknown.",
+  "tgn_place": "If a specific place of creation is identifiable, provide the Getty TGN ID (e.g. 7000874 for Rome, 7006952 for Florence, 7016845 for Amsterdam). Null if unknown.",
+  "period": "Art-historical period (e.g. 'Renaissance', 'Baroque', 'Medieval', 'Edo period', 'Mughal', 'Song dynasty', 'Hellenistic', 'Romanesque', 'Gothic', 'Symbolist', 'Art Nouveau'). Be specific to the cultural tradition.",
+  "culture": "Cultural origin (e.g. 'Italian', 'Japanese', 'Tibetan', 'Persian', 'Flemish', 'German', 'French', 'Indian', 'Chinese', 'Egyptian', 'Aztec'). Null if unclear.",
+  "museum_description": "2-3 sentences for a museum wall label. What the viewer sees and why it matters. No AI slop."
 }
 
 AVAILABLE COLLECTIONS:
@@ -122,10 +140,14 @@ async function fetchImageBase64(url) {
 }
 
 async function enrichArtwork(artwork) {
-  // Prefer highest resolution for better inscription reading.
-  // commons_full_url is the original upload (often 4000+ px).
-  const imageUrl = artwork.commons_full_url || artwork.thumbnail_blob || artwork.thumbnail;
+  // Prefer R2 archived images (no rate limits, fast) over external URLs.
+  // Skip artworks that are only on external URLs — they'll 429.
+  // Run R2 archival first, then enrichment.
+  const r2Url = artwork.archived_full_url || artwork.thumbnail_blob;
+  const externalUrl = artwork.commons_full_url || artwork.thumbnail;
+  const imageUrl = r2Url || externalUrl;
   if (!imageUrl) return { error: 'no_image' };
+  if (!r2Url && externalUrl?.includes('wikimedia')) return { error: 'not_on_r2_yet' };
 
   const prompt = buildPrompt(artwork);
   const imageBase64 = await fetchImageBase64(imageUrl);
@@ -170,7 +192,8 @@ async function main() {
   const projection = {
     _id: 1, id: 1, slug: 1, title: 1, author: 1, published: 1,
     medium: 1, resource_type: 1, thumbnail_blob: 1, thumbnail: 1,
-    commons_full_url: 1, commons_categories: 1,
+    archived_full_url: 1, commons_full_url: 1, commons_categories: 1,
+    display_title: 1, 'enrichment.ulan_artist': 1,
   };
 
   // Use cursor-based iteration to avoid loading all docs into memory
@@ -210,6 +233,12 @@ async function main() {
         continue;
       }
 
+      if (enrichment.display_title && enrichment.display_title !== art.title) {
+        console.log(`  Title: "${art.title?.substring(0, 40)}" → "${enrichment.display_title}"`);
+      }
+      if (enrichment.corrected_author && enrichment.corrected_author !== art.author) {
+        console.log(`  Author: "${art.author?.substring(0, 30)}" → "${enrichment.corrected_author}"`);
+      }
       console.log(`  Subject: ${enrichment.subject}`);
       console.log(`  Genre: ${enrichment.genre}`);
       console.log(`  Collections: ${(enrichment.collections || []).join(', ') || 'none'}`);
@@ -230,7 +259,15 @@ async function main() {
       results.push({ slug: art.slug, ...enrichment });
 
       if (!DRY_RUN) {
-        // Write enrichment to the book document
+        const now = new Date();
+        const provenanceEntry = {
+          source: 'ai_enrichment',
+          model: 'gemini-3.1-flash-lite-preview',
+          date: now,
+          script: 'artwork-enrichment.mjs',
+        };
+
+        // Write enrichment subdocument (full structured data)
         const updateFields = {
           enrichment: {
             subject: enrichment.subject,
@@ -245,11 +282,69 @@ async function main() {
             figures_depicted: enrichment.figures_depicted || [],
             symbols: enrichment.symbols || [],
             iconclass: enrichment.iconclass || [],
+            aat_technique: enrichment.aat_technique || null,
+            aat_material: enrichment.aat_material || null,
+            aat_style: enrichment.aat_style || null,
+            ulan_artist: enrichment.ulan_artist || null,
+            tgn_place: enrichment.tgn_place || null,
+            period: enrichment.period || null,
+            culture: enrichment.culture || null,
+            museum_description: enrichment.museum_description || null,
             model: 'gemini-3.1-flash-lite-preview',
-            enriched_at: new Date(),
+            enriched_at: now,
           },
-          updated_at: new Date(),
+          updated_at: now,
         };
+
+        // Promote enrichment to core book fields for search/display
+        // Only overwrite if the enrichment provides better data
+        const provenance = {};
+
+        // Display title — promote if enrichment provides a cleaner one
+        if (enrichment.display_title && enrichment.display_title !== art.title) {
+          updateFields.display_title = enrichment.display_title;
+          provenance.display_title = { ...provenanceEntry, previous_value: art.display_title || art.title };
+        }
+
+        // Author — fix if enrichment corrects it
+        if (enrichment.corrected_author && enrichment.corrected_author !== art.author) {
+          updateFields.author = enrichment.corrected_author;
+          provenance.author = { ...provenanceEntry, previous_value: art.author };
+        }
+
+        // Description — promote to top-level for search indexing
+        if (enrichment.description) {
+          updateFields.description = enrichment.description;
+          provenance.description = provenanceEntry;
+        }
+
+        // Summary — combine subject + significance for book-level search
+        if (enrichment.subject) {
+          const summary = [enrichment.subject, enrichment.significance].filter(Boolean).join(' ');
+          updateFields.summary = summary;
+          provenance.summary = provenanceEntry;
+        }
+
+        // Genre → resource_type (more accurate than import guess)
+        if (enrichment.genre && enrichment.genre !== art.resource_type) {
+          updateFields.resource_type = enrichment.genre;
+          provenance.resource_type = { ...provenanceEntry, previous_value: art.resource_type };
+        }
+
+        // Write provenance for all touched fields
+        if (Object.keys(provenance).length > 0) {
+          for (const [field, entry] of Object.entries(provenance)) {
+            updateFields[`field_provenance.${field}`] = entry;
+          }
+          updateFields['field_provenance.enrichment'] = provenanceEntry;
+        }
+
+        // Make visible after enrichment (Commons imports start as hidden drafts)
+        if (art.hidden && art.hidden_reason === 'artwork_import') {
+          updateFields.hidden = false;
+          updateFields.status = 'published';
+          updateFields.visible = true;
+        }
 
         await books.updateOne({ _id: art._id }, { $set: updateFields });
 
