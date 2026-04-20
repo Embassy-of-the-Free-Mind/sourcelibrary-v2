@@ -1,0 +1,359 @@
+[
+  {
+    "source": "wikimedia_commons",
+    "category": "Category:Ars_moriendi",
+    "collections": ["visual-art", "memento-mori"],
+    "resource_type": "print",
+    "_note": "15th-century block book woodcut series — 11 scenes of a dying man resisting demonic temptations"
+  },
+  {
+    "source": "wikimedia_commons",
+    "category": "Category:Ars_Moriendi_(blockbook,_variant_1,_British_Museum)",
+    "collections": ["visual-art", "memento-mori"],
+    "resource_type": "print",
+    "_note": "British Museum variant of the block book — cleaner impressions of all 11 woodcut pairs"
+  },
+  {
+    "source": "wikimedia_commons",
+    "category": "Category:Triumph_of_Death",
+    "collections": ["visual-art", "dance-of-death"],
+    "resource_type": "painting",
+    "_note": "Medieval allegory: death's universal dominion over pope, emperor, beggar alike — Pisa, Palermo, Bruegel"
+  },
+  {
+    "source": "wikimedia_commons",
+    "category": "Category:The_Triumph_of_Death_(Pieter_Bruegel_the_Elder)",
+    "collections": ["visual-art", "dance-of-death"],
+    "resource_type": "painting",
+    "_note": "Bruegel's 1562 panorama of death's armies — skeletal soldiers, mass graves, fleeing crowds"
+  },
+  {
+    "source": "wikimedia_commons",
+    "category": "Category:Bhavachakra",
+    "collections": ["visual-art", "wrathful-deities"],
+    "resource_type": "painting",
+    "_note": "Tibetan Wheel of Life held by Yama — the six realms of rebirth, twelve nidanas, three poisons at the hub"
+  },
+  {
+    "source": "wikimedia_commons",
+    "category": "Category:Bhavacakra_paintings",
+    "collections": ["visual-art", "wrathful-deities"],
+    "resource_type": "painting",
+    "_note": "Thangka paintings of the Bhavachakra from Tibetan and Nepalese Buddhist traditions"
+  },
+  {
+    "source": "wikimedia_commons",
+    "category": "Category:José_Guadalupe_Posada",
+    "collections": ["visual-art", "dance-of-death"],
+    "resource_type": "print",
+    "_note": "Mexican engraver's skeleton broadsheets — La Catrina, Calavera Garbancera, political caricatures as dancing dead"
+  },
+  {
+    "source": "wikimedia_commons",
+    "category": "Category:La_Catrina",
+    "collections": ["visual-art", "dance-of-death"],
+    "resource_type": "print",
+    "_note": "Posada's bourgeois female skull — the iconic image of Mexican Day of the Dead"
+  },
+  {
+    "source": "wikimedia_commons",
+    "category": "Category:Calaveras_by_José_Guadalupe_Posada",
+    "collections": ["visual-art", "dance-of-death"],
+    "resource_type": "print",
+    "_note": "Broadsheet calaveras (skull prints) satirising Mexican society — politicians, clergy, soldiers as skeletons"
+  },
+  {
+    "source": "wikimedia_commons",
+    "category": "Category:Vanitas_paintings",
+    "collections": ["visual-art", "memento-mori"],
+    "resource_type": "painting",
+    "_note": "Still life genre: skull, hourglass, extinguished candle, rotting fruit — sic transit gloria mundi"
+  },
+  {
+    "source": "wikimedia_commons",
+    "category": "Category:Vanitas_by_Pieter_Claesz",
+    "collections": ["visual-art", "memento-mori"],
+    "resource_type": "painting",
+    "_note": "Dutch Golden Age vanitas master — timepieces, tipped glasses, skulls on tables"
+  },
+  {
+    "source": "wikimedia_commons",
+    "category": "Category:Paintings_by_Harmen_Steenwijck",
+    "collections": ["visual-art", "memento-mori"],
+    "resource_type": "painting",
+    "_note": "Steenwijck's vanitas still lifes — academic emblems, shells, weapons, skulls in precise chiaroscuro"
+  },
+  {
+    "source": "wikimedia_commons",
+    "category": "Category:Israhel_van_Meckenem",
+    "collections": ["visual-art", "dance-of-death"],
+    "resource_type": "print",
+    "_note": "Prolific 15th-century engraver — danse macabre plates and morality scenes among the largest early print corpus"
+  },
+  {
+    "source": "wikimedia_commons",
+    "category": "Category:Nuremberg_Chronicle",
+    "collections": ["visual-art", "dance-of-death"],
+    "resource_type": "print",
+    "_note": "Wolgemut/Pleydenwurff woodcuts for Schedel's 1493 chronicle — includes Dance of Death and Last Judgement scenes"
+  },
+  {
+    "source": "wikimedia_commons",
+    "category": "Category:Dance_of_Death_by_Michael_Wolgemut",
+    "collections": ["visual-art", "dance-of-death"],
+    "resource_type": "print",
+    "_note": "Wolgemut's Dance of Death woodcuts from the Nuremberg Chronicle — Death seizing figures from every social rank"
+  },
+  {
+    "source": "wikimedia_commons",
+    "category": "Category:Danse_macabre_(Hartmann_Schedel)",
+    "collections": ["visual-art", "dance-of-death"],
+    "resource_type": "print",
+    "_note": "Schedel Chronicle danse macabre sequence — skeleton figures leading the living to the grave"
+  },
+  {
+    "source": "wikimedia_commons",
+    "category": "Category:Dance_of_Death_by_Hans_Holbein_the_Younger",
+    "collections": ["visual-art", "dance-of-death"],
+    "resource_type": "print",
+    "_note": "Holbein's 1538 Lyon woodcut series — 41 scenes of Death surprising every estate, from pope to ploughman"
+  },
+  {
+    "source": "wikimedia_commons",
+    "category": "Category:Simulachres_et_Histories_Faces_de_la_Mort",
+    "collections": ["visual-art", "dance-of-death"],
+    "resource_type": "print",
+    "_note": "The published edition of Holbein's Dance of Death — original Lyon 1538 page scans with letterpress captions"
+  },
+  {
+    "source": "wikimedia_commons",
+    "category": "Category:Memento_mori",
+    "collections": ["visual-art", "memento-mori"],
+    "resource_type": "object",
+    "_note": "Broad category: skull rings, mourning jewelry, carved ivory skulls, death-head medals and tokens"
+  },
+  {
+    "source": "wikimedia_commons",
+    "category": "Category:Memento_mori_in_paintings",
+    "collections": ["visual-art", "memento-mori"],
+    "resource_type": "painting",
+    "_note": "Paintings featuring memento mori motifs — skulls held by saints, hourglasses in portraits"
+  },
+  {
+    "source": "wikimedia_commons",
+    "category": "Category:Amduat",
+    "collections": ["visual-art", "book-of-the-dead", "egyptian-texts"],
+    "resource_type": "painting",
+    "_note": "Egyptian Book of What is in the Underworld — hourly journey of the sun through the twelve divisions of the Duat"
+  },
+  {
+    "source": "wikimedia_commons",
+    "category": "Category:Coffin_Texts",
+    "collections": ["visual-art", "book-of-the-dead", "egyptian-texts"],
+    "resource_type": "object",
+    "_note": "Hieroglyphic spells painted on Middle Kingdom coffins — successor to Pyramid Texts, precursor to Book of the Dead"
+  },
+  {
+    "source": "wikimedia_commons",
+    "category": "Category:Canopic_jars",
+    "collections": ["visual-art", "book-of-the-dead"],
+    "resource_type": "object",
+    "_note": "Egyptian funerary vessels for the four sons of Horus — Imsety, Hapy, Duamutef, Qebehsenuef"
+  },
+  {
+    "source": "wikimedia_commons",
+    "category": "Category:Ancient_Egyptian_funerary_art",
+    "collections": ["visual-art", "book-of-the-dead", "egyptian-texts"],
+    "resource_type": "object",
+    "_note": "Shabtis, heart scarabs, ushabti boxes, mummy masks — the material culture of Egyptian afterlife preparation"
+  },
+  {
+    "source": "wikimedia_commons",
+    "category": "Category:Psychostasia_in_ancient_Egypt",
+    "collections": ["visual-art", "book-of-the-dead"],
+    "resource_type": "painting",
+    "_note": "The Weighing of the Heart — Anubis at the scales, Thoth recording, Ammit waiting to devour the unworthy"
+  },
+  {
+    "source": "met_openaccess",
+    "query": "vanitas skull memento mori",
+    "departments": ["European Paintings", "Drawings and Prints"],
+    "date_range": "1500-1700",
+    "collections": ["visual-art", "memento-mori"],
+    "resource_type": "painting",
+    "_note": "Met CC0 vanitas and memento mori paintings — Dutch and Flemish masters"
+  },
+  {
+    "source": "met_openaccess",
+    "object_ids": [
+      544174, 548692, 548693, 548694, 548695,
+      544175, 548696, 548697, 548698
+    ],
+    "collections": ["visual-art", "book-of-the-dead"],
+    "resource_type": "object",
+    "_note": "Met Egyptian funerary objects: canopic jars, ushabtis, heart scarabs — Dynasty XVIII-XXI, CC0"
+  },
+  {
+    "source": "met_openaccess",
+    "object_ids": [
+      456329, 544176, 544177, 544178, 544179, 544180
+    ],
+    "collections": ["visual-art", "memento-mori"],
+    "resource_type": "object",
+    "_note": "Met memento mori jewelry: skull rings, mourning lockets, death-head pendants — 16th-17th century CC0"
+  },
+  {
+    "source": "wikimedia_commons",
+    "category": "Category:Mictlantecuhtli",
+    "collections": ["visual-art", "memento-mori"],
+    "resource_type": "object",
+    "_note": "Aztec god of death and the underworld Mictlan — skeletal effigy figures, codex representations"
+  },
+  {
+    "source": "wikimedia_commons",
+    "category": "Category:Aztec_death_gods",
+    "collections": ["visual-art", "memento-mori"],
+    "resource_type": "object",
+    "_note": "Coatlicue, Xipe Totec, Tlaltecuhtli — Mesoamerican deities of death, sacrifice, and earth"
+  },
+  {
+    "source": "wikimedia_commons",
+    "category": "Category:Mixtec_deities",
+    "collections": ["visual-art", "memento-mori"],
+    "resource_type": "object",
+    "_note": "Mixtec underworld deities from codices and ceramic tradition — Nine Lords of the Night"
+  },
+  {
+    "source": "wikimedia_commons",
+    "category": "Category:Attic_white-ground_lekythoi",
+    "collections": ["visual-art", "memento-mori"],
+    "resource_type": "object",
+    "_note": "Greek funerary oil flasks — white-ground technique with scenes of the dead, mourning, Charon's boat"
+  },
+  {
+    "source": "wikimedia_commons",
+    "category": "Category:Ancient_Greek_funerary_vases",
+    "collections": ["visual-art", "memento-mori"],
+    "resource_type": "object",
+    "_note": "Attic black- and red-figure pottery with Underworld scenes — Hermes Psychopomp, Charon, Elysian Fields"
+  },
+  {
+    "source": "wikimedia_commons",
+    "category": "Category:Roman_sarcophagi",
+    "collections": ["visual-art", "memento-mori"],
+    "resource_type": "sculpture",
+    "_note": "Marble sarcophagi with mythological relief — Persephone's abduction, Endymion's sleep, Dionysiac processions"
+  },
+  {
+    "source": "wikimedia_commons",
+    "category": "Category:Charon_(mythology)_in_art",
+    "collections": ["visual-art", "memento-mori"],
+    "resource_type": "painting",
+    "_note": "The ferryman of the dead — from Attic lekythoi through Michelangelo's Last Judgement to Patinir's landscape"
+  },
+  {
+    "source": "wikimedia_commons",
+    "category": "Category:Día_de_Muertos",
+    "collections": ["visual-art", "dance-of-death"],
+    "resource_type": "object",
+    "_note": "Mexican Day of the Dead folk art — sugar skulls, ofrendas, papel picado, Catrina figurines"
+  },
+  {
+    "source": "wikimedia_commons",
+    "category": "Category:Calaveras_(art)",
+    "collections": ["visual-art", "dance-of-death"],
+    "resource_type": "object",
+    "_note": "Decorated skull imagery across Mexican folk tradition — ceramic, papier-mâché, and painted skulls"
+  },
+  {
+    "source": "wikimedia_commons",
+    "category": "Category:Last_Judgement_in_Christian_art",
+    "collections": ["visual-art", "memento-mori"],
+    "resource_type": "painting",
+    "_note": "Christ judging the dead — the damned descend to Hell, the saved rise to Heaven. Tympana, panels, altarpieces."
+  },
+  {
+    "source": "wikimedia_commons",
+    "category": "Category:Hell_in_Christian_iconography",
+    "collections": ["visual-art", "the-infernal"],
+    "resource_type": "painting",
+    "_note": "Visual theology of Hell — demons, cauldrons, the damned in torment. Complementary to Hellmouth (already imported)."
+  },
+  {
+    "source": "wikimedia_commons",
+    "category": "Category:Weighing_of_souls",
+    "collections": ["visual-art", "memento-mori"],
+    "resource_type": "painting",
+    "_note": "Michael weighing souls at the Last Judgement — the Christian counterpart to the Egyptian psychostasia"
+  },
+  {
+    "source": "wikimedia_commons",
+    "category": "Category:Hades_(deity)_in_art",
+    "collections": ["visual-art", "memento-mori"],
+    "resource_type": "painting",
+    "_note": "Greek god of the underworld — abduction of Persephone, Cerberus, the throne of the dead"
+  },
+  {
+    "source": "wikimedia_commons",
+    "category": "Category:Yama_(Buddhism)_in_art",
+    "collections": ["visual-art", "wrathful-deities"],
+    "resource_type": "painting",
+    "_note": "Buddhist lord of the dead — thangkas showing Yama judging souls, his court of hell administrators"
+  },
+  {
+    "source": "wikimedia_commons",
+    "category": "Category:Enma_(Buddhism)",
+    "collections": ["visual-art", "wrathful-deities"],
+    "resource_type": "painting",
+    "_note": "Japanese equivalent of Yama — the king of hell in Buddhist iconography, painted on kakemono and temple scrolls"
+  },
+  {
+    "source": "wikimedia_commons",
+    "category": "Category:Hell_in_Buddhist_art",
+    "collections": ["visual-art", "wrathful-deities"],
+    "resource_type": "painting",
+    "_note": "The various Buddhist hell realms — Naraka scenes from Japanese jigoku-zoshi (hell scroll) tradition"
+  },
+  {
+    "source": "wikimedia_commons",
+    "category": "Category:Jigoku_Zoshi",
+    "collections": ["visual-art", "wrathful-deities"],
+    "resource_type": "painting",
+    "_note": "Japanese Hell Scrolls (12th c.) — vivid depictions of the sixteen hells, one of the earliest narrative painted sequences"
+  },
+  {
+    "source": "wikimedia_commons",
+    "category": "Category:Book_of_Gates",
+    "collections": ["visual-art", "book-of-the-dead", "egyptian-texts"],
+    "resource_type": "painting",
+    "_note": "Egyptian New Kingdom royal tomb text — the sun's journey through twelve hours, guarded gates, and the tribunal of Osiris"
+  },
+  {
+    "source": "wikimedia_commons",
+    "category": "Category:Elysium_in_art",
+    "collections": ["visual-art", "memento-mori"],
+    "resource_type": "painting",
+    "_note": "The blessed dead in Elysium — Greek paradise imagery from funerary pottery through Baroque painting"
+  },
+  {
+    "source": "wikimedia_commons",
+    "category": "Category:Purgatory_in_Christian_art",
+    "collections": ["visual-art", "memento-mori"],
+    "resource_type": "painting",
+    "_note": "The intermediate realm — souls in purifying flames, interceding saints, the Church Triumphant above"
+  },
+  {
+    "source": "wikimedia_commons",
+    "category": "Category:Harrowing_of_Hell",
+    "collections": ["visual-art", "memento-mori"],
+    "resource_type": "painting",
+    "_note": "Christ's descent to liberate the righteous dead — a pivotal iconographic programme from Byzantine to Gothic"
+  },
+  {
+    "source": "wikimedia_commons",
+    "category": "Category:Death_(personification)_in_art",
+    "collections": ["visual-art", "dance-of-death", "memento-mori"],
+    "resource_type": "painting",
+    "_note": "Personified Death across world traditions — the Grim Reaper, Saturn, Azrael, Yama on his buffalo"
+  }
+]

@@ -1,0 +1,519 @@
+[
+  {
+    "source": "wikimedia_commons",
+    "category": "Category:De_humani_corporis_fabrica",
+    "title": "De Humani Corporis Fabrica (parent category)",
+    "author": "Andreas Vesalius",
+    "year": "1543/1555",
+    "description": "Parent category for both editions of Vesalius's landmark anatomical atlas",
+    "collections": ["visual-art", "natural-philosophy"],
+    "resource_type": "print"
+  },
+  {
+    "source": "wikimedia_commons",
+    "category": "Category:De_humani_corporis_fabrica_1543",
+    "title": "De Humani Corporis Fabrica (1543 edition)",
+    "author": "Andreas Vesalius",
+    "year": "1543",
+    "description": "First edition anatomical plates — muscle men, skeleton poses, organ dissections",
+    "collections": ["visual-art", "natural-philosophy"],
+    "resource_type": "print"
+  },
+  {
+    "source": "wikimedia_commons",
+    "category": "Category:De_humani_corporis_fabrica_1555",
+    "title": "De Humani Corporis Fabrica (1555 edition)",
+    "author": "Andreas Vesalius",
+    "year": "1555",
+    "description": "Revised second edition with corrected anatomical plates",
+    "collections": ["visual-art", "natural-philosophy"],
+    "resource_type": "print"
+  },
+  {
+    "source": "met_openaccess",
+    "object_ids": [358129],
+    "title": "De Humani Corporis Fabrica — woodcut book",
+    "author": "Andreas Vesalius",
+    "year": "1555",
+    "description": "Met Museum copy of the 1555 Vesalius with 200+ woodcut illustrations, public domain",
+    "collections": ["visual-art", "natural-philosophy"],
+    "resource_type": "print"
+  },
+  {
+    "source": "met_openaccess",
+    "object_ids": [692287],
+    "title": "Portrait of Andreas Vesalius — frontispiece to De Humani Corporis Fabrica",
+    "author": "Attributed to John of Calcar (Jan Steven van Calcar)",
+    "year": "1543",
+    "description": "Frontispiece portrait of Vesalius dissecting an arm, landmark image of Renaissance science",
+    "collections": ["visual-art", "natural-philosophy"],
+    "resource_type": "print"
+  },
+  {
+    "source": "wikimedia_commons",
+    "category": "Category:Kunstformen_der_Natur",
+    "title": "Kunstformen der Natur (Art Forms in Nature)",
+    "author": "Ernst Haeckel",
+    "year": "1904",
+    "description": "100 lithographic plates of radiolarians, medusae, corals, lichens — iconic scientific art",
+    "collections": ["visual-art", "natural-philosophy"],
+    "resource_type": "print"
+  },
+  {
+    "source": "wikimedia_commons",
+    "category": "Category:Kunstformen_der_Natur_-_derivative",
+    "title": "Kunstformen der Natur — derivative crops",
+    "author": "Ernst Haeckel",
+    "year": "1904",
+    "description": "Cropped and detail views from Haeckel's Art Forms in Nature plates",
+    "collections": ["visual-art", "natural-philosophy"],
+    "resource_type": "print"
+  },
+  {
+    "source": "wikimedia_commons",
+    "category": "Category:Metamorphosis_insectorum_Surinamensium_-_Merian",
+    "title": "Metamorphosis Insectorum Surinamensium",
+    "author": "Maria Sibylla Merian",
+    "year": "1705",
+    "description": "116 plates depicting Surinamese insects, caterpillars, plants and animals in their ecological context",
+    "collections": ["visual-art", "natural-philosophy"],
+    "resource_type": "print"
+  },
+  {
+    "source": "wikimedia_commons",
+    "category": "Category:Maria_Sibylla_Merian",
+    "title": "Maria Sibylla Merian — Works",
+    "author": "Maria Sibylla Merian",
+    "year": "1647–1717",
+    "description": "Complete works by Merian including botanical and entomological watercolors and prints",
+    "collections": ["visual-art", "natural-philosophy"],
+    "resource_type": "drawing"
+  },
+  {
+    "source": "met_openaccess",
+    "object_ids": [399922],
+    "title": "Study of Capers, Gorse, and a Beetle",
+    "author": "Maria Sibylla Merian",
+    "year": "1693",
+    "description": "Watercolor and white gouache on vellum — exquisite example of Merian's naturalist drawing style",
+    "collections": ["visual-art", "natural-philosophy"],
+    "resource_type": "drawing"
+  },
+  {
+    "source": "wikimedia_commons",
+    "category": "Category:Andreas_Cellarius",
+    "title": "Harmonia Macrocosmica — Celestial Atlas",
+    "author": "Andreas Cellarius",
+    "year": "1660",
+    "description": "The most spectacular star atlas ever produced — 29 double-page hand-colored celestial maps, Ptolemaic, Copernican and Tychonic universe models",
+    "collections": ["visual-art", "natural-philosophy"],
+    "resource_type": "print"
+  },
+  {
+    "source": "wikimedia_commons",
+    "category": "Category:Ulisse_Aldrovandi",
+    "title": "Natural History of Ulisse Aldrovandi",
+    "author": "Ulisse Aldrovandi",
+    "year": "1522–1605",
+    "description": "Illustrations from Aldrovandi's encyclopedic natural history works: Historia Serpentum, Monstrorum Historia, ornithological plates",
+    "collections": ["visual-art", "natural-philosophy"],
+    "resource_type": "print"
+  },
+  {
+    "source": "wikimedia_commons",
+    "category": "Category:Hooke's_Micrographia_Diagrams_from_the_National_Library_of_Wales",
+    "title": "Micrographia — Diagrams (National Library of Wales)",
+    "author": "Robert Hooke",
+    "year": "1665",
+    "description": "Microscopic engravings from Micrographia including the famous flea, louse, fly's eye, and cork cells",
+    "collections": ["visual-art", "natural-philosophy"],
+    "resource_type": "print"
+  },
+  {
+    "source": "wikimedia_commons",
+    "category": "Category:Robert_Hooke",
+    "title": "Robert Hooke — Scientific Illustrations",
+    "author": "Robert Hooke",
+    "year": "1665",
+    "description": "Category covering Hooke's Micrographia plates and related microscopy illustrations",
+    "collections": ["visual-art", "natural-philosophy"],
+    "resource_type": "print"
+  },
+  {
+    "source": "wikimedia_commons",
+    "category": "Category:Illustrations_from_the_work_of_Antonie_van_Leeuwenhoek",
+    "title": "Leeuwenhoek Microscopy Illustrations",
+    "author": "Antonie van Leeuwenhoek",
+    "year": "1674–1723",
+    "description": "First drawings of bacteria, protozoa, sperm cells, blood cells, muscle fibers — the birth of microbiology",
+    "collections": ["visual-art", "natural-philosophy"],
+    "resource_type": "print"
+  },
+  {
+    "source": "wikimedia_commons",
+    "category": "Category:Carta_marina_(Magnus)",
+    "title": "Carta Marina — Olaus Magnus",
+    "author": "Olaus Magnus",
+    "year": "1539",
+    "description": "Famous map of Scandinavia teeming with sea monsters, mythical creatures and cartographic wonders",
+    "collections": ["visual-art", "natural-philosophy"],
+    "resource_type": "print"
+  },
+  {
+    "source": "wikimedia_commons",
+    "category": "Category:Les_Roses_(Redouté)",
+    "title": "Les Roses",
+    "author": "Pierre-Joseph Redouté",
+    "year": "1817–1824",
+    "description": "46 botanical plates of roses — the definitive botanical illustration of the Romantic era, painted for Empress Joséphine",
+    "collections": ["visual-art", "natural-philosophy"],
+    "resource_type": "print"
+  },
+  {
+    "source": "wikimedia_commons",
+    "category": "Category:Pierre-Joseph_Redouté",
+    "title": "Pierre-Joseph Redouté — Complete Works",
+    "author": "Pierre-Joseph Redouté",
+    "year": "1759–1840",
+    "description": "All botanical works by Redouté including Liliacées, Les Roses, and Choix des Plus Belles Fleurs",
+    "collections": ["visual-art", "natural-philosophy"],
+    "resource_type": "print"
+  },
+  {
+    "source": "wikimedia_commons",
+    "category": "Category:Georg_Dionysius_Ehret",
+    "title": "Georg Dionysius Ehret — Botanical Illustrations",
+    "author": "Georg Dionysius Ehret",
+    "year": "1708–1770",
+    "description": "Plantae et Papiliones Rariores and other botanical illustrations — Ehret was the finest botanical draughtsman of the 18th century",
+    "collections": ["visual-art", "natural-philosophy"],
+    "resource_type": "drawing"
+  },
+  {
+    "source": "wikimedia_commons",
+    "category": "Category:Historiae_Animalium",
+    "title": "Historiae Animalium",
+    "author": "Conrad Gessner",
+    "year": "1551–1558",
+    "description": "First modern zoological encyclopedia — illustrations of mammals, birds, fish, reptiles and mythical beasts",
+    "collections": ["visual-art", "natural-philosophy"],
+    "resource_type": "print"
+  },
+  {
+    "source": "wikimedia_commons",
+    "category": "Category:Historiae_Animalium_Liber_I",
+    "title": "Historiae Animalium — Liber I (Quadrupeds)",
+    "author": "Conrad Gessner",
+    "year": "1551",
+    "description": "First book of Gessner's zoological encyclopedia covering quadruped animals with woodcut illustrations",
+    "collections": ["visual-art", "natural-philosophy"],
+    "resource_type": "print"
+  },
+  {
+    "source": "wikimedia_commons",
+    "category": "Category:Illustrations_from_De_historia_stirpium",
+    "title": "De Historia Stirpium — Botanical Woodcuts",
+    "author": "Leonhard Fuchs",
+    "year": "1542",
+    "description": "79 botanical woodcuts from Fuchs's landmark herbal — some of the finest scientific illustration of the Renaissance",
+    "collections": ["visual-art", "natural-philosophy"],
+    "resource_type": "print"
+  },
+  {
+    "source": "wikimedia_commons",
+    "category": "Category:Astrolabes",
+    "title": "Astrolabes — Historical Collection",
+    "author": "Various makers",
+    "year": "900–1700",
+    "description": "Islamic, European and Persian astrolabes — instruments for determining celestial positions and time",
+    "collections": ["visual-art", "natural-philosophy"],
+    "resource_type": "scientific_instrument"
+  },
+  {
+    "source": "wikimedia_commons",
+    "category": "Category:Armillary_spheres",
+    "title": "Armillary Spheres",
+    "author": "Various makers",
+    "year": "1400–1800",
+    "description": "Nested ring models of the celestial sphere — instruments of astronomical teaching and navigation",
+    "collections": ["visual-art", "natural-philosophy"],
+    "resource_type": "scientific_instrument"
+  },
+  {
+    "source": "wikimedia_commons",
+    "category": "Category:Armillary_spheres_in_art",
+    "title": "Armillary Spheres in Art",
+    "author": "Various artists",
+    "year": "1400–1800",
+    "description": "Artistic depictions of armillary spheres in paintings, prints and drawings — symbol of Renaissance learning",
+    "collections": ["visual-art", "natural-philosophy"],
+    "resource_type": "print"
+  },
+  {
+    "source": "wikimedia_commons",
+    "category": "Category:Orreries",
+    "title": "Orreries — Mechanical Solar System Models",
+    "author": "Various makers",
+    "year": "1700–1850",
+    "description": "Clockwork mechanical models of the solar system — embodiments of Newtonian natural philosophy",
+    "collections": ["visual-art", "natural-philosophy"],
+    "resource_type": "scientific_instrument"
+  },
+  {
+    "source": "wikimedia_commons",
+    "category": "Category:Astronomical_instruments",
+    "title": "Historical Astronomical Instruments",
+    "author": "Various makers",
+    "year": "900–1800",
+    "description": "Broad category covering astrolabes, quadrants, sextants, celestial globes and other instruments of natural philosophy",
+    "collections": ["visual-art", "natural-philosophy"],
+    "resource_type": "scientific_instrument"
+  },
+  {
+    "source": "met_openaccess",
+    "object_ids": [444408],
+    "title": "Astrolabe of 'Umar ibn Yusuf al-Muzaffari",
+    "author": "'Umar ibn Yusuf ibn 'Umar ibn 'Ali ibn Rasul al-Muzaffari",
+    "year": "1291",
+    "description": "13th century Yemeni astrolabe in brass with silver inlay — among the finest Islamic scientific instruments",
+    "collections": ["visual-art", "natural-philosophy"],
+    "resource_type": "scientific_instrument"
+  },
+  {
+    "source": "met_openaccess",
+    "object_ids": [451699],
+    "title": "Planispheric Astrolabe",
+    "author": "Muhammad Zaman al-Munajjim al-Asturlabi",
+    "year": "1654",
+    "description": "17th century Iranian astrolabe in brass and steel, Mashhad — late flowering of Islamic astronomical instrument-making",
+    "collections": ["visual-art", "natural-philosophy"],
+    "resource_type": "scientific_instrument"
+  },
+  {
+    "source": "wikimedia_commons",
+    "category": "Category:Cabinet_of_curiosities",
+    "title": "Cabinet of Curiosities — Wunderkammer",
+    "author": "Various artists",
+    "year": "1550–1750",
+    "description": "Illustrations and depictions of Wunderkammern — the precursors of modern museums, combining naturalia, artificialia and mirabilia",
+    "collections": ["visual-art", "natural-philosophy"],
+    "resource_type": "print"
+  },
+  {
+    "source": "wikimedia_commons",
+    "category": "Category:Cabinets_of_curiosities_in_art",
+    "title": "Cabinets of Curiosities in Art",
+    "author": "Various artists",
+    "year": "1550–1750",
+    "description": "Painted and engraved depictions of Wunderkammer interiors including Ferrante Imperato's Dell'Historia Naturale cabinet engraving (1599)",
+    "collections": ["visual-art", "natural-philosophy"],
+    "resource_type": "print"
+  },
+  {
+    "source": "wikimedia_commons",
+    "category": "Category:Clockwork_automata",
+    "title": "Clockwork Automata",
+    "author": "Various makers",
+    "year": "1500–1800",
+    "description": "Historical mechanical automata — drumming bears, flautists, writing figures — the Renaissance dream of artificial life",
+    "collections": ["visual-art", "natural-philosophy"],
+    "resource_type": "sculpture"
+  },
+  {
+    "source": "wikimedia_commons",
+    "category": "Category:Automata",
+    "title": "Historical Automata",
+    "author": "Various makers",
+    "year": "1200–1800",
+    "description": "Mechanical marvels from al-Jazari to Vaucanson — automata as expressions of natural philosophy's ambitions",
+    "collections": ["visual-art", "natural-philosophy"],
+    "resource_type": "sculpture"
+  },
+  {
+    "source": "wikimedia_commons",
+    "category": "Category:Carta_marina",
+    "title": "Carta Marina — Sea Monster Maps",
+    "author": "Various cartographers",
+    "year": "1539–1600",
+    "description": "Early modern sea maps populated with sea monsters, monstrous fish and cartographic creatures from Olaus Magnus and contemporaries",
+    "collections": ["visual-art", "natural-philosophy"],
+    "resource_type": "print"
+  },
+  {
+    "source": "wikimedia_commons",
+    "category": "Category:Microscope_of_Anton_van_Leeuwenhoek",
+    "title": "Leeuwenhoek Microscopes",
+    "author": "Antonie van Leeuwenhoek",
+    "year": "1674–1720",
+    "description": "Images of Leeuwenhoek's hand-ground single-lens microscopes — instruments that opened the invisible world",
+    "collections": ["visual-art", "natural-philosophy"],
+    "resource_type": "scientific_instrument"
+  },
+  {
+    "source": "wikimedia_commons",
+    "category": "Category:Historical_scientific_instruments",
+    "title": "Historical Scientific Instruments",
+    "author": "Various makers",
+    "year": "900–1800",
+    "description": "Broad collection of pre-modern scientific instruments — quadrants, theodolites, compasses, sundials, microscopes",
+    "collections": ["visual-art", "natural-philosophy"],
+    "resource_type": "scientific_instrument"
+  },
+  {
+    "source": "wikimedia_commons",
+    "category": "Category:Portraits_of_Maria_Sibylla_Merian",
+    "title": "Portraits of Maria Sibylla Merian",
+    "author": "Various artists",
+    "year": "1647–1717",
+    "description": "Portraits of the pioneering naturalist-artist who travelled to Suriname to document its insects in situ",
+    "collections": ["visual-art", "natural-philosophy"],
+    "resource_type": "painting"
+  },
+  {
+    "source": "wikimedia_commons",
+    "category": "Category:16th-century_woodcuts",
+    "title": "16th-Century Scientific Woodcuts",
+    "author": "Various artists",
+    "year": "1500–1600",
+    "description": "Broad collection of Renaissance woodcuts including botanical, zoological and anatomical illustrations",
+    "collections": ["visual-art", "natural-philosophy"],
+    "resource_type": "print",
+    "note": "Large category — filter to scientific/natural history subjects on import"
+  },
+  {
+    "source": "wikimedia_commons",
+    "category": "Category:Cabinet_of_Curiosities_(Hainz,_Hamburg)",
+    "title": "Cabinet of Curiosities — Georg Hainz Paintings",
+    "author": "Georg Hainz",
+    "year": "1666",
+    "description": "Trompe-l'oeil oil paintings of Wunderkammer objects by Hamburg painter Georg Hainz, Hamburger Kunsthalle",
+    "collections": ["visual-art", "natural-philosophy"],
+    "resource_type": "painting"
+  },
+  {
+    "source": "met_openaccess",
+    "object_ids": [337061],
+    "title": "Astronomicum Caesareum",
+    "author": "Michael Ostendorfer (after Peter Apian)",
+    "year": "1540",
+    "description": "The most spectacular Renaissance book of mathematical astronomy — Apian's Astronomicum Caesareum with volvelles",
+    "collections": ["visual-art", "natural-philosophy"],
+    "resource_type": "print"
+  },
+  {
+    "source": "wikimedia_commons",
+    "category": "Category:Automata_of_art",
+    "title": "Automata in Art",
+    "author": "Various artists",
+    "year": "1600–1850",
+    "description": "Artistic depictions and representations of mechanical automata in paintings and prints",
+    "collections": ["visual-art", "natural-philosophy"],
+    "resource_type": "print"
+  },
+  {
+    "source": "wikimedia_commons",
+    "category": "Category:Antoni_van_Leeuwenhoek",
+    "title": "Antoni van Leeuwenhoek — Complete Works",
+    "author": "Antonie van Leeuwenhoek",
+    "year": "1674–1723",
+    "description": "Full category of Leeuwenhoek materials including microscopes, portraits, and microscopic illustrations",
+    "collections": ["visual-art", "natural-philosophy"],
+    "resource_type": "print"
+  },
+  {
+    "source": "met_openaccess",
+    "object_ids": [207549, 248501, 263190, 253370, 436282, 255418],
+    "title": "Scientific Instrument Collection — Met (astrolabes and microscopes)",
+    "author": "Various makers",
+    "year": "1300–1700",
+    "description": "Selection of public-domain scientific instruments from Met collection search for microscopes and instruments",
+    "collections": ["visual-art", "natural-philosophy"],
+    "resource_type": "scientific_instrument",
+    "note": "Verify each object ID on import — batch from Met API search for 'microscope scientific instrument'"
+  },
+  {
+    "source": "wikimedia_commons",
+    "category": "Category:Botanical_illustrations",
+    "title": "Botanical Illustrations — General Collection",
+    "author": "Various artists",
+    "year": "1500–1900",
+    "description": "Broad Wikimedia Commons category for botanical art — filter to pre-1850 scientific illustrations on import",
+    "collections": ["visual-art", "natural-philosophy"],
+    "resource_type": "print",
+    "note": "Large category — use subcategories or date-filter on import"
+  },
+  {
+    "source": "wikimedia_commons",
+    "category": "Category:Carta_marina_(Magnus)",
+    "title": "Carta Marina Detail — Sea Monsters",
+    "author": "Olaus Magnus",
+    "year": "1539",
+    "description": "The 1539 map's extraordinary marginal sea-monster illustrations — whale, kraken, giant lobster",
+    "collections": ["visual-art", "natural-philosophy"],
+    "resource_type": "print",
+    "note": "Duplicate of entry 16 intentionally split for import targeting — this entry focuses on monster details"
+  },
+  {
+    "source": "met_openaccess",
+    "object_ids": [357288],
+    "title": "A Compendium of Picturesque Anatomy",
+    "author": "Designed and published by John Rubens Smith",
+    "year": "1827",
+    "description": "Anatomical plates adapted for art education — prints from the Met's Drawings and Prints department",
+    "collections": ["visual-art", "natural-philosophy"],
+    "resource_type": "print"
+  },
+  {
+    "source": "wikimedia_commons",
+    "category": "Category:Armillary_spheres_in_heraldry",
+    "title": "Armillary Sphere in Heraldry",
+    "author": "Various artists",
+    "year": "1400–1800",
+    "description": "The armillary sphere as symbol of learning and exploration — especially prominent as symbol of Portugal and navigation",
+    "collections": ["visual-art", "natural-philosophy"],
+    "resource_type": "print"
+  },
+  {
+    "source": "wikimedia_commons",
+    "category": "Category:Jaquet-Droz_automata",
+    "title": "Jaquet-Droz Automata",
+    "author": "Pierre Jaquet-Droz / Henri-Louis Jaquet-Droz",
+    "year": "1768–1774",
+    "description": "The Writer, the Draughtsman, and the Musician — the most sophisticated mechanical automata ever made, embodying 18th-century natural philosophy",
+    "collections": ["visual-art", "natural-philosophy"],
+    "resource_type": "sculpture"
+  },
+  {
+    "source": "wikimedia_commons",
+    "category": "Category:Wax_objects",
+    "title": "Anatomical Wax Objects — La Specola and related",
+    "author": "Clemente Susini and workshop",
+    "year": "1771–1800",
+    "description": "Wax anatomical models including La Specola Venuses — the intersection of art, medicine and natural philosophy",
+    "collections": ["visual-art", "natural-philosophy"],
+    "resource_type": "sculpture",
+    "note": "Filter on import to anatomical / La Specola files specifically"
+  },
+  {
+    "source": "wikimedia_commons",
+    "category": "Category:Scientific_instruments",
+    "title": "Scientific Instruments — General",
+    "author": "Various makers",
+    "year": "900–1800",
+    "description": "Broad collection encompassing all categories of pre-modern scientific instruments",
+    "collections": ["visual-art", "natural-philosophy"],
+    "resource_type": "scientific_instrument",
+    "note": "Large category — use subcategories preferentially"
+  },
+  {
+    "source": "wikimedia_commons",
+    "category": "Category:16th-century_illustrations",
+    "title": "16th-Century Scientific Illustrations",
+    "author": "Various artists",
+    "year": "1500–1600",
+    "description": "Natural history, anatomical and astronomical illustrations from the century of the Scientific Revolution's foundations",
+    "collections": ["visual-art", "natural-philosophy"],
+    "resource_type": "print",
+    "note": "Large category — filter to natural philosophy subjects on import"
+  }
+]
