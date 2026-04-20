@@ -95,6 +95,27 @@ const HARDCODED_IMAGES = {
     'Papyrus_Prisse_192_2.jpg',
     'Papyrus_Prisse_193_1.jpg',
   ],
+  'oraec:oraec40': [ // Horus and Seth (Chester Beatty I)
+    'Contendings_of_Horus_and_Seth_(CBL_Pap_1.2).jpg',
+    'P._Chester_Beatty_I,_folio_13-14,_recto.jpg',
+  ],
+  'oraec:oraec13': [ // Edwin Smith Surgical Papyrus
+    'Edwin_Smith_Papyrus_v2.jpg',
+    'Page_from_Edwin_Smith_surgical_papyrus.._Wellcome_L0051970.jpg',
+    'Page_from_Edwin_Smith_surgical_papyrus.._Wellcome_L0051967.jpg',
+    'Page_from_Edwin_Smith_surgical_papyrus.._Wellcome_L0051972.jpg',
+    'Page_from_Edwin_Smith_surgical_papyrus.._Wellcome_L0051971.jpg',
+  ],
+  'oraec:oraec58': [ // Book of the Heavenly Cow (Seti I tomb)
+    'Book_of_the_Heavenly_Cow_KV17.jpg',
+  ],
+  'oraec:oraec1662': [ // Hymn to Aton
+    'Great_Hymn_to_the_Aten_from_Ay%27s_EA25_tomb.jpg',
+    'Aten_worship_-_Great_Hymn_to_Aten.jpg',
+  ],
+  'oraec:oraec51': [ // Two Brothers
+    'Tale_of_two_brothers.jpg',
+  ],
 };
 
 // ── Helpers ──
