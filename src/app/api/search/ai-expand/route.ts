@@ -69,7 +69,7 @@ Query: "${query}"
 Reply EXACTLY in this format (no extra text):
 DISPLAY_HINT
 ---DISPLAY---
-One sentence of scholarly context (max 30 words). Use *italics* for foreign terms.
+2-3 sentences of scholarly context (40-80 words). Explain what this is, name key texts/authors/traditions, and what the searcher will find. Use *italics* for foreign terms and titles. Be substantive — this is the reader's first encounter with the topic.
 ---TERMS---
 ["term1","term2","term3"]
 ---IMAGE_TERMS---
@@ -87,7 +87,7 @@ IMAGE_TERMS = 2-4 specific artworks, visual subjects, or iconographic themes tha
           }],
           generationConfig: {
             temperature: 0.3,
-            maxOutputTokens: 300,
+            maxOutputTokens: 500,
           },
         });
 
