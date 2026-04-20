@@ -62,32 +62,26 @@ export async function POST(request: NextRequest) {
           contents: [{
             role: 'user',
             parts: [{
-              text: `Search guide for a pre-modern primary source library (10K+ books, 18K+ artworks spanning alchemy, Hermetica, Kabbalah, natural philosophy, Sanskrit, Chinese, Arabic, and more).
+              text: `You are a librarian at the Embassy of the Free Mind. A visitor searches: "${query}"
 
-Query: "${query}"
+Reply in this EXACT format:
+<display>HINT</display>
+<narration>1-2 sentences (30-50 words). Orient the visitor: what is this, who made it, why it matters. Name a specific text or artist. No filler ("you will find", "this collection contains"). Speak like a knowledgeable friend, not a textbook.</narration>
+<terms>["term1","term2","term3"]</terms>
+<image_terms>["artwork1","artwork2"]</image_terms>
 
-Reply EXACTLY in this format (no extra text):
-DISPLAY_HINT
----DISPLAY---
-2-3 sentences of scholarly context (40-80 words). Explain what this is, name key texts/authors/traditions, and what the searcher will find. Use *italics* for foreign terms and titles. Be substantive — this is the reader's first encounter with the topic.
----TERMS---
-["term1","term2","term3"]
----IMAGE_TERMS---
-["artwork1","artwork2"]
+HINT = images_first | books_first | not_in_collection
+- images_first: query is about visual art, a painting, diagram, or illustration
+- books_first: query is about texts, concepts, authors, traditions
+- not_in_collection: outside scope (modern, pop culture)
 
-DISPLAY_HINT is one of: images_first, books_first, not_in_collection
-- images_first: user wants a visual artwork/painting/diagram (e.g., "school of athens", "tree of life diagram")
-- books_first: user wants texts/concepts/authors (e.g., "alchemy", "Paracelsus", "mystical ecstasy")
-- not_in_collection: query is outside scope (modern art, pop culture). Explain what IS available.
-Default to books_first when uncertain.
-
-TERMS = 3-5 alternative book search terms (authors, titles, Latin/original-language equivalents)
-IMAGE_TERMS = 2-4 specific artworks, visual subjects, or iconographic themes that a pre-modern art collection would contain. Think of actual paintings, engravings, diagrams — not synonyms.`
+TERMS = 3-5 period-appropriate search terms (authors, titles, Latin/original-language equivalents)
+IMAGE_TERMS = 2-3 specific artworks or visual subjects in a pre-modern art collection`
             }]
           }],
           generationConfig: {
             temperature: 0.3,
-            maxOutputTokens: 500,
+            maxOutputTokens: 350,
           },
         });
 
@@ -102,55 +96,48 @@ IMAGE_TERMS = 2-4 specific artworks, visual subjects, or iconographic themes tha
           if (!text) continue;
           fullText += text;
 
-          // Emit display hint as soon as we see ---DISPLAY---
-          if (!sentDisplay && fullText.includes('---DISPLAY---')) {
-            const displayPart = fullText.split('---DISPLAY---')[0].trim();
-            const hint = ['images_first', 'books_first', 'not_in_collection'].includes(displayPart)
-              ? displayPart : 'books_first';
-            controller.enqueue(encoder.encode(`event: display\ndata: ${JSON.stringify(hint)}\n\n`));
-            sentDisplay = true;
-            inNarration = true;
-          }
-
-          // Stream narration chunks (between ---DISPLAY--- and ---TERMS---)
-          if (inNarration && !fullText.includes('---TERMS---')) {
-            // Only send text that's clearly narration (after ---DISPLAY---, before ---TERMS---)
-            if (!text.includes('---DISPLAY---')) {
-              controller.enqueue(encoder.encode(`event: narration\ndata: ${JSON.stringify(text)}\n\n`));
-            } else {
-              // This chunk contains ---DISPLAY--- — send only the part after it
-              const afterSep = text.split('---DISPLAY---').pop() || '';
-              if (afterSep.trim()) {
-                controller.enqueue(encoder.encode(`event: narration\ndata: ${JSON.stringify(afterSep)}\n\n`));
-              }
+          // Stream narration as it arrives (between <narration> tags)
+          if (!sentDisplay) {
+            const displayMatch = fullText.match(/<display>(.*?)<\/display>/);
+            if (displayMatch) {
+              const hint = ['images_first', 'books_first', 'not_in_collection'].includes(displayMatch[1].trim())
+                ? displayMatch[1].trim() : 'books_first';
+              controller.enqueue(encoder.encode(`event: display\ndata: ${JSON.stringify(hint)}\n\n`));
+              sentDisplay = true;
+              inNarration = true;
             }
           }
-          if (fullText.includes('---TERMS---')) inNarration = false;
+
+          if (inNarration && !fullText.includes('</narration>')) {
+            // Stream narration text (strip XML tags from chunks)
+            const clean = text.replace(/<\/?narration>/g, '').replace(/<\/?display>.*?(?:<\/display>)?/g, '');
+            if (clean.trim()) {
+              controller.enqueue(encoder.encode(`event: narration\ndata: ${JSON.stringify(clean)}\n\n`));
+            }
+          }
+          if (fullText.includes('</narration>')) inNarration = false;
         }
 
-        // Debug: log full model output
+        // Parse complete XML from full text
         console.log('[ai-expand] Full output:', JSON.stringify(fullText));
 
-        // Parse everything from complete text
         if (!sentDisplay) {
           controller.enqueue(encoder.encode(`event: display\ndata: "books_first"\n\n`));
         }
 
-        // Extract narration
-        const narrationPart = fullText.includes('---DISPLAY---')
-          ? (fullText.split('---DISPLAY---')[1] || '').split('---TERMS---')[0].trim()
-          : fullText.split('---TERMS---')[0].trim();
-        // If narration wasn't streamed (no ---DISPLAY---), send it now
-        if (!sentDisplay && narrationPart) {
+        // Extract narration (send if wasn't streamed)
+        const narrationMatch = fullText.match(/<narration>([\s\S]*?)<\/narration>/);
+        const narrationPart = narrationMatch ? narrationMatch[1].trim() : '';
+        if (!inNarration && narrationPart && !sentDisplay) {
           controller.enqueue(encoder.encode(`event: narration\ndata: ${JSON.stringify(narrationPart)}\n\n`));
         }
 
-        // Parse terms (between ---TERMS--- and ---IMAGE_TERMS---)
+        // Parse terms
         let finalTerms: string[] = [];
-        if (fullText.includes('---TERMS---')) {
-          const afterTerms = (fullText.split('---TERMS---')[1] || '').split('---IMAGE_TERMS---')[0].trim();
+        const termsMatch = fullText.match(/<terms>([\s\S]*?)<\/terms>/);
+        if (termsMatch) {
           try {
-            const parsed = JSON.parse(afterTerms.replace(/^```(?:json)?\s*/, '').replace(/\s*```$/, ''));
+            const parsed = JSON.parse(termsMatch[1].trim());
             if (Array.isArray(parsed)) {
               finalTerms = parsed.filter((t: unknown) => typeof t === 'string' && t.length >= 2).slice(0, 5);
             }
@@ -158,12 +145,12 @@ IMAGE_TERMS = 2-4 specific artworks, visual subjects, or iconographic themes tha
         }
         controller.enqueue(encoder.encode(`event: terms\ndata: ${JSON.stringify(finalTerms)}\n\n`));
 
-        // Parse image_terms (after ---IMAGE_TERMS---)
+        // Parse image_terms
         let imageTerms: string[] = [];
-        if (fullText.includes('---IMAGE_TERMS---')) {
-          const afterImageSep = fullText.split('---IMAGE_TERMS---').pop()?.trim() || '';
+        const imgMatch = fullText.match(/<image_terms>([\s\S]*?)<\/image_terms>/);
+        if (imgMatch) {
           try {
-            const parsed = JSON.parse(afterImageSep.replace(/^```(?:json)?\s*/, '').replace(/\s*```$/, ''));
+            const parsed = JSON.parse(imgMatch[1].trim());
             if (Array.isArray(parsed)) {
               imageTerms = parsed.filter((t: unknown) => typeof t === 'string' && t.length >= 2).slice(0, 4);
             }
@@ -174,7 +161,8 @@ IMAGE_TERMS = 2-4 specific artworks, visual subjects, or iconographic themes tha
         }
 
         // Cache
-        responseCache.set(normalized, { display: sentDisplay ? fullText.split('---DISPLAY---')[0].trim() : 'books_first', narration: narrationPart, terms: finalTerms, imageTerms, timestamp: Date.now() });
+        const displayHint = fullText.match(/<display>(.*?)<\/display>/)?.[1]?.trim() || 'books_first';
+        responseCache.set(normalized, { display: displayHint, narration: narrationPart, terms: finalTerms, imageTerms, timestamp: Date.now() });
 
         controller.enqueue(encoder.encode(`event: done\ndata: {}\n\n`));
         controller.close();
