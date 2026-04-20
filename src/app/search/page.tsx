@@ -137,6 +137,7 @@ export default function SearchPage() {
   const [aiResults, setAiResults] = useState<SearchResult[]>([]);
   const [aiStreaming, setAiStreaming] = useState(false);
   const [displayHint, setDisplayHint] = useState<'images_first' | 'books_first' | 'not_in_collection'>('books_first');
+  const displayHintLocked = useRef(false); // lock once results render to prevent layout shift
   const aiAbortRef = useRef<(() => void) | null>(null);
 
   // Load filter options + collections (independent so one failure doesn't block others)
@@ -189,6 +190,7 @@ export default function SearchPage() {
       setAiResults([]);
       setAiNarrationHistory([]);
       setDisplayHint('books_first');
+      displayHintLocked.current = false;
     } else {
       // Pill click — save current narration to history before streaming new one
       const curNarration = aiNarrationRef.current;
@@ -240,33 +242,32 @@ export default function SearchPage() {
       },
       () => setAiStreaming(false),
       (hint) => {
-        if (hint === 'images_first' || hint === 'books_first' || hint === 'not_in_collection') {
+        // Only apply display hint if results haven't rendered yet (prevents layout shift)
+        if (!displayHintLocked.current && (hint === 'images_first' || hint === 'books_first' || hint === 'not_in_collection')) {
           setDisplayHint(hint);
+          displayHintLocked.current = true;
         }
       },
       async (imgTerms) => {
         // Fire supplementary gallery searches with LLM-suggested image terms
+        // Use galleryApi.list (lightweight) instead of full unified search
         if (!imgTerms || imgTerms.length === 0) return;
         const existingIds = new Set(imageResults.map(i => `${i.pageId}-${i.detectionIndex}`));
         const newImages: GalleryItem[] = [];
-        for (const term of imgTerms.slice(0, 3)) {
-          try {
-            const data = await searchApi.unified(term, { limit: 1, galleryLimit: 4 });
-            const galleryResults = [...(data.gallery?.results || []), ...((data as any).visual?.results || [])];
-            for (const g of galleryResults) {
-              const parts = (g.id || '').split('-');
-              const detectionIndex = parseInt(parts.pop() || '0');
-              const pageId = parts.join('-');
-              const key = `${pageId}-${detectionIndex}`;
-              if (existingIds.has(key)) continue;
-              existingIds.add(key);
-              newImages.push({
-                pageId, bookId: g.bookId || '', pageNumber: 0, detectionIndex,
-                imageUrl: g.imageUrl || '', thumbnailUrl: g.imageUrl || '',
-                bookTitle: g.bookTitle || '', author: '', description: g.description || '', type: g.type,
-              } as GalleryItem);
-            }
-          } catch { /* skip failed term */ }
+        // Search all image terms in parallel
+        const results = await Promise.allSettled(
+          imgTerms.slice(0, 3).map(term =>
+            galleryApi.list({ query: term, limit: 4, maxPerBook: 1 })
+          )
+        );
+        for (const r of results) {
+          if (r.status !== 'fulfilled') continue;
+          for (const item of (r.value.items || [])) {
+            const key = `${item.pageId}-${item.detectionIndex}`;
+            if (existingIds.has(key)) continue;
+            existingIds.add(key);
+            newImages.push(item);
+          }
         }
         if (newImages.length > 0) {
           setImageResults(prev => [...prev, ...newImages]);
@@ -377,6 +378,7 @@ export default function SearchPage() {
           setIndexTotal(iTotal);
           setImageResults(images);
           setImageTotal(imTotal);
+          displayHintLocked.current = true; // lock layout once results render
 
           // Cache the result
           searchCache.current.set(cacheKey, {
