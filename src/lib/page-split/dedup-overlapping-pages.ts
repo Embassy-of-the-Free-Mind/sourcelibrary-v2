@@ -1,17 +1,19 @@
 /**
  * Detect and remove duplicate pages caused by overlapping BPH spread photography.
  *
- * BPH digitization photographs overlapping page openings — the RIGHT half of
- * spread N is the same physical page as the LEFT half of spread N+1. After split
- * detection, these produce duplicate page records with identical content.
+ * BPH scans photograph overlapping page openings: the RIGHT half of spread N is
+ * the same physical page as the LEFT half of spread N+1. After splitting, this
+ * creates duplicate page records throughout the book.
  *
- * Detection: fingerprint OCR text (first 400 chars of raw ocr.data), group by
- * fingerprint server-side via MongoDB aggregation, flag groups with 2+ pages.
+ * Detection is structural (not OCR-based): a LEFT-crop page following a RIGHT-crop
+ * page from a different spread is a duplicate. This is reliable because OCR text
+ * varies between scans of the same page, making fingerprint-based dedup unreliable.
  *
- * For each duplicate group, keep the lowest page_number, archive the rest to
- * `duplicate_pages` collection, renumber remaining pages, update book caches.
+ * For each duplicate, the LEFT page (from the later spread) is archived to
+ * `duplicate_pages` collection, remaining pages are renumbered, and book caches
+ * are updated.
  *
- * Integrated into pipeline cron Phase 3 after OCR completion.
+ * Integrated into pipeline orchestrator Phase 3.1 after spread splitting.
  */
 
 import type { Db } from 'mongodb';
@@ -25,8 +27,7 @@ export interface DedupResult {
 }
 
 /**
- * Scan a book for duplicate pages and remove them.
- * Only processes books that have split pages (crop data exists).
+ * Scan a book for duplicate pages from overlapping spread scans and remove them.
  *
  * @returns null if no duplicates found, DedupResult otherwise
  */
@@ -36,55 +37,39 @@ export async function deduplicateOverlappingPages(
 ): Promise<DedupResult | null> {
   const pagesCol = db.collection('pages');
 
-  // Only run on books with split pages — no splits means no overlapping duplicates
-  const hasSplitPages = await pagesCol.countDocuments({
-    book_id: bookId,
-    'crop.xStart': { $exists: true },
-  });
-  if (hasSplitPages === 0) return null;
-
-  // Fingerprint OCR text server-side: take first 400 chars of ocr.data,
-  // group by that substring, return groups with 2+ pages.
-  // XML tags are consistent across duplicate scans so raw comparison works.
-  const pipeline = [
-    {
-      $match: {
-        book_id: bookId,
-        'ocr.data': { $exists: true, $ne: '' },
+  // Get all pages with crop and spread info, sorted by page_number
+  const pages = await pagesCol
+    .find(
+      { book_id: bookId },
+      {
+        projection: {
+          _id: 1,
+          id: 1,
+          page_number: 1,
+          crop: 1,
+          photo_original: 1,
+        },
       },
-    },
-    {
-      $project: {
-        id: 1,
-        page_number: 1,
-        fp_raw: { $substrCP: ['$ocr.data', 0, 400] },
-      },
-    },
-    {
-      $group: {
-        _id: '$fp_raw',
-        count: { $sum: 1 },
-        pages: { $push: { id: '$id', page_number: '$page_number' } },
-      },
-    },
-    { $match: { count: { $gte: 2 } } },
-  ];
-
-  const groups = await pagesCol
-    .aggregate(pipeline, { allowDiskUse: true })
+    )
+    .sort({ page_number: 1 })
     .toArray();
 
-  if (groups.length === 0) return null;
+  if (pages.length === 0) return null;
 
-  // Collect page IDs to archive (keep lowest page_number in each group)
+  // Detect structural duplicates: LEFT page following RIGHT page from different spread
   const pageIdsToArchive: string[] = [];
-  for (const group of groups) {
-    const sorted = group.pages.sort(
-      (a: { page_number: number }, b: { page_number: number }) =>
-        a.page_number - b.page_number,
-    );
-    for (let i = 1; i < sorted.length; i++) {
-      pageIdsToArchive.push(sorted[i].id);
+  for (let i = 1; i < pages.length; i++) {
+    const prev = pages[i - 1];
+    const curr = pages[i];
+    const prevIsRight = prev.crop && prev.crop.xStart > 0;
+    const currIsLeft = curr.crop && curr.crop.xStart === 0;
+    const differentSpread =
+      prev.photo_original &&
+      curr.photo_original &&
+      prev.photo_original !== curr.photo_original;
+
+    if (prevIsRight && currIsLeft && differentSpread) {
+      pageIdsToArchive.push(curr.id as string);
     }
   }
 
@@ -161,7 +146,7 @@ export async function deduplicateOverlappingPages(
 
   return {
     bookId,
-    duplicatesFound: groups.length,
+    duplicatesFound: pageIdsToArchive.length,
     pagesRemoved: pageIdsToArchive.length,
     pagesRenumbered: bulkOps.length,
     newPageCount: newCount,
