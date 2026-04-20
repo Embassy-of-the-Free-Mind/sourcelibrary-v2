@@ -55,7 +55,7 @@ export async function POST(request: NextRequest) {
     async start(controller) {
       try {
         const client = getGeminiClient();
-        const model = client.getGenerativeModel({ model: 'gemini-2.0-flash' });
+        const model = client.getGenerativeModel({ model: 'gemini-3-flash-preview' });
 
         const result = await model.generateContentStream({
           contents: [{
