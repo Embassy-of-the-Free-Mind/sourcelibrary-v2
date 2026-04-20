@@ -3,8 +3,8 @@ import { getGeminiClient } from '@/lib/gemini-client';
 
 export const preferredRegion = 'fra1';
 
-// Cache full responses (narration + terms) to avoid repeated AI calls
-const responseCache = new Map<string, { narration: string; terms: string[]; timestamp: number }>();
+// Cache full responses (narration + terms + display hint) to avoid repeated AI calls
+const responseCache = new Map<string, { display: string; narration: string; terms: string[]; timestamp: number }>();
 const CACHE_TTL = 30 * 60 * 1000; // 30 minutes
 
 /**
@@ -32,6 +32,7 @@ export async function POST(request: NextRequest) {
   const cached = responseCache.get(normalized);
   if (cached && Date.now() - cached.timestamp < CACHE_TTL) {
     const lines = [
+      `event: display\ndata: ${JSON.stringify(cached.display)}\n`,
       `event: narration\ndata: ${JSON.stringify(cached.narration)}\n`,
       `event: terms\ndata: ${JSON.stringify(cached.terms)}\n`,
       `event: done\ndata: {}\n`,
@@ -59,22 +60,29 @@ export async function POST(request: NextRequest) {
           contents: [{
             role: 'user',
             parts: [{
-              text: `You are a search guide for Source Library, a digital library of over 10,000 pre-modern primary sources spanning world traditions. The collection includes: Western alchemy and Hermetica, Kabbalah, Rosicrucianism, natural philosophy, early modern science, Sanskrit texts (rasayana, Tantra, Vedanta, Ayurveda), Chinese and Japanese classics, Arabic and Islamic philosophy, Egyptian and Near Eastern sources, Korean and Southeast Asian manuscripts, Tibetan Buddhism, and more. Languages include Latin, Greek, Arabic, Sanskrit, Hebrew, German, English, French, Italian, Dutch, Chinese, Japanese, Korean, and many others. Dates range from antiquity through the 19th century.
-
-The library DOES contain primary sources from all these traditions — never suggest otherwise.
+              text: `You are a search guide for Source Library, a digital library of over 10,000 pre-modern primary sources AND 18,000+ historical artworks/illustrations. The collection includes: Western alchemy and Hermetica, Kabbalah, Rosicrucianism, natural philosophy, early modern science, Sanskrit texts (rasayana, Tantra, Vedanta, Ayurveda), Chinese and Japanese classics, Arabic and Islamic philosophy, Egyptian and Near Eastern sources, Korean and Southeast Asian manuscripts, Tibetan Buddhism, and more. Artwork includes paintings, engravings, woodcuts, manuscript illuminations, alchemical emblems, scientific diagrams, and portraits from these traditions. Languages include Latin, Greek, Arabic, Sanskrit, Hebrew, German, English, French, Italian, Dutch, Chinese, Japanese, Korean, and many others. Dates range from antiquity through the 19th century.
 
 A user searched for "${query}".
 
-Respond in TWO parts, separated by exactly "---TERMS---" on its own line:
+Respond in THREE parts, separated by "---DISPLAY---" and "---TERMS---" on their own lines:
 
-PART 1: Write 1-2 brief, scholarly sentences (max 40 words) contextualizing this search within its tradition. Use italics for Latin/foreign terms. Be specific and knowledgeable, not generic. Don't say "Source Library" or "our collection." Write as if you're a knowledgeable librarian whispering helpful context. Assume the library has relevant sources.
+PART 1 (DISPLAY HINT): Write ONLY one of these exact words on the first line:
+- "images_first" — if the user is clearly looking for a visual artwork, painting, illustration, or image (e.g., "school of athens", "tree of life diagram", "alchemical emblems", "Bosch garden")
+- "books_first" — if the user wants texts, concepts, authors, or ideas (e.g., "alchemy", "Paracelsus", "mystical ecstasy", "kabbalah")
+- "not_in_collection" — if the query is about something clearly outside the collection's scope (e.g., "Taylor Swift", "quantum computing", "goya" — we have pre-modern sources, not modern/19th-century+ art unless it relates to esoteric traditions)
 
-PART 2: After the ---TERMS--- separator, write ONLY a JSON array of 3-5 alternative search terms. Include original-language equivalents, historical spellings, key authors, or related concepts from the relevant tradition.
+When uncertain, default to "books_first".
+
+PART 2 (NARRATION): After "---DISPLAY---", write 1-2 brief, scholarly sentences (max 40 words) contextualizing this search. Use italics for Latin/foreign terms. Be specific, not generic. Don't say "Source Library" or "our collection." Write as if you're a knowledgeable librarian whispering helpful context. If "not_in_collection", briefly explain what IS available that's related.
+
+PART 3 (TERMS): After "---TERMS---", write ONLY a JSON array of 3-5 alternative search terms.
 
 Example response:
-The *lapis philosophorum* was the supreme goal of chrysopoeia — the art of gold-making. Geber's *Summa Perfectionis* and Ripley's *Compound of Alchemy* are foundational texts.
+images_first
+---DISPLAY---
+Raphael's fresco depicts the great philosophers of antiquity — Plato, Aristotle, Pythagoras — in the Vatican's *Stanza della Segnatura*. Many of their works are in the collection.
 ---TERMS---
-["lapis philosophorum", "chrysopoeia", "Geber", "George Ripley", "Summa Perfectionis"]`
+["Raphael Vatican", "Plato Aristotle", "Stanza della Segnatura", "School of Athens fresco"]`
             }]
           }],
           generationConfig: {
@@ -85,7 +93,10 @@ The *lapis philosophorum* was the supreme goal of chrysopoeia — the art of gol
 
         let fullText = '';
         let sentTerms = false;
-        let hitSeparator = false;
+        let sentDisplay = false;
+        let hitDisplaySep = false;
+        let hitTermsSep = false;
+        let displayHint = 'books_first';
 
         for await (const chunk of result.stream) {
           const text = chunk.text();
@@ -93,59 +104,108 @@ The *lapis philosophorum* was the supreme goal of chrysopoeia — the art of gol
 
           fullText += text;
 
-          // Check if we've just hit the separator
-          if (!hitSeparator && fullText.includes('---TERMS---')) {
-            hitSeparator = true;
-            // Send any trailing narration before the separator that wasn't sent yet
-            // (the chunk that contains "---TERMS---" may have narration text before it)
-            const separatorIdx = text.indexOf('---TERMS---');
-            if (separatorIdx > 0) {
-              controller.enqueue(encoder.encode(`event: narration\ndata: ${JSON.stringify(text.slice(0, separatorIdx))}\n\n`));
+          // Phase 1: Extract display hint (before ---DISPLAY---)
+          if (!hitDisplaySep && fullText.includes('---DISPLAY---')) {
+            hitDisplaySep = true;
+            const displayPart = fullText.split('---DISPLAY---')[0].trim();
+            if (['images_first', 'books_first', 'not_in_collection'].includes(displayPart)) {
+              displayHint = displayPart;
             }
-          } else if (hitSeparator && !sentTerms) {
-            // Accumulating terms JSON — try to parse on each chunk
-            const [narration, termsSection] = fullText.split('---TERMS---');
-            const termsText = termsSection?.trim();
-            if (termsText) {
+            if (!sentDisplay) {
+              controller.enqueue(encoder.encode(`event: display\ndata: ${JSON.stringify(displayHint)}\n\n`));
+              sentDisplay = true;
+            }
+          }
+
+          // Phase 2: Stream narration (between ---DISPLAY--- and ---TERMS---)
+          if (!hitTermsSep && fullText.includes('---TERMS---')) {
+            hitTermsSep = true;
+            const afterDisplay = fullText.split('---DISPLAY---')[1] || fullText;
+            const narrationBeforeTerms = afterDisplay.split('---TERMS---')[0].trim();
+            // Send any remaining narration chunk before the terms separator
+            const chunkTermsIdx = text.indexOf('---TERMS---');
+            if (chunkTermsIdx > 0 && hitDisplaySep) {
+              const narChunk = text.slice(0, chunkTermsIdx);
+              if (narChunk.trim()) {
+                controller.enqueue(encoder.encode(`event: narration\ndata: ${JSON.stringify(narChunk)}\n\n`));
+              }
+            }
+          } else if (hitDisplaySep && !hitTermsSep) {
+            // Streaming narration — skip the ---DISPLAY--- line itself
+            const chunkDisplayIdx = text.indexOf('---DISPLAY---');
+            if (chunkDisplayIdx >= 0) {
+              const afterSep = text.slice(chunkDisplayIdx + '---DISPLAY---'.length);
+              if (afterSep.trim()) {
+                controller.enqueue(encoder.encode(`event: narration\ndata: ${JSON.stringify(afterSep)}\n\n`));
+              }
+            } else {
+              controller.enqueue(encoder.encode(`event: narration\ndata: ${JSON.stringify(text)}\n\n`));
+            }
+          } else if (!hitDisplaySep) {
+            // Haven't hit ---DISPLAY--- yet — might be old format without display hint
+            // If we see ---TERMS--- without ---DISPLAY---, treat as books_first
+            if (fullText.includes('---TERMS---')) {
+              hitTermsSep = true;
+              if (!sentDisplay) {
+                controller.enqueue(encoder.encode(`event: display\ndata: "books_first"\n\n`));
+                sentDisplay = true;
+              }
+              // Send narration before ---TERMS---
+              const narration = fullText.split('---TERMS---')[0].trim();
+              if (narration) {
+                controller.enqueue(encoder.encode(`event: narration\ndata: ${JSON.stringify(narration)}\n\n`));
+              }
+            }
+          }
+
+          // Phase 3: Parse terms JSON
+          if (hitTermsSep && !sentTerms) {
+            const afterTermsSep = fullText.split('---TERMS---').pop()?.trim() || '';
+            if (afterTermsSep) {
               try {
-                const jsonStr = termsText.replace(/^```(?:json)?\s*/, '').replace(/\s*```$/, '');
+                const jsonStr = afterTermsSep.replace(/^```(?:json)?\s*/, '').replace(/\s*```$/, '');
                 const parsed = JSON.parse(jsonStr);
                 if (Array.isArray(parsed)) {
                   const terms = parsed.filter((t: unknown) => typeof t === 'string' && t.length >= 2).slice(0, 5);
                   controller.enqueue(encoder.encode(`event: terms\ndata: ${JSON.stringify(terms)}\n\n`));
                   sentTerms = true;
-                  responseCache.set(normalized, { narration: narration.trim(), terms, timestamp: Date.now() });
+                  const narrationPart = hitDisplaySep
+                    ? (fullText.split('---DISPLAY---')[1] || '').split('---TERMS---')[0].trim()
+                    : fullText.split('---TERMS---')[0].trim();
+                  responseCache.set(normalized, { display: displayHint, narration: narrationPart, terms, timestamp: Date.now() });
                 }
               } catch {
                 // JSON not complete yet
               }
             }
-          } else if (!hitSeparator) {
-            // Still in narration part — stream delta
-            controller.enqueue(encoder.encode(`event: narration\ndata: ${JSON.stringify(text)}\n\n`));
           }
+        }
+
+        // Send display hint if never sent (fallback)
+        if (!sentDisplay) {
+          controller.enqueue(encoder.encode(`event: display\ndata: "books_first"\n\n`));
         }
 
         // Final attempt to parse terms if not yet sent
         if (!sentTerms && fullText.includes('---TERMS---')) {
-          const [narration, termsSection] = fullText.split('---TERMS---');
-          const termsText = termsSection?.trim();
-          if (termsText) {
+          const afterTermsSep = fullText.split('---TERMS---').pop()?.trim() || '';
+          if (afterTermsSep) {
             try {
-              const jsonStr = termsText.replace(/^```(?:json)?\s*/, '').replace(/\s*```$/, '');
+              const jsonStr = afterTermsSep.replace(/^```(?:json)?\s*/, '').replace(/\s*```$/, '');
               const parsed = JSON.parse(jsonStr);
               if (Array.isArray(parsed)) {
                 const terms = parsed.filter((t: unknown) => typeof t === 'string' && t.length >= 2).slice(0, 5);
                 controller.enqueue(encoder.encode(`event: terms\ndata: ${JSON.stringify(terms)}\n\n`));
-                responseCache.set(normalized, { narration: narration.trim(), terms, timestamp: Date.now() });
+                const narrationPart = hitDisplaySep
+                  ? (fullText.split('---DISPLAY---')[1] || '').split('---TERMS---')[0].trim()
+                  : fullText.split('---TERMS---')[0].trim();
+                responseCache.set(normalized, { display: displayHint, narration: narrationPart, terms, timestamp: Date.now() });
               }
             } catch {
-              // Parse failed, send empty terms
               controller.enqueue(encoder.encode(`event: terms\ndata: []\n\n`));
             }
           }
         } else if (!sentTerms) {
-          // No separator found — model didn't follow format. Still try to extract terms.
           controller.enqueue(encoder.encode(`event: terms\ndata: []\n\n`));
         }
 

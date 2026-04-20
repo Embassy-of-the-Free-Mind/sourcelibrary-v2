@@ -77,6 +77,7 @@ export const search = {
     onNarration: (text: string) => void,
     onTerms: (terms: string[]) => void,
     onDone: () => void,
+    onDisplay?: (hint: string) => void,
   ): (() => void) => {
     const controller = new AbortController();
 
@@ -110,7 +111,9 @@ export const search = {
             } else if (line.startsWith('data: ')) {
               const data = line.slice(6);
               try {
-                if (eventType === 'narration') {
+                if (eventType === 'display') {
+                  onDisplay?.(JSON.parse(data));
+                } else if (eventType === 'narration') {
                   onNarration(JSON.parse(data));
                 } else if (eventType === 'terms') {
                   onTerms(JSON.parse(data));

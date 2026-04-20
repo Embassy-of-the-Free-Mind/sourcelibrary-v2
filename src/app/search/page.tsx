@@ -130,12 +130,13 @@ export default function SearchPage() {
   // Suggestions
   const [suggestion, setSuggestion] = useState<string | null>(null);
 
-  // AI-assisted search — streaming narration + expanded terms
+  // AI-assisted search — streaming narration + expanded terms + display hint
   const [aiNarration, setAiNarration] = useState('');
   const [aiNarrationHistory, setAiNarrationHistory] = useState<{ query: string; text: string; terms: string[] }[]>([]);
   const [aiTerms, setAiTerms] = useState<string[]>([]);
   const [aiResults, setAiResults] = useState<SearchResult[]>([]);
   const [aiStreaming, setAiStreaming] = useState(false);
+  const [displayHint, setDisplayHint] = useState<'images_first' | 'books_first' | 'not_in_collection'>('books_first');
   const aiAbortRef = useRef<(() => void) | null>(null);
 
   // Load filter options + collections (independent so one failure doesn't block others)
@@ -187,6 +188,7 @@ export default function SearchPage() {
       setAiTerms([]);
       setAiResults([]);
       setAiNarrationHistory([]);
+      setDisplayHint('books_first');
     } else {
       // Pill click — save current narration to history before streaming new one
       const curNarration = aiNarrationRef.current;
@@ -237,6 +239,11 @@ export default function SearchPage() {
         }
       },
       () => setAiStreaming(false),
+      (hint) => {
+        if (hint === 'images_first' || hint === 'books_first' || hint === 'not_in_collection') {
+          setDisplayHint(hint);
+        }
+      },
     );
     aiAbortRef.current = abort;
   // eslint-disable-next-line react-hooks/exhaustive-deps
@@ -1096,17 +1103,76 @@ export default function SearchPage() {
           </div>
         )}
 
-        {/* ==================== UNIFIED VIEW — FLAT RESULTS ==================== */}
+        {/* ==================== UNIFIED VIEW — ADAPTIVE LAYOUT ==================== */}
         {viewMode === 'unified' && !loading && query.length >= 2 && (totalResults > 0 || semanticResults.length > 0 || semanticLoading) && (() => {
           const keywordIds = new Set(bookResults.map(b => b.id || (b as any).book_id));
           const uniqueSemantic = semanticResults.filter((sem: any) => !keywordIds.has(sem.book_id));
           const hasBoth = bookResults.length > 0 && uniqueSemantic.length > 0;
 
-          return (
-            <div className="space-y-3">
-              {/* Section label only when both types present */}
-              {hasBoth && uniqueSemantic.length > 0 && (
-                <h2 className="text-xs font-medium text-muted uppercase tracking-wide flex items-center gap-2">
+          // Shared components
+          const narrationBlock = query.length >= 3 && (aiStreaming || aiNarration || aiNarrationHistory.length > 0) && (
+            <div className="px-4 py-3 bg-warm/60 rounded-lg border border-border-light space-y-2">
+              {aiNarrationHistory.map((entry, i) => (
+                <div key={i} className="text-sm text-secondary/70 italic leading-relaxed border-b border-border-light pb-2">
+                  <span className="text-xs text-muted not-italic font-medium">{entry.query}:</span>{' '}
+                  <span dangerouslySetInnerHTML={{
+                    __html: entry.text
+                      .replace(/&/g, '&amp;').replace(/</g, '&lt;').replace(/>/g, '&gt;')
+                      .replace(/\*([^*]+)\*/g, '<em>$1</em>')
+                  }} />
+                </div>
+              ))}
+              {(aiStreaming || aiNarration) && (
+                <p className="text-sm text-secondary italic leading-relaxed"
+                   dangerouslySetInnerHTML={{
+                     __html: aiNarration
+                       .replace(/&/g, '&amp;').replace(/</g, '&lt;').replace(/>/g, '&gt;')
+                       .replace(/\*([^*]+)\*/g, '<em>$1</em>')
+                       + (aiStreaming ? '<span class="inline-block w-1.5 h-4 bg-accent-rust/40 animate-pulse ml-0.5 align-text-bottom"></span>' : '')
+                   }}
+                />
+              )}
+              {aiTerms.length > 0 && (
+                <div className="flex flex-wrap gap-1.5">
+                  {aiTerms.map(term => (
+                    <button
+                      key={term}
+                      onClick={() => { startAiStream(term, true); }}
+                      className="px-2.5 py-1 bg-white/60 text-secondary text-xs rounded-full hover:bg-accent-rust/10 hover:text-accent-rust transition-colors"
+                    >
+                      {term}
+                    </button>
+                  ))}
+                </div>
+              )}
+            </div>
+          );
+
+          const imageStrip = imageResults.length > 0 && (
+            <>
+              {displayHint !== 'images_first' && (
+                <h2 className="text-xs font-medium text-muted uppercase tracking-wide flex items-center gap-2 mt-4">
+                  <span className="w-1.5 h-1.5 rounded-full bg-accent-gold" />
+                  Illustrations
+                </h2>
+              )}
+              <div className={`grid gap-3 ${displayHint === 'images_first' ? 'grid-cols-2 sm:grid-cols-3 md:grid-cols-4' : 'grid-cols-3 sm:grid-cols-4 md:grid-cols-6'}`}>
+                {imageResults.slice(0, displayHint === 'images_first' ? 8 : PREVIEW_IMAGES).map((item, idx) => (
+                  <ImageResultCard key={`${item.pageId}-${item.detectionIndex}-${idx}`} item={item} query={query} large={displayHint === 'images_first'} />
+                ))}
+              </div>
+              {imageTotal > PREVIEW_IMAGES && (
+                <button onClick={() => drillInto('images')} className="text-sm text-accent-gold-dark hover:text-accent-gold font-medium transition-colors flex items-center gap-1">
+                  See all images <ChevronRight className="w-3.5 h-3.5" />
+                </button>
+              )}
+            </>
+          );
+
+          const bookSection = (
+            <>
+              {hasBoth && (
+                <h2 className="text-xs font-medium text-muted uppercase tracking-wide flex items-center gap-2 mt-4">
                   <span className="w-1.5 h-1.5 rounded-full bg-violet-400" />
                   Conceptual matches
                 </h2>
@@ -1114,8 +1180,7 @@ export default function SearchPage() {
               {uniqueSemantic.map((sem: any) => (
                 <SemanticResultCard key={sem.book_id} result={sem} query={query} />
               ))}
-
-              {hasBoth && bookResults.length > 0 && (
+              {hasBoth && (
                 <h2 className="text-xs font-medium text-muted uppercase tracking-wide flex items-center gap-2 mt-4">
                   <span className="w-1.5 h-1.5 rounded-full bg-accent-rust" />
                   Text matches
@@ -1124,70 +1189,33 @@ export default function SearchPage() {
               {bookResults.slice(0, PREVIEW_BOOKS).map((result, idx) => (
                 <BookResultCard key={result.id} result={result} query={query} autoPassages={idx === 0} />
               ))}
-
-              {/* AI narration — positioned after results, not above */}
-              {query.length >= 3 && (aiStreaming || aiNarration || aiNarrationHistory.length > 0) && (
-                <div className="px-4 py-3 bg-warm/60 rounded-lg border border-border-light space-y-2">
-                  {aiNarrationHistory.map((entry, i) => (
-                    <div key={i} className="text-sm text-secondary/70 italic leading-relaxed border-b border-border-light pb-2">
-                      <span className="text-xs text-muted not-italic font-medium">{entry.query}:</span>{' '}
-                      <span dangerouslySetInnerHTML={{
-                        __html: entry.text
-                          .replace(/&/g, '&amp;').replace(/</g, '&lt;').replace(/>/g, '&gt;')
-                          .replace(/\*([^*]+)\*/g, '<em>$1</em>')
-                      }} />
-                    </div>
-                  ))}
-                  {(aiStreaming || aiNarration) && (
-                    <p className="text-sm text-secondary italic leading-relaxed"
-                       dangerouslySetInnerHTML={{
-                         __html: aiNarration
-                           .replace(/&/g, '&amp;').replace(/</g, '&lt;').replace(/>/g, '&gt;')
-                           .replace(/\*([^*]+)\*/g, '<em>$1</em>')
-                           + (aiStreaming ? '<span class="inline-block w-1.5 h-4 bg-accent-rust/40 animate-pulse ml-0.5 align-text-bottom"></span>' : '')
-                       }}
-                    />
-                  )}
-                  {aiTerms.length > 0 && (
-                    <div className="flex flex-wrap gap-1.5">
-                      {aiTerms.map(term => (
-                        <button
-                          key={term}
-                          onClick={() => { startAiStream(term, true); }}
-                          className="px-2.5 py-1 bg-white/60 text-secondary text-xs rounded-full hover:bg-accent-rust/10 hover:text-accent-rust transition-colors"
-                        >
-                          {term}
-                        </button>
-                      ))}
-                    </div>
-                  )}
-                </div>
-              )}
-
-              {/* "See all" — subtle inline link, not a big button */}
               {bookTotal > PREVIEW_BOOKS && (
                 <button onClick={() => drillInto('books')} className="text-sm text-accent-rust hover:text-accent-rust-dark font-medium transition-colors flex items-center gap-1">
                   See all {bookTotal} results <ChevronRight className="w-3.5 h-3.5" />
                 </button>
               )}
+            </>
+          );
 
-              {/* Gallery images — inline strip */}
-              {imageResults.length > 0 && (
+          return (
+            <div className="space-y-3">
+              {displayHint === 'images_first' ? (
                 <>
-                  <h2 className="text-xs font-medium text-muted uppercase tracking-wide flex items-center gap-2 mt-4">
-                    <span className="w-1.5 h-1.5 rounded-full bg-accent-gold" />
-                    Illustrations
-                  </h2>
-                  <div className="grid grid-cols-3 sm:grid-cols-4 md:grid-cols-6 gap-3">
-                    {imageResults.slice(0, PREVIEW_IMAGES).map((item, idx) => (
-                      <ImageResultCard key={`${item.pageId}-${item.detectionIndex}-${idx}`} item={item} query={query} />
-                    ))}
-                  </div>
-                  {imageTotal > PREVIEW_IMAGES && (
-                    <button onClick={() => drillInto('images')} className="text-sm text-accent-gold-dark hover:text-accent-gold font-medium transition-colors flex items-center gap-1">
-                      See all images <ChevronRight className="w-3.5 h-3.5" />
-                    </button>
-                  )}
+                  {imageStrip}
+                  {narrationBlock}
+                  {bookSection}
+                </>
+              ) : displayHint === 'not_in_collection' ? (
+                <>
+                  {narrationBlock}
+                  {bookSection}
+                  {imageStrip}
+                </>
+              ) : (
+                <>
+                  {bookSection}
+                  {narrationBlock}
+                  {imageStrip}
                 </>
               )}
             </div>
