@@ -102,7 +102,7 @@ The terms and image_terms are the most important part — they expand the search
           if (!text) continue;
           fullText += text;
 
-          // Stream narration as it arrives (between <narration> tags)
+          // Emit display hint early so layout can adjust
           if (!sentDisplay) {
             const displayMatch = fullText.match(/<display>(.*?)<\/display>/);
             if (displayMatch) {
@@ -110,31 +110,21 @@ The terms and image_terms are the most important part — they expand the search
                 ? displayMatch[1].trim() : 'books_first';
               controller.enqueue(encoder.encode(`event: display\ndata: ${JSON.stringify(hint)}\n\n`));
               sentDisplay = true;
-              inNarration = true;
             }
           }
-
-          if (inNarration && !fullText.includes('</narration>')) {
-            // Stream narration text (strip XML tags from chunks)
-            const clean = text.replace(/<\/?narration>/g, '').replace(/<\/?display>.*?(?:<\/display>)?/g, '');
-            if (clean.trim()) {
-              controller.enqueue(encoder.encode(`event: narration\ndata: ${JSON.stringify(clean)}\n\n`));
-            }
-          }
-          if (fullText.includes('</narration>')) inNarration = false;
         }
 
-        // Parse complete XML from full text
+        // Parse everything from complete text — no streaming narration (avoids tag leaks)
         console.log('[ai-expand] Full output:', JSON.stringify(fullText));
 
         if (!sentDisplay) {
           controller.enqueue(encoder.encode(`event: display\ndata: "books_first"\n\n`));
         }
 
-        // Extract narration (send if wasn't streamed)
+        // Extract narration — clean, complete, no tag fragments
         const narrationMatch = fullText.match(/<narration>([\s\S]*?)<\/narration>/);
         const narrationPart = narrationMatch ? narrationMatch[1].trim() : '';
-        if (!inNarration && narrationPart && !sentDisplay) {
+        if (narrationPart) {
           controller.enqueue(encoder.encode(`event: narration\ndata: ${JSON.stringify(narrationPart)}\n\n`));
         }
 
