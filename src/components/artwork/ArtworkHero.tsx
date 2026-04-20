@@ -23,40 +23,57 @@ interface ArtworkHeroProps {
 
 export default function ArtworkHero({ imageUrl, thumbUrl, title, fullResUrl, license, isLandscape, prevWork, nextWork }: ArtworkHeroProps) {
   const [fitHeight, setFitHeight] = useState(false);
-  const [hiResLoaded, setHiResLoaded] = useState(!thumbUrl || thumbUrl === imageUrl);
-
-  // Progressive loading: show 600px thumb immediately, swap to full-res when ready
-  const displaySrc = hiResLoaded ? imageUrl : thumbUrl!;
+  const hasThumb = !!thumbUrl && thumbUrl !== imageUrl;
+  const [hiResLoaded, setHiResLoaded] = useState(!hasThumb);
 
   return (
     <div className="bg-stone-900 relative">
-      {/* Preload full-res image in background */}
-      {!hiResLoaded && (
-        // eslint-disable-next-line @next/next/no-img-element
-        <img
-          src={imageUrl}
-          alt=""
-          className="hidden"
-          onLoad={() => setHiResLoaded(true)}
-        />
-      )}
-
       {/* Image container */}
       <div className={`max-w-[var(--container-wide)] mx-auto ${fitHeight ? 'py-2' : isLandscape ? 'py-4 sm:py-8' : 'py-4 sm:py-8 max-w-3xl'}`}>
         <div
           className={`relative mx-auto ${fitHeight ? '' : isLandscape ? 'aspect-[16/10]' : 'aspect-[3/4]'}`}
           style={fitHeight ? { height: 'calc(100vh - 120px)' } : undefined}
         >
-          <ImageWithMagnifier
-            src={displaySrc}
-            thumbnail={thumbUrl || imageUrl}
-            highResSrc={imageUrl}
-            alt={title}
-            className="w-full h-full"
-            magnifierSize={240}
-            zoomLevel={3}
-            darkMode
-          />
+          {hasThumb ? (
+            <>
+              {/* Layer 1: 600px thumb — shows immediately */}
+              <div className={`absolute inset-0 transition-opacity duration-700 ${hiResLoaded ? 'opacity-0 pointer-events-none' : 'opacity-100'}`}>
+                <ImageWithMagnifier
+                  src={thumbUrl}
+                  thumbnail={thumbUrl}
+                  alt={title}
+                  className="w-full h-full"
+                  magnifierSize={240}
+                  zoomLevel={3}
+                  darkMode
+                />
+              </div>
+              {/* Layer 2: full-res — fades in over thumb */}
+              <div className={`absolute inset-0 transition-opacity duration-700 ${hiResLoaded ? 'opacity-100' : 'opacity-0'}`}>
+                <ImageWithMagnifier
+                  src={imageUrl}
+                  thumbnail={thumbUrl}
+                  highResSrc={imageUrl}
+                  alt={title}
+                  className="w-full h-full"
+                  magnifierSize={240}
+                  zoomLevel={3}
+                  darkMode
+                  onLoad={() => setHiResLoaded(true)}
+                />
+              </div>
+            </>
+          ) : (
+            <ImageWithMagnifier
+              src={imageUrl}
+              thumbnail={imageUrl}
+              alt={title}
+              className="w-full h-full"
+              magnifierSize={240}
+              zoomLevel={3}
+              darkMode
+            />
+          )}
         </div>
       </div>
 

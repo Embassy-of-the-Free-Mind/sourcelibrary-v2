@@ -14,6 +14,7 @@ interface ImageWithMagnifierProps {
   highResSrc?: string; // For magnifier/zoom, use higher resolution version
   fallbackSrc?: string; // Fallback if src fails to load (e.g. on-the-fly crop URL)
   darkMode?: boolean; // Dark skeleton/background for lightbox contexts
+  onLoad?: () => void; // Called when the display image finishes loading
 }
 
 // Magnifier component for zooming into the source image
@@ -29,7 +30,8 @@ export default function ImageWithMagnifier({
   scrollable = false,
   highResSrc,
   fallbackSrc,
-  darkMode = false
+  darkMode = false,
+  onLoad,
 }: ImageWithMagnifierProps) {
   const [showMagnifier, setShowMagnifier] = useState(false);
   const [magnifierPosition, setMagnifierPosition] = useState({ x: 0, y: 0 });
@@ -256,6 +258,7 @@ export default function ImageWithMagnifier({
               }
             }
             setIsLoaded(true);
+            onLoad?.();
             if (imgRef.current) {
               const rect = imgRef.current.getBoundingClientRect();
               setImageDimensions({ width: rect.width, height: rect.height });
