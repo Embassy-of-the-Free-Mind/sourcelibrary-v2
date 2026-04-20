@@ -20,7 +20,8 @@ import {
   RotateCcw,
   Search,
   Info,
-  Type
+  Type,
+  BookOpen
 } from 'lucide-react';
 import { useReaderPreferences } from '@/hooks/useReaderPreferences';
 import NotesRenderer from '@/components/reader/NotesRenderer';
@@ -491,6 +492,7 @@ export default function TranslationEditor({
   const [showOcrPanel, setShowOcrPanel] = useState(false);
   const [showTranslationPanel, setShowTranslationPanel] = useState(true);
   const [showTransliterationPanel, setShowTransliterationPanel] = useState(false);
+  const [showGermanSourcePanel, setShowGermanSourcePanel] = useState(false);
   const [transliterationText, setTransliterationText] = useState('');
   const [transliterationLoading, setTransliterationLoading] = useState(false);
   const [showPageMetadata, setShowPageMetadata] = useState(false); // Toggle for page metadata panel
@@ -615,6 +617,7 @@ export default function TranslationEditor({
   // Transliteration: only show panel when page has transliteration data
   const isNonLatin = hasNonLatinScript(book.language);
   const hasTransliteration = !!(page.transliteration?.data || transliterationText);
+  const hasGermanSource = !!page.translation?.german_source;
   useEffect(() => {
     if (!showTransliterationPanel || !isNonLatin || !page.ocr?.data) return;
     // Check for cached transliteration first
@@ -926,6 +929,21 @@ export default function TranslationEditor({
                   <span className="hidden sm:inline">Romanized</span>
                 </button>
               )}
+              {hasGermanSource && (
+                <button
+                  onClick={() => setShowGermanSourcePanel(!showGermanSourcePanel)}
+                  className={`flex items-center justify-center gap-1.5 px-2 sm:px-2.5 py-1.5 rounded-md text-xs font-medium transition-all focus-visible:ring-2 focus-visible:ring-accent-rust focus-visible:outline-none ${showGermanSourcePanel ? 'text-white' : ''}`}
+                  style={{
+                    background: showGermanSourcePanel ? 'var(--accent-rust)' : 'transparent',
+                    color: showGermanSourcePanel ? '#fff' : 'var(--text-muted)',
+                  }}
+                  aria-label={`${showGermanSourcePanel ? 'Hide' : 'Show'} German scholarly translation`}
+                  aria-pressed={showGermanSourcePanel}
+                >
+                  <BookOpen className="w-4 h-4" aria-hidden="true" />
+                  <span className="hidden sm:inline">Deutsch</span>
+                </button>
+              )}
               <button
                 onClick={() => setShowTranslationPanel(!showTranslationPanel)}
                 className={`flex items-center justify-center gap-1.5 px-2 sm:px-2.5 py-1.5 rounded-md text-xs font-medium transition-all focus-visible:ring-2 focus-visible:ring-accent-rust focus-visible:outline-none ${showTranslationPanel ? 'text-white' : ''}`}
@@ -1069,7 +1087,7 @@ export default function TranslationEditor({
 
         {/* Panel layout - dynamic based on visibility */}
         {(() => {
-          const visibleCount = [showImagePanel, showOcrPanel, showTranslationPanel, showTransliterationPanel && hasTransliteration].filter(Boolean).length;
+          const visibleCount = [showImagePanel, showOcrPanel, showTranslationPanel, showTransliterationPanel && hasTransliteration, showGermanSourcePanel && hasGermanSource].filter(Boolean).length;
           const panelWidth = visibleCount === 1 ? 'w-full' : visibleCount === 2 ? 'lg:w-1/2' : visibleCount === 3 ? 'lg:w-1/3' : 'lg:w-1/4';
 
           return (
@@ -1317,6 +1335,30 @@ export default function TranslationEditor({
                         </p>
                       </div>
                     )}
+                  </div>
+                </div>
+              )}
+
+              {/* German Source Panel (ORAEC Egyptian texts) */}
+              {showGermanSourcePanel && hasGermanSource && (
+                <div className={`w-full ${panelWidth} flex flex-col min-h-[50vh] shrink-0 lg:min-h-0 lg:shrink lg:flex-1`} style={{ background: 'var(--bg-white)', borderRight: '1px solid var(--border-light)' }}>
+                  <div className="px-4 py-2 flex items-center justify-between flex-shrink-0" style={{ borderBottom: '1px solid var(--border-light)' }}>
+                    <span className="text-xs font-medium uppercase tracking-wide" style={{ color: 'var(--text-muted)' }}>
+                      Deutsch <span className="normal-case font-normal">(ORAEC)</span>
+                    </span>
+                    <button
+                      onClick={() => copyToClipboard(page.translation?.german_source || '')}
+                      className="flex items-center gap-1 px-2 py-1 rounded text-xs transition-colors hover:bg-stone-100"
+                      style={{ color: 'var(--text-muted)' }}
+                    >
+                      <Copy className="w-3 h-3" />
+                      Copy
+                    </button>
+                  </div>
+                  <div className="flex-1 overflow-auto p-4 min-h-0" data-reader-panel>
+                    <div className="prose prose-sm max-w-none whitespace-pre-wrap" style={{ color: 'var(--text-primary)', fontSize: 'var(--reader-font-size, 15px)', lineHeight: 'var(--reader-line-height, 1.8)' }}>
+                      {page.translation?.german_source}
+                    </div>
                   </div>
                 </div>
               )}
@@ -1633,6 +1675,20 @@ export default function TranslationEditor({
                 <span className="hidden sm:inline">Romanized</span>
               </button>
             )}
+            {hasGermanSource && (
+              <button
+                onClick={() => setShowGermanSourcePanel(!showGermanSourcePanel)}
+                className={`flex items-center justify-center gap-1.5 px-2 sm:px-2.5 py-1.5 rounded-md text-xs font-medium transition-all ${showGermanSourcePanel ? 'text-white' : ''}`}
+                style={{
+                  background: showGermanSourcePanel ? 'var(--accent-rust)' : 'transparent',
+                  color: showGermanSourcePanel ? '#fff' : 'var(--text-muted)',
+                }}
+                title="Toggle German scholarly translation"
+              >
+                <BookOpen className="w-4 h-4" />
+                <span className="hidden sm:inline">Deutsch</span>
+              </button>
+            )}
             <button
               onClick={() => setShowTranslationPanel(!showTranslationPanel)}
               className={`flex items-center justify-center gap-1.5 px-2 sm:px-2.5 py-1.5 rounded-md text-xs font-medium transition-all ${showTranslationPanel ? 'text-white' : ''}`}
@@ -1872,6 +1928,21 @@ export default function TranslationEditor({
                   Switch to read mode to generate transliteration.
                 </p>
               )}
+            </div>
+          </div>
+        )}
+
+        {/* German Source Panel (edit mode, read-only) */}
+        {showGermanSourcePanel && hasGermanSource && (
+          <div className="w-full min-h-[50vh] lg:min-h-0 lg:flex-1 flex flex-col shrink-0 lg:shrink" style={{ background: 'var(--bg-white)', borderLeft: '1px solid var(--border-light)' }}>
+            <div className="px-3 sm:px-4 py-2 sm:py-3 flex items-center justify-between" style={{ borderBottom: '1px solid var(--border-light)' }}>
+              <span className="text-sm font-medium" style={{ color: 'var(--text-primary)' }}>Deutsch (ORAEC)</span>
+              <span className="text-xs" style={{ color: 'var(--text-muted)' }}>read-only</span>
+            </div>
+            <div className="flex-1 overflow-auto p-3 sm:p-4" data-reader-panel>
+              <div className="prose-manuscript leading-relaxed whitespace-pre-wrap" style={{ color: 'var(--text-secondary)', fontSize: `${fontSize}px`, lineHeight: String(lineHeight) }} lang="de">
+                {page.translation?.german_source}
+              </div>
             </div>
           </div>
         )}
