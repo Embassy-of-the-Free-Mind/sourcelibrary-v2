@@ -1248,22 +1248,20 @@ export default function SearchPage() {
 
           return (
             <div className="space-y-3">
+              {narrationBlock}
               {displayHint === 'images_first' ? (
                 <>
                   {imageStrip}
-                  {narrationBlock}
                   {bookSection}
                 </>
               ) : displayHint === 'not_in_collection' ? (
                 <>
-                  {narrationBlock}
                   {bookSection}
                   {imageStrip}
                 </>
               ) : (
                 <>
                   {bookSection}
-                  {narrationBlock}
                   {imageStrip}
                 </>
               )}
