@@ -138,6 +138,9 @@ Raphael's fresco depicts the great philosophers of antiquity — Plato, Aristotl
           if (fullText.includes('---TERMS---')) inNarration = false;
         }
 
+        // Debug: log full model output
+        console.log('[ai-expand] Full output:', JSON.stringify(fullText));
+
         // Parse everything from complete text
         if (!sentDisplay) {
           controller.enqueue(encoder.encode(`event: display\ndata: "books_first"\n\n`));
