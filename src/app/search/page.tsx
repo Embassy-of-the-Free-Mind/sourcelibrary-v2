@@ -69,6 +69,7 @@ export default function SearchPage() {
   const [indexTotal, setIndexTotal] = useState(0);
   const [imageResults, setImageResults] = useState<GalleryItem[]>([]);
   const [imageTotal, setImageTotal] = useState(0);
+  const [collectionResults, setCollectionResults] = useState<{ slug: string; name: string; description?: string; book_count: number; featured_image?: string }[]>([]);
 
   // Semantic results (parallel search agent)
   const [semanticResults, setSemanticResults] = useState<any[]>([]);
@@ -283,6 +284,7 @@ export default function SearchPage() {
     if (!q || q.length < 2) {
       setBookResults([]); setBookTotal(0);
       setIndexResults([]); setIndexTotal(0);
+      setCollectionResults([]);
       setImageResults([]); setImageTotal(0);
       return;
     }
@@ -378,6 +380,7 @@ export default function SearchPage() {
           setIndexTotal(iTotal);
           setImageResults(images);
           setImageTotal(imTotal);
+          setCollectionResults((data as any).collections?.results || []);
           displayHintLocked.current = true; // lock layout once results render
 
           // Cache the result
@@ -1248,8 +1251,33 @@ export default function SearchPage() {
             </>
           );
 
+          const collectionCards = collectionResults.length > 0 && (
+            <div className="space-y-2">
+              {collectionResults.map(col => (
+                <Link
+                  key={col.slug}
+                  href={`/collections/${col.slug}`}
+                  className="flex items-center gap-3 p-3 bg-white rounded-xl border border-accent-rust/20 hover:border-accent-rust/40 hover:shadow-md transition-all"
+                >
+                  {col.featured_image && (
+                    <Image src={col.featured_image} alt="" width={48} height={48} className="rounded-lg object-cover flex-shrink-0" unoptimized />
+                  )}
+                  <div className="min-w-0 flex-1">
+                    <h3 className="font-serif font-medium text-primary text-sm">{col.name}</h3>
+                    {col.description && (
+                      <p className="text-xs text-secondary mt-0.5 line-clamp-1">{col.description}</p>
+                    )}
+                    <span className="text-xs text-muted">{col.book_count} books</span>
+                  </div>
+                  <ChevronRight className="w-4 h-4 text-muted flex-shrink-0" />
+                </Link>
+              ))}
+            </div>
+          );
+
           return (
             <div className="space-y-3">
+              {collectionCards}
               {narrationBlock}
               {displayHint === 'images_first' ? (
                 <>

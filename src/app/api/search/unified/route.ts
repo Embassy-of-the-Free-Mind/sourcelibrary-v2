@@ -39,6 +39,14 @@ interface GalleryResult {
   bookId: string;
 }
 
+interface CollectionResult {
+  slug: string;
+  name: string;
+  description?: string;
+  book_count: number;
+  featured_image?: string;
+}
+
 /**
  * GET /api/search/unified
  *
@@ -117,8 +125,9 @@ export async function GET(request: NextRequest) {
       similarity: number;
     }
     const emptyArtworks = { results: [] as ArtworkSearchResult[], total: 0 };
+    const emptyCollections = { results: [] as CollectionResult[] };
 
-    const [booksResult, indexResult, galleryResult, visualResult, semanticResultRaw, artworkResult] = await Promise.all([
+    const [booksResult, indexResult, galleryResult, visualResult, semanticResultRaw, artworkResult, collectionsResult] = await Promise.all([
       withTimeout(searchBooks(query, limit, searchFilters, library), emptyBooks, 'books'),
       withTimeout(
         searchIndex(db, query, limit).catch((err) => {
@@ -186,6 +195,11 @@ export async function GET(request: NextRequest) {
           .catch(() => emptyArtworks),
         emptyArtworks, 'artworks', 6000,
       ),
+      // Collection search: match collection names/descriptions (~300 docs, fast)
+      withTimeout(
+        searchCollections(db, queryRegex, query).catch(() => emptyCollections),
+        emptyCollections, 'collections', 2000,
+      ),
     ]);
 
     // Dedup semantic results: remove books already in keyword results
@@ -212,6 +226,7 @@ export async function GET(request: NextRequest) {
       visual: visualResult,
       semantic: semanticResult,
       artworks: artworkResult,
+      collections: collectionsResult,
     }, {
       headers: {
         'Cache-Control': 'no-store',
@@ -542,4 +557,36 @@ async function searchVisual(query: string, limit: number): Promise<{ results: Ga
   } catch {
     return { results: [], total: 0 };
   }
+}
+
+/**
+ * Search collections by name/description.
+ * ~300 docs, fast regex on a small collection.
+ */
+async function searchCollections(db: any, queryRegex: RegExp, query: string): Promise<{ results: CollectionResult[] }> {
+  const cols = await db.collection('collections')
+    .find({
+      visible: { $ne: false },
+      book_count: { $gt: 0 },
+      $or: [
+        { name: queryRegex },
+        { description: queryRegex },
+        { slug: queryRegex },
+      ],
+    })
+    .project({ slug: 1, name: 1, description: 1, book_count: 1, featured_image: 1 })
+    .sort({ book_count: -1 })
+    .limit(3)
+    .maxTimeMS(2000)
+    .toArray();
+
+  return {
+    results: cols.map((c: any) => ({
+      slug: c.slug,
+      name: c.name,
+      description: c.description?.slice(0, 150),
+      book_count: c.book_count,
+      featured_image: c.featured_image,
+    })),
+  };
 }
