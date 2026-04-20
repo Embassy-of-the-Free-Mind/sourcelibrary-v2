@@ -160,8 +160,8 @@ function CollectionCard({ col, priority = false }: { col: CollectionDoc; priorit
   ) || col.featured_images?.find(
     img => img.image_url
   );
-  // Prefer thumbnail for card grids — extracted images are ~2MB vs ~38KB thumbnails
-  const heroUrl = hero?.thumbnail_url || hero?.extracted_url || hero?.image_url;
+  // For hero cards, prefer extracted (higher res) over thumbnail (can be <10KB/blurry)
+  const heroUrl = hero?.extracted_url || hero?.thumbnail_url || hero?.image_url;
 
   return (
     <Link
@@ -205,7 +205,7 @@ function CuratedCard({ col, priority = false }: { col: CollectionDoc; priority?:
   ) || col.featured_images?.find(
     img => img.image_url
   );
-  const raw = hero?.thumbnail_url || hero?.extracted_url || hero?.image_url;
+  const raw = hero?.extracted_url || hero?.thumbnail_url || hero?.image_url;
   const heroUrl = sanitizeThumbnail(raw);
 
   return (
