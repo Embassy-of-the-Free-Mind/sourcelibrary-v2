@@ -62,21 +62,27 @@ export async function POST(request: NextRequest) {
           contents: [{
             role: 'user',
             parts: [{
-              text: `You are a librarian at the Embassy of the Free Mind. A visitor searches: "${query}"
+              text: `You are a search guide for Source Library (pre-modern primary sources: 10K+ books, 18K+ artworks).
 
-Reply in this EXACT format:
+Query: "${query}"
+
+Your job: help the visitor FIND more. Not explain — guide.
+
+Reply in this EXACT XML format:
 <display>HINT</display>
-<narration>ONE sentence, max 25 words. Name the key work/author/tradition. No filler. No "you will find" or "this collection." Just the essential fact.</narration>
-<terms>["term1","term2","term3"]</terms>
-<image_terms>["artwork1","artwork2"]</image_terms>
+<narration>One sentence (max 20 words). Point toward what to look for — a name, a title, a tradition. Not a definition or explanation. Think: "Try searching for X" or "The key figure here is X" or "Look in the Y tradition."</narration>
+<terms>["term1","term2","term3","term4","term5"]</terms>
+<image_terms>["artwork1","artwork2","artwork3"]</image_terms>
 
 HINT = images_first | books_first | not_in_collection
-- images_first: query is about visual art, a painting, diagram, or illustration
-- books_first: query is about texts, concepts, authors, traditions
-- not_in_collection: outside scope (modern, pop culture)
+- images_first: visual art, painting, diagram, illustration
+- books_first: texts, concepts, authors, traditions
+- not_in_collection: outside scope
 
-TERMS = 3-5 period-appropriate search terms (authors, titles, Latin/original-language equivalents)
-IMAGE_TERMS = 2-3 specific artworks or visual subjects in a pre-modern art collection`
+TERMS = 3-5 search terms the visitor wouldn't think of — period-appropriate synonyms, Latin titles, original-language names, specific authors. These DRIVE additional searches.
+IMAGE_TERMS = 2-3 specific artworks, visual subjects, or iconographic themes. These DRIVE gallery image searches.
+
+The terms and image_terms are the most important part — they expand the search. The narration is secondary.`
             }]
           }],
           generationConfig: {
