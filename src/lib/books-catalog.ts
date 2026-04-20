@@ -298,6 +298,62 @@ export async function browseArtists(letter: string): Promise<{ name: string; cou
   return results.sort((a, b) => a.name.localeCompare(b.name));
 }
 
+/** Select string for search results — includes summary_text and doi for display */
+const SEARCH_SELECT = `${BOOK_SELECT}, summary_text, doi, work_id`;
+
+/**
+ * Search books by title/author text — returns full metadata for search display.
+ *
+ * Single Supabase query replaces the old two-hop pattern:
+ *   searchBookIds → MongoDB $in lookup (~1s)
+ * Now: trigram search + filters + metadata in one query (~200ms).
+ */
+export async function searchBooksCatalog(
+  text: string,
+  opts?: {
+    limit?: number;
+    language?: string;
+    category?: string;
+    firstTranslation?: boolean;
+    hasTranslation?: boolean;
+    library?: string;
+  }
+): Promise<CatalogBookDetail[]> {
+  const limit = opts?.limit || 20;
+
+  // Build OR filter — same logic as searchBookIds
+  const STOPWORDS = new Set(['a', 'an', 'and', 'at', 'by', 'de', 'der', 'des', 'di', 'du', 'el', 'en', 'et', 'for', 'from', 'in', 'la', 'le', 'les', 'of', 'on', 'or', 'the', 'to', 'und', 'von', 'with']);
+  const words = text.trim().split(/\s+/).filter(w => w.length >= 2);
+  const phraseFilters = `title.ilike.%${text}%,display_title.ilike.%${text}%,author.ilike.%${text}%`;
+
+  let orFilter = phraseFilters;
+  if (words.length >= 2) {
+    const titleAnds = words.map(w => `title.ilike.%${w}%`).join(',');
+    const displayAnds = words.map(w => `display_title.ilike.%${w}%`).join(',');
+    orFilter += `,and(${titleAnds}),and(${displayAnds})`;
+  } else {
+    orFilter += `,language.ilike.%${text}%`;
+  }
+
+  let query = supabase
+    .from('books_catalog')
+    .select(SEARCH_SELECT)
+    .eq('visible', true)
+    .gt('pages_count', 0)
+    .or(orFilter)
+    .limit(limit);
+
+  if (opts?.language) query = query.eq('language', opts.language);
+  if (opts?.category) query = query.contains('categories', [opts.category]);
+  if (opts?.firstTranslation) query = query.eq('is_first_translation', true);
+  if (opts?.hasTranslation) query = query.gt('pages_translated', 0);
+  if (opts?.library) query = query.eq('image_source_provider', opts.library);
+
+  const { data, error } = await query;
+  if (error) throw new Error(`searchBooksCatalog failed: ${error.message}`);
+  return (data || []) as unknown as CatalogBookDetail[];
+}
+
 /**
  * Search books by title/author text — returns matching book IDs.
  *

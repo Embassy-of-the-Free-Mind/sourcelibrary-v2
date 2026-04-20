@@ -3,7 +3,7 @@ import { getDb } from '@/lib/mongodb';
 import { supabase } from '@/lib/supabase';
 import type { BookSearchFilters } from '@/lib/atlas-search';
 import type { SearchResult } from '@/lib/api-client/types/search';
-import { searchBookIds } from '@/lib/books-catalog';
+import { searchBooksCatalog } from '@/lib/books-catalog';
 import { semanticBookSearch, semanticArtworkSearch } from '@/lib/semantic-search';
 
 // CLIP server on Hetzner for visual text→image search
@@ -119,7 +119,7 @@ export async function GET(request: NextRequest) {
     const emptyArtworks = { results: [] as ArtworkSearchResult[], total: 0 };
 
     const [booksResult, indexResult, galleryResult, visualResult, semanticResultRaw, artworkResult] = await Promise.all([
-      withTimeout(searchBooks(db, query, queryRegex, limit, searchFilters, library), emptyBooks, 'books'),
+      withTimeout(searchBooks(query, limit, searchFilters, library), emptyBooks, 'books'),
       withTimeout(
         searchIndex(db, query, limit).catch((err) => {
           console.error('Index search error:', err);
@@ -224,83 +224,20 @@ export async function GET(request: NextRequest) {
 }
 
 async function searchBooks(
-  db: any,
   query: string,
-  queryRegex: RegExp,
   limit: number,
   searchFilters: BookSearchFilters,
   library?: string,
 ) {
-  const bookProjection = {
-    id: 1, slug: 1, title: 1, display_title: 1, author: 1, language: 1, published: 1,
-    pages_count: 1, pages_translated: 1, pages_ocr: 1, pages_blank: 1,
-    thumbnail: 1, thumbnail_blob: 1, doi: 1, categories: 1, quality_score: 1,
-    'reading_summary.overview': 1, work_id: 1,
-  };
-
-  // Supabase trigram search (fast, always warm — no cold-start penalty)
-  const matchingIds = await searchBookIds(query, { limit: (limit + 1) * 2 });
-
-  let books;
-  if (matchingIds.length > 0) {
-    const filter: Record<string, unknown> = {
-      id: { $in: matchingIds },
-      visible: true,
-      pages_count: { $gt: 0 },
-    };
-    if (searchFilters.language) filter.language = searchFilters.language;
-    if (searchFilters.category) filter.categories = searchFilters.category;
-    if (searchFilters.isFirstTranslation) filter.is_first_translation = true;
-    if (searchFilters.hasTranslation) filter.pages_translated = { $gt: 0 };
-    if (library) filter['image_source.provider'] = library;
-
-    books = await db.collection('books')
-      .find(filter)
-      .project(bookProjection)
-      .limit(limit + 1)
-      .maxTimeMS(5000)
-      .toArray();
-  } else {
-    books = [];
-  }
-
-  // Author alias expansion: if results are sparse and query matches an entity alias,
-  // include books linked to that entity (catches variant name searches like "Marsilius Ficinus")
-  if (books.length < limit) {
-    const seenIds = new Set(books.map((b: any) => b.id));
-    const entity = await db.collection('entities').findOne({
-      type: 'person',
-      canonical_name: { $exists: true },
-      $or: [
-        { canonical_name: queryRegex },
-        { aliases: queryRegex },
-        { name: queryRegex },
-      ],
-    }, { projection: { _id: 1 }, maxTimeMS: 2000 }).catch(() => null);
-
-    if (entity) {
-      const aliasFilter: Record<string, unknown> = {
-        author_entity_id: entity._id.toString(),
-        visible: true,
-        pages_count: { $gt: 0 },
-      };
-      if (library) aliasFilter['image_source.provider'] = library;
-
-      const aliasBooks = await db.collection('books')
-        .find(aliasFilter)
-        .project(bookProjection)
-        .limit(limit - books.length)
-        .maxTimeMS(3000)
-        .toArray();
-
-      for (const ab of aliasBooks) {
-        if (!seenIds.has(ab.id)) {
-          books.push(ab);
-          seenIds.add(ab.id);
-        }
-      }
-    }
-  }
+  // Single Supabase query — no MongoDB round-trip
+  const books = await searchBooksCatalog(query, {
+    limit: (limit + 1) * 2,
+    language: searchFilters.language,
+    category: searchFilters.category,
+    firstTranslation: searchFilters.isFirstTranslation,
+    hasTranslation: searchFilters.hasTranslation,
+    library,
+  });
 
   // Canon-weighted reranking: older editions first, original language preferred
   const queryLower = query.toLowerCase();
@@ -329,7 +266,7 @@ async function searchBooks(
   // Work-level dedup: collapse editions of the same work (keep best-ranked)
   const seenWorkIds = new Set<string>();
   const deduped = books.filter((b: any) => {
-    if (!b.work_id) return true; // no work_id — always keep
+    if (!b.work_id) return true;
     if (seenWorkIds.has(b.work_id)) return false;
     seenWorkIds.add(b.work_id);
     return true;
@@ -340,7 +277,7 @@ async function searchBooks(
 
   return {
     results: truncated.map((b: any): SearchResult => {
-      const summaryText = b.reading_summary?.overview;
+      const summaryText = b.summary_text;
       return {
         id: b.id,
         type: 'book',
