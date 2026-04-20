@@ -55,49 +55,39 @@ export async function POST(request: NextRequest) {
     async start(controller) {
       try {
         const client = getGeminiClient();
-        const model = client.getGenerativeModel({ model: 'gemini-3-flash-preview' });
+        // flash-lite follows structured format reliably and is 50% cheaper
+        const model = client.getGenerativeModel({ model: 'gemini-3.1-flash-lite-preview' });
 
         const result = await model.generateContentStream({
           contents: [{
             role: 'user',
             parts: [{
-              text: `You are a search guide for Source Library, a digital library of over 10,000 pre-modern primary sources AND 18,000+ historical artworks/illustrations. The collection includes: Western alchemy and Hermetica, Kabbalah, Rosicrucianism, natural philosophy, early modern science, Sanskrit texts (rasayana, Tantra, Vedanta, Ayurveda), Chinese and Japanese classics, Arabic and Islamic philosophy, Egyptian and Near Eastern sources, Korean and Southeast Asian manuscripts, Tibetan Buddhism, and more. Artwork includes paintings, engravings, woodcuts, manuscript illuminations, alchemical emblems, scientific diagrams, and portraits from these traditions. Languages include Latin, Greek, Arabic, Sanskrit, Hebrew, German, English, French, Italian, Dutch, Chinese, Japanese, Korean, and many others. Dates range from antiquity through the 19th century.
+              text: `Search guide for a pre-modern primary source library (10K+ books, 18K+ artworks spanning alchemy, Hermetica, Kabbalah, natural philosophy, Sanskrit, Chinese, Arabic, and more).
 
-A user searched for "${query}".
+Query: "${query}"
 
-Respond in THREE parts, separated by "---DISPLAY---" and "---TERMS---" on their own lines:
-
-PART 1 (DISPLAY HINT): Write ONLY one of these exact words on the first line:
-- "images_first" — if the user is clearly looking for a visual artwork, painting, illustration, or image (e.g., "school of athens", "tree of life diagram", "alchemical emblems", "Bosch garden")
-- "books_first" — if the user wants texts, concepts, authors, or ideas (e.g., "alchemy", "Paracelsus", "mystical ecstasy", "kabbalah")
-- "not_in_collection" — if the query is about something clearly outside the collection's scope (e.g., "Taylor Swift", "quantum computing", "goya" — we have pre-modern sources, not modern/19th-century+ art unless it relates to esoteric traditions)
-
-When uncertain, default to "books_first".
-
-PART 2 (NARRATION): After "---DISPLAY---", write 1-2 brief, scholarly sentences (max 40 words) contextualizing this search. Use italics for Latin/foreign terms. Be specific, not generic. Don't say "Source Library" or "our collection." Write as if you're a knowledgeable librarian whispering helpful context. If "not_in_collection", briefly explain what IS available that's related.
-
-PART 3 (TERMS): After "---TERMS---", write ONLY a JSON array of 3-5 alternative search terms for BOOKS (authors, titles, concepts, original-language equivalents).
-
-PART 4 (IMAGE TERMS): After "---IMAGE_TERMS---", write ONLY a JSON array of 2-4 search terms to find IMAGES related to this query. Don't just rephrase the query — think about what specific artworks, famous paintings, engravings, diagrams, or illustrations actually depict this subject. Name specific works, artists, or iconographic subjects that a pre-modern art collection would contain. Examples:
-- "mystical ecstasy" → ["Bernini Teresa", "Hildegard visions", "stigmata", "ascension"] (specific artworks depicting ecstasy)
-- "alchemy" → ["alchemical furnace", "philosopher's stone emblem", "distillation apparatus"] (things you'd see in alchemical illustrations)
-- "Paracelsus" → ["portrait Paracelsus", "iatrochemistry laboratory", "Paracelsus woodcut"] (visual depictions of the person/practice)
-
-Skip this section entirely if images genuinely aren't relevant.
-
-Example response:
-images_first
+Reply EXACTLY in this format (no extra text):
+DISPLAY_HINT
 ---DISPLAY---
-Raphael's fresco depicts the great philosophers of antiquity — Plato, Aristotle, Pythagoras — in the Vatican's *Stanza della Segnatura*. Many of their works are in the collection.
+One sentence of scholarly context (max 30 words). Use *italics* for foreign terms.
 ---TERMS---
-["Plato Aristotle", "Stanza della Segnatura", "Raphael Vatican"]
+["term1","term2","term3"]
 ---IMAGE_TERMS---
-["School of Athens", "Raphael philosophers", "Plato Aristotle fresco"]`
+["artwork1","artwork2"]
+
+DISPLAY_HINT is one of: images_first, books_first, not_in_collection
+- images_first: user wants a visual artwork/painting/diagram (e.g., "school of athens", "tree of life diagram")
+- books_first: user wants texts/concepts/authors (e.g., "alchemy", "Paracelsus", "mystical ecstasy")
+- not_in_collection: query is outside scope (modern art, pop culture). Explain what IS available.
+Default to books_first when uncertain.
+
+TERMS = 3-5 alternative book search terms (authors, titles, Latin/original-language equivalents)
+IMAGE_TERMS = 2-4 specific artworks, visual subjects, or iconographic themes that a pre-modern art collection would contain. Think of actual paintings, engravings, diagrams — not synonyms.`
             }]
           }],
           generationConfig: {
-            temperature: 0.5,
-            maxOutputTokens: 400,
+            temperature: 0.3,
+            maxOutputTokens: 300,
           },
         });
 
