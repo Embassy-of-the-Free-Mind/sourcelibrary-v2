@@ -72,31 +72,28 @@ const tablets = gilgameshData as TabletEntry[];
 
 function renderAtfTokens(tokens: AtfToken[]) {
   return tokens.map((t, i) => {
-    if (t.type === 'cuneiform') {
-      return (
-        <span key={i} className="text-amber-900 text-lg" title={t.reading}>
-          {t.cuneiform}
-        </span>
-      );
-    }
-    if (t.type === 'determinative') {
+    if (t.isDeterminative) {
       return (
         <sup key={i} className="text-stone-400 text-[0.6em]" title={t.reading}>
-          {t.cuneiform || t.reading}
+          {t.sign || t.reading}
         </sup>
       );
     }
-    if (t.type === 'number') {
+    if (t.isNumber) {
       return (
         <span key={i} className="text-blue-800 font-mono text-sm" title={t.reading}>
-          {t.cuneiform || t.reading}
+          {t.sign || t.numValue || t.reading}
         </span>
       );
     }
-    if (t.type === 'separator') {
-      return <span key={i} className="mx-0.5" />;
+    if (t.sign) {
+      return (
+        <span key={i} className="text-amber-900 text-lg" title={t.reading}>
+          {t.sign}
+        </span>
+      );
     }
-    // Unknown — show as transliteration
+    // No mapping — show as transliteration
     return (
       <span key={i} className="text-stone-500 text-sm italic">
         {t.reading}
