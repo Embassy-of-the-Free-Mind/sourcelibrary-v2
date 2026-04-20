@@ -91,6 +91,39 @@ async function fetchWings(): Promise<Wing[]> {
   }));
 }
 
+function CollectionCard({ col }: { col: SubCollection }) {
+  return (
+    <Link
+      href={`/collections/${col.slug}`}
+      className={`group relative block overflow-hidden rounded-lg aspect-[4/3] ${
+        !col.visible ? 'opacity-40' : ''
+      }`}
+    >
+      {col.image ? (
+        <Image
+          src={col.image}
+          alt={col.name}
+          fill
+          sizes="(max-width: 640px) 50vw, (max-width: 1024px) 25vw, 16vw"
+          className="object-cover transition-transform duration-500 ease-out group-hover:scale-105"
+          unoptimized
+        />
+      ) : (
+        <div className="absolute inset-0 bg-warm" />
+      )}
+      <div className="absolute inset-0 bg-gradient-to-t from-[rgba(26,22,18,0.85)] via-[rgba(26,22,18,0.35)] to-transparent" />
+      <div className="absolute inset-0 flex flex-col justify-end p-3">
+        <p className="text-white/50 text-[10px] mb-0.5">
+          {col.book_count.toLocaleString()} books
+        </p>
+        <h3 className="font-serif text-xs sm:text-sm text-white font-semibold leading-tight line-clamp-2 group-hover:text-accent-gold transition-colors">
+          {col.name}
+        </h3>
+      </div>
+    </Link>
+  );
+}
+
 export default async function AllCollectionsPage() {
   const wings = await fetchWings();
 
@@ -104,7 +137,7 @@ export default async function AllCollectionsPage() {
         />
       }
     >
-      <div className="mb-4">
+      <div className="mb-6">
         <Link
           href="/collections"
           className="text-sm text-accent-rust hover:text-accent-rust/80 transition-colors"
@@ -113,87 +146,48 @@ export default async function AllCollectionsPage() {
         </Link>
       </div>
 
-      <div className="grid gap-8 grid-cols-1 md:grid-cols-2 xl:grid-cols-3">
+      <div className="space-y-12">
         {wings.map(wing => (
-          <div key={wing.slug} className="bg-white rounded-xl border border-stone-200 overflow-hidden">
-            {/* Wing header with image */}
+          <section key={wing.slug}>
+            {/* Wing header */}
             <Link
               href={`/collections/${wing.slug}`}
-              className="group relative block h-28 overflow-hidden"
+              className="group relative block overflow-hidden rounded-xl h-36 sm:h-44 mb-4"
             >
               {wing.image ? (
                 <Image
                   src={wing.image}
                   alt={wing.name}
                   fill
-                  sizes="(max-width: 768px) 100vw, 33vw"
+                  sizes="100vw"
                   className="object-cover transition-transform duration-500 group-hover:scale-105"
                   unoptimized
                 />
               ) : (
                 <div className="absolute inset-0 bg-gradient-to-r from-[#2a1f17] to-[#3d2e22]" />
               )}
-              <div className="absolute inset-0 bg-gradient-to-t from-[rgba(26,22,18,0.9)] via-[rgba(26,22,18,0.4)] to-transparent" />
-              <div className="absolute inset-0 flex flex-col justify-end p-4">
-                <h2 className="font-serif text-lg text-white font-semibold group-hover:text-accent-gold transition-colors">
+              <div className="absolute inset-0 bg-gradient-to-t from-[rgba(26,22,18,0.9)] via-[rgba(26,22,18,0.35)] to-[rgba(26,22,18,0.15)]" />
+              <div className="absolute inset-0 flex flex-col justify-end p-5 sm:p-6">
+                <h2 className="font-serif text-2xl sm:text-3xl text-white font-semibold group-hover:text-accent-gold transition-colors">
                   {wing.name}
                 </h2>
-                <p className="text-white/50 text-xs mt-0.5">
+                <p className="text-white/50 text-sm mt-1">
                   {wing.book_count.toLocaleString()} books · {wing.children.length} sub-collections
                 </p>
               </div>
             </Link>
 
-            {/* Subcollections */}
+            {/* Subcollection cards grid */}
             {wing.children.length > 0 ? (
-              <ul className="divide-y divide-stone-100">
+              <div className="grid gap-3 grid-cols-2 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-5 xl:grid-cols-6">
                 {wing.children.map(sub => (
-                  <li key={sub.slug}>
-                    <Link
-                      href={`/collections/${sub.slug}`}
-                      className={`flex items-center gap-3 px-4 py-2 hover:bg-stone-50 transition-colors ${
-                        !sub.visible ? 'opacity-40' : ''
-                      }`}
-                    >
-                      {/* Thumbnail */}
-                      <div className="w-8 h-8 rounded overflow-hidden flex-shrink-0 bg-stone-100">
-                        {sub.image ? (
-                          <Image
-                            src={sub.image}
-                            alt=""
-                            width={32}
-                            height={32}
-                            className="w-full h-full object-cover"
-                            unoptimized
-                          />
-                        ) : (
-                          <div className="w-full h-full bg-stone-200" />
-                        )}
-                      </div>
-                      <span className="text-sm text-stone-700 truncate flex-1">
-                        {sub.name}
-                        {sub.type === 'curated' && (
-                          <span className="ml-1.5 text-[10px] text-accent-rust font-medium uppercase tracking-wider">
-                            curated
-                          </span>
-                        )}
-                        {!sub.visible && (
-                          <span className="ml-1.5 text-[10px] text-stone-400 font-medium uppercase tracking-wider">
-                            hidden
-                          </span>
-                        )}
-                      </span>
-                      <span className="text-xs text-stone-400 tabular-nums flex-shrink-0">
-                        {sub.book_count.toLocaleString()}
-                      </span>
-                    </Link>
-                  </li>
+                  <CollectionCard key={sub.slug} col={sub} />
                 ))}
-              </ul>
+              </div>
             ) : (
-              <p className="px-5 py-4 text-sm text-stone-400 italic">No sub-collections yet</p>
+              <p className="text-sm text-stone-400 italic">No sub-collections yet</p>
             )}
-          </div>
+          </section>
         ))}
       </div>
     </ContentPageLayout>
