@@ -4326,7 +4326,7 @@ Rules:
                   book_id: book.id,
                   $or: [
                     { page_type: { $in: IMAGE_CANDIDATE_PAGE_TYPES } },
-                    { page_type: { $exists: false }, 'ocr.data': { $regex: '<detected-images>|<image-desc' } },
+                    { page_type: { $nin: IMAGE_CANDIDATE_PAGE_TYPES }, 'ocr.data': { $regex: '<detected-images>|<image-desc' } },
                   ],
                 }, { projection: { id: 1 } })
                 .toArray();
@@ -4450,7 +4450,7 @@ Rules:
                   book_id: book.id,
                   $or: [
                     { page_type: { $in: IMAGE_CANDIDATE_PAGE_TYPES } },
-                    { page_type: { $exists: false }, 'ocr.data': { $regex: '<detected-images>|<image-desc' } },
+                    { page_type: { $nin: IMAGE_CANDIDATE_PAGE_TYPES }, 'ocr.data': { $regex: '<detected-images>|<image-desc' } },
                   ],
                 }, { projection: { id: 1 } })
                 .toArray();
