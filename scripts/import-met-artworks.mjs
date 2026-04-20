@@ -29,6 +29,7 @@ const DELAY_MS = 300; // Met rate limits aggressively despite claiming 80/s
 // Each entry: { query, artistFilter?, department?, dateBegin?, dateEnd?, type? }
 
 const IMPORT_TARGETS = [
+  // ── Existing targets ──
   // Dürer — engravings and woodcuts
   { query: 'Albrecht Durer', artistFilter: /d[üu]rer/i, department: 3, dateEnd: 1600, type: 'print' },
   { query: 'Durer', artistFilter: /d[üu]rer/i, department: 9, dateEnd: 1600, type: 'painting' },
@@ -52,6 +53,48 @@ const IMPORT_TARGETS = [
   { query: 'alchemy', dateBegin: 1400, dateEnd: 1700, type: 'print' },
   { query: 'astrolabe', dateBegin: 1400, dateEnd: 1700, type: 'object' },
   { query: 'emblem book', dateBegin: 1400, dateEnd: 1700, type: 'print' },
+
+  // ── Renaissance expansion ──
+
+  // European Paintings dept (11) — Italian Renaissance
+  { query: 'Raphael', artistFilter: /raphael|raffaello|sanzio/i, department: 11, dateBegin: 1400, dateEnd: 1600, type: 'painting' },
+  { query: 'Titian', artistFilter: /titian|tiziano/i, department: 11, dateBegin: 1400, dateEnd: 1600, type: 'painting' },
+  { query: 'Bellini', artistFilter: /bellini/i, department: 11, dateBegin: 1400, dateEnd: 1600, type: 'painting' },
+  { query: 'Botticelli', artistFilter: /botticelli/i, department: 11, dateBegin: 1400, dateEnd: 1600, type: 'painting' },
+  { query: 'Mantegna', artistFilter: /mantegna/i, department: 11, dateBegin: 1400, dateEnd: 1600, type: 'painting' },
+  { query: 'Tintoretto', artistFilter: /tintoretto/i, department: 11, dateBegin: 1400, dateEnd: 1600, type: 'painting' },
+  { query: 'Veronese', artistFilter: /veronese/i, department: 11, dateBegin: 1400, dateEnd: 1600, type: 'painting' },
+  { query: 'Caravaggio', artistFilter: /caravaggio/i, department: 11, dateBegin: 1500, dateEnd: 1620, type: 'painting' },
+  { query: 'Correggio', artistFilter: /correggio/i, department: 11, dateBegin: 1400, dateEnd: 1600, type: 'painting' },
+  { query: 'Bronzino', artistFilter: /bronzino/i, department: 11, dateBegin: 1400, dateEnd: 1600, type: 'painting' },
+  { query: 'Pontormo', artistFilter: /pontormo/i, department: 11, dateBegin: 1400, dateEnd: 1600, type: 'painting' },
+  { query: 'Andrea del Sarto', artistFilter: /andrea del sarto/i, department: 11, dateBegin: 1400, dateEnd: 1600, type: 'painting' },
+  { query: 'Piero della Francesca', artistFilter: /piero della francesca/i, department: 11, dateBegin: 1400, dateEnd: 1500, type: 'painting' },
+  { query: 'Lippi', artistFilter: /lippi/i, department: 11, dateBegin: 1400, dateEnd: 1600, type: 'painting' },
+  { query: 'Ghirlandaio', artistFilter: /ghirlandaio/i, department: 11, dateBegin: 1400, dateEnd: 1600, type: 'painting' },
+  { query: 'Perugino', artistFilter: /perugino/i, department: 11, dateBegin: 1400, dateEnd: 1600, type: 'painting' },
+  { query: 'Signorelli', artistFilter: /signorelli/i, department: 11, dateBegin: 1400, dateEnd: 1600, type: 'painting' },
+  { query: 'Carpaccio', artistFilter: /carpaccio/i, department: 11, dateBegin: 1400, dateEnd: 1600, type: 'painting' },
+  { query: 'Lorenzo Lotto', artistFilter: /lotto/i, department: 11, dateBegin: 1400, dateEnd: 1600, type: 'painting' },
+
+  // Northern Renaissance paintings
+  { query: 'van Eyck', artistFilter: /van eyck/i, department: 11, dateBegin: 1400, dateEnd: 1500, type: 'painting' },
+  { query: 'Memling', artistFilter: /memling/i, department: 11, dateBegin: 1400, dateEnd: 1500, type: 'painting' },
+  { query: 'Rogier van der Weyden', artistFilter: /weyden/i, department: 11, dateBegin: 1400, dateEnd: 1500, type: 'painting' },
+  { query: 'Gerard David', artistFilter: /gerard david/i, department: 11, dateBegin: 1400, dateEnd: 1600, type: 'painting' },
+  { query: 'Holbein', artistFilter: /holbein/i, department: 11, dateBegin: 1400, dateEnd: 1600, type: 'painting' },
+  { query: 'El Greco', artistFilter: /greco/i, department: 11, dateBegin: 1500, dateEnd: 1620, type: 'painting' },
+  { query: 'Altdorfer', artistFilter: /altdorfer/i, department: 11, dateBegin: 1400, dateEnd: 1600, type: 'painting' },
+
+  // Drawings & Prints dept (9) — Renaissance prints
+  { query: 'Mantegna', artistFilter: /mantegna/i, department: 9, dateBegin: 1400, dateEnd: 1600, type: 'print' },
+  { query: 'Schongauer', artistFilter: /schongauer/i, department: 9, dateBegin: 1400, dateEnd: 1600, type: 'print' },
+  { query: 'Lucas van Leyden', artistFilter: /lucas van leyden|lucas.*leyden/i, department: 9, dateBegin: 1400, dateEnd: 1600, type: 'print' },
+  { query: 'Marcantonio Raimondi', artistFilter: /raimondi/i, department: 9, dateBegin: 1400, dateEnd: 1600, type: 'print' },
+  { query: 'Goltzius', artistFilter: /goltzius/i, department: 9, dateBegin: 1400, dateEnd: 1620, type: 'print' },
+
+  // Sculpture (12)
+  { query: 'Renaissance', department: 12, dateBegin: 1400, dateEnd: 1600, type: 'object' },
 ];
 
 // ─── Helpers ─────────────────────────────────────────────────────────────────

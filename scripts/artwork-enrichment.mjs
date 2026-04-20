@@ -339,6 +339,13 @@ async function main() {
           updateFields['field_provenance.enrichment'] = provenanceEntry;
         }
 
+        // Make visible after enrichment (Commons imports start as hidden drafts)
+        if (art.hidden && art.hidden_reason === 'artwork_import') {
+          updateFields.hidden = false;
+          updateFields.status = 'published';
+          updateFields.visible = true;
+        }
+
         await books.updateOne({ _id: art._id }, { $set: updateFields });
 
         // Add to collections array (used by collection pages for querying)

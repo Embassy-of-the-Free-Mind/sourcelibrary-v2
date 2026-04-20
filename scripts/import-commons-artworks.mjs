@@ -91,7 +91,48 @@ const IMPORT_CATEGORIES = [
   { category: 'Paintings by Giorgione', artist: 'Giorgione', type: 'painting', recurse: true },
   { category: 'Paintings by Giovanni Bellini', artist: 'Giovanni Bellini', type: 'painting', recurse: true },
   { category: 'Paintings by Paolo Veronese', artist: 'Paolo Veronese', type: 'painting', recurse: true },
+  { category: 'Paintings by Tintoretto', artist: 'Tintoretto', type: 'painting', recurse: true },
+  { category: 'Paintings by Vittore Carpaccio', artist: 'Vittore Carpaccio', type: 'painting', recurse: true },
+  { category: 'Paintings by Lorenzo Lotto', artist: 'Lorenzo Lotto', type: 'painting', recurse: true },
+  { category: 'Paintings by Jacopo Bassano', artist: 'Jacopo Bassano', type: 'painting', recurse: true },
+  { category: 'Paintings by Cima da Conegliano', artist: 'Cima da Conegliano', type: 'painting', recurse: true },
   { category: 'Paintings by Caravaggio', artist: 'Caravaggio', type: 'painting', recurse: true },
+
+  // Mannerism
+  { category: 'Paintings by Pontormo', artist: 'Pontormo', type: 'painting', recurse: true },
+  { category: 'Paintings by Agnolo Bronzino', artist: 'Agnolo Bronzino', type: 'painting', recurse: true },
+  { category: 'Paintings by Parmigianino', artist: 'Parmigianino', type: 'painting', recurse: true },
+  { category: 'Paintings by Rosso Fiorentino', artist: 'Rosso Fiorentino', type: 'painting', recurse: true },
+  { category: 'Paintings by Andrea del Sarto', artist: 'Andrea del Sarto', type: 'painting', recurse: true },
+  { category: 'Paintings by Correggio', artist: 'Correggio', type: 'painting', recurse: true },
+  { category: 'Paintings by Giulio Romano', artist: 'Giulio Romano', type: 'painting', recurse: true },
+  { category: 'Paintings by Federico Barocci', artist: 'Federico Barocci', type: 'painting', recurse: true },
+
+  // Northern Renaissance — paintings
+  { category: 'Paintings by Jan van Eyck', artist: 'Jan van Eyck', type: 'painting', recurse: true },
+  { category: 'Paintings by Rogier van der Weyden', artist: 'Rogier van der Weyden', type: 'painting', recurse: true },
+  { category: 'Paintings by Hans Memling', artist: 'Hans Memling', type: 'painting', recurse: true },
+  { category: 'Paintings by Hugo van der Goes', artist: 'Hugo van der Goes', type: 'painting', recurse: true },
+  { category: 'Paintings by Robert Campin', artist: 'Robert Campin', type: 'painting', recurse: true },
+  { category: 'Paintings by Petrus Christus', artist: 'Petrus Christus', type: 'painting', recurse: true },
+  { category: 'Paintings by Dieric Bouts', artist: 'Dieric Bouts', type: 'painting', recurse: true },
+  { category: 'Paintings by Gerard David', artist: 'Gerard David', type: 'painting', recurse: true },
+  { category: 'Paintings by Quentin Matsys', artist: 'Quentin Matsys', type: 'painting', recurse: true },
+  { category: 'Paintings by Joachim Patinir', artist: 'Joachim Patinir', type: 'painting', recurse: true },
+  { category: 'Paintings by Lucas Cranach the Elder', artist: 'Lucas Cranach the Elder', type: 'painting', recurse: true },
+  { category: 'Paintings by Hans Holbein the Younger', artist: 'Hans Holbein the Younger', type: 'painting', recurse: true },
+  { category: 'Paintings by Matthias Grünewald', artist: 'Matthias Grünewald', type: 'painting', recurse: true },
+
+  // Renaissance sculpture (beyond Donatello/Ghiberti)
+  { category: 'Sculptures by Michelangelo', artist: 'Michelangelo', type: 'object', recurse: true },
+  { category: 'Sculptures by Andrea della Robbia', artist: 'Andrea della Robbia', type: 'object', recurse: true },
+  { category: 'Sculptures by Luca della Robbia', artist: 'Luca della Robbia', type: 'object', recurse: true },
+  { category: 'Sculptures by Benvenuto Cellini', artist: 'Benvenuto Cellini', type: 'object', recurse: true },
+  { category: 'Sculptures by Giambologna', artist: 'Giambologna', type: 'object', recurse: true },
+
+  // Spanish Renaissance
+  { category: 'Paintings by Pedro Berruguete', artist: 'Pedro Berruguete', type: 'painting', recurse: true },
+  { category: 'Paintings by Luis de Morales', artist: 'Luis de Morales', type: 'painting', recurse: true },
 
   // Hieronymus Bosch — visionary/esoteric
   { category: 'Hieronymus Bosch', artist: 'Hieronymus Bosch', type: 'painting', recurse: true },
