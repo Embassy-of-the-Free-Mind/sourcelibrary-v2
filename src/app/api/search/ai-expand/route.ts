@@ -66,7 +66,7 @@ export async function POST(request: NextRequest) {
 
 Reply in this EXACT format:
 <display>HINT</display>
-<narration>1-2 sentences (30-50 words). Orient the visitor: what is this, who made it, why it matters. Name a specific text or artist. No filler ("you will find", "this collection contains"). Speak like a knowledgeable friend, not a textbook.</narration>
+<narration>ONE sentence, max 25 words. Name the key work/author/tradition. No filler. No "you will find" or "this collection." Just the essential fact.</narration>
 <terms>["term1","term2","term3"]</terms>
 <image_terms>["artwork1","artwork2"]</image_terms>
 
@@ -81,7 +81,7 @@ IMAGE_TERMS = 2-3 specific artworks or visual subjects in a pre-modern art colle
           }],
           generationConfig: {
             temperature: 0.3,
-            maxOutputTokens: 350,
+            maxOutputTokens: 250,
           },
         });
 
