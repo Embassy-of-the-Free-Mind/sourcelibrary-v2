@@ -625,3 +625,22 @@ mark {
   * { break-inside: avoid; }
   a[href]::after { content: none !important; }
 }
+
+/* Embed mode — hide all chrome when rendered inside an iframe */
+.embed-mode ~ header,
+.embed-mode ~ footer,
+.embed-mode ~ section,
+body:has(.embed-mode) > header,
+body:has(.embed-mode) > footer,
+body:has(.embed-mode) > section,
+body:has(.embed-mode) .skip-link,
+body:has(.embed-mode) #cookie-consent,
+body:has(.embed-mode) [data-site-mode-indicator] {
+  display: none !important;
+}
+body:has(.embed-mode) {
+  background: #fafaf8;
+}
+body:has(.embed-mode) #main-content {
+  min-height: 100vh;
+}
