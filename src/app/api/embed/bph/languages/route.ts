@@ -29,7 +29,7 @@ export async function GET() {
           'image_source.provider': 'bph',
           visible: true,
           pages_count: { $gt: 0 },
-          language: { $exists: true, $ne: null, $ne: '' },
+          language: { $exists: true, $nin: [null, ''] },
         },
       },
       { $group: { _id: '$language', count: { $sum: 1 } } },
