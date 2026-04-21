@@ -14,7 +14,7 @@ export const metadata: Metadata = {
 
 export default async function CatalogPage() {
   const [browseResult, languages] = await Promise.all([
-    browseBooks({ hasTranslation: true, sort: 'popular', limit: 60 }).catch((err) => {
+    browseBooks({ sort: 'popular', limit: 60 }).catch((err) => {
       console.error('[catalog] browseBooks failed:', err?.message || err);
       return { books: [], total: 0 };
     }),
@@ -33,7 +33,7 @@ export default async function CatalogPage() {
           Catalog
         </h1>
         <p className="text-lg mb-10" style={{ color: 'var(--text-muted)' }}>
-          Every translated book in the library.
+          Every book in the library.
         </p>
 
         <CatalogBrowser
