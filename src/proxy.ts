@@ -149,6 +149,14 @@ function logBotAccess(request: NextRequest, action: string) {
   }
 }
 
+// --- Tenant subdomain → embed rewrite ---
+// Maps tenant subdomains (e.g. bph.sourcelibrary.org) to their embed routes.
+// Adding a new tenant: insert a row here and create the DNS record.
+const TENANT_SUBDOMAINS: Record<string, string> = {
+  'bph.sourcelibrary.org': 'bph',
+  // 'ritman.sourcelibrary.org': 'ritman',
+};
+
 export function proxy(request: NextRequest) {
   const { pathname } = request.nextUrl;
 
@@ -158,6 +166,26 @@ export function proxy(request: NextRequest) {
     const url = request.nextUrl.clone();
     url.host = 'sourcelibrary.org';
     return NextResponse.redirect(url, 301);
+  }
+
+  // --- Tenant subdomain rewrite ---
+  // Rewrites all paths on tenant subdomains to the filtered embed routes.
+  // e.g. bph.sourcelibrary.org/book/aurora → internally serves /embed/bph/book/aurora
+  const tenant = TENANT_SUBDOMAINS[host.toLowerCase()];
+  if (tenant && !pathname.startsWith('/embed/') && !pathname.startsWith('/_next/') && !pathname.startsWith('/api/')) {
+    const url = request.nextUrl.clone();
+    // Map common paths to embed equivalents
+    if (pathname === '/' || pathname === '/search') {
+      url.pathname = `/embed/${tenant}`;
+    } else if (pathname.startsWith('/book/')) {
+      url.pathname = `/embed/${tenant}${pathname}`;
+    } else if (pathname.startsWith('/collections')) {
+      url.pathname = `/embed/${tenant}${pathname}`;
+    } else {
+      // All other paths on tenant subdomain → embed root (filtered search)
+      url.pathname = `/embed/${tenant}`;
+    }
+    return NextResponse.rewrite(url);
   }
 
   // --- Bot enforcement (before any other logic) ---
