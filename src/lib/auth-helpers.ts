@@ -3,6 +3,42 @@ import { ROLE_LEVEL, type Role } from '@/lib/auth';
 import { NextRequest, NextResponse } from 'next/server';
 import { Session } from 'next-auth';
 import { redirect } from 'next/navigation';
+import { headers } from 'next/headers';
+import { getDb } from '@/lib/mongodb';
+
+function normalizeRole(role: unknown): Role {
+  if (role === 'superadmin' || role === 'admin' || role === 'editor' || role === 'reader') {
+    return role;
+  }
+  // Backward compatibility with older role labels.
+  if (role === 'user') return 'reader';
+  return 'reader';
+}
+
+async function getTenantMembershipRole(
+  email: string | null | undefined,
+  tenantId: string | null | undefined,
+): Promise<Role | null> {
+  if (!email || !tenantId) return null;
+
+  try {
+    const db = await getDb();
+    const membership = await db.collection('memberships').findOne(
+      {
+        email: email.toLowerCase(),
+        tenantId,
+        status: 'active',
+      },
+      { projection: { role: 1 } }
+    );
+
+    if (!membership?.role) return null;
+    return normalizeRole(membership.role);
+  } catch {
+    // Auth guards should fail closed on role checks if membership lookup fails.
+    return null;
+  }
+}
 
 /**
  * Get the current session in API routes or server components
@@ -35,8 +71,18 @@ export async function requireRole(minRole: Role, loginPath = '/auth/signin'): Pr
   if (!session?.user) {
     redirect(loginPath);
   }
-  const userRole = (session.user as any).role as Role;
-  if ((ROLE_LEVEL[userRole] ?? 0) < ROLE_LEVEL[minRole]) {
+  let effectiveRole = normalizeRole((session.user as any).role);
+
+  if ((ROLE_LEVEL[effectiveRole] ?? 0) < ROLE_LEVEL[minRole]) {
+    const h = await headers();
+    const tenantId = h.get('x-tenant-id');
+    const tenantRole = await getTenantMembershipRole(session.user.email, tenantId);
+    if (tenantRole && (ROLE_LEVEL[tenantRole] ?? 0) > (ROLE_LEVEL[effectiveRole] ?? 0)) {
+      effectiveRole = tenantRole;
+    }
+  }
+
+  if ((ROLE_LEVEL[effectiveRole] ?? 0) < ROLE_LEVEL[minRole]) {
     redirect('/unauthorized');
   }
   return session;
@@ -60,7 +106,7 @@ export async function isSuperAdmin(): Promise<boolean> {
  */
 export async function isAdmin(): Promise<boolean> {
   const session = await getSession();
-  const role = (session?.user as any)?.role as Role;
+  const role = normalizeRole((session?.user as any)?.role);
   return (ROLE_LEVEL[role] ?? 0) >= ROLE_LEVEL['admin'];
 }
 
@@ -70,7 +116,7 @@ export async function isAdmin(): Promise<boolean> {
  */
 export async function isInnerCircle(): Promise<boolean> {
   const session = await getSession();
-  const role = (session?.user as any)?.role as Role;
+  const role = normalizeRole((session?.user as any)?.role);
   return (ROLE_LEVEL[role] ?? 0) >= ROLE_LEVEL['editor'];
 }
 
@@ -154,8 +200,15 @@ export function withAuth(
       );
     }
 
-    const userRole = (session.user as any).role as Role;
-    if ((ROLE_LEVEL[userRole] ?? 0) < ROLE_LEVEL[minRole]) {
+    const headerTenantId = request.headers.get('x-tenant-id');
+    const membershipRole = await getTenantMembershipRole(session.user.email, headerTenantId);
+
+    let effectiveRole = normalizeRole((session.user as any).role);
+    if (membershipRole && (ROLE_LEVEL[membershipRole] ?? 0) > (ROLE_LEVEL[effectiveRole] ?? 0)) {
+      effectiveRole = membershipRole;
+    }
+
+    if ((ROLE_LEVEL[effectiveRole] ?? 0) < ROLE_LEVEL[minRole]) {
       return NextResponse.json(
         { error: 'Forbidden - Insufficient role' },
         { status: 403 }
@@ -163,16 +216,19 @@ export function withAuth(
     }
 
     // Phase 1 tenant verification: prevent cross-tenant access
-    const headerTenantId = request.headers.get('x-tenant-id');
     if (headerTenantId) {
       const sessionTenantId = (session.user as any).tenantId;
-      
+
       // Superadmin can access any tenant (bypass check)
-      if (userRole !== 'superadmin' && sessionTenantId && sessionTenantId !== headerTenantId) {
-        return NextResponse.json(
-          { error: 'Forbidden - Tenant mismatch' },
-          { status: 403 }
-        );
+      if (effectiveRole !== 'superadmin') {
+        const sessionMatchesTenant = Boolean(sessionTenantId) && sessionTenantId === headerTenantId;
+        const membershipMatchesTenant = Boolean(membershipRole);
+        if (!sessionMatchesTenant && !membershipMatchesTenant) {
+          return NextResponse.json(
+            { error: 'Forbidden - Tenant mismatch' },
+            { status: 403 }
+          );
+        }
       }
     }
 

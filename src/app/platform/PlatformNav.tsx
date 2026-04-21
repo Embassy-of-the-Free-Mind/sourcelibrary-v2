@@ -27,16 +27,16 @@ export function PlatformNav() {
 
   return (
     <nav style={{
-      display: 'flex',
-      alignItems: 'center',
-      gap: 4,
-      padding: '0 20px',
-      height: 52,
-      background: '#161b22',
-      borderBottom: '1px solid #30363d',
-      overflowX: 'auto',
-      flexShrink: 0,
-    }}>
+        display: 'flex',
+        alignItems: 'center',
+        gap: 4,
+        padding: '0 20px',
+        height: 52,
+        background: '#161b22',
+        borderBottom: '1px solid #30363d',
+        overflowX: 'auto',
+        flexShrink: 0,
+      }}>
       {/* Logo */}
       <Link href="/" style={{ display: 'flex', alignItems: 'center', marginRight: 16, flexShrink: 0 }}>
         <Image
