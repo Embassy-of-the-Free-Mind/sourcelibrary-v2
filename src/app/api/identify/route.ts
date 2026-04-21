@@ -2,6 +2,7 @@ import { NextRequest, NextResponse } from 'next/server';
 import { getNextApiKey } from '@/lib/gemini-client';
 import { getDb } from '@/lib/mongodb';
 import { supabase } from '@/lib/supabase';
+import { semanticArtworkSearch } from '@/lib/semantic-search';
 
 export const maxDuration = 30;
 export const dynamic = 'force-dynamic';
@@ -198,7 +199,20 @@ export async function POST(request: NextRequest) {
       return NextResponse.json({ error: 'Could not parse vision response — try a clearer image', detail: text.substring(0, 300) }, { status: 500 });
     }
 
-    // Promise 3: Google Search verification (runs after initial ID, in parallel with DB search)
+    // Promise 3: Semantic artwork search (runs after initial ID, in parallel with DB search)
+    // Uses the identification to find related artworks via embedding similarity
+    const artworkSearchQuery = [
+      identification.artist,
+      identification.title,
+      identification.subject,
+      ...(identification.search_terms || []).slice(0, 3),
+    ].filter(Boolean).join(' ');
+
+    const semanticArtworkPromise: Promise<SemanticArtworkResult[]> = artworkSearchQuery
+      ? semanticArtworkSearch(artworkSearchQuery, 10, { threshold: 0.4 }).catch(() => [])
+      : Promise.resolve([]);
+
+    // Promise 4: Google Search verification (runs after initial ID, in parallel with DB search)
     // Uses grounding to verify/correct the identification against museum catalogs
     const verifyPromise: Promise<{ corrected_artist?: string; corrected_title?: string; sources?: WebSource[]; catalog_numbers?: string[] } | null> = (async () => {
       try {
@@ -580,7 +594,26 @@ Return JSON only:
       }
     }
 
-    // Re-sort after merging CLIP results
+    // Merge semantic artwork results (found via identification metadata)
+    const semanticArtworks = await semanticArtworkPromise;
+    for (const sa of semanticArtworks) {
+      if (existingMatchIds.has(sa.book_id)) continue;
+      const semanticScore = Math.round(sa.similarity * 30); // Scale similarity to 0-30
+      matches.push({
+        id: sa.book_id,
+        title: sa.display_title || sa.title,
+        author: sa.author,
+        resource_type: sa.resource_type,
+        thumbnail: sa.thumbnail_url,
+        enrichment: { subject: [sa.subjects?.join(', '), sa.figures?.join(', ')].filter(Boolean).join(' — ') },
+        _score: semanticScore,
+        _visual_similarity: undefined,
+        _match_source: 'semantic_artwork',
+      });
+      existingMatchIds.add(sa.book_id);
+    }
+
+    // Re-sort after merging CLIP + semantic artwork results
     matches.sort((a, b) => b._score - a._score);
 
     // Sort page matches by score and attach to book results
@@ -670,6 +703,7 @@ Return JSON only:
         };
       }),
       visual_search: clipMatches.length > 0,
+      semantic_artwork_search: semanticArtworks.length > 0,
       verified: !!verification,
       page: bestPage ? {
         book_id: bestPage.bookId,
