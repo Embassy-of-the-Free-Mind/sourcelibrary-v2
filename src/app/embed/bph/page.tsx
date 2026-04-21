@@ -1,4 +1,7 @@
+import { Suspense } from 'react';
 import SearchPage from '@/app/search/page';
+
+export const dynamic = 'force-dynamic';
 
 export const metadata = {
   title: 'Digital Catalogue — Bibliotheca Philosophica Hermetica',
@@ -8,8 +11,11 @@ export const metadata = {
 /**
  * BPH embed catalogue — renders the same search page.
  * The embed layout hides SiteHeader/footer via CSS.
- * TODO: pass library=bph as default filter once SearchPage accepts props.
  */
 export default function EmbedCataloguePage() {
-  return <SearchPage />;
+  return (
+    <Suspense>
+      <SearchPage />
+    </Suspense>
+  );
 }
