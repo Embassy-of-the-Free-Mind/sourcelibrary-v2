@@ -28,6 +28,7 @@ export async function GET(
     const mode = searchParams.get('mode');
     const sort = searchParams.get('sort') || 'year_asc';
     const language = searchParams.get('language');
+    const provider = searchParams.get('provider'); // tenant provider filter (e.g. "bph")
     const q = searchParams.get('q')?.trim();
     const limit = Math.min(parseInt(searchParams.get('limit') || '60'), 200);
     const offset = parseInt(searchParams.get('offset') || '0');
@@ -67,6 +68,7 @@ export async function GET(
         sort: sbSort,
         limit: 1000, // manifest wants everything
         exactCount: true,
+        provider: provider || undefined,
       });
 
       const books = sbBooks.map(b => ({
@@ -96,6 +98,7 @@ export async function GET(
       offset,
       limit,
       exactCount: true,
+      provider: provider || undefined,
     });
 
     const books = sbBooks.map(b => ({

@@ -194,7 +194,7 @@ const COMPACT_LIMIT = 14;
 /** Sanitize thumbnail URLs: unwrap /api/image?url= wrappers, reject non-http URLs.
  *  The /api/image wrapper crashes Next.js Image during SSR. */
 
-async function fetchCollectionData(id: string) {
+async function fetchCollectionData(id: string, provider?: string) {
   // Wrap getReadDb() in a timeout — when MongoDB Atlas is overloaded, the connection
   // itself can hang for 60+ seconds. Better to fail fast and let ISR retry.
   const db = await withTimeout(getReadDb(), 10000, null as unknown as Awaited<ReturnType<typeof getReadDb>>);
@@ -217,6 +217,8 @@ async function fetchCollectionData(id: string) {
           { resource_type: { $exists: true } },
         ],
       };
+  // Tenant provider filter — restrict to a specific library's books
+  if (provider) filter['image_source.provider'] = provider;
 
   const projection = {
     _id: 0, id: 1, slug: 1, title: 1, display_title: 1, author: 1, year: 1,
@@ -277,6 +279,7 @@ async function fetchCollectionData(id: string) {
         limit: COMPACT_LIMIT,
         skipCount: true, // collection.book_count is cached — skip expensive Supabase count
         hasPages: isArtCollection ? false : undefined,
+        provider: provider || undefined,
       });
       return sbBooks.map(b => ({
         id: b.id, slug: b.slug, title: b.title, display_title: b.display_title,
@@ -491,12 +494,12 @@ async function fetchCollectionData(id: string) {
 
 // ---------- Page ----------
 
-export default async function CollectionDetailPage({ params }: Props) {
+export default async function CollectionDetailPage({ params, provider }: Props & { provider?: string }) {
   const { id } = await params;
 
   let data;
   try {
-    data = await fetchCollectionData(id);
+    data = await fetchCollectionData(id, provider);
   } catch (err) {
     console.error('[Collection page] fetchCollectionData failed:', err instanceof Error ? err.message : err);
     // Opt out of ISR caching for this response so the error isn't persisted.
@@ -1208,6 +1211,7 @@ export default async function CollectionDetailPage({ params }: Props) {
           total={total}
           languages={languages}
           collectionType={collection.collection_type}
+          provider={provider}
         />
       </div>
       <SignUpCTA />

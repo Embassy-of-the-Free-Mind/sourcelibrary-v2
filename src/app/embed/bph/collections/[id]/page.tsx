@@ -6,9 +6,9 @@ export const maxDuration = 60;
 export async function generateStaticParams() { return []; }
 
 /**
- * BPH embed collection detail — renders the same CollectionDetailPage.
+ * BPH embed collection detail — renders CollectionDetailPage filtered to BPH books.
  * Chrome hidden by embed layout CSS.
  */
 export default async function EmbedCollectionDetailPage({ params }: { params: Promise<{ id: string }> }) {
-  return <CollectionDetailPage params={params} />;
+  return <CollectionDetailPage params={params} provider="bph" />;
 }

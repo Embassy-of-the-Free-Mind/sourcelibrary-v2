@@ -41,6 +41,8 @@ interface CollectionAllBooksProps {
   total: number;
   languages: { lang: string; count: number }[];
   collectionType?: string;
+  /** Tenant provider filter (e.g. "bph") — restricts books to a specific library */
+  provider?: string;
 }
 
 type ViewMode = 'grid' | 'list';
@@ -96,6 +98,7 @@ export default function CollectionAllBooks({
   total,
   languages,
   collectionType,
+  provider,
 }: CollectionAllBooksProps) {
   const itemLabel = collectionType === 'visual_art' ? 'works' : 'books';
   const sizeDefault: ViewMode = total > 200 ? 'list' : 'grid';
@@ -115,7 +118,8 @@ export default function CollectionAllBooks({
   const fetchManifest = useCallback(async () => {
     setLoading(true);
     try {
-      const res = await fetch(`/api/collections/${collectionId}?mode=manifest`);
+      const providerParam = provider ? `&provider=${provider}` : '';
+      const res = await fetch(`/api/collections/${collectionId}?mode=manifest${providerParam}`);
       if (!res.ok) throw new Error('Failed to fetch');
       const data = await res.json();
       // For book collections, filter out artworks — they have their own section.
