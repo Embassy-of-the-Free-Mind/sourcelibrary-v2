@@ -2,7 +2,7 @@ import { NextRequest, NextResponse } from 'next/server';
 import { getNextApiKey } from '@/lib/gemini-client';
 import { getDb } from '@/lib/mongodb';
 import { supabase } from '@/lib/supabase';
-import { semanticArtworkSearch } from '@/lib/semantic-search';
+import { semanticArtworkSearch, type SemanticArtworkResult } from '@/lib/semantic-search';
 
 export const maxDuration = 30;
 export const dynamic = 'force-dynamic';
