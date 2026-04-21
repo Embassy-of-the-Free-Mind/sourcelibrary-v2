@@ -625,9 +625,9 @@ export default function SearchPage({ defaultLibrary }: { defaultLibrary?: string
 
   const clearFilters = () => {
     setLanguage(''); setCategory(''); setCollection(''); setDateFrom(''); setDateTo('');
-    setHasDoi(false); setHasTranslation(false); setFirstTranslation(false); setLibrary(''); setSortBy('relevance'); setBrowseSortBy('recent-translation'); setOffset(0);
+    setHasDoi(false); setHasTranslation(false); setFirstTranslation(false); setLibrary(defaultLibrary || ''); setSortBy('relevance'); setBrowseSortBy('recent-translation'); setOffset(0);
   };
-  const hasActiveFilters = language || category || collection || dateFrom || dateTo || hasDoi || hasTranslation || firstTranslation || library || sortBy !== 'relevance';
+  const hasActiveFilters = language || category || collection || dateFrom || dateTo || hasDoi || hasTranslation || firstTranslation || (library && library !== defaultLibrary) || sortBy !== 'relevance';
 
   return (
     <div className="min-h-screen bg-cream">
@@ -804,6 +804,7 @@ export default function SearchPage({ defaultLibrary }: { defaultLibrary?: string
                       ))}
                     </select>
                   </div>
+                  {!defaultLibrary && (
                   <div>
                     <label className="block text-sm text-secondary mb-1">Library</label>
                     <select value={library} onChange={(e) => setLibrary(e.target.value)}
@@ -814,6 +815,7 @@ export default function SearchPage({ defaultLibrary }: { defaultLibrary?: string
                       ))}
                     </select>
                   </div>
+                  )}
                   <div>
                     <label className="block text-sm text-secondary mb-1">Published after</label>
                     <input type="text" value={dateFrom} onChange={(e) => setDateFrom(e.target.value)}
@@ -875,6 +877,7 @@ export default function SearchPage({ defaultLibrary }: { defaultLibrary?: string
                       ))}
                     </select>
                   </div>
+                  {!defaultLibrary && (
                   <div>
                     <label className="block text-sm text-secondary mb-1">Library</label>
                     <select value={library} onChange={(e) => setLibrary(e.target.value)}
@@ -885,6 +888,7 @@ export default function SearchPage({ defaultLibrary }: { defaultLibrary?: string
                       ))}
                     </select>
                   </div>
+                  )}
                   <div>
                     <label className="block text-sm text-secondary mb-1">Published after</label>
                     <input type="text" value={dateFrom} onChange={(e) => setDateFrom(e.target.value)}
