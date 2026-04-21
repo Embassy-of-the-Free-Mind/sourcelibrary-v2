@@ -113,29 +113,34 @@ export async function GET(request: NextRequest) {
 
     // Count BPH books in each collection
     const bphBooks = db.collection('books');
-    const collectionsWithCounts = await Promise.all(
-      collections.map(async (col) => {
-        const count = await bphBooks.countDocuments({
-          'image_source.provider': 'bph',
-          visible: true,
-          pages_count: { $gt: 0 },
-          categories: col.slug,
+    const collectionsWithCounts: Array<{ slug: string; name: string; description?: string; subtitle?: string; featured_images?: unknown[]; bph_count: number }> = [];
+    for (const col of collections) {
+      const count = await bphBooks.countDocuments({
+        'image_source.provider': 'bph',
+        visible: true,
+        pages_count: { $gt: 0 },
+        categories: col.slug,
+      });
+      if (count > 0) {
+        collectionsWithCounts.push({
+          slug: col.slug as string,
+          name: col.name as string,
+          description: col.description as string | undefined,
+          subtitle: col.subtitle as string | undefined,
+          featured_images: col.featured_images as unknown[] | undefined,
+          bph_count: count,
         });
-        return { ...col, bph_count: count };
-      })
-    );
+      }
+    }
 
-    // Only return collections that have at least 1 BPH book
-    const filtered = collectionsWithCounts
-      .filter(c => c.bph_count > 0)
-      .map(c => ({
-        slug: c.slug,
-        name: c.name,
-        description: c.description || null,
-        subtitle: c.subtitle || null,
-        image: c.featured_images?.[0] || null,
-        item_count: c.bph_count,
-      }));
+    const filtered = collectionsWithCounts.map(c => ({
+      slug: c.slug,
+      name: c.name,
+      description: c.description || null,
+      subtitle: c.subtitle || null,
+      image: c.featured_images?.[0] || null,
+      item_count: c.bph_count,
+    }));
 
     return NextResponse.json({ collections: filtered }, { headers: CORS_HEADERS });
   } catch (error) {
