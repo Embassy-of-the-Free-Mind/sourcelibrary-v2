@@ -53,7 +53,7 @@ interface CategoryOption { value: string; label: string; icon?: string; }
 
 type ViewMode = 'unified' | 'books' | 'index' | 'images';
 
-export default function SearchPage() {
+export default function SearchPage({ defaultLibrary }: { defaultLibrary?: string } = {}) {
   const router = useRouter();
   const searchParams = useSearchParams();
 
@@ -104,7 +104,7 @@ export default function SearchPage() {
   const [hasDoi, setHasDoi] = useState(searchParams.get('has_doi') === 'true');
   const [hasTranslation, setHasTranslation] = useState(searchParams.get('has_translation') === 'true');
   const [firstTranslation, setFirstTranslation] = useState(searchParams.get('first_translation') === 'true');
-  const [library, setLibrary] = useState(searchParams.get('library') || '');
+  const [library, setLibrary] = useState(searchParams.get('library') || defaultLibrary || '');
   const [languages, setLanguages] = useState<LanguageOption[]>([{ value: '', label: 'All Languages' }]);
   const [categories, setCategories] = useState<CategoryOption[]>([{ value: '', label: 'All Categories' }]);
   const [collectionsList, setCollectionsList] = useState<Collection[]>([]);

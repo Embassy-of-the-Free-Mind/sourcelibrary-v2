@@ -9,13 +9,13 @@ export const metadata = {
 };
 
 /**
- * BPH embed catalogue — renders the same search page.
+ * BPH embed catalogue — renders the same search page, filtered to BPH books.
  * The embed layout hides SiteHeader/footer via CSS.
  */
 export default function EmbedCataloguePage() {
   return (
     <Suspense>
-      <SearchPage />
+      <SearchPage defaultLibrary="bph" />
     </Suspense>
   );
 }
