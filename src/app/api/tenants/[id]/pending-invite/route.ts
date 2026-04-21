@@ -18,10 +18,13 @@ export async function GET(
 
   try {
     const db = await getDb();
+    // Match both 'pending' (first sign-in) and 'active' (returning member).
+    // Checking only 'pending' locked out members whose invite was already
+    // activated on their first sign-in.
     const membership = await db.collection('memberships').findOne({
       email,
       tenantId,
-      status: 'pending',
+      status: { $in: ['pending', 'active'] },
     });
 
     if (membership) {
