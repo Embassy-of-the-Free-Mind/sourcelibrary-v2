@@ -1,146 +1,63 @@
-# BPH Digital Catalogue — Integration Guide
+# BPH Digital Catalogue — API Integration Guide
 
 > For the Webflow developer integrating the Bibliotheca Philosophica Hermetica
 > digital catalogue into the Embassy of the Free Mind website.
 
-**Base URL:** `https://bph.sourcelibrary.org` (pending DNS setup)
-**Preview URL:** `https://sourcelibrary-v2-git-feat-bph-embed-api-dereklomas-projects.vercel.app`
+**Base URL:** `https://bph.sourcelibrary.org`
+**All endpoints:** Public, read-only, CORS-open, no API key required.
 
 ---
 
-## 1. Iframe Embed
-
-The iframe renders the full reading experience — catalogue browsing, book reader,
-page viewer, search. All navigation stays inside the iframe.
-
-```html
-<iframe
-  id="bph-catalogue"
-  src="https://bph.sourcelibrary.org/embed/bph"
-  style="width: 100%; height: 80vh; border: none;"
-  allow="clipboard-write"
-  loading="lazy"
-></iframe>
-```
-
-### Iframe Pages (slug-based routing)
-
-| Page | iframe src path | Description |
-|------|----------------|-------------|
-| Catalogue | `/embed/bph` | Paginated grid of all BPH books with search |
-| Catalogue + search | `/embed/bph?q=astrology` | Pre-filtered search results |
-| Book detail | `/embed/bph/book/{slug}` | Single book with metadata + reader link |
-| Book reader | `/book/{slug}` | Full page reader (OCR + translation) |
-| Page viewer | `/book/{slug}/page/{pageId}` | Single page with image + text |
-| Collection areas | `/embed/bph/collections` | Grid of subject areas |
-| Collection area | `/embed/bph/collections/{slug}` | Books in a subject area |
-
-### Listening for Navigation Events
-
-When a user navigates inside the iframe, it sends a `postMessage` to the parent
-window. Use this to update the browser URL bar on the Webflow side:
+## Quick Start
 
 ```javascript
-window.addEventListener('message', (event) => {
-  // Only accept messages from our embed
-  if (event.origin !== 'https://bph.sourcelibrary.org') return;
+// Fetch all BPH books
+const res = await fetch('https://bph.sourcelibrary.org/api/embed/bph/books');
+const { books, total } = await res.json();
 
-  const { type, path, book, page } = event.data;
+// Search
+const res = await fetch('https://bph.sourcelibrary.org/api/embed/bph/books?q=alchemy');
 
-  if (type === 'sl-navigate') {
-    // Update Webflow URL to reflect iframe state
-    // e.g., /bibliotheca-philosophica-hermetica/catalogue?book=aurora-boehme
-    const params = new URLSearchParams();
-    if (book) params.set('book', book);
-    if (page) params.set('page', page);
-    const qs = params.toString();
-    const newUrl = `/bibliotheca-philosophica-hermetica/catalogue${qs ? '?' + qs : ''}`;
-    window.history.replaceState(null, '', newUrl);
-  }
-});
-```
-
-### Deep Linking into the Iframe
-
-To open the iframe at a specific book (e.g., from a Webflow URL with `?book=aurora-boehme`):
-
-```javascript
-document.addEventListener('DOMContentLoaded', () => {
-  const params = new URLSearchParams(window.location.search);
-  const book = params.get('book');
-  const page = params.get('page');
-  const q = params.get('q');
-
-  const iframe = document.getElementById('bph-catalogue');
-  let src = 'https://bph.sourcelibrary.org/embed/bph';
-
-  if (book) {
-    src = `https://bph.sourcelibrary.org/embed/bph/book/${book}`;
-    if (page) src += `/page/${page}`;
-  } else if (q) {
-    src += `?q=${encodeURIComponent(q)}`;
-  }
-
-  iframe.src = src;
-});
+// Link to the reader
+const readerUrl = `https://bph.sourcelibrary.org/book/${book.slug}`;
 ```
 
 ---
 
-## 2. REST API
-
-All endpoints are **public, read-only, CORS-open**. No API key required.
-Responses are JSON. All endpoints accept `GET` only.
-
-### Base URL
-
-```
-https://bph.sourcelibrary.org/api/embed/bph
-```
-
----
+## API Reference
 
 ### `GET /api/embed/bph/stats`
 
-Aggregate statistics for the BPH digital collection.
-
-**Response:**
+Collection-wide statistics for counters and dashboards.
 
 ```json
 {
-  "total": 2317,
-  "translated": 1842,
-  "languages": 12,
-  "language_list": ["Arabic", "Dutch", "English", "French", "German", "Greek", "Hebrew", "Italian", "Latin", "Portuguese", "Spanish", "Swedish"],
-  "pages_total": 485230,
-  "pages_translated": 312450
+  "total": 2279,
+  "translated": 2278,
+  "languages": 25,
+  "language_list": ["Arabic", "Dutch", "English", "French", "German", "Latin", ...],
+  "pages_total": 607260,
+  "pages_translated": 594857
 }
 ```
-
-**Use case:** Display stats on the BPH overview page, e.g.:
-- "2,317 digitized texts"
-- "312,450 pages translated"
-- "12 languages"
 
 ---
 
 ### `GET /api/embed/bph/books`
 
-Paginated catalogue of all BPH books. Supports search and filtering.
-
-**Parameters:**
+Paginated catalogue with search, sort, and filters.
 
 | Param | Type | Default | Description |
 |-------|------|---------|-------------|
-| `q` | string | — | Search query (min 2 chars). Searches title, author, display title. |
+| `q` | string | — | Search query (min 2 chars) |
 | `limit` | number | 24 | Results per page (max 100) |
 | `offset` | number | 0 | Pagination offset |
-| `sort` | string | `title` | Sort: `title`, `date_asc`, `date_desc`, `recent` |
-| `language` | string | — | Filter by original language (e.g., `Latin`, `German`) |
-| `category` | string | — | Filter by collection slug (e.g., `alchemy`, `hermetica`) |
+| `sort` | string | `title` | `title`, `date_asc`, `date_desc`, `recent` |
+| `language` | string | — | Filter by language (e.g., `Latin`) |
+| `category` | string | — | Filter by collection slug (e.g., `alchemy`) |
 | `year_from` | number | — | Min publication year |
 | `year_to` | number | — | Max publication year |
-| `translated` | `"true"` | — | Only show books with English translations |
+| `translated` | `"true"` | — | Only books with translations |
 
 **Response:**
 
@@ -149,22 +66,22 @@ Paginated catalogue of all BPH books. Supports search and filtering.
   "books": [
     {
       "id": "abc123",
-      "slug": "aurora-boehme",
+      "slug": "aurora-or-the-day-spring-boehme",
       "title": "Aurora, oder Morgenröthe im Auffgang",
-      "display_title": "Aurora, or The Morning Redness in the Rising",
+      "display_title": "Aurora, or The Day-Spring",
       "author": "Jacob Boehme",
       "language": "German",
       "published": "1634",
       "year": 1634,
       "pages_count": 312,
       "pages_translated": 312,
-      "thumbnail": "https://cdn.sourcelibrary.org/thumbs/aurora-boehme.jpg",
+      "thumbnail": "https://images.sourcelibrary.org/...",
       "catalogue_number": "BPH Catalogue (UBN: 1234)",
       "categories": ["alchemy", "mysticism", "theosophy"],
-      "url": "/book/aurora-boehme"
+      "url": "/book/aurora-or-the-day-spring-boehme"
     }
   ],
-  "total": 2317,
+  "total": 2279,
   "limit": 24,
   "offset": 0
 }
@@ -173,36 +90,24 @@ Paginated catalogue of all BPH books. Supports search and filtering.
 **Examples:**
 
 ```
-# First page of all books
-/api/embed/bph/books
-
-# Search for "alchemy"
 /api/embed/bph/books?q=alchemy
-
-# Latin books, oldest first
 /api/embed/bph/books?language=Latin&sort=date_asc
-
-# Page 2 of results
-/api/embed/bph/books?offset=24&limit=24
-
-# Books with translations in the Hermetica collection
 /api/embed/bph/books?category=hermetica&translated=true
+/api/embed/bph/books?offset=24&limit=24
 ```
 
 ---
 
 ### `GET /api/embed/bph/books/{slug}`
 
-Look up a single BPH book by slug or ID.
-
-**Response:**
+Single book lookup by slug.
 
 ```json
 {
   "id": "abc123",
-  "slug": "aurora-boehme",
+  "slug": "aurora-or-the-day-spring-boehme",
   "title": "Aurora, oder Morgenröthe im Auffgang",
-  "display_title": "Aurora, or The Morning Redness in the Rising",
+  "display_title": "Aurora, or The Day-Spring",
   "author": "Jacob Boehme",
   "language": "German",
   "published": "1634",
@@ -210,47 +115,45 @@ Look up a single BPH book by slug or ID.
   "pages_count": 312,
   "pages_translated": 312,
   "pages_ocr": 312,
-  "thumbnail": "https://cdn.sourcelibrary.org/thumbs/aurora-boehme.jpg",
+  "thumbnail": "https://images.sourcelibrary.org/...",
   "catalogue_number": "BPH Catalogue (UBN: 1234)",
-  "description": "First edition of Boehme's foundational theosophical work...",
-  "summary": "A visionary cosmological text that describes the origin of all things...",
-  "categories": ["alchemy", "mysticism", "theosophy"],
+  "description": "First edition of Boehme's foundational work...",
+  "summary": "A visionary cosmological text...",
+  "categories": ["alchemy", "mysticism"],
   "chapters": [
     { "title": "Chapter 1: Of the First Root of the Tree", "startPage": 5 }
   ],
   "doi": "10.5281/zenodo.12345",
   "is_first_translation": true,
   "provider": "Embassy of the Free Mind",
-  "url": "/book/aurora-boehme"
+  "url": "/book/aurora-or-the-day-spring-boehme"
 }
 ```
 
 ---
 
-### `GET /api/embed/bph/collections`
+### `GET /api/embed/bph/featured`
 
-List all collection areas (subject categories) that contain BPH books.
+Curated selection of the best BPH books. Prioritizes first translations and high-quality texts.
 
-**Response:**
+| Param | Default | Description |
+|-------|---------|-------------|
+| `limit` | 6 | Number of books (max 24) |
+| `category` | — | Optional category filter |
 
 ```json
 {
-  "collections": [
+  "books": [
     {
-      "slug": "alchemy",
-      "name": "Alchemy",
-      "description": "The art of transformation — from Jabir ibn Hayyan to Isaac Newton.",
-      "subtitle": "Transmutation & the Philosopher's Stone",
-      "image": { "url": "https://cdn...", "alt": "..." },
-      "item_count": 487
-    },
-    {
-      "slug": "hermetica",
-      "name": "Hermetica",
-      "description": "Texts attributed to Hermes Trismegistus...",
-      "subtitle": null,
-      "image": null,
-      "item_count": 234
+      "slug": "aurora-or-the-day-spring-boehme",
+      "title": "Aurora, or The Day-Spring",
+      "author": "Jacob Boehme",
+      "language": "German",
+      "published": "1634",
+      "thumbnail": "https://images.sourcelibrary.org/...",
+      "is_first_translation": true,
+      "summary": "A visionary cosmological text...",
+      "reader_url": "https://bph.sourcelibrary.org/book/aurora-or-the-day-spring-boehme"
     }
   ]
 }
@@ -258,184 +161,221 @@ List all collection areas (subject categories) that contain BPH books.
 
 ---
 
-### `GET /api/embed/bph/collections?slug={slug}`
+### `GET /api/embed/bph/suggest?q=alch`
 
-Get a single collection area with its BPH books (paginated).
-
-**Additional parameters:**
-
-| Param | Type | Default | Description |
-|-------|------|---------|-------------|
-| `slug` | string | required | Collection slug |
-| `limit` | number | 24 | Books per page |
-| `offset` | number | 0 | Pagination offset |
-| `sort` | string | `title` | Sort: `title`, `date_asc`, `date_desc` |
-
-**Response:**
+Autocomplete/typeahead for search. Returns up to 8 matches with minimal data.
 
 ```json
 {
-  "collection": {
-    "slug": "alchemy",
-    "name": "Alchemy",
-    "description": "The art of transformation...",
-    "subtitle": "Transmutation & the Philosopher's Stone",
-    "image": { "url": "...", "alt": "..." },
-    "item_count": 487,
-    "books": [ ... ],
-    "total": 487,
-    "limit": 24,
-    "offset": 0
-  }
+  "suggestions": [
+    {
+      "slug": "alchemiae-libri-libavius",
+      "title": "Alchemiae Libri",
+      "author": "Andreas Libavius",
+      "language": "Latin",
+      "published": "1597",
+      "thumbnail": "https://..."
+    }
+  ]
 }
 ```
 
 ---
 
-## 3. Webflow Integration Recipes
+### `GET /api/embed/bph/collections`
 
-### Stats Counter on Homepage
+All collection areas (subject categories) that contain BPH books.
+
+```json
+{
+  "collections": [
+    {
+      "slug": "alchemy",
+      "name": "Alchemy",
+      "description": "The art of transformation...",
+      "subtitle": "Transmutation & the Philosopher's Stone",
+      "image": { "extracted_url": "https://..." },
+      "item_count": 560
+    }
+  ]
+}
+```
+
+### `GET /api/embed/bph/collections?slug=alchemy`
+
+Single collection with paginated BPH books.
+
+| Param | Default | Description |
+|-------|---------|-------------|
+| `slug` | required | Collection slug |
+| `limit` | 24 | Books per page (max 100) |
+| `offset` | 0 | Pagination offset |
+| `sort` | `title` | `title`, `date_asc`, `date_desc` |
+
+---
+
+### `GET /api/embed/bph/languages`
+
+All languages in the BPH collection with book counts. For building filter dropdowns.
+
+```json
+{
+  "languages": [
+    { "language": "Latin", "count": 1247 },
+    { "language": "German", "count": 412 },
+    { "language": "French", "count": 198 }
+  ]
+}
+```
+
+---
+
+## Linking to the Reader
+
+When a user clicks a book in the Webflow catalogue, link them to the reader:
+
+```
+https://bph.sourcelibrary.org/book/{slug}
+```
+
+For a specific page:
+
+```
+https://bph.sourcelibrary.org/book/{slug}/page/{pageId}
+```
+
+The reader at `bph.sourcelibrary.org` shows the book without Source Library branding (header/footer hidden).
+
+---
+
+## Thumbnail Images
+
+Book thumbnails are served from our CDN. They're stable URLs, cached, and fast.
+
+- `thumbnail` field in API responses is always a direct URL
+- Typical sizes: 200-400px wide
+- Format: JPEG
+- For higher resolution, the book detail endpoint returns the full cover image
+
+---
+
+## Webflow Integration Examples
+
+### Stats Counter
 
 ```html
-<div id="bph-stats"></div>
-
 <script>
 fetch('https://bph.sourcelibrary.org/api/embed/bph/stats')
   .then(r => r.json())
-  .then(data => {
-    document.getElementById('bph-stats').innerHTML = `
-      <div class="stat">${data.total.toLocaleString()} digitized texts</div>
-      <div class="stat">${data.pages_translated.toLocaleString()} pages translated</div>
-      <div class="stat">${data.languages} languages</div>
-    `;
+  .then(d => {
+    document.getElementById('book-count').textContent = d.total.toLocaleString();
+    document.getElementById('page-count').textContent = d.pages_translated.toLocaleString();
+    document.getElementById('lang-count').textContent = d.languages;
   });
 </script>
 ```
 
-### Search Box That Opens Catalogue
+### Search with Autocomplete
 
 ```html
-<form onsubmit="searchBPH(event)">
-  <input type="text" id="bph-search" placeholder="Search the collection..." />
-  <button type="submit">Search</button>
-</form>
+<input type="text" id="search" placeholder="Search the collection..." />
+<div id="suggestions"></div>
 
 <script>
-function searchBPH(e) {
-  e.preventDefault();
-  const q = document.getElementById('bph-search').value;
-  // Option A: Navigate to catalogue page with query
-  window.location.href = `/bibliotheca-philosophica-hermetica/catalogue?q=${encodeURIComponent(q)}`;
-  // Option B: Update iframe src directly
-  // document.getElementById('bph-catalogue').src =
-  //   `https://bph.sourcelibrary.org/embed/bph?q=${encodeURIComponent(q)}`;
-}
+let timer;
+document.getElementById('search').addEventListener('input', (e) => {
+  clearTimeout(timer);
+  timer = setTimeout(async () => {
+    if (e.target.value.length < 2) return;
+    const res = await fetch(
+      `https://bph.sourcelibrary.org/api/embed/bph/suggest?q=${encodeURIComponent(e.target.value)}`
+    );
+    const { suggestions } = await res.json();
+    document.getElementById('suggestions').innerHTML = suggestions.map(s =>
+      `<a href="https://bph.sourcelibrary.org/book/${s.slug}">${s.title} — ${s.author}</a>`
+    ).join('');
+  }, 300);
+});
 </script>
 ```
 
-### Collection Area Grid (Pure Webflow + API)
+### Featured Books Grid
 
 ```html
-<div id="collection-areas" class="w-dyn-list"></div>
+<div id="featured"></div>
 
 <script>
-fetch('https://bph.sourcelibrary.org/api/embed/bph/collections')
+fetch('https://bph.sourcelibrary.org/api/embed/bph/featured?limit=6')
   .then(r => r.json())
-  .then(({ collections }) => {
-    const grid = document.getElementById('collection-areas');
-    grid.innerHTML = collections.map(c => `
-      <a href="/bibliotheca-philosophica-hermetica/collection-areas?area=${c.slug}"
-         class="collection-card">
-        <h3>${c.name}</h3>
-        <p>${c.description || ''}</p>
-        <span class="count">${c.item_count} items</span>
+  .then(({ books }) => {
+    document.getElementById('featured').innerHTML = books.map(b => `
+      <a href="${b.reader_url}" class="book-card">
+        <img src="${b.thumbnail}" alt="${b.title}" loading="lazy" />
+        <h3>${b.title}</h3>
+        <p>${b.author}</p>
       </a>
     `).join('');
   });
 </script>
 ```
 
----
+### Paginated Catalogue
 
-## 4. Styling & Branding
+```html
+<div id="catalogue"></div>
+<button id="prev">Previous</button>
+<span id="page-info"></span>
+<button id="next">Next</button>
 
-The iframe content has **no Source Library header or footer**. It's a clean
-content area designed to sit inside the EFM/BPH Webflow chrome.
+<script>
+let page = 0;
+const PAGE_SIZE = 24;
 
-The embed uses a neutral color palette that works with the EFM brand:
-- Background: `#fafaf8` (warm white)
-- Text: `#1c1917` (near-black)
-- Accent: configurable via CSS custom property `--bph-accent`
+async function loadPage() {
+  const res = await fetch(
+    `https://bph.sourcelibrary.org/api/embed/bph/books?limit=${PAGE_SIZE}&offset=${page * PAGE_SIZE}&sort=title`
+  );
+  const { books, total } = await res.json();
+  const totalPages = Math.ceil(total / PAGE_SIZE);
 
-To override styles from the parent page, pass a theme parameter:
+  document.getElementById('catalogue').innerHTML = books.map(b => `
+    <a href="https://bph.sourcelibrary.org/book/${b.slug}" class="book-card">
+      <img src="${b.thumbnail}" alt="${b.display_title || b.title}" loading="lazy" />
+      <h3>${b.display_title || b.title}</h3>
+      <p>${b.author} · ${b.published || ''}</p>
+    </a>
+  `).join('');
 
-```
-/embed/bph?theme=dark    — dark background
-/embed/bph?theme=light   — light background (default)
-```
+  document.getElementById('page-info').textContent = `Page ${page + 1} of ${totalPages}`;
+  document.getElementById('prev').disabled = page === 0;
+  document.getElementById('next').disabled = page >= totalPages - 1;
+}
 
----
-
-## 5. Preventing Link Escape
-
-When users cmd+click or right-click → "Open in new tab" on a book link inside
-the iframe, the browser opens the raw Source Library URL. We handle this with:
-
-1. **All links inside the iframe use `target="_self"`** — normal clicks stay in the iframe.
-2. **New-tab opens redirect to the Webflow parent.** If the server detects the request
-   isn't inside an iframe (missing `Sec-Fetch-Dest: iframe`), it redirects to
-   the configured Webflow parent URL with the book slug as a query parameter.
-
-Configure the parent URL via environment variable:
-```
-EMBED_PARENT_URL=https://embassyofthefreemind.webflow.io/bibliotheca-philosophica-hermetica
-```
-
-So a new-tab open of `/book/aurora-boehme` redirects to:
-```
-https://embassyofthefreemind.webflow.io/bibliotheca-philosophica-hermetica/catalogue?book=aurora-boehme
+document.getElementById('prev').onclick = () => { page--; loadPage(); };
+document.getElementById('next').onclick = () => { page++; loadPage(); };
+loadPage();
+</script>
 ```
 
 ---
 
-## 6. URL Structure Mapping
+## Reader Iframe (Optional)
 
-| Webflow URL | iframe src | Notes |
-|------------|------------|-------|
-| `/bibliotheca-philosophica-hermetica` | — | BPH overview (Webflow native) |
-| `/bibliotheca-philosophica-hermetica/catalogue` | `/embed/bph` | Full catalogue |
-| `/bibliotheca-philosophica-hermetica/catalogue?q=alchemy` | `/embed/bph?q=alchemy` | Search |
-| `/bibliotheca-philosophica-hermetica/catalogue?book=aurora-boehme` | `/embed/bph/book/aurora-boehme` | Single book |
-| `/bibliotheca-philosophica-hermetica/collection-areas` | `/embed/bph/collections` | All areas |
-| `/bibliotheca-philosophica-hermetica/collection-areas?area=alchemy` | `/embed/bph/collections/alchemy` | One area |
+For embedding the full book reader (OCR + translation + page images) in Webflow:
 
----
+```html
+<iframe
+  src="https://bph.sourcelibrary.org/book/aurora-or-the-day-spring-boehme"
+  style="width: 100%; height: 85vh; border: none;"
+  allow="clipboard-write"
+  loading="lazy"
+></iframe>
+```
 
-## 7. FAQ
-
-**Q: Do we need an API key?**
-A: No. The BPH embed API is public and read-only. It only exposes BPH books (filtered
-by `image_source.provider === "bph"`). No Source Library content leaks through.
-
-**Q: Can we use the same API for the current EFM website too?**
-A: Yes. The API endpoints work from any origin. You can call them from
-`embassyofthefreemind.com`, the Webflow staging site, or localhost.
-
-**Q: What about rate limiting?**
-A: The API is served via Vercel + Cloudflare with standard rate limits. For typical
-website usage (a few hundred requests per minute), you won't hit any limits.
-
-**Q: Can users search within a book?**
-A: Yes. The book reader (inside the iframe) has built-in page-level search. The
-API also supports `GET /api/books/{id}/search?q=...` for programmatic page search.
-
-**Q: What about images/gallery?**
-A: Gallery endpoints are planned for Phase 2. The current book reader already
-displays all page images inline. Extracted illustrations with AI-generated
-metadata will be available via `/api/embed/bph/gallery` in the next phase.
+The reader has no Source Library header/footer when loaded on `bph.sourcelibrary.org`.
 
 ---
 
 ## Support
 
-For integration questions: derek@sourcelibrary.org
+Integration questions: derek@sourcelibrary.org
