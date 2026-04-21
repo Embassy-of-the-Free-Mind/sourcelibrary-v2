@@ -1,6 +1,7 @@
 import { NextRequest, NextResponse } from 'next/server';
 import { auth } from '@/lib/auth';
 import { withAuth } from '@/lib/auth-helpers';
+import { getTenantContextFromRequest } from '@/lib/tenant-context';
 import { getDb } from '@/lib/mongodb';
 
 const DB_TIMEOUT_MS = 3000;
@@ -25,6 +26,11 @@ export async function POST(request: NextRequest) {
     }
 
     const userId = session.user.id;
+    const { id: tenantId } = getTenantContextFromRequest(request);
+    if (!tenantId) {
+      return NextResponse.json({ success: true }); // silent fail
+    }
+
     const now = new Date();
 
     const dbWork = (async () => {
@@ -37,6 +43,7 @@ export async function POST(request: NextRequest) {
         {
           user_id: userId,
           book_id,
+          tenantId,
           updated_at: { $gte: cutoff },
         },
         { sort: { updated_at: -1 } }
@@ -53,6 +60,7 @@ export async function POST(request: NextRequest) {
             },
             $inc: { pages_viewed: 1 },
             $addToSet: { pages_read: { page_id, page_number } },
+          tenantId,
           }
         );
       } else {
@@ -91,11 +99,16 @@ export const GET = withAuth(async (request, session) => {
   const limit = Math.min(parseInt(searchParams.get('limit') || '50'), 200);
   const offset = parseInt(searchParams.get('offset') || '0');
   const userId = session.user!.id;
+  const { id: tenantId } = getTenantContextFromRequest(request);
+
+  if (!tenantId) {
+    return NextResponse.json({ entries: [], total: 0 });
+  }
 
   const db = await getDb();
 
   const pipeline = [
-    { $match: { user_id: userId } },
+    { $match: { user_id: userId, tenantId } },
     { $sort: { updated_at: -1 as const } },
     { $skip: offset },
     { $limit: limit },
@@ -147,7 +160,7 @@ export const GET = withAuth(async (request, session) => {
 
   const [entries, totalResult] = await Promise.all([
     db.collection('reading_history').aggregate(pipeline).toArray(),
-    db.collection('reading_history').countDocuments({ user_id: userId }),
+    db.collection('reading_history').countDocuments({ user_id: userId, tenantId }),
   ]);
 
   return NextResponse.json({ entries, total: totalResult, offset, limit });

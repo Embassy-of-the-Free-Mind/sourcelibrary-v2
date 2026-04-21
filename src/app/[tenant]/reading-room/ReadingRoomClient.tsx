@@ -2,9 +2,11 @@
 
 import { useState, useEffect, useRef, useCallback } from 'react';
 import { useSession } from 'next-auth/react';
+import { useParams } from 'next/navigation';
 import Link from 'next/link';
 import ReactMarkdown from 'react-markdown';
 import remarkGfm from 'remark-gfm';
+import { tenantBookUrl } from '@/lib/slugify';
 // remarkBreaks removed — we use ensureParagraphBreaks() instead for proper spacing
 import SiteHeader from '@/components/layout/SiteHeader';
 
@@ -119,25 +121,20 @@ const TOOL_LABELS: Record<string, string> = {
 
 // ── Source Card Component ─────────────────────────────────────────────
 
-function SourceCardRow({ sources }: { sources: SourceCard[] }) {
+function SourceCardRow({ sources, tenant }: { sources: SourceCard[]; tenant?: string }) {
   if (sources.length === 0) return null;
   return (
     <div className="mt-3 flex gap-2 overflow-x-auto pb-1 -mx-1 px-1">
       {sources.map((s, i) => {
-        const url = s.bookSlug
-          ? `/book/${s.bookSlug}${s.pageNumber ? `?page=${s.pageNumber}` : ''}`
-          : `/book/${s.bookId}${s.pageNumber ? `?page=${s.pageNumber}` : ''}`;
+        const url = tenantBookUrl({ slug: s.bookSlug, id: s.bookId }, tenant) + (s.pageNumber ? `?page=${s.pageNumber}` : '');
         return (
-          <a
+          <Link
             key={`${s.bookId}-${s.pageNumber}-${i}`}
-            href={`https://sourcelibrary.org${url}`}
-            target="_blank"
-            rel="noopener noreferrer"
-            className={`flex-shrink-0 w-[200px] rounded-lg border p-2.5 transition-colors ${
-              s.inCollection
+            href={url}
+            className={`flex-shrink-0 w-[200px] rounded-lg border p-2.5 transition-colors ${s.inCollection
                 ? 'border-[#e8e4dc] bg-white hover:border-[#c9a86c] hover:bg-[#faf8f4]'
                 : 'border-dashed border-[#d4d0c8] bg-[#f9f7f3] opacity-60'
-            }`}
+              }`}
           >
             <p className="text-[12px] font-body text-[#1a1612] font-medium leading-tight line-clamp-2">
               {s.bookTitle}
@@ -154,7 +151,7 @@ function SourceCardRow({ sources }: { sources: SourceCard[] }) {
             {!s.inCollection && (
               <p className="text-[9px] text-[#b0a89c] font-sans mt-1">Not yet in collection</p>
             )}
-          </a>
+          </Link>
         );
       })}
     </div>
@@ -218,6 +215,8 @@ function pickSuggestions(count: number): string[] {
 
 export default function ReadingRoomClient({ featuredPassage }: ReadingRoomClientProps) {
   const { data: session, status } = useSession();
+  const params = useParams<{ tenant: string }>();
+  const tenant = params?.tenant;
   const [messages, setMessages] = useState<Message[]>([]);
   const [suggestions] = useState(() => pickSuggestions(4));
   const [input, setInput] = useState('');
@@ -242,7 +241,7 @@ export default function ReadingRoomClient({ featuredPassage }: ReadingRoomClient
     fetch('/api/embassy/threads?limit=50')
       .then(r => r.json())
       .then(data => { if (data.threads) setThreads(data.threads); })
-      .catch(() => {});
+      .catch(() => { });
   }, []);
 
   // Fetch user's own threads when signed in
@@ -251,7 +250,7 @@ export default function ReadingRoomClient({ featuredPassage }: ReadingRoomClient
       fetch('/api/embassy/threads?mine=true&limit=20')
         .then(r => r.json())
         .then(data => { if (data.threads) setMyThreads(data.threads); })
-        .catch(() => {});
+        .catch(() => { });
     }
   }, [status]);
 
@@ -648,7 +647,7 @@ export default function ReadingRoomClient({ featuredPassage }: ReadingRoomClient
                           )}
 
                           {/* Source cards */}
-                          <SourceCardRow sources={assistant.sources} />
+                          <SourceCardRow sources={assistant.sources} tenant={tenant} />
 
                           {/* Notebook indicator */}
                           {assistant.notebookCount && assistant.notebookCount > 0 && (
@@ -752,18 +751,16 @@ export default function ReadingRoomClient({ featuredPassage }: ReadingRoomClient
                 <div className="flex gap-4 mb-4">
                   <button
                     onClick={() => { setSidebarTab('recent'); setVisibleThreads(5); }}
-                    className={`text-[11px] tracking-[0.2em] uppercase font-sans transition-colors ${
-                      sidebarTab === 'recent' ? 'text-[#1a1612]' : 'text-[#b0a89c] hover:text-[#8a8480]'
-                    }`}
+                    className={`text-[11px] tracking-[0.2em] uppercase font-sans transition-colors ${sidebarTab === 'recent' ? 'text-[#1a1612]' : 'text-[#b0a89c] hover:text-[#8a8480]'
+                      }`}
                   >
                     Recent
                   </button>
                   {isSignedIn && (
                     <button
                       onClick={() => { setSidebarTab('mine'); setVisibleThreads(5); }}
-                      className={`text-[11px] tracking-[0.2em] uppercase font-sans transition-colors ${
-                        sidebarTab === 'mine' ? 'text-[#1a1612]' : 'text-[#b0a89c] hover:text-[#8a8480]'
-                      }`}
+                      className={`text-[11px] tracking-[0.2em] uppercase font-sans transition-colors ${sidebarTab === 'mine' ? 'text-[#1a1612]' : 'text-[#b0a89c] hover:text-[#8a8480]'
+                        }`}
                     >
                       My Conversations
                     </button>

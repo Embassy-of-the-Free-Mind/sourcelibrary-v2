@@ -1,5 +1,6 @@
-import { NextResponse } from 'next/server';
+import { NextResponse, NextRequest } from 'next/server';
 import { getReadDb } from '@/lib/mongodb';
+import { getTenantContextFromRequest } from '@/lib/tenant-context';
 
 interface BookStatus {
   id: string;
@@ -17,12 +18,18 @@ interface BookStatus {
 }
 
 // GET /api/books/status - Get summary readiness status for all books
-export async function GET() {
+export async function GET(request: NextRequest) {
   try {
     const db = await getReadDb();
+    const { id: tenantId } = getTenantContextFromRequest(request);
+
+    if (!tenantId) {
+      return NextResponse.json({ books: [] });
+    }
 
     // Aggregate book data with page counts
     const books = await db.collection('books').aggregate([
+      { $match: { tenantId } },
       {
         $lookup: {
           from: 'pages',

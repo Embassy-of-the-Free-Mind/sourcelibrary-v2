@@ -1,5 +1,6 @@
 import { NextRequest, NextResponse } from 'next/server';
 import { getDb } from '@/lib/mongodb';
+import { getTenantContextFromRequest } from '@/lib/tenant-context';
 
 interface SearchMatch {
   field: 'ocr' | 'translation';
@@ -76,6 +77,11 @@ export async function GET(
     const { id: bookId } = await params;
     const { searchParams } = new URL(request.url);
     const query = searchParams.get('q');
+    const tenantContext = getTenantContextFromRequest(request.headers);
+
+    if (tenantContext.slug && !tenantContext.id) {
+      return NextResponse.json({ error: 'Book not found' }, { status: 404 });
+    }
 
     if (!query || query.trim().length === 0) {
       return NextResponse.json({ error: 'Query parameter "q" is required' }, { status: 400 });
@@ -89,15 +95,19 @@ export async function GET(
     // $text search is NOT used here because the pages text index lacks a book_id
     // prefix, so $text + book_id filter scans the entire 420k+ page index.
     const regex = new RegExp(escapeRegex(trimmedQuery), 'i');
+    const pageFilter: Record<string, unknown> = {
+      book_id: bookId,
+      $or: [
+        { 'ocr.data': { $regex: regex } },
+        { 'translation.data': { $regex: regex } }
+      ]
+    };
+    if (tenantContext.id) {
+      pageFilter.tenantId = tenantContext.id;
+    }
 
     const pages = await db.collection('pages')
-      .find({
-        book_id: bookId,
-        $or: [
-          { 'ocr.data': { $regex: regex } },
-          { 'translation.data': { $regex: regex } }
-        ]
-      }, {
+      .find(pageFilter, {
         projection: {
           id: 1,
           page_number: 1,
@@ -151,7 +161,7 @@ export async function GET(
       event: 'search_query',
       query: trimmedQuery,
       results_count: results.length,
-      filters: { book_id: bookId, source: 'book_search' },
+      filters: { book_id: bookId, source: 'book_search', tenantId: tenantContext.id || null },
       timestamp: new Date(),
       ip: request.headers.get('x-forwarded-for')?.split(',')[0]?.trim() || 'unknown',
       created_at: new Date(),

@@ -41,6 +41,7 @@ import { firstTranslationBadge, firstTranslationDescription } from '@/lib/first-
 import { formatAuthor } from '@/lib/utils';
 import AuthorName from '@/components/AuthorName';
 import SiteHeader from '@/components/layout/SiteHeader';
+import { headers } from 'next/headers';
 
 // ISR: serve cached HTML, revalidate in background every 24h.
 // Pipeline also calls /api/admin/revalidate-book for immediate updates after OCR/translation/enrichment.
@@ -57,7 +58,7 @@ export async function generateStaticParams() {
 }
 
 interface PageProps {
-  params: Promise<{ id: string }>;
+  params: Promise<{ tenant: string; id: string }>;
 }
 
 // Cached book lookup — deduplicates between generateMetadata and BookInfo
@@ -116,17 +117,22 @@ async function getBookForMetadata(id: string): Promise<Book | null> {
 
 export async function generateMetadata({ params }: PageProps): Promise<Metadata> {
   const { id } = await params;
+  const h = await headers();
+  const tenantId = h.get('x-tenant-id');
   let book: Book | null;
   try {
     book = await getBookForMetadata(id);
   } catch {
-    // DB timeout or other error — return minimal metadata so navigation doesn't silently fail.
-    // The page component's own error handling will show the user a friendly message.
     return { title: 'Source Library', robots: { index: false, follow: false } };
   }
 
   if (!book) {
     return { title: 'Book Not Found - Source Library', robots: { index: false, follow: false } };
+  }
+
+  // Wrong tenant — suppress metadata entirely so the 404 isn't indexed
+  if (book.tenantId && tenantId && book.tenantId !== tenantId) {
+    return { title: 'Not Found - Source Library', robots: { index: false, follow: false } };
   }
 
   const title = book.display_title || book.title;
@@ -225,16 +231,16 @@ async function getBook(id: string): Promise<{ book: Book; pages: Page[]; totalBo
   // This runs in parallel with pages/gallery/collections — no sequential bottleneck.
   const fullBookPromise = fromCatalog
     ? findBookByIdOrSlug(db, bookId, {
-        reading_sections: 0,
-        pipeline: 0,
-        pipeline_auto: 0,
-        split_check: 0,
-        'index.sectionSummaries': 0,
-        'index.people': 0,
-        'index.places': 0,
-        'index.concepts': 0,
-        'index.keyTerms': 0,
-      }).catch(() => null)
+      reading_sections: 0,
+      pipeline: 0,
+      pipeline_auto: 0,
+      split_check: 0,
+      'index.sectionSummaries': 0,
+      'index.people': 0,
+      'index.places': 0,
+      'index.concepts': 0,
+      'index.keyTerms': 0,
+    }).catch(() => null)
     : Promise.resolve(null); // Already have full book from Atlas
 
   // All queries have maxTimeMS to fail fast during DB degradation
@@ -289,13 +295,13 @@ async function getBook(id: string): Promise<{ book: Book; pages: Page[]; totalBo
     // Collections this book belongs to
     (quickBook.collections as string[] | undefined)?.length
       ? db.collection('collections')
-          .find(
-            { slug: { $in: quickBook.collections as string[] }, visible: true },
-            { projection: { _id: 0, slug: 1, name: 1, subtitle: 1, color: 1, book_count: 1, featured_images: 1 }, maxTimeMS: 5000 },
-          )
-          .sort({ order: 1 })
-          .toArray()
-          .catch(() => [])
+        .find(
+          { slug: { $in: quickBook.collections as string[] }, visible: true },
+          { projection: { _id: 0, slug: 1, name: 1, subtitle: 1, color: 1, book_count: 1, featured_images: 1 }, maxTimeMS: 5000 },
+        )
+        .sort({ order: 1 })
+        .toArray()
+        .catch(() => [])
       : Promise.resolve([]),
   ]);
 
@@ -361,7 +367,7 @@ function PagesGridSkeleton() {
 }
 
 // Book info component (streams in via Suspense)
-async function BookInfo({ id }: { id: string }) {
+async function BookInfo({ id, tenantId, tenantSlug }: { id: string; tenantId: string; tenantSlug: string }) {
   let data;
   try {
     data = await getBook(id);
@@ -384,6 +390,12 @@ async function BookInfo({ id }: { id: string }) {
   }
 
   const { book, pages, totalBooks, galleryImages, galleryImageCount, bookCollections } = data;
+
+  // Enforce tenant isolation: book must belong to the tenant in the URL.
+  // book.tenantId is set by the data pipeline for all tenant-scoped books.
+  if (book.tenantId && book.tenantId !== tenantId) {
+    notFound();
+  }
 
   // Empty shell books (0 pages from failed imports) should 404
   // But visual art (paintings, prints, etc.) legitimately has no page documents
@@ -644,6 +656,7 @@ async function BookInfo({ id }: { id: string }) {
                       language={book.language}
                       doi={book.doi}
                       editionVersion={currentEdition?.version}
+                      tenantSlug={tenantSlug || undefined}
                       className="text-stone-300 hover:text-white hover:bg-white/10"
                     />
                     <DownloadButton
@@ -674,6 +687,7 @@ async function BookInfo({ id }: { id: string }) {
                       bookId={book.id}
                       doi={book.doi}
                       label="Share"
+                      tenantSlug={tenantSlug || undefined}
                       className="text-stone-300 hover:text-white hover:bg-white/10"
                     />
                   </div>
@@ -885,6 +899,9 @@ async function BookInfo({ id }: { id: string }) {
 
 export default async function BookDetailPage({ params }: PageProps) {
   const { id } = await params;
+  const h = await headers();
+  const tenantId = h.get('x-tenant-id') || '';
+  const tenantSlug = h.get('x-tenant-slug') || '';
 
   return (
     <div className="min-h-screen bg-cream">
@@ -901,7 +918,7 @@ export default async function BookDetailPage({ params }: PageProps) {
           </main>
         </>
       }>
-        <BookInfo id={id} />
+        <BookInfo id={id} tenantId={tenantId} tenantSlug={tenantSlug} />
       </Suspense>
       <SignUpCTA />
     </div>

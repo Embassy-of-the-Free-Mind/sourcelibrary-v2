@@ -1,5 +1,6 @@
 import { NextRequest, NextResponse } from 'next/server';
 import { getDb } from '@/lib/mongodb';
+import { getTenantContextFromRequest } from '@/lib/tenant-context';
 import { ObjectId } from 'mongodb';
 
 export interface Highlight {
@@ -25,10 +26,15 @@ export async function GET(request: NextRequest) {
     const pageId = searchParams.get('page_id');
     const limit = Math.min(100, Math.max(1, parseInt(searchParams.get('limit') || '50')));
     const skip = Math.max(0, parseInt(searchParams.get('skip') || '0'));
+    const { id: tenantId } = getTenantContextFromRequest(request);
+
+    if (!tenantId) {
+      return NextResponse.json({ highlights: [], pagination: { limit, skip } });
+    }
 
     const db = await getDb();
 
-    const query: Record<string, string> = {};
+    const query: Record<string, string> = { tenantId };
     if (bookId) query.book_id = bookId;
     if (pageId) query.page_id = pageId;
 
@@ -54,6 +60,14 @@ export async function POST(request: NextRequest) {
   try {
     const body = await request.json();
     const { book_id, page_id, page_number, book_title, book_author, text, context, note, color, user_name } = body;
+    const { id: tenantId } = getTenantContextFromRequest(request);
+
+    if (!tenantId) {
+      return NextResponse.json(
+        { error: 'Tenant not found' },
+        { status: 400 }
+      );
+    }
 
     if (!book_id || !page_id || !text) {
       return NextResponse.json(
@@ -109,6 +123,7 @@ export async function POST(request: NextRequest) {
       note: note?.trim(),
       color: color || 'yellow',
       user_name: user_name?.trim() || undefined,
+      tenantId,
       created_at: new Date(),
     };
 

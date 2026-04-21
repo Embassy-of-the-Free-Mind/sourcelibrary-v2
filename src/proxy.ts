@@ -184,6 +184,23 @@ function getCorsHeaders(origin: string): Record<string, string> {
 export async function proxy(request: NextRequest) {
   const { pathname } = request.nextUrl;
 
+  async function resolveActiveTenant(slug: string): Promise<{ id: string; slug: string } | null> {
+    if (!slug || NON_TENANT_PATHS.has(slug) || slug.includes('.') || !/^[a-z0-9-]+$/.test(slug)) {
+      return null;
+    }
+    try {
+      const db = await getDb();
+      const tenant = await db.collection('tenants').findOne({
+        slug,
+        status: { $ne: 'deleted' },
+      });
+      if (!tenant) return null;
+      return { id: tenant.id as string, slug };
+    } catch {
+      return null;
+    }
+  }
+
   // --- Embed CORS: allow partner Webflow sites to call collection/book APIs ---
   const isEmbedRoute =
     pathname.startsWith('/api/collections') || pathname.startsWith('/api/books');
@@ -264,6 +281,12 @@ export async function proxy(request: NextRequest) {
     }
   }
 
+  // Root /book/* paths (any depth) are not tenant slugs — pass through directly
+  // without tenant resolution so /book/slug, /book/slug/page/id, etc. always work.
+  if (pathname.startsWith('/book/') || pathname === '/book') {
+    return NextResponse.next();
+  }
+
   // --- Bot rate limiting (soft) ---
   // Browser rate limiting is handled by Vercel WAF (dashboard config).
   // This in-memory limiter only applies to bots as a defense-in-depth layer.
@@ -315,28 +338,51 @@ export async function proxy(request: NextRequest) {
   let tenantSlug: string | null = null;
 
   const [, firstSegment] = pathname.split('/');
-  if (
-    firstSegment &&
-    !NON_TENANT_PATHS.has(firstSegment) &&
-    !firstSegment.includes('.') &&
-    /^[a-z0-9-]+$/.test(firstSegment)
-  ) {
-    try {
-      const db = await getDb();
-      const tenant = await db.collection('tenants').findOne({
-        slug: firstSegment,
-        status: { $ne: 'deleted' },
-      });
-      if (tenant) {
-        tenantId = tenant.id as string;
-        tenantSlug = firstSegment;
+  if (firstSegment) {
+    const directTenant = await resolveActiveTenant(firstSegment);
+    if (directTenant) {
+      tenantId = directTenant.id;
+      tenantSlug = directTenant.slug;
+    } else if (
+      !NON_TENANT_PATHS.has(firstSegment) &&
+      !firstSegment.includes('.') &&
+      /^[a-z0-9-]+$/.test(firstSegment)
+    ) {
+      // Unknown slug — redirect to home
+      return NextResponse.redirect(new URL('/', request.url));
+    }
+  }
+
+  // Root /api/* calls from tenant pages do not include the tenant segment in the pathname.
+  // Infer tenant from referer so legacy root APIs remain tenant-safe during migration.
+  if (!tenantId && pathname.startsWith('/api/')) {
+    const [, apiPrefix, apiTenantSegment] = pathname.split('/');
+
+    // If the API path is /api/{tenant}/..., prefer explicit tenant segment.
+    if (apiPrefix === 'api' && apiTenantSegment) {
+      const pathTenant = await resolveActiveTenant(apiTenantSegment);
+      if (pathTenant) {
+        tenantId = pathTenant.id;
+        tenantSlug = pathTenant.slug;
       }
-      else {
-          // Unknown slug — redirect to home
-          return NextResponse.redirect(new URL('/', request.url));
+    }
+
+    // Fallback to referer tenant path: /{tenant}/...
+    if (!tenantId) {
+      const referer = request.headers.get('referer');
+      if (referer) {
+        try {
+          const refererUrl = new URL(referer);
+          const [, refererFirstSegment] = refererUrl.pathname.split('/');
+          const refTenant = await resolveActiveTenant(refererFirstSegment || '');
+          if (refTenant) {
+            tenantId = refTenant.id;
+            tenantSlug = refTenant.slug;
+          }
+        } catch {
+          // Ignore malformed referer
+        }
       }
-    } catch {
-      // DB error or tenants collection doesn't exist — let the request through without tenant context
     }
   }
 

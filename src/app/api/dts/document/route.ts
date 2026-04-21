@@ -13,8 +13,7 @@
  */
 
 import { NextRequest, NextResponse } from 'next/server';
-import { getReadDb } from '@/lib/mongodb';
-import { isBot, isTrustedBot, botMaxPage } from '@/lib/bot-gate';
+import { getReadDb } from '@/lib/mongodb';import { getTenantContextFromRequest } from '@/lib/tenant-context';import { isBot, isTrustedBot, botMaxPage } from '@/lib/bot-gate';
 
 const BASE = 'https://sourcelibrary.org';
 
@@ -49,9 +48,17 @@ export async function GET(request: NextRequest) {
     }
 
     const db = await getReadDb();
+    const { id: tenantId } = getTenantContextFromRequest(request);
+
+    if (!tenantId) {
+      return NextResponse.json(
+        { error: `Resource "${resourceId}" not found` },
+        { status: 404 }
+      );
+    }
 
     const book = await db.collection('books').findOne(
-      { $or: [{ id: resourceId }, { slug: resourceId }] },
+      { $and: [{ tenantId }, { $or: [{ id: resourceId }, { slug: resourceId }] }] },
       {
         projection: {
           id: 1, title: 1, display_title: 1, slug: 1,

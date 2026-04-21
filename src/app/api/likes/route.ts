@@ -7,6 +7,7 @@
 
 import { NextRequest, NextResponse } from 'next/server';
 import { getDb } from '@/lib/mongodb';
+import { getTenantContextFromRequest } from '@/lib/tenant-context';
 import { LikeTargetType } from '@/lib/types';
 
 /**
@@ -38,8 +39,16 @@ export async function POST(request: NextRequest) {
       );
     }
 
+    const { id: tenantId } = getTenantContextFromRequest(request);
+    if (!tenantId) {
+      return NextResponse.json(
+        { error: 'Tenant not found' },
+        { status: 400 }
+      );
+    }
+
     const db = await getDb();
-    const filter = { target_type, target_id, visitor_id };
+    const filter = { target_type, target_id, visitor_id, tenantId };
 
     // Atomic toggle: try to delete first — if nothing was deleted, insert
     const deleted = await db.collection('likes').deleteOne(filter);
@@ -52,6 +61,7 @@ export async function POST(request: NextRequest) {
     const count = await db.collection('likes').countDocuments({
       target_type,
       target_id,
+      tenantId,
     });
 
     // Cascade: liking a page also likes the parent book
@@ -59,7 +69,7 @@ export async function POST(request: NextRequest) {
     if (target_type === 'page' && liked) {
       try {
         const page = await db.collection('pages').findOne(
-          { id: target_id },
+          { id: target_id, tenantId },
           { projection: { book_id: 1 } }
         );
         if (page?.book_id) {
@@ -69,6 +79,7 @@ export async function POST(request: NextRequest) {
               target_type: 'book',
               target_id: page.book_id,
               visitor_id,
+              tenantId,
               created_at: new Date(),
             });
           } catch (e: unknown) {
@@ -78,6 +89,7 @@ export async function POST(request: NextRequest) {
           const bookCount = await db.collection('likes').countDocuments({
             target_type: 'book',
             target_id: page.book_id,
+            tenantId,
           });
           cascade = { book_id: page.book_id, book_liked: true, book_count: bookCount };
         }
@@ -145,12 +157,21 @@ export async function GET(request: NextRequest) {
       targets = targets.slice(0, 100);
     }
 
+    const { id: tenantId } = getTenantContextFromRequest(request);
+    if (!tenantId) {
+      return NextResponse.json(
+        { error: 'Tenant not found' },
+        { status: 400 }
+      );
+    }
+
     const db = await getDb();
 
     // Build aggregation to get counts
     const countPipeline = [
       {
         $match: {
+          tenantId,
           $or: targets.map(t => ({
             target_type: t.type,
             target_id: t.id,
@@ -187,6 +208,7 @@ export async function GET(request: NextRequest) {
     // Check if visitor has liked (if visitor_id provided)
     if (visitorId) {
       const visitorLikes = await db.collection('likes').find({
+        tenantId,
         visitor_id: visitorId,
         $or: targets.map(t => ({
           target_type: t.type,

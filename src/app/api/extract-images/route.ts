@@ -1,5 +1,6 @@
 import { NextRequest, NextResponse } from 'next/server';
 import { getDb } from '@/lib/mongodb';
+import { getTenantContextFromRequest } from '@/lib/tenant-context';
 import { logGeminiCall } from '@/lib/gemini-logger';
 import {
   extractWithGemini,
@@ -23,6 +24,11 @@ export const POST = withAuth(async (request, session) => {
     const bookId = body.bookId;
     const dryRun = body.dryRun || false;
     const model: 'gemini' | 'mistral' | 'grounding-dino' = body.model || 'gemini';
+    const { id: tenantId } = getTenantContextFromRequest(request);
+
+    if (!tenantId) {
+      return NextResponse.json({ error: 'Unauthorized' }, { status: 403 });
+    }
 
     const useGemini = model === 'gemini';
     const extractFn = model === 'mistral'
@@ -67,13 +73,16 @@ export const POST = withAuth(async (request, session) => {
     }
 
     const pages = await db.collection('pages').aggregate([
-      { $match: query },
+      { $match: { ...query, tenantId } },
       { $sample: { size: limit } },
       {
         $lookup: {
           from: 'books',
           localField: 'book_id',
           foreignField: 'id',
+          pipeline: [
+            { $match: { tenantId } }
+          ],
           as: 'book'
         }
       },
@@ -125,7 +134,7 @@ export const POST = withAuth(async (request, session) => {
         // Update the page with extracted images (unless dry run)
         if (!dryRun && extractedImages.length > 0) {
           await db.collection('pages').updateOne(
-            { _id: page._id },
+            { _id: page._id, tenantId },
             { $set: { detected_images: extractedImages } }
           );
         }
@@ -192,22 +201,31 @@ export const POST = withAuth(async (request, session) => {
 });
 
 // GET - check status / get pages with images
-export const GET = withAuth(async (request, session) => {
+export const GET = withAuth(async (request: NextRequest, session) => {
   try {
+    const { id: tenantId } = getTenantContextFromRequest(request);
+
+    if (!tenantId) {
+      return NextResponse.json({ error: 'Unauthorized' }, { status: 403 });
+    }
+
     const db = await getDb();
 
     // Count pages with detected images
     const withImages = await db.collection('pages').countDocuments({
+      tenantId,
       'detected_images.0': { $exists: true }
     });
 
     // Count pages with OCR image tags (potential candidates)
     const withOcrTags = await db.collection('pages').countDocuments({
+      tenantId,
       'ocr.data': { $regex: '\\[\\[image:', $options: 'i' }
     });
 
     // Count pages with vision-extracted images
     const withVisionExtracted = await db.collection('pages').countDocuments({
+      tenantId,
       'detected_images.detection_source': 'vision_model'
     });
 

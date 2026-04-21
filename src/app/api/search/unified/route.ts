@@ -4,6 +4,7 @@ import { supabase } from '@/lib/supabase';
 import type { BookSearchFilters } from '@/lib/atlas-search';
 import type { SearchResult } from '@/lib/api-client/types/search';
 import { searchBookIds } from '@/lib/books-catalog';
+import { getTenantContextFromRequest } from '@/lib/tenant-context';
 
 // CLIP server on Hetzner for visual text→image search
 const CLIP_URL = process.env.CLIP_URL || 'http://46.224.122.120:3456/clip';
@@ -47,6 +48,7 @@ interface GalleryResult {
 export async function GET(request: NextRequest) {
   try {
     const { searchParams } = new URL(request.url);
+    const tenantContext = getTenantContextFromRequest(request.headers);
     const query = searchParams.get('q') || '';
     const limit = Math.min(parseInt(searchParams.get('limit') || '8'), 12);
     const galleryLimit = Math.min(parseInt(searchParams.get('gallery_limit') || '6'), 12);
@@ -67,6 +69,16 @@ export async function GET(request: NextRequest) {
       });
     }
 
+    if (tenantContext.slug && !tenantContext.id) {
+      return NextResponse.json({
+        query,
+        books: { results: [], total: 0 },
+        index: { results: [], total: 0 },
+        gallery: { results: [], total: 0 },
+        visual: { results: [], total: 0 },
+      });
+    }
+
     const db = await getDb();
     const queryRegex = new RegExp(query.replace(/[.*+?^${}()|[\]\\]/g, '\\$&'), 'i');
 
@@ -76,24 +88,43 @@ export async function GET(request: NextRequest) {
     if (category) searchFilters.category = category;
     if (firstTranslation) searchFilters.isFirstTranslation = true;
     if (hasTranslation) searchFilters.hasTranslation = true;
+    if (tenantContext.id) searchFilters.tenantId = tenantContext.id;
 
     // Run book, index, gallery, and visual search in parallel
     const [booksResult, indexResult, galleryResult, visualResult] = await Promise.all([
-      searchBooks(db, query, queryRegex, limit, searchFilters, library),
-      searchIndex(db, query, limit).catch((err) => {
+      searchBooks(db, query, queryRegex, limit, searchFilters, library, tenantContext.id || undefined),
+      searchIndex(db, query, limit, tenantContext.id || undefined).catch((err) => {
         console.error('Index search error:', err);
         return { results: [] as IndexResult[], total: 0 };
       }),
-      searchGallery(db, query, queryRegex, galleryLimit),
+      searchGallery(db, query, queryRegex, galleryLimit, tenantContext.id || undefined),
       searchVisual(query, galleryLimit),
     ]);
+
+    let filteredVisualResult = visualResult;
+    if (tenantContext.id && visualResult.results.length > 0) {
+      const visualBookIds = [...new Set(visualResult.results.map((r) => r.bookId).filter(Boolean))];
+      if (visualBookIds.length > 0) {
+        const allowedBooks = await db.collection('books')
+          .find({ id: { $in: visualBookIds }, tenantId: tenantContext.id }, { projection: { id: 1 } })
+          .toArray();
+        const allowedBookIds = new Set(allowedBooks.map((b: any) => b.id));
+        const results = visualResult.results.filter((r) => allowedBookIds.has(r.bookId));
+        filteredVisualResult = {
+          results,
+          total: results.length,
+        };
+      } else {
+        filteredVisualResult = { results: [], total: 0 };
+      }
+    }
 
     // Log search query (fire-and-forget)
     db.collection('analytics_events').insertOne({
       event: 'search_query',
       query,
-      results_count: booksResult.total + indexResult.total + galleryResult.total + visualResult.total,
-      filters: { language, category, library, source: 'unified' },
+      results_count: booksResult.total + indexResult.total + galleryResult.total + filteredVisualResult.total,
+      filters: { language, category, library, source: 'unified', tenantId: tenantContext.id || null },
       timestamp: new Date(),
       ip: request.headers.get('x-forwarded-for')?.split(',')[0]?.trim() || 'unknown',
       created_at: new Date(),
@@ -104,7 +135,7 @@ export async function GET(request: NextRequest) {
       books: booksResult,
       index: indexResult,
       gallery: galleryResult,
-      visual: visualResult,
+      visual: filteredVisualResult,
     }, {
       headers: {
         'Cache-Control': 'no-store',
@@ -123,6 +154,7 @@ async function searchBooks(
   limit: number,
   searchFilters: BookSearchFilters,
   library?: string,
+  tenantId?: string,
 ) {
   const bookProjection = {
     id: 1, slug: 1, title: 1, display_title: 1, author: 1, language: 1, published: 1,
@@ -146,6 +178,7 @@ async function searchBooks(
     if (searchFilters.isFirstTranslation) filter.is_first_translation = true;
     if (searchFilters.hasTranslation) filter.pages_translated = { $gt: 0 };
     if (library) filter['image_source.provider'] = library;
+    if (tenantId) filter.tenantId = tenantId;
 
     books = await db.collection('books')
       .find(filter)
@@ -178,6 +211,7 @@ async function searchBooks(
         pages_count: { $gt: 0 },
       };
       if (library) aliasFilter['image_source.provider'] = library;
+      if (tenantId) aliasFilter.tenantId = tenantId;
 
       const aliasBooks = await db.collection('books')
         .find(aliasFilter)
@@ -252,7 +286,7 @@ async function searchBooks(
   };
 }
 
-async function searchIndex(db: any, query: string, limit: number) {
+async function searchIndex(db: any, query: string, limit: number, tenantId?: string) {
   const escapedQuery = query.replace(/[.*+?^${}()|[\]\\]/g, '\\$&');
   const queryRegex = new RegExp(escapedQuery, 'i');
 
@@ -294,9 +328,27 @@ async function searchIndex(db: any, query: string, limit: number) {
   }
 
   // Expand each entity into per-book results (matching the IndexResult shape)
+  let allowedBookIds: Set<string> | null = null;
+  if (tenantId) {
+    const entityBookIds = [...new Set(
+      entities.flatMap((e: any) => (e.books || []).map((b: any) => b.book_id).filter(Boolean)),
+    )];
+    if (entityBookIds.length > 0) {
+      const allowedBooks = await db.collection('books')
+        .find({ id: { $in: entityBookIds }, tenantId }, { projection: { id: 1 } })
+        .toArray();
+      allowedBookIds = new Set(allowedBooks.map((b: any) => b.id));
+    } else {
+      allowedBookIds = new Set();
+    }
+  }
+
   const results: IndexResult[] = [];
   for (const entity of entities) {
     for (const book of (entity.books || []).slice(0, 2)) { // top 2 books per entity
+      if (allowedBookIds && !allowedBookIds.has(book.book_id)) {
+        continue;
+      }
       results.push({
         type: entity.type === 'person' ? 'person' : entity.type === 'place' ? 'place' : 'concept',
         term: entity.name,
@@ -315,6 +367,7 @@ async function searchIndex(db: any, query: string, limit: number) {
     const books = await db.collection('books').find({
       'index.generatedAt': { $exists: true },
       visible: true,
+      ...(tenantId ? { tenantId } : {}),
       $or: [
         { 'index.concepts.term': queryRegex },
         { 'index.people.term': queryRegex },
@@ -369,7 +422,7 @@ async function searchIndex(db: any, query: string, limit: number) {
   return { results, total: results.length, hasMore: results.length >= limit };
 }
 
-async function searchGallery(db: any, query: string, queryRegex: RegExp, limit: number): Promise<{ results: GalleryResult[]; total: number }> {
+async function searchGallery(db: any, query: string, queryRegex: RegExp, limit: number, tenantId?: string): Promise<{ results: GalleryResult[]; total: number }> {
   try {
     let images;
     try {
@@ -388,6 +441,7 @@ async function searchGallery(db: any, query: string, queryRegex: RegExp, limit: 
               minimumShouldMatch: 1,
               filter: [
                 { range: { path: 'gallery_quality', gte: 0.5 } },
+                ...(tenantId ? [{ equals: { path: 'tenantId', value: tenantId } }] : []),
               ],
             },
           },
@@ -400,6 +454,7 @@ async function searchGallery(db: any, query: string, queryRegex: RegExp, limit: 
       images = await db.collection('gallery_images')
         .find(
           {
+            ...(tenantId ? { tenantId } : {}),
             gallery_quality: { $gte: 0.5 },
             extracted_url: { $ne: null },
             $or: [

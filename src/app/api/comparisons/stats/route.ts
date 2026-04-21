@@ -1,5 +1,6 @@
 import { NextRequest, NextResponse } from 'next/server';
 import { getReadDb } from '@/lib/mongodb';
+import { getTenantContextFromRequest } from '@/lib/tenant-context';
 import { withAuth } from '@/lib/auth-helpers';
 
 // GET /api/comparisons/stats - Get win rates between experiments
@@ -9,6 +10,7 @@ export const GET = withAuth(async (request, session) => {
     const { searchParams } = new URL(request.url);
     const experimentA = searchParams.get('experiment_a');
     const experimentB = searchParams.get('experiment_b');
+    const { id: tenantId } = getTenantContextFromRequest(request);
 
     if (!experimentA || !experimentB) {
       return NextResponse.json(
@@ -17,12 +19,17 @@ export const GET = withAuth(async (request, session) => {
       );
     }
 
+    if (!tenantId) {
+      return NextResponse.json({ error: 'Tenant not found' }, { status: 400 });
+    }
+
     // Get all comparisons between these experiments
     const comparisons = await db
       .collection('comparisons')
       .find({
         experiment_a_id: experimentA,
         experiment_b_id: experimentB,
+        tenantId,
       })
       .toArray();
 

@@ -1,5 +1,6 @@
 import { NextRequest, NextResponse } from 'next/server';
 import { getReadDb } from '@/lib/mongodb';
+import { getTenantContextFromRequest } from '@/lib/tenant-context';
 
 export const maxDuration = 15;
 export const dynamic = 'force-dynamic';
@@ -129,6 +130,11 @@ export async function GET(request: NextRequest) {
     const count = Math.min(parseInt(searchParams.get('count') || '10'), 50);
     const language = searchParams.get('language');
     const topic = searchParams.get('topic');
+    const { id: tenantId } = getTenantContextFromRequest(request);
+
+    if (!tenantId) {
+      return NextResponse.json({ error: 'Unauthorized' }, { status: 403 });
+    }
 
     // If no topic specified and no count, return available topics
     if (searchParams.get('topics') === 'true') {
@@ -142,7 +148,7 @@ export async function GET(request: NextRequest) {
     if (topic && TOPICS[topic]) {
       const collSlugs = TOPICS[topic].collections;
       const collections = await db.collection('collections')
-        .find({ slug: { $in: collSlugs } })
+        .find({ slug: { $in: collSlugs }, tenantId })
         .project({ 'books': 1 })
         .toArray();
       topicBookIds = collections.flatMap(c => (c.books || []).map((b: { book_id?: string }) => b.book_id)).filter(Boolean);
@@ -153,6 +159,7 @@ export async function GET(request: NextRequest) {
 
     // Build query — find pages with <term> tags that also have adjacent <note> or <gloss>
     const query: Record<string, unknown> = {
+      tenantId,
       'translation.data': { $regex: '<term>.*?</term>\\s*<(?:note|gloss)>' },
     };
     if (topicBookIds) {
@@ -170,6 +177,7 @@ export async function GET(request: NextRequest) {
     // Also try pages with inline definitions (term; definition pattern)
     if (pages.length < count * 3) {
       const inlineQuery: Record<string, unknown> = {
+        tenantId,
         'translation.data': { $regex: '<term>[^<]*[:;][^<]*</term>' },
       };
       if (topicBookIds) {
@@ -221,7 +229,7 @@ export async function GET(request: NextRequest) {
     // Enrich with book metadata
     const bookIds = [...new Set(selected.map(t => t.bookId))];
     const books = await db.collection('books')
-      .find({ id: { $in: bookIds } })
+      .find({ id: { $in: bookIds }, tenantId })
       .project({ id: 1, title: 1, author: 1, date: 1, language: 1, slug: 1 })
       .toArray();
     const bookMap = new Map(books.map(b => [b.id as string, b]));

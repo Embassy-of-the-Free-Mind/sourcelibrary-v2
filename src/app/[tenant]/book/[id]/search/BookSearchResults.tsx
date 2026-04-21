@@ -3,8 +3,9 @@
 import { useState, useEffect, useRef, useCallback } from 'react';
 import { Search, FileText, Languages, Loader2, ArrowLeft, X } from 'lucide-react';
 import Link from 'next/link';
-import { useRouter } from 'next/navigation';
+import { useRouter, useParams } from 'next/navigation';
 import HighlightedText from '@/components/search/HighlightedText';
+import { tenantBookUrl } from '@/lib/slugify';
 
 interface SearchMatch {
   field: 'ocr' | 'translation';
@@ -33,10 +34,13 @@ interface Props {
   bookTitle: string;
   backUrl: string;
   initialQuery: string;
+  tenant?: string;
 }
 
-export default function BookSearchResults({ bookId, bookTitle, backUrl, initialQuery }: Props) {
+export default function BookSearchResults({ bookId, bookTitle, backUrl, initialQuery, tenant }: Props) {
   const router = useRouter();
+  const params = useParams<{ tenant: string }>();
+  const tenantSlug = tenant || params.tenant;
   const [query, setQuery] = useState(initialQuery);
   const [results, setResults] = useState<SearchResult[]>([]);
   const [isSearching, setIsSearching] = useState(false);
@@ -91,11 +95,11 @@ export default function BookSearchResults({ bookId, bookTitle, backUrl, initialQ
   const filteredResults = fieldFilter === 'all'
     ? results
     : results
-        .map(r => ({
-          ...r,
-          matches: r.matches.filter(m => m.field === fieldFilter)
-        }))
-        .filter(r => r.matches.length > 0);
+      .map(r => ({
+        ...r,
+        matches: r.matches.filter(m => m.field === fieldFilter)
+      }))
+      .filter(r => r.matches.length > 0);
 
   return (
     <>
@@ -148,22 +152,20 @@ export default function BookSearchResults({ bookId, bookTitle, backUrl, initialQ
           <div className="flex items-center gap-1 rounded-md bg-stone-100 p-0.5">
             <button
               onClick={() => setFieldFilter('all')}
-              className={`px-2.5 py-1 rounded text-xs font-medium transition-colors ${
-                fieldFilter === 'all'
+              className={`px-2.5 py-1 rounded text-xs font-medium transition-colors ${fieldFilter === 'all'
                   ? 'bg-white text-stone-900 shadow-sm'
                   : 'text-stone-500 hover:text-stone-700'
-              }`}
+                }`}
             >
               All
             </button>
             {ocrPages > 0 && (
               <button
                 onClick={() => setFieldFilter('ocr')}
-                className={`px-2.5 py-1 rounded text-xs font-medium transition-colors flex items-center gap-1 ${
-                  fieldFilter === 'ocr'
+                className={`px-2.5 py-1 rounded text-xs font-medium transition-colors flex items-center gap-1 ${fieldFilter === 'ocr'
                     ? 'bg-white text-stone-900 shadow-sm'
                     : 'text-stone-500 hover:text-stone-700'
-                }`}
+                  }`}
               >
                 <FileText className="w-3 h-3 text-blue-600" />
                 OCR ({ocrPages})
@@ -172,11 +174,10 @@ export default function BookSearchResults({ bookId, bookTitle, backUrl, initialQ
             {translationPages > 0 && (
               <button
                 onClick={() => setFieldFilter('translation')}
-                className={`px-2.5 py-1 rounded text-xs font-medium transition-colors flex items-center gap-1 ${
-                  fieldFilter === 'translation'
+                className={`px-2.5 py-1 rounded text-xs font-medium transition-colors flex items-center gap-1 ${fieldFilter === 'translation'
                     ? 'bg-white text-stone-900 shadow-sm'
                     : 'text-stone-500 hover:text-stone-700'
-                }`}
+                  }`}
               >
                 <Languages className="w-3 h-3 text-status-success" />
                 Translation ({translationPages})
@@ -201,7 +202,7 @@ export default function BookSearchResults({ bookId, bookTitle, backUrl, initialQ
           {filteredResults.map((result) => (
             <Link
               key={result.pageId}
-              href={`/book/${bookId}/page/${result.pageId}?highlight=${encodeURIComponent(query.trim())}`}
+              href={tenantBookUrl({ id: bookId }, tenantSlug) + `/page/${result.pageId}?highlight=${encodeURIComponent(query.trim())}`}
               className="block bg-white rounded-lg border border-stone-200 hover:border-stone-300 hover:shadow-sm transition-all px-5 py-4"
             >
               <div className="flex items-center gap-2 mb-2">

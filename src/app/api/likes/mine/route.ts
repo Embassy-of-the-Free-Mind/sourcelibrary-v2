@@ -8,6 +8,7 @@ import { NextRequest, NextResponse } from 'next/server';
 import { getReadDb } from '@/lib/mongodb';
 import { LikeTargetType } from '@/lib/types';
 import { buildCropUrl } from '@/lib/social-image-selector';
+import { getTenantContextFromRequest } from '@/lib/tenant-context';
 
 /**
  * GET /api/likes/mine
@@ -21,8 +22,13 @@ import { buildCropUrl } from '@/lib/social-image-selector';
 export async function GET(request: NextRequest) {
   try {
     const { searchParams } = new URL(request.url);
+    const tenantContext = getTenantContextFromRequest(request.headers);
     const visitorId = searchParams.get('visitor_id');
     const targetType = searchParams.get('type') as LikeTargetType | null;
+
+    if (tenantContext.slug && !tenantContext.id) {
+      return NextResponse.json({ items: [], total: 0 });
+    }
 
     if (!visitorId) {
       return NextResponse.json({ error: 'visitor_id is required' }, { status: 400 });
@@ -34,9 +40,10 @@ export async function GET(request: NextRequest) {
     const limit = Math.min(parseInt(searchParams.get('limit') || '100'), 5000);
 
     const db = await getReadDb();
+    const tenantFilter = tenantContext.id ? { tenantId: tenantContext.id } : {};
 
     const myLikes = await db.collection('likes')
-      .find({ visitor_id: visitorId, target_type: targetType })
+      .find({ visitor_id: visitorId, target_type: targetType, ...tenantFilter })
       .project({ target_id: 1, created_at: 1 })
       .sort({ created_at: -1 })
       .limit(limit)
@@ -50,7 +57,7 @@ export async function GET(request: NextRequest) {
 
     // Get like counts for each target
     const countPipeline = [
-      { $match: { target_type: targetType, target_id: { $in: targetIds } } },
+      { $match: { target_type: targetType, target_id: { $in: targetIds }, ...tenantFilter } },
       { $group: { _id: '$target_id', count: { $sum: 1 } } },
     ];
     const counts = await db.collection('likes').aggregate(countPipeline).toArray();
@@ -58,14 +65,14 @@ export async function GET(request: NextRequest) {
 
     if (targetType === 'book') {
       const booksData = await db.collection('books').find(
-        { id: { $in: targetIds } },
+        { id: { $in: targetIds }, ...tenantFilter },
         { projection: { id: 1, title: 1, display_title: 1, author: 1, year: 1, published: 1, language: 1, thumbnail_blob: 1, cover_image: 1 } }
       ).toArray();
       const booksMap = new Map(booksData.map(b => [b.id, b]));
 
       // Get top 3 extracted illustrations per book
       const galleryImages = await db.collection('gallery_images').aggregate([
-        { $match: { book_id: { $in: targetIds }, gallery_quality: { $gte: 0.6 }, extracted_url: { $exists: true, $ne: null } } },
+        { $match: { book_id: { $in: targetIds }, gallery_quality: { $gte: 0.6 }, extracted_url: { $exists: true, $ne: null }, ...tenantFilter } },
         { $sort: { gallery_quality: -1 } },
         { $group: { _id: '$book_id', images: { $push: { url: '$extracted_url', description: '$description', type: '$type' } } } },
         { $project: { images: { $slice: ['$images', 3] } } },
@@ -77,7 +84,7 @@ export async function GET(request: NextRequest) {
       let thumbMap = new Map<string, string>();
       if (booksWithoutGallery.length > 0) {
         const thumbnailPages = await db.collection('pages').find(
-          { book_id: { $in: booksWithoutGallery }, page_number: 1 },
+          { book_id: { $in: booksWithoutGallery }, page_number: 1, ...tenantFilter },
           { projection: { book_id: 1, thumbnail_blob: 1, archived_photo: 1, cropped_photo: 1, photo: 1 } }
         ).toArray();
         thumbMap = new Map(thumbnailPages.map(p => [p.book_id, p.archived_photo || p.cropped_photo || p.photo || p.thumbnail_blob]));
@@ -108,14 +115,14 @@ export async function GET(request: NextRequest) {
 
     if (targetType === 'page') {
       const pagesData = await db.collection('pages').find(
-        { id: { $in: targetIds } },
+        { id: { $in: targetIds }, ...tenantFilter },
         { projection: { id: 1, book_id: 1, page_number: 1, 'translation.data': 1, 'ocr.data': 1, thumbnail_blob: 1, archived_photo: 1, cropped_photo: 1, photo: 1 } }
       ).toArray();
       const pagesMap = new Map(pagesData.map(p => [p.id, p]));
 
       const bookIds = [...new Set(pagesData.map(p => p.book_id))];
       const booksData = await db.collection('books').find(
-        { id: { $in: bookIds } },
+        { id: { $in: bookIds }, ...tenantFilter },
         { projection: { id: 1, title: 1, display_title: 1, author: 1, year: 1 } }
       ).toArray();
       const booksMap = new Map(booksData.map(b => [b.id, b]));
@@ -154,14 +161,14 @@ export async function GET(request: NextRequest) {
 
       const pageIds = [...new Set(parsedItems.map(p => p.pageId))];
       const pagesData = await db.collection('pages').find(
-        { id: { $in: pageIds } },
+        { id: { $in: pageIds }, ...tenantFilter },
         { projection: { id: 1, book_id: 1, page_number: 1, photo_original: 1, cropped_photo: 1, archived_photo: 1, detected_images: 1 } }
       ).toArray();
       const pagesMap = new Map(pagesData.map(p => [p.id, p]));
 
       const bookIds = [...new Set(pagesData.map(p => p.book_id))];
       const booksData = await db.collection('books').find(
-        { id: { $in: bookIds } },
+        { id: { $in: bookIds }, ...tenantFilter },
         { projection: { id: 1, title: 1, author: 1, year: 1 } }
       ).toArray();
       const booksMap = new Map(booksData.map(b => [b.id, b]));

@@ -1,4 +1,7 @@
+'use client';
+
 import Link from 'next/link';
+import { useParams } from 'next/navigation';
 import { Wand2, ArrowUpDown, Scissors, X, CheckCircle2, Loader2 } from 'lucide-react';
 import DownloadButton from '@/components/ui/DownloadButton';
 import type { Job } from '@/lib/types/job';
@@ -36,6 +39,9 @@ export default function BookPagesActions({
   onExitReorder,
   onSaveOrder
 }: BookPagesActionsProps) {
+  const params = useParams<{ tenant: string }>();
+  const tenantPrefix = params?.tenant ? `/${params.tenant}` : '';
+
   return (
     <div className="flex items-center gap-2">
       {!batchMode && !reorderMode && !currentJob && !checkingJob ? (
@@ -55,7 +61,7 @@ export default function BookPagesActions({
             Reorder
           </button>
           <Link
-            href={`/book/${bookId}/split`}
+            href={`${tenantPrefix}/book/${bookId}/split`}
             className="flex items-center gap-2 px-4 py-2 bg-stone-100 text-stone-700 rounded-lg hover:bg-stone-200 transition-colors text-sm font-medium"
           >
             <Scissors className="w-4 h-4" />

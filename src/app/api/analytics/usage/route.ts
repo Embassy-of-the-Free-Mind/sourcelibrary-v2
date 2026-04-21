@@ -1,5 +1,6 @@
-import { NextResponse } from 'next/server';
+import { NextRequest, NextResponse } from 'next/server';
 import { getDb } from '@/lib/mongodb';
+import { getTenantContextFromRequest } from '@/lib/tenant-context';
 import { withAuth } from '@/lib/auth-helpers';
 import { supabase } from '@/lib/supabase';
 
@@ -9,13 +10,18 @@ export const maxDuration = 30;
 const cache = new Map<number, { data: any; timestamp: number }>();
 const CACHE_TTL_MS = 60 * 1000; // 1 minute (Supabase queries are fast)
 
-export const GET = withAuth(async (request, session) => {
+export const GET = withAuth(async (request: NextRequest, session) => {
   try {
     const { searchParams } = new URL(request.url);
     const days = parseInt(searchParams.get('days') || '30', 10);
+    const { id: tenantId } = getTenantContextFromRequest(request);
+
+    if (!tenantId) {
+      return NextResponse.json({ error: 'Tenant not found' }, { status: 400 });
+    }
 
     // Return cached result if fresh
-    const cached = cache.get(days);
+    const cached = cache.get(`${days}-${tenantId}`);
     if (cached && (Date.now() - cached.timestamp) < CACHE_TTL_MS) {
       return NextResponse.json(cached.data);
     }
@@ -30,7 +36,7 @@ export const GET = withAuth(async (request, session) => {
 
       // 2. Recent books (fast find with projection + index on created_at)
       db.collection('books')
-        .find({ created_at: { $gte: cutoffDate } })
+        .find({ tenantId, created_at: { $gte: cutoffDate } })
         .sort({ created_at: -1 })
         .limit(10)
         .project({ title: 1, author: 1, created_at: 1, pages_count: 1 })

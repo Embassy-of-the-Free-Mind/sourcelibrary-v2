@@ -24,6 +24,7 @@ import {
   type GalleryItem,
   type Collection,
 } from '@/lib/api-client';
+import { tenantBookUrl } from '@/lib/slugify';
 import HighlightedText from '@/components/search/HighlightedText';
 import { SEARCH_TYPE_STYLES, type SearchIndexType } from '@/lib/style-constants';
 import { BookLoader } from '@/components/ui/BookLoader';
@@ -132,7 +133,7 @@ export default function SearchPage() {
           ...langData.languages.map((l: any) => ({ value: l.code, label: `${l.name} (${l.book_count})` })),
         ]);
       }
-    }).catch(() => {});
+    }).catch(() => { });
 
     categoriesApi.list().then((catData) => {
       if (catData.categories) {
@@ -143,13 +144,13 @@ export default function SearchPage() {
             .map((c: any) => ({ value: c.id, label: `${c.icon ? c.icon + ' ' : ''}${c.name} (${c.book_count})`, icon: c.icon })),
         ]);
       }
-    }).catch(() => {});
+    }).catch(() => { });
 
     collectionsApi.list().then((colData) => {
       if (colData.collections) {
         setCollectionsList(colData.collections);
       }
-    }).catch(() => {});
+    }).catch(() => { });
   }, []);
 
   // AI-assisted search — start streaming immediately when user searches
@@ -199,7 +200,7 @@ export default function SearchPage() {
       () => setAiStreaming(false),
     );
     aiAbortRef.current = abort;
-  // eslint-disable-next-line react-hooks/exhaustive-deps
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [bookResults]);
 
   const performSearch = useCallback(async (q: string, mode: ViewMode = viewMode, pageOffset = 0) => {
@@ -325,7 +326,7 @@ export default function SearchPage() {
     } finally {
       setLoading(false);
     }
-  // eslint-disable-next-line react-hooks/exhaustive-deps
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [viewMode, indexType, language, category, dateFrom, dateTo, hasDoi, hasTranslation, firstTranslation, library, sortBy, resultsPerPage]);
 
   const updateUrl = useCallback((q: string, mode: ViewMode, pageOffset = 0) => {
@@ -372,7 +373,7 @@ export default function SearchPage() {
         startAiStream(query);
       }
     }
-  // eslint-disable-next-line react-hooks/exhaustive-deps
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [viewMode, indexType, language, category, dateFrom, dateTo, hasDoi, hasTranslation, firstTranslation, library, sortBy, offset, performSearch, updateUrl]);
 
   // Browse mode: fetch books when no query
@@ -426,7 +427,7 @@ export default function SearchPage() {
       performBrowse();
       updateUrl('', viewMode, offset);
     }
-  // eslint-disable-next-line react-hooks/exhaustive-deps
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [isBrowseMode, language, category, collection, library, browseSortBy, offset, firstTranslation, hasTranslation, viewMode]);
 
   // Browse gallery: load images when in browse mode + images tab
@@ -453,7 +454,7 @@ export default function SearchPage() {
       performBrowseGallery();
       updateUrl('', 'images', offset);
     }
-  // eslint-disable-next-line react-hooks/exhaustive-deps
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [isBrowseMode, viewMode, offset, resultsPerPage]);
 
   // Fuzzy suggestions on zero results
@@ -569,24 +570,23 @@ export default function SearchPage() {
           <div className="mt-3 flex gap-1 border-b border-border-light -mx-4 px-4">
             {(isBrowseMode
               ? [
-                  { mode: 'unified' as ViewMode, label: 'Books', icon: Book },
-                  { mode: 'images' as ViewMode, label: 'Images', icon: ImageIcon },
-                ]
+                { mode: 'unified' as ViewMode, label: 'Books', icon: Book },
+                { mode: 'images' as ViewMode, label: 'Images', icon: ImageIcon },
+              ]
               : [
-                  { mode: 'unified' as ViewMode, label: 'All', icon: Search },
-                  { mode: 'books' as ViewMode, label: 'Books', icon: Book },
-                  { mode: 'index' as ViewMode, label: 'Index', icon: Lightbulb },
-                  { mode: 'images' as ViewMode, label: 'Images', icon: ImageIcon },
-                ]
+                { mode: 'unified' as ViewMode, label: 'All', icon: Search },
+                { mode: 'books' as ViewMode, label: 'Books', icon: Book },
+                { mode: 'index' as ViewMode, label: 'Index', icon: Lightbulb },
+                { mode: 'images' as ViewMode, label: 'Images', icon: ImageIcon },
+              ]
             ).map(({ mode, label, icon: Icon }) => (
               <button
                 key={mode}
                 onClick={() => { setViewMode(mode); setOffset(0); }}
-                className={`flex items-center gap-1.5 px-4 py-2.5 text-sm font-medium border-b-2 transition-colors ${
-                  viewMode === mode
+                className={`flex items-center gap-1.5 px-4 py-2.5 text-sm font-medium border-b-2 transition-colors ${viewMode === mode
                     ? 'border-accent-rust text-accent-rust'
                     : 'border-transparent text-muted hover:text-secondary hover:border-border-medium'
-                }`}
+                  }`}
               >
                 <Icon className="w-4 h-4" />
                 {label}
@@ -612,11 +612,10 @@ export default function SearchPage() {
                   <button
                     key={type.value}
                     onClick={() => { setIndexType(type.value); setOffset(0); }}
-                    className={`px-3 py-1.5 rounded-lg text-sm flex items-center gap-1.5 transition-colors ${
-                      indexType === type.value
+                    className={`px-3 py-1.5 rounded-lg text-sm flex items-center gap-1.5 transition-colors ${indexType === type.value
                         ? 'bg-accent-violet/12 text-accent-violet border border-accent-violet/30'
                         : 'bg-warm text-secondary border border-transparent hover:bg-border-light'
-                    }`}
+                      }`}
                   >
                     <Icon className="w-3.5 h-3.5" />
                     {type.label}
@@ -861,11 +860,10 @@ export default function SearchPage() {
               <div className="flex flex-wrap gap-2 mb-6">
                 <button
                   onClick={() => { setCollection(''); setOffset(0); }}
-                  className={`px-4 py-2 rounded-full text-sm font-medium transition-colors ${
-                    !collection
+                  className={`px-4 py-2 rounded-full text-sm font-medium transition-colors ${!collection
                       ? 'bg-accent-rust text-white'
                       : 'bg-warm text-secondary hover:bg-accent-rust/10 hover:text-accent-rust border border-border-light'
-                  }`}
+                    }`}
                 >
                   All books
                   {!collection && browseTotal > 0 && (
@@ -876,11 +874,10 @@ export default function SearchPage() {
                   <button
                     key={col.slug}
                     onClick={() => { setCollection(col.slug); setOffset(0); }}
-                    className={`px-4 py-2 rounded-full text-sm font-medium transition-colors ${
-                      collection === col.slug
+                    className={`px-4 py-2 rounded-full text-sm font-medium transition-colors ${collection === col.slug
                         ? 'bg-accent-rust text-white'
                         : 'bg-warm text-secondary hover:bg-accent-rust/10 hover:text-accent-rust border border-border-light'
-                    }`}
+                      }`}
                   >
                     {col.name}
                     <span className={`ml-1.5 ${collection === col.slug ? 'text-white/80' : 'text-muted'}`}>
@@ -972,12 +969,12 @@ export default function SearchPage() {
         {query.length >= 3 && (aiStreaming || aiNarration) && (
           <div className="mb-6 px-4 py-3 bg-warm rounded-lg border border-border-light">
             <p className="text-sm text-secondary italic leading-relaxed"
-               dangerouslySetInnerHTML={{
-                 __html: aiNarration
-                   .replace(/&/g, '&amp;').replace(/</g, '&lt;').replace(/>/g, '&gt;')
-                   .replace(/\*([^*]+)\*/g, '<em>$1</em>')
-                   + (aiStreaming ? '<span class="inline-block w-1.5 h-4 bg-accent-rust/40 animate-pulse ml-0.5 align-text-bottom"></span>' : '')
-               }}
+              dangerouslySetInnerHTML={{
+                __html: aiNarration
+                  .replace(/&/g, '&amp;').replace(/</g, '&lt;').replace(/>/g, '&gt;')
+                  .replace(/\*([^*]+)\*/g, '<em>$1</em>')
+                  + (aiStreaming ? '<span class="inline-block w-1.5 h-4 bg-accent-rust/40 animate-pulse ml-0.5 align-text-bottom"></span>' : '')
+              }}
             />
             {aiTerms.length > 0 && (
               <div className="flex flex-wrap gap-1.5 mt-2">
@@ -1104,7 +1101,7 @@ export default function SearchPage() {
                 <div className="space-y-3">
                   {/* Books first */}
                   {bookResults.slice(0, PREVIEW_BOOKS).map((result) => (
-                    <BookResultCard key={result.id} result={result} query={query} />
+                    <BookResultCard key={result.id} result={result} query={query} tenant={tenant} />
                   ))}
                   {bookTotal > PREVIEW_BOOKS && (
                     <button onClick={() => drillInto('books')} className="w-full py-3 bg-accent-rust/8 text-accent-rust font-medium rounded-xl hover:bg-accent-rust/15 transition-colors flex items-center justify-center gap-1.5">
@@ -1114,7 +1111,7 @@ export default function SearchPage() {
 
                   {/* Index entries after books */}
                   {indexResults.slice(0, PREVIEW_INDEX).map((result, idx) => (
-                    <IndexResultCard key={`${result.book_id}-${result.type}-${idx}`} result={result} query={query} />
+                    <IndexResultCard key={`${result.book_id}-${result.type}-${idx}`} result={result} query={query} tenant={tenant} />
                   ))}
                   {indexTotal > PREVIEW_INDEX && (
                     <button onClick={() => drillInto('index')} className="w-full py-3 bg-accent-violet/8 text-accent-violet font-medium rounded-xl hover:bg-accent-violet/15 transition-colors flex items-center justify-center gap-1.5">
@@ -1158,7 +1155,7 @@ export default function SearchPage() {
             {loading && <div className="py-4"><BookLoader size="xs" /></div>}
             <div className="space-y-3">
               {bookResults.map((result) => (
-                <BookResultCard key={result.id} result={result} query={query} />
+                <BookResultCard key={result.id} result={result} query={query} tenant={tenant} />
               ))}
             </div>
             <Pagination total={bookTotal} offset={offset} setOffset={setOffset} loading={loading} pageSize={resultsPerPage} />
@@ -1176,7 +1173,7 @@ export default function SearchPage() {
             {loading && <div className="py-4"><BookLoader size="xs" /></div>}
             <div className="space-y-3">
               {indexResults.map((result, idx) => (
-                <IndexResultCard key={`${result.book_id}-${result.type}-${idx}`} result={result} query={query} />
+                <IndexResultCard key={`${result.book_id}-${result.type}-${idx}`} result={result} query={query} tenant={tenant} />
               ))}
             </div>
           </>
@@ -1220,7 +1217,7 @@ export default function SearchPage() {
                 return (
                   <Link
                     key={result.id}
-                    href={result.type === 'page' ? `/book/${result.slug || result.book_id}/page-number/${result.page_number}` : `/book/${result.slug || result.book_id}`}
+                    href={result.type === 'page' ? tenantBookUrl({ slug: result.slug, id: result.book_id }, tenant) + `/page-number/${result.page_number}` : tenantBookUrl({ slug: result.slug, id: result.book_id }, tenant)}
                     className="flex items-start gap-3 p-3 bg-warm rounded-lg hover:bg-warm-hover transition-colors"
                   >
                     {cover && (
@@ -1252,14 +1249,18 @@ export default function SearchPage() {
 
 // ==================== RESULT CARDS ====================
 
-function BookResultCard({ result, query }: { result: SearchResult; query: string }) {
+function BookResultCard({ result, query, tenant }: { result: SearchResult; query: string; tenant?: string }) {
   const cover = getBookThumbnailUrl({ thumbnail: result.thumbnail, thumbnail_blob: (result as any).thumbnail_blob });
   const text = result.snippet || result.summary;
   const [imgError, setImgError] = useState(false);
 
+  const href = result.type === 'page'
+    ? tenantBookUrl({ slug: result.slug, id: result.book_id }, tenant) + `/page-number/${result.page_number}`
+    : tenantBookUrl({ slug: result.slug, id: result.book_id }, tenant);
+
   return (
     <Link
-      href={result.type === 'page' ? `/book/${result.slug || result.book_id}/page-number/${result.page_number}` : `/book/${result.slug || result.book_id}`}
+      href={href}
       className="block bg-white rounded-xl border border-border-light p-4 hover:border-accent-rust/30 hover:shadow-md transition-all"
     >
       <div className="flex items-start gap-4">
@@ -1312,18 +1313,19 @@ function BookResultCard({ result, query }: { result: SearchResult; query: string
   );
 }
 
-function IndexResultCard({ result, query }: { result: IndexSearchResult; query: string }) {
+function IndexResultCard({ result, query, tenant }: { result: IndexSearchResult; query: string; tenant?: string }) {
   const typeLabel = INDEX_TYPES.find(t => t.value === result.type)?.label || result.type;
   const isQuote = result.type === 'quote';
 
+  const href = isQuote && result.quote_page
+    ? tenantBookUrl({ slug: result.book_slug, id: result.book_id }, tenant) + `/guide?page=${result.quote_page}`
+    : result.pages && result.pages.length > 0
+      ? tenantBookUrl({ slug: result.book_slug, id: result.book_id }, tenant) + `/guide?page=${result.pages[0]}`
+      : tenantBookUrl({ slug: result.book_slug, id: result.book_id }, tenant);
+
   return (
     <Link
-      href={isQuote && result.quote_page
-        ? `/book/${result.book_slug || result.book_id}/guide?page=${result.quote_page}`
-        : result.pages && result.pages.length > 0
-        ? `/book/${result.book_slug || result.book_id}/guide?page=${result.pages[0]}`
-        : `/book/${result.book_slug || result.book_id}`
-      }
+      href={href}
       className="block bg-white rounded-xl border border-border-light p-4 hover:border-accent-violet/30 hover:shadow-md transition-all"
     >
       <div className="min-w-0">

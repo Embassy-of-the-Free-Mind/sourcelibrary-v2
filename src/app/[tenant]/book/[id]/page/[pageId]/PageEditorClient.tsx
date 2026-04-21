@@ -1,6 +1,7 @@
 'use client';
 
 import { useEffect, useState, useCallback, useRef, Suspense } from 'react';
+import { useParams } from 'next/navigation';
 import TranslationEditor from '@/components/pipeline/TranslationEditor';
 import VersionBanner from '@/components/ui/VersionBanner';
 import { useLoadingMetrics } from '@/hooks/useLoadingMetrics';
@@ -29,6 +30,8 @@ export default function PageEditorClient({
   const [pageList] = useState<Page[]>(initialPageList);
   const [currentPageId, setCurrentPageId] = useState<string>(initialPage.id);
   const [currentPage, setCurrentPage] = useState<Page>(initialPage);
+  const params = useParams<{ tenant: string }>();
+  const tenantPrefix = params?.tenant ? `/${params.tenant}` : '';
 
   // Version pinning: detect ?v= param for citation-pinned reading
   const [pinnedVersion, setPinnedVersion] = useState<string | null>(null);
@@ -75,7 +78,7 @@ export default function PageEditorClient({
         // Version not found — fall back to current
         setPinnedVersion(null);
       });
-  // eslint-disable-next-line react-hooks/exhaustive-deps
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
   // Re-fetch versioned content when navigating to a new page while version-pinned
@@ -105,7 +108,7 @@ export default function PageEditorClient({
 
   useEffect(() => {
     markLoaded();
-  // eslint-disable-next-line react-hooks/exhaustive-deps
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
   // Fetch a single page's full data, with cache
@@ -162,7 +165,7 @@ export default function PageEditorClient({
     if (currentIdx >= 0 && currentIdx < firstSubstantive) {
       handleNavigate(pageList[firstSubstantive].id);
     }
-  // eslint-disable-next-line react-hooks/exhaustive-deps
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
   // Prefetch nearby pages on initial mount
@@ -171,7 +174,7 @@ export default function PageEditorClient({
     if (idx >= 0) {
       prefetchAround(idx, pageList);
     }
-  // eslint-disable-next-line react-hooks/exhaustive-deps
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
   // When currentPageId changes (navigation), load that page's data
@@ -209,7 +212,7 @@ export default function PageEditorClient({
   const handleNavigate = useCallback((newPageId: string) => {
     setCurrentPageId(newPageId);
     const vSuffix = pinnedVersion ? `?v=${encodeURIComponent(pinnedVersion)}` : '';
-    window.history.pushState(null, '', `/book/${book.id}/page/${newPageId}${vSuffix}`);
+    window.history.pushState(null, '', `${tenantPrefix}/book/${book.id}/page/${newPageId}${vSuffix}`);
     window.scrollTo({ top: 0, behavior: 'instant' });
     // Notify embed.js host frame (no-op when not in an iframe)
     if (window.self !== window.top) {
@@ -240,11 +243,11 @@ export default function PageEditorClient({
   // When version-pinned, overlay the versioned translation onto the page object
   const displayPage = pinnedVersion && versionedTranslation != null
     ? {
-        ...currentPage,
-        translation: currentPage.translation
-          ? { ...currentPage.translation, data: versionedTranslation }
-          : { data: versionedTranslation, language: 'en', model: 'versioned' },
-      } as Page
+      ...currentPage,
+      translation: currentPage.translation
+        ? { ...currentPage.translation, data: versionedTranslation }
+        : { data: versionedTranslation, language: 'en', model: 'versioned' },
+    } as Page
     : currentPage;
 
   return (
@@ -261,7 +264,7 @@ export default function PageEditorClient({
           isCurrentVersion={versionEdition.isCurrentVersion}
           doi={versionEdition.doi}
           doiUrl={versionEdition.doiUrl}
-          bookUrl={`/book/${book.id}/page/${currentPageId}`}
+          bookUrl={`${tenantPrefix}/book/${book.id}/page/${currentPageId}`}
         />
       )}
 
@@ -271,8 +274,8 @@ export default function PageEditorClient({
         pages={pageList}
         currentIndex={currentIndex}
         onNavigate={handleNavigate}
-        onSave={pinnedVersion ? async () => {} : handleSave}
-        onRefresh={pinnedVersion ? async () => {} : async () => {
+        onSave={pinnedVersion ? async () => { } : handleSave}
+        onRefresh={pinnedVersion ? async () => { } : async () => {
           try {
             const pageData = await pagesApi.get(currentPageId);
             pageCacheRef.current.set(currentPageId, pageData);

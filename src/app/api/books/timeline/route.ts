@@ -1,5 +1,6 @@
 import { NextRequest, NextResponse } from 'next/server';
 import { getReadDb } from '@/lib/mongodb';
+import { getTenantContextFromRequest } from '@/lib/tenant-context';
 
 export const dynamic = 'force-dynamic';
 
@@ -9,11 +10,17 @@ export async function GET(request: NextRequest) {
     const decade = searchParams.get('decade');
     const language = searchParams.get('language') || '';
     const collection = searchParams.get('collection') || '';
+    const { id: tenantId } = getTenantContextFromRequest(request);
+
+    if (!tenantId) {
+      return NextResponse.json({ books: [], timeline: [] });
+    }
 
     const db = await getReadDb();
 
     // Base filter: has year, not hidden
     const baseMatch: Record<string, unknown> = {
+      tenantId,
       year: { $exists: true, $ne: null },
       visible: true,
       pages_count: { $gt: 0 },

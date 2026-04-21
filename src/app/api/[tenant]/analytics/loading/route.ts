@@ -1,0 +1,171 @@
+import { NextRequest, NextResponse } from 'next/server';
+import { getDb } from '@/lib/mongodb';
+import { LoadingMetric } from '@/lib/api-client';
+import { withAuth } from '@/lib/auth-helpers';
+import { anonymizeIp } from '@/lib/anonymize-ip';
+import { resolveTenantId } from '@/lib/tenant-context';
+
+interface AnalyticsPayload {
+  metrics: LoadingMetric[];
+}
+
+// Loading metrics are fire-and-forget — don't hold serverless slots during DB degradation
+const DB_TIMEOUT_MS = 3000;
+
+export async function POST(
+  request: NextRequest,
+  context: { params: Promise<{ tenant: string }> }
+) {
+  try {
+    const { tenant } = await context.params;
+    const tenantId = await resolveTenantId(tenant);
+    if (!tenantId) {
+      return NextResponse.json({ error: 'Tenant not found' }, { status: 400 });
+    }
+
+    const payload: AnalyticsPayload = await request.json();
+
+    if (!payload.metrics || !Array.isArray(payload.metrics)) {
+      return NextResponse.json(
+        { error: 'Invalid payload: metrics array required' },
+        { status: 400 }
+      );
+    }
+
+    // Add server-side metadata
+    const enrichedMetrics = payload.metrics.map((metric) => ({
+      ...metric,
+      tenantId,
+      received_at: new Date(),
+      user_agent: request.headers.get('user-agent') || 'unknown',
+      ip: anonymizeIp(request.headers.get('x-forwarded-for')?.split(',')[0]?.trim() || 'unknown'),
+    }));
+
+    const dbWrite = (async () => {
+      const db = await getDb();
+      await db.collection('loading_metrics').insertMany(enrichedMetrics);
+    })();
+
+    const timeout = new Promise<'timeout'>((resolve) =>
+      setTimeout(() => resolve('timeout'), DB_TIMEOUT_MS)
+    );
+
+    const result = await Promise.race([dbWrite, timeout]);
+    if (result === 'timeout') {
+      return NextResponse.json({ success: true, count: 0 });
+    }
+
+    return NextResponse.json({ success: true, count: enrichedMetrics.length });
+  } catch {
+    // Silently succeed — metrics must never error to the client
+    return NextResponse.json({ success: true, count: 0 });
+  }
+}
+
+// GET endpoint for viewing analytics summary
+export const GET = withAuth(async (request, session, context) => {
+  try {
+    const { tenant } = await context.params;
+    const tenantId = await resolveTenantId(tenant);
+    if (!tenantId) {
+      return NextResponse.json({ error: 'Tenant not found' }, { status: 400 });
+    }
+
+    const { searchParams } = new URL(request.url);
+    const metricName = searchParams.get('name');
+    const hours = parseInt(searchParams.get('hours') || '24', 10);
+
+    const db = await getDb();
+    const cutoff = Date.now() - hours * 60 * 60 * 1000;
+
+    const query: Record<string, unknown> = { tenantId, timestamp: { $gte: cutoff } };
+    if (metricName) {
+      query.name = metricName;
+    }
+
+    // Aggregate stats by metric name
+    const pipeline = [
+      { $match: query },
+      {
+        $group: {
+          _id: '$name',
+          count: { $sum: 1 },
+          avg_duration: { $avg: '$duration' },
+          min_duration: { $min: '$duration' },
+          max_duration: { $max: '$duration' },
+          p50: { $percentile: { input: '$duration', p: [0.5], method: 'approximate' } },
+          p95: { $percentile: { input: '$duration', p: [0.95], method: 'approximate' } },
+        },
+      },
+      { $sort: { count: -1 as const } },
+    ];
+
+    const stats = await db.collection('loading_metrics').aggregate(pipeline).toArray();
+
+    // Aggregate stats by source (blob vs IA) for image loading metrics
+    const sourceQuery = {
+      ...query,
+      name: { $in: ['page_thumbnail_load', 'book_card_image_load'] },
+      'metadata.source': { $exists: true },
+    };
+    const sourcePipeline = [
+      { $match: sourceQuery },
+      {
+        $group: {
+          _id: '$metadata.source',
+          count: { $sum: 1 },
+          avg_duration: { $avg: '$duration' },
+          min_duration: { $min: '$duration' },
+          max_duration: { $max: '$duration' },
+          p50: { $percentile: { input: '$duration', p: [0.5], method: 'approximate' } },
+          p95: { $percentile: { input: '$duration', p: [0.95], method: 'approximate' } },
+        },
+      },
+      { $sort: { _id: 1 as const } },
+    ];
+
+    const sourceStats = await db.collection('loading_metrics').aggregate(sourcePipeline).toArray();
+
+    // Get recent samples
+    const recentSamples = await db
+      .collection('loading_metrics')
+      .find(query)
+      .sort({ timestamp: -1 })
+      .limit(20)
+      .toArray();
+
+    return NextResponse.json({
+      stats: stats.map((s) => ({
+        name: s._id,
+        count: s.count,
+        avg: Math.round(s.avg_duration * 100) / 100,
+        min: Math.round(s.min_duration * 100) / 100,
+        max: Math.round(s.max_duration * 100) / 100,
+        p50: s.p50?.[0] ? Math.round(s.p50[0] * 100) / 100 : null,
+        p95: s.p95?.[0] ? Math.round(s.p95[0] * 100) / 100 : null,
+      })),
+      sourceStats: sourceStats.map((s) => ({
+        source: s._id || 'unknown',
+        count: s.count,
+        avg: Math.round(s.avg_duration * 100) / 100,
+        min: Math.round(s.min_duration * 100) / 100,
+        max: Math.round(s.max_duration * 100) / 100,
+        p50: s.p50?.[0] ? Math.round(s.p50[0] * 100) / 100 : null,
+        p95: s.p95?.[0] ? Math.round(s.p95[0] * 100) / 100 : null,
+      })),
+      recentSamples: recentSamples.map((s) => ({
+        name: s.name,
+        duration: Math.round(s.duration * 100) / 100,
+        timestamp: s.timestamp,
+        metadata: s.metadata,
+      })),
+      query: { hours, metricName },
+    });
+  } catch (error) {
+    console.error('Error fetching analytics:', error);
+    return NextResponse.json(
+      { error: 'Failed to fetch analytics' },
+      { status: 500 }
+    );
+  }
+});

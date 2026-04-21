@@ -49,6 +49,12 @@ function SourceBadge({ source }: { source: string }) {
   );
 }
 
+function getTenantSlug(): string {
+  if (typeof window === 'undefined') return '';
+  const slug = window.location.pathname.split('/')[1] || '';
+  return /^[a-z0-9-]+$/.test(slug) ? slug : '';
+}
+
 export default function RevisionHistory({ pageId, field, currentSource, editedBy, editedAt, model }: RevisionHistoryProps) {
   const [isOpen, setIsOpen] = useState(false);
   const [revisions, setRevisions] = useState<PageRevision[]>([]);
@@ -61,7 +67,8 @@ export default function RevisionHistory({ pageId, field, currentSource, editedBy
   useEffect(() => {
     if (!isOpen) return;
     setLoading(true);
-    fetch(`/api/pages/${pageId}/revisions?field=${field}&limit=20`)
+    const tenant = getTenantSlug();
+    fetch(`/api/${tenant}/pages/${pageId}/revisions?field=${field}&limit=20`)
       .then(r => r.json())
       .then(data => {
         setRevisions(data.revisions || []);
@@ -86,7 +93,8 @@ export default function RevisionHistory({ pageId, field, currentSource, editedBy
   async function handleRestore(revisionId: string) {
     setRestoring(revisionId);
     try {
-      const res = await fetch(`/api/pages/${pageId}/revisions/${revisionId}/restore`, {
+      const tenant = getTenantSlug();
+      const res = await fetch(`/api/${tenant}/pages/${pageId}/revisions/${revisionId}/restore`, {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify({ restoredBy: 'User' }),
@@ -218,7 +226,7 @@ export default function RevisionHistory({ pageId, field, currentSource, editedBy
                           background: 'var(--bg-warm)',
                           color: 'var(--text-secondary)',
                           maxHeight: '120px',
-                          }}
+                        }}
                       >
                         {truncate(rev.data, 500)}
                       </div>

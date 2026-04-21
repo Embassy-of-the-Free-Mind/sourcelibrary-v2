@@ -2,12 +2,16 @@
 
 import { useState, useEffect } from 'react';
 import Link from 'next/link';
+import { useParams } from 'next/navigation';
 import { RefreshCw, ExternalLink, AlertTriangle, CheckCircle, BarChart3 } from 'lucide-react';
 import { BookLoader } from '@/components/ui/BookLoader';
 import { qa } from '@/lib/api-client';
+import { tenantBookUrl } from '@/lib/slugify';
 import type { QASampleResponse } from '@/lib/api-client';
 
 export default function QASamplingPage() {
+  const params = useParams<{ tenant: string }>();
+  const tenant = params?.tenant;
   const [data, setData] = useState<QASampleResponse | null>(null);
   const [loading, setLoading] = useState(true);
   const [sampleSize, setSampleSize] = useState(50);
@@ -180,7 +184,7 @@ export default function QASamplingPage() {
                       <div className="flex-1 min-w-0">
                         <div className="flex items-center gap-2 mb-1">
                           <Link
-                            href={`/book/${sample.bookId}/page/${sample.pageId}`}
+                            href={tenantBookUrl({ id: sample.bookId }, tenant) + `/page/${sample.pageId}`}
                             className="font-medium text-accent-rust hover:text-accent-rust"
                           >
                             {sample.bookTitle} - Page {sample.pageNumber}
@@ -213,7 +217,7 @@ export default function QASamplingPage() {
                         </p>
                       </div>
                       <Link
-                        href={`/book/${sample.bookId}/page/${sample.pageId}`}
+                        href={tenantBookUrl({ id: sample.bookId }, tenant) + `/page/${sample.pageId}`}
                         className="flex-shrink-0 p-1.5 text-stone-400 hover:text-stone-600"
                       >
                         <ExternalLink className="w-4 h-4" />

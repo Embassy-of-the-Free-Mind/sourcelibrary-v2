@@ -1,7 +1,8 @@
 export const dynamic = 'force-dynamic';
 
-import { NextResponse } from 'next/server';
+import { NextRequest, NextResponse } from 'next/server';
 import { getReadDb } from '@/lib/mongodb';
+import { getTenantContextFromRequest } from '@/lib/tenant-context';
 
 /**
  * GET /api/scan/recent
@@ -9,12 +10,18 @@ import { getReadDb } from '@/lib/mongodb';
  * Returns books created via Mobile Scan, sorted by created_at desc.
  * Unauthenticated — only returns books with provider_name: 'Mobile Scan'.
  */
-export async function GET() {
+export async function GET(request: NextRequest) {
   try {
     const db = await getReadDb();
+    const { id: tenantId } = getTenantContextFromRequest(request);
+
+    if (!tenantId) {
+      return NextResponse.json({ books: [] });
+    }
 
     const books = await db.collection('books')
       .find({
+        tenantId,
         'image_source.provider': 'user_upload',
         'image_source.provider_name': 'Mobile Scan',
       })

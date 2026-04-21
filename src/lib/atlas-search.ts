@@ -4,6 +4,7 @@ export const BOOK_SEARCH_INDEX = 'books_search';
 export const PAGE_SEARCH_INDEX = 'pages_search';
 
 export interface BookSearchFilters {
+  tenantId?: string;
   language?: string;
   category?: string;
   yearExact?: number;

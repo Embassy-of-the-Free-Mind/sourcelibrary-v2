@@ -128,6 +128,19 @@ export function bookUrl(book: { slug?: string; id: string }): string {
 }
 
 /**
+ * Tenant-aware book URL construction.
+ * Use in tenant routes to keep navigation within the tenant path.
+ * Falls back to root URL if no tenant is provided.
+ */
+export function tenantBookUrl(
+  book: { slug?: string; id: string },
+  tenantSlug?: string | null
+): string {
+  const path = `/book/${book.slug || book.id}`;
+  return tenantSlug ? `/${tenantSlug}${path}` : path;
+}
+
+/**
  * Generate a URL for an author page.
  * Returns null for unknown/anonymous authors.
  */

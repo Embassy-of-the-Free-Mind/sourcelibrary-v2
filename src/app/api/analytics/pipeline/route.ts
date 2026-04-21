@@ -1,5 +1,6 @@
 import { NextRequest, NextResponse } from 'next/server';
 import { getDb } from '@/lib/mongodb';
+import { getTenantContextFromRequest } from '@/lib/tenant-context';
 import { withAuth } from '@/lib/auth-helpers';
 import { supabase } from '@/lib/supabase';
 
@@ -21,13 +22,18 @@ const CACHE_TTL_MS = 60 * 1000;
  * Query params:
  *   ?hours=24   — snapshot window (default 24)
  */
-export const GET = withAuth(async (request, session) => {
+export const GET = withAuth(async (request: NextRequest, session) => {
   try {
     const { searchParams } = new URL(request.url);
     const hours = Math.min(parseInt(searchParams.get('hours') || '24', 10), 720); // max 30 days
+    const { id: tenantId } = getTenantContextFromRequest(request);
+
+    if (!tenantId) {
+      return NextResponse.json({ error: 'Tenant not found' }, { status: 400 });
+    }
 
     // Check cache
-    const cacheKey = `pipeline-${hours}`;
+    const cacheKey = `pipeline-${hours}-${tenantId}`;
     if (pipelineCache && pipelineCache.key === cacheKey && Date.now() - pipelineCache.ts < CACHE_TTL_MS) {
       return NextResponse.json(pipelineCache.data);
     }

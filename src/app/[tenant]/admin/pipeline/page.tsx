@@ -86,9 +86,13 @@ export default function PipelineDashboard() {
 
   const fetchData = useCallback(async () => {
     try {
+      const tenant = typeof window !== 'undefined' ? (window.location.pathname.split('/')[1] || '') : '';
+      const pipelinePath = /^[a-z0-9-]+$/.test(tenant)
+        ? `/api/${tenant}/analytics/pipeline?hours=24`
+        : '/api/analytics/pipeline?hours=24';
       const [rtRes, plRes] = await Promise.all([
         fetch('/api/admin/realtime'),
-        fetch('/api/analytics/pipeline?hours=24'),
+        fetch(pipelinePath),
       ]);
       if (rtRes.ok) setRealtime(await rtRes.json());
       if (plRes.ok) setPipeline(await plRes.json());
@@ -277,7 +281,7 @@ export default function PipelineDashboard() {
                           width: `${Math.max(pct, 1)}%`,
                           background: isActive ? 'var(--accent-sage)'
                             : isFailed || isAttention ? 'var(--accent-rust)'
-                            : 'var(--border-medium)',
+                              : 'var(--border-medium)',
                         }}
                       />
                     </div>
@@ -369,30 +373,30 @@ export default function PipelineDashboard() {
                         {Object.entries(pipeline.cronHealth)
                           .sort(([, a], [, b]) => (b.failures || 0) - (a.failures || 0))
                           .map(([name, cron]) => (
-                          <tr key={name} className="border-t" style={{ borderColor: 'var(--border-light)' }}>
-                            <td className="py-1.5 pr-3 font-medium" style={{ color: 'var(--text-primary)' }}>
-                              {name.replace(/-/g, ' ')}
-                            </td>
-                            <td className="py-1.5 px-2 text-right whitespace-nowrap" style={{ color: 'var(--text-muted)' }}>
-                              {cron.lastRun ? timeAgo(cron.lastRun) : 'never'}
-                            </td>
-                            <td className="py-1.5 px-2 text-right tabular-nums" style={{ color: 'var(--text-muted)' }}>
-                              {cron.avgDuration ? `${(cron.avgDuration / 1000).toFixed(1)}s` : '-'}
-                            </td>
-                            <td className="py-1.5 px-2 text-right tabular-nums" style={{ color: 'var(--text-secondary)' }}>
-                              {cron.runsInPeriod}
-                            </td>
-                            <td
-                              className="py-1.5 px-2 text-right tabular-nums"
-                              style={{ color: cron.failures > 0 ? 'var(--accent-rust)' : 'var(--text-muted)' }}
-                            >
-                              {cron.failures}
-                            </td>
-                            <td className="py-1.5 pl-2 truncate max-w-[200px]" style={{ color: 'var(--text-faint)' }}>
-                              {cron.recentErrors?.[0] ? String(cron.recentErrors[0]).slice(0, 80) : '-'}
-                            </td>
-                          </tr>
-                        ))}
+                            <tr key={name} className="border-t" style={{ borderColor: 'var(--border-light)' }}>
+                              <td className="py-1.5 pr-3 font-medium" style={{ color: 'var(--text-primary)' }}>
+                                {name.replace(/-/g, ' ')}
+                              </td>
+                              <td className="py-1.5 px-2 text-right whitespace-nowrap" style={{ color: 'var(--text-muted)' }}>
+                                {cron.lastRun ? timeAgo(cron.lastRun) : 'never'}
+                              </td>
+                              <td className="py-1.5 px-2 text-right tabular-nums" style={{ color: 'var(--text-muted)' }}>
+                                {cron.avgDuration ? `${(cron.avgDuration / 1000).toFixed(1)}s` : '-'}
+                              </td>
+                              <td className="py-1.5 px-2 text-right tabular-nums" style={{ color: 'var(--text-secondary)' }}>
+                                {cron.runsInPeriod}
+                              </td>
+                              <td
+                                className="py-1.5 px-2 text-right tabular-nums"
+                                style={{ color: cron.failures > 0 ? 'var(--accent-rust)' : 'var(--text-muted)' }}
+                              >
+                                {cron.failures}
+                              </td>
+                              <td className="py-1.5 pl-2 truncate max-w-[200px]" style={{ color: 'var(--text-faint)' }}>
+                                {cron.recentErrors?.[0] ? String(cron.recentErrors[0]).slice(0, 80) : '-'}
+                              </td>
+                            </tr>
+                          ))}
                       </tbody>
                     </table>
                   </div>

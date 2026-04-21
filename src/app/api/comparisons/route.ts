@@ -1,5 +1,6 @@
 import { NextRequest, NextResponse } from 'next/server';
 import { getDb } from '@/lib/mongodb';
+import { getTenantContextFromRequest } from '@/lib/tenant-context';
 import crypto from 'crypto';
 import { withAuth } from '@/lib/auth-helpers';
 
@@ -11,8 +12,13 @@ export const GET = withAuth(async (request, session) => {
     const experimentA = searchParams.get('experiment_a');
     const experimentB = searchParams.get('experiment_b');
     const pageId = searchParams.get('page_id');
+    const { id: tenantId } = getTenantContextFromRequest(request);
 
-    const query: Record<string, unknown> = {};
+    if (!tenantId) {
+      return NextResponse.json({ comparisons: [] });
+    }
+
+    const query: Record<string, unknown> = { tenantId };
     if (experimentA) query.experiment_a_id = experimentA;
     if (experimentB) query.experiment_b_id = experimentB;
     if (pageId) query.page_id = pageId;
@@ -56,6 +62,11 @@ export const POST = withAuth(async (request, session) => {
       );
     }
 
+    const { id: tenantId } = getTenantContextFromRequest(request);
+    if (!tenantId) {
+      return NextResponse.json({ error: 'Tenant not found' }, { status: 400 });
+    }
+
     const db = await getDb();
 
     // Check if comparison already exists for this page/experiment pair
@@ -64,6 +75,7 @@ export const POST = withAuth(async (request, session) => {
       experiment_a_id,
       experiment_b_id,
       field,
+      tenantId,
     });
 
     if (existing) {
@@ -90,6 +102,7 @@ export const POST = withAuth(async (request, session) => {
       field,
       winner,
       notes: notes || '',
+      tenantId,
       created_at: new Date().toISOString(),
     };
 

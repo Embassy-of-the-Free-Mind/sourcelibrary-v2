@@ -1,5 +1,6 @@
-import { NextResponse } from 'next/server';
+import { NextRequest, NextResponse } from 'next/server';
 import { getReadDb } from '@/lib/mongodb';
+import { getTenantContextFromRequest } from '@/lib/tenant-context';
 
 export const dynamic = 'force-dynamic';
 export const maxDuration = 60;
@@ -9,13 +10,18 @@ export const maxDuration = 60;
  * Returns weekly book imports, OCR'd pages, and translated pages over time.
  * Uses book-level cached counts to avoid scanning the 900k+ pages collection.
  */
-export async function GET() {
+export async function GET(request: NextRequest) {
   try {
     const db = await getReadDb();
+    const { id: tenantId } = getTenantContextFromRequest(request);
+
+    if (!tenantId) {
+      return NextResponse.json({ booksByWeek: [], bookStats: [], totals: {} });
+    }
 
     // Book imports by week — small collection, fast
     const booksByWeek = await db.collection('books').aggregate([
-      { $match: { created_at: { $exists: true, $type: 'date' } } },
+      { $match: { tenantId, created_at: { $exists: true, $type: 'date' } } },
       {
         $group: {
           _id: {
@@ -30,7 +36,7 @@ export async function GET() {
     // Use book-level cached page counts instead of scanning pages collection.
     // These are refreshed by sync-page-counts cron every 6h.
     const bookStats = await db.collection('books').aggregate([
-      { $match: { created_at: { $exists: true, $type: 'date' } } },
+      { $match: { tenantId, created_at: { $exists: true, $type: 'date' } } },
       {
         $group: {
           _id: {
@@ -45,6 +51,7 @@ export async function GET() {
 
     // Current totals from book-level caches
     const totalsAgg = await db.collection('books').aggregate([
+      { $match: { tenantId } },
       {
         $group: {
           _id: null,

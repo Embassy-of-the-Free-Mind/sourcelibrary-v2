@@ -64,6 +64,21 @@ export async function isAdmin(): Promise<boolean> {
   return (ROLE_LEVEL[role] ?? 0) >= ROLE_LEVEL['admin'];
 }
 
+/**
+ * Legacy compatibility alias for older callsites.
+ * Inner circle maps to editor-level access in the new role model.
+ */
+export async function isInnerCircle(): Promise<boolean> {
+  const session = await getSession();
+  const role = (session?.user as any)?.role as Role;
+  return (ROLE_LEVEL[role] ?? 0) >= ROLE_LEVEL['editor'];
+}
+
+/**
+ * Legacy compatibility alias for older server-component guards.
+ */
+export const requireInnerCircle = () => requireRole('editor');
+
 // --- Dual-mode identity resolution for engagement APIs ---
 
 export interface ResolvedIdentity {

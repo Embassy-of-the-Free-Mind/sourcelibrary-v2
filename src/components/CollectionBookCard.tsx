@@ -33,9 +33,11 @@ interface CollectionBook {
 interface CollectionBookCardProps {
   book: CollectionBook;
   priority?: boolean;
+  /** Optional URL prefix (e.g. '/bph') — prepended to the /book/{slug} path */
+  bookUrlPrefix?: string;
 }
 
-export default function CollectionBookCard({ book, priority = false }: CollectionBookCardProps) {
+export default function CollectionBookCard({ book, priority = false, bookUrlPrefix }: CollectionBookCardProps) {
   const [imageLoaded, setImageLoaded] = useState(false);
   const [imageError, setImageError] = useState(false);
   const [useFallback, setUseFallback] = useState(false);
@@ -45,9 +47,11 @@ export default function CollectionBookCard({ book, priority = false }: Collectio
   const fallbackUrl = getBookThumbnailUrl(book, 'thumb');
   const thumbnailUrl = useFallback && fallbackUrl ? fallbackUrl : primaryUrl;
 
+  const bookHref = `${bookUrlPrefix || ''}/book/${book.slug || book.id || book.bookId}`;
+
   return (
     <Link
-      href={`/book/${book.slug || book.id || book.bookId}`}
+      href={bookHref}
       className="group block"
     >
       <div className="h-full rounded-xl border border-border-light hover:border-accent-rust/40 hover:shadow-lg transition-[border-color,box-shadow] overflow-hidden bg-white">

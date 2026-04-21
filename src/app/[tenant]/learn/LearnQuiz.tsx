@@ -2,6 +2,8 @@
 
 import { useState, useEffect, useCallback } from 'react';
 import Link from 'next/link';
+import { useParams } from 'next/navigation';
+import { tenantBookUrl } from '@/lib/slugify';
 
 interface Topic {
   id: string;
@@ -38,6 +40,8 @@ const FALLBACK_TOPICS: Topic[] = [
 ];
 
 export default function LearnQuiz() {
+  const params = useParams<{ tenant: string }>();
+  const tenant = params?.tenant;
   const [topics, setTopics] = useState<Topic[]>(FALLBACK_TOPICS);
   const [activeTopic, setActiveTopic] = useState<string | null>(null);
   const [questions, setQuestions] = useState<TermQuestion[]>([]);
@@ -262,7 +266,7 @@ export default function LearnQuiz() {
   const q = questions[currentIdx];
   if (!q) return null;
 
-  const bookHref = q.slug ? `/book/${q.slug}` : `/book/${q.bookId}`;
+  const bookHref = tenantBookUrl({ slug: q.slug, id: q.bookId }, tenant);
   const isCorrect = selected === q.correctIndex;
   const topicLabel = activeTopic ? topics.find(t => t.id === activeTopic)?.label : 'All Topics';
 

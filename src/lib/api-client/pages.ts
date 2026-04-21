@@ -15,15 +15,26 @@ import type {
 } from './types/pages';
 
 /**
+ * Get current tenant slug from URL
+ */
+function getTenantSlug(): string {
+  if (typeof window === 'undefined') return '';
+  const slug = window.location.pathname.split('/')[1] || '';
+  return /^[a-z0-9-]+$/.test(slug) ? slug : '';
+}
+
+/**
  * Pages API client
  * Handles individual page operations (OCR, translation, splitting)
+ * All routes are tenant-scoped: /api/[tenant]/pages/...
  */
 export const pages = {
   /**
    * Get a single page by ID
    */
   get: async (id: string): Promise<Page> => {
-    return await apiClient.get(`/api/pages/${id}`);
+    const tenant = getTenantSlug();
+    return await apiClient.get(`/api/${tenant}/pages/${id}`);
   },
 
   /**
@@ -31,7 +42,8 @@ export const pages = {
    * Used by the reader to prefetch adjacent pages without triggering rate limits.
    */
   getBatch: async (ids: string[]): Promise<Page[]> => {
-    const data = await apiClient.post('/api/pages/batch', { ids }) as unknown as { pages: Page[] };
+    const tenant = getTenantSlug();
+    const data = await apiClient.post(`/api/${tenant}/pages/batch`, { ids }) as unknown as { pages: Page[] };
     return data.pages;
   },
 
@@ -39,91 +51,104 @@ export const pages = {
    * Update page content (OCR, translation, summary)
    */
   update: async (id: string, updates: PageUpdateRequest): Promise<PageUpdateResponse> => {
-    return await apiClient.patch(`/api/pages/${id}`, updates);
+    const tenant = getTenantSlug();
+    return await apiClient.patch(`/api/${tenant}/pages/${id}`, updates);
   },
 
   /**
    * Delete a page
    */
   delete: async (id: string): Promise<{ success: boolean }> => {
-    return await apiClient.delete(`/api/pages/${id}`);
+    const tenant = getTenantSlug();
+    return await apiClient.delete(`/api/${tenant}/pages/${id}`);
   },
 
   /**
    * OCR a single page
    */
   ocr: async (id: string, request: PageOcrRequest = {}): Promise<PageOcrResponse> => {
-    return await apiClient.post(`/api/pages/${id}/ocr`, request);
+    const tenant = getTenantSlug();
+    return await apiClient.post(`/api/${tenant}/pages/${id}/ocr`, request);
   },
 
   /**
    * Translate a single page
    */
   translate: async (id: string, request: PageTranslateRequest = {}): Promise<PageTranslateResponse> => {
-    return await apiClient.post(`/api/pages/${id}/translate`, request);
+    const tenant = getTenantSlug();
+    return await apiClient.post(`/api/${tenant}/pages/${id}/translate`, request);
   },
 
   /**
    * Summarize a page
    */
   summarize: async (id: string): Promise<{ summary: string }> => {
-    return await apiClient.post(`/api/pages/${id}/summarize`);
+    const tenant = getTenantSlug();
+    return await apiClient.post(`/api/${tenant}/pages/${id}/summarize`);
   },
 
   /**
    * Detect if page is a two-page spread
    */
   detectSplit: async (id: string): Promise<PageDetectSplitResponse> => {
-    return await apiClient.post(`/api/pages/${id}/detect-split`);
+    const tenant = getTenantSlug();
+    return await apiClient.post(`/api/${tenant}/pages/${id}/detect-split`);
   },
 
   /**
    * Split a two-page spread into two pages
    */
   split: async (id: string, splitPosition: number): Promise<PageSplitResponse> => {
-    return await apiClient.post(`/api/pages/${id}/split`, { split_position: splitPosition });
+    const tenant = getTenantSlug();
+    return await apiClient.post(`/api/${tenant}/pages/${id}/split`, { split_position: splitPosition });
   },
 
   /**
    * Create a snapshot/backup of page content before reprocessing
    */
   snapshot: async (id: string, type: 'pre_ocr' | 'pre_translate' | 'manual_backup'): Promise<{ snapshot_id: string }> => {
-    return await apiClient.post(`/api/pages/${id}/snapshot`, { snapshot_type: type });
+    const tenant = getTenantSlug();
+    return await apiClient.post(`/api/${tenant}/pages/${id}/snapshot`, { snapshot_type: type });
   },
 
   /**
    * Restore page from a snapshot
    */
   restore: async (id: string, snapshotId: string): Promise<PageUpdateResponse> => {
-    return await apiClient.post(`/api/pages/${id}/restore`, { snapshot_id: snapshotId });
+    const tenant = getTenantSlug();
+    return await apiClient.post(`/api/${tenant}/pages/${id}/restore`, { snapshot_id: snapshotId });
   },
 
   /**
    * Get page snapshots
    */
   snapshots: async (id: string): Promise<{ snapshots: Array<any> }> => {
-    return await apiClient.get(`/api/pages/${id}/snapshots`);
+    const tenant = getTenantSlug();
+    return await apiClient.get(`/api/${tenant}/pages/${id}/snapshots`);
   },
 
   /**
    * Ask a question about page content
    */
   ask: async (id: string, request: PageAskRequest): Promise<PageAskResponse> => {
-    return await apiClient.post(`/api/pages/${id}/ask`, request);
+    const tenant = getTenantSlug();
+    return await apiClient.post(`/api/${tenant}/pages/${id}/ask`, request);
   },
 
   /**
    * Modernize page text
    */
   modernize: async (id: string): Promise<{ modernized: string }> => {
-    return await apiClient.post(`/api/pages/${id}/modernize`);
+    const tenant = getTenantSlug();
+    return await apiClient.post(`/api/${tenant}/pages/${id}/modernize`);
   },
 
   /**
    * Transliterate page OCR text (non-Latin scripts to Latin characters)
    */
   transliterate: async (id: string): Promise<{ transliteration: string; cached?: boolean; script?: string }> => {
-    return await apiClient.post(`/api/pages/${id}/transliterate`);
+    const tenant = getTenantSlug();
+    return await apiClient.post(`/api/${tenant}/pages/${id}/transliterate`);
   },
 
   /**
@@ -149,7 +174,8 @@ export const pages = {
     imageErrors?: number;
     message: string;
   }> => {
-    return await apiClient.post('/api/pages/batch-split', {
+    const tenant = getTenantSlug();
+    return await apiClient.post(`/api/${tenant}/pages/batch-split`, {
       splits,
       ...(options?.confirmClearOcr && { confirmClearOcr: true })
     }, { timeout: 300000 });
@@ -163,20 +189,23 @@ export const pages = {
     resetCount: number;
     totalPages: number;
   }> => {
-    return await apiClient.post('/api/pages/batch-reset', { pageIds }, { timeout: 120000 });
+    const tenant = getTenantSlug();
+    return await apiClient.post(`/api/${tenant}/pages/batch-reset`, { pageIds }, { timeout: 120000 });
   },
 
   /**
    * Reset split status for a page
    */
   resetSplit: async (id: string): Promise<{ success: boolean }> => {
-    return await apiClient.post(`/api/pages/${id}/reset`, {}, { timeout: 60000 });
+    const tenant = getTenantSlug();
+    return await apiClient.post(`/api/${tenant}/pages/${id}/reset`, {}, { timeout: 60000 });
   },
 
   /**
    * Apply a quick fix to a page field
    */
   quickFix: async (id: string, field: string, fix: any): Promise<{ success: boolean; page: Page }> => {
-    return await apiClient.patch(`/api/pages/${id}/quick-fix`, { field, fix });
+    const tenant = getTenantSlug();
+    return await apiClient.patch(`/api/${tenant}/pages/${id}/quick-fix`, { field, fix });
   },
 };
