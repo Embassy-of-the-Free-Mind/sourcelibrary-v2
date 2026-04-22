@@ -133,6 +133,66 @@ async function fetchWikimediaCategory(category) {
   return results;
 }
 
+// ── Wikimedia individual files fetcher ──
+// Same as category fetcher step 2, but for an explicit list of File: titles
+
+async function fetchWikimediaFiles(fileTitles) {
+  const results = [];
+  for (let i = 0; i < fileTitles.length; i += 50) {
+    const batch = fileTitles.slice(i, i + 50);
+    const titles = batch.join('|');
+
+    const params = new URLSearchParams({
+      action: 'query', titles, prop: 'imageinfo',
+      iiprop: 'url|size|mime|extmetadata', format: 'json',
+    });
+
+    const res = await fetch(`https://commons.wikimedia.org/w/api.php?${params}`, { signal: AbortSignal.timeout(30000) });
+    if (!res.ok) throw new Error(`Wikimedia imageinfo API HTTP ${res.status}`);
+    const data = await res.json();
+
+    for (const page of Object.values(data.query?.pages || {})) {
+      if (page.missing !== undefined) {
+        console.warn(`  WARNING: file not found on Commons: ${page.title}`);
+        continue;
+      }
+      const info = page.imageinfo?.[0];
+      if (!info?.url || !info.mime?.startsWith('image/')) continue;
+
+      const ext = info.extmetadata || {};
+      const objectName = stripHtml(ext.ObjectName?.value || '');
+      const artist = stripHtml(ext.Artist?.value || '');
+      const dateStr = stripHtml(ext.DateTimeOriginal?.value || ext.DateTime?.value || '');
+      const description = stripHtml(ext.ImageDescription?.value || '');
+      const licenseShort = ext.LicenseShortName?.value || '';
+      const licenseUrl = ext.LicenseUrl?.value || '';
+      const categories = ext.Categories?.value || '';
+
+      const fallbackTitle = page.title?.replace(/^File:/, '').replace(/\.\w+$/, '') || 'Untitled';
+      const title = objectName || fallbackTitle;
+
+      results.push({
+        url: info.url,
+        width: info.width || null,
+        height: info.height || null,
+        title,
+        author: artist || 'Unknown artist',
+        date: dateStr || null,
+        commons_description: description || null,
+        commons_categories: categories || null,
+        commons_page_title: page.title,
+        license: licenseUrl || licenseShort || 'publicdomain',
+        license_short: licenseShort || null,
+        source_url: `https://commons.wikimedia.org/wiki/${encodeURIComponent(page.title)}`,
+      });
+    }
+
+    if (i + 50 < fileTitles.length) await sleep(1500);
+  }
+
+  return results;
+}
+
 // ── Met Open Access fetcher ──
 // Returns one artwork object per object_id (using primaryImage only)
 
@@ -422,9 +482,14 @@ async function main() {
       let artworks = [];
 
       if (entry.source === 'wikimedia_commons') {
-        if (!entry.category) { console.log('ERROR: missing category'); errors++; continue; }
-        process.stdout.write(`  Fetching Wikimedia category ${entry.category} ... `);
-        artworks = await fetchWikimediaCategory(entry.category);
+        if (!entry.category && !entry.files?.length) { console.log('ERROR: missing category or files'); errors++; continue; }
+        if (entry.files?.length) {
+          process.stdout.write(`  Fetching ${entry.files.length} Wikimedia files ... `);
+          artworks = await fetchWikimediaFiles(entry.files);
+        } else {
+          process.stdout.write(`  Fetching Wikimedia category ${entry.category} ... `);
+          artworks = await fetchWikimediaCategory(entry.category);
+        }
         console.log(`${artworks.length} images`);
 
       } else if (entry.source === 'met_openaccess') {
