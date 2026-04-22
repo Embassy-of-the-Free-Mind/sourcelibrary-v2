@@ -181,6 +181,8 @@ export function proxy(request: NextRequest) {
       url.pathname = `/embed/${tenant}${pathname}`;
     } else if (pathname.startsWith('/collections')) {
       url.pathname = `/embed/${tenant}${pathname}`;
+    } else if (pathname === '/catalog') {
+      url.pathname = `/embed/${tenant}/catalog`;
     } else {
       // All other paths on tenant subdomain → embed root (filtered search)
       url.pathname = `/embed/${tenant}`;

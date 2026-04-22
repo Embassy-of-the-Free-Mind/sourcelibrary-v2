@@ -1,5 +1,6 @@
 import { NextResponse } from 'next/server';
 import { getReadDb } from '@/lib/mongodb';
+import { supabase } from '@/lib/supabase';
 
 export const revalidate = 3600; // Cache for 1 hour
 
@@ -17,7 +18,8 @@ export async function OPTIONS() {
  * GET /api/embed/bph/stats
  *
  * Returns aggregate stats for BPH collection:
- * - total: total number of BPH books
+ * - catalog_total: total works in BPH catalog (Supabase bph_works)
+ * - digitized: digitized books on Source Library
  * - translated: books with at least one translated page
  * - languages: number of distinct original languages
  * - pages_total: total pages across all BPH books
@@ -29,12 +31,12 @@ export async function GET() {
     const books = db.collection('books');
 
     const bphFilter = {
-      'image_source.provider': 'bph',
+      held_by: 'bph',
       visible: true,
       pages_count: { $gt: 0 },
     };
 
-    const [totalResult, translatedResult, languagesResult, pagesResult] = await Promise.all([
+    const [totalResult, translatedResult, languagesResult, pagesResult, catalogResult] = await Promise.all([
       books.countDocuments(bphFilter),
       books.countDocuments({ ...bphFilter, pages_translated: { $gt: 0 } }),
       books.distinct('language', bphFilter),
@@ -48,11 +50,15 @@ export async function GET() {
           },
         },
       ]).toArray(),
+      supabase.from('bph_works').select('*', { count: 'exact', head: true }),
     ]);
 
     const pageStats = pagesResult[0] || { pages_total: 0, pages_translated: 0 };
 
     return NextResponse.json({
+      catalog_total: catalogResult.count || 0,
+      digitized: totalResult,
+      // Keep 'total' for backwards compat with existing consumers
       total: totalResult,
       translated: translatedResult,
       languages: languagesResult.filter(Boolean).length,
