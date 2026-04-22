@@ -90,6 +90,179 @@ function formatTranscript(script: string): { speaker: string; text: string }[] {
     .filter(entry => entry.text.length > 0);
 }
 
+// ── Illustration Gallery ──────────────────────────────────────────────
+
+interface IllustrationImage {
+  id: string;
+  imageUrl: string;
+  pageNumber: number;
+  description?: string;
+  type?: string;
+  bookTitle?: string;
+  bookSlug?: string;
+}
+
+function IllustrationGallery({ threadId }: { threadId: string }) {
+  const [images, setImages] = useState<(IllustrationImage & { bookId?: string })[]>([]);
+  const [loaded, setLoaded] = useState(false);
+  const [lightboxIdx, setLightboxIdx] = useState<number | null>(null);
+  const [primaryBookId, setPrimaryBookId] = useState<string | null>(null);
+
+  useEffect(() => {
+    // Fetch notebook to get cited book IDs
+    fetch(`/api/embassy/threads/${threadId}/notebook?format=json`)
+      .then(r => r.ok ? r.json() : null)
+      .then(data => {
+        if (!data?.notebook?.findings) { setLoaded(true); return; }
+        const bookIds = Array.from(new Set(data.notebook.findings.map((f: SourceFinding) => f.source.bookId))) as string[];
+        if (bookIds.length > 0) setPrimaryBookId(bookIds[0]);
+        // Fetch all images for each cited book
+        Promise.all(
+          bookIds.map(bid =>
+            fetch(`/api/gallery?bookId=${bid}&limit=200`)
+              .then(r => r.ok ? r.json() : null)
+              .then(d => (d?.images || []).map((img: IllustrationImage) => ({ ...img, bookId: bid })))
+              .catch(() => [])
+          )
+        ).then(results => {
+          const all = results.flat().sort((a: IllustrationImage, b: IllustrationImage) => (a.pageNumber || 0) - (b.pageNumber || 0));
+          setImages(all);
+          setLoaded(true);
+        });
+      })
+      .catch(() => setLoaded(true));
+  }, [threadId]);
+
+  // Keyboard navigation for lightbox
+  useEffect(() => {
+    if (lightboxIdx === null) return;
+    function handleKey(e: KeyboardEvent) {
+      if (e.key === 'Escape') setLightboxIdx(null);
+      if (e.key === 'ArrowRight') setLightboxIdx(prev => prev !== null ? Math.min(prev + 1, images.length - 1) : null);
+      if (e.key === 'ArrowLeft') setLightboxIdx(prev => prev !== null ? Math.max(prev - 1, 0) : null);
+    }
+    document.addEventListener('keydown', handleKey);
+    document.body.style.overflow = 'hidden';
+    return () => {
+      document.removeEventListener('keydown', handleKey);
+      document.body.style.overflow = '';
+    };
+  }, [lightboxIdx, images.length]);
+
+  if (!loaded || images.length === 0) return null;
+
+  const current = lightboxIdx !== null ? images[lightboxIdx] : null;
+
+  return (
+    <div className="mt-8">
+      <div className="flex items-center justify-between mb-3">
+        <p className="text-[12px] text-[#6b6560] font-sans tracking-wide uppercase">
+          Illustrations ({images.length})
+        </p>
+        {primaryBookId && (
+          <a
+            href={`/gallery?bookId=${primaryBookId}`}
+            target="_blank"
+            rel="noopener noreferrer"
+            className="text-[11px] text-[#9e4a3a] font-sans hover:underline"
+          >
+            View full gallery
+          </a>
+        )}
+      </div>
+
+      {/* Thumbnail grid */}
+      <div className="grid grid-cols-4 sm:grid-cols-5 md:grid-cols-6 gap-1.5">
+        {images.map((img, i) => (
+          <button
+            key={img.id || i}
+            onClick={() => setLightboxIdx(i)}
+            className="group relative aspect-square overflow-hidden rounded-lg bg-[#f0ece4] focus:outline-none focus:ring-2 focus:ring-[#c9a86c]"
+          >
+            {/* eslint-disable-next-line @next/next/no-img-element */}
+            <img
+              src={`/api/image?url=${encodeURIComponent(img.imageUrl)}&w=200&q=70`}
+              alt={img.description || `Page ${img.pageNumber}`}
+              className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-200"
+              loading="lazy"
+            />
+            <div className="absolute bottom-0 left-0 right-0 bg-gradient-to-t from-black/50 to-transparent p-1 opacity-0 group-hover:opacity-100 transition-opacity">
+              <p className="text-[9px] text-white font-sans">p. {img.pageNumber}</p>
+            </div>
+          </button>
+        ))}
+      </div>
+
+      {/* Lightbox */}
+      {current && lightboxIdx !== null && (
+        <div
+          className="fixed inset-0 z-50 bg-black/90 flex items-center justify-center"
+          onClick={() => setLightboxIdx(null)}
+        >
+          {/* Close button */}
+          <button
+            onClick={() => setLightboxIdx(null)}
+            className="absolute top-4 right-4 text-white/70 hover:text-white z-10"
+          >
+            <svg className="w-8 h-8" fill="none" viewBox="0 0 24 24" strokeWidth={1.5} stroke="currentColor">
+              <path strokeLinecap="round" strokeLinejoin="round" d="M6 18L18 6M6 6l12 12" />
+            </svg>
+          </button>
+
+          {/* Previous */}
+          {lightboxIdx > 0 && (
+            <button
+              onClick={e => { e.stopPropagation(); setLightboxIdx(lightboxIdx - 1); }}
+              className="absolute left-2 sm:left-6 top-1/2 -translate-y-1/2 text-white/60 hover:text-white z-10 p-2"
+            >
+              <svg className="w-10 h-10" fill="none" viewBox="0 0 24 24" strokeWidth={1.5} stroke="currentColor">
+                <path strokeLinecap="round" strokeLinejoin="round" d="M15.75 19.5L8.25 12l7.5-7.5" />
+              </svg>
+            </button>
+          )}
+
+          {/* Next */}
+          {lightboxIdx < images.length - 1 && (
+            <button
+              onClick={e => { e.stopPropagation(); setLightboxIdx(lightboxIdx + 1); }}
+              className="absolute right-2 sm:right-6 top-1/2 -translate-y-1/2 text-white/60 hover:text-white z-10 p-2"
+            >
+              <svg className="w-10 h-10" fill="none" viewBox="0 0 24 24" strokeWidth={1.5} stroke="currentColor">
+                <path strokeLinecap="round" strokeLinejoin="round" d="M8.25 4.5l7.5 7.5-7.5 7.5" />
+              </svg>
+            </button>
+          )}
+
+          {/* Image + caption */}
+          <div
+            className="flex flex-col items-center max-w-[90vw] max-h-[90vh]"
+            onClick={e => e.stopPropagation()}
+          >
+            {/* eslint-disable-next-line @next/next/no-img-element */}
+            <img
+              src={`/api/image?url=${encodeURIComponent(current.imageUrl)}&w=1200&q=85`}
+              alt={current.description || `Page ${current.pageNumber}`}
+              className="max-h-[75vh] max-w-full object-contain rounded-lg"
+            />
+            <div className="mt-3 text-center max-w-lg">
+              {current.description && (
+                <p className="text-[13px] text-white/80 font-body leading-relaxed">
+                  {current.description}
+                </p>
+              )}
+              <p className="text-[11px] text-white/50 font-sans mt-1">
+                Page {current.pageNumber}
+                {current.type && <> &middot; {current.type}</>}
+                {' '}&middot; {lightboxIdx + 1} of {images.length}
+              </p>
+            </div>
+          </div>
+        </div>
+      )}
+    </div>
+  );
+}
+
 // ── Source Cards ──────────────────────────────────────────────────────
 
 interface SourceFinding {
@@ -104,19 +277,8 @@ interface SourceFinding {
   };
 }
 
-interface GalleryImage {
-  id: string;
-  imageUrl: string;
-  bookTitle: string;
-  bookSlug?: string;
-  pageNumber: number;
-  description?: string;
-  type?: string;
-}
-
 function SourceCards({ threadId }: { threadId: string }) {
   const [findings, setFindings] = useState<SourceFinding[]>([]);
-  const [galleryImages, setGalleryImages] = useState<GalleryImage[]>([]);
   const [loaded, setLoaded] = useState(false);
   const [expanded, setExpanded] = useState(false);
 
@@ -126,22 +288,6 @@ function SourceCards({ threadId }: { threadId: string }) {
       .then(data => {
         if (data?.notebook?.findings) {
           setFindings(data.notebook.findings);
-          // Fetch gallery images from cited books
-          const bookIds = [...new Set(data.notebook.findings.map((f: SourceFinding) => f.source.bookId))];
-          // Fetch gallery images for each book (in parallel, up to 4 per book)
-          Promise.all(
-            bookIds.map(bid =>
-              fetch(`/api/gallery?bookId=${bid}&limit=4`)
-                .then(r => r.ok ? r.json() : null)
-                .then(d => (d?.images || []).map((img: { id: string; imageUrl: string; bookTitle: string; bookSlug?: string; pageNumber: number; description?: string; type?: string }) => ({
-                  ...img, bookId: bid,
-                })))
-                .catch(() => [])
-            )
-          ).then(results => {
-            const all = results.flat().slice(0, 12);
-            setGalleryImages(all);
-          });
         }
         setLoaded(true);
       })
@@ -221,43 +367,6 @@ function SourceCards({ threadId }: { threadId: string }) {
             );
           })}
 
-          {/* Gallery images from cited books */}
-          {galleryImages.length > 0 && (
-            <div className="mt-4 pt-4 border-t border-[#e8e4dc]">
-              <p className="text-[11px] text-[#6b6560] font-sans tracking-wide uppercase mb-3">
-                Illustrations from these sources
-              </p>
-              <div className="grid grid-cols-3 gap-2">
-                {galleryImages.map((img, i) => (
-                  <a
-                    key={img.id || i}
-                    href={`https://sourcelibrary.org/gallery/image/${img.id}`}
-                    target="_blank"
-                    rel="noopener noreferrer"
-                    className="group relative aspect-square overflow-hidden rounded-lg bg-[#f0ece4]"
-                  >
-                    {/* eslint-disable-next-line @next/next/no-img-element */}
-                    <img
-                      src={`https://sourcelibrary.org/api/image?url=${encodeURIComponent(img.imageUrl)}&w=300&q=75`}
-                      alt={img.description || ''}
-                      className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-300"
-                      loading="lazy"
-                    />
-                    <div className="absolute inset-0 bg-gradient-to-t from-black/60 via-transparent to-transparent opacity-0 group-hover:opacity-100 transition-opacity">
-                      <div className="absolute bottom-0 left-0 right-0 p-2">
-                        <p className="text-[10px] text-white font-sans leading-tight line-clamp-2">
-                          {img.description || img.bookTitle}
-                        </p>
-                        {img.type && (
-                          <p className="text-[9px] text-white/70 font-sans capitalize">{img.type}</p>
-                        )}
-                      </div>
-                    </div>
-                  </a>
-                ))}
-              </div>
-            </div>
-          )}
         </div>
       )}
     </div>
@@ -748,6 +857,9 @@ export default function ThreadPage({ params }: { params: Promise<{ id: string }>
 
         {/* Podcast section */}
         <PodcastPlayer threadId={id} isOwner={!!session?.user?.id && session.user.id === thread.creatorId} />
+
+        {/* Illustrations from cited books */}
+        <IllustrationGallery threadId={id} />
 
         {/* Source books used in this research */}
         <SourceCards threadId={id} />
