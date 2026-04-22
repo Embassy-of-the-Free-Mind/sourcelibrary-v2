@@ -25,6 +25,15 @@ interface BlogPost {
 
 const posts: BlogPost[] = [
   {
+    slug: 'incunabula-knowledge-graph',
+    title: 'Mapping the Incunabula',
+    subtitle: 'An interactive knowledge graph connecting nearly 1,000 pre-1501 printed books by author, printer, place, and subject — revealing the networks behind the printing revolution.',
+    date: '22 April 2026',
+    readTime: '8 min read',
+    tag: 'Interactive',
+    tagColor: 'bg-amber-50 text-amber-700',
+  },
+  {
     slug: 'cellulae',
     title: 'Cellulae',
     subtitle: 'A word on page 32 of a medieval manuscript launched modern biology. The argument on page 33 helped criminalize rape victims for eight centuries. They were written by the same man.',
