@@ -55,12 +55,17 @@ export async function GET(request: NextRequest) {
       }
     }
 
-    const enriched = books.map(b => ({
-      ...b,
-      thumbnail: thumbnailMap[b.book_id]?.thumbnail || null,
-      thumbnail_blob: thumbnailMap[b.book_id]?.thumbnail_blob || null,
-      slug: thumbnailMap[b.book_id]?.slug || b.book_id,
-    }));
+    // Filter out low-similarity results that are effectively random matches.
+    // Calibrated 2026-04-23: real queries score 0.67+, nonsense scores 0.57-0.63.
+    const SEMANTIC_SIM_FLOOR = 0.65;
+    const enriched = books
+      .filter(b => b.similarity >= SEMANTIC_SIM_FLOOR)
+      .map(b => ({
+        ...b,
+        thumbnail: thumbnailMap[b.book_id]?.thumbnail || null,
+        thumbnail_blob: thumbnailMap[b.book_id]?.thumbnail_blob || null,
+        slug: thumbnailMap[b.book_id]?.slug || b.book_id,
+      }));
 
     return NextResponse.json({
       results: enriched,
