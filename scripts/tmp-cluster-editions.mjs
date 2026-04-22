@@ -34,13 +34,36 @@ function trigrams(s) {
   return set;
 }
 
+// Strip parenthetical edition markers, dates, and library shelfmarks before comparing
+function normalizeTitle(s) {
+  if (!s) return '';
+  return s
+    .toLowerCase()
+    .replace(/\(.*?\)/g, '')                  // (1485 editio princeps), (De Sphaera), etc.
+    .replace(/\[.*?\]/g, '')                  // [BPH 131], [MS], etc.
+    .replace(/\b\d{4}\b/g, '')               // standalone years
+    .replace(/\b(ms|vol|tome?|part|book|bd|t)\b\.?\s*/gi, '')
+    .replace(/[,.:;]+\s*$/, '')              // trailing punctuation
+    .replace(/\s+/g, ' ')
+    .trim();
+}
+
 function trigramSimilarity(a, b) {
   if (!a || !b) return 0;
-  const ta = trigrams(a);
-  const tb = trigrams(b);
-  let intersection = 0;
-  for (const t of ta) if (tb.has(t)) intersection++;
-  return intersection / (ta.size + tb.size - intersection); // Jaccard
+  // Compare both raw and normalized, take the higher score
+  const rawA = trigrams(a), rawB = trigrams(b);
+  let rawInter = 0;
+  for (const t of rawA) if (rawB.has(t)) rawInter++;
+  const rawScore = rawInter / (rawA.size + rawB.size - rawInter);
+
+  const normA = normalizeTitle(a), normB = normalizeTitle(b);
+  if (!normA || !normB) return rawScore;
+  const nta = trigrams(normA), ntb = trigrams(normB);
+  let normInter = 0;
+  for (const t of nta) if (ntb.has(t)) normInter++;
+  const normScore = normInter / (nta.size + ntb.size - normInter);
+
+  return Math.max(rawScore, normScore);
 }
 
 function normalizeAuthor(author) {
@@ -108,6 +131,16 @@ function compositeScore(semantic, titleSim, authorSim, yearProx, langMatch, titl
 
   // Reject: titles that differ only by volume/part number (different volumes, not editions)
   if (differsByVolumeOnly(titleA, titleB)) return 0;
+
+  // If titles only match after stripping parentheticals (raw trigram < 0.7 but normalized = 1.0),
+  // require strong author match — prevents "Book of Hours (PH 2)" ≠ "Book of Hours (BPH 131)"
+  const rawSim = (() => {
+    const ta = trigrams(titleA), tb = trigrams(titleB);
+    let inter = 0;
+    for (const t of ta) if (tb.has(t)) inter++;
+    return inter / (ta.size + tb.size - inter);
+  })();
+  if (rawSim < 0.85 && titleSim >= 0.95 && authorSim < 1.0) return 0;
 
   // Weighted combination — title is king for edition detection
   return (
