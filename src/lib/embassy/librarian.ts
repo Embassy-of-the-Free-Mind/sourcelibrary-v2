@@ -5,7 +5,7 @@ import { supabase } from '@/lib/supabase';
 import { ObjectId } from 'mongodb';
 
 /**
- * The Librarian — Research agent for the Embassy Reading Room.
+ * The Librarian — Research agent for Source Library.
  *
  * Architecture: reason-first, search-second, accumulate findings.
  * Gemini reasons about the user's question, calls tools iteratively,

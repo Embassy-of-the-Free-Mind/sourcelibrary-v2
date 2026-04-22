@@ -1,5 +1,5 @@
 import { connectToDatabase } from '@/lib/mongodb';
-import ReadingRoomClient from './ReadingRoomClient';
+import LibrarianClient from './LibrarianClient';
 
 export const revalidate = 86400; // 24h ISR
 
@@ -32,7 +32,7 @@ async function getHeroImages(): Promise<{ url: string; key: string }[]> {
       key: img._id.toString(),
     }));
   } catch (err) {
-    console.error('[reading-room] Failed to load hero images:', err);
+    console.error('[librarian] Failed to load hero images:', err);
     return [];
   }
 }
@@ -140,16 +140,16 @@ async function getFeaturedPassage() {
       pageId: bestPage._id?.toString() || undefined,
     };
   } catch (err) {
-    console.error('[reading-room] Failed to load featured passage:', err);
+    console.error('[librarian] Failed to load featured passage:', err);
     return null;
   }
 }
 
-export default async function ReadingRoomPage() {
+export default async function LibrarianPage() {
   const featuredPassage = await getFeaturedPassage();
 
   return (
-    <ReadingRoomClient
+    <LibrarianClient
       featuredPassage={featuredPassage}
     />
   );

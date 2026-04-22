@@ -12,7 +12,7 @@ const TIMEOUT = 15_000;
 
 const STATIC_PAGES = [
   '/', '/collections', '/curated', '/browse', '/gallery', '/libraries',
-  '/languages', '/search', '/about', '/reading-room', '/blog',
+  '/languages', '/search', '/about', '/librarian', '/blog',
   '/artwork', '/explore', '/timeline', '/browse/authors', '/taxonomy',
 ];
 

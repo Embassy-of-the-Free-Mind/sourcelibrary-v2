@@ -111,7 +111,7 @@ interface FeaturedPassage {
   pageId?: string;
 }
 
-interface ReadingRoomClientProps {
+interface LibrarianClientProps {
   featuredPassage: FeaturedPassage | null;
 }
 
@@ -236,7 +236,7 @@ function pickSuggestions(count: number): string[] {
   return shuffled.slice(0, count);
 }
 
-export default function ReadingRoomClient({ featuredPassage }: ReadingRoomClientProps) {
+export default function LibrarianClient({ featuredPassage }: LibrarianClientProps) {
   const { data: session, status } = useSession();
   const [messages, setMessages] = useState<Message[]>([]);
   const [suggestions] = useState(() => pickSuggestions(4));
@@ -345,7 +345,7 @@ export default function ReadingRoomClient({ featuredPassage }: ReadingRoomClient
         if (res.status === 401) {
           updateLastAssistant(m => ({
             ...m,
-            content: 'Please [sign in](/auth/signin?callbackUrl=/reading-room) to talk with the Librarian. It\'s free — just create an account or sign in with Google.',
+            content: 'Please [sign in](/auth/signin?callbackUrl=/librarian) to talk with the Librarian. It\'s free — just create an account or sign in with Google.',
           }));
         } else {
           updateLastAssistant(m => ({ ...m, content: err.error || 'Something went wrong. Please try again.' }));
@@ -534,14 +534,14 @@ export default function ReadingRoomClient({ featuredPassage }: ReadingRoomClient
 
         <div className="relative max-w-[1200px] mx-auto px-6 md:px-12 pt-14 sm:pt-20 pb-14">
           <h1 className="text-4xl sm:text-5xl md:text-6xl text-white font-display mb-3 drop-shadow-lg" style={{ fontWeight: 500 }}>
-            The Reading Room
+            The Librarian
           </h1>
           <p className="text-white/80 text-base sm:text-lg font-body leading-relaxed max-w-[480px] drop-shadow-sm">
             Your research agent for over 10,000 rare books. Ask a question, and the Librarian
             will search the collection, cross-reference sources, and build up findings you can export.
           </p>
           <Link
-            href="/reading-room/voice"
+            href="/librarian/voice"
             className="inline-flex items-center gap-2 mt-4 px-4 py-2 bg-white/10 hover:bg-white/20 text-white/80 hover:text-white text-sm rounded-lg backdrop-blur-sm border border-white/10 transition-all"
           >
             <svg className="w-4 h-4" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={1.5}>
@@ -826,7 +826,7 @@ export default function ReadingRoomClient({ featuredPassage }: ReadingRoomClient
 
                   {!isSignedIn && status !== 'loading' && (
                     <p className="mt-2 text-[12px] text-[#8a8480] font-sans">
-                      <Link href="/auth/signin?callbackUrl=/reading-room" className="text-[#9e4a3a] hover:underline">
+                      <Link href="/auth/signin?callbackUrl=/librarian" className="text-[#9e4a3a] hover:underline">
                         Sign in
                       </Link>
                       {' '}to talk with the Librarian. Free — no membership required.
@@ -879,7 +879,7 @@ export default function ReadingRoomClient({ featuredPassage }: ReadingRoomClient
                       {displayThreads.map((thread) => (
                         <Link
                           key={thread.id}
-                          href={`/reading-room/thread/${thread.id}`}
+                          href={`/librarian/thread/${thread.id}`}
                           className="block py-3 border-b border-[#e8e4dc] hover:bg-[#f5f0e8]/50 transition-colors -mx-2 px-2 rounded"
                         >
                           <p className="text-sm font-body text-[#1a1612] line-clamp-2 leading-snug mb-1">

@@ -514,7 +514,7 @@ export default function UnifiedSearch() {
                       );
                     })}
                     <Link
-                      href={`/reading-room?q=${encodeURIComponent(query)}`}
+                      href={`/librarian?q=${encodeURIComponent(query)}`}
                       onClick={() => setIsOpen(false)}
                       className="flex items-center gap-2 px-2 py-2 mt-1 rounded-lg text-xs text-violet-600 hover:bg-violet-50 transition-colors"
                     >

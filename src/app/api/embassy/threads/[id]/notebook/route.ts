@@ -49,7 +49,7 @@ export async function GET(
   const topic = notebook.topic || thread.title || 'Research Notes';
   lines.push(`# ${topic}`);
   lines.push('');
-  lines.push(`*Research conducted via the Source Library Reading Room*`);
+  lines.push(`*Research conducted via the Source Library Librarian*`);
   lines.push(`*${notebook.findings.length} findings · ${new Date(notebook.updatedAt).toLocaleDateString('en-US', { year: 'numeric', month: 'long', day: 'numeric' })}*`);
   lines.push('');
   lines.push('---');
@@ -96,7 +96,7 @@ export async function GET(
 
   lines.push('---');
   lines.push('');
-  lines.push('*Exported from [Source Library](https://sourcelibrary.org/reading-room)*');
+  lines.push('*Exported from [Source Library](https://sourcelibrary.org/librarian)*');
 
   const markdown = lines.join('\n');
 
