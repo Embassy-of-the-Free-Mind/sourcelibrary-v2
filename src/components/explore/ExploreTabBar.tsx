@@ -7,6 +7,7 @@ const TABS = [
   { href: '/timeline', label: 'Timeline' },
   { href: '/explore/timeline', label: 'People' },
   { href: '/explore/map', label: 'Map' },
+  { href: '/explore/constellation', label: 'Constellation' },
 ] as const;
 
 export default function ExploreTabBar() {

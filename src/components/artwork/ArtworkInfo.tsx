@@ -88,6 +88,7 @@ export default function ArtworkInfo({ book, collections, prevWork, nextWork }: A
   const archivedFullUrl = (book as any).archived_full_url || '';
   const fullWidth = (book as any).full_width || commonsWidth;
   const fullHeight = (book as any).full_height || commonsHeight;
+  const sourceBook = (book as any).source_book as { id: string; slug: string; title: string } | undefined;
 
   return (
     <>
@@ -295,6 +296,31 @@ export default function ArtworkInfo({ book, collections, prevWork, nextWork }: A
               ))}
             </div>
           </div>
+        )}
+
+        {/* Source Manuscript — links artwork to its parent codex/book */}
+        {sourceBook && (
+          <Link
+            href={`/book/${sourceBook.slug}`}
+            className="card p-6 sm:p-8 flex items-center gap-4 group hover:border-accent-rust/30 transition-colors"
+            style={{ borderColor: 'var(--border-light)' }}
+          >
+            <div className="w-10 h-10 rounded-lg flex items-center justify-center flex-shrink-0"
+              style={{ background: 'var(--accent-rust)', opacity: 0.9 }}>
+              <BookOpen className="w-5 h-5 text-white" />
+            </div>
+            <div className="min-w-0">
+              <p className="text-xs uppercase tracking-wider font-medium" style={{ color: 'var(--text-muted)' }}>
+                From this manuscript
+              </p>
+              <p className="text-sm font-medium mt-0.5 group-hover:text-accent-rust transition-colors truncate" style={{ color: 'var(--text-primary)' }}>
+                {sourceBook.title}
+              </p>
+              <p className="text-xs mt-0.5" style={{ color: 'var(--text-muted)' }}>
+                Read the full text with translation →
+              </p>
+            </div>
+          </Link>
         )}
 
         {/* Collections */}

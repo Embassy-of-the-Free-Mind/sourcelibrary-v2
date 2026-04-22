@@ -95,8 +95,11 @@ function formatTranscript(script: string): { speaker: string; text: string }[] {
 interface IllustrationImage {
   id: string;
   imageUrl: string;
+  extractedUrl?: string;
+  thumbnailUrl?: string;
   pageNumber: number;
   description?: string;
+  museumDescription?: string;
   type?: string;
   bookTitle?: string;
   bookSlug?: string;
@@ -121,7 +124,7 @@ function IllustrationGallery({ threadId }: { threadId: string }) {
           bookIds.map(bid =>
             fetch(`/api/gallery?bookId=${bid}&limit=200`)
               .then(r => r.ok ? r.json() : null)
-              .then(d => (d?.images || []).map((img: IllustrationImage) => ({ ...img, bookId: bid })))
+              .then(d => (d?.items || d?.images || []).map((img: IllustrationImage) => ({ ...img, bookId: bid })))
               .catch(() => [])
           )
         ).then(results => {
@@ -181,7 +184,7 @@ function IllustrationGallery({ threadId }: { threadId: string }) {
           >
             {/* eslint-disable-next-line @next/next/no-img-element */}
             <img
-              src={`/api/image?url=${encodeURIComponent(img.imageUrl)}&w=200&q=70`}
+              src={img.thumbnailUrl || `/api/image?url=${encodeURIComponent(img.extractedUrl || img.imageUrl)}&w=200&q=70`}
               alt={img.description || `Page ${img.pageNumber}`}
               className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-200"
               loading="lazy"
@@ -240,14 +243,14 @@ function IllustrationGallery({ threadId }: { threadId: string }) {
           >
             {/* eslint-disable-next-line @next/next/no-img-element */}
             <img
-              src={`/api/image?url=${encodeURIComponent(current.imageUrl)}&w=1200&q=85`}
+              src={current.extractedUrl || `/api/image?url=${encodeURIComponent(current.imageUrl)}&w=1200&q=85`}
               alt={current.description || `Page ${current.pageNumber}`}
               className="max-h-[75vh] max-w-full object-contain rounded-lg"
             />
             <div className="mt-3 text-center max-w-lg">
-              {current.description && (
+              {(current.museumDescription || current.description) && (
                 <p className="text-[13px] text-white/80 font-body leading-relaxed">
-                  {current.description}
+                  {current.museumDescription || current.description}
                 </p>
               )}
               <p className="text-[11px] text-white/50 font-sans mt-1">

@@ -41,7 +41,7 @@ export async function GET(request: NextRequest) {
     const books = await db.collection('books')
       .find({
         id: { $in: matchedIds },
-        'image_source.provider': 'bph',
+        held_by: 'bph',
         visible: true,
         pages_count: { $gt: 0 },
       })
