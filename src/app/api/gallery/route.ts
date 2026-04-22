@@ -263,14 +263,17 @@ export async function GET(request: NextRequest) {
     const hasMore = items.length > limit;
     if (hasMore) items.splice(limit); // trim to limit
 
-    // Avoid countDocuments entirely — derive total from what we know
+    // Derive total — avoid countDocuments for unfiltered browsing, but use it for searches
     let total: number;
     if (!hasMore && offset === 0) {
       total = items.length; // we have everything
     } else if (!hasMore) {
       total = offset + items.length; // last page
+    } else if (searchQuery || collectionBookIds || libraryBookIds || imageType || subjectFilter || figureFilter || symbolFilter || iconclassFilter || yearStart !== null || yearEnd !== null) {
+      // Filtered query — estimated count is wildly wrong, do a real count (capped at 10s)
+      total = await db.collection('gallery_images').countDocuments(filter, { maxTimeMS: 10000 }).catch(() => offset + items.length + 1);
     } else {
-      // There are more results — use estimated count as approximation
+      // Unfiltered browsing — estimated count is fine
       total = await db.collection('gallery_images').estimatedDocumentCount();
     }
 

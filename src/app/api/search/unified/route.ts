@@ -178,7 +178,7 @@ export async function GET(request: NextRequest) {
       ),
       // Artwork semantic search: dedicated artwork_embeddings table (3072 dims)
       withTimeout(
-        semanticArtworkSearch(query, 8)
+        semanticArtworkSearch(query, 4)
           .then(artworks => ({
             results: artworks.map(a => ({
               book_id: a.book_id,

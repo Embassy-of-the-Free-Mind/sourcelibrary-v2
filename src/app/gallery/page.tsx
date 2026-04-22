@@ -71,6 +71,8 @@ async function fetchInitialGalleryData(): Promise<GalleryResponse> {
       gallery_quality: { $gte: minQuality },
       book_rank: { $lte: maxPerBook },
       book_visible: true,
+      extracted_url: { $ne: null },
+      image_url: { $ne: null },
     };
 
     // Read pre-computed filters from system_config (subjects/year aggs take 20-40s on Atlas)
