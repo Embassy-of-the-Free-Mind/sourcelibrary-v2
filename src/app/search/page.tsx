@@ -353,11 +353,15 @@ export default function SearchPage({ defaultLibrary }: { defaultLibrary?: string
               type: g.type,
             } as GalleryItem);
           }
-          // Merge artwork semantic results as image cards (they have thumbnails)
+          // Merge artwork semantic results as image cards (cap at 3 to avoid flooding)
+          const maxArtworks = 3;
+          let artworkCount = 0;
           for (const a of artworkResults) {
+            if (artworkCount >= maxArtworks) break;
             const artId = `artwork-${a.book_id}`;
             if (seenImageIds.has(artId)) continue;
             seenImageIds.add(artId);
+            artworkCount++;
             images.push({
               pageId: a.book_id,
               bookId: a.book_id,
@@ -661,8 +665,8 @@ export default function SearchPage({ defaultLibrary }: { defaultLibrary?: string
                   className="w-full sm:w-auto pl-9 pr-3 py-3 border border-border-medium rounded-xl text-sm text-secondary bg-white focus:outline-none focus:ring-2 focus:ring-accent-rust/30 appearance-none cursor-pointer"
                 >
                   <option value="relevance">Relevance</option>
-                  <option value="date_desc">Newest first</option>
-                  <option value="date_asc">Oldest first</option>
+                  <option value="date_desc">Year (newest)</option>
+                  <option value="date_asc">Year (oldest)</option>
                   <option value="title">Title A-Z</option>
                 </select>
               </div>

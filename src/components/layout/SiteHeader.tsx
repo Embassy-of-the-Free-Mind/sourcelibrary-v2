@@ -5,6 +5,7 @@ import Link from 'next/link';
 import { usePathname } from 'next/navigation';
 import Logo from './Logo';
 import UserMenu from './UserMenu';
+import { Search } from 'lucide-react';
 
 const NAV_LINKS = [
   { label: 'Collections', href: '/collections' },
@@ -105,6 +106,19 @@ export default function SiteHeader({ variant = 'light', breadcrumbs, sticky, cla
               );
             })}
           </nav>
+
+          {/* Desktop search icon */}
+          <Link
+            href="/search"
+            className={`hidden lg:flex items-center justify-center w-8 h-8 rounded-lg transition-colors ${
+              pathname === '/search'
+                ? (isWhiteText ? 'text-white bg-white/10' : 'text-primary bg-warm')
+                : (isWhiteText ? 'text-white/60 hover:text-white hover:bg-white/10' : 'text-secondary hover:text-primary hover:bg-warm/50')
+            }`}
+            aria-label="Search"
+          >
+            <Search className="w-4 h-4" />
+          </Link>
 
           {/* Mobile hamburger */}
           <div className="relative lg:hidden" ref={menuRef}>
