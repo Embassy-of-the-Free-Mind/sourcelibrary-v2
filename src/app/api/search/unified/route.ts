@@ -207,11 +207,36 @@ export async function GET(request: NextRequest) {
     const dedupedSemantic = semanticResultRaw.results.filter(s => !keywordBookIds.has(s.book_id));
     const semanticResult = { results: dedupedSemantic.slice(0, 6), total: dedupedSemantic.length };
 
+    // Apply similarity floor to visual/semantic/artwork lanes.
+    // Without this, nonsense queries like "xyznonexistent" return random results
+    // because embeddings always find *something* in the vector space.
+    const VISUAL_SIM_FLOOR = 0.28;
+    const SEMANTIC_SIM_FLOOR = 0.45;
+    const ARTWORK_SIM_FLOOR = 0.45;
+
+    const filteredVisual = {
+      results: visualResult.results.filter((r: any) => (r.similarity ?? 1) >= VISUAL_SIM_FLOOR),
+      total: 0,
+    };
+    filteredVisual.total = filteredVisual.results.length;
+
+    const filteredSemantic = {
+      results: semanticResult.results.filter(r => r.similarity >= SEMANTIC_SIM_FLOOR),
+      total: 0,
+    };
+    filteredSemantic.total = filteredSemantic.results.length;
+
+    const filteredArtworks = {
+      results: artworkResult.results.filter(r => r.similarity >= ARTWORK_SIM_FLOOR),
+      total: 0,
+    };
+    filteredArtworks.total = filteredArtworks.results.length;
+
     // Log search query (fire-and-forget)
     db.collection('analytics_events').insertOne({
       event: 'search_query',
       query,
-      results_count: booksResult.total + indexResult.total + galleryResult.total + visualResult.total + semanticResult.total + artworkResult.total,
+      results_count: booksResult.total + indexResult.total + galleryResult.total + filteredVisual.total + filteredSemantic.total + filteredArtworks.total,
       filters: { language, category, library, source: 'unified' },
       timestamp: new Date(),
       ip: request.headers.get('x-forwarded-for')?.split(',')[0]?.trim() || 'unknown',
@@ -223,9 +248,9 @@ export async function GET(request: NextRequest) {
       books: booksResult,
       index: indexResult,
       gallery: galleryResult,
-      visual: visualResult,
-      semantic: semanticResult,
-      artworks: artworkResult,
+      visual: filteredVisual,
+      semantic: filteredSemantic,
+      artworks: filteredArtworks,
       collections: collectionsResult,
     }, {
       headers: {
