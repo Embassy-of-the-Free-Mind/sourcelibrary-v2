@@ -1393,7 +1393,7 @@ export default function SearchPage({ defaultLibrary }: { defaultLibrary?: string
         {!noResults && !loading && query.length >= 3 && viewMode === 'unified' && (
           <section className="mt-8 pt-6 border-t border-border-light">
             <Link
-              href={`/reading-room?q=${encodeURIComponent(query)}`}
+              href={`/librarian?q=${encodeURIComponent(query)}`}
               className="block p-6 rounded-xl bg-gradient-to-br from-[#2c1810] to-[#1a1612] text-white hover:from-[#3a2218] hover:to-[#2c1810] transition-all group"
             >
               <div className="flex items-start gap-4">

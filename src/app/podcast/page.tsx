@@ -183,7 +183,7 @@ export default async function PodcastPage() {
         {/* Episodes */}
         {episodes.length === 0 ? (
           <div className="text-center py-12">
-            <p className="text-[#8a8480] font-body">No episodes yet. Research a topic in the Reading Room to generate one.</p>
+            <p className="text-[#8a8480] font-body">No episodes yet. Research a topic with the Librarian to generate one.</p>
           </div>
         ) : (
           <div className="space-y-6">
@@ -214,7 +214,7 @@ export default async function PodcastPage() {
                 <div className="flex items-start justify-between gap-3 mb-3">
                   <div>
                     <Link
-                      href={`/reading-room/thread/${ep.threadId}`}
+                      href={`/librarian/thread/${ep.threadId}`}
                       className="text-[16px] font-serif text-[#1a1612] leading-snug hover:text-[#9e4a3a] transition-colors"
                       style={{ fontWeight: 400 }}
                     >
@@ -235,7 +235,7 @@ export default async function PodcastPage() {
 
                 <div className="mt-2 flex items-center justify-between">
                   <Link
-                    href={`/reading-room/thread/${ep.threadId}`}
+                    href={`/librarian/thread/${ep.threadId}`}
                     className="text-[11px] text-[#9e4a3a] font-sans hover:underline"
                   >
                     View research &amp; sources
@@ -253,10 +253,10 @@ export default async function PodcastPage() {
             Want to create your own episode?
           </p>
           <Link
-            href="/reading-room"
+            href="/librarian"
             className="inline-block px-5 py-2.5 bg-[#1a1612] text-white rounded-lg text-sm font-sans hover:bg-[#2a2622] transition-colors"
           >
-            Research a topic in the Reading Room
+            Research a topic with the Librarian
           </Link>
         </div>
       </div>

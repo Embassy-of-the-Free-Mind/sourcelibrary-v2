@@ -20,7 +20,7 @@ const STORE = process.argv.includes('--store');
 
 const STATIC_PAGES = [
   '/', '/collections', '/browse', '/gallery', '/libraries',
-  '/languages', '/search', '/about', '/reading-room', '/blog',
+  '/languages', '/search', '/about', '/librarian', '/blog',
   '/artwork', '/encyclopedia', '/explore', '/categories',
   '/topics', '/timeline', '/browse/authors', '/taxonomy',
 ];

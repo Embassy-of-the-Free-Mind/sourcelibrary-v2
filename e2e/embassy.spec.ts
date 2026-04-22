@@ -2,21 +2,21 @@ import { test, expect } from '@playwright/test';
 import { measurePerf } from './perf';
 
 /**
- * E2E tests for the Reading Room (formerly Embassy of the Free Mind).
+ * E2E tests for the Librarian (formerly Reading Room / Embassy of the Free Mind).
  * Tests against the live production site.
  */
 
-test.describe('Reading Room', () => {
+test.describe('Librarian', () => {
   test.beforeEach(async ({ page }) => {
-    await page.goto('/reading-room');
+    await page.goto('/librarian');
   });
 
   test.afterEach(async ({ page }, testInfo) => {
-    await measurePerf(page, `reading-room: ${testInfo.title}`);
+    await measurePerf(page, `librarian: ${testInfo.title}`);
   });
 
-  test('page loads with Reading Room heading', async ({ page }) => {
-    await expect(page.locator('h1')).toContainText('Reading Room');
+  test('page loads with Librarian heading', async ({ page }) => {
+    await expect(page.locator('h1')).toContainText('The Librarian');
   });
 
   test('shows librarian description', async ({ page }) => {
@@ -58,25 +58,25 @@ test.describe('Reading Room', () => {
   });
 });
 
-test.describe('Reading Room - Room Page', () => {
+test.describe('Librarian - Room Page', () => {
   test('general room loads', async ({ page }) => {
-    await page.goto('/reading-room/room/general');
+    await page.goto('/librarian/room/general');
     await expect(page.locator('h1')).toBeVisible();
   });
 });
 
-test.describe('Reading Room - Thread View', () => {
+test.describe('Librarian - Thread View', () => {
   test('thread page has back link', async ({ page }) => {
-    await page.goto('/reading-room');
-    const threadLink = page.locator('a[href*="/reading-room/thread/"]').first();
+    await page.goto('/librarian');
+    const threadLink = page.locator('a[href*="/librarian/thread/"]').first();
     if (await threadLink.isVisible()) {
       await threadLink.click();
-      await expect(page.locator('a[href="/reading-room"]')).toBeVisible();
+      await expect(page.locator('a[href="/librarian"]')).toBeVisible();
     }
   });
 });
 
-test.describe('Reading Room - API Routes', () => {
+test.describe('Librarian - API Routes', () => {
   test('GET /api/embassy/threads returns JSON', async ({ request }) => {
     const res = await request.get('/api/embassy/threads');
     if (res.status() === 429) { test.skip(); return; }

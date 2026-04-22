@@ -746,7 +746,7 @@ export default function ThreadPage({ params }: { params: Promise<{ id: string }>
   if (loading) {
     return (
       <div className="min-h-screen bg-[#fdfcf9]">
-        <SiteHeader variant="light" breadcrumbs={[{ label: 'Reading Room', href: '/reading-room' }]} />
+        <SiteHeader variant="light" breadcrumbs={[{ label: 'The Librarian', href: '/librarian' }]} />
         <div className="max-w-[680px] mx-auto px-6 py-16">
           <p className="text-[#8a8480] text-sm font-body">Loading...</p>
         </div>
@@ -757,13 +757,13 @@ export default function ThreadPage({ params }: { params: Promise<{ id: string }>
   if (error || !thread) {
     return (
       <div className="min-h-screen bg-[#fdfcf9]">
-        <SiteHeader variant="light" breadcrumbs={[{ label: 'Reading Room', href: '/reading-room' }]} />
+        <SiteHeader variant="light" breadcrumbs={[{ label: 'The Librarian', href: '/librarian' }]} />
         <div className="max-w-[680px] mx-auto px-6 py-16 text-center">
           <h1 className="text-2xl font-serif text-[#1a1612] mb-4" style={{ fontWeight: 400 }}>
             Thread not found
           </h1>
-          <Link href="/reading-room" className="text-sm text-[#9e4a3a] hover:underline font-sans">
-            Return to the Reading Room
+          <Link href="/librarian" className="text-sm text-[#9e4a3a] hover:underline font-sans">
+            Return to the Librarian
           </Link>
         </div>
       </div>
@@ -772,14 +772,14 @@ export default function ThreadPage({ params }: { params: Promise<{ id: string }>
 
   return (
     <div className="min-h-screen bg-[#fdfcf9]">
-      <SiteHeader variant="light" breadcrumbs={[{ label: 'Reading Room', href: '/reading-room' }]} />
+      <SiteHeader variant="light" breadcrumbs={[{ label: 'The Librarian', href: '/librarian' }]} />
 
       <div className="max-w-[680px] mx-auto px-6 py-8 md:py-12">
         <Link
-          href="/reading-room"
+          href="/librarian"
           className="text-[11px] text-[#6b6560] tracking-[0.2em] uppercase hover:text-[#444] transition-colors font-sans"
         >
-          The Reading Room
+          The Librarian
         </Link>
 
         <div className="mt-4 mb-8">
@@ -800,7 +800,7 @@ export default function ThreadPage({ params }: { params: Promise<{ id: string }>
                   setDeleting(true);
                   try {
                     const res = await fetch(`/api/embassy/threads/${id}`, { method: 'DELETE' });
-                    if (res.ok) router.push('/reading-room');
+                    if (res.ok) router.push('/librarian');
                     else setDeleting(false);
                   } catch { setDeleting(false); }
                 }}
@@ -872,7 +872,7 @@ export default function ThreadPage({ params }: { params: Promise<{ id: string }>
             Want to explore this topic further?
           </p>
           <Link
-            href="/reading-room"
+            href="/librarian"
             className="inline-block px-5 py-2.5 bg-[#1a1612] text-white rounded-lg text-sm font-sans hover:bg-[#2a2622] transition-colors"
           >
             Ask the Librarian
