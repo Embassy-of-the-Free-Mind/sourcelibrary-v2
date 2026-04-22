@@ -61,6 +61,8 @@ export interface Book {
 
   // Workflow status
   status?: BookStatus;
+  /** Libraries/institutions that hold a copy of this work (e.g. ['bph', 'mdz']) */
+  held_by?: string[];
   summary?: string | BookSummary;
   job?: {  // Active processing job (set during processing, cleared on completion)
     type: 'realtime' | 'batch';

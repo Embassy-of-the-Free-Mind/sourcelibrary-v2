@@ -26,7 +26,7 @@ export async function GET() {
     const result = await db.collection('books').aggregate([
       {
         $match: {
-          'image_source.provider': 'bph',
+          held_by: 'bph',
           visible: true,
           pages_count: { $gt: 0 },
           language: { $exists: true, $nin: [null, ''] },

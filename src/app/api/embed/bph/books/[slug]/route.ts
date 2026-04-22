@@ -28,7 +28,7 @@ export async function GET(
     // Try slug first, then ID
     const book = await db.collection('books').findOne({
       $or: [{ slug }, { id: slug }],
-      'image_source.provider': 'bph',
+      held_by: 'bph',
       visible: true,
     }, {
       projection: {

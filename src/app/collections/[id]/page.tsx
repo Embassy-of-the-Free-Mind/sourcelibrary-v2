@@ -217,8 +217,14 @@ async function fetchCollectionData(id: string, provider?: string) {
           { resource_type: { $exists: true } },
         ],
       };
-  // Tenant provider filter — restrict to a specific library's books
-  if (provider) filter['image_source.provider'] = provider;
+  // Tenant provider filter — restrict to a specific library's books.
+  // Use $and to avoid overwriting an existing $or on the filter.
+  if (provider) {
+    filter.$and = [
+      ...(filter.$and as unknown[] || []),
+      { $or: [{ held_by: provider }, { 'image_source.provider': provider }] },
+    ];
+  }
 
   const projection = {
     _id: 0, id: 1, slug: 1, title: 1, display_title: 1, author: 1, year: 1,
