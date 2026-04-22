@@ -210,9 +210,10 @@ export async function GET(request: NextRequest) {
     // Apply similarity floor to visual/semantic/artwork lanes.
     // Without this, nonsense queries like "xyznonexistent" return random results
     // because embeddings always find *something* in the vector space.
+    // Calibrated 2026-04-23: real queries score 0.67+, nonsense scores 0.57-0.63.
     const VISUAL_SIM_FLOOR = 0.28;
-    const SEMANTIC_SIM_FLOOR = 0.45;
-    const ARTWORK_SIM_FLOOR = 0.45;
+    const SEMANTIC_SIM_FLOOR = 0.65;
+    const ARTWORK_SIM_FLOOR = 0.65;
 
     const filteredVisual = {
       results: visualResult.results.filter((r: any) => (r.similarity ?? 1) >= VISUAL_SIM_FLOOR),
