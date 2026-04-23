@@ -1494,22 +1494,13 @@ export default function TranslationEditor({
                   </div>
                   <div className="flex-1 overflow-auto p-4 min-h-0" data-reader-panel>
                     {translationText && modernizedMode && modernizedText ? (
-                      /* Modernized text view */
-                      <div className="prose prose-sm max-w-none" style={{ color: 'var(--text-primary)', fontSize: 'var(--reader-font-size, 15px)', lineHeight: 'var(--reader-line-height, 1.8)' }}>
-                        {modernizedText.split('\n\n').map((para, i) => {
-                          const trimmed = para.trim();
-                          // Render <section-intro> tags as green editorial headers
-                          const sectionMatch = trimmed.match(/^<section-intro>([\s\S]*?)<\/section-intro>$/);
-                          if (sectionMatch) {
-                            return <p key={i} className="italic mt-6 mb-2 text-[13px]" style={{ color: '#5a8a6a' }}>{sectionMatch[1]}</p>;
-                          }
-                          // Legacy: italic section headers (*text*)
-                          if (/^\*[^*]+\*$/.test(trimmed)) {
-                            return <p key={i} className="italic mt-6 mb-2 text-[13px]" style={{ color: '#5a8a6a' }}>{trimmed.slice(1, -1)}</p>;
-                          }
-                          return <p key={i} className="mb-3">{trimmed}</p>;
-                        })}
-                      </div>
+                      /* Modernized text view — use NotesRenderer for full markdown support */
+                      (() => {
+                        // Convert <section-intro> tags to <note> tags so NotesRenderer styles them as green editorial notes
+                        const processedText = modernizedText
+                          .replace(/<section-intro>([\s\S]*?)<\/section-intro>/g, '\n\n<note>$1</note>\n\n');
+                        return <NotesRenderer text={processedText} showNotes={true} showMetadata={false} columns={page.columns} pageType={page.page_type} />;
+                      })()
                     ) : translationText && modernizedMode && !modernizedText ? (
                       /* Modernize button — text exists but no modernized version yet */
                       <div className="h-full flex flex-col items-center justify-center text-center px-4 gap-3">
