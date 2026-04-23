@@ -123,6 +123,10 @@ export default function SearchPage({ defaultLibrary }: { defaultLibrary?: string
     searchParams.get('sort') || 'recent-translation'
   );
 
+  // Collection pills expand/collapse (mobile)
+  const [showAllCollections, setShowAllCollections] = useState(false);
+  const MOBILE_COLLECTION_LIMIT = 6;
+
   // Browse gallery state (images tab in browse mode)
   const [browseImages, setBrowseImages] = useState<GalleryItem[]>([]);
   const [browseImageTotal, setBrowseImageTotal] = useState(0);
@@ -985,40 +989,57 @@ export default function SearchPage({ defaultLibrary }: { defaultLibrary?: string
         {/* Browse mode — shown when no query + books tab */}
         {isBrowseMode && viewMode !== 'images' && (
           <div>
-            {/* Collection pills */}
-            {collectionsList.length > 0 && (
-              <div className="flex flex-wrap gap-2 mb-6">
-                <button
-                  onClick={() => { setCollection(''); setOffset(0); }}
-                  className={`px-4 py-2 rounded-full text-sm font-medium transition-colors ${
-                    !collection
-                      ? 'bg-accent-rust text-white'
-                      : 'bg-warm text-secondary hover:bg-accent-rust/10 hover:text-accent-rust border border-border-light'
-                  }`}
-                >
-                  All books
-                  {!collection && browseTotal > 0 && (
-                    <span className="ml-1.5 text-white/80">({browseTotal})</span>
-                  )}
-                </button>
-                {collectionsList.map((col) => (
+            {/* Collection pills — truncated on mobile */}
+            {collectionsList.length > 0 && (() => {
+              const visibleCollections = showAllCollections
+                ? collectionsList
+                : collectionsList.slice(0, MOBILE_COLLECTION_LIMIT);
+              const hasMore = collectionsList.length > MOBILE_COLLECTION_LIMIT;
+              return (
+                <div className="flex flex-wrap gap-2 mb-6">
                   <button
-                    key={col.slug}
-                    onClick={() => { setCollection(col.slug); setOffset(0); }}
+                    onClick={() => { setCollection(''); setOffset(0); }}
                     className={`px-4 py-2 rounded-full text-sm font-medium transition-colors ${
-                      collection === col.slug
+                      !collection
                         ? 'bg-accent-rust text-white'
                         : 'bg-warm text-secondary hover:bg-accent-rust/10 hover:text-accent-rust border border-border-light'
                     }`}
                   >
-                    {col.name}
-                    <span className={`ml-1.5 ${collection === col.slug ? 'text-white/80' : 'text-muted'}`}>
-                      ({col.book_count})
-                    </span>
+                    All books
+                    {!collection && browseTotal > 0 && (
+                      <span className="ml-1.5 text-white/80">({browseTotal})</span>
+                    )}
                   </button>
-                ))}
-              </div>
-            )}
+                  {/* Show all on desktop, truncated on mobile */}
+                  {collectionsList.map((col, idx) => (
+                    <button
+                      key={col.slug}
+                      onClick={() => { setCollection(col.slug); setOffset(0); }}
+                      className={`px-4 py-2 rounded-full text-sm font-medium transition-colors ${
+                        !showAllCollections && idx >= MOBILE_COLLECTION_LIMIT ? 'hidden sm:inline-flex' : ''
+                      } ${
+                        collection === col.slug
+                          ? 'bg-accent-rust text-white'
+                          : 'bg-warm text-secondary hover:bg-accent-rust/10 hover:text-accent-rust border border-border-light'
+                      }`}
+                    >
+                      {col.name}
+                      <span className={`ml-1.5 ${collection === col.slug ? 'text-white/80' : 'text-muted'}`}>
+                        ({col.book_count})
+                      </span>
+                    </button>
+                  ))}
+                  {hasMore && !showAllCollections && (
+                    <button
+                      onClick={() => setShowAllCollections(true)}
+                      className="sm:hidden px-4 py-2 rounded-full text-sm font-medium bg-warm text-muted border border-border-light hover:text-secondary transition-colors"
+                    >
+                      +{collectionsList.length - MOBILE_COLLECTION_LIMIT} more
+                    </button>
+                  )}
+                </div>
+              );
+            })()}
 
             {/* Results count + per-page selector */}
             {!browseLoading && browseTotal > 0 && (
@@ -1218,7 +1239,7 @@ export default function SearchPage({ defaultLibrary }: { defaultLibrary?: string
                   Illustrations
                 </h2>
               )}
-              <div className={`grid gap-3 ${displayHint === 'images_first' ? 'grid-cols-2 sm:grid-cols-3 md:grid-cols-4' : 'grid-cols-3 sm:grid-cols-4 md:grid-cols-6'}`}>
+              <div className={`grid gap-3 ${displayHint === 'images_first' ? 'grid-cols-2 sm:grid-cols-3 md:grid-cols-4' : 'grid-cols-2 sm:grid-cols-4 md:grid-cols-6'}`}>
                 {imageResults.slice(0, displayHint === 'images_first' ? 8 : PREVIEW_IMAGES).map((item, idx) => (
                   <ImageResultCard key={`${item.pageId}-${item.detectionIndex}-${idx}`} item={item} query={query} large={displayHint === 'images_first'} />
                 ))}
@@ -1249,7 +1270,7 @@ export default function SearchPage({ defaultLibrary }: { defaultLibrary?: string
                 </h2>
               )}
               {bookResults.slice(0, PREVIEW_BOOKS).map((result, idx) => (
-                <BookResultCard key={result.id} result={result} query={query} autoPassages={idx === 0} />
+                <BookResultCard key={result.id} result={result} query={query} autoPassages={idx === 0} mobileCompact />
               ))}
               {bookTotal > PREVIEW_BOOKS && (
                 <button onClick={() => drillInto('books')} className="text-sm text-accent-rust hover:text-accent-rust-dark font-medium transition-colors flex items-center gap-1">
@@ -1436,7 +1457,7 @@ function cleanSnippet(text: string): string {
     .trim();
 }
 
-function BookResultCard({ result, query, autoPassages }: { result: SearchResult; query: string; autoPassages?: boolean }) {
+function BookResultCard({ result, query, autoPassages, mobileCompact }: { result: SearchResult; query: string; autoPassages?: boolean; mobileCompact?: boolean }) {
   const cover = getBookThumbnailUrl({ thumbnail: result.thumbnail, thumbnail_blob: (result as any).thumbnail_blob });
   const text = cleanSnippet(result.snippet || result.summary || '');
   const [imgError, setImgError] = useState(false);
@@ -1474,12 +1495,14 @@ function BookResultCard({ result, query, autoPassages }: { result: SearchResult;
     }
   }, [result.book_id, query, passages]);
 
-  // Auto-fetch passages for first translated book
+  // Auto-fetch passages for first translated book (desktop only — too tall on mobile)
+  const isMobileView = typeof window !== 'undefined' && window.innerWidth < 640;
   useEffect(() => {
-    if (autoPassages && !autoFired.current && result.translated_count && result.translated_count > 0) {
+    if (autoPassages && !autoFired.current && result.translated_count && result.translated_count > 0 && !isMobileView) {
       autoFired.current = true;
       fetchPassages();
     }
+  // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [autoPassages, result.translated_count, fetchPassages]);
 
   const findPassages = useCallback(async (e: React.MouseEvent) => {
@@ -1494,20 +1517,20 @@ function BookResultCard({ result, query, autoPassages }: { result: SearchResult;
 
   return (
     <div className="bg-white rounded-xl border border-border-light hover:border-accent-rust/30 hover:shadow-md transition-all">
-      <Link href={href} className="block p-4">
-        <div className="flex items-start gap-4">
+      <Link href={href} className={`block ${mobileCompact ? 'p-3 sm:p-4' : 'p-4'}`}>
+        <div className="flex items-start gap-3 sm:gap-4">
           {cover && !imgError ? (
             <Image
               src={cover}
               alt=""
               width={60}
               height={84}
-              className="rounded shadow-sm flex-shrink-0 object-cover"
+              className={`rounded shadow-sm flex-shrink-0 object-cover ${mobileCompact ? 'w-[44px] h-[62px] sm:w-[60px] sm:h-[84px]' : ''}`}
               onError={() => setImgError(true)}
               unoptimized
             />
           ) : (
-            <div className="w-[60px] h-[84px] rounded bg-warm flex items-center justify-center flex-shrink-0">
+            <div className={`rounded bg-warm flex items-center justify-center flex-shrink-0 ${mobileCompact ? 'w-[44px] h-[62px] sm:w-[60px] sm:h-[84px]' : 'w-[60px] h-[84px]'}`}>
               <Book className="w-6 h-6 text-border-medium" />
             </div>
           )}
@@ -1530,12 +1553,12 @@ function BookResultCard({ result, query, autoPassages }: { result: SearchResult;
               )}
             </div>
             {text ? (
-              <p className="mt-1.5 text-sm text-secondary line-clamp-2 font-body leading-relaxed">
+              <p className={`mt-1.5 text-sm text-secondary font-body leading-relaxed ${mobileCompact ? 'line-clamp-1 sm:line-clamp-2' : 'line-clamp-2'}`}>
                 <HighlightedText text={text} query={query} />
               </p>
             ) : result.categories && result.categories.length > 0 ? (
               <div className="mt-1.5 flex flex-wrap gap-1">
-                {result.categories.slice(0, 4).map((cat: string) => (
+                {result.categories.slice(0, mobileCompact ? 2 : 4).map((cat: string) => (
                   <span key={cat} className="text-xs px-2 py-0.5 bg-warm text-muted rounded-full">{cat}</span>
                 ))}
               </div>
@@ -1594,12 +1617,12 @@ function SemanticResultCard({ result, query }: { result: any; query: string }) {
   const cover = getBookThumbnailUrl({ thumbnail: result.thumbnail, thumbnail_blob: result.thumbnail_blob });
   return (
     <div className="bg-white rounded-xl border border-border-light hover:border-accent-rust/30 hover:shadow-md transition-all">
-      <Link href={`/book/${result.slug || result.book_id}`} className="block p-4">
-        <div className="flex items-start gap-4">
+      <Link href={`/book/${result.slug || result.book_id}`} className="block p-3 sm:p-4">
+        <div className="flex items-start gap-3 sm:gap-4">
           {cover ? (
-            <Image src={cover} alt="" width={60} height={84} className="rounded shadow-sm flex-shrink-0 object-cover w-[60px] h-[84px]" />
+            <Image src={cover} alt="" width={60} height={84} className="rounded shadow-sm flex-shrink-0 object-cover w-[44px] h-[62px] sm:w-[60px] sm:h-[84px]" />
           ) : (
-            <div className="w-[60px] h-[84px] rounded bg-warm flex items-center justify-center flex-shrink-0">
+            <div className="w-[44px] h-[62px] sm:w-[60px] sm:h-[84px] rounded bg-warm flex items-center justify-center flex-shrink-0">
               <Book className="w-6 h-6 text-border-medium" />
             </div>
           )}
@@ -1610,7 +1633,7 @@ function SemanticResultCard({ result, query }: { result: any; query: string }) {
               {result.language ? ` · ${result.language}` : ''}
             </p>
             {result.summary_snippet && (
-              <p className="text-sm text-secondary mt-1.5 line-clamp-2">{result.summary_snippet}</p>
+              <p className="text-sm text-secondary mt-1.5 line-clamp-1 sm:line-clamp-2">{result.summary_snippet}</p>
             )}
             {result.relevance_hint && (
               <p className="text-xs text-violet-500 mt-1">{result.relevance_hint}</p>
