@@ -69,7 +69,7 @@ export default function SearchPage({ defaultLibrary }: { defaultLibrary?: string
   const [indexTotal, setIndexTotal] = useState(0);
   const [imageResults, setImageResults] = useState<GalleryItem[]>([]);
   const [imageTotal, setImageTotal] = useState(0);
-  const [collectionResults, setCollectionResults] = useState<{ slug: string; name: string; description?: string; book_count: number; featured_image?: string }[]>([]);
+  const [collectionResults, setCollectionResults] = useState<{ slug: string; name: string; description?: string; book_count: number; featured_image?: string; hero_image?: string }[]>([]);
 
   // Semantic results (parallel search agent)
   const [semanticResults, setSemanticResults] = useState<any[]>([]);
@@ -1281,24 +1281,34 @@ export default function SearchPage({ defaultLibrary }: { defaultLibrary?: string
           );
 
           const collectionCards = collectionResults.length > 0 && (
-            <div className="space-y-2">
+            <div className="grid grid-cols-2 sm:grid-cols-3 gap-3">
               {collectionResults.map(col => (
                 <Link
                   key={col.slug}
                   href={`/collections/${col.slug}`}
-                  className="flex items-center gap-3 p-3 bg-white rounded-xl border border-accent-rust/20 hover:border-accent-rust/40 hover:shadow-md transition-all"
+                  className="group relative block overflow-hidden rounded-lg aspect-[4/3]"
                 >
-                  {col.featured_image && (
-                    <Image src={col.featured_image} alt="" width={48} height={48} className="rounded-lg object-cover flex-shrink-0" unoptimized />
+                  {col.hero_image ? (
+                    <Image
+                      src={col.hero_image}
+                      alt={`Illustration from ${col.name}`}
+                      fill
+                      sizes="(max-width: 640px) 50vw, 33vw"
+                      className="object-cover transition-transform duration-500 ease-out group-hover:scale-105"
+                      unoptimized
+                    />
+                  ) : (
+                    <div className="absolute inset-0 bg-warm" />
                   )}
-                  <div className="min-w-0 flex-1">
-                    <h3 className="font-serif font-medium text-primary text-sm">{col.name}</h3>
-                    {col.description && (
-                      <p className="text-xs text-secondary mt-0.5 line-clamp-1">{col.description}</p>
-                    )}
-                    <span className="text-xs text-muted">{col.book_count} books</span>
+                  <div className="absolute inset-0 bg-gradient-to-t from-[rgba(26,22,18,0.85)] via-[rgba(26,22,18,0.35)] to-transparent" />
+                  <div className="absolute inset-0 flex flex-col justify-end p-3">
+                    <p className="text-white/50 text-[11px] mb-1">
+                      {col.book_count.toLocaleString()} books
+                    </p>
+                    <h3 className="font-serif text-sm sm:text-base text-white font-semibold leading-tight line-clamp-2 group-hover:text-accent-gold transition-colors">
+                      {col.name}
+                    </h3>
                   </div>
-                  <ChevronRight className="w-4 h-4 text-muted flex-shrink-0" />
                 </Link>
               ))}
             </div>
