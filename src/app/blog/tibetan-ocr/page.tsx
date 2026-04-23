@@ -332,7 +332,7 @@ export default function TibetanOcrPage() {
 
       </article>
 
-      <BlogComments />
+      <BlogComments slug="tibetan-ocr" />
 
     </ContentPageLayout>
   );
