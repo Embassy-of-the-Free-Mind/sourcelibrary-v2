@@ -46,7 +46,7 @@ async function fetchBPHCollections(): Promise<CollectionDoc[]> {
 
   for (const col of collections) {
     const count = await books.countDocuments({
-      'image_source.provider': 'bph',
+      held_by: 'bph',
       visible: true,
       pages_count: { $gt: 0 },
       categories: col.slug,

@@ -25,6 +25,26 @@ interface BlogPost {
 
 const posts: BlogPost[] = [
   {
+    slug: 'tibetan-ocr',
+    title: 'Benchmarking AI OCR on 232,000 Pages of Bhutanese Manuscripts',
+    subtitle: 'Claude, Gemini, and the question of what "good enough" means for handwritten Tibetan. We test three models on monastery manuscripts from Gangtey, Drametse, and Tshamdrak.',
+    date: '23 April 2026',
+    readTime: '12 min read',
+    tag: 'Research',
+    tagColor: 'bg-emerald-50 text-emerald-700',
+    image: 'https://images.eap.bl.uk/EAP039/EAP039_1_4_277/10.jp2/full/600,/0/default.jpg',
+    imageAlt: 'Ritual mandala from Gangtey Monastery, Bhutan',
+  },
+  {
+    slug: 'incunabula-knowledge-graph',
+    title: 'Mapping the Incunabula',
+    subtitle: 'An interactive knowledge graph connecting nearly 1,000 pre-1501 printed books by author, printer, place, and subject — revealing the networks behind the printing revolution.',
+    date: '22 April 2026',
+    readTime: '8 min read',
+    tag: 'Interactive',
+    tagColor: 'bg-amber-50 text-amber-700',
+  },
+  {
     slug: 'cellulae',
     title: 'Cellulae',
     subtitle: 'A word on page 32 of a medieval manuscript launched modern biology. The argument on page 33 helped criminalize rape victims for eight centuries. They were written by the same man.',

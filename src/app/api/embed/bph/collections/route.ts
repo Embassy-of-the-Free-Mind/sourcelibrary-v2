@@ -44,7 +44,7 @@ export async function GET(request: NextRequest) {
       }
 
       const bookFilter = {
-        'image_source.provider': 'bph',
+        held_by: 'bph',
         visible: true,
         pages_count: { $gt: 0 },
         categories: slug,
@@ -116,7 +116,7 @@ export async function GET(request: NextRequest) {
     const collectionsWithCounts: Array<{ slug: string; name: string; description?: string; subtitle?: string; featured_images?: unknown[]; bph_count: number }> = [];
     for (const col of collections) {
       const count = await bphBooks.countDocuments({
-        'image_source.provider': 'bph',
+        held_by: 'bph',
         visible: true,
         pages_count: { $gt: 0 },
         categories: col.slug,

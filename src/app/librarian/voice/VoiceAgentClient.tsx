@@ -386,7 +386,7 @@ function VoiceAgentInner() {
                 </button>
               )}
               <div className="mt-auto pt-4 border-t border-[#e8e4dc]">
-                <Link href="/reading-room" className="text-sm text-[#c9a86c] hover:text-[#a88a4c] font-display">Switch to text chat &rarr;</Link>
+                <Link href="/librarian" className="text-sm text-[#c9a86c] hover:text-[#a88a4c] font-display">Switch to text chat &rarr;</Link>
               </div>
             </div>
           </div>

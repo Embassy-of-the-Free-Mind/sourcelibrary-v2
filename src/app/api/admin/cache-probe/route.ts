@@ -14,7 +14,7 @@ const STATIC_PAGES = [
   '/languages',
   '/search',
   '/about',
-  '/reading-room',
+  '/librarian',
   '/blog',
   '/artwork',
   '/encyclopedia',

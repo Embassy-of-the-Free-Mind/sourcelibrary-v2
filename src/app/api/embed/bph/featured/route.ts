@@ -31,7 +31,7 @@ export async function GET(request: NextRequest) {
 
     const db = await getReadDb();
     const filter: Record<string, unknown> = {
-      'image_source.provider': 'bph',
+      held_by: 'bph',
       visible: true,
       pages_count: { $gt: 0 },
       pages_translated: { $gt: 0 },
