@@ -228,11 +228,25 @@ export async function GET(request: NextRequest) {
     };
     filteredSemantic.total = filteredSemantic.results.length;
 
+    const artworksAboveFloor = artworkResult.results.filter(r => r.similarity >= ARTWORK_SIM_FLOOR);
+    // Enrich artworks with slugs from MongoDB (needed for /artwork/[slug] links)
+    if (artworksAboveFloor.length > 0) {
+      try {
+        const artworkIds = artworksAboveFloor.map(a => a.book_id);
+        const artworkDocs = await db.collection('books').find(
+          { id: { $in: artworkIds } },
+          { projection: { id: 1, slug: 1 } }
+        ).maxTimeMS(2000).toArray();
+        const slugMap = new Map(artworkDocs.map(d => [d.id, d.slug]));
+        for (const a of artworksAboveFloor) {
+          (a as any).slug = slugMap.get(a.book_id) || null;
+        }
+      } catch { /* non-fatal */ }
+    }
     const filteredArtworks = {
-      results: artworkResult.results.filter(r => r.similarity >= ARTWORK_SIM_FLOOR),
-      total: 0,
+      results: artworksAboveFloor,
+      total: artworksAboveFloor.length,
     };
-    filteredArtworks.total = filteredArtworks.results.length;
 
     // Log search query (fire-and-forget)
     db.collection('analytics_events').insertOne({

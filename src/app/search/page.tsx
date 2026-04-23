@@ -378,7 +378,8 @@ export default function SearchPage({ defaultLibrary }: { defaultLibrary?: string
               description: a.display_title || a.title || '',
               type: a.genre || 'artwork',
               isArtwork: true,
-            } as GalleryItem & { isArtwork?: boolean });
+              artworkSlug: a.slug || null,
+            } as GalleryItem & { isArtwork?: boolean; artworkSlug?: string | null });
           }
           const imTotal = (data.gallery?.total || 0) + (data.visual?.total || 0) + artworkResults.length;
 
@@ -1704,16 +1705,21 @@ function IndexResultCard({ result, query }: { result: IndexSearchResult; query: 
   );
 }
 
-function ImageResultCard({ item, query, large }: { item: GalleryItem; query: string; large?: boolean }) {
+function ImageResultCard({ item, query, large }: { item: GalleryItem & { isArtwork?: boolean; artworkSlug?: string | null }; query: string; large?: boolean }) {
   const [imageError, setImageError] = useState(false);
 
   // Use pre-generated thumbnail/extracted URL first (publicly accessible),
   // fall back to original imageUrl (crop-image API requires auth and breaks for visitors)
   const displayUrl = item.thumbnailUrl || item.extractedUrl || item.imageUrl;
 
+  // Artworks link to /artwork/[slug], gallery images to /gallery/image/[id]
+  const href = item.isArtwork
+    ? `/artwork/${item.artworkSlug || item.pageId}`
+    : `/gallery/image/${item.pageId}-${item.detectionIndex}`;
+
   return (
     <Link
-      href={`/gallery/image/${item.pageId}-${item.detectionIndex}`}
+      href={href}
       className="group block bg-white rounded-lg border border-border-light overflow-hidden hover:border-accent-gold/30 hover:shadow-md transition-all"
     >
       <div className={`relative bg-warm ${large ? 'aspect-[3/4]' : 'aspect-square'}`}>
