@@ -25,6 +25,15 @@ interface BlogPost {
 
 const posts: BlogPost[] = [
   {
+    slug: 'confident-hallucinator',
+    title: 'The Confident Hallucinator',
+    subtitle: 'What we learned evaluating AI OCR across four scripts. A model can be perfectly consistent and completely wrong — 100% consistency, 0% accuracy.',
+    date: '23 April 2026',
+    readTime: '10 min read',
+    tag: 'Research',
+    tagColor: 'bg-blue-50 text-blue-700',
+  },
+  {
     slug: 'incunabula-knowledge-graph',
     title: 'Mapping the Incunabula',
     subtitle: 'An interactive knowledge graph connecting nearly 1,000 pre-1501 printed books by author, printer, place, and subject — revealing the networks behind the printing revolution.',
