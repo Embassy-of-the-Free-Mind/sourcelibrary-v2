@@ -321,6 +321,11 @@ const MODERNIZATION_PROMPT = `You are an editor turning a scholarly translation 
 - Humor and irony
 - Cultural details and customs
 
+**Cross-page continuity:**
+- If previous page context is provided, your text MUST flow seamlessly from it. If the previous page ended mid-sentence or mid-thought, continue it naturally — do NOT restart or summarize.
+- Match the tone, tense, and style of the previous page's modernized text.
+- Never begin with a transition that ignores what came before.
+
 **Format:** Clean prose with paragraph breaks and occasional italic section headers. No markdown headings (#), no bullet points, no annotations. Just flowing, readable modern text that preserves every detail of the original.
 
 **IMPORTANT:** If the translation has <note>...</note>, <term>...</term>, or other XML/bracket tags, incorporate that information naturally into the text rather than preserving the markup. Remove all tags from output.`;
@@ -337,14 +342,16 @@ export async function performModernization(
   const model = getGeminiClient().getGenerativeModel({ model: modelId });
 
   let prompt = customPrompt || MODERNIZATION_PROMPT;
-  prompt += `\n\n**Text to modernize:**\n${translationText}`;
 
+  // Previous context FIRST so the model knows what it's continuing from
   if (previousContext?.modernized) {
-    prompt += `\n\n**Previous page (modernized) for continuity:**\n${previousContext.modernized.slice(0, 2000)}...`;
+    prompt += `\n\n**Previous page (modernized) — continue seamlessly from here:**\n...${previousContext.modernized.slice(-1500)}`;
   }
   if (previousContext?.translation) {
-    prompt += `\n\n**Previous page (original translation) for reference:**\n${previousContext.translation.slice(0, 2000)}...`;
+    prompt += `\n\n**Previous page (original translation) for reference:**\n...${previousContext.translation.slice(-1500)}`;
   }
+
+  prompt += `\n\n**Text to modernize (this page):**\n${translationText}`;
 
   const result = await model.generateContent(prompt);
 
