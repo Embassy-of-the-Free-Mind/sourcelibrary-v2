@@ -1499,7 +1499,7 @@ export default function TranslationEditor({
                         {modernizedText.split('\n\n').map((para, i) => {
                           const trimmed = para.trim();
                           // Render <section-intro> tags as green editorial headers
-                          const sectionMatch = trimmed.match(/^<section-intro>(.*?)<\/section-intro>$/s);
+                          const sectionMatch = trimmed.match(/^<section-intro>([\s\S]*?)<\/section-intro>$/);
                           if (sectionMatch) {
                             return <p key={i} className="italic mt-6 mb-2 text-[13px]" style={{ color: '#5a8a6a' }}>{sectionMatch[1]}</p>;
                           }
