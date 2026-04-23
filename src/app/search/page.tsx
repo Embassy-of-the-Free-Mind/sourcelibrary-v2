@@ -1283,33 +1283,7 @@ export default function SearchPage({ defaultLibrary }: { defaultLibrary?: string
           const collectionCards = collectionResults.length > 0 && (
             <div className="grid grid-cols-2 sm:grid-cols-3 gap-3">
               {collectionResults.map(col => (
-                <Link
-                  key={col.slug}
-                  href={`/collections/${col.slug}`}
-                  className="group relative block overflow-hidden rounded-lg aspect-[4/3]"
-                >
-                  {col.hero_image ? (
-                    <Image
-                      src={col.hero_image}
-                      alt={`Illustration from ${col.name}`}
-                      fill
-                      sizes="(max-width: 640px) 50vw, 33vw"
-                      className="object-cover transition-transform duration-500 ease-out group-hover:scale-105"
-                      unoptimized
-                    />
-                  ) : (
-                    <div className="absolute inset-0 bg-warm" />
-                  )}
-                  <div className="absolute inset-0 bg-gradient-to-t from-[rgba(26,22,18,0.85)] via-[rgba(26,22,18,0.35)] to-transparent" />
-                  <div className="absolute inset-0 flex flex-col justify-end p-3">
-                    <p className="text-white/50 text-[11px] mb-1">
-                      {col.book_count.toLocaleString()} books
-                    </p>
-                    <h3 className="font-serif text-sm sm:text-base text-white font-semibold leading-tight line-clamp-2 group-hover:text-accent-gold transition-colors">
-                      {col.name}
-                    </h3>
-                  </div>
-                </Link>
+                <SearchCollectionCard key={col.slug} col={col} />
               ))}
             </div>
           );
@@ -1623,14 +1597,48 @@ function BookResultCard({ result, query, autoPassages, mobileCompact }: { result
   );
 }
 
+function SearchCollectionCard({ col }: { col: { slug: string; name: string; book_count: number; hero_image?: string } }) {
+  const [imgError, setImgError] = useState(false);
+  return (
+    <Link
+      href={`/collections/${col.slug}`}
+      className="group relative block overflow-hidden rounded-lg aspect-[4/3]"
+    >
+      {col.hero_image && !imgError ? (
+        <Image
+          src={col.hero_image}
+          alt={`Illustration from ${col.name}`}
+          fill
+          sizes="(max-width: 640px) 50vw, 33vw"
+          className="object-cover transition-transform duration-500 ease-out group-hover:scale-105"
+          unoptimized
+          onError={() => setImgError(true)}
+        />
+      ) : (
+        <div className="absolute inset-0 bg-warm" />
+      )}
+      <div className="absolute inset-0 bg-gradient-to-t from-[rgba(26,22,18,0.85)] via-[rgba(26,22,18,0.35)] to-transparent" />
+      <div className="absolute inset-0 flex flex-col justify-end p-3">
+        <p className="text-white/50 text-[11px] mb-1">
+          {col.book_count.toLocaleString()} books
+        </p>
+        <h3 className="font-serif text-sm sm:text-base text-white font-semibold leading-tight line-clamp-2 group-hover:text-accent-gold transition-colors">
+          {col.name}
+        </h3>
+      </div>
+    </Link>
+  );
+}
+
 function SemanticResultCard({ result, query }: { result: any; query: string }) {
   const cover = getBookThumbnailUrl({ thumbnail: result.thumbnail, thumbnail_blob: result.thumbnail_blob });
+  const [imgError, setImgError] = useState(false);
   return (
     <div className="bg-white rounded-xl border border-border-light hover:border-accent-rust/30 hover:shadow-md transition-all">
       <Link href={`/book/${result.slug || result.book_id}`} className="block p-3 sm:p-4">
         <div className="flex items-start gap-3 sm:gap-4">
-          {cover ? (
-            <Image src={cover} alt="" width={60} height={84} className="rounded shadow-sm flex-shrink-0 object-cover w-[44px] h-[62px] sm:w-[60px] sm:h-[84px]" />
+          {cover && !imgError ? (
+            <Image src={cover} alt="" width={60} height={84} className="rounded shadow-sm flex-shrink-0 object-cover w-[44px] h-[62px] sm:w-[60px] sm:h-[84px]" unoptimized onError={() => setImgError(true)} />
           ) : (
             <div className="w-[44px] h-[62px] sm:w-[60px] sm:h-[84px] rounded bg-warm flex items-center justify-center flex-shrink-0">
               <Book className="w-6 h-6 text-border-medium" />
@@ -1717,6 +1725,7 @@ function ImageResultCard({ item, query, large }: { item: GalleryItem; query: str
             className="object-cover group-hover:scale-105 transition-transform duration-300"
             sizes={large ? '(max-width: 640px) 50vw, (max-width: 1024px) 25vw, 20vw' : '(max-width: 640px) 50vw, 16vw'}
             onError={() => setImageError(true)}
+            unoptimized
           />
         ) : (
           <div className="absolute inset-0 flex items-center justify-center">
