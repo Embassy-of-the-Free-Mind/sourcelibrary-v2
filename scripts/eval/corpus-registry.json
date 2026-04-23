@@ -1,0 +1,65 @@
+{
+  "bhutan": {
+    "label": "Bhutanese Buddhist Manuscripts",
+    "script": "tibetan",
+    "filter": { "categories": "Tibetan Buddhism", "image_source.provider": { "$in": ["eap", "bdrc"] } },
+    "default_sample": 20,
+    "notes": "1,325 EAP manuscripts, 232K pages. dbu can + dbu med scripts."
+  },
+  "latin-alchemy": {
+    "label": "Latin Alchemical Texts (pre-1700)",
+    "script": "default",
+    "filter": { "language": "la", "categories": "Alchemy", "status": "live" },
+    "default_sample": 15,
+    "notes": "Printed Latin texts — baseline for OCR evaluation."
+  },
+  "fraktur": {
+    "label": "German Fraktur (pre-1800)",
+    "script": "default",
+    "filter": { "language": "de", "year": { "$lt": 1800 }, "status": "live" },
+    "default_sample": 15,
+    "notes": "Blackletter/Fraktur typefaces."
+  },
+  "arabic": {
+    "label": "Arabic Printed Texts",
+    "script": "arabic",
+    "filter": { "language": "ar", "status": "live" },
+    "default_sample": 15,
+    "notes": "Naskh script, printed editions."
+  },
+  "hebrew": {
+    "label": "Hebrew Texts",
+    "script": "hebrew",
+    "filter": { "language": "he", "status": "live" },
+    "default_sample": 15,
+    "notes": "Hebrew + Rashi script. Known failure mode for some models."
+  },
+  "chinese-classical": {
+    "label": "Classical Chinese (woodblock)",
+    "script": "cjk",
+    "filter": { "language": "zh", "status": "live" },
+    "default_sample": 15,
+    "notes": "Woodblock-printed classical Chinese."
+  },
+  "sanskrit": {
+    "label": "Sanskrit (Devanagari)",
+    "script": "default",
+    "filter": { "language": "sa", "status": "live" },
+    "default_sample": 15,
+    "notes": "Printed Devanagari editions."
+  },
+  "greek-ancient": {
+    "label": "Ancient Greek (printed editions)",
+    "script": "default",
+    "filter": { "language": "grc", "status": "live" },
+    "default_sample": 15,
+    "notes": "Aldine and early printed Greek."
+  },
+  "bph-manuscripts": {
+    "label": "BPH Manuscripts (Embassy of the Free Mind)",
+    "script": "default",
+    "filter": { "image_source.provider": "bph", "status": "live" },
+    "default_sample": 15,
+    "notes": "High-quality scans from Bibliotheca Philosophica Hermetica."
+  }
+}
