@@ -326,7 +326,7 @@ const MODERNIZATION_PROMPT = `You are an editor turning a scholarly translation 
 - Match the tone, tense, and style of the previous page's modernized text.
 - Never begin with a transition that ignores what came before.
 
-**Format:** Clean prose with paragraph breaks and occasional italic section headers. No markdown headings (#), no bullet points, no annotations. Just flowing, readable modern text that preserves every detail of the original.
+**Format:** Clean prose with paragraph breaks and occasional <section-intro> headers at major topic shifts. Do NOT add new markdown headings, but DO preserve original document structure: book titles, author names, chapter headings, and section titles from the source text should be kept as markdown headings (# ## ###) exactly as they appear in the input.
 
 **IMPORTANT:** If the translation has <note>...</note>, <term>...</term>, or other XML/bracket tags, incorporate that information naturally into the text rather than preserving the markup. Remove all tags from output.`;
 
