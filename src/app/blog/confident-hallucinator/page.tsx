@@ -168,8 +168,87 @@ export default function ConfidentHallucinatorPage() {
           Flash Lite is generating <strong>4&ndash;27x more text</strong> than Flash on the same Hebrew pages. On the Key of Solomon manuscript (p96), it produces nearly 16,000 characters from a single manuscript page that Flash reads as ~587 characters. That&rsquo;s not OCR &mdash; that&rsquo;s generation. The model is writing plausible Hebrew text that has nothing to do with what&rsquo;s on the page.
         </p>
 
-        <p className="text-secondary leading-relaxed mb-6">
+        <p className="text-secondary leading-relaxed mb-8">
           And it does this with perfect consistency. Every run, the same hallucination. <strong>MCR&nbsp;=&nbsp;100%, accuracy&nbsp;&asymp;&nbsp;0%.</strong>
+        </p>
+
+        {/* --- Side-by-side comparison --- */}
+        <h3 className="text-xl text-primary mt-12 mb-4">
+          Side by Side: Sepher Maphteah Shelomo, Page 96
+        </h3>
+
+        <p className="text-secondary leading-relaxed mb-6">
+          Here is the actual OCR output from both models on the same page of the <a href="/book/sepher-maphteah-shelomo-book-of-the-key-of-solomon-anonymous" className="text-accent-rust hover:underline">Key of Solomon</a> manuscript. Flash reads a specific passage about a silver amulet inscribed with divine names. Lite starts similarly, then enters a generative loop &mdash; repeating &ldquo;this is a great and hidden secret from all the wise of heart&rdquo; for 16,000 characters.
+        </p>
+
+        {/* Source page image */}
+        <div className="mb-6">
+          <p className="text-xs text-muted mb-2 uppercase tracking-wide">Source manuscript page</p>
+          <img
+            src="https://images.sourcelibrary.org/archived/695285cdab34727b1f04c25a/96.jpg"
+            alt="Page 96 of Sepher Maphteah Shelomo (Key of Solomon), a Hebrew magical manuscript"
+            className="w-full max-w-lg rounded border border-light"
+            loading="lazy"
+          />
+        </div>
+
+        <div className="grid md:grid-cols-2 gap-6 mb-8">
+          {/* Flash output */}
+          <div className="border border-light rounded-lg overflow-hidden">
+            <div className="bg-green-50 px-4 py-2 border-b border-light">
+              <p className="text-sm font-semibold text-green-800">Gemini Flash 3 &mdash; 552 chars</p>
+              <p className="text-xs text-green-600">MCR 33% &middot; 3 different outputs &middot; Unstable but plausible</p>
+            </div>
+            <div className="p-4 text-sm text-secondary leading-relaxed font-mono direction-rtl text-right max-h-64 overflow-y-auto" dir="rtl">
+              &#1502;&#1494;<br/>
+              &#1511;&#1495; &#1500;&#1498; &#1502;&#1496;&#1497;&#1500; &#1513;&#1500; &#1499;&#1505;&#1507; &#1510;&#1512;&#1493;&#1507; &#1493;&#1497;&#1492;&#1497; &#1502;&#1513;&#1511;&#1500;&#1493; &#1495;&#1502;&#1513;&#1492; &#1494;&#1492;&#1493;&#1489;&#1497;&#1501; &#1493;&#1497;&#1492;&#1497; &#1506;&#1490;&#1493;&#1500; &#1493;&#1495;&#1511;&#1493;&#1511; &#1506;&#1500;&#1497;&#1493; &#1488;&#1500;&#1493; &#1492;&#1513;&#1502;&#1493;&#1514;<br/>
+              &#1493;&#1492;&#1513;&#1502;&#1493;&#1514; &#1492;&#1502;&#1492; &#1488;&#1500;&#1493;: &#1497;&#1492;&#1493;&#1492; &#1510;&#1489;&#1488;&#1493;&#1514; &#1488;&#1500;&#1492;&#1497; &#1497;&#1513;&#1512;&#1488;&#1500; : &#1493;&#1502;&#1503; &#1492;&#1510;&#1491; &#1492;&#1513;&#1504;&#1497; &#1513;&#1500; &#1492;&#1502;&#1496;&#1497;&#1500; &#1497;&#1492;&#1497;&#1492;<br/>
+              &#1495;&#1511;&#1493;&#1511; &#1513;&#1501; &#1492;&#1502;&#1508;&#1493;&#1512;&#1513; &#1493;&#1492;&#1493;&#1488; &#1488;&#1490;&#1500;&#1488; &#1488;&#1490;&#1500;&#1488; &#1488;&#1490;&#1500;&#1488; : &#1493;&#1497;&#1492;&#1497; &#1492;&#1502;&#1496;&#1497;&#1500; &#1492;&#1494;&#1492; &#1514;&#1500;&#1493;&#1497; &#1489;&#1510;&#1493;&#1488;&#1512;&#1498;<br/>
+              &#1493;&#1511;&#1493;&#1491;&#1501; &#1513;&#1514;&#1514;&#1500;&#1492; &#1488;&#1493;&#1514;&#1493; &#1489;&#1510;&#1493;&#1488;&#1512;&#1498; &#1514;&#1488;&#1502;&#1512; &#1488;&#1500;&#1493; &#1492;&#1513;&#1502;&#1493;&#1514; &#1513;&#1489;&#1506; &#1508;&#1506;&#1502;&#1497;&#1501; &#1489;&#1499;&#1500; &#1497;&#1493;&#1501; ~
+            </div>
+          </div>
+
+          {/* Lite output */}
+          <div className="border border-red-200 rounded-lg overflow-hidden">
+            <div className="bg-red-50 px-4 py-2 border-b border-red-200">
+              <p className="text-sm font-semibold text-red-800">Gemini Flash Lite &mdash; 15,957 chars</p>
+              <p className="text-xs text-red-600">MCR 100% &middot; 3 identical outputs &middot; Deterministic hallucination</p>
+            </div>
+            <div className="p-4 text-sm text-secondary leading-relaxed font-mono direction-rtl text-right max-h-64 overflow-y-auto" dir="rtl">
+              &#1502;&#1494;<br/>
+              &#1494;&#1492; &#1513;&#1500;&#1501;. &#1493;&#1491;&#1506; &#1499;&#1497; &#1489;&#1497;&#1493;&#1501; &#1494;&#1492; &#1514;&#1506;&#1513;&#1492; &#1492;&#1496;&#1489;&#1506;&#1514; &#1492;&#1494;&#1488;&#1514; &#1493;&#1514;&#1495;&#1512;&#1493;&#1496; &#1506;&#1500;&#1497;&#1492; &#1492;&#1513;&#1502;&#1493;&#1514; &#1492;&#1488;&#1500;&#1492;<br/>
+              &#1493;&#1492;&#1513;&#1502;&#1493;&#1514; &#1492;&#1501;: &#1488;&#1490;&#1500;&#1488; &#1488;&#1490;&#1500;&#1488; &#1488;&#1490;&#1500;&#1488; &#1488;&#1490;&#1500;&#1488;<br/>
+              &#1493;&#1491;&#1506; &#1513;&#1494;&#1492; &#1492;&#1513;&#1501; &#1492;&#1493;&#1488; &#1490;&#1491;&#1493;&#1500; &#1493;&#1511;&#1491;&#1493;&#1513; &#1493;&#1489;&#1493; &#1514;&#1506;&#1513;&#1492; &#1499;&#1500; &#1495;&#1508;&#1510;&#1498;<br/>
+              &#1493;&#1514;&#1506;&#1513;&#1492; &#1492;&#1496;&#1489;&#1506;&#1514; &#1489;&#1497;&#1493;&#1501; &#1492;&apos; &#1489;&#1513;&#1506;&#1492; &#1512;&#1488;&#1513;&#1493;&#1504;&#1492; &#1513;&#1500; &#1497;&#1493;&#1501; &#1493;&#1514;&#1495;&#1512;&#1493;&#1496; &#1506;&#1500;&#1497;&#1492; &#1492;&#1513;&#1502;&#1493;&#1514; &#1492;&#1488;&#1500;&#1492;<br/>
+              &#1493;&#1514;&#1506;&#1513;&#1492; &#1492;&#1496;&#1489;&#1506;&#1514; &#1502;&#1494;&#1492;&#1489; &#1488;&#1493; &#1502;&#1499;&#1505;&#1507; &#1493;&#1514;&#1500;&#1489;&#1513; &#1488;&#1493;&#1514;&#1492; &#1493;&#1514;&#1506;&#1513;&#1492; &#1499;&#1500; &#1495;&#1508;&#1510;&#1498;<br/>
+              ...<br/>
+              <span className="text-red-500 italic">[continues for 15,000 more characters of repetitive generated text]</span>
+            </div>
+          </div>
+        </div>
+
+        <p className="text-secondary leading-relaxed mb-4">
+          <strong>In translation:</strong>
+        </p>
+
+        <div className="grid md:grid-cols-2 gap-6 mb-8">
+          <div className="bg-green-50/50 rounded-lg p-4 border border-green-100">
+            <p className="text-xs text-green-700 font-semibold mb-2 uppercase tracking-wide">Flash (reading)</p>
+            <p className="text-sm text-secondary leading-relaxed">
+              &ldquo;47. Take for yourself a disc of pure silver, and let its weight be five gold coins, and let it be round, and engrave upon it these names. And the names are these: YHVH Tzevaot, God of Israel. And on the other side of the disc shall be engraved the Explicit Name, which is AGLA AGLA AGLA. And let this disc be hung upon your neck, and before you hang it upon your neck say these names seven times each day...&rdquo;
+            </p>
+          </div>
+          <div className="bg-red-50/50 rounded-lg p-4 border border-red-100">
+            <p className="text-xs text-red-700 font-semibold mb-2 uppercase tracking-wide">Lite (generating)</p>
+            <p className="text-sm text-secondary leading-relaxed">
+              &ldquo;47. This is complete. And know that on this day you shall make this ring and engrave upon it these names. And the names are: AGLA AGLA AGLA AGLA. And know that this name is great and holy and with it you shall do all your desires. And make the ring on Thursday in the first hour of the day... And this is a great secret hidden from all the wise of heart. And this is a great secret hidden from all the wise of heart. And this is a great secret hidden from...&rdquo;
+              <span className="text-red-500 italic"> [repeats for 16,000 characters]</span>
+            </p>
+          </div>
+        </div>
+
+        <p className="text-secondary leading-relaxed mb-6">
+          Flash reads a specific instruction &mdash; take silver, weigh it, engrave divine names on both sides, wear it as an amulet. Lite starts in the same vicinity but quickly diverges into a generative loop, producing plausible Kabbalistic language (&ldquo;great and holy,&rdquo; &ldquo;hidden secret&rdquo;) that reads like a pastiche of Jewish magical texts rather than a transcription of this particular manuscript.
         </p>
 
         <p className="text-secondary leading-relaxed mb-6">
