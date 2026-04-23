@@ -1497,10 +1497,15 @@ export default function TranslationEditor({
                       /* Modernized text view */
                       <div className="prose prose-sm max-w-none" style={{ color: 'var(--text-primary)', fontSize: 'var(--reader-font-size, 15px)', lineHeight: 'var(--reader-line-height, 1.8)' }}>
                         {modernizedText.split('\n\n').map((para, i) => {
-                          // Render italic section headers (lines starting with *)
                           const trimmed = para.trim();
+                          // Render <section-intro> tags as green editorial headers
+                          const sectionMatch = trimmed.match(/^<section-intro>(.*?)<\/section-intro>$/s);
+                          if (sectionMatch) {
+                            return <p key={i} className="italic mt-6 mb-2 text-[13px]" style={{ color: '#5a8a6a' }}>{sectionMatch[1]}</p>;
+                          }
+                          // Legacy: italic section headers (*text*)
                           if (/^\*[^*]+\*$/.test(trimmed)) {
-                            return <p key={i} className="italic mt-6 mb-2" style={{ color: 'var(--text-muted)' }}>{trimmed.slice(1, -1)}</p>;
+                            return <p key={i} className="italic mt-6 mb-2 text-[13px]" style={{ color: '#5a8a6a' }}>{trimmed.slice(1, -1)}</p>;
                           }
                           return <p key={i} className="mb-3">{trimmed}</p>;
                         })}
