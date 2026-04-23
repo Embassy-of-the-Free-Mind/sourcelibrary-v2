@@ -25,6 +25,15 @@ interface BlogPost {
 
 const posts: BlogPost[] = [
   {
+    slug: 'confident-hallucinator',
+    title: 'The Confident Hallucinator',
+    subtitle: 'What we learned evaluating AI OCR across four scripts. A model can be perfectly consistent and completely wrong — 100% consistency, 0% accuracy.',
+    date: '23 April 2026',
+    readTime: '10 min read',
+    tag: 'Research',
+    tagColor: 'bg-blue-50 text-blue-700',
+  },
+  {
     slug: 'tibetan-ocr',
     title: 'Benchmarking AI OCR on 232,000 Pages of Bhutanese Manuscripts',
     subtitle: 'Claude, Gemini, and the question of what "good enough" means for handwritten Tibetan. We test three models on monastery manuscripts from Gangtey, Drametse, and Tshamdrak.',

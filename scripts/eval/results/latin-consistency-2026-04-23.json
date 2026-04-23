@@ -1,0 +1,124 @@
+{
+  "corpus": "latin",
+  "models": [
+    "gemini-3-flash-preview"
+  ],
+  "runsPerModel": 3,
+  "pages": [
+    {
+      "bookId": "6836f8ee811c8ab472a49e36",
+      "bookTitle": "Tractatus duo. De natura elementorum. De quinta essentia",
+      "pageNumber": 34,
+      "script": "default",
+      "results": {
+        "gemini-3-flash-preview": {
+          "mcr": {
+            "rate": 0.6666666666666666,
+            "modalOutput": "DE ELEMENTIS. 35\nCAPVT. VIII.\nRecapitulatio doctrinæ de generatione\nventorum, pluuiarum & tonitruorum:\n& insignis obseruatio de nutritione ve-\ngetabilium, vt & de primæ materiæ\ninuestigatione.\nEX his omnibus luce meridiana\nclariùs cernimus, quàm paternè\nNaturæ Auctor per Naturam nos e-\nrudiat, incitétque agnitionem atque\namorem sapientiæ, bonitatis, atque\nomnipotentiæ suæ. Intuemini, sultis,\noptimum atque admirabilē ordinem,\nqui in omnibus rebus, si accuratè di-\nspiciamus, elucet. Cogitate quàm mi-\nrifica ratione (veluti superiùs audiui-\nstis) crassum illud Aquæ corpus à So-\nle inuisibiliter sublatum in altum, mu-\ntetur in latè diffusum aërem; qua ori-\ngine nascitur mobilium ventorū nu-\nmerosa propago. Sic rarefacta eadem\naqua huc illuc agitatur, eoque delata,\nquò ob maris, stagnorum & fluminū\ndefectum nulli transmittuntur vapo-\nres, tum præterea feruore solis sur-\nsum acta ad frigidam aëris",
+            "modeCount": 2,
+            "totalRuns": 3,
+            "uniqueOutputs": 2
+          },
+          "pairwise": {
+            "pairs": [
+              {
+                "i": 0,
+                "j": 1,
+                "charSimilarity": 0.9825897714907508,
+                "syllableSimilarity": 0.9701492537313433
+              },
+              {
+                "i": 0,
+                "j": 2,
+                "charSimilarity": 1,
+                "syllableSimilarity": 1
+              },
+              {
+                "i": 1,
+                "j": 2,
+                "charSimilarity": 0.9825897714907508,
+                "syllableSimilarity": 0.9701492537313433
+              }
+            ],
+            "avgCharSimilarity": 0.9883931809938339,
+            "avgSyllableSimilarity": 0.9800995024875622
+          },
+          "costUsd": 0.004529999999999999,
+          "durationMs": 123262,
+          "outputLengths": [
+            904,
+            919,
+            904
+          ]
+        }
+      }
+    },
+    {
+      "bookId": "68611c716122a466ae2491ab",
+      "bookTitle": "Plantarum seu Stirpium Icones (preface)",
+      "pageNumber": 5,
+      "script": "default",
+      "results": {
+        "gemini-3-flash-preview": {
+          "mcr": {
+            "rate": 1,
+            "modalOutput": "Scammonium, Brionia. 620. 625.\nClematis, Vitis. 626. 630.\nClymenon, Viſcum. 632. 637.\nCucumis. Melo, Pepo. 638. 647.\nDoronicum. Malua. 648. 652.\nAlthæa, Geranium, 653. 662.\nRanunculus. Aconitum 664. 678.\nHelleborus, Pæonia. 679. 685.\nDentaria, Pentaphylion. 687. 692.\nCariophyllata, Fragaria. 693. 698.\nAngelica. Libanotis. 698. 704.\nElioſelinum, Paſtinaca. 707. 711.\nCentaurium, Valeriana. 712. 716.\nPimpinella, Paſtinaca. 718. 723.\nAmmi, Caucalis. 724. 728.\nOenanthe, Cicutaria. 729. 735.\nSeſeli. Melanthium. 736.",
+            "modeCount": 3,
+            "totalRuns": 3,
+            "uniqueOutputs": 1
+          },
+          "pairwise": {
+            "pairs": [
+              {
+                "i": 0,
+                "j": 1,
+                "charSimilarity": 1,
+                "syllableSimilarity": 1
+              },
+              {
+                "i": 0,
+                "j": 2,
+                "charSimilarity": 1,
+                "syllableSimilarity": 1
+              },
+              {
+                "i": 1,
+                "j": 2,
+                "charSimilarity": 1,
+                "syllableSimilarity": 1
+              }
+            ],
+            "avgCharSimilarity": 1,
+            "avgSyllableSimilarity": 1
+          },
+          "costUsd": 0.0044925,
+          "durationMs": 298120,
+          "outputLengths": [
+            515,
+            515,
+            515
+          ]
+        }
+      }
+    }
+  ],
+  "summary": {
+    "byModel": {
+      "gemini-3-flash-preview": {
+        "pages": 2,
+        "avgMcr": 0.8333333333333333,
+        "avgCharSim": 0.994196590496917,
+        "avgSylSim": 0.9900497512437811
+      }
+    }
+  },
+  "meta": {
+    "date": "2026-04-23",
+    "totalCalls": 6,
+    "totalCostUsd": 0.009022500000000001,
+    "totalDurationMs": 421382,
+    "costByModel": {
+      "gemini-3-flash-preview": 0.009022500000000001
+    }
+  }
+}

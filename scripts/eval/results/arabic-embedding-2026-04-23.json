@@ -1,0 +1,68 @@
+{
+  "pages": [
+    {
+      "bookId": "695361879c494f9f9f0424f4",
+      "bookTitle": "Picatrix (Ghāyat al-Ḥakīm)",
+      "pageNumber": 109,
+      "distances": {
+        "ocrToAiTranslation": 0.11899180563060763
+      },
+      "flagged": false,
+      "sigmas": -0.14260581525966518
+    },
+    {
+      "bookId": "695361ba9c494f9f9f042a69",
+      "bookTitle": "Alchemical Compendium (Herat 1499)",
+      "pageNumber": 176,
+      "distances": {
+        "ocrToAiTranslation": 0.12858019387859132
+      },
+      "flagged": false,
+      "sigmas": 0.9950568737632798
+    },
+    {
+      "bookId": "6953b59b77f38f6761bd990c",
+      "bookTitle": "Book of Curiosities (Kitab Gharaib al-funun)",
+      "pageNumber": 49,
+      "distances": {
+        "ocrToAiTranslation": 0.10744758756142103
+      },
+      "flagged": false,
+      "sigmas": -1.5123277989329769
+    },
+    {
+      "bookId": "6953dd4277f38f6761be739a",
+      "bookTitle": "Kitab Falsafat - Philosophy of Averroes",
+      "pageNumber": 80,
+      "distances": {
+        "ocrToAiTranslation": 0.13023607647702362
+      },
+      "flagged": false,
+      "sigmas": 1.1915274171869816
+    },
+    {
+      "bookId": "6955761257e3b773024f28e3",
+      "bookTitle": "كتاب الموسيقى الكبير (Kitab al-Musiqa al-Kabir)",
+      "pageNumber": 19,
+      "distances": {
+        "ocrToAiTranslation": 0.11571287839328293
+      },
+      "flagged": false,
+      "sigmas": -0.5316506767576162
+    }
+  ],
+  "summary": {
+    "pagesEvaluated": 5,
+    "meanOcrToTranslation": 0.1201937083881853,
+    "stdOcrToTranslation": 0.008428146884397216,
+    "flaggedCount": 0,
+    "flagged": []
+  },
+  "meta": {
+    "embeddingModel": "gemini-embedding-2-preview",
+    "embeddingDims": 768,
+    "sigmaThreshold": 2,
+    "date": "2026-04-23"
+  },
+  "corpus": "arabic"
+}

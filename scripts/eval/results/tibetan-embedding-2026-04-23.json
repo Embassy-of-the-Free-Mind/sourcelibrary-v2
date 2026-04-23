@@ -1,0 +1,48 @@
+{
+  "pages": [
+    {
+      "bookId": "6953c95477f38f6761bde815",
+      "bookTitle": "Tibetan Book of the Dead (Bardo Thodol)",
+      "pageNumber": 128,
+      "distances": {
+        "ocrToAiTranslation": 0.07367036523568282
+      },
+      "flagged": false,
+      "sigmas": 1.3319349354943248
+    },
+    {
+      "bookId": "699249b6a2d53df4853bec9d",
+      "bookTitle": "The Tibetan Book of the Dead (Bardo Thodol)",
+      "pageNumber": 105,
+      "distances": {
+        "ocrToAiTranslation": 0.03803706914802074
+      },
+      "flagged": false,
+      "sigmas": -1.0776250872652473
+    },
+    {
+      "bookId": "69dfdad3220eedf04e13bb16",
+      "bookTitle": "The Life of the Buddha, Derived from Tibetan Works",
+      "pageNumber": 148,
+      "distances": {
+        "ocrToAiTranslation": 0.05021250176183922
+      },
+      "flagged": false,
+      "sigmas": -0.2543098482290781
+    }
+  ],
+  "summary": {
+    "pagesEvaluated": 3,
+    "meanOcrToTranslation": 0.053973312048514265,
+    "stdOcrToTranslation": 0.014788299835275612,
+    "flaggedCount": 0,
+    "flagged": []
+  },
+  "meta": {
+    "embeddingModel": "gemini-embedding-2-preview",
+    "embeddingDims": 768,
+    "sigmaThreshold": 2,
+    "date": "2026-04-23"
+  },
+  "corpus": "tibetan"
+}

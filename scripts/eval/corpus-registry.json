@@ -1,0 +1,79 @@
+{
+  "latin": {
+    "label": "Latin Texts",
+    "script": "default",
+    "filter": { "language": "Latin" },
+    "default_sample": 15,
+    "notes": "5,261 books with OCR. Printed Latin — easiest baseline."
+  },
+  "german": {
+    "label": "German Texts (incl. Fraktur)",
+    "script": "default",
+    "filter": { "language": "German" },
+    "default_sample": 15,
+    "notes": "1,851 books. Mix of Fraktur and Roman typefaces."
+  },
+  "tibetan": {
+    "label": "Tibetan Buddhist Manuscripts",
+    "script": "tibetan",
+    "filter": { "language": "Tibetan" },
+    "default_sample": 20,
+    "notes": "1,109 books. dbu can + dbu med scripts. EAP/BDRC/IIIF sources."
+  },
+  "greek": {
+    "label": "Ancient Greek Texts",
+    "script": "default",
+    "filter": { "language": "Greek" },
+    "default_sample": 15,
+    "notes": "781 books. Aldine and early printed editions."
+  },
+  "french": {
+    "label": "French Texts",
+    "script": "default",
+    "filter": { "language": "French" },
+    "default_sample": 15,
+    "notes": "701 books. Printed French, early modern."
+  },
+  "chinese": {
+    "label": "Classical Chinese",
+    "script": "cjk",
+    "filter": { "language": "Chinese" },
+    "default_sample": 15,
+    "notes": "662 books. Woodblock-printed classical Chinese."
+  },
+  "sanskrit": {
+    "label": "Sanskrit (Devanagari)",
+    "script": "default",
+    "filter": { "language": "Sanskrit" },
+    "default_sample": 15,
+    "notes": "429 books. Printed Devanagari editions."
+  },
+  "hebrew": {
+    "label": "Hebrew Texts",
+    "script": "hebrew",
+    "filter": { "language": "Hebrew" },
+    "default_sample": 15,
+    "notes": "187 books. Hebrew + Rashi script. Known failure mode for some models."
+  },
+  "arabic": {
+    "label": "Arabic Texts",
+    "script": "arabic",
+    "filter": { "language": "Arabic" },
+    "default_sample": 15,
+    "notes": "132 books. Printed Naskh."
+  },
+  "japanese": {
+    "label": "Japanese Texts",
+    "script": "cjk",
+    "filter": { "language": "Japanese" },
+    "default_sample": 15,
+    "notes": "77 books. Woodblock and printed Japanese."
+  },
+  "bph": {
+    "label": "BPH Manuscripts (Embassy of the Free Mind)",
+    "script": "default",
+    "filter": { "image_source.provider": "bph" },
+    "default_sample": 15,
+    "notes": "2,254 books. High-quality scans from Bibliotheca Philosophica Hermetica."
+  }
+}

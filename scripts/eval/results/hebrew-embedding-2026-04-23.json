@@ -1,0 +1,68 @@
+{
+  "pages": [
+    {
+      "bookId": "fec0b295-0795-440f-a467-434e17ba2a8e",
+      "bookTitle": "Asis rimonim",
+      "pageNumber": 39,
+      "distances": {
+        "ocrToAiTranslation": 0.09366883904875534
+      },
+      "flagged": false,
+      "sigmas": -0.5402508965565377
+    },
+    {
+      "bookId": "6911cf678cb6d2ae494a1061",
+      "bookTitle": "Sefer ha-bahir",
+      "pageNumber": 20,
+      "distances": {
+        "ocrToAiTranslation": 0.347744477859361
+      },
+      "flagged": false,
+      "sigmas": 1.995873769301035
+    },
+    {
+      "bookId": "695285cdab34727b1f04c25a",
+      "bookTitle": "Sepher Maphteah Shelomo",
+      "pageNumber": 96,
+      "distances": {
+        "ocrToAiTranslation": 0.0889994220174678
+      },
+      "flagged": false,
+      "sigmas": -0.5868599448055564
+    },
+    {
+      "bookId": "69520c0fab34727b1f043e63",
+      "bookTitle": "Zohar (Genèse)",
+      "pageNumber": 366,
+      "distances": {
+        "ocrToAiTranslation": 0.10804879789272359
+      },
+      "flagged": false,
+      "sigmas": -0.3967134504285765
+    },
+    {
+      "bookId": "6956ad58f839ef5a9e73673f",
+      "bookTitle": "Clavicula Salomonis (Hebrew Manuscript)",
+      "pageNumber": 27,
+      "distances": {
+        "ocrToAiTranslation": 0.1005014365725394
+      },
+      "flagged": false,
+      "sigmas": -0.47204947751036497
+    }
+  ],
+  "summary": {
+    "pagesEvaluated": 5,
+    "meanOcrToTranslation": 0.14779259467816944,
+    "stdOcrToTranslation": 0.100182629912119,
+    "flaggedCount": 0,
+    "flagged": []
+  },
+  "meta": {
+    "embeddingModel": "gemini-embedding-2-preview",
+    "embeddingDims": 768,
+    "sigmaThreshold": 2,
+    "date": "2026-04-23"
+  },
+  "corpus": "hebrew"
+}
