@@ -203,8 +203,8 @@ export async function runModel(model, imageBuffer, prompt, opts = {}) {
 
 // ── Image fetching helper ──────────────────────────────────────────
 
-export async function fetchImage(url) {
-  const resp = await fetch(url);
+export async function fetchImage(url, timeoutMs = 30000) {
+  const resp = await fetch(url, { signal: AbortSignal.timeout(timeoutMs) });
   if (!resp.ok) throw new Error(`Failed to fetch image: ${resp.status} ${url}`);
   return Buffer.from(await resp.arrayBuffer());
 }

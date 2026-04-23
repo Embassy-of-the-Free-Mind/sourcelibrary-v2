@@ -66,13 +66,14 @@ async function cmdConsistency() {
   const models = modelNames.map(resolveModel);
   const delayMs = parseInt(args.delay || '2000');
   const prompt = args.prompt || DEFAULT_PROMPT;
+  const temperatures = (args.temp || '0').split(',').map(Number);
 
   // Cost estimate
   if (args['dry-run']) {
     console.log('Cost estimate:');
     for (const model of models) {
-      const est = estimateCost(model, runs, sampleSize);
-      console.log(`  ${model}: ${est.calls} calls, ~$${est.estimatedUsd.toFixed(3)}`);
+      const est = estimateCost(model, runs * temperatures.length, sampleSize);
+      console.log(`  ${model}: ${est.calls} calls across ${temperatures.length} temp(s), ~$${est.estimatedUsd.toFixed(3)}`);
     }
     return;
   }
@@ -80,20 +81,30 @@ async function cmdConsistency() {
   console.log(`\nOCR Consistency Evaluation`);
   console.log(`  Corpus: ${corpus}`);
   console.log(`  Sample: ${sampleSize} pages`);
-  console.log(`  Runs: ${runs} per model`);
-  console.log(`  Models: ${models.join(', ')}\n`);
+  console.log(`  Runs: ${runs} per model per temperature`);
+  console.log(`  Models: ${models.join(', ')}`);
+  console.log(`  Temperatures: ${temperatures.join(', ')}\n`);
 
   // Sample pages
   console.log('Sampling pages...');
   const pages = await samplePages(corpus, sampleSize);
   console.log(`  Got ${pages.length} pages from ${new Set(pages.map(p => p.bookId)).size} books\n`);
 
+  // Build list of (model, temp) combos — keyed as "model@temp"
+  const combos = [];
+  for (const model of models) {
+    for (const temp of temperatures) {
+      combos.push({ model, temp, key: `${model}@t${temp}` });
+    }
+  }
+
   const results = {
     corpus,
     models,
-    runsPerModel: runs,
+    temperatures,
+    runsPerCombo: runs,
     pages: [],
-    summary: { byModel: {} },
+    summary: { byCombo: {} },
     meta: {
       date: new Date().toISOString().slice(0, 10),
       totalCalls: 0,
@@ -103,9 +114,9 @@ async function cmdConsistency() {
     },
   };
 
-  for (const model of models) {
-    results.meta.costByModel[model] = 0;
-    results.summary.byModel[model] = { pages: 0, mcrValues: [], charSimValues: [], sylSimValues: [] };
+  for (const c of combos) {
+    results.meta.costByModel[c.key] = 0;
+    results.summary.byCombo[c.key] = { model: c.model, temp: c.temp, pages: 0, mcrValues: [], charSimValues: [], sylSimValues: [] };
   }
 
   // Run evaluation
@@ -131,14 +142,14 @@ async function cmdConsistency() {
       results: {},
     };
 
-    for (const model of models) {
+    for (const combo of combos) {
       const ocrRuns = [];
       let totalCost = 0;
       let totalDuration = 0;
 
       for (let r = 0; r < runs; r++) {
         try {
-          const result = await runModel(model, imageBuffer, prompt);
+          const result = await runModel(combo.model, imageBuffer, prompt, { temperature: combo.temp });
           const cleaned = cleanText(result.text, page.script);
           ocrRuns.push(cleaned);
           totalCost += result.costUsd;
@@ -146,19 +157,22 @@ async function cmdConsistency() {
           results.meta.totalCalls++;
           results.meta.totalCostUsd += result.costUsd;
           results.meta.totalDurationMs += result.durationMs;
-          results.meta.costByModel[model] += result.costUsd;
-          process.stdout.write(`  ${model} run ${r + 1}/${runs}: ${cleaned.length} chars\n`);
+          results.meta.costByModel[combo.key] += result.costUsd;
+          process.stdout.write(`  ${combo.key} run ${r + 1}/${runs}: ${cleaned.length} chars\n`);
         } catch (err) {
-          console.error(`  ${model} run ${r + 1} ERROR: ${err.message.slice(0, 80)}`);
+          console.error(`  ${combo.key} run ${r + 1} ERROR: ${err.message.slice(0, 80)}`);
           ocrRuns.push('');
         }
-        if (r < runs - 1) await new Promise(r => setTimeout(r, delayMs));
+        if (r < runs - 1) await new Promise(resolve => setTimeout(resolve, delayMs));
       }
 
-      const mcrResult = mcr(ocrRuns.filter(r => r.length > 0));
-      const pairwise = pairwiseMetrics(ocrRuns.filter(r => r.length > 0), page.script);
+      const validRuns = ocrRuns.filter(r => r.length > 0);
+      const mcrResult = mcr(validRuns);
+      const pairwise = pairwiseMetrics(validRuns, page.script);
 
-      pageResult.results[model] = {
+      pageResult.results[combo.key] = {
+        model: combo.model,
+        temperature: combo.temp,
         mcr: mcrResult,
         pairwise,
         costUsd: totalCost,
@@ -167,30 +181,30 @@ async function cmdConsistency() {
       };
 
       // Accumulate summary
-      const s = results.summary.byModel[model];
+      const s = results.summary.byCombo[combo.key];
       s.pages++;
       s.mcrValues.push(mcrResult.rate);
       s.charSimValues.push(pairwise.avgCharSimilarity);
       s.sylSimValues.push(pairwise.avgSyllableSimilarity);
     }
 
-    // Cross-model comparison (best run from each model)
-    if (models.length > 1) {
+    // Cross-combo comparison at temp=0 (best run from each model)
+    const t0combos = combos.filter(c => c.temp === 0 || c.temp === temperatures[0]);
+    if (t0combos.length > 1) {
       const bestRuns = {};
-      for (const model of models) {
-        const runs = pageResult.results[model];
-        // Use modal output as "best"
-        bestRuns[model] = runs.mcr.modalOutput || '';
+      for (const c of t0combos) {
+        const r = pageResult.results[c.key];
+        bestRuns[c.key] = r?.mcr?.modalOutput || '';
       }
 
       if (!results.summary.crossModel) results.summary.crossModel = [];
-      for (let i = 0; i < models.length; i++) {
-        for (let j = i + 1; j < models.length; j++) {
-          const cs = charSimilarity(bestRuns[models[i]], bestRuns[models[j]]);
-          const ss = syllableSimilarity(bestRuns[models[i]], bestRuns[models[j]], page.script);
+      for (let i = 0; i < t0combos.length; i++) {
+        for (let j = i + 1; j < t0combos.length; j++) {
+          const cs = charSimilarity(bestRuns[t0combos[i].key], bestRuns[t0combos[j].key]);
+          const ss = syllableSimilarity(bestRuns[t0combos[i].key], bestRuns[t0combos[j].key], page.script);
           results.summary.crossModel.push({
-            modelA: models[i],
-            modelB: models[j],
+            modelA: t0combos[i].key,
+            modelB: t0combos[j].key,
             page: `${page.bookId}-p${page.pageNumber}`,
             charSimilarity: cs,
             syllableSimilarity: ss,
@@ -203,11 +217,10 @@ async function cmdConsistency() {
   }
 
   // Compute summary averages
-  for (const [model, s] of Object.entries(results.summary.byModel)) {
+  for (const [key, s] of Object.entries(results.summary.byCombo)) {
     s.avgMcr = s.mcrValues.reduce((a, b) => a + b, 0) / (s.mcrValues.length || 1);
     s.avgCharSim = s.charSimValues.reduce((a, b) => a + b, 0) / (s.charSimValues.length || 1);
     s.avgSylSim = s.sylSimValues.reduce((a, b) => a + b, 0) / (s.sylSimValues.length || 1);
-    // Clean up arrays from output
     delete s.mcrValues;
     delete s.charSimValues;
     delete s.sylSimValues;

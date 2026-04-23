@@ -1,65 +1,79 @@
 {
-  "bhutan": {
-    "label": "Bhutanese Buddhist Manuscripts",
+  "latin": {
+    "label": "Latin Texts",
+    "script": "default",
+    "filter": { "language": "Latin" },
+    "default_sample": 15,
+    "notes": "5,261 books with OCR. Printed Latin — easiest baseline."
+  },
+  "german": {
+    "label": "German Texts (incl. Fraktur)",
+    "script": "default",
+    "filter": { "language": "German" },
+    "default_sample": 15,
+    "notes": "1,851 books. Mix of Fraktur and Roman typefaces."
+  },
+  "tibetan": {
+    "label": "Tibetan Buddhist Manuscripts",
     "script": "tibetan",
-    "filter": { "categories": "Tibetan Buddhism", "image_source.provider": { "$in": ["eap", "bdrc"] } },
+    "filter": { "language": "Tibetan" },
     "default_sample": 20,
-    "notes": "1,325 EAP manuscripts, 232K pages. dbu can + dbu med scripts."
+    "notes": "1,109 books. dbu can + dbu med scripts. EAP/BDRC/IIIF sources."
   },
-  "latin-alchemy": {
-    "label": "Latin Alchemical Texts (pre-1700)",
+  "greek": {
+    "label": "Ancient Greek Texts",
     "script": "default",
-    "filter": { "language": "la", "categories": "Alchemy", "status": "live" },
+    "filter": { "language": "Greek" },
     "default_sample": 15,
-    "notes": "Printed Latin texts — baseline for OCR evaluation."
+    "notes": "781 books. Aldine and early printed editions."
   },
-  "fraktur": {
-    "label": "German Fraktur (pre-1800)",
+  "french": {
+    "label": "French Texts",
     "script": "default",
-    "filter": { "language": "de", "year": { "$lt": 1800 }, "status": "live" },
+    "filter": { "language": "French" },
     "default_sample": 15,
-    "notes": "Blackletter/Fraktur typefaces."
+    "notes": "701 books. Printed French, early modern."
   },
-  "arabic": {
-    "label": "Arabic Printed Texts",
-    "script": "arabic",
-    "filter": { "language": "ar", "status": "live" },
-    "default_sample": 15,
-    "notes": "Naskh script, printed editions."
-  },
-  "hebrew": {
-    "label": "Hebrew Texts",
-    "script": "hebrew",
-    "filter": { "language": "he", "status": "live" },
-    "default_sample": 15,
-    "notes": "Hebrew + Rashi script. Known failure mode for some models."
-  },
-  "chinese-classical": {
-    "label": "Classical Chinese (woodblock)",
+  "chinese": {
+    "label": "Classical Chinese",
     "script": "cjk",
-    "filter": { "language": "zh", "status": "live" },
+    "filter": { "language": "Chinese" },
     "default_sample": 15,
-    "notes": "Woodblock-printed classical Chinese."
+    "notes": "662 books. Woodblock-printed classical Chinese."
   },
   "sanskrit": {
     "label": "Sanskrit (Devanagari)",
     "script": "default",
-    "filter": { "language": "sa", "status": "live" },
+    "filter": { "language": "Sanskrit" },
     "default_sample": 15,
-    "notes": "Printed Devanagari editions."
+    "notes": "429 books. Printed Devanagari editions."
   },
-  "greek-ancient": {
-    "label": "Ancient Greek (printed editions)",
-    "script": "default",
-    "filter": { "language": "grc", "status": "live" },
+  "hebrew": {
+    "label": "Hebrew Texts",
+    "script": "hebrew",
+    "filter": { "language": "Hebrew" },
     "default_sample": 15,
-    "notes": "Aldine and early printed Greek."
+    "notes": "187 books. Hebrew + Rashi script. Known failure mode for some models."
   },
-  "bph-manuscripts": {
+  "arabic": {
+    "label": "Arabic Texts",
+    "script": "arabic",
+    "filter": { "language": "Arabic" },
+    "default_sample": 15,
+    "notes": "132 books. Printed Naskh."
+  },
+  "japanese": {
+    "label": "Japanese Texts",
+    "script": "cjk",
+    "filter": { "language": "Japanese" },
+    "default_sample": 15,
+    "notes": "77 books. Woodblock and printed Japanese."
+  },
+  "bph": {
     "label": "BPH Manuscripts (Embassy of the Free Mind)",
     "script": "default",
-    "filter": { "image_source.provider": "bph", "status": "live" },
+    "filter": { "image_source.provider": "bph" },
     "default_sample": 15,
-    "notes": "High-quality scans from Bibliotheca Philosophica Hermetica."
+    "notes": "2,254 books. High-quality scans from Bibliotheca Philosophica Hermetica."
   }
 }

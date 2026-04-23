@@ -91,12 +91,12 @@ export async function samplePages(corpusName, n = 10, opts = {}) {
   const books = db.collection('books');
   const pages = db.collection('pages');
 
-  // Build book filter
+  // Build book filter — require pages with OCR data, not necessarily 'live' status
   let bookFilter;
   if (opts.bookId) {
     bookFilter = { id: opts.bookId };
   } else {
-    bookFilter = { status: 'live', ...corpus.filter };
+    bookFilter = { pages_ocr: { $gte: 10 }, ...corpus.filter };
   }
 
   // Get candidate books

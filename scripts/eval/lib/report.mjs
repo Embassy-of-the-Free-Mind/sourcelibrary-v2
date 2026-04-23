@@ -44,7 +44,8 @@ export function listResults() {
 // ── Markdown report generation ─────────────────────────────────────
 
 export function generateConsistencyReport(results) {
-  const { corpus, models, pages, summary, meta } = results;
+  const { corpus, pages, summary, meta } = results;
+  const comboData = summary.byCombo || summary.byModel || {};
   const lines = [];
 
   lines.push(`# OCR Consistency Report: ${corpus}`);
@@ -53,10 +54,12 @@ export function generateConsistencyReport(results) {
 
   // Summary table
   lines.push('## Summary\n');
-  lines.push('| Model | MCR | Avg Char Similarity | Avg Syllable Similarity | Pages |');
-  lines.push('|-------|-----|--------------------|-----------------------|-------|');
-  for (const [model, stats] of Object.entries(summary.byModel)) {
-    lines.push(`| ${model} | ${(stats.avgMcr * 100).toFixed(1)}% | ${(stats.avgCharSim * 100).toFixed(1)}% | ${(stats.avgSylSim * 100).toFixed(1)}% | ${stats.pages} |`);
+  lines.push('| Model | Temp | MCR | Avg Char Similarity | Avg Syllable Similarity | Pages |');
+  lines.push('|-------|------|-----|--------------------|-----------------------|-------|');
+  for (const [key, stats] of Object.entries(comboData)) {
+    const temp = stats.temp ?? '0';
+    const label = stats.model || key;
+    lines.push(`| ${label} | ${temp} | ${(stats.avgMcr * 100).toFixed(1)}% | ${(stats.avgCharSim * 100).toFixed(1)}% | ${(stats.avgSylSim * 100).toFixed(1)}% | ${stats.pages} |`);
   }
   lines.push('');
 
@@ -71,13 +74,47 @@ export function generateConsistencyReport(results) {
     lines.push('');
   }
 
+  // Output length analysis (hallucination signal)
+  const comboLengths = {};
+  for (const page of pages) {
+    for (const [key, result] of Object.entries(page.results)) {
+      if (!comboLengths[key]) comboLengths[key] = [];
+      const validLengths = result.outputLengths.filter(l => l > 0);
+      if (validLengths.length > 0) comboLengths[key].push(...validLengths);
+    }
+  }
+  const allKeys = Object.keys(comboLengths);
+  if (allKeys.length > 1) {
+    lines.push('## Output Length Analysis\n');
+    lines.push('Large length disparities between models suggest hallucination (the longer model may be generating text not on the page).\n');
+    lines.push('| Model | Temp | Avg Chars | Min | Max | Length Ratio |');
+    lines.push('|-------|------|----------|-----|-----|-------------|');
+    const avgLengths = {};
+    for (const [key, lengths] of Object.entries(comboLengths)) {
+      const avg = lengths.reduce((a, b) => a + b, 0) / lengths.length;
+      avgLengths[key] = avg;
+    }
+    const minAvg = Math.min(...Object.values(avgLengths));
+    for (const [key, stats] of Object.entries(comboData)) {
+      const lengths = comboLengths[key] || [];
+      const avg = avgLengths[key] || 0;
+      const min = Math.min(...lengths);
+      const max = Math.max(...lengths);
+      const ratio = minAvg > 0 ? (avg / minAvg).toFixed(1) + 'x' : '—';
+      const temp = stats.temp ?? '0';
+      const label = stats.model || key;
+      lines.push(`| ${label} | ${temp} | ${Math.round(avg)} | ${min} | ${max} | ${ratio} |`);
+    }
+    lines.push('');
+  }
+
   // Per-page details
   lines.push('## Per-Page Results\n');
   for (const page of pages) {
     lines.push(`### ${page.bookTitle} — Page ${page.pageNumber}\n`);
     for (const [model, result] of Object.entries(page.results)) {
       const m = result.mcr;
-      lines.push(`**${model}**: MCR ${(m.rate * 100).toFixed(0)}% (${m.modeCount}/${m.totalRuns} identical), ${m.uniqueOutputs} unique outputs`);
+      lines.push(`**${model}**: MCR ${(m.rate * 100).toFixed(0)}% (${m.modeCount}/${m.totalRuns} identical), ${m.uniqueOutputs} unique outputs, avg ${Math.round(result.outputLengths.filter(l => l > 0).reduce((a, b) => a + b, 0) / Math.max(1, result.outputLengths.filter(l => l > 0).length))} chars`);
       if (result.pairwise) {
         lines.push(`  Pairwise: char=${(result.pairwise.avgCharSimilarity * 100).toFixed(1)}% syl=${(result.pairwise.avgSyllableSimilarity * 100).toFixed(1)}%`);
       }

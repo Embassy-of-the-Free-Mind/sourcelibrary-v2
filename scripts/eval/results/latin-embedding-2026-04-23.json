@@ -1,0 +1,68 @@
+{
+  "pages": [
+    {
+      "bookId": "6836f8ee811c8ab472a49e36",
+      "bookTitle": "Tractatus duo. De natura elementorum. De quinta essentia",
+      "pageNumber": 34,
+      "distances": {
+        "ocrToAiTranslation": 0.09126981954824753
+      },
+      "flagged": false,
+      "sigmas": -1.177304517567075
+    },
+    {
+      "bookId": "68611c716122a466ae2491ab",
+      "bookTitle": "Plantarum seu Stirpium Icones (preface)",
+      "pageNumber": 5,
+      "distances": {
+        "ocrToAiTranslation": 0.12211989495030906
+      },
+      "flagged": false,
+      "sigmas": 0.7931720176018271
+    },
+    {
+      "bookId": "685a9b1bcdbe778e22823a64",
+      "bookTitle": "De Voluptate (On Pleasure)",
+      "pageNumber": 20,
+      "distances": {
+        "ocrToAiTranslation": 0.10593771568213606
+      },
+      "flagged": false,
+      "sigmas": -0.24042689975124965
+    },
+    {
+      "bookId": "785e0f79-eb56-49f6-9c47-b75c8e859159",
+      "bookTitle": "On Presages, Divination, and Astrological and Astronomical Fragments",
+      "pageNumber": 67,
+      "distances": {
+        "ocrToAiTranslation": 0.1328892209021889
+      },
+      "flagged": false,
+      "sigmas": 1.481037567724492
+    },
+    {
+      "bookId": "d850a255-4633-43d5-8383-7c67a7e55144",
+      "bookTitle": "Incipit: Ex Ilss. quodam Philosophi R.C. extractum",
+      "pageNumber": 45,
+      "distances": {
+        "ocrToAiTranslation": 0.09629272486998863
+      },
+      "flagged": false,
+      "sigmas": -0.8564781680079926
+    }
+  ],
+  "summary": {
+    "pagesEvaluated": 5,
+    "meanOcrToTranslation": 0.10970187519057403,
+    "stdOcrToTranslation": 0.01565614959196516,
+    "flaggedCount": 0,
+    "flagged": []
+  },
+  "meta": {
+    "embeddingModel": "gemini-embedding-2-preview",
+    "embeddingDims": 768,
+    "sigmaThreshold": 2,
+    "date": "2026-04-23"
+  },
+  "corpus": "latin"
+}
