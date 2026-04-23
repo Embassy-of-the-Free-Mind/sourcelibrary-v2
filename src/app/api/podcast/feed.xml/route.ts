@@ -19,9 +19,9 @@ export async function GET() {
     const formatLabel = PODCAST_FORMATS[ep.podcast.format]?.label || 'Deep Dive';
     const title = escapeXml(`${formatLabel}: ${ep.podcast.topic}`);
     const description = escapeXml(
-      `${formatLabel} episode exploring "${ep.podcast.topic}" — generated from ${ep.podcast.findingCount} research findings in the Source Library Reading Room. By ${ep.creatorName}.`,
+      `${formatLabel} episode exploring "${ep.podcast.topic}" — generated from ${ep.podcast.findingCount} research findings in Source Library. By ${ep.creatorName}.`,
     );
-    const threadUrl = `https://sourcelibrary.org/reading-room/thread/${ep.threadId}`;
+    const threadUrl = `https://sourcelibrary.org/librarian/thread/${ep.threadId}`;
     const guid = `sourcelibrary-podcast-${ep.threadId}-${ep.podcast.format}`;
 
     return `    <item>
@@ -45,7 +45,7 @@ export async function GET() {
   xmlns:atom="http://www.w3.org/2005/Atom">
   <channel>
     <title>Source Library Deep Dive</title>
-    <link>https://sourcelibrary.org/reading-room</link>
+    <link>https://sourcelibrary.org/librarian</link>
     <description>AI-generated scholarly podcasts from the Embassy of the Free Mind's rare book collection. Explore alchemy, Hermetica, Kabbalah, and the Western esoteric tradition through primary sources from the 15th-18th centuries.</description>
     <language>en</language>
     <lastBuildDate>${lastBuildDate}</lastBuildDate>

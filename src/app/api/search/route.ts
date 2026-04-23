@@ -105,7 +105,7 @@ export async function GET(request: NextRequest) {
       if (hasDoi === 'true') filters.doi = { $exists: true, $ne: null };
       if (hasTranslation === 'true') filters.pages_translated = { $gt: 0 };
       if (firstTranslation === 'true') filters.is_first_translation = true;
-      if (library) filters['image_source.provider'] = library;
+      if (library) filters.$or = [{ held_by: library }, { 'image_source.provider': library }];
       return filters;
     }
 

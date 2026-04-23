@@ -189,20 +189,41 @@ const nextConfig: NextConfig = {
         destination: '/shwep',
         permanent: false,
       },
-      // Embassy → Reading Room rename
+      // Embassy → Reading Room → Librarian rename chain
       {
         source: '/embassy',
-        destination: '/reading-room',
+        destination: '/librarian',
         permanent: true,
       },
       {
         source: '/embassy/thread/:id',
-        destination: '/reading-room/thread/:id',
+        destination: '/librarian/thread/:id',
         permanent: true,
       },
       {
         source: '/embassy/room/:slug',
-        destination: '/reading-room/room/:slug',
+        destination: '/librarian/room/:slug',
+        permanent: true,
+      },
+      // Reading Room → Librarian rename
+      {
+        source: '/reading-room',
+        destination: '/librarian',
+        permanent: true,
+      },
+      {
+        source: '/reading-room/thread/:id',
+        destination: '/librarian/thread/:id',
+        permanent: true,
+      },
+      {
+        source: '/reading-room/room/:slug',
+        destination: '/librarian/room/:slug',
+        permanent: true,
+      },
+      {
+        source: '/reading-room/voice',
+        destination: '/librarian/voice',
         permanent: true,
       },
     ];

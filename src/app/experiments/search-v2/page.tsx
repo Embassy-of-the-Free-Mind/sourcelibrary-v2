@@ -17,7 +17,7 @@ import HighlightedText from '@/components/search/HighlightedText';
 import { ENTITY_TYPE_STYLES, type EntityType } from '@/lib/style-constants';
 import SiteHeader from '@/components/layout/SiteHeader';
 
-// ── Helpers (same as ReadingRoomClient) ──────────────────────────────
+// ── Helpers (same as LibrarianClient) ────────────────────────────────
 
 function linkifySourceUrls(text: string): string {
   return text.replace(

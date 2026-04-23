@@ -1,15 +1,19 @@
 'use client';
 
 import { useEffect, useRef, useState, useCallback } from 'react';
-import * as d3 from 'd3';
 
-interface GraphNode extends d3.SimulationNodeDatum {
+interface GraphNode {
   id: string;
   label: string;
   type: 'book' | 'author' | 'printer' | 'place' | 'subject';
   size?: number;
   year?: number;
   metadata?: Record<string, unknown>;
+  // d3 SimulationNodeDatum fields
+  x?: number;
+  y?: number;
+  fx?: number | null;
+  fy?: number | null;
 }
 
 interface GraphEdge {
@@ -60,7 +64,7 @@ export default function KnowledgeGraphPage() {
     showSubjects: true,
   });
   const [searchTerm, setSearchTerm] = useState('');
-  const simulationRef = useRef<d3.Simulation<GraphNode, GraphEdge> | null>(null);
+  const simulationRef = useRef<any>(null);
 
   useEffect(() => {
     fetch('/api/admin/knowledge-graph')
@@ -81,6 +85,10 @@ export default function KnowledgeGraphPage() {
 
   useEffect(() => {
     if (!data || !svgRef.current) return;
+
+    let cancelled = false;
+    import('d3').then(d3 => {
+    if (cancelled || !svgRef.current) return;
 
     const svg = d3.select(svgRef.current);
     svg.selectAll('*').remove();
@@ -215,6 +223,9 @@ export default function KnowledgeGraphPage() {
     });
 
     return () => { simulation.stop(); };
+    }); // end import('d3')
+
+    return () => { cancelled = true; simulationRef.current?.stop(); };
   }, [data, filters, searchTerm, getVisibleTypes]);
 
   if (loading) {
