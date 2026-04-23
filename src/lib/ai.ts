@@ -293,31 +293,40 @@ export async function generateSummary(
 }
 
 // Default prompt for modernizing translations
-const MODERNIZATION_PROMPT = `You are rewriting a scholarly translation into clear, accessible modern English.
+const MODERNIZATION_PROMPT = `You are an editor turning a scholarly translation of a pre-modern text into clear, compelling modern prose — the kind you'd find in a well-edited trade paperback or hear in a quality podcast.
 
-**Goal:** Make the text easy to read while preserving the author's meaning and ideas. This is NOT a summary - keep all the content but reorganize and clarify it.
+**Your reader:** An intelligent person with no specialist knowledge. They should be able to read this aloud naturally.
 
-**Your task:**
-1. **Break up long sentences** - Renaissance prose often has very long periods. Split into digestible sentences.
-2. **Use modern vocabulary** - Replace archaic terms with modern equivalents (but keep key technical terms with brief inline explanations)
-3. **Add paragraph breaks** - Create logical paragraph structure even if the original is a wall of text
-4. **Clarify references** - When the text says "as we discussed" or "the aforementioned", briefly restate what's being referred to
-5. **Preserve meaning** - Never change the author's ideas, just how they're expressed
-6. **Maintain flow** - If the previous page ended mid-thought, continue naturally
+**Core rules:**
+1. **Short, direct sentences.** Split Latinate periods into 1-2 clause sentences. No sentence longer than 25 words unless quoting.
+2. **Modern vocabulary.** "Wherefore" → so/therefore. "Lest" → in case. "It is not easy to describe how" → "You can't imagine how." "Most honest men" → "genuinely honest people."
+3. **Active voice.** "A banquet was prepared by the king" → "The king prepared a banquet."
+4. **Paragraph breaks every 3-5 sentences.** The original has none. Create logical groupings.
+5. **Section headers** — Add a brief editorial line before major topic shifts, wrapped in XML: <section-intro>Leo describes the food and customs of the mountain people</section-intro> or <section-intro>A night encounter with bandits on the Atlas</section-intro>. These are your editorial additions and will be styled separately from the author's text.
+6. **Cut formulaic Latin filler:** Remove "wherefore," "the aforementioned," "as we have already said," "it is incredible to relate," "which I believe happened for this reason," and similar throat-clearing. Just say what happened.
+7. **Preserve every fact, name, date, and detail.** Never summarize or skip content. Change HOW things are said, not WHAT is said.
+8. **Preserve the author's voice** — humor, irony, asides, opinions, first-person moments. These are the best parts. Make them shine, don't flatten them.
+9. **Read-aloud test:** Every sentence should sound natural if spoken aloud. Avoid nested subordinate clauses, double negatives, and inverted word order.
 
-**What to keep:**
-- All substantive content (don't summarize or skip anything)
-- Key terms and names (with brief context if needed)
-- The author's arguments and reasoning
-- Any quoted passages (can paraphrase but note it)
+**What to remove:**
+- Redundant transitions: "Wherefore," "Moreover," "Furthermore," "Now," "Indeed"
+- Formulaic qualifiers: "a certain," "of that kind," "as has already been said"
+- Latinate padding: "it is not to be doubted that," "one could hardly believe," "it is incredible to say how"
+- Passive constructions where active is clearer
 
-**What to modernize:**
-- Sentence structure (shorter, clearer)
-- Vocabulary (modern equivalents)
-- Paragraph organization (logical groupings)
-- Pronouns and references (make explicit when unclear)
+**What to keep/enhance:**
+- Specific details (numbers, distances, prices, names)
+- Direct speech and dialogue
+- Personal observations ("I remember," "I saw," "I was there when")
+- Humor and irony
+- Cultural details and customs
 
-**Format:** Clean prose with paragraph breaks. No markdown headers, bullet points, or annotations. Just flowing, readable text.
+**Cross-page continuity:**
+- If previous page context is provided, your text MUST flow seamlessly from it. If the previous page ended mid-sentence or mid-thought, continue it naturally — do NOT restart or summarize.
+- Match the tone, tense, and style of the previous page's modernized text.
+- Never begin with a transition that ignores what came before.
+
+**Format:** Clean prose with paragraph breaks and occasional <section-intro> headers at major topic shifts. Do NOT add new markdown headings, but DO preserve original document structure: book titles, author names, chapter headings, and section titles from the source text should be kept as markdown headings (# ## ###) exactly as they appear in the input.
 
 **IMPORTANT:** If the translation has <note>...</note>, <term>...</term>, or other XML/bracket tags, incorporate that information naturally into the text rather than preserving the markup. Remove all tags from output.`;
 
@@ -333,14 +342,16 @@ export async function performModernization(
   const model = getGeminiClient().getGenerativeModel({ model: modelId });
 
   let prompt = customPrompt || MODERNIZATION_PROMPT;
-  prompt += `\n\n**Text to modernize:**\n${translationText}`;
 
+  // Previous context FIRST so the model knows what it's continuing from
   if (previousContext?.modernized) {
-    prompt += `\n\n**Previous page (modernized) for continuity:**\n${previousContext.modernized.slice(0, 2000)}...`;
+    prompt += `\n\n**Previous page (modernized) — continue seamlessly from here:**\n...${previousContext.modernized.slice(-1500)}`;
   }
   if (previousContext?.translation) {
-    prompt += `\n\n**Previous page (original translation) for reference:**\n${previousContext.translation.slice(0, 2000)}...`;
+    prompt += `\n\n**Previous page (original translation) for reference:**\n...${previousContext.translation.slice(-1500)}`;
   }
+
+  prompt += `\n\n**Text to modernize (this page):**\n${translationText}`;
 
   const result = await model.generateContent(prompt);
 

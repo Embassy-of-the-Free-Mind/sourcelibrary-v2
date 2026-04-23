@@ -425,6 +425,14 @@ export default function TranslationEditor({
   const [summaryText, setSummaryText] = useState(page.summary?.data || '');
   const { fontSize, lineHeight, increaseFontSize, decreaseFontSize, resetFontSize, isMinSize, isMaxSize, isDefaultSize } = useReaderPreferences();
 
+  // Modernized text toggle
+  const [modernizedMode, setModernizedMode] = useState(() => {
+    if (typeof window === 'undefined') return false;
+    return localStorage.getItem('sl_reader_mode') === 'modern';
+  });
+  const [modernizedText, setModernizedText] = useState<string | null>(page.modernized?.data || null);
+  const [modernizing, setModernizing] = useState(false);
+
   // Translation request (guest users)
   const [translationRequested, setTranslationRequested] = useState(false);
 
@@ -745,12 +753,45 @@ export default function TranslationEditor({
     setOcrText(page.ocr?.data || '');
     setTranslationText(page.translation?.data || '');
     setSummaryText(page.summary?.data || '');
+    setModernizedText(page.modernized?.data || null);
+    setModernizing(false);
     // Reset scroll on all content panels and the outer panel container (mobile stacked layout)
     document.querySelectorAll('[data-reader-panel]').forEach(el => {
       el.scrollTop = 0;
     });
     document.querySelector('[data-reader-panels-container]')?.scrollTo(0, 0);
   }, [page]);
+
+  // Toggle modernized mode and persist to localStorage
+  const toggleModernizedMode = () => {
+    const next = !modernizedMode;
+    setModernizedMode(next);
+    localStorage.setItem('sl_reader_mode', next ? 'modern' : 'scholarly');
+  };
+
+  // Generate modernized text for the current page
+  const handleModernize = async () => {
+    setModernizing(true);
+    try {
+      const res = await fetch(`/api/pages/${page.id}/modernize`, {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({}),
+      });
+      if (!res.ok) {
+        const err = await res.json().catch(() => ({ error: 'Failed to modernize' }));
+        toast.error(err.error || 'Failed to modernize');
+        return;
+      }
+      const data = await res.json();
+      setModernizedText(data.modernized);
+      toast.success('Modernized text generated');
+    } catch {
+      toast.error('Failed to modernize');
+    } finally {
+      setModernizing(false);
+    }
+  };
 
   const handleProcess = async (action: 'ocr' | 'translation' | 'summary' | 'all') => {
     setProcessing(action);
@@ -1386,6 +1427,34 @@ export default function TranslationEditor({
                           model={page.translation?.model}
                         />
                       )}
+                      {/* Scholarly / Modern toggle pill */}
+                      {translationText && (
+                        <button
+                          onClick={toggleModernizedMode}
+                          className="flex items-center rounded-full text-[10px] font-medium overflow-hidden border"
+                          style={{ borderColor: 'var(--border-light)' }}
+                          title={modernizedMode ? 'Switch to scholarly translation' : 'Switch to modern prose'}
+                        >
+                          <span
+                            className="px-2 py-0.5 transition-colors"
+                            style={{
+                              background: !modernizedMode ? 'var(--accent-sage)' : 'transparent',
+                              color: !modernizedMode ? '#fff' : 'var(--text-muted)',
+                            }}
+                          >
+                            Scholarly
+                          </span>
+                          <span
+                            className="px-2 py-0.5 transition-colors"
+                            style={{
+                              background: modernizedMode ? 'var(--accent-sage)' : 'transparent',
+                              color: modernizedMode ? '#fff' : 'var(--text-muted)',
+                            }}
+                          >
+                            Modern
+                          </span>
+                        </button>
+                      )}
                     </div>
                     {translationText && (
                       <div className="flex items-center gap-2">
@@ -1413,7 +1482,7 @@ export default function TranslationEditor({
                           Info
                         </button>
                         <button
-                          onClick={() => copyToClipboard(translationText)}
+                          onClick={() => copyToClipboard(modernizedMode && modernizedText ? modernizedText : translationText)}
                           className="flex items-center gap-1 px-2 py-1 rounded text-xs transition-colors hover:bg-stone-100"
                           style={{ color: 'var(--text-muted)' }}
                         >
@@ -1424,7 +1493,46 @@ export default function TranslationEditor({
                     )}
                   </div>
                   <div className="flex-1 overflow-auto p-4 min-h-0" data-reader-panel>
-                    {translationText ? (
+                    {translationText && modernizedMode && modernizedText ? (
+                      /* Modernized text view — use NotesRenderer for full markdown support */
+                      (() => {
+                        // Convert <section-intro> tags to <note> tags so NotesRenderer styles them as green editorial notes
+                        const processedText = modernizedText
+                          .replace(/<section-intro>([\s\S]*?)<\/section-intro>/g, '\n\n<note>$1</note>\n\n');
+                        return <NotesRenderer text={processedText} showNotes={true} showMetadata={false} columns={page.columns} pageType={page.page_type} />;
+                      })()
+                    ) : translationText && modernizedMode && !modernizedText ? (
+                      /* Modernize button — text exists but no modernized version yet */
+                      <div className="h-full flex flex-col items-center justify-center text-center px-4 gap-3">
+                        <p className="text-sm" style={{ color: 'var(--text-muted)' }}>
+                          No modern version of this page yet.
+                        </p>
+                        <button
+                          onClick={handleModernize}
+                          disabled={modernizing}
+                          className="flex items-center gap-2 px-4 py-2 rounded-lg text-sm font-medium transition-colors"
+                          style={{
+                            background: modernizing ? 'var(--bg-subtle)' : 'var(--accent-sage)',
+                            color: modernizing ? 'var(--text-muted)' : '#fff',
+                          }}
+                        >
+                          {modernizing ? (
+                            <>
+                              <Loader2 className="w-4 h-4 animate-spin" />
+                              Modernizing...
+                            </>
+                          ) : (
+                            <>
+                              <BookOpen className="w-4 h-4" />
+                              Generate Modern Version
+                            </>
+                          )}
+                        </button>
+                        <p className="text-xs max-w-xs" style={{ color: 'var(--text-faint)' }}>
+                          AI will rewrite the scholarly translation into clear, readable modern prose while preserving all content.
+                        </p>
+                      </div>
+                    ) : translationText ? (
                       <>
                         <HighlightSelection
                           bookId={book.id}
