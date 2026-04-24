@@ -112,7 +112,11 @@ export async function runGemini(model, imageBuffer, prompt, opts = {}) {
   };
 
   if (thinking) {
-    body.generationConfig.thinkingConfig = { thinkingBudget: 8192 };
+    // Gemini 3.x uses thinkingLevel; 2.5 uses thinkingBudget
+    const isGemini3 = model.includes('gemini-3');
+    body.generationConfig.thinkingConfig = isGemini3
+      ? { thinkingLevel: 'HIGH' }
+      : { thinkingBudget: 8192 };
   }
 
   const start = Date.now();
