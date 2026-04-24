@@ -287,49 +287,73 @@ function KeyFiguresBlock({ figures, books }: {
 
 // ─── Component: Quotes ──────────────────────────────────────────
 
-function QuotesBlock({ quotes, books }: {
+function QuotesBlock({ quotes, books, title }: {
   quotes: {
     text: string;
+    original_text?: string;
+    original_language?: string;
     author?: string;
     book_title?: string;
     book_id?: string;
     page_number?: number;
+    year?: number;
     verified?: boolean;
   }[];
   books: BookRef[];
+  title?: string;
 }) {
   return (
-    <div className="space-y-6">
-      {quotes.filter(q => q.verified !== false).map((q, i) => {
-        const book = q.book_id ? findBook(books, q.book_id) : undefined;
-        return (
-          <blockquote
-            key={i}
-            className="relative pl-6 border-l-2 border-accent-gold/40 py-2"
-          >
-            <Quote className="absolute -left-3 -top-1 w-5 h-5 text-accent-gold/30 bg-cream" />
-            <p className="text-lg sm:text-xl font-display text-primary/80 leading-relaxed italic">
-              &ldquo;{q.text}&rdquo;
-            </p>
-            <footer className="mt-2 text-sm text-muted">
-              — <AuthorName author={q.author} />
-              {book ? (
-                <Link
-                  href={q.page_number
-                    ? `${bookUrl({ id: book.id, slug: book.slug })}?page=${q.page_number}`
-                    : bookUrl({ id: book.id, slug: book.slug })}
-                  className="text-accent-rust hover:underline ml-1"
-                >
-                  {q.book_title || bookTitle(book)}
-                  {q.page_number ? `, p. ${q.page_number}` : ''}
-                </Link>
-              ) : (
-                q.book_title ? `, ${q.book_title}` : ''
+    <div>
+      {title && (
+        <h3 className="text-xl sm:text-2xl font-display text-primary mb-6 flex items-center gap-2">
+          <Quote className="w-5 h-5 text-accent-gold/40" />
+          {title}
+        </h3>
+      )}
+      <div className="space-y-8">
+        {quotes.filter(q => q.verified !== false).map((q, i) => {
+          const book = q.book_id ? findBook(books, q.book_id) : undefined;
+          const bookHref = book
+            ? (q.page_number
+                ? `${bookUrl({ id: book.id, slug: book.slug })}?page=${q.page_number}`
+                : bookUrl({ id: book.id, slug: book.slug }))
+            : undefined;
+          return (
+            <blockquote
+              key={i}
+              className="relative pl-6 border-l-2 border-accent-gold/40 py-2"
+            >
+              <Quote className="absolute -left-3 -top-1 w-5 h-5 text-accent-gold/30 bg-cream" />
+              <p className="text-lg sm:text-xl font-display text-primary/80 leading-relaxed italic">
+                &ldquo;{q.text}&rdquo;
+              </p>
+              {q.original_text && (
+                <p className="mt-2 text-sm text-secondary/60 italic leading-relaxed">
+                  <span className="text-[10px] uppercase tracking-wider text-muted/50 not-italic mr-1.5">
+                    {q.original_language || 'original'}
+                  </span>
+                  &ldquo;{q.original_text}&rdquo;
+                </p>
               )}
-            </footer>
-          </blockquote>
-        );
-      })}
+              <footer className="mt-3 text-sm text-muted">
+                — <AuthorName author={q.author} />
+                {q.year && <span className="text-muted/60"> ({q.year})</span>}
+                {bookHref ? (
+                  <Link
+                    href={bookHref}
+                    className="text-accent-rust hover:underline ml-1"
+                  >
+                    {q.book_title || (book ? bookTitle(book) : '')}
+                    {q.page_number ? `, p. ${q.page_number}` : ''}
+                  </Link>
+                ) : (
+                  q.book_title ? `, ${q.book_title}` : ''
+                )}
+              </footer>
+            </blockquote>
+          );
+        })}
+      </div>
     </div>
   );
 }
@@ -507,6 +531,60 @@ function CrossCollectionsBlock({ links }: {
   );
 }
 
+// ─── Component: Thematic Gallery ────────────────────────────────
+
+function ThematicGalleryBlock({ clusters, books }: {
+  clusters: {
+    theme: string;
+    description?: string;
+    images: GalleryImage[];
+  }[];
+  books: BookRef[];
+}) {
+  if (clusters.length === 0) return null;
+  return (
+    <div className="space-y-8">
+      {clusters.map((cluster, ci) => (
+        <div key={ci}>
+          <h3 className="text-lg sm:text-xl font-display text-primary mb-1">
+            {cluster.theme}
+          </h3>
+          {cluster.description && (
+            <p className="text-sm text-muted mb-3">{linkBookNames(cluster.description, books)}</p>
+          )}
+          <div className="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-4 gap-3">
+            {cluster.images.map((img) => {
+              const src = imageUrl(img);
+              if (!src) return null;
+              return (
+                <Link
+                  key={img.id}
+                  href={imagePageHref(img)}
+                  className="group relative aspect-square rounded-lg overflow-hidden border border-border-light hover:border-accent-rust/40 transition-all hover:shadow-md"
+                  title={img.museum_description}
+                >
+                  <Image
+                    src={src}
+                    alt={img.museum_description || img.book_title || 'Illustration'}
+                    fill
+                    className="object-cover group-hover:scale-105 transition-transform duration-300"
+                    sizes="(min-width: 1024px) 200px, (min-width: 640px) 160px, 50vw"
+                  />
+                  <div className="absolute bottom-0 left-0 right-0 bg-gradient-to-t from-black/60 to-transparent p-2 pt-6 opacity-0 group-hover:opacity-100 transition-opacity">
+                    <p className="text-[11px] text-white/90 line-clamp-2 leading-tight">
+                      {img.museum_description || img.book_title}
+                    </p>
+                  </div>
+                </Link>
+              );
+            })}
+          </div>
+        </div>
+      ))}
+    </div>
+  );
+}
+
 // ─── Component: Gallery Grid ────────────────────────────────────
 
 function GalleryGridBlock({ embeddedImages, fallbackImages, indices, title }: {
@@ -581,7 +659,7 @@ export default function ExhibitionLayout({ layout, books, images, collectionSlug
             return <KeyFiguresBlock key={i} figures={block.figures} books={books} />;
 
           case 'quotes':
-            return <QuotesBlock key={i} quotes={block.quotes} books={books} />;
+            return <QuotesBlock key={i} quotes={block.quotes} books={books} title={block.title} />;
 
           case 'timeline':
             return <TimelineBlock key={i} start_year={block.start_year} end_year={block.end_year} highlights={block.highlights} books={books} />;
@@ -598,6 +676,9 @@ export default function ExhibitionLayout({ layout, books, images, collectionSlug
 
           case 'gallery_grid':
             return <GalleryGridBlock key={i} embeddedImages={block.images} fallbackImages={images} indices={block.image_indices} title={block.title || 'Illustrations from the Collection'} />;
+
+          case 'thematic_gallery':
+            return <ThematicGalleryBlock key={i} clusters={block.clusters || []} books={books} />;
 
           case 'cross_collections':
             return <CrossCollectionsBlock key={i} links={block.links} />;
