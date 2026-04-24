@@ -247,6 +247,15 @@ export default async function CollectionsPage() {
 
   const INITIAL_PATHWAYS = 12;
 
+  // Pick a hero background from the first collection with a usable image
+  const allCols = [...pathways, ...categories];
+  const heroBg = sanitizeThumbnail(
+    allCols.flatMap(c => c.featured_images || [])
+      .find(img => img.extracted_url || img.image_url)
+      ?.extracted_url || allCols.flatMap(c => c.featured_images || [])
+      .find(img => img.image_url)?.image_url
+  );
+
   return (
     <ContentPageLayout
       maxWidth="wide"
@@ -254,6 +263,8 @@ export default async function CollectionsPage() {
         <ContentHeader
           title="Collections"
           subtitle="10,000+ books across three millennia of human knowledge."
+          image={heroBg}
+          imageAlt="Historical illustration from the collection"
         />
       }
     >
