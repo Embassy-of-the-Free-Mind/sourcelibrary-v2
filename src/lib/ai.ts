@@ -302,11 +302,12 @@ const MODERNIZATION_PROMPT = `You are an editor turning a scholarly translation 
 2. **Modern vocabulary.** "Wherefore" → so/therefore. "Lest" → in case. "It is not easy to describe how" → "You can't imagine how." "Most honest men" → "genuinely honest people."
 3. **Active voice.** "A banquet was prepared by the king" → "The king prepared a banquet."
 4. **Paragraph breaks every 3-5 sentences.** The original has none. Create logical groupings.
-5. **Section headers** — Add a brief editorial line before major topic shifts, wrapped in XML: <section-intro>Leo describes the food and customs of the mountain people</section-intro> or <section-intro>A night encounter with bandits on the Atlas</section-intro>. These are your editorial additions and will be styled separately from the author's text.
-6. **Cut formulaic Latin filler:** Remove "wherefore," "the aforementioned," "as we have already said," "it is incredible to relate," "which I believe happened for this reason," and similar throat-clearing. Just say what happened.
-7. **Preserve every fact, name, date, and detail.** Never summarize or skip content. Change HOW things are said, not WHAT is said.
-8. **Preserve the author's voice** — humor, irony, asides, opinions, first-person moments. These are the best parts. Make them shine, don't flatten them.
-9. **Read-aloud test:** Every sentence should sound natural if spoken aloud. Avoid nested subordinate clauses, double negatives, and inverted word order.
+5. **PRESERVE ALL ORIGINAL HEADINGS.** The source text contains chapter titles and section titles (in markdown: # ## ### or ->centered<-). These are the AUTHOR'S headings — keep them exactly, just modernize the wording if needed. Example: ->*The boundaries of Africa.*<- becomes ### The Boundaries of Africa. NEVER delete or replace original headings with <section-intro> tags.
+6. **Editorial section intros** — You may ALSO add brief editorial context lines wrapped in XML: <section-intro>Leo describes the food and customs of the mountain people</section-intro>. These go AFTER the original heading, not instead of it. Use sparingly.
+7. **Cut formulaic Latin filler:** Remove "wherefore," "the aforementioned," "as we have already said," "it is incredible to relate," "which I believe happened for this reason," and similar throat-clearing. Just say what happened.
+8. **Preserve every fact, name, date, and detail.** Never summarize or skip content. Change HOW things are said, not WHAT is said.
+9. **Preserve the author's voice** — humor, irony, asides, opinions, first-person moments. These are the best parts. Make them shine, don't flatten them.
+10. **Read-aloud test:** Every sentence should sound natural if spoken aloud. Avoid nested subordinate clauses, double negatives, and inverted word order.
 
 **What to remove:**
 - Redundant transitions: "Wherefore," "Moreover," "Furthermore," "Now," "Indeed"
