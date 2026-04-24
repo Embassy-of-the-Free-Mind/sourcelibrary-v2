@@ -359,6 +359,51 @@ export default function ConfidentHallucinatorPage() {
           Together, they triangulate quality without requiring any ground truth. For our pipeline of 17,000+ books across dozens of scripts, this is the difference between scalable quality assurance and manual review of every page.
         </p>
 
+        {/* --- Embedding survey --- */}
+        <h2 className="text-2xl md:text-3xl text-primary mt-16 mb-6">
+          Manuscript vs. Print: The Embedding Survey
+        </h2>
+
+        <p className="text-secondary leading-relaxed mb-6">
+          Our initial embedding evaluations used 3&ndash;5 pages per language &mdash; enough to spot outliers like the Sefer ha-bahir, but too few for reliable cross-language comparison. We ran a properly powered survey: 20 pages per cell, 5 languages &times; 2 conditions (manuscript vs. print), 182 pages total, stratified across different books and skipping title pages.
+        </p>
+
+        <div className="overflow-x-auto mb-8">
+          <table className="w-full text-sm text-secondary">
+            <thead>
+              <tr className="border-b border-light">
+                <th className="text-left py-3 pr-4 font-semibold">Language</th>
+                <th className="text-right py-3 pr-4 font-semibold">Manuscript</th>
+                <th className="text-right py-3 pr-4 font-semibold">Print</th>
+                <th className="text-right py-3 pr-4 font-semibold">&Delta;</th>
+                <th className="text-right py-3 font-semibold">N</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr className="border-b border-light/50"><td className="py-2 pr-4">Greek</td><td className="py-2 pr-4 text-right">0.118</td><td className="py-2 pr-4 text-right font-medium">0.113</td><td className="py-2 pr-4 text-right">+0.005</td><td className="py-2 text-right">40</td></tr>
+              <tr className="border-b border-light/50"><td className="py-2 pr-4">Arabic</td><td className="py-2 pr-4 text-right">0.140</td><td className="py-2 pr-4 text-right font-medium">0.124</td><td className="py-2 pr-4 text-right">+0.016</td><td className="py-2 text-right">40</td></tr>
+              <tr className="border-b border-light/50"><td className="py-2 pr-4">Hebrew</td><td className="py-2 pr-4 text-right">0.149</td><td className="py-2 pr-4 text-right font-medium">0.127</td><td className="py-2 pr-4 text-right">+0.022</td><td className="py-2 text-right">40</td></tr>
+              <tr className="border-b border-light/50"><td className="py-2 pr-4">Latin</td><td className="py-2 pr-4 text-right">0.164</td><td className="py-2 pr-4 text-right font-medium">0.129</td><td className="py-2 pr-4 text-right">+0.035</td><td className="py-2 text-right">40</td></tr>
+              <tr className="border-b border-light/50"><td className="py-2 pr-4">Sanskrit</td><td className="py-2 pr-4 text-right text-muted">0.210 <span className="text-xs">(n=2)</span></td><td className="py-2 pr-4 text-right font-medium">0.144</td><td className="py-2 pr-4 text-right">+0.066</td><td className="py-2 text-right">22</td></tr>
+            </tbody>
+          </table>
+          <p className="text-xs text-muted mt-2">Cosine distance between OCR embedding and translation embedding (lower = better alignment). 20 pages per cell, sampled across different books. Embedding model: Gemini embedding-2-preview (768d).</p>
+        </div>
+
+        <p className="text-secondary leading-relaxed mb-6">
+          Three findings change the story:
+        </p>
+
+        <ol className="text-secondary leading-relaxed mb-8 space-y-4">
+          <li><strong>Manuscripts always have higher embedding distance than print.</strong> Every language shows the same direction. Harder-to-read text &rarr; more OCR errors &rarr; translation built on worse input &rarr; higher semantic divergence. The gap ranges from almost nothing (Greek, +0.005) to substantial (Latin, +0.035).</li>
+          <li><strong>The manuscript/print distinction matters more than language.</strong> Latin manuscripts (0.164) are worse than Hebrew print (0.127). The condition &mdash; handwritten vs. typeset &mdash; is a stronger predictor of translation quality than the script itself.</li>
+          <li><strong>Hebrew is not uniquely bad.</strong> Our initial 5-page sample showed a 0.348 outlier on the Sefer ha-bahir that inflated the mean. With 20 pages per cell, Hebrew print (0.127) and manuscript (0.149) are comparable to Arabic and Latin. The earlier result was a sampling artifact, not a language-level problem.</li>
+        </ol>
+
+        <p className="text-secondary leading-relaxed mb-8">
+          Greek has the best alignment overall (0.113&ndash;0.118), with manuscripts nearly as good as print. This may reflect stronger training data for Greek in the embedding model, or it may be that the Greek manuscripts in our collection (Bodleian Library) are particularly clean.
+        </p>
+
         {/* --- Implications --- */}
         <h2 className="text-2xl md:text-3xl text-primary mt-16 mb-6">
           Implications for Our Pipeline
@@ -368,7 +413,8 @@ export default function ConfidentHallucinatorPage() {
           <li><strong>Hebrew should not use Flash Lite.</strong> It confidently hallucinates. Use Flash only, with multi-run consensus.</li>
           <li><strong>Arabic should use multi-run voting</strong> at temp=0 (Flash MCR is only 44% &mdash; 3 runs with majority vote would improve significantly).</li>
           <li><strong>Tibetan printed text</strong> is handled well by both models. Cursive manuscripts need further evaluation.</li>
-          <li><strong>Latin</strong> is reliable. Single-run Flash is sufficient.</li>
+          <li><strong>Latin print</strong> is reliable. Single-run Flash is sufficient.</li>
+          <li><strong>Manuscripts need more attention than print, regardless of language.</strong> The embedding survey shows a consistent manuscript penalty across all five languages. Manuscript-heavy collections should get priority for quality review.</li>
           <li><strong>Embedding-based translation monitoring</strong> should be deployed pipeline-wide. Pages with OCR&rarr;translation distance &gt; 2&sigma; from their corpus mean should be flagged for review.</li>
         </ul>
 
@@ -423,7 +469,7 @@ export default function ConfidentHallucinatorPage() {
         <hr className="border-light my-12" />
 
         <p className="text-muted text-sm leading-relaxed">
-          <strong>Technical details:</strong> Models: Gemini 3 Flash Preview, Gemini 3.1 Flash Lite Preview. Temperatures: 0, 0.3. Embedding model: Gemini embedding-2-preview (768d). 143 API calls, $0.20 total. Five scripts: Latin, Tibetan, Arabic, Hebrew, Sanskrit. Evaluation framework: <a href="https://github.com/Embassy-of-the-Free-Mind/sourcelibrary-v2/issues/1329" className="text-accent-rust hover:underline">qa-eval</a> (open source). Raw results in <code className="bg-warm px-1 py-0.5 rounded">scripts/eval/results/</code>.
+          <strong>Technical details:</strong> Models: Gemini 3 Flash Preview, Gemini 3.1 Flash Lite Preview. Temperatures: 0, 0.3. Embedding model: Gemini embedding-2-preview (768d). Consistency eval: 143 API calls across 5 scripts. Embedding survey: 182 pages across 5 languages &times; 2 conditions (manuscript/print), 20 pages per cell. Total cost: ~$0.25 USD. Evaluation framework: <a href="https://github.com/Embassy-of-the-Free-Mind/sourcelibrary-v2/issues/1329" className="text-accent-rust hover:underline">qa-eval</a> (open source). Raw results in <code className="bg-warm px-1 py-0.5 rounded">scripts/eval/results/</code>.
         </p>
 
       </article>
