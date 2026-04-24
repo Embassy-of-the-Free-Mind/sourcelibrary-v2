@@ -24,6 +24,8 @@ export default function HiddenEngineersPage() {
         <ContentHeader
           title="The Hidden Engineers"
           subtitle="Steam engines in spell books, automata in alchemy, kites in natural magic &mdash; before engineering was a discipline, its knowledge lived in unexpected places"
+          image="https://3kwioilsplnmnkv8.public.blob.vercel-storage.com/archived/695230c6ab34727b1f044784/93.jpg"
+          imageAlt="Hero of Alexandria's Aeolipile diagram from a 16th-century manuscript"
         >
           <p className="text-stone-400 text-sm mt-4">27 February 2026 &middot; 22 min read</p>
         </ContentHeader>

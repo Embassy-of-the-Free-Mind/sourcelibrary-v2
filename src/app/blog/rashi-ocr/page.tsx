@@ -40,6 +40,8 @@ export default function RashiOcrPage() {
         <ContentHeader
           title="The Rashi Problem"
           subtitle="When AI OCR hallucinates in Hebrew &mdash; and your quality metrics say it's fine"
+          image="https://images.sourcelibrary.org/archived/6990630be7b7642c081de08b/8.jpg"
+          imageAlt="Page from the Zohar, Cremona 1558 edition, showing dense Rashi script"
         >
           <p className="text-stone-400 text-sm mt-4">24 March 2026 &middot; 10 min read</p>
         </ContentHeader>

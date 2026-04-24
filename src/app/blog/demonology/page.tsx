@@ -24,6 +24,8 @@ export default function DemonologyPage() {
         <ContentHeader
           title="What Are Demons? Five Answers from the Primary Sources"
           subtitle="The word &ldquo;demon&rdquo; names two almost opposite things — and the history of how it acquired its current meaning is one of the stranger reversals in intellectual history"
+          image="https://3kwioilsplnmnkv8.public.blob.vercel-storage.com/archived/6953b56577f38f6761bd979d/62.jpg"
+          imageAlt="Illustration of a jinn from the Book of Wonders, 14th century"
         >
           <p className="text-stone-400 text-sm mt-4">21 February 2026 &middot; 18 min read</p>
         </ContentHeader>

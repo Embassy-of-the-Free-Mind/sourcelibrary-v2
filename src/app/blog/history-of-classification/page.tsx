@@ -27,6 +27,8 @@ export default function HistoryOfClassificationPage() {
         <ContentHeader
           title="Ten Thousand Years of Tagging"
           subtitle="A history of how humans organize knowledge — told through the books that invented it"
+          image="https://images.sourcelibrary.org/pages/69773e18094afd77cbd39c0a/0021-full.jpg"
+          imageAlt="Minerva in a library with putti studying a globe, from Chemical Library, 1727"
         >
           <p className="text-stone-400 text-sm mt-4">16 March 2026 &middot; 20 min read</p>
         </ContentHeader>

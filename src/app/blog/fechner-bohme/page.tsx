@@ -23,6 +23,8 @@ export default function FechnerBohmePage() {
         <ContentHeader
           title="The Mystic Who Invented Psychophysics"
           subtitle="Gustav Fechner, Jakob Böhme, and the Secret History of Experimental Psychology"
+          image="https://3kwioilsplnmnkv8.public.blob.vercel-storage.com/archived/6867c580aadfee9e955eca92/4.jpg"
+          imageAlt="Title page of Aurora by Jakob Bohme"
         >
           <p className="text-stone-400 text-sm mt-4">16 February 2026 &middot; 15 min read</p>
         </ContentHeader>

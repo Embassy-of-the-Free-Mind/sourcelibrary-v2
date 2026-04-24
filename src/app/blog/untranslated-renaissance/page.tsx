@@ -22,6 +22,8 @@ export default function UntranslatedRenaissancePage() {
         <ContentHeader
           title="How Much of the Renaissance Has Been Translated?"
           subtitle="We tried to count."
+          image="https://api.digitale-sammlungen.de/iiif/image/v2/bsb11057772_00219/full/full/0/default.jpg"
+          imageAlt="Human head as microcosm mapping mental faculties, from Fludd's History of the Microcosm, 1619"
         >
           <p className="text-stone-400 text-sm mt-4">15 March 2026 &middot; 12 min read</p>
         </ContentHeader>

@@ -3,6 +3,7 @@
 import { useState, useEffect, useCallback } from 'react';
 import { annotations } from '@/lib/api-client/annotations';
 import type { Annotation } from '@/lib/types';
+import FeedbackWidget from '@/components/feedback/FeedbackWidget';
 
 interface BlogCommentsProps {
   slug: string;
@@ -283,6 +284,12 @@ export default function BlogComments({ slug }: BlogCommentsProps) {
 
   return (
     <section className="mt-16 pt-10 border-t border-border-medium">
+      <p className="text-sm text-muted mb-8 font-body">
+        Produced by J. Derek Lomas of Delft University of Technology using{' '}
+        <a href="https://docs.anthropic.com/en/docs/claude-code" className="text-accent-rust hover:text-accent-rust/80 underline">Claude Code</a>.{' '}
+        <FeedbackWidget label="Send feedback" className="text-accent-rust hover:text-accent-rust/80 underline" />.
+      </p>
+
       <h2 className="font-serif text-2xl text-primary mb-6">
         Comments{total > 0 && <span className="text-muted font-sans text-lg ml-2">({total})</span>}
       </h2>

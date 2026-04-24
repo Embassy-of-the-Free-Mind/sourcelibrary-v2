@@ -22,6 +22,8 @@ export default function VisualizingClassificationPage() {
         <ContentHeader
           title="Visualizing 20,000 Books Across Six Dimensions"
           subtitle="What does a faceted classification look like? Four views of the same library."
+          image="https://images.sourcelibrary.org/archived/6990601f8cbcc9a4dba2c624/7.jpg"
+          imageAlt="Jyotisha classification tree in Sanskrit from the Celestial Tree of Natal Astrology"
         >
           <p className="text-stone-400 text-sm mt-4">16 March 2026 &middot; 6 min read &middot; Interactive</p>
         </ContentHeader>

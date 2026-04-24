@@ -22,6 +22,8 @@ export default function OriginStoryPage() {
         <ContentHeader
           title="Where Source Library Came From"
           subtitle="From one untranslated Ficino manuscript to 5,000 books and the ambition to translate the Renaissance"
+          image="https://3kwioilsplnmnkv8.public.blob.vercel-storage.com/blog/ficino-bust-laptop.jpg"
+          imageAlt="Bronze bust of Marsilio Ficino with a laptop at the Embassy of the Free Mind"
         >
           <p className="text-stone-400 text-sm mt-4">15 March 2026 &middot; 8 min read</p>
         </ContentHeader>

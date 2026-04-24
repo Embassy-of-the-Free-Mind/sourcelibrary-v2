@@ -23,6 +23,8 @@ export default function FirstTranslationsPage() {
         <ContentHeader
           title="First English Translations"
           subtitle="Nearly 2,000 books in Source Library have never been read in English before — over 900 are now fully translated"
+          image="https://3kwioilsplnmnkv8.public.blob.vercel-storage.com/archived/4d4089b9-9227-4cc5-b0a2-9b06ee731061/2.jpg"
+          imageAlt="Frontispiece of Kircher's Oedipus Aegyptiacus, 1653"
         >
           <p className="text-stone-400 text-sm mt-4">20 February 2026, updated 8 March 2026 &middot; 15 min read</p>
         </ContentHeader>

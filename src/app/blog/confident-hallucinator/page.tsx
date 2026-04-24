@@ -22,6 +22,8 @@ export default function ConfidentHallucinatorPage() {
         <ContentHeader
           title="The Confident Hallucinator"
           subtitle="What we learned evaluating AI OCR across five scripts and three model tiers"
+          image="https://images.sourcelibrary.org/archived/6956eaf4f23ebf30578dba35/221.jpg"
+          imageAlt="Comparative table of five scripts from Agrippa's Occult Philosophy, 1531"
         >
           <p className="text-stone-400 text-sm mt-4">23&ndash;24 April 2026 &middot; 18 min read</p>
         </ContentHeader>

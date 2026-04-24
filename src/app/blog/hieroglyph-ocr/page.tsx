@@ -75,6 +75,8 @@ export default function HieroglyphOcrPage() {
         <ContentHeader
           title="Can AI Read Hieroglyphs?"
           subtitle="Four approaches, four failures, and what we learned"
+          image="https://iiif.archive.org/iiif/egyptianreadingb00budguoft$80/full/1000,/0/default.jpg"
+          imageAlt="Page from Budge's Egyptian Reading Book showing hieroglyphic text, 1896"
         >
           <p className="text-stone-400 text-sm mt-4">14 March 2026 &middot; 12 min read</p>
         </ContentHeader>

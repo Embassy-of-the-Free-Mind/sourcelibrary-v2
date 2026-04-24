@@ -23,6 +23,8 @@ export default function TibetanOcrPage() {
         <ContentHeader
           title="Benchmarking AI OCR on 232,000 Pages of Bhutanese Buddhist Manuscripts"
           subtitle="Claude, Gemini, and the question of what &ldquo;good enough&rdquo; means for handwritten Tibetan"
+          image="https://images.eap.bl.uk/EAP039/EAP039_1_4_277/10.jp2/full/600,/0/default.jpg"
+          imageAlt="Ritual mandala from Gangtey Monastery, Bhutan"
         >
           <p className="text-stone-400 text-sm mt-4">23 April 2026 &middot; 12 min read</p>
         </ContentHeader>

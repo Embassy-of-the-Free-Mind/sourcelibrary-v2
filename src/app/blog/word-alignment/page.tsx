@@ -24,6 +24,8 @@ export default function WordAlignmentPage() {
         <ContentHeader
           title="Reading Through the Translation"
           subtitle="Click any English word to see the original that produced it"
+          image="https://images.sourcelibrary.org/archived/6953cc3677f38f6761be156e/383.jpg"
+          imageAlt="Fragment of Greek papyrus from Herculaneum, 1885"
         >
           <p className="text-stone-400 text-sm mt-4">17 April 2026</p>
         </ContentHeader>

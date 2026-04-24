@@ -22,6 +22,8 @@ export default function ClusteringPage() {
         <ContentHeader
           title="What Does a Library of 3,400 Rare Books Look Like?"
           subtitle="Embedding-based clustering reveals the hidden structure of a historical collection"
+          image="https://3kwioilsplnmnkv8.public.blob.vercel-storage.com/archived/6952dac677f38f6761bc683a/13.jpg"
+          imageAlt="Integra Naturae Speculum by Robert Fludd, 1617"
         >
           <p className="text-stone-400 text-sm mt-4">14 March 2026 &middot; 10 min read</p>
         </ContentHeader>

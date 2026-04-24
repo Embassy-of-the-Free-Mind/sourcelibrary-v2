@@ -38,26 +38,32 @@ export default function robots(): MetadataRoute.Robots {
       // See https://sourcelibrary.org/terms for licensing details.
       {
         userAgent: 'CCBot',
+        allow: '/blog/',
         disallow: '/',
       },
       {
         userAgent: 'Bytespider',
+        allow: '/blog/',
         disallow: '/',
       },
       {
         userAgent: 'Diffbot',
+        allow: '/blog/',
         disallow: '/',
       },
       {
         userAgent: 'Omgilibot',
+        allow: '/blog/',
         disallow: '/',
       },
       {
         userAgent: 'FacebookBot',
+        allow: '/blog/',
         disallow: '/',
       },
       {
         userAgent: 'Applebot',
+        allow: '/blog/',
         disallow: '/',
       },
 
@@ -65,17 +71,17 @@ export default function robots(): MetadataRoute.Robots {
       // GPTBot, Claude-Web, etc. — access the structured API
       {
         userAgent: 'GPTBot',
-        allow: ['/api/search', '/api/books/', '/api/mcp', '/llms.txt', '/terms', '/developers'],
+        allow: ['/blog/', '/api/search', '/api/books/', '/api/mcp', '/llms.txt', '/terms', '/developers'],
         disallow: '/',
       },
       {
         userAgent: 'Claude-Web',
-        allow: ['/api/search', '/api/books/', '/api/mcp', '/llms.txt', '/terms', '/developers'],
+        allow: ['/blog/', '/api/search', '/api/books/', '/api/mcp', '/llms.txt', '/terms', '/developers'],
         disallow: '/',
       },
       {
         userAgent: 'Anthropic-AI',
-        allow: ['/api/search', '/api/books/', '/api/mcp', '/llms.txt', '/terms', '/developers'],
+        allow: ['/blog/', '/api/search', '/api/books/', '/api/mcp', '/llms.txt', '/terms', '/developers'],
         disallow: '/',
       },
     ],

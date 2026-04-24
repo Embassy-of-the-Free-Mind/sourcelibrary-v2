@@ -18,7 +18,7 @@ export function ContentHeader({ title, subtitle, children, image, imageAlt }: Co
     <>
       <SiteHeader variant="light" />
 
-      <div className="relative overflow-hidden text-white py-16 md:py-20">
+      <div className={`relative overflow-hidden text-white ${image ? 'pt-16 pb-10 md:pt-24 md:pb-14 min-h-[260px] md:min-h-[340px] flex flex-col justify-end' : 'py-16 md:py-20'}`}>
         {image ? (
           <>
             {/* eslint-disable-next-line @next/next/no-img-element */}
@@ -27,19 +27,28 @@ export function ContentHeader({ title, subtitle, children, image, imageAlt }: Co
               alt={imageAlt || ''}
               className="absolute inset-0 w-full h-full object-cover"
             />
-            <div className="absolute inset-0 bg-gradient-to-t from-[rgba(26,22,18,0.85)] via-[rgba(26,22,18,0.35)] to-transparent" />
+            <div className="absolute inset-0" style={{ background: 'linear-gradient(to top, rgba(26,22,18,0.94) 0%, rgba(26,22,18,0.75) 35%, rgba(26,22,18,0.35) 65%, rgba(26,22,18,0.15) 100%)' }} />
           </>
         ) : (
           <div className="absolute inset-0 bg-gradient-to-b from-[#2a1f17] to-[#1a1612]" />
         )}
         <div className="relative max-w-[var(--container-standard)] mx-auto px-6">
-          <h1 className="font-serif text-4xl md:text-5xl tracking-tight mb-4">{title}</h1>
+          <h1 className={`font-serif text-4xl md:text-5xl tracking-tight ${subtitle ? 'mb-4' : ''} ${image ? 'drop-shadow-[0_2px_12px_rgba(0,0,0,0.4)]' : ''}`}>{title}</h1>
           {subtitle && (
-            <p className="text-lg md:text-xl text-stone-300 max-w-2xl font-body leading-relaxed">{subtitle}</p>
+            <p className={`text-lg md:text-xl text-stone-300 max-w-2xl font-body leading-relaxed ${image ? 'drop-shadow-[0_1px_6px_rgba(0,0,0,0.3)]' : ''}`}>{subtitle}</p>
           )}
-          {children}
+          {!image && children}
         </div>
       </div>
+
+      {/* Date/byline below hero when image is present */}
+      {image && children && (
+        <div className="bg-cream">
+          <div className="max-w-[var(--container-standard)] mx-auto px-6 pt-6">
+            {children}
+          </div>
+        </div>
+      )}
     </>
   );
 }

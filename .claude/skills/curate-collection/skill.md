@@ -66,8 +66,34 @@ for (const col of collections) {
     gallery_quality: { $gte: 0.7 }
   });
 
+  // Artwork quality (Visual Art section)
+  const artworkCount = await db.collection('books').countDocuments({ collections: slug, resource_type: { $exists: true } });
+  if (artworkCount > 0) {
+    // Check for duplicates (same normalized title)
+    const artworks = await db.collection('books').find(
+      { collections: slug, resource_type: { $exists: true } },
+      { projection: { title: 1, author: 1, medium: 1, resource_type: 1 } }
+    ).toArray();
+    const norm = t => t?.toLowerCase().replace(/[^a-z0-9]/g, '');
+    const seen = new Set();
+    let dupeCount = 0;
+    for (const a of artworks) { const k = norm(a.title); if (seen.has(k)) dupeCount++; seen.add(k); }
+    if (dupeCount) problems.push(`${dupeCount} duplicate artworks`);
+
+    // Check for text-heavy prints (medium=paper)
+    const paperCount = artworks.filter(a => a.medium === 'paper' && a.resource_type === 'print').length;
+    if (paperCount > 3) problems.push(`${paperCount} paper prints (likely text pages)`);
+
+    // Check for over-concentration
+    const byAuthor = {};
+    for (const a of artworks) { byAuthor[a.author || '?'] = (byAuthor[a.author || '?'] || 0) + 1; }
+    for (const [author, count] of Object.entries(byAuthor)) {
+      if (count > artworkCount * 0.6) problems.push(`artwork dominated by ${author} (${count}/${artworkCount})`);
+    }
+  }
+
   if (problems.length) {
-    issues.push({ slug, name: col.name, book_count: totalBooks, translated: translatedBooks, gallery: galleryCount, problems });
+    issues.push({ slug, name: col.name, book_count: totalBooks, translated: translatedBooks, gallery: galleryCount, artworks: artworkCount, problems });
   }
 }
 
@@ -224,7 +250,75 @@ For every book title referenced in the `expanded_description`, create a `mention
 
 The `text` must be the **exact string** as it appears in the description. `linkBookTitles()` does regex matching — longest match first, case-sensitive.
 
-### Step 7: Select Featured Images
+### Step 7: Audit & Curate Artworks (Visual Art Section)
+
+Collections that contain artworks (books with `resource_type`) display a "Visual Art" section. This section is prone to quality issues — audit it every time you curate.
+
+```javascript
+// Fetch all artworks in this collection
+const artworks = await db.collection('books').find(
+  { collections: slug, resource_type: { $exists: true } },
+  { projection: { id: 1, title: 1, author: 1, resource_type: 1, medium: 1, thumbnail: 1, enrichment: 1 } }
+).sort({ author: 1, title: 1 }).toArray();
+
+if (artworks.length > 0) {
+  console.log(`\n=== ARTWORK AUDIT (${artworks.length} items) ===`);
+
+  // 1. DUPLICATES — same subject from different sources
+  // Normalize titles and group by similarity
+  const normalize = t => t?.toLowerCase().replace(/[^a-z0-9]/g, '');
+  const groups = new Map();
+  for (const a of artworks) {
+    const key = normalize(a.title);
+    if (!groups.has(key)) groups.set(key, []);
+    groups.get(key).push(a);
+  }
+  const dupes = [...groups.values()].filter(g => g.length > 1);
+  if (dupes.length) {
+    console.log(`\nDUPLICATES (${dupes.length} groups):`);
+    for (const group of dupes) {
+      console.log(`  "${group[0].title}"`);
+      for (const a of group) console.log(`    - ${a.id} (${a.author})`);
+    }
+  }
+
+  // 2. CONCENTRATION — too many items from one work/artist
+  const byAuthor = new Map();
+  for (const a of artworks) {
+    const key = a.author || 'unknown';
+    byAuthor.set(key, (byAuthor.get(key) || 0) + 1);
+  }
+  for (const [author, count] of byAuthor) {
+    if (count > 15) console.log(`\nOVER-REPRESENTED: ${author} has ${count}/${artworks.length} items`);
+  }
+
+  // 3. RELEVANCE — artworks that may not belong to the collection theme
+  // Flag items with resource_types not in VISUAL_RESOURCE_TYPES
+  const VISUAL_TYPES = ['painting', 'drawing', 'print', 'fresco', 'engraving', 'woodcut'];
+  const nonVisual = artworks.filter(a => !VISUAL_TYPES.includes(a.resource_type));
+  if (nonVisual.length) {
+    console.log(`\nNON-STANDARD TYPES (${nonVisual.length}):`);
+    for (const a of nonVisual) console.log(`  ${a.resource_type}: ${a.title} (${a.id})`);
+  }
+
+  // 4. TEXT-HEAVY — prints with medium "paper" are often book pages, not standalone art
+  const paperPrints = artworks.filter(a => a.medium === 'paper' && a.resource_type === 'print');
+  if (paperPrints.length) {
+    console.log(`\nPOSSIBLE TEXT PAGES (medium=paper, ${paperPrints.length}):`);
+    for (const a of paperPrints) console.log(`  ${a.title} (${a.id})`);
+    console.log('  → Visually inspect thumbnails. Remove from collection if text-heavy.');
+  }
+}
+```
+
+**Common fixes:**
+- **Remove irrelevant artworks:** `db.collection('books').updateMany({ id: { $in: idsToRemove } }, { $pull: { collections: slug } })`
+- **Remove duplicates:** Keep the version with better metadata/thumbnail. Remove the other from the collection.
+- **Thin over-represented artists:** If one work contributes 50+ emblems, keep 10-15 best and remove the rest from the collection (not from the DB).
+
+**Important:** This only removes the collection tag — it does NOT delete artworks. They remain available in `/artwork`.
+
+### Step 8: Select Featured Images
 
 Pick 6-9 gallery images for the collection hero. Requirements:
 - `gallery_quality >= 0.7`
@@ -234,7 +328,7 @@ Pick 6-9 gallery images for the collection hero. Requirements:
 
 If the collection doesn't have gallery images yet (books not processed), note this and skip — gallery images populate automatically when the image extraction pipeline runs on collection books.
 
-### Step 8: Push Everything
+### Step 9: Push Everything
 
 Use a single script to update the collection via the API. Always include `curation_todo` tracking what's incomplete:
 
@@ -260,7 +354,7 @@ const resp = await fetch('https://sourcelibrary.org/api/collections', {
 });
 ```
 
-### Step 9: Verify
+### Step 10: Verify
 
 After pushing, fetch the collection page and verify:
 ```bash
@@ -307,3 +401,5 @@ Match this level of richness for every collection.
 4. **Don't write the description about Source Library** ("our collection includes..."). Write about the tradition/field itself. The collection IS the description.
 5. **Don't set featured_images manually unless necessary.** The image extraction pipeline does this automatically with quality scoring. Only override if the automatic selection is poor.
 6. **Don't forget to verify book IDs are real.** Always fetch book data before referencing IDs.
+7. **Don't ignore the Visual Art section.** Artwork imports from Rijksmuseum/Wikimedia often bring in text-heavy pages, duplicates, and off-topic prints. Always run the artwork audit (Step 7) when curating collections that have artworks.
+8. **Don't remove artworks from the database — only from collections.** Use `$pull: { collections: slug }` to untag, never `deleteOne`.

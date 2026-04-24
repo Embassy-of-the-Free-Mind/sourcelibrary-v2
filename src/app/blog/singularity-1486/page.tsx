@@ -23,6 +23,8 @@ export default function Singularity1486Page() {
         <ContentHeader
           title="The Singularity Was Published in 1486"
           subtitle="Transhumanism, panpsychism, and the planetary mind &mdash; in the original Latin and German"
+          image="https://images.sourcelibrary.org/archived/695201a9ab34727b1f041826/250.jpg"
+          imageAlt="Cosmological diagram of human figure with musical proportions from Fludd's History of the Microcosm, 1619"
         >
           <p className="text-stone-400 text-sm mt-4">15 April 2026 &middot; 12 min read</p>
         </ContentHeader>

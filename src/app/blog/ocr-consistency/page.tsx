@@ -23,6 +23,8 @@ export default function OcrConsistencyPage() {
         <ContentHeader
           title="How Consistent Is AI OCR?"
           subtitle="1,448 duplicate scans reveal what happens when the same page is read twice"
+          image="https://images.sourcelibrary.org/archived/695591547bd6d2cd1d618a62/154.jpg"
+          imageAlt="Alchemist in laboratory with lion and furnace from Basilius Valentinus, Twelve Keys, 1618"
         >
           <p className="text-stone-400 text-sm mt-4">7 March 2026 &middot; 12 min read</p>
         </ContentHeader>

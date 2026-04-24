@@ -33,6 +33,8 @@ export default function TenThousandBooksPage() {
         <ContentHeader
           title="10,000 Books"
           subtitle="And the Renaissance encyclopedia that nobody translated for 509 years"
+          image="https://images.sourcelibrary.org/archived/6909aba7cf28baa1b4caef69/5.jpg"
+          imageAlt="Woodcut dedication page from Champier's Mirabilium divinorum, 1517"
         >
           <p className="text-stone-400 text-sm mt-4">13 April 2026 &middot; 4 min read</p>
         </ContentHeader>

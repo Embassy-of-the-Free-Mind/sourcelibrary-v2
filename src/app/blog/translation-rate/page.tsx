@@ -22,6 +22,8 @@ export default function TranslationRatePage() {
         <ContentHeader
           title="How Many Renaissance Books Get Translated Each Year?"
           subtitle="We counted."
+          image="https://images.sourcelibrary.org/archived/69528b19ab34727b1f04f2fe/8.jpg"
+          imageAlt="Arts and Crafts frontispiece from the Book of Divine Consolation of Angela of Foligno, 1909"
         >
           <p className="text-stone-400 text-sm mt-4">21 March 2026 &middot; 10 min read</p>
         </ContentHeader>

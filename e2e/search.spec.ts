@@ -29,12 +29,12 @@ test.describe('Search', () => {
     await measurePerf(page, 'search: result cards link to books');
   });
 
-  test('search results summary appears', async ({ page }) => {
+  test('search results tabs appear', async ({ page }) => {
     await page.goto(`/search?q=${SEARCH.query}`);
 
-    // In the unified "All" view, results show as accordion sections like "Books (5)"
-    const booksSection = page.getByText(/books\s*\(\d+\)/i);
-    await expect(booksSection.first()).toBeVisible({ timeout: SEARCH_TIMEOUT });
-    await measurePerf(page, 'search: results summary appears');
+    // Search UI shows category tabs as buttons: All, Books, Index, Images
+    const booksTab = page.locator('button', { hasText: 'Books' });
+    await expect(booksTab.first()).toBeVisible({ timeout: SEARCH_TIMEOUT });
+    await measurePerf(page, 'search: results tabs appear');
   });
 });

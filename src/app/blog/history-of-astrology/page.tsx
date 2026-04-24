@@ -23,6 +23,8 @@ export default function HistoryOfAstrologyPage() {
         <ContentHeader
           title="A History of Astrology Across Traditions"
           subtitle="How the sky became a text — and how five civilisations learned to read it"
+          image="https://3kwioilsplnmnkv8.public.blob.vercel-storage.com/archived/699068948034a3640265b709/311.jpg"
+          imageAlt="Zodiac Man from a medieval astrological manuscript"
         >
           <p className="text-stone-400 text-sm mt-4">21 February 2026 &middot; 22 min read</p>
         </ContentHeader>

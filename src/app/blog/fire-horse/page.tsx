@@ -23,6 +23,8 @@ export default function FireHorsePage() {
         <ContentHeader
           title="The Year of the Fire Horse"
           subtitle="Double Yang Fire, a 17th-Century Arsonist, and the Original Texts Behind Chinese Astrology"
+          image="https://3kwioilsplnmnkv8.public.blob.vercel-storage.com/archived/6992cac0d4d545ae73feea71/6.jpg"
+          imageAlt="He Tu River Map diagram from Chinese cosmological tradition"
         >
           <p className="text-stone-400 text-sm mt-4">17 February 2026 &middot; 16 min read</p>
         </ContentHeader>

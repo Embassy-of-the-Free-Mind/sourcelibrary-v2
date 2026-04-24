@@ -23,6 +23,8 @@ export default function McpServerPage() {
         <ContentHeader
           title="Claude Can Now Read Thousands of Rare Books"
           subtitle="An MCP server for primary source research in alchemy, Hermeticism, Renaissance philosophy, and early modern science"
+          image="https://3kwioilsplnmnkv8.public.blob.vercel-storage.com/archived/699065973dc2ed39a49f1e71/4.jpg"
+          imageAlt="The Fountain of Hermes from the Ripley Scroll, Bodleian Library, c. 1450"
         >
           <p className="text-stone-400 text-sm mt-4">18 February 2026 &middot; 8 min read</p>
         </ContentHeader>

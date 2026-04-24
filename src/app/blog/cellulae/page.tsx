@@ -23,6 +23,8 @@ export default function CellulaePage() {
         <ContentHeader
           title="Cellulae"
           subtitle="What two pages of a medieval manuscript reveal about biology, law, and the dangers of careful reasoning"
+          image="https://images.sourcelibrary.org/archived/695677fdbe7c607c5f03b2d9/717.jpg"
+          imageAlt="Scientific plate from Philosophical Transactions of the Royal Society, 1694"
         >
           <p className="text-stone-400 text-sm mt-4">16 April 2026 &middot; 12 min read</p>
         </ContentHeader>

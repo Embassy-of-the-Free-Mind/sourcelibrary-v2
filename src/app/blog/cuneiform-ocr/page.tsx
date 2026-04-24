@@ -23,6 +23,8 @@ export default function CuneiformOcrPage() {
         <ContentHeader
           title="Can AI Read Cuneiform?"
           subtitle="Testing Gemini and Claude on the oldest writing system on Earth"
+          image="https://3kwioilsplnmnkv8.public.blob.vercel-storage.com/blog/cuneiform/P464358_d-sBPv8Z5dT88Vwi9ZcuAMnSz4nYflrw.jpg"
+          imageAlt="Code of Hammurabi stele detail showing cuneiform inscription, ca. 1750 BCE"
         >
           <p className="text-stone-400 text-sm mt-4">9 March 2026 &middot; 35 min read</p>
         </ContentHeader>

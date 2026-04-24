@@ -22,6 +22,8 @@ export default function CountingTheGapPage() {
         <ContentHeader
           title="We Spent a Day Counting What Hasn't Been Translated"
           subtitle="A working session that got out of hand"
+          image="https://images.sourcelibrary.org/pages/697c8e0fbaa544415f85b6c6/0132-full.jpg"
+          imageAlt="Tree of Knowledge of Good and Evil from Secret Symbols of the Rosicrucians, 1785"
         >
           <p className="text-stone-400 text-sm mt-4">15 March 2026 &middot; 8 min read</p>
         </ContentHeader>

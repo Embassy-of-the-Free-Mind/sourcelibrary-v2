@@ -23,6 +23,8 @@ export default function FirstTranslationMethodologyPage() {
         <ContentHeader
           title="How We Identify First Translations"
           subtitle="The methodology behind Source Library's classification system"
+          image="https://3kwioilsplnmnkv8.public.blob.vercel-storage.com/archived/6952587bab34727b1f045546/3.jpg"
+          imageAlt="Title page of Symbola Aureae Mensae by Michael Maier, 1617"
         >
           <p className="text-stone-400 text-sm mt-4">23 February 2026, updated 30 March 2026 &middot; 22 min read</p>
         </ContentHeader>

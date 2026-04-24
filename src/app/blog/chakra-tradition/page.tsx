@@ -23,6 +23,8 @@ export default function ChakraTraditionPage() {
         <ContentHeader
           title="Recovering the Chakra Tradition"
           subtitle="From Sanskrit Manuscripts to First English Translations"
+          image="https://iiif.wellcomecollection.org/image/b33599051_0001.jp2/full/1000,/0/default.jpg"
+          imageAlt="Chakra diagram from the Shaiva tantric tradition, Wellcome Collection"
         >
           <p className="text-stone-400 text-sm mt-4">15 February 2026 &middot; 12 min read</p>
         </ContentHeader>

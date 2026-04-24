@@ -23,6 +23,8 @@ export default function IndigenousTraditionsPage() {
         <ContentHeader
           title="The Sacred Texts That Were Never 'Texts'"
           subtitle="Oral Traditions, Field Recordings, and the Problem of Putting Living Religion on Paper"
+          image="https://archive.org/download/gri_33125009545621/page/n23/full/pct:50/0/default.jpg"
+          imageAlt="Weighing of the Heart scene from the Book of the Dead, Papyrus of Ani, c. 1250 BCE"
         >
           <p className="text-stone-400 text-sm mt-4">16 February 2026 &middot; 18 min read</p>
         </ContentHeader>

@@ -24,6 +24,8 @@ export default function PhilosophersStonePage() {
         <ContentHeader
           title="What Is the Philosopher's Stone? Eight Answers from the Primary Sources"
           subtitle="The most famous concept in alchemy means radically different things depending on which century, which tradition, and which text you pick up"
+          image="https://3kwioilsplnmnkv8.public.blob.vercel-storage.com/uploads/69804b952c52aad359879321/69804ceaefc8a337f6e2717b.jpg"
+          imageAlt="Frontispiece engraving from Lambspringk's De Lapide Philosophico, 1625"
         >
           <p className="text-stone-400 text-sm mt-4">27 February 2026 &middot; 20 min read</p>
         </ContentHeader>

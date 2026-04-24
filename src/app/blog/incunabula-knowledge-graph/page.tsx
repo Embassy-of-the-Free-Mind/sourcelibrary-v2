@@ -22,6 +22,8 @@ export default function IncunabulaKnowledgeGraphPage() {
         <ContentHeader
           title="Mapping the Incunabula"
           subtitle="A knowledge graph of the first printed books"
+          image="https://images.sourcelibrary.org/archived/6909d654cf28baa1b4cb0269/4.jpg"
+          imageAlt="Allegorical printing press vignette from Zimmermann, 1751"
         >
           <p className="text-stone-400 text-sm mt-4">22 April 2026 &middot; 8 min read</p>
         </ContentHeader>

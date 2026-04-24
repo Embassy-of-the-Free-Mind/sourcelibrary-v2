@@ -23,6 +23,8 @@ export default function InvisibleHandPage() {
         <ContentHeader
           title="The Invisible Hand Has a History"
           subtitle="Tracing Market Theory from Aristotle to Bastiat in Original Editions"
+          image="https://3kwioilsplnmnkv8.public.blob.vercel-storage.com/archived/69520c46ab34727b1f044141/7.jpg"
+          imageAlt="Title page of Atalanta Fugiens by Michael Maier"
         >
           <p className="text-stone-400 text-sm mt-4">15 February 2026 &middot; 20 min read</p>
         </ContentHeader>

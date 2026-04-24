@@ -29,6 +29,8 @@ export default function RithmomachiaPage() {
         <ContentHeader
           title="Rithmomachia"
           subtitle="The Forgotten Game That Taught Europe to Think Like Pythagoras"
+          image="https://3kwioilsplnmnkv8.public.blob.vercel-storage.com/archived/699fcd499ff0f1d2c4518062/498.jpg"
+          imageAlt="Copperplate engraving of Rithmomachia game board from Selenus, 1616"
         >
           <p className="text-stone-400 text-sm mt-4">2 March 2026 &middot; 18 min read</p>
         </ContentHeader>

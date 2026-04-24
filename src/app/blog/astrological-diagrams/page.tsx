@@ -71,6 +71,8 @@ export default function AstrologicalDiagramsPage() {
         <ContentHeader
           title="Reading the Stars"
           subtitle="Astrological Diagrams from Nine Centuries of the Heavens"
+          image="https://3kwioilsplnmnkv8.public.blob.vercel-storage.com/archived/6952dac677f38f6761bc683a/13.jpg"
+          imageAlt="Integra Naturae Speculum by Robert Fludd, 1617"
         >
           <p className="text-stone-400 text-sm mt-4">21 February 2026 &middot; 20 min read</p>
         </ContentHeader>
