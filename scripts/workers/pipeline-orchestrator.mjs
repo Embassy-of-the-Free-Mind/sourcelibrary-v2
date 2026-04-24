@@ -26,7 +26,7 @@ import { nanoid } from 'nanoid';
 import { SQSClient, SendMessageBatchCommand } from '@aws-sdk/client-sqs';
 import { S3Client, PutObjectCommand } from '@aws-sdk/client-s3';
 import { GoogleGenAI } from '@google/genai';
-import { createHash } from 'crypto';
+import { createHash, randomBytes } from 'crypto';
 import { execFile } from 'child_process';
 import { promisify } from 'util';
 import fs from 'fs';
@@ -46,6 +46,37 @@ const SQS_IMAGE_EXTRACTION_QUEUE_URL = process.env.SQS_PAGE_IMAGE_EXTRACTION_QUE
 
 // Gemini Batch API config (for direct OCR submission, bypassing Vercel)
 const GEMINI_API_BASE = 'https://generativelanguage.googleapis.com/v1beta';
+/**
+ * Save current page content as a revision before overwriting.
+ * Lightweight inline version of src/lib/page-revisions.ts createRevision().
+ */
+async function saveRevisionBeforeOverwrite(db, pageId, field) {
+  try {
+    const page = await db.collection('pages').findOne(
+      { id: pageId },
+      { projection: { book_id: 1, ocr: 1, translation: 1 } }
+    );
+    if (!page) return;
+    const fieldData = page[field];
+    if (!fieldData?.data) return; // No existing content — first write
+    await db.collection('page_revisions').insertOne({
+      id: randomBytes(6).toString('hex'),
+      page_id: pageId,
+      book_id: page.book_id,
+      field,
+      data: fieldData.data,
+      source: fieldData.source || 'ai',
+      model: fieldData.model,
+      language: fieldData.language,
+      prompt_version: fieldData.prompt_version,
+      original_date: fieldData.updated_at,
+      created_at: new Date(),
+    });
+  } catch (e) {
+    // Non-fatal — don't block pipeline on revision failure
+  }
+}
+
 const OCR_MODEL_FLASH = 'gemini-3-flash-preview';
 const OCR_MODEL_LITE = 'gemini-3.1-flash-lite-preview';
 function getOcrModelForBook(book) {
@@ -607,7 +638,8 @@ async function translatePage(db, page, sourceLanguage, previousTranslation) {
   // Extract metadata from translation output
   const meta = extractTranslationMetadata(text);
 
-  // Save translation to page
+  // Save revision before overwriting, then write translation
+  await saveRevisionBeforeOverwrite(db, page.id, 'translation');
   await db.collection('pages').updateOne(
     { id: page.id },
     {
@@ -2797,6 +2829,7 @@ Reply with ONLY: {"is_spread": true} or {"is_spread": false}` },
               const usage = data.usageMetadata || {};
 
               if (text) {
+                await saveRevisionBeforeOverwrite(db, pageId, 'ocr');
                 await db.collection('pages').updateOne(
                   { id: pageId },
                   { $set: {
