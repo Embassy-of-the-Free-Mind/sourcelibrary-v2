@@ -1427,8 +1427,8 @@ export default function TranslationEditor({
                           model={page.translation?.model}
                         />
                       )}
-                      {/* Scholarly / Modern toggle pill */}
-                      {translationText && (
+                      {/* Scholarly / Modern toggle pill — only show when modernized text exists */}
+                      {translationText && modernizedText && (
                         <button
                           onClick={toggleModernizedMode}
                           className="flex items-center rounded-full text-[10px] font-medium overflow-hidden border"
