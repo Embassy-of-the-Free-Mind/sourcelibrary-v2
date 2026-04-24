@@ -1,0 +1,133 @@
+{
+  "results": [
+    {
+      "book_id": "69099634cf28baa1b4cae779",
+      "page": 128,
+      "language": "Russian",
+      "label": "BPH Cyrillic",
+      "is_control": false,
+      "ocr_chars": 190526,
+      "ocr_model": "gemini-3-flash-preview",
+      "translation_chars": 1694,
+      "distances": {
+        "ocr_to_translation": 0.3726,
+        "ocr_to_translation_sim": 0.6274,
+        "ocr_to_neighbors_mean": 0.3916,
+        "ocr_to_neighbors_max": 0.415,
+        "ocr_to_neighbors_min": 0.3789,
+        "neighbor_to_neighbor_mean": 0.1851
+      }
+    },
+    {
+      "book_id": "699438416879ff0184cb8300",
+      "page": 632,
+      "language": "Greek",
+      "label": "Patrologia Graeca",
+      "is_control": false,
+      "ocr_chars": 185304,
+      "ocr_model": "gemini-3.1-flash-lite-preview",
+      "translation_chars": 3251,
+      "distances": {
+        "ocr_to_translation": 0.2002,
+        "ocr_to_translation_sim": 0.7998,
+        "ocr_to_neighbors_mean": 0.2049,
+        "ocr_to_neighbors_max": 0.2329,
+        "ocr_to_neighbors_min": 0.1829,
+        "neighbor_to_neighbor_mean": 0.1403
+      }
+    },
+    {
+      "book_id": "69a99d0a510aaf87d0635bfc",
+      "page": 194,
+      "language": "Syriac",
+      "label": "Patrologia Orientalis",
+      "is_control": false,
+      "ocr_chars": 112705,
+      "ocr_model": "gemini-2.5-flash",
+      "translation_chars": 1030,
+      "distances": {
+        "ocr_to_translation": 0.279,
+        "ocr_to_translation_sim": 0.721,
+        "ocr_to_neighbors_mean": 0.2883,
+        "ocr_to_neighbors_max": 0.3017,
+        "ocr_to_neighbors_min": 0.2635,
+        "neighbor_to_neighbor_mean": 0.1819
+      }
+    },
+    {
+      "book_id": "699258553d2d40d1b058961b",
+      "page": 160,
+      "language": "Tamil",
+      "label": "Manimekalai",
+      "is_control": false,
+      "ocr_chars": 122789,
+      "ocr_model": "gemini-3.1-flash-lite-preview",
+      "translation_chars": 2967,
+      "distances": {
+        "ocr_to_translation": 0.1322,
+        "ocr_to_translation_sim": 0.8678,
+        "ocr_to_neighbors_mean": 0.1274,
+        "ocr_to_neighbors_max": 0.1394,
+        "ocr_to_neighbors_min": 0.1068,
+        "neighbor_to_neighbor_mean": 0.1356
+      }
+    },
+    {
+      "book_id": "69924401bc722ec0ee80b312",
+      "page": 179,
+      "language": "Hebrew",
+      "label": "Mikraot Gedolot",
+      "is_control": false,
+      "ocr_chars": 127425,
+      "ocr_model": "gemini-3.1-flash-lite-preview",
+      "translation_chars": 11704,
+      "distances": {
+        "ocr_to_translation": 0.1417,
+        "ocr_to_translation_sim": 0.8583,
+        "ocr_to_neighbors_mean": 0.1508,
+        "ocr_to_neighbors_max": 0.1612,
+        "ocr_to_neighbors_min": 0.14,
+        "neighbor_to_neighbor_mean": 0.0982
+      }
+    },
+    {
+      "book_id": "69924401bc722ec0ee80b312",
+      "page": 200,
+      "language": "Hebrew",
+      "label": "Mikraot Gedolot (control)",
+      "is_control": true,
+      "ocr_chars": 4795,
+      "ocr_model": "gemini-3-flash-preview",
+      "translation_chars": 5724,
+      "distances": {
+        "ocr_to_translation": 0.1684,
+        "ocr_to_translation_sim": 0.8316,
+        "ocr_to_neighbors_mean": 0.3791,
+        "ocr_to_neighbors_max": 0.5174,
+        "ocr_to_neighbors_min": 0.2413,
+        "neighbor_to_neighbor_mean": 0.4613
+      }
+    },
+    {
+      "book_id": "699438416879ff0184cb8300",
+      "page": 137,
+      "language": "Greek",
+      "label": "PG40 (control)",
+      "is_control": true,
+      "ocr_chars": 5896,
+      "ocr_model": "gemini-3.1-flash-lite-preview",
+      "translation_chars": 3615,
+      "distances": {
+        "ocr_to_translation": 0.2455,
+        "ocr_to_translation_sim": 0.7545,
+        "ocr_to_neighbors_mean": 0.1347,
+        "ocr_to_neighbors_max": 0.1506,
+        "ocr_to_neighbors_min": 0.1161,
+        "neighbor_to_neighbor_mean": 0.1533
+      }
+    }
+  ],
+  "meta": {
+    "date": "2026-04-24T23:32:18.071Z"
+  }
+}
