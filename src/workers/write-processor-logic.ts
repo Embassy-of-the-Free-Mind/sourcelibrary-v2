@@ -20,6 +20,7 @@ import { logGeminiCall } from '@/lib/gemini-logger';
 import { retryDbWrite } from '@/lib/retry-utils';
 import { checkJobCompletion } from '@/lib/job-completion';
 import { syncPageUpdate } from '@/lib/supabase-page-writer';
+import { createRevision } from '@/lib/page-revisions';
 import type { PageJobType } from '@/lib/types/job';
 import type {
   WriteResultMessage,
@@ -69,6 +70,8 @@ async function processOcrResult(db: Awaited<ReturnType<typeof getDb>>, message: 
       }
     ), `record OCR failure for page ${pageId}`, 3, LOG_PREFIX);
   } else if (message.data) {
+    // Save revision before overwriting OCR (no-op on first write)
+    try { await createRevision(pageId, 'ocr', jobId); } catch {}
     // Save OCR result to page
     const { text, language, model, promptVersion, promptId, promptHash, pageType, columns, scriptType, detectedImages } = message.data;
     const ocrSetPayload = {

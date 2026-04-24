@@ -275,25 +275,36 @@ export default function ImageWithMagnifier({
         />
 
         {/* Desktop: Magnifier lens - uses full resolution image */}
-        {!isTouchDevice && showMagnifier && fullImageLoaded && (
-          <div
-            className="absolute pointer-events-none rounded-full overflow-hidden"
-            style={{
-              width: magnifierSize,
-              height: magnifierSize,
-              left: cursorPosition.x - magnifierSize / 2,
-              top: cursorPosition.y - magnifierSize / 2,
-              border: '4px solid white',
-              boxShadow: '0 4px 20px rgba(0,0,0,0.3)',
-              backgroundImage: `url(${magnifierSrc})`,
-              backgroundSize: `${imageDimensions.width * zoomLevel}px ${imageDimensions.height * zoomLevel}px`,
-              backgroundPosition: `${-(magnifierPosition.x / 100) * imageDimensions.width * zoomLevel + magnifierSize / 2}px ${-(magnifierPosition.y / 100) * imageDimensions.height * zoomLevel + magnifierSize / 2}px`,
-              backgroundRepeat: 'no-repeat',
-              backgroundColor: 'white',
-              zIndex: 100,
-            }}
-          />
-        )}
+        {!isTouchDevice && showMagnifier && fullImageLoaded && (() => {
+          // Calculate effective zoom: use full image native resolution for sharpness.
+          // If the full image is only marginally larger than display, scale up to use all native pixels.
+          const nativeW = fullImageDimensions.width || imageDimensions.width;
+          const nativeH = fullImageDimensions.height || imageDimensions.height;
+          const nativeZoom = Math.max(nativeW / (imageDimensions.width || 1), 1);
+          // Use whichever is larger: requested zoomLevel or native pixel ratio
+          const effectiveZoom = Math.max(zoomLevel, nativeZoom);
+          const bgW = imageDimensions.width * effectiveZoom;
+          const bgH = imageDimensions.height * effectiveZoom;
+          return (
+            <div
+              className="absolute pointer-events-none rounded-full overflow-hidden"
+              style={{
+                width: magnifierSize,
+                height: magnifierSize,
+                left: cursorPosition.x - magnifierSize / 2,
+                top: cursorPosition.y - magnifierSize / 2,
+                border: '4px solid white',
+                boxShadow: '0 4px 20px rgba(0,0,0,0.3)',
+                backgroundImage: `url(${magnifierSrc})`,
+                backgroundSize: `${bgW}px ${bgH}px`,
+                backgroundPosition: `${-(magnifierPosition.x / 100) * bgW + magnifierSize / 2}px ${-(magnifierPosition.y / 100) * bgH + magnifierSize / 2}px`,
+                backgroundRepeat: 'no-repeat',
+                backgroundColor: 'white',
+                zIndex: 100,
+              }}
+            />
+          );
+        })()}
 
       </div>
 
