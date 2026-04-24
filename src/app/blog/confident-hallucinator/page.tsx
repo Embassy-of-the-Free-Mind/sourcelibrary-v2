@@ -70,7 +70,8 @@ export default function ConfidentHallucinatorPage() {
                 <li><a href="#manuscript-vs-print" className="text-accent-rust hover:underline">Manuscript vs. Print: The Real Variable</a></li>
                 <li><a href="#thinking-mode" className="text-accent-rust hover:underline">Thinking Mode: The Cure</a></li>
                 <li><a href="#media-resolution" className="text-accent-rust hover:underline">Media Resolution: No Effect</a></li>
-                <li><a href="#implications" className="text-accent-rust hover:underline">Implications for Our Pipeline</a></li>
+                <li><a href="#thinking-hypothesis" className="text-accent-rust hover:underline">Why Flash Never Hallucinated</a></li>
+                <li><a href="#implications" className="text-accent-rust hover:underline">Implications</a></li>
                 <li><a href="#references" className="text-accent-rust hover:underline">References &amp; Cost</a></li>
               </ol>
             </div>
@@ -567,9 +568,53 @@ export default function ConfidentHallucinatorPage() {
           The takeaway: the confident hallucinator pattern is a <strong>generation problem, not a perception problem</strong>. The model sees the page fine; it just can&rsquo;t stop generating once it starts. Thinking mode is the intervention because it operates on the generation side.
         </p>
 
+        {/* --- The Thinking Hypothesis --- */}
+        <h2 id="thinking-hypothesis" className="text-2xl md:text-3xl text-primary mt-16 mb-6">
+          12. The Thinking Hypothesis: Why Flash Never Hallucinated
+        </h2>
+
+        <p className="text-secondary leading-relaxed mb-6">
+          A follow-up test revealed something we hadn&rsquo;t considered: <strong>Flash uses thinking by default.</strong> Even without any <code className="bg-warm px-1 py-0.5 rounded">thinkingConfig</code> in the API call, Flash produces ~7,700 thinking tokens on every OCR request. Flash Lite produces zero.
+        </p>
+
+        <div className="overflow-x-auto mb-8">
+          <table className="w-full text-sm text-secondary">
+            <thead>
+              <tr className="border-b border-light">
+                <th className="text-left py-3 pr-4 font-semibold">Model</th>
+                <th className="text-left py-3 pr-4 font-semibold">Config</th>
+                <th className="text-right py-3 pr-4 font-semibold">Output</th>
+                <th className="text-right py-3 pr-4 font-semibold">Think tokens</th>
+                <th className="text-left py-3 font-semibold">Result</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr className="border-b border-light/50"><td className="py-2 pr-4">Flash</td><td className="py-2 pr-4">default (no config)</td><td className="py-2 pr-4 text-right">622</td><td className="py-2 pr-4 text-right font-bold">7,681</td><td className="py-2 text-green-700">Clean &mdash; <strong>thinks by default</strong></td></tr>
+              <tr className="border-b border-light/50"><td className="py-2 pr-4">Flash</td><td className="py-2 pr-4">thinkingLevel: HIGH</td><td className="py-2 pr-4 text-right">552</td><td className="py-2 pr-4 text-right">7,678</td><td className="py-2 text-green-700">Clean &mdash; same think budget</td></tr>
+              <tr className="border-b border-light/50 bg-red-50/30"><td className="py-2 pr-4">Lite</td><td className="py-2 pr-4">default (no config)</td><td className="py-2 pr-4 text-right font-bold text-red-700">10,096</td><td className="py-2 pr-4 text-right font-bold text-red-700">0</td><td className="py-2 text-red-700">Hallucinating &mdash; <strong>no thinking</strong></td></tr>
+              <tr className="border-b border-light/50"><td className="py-2 pr-4">Lite</td><td className="py-2 pr-4">thinkingLevel: HIGH</td><td className="py-2 pr-4 text-right text-green-700">573</td><td className="py-2 pr-4 text-right font-bold text-green-700">7,679</td><td className="py-2 text-green-700">Fixed &mdash; matches Flash</td></tr>
+              <tr className="border-b border-light/50 bg-red-50/30"><td className="py-2 pr-4">Pro</td><td className="py-2 pr-4">default (no config)</td><td className="py-2 pr-4 text-right font-bold text-red-700">10,117</td><td className="py-2 pr-4 text-right font-bold text-red-700">0</td><td className="py-2 text-red-700">Hallucinating &mdash; no thinking</td></tr>
+              <tr className="border-b border-light/50"><td className="py-2 pr-4">Pro</td><td className="py-2 pr-4">thinkingBudget: 8192</td><td className="py-2 pr-4 text-right text-green-700">566</td><td className="py-2 pr-4 text-right font-bold text-green-700">7,680</td><td className="py-2 text-green-700">Fixed &mdash; matches Flash</td></tr>
+              <tr className="border-b border-light/50 bg-red-50/30"><td className="py-2 pr-4">Pro</td><td className="py-2 pr-4">thinkingLevel: HIGH</td><td className="py-2 pr-4 text-right text-red-700">10,117</td><td className="py-2 pr-4 text-right text-red-700">0</td><td className="py-2 text-red-700">Still hallucinating &mdash; <strong>Pro ignores thinkingLevel</strong></td></tr>
+            </tbody>
+          </table>
+        </div>
+
+        <p className="text-secondary leading-relaxed mb-6">
+          <strong>The confident hallucinator is simply a model without thinking turned on.</strong> Flash never hallucinated because it was thinking all along &mdash; spending ~7,700 tokens reasoning about what&rsquo;s on the page before generating output. Lite and Pro default to zero thinking tokens on these inputs, and both hallucinate identically. Enabling thinking on either model immediately fixes the problem.
+        </p>
+
+        <p className="text-secondary leading-relaxed mb-6">
+          This also explains a pricing puzzle from our pipeline. We route non-BPH books to Lite because it&rsquo;s &ldquo;50% cheaper.&rdquo; But Flash&rsquo;s hidden thinking tokens mean it was doing substantially more work per page &mdash; and getting substantially better results on manuscripts. The cost difference was real; so was the quality difference. We just didn&rsquo;t know why.
+        </p>
+
+        <p className="text-secondary leading-relaxed mb-8">
+          <strong>An API quirk:</strong> Pro ignores <code className="bg-warm px-1 py-0.5 rounded">thinkingLevel: &quot;HIGH&quot;</code> (produces 0 thinking tokens), but responds to <code className="bg-warm px-1 py-0.5 rounded">thinkingBudget: 8192</code>. The Gemini docs say to use <code className="bg-warm px-1 py-0.5 rounded">thinkingLevel</code> for Gemini 3 models, but Pro requires the legacy <code className="bg-warm px-1 py-0.5 rounded">thinkingBudget</code> parameter. Lite accepts both.
+        </p>
+
         {/* --- Implications --- */}
         <h2 id="implications" className="text-2xl md:text-3xl text-primary mt-16 mb-6">
-          12. Implications for Our Pipeline
+          13. Implications for Our Pipeline
         </h2>
 
         <p className="text-secondary leading-relaxed mb-4">
@@ -584,11 +629,11 @@ export default function ConfidentHallucinatorPage() {
           <strong>From Part II (Pro and thinking mode):</strong>
         </p>
         <ul className="text-secondary leading-relaxed mb-6 space-y-3">
-          <li><strong>Flash remains the best default OCR model.</strong> It never hallucinates, never misidentifies scripts (at default resolution), and costs 5x less than Pro.</li>
+          <li><strong>Flash works because it thinks by default</strong> &mdash; not because it&rsquo;s a better model. Any model with ~7,700 thinking tokens reads manuscripts correctly.</li>
+          <li><strong>Lite + thinking is the cheapest fix.</strong> Enabling <code className="bg-warm px-1 py-0.5 rounded">thinkingLevel: &quot;HIGH&quot;</code> on Lite produces Flash-quality output at Lite pricing. For manuscript-heavy collections, this is the optimal config.</li>
           <li><strong>Model size does not fix hallucination.</strong> Pro is worse than Flash on manuscripts and 55x more expensive. Don&rsquo;t throw money at a generation problem.</li>
-          <li><strong>Thinking mode is the cure for manuscripts.</strong> When a page is flagged as potentially hallucinated (via length ratio), re-run it with Pro + thinking. The 3,000&ndash;8,000 thinking tokens cost more per page but eliminate the failure mode entirely.</li>
-          <li><strong>The real variable is manuscript vs. print</strong>, not script. All models handle printed Hebrew perfectly (Prague Haggadah, Sefer ha-bahir). Cursive manuscripts with repetitive magical formulae trigger the confident hallucinator across all model tiers.</li>
-          <li><strong>A two-pass pipeline</strong> is cheaper than using thinking mode everywhere: (1)&nbsp;Run Flash on everything. (2)&nbsp;Flag pages where output length &gt;&nbsp;3x the corpus median. (3)&nbsp;Re-run flagged pages with Pro + thinking.</li>
+          <li><strong>The real variable is manuscript vs. print</strong>, not script. All models handle printed Hebrew perfectly. Cursive manuscripts with repetitive magical formulae trigger the confident hallucinator across all model tiers.</li>
+          <li><strong>A two-pass pipeline</strong> may be cheaper than thinking everywhere: (1)&nbsp;Run Lite without thinking on everything. (2)&nbsp;Flag pages where output length &gt;&nbsp;3x the corpus median. (3)&nbsp;Re-run flagged pages with Lite + thinking. The open question is whether <code className="bg-warm px-1 py-0.5 rounded">thinkingLevel: &quot;MINIMAL&quot;</code> is sufficient &mdash; if so, the cost of thinking everywhere approaches zero.</li>
         </ul>
 
         {/* --- Novelty table --- */}
@@ -619,7 +664,7 @@ export default function ConfidentHallucinatorPage() {
 
         {/* --- References --- */}
         <h2 id="references" className="text-2xl md:text-3xl text-primary mt-16 mb-6">
-          13. References &amp; Cost
+          14. References &amp; Cost
         </h2>
 
         <p className="text-secondary leading-relaxed mb-6">
