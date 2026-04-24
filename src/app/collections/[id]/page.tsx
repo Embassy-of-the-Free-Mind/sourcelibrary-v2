@@ -797,8 +797,25 @@ export default async function CollectionDetailPage({ params, provider }: Props &
         );
       })()}
 
-      {/* Gallery — labeled illustrations from this collection (or artwork previews for art collections) */}
-      {diverseGalleryImages.length > 0 && (
+      {/* Exhibition Layout — renders curated components ABOVE gallery when available */}
+      {exhibition?.layout && (
+        <div className="bg-warm border-b border-border-light">
+          <div className="max-w-7xl mx-auto px-6 py-10">
+            {exhibition.subtitle && (
+              <p className="text-lg text-muted italic mb-6 font-display">{exhibition.subtitle}</p>
+            )}
+            <ExhibitionLayout
+              layout={exhibition.layout}
+              books={exhibitionBooks as any[]}
+              images={galleryImages}
+              collectionSlug={id}
+            />
+          </div>
+        </div>
+      )}
+
+      {/* Gallery — labeled illustrations (hidden when exhibition provides its own gallery_grid) */}
+      {diverseGalleryImages.length > 0 && !exhibition?.layout && (
         <div className="bg-warm border-b border-border-light">
           <div className="max-w-7xl mx-auto px-6 py-8">
             <div className="flex items-center justify-between mb-2">
@@ -876,8 +893,8 @@ export default async function CollectionDetailPage({ params, provider }: Props &
         </div>
       )}
 
-      {/* Artwork preview — for art collections without gallery images */}
-      {artworkPreviewImages.length > 0 && (
+      {/* Artwork preview — for art collections without gallery images (hidden when exhibition present) */}
+      {artworkPreviewImages.length > 0 && !exhibition?.layout && (
         <div className="bg-warm border-b border-border-light">
           <div className="max-w-7xl mx-auto px-6 py-8">
             <div className="flex items-center justify-between mb-2">
@@ -941,8 +958,8 @@ export default async function CollectionDetailPage({ params, provider }: Props &
         </div>
       )}
 
-      {/* Visual Art — artworks tagged to this collection */}
-      {artworks.length > 0 && (
+      {/* Visual Art — artworks tagged to this collection (hidden when exhibition present) */}
+      {artworks.length > 0 && !exhibition?.layout && (
         <div className="bg-warm border-b border-border-light">
           <div className="max-w-7xl mx-auto px-6 py-8">
             <div className="flex items-center justify-between mb-2">
@@ -1040,20 +1057,7 @@ export default async function CollectionDetailPage({ params, provider }: Props &
 
       <div className="max-w-7xl mx-auto px-6 py-10">
 
-        {/* Exhibition Layout — renders curated components if available */}
-        {exhibition?.layout && (
-          <div className="mb-12">
-            {exhibition.subtitle && (
-              <p className="text-lg text-muted italic mb-6 font-display">{exhibition.subtitle}</p>
-            )}
-            <ExhibitionLayout
-              layout={exhibition.layout}
-              books={exhibitionBooks as any[]}
-              images={galleryImages}
-              collectionSlug={id}
-            />
-          </div>
-        )}
+        {/* Exhibition Layout is now rendered above the gallery section */}
 
         {/* Curated Highlights — remaining tier 1 + tiers 2 & 3 (hidden when exhibition is present) */}
         {hasCuratedHighlights && !exhibition?.layout && (
