@@ -5,10 +5,10 @@ import BlogComments from '@/components/blog/BlogComments';
 
 export const metadata: Metadata = {
   title: 'The Confident Hallucinator - Research Notes - Source Library',
-  description: 'What we learned evaluating AI OCR across five scripts. A model can be perfectly consistent and completely wrong — 100% consistency, 0% accuracy. Output length ratios and embedding distances detect what MCR alone cannot.',
+  description: 'AI OCR evaluation across five scripts and three Gemini model tiers. A model can be perfectly consistent and completely wrong. Thinking mode fixes what model size cannot.',
   openGraph: {
     title: 'The Confident Hallucinator',
-    description: 'AI OCR evaluation across Latin, Tibetan, Arabic, Hebrew, and Sanskrit reveals that consistency alone is a dangerous quality signal.',
+    description: 'AI OCR evaluation across Latin, Tibetan, Arabic, Hebrew, and Sanskrit reveals that consistency alone is a dangerous quality signal — and thinking mode is the cure.',
   },
   alternates: {
     canonical: '/blog/confident-hallucinator',
@@ -21,9 +21,9 @@ export default function ConfidentHallucinatorPage() {
       header={
         <ContentHeader
           title="The Confident Hallucinator"
-          subtitle="What we learned evaluating AI OCR across five scripts"
+          subtitle="What we learned evaluating AI OCR across five scripts and three model tiers"
         >
-          <p className="text-stone-400 text-sm mt-4">23 April 2026 &middot; 10 min read</p>
+          <p className="text-stone-400 text-sm mt-4">23&ndash;24 April 2026 &middot; 18 min read</p>
         </ContentHeader>
       }
       bg="bg-cream"
@@ -44,12 +44,50 @@ export default function ConfidentHallucinatorPage() {
 
         {/* --- Lead --- */}
         <p className="text-xl text-secondary leading-relaxed mb-8">
-          We built a quality evaluation framework for our OCR and translation pipeline, then ran it across five script families: Latin (printed), Tibetan (manuscript), Hebrew (mixed), Arabic (manuscript), and Sanskrit (Devanagari). The central finding is that consistency alone is a dangerous quality signal &mdash; a model can be perfectly consistent and completely wrong.
+          We built a quality evaluation framework for our OCR and translation pipeline, then ran it across five script families and three Gemini model tiers: Flash, Flash Lite, and Pro. The central finding is that consistency alone is a dangerous quality signal &mdash; a model can be perfectly consistent and completely wrong. The follow-up finding is that thinking mode fixes what model size cannot.
         </p>
 
+        {/* --- Table of Contents --- */}
+        <nav className="bg-warm/50 rounded-lg p-6 mb-12 border border-light">
+          <p className="text-sm font-semibold text-primary mb-3 uppercase tracking-wide">Contents</p>
+          <div className="grid md:grid-cols-2 gap-x-8 gap-y-1 text-sm">
+            <div>
+              <p className="font-medium text-primary mt-2 mb-1">Part I: Framework &amp; Flash vs. Lite</p>
+              <ol className="text-secondary space-y-0.5 list-decimal list-inside">
+                <li><a href="#framework" className="text-accent-rust hover:underline">The Framework</a></li>
+                <li><a href="#cross-script" className="text-accent-rust hover:underline">Cross-Script Matrix</a></li>
+                <li><a href="#hebrew-hallucinator" className="text-accent-rust hover:underline">Hebrew: The Confident Hallucinator</a></li>
+                <li><a href="#temperature" className="text-accent-rust hover:underline">Temperature Effects</a></li>
+                <li><a href="#sanskrit" className="text-accent-rust hover:underline">Sanskrit: High Agreement, Low Consistency</a></li>
+                <li><a href="#triangulation" className="text-accent-rust hover:underline">The Triangulation Principle</a></li>
+              </ol>
+            </div>
+            <div>
+              <p className="font-medium text-primary mt-2 mb-1">Part II: Does Pro Fix It?</p>
+              <ol className="text-secondary space-y-0.5 list-decimal list-inside" start={7}>
+                <li><a href="#pro-eval" className="text-accent-rust hover:underline">Adding Gemini Pro to the Matrix</a></li>
+                <li><a href="#manuscript-vs-print" className="text-accent-rust hover:underline">Manuscript vs. Print: The Real Variable</a></li>
+                <li><a href="#thinking-mode" className="text-accent-rust hover:underline">Thinking Mode: The Cure</a></li>
+                <li><a href="#media-resolution" className="text-accent-rust hover:underline">Media Resolution: No Effect</a></li>
+                <li><a href="#implications" className="text-accent-rust hover:underline">Implications for Our Pipeline</a></li>
+                <li><a href="#references" className="text-accent-rust hover:underline">References &amp; Cost</a></li>
+              </ol>
+            </div>
+          </div>
+        </nav>
+
+        {/* ================================================================ */}
+        {/* PART I */}
+        {/* ================================================================ */}
+
+        <div className="border-b border-light pb-2 mb-12">
+          <p className="text-xs uppercase tracking-widest text-muted font-semibold">Part I</p>
+          <p className="text-lg text-primary font-medium">Framework &amp; Flash vs. Lite</p>
+        </div>
+
         {/* --- The Framework --- */}
-        <h2 className="text-2xl md:text-3xl text-primary mt-16 mb-6">
-          The Framework
+        <h2 id="framework" className="text-2xl md:text-3xl text-primary mt-16 mb-6">
+          1. The Framework
         </h2>
 
         <p className="text-secondary leading-relaxed mb-6">
@@ -73,9 +111,13 @@ export default function ConfidentHallucinatorPage() {
         </ul>
 
         {/* --- Results --- */}
-        <h2 className="text-2xl md:text-3xl text-primary mt-16 mb-6">
-          Results: The Cross-Script Matrix
+        <h2 id="cross-script" className="text-2xl md:text-3xl text-primary mt-16 mb-6">
+          2. Cross-Script Matrix
         </h2>
+
+        <p className="text-secondary leading-relaxed mb-6">
+          Initial evaluation: Gemini Flash 3 vs. Flash Lite 3.1 across five scripts.
+        </p>
 
         <div className="overflow-x-auto mb-12">
           <table className="w-full text-sm text-secondary">
@@ -104,7 +146,6 @@ export default function ConfidentHallucinatorPage() {
           </table>
         </div>
 
-        {/* --- Latin --- */}
         <h3 className="text-xl text-primary mt-12 mb-4">
           Latin: The Baseline
         </h3>
@@ -113,7 +154,6 @@ export default function ConfidentHallucinatorPage() {
           Latin printed text is easy. Gemini Flash 3 achieves 83% MCR (2 of 3 pages fully consistent, one page with minor variation: 904 vs 919 chars). Character similarity is 99.4% even across inconsistent runs &mdash; the model is reading the same text with minor punctuation differences. Embedding distance is tight at 0.110 &plusmn; 0.016. This is what healthy OCR looks like.
         </p>
 
-        {/* --- Tibetan --- */}
         <h3 className="text-xl text-primary mt-12 mb-4">
           Tibetan: Surprisingly Good
         </h3>
@@ -122,7 +162,6 @@ export default function ConfidentHallucinatorPage() {
           Both Flash and Lite achieve near-perfect consistency on these particular Tibetan pages (Bardo Thodol, Life of the Buddha &mdash; formal printed editions, not the cursive manuscripts from our <a href="/blog/ocr-consistency" className="text-accent-rust hover:underline">earlier experiment</a>). Embedding distance is remarkably low at 0.054, suggesting the translations are semantically very close to the originals. Cross-model agreement is 74%.
         </p>
 
-        {/* --- Arabic --- */}
         <h3 className="text-xl text-primary mt-12 mb-4">
           Arabic: Unstable but Not Delusional
         </h3>
@@ -131,21 +170,17 @@ export default function ConfidentHallucinatorPage() {
           Flash is remarkably inconsistent on Arabic &mdash; 44% MCR at temp=0, meaning no two of three runs agree. The Picatrix page produced three completely different readings (17% character similarity). But the output lengths are reasonable (Flash 1,284 chars, Lite 2,349 chars &mdash; a 1.8x ratio, elevated but not alarming). Flash&rsquo;s problem is instability, not hallucination.
         </p>
 
-        <p className="text-secondary leading-relaxed mb-6">
-          At temp=0.3, Lite&rsquo;s length ratio spikes to 3.4x (max 19,439 chars on one page), indicating temperature-induced hallucination. Arabic Lite should stay at temp=0.
-        </p>
-
-        <p className="text-secondary leading-relaxed mb-6">
+        <p className="text-secondary leading-relaxed mb-8">
           Embedding distance for Arabic translation is 0.120 &plusmn; 0.008 &mdash; similar to Latin, suggesting the existing translations are semantically faithful despite the OCR instability.
         </p>
 
         {/* --- Hebrew --- */}
-        <h2 className="text-2xl md:text-3xl text-primary mt-16 mb-6">
-          Hebrew: The Confident Hallucinator
+        <h2 id="hebrew-hallucinator" className="text-2xl md:text-3xl text-primary mt-16 mb-6">
+          3. Hebrew: The Confident Hallucinator
         </h2>
 
         <p className="text-secondary leading-relaxed mb-6">
-          This is the most important finding. Flash Lite achieves <strong>100% MCR</strong> on all three Hebrew pages at temperature=0. By the MCR metric alone, it looks perfect. But look at the output lengths:
+          This is the most important finding from Part I. Flash Lite achieves <strong>100% MCR</strong> on all three Hebrew pages at temperature=0. By the MCR metric alone, it looks perfect. But look at the output lengths:
         </p>
 
         <div className="overflow-x-auto mb-8">
@@ -249,21 +284,13 @@ export default function ConfidentHallucinatorPage() {
           </div>
         </div>
 
-        <p className="text-secondary leading-relaxed mb-6">
+        <p className="text-secondary leading-relaxed mb-8">
           Flash reads a specific instruction &mdash; take silver, weigh it, engrave divine names on both sides, wear it as an amulet. Lite starts in the same vicinity but quickly diverges into a generative loop, producing plausible Kabbalistic language (&ldquo;great and holy,&rdquo; &ldquo;hidden secret&rdquo;) that reads like a pastiche of Jewish magical texts rather than a transcription of this particular manuscript.
         </p>
 
-        <p className="text-secondary leading-relaxed mb-6">
-          Cross-model agreement confirms the problem: <strong>10.2% character similarity</strong> between Flash and Lite, with essentially zero syllable agreement (0.1%). They&rsquo;re reading completely different texts.
-        </p>
-
-        <p className="text-secondary leading-relaxed mb-8">
-          The embedding eval adds another signal: the Sefer ha-bahir (p20) has an OCR&rarr;translation embedding distance of <strong>0.348</strong>, versus a corpus mean of 0.094&ndash;0.108 for the other Hebrew pages. The translation of that page is semantically distant from its source &mdash; a signal that either the OCR or the translation (or both) went wrong.
-        </p>
-
         {/* --- Temperature --- */}
-        <h2 className="text-2xl md:text-3xl text-primary mt-16 mb-6">
-          Temperature Effects
+        <h2 id="temperature" className="text-2xl md:text-3xl text-primary mt-16 mb-6">
+          4. Temperature Effects
         </h2>
 
         <div className="overflow-x-auto mb-8">
@@ -290,59 +317,26 @@ export default function ConfidentHallucinatorPage() {
           </table>
         </div>
 
-        <p className="text-secondary leading-relaxed mb-6">
+        <p className="text-secondary leading-relaxed mb-8">
           Temperature=0.3 devastates Flash Lite&rsquo;s consistency on Arabic and Hebrew (100% &rarr; 33%), while barely touching Tibetan. This suggests Lite&rsquo;s Hebrew/Arabic &ldquo;consistency&rdquo; at temp=0 is a fragile deterministic lock-in that shatters with any noise &mdash; exactly what you&rsquo;d expect from a model that has memorized a generation pattern rather than learned to read the script.
         </p>
 
-        <p className="text-secondary leading-relaxed mb-8">
-          The Tibetan result is counterintuitive: Flash actually gets <em>more</em> consistent at temp=0.3 (89% &rarr; 100%). One possible explanation: the temp=0 mode-switching we observed might occur at a decision boundary that slight temperature noise pushes past, stabilizing into one interpretation.
-        </p>
-
         {/* --- Sanskrit --- */}
-        <h2 className="text-2xl md:text-3xl text-primary mt-16 mb-6">
-          Sanskrit: High Agreement, Low Consistency
+        <h2 id="sanskrit" className="text-2xl md:text-3xl text-primary mt-16 mb-6">
+          5. Sanskrit: High Agreement, Low Consistency
         </h2>
 
         <p className="text-secondary leading-relaxed mb-6">
-          Sanskrit produces a pattern unlike any other script in our evaluation. Cross-model agreement is <strong>98.8%</strong> at the character level &mdash; Flash and Lite are reading essentially the same text. But MCR is only 44% for Flash, meaning 3 runs produce 3 &ldquo;different&rdquo; outputs. How can the models agree with each other but not with themselves?
-        </p>
-
-        <div className="overflow-x-auto mb-8">
-          <table className="w-full text-sm text-secondary">
-            <thead>
-              <tr className="border-b border-light">
-                <th className="text-left py-3 pr-4 font-semibold">Model</th>
-                <th className="text-left py-3 pr-4 font-semibold">Temp</th>
-                <th className="text-right py-3 pr-4 font-semibold">MCR</th>
-                <th className="text-right py-3 pr-4 font-semibold">Char Sim</th>
-                <th className="text-right py-3 pr-4 font-semibold">Length Ratio</th>
-                <th className="text-right py-3 font-semibold">Cross-Model</th>
-              </tr>
-            </thead>
-            <tbody>
-              <tr className="border-b border-light/50"><td className="py-2 pr-4">Flash</td><td className="py-2 pr-4">0</td><td className="py-2 pr-4 text-right">44%</td><td className="py-2 pr-4 text-right">98.3%</td><td className="py-2 pr-4 text-right">1.2x</td><td className="py-2 text-right" rowSpan={4}>98.8%</td></tr>
-              <tr className="border-b border-light/50"><td className="py-2 pr-4">Flash</td><td className="py-2 pr-4">0.3</td><td className="py-2 pr-4 text-right">44%</td><td className="py-2 pr-4 text-right">86.4%</td><td className="py-2 pr-4 text-right">1.0x</td></tr>
-              <tr className="border-b border-light/50"><td className="py-2 pr-4">Lite</td><td className="py-2 pr-4">0</td><td className="py-2 pr-4 text-right">89%</td><td className="py-2 pr-4 text-right">100%</td><td className="py-2 pr-4 text-right">1.1x</td></tr>
-              <tr className="border-b border-light/50"><td className="py-2 pr-4">Lite</td><td className="py-2 pr-4">0.3</td><td className="py-2 pr-4 text-right">56%</td><td className="py-2 pr-4 text-right">99.6%</td><td className="py-2 pr-4 text-right">1.1x</td></tr>
-            </tbody>
-          </table>
-        </div>
-
-        <p className="text-secondary leading-relaxed mb-6">
-          The answer is that MCR is too strict. With 98.3% character similarity, runs differ by only ~30 characters out of 1,700 &mdash; a handful of ambiguous glyphs in dense Devanagari. But because MCR requires <em>exact byte identity</em>, even a single character difference counts as a distinct output. Sanskrit has high reading accuracy and low exact-match consistency.
+          Sanskrit produces a pattern unlike any other script in our evaluation. Cross-model agreement is <strong>98.8%</strong> at the character level &mdash; Flash and Lite are reading essentially the same text. But MCR is only 44% for Flash, meaning 3 runs produce 3 &ldquo;different&rdquo; outputs.
         </p>
 
         <p className="text-secondary leading-relaxed mb-6">
-          This is the opposite failure mode from Hebrew. Hebrew Lite has high MCR (100%) but low accuracy (hallucinating). Sanskrit Flash has low MCR (44%) but high accuracy (98.3% character similarity). <strong>MCR and character similarity tell different stories</strong> &mdash; you need both.
-        </p>
-
-        <p className="text-secondary leading-relaxed mb-8">
-          Embedding distance confirms the readings are sound: Sanskrit scores <strong>0.105</strong> &mdash; between Latin (0.110) and Tibetan (0.054). The translations are semantically faithful despite the surface-level inconsistency.
+          The answer is that MCR is too strict. With 98.3% character similarity, runs differ by only ~30 characters out of 1,700 &mdash; a handful of ambiguous glyphs in dense Devanagari. This is the opposite failure mode from Hebrew: Hebrew Lite has high MCR (100%) but low accuracy. Sanskrit Flash has low MCR (44%) but high accuracy (98.3%). <strong>MCR and character similarity tell different stories</strong> &mdash; you need both.
         </p>
 
         {/* --- Triangulation --- */}
-        <h2 className="text-2xl md:text-3xl text-primary mt-16 mb-6">
-          The Triangulation Principle
+        <h2 id="triangulation" className="text-2xl md:text-3xl text-primary mt-16 mb-6">
+          6. The Triangulation Principle
         </h2>
 
         <p className="text-secondary leading-relaxed mb-6">
@@ -359,23 +353,202 @@ export default function ConfidentHallucinatorPage() {
           Together, they triangulate quality without requiring any ground truth. For our pipeline of 17,000+ books across dozens of scripts, this is the difference between scalable quality assurance and manual review of every page.
         </p>
 
-        {/* --- Implications --- */}
-        <h2 className="text-2xl md:text-3xl text-primary mt-16 mb-6">
-          Implications for Our Pipeline
+        {/* ================================================================ */}
+        {/* PART II */}
+        {/* ================================================================ */}
+
+        <div className="border-b border-light pb-2 mb-12 mt-20">
+          <p className="text-xs uppercase tracking-widest text-muted font-semibold">Part II</p>
+          <p className="text-lg text-primary font-medium">Does Pro Fix It?</p>
+          <p className="text-xs text-muted mt-1">Added 24 April 2026, after <a href="https://x.com/shabornikov" className="text-accent-rust hover:underline">Shiv Shankar&rsquo;s</a> question: &ldquo;I wonder if flash vs pro shows similar trends&rdquo;</p>
+        </div>
+
+        {/* --- Pro eval --- */}
+        <h2 id="pro-eval" className="text-2xl md:text-3xl text-primary mt-16 mb-6">
+          7. Adding Gemini Pro to the Matrix
         </h2>
 
-        <ul className="text-secondary leading-relaxed mb-8 space-y-3">
-          <li><strong>Hebrew should not use Flash Lite.</strong> It confidently hallucinates. Use Flash only, with multi-run consensus.</li>
-          <li><strong>Arabic should use multi-run voting</strong> at temp=0 (Flash MCR is only 44% &mdash; 3 runs with majority vote would improve significantly).</li>
-          <li><strong>Tibetan printed text</strong> is handled well by both models. Cursive manuscripts need further evaluation.</li>
-          <li><strong>Latin</strong> is reliable. Single-run Flash is sufficient.</li>
-          <li><strong>Embedding-based translation monitoring</strong> should be deployed pipeline-wide. Pages with OCR&rarr;translation distance &gt; 2&sigma; from their corpus mean should be flagged for review.</li>
+        <p className="text-secondary leading-relaxed mb-6">
+          We ran the same evaluation with Gemini 3.1 Pro Preview added to Flash and Flash Lite. Pro is 5x more expensive than Flash and 33x more expensive than Lite. The question: does the bigger model avoid the hallucination trap?
+        </p>
+
+        <div className="overflow-x-auto mb-8">
+          <table className="w-full text-sm text-secondary">
+            <thead>
+              <tr className="border-b border-light">
+                <th className="text-left py-3 pr-4 font-semibold">Script</th>
+                <th className="text-left py-3 pr-4 font-semibold">Book</th>
+                <th className="text-right py-3 pr-4 font-semibold">Pro</th>
+                <th className="text-right py-3 pr-4 font-semibold">Flash</th>
+                <th className="text-right py-3 pr-4 font-semibold">Lite</th>
+                <th className="text-right py-3 font-semibold">Pro/Flash</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr className="border-b border-light/50"><td className="py-2 pr-4 font-medium">Latin</td><td className="py-2 pr-4">De natura elementorum</td><td className="py-2 pr-4 text-right">918</td><td className="py-2 pr-4 text-right">909</td><td className="py-2 pr-4 text-right text-muted">&mdash;</td><td className="py-2 text-right">1.0x</td></tr>
+              <tr className="border-b border-light/50"><td className="py-2 pr-4 font-medium">Latin</td><td className="py-2 pr-4">De Voluptate</td><td className="py-2 pr-4 text-right">831</td><td className="py-2 pr-4 text-right">~830</td><td className="py-2 pr-4 text-right text-muted">&mdash;</td><td className="py-2 text-right">1.0x</td></tr>
+              <tr className="border-b border-light/50"><td className="py-2 pr-4 font-medium">Arabic</td><td className="py-2 pr-4">Picatrix</td><td className="py-2 pr-4 text-right">844</td><td className="py-2 pr-4 text-right">828</td><td className="py-2 pr-4 text-right">3,433</td><td className="py-2 text-right">1.0x</td></tr>
+              <tr className="border-b border-light/50"><td className="py-2 pr-4 font-medium">Arabic</td><td className="py-2 pr-4">Alchemical Compendium</td><td className="py-2 pr-4 text-right">1,242</td><td className="py-2 pr-4 text-right">1,228</td><td className="py-2 pr-4 text-right">1,233</td><td className="py-2 text-right">1.0x</td></tr>
+              <tr className="border-b border-light/50 bg-red-50/30"><td className="py-2 pr-4 font-medium">Hebrew</td><td className="py-2 pr-4">Asis rimonim (MS)</td><td className="py-2 pr-4 text-right font-bold text-red-700">16,400</td><td className="py-2 pr-4 text-right">660</td><td className="py-2 pr-4 text-right text-red-700">17,868</td><td className="py-2 text-right font-bold text-red-700">24.8x</td></tr>
+              <tr className="border-b border-light/50"><td className="py-2 pr-4 font-medium">Hebrew</td><td className="py-2 pr-4">Sefer ha-bahir (print)</td><td className="py-2 pr-4 text-right">640</td><td className="py-2 pr-4 text-right">619</td><td className="py-2 pr-4 text-right text-red-700">4,502</td><td className="py-2 text-right">1.0x</td></tr>
+              <tr className="border-b border-light/50 bg-red-50/30"><td className="py-2 pr-4 font-medium">Hebrew</td><td className="py-2 pr-4">Key of Solomon (MS)</td><td className="py-2 pr-4 text-right font-bold text-red-700">10,165</td><td className="py-2 pr-4 text-right">599</td><td className="py-2 pr-4 text-right text-red-700">12,050</td><td className="py-2 text-right font-bold text-red-700">17.0x</td></tr>
+              <tr className="border-b border-light/50"><td className="py-2 pr-4 font-medium">Sanskrit</td><td className="py-2 pr-4">Gheranda Samhita</td><td className="py-2 pr-4 text-right">1,513</td><td className="py-2 pr-4 text-right">1,456</td><td className="py-2 pr-4 text-right">1,456</td><td className="py-2 text-right">1.0x</td></tr>
+              <tr className="border-b border-light/50"><td className="py-2 pr-4 font-medium">Sanskrit</td><td className="py-2 pr-4">Shiva Samhita</td><td className="py-2 pr-4 text-right">1,793</td><td className="py-2 pr-4 text-right">1,437</td><td className="py-2 pr-4 text-right">1,772</td><td className="py-2 text-right">1.2x</td></tr>
+              <tr className="border-b border-light/50"><td className="py-2 pr-4 font-medium">Tibetan</td><td className="py-2 pr-4">Bardo Thodol</td><td className="py-2 pr-4 text-right">31</td><td className="py-2 pr-4 text-right">31</td><td className="py-2 pr-4 text-right">31</td><td className="py-2 text-right">1.0x</td></tr>
+            </tbody>
+          </table>
+        </div>
+
+        <p className="text-secondary leading-relaxed mb-6">
+          <strong>Pro hallucinates on the exact same pages as Lite.</strong> On the Asis rimonim manuscript, Pro generates 16,400 characters versus Flash&rsquo;s 660 &mdash; a 25x ratio. On the Key of Solomon, 10,165 versus 599 &mdash; a 17x ratio. Pro is even <em>worse</em> than Lite on the Asis rimonim page.
+        </p>
+
+        <p className="text-secondary leading-relaxed mb-6">
+          Cross-model agreement between Pro and Flash on Hebrew is <strong>10.0%</strong> &mdash; they are reading completely different texts. Pro and Lite agree at 45.4%, united in hallucination but diverging in content. Pro cost <strong>$0.76</strong> for these 9 pages versus Flash&rsquo;s <strong>$0.01</strong>. Fifty-five times more expensive to hallucinate.
+        </p>
+
+        <p className="text-secondary leading-relaxed mb-8">
+          On every other script &mdash; Latin, Arabic, Sanskrit, Tibetan &mdash; Pro is excellent. It achieves 100% MCR on Latin (vs Flash&rsquo;s 83%) and 100% on Arabic (vs Flash&rsquo;s 44%). <strong>Model size helps where the problem is instability, not where it&rsquo;s hallucination.</strong>
+        </p>
+
+        {/* --- Manuscript vs Print --- */}
+        <h2 id="manuscript-vs-print" className="text-2xl md:text-3xl text-primary mt-16 mb-6">
+          8. Manuscript vs. Print: The Real Variable
+        </h2>
+
+        <p className="text-secondary leading-relaxed mb-6">
+          But look at the Hebrew results more carefully. The Sefer ha-bahir &mdash; a <em>printed</em> text from 1651 &mdash; shows normal output lengths across all three models: Pro 640, Flash 619, Lite 4,502 (Lite still hallucinated, but less dramatically). The two manuscript pages are where Pro and Lite both explode.
+        </p>
+
+        <p className="text-secondary leading-relaxed mb-6">
+          To test this hypothesis, we ran Pro on the <a href="/book/prague-haggadah-1526-anonymous" className="text-accent-rust hover:underline">Prague Haggadah</a> (1526), a <em>printed</em> Hebrew text with a well-known liturgical passage:
+        </p>
+
+        <div className="grid md:grid-cols-2 gap-6 mb-8">
+          <div className="bg-green-50/50 rounded-lg p-4 border border-green-100">
+            <p className="text-xs text-green-700 font-semibold mb-2 uppercase tracking-wide">Pro on printed Hebrew &mdash; 177 chars</p>
+            <p className="text-sm text-secondary leading-relaxed font-mono" dir="rtl">
+              &#1492;&#1488;<br/>
+              &#1500;&#1463;&#1495;&#1456;&#1502;&#1464;&#1488; &#1506;&#1463;&#1504;&#1456;&#1497;&#1464;&#1488; &#1491;&#1460;&#1497; &#1488;&#1458;&#1499;&#1463;&#1500;&#1468;&#1493;&#1468;<br/>
+              &#1488;&#1458;&#1489;&#1464;&#1492;&#1464;&#1514;&#1464;&#1504;&#1464;&#1488; &#1489;&#1468;&#1456;<br/>
+              &#1489;&#1468;&#1456;&#1488;&#1463;&#1512;&#1456;&#1506;&#1464;&#1488; &#1491;&#1456;&#1502;&#1460;&#1510;&#1456;&#1512;&#1464;&#1497;&#1460;&#1501;<br/>
+              &#1499;&#1464;&#1468;&#1500; &#1491;&#1460;&#1499;&#1456;&#1508;&#1460;&#1497;&#1503; &#1497;&#1461;&#1497;&#1514;&#1461;&#1497; &#1493;&#1456;&#1497;&#1461;&#1497;&#1499;&#1493;&#1468;&#1500;<br/>
+              &#1499;&#1464;&#1468;&#1500; &#1491;&#1460;&#1510;&#1456;&#1512;&#1460;&#1497;&#1498;&#1456; &#1497;&#1461;&#1497;&#1514;&#1461;&#1497; &#1493;&#1456;&#1497;&#1460;&#1508;&#1456;&#1505;&#1463;&#1495;<br/>
+              &#1492;&#1464;&#1513;&#1473;&#1463;&#1514;&#1468;&#1464;&#1488; &#1492;&#1464;&#1499;&#1464;&#1488;<br/>
+              &#1500;&#1456;&#1513;&#1473;&#1464;&#1504;&#1464;&#1492; &#1492;&#1463;&#1489;&#1468;&#1464;&#1488;&#1464;&#1492; &#1489;&#1468;&#1456;&#1488;&#1463;&#1512;&#1456;&#1506;&#1464;
+            </p>
+          </div>
+          <div className="bg-green-50/50 rounded-lg p-4 border border-green-100">
+            <p className="text-xs text-green-700 font-semibold mb-2 uppercase tracking-wide">Ha Lachma Anya &mdash; known text</p>
+            <p className="text-sm text-secondary leading-relaxed italic">
+              &ldquo;This is the bread of affliction that our ancestors ate in the land of Egypt. All who are hungry, come and eat. All who are in need, come and celebrate Passover. Now we are here; next year in the land...&rdquo;
+            </p>
+            <p className="text-xs text-muted mt-2">This is the opening of the Passover Haggadah, recited identically in every Jewish household for centuries. Pro reads it perfectly.</p>
+          </div>
+        </div>
+
+        <p className="text-secondary leading-relaxed mb-8">
+          <strong>The hallucination is not about Hebrew. It&rsquo;s about manuscripts.</strong> All three models handle printed Hebrew correctly. The confident hallucinator pattern is triggered specifically by cursive handwritten text &mdash; particularly magical manuscripts with repetitive divine names that give the model a &ldquo;seed&rdquo; for its generative loop.
+        </p>
+
+        {/* --- Thinking Mode --- */}
+        <h2 id="thinking-mode" className="text-2xl md:text-3xl text-primary mt-16 mb-6">
+          9. Thinking Mode: The Cure
+        </h2>
+
+        <p className="text-secondary leading-relaxed mb-6">
+          After Shiv suggested testing with thinking mode, we ran an ablation study on the Key of Solomon p96 &mdash; the page where Pro generates 10,117 characters of hallucinated text:
+        </p>
+
+        <div className="overflow-x-auto mb-8">
+          <table className="w-full text-sm text-secondary">
+            <thead>
+              <tr className="border-b border-light">
+                <th className="text-left py-3 pr-4 font-semibold">Variant</th>
+                <th className="text-right py-3 pr-4 font-semibold">Output</th>
+                <th className="text-right py-3 pr-4 font-semibold">Think tokens</th>
+                <th className="text-right py-3 pr-4 font-semibold">Time</th>
+                <th className="text-left py-3 font-semibold">Result</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr className="border-b border-light/50 bg-red-50/30"><td className="py-2 pr-4">Pro baseline</td><td className="py-2 pr-4 text-right font-bold text-red-700">10,117</td><td className="py-2 pr-4 text-right">0</td><td className="py-2 pr-4 text-right">56s</td><td className="py-2 text-red-700">Hallucinating &mdash; AGLA loop</td></tr>
+              <tr className="border-b border-light/50 bg-red-50/30"><td className="py-2 pr-4">Pro + high resolution</td><td className="py-2 pr-4 text-right font-bold text-red-700">10,117</td><td className="py-2 pr-4 text-right">0</td><td className="py-2 pr-4 text-right">53s</td><td className="py-2 text-red-700">Identical hallucination</td></tr>
+              <tr className="border-b border-light/50 bg-green-50/30"><td className="py-2 pr-4 font-bold">Pro + thinking</td><td className="py-2 pr-4 text-right font-bold text-green-700">1,009</td><td className="py-2 pr-4 text-right">2,997</td><td className="py-2 pr-4 text-right">31s</td><td className="py-2 text-green-700">Reads actual content</td></tr>
+              <tr className="border-b border-light/50 bg-green-50/30"><td className="py-2 pr-4">Pro + thinking + high res</td><td className="py-2 pr-4 text-right text-green-700">566</td><td className="py-2 pr-4 text-right">7,680</td><td className="py-2 pr-4 text-right">56s</td><td className="py-2 text-green-700">Most constrained reading</td></tr>
+              <tr className="border-b border-light/50 bg-green-50/30"><td className="py-2 pr-4">Pro + low resolution</td><td className="py-2 pr-4 text-right text-green-700">1,064</td><td className="py-2 pr-4 text-right">5,663</td><td className="py-2 pr-4 text-right">55s</td><td className="py-2 text-green-700">No hallucination</td></tr>
+              <tr className="border-b border-light/50"><td className="py-2 pr-4">Flash baseline</td><td className="py-2 pr-4 text-right">622</td><td className="py-2 pr-4 text-right text-muted">n/a</td><td className="py-2 pr-4 text-right">33s</td><td className="py-2">Clean reading</td></tr>
+              <tr className="border-b border-light/50"><td className="py-2 pr-4">Flash + high resolution</td><td className="py-2 pr-4 text-right">622</td><td className="py-2 pr-4 text-right text-muted">n/a</td><td className="py-2 pr-4 text-right">33s</td><td className="py-2">Identical to baseline</td></tr>
+              <tr className="border-b border-light/50 bg-amber-50/30"><td className="py-2 pr-4">Flash + low resolution</td><td className="py-2 pr-4 text-right">122</td><td className="py-2 pr-4 text-right text-muted">n/a</td><td className="py-2 pr-4 text-right">33s</td><td className="py-2 text-amber-700">Wrong script (Mandaic)</td></tr>
+            </tbody>
+          </table>
+        </div>
+
+        <p className="text-secondary leading-relaxed mb-6">
+          <strong>Thinking mode eliminates the hallucination.</strong> Pro + thinking produces 1,009 characters of actual manuscript content: pottery vessels, divine seals, healing instructions, lead amulets. The 2,997 thinking tokens apparently let the model reason about what&rsquo;s actually on the page before generating, breaking the repetitive loop. With thinking + high resolution, the model uses its full thinking budget (7,680 tokens) and produces the most constrained reading at 566 characters &mdash; close to Flash&rsquo;s 622.
+        </p>
+
+        <p className="text-secondary leading-relaxed mb-4">
+          <strong>What Pro + thinking reads:</strong>
+        </p>
+
+        <div className="bg-green-50/50 rounded-lg p-4 border border-green-100 mb-8">
+          <p className="text-sm text-secondary leading-relaxed">
+            &ldquo;47. He recited over it. And make a clean pottery vessel on the sea of the west, etc., to immerse... Take a new clay vessel and dig in the earth. Take this seal and carve for it, and it shall not touch flesh, and upon all weapons they shall not touch you. And this is the form of the seal of copper, and this is: and write around it these names &mdash; Ehyeh Asher Ehyeh, Tzevaot, God of Israel, Amen, Netzach, Selah... Take a piece of lead and engrave upon it these names and bind it on the arm of the sick person, and he shall be healed immediately with the help of God, blessed be He, Amen.&rdquo;
+          </p>
+        </div>
+
+        <p className="text-secondary leading-relaxed mb-8">
+          Compare this with Pro&rsquo;s baseline output on the same page, which reads the first few lines then collapses into &ldquo;AGLA AGLA AGLA AGLA...&rdquo; repeated hundreds of times until hitting the token limit. The thinking model reads specific instructions about seals, amulets, and healing &mdash; the actual content of a magical manuscript.
+        </p>
+
+        {/* --- Media Resolution --- */}
+        <h2 id="media-resolution" className="text-2xl md:text-3xl text-primary mt-16 mb-6">
+          10. Media Resolution: No Effect
+        </h2>
+
+        <p className="text-secondary leading-relaxed mb-6">
+          Shiv also suggested testing <code className="bg-warm px-1 py-0.5 rounded">mediaResolution</code> levels. Results: resolution changes do not affect the hallucination.
+        </p>
+
+        <ul className="text-secondary leading-relaxed mb-6 space-y-3">
+          <li><strong>Pro + high resolution</strong> produces the <em>identical</em> 10,117-character hallucination as baseline. The vision encoder already has enough detail; the problem is downstream in generation.</li>
+          <li><strong>Flash + high resolution</strong> produces byte-for-byte identical output to Flash baseline (622 chars). Resolution is irrelevant for a model that already reads correctly.</li>
+          <li><strong>Flash + low resolution</strong> is the one surprise: it outputs 122 characters of <strong>Mandaic script</strong> instead of Hebrew. Reducing the image to 298 input tokens (vs. 1,124 at default) causes Flash to misidentify the script entirely &mdash; a different failure mode than hallucination.</li>
         </ul>
 
-        {/* --- What's known vs novel --- */}
-        <h2 className="text-2xl md:text-3xl text-primary mt-16 mb-6">
-          What We&rsquo;re Measuring vs. What&rsquo;s Known
+        <p className="text-secondary leading-relaxed mb-8">
+          The takeaway: the confident hallucinator pattern is a <strong>generation problem, not a perception problem</strong>. The model sees the page fine; it just can&rsquo;t stop generating once it starts. Thinking mode is the intervention because it operates on the generation side.
+        </p>
+
+        {/* --- Implications --- */}
+        <h2 id="implications" className="text-2xl md:text-3xl text-primary mt-16 mb-6">
+          11. Implications for Our Pipeline
         </h2>
+
+        <p className="text-secondary leading-relaxed mb-4">
+          <strong>From Part I (Flash vs. Lite):</strong>
+        </p>
+        <ul className="text-secondary leading-relaxed mb-6 space-y-3">
+          <li><strong>Embedding-based translation monitoring</strong> should be deployed pipeline-wide. Pages with OCR&rarr;translation distance &gt; 2&sigma; from their corpus mean should be flagged for review.</li>
+          <li><strong>Output length ratio</strong> is the simplest hallucination detector. A page where one model produces 5x+ more text than another is almost certainly hallucinating.</li>
+        </ul>
+
+        <p className="text-secondary leading-relaxed mb-4">
+          <strong>From Part II (Pro and thinking mode):</strong>
+        </p>
+        <ul className="text-secondary leading-relaxed mb-6 space-y-3">
+          <li><strong>Flash remains the best default OCR model.</strong> It never hallucinates, never misidentifies scripts (at default resolution), and costs 5x less than Pro.</li>
+          <li><strong>Model size does not fix hallucination.</strong> Pro is worse than Flash on manuscripts and 55x more expensive. Don&rsquo;t throw money at a generation problem.</li>
+          <li><strong>Thinking mode is the cure for manuscripts.</strong> When a page is flagged as potentially hallucinated (via length ratio), re-run it with Pro + thinking. The 3,000&ndash;8,000 thinking tokens cost more per page but eliminate the failure mode entirely.</li>
+          <li><strong>The real variable is manuscript vs. print</strong>, not script. All models handle printed Hebrew perfectly (Prague Haggadah, Sefer ha-bahir). Cursive manuscripts with repetitive magical formulae trigger the confident hallucinator across all model tiers.</li>
+          <li><strong>A two-pass pipeline</strong> is cheaper than using thinking mode everywhere: (1)&nbsp;Run Flash on everything. (2)&nbsp;Flag pages where output length &gt;&nbsp;3x the corpus median. (3)&nbsp;Re-run flagged pages with Pro + thinking.</li>
+        </ul>
+
+        {/* --- Novelty table --- */}
+        <h3 className="text-xl text-primary mt-12 mb-4">
+          What We&rsquo;re Measuring vs. What&rsquo;s Known
+        </h3>
 
         <div className="overflow-x-auto mb-8">
           <table className="w-full text-sm text-secondary">
@@ -390,26 +563,23 @@ export default function ConfidentHallucinatorPage() {
               <tr className="border-b border-light/50"><td className="py-2 pr-4">Multi-run consistency (MCR)</td><td className="py-2 pr-4">Wang &amp; Wang 2025, Lopresti &amp; Zhou 1996</td><td className="py-2">Applied to VLM OCR on historical manuscripts</td></tr>
               <tr className="border-b border-light/50"><td className="py-2 pr-4">Output length ratio</td><td className="py-2 pr-4">This work</td><td className="py-2">Simple hallucination detector, no ground truth</td></tr>
               <tr className="border-b border-light/50"><td className="py-2 pr-4">Embedding distance</td><td className="py-2 pr-4">This work</td><td className="py-2">Translation quality proxy without reference</td></tr>
-              <tr className="border-b border-light/50"><td className="py-2 pr-4">Temperature &times; model &times; script</td><td className="py-2 pr-4">This work</td><td className="py-2">Mapped interaction effects across 4 scripts</td></tr>
               <tr className="border-b border-light/50"><td className="py-2 pr-4">&ldquo;Confident hallucinator&rdquo; pattern</td><td className="py-2 pr-4">This work</td><td className="py-2">High MCR + high length ratio = systematic hallucination</td></tr>
-              <tr className="border-b border-light/50"><td className="py-2 pr-4">CER, BLEU-4, ROUGE-L</td><td className="py-2 pr-4">Standard NLP</td><td className="py-2">Implemented but limited by ground truth</td></tr>
+              <tr className="border-b border-light/50"><td className="py-2 pr-4">Thinking mode as hallucination cure</td><td className="py-2 pr-4">This work</td><td className="py-2">10x output reduction, actual content on same input</td></tr>
+              <tr className="border-b border-light/50"><td className="py-2 pr-4">Manuscript vs. print as trigger</td><td className="py-2 pr-4">This work</td><td className="py-2">Same script, same models &mdash; only format matters</td></tr>
+              <tr className="border-b border-light/50"><td className="py-2 pr-4">Model size &times; hallucination</td><td className="py-2 pr-4">This work</td><td className="py-2">Pro is worse, not better, on hallucination-prone inputs</td></tr>
             </tbody>
           </table>
         </div>
 
-        {/* --- Cost --- */}
-        <h3 className="text-xl text-primary mt-12 mb-4">
-          Cost
-        </h3>
-
-        <p className="text-secondary leading-relaxed mb-8">
-          All evaluations in this post cost a total of <strong>$0.15 USD</strong> &mdash; 107 API calls across two Gemini models, four scripts, two temperatures. The embedding evaluations added ~$0.01 each. Quality evaluation at this price point is practically free relative to the cost of running the OCR pipeline itself.
-        </p>
-
         {/* --- References --- */}
-        <h2 className="text-2xl md:text-3xl text-primary mt-16 mb-6">
-          References
+        <h2 id="references" className="text-2xl md:text-3xl text-primary mt-16 mb-6">
+          12. References &amp; Cost
         </h2>
+
+        <p className="text-secondary leading-relaxed mb-6">
+          Part I (Flash vs. Lite): 143 API calls, $0.20 total across two models, five scripts, two temperatures.<br/>
+          Part II (adding Pro): 27 API calls for the 3-model Hebrew eval ($0.79), plus ablation runs (~$0.40). Total for all experiments: <strong>~$2.00 USD</strong>.
+        </p>
 
         <ul className="text-secondary leading-relaxed mb-8 space-y-2 text-sm">
           <li>Wang, Y. &amp; Wang, H. (2025). &ldquo;Improving LLM Consistency via Multi-Run Aggregation.&rdquo; <a href="https://arxiv.org/abs/2503.16974" className="text-accent-rust hover:underline">arXiv:2503.16974</a></li>
@@ -423,7 +593,7 @@ export default function ConfidentHallucinatorPage() {
         <hr className="border-light my-12" />
 
         <p className="text-muted text-sm leading-relaxed">
-          <strong>Technical details:</strong> Models: Gemini 3 Flash Preview, Gemini 3.1 Flash Lite Preview. Temperatures: 0, 0.3. Embedding model: Gemini embedding-2-preview (768d). 143 API calls, $0.20 total. Five scripts: Latin, Tibetan, Arabic, Hebrew, Sanskrit. Evaluation framework: <a href="https://github.com/Embassy-of-the-Free-Mind/sourcelibrary-v2/issues/1329" className="text-accent-rust hover:underline">qa-eval</a> (open source). Raw results in <code className="bg-warm px-1 py-0.5 rounded">scripts/eval/results/</code>.
+          <strong>Technical details:</strong> Models: Gemini 3 Flash Preview, Gemini 3.1 Flash Lite Preview, Gemini 3.1 Pro Preview. Temperatures: 0, 0.3. Embedding model: Gemini embedding-2-preview (768d). Thinking budget: 8,192 tokens. Media resolution: low/medium/high. ~200 API calls, ~$2.00 total. Five scripts: Latin, Tibetan, Arabic, Hebrew, Sanskrit. Evaluation framework: <a href="https://github.com/Embassy-of-the-Free-Mind/sourcelibrary-v2/issues/1329" className="text-accent-rust hover:underline">qa-eval</a> (open source). Raw results in <code className="bg-warm px-1 py-0.5 rounded">scripts/eval/results/</code>.
         </p>
 
       </article>

@@ -1,0 +1,329 @@
+{
+  "corpus": "latin",
+  "models": [
+    "gemini-3.1-pro-preview",
+    "gemini-3-flash-preview"
+  ],
+  "temperatures": [
+    0
+  ],
+  "thinking": false,
+  "runsPerCombo": 3,
+  "pages": [
+    {
+      "bookId": "6836f8ee811c8ab472a49e36",
+      "bookTitle": "Tractatus duo. De natura elementorum. De quinta essentia",
+      "pageNumber": 34,
+      "script": "default",
+      "results": {
+        "gemini-3.1-pro-preview@t0": {
+          "model": "gemini-3.1-pro-preview",
+          "temperature": 0,
+          "mcr": {
+            "rate": 0.6666666666666666,
+            "modalOutput": "DE ELEMENTIS. 35\nCAPVT. VIII.\nRecapitulatio doctrinæ de generatione\nventorum, pluuiarum & tonitruorum:\n& inſignis obſeruatio de nutritione ve-\ngetabilium, vt & de primæ materiæ\ninueſtigatione.\nEX his omnibus luce meridiana\nclariùs cernimus, quàm paternè\nNaturæ Auctor per Naturam nos e-\nrudiat, incitétque agnitionem atque\namorem ſapientiæ, bonitatis, atque\nomnipotentiæ ſuæ. Intuemini, ſultis,\noptimum atque admirabilẽ ordinem,\nqui in omnibus rebus, ſi accuratè di-\nſpiciamus, elucet. Cogitate quàm mi-\nrifica ratione (veluti ſuperiùs audiui-\nſtis) craſſum illud Aquæ corpus à So-\nle inuiſibiliter ſublatum in altum, mu-\ntetur in latè diffuſum aërem; qua ori-\ngine naſcitur mobilium ventorũ nu-\nmeroſa propago. Sic rarefacta eadem\naqua huc illuc agitatur, eoque delata,\nquò ob maris, ſtagnorum & fluminũ\ndefectum nulli tranſmittuntur vapo-\nres, tum præterea feruore ſolis ſur-\nſum acta ad frigidam aëris prouinciã\nb 6",
+            "modeCount": 2,
+            "totalRuns": 3,
+            "uniqueOutputs": 2
+          },
+          "pairwise": {
+            "pairs": [
+              {
+                "i": 0,
+                "j": 1,
+                "charSimilarity": 0.9989106753812637,
+                "syllableSimilarity": 0.9925373134328358
+              },
+              {
+                "i": 0,
+                "j": 2,
+                "charSimilarity": 0.9989106753812637,
+                "syllableSimilarity": 0.9925373134328358
+              },
+              {
+                "i": 1,
+                "j": 2,
+                "charSimilarity": 1,
+                "syllableSimilarity": 1
+              }
+            ],
+            "avgCharSimilarity": 0.9992737835875092,
+            "avgSyllableSimilarity": 0.9950248756218905
+          },
+          "costUsd": 0.023745000000000002,
+          "durationMs": 94807,
+          "outputLengths": [
+            918,
+            918,
+            918
+          ]
+        },
+        "gemini-3-flash-preview@t0": {
+          "model": "gemini-3-flash-preview",
+          "temperature": 0,
+          "mcr": {
+            "rate": 0.6666666666666666,
+            "modalOutput": "DE ELEMENTIS. 35\nCAPVT. VIII.\nRecapitulatio doctrinæ de generatione\nventorum, pluuiarum & tonitruorum:\n& insignis obseruatio de nutritione ve-\ngetabilium, vt & de primæ materiæ\ninuestigatione.\nEX his omnibus luce meridiana\nclariùs cernimus, quàm paternè\nNaturæ Auctor per Naturam nos e-\nrudiat, incitétque agnitionem atque\namorem sapientiæ, bonitatis, atque\nomnipotentiæ suæ. Intuemini, sultis,\noptimum atque admirabilē ordinem,\nqui in omnibus rebus, si accuratè di-\nspiciamus, elucet. Cogitate quàm mi-\nrifica ratione (veluti superiùs audiui-\nstis) crassum illud Aquæ corpus à So-\nle inuisibiliter sublatum in altum, mu-\ntetur in latè diffusum aërem; qua ori-\ngine nascitur mobilium ventorū nu-\nmerosa propago. Sic rarefacta eadem\naqua huc illuc agitatur, eoque delata,\nquò ob maris, stagnorum & fluminū\ndefectum nulli transmittuntur vapo-\nres, tum præterea feruore solis sur-\nsum acta ad frigidam aëris",
+            "modeCount": 2,
+            "totalRuns": 3,
+            "uniqueOutputs": 2
+          },
+          "pairwise": {
+            "pairs": [
+              {
+                "i": 0,
+                "j": 1,
+                "charSimilarity": 1,
+                "syllableSimilarity": 1
+              },
+              {
+                "i": 0,
+                "j": 2,
+                "charSimilarity": 0.9825897714907508,
+                "syllableSimilarity": 0.9701492537313433
+              },
+              {
+                "i": 1,
+                "j": 2,
+                "charSimilarity": 0.9825897714907508,
+                "syllableSimilarity": 0.9701492537313433
+              }
+            ],
+            "avgCharSimilarity": 0.9883931809938339,
+            "avgSyllableSimilarity": 0.9800995024875622
+          },
+          "costUsd": 0.004529999999999999,
+          "durationMs": 84857,
+          "outputLengths": [
+            904,
+            904,
+            919
+          ]
+        }
+      }
+    },
+    {
+      "bookId": "68611c716122a466ae2491ab",
+      "bookTitle": "Plantarum seu Stirpium Icones (preface)",
+      "pageNumber": 5,
+      "script": "default",
+      "results": {
+        "gemini-3.1-pro-preview@t0": {
+          "model": "gemini-3.1-pro-preview",
+          "temperature": 0,
+          "mcr": {
+            "rate": 0.6666666666666666,
+            "modalOutput": "Scammonium, Brionia. 620. 625.\nClematis, Vitis. 626. 630.\nClymenon, Viſcum. 632. 637.\nCucumis. Melo, Pepo. 638. 647.\nDoronicum. Malua. 648. 652.\nAlthæa, Geranium, 653. 662.\nRanunculus. Aconitum. 664. 678.\nHelleborus, Pæonia. 679. 685.\nDentaria, Pentaphyllon. 687. 692.\nCariophyllata, Fragaria. 693. 698.\nAngelica. Libanotis. 698. 704.\nElioſelinum, Paſtinaca. 707. 711.\nCentaurium, Valeriana. 712. 716.\nPimpinella, Paſtinaca. 718. 723.\nAmmi, Caucalis. 724. 728.\nOenanthe, Cicutaria. 729. 735.\nSeſeli. Melanthium. 736. 742.\nCuminum, Mille-folium. 742. 748.\nTanacetum, Matricaria. 748. 751.\nAbſinthium, Fumaria. 752. 758.\nRadix caua, Aquilegia. 759. 764.\nArtemiſia, Abrotanum. 764. 770.\nAnthemis, Pyrethrum. 770. 775.\nFerula, Seſeli. 778. 785.\nCorruda, Myriophyllum. 787. 791.\nRubia, Mollugo. 797. 802.\nPhyllitis. Adianthum. 805. 809.\nFilix, Lochnitis. 812. 816.\n4",
+            "modeCount": 2,
+            "totalRuns": 3,
+            "uniqueOutputs": 2
+          },
+          "pairwise": {
+            "pairs": [
+              {
+                "i": 0,
+                "j": 1,
+                "charSimilarity": 0.9976771196283392,
+                "syllableSimilarity": 0.9826086956521739
+              },
+              {
+                "i": 0,
+                "j": 2,
+                "charSimilarity": 0.9976771196283392,
+                "syllableSimilarity": 0.9826086956521739
+              },
+              {
+                "i": 1,
+                "j": 2,
+                "charSimilarity": 1,
+                "syllableSimilarity": 1
+              }
+            ],
+            "avgCharSimilarity": 0.9984514130855594,
+            "avgSyllableSimilarity": 0.9884057971014494
+          },
+          "costUsd": 0.0321675,
+          "durationMs": 145505,
+          "outputLengths": [
+            860,
+            861,
+            861
+          ]
+        },
+        "gemini-3-flash-preview@t0": {
+          "model": "gemini-3-flash-preview",
+          "temperature": 0,
+          "mcr": {
+            "rate": 0.6666666666666666,
+            "modalOutput": "Scammonium, Brionia. 620. 625.\nClematis, Vitis. 626. 630.\nClymenon, Viſcum. 632. 637.\nCucumis. Melo, Pepo. 638. 647.\nDoronicum. Malua. 648. 652.\nAlthæa, Geranium, 653. 662.\nRanunculus. Aconitum 664. 678.\nHelleborus, Pæonia. 679. 685.\nDentaria, Pentaphylion. 687. 692.\nCariophyllata, Fragaria. 693. 698.\nAngelica. Libanotis. 698. 704.\nElioſelinum, Paſtinaca. 707. 711.\nCentaurium, Valeriana. 712. 716.\nPimpinella, Paſtinaca. 718. 723.\nAmmi, Caucalis. 724. 728.\nOenanthe, Cicutaria. 729. 735.\nSeſeli. Melanthium. 736. 742",
+            "modeCount": 2,
+            "totalRuns": 3,
+            "uniqueOutputs": 2
+          },
+          "pairwise": {
+            "pairs": [
+              {
+                "i": 0,
+                "j": 1,
+                "charSimilarity": 1,
+                "syllableSimilarity": 1
+              },
+              {
+                "i": 0,
+                "j": 2,
+                "charSimilarity": 0.9980769230769231,
+                "syllableSimilarity": 0.9855072463768116
+              },
+              {
+                "i": 1,
+                "j": 2,
+                "charSimilarity": 0.9980769230769231,
+                "syllableSimilarity": 0.9855072463768116
+              }
+            ],
+            "avgCharSimilarity": 0.9987179487179487,
+            "avgSyllableSimilarity": 0.9903381642512077
+          },
+          "costUsd": 0.0045225000000000005,
+          "durationMs": 108926,
+          "outputLengths": [
+            519,
+            519,
+            520
+          ]
+        }
+      }
+    },
+    {
+      "bookId": "685a9b1bcdbe778e22823a64",
+      "bookTitle": "De Voluptate (On Pleasure)",
+      "pageNumber": 20,
+      "script": "default",
+      "results": {
+        "gemini-3.1-pro-preview@t0": {
+          "model": "gemini-3.1-pro-preview",
+          "temperature": 0,
+          "mcr": {
+            "rate": 0.6666666666666666,
+            "modalOutput": "DE VOLVPTATE\ncraffiora corpora admouentur, eadé prædita humoris calorisq; natura,\nqua ipfe quoque fenfus affectus eſt, horum tunc præfentia corporum,\nquia fibi cognata funt, quia eandem naturam habent, quia propriam\neius concretionem, qualitatémq; tuentur, exultat quodammodo, ac ge-\nſtit, totuſq; fuauitate perfunditur. Guſtus uero liquidioribus (ut patet)\ncorporib⁹ recreatur. delectatur enim faporib⁹ his, qui humoris decocti,\nmaturíq; naturam habét. Quippe cum & ipfe (ut Platonici putant) eadé\nproportione concretus fit. quo fit, ut fimili, & quaſi fuo quodam fami-\nliari accedente, cum eo fuauiffime conquiefcat. Odorandi præterea uis\nodoribus iis reficitur maxime, qui inter aquæ aeriſq; naturam commi-\nſti funt, quod in pomis, floribuſq; percipitur, fi quidem, & ipfa eandem\nnaturam ab origine fortita fit. Aures infuper eiufmodi delectantur fo-\nnis, qui ex puriffimo aere confect",
+            "modeCount": 2,
+            "totalRuns": 3,
+            "uniqueOutputs": 2
+          },
+          "pairwise": {
+            "pairs": [
+              {
+                "i": 0,
+                "j": 1,
+                "charSimilarity": 0.9042792792792793,
+                "syllableSimilarity": 0.023809523809523808
+              },
+              {
+                "i": 0,
+                "j": 2,
+                "charSimilarity": 0.9042792792792793,
+                "syllableSimilarity": 0.023809523809523808
+              },
+              {
+                "i": 1,
+                "j": 2,
+                "charSimilarity": 1,
+                "syllableSimilarity": 1
+              }
+            ],
+            "avgCharSimilarity": 0.9361861861861862,
+            "avgSyllableSimilarity": 0.34920634920634924
+          },
+          "costUsd": 0.02265,
+          "durationMs": 167869,
+          "outputLengths": [
+            831,
+            888,
+            888
+          ]
+        },
+        "gemini-3-flash-preview@t0": {
+          "model": "gemini-3-flash-preview",
+          "temperature": 0,
+          "mcr": {
+            "rate": 0.6666666666666666,
+            "modalOutput": "DE VOLVPTATE\ncraſſiora corpora admouentur, eadē prædita humoris calorisq; natura,\nqua ipſe quoque ſenſus affectus eſt, horum tunc præſentia corporum,\nquia ſibi cognata ſunt, quia eandem naturam habent, quia propriam\neius concretionem, qualitatemq; tuentur, exultat quodammodo, ac ge-\nſtit, totuſq; ſuauitate perfunditur. Guſtus uero liquidioribus (ut patet)\ncorporib⁹ recreatur. delectatur enim ſaporib⁹ his, qui humoris decocti,\nmaturiq; naturam habēt. Quippe cum & ipſe (ut Platonici putant) eadē\nproportione concretus ſit quo ſit, ut ſimili, & quaſi ſuo quodam fami-\nliari accedente, cum eo ſuauiſſime conquieſcat. Odorandi præterea uis\nodoribus iis reficitur maxime, qui inter aquæ aeriſq; naturam commi-\nſti ſunt, quod in pomis, floribusq; percipitur, ſi quidem, & ipſa eandem\nnaturam ab origine fortita ſit. Aures inſuper eiuſmodi delectantur ſo-\nnis, qui ex puri",
+            "modeCount": 2,
+            "totalRuns": 3,
+            "uniqueOutputs": 2
+          },
+          "pairwise": {
+            "pairs": [
+              {
+                "i": 0,
+                "j": 1,
+                "charSimilarity": 1,
+                "syllableSimilarity": 1
+              },
+              {
+                "i": 0,
+                "j": 2,
+                "charSimilarity": 0.32561788936837976,
+                "syllableSimilarity": 0.00949367088607595
+              },
+              {
+                "i": 1,
+                "j": 2,
+                "charSimilarity": 0.32561788936837976,
+                "syllableSimilarity": 0.00949367088607595
+              }
+            ],
+            "avgCharSimilarity": 0.5504119262455864,
+            "avgSyllableSimilarity": 0.339662447257384
+          },
+          "costUsd": 0.006516000000000001,
+          "durationMs": 90715,
+          "outputLengths": [
+            869,
+            869,
+            2549
+          ]
+        }
+      }
+    }
+  ],
+  "summary": {
+    "byCombo": {
+      "gemini-3.1-pro-preview@t0": {
+        "model": "gemini-3.1-pro-preview",
+        "temp": 0,
+        "pages": 3,
+        "avgMcr": 0.6666666666666666,
+        "avgCharSim": 0.9779704609530849,
+        "avgSylSim": 0.777545673976563
+      },
+      "gemini-3-flash-preview@t0": {
+        "model": "gemini-3-flash-preview",
+        "temp": 0,
+        "pages": 3,
+        "avgMcr": 0.6666666666666666,
+        "avgCharSim": 0.8458410186524564,
+        "avgSylSim": 0.7700333713320514
+      }
+    },
+    "crossModel": [
+      {
+        "modelA": "gemini-3.1-pro-preview@t0",
+        "modelB": "gemini-3-flash-preview@t0",
+        "charSimilarity": 0.8339033078990038,
+        "syllableSimilarity": 0.708796253377694,
+        "pages": 3
+      }
+    ]
+  },
+  "meta": {
+    "date": "2026-04-24",
+    "totalCalls": 18,
+    "totalCostUsd": 0.09413099999999999,
+    "totalDurationMs": 692679,
+    "costByModel": {
+      "gemini-3.1-pro-preview@t0": 0.07856250000000001,
+      "gemini-3-flash-preview@t0": 0.015568500000000002
+    }
+  }
+}

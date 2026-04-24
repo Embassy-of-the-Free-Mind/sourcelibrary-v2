@@ -67,6 +67,8 @@ async function cmdConsistency() {
   const delayMs = parseInt(args.delay || '2000');
   const prompt = args.prompt || DEFAULT_PROMPT;
   const temperatures = (args.temp || '0').split(',').map(Number);
+  const thinking = args.thinking === true || args.thinking === 'true';
+  const mediaResolution = args['media-resolution'] || undefined; // 'low', 'medium', 'high'
 
   // Cost estimate
   if (args['dry-run']) {
@@ -83,18 +85,24 @@ async function cmdConsistency() {
   console.log(`  Sample: ${sampleSize} pages`);
   console.log(`  Runs: ${runs} per model per temperature`);
   console.log(`  Models: ${models.join(', ')}`);
-  console.log(`  Temperatures: ${temperatures.join(', ')}\n`);
+  console.log(`  Temperatures: ${temperatures.join(', ')}`);
+  if (thinking) console.log(`  Thinking: enabled (8192 token budget)`);
+  if (mediaResolution) console.log(`  Media resolution: ${mediaResolution}`);
+  console.log();
 
   // Sample pages
   console.log('Sampling pages...');
   const pages = await samplePages(corpus, sampleSize);
   console.log(`  Got ${pages.length} pages from ${new Set(pages.map(p => p.bookId)).size} books\n`);
 
-  // Build list of (model, temp) combos — keyed as "model@temp"
+  // Build list of (model, temp) combos — keyed as "model@temp[+thinking][+res]"
   const combos = [];
   for (const model of models) {
     for (const temp of temperatures) {
-      combos.push({ model, temp, key: `${model}@t${temp}` });
+      let key = `${model}@t${temp}`;
+      if (thinking) key += '+think';
+      if (mediaResolution) key += `+${mediaResolution}`;
+      combos.push({ model, temp, key });
     }
   }
 
@@ -102,6 +110,8 @@ async function cmdConsistency() {
     corpus,
     models,
     temperatures,
+    thinking,
+    ...(mediaResolution && { mediaResolution }),
     runsPerCombo: runs,
     pages: [],
     summary: { byCombo: {} },
@@ -149,7 +159,7 @@ async function cmdConsistency() {
 
       for (let r = 0; r < runs; r++) {
         try {
-          const result = await runModel(combo.model, imageBuffer, prompt, { temperature: combo.temp });
+          const result = await runModel(combo.model, imageBuffer, prompt, { temperature: combo.temp, thinking, mediaResolution });
           const cleaned = cleanText(result.text, page.script);
           ocrRuns.push(cleaned);
           totalCost += result.costUsd;
