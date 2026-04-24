@@ -1047,7 +1047,7 @@ export default function ImageDetailPage({
                               onMouseUp={handleBboxMouseUp}
                               onMouseLeave={handleBboxMouseUp}
                             >
-                              <Image src={data.fullPageUrl} alt="Full page" fill sizes="(max-width: 768px) 90vw, 80vw" className="object-contain pointer-events-none" onDragStart={(e) => e.preventDefault()} unoptimized />
+                              <Image src={data.fullPageUrl} alt="Full page" fill sizes="(max-width: 768px) 90vw, 80vw" className="object-contain pointer-events-none" onDragStart={(e) => e.preventDefault()} onError={(e) => { (e.target as HTMLImageElement).style.display = 'none'; }} unoptimized />
                               <div className="absolute inset-0 bg-black/60 pointer-events-none" style={{
                                 clipPath: `polygon(0 0, 100% 0, 100% 100%, 0 100%, 0 0, ${bboxValues.x * 100}% ${bboxValues.y * 100}%, ${bboxValues.x * 100}% ${(bboxValues.y + bboxValues.height) * 100}%, ${(bboxValues.x + bboxValues.width) * 100}% ${(bboxValues.y + bboxValues.height) * 100}%, ${(bboxValues.x + bboxValues.width) * 100}% ${bboxValues.y * 100}%, ${bboxValues.x * 100}% ${bboxValues.y * 100}%)`
                               }} />
@@ -1107,7 +1107,7 @@ export default function ImageDetailPage({
                   <Link href={data.readUrl} className="block group">
                     {getBookThumbnailUrl(data.book) && (
                       <div className="relative w-full aspect-[3/4] bg-stone-900">
-                        <Image src={getBookThumbnailUrl(data.book)!} alt={data.book.title} fill sizes="(max-width: 768px) 90vw, 300px" className="object-cover group-hover:opacity-90 transition-opacity" unoptimized />
+                        <Image src={getBookThumbnailUrl(data.book)!} alt={data.book.title} fill sizes="(max-width: 768px) 90vw, 300px" className="object-cover group-hover:opacity-90 transition-opacity" unoptimized onError={(e) => { (e.target as HTMLImageElement).style.display = 'none'; }} />
                       </div>
                     )}
                     <div className="p-5">
@@ -1156,6 +1156,7 @@ export default function ImageDetailPage({
                                 sizes="120px"
                                 className="object-cover group-hover:scale-105 transition-transform duration-200"
                                 unoptimized
+                                onError={(e) => { (e.target as HTMLImageElement).style.display = 'none'; }}
                               />
                             </Link>
                           );
