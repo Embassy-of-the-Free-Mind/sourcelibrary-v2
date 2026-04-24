@@ -27,7 +27,7 @@ const posts: BlogPost[] = [
   {
     slug: 'confident-hallucinator',
     title: 'The Confident Hallucinator',
-    subtitle: 'What we learned evaluating AI OCR across four scripts. A model can be perfectly consistent and completely wrong — 100% consistency, 0% accuracy.',
+    subtitle: 'What we learned evaluating AI OCR across five scripts. A model can be perfectly consistent and completely wrong — 100% consistency, 0% accuracy.',
     date: '23 April 2026',
     readTime: '10 min read',
     tag: 'Research',

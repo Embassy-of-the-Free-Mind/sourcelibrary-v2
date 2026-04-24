@@ -1,0 +1,599 @@
+{
+  "corpus": "sanskrit",
+  "models": [
+    "gemini-3-flash-preview",
+    "gemini-3.1-flash-lite-preview"
+  ],
+  "temperatures": [
+    0,
+    0.3
+  ],
+  "runsPerCombo": 3,
+  "pages": [
+    {
+      "bookId": "6953c83377f38f6761bdbf5a",
+      "bookTitle": "Gheranda Samhita",
+      "pageNumber": 5,
+      "script": "default",
+      "results": {
+        "gemini-3-flash-preview@t0": {
+          "model": "gemini-3-flash-preview",
+          "temperature": 0,
+          "mcr": {
+            "rate": 0.6666666666666666,
+            "modalOutput": "An important message to our readers:\n\nThe asanas in this book should not be attempted without the supervision of an experienced teacher or prior experience. Many of the other practices should not be attempted at all. The ideas expressed in this book should not be used to diagnose, prescribe, treat, cure, or prevent any disease, illness, or individual health problem. Consult your health care practitioner for individual health care. YogaVidya.com LLC shall not be liable for any direct, indirect, incidental, special, consequential, or punitive damages resulting from the use of this book.\n\nYogaVidya.com, PO Box 569, Woodstock NY 12498-0569 USA\n\nCopyright ©2004 James Mallinson. All rights reserved\n\nYogaVidya.com and Read the Originals are trademarks of YogaVidya.com LLC\n\nPrinted on acid-free paper\n\nFirst edition\n\nManufactured in the United States of America\n\nBritish Library Cataloguing in Publication Data.\nA catalogue record for this book is available from the British Library.\n\nPublisher’s Cataloging-in-Publication Data\n\nMallinson, James.\nThe Gheranda Samhita: the original Sanskrit / and an English translation [by] James Mallinson.\nWoodstock, NY : YogaVidya.com, 2004.\nxvi, [128] p. : ill. ; cm.\nIncludes Sanskrit and English.\nISBN 0-9716466-2-7 (hardcover)\nISBN 0-9716466-3-5 (paperback)\n1. Hatha Yoga. 2. Kundalini. I. Title. II. Mallinson, James, 1970-, tr.\nRA781.7.G43 2004\n613.7'046—dc21 2004112200\n\nLoretta made this whole deal possible.",
+            "modeCount": 2,
+            "totalRuns": 3,
+            "uniqueOutputs": 2
+          },
+          "pairwise": {
+            "pairs": [
+              {
+                "i": 0,
+                "j": 1,
+                "charSimilarity": 1,
+                "syllableSimilarity": 1
+              },
+              {
+                "i": 0,
+                "j": 2,
+                "charSimilarity": 0.9445893089960886,
+                "syllableSimilarity": 1
+              },
+              {
+                "i": 1,
+                "j": 2,
+                "charSimilarity": 0.9445893089960886,
+                "syllableSimilarity": 1
+              }
+            ],
+            "avgCharSimilarity": 0.9630595393307257,
+            "avgSyllableSimilarity": 1
+          },
+          "costUsd": 0.0054989999999999995,
+          "durationMs": 41657,
+          "outputLengths": [
+            1456,
+            1456,
+            1534
+          ]
+        },
+        "gemini-3-flash-preview@t0.3": {
+          "model": "gemini-3-flash-preview",
+          "temperature": 0.3,
+          "mcr": {
+            "rate": 0.6666666666666666,
+            "modalOutput": "An important message to our readers:\n\nThe asanas in this book should not be attempted without the supervision of an\nexperienced teacher or prior experience. Many of the other practices should\nnot be attempted at all. The ideas expressed in this book should not be used to\ndiagnose, prescribe, treat, cure, or prevent any disease, illness, or individual\nhealth problem. Consult your health care practitioner for individual health\ncare. YogaVidya.com LLC shall not be liable for any direct, indirect, incidental,\nspecial, consequential, or punitive damages resulting from the use of this book.\n\nYogaVidya.com, PO Box 569, Woodstock NY 12498-0569 USA\n\nCopyright ©2004 James Mallinson. All rights reserved\n\nYogaVidya.com and Read the Originals are trademarks of YogaVidya.com LLC\n\nPrinted on acid-free paper\n\nFirst edition\n\nManufactured in the United States of America\n\nBritish Library Cataloguing in Publication Data.\nA catalogue record for this book is available from the British Library.\n\nPublisher’s Cataloging-in-Publication Data\n\nMallinson, James.\nThe Gheranda Samhita: the original Sanskrit / and an English translation [by]\nJames Mallinson.\nWoodstock, NY : YogaVidya.com, 2004.\nxvi, [128] p. : ill. ; cm.\nIncludes Sanskrit and English.\nISBN 0-9716466-2-7 (hardcover)\nISBN 0-9716466-3-5 (paperback)\n1. Hatha Yoga. 2. Kundalini. I. Title. II. Mallinson, James, 1970-, tr.\nRA781.7.G43 2004\n613.7'046—dc21 2004112200\n\nLoretta made this whole deal possible.",
+            "modeCount": 2,
+            "totalRuns": 3,
+            "uniqueOutputs": 2
+          },
+          "pairwise": {
+            "pairs": [
+              {
+                "i": 0,
+                "j": 1,
+                "charSimilarity": 1,
+                "syllableSimilarity": 1
+              },
+              {
+                "i": 0,
+                "j": 2,
+                "charSimilarity": 0.9758713136729222,
+                "syllableSimilarity": 1
+              },
+              {
+                "i": 1,
+                "j": 2,
+                "charSimilarity": 0.9758713136729222,
+                "syllableSimilarity": 1
+              }
+            ],
+            "avgCharSimilarity": 0.9839142091152815,
+            "avgSyllableSimilarity": 1
+          },
+          "costUsd": 0.0055320000000000005,
+          "durationMs": 28937,
+          "outputLengths": [
+            1456,
+            1456,
+            1492
+          ]
+        },
+        "gemini-3.1-flash-lite-preview@t0": {
+          "model": "gemini-3.1-flash-lite-preview",
+          "temperature": 0,
+          "mcr": {
+            "rate": 1,
+            "modalOutput": "An important message to our readers:\n\nThe asanas in this book should not be attempted without the supervision of an\nexperienced teacher or prior experience. Many of the other practices should\nnot be attempted at all. The ideas expressed in this book should not be used to\ndiagnose, prescribe, treat, cure, or prevent any disease, illness, or individual\nhealth problem. Consult your health care practitioner for individual health\ncare. YogaVidya.com LLC shall not be liable for any direct, indirect, incidental,\nspecial, consequential, or punitive damages resulting from the use of this book.\n\nYogaVidya.com, PO Box 569, Woodstock NY 12498-0569 USA\n\nCopyright ©2004 James Mallinson. All rights reserved\n\nYogaVidya.com and Read the Originals are trademarks of YogaVidya.com LLC\n\nPrinted on acid-free paper\n\nFirst edition\n\nManufactured in the United States of America\n\nBritish Library Cataloguing in Publication Data.\nA catalogue record for this book is available from the British Library.\n\nPublisher’s Cataloging-in-Publication Data\n\nMallinson, James.\nThe Gheranda Samhita: the original Sanskrit / and an English translation [by]\nJames Mallinson.\nWoodstock, NY : YogaVidya.com, 2004.\nxvi, [128] p. : ill. ; cm.\nIncludes Sanskrit and English.\nISBN 0-9716466-2-7 (hardcover)\nISBN 0-9716466-3-5 (paperback)\n1. Hatha Yoga. 2. Kundalini. I. Title. II. Mallinson, James, 1970-, tr.\nRA781.7.G43 2004\n613.7’046—dc21 2004112200\n\nLoretta made this whole deal possible.",
+            "modeCount": 3,
+            "totalRuns": 3,
+            "uniqueOutputs": 1
+          },
+          "pairwise": {
+            "pairs": [
+              {
+                "i": 0,
+                "j": 1,
+                "charSimilarity": 1,
+                "syllableSimilarity": 1
+              },
+              {
+                "i": 0,
+                "j": 2,
+                "charSimilarity": 1,
+                "syllableSimilarity": 1
+              },
+              {
+                "i": 1,
+                "j": 2,
+                "charSimilarity": 1,
+                "syllableSimilarity": 1
+              }
+            ],
+            "avgCharSimilarity": 1,
+            "avgSyllableSimilarity": 1
+          },
+          "costUsd": 0.0006363,
+          "durationMs": 7556,
+          "outputLengths": [
+            1456,
+            1456,
+            1456
+          ]
+        },
+        "gemini-3.1-flash-lite-preview@t0.3": {
+          "model": "gemini-3.1-flash-lite-preview",
+          "temperature": 0.3,
+          "mcr": {
+            "rate": 0.6666666666666666,
+            "modalOutput": "An important message to our readers:\n\nThe asanas in this book should not be attempted without the supervision of an\nexperienced teacher or prior experience. Many of the other practices should\nnot be attempted at all. The ideas expressed in this book should not be used to\ndiagnose, prescribe, treat, cure, or prevent any disease, illness, or individual\nhealth problem. Consult your health care practitioner for individual health\ncare. YogaVidya.com LLC shall not be liable for any direct, indirect, incidental,\nspecial, consequential, or punitive damages resulting from the use of this book.\n\nYogaVidya.com, PO Box 569, Woodstock NY 12498-0569 USA\n\nCopyright ©2004 James Mallinson. All rights reserved\n\nYogaVidya.com and Read the Originals are trademarks of YogaVidya.com LLC\n\nPrinted on acid-free paper\n\nFirst edition\n\nManufactured in the United States of America\n\nBritish Library Cataloguing in Publication Data.\nA catalogue record for this book is available from the British Library.\n\nPublisher's Cataloging-in-Publication Data\n\nMallinson, James.\nThe Gheranda Samhita: the original Sanskrit / and an English translation [by]\nJames Mallinson.\nWoodstock, NY : YogaVidya.com, 2004.\nxvi, [128] p. : ill. ; cm.\nIncludes Sanskrit and English.\nISBN 0-9716466-2-7 (hardcover)\nISBN 0-9716466-3-5 (paperback)\n1. Hatha Yoga. 2. Kundalini. I. Title. II. Mallinson, James, 1970-, tr.\nRA781.7.G43 2004\n613.7'046—dc21 2004112200\n\nLoretta made this whole deal possible.",
+            "modeCount": 2,
+            "totalRuns": 3,
+            "uniqueOutputs": 2
+          },
+          "pairwise": {
+            "pairs": [
+              {
+                "i": 0,
+                "j": 1,
+                "charSimilarity": 0.9986263736263736,
+                "syllableSimilarity": 0.990521327014218
+              },
+              {
+                "i": 0,
+                "j": 2,
+                "charSimilarity": 1,
+                "syllableSimilarity": 1
+              },
+              {
+                "i": 1,
+                "j": 2,
+                "charSimilarity": 0.9986263736263736,
+                "syllableSimilarity": 0.990521327014218
+              }
+            ],
+            "avgCharSimilarity": 0.9990842490842491,
+            "avgSyllableSimilarity": 0.9936808846761455
+          },
+          "costUsd": 0.0006363,
+          "durationMs": 8667,
+          "outputLengths": [
+            1456,
+            1456,
+            1456
+          ]
+        }
+      }
+    },
+    {
+      "bookId": "6953c86b77f38f6761bdc210",
+      "bookTitle": "Shiva Samhita (Sanskrit with English)",
+      "pageNumber": 50,
+      "script": "default",
+      "results": {
+        "gemini-3-flash-preview@t0": {
+          "model": "gemini-3-flash-preview",
+          "temperature": 0,
+          "mcr": {
+            "rate": 0.3333333333333333,
+            "modalOutput": "44 SIVA SAMHITA.\n\nमहामुद्रा महाबन्धो महावेधश्च खेचरी ।\nजालंधरो मूलबंधो बिपरीतकृतिस्तथा ॥\nउड्डानं चैव वज्रोणी दशमे शक्तिचालनम् ।\nइदं हि मुद्रादशकं मुद्राणामुत्तमोत्तमम् ॥ १५ ॥\n\n15. Out of the many Mudrâs, the following ten are the best:— (1) Mahâmudrâ, (2) Mahâbandha, (3) Mahâvedha, (4) Khechari, (5) Jâlandhar, (6) Mulabandha, (7) Viparitkarana, (8) Uddana, (9) Vajrondî, and (10) Shaktichâlana.\n\nअथ महामुद्राकथनम् ।\nमहामुद्रां प्रवक्ष्यामि तन्त्रेऽस्मिन्मम वल्लभे ।\nयां प्राप्य सिद्धाः सिद्धिं च कपिलाद्याः पुरागताः ॥ १६ ॥\n\n16. My dearest, I shall now describe to you the Mahâmudrâ, from whose knowledge the ancient sages Kapila and others obtained success in Yoga.\n\n(1.)—Mahâ-Mudrâ.\n\nअपसव्येन संपीड्य पादमूलेन सादरम् ।\nगुरूपदेशतो योनिं गुदमेढ्रान्तरालगाम् ॥\nसव्यं प्रसारितं पादं धृत्वा पाणियुगेन वै ।\nनवद्वाराणि संयम्य चिबुकं हृदयोपरि ॥\nचित्तं चित्तपथे दत्त्वा प्रभवेद्वायुसाधनम् ।\nमहामुद्राभवेदेषा सर्वतन्त्रेषु गोपिता ॥\nवामाङ्गेन समभ्यस्य दक्षाङ्गेनाभ्यसेत्पुनः\nप्राणायामं समं कृत्वा योगी नियतमानसः ॥ १७ ॥\n\n17. In accordance with the instructions of the Guru, press gently the perineum with the heel of the left foot. Stretching the right foot out, hold it fast by the two hands. Having closed the nine gates (of the body), place the chin on the chest. Then concentrate the vibrations of the mind and inspire air and retain it by kumbhaka (so long as one can comfortably keep it). This is the Mahâmudrâ, held secret in all the Tantras. The steady-minded Yogi, having practised it on the left side, should then practise it on the right side; and in all cases must be firm in prânâyâma—the regulation of his breath.\n\nअनेन विधिना योगी मन्दभाग्योपि सिध्यति ।\nसर्वासामेव नाडीनां चालनं बिन्दुमारणम् ॥\nजीवनन्तु कषायस्य पातकानां विनाशनम् ।\nसर्वरोगोपशमनं जठराग्निविवर्धनम् ॥",
+            "modeCount": 1,
+            "totalRuns": 3,
+            "uniqueOutputs": 3
+          },
+          "pairwise": {
+            "pairs": [
+              {
+                "i": 0,
+                "j": 1,
+                "charSimilarity": 0.988155668358714,
+                "syllableSimilarity": 0.16483516483516483
+              },
+              {
+                "i": 0,
+                "j": 2,
+                "charSimilarity": 0.9954853273137697,
+                "syllableSimilarity": 0.13186813186813187
+              },
+              {
+                "i": 1,
+                "j": 2,
+                "charSimilarity": 0.9842075578116187,
+                "syllableSimilarity": 0.9340659340659341
+              }
+            ],
+            "avgCharSimilarity": 0.9892828511613675,
+            "avgSyllableSimilarity": 0.4102564102564103
+          },
+          "costUsd": 0.007386,
+          "durationMs": 86956,
+          "outputLengths": [
+            1770,
+            1773,
+            1772
+          ]
+        },
+        "gemini-3-flash-preview@t0.3": {
+          "model": "gemini-3-flash-preview",
+          "temperature": 0.3,
+          "mcr": {
+            "rate": 0.3333333333333333,
+            "modalOutput": "44 SIVA SAMHITA.\n\nमहामुद्रा महाबन्धो महावेधश्च खेचरी ।\nजालंधरो मूलबंधो विपरीतकृतिस्तथा ॥\nउड्डानं चैव वज्रोणी दशमे शक्तिचालनम् ।\nइदं हि मुद्रादशकं मुद्राणामुत्तमोत्तमम् ॥ १५ ॥\n\n15. Out of the many Mudrâs, the following ten are the best:— (1) Mahâmudrâ, (2) Mahâbandha, (3) Mahâvedha, (4) Khechari, (5) Jâlandhar, (6) Mulabandha, (7) Viparítkaraṇa, (8) Uḍḍana, (9) Vajroṇḍî, and (10) Shaktichâlana.\n\nअथ महामुद्राकथनम् ।\nमहामुद्रां प्रवक्ष्यामि तन्त्रेऽस्मिन्मम वल्लभे ।\nयां प्राप्य सिद्धाः सिद्धिं च कपिलाद्याः पुरागताः ॥ १६ ॥\n\n16. My dearest, I shall now describe to you the Mahâmudrâ, -from whose knowledge the ancient sages Kapila and others obtained success in Yoga.\n\n(1.)—Mahâ-Mudrâ.\n\nअपसव्येन संपीड्य पादमूलेन सादरम् ।\nगुरूपदेशतो योनिं गुदमेढ्रान्तरालगाम् ॥\nसव्यं प्रसारित",
+            "modeCount": 1,
+            "totalRuns": 3,
+            "uniqueOutputs": 3
+          },
+          "pairwise": {
+            "pairs": [
+              {
+                "i": 0,
+                "j": 1,
+                "charSimilarity": 0.970360824742268,
+                "syllableSimilarity": 0.4017857142857143
+              },
+              {
+                "i": 0,
+                "j": 2,
+                "charSimilarity": 0.4298591549295775,
+                "syllableSimilarity": 0.13090909090909092
+              },
+              {
+                "i": 1,
+                "j": 2,
+                "charSimilarity": 0.4326760563380282,
+                "syllableSimilarity": 0.13090909090909092
+              }
+            ],
+            "avgCharSimilarity": 0.6109653453366245,
+            "avgSyllableSimilarity": 0.2212012987012987
+          },
+          "costUsd": 0.005535,
+          "durationMs": 90613,
+          "outputLengths": [
+            776,
+            768,
+            1775
+          ]
+        },
+        "gemini-3.1-flash-lite-preview@t0": {
+          "model": "gemini-3.1-flash-lite-preview",
+          "temperature": 0,
+          "mcr": {
+            "rate": 1,
+            "modalOutput": "44 SIVA SAMHITA.\n\nमहामुद्रा महाबन्धो महावेधश्च खेचरी ।\nजालंधरो मूलबंधो विपरीतकृतिस्तथा ॥\nउड्डानं चैव वज्रोणी दशमे शक्तिचालनम् ।\nइदं हि मुद्रादशकं मुद्राणामुत्तमोत्तमम् ॥ १५ ॥\n\n15. Out of the many Mudrâs, the following ten are the best :—(1)\nMahâmudrâ, (2) Mahâbandha, (3) Mahâvedha, (4) Khechari, (5) Jâlan-\ndhar, (6) Mulabandha, (7) Viparitkarana, (8) Uddana, (9) Vajrondî, and\n(10) Shaktichâlana.\n\nअथ महामुद्राकथनम् ।\nमहामुद्रां प्रवक्ष्यामि तन्त्रेऽस्मिन्मम वल्लभे ।\nयां प्राप्य सिद्धाः सिद्धिं च कपिलाद्याः पुरागताः ॥ १६ ॥\n\n16. My dearest, I shall now describe to you the Mahâmudrâ, from\nwhose knowledge the ancient sages Kapila and others obtained success in\nYoga.\n\n(1.)—Mahâ-Mudrâ.\n\nअपसव्येन संपीड्य पादमूलेन सादरम् ।\nगुरूपदेशतो योनिं गुदमेढ्रान्तरालगाम् ॥\nसव्यं प्रसारितं पादं धृत्वा पाणियुगेन वै ।\nनवद्वाराणि संयम्य चिबुकं हृदयोपरि ॥\nचित्तं चित्तपथे दत्त्वा प्रभवेद्वायुसाधनम् ।\nमहामुद्राभवेदेषा सर्वतन्त्रेषु गोपिता ॥\nवामाङ्गेन समभ्यस्य दक्षाङ्गेनाभ्यसेत्पुनः ।\nप्राणायामं समं कृत्वा योगी नियतमानसः ॥ १७ ॥\n\n17. In accordance with the instructions of the Guru, press gently\nthe perineum with the heel of the left foot. Stretching the right foot out,\nhold it fast by the two hands. Having closed the nine gates (of the body),\nplace the chin on the chest. Then concentrate the vibrations of the mind\nand inspire air and retain it by kumbhaka (so long as one can comfortably\nkeep it). This is the Mahâmudrâ, held secret in all the Tantras. The\nsteady-minded Yogi, having practised it on the left side, should then\npractise it on the right side; and in all cases must be firm in prânâyâma\n—the regulation of his breath.\n\nअनेन विधिना योगी मन्दभाग्योपि सिध्यति ।\nसर्वासामेव नाडीनां चालनं बिन्दुमारणम् ॥\nजीवनन्तु कषायस्य पातकानां विनाशनम् ।\nसवरोगोपशमनं जठराग्निविवर्धनम् ॥",
+            "modeCount": 3,
+            "totalRuns": 3,
+            "uniqueOutputs": 1
+          },
+          "pairwise": {
+            "pairs": [
+              {
+                "i": 0,
+                "j": 1,
+                "charSimilarity": 1,
+                "syllableSimilarity": 1
+              },
+              {
+                "i": 0,
+                "j": 2,
+                "charSimilarity": 1,
+                "syllableSimilarity": 1
+              },
+              {
+                "i": 1,
+                "j": 2,
+                "charSimilarity": 1,
+                "syllableSimilarity": 1
+              }
+            ],
+            "avgCharSimilarity": 1,
+            "avgSyllableSimilarity": 1
+          },
+          "costUsd": 0.0008302499999999999,
+          "durationMs": 13998,
+          "outputLengths": [
+            1773,
+            1773,
+            1773
+          ]
+        },
+        "gemini-3.1-flash-lite-preview@t0.3": {
+          "model": "gemini-3.1-flash-lite-preview",
+          "temperature": 0.3,
+          "mcr": {
+            "rate": 0.3333333333333333,
+            "modalOutput": "44 SIVA SAMHITA.\n\nमहामुद्रा महाबन्धो महावेधश्च खेचरी ।\nजालंधरो मूलबंधो विपरीतकृतिस्तथा ॥\nउड्डानं चैव वज्रोणी दशमे शक्तिचालनम् ।\nइदं हि मुद्रादशकं मुद्राणामुत्तमोत्तमम् ॥ १५ ॥\n\n15. Out of the many Mudrâs, the following ten are the best :—(1)\nMahâmudrâ, (2) Mahâbandha, (3) Mahâvedha, (4) Khechari, (5) Jâlan-\ndhar, (6) Mulabandha, (7) Viparitkarana, (8) Uddana, (9) Vajrondî, and\n(10) Shaktichâlana.\n\nअथ महामुद्राकथनम् ।\nमहामुद्रां प्रवक्ष्यामि तन्त्रेऽस्मिन्मम वल्लभे ।\nयां प्राप्य सिद्धाः सिद्धिं च कपिलाद्याः पुरागताः ॥ १६ ॥\n\n16. My dearest, I shall now describe to you the Mahâmudrâ, from\nwhose knowledge the ancient sages Kapila and others obtained success in\nYoga.\n\n(1.)—Mahâ-Mudrâ.\n\nअपसव्येन संपीड्य पादमूलेन सादरम् ।\nगुरूपदेशतो योनिं गुदमेढ्रान्तरालगाम् ॥\nसव्यं प्रसारितं पादं धृत्वा पाणियुगेन वै ।\nनवद्वाराणि संयम्य चिबुकं हृदयोपरि ॥\nचित्तं चित्तपथे दत्त्वा प्रभवेद्वायुसाधनम् ।\nमहामुद्राभवेदेषा सर्वतन्त्रेषु गोपिता ॥\nवामाङ्गेन समभ्यस्य दक्षिणाङ्गेनाभ्यसेत्पुनः ।\nप्राणायामं समं कृत्वा योगी नियतमानसः ॥ १७ ॥\n\n17. In accordance with the instructions of the Guru, press gently\nthe perineum with the heel of the left foot. Stretching the right foot out,\nhold it fast by the two hands. Having closed the nine gates (of the body),\nplace the chin on the chest. Then concentrate the vibrations of the mind\nand inspire air and retain it by kumbhaka (so long as one can comfortably\nkeep it). This is the Mahâmudrâ, held secret in all the Tantras. The\nsteady-minded Yogi, having practised it on the left side, should then\npractise it on the right side; and in all cases must be firm in prânâyâma\n—the regulation of his breath.\n\nअनेन विधिना योगी मन्दभाग्योपि सिध्यति ।\nसर्वासामेव नाडीनां चालनं बिन्दुमारणम् ॥\nजीवनन्तु कषायस्य पातकानां विनाशनम् ।\nसवरोगोपशमनं जठराग्निविवर्धनम् ॥",
+            "modeCount": 1,
+            "totalRuns": 3,
+            "uniqueOutputs": 3
+          },
+          "pairwise": {
+            "pairs": [
+              {
+                "i": 0,
+                "j": 1,
+                "charSimilarity": 0.9926760563380281,
+                "syllableSimilarity": 0.13138686131386862
+              },
+              {
+                "i": 0,
+                "j": 2,
+                "charSimilarity": 0.9988732394366198,
+                "syllableSimilarity": 0.9963503649635036
+              },
+              {
+                "i": 1,
+                "j": 2,
+                "charSimilarity": 0.9937958262831359,
+                "syllableSimilarity": 0.13138686131386862
+              }
+            ],
+            "avgCharSimilarity": 0.995115040685928,
+            "avgSyllableSimilarity": 0.4197080291970803
+          },
+          "costUsd": 0.0008323499999999999,
+          "durationMs": 11911,
+          "outputLengths": [
+            1775,
+            1773,
+            1773
+          ]
+        }
+      }
+    },
+    {
+      "bookId": "69557548f63a757109173f3c",
+      "bookTitle": "Sangita Ratnakara",
+      "pageNumber": 163,
+      "script": "default",
+      "results": {
+        "gemini-3-flash-preview@t0": {
+          "model": "gemini-3-flash-preview",
+          "temperature": 0,
+          "mcr": {
+            "rate": 0.3333333333333333,
+            "modalOutput": "क्रमताना: ४] प्रथम: स्वरगताध्याय: १३३\n\nसप्ताद्येकान्तकोष्ठानामधो ऽध: सप्त पङ्क्तय: ॥ ६३ ॥\n\nदशो भेद: । ततो मध्यमस्याधस्तात्षड्ज: । पुरो गरी । पश्चान्म: । एवं\nमसगरीति षोडशो भेद: । ततो गांधारस्याधस्तात्षड्ज: । पुरो रि: । पश्चाद्गमौ ।\nएवं गमसरीति सप्तदशो भेद: । ततो मध्यमस्याधस्ताद्गांधार: । पुर: सरी ।\nपश्चान्म: । एवं मगसगीत्यष्टादशो भेद: । तत ऋषभस्याधस्तात्षड्ज: । पश्चाद्रि-\nगमा: । एवं रिगमसेत्यूनविंशतितमो भेद: । ततो गांधारस्याधस्तादृषभ: । पुरो\nमसौ । पश्चाद्ग: । एवं गरिमसेति विंशतितमो भेद: । ततो मध्यमस्याधस्ताद्गां-\nधार: । पुर: स: । पश्चाद्रिमौ । एवं रिमगसेत्येकविंशतितमो भेद: । ततो\nमध्यमस्याधस्तादृषभ: । पुरो गसौ । पश्चान्म: । एवं मरिगसेति द्वाविंशति-\nतमो भेद: । ततो गांधारस्याधस्तादृषभ: । पुर: स: । पश्चाद्गमौ । एवं गमरि-\nसेति त्रयोविंशतितमो भेद: । ततो मध्यमस्याधस्ताद्गांधार: । पुरो रिसौ ।\nपश्चान्म: । एवं मगरिसेति चतुर्विंशतितमो भेद: । ततो विपरीतक्रमसद्भावात्प्रस्तार-\nलक्षणाभावाच्च प्रस्तारो नास्ति । अनेनैव प्रकारेण पञ्चस्वरादिषु प्रस्तार:\nकर्तव्य: । तत्र सरिगमपेति पञ्चस्वरप्रस्तारे पान्ताश्चतुर्विंशति: । ततो मान्ताश्च-\nतुर्विंशति: । ततो गान्ताश्चतुर्विंशति: । ततो र्यन्ताश्चतुर्विंशति: । तत: सान्ता-\nश्चतुर्विंशति: । एवं पञ्चस्वरप्रस्तारे विंशत्युत्तरं शतं भेदा भवन्ति । सरिगमपधेति\nषट्स्वरप्रस्तारे धान्ता विंशत्युत्तरं शतम् । पान्ताश्च विंशत्युत्तरं शतम् । मान्ताश्च\nविंशत्युत्तरं शतम् । गान्ताश्च विंशत्युत्तरं शतम् । र्यन्ताश्च विंशत्युत्तरं शतम् ।\nसान्ताश्च विंशत्युत्तरं शतम् । एवं विंशत्युत्तराणि सप्त शतानि षट्स्वरभेदा\nभवन्ति । सरिगमपधनीति सप्तस्वरप्रस्तारे तु निषादान्ता विंशत्युत्तराणि सप्त\nशतानि । ततो धान्ता विंशत्युत्तराणि सप्त शतानि । तत: पान्तास्तावन्ति ।\nततो मान्तास्तावन्ति । ततो गान्तास्तावन्ति । तत ऋषभान्तास्तावन्ति । तत:\nसान्तास्तावन्ति । एवं सप्तस्वरप्रस्तारे चत्वारिंशदुत्तराणि पञ्च सहस्राणि भेदा\nभवन्ति ॥ ६२, ६३- ॥\n\n(क०) एवं प्रस्तुतेषु कूटेषु नष्टोद्दिष्टानबोधार्थं खण्डमेरुं लक्ष-\nयति— सप्तादीति । सप्ताद्येकान्तकोष्ठानाम्, ससादयो येषां ते ससादय:,",
+            "modeCount": 1,
+            "totalRuns": 3,
+            "uniqueOutputs": 3
+          },
+          "pairwise": {
+            "pairs": [
+              {
+                "i": 0,
+                "j": 1,
+                "charSimilarity": 0.9952279957582184,
+                "syllableSimilarity": 0.98046875
+              },
+              {
+                "i": 0,
+                "j": 2,
+                "charSimilarity": 0.9957627118644068,
+                "syllableSimilarity": 0.984375
+              },
+              {
+                "i": 1,
+                "j": 2,
+                "charSimilarity": 0.9984110169491526,
+                "syllableSimilarity": 0.98828125
+              }
+            ],
+            "avgCharSimilarity": 0.9964672415239259,
+            "avgSyllableSimilarity": 0.984375
+          },
+          "costUsd": 0.009024,
+          "durationMs": 66271,
+          "outputLengths": [
+            1883,
+            1886,
+            1888
+          ]
+        },
+        "gemini-3-flash-preview@t0.3": {
+          "model": "gemini-3-flash-preview",
+          "temperature": 0.3,
+          "mcr": {
+            "rate": 0.3333333333333333,
+            "modalOutput": "क्रमताना: ४] प्रथम: स्वरगताध्याय: १३३\n\nसप्ताद्येकान्तकोष्ठानामधो ऽध: सप्त पङ्क्तय: ॥ ६३ ॥\n\nदशो भेद: । ततो मध्यमस्याधस्तात्षड्ज: । पुरो गरी । पश्चान्म: । एवं\nमसगरीति षोडशो भेद: । ततो गांधारस्याधस्तात्षड्ज: । पुरो रि: । पश्चाद्मौ ।\nएवं गमसरीति सप्तदशो भेद: । ततो मध्यमस्याधस्ताद्गांधार: । पुर: सरी ।\nपश्चान्म: । एवं मगसगीत्यष्टादशो भेद: । तत ऋषभस्याधस्तात्षड्ज: । पश्चाद्रि-\nगमा: । एवं रिगमसेत्यूनविंशतितमो भेद: । ततो गांधारस्याधस्तादृषभ: । पुरो\nमसौ । पश्चाद्र: । एवं गरिमसेति विंशतितमो भेद: । ततो मध्यमस्याधस्ताद्गां-\nधार: । पुर: स: । पश्चाद्रिमौ । एवं रिमगसेत्येकविंशतितमो भेद: । ततो\nमध्यमस्याधस्तादृषभ: । पुरो गसौ । पश्चान्म: । एवं मरिगसेति द्वाविंशति-\nतमो भेद: । ततो गांधारस्याधस्तादृषभ: । पुर: स: । पश्चाद्मौ । एवं गमरि-\nसेति त्रयोविंशतितमो भेद: । ततो मध्यमस्याधस्ताद्गांधार: । पुरो रिसौ ।\nपश्चान्म: । एवं मगरिसेति चतुर्विंशतितमो भेद: । ततो विपरीतक्रमसद्भावात्प्रस्तार-\nलक्षणाभावाच्च प्रस्तारो नास्ति । अनेनैव प्रकारेण पञ्चस्वरादिषु प्रस्तार:\nकर्तव्य: । तत्र सरिगमपेति पञ्चस्वरप्रस्तारे पान्ताश्चतुर्विंशति: । ततो मान्ताश्च-\nतुर्विंशति: । ततो गान्ताश्चतुर्विंशति: । ततो र्यन्ताश्चतुर्विंशति: । तत: सान्ता-\nश्चतुर्विंशति: । एवं पञ्चस्वरप्रस्तारे विंशत्युत्तरं शतं भेदा भवन्ति । सरिगमपधेति\nषट्स्वरप्रस्तारे धान्ता विंशत्युत्तरं शतम् । पान्ताश्च विंशत्युत्तरं शतम् । मान्ताश्च\nविंशत्युत्तरं शतम् । गान्ताश्च विंशत्युत्तरं शतम् । र्यन्ताश्च विंशत्युत्तरं शतम् ।\nसान्ताश्च विंशत्युत्तरं शतम् । एवं विंशत्युत्तराणि सप्त शतानि षट्स्वरभेदा\nभवन्ति । सरिगमपधनीति सप्तस्वरप्रस्तारे तु निषादान्ता विंशत्युत्तराणि सप्त\nशतानि । ततो धान्ता विंशत्युत्तराणि सप्त शतानि । तत: पान्तास्तावन्ति ।\nततो मान्तास्तावन्ति । ततो गान्तास्तावन्ति । तत ऋषभान्तास्तावन्ति । तत:\nसान्तास्तावन्ति । एवं सप्तस्वरप्रस्तारे चत्वारिंशदुत्तराणि पञ्च सहस्राणि भेदा\nभवन्ति ॥ ६२, ६३- ॥\n\n(क०) एवं प्रस्तुतेषु कूटेषु नष्टोद्दिष्टतानबोधार्थं खण्डमेरुं लक्ष-\nयति- सप्तादीति । सप्ताद्येकान्तकोष्ठानाम्, सप्तादयो येषां ते सप्तादय:,",
+            "modeCount": 1,
+            "totalRuns": 3,
+            "uniqueOutputs": 3
+          },
+          "pairwise": {
+            "pairs": [
+              {
+                "i": 0,
+                "j": 1,
+                "charSimilarity": 0.9994697773064687,
+                "syllableSimilarity": 0.99609375
+              },
+              {
+                "i": 0,
+                "j": 2,
+                "charSimilarity": 0.9973530968766543,
+                "syllableSimilarity": 0.953307392996109
+              },
+              {
+                "i": 1,
+                "j": 2,
+                "charSimilarity": 0.9978824775013234,
+                "syllableSimilarity": 0.9571984435797666
+              }
+            ],
+            "avgCharSimilarity": 0.9982351172281488,
+            "avgSyllableSimilarity": 0.9688665288586252
+          },
+          "costUsd": 0.009015,
+          "durationMs": 56827,
+          "outputLengths": [
+            1886,
+            1886,
+            1889
+          ]
+        },
+        "gemini-3.1-flash-lite-preview@t0": {
+          "model": "gemini-3.1-flash-lite-preview",
+          "temperature": 0,
+          "mcr": {
+            "rate": 0.6666666666666666,
+            "modalOutput": "क्रमताना: ४] प्रथम: स्वरगताध्याय: १३३\nसप्ताद्येकान्तकोष्ठनामधो ऽध: सप्त पङ्क्तय: ।। ६३ ।।\nदशो भेद: । ततो मध्यमस्याधस्तात्षड्ज: । पुरो गरी । पश्चान्म: । एवं\nमसगरीति षोडशो भेद: । ततो गान्धारस्याधस्तात्षड्ज: । पुरो रि: । पश्चाद्मौ ।\nएवं गमसरीति सप्तदशो भेद: । ततो मध्यमस्याधस्ताद्गान्धार: । पुर: सरी ।\nपश्चान्म: । एवं मगसरीत्यष्टादशो भेद: । तत ऋषभस्याधस्तात्षड्ज: । पश्चाद्रि-\nगमा: । एवं रिगमसेत्यूनविंशतितमो भेद: । ततो गान्धारस्याधस्तादृषभ: । पुरो\nमसौ । पश्चाद्र: । एवं गरिमसेति विंशतितमो भेद: । ततो मध्यमस्याधस्ताद्गां-\nधार: । पुर: स: । पश्चाद्रिमौ । एवं रिमगसेत्येकविंशतितमो भेद: । ततो\nमध्यमस्याधस्तादृषभ: । पुरो मसौ । पश्चान्म: । एवं मरिमसेति द्वाविंशति-\nतमो भेद: । ततो गान्धारस्याधस्तादृषभ: । पुर: स: । पश्चाद्रमौ । एवं गमरि-\nसेति त्रयोविंशतितमो भेद: । ततो मध्यमस्याधस्ताद्गान्धार: । पुरो रिसौ ।\nपश्चान्म: । एवं मगरिसेति चतुर्विंशतितमो भेद: । ततो विपरीतक्रमसद्भावात्प्रस्तार-\nलक्षणाभावाच्च प्रस्तारो नास्ति । अनेनैव प्रकारेण पञ्चस्वरादिषु प्रस्तार:\nकर्तव्य: । तत्र सरिमपेति पञ्चस्वरप्रस्तारे पान्ताश्चतुर्विंशति: । ततो मान्ताश्च-\nतुर्विंशति: । ततो गान्ताश्चतुर्विंशति: । ततो र्यन्ताश्चतुर्विंशति: । तत: सान्ता-\nश्चतुर्विंशति: । एवं पञ्चस्वरप्रस्तारे विंशत्युत्तरं शतं भेदा भवन्ति । सरिमपधेति\nषट्स्वरप्रस्तारे धान्ता विंशत्युत्तरं शतम् । पान्ताश्च विंशत्युत्तरं शतम् । मान्ताश्च\nविंशत्युत्तरं शतम् । गान्ताश्च विंशत्युत्तरं शतम् । यन्ताश्च विंशत्युत्तरं शतम् ।\nसान्ताश्च विंशत्युत्तरं शतम् । एवं विंशत्युत्तराणि सप्त शतानि षट्स्वरभेदा\nभवन्ति । सरिमपधनीति सप्तस्वरप्रस्तारे तु निषादान्ता विंशत्युत्तराणि सप्त\nशतानि । ततो धान्ता विंशत्युत्तराणि सप्त शतानि । तत: पान्तास्तावन्ति ।\nततो मान्तास्तावन्ति । ततो गान्तास्तावन्ति । तत ऋषभान्तास्तावन्ति । तत:\nसान्तास्तावन्ति । एवं सप्तस्वरप्रस्तारे चत्वारिंशदुत्तराणि पञ्च सहस्राणि भेदा\nभवन्ति ।। ६२, ६३- ।।\n(क०) एवं प्रस्तुतेषु कूटेषु नष्टोद्दिष्टानबोधार्थं खण्डमेरुं लक्ष-\nयति— सप्तादीति । सप्ताद्येकान्तकोष्ठनाम्, सप्तादयो येषां ते सप्तादय:,",
+            "modeCount": 2,
+            "totalRuns": 3,
+            "uniqueOutputs": 2
+          },
+          "pairwise": {
+            "pairs": [
+              {
+                "i": 0,
+                "j": 1,
+                "charSimilarity": 0.9989389920424403,
+                "syllableSimilarity": 0.99609375
+              },
+              {
+                "i": 0,
+                "j": 2,
+                "charSimilarity": 1,
+                "syllableSimilarity": 1
+              },
+              {
+                "i": 1,
+                "j": 2,
+                "charSimilarity": 0.9989389920424403,
+                "syllableSimilarity": 0.99609375
+              }
+            ],
+            "avgCharSimilarity": 0.9992926613616269,
+            "avgSyllableSimilarity": 0.9973958333333334
+          },
+          "costUsd": 0.0009747000000000001,
+          "durationMs": 12196,
+          "outputLengths": [
+            1885,
+            1883,
+            1885
+          ]
+        },
+        "gemini-3.1-flash-lite-preview@t0.3": {
+          "model": "gemini-3.1-flash-lite-preview",
+          "temperature": 0.3,
+          "mcr": {
+            "rate": 0.6666666666666666,
+            "modalOutput": "क्रमताना: ४] प्रथम: स्वरगताध्याय: १३३\nसप्ताद्येकान्तकोष्ठनामधो ऽध: सप्त पङ्क्तय: ।। ६३ ।।\nदशो भेद: । ततो मध्यमस्याधस्तात्षड्ज: । पुरो गरी । पश्चान्म: । एवं\nमसगरीति षोडशो भेद: । ततो गान्धारस्याधस्तात्षड्ज: । पुरो रि: । पश्चाद्मौ ।\nएवं गमसरीति सप्तदशो भेद: । ततो मध्यमस्याधस्ताद्गान्धार: । पुर: सरी ।\nपश्चान्म: । एवं मगसरीत्यष्टादशो भेद: । तत ऋषभस्याधस्तात्षड्ज: । पश्चाद्रि-\nगमा: । एवं रिगमसेत्यूनविंशतितमो भेद: । ततो गान्धारस्याधस्तादृषभ: । पुरो\nमसौ । पश्चाद्र: । एवं गरिमसेति विंशतितमो भेद: । ततो मध्यमस्याधस्ताद्गां-\nधार: । पुर: स: । पश्चाद्रिमौ । एवं रिमगसेत्येकविंशतितमो भेद: । ततो\nमध्यमस्याधस्तादृषभ: । पुरो मसौ । पश्चान्म: । एवं मरिमसेति द्वाविंशति-\nतमो भेद: । ततो गान्धारस्याधस्तादृषभ: । पुर: स: । पश्चाद्रमौ । एवं गमरि-\nसेति त्रयोविंशतितमो भेद: । ततो मध्यमस्याधस्ताद्गान्धार: । पुरो रिसौ ।\nपश्चान्म: । एवं मगरिसेति चतुर्विंशतितमो भेद: । ततो विपरीतक्रमसद्भावात्प्रस्तार-\nलक्षणाभावाच्च प्रस्तारो नास्ति । अनेनैव प्रकारेण पञ्चस्वरादिषु प्रस्तार:\nकर्तव्य: । तत्र सरिमपेति पञ्चस्वरप्रस्तारे पान्ताश्चतुर्विंशति: । ततो मान्ताश्च-\nतुर्विंशति: । ततो गान्ताश्चतुर्विंशति: । ततो र्यन्ताश्चतुर्विंशति: । तत: सान्ता-\nश्चतुर्विंशति: । एवं पञ्चस्वरप्रस्तारे विशत्युत्तरं शतं भेदा भवन्ति । सरिमपधेति\nषट्स्वरप्रस्तारे धान्ता विशत्युत्तरं शतम् । पान्ताश्च विशत्युत्तरं शतम् । मान्ताश्च\nविशत्युत्तरं शतम् । गान्ताश्च विशत्युत्तरं शतम् । यन्ताश्च विशत्युत्तरं शतम् ।\nसान्ताश्च विशत्युत्तरं शतम् । एवं विशत्युत्तराणि सप्त शतानि षट्स्वरभेदा\nभवन्ति । सरिमपधनीति सप्तस्वरप्रस्तारे तु निषादान्ता विशत्युत्तराणि सप्त\nशतानि । ततो धान्ता विशत्युत्तराणि सप्त शतानि । तत: पान्तास्तावन्ति ।\nततो मान्तास्तावन्ति । ततो गान्तास्तावन्ति । तत ऋषभान्तास्तावन्ति । तत:\nसान्तास्तावन्ति । एवं सप्तस्वरप्रस्तारे चत्वारिंशदुत्तराणि पञ्च सहस्राणि भेदा\nभवन्ति ।। ६२, ६३- ।।\n(क०) एवं प्रस्तुतेषु कूटेषु नष्टोद्दिष्टानबोधार्थं खण्डमेरुं लक्ष-\nयति— सप्तादीति । सप्ताद्येकान्तकोष्ठनाम्, सप्तादयो येषां ते सप्तादय:,",
+            "modeCount": 2,
+            "totalRuns": 3,
+            "uniqueOutputs": 2
+          },
+          "pairwise": {
+            "pairs": [
+              {
+                "i": 0,
+                "j": 1,
+                "charSimilarity": 0.9920382165605095,
+                "syllableSimilarity": 0.91796875
+              },
+              {
+                "i": 0,
+                "j": 2,
+                "charSimilarity": 1,
+                "syllableSimilarity": 1
+              },
+              {
+                "i": 1,
+                "j": 2,
+                "charSimilarity": 0.9920382165605095,
+                "syllableSimilarity": 0.91796875
+              }
+            ],
+            "avgCharSimilarity": 0.994692144373673,
+            "avgSyllableSimilarity": 0.9453125
+          },
+          "costUsd": 0.0009708000000000001,
+          "durationMs": 13318,
+          "outputLengths": [
+            1875,
+            1884,
+            1875
+          ]
+        }
+      }
+    }
+  ],
+  "summary": {
+    "byCombo": {
+      "gemini-3-flash-preview@t0": {
+        "model": "gemini-3-flash-preview",
+        "temp": 0,
+        "pages": 3,
+        "avgMcr": 0.4444444444444444,
+        "avgCharSim": 0.9829365440053396,
+        "avgSylSim": 0.7982104700854702
+      },
+      "gemini-3-flash-preview@t0.3": {
+        "model": "gemini-3-flash-preview",
+        "temp": 0.3,
+        "pages": 3,
+        "avgMcr": 0.4444444444444444,
+        "avgCharSim": 0.8643715572266849,
+        "avgSylSim": 0.7300226091866414
+      },
+      "gemini-3.1-flash-lite-preview@t0": {
+        "model": "gemini-3.1-flash-lite-preview",
+        "temp": 0,
+        "pages": 3,
+        "avgMcr": 0.8888888888888888,
+        "avgCharSim": 0.9997642204538756,
+        "avgSylSim": 0.9991319444444445
+      },
+      "gemini-3.1-flash-lite-preview@t0.3": {
+        "model": "gemini-3.1-flash-lite-preview",
+        "temp": 0.3,
+        "pages": 3,
+        "avgMcr": 0.5555555555555555,
+        "avgCharSim": 0.9962971447146168,
+        "avgSylSim": 0.7862338046244086
+      }
+    },
+    "crossModel": [
+      {
+        "modelA": "gemini-3-flash-preview@t0",
+        "modelB": "gemini-3.1-flash-lite-preview@t0",
+        "charSimilarity": 0.9875006705568582,
+        "syllableSimilarity": 0.6886669517043161,
+        "pages": 3
+      }
+    ]
+  },
+  "meta": {
+    "date": "2026-04-24",
+    "totalCalls": 36,
+    "totalCostUsd": 0.0468717,
+    "totalDurationMs": 438907,
+    "costByModel": {
+      "gemini-3-flash-preview@t0": 0.021908999999999998,
+      "gemini-3-flash-preview@t0.3": 0.020082,
+      "gemini-3.1-flash-lite-preview@t0": 0.00244125,
+      "gemini-3.1-flash-lite-preview@t0.3": 0.00243945
+    }
+  }
+}
