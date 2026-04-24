@@ -63,6 +63,7 @@ export default function FeaturedCollections({ initialCollections }: FeaturedColl
                 unoptimized
                 priority={i < 6}
                 loading={i < 6 ? 'eager' : 'lazy'}
+                onError={(e) => { (e.target as HTMLImageElement).style.display = 'none'; }}
               />
             ) : (
               <div className="absolute inset-0 bg-stone-200 flex items-center justify-center text-stone-400">
