@@ -538,8 +538,16 @@ export default function TranslationEditor({
     const newPathMatch = p.photo?.match(/^(https:\/\/images\.sourcelibrary\.org\/pages\/[^/]+\/(?:sp[a-z0-9]+-?)?\d{4,})(-full)?\.jpg$/);
     if (newPathMatch) return `${newPathMatch[1]}-full.jpg`;
 
-    // Archived photo is full-res — serve directly from CDN
-    if (isUsableImageUrl(p.archived_photo)) return p.archived_photo!;
+    // Archived photo — serve directly from CDN
+    if (isUsableImageUrl(p.archived_photo)) {
+      // If the source is IIIF and was archived at low res (e.g. /full/1000,/),
+      // try requesting a higher-res version for the magnifier
+      const iiifMatch = (p.photo_original || p.photo || '').match(/^(https?:\/\/.+\/iiif\/2\/.+)\/full\/\d+,\/(\d+)\/default\.jpg$/);
+      if (iiifMatch) {
+        return `${iiifMatch[1]}/full/3000,/${iiifMatch[2]}/default.jpg`;
+      }
+      return p.archived_photo!;
+    }
 
     // External sources: proxy
     const baseUrl = p.photo_original || p.photo;
