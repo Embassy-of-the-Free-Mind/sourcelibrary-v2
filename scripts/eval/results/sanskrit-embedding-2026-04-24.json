@@ -1,0 +1,68 @@
+{
+  "pages": [
+    {
+      "bookId": "6953c83377f38f6761bdbf5a",
+      "bookTitle": "Gheranda Samhita",
+      "pageNumber": 5,
+      "distances": {
+        "ocrToAiTranslation": 0.047250727405929394
+      },
+      "flagged": false,
+      "sigmas": -1.3764188394238417
+    },
+    {
+      "bookId": "6953c86b77f38f6761bdc210",
+      "bookTitle": "Shiva Samhita (Sanskrit with English)",
+      "pageNumber": 50,
+      "distances": {
+        "ocrToAiTranslation": 0.07453393895383131
+      },
+      "flagged": false,
+      "sigmas": -0.7275054359725186
+    },
+    {
+      "bookId": "69557548f63a757109173f3c",
+      "bookTitle": "Sangita Ratnakara",
+      "pageNumber": 163,
+      "distances": {
+        "ocrToAiTranslation": 0.13880735801847455
+      },
+      "flagged": false,
+      "sigmas": 0.8011959430225114
+    },
+    {
+      "bookId": "6955831757e3b773024f76ae",
+      "bookTitle": "Abhidharmakosa with Bhashya",
+      "pageNumber": 1104,
+      "distances": {
+        "ocrToAiTranslation": 0.1634860189057431
+      },
+      "flagged": false,
+      "sigmas": 1.3881618066585315
+    },
+    {
+      "bookId": "6953e2ff77f38f6761beb2fa",
+      "bookTitle": "Tantraloka Vol. 1 with Jayaratha Commentary",
+      "pageNumber": 186,
+      "distances": {
+        "ocrToAiTranslation": 0.10152950579916875
+      },
+      "flagged": false,
+      "sigmas": -0.08543347428468236
+    }
+  ],
+  "summary": {
+    "pagesEvaluated": 5,
+    "meanOcrToTranslation": 0.10512150981662942,
+    "stdOcrToTranslation": 0.042044456783898926,
+    "flaggedCount": 0,
+    "flagged": []
+  },
+  "meta": {
+    "embeddingModel": "gemini-embedding-2-preview",
+    "embeddingDims": 768,
+    "sigmaThreshold": 2,
+    "date": "2026-04-24"
+  },
+  "corpus": "sanskrit"
+}
