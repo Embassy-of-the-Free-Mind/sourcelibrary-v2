@@ -1,0 +1,20 @@
+{
+  "book_id": "69b3e5b8304c1c6b39509cc0",
+  "page_number": 1,
+  "language": "Hebrew",
+  "thinking_level": "LOW",
+  "model": "gemini-3.1-flash-lite-preview",
+  "ocr_char_count": 155,
+  "input_tokens": 1112,
+  "output_tokens": 155,
+  "thinking_tokens": 106,
+  "duration_ms": 1259,
+  "finish_reason": "STOP",
+  "original_ocr_chars": 623,
+  "original_model": "gemini-3-flash-preview",
+  "hallucination_ratio": null,
+  "actual_text_estimate": null,
+  "ratio_to_estimate": null,
+  "likely_hallucinated": false,
+  "timestamp": "2026-04-24T15:16:46.691Z"
+}

@@ -1,0 +1,20 @@
+{
+  "book_id": "69a5e484006a4098422176a4",
+  "page_number": 219,
+  "language": "Syriac",
+  "thinking_level": "MINIMAL",
+  "model": "gemini-3.1-flash-lite-preview",
+  "ocr_char_count": 5037,
+  "input_tokens": 1105,
+  "output_tokens": 3947,
+  "thinking_tokens": 0,
+  "duration_ms": 16503,
+  "finish_reason": "STOP",
+  "original_ocr_chars": 24654,
+  "original_model": "gemini-3-flash-preview",
+  "hallucination_ratio": 14.3,
+  "actual_text_estimate": 2259,
+  "ratio_to_estimate": 2.23,
+  "likely_hallucinated": false,
+  "timestamp": "2026-04-24T16:48:34.632Z"
+}

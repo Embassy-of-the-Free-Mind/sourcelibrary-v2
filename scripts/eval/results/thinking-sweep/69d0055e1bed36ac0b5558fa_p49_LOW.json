@@ -1,0 +1,20 @@
+{
+  "book_id": "69d0055e1bed36ac0b5558fa",
+  "page_number": 49,
+  "language": "Sanskrit",
+  "thinking_level": "LOW",
+  "model": "gemini-3.1-flash-lite-preview",
+  "ocr_char_count": 703,
+  "input_tokens": 1132,
+  "output_tokens": 343,
+  "thinking_tokens": 106,
+  "duration_ms": 2796,
+  "finish_reason": "STOP",
+  "original_ocr_chars": 24176,
+  "original_model": "gemini-3.1-flash-lite-preview",
+  "hallucination_ratio": 13.2,
+  "actual_text_estimate": 1912,
+  "ratio_to_estimate": 0.37,
+  "likely_hallucinated": false,
+  "timestamp": "2026-04-24T17:39:32.422Z"
+}

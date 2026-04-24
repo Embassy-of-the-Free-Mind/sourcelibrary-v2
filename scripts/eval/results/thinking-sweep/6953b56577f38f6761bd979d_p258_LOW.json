@@ -1,0 +1,20 @@
+{
+  "book_id": "6953b56577f38f6761bd979d",
+  "page_number": 258,
+  "language": "Arabic",
+  "thinking_level": "LOW",
+  "model": "gemini-3.1-flash-lite-preview",
+  "ocr_char_count": 683,
+  "input_tokens": 1112,
+  "output_tokens": 300,
+  "thinking_tokens": 101,
+  "duration_ms": 2326,
+  "finish_reason": "STOP",
+  "original_ocr_chars": 17018,
+  "original_model": "gemini-3-flash-preview",
+  "hallucination_ratio": 9.8,
+  "actual_text_estimate": 1636,
+  "ratio_to_estimate": 0.42,
+  "likely_hallucinated": false,
+  "timestamp": "2026-04-24T16:29:44.228Z"
+}

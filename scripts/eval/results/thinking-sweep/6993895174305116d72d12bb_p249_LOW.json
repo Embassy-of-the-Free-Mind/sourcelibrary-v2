@@ -1,0 +1,20 @@
+{
+  "book_id": "6993895174305116d72d12bb",
+  "page_number": 249,
+  "language": "Greek",
+  "thinking_level": "LOW",
+  "model": "gemini-3.1-flash-lite-preview",
+  "ocr_char_count": 1738,
+  "input_tokens": 1096,
+  "output_tokens": 1133,
+  "thinking_tokens": 109,
+  "duration_ms": 7831,
+  "finish_reason": "STOP",
+  "original_ocr_chars": 149396,
+  "original_model": "gemini-3.1-flash-lite-preview",
+  "hallucination_ratio": 68.6,
+  "actual_text_estimate": 2500,
+  "ratio_to_estimate": 0.7,
+  "likely_hallucinated": false,
+  "timestamp": "2026-04-24T16:41:23.478Z"
+}

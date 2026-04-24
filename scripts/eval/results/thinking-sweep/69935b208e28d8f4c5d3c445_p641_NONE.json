@@ -1,0 +1,20 @@
+{
+  "book_id": "69935b208e28d8f4c5d3c445",
+  "page_number": 641,
+  "language": "Persian",
+  "thinking_level": "NONE",
+  "model": "gemini-3.1-flash-lite-preview",
+  "ocr_char_count": 2256,
+  "input_tokens": 1112,
+  "output_tokens": 969,
+  "thinking_tokens": 0,
+  "duration_ms": 4887,
+  "finish_reason": "STOP",
+  "original_ocr_chars": 17693,
+  "original_model": "gemini-3.1-flash-lite-preview",
+  "hallucination_ratio": 32.6,
+  "actual_text_estimate": 2646,
+  "ratio_to_estimate": 0.85,
+  "likely_hallucinated": false,
+  "timestamp": "2026-04-24T16:40:32.273Z"
+}

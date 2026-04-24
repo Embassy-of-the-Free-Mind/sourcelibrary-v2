@@ -1,0 +1,20 @@
+{
+  "book_id": "69af12510092756351e44992",
+  "page_number": 75,
+  "language": "Chinese",
+  "thinking_level": "HIGH",
+  "model": "gemini-3.1-flash-lite-preview",
+  "ocr_char_count": 718,
+  "input_tokens": 1120,
+  "output_tokens": 638,
+  "thinking_tokens": 15358,
+  "duration_ms": 36210,
+  "finish_reason": "MAX_TOKENS",
+  "original_ocr_chars": 21284,
+  "original_model": "gemini-3-flash-preview",
+  "hallucination_ratio": 40.1,
+  "actual_text_estimate": 1092,
+  "ratio_to_estimate": 0.66,
+  "likely_hallucinated": false,
+  "timestamp": "2026-04-24T17:32:24.390Z"
+}

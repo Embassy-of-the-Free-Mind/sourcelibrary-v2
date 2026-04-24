@@ -1,0 +1,20 @@
+{
+  "book_id": "69d5ad154dc55b8478ddf843",
+  "page_number": 139,
+  "language": "Ge'ez",
+  "thinking_level": "LOW",
+  "model": "gemini-3.1-flash-lite-preview",
+  "ocr_char_count": 448,
+  "input_tokens": 1117,
+  "output_tokens": 443,
+  "thinking_tokens": 106,
+  "duration_ms": 3552,
+  "finish_reason": "STOP",
+  "original_ocr_chars": 21654,
+  "original_model": "gemini-3.1-flash-lite-preview",
+  "hallucination_ratio": 28.3,
+  "actual_text_estimate": 716,
+  "ratio_to_estimate": 0.63,
+  "likely_hallucinated": false,
+  "timestamp": "2026-04-24T17:43:38.480Z"
+}

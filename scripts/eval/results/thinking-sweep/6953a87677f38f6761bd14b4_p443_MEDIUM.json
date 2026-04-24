@@ -1,0 +1,20 @@
+{
+  "book_id": "6953a87677f38f6761bd14b4",
+  "page_number": 443,
+  "language": "Armenian",
+  "thinking_level": "MEDIUM",
+  "model": "gemini-3.1-flash-lite-preview",
+  "ocr_char_count": 466,
+  "input_tokens": 1096,
+  "output_tokens": 316,
+  "thinking_tokens": 15356,
+  "duration_ms": 34499,
+  "finish_reason": "STOP",
+  "original_ocr_chars": 22109,
+  "original_model": "gemini-3.1-flash-lite-preview",
+  "hallucination_ratio": 13,
+  "actual_text_estimate": 1209,
+  "ratio_to_estimate": 0.39,
+  "likely_hallucinated": false,
+  "timestamp": "2026-04-24T16:28:57.344Z"
+}
