@@ -51,14 +51,23 @@ interface ArtworkNavItem {
   title: string;
 }
 
+interface RelatedBookPreview {
+  id: string;
+  slug: string;
+  title: string;
+  thumbnail?: string;
+  thumbnail_blob?: string;
+}
+
 interface ArtworkInfoProps {
   book: Book;
   collections: Array<{ slug: string; name: string; subtitle?: string; color?: string }>;
   prevWork?: ArtworkNavItem | null;
   nextWork?: ArtworkNavItem | null;
+  relatedBooks?: RelatedBookPreview[];
 }
 
-export default function ArtworkInfo({ book, collections, prevWork, nextWork }: ArtworkInfoProps) {
+export default function ArtworkInfo({ book, collections, prevWork, nextWork, relatedBooks = [] }: ArtworkInfoProps) {
   const displayImage = (book as any).thumbnail_blob || book.thumbnail || '';
   const thumbImage = book.thumbnail || '';
   const commonsUrl = (book as any).commons_url || '';
@@ -321,6 +330,39 @@ export default function ArtworkInfo({ book, collections, prevWork, nextWork }: A
               </p>
             </div>
           </Link>
+        )}
+
+        {/* Related books by this artist */}
+        {!sourceBook && relatedBooks.length > 0 && (
+          <div className="card p-6 sm:p-8">
+            <h2 className="text-lg font-display font-semibold mb-4 flex items-center gap-2" style={{ color: 'var(--text-primary)' }}>
+              <BookOpen className="w-5 h-5" style={{ color: 'var(--accent-rust)' }} />
+              Books by {book.author}
+            </h2>
+            <div className="space-y-2">
+              {relatedBooks.map(rb => (
+                <Link
+                  key={rb.id}
+                  href={`/book/${rb.slug || rb.id}`}
+                  className="flex items-center gap-3 p-2 -mx-2 rounded-lg hover:bg-stone-50 transition-colors group"
+                >
+                  {(rb.thumbnail_blob || rb.thumbnail) && (
+                    <div className="w-10 h-14 rounded overflow-hidden bg-stone-100 flex-shrink-0">
+                      <img src={rb.thumbnail_blob || rb.thumbnail} alt="" className="w-full h-full object-cover" />
+                    </div>
+                  )}
+                  <div className="min-w-0">
+                    <p className="text-sm font-medium group-hover:text-accent-rust transition-colors truncate" style={{ color: 'var(--text-primary)' }}>
+                      {rb.title}
+                    </p>
+                    <p className="text-xs" style={{ color: 'var(--text-muted)' }}>
+                      Read with translation →
+                    </p>
+                  </div>
+                </Link>
+              ))}
+            </div>
+          </div>
         )}
 
         {/* Collections */}

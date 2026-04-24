@@ -395,10 +395,28 @@ async function BookInfo({ id }: { id: string }) {
 
   // Visual art gets a dedicated layout — no OCR, no pages grid, no translation stats
   if (isVisualArt) {
+    // Find related books by this artist (when source_book isn't already set)
+    let relatedBooksByAuthor: Array<{ id: string; slug: string; title: string; thumbnail?: string; thumbnail_blob?: string }> = [];
+    const hasSourceBook = !!(book as any).source_book;
+    const authorName = book.author?.trim();
+    const isKnownAuthor = authorName && !/^unknown/i.test(authorName) && !/^unidentified/i.test(authorName) && !/^anonymous/i.test(authorName);
+    if (!hasSourceBook && isKnownAuthor) {
+      relatedBooksByAuthor = await db.collection('books')
+        .find(
+          { author: authorName, content_type: { $ne: 'artwork' }, pages_count: { $gt: 0 } },
+          { projection: { id: 1, slug: 1, title: 1, thumbnail: 1, thumbnail_blob: 1 }, maxTimeMS: 3000 },
+        )
+        .limit(6)
+        .toArray()
+        .then(docs => JSON.parse(JSON.stringify(docs)))
+        .catch(() => []);
+    }
+
     return (
       <ArtworkInfo
         book={book}
         collections={bookCollections}
+        relatedBooks={relatedBooksByAuthor}
       />
     );
   }
