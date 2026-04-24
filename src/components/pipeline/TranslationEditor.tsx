@@ -431,7 +431,6 @@ export default function TranslationEditor({
     return localStorage.getItem('sl_reader_mode') === 'modern';
   });
   const [modernizedText, setModernizedText] = useState<string | null>(page.modernized?.data || null);
-  const [modernizing, setModernizing] = useState(false);
 
   // Translation request (guest users)
   const [translationRequested, setTranslationRequested] = useState(false);
@@ -762,7 +761,6 @@ export default function TranslationEditor({
     setTranslationText(page.translation?.data || '');
     setSummaryText(page.summary?.data || '');
     setModernizedText(page.modernized?.data || null);
-    setModernizing(false);
     // Reset scroll on all content panels and the outer panel container (mobile stacked layout)
     document.querySelectorAll('[data-reader-panel]').forEach(el => {
       el.scrollTop = 0;
@@ -777,29 +775,6 @@ export default function TranslationEditor({
     localStorage.setItem('sl_reader_mode', next ? 'modern' : 'scholarly');
   };
 
-  // Generate modernized text for the current page
-  const handleModernize = async () => {
-    setModernizing(true);
-    try {
-      const res = await fetch(`/api/pages/${page.id}/modernize`, {
-        method: 'POST',
-        headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify({}),
-      });
-      if (!res.ok) {
-        const err = await res.json().catch(() => ({ error: 'Failed to modernize' }));
-        toast.error(err.error || 'Failed to modernize');
-        return;
-      }
-      const data = await res.json();
-      setModernizedText(data.modernized);
-      toast.success('Modernized text generated');
-    } catch {
-      toast.error('Failed to modernize');
-    } finally {
-      setModernizing(false);
-    }
-  };
 
   const handleProcess = async (action: 'ocr' | 'translation' | 'summary' | 'all') => {
     setProcessing(action);
@@ -1509,37 +1484,6 @@ export default function TranslationEditor({
                           .replace(/<section-intro>([\s\S]*?)<\/section-intro>/g, '\n\n<note>$1</note>\n\n');
                         return <NotesRenderer text={processedText} showNotes={true} showMetadata={false} columns={page.columns} pageType={page.page_type} />;
                       })()
-                    ) : translationText && modernizedMode && !modernizedText ? (
-                      /* Modernize button — text exists but no modernized version yet */
-                      <div className="h-full flex flex-col items-center justify-center text-center px-4 gap-3">
-                        <p className="text-sm" style={{ color: 'var(--text-muted)' }}>
-                          No modern version of this page yet.
-                        </p>
-                        <button
-                          onClick={handleModernize}
-                          disabled={modernizing}
-                          className="flex items-center gap-2 px-4 py-2 rounded-lg text-sm font-medium transition-colors"
-                          style={{
-                            background: modernizing ? 'var(--bg-subtle)' : 'var(--accent-sage)',
-                            color: modernizing ? 'var(--text-muted)' : '#fff',
-                          }}
-                        >
-                          {modernizing ? (
-                            <>
-                              <Loader2 className="w-4 h-4 animate-spin" />
-                              Modernizing...
-                            </>
-                          ) : (
-                            <>
-                              <BookOpen className="w-4 h-4" />
-                              Generate Modern Version
-                            </>
-                          )}
-                        </button>
-                        <p className="text-xs max-w-xs" style={{ color: 'var(--text-faint)' }}>
-                          AI will rewrite the scholarly translation into clear, readable modern prose while preserving all content.
-                        </p>
-                      </div>
                     ) : translationText ? (
                       <>
                         <HighlightSelection

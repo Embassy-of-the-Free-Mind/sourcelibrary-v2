@@ -11,7 +11,7 @@ const NAV_LINKS = [
   { label: 'Collections', href: '/collections' },
   { label: 'Gallery', href: '/gallery' },
   { label: 'Browse', href: '/browse' },
-  { label: 'Explore', href: '/explore' },
+  { label: 'Explore', href: '/explore/map', activePrefix: '/explore' },
   { label: 'Librarian', href: '/librarian' },
   { label: 'Podcast', href: '/podcast' },
 ];
@@ -92,7 +92,8 @@ export default function SiteHeader({ variant = 'light', breadcrumbs, sticky, cla
           {/* Desktop nav links */}
           <nav className="hidden lg:flex items-center gap-5">
             {NAV_LINKS.map((link) => {
-              const isActive = pathname === link.href || pathname?.startsWith(link.href + '/');
+              const prefix = ('activePrefix' in link ? link.activePrefix : link.href) as string;
+              const isActive = pathname === prefix || pathname?.startsWith(prefix + '/');
               return (
                 <Link
                   key={link.href}
@@ -144,7 +145,8 @@ export default function SiteHeader({ variant = 'light', breadcrumbs, sticky, cla
             {menuOpen && (
               <div className="absolute right-0 top-full mt-2 w-52 bg-white rounded-lg shadow-lg border border-border-light py-2 z-50">
                 {NAV_LINKS.map((link) => {
-                  const isActive = pathname === link.href || pathname?.startsWith(link.href + '/');
+                  const prefix = ('activePrefix' in link ? link.activePrefix : link.href) as string;
+                  const isActive = pathname === prefix || pathname?.startsWith(prefix + '/');
                   return (
                     <Link
                       key={link.href}
