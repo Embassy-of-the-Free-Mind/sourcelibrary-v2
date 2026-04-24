@@ -86,6 +86,7 @@ export default function SimilarImages({ imageId }: SimilarImagesProps) {
                 sizes="100px"
                 className="object-cover group-hover:scale-105 transition-transform duration-200"
                 unoptimized
+                onError={(e) => { (e.target as HTMLImageElement).style.display = 'none'; }}
               />
               {item.type && (
                 <span className="absolute bottom-0 left-0 right-0 bg-black/60 text-[10px] text-stone-300 px-1 py-0.5 truncate opacity-0 group-hover:opacity-100 transition-opacity">

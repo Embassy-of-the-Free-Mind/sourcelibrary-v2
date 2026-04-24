@@ -390,6 +390,7 @@ export default function UnifiedSearch() {
                                 sizes="32px"
                                 className="w-full h-full object-cover"
                                 unoptimized
+                                onError={(e) => { (e.target as HTMLImageElement).style.display = 'none'; }}
                               />
                             </div>
                           ) : (
@@ -566,6 +567,7 @@ export default function UnifiedSearch() {
                                 sizes="32px"
                                 className="w-full h-full object-cover"
                                 unoptimized
+                                onError={(e) => { (e.target as HTMLImageElement).style.display = 'none'; }}
                               />
                             </div>
                           ) : (
