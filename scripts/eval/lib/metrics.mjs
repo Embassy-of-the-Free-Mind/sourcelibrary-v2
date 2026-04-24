@@ -203,8 +203,22 @@ const SCRIPT_FILTERS = {
 
 export function cleanText(text, script) {
   if (!text) return '';
-  // Strip XML tags commonly in OCR output
-  let cleaned = text.replace(/<[^>]+>/g, '').trim();
+  let cleaned = text
+    // Strip XML tags (<language>, <note>, <meta>, <scan-quality>, etc.)
+    .replace(/<[^>]+>/g, '')
+    // Strip markdown heading markers
+    .replace(/^#{1,6}\s+/gm, '')
+    // Strip markdown bold/italic
+    .replace(/\*{1,3}([^*]+)\*{1,3}/g, '$1')
+    // Strip markdown centering syntax (->text<-)
+    .replace(/^->\s*|\s*<-$/gm, '')
+    // Strip markdown horizontal rules
+    .replace(/^-{3,}$/gm, '')
+    // Strip markdown blockquote markers
+    .replace(/^>\s*/gm, '')
+    // Normalize whitespace
+    .replace(/\n{3,}/g, '\n\n')
+    .trim();
   if (script && SCRIPT_FILTERS[script]) {
     cleaned = SCRIPT_FILTERS[script](cleaned);
   }

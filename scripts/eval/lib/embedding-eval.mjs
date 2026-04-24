@@ -9,7 +9,7 @@
  * semantic search (src/lib/semantic-search.ts).
  */
 
-import { cosineSimilarity, cosineDistance } from './metrics.mjs';
+import { cosineSimilarity, cosineDistance, cleanText } from './metrics.mjs';
 
 const EMBEDDING_MODEL = 'gemini-embedding-2-preview';
 const EMBEDDING_DIMS = 768;
@@ -76,21 +76,21 @@ export async function evaluatePage(page, humanTranslation = null) {
   const texts = [];
   const labels = [];
 
-  // OCR text (original language)
+  // OCR text (original language) — strip XML/markdown before embedding
   if (page.ocrText) {
-    texts.push(page.ocrText);
+    texts.push(cleanText(page.ocrText));
     labels.push('ocr');
   }
 
   // AI translation
   if (page.translationText) {
-    texts.push(page.translationText);
+    texts.push(cleanText(page.translationText));
     labels.push('aiTranslation');
   }
 
   // Human translation
   if (humanTranslation) {
-    texts.push(humanTranslation);
+    texts.push(cleanText(humanTranslation));
     labels.push('humanTranslation');
   }
 

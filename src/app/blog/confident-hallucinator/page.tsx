@@ -329,74 +329,11 @@ export default function ConfidentHallucinatorPage() {
         </div>
 
         <p className="text-secondary leading-relaxed mb-6">
-          The answer is <strong>formatting instability</strong>, not reading instability. With 98.3% character similarity across runs, the models differ by only 20&ndash;30 characters out of ~1,700 per page. Those differences are almost entirely in metadata: whether a heading uses <code className="bg-warm px-1 py-0.5 rounded">##</code> or <code className="bg-warm px-1 py-0.5 rounded">###</code>, whether there&rsquo;s a blank line before a verse number, how the model formats its XML tags. The <em>text</em> is the same; the <em>structure</em> wobbles.
-        </p>
-
-        <p className="text-secondary leading-relaxed mb-6">
-          Embedding distance confirms this: Sanskrit scores <strong>0.105</strong> &mdash; between Latin (0.110) and Tibetan (0.054). The translations are semantically sound. Sanskrit is not a reading problem; it&rsquo;s a formatting problem.
-        </p>
-
-        {/* --- XML discussion --- */}
-        <h2 className="text-2xl md:text-3xl text-primary mt-16 mb-6">
-          The XML Layer: Structure as Signal
-        </h2>
-
-        <p className="text-secondary leading-relaxed mb-6">
-          Our OCR output is not plain text. It&rsquo;s structured markdown with embedded XML metadata tags. This is by design &mdash; the OCR prompt asks models to annotate what they see:
-        </p>
-
-        <div className="bg-warm rounded-lg p-4 mb-6 font-mono text-sm overflow-x-auto">
-          <p className="text-stone-500 mb-2">{/* OCR output example */}</p>
-          <p>&lt;language&gt;Latin&lt;/language&gt;</p>
-          <p>&lt;scan-quality&gt;good&lt;/scan-quality&gt;</p>
-          <p>&lt;script&gt;printed&lt;/script&gt;</p>
-          <p>&lt;page-type&gt;text&lt;/page-type&gt;</p>
-          <p className="mt-2">mitum inftar cryſtalli. He&icirc;c cernere</p>
-          <p>erat Spirit&ucirc; militatem aduerſus Cor-</p>
-          <p>pus, quod c&ugrave;m tandem ſuperaſſet...</p>
-        </div>
-
-        <p className="text-secondary leading-relaxed mb-6">
-          And the translation layer adds its own annotation vocabulary:
-        </p>
-
-        <div className="bg-warm rounded-lg p-4 mb-6 font-mono text-sm overflow-x-auto">
-          <p className="text-stone-500 mb-2">{/* Translation output example */}</p>
-          <p>&lt;meta&gt;continues discussion of the philosopher&rsquo;s stone&lt;/meta&gt;</p>
-          <p className="mt-2">...limited like crystal. Here one could see</p>
-          <p>the Spirit warring against the Body, which</p>
-          <p>having at last overcome, from both was made</p>
-          <p>&lt;term&gt;UNUM&lt;/term&gt; &lt;gloss&gt;the One&lt;/gloss&gt;.</p>
-          <p>The Body served the Soul, and was for it a</p>
-          <p>stable dwelling. &lt;note&gt;The alchemical metaphor</p>
-          <p>of body-soul unification parallels the</p>
-          <p>&lt;term&gt;coniunctio&lt;/term&gt;&lt;/note&gt;</p>
-        </div>
-
-        <p className="text-secondary leading-relaxed mb-6">
-          This creates a layered document where the text is interwoven with structural and semantic metadata. The XML tags serve readers directly &mdash; <code className="bg-warm px-1 py-0.5 rounded">&lt;note&gt;</code> and <code className="bg-warm px-1 py-0.5 rounded">&lt;term&gt;</code> tags are toggleable in the reading interface, <code className="bg-warm px-1 py-0.5 rounded">&lt;meta&gt;</code> tags help the translation model maintain context across page boundaries.
-        </p>
-
-        <h3 className="text-xl text-primary mt-12 mb-4">
-          What This Means for Evaluation
-        </h3>
-
-        <p className="text-secondary leading-relaxed mb-6">
-          XML tags complicate consistency measurement in three ways:
-        </p>
-
-        <ol className="text-secondary leading-relaxed mb-8 space-y-4">
-          <li><strong>Tag placement varies between runs.</strong> A model might classify scan quality as <code className="bg-warm px-1 py-0.5 rounded">&lt;scan-quality&gt;good&lt;/scan-quality&gt;</code> in one run and <code className="bg-warm px-1 py-0.5 rounded">&lt;scan-quality&gt;fair&lt;/scan-quality&gt;</code> in another. The text is identical; the metadata judgment differs. This tanks MCR even though the actual transcription is stable.</li>
-          <li><strong>Tag presence is non-deterministic.</strong> One run might include a <code className="bg-warm px-1 py-0.5 rounded">&lt;page-num&gt;</code> tag; another might skip it. In Sanskrit, the Shiva Samhita page produced 3 runs with 1770, 1773, and 1772 characters &mdash; 98.9% character similarity but 0% MCR because no two runs were byte-identical.</li>
-          <li><strong>Translation annotations diverge more than translations.</strong> The translation text might be identical across runs, but the <code className="bg-warm px-1 py-0.5 rounded">&lt;note&gt;</code> annotations and <code className="bg-warm px-1 py-0.5 rounded">&lt;meta&gt;</code> tags vary. Should those count as inconsistency? For a reader, probably not. For a scholar citing the translation, maybe.</li>
-        </ol>
-
-        <p className="text-secondary leading-relaxed mb-6">
-          Our current eval strips XML tags before comparison (via a simple regex). This is the right default for measuring <em>reading accuracy</em> &mdash; did the model transcribe the text correctly? But it discards potentially valuable signal. A model that consistently tags a page as <code className="bg-warm px-1 py-0.5 rounded">&lt;scan-quality&gt;poor&lt;/scan-quality&gt;</code> may be telling us something about that page that the text metrics don&rsquo;t capture.
+          The answer is formatting, not reading. Our production OCR output includes XML metadata tags (<code className="bg-warm px-1 py-0.5 rounded">&lt;language&gt;</code>, <code className="bg-warm px-1 py-0.5 rounded">&lt;scan-quality&gt;</code>) and markdown formatting (<code className="bg-warm px-1 py-0.5 rounded">##</code> headings, <code className="bg-warm px-1 py-0.5 rounded">**bold**</code>). The eval strips all of this before comparison &mdash; we&rsquo;re measuring whether models read the same <em>text</em>, not whether they format it the same way. With 98.3% character similarity across runs, the transcriptions are nearly identical; the 44% MCR comes from trivial differences like heading levels and whitespace.
         </p>
 
         <p className="text-secondary leading-relaxed mb-8">
-          This is why Sanskrit&rsquo;s 44% MCR is misleading. Once you strip the XML and whitespace, the actual transcription consistency is probably above 95%. The &ldquo;inconsistency&rdquo; lives in the structural layer, not the content layer. A future version of the eval framework should report both: MCR-text (stripped) and MCR-full (with tags), to distinguish formatting instability from reading instability.
+          Embedding distance confirms this: Sanskrit scores <strong>0.105</strong> &mdash; between Latin (0.110) and Tibetan (0.054). The translations are semantically sound. Sanskrit is not a reading problem; it&rsquo;s a formatting problem.
         </p>
 
         {/* --- Triangulation --- */}
