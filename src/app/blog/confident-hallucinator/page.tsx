@@ -5,10 +5,10 @@ import BlogComments from '@/components/blog/BlogComments';
 
 export const metadata: Metadata = {
   title: 'The Confident Hallucinator - Research Notes - Source Library',
-  description: 'What we learned evaluating AI OCR across four scripts. A model can be perfectly consistent and completely wrong — 100% consistency, 0% accuracy. Output length ratios and embedding distances detect what MCR alone cannot.',
+  description: 'What we learned evaluating AI OCR across five scripts. A model can be perfectly consistent and completely wrong — 100% consistency, 0% accuracy. Output length ratios and embedding distances detect what MCR alone cannot.',
   openGraph: {
     title: 'The Confident Hallucinator',
-    description: 'AI OCR evaluation across Latin, Tibetan, Arabic, and Hebrew reveals that consistency alone is a dangerous quality signal.',
+    description: 'AI OCR evaluation across Latin, Tibetan, Arabic, Hebrew, and Sanskrit reveals that consistency alone is a dangerous quality signal.',
   },
   alternates: {
     canonical: '/blog/confident-hallucinator',
@@ -21,7 +21,7 @@ export default function ConfidentHallucinatorPage() {
       header={
         <ContentHeader
           title="The Confident Hallucinator"
-          subtitle="What we learned evaluating AI OCR across four scripts"
+          subtitle="What we learned evaluating AI OCR across five scripts"
         >
           <p className="text-stone-400 text-sm mt-4">23 April 2026 &middot; 10 min read</p>
         </ContentHeader>
@@ -44,7 +44,7 @@ export default function ConfidentHallucinatorPage() {
 
         {/* --- Lead --- */}
         <p className="text-xl text-secondary leading-relaxed mb-8">
-          We built a quality evaluation framework for our OCR and translation pipeline, then ran it across four script families: Latin (printed), Tibetan (manuscript), Hebrew (mixed), and Arabic (manuscript). The central finding is that consistency alone is a dangerous quality signal &mdash; a model can be perfectly consistent and completely wrong.
+          We built a quality evaluation framework for our OCR and translation pipeline, then ran it across five script families: Latin (printed), Tibetan (manuscript), Hebrew (mixed), Arabic (manuscript), and Sanskrit (Devanagari). The central finding is that consistency alone is a dangerous quality signal &mdash; a model can be perfectly consistent and completely wrong.
         </p>
 
         {/* --- The Framework --- */}
@@ -98,6 +98,8 @@ export default function ConfidentHallucinatorPage() {
               <tr className="border-b border-light/50"><td className="py-2 pr-4 font-medium">Arabic</td><td className="py-2 pr-4">Lite</td><td className="py-2 pr-4">0</td><td className="py-2 pr-4 text-right">100%</td><td className="py-2 pr-4 text-right">100%</td><td className="py-2 pr-4 text-right">1.8x</td><td className="py-2 text-right">&mdash;</td></tr>
               <tr className="border-b border-light/50"><td className="py-2 pr-4 font-medium">Hebrew</td><td className="py-2 pr-4">Flash</td><td className="py-2 pr-4">0</td><td className="py-2 pr-4 text-right">56%</td><td className="py-2 pr-4 text-right">43%</td><td className="py-2 pr-4 text-right">1.0x</td><td className="py-2 text-right">0.148</td></tr>
               <tr className="border-b border-light/50 bg-red-50/30"><td className="py-2 pr-4 font-medium">Hebrew</td><td className="py-2 pr-4">Lite</td><td className="py-2 pr-4">0</td><td className="py-2 pr-4 text-right font-bold">100%</td><td className="py-2 pr-4 text-right">100%</td><td className="py-2 pr-4 text-right font-bold text-red-700">12.7x</td><td className="py-2 text-right">&mdash;</td></tr>
+              <tr className="border-b border-light/50"><td className="py-2 pr-4 font-medium">Sanskrit</td><td className="py-2 pr-4">Flash</td><td className="py-2 pr-4">0</td><td className="py-2 pr-4 text-right">44%</td><td className="py-2 pr-4 text-right">98%</td><td className="py-2 pr-4 text-right">1.2x</td><td className="py-2 text-right">0.105</td></tr>
+              <tr className="border-b border-light/50"><td className="py-2 pr-4 font-medium">Sanskrit</td><td className="py-2 pr-4">Lite</td><td className="py-2 pr-4">0</td><td className="py-2 pr-4 text-right">89%</td><td className="py-2 pr-4 text-right">100%</td><td className="py-2 pr-4 text-right">1.1x</td><td className="py-2 text-right">&mdash;</td></tr>
             </tbody>
           </table>
         </div>
@@ -282,6 +284,8 @@ export default function ConfidentHallucinatorPage() {
               <tr className="border-b border-light/50 bg-red-50/30"><td className="py-2 pr-4">Arabic</td><td className="py-2 pr-4">Lite</td><td className="py-2 pr-4 text-right">100%</td><td className="py-2 pr-4 text-right">33%</td><td className="py-2 text-right font-bold text-red-700">&minus;67%</td></tr>
               <tr className="border-b border-light/50"><td className="py-2 pr-4">Hebrew</td><td className="py-2 pr-4">Flash</td><td className="py-2 pr-4 text-right">56%</td><td className="py-2 pr-4 text-right">39%</td><td className="py-2 text-right text-red-700">&minus;17%</td></tr>
               <tr className="border-b border-light/50 bg-red-50/30"><td className="py-2 pr-4">Hebrew</td><td className="py-2 pr-4">Lite</td><td className="py-2 pr-4 text-right">100%</td><td className="py-2 pr-4 text-right">33%</td><td className="py-2 text-right font-bold text-red-700">&minus;67%</td></tr>
+              <tr className="border-b border-light/50"><td className="py-2 pr-4">Sanskrit</td><td className="py-2 pr-4">Flash</td><td className="py-2 pr-4 text-right">44%</td><td className="py-2 pr-4 text-right">44%</td><td className="py-2 text-right">0%</td></tr>
+              <tr className="border-b border-light/50"><td className="py-2 pr-4">Sanskrit</td><td className="py-2 pr-4">Lite</td><td className="py-2 pr-4 text-right">89%</td><td className="py-2 pr-4 text-right">56%</td><td className="py-2 text-right text-red-700">&minus;33%</td></tr>
             </tbody>
           </table>
         </div>
@@ -292,6 +296,107 @@ export default function ConfidentHallucinatorPage() {
 
         <p className="text-secondary leading-relaxed mb-8">
           The Tibetan result is counterintuitive: Flash actually gets <em>more</em> consistent at temp=0.3 (89% &rarr; 100%). One possible explanation: the temp=0 mode-switching we observed might occur at a decision boundary that slight temperature noise pushes past, stabilizing into one interpretation.
+        </p>
+
+        {/* --- Sanskrit --- */}
+        <h2 className="text-2xl md:text-3xl text-primary mt-16 mb-6">
+          Sanskrit: High Agreement, Low Consistency
+        </h2>
+
+        <p className="text-secondary leading-relaxed mb-6">
+          Sanskrit produces a pattern unlike any other script in our evaluation. Cross-model agreement is <strong>98.8%</strong> at the character level &mdash; Flash and Lite are reading essentially the same text. But MCR is only 44% for Flash, meaning 3 runs produce 3 &ldquo;different&rdquo; outputs. How can the models agree with each other but not with themselves?
+        </p>
+
+        <div className="overflow-x-auto mb-8">
+          <table className="w-full text-sm text-secondary">
+            <thead>
+              <tr className="border-b border-light">
+                <th className="text-left py-3 pr-4 font-semibold">Model</th>
+                <th className="text-left py-3 pr-4 font-semibold">Temp</th>
+                <th className="text-right py-3 pr-4 font-semibold">MCR</th>
+                <th className="text-right py-3 pr-4 font-semibold">Char Sim</th>
+                <th className="text-right py-3 pr-4 font-semibold">Length Ratio</th>
+                <th className="text-right py-3 font-semibold">Cross-Model</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr className="border-b border-light/50"><td className="py-2 pr-4">Flash</td><td className="py-2 pr-4">0</td><td className="py-2 pr-4 text-right">44%</td><td className="py-2 pr-4 text-right">98.3%</td><td className="py-2 pr-4 text-right">1.2x</td><td className="py-2 text-right" rowSpan={4}>98.8%</td></tr>
+              <tr className="border-b border-light/50"><td className="py-2 pr-4">Flash</td><td className="py-2 pr-4">0.3</td><td className="py-2 pr-4 text-right">44%</td><td className="py-2 pr-4 text-right">86.4%</td><td className="py-2 pr-4 text-right">1.0x</td></tr>
+              <tr className="border-b border-light/50"><td className="py-2 pr-4">Lite</td><td className="py-2 pr-4">0</td><td className="py-2 pr-4 text-right">89%</td><td className="py-2 pr-4 text-right">100%</td><td className="py-2 pr-4 text-right">1.1x</td></tr>
+              <tr className="border-b border-light/50"><td className="py-2 pr-4">Lite</td><td className="py-2 pr-4">0.3</td><td className="py-2 pr-4 text-right">56%</td><td className="py-2 pr-4 text-right">99.6%</td><td className="py-2 pr-4 text-right">1.1x</td></tr>
+            </tbody>
+          </table>
+        </div>
+
+        <p className="text-secondary leading-relaxed mb-6">
+          The answer is <strong>formatting instability</strong>, not reading instability. With 98.3% character similarity across runs, the models differ by only 20&ndash;30 characters out of ~1,700 per page. Those differences are almost entirely in metadata: whether a heading uses <code className="bg-warm px-1 py-0.5 rounded">##</code> or <code className="bg-warm px-1 py-0.5 rounded">###</code>, whether there&rsquo;s a blank line before a verse number, how the model formats its XML tags. The <em>text</em> is the same; the <em>structure</em> wobbles.
+        </p>
+
+        <p className="text-secondary leading-relaxed mb-6">
+          Embedding distance confirms this: Sanskrit scores <strong>0.105</strong> &mdash; between Latin (0.110) and Tibetan (0.054). The translations are semantically sound. Sanskrit is not a reading problem; it&rsquo;s a formatting problem.
+        </p>
+
+        {/* --- XML discussion --- */}
+        <h2 className="text-2xl md:text-3xl text-primary mt-16 mb-6">
+          The XML Layer: Structure as Signal
+        </h2>
+
+        <p className="text-secondary leading-relaxed mb-6">
+          Our OCR output is not plain text. It&rsquo;s structured markdown with embedded XML metadata tags. This is by design &mdash; the OCR prompt asks models to annotate what they see:
+        </p>
+
+        <div className="bg-warm rounded-lg p-4 mb-6 font-mono text-sm overflow-x-auto">
+          <p className="text-stone-500 mb-2">{/* OCR output example */}</p>
+          <p>&lt;language&gt;Latin&lt;/language&gt;</p>
+          <p>&lt;scan-quality&gt;good&lt;/scan-quality&gt;</p>
+          <p>&lt;script&gt;printed&lt;/script&gt;</p>
+          <p>&lt;page-type&gt;text&lt;/page-type&gt;</p>
+          <p className="mt-2">mitum inftar cryſtalli. He&icirc;c cernere</p>
+          <p>erat Spirit&ucirc; militatem aduerſus Cor-</p>
+          <p>pus, quod c&ugrave;m tandem ſuperaſſet...</p>
+        </div>
+
+        <p className="text-secondary leading-relaxed mb-6">
+          And the translation layer adds its own annotation vocabulary:
+        </p>
+
+        <div className="bg-warm rounded-lg p-4 mb-6 font-mono text-sm overflow-x-auto">
+          <p className="text-stone-500 mb-2">{/* Translation output example */}</p>
+          <p>&lt;meta&gt;continues discussion of the philosopher&rsquo;s stone&lt;/meta&gt;</p>
+          <p className="mt-2">...limited like crystal. Here one could see</p>
+          <p>the Spirit warring against the Body, which</p>
+          <p>having at last overcome, from both was made</p>
+          <p>&lt;term&gt;UNUM&lt;/term&gt; &lt;gloss&gt;the One&lt;/gloss&gt;.</p>
+          <p>The Body served the Soul, and was for it a</p>
+          <p>stable dwelling. &lt;note&gt;The alchemical metaphor</p>
+          <p>of body-soul unification parallels the</p>
+          <p>&lt;term&gt;coniunctio&lt;/term&gt;&lt;/note&gt;</p>
+        </div>
+
+        <p className="text-secondary leading-relaxed mb-6">
+          This creates a layered document where the text is interwoven with structural and semantic metadata. The XML tags serve readers directly &mdash; <code className="bg-warm px-1 py-0.5 rounded">&lt;note&gt;</code> and <code className="bg-warm px-1 py-0.5 rounded">&lt;term&gt;</code> tags are toggleable in the reading interface, <code className="bg-warm px-1 py-0.5 rounded">&lt;meta&gt;</code> tags help the translation model maintain context across page boundaries.
+        </p>
+
+        <h3 className="text-xl text-primary mt-12 mb-4">
+          What This Means for Evaluation
+        </h3>
+
+        <p className="text-secondary leading-relaxed mb-6">
+          XML tags complicate consistency measurement in three ways:
+        </p>
+
+        <ol className="text-secondary leading-relaxed mb-8 space-y-4">
+          <li><strong>Tag placement varies between runs.</strong> A model might classify scan quality as <code className="bg-warm px-1 py-0.5 rounded">&lt;scan-quality&gt;good&lt;/scan-quality&gt;</code> in one run and <code className="bg-warm px-1 py-0.5 rounded">&lt;scan-quality&gt;fair&lt;/scan-quality&gt;</code> in another. The text is identical; the metadata judgment differs. This tanks MCR even though the actual transcription is stable.</li>
+          <li><strong>Tag presence is non-deterministic.</strong> One run might include a <code className="bg-warm px-1 py-0.5 rounded">&lt;page-num&gt;</code> tag; another might skip it. In Sanskrit, the Shiva Samhita page produced 3 runs with 1770, 1773, and 1772 characters &mdash; 98.9% character similarity but 0% MCR because no two runs were byte-identical.</li>
+          <li><strong>Translation annotations diverge more than translations.</strong> The translation text might be identical across runs, but the <code className="bg-warm px-1 py-0.5 rounded">&lt;note&gt;</code> annotations and <code className="bg-warm px-1 py-0.5 rounded">&lt;meta&gt;</code> tags vary. Should those count as inconsistency? For a reader, probably not. For a scholar citing the translation, maybe.</li>
+        </ol>
+
+        <p className="text-secondary leading-relaxed mb-6">
+          Our current eval strips XML tags before comparison (via a simple regex). This is the right default for measuring <em>reading accuracy</em> &mdash; did the model transcribe the text correctly? But it discards potentially valuable signal. A model that consistently tags a page as <code className="bg-warm px-1 py-0.5 rounded">&lt;scan-quality&gt;poor&lt;/scan-quality&gt;</code> may be telling us something about that page that the text metrics don&rsquo;t capture.
+        </p>
+
+        <p className="text-secondary leading-relaxed mb-8">
+          This is why Sanskrit&rsquo;s 44% MCR is misleading. Once you strip the XML and whitespace, the actual transcription consistency is probably above 95%. The &ldquo;inconsistency&rdquo; lives in the structural layer, not the content layer. A future version of the eval framework should report both: MCR-text (stripped) and MCR-full (with tags), to distinguish formatting instability from reading instability.
         </p>
 
         {/* --- Triangulation --- */}
@@ -377,7 +482,7 @@ export default function ConfidentHallucinatorPage() {
         <hr className="border-light my-12" />
 
         <p className="text-muted text-sm leading-relaxed">
-          <strong>Technical details:</strong> Models: Gemini 3 Flash Preview, Gemini 3.1 Flash Lite Preview. Temperatures: 0, 0.3. Embedding model: Gemini embedding-2-preview (768d). 107 API calls, $0.15 total. Evaluation framework: <a href="https://github.com/Embassy-of-the-Free-Mind/sourcelibrary-v2/issues/1329" className="text-accent-rust hover:underline">qa-eval</a> (open source). Raw results in <code className="bg-warm px-1 py-0.5 rounded">scripts/eval/results/</code>.
+          <strong>Technical details:</strong> Models: Gemini 3 Flash Preview, Gemini 3.1 Flash Lite Preview. Temperatures: 0, 0.3. Embedding model: Gemini embedding-2-preview (768d). 143 API calls, $0.20 total. Five scripts: Latin, Tibetan, Arabic, Hebrew, Sanskrit. Evaluation framework: <a href="https://github.com/Embassy-of-the-Free-Mind/sourcelibrary-v2/issues/1329" className="text-accent-rust hover:underline">qa-eval</a> (open source). Raw results in <code className="bg-warm px-1 py-0.5 rounded">scripts/eval/results/</code>.
         </p>
 
       </article>
