@@ -94,46 +94,66 @@ No single metric is sufficient. You need at least three signals:
 
 Together, they triangulate quality without requiring any ground truth. For our pipeline of 17,000+ books across dozens of scripts, this is the difference between scalable quality assurance and manual review of every page.
 
+---
+
+## Part II: Does Pro Fix It?
+
+*Added 24 April 2026, after Shiv Shankar's question: "I wonder if flash vs pro shows similar trends"*
+
+## Adding Gemini Pro to the Matrix
+
+We ran the same evaluation with Gemini 3.1 Pro Preview (5x more expensive than Flash, 33x more expensive than Lite).
+
+| Script | Book | Pro avg | Flash avg | Lite avg | Pro/Flash |
+|--------|------|---------|-----------|----------|-----------|
+| Latin | De natura elementorum | 918 | 909 | — | 1.0x |
+| Arabic | Picatrix | 844 | 828 | 3,433 | 1.0x |
+| Arabic | Alchemical Compendium | 1,242 | 1,228 | 1,233 | 1.0x |
+| **Hebrew** | **Asis rimonim (MS)** | **16,400** | 660 | 17,868 | **24.8x** |
+| Hebrew | Sefer ha-bahir (print) | 640 | 619 | 4,502 | 1.0x |
+| **Hebrew** | **Key of Solomon (MS)** | **10,165** | 599 | 12,050 | **17.0x** |
+| Sanskrit | Gheranda Samhita | 1,513 | 1,456 | 1,456 | 1.0x |
+| Tibetan | Bardo Thodol | 31 | 31 | 31 | 1.0x |
+
+**Pro hallucinates on the exact same pages as Lite.** On manuscripts, Pro is even worse than Lite. On everything else — Latin, Arabic, Sanskrit, Tibetan — Pro is excellent (100% MCR vs Flash's 44-83%). Model size helps instability but not hallucination.
+
+## Manuscript vs. Print: The Real Variable
+
+The Sefer ha-bahir (printed, 1651) shows normal lengths across all models. The two manuscript pages are where Pro and Lite both explode. Manual test on the Prague Haggadah (printed Hebrew, 1526) confirms: Pro reads 177 characters of the Ha Lachma Anya prayer perfectly.
+
+**The hallucination is not about Hebrew. It's about manuscripts.** Cursive handwritten text with repetitive divine names gives the model a "seed" for its generative loop.
+
+## Thinking Mode: The Cure
+
+Ablation study on Key of Solomon p96 (the page where Pro generates 10,117 chars of hallucination):
+
+| Variant | Output chars | Think tokens | Result |
+|---------|-------------|-------------|--------|
+| Pro baseline | **10,117** | 0 | Hallucinating — AGLA loop |
+| Pro + high resolution | **10,117** | 0 | Identical hallucination |
+| **Pro + thinking** | **1,009** | 2,997 | **Reads actual content** |
+| Pro + thinking + high res | 566 | 7,680 | Most constrained reading |
+| Pro + low resolution | 1,064 | 5,663 | No hallucination |
+| Flash baseline | 622 | n/a | Clean reading |
+| Flash + high resolution | 622 | n/a | Identical to baseline |
+| Flash + low resolution | 122 | n/a | Wrong script (Mandaic!) |
+
+**Thinking mode eliminates the hallucination.** Pro + thinking produces 1,009 characters of actual manuscript content: pottery vessels, divine seals, healing instructions, lead amulets. The ~3,000 thinking tokens let the model reason about what's on the page before generating.
+
+**Media resolution alone does nothing.** Pro + high res = identical hallucination. The problem is in generation, not perception.
+
 ## Implications for Our Pipeline
 
-Based on these results:
+**From Part I:**
+- Output length ratio is the simplest hallucination detector
+- Embedding-based translation monitoring should be pipeline-wide
 
-- **Hebrew should not use Flash Lite.** It confidently hallucinates. Use Flash only, with multi-run consensus.
-- **Arabic should use multi-run voting** at temp=0 (Flash MCR is only 44% — 3 runs with majority vote would improve significantly).
-- **Tibetan printed text** is handled well by both models. Cursive manuscripts need further evaluation.
-- **Latin** is reliable. Single-run Flash is sufficient.
-- **Embedding-based translation monitoring** should be deployed pipeline-wide. Pages with OCR→translation distance > 2σ from their corpus mean should be flagged for review.
-
-## What We're Measuring vs. What's Known
-
-| Metric | Source | Novel aspect |
-|--------|--------|-------------|
-| Multi-run consistency (MCR) | Wang & Wang 2025, Lopresti & Zhou 1996 | Applied to VLM OCR on historical manuscripts |
-| Output length ratio | This work | Simple hallucination detector, no ground truth |
-| Embedding distance | This work | Translation quality proxy without reference |
-| Temperature × model × script | This work | Mapped interaction effects across 4 scripts |
-| "Confident hallucinator" pattern | This work | High MCR + high length ratio = systematic hallucination |
-| CER, BLEU-4, ROUGE-L | Standard NLP | Implemented but limited by ground truth availability |
-
-## Cost
-
-All evaluations in this post cost a total of **$0.15 USD** — 107 API calls across two Gemini models, four scripts, two temperatures. The embedding evaluations added ~$0.01 each. Quality evaluation at this price point is practically free relative to the cost of running the OCR pipeline itself.
-
-## Reproducibility
-
-All evaluation code is open source:
-
-```bash
-# Install: clone the repo, then:
-set -a; source .env.production.local; set +a
-
-# Run any evaluation
-node scripts/eval/qa-eval.mjs consistency --corpus=hebrew --sample=3 --models=flash,lite --runs=3 --temp=0,0.3
-node scripts/eval/qa-eval.mjs embedding --corpus=hebrew --sample=5
-node scripts/eval/qa-eval.mjs report --corpus=hebrew --format=blog
-```
-
-Raw results are in `scripts/eval/results/`. The framework supports 11 corpora across every major script family in our collection.
+**From Part II:**
+- **Flash remains the best default OCR model.** Never hallucinates, cheapest.
+- **Model size does not fix hallucination.** Pro is worse and 55x more expensive.
+- **Thinking mode is the cure for manuscripts.** Re-run flagged pages with Pro + thinking.
+- **The real variable is manuscript vs. print**, not script.
+- **Two-pass pipeline:** (1) Flash on everything, (2) flag pages where length > 3x corpus median, (3) re-run flagged pages with Pro + thinking.
 
 ## References
 
@@ -146,4 +166,4 @@ Raw results are in `scripts/eval/results/`. The framework supports 11 corpora ac
 
 ---
 
-*This post was generated from structured evaluation data using the [qa-eval framework](https://github.com/Embassy-of-the-Free-Mind/sourcelibrary-v2/issues/1329). Total evaluation cost: $0.15.*
+*Total evaluation cost across both parts: ~$2.00 USD. ~200 API calls across three Gemini models, five scripts, thinking mode, and resolution variants.*

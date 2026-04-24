@@ -12,6 +12,7 @@ import Anthropic from '@anthropic-ai/sdk';
 const PRICING = {
   'gemini-3-flash-preview':       { input: 0.50, output: 3.00 },
   'gemini-3.1-flash-lite-preview': { input: 0.075, output: 0.30 },
+  'gemini-3.1-pro-preview':       { input: 2.50, output: 15.00 },
   'gemini-2.5-flash':             { input: 0.15, output: 0.60 },
   'claude-opus-4-6':              { input: 15.00, output: 75.00 },
   'claude-sonnet-4-6':            { input: 3.00, output: 15.00 },
@@ -90,9 +91,15 @@ function getAnthropic() {
 // ── Run Gemini ─────────────────────────────────────────────────────
 
 export async function runGemini(model, imageBuffer, prompt, opts = {}) {
-  const { temperature = 0, maxTokens = 8000 } = opts;
+  const { temperature = 0, maxTokens = 8000, thinking = false, mediaResolution } = opts;
   const apiKey = getNextGeminiKey();
   const b64 = imageBuffer.toString('base64');
+
+  const genConfig = { temperature, maxOutputTokens: maxTokens };
+  if (mediaResolution) {
+    const resMap = { low: 'MEDIA_RESOLUTION_LOW', medium: 'MEDIA_RESOLUTION_MEDIUM', high: 'MEDIA_RESOLUTION_HIGH' };
+    genConfig.mediaResolution = resMap[mediaResolution] || mediaResolution;
+  }
 
   const body = {
     contents: [{
@@ -101,8 +108,12 @@ export async function runGemini(model, imageBuffer, prompt, opts = {}) {
         { inline_data: { mime_type: 'image/jpeg', data: b64 } },
       ],
     }],
-    generationConfig: { temperature, maxOutputTokens: maxTokens },
+    generationConfig: genConfig,
   };
+
+  if (thinking) {
+    body.generationConfig.thinkingConfig = { thinkingBudget: 8192 };
+  }
 
   const start = Date.now();
   const resp = await fetch(
@@ -122,19 +133,28 @@ export async function runGemini(model, imageBuffer, prompt, opts = {}) {
 
   const data = await resp.json();
   const durationMs = Date.now() - start;
-  const text = data.candidates?.[0]?.content?.parts?.[0]?.text || '';
+
+  // Thinking models return multiple parts: thought + text
+  const parts = data.candidates?.[0]?.content?.parts || [];
+  const textParts = parts.filter(p => p.text && !p.thought);
+  const thoughtParts = parts.filter(p => p.thought);
+  const text = textParts.map(p => p.text).join('') || parts[0]?.text || '';
+
   const usage = data.usageMetadata || {};
   const inputTokens = usage.promptTokenCount || 0;
   const outputTokens = usage.candidatesTokenCount || 0;
+  const thinkingTokens = usage.thoughtsTokenCount || 0;
 
   return {
     text,
     model,
     inputTokens,
     outputTokens,
+    thinkingTokens,
     costUsd: calcCost(model, inputTokens, outputTokens),
     durationMs,
     finishReason: data.candidates?.[0]?.finishReason || 'unknown',
+    ...(thinking && thoughtParts.length > 0 && { thoughtText: thoughtParts.map(p => p.thought || p.text).join('') }),
   };
 }
 
@@ -181,6 +201,7 @@ const MODEL_ALIASES = {
   'flash': 'gemini-3-flash-preview',
   'flash-lite': 'gemini-3.1-flash-lite-preview',
   'lite': 'gemini-3.1-flash-lite-preview',
+  'pro': 'gemini-3.1-pro-preview',
   'opus': 'claude-opus-4-6',
   'sonnet': 'claude-sonnet-4-6',
   'haiku': 'claude-haiku-4-5-20251001',

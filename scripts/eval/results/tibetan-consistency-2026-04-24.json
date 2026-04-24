@@ -1,0 +1,479 @@
+{
+  "corpus": "tibetan",
+  "models": [
+    "gemini-3.1-pro-preview",
+    "gemini-3-flash-preview",
+    "gemini-3.1-flash-lite-preview"
+  ],
+  "temperatures": [
+    0
+  ],
+  "thinking": false,
+  "runsPerCombo": 3,
+  "pages": [
+    {
+      "bookId": "6953c95477f38f6761bde815",
+      "bookTitle": "Tibetan Book of the Dead (Bardo Thodol)",
+      "pageNumber": 128,
+      "script": "tibetan",
+      "results": {
+        "gemini-3.1-pro-preview@t0": {
+          "model": "gemini-3.1-pro-preview",
+          "temperature": 0,
+          "mcr": {
+            "rate": 1,
+            "modalOutput": "-\n\n-\n\n-\n\n-\n-\n-\n\n-\n\n-\n--\n-\n--\n\n-",
+            "modeCount": 3,
+            "totalRuns": 3,
+            "uniqueOutputs": 1
+          },
+          "pairwise": {
+            "pairs": [
+              {
+                "i": 0,
+                "j": 1,
+                "charSimilarity": 1,
+                "syllableSimilarity": 1
+              },
+              {
+                "i": 0,
+                "j": 2,
+                "charSimilarity": 1,
+                "syllableSimilarity": 1
+              },
+              {
+                "i": 1,
+                "j": 2,
+                "charSimilarity": 1,
+                "syllableSimilarity": 1
+              }
+            ],
+            "avgCharSimilarity": 1,
+            "avgSyllableSimilarity": 1
+          },
+          "costUsd": 0.031455,
+          "durationMs": 137556,
+          "outputLengths": [
+            31,
+            31,
+            31
+          ]
+        },
+        "gemini-3-flash-preview@t0": {
+          "model": "gemini-3-flash-preview",
+          "temperature": 0,
+          "mcr": {
+            "rate": 1,
+            "modalOutput": "-\n\n-\n\n-\n\n-\n-\n-\n\n-\n\n-\n--\n-\n--\n\n-",
+            "modeCount": 3,
+            "totalRuns": 3,
+            "uniqueOutputs": 1
+          },
+          "pairwise": {
+            "pairs": [
+              {
+                "i": 0,
+                "j": 1,
+                "charSimilarity": 1,
+                "syllableSimilarity": 1
+              },
+              {
+                "i": 0,
+                "j": 2,
+                "charSimilarity": 1,
+                "syllableSimilarity": 1
+              },
+              {
+                "i": 1,
+                "j": 2,
+                "charSimilarity": 1,
+                "syllableSimilarity": 1
+              }
+            ],
+            "avgCharSimilarity": 1,
+            "avgSyllableSimilarity": 1
+          },
+          "costUsd": 0.0062640000000000005,
+          "durationMs": 47082,
+          "outputLengths": [
+            31,
+            31,
+            31
+          ]
+        },
+        "gemini-3.1-flash-lite-preview@t0": {
+          "model": "gemini-3.1-flash-lite-preview",
+          "temperature": 0,
+          "mcr": {
+            "rate": 1,
+            "modalOutput": "-\n\n-\n\n-\n\n-\n-\n-\n\n-\n\n-\n--\n-\n--\n\n-",
+            "modeCount": 3,
+            "totalRuns": 3,
+            "uniqueOutputs": 1
+          },
+          "pairwise": {
+            "pairs": [
+              {
+                "i": 0,
+                "j": 1,
+                "charSimilarity": 1,
+                "syllableSimilarity": 1
+              },
+              {
+                "i": 0,
+                "j": 2,
+                "charSimilarity": 1,
+                "syllableSimilarity": 1
+              },
+              {
+                "i": 1,
+                "j": 2,
+                "charSimilarity": 1,
+                "syllableSimilarity": 1
+              }
+            ],
+            "avgCharSimilarity": 1,
+            "avgSyllableSimilarity": 1
+          },
+          "costUsd": 0.00070875,
+          "durationMs": 10863,
+          "outputLengths": [
+            31,
+            31,
+            31
+          ]
+        }
+      }
+    },
+    {
+      "bookId": "699249b6a2d53df4853bec9d",
+      "bookTitle": "The Tibetan Book of the Dead (Bardo Thodol)",
+      "pageNumber": 105,
+      "script": "tibetan",
+      "results": {
+        "gemini-3.1-pro-preview@t0": {
+          "model": "gemini-3.1-pro-preview",
+          "temperature": 0,
+          "mcr": {
+            "rate": 1,
+            "modalOutput": "--\n\n-\n\n-\n\n-\n\n-\n-\n\n-\n\n-\n\n-\n-\n---",
+            "modeCount": 3,
+            "totalRuns": 3,
+            "uniqueOutputs": 1
+          },
+          "pairwise": {
+            "pairs": [
+              {
+                "i": 0,
+                "j": 1,
+                "charSimilarity": 1,
+                "syllableSimilarity": 1
+              },
+              {
+                "i": 0,
+                "j": 2,
+                "charSimilarity": 1,
+                "syllableSimilarity": 1
+              },
+              {
+                "i": 1,
+                "j": 2,
+                "charSimilarity": 1,
+                "syllableSimilarity": 1
+              }
+            ],
+            "avgCharSimilarity": 1,
+            "avgSyllableSimilarity": 1
+          },
+          "costUsd": 0.035025,
+          "durationMs": 113238,
+          "outputLengths": [
+            31,
+            31,
+            31
+          ]
+        },
+        "gemini-3-flash-preview@t0": {
+          "model": "gemini-3-flash-preview",
+          "temperature": 0,
+          "mcr": {
+            "rate": 1,
+            "modalOutput": "--\n\n-\n\n-\n\n-\n\n-\n\n-\n\n-\n\n-\n\n-\n-\n---",
+            "modeCount": 3,
+            "totalRuns": 3,
+            "uniqueOutputs": 1
+          },
+          "pairwise": {
+            "pairs": [
+              {
+                "i": 0,
+                "j": 1,
+                "charSimilarity": 1,
+                "syllableSimilarity": 1
+              },
+              {
+                "i": 0,
+                "j": 2,
+                "charSimilarity": 1,
+                "syllableSimilarity": 1
+              },
+              {
+                "i": 1,
+                "j": 2,
+                "charSimilarity": 1,
+                "syllableSimilarity": 1
+              }
+            ],
+            "avgCharSimilarity": 1,
+            "avgSyllableSimilarity": 1
+          },
+          "costUsd": 0.0069689999999999995,
+          "durationMs": 39031,
+          "outputLengths": [
+            32,
+            32,
+            32
+          ]
+        },
+        "gemini-3.1-flash-lite-preview@t0": {
+          "model": "gemini-3.1-flash-lite-preview",
+          "temperature": 0,
+          "mcr": {
+            "rate": 0.6666666666666666,
+            "modalOutput": "--\n\n---\n\n-\n\n----",
+            "modeCount": 2,
+            "totalRuns": 3,
+            "uniqueOutputs": 2
+          },
+          "pairwise": {
+            "pairs": [
+              {
+                "i": 0,
+                "j": 1,
+                "charSimilarity": 0.875,
+                "syllableSimilarity": 1
+              },
+              {
+                "i": 0,
+                "j": 2,
+                "charSimilarity": 1,
+                "syllableSimilarity": 1
+              },
+              {
+                "i": 1,
+                "j": 2,
+                "charSimilarity": 0.875,
+                "syllableSimilarity": 1
+              }
+            ],
+            "avgCharSimilarity": 0.9166666666666666,
+            "avgSyllableSimilarity": 1
+          },
+          "costUsd": 0.0007407,
+          "durationMs": 9181,
+          "outputLengths": [
+            16,
+            14,
+            16
+          ]
+        }
+      }
+    },
+    {
+      "bookId": "699249bca2d53df4853bf2a0",
+      "bookTitle": "Tibet's Great Yogi Milarepa",
+      "pageNumber": 181,
+      "script": "tibetan",
+      "results": {
+        "gemini-3.1-pro-preview@t0": {
+          "model": "gemini-3.1-pro-preview",
+          "temperature": 0,
+          "mcr": {
+            "rate": 1,
+            "modalOutput": "-\n\n-\n\n-\n-\n\n-\n\n-\n-\n-",
+            "modeCount": 3,
+            "totalRuns": 3,
+            "uniqueOutputs": 1
+          },
+          "pairwise": {
+            "pairs": [
+              {
+                "i": 0,
+                "j": 1,
+                "charSimilarity": 1,
+                "syllableSimilarity": 1
+              },
+              {
+                "i": 0,
+                "j": 2,
+                "charSimilarity": 1,
+                "syllableSimilarity": 1
+              },
+              {
+                "i": 1,
+                "j": 2,
+                "charSimilarity": 1,
+                "syllableSimilarity": 1
+              }
+            ],
+            "avgCharSimilarity": 1,
+            "avgSyllableSimilarity": 1
+          },
+          "costUsd": 0.031515,
+          "durationMs": 67404,
+          "outputLengths": [
+            19,
+            19,
+            19
+          ]
+        },
+        "gemini-3-flash-preview@t0": {
+          "model": "gemini-3-flash-preview",
+          "temperature": 0,
+          "mcr": {
+            "rate": 1,
+            "modalOutput": "-\n\n-\n\n-\n-\n\n-\n\n-\n-\n-",
+            "modeCount": 3,
+            "totalRuns": 3,
+            "uniqueOutputs": 1
+          },
+          "pairwise": {
+            "pairs": [
+              {
+                "i": 0,
+                "j": 1,
+                "charSimilarity": 1,
+                "syllableSimilarity": 1
+              },
+              {
+                "i": 0,
+                "j": 2,
+                "charSimilarity": 1,
+                "syllableSimilarity": 1
+              },
+              {
+                "i": 1,
+                "j": 2,
+                "charSimilarity": 1,
+                "syllableSimilarity": 1
+              }
+            ],
+            "avgCharSimilarity": 1,
+            "avgSyllableSimilarity": 1
+          },
+          "costUsd": 0.006303,
+          "durationMs": 95490,
+          "outputLengths": [
+            19,
+            19,
+            19
+          ]
+        },
+        "gemini-3.1-flash-lite-preview@t0": {
+          "model": "gemini-3.1-flash-lite-preview",
+          "temperature": 0,
+          "mcr": {
+            "rate": 1,
+            "modalOutput": "-\n-\n-\n\n-\n\n-\n--",
+            "modeCount": 3,
+            "totalRuns": 3,
+            "uniqueOutputs": 1
+          },
+          "pairwise": {
+            "pairs": [
+              {
+                "i": 0,
+                "j": 1,
+                "charSimilarity": 1,
+                "syllableSimilarity": 1
+              },
+              {
+                "i": 0,
+                "j": 2,
+                "charSimilarity": 1,
+                "syllableSimilarity": 1
+              },
+              {
+                "i": 1,
+                "j": 2,
+                "charSimilarity": 1,
+                "syllableSimilarity": 1
+              }
+            ],
+            "avgCharSimilarity": 1,
+            "avgSyllableSimilarity": 1
+          },
+          "costUsd": 0.0006984000000000001,
+          "durationMs": 7974,
+          "outputLengths": [
+            14,
+            14,
+            14
+          ]
+        }
+      }
+    }
+  ],
+  "summary": {
+    "byCombo": {
+      "gemini-3.1-pro-preview@t0": {
+        "model": "gemini-3.1-pro-preview",
+        "temp": 0,
+        "pages": 3,
+        "avgMcr": 1,
+        "avgCharSim": 1,
+        "avgSylSim": 1
+      },
+      "gemini-3-flash-preview@t0": {
+        "model": "gemini-3-flash-preview",
+        "temp": 0,
+        "pages": 3,
+        "avgMcr": 1,
+        "avgCharSim": 1,
+        "avgSylSim": 1
+      },
+      "gemini-3.1-flash-lite-preview@t0": {
+        "model": "gemini-3.1-flash-lite-preview",
+        "temp": 0,
+        "pages": 3,
+        "avgMcr": 0.8888888888888888,
+        "avgCharSim": 0.9722222222222222,
+        "avgSylSim": 1
+      }
+    },
+    "crossModel": [
+      {
+        "modelA": "gemini-3.1-pro-preview@t0",
+        "modelB": "gemini-3-flash-preview@t0",
+        "charSimilarity": 0.9895833333333334,
+        "syllableSimilarity": 1,
+        "pages": 3
+      },
+      {
+        "modelA": "gemini-3.1-pro-preview@t0",
+        "modelB": "gemini-3.1-flash-lite-preview@t0",
+        "charSimilarity": 0.7509903791737408,
+        "syllableSimilarity": 0.6022727272727273,
+        "pages": 3
+      },
+      {
+        "modelA": "gemini-3-flash-preview@t0",
+        "modelB": "gemini-3.1-flash-lite-preview@t0",
+        "charSimilarity": 0.7456140350877193,
+        "syllableSimilarity": 0.6022727272727273,
+        "pages": 3
+      }
+    ]
+  },
+  "meta": {
+    "date": "2026-04-24",
+    "totalCalls": 27,
+    "totalCostUsd": 0.11967885000000003,
+    "totalDurationMs": 527819,
+    "costByModel": {
+      "gemini-3.1-pro-preview@t0": 0.097995,
+      "gemini-3-flash-preview@t0": 0.019536,
+      "gemini-3.1-flash-lite-preview@t0": 0.0021478499999999998
+    }
+  }
+}
