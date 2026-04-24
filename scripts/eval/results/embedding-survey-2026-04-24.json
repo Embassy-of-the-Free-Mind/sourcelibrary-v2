@@ -1,0 +1,1734 @@
+{
+  "design": {
+    "languages": [
+      "Latin",
+      "Hebrew",
+      "Arabic",
+      "Sanskrit",
+      "Greek"
+    ],
+    "conditions": [
+      "manuscript",
+      "print"
+    ],
+    "pagesPerCell": 20,
+    "embeddingModel": "gemini-embedding-2-preview",
+    "embeddingDims": 768,
+    "minTextLength": 100,
+    "date": "2026-04-24"
+  },
+  "cells": [
+    {
+      "cell": "Latin-manuscript",
+      "language": "Latin",
+      "condition": "manuscript",
+      "n": 20,
+      "mean": 0.16359243933574982,
+      "median": 0.17031133057130665,
+      "stddev": 0.04367871170496867,
+      "min": 0.07437152370452493,
+      "max": 0.2378732468998005,
+      "outliers": [],
+      "pages": [
+        {
+          "bookTitle": "Medical-Astrological Compendium with Anatomical Illustrations",
+          "pageNumber": 6,
+          "provider": "bodleian",
+          "distance": 0.16249136738228898,
+          "ocrLength": 2216,
+          "translationLength": 2757
+        },
+        {
+          "bookTitle": "Experimentarius and Geomancy Texts (MS. Digby 46)",
+          "pageNumber": 9,
+          "provider": "bodleian",
+          "distance": 0.09958284299802822,
+          "ocrLength": 3085,
+          "translationLength": 3294
+        },
+        {
+          "bookTitle": "Astrological Treatise (MS. Digby 83)",
+          "pageNumber": 6,
+          "provider": "bodleian",
+          "distance": 0.11383275349269573,
+          "ocrLength": 993,
+          "translationLength": 1248
+        },
+        {
+          "bookTitle": "Kalendarium with Medical and Astrological Texts",
+          "pageNumber": 6,
+          "provider": "bodleian",
+          "distance": 0.17031133057130665,
+          "ocrLength": 2670,
+          "translationLength": 4026
+        },
+        {
+          "bookTitle": "Wonders of the East / Astronomical-Calendrical Treatise",
+          "pageNumber": 12,
+          "provider": "bodleian",
+          "distance": 0.2378732468998005,
+          "ocrLength": 2532,
+          "translationLength": 2990
+        },
+        {
+          "bookTitle": "Medical and Herbal Texts (MS. Ashmole 1462)",
+          "pageNumber": 4,
+          "provider": "bodleian",
+          "distance": 0.10972383649190265,
+          "ocrLength": 1847,
+          "translationLength": 1319
+        },
+        {
+          "bookTitle": "Timaeus (MS. Digby 23)",
+          "pageNumber": 5,
+          "provider": "bodleian",
+          "distance": 0.14133912947924132,
+          "ocrLength": 2054,
+          "translationLength": 2420
+        },
+        {
+          "bookTitle": "Herbarium / Liber medicinae ex animalibus",
+          "pageNumber": 3,
+          "provider": "bodleian",
+          "distance": 0.11928779783284704,
+          "ocrLength": 226,
+          "translationLength": 746
+        },
+        {
+          "bookTitle": "Philosophia Baconis (MS. Digby 76, annotated by John Dee)",
+          "pageNumber": 7,
+          "provider": "bodleian",
+          "distance": 0.18482250606805894,
+          "ocrLength": 2922,
+          "translationLength": 3562
+        },
+        {
+          "bookTitle": "Ramon Lull, Margarete Porete, pseudo-Augustine, pseudo-Jerome",
+          "pageNumber": 7,
+          "provider": "bodleian",
+          "distance": 0.23240288224682526,
+          "ocrLength": 2146,
+          "translationLength": 2903
+        },
+        {
+          "bookTitle": "Astronomical Texts (Sacrobosco, Albumasar, Alcabitius, Messahala, Al-Kindi)",
+          "pageNumber": 6,
+          "provider": "bodleian",
+          "distance": 0.15637053874126172,
+          "ocrLength": 3222,
+          "translationLength": 1679
+        },
+        {
+          "bookTitle": "I.N.D.N.I.C. Hunc, ex ff. libro 1 & 2 desumptarum, illustrium quastionum cinnum",
+          "pageNumber": 8,
+          "provider": "bph",
+          "distance": 0.1495117049794048,
+          "ocrLength": 2986,
+          "translationLength": 5393
+        },
+        {
+          "bookTitle": "[Greek] De invidia homilia xvii",
+          "pageNumber": 7,
+          "provider": "bph",
+          "distance": 0.22420094688142223,
+          "ocrLength": 1617,
+          "translationLength": 2052
+        },
+        {
+          "bookTitle": "Catalogus librorum, quos Lazarus Zetznerus bibliopola argentoratens P.M. & posteum, haeredes eius hactenus aut propriis sumptibus imprimi curarunt",
+          "pageNumber": 6,
+          "provider": "bph",
+          "distance": 0.17983224235755202,
+          "ocrLength": 944,
+          "translationLength": 3033
+        },
+        {
+          "bookTitle": "Fasciculus considerationum brevissimarum De diversis materiis, quarum duas priores I. De Valentinianorum Aeonibus. II. De Angelorum Nominibus, Michael, Gabriel &c.",
+          "pageNumber": 4,
+          "provider": "bph",
+          "distance": 0.1723580202394006,
+          "ocrLength": 2726,
+          "translationLength": 3289
+        },
+        {
+          "bookTitle": "In memory of Robert Fludd. An address to the Rosicrucians assembled at Bearstead, in Kent, on September 14, 1907",
+          "pageNumber": 6,
+          "provider": "bph",
+          "distance": 0.07437152370452493,
+          "ocrLength": 2678,
+          "translationLength": 2673
+        },
+        {
+          "bookTitle": "[Greek] De sancto martyre Romano Oratio II",
+          "pageNumber": 6,
+          "provider": "bph",
+          "distance": 0.1892720631821413,
+          "ocrLength": 1211,
+          "translationLength": 1459
+        },
+        {
+          "bookTitle": "Disputatio juridica, de jure emphyteutico",
+          "pageNumber": 11,
+          "provider": "bph",
+          "distance": 0.1559322574585995,
+          "ocrLength": 2509,
+          "translationLength": 4429
+        },
+        {
+          "bookTitle": "Aendachticheyt op 's doods ghedachtens zoetheydts redeneringhe",
+          "pageNumber": 8,
+          "provider": "bph",
+          "distance": 0.19919780027013223,
+          "ocrLength": 1811,
+          "translationLength": 2293
+        },
+        {
+          "bookTitle": "[Greek] In sactos Maccabaeos, et in eorum matrem, homilia",
+          "pageNumber": 8,
+          "provider": "bph",
+          "distance": 0.19913399543756172,
+          "ocrLength": 1174,
+          "translationLength": 1624
+        }
+      ]
+    },
+    {
+      "cell": "Latin-print",
+      "language": "Latin",
+      "condition": "print",
+      "n": 20,
+      "mean": 0.12944712119245877,
+      "median": 0.12349299649659595,
+      "stddev": 0.0337194178999383,
+      "min": 0.07276484304527253,
+      "max": 0.21042386007701508,
+      "outliers": [
+        {
+          "book": "Epistolae",
+          "page": 11,
+          "distance": 0.21042386007701508
+        }
+      ],
+      "pages": [
+        {
+          "bookTitle": "Epistolarum medicinalium tomus primus",
+          "pageNumber": 3,
+          "provider": "internet_archive",
+          "distance": 0.14362570448898004,
+          "ocrLength": 1400,
+          "translationLength": 2252
+        },
+        {
+          "bookTitle": "De vitis, dogmatis et apophthegmatis eorum qui in philosophia claruerunt libri X",
+          "pageNumber": 3,
+          "provider": "internet_archive",
+          "distance": 0.11975898001072405,
+          "ocrLength": 466,
+          "translationLength": 1422
+        },
+        {
+          "bookTitle": "Tetragonismus idest circuli quadratura per Campanum archimedem Syracusanum atque boetium mathematicae perspicacissimos adinuenta",
+          "pageNumber": 5,
+          "provider": "internet_archive",
+          "distance": 0.09676702130534254,
+          "ocrLength": 1009,
+          "translationLength": 2526
+        },
+        {
+          "bookTitle": "Platonis Opera a Marsilio Ficino traducta",
+          "pageNumber": 3,
+          "provider": "internet_archive",
+          "distance": 0.10124276586168501,
+          "ocrLength": 1273,
+          "translationLength": 1260
+        },
+        {
+          "bookTitle": "Marsilij Ficini florentini Platonica theologia de immortalitate animorum",
+          "pageNumber": 4,
+          "provider": "internet_archive",
+          "distance": 0.11186774643497976,
+          "ocrLength": 174,
+          "translationLength": 630
+        },
+        {
+          "bookTitle": "Epistolae",
+          "pageNumber": 11,
+          "provider": "internet_archive",
+          "distance": 0.21042386007701508,
+          "ocrLength": 420,
+          "translationLength": 4089
+        },
+        {
+          "bookTitle": "Nova et accurata vestibuli Comeniani editio. Ampl. facultatis philos. in acad. reg. consensu ita adornata, ut reverendi, eximii & doctissimi viri, Dn. Christophori Liebruderi, eccles. Pol. Regiom. pastoris curâ & operâ versio polonica accesserit ; & rectorum scholarum Regiom. studio omnia themata textui è regione cum primariis eorundem accidentibus addita sint.",
+          "pageNumber": 8,
+          "provider": "internet_archive",
+          "distance": 0.1669293447025345,
+          "ocrLength": 951,
+          "translationLength": 3467
+        },
+        {
+          "bookTitle": "De revolutionibus orbium coelestium libri VI",
+          "pageNumber": 10,
+          "provider": "internet_archive",
+          "distance": 0.0741268041913401,
+          "ocrLength": 2458,
+          "translationLength": 4755
+        },
+        {
+          "bookTitle": "Epytoma in Almagestum Ptolemaei",
+          "pageNumber": 10,
+          "provider": "internet_archive",
+          "distance": 0.10600106804423925,
+          "ocrLength": 3790,
+          "translationLength": 5719
+        },
+        {
+          "bookTitle": "Opera Omnia (Complete Works)",
+          "pageNumber": 8,
+          "provider": "internet_archive",
+          "distance": 0.12349299649659595,
+          "ocrLength": 2624,
+          "translationLength": 2957
+        },
+        {
+          "bookTitle": "Cosmographia (Geography)",
+          "pageNumber": 7,
+          "provider": "internet_archive",
+          "distance": 0.10030634089856605,
+          "ocrLength": 4168,
+          "translationLength": 5166
+        },
+        {
+          "bookTitle": "De Revolutionibus Orbium Coelestium",
+          "pageNumber": 12,
+          "provider": "internet_archive",
+          "distance": 0.15228062203460668,
+          "ocrLength": 2252,
+          "translationLength": 4250
+        },
+        {
+          "bookTitle": "Magia Naturalis",
+          "pageNumber": 10,
+          "provider": "internet_archive",
+          "distance": 0.14900142521877946,
+          "ocrLength": 1562,
+          "translationLength": 3269
+        },
+        {
+          "bookTitle": "Ars Magna Generalis",
+          "pageNumber": 3,
+          "provider": "internet_archive",
+          "distance": 0.12082340945713177,
+          "ocrLength": 1168,
+          "translationLength": 2314
+        },
+        {
+          "bookTitle": "Elementa Geometriae",
+          "pageNumber": 9,
+          "provider": "internet_archive",
+          "distance": 0.10982461449369096,
+          "ocrLength": 4433,
+          "translationLength": 5638
+        },
+        {
+          "bookTitle": "De Mineralibus",
+          "pageNumber": 3,
+          "provider": "internet_archive",
+          "distance": 0.15061003200805845,
+          "ocrLength": 2809,
+          "translationLength": 3842
+        },
+        {
+          "bookTitle": "Emblemata",
+          "pageNumber": 5,
+          "provider": "internet_archive",
+          "distance": 0.07276484304527253,
+          "ocrLength": 806,
+          "translationLength": 1945
+        },
+        {
+          "bookTitle": "Pansophiae Prodromus",
+          "pageNumber": 5,
+          "provider": "internet_archive",
+          "distance": 0.15693980087652004,
+          "ocrLength": 720,
+          "translationLength": 1643
+        },
+        {
+          "bookTitle": "De nobilitate et praecellentia foeminei sexus",
+          "pageNumber": 3,
+          "provider": "gallica",
+          "distance": 0.15689251710488794,
+          "ocrLength": 535,
+          "translationLength": 2027
+        },
+        {
+          "bookTitle": "De Restituta utriusque medicinae vera praxi",
+          "pageNumber": 3,
+          "provider": "gallica",
+          "distance": 0.1652625270982251,
+          "ocrLength": 280,
+          "translationLength": 932
+        }
+      ]
+    },
+    {
+      "cell": "Hebrew-manuscript",
+      "language": "Hebrew",
+      "condition": "manuscript",
+      "n": 20,
+      "mean": 0.14894589658373186,
+      "median": 0.1472043189992439,
+      "stddev": 0.04321297019705801,
+      "min": 0.07618136797007191,
+      "max": 0.26034895304870365,
+      "outliers": [
+        {
+          "book": "Luria's Commentary on the Zohar of Genes",
+          "page": 11,
+          "distance": 0.26034895304870365
+        }
+      ],
+      "pages": [
+        {
+          "bookTitle": "Asis rimonim",
+          "pageNumber": 12,
+          "provider": "bph",
+          "distance": 0.17738469374469534,
+          "ocrLength": 6663,
+          "translationLength": 13149
+        },
+        {
+          "bookTitle": "Sefer ha-bahir",
+          "pageNumber": 6,
+          "provider": "bph",
+          "distance": 0.1714587849573317,
+          "ocrLength": 3152,
+          "translationLength": 6820
+        },
+        {
+          "bookTitle": "[Hebrew: Avodat ha-kodesh]",
+          "pageNumber": 4,
+          "provider": "bph",
+          "distance": 0.1093440992997522,
+          "ocrLength": 2188,
+          "translationLength": 5079
+        },
+        {
+          "bookTitle": "[Hebrew: Sefer pa'amon ve'rimon]",
+          "pageNumber": 11,
+          "provider": "bph",
+          "distance": 0.13464240941152472,
+          "ocrLength": 5419,
+          "translationLength": 8626
+        },
+        {
+          "bookTitle": "[Hebrew: Perush shir ha-shirim]",
+          "pageNumber": 9,
+          "provider": "bph",
+          "distance": 0.08792773900096895,
+          "ocrLength": 974,
+          "translationLength": 2508
+        },
+        {
+          "bookTitle": "[Hebrew: Sha'arei zedek]",
+          "pageNumber": 6,
+          "provider": "bph",
+          "distance": 0.13487709223747713,
+          "ocrLength": 1580,
+          "translationLength": 2719
+        },
+        {
+          "bookTitle": "[Hebrew: Sefer Yetzirah]",
+          "pageNumber": 3,
+          "provider": "bph",
+          "distance": 0.07618136797007191,
+          "ocrLength": 746,
+          "translationLength": 1840
+        },
+        {
+          "bookTitle": "[Hebrew: Sefer matzat shimurim]",
+          "pageNumber": 11,
+          "provider": "bph",
+          "distance": 0.14257801286742788,
+          "ocrLength": 3204,
+          "translationLength": 7358
+        },
+        {
+          "bookTitle": "[Hebrew: Sha'arei orah]",
+          "pageNumber": 8,
+          "provider": "bph",
+          "distance": 0.18092569750093235,
+          "ocrLength": 3021,
+          "translationLength": 6611
+        },
+        {
+          "bookTitle": "[Hebrew: Sefer shnei luchot ha-brit]",
+          "pageNumber": 8,
+          "provider": "bph",
+          "distance": 0.15255896438022631,
+          "ocrLength": 1361,
+          "translationLength": 1845
+        },
+        {
+          "bookTitle": "Zohar (Parashat Bereshit, with Moses Cordovero commentary Or yakar)",
+          "pageNumber": 7,
+          "provider": "bodleian",
+          "distance": 0.12327981407032451,
+          "ocrLength": 3152,
+          "translationLength": 4561
+        },
+        {
+          "bookTitle": "Luria's Commentary on the Zohar of Genesis",
+          "pageNumber": 11,
+          "provider": "bodleian",
+          "distance": 0.26034895304870365,
+          "ocrLength": 3169,
+          "translationLength": 4533
+        },
+        {
+          "bookTitle": "Collection of kabbalistic texts",
+          "pageNumber": 8,
+          "provider": "bodleian",
+          "distance": 0.18914376612945005,
+          "ocrLength": 1255,
+          "translationLength": 2471
+        },
+        {
+          "bookTitle": "Collection of kabbalistic texts",
+          "pageNumber": 9,
+          "provider": "bodleian",
+          "distance": 0.15415697728853528,
+          "ocrLength": 1845,
+          "translationLength": 2543
+        },
+        {
+          "bookTitle": "Kabbalistic works",
+          "pageNumber": 7,
+          "provider": "bodleian",
+          "distance": 0.13088396126898283,
+          "ocrLength": 429,
+          "translationLength": 925
+        },
+        {
+          "bookTitle": "Collection of philosophical works by Averroes",
+          "pageNumber": 11,
+          "provider": "bodleian",
+          "distance": 0.1908190827763293,
+          "ocrLength": 1708,
+          "translationLength": 2998
+        },
+        {
+          "bookTitle": "Collection of astronomical and astrological texts",
+          "pageNumber": 13,
+          "provider": "bodleian",
+          "distance": 0.09340555883921442,
+          "ocrLength": 2105,
+          "translationLength": 4260
+        },
+        {
+          "bookTitle": "Zohar (Exodus)",
+          "pageNumber": 12,
+          "provider": "bodleian",
+          "distance": 0.11730302078452592,
+          "ocrLength": 2151,
+          "translationLength": 4513
+        },
+        {
+          "bookTitle": "Zohar on Genesis-Exodus",
+          "pageNumber": 11,
+          "provider": "bodleian",
+          "distance": 0.2044936170989189,
+          "ocrLength": 2492,
+          "translationLength": 5856
+        },
+        {
+          "bookTitle": "Collection of Kabbalah and Hekhalot Texts",
+          "pageNumber": 7,
+          "provider": "bodleian",
+          "distance": 0.1472043189992439,
+          "ocrLength": 2606,
+          "translationLength": 5550
+        }
+      ]
+    },
+    {
+      "cell": "Hebrew-print",
+      "language": "Hebrew",
+      "condition": "print",
+      "n": 20,
+      "mean": 0.1266326002215107,
+      "median": 0.12588858783846013,
+      "stddev": 0.051953767917789016,
+      "min": 0.033751657337120156,
+      "max": 0.22234028843046028,
+      "outliers": [],
+      "pages": [
+        {
+          "bookTitle": "Sepher Maphteah Shelomo",
+          "pageNumber": 6,
+          "provider": "internet_archive",
+          "distance": 0.22234028843046028,
+          "ocrLength": 648,
+          "translationLength": 2436
+        },
+        {
+          "bookTitle": "Zohar (Genèse)",
+          "pageNumber": 11,
+          "provider": "gallica",
+          "distance": 0.1752750104012316,
+          "ocrLength": 409,
+          "translationLength": 223
+        },
+        {
+          "bookTitle": "Clavicula Salomonis (Hebrew Manuscript)",
+          "pageNumber": 4,
+          "provider": "internet_archive",
+          "distance": 0.11458740971331816,
+          "ocrLength": 160,
+          "translationLength": 679
+        },
+        {
+          "bookTitle": "Betser ba-Midbar (Kabbalistic Commentary on Torah)",
+          "pageNumber": 10,
+          "provider": "internet_archive",
+          "distance": 0.150866908275197,
+          "ocrLength": 1329,
+          "translationLength": 3188
+        },
+        {
+          "bookTitle": "Recueil de traités de Kabbale (Hebrew Manuscript)",
+          "pageNumber": 12,
+          "provider": "gallica",
+          "distance": 0.2158055013001975,
+          "ocrLength": 2019,
+          "translationLength": 6034
+        },
+        {
+          "bookTitle": "Recueil de traités de Kabbale (Isaac Ibn Latif)",
+          "pageNumber": 7,
+          "provider": "gallica",
+          "distance": 0.125149755238267,
+          "ocrLength": 915,
+          "translationLength": 1817
+        },
+        {
+          "bookTitle": "Sepher Raziel - Sixteenth Century English Grimoire",
+          "pageNumber": 6,
+          "provider": "internet_archive",
+          "distance": 0.11034539579110669,
+          "ocrLength": 1976,
+          "translationLength": 3055
+        },
+        {
+          "bookTitle": "Sefer ha-Zohar (Cremona 1558)",
+          "pageNumber": 6,
+          "provider": "internet_archive",
+          "distance": 0.16927567819338718,
+          "ocrLength": 1430,
+          "translationLength": 5704
+        },
+        {
+          "bookTitle": "Der Hebräische Pentateuch der Samaritaner",
+          "pageNumber": 11,
+          "provider": "internet_archive",
+          "distance": 0.10350341320829803,
+          "ocrLength": 4168,
+          "translationLength": 3764
+        },
+        {
+          "bookTitle": "Mishnah: Kaufmann Manuscript (Complete)",
+          "pageNumber": 12,
+          "provider": "internet_archive",
+          "distance": 0.14560980289375403,
+          "ocrLength": 1125,
+          "translationLength": 3268
+        },
+        {
+          "bookTitle": "Midrash Bereshit Rabbah (Theodor-Albeck Critical Edition)",
+          "pageNumber": 3,
+          "provider": "internet_archive",
+          "distance": 0.16545538520615555,
+          "ocrLength": 297,
+          "translationLength": 1023
+        },
+        {
+          "bookTitle": "Prague Haggadah (1526)",
+          "pageNumber": 12,
+          "provider": "internet_archive",
+          "distance": 0.12602141143486478,
+          "ocrLength": 1126,
+          "translationLength": 2840
+        },
+        {
+          "bookTitle": "Mikraot Gedolot: First Rabbinic Bible (Venice, 1517)",
+          "pageNumber": 10,
+          "provider": "internet_archive",
+          "distance": 0.12588858783846013,
+          "ocrLength": 8722,
+          "translationLength": 9685
+        },
+        {
+          "bookTitle": "3 Enoch, or The Hebrew Book of Enoch",
+          "pageNumber": 10,
+          "provider": "internet_archive",
+          "distance": 0.033751657337120156,
+          "ocrLength": 1490,
+          "translationLength": 1519
+        },
+        {
+          "bookTitle": "The Apocalypse of Abraham",
+          "pageNumber": 5,
+          "provider": "internet_archive",
+          "distance": 0.0604879708849444,
+          "ocrLength": 223,
+          "translationLength": 346
+        },
+        {
+          "bookTitle": "The Wisdom of Ben Sira (Hebrew, Cairo Genizah Fragments)",
+          "pageNumber": 11,
+          "provider": "internet_archive",
+          "distance": 0.07316568018588898,
+          "ocrLength": 926,
+          "translationLength": 607
+        },
+        {
+          "bookTitle": "Duodecim prophetae (Hebrew text)",
+          "pageNumber": 5,
+          "provider": "internet_archive",
+          "distance": 0.0602342683967666,
+          "ocrLength": 922,
+          "translationLength": 1209
+        },
+        {
+          "bookTitle": "Talmudis Babylonici Codex Middoth",
+          "pageNumber": 10,
+          "provider": "internet_archive",
+          "distance": 0.0745079561419616,
+          "ocrLength": 1016,
+          "translationLength": 1408
+        },
+        {
+          "bookTitle": "Grammatica Hebraica",
+          "pageNumber": 14,
+          "provider": "google_books",
+          "distance": 0.1946440359864866,
+          "ocrLength": 532,
+          "translationLength": 475
+        },
+        {
+          "bookTitle": "Composita Verborum et Nominum Hebraicorum",
+          "pageNumber": 11,
+          "provider": "google_books",
+          "distance": 0.08573588757234818,
+          "ocrLength": 1222,
+          "translationLength": 1545
+        }
+      ]
+    },
+    {
+      "cell": "Arabic-manuscript",
+      "language": "Arabic",
+      "condition": "manuscript",
+      "n": 20,
+      "mean": 0.1403536216472277,
+      "median": 0.14224380177417895,
+      "stddev": 0.051408552770727034,
+      "min": 0.0446236246352284,
+      "max": 0.26899652499937,
+      "outliers": [
+        {
+          "book": "Book of Curiosities (Kitab Gharaib al-fu",
+          "page": 7,
+          "distance": 0.26899652499937
+        }
+      ],
+      "pages": [
+        {
+          "bookTitle": "Book of Curiosities (Kitab Gharaib al-funun)",
+          "pageNumber": 6,
+          "provider": "bodleian",
+          "distance": 0.08916995385023208,
+          "ocrLength": 2572,
+          "translationLength": 4129
+        },
+        {
+          "bookTitle": "Kitab al-Bulhan Bodleian Library MS. Bodl. Or. 133",
+          "pageNumber": 7,
+          "provider": "bodleian",
+          "distance": 0.12133718533686222,
+          "ocrLength": 968,
+          "translationLength": 3034
+        },
+        {
+          "bookTitle": "Kitab al-Bulhan (Book of Wonders)",
+          "pageNumber": 11,
+          "provider": "bodleian",
+          "distance": 0.16358836851961278,
+          "ocrLength": 2231,
+          "translationLength": 3112
+        },
+        {
+          "bookTitle": "Collection of magical and other treatises ascribed to Hermes Trismegistus",
+          "pageNumber": 5,
+          "provider": "bodleian",
+          "distance": 0.08936112725599987,
+          "ocrLength": 1628,
+          "translationLength": 2712
+        },
+        {
+          "bookTitle": "Paracelsus — Arabic Translation (PH254)",
+          "pageNumber": 10,
+          "provider": "bph",
+          "distance": 0.1763489266575894,
+          "ocrLength": 2063,
+          "translationLength": 3409
+        },
+        {
+          "bookTitle": "The Ibn al-Bawwab Qur'an (Baghdad, c. 1000 CE)",
+          "pageNumber": 9,
+          "provider": "chester_beatty",
+          "distance": 0.145566697752459,
+          "ocrLength": 792,
+          "translationLength": 1790
+        },
+        {
+          "bookTitle": "The Ruzbihan Qur'an (Shiraz, c. 1410)",
+          "pageNumber": 11,
+          "provider": "chester_beatty",
+          "distance": 0.10813862958678189,
+          "ocrLength": 1635,
+          "translationLength": 2938
+        },
+        {
+          "bookTitle": "Hijazi Qur'an (possibly 7th century)",
+          "pageNumber": 10,
+          "provider": "chester_beatty",
+          "distance": 0.09344562155226188,
+          "ocrLength": 1913,
+          "translationLength": 3282
+        },
+        {
+          "bookTitle": "al-Shifa (The Cure) — Philosophy and Medicine",
+          "pageNumber": 10,
+          "provider": "chester_beatty",
+          "distance": 0.2127716324859461,
+          "ocrLength": 2645,
+          "translationLength": 4956
+        },
+        {
+          "bookTitle": "al-Fusul al-Hikmiyya (Philosophical Aphorisms)",
+          "pageNumber": 8,
+          "provider": "chester_beatty",
+          "distance": 0.12198392026623017,
+          "ocrLength": 1428,
+          "translationLength": 3021
+        },
+        {
+          "bookTitle": "Fourteen Texts on Geometry, Cosmology, Philosophy and the Qur'an",
+          "pageNumber": 9,
+          "provider": "chester_beatty",
+          "distance": 0.11638245162792182,
+          "ocrLength": 766,
+          "translationLength": 2585
+        },
+        {
+          "bookTitle": "Athar al-Bilad (Cosmography and Wonders of Creation)",
+          "pageNumber": 11,
+          "provider": "chester_beatty",
+          "distance": 0.1144923119171859,
+          "ocrLength": 2263,
+          "translationLength": 5022
+        },
+        {
+          "bookTitle": "Book of Curiosities (Kitab Gharaib al-funun)",
+          "pageNumber": 7,
+          "provider": "bodleian",
+          "distance": 0.26899652499937,
+          "ocrLength": 430,
+          "translationLength": 5511
+        },
+        {
+          "bookTitle": "Collection of magical and other treatises ascribed to Hermes Trismegistus",
+          "pageNumber": 10,
+          "provider": "bodleian",
+          "distance": 0.15118183663204343,
+          "ocrLength": 1522,
+          "translationLength": 2773
+        },
+        {
+          "bookTitle": "Paracelsus — Arabic Translation (PH254)",
+          "pageNumber": 11,
+          "provider": "bph",
+          "distance": 0.14224380177417895,
+          "ocrLength": 2112,
+          "translationLength": 3441
+        },
+        {
+          "bookTitle": "The Ruzbihan Qur'an (Shiraz, c. 1410)",
+          "pageNumber": 10,
+          "provider": "chester_beatty",
+          "distance": 0.09173929903675737,
+          "ocrLength": 1328,
+          "translationLength": 2369
+        },
+        {
+          "bookTitle": "Hijazi Qur'an (possibly 7th century)",
+          "pageNumber": 4,
+          "provider": "chester_beatty",
+          "distance": 0.0446236246352284,
+          "ocrLength": 2169,
+          "translationLength": 3683
+        },
+        {
+          "bookTitle": "al-Shifa (The Cure) — Philosophy and Medicine",
+          "pageNumber": 5,
+          "provider": "chester_beatty",
+          "distance": 0.21032693621660492,
+          "ocrLength": 2542,
+          "translationLength": 5507
+        },
+        {
+          "bookTitle": "al-Fusul al-Hikmiyya (Philosophical Aphorisms)",
+          "pageNumber": 10,
+          "provider": "chester_beatty",
+          "distance": 0.1817566769038791,
+          "ocrLength": 1301,
+          "translationLength": 3409
+        },
+        {
+          "bookTitle": "Fourteen Texts on Geometry, Cosmology, Philosophy and the Qur'an",
+          "pageNumber": 12,
+          "provider": "chester_beatty",
+          "distance": 0.16361690593740874,
+          "ocrLength": 955,
+          "translationLength": 2774
+        }
+      ]
+    },
+    {
+      "cell": "Arabic-print",
+      "language": "Arabic",
+      "condition": "print",
+      "n": 20,
+      "mean": 0.12374589773355552,
+      "median": 0.12449572747451965,
+      "stddev": 0.051443093431296445,
+      "min": 0.03353549576084891,
+      "max": 0.239041130749313,
+      "outliers": [
+        {
+          "book": "Amulette composée par Al-Buni",
+          "page": 7,
+          "distance": 0.239041130749313
+        }
+      ],
+      "pages": [
+        {
+          "bookTitle": "Picatrix (Ghāyat al-Ḥakīm)",
+          "pageNumber": 8,
+          "provider": "internet_archive",
+          "distance": 0.12364726967828044,
+          "ocrLength": 1876,
+          "translationLength": 3569
+        },
+        {
+          "bookTitle": "كتاب الموسيقى الكبير (Kitab al-Musiqa al-Kabir)",
+          "pageNumber": 4,
+          "provider": "internet_archive",
+          "distance": 0.19401302567908485,
+          "ocrLength": 630,
+          "translationLength": 2022
+        },
+        {
+          "bookTitle": "Majmu nafis fi al-kimiya (Jabir ibn Hayyan)",
+          "pageNumber": 5,
+          "provider": "internet_archive",
+          "distance": 0.049355316166038166,
+          "ocrLength": 803,
+          "translationLength": 1547
+        },
+        {
+          "bookTitle": "Ghayat al-Hakim (Arabic MS)",
+          "pageNumber": 8,
+          "provider": "internet_archive",
+          "distance": 0.15022348654046824,
+          "ocrLength": 656,
+          "translationLength": 3484
+        },
+        {
+          "bookTitle": "Awrad Ibn Arabi (Daily Prayers)",
+          "pageNumber": 12,
+          "provider": "internet_archive",
+          "distance": 0.16783047519980665,
+          "ocrLength": 1977,
+          "translationLength": 4528
+        },
+        {
+          "bookTitle": "Traite des medicaments (Jami al-Mufradat)",
+          "pageNumber": 8,
+          "provider": "gallica",
+          "distance": 0.09725209627465758,
+          "ocrLength": 3975,
+          "translationLength": 7705
+        },
+        {
+          "bookTitle": "Al-Lum'a al-nuraniyya (Radiant Sparks)",
+          "pageNumber": 5,
+          "provider": "gallica",
+          "distance": 0.12449572747451965,
+          "ocrLength": 1577,
+          "translationLength": 3435
+        },
+        {
+          "bookTitle": "Shams al-Ma'arif (Sun of Knowledge) - Talismans & Magic Squares",
+          "pageNumber": 9,
+          "provider": "gallica",
+          "distance": 0.14326388230605103,
+          "ocrLength": 1742,
+          "translationLength": 4302
+        },
+        {
+          "bookTitle": "Amulette composée par Al-Buni",
+          "pageNumber": 7,
+          "provider": "gallica",
+          "distance": 0.239041130749313,
+          "ocrLength": 1002,
+          "translationLength": 2163
+        },
+        {
+          "bookTitle": "Introductorium in Astronomiam",
+          "pageNumber": 12,
+          "provider": "internet_archive",
+          "distance": 0.0888391607315474,
+          "ocrLength": 3370,
+          "translationLength": 5044
+        },
+        {
+          "bookTitle": "The Incoherence of the Philosophers (Tahafut al-Falasifa)",
+          "pageNumber": 4,
+          "provider": "internet_archive",
+          "distance": 0.1294347438522978,
+          "ocrLength": 1251,
+          "translationLength": 1223
+        },
+        {
+          "bookTitle": "Shams al-Maarif al-Kubra",
+          "pageNumber": 4,
+          "provider": "gallica",
+          "distance": 0.16162889446317086,
+          "ocrLength": 1744,
+          "translationLength": 4579
+        },
+        {
+          "bookTitle": "Merveilles des pays",
+          "pageNumber": 4,
+          "provider": "gallica",
+          "distance": 0.07136947589549503,
+          "ocrLength": 1335,
+          "translationLength": 2146
+        },
+        {
+          "bookTitle": "Al-Coranus: First Printed Arabic Quran",
+          "pageNumber": 12,
+          "provider": "internet_archive",
+          "distance": 0.042727420018745965,
+          "ocrLength": 467,
+          "translationLength": 469
+        },
+        {
+          "bookTitle": "The Code of Hammurabi",
+          "pageNumber": 11,
+          "provider": "internet_archive",
+          "distance": 0.12065134585393233,
+          "ocrLength": 766,
+          "translationLength": 1977
+        },
+        {
+          "bookTitle": "Al-Kitab al-Muqaddas: Arabic Bible",
+          "pageNumber": 8,
+          "provider": "internet_archive",
+          "distance": 0.1412344822471412,
+          "ocrLength": 1623,
+          "translationLength": 3665
+        },
+        {
+          "bookTitle": "The Quran, Part 1 (SBE Vol. 6)",
+          "pageNumber": 9,
+          "provider": "internet_archive",
+          "distance": 0.03353549576084891,
+          "ocrLength": 352,
+          "translationLength": 258
+        },
+        {
+          "bookTitle": "Three Theological Treatises (Manuscript, 4 years after Ghazālī)",
+          "pageNumber": 4,
+          "provider": "internet_archive",
+          "distance": 0.12194601263318294,
+          "ocrLength": 1758,
+          "translationLength": 3176
+        },
+        {
+          "bookTitle": "Rasa'il al-Hikma (Epistles of Wisdom)",
+          "pageNumber": 5,
+          "provider": "internet_archive",
+          "distance": 0.0891370464331902,
+          "ocrLength": 1314,
+          "translationLength": 2108
+        },
+        {
+          "bookTitle": "Ihya Ulum al-Din (Revival of the Religious Sciences)",
+          "pageNumber": 6,
+          "provider": "internet_archive",
+          "distance": 0.18529146671333807,
+          "ocrLength": 1256,
+          "translationLength": 3414
+        }
+      ]
+    },
+    {
+      "cell": "Sanskrit-manuscript",
+      "language": "Sanskrit",
+      "condition": "manuscript",
+      "n": 2,
+      "mean": 0.21040726425848977,
+      "median": 0.2523676377808336,
+      "stddev": 0.04196037352234383,
+      "min": 0.16844689073614594,
+      "max": 0.2523676377808336,
+      "outliers": [],
+      "pages": [
+        {
+          "bookTitle": "Kriyāsamuccaya (Tantric Ritual Collection)",
+          "pageNumber": 9,
+          "provider": "bdrc",
+          "distance": 0.16844689073614594,
+          "ocrLength": 1086,
+          "translationLength": 1519
+        },
+        {
+          "bookTitle": "Kriyāsamuccaya (Tantric Ritual Collection)",
+          "pageNumber": 11,
+          "provider": "bdrc",
+          "distance": 0.2523676377808336,
+          "ocrLength": 997,
+          "translationLength": 1496
+        }
+      ]
+    },
+    {
+      "cell": "Sanskrit-print",
+      "language": "Sanskrit",
+      "condition": "print",
+      "n": 20,
+      "mean": 0.14410252471208668,
+      "median": 0.15537529309475984,
+      "stddev": 0.03681910168332019,
+      "min": 0.07760818228397914,
+      "max": 0.19610472896531062,
+      "outliers": [],
+      "pages": [
+        {
+          "bookTitle": "Gheranda Samhita",
+          "pageNumber": 9,
+          "provider": "internet_archive",
+          "distance": 0.09603655280907197,
+          "ocrLength": 1800,
+          "translationLength": 3029
+        },
+        {
+          "bookTitle": "Shiva Samhita (Sanskrit with English)",
+          "pageNumber": 8,
+          "provider": "internet_archive",
+          "distance": 0.16393918310517264,
+          "ocrLength": 787,
+          "translationLength": 2816
+        },
+        {
+          "bookTitle": "Sangita Ratnakara",
+          "pageNumber": 5,
+          "provider": "internet_archive",
+          "distance": 0.09718777219655739,
+          "ocrLength": 1579,
+          "translationLength": 2268
+        },
+        {
+          "bookTitle": "Abhidharmakosa with Bhashya",
+          "pageNumber": 3,
+          "provider": "internet_archive",
+          "distance": 0.09281752023327428,
+          "ocrLength": 557,
+          "translationLength": 1197
+        },
+        {
+          "bookTitle": "Tantraloka Vol. 1 with Jayaratha Commentary",
+          "pageNumber": 12,
+          "provider": "internet_archive",
+          "distance": 0.1433392350753231,
+          "ocrLength": 880,
+          "translationLength": 2467
+        },
+        {
+          "bookTitle": "Yoga-System of Patanjali (Woods - Harvard)",
+          "pageNumber": 5,
+          "provider": "internet_archive",
+          "distance": 0.14297961324217245,
+          "ocrLength": 144,
+          "translationLength": 1194
+        },
+        {
+          "bookTitle": "Kularnava Tantra",
+          "pageNumber": 5,
+          "provider": "internet_archive",
+          "distance": 0.18964984829959008,
+          "ocrLength": 426,
+          "translationLength": 3983
+        },
+        {
+          "bookTitle": "Yoga-Darsana: Sutras with Bhashya of Vyasa",
+          "pageNumber": 6,
+          "provider": "internet_archive",
+          "distance": 0.12473360962510294,
+          "ocrLength": 587,
+          "translationLength": 1125
+        },
+        {
+          "bookTitle": "Dattilam",
+          "pageNumber": 10,
+          "provider": "internet_archive",
+          "distance": 0.15537529309475984,
+          "ocrLength": 1646,
+          "translationLength": 3855
+        },
+        {
+          "bookTitle": "Surya Siddhanta with Gudhartha-prakasaka",
+          "pageNumber": 7,
+          "provider": "internet_archive",
+          "distance": 0.19610472896531062,
+          "ocrLength": 2141,
+          "translationLength": 2789
+        },
+        {
+          "bookTitle": "Brihat Samhita",
+          "pageNumber": 3,
+          "provider": "internet_archive",
+          "distance": 0.0933630634191861,
+          "ocrLength": 858,
+          "translationLength": 853
+        },
+        {
+          "bookTitle": "Brihat Jataka with Bhattotpala Commentary",
+          "pageNumber": 10,
+          "provider": "internet_archive",
+          "distance": 0.1578160594996566,
+          "ocrLength": 3018,
+          "translationLength": 5223
+        },
+        {
+          "bookTitle": "Phaladeepika",
+          "pageNumber": 3,
+          "provider": "internet_archive",
+          "distance": 0.18324135338848901,
+          "ocrLength": 1812,
+          "translationLength": 2912
+        },
+        {
+          "bookTitle": "Aryabhatiya with Bhatadipika of Paramesvara",
+          "pageNumber": 11,
+          "provider": "internet_archive",
+          "distance": 0.15527609606005155,
+          "ocrLength": 1329,
+          "translationLength": 3808
+        },
+        {
+          "bookTitle": "Panchasiddhantika",
+          "pageNumber": 9,
+          "provider": "internet_archive",
+          "distance": 0.07760818228397914,
+          "ocrLength": 3189,
+          "translationLength": 4147
+        },
+        {
+          "bookTitle": "Saravali",
+          "pageNumber": 3,
+          "provider": "internet_archive",
+          "distance": 0.1572324390506935,
+          "ocrLength": 1258,
+          "translationLength": 2728
+        },
+        {
+          "bookTitle": "Muhurta Chintamani",
+          "pageNumber": 11,
+          "provider": "internet_archive",
+          "distance": 0.18419897496595294,
+          "ocrLength": 2270,
+          "translationLength": 3886
+        },
+        {
+          "bookTitle": "Jataka Parijata",
+          "pageNumber": 10,
+          "provider": "internet_archive",
+          "distance": 0.11111863725675342,
+          "ocrLength": 1386,
+          "translationLength": 3424
+        },
+        {
+          "bookTitle": "Tajika Nilakanthi",
+          "pageNumber": 3,
+          "provider": "internet_archive",
+          "distance": 0.18184684467493917,
+          "ocrLength": 1923,
+          "translationLength": 2970
+        },
+        {
+          "bookTitle": "Laghu Parashari",
+          "pageNumber": 6,
+          "provider": "internet_archive",
+          "distance": 0.17818548699569658,
+          "ocrLength": 1963,
+          "translationLength": 4809
+        }
+      ]
+    },
+    {
+      "cell": "Greek-manuscript",
+      "language": "Greek",
+      "condition": "manuscript",
+      "n": 20,
+      "mean": 0.1178122731823276,
+      "median": 0.11863730022723629,
+      "stddev": 0.034302694412387764,
+      "min": 0.07617915232877825,
+      "max": 0.18171394978103783,
+      "outliers": [],
+      "pages": [
+        {
+          "bookTitle": "[Greek] Argonauticon libri IIII",
+          "pageNumber": 7,
+          "provider": "bph",
+          "distance": 0.11955827315245737,
+          "ocrLength": 1291,
+          "translationLength": 2711
+        },
+        {
+          "bookTitle": "[Greek] Ecclesiasticae historiae",
+          "pageNumber": 12,
+          "provider": "bph",
+          "distance": 0.07776734578867506,
+          "ocrLength": 1353,
+          "translationLength": 2564
+        },
+        {
+          "bookTitle": "[Greek] Evangelicae praeparationis",
+          "pageNumber": 9,
+          "provider": "bph",
+          "distance": 0.09711131388320027,
+          "ocrLength": 2855,
+          "translationLength": 4530
+        },
+        {
+          "bookTitle": "[Greek]: Opera quae extant omnia",
+          "pageNumber": 5,
+          "provider": "bph",
+          "distance": 0.14583443545133545,
+          "ocrLength": 2347,
+          "translationLength": 3946
+        },
+        {
+          "bookTitle": "[Greek] De sacris notis et sculpturis",
+          "pageNumber": 10,
+          "provider": "bph",
+          "distance": 0.11882353134266443,
+          "ocrLength": 720,
+          "translationLength": 2090
+        },
+        {
+          "bookTitle": "Plato, Dialogues (copied by Leonardo Bruni)",
+          "pageNumber": 3,
+          "provider": "e-codices",
+          "distance": 0.07617915232877825,
+          "ocrLength": 231,
+          "translationLength": 341
+        },
+        {
+          "bookTitle": "Euripides, Phoinissae (The Phoenician Women)",
+          "pageNumber": 9,
+          "provider": "e-codices",
+          "distance": 0.10862798186786671,
+          "ocrLength": 763,
+          "translationLength": 1444
+        },
+        {
+          "bookTitle": "Theophrastus and Aristotle, Corpus (Aldine source MS)",
+          "pageNumber": 12,
+          "provider": "e-codices",
+          "distance": 0.18171394978103783,
+          "ocrLength": 1586,
+          "translationLength": 1694
+        },
+        {
+          "bookTitle": "Strategicon; De velitatione bellica; Apparatus bellicus",
+          "pageNumber": 11,
+          "provider": "e-codices",
+          "distance": 0.17840349825257462,
+          "ocrLength": 1507,
+          "translationLength": 1647
+        },
+        {
+          "bookTitle": "Codex Delta: Greek Gospels with Latin Interlinear",
+          "pageNumber": 6,
+          "provider": "e-codices",
+          "distance": 0.11863730022723629,
+          "ocrLength": 1442,
+          "translationLength": 3018
+        },
+        {
+          "bookTitle": "Galen, De simplicium medicamentorum facultatibus",
+          "pageNumber": 7,
+          "provider": "e-codices",
+          "distance": 0.1298647987240631,
+          "ocrLength": 2139,
+          "translationLength": 2514
+        },
+        {
+          "bookTitle": "Praxapostolos: Acts and Epistles (Erasmus, 12th c.)",
+          "pageNumber": 8,
+          "provider": "e-codices",
+          "distance": 0.0800049115488164,
+          "ocrLength": 1062,
+          "translationLength": 1342
+        },
+        {
+          "bookTitle": "Tetraevangelium (Greek Gospels, 8th-9th c.)",
+          "pageNumber": 11,
+          "provider": "e-codices",
+          "distance": 0.11936120483238721,
+          "ocrLength": 843,
+          "translationLength": 1313
+        },
+        {
+          "bookTitle": "Elias of Crete, Commentary on Gregory of Nazianzus",
+          "pageNumber": 7,
+          "provider": "e-codices",
+          "distance": 0.08918335629776108,
+          "ocrLength": 4001,
+          "translationLength": 6444
+        },
+        {
+          "bookTitle": "Athanasius of Alexandria, Works (Vol. 1)",
+          "pageNumber": 9,
+          "provider": "e-codices",
+          "distance": 0.1156506860234805,
+          "ocrLength": 1343,
+          "translationLength": 1795
+        },
+        {
+          "bookTitle": "Euclid, Elements I-XV (888 CE, oldest dated classical MS)",
+          "pageNumber": 10,
+          "provider": "bodleian",
+          "distance": 0.08256451881459881,
+          "ocrLength": 2450,
+          "translationLength": 2664
+        },
+        {
+          "bookTitle": "Proclus, Commentary on Plato Alcibiades I; Commentary on Homer Iliad",
+          "pageNumber": 9,
+          "provider": "bodleian",
+          "distance": 0.1725219330312172,
+          "ocrLength": 1801,
+          "translationLength": 3684
+        },
+        {
+          "bookTitle": "Aristotle, Organon (Logical Treatises)",
+          "pageNumber": 8,
+          "provider": "bodleian",
+          "distance": 0.0797283441914991,
+          "ocrLength": 1569,
+          "translationLength": 2854
+        },
+        {
+          "bookTitle": "Herodotus, Historiae; Plutarch; Plethon",
+          "pageNumber": 10,
+          "provider": "bodleian",
+          "distance": 0.0961001200584537,
+          "ocrLength": 3776,
+          "translationLength": 5330
+        },
+        {
+          "bookTitle": "Plutarch, Lives",
+          "pageNumber": 7,
+          "provider": "bodleian",
+          "distance": 0.16860880804844858,
+          "ocrLength": 1811,
+          "translationLength": 2149
+        }
+      ]
+    },
+    {
+      "cell": "Greek-print",
+      "language": "Greek",
+      "condition": "print",
+      "n": 20,
+      "mean": 0.11304925210802,
+      "median": 0.12568744680521304,
+      "stddev": 0.041578349126831296,
+      "min": -2.220446049250313e-16,
+      "max": 0.16389797064306333,
+      "outliers": [],
+      "pages": [
+        {
+          "bookTitle": "Oracula Sibyllina (Greek Text)",
+          "pageNumber": 8,
+          "provider": "internet_archive",
+          "distance": 0.15916950612501646,
+          "ocrLength": 120,
+          "translationLength": 722
+        },
+        {
+          "bookTitle": "Origenis Philocalia (Greek Text 1677)",
+          "pageNumber": 7,
+          "provider": "internet_archive",
+          "distance": 0.1419423183951216,
+          "ocrLength": 2343,
+          "translationLength": 3806
+        },
+        {
+          "bookTitle": "De Administrando Imperio",
+          "pageNumber": 9,
+          "provider": "internet_archive",
+          "distance": 0.12568744680521304,
+          "ocrLength": 3508,
+          "translationLength": 5602
+        },
+        {
+          "bookTitle": "Digenes Akrites (Greek Epic)",
+          "pageNumber": 6,
+          "provider": "internet_archive",
+          "distance": 0.06321731057473734,
+          "ocrLength": 2658,
+          "translationLength": 3603
+        },
+        {
+          "bookTitle": "Novum Testamentum Graece (Tischendorf)",
+          "pageNumber": 10,
+          "provider": "internet_archive",
+          "distance": 0.1181588641845045,
+          "ocrLength": 471,
+          "translationLength": 1551
+        },
+        {
+          "bookTitle": "Septuaginta (Greek Old Testament)",
+          "pageNumber": 3,
+          "provider": "internet_archive",
+          "distance": 0.16363524606116342,
+          "ocrLength": 737,
+          "translationLength": 452
+        },
+        {
+          "bookTitle": "Novum Testamentum Graece",
+          "pageNumber": 12,
+          "provider": "internet_archive",
+          "distance": 0.12284306636350151,
+          "ocrLength": 2228,
+          "translationLength": 4024
+        },
+        {
+          "bookTitle": "Philokalia (Greek Text, Athens 1893)",
+          "pageNumber": 7,
+          "provider": "internet_archive",
+          "distance": 0.1434470596030495,
+          "ocrLength": 3877,
+          "translationLength": 5696
+        },
+        {
+          "bookTitle": "Papyri Graecae Magicae (Preisendanz)",
+          "pageNumber": 12,
+          "provider": "internet_archive",
+          "distance": 0.12925887520742751,
+          "ocrLength": 1538,
+          "translationLength": 2331
+        },
+        {
+          "bookTitle": "Zenon Papyri Vol. III - Cairo Museum",
+          "pageNumber": 9,
+          "provider": "internet_archive",
+          "distance": 0.05686024555219471,
+          "ocrLength": 4128,
+          "translationLength": 5480
+        },
+        {
+          "bookTitle": "Epictetus Discourses Vol. 2 (Books 3-4) & Encheiridion",
+          "pageNumber": 7,
+          "provider": "internet_archive",
+          "distance": 0.07982836579795605,
+          "ocrLength": 576,
+          "translationLength": 1022
+        },
+        {
+          "bookTitle": "Opera Omnia Vol. I",
+          "pageNumber": 3,
+          "provider": "internet_archive",
+          "distance": -2.220446049250313e-16,
+          "ocrLength": 515,
+          "translationLength": 515
+        },
+        {
+          "bookTitle": "Monumenta Sacra Inedita (Tischendorf)",
+          "pageNumber": 10,
+          "provider": "internet_archive",
+          "distance": 0.12721170538093463,
+          "ocrLength": 1372,
+          "translationLength": 2563
+        },
+        {
+          "bookTitle": "Aristotelis Opera Omnia (Greek)",
+          "pageNumber": 3,
+          "provider": "internet_archive",
+          "distance": 0.15319410888353102,
+          "ocrLength": 936,
+          "translationLength": 1298
+        },
+        {
+          "bookTitle": "Plato Statesman & Philebus",
+          "pageNumber": 8,
+          "provider": "internet_archive",
+          "distance": 0.16389797064306333,
+          "ocrLength": 296,
+          "translationLength": 414
+        },
+        {
+          "bookTitle": "Plato Euthyphro, Apology, Crito, Phaedo, Phaedrus",
+          "pageNumber": 9,
+          "provider": "internet_archive",
+          "distance": 0.10932562651944222,
+          "ocrLength": 414,
+          "translationLength": 1003
+        },
+        {
+          "bookTitle": "Musici Scriptores Graeci",
+          "pageNumber": 11,
+          "provider": "internet_archive",
+          "distance": 0.10301456471666692,
+          "ocrLength": 1302,
+          "translationLength": 2095
+        },
+        {
+          "bookTitle": "Opuscula Tria (incl. Vita Pythagorae)",
+          "pageNumber": 8,
+          "provider": "internet_archive",
+          "distance": 0.0573850070503511,
+          "ocrLength": 625,
+          "translationLength": 1127
+        },
+        {
+          "bookTitle": "In Aristotelis Physicorum Libros Commentaria",
+          "pageNumber": 5,
+          "provider": "internet_archive",
+          "distance": 0.10901372726090819,
+          "ocrLength": 292,
+          "translationLength": 804
+        },
+        {
+          "bookTitle": "Corpus Hermeticum (Greek manuscript)",
+          "pageNumber": 9,
+          "provider": "gallica",
+          "distance": 0.1338940270356167,
+          "ocrLength": 1596,
+          "translationLength": 1853
+        }
+      ]
+    }
+  ],
+  "summary": {
+    "Latin-manuscript": {
+      "n": 20,
+      "mean": 0.16359243933574982,
+      "median": 0.17031133057130665,
+      "stddev": 0.04367871170496867,
+      "min": 0.07437152370452493,
+      "max": 0.2378732468998005,
+      "outlierCount": 0
+    },
+    "Latin-print": {
+      "n": 20,
+      "mean": 0.12944712119245877,
+      "median": 0.12349299649659595,
+      "stddev": 0.0337194178999383,
+      "min": 0.07276484304527253,
+      "max": 0.21042386007701508,
+      "outlierCount": 1
+    },
+    "Hebrew-manuscript": {
+      "n": 20,
+      "mean": 0.14894589658373186,
+      "median": 0.1472043189992439,
+      "stddev": 0.04321297019705801,
+      "min": 0.07618136797007191,
+      "max": 0.26034895304870365,
+      "outlierCount": 1
+    },
+    "Hebrew-print": {
+      "n": 20,
+      "mean": 0.1266326002215107,
+      "median": 0.12588858783846013,
+      "stddev": 0.051953767917789016,
+      "min": 0.033751657337120156,
+      "max": 0.22234028843046028,
+      "outlierCount": 0
+    },
+    "Arabic-manuscript": {
+      "n": 20,
+      "mean": 0.1403536216472277,
+      "median": 0.14224380177417895,
+      "stddev": 0.051408552770727034,
+      "min": 0.0446236246352284,
+      "max": 0.26899652499937,
+      "outlierCount": 1
+    },
+    "Arabic-print": {
+      "n": 20,
+      "mean": 0.12374589773355552,
+      "median": 0.12449572747451965,
+      "stddev": 0.051443093431296445,
+      "min": 0.03353549576084891,
+      "max": 0.239041130749313,
+      "outlierCount": 1
+    },
+    "Sanskrit-manuscript": {
+      "n": 2,
+      "mean": 0.21040726425848977,
+      "median": 0.2523676377808336,
+      "stddev": 0.04196037352234383,
+      "min": 0.16844689073614594,
+      "max": 0.2523676377808336,
+      "outlierCount": 0
+    },
+    "Sanskrit-print": {
+      "n": 20,
+      "mean": 0.14410252471208668,
+      "median": 0.15537529309475984,
+      "stddev": 0.03681910168332019,
+      "min": 0.07760818228397914,
+      "max": 0.19610472896531062,
+      "outlierCount": 0
+    },
+    "Greek-manuscript": {
+      "n": 20,
+      "mean": 0.1178122731823276,
+      "median": 0.11863730022723629,
+      "stddev": 0.034302694412387764,
+      "min": 0.07617915232877825,
+      "max": 0.18171394978103783,
+      "outlierCount": 0
+    },
+    "Greek-print": {
+      "n": 20,
+      "mean": 0.11304925210802,
+      "median": 0.12568744680521304,
+      "stddev": 0.041578349126831296,
+      "min": -2.220446049250313e-16,
+      "max": 0.16389797064306333,
+      "outlierCount": 0
+    }
+  }
+}
