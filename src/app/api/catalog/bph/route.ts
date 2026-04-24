@@ -1,5 +1,5 @@
 import { NextRequest, NextResponse } from 'next/server';
-import { supabase } from '@/lib/supabase';
+import { supabase, sanitizeFilterValue } from '@/lib/supabase';
 
 export const dynamic = 'force-dynamic';
 
@@ -19,7 +19,8 @@ export async function GET(req: NextRequest) {
 
   // Text search
   if (q.length >= 2) {
-    query = query.or(`title.ilike.%${q}%,author.ilike.%${q}%,shelf_mark.ilike.%${q}%`);
+    const safe = sanitizeFilterValue(q);
+    query = query.or(`title.ilike.%${safe}%,author.ilike.%${safe}%,shelf_mark.ilike.%${safe}%`);
   }
 
   // Keyword filter

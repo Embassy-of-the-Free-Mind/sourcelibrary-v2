@@ -3,6 +3,7 @@ import { getNextApiKey } from '@/lib/gemini-client';
 import { getDb } from '@/lib/mongodb';
 import { supabase } from '@/lib/supabase';
 import { semanticArtworkSearch, type SemanticArtworkResult } from '@/lib/semantic-search';
+import { checkRateLimit, getClientIp } from '@/lib/rate-limit';
 
 export const maxDuration = 30;
 export const dynamic = 'force-dynamic';
@@ -88,6 +89,11 @@ interface IdentifyResult {
 }
 
 export async function POST(request: NextRequest) {
+  const rl = checkRateLimit({ name: 'identify', limit: 10, windowSeconds: 3600 }, getClientIp(request));
+  if (!rl.allowed) {
+    return NextResponse.json({ error: 'Rate limit exceeded' }, { status: 429, headers: { 'Retry-After': String(rl.retryAfter) } });
+  }
+
   try {
     const formData = await request.formData();
     const file = formData.get('image') as File | null;

@@ -2,7 +2,7 @@ import { NextRequest, NextResponse } from 'next/server';
 import { getDb } from '@/lib/mongodb';
 import { z } from 'zod';
 import { logAuditEvent } from '@/lib/audit-logger';
-import { withAuth } from '@/lib/auth-helpers';
+import { withAuth, withAdminAuth } from '@/lib/auth-helpers';
 import { createRevision } from '@/lib/page-revisions';
 import { contentHash } from '@/lib/steganographia';
 
@@ -177,7 +177,7 @@ export const PATCH = withAuth(async (request, session, context) => {
   }
 });
 
-export const DELETE = withAuth(async (request, session, context) => {
+export const DELETE = withAdminAuth(async (request, session, context) => {
   try {
     const { id } = await context.params;
     const db = await getDb();

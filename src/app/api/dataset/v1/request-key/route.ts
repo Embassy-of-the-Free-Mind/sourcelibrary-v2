@@ -1,5 +1,6 @@
 import { NextRequest, NextResponse } from 'next/server';
 import { getDb } from '@/lib/mongodb';
+import { checkRateLimit, getClientIp } from '@/lib/rate-limit';
 
 /**
  * POST /api/dataset/v1/request-key — Public endpoint to request an API key
@@ -9,6 +10,11 @@ import { getDb } from '@/lib/mongodb';
  * Creates a pending request that an admin can approve.
  */
 export async function POST(request: NextRequest) {
+  const rl = checkRateLimit({ name: 'request-key', limit: 3, windowSeconds: 3600 }, getClientIp(request));
+  if (!rl.allowed) {
+    return NextResponse.json({ error: 'Rate limit exceeded' }, { status: 429, headers: { 'Retry-After': String(rl.retryAfter) } });
+  }
+
   const body = await request.json();
   const { name, email, organization, use_case, tier } = body;
 
