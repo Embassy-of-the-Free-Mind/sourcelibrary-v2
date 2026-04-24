@@ -8,6 +8,7 @@ import { bookUrl } from '@/lib/slugify';
 import { firstTranslationBadge } from '@/lib/first-translation-labels';
 import AuthorName from '@/components/AuthorName';
 import { getBookThumbnailUrl } from '@/lib/utils';
+import ImageWithMagnifier from '@/components/ui/ImageWithMagnifier';
 
 // ─── Types ──────────────────────────────────────────────────────
 
@@ -429,33 +430,29 @@ function FeaturedImageBlock({ image, caption }: {
   const src = image ? imageUrl(image) : '';
   if (!src) return null;
 
-  const inner = (
+  return (
     <figure className="rounded-xl overflow-hidden border border-border-light shadow-lg">
-      <div className="relative aspect-[3/2] sm:aspect-[16/9] bg-dark">
-        <Image
+      <div className="relative bg-dark">
+        <ImageWithMagnifier
           src={src}
+          highResSrc={src}
           alt={image?.museum_description || caption}
-          fill
-          className="object-contain"
-          sizes="(min-width: 1024px) 900px, 100vw"
-          unoptimized
+          className="w-full aspect-[3/2] sm:aspect-[16/9] object-contain"
+          magnifierSize={250}
+          zoomLevel={3}
+          darkMode
         />
       </div>
       <figcaption className="px-5 py-3 text-sm text-secondary bg-white leading-relaxed">
         {caption}
+        {image?.book_id && (
+          <Link href={imagePageHref(image)} className="text-accent-rust hover:underline ml-2 text-xs">
+            View in book &rarr;
+          </Link>
+        )}
       </figcaption>
     </figure>
   );
-
-  if (image?.book_id) {
-    return (
-      <Link href={imagePageHref(image)} className="block hover:opacity-95 transition-opacity">
-        {inner}
-      </Link>
-    );
-  }
-
-  return inner;
 }
 
 // ─── Component: Reading Paths ───────────────────────────────────
@@ -662,7 +659,7 @@ function GalleryGridBlock({ embeddedImages, fallbackImages, indices, title }: {
                 fill
                 className="object-cover group-hover:scale-105 transition-transform duration-300"
                 sizes="(min-width: 1024px) 200px, (min-width: 640px) 160px, 50vw"
-                unoptimized
+                quality={75}
               />
               {img.type && (
                 <span className="absolute bottom-1.5 left-1.5 text-[10px] bg-dark/70 text-white px-1.5 py-0.5 rounded capitalize">
