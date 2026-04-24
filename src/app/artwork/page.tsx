@@ -55,7 +55,7 @@ export default async function ArtworkLandingPage() {
               const img = sanitizeThumbnail(col.featured_images?.[0]?.thumbnail_url || col.featured_images?.[0]?.extracted_url || '');
               return img ? (
                 <div key={col.slug} className="relative">
-                  <Image src={img as string} alt="" fill className="object-cover" sizes="25vw" onError={(e) => { (e.target as HTMLImageElement).style.display = 'none'; }} />
+                  <Image src={img as string} alt="" fill className="object-cover" sizes="25vw" />
                 </div>
               ) : <div key={col.slug} />;
             })}
@@ -100,7 +100,7 @@ export default async function ArtworkLandingPage() {
                       className="object-cover group-hover:scale-[1.03] transition-transform duration-700"
                       sizes={i === 0 ? '(max-width: 1024px) 100vw, 66vw' : '(max-width: 1024px) 100vw, 33vw'}
                       priority
-                      onError={(e) => { (e.target as HTMLImageElement).style.display = 'none'; }}
+                     
                     />
                   )}
                   <div className="absolute inset-0 bg-gradient-to-t from-black/80 via-black/30 to-transparent" />
@@ -137,7 +137,7 @@ export default async function ArtworkLandingPage() {
                       fill
                       className="object-cover group-hover:scale-[1.03] transition-transform duration-700"
                       sizes="(max-width: 640px) 100vw, (max-width: 1024px) 50vw, 25vw"
-                      onError={(e) => { (e.target as HTMLImageElement).style.display = 'none'; }}
+                     
                     />
                   )}
                   <div className="absolute inset-0 bg-gradient-to-t from-black/70 via-black/20 to-transparent" />
