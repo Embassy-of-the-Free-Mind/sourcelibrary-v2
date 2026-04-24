@@ -1,0 +1,968 @@
+{
+  "cell_posteriors": {
+    "Armenian:HIGH": {
+      "k": 0,
+      "n": 5,
+      "posterior": {
+        "a": 0.5,
+        "b": 5.5,
+        "mean": 0.0833,
+        "ci95": [
+          0.0001,
+          1
+        ]
+      }
+    },
+    "Armenian:LOW": {
+      "k": 2,
+      "n": 5,
+      "posterior": {
+        "a": 2.5,
+        "b": 3.5,
+        "mean": 0.4167,
+        "ci95": [
+          0.0944,
+          0.7906
+        ]
+      }
+    },
+    "Armenian:MEDIUM": {
+      "k": 2,
+      "n": 5,
+      "posterior": {
+        "a": 2.5,
+        "b": 3.5,
+        "mean": 0.4167,
+        "ci95": [
+          0.0944,
+          0.7906
+        ]
+      }
+    },
+    "Armenian:MINIMAL": {
+      "k": 1,
+      "n": 5,
+      "posterior": {
+        "a": 1.5,
+        "b": 4.5,
+        "mean": 0.25,
+        "ci95": [
+          0.0225,
+          0.6288
+        ]
+      }
+    },
+    "Armenian:NONE": {
+      "k": 1,
+      "n": 5,
+      "posterior": {
+        "a": 1.5,
+        "b": 4.5,
+        "mean": 0.25,
+        "ci95": [
+          0.0225,
+          0.6288
+        ]
+      }
+    },
+    "Arabic:HIGH": {
+      "k": 0,
+      "n": 5,
+      "posterior": {
+        "a": 0.5,
+        "b": 5.5,
+        "mean": 0.0833,
+        "ci95": [
+          0.0001,
+          1
+        ]
+      }
+    },
+    "Arabic:LOW": {
+      "k": 0,
+      "n": 5,
+      "posterior": {
+        "a": 0.5,
+        "b": 5.5,
+        "mean": 0.0833,
+        "ci95": [
+          0.0001,
+          1
+        ]
+      }
+    },
+    "Arabic:MEDIUM": {
+      "k": 0,
+      "n": 5,
+      "posterior": {
+        "a": 0.5,
+        "b": 5.5,
+        "mean": 0.0833,
+        "ci95": [
+          0.0001,
+          1
+        ]
+      }
+    },
+    "Arabic:MINIMAL": {
+      "k": 0,
+      "n": 5,
+      "posterior": {
+        "a": 0.5,
+        "b": 5.5,
+        "mean": 0.0833,
+        "ci95": [
+          0.0001,
+          1
+        ]
+      }
+    },
+    "Arabic:NONE": {
+      "k": 0,
+      "n": 5,
+      "posterior": {
+        "a": 0.5,
+        "b": 5.5,
+        "mean": 0.0833,
+        "ci95": [
+          0.0001,
+          1
+        ]
+      }
+    },
+    "Greek:HIGH": {
+      "k": 0,
+      "n": 5,
+      "posterior": {
+        "a": 0.5,
+        "b": 5.5,
+        "mean": 0.0833,
+        "ci95": [
+          0.0001,
+          1
+        ]
+      }
+    },
+    "Greek:LOW": {
+      "k": 1,
+      "n": 5,
+      "posterior": {
+        "a": 1.5,
+        "b": 4.5,
+        "mean": 0.25,
+        "ci95": [
+          0.0225,
+          0.6288
+        ]
+      }
+    },
+    "Greek:MEDIUM": {
+      "k": 1,
+      "n": 5,
+      "posterior": {
+        "a": 1.5,
+        "b": 4.5,
+        "mean": 0.25,
+        "ci95": [
+          0.0225,
+          0.6288
+        ]
+      }
+    },
+    "Greek:MINIMAL": {
+      "k": 1,
+      "n": 5,
+      "posterior": {
+        "a": 1.5,
+        "b": 4.5,
+        "mean": 0.25,
+        "ci95": [
+          0.0225,
+          0.6288
+        ]
+      }
+    },
+    "Greek:NONE": {
+      "k": 1,
+      "n": 5,
+      "posterior": {
+        "a": 1.5,
+        "b": 4.5,
+        "mean": 0.25,
+        "ci95": [
+          0.0225,
+          0.6288
+        ]
+      }
+    },
+    "Japanese:HIGH": {
+      "k": 0,
+      "n": 5,
+      "posterior": {
+        "a": 0.5,
+        "b": 5.5,
+        "mean": 0.0833,
+        "ci95": [
+          0.0001,
+          1
+        ]
+      }
+    },
+    "Japanese:LOW": {
+      "k": 2,
+      "n": 5,
+      "posterior": {
+        "a": 2.5,
+        "b": 3.5,
+        "mean": 0.4167,
+        "ci95": [
+          0.0944,
+          0.7906
+        ]
+      }
+    },
+    "Japanese:MEDIUM": {
+      "k": 1,
+      "n": 5,
+      "posterior": {
+        "a": 1.5,
+        "b": 4.5,
+        "mean": 0.25,
+        "ci95": [
+          0.0225,
+          0.6288
+        ]
+      }
+    },
+    "Japanese:MINIMAL": {
+      "k": 2,
+      "n": 5,
+      "posterior": {
+        "a": 2.5,
+        "b": 3.5,
+        "mean": 0.4167,
+        "ci95": [
+          0.0944,
+          0.7906
+        ]
+      }
+    },
+    "Japanese:NONE": {
+      "k": 2,
+      "n": 5,
+      "posterior": {
+        "a": 2.5,
+        "b": 3.5,
+        "mean": 0.4167,
+        "ci95": [
+          0.0944,
+          0.7906
+        ]
+      }
+    },
+    "Persian:HIGH": {
+      "k": 0,
+      "n": 5,
+      "posterior": {
+        "a": 0.5,
+        "b": 5.5,
+        "mean": 0.0833,
+        "ci95": [
+          0.0001,
+          1
+        ]
+      }
+    },
+    "Persian:LOW": {
+      "k": 0,
+      "n": 5,
+      "posterior": {
+        "a": 0.5,
+        "b": 5.5,
+        "mean": 0.0833,
+        "ci95": [
+          0.0001,
+          1
+        ]
+      }
+    },
+    "Persian:MEDIUM": {
+      "k": 0,
+      "n": 5,
+      "posterior": {
+        "a": 0.5,
+        "b": 5.5,
+        "mean": 0.0833,
+        "ci95": [
+          0.0001,
+          1
+        ]
+      }
+    },
+    "Persian:MINIMAL": {
+      "k": 0,
+      "n": 5,
+      "posterior": {
+        "a": 0.5,
+        "b": 5.5,
+        "mean": 0.0833,
+        "ci95": [
+          0.0001,
+          1
+        ]
+      }
+    },
+    "Persian:NONE": {
+      "k": 0,
+      "n": 5,
+      "posterior": {
+        "a": 0.5,
+        "b": 5.5,
+        "mean": 0.0833,
+        "ci95": [
+          0.0001,
+          1
+        ]
+      }
+    },
+    "Sanskrit:HIGH": {
+      "k": 0,
+      "n": 5,
+      "posterior": {
+        "a": 0.5,
+        "b": 5.5,
+        "mean": 0.0833,
+        "ci95": [
+          0.0001,
+          1
+        ]
+      }
+    },
+    "Sanskrit:LOW": {
+      "k": 0,
+      "n": 5,
+      "posterior": {
+        "a": 0.5,
+        "b": 5.5,
+        "mean": 0.0833,
+        "ci95": [
+          0.0001,
+          1
+        ]
+      }
+    },
+    "Sanskrit:MEDIUM": {
+      "k": 0,
+      "n": 5,
+      "posterior": {
+        "a": 0.5,
+        "b": 5.5,
+        "mean": 0.0833,
+        "ci95": [
+          0.0001,
+          1
+        ]
+      }
+    },
+    "Sanskrit:MINIMAL": {
+      "k": 1,
+      "n": 5,
+      "posterior": {
+        "a": 1.5,
+        "b": 4.5,
+        "mean": 0.25,
+        "ci95": [
+          0.0225,
+          0.6288
+        ]
+      }
+    },
+    "Sanskrit:NONE": {
+      "k": 1,
+      "n": 5,
+      "posterior": {
+        "a": 1.5,
+        "b": 4.5,
+        "mean": 0.25,
+        "ci95": [
+          0.0225,
+          0.6288
+        ]
+      }
+    },
+    "Hebrew:HIGH": {
+      "k": 0,
+      "n": 6,
+      "posterior": {
+        "a": 0.5,
+        "b": 6.5,
+        "mean": 0.0714,
+        "ci95": [
+          0.0001,
+          1
+        ]
+      }
+    },
+    "Hebrew:LOW": {
+      "k": 3,
+      "n": 6,
+      "posterior": {
+        "a": 3.5,
+        "b": 3.5,
+        "mean": 0.5,
+        "ci95": [
+          0.1668,
+          0.8332
+        ]
+      }
+    },
+    "Hebrew:MEDIUM": {
+      "k": 1,
+      "n": 6,
+      "posterior": {
+        "a": 1.5,
+        "b": 5.5,
+        "mean": 0.2143,
+        "ci95": [
+          0.0186,
+          0.5582
+        ]
+      }
+    },
+    "Hebrew:MINIMAL": {
+      "k": 3,
+      "n": 6,
+      "posterior": {
+        "a": 3.5,
+        "b": 3.5,
+        "mean": 0.5,
+        "ci95": [
+          0.1668,
+          0.8332
+        ]
+      }
+    },
+    "Hebrew:NONE": {
+      "k": 3,
+      "n": 6,
+      "posterior": {
+        "a": 3.5,
+        "b": 3.5,
+        "mean": 0.5,
+        "ci95": [
+          0.1668,
+          0.8332
+        ]
+      }
+    },
+    "Chinese:HIGH": {
+      "k": 0,
+      "n": 5,
+      "posterior": {
+        "a": 0.5,
+        "b": 5.5,
+        "mean": 0.0833,
+        "ci95": [
+          0.0001,
+          1
+        ]
+      }
+    },
+    "Chinese:LOW": {
+      "k": 3,
+      "n": 5,
+      "posterior": {
+        "a": 3.5,
+        "b": 2.5,
+        "mean": 0.5833,
+        "ci95": [
+          0.2094,
+          0.9056
+        ]
+      }
+    },
+    "Chinese:MEDIUM": {
+      "k": 1,
+      "n": 5,
+      "posterior": {
+        "a": 1.5,
+        "b": 4.5,
+        "mean": 0.25,
+        "ci95": [
+          0.0225,
+          0.6288
+        ]
+      }
+    },
+    "Chinese:MINIMAL": {
+      "k": 3,
+      "n": 5,
+      "posterior": {
+        "a": 3.5,
+        "b": 2.5,
+        "mean": 0.5833,
+        "ci95": [
+          0.2094,
+          0.9056
+        ]
+      }
+    },
+    "Chinese:NONE": {
+      "k": 3,
+      "n": 5,
+      "posterior": {
+        "a": 3.5,
+        "b": 2.5,
+        "mean": 0.5833,
+        "ci95": [
+          0.2094,
+          0.9056
+        ]
+      }
+    },
+    "Syriac:HIGH": {
+      "k": 0,
+      "n": 5,
+      "posterior": {
+        "a": 0.5,
+        "b": 5.5,
+        "mean": 0.0833,
+        "ci95": [
+          0.0001,
+          1
+        ]
+      }
+    },
+    "Syriac:LOW": {
+      "k": 2,
+      "n": 5,
+      "posterior": {
+        "a": 2.5,
+        "b": 3.5,
+        "mean": 0.4167,
+        "ci95": [
+          0.0944,
+          0.7906
+        ]
+      }
+    },
+    "Syriac:MEDIUM": {
+      "k": 3,
+      "n": 5,
+      "posterior": {
+        "a": 3.5,
+        "b": 2.5,
+        "mean": 0.5833,
+        "ci95": [
+          0.2094,
+          0.9056
+        ]
+      }
+    },
+    "Syriac:MINIMAL": {
+      "k": 4,
+      "n": 5,
+      "posterior": {
+        "a": 4.5,
+        "b": 1.5,
+        "mean": 0.75,
+        "ci95": [
+          0.3714,
+          0.9775
+        ]
+      }
+    },
+    "Syriac:NONE": {
+      "k": 4,
+      "n": 5,
+      "posterior": {
+        "a": 4.5,
+        "b": 1.5,
+        "mean": 0.75,
+        "ci95": [
+          0.3714,
+          0.9775
+        ]
+      }
+    },
+    "Ge'ez:HIGH": {
+      "k": 0,
+      "n": 5,
+      "posterior": {
+        "a": 0.5,
+        "b": 5.5,
+        "mean": 0.0833,
+        "ci95": [
+          0.0001,
+          1
+        ]
+      }
+    },
+    "Ge'ez:LOW": {
+      "k": 0,
+      "n": 5,
+      "posterior": {
+        "a": 0.5,
+        "b": 5.5,
+        "mean": 0.0833,
+        "ci95": [
+          0.0001,
+          1
+        ]
+      }
+    },
+    "Ge'ez:MEDIUM": {
+      "k": 0,
+      "n": 5,
+      "posterior": {
+        "a": 0.5,
+        "b": 5.5,
+        "mean": 0.0833,
+        "ci95": [
+          0.0001,
+          1
+        ]
+      }
+    },
+    "Ge'ez:MINIMAL": {
+      "k": 0,
+      "n": 5,
+      "posterior": {
+        "a": 0.5,
+        "b": 5.5,
+        "mean": 0.0833,
+        "ci95": [
+          0.0001,
+          1
+        ]
+      }
+    },
+    "Ge'ez:NONE": {
+      "k": 0,
+      "n": 5,
+      "posterior": {
+        "a": 0.5,
+        "b": 5.5,
+        "mean": 0.0833,
+        "ci95": [
+          0.0001,
+          1
+        ]
+      }
+    }
+  },
+  "hierarchical_prior": {
+    "NONE": {
+      "a": 0.5,
+      "b": 1.2,
+      "pooled_mean": 0.29,
+      "pooled_var": 0.076556,
+      "n_langs": 10,
+      "method": "moment_matching",
+      "lang_rates": {
+        "Armenian": {
+          "rate": 0.2,
+          "k": 1,
+          "n": 5
+        },
+        "Arabic": {
+          "rate": 0,
+          "k": 0,
+          "n": 5
+        },
+        "Greek": {
+          "rate": 0.2,
+          "k": 1,
+          "n": 5
+        },
+        "Japanese": {
+          "rate": 0.4,
+          "k": 2,
+          "n": 5
+        },
+        "Persian": {
+          "rate": 0,
+          "k": 0,
+          "n": 5
+        },
+        "Sanskrit": {
+          "rate": 0.2,
+          "k": 1,
+          "n": 5
+        },
+        "Hebrew": {
+          "rate": 0.5,
+          "k": 3,
+          "n": 6
+        },
+        "Chinese": {
+          "rate": 0.6,
+          "k": 3,
+          "n": 5
+        },
+        "Syriac": {
+          "rate": 0.8,
+          "k": 4,
+          "n": 5
+        },
+        "Ge'ez": {
+          "rate": 0,
+          "k": 0,
+          "n": 5
+        }
+      }
+    },
+    "MINIMAL": {
+      "a": 0.5,
+      "b": 1.2,
+      "pooled_mean": 0.29,
+      "pooled_var": 0.076556,
+      "n_langs": 10,
+      "method": "moment_matching",
+      "lang_rates": {
+        "Armenian": {
+          "rate": 0.2,
+          "k": 1,
+          "n": 5
+        },
+        "Arabic": {
+          "rate": 0,
+          "k": 0,
+          "n": 5
+        },
+        "Greek": {
+          "rate": 0.2,
+          "k": 1,
+          "n": 5
+        },
+        "Japanese": {
+          "rate": 0.4,
+          "k": 2,
+          "n": 5
+        },
+        "Persian": {
+          "rate": 0,
+          "k": 0,
+          "n": 5
+        },
+        "Sanskrit": {
+          "rate": 0.2,
+          "k": 1,
+          "n": 5
+        },
+        "Hebrew": {
+          "rate": 0.5,
+          "k": 3,
+          "n": 6
+        },
+        "Chinese": {
+          "rate": 0.6,
+          "k": 3,
+          "n": 5
+        },
+        "Syriac": {
+          "rate": 0.8,
+          "k": 4,
+          "n": 5
+        },
+        "Ge'ez": {
+          "rate": 0,
+          "k": 0,
+          "n": 5
+        }
+      }
+    },
+    "LOW": {
+      "a": 0.585,
+      "b": 1.756,
+      "pooled_mean": 0.25,
+      "pooled_var": 0.056111,
+      "n_langs": 10,
+      "method": "moment_matching",
+      "lang_rates": {
+        "Armenian": {
+          "rate": 0.4,
+          "k": 2,
+          "n": 5
+        },
+        "Arabic": {
+          "rate": 0,
+          "k": 0,
+          "n": 5
+        },
+        "Greek": {
+          "rate": 0.2,
+          "k": 1,
+          "n": 5
+        },
+        "Japanese": {
+          "rate": 0.4,
+          "k": 2,
+          "n": 5
+        },
+        "Persian": {
+          "rate": 0,
+          "k": 0,
+          "n": 5
+        },
+        "Sanskrit": {
+          "rate": 0,
+          "k": 0,
+          "n": 5
+        },
+        "Hebrew": {
+          "rate": 0.5,
+          "k": 3,
+          "n": 6
+        },
+        "Chinese": {
+          "rate": 0.6,
+          "k": 3,
+          "n": 5
+        },
+        "Syriac": {
+          "rate": 0.4,
+          "k": 2,
+          "n": 5
+        },
+        "Ge'ez": {
+          "rate": 0,
+          "k": 0,
+          "n": 5
+        }
+      }
+    },
+    "MEDIUM": {
+      "a": 0.5,
+      "b": 2.207,
+      "pooled_mean": 0.1767,
+      "pooled_var": 0.039519,
+      "n_langs": 10,
+      "method": "moment_matching",
+      "lang_rates": {
+        "Armenian": {
+          "rate": 0.4,
+          "k": 2,
+          "n": 5
+        },
+        "Arabic": {
+          "rate": 0,
+          "k": 0,
+          "n": 5
+        },
+        "Greek": {
+          "rate": 0.2,
+          "k": 1,
+          "n": 5
+        },
+        "Japanese": {
+          "rate": 0.2,
+          "k": 1,
+          "n": 5
+        },
+        "Persian": {
+          "rate": 0,
+          "k": 0,
+          "n": 5
+        },
+        "Sanskrit": {
+          "rate": 0,
+          "k": 0,
+          "n": 5
+        },
+        "Hebrew": {
+          "rate": 0.167,
+          "k": 1,
+          "n": 6
+        },
+        "Chinese": {
+          "rate": 0.2,
+          "k": 1,
+          "n": 5
+        },
+        "Syriac": {
+          "rate": 0.6,
+          "k": 3,
+          "n": 5
+        },
+        "Ge'ez": {
+          "rate": 0,
+          "k": 0,
+          "n": 5
+        }
+      }
+    },
+    "HIGH": {
+      "a": 0.5,
+      "b": 51.5,
+      "pooled_mean": 0,
+      "pooled_var": 0,
+      "n_langs": 10,
+      "method": "all_zero",
+      "lang_rates": {
+        "Armenian": {
+          "rate": 0,
+          "k": 0,
+          "n": 5
+        },
+        "Arabic": {
+          "rate": 0,
+          "k": 0,
+          "n": 5
+        },
+        "Greek": {
+          "rate": 0,
+          "k": 0,
+          "n": 5
+        },
+        "Japanese": {
+          "rate": 0,
+          "k": 0,
+          "n": 5
+        },
+        "Persian": {
+          "rate": 0,
+          "k": 0,
+          "n": 5
+        },
+        "Sanskrit": {
+          "rate": 0,
+          "k": 0,
+          "n": 5
+        },
+        "Hebrew": {
+          "rate": 0,
+          "k": 0,
+          "n": 6
+        },
+        "Chinese": {
+          "rate": 0,
+          "k": 0,
+          "n": 5
+        },
+        "Syriac": {
+          "rate": 0,
+          "k": 0,
+          "n": 5
+        },
+        "Ge'ez": {
+          "rate": 0,
+          "k": 0,
+          "n": 5
+        }
+      }
+    }
+  },
+  "meta": {
+    "date": "2026-04-24T21:46:54.009Z",
+    "n_results": 255,
+    "model": "gemini-3.1-flash-lite-preview",
+    "levels": [
+      "NONE",
+      "MINIMAL",
+      "LOW",
+      "MEDIUM",
+      "HIGH"
+    ]
+  }
+}
