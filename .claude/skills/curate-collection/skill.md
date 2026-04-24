@@ -187,20 +187,50 @@ const images = await db.collection('gallery_images').find(
 ).sort({ gallery_quality: -1 }).limit(50).toArray();
 ```
 
-### Step 3: Pull Real Quotes
+### Step 3: Search-Driven Discovery (MCP Tools)
 
-For the 5-10 most important books, fetch actual translated passages:
+**This is the key step.** Before writing editorial content, use the Source Library MCP search tools to discover what the collection's books actually contain. This surfaces content that no curator could find by scanning titles alone.
 
-```bash
-curl -s "https://sourcelibrary.org/api/books/BOOK_ID/quote?page=N"
+**3a. Search translations for thematic passages:**
+Run 3-5 `search_translations` queries using the collection's core themes. For example, for "Courts of Wonder":
+- `search_translations("automaton mechanical marvel")`
+- `search_translations("cabinet curiosity collection wonder")`
+- `search_translations("grotto garden artificial")`
+
+Look for: vivid first-person descriptions, surprising connections between books, passages that capture the spirit of the collection. Save the best 8-10 passages with book_id and page_number.
+
+**3b. Search images for visual themes:**
+Run 2-3 `search_images` queries for visual subjects:
+- `search_images(query="automaton mechanical", type="engraving")`
+- `search_images(subject="dragon monster")`
+
+Group results into 3-5 thematic clusters (e.g., "Mechanical Marvels", "Natural Wonders", "Court Spectacles"). Each cluster needs a theme name, short description, and 4-8 images.
+
+**3c. Discover overlooked books:**
+Search results will surface books the metadata scan missed. Note any book that:
+- Has compelling passages but wasn't in the highlighted_books shortlist
+- Connects to the collection's theme in unexpected ways
+- Has striking images that would enhance the visual gallery
+
+**3d. Pull verified quotes:**
+For the best 5-8 passages found above, verify each with `get_quote(book_id, page_number)` to get exact text and citation URL. Also fetch the original language text (use `get_book_text` with `content: "both"` and the same page range).
+
+Structure each verified quote as:
+```json
+{
+  "text": "English translation of the passage",
+  "original_text": "Original language text (Latin, German, etc.)",
+  "original_language": "Latin",
+  "author": "Author Name",
+  "book_id": "the-book-id",
+  "book_title": "Short Book Title",
+  "page_number": 42,
+  "year": 1617,
+  "verified": true
+}
 ```
 
-Try multiple pages to find compelling passages. Good pages to try:
-- Title page (page 1-3)
-- First page of main text (varies, often page 5-15)
-- Pages with illustrations or diagrams
-
-Save quote text + citation URLs for use in the description.
+**IMPORTANT:** Never fabricate quotes. Every quote must come from `get_quote` with a real page number. If search_translations returns a snippet, always verify it with get_quote before including it.
 
 ### Step 4: Write the Expanded Description
 
@@ -354,7 +384,104 @@ const resp = await fetch('https://sourcelibrary.org/api/collections', {
 });
 ```
 
-### Step 10: Verify
+### Step 10: Generate Exhibition Layout (curation_drafts)
+
+After building collection metadata, generate a rich exhibition layout and save it to `curation_drafts`. This drives the ExhibitionLayout component on the collection page.
+
+```javascript
+const exhibition = {
+  collection_slug: 'SLUG',
+  status: 'draft',
+  created_at: new Date(),
+  updated_at: new Date(),
+  curation: {
+    layout: [
+      // Opening hook — one compelling sentence
+      { component: 'hook', text: 'A single sentence that captures the essence of the collection.' },
+
+      // Stats bar
+      { component: 'stats', items: [
+        { label: 'Books', value: '663' },
+        { label: 'Languages', value: '8' },
+        { label: 'Centuries', value: '15th–18th' },
+      ]},
+
+      // Editorial description
+      { component: 'description', paragraphs: ['Paragraph 1...', 'Paragraph 2...'] },
+
+      // Voices from the Collection — search-discovered quotes with original language
+      { component: 'quotes', title: 'Voices from the Collection', quotes: [
+        {
+          text: 'English translation',
+          original_text: 'Original language text',
+          original_language: 'Latin',
+          author: 'Author Name',
+          book_id: 'book-id',
+          book_title: 'Short Title',
+          page_number: 42,
+          year: 1617,
+          verified: true,
+        },
+        // ... 3-5 total quotes
+      ]},
+
+      // Thematic image gallery — clustered by subject
+      { component: 'thematic_gallery', clusters: [
+        {
+          theme: 'Mechanical Marvels',
+          description: 'Automata and hydraulic devices from Kircher, Schott, and Hero of Alexandria.',
+          images: [
+            // gallery_image documents with id, book_id, thumbnail_url, museum_description
+          ],
+        },
+        // ... 3-5 clusters
+      ]},
+
+      // Key sections — thematic groupings of books
+      { component: 'sections', sections: [
+        { title: 'Section Name', subtitle: 'Brief description', books: [{ id: 'book-id', note: 'Why this book matters' }] },
+      ]},
+
+      // Reading paths — named journeys through the collection
+      { component: 'reading_paths', paths: [
+        {
+          audience: "The Engineer's Path",
+          description: 'From ancient pneumatics to Baroque mechanism',
+          steps: [
+            { book_id: 'hero-pneumatica-id', instruction: 'Start here — the engineering manual behind courtly automata' },
+            // ... 4-6 steps
+          ],
+        },
+      ]},
+
+      // Timeline
+      { component: 'timeline', start_year: 1450, end_year: 1700, highlights: [
+        { year: 1550, label: 'Event description', book_id: 'optional-book-id' },
+      ]},
+
+      // Cross-collection links
+      { component: 'cross_collections', links: [
+        { slug: 'alchemy', why: 'Many court cabinets included alchemical instruments' },
+      ]},
+    ],
+  },
+};
+
+// Upsert into curation_drafts
+await db.collection('curation_drafts').updateOne(
+  { collection_slug: 'SLUG' },
+  { $set: exhibition },
+  { upsert: true }
+);
+```
+
+**Key rules for exhibition layout:**
+- Quotes MUST be verified via `get_quote` — never fabricate
+- Thematic gallery images must have real `id` and `thumbnail_url` from `gallery_images` collection
+- Reading path book_ids must exist and be visible
+- All book references are resolved at render time — only include the ID
+
+### Step 11: Verify
 
 After pushing, fetch the collection page and verify:
 ```bash
@@ -373,7 +500,18 @@ print('Books returned:', len(d.get('books', [])))
 "
 ```
 
-Report the live URL: `https://sourcelibrary.org/collection/SLUG`
+Also check the exhibition draft:
+```bash
+curl -s "https://sourcelibrary.org/api/collections/SLUG" | python3 -c "
+import sys, json; d = json.load(sys.stdin)
+e = d.get('exhibition', {})
+layout = e.get('layout', [])
+print('Exhibition blocks:', len(layout))
+for b in layout: print(f'  {b[\"component\"]}')
+"
+```
+
+Report the live URL: `https://sourcelibrary.org/collections/SLUG`
 
 ---
 

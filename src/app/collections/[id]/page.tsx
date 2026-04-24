@@ -461,6 +461,11 @@ async function fetchCollectionData(id: string, provider?: string) {
           if (h.book_id) allBookIds.add(h.book_id);
         }
       }
+      if (block.component === 'quotes') {
+        for (const q of block.quotes || []) {
+          if (q.book_id) allBookIds.add(q.book_id);
+        }
+      }
     }
     if (allBookIds.size > 0) {
       const exBooks = await withTimeout(
