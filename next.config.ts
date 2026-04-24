@@ -87,7 +87,7 @@ const nextConfig: NextConfig = {
             value: [
               // Next.js requires 'unsafe-inline' for styles and 'unsafe-eval' for dev; in prod we need 'unsafe-inline' for React inline styles
               "default-src 'self'",
-              "script-src 'self' 'unsafe-inline' 'unsafe-eval' https://translate.google.com https://translate.googleapis.com",
+              "script-src 'self' 'unsafe-inline' 'unsafe-eval' blob: data: https://translate.google.com https://translate.googleapis.com",
               "style-src 'self' 'unsafe-inline' https://fonts.googleapis.com https://translate.googleapis.com",
               "font-src 'self' https://fonts.gstatic.com",
               // Images: self + all configured remote image sources + data URIs for base64 thumbnails
@@ -95,6 +95,7 @@ const nextConfig: NextConfig = {
               "connect-src 'self' https://*.supabase.co https://generativelanguage.googleapis.com https://translate.googleapis.com wss://*.supabase.co https://api.elevenlabs.io wss://*.elevenlabs.io",
               "media-src 'self' blob: https://api.elevenlabs.io",
               "frame-src 'self' https://translate.google.com",
+              "worker-src 'self' blob: data:",
               "object-src 'none'",
               "base-uri 'self'",
               "form-action 'self'",
