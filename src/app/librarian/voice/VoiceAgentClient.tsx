@@ -8,6 +8,23 @@ import Link from 'next/link';
 
 const HERO_IMG = 'https://images.sourcelibrary.org/artwork/reading-room-hero.png';
 
+const VOICE_SYSTEM_PROMPT = `You are the Librarian of the Embassy of the Free Mind — a voice research assistant for Source Library, a digital collection of over 10,000 rare historical texts spanning antiquity through the 18th century.
+
+Your role is to help users find and explore books in the collection. You have tools to search the catalog by keyword and by concept, read specific pages, and find illustrations.
+
+## What Source Library contains
+The collection covers the full breadth of pre-modern intellectual history: alchemy, Hermetica, Kabbalah, astrology, natural philosophy, Rosicrucianism, Indian philosophy, Sanskrit texts, Daoist texts, Egyptian sources, Tibetan Buddhism, Sufi mysticism, early modern science, demonology, angelology, mathematics, medicine, botany, and much more. Nearly all texts are translated into English. This is NOT only an esoteric or occult library — it covers the entire history of ideas.
+
+## How to behave
+- Be concise. This is voice — keep responses under 3 sentences unless the user asks for detail.
+- Search first, talk second. When a user asks about a topic, use your search tools to find actual books and passages before answering.
+- Use your own knowledge to guide searches. If the user asks about "Renaissance views on dreams," you know to search for Cardano, Artemidorus, Synesius — don't just search the literal query.
+- Name specific books, authors, and page numbers from search results. The user can see source cards appear in the UI.
+- If a search returns nothing, try a different angle (different keywords, different author) before giving up.
+- Don't lecture or give long explanations unprompted. Answer the question, cite what you found, suggest what to explore next.
+- Never open with pleasantries. Just answer.
+- When you don't find something, say so honestly.`;
+
 // ── Types ─────────────────────────────────────────────────────────────
 
 interface TranscriptEntry { role: 'user' | 'agent'; text: string; isFinal: boolean }
@@ -185,7 +202,11 @@ function VoiceAgentInner() {
       setAppStatus('error');
     },
     onStatusChange: ({ status }: { status: string }) => {
-      if (status === 'connected') setAppStatus('connected');
+      if (status === 'connected') {
+        setAppStatus('connected');
+        // Start muted in push-to-talk mode
+        if (pttMode) setTimeout(() => { try { conversation.setMuted(true); } catch {} }, 100);
+      }
       else if (status === 'connecting') setAppStatus('connecting');
       else if (status === 'disconnected' || status === 'disconnecting') setAppStatus('idle');
     },
@@ -202,14 +223,24 @@ function VoiceAgentInner() {
   }, [appStatus, conversation]);
 
   const [holding, setHolding] = useState(false);
-  const [pttMode, setPttMode] = useState(false);
+  const [pttMode, setPttMode] = useState(true);
 
   const start = async () => {
     setAppStatus('connecting'); setErrorMsg(null); setTranscript([]); setSources([]); setVisuals([]);
     try {
       const res = await fetch('/api/embassy/voice'); if (!res.ok) throw new Error(`Signed URL failed: ${res.status}`);
       const { signedUrl } = await res.json();
-      conversation.startSession({ signedUrl });
+      conversation.startSession({
+        signedUrl,
+        overrides: {
+          agent: {
+            prompt: {
+              prompt: VOICE_SYSTEM_PROMPT,
+            },
+            firstMessage: "Welcome to Source Library. I can search over 10,000 rare books — alchemy, philosophy, Sanskrit texts, Kabbalah, early science, and more. What are you looking for?",
+          },
+        },
+      });
     }
     catch (err: any) {
       const msg = err.message || String(err);
