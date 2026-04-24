@@ -44,25 +44,28 @@ Derek runs ~10 Claude Code terminals simultaneously, all sharing the main workin
 - Production database: `bookstore` (~17K live books, ~24.5K warehouse), NOT `sourcelibrary_research`
 
 ## AI Models — IMPORTANT
-- Summary/Index generation: enrich-worker uses `gemini-3.1-flash-lite-preview` for summary+index (Phase 6), `gemini-3-flash-preview` for chapters (Phase 7) and quality scoring (Phase 7.5), `gemini-3.1-flash-lite-preview` for collection assignment (Phase 7.6). NEVER use models older than v3.
+- Summary/Index generation: enrich-worker uses `gemini-3.1-flash-lite-preview` for all phases — summary+index (Phase 6), chapters (Phase 7), quality scoring (Phase 7.5), collection assignment (Phase 7.6). NEVER use models older than v3.
 - OCR/Translation routing: `gemini-3-flash-preview` for BPH books, `gemini-3.1-flash-lite-preview` for everything else (50% cheaper). See `src/lib/types/ai-models.ts`.
 - Reference: https://ai.google.dev/gemini-api/docs/models
 
 ## System Map
 - **Interactive diagram:** https://sourcelibrary.org/admin/system-map — click any node for details, key files, collections, gotchas
 - **Markdown reference:** `.claude/docs/system-map.md` — full text version with file layout, collection inventory, dead code list
-- **Dead code cleanup:** GitHub issue #258 (closed) — most cleaned up, some camera/rithmomachia components may remain
+- **Dead code cleanup:** GitHub issue #258 (closed) — most cleaned up, some camera components may remain. Note: rithmomachia is a live feature (`/rithmomachia`), not dead code.
 
 ## Domain Context
+Memory is organized hierarchically: `MEMORY.md` (top-level, always loaded) → `_index-*.md` section indexes → individual topic files. Load the relevant section index for your task — don't read all of them.
+
 Detect the work domain from the user's prompt and load the right context automatically:
 - **System overview / "where does X live?":** read `.claude/docs/system-map.md`
-- **Pipeline/cron/Lambda/OCR/translation work:** read `memory/pipeline-ops.md` (or invoke `/pipeline-context` for full context)
-- **UI/frontend/navigation:** read `memory/ui-navigation.md` (or `/ui-context`)
-- **Data fixes/maintenance/stuck books:** read `memory/data-quality.md` (or `/maintenance`)
-- **Book acquisition:** `/curator` or `/library-curator`
+- **Pipeline/cron/Lambda/OCR/translation:** read `memory/_index-pipeline.md` + `memory/_index-safety.md` (or `/pipeline-context`)
+- **UI/frontend/navigation:** read `memory/_index-product.md` (or `/ui-context`)
+- **Data fixes/maintenance/stuck books:** read `memory/_index-safety.md` + `memory/_index-content.md` (or `/maintenance`)
+- **Search/embeddings:** read `memory/_index-search.md`
+- **Import/curation:** read `memory/_index-content.md` (or `/curator`, `/library-curator`)
+- **Deploy/infra:** read `memory/_index-infrastructure.md`
 - **Quality auditing:** `/qa-audit`
 - **Batch processing:** `/batch-translate`
-- **MCP server/CLI:** read `memory/mcp-server.md`
 - **Handoffs:** `.claude/handoffs/` (read by date/topic)
 - **Reference docs:** `.claude/docs/` (read on demand, never all at once)
 
@@ -70,6 +73,7 @@ Detect the work domain from the user's prompt and load the right context automat
 - **After fixing a non-trivial bug**, proactively update the relevant memory file following the `/lesson` workflow. Don't wait to be asked.
 - When reading memory files, flag anything that contradicts the current codebase and fix it.
 - Memory entries with dates >14 days old: verify before trusting stats/counts.
+- **When adding new memory files**, add them to the appropriate `_index-*.md` section index (not directly to MEMORY.md). Keep MEMORY.md under 100 lines.
 
 ## Compaction Instructions
 When compacting (`/compact`), ALWAYS preserve:

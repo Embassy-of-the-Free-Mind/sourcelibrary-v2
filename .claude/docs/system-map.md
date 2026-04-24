@@ -1,6 +1,6 @@
 # Source Library System Map
 
-> Last audited: 2026-04-01. Use this as the primary navigation reference.
+> Last audited: 2026-04-24. Use this as the primary navigation reference.
 
 ## Architecture Overview
 
@@ -30,14 +30,14 @@ Users ──> Vercel (Next.js 16) ──> MongoDB Atlas (bookstore)
 
 | Service | Purpose | Key Config |
 |---------|---------|------------|
-| **Vercel** | Next.js hosting, 5 crons | Project: `sourcelibrary-v2` |
+| **Vercel** | Next.js hosting, 7 crons | Project: `sourcelibrary-v2` |
 | **MongoDB Atlas** | Primary database | DB: `bookstore`, ~17K live + ~24.5K warehouse books |
 | **Supabase Postgres** | Analytics, browse cache, catalog, search | pgvector, pg_trgm, pg_cron |
 | **AWS Lambda** (eu-central-1) | AI processing workers | 4 functions, SQS-triggered |
 | **AWS SQS** (eu-central-1) | Job queues (FIFO) | 4 queues: OCR, translation, images, write |
 | **Cloudflare R2** | Image/page storage | `images.sourcelibrary.org` |
 | **Hetzner** (cax31) | Pipeline orchestration, translation, embeddings | `root@46.224.122.120`, unified scheduler |
-| **Gemini AI** | OCR, translation, enrichment | 10-key rotation. BPH: `gemini-3-flash-preview`, others: `gemini-3.1-flash-lite-preview` |
+| **Gemini AI** | OCR, translation, enrichment | 3 unique keys (3 GCP projects). BPH: `gemini-3-flash-preview`, others: `gemini-3.1-flash-lite-preview` |
 | **Stripe** | Payments | Ficino Society membership |
 | **Zenodo** | DOI publishing | Scholarly editions |
 | **Twitter/X** | Social automation | 3h posting cron |
@@ -64,8 +64,8 @@ Import (IA/Gallica/IIIF/Wellcome/etc.)
 
   enrich-worker.mjs (every 5 min):
        └─> Phase 6: Summary + Index (3.1-flash-lite) ──> summary_indexed
-       └─> Phase 7: Chapter extraction (3-flash) ──> chapters_complete
-       └─> Phase 7.5: Quality scoring (3-flash, 0-100 score)
+       └─> Phase 7: Chapter extraction (3.1-flash-lite) ──> chapters_complete
+       └─> Phase 7.5: Quality scoring (3.1-flash-lite, 0-100 score)
        └─> Phase 7.6: Collection assignment (3.1-flash-lite, additive)
 
   pipeline-orchestrator.mjs (continued):
@@ -87,7 +87,7 @@ Supabase serves derived reads for performance-critical paths. MongoDB remains so
 | Table/View | Purpose | Source |
 |------------|---------|--------|
 | `books_catalog` | Browse cache (11s→0.6s) | Synced from MongoDB `books` |
-| `page_translations` | Semantic search embeddings | pgvector, e5-base model |
+| `page_translations` | Semantic search embeddings | pgvector, Gemini embedding-2-preview (768d/3072d) |
 | `gemini_usage` | AI cost analytics | Synced from MongoDB |
 | `pipeline_snapshots` | Pipeline velocity charts | Synced from MongoDB |
 | `cron_runs` | Cron execution logs | Synced from MongoDB |
@@ -110,15 +110,16 @@ Key: `src/app/author/`, `src/app/browse/authors/`, author normalization in `src/
 
 ## Visual Art Wing (added 2026-03-30+)
 
-Museum artwork imports alongside historical texts. Mixed collections show both.
+Museum artwork imports alongside historical texts. ~18K artworks. Mixed collections show both.
 
 | Source | Script | Status |
 |--------|--------|--------|
-| Met Museum | `scripts/import-met-artworks.mjs` | Active, `--object-ids` flag |
+| Met Museum | `scripts/import-met-artworks.mjs` | Active |
 | Cleveland Museum | `scripts/import-cleveland-artworks.mjs` | Active |
-| Rijksmuseum | Planned | — |
+| Wikimedia Commons | `scripts/import-commons-artworks.mjs` | Active (NOT `import-artwork.mjs`) |
+| Rijksmuseum, AIC | Various | Active |
 
-Collections support `collection_type` field. Low-res artwork filtering and upgrade pipeline in place.
+Routes: `/artwork/[slug]`, `/artist/[name]`, `/api/artwork/`. Collections support `collection_type` field. Gemini Vision cataloging, CLIP embeddings (3072d), semantic search.
 
 ## MongoDB Collections (73)
 
@@ -181,60 +182,88 @@ Collections support `collection_type` field. Low-res artwork filtering and upgra
 ```
 src/
 ├── app/                    # Next.js app router
-│   ├── api/                # 325 API routes (direct DB queries, no repository layer)
-│   │   ├── books/[id]/     # 57 book operations
-│   │   ├── pages/[id]/     # 15 page operations
+│   ├── api/                # ~400 API routes (direct DB queries, no repository layer)
+│   │   ├── books/[id]/     # 60 book operations
+│   │   ├── admin/          # 60 admin endpoints
 │   │   ├── import/         # 26 IIIF source importers
-│   │   ├── admin/          # 46 admin endpoints
-│   │   ├── cron/           # 11 cron endpoints (4 active on Vercel)
-│   │   ├── gallery/        # 7 gallery endpoints
-│   │   ├── search/         # 6 search endpoints
+│   │   ├── pages/[id]/     # 15 page operations
+│   │   ├── cron/           # 6 active cron routes (7 scheduled in vercel.json)
+│   │   ├── search/         # 8 search endpoints (main, unified, visual, semantic, suggest, etc.)
+│   │   ├── gallery/        # 8 gallery endpoints
 │   │   ├── social/         # 11 social media endpoints
+│   │   ├── embassy/        # 9 librarian/chat endpoints
+│   │   ├── embed/          # 7 embed endpoints (BPH, Bhutan)
+│   │   ├── image/          # Image proxy
+│   │   ├── mcp/            # MCP server endpoint (OAuth)
+│   │   ├── health/         # Health check (+ auth sub-route)
+│   │   ├── artwork/        # Artwork search
 │   │   ├── stripe/         # 4 payment endpoints
 │   │   ├── dataset/v1/     # Public API (keyed access)
-│   │   └── ...             # experiments, analytics, ficino, etc.
+│   │   └── ...             # experiments, analytics, scan, catalog, etc.
 │   ├── author/[name]/      # Author detail page (catalog, gallery strip)
+│   ├── artist/[name]/      # Artist detail page (artworks)
+│   ├── artwork/[slug]/     # Artwork detail page
 │   ├── book/[id]/          # Reader pages (guide, summary, QA, pipeline, editions)
-│   ├── browse/authors/     # Author listing
+│   ├── browse/authors/     # Author listing (+ [letter] sub-route)
 │   ├── collections/        # Collection browse & detail (supports mixed art+book)
 │   ├── gallery/            # Image gallery
+│   ├── librarian/          # Agentic Librarian (room/, thread/, voice/)
+│   ├── podcast/            # Podcast player + RSS feed
+│   ├── shwep/[number]/     # SHWEP podcast integration
+│   ├── search/             # Search UI (+ visual search)
+│   ├── embed/              # Institutional embeds (bhutan/, bph/ with catalog sub-routes)
+│   ├── work/[id]/          # Work-level linking (WEMI)
+│   ├── hieroglyphs/        # Egyptian hieroglyphs page
+│   ├── tablets/            # Cuneiform tablets page
+│   ├── rithmomachia/       # Mathematical board game (guide, scenarios)
 │   ├── admin/              # Admin dashboard pages
-│   ├── blog/               # 31 blog posts (hardcoded JSX, no CMS)
-│   ├── press/              # 7 press pages (hardcoded JSX)
+│   ├── blog/               # 39 blog posts (hardcoded JSX, no CMS)
+│   ├── press-release/      # Press release page
 │   ├── research/           # Research tools (atlas, diffusion, timeline)
 │   ├── explore/            # Map & timeline visualizations
 │   ├── ficino-society/     # Membership, discussions
+│   ├── catalog/, census/, encyclopedia/  # Reference browse pages
+│   ├── languages/, timeline/, topics/    # Content browse pages
 │   ├── about/, support/, terms/, privacy/  # Static info pages
-│   └── ...                 # ~160 pages total
+│   └── ...                 # 68 top-level app directories
 │
-├── components/             # 148 React components (.tsx files)
+├── components/             # 174 React components (.tsx files)
 │   ├── book/               # Book detail, reader, processing
 │   ├── layout/             # GlobalHeader, GlobalFooter, FeaturedCollections
-│   ├── gallery/            # Gallery views
+│   ├── gallery/            # Gallery views (+ IconclassFilter)
 │   ├── reader/             # Page reader, zoom, sidebar
 │   ├── search/             # Search results, filters
 │   ├── explore/            # Map, timeline
 │   ├── ui/                 # Primitives (Button, Dialog, Tabs, etc.)
-│   ├── camera/             # Mobile scanning (6 components, possibly unused)
-│   ├── rithmomachia/       # Game feature (12 components, possibly unused)
+│   ├── camera/             # Mobile scanning (6 components, likely unused)
+│   ├── rithmomachia/       # Game components (14, live feature)
 │   └── ...
 │
-├── lib/                    # 200 utility modules
+├── lib/                    # ~95 top-level modules + 10 subdirectories
 │   ├── mongodb.ts          # DB connection (singleton, pool management)
 │   ├── supabase.ts         # Supabase client (analytics, browse, search)
 │   ├── ai.ts               # Core Gemini operations
-│   ├── gemini-client.ts    # API key rotation (10 keys)
+│   ├── gemini-client.ts    # API key rotation (3 keys, 3 GCP projects)
 │   ├── gemini-batch.ts     # Batch API orchestration
+│   ├── semantic-search.ts  # 7-lane search, embedding-2-preview (768d/3072d)
+│   ├── semantic-alignment.ts # Embedding-based quality measurement
 │   ├── storage.ts          # R2 + Vercel Blob abstraction
 │   ├── sqs-client.ts       # SQS queue client
-│   ├── auth.ts             # NextAuth config (Google + Email)
+│   ├── auth.ts             # NextAuth config (Google + Email/Resend magic links)
 │   ├── auth-helpers.ts     # withAuth(), withAdminAuth()
 │   ├── slugify.ts          # URL slug generation, bookUrl()
 │   ├── book-lookup.ts      # Book query helpers
+│   ├── book-index.ts       # Reads from book_indexes collection
 │   ├── import-utils.ts     # IIIF manifest parsing
 │   ├── page-revisions.ts   # createRevision() — MUST call before page writes
-│   ├── api-client/         # Frontend API wrappers (61 files)
-│   ├── types/              # TypeScript types (25 files)
+│   ├── adaptive-limits.ts  # system_config.adaptive_limits read/write
+│   ├── iconclass-categories.ts # Iconclass visual classification
+│   ├── page-split/         # Split detection (dedup, ghost pages, ML detection)
+│   ├── rithmomachia/       # Game engine (35+ files)
+│   ├── taxonomy/           # Faceted vocabulary (6 facets), tagging
+│   ├── embassy/            # Librarian chat tools
+│   ├── api-client/         # Frontend API wrappers
+│   ├── types/              # TypeScript types (ai-models.ts, book.ts, etc.)
 │   └── ...
 │
 ├── workers/                # Lambda function source
@@ -245,31 +274,45 @@ src/
 │
 └── hooks/                  # 8 React hooks
 
-scripts/                    # 308 operational scripts
-├── analysis/               # ~51 inspection/reporting scripts
-├── batch/                  # ~33 bulk processing scripts
-├── enrichment/             # ~44 metadata enrichment scripts
-├── maintenance/            # ~56 data fix scripts
-├── import/                 # ~17 bulk import scripts
-├── one-off/                # ~7 exploratory scripts
+scripts/                    # Operational scripts
+├── analysis/               # ~50 inspection/reporting scripts
+├── batch/                  # Bulk processing scripts
+├── enrichment/             # Metadata enrichment scripts
+├── maintenance/            # Data fix scripts
+├── import/                 # Bulk import scripts + JSON manifests
+├── migration/              # Data migration scripts (~49 files)
+├── eval/                   # Quality evaluation scripts
+├── experiments/            # One-off experiments
 ├── aws-lambda/             # Lambda build/deploy
-├── workers/                # scheduler.mjs (unified), translate-worker, pipeline-orchestrator, etc.
+├── workers/                # Hetzner workers (40 files):
+│   ├── scheduler.mjs       # Unified cron scheduler
+│   ├── pipeline-orchestrator.mjs  # Main pipeline (every 2 min)
+│   ├── enrich-worker.mjs   # Enrichment phases (every 5 min)
+│   ├── translate-worker.mjs # Realtime translation (15 concurrent)
+│   ├── batch-collector.mjs  # Gemini Batch API results (every 10 min)
+│   ├── embed-gemini.mjs     # Embedding generation
+│   ├── clip-server.mjs      # CLIP visual search server
+│   ├── archive-*.mjs        # Source-specific archivers (7 variants)
+│   └── sync-*.mjs           # Supabase sync workers
 └── lib/                    # Shared script utilities
 ```
 
-## Pages Breakdown (~170 total)
+## Pages Breakdown (68 top-level dirs)
 
 | Category | Count | Content Source | Examples |
 |----------|-------|---------------|----------|
-| Core library (dynamic) | ~45 | MongoDB + APIs | Book reader, search, collections, author pages, browse/authors, artworks |
+| Core library (dynamic) | ~50 | MongoDB + APIs | Book reader, search, collections, author, artist, artwork, work, browse |
+| Agentic features | ~5 | Gemini + MongoDB | Librarian room, thread, voice; search v2 |
+| Content pages | ~8 | MongoDB | Podcast, SHWEP, hieroglyphs, tablets, encyclopedia, languages |
+| Institutional embeds | ~6 | MongoDB | embed/bhutan, embed/bph (each with book, catalog, collections) |
 | Admin/ops dashboards | ~15 | MongoDB + APIs | Pipeline control, jobs, analytics, email, KDP |
 | Research/experiments | ~20 | MongoDB + APIs | OCR quality, concept diffusion, image atlas |
-| Blog posts | 31 | Hardcoded JSX (no CMS) | origin-story, progress-studies, hidden-engineers |
-| Press releases | 7 | Hardcoded JSX | alchemy, hermetic-tradition, kabbalah |
+| Blog posts | 39 | Hardcoded JSX (no CMS) | origin-story, progress-studies, hidden-engineers |
+| Press | 1 | Hardcoded JSX | press-release |
 | Auth/legal/info | ~10 | Static JSX | signin, terms, privacy, about, support |
 | Gallery | ~6 | MongoDB + APIs | Browse, collections, image viewer, curation |
 | Community | ~5 | MongoDB + APIs | Ficino Society, discussions, contribute |
-| Questionable/stubs | ~15 | Mixed | See below |
+| Games | ~4 | Client-side | Rithmomachia (guide, scenarios) |
 
 ### Pages to audit
 - `/testloader` — debug page, should not be public
@@ -284,7 +327,7 @@ scripts/                    # 308 operational scripts
 3. **SQS-driven async processing** — All AI work goes through SQS → Lambda → Gemini → write-back.
 4. **Page revisions before writes** — Any script modifying `ocr.data` or `translation.data` MUST call `createRevision()` first.
 5. **Admin via whitelist** — `admin_users` collection, no RBAC. `withAdminAuth()` wrapper.
-6. **Key rotation for Gemini** — 10 API keys with cooldown. `gemini-client.ts` handles rotation.
+6. **Key rotation for Gemini** — 3 API keys (3 GCP projects) with cooldown. `gemini-client.ts` handles rotation.
 7. **Hetzner for heavy crons** — Pipeline orchestration moved off Vercel to reduce costs/timeouts. Unified scheduler manages all workers.
 8. **Supabase for read-heavy paths** — Browse, analytics, search, and libraries queries hit Supabase for speed. MongoDB remains source of truth; Supabase mirrors derived data via sync crons.
 9. **Model routing by source** — BPH books get `gemini-3-flash-preview` (premium), all others get `gemini-3.1-flash-lite-preview` (50% cheaper). See `src/lib/types/ai-models.ts`.
@@ -309,7 +352,8 @@ Issue #258 closed. These remain with no imports anywhere:
 | `PageTracker.tsx` | `components/reader/` | Orphaned |
 | `SessionCard.tsx` | `components/research/` | Orphaned |
 | Camera components (6) | `components/camera/` | Mobile scanning — unused, ask before deleting |
-| Rithmomachia components (14) | `components/rithmomachia/` | Game — unused, ask before deleting |
+
+Note: Rithmomachia is a **live feature** (`/rithmomachia`, guide, scenarios, blog post) — NOT dead code.
 
 `Footer.tsx` was previously listed but no longer exists (already deleted).
 
