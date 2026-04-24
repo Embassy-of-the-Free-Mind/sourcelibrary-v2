@@ -111,48 +111,69 @@ const nextConfig: NextConfig = {
           { key: 'Vary', value: 'RSC, Next-Router-State-Tree, Next-Router-Prefetch' },
         ],
       },
+      // Prevent Cloudflare from caching RSC (React Server Component) responses.
+      // CF Free ignores Vary: RSC, so an RSC payload can poison the cache and
+      // get served to browsers as raw flight data instead of HTML.
+      // This rule sets CDN-Cache-Control: no-store for any request with the RSC header.
+      {
+        source: '/:path*',
+        has: [{ type: 'header', key: 'rsc' }],
+        headers: [{ key: 'CDN-Cache-Control', value: 'no-store' }],
+      },
       // CDN-Cache-Control for Cloudflare edge caching.
       // Cloudflare strips this header before sending to browsers —
       // it only controls Cloudflare's edge cache behavior.
       // Admin/auth/API routes are excluded by Cloudflare Cache Rules (bypass).
+      // The `missing` condition ensures these only apply to non-RSC requests
+      // (RSC requests are handled by the no-store rule above).
       {
         source: '/book/:path*',
+        missing: [{ type: 'header', key: 'rsc' }],
         headers: [{ key: 'CDN-Cache-Control', value: 'public, max-age=86400, stale-while-revalidate=3600' }],
       },
       {
         source: '/collections/:path*',
+        missing: [{ type: 'header', key: 'rsc' }],
         headers: [{ key: 'CDN-Cache-Control', value: 'public, max-age=86400, stale-while-revalidate=3600' }],
       },
       {
         source: '/author/:path*',
+        missing: [{ type: 'header', key: 'rsc' }],
         headers: [{ key: 'CDN-Cache-Control', value: 'public, max-age=86400, stale-while-revalidate=3600' }],
       },
       {
         source: '/browse/:path*',
+        missing: [{ type: 'header', key: 'rsc' }],
         headers: [{ key: 'CDN-Cache-Control', value: 'public, max-age=86400, stale-while-revalidate=3600' }],
       },
       {
         source: '/encyclopedia/:path*',
+        missing: [{ type: 'header', key: 'rsc' }],
         headers: [{ key: 'CDN-Cache-Control', value: 'public, max-age=86400, stale-while-revalidate=3600' }],
       },
       {
         source: '/gallery/:path*',
+        missing: [{ type: 'header', key: 'rsc' }],
         headers: [{ key: 'CDN-Cache-Control', value: 'public, max-age=86400, stale-while-revalidate=3600' }],
       },
       {
         source: '/explore/:path*',
+        missing: [{ type: 'header', key: 'rsc' }],
         headers: [{ key: 'CDN-Cache-Control', value: 'public, max-age=86400, stale-while-revalidate=3600' }],
       },
       {
         source: '/libraries/:path*',
+        missing: [{ type: 'header', key: 'rsc' }],
         headers: [{ key: 'CDN-Cache-Control', value: 'public, max-age=86400, stale-while-revalidate=3600' }],
       },
       {
         source: '/languages/:path*',
+        missing: [{ type: 'header', key: 'rsc' }],
         headers: [{ key: 'CDN-Cache-Control', value: 'public, max-age=86400, stale-while-revalidate=3600' }],
       },
       {
         source: '/artwork/:path*',
+        missing: [{ type: 'header', key: 'rsc' }],
         headers: [{ key: 'CDN-Cache-Control', value: 'public, max-age=86400, stale-while-revalidate=3600' }],
       },
       // Prevent Cloudflare from caching admin/auth routes
