@@ -292,15 +292,9 @@ export function proxy(request: NextRequest) {
     },
   });
 
-  // Prevent Cloudflare from caching RSC flight data as HTML.
-  // CF Free plan ignores the Vary header (except Accept-Encoding), so RSC
-  // responses (text/x-component) get cached and served to browsers expecting
-  // HTML, showing raw React flight data instead of the page.
-  // CDN-Cache-Control is respected by CF but stripped before reaching the browser.
-  const isRsc = request.headers.get('rsc') === '1';
-  if (isRsc) {
-    response.headers.set('CDN-Cache-Control', 'no-store');
-  }
+  // RSC cache poisoning is handled in next.config.ts headers() via
+  // has/missing conditions on the 'rsc' header. Middleware can't reliably
+  // override CDN-Cache-Control because Next.js ISR sets it after middleware.
 
   return response;
 }
