@@ -302,6 +302,49 @@ function QuotesBlock({ quotes, books, title }: {
   books: BookRef[];
   title?: string;
 }) {
+  const verified = quotes.filter(q => q.verified !== false);
+  if (verified.length === 0) return null;
+
+  // First quote is the hero — larger, more prominent
+  const [hero, ...rest] = verified;
+
+  function renderQuote(q: typeof hero, isHero: boolean) {
+    const book = q.book_id ? findBook(books, q.book_id) : undefined;
+    const bookHref = book
+      ? (q.page_number
+          ? `${bookUrl({ id: book.id, slug: book.slug })}?page=${q.page_number}`
+          : bookUrl({ id: book.id, slug: book.slug }))
+      : undefined;
+    return (
+      <blockquote className={`relative ${isHero ? 'py-6 px-8 bg-white/60 rounded-xl border border-accent-gold/20' : 'pl-6 border-l-2 border-accent-gold/40 py-2'}`}>
+        {isHero && <Quote className="absolute top-4 left-4 w-8 h-8 text-accent-gold/20" />}
+        <p className={`${isHero ? 'text-xl sm:text-2xl leading-relaxed' : 'text-base sm:text-lg leading-relaxed'} font-display text-primary/85 italic ${isHero ? 'pl-6' : ''}`}>
+          &ldquo;{q.text}&rdquo;
+        </p>
+        {q.original_text && (
+          <p className={`mt-3 text-xs text-secondary/50 italic leading-relaxed ${isHero ? 'pl-6' : ''}`}>
+            <span className="text-[9px] uppercase tracking-widest text-muted/40 not-italic mr-1.5">
+              {q.original_language || 'original'}
+            </span>
+            {q.original_text}
+          </p>
+        )}
+        <footer className={`mt-3 text-sm text-muted ${isHero ? 'pl-6' : ''}`}>
+          — <AuthorName author={q.author} />
+          {q.year && <span className="text-muted/60"> ({q.year})</span>}
+          {bookHref ? (
+            <Link href={bookHref} className="text-accent-rust hover:underline ml-1">
+              {q.book_title || (book ? bookTitle(book) : '')}
+              {q.page_number ? `, p. ${q.page_number}` : ''}
+            </Link>
+          ) : (
+            q.book_title ? `, ${q.book_title}` : ''
+          )}
+        </footer>
+      </blockquote>
+    );
+  }
+
   return (
     <div>
       {title && (
@@ -310,50 +353,14 @@ function QuotesBlock({ quotes, books, title }: {
           {title}
         </h3>
       )}
-      <div className="space-y-8">
-        {quotes.filter(q => q.verified !== false).map((q, i) => {
-          const book = q.book_id ? findBook(books, q.book_id) : undefined;
-          const bookHref = book
-            ? (q.page_number
-                ? `${bookUrl({ id: book.id, slug: book.slug })}?page=${q.page_number}`
-                : bookUrl({ id: book.id, slug: book.slug }))
-            : undefined;
-          return (
-            <blockquote
-              key={i}
-              className="relative pl-6 border-l-2 border-accent-gold/40 py-2"
-            >
-              <Quote className="absolute -left-3 -top-1 w-5 h-5 text-accent-gold/30 bg-cream" />
-              <p className="text-lg sm:text-xl font-display text-primary/80 leading-relaxed italic">
-                &ldquo;{q.text}&rdquo;
-              </p>
-              {q.original_text && (
-                <p className="mt-2 text-sm text-secondary/60 italic leading-relaxed">
-                  <span className="text-[10px] uppercase tracking-wider text-muted/50 not-italic mr-1.5">
-                    {q.original_language || 'original'}
-                  </span>
-                  &ldquo;{q.original_text}&rdquo;
-                </p>
-              )}
-              <footer className="mt-3 text-sm text-muted">
-                — <AuthorName author={q.author} />
-                {q.year && <span className="text-muted/60"> ({q.year})</span>}
-                {bookHref ? (
-                  <Link
-                    href={bookHref}
-                    className="text-accent-rust hover:underline ml-1"
-                  >
-                    {q.book_title || (book ? bookTitle(book) : '')}
-                    {q.page_number ? `, p. ${q.page_number}` : ''}
-                  </Link>
-                ) : (
-                  q.book_title ? `, ${q.book_title}` : ''
-                )}
-              </footer>
-            </blockquote>
-          );
-        })}
-      </div>
+      {renderQuote(hero, true)}
+      {rest.length > 0 && (
+        <div className="grid gap-6 grid-cols-1 md:grid-cols-2 mt-6">
+          {rest.map((q, i) => (
+            <div key={i}>{renderQuote(q, false)}</div>
+          ))}
+        </div>
+      )}
     </div>
   );
 }
@@ -423,17 +430,18 @@ function FeaturedImageBlock({ image, caption }: {
   if (!src) return null;
 
   const inner = (
-    <figure className="rounded-xl overflow-hidden border border-border-light">
-      <div className="relative aspect-[16/9] sm:aspect-[2/1] bg-dark">
+    <figure className="rounded-xl overflow-hidden border border-border-light shadow-lg">
+      <div className="relative aspect-[3/2] sm:aspect-[16/9] bg-dark">
         <Image
           src={src}
           alt={image?.museum_description || caption}
           fill
           className="object-contain"
           sizes="(min-width: 1024px) 900px, 100vw"
+          unoptimized
         />
       </div>
-      <figcaption className="px-4 py-3 text-sm text-secondary bg-white leading-relaxed">
+      <figcaption className="px-5 py-3 text-sm text-secondary bg-white leading-relaxed">
         {caption}
       </figcaption>
     </figure>
@@ -541,46 +549,75 @@ function ThematicGalleryBlock({ clusters, books }: {
   }[];
   books: BookRef[];
 }) {
-  if (clusters.length === 0) return null;
+  const validClusters = clusters.filter(c => c.images.some(img => imageUrl(img)));
+  if (validClusters.length === 0) return null;
   return (
-    <div className="space-y-8">
-      {clusters.map((cluster, ci) => (
-        <div key={ci}>
-          <h3 className="text-lg sm:text-xl font-display text-primary mb-1">
-            {cluster.theme}
-          </h3>
-          {cluster.description && (
-            <p className="text-sm text-muted mb-3">{linkBookNames(cluster.description, books)}</p>
-          )}
-          <div className="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-4 gap-3">
-            {cluster.images.map((img) => {
-              const src = imageUrl(img);
-              if (!src) return null;
-              return (
+    <div className="space-y-10">
+      {validClusters.map((cluster, ci) => {
+        const validImages = cluster.images.filter(img => imageUrl(img));
+        if (validImages.length === 0) return null;
+        // First image is hero-sized, rest are grid
+        const [hero, ...grid] = validImages;
+        const heroSrc = imageUrl(hero);
+        return (
+          <div key={ci}>
+            <h3 className="text-xl sm:text-2xl font-display text-primary mb-1">
+              {cluster.theme}
+            </h3>
+            {cluster.description && (
+              <p className="text-sm text-muted mb-4">{linkBookNames(cluster.description, books)}</p>
+            )}
+            <div className="grid grid-cols-1 sm:grid-cols-3 gap-3">
+              {/* Hero image — spans 2 cols on desktop */}
+              {heroSrc && (
                 <Link
-                  key={img.id}
-                  href={imagePageHref(img)}
-                  className="group relative aspect-square rounded-lg overflow-hidden border border-border-light hover:border-accent-rust/40 transition-all hover:shadow-md"
-                  title={img.museum_description}
+                  href={imagePageHref(hero)}
+                  className="group relative sm:col-span-2 aspect-[4/3] rounded-lg overflow-hidden border border-border-light hover:border-accent-rust/40 transition-all hover:shadow-lg"
                 >
                   <Image
-                    src={src}
-                    alt={img.museum_description || img.book_title || 'Illustration'}
+                    src={heroSrc}
+                    alt={hero.museum_description || hero.book_title || 'Illustration'}
                     fill
-                    className="object-cover group-hover:scale-105 transition-transform duration-300"
-                    sizes="(min-width: 1024px) 200px, (min-width: 640px) 160px, 50vw"
+                    className="object-cover group-hover:scale-105 transition-transform duration-500"
+                    sizes="(min-width: 1024px) 600px, (min-width: 640px) 400px, 100vw"
                   />
-                  <div className="absolute bottom-0 left-0 right-0 bg-gradient-to-t from-black/60 to-transparent p-2 pt-6 opacity-0 group-hover:opacity-100 transition-opacity">
-                    <p className="text-[11px] text-white/90 line-clamp-2 leading-tight">
-                      {img.museum_description || img.book_title}
+                  <div className="absolute bottom-0 left-0 right-0 bg-gradient-to-t from-black/70 to-transparent p-4 pt-12">
+                    <p className="text-sm text-white/90 line-clamp-2 leading-snug font-medium">
+                      {hero.museum_description}
                     </p>
+                    <p className="text-xs text-white/60 mt-1">{hero.book_title}</p>
                   </div>
                 </Link>
-              );
-            })}
+              )}
+              {/* Remaining images */}
+              {grid.map((img) => {
+                const src = imageUrl(img);
+                if (!src) return null;
+                return (
+                  <Link
+                    key={img.id}
+                    href={imagePageHref(img)}
+                    className="group relative aspect-square rounded-lg overflow-hidden border border-border-light hover:border-accent-rust/40 transition-all hover:shadow-md"
+                  >
+                    <Image
+                      src={src}
+                      alt={img.museum_description || img.book_title || 'Illustration'}
+                      fill
+                      className="object-cover group-hover:scale-105 transition-transform duration-300"
+                      sizes="(min-width: 1024px) 200px, (min-width: 640px) 160px, 50vw"
+                    />
+                    <div className="absolute bottom-0 left-0 right-0 bg-gradient-to-t from-black/60 to-transparent p-2 pt-8 opacity-0 group-hover:opacity-100 transition-opacity">
+                      <p className="text-[11px] text-white/90 line-clamp-2 leading-tight">
+                        {img.museum_description || img.book_title}
+                      </p>
+                    </div>
+                  </Link>
+                );
+              })}
+            </div>
           </div>
-        </div>
-      ))}
+        );
+      })}
     </div>
   );
 }
@@ -625,6 +662,7 @@ function GalleryGridBlock({ embeddedImages, fallbackImages, indices, title }: {
                 fill
                 className="object-cover group-hover:scale-105 transition-transform duration-300"
                 sizes="(min-width: 1024px) 200px, (min-width: 640px) 160px, 50vw"
+                unoptimized
               />
               {img.type && (
                 <span className="absolute bottom-1.5 left-1.5 text-[10px] bg-dark/70 text-white px-1.5 py-0.5 rounded capitalize">
