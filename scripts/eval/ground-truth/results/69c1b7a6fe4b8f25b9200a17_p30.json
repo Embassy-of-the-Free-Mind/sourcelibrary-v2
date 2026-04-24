@@ -1,0 +1,31 @@
+{
+  "book_id": "69c1b7a6fe4b8f25b9200a17",
+  "page_number": 30,
+  "language": "Arabic",
+  "category": "hallucination",
+  "hallucination_ratio": 8.8,
+  "book_title": "Hijazi Quran (7th century)",
+  "provider": "Chester Beatty Library",
+  "page_type": "text",
+  "script_type": "handwritten",
+  "columns": 1,
+  "existing_ocr_model": "gemini-3-flash-preview",
+  "existing_ocr_chars": 15208,
+  "evaluator": "claude-opus-4-6-interactive",
+  "evaluation": {
+    "quality": "hallucinated",
+    "hallucination": true,
+    "hallucination_type": "generative_fabrication",
+    "hallucination_trigger": "Arabic manuscript with mixed content (tables, diagrams, or illustrations alongside text). The structured non-text elements provide generation scaffolding.",
+    "cer_estimate": 0.92,
+    "errors": [
+      "15,208 chars vs ~2,097 actual (8.8x over-generation)",
+      "Fluent fabrication in source script — hard to detect without image comparison"
+    ],
+    "ocr_length_vs_actual": "much_longer",
+    "actual_text_estimate_chars": 2097,
+    "structural_accuracy": "poor",
+    "notes": "Arabic hallucination via gemini-3-flash-preview. 8.8x over-generation."
+  },
+  "processed_at": "2026-04-24T14:31:43.043Z"
+}

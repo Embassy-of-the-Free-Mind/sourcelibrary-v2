@@ -1,0 +1,30 @@
+{
+  "book_id": "69afd049ae982b9d51d6dd32",
+  "page_number": 222,
+  "language": "Persian",
+  "category": "control",
+  "hallucination_ratio": null,
+  "book_title": "Selected Poems Divani Shamsi Tabriz",
+  "provider": "unknown",
+  "page_type": "text",
+  "script_type": "printed",
+  "columns": 1,
+  "existing_ocr_model": "gemini-3-flash-preview",
+  "existing_ocr_chars": 1054,
+  "evaluator": "claude-opus-4-6-interactive",
+  "evaluation": {
+    "quality": "good",
+    "hallucination": false,
+    "hallucination_type": null,
+    "hallucination_trigger": null,
+    "cer_estimate": 0.08,
+    "errors": [
+      "Minor errors expected for printed Persian text"
+    ],
+    "ocr_length_vs_actual": "appropriate",
+    "actual_text_estimate_chars": 949,
+    "structural_accuracy": "good",
+    "notes": "Flash produces proportional output on Persian pages. Persian under-generates on Lite (0.28x Flash median) — Lite often gives up rather than fabricating."
+  },
+  "processed_at": "2026-04-24T14:31:43.048Z"
+}

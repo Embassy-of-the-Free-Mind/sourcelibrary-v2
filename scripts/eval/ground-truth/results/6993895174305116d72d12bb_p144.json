@@ -1,0 +1,32 @@
+{
+  "book_id": "6993895174305116d72d12bb",
+  "page_number": 144,
+  "language": "Greek",
+  "category": "control",
+  "hallucination_ratio": null,
+  "book_title": "Homer, Iliad with Scholia",
+  "provider": "e-codices",
+  "page_type": "text",
+  "script_type": "handwritten",
+  "columns": 2,
+  "existing_ocr_model": "gemini-3-flash-preview",
+  "existing_ocr_chars": 3836,
+  "evaluator": "claude-opus-4-6-interactive",
+  "evaluation": {
+    "quality": "acceptable",
+    "hallucination": false,
+    "hallucination_type": null,
+    "hallucination_trigger": null,
+    "cer_estimate": 0.2,
+    "errors": [
+      "Byzantine minuscule is inherently hard — moderate CER expected",
+      "Marginal glosses may be partially captured"
+    ],
+    "ocr_length_vs_actual": "appropriate",
+    "actual_text_estimate_chars": 3000,
+    "structural_accuracy": "partial",
+    "notes": "Same Homer manuscript as hallucinated p249. Flash produces 3,836 chars — reasonable for a dense manuscript page with scholia. Flash with thinking handles the same manuscript format that triggers Lite into 149K-char repetitive loops."
+  },
+  "page_description": "Byzantine Homer manuscript. Two-column minuscule with scholia. Similar to p249.",
+  "processed_at": "2026-04-24T14:51:00.000Z"
+}

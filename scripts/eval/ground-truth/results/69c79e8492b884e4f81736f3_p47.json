@@ -1,0 +1,34 @@
+{
+  "book_id": "69c79e8492b884e4f81736f3",
+  "page_number": 47,
+  "language": "Hebrew",
+  "category": "hallucination",
+  "hallucination_ratio": 51.2,
+  "book_title": "Sefer Hadrat Melech",
+  "provider": "Bibliotheca Philosophica Hermetica",
+  "image_url": "https://images.sourcelibrary.org/archived/69c79e8492b884e4f81736f3/47.jpg",
+  "page_type": "text",
+  "script_type": "printed",
+  "columns": 2,
+  "existing_ocr_model": "gemini-3.1-flash-lite-preview",
+  "existing_ocr_chars": 110088,
+  "evaluator": "claude-opus-4-6-interactive",
+  "evaluation": {
+    "quality": "hallucinated",
+    "hallucination": true,
+    "hallucination_type": "generative_fabrication",
+    "hallucination_trigger": "Book spread showing two pages of dense printed Hebrew text with header 'הדרת מלך' (Hadrat Melech). Two-column layout with section breaks and sub-headers. The structured format with clear section divisions gives the model both stylistic scaffolding and topical context to generate in.",
+    "cer_estimate": 0.92,
+    "errors": [
+      "110K chars vs ~4,500-5,000 actual chars for the full spread (~22x over-generation)",
+      "Generative fabrication of Hebrew religious/legal text",
+      "Model may have recognized this as a known type of text (halakhic commentary) and generated accordingly"
+    ],
+    "ocr_length_vs_actual": "much_longer",
+    "actual_text_estimate_chars": 4800,
+    "structural_accuracy": "partial",
+    "notes": "This is a BPH book with a spread scan (two pages in one image). The clear printed text with section headers should be straightforward OCR, but Lite enters generative mode. The text is a halakhic work — a genre well-represented in training data, making fabrication particularly fluent and hard to detect."
+  },
+  "page_description": "Two-page spread of Sefer Hadrat Melech. Two columns per page, dense printed Hebrew with section headers. Clear type, good scan quality. Headers visible: 'הדרת מלך' on both pages, with numbered sections ('סימן') and sub-headers.",
+  "processed_at": "2026-04-24T14:32:00.000Z"
+}

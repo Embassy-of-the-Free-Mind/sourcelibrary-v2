@@ -1,0 +1,31 @@
+{
+  "book_id": "69a5f09db29703bc86eb5fe3",
+  "page_number": 31,
+  "language": "Armenian",
+  "category": "hallucination",
+  "hallucination_ratio": 15.2,
+  "book_title": "Patmutiwn Makabayetswots",
+  "provider": "Internet Archive",
+  "page_type": "unknown",
+  "script_type": "printed",
+  "columns": 1,
+  "existing_ocr_model": "gemini-3.1-flash-lite-preview",
+  "existing_ocr_chars": 25864,
+  "evaluator": "claude-opus-4-6-interactive",
+  "evaluation": {
+    "quality": "hallucinated",
+    "hallucination": true,
+    "hallucination_type": "generative_fabrication",
+    "hallucination_trigger": "Printed Armenian text, typically 19th-century typeset. Dense two-column layout with footnote apparatus. Armenian script shares some visual features with Latin and Greek but has unique characters. Lite consistently produces 13-15x over-generation on Armenian printed text.",
+    "cer_estimate": 0.92,
+    "errors": [
+      "25,864 chars vs ~1,841 actual (15.2x over-generation)",
+      "Fluent fabrication in source script — hard to detect without image comparison"
+    ],
+    "ocr_length_vs_actual": "much_longer",
+    "actual_text_estimate_chars": 1841,
+    "structural_accuracy": "poor",
+    "notes": "All 5 Armenian hallucinations are Lite, all around 13-15x ratio — remarkably consistent. Suggests a systematic threshold rather than stochastic failure."
+  },
+  "processed_at": "2026-04-24T14:31:43.048Z"
+}

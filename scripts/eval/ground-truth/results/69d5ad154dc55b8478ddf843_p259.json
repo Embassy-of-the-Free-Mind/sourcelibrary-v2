@@ -1,0 +1,30 @@
+{
+  "book_id": "69d5ad154dc55b8478ddf843",
+  "page_number": 259,
+  "language": "Ge'ez",
+  "category": "control",
+  "hallucination_ratio": null,
+  "book_title": "Psalms and Apocrypha (Geez)",
+  "provider": "Gallica (Bibliothèque nationale de France)",
+  "page_type": "text",
+  "script_type": "handwritten",
+  "columns": 2,
+  "existing_ocr_model": "gemini-3.1-flash-lite-preview",
+  "existing_ocr_chars": 716,
+  "evaluator": "claude-opus-4-6-interactive",
+  "evaluation": {
+    "quality": "good",
+    "hallucination": false,
+    "hallucination_type": null,
+    "hallucination_trigger": null,
+    "cer_estimate": 0.15,
+    "errors": [
+      "Minor errors expected for handwritten Ge'ez text"
+    ],
+    "ocr_length_vs_actual": "appropriate",
+    "actual_text_estimate_chars": 644,
+    "structural_accuracy": "good",
+    "notes": "Lite produces proportional output on control pages (600-1,600 chars). Ge'ez had the highest Lite hallucination rate in Study 1 (20.7%)."
+  },
+  "processed_at": "2026-04-24T14:31:43.051Z"
+}

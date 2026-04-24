@@ -1,0 +1,32 @@
+{
+  "book_id": "69942f6fb2f6748db4ac0db5",
+  "page_number": 97,
+  "language": "Greek",
+  "category": "control",
+  "hallucination_ratio": null,
+  "book_title": "Maximus Confessor De Coelesti Hierarchia",
+  "provider": "Biblioteca Apostolica Vaticana",
+  "page_type": "text",
+  "script_type": "handwritten",
+  "columns": 1,
+  "existing_ocr_model": "gemini-3.1-flash-lite-preview",
+  "existing_ocr_chars": 2913,
+  "evaluator": "claude-opus-4-6-interactive",
+  "evaluation": {
+    "quality": "acceptable",
+    "hallucination": false,
+    "hallucination_type": null,
+    "hallucination_trigger": null,
+    "cer_estimate": 0.18,
+    "errors": [
+      "Cursive minuscule — moderate error rate expected",
+      "Marginal annotations may be partially read"
+    ],
+    "ocr_length_vs_actual": "appropriate",
+    "actual_text_estimate_chars": 2200,
+    "structural_accuracy": "partial",
+    "notes": "Same Vatican manuscript as hallucinated p197, also Lite. 2,913 chars is proportional. Again shows Lite hallucination is page-specific, not book-level deterministic. Some pages trigger it, others do not — even within the same manuscript and model."
+  },
+  "page_description": "Vatican manuscript, similar to p197. Cursive Greek with marginal notes.",
+  "processed_at": "2026-04-24T14:52:00.000Z"
+}

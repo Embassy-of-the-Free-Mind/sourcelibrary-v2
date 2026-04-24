@@ -1,0 +1,30 @@
+{
+  "book_id": "69d0055e1bed36ac0b5558fa",
+  "page_number": 10,
+  "language": "Sanskrit",
+  "category": "control",
+  "hallucination_ratio": null,
+  "book_title": "Rasaratnakara",
+  "provider": "Internet Archive",
+  "page_type": "preface",
+  "script_type": "handwritten",
+  "columns": 1,
+  "existing_ocr_model": "gemini-3-flash-preview",
+  "existing_ocr_chars": 1912,
+  "evaluator": "claude-opus-4-6-interactive",
+  "evaluation": {
+    "quality": "good",
+    "hallucination": false,
+    "hallucination_type": null,
+    "hallucination_trigger": null,
+    "cer_estimate": 0.15,
+    "errors": [
+      "Minor errors expected for handwritten Sanskrit text"
+    ],
+    "ocr_length_vs_actual": "appropriate",
+    "actual_text_estimate_chars": 1721,
+    "structural_accuracy": "good",
+    "notes": "Control pages show appropriate output length, confirming hallucination is page-specific rather than book-level."
+  },
+  "processed_at": "2026-04-24T14:31:43.047Z"
+}

@@ -1,0 +1,30 @@
+{
+  "book_id": "69af12510092756351e44992",
+  "page_number": 73,
+  "language": "Chinese",
+  "category": "control",
+  "hallucination_ratio": null,
+  "book_title": "Kun Yu Wan Guo Quan Tu",
+  "provider": "Library of Congress",
+  "page_type": "text",
+  "script_type": "printed",
+  "columns": 2,
+  "existing_ocr_model": "gemini-3-flash-preview",
+  "existing_ocr_chars": 1092,
+  "evaluator": "claude-opus-4-6-interactive",
+  "evaluation": {
+    "quality": "good",
+    "hallucination": false,
+    "hallucination_type": null,
+    "hallucination_trigger": null,
+    "cer_estimate": 0.08,
+    "errors": [
+      "Minor errors expected for printed Chinese text"
+    ],
+    "ocr_length_vs_actual": "appropriate",
+    "actual_text_estimate_chars": 983,
+    "structural_accuracy": "good",
+    "notes": "Flash handles clear Chinese woodblock pages well, producing proportional output (~500-1,100 chars for typical pages)."
+  },
+  "processed_at": "2026-04-24T14:31:43.045Z"
+}

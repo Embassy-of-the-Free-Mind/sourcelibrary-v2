@@ -1,0 +1,34 @@
+{
+  "book_id": "69b3e5b8304c1c6b39509cc0",
+  "page_number": 1,
+  "language": "Hebrew",
+  "category": "control",
+  "hallucination_ratio": null,
+  "book_title": "Hebrew book (cover page)",
+  "provider": "Unknown",
+  "image_url": "https://images.sourcelibrary.org/archived/69b3e5b8304c1c6b39509cc0/1.jpg",
+  "page_type": "blank",
+  "script_type": null,
+  "columns": 0,
+  "existing_ocr_model": "gemini-3-flash-preview",
+  "existing_ocr_chars": 623,
+  "evaluator": "claude-opus-4-6-interactive",
+  "evaluation": {
+    "quality": "poor",
+    "hallucination": true,
+    "hallucination_type": "generative_fabrication",
+    "hallucination_trigger": "This is a book cover with NO text — leather binding with decorative border tooling and a measuring ruler on the left edge. There is zero text to transcribe. Any OCR output beyond a blank/cover marker is hallucinated.",
+    "cer_estimate": 1.0,
+    "errors": [
+      "623 chars of output for a page with zero text",
+      "Model generated descriptive/metadata content for a blank leather book cover",
+      "Should have been classified as blank/cover page with no OCR output"
+    ],
+    "ocr_length_vs_actual": "much_longer",
+    "actual_text_estimate_chars": 0,
+    "structural_accuracy": "poor",
+    "notes": "Interesting edge case: even Flash hallucinates on blank pages by generating metadata or descriptions. 623 chars is relatively short, so this would not be caught by the 3x-median threshold used in Study 1. This is a different kind of hallucination — not over-generation of text in the source language, but fabrication of structural markup and metadata for a page that has no content. The page should have been classified as 'blank' or 'cover' with null/empty OCR data. This was selected as a 'control' but is actually a minor hallucination case — an interesting discovery."
+  },
+  "page_description": "Leather book cover/binding. Tan/camel colored leather with decorative tooled border lines. Spine visible on right edge with horizontal bands. Measuring ruler on left edge for scale. No text whatsoever.",
+  "processed_at": "2026-04-24T14:39:00.000Z"
+}

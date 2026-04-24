@@ -1,0 +1,34 @@
+{
+  "book_id": "6953cc3677f38f6761be156e",
+  "page_number": 202,
+  "language": "Greek",
+  "category": "hallucination",
+  "hallucination_ratio": 39.8,
+  "book_title": "Fragmenta Herculanensia - Herculaneum Papyri Catalog",
+  "provider": "Internet Archive",
+  "page_type": "text",
+  "script_type": "printed",
+  "columns": 1,
+  "existing_ocr_model": "gemini-3-flash-preview",
+  "existing_ocr_chars": 86234,
+  "evaluator": "claude-opus-4-6-interactive",
+  "evaluation": {
+    "quality": "hallucinated",
+    "hallucination": true,
+    "hallucination_type": "generative_fabrication",
+    "hallucination_trigger": "IMPORTANT: This page is actually ENGLISH text — a scholarly catalog of papyri (The Oxford Facsimiles). It contains tables mapping Nap./Ox. references with column-style layout. The book is classified as Greek but this page is English with scattered Greek words. Flash hallucinates at 39.8x even on printed English — likely because the mixed English/Greek content with tabular references provides a generation template.",
+    "cer_estimate": 0.9,
+    "errors": [
+      "86K chars vs ~2,200 actual (39x)",
+      "Flash hallucination on PRINTED text",
+      "Book language mismatch: classified as Greek but page is English",
+      "The tabular reference format may trigger repetitive generation of catalog entries"
+    ],
+    "ocr_length_vs_actual": "much_longer",
+    "actual_text_estimate_chars": 2200,
+    "structural_accuracy": "poor",
+    "notes": "FALSE POSITIVE WARNING: This may be a Study 1 methodology issue. The page is English, but the book is classified Greek. The high ratio may partly reflect language mismatch rather than pure hallucination. However, 86K chars for a page with ~2,200 chars of actual content is still 39x over-generation, so genuine hallucination is occurring even with that caveat. Flash hallucinates on tabular/catalog formats."
+  },
+  "page_description": "Printed English scholarly catalog page. Heading: THE OXFORD FACSIMILES. Lists papyrus entries (1042, 1044, 1050) with cross-references between Nap. and Ox. editions. Tabular reference format.",
+  "processed_at": "2026-04-24T14:48:00.000Z"
+}

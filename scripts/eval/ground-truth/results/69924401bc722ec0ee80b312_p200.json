@@ -1,0 +1,33 @@
+{
+  "book_id": "69924401bc722ec0ee80b312",
+  "page_number": 200,
+  "language": "Hebrew",
+  "category": "control",
+  "hallucination_ratio": null,
+  "book_title": "Mikraot Gedolot: First Rabbinic Bible (Venice, 1517)",
+  "provider": "Internet Archive",
+  "image_url": "https://images.sourcelibrary.org/archived/69924401bc722ec0ee80b312/200.jpg",
+  "page_type": "text",
+  "script_type": "printed",
+  "columns": 1,
+  "existing_ocr_model": "gemini-3-flash-preview",
+  "existing_ocr_chars": 4795,
+  "evaluator": "claude-opus-4-6-interactive",
+  "evaluation": {
+    "quality": "good",
+    "hallucination": false,
+    "hallucination_type": null,
+    "hallucination_trigger": null,
+    "cer_estimate": 0.08,
+    "errors": [
+      "Minor: some characters may be misread in the smaller commentary type",
+      "The dense page staining in the center may cause occasional character substitutions"
+    ],
+    "ocr_length_vs_actual": "appropriate",
+    "actual_text_estimate_chars": 3200,
+    "structural_accuracy": "good",
+    "notes": "Same book as the hallucinated p179/p160, but processed by Flash instead of Lite. Flash's output of 4,795 chars is reasonable for this dense Rabbinic Bible page — slightly longer than my estimate but within range given the multi-layer commentary format. This is the control demonstrating that Flash handles the same Mikra'ot Gedolot layout that Lite completely fails on."
+  },
+  "page_description": "Mikra'ot Gedolot page similar to p179/p160. Central biblical text with surrounding commentaries. Some page darkening/staining in center. Clear printed Hebrew. Bottom section has colophon marker.",
+  "processed_at": "2026-04-24T14:35:00.000Z"
+}

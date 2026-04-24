@@ -1,0 +1,35 @@
+{
+  "book_id": "fec0b295-0795-440f-a467-434e17ba2a8e",
+  "page_number": 29,
+  "language": "Hebrew",
+  "category": "hallucination",
+  "hallucination_ratio": 18.7,
+  "book_title": "Hebrew manuscript (BPH)",
+  "provider": "Bibliotheca Philosophica Hermetica",
+  "image_url": "https://images.sourcelibrary.org/archived/fec0b295-0795-440f-a467-434e17ba2a8e/29.jpg",
+  "page_type": "text",
+  "script_type": "handwritten",
+  "columns": 2,
+  "existing_ocr_model": "gemini-3-flash-preview",
+  "existing_ocr_chars": 38082,
+  "evaluator": "claude-opus-4-6-interactive",
+  "evaluation": {
+    "quality": "hallucinated",
+    "hallucination": true,
+    "hallucination_type": "generative_fabrication",
+    "hallucination_trigger": "Two-page manuscript spread with dense cursive Hebrew script. Multiple text blocks with varying line spacing and possibly different scribal hands. Faded ink in places. The difficulty of reading cursive Hebrew combined with the spread format (double the expected content) triggers over-generation even in Flash.",
+    "cer_estimate": 0.85,
+    "errors": [
+      "38K chars vs ~3,000-4,000 actual chars on the spread (~10x over-generation)",
+      "Flash hallucination — significant because Flash normally avoids this via thinking",
+      "The handwritten cursive script is significantly harder to read than printed text",
+      "Some text blocks have faded ink, creating genuine perception difficulty"
+    ],
+    "ocr_length_vs_actual": "much_longer",
+    "actual_text_estimate_chars": 3500,
+    "structural_accuracy": "poor",
+    "notes": "Critical finding: Flash hallucinates on this page. This is one of the few cases where even thinking-enabled Flash enters generative mode. The combination of handwritten cursive Hebrew + manuscript spread + faded ink + multiple text blocks creates sufficient perceptual difficulty to overwhelm even Flash's metacognitive checkpoints. Suggests thinking helps but has limits on the hardest manuscripts."
+  },
+  "page_description": "Manuscript spread showing two pages of dense cursive Hebrew handwriting. Multiple distinct text blocks. Left page has denser text with smaller writing; right page has larger, clearer hand. Some fading and foxing. BPH provenance suggests 17th-18th century kabbalistic or philosophical manuscript.",
+  "processed_at": "2026-04-24T14:33:00.000Z"
+}

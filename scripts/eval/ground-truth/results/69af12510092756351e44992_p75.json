@@ -1,0 +1,31 @@
+{
+  "book_id": "69af12510092756351e44992",
+  "page_number": 75,
+  "language": "Chinese",
+  "category": "hallucination",
+  "hallucination_ratio": 40.1,
+  "book_title": "Kun Yu Wan Guo Quan Tu",
+  "provider": "Library of Congress",
+  "page_type": "text",
+  "script_type": "printed",
+  "columns": 2,
+  "existing_ocr_model": "gemini-3-flash-preview",
+  "existing_ocr_chars": 21284,
+  "evaluator": "claude-opus-4-6-interactive",
+  "evaluation": {
+    "quality": "hallucinated",
+    "hallucination": true,
+    "hallucination_type": "uncertainty_repetition",
+    "hallucination_trigger": "Chinese woodblock or manuscript page with significant damage, ink bleed-through, or faded text. Flash generates thousands of [?] uncertainty markers rather than fabricating characters — a safer but still problematic failure mode.",
+    "cer_estimate": 0.85,
+    "errors": [
+      "21,284 chars vs ~1,092 actual (40.1x over-generation)",
+      "Uncertainty markers ([?]) repeated extensively"
+    ],
+    "ocr_length_vs_actual": "much_longer",
+    "actual_text_estimate_chars": 1092,
+    "structural_accuracy": "poor",
+    "notes": "Chinese hallucination pattern is unique: ALL 5 candidates are Flash (not Lite), and the pattern is uncertainty_repetition ([?] markers) rather than generative_fabrication. This suggests Chinese character complexity creates a different failure mode where even thinking-enabled Flash cannot read damaged text, but at least signals uncertainty rather than fabricating."
+  },
+  "processed_at": "2026-04-24T14:31:43.044Z"
+}

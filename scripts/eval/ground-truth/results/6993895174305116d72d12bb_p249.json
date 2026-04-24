@@ -1,0 +1,33 @@
+{
+  "book_id": "6993895174305116d72d12bb",
+  "page_number": 249,
+  "language": "Greek",
+  "category": "hallucination",
+  "hallucination_ratio": 68.6,
+  "book_title": "Homer, Iliad with Scholia",
+  "provider": "e-codices",
+  "page_type": "text",
+  "script_type": "handwritten",
+  "columns": 2,
+  "existing_ocr_model": "gemini-3.1-flash-lite-preview",
+  "existing_ocr_chars": 149396,
+  "evaluator": "claude-opus-4-6-interactive",
+  "evaluation": {
+    "quality": "hallucinated",
+    "hallucination": true,
+    "hallucination_type": "repetitive_loop",
+    "hallucination_trigger": "Byzantine minuscule manuscript with extensive marginal scholia. Two-column layout with interlinear glosses. The repetitive visual structure of short marginal annotations triggers a tag-repetition loop.",
+    "cer_estimate": 0.98,
+    "errors": [
+      "149K chars vs ~2,500 actual (60x)",
+      "Generates <margin>πλη</margin> and <margin>τῆ</margin> 3,343 times each",
+      "First ~500 chars may be genuine, rest is pure loop"
+    ],
+    "ocr_length_vs_actual": "much_longer",
+    "actual_text_estimate_chars": 2500,
+    "structural_accuracy": "poor",
+    "notes": "Classic Pattern 1: repetitive tag loop. The marginal scholia structure triggers the model to generate the same gloss tags indefinitely. This is the most mechanically obvious hallucination pattern — trivially detectable by checking for repeated sequences."
+  },
+  "page_description": "Byzantine manuscript of Homer Iliad with scholia. Two columns of minuscule Greek with extensive marginal and interlinear glosses. Faded parchment, brown ink.",
+  "processed_at": "2026-04-24T14:46:00.000Z"
+}

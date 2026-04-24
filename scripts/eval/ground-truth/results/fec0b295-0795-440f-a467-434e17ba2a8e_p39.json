@@ -1,0 +1,34 @@
+{
+  "book_id": "fec0b295-0795-440f-a467-434e17ba2a8e",
+  "page_number": 39,
+  "language": "Hebrew",
+  "category": "control",
+  "hallucination_ratio": null,
+  "book_title": "Hebrew manuscript (BPH)",
+  "provider": "Bibliotheca Philosophica Hermetica",
+  "image_url": "https://images.sourcelibrary.org/archived/fec0b295-0795-440f-a467-434e17ba2a8e/39.jpg",
+  "page_type": "text",
+  "script_type": "handwritten",
+  "columns": 2,
+  "existing_ocr_model": "gemini-3-flash-preview",
+  "existing_ocr_chars": 3146,
+  "evaluator": "claude-opus-4-6-interactive",
+  "evaluation": {
+    "quality": "acceptable",
+    "hallucination": false,
+    "hallucination_type": null,
+    "hallucination_trigger": null,
+    "cer_estimate": 0.15,
+    "errors": [
+      "Cursive Hebrew manuscript is inherently difficult — expect moderate character error rate",
+      "Some text blocks may have been partially omitted rather than fabricated",
+      "Faded areas may be misread"
+    ],
+    "ocr_length_vs_actual": "appropriate",
+    "actual_text_estimate_chars": 3500,
+    "structural_accuracy": "partial",
+    "notes": "Same manuscript book as hallucinated p29 (the manuscript spread), but this is a different page where Flash produced proportional output (3,146 chars for a similar spread). This shows Flash can handle this manuscript on some pages but not others. Comparing p29 (38K, hallucinated) to p39 (3.1K, acceptable) in the same book raises the question: what's different about the specific pages? The answer may be in the visual complexity or legibility of particular pages."
+  },
+  "page_description": "Manuscript spread, same book as p29. Dense cursive Hebrew in two text blocks per page. Similar hand, similar layout. Text appears slightly more regular and legible than p29.",
+  "processed_at": "2026-04-24T14:37:00.000Z"
+}

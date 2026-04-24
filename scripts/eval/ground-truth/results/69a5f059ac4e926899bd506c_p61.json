@@ -1,0 +1,30 @@
+{
+  "book_id": "69a5f059ac4e926899bd506c",
+  "page_number": 61,
+  "language": "Armenian",
+  "category": "control",
+  "hallucination_ratio": null,
+  "book_title": "Vasn Vardanay ew Hayots Paterazmin",
+  "provider": "Internet Archive",
+  "page_type": "text",
+  "script_type": "printed",
+  "columns": 1,
+  "existing_ocr_model": "gemini-3.1-flash-lite-preview",
+  "existing_ocr_chars": 3295,
+  "evaluator": "claude-opus-4-6-interactive",
+  "evaluation": {
+    "quality": "good",
+    "hallucination": false,
+    "hallucination_type": null,
+    "hallucination_trigger": null,
+    "cer_estimate": 0.08,
+    "errors": [
+      "Minor errors expected for printed Armenian text"
+    ],
+    "ocr_length_vs_actual": "appropriate",
+    "actual_text_estimate_chars": 2966,
+    "structural_accuracy": "good",
+    "notes": "Both Flash and Lite produce proportional output on control pages, suggesting hallucination is triggered by specific page features (density, layout) rather than script difficulty alone."
+  },
+  "processed_at": "2026-04-24T14:31:43.049Z"
+}

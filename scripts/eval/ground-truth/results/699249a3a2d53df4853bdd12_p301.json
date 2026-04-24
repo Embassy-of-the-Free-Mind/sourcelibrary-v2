@@ -1,0 +1,30 @@
+{
+  "book_id": "699249a3a2d53df4853bdd12",
+  "page_number": 301,
+  "language": "Japanese",
+  "category": "control",
+  "hallucination_ratio": null,
+  "book_title": "Kojiki",
+  "provider": "Internet Archive",
+  "page_type": "text",
+  "script_type": "printed",
+  "columns": 1,
+  "existing_ocr_model": "gemini-3-flash-preview",
+  "existing_ocr_chars": 1207,
+  "evaluator": "claude-opus-4-6-interactive",
+  "evaluation": {
+    "quality": "good",
+    "hallucination": false,
+    "hallucination_type": null,
+    "hallucination_trigger": null,
+    "cer_estimate": 0.08,
+    "errors": [
+      "Minor errors expected for printed Japanese text"
+    ],
+    "ocr_length_vs_actual": "appropriate",
+    "actual_text_estimate_chars": 1086,
+    "structural_accuracy": "good",
+    "notes": "Flash produces appropriate output (~900-1,200 chars). Even Lite controls are proportional, showing hallucination is page-specific."
+  },
+  "processed_at": "2026-04-24T14:31:43.050Z"
+}

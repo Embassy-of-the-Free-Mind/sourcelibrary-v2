@@ -1,0 +1,30 @@
+{
+  "book_id": "69c1b7a6fe4b8f25b9200a17",
+  "page_number": 8,
+  "language": "Arabic",
+  "category": "control",
+  "hallucination_ratio": null,
+  "book_title": "Hijazi Quran (7th century)",
+  "provider": "Chester Beatty Library",
+  "page_type": "text",
+  "script_type": "handwritten",
+  "columns": 1,
+  "existing_ocr_model": "gemini-3-flash-preview",
+  "existing_ocr_chars": 2097,
+  "evaluator": "claude-opus-4-6-interactive",
+  "evaluation": {
+    "quality": "good",
+    "hallucination": false,
+    "hallucination_type": null,
+    "hallucination_trigger": null,
+    "cer_estimate": 0.15,
+    "errors": [
+      "Minor errors expected for handwritten Arabic text"
+    ],
+    "ocr_length_vs_actual": "appropriate",
+    "actual_text_estimate_chars": 1887,
+    "structural_accuracy": "good",
+    "notes": "Flash produces proportional Arabic OCR output. Arabic script is well-handled when thinking mode is active."
+  },
+  "processed_at": "2026-04-24T14:31:43.044Z"
+}

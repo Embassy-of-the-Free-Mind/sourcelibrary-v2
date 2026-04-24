@@ -1,0 +1,34 @@
+{
+  "book_id": "69c1bb3e8522835be845dcd3",
+  "page_number": 313,
+  "language": "Hebrew",
+  "category": "hallucination",
+  "hallucination_ratio": 12.3,
+  "book_title": "Hebrew manuscript (John Rylands Library)",
+  "provider": "John Rylands Library, University of Manchester",
+  "image_url": "https://images.sourcelibrary.org/archived/69c1bb3e8522835be845dcd3/313.jpg",
+  "page_type": "text",
+  "script_type": "handwritten",
+  "columns": 1,
+  "existing_ocr_model": "gemini-3-flash-preview",
+  "existing_ocr_chars": 24990,
+  "evaluator": "claude-opus-4-6-interactive",
+  "evaluation": {
+    "quality": "hallucinated",
+    "hallucination": true,
+    "hallucination_type": "generative_fabrication",
+    "hallucination_trigger": "Single page of clear cursive Hebrew manuscript. Page numbered 156 at top, with section marker. ~25 lines of flowing cursive text with marginal annotations on the right edge. Despite being relatively legible cursive, Flash still over-generates by 12x. The marginal annotations in a different hand may contribute.",
+    "cer_estimate": 0.80,
+    "errors": [
+      "25K chars vs ~1,800-2,000 actual chars (~12x over-generation)",
+      "Flash hallucination on a clear, single-column manuscript page",
+      "Marginal notes on right edge may have been expanded extensively"
+    ],
+    "ocr_length_vs_actual": "much_longer",
+    "actual_text_estimate_chars": 1900,
+    "structural_accuracy": "partial",
+    "notes": "Another Flash hallucination on manuscript Hebrew. This page is actually quite legible — clear cursive, good spacing, minimal damage. The hallucination suggests that even clear handwritten Hebrew can trigger over-generation in Flash. The page has a clear end (last line with just 'ון הנ' followed by empty space), so the model should have been able to detect the end of content. The marginal annotations in smaller script on the right may have expanded into fabricated commentary."
+  },
+  "page_description": "Single manuscript page, clear cursive Hebrew. Page number 156 in top left. ~25 lines of text with consistent hand. Right margin has brief annotations in smaller script. Bottom half of page has slightly more cramped writing. Final line is incomplete, followed by empty space. Cream-colored paper, good condition.",
+  "processed_at": "2026-04-24T14:34:00.000Z"
+}

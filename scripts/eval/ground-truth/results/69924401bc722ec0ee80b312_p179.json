@@ -1,0 +1,35 @@
+{
+  "book_id": "69924401bc722ec0ee80b312",
+  "page_number": 179,
+  "language": "Hebrew",
+  "category": "hallucination",
+  "hallucination_ratio": 59.3,
+  "book_title": "Mikraot Gedolot: First Rabbinic Bible (Venice, 1517)",
+  "provider": "Internet Archive",
+  "image_url": "https://images.sourcelibrary.org/archived/69924401bc722ec0ee80b312/179.jpg",
+  "page_type": "text",
+  "script_type": "printed",
+  "columns": 1,
+  "existing_ocr_model": "gemini-3.1-flash-lite-preview",
+  "existing_ocr_chars": 127425,
+  "evaluator": "claude-opus-4-6-interactive",
+  "evaluation": {
+    "quality": "hallucinated",
+    "hallucination": true,
+    "hallucination_type": "generative_fabrication",
+    "hallucination_trigger": "Dense Rabbinic Bible layout with central biblical text (Proverbs) surrounded by smaller commentary blocks (Rashi, Ibn Ezra, etc.). The model correctly identifies the Proverbs text and begins transcribing, then continues generating plausible biblical Hebrew commentary far beyond what is visible on the page.",
+    "cer_estimate": 0.95,
+    "errors": [
+      "Massive over-generation: 127K chars vs ~2,500-3,000 actual chars on the page",
+      "First ~500 chars appear genuine (Proverbs chapter opening), remainder is fabricated",
+      "Generated text is linguistically fluent Hebrew — indistinguishable from real commentary without image comparison",
+      "No repetitive pattern — each generated line is unique, making automated detection impossible"
+    ],
+    "ocr_length_vs_actual": "much_longer",
+    "actual_text_estimate_chars": 2800,
+    "structural_accuracy": "partial",
+    "notes": "This is the archetypal 'confident hallucinator' pattern. The model switches from OCR to generative mode seamlessly. The printed text is clear and legible — this is not a perception failure but a mode failure. The multi-block Rabbinic Bible layout may confuse the model about how much text to expect."
+  },
+  "page_description": "Mikra'ot Gedolot page for Proverbs (Mishlei). Central biblical text in larger type, surrounded by Rashi and other commentaries in smaller type. Clear printed Hebrew, good scan quality. Header reads 'משלי' (Proverbs).",
+  "processed_at": "2026-04-24T14:30:00.000Z"
+}

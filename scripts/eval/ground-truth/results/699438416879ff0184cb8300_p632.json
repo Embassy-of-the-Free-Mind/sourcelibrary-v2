@@ -1,0 +1,32 @@
+{
+  "book_id": "699438416879ff0184cb8300",
+  "page_number": 632,
+  "language": "Greek",
+  "category": "hallucination",
+  "hallucination_ratio": 85.1,
+  "book_title": "Patrologia Graeca Vol. 40 (Evagrius Ponticus)",
+  "provider": "Internet Archive",
+  "page_type": "text",
+  "script_type": "printed",
+  "columns": 2,
+  "existing_ocr_model": "gemini-3.1-flash-lite-preview",
+  "existing_ocr_chars": 185304,
+  "evaluator": "claude-opus-4-6-interactive",
+  "evaluation": {
+    "quality": "hallucinated",
+    "hallucination": true,
+    "hallucination_type": "generative_fabrication",
+    "hallucination_trigger": "Bilingual Latin-Greek Patrologia page with two dense columns. Printed text, clear type. The bilingual format with extensive patristic content provides rich stylistic context for generation. The large page with small type has maybe 4,000 chars of actual text.",
+    "cer_estimate": 0.95,
+    "errors": [
+      "185K chars vs ~4,000 actual (46x over-generation)",
+      "Lite generates fluent patristic Greek and Latin far beyond page content"
+    ],
+    "ocr_length_vs_actual": "much_longer",
+    "actual_text_estimate_chars": 4000,
+    "structural_accuracy": "partial",
+    "notes": "Patrologia Graeca pages are well-represented in training data, making fabrication particularly convincing. The bilingual format doubles the stylistic options for generation."
+  },
+  "page_description": "PG Vol. 40, bilingual Latin-Greek with numbered sections (XCI-XCVIII). Dense two-column printed text. Clear type.",
+  "processed_at": "2026-04-24T14:45:00.000Z"
+}

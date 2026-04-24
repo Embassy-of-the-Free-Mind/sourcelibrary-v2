@@ -1,0 +1,33 @@
+{
+  "book_id": "69c79e8492b884e4f81736f3",
+  "page_number": 108,
+  "language": "Hebrew",
+  "category": "control",
+  "hallucination_ratio": null,
+  "book_title": "Sefer Hadrat Melech",
+  "provider": "Bibliotheca Philosophica Hermetica",
+  "image_url": "https://images.sourcelibrary.org/archived/69c79e8492b884e4f81736f3/108.jpg",
+  "page_type": "text",
+  "script_type": "printed",
+  "columns": 2,
+  "existing_ocr_model": "gemini-3-flash-preview",
+  "existing_ocr_chars": 5702,
+  "evaluator": "claude-opus-4-6-interactive",
+  "evaluation": {
+    "quality": "good",
+    "hallucination": false,
+    "hallucination_type": null,
+    "hallucination_trigger": null,
+    "cer_estimate": 0.06,
+    "errors": [
+      "Minor: some section header formatting may be imperfect",
+      "The spread format means two pages are combined — minor structural inaccuracy possible at the gutter"
+    ],
+    "ocr_length_vs_actual": "appropriate",
+    "actual_text_estimate_chars": 5000,
+    "structural_accuracy": "good",
+    "notes": "Same book as hallucinated p47, but processed by Flash. 5,702 chars is appropriate for a two-page spread with dense printed Hebrew and section headers. Flash correctly handles this layout. Multiple section headers visible ('יוחסין', 'כלל', 'חשבון') indicate well-structured halakhic text. Flash produces proportional output."
+  },
+  "page_description": "Two-page spread of Sefer Hadrat Melech. Left page has dense text ending a section; right page begins new sections with headers including 'יוחסין' (Lineage), 'כלל' (Rule), and 'חשבון' (Calculation). Clear printed Hebrew with rubrics/section markers.",
+  "processed_at": "2026-04-24T14:36:00.000Z"
+}

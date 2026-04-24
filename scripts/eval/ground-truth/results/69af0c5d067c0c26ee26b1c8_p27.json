@@ -1,0 +1,31 @@
+{
+  "book_id": "69af0c5d067c0c26ee26b1c8",
+  "page_number": 27,
+  "language": "Sanskrit",
+  "category": "hallucination",
+  "hallucination_ratio": 10.8,
+  "book_title": "Khandakhadyaka",
+  "provider": "Internet Archive",
+  "page_type": "unknown",
+  "script_type": "handwritten",
+  "columns": 1,
+  "existing_ocr_model": "gemini-3.1-flash-lite-preview",
+  "existing_ocr_chars": 19901,
+  "evaluator": "claude-opus-4-6-interactive",
+  "evaluation": {
+    "quality": "hallucinated",
+    "hallucination": true,
+    "hallucination_type": "generative_fabrication",
+    "hallucination_trigger": "Sanskrit manuscript in Devanagari script. Dense text with possible commentary layers or tabular content. Lite without thinking over-generates extensively.",
+    "cer_estimate": 0.92,
+    "errors": [
+      "19,901 chars vs ~1,900 actual (10.8x over-generation)",
+      "Fluent fabrication in source script — hard to detect without image comparison"
+    ],
+    "ocr_length_vs_actual": "much_longer",
+    "actual_text_estimate_chars": 1900,
+    "structural_accuracy": "poor",
+    "notes": "Sanskrit hallucination via gemini-3.1-flash-lite-preview. 10.8x over-generation."
+  },
+  "processed_at": "2026-04-24T14:31:43.046Z"
+}

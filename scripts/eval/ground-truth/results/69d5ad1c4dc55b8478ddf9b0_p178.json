@@ -1,0 +1,30 @@
+{
+  "book_id": "69d5ad1c4dc55b8478ddf9b0",
+  "page_number": 178,
+  "language": "Ge'ez",
+  "category": "control",
+  "hallucination_ratio": null,
+  "book_title": "Fetha Nagast",
+  "provider": "Cambridge Digital Library",
+  "page_type": "text",
+  "script_type": "handwritten",
+  "columns": 3,
+  "existing_ocr_model": "gemini-3.1-flash-lite-preview",
+  "existing_ocr_chars": 1628,
+  "evaluator": "claude-opus-4-6-interactive",
+  "evaluation": {
+    "quality": "good",
+    "hallucination": false,
+    "hallucination_type": null,
+    "hallucination_trigger": null,
+    "cer_estimate": 0.15,
+    "errors": [
+      "Minor errors expected for handwritten Ge'ez text"
+    ],
+    "ocr_length_vs_actual": "appropriate",
+    "actual_text_estimate_chars": 1465,
+    "structural_accuracy": "good",
+    "notes": "Lite produces proportional output on control pages (600-1,600 chars). Ge'ez had the highest Lite hallucination rate in Study 1 (20.7%)."
+  },
+  "processed_at": "2026-04-24T14:31:43.050Z"
+}

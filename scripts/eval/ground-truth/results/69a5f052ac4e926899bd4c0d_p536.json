@@ -1,0 +1,30 @@
+{
+  "book_id": "69a5f052ac4e926899bd4c0d",
+  "page_number": 536,
+  "language": "Arabic",
+  "category": "control",
+  "hallucination_ratio": null,
+  "book_title": "Historia Compendiosa Dynastiarum",
+  "provider": "Internet Archive",
+  "page_type": "text",
+  "script_type": "handwritten",
+  "columns": 1,
+  "existing_ocr_model": "gemini-3.1-flash-lite-preview",
+  "existing_ocr_chars": 1499,
+  "evaluator": "claude-opus-4-6-interactive",
+  "evaluation": {
+    "quality": "good",
+    "hallucination": false,
+    "hallucination_type": null,
+    "hallucination_trigger": null,
+    "cer_estimate": 0.15,
+    "errors": [
+      "Minor errors expected for handwritten Arabic text"
+    ],
+    "ocr_length_vs_actual": "appropriate",
+    "actual_text_estimate_chars": 1349,
+    "structural_accuracy": "good",
+    "notes": "Flash produces proportional Arabic OCR output. Arabic script is well-handled when thinking mode is active."
+  },
+  "processed_at": "2026-04-24T14:31:43.044Z"
+}

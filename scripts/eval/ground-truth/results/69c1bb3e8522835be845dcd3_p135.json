@@ -1,0 +1,34 @@
+{
+  "book_id": "69c1bb3e8522835be845dcd3",
+  "page_number": 135,
+  "language": "Hebrew",
+  "category": "control",
+  "hallucination_ratio": null,
+  "book_title": "Hebrew manuscript (John Rylands Library)",
+  "provider": "John Rylands Library, University of Manchester",
+  "image_url": "https://images.sourcelibrary.org/archived/69c1bb3e8522835be845dcd3/135.jpg",
+  "page_type": "text",
+  "script_type": "handwritten",
+  "columns": 1,
+  "existing_ocr_model": "gemini-3-flash-preview",
+  "existing_ocr_chars": 1626,
+  "evaluator": "claude-opus-4-6-interactive",
+  "evaluation": {
+    "quality": "acceptable",
+    "hallucination": false,
+    "hallucination_type": null,
+    "hallucination_trigger": null,
+    "cer_estimate": 0.12,
+    "errors": [
+      "Cursive Hebrew requires specialized paleographic knowledge — expect moderate error rate",
+      "Parenthetical references (פסיקתא, etc.) may be misread",
+      "Marginal annotations may be partially captured"
+    ],
+    "ocr_length_vs_actual": "appropriate",
+    "actual_text_estimate_chars": 1800,
+    "structural_accuracy": "good",
+    "notes": "Same Rylands manuscript as hallucinated p313. This page (numbered 67 at top) has ~25 lines of clear cursive Hebrew with marginal annotations. Flash produced 1,626 chars — proportional to the visible text. Compare to p313 (24,990 chars, 12x over-generation) from the same book. The page layouts are similar, suggesting hallucination triggers are page-specific rather than book-specific. This page's text appears slightly more structured (with clear paragraph breaks and parenthetical references) which may help Flash maintain perceptual mode."
+  },
+  "page_description": "Single manuscript page numbered 67 at top. ~25 lines of clear cursive Hebrew. Marginal annotations on right edge. Some parenthetical references visible. Good condition, clear ink. Bottom third has slightly more cramped writing.",
+  "processed_at": "2026-04-24T14:38:00.000Z"
+}

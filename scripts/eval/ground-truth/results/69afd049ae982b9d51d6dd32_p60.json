@@ -1,0 +1,31 @@
+{
+  "book_id": "69afd049ae982b9d51d6dd32",
+  "page_number": 60,
+  "language": "Persian",
+  "category": "hallucination",
+  "hallucination_ratio": 9.9,
+  "book_title": "Selected Poems Divani Shamsi Tabriz",
+  "provider": "unknown",
+  "page_type": "index",
+  "script_type": "printed",
+  "columns": 2,
+  "existing_ocr_model": "gemini-3-flash-preview",
+  "existing_ocr_chars": 18978,
+  "evaluator": "claude-opus-4-6-interactive",
+  "evaluation": {
+    "quality": "hallucinated",
+    "hallucination": true,
+    "hallucination_type": "generative_fabrication",
+    "hallucination_trigger": "Persian/Arabic script text, often in mixed-language scholarly editions. Some pages classified as Persian are actually Russian or English with embedded Persian/Arabic examples. The mixed-script content creates generation opportunities.",
+    "cer_estimate": 0.92,
+    "errors": [
+      "18,978 chars vs ~1,054 actual (9.9x over-generation)",
+      "Fluent fabrication in source script — hard to detect without image comparison"
+    ],
+    "ocr_length_vs_actual": "much_longer",
+    "actual_text_estimate_chars": 1054,
+    "structural_accuracy": "poor",
+    "notes": "Persian hallucination in the Study 1 data showed an unusual under-generation pattern on Lite (median 542 chars vs Flash 1,912). The hallucination candidates here are the exceptions — pages where the model over-generates instead of giving up."
+  },
+  "processed_at": "2026-04-24T14:31:43.047Z"
+}

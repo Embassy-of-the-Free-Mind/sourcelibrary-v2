@@ -1,0 +1,33 @@
+{
+  "book_id": "69942f6fb2f6748db4ac0db5",
+  "page_number": 197,
+  "language": "Greek",
+  "category": "hallucination",
+  "hallucination_ratio": 40.3,
+  "book_title": "Maximus Confessor De Coelesti Hierarchia",
+  "provider": "Biblioteca Apostolica Vaticana",
+  "page_type": "text",
+  "script_type": "handwritten",
+  "columns": 1,
+  "existing_ocr_model": "gemini-3.1-flash-lite-preview",
+  "existing_ocr_chars": 87789,
+  "evaluator": "claude-opus-4-6-interactive",
+  "evaluation": {
+    "quality": "hallucinated",
+    "hallucination": true,
+    "hallucination_type": "generative_fabrication",
+    "hallucination_trigger": "Dense cursive Greek manuscript with marginal annotations in different hands. Main text in brown ink with occasional red markings. Marginal notes crowd the edges. The visual complexity of multiple scribal layers triggers over-generation.",
+    "cer_estimate": 0.92,
+    "errors": [
+      "88K chars vs ~2,200 actual (40x)",
+      "Generates patristic Greek commentary beyond visible content",
+      "Multiple annotation layers may confuse content boundaries"
+    ],
+    "ocr_length_vs_actual": "much_longer",
+    "actual_text_estimate_chars": 2200,
+    "structural_accuracy": "poor",
+    "notes": "Vatican manuscript with complex multi-layer annotations. The presence of main text + interlinear glosses + marginal notes + different ink colors creates a perceptually demanding page that overwhelms Lite completely."
+  },
+  "page_description": "Vatican Greek manuscript. Dense cursive minuscule with extensive marginal annotations in smaller hand. Copyright notice for BAV at bottom. Brown ink, some fading.",
+  "processed_at": "2026-04-24T14:47:00.000Z"
+}

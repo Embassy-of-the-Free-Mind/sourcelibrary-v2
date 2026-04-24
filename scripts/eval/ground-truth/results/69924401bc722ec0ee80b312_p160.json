@@ -1,0 +1,34 @@
+{
+  "book_id": "69924401bc722ec0ee80b312",
+  "page_number": 160,
+  "language": "Hebrew",
+  "category": "hallucination",
+  "hallucination_ratio": 58.7,
+  "book_title": "Mikraot Gedolot: First Rabbinic Bible (Venice, 1517)",
+  "provider": "Internet Archive",
+  "image_url": "https://images.sourcelibrary.org/archived/69924401bc722ec0ee80b312/160.jpg",
+  "page_type": "text",
+  "script_type": "printed",
+  "columns": 2,
+  "existing_ocr_model": "gemini-3.1-flash-lite-preview",
+  "existing_ocr_chars": 126171,
+  "evaluator": "claude-opus-4-6-interactive",
+  "evaluation": {
+    "quality": "hallucinated",
+    "hallucination": true,
+    "hallucination_type": "generative_fabrication",
+    "hallucination_trigger": "Same Rabbinic Bible format as p179. Dense printed Hebrew with central text block and surrounding commentaries. The multi-layered layout with different font sizes provides extensive stylistic context for the model to generate in.",
+    "cer_estimate": 0.95,
+    "errors": [
+      "126K chars vs ~3,000-3,500 actual chars (~36x over-generation)",
+      "Fluent Hebrew fabrication with no detectable repetitive patterns",
+      "The bottom portion of the page has denser commentary — model may extrapolate this density indefinitely"
+    ],
+    "ocr_length_vs_actual": "much_longer",
+    "actual_text_estimate_chars": 3200,
+    "structural_accuracy": "partial",
+    "notes": "Nearly identical hallucination pattern to p179. Same book, same model, same trigger. The Rabbinic Bible's multi-commentary format appears to be a systematic trigger for Lite without thinking."
+  },
+  "page_description": "Mikra'ot Gedolot page with central text surrounded by commentaries. Top section has header text with brief notations, bottom half is dense continuous commentary. Clear printed Hebrew.",
+  "processed_at": "2026-04-24T14:31:00.000Z"
+}

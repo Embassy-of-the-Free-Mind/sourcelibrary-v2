@@ -1,0 +1,31 @@
+{
+  "book_id": "69d5ae22d0bd3547a5656c4d",
+  "page_number": 231,
+  "language": "Ge'ez",
+  "category": "hallucination",
+  "hallucination_ratio": 32.2,
+  "book_title": "Gadla Hawaryat",
+  "provider": "John Rylands Library, University of Manchester",
+  "page_type": "text",
+  "script_type": "handwritten",
+  "columns": 1,
+  "existing_ocr_model": "gemini-3.1-flash-lite-preview",
+  "existing_ocr_chars": 24635,
+  "evaluator": "claude-opus-4-6-interactive",
+  "evaluation": {
+    "quality": "hallucinated",
+    "hallucination": true,
+    "hallucination_type": "generative_fabrication",
+    "hallucination_trigger": "Ge'ez (Ethiopic) manuscript with regular scribal hand. Two-column layout with word separators (double colons). Despite clear, well-preserved script, Lite produces 22-33x over-generation. The Ethiopic syllabary's visual regularity may provide strong generation templates.",
+    "cer_estimate": 0.92,
+    "errors": [
+      "24,635 chars vs ~797 actual (32.2x over-generation)",
+      "Fluent fabrication in source script — hard to detect without image comparison"
+    ],
+    "ocr_length_vs_actual": "much_longer",
+    "actual_text_estimate_chars": 797,
+    "structural_accuracy": "poor",
+    "notes": "Ge'ez showed the highest Lite hallucination rate (20.7% vs 3.0% Flash) in Study 1. The script's regular structure and limited training data may combine to create a strong generation-mode trigger."
+  },
+  "processed_at": "2026-04-24T14:31:43.050Z"
+}

@@ -1,0 +1,31 @@
+{
+  "book_id": "69a5ea9a2c1720a023b0c9c0",
+  "page_number": 281,
+  "language": "Syriac",
+  "category": "hallucination",
+  "hallucination_ratio": 37.6,
+  "book_title": "Narsai: Homiliae et Carmina",
+  "provider": "Internet Archive",
+  "page_type": "text",
+  "script_type": "printed",
+  "columns": 1,
+  "existing_ocr_model": "gemini-3.1-flash-lite-preview",
+  "existing_ocr_chars": 78638,
+  "evaluator": "claude-opus-4-6-interactive",
+  "evaluation": {
+    "quality": "hallucinated",
+    "hallucination": true,
+    "hallucination_type": "generative_fabrication",
+    "hallucination_trigger": "Printed scholarly edition with Syriac fragments and French/Latin apparatus. The model generates extensive content in multiple scripts/languages far beyond what appears on the page.",
+    "cer_estimate": 0.92,
+    "errors": [
+      "78,638 chars vs ~1,626 actual (37.6x over-generation)",
+      "Fluent fabrication in source script — hard to detect without image comparison"
+    ],
+    "ocr_length_vs_actual": "much_longer",
+    "actual_text_estimate_chars": 1626,
+    "structural_accuracy": "poor",
+    "notes": "Syriac hallucination via gemini-3.1-flash-lite-preview. 37.6x over-generation."
+  },
+  "processed_at": "2026-04-24T14:31:43.045Z"
+}
