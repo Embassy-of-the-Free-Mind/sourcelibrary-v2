@@ -40,6 +40,19 @@ export const supabaseAdmin: SupabaseClient | null = SUPABASE_SERVICE_ROLE_KEY
   : null;
 
 /**
+ * Sanitize user input for interpolation into PostgREST filter strings (.or(), .ilike(), etc.).
+ * Strips characters that have special meaning in PostgREST filter syntax:
+ *   , — separates filter conditions
+ *   ( ) — logical grouping
+ *   . followed by operator keywords could be interpreted as new filters
+ *
+ * Without this, a search for `%,id.gt.0` could inject additional filter conditions.
+ */
+export function sanitizeFilterValue(value: string): string {
+  return value.replace(/[,()]/g, '');
+}
+
+/**
  * Helper: query USTC editions by Supabase auto-increment ID.
  * Note: `id` is the Supabase row ID, NOT the USTC serial number (`sn`).
  */
@@ -56,10 +69,11 @@ export async function getUstcEditionById(id: number) {
  * Helper: search USTC enrichments by English title (uses trigram index).
  */
 export async function searchUstcEnrichments(query: string, limit = 20) {
+  const safe = sanitizeFilterValue(query);
   const { data } = await supabase
     .from('ustc_enrichments')
     .select('id, english_title, std_title, original_author, detected_language')
-    .ilike('english_title', `%${query}%`)
+    .ilike('english_title', `%${safe}%`)
     .limit(limit);
   return data || [];
 }

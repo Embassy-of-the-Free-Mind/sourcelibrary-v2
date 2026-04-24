@@ -5,6 +5,7 @@ import type { BookSearchFilters } from '@/lib/atlas-search';
 import type { SearchResult } from '@/lib/api-client/types/search';
 import { searchBooksCatalog } from '@/lib/books-catalog';
 import { semanticBookSearch, semanticArtworkSearch } from '@/lib/semantic-search';
+import { checkRateLimit, getClientIp } from '@/lib/rate-limit';
 
 // CLIP server on Hetzner for visual text→image search
 const CLIP_URL = process.env.CLIP_URL || 'http://46.224.122.120:3456/clip';
@@ -55,6 +56,11 @@ interface CollectionResult {
  * Designed for typeahead — no page content search (that's the slow part).
  */
 export async function GET(request: NextRequest) {
+  const rl = checkRateLimit({ name: 'search', limit: 60, windowSeconds: 60 }, getClientIp(request));
+  if (!rl.allowed) {
+    return NextResponse.json({ error: 'Rate limit exceeded' }, { status: 429, headers: { 'Retry-After': String(rl.retryAfter) } });
+  }
+
   try {
     const { searchParams } = new URL(request.url);
     const query = searchParams.get('q') || '';

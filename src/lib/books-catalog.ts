@@ -8,7 +8,7 @@
  * via the Hetzner supabase-sync cron.
  */
 
-import { supabase } from '@/lib/supabase';
+import { supabase, sanitizeFilterValue } from '@/lib/supabase';
 
 export interface CatalogBook {
   id: string;
@@ -126,9 +126,9 @@ export async function browseBooks(opts: {
   if (opts.firstTranslation) query = query.eq('is_first_translation', true);
   if (opts.yearMin != null) query = query.gte('year', opts.yearMin);
   if (opts.yearMax != null) query = query.lte('year', opts.yearMax);
-  if (opts.titlePrefix) query = query.or(`display_title.ilike.${opts.titlePrefix}%,title.ilike.${opts.titlePrefix}%`);
-  if (opts.authorPrefix) query = query.ilike('author', `${opts.authorPrefix}%`);
-  if (opts.search) query = query.or(`title.ilike.%${opts.search}%,display_title.ilike.%${opts.search}%,author.ilike.%${opts.search}%`);
+  if (opts.titlePrefix) { const s = sanitizeFilterValue(opts.titlePrefix); query = query.or(`display_title.ilike.${s}%,title.ilike.${s}%`); }
+  if (opts.authorPrefix) query = query.ilike('author', `${sanitizeFilterValue(opts.authorPrefix)}%`);
+  if (opts.search) { const s = sanitizeFilterValue(opts.search); query = query.or(`title.ilike.%${s}%,display_title.ilike.%${s}%,author.ilike.%${s}%`); }
 
   query = applySort(query, opts.sort || 'popular');
   query = query.range(offset, offset + limit - 1);
@@ -322,9 +322,10 @@ export async function searchBooksCatalog(
   const limit = opts?.limit || 20;
 
   // Build OR filter — same logic as searchBookIds
+  const safe = sanitizeFilterValue(text);
   const STOPWORDS = new Set(['a', 'an', 'and', 'at', 'by', 'de', 'der', 'des', 'di', 'du', 'el', 'en', 'et', 'for', 'from', 'in', 'la', 'le', 'les', 'of', 'on', 'or', 'the', 'to', 'und', 'von', 'with']);
-  const words = text.trim().split(/\s+/).filter(w => w.length >= 2);
-  const phraseFilters = `title.ilike.%${text}%,display_title.ilike.%${text}%,author.ilike.%${text}%`;
+  const words = safe.trim().split(/\s+/).filter(w => w.length >= 2);
+  const phraseFilters = `title.ilike.%${safe}%,display_title.ilike.%${safe}%,author.ilike.%${safe}%`;
 
   let orFilter = phraseFilters;
   if (words.length >= 2) {
@@ -332,7 +333,7 @@ export async function searchBooksCatalog(
     const displayAnds = words.map(w => `display_title.ilike.%${w}%`).join(',');
     orFilter += `,and(${titleAnds}),and(${displayAnds})`;
   } else {
-    orFilter += `,language.ilike.%${text}%`;
+    orFilter += `,language.ilike.%${safe}%`;
   }
 
   let query = supabase
@@ -373,12 +374,13 @@ export async function searchBookIds(
 
   // Build OR filter: exact phrase match + word-level AND matches
   // "mathematical magick" should match "Mathematicall Magick" by matching each word
+  const safe = sanitizeFilterValue(text);
   const STOPWORDS = new Set(['a', 'an', 'and', 'at', 'by', 'de', 'der', 'des', 'di', 'du', 'el', 'en', 'et', 'for', 'from', 'in', 'la', 'le', 'les', 'of', 'on', 'or', 'the', 'to', 'und', 'von', 'with']);
-  const words = text.trim().split(/\s+/).filter(w => w.length >= 2);
+  const words = safe.trim().split(/\s+/).filter(w => w.length >= 2);
   const contentWords = words.filter(w => w.length >= 3 && !STOPWORDS.has(w.toLowerCase()));
   // Only ilike on indexed/short fields — summary_text and description cause
   // full-table scans and Supabase statement timeouts (no trigram indexes)
-  const phraseFilters = `title.ilike.%${text}%,display_title.ilike.%${text}%,author.ilike.%${text}%`;
+  const phraseFilters = `title.ilike.%${safe}%,display_title.ilike.%${safe}%,author.ilike.%${safe}%`;
 
   let orFilter = phraseFilters;
   if (words.length >= 2) {
@@ -392,7 +394,7 @@ export async function searchBookIds(
   } else {
     // Single word: also match against language (e.g. "Sanskrit", "Arabic")
     // This is fast since it's a single ilike on an indexed field
-    orFilter += `,language.ilike.%${text}%`;
+    orFilter += `,language.ilike.%${safe}%`;
   }
 
   let query = supabase

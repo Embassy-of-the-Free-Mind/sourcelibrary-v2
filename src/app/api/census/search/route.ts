@@ -1,5 +1,5 @@
 import { NextRequest, NextResponse } from 'next/server';
-import { supabase } from '@/lib/supabase';
+import { supabase, sanitizeFilterValue } from '@/lib/supabase';
 
 export const dynamic = 'force-dynamic';
 
@@ -69,7 +69,7 @@ async function fallbackSearch(query: string, limit: number) {
   const { data: enriched } = await supabase
     .from('ustc_enrichments')
     .select('id, std_title, english_title, original_author, detected_language, work_type')
-    .or(`std_title.ilike.%${query}%,english_title.ilike.%${query}%,original_author.ilike.%${query}%`)
+    .or(`std_title.ilike.%${sanitizeFilterValue(query)}%,english_title.ilike.%${sanitizeFilterValue(query)}%,original_author.ilike.%${sanitizeFilterValue(query)}%`)
     .limit(limit);
 
   if (!enriched || enriched.length === 0) {
@@ -88,7 +88,7 @@ async function fallbackSearch(query: string, limit: number) {
   const { data: catalogs } = await supabase
     .from('translation_catalogs')
     .select('author_surname, english_title, translator, pub_year, source, completeness')
-    .or(`author_surname.ilike.%${query}%,english_title.ilike.%${query}%`)
+    .or(`author_surname.ilike.%${sanitizeFilterValue(query)}%,english_title.ilike.%${sanitizeFilterValue(query)}%`)
     .limit(50);
 
   const catalogBySurname = new Map<string, any[]>();

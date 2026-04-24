@@ -1,6 +1,6 @@
 import { NextRequest, NextResponse } from 'next/server';
 import { getDb } from '@/lib/mongodb';
-import { withAuth } from '@/lib/auth-helpers';
+import { withAdminAuth } from '@/lib/auth-helpers';
 
 /**
  * Clear OCR/translation data from pages of a book.
@@ -13,7 +13,7 @@ import { withAuth } from '@/lib/auth-helpers';
  *   reason?: string  // For audit logging
  * }
  */
-export const POST = withAuth(async (request, session, context) => {
+export const POST = withAdminAuth(async (request, session, context) => {
   try {
     const { id: bookId } = await context.params;
     const body = await request.json();

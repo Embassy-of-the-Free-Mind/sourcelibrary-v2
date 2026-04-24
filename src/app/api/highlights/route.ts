@@ -1,6 +1,7 @@
 import { NextRequest, NextResponse } from 'next/server';
 import { getDb } from '@/lib/mongodb';
 import { ObjectId } from 'mongodb';
+import { withAuth } from '@/lib/auth-helpers';
 
 export interface Highlight {
   id: string;
@@ -50,10 +51,11 @@ export async function GET(request: NextRequest) {
 }
 
 // POST /api/highlights - Create a new highlight
-export async function POST(request: NextRequest) {
+export const POST = withAuth(async (request: NextRequest, session) => {
   try {
     const body = await request.json();
-    const { book_id, page_id, page_number, book_title, book_author, text, context, note, color, user_name } = body;
+    const { book_id, page_id, page_number, book_title, book_author, text, context, note, color } = body;
+    const user_name = session?.user?.name || session?.user?.email || undefined;
 
     if (!book_id || !page_id || !text) {
       return NextResponse.json(
@@ -122,4 +124,4 @@ export async function POST(request: NextRequest) {
       { status: 500 }
     );
   }
-}
+});
