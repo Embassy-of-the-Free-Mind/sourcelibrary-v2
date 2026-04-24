@@ -23,7 +23,7 @@
 
 import { MongoClient } from 'mongodb';
 import { GoogleGenerativeAI } from '@google/generative-ai';
-import { createHash } from 'crypto';
+import { createHash, randomBytes } from 'crypto';
 import { nanoid } from 'nanoid';
 import { logUsage } from './lib/supabase-usage-logger.mjs';
 import { syncPageUpdate, syncPageBatch } from './lib/supabase-page-writer.mjs';
@@ -345,8 +345,43 @@ function effectiveBatchSize(pages, maxBatchSize) {
   return Math.max(1, size);
 }
 
+/**
+ * Save current page content as a revision before overwriting.
+ * Lightweight inline version of src/lib/page-revisions.ts createRevision().
+ */
+async function saveRevisionBeforeOverwrite(db, pageId, field, jobId) {
+  try {
+    const page = await db.collection('pages').findOne(
+      { id: pageId },
+      { projection: { book_id: 1, ocr: 1, translation: 1 } }
+    );
+    if (!page) return;
+    const fieldData = page[field];
+    if (!fieldData?.data) return; // No existing content — first write
+    await db.collection('page_revisions').insertOne({
+      id: randomBytes(6).toString('hex'),
+      page_id: pageId,
+      book_id: page.book_id,
+      field,
+      data: fieldData.data,
+      source: fieldData.source || 'ai',
+      model: fieldData.model,
+      language: fieldData.language,
+      prompt_version: fieldData.prompt_version,
+      edited_by: fieldData.edited_by,
+      job_id: jobId,
+      original_date: fieldData.updated_at,
+      created_at: new Date(),
+    });
+  } catch (e) {
+    // Non-fatal — don't block translation on revision failure
+    console.error(`  [revision] Failed for ${pageId}/${field}: ${e.message?.slice(0, 50)}`);
+  }
+}
+
 // ── Write a single page translation to DB ──
 async function writePageTranslation(db, page, text, book) {
+  await saveRevisionBeforeOverwrite(db, page.id, 'translation');
   const setPayload = {
     translation: {
       data: text,
@@ -371,6 +406,10 @@ async function bulkWritePageTranslations(db, entries, book) {
   if (entries.length === 1) {
     return writePageTranslation(db, entries[0].page, entries[0].text, book);
   }
+  // Save revisions before overwriting (parallel, non-blocking)
+  await Promise.all(entries.map(({ page }) =>
+    saveRevisionBeforeOverwrite(db, page.id, 'translation')
+  ));
   const now = new Date();
   const model = getModelForBook(book);
   const ops = entries.map(({ page, text }) => ({
