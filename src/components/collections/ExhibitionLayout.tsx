@@ -321,10 +321,10 @@ function QuotesBlock({ quotes, books, title }: {
           return (
             <blockquote
               key={i}
-              className="relative pl-6 border-l-2 border-accent-gold/40 py-2"
+              className="relative pl-6 border-l-3 border-accent-gold/50 py-3"
             >
-              <Quote className="absolute -left-3 -top-1 w-5 h-5 text-accent-gold/30 bg-cream" />
-              <p className="text-lg sm:text-xl font-display text-primary/80 leading-relaxed italic">
+              <Quote className="absolute -left-3.5 -top-1 w-6 h-6 text-accent-gold/40 bg-cream" />
+              <p className="text-base sm:text-lg font-display text-primary/85 leading-relaxed italic">
                 &ldquo;{q.text}&rdquo;
               </p>
               {q.original_text && (
@@ -423,17 +423,18 @@ function FeaturedImageBlock({ image, caption }: {
   if (!src) return null;
 
   const inner = (
-    <figure className="rounded-xl overflow-hidden border border-border-light">
-      <div className="relative aspect-[16/9] sm:aspect-[2/1] bg-dark">
+    <figure className="rounded-xl overflow-hidden border border-border-light shadow-lg">
+      <div className="relative aspect-[3/2] sm:aspect-[16/9] bg-dark">
         <Image
           src={src}
           alt={image?.museum_description || caption}
           fill
           className="object-contain"
           sizes="(min-width: 1024px) 900px, 100vw"
+          unoptimized
         />
       </div>
-      <figcaption className="px-4 py-3 text-sm text-secondary bg-white leading-relaxed">
+      <figcaption className="px-5 py-3 text-sm text-secondary bg-white leading-relaxed">
         {caption}
       </figcaption>
     </figure>
@@ -625,6 +626,7 @@ function GalleryGridBlock({ embeddedImages, fallbackImages, indices, title }: {
                 fill
                 className="object-cover group-hover:scale-105 transition-transform duration-300"
                 sizes="(min-width: 1024px) 200px, (min-width: 640px) 160px, 50vw"
+                unoptimized
               />
               {img.type && (
                 <span className="absolute bottom-1.5 left-1.5 text-[10px] bg-dark/70 text-white px-1.5 py-0.5 rounded capitalize">
