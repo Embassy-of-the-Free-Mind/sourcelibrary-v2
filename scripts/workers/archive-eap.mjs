@@ -90,10 +90,10 @@ async function main() {
   await client.connect();
   const db = client.db('bookstore');
 
-  // Find EAP books (IIIF manifest contains eap.bl.uk)
+  // Find EAP books by tenant_id (indexed) — avoids regex on iiif_manifest
   const eapBooks = await db.collection('books')
     .find({
-      'image_source.iiif_manifest': /eap\.bl\.uk/,
+      tenant_id: 'bhutan',
       pages_count: { $gt: 0 },
     }, { projection: { id: 1, title: 1, pages_count: 1 } })
     .limit(5000)
