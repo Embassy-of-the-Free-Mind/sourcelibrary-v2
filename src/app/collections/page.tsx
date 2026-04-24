@@ -153,15 +153,19 @@ async function fetchTimelineDecades(): Promise<{ decades: DecadeBucket[]; total:
   }
 }
 
+/** Pick the best image URL for a card: prefer small thumbnails, fall back to extracted, then raw page. */
+function pickCardImage(images: FeaturedImage[] | undefined): string | undefined {
+  if (!images?.length) return undefined;
+  // Find first image that has any usable URL
+  for (const img of images) {
+    const url = img.thumbnail_url || img.extracted_url || img.image_url;
+    if (url) return img.thumbnail_url || img.extracted_url || img.image_url;
+  }
+  return undefined;
+}
+
 function CollectionCard({ col, priority = false }: { col: CollectionDoc; priority?: boolean }) {
-  // Prefer images with proper gallery crops (thumbnail/extracted) over raw page URLs
-  const hero = col.featured_images?.find(
-    img => img.thumbnail_url || img.extracted_url
-  ) || col.featured_images?.find(
-    img => img.image_url
-  );
-  // For hero cards, prefer extracted (higher res) over thumbnail (can be <10KB/blurry)
-  const heroUrl = hero?.extracted_url || hero?.thumbnail_url || hero?.image_url;
+  const heroUrl = sanitizeThumbnail(pickCardImage(col.featured_images));
 
   return (
     <Link
@@ -176,7 +180,6 @@ function CollectionCard({ col, priority = false }: { col: CollectionDoc; priorit
           fill
           sizes="(max-width: 640px) 50vw, (max-width: 1024px) 33vw, 20vw"
           className="object-cover transition-transform duration-500 ease-out group-hover:scale-105"
-          unoptimized
           priority={priority}
           loading={priority ? 'eager' : 'lazy'}
         />
@@ -200,13 +203,7 @@ function CollectionCard({ col, priority = false }: { col: CollectionDoc; priorit
 
 
 function CuratedCard({ col, priority = false }: { col: CollectionDoc; priority?: boolean }) {
-  const hero = col.featured_images?.find(
-    img => img.thumbnail_url || img.extracted_url
-  ) || col.featured_images?.find(
-    img => img.image_url
-  );
-  const raw = hero?.extracted_url || hero?.thumbnail_url || hero?.image_url;
-  const heroUrl = sanitizeThumbnail(raw);
+  const heroUrl = sanitizeThumbnail(pickCardImage(col.featured_images));
 
   return (
     <Link
@@ -220,7 +217,6 @@ function CuratedCard({ col, priority = false }: { col: CollectionDoc; priority?:
           fill
           sizes="(max-width: 640px) 100vw, (max-width: 1024px) 50vw, 25vw"
           className="object-cover transition-transform duration-500 ease-out group-hover:scale-105"
-          unoptimized
           priority={priority}
           loading={priority ? 'eager' : 'lazy'}
         />
@@ -262,16 +258,9 @@ export default async function CollectionsPage() {
       }
     >
 
-      {/* Core wings of the library */}
-      <div className="grid gap-3 sm:gap-4 grid-cols-2 md:grid-cols-3 lg:grid-cols-4 xl:grid-cols-5">
-        {categories.map((col, i) => (
-          <CollectionCard key={col.slug} col={col} priority={i < 10} />
-        ))}
-      </div>
-
-      {/* Curated pathways — the hooks */}
+      {/* Curated pathways — the hooks, shown first */}
       {pathways.length > 0 && (
-        <div className="mt-12">
+        <div>
           <div className="mb-4">
             <h2 className="font-display text-2xl text-primary">Curated Pathways</h2>
             <p className="text-stone-500 mt-1 text-sm">Thematic journeys through the collection</p>
@@ -286,6 +275,19 @@ export default async function CollectionsPage() {
           </ShowMorePathways>
         </div>
       )}
+
+      {/* Core collections */}
+      <div className="mt-12">
+        <div className="mb-4">
+          <h2 className="font-display text-2xl text-primary">Core Collections</h2>
+          <p className="text-stone-500 mt-1 text-sm">The main wings of the library</p>
+        </div>
+        <div className="grid gap-3 sm:gap-4 grid-cols-2 md:grid-cols-3 lg:grid-cols-4 xl:grid-cols-5">
+          {categories.map((col, i) => (
+            <CollectionCard key={col.slug} col={col} />
+          ))}
+        </div>
+      </div>
 
       {/* Era timeline — full-bleed dark section */}
       <EraTimeline decades={timeline.decades} total={timeline.total} />
