@@ -90,6 +90,11 @@ export async function GET(request: NextRequest) {
         'digital.bodleian.ox.ac.uk',   // Bodleian
         'iiif.bodleian.ox.ac.uk',
         'digital.archives.go.jp',       // National Archives of Japan
+        'contentdm.oclc.org',           // ContentDM (Laurenziana, etc.)
+        'uvaerfgoed.nl',               // UVA heritage collections
+        'rijksmuseum.nl',              // Rijksmuseum
+        'dl.ndl.go.jp',               // National Diet Library Japan
+        'e-rara.ch',                   // Swiss libraries
       ];
       const urlObj = new URL(url);
       if (!allowedHosts.some(host => urlObj.hostname.endsWith(host))) {
