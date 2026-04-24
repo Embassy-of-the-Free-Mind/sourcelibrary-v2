@@ -329,11 +329,15 @@ export default function ConfidentHallucinatorPage() {
         </div>
 
         <p className="text-secondary leading-relaxed mb-6">
-          The answer is formatting, not reading. Our production OCR output includes XML metadata tags (<code className="bg-warm px-1 py-0.5 rounded">&lt;language&gt;</code>, <code className="bg-warm px-1 py-0.5 rounded">&lt;scan-quality&gt;</code>) and markdown formatting (<code className="bg-warm px-1 py-0.5 rounded">##</code> headings, <code className="bg-warm px-1 py-0.5 rounded">**bold**</code>). The eval strips all of this before comparison &mdash; we&rsquo;re measuring whether models read the same <em>text</em>, not whether they format it the same way. With 98.3% character similarity across runs, the transcriptions are nearly identical; the 44% MCR comes from trivial differences like heading levels and whitespace.
+          The answer is that MCR is too strict. With 98.3% character similarity, runs differ by only ~30 characters out of 1,700 &mdash; a handful of ambiguous glyphs in dense Devanagari. But because MCR requires <em>exact byte identity</em>, even a single character difference counts as a distinct output. Sanskrit has high reading accuracy and low exact-match consistency.
+        </p>
+
+        <p className="text-secondary leading-relaxed mb-6">
+          This is the opposite failure mode from Hebrew. Hebrew Lite has high MCR (100%) but low accuracy (hallucinating). Sanskrit Flash has low MCR (44%) but high accuracy (98.3% character similarity). <strong>MCR and character similarity tell different stories</strong> &mdash; you need both.
         </p>
 
         <p className="text-secondary leading-relaxed mb-8">
-          Embedding distance confirms this: Sanskrit scores <strong>0.105</strong> &mdash; between Latin (0.110) and Tibetan (0.054). The translations are semantically sound. Sanskrit is not a reading problem; it&rsquo;s a formatting problem.
+          Embedding distance confirms the readings are sound: Sanskrit scores <strong>0.105</strong> &mdash; between Latin (0.110) and Tibetan (0.054). The translations are semantically faithful despite the surface-level inconsistency.
         </p>
 
         {/* --- Triangulation --- */}
