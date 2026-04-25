@@ -430,7 +430,7 @@ export default function ScholarCatalog({ initialBooks, initialTotal, languages }
                               className="shrink-0 text-[10px] px-1.5 py-0.5 rounded font-medium"
                               style={{ background: '#f5e6d3', color: '#8B6914' }}
                             >
-                              {firstTranslationBadge(book.ft_disposition, book.language)}
+                              {firstTranslationBadge(book.ft_disposition, book.language ?? undefined)}
                             </span>
                           )}
                           <CopyPermalink slug={book.slug} id={book.id} />
