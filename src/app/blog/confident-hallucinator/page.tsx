@@ -23,7 +23,7 @@ export default function ConfidentHallucinatorPage() {
           title="The Confident Hallucinator"
           subtitle="What we learned evaluating AI OCR across five scripts and three model tiers"
         >
-          <p className="text-stone-400 text-sm mt-4">23&ndash;24 April 2026 &middot; 18 min read</p>
+          <p className="text-stone-400 text-sm mt-4">23&ndash;25 April 2026 &middot; 25 min read</p>
         </ContentHeader>
       }
       bg="bg-cream"
@@ -72,6 +72,15 @@ export default function ConfidentHallucinatorPage() {
                 <li><a href="#media-resolution" className="text-accent-rust hover:underline">Media Resolution: No Effect</a></li>
                 <li><a href="#thinking-hypothesis" className="text-accent-rust hover:underline">Why Flash Never Hallucinated</a></li>
                 <li><a href="#implications" className="text-accent-rust hover:underline">Implications</a></li>
+              </ol>
+              <p className="font-medium text-primary mt-3 mb-1">Part III: At Scale</p>
+              <ol className="text-secondary space-y-0.5 list-decimal list-inside" start={15}>
+                <li><a href="#at-scale" className="text-accent-rust hover:underline">Mining 745,000 Pages</a></li>
+                <li><a href="#thinking-sweep" className="text-accent-rust hover:underline">The Thinking Frontier</a></li>
+                <li><a href="#prompt-test" className="text-accent-rust hover:underline">Can a Prompt Fix It?</a></li>
+                <li><a href="#claude" className="text-accent-rust hover:underline">Does Claude Hallucinate?</a></li>
+                <li><a href="#embeddings" className="text-accent-rust hover:underline">Can Embeddings Detect It?</a></li>
+                <li><a href="#production" className="text-accent-rust hover:underline">24,888 Fabricated Pages</a></li>
                 <li><a href="#references" className="text-accent-rust hover:underline">References &amp; Cost</a></li>
               </ol>
             </div>
@@ -662,14 +671,204 @@ export default function ConfidentHallucinatorPage() {
           </table>
         </div>
 
-        {/* --- References --- */}
-        <h2 id="references" className="text-2xl md:text-3xl text-primary mt-16 mb-6">
-          14. References &amp; Cost
+        {/* ================================================================ */}
+        {/* Part III: At Scale */}
+        {/* ================================================================ */}
+
+        <hr className="border-light my-16" />
+
+        <h2 className="text-2xl md:text-3xl text-primary mb-6">
+          Part III: 745,000 Pages, 25,000 Hallucinations
         </h2>
 
         <p className="text-secondary leading-relaxed mb-6">
-          Part I (Flash vs. Lite): 143 API calls, $0.20 total across two models, five scripts, two temperatures.<br/>
-          Part II (adding Pro): 27 API calls for the 3-model Hebrew eval ($0.79), plus ablation runs (~$0.40). Total for all experiments: <strong>~$2.00 USD</strong>.
+          The pilot study tested 5 pages across 5 scripts. What happens when we scan the entire non-Latin corpus?
+        </p>
+
+        {/* --- 15. At-Scale Scan --- */}
+        <h2 id="at-scale" className="text-2xl md:text-3xl text-primary mt-12 mb-6">
+          15. Mining 745,000 Pages
+        </h2>
+
+        <p className="text-secondary leading-relaxed mb-6">
+          We queried the Source Library&rsquo;s Supabase database for all pages in non-Latin-script languages with OCR output, extracting character counts and model metadata. The hallucination proxy: any page whose OCR character count exceeds 3&times; the median for that language-model combination.
+        </p>
+
+        <div className="overflow-x-auto mb-8">
+          <table className="w-full text-sm text-secondary">
+            <thead>
+              <tr className="border-b border-light">
+                <th className="text-left py-3 pr-4 font-semibold">Language</th>
+                <th className="text-right py-3 pr-4 font-semibold">Flash pages</th>
+                <th className="text-right py-3 pr-4 font-semibold">Flash hall %</th>
+                <th className="text-right py-3 pr-4 font-semibold">Lite pages</th>
+                <th className="text-right py-3 pr-4 font-semibold">Lite hall %</th>
+                <th className="text-right py-3 font-semibold">Lite/Flash</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr className="border-b border-light/50"><td className="py-2 pr-4">Ge&rsquo;ez</td><td className="text-right py-2 pr-4">4,275</td><td className="text-right py-2 pr-4">3.0%</td><td className="text-right py-2 pr-4">1,404</td><td className="text-right py-2 pr-4 font-bold text-accent-rust">20.7%</td><td className="text-right py-2">6.9&times;</td></tr>
+              <tr className="border-b border-light/50"><td className="py-2 pr-4">Chinese</td><td className="text-right py-2 pr-4">65,099</td><td className="text-right py-2 pr-4">6.1%</td><td className="text-right py-2 pr-4">5,615</td><td className="text-right py-2 pr-4 font-bold text-accent-rust">16.2%</td><td className="text-right py-2">2.7&times;</td></tr>
+              <tr className="border-b border-light/50"><td className="py-2 pr-4">Persian</td><td className="text-right py-2 pr-4">7,952</td><td className="text-right py-2 pr-4">1.5%</td><td className="text-right py-2 pr-4">400</td><td className="text-right py-2 pr-4 font-bold text-accent-rust">16.3%</td><td className="text-right py-2">10.9&times;</td></tr>
+              <tr className="border-b border-light/50"><td className="py-2 pr-4">Syriac</td><td className="text-right py-2 pr-4">33,131</td><td className="text-right py-2 pr-4">6.0%</td><td className="text-right py-2 pr-4">14,493</td><td className="text-right py-2 pr-4 font-bold text-accent-rust">14.6%</td><td className="text-right py-2">2.4&times;</td></tr>
+              <tr className="border-b border-light/50"><td className="py-2 pr-4">Hebrew</td><td className="text-right py-2 pr-4">46,378</td><td className="text-right py-2 pr-4">6.6%</td><td className="text-right py-2 pr-4">3,259</td><td className="text-right py-2 pr-4 font-bold text-accent-rust">9.5%</td><td className="text-right py-2">1.4&times;</td></tr>
+              <tr className="border-b border-light/50"><td className="py-2 pr-4">Greek</td><td className="text-right py-2 pr-4">244,972</td><td className="text-right py-2 pr-4">2.6%</td><td className="text-right py-2 pr-4">50,926</td><td className="text-right py-2 pr-4 font-bold text-accent-rust">7.1%</td><td className="text-right py-2">2.7&times;</td></tr>
+              <tr className="border-b border-light/50"><td className="py-2 pr-4">Japanese</td><td className="text-right py-2 pr-4">2,002</td><td className="text-right py-2 pr-4">0.3%</td><td className="text-right py-2 pr-4">305</td><td className="text-right py-2 pr-4 font-bold text-accent-rust">10.5%</td><td className="text-right py-2">35&times;</td></tr>
+            </tbody>
+          </table>
+        </div>
+
+        <p className="text-secondary leading-relaxed mb-6">
+          Lite hallucinates more than Flash in <strong>every single language</strong>. But here&rsquo;s the twist: <strong>67% of the total hallucinations are Flash</strong> (16,552 vs 8,336), because Flash processed 5&times; more pages. Flash&rsquo;s default thinking (~7,700 tokens) helps, but isn&rsquo;t enough for the hardest pages.
+        </p>
+
+        {/* --- 16. Thinking Level Sweep --- */}
+        <h2 id="thinking-sweep" className="text-2xl md:text-3xl text-primary mt-16 mb-6">
+          16. The Thinking Frontier
+        </h2>
+
+        <p className="text-secondary leading-relaxed mb-6">
+          We ran 255 API calls: 51 hallucination pages &times; 5 thinking levels (NONE through HIGH) on Gemini Flash Lite. Cost: $0.16.
+        </p>
+
+        <div className="bg-warm/50 rounded-lg p-6 mb-8 border border-light">
+          <p className="text-primary font-semibold mb-4">Minimum thinking level to prevent hallucination:</p>
+          <div className="grid grid-cols-2 gap-4 text-sm text-secondary">
+            <div>
+              <p className="font-medium text-primary">NONE sufficient:</p>
+              <p>Arabic, Persian, Ge&rsquo;ez</p>
+              <p className="text-xs text-muted mt-1">(hallucination is stochastic &mdash; doesn&rsquo;t reproduce on re-run)</p>
+            </div>
+            <div>
+              <p className="font-medium text-primary">HIGH required:</p>
+              <p>Hebrew, Greek, Chinese, Japanese, Armenian, Syriac</p>
+              <p className="text-xs text-muted mt-1">(only ~15,360 thinking tokens reliably prevents it)</p>
+            </div>
+          </div>
+        </div>
+
+        <p className="text-secondary leading-relaxed mb-4">
+          <strong>The non-monotonic surprise:</strong> Hebrew p179 produces correct output at NONE (2,122 chars), hallucinates at LOW (31,816 chars) and MEDIUM (25,369 chars), then returns to correct at HIGH (1,215 chars). Low-level thinking can <em>introduce</em> hallucination that doesn&rsquo;t exist without thinking.
+        </p>
+
+        <p className="text-secondary leading-relaxed mb-6">
+          MINIMAL thinking produces 0 thinking tokens &mdash; it&rsquo;s a no-op. MEDIUM is non-deterministic (sometimes 0 tokens, sometimes 15K). Only HIGH consistently generates ~15,360 thinking tokens. There is no cheap intermediate.
+        </p>
+
+        {/* --- 17. Prompt Engineering --- */}
+        <h2 id="prompt-test" className="text-2xl md:text-3xl text-primary mt-16 mb-6">
+          17. Can a Prompt Fix It?
+        </h2>
+
+        <p className="text-secondary leading-relaxed mb-6">
+          We tested whether explicit anti-hallucination instructions in the prompt could substitute for thinking mode. 20 pages, 4 arms:
+        </p>
+
+        <div className="overflow-x-auto mb-8">
+          <table className="w-full text-sm text-secondary">
+            <thead>
+              <tr className="border-b border-light">
+                <th className="text-left py-3 pr-4 font-semibold">Arm</th>
+                <th className="text-left py-3 pr-4 font-semibold">Description</th>
+                <th className="text-right py-3 pr-4 font-semibold">Hallucinated</th>
+                <th className="text-right py-3 font-semibold">Rate</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr className="border-b border-light/50"><td className="py-2 pr-4">A</td><td className="py-2 pr-4">Standard prompt, no thinking</td><td className="text-right py-2 pr-4">9/20</td><td className="text-right py-2">45%</td></tr>
+              <tr className="border-b border-light/50 bg-warm/30"><td className="py-2 pr-4 font-bold">B</td><td className="py-2 pr-4 font-bold">Standard prompt + thinking:HIGH</td><td className="text-right py-2 pr-4 font-bold">0/20</td><td className="text-right py-2 font-bold">0%</td></tr>
+              <tr className="border-b border-light/50"><td className="py-2 pr-4">C</td><td className="py-2 pr-4">&ldquo;STOP at end of text, do NOT fabricate&rdquo;</td><td className="text-right py-2 pr-4">7/20</td><td className="text-right py-2">35%</td></tr>
+              <tr className="border-b border-light/50"><td className="py-2 pr-4">D</td><td className="py-2 pr-4">Length-constrained prompt</td><td className="text-right py-2 pr-4">9/20</td><td className="text-right py-2">45%</td></tr>
+            </tbody>
+          </table>
+        </div>
+
+        <p className="text-secondary leading-relaxed mb-6">
+          The anti-hallucination prompt reduces the rate slightly (35% vs 45%) but still fails on the hardest pages. On one Tamil page, it made things <em>worse</em> &mdash; 248,000 chars vs the baseline 123,000. Telling the model about hallucination gave it more stylistic context to generate in. Prompt engineering is not a substitute for thinking.
+        </p>
+
+        {/* --- 18. Claude Comparison --- */}
+        <h2 id="claude" className="text-2xl md:text-3xl text-primary mt-16 mb-6">
+          18. Does Claude Hallucinate?
+        </h2>
+
+        <p className="text-secondary leading-relaxed mb-6">
+          We tested Claude Opus 4.6 on the 5 pages with the worst Gemini hallucinations (33&ndash;69&times; over-generation):
+        </p>
+
+        <div className="overflow-x-auto mb-8">
+          <table className="w-full text-sm text-secondary">
+            <thead>
+              <tr className="border-b border-light">
+                <th className="text-left py-3 pr-4 font-semibold">Page</th>
+                <th className="text-right py-3 pr-4 font-semibold">Gemini output</th>
+                <th className="text-right py-3 pr-4 font-semibold">Claude output</th>
+                <th className="text-right py-3 font-semibold">Gemini/Claude</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr className="border-b border-light/50"><td className="py-2 pr-4">Greek Homer scholia</td><td className="text-right py-2 pr-4">149,396</td><td className="text-right py-2 pr-4">~1,000</td><td className="text-right py-2">149&times;</td></tr>
+              <tr className="border-b border-light/50"><td className="py-2 pr-4">Syriac Patrologia</td><td className="text-right py-2 pr-4">112,705</td><td className="text-right py-2 pr-4">~1,200</td><td className="text-right py-2">94&times;</td></tr>
+              <tr className="border-b border-light/50"><td className="py-2 pr-4">Hebrew Mikra&rsquo;ot Gedolot</td><td className="text-right py-2 pr-4">127,425</td><td className="text-right py-2 pr-4">~2,800</td><td className="text-right py-2">45&times;</td></tr>
+              <tr className="border-b border-light/50"><td className="py-2 pr-4">Sanskrit manuscript</td><td className="text-right py-2 pr-4">56,953</td><td className="text-right py-2 pr-4">~300</td><td className="text-right py-2">190&times;</td></tr>
+              <tr className="border-b border-light/50"><td className="py-2 pr-4">Ge&rsquo;ez manuscript</td><td className="text-right py-2 pr-4">24,696</td><td className="text-right py-2 pr-4">~1,700</td><td className="text-right py-2">15&times;</td></tr>
+            </tbody>
+          </table>
+        </div>
+
+        <p className="text-secondary leading-relaxed mb-6">
+          <strong>Claude produces proportional output on every page.</strong> Where text is illegible, it marks it as such rather than fabricating. The confident hallucinator is architecture-specific &mdash; it&rsquo;s a Gemini behavior, not a universal VLM property.
+        </p>
+
+        {/* --- 19. Embeddings --- */}
+        <h2 id="embeddings" className="text-2xl md:text-3xl text-primary mt-16 mb-6">
+          19. Can Embeddings Detect Hallucination?
+        </h2>
+
+        <p className="text-secondary leading-relaxed mb-6">
+          We tested whether embedding-space distances could serve as a hallucination detector &mdash; comparing hallucinated OCR against its translation and neighboring pages. The answer: <strong>no</strong>.
+        </p>
+
+        <p className="text-secondary leading-relaxed mb-6">
+          Hallucinated text is semantically <em>on-topic</em>. The model fabricates Hebrew biblical commentary for a page from a Hebrew Bible, Tamil literary prose for a page from a Tamil literary text. OCR&harr;Neighbor embedding distance shows no anomaly for the most fluent hallucinations (Tamil: 0.13 vs baseline 0.14). The confident hallucinator is confident precisely because it generates topically coherent fabrications. Character count remains the best detector.
+        </p>
+
+        {/* --- 20. Production Impact --- */}
+        <h2 id="production" className="text-2xl md:text-3xl text-primary mt-16 mb-6">
+          20. 24,888 Fabricated Pages in Production
+        </h2>
+
+        <p className="text-secondary leading-relaxed mb-6">
+          A full scan of the Source Library found <strong>24,888 hallucinated pages</strong> live in production across 862 books and 15 languages. 98% have been translated into English &mdash; the pipeline faithfully translated fabricated text into fluent English, making it look even more legitimate.
+        </p>
+
+        <p className="text-secondary leading-relaxed mb-6">
+          The fix works: re-running the 5 worst pages with the same model but <code className="bg-warm px-1 py-0.5 rounded text-xs">thinkingLevel: HIGH</code> produces 97.9&ndash;100% character count reduction. Estimated cost to clean up all 24,888 pages: ~$50.
+        </p>
+
+        <div className="bg-warm/50 rounded-lg p-6 mb-8 border border-light">
+          <p className="text-primary font-semibold mb-3">What we know now (36 findings):</p>
+          <ul className="text-sm text-secondary space-y-1">
+            <li>&bull; Hallucination is stochastic, page-specific, and non-monotonic with thinking level</li>
+            <li>&bull; Only <code className="bg-warm px-1 py-0.5 rounded text-xs">thinkingLevel: HIGH</code> (~15K tokens) reliably prevents it</li>
+            <li>&bull; Prompt engineering cannot substitute for thinking (35&ndash;45% vs 0%)</li>
+            <li>&bull; Claude does not hallucinate on any tested page</li>
+            <li>&bull; Embeddings cannot detect hallucination (fabricated text is on-topic)</li>
+            <li>&bull; 67% of hallucinations are Flash, not Lite (volume &gt; rate)</li>
+            <li>&bull; Total research cost: $0.35 in API calls + ~$50 to fix production</li>
+          </ul>
+        </div>
+
+        {/* --- References --- */}
+        <h2 id="references" className="text-2xl md:text-3xl text-primary mt-16 mb-6">
+          21. References &amp; Cost
+        </h2>
+
+        <p className="text-secondary leading-relaxed mb-6">
+          Part I (Flash vs. Lite): 143 API calls, $0.20.<br/>
+          Part II (adding Pro): ~60 API calls, ~$1.19.<br/>
+          Part III (at-scale): 745K page scan (database queries, $0), 255-call thinking sweep ($0.16), 80-call prompt test (~$0.05), 7-page embedding test (~$0.01).<br/>
+          Total for all experiments: <strong>~$1.61 USD</strong>. Production cleanup estimate: ~$50.
         </p>
 
         <ul className="text-secondary leading-relaxed mb-8 space-y-2 text-sm">
