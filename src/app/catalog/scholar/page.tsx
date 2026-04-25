@@ -1,6 +1,7 @@
 import { Metadata } from 'next';
-import { browseBooks, getLanguageCounts } from '@/lib/books-catalog';
+import SiteHeader from '@/components/layout/SiteHeader';
 import ScholarCatalog from '@/components/catalog/ScholarCatalog';
+import { browseBooks, getLanguageCounts } from '@/lib/books-catalog';
 
 export const revalidate = 86400;
 export const maxDuration = 30;
@@ -24,10 +25,22 @@ export default async function ScholarCatalogPage() {
   ]);
 
   return (
-    <ScholarCatalog
-      initialBooks={browseResult.books}
-      initialTotal={browseResult.total}
-      languages={languages}
-    />
+    <>
+      <SiteHeader variant="light" />
+      <div className="max-w-7xl mx-auto px-6 md:px-12 py-12 md:py-20">
+        <h1 className="text-3xl md:text-4xl font-display mb-2" style={{ color: 'var(--text-primary)' }}>
+          Catalog
+        </h1>
+        <p className="text-lg mb-10" style={{ color: 'var(--text-muted)' }}>
+          {browseResult.total.toLocaleString()} works. Bibliographic records with permalinks, OCR status, and translation coverage.
+        </p>
+
+        <ScholarCatalog
+          initialBooks={browseResult.books}
+          initialTotal={browseResult.total}
+          languages={languages}
+        />
+      </div>
+    </>
   );
 }
