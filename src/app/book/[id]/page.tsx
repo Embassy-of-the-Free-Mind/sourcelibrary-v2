@@ -644,16 +644,18 @@ async function BookInfo({ id }: { id: string }) {
                 <BookDedication bookId={book.id} dedication={(book as any).dedication || null} />
               </div>
 
-              {/* Read This Book — links to title page or first OCR'd page */}
+              {/* Read This Book — links to title page area, skipping endpapers */}
               {(() => {
-                const titlePage = pages.find(p => p.page_type === 'title_page' || p.page_type === 'title-page');
-                const firstOcrPage = pages.find(p => p.ocr);
-                const readPage = titlePage || firstOcrPage || pages[0];
-                if (!readPage) return null;
+                if (pages.length === 0) return null;
+                const bookSlug = book.slug || book.id;
+                // Most printed books have 2-4 blank endpapers before the title page.
+                // Skip to ~page 4 for longer books to land near the title page.
+                const skipTo = totalPages >= 20 ? 4 : totalPages >= 10 ? 2 : 0;
+                const readPage = pages[skipTo] || pages[0];
                 return (
                   <div className="mt-5">
                     <Link
-                      href={`/book/${book.slug || book.id}/page/${readPage.id}`}
+                      href={`/book/${bookSlug}/page/${readPage.id}`}
                       className="inline-flex items-center gap-2.5 px-6 py-3 bg-accent-rust hover:bg-accent-rust/90 text-white font-medium rounded-lg transition-colors text-base"
                     >
                       <BookOpen className="w-5 h-5" />
