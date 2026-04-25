@@ -644,14 +644,16 @@ async function BookInfo({ id }: { id: string }) {
                 <BookDedication bookId={book.id} dedication={(book as any).dedication || null} />
               </div>
 
-              {/* Read This Book — links to title page area, skipping endpapers */}
+              {/* Read This Book — first chapter > endpaper-skip fallback */}
               {(() => {
                 if (pages.length === 0) return null;
                 const bookSlug = book.slug || book.id;
-                // Most printed books have 2-4 blank endpapers before the title page.
-                // Skip to ~page 4 for longer books to land near the title page.
+                // Prefer first chapter page if available
+                const firstChapterPageId = book.chapters?.length ? (book.chapters as { pageId?: string }[])[0]?.pageId : null;
+                const firstChapterPage = firstChapterPageId ? pages.find(p => p.id === firstChapterPageId) : null;
+                // Fallback: skip endpapers (2-4 blank pages before title page)
                 const skipTo = totalPages >= 20 ? 4 : totalPages >= 10 ? 2 : 0;
-                const readPage = pages[skipTo] || pages[0];
+                const readPage = firstChapterPage || pages[skipTo] || pages[0];
                 return (
                   <div className="mt-5">
                     <Link
