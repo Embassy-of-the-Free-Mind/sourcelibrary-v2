@@ -4,7 +4,7 @@ import { useState, useCallback, useRef, useEffect } from 'react';
 import Link from 'next/link';
 import {
   Search, X, Download, Copy, Check, ChevronLeft, ChevronRight,
-  ExternalLink, BookOpen, ArrowUpDown, ArrowUp, ArrowDown,
+  BookOpen, ArrowUpDown, ArrowUp, ArrowDown,
 } from 'lucide-react';
 import AuthorName from '@/components/AuthorName';
 import { firstTranslationBadge } from '@/lib/first-translation-labels';
@@ -99,6 +99,21 @@ export default function ScholarCatalog({ initialBooks, initialTotal, languages }
   const abortRef = useRef<AbortController | null>(null);
 
   const totalPages = Math.ceil(total / PER_PAGE);
+
+  // Keyboard shortcut: / to focus search
+  useEffect(() => {
+    const handleKeyDown = (e: KeyboardEvent) => {
+      if (e.key === '/' && document.activeElement?.tagName !== 'INPUT') {
+        e.preventDefault();
+        searchRef.current?.focus();
+      }
+      if (e.key === 'Escape' && document.activeElement === searchRef.current) {
+        searchRef.current?.blur();
+      }
+    };
+    window.addEventListener('keydown', handleKeyDown);
+    return () => window.removeEventListener('keydown', handleKeyDown);
+  }, []);
 
   const fetchBooks = useCallback(async (params: {
     sort: string; language: string; query: string; page: number;
@@ -254,7 +269,7 @@ export default function ScholarCatalog({ initialBooks, initialTotal, languages }
               type="text"
               value={query}
               onChange={e => handleSearch(e.target.value)}
-              placeholder="Search by title or author..."
+              placeholder="Search by title or author...  (press /)"
               className="w-full text-sm border rounded-md pl-9 pr-8 py-2 focus:outline-none focus:ring-1"
               style={{
                 borderColor: '#ddd',

@@ -2,6 +2,7 @@
 
 import { useState, useCallback, useRef, useEffect } from 'react';
 import { Search, X, LayoutGrid, List, Download } from 'lucide-react';
+import Link from 'next/link';
 import CollectionBookCard from '@/components/CollectionBookCard';
 import CollectionListView from '@/components/collections/CollectionListView';
 import CatalogPagination from '@/components/collections/CatalogPagination';
@@ -185,6 +186,13 @@ export default function CatalogBrowser({ initialBooks, initialTotal, languages }
             <Download className="w-3.5 h-3.5" />
             CSV
           </a>
+          <Link
+            href="/catalog/scholar"
+            className="text-xs text-muted hover:text-accent-rust transition-colors"
+            title="Minimal bibliographic view for researchers"
+          >
+            Scholar view
+          </Link>
         </div>
 
         <div className="flex flex-wrap items-center gap-3">
