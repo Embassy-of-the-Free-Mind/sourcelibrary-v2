@@ -168,8 +168,36 @@ export default function CatalogBrowser({ initialBooks, initialTotal, languages }
 
   return (
     <div>
+      {/* Search bar — prominent */}
+      <div className="relative mb-6">
+        <Search className="absolute left-4 top-1/2 -translate-y-1/2 w-5 h-5 text-muted" />
+        <input
+          ref={searchRef}
+          type="text"
+          value={query}
+          onChange={e => handleSearch(e.target.value)}
+          placeholder="Search titles and authors..."
+          className="w-full text-base border border-border-light rounded-xl pl-12 pr-10 py-3 bg-white text-primary placeholder:text-muted/50 focus:outline-none focus:border-accent-rust focus:ring-1 focus:ring-accent-rust/20"
+        />
+        {query && (
+          <button
+            onClick={() => {
+              setQuery('');
+              setCurrentPage(1);
+              if (debounceRef.current) clearTimeout(debounceRef.current);
+              updateUrl(sort, language, 1, '', viewMode);
+              fetchBooks({ sort, language, query: '', page: 1 });
+              searchRef.current?.focus();
+            }}
+            className="absolute right-3 top-1/2 -translate-y-1/2 text-muted hover:text-primary cursor-pointer"
+          >
+            <X className="w-5 h-5" />
+          </button>
+        )}
+      </div>
+
       {/* Controls */}
-      <div className="flex flex-wrap items-end justify-between gap-4 mb-6">
+      <div className="flex flex-wrap items-center justify-between gap-4 mb-6">
         <div className="flex items-center gap-3">
           <p className="text-sm text-muted">
             {query || language ? (
@@ -252,34 +280,6 @@ export default function CatalogBrowser({ initialBooks, initialTotal, languages }
               </option>
             ))}
           </select>
-
-          {/* Search */}
-          <div className="relative">
-            <Search className="absolute left-2.5 top-1/2 -translate-y-1/2 w-3.5 h-3.5 text-muted" />
-            <input
-              ref={searchRef}
-              type="text"
-              value={query}
-              onChange={e => handleSearch(e.target.value)}
-              placeholder="Search titles, authors..."
-              className="text-sm border border-border-light rounded-lg pl-8 pr-8 py-1.5 bg-white text-primary placeholder:text-muted/60 focus:outline-none focus:border-accent-rust w-48 sm:w-56"
-            />
-            {query && (
-              <button
-                onClick={() => {
-                  setQuery('');
-                  setCurrentPage(1);
-                  if (debounceRef.current) clearTimeout(debounceRef.current);
-                  updateUrl(sort, language, 1, '', viewMode);
-                  fetchBooks({ sort, language, query: '', page: 1 });
-                  searchRef.current?.focus();
-                }}
-                className="absolute right-2 top-1/2 -translate-y-1/2 text-muted hover:text-primary cursor-pointer"
-              >
-                <X className="w-3.5 h-3.5" />
-              </button>
-            )}
-          </div>
         </div>
       </div>
 
