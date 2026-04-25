@@ -283,18 +283,19 @@ export async function GET(request: NextRequest) {
     const clipScores = await clipPromise;
     let items = textItems;
 
-    // Book-context fallback: when text search returns few results, find books whose
-    // summaries/content discuss the query, then show top images from those books.
-    // e.g. "vulva" finds Colombo's anatomy book (mentions vulva in text) → shows its illustrations.
+    // Book-context fallback: when text search returns few results, use semantic book
+    // search (book_embeddings, 17K rows) to find books about the topic, then show
+    // their top images. This bridges the gap between book content and image metadata.
+    // e.g. "vulva" → semantic search finds anatomy books → shows their illustrations.
     if (searchQuery && items.length < 3 && offset === 0) {
       try {
-        const { searchBooksCatalog } = await import('@/lib/books-catalog');
-        const contextBooks = await searchBooksCatalog(searchQuery, { limit: 5 });
+        const { semanticBookSearch } = await import('@/lib/semantic-search');
+        const contextBooks = await semanticBookSearch(searchQuery, 8, { threshold: 0.5 });
         if (contextBooks.length > 0) {
           const existingBookIds = new Set(items.map(doc => doc.book_id));
           const newBookIds = contextBooks
-            .map((b: any) => b.id)
-            .filter((id: string) => !existingBookIds.has(id));
+            .map(b => b.book_id)
+            .filter(id => !existingBookIds.has(id));
           if (newBookIds.length > 0) {
             const bookImages = await db.collection('gallery_images')
               .find({
