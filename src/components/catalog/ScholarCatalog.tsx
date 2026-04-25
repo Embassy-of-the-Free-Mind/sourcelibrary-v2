@@ -3,8 +3,8 @@
 import { useState, useCallback, useRef, useEffect } from 'react';
 import Link from 'next/link';
 import {
-  Search, X, Download, Copy, Check,
-  ArrowUpDown, ArrowUp, ArrowDown, FileText,
+  Search, X, Download, Copy, Check, Filter,
+  ArrowUpDown, ArrowUp, ArrowDown, FileText, ChevronDown,
 } from 'lucide-react';
 import AuthorName from '@/components/AuthorName';
 import { firstTranslationBadge } from '@/lib/first-translation-labels';
@@ -12,6 +12,17 @@ import CatalogPagination from '@/components/collections/CatalogPagination';
 
 const PER_PAGE = 60;
 const LETTERS = 'ABCDEFGHIJKLMNOPQRSTUVWXYZ'.split('');
+
+const CENTURIES = [
+  { label: 'Ancient', min: -5000, max: 499 },
+  { label: 'Medieval', min: 500, max: 1399 },
+  { label: '15th c.', min: 1400, max: 1499 },
+  { label: '16th c.', min: 1500, max: 1599 },
+  { label: '17th c.', min: 1600, max: 1699 },
+  { label: '18th c.', min: 1700, max: 1799 },
+  { label: '19th c.', min: 1800, max: 1899 },
+  { label: '20th c.', min: 1900, max: 1999 },
+];
 
 interface BookItem {
   id: string;
@@ -25,9 +36,7 @@ interface BookItem {
   pages_ocr?: number;
   pages_translated?: number;
   pages_blank?: number;
-  photo?: string | null;
   published?: string | null;
-  read_count?: number;
   is_first_translation?: boolean;
   ft_disposition?: string;
   image_source_provider?: string | null;
@@ -63,11 +72,6 @@ function SortIcon({ column, currentSort }: { column: string; currentSort: string
   return <ArrowUp className="w-3 h-3 text-accent-rust" />;
 }
 
-function translationPercent(book: BookItem): number {
-  const denom = Math.max((book.pages_ocr || 0) - (book.pages_blank || 0), 1);
-  return book.pages_translated ? Math.round((book.pages_translated / denom) * 100) : 0;
-}
-
 function CopyPermalink({ slug, id }: { slug?: string | null; id: string }) {
   const [copied, setCopied] = useState(false);
   const url = `https://sourcelibrary.org/book/${slug || id}`;
@@ -92,15 +96,30 @@ function CopyPermalink({ slug, id }: { slug?: string | null; id: string }) {
   );
 }
 
+interface Filters {
+  language: string;
+  yearMin: string;
+  yearMax: string;
+  firstTranslation: boolean;
+  hasTranslation: boolean;
+}
+
 export default function ScholarCatalog({ initialBooks, initialTotal, languages }: ScholarCatalogProps) {
   const [books, setBooks] = useState<BookItem[]>(initialBooks);
   const [total, setTotal] = useState(initialTotal);
   const [loading, setLoading] = useState(false);
   const [sort, setSort] = useState('title');
-  const [language, setLanguage] = useState('');
   const [query, setQuery] = useState('');
   const [currentPage, setCurrentPage] = useState(1);
   const [titlePrefix, setTitlePrefix] = useState('');
+  const [filtersOpen, setFiltersOpen] = useState(false);
+  const [filters, setFilters] = useState<Filters>({
+    language: '',
+    yearMin: '',
+    yearMax: '',
+    firstTranslation: false,
+    hasTranslation: false,
+  });
 
   // Full-text search state
   const [contentMatches, setContentMatches] = useState<ContentMatch[]>([]);
@@ -114,11 +133,12 @@ export default function ScholarCatalog({ initialBooks, initialTotal, languages }
   const contentAbortRef = useRef<AbortController | null>(null);
 
   const totalPages = Math.ceil(total / PER_PAGE);
+  const hasActiveFilters = filters.language || filters.yearMin || filters.yearMax || filters.firstTranslation || filters.hasTranslation;
 
   // Keyboard shortcut: / to focus search
   useEffect(() => {
     const handleKeyDown = (e: KeyboardEvent) => {
-      if (e.key === '/' && document.activeElement?.tagName !== 'INPUT') {
+      if (e.key === '/' && document.activeElement?.tagName !== 'INPUT' && document.activeElement?.tagName !== 'SELECT') {
         e.preventDefault();
         searchRef.current?.focus();
       }
@@ -130,19 +150,30 @@ export default function ScholarCatalog({ initialBooks, initialTotal, languages }
     return () => window.removeEventListener('keydown', handleKeyDown);
   }, []);
 
+  const buildQueryString = useCallback((params: {
+    sort: string; query: string; page: number; filters: Filters;
+  }) => {
+    const qs = new URLSearchParams();
+    if (params.sort !== 'popular') qs.set('sort', params.sort);
+    if (params.filters.language) qs.set('language', params.filters.language);
+    if (params.query) qs.set('q', params.query);
+    if (params.page > 1) qs.set('page', String(params.page));
+    if (params.filters.yearMin) qs.set('year_min', params.filters.yearMin);
+    if (params.filters.yearMax) qs.set('year_max', params.filters.yearMax);
+    if (params.filters.firstTranslation) qs.set('first_translation', '1');
+    if (params.filters.hasTranslation) qs.set('has_translation', '1');
+    return qs;
+  }, []);
+
   const fetchBooks = useCallback(async (params: {
-    sort: string; language: string; query: string; page: number;
+    sort: string; query: string; page: number; filters: Filters;
   }) => {
     if (abortRef.current) abortRef.current.abort();
     const controller = new AbortController();
     abortRef.current = controller;
     setLoading(true);
     try {
-      const qs = new URLSearchParams();
-      if (params.sort !== 'popular') qs.set('sort', params.sort);
-      if (params.language) qs.set('language', params.language);
-      if (params.query) qs.set('q', params.query);
-      if (params.page > 1) qs.set('page', String(params.page));
+      const qs = buildQueryString(params);
       const res = await fetch(`/api/catalog/browse?${qs.toString()}`, { signal: controller.signal });
       if (!res.ok) throw new Error('fetch failed');
       const data = await res.json();
@@ -153,9 +184,8 @@ export default function ScholarCatalog({ initialBooks, initialTotal, languages }
     } finally {
       if (!controller.signal.aborted) setLoading(false);
     }
-  }, []);
+  }, [buildQueryString]);
 
-  // Full-text content search (parallel to catalog search)
   const fetchContentMatches = useCallback(async (q: string, lang: string) => {
     if (contentAbortRef.current) contentAbortRef.current.abort();
     if (!q || q.length < 3) {
@@ -188,36 +218,53 @@ export default function ScholarCatalog({ initialBooks, initialTotal, languages }
     initializedRef.current = true;
     const params = new URLSearchParams(window.location.search);
     const urlSort = params.get('sort') || 'title';
-    const urlLang = params.get('language') || '';
     const urlQ = params.get('q') || '';
     const urlPage = parseInt(params.get('page') || '1', 10);
+    const urlFilters: Filters = {
+      language: params.get('language') || '',
+      yearMin: params.get('year_min') || '',
+      yearMax: params.get('year_max') || '',
+      firstTranslation: params.get('first_translation') === '1',
+      hasTranslation: params.get('has_translation') === '1',
+    };
     setSort(urlSort);
-    setLanguage(urlLang);
     setQuery(urlQ);
     setCurrentPage(urlPage);
-    const isDefault = urlSort === 'title' && !urlLang && !urlQ && urlPage === 1;
+    setFilters(urlFilters);
+    if (urlFilters.yearMin || urlFilters.yearMax || urlFilters.firstTranslation || urlFilters.hasTranslation) {
+      setFiltersOpen(true);
+    }
+    const isDefault = urlSort === 'title' && !urlFilters.language && !urlQ && urlPage === 1 && !urlFilters.yearMin && !urlFilters.yearMax && !urlFilters.firstTranslation && !urlFilters.hasTranslation;
     if (!isDefault) {
-      fetchBooks({ sort: urlSort, language: urlLang, query: urlQ, page: urlPage });
-      if (urlQ && urlQ.length >= 3) fetchContentMatches(urlQ, urlLang);
+      fetchBooks({ sort: urlSort, query: urlQ, page: urlPage, filters: urlFilters });
+      if (urlQ && urlQ.length >= 3) fetchContentMatches(urlQ, urlFilters.language);
     }
   }, [fetchBooks, fetchContentMatches]);
 
-  const updateUrl = useCallback((s: string, lang: string, page: number, q: string) => {
+  const updateUrl = useCallback((s: string, page: number, q: string, f: Filters) => {
     const params = new URLSearchParams();
     if (s !== 'title') params.set('sort', s);
-    if (lang) params.set('language', lang);
+    if (f.language) params.set('language', f.language);
     if (q) params.set('q', q);
     if (page > 1) params.set('page', String(page));
+    if (f.yearMin) params.set('year_min', f.yearMin);
+    if (f.yearMax) params.set('year_max', f.yearMax);
+    if (f.firstTranslation) params.set('first_translation', '1');
+    if (f.hasTranslation) params.set('has_translation', '1');
     const qs = params.toString();
     window.history.replaceState(null, '', `/catalog/scholar${qs ? `?${qs}` : ''}`);
   }, []);
 
+  const doFetch = useCallback((newSort: string, newQuery: string, newPage: number, newFilters: Filters) => {
+    updateUrl(newSort, newPage, newQuery, newFilters);
+    fetchBooks({ sort: newSort, query: newQuery, page: newPage, filters: newFilters });
+  }, [updateUrl, fetchBooks]);
+
   const handleSort = useCallback((newSort: string) => {
     setSort(newSort);
     setCurrentPage(1);
-    updateUrl(newSort, language, 1, query);
-    fetchBooks({ sort: newSort, language, query, page: 1 });
-  }, [language, query, updateUrl, fetchBooks]);
+    doFetch(newSort, query, 1, filters);
+  }, [query, filters, doFetch]);
 
   const handleColumnSort = (column: string) => {
     if (column === 'year') handleSort(sort === 'year_asc' ? 'year_desc' : 'year_asc');
@@ -225,14 +272,29 @@ export default function ScholarCatalog({ initialBooks, initialTotal, languages }
     else if (column === 'author') handleSort('author');
   };
 
-  const handleLanguage = useCallback((newLang: string) => {
-    setLanguage(newLang);
+  const handleFilterChange = useCallback((key: keyof Filters, value: string | boolean) => {
+    const newFilters = { ...filters, [key]: value };
+    setFilters(newFilters);
     setCurrentPage(1);
     setTitlePrefix('');
-    updateUrl(sort, newLang, 1, query);
-    fetchBooks({ sort, language: newLang, query, page: 1 });
-    if (query.length >= 3) fetchContentMatches(query, newLang);
-  }, [sort, query, updateUrl, fetchBooks, fetchContentMatches]);
+    doFetch(sort, query, 1, newFilters);
+    if (key === 'language' && query.length >= 3) fetchContentMatches(query, newFilters.language);
+  }, [sort, query, filters, doFetch, fetchContentMatches]);
+
+  const handleCenturyClick = useCallback((min: number, max: number) => {
+    const newFilters = { ...filters, yearMin: String(min), yearMax: String(max) };
+    setFilters(newFilters);
+    setCurrentPage(1);
+    setTitlePrefix('');
+    doFetch(sort, query, 1, newFilters);
+  }, [sort, query, filters, doFetch]);
+
+  const clearDateFilter = useCallback(() => {
+    const newFilters = { ...filters, yearMin: '', yearMax: '' };
+    setFilters(newFilters);
+    setCurrentPage(1);
+    doFetch(sort, query, 1, newFilters);
+  }, [sort, query, filters, doFetch]);
 
   const handleSearch = useCallback((value: string) => {
     setQuery(value);
@@ -240,11 +302,10 @@ export default function ScholarCatalog({ initialBooks, initialTotal, languages }
     setTitlePrefix('');
     if (debounceRef.current) clearTimeout(debounceRef.current);
     debounceRef.current = setTimeout(() => {
-      updateUrl(sort, language, 1, value);
-      fetchBooks({ sort, language, query: value, page: 1 });
-      fetchContentMatches(value, language);
+      doFetch(sort, value, 1, filters);
+      fetchContentMatches(value, filters.language);
     }, 300);
-  }, [sort, language, updateUrl, fetchBooks, fetchContentMatches]);
+  }, [sort, filters, doFetch, fetchContentMatches]);
 
   const handleLetterFilter = useCallback((letter: string) => {
     const newPrefix = titlePrefix === letter ? '' : letter;
@@ -254,38 +315,66 @@ export default function ScholarCatalog({ initialBooks, initialTotal, languages }
     setQuery(q);
     setContentMatches([]);
     setContentTotal(0);
-    updateUrl(sort, language, 1, q);
-    fetchBooks({ sort, language, query: q, page: 1 });
-  }, [titlePrefix, sort, language, updateUrl, fetchBooks]);
+    doFetch(sort, q, 1, filters);
+  }, [titlePrefix, sort, filters, doFetch]);
 
   const handlePage = useCallback((page: number) => {
     setCurrentPage(page);
-    updateUrl(sort, language, page, query);
-    fetchBooks({ sort, language, query, page });
+    updateUrl(sort, page, query, filters);
+    fetchBooks({ sort, query, page, filters });
     window.scrollTo({ top: 0, behavior: 'smooth' });
-  }, [sort, language, query, updateUrl, fetchBooks]);
+  }, [sort, query, filters, updateUrl, fetchBooks]);
 
-  const clearSearch = useCallback(() => {
+  const clearAll = useCallback(() => {
+    const defaultFilters: Filters = { language: '', yearMin: '', yearMax: '', firstTranslation: false, hasTranslation: false };
     setQuery('');
     setTitlePrefix('');
     setCurrentPage(1);
+    setFilters(defaultFilters);
     setContentMatches([]);
     setContentTotal(0);
     if (debounceRef.current) clearTimeout(debounceRef.current);
-    updateUrl(sort, language, 1, '');
-    fetchBooks({ sort, language, query: '', page: 1 });
+    doFetch(sort, '', 1, defaultFilters);
     searchRef.current?.focus();
-  }, [sort, language, updateUrl, fetchBooks]);
+  }, [sort, doFetch]);
 
-  const csvUrl = `/api/catalog/csv${language ? `?language=${encodeURIComponent(language)}` : ''}`;
+  const csvUrl = `/api/catalog/csv${filters.language ? `?language=${encodeURIComponent(filters.language)}` : ''}`;
+
+  // Display year or published field
+  const displayYear = (book: BookItem) => {
+    if (book.year) return book.year;
+    if (book.published) return book.published;
+    return '—';
+  };
 
   return (
     <div>
-      {/* Controls */}
-      <div className="flex flex-wrap items-end justify-between gap-4 mb-6">
+      {/* Search bar — prominent */}
+      <div className="relative mb-6">
+        <Search className="absolute left-4 top-1/2 -translate-y-1/2 w-5 h-5 text-muted" />
+        <input
+          ref={searchRef}
+          type="text"
+          value={query}
+          onChange={e => handleSearch(e.target.value)}
+          placeholder="Search titles, authors, and page content...  (press /)"
+          className="w-full text-base border border-border-light rounded-xl pl-12 pr-10 py-3 bg-white text-primary placeholder:text-muted/50 focus:outline-none focus:border-accent-rust focus:ring-1 focus:ring-accent-rust/20"
+        />
+        {query && (
+          <button
+            onClick={clearAll}
+            className="absolute right-3 top-1/2 -translate-y-1/2 text-muted hover:text-primary cursor-pointer"
+          >
+            <X className="w-5 h-5" />
+          </button>
+        )}
+      </div>
+
+      {/* Controls row */}
+      <div className="flex flex-wrap items-center justify-between gap-3 mb-4">
         <div className="flex items-center gap-3">
           <p className="text-sm text-muted">
-            {query || language
+            {query || hasActiveFilters
               ? `${total.toLocaleString()} of ${initialTotal.toLocaleString()} books`
               : `${total.toLocaleString()} books`}
           </p>
@@ -320,8 +409,8 @@ export default function ScholarCatalog({ initialBooks, initialTotal, languages }
 
           {/* Language filter */}
           <select
-            value={language}
-            onChange={e => handleLanguage(e.target.value)}
+            value={filters.language}
+            onChange={e => handleFilterChange('language', e.target.value)}
             className="text-sm border border-border-light rounded-lg px-3 py-1.5 bg-white text-secondary focus:outline-none focus:border-accent-rust cursor-pointer"
           >
             <option value="">All languages</option>
@@ -330,28 +419,104 @@ export default function ScholarCatalog({ initialBooks, initialTotal, languages }
             ))}
           </select>
 
-          {/* Search */}
-          <div className="relative">
-            <Search className="absolute left-2.5 top-1/2 -translate-y-1/2 w-3.5 h-3.5 text-muted" />
-            <input
-              ref={searchRef}
-              type="text"
-              value={query}
-              onChange={e => handleSearch(e.target.value)}
-              placeholder="Search titles, authors, and content...  (/)"
-              className="text-sm border border-border-light rounded-lg pl-8 pr-8 py-1.5 bg-white text-primary placeholder:text-muted/60 focus:outline-none focus:border-accent-rust w-56 sm:w-72"
-            />
-            {query && (
+          {/* Filters toggle */}
+          <button
+            onClick={() => setFiltersOpen(!filtersOpen)}
+            className={`inline-flex items-center gap-1.5 text-sm border rounded-lg px-3 py-1.5 cursor-pointer transition-colors ${
+              hasActiveFilters
+                ? 'border-accent-rust bg-accent-rust/5 text-accent-rust'
+                : 'border-border-light text-secondary hover:border-accent-rust'
+            }`}
+          >
+            <Filter className="w-3.5 h-3.5" />
+            Filters
+            {hasActiveFilters && <span className="w-1.5 h-1.5 rounded-full bg-accent-rust" />}
+            <ChevronDown className={`w-3 h-3 transition-transform ${filtersOpen ? 'rotate-180' : ''}`} />
+          </button>
+        </div>
+      </div>
+
+      {/* Expanded filters */}
+      {filtersOpen && (
+        <div className="mb-6 p-4 rounded-lg border border-border-light bg-warm/30">
+          <div className="flex flex-wrap items-end gap-4">
+            {/* Date range */}
+            <div>
+              <label className="block text-xs text-muted mb-1">Publication period</label>
+              <div className="flex flex-wrap gap-1.5">
+                {CENTURIES.map(c => {
+                  const isActive = filters.yearMin === String(c.min) && filters.yearMax === String(c.max);
+                  return (
+                    <button
+                      key={c.label}
+                      onClick={() => isActive ? clearDateFilter() : handleCenturyClick(c.min, c.max)}
+                      className={`text-xs px-2.5 py-1 rounded-lg cursor-pointer transition-colors ${
+                        isActive ? 'bg-accent-rust/10 text-accent-rust font-medium' : 'text-muted hover:text-primary hover:bg-warm'
+                      }`}
+                    >
+                      {c.label}
+                    </button>
+                  );
+                })}
+              </div>
+            </div>
+
+            {/* Custom year range */}
+            <div>
+              <label className="block text-xs text-muted mb-1">Year range</label>
+              <div className="flex items-center gap-1.5">
+                <input
+                  type="number"
+                  value={filters.yearMin}
+                  onChange={e => handleFilterChange('yearMin', e.target.value)}
+                  placeholder="From"
+                  className="w-20 text-xs border border-border-light rounded-lg px-2 py-1.5 bg-white text-primary focus:outline-none focus:border-accent-rust"
+                />
+                <span className="text-muted text-xs">—</span>
+                <input
+                  type="number"
+                  value={filters.yearMax}
+                  onChange={e => handleFilterChange('yearMax', e.target.value)}
+                  placeholder="To"
+                  className="w-20 text-xs border border-border-light rounded-lg px-2 py-1.5 bg-white text-primary focus:outline-none focus:border-accent-rust"
+                />
+              </div>
+            </div>
+
+            {/* Boolean filters */}
+            <div className="flex items-center gap-4">
+              <label className="flex items-center gap-1.5 text-xs text-secondary cursor-pointer">
+                <input
+                  type="checkbox"
+                  checked={filters.hasTranslation}
+                  onChange={e => handleFilterChange('hasTranslation', e.target.checked)}
+                  className="rounded border-border-light accent-accent-rust"
+                />
+                Has translation
+              </label>
+              <label className="flex items-center gap-1.5 text-xs text-secondary cursor-pointer">
+                <input
+                  type="checkbox"
+                  checked={filters.firstTranslation}
+                  onChange={e => handleFilterChange('firstTranslation', e.target.checked)}
+                  className="rounded border-border-light accent-accent-rust"
+                />
+                First English translation
+              </label>
+            </div>
+
+            {/* Clear filters */}
+            {hasActiveFilters && (
               <button
-                onClick={clearSearch}
-                className="absolute right-2 top-1/2 -translate-y-1/2 text-muted hover:text-primary cursor-pointer"
+                onClick={clearAll}
+                className="text-xs text-accent-rust hover:underline cursor-pointer"
               >
-                <X className="w-3.5 h-3.5" />
+                Clear all filters
               </button>
             )}
           </div>
         </div>
-      </div>
+      )}
 
       {/* Alphabetical quick-jump */}
       <div className="flex flex-wrap gap-1 mb-6">
@@ -408,7 +573,7 @@ export default function ScholarCatalog({ initialBooks, initialTotal, languages }
           </div>
           {contentTotal > 10 && (
             <Link
-              href={`/search?q=${encodeURIComponent(query)}${language ? `&language=${language}` : ''}`}
+              href={`/search?q=${encodeURIComponent(query)}${filters.language ? `&language=${filters.language}` : ''}`}
               className="inline-block mt-3 text-xs text-accent-rust hover:underline"
             >
               See all {contentTotal.toLocaleString()} content matches →
@@ -431,30 +596,27 @@ export default function ScholarCatalog({ initialBooks, initialTotal, languages }
             <table className="w-full text-left">
               <thead>
                 <tr className="border-b border-border-medium text-xs text-muted uppercase tracking-wide">
-                  <th className="pb-3 pr-4 font-medium w-[40%]">
+                  <th className="pb-3 pr-4 font-medium w-[45%]">
                     <button onClick={() => handleColumnSort('title')} className="flex items-center gap-1.5 hover:text-primary transition-colors cursor-pointer">
                       Title <SortIcon column="title" currentSort={sort} />
                     </button>
                   </th>
-                  <th className="pb-3 pr-4 font-medium hidden sm:table-cell w-[20%]">
+                  <th className="pb-3 pr-4 font-medium hidden sm:table-cell">
                     <button onClick={() => handleColumnSort('author')} className="flex items-center gap-1.5 hover:text-primary transition-colors cursor-pointer">
                       Author <SortIcon column="author" currentSort={sort} />
                     </button>
                   </th>
-                  <th className="pb-3 pr-4 font-medium w-16">
+                  <th className="pb-3 pr-4 font-medium w-20">
                     <button onClick={() => handleColumnSort('year')} className="flex items-center gap-1.5 hover:text-primary transition-colors cursor-pointer">
                       Year <SortIcon column="year" currentSort={sort} />
                     </button>
                   </th>
                   <th className="pb-3 pr-4 font-medium hidden md:table-cell w-24">Language</th>
-                  <th className="pb-3 pr-4 font-medium hidden lg:table-cell w-16 text-right">Pages</th>
-                  <th className="pb-3 font-medium hidden lg:table-cell w-20 text-right">Translated</th>
-                  <th className="pb-3 font-medium hidden xl:table-cell w-28">Source</th>
+                  <th className="pb-3 font-medium hidden lg:table-cell w-20 text-right">Pages</th>
                 </tr>
               </thead>
               <tbody className="divide-y divide-border-light">
                 {books.map((book) => {
-                  const pct = translationPercent(book);
                   const href = `/book/${book.slug || book.id}`;
                   return (
                     <tr key={book.id} className="group hover:bg-warm/50 transition-colors">
@@ -483,33 +645,17 @@ export default function ScholarCatalog({ initialBooks, initialTotal, languages }
                         </Link>
                       </td>
                       <td className="py-3 pr-4 text-sm text-muted tabular-nums">
-                        <Link href={href} className="block">{book.year || '—'}</Link>
+                        <Link href={href} className="block">
+                          {displayYear(book)}
+                        </Link>
                       </td>
                       <td className="py-3 pr-4 hidden md:table-cell">
                         <Link href={href} className="block">
                           <span className="text-xs text-muted bg-warm px-2 py-0.5 rounded">{book.language || '—'}</span>
                         </Link>
                       </td>
-                      <td className="py-3 pr-4 hidden lg:table-cell text-right">
-                        <Link href={href} className="block text-sm text-muted tabular-nums">{book.pages_count || '—'}</Link>
-                      </td>
                       <td className="py-3 hidden lg:table-cell text-right">
-                        <Link href={href} className="block text-sm tabular-nums">
-                          {pct > 0 ? (
-                            <span className={pct === 100 ? 'text-green-700' : 'text-muted'}>{pct}%</span>
-                          ) : (
-                            <span className="text-muted/40">—</span>
-                          )}
-                        </Link>
-                      </td>
-                      <td className="py-3 hidden xl:table-cell">
-                        {book.image_source_provider ? (
-                          <span className="text-[11px] text-muted/60 truncate block max-w-[100px]" title={book.image_source_provider}>
-                            {book.image_source_provider}
-                          </span>
-                        ) : (
-                          <span className="text-muted/40">—</span>
-                        )}
+                        <Link href={href} className="block text-sm text-muted tabular-nums">{book.pages_count || '—'}</Link>
                       </td>
                     </tr>
                   );

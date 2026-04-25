@@ -27,8 +27,15 @@ export async function GET(request: Request) {
     const offset = (page - 1) * limit;
     const includeLangs = searchParams.get('langs') === '1';
 
+    // Additional filters
+    const yearMin = searchParams.get('year_min') ? parseInt(searchParams.get('year_min')!, 10) : undefined;
+    const yearMax = searchParams.get('year_max') ? parseInt(searchParams.get('year_max')!, 10) : undefined;
+    const firstTranslation = searchParams.get('first_translation') === '1' || undefined;
+    const hasTranslation = searchParams.get('has_translation') === '1' || undefined;
+    const category = searchParams.get('category') || undefined;
+
     const promises: [Promise<{ books: unknown[]; total: number }>, Promise<{ lang: string; count: number }[]> | null] = [
-      browseBooks({ language, search, sort, offset, limit, exactCount: true }),
+      browseBooks({ language, search, sort, offset, limit, exactCount: true, yearMin, yearMax, firstTranslation, hasTranslation, category }),
       includeLangs ? getLanguageCounts({}) : null,
     ];
 
