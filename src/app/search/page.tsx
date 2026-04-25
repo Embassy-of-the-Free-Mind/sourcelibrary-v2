@@ -75,6 +75,11 @@ export default function SearchPage({ defaultLibrary }: { defaultLibrary?: string
   const [semanticResults, setSemanticResults] = useState<any[]>([]);
   const [semanticLoading, setSemanticLoading] = useState(false);
 
+  // Track when the base search has set image results, so AI imgTerms callback
+  // doesn't add images that get immediately overwritten by the base search completing.
+  const baseImagesSet = useRef(false);
+  const pendingAiImages = useRef<GalleryItem[]>([]);
+
   // Accordion open state for unified view sections
   const [expandedSections, setExpandedSections] = useState<Set<string>>(new Set(['books', 'semantic']));
   const toggleSection = (section: string) => {
@@ -209,6 +214,10 @@ export default function SearchPage({ defaultLibrary }: { defaultLibrary?: string
       setAiTerms([]);
     }
 
+    // Reset the base-images gate so imgTerms buffers until performSearch sets results
+    baseImagesSet.current = false;
+    pendingAiImages.current = [];
+
     if (!q || q.length < 3) return;
     setAiStreaming(true);
 
@@ -275,8 +284,14 @@ export default function SearchPage({ defaultLibrary }: { defaultLibrary?: string
           }
         }
         if (newImages.length > 0) {
-          setImageResults(prev => [...prev, ...newImages]);
-          setImageTotal(prev => prev + newImages.length);
+          if (baseImagesSet.current) {
+            // Base search already set results — safe to append
+            setImageResults(prev => [...prev, ...newImages]);
+            setImageTotal(prev => prev + newImages.length);
+          } else {
+            // Base search hasn't completed yet — buffer these so they don't get wiped
+            pendingAiImages.current = [...pendingAiImages.current, ...newImages];
+          }
         }
       },
     );
@@ -387,8 +402,19 @@ export default function SearchPage({ defaultLibrary }: { defaultLibrary?: string
           setBookTotal(bTotal);
           setIndexResults(index);
           setIndexTotal(iTotal);
-          setImageResults(images);
-          setImageTotal(imTotal);
+          // Merge any AI-supplemented images that arrived before the base search completed
+          const pending = pendingAiImages.current;
+          if (pending.length > 0) {
+            const baseIds = new Set(images.map((i: GalleryItem) => `${i.pageId}-${i.detectionIndex}`));
+            const unique = pending.filter(p => !baseIds.has(`${p.pageId}-${p.detectionIndex}`));
+            setImageResults([...images, ...unique]);
+            setImageTotal(imTotal + unique.length);
+            pendingAiImages.current = [];
+          } else {
+            setImageResults(images);
+            setImageTotal(imTotal);
+          }
+          baseImagesSet.current = true;
           setCollectionResults((data as any).collections?.results || []);
           displayHintLocked.current = true; // lock layout once results render
 
@@ -446,8 +472,20 @@ export default function SearchPage({ defaultLibrary }: { defaultLibrary?: string
         setIndexTotal(data.total || 0);
       } else if (mode === 'images') {
         const data = await galleryApi.list({ query: q, limit: resultsPerPage, offset: pageOffset });
-        setImageResults(data.items || []);
-        setImageTotal(data.total || 0);
+        const items = data.items || [];
+        // Merge any AI-supplemented images that arrived before gallery API responded
+        const pending = pendingAiImages.current;
+        if (pending.length > 0) {
+          const baseIds = new Set(items.map((i: GalleryItem) => `${i.pageId}-${i.detectionIndex}`));
+          const unique = pending.filter(p => !baseIds.has(`${p.pageId}-${p.detectionIndex}`));
+          setImageResults([...items, ...unique]);
+          setImageTotal((data.total || 0) + unique.length);
+          pendingAiImages.current = [];
+        } else {
+          setImageResults(items);
+          setImageTotal(data.total || 0);
+        }
+        baseImagesSet.current = true;
       }
     } catch (error) {
       console.error('Search error:', error);
