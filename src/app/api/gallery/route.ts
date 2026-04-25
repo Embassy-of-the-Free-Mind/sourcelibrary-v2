@@ -199,15 +199,10 @@ export async function GET(request: NextRequest) {
     // Shuffle is handled client-side — server-side $sample/$skip both timeout on Atlas
     // with broad filters (minQuality=0.5, maxPerBook=999). The shuffle param is ignored.
 
-    // Fire CLIP visual search and semantic embedding search in parallel with text search.
-    // Semantic search understands meaning ("vulva" → "uterus", "yoni", "reproductive anatomy")
-    // while text search only matches exact terms in metadata.
+    // Fire CLIP visual search in parallel with text search
     const clipPromise = searchQuery
       ? clipTextSearch(searchQuery, Math.max(limit * 2, 60))
       : Promise.resolve(new Map<string, number>());
-    const semanticPromise = searchQuery
-      ? semanticGallerySearch(searchParams, searchQuery).catch(() => ({ items: [] as any[] }))
-      : Promise.resolve({ items: [] as any[] });
 
     let textItems: any[] = [];
 
@@ -285,32 +280,46 @@ export async function GET(request: NextRequest) {
         .toArray();
     }
 
-    const [clipScores, semanticResult] = await Promise.all([clipPromise, semanticPromise]);
+    const clipScores = await clipPromise;
     let items = textItems;
 
-    // Merge semantic results — these find conceptually related images
-    // (e.g. "vulva" matches images described as "uterus", "yoni", "reproductive anatomy")
-    if (semanticResult.items && semanticResult.items.length > 0) {
-      const textIds = new Set(items.map(doc => `${doc.page_id}-${doc.detection_index}`));
-      const semanticDocs = semanticResult.items
-        .filter((doc: any) => !textIds.has(`${doc.pageId}-${doc.detectionIndex}`))
-        .map((doc: any) => ({
-          ...doc,
-          // Remap camelCase back to snake_case for consistency with text results
-          page_id: doc.pageId,
-          book_id: doc.bookId,
-          page_number: doc.pageNumber,
-          detection_index: doc.detectionIndex,
-          image_url: doc.imageUrl,
-          book_title: doc.bookTitle,
-          book_author: doc.author,
-          book_year: doc.year,
-          extracted_url: doc.extractedUrl,
-          thumbnail_url: doc.thumbnailUrl,
-          gallery_quality: doc.galleryQuality,
-          museum_description: doc.museumDescription,
-        }));
-      items = [...items, ...semanticDocs];
+    // Book-context fallback: when text search returns few results, find books whose
+    // summaries/content discuss the query, then show top images from those books.
+    // e.g. "vulva" finds Colombo's anatomy book (mentions vulva in text) → shows its illustrations.
+    if (searchQuery && items.length < 3 && offset === 0) {
+      try {
+        const { searchBooksCatalog } = await import('@/lib/books-catalog');
+        const contextBooks = await searchBooksCatalog(searchQuery, { limit: 5 });
+        if (contextBooks.length > 0) {
+          const existingBookIds = new Set(items.map(doc => doc.book_id));
+          const newBookIds = contextBooks
+            .map((b: any) => b.id)
+            .filter((id: string) => !existingBookIds.has(id));
+          if (newBookIds.length > 0) {
+            const bookImages = await db.collection('gallery_images')
+              .find({
+                book_id: { $in: newBookIds },
+                gallery_quality: { $gte: Math.max(minQuality, 0.7) },
+                book_visible: true,
+                extracted_url: { $ne: null },
+                image_url: { $ne: null },
+                book_rank: { $lte: 2 }, // top 2 per book
+              }, { projection: { _id: 0 } })
+              .sort({ gallery_quality: -1 })
+              .limit(limit)
+              .toArray();
+            if (bookImages.length > 0) {
+              const existingIds = new Set(items.map(doc => `${doc.page_id}-${doc.detection_index}`));
+              const newImages = bookImages.filter(doc =>
+                !existingIds.has(`${doc.page_id}-${doc.detection_index}`)
+              );
+              items = [...items, ...newImages];
+            }
+          }
+        }
+      } catch {
+        // Non-critical fallback — proceed with text results only
+      }
     }
 
     // Merge CLIP visual results with text results

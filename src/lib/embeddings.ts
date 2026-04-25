@@ -3,8 +3,10 @@ import { getGeminiClient, reportRateLimitError } from './gemini-client';
 import { TaskType } from '@google/generative-ai';
 import { supabase } from './supabase';
 
-// text-embedding-004 was deprecated April 2026. gemini-embedding-001 is the successor.
-// Must use outputDimensionality: 768 to match existing stored embeddings.
+// text-embedding-004 was deprecated April 2026. Gallery text embeddings (87K rows)
+// were generated with this model and are NOT compatible with gemini-embedding-001.
+// Semantic gallery search is disabled until embeddings are re-generated.
+// Book/artwork embeddings use gemini-embedding-2-preview (separate pipeline).
 const EMBEDDING_MODEL = 'gemini-embedding-001';
 const EMBEDDING_DIMENSIONS = 768;
 
