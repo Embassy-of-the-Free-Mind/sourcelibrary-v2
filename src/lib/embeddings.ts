@@ -3,7 +3,9 @@ import { getGeminiClient, reportRateLimitError } from './gemini-client';
 import { TaskType } from '@google/generative-ai';
 import { supabase } from './supabase';
 
-const EMBEDDING_MODEL = 'text-embedding-004';
+// text-embedding-004 was deprecated April 2026. gemini-embedding-001 is the successor.
+// Must use outputDimensionality: 768 to match existing stored embeddings.
+const EMBEDDING_MODEL = 'gemini-embedding-001';
 const EMBEDDING_DIMENSIONS = 768;
 
 export interface ImageEmbeddingInput {
@@ -72,7 +74,8 @@ export async function generateEmbedding(text: string): Promise<number[]> {
     const result = await model.embedContent({
       content: { role: 'user', parts: [{ text }] },
       taskType: TaskType.RETRIEVAL_DOCUMENT,
-    });
+      outputDimensionality: EMBEDDING_DIMENSIONS,
+    } as any);
 
     return result.embedding.values;
   } catch (err) {
@@ -255,7 +258,8 @@ export async function generateQueryEmbedding(query: string): Promise<number[]> {
   const result = await model.embedContent({
     content: { role: 'user', parts: [{ text: query }] },
     taskType: TaskType.RETRIEVAL_QUERY,
-  });
+    outputDimensionality: EMBEDDING_DIMENSIONS,
+  } as any);
 
   return result.embedding.values;
 }
