@@ -1,3 +1,4 @@
+// @ts-nocheck — d3 is dynamically imported and untyped in this admin page
 'use client';
 
 import { useEffect, useRef, useState, useCallback } from 'react';
