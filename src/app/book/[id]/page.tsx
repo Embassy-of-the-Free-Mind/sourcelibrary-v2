@@ -7,7 +7,7 @@ import { Book, Page, TranslationEdition } from '@/lib/types';
 import { findBookByIdOrSlug } from '@/lib/book-lookup';
 import { deduplicateByDHash } from '@/lib/dhash';
 import { getBookDetail } from '@/lib/books-catalog';
-import { Calendar, Globe, FileText, BookMarked, Images } from 'lucide-react';
+import { Calendar, Globe, FileText, BookMarked, Images, BookOpen } from 'lucide-react';
 import ArtworkInfo from '@/components/artwork/ArtworkInfo';
 import SearchPanel from '@/components/search/SearchPanel';
 import BookPagesSection from '@/components/book/BookPagesSection';
@@ -643,6 +643,25 @@ async function BookInfo({ id }: { id: string }) {
               <div className="mt-3">
                 <BookDedication bookId={book.id} dedication={(book as any).dedication || null} />
               </div>
+
+              {/* Read This Book — links to title page or first OCR'd page */}
+              {(() => {
+                const titlePage = pages.find(p => p.page_type === 'title_page' || p.page_type === 'title-page');
+                const firstOcrPage = pages.find(p => p.ocr);
+                const readPage = titlePage || firstOcrPage || pages[0];
+                if (!readPage) return null;
+                return (
+                  <div className="mt-5">
+                    <Link
+                      href={`/book/${book.slug || book.id}/page/${readPage.id}`}
+                      className="inline-flex items-center gap-2.5 px-6 py-3 bg-accent-rust hover:bg-accent-rust/90 text-white font-medium rounded-lg transition-colors text-base"
+                    >
+                      <BookOpen className="w-5 h-5" />
+                      Read This Book
+                    </Link>
+                  </div>
+                );
+              })()}
 
               {/* Actions */}
               <div className="flex flex-col items-center sm:items-start gap-3 mt-5 text-sm">
