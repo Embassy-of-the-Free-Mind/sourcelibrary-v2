@@ -196,41 +196,91 @@ export async function GET(request: NextRequest) {
       filter.book_year = yearFilter;
     }
 
-    if (searchQuery) {
-      // Use $text index (covers description, book_title, book_author)
-      // instead of 7-branch regex scan across 73k docs
-      filter.$text = { $search: searchQuery };
-    }
-
     // Shuffle is handled client-side — server-side $sample/$skip both timeout on Atlas
     // with broad filters (minQuality=0.5, maxPerBook=999). The shuffle param is ignored.
 
-    // When text searching, sort by relevance first, then quality
-    const sortOrder: Record<string, any> = searchQuery
-      ? { score: { $meta: 'textScore' }, gallery_quality: -1 }
-      : { gallery_quality: -1, book_year: 1, book_id: 1, page_number: 1 };
-    const projection: Record<string, any> = searchQuery
-      ? { _id: 0, score: { $meta: 'textScore' } }
-      : { _id: 0 };
-
-    // Fire CLIP visual search in parallel with MongoDB text search
+    // Fire CLIP visual search in parallel with text search
     const clipPromise = searchQuery
       ? clipTextSearch(searchQuery, Math.max(limit * 2, 60))
       : Promise.resolve(new Map<string, number>());
 
-    // countDocuments with compound filters takes 20s+ on Atlas (no covering index).
-    // Strategy: run find first, then only count if we need pagination info.
-    // For first page with full results, total = offset + items.length (or +1 if full page).
-    const [textItems, clipScores] = await Promise.all([
-      db.collection('gallery_images')
-        .find(filter, { projection })
+    let textItems: any[] = [];
+
+    if (searchQuery) {
+      // Primary: Atlas Search (gallery_search index) — searches description,
+      // museum_description, subjects, figures. Same index used by unified search.
+      try {
+        textItems = await db.collection('gallery_images').aggregate([
+          {
+            $search: {
+              index: 'gallery_search',
+              compound: {
+                should: [
+                  { autocomplete: { query: searchQuery, path: 'description', score: { boost: { value: 3 } }, fuzzy: { maxEdits: 1, prefixLength: 2 } } },
+                  { text: { query: searchQuery, path: 'museum_description', score: { boost: { value: 2 } }, fuzzy: { maxEdits: 1, prefixLength: 2 } } },
+                  { text: { query: searchQuery, path: 'metadata.subjects', fuzzy: { maxEdits: 1, prefixLength: 2 } } },
+                  { text: { query: searchQuery, path: 'metadata.figures', fuzzy: { maxEdits: 1, prefixLength: 2 } } },
+                ],
+                minimumShouldMatch: 1,
+                filter: [
+                  { range: { path: 'gallery_quality', gte: minQuality } },
+                ],
+              },
+            },
+          },
+          { $match: {
+            book_visible: true,
+            extracted_url: { $ne: null },
+            image_url: { $ne: null },
+            ...(!bookId && maxPerBook < 100 ? { book_rank: { $lte: maxPerBook } } : {}),
+            ...(bookId ? { book_id: bookId } : {}),
+            ...(collectionBookIds && libraryBookIds
+              ? { book_id: { $in: collectionBookIds.filter(id => libraryBookIds!.includes(id)) } }
+              : collectionBookIds ? { book_id: { $in: collectionBookIds } }
+              : libraryBookIds ? { book_id: { $in: libraryBookIds } }
+              : {}),
+            ...(imageType ? { type: imageType } : {}),
+            ...(subjectFilter ? { 'metadata.subjects': subjectFilter } : {}),
+            ...(figureFilter ? { 'metadata.figures': figureFilter } : {}),
+            ...(symbolFilter ? { 'metadata.symbols': symbolFilter } : {}),
+            ...(yearStart !== null || yearEnd !== null ? {
+              book_year: {
+                ...(yearStart !== null ? { $gte: yearStart } : {}),
+                ...(yearEnd !== null ? { $lte: yearEnd } : {}),
+              },
+            } : {}),
+          }},
+          { $project: { _id: 0 } },
+          { $skip: offset },
+          { $limit: limit + 1 },
+        ], { maxTimeMS: 8000 }).toArray();
+      } catch {
+        // Atlas Search index not ready — fall back to $text
+      }
+
+      // Fallback: $text index (covers description, book_title, book_author)
+      if (textItems.length === 0) {
+        filter.$text = { $search: searchQuery };
+        const sortOrder: Record<string, any> = { score: { $meta: 'textScore' }, gallery_quality: -1 };
+        const projection = { _id: 0, score: { $meta: 'textScore' as const } };
+        textItems = await db.collection('gallery_images')
+          .find(filter, { projection })
+          .sort(sortOrder)
+          .skip(offset)
+          .limit(limit + 1)
+          .toArray();
+      }
+    } else {
+      const sortOrder: Record<string, any> = { gallery_quality: -1, book_year: 1, book_id: 1, page_number: 1 };
+      textItems = await db.collection('gallery_images')
+        .find(filter, { projection: { _id: 0 } })
         .sort(sortOrder)
         .skip(offset)
-        .limit(limit + 1) // fetch one extra to know if there are more
-        .toArray(),
-      clipPromise,
-    ]);
+        .limit(limit + 1)
+        .toArray();
+    }
 
+    const clipScores = await clipPromise;
     let items = textItems;
 
     // Merge CLIP visual results with text results
@@ -270,8 +320,14 @@ export async function GET(request: NextRequest) {
     } else if (!hasMore) {
       total = offset + items.length; // last page
     } else if (searchQuery || collectionBookIds || libraryBookIds || imageType || subjectFilter || figureFilter || symbolFilter || iconclassFilter || yearStart !== null || yearEnd !== null) {
-      // Filtered query — estimated count is wildly wrong, do a real count (capped at 10s)
-      total = await db.collection('gallery_images').countDocuments(filter, { maxTimeMS: 10000 }).catch(() => offset + items.length + 1);
+      // Filtered query — for Atlas Search queries, countDocuments can't replicate the
+      // search pipeline, so estimate from result count. For $text queries, use countDocuments.
+      if (searchQuery && !filter.$text) {
+        // Atlas Search was used — estimate total from what we have
+        total = offset + items.length + (hasMore ? 1 : 0);
+      } else {
+        total = await db.collection('gallery_images').countDocuments(filter, { maxTimeMS: 10000 }).catch(() => offset + items.length + 1);
+      }
     } else {
       // Unfiltered browsing — estimated count is fine
       total = await db.collection('gallery_images').estimatedDocumentCount();
