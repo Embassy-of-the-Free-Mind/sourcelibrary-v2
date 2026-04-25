@@ -87,6 +87,7 @@ export async function browseBooks(opts: {
   collection?: string;
   category?: string;
   provider?: string;
+  library?: string;
   firstTranslation?: boolean;
   hasTranslation?: boolean;
   hasPages?: boolean;
@@ -123,6 +124,7 @@ export async function browseBooks(opts: {
   if (opts.collection) query = query.contains('collections', [opts.collection]);
   if (opts.category) query = query.contains('categories', [opts.category]);
   if (opts.provider) query = query.eq('image_source_provider', opts.provider);
+  if (opts.library === 'bhutan') query = query.ilike('iiif_manifest', '%eap.bl.uk%');
   if (opts.firstTranslation) query = query.eq('is_first_translation', true);
   if (opts.yearMin != null) query = query.gte('year', opts.yearMin);
   if (opts.yearMax != null) query = query.lte('year', opts.yearMax);
@@ -348,7 +350,8 @@ export async function searchBooksCatalog(
   if (opts?.category) query = query.contains('categories', [opts.category]);
   if (opts?.firstTranslation) query = query.eq('is_first_translation', true);
   if (opts?.hasTranslation) query = query.gt('pages_translated', 0);
-  if (opts?.library) query = query.eq('image_source_provider', opts.library);
+  if (opts?.library === 'bhutan') query = query.ilike('iiif_manifest', '%eap.bl.uk%');
+  else if (opts?.library) query = query.eq('image_source_provider', opts.library);
 
   const { data, error } = await query;
   if (error) throw new Error(`searchBooksCatalog failed: ${error.message}`);
