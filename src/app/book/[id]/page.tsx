@@ -401,7 +401,8 @@ async function BookInfo({ id }: { id: string }) {
     const authorName = book.author?.trim();
     const isKnownAuthor = authorName && !/^unknown/i.test(authorName) && !/^unidentified/i.test(authorName) && !/^anonymous/i.test(authorName);
     if (!hasSourceBook && isKnownAuthor) {
-      relatedBooksByAuthor = await db.collection('books')
+      const artDb = await getReadDb();
+      relatedBooksByAuthor = await artDb.collection('books')
         .find(
           { author: authorName, content_type: { $ne: 'artwork' }, pages_count: { $gt: 0 } },
           { projection: { id: 1, slug: 1, title: 1, thumbnail: 1, thumbnail_blob: 1 }, maxTimeMS: 3000 },
