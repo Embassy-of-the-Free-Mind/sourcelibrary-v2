@@ -119,28 +119,12 @@ Marcus: Yeah, and actually...`;
 
     if (inlineData?.data) {
       const pcmData = Buffer.from(inlineData.data, 'base64');
-
-      // WAV header
-      const sampleRate = 24000, channels = 1, bitsPerSample = 16;
-      const header = Buffer.alloc(44);
-      header.write('RIFF', 0);
-      header.writeUInt32LE(36 + pcmData.length, 4);
-      header.write('WAVE', 8);
-      header.write('fmt ', 12);
-      header.writeUInt32LE(16, 16);
-      header.writeUInt16LE(1, 20);
-      header.writeUInt16LE(channels, 22);
-      header.writeUInt32LE(sampleRate, 24);
-      header.writeUInt32LE(sampleRate * channels * (bitsPerSample / 8), 28);
-      header.writeUInt16LE(channels * (bitsPerSample / 8), 32);
-      header.writeUInt16LE(bitsPerSample, 34);
-      header.write('data', 36);
-      header.writeUInt32LE(pcmData.length, 40);
-      const wavBuffer = Buffer.concat([header, pcmData]);
+      const { encodePcmToMp3 } = await import('@/lib/embassy/podcast');
+      const mp3Buffer = encodePcmToMp3(pcmData, 24000);
 
       // Upload to R2
-      const key = `podcasts/interactive/${id}-${Date.now()}.wav`;
-      const { url } = await storagePut(key, wavBuffer, { contentType: 'audio/wav' });
+      const key = `podcasts/interactive/${id}-${Date.now()}.mp3`;
+      const { url } = await storagePut(key, mp3Buffer, { contentType: 'audio/mpeg' });
 
       return NextResponse.json({ script, audioUrl: url });
     }

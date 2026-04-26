@@ -102,9 +102,9 @@ export async function generatePodcast(
   const audioBuffer = await generateAudio(ai, script, isMultiSpeaker);
 
   // Stage 3: Upload to R2
-  const key = `podcasts/${threadId}-${format}-${Date.now()}.wav`;
+  const key = `podcasts/${threadId}-${format}-${Date.now()}.mp3`;
   const { url } = await storagePut(key, audioBuffer, {
-    contentType: 'audio/wav',
+    contentType: 'audio/mpeg',
   });
 
   // Stage 4: Save metadata to thread
@@ -358,35 +358,33 @@ async function generateAudio(
   }
 
   const pcmData = Buffer.from(inlineData.data, 'base64');
-  return createWavBuffer(pcmData, 24000, 1, 16);
+  return encodePcmToMp3(pcmData, 24000);
 }
 
-function createWavBuffer(
-  pcmData: Buffer,
-  sampleRate: number,
-  channels: number,
-  bitsPerSample: number,
-): Buffer {
-  const byteRate = sampleRate * channels * (bitsPerSample / 8);
-  const blockAlign = channels * (bitsPerSample / 8);
-  const dataSize = pcmData.length;
+/**
+ * Encode raw 16-bit PCM to MP3 using lamejs (pure JS, works on serverless).
+ */
+export function encodePcmToMp3(pcmData: Buffer, sampleRate: number): Buffer {
+  // eslint-disable-next-line @typescript-eslint/no-require-imports
+  const lamejs = require('../vendor/lamejs-bundle');
+  const mp3enc = new lamejs.Mp3Encoder(1, sampleRate, 128);
+  const samples = new Int16Array(pcmData.buffer, pcmData.byteOffset, pcmData.length / 2);
 
-  const header = Buffer.alloc(44);
-  header.write('RIFF', 0);
-  header.writeUInt32LE(36 + dataSize, 4);
-  header.write('WAVE', 8);
-  header.write('fmt ', 12);
-  header.writeUInt32LE(16, 16);
-  header.writeUInt16LE(1, 20);
-  header.writeUInt16LE(channels, 22);
-  header.writeUInt32LE(sampleRate, 24);
-  header.writeUInt32LE(byteRate, 28);
-  header.writeUInt16LE(blockAlign, 32);
-  header.writeUInt16LE(bitsPerSample, 34);
-  header.write('data', 36);
-  header.writeUInt32LE(dataSize, 40);
+  const mp3Parts: Buffer[] = [];
+  const CHUNK = 1152; // lamejs processes in chunks of 1152 samples
+  for (let i = 0; i < samples.length; i += CHUNK) {
+    const chunk = samples.subarray(i, i + CHUNK);
+    const mp3buf = mp3enc.encodeBuffer(chunk);
+    if (mp3buf.length > 0) {
+      mp3Parts.push(Buffer.from(mp3buf));
+    }
+  }
+  const flush = mp3enc.flush();
+  if (flush.length > 0) {
+    mp3Parts.push(Buffer.from(flush));
+  }
 
-  return Buffer.concat([header, pcmData]);
+  return Buffer.concat(mp3Parts);
 }
 
 // ── Query helpers ────────────────────────────────────────────────────
