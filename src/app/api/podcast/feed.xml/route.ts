@@ -27,7 +27,7 @@ export async function GET() {
     return `    <item>
       <title>${title}</title>
       <description>${description}</description>
-      <enclosure url="${escapeXml(ep.podcast.audioUrl)}" type="audio/wav" />
+      <enclosure url="${escapeXml(ep.podcast.audioUrl)}" type="${ep.podcast.audioUrl.endsWith('.wav') ? 'audio/wav' : 'audio/mpeg'}" />
       <guid isPermaLink="false">${guid}</guid>
       <pubDate>${pubDate}</pubDate>
       <link>${threadUrl}</link>
