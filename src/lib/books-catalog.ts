@@ -32,6 +32,7 @@ export interface CatalogBook {
   image_source_provider: string | null;
   categories: string[];
   collections: string[];
+  resource_type: string | null;
 }
 
 /** Extended book detail from Supabase — includes fields for the /book/[id] page shell. */
@@ -42,7 +43,6 @@ export interface CatalogBookDetail extends CatalogBook {
   place_published: string | null;
   doi: string | null;
   work_id: string | null;
-  resource_type: string | null;
   source_url: string | null;
   provider_name: string | null;
   image_attribution: string | null;
@@ -59,7 +59,7 @@ export interface CatalogBookDetail extends CatalogBook {
   updated_at: string | null;
 }
 
-const BOOK_SELECT = 'id, slug, title, display_title, author, year, language, published, pages_count, pages_ocr, pages_translated, pages_blank, photo, thumbnail, thumbnail_blob, read_count, is_first_translation, quality_score, image_source_provider, categories, collections';
+const BOOK_SELECT = 'id, slug, title, display_title, author, year, language, published, pages_count, pages_ocr, pages_translated, pages_blank, photo, thumbnail, thumbnail_blob, read_count, is_first_translation, quality_score, image_source_provider, categories, collections, resource_type';
 
 export type SortOption = 'popular' | 'title' | 'author' | 'year_asc' | 'year_desc' | 'recent' | 'last_translated' | 'quality';
 

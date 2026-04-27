@@ -33,6 +33,7 @@ interface BookItem {
   relevance?: number;
   created_at?: string;
   last_translation_at?: string;
+  resource_type?: string;
 }
 
 interface CollectionAllBooksProps {
@@ -368,6 +369,7 @@ export default function CollectionAllBooks({
                 translation_percent: book.pages_ocr && book.pages_translated
                   ? Math.round((book.pages_translated / Math.max((book.pages_ocr || 0) - (book.pages_blank || 0), 1)) * 100)
                   : 0,
+                resource_type: book.resource_type,
               }}
               priority={!expanded && i < 4}
             />

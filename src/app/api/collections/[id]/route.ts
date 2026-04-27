@@ -80,7 +80,7 @@ export async function GET(
         thumbnail: b.thumbnail, thumbnail_blob: b.thumbnail_blob,
         is_first_translation: b.is_first_translation,
         created_at: null, last_translation_at: null,
-        resource_type: null, medium: null, enrichment: null,
+        resource_type: b.resource_type || null, medium: null, enrichment: null,
         relevance: b.quality_score || 0,
       }));
 
