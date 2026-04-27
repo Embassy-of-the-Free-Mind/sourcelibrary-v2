@@ -327,6 +327,7 @@ export async function searchBooksCatalog(
   const safe = sanitizeFilterValue(text);
   const STOPWORDS = new Set(['a', 'an', 'and', 'at', 'by', 'de', 'der', 'des', 'di', 'du', 'el', 'en', 'et', 'for', 'from', 'in', 'la', 'le', 'les', 'of', 'on', 'or', 'the', 'to', 'und', 'von', 'with']);
   const words = safe.trim().split(/\s+/).filter(w => w.length >= 2);
+  const contentWords = words.filter(w => w.length >= 3 && !STOPWORDS.has(w.toLowerCase()));
   const phraseFilters = `title.ilike.%${safe}%,display_title.ilike.%${safe}%,author.ilike.%${safe}%`;
 
   let orFilter = phraseFilters;
@@ -334,6 +335,17 @@ export async function searchBooksCatalog(
     const titleAnds = words.map(w => `title.ilike.%${w}%`).join(',');
     const displayAnds = words.map(w => `display_title.ilike.%${w}%`).join(',');
     orFilter += `,and(${titleAnds}),and(${displayAnds})`;
+
+    // Cross-field AND: author + title words (catches "newton principia")
+    if (contentWords.length >= 2 && contentWords.length <= 3) {
+      for (const w of contentWords) {
+        const others = contentWords.filter(o => o !== w);
+        const titlePart = others.map(o => `title.ilike.%${o}%`).join(',');
+        const displayPart = others.map(o => `display_title.ilike.%${o}%`).join(',');
+        orFilter += `,and(author.ilike.%${w}%,${titlePart})`;
+        orFilter += `,and(author.ilike.%${w}%,${displayPart})`;
+      }
+    }
   } else {
     // Single word: also match against language and subject_keywords
     orFilter += `,language.ilike.%${safe}%`;
@@ -395,8 +407,18 @@ export async function searchBookIds(
     const displayAnds = words.map(w => `display_title.ilike.%${w}%`).join(',');
     orFilter += `,and(${titleAnds}),and(${displayAnds})`;
 
-    // Cross-field AND removed — language.ilike causes 70s full-table scans.
-    // Semantic search covers cross-field conceptual matches (e.g. "sanskrit alchemy").
+    // Cross-field AND: some words in title + some in author
+    // Catches "newton principia" where "newton" is author and "principia" is in title
+    // Only add if we have 2-3 words (more would be too loose)
+    if (contentWords.length >= 2 && contentWords.length <= 3) {
+      for (const w of contentWords) {
+        const others = contentWords.filter(o => o !== w);
+        const titlePart = others.map(o => `title.ilike.%${o}%`).join(',');
+        const displayPart = others.map(o => `display_title.ilike.%${o}%`).join(',');
+        orFilter += `,and(author.ilike.%${w}%,${titlePart})`;
+        orFilter += `,and(author.ilike.%${w}%,${displayPart})`;
+      }
+    }
   } else {
     // Single word: also match against language (e.g. "Sanskrit", "Arabic")
     // This is fast since it's a single ilike on an indexed field

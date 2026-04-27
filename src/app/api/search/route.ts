@@ -516,17 +516,23 @@ export async function GET(request: NextRequest) {
         if (a.type !== b.type) return a.type === 'book' ? -1 : 1;
 
         // 2. Title/author match (strongest signal)
+        // Check both title and display_title, and for multi-word queries
+        // count how many query words appear across title+author fields
+        const queryWords = queryLower.split(/\s+/).filter(w => w.length >= 3);
+
+        const aAllText = `${(a.display_title || '').toLowerCase()} ${a.title.toLowerCase()} ${(a.author || '').toLowerCase()}`;
+        const bAllText = `${(b.display_title || '').toLowerCase()} ${b.title.toLowerCase()} ${(b.author || '').toLowerCase()}`;
+
+        const aWordHits = queryWords.filter(w => aAllText.includes(w)).length;
+        const bWordHits = queryWords.filter(w => bAllText.includes(w)).length;
+        if (aWordHits !== bWordHits) return bWordHits - aWordHits;
+
+        // Exact phrase match in title is stronger than scattered word matches
         const aTitle = (a.display_title || a.title).toLowerCase();
         const bTitle = (b.display_title || b.title).toLowerCase();
-        const aTitleMatch = aTitle.includes(queryLower);
-        const bTitleMatch = bTitle.includes(queryLower);
-        if (aTitleMatch !== bTitleMatch) return aTitleMatch ? -1 : 1;
-
-        const aAuthor = (a.author || '').toLowerCase();
-        const bAuthor = (b.author || '').toLowerCase();
-        const aAuthorMatch = aAuthor.includes(queryLower);
-        const bAuthorMatch = bAuthor.includes(queryLower);
-        if (aAuthorMatch !== bAuthorMatch) return aAuthorMatch ? -1 : 1;
+        const aTitleExact = aTitle.includes(queryLower);
+        const bTitleExact = bTitle.includes(queryLower);
+        if (aTitleExact !== bTitleExact) return aTitleExact ? -1 : 1;
 
         // 3. Original language beats modern English translations
         // A Latin "De Occulta Philosophia" should rank above an English reprint
