@@ -657,11 +657,11 @@ export default async function CollectionDetailPage({ params, provider }: Props &
 
         <div className="relative max-w-7xl mx-auto px-6 pt-8 pb-12 sm:pb-16">
           <Link
-            href={parentCollection ? `/collections/${parentCollection.slug}` : '/#library'}
+            href={parentCollection ? `/collections/${parentCollection.slug}` : isArtCollection ? '/artwork' : '/#library'}
             className="inline-flex items-center gap-2 text-sm text-white/50 hover:text-white/80 transition-colors mb-8"
           >
             <ArrowLeft className="w-4 h-4" />
-            {parentCollection ? parentCollection.name : 'Library'}
+            {parentCollection ? parentCollection.name : isArtCollection ? 'Visual Art' : 'Library'}
           </Link>
 
           <h1
