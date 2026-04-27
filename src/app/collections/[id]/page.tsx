@@ -296,6 +296,7 @@ async function fetchCollectionData(id: string, provider?: string) {
         published: b.published, read_count: b.read_count,
         is_first_translation: b.is_first_translation,
         categories: b.categories,
+        resource_type: b.resource_type,
       }));
     } catch {
       // MongoDB fallback — if Supabase is down
