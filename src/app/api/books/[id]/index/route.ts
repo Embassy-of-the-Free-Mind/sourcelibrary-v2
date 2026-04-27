@@ -666,7 +666,7 @@ ${researchContext}
 ${chapters.map(c => `- Page ${c.pageNumber}: ${c.title}`).join('\n')}
 ` : '';
 
-  const prompt = `You're writing compelling copy to help readers discover "${bookTitle}" by ${bookAuthor}.${languageContext}
+  const prompt = `You are a scholarly cataloger writing a description of "${bookTitle}" by ${bookAuthor}.${languageContext}
 
 ${researchSection}
 ${chapterSection}
@@ -687,28 +687,31 @@ ${batchSummariesText}
 ${quotesText}
 
 ## Your Task
-Synthesize the above into compelling summaries that make readers WANT to explore this text.
+Synthesize the above into clear, informative summaries suitable for an academic library catalog.
 
 **Writing style:**
-- Write like a knowledgeable human, not an AI. Be direct and concrete.
+- Write like a rare books librarian: precise, knowledgeable, and direct.
+- State what the text IS and what it CONTAINS. Do not sell or promote it.
 - NEVER use em-dashes (—). Use commas, colons, semicolons, or separate sentences instead.
-- NEVER use these AI-isms: "delves into", "rich tapestry", "fascinating exploration", "sheds light on", "offers a window into", "comprehensive", "intricate", "nuanced", "multifaceted", "groundbreaking", "seminal".
-- Prefer short, clear sentences over long compound ones.
-- Scholarly but accessible. Say what the text does, not how impressive it is.
+- NEVER open with imperatives or invitations: "Step into", "Discover", "Explore", "Unlock", "Dive into", "Journey into", "Embark on", "Immerse yourself", "Experience", "Venture into", "Uncover".
+- NEVER use these AI-isms: "delves into", "rich tapestry", "fascinating exploration", "sheds light on", "offers a window into", "comprehensive", "intricate", "nuanced", "multifaceted", "groundbreaking", "seminal", "remarkable", "extraordinary".
+- NEVER address the reader directly ("you", "your", "readers").
+- Prefer short, declarative sentences. Lead with the subject matter, not with rhetoric.
+- Name specific ideas, arguments, and methods rather than vaguely praising the work.
 
-1. **BRIEF** (2-3 punchy sentences):
-   - Hook the reader - what's compelling about this text?
-   - What questions does it tackle? What will readers discover?
+1. **BRIEF** (2-3 sentences):
+   - What is this text? What does it argue or contain?
+   - Name specific topics, methods, or claims. Be concrete.
 
 2. **ABSTRACT** (1 paragraph, 4-6 sentences):
-   - What makes this text worth reading?
-   - What bold claims or intriguing ideas does it contain?
-   - What's the author's unique perspective?
+   - Summarize the work's contents, structure, and argument.
+   - Note the author's approach and any notable sources or influences.
+   - Mention the historical or intellectual context where relevant.
 
 3. **DETAILED** (2-4 paragraphs):
-   - Paint a picture of the journey through this text
-   - Highlight the most striking ideas or arguments
-   - Convey the texture and flavor of the writing
+   - Describe the structure and contents of the work.
+   - Highlight specific arguments, examples, or passages.
+   - Note the work's place in its tradition or field.
 
 4. **SECTIONS**: ${hasChapters ? 'Use the detected chapter structure.' : 'Group into 5-8 thematic sections.'} For each:
    - Title and page range

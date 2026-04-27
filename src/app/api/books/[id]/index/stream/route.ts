@@ -142,7 +142,7 @@ async function synthesizeSummary(
   const batchSummaries = batches.map(b => `Pages ${b.pageRange.start}-${b.pageRange.end}: ${b.summary}`).join('\n');
   const quotesText = allQuotes.map(q => `- "${q.text}" (p.${q.page})`).join('\n');
 
-  const prompt = `Write compelling summaries for "${bookTitle}" by ${bookAuthor}${bookLanguage ? ` (from ${bookLanguage})` : ''}.
+  const prompt = `You are a scholarly cataloger. Write a description of "${bookTitle}" by ${bookAuthor}${bookLanguage ? ` (from ${bookLanguage})` : ''}.
 
 Themes: ${allThemes.join(', ')}
 
@@ -152,14 +152,16 @@ ${batchSummaries}
 Notable quotes:
 ${quotesText}
 
+Style: Write like a rare books librarian. State what the text is and contains. Do not sell or promote it. Never open with "Step into", "Discover", "Explore", "Unlock", or similar invitations. Never address the reader as "you". Be precise and concrete.
+
 Output JSON:
 {
-  "brief": "2-3 punchy sentences that hook readers",
-  "abstract": "1 paragraph (4-6 sentences) - what's compelling about this text?",
-  "detailed": "2-4 paragraphs painting the journey through this text"
+  "brief": "2-3 declarative sentences: what the text is, what it argues or contains",
+  "abstract": "1 paragraph (4-6 sentences) summarizing contents, structure, and context",
+  "detailed": "2-4 paragraphs describing the work's structure, arguments, and significance"
 }
 
-Use the actual quotes provided. Be engaging but accurate.`;
+Use the actual quotes provided. Be accurate.`;
 
   const result = await model.generateContent(prompt);
   const jsonMatch = result.response.text().match(/\{[\s\S]*\}/);
