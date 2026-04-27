@@ -65,6 +65,7 @@ export async function GET(
         collection: id,
         hasTranslation: !skipTranslationFilter,
         hasPages: isArtCollection ? false : undefined,
+        hasResourceType: isArtCollection || undefined,
         sort: sbSort,
         limit: 1000, // manifest wants everything
         exactCount: true,
