@@ -267,7 +267,7 @@ async function getBook(id: string): Promise<{ book: Book; pages: Page[]; totalBo
       .sort({ page_number: 1 })
       .limit(110) // slight over-fetch to account for digitizer-inserts filtered below
       .toArray()
-      .then(docs => docs.filter(d => d.page_type !== 'digitizer-insert').slice(0, 100)),
+      .then(docs => docs.filter(d => d.page_type !== 'digitizer-insert' && d.page_type !== 'archived-spread' && (d.page_number == null || d.page_number >= 0)).slice(0, 100)),
     db.collection('books').estimatedDocumentCount().catch(() => 1200),
     // Top 8 gallery images for preview row
     db.collection('gallery_images')

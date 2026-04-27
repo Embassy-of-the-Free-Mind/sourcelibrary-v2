@@ -41,7 +41,7 @@ export default async function PageEditorPage({ params }: PageProps) {
       .sort({ page_number: 1 })
       .maxTimeMS(15000)
       .toArray()
-      .then(pages => pages.filter(p => p.page_type !== 'digitizer-insert'))
+      .then(pages => pages.filter(p => p.page_type !== 'digitizer-insert' && p.page_type !== 'archived-spread' && (p.page_number == null || p.page_number >= 0)))
       .catch((err) => {
         console.error(`[page-nav] Failed to load page list for book ${currentPage.book_id}:`, err.message);
         return [{ id: pageId, page_number: currentPage.page_number }];
