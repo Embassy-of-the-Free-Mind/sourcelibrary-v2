@@ -149,7 +149,7 @@ export async function GET(request: NextRequest) {
     const searchQuery = `${title}${author ? ' by ' + author : ''}`;
     const semanticResults = await semanticBookSearch(searchQuery, 8, {
       language: language || undefined,
-      threshold: 0.68, // Higher threshold for dedup — must be genuinely similar
+      threshold: 0.63, // Lower threshold for dedup — prefer high recall (catch possible dupes)
     });
 
     for (const sem of semanticResults) {
@@ -168,7 +168,7 @@ export async function GET(request: NextRequest) {
         language: sem.language || undefined,
         year: sem.year || undefined,
         match_type: 'semantic',
-        confidence: sem.similarity >= 0.8 ? 'high' : sem.similarity >= 0.72 ? 'medium' : 'low',
+        confidence: sem.similarity >= 0.78 ? 'high' : sem.similarity >= 0.68 ? 'medium' : 'low',
         similarity: Math.round(sem.similarity * 1000) / 1000,
         url: `https://sourcelibrary.org/book/${book?.slug || sem.book_id}`,
       });
