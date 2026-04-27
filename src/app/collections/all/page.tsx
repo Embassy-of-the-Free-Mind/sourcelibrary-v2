@@ -134,6 +134,8 @@ export default async function AllCollectionsPage() {
         <ContentHeader
           title="All Collections"
           subtitle="Every wing and sub-collection in the library."
+          image={wings.find(w => w.image)?.image}
+          imageAlt="Illustration from the collection"
         />
       }
     >

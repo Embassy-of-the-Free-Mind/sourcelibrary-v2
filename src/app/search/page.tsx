@@ -699,7 +699,7 @@ export default function SearchPage({ defaultLibrary }: { defaultLibrary?: string
                 <Loader2 className="absolute right-4 top-1/2 -translate-y-1/2 w-5 h-5 text-muted animate-spin" />
               )}
             </div>
-            {!isBrowseMode && (
+            {!isBrowseMode && viewMode !== 'unified' && (
               <div className="relative flex-shrink-0">
                 <ArrowUpDown className="absolute left-3 top-1/2 -translate-y-1/2 w-4 h-4 text-muted pointer-events-none" />
                 <select

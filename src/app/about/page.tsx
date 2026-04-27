@@ -16,6 +16,8 @@ export default function AboutPage() {
       header={
         <ContentHeader
           title="Source Library transforms 2500+ years of wisdom texts into a living archive, freely available to all."
+          image="https://images.sourcelibrary.org/archived/6909aba7cf28baa1b4caef69/5.jpg"
+          imageAlt="Historical illustration from the Embassy of the Free Mind collection"
         />
       }
       bg="bg-cream"

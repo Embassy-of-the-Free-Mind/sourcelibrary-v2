@@ -680,6 +680,8 @@ export default function SourcesPage() {
         <ContentHeader
           title="Source Libraries"
           subtitle={`${sources.length} institutions surveyed across ${new Set(sources.map(s => s.country)).size} countries`}
+          image="https://images.sourcelibrary.org/archived/6909d654cf28baa1b4cb0269/4.jpg"
+          imageAlt="Incunabulum page from a partner library"
         />
       }
       bg="bg-cream"
