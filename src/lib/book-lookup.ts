@@ -48,7 +48,7 @@ export async function findBookByIdOrSlug(
 
   const query: Document = { $or: orConditions };
   if (tenantId) {
-    query.tenantId = tenantId;
+    query.tenant_id = tenantId;
   }
 
   const book = await db.collection('books').findOne(query, opts);

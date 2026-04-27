@@ -131,7 +131,7 @@ export async function generateMetadata({ params }: PageProps): Promise<Metadata>
   }
 
   // Wrong tenant — suppress metadata entirely so the 404 isn't indexed
-  if (book.tenantId && tenantId && book.tenantId !== tenantId) {
+  if (book.tenant_id && tenantId && book.tenant_id !== tenantId) {
     return { title: 'Not Found - Source Library', robots: { index: false, follow: false } };
   }
 
@@ -392,8 +392,8 @@ async function BookInfo({ id, tenantId, tenantSlug }: { id: string; tenantId: st
   const { book, pages, totalBooks, galleryImages, galleryImageCount, bookCollections } = data;
 
   // Enforce tenant isolation: book must belong to the tenant in the URL.
-  // book.tenantId is set by the data pipeline for all tenant-scoped books.
-  if (book.tenantId && book.tenantId !== tenantId) {
+  // book.tenant_id is set by the data pipeline for all tenant-scoped books.
+  if (book.tenant_id && book.tenant_id !== tenantId) {
     notFound();
   }
 
