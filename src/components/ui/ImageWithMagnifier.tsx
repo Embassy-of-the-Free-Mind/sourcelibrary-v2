@@ -310,7 +310,7 @@ export default function ImageWithMagnifier({
 
       {/* Fullscreen viewer - works for both mobile and desktop */}
       <FullscreenImageViewer
-        src={src}
+        src={highResSrc || src}
         alt={alt}
         isOpen={showFullscreen}
         onClose={() => setShowFullscreen(false)}

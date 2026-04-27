@@ -556,6 +556,10 @@ export default function TranslationEditor({
   // URLs for current page at different quality tiers
   const pageFullUrl = getImageUrl(page, 'full');       // For magnifier (2400px, cropped if split)
   const pageDisplayUrl = getImageUrl(page, 'display'); // For main view (1200px)
+  // Native-res: the original archived image for fullscreen viewing
+  const pageNativeUrl = page.split_from_spread
+    ? pageFullUrl // split pages: cropped image IS the full res
+    : (isUsableImageUrl(page.archived_photo) ? page.archived_photo! : pageFullUrl);
 
   // CDLI tablet witnesses (for text-only ETCSL books)
   const witnessesWithPhotos = useMemo(
@@ -1151,7 +1155,7 @@ export default function TranslationEditor({
                   <div className="flex-1 overflow-auto p-2 lg:p-4" data-reader-panel>
                     <div className="relative w-full rounded-lg overflow-hidden" style={{ background: 'var(--bg-white)', border: '1px solid var(--border-light)', boxShadow: '0 2px 8px rgba(0,0,0,0.06)', ...(page.display_brightness && page.display_brightness !== 1.0 ? { filter: `brightness(${page.display_brightness})` } : {}) }}>
                       {pageDisplayUrl ? (
-                        <ImageWithMagnifier src={pageFullUrl} thumbnail={pageDisplayUrl} alt={`Page ${page.page_number}`} scrollable />
+                        <ImageWithMagnifier src={pageFullUrl} thumbnail={pageDisplayUrl} highResSrc={pageNativeUrl} alt={`Page ${page.page_number}`} scrollable />
                       ) : hasWitnessPhotos && currentWitness ? (
                         <ImageWithMagnifier
                           src={currentWitness.photo_url!}
