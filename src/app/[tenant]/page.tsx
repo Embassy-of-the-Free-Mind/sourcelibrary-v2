@@ -57,7 +57,7 @@ export default async function TenantRoot({ params, searchParams }: Props) {
       fetchTenantBphDigitizedMap(tenantId),
       fetchTenantBphCatalogTotal(tenantId),
     ])
-    : [Promise.resolve({}), Promise.resolve(0)];
+    : [{} as Record<string, { id: string; slug: string }>, 0];
 
   const basePath = `/${tenant}`;
 
