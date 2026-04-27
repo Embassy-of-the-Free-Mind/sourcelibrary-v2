@@ -262,7 +262,9 @@ export async function GET(request: NextRequest) {
       (async () => {
         if (bookId || !searchContent) return [];
         try {
-          const books = await semanticBookSearch(query, MAX_PAGE_RESULTS);
+          const books = await semanticBookSearch(query, MAX_PAGE_RESULTS, {
+            language: language || undefined,
+          });
           return books.map(b => ({
             page_id: '',
             book_id: b.book_id,
