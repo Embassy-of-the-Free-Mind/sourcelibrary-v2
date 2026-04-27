@@ -368,6 +368,9 @@ async function searchBooks(
 }
 
 async function searchIndex(db: any, query: string, limit: number) {
+  // Skip index search for very short queries — autocomplete + fuzzy on 1-2 chars is too loose
+  if (query.length < 3) return { results: [] as IndexResult[], total: 0, hasMore: false };
+
   const escapedQuery = query.replace(/[.*+?^${}()|[\]\\]/g, '\\$&');
   const queryRegex = new RegExp(escapedQuery, 'i');
 

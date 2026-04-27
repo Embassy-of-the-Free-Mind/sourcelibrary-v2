@@ -95,6 +95,8 @@ export default async function LanguagesPage() {
       <ContentHeader
         title="Languages"
         subtitle={`${totalBooks.toLocaleString()} books across ${languages.length} languages, spanning five millennia of human thought.`}
+        image={major.find(l => l.heroImage)?.heroImage}
+        imageAlt="Multilingual manuscript page"
       />
 
       <div className="grid gap-5 grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 mb-12">
