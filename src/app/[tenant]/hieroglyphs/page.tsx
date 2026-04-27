@@ -1,5 +1,7 @@
 import type { Metadata } from 'next';
-import evalData from '../../../scripts/output/hieroglyph-eval.json';
+// TODO: Restore hieroglyph-eval.json import when data file is available
+// import evalData from '../../../scripts/output/hieroglyph-eval.json';
+const evalData: any[] = [];
 
 export const metadata: Metadata = {
   title: 'Hieroglyph OCR Eval — Source Library',
