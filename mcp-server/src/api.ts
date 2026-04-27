@@ -83,7 +83,7 @@ export async function searchLibrary(args: {
   if (args.has_doi) params.set("has_doi", "true");
   if (args.has_translation) params.set("has_translation", "true");
   if (args.sort) params.set("sort", args.sort);
-  if (args.limit) params.set("limit", String(Math.min(args.limit, 100)));
+  if (args.limit) params.set("limit", String(Math.min(args.limit, 500)));
   if (args.offset) params.set("offset", String(args.offset));
 
   const result = await apiGet("/search", params) as Record<string, unknown>;
