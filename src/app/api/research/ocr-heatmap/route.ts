@@ -1,13 +1,8 @@
 import { NextResponse } from 'next/server';
 import { getReadDb } from '@/lib/mongodb';
-import { createClient } from '@supabase/supabase-js';
+import { supabase as sb } from '@/lib/supabase';
 
 export const maxDuration = 60;
-
-const sb = createClient(
-  process.env.SUPABASE_URL || process.env.NEXT_PUBLIC_SUPABASE_URL || '',
-  process.env.SUPABASE_SERVICE_ROLE_KEY || '',
-);
 
 function cosineSim(a: number[], b: number[]): number {
   let dot = 0,

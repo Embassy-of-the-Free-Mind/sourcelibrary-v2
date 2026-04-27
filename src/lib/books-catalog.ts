@@ -335,7 +335,10 @@ export async function searchBooksCatalog(
     const displayAnds = words.map(w => `display_title.ilike.%${w}%`).join(',');
     orFilter += `,and(${titleAnds}),and(${displayAnds})`;
   } else {
+    // Single word: also match against language and subject_keywords
     orFilter += `,language.ilike.%${safe}%`;
+    // subject_keywords array contains — catches "panchatantra", "alchemy", etc.
+    orFilter += `,subject_keywords.cs.{"${safe}"}`;
   }
 
   let query = supabase
@@ -398,6 +401,8 @@ export async function searchBookIds(
     // Single word: also match against language (e.g. "Sanskrit", "Arabic")
     // This is fast since it's a single ilike on an indexed field
     orFilter += `,language.ilike.%${safe}%`;
+    // subject_keywords array contains — catches terms like "panchatantra", "alchemy", "metallurgy"
+    orFilter += `,subject_keywords.cs.{"${safe}"}`;
   }
 
   let query = supabase
