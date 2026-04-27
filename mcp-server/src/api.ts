@@ -65,6 +65,43 @@ export async function submitFeedback(args: {
   };
 }
 
+export async function checkDuplicate(args: {
+  title: string;
+  author?: string;
+  year?: string;
+  language?: string;
+  ia_id?: string;
+  manifest?: string;
+}) {
+  const params = new URLSearchParams({ title: args.title });
+  if (args.author) params.set("author", args.author);
+  if (args.year) params.set("year", args.year);
+  if (args.language) params.set("language", args.language);
+  if (args.ia_id) params.set("ia_id", args.ia_id);
+  if (args.manifest) params.set("manifest", args.manifest);
+
+  const result = await apiGet("/books/check-duplicate", params) as Record<string, unknown>;
+
+  return {
+    isDuplicate: result.isDuplicate,
+    confidence: result.confidence,
+    suggestion: result.suggestion,
+    matches: (result.matches as Array<Record<string, unknown>>)?.map((m) => ({
+      book_id: m.book_id,
+      title: m.title,
+      display_title: m.display_title,
+      author: m.author,
+      language: m.language,
+      year: m.year,
+      match_type: m.match_type,
+      confidence: m.confidence,
+      similarity: m.similarity,
+      url: m.url,
+    })),
+    normalization: result.normalization,
+  };
+}
+
 export async function searchLibrary(args: {
   query: string;
   language?: string;

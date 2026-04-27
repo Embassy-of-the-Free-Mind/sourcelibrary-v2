@@ -18,6 +18,7 @@ import {
   getQuote,
   searchImages,
   submitFeedback,
+  checkDuplicate,
 } from "./api.js";
 
 // ── Tool Definitions ──────────────────────────────────────────────────
@@ -298,6 +299,43 @@ const TOOLS: Tool[] = [
       },
     },
   },
+  // ── Curation ──
+  {
+    name: "check_duplicate",
+    description:
+      "Check if a book already exists in Source Library before importing. Uses 4-tier matching: source fingerprint, title+author normalization, keyword search, and semantic similarity. Returns confidence level, matches with URLs, and a suggestion (safe to import / review matches / likely duplicate). Use this BEFORE every import to avoid duplicates.",
+    inputSchema: {
+      type: "object" as const,
+      properties: {
+        title: {
+          type: "string",
+          description: "Book title (original language or English)",
+        },
+        author: {
+          type: "string",
+          description: "Author name (any format: 'First Last', 'Last, First', etc.)",
+        },
+        year: {
+          type: "string",
+          description: "Publication year (optional, for context)",
+        },
+        language: {
+          type: "string",
+          description: "Language hint for semantic search (optional)",
+        },
+        ia_id: {
+          type: "string",
+          description: "Internet Archive identifier (optional, for exact fingerprint match)",
+        },
+        manifest: {
+          type: "string",
+          description: "IIIF manifest URL (optional, for exact fingerprint match)",
+        },
+      },
+      required: ["title"],
+    },
+  },
+
   // ── Feedback ──
   {
     name: "submit_feedback",
@@ -384,6 +422,9 @@ server.setRequestHandler(CallToolRequestSchema, async (request) => {
         break;
       case "search_images":
         result = await searchImages(args as Parameters<typeof searchImages>[0]);
+        break;
+      case "check_duplicate":
+        result = await checkDuplicate(args as Parameters<typeof checkDuplicate>[0]);
         break;
       case "submit_feedback":
         result = await submitFeedback(args as Parameters<typeof submitFeedback>[0]);
