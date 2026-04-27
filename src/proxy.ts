@@ -183,6 +183,12 @@ export function proxy(request: NextRequest) {
       url.pathname = `/embed/${tenant}${pathname}`;
     } else if (pathname === '/catalog') {
       url.pathname = `/embed/${tenant}/catalog`;
+    } else if (pathname.startsWith('/gallery')) {
+      // Gallery doesn't have tenant-specific embeds — redirect to main site
+      const mainUrl = request.nextUrl.clone();
+      mainUrl.host = 'sourcelibrary.org';
+      mainUrl.port = '';
+      return NextResponse.redirect(mainUrl, 302);
     } else {
       // All other paths on tenant subdomain → embed root (filtered search)
       url.pathname = `/embed/${tenant}`;
