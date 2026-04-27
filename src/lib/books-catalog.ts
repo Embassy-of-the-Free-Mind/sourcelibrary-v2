@@ -91,6 +91,8 @@ export async function browseBooks(opts: {
   firstTranslation?: boolean;
   hasTranslation?: boolean;
   hasPages?: boolean;
+  /** Only return items with resource_type set (artworks) */
+  hasResourceType?: boolean;
   yearMin?: number;
   yearMax?: number;
   titlePrefix?: string;
@@ -120,6 +122,7 @@ export async function browseBooks(opts: {
 
   if (opts.hasPages !== false) query = query.gt('pages_count', 0);
   if (opts.hasTranslation) query = query.gt('pages_translated', 0);
+  if (opts.hasResourceType) query = query.not('resource_type', 'is', null);
   if (opts.language) query = query.eq('language', opts.language);
   if (opts.collection) query = query.contains('collections', [opts.collection]);
   if (opts.category) query = query.contains('categories', [opts.category]);

@@ -285,6 +285,7 @@ async function fetchCollectionData(id: string, provider?: string) {
         limit: COMPACT_LIMIT,
         skipCount: true, // collection.book_count is cached — skip expensive Supabase count
         hasPages: isArtCollection ? false : undefined,
+        hasResourceType: isArtCollection || undefined,
         provider: provider || undefined,
       });
       return sbBooks.map(b => ({
@@ -749,7 +750,7 @@ export default async function CollectionDetailPage({ params, provider }: Props &
       )}
 
       {/* Featured Book — the #1 curated highlight, shown prominently to get visitors into a book fast */}
-      {tier1.length > 0 && !exhibition?.layout && (() => {
+      {tier1.length > 0 && !isArtCollection && !exhibition?.layout && (() => {
         const featured = tier1[0];
         return (
           <div className="bg-warm border-b border-border-light">
@@ -894,71 +895,6 @@ export default async function CollectionDetailPage({ params, provider }: Props &
         </div>
       )}
 
-      {/* Artwork preview — for art collections without gallery images (hidden when exhibition present) */}
-      {artworkPreviewImages.length > 0 && !exhibition?.layout && (
-        <div className="bg-warm border-b border-border-light">
-          <div className="max-w-7xl mx-auto px-6 py-8">
-            <div className="flex items-center justify-between mb-2">
-              <h2 className="text-2xl sm:text-3xl text-primary font-display">
-                Featured Works
-              </h2>
-            </div>
-            <p className="text-sm text-muted mb-5">
-              {total.toLocaleString()} works in this collection
-            </p>
-            <div className="grid grid-cols-3 sm:grid-cols-4 lg:grid-cols-5 gap-4">
-              {artworkPreviewImages.map((art) => {
-                const thumb = getBookThumbnailUrl(art);
-                return (
-                  <Link
-                    key={art.id}
-                    href={`/artwork/${art.slug || art.id}`}
-                    className="group relative aspect-square rounded-lg overflow-hidden border border-border-light hover:border-accent-rust/40 transition-all hover:shadow-md"
-                    title={art.display_title || art.title}
-                  >
-                    {thumb ? (
-                      <Image
-                        src={thumb}
-                        alt={art.display_title || art.title}
-                        fill
-                        className="object-cover group-hover:scale-105 transition-transform duration-300"
-                        sizes="(min-width: 1024px) 200px, (min-width: 640px) 160px, 120px"
-                        unoptimized
-                      />
-                    ) : (
-                      <div className="w-full h-full bg-cream flex items-center justify-center">
-                        <Images className="w-6 h-6 text-muted" />
-                      </div>
-                    )}
-                    <div className="absolute inset-x-0 bottom-0 bg-gradient-to-t from-black/70 to-transparent p-2 pt-6 opacity-0 group-hover:opacity-100 transition-opacity">
-                      <p className="text-[11px] text-white leading-tight line-clamp-2">
-                        {art.display_title || art.title}
-                      </p>
-                    </div>
-                    {art.resource_type && (
-                      <span className="absolute top-1.5 left-1.5 text-[10px] bg-dark/70 text-white px-1.5 py-0.5 rounded capitalize leading-none">
-                        {art.resource_type}
-                      </span>
-                    )}
-                  </Link>
-                );
-              })}
-              {total > artworkPreviewImages.length && (
-                <Link
-                  href={`/collections/${id}#all-books`}
-                  className="group relative aspect-square rounded-lg overflow-hidden border border-border-light hover:border-accent-rust/40 transition-all hover:shadow-md bg-cream flex flex-col items-center justify-center gap-2 text-center"
-                >
-                  <Images className="w-8 h-8 text-muted group-hover:text-accent-rust transition-colors" />
-                  <span className="text-sm font-medium text-muted group-hover:text-accent-rust transition-colors px-3">
-                    View all {total.toLocaleString()} works
-                  </span>
-                </Link>
-              )}
-            </div>
-          </div>
-        </div>
-      )}
-
       {/* Visual Art — artworks tagged to this collection (hidden when exhibition present) */}
       {artworks.length > 0 && !exhibition?.layout && (
         <div className="bg-warm border-b border-border-light">
@@ -1061,7 +997,7 @@ export default async function CollectionDetailPage({ params, provider }: Props &
         {/* Exhibition Layout is now rendered above the gallery section */}
 
         {/* Curated Highlights — remaining tier 1 + tiers 2 & 3 (hidden when exhibition is present) */}
-        {hasCuratedHighlights && !exhibition?.layout && (
+        {hasCuratedHighlights && !isArtCollection && !exhibition?.layout && (
           <div className="mb-12">
             {/* Tier 1: Essential Reading (skip first, already shown as featured) */}
             {tier1.length > 1 && (
