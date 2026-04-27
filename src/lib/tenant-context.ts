@@ -40,11 +40,21 @@ export function getTenantContextFromRequest(
   requestOrHeaders: NextRequest | Awaited<ReturnType<typeof headers>>
 ): TenantContext {
   // Handle both NextRequest and Headers objects
-  const headersObj = requestOrHeaders instanceof NextRequest
-    ? requestOrHeaders.headers
-    : requestOrHeaders;
+  // Check for .headers property (NextRequest) vs direct .get method (Headers from next/headers)
+  let headersObj: any;
+  
+  if (requestOrHeaders && typeof requestOrHeaders === 'object') {
+    // If it has a .headers property with a .get method, it's likely a NextRequest
+    if ('headers' in requestOrHeaders && requestOrHeaders.headers && typeof requestOrHeaders.headers.get === 'function') {
+      headersObj = requestOrHeaders.headers;
+    } 
+    // If it directly has a .get method, it's a Headers object
+    else if (typeof requestOrHeaders.get === 'function') {
+      headersObj = requestOrHeaders;
+    }
+  }
 
-  if (typeof headersObj.get !== 'function') {
+  if (typeof headersObj?.get !== 'function') {
     // Return empty context if headers are invalid (e.g. from test mocks)
     return { slug: null, id: null };
   }

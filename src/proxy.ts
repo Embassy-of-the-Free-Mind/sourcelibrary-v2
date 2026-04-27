@@ -191,11 +191,15 @@ export async function proxy(request: NextRequest) {
     try {
       const db = await getDb();
       const tenant = await db.collection('tenants').findOne({
-        slug,
+        $or: [
+          { slug },
+          { aliases: slug },
+          { slug_aliases: slug },
+        ],
         status: { $ne: 'deleted' },
       });
       if (!tenant) return null;
-      return { id: tenant.id as string, slug };
+      return { id: tenant.id as string, slug: tenant.slug as string };
     } catch {
       return null;
     }
@@ -341,6 +345,13 @@ export async function proxy(request: NextRequest) {
   if (firstSegment) {
     const directTenant = await resolveActiveTenant(firstSegment);
     if (directTenant) {
+      if (!pathname.startsWith('/api/') && firstSegment !== directTenant.slug) {
+        const url = request.nextUrl.clone();
+        const pathWithoutLeadingSlash = pathname.slice(1);
+        const [, ...restSegments] = pathWithoutLeadingSlash.split('/');
+        url.pathname = `/${[directTenant.slug, ...restSegments].filter(Boolean).join('/')}`;
+        return NextResponse.redirect(url, 308);
+      }
       tenantId = directTenant.id;
       tenantSlug = directTenant.slug;
     } else if (

@@ -584,8 +584,8 @@ export default function SearchPage() {
                 key={mode}
                 onClick={() => { setViewMode(mode); setOffset(0); }}
                 className={`flex items-center gap-1.5 px-4 py-2.5 text-sm font-medium border-b-2 transition-colors ${viewMode === mode
-                    ? 'border-accent-rust text-accent-rust'
-                    : 'border-transparent text-muted hover:text-secondary hover:border-border-medium'
+                  ? 'border-accent-rust text-accent-rust'
+                  : 'border-transparent text-muted hover:text-secondary hover:border-border-medium'
                   }`}
               >
                 <Icon className="w-4 h-4" />
@@ -613,8 +613,8 @@ export default function SearchPage() {
                     key={type.value}
                     onClick={() => { setIndexType(type.value); setOffset(0); }}
                     className={`px-3 py-1.5 rounded-lg text-sm flex items-center gap-1.5 transition-colors ${indexType === type.value
-                        ? 'bg-accent-violet/12 text-accent-violet border border-accent-violet/30'
-                        : 'bg-warm text-secondary border border-transparent hover:bg-border-light'
+                      ? 'bg-accent-violet/12 text-accent-violet border border-accent-violet/30'
+                      : 'bg-warm text-secondary border border-transparent hover:bg-border-light'
                       }`}
                   >
                     <Icon className="w-3.5 h-3.5" />
@@ -835,7 +835,7 @@ export default function SearchPage() {
             {!browseImageLoading && browseImages.length > 0 && (
               <div className="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-5 gap-4">
                 {browseImages.map((item, idx) => (
-                  <ImageResultCard key={`${item.pageId}-${item.detectionIndex}-${idx}`} item={item} query="" large />
+                  <ImageResultCard key={`${item.pageId}-${item.detectionIndex}-${idx}`} item={item} query="" large tenant={tenant} />
                 ))}
               </div>
             )}
@@ -861,8 +861,8 @@ export default function SearchPage() {
                 <button
                   onClick={() => { setCollection(''); setOffset(0); }}
                   className={`px-4 py-2 rounded-full text-sm font-medium transition-colors ${!collection
-                      ? 'bg-accent-rust text-white'
-                      : 'bg-warm text-secondary hover:bg-accent-rust/10 hover:text-accent-rust border border-border-light'
+                    ? 'bg-accent-rust text-white'
+                    : 'bg-warm text-secondary hover:bg-accent-rust/10 hover:text-accent-rust border border-border-light'
                     }`}
                 >
                   All books
@@ -875,8 +875,8 @@ export default function SearchPage() {
                     key={col.slug}
                     onClick={() => { setCollection(col.slug); setOffset(0); }}
                     className={`px-4 py-2 rounded-full text-sm font-medium transition-colors ${collection === col.slug
-                        ? 'bg-accent-rust text-white'
-                        : 'bg-warm text-secondary hover:bg-accent-rust/10 hover:text-accent-rust border border-border-light'
+                      ? 'bg-accent-rust text-white'
+                      : 'bg-warm text-secondary hover:bg-accent-rust/10 hover:text-accent-rust border border-border-light'
                       }`}
                   >
                     {col.name}
@@ -1083,7 +1083,7 @@ export default function SearchPage() {
                 </div>
                 <div className="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-3 lg:grid-cols-6 gap-3">
                   {imageResults.slice(0, PREVIEW_IMAGES).map((item, idx) => (
-                    <ImageResultCard key={`${item.pageId}-${item.detectionIndex}-${idx}`} item={item} query={query} />
+                    <ImageResultCard key={`${item.pageId}-${item.detectionIndex}-${idx}`} item={item} query={query} tenant={tenant} />
                   ))}
                 </div>
               </section>
@@ -1200,7 +1200,7 @@ export default function SearchPage() {
             {loading && <div className="py-4"><BookLoader size="xs" /></div>}
             <div className="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-5 gap-4">
               {imageResults.map((item, idx) => (
-                <ImageResultCard key={`${item.pageId}-${item.detectionIndex}-${idx}`} item={item} query={query} large />
+                <ImageResultCard key={`${item.pageId}-${item.detectionIndex}-${idx}`} item={item} query={query} large tenant={tenant} />
               ))}
             </div>
             <Pagination total={imageTotal} offset={offset} setOffset={setOffset} loading={loading} pageSize={resultsPerPage} />
@@ -1355,16 +1355,19 @@ function IndexResultCard({ result, query, tenant }: { result: IndexSearchResult;
   );
 }
 
-function ImageResultCard({ item, query, large }: { item: GalleryItem; query: string; large?: boolean }) {
+function ImageResultCard({ item, query, large, tenant }: { item: GalleryItem; query: string; large?: boolean; tenant?: string }) {
   const [imageError, setImageError] = useState(false);
 
   // Use pre-generated thumbnail/extracted URL first (publicly accessible),
   // fall back to original imageUrl (crop-image API requires auth and breaks for visitors)
   const displayUrl = item.thumbnailUrl || item.extractedUrl || item.imageUrl;
+  const imageHref = tenant
+    ? `/${tenant}/gallery/image/${item.pageId}-${item.detectionIndex}`
+    : `/gallery/image/${item.pageId}-${item.detectionIndex}`;
 
   return (
     <Link
-      href={`/gallery/image/${item.pageId}-${item.detectionIndex}`}
+      href={imageHref}
       className="group block bg-white rounded-lg border border-border-light overflow-hidden hover:border-accent-gold/30 hover:shadow-md transition-all"
     >
       <div className={`relative bg-warm ${large ? 'aspect-[3/4]' : 'aspect-square'}`}>

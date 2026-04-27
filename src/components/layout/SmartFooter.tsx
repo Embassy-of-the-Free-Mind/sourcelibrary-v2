@@ -10,11 +10,11 @@ import GlobalFooter from './GlobalFooter';
 import EFMFooter from './EFMFooter';
 
 export default function SmartFooter() {
-  const isEmbedded = useIsEmbedded();
+    const isEmbedded = useIsEmbedded();
 
-  if (isEmbedded) {
-    return <EFMFooter />;
-  }
+    if (isEmbedded) {
+        return <EFMFooter />;
+    }
 
-  return <GlobalFooter />;
+    return <GlobalFooter />;
 }

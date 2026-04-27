@@ -27,7 +27,7 @@ export async function GET(request: NextRequest) {
     
     // Get category counts for books in this tenant
     const counts = await db.collection('books').aggregate([
-      { $match: { visible: true, pages_translated: { $gt: 0 } } },
+      { $match: { tenantId, visible: true, pages_translated: { $gt: 0 } } },
       { $unwind: '$categories' },
       { $group: { _id: '$categories', count: { $sum: 1 } } },
     ]).toArray() as Array<{ _id: string; count: number }>;

@@ -1,5 +1,6 @@
 import { NextRequest, NextResponse } from 'next/server';
 import { getReadDb } from '@/lib/mongodb';
+import { getTenantContextFromRequest, resolveTenantId } from '@/lib/tenant-context';
 import { supabase } from '@/lib/supabase';
 import { generateQueryEmbedding, cosineSimilarity } from '@/lib/embeddings';
 
@@ -92,6 +93,14 @@ let cachedFilters: { data: { types: string[]; subjects: string[]; yearRange: { m
 export async function GET(request: NextRequest) {
   try {
     const { searchParams } = new URL(request.url);
+    const tenantCtx = getTenantContextFromRequest(request);
+    let tenantId = tenantCtx.id;
+    if (!tenantId && tenantCtx.slug) {
+      tenantId = await resolveTenantId(tenantCtx.slug);
+    }
+    if (!tenantId) {
+      return NextResponse.json({ error: 'No tenant context' }, { status: 400 });
+    }
 
     // Visual search mode — uses CLIP image embeddings (text→image)
     const visual = searchParams.get('visual') === 'true';
@@ -140,6 +149,7 @@ export async function GET(request: NextRequest) {
     let collectionBookIds: string[] | null = null;
     if (collectionSlug) {
       collectionBookIds = await db.collection('books').distinct('id', {
+        ...(tenantId ? { tenantId } : {}),
         collections: collectionSlug,
         visible: true,
         pages_count: { $gt: 0 },
@@ -150,6 +160,7 @@ export async function GET(request: NextRequest) {
     let libraryBookIds: string[] | null = null;
     if (libraryFilter) {
       libraryBookIds = await db.collection('books').distinct('id', {
+        ...(tenantId ? { tenantId } : {}),
         'image_source.provider': libraryFilter,
         visible: true,
         pages_count: { $gt: 0 },
@@ -158,6 +169,7 @@ export async function GET(request: NextRequest) {
 
     // Build query filter — exclude images without extracted thumbnails
     const filter: Record<string, unknown> = {
+      ...(tenantId ? { tenantId } : {}),
       gallery_quality: { $gte: minQuality },
       book_visible: true,
       extracted_url: { $ne: null },
@@ -243,6 +255,7 @@ export async function GET(request: NextRequest) {
         const clipDocs = await db.collection('gallery_images')
           .find({
             id: { $in: clipOnlyIds },
+            ...(tenantId ? { tenantId } : {}),
             gallery_quality: { $gte: minQuality },
             book_visible: true,
             extracted_url: { $ne: null },
@@ -331,7 +344,7 @@ export async function GET(request: NextRequest) {
     // Get book info if filtered by bookId
     let bookInfo = null;
     if (bookId) {
-      bookInfo = await getBookInfo(db, bookId);
+      bookInfo = await getBookInfo(db, bookId, tenantId || undefined);
     }
 
     return NextResponse.json({
@@ -393,16 +406,19 @@ async function getGalleryFilters(db: Awaited<ReturnType<typeof getReadDb>>) {
 /**
  * Get book info for book-filtered gallery views
  */
-async function getBookInfo(db: Awaited<ReturnType<typeof getReadDb>>, bookId: string) {
-  const book = await db.collection('books').findOne({ id: bookId });
+async function getBookInfo(db: Awaited<ReturnType<typeof getReadDb>>, bookId: string, tenantId?: string) {
+  const scope = tenantId ? { tenantId } : {};
+  const book = await db.collection('books').findOne({ id: bookId, ...scope });
   if (!book) return null;
 
   const [hasOcr, hasImages] = await Promise.all([
     db.collection('pages').countDocuments({
+      ...scope,
       book_id: bookId,
       'ocr.data': { $exists: true, $ne: '' }
     }),
     db.collection('pages').countDocuments({
+      ...scope,
       book_id: bookId,
       'detected_images.0': { $exists: true }
     }),

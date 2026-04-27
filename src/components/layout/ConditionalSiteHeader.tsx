@@ -9,16 +9,16 @@ import { useIsEmbedded } from '@/hooks/useEmbedContext';
 import SiteHeader from './SiteHeader';
 
 interface Props {
-  variant?: 'light' | 'dark';
+    variant?: 'light' | 'dark';
 }
 
 export default function ConditionalSiteHeader({ variant = 'light' }: Props) {
-  const isEmbedded = useIsEmbedded();
+    const isEmbedded = useIsEmbedded();
 
-  // Don't render header when embedded
-  if (isEmbedded) {
-    return null;
-  }
+    // Don't render header when embedded
+    if (isEmbedded) {
+        return null;
+    }
 
-  return <SiteHeader variant={variant} />;
+    return <SiteHeader variant={variant} />;
 }

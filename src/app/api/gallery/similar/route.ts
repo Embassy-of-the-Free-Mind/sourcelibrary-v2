@@ -3,6 +3,7 @@ import { Db } from 'mongodb';
 import { getDb } from '@/lib/mongodb';
 import { cosineSimilarity } from '@/lib/embeddings';
 import { supabase } from '@/lib/supabase';
+import { getTenantContextFromRequest, resolveTenantId } from '@/lib/tenant-context';
 
 export const preferredRegion = 'fra1';
 
@@ -21,6 +22,14 @@ export async function GET(request: NextRequest) {
     const { searchParams } = new URL(request.url);
     const id = searchParams.get('id');
     const limit = Math.min(parseInt(searchParams.get('limit') || '12'), 24);
+    const tenantCtx = getTenantContextFromRequest(request);
+    let tenantId = tenantCtx.id;
+    if (!tenantId && tenantCtx.slug) {
+      tenantId = await resolveTenantId(tenantCtx.slug);
+    }
+    if (!tenantId) {
+      return NextResponse.json({ error: 'No tenant context' }, { status: 400 });
+    }
 
     if (!id) {
       return NextResponse.json({ error: 'id parameter required' }, { status: 400 });
@@ -34,7 +43,8 @@ export async function GET(request: NextRequest) {
       const resolved = await resolveGalleryItems(
         db,
         clipResults.map((r) => r.id),
-        clipResults.map((r) => ({ id: r.id, similarity: r.similarity }))
+        clipResults.map((r) => ({ id: r.id, similarity: r.similarity })),
+        tenantId || undefined
       );
       if (resolved.length >= 3) {
         const response = NextResponse.json({ items: resolved, total: resolved.length, method: 'clip' });
@@ -53,11 +63,12 @@ export async function GET(request: NextRequest) {
       results = await embeddingSimilarity(
         db,
         targetEmb as unknown as { id: string; book_id: string; embedding: number[] },
-        limit
+        limit,
+        tenantId || undefined
       );
       method = 'embedding';
     } else {
-      results = await metadataFallback(db, id, limit);
+      results = await metadataFallback(db, id, limit, tenantId || undefined);
       method = 'metadata';
     }
 
@@ -137,7 +148,8 @@ async function clipSimilarity(galleryId: string, limit: number) {
 async function embeddingSimilarity(
   db: Db,
   targetEmb: { id: string; book_id: string; embedding: number[] },
-  limit: number
+  limit: number,
+  tenantId?: string
 ) {
   // Try Supabase pgvector first
   try {
@@ -169,7 +181,7 @@ async function embeddingSimilarity(
       }
 
       if (topIds.length > 0) {
-        return resolveGalleryItems(db, topIds, scored);
+        return resolveGalleryItems(db, topIds, scored, tenantId);
       }
     }
   } catch {
@@ -206,7 +218,7 @@ async function embeddingSimilarity(
     topIds.push(item.id);
   }
 
-  return resolveGalleryItems(db, topIds, scored);
+  return resolveGalleryItems(db, topIds, scored, tenantId);
 }
 
 /**
@@ -215,7 +227,8 @@ async function embeddingSimilarity(
 async function metadataFallback(
   db: Db,
   targetId: string,
-  limit: number
+  limit: number,
+  tenantId?: string
 ) {
   // Parse target ID to get page + detection
   const parts = targetId.split('-');
@@ -223,7 +236,7 @@ async function metadataFallback(
   const pageId = parts.join('-');
 
   const page = await db.collection('pages').findOne(
-    { id: pageId },
+    { id: pageId, ...(tenantId ? { tenantId } : {}) },
     { projection: { book_id: 1, detected_images: 1 } }
   );
 
@@ -251,6 +264,7 @@ async function metadataFallback(
     .aggregate([
       {
         $match: {
+          ...(tenantId ? { tenantId } : {}),
           book_id: { $ne: page.book_id },
           'detected_images.0': { $exists: true },
           $or: matchConditions,
@@ -348,7 +362,8 @@ async function metadataFallback(
 async function resolveGalleryItems(
   db: Db,
   ids: string[],
-  scored: Array<{ id: string; similarity: number }>
+  scored: Array<{ id: string; similarity: number }>,
+  tenantId?: string
 ) {
   if (ids.length === 0) return [];
 
@@ -362,7 +377,7 @@ async function resolveGalleryItems(
   const pages = await db
     .collection('pages')
     .aggregate([
-      { $match: { id: { $in: pageIds } } },
+      { $match: { id: { $in: pageIds }, ...(tenantId ? { tenantId } : {}) } },
       {
         $lookup: {
           from: 'books',

@@ -11,6 +11,7 @@ Cross-cutting patterns and postmortems. Domain-specific lessons go in their resp
 - **Tenant scoping must include all follow-up queries (2026-04-17):** Adding `tenantId` at request entry is not enough. Any subsequent `findOne`, `updateOne`, `countDocuments`, `$lookup`, and helper-built query (e.g. `buildQuery`) must include `tenantId`, including fire-and-forget updates and analytics rollups.
 - **Guard `after()` + honor non-stream mode in route tests (2026-04-21):** `after()` throws outside request scope (e.g., direct Vitest handler calls). Wrap it in a fallback path and keep `stream: false` JSON responses available for integration tests and non-SSE clients. See `src/app/api/embassy/chat/route.ts`.
 - **Tenant admin auth must resolve role server-side (2026-04-21):** Server guards cannot rely on client `update()` token enrichment (`TenantSessionUpdater`). In `requireRole`/`withAuth`, resolve effective role from `memberships` using `x-tenant-id` + email before denying.
+- **Avoid unbounded `distinct` on large tenant backfills (2026-04-27):** `pages.distinct('id', { book_id: { $in: [...] } })` can hit Mongo's 16MB distinct cap on large tenants (e.g., BPH). Always chunk by `book_id` and then chunk `page_id` for downstream `gallery_images` updates.
 
 ## Incident History
 

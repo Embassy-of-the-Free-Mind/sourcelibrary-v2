@@ -10,15 +10,15 @@ import SiteHeader from './SiteHeader';
 import EFMHeader from './EFMHeader';
 
 interface Props {
-  variant?: 'light' | 'dark';
+    variant?: 'light' | 'dark';
 }
 
 export default function SmartHeader({ variant = 'light' }: Props) {
-  const isEmbedded = useIsEmbedded();
+    const isEmbedded = useIsEmbedded();
 
-  if (isEmbedded) {
-    return <EFMHeader />;
-  }
+    if (isEmbedded) {
+        return <EFMHeader />;
+    }
 
-  return <SiteHeader variant={variant} />;
+    return <SiteHeader variant={variant} />;
 }

@@ -197,14 +197,24 @@ const COMPACT_LIMIT = 14;
 /** Sanitize thumbnail URLs: unwrap /api/image?url= wrappers, reject non-http URLs.
  *  The /api/image wrapper crashes Next.js Image during SSR. */
 
-async function fetchCollectionData(id: string) {
+async function fetchCollectionData(id: string, tenantId: string | null) {
   // Wrap getReadDb() in a timeout — when MongoDB Atlas is overloaded, the connection
   // itself can hang for 60+ seconds. Better to fail fast and let ISR retry.
   const db = await withTimeout(getReadDb(), 10000, null as unknown as Awaited<ReturnType<typeof getReadDb>>);
   if (!db) throw new Error('DB connection timeout');
 
   const collection = await withTimeout(
-    db.collection('collections').findOne({ slug: id }),
+    db.collection('collections').findOne(
+      tenantId
+        ? {
+          slug: id,
+          $or: [
+            { tenantId },
+            { tenantId: { $exists: false } },
+          ],
+        }
+        : { slug: id }
+    ),
     8000, null,
   );
   if (!collection) return null;
@@ -212,14 +222,19 @@ async function fetchCollectionData(id: string) {
   const isArtCollection = collection.collection_type === 'visual_art';
 
   const filter: Record<string, unknown> = isArtCollection
-    ? { collections: id, resource_type: { $exists: true } }
+    ? {
+      collections: id,
+      resource_type: { $exists: true },
+      ...(tenantId ? { tenantId } : {}),
+    }
     : {
-        collections: id,
-        $or: [
-          { visible: true, pages_count: { $gt: 0 }, pages_translated: { $gt: 0 } },
-          { resource_type: { $exists: true } },
-        ],
-      };
+      collections: id,
+      ...(tenantId ? { tenantId } : {}),
+      $or: [
+        { visible: true, pages_count: { $gt: 0 }, pages_translated: { $gt: 0 } },
+        { resource_type: { $exists: true } },
+      ],
+    };
 
   const projection = {
     _id: 0, id: 1, slug: 1, title: 1, display_title: 1, author: 1, year: 1,
@@ -250,45 +265,57 @@ async function fetchCollectionData(id: string) {
   // Fetch artworks for mixed collections (book collections that also contain artworks)
   const artworksPromise = !isArtCollection
     ? withTimeout(
-        db.collection('books')
-          .find(
-            { collections: id, resource_type: { $exists: true } },
-            {
-              projection: {
-                _id: 0, id: 1, slug: 1, title: 1, display_title: 1, author: 1, published: 1,
-                resource_type: 1, medium: 1, thumbnail: 1, thumbnail_blob: 1,
-                'enrichment.subject': 1, 'enrichment.genre': 1,
-                commons_width: 1, commons_height: 1,
-              },
-              maxTimeMS: 8000,
+      db.collection('books')
+        .find(
+          { collections: id, resource_type: { $exists: true } },
+          {
+            projection: {
+              _id: 0, id: 1, slug: 1, title: 1, display_title: 1, author: 1, published: 1,
+              resource_type: 1, medium: 1, thumbnail: 1, thumbnail_blob: 1,
+              'enrichment.subject': 1, 'enrichment.genre': 1,
+              commons_width: 1, commons_height: 1,
             },
-          )
-          .sort({ author: 1, title: 1 })
-          .limit(60)
-          .toArray(),
-        8000, [],
-      )
+            maxTimeMS: 8000,
+          },
+        )
+        .sort({ author: 1, title: 1 })
+        .limit(60)
+        .toArray(),
+      8000, [],
+    )
     : Promise.resolve([]);
 
   // Books query: Supabase primary (fast), MongoDB fallback (has collection_scores
   // but Atlas multiplanner timeouts cause 10-15s delays or 500s).
   async function fetchBooksWithFallback() {
     try {
-      const { books: sbBooks } = await browseBooks({
-        collection: id,
-        sort: 'popular',
-        limit: COMPACT_LIMIT,
-      });
-      return sbBooks.map(b => ({
-        id: b.id, slug: b.slug, title: b.title, display_title: b.display_title,
-        author: b.author, year: b.year, language: b.language,
-        pages_count: b.pages_count, pages_ocr: b.pages_ocr,
-        pages_translated: b.pages_translated, pages_blank: b.pages_blank,
-        photo: b.photo, thumbnail: b.thumbnail, thumbnail_blob: b.thumbnail_blob,
-        published: b.published, read_count: b.read_count,
-        is_first_translation: b.is_first_translation,
-        categories: b.categories,
-      }));
+      if (!tenantId) {
+        const { books: sbBooks } = await browseBooks({
+          collection: id,
+          sort: 'popular',
+          limit: COMPACT_LIMIT,
+        });
+        return sbBooks.map(b => ({
+          id: b.id, slug: b.slug, title: b.title, display_title: b.display_title,
+          author: b.author, year: b.year, language: b.language,
+          pages_count: b.pages_count, pages_ocr: b.pages_ocr,
+          pages_translated: b.pages_translated, pages_blank: b.pages_blank,
+          photo: b.photo, thumbnail: b.thumbnail, thumbnail_blob: b.thumbnail_blob,
+          published: b.published, read_count: b.read_count,
+          is_first_translation: b.is_first_translation,
+          categories: b.categories,
+        }));
+      }
+
+      const docs = await withTimeout(
+        db.collection('books')
+          .find(filter, { projection, maxTimeMS: 8000 })
+          .sort({ read_count: -1, title: 1 })
+          .limit(COMPACT_LIMIT)
+          .toArray(),
+        15000, [],
+      );
+      return docs;
     } catch {
       // MongoDB fallback — if Supabase is down
       console.warn(`[Collection ${id}] Supabase books query failed, falling back to MongoDB`);
@@ -308,14 +335,14 @@ async function fetchCollectionData(id: string) {
     fetchBooksWithFallback(),
     curatedBookIds.length > 0
       ? withTimeout(
-          db.collection('books')
-            .find(
-              { id: { $in: curatedBookIds }, visible: true },
-              { projection: { ...projection, is_first_translation: 1, 'translation_verification.disposition': 1 } },
-            )
-            .toArray(),
-          8000, [],
-        )
+        db.collection('books')
+          .find(
+            { id: { $in: curatedBookIds }, visible: true },
+            { projection: { ...projection, is_first_translation: 1, 'translation_verification.disposition': 1 } },
+          )
+          .toArray(),
+        8000, [],
+      )
       : Promise.resolve([]),
     // Gallery: prefer thematic gallery collection (materialized), then curated, then dynamic query
     withTimeout(
@@ -338,7 +365,10 @@ async function fetchCollectionData(id: string) {
           }
           // Fallback: dynamic query (before thematic collections are seeded)
           const bookDocs = await db.collection('books')
-            .find({ collections: id, visible: true }, { projection: { id: 1 }, maxTimeMS: 5000 })
+            .find(
+              { collections: id, visible: true, ...(tenantId ? { tenantId } : {}) },
+              { projection: { id: 1 }, maxTimeMS: 5000 }
+            )
             .toArray();
           const bookIds = bookDocs.map(d => d.id);
           if (bookIds.length === 0) return [];
@@ -356,11 +386,14 @@ async function fetchCollectionData(id: string) {
     ),
     mentionedBookIds.length > 0
       ? withTimeout(
-          db.collection('books')
-            .find({ id: { $in: mentionedBookIds }, pages_translated: { $gt: 0 } }, { projection })
-            .toArray(),
-          8000, [],
-        )
+        db.collection('books')
+          .find(
+            { id: { $in: mentionedBookIds }, pages_translated: { $gt: 0 }, ...(tenantId ? { tenantId } : {}) },
+            { projection }
+          )
+          .toArray(),
+        8000, [],
+      )
       : Promise.resolve([]),
   ]);
 
@@ -371,7 +404,15 @@ async function fetchCollectionData(id: string) {
   if (collection.parent) {
     const parentDoc = await withTimeout(
       db.collection('collections').findOne(
-        { slug: collection.parent },
+        tenantId
+          ? {
+            slug: collection.parent,
+            $or: [
+              { tenantId },
+              { tenantId: { $exists: false } },
+            ],
+          }
+          : { slug: collection.parent },
         { projection: { slug: 1, name: 1 } },
       ),
       5000, null,
@@ -384,7 +425,7 @@ async function fetchCollectionData(id: string) {
   // Fetch child collections if this is a parent collection
   const childCollections = await withTimeout(
     db.collection('collections')
-      .find({ parent: id, visible: true })
+      .find({ parent: id, visible: true, ...(tenantId ? { tenantId } : {}) })
       .sort({ book_count: -1 })
       .project({ slug: 1, name: 1, subtitle: 1, book_count: 1, featured_images: 1 })
       .toArray(),
@@ -494,11 +535,11 @@ async function fetchCollectionData(id: string) {
 
 export default async function CollectionDetailPage({ params }: Props) {
   const { id } = await params;
-  const { slug: tenantSlug } = getTenantContextFromRequest(await headers());
+  const { slug: tenantSlug, id: tenantId } = getTenantContextFromRequest(await headers());
 
   let data;
   try {
-    data = await fetchCollectionData(id);
+    data = await fetchCollectionData(id, tenantId);
   } catch (err) {
     console.error('[Collection page] fetchCollectionData failed:', err instanceof Error ? err.message : err);
     // Opt out of ISR caching for this response so the error isn't persisted.
@@ -546,12 +587,12 @@ export default async function CollectionDetailPage({ params }: Props) {
   // Fallback hero: use collection.hero_image or first featured_image when no gallery images
   const fallbackHeroUrl = !heroImages.length
     ? (collection.hero_image as string | undefined)
-      || (() => {
-        const fi = (collection.featured_images as { extracted_url?: string; image_url?: string; thumbnail_url?: string }[] | undefined);
-        const first = fi?.find(img => img.thumbnail_url || img.extracted_url || img.image_url);
-        return first?.thumbnail_url || first?.extracted_url || first?.image_url;
-      })()
-      || null
+    || (() => {
+      const fi = (collection.featured_images as { extracted_url?: string; image_url?: string; thumbnail_url?: string }[] | undefined);
+      const first = fi?.find(img => img.thumbnail_url || img.extracted_url || img.image_url);
+      return first?.thumbnail_url || first?.extracted_url || first?.image_url;
+    })()
+    || null
     : null;
   // For art collections, build artwork preview from the books array (which ARE artworks)
   type ArtPreview = { id: string; slug?: string; title: string; display_title?: string; author?: string; thumbnail?: string; thumbnail_blob?: string; resource_type?: string; enrichment?: { subject?: string }; commons_width?: number; commons_height?: number };
@@ -603,12 +644,11 @@ export default async function CollectionDetailPage({ params }: Props) {
       {/* Hero Section */}
       <div className="relative bg-dark overflow-hidden">
         {heroImages.length > 0 ? (
-          <div className={`absolute inset-0 grid opacity-30 ${
-            heroImages.length <= 2 ? 'grid-cols-2' :
-            heroImages.length <= 3 ? 'grid-cols-3' :
-            heroImages.length <= 4 ? 'grid-cols-2 sm:grid-cols-4' :
-            'grid-cols-3 sm:grid-cols-6'
-          }`}>
+          <div className={`absolute inset-0 grid opacity-30 ${heroImages.length <= 2 ? 'grid-cols-2' :
+              heroImages.length <= 3 ? 'grid-cols-3' :
+                heroImages.length <= 4 ? 'grid-cols-2 sm:grid-cols-4' :
+                  'grid-cols-3 sm:grid-cols-6'
+            }`}>
             {heroImages.map((img: { pageId?: string; page_id?: string; detectionIndex?: number; detection_index?: number; thumbnailUrl?: string; thumbnail_url?: string; extractedUrl?: string; extracted_url?: string; imageUrl?: string; image_url?: string }) => {
               const src = img.thumbnail_url || img.thumbnailUrl || img.extracted_url || img.extractedUrl || img.imageUrl || img.image_url;
               const key = `${img.pageId || img.page_id}-${img.detectionIndex ?? img.detection_index}`;
