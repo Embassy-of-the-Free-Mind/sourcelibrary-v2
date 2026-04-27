@@ -3,6 +3,7 @@ import Link from 'next/link';
 import Image from 'next/image';
 import { Metadata } from 'next';
 import { ArrowLeft, BookOpen, Images, Library } from 'lucide-react';
+import { headers } from 'next/headers';
 import SiteHeader from '@/components/layout/SiteHeader';
 import { getReadDb } from '@/lib/mongodb';
 import { notFound } from 'next/navigation';
@@ -11,7 +12,8 @@ import CollectionSchema from '@/components/seo/CollectionSchema';
 import CollectionAllBooks from '@/components/collections/CollectionAllBooks';
 import ExhibitionLayout from '@/components/collections/ExhibitionLayout';
 import SignUpCTA from '@/components/auth/SignUpCTA';
-import { bookUrl } from '@/lib/slugify';
+import { bookUrl, tenantBookUrl } from '@/lib/slugify';
+import { getTenantContextFromRequest } from '@/lib/tenant-context';
 import EmbedNavigationReporter from '@/components/embed/EmbedNavigationReporter';
 import { bookTitle, sanitizeThumbnail, withTimeout } from '@/lib/collections-utils';
 import { getBookThumbnailUrl } from '@/lib/utils';
@@ -492,6 +494,7 @@ async function fetchCollectionData(id: string) {
 
 export default async function CollectionDetailPage({ params }: Props) {
   const { id } = await params;
+  const { slug: tenantSlug } = getTenantContextFromRequest(await headers());
 
   let data;
   try {
@@ -740,7 +743,7 @@ export default async function CollectionDetailPage({ params }: Props) {
           <div className="bg-warm border-b border-border-light">
             <div className="max-w-7xl mx-auto px-6 py-8">
               <Link
-                href={bookUrl({ id: featured.id, slug: featured.slug })}
+                href={tenantBookUrl({ id: featured.id, slug: featured.slug }, tenantSlug)}
                 className="group flex flex-col sm:flex-row gap-6 sm:gap-8"
               >
                 <div className="w-40 sm:w-48 flex-shrink-0 mx-auto sm:mx-0">
@@ -1055,7 +1058,7 @@ export default async function CollectionDetailPage({ params }: Props) {
                   {tier1.slice(1).map((h: CuratedHighlight) => (
                     <Link
                       key={h.book_id}
-                      href={bookUrl({ id: h.id, slug: h.slug })}
+                      href={tenantBookUrl({ id: h.id, slug: h.slug }, tenantSlug)}
                       className="group flex gap-4 p-4 rounded-xl bg-white border border-border-light hover:border-accent-rust/30 hover:shadow-md transition-all"
                     >
                       <div className="w-20 sm:w-24 flex-shrink-0">
@@ -1108,7 +1111,7 @@ export default async function CollectionDetailPage({ params }: Props) {
                   {tier2.map((h: CuratedHighlight) => (
                     <Link
                       key={h.book_id}
-                      href={bookUrl({ id: h.id, slug: h.slug })}
+                      href={tenantBookUrl({ id: h.id, slug: h.slug }, tenantSlug)}
                       className="group flex gap-3 p-3 rounded-xl bg-white border border-border-light hover:border-accent-rust/30 hover:shadow-md transition-all"
                     >
                       <div className="w-14 flex-shrink-0">
@@ -1160,7 +1163,7 @@ export default async function CollectionDetailPage({ params }: Props) {
                   {tier3.map((h: CuratedHighlight) => (
                     <Link
                       key={h.book_id}
-                      href={bookUrl({ id: h.id, slug: h.slug })}
+                      href={tenantBookUrl({ id: h.id, slug: h.slug }, tenantSlug)}
                       className="group flex items-center gap-3 p-2.5 rounded-lg bg-white border border-border-light hover:border-accent-rust/30 hover:shadow-sm transition-all"
                     >
                       <div className="w-10 flex-shrink-0">

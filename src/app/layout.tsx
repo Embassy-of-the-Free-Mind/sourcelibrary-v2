@@ -1,6 +1,6 @@
 import type { Metadata } from "next";
 import "./globals.css";
-import GlobalFooter from "@/components/layout/GlobalFooter";
+import SmartFooter from "@/components/layout/SmartFooter";
 import Providers from "@/components/providers/Providers";
 import PageTracker from "@/components/reader/PageTracker";
 import SiteModeIndicator from "@/components/providers/SiteModeIndicator";
@@ -100,7 +100,7 @@ export default async function RootLayout({
           <div id="main-content" className="flex-1">
             {children}
           </div>
-          <GlobalFooter />
+          <SmartFooter />
           <SiteModeIndicator />
         </Providers>
         <ClientToaster />

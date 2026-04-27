@@ -32,3 +32,4 @@ Operational reference for frontend work. For design tokens, see `.claude/docs/st
 - **Designer review feedback (2026-03-18):** Reduce container widths, fix navbars, avoid AI-sounding writing, fix pagination, reduce dark gradients.
 - **Book URLs must use slugs (2026-03-16):** Hex ObjectIds break client-side navigation due to Next.js routing. Always use `bookUrl(book)`.
 - **Hydration mismatches from Date formatting:** Use `suppressHydrationWarning` on date elements or format server-side only.
+- **Platform nav hydration stability (2026-04-21):** Keep initial SSR/CSR tree shape deterministic in layout/nav (avoid adding/removing top-level wrappers during first client render). For client-only banners, render after mount to prevent recoverable hydration mismatch.

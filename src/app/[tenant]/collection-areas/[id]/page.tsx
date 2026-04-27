@@ -1,3 +1,8 @@
+/**
+ * Collection Area detail page — shows books in a specific thematic area
+ * Mirrors the categories detail functionality but at /{tenant}/collection-areas/[id]
+ */
+
 import { Metadata } from 'next';
 import Link from 'next/link';
 import Image from 'next/image';
@@ -7,8 +12,7 @@ import SiteHeader from '@/components/layout/SiteHeader';
 import { getReadDb } from '@/lib/mongodb';
 import { LIBRARY_CATEGORIES } from '@/app/api/categories/route';
 import { notFound } from 'next/navigation';
-import CategorySchema from '@/components/seo/CategorySchema';
-import { bookUrl, tenantBookUrl } from '@/lib/slugify';
+import { tenantBookUrl } from '@/lib/slugify';
 import { getTenantContextFromRequest } from '@/lib/tenant-context';
 import { getBookThumbnailUrl } from '@/lib/utils';
 
@@ -28,100 +32,81 @@ interface Book {
   summary?: { data: string } | string;
 }
 
-// ISR: rebuild at most every hour
-export const revalidate = false;
-export const dynamicParams = true;
-export async function generateStaticParams() {
-  return []; // All paths generated on demand via ISR
+interface Props {
+  params: Promise<{ tenant: string; id: string }>;
 }
 
-interface CategoryPageProps {
-  params: Promise<{ id: string }>;
-}
-
-function getCategory(id: string) {
+function getArea(id: string) {
   return LIBRARY_CATEGORIES.find(c => c.id === id);
 }
 
-async function getCategoryBooks(id: string): Promise<Book[]> {
+async function getAreaBooks(id: string): Promise<Book[]> {
   try {
     const db = await getReadDb();
-    // Use cached pages_translated on books — no $lookup against 9.5M pages collection
     const books = await db.collection('books').find(
       { categories: id, visible: true, pages_translated: { $gt: 0 } },
       { maxTimeMS: 30000 }
     )
-    .project({ _id: 0, pages_array: 0 })
-    .sort({ pages_translated: -1, title: 1 })
-    .toArray();
+      .project({ _id: 0, pages_array: 0 })
+      .sort({ pages_translated: -1, title: 1 })
+      .toArray();
     return books as unknown as Book[];
   } catch (err) {
-    console.error(`Category books fetch failed for ${id}:`, err);
+    console.error(`Collection area books fetch failed for ${id}:`, err);
     return [];
   }
 }
 
-export async function generateMetadata({ params }: CategoryPageProps): Promise<Metadata> {
+export async function generateMetadata({ params }: Props): Promise<Metadata> {
   const { id } = await params;
-  const category = getCategory(id);
-  if (!category) return { title: 'Category Not Found' };
+  const area = getArea(id);
+  if (!area) return { title: 'Area Not Found' };
 
   return {
-    title: `${category.name} — Source Library`,
-    description: `Browse ${category.description.toLowerCase()} in Source Library's collection of rare historical texts, digitized and translated with AI.`,
-    alternates: { canonical: `/categories/${id}` },
+    title: `${area.name} — Source Library`,
+    description: `Browse ${area.description.toLowerCase()} in Source Library's collection of rare historical texts.`,
+    alternates: { canonical: `/collection-areas/${id}` },
     openGraph: {
-      title: `${category.name} — Source Library`,
-      description: category.description,
+      title: `${area.name} — Source Library`,
+      description: area.description,
     },
     twitter: {
       card: 'summary_large_image',
-      title: `${category.name} — Source Library`,
-      description: category.description,
+      title: `${area.name} — Source Library`,
+      description: area.description,
     },
   };
 }
 
-export default async function CategoryPage({ params }: CategoryPageProps) {
-  const { id } = await params;
+export default async function CollectionAreaPage({ params }: Props) {
+  const { tenant, id } = await params;
   const { slug: tenantSlug } = getTenantContextFromRequest(await headers());
-  const category = getCategory(id);
-  if (!category) notFound();
 
-  const books = await getCategoryBooks(id);
+  const area = getArea(id);
+  if (!area) notFound();
+
+  const books = await getAreaBooks(id);
 
   return (
     <div className="min-h-screen bg-stone-50">
-      <CategorySchema
-        id={id}
-        name={category.name}
-        description={category.description}
-        bookCount={books.length}
-        books={books.slice(0, 20).map(b => ({
-          id: b.id,
-          slug: b.slug,
-          title: b.display_title || b.title,
-          author: b.author,
-        }))}
-      />
       <SiteHeader variant="light" />
 
       {/* Hero */}
       <div className="bg-gradient-to-b from-stone-800 to-stone-900 text-white">
         <div className="max-w-5xl mx-auto px-4 py-12">
           <div className="flex items-center gap-4">
-            <span className="text-4xl">{category.icon}</span>
+            <span className="text-4xl">{area.icon}</span>
             <div>
               <h1 className="text-3xl sm:text-4xl font-serif font-bold">
-                {category.name}
+                {area.name}
               </h1>
-              {category.description && (
-                <p className="text-stone-300 mt-2">{category.description}</p>
+              {area.description && (
+                <p className="text-stone-300 mt-2">{area.description}</p>
               )}
             </div>
           </div>
           <p className="text-accent-gold mt-4 font-medium">
-            {books.length} book{books.length !== 1 ? 's' : ''} in this category
+            {books.length} book{books.length !== 1 ? 's' : ''} in this area
           </p>
         </div>
       </div>
@@ -132,7 +117,7 @@ export default async function CategoryPage({ params }: CategoryPageProps) {
           <div className="text-center py-16">
             <BookOpen className="w-16 h-16 text-stone-300 mx-auto mb-4" />
             <h2 className="text-xl font-semibold text-stone-700 mb-2">
-              No books in this category yet
+              No books in this area yet
             </h2>
             <p className="text-stone-500">
               Books will appear here as they are categorized.
@@ -168,13 +153,15 @@ export default async function CategoryPage({ params }: CategoryPageProps) {
                     )}
                     {/* Translation badge */}
                     {book.translation_percent !== undefined && (
-                      <div className={`absolute top-2 right-2 px-2 py-1 rounded-full text-xs font-medium ${
-                        (book.translation_percent ?? 0) >= 95
-                          ? 'bg-status-success text-white'
-                          : (book.translation_percent ?? 0) > 0
-                            ? 'bg-accent-gold/80 text-white'
-                            : 'bg-stone-500 text-white'
-                      }`}>
+                      <div
+                        className={`absolute top-2 right-2 px-2 py-1 rounded-full text-xs font-medium ${
+                          (book.translation_percent ?? 0) >= 95
+                            ? 'bg-status-success text-white'
+                            : (book.translation_percent ?? 0) > 0
+                              ? 'bg-accent-gold/80 text-white'
+                              : 'bg-stone-500 text-white'
+                        }`}
+                      >
                         {(book.translation_percent ?? 0) >= 95
                           ? 'Translated'
                           : `${book.translation_percent}%`}
@@ -182,19 +169,23 @@ export default async function CategoryPage({ params }: CategoryPageProps) {
                     )}
                   </div>
 
-                  {/* Info */}
+                  {/* Content */}
                   <div className="p-4">
-                    <h3 className="font-serif font-semibold text-stone-900 group-hover:text-accent-rust transition-colors line-clamp-2">
+                    <h3 className="font-semibold text-sm group-hover:text-accent-rust transition-colors line-clamp-2">
                       {book.display_title || book.title}
                     </h3>
-                    <p className="text-sm text-stone-600 mt-1">{book.author}</p>
-                    <div className="flex items-center gap-2 mt-2 text-xs text-stone-500">
-                      <span className="px-2 py-0.5 bg-stone-100 rounded">{book.language}</span>
-                      {book.published && <span>{book.published}</span>}
-                    </div>
+                    <p className="text-xs text-muted mt-1 line-clamp-1">
+                      {book.author}
+                    </p>
                     {summaryText && (
-                      <p className="text-sm text-stone-600 mt-3 line-clamp-2">
+                      <p className="text-xs text-secondary mt-2 line-clamp-2">
                         {summaryText}
+                      </p>
+                    )}
+                    {book.pages_count && (
+                      <p className="text-xs text-muted mt-2">
+                        {book.pages_count} pages
+                        {book.pages_translated ? ` • ${book.pages_translated} translated` : ''}
                       </p>
                     )}
                   </div>

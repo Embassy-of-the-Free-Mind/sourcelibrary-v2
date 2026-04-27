@@ -4,6 +4,7 @@ import { useState, useEffect, useCallback } from 'react';
 import { useRouter, useSearchParams } from 'next/navigation';
 import { useDebouncedCallback } from 'use-debounce';
 import { Search, X, ChevronLeft, ChevronRight, BookMarked } from 'lucide-react';
+import { tenantBookUrl } from '@/lib/slugify';
 
 interface BphWork {
   ubn: string;
@@ -57,9 +58,11 @@ interface Props {
   basePath: string;
   /** Map of UBN → { id, slug } for BPH books that exist on Source Library */
   digitizedUbns: Record<string, { id: string; slug: string }>;
+  /** Optional tenant slug to include in book URLs */
+  tenantSlug?: string;
 }
 
-export default function BphCatalogBrowser({ basePath, digitizedUbns }: Props) {
+export default function BphCatalogBrowser({ basePath, digitizedUbns, tenantSlug }: Props) {
   const router = useRouter();
   const searchParams = useSearchParams();
 
@@ -218,7 +221,7 @@ export default function BphCatalogBrowser({ basePath, digitizedUbns }: Props) {
                       <div className="font-medium text-primary leading-snug">
                         {digitized ? (
                           <a
-                            href={`/book/${digitized.slug || digitized.id}`}
+                            href={tenantBookUrl({ id: digitized.id, slug: digitized.slug }, tenantSlug)}
                             className="hover:text-accent-rust transition-colors"
                           >
                             {w.title}
@@ -253,7 +256,7 @@ export default function BphCatalogBrowser({ basePath, digitizedUbns }: Props) {
                     <td className="px-3 py-2 text-center">
                       {digitized ? (
                         <a
-                          href={`/book/${digitized.slug || digitized.id}`}
+                          href={tenantBookUrl({ id: digitized.id, slug: digitized.slug }, tenantSlug)}
                           title="Read on Source Library"
                         >
                           <BookMarked className="w-4 h-4 text-accent-rust inline-block" />

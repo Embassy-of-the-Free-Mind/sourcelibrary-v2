@@ -84,6 +84,7 @@ export default async function TenantRoot({ params, searchParams }: Props) {
     isBph,
     digitizedUbns,
     catalogTotal,
+    tenantSlug,
   };
 
   return <SharedLibraryView {...viewProps} />;

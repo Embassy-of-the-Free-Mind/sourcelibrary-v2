@@ -7,7 +7,7 @@
 import Link from 'next/link';
 import Image from 'next/image';
 import { BookOpen, ExternalLink, Images, Library } from 'lucide-react';
-import SiteHeader from '@/components/layout/SiteHeader';
+import SmartHeader from '@/components/layout/SmartHeader';
 import CollectionBookCard from '@/components/CollectionBookCard';
 import CollectionFilters from '@/components/collections/CollectionFilters';
 import { bookTitle } from '@/lib/collections-utils';
@@ -89,6 +89,8 @@ export interface SharedLibraryViewProps {
   isBph: boolean;
   digitizedUbns?: Record<string, { id: string; slug: string }>;
   catalogTotal?: number;
+  /** Optional tenant slug to pass to nested components */
+  tenantSlug?: string | null;
 }
 
 export default function SharedLibraryView({
@@ -108,6 +110,7 @@ export default function SharedLibraryView({
   isBph,
   digitizedUbns = {},
   catalogTotal = 0,
+  tenantSlug,
 }: SharedLibraryViewProps) {
   const totalPages = Math.ceil(total / PER_PAGE);
   const currentPage = Math.floor(offset / PER_PAGE) + 1;
@@ -118,7 +121,7 @@ export default function SharedLibraryView({
 
   return (
     <div className="min-h-screen bg-cream">
-      <SiteHeader variant="dark" />
+      <SmartHeader variant="dark" />
       {/* Hero Section */}
       <div className="relative bg-dark overflow-hidden">
         <div className="absolute inset-0 bg-gradient-to-b from-black/70 via-black/40 to-transparent" />
@@ -415,6 +418,7 @@ export default function SharedLibraryView({
             <BphCatalogBrowser
               basePath={basePath}
               digitizedUbns={digitizedUbns}
+              tenantSlug={tenantSlug}
             />
           </div>
         )}
