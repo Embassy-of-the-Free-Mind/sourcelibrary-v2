@@ -31,8 +31,23 @@
   var script = document.currentScript ||
     (function () {
       var scripts = document.getElementsByTagName('script');
+      // Find the script by looking for our specific src pattern
+      for (var i = scripts.length - 1; i >= 0; i--) {
+        var src = scripts[i].src || '';
+        if (src.indexOf('embed') !== -1 && src.indexOf('v1.js') !== -1) {
+          return scripts[i];
+        }
+        if (src.indexOf('sourcelibrary') !== -1 && src.indexOf('embed') !== -1) {
+          return scripts[i];
+        }
+      }
       return scripts[scripts.length - 1];
     })();
+
+  if (!script) {
+    console.error('[SourceLibrary] Could not find embed script element.');
+    return;
+  }
 
   var BASE_URL = (script.getAttribute('data-base-url') || 'https://sourcelibrary.org').replace(/\/$/, '');
   var COLLECTION = script.getAttribute('data-collection') || '';

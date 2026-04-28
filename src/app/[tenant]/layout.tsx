@@ -1,7 +1,5 @@
 import { notFound } from 'next/navigation';
-import { auth } from '@/lib/auth';
 import { getDb } from '@/lib/mongodb';
-import { activatePendingMembership } from '@/lib/memberships';
 import { TenantSessionUpdater } from '@/components/auth/TenantSessionUpdater';
 import { resolveTenantId } from '@/lib/tenant-context';
 import { cache } from 'react';
@@ -26,7 +24,6 @@ export default async function TenantLayout({
   // Use cached lookup instead of headers() to preserve ISR for child pages
   const tenant = await getCachedTenant(slug);
   if (!tenant) notFound();
-  const tenantId = tenant.id as string;
 
   if (tenant.status === 'suspended') {
     return (
@@ -53,29 +50,12 @@ export default async function TenantLayout({
     );
   }
 
-  // Activate any pending membership for the signed-in user.
-  // This is idempotent — updateOne with status:'pending' filter is a no-op if already active.
-  const session = await auth();
-  if (session?.user?.email) {
-    const db = await getDb();
-    const pending = await db.collection('memberships').findOne({
-      email: session.user.email.toLowerCase(),
-      tenantId,
-      status: 'pending',
-    });
-    if (pending) {
-      await activatePendingMembership({
-        db,
-        email: session.user.email,
-        tenantId,
-        userId: (session.user as any).id,
-      });
-    }
-  }
+  // Membership activation moved to TenantSessionUpdater (client component)
+  // to avoid calling auth() which uses headers() and forces dynamic rendering.
 
   return (
     <>
-      {/* Trigger JWT update with tenant context for role resolution */}
+      {/* Trigger JWT update with tenant context for role resolution + activate pending memberships */}
       <TenantSessionUpdater tenantSlug={slug} />
       {children}
     </>
