@@ -387,11 +387,6 @@ export default function CollectionAllBooks({
                     {book.author}{year > 0 ? `, ${year}` : ''}
                   </p>
                 </div>
-                {book.resource_type && book.resource_type !== 'painting' && (
-                  <span className="absolute top-2 left-2 text-[10px] bg-black/60 text-white px-1.5 py-0.5 rounded capitalize">
-                    {book.resource_type.replace(/_/g, ' ')}
-                  </span>
-                )}
               </Link>
             );
           })}
