@@ -50,8 +50,8 @@ export default function ArtworkHero({ imageUrl, thumbUrl, hiResUrl, title, fullR
         >
           {hasThumb ? (
             <>
-              {/* Layer 1: thumb — shows immediately */}
-              <div className={`absolute inset-0 transition-opacity duration-700 ${medResLoaded ? 'opacity-0 pointer-events-none' : 'opacity-100'}`}>
+              {/* Layer 1: thumb — always visible underneath, covered by higher layers */}
+              <div className={`absolute inset-0 ${medResLoaded ? 'pointer-events-none' : ''}`}>
                 <ImageWithMagnifier
                   src={thumbUrl}
                   thumbnail={thumbUrl}
@@ -62,7 +62,7 @@ export default function ArtworkHero({ imageUrl, thumbUrl, hiResUrl, title, fullR
                   darkMode
                 />
               </div>
-              {/* Layer 2: medium-res blob — fades in over thumb */}
+              {/* Layer 2: medium-res blob — fades in over thumb (thumb stays opaque beneath) */}
               <div className={`absolute inset-0 transition-opacity duration-700 ${medResLoaded ? 'opacity-100' : 'opacity-0'} ${hiResLoaded ? 'pointer-events-none' : ''}`}>
                 <ImageWithMagnifier
                   src={imageUrl}
@@ -76,7 +76,7 @@ export default function ArtworkHero({ imageUrl, thumbUrl, hiResUrl, title, fullR
                   onLoad={() => setMedResLoaded(true)}
                 />
               </div>
-              {/* Layer 3: full-res archived — fades in over medium when ready */}
+              {/* Layer 3: full-res archived — fades in over medium (medium stays opaque beneath) */}
               {hasHiRes && hiResLoaded && (
                 <div className="absolute inset-0 animate-fade-in-slow">
                   <ImageWithMagnifier
