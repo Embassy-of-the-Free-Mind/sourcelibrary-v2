@@ -61,6 +61,37 @@ export async function GET(
 
     // Manifest mode: return all books for client-side filter/sort
     if (mode === 'manifest') {
+      // Art collections: use MongoDB for resolution-based sorting and repro filtering
+      if (isArtCollection) {
+        const artFilter: Record<string, unknown> = {
+          collections: id,
+          resource_type: { $exists: true },
+          visible: true,
+          $or: [{ year: { $lt: 1700 } }, { year: { $exists: false } }],
+        };
+        const docs = await db.collection('books')
+          .find(artFilter, {
+            projection: {
+              _id: 0, id: 1, slug: 1, title: 1, display_title: 1, author: 1, year: 1,
+              language: 1, pages_count: 1, thumbnail: 1, thumbnail_blob: 1,
+              published: 1, read_count: 1, resource_type: 1, commons_width: 1,
+            },
+            maxTimeMS: 15000,
+          })
+          .sort({ commons_width: -1 })
+          .limit(1000)
+          .toArray();
+        const books = docs.map(b => ({
+          ...b,
+          pages_ocr: 0, pages_translated: 0, pages_blank: 0,
+          is_first_translation: false,
+          created_at: null, last_translation_at: null,
+          medium: null, enrichment: null,
+          relevance: b.commons_width || 0,
+        }));
+        return NextResponse.json({ books, total: books.length });
+      }
+
       const { books: sbBooks, total } = await browseBooks({
         collection: id,
         hasTranslation: !skipTranslationFilter,
