@@ -1,76 +1,115 @@
 'use client';
 
 import { useEffect } from 'react';
+import { usePathname, useSearchParams } from 'next/navigation';
 
-/**
- * Sends the current embedded document height to the parent page.
- * Parent embed.js uses this to resize the iframe and avoid double scrollbars.
- */
+function getDocumentHeight(): number {
+    const main = document.getElementById('main-content');
+    if (main) {
+        const rect = main.getBoundingClientRect();
+        const fromRect = Math.ceil(rect.height);
+        const fromScroll = Math.ceil(main.scrollHeight);
+        return Math.max(fromRect, fromScroll);
+    }
+
+    const scrollEl = document.scrollingElement as HTMLElement | null;
+    if (scrollEl) return scrollEl.scrollHeight;
+
+    const doc = document.documentElement;
+    const body = document.body;
+    return Math.max(doc?.scrollHeight ?? 0, body?.scrollHeight ?? 0);
+}
+
 export default function EmbedResizeReporter() {
+    const pathname = usePathname();
+    const searchParams = useSearchParams();
+    const routeKey = pathname + '?' + (searchParams?.toString() || '');
+
     useEffect(() => {
         if (typeof window === 'undefined') return;
         if (window.self === window.top) return;
 
-        let raf = 0;
-        let lastSent = 0;
+        let rafId: number | null = null;
+        let timeoutId: number | null = null;
+        let intervalId: number | null = null;
+        const burstTimeouts: number[] = [];
+        let lastPostedHeight = -1;
 
-        const postHeight = () => {
-            const body = document.body;
-            const doc = document.documentElement;
-            if (!body || !doc) return;
+        const postResize = (force = false) => {
+            const height = Math.max(window.innerHeight, getDocumentHeight());
 
-            const height = Math.max(
-                body.scrollHeight,
-                body.offsetHeight,
-                doc.scrollHeight,
-                doc.offsetHeight,
-                doc.clientHeight,
-            );
+            // Avoid flooding parent with duplicate measurements.
+            if (!force && Math.abs(height - lastPostedHeight) < 2) return;
 
-            if (height > 0 && height !== lastSent) {
-                lastSent = height;
-                window.parent.postMessage({ type: 'sl-resize', height }, '*');
-            }
+            lastPostedHeight = height;
+            window.parent.postMessage({ type: 'sl-resize', height }, '*');
         };
 
-        const schedulePost = () => {
-            if (raf) return;
-            raf = window.requestAnimationFrame(() => {
-                raf = 0;
-                postHeight();
+        const scheduleResize = () => {
+            if (rafId !== null) return;
+            rafId = window.requestAnimationFrame(() => {
+                rafId = null;
+                postResize();
             });
         };
 
-        const ro = new ResizeObserver(schedulePost);
-        ro.observe(document.documentElement);
-        ro.observe(document.body);
+        const resizeObserver = new ResizeObserver(() => {
+            scheduleResize();
+        });
 
-        const mo = new MutationObserver(schedulePost);
-        mo.observe(document.documentElement, { childList: true, subtree: true, attributes: true, characterData: true });
+        if (document.documentElement) resizeObserver.observe(document.documentElement);
+        if (document.body) resizeObserver.observe(document.body);
 
-        const handleMessage = (event: MessageEvent) => {
-            if (!event.data || event.data.type !== 'sl-request-resize') return;
-            schedulePost();
-        };
+        const mutationObserver = new MutationObserver(() => {
+            scheduleResize();
+        });
 
-        window.addEventListener('load', schedulePost);
-        window.addEventListener('resize', schedulePost);
-        window.addEventListener('message', handleMessage);
+        if (document.body) {
+            mutationObserver.observe(document.body, {
+                childList: true,
+                subtree: true,
+                attributes: true,
+                characterData: true,
+            });
+        }
 
-        // Fallback heartbeat for late layout changes (font swap, async images, CMS injections).
-        const intervalId = window.setInterval(schedulePost, 1000);
-        schedulePost();
+        window.addEventListener('resize', scheduleResize);
+        window.addEventListener('orientationchange', scheduleResize);
+
+        // Initial posts after layout settles.
+        postResize(true);
+        timeoutId = window.setTimeout(() => postResize(true), 250);
+
+        // Route changes and suspense boundaries can settle over multiple frames.
+        // Emit a short burst to ensure parent gets the final shrunk height.
+        [50, 180, 420, 900].forEach((delay) => {
+            const id = window.setTimeout(() => postResize(true), delay);
+            burstTimeouts.push(id);
+        });
+
+        // Fonts can materially change line wrapping/page height.
+        if (document.fonts && document.fonts.ready) {
+            document.fonts.ready.then(() => postResize(true)).catch(() => {
+                // no-op
+            });
+        }
+
+        // Safety net: content can change without mutations/resize (fonts, async media, virtualized UI).
+        intervalId = window.setInterval(() => {
+            postResize();
+        }, 400);
 
         return () => {
-            if (raf) window.cancelAnimationFrame(raf);
-            ro.disconnect();
-            mo.disconnect();
-            window.clearInterval(intervalId);
-            window.removeEventListener('load', schedulePost);
-            window.removeEventListener('resize', schedulePost);
-            window.removeEventListener('message', handleMessage);
+            window.removeEventListener('resize', scheduleResize);
+            window.removeEventListener('orientationchange', scheduleResize);
+            resizeObserver.disconnect();
+            mutationObserver.disconnect();
+            if (rafId !== null) window.cancelAnimationFrame(rafId);
+            if (timeoutId !== null) window.clearTimeout(timeoutId);
+            if (intervalId !== null) window.clearInterval(intervalId);
+            burstTimeouts.forEach((id) => window.clearTimeout(id));
         };
-    }, []);
+    }, [routeKey]);
 
     return null;
 }

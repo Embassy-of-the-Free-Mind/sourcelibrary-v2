@@ -12,16 +12,16 @@
  *     data-library="bph"
  *     data-collection="alchemy"
  *     data-target="sl-embed"
- *     data-height="100vh">
+ *     data-top-offset="38px">
  *   </script>
  *
  * Attributes:
  *   data-collection  — collection slug to embed (e.g. "alchemy")
  *   data-library     — library provider key to embed (e.g. "bph", "internet-archive")
  *   data-target      — id of the container div (required)
- *   data-height      — iframe height, any CSS value (default: 100vh)
- *   data-auto-height — auto-resize iframe to content height via postMessage (default: true)
- *   data-bottom-offset — extra px added below iframe content (default: 24)
+ *   data-top-offset  — top offset for fixed host nav (default: 0px)
+ *   data-height      — optional fallback height override (legacy)
+ *   data-scroll-mode — "page" (default, footer reachable) or "iframe" (locked host scroll)
  *   data-base-url    — override API/page base URL (default: https://sourcelibrary.org)
  *
  * At least one of data-collection or data-library is required.
@@ -55,10 +55,9 @@
   var COLLECTION = script.getAttribute('data-collection') || '';
   var TENANT = script.getAttribute('data-library') || '';
   var TARGET_ID = script.getAttribute('data-target') || 'sl-embed';
-  var HEIGHT = script.getAttribute('data-height') || '100vh';
-  var AUTO_HEIGHT = (script.getAttribute('data-auto-height') || 'true').toLowerCase() !== 'false';
-  var BOTTOM_OFFSET = parseInt(script.getAttribute('data-bottom-offset') || '24', 10);
-  if (isNaN(BOTTOM_OFFSET) || BOTTOM_OFFSET < 0) BOTTOM_OFFSET = 24;
+  var TOP_OFFSET = script.getAttribute('data-top-offset') || '0px';
+  // var HEIGHT_OVERRIDE = script.getAttribute('data-height') || '';
+  var SCROLL_MODE = (script.getAttribute('data-scroll-mode') || 'page').toLowerCase();
 
   if (!TENANT) {
     console.error('[SourceLibrary] data-library is required on the embed script tag.');
@@ -71,10 +70,47 @@
     var style = document.createElement('style');
     style.id = 'sl-embed-styles';
     style.textContent = [
+      // Keep iframe in normal document flow so footer remains below it.
       '#sl-iframe-wrap{position:relative;width:100%;overflow:hidden}',
-      '#sl-iframe-wrap iframe{display:block;width:100%;border:none;background:#faf8f4}',
+      '#sl-iframe-wrap iframe{display:block;width:100%;height:100%;border:none;background:#faf8f4}',
+      // Iframe-only mode: lock host scroll to prevent nested iframe/page scrolling.
+      'html.sl-embed-lock-scroll,body.sl-embed-lock-scroll{overflow:hidden!important;height:100%!important}',
     ].join('');
     document.head.appendChild(style);
+  }
+
+  function setHostScrollLocked(locked) {
+    var method = locked ? 'add' : 'remove';
+    document.documentElement.classList[method]('sl-embed-lock-scroll');
+    if (document.body) document.body.classList[method]('sl-embed-lock-scroll');
+  }
+
+  function getViewportHeightBelowOffset() {
+    var n = parseFloat(TOP_OFFSET);
+    var unit = (TOP_OFFSET || '').replace(String(n), '').trim() || 'px';
+
+    // Best-case: pixel offset can be subtracted from viewport reliably.
+    if (!isNaN(n) && unit === 'px') {
+      var px = Math.max(0, Math.round(window.innerHeight - n));
+      return px + 'px';
+    }
+
+    // Fallback for non-px units (e.g. rem): delegate to CSS calc.
+    return 'calc(100vh - ' + TOP_OFFSET + ')';
+  }
+
+  function getViewportHeightBelowOffsetPx() {
+    var n = parseFloat(TOP_OFFSET);
+    var unit = (TOP_OFFSET || '').replace(String(n), '').trim() || 'px';
+    if (isNaN(n) || unit !== 'px') return null;
+    return Math.max(0, Math.round(window.innerHeight - n));
+  }
+
+  function getTopOffsetPx() {
+    var n = parseFloat(TOP_OFFSET);
+    var unit = (TOP_OFFSET || '').replace(String(n), '').trim() || 'px';
+    if (isNaN(n) || unit !== 'px') return 0;
+    return Math.max(0, Math.round(n));
   }
 
   // --- URL state helpers ---
@@ -124,36 +160,47 @@
   function render(container) {
     injectStyles();
 
-    // Defensive defaults for CMS builders (e.g. Webflow) where the embed target
-    // might be configured with fixed height/overflow, causing footer overlap.
-    container.style.height = 'auto';
-    container.style.minHeight = '0';
-    container.style.overflow = 'visible';
-
     var wrap = document.createElement('div');
     wrap.id = 'sl-iframe-wrap';
-    wrap.style.height = HEIGHT;
+    wrap.style.marginTop = TOP_OFFSET;
+    wrap.style.height = getViewportHeightBelowOffset();
 
     var iframe = document.createElement('iframe');
     iframe.id = 'sl-embed-iframe';
     iframe.src = buildInitialSrc();
-    iframe.style.height = HEIGHT;
-    iframe.style.overflow = 'hidden';
     iframe.setAttribute('allowfullscreen', '');
     iframe.setAttribute('title', 'Source Library');
-    iframe.setAttribute('scrolling', AUTO_HEIGHT ? 'no' : 'auto');
 
-    if (AUTO_HEIGHT) {
-      // Ask embedded app to emit a fresh height after load/nav transitions.
-      iframe.addEventListener('load', function () {
-        try {
-          iframe.contentWindow.postMessage({ type: 'sl-request-resize' }, BASE_URL);
-        } catch (e) {}
-      });
+    function resetToViewportBaseline() {
+      if (SCROLL_MODE === 'iframe') return;      
+      var baseline = getViewportHeightBelowOffset();
+      iframe.style.height = baseline;
+      wrap.style.height = baseline;
+    }
+
+    function scrollHostToEmbedTop() {
+      var wrapTop = wrap.getBoundingClientRect().top + window.pageYOffset;
+      var target = Math.max(0, Math.round(wrapTop - getTopOffsetPx()));
+      window.scrollTo(0, target);
+    }
+
+    var lastNavKey = String(getURLParam('book') || '') + '::' + String(getURLParam('page') || '');
+
+    if (SCROLL_MODE === 'iframe') {
+      wrap.style.overscrollBehaviorY = 'contain';
+      iframe.style.overscrollBehaviorY = 'contain';
     }
 
     wrap.appendChild(iframe);
     container.appendChild(wrap);
+
+    // Safety: always clear any stale lock from prior script versions/renders.
+    setHostScrollLocked(SCROLL_MODE === 'iframe');
+
+    // If the iframe performs a document navigation, drop stale prior height immediately.
+    iframe.addEventListener('load', function () {
+      resetToViewportBaseline();
+    });
 
     // --- postMessage listener ---
     // Source Library pages send navigation events so we can keep
@@ -161,14 +208,18 @@
     window.addEventListener('message', function (event) {
       // Only accept messages from the Source Library origin
       if (event.origin !== BASE_URL) return;
+      if (event.source !== iframe.contentWindow) return;
 
       var data = event.data;
       if (!data || !data.type) return;
 
-      if (AUTO_HEIGHT && data.type === 'sl-resize') {
+      // Page mode: auto-grow iframe to content height so host page has one scrollbar.
+      if (SCROLL_MODE !== 'iframe' && data.type === 'sl-resize') {
         var nextHeight = parseInt(data.height, 10);
         if (!isNaN(nextHeight) && nextHeight > 0) {
-          var px = (nextHeight + BOTTOM_OFFSET) + 'px';
+          var minPx = getViewportHeightBelowOffsetPx();
+          var applied = minPx ? Math.max(minPx, nextHeight) : nextHeight;
+          var px = applied + 'px';
           iframe.style.height = px;
           wrap.style.height = px;
         }
@@ -176,6 +227,16 @@
       }
 
       if (data.type !== 'sl-navigate') return;
+
+      // Client-side route transitions can keep previous page height briefly.
+      // Reset to viewport baseline, then let sl-resize grow/shrink to final content.
+      resetToViewportBaseline();
+
+      var nextNavKey = String(data.book || '') + '::' + String(data.page || '');
+      if (nextNavKey !== lastNavKey) {
+        scrollHostToEmbedTop();
+        lastNavKey = nextNavKey;
+      }
 
       // Update host URL params without reloading the page
       setURLParams({
