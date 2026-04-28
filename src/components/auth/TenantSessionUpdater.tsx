@@ -42,7 +42,7 @@ export function TenantSessionUpdater({ tenantSlug }: TenantSessionUpdaterProps) 
     useEffect(() => {
         const user = session?.user as any;
         if (!user?.email) return;
-        
+
         // Prevent repeated calls for the same tenant
         if (membershipActivatedRef.current === tenantSlug) return;
         membershipActivatedRef.current = tenantSlug;

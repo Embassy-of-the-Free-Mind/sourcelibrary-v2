@@ -1,6 +1,6 @@
 import { ImageResponse } from 'next/og';
 import { getReadDb } from '@/lib/mongodb';
-import { findBookByIdOrSlug } from '@/lib/book-lookup';
+import { findTenantBookByIdOrSlug } from '@/lib/tenant-book-lookup';
 import { Book, Page } from '@/lib/types';
 
 export const alt = 'Page from Source Library';
@@ -18,17 +18,25 @@ const OG_PAGE_PROJECTION = {
   cropped_photo: 1, crop: 1, 'translation.data': 1, 'ocr.data': 1,
 };
 
-async function getPageData(bookId: string, pageId: string): Promise<{ book: Book | null; page: Page | null }> {
+async function getPageData(tenantSlug: string, bookId: string, pageId: string): Promise<{ book: Book | null; page: Page | null }> {
   try {
     const db = await getReadDb();
 
     const [bookResult, page] = await Promise.all([
-      findBookByIdOrSlug(db, bookId, OG_BOOK_PROJECTION),
+      findTenantBookByIdOrSlug(db, tenantSlug, bookId, OG_BOOK_PROJECTION),
       db.collection('pages').findOne({ id: pageId }, { projection: OG_PAGE_PROJECTION }),
     ]);
 
+    const book = bookResult ? (bookResult.book as unknown as Book) : null;
+    if (book && page) {
+      const scopedBookId = (book.id || (book as any)._id?.toString()) as string;
+      if ((page as any).book_id && (page as any).book_id !== scopedBookId) {
+        return { book: null, page: null };
+      }
+    }
+
     return {
-      book: bookResult ? (bookResult.book as unknown as Book) : null,
+      book,
       page: page as unknown as Page | null,
     };
   } catch {
@@ -36,9 +44,9 @@ async function getPageData(bookId: string, pageId: string): Promise<{ book: Book
   }
 }
 
-export default async function Image({ params }: { params: Promise<{ id: string; pageId: string }> }) {
-  const { id, pageId } = await params;
-  const { book, page } = await getPageData(id, pageId);
+export default async function Image({ params }: { params: Promise<{ tenant: string; id: string; pageId: string }> }) {
+  const { tenant, id, pageId } = await params;
+  const { book, page } = await getPageData(tenant, id, pageId);
 
   const title = book?.display_title || book?.title || 'Unknown Title';
   const author = book?.author || 'Unknown Author';
@@ -52,13 +60,13 @@ export default async function Image({ params }: { params: Promise<{ id: string; 
   const rawTranslation = (page as any)?.translation?.data || '';
   const translationExcerpt = rawTranslation
     ? rawTranslation
-        .replace(/<[^>]+>/g, '')          // strip XML/HTML tags
-        .replace(/\*\*([^*]+)\*\*/g, '$1') // strip markdown bold
-        .replace(/\s+/g, ' ')             // collapse whitespace
-        .trim()
-        .slice(0, 220)
-        .replace(/\s\S*$/, '')            // break at last full word
-        + (rawTranslation.length > 220 ? '...' : '')
+      .replace(/<[^>]+>/g, '')          // strip XML/HTML tags
+      .replace(/\*\*([^*]+)\*\*/g, '$1') // strip markdown bold
+      .replace(/\s+/g, ' ')             // collapse whitespace
+      .trim()
+      .slice(0, 220)
+      .replace(/\s\S*$/, '')            // break at last full word
+    + (rawTranslation.length > 220 ? '...' : '')
     : '';
 
   return new ImageResponse(

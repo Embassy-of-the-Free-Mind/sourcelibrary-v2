@@ -1,13 +1,13 @@
 import { Metadata } from 'next';
 import { getReadDb } from '@/lib/mongodb';
-import { findBookByIdOrSlug } from '@/lib/book-lookup';
+import { findTenantBookByIdOrSlug } from '@/lib/tenant-book-lookup';
 import { Book, Page } from '@/lib/types';
 
 export const preferredRegion = 'fra1';
 
 interface LayoutProps {
   children: React.ReactNode;
-  params: Promise<{ id: string; pageId: string }>;
+  params: Promise<{ tenant: string; id: string; pageId: string }>;
 }
 
 // Only fetch the fields needed for metadata — skip index, reading_summary, etc.
@@ -15,19 +15,28 @@ const BOOK_META_PROJECTION = {
   _id: 0, id: 1, slug: 1, title: 1, display_title: 1, author: 1, published: 1, language: 1,
 };
 const PAGE_META_PROJECTION = {
-  _id: 0, id: 1, page_number: 1, photo: 1,
+  _id: 0, id: 1, book_id: 1, page_number: 1, photo: 1,
   'translation.data': 1, 'ocr.data': 1,
 };
 
-async function getPageData(bookId: string, pageId: string): Promise<{ book: Book | null; page: Page | null }> {
+async function getPageData(tenantSlug: string, bookId: string, pageId: string): Promise<{ book: Book | null; page: Page | null }> {
   try {
     const db = await getReadDb();
     const [bookResult, page] = await Promise.all([
-      findBookByIdOrSlug(db, bookId, BOOK_META_PROJECTION),
+      findTenantBookByIdOrSlug(db, tenantSlug, bookId, BOOK_META_PROJECTION),
       db.collection('pages').findOne({ id: pageId }, { projection: PAGE_META_PROJECTION }),
     ]);
+
+    const book = (bookResult?.book ?? null) as unknown as Book | null;
+    if (book && page) {
+      const scopedBookId = (book.id || (book as any)._id?.toString()) as string;
+      if ((page as any).book_id && (page as any).book_id !== scopedBookId) {
+        return { book: null, page: null };
+      }
+    }
+
     return {
-      book: (bookResult?.book ?? null) as unknown as Book | null,
+      book,
       page: page as unknown as Page | null,
     };
   } catch {
@@ -36,8 +45,8 @@ async function getPageData(bookId: string, pageId: string): Promise<{ book: Book
 }
 
 export async function generateMetadata({ params }: LayoutProps): Promise<Metadata> {
-  const { id, pageId } = await params;
-  const { book, page } = await getPageData(id, pageId);
+  const { tenant, id, pageId } = await params;
+  const { book, page } = await getPageData(tenant, id, pageId);
 
   if (!book || !page) {
     return {
@@ -62,7 +71,7 @@ export async function generateMetadata({ params }: LayoutProps): Promise<Metadat
 
   // Always use slug for canonical URL, even if accessed via hex ObjectId
   const bookPath = (book as unknown as { slug?: string }).slug || id;
-  const pageUrl = `/book/${bookPath}/page/${pageId}`;
+  const pageUrl = `/${tenant}/book/${bookPath}/page/${pageId}`;
 
   return {
     title: `${title} - Source Library`,

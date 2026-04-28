@@ -1,6 +1,6 @@
 import { notFound } from 'next/navigation';
 import { getReadDb } from '@/lib/mongodb';
-import { findBookByIdOrSlug } from '@/lib/book-lookup';
+import { findTenantBookByIdOrSlug } from '@/lib/tenant-book-lookup';
 import type { Book, Page } from '@/lib/types';
 import PageEditorClient from './PageEditorClient';
 import EmbedNavigationReporter from '@/components/embed/EmbedNavigationReporter';
@@ -9,7 +9,7 @@ import EmbedNavigationReporter from '@/components/embed/EmbedNavigationReporter'
 export const revalidate = 86400;
 
 interface PageProps {
-  params: Promise<{ id: string; pageId: string }>;
+  params: Promise<{ tenant: string; id: string; pageId: string }>;
 }
 
 // Book projection: only fields needed by the reader
@@ -20,7 +20,7 @@ const BOOK_NAV_PROJECTION = {
 };
 
 export default async function PageEditorPage({ params }: PageProps) {
-  const { id, pageId } = await params;
+  const { tenant, id, pageId } = await params;
   const db = await getReadDb();
 
   // Step 1: Get current page (fast indexed lookup by id, gives us book_id for nav)
@@ -35,7 +35,7 @@ export default async function PageEditorPage({ params }: PageProps) {
 
   // Step 2: Book lookup + nav pages in parallel (both can start now)
   const [bookResult, navPages] = await Promise.all([
-    findBookByIdOrSlug(db, id, BOOK_NAV_PROJECTION),
+    findTenantBookByIdOrSlug(db, tenant, id, BOOK_NAV_PROJECTION),
     db.collection('pages')
       .find({ book_id: currentPage.book_id as string })
       .project({ _id: 0, id: 1, page_number: 1, split_from: 1, page_type: 1 })
@@ -54,6 +54,10 @@ export default async function PageEditorPage({ params }: PageProps) {
   }
 
   const book = bookResult.book as unknown as Book;
+  const scopedBookId = (book.id || (book as any)._id?.toString()) as string;
+  if ((currentPage.book_id as string) !== scopedBookId) {
+    notFound();
+  }
 
   return (
     <>

@@ -121,22 +121,19 @@ function getBookTenantId(book: Record<string, unknown> | Book): string | undefin
 async function getBookForMetadata(id: string, tenantId?: string | null): Promise<Book | null> {
   const result = await getCachedBookLookup(id);
   if (result && tenantId) {
-    const bookTenantId = getBookTenantId(result.book);
-    if (bookTenantId && bookTenantId !== tenantId) {
-      const db = await getReadDb();
-      const scoped = await findBookByIdOrSlug(db, id, {
-        reading_sections: 0,
-        pipeline: 0,
-        pipeline_auto: 0,
-        split_check: 0,
-        'index.sectionSummaries': 0,
-        'index.people': 0,
-        'index.places': 0,
-        'index.concepts': 0,
-        'index.keyTerms': 0,
-      }, tenantId);
-      return scoped ? (scoped.book as unknown as Book) : null;
-    }
+    const db = await getReadDb();
+    const scoped = await findBookByIdOrSlug(db, id, {
+      reading_sections: 0,
+      pipeline: 0,
+      pipeline_auto: 0,
+      split_check: 0,
+      'index.sectionSummaries': 0,
+      'index.people': 0,
+      'index.places': 0,
+      'index.concepts': 0,
+      'index.keyTerms': 0,
+    }, tenantId);
+    return scoped ? (scoped.book as unknown as Book) : null;
   }
   return result ? (result.book as unknown as Book) : null;
 }
@@ -250,8 +247,7 @@ async function getBook(id: string, tenantId?: string): Promise<{ book: Book; pag
 
   if (!result) return null;
   let effectiveResult = result;
-  const cachedBookTenantId = getBookTenantId(result.book);
-  if (tenantId && cachedBookTenantId && cachedBookTenantId !== tenantId) {
+  if (tenantId) {
     const scoped = await findBookByIdOrSlug(db, id, {
       reading_sections: 0,
       pipeline: 0,

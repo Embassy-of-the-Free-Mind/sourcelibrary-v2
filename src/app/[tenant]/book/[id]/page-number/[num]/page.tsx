@@ -1,13 +1,13 @@
 import { notFound, redirect } from 'next/navigation';
 import { getReadDb } from '@/lib/mongodb';
-import { findBookByIdOrSlug } from '@/lib/book-lookup';
+import { findTenantBookByIdOrSlug } from '@/lib/tenant-book-lookup';
 
 interface Props {
-  params: Promise<{ id: string; num: string }>;
+  params: Promise<{ tenant: string; id: string; num: string }>;
 }
 
 export default async function PageNumberRedirect({ params }: Props) {
-  const { id, num } = await params;
+  const { tenant, id, num } = await params;
   const pageNumber = parseInt(num, 10);
 
   if (isNaN(pageNumber)) {
@@ -17,7 +17,7 @@ export default async function PageNumberRedirect({ params }: Props) {
   const db = await getReadDb();
 
   // Resolve slug/id/ObjectId to actual book
-  const result = await findBookByIdOrSlug(db, id, { id: 1, slug: 1 });
+  const result = await findTenantBookByIdOrSlug(db, tenant, id, { id: 1, slug: 1 });
   if (!result) {
     notFound();
   }
@@ -35,5 +35,5 @@ export default async function PageNumberRedirect({ params }: Props) {
   }
 
   const pageId = page.id || page._id?.toString();
-  redirect(`/book/${bookSlug}/page/${pageId}`);
+  redirect(`/${tenant}/book/${bookSlug}/page/${pageId}`);
 }

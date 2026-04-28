@@ -1,6 +1,6 @@
 import { ImageResponse } from 'next/og';
 import { getReadDb } from '@/lib/mongodb';
-import { findBookByIdOrSlug } from '@/lib/book-lookup';
+import { findTenantBookByIdOrSlug } from '@/lib/tenant-book-lookup';
 import { Book } from '@/lib/types';
 
 export const alt = 'Book from Source Library';
@@ -10,10 +10,10 @@ export const size = {
 };
 export const contentType = 'image/png';
 
-async function getBookForOG(id: string): Promise<Book | null> {
+async function getBookForOG(tenantSlug: string, id: string): Promise<Book | null> {
   try {
     const db = await getReadDb();
-    const result = await findBookByIdOrSlug(db, id, {
+    const result = await findTenantBookByIdOrSlug(db, tenantSlug, id, {
       _id: 0, id: 1, title: 1, display_title: 1, author: 1,
       published: 1, language: 1, thumbnail: 1, slug: 1,
     });
@@ -23,9 +23,9 @@ async function getBookForOG(id: string): Promise<Book | null> {
   }
 }
 
-export default async function Image({ params }: { params: Promise<{ id: string }> }) {
-  const { id } = await params;
-  const book = await getBookForOG(id);
+export default async function Image({ params }: { params: Promise<{ tenant: string; id: string }> }) {
+  const { tenant, id } = await params;
+  const book = await getBookForOG(tenant, id);
 
   const title = book?.display_title || book?.title || 'Unknown Title';
   const author = book?.author || 'Unknown Author';

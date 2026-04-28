@@ -20,7 +20,7 @@ export default async function TenantLayout({
   params: Promise<{ tenant: string }>;
 }) {
   const { tenant: slug } = await params;
-  
+
   // Use cached lookup instead of headers() to preserve ISR for child pages
   const tenant = await getCachedTenant(slug);
   if (!tenant) notFound();
