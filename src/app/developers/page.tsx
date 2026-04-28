@@ -1,6 +1,7 @@
 import { Metadata } from 'next';
 import Link from 'next/link';
 import ContentPageLayout, { ContentHeader } from '@/components/layout/ContentPageLayout';
+import ApiKeyRequestForm from '@/components/developers/ApiKeyRequestForm';
 
 export const metadata: Metadata = {
   title: 'Developers - Source Library',
@@ -310,6 +311,20 @@ source-library search "alchemy" --json | jq .results`}
               </tbody>
             </table>
           </div>
+        </div>
+      </section>
+
+      {/* Dataset API */}
+      <section className="mb-16">
+        <h2 className="text-2xl font-semibold text-primary mb-2">Dataset API</h2>
+        <p className="text-secondary mb-6 max-w-2xl">
+          For bulk access to OCR text, translations, and page-level data, request an API key.
+          Keys are reviewed within 24 hours.
+        </p>
+
+        <div className="bg-white rounded-xl border border-border-light p-6 md:p-8">
+          <h3 className="text-lg font-semibold text-primary mb-4">Request an API Key</h3>
+          <ApiKeyRequestForm />
         </div>
       </section>
 
