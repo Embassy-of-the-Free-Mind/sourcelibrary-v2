@@ -11,7 +11,9 @@ interface UserMenuProps {
 export default function UserMenu({ variant = 'default' }: UserMenuProps) {
   const { data: session, status } = useSession();
   const [isOpen, setIsOpen] = useState(false);
+  const [imgError, setImgError] = useState(false);
   const menuRef = useRef<HTMLDivElement>(null);
+  const handleImgError = useCallback(() => setImgError(true), []);
 
   useEffect(() => {
     function handleClickOutside(event: MouseEvent) {
@@ -43,8 +45,6 @@ export default function UserMenu({ variant = 'default' }: UserMenuProps) {
   // Authenticated user: show avatar + dropdown
   const isAdmin = (session.user as any)?.role === 'admin';
   const isMember = (session.user as any)?.membership != null;
-  const [imgError, setImgError] = useState(false);
-  const handleImgError = useCallback(() => setImgError(true), []);
 
   const initials = session.user?.name
     ?.split(' ')
