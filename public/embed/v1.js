@@ -20,6 +20,7 @@
  *   data-library     — library provider key to embed (e.g. "bph", "internet-archive")
  *   data-target      — id of the container div (required)
  *   data-height      — iframe height, any CSS value (default: 100vh)
+ *   data-auto-height — auto-resize iframe to content height via postMessage (default: true)
  *   data-base-url    — override API/page base URL (default: https://sourcelibrary.org)
  *
  * At least one of data-collection or data-library is required.
@@ -54,6 +55,7 @@
   var TENANT = script.getAttribute('data-library') || '';
   var TARGET_ID = script.getAttribute('data-target') || 'sl-embed';
   var HEIGHT = script.getAttribute('data-height') || '100vh';
+  var AUTO_HEIGHT = (script.getAttribute('data-auto-height') || 'true').toLowerCase() !== 'false';
 
   if (!TENANT) {
     console.error('[SourceLibrary] data-library is required on the embed script tag.');
@@ -127,8 +129,10 @@
     iframe.id = 'sl-embed-iframe';
     iframe.src = buildInitialSrc();
     iframe.style.height = HEIGHT;
+    iframe.style.overflow = 'hidden';
     iframe.setAttribute('allowfullscreen', '');
     iframe.setAttribute('title', 'Source Library');
+    iframe.setAttribute('scrolling', AUTO_HEIGHT ? 'no' : 'auto');
 
     wrap.appendChild(iframe);
     container.appendChild(wrap);
@@ -141,7 +145,19 @@
       if (event.origin !== BASE_URL) return;
 
       var data = event.data;
-      if (!data || data.type !== 'sl-navigate') return;
+      if (!data || !data.type) return;
+
+      if (AUTO_HEIGHT && data.type === 'sl-resize') {
+        var nextHeight = parseInt(data.height, 10);
+        if (!isNaN(nextHeight) && nextHeight > 0) {
+          var px = nextHeight + 'px';
+          iframe.style.height = px;
+          wrap.style.height = px;
+        }
+        return;
+      }
+
+      if (data.type !== 'sl-navigate') return;
 
       // Update host URL params without reloading the page
       setURLParams({
