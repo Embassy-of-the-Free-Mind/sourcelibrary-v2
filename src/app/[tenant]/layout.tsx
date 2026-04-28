@@ -1,9 +1,18 @@
-import { headers } from 'next/headers';
 import { notFound } from 'next/navigation';
 import { auth } from '@/lib/auth';
 import { getDb } from '@/lib/mongodb';
 import { activatePendingMembership } from '@/lib/memberships';
 import { TenantSessionUpdater } from '@/components/auth/TenantSessionUpdater';
+import { resolveTenantId } from '@/lib/tenant-context';
+import { cache } from 'react';
+
+// Cached tenant lookup - avoid DB hit on every page under the tenant layout
+const getCachedTenant = cache(async (slug: string) => {
+  const db = await getDb();
+  const tenantId = await resolveTenantId(slug);
+  if (!tenantId) return null;
+  return db.collection('tenants').findOne({ id: tenantId });
+});
 
 export default async function TenantLayout({
   children,
@@ -13,17 +22,11 @@ export default async function TenantLayout({
   params: Promise<{ tenant: string }>;
 }) {
   const { tenant: slug } = await params;
-  const h = await headers();
-  const tenantId = h.get('x-tenant-id');
-
-  // Middleware should always set x-tenant-id for [tenant] paths.
-  // If missing, the request bypassed the proxy — treat as not found.
-  if (!tenantId) notFound();
-
-  const db = await getDb();
-  const tenant = await db.collection('tenants').findOne({ id: tenantId });
-
+  
+  // Use cached lookup instead of headers() to preserve ISR for child pages
+  const tenant = await getCachedTenant(slug);
   if (!tenant) notFound();
+  const tenantId = tenant.id as string;
 
   if (tenant.status === 'suspended') {
     return (
@@ -54,6 +57,7 @@ export default async function TenantLayout({
   // This is idempotent — updateOne with status:'pending' filter is a no-op if already active.
   const session = await auth();
   if (session?.user?.email) {
+    const db = await getDb();
     const pending = await db.collection('memberships').findOne({
       email: session.user.email.toLowerCase(),
       tenantId,
