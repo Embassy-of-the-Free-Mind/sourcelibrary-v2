@@ -427,15 +427,18 @@ function FeaturedImageBlock({ image, caption }: {
   image?: GalleryImage;
   caption: string;
 }) {
-  const src = image ? imageUrl(image) : '';
-  if (!src) return null;
+  // Use full extracted image for display, thumb only as placeholder
+  const fullSrc = image ? (image.extracted_url || image.image_url || image.thumbnail_url || '') : '';
+  const thumbSrc = image?.thumbnail_url || '';
+  if (!fullSrc) return null;
 
   return (
     <figure className="rounded-xl overflow-hidden border border-border-light shadow-lg">
       <div className="relative bg-dark">
         <ImageWithMagnifier
-          src={src}
-          highResSrc={src}
+          src={fullSrc}
+          thumbnail={thumbSrc || fullSrc}
+          highResSrc={fullSrc}
           alt={image?.museum_description || caption}
           className="w-full aspect-[3/2] sm:aspect-[16/9] object-contain"
           magnifierSize={250}
