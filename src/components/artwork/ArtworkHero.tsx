@@ -24,21 +24,34 @@ interface ArtworkHeroProps {
 
 export default function ArtworkHero({ imageUrl, thumbUrl, hiResUrl, title, fullResUrl, license, isLandscape, prevWork, nextWork }: ArtworkHeroProps) {
   const [fitHeight, setFitHeight] = useState(false);
+  const hasThumb = !!thumbUrl && thumbUrl !== imageUrl;
   const hasHiRes = !!hiResUrl && hiResUrl !== imageUrl;
+  const [medReady, setMedReady] = useState(!hasThumb); // if no thumb, medium is already the starting point
   const [hiResReady, setHiResReady] = useState(false);
 
-  // Load hi-res in background, swap in instantly when ready
+  // Background-load medium blob
   useEffect(() => {
-    if (!hasHiRes) return;
-    setHiResReady(false);
+    if (!hasThumb) return;
+    const img = new window.Image();
+    img.onload = () => setMedReady(true);
+    img.src = imageUrl;
+  }, [hasThumb, imageUrl]);
+
+  // Background-load hi-res after medium is ready
+  useEffect(() => {
+    if (!medReady || !hasHiRes) return;
     const img = new window.Image();
     img.onload = () => setHiResReady(true);
     img.src = hiResUrl!;
-  }, [hasHiRes, hiResUrl]);
+  }, [medReady, hasHiRes, hiResUrl]);
 
-  // Best available source — upgrades silently
-  const bestSrc = (hiResReady && hiResUrl) ? hiResUrl : imageUrl;
-  const thumb = thumbUrl || imageUrl;
+  // Best loaded source — upgrades instantly, no transitions
+  const displaySrc = hiResReady && hiResUrl ? hiResUrl
+    : medReady ? imageUrl
+    : thumbUrl || imageUrl;
+
+  // Best available for magnifier zoom
+  const magnifierSrc = hiResReady && hiResUrl ? hiResUrl : imageUrl;
 
   // Keyboard navigation
   useEffect(() => {
@@ -62,9 +75,9 @@ export default function ArtworkHero({ imageUrl, thumbUrl, hiResUrl, title, fullR
           style={fitHeight ? { height: 'calc(100vh - 120px)' } : undefined}
         >
           <ImageWithMagnifier
-            src={bestSrc}
-            thumbnail={thumb}
-            highResSrc={hiResReady && hiResUrl ? hiResUrl : imageUrl}
+            src={displaySrc}
+            thumbnail={displaySrc}
+            highResSrc={magnifierSrc}
             alt={title}
             className="w-full h-full"
             magnifierSize={240}
