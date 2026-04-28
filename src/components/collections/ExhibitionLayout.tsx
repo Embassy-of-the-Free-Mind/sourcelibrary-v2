@@ -688,7 +688,7 @@ export default function ExhibitionLayout({ layout, books, images, collectionSlug
             return <HookBlock key={i} text={block.text} />;
 
           case 'stats':
-            return <StatsBlock key={i} items={block.items} />;
+            return null; // Stats block removed — too noisy for collection pages
 
           case 'sections':
             return <SectionsBlock key={i} sections={block.sections} books={books} />;
