@@ -21,6 +21,7 @@
  *   data-target      — id of the container div (required)
  *   data-height      — iframe height, any CSS value (default: 100vh)
  *   data-auto-height — auto-resize iframe to content height via postMessage (default: true)
+ *   data-bottom-offset — extra px added below iframe content (default: 24)
  *   data-base-url    — override API/page base URL (default: https://sourcelibrary.org)
  *
  * At least one of data-collection or data-library is required.
@@ -56,6 +57,8 @@
   var TARGET_ID = script.getAttribute('data-target') || 'sl-embed';
   var HEIGHT = script.getAttribute('data-height') || '100vh';
   var AUTO_HEIGHT = (script.getAttribute('data-auto-height') || 'true').toLowerCase() !== 'false';
+  var BOTTOM_OFFSET = parseInt(script.getAttribute('data-bottom-offset') || '24', 10);
+  if (isNaN(BOTTOM_OFFSET) || BOTTOM_OFFSET < 0) BOTTOM_OFFSET = 24;
 
   if (!TENANT) {
     console.error('[SourceLibrary] data-library is required on the embed script tag.');
@@ -121,6 +124,12 @@
   function render(container) {
     injectStyles();
 
+    // Defensive defaults for CMS builders (e.g. Webflow) where the embed target
+    // might be configured with fixed height/overflow, causing footer overlap.
+    container.style.height = 'auto';
+    container.style.minHeight = '0';
+    container.style.overflow = 'visible';
+
     var wrap = document.createElement('div');
     wrap.id = 'sl-iframe-wrap';
     wrap.style.height = HEIGHT;
@@ -133,6 +142,15 @@
     iframe.setAttribute('allowfullscreen', '');
     iframe.setAttribute('title', 'Source Library');
     iframe.setAttribute('scrolling', AUTO_HEIGHT ? 'no' : 'auto');
+
+    if (AUTO_HEIGHT) {
+      // Ask embedded app to emit a fresh height after load/nav transitions.
+      iframe.addEventListener('load', function () {
+        try {
+          iframe.contentWindow.postMessage({ type: 'sl-request-resize' }, BASE_URL);
+        } catch (e) {}
+      });
+    }
 
     wrap.appendChild(iframe);
     container.appendChild(wrap);
@@ -150,7 +168,7 @@
       if (AUTO_HEIGHT && data.type === 'sl-resize') {
         var nextHeight = parseInt(data.height, 10);
         if (!isNaN(nextHeight) && nextHeight > 0) {
-          var px = nextHeight + 'px';
+          var px = (nextHeight + BOTTOM_OFFSET) + 'px';
           iframe.style.height = px;
           wrap.style.height = px;
         }
