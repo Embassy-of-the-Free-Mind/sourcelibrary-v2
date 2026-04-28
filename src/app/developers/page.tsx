@@ -21,6 +21,17 @@ export default function DevelopersPage() {
         />
       }
     >
+      {/* Request API Key */}
+      <section className="mb-16">
+        <div className="bg-white rounded-xl border border-border-light p-6 md:p-8">
+          <h2 className="text-lg font-semibold text-primary mb-2">Request an API Key</h2>
+          <p className="text-secondary mb-6">
+            For bulk access to OCR text, translations, and page-level data. Keys are reviewed within 24 hours.
+          </p>
+          <ApiKeyRequestForm />
+        </div>
+      </section>
+
       {/* Use case */}
       <section className="mb-16">
         <div className="bg-white rounded-xl border border-border-light p-6 md:p-8">
