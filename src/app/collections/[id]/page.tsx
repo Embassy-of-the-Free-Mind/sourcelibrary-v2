@@ -278,12 +278,13 @@ async function fetchCollectionData(id: string, provider?: string) {
   // Books query: Supabase primary (fast), MongoDB fallback (has collection_scores
   // but Atlas multiplanner timeouts cause 10-15s delays or 500s).
   async function fetchBooksWithFallback() {
-    // Art collections: use MongoDB directly to sort by image resolution
-    // and exclude reproductions (year >= 1700). Supabase lacks resolution data.
+    // Art collections: use MongoDB directly to sort by image resolution.
+    // Exclude photographs, modern reproductions, and museum object photos.
     if (isArtCollection) {
+      const EXCLUDED_TYPES = ['photograph', 'object', 'sculpture', 'architectural', 'decorative', 'ritual-object'];
       const artFilter = {
         collections: id,
-        resource_type: { $exists: true },
+        resource_type: { $exists: true, $nin: EXCLUDED_TYPES },
         $or: [{ year: { $lt: 1700 } }, { year: { $exists: false } }],
       };
       const docs = await withTimeout(
