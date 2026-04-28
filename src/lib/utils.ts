@@ -51,6 +51,13 @@ export function getBookThumbnailUrl(
 
   if (!raw.includes('images.sourcelibrary.org/')) return raw;
 
+  // Artwork URLs: many -thumb.jpg variants were never generated, so always
+  // normalize to -full.jpg (the only version guaranteed to exist).
+  if (raw.includes('/artwork/')) {
+    if (raw.endsWith('-thumb.jpg')) return raw.replace(/-thumb\.jpg$/, '-full.jpg');
+    return raw;
+  }
+
   // Rewrite legacy /thumbnails/{bookId}/{num}.jpg → /pages/{bookId}/{0num}.jpg
   // The /thumbnails/ path has only small images, but /pages/ has all three variants.
   const thumbMatch = raw.match(/\/thumbnails\/([^/]+)\/(\d+)\.jpg$/);
