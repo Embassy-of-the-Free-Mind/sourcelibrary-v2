@@ -352,7 +352,7 @@ export default function CollectionAllBooks({
         /* Art gallery grid — image-forward layout */
         <div className={`grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-4 xl:grid-cols-5 gap-3 ${loading ? 'opacity-50 pointer-events-none' : ''}`}>
           {displayBooks.map((book) => {
-            const thumb = getBookThumbnailUrl(book) || book.photo;
+            const thumb = getBookThumbnailUrl(book, 'thumb') || book.photo;
             const title = bookTitle(book);
             const year = book.year || parseInt(book.published || '', 10) || 0;
             return (
