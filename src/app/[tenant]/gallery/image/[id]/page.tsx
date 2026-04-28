@@ -608,7 +608,7 @@ export default function ImageDetailPage({
       <div className="min-h-screen bg-black flex items-center justify-center">
         <div className="text-center text-white">
           <p className="text-xl mb-4">{error || 'Image not found'}</p>
-          <Link href="/gallery" className="text-accent-gold hover:text-accent-gold">
+          <Link href={`/${tenant}/gallery`} className="text-accent-gold hover:text-accent-gold">
             Back to Gallery
           </Link>
         </div>
@@ -627,9 +627,9 @@ export default function ImageDetailPage({
         <header className="flex-shrink-0 z-40 bg-black/80 backdrop-blur-sm border-b border-white/10">
           <div className="px-4 py-2 flex items-center justify-between gap-2 min-w-0">
             <nav className="flex items-center gap-1.5 text-sm">
-              <Link href="/" className="text-stone-500 hover:text-white transition-colors">Source Library</Link>
+              <Link href={`/${tenant}`} className="text-stone-500 hover:text-white transition-colors">Source Library</Link>
               <span className="text-stone-600">/</span>
-              <Link href="/gallery" className="text-stone-400 hover:text-white transition-colors">Gallery</Link>
+              <Link href={`/${tenant}/gallery`} className="text-stone-400 hover:text-white transition-colors">Gallery</Link>
             </nav>
 
             {/* Counter */}
@@ -947,8 +947,8 @@ export default function ImageDetailPage({
                   <button
                     onClick={downloadImage}
                     className={`flex items-center gap-1.5 px-4 py-2 rounded-lg text-sm transition-colors ${canDownloadImage
-                        ? 'bg-stone-800 hover:bg-stone-700 text-white'
-                        : 'bg-stone-800 hover:bg-stone-700 text-stone-200'
+                      ? 'bg-stone-800 hover:bg-stone-700 text-white'
+                      : 'bg-stone-800 hover:bg-stone-700 text-stone-200'
                       }`}
                   >
                     <Download className="w-4 h-4" />
@@ -958,8 +958,8 @@ export default function ImageDetailPage({
                     onClick={downloadHighRes}
                     disabled={downloading}
                     className={`flex items-center gap-1.5 px-4 py-2 rounded-lg text-sm transition-colors disabled:opacity-50 ${canDownloadImage
-                        ? 'bg-amber-900/60 hover:bg-amber-800/60 text-amber-100'
-                        : 'bg-stone-800 hover:bg-stone-700 text-stone-200'
+                      ? 'bg-amber-900/60 hover:bg-amber-800/60 text-amber-100'
+                      : 'bg-stone-800 hover:bg-stone-700 text-stone-200'
                       }`}
                   >
                     {downloading

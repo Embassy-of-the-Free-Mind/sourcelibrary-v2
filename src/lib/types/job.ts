@@ -52,6 +52,7 @@ export interface Job {
   progress: JobProgress;
   book_id?: string;
   book_title?: string;
+  tenantId?: string;  // Multi-tenant compatibility
 
   // New SQS-based fields
   failed_page_ids?: string[];  // Pages that failed (for retry)

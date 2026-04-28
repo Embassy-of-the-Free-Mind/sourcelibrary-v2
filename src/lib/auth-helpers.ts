@@ -238,18 +238,18 @@ export function withAuth(
 
 // --- Shims — keep existing callsites working during Phase 1 migration ---
 // TODO: Remove withAdminAuth once all callsites use withAuth({ minRole: 'admin' })
-export const withAdminAuth = (h: any) => withAuth(h, { minRole: 'admin' });
+export const withAdminAuth = (h: (request: NextRequest, session: Session, context?: any) => Promise<NextResponse>) => withAuth(h, { minRole: 'admin' });
 
 // TODO: Remove withSuperadminAuth once all callsites use withAuth({ minRole: 'superadmin' })
-export const withSuperadminAuth = (h: any) => withAuth(h, { minRole: 'superadmin' });
+export const withSuperadminAuth = (h: (request: NextRequest, session: Session, context?: any) => Promise<NextResponse>) => withAuth(h, { minRole: 'superadmin' });
 
 // TODO: Remove withEditorAuth once all callsites use withAuth({ minRole: 'editor' })
-export const withEditorAuth = (h: any) => withAuth(h, { minRole: 'editor' });
+export const withEditorAuth = (h: (request: NextRequest, session: Session, context?: any) => Promise<NextResponse>) => withAuth(h, { minRole: 'editor' });
 
 // TODO: Remove withInnerCircleAuth — mapped to 'editor'. Verify each callsite matches
 // this permission level before removing.
-export const withInnerCircleAuth = (h: any) => withAuth(h, { minRole: 'editor' });
+export const withInnerCircleAuth = (h: (request: NextRequest, session: Session, context?: any) => Promise<NextResponse>) => withAuth(h, { minRole: 'editor' });
 
 // TODO: Remove withCuratorAuth — mapped to 'editor'. Verify each callsite matches
 // this permission level before removing.
-export const withCuratorAuth = (h: any) => withAuth(h, { minRole: 'editor' });
+export const withCuratorAuth = (h: (request: NextRequest, session: Session, context?: any) => Promise<NextResponse>) => withAuth(h, { minRole: 'editor' });

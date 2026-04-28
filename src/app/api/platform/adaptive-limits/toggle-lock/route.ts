@@ -5,10 +5,11 @@ import { withAdminAuth } from '@/lib/auth-helpers';
 export const POST = withAdminAuth(async (_req: NextRequest) => {
   try {
     const db = await getDb();
-    const doc = await db.collection('system_config').findOne({ _id: 'adaptive_limits' });
+    const systemConfig = db.collection<{ _id: string; locked?: boolean }>('system_config');
+    const doc = await systemConfig.findOne({ _id: 'adaptive_limits' });
     const newLocked = !doc?.locked;
 
-    await db.collection('system_config').updateOne(
+    await systemConfig.updateOne(
       { _id: 'adaptive_limits' },
       {
         $set: {

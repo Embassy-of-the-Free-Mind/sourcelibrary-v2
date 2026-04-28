@@ -15,6 +15,7 @@ export interface Highlight {
   note?: string;     // Optional user note
   color?: string;    // Highlight color
   user_name?: string; // Who highlighted this (public)
+  tenantId?: string; // Multi-tenant support (optional)
   created_at: Date;
 }
 

@@ -1,5 +1,6 @@
 import { Suspense } from 'react';
 import { getReadDb } from '@/lib/mongodb';
+import { headers } from 'next/headers';
 import GalleryClient from '@/components/gallery/GalleryClient';
 import SignUpCTA from '@/components/auth/SignUpCTA';
 import type { GalleryResponse } from '@/lib/api-client/types/gallery';
@@ -11,10 +12,13 @@ export const revalidate = 3600; // ISR: rebuild every hour
  * and passes it to the client component for instant rendering.
  */
 export default async function GalleryPage() {
+  const h = await headers();
+  const tenantId = h.get('x-tenant-id');
+
   const [initialData, initialCollections, bookCollections] = await Promise.all([
-    fetchInitialGalleryData(),
-    fetchFeaturedCollections(),
-    fetchBookCollections(),
+    fetchInitialGalleryData(tenantId),
+    fetchFeaturedCollections(tenantId),
+    fetchBookCollections(tenantId),
   ]);
 
   return (
@@ -45,7 +49,7 @@ export default async function GalleryPage() {
 /**
  * Fetch first page of gallery data directly from MongoDB (no API roundtrip).
  */
-async function fetchInitialGalleryData(): Promise<GalleryResponse> {
+async function fetchInitialGalleryData(tenantId: string | null): Promise<GalleryResponse> {
   try {
     const db = await getReadDb();
     const limit = 24;
@@ -67,11 +71,14 @@ async function fetchInitialGalleryData(): Promise<GalleryResponse> {
       };
     }
 
-    const filter = {
+    const filter: Record<string, unknown> = {
       gallery_quality: { $gte: minQuality },
       book_rank: { $lte: maxPerBook },
       book_visible: true,
     };
+    if (tenantId) {
+      filter.tenantId = tenantId;
+    }
 
     // Read pre-computed filters from system_config (subjects/year aggs take 20-40s on Atlas)
     let typesResult: { _id: string }[] = [];
@@ -98,7 +105,7 @@ async function fetchInitialGalleryData(): Promise<GalleryResponse> {
         .sort({ gallery_quality: -1, book_year: 1, book_id: 1, page_number: 1 })
         .limit(limit)
         .toArray(),
-      db.collection('gallery_images').estimatedDocumentCount(),
+      db.collection('gallery_images').countDocuments(filter),
     ]);
 
     const mappedItems = items.map(doc => ({
@@ -150,11 +157,16 @@ async function fetchInitialGalleryData(): Promise<GalleryResponse> {
 /**
  * Fetch book collections for the collection filter dropdown.
  */
-async function fetchBookCollections() {
+async function fetchBookCollections(tenantId: string | null) {
   try {
     const db = await getReadDb();
+    const query: Record<string, unknown> = { book_count: { $gte: 1 } };
+    if (tenantId) {
+      query.tenantId = tenantId;
+    }
+
     const collections = await db.collection('collections')
-      .find({ book_count: { $gte: 1 } })
+      .find(query)
       .sort({ parent: 1, order: 1, name: 1 })
       .project({ _id: 0, slug: 1, name: 1, book_count: 1, parent: 1 })
       .toArray();
@@ -168,11 +180,16 @@ async function fetchBookCollections() {
 /**
  * Fetch all collections for SSR (shown on gallery landing page).
  */
-async function fetchFeaturedCollections() {
+async function fetchFeaturedCollections(tenantId: string | null) {
   try {
     const db = await getReadDb();
+    const query: Record<string, unknown> = {};
+    if (tenantId) {
+      query.tenantId = tenantId;
+    }
+
     const collections = await db.collection('gallery_collections')
-      .find({})
+      .find(query)
       .sort({ featured: -1, sort_order: 1 })
       .toArray();
 
@@ -184,8 +201,8 @@ async function fetchFeaturedCollections() {
       .filter(Boolean);
     const galleryDocs = coverImageIds.length > 0
       ? await db.collection('gallery_images')
-          .find({ id: { $in: coverImageIds } }, { projection: { id: 1, extracted_url: 1, thumbnail_url: 1, description: 1 } })
-          .toArray()
+        .find({ id: { $in: coverImageIds } }, { projection: { id: 1, extracted_url: 1, thumbnail_url: 1, description: 1 } })
+        .toArray()
       : [];
     // eslint-disable-next-line @typescript-eslint/no-explicit-any
     const galleryMap = new Map(galleryDocs.map((d: any) => [d.id, d]));

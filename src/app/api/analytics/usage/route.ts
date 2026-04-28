@@ -7,7 +7,7 @@ import { supabase } from '@/lib/supabase';
 export const maxDuration = 30;
 
 // Simple in-memory cache keyed by days param (persists for serverless function lifetime)
-const cache = new Map<number, { data: any; timestamp: number }>();
+const cache = new Map<string, { data: any; timestamp: number }>();
 const CACHE_TTL_MS = 60 * 1000; // 1 minute (Supabase queries are fast)
 
 export const GET = withAuth(async (request: NextRequest, session) => {
@@ -21,7 +21,8 @@ export const GET = withAuth(async (request: NextRequest, session) => {
     }
 
     // Return cached result if fresh
-    const cached = cache.get(`${days}-${tenantId}`);
+    const cacheKey = `${days}-${tenantId}`;
+    const cached = cache.get(cacheKey);
     if (cached && (Date.now() - cached.timestamp) < CACHE_TTL_MS) {
       return NextResponse.json(cached.data);
     }
@@ -263,7 +264,7 @@ export const GET = withAuth(async (request: NextRequest, session) => {
       query: { days },
     };
 
-    cache.set(days, { data: responseData, timestamp: Date.now() });
+    cache.set(cacheKey, { data: responseData, timestamp: Date.now() });
 
     return NextResponse.json(responseData);
   } catch (error) {

@@ -107,9 +107,31 @@ const getCachedBookLookup = cache(async (id: string): Promise<{
   return { book: result.book as Record<string, unknown>, matchedBySlug: result.matchedBySlug, fromCatalog: false };
 });
 
+function getBookTenantId(book: Record<string, unknown> | Book): string | undefined {
+  return (book as any).tenantId || (book as any).tenant_id;
+}
+
 // Lightweight book fetch for metadata — reuses cached lookup
-async function getBookForMetadata(id: string): Promise<Book | null> {
+async function getBookForMetadata(id: string, tenantId?: string | null): Promise<Book | null> {
   const result = await getCachedBookLookup(id);
+  if (result && tenantId) {
+    const bookTenantId = getBookTenantId(result.book);
+    if (bookTenantId && bookTenantId !== tenantId) {
+      const db = await getReadDb();
+      const scoped = await findBookByIdOrSlug(db, id, {
+        reading_sections: 0,
+        pipeline: 0,
+        pipeline_auto: 0,
+        split_check: 0,
+        'index.sectionSummaries': 0,
+        'index.people': 0,
+        'index.places': 0,
+        'index.concepts': 0,
+        'index.keyTerms': 0,
+      }, tenantId);
+      return scoped ? (scoped.book as unknown as Book) : null;
+    }
+  }
   return result ? (result.book as unknown as Book) : null;
 }
 
@@ -121,7 +143,7 @@ export async function generateMetadata({ params }: PageProps): Promise<Metadata>
   const tenantId = h.get('x-tenant-id');
   let book: Book | null;
   try {
-    book = await getBookForMetadata(id);
+    book = await getBookForMetadata(id, tenantId);
   } catch {
     return { title: 'Source Library', robots: { index: false, follow: false } };
   }
@@ -131,7 +153,8 @@ export async function generateMetadata({ params }: PageProps): Promise<Metadata>
   }
 
   // Wrong tenant — suppress metadata entirely so the 404 isn't indexed
-  if (book.tenant_id && tenantId && book.tenant_id !== tenantId) {
+  const bookTenantId = (book as any).tenantId || (book as any).tenant_id;
+  if (bookTenantId && tenantId && bookTenantId !== tenantId) {
     return { title: 'Not Found - Source Library', robots: { index: false, follow: false } };
   }
 
@@ -144,7 +167,8 @@ export async function generateMetadata({ params }: PageProps): Promise<Metadata>
   if (description.length > 155) {
     description = `${title} by ${author}${year}`.slice(0, 152) + '...';
   }
-  const bookUrl = `/book/${book.slug || book.id}`;
+  const tenantSlug = h.get('x-tenant-slug');
+  const bookUrl = tenantSlug ? `/${tenantSlug}/book/${book.slug || book.id}` : `/book/${book.slug || book.id}`;
 
   // Get publication date for OG tags
   const currentEdition = (book.editions as TranslationEdition[] | undefined)?.find(e => e.status === 'published') || (book.editions as TranslationEdition[] | undefined)?.find(e => e.status === 'draft');
@@ -211,7 +235,7 @@ export async function generateMetadata({ params }: PageProps): Promise<Metadata>
 interface GalleryImagePreview { id: string; extracted_url?: string; thumbnail_url?: string; image_url?: string; description?: string; type?: string; page_number?: number; gallery_quality?: number }
 interface BookCollectionPreview { slug: string; name: string; subtitle?: string; color?: string; book_count?: number; featured_images?: Array<{ extracted_url?: string; thumbnail_url?: string; image_url?: string }> }
 
-async function getBook(id: string): Promise<{ book: Book; pages: Page[]; totalBooks: number; galleryImages: GalleryImagePreview[]; galleryImageCount: number; bookCollections: BookCollectionPreview[]; matchedBySlug: boolean } | null> {
+async function getBook(id: string, tenantId?: string): Promise<{ book: Book; pages: Page[]; totalBooks: number; galleryImages: GalleryImagePreview[]; galleryImageCount: number; bookCollections: BookCollectionPreview[]; matchedBySlug: boolean } | null> {
   // Reuse the cached book lookup (shared with generateMetadata — saves a full DB round trip)
   // When Supabase serves the lookup (<50ms), we get the bookId instantly and can start
   // ALL Atlas queries in parallel — including a full book refetch for fields not in the catalog.
@@ -221,7 +245,29 @@ async function getBook(id: string): Promise<{ book: Book; pages: Page[]; totalBo
   ]);
 
   if (!result) return null;
-  const { book: quickBook, matchedBySlug, fromCatalog } = result;
+  let effectiveResult = result;
+  const cachedBookTenantId = getBookTenantId(result.book);
+  if (tenantId && cachedBookTenantId && cachedBookTenantId !== tenantId) {
+    const scoped = await findBookByIdOrSlug(db, id, {
+      reading_sections: 0,
+      pipeline: 0,
+      pipeline_auto: 0,
+      split_check: 0,
+      'index.sectionSummaries': 0,
+      'index.people': 0,
+      'index.places': 0,
+      'index.concepts': 0,
+      'index.keyTerms': 0,
+    }, tenantId);
+    if (!scoped) return null;
+    effectiveResult = {
+      book: scoped.book as Record<string, unknown>,
+      matchedBySlug: scoped.matchedBySlug,
+      fromCatalog: false,
+    };
+  }
+
+  const { book: quickBook, matchedBySlug, fromCatalog } = effectiveResult;
 
   // Use the book's id field, or fall back to _id string
   const bookId = (quickBook.id || quickBook._id?.toString()) as string;
@@ -240,7 +286,7 @@ async function getBook(id: string): Promise<{ book: Book; pages: Page[]; totalBo
       'index.places': 0,
       'index.concepts': 0,
       'index.keyTerms': 0,
-    }).catch(() => null)
+    }, tenantId).catch(() => null)
     : Promise.resolve(null); // Already have full book from Atlas
 
   // All queries have maxTimeMS to fail fast during DB degradation
@@ -367,10 +413,10 @@ function PagesGridSkeleton() {
 }
 
 // Book info component (streams in via Suspense)
-async function BookInfo({ id, tenantId, tenantSlug }: { id: string; tenantId: string; tenantSlug: string }) {
+async function BookInfo({ id, tenantId, tenantSlug }: { id: string; tenantId?: string; tenantSlug: string }) {
   let data;
   try {
-    data = await getBook(id);
+    data = await getBook(id, tenantId);
   } catch (err) {
     console.error('[Book page] getBook failed:', err instanceof Error ? err.message : err);
     // Return a friendly message instead of crashing the Suspense boundary
@@ -379,7 +425,7 @@ async function BookInfo({ id, tenantId, tenantSlug }: { id: string; tenantId: st
         <div className="text-center max-w-md px-6">
           <h2 className="text-2xl font-display text-primary mb-3">Temporarily Unavailable</h2>
           <p className="text-secondary mb-6">This book is taking longer than expected to load. Please try again in a moment.</p>
-          <Link href="/" className="text-accent-rust hover:underline">Return to Library</Link>
+          <Link href={`/${tenantSlug || ''}`} className="text-accent-rust hover:underline">Return to Library</Link>
         </div>
       </div>
     );
@@ -393,7 +439,8 @@ async function BookInfo({ id, tenantId, tenantSlug }: { id: string; tenantId: st
 
   // Enforce tenant isolation: book must belong to the tenant in the URL.
   // book.tenant_id is set by the data pipeline for all tenant-scoped books.
-  if (book.tenant_id && book.tenant_id !== tenantId) {
+  const bookTenantId = (book as any).tenantId || (book as any).tenant_id;
+  if (tenantId && bookTenantId && bookTenantId !== tenantId) {
     notFound();
   }
 
@@ -547,7 +594,7 @@ async function BookInfo({ id, tenantId, tenantSlug }: { id: string; tenantId: st
                 </div>
                 {imageCount > 0 && (
                   <Link
-                    href={`/gallery?bookId=${book.id}`}
+                    href={`/${tenantSlug}/gallery?bookId=${book.id}`}
                     className="flex items-center gap-2 text-accent-gold hover:text-accent-gold transition-colors"
                     title="View identified images in gallery"
                   >
@@ -608,7 +655,7 @@ async function BookInfo({ id, tenantId, tenantSlug }: { id: string; tenantId: st
                   {bookCollections.map(col => (
                     <Link
                       key={col.slug}
-                      href={`/collections/${col.slug}`}
+                      href={`/${tenantSlug}/collections/${col.slug}`}
                       className="text-xs text-stone-400 hover:text-white bg-white/5 hover:bg-white/10 px-2.5 py-1 rounded-full transition-colors"
                     >
                       {col.name}
@@ -813,7 +860,7 @@ async function BookInfo({ id, tenantId, tenantSlug }: { id: string; tenantId: st
                     <span className="text-sm font-normal text-stone-400 ml-2">{imageCount}</span>
                   </h2>
                   <Link
-                    href={`/gallery?bookId=${book.id}`}
+                    href={`/${tenantSlug}/gallery?bookId=${book.id}`}
                     className="text-sm text-accent-rust hover:text-accent-gold-dark transition-colors"
                   >
                     View All &rarr;
@@ -826,7 +873,7 @@ async function BookInfo({ id, tenantId, tenantSlug }: { id: string; tenantId: st
                     return (
                       <Link
                         key={img.id}
-                        href={`/gallery/image/${img.id}`}
+                        href={`/${tenantSlug}/gallery/image/${img.id}`}
                         className="flex-shrink-0 group"
                       >
                         <div className="w-28 h-28 sm:w-36 sm:h-36 rounded-lg overflow-hidden bg-stone-100 border border-stone-200 group-hover:border-accent-rust/40 transition-colors">
@@ -865,7 +912,7 @@ async function BookInfo({ id, tenantId, tenantSlug }: { id: string; tenantId: st
               Pages
             </h2>
             <Link
-              href={`/book/${book.slug || book.id}/overview`}
+              href={`/${tenantSlug}/book/${book.slug || book.id}/overview`}
               className="text-sm text-stone-400 hover:text-accent-gold transition-colors flex items-center gap-1.5"
             >
               <svg width="14" height="14" viewBox="0 0 14 14" fill="none" className="opacity-70">
@@ -898,10 +945,10 @@ async function BookInfo({ id, tenantId, tenantSlug }: { id: string; tenantId: st
 }
 
 export default async function BookDetailPage({ params }: PageProps) {
-  const { id } = await params;
+  const { id, tenant } = await params;
   const h = await headers();
-  const tenantId = h.get('x-tenant-id') || '';
-  const tenantSlug = h.get('x-tenant-slug') || '';
+  const tenantId = h.get('x-tenant-id') || undefined;
+  const tenantSlug = h.get('x-tenant-slug') || tenant;
 
   return (
     <div className="min-h-screen bg-cream">

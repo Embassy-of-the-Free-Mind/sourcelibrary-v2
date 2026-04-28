@@ -6,6 +6,7 @@ import { LIMIT_RANGES } from '@/lib/adaptive-limits';
 export const POST = withAdminAuth(async (_req: NextRequest) => {
   try {
     const db = await getDb();
+    const systemConfig = db.collection<{ _id: string; locked?: boolean }>('system_config');
 
     // Build default limits from LIMIT_RANGES
     const defaultLimits = {} as Record<string, number>;
@@ -13,7 +14,7 @@ export const POST = withAdminAuth(async (_req: NextRequest) => {
       defaultLimits[key] = (range as any).default;
     }
 
-    await db.collection('system_config').updateOne(
+    await systemConfig.updateOne(
       { _id: 'adaptive_limits' },
       {
         $set: {

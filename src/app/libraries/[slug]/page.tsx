@@ -50,7 +50,13 @@ export async function generateMetadata({ params }: Props): Promise<Metadata> {
 
 // ---------- Data fetching ----------
 
-async function fetchLibraryData(providerKey: string, sort: string, language: string, offset: number, q?: string) {
+async function fetchLibraryData(
+  providerKey: string,
+  sort: string,
+  language: string,
+  offset: number,
+  q?: string
+): Promise<Pick<SharedLibraryViewProps, 'books' | 'total' | 'topBooks' | 'languages' | 'galleryImages' | 'contributingLibraries'>> {
   const [booksResult, languages, sampleResult] = await Promise.all([
     browseBooks({
       provider: providerKey,
@@ -112,11 +118,11 @@ async function fetchLibraryData(providerKey: string, sort: string, language: str
     .slice(0, 20);
 
   return {
-    books: booksResult.books,
+    books: booksResult.books as SharedLibraryViewProps['books'],
     total: booksResult.total,
-    topBooks: sampleResult.books.slice(0, 5),
-    languages,
-    galleryImages,
+    topBooks: sampleResult.books.slice(0, 5) as SharedLibraryViewProps['topBooks'],
+    languages: languages as SharedLibraryViewProps['languages'],
+    galleryImages: galleryImages as SharedLibraryViewProps['galleryImages'],
     contributingLibraries,
   };
 }

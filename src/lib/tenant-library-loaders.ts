@@ -108,14 +108,14 @@ async function browseTenantBooks(opts: BrowseOptions): Promise<BrowseResult> {
   };
 
   const [books, countResult] = await Promise.all([
-    db.collection('books').aggregate([
+    db.collection('books').aggregate<BrowseResult['books'][number]>([
       ...pipelineStart,
       { $sort: sortStage },
       { $skip: opts.offset },
       { $limit: opts.limit },
       { $project: projection },
     ], { maxTimeMS: 30_000 }).toArray(),
-    db.collection('books').aggregate([
+    db.collection('books').aggregate<{ count: number }>([
       ...pipelineStart,
       { $count: 'count' },
     ], { maxTimeMS: 15_000 }).toArray(),

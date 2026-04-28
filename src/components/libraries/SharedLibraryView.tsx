@@ -183,7 +183,7 @@ export default function SharedLibraryView({
                 return (
                   <Link
                     key={galleryId}
-                    href={`/gallery/image/${galleryId}`}
+                    href={`${basePath}/gallery/image/${galleryId}`}
                     className="group relative aspect-square rounded-lg overflow-hidden border border-border-light hover:border-accent-rust/40 transition-all hover:shadow-md"
                     title={img.museumDescription || img.museum_description || img.description || img.bookTitle || img.book_title}
                   >
@@ -209,7 +209,7 @@ export default function SharedLibraryView({
                 );
               })}
               <Link
-                href="/gallery"
+                href={`${basePath}/gallery`}
                 className="group relative aspect-square rounded-lg overflow-hidden border border-border-light hover:border-accent-rust/40 transition-all hover:shadow-md bg-cream flex items-center justify-center"
               >
                 <div className="text-center px-2">
@@ -418,7 +418,7 @@ export default function SharedLibraryView({
             <BphCatalogBrowser
               basePath={basePath}
               digitizedUbns={digitizedUbns}
-              tenantSlug={tenantSlug}
+              tenantSlug={tenantSlug ?? undefined}
             />
           </div>
         )}

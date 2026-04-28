@@ -49,7 +49,7 @@ export function getTenantContextFromRequest(
       headersObj = requestOrHeaders.headers;
     } 
     // If it directly has a .get method, it's a Headers object
-    else if (typeof requestOrHeaders.get === 'function') {
+    else if ('get' in requestOrHeaders && typeof requestOrHeaders.get === 'function') {
       headersObj = requestOrHeaders;
     }
   }

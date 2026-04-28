@@ -8,7 +8,7 @@ import { withAuth } from '@/lib/auth-helpers';
 export const maxDuration = 60;
 
 // In-memory cache (5 minutes)
-let cache: { data: any; ts: number } | null = null;
+let cache: { key: string; data: any; ts: number } | null = null;
 const CACHE_TTL_MS = 5 * 60 * 1000;
 
 /**
@@ -280,7 +280,7 @@ export const GET = withAuth(async (request: NextRequest) => {
       },
     };
 
-    cache = { data, ts: Date.now() };
+    cache = { key: cacheKey, data, ts: Date.now() };
     return NextResponse.json(data);
   } catch (error) {
     console.error('Canon analytics error:', error);
