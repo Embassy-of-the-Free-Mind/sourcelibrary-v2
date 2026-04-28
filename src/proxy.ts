@@ -10,6 +10,8 @@ const NON_TENANT_PATHS = new Set([
   'support', 'unauthorized', 'design-options', 'experiments',
   'ficino-society', 'contribute', 'census', 'oauth', 'developers',
   'founding-donors', 'libraries', 'blog', '_archived', '.well-known',
+  // Legacy root paths (pages moved to /[tenant]/*) — kept here to 404 cleanly
+  'book', 'collections',
 ]);
 
 // Domains that enable the Ficino Society social layer
@@ -283,12 +285,6 @@ export async function proxy(request: NextRequest) {
       url.searchParams.set('id', segment);
       return NextResponse.rewrite(url);
     }
-  }
-
-  // Root /book/* paths (any depth) are not tenant slugs — pass through directly
-  // without tenant resolution so /book/slug, /book/slug/page/id, etc. always work.
-  if (pathname.startsWith('/book/') || pathname === '/book') {
-    return NextResponse.next();
   }
 
   // --- Bot rate limiting (soft) ---

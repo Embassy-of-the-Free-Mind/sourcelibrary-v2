@@ -27,42 +27,6 @@
 (function () {
   'use strict';
 
-  // Maps providerKey → URL slug for /libraries/[slug] pages.
-  // Mirrors LIBRARY_PARTNERS in src/lib/library-partners.ts.
-  var LIBRARY_SLUGS = {
-    'internet_archive': 'internet-archive',
-    'gallica': 'gallica',
-    'mdz': 'bavarian-state-library',
-    'bodleian': 'bodleian',
-    'cambridge': 'cambridge',
-    'bph': 'bibliotheca-philosophica-hermetica',
-    'e-rara': 'e-rara',
-    'wellcome': 'wellcome-collection',
-    'hab': 'hab-wolfenbuettel',
-    'vatican': 'vatican-library',
-    'google_books': 'google-books',
-    'hathi_trust': 'hathi-trust',
-    'europeana': 'europeana',
-    'manchester': 'manchester',
-    'allard_pierson': 'allard-pierson',
-    'laurenziana': 'laurenziana',
-    'leiden': 'leiden',
-    'e-codices': 'e-codices',
-    'chester_beatty': 'chester-beatty',
-    'ndl_japan': 'ndl-japan',
-    'cmc_kloss': 'kloss-collection',
-    'loc': 'library-of-congress',
-    'bl': 'british-library',
-    'sbb': 'sbb-berlin',
-    'onb': 'austrian-national-library',
-    'yale_beinecke': 'yale-beinecke',
-    'harvard': 'harvard-houghton',
-    'penn_colenda': 'penn-schoenberg',
-    'huntington': 'huntington',
-    'getty': 'getty',
-    'kyoto_rmda': 'kyoto',
-  };
-
   // --- Config ---
   var script = document.currentScript ||
     (function () {
@@ -72,13 +36,12 @@
 
   var BASE_URL = (script.getAttribute('data-base-url') || 'https://sourcelibrary.org').replace(/\/$/, '');
   var COLLECTION = script.getAttribute('data-collection') || '';
-  var LIBRARY_KEY = script.getAttribute('data-library') || '';
-  var LIBRARY_SLUG = LIBRARY_KEY ? (LIBRARY_SLUGS[LIBRARY_KEY] || LIBRARY_KEY) : '';
+  var TENANT = script.getAttribute('data-library') || '';
   var TARGET_ID = script.getAttribute('data-target') || 'sl-embed';
   var HEIGHT = script.getAttribute('data-height') || '100vh';
 
-  if (!COLLECTION && !LIBRARY_SLUG) {
-    console.error('[SourceLibrary] data-collection or data-library is required on the embed script tag.');
+  if (!TENANT) {
+    console.error('[SourceLibrary] data-library is required on the embed script tag.');
     return;
   }
 
@@ -119,20 +82,22 @@
   }
 
   // Build the initial iframe src from URL params (for deep linking)
+  // All paths are tenant-scoped: /{tenant}/book/*, /{tenant}/collections/*
   function buildInitialSrc() {
     var book = getURLParam('book');
     var page = getURLParam('page');
 
     if (book && page) {
-      return BASE_URL + '/book/' + encodeURIComponent(book) + '/page/' + encodeURIComponent(page);
+      return BASE_URL + '/' + TENANT + '/book/' + encodeURIComponent(book) + '/page/' + encodeURIComponent(page);
     }
     if (book) {
-      return BASE_URL + '/book/' + encodeURIComponent(book);
+      return BASE_URL + '/' + TENANT + '/book/' + encodeURIComponent(book);
     }
-    if (LIBRARY_SLUG) {
-      return BASE_URL + '/libraries/' + encodeURIComponent(LIBRARY_SLUG) + '?view=books';
+    if (COLLECTION) {
+      return BASE_URL + '/' + TENANT + '/collections/' + encodeURIComponent(COLLECTION);
     }
-    return BASE_URL + '/collections/' + encodeURIComponent(COLLECTION);
+    // Default: tenant root (library home page)
+    return BASE_URL + '/' + TENANT;
   }
 
   // --- Render ---
