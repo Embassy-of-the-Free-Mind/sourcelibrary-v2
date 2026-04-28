@@ -278,6 +278,25 @@ async function fetchCollectionData(id: string, provider?: string) {
   // Books query: Supabase primary (fast), MongoDB fallback (has collection_scores
   // but Atlas multiplanner timeouts cause 10-15s delays or 500s).
   async function fetchBooksWithFallback() {
+    // Art collections: use MongoDB directly to sort by image resolution
+    // and exclude reproductions (year >= 1700). Supabase lacks resolution data.
+    if (isArtCollection) {
+      const artFilter = {
+        collections: id,
+        resource_type: { $exists: true },
+        $or: [{ year: { $lt: 1700 } }, { year: { $exists: false } }],
+      };
+      const docs = await withTimeout(
+        db.collection('books')
+          .find(artFilter, { projection, maxTimeMS: 8000 })
+          .sort({ commons_width: -1 })
+          .limit(COMPACT_LIMIT)
+          .toArray(),
+        15000, [],
+      );
+      return docs;
+    }
+
     try {
       const { books: sbBooks } = await browseBooks({
         collection: id,
