@@ -24,21 +24,34 @@ interface ArtworkHeroProps {
 
 export default function ArtworkHero({ imageUrl, thumbUrl, hiResUrl, title, fullResUrl, license, isLandscape, prevWork, nextWork }: ArtworkHeroProps) {
   const [fitHeight, setFitHeight] = useState(false);
-  const hasThumb = !!thumbUrl && thumbUrl !== imageUrl;
   const hasHiRes = !!hiResUrl && hiResUrl !== imageUrl;
-  const [medResLoaded, setMedResLoaded] = useState(!hasThumb);
-  const [hiResLoaded, setHiResLoaded] = useState(false);
+  const [hiResReady, setHiResReady] = useState(false);
 
-  // Start loading hi-res image in background once medium-res is visible
+  // Load hi-res in background, swap in instantly when ready
   useEffect(() => {
-    if (!medResLoaded || !hasHiRes) return;
+    if (!hasHiRes) return;
+    setHiResReady(false);
     const img = new window.Image();
-    img.onload = () => setHiResLoaded(true);
+    img.onload = () => setHiResReady(true);
     img.src = hiResUrl!;
-  }, [medResLoaded, hasHiRes, hiResUrl]);
+  }, [hasHiRes, hiResUrl]);
 
-  // The best available src for magnifier zoom
-  const magnifierSrc = (hiResLoaded && hiResUrl) ? hiResUrl : imageUrl;
+  // Best available source — upgrades silently
+  const bestSrc = (hiResReady && hiResUrl) ? hiResUrl : imageUrl;
+  const thumb = thumbUrl || imageUrl;
+
+  // Keyboard navigation
+  useEffect(() => {
+    const handleKey = (e: KeyboardEvent) => {
+      if (e.key === 'ArrowLeft' && prevWork) {
+        window.location.href = `/artwork/${prevWork.slug}`;
+      } else if (e.key === 'ArrowRight' && nextWork) {
+        window.location.href = `/artwork/${nextWork.slug}`;
+      }
+    };
+    window.addEventListener('keydown', handleKey);
+    return () => window.removeEventListener('keydown', handleKey);
+  }, [prevWork, nextWork]);
 
   return (
     <div className="bg-stone-900 relative">
@@ -48,92 +61,16 @@ export default function ArtworkHero({ imageUrl, thumbUrl, hiResUrl, title, fullR
           className={`relative mx-auto ${fitHeight ? '' : isLandscape ? 'aspect-[16/10]' : 'aspect-[3/4]'}`}
           style={fitHeight ? { height: 'calc(100vh - 120px)' } : undefined}
         >
-          {hasThumb ? (
-            <>
-              {/* Layer 1: thumb — always visible underneath, covered by higher layers */}
-              <div className={`absolute inset-0 ${medResLoaded ? 'pointer-events-none' : ''}`}>
-                <ImageWithMagnifier
-                  src={thumbUrl}
-                  thumbnail={thumbUrl}
-                  alt={title}
-                  className="w-full h-full"
-                  magnifierSize={240}
-                  zoomLevel={3}
-                  darkMode
-                />
-              </div>
-              {/* Layer 2: medium-res blob — fades in over thumb (thumb stays opaque beneath) */}
-              <div className={`absolute inset-0 transition-opacity duration-700 ${medResLoaded ? 'opacity-100' : 'opacity-0'} ${hiResLoaded ? 'pointer-events-none' : ''}`}>
-                <ImageWithMagnifier
-                  src={imageUrl}
-                  thumbnail={thumbUrl}
-                  highResSrc={magnifierSrc}
-                  alt={title}
-                  className="w-full h-full"
-                  magnifierSize={240}
-                  zoomLevel={3}
-                  darkMode
-                  onLoad={() => setMedResLoaded(true)}
-                />
-              </div>
-              {/* Layer 3: full-res archived — fades in over medium (medium stays opaque beneath) */}
-              {hasHiRes && hiResLoaded && (
-                <div className="absolute inset-0 animate-fade-in-slow">
-                  <ImageWithMagnifier
-                    src={hiResUrl!}
-                    thumbnail={imageUrl}
-                    highResSrc={hiResUrl!}
-                    alt={title}
-                    className="w-full h-full"
-                    magnifierSize={240}
-                    zoomLevel={3}
-                    darkMode
-                  />
-                </div>
-              )}
-            </>
-          ) : hasHiRes ? (
-            <>
-              {/* No thumb but has hi-res: show medium immediately, fade in hi-res */}
-              <div className={`absolute inset-0 ${hiResLoaded ? 'pointer-events-none' : ''}`}>
-                <ImageWithMagnifier
-                  src={imageUrl}
-                  thumbnail={imageUrl}
-                  highResSrc={magnifierSrc}
-                  alt={title}
-                  className="w-full h-full"
-                  magnifierSize={240}
-                  zoomLevel={3}
-                  darkMode
-                  onLoad={() => setMedResLoaded(true)}
-                />
-              </div>
-              {hiResLoaded && (
-                <div className="absolute inset-0 animate-fade-in-slow">
-                  <ImageWithMagnifier
-                    src={hiResUrl!}
-                    thumbnail={imageUrl}
-                    highResSrc={hiResUrl!}
-                    alt={title}
-                    className="w-full h-full"
-                    magnifierSize={240}
-                    zoomLevel={3}
-                    darkMode
-                  />
-                </div>
-              )}
-            </>
-          ) : (
-            <ImageWithMagnifier
-              src={imageUrl}
-              thumbnail={imageUrl}
-              alt={title}
-              className="w-full h-full"
-              magnifierSize={240}
-              zoomLevel={3}
-              darkMode
-            />
-          )}
+          <ImageWithMagnifier
+            src={bestSrc}
+            thumbnail={thumb}
+            highResSrc={hiResReady && hiResUrl ? hiResUrl : imageUrl}
+            alt={title}
+            className="w-full h-full"
+            magnifierSize={240}
+            zoomLevel={3}
+            darkMode
+          />
         </div>
       </div>
 
