@@ -835,8 +835,8 @@ export default async function CollectionDetailPage({ params, provider }: Props &
         </div>
       )}
 
-      {/* Gallery — labeled illustrations (hidden when exhibition provides its own gallery_grid) */}
-      {diverseGalleryImages.length > 0 && !exhibition?.layout && (
+      {/* Gallery — labeled illustrations (hidden for art collections and exhibitions) */}
+      {diverseGalleryImages.length > 0 && !isArtCollection && !exhibition?.layout && (
         <div className="bg-warm border-b border-border-light">
           <div className="max-w-7xl mx-auto px-6 py-8">
             <div className="flex items-center justify-between mb-2">
