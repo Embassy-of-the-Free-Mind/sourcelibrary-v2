@@ -5,7 +5,7 @@
 
 'use client';
 
-import { useIsEmbedded } from '@/hooks/useEmbedContext';
+import { useEmbedContext } from '@/hooks/useEmbedContext';
 import SiteHeader from './SiteHeader';
 
 interface Props {
@@ -13,10 +13,11 @@ interface Props {
 }
 
 export default function ConditionalSiteHeader({ variant = 'light' }: Props) {
-    const isEmbedded = useIsEmbedded();
+    const { isEmbedded, isLoading } = useEmbedContext();
 
-    // Don't render header when embedded
-    if (isEmbedded) {
+    // During SSR and initial hydration, always render header to avoid mismatch.
+    // After hydration completes (isLoading=false), hide if embedded.
+    if (!isLoading && isEmbedded) {
         return null;
     }
 

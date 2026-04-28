@@ -5,14 +5,15 @@
 
 'use client';
 
-import { useIsEmbedded } from '@/hooks/useEmbedContext';
+import { useEmbedContext } from '@/hooks/useEmbedContext';
 import GlobalFooter from './GlobalFooter';
 
 export default function ConditionalFooter() {
-    const isEmbedded = useIsEmbedded();
+    const { isEmbedded, isLoading } = useEmbedContext();
 
-    // Don't render footer when embedded
-    if (isEmbedded) {
+    // During SSR and initial hydration, always render footer to avoid mismatch.
+    // After hydration completes (isLoading=false), hide if embedded.
+    if (!isLoading && isEmbedded) {
         return null;
     }
 

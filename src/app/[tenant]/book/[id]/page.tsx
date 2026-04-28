@@ -41,7 +41,13 @@ import { firstTranslationBadge, firstTranslationDescription } from '@/lib/first-
 import { formatAuthor } from '@/lib/utils';
 import AuthorName from '@/components/AuthorName';
 import ConditionalSiteHeader from '@/components/layout/ConditionalSiteHeader';
-import { headers } from 'next/headers';
+import { resolveTenantId } from '@/lib/tenant-context';
+
+// Cached tenant ID lookup - avoids headers() which would disable ISR
+const getCachedTenantId = cache(async (slug: string): Promise<string | undefined> => {
+  const id = await resolveTenantId(slug);
+  return id ?? undefined;
+});
 
 // ISR: serve cached HTML, revalidate in background every 24h.
 // Pipeline also calls /api/admin/revalidate-book for immediate updates after OCR/translation/enrichment.
@@ -138,9 +144,8 @@ async function getBookForMetadata(id: string, tenantId?: string | null): Promise
 
 
 export async function generateMetadata({ params }: PageProps): Promise<Metadata> {
-  const { id } = await params;
-  const h = await headers();
-  const tenantId = h.get('x-tenant-id');
+  const { id, tenant } = await params;
+  const tenantId = await getCachedTenantId(tenant);
   let book: Book | null;
   try {
     book = await getBookForMetadata(id, tenantId);
@@ -167,8 +172,7 @@ export async function generateMetadata({ params }: PageProps): Promise<Metadata>
   if (description.length > 155) {
     description = `${title} by ${author}${year}`.slice(0, 152) + '...';
   }
-  const tenantSlug = h.get('x-tenant-slug');
-  const bookUrl = tenantSlug ? `/${tenantSlug}/book/${book.slug || book.id}` : `/book/${book.slug || book.id}`;
+  const bookUrl = tenant ? `/${tenant}/book/${book.slug || book.id}` : `/book/${book.slug || book.id}`;
 
   // Get publication date for OG tags
   const currentEdition = (book.editions as TranslationEdition[] | undefined)?.find(e => e.status === 'published') || (book.editions as TranslationEdition[] | undefined)?.find(e => e.status === 'draft');
@@ -946,9 +950,9 @@ async function BookInfo({ id, tenantId, tenantSlug }: { id: string; tenantId?: s
 
 export default async function BookDetailPage({ params }: PageProps) {
   const { id, tenant } = await params;
-  const h = await headers();
-  const tenantId = h.get('x-tenant-id') || undefined;
-  const tenantSlug = h.get('x-tenant-slug') || tenant;
+  // Use cached tenant lookup instead of headers() to preserve ISR
+  const tenantId = await getCachedTenantId(tenant);
+  const tenantSlug = tenant;
 
   return (
     <div className="min-h-screen bg-cream">
