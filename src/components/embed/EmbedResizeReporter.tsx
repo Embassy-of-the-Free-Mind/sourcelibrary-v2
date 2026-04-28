@@ -1,7 +1,10 @@
 'use client';
 
 import { useEffect } from 'react';
-import { usePathname, useSearchParams } from 'next/navigation';
+
+function getRouteKey(): string {
+    return window.location.pathname + window.location.search;
+}
 
 function getDocumentHeight(): number {
     const main = document.getElementById('main-content');
@@ -21,10 +24,6 @@ function getDocumentHeight(): number {
 }
 
 export default function EmbedResizeReporter() {
-    const pathname = usePathname();
-    const searchParams = useSearchParams();
-    const routeKey = pathname + '?' + (searchParams?.toString() || '');
-
     useEffect(() => {
         if (typeof window === 'undefined') return;
         if (window.self === window.top) return;
@@ -34,6 +33,7 @@ export default function EmbedResizeReporter() {
         let intervalId: number | null = null;
         const burstTimeouts: number[] = [];
         let lastPostedHeight = -1;
+        let lastRouteKey = getRouteKey();
 
         const postResize = (force = false) => {
             const height = Math.max(window.innerHeight, getDocumentHeight());
@@ -43,6 +43,13 @@ export default function EmbedResizeReporter() {
 
             lastPostedHeight = height;
             window.parent.postMessage({ type: 'sl-resize', height }, '*');
+        };
+
+        const scheduleForcedBurst = () => {
+            [50, 180, 420, 900].forEach((delay) => {
+                const id = window.setTimeout(() => postResize(true), delay);
+                burstTimeouts.push(id);
+            });
         };
 
         const scheduleResize = () => {
@@ -82,10 +89,7 @@ export default function EmbedResizeReporter() {
 
         // Route changes and suspense boundaries can settle over multiple frames.
         // Emit a short burst to ensure parent gets the final shrunk height.
-        [50, 180, 420, 900].forEach((delay) => {
-            const id = window.setTimeout(() => postResize(true), delay);
-            burstTimeouts.push(id);
-        });
+        scheduleForcedBurst();
 
         // Fonts can materially change line wrapping/page height.
         if (document.fonts && document.fonts.ready) {
@@ -96,6 +100,12 @@ export default function EmbedResizeReporter() {
 
         // Safety net: content can change without mutations/resize (fonts, async media, virtualized UI).
         intervalId = window.setInterval(() => {
+            const currentRouteKey = getRouteKey();
+            if (currentRouteKey !== lastRouteKey) {
+                lastRouteKey = currentRouteKey;
+                postResize(true);
+                scheduleForcedBurst();
+            }
             postResize();
         }, 400);
 
@@ -109,7 +119,7 @@ export default function EmbedResizeReporter() {
             if (intervalId !== null) window.clearInterval(intervalId);
             burstTimeouts.forEach((id) => window.clearTimeout(id));
         };
-    }, [routeKey]);
+    }, []);
 
     return null;
 }
