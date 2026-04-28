@@ -49,6 +49,17 @@ export function getBookThumbnailUrl(
     : (book.thumbnail_blob || book.thumbnail || null);
   if (!raw) return null;
 
+  // Wikimedia Commons: rewrite to thumb.php for CDN-cached resized images.
+  // Loading full-res Wikimedia files (3000-8000px) directly causes 429 rate-limits
+  // and wastes bandwidth. thumb.php serves fast, CDN-cached thumbnails.
+  if (raw.includes('upload.wikimedia.org/wikipedia/commons/')) {
+    const filename = raw.split('/').pop();
+    if (filename) {
+      const w = size === 'thumb' ? 400 : 800;
+      return `https://commons.wikimedia.org/w/thumb.php?f=${filename}&w=${w}`;
+    }
+  }
+
   if (!raw.includes('images.sourcelibrary.org/')) return raw;
 
   // Artwork URLs: many -thumb.jpg variants were never generated, so always
