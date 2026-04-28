@@ -63,9 +63,10 @@ export async function GET(
     if (mode === 'manifest') {
       // Art collections: use MongoDB for resolution-based sorting and repro filtering
       if (isArtCollection) {
+        const EXCLUDED_TYPES = ['photograph', 'object', 'sculpture', 'architectural', 'decorative', 'ritual-object'];
         const artFilter: Record<string, unknown> = {
           collections: id,
-          resource_type: { $exists: true },
+          resource_type: { $exists: true, $nin: EXCLUDED_TYPES },
           visible: true,
           $or: [{ year: { $lt: 1700 } }, { year: { $exists: false } }],
         };
