@@ -404,12 +404,19 @@ export async function proxy(request: NextRequest) {
   });
 
   // --- X-Frame-Options ---
-  // /book/* and /collections/* are embeddable by allowlisted partner origins (and localhost for dev).
+  // Tenant-scoped paths (/{tenant}/book/*, /{tenant}/collections/*, /{tenant}) and /libraries/*
+  // are embeddable by allowlisted partner origins (and localhost for dev).
   // Everything else gets DENY to prevent clickjacking.
   const isEmbeddablePath =
+    // Legacy root paths (kept for backwards compat during migration)
     pathname.startsWith('/book/') ||
     pathname.startsWith('/collections/') ||
-    pathname.startsWith('/libraries/');
+    pathname.startsWith('/libraries/') ||
+    // Tenant-scoped paths: allow all paths under a resolved tenant
+    (tenantSlug && (
+      pathname === `/${tenantSlug}` ||
+      pathname.startsWith(`/${tenantSlug}/`)
+    ));
 
   if (isEmbeddablePath) {
     const frameOrigin = request.headers.get('origin') ||
