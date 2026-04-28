@@ -1,9 +1,9 @@
-import SiteHeader from '@/components/layout/SiteHeader';
+import ConditionalSiteHeader from '@/components/layout/ConditionalSiteHeader';
 
 export default function BookDetailLoading() {
   return (
     <div className="min-h-screen bg-cream">
-      <SiteHeader variant="light" />
+      <ConditionalSiteHeader variant="light" />
 
       <div className="max-w-7xl mx-auto px-4 sm:px-6 py-8">
         {/* Breadcrumb skeleton */}

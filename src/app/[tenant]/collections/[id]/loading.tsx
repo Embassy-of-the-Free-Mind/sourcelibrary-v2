@@ -1,9 +1,9 @@
-import SiteHeader from '@/components/layout/SiteHeader';
+import ConditionalSiteHeader from '@/components/layout/ConditionalSiteHeader';
 
 export default function CollectionLoading() {
   return (
     <div className="min-h-screen bg-cream">
-      <SiteHeader variant="dark" />
+      <ConditionalSiteHeader variant="dark" />
 
       {/* Hero skeleton */}
       <div className="relative bg-dark overflow-hidden">

@@ -40,7 +40,7 @@ import { authorUrl } from '@/lib/slugify';
 import { firstTranslationBadge, firstTranslationDescription } from '@/lib/first-translation-labels';
 import { formatAuthor } from '@/lib/utils';
 import AuthorName from '@/components/AuthorName';
-import SiteHeader from '@/components/layout/SiteHeader';
+import ConditionalSiteHeader from '@/components/layout/ConditionalSiteHeader';
 import { headers } from 'next/headers';
 
 // ISR: serve cached HTML, revalidate in background every 24h.
@@ -952,8 +952,8 @@ export default async function BookDetailPage({ params }: PageProps) {
 
   return (
     <div className="min-h-screen bg-cream">
-      {/* Header - renders immediately */}
-      <SiteHeader variant="light" />
+      {/* Header - renders immediately (hidden when embedded) */}
+      <ConditionalSiteHeader variant="light" />
 
       {/* Book content streams in */}
       <Suspense fallback={

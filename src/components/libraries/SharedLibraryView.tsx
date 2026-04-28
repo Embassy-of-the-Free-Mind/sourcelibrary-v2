@@ -7,7 +7,7 @@
 import Link from 'next/link';
 import Image from 'next/image';
 import { BookOpen, ExternalLink, Images, Library } from 'lucide-react';
-import SmartHeader from '@/components/layout/SmartHeader';
+import ConditionalSiteHeader from '@/components/layout/ConditionalSiteHeader';
 import CollectionBookCard from '@/components/CollectionBookCard';
 import CollectionFilters from '@/components/collections/CollectionFilters';
 import { bookTitle } from '@/lib/collections-utils';
@@ -121,7 +121,7 @@ export default function SharedLibraryView({
 
   return (
     <div className="min-h-screen bg-cream">
-      <SmartHeader variant="dark" />
+      <ConditionalSiteHeader variant="dark" />
       {/* Hero Section */}
       <div className="relative bg-dark overflow-hidden">
         <div className="absolute inset-0 bg-gradient-to-b from-black/70 via-black/40 to-transparent" />

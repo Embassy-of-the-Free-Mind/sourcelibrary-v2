@@ -4,7 +4,7 @@ import Image from 'next/image';
 import { Metadata } from 'next';
 import { ArrowLeft, BookOpen, Images, Library } from 'lucide-react';
 import { headers } from 'next/headers';
-import SiteHeader from '@/components/layout/SiteHeader';
+import ConditionalSiteHeader from '@/components/layout/ConditionalSiteHeader';
 import { getReadDb } from '@/lib/mongodb';
 import { notFound } from 'next/navigation';
 import { unstable_noStore } from 'next/cache';
@@ -626,7 +626,7 @@ export default async function CollectionDetailPage({ params }: Props) {
   return (
     <div className="min-h-screen bg-cream">
       <EmbedNavigationReporter />
-      <SiteHeader variant="dark" />
+      <ConditionalSiteHeader variant="dark" />
       <CollectionSchema
         slug={id}
         name={collection.name}
