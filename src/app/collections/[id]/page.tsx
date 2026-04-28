@@ -285,7 +285,6 @@ async function fetchCollectionData(id: string, provider?: string) {
       const artFilter = {
         collections: id,
         resource_type: { $exists: true, $nin: EXCLUDED_TYPES },
-        $or: [{ year: { $lt: 1700 } }, { year: { $exists: false } }],
       };
       const docs = await withTimeout(
         db.collection('books')
