@@ -2,7 +2,7 @@ import React from 'react';
 import Link from 'next/link';
 import Image from 'next/image';
 import { Metadata } from 'next';
-import { ArrowLeft, BookOpen, Images, Library } from 'lucide-react';
+import { ArrowLeft, BookOpen } from 'lucide-react';
 import SiteHeader from '@/components/layout/SiteHeader';
 import { getReadDb } from '@/lib/mongodb';
 import { notFound } from 'next/navigation';
@@ -745,10 +745,7 @@ export default async function CollectionDetailPage({ params, provider }: Props &
                         unoptimized
                       />
                     ) : (
-                      <div className="absolute inset-0 bg-gradient-to-br from-[#3d3529] to-[#2a2318] flex flex-col items-center justify-center gap-2">
-                        <Library className="w-8 h-8 text-white/30" />
-                        <span className="text-white/20 text-xs font-display">{child.book_count ? `${child.book_count} ${itemLabel}` : ''}</span>
-                      </div>
+                      <div className="absolute inset-0 bg-gradient-to-br from-[#3d3529] to-[#2a2318]" />
                     )}
                     <div className="absolute inset-0 bg-gradient-to-t from-[rgba(26,22,18,0.85)] via-[rgba(26,22,18,0.35)] to-transparent" />
                     <div className="absolute inset-0 flex flex-col justify-end p-3 sm:p-4">
@@ -764,6 +761,74 @@ export default async function CollectionDetailPage({ params, provider }: Props &
                   </Link>
                 );
               })}
+            </div>
+          </div>
+        </div>
+      )}
+
+      {/* Gallery — labeled illustrations */}
+      {diverseGalleryImages.length > 0 && !isArtCollection && !exhibition?.layout && (
+        <div className="bg-warm border-b border-border-light">
+          <div className="max-w-7xl mx-auto px-6 py-8">
+            <div className="flex items-center justify-between mb-2">
+              <h2 className="text-2xl sm:text-3xl text-primary font-display">
+                Illustrations
+              </h2>
+              <Link
+                href={galleryCollectionSlug ? `/gallery/collections/${galleryCollectionSlug}` : `/gallery?collection=${id}`}
+                className="text-sm text-muted hover:text-accent-rust transition-colors"
+              >
+                Browse all {galleryTotalImages.toLocaleString()}
+              </Link>
+            </div>
+            <div className="grid grid-cols-3 sm:grid-cols-4 lg:grid-cols-5 gap-4 mt-5">
+              {diverseGalleryImages.map((img: { pageId?: string; page_id?: string; bookId?: string; book_id?: string; detectionIndex?: number; detection_index?: number; thumbnailUrl?: string; thumbnail_url?: string; extractedUrl?: string; extracted_url?: string; imageUrl?: string; image_url?: string; museumDescription?: string; museum_description?: string; description?: string; bookTitle?: string; book_title?: string; type?: string }) => {
+                const thumb = img.thumbnail_url || img.thumbnailUrl || img.extracted_url || img.extractedUrl || img.imageUrl || img.image_url;
+                const pageId = img.pageId || img.page_id;
+                const bookId = img.bookId || img.book_id;
+                const detIdx = img.detectionIndex ?? img.detection_index;
+                const galleryId = `${pageId}-${detIdx}`;
+                const label = img.museumDescription || img.museum_description || img.description || img.bookTitle || img.book_title;
+                return (
+                  <Link
+                    key={galleryId}
+                    href={`/book/${bookId}/page/${pageId}`}
+                    className="group relative aspect-square rounded-lg overflow-hidden border border-border-light hover:border-accent-rust/40 transition-all hover:shadow-md"
+                    title={label}
+                  >
+                    {thumb && (
+                      <Image
+                        src={thumb}
+                        alt={img.description || img.bookTitle || img.book_title || 'Illustration'}
+                        fill
+                        className="object-cover group-hover:scale-105 transition-transform duration-300"
+                        sizes="(min-width: 1024px) 200px, (min-width: 640px) 160px, 120px"
+                        unoptimized
+                      />
+                    )}
+                    <div className="absolute inset-x-0 bottom-0 bg-gradient-to-t from-black/70 to-transparent p-2 pt-6 opacity-0 group-hover:opacity-100 transition-opacity">
+                      <p className="text-[11px] text-white leading-tight line-clamp-2">
+                        {label}
+                      </p>
+                    </div>
+                    {img.type && (
+                      <span className="absolute top-1.5 left-1.5 text-[10px] bg-dark/70 text-white px-1.5 py-0.5 rounded capitalize leading-none">
+                        {img.type}
+                      </span>
+                    )}
+                  </Link>
+                );
+              })}
+              {galleryTotalImages > diverseGalleryImages.length && (
+                <Link
+                  href={galleryCollectionSlug ? `/gallery/collections/${galleryCollectionSlug}` : `/gallery?collection=${id}`}
+                  className="group relative aspect-square rounded-lg overflow-hidden border border-border-light hover:border-accent-rust/40 transition-all hover:shadow-md bg-cream flex flex-col items-center justify-center gap-2 text-center"
+                >
+                  <span className="text-sm font-medium text-muted group-hover:text-accent-rust transition-colors px-3">
+                    View all {galleryTotalImages.toLocaleString()}
+                  </span>
+                </Link>
+              )}
             </div>
           </div>
         </div>
@@ -836,84 +901,7 @@ export default async function CollectionDetailPage({ params, provider }: Props &
         </div>
       )}
 
-      {/* Gallery — labeled illustrations (hidden for art collections and exhibitions) */}
-      {diverseGalleryImages.length > 0 && !isArtCollection && !exhibition?.layout && (
-        <div className="bg-warm border-b border-border-light">
-          <div className="max-w-7xl mx-auto px-6 py-8">
-            <div className="flex items-center justify-between mb-2">
-              <h2 className="text-2xl sm:text-3xl text-primary font-display">
-                Illustrations
-              </h2>
-              <Link
-                href={galleryCollectionSlug ? `/gallery/collections/${galleryCollectionSlug}` : `/gallery?collection=${id}`}
-                className="text-sm text-muted hover:text-accent-rust transition-colors flex items-center gap-1.5"
-              >
-                <Images className="w-4 h-4" />
-                Browse all
-              </Link>
-            </div>
-            <p className="text-sm text-muted mb-5">
-              {galleryTotalImages.toLocaleString()} images extracted{galleryTotalCount ? '' : ` from ${galleryUniqueBooks.toLocaleString()} ${itemLabel}`}
-            </p>
-            <div className="grid grid-cols-3 sm:grid-cols-4 lg:grid-cols-5 gap-4">
-              {diverseGalleryImages.map((img: { pageId?: string; page_id?: string; bookId?: string; book_id?: string; detectionIndex?: number; detection_index?: number; thumbnailUrl?: string; thumbnail_url?: string; extractedUrl?: string; extracted_url?: string; imageUrl?: string; image_url?: string; museumDescription?: string; museum_description?: string; description?: string; bookTitle?: string; book_title?: string; type?: string }) => {
-                const thumb = img.thumbnail_url || img.thumbnailUrl || img.extracted_url || img.extractedUrl || img.imageUrl || img.image_url;
-                const pageId = img.pageId || img.page_id;
-                const bookId = img.bookId || img.book_id;
-                const detIdx = img.detectionIndex ?? img.detection_index;
-                const galleryId = `${pageId}-${detIdx}`;
-                const label = img.museumDescription || img.museum_description || img.description || img.bookTitle || img.book_title;
-                return (
-                  <Link
-                    key={galleryId}
-                    href={`/book/${bookId}/page/${pageId}`}
-                    className="group relative aspect-square rounded-lg overflow-hidden border border-border-light hover:border-accent-rust/40 transition-all hover:shadow-md"
-                    title={label}
-                  >
-                    {thumb ? (
-                      <Image
-                        src={thumb}
-                        alt={img.description || img.bookTitle || img.book_title || 'Illustration'}
-                        fill
-                        className="object-cover group-hover:scale-105 transition-transform duration-300"
-                        sizes="(min-width: 1024px) 200px, (min-width: 640px) 160px, 120px"
-                        unoptimized
-                      />
-                    ) : (
-                      <div className="w-full h-full bg-cream flex items-center justify-center">
-                        <Images className="w-6 h-6 text-muted" />
-                      </div>
-                    )}
-                    {/* Label overlay */}
-                    <div className="absolute inset-x-0 bottom-0 bg-gradient-to-t from-black/70 to-transparent p-2 pt-6 opacity-0 group-hover:opacity-100 transition-opacity">
-                      <p className="text-[11px] text-white leading-tight line-clamp-2">
-                        {label}
-                      </p>
-                    </div>
-                    {img.type && (
-                      <span className="absolute top-1.5 left-1.5 text-[10px] bg-dark/70 text-white px-1.5 py-0.5 rounded capitalize leading-none">
-                        {img.type}
-                      </span>
-                    )}
-                  </Link>
-                );
-              })}
-              {/* "View all" CTA card as last panel */}
-              {galleryTotalImages > diverseGalleryImages.length && (
-                <Link
-                  href={galleryCollectionSlug ? `/gallery/collections/${galleryCollectionSlug}` : `/gallery?collection=${id}`}
-                  className="group relative aspect-square rounded-lg overflow-hidden border border-border-light hover:border-accent-rust/40 transition-all hover:shadow-md bg-cream flex flex-col items-center justify-center gap-2 text-center"
-                >
-                  <Images className="w-8 h-8 text-muted group-hover:text-accent-rust transition-colors" />
-                  <span className="text-sm font-medium text-muted group-hover:text-accent-rust transition-colors px-3">
-                    View all {galleryTotalImages.toLocaleString()} illustrations
-                  </span>
-                </Link>
-              )}
-            </div>
-          </div>
-        </div>
-      )}
+      {/* Gallery section moved above exhibition/featured book */}
 
       {/* Visual Art — artworks tagged to this collection (hidden when exhibition present) */}
       {artworks.length > 0 && !exhibition?.layout && (
@@ -954,9 +942,7 @@ export default async function CollectionDetailPage({ params, provider }: Props &
                             loading="lazy"
                           />
                         ) : (
-                          <div className="absolute inset-0 flex items-center justify-center">
-                            <Images className="w-8 h-8 text-muted" />
-                          </div>
+                          <div className="absolute inset-0 bg-cream" />
                         )}
                         {art.resource_type && art.resource_type !== 'printed_book' && (
                           <span className="absolute top-2 left-2 text-[10px] bg-dark/70 text-white px-1.5 py-0.5 rounded capitalize">
