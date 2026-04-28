@@ -2,7 +2,7 @@
 
 import { useSession, signOut } from 'next-auth/react';
 import Link from 'next/link';
-import { useState, useRef, useEffect } from 'react';
+import { useState, useRef, useEffect, useCallback } from 'react';
 
 interface UserMenuProps {
   variant?: 'hero' | 'default';
@@ -43,6 +43,9 @@ export default function UserMenu({ variant = 'default' }: UserMenuProps) {
   // Authenticated user: show avatar + dropdown
   const isAdmin = (session.user as any)?.role === 'admin';
   const isMember = (session.user as any)?.membership != null;
+  const [imgError, setImgError] = useState(false);
+  const handleImgError = useCallback(() => setImgError(true), []);
+
   const initials = session.user?.name
     ?.split(' ')
     .map(n => n[0])
@@ -56,13 +59,14 @@ export default function UserMenu({ variant = 'default' }: UserMenuProps) {
         onClick={() => setIsOpen(!isOpen)}
         className="flex items-center gap-2 focus:outline-none"
       >
-        {session.user?.image ? (
+        {session.user?.image && !imgError ? (
           // eslint-disable-next-line @next/next/no-img-element
           <img
             src={session.user.image}
             alt={session.user.name || 'User'}
             className="w-8 h-8 rounded-full border-2"
             style={{ borderColor: isMember ? 'var(--accent-gold)' : 'rgba(255,255,255,0.3)' }}
+            onError={handleImgError}
           />
         ) : (
           <div
