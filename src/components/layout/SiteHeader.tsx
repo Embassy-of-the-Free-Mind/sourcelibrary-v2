@@ -5,12 +5,27 @@ import Link from 'next/link';
 import { usePathname } from 'next/navigation';
 import Logo from './Logo';
 import UserMenu from './UserMenu';
-import { Search } from 'lucide-react';
+import { Search, ChevronDown } from 'lucide-react';
 
-const NAV_LINKS = [
+interface NavLink {
+  label: string;
+  href: string;
+  activePrefix?: string;
+  children?: { label: string; href: string }[];
+}
+
+const NAV_LINKS: NavLink[] = [
   { label: 'Collections', href: '/collections' },
   { label: 'Gallery', href: '/gallery' },
-  { label: 'Browse', href: '/browse' },
+  {
+    label: 'Browse',
+    href: '/browse',
+    activePrefix: '/browse',
+    children: [
+      { label: 'Browse', href: '/browse' },
+      { label: 'Catalog', href: '/catalog' },
+    ],
+  },
   { label: 'Explore', href: '/explore/map', activePrefix: '/explore' },
   { label: 'Librarian', href: '/librarian' },
   { label: 'Podcast', href: '/podcast' },
@@ -35,23 +50,28 @@ interface SiteHeaderProps {
 export default function SiteHeader({ variant = 'light', breadcrumbs, sticky, className = '' }: SiteHeaderProps) {
   const isWhiteText = variant === 'transparent' || variant === 'dark';
   const [menuOpen, setMenuOpen] = useState(false);
+  const [dropdownOpen, setDropdownOpen] = useState<string | null>(null);
   const menuRef = useRef<HTMLDivElement>(null);
+  const dropdownRef = useRef<HTMLDivElement>(null);
   const pathname = usePathname();
 
-  // Close menu on route change
-  useEffect(() => { setMenuOpen(false); }, [pathname]);
+  // Close menus on route change
+  useEffect(() => { setMenuOpen(false); setDropdownOpen(null); }, [pathname]);
 
   // Close menu on click outside
   useEffect(() => {
-    if (!menuOpen) return;
+    if (!menuOpen && !dropdownOpen) return;
     function handleClick(e: MouseEvent) {
-      if (menuRef.current && !menuRef.current.contains(e.target as Node)) {
+      if (menuOpen && menuRef.current && !menuRef.current.contains(e.target as Node)) {
         setMenuOpen(false);
+      }
+      if (dropdownOpen && dropdownRef.current && !dropdownRef.current.contains(e.target as Node)) {
+        setDropdownOpen(null);
       }
     }
     document.addEventListener('mousedown', handleClick);
     return () => document.removeEventListener('mousedown', handleClick);
-  }, [menuOpen]);
+  }, [menuOpen, dropdownOpen]);
 
   const variantClasses = {
     transparent: 'relative z-50 py-4',
@@ -92,8 +112,46 @@ export default function SiteHeader({ variant = 'light', breadcrumbs, sticky, cla
           {/* Desktop nav links */}
           <nav className="hidden lg:flex items-center gap-5">
             {NAV_LINKS.map((link) => {
-              const prefix = ('activePrefix' in link ? link.activePrefix : link.href) as string;
+              const prefix = (link.activePrefix || link.href);
               const isActive = pathname === prefix || pathname?.startsWith(prefix + '/');
+              const isCatalogActive = link.children?.some(c => pathname === c.href || pathname?.startsWith(c.href + '/'));
+
+              if (link.children) {
+                return (
+                  <div key={link.href} className="relative" ref={dropdownRef}>
+                    <button
+                      onClick={() => setDropdownOpen(dropdownOpen === link.label ? null : link.label)}
+                      className={`text-sm font-sans tracking-wide transition-colors flex items-center gap-0.5 ${
+                        isActive || isCatalogActive ? activeLinkClass : linkClass
+                      }`}
+                    >
+                      {link.label}
+                      <ChevronDown className={`w-3 h-3 transition-transform ${dropdownOpen === link.label ? 'rotate-180' : ''}`} />
+                    </button>
+                    {dropdownOpen === link.label && (
+                      <div className="absolute left-0 top-full mt-2 w-36 bg-white rounded-lg shadow-lg border border-border-light py-1.5 z-50">
+                        {link.children.map((child) => {
+                          const childActive = pathname === child.href || pathname?.startsWith(child.href + '/');
+                          return (
+                            <Link
+                              key={child.href}
+                              href={child.href}
+                              className={`block px-4 py-2 text-sm transition-colors ${
+                                childActive
+                                  ? 'text-primary font-medium bg-warm'
+                                  : 'text-secondary hover:text-primary hover:bg-warm/50'
+                              }`}
+                            >
+                              {child.label}
+                            </Link>
+                          );
+                        })}
+                      </div>
+                    )}
+                  </div>
+                );
+              }
+
               return (
                 <Link
                   key={link.href}
@@ -144,8 +202,26 @@ export default function SiteHeader({ variant = 'light', breadcrumbs, sticky, cla
 
             {menuOpen && (
               <div className="absolute right-0 top-full mt-2 w-52 bg-white rounded-lg shadow-lg border border-border-light py-2 z-50">
-                {NAV_LINKS.map((link) => {
-                  const prefix = ('activePrefix' in link ? link.activePrefix : link.href) as string;
+                {NAV_LINKS.flatMap((link) => {
+                  if (link.children) {
+                    return link.children.map((child) => {
+                      const childActive = pathname === child.href || pathname?.startsWith(child.href + '/');
+                      return (
+                        <Link
+                          key={child.href}
+                          href={child.href}
+                          className={`block px-4 py-2.5 text-sm transition-colors ${
+                            childActive
+                              ? 'text-primary font-medium bg-warm'
+                              : 'text-secondary hover:text-primary hover:bg-warm/50'
+                          }`}
+                        >
+                          {child.label}
+                        </Link>
+                      );
+                    });
+                  }
+                  const prefix = (link.activePrefix || link.href);
                   const isActive = pathname === prefix || pathname?.startsWith(prefix + '/');
                   return (
                     <Link
