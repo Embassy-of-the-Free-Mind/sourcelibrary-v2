@@ -112,9 +112,8 @@ function CollectionCard({ col }: { col: SubCollection }) {
   return (
     <Link
       href={`/collections/${col.slug}`}
-      className={`group relative block overflow-hidden rounded-lg aspect-[4/3] ${
-        !col.visible ? 'opacity-40' : ''
-      }`}
+      className={`group relative block overflow-hidden rounded-lg aspect-[4/3] ${!col.visible ? 'opacity-40' : ''
+        }`}
     >
       {col.image ? (
         <Image

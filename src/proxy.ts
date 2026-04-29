@@ -10,6 +10,8 @@ const NON_TENANT_PATHS = new Set([
   'support', 'unauthorized', 'design-options', 'experiments',
   'ficino-society', 'contribute', 'census', 'oauth', 'developers',
   'founding-donors', 'libraries', 'blog', '_archived', '.well-known',
+  // Global navigation roots
+  'gallery', 'browse', 'explore', 'librarian', 'podcast', 'search',
   // Legacy root paths (pages moved to /[tenant]/*) — kept here to 404 cleanly
   'book', 'collections',
 ]);
@@ -384,6 +386,20 @@ export async function proxy(request: NextRequest) {
     if (directTenant) {
       const url = request.nextUrl.clone();
       url.pathname = `/collections${collectionsSuffix}`;
+      return NextResponse.redirect(url, 308);
+    }
+  }
+
+  // Explore is global-only. Canonicalize tenant-scoped explore paths
+  // (e.g. /bph/explore/map) to /explore/map.
+  const tenantExploreMatch = pathname.match(/^\/([^/]+)\/explore(\/.*)?$/);
+  if (tenantExploreMatch) {
+    const tenantSegment = tenantExploreMatch[1];
+    const exploreSuffix = tenantExploreMatch[2] || '';
+    const directTenant = await resolveActiveTenant(tenantSegment);
+    if (directTenant) {
+      const url = request.nextUrl.clone();
+      url.pathname = `/explore${exploreSuffix}`;
       return NextResponse.redirect(url, 308);
     }
   }

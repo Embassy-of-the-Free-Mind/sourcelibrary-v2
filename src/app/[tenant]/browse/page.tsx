@@ -1,5 +1,6 @@
 import { Metadata } from 'next';
 import Link from 'next/link';
+import { headers } from 'next/headers';
 import SiteHeader from '@/components/layout/SiteHeader';
 
 export const metadata: Metadata = {
@@ -20,7 +21,11 @@ const CENTURIES = [
   { label: '20th century', slug: '1900s', range: '1900–1930' },
 ];
 
-export default function BrowsePage() {
+export default async function BrowsePage() {
+  const h = await headers();
+  const tenantSlug = h.get('x-tenant-slug');
+  const base = tenantSlug ? `/${tenantSlug}/browse` : '/browse';
+
   return (
     <>
       <SiteHeader variant="light" />
@@ -41,7 +46,7 @@ export default function BrowsePage() {
           {LETTERS.map(letter => (
             <Link
               key={letter}
-              href={`/browse/titles/${letter}`}
+              href={`${base}/titles/${letter}`}
               className="w-10 h-10 flex items-center justify-center rounded-lg text-sm font-medium transition-colors hover:opacity-80"
               style={{ background: 'var(--bg-warm)', color: 'var(--text-primary)', border: '1px solid var(--border-light)' }}
             >
@@ -60,7 +65,7 @@ export default function BrowsePage() {
           {LETTERS.map(letter => (
             <Link
               key={letter}
-              href={`/browse/authors/${letter}`}
+              href={`${base}/authors/${letter}`}
               className="w-10 h-10 flex items-center justify-center rounded-lg text-sm font-medium transition-colors hover:opacity-80"
               style={{ background: 'var(--bg-warm)', color: 'var(--text-primary)', border: '1px solid var(--border-light)' }}
             >
@@ -82,7 +87,7 @@ export default function BrowsePage() {
           {LETTERS.map(letter => (
             <Link
               key={letter}
-              href={`/browse/artists/${letter}`}
+              href={`${base}/artists/${letter}`}
               className="w-10 h-10 flex items-center justify-center rounded-lg text-sm font-medium transition-colors hover:opacity-80"
               style={{ background: 'var(--bg-warm)', color: 'var(--text-primary)', border: '1px solid var(--border-light)' }}
             >
@@ -101,7 +106,7 @@ export default function BrowsePage() {
           Browse illustrations and artworks by visual subject using the Iconclass classification system.
         </p>
         <Link
-          href="/browse/subjects"
+          href={`${base}/subjects`}
           className="inline-flex items-center gap-2 rounded-lg px-4 py-3 text-sm font-medium transition-colors hover:opacity-80"
           style={{ background: 'var(--bg-warm)', color: 'var(--text-primary)', border: '1px solid var(--border-light)' }}
         >
@@ -118,7 +123,7 @@ export default function BrowsePage() {
           {CENTURIES.map(c => (
             <Link
               key={c.slug}
-              href={`/browse/years/${c.slug}`}
+              href={`${base}/years/${c.slug}`}
               className="rounded-lg p-4 transition-colors hover:opacity-80"
               style={{ background: 'var(--bg-warm)', border: '1px solid var(--border-light)' }}
             >

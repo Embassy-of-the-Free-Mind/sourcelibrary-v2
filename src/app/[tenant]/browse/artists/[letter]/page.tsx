@@ -2,7 +2,9 @@ import { Metadata } from 'next';
 import Link from 'next/link';
 import SiteHeader from '@/components/layout/SiteHeader';
 import { authorSlug } from '@/lib/slugify';
+import { headers } from 'next/headers';
 import { browseArtists } from '@/lib/books-catalog';
+import { tenantBrowseArtists } from '@/lib/tenant-browse';
 import { notFound } from 'next/navigation';
 
 const LETTERS = 'ABCDEFGHIJKLMNOPQRSTUVWXYZ'.split('');
@@ -34,16 +36,23 @@ export default async function BrowseArtistsPage({ params }: PageProps) {
   const l = letter.toUpperCase();
   if (l.length !== 1 || !/[A-Z]/.test(l)) notFound();
 
+  const h = await headers();
+  const tenantId = h.get('x-tenant-id');
+  const tenantSlug = h.get('x-tenant-slug');
+  const base = tenantSlug ? `/${tenantSlug}/browse` : '/browse';
+
   let artists: { name: string; count: number }[] = [];
   try {
-    artists = await browseArtists(l);
+    artists = tenantId
+      ? await tenantBrowseArtists(tenantId, l)
+      : await browseArtists(l);
   } catch {
     // Supabase error — render empty page
   }
 
   return (
     <>
-      <SiteHeader variant="light" breadcrumbs={[{ label: 'Browse', href: '/browse' }]} />
+      <SiteHeader variant="light" breadcrumbs={[{ label: 'Browse', href: base }]} />
       <div className="max-w-4xl mx-auto px-6 md:px-12 py-12 md:py-20">
       <h1 className="text-3xl md:text-4xl font-display mb-2" style={{ color: 'var(--text-primary)' }}>
         Artists: {l}
@@ -57,7 +66,7 @@ export default async function BrowseArtistsPage({ params }: PageProps) {
         {LETTERS.map(lt => (
           <Link
             key={lt}
-            href={`/browse/artists/${lt}`}
+            href={`${base}/artists/${lt}`}
             className={`w-8 h-8 flex items-center justify-center rounded text-xs font-medium transition-colors ${
               lt === l ? 'text-white' : 'hover:opacity-70'
             }`}

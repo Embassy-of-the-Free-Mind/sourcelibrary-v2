@@ -1,7 +1,9 @@
 import { Metadata } from 'next';
 import Link from 'next/link';
 import SiteHeader from '@/components/layout/SiteHeader';
+import { headers } from 'next/headers';
 import { browseBooks } from '@/lib/books-catalog';
+import { tenantBrowseYears } from '@/lib/tenant-browse';
 import { notFound } from 'next/navigation';
 import BrowseViewToggle from '@/components/browse/BrowseViewToggle';
 
@@ -47,6 +49,11 @@ export default async function BrowseYearsPage({ params }: PageProps) {
   const p = PERIODS[period];
   if (!p) notFound();
 
+  const h = await headers();
+  const tenantId = h.get('x-tenant-id');
+  const tenantSlug = h.get('x-tenant-slug');
+  const base = tenantSlug ? `/${tenantSlug}/browse` : '/browse';
+
   let books: Array<{
     id: string;
     slug?: string;
@@ -63,35 +70,39 @@ export default async function BrowseYearsPage({ params }: PageProps) {
     is_first_translation: boolean;
   }> = [];
   try {
-    const result = await browseBooks({
-      yearMin: p.min,
-      yearMax: p.max,
-      hasTranslation: true,
-      sort: 'year_asc',
-      limit: 2000,
-    });
-    books = result.books.map(b => ({
-      id: b.id,
-      slug: b.slug || undefined,
-      title: b.title,
-      display_title: b.display_title || undefined,
-      author: b.author || '',
-      language: b.language || '',
-      published: b.published || '',
-      year: b.year || 0,
-      pages_count: b.pages_count || 0,
-      pages_translated: b.pages_translated || 0,
-      thumbnail: b.thumbnail,
-      thumbnail_blob: b.thumbnail_blob,
-      is_first_translation: b.is_first_translation || false,
-    }));
+    if (tenantId) {
+      books = await tenantBrowseYears(tenantId, p.min, p.max);
+    } else {
+      const result = await browseBooks({
+        yearMin: p.min,
+        yearMax: p.max,
+        hasTranslation: true,
+        sort: 'year_asc',
+        limit: 2000,
+      });
+      books = result.books.map(b => ({
+        id: b.id,
+        slug: b.slug || undefined,
+        title: b.title,
+        display_title: b.display_title || undefined,
+        author: b.author || '',
+        language: b.language || '',
+        published: b.published || '',
+        year: b.year || 0,
+        pages_count: b.pages_count || 0,
+        pages_translated: b.pages_translated || 0,
+        thumbnail: b.thumbnail,
+        thumbnail_blob: b.thumbnail_blob,
+        is_first_translation: b.is_first_translation || false,
+      }));
+    }
   } catch {
     // Supabase error — render empty page
   }
 
   return (
     <>
-      <SiteHeader variant="light" breadcrumbs={[{ label: 'Browse', href: '/browse' }]} />
+      <SiteHeader variant="light" breadcrumbs={[{ label: 'Browse', href: base }]} />
       <div className="max-w-6xl mx-auto px-6 md:px-12 py-12 md:py-20">
       <h1 className="text-3xl md:text-4xl font-display mb-2" style={{ color: 'var(--text-primary)' }}>
         {p.label}
@@ -105,7 +116,7 @@ export default async function BrowseYearsPage({ params }: PageProps) {
         {PERIOD_SLUGS.map(slug => (
           <Link
             key={slug}
-            href={`/browse/years/${slug}`}
+            href={`${base}/years/${slug}`}
             className={`px-3 py-1.5 rounded-full text-xs font-medium transition-colors ${
               slug === period ? 'text-white' : 'hover:opacity-70'
             }`}
