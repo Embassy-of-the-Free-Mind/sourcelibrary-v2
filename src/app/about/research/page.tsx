@@ -19,6 +19,8 @@ export default function ResearchPage() {
         <ContentHeader
           title="How Our Translations Work"
           subtitle="Every translation in Source Library is produced by AI and preserved alongside the original text. Here's how the process works, what quality signals we measure, and what the limitations are."
+          image="https://images.sourcelibrary.org/archived/695591547bd6d2cd1d618a62/154.jpg"
+          imageAlt="Historical manuscript page showing original text"
         />
       }
       bg="bg-cream"

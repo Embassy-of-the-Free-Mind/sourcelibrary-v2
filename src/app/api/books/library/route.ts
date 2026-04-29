@@ -1,6 +1,7 @@
 import { NextRequest, NextResponse } from 'next/server';
 import { getReadDb } from '@/lib/mongodb';
 import { buildBookSearchStage } from '@/lib/atlas-search';
+import { getTenantContextFromRequest, resolveTenantId } from '@/lib/tenant-context';
 
 export const dynamic = 'force-dynamic';
 export const maxDuration = 120;
@@ -50,10 +51,23 @@ export async function GET(request: NextRequest) {
     const firstTranslation = searchParams.get('first_translation') === 'true';
     const hasTranslation = searchParams.get('has_translation') === 'true';
     const sort = (searchParams.get('sort') || 'recent-translation') as SortOption;
+    const { slug: tenantSlugHeader, id: tenantIdHeader } = getTenantContextFromRequest(request);
+    const tenantSlugParam = searchParams.get('tenant_slug') || '';
+    const tenantSlug = tenantSlugHeader || tenantSlugParam;
+
+    // Prefer proxy-resolved x-tenant-id header. Fallback to slug param resolution.
+    let tenantId: string | null = tenantIdHeader;
+    if (!tenantId && tenantSlugParam) {
+      tenantId = await resolveTenantId(tenantSlugParam);
+    }
+    if (tenantSlug && !tenantId) {
+      // Unknown tenant slug — return empty results
+      return NextResponse.json({ books: [], total: 0, skip, limit });
+    }
 
     // Serve cached response for cacheable requests (no text search, reasonable pagination)
     const isCacheable = !search.trim() && skip < 200;
-    const cacheKey = `s:${sort}|sk:${skip}|l:${limit}|ft:${firstTranslation}|ht:${hasTranslation}|lang:${language}|cat:${category}|col:${collection}|lib:${library}`;
+    const cacheKey = `t:${tenantSlug}|s:${sort}|sk:${skip}|l:${limit}|ft:${firstTranslation}|ht:${hasTranslation}|lang:${language}|cat:${category}|col:${collection}|lib:${library}`;
     if (isCacheable) {
       const cached = browseCache.get(cacheKey);
       if (cached && (Date.now() - cached.timestamp) < BROWSE_CACHE_TTL) {
@@ -83,12 +97,14 @@ export async function GET(request: NextRequest) {
         }),
         ...(collection ? [{ $match: { collections: collection } }] : []),
         ...(library ? [{ $match: { 'image_source.provider': library } }] : []),
+        ...(tenantId ? [{ $match: { tenantId } }] : []),
       ];
     } else {
       const matchConditions: Record<string, unknown>[] = [
         { visible: true },
         { pages_count: { $gt: 0 } },
       ];
+      if (tenantId) matchConditions.push({ tenantId });
       if (language) matchConditions.push({ language });
       if (category) matchConditions.push({ categories: category });
       if (collection) matchConditions.push({ collections: collection });
@@ -135,6 +151,7 @@ export async function GET(request: NextRequest) {
       _id: 0,
       id: 1,
       slug: 1,
+      tenantId: 1,
       title: 1,
       display_title: 1,
       author: 1,
@@ -174,7 +191,23 @@ export async function GET(request: NextRequest) {
 
     const total = countResult[0]?.count || 0;
 
-    const responseData = JSON.stringify({ books, total });
+    const tenantIds = [...new Set(books.map((b: any) => b.tenantId).filter(Boolean))];
+    const tenantSlugMap = new Map<string, string>();
+    if (tenantIds.length > 0) {
+      const tenants = await db.collection('tenants')
+        .find({ id: { $in: tenantIds }, status: { $ne: 'deleted' } }, { projection: { _id: 0, id: 1, slug: 1 }, maxTimeMS: 5000 })
+        .toArray();
+      for (const tenant of tenants) {
+        if (tenant?.id && tenant?.slug) tenantSlugMap.set(tenant.id, tenant.slug);
+      }
+    }
+
+    const booksWithTenantSlug = books.map((book: any) => ({
+      ...book,
+      tenant_slug: book.tenantId ? tenantSlugMap.get(book.tenantId) || null : null,
+    }));
+
+    const responseData = JSON.stringify({ books: booksWithTenantSlug, total });
 
     // Cache cacheable views
     if (isCacheable) {

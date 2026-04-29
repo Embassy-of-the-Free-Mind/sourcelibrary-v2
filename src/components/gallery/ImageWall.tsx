@@ -1,7 +1,7 @@
 'use client';
 
 import { useEffect, useRef, useState, useCallback, useMemo } from 'react';
-import { useRouter } from 'next/navigation';
+import { useRouter, usePathname } from 'next/navigation';
 
 interface WallImage {
   id: string;   // pageId-detectionIndex
@@ -38,6 +38,11 @@ export default function ImageWall({ initialData }: ImageWallProps) {
   const canvasRef = useRef<HTMLCanvasElement>(null);
   const containerRef = useRef<HTMLDivElement>(null);
   const router = useRouter();
+  const pathname = usePathname();
+
+  // Extract tenant prefix from pathname
+  const pathParts = pathname.split('/').filter(Boolean);
+  const tenantPrefix = pathParts[1] === 'gallery' && pathParts[0] ? `/${pathParts[0]}` : '';
 
   // Data
   const [images, setImages] = useState<WallImage[]>(initialData?.images ?? []);
@@ -358,7 +363,7 @@ export default function ImageWall({ initialData }: ImageWallProps) {
           const idx = hitTest(sx, sy);
           if (idx >= 0) {
             const img = images[idx];
-            router.push(`/gallery/image/${img.id}`);
+            router.push(`${tenantPrefix}/gallery/image/${img.id}`);
           }
         }
         dragRef.current = null;
@@ -419,7 +424,7 @@ export default function ImageWall({ initialData }: ImageWallProps) {
           const idx = hitTest(sx, sy);
           if (idx >= 0) {
             const img = images[idx];
-            router.push(`/gallery/image/${img.id}`);
+            router.push(`${tenantPrefix}/gallery/image/${img.id}`);
           }
         }
       }

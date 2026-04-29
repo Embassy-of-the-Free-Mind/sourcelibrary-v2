@@ -1,7 +1,7 @@
 'use client';
 
 import { useState, useEffect, useCallback, useRef } from 'react';
-import { useSearchParams, useRouter } from 'next/navigation';
+import { useSearchParams, useRouter, usePathname } from 'next/navigation';
 import Link from 'next/link';
 import Image from 'next/image';
 import {
@@ -87,7 +87,11 @@ function shuffle<T>(arr: T[]): T[] {
 export default function GalleryClient({ initialData, initialCollections, bookCollections = [] }: GalleryClientProps) {
   const searchParams = useSearchParams();
   const router = useRouter();
+  const pathname = usePathname();
   const identity = useIdentity();
+
+  const pathParts = pathname.split('/').filter(Boolean);
+  const tenantPrefix = pathParts[1] === 'gallery' && pathParts[0] ? `/${pathParts[0]}` : '';
 
   // Shuffle initial items client-side so order varies each visit
   const [data, setData] = useState<GalleryResponse>(() => ({
@@ -141,8 +145,8 @@ export default function GalleryClient({ initialData, initialCollections, bookCol
       }
     });
     params.delete('offset');
-    router.push(`/gallery?${params.toString()}`);
-  }, [searchParams, router]);
+    router.push(`${tenantPrefix}/gallery?${params.toString()}`);
+  }, [searchParams, router, tenantPrefix]);
 
   // Fetch gallery data when filters change (resets items) — skip on initial load if no URL filters
   useEffect(() => {
@@ -183,7 +187,7 @@ export default function GalleryClient({ initialData, initialCollections, bookCol
     };
 
     fetchGallery();
-  // eslint-disable-next-line react-hooks/exhaustive-deps
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [bookId, collectionFilter, libraryFilter, imageSearchQuery, typeFilter, subjectFilter, iconclassFilter, yearStart, yearEnd, qualityParam, includeArchive, identity.id]);
 
   // Load more handler — appends next batch to accumulated items
@@ -293,7 +297,7 @@ export default function GalleryClient({ initialData, initialCollections, bookCol
       <SiteHeader
         variant="dark"
         sticky
-        breadcrumbs={[{ label: 'Image Gallery', href: '/gallery' }]}
+        breadcrumbs={[{ label: 'Image Gallery', href: `${tenantPrefix}/gallery` }]}
       />
 
       <div className="px-4 sm:px-6 lg:px-8 py-6 overflow-x-hidden">
@@ -347,9 +351,8 @@ export default function GalleryClient({ initialData, initialCollections, bookCol
           {/* Filters Toggle */}
           <button
             onClick={() => setShowFilters(!showFilters)}
-            className={`flex items-center gap-1.5 px-3 py-2 text-sm rounded-lg border transition-colors ${
-              showFilters ? 'bg-accent-rust text-white border-accent-rust' : 'bg-white text-stone-600 border-stone-300 hover:bg-stone-50'
-            }`}
+            className={`flex items-center gap-1.5 px-3 py-2 text-sm rounded-lg border transition-colors ${showFilters ? 'bg-accent-rust text-white border-accent-rust' : 'bg-white text-stone-600 border-stone-300 hover:bg-stone-50'
+              }`}
           >
             <SlidersHorizontal className="w-4 h-4" />
             Filters
@@ -357,7 +360,7 @@ export default function GalleryClient({ initialData, initialCollections, bookCol
 
           {/* Image Wall link */}
           <Link
-            href="/gallery/wall"
+            href={`${tenantPrefix}/gallery/wall`}
             className="flex items-center gap-1.5 px-3 py-2 text-sm rounded-lg border border-stone-300 bg-white text-stone-600 hover:bg-stone-50 transition-colors"
           >
             <svg width="16" height="16" viewBox="0 0 16 16" fill="none" className="w-4 h-4">
@@ -463,11 +466,10 @@ export default function GalleryClient({ initialData, initialCollections, bookCol
                     <button
                       key={key}
                       onClick={() => handleQualityChange(key)}
-                      className={`px-2 py-1 text-xs rounded-full transition-colors ${
-                        currentQualityLevel === key
+                      className={`px-2 py-1 text-xs rounded-full transition-colors ${currentQualityLevel === key
                           ? 'bg-accent-rust text-white'
                           : 'bg-stone-100 text-stone-600 hover:bg-stone-200'
-                      }`}
+                        }`}
                     >
                       {label}
                     </button>
@@ -630,7 +632,7 @@ export default function GalleryClient({ initialData, initialCollections, bookCol
             )}
             <div className="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-5 xl:grid-cols-6 gap-4">
               {allItems.map((item, idx) => (
-                <GalleryCard key={`${item.pageId}-${item.detectionIndex}-${idx}`} item={item} priority={idx < 12} />
+                <GalleryCard key={`${item.pageId}-${item.detectionIndex}-${idx}`} item={item} priority={idx < 12} tenantPrefix={tenantPrefix} />
               ))}
             </div>
 
@@ -660,7 +662,7 @@ export default function GalleryClient({ initialData, initialCollections, bookCol
   );
 }
 
-function GalleryCard({ item, priority = false }: { item: GalleryItem; priority?: boolean }) {
+function GalleryCard({ item, priority = false, tenantPrefix = '' }: { item: GalleryItem; priority?: boolean; tenantPrefix?: string }) {
   const [imageError, setImageError] = useState(false);
   const [useCropFallback, setUseCropFallback] = useState(false);
 
@@ -677,7 +679,7 @@ function GalleryCard({ item, priority = false }: { item: GalleryItem; priority?:
 
   return (
     <div className="relative group rounded-lg overflow-hidden hover:shadow-md transition-all hover:-translate-y-0.5">
-      <Link href={`/gallery/image/${galleryImageId}`} className="block relative aspect-square bg-stone-100">
+      <Link href={`${tenantPrefix}/gallery/image/${galleryImageId}`} className="block relative aspect-square bg-stone-100">
         {!imageError ? (
           <Image
             src={displayUrl}
@@ -749,6 +751,9 @@ function GalleryCard({ item, priority = false }: { item: GalleryItem; priority?:
 }
 
 function BookEmptyState({ bookInfo }: { bookInfo: BookInfo }) {
+  const pathname = usePathname();
+  const pathParts = pathname.split('/').filter(Boolean);
+  const tenantPrefix = pathParts[1] === 'gallery' && pathParts[0] ? `/${pathParts[0]}` : '';
   const [extracting, setExtracting] = useState(false);
 
   const handleExtract = async () => {
@@ -804,7 +809,7 @@ function BookEmptyState({ bookInfo }: { bookInfo: BookInfo }) {
               This book needs OCR processing before images can be extracted.
             </p>
             <Link
-              href={`/book/${bookInfo.slug || bookInfo.id}`}
+              href={`${tenantPrefix}/book/${bookInfo.slug || bookInfo.id}`}
               className="inline-block mt-3 text-accent-rust hover:text-accent-rust text-sm"
             >
               Go to book page →

@@ -28,26 +28,33 @@ interface CollectionBook {
   ft_disposition?: string;
   published?: string;
   translation_percent?: number;
+  resource_type?: string;
 }
 
 interface CollectionBookCardProps {
   book: CollectionBook;
   priority?: boolean;
+  /** Optional URL prefix (e.g. '/bph') — prepended to the /book/{slug} path */
+  bookUrlPrefix?: string;
 }
 
-export default function CollectionBookCard({ book, priority = false }: CollectionBookCardProps) {
+export default function CollectionBookCard({ book, priority = false, bookUrlPrefix }: CollectionBookCardProps) {
   const [imageLoaded, setImageLoaded] = useState(false);
   const [imageError, setImageError] = useState(false);
   const [useFallback, setUseFallback] = useState(false);
 
+  const isArtwork = !!book.resource_type;
   const pageCount = book.pages_count || book.pages || 0;
   const primaryUrl = getBookThumbnailUrl(book, 'display');
   const fallbackUrl = getBookThumbnailUrl(book, 'thumb');
   const thumbnailUrl = useFallback && fallbackUrl ? fallbackUrl : primaryUrl;
+  const slug = book.slug || book.id || book.bookId;
+
+  const bookHref = `${bookUrlPrefix || ''}/book/${book.slug || book.id || book.bookId}`;
 
   return (
     <Link
-      href={`/book/${book.slug || book.id || book.bookId}`}
+      href={isArtwork && bookUrlPrefix ? `${bookUrlPrefix}/artwork/${slug}` : bookHref}
       className="group block"
     >
       <div className="h-full rounded-xl border border-border-light hover:border-accent-rust/40 hover:shadow-lg transition-[border-color,box-shadow] overflow-hidden bg-white">
@@ -120,19 +127,30 @@ export default function CollectionBookCard({ book, priority = false }: Collectio
                 {book.year}
               </span>
             )}
-            {pageCount > 0 && (
+            {isArtwork ? (
+              <>{book.resource_type && (
+                <>
+                  <span>•</span>
+                  <span className="capitalize">{book.resource_type.replace(/_/g, ' ')}</span>
+                </>
+              )}</>
+            ) : (
               <>
-                <span>•</span>
-                <span className="flex items-center gap-1">
-                  <FileText className="w-3 h-3" />
-                  {pageCount} pages
-                </span>
-              </>
-            )}
-            {book.language && (
-              <>
-                <span>•</span>
-                <span>{book.language}</span>
+                {pageCount > 0 && (
+                  <>
+                    <span>•</span>
+                    <span className="flex items-center gap-1">
+                      <FileText className="w-3 h-3" />
+                      {pageCount} pages
+                    </span>
+                  </>
+                )}
+                {book.language && (
+                  <>
+                    <span>•</span>
+                    <span>{book.language}</span>
+                  </>
+                )}
               </>
             )}
           </div>

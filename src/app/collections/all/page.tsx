@@ -2,6 +2,7 @@ import { getReadDb } from '@/lib/mongodb';
 import Link from 'next/link';
 import Image from 'next/image';
 import ContentPageLayout, { ContentHeader } from '@/components/layout/ContentPageLayout';
+// No external slugify imports needed
 import type { Metadata } from 'next';
 
 export const revalidate = 86400;
@@ -20,6 +21,7 @@ interface FeaturedImage {
 
 interface SubCollection {
   slug: string;
+  tenant_slug?: string | null;
   name: string;
   book_count: number;
   visible: boolean;
@@ -29,6 +31,7 @@ interface SubCollection {
 
 interface Wing {
   slug: string;
+  tenant_slug?: string | null;
   name: string;
   book_count: number;
   image?: string;
@@ -50,15 +53,27 @@ async function fetchWings(): Promise<Wing[]> {
     type: { $ne: 'curated' },
     collection_type: { $ne: 'visual_art' },
     visible: true,
-  }).project({ slug: 1, name: 1, book_count: 1, featured_images: { $slice: 1 }, _id: 0 }).sort({ name: 1 }).toArray();
+  }).project({ slug: 1, tenantId: 1, name: 1, book_count: 1, featured_images: { $slice: 1 }, _id: 0 }).sort({ name: 1 }).toArray();
 
   // Get all subcollections with their first featured image
   const subs = await db.collection('collections').find({
     parent: { $exists: true },
   }).project({
-    slug: 1, name: 1, book_count: 1, parent: 1, visible: 1, type: 1,
+    slug: 1, tenantId: 1, name: 1, book_count: 1, parent: 1, visible: 1, type: 1,
     featured_images: { $slice: 1 }, _id: 0,
   }).toArray();
+
+  const tenantIds = [...new Set([
+    ...wings.map((w: any) => w.tenantId).filter(Boolean),
+    ...subs.map((s: any) => s.tenantId).filter(Boolean),
+  ])];
+  const tenants = tenantIds.length > 0
+    ? await db.collection('tenants').find(
+      { id: { $in: tenantIds }, status: { $ne: 'deleted' } },
+      { projection: { _id: 0, id: 1, slug: 1 }, maxTimeMS: 5000 }
+    ).toArray()
+    : [];
+  const tenantSlugById = new Map(tenants.map((t: any) => [t.id, t.slug]));
 
   // Build parent → children map
   const childMap = new Map<string, SubCollection[]>();
@@ -68,6 +83,7 @@ async function fetchWings(): Promise<Wing[]> {
       if (!childMap.has(p)) childMap.set(p, []);
       childMap.get(p)!.push({
         slug: sub.slug,
+        tenant_slug: sub.tenantId ? tenantSlugById.get(sub.tenantId) || null : null,
         name: sub.name || sub.slug,
         book_count: sub.book_count || 0,
         visible: sub.visible !== false,
@@ -84,6 +100,7 @@ async function fetchWings(): Promise<Wing[]> {
 
   return wings.map(w => ({
     slug: w.slug,
+    tenant_slug: w.tenantId ? tenantSlugById.get(w.tenantId) || null : null,
     name: w.name,
     book_count: w.book_count || 0,
     image: pickImage(w.featured_images),
@@ -95,9 +112,8 @@ function CollectionCard({ col }: { col: SubCollection }) {
   return (
     <Link
       href={`/collections/${col.slug}`}
-      className={`group relative block overflow-hidden rounded-lg aspect-[4/3] ${
-        !col.visible ? 'opacity-40' : ''
-      }`}
+      className={`group relative block overflow-hidden rounded-lg aspect-[4/3] ${!col.visible ? 'opacity-40' : ''
+        }`}
     >
       {col.image ? (
         <Image
@@ -134,6 +150,8 @@ export default async function AllCollectionsPage() {
         <ContentHeader
           title="All Collections"
           subtitle="Every wing and sub-collection in the library."
+          image={wings.find(w => w.image)?.image}
+          imageAlt="Illustration from the collection"
         />
       }
     >

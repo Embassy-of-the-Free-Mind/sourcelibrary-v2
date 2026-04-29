@@ -1,7 +1,7 @@
 import { Suspense } from 'react';
 import Link from 'next/link';
 import { Library } from 'lucide-react';
-import SearchPage from '@/app/search/page';
+import SearchPage from '@/app/[tenant]/search/page';
 
 export const dynamic = 'force-dynamic';
 

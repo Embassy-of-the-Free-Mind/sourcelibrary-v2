@@ -1,6 +1,6 @@
 'use client';
 
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
 import Link from 'next/link';
 import ImageWithMagnifier from '@/components/ui/ImageWithMagnifier';
 import { ZoomIn, Maximize, Minimize, ChevronLeft, ChevronRight } from 'lucide-react';
@@ -13,6 +13,7 @@ interface ArtworkNavItem {
 interface ArtworkHeroProps {
   imageUrl: string;
   thumbUrl?: string;
+  hiResUrl?: string;
   title: string;
   fullResUrl: string;
   license: string;
@@ -21,10 +22,49 @@ interface ArtworkHeroProps {
   nextWork?: ArtworkNavItem | null;
 }
 
-export default function ArtworkHero({ imageUrl, thumbUrl, title, fullResUrl, license, isLandscape, prevWork, nextWork }: ArtworkHeroProps) {
+export default function ArtworkHero({ imageUrl, thumbUrl, hiResUrl, title, fullResUrl, license, isLandscape, prevWork, nextWork }: ArtworkHeroProps) {
   const [fitHeight, setFitHeight] = useState(false);
   const hasThumb = !!thumbUrl && thumbUrl !== imageUrl;
-  const [hiResLoaded, setHiResLoaded] = useState(!hasThumb);
+  const hasHiRes = !!hiResUrl && hiResUrl !== imageUrl;
+  const [medReady, setMedReady] = useState(!hasThumb); // if no thumb, medium is already the starting point
+  const [hiResReady, setHiResReady] = useState(false);
+
+  // Background-load medium blob
+  useEffect(() => {
+    if (!hasThumb) return;
+    const img = new window.Image();
+    img.onload = () => setMedReady(true);
+    img.src = imageUrl;
+  }, [hasThumb, imageUrl]);
+
+  // Background-load hi-res after medium is ready
+  useEffect(() => {
+    if (!medReady || !hasHiRes) return;
+    const img = new window.Image();
+    img.onload = () => setHiResReady(true);
+    img.src = hiResUrl!;
+  }, [medReady, hasHiRes, hiResUrl]);
+
+  // Best loaded source — upgrades instantly, no transitions
+  const displaySrc = hiResReady && hiResUrl ? hiResUrl
+    : medReady ? imageUrl
+    : thumbUrl || imageUrl;
+
+  // Best available for magnifier zoom
+  const magnifierSrc = hiResReady && hiResUrl ? hiResUrl : imageUrl;
+
+  // Keyboard navigation
+  useEffect(() => {
+    const handleKey = (e: KeyboardEvent) => {
+      if (e.key === 'ArrowLeft' && prevWork) {
+        window.location.href = `/artwork/${prevWork.slug}`;
+      } else if (e.key === 'ArrowRight' && nextWork) {
+        window.location.href = `/artwork/${nextWork.slug}`;
+      }
+    };
+    window.addEventListener('keydown', handleKey);
+    return () => window.removeEventListener('keydown', handleKey);
+  }, [prevWork, nextWork]);
 
   return (
     <div className="bg-stone-900 relative">
@@ -34,46 +74,16 @@ export default function ArtworkHero({ imageUrl, thumbUrl, title, fullResUrl, lic
           className={`relative mx-auto ${fitHeight ? '' : isLandscape ? 'aspect-[16/10]' : 'aspect-[3/4]'}`}
           style={fitHeight ? { height: 'calc(100vh - 120px)' } : undefined}
         >
-          {hasThumb ? (
-            <>
-              {/* Layer 1: 600px thumb — shows immediately */}
-              <div className={`absolute inset-0 transition-opacity duration-700 ${hiResLoaded ? 'opacity-0 pointer-events-none' : 'opacity-100'}`}>
-                <ImageWithMagnifier
-                  src={thumbUrl}
-                  thumbnail={thumbUrl}
-                  alt={title}
-                  className="w-full h-full"
-                  magnifierSize={240}
-                  zoomLevel={3}
-                  darkMode
-                />
-              </div>
-              {/* Layer 2: full-res — fades in over thumb */}
-              <div className={`absolute inset-0 transition-opacity duration-700 ${hiResLoaded ? 'opacity-100' : 'opacity-0'}`}>
-                <ImageWithMagnifier
-                  src={imageUrl}
-                  thumbnail={thumbUrl}
-                  highResSrc={imageUrl}
-                  alt={title}
-                  className="w-full h-full"
-                  magnifierSize={240}
-                  zoomLevel={3}
-                  darkMode
-                  onLoad={() => setHiResLoaded(true)}
-                />
-              </div>
-            </>
-          ) : (
-            <ImageWithMagnifier
-              src={imageUrl}
-              thumbnail={imageUrl}
-              alt={title}
-              className="w-full h-full"
-              magnifierSize={240}
-              zoomLevel={3}
-              darkMode
-            />
-          )}
+          <ImageWithMagnifier
+            src={displaySrc}
+            thumbnail={displaySrc}
+            highResSrc={magnifierSrc}
+            alt={title}
+            className="w-full h-full"
+            magnifierSize={240}
+            zoomLevel={3}
+            darkMode
+          />
         </div>
       </div>
 

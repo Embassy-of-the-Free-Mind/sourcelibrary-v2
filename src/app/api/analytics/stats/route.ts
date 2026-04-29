@@ -1,5 +1,6 @@
 import { NextRequest, NextResponse } from 'next/server';
 import { getReadDb } from '@/lib/mongodb';
+import { getTenantContextFromRequest } from '@/lib/tenant-context';
 
 // In-memory cache for global stats (called on every page load via footer)
 let globalStatsCache: { data: Record<string, unknown>; timestamp: number } | null = null;
@@ -17,13 +18,14 @@ export async function GET(request: NextRequest) {
   try {
     const { searchParams } = new URL(request.url);
     const bookId = searchParams.get('book_id');
+    const { id: tenantId } = getTenantContextFromRequest(request);
 
     const db = await getReadDb();
 
     if (bookId) {
       // Get stats for specific book
       const book = await db.collection('books').findOne(
-        { id: bookId },
+        { id: bookId, tenantId },
         { projection: { read_count: 1, edit_count: 1 } }
       );
 

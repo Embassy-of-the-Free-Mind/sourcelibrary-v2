@@ -1,7 +1,44 @@
 import { auth } from '@/lib/auth';
+import { ROLE_LEVEL, type Role } from '@/lib/auth';
 import { NextRequest, NextResponse } from 'next/server';
 import { Session } from 'next-auth';
 import { redirect } from 'next/navigation';
+import { headers } from 'next/headers';
+import { getDb } from '@/lib/mongodb';
+
+function normalizeRole(role: unknown): Role {
+  if (role === 'superadmin' || role === 'admin' || role === 'editor' || role === 'reader') {
+    return role;
+  }
+  // Backward compatibility with older role labels.
+  if (role === 'user') return 'reader';
+  return 'reader';
+}
+
+async function getTenantMembershipRole(
+  email: string | null | undefined,
+  tenantId: string | null | undefined,
+): Promise<Role | null> {
+  if (!email || !tenantId) return null;
+
+  try {
+    const db = await getDb();
+    const membership = await db.collection('memberships').findOne(
+      {
+        email: email.toLowerCase(),
+        tenantId,
+        status: 'active',
+      },
+      { projection: { role: 1 } }
+    );
+
+    if (!membership?.role) return null;
+    return normalizeRole(membership.role);
+  } catch {
+    // Auth guards should fail closed on role checks if membership lookup fails.
+    return null;
+  }
+}
 
 /**
  * Get the current session in API routes or server components
@@ -11,8 +48,8 @@ export async function getSession(): Promise<Session | null> {
 }
 
 /**
- * Require any authentication in server components (admin or reader)
- * Redirects to signin if not authenticated
+ * Require any authentication in server components.
+ * Redirects to signin if not authenticated.
  */
 export async function requireAuth(): Promise<Session> {
   const session = await getSession();
@@ -23,84 +60,70 @@ export async function requireAuth(): Promise<Session> {
 }
 
 /**
- * Require admin role in server components
- * Redirects to signin if not authenticated, or unauthorized if not admin
+ * Require a minimum role level in server components.
+ * Redirects to loginPath if not authenticated, or /unauthorized if role is insufficient.
+ *
+ * TODO (Phase 1): Callers in tenant layouts must pass loginPath = `/${tenantSlug}/login`,
+ * reading tenantSlug from headers() set by proxy.ts.
  */
-export async function requireAdmin(): Promise<Session> {
+export async function requireRole(minRole: Role, loginPath = '/auth/signin'): Promise<Session> {
   const session = await getSession();
   if (!session?.user) {
-    redirect('/auth/signin');
+    redirect(loginPath);
   }
-  if ((session.user as any).role !== 'admin') {
+  let effectiveRole = normalizeRole((session.user as any).role);
+
+  if ((ROLE_LEVEL[effectiveRole] ?? 0) < ROLE_LEVEL[minRole]) {
+    const h = await headers();
+    const tenantId = h.get('x-tenant-id');
+    const tenantRole = await getTenantMembershipRole(session.user.email, tenantId);
+    if (tenantRole && (ROLE_LEVEL[tenantRole] ?? 0) > (ROLE_LEVEL[effectiveRole] ?? 0)) {
+      effectiveRole = tenantRole;
+    }
+  }
+
+  if ((ROLE_LEVEL[effectiveRole] ?? 0) < ROLE_LEVEL[minRole]) {
     redirect('/unauthorized');
   }
   return session;
 }
 
+// Convenience shorthands
+export const requireSuperAdmin = () => requireRole('superadmin', '/platform/login');
+export const requireAdmin = () => requireRole('admin'); // TODO (Phase 1): pass /${tenantSlug}/login
+export const requireEditor = () => requireRole('editor'); // TODO (Phase 1): pass /${tenantSlug}/login
+
 /**
- * Require inner_circle or admin role in server components
+ * Check if current user is a superadmin
  */
-export async function requireInnerCircle(): Promise<Session> {
+export async function isSuperAdmin(): Promise<boolean> {
   const session = await getSession();
-  if (!session?.user) {
-    redirect('/auth/signin');
-  }
-  const role = (session.user as any).role;
-  if (role !== 'admin' && role !== 'inner_circle') {
-    redirect('/unauthorized');
-  }
-  return session;
+  return (session?.user as any)?.role === 'superadmin';
 }
 
 /**
- * Check if current user is an admin
+ * Check if current user is admin or superadmin
  */
 export async function isAdmin(): Promise<boolean> {
   const session = await getSession();
-  return (session?.user as any)?.role === 'admin';
+  const role = normalizeRole((session?.user as any)?.role);
+  return (ROLE_LEVEL[role] ?? 0) >= ROLE_LEVEL['admin'];
 }
 
 /**
- * Check if current user is inner_circle or admin
+ * Legacy compatibility alias for older callsites.
+ * Inner circle maps to editor-level access in the new role model.
  */
 export async function isInnerCircle(): Promise<boolean> {
   const session = await getSession();
-  const role = (session?.user as any)?.role;
-  return role === 'admin' || role === 'inner_circle';
+  const role = normalizeRole((session?.user as any)?.role);
+  return (ROLE_LEVEL[role] ?? 0) >= ROLE_LEVEL['editor'];
 }
 
 /**
- * Wrapper for API routes requiring any authentication.
- * Accepts either a NextAuth session or a CRON_SECRET bearer token
- * (for internal server-to-server calls from pipeline crons).
- * Returns 401 if not authenticated.
+ * Legacy compatibility alias for older server-component guards.
  */
-export function withAuth(
-  handler: (request: NextRequest, session: Session, context?: any) => Promise<NextResponse>
-): (request: NextRequest, context?: any) => Promise<NextResponse> {
-  return async (request: NextRequest, context?: any) => {
-    // Check for CRON_SECRET bearer token (internal service-to-service calls)
-    const cronSecret = process.env.CRON_SECRET;
-    const authHeader = request.headers.get('authorization');
-    if (cronSecret && authHeader === `Bearer ${cronSecret}`) {
-      // Create a synthetic admin session for cron calls
-      const cronSession: Session = {
-        user: { name: 'Pipeline Cron', email: 'cron@sourcelibrary.org', role: 'admin' } as any,
-        expires: new Date(Date.now() + 3600000).toISOString(),
-      };
-      return handler(request, cronSession, context);
-    }
-
-    const session = await auth();
-    if (!session?.user) {
-      return NextResponse.json(
-        { error: 'Unauthorized - Authentication required' },
-        { status: 401 }
-      );
-    }
-    return handler(request, session, context);
-  };
-}
+export const requireInnerCircle = () => requireRole('editor');
 
 // --- Dual-mode identity resolution for engagement APIs ---
 
@@ -142,15 +165,23 @@ export async function resolveIdentity(request: NextRequest): Promise<ResolvedIde
   return null;
 }
 
+// --- API route wrappers ---
+
 /**
- * Wrapper for API routes requiring inner_circle or admin role.
- * Returns 401 if not authenticated, 403 if not inner_circle/admin.
+ * Unified API route wrapper with role-based access control and tenant verification.
+ * Accepts CRON_SECRET bearer token for internal pipeline workers.
+ * Returns 401 if not authenticated, 403 if role is insufficient or tenant mismatch.
+ *
+ * Phase 1 tenant verification:
+ * - If x-tenant-id is present (tenant-scoped route), verifies session tenantId matches
+ * - Prevents cross-tenant data access via crafted headers
  */
-export function withInnerCircleAuth(
-  handler: (request: NextRequest, session: Session, context?: any) => Promise<NextResponse>
+export function withAuth(
+  handler: (request: NextRequest, session: Session, context?: any) => Promise<NextResponse>,
+  { minRole = 'reader' as Role }: { minRole?: Role } = {}
 ): (request: NextRequest, context?: any) => Promise<NextResponse> {
   return async (request: NextRequest, context?: any) => {
-    // Check for CRON_SECRET bearer token (internal service-to-service calls)
+    // CRON_SECRET bypass — pipeline workers call admin routes with this token
     const cronSecret = process.env.CRON_SECRET;
     const authHeader = request.headers.get('authorization');
     if (cronSecret && authHeader === `Bearer ${cronSecret}`) {
@@ -168,89 +199,57 @@ export function withInnerCircleAuth(
         { status: 401 }
       );
     }
-    const role = (session.user as any).role;
-    if (role !== 'admin' && role !== 'inner_circle') {
+
+    const headerTenantId = request.headers.get('x-tenant-id');
+    const membershipRole = await getTenantMembershipRole(session.user.email, headerTenantId);
+
+    let effectiveRole = normalizeRole((session.user as any).role);
+    if (membershipRole && (ROLE_LEVEL[membershipRole] ?? 0) > (ROLE_LEVEL[effectiveRole] ?? 0)) {
+      effectiveRole = membershipRole;
+    }
+
+    if ((ROLE_LEVEL[effectiveRole] ?? 0) < ROLE_LEVEL[minRole]) {
       return NextResponse.json(
-        { error: 'Forbidden - Inner circle access required' },
+        { error: 'Forbidden - Insufficient role' },
         { status: 403 }
       );
     }
+
+    // Phase 1 tenant verification: prevent cross-tenant access
+    if (headerTenantId) {
+      const sessionTenantId = (session.user as any).tenantId;
+
+      // Superadmin can access any tenant (bypass check)
+      if (effectiveRole !== 'superadmin') {
+        const sessionMatchesTenant = Boolean(sessionTenantId) && sessionTenantId === headerTenantId;
+        const membershipMatchesTenant = Boolean(membershipRole);
+        if (!sessionMatchesTenant && !membershipMatchesTenant) {
+          return NextResponse.json(
+            { error: 'Forbidden - Tenant mismatch' },
+            { status: 403 }
+          );
+        }
+      }
+    }
+
     return handler(request, session, context);
   };
 }
 
-/**
- * Wrapper for API routes requiring curator or admin role.
- * Curators can import books and edit metadata. Admins can do everything curators can.
- * Returns 401 if not authenticated, 403 if not curator/admin.
- */
-export function withCuratorAuth(
-  handler: (request: NextRequest, session: Session, context?: any) => Promise<NextResponse>
-): (request: NextRequest, context?: any) => Promise<NextResponse> {
-  return async (request: NextRequest, context?: any) => {
-    // Check for CRON_SECRET bearer token (internal service-to-service calls)
-    const cronSecret = process.env.CRON_SECRET;
-    const authHeader = request.headers.get('authorization');
-    if (cronSecret && authHeader === `Bearer ${cronSecret}`) {
-      const cronSession: Session = {
-        user: { name: 'Pipeline Cron', email: 'cron@sourcelibrary.org', role: 'admin' } as any,
-        expires: new Date(Date.now() + 3600000).toISOString(),
-      };
-      return handler(request, cronSession, context);
-    }
+// --- Shims — keep existing callsites working during Phase 1 migration ---
+// TODO: Remove withAdminAuth once all callsites use withAuth({ minRole: 'admin' })
+export const withAdminAuth = (h: (request: NextRequest, session: Session, context?: any) => Promise<NextResponse>) => withAuth(h, { minRole: 'admin' });
 
-    const session = await auth();
-    if (!session?.user) {
-      return NextResponse.json(
-        { error: 'Unauthorized - Authentication required' },
-        { status: 401 }
-      );
-    }
-    const role = (session.user as any).role;
-    if (role !== 'admin' && role !== 'curator') {
-      return NextResponse.json(
-        { error: 'Forbidden - Curator access required' },
-        { status: 403 }
-      );
-    }
-    return handler(request, session, context);
-  };
-}
+// TODO: Remove withSuperadminAuth once all callsites use withAuth({ minRole: 'superadmin' })
+export const withSuperadminAuth = (h: (request: NextRequest, session: Session, context?: any) => Promise<NextResponse>) => withAuth(h, { minRole: 'superadmin' });
 
-/**
- * Wrapper for API routes requiring admin role.
- * Accepts NextAuth admin sessions OR CRON_SECRET bearer tokens
- * (pipeline crons need to call admin routes too).
- * Returns 401 if not authenticated, 403 if not admin.
- */
-export function withAdminAuth(
-  handler: (request: NextRequest, session: Session, context?: any) => Promise<NextResponse>
-): (request: NextRequest, context?: any) => Promise<NextResponse> {
-  return async (request: NextRequest, context?: any) => {
-    // Check for CRON_SECRET bearer token (internal service-to-service calls)
-    const cronSecret = process.env.CRON_SECRET;
-    const authHeader = request.headers.get('authorization');
-    if (cronSecret && authHeader === `Bearer ${cronSecret}`) {
-      const cronSession: Session = {
-        user: { name: 'Pipeline Cron', email: 'cron@sourcelibrary.org', role: 'admin' } as any,
-        expires: new Date(Date.now() + 3600000).toISOString(),
-      };
-      return handler(request, cronSession, context);
-    }
+// TODO: Remove withEditorAuth once all callsites use withAuth({ minRole: 'editor' })
+export const withEditorAuth = (h: (request: NextRequest, session: Session, context?: any) => Promise<NextResponse>) => withAuth(h, { minRole: 'editor' });
 
-    const session = await auth();
-    if (!session?.user) {
-      return NextResponse.json(
-        { error: 'Unauthorized - Authentication required' },
-        { status: 401 }
-      );
-    }
-    if ((session.user as any).role !== 'admin') {
-      return NextResponse.json(
-        { error: 'Forbidden - Admin access required' },
-        { status: 403 }
-      );
-    }
-    return handler(request, session, context);
-  };
-}
+// TODO: Remove withInnerCircleAuth — mapped to 'editor'. Verify each callsite matches
+// this permission level before removing.
+export const withInnerCircleAuth = (h: (request: NextRequest, session: Session, context?: any) => Promise<NextResponse>) => withAuth(h, { minRole: 'editor' });
+
+// TODO: Remove withCuratorAuth — mapped to 'editor'. Verify each callsite matches
+// this permission level before removing.
+export const withCuratorAuth = (h: (request: NextRequest, session: Session, context?: any) => Promise<NextResponse>) => withAuth(h, { minRole: 'editor' });

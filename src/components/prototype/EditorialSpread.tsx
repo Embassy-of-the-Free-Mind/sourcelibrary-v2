@@ -16,6 +16,7 @@ interface FeaturedBook {
 interface EditorialSpreadProps {
   collection: {
     slug: string;
+    tenantSlug?: string | null;
     name: string;
     subtitle: string;
     description: string;

@@ -1,5 +1,6 @@
 import { NextRequest, NextResponse } from 'next/server';
 import { getDb } from '@/lib/mongodb';
+import { getTenantContextFromRequest } from '@/lib/tenant-context';
 import { ObjectId } from 'mongodb';
 import { withAuth } from '@/lib/auth-helpers';
 
@@ -15,6 +16,7 @@ export interface Highlight {
   note?: string;     // Optional user note
   color?: string;    // Highlight color
   user_name?: string; // Who highlighted this (public)
+  tenantId?: string; // Multi-tenant support (optional)
   created_at: Date;
 }
 
@@ -26,10 +28,15 @@ export async function GET(request: NextRequest) {
     const pageId = searchParams.get('page_id');
     const limit = Math.min(100, Math.max(1, parseInt(searchParams.get('limit') || '50')));
     const skip = Math.max(0, parseInt(searchParams.get('skip') || '0'));
+    const { id: tenantId } = getTenantContextFromRequest(request);
+
+    if (!tenantId) {
+      return NextResponse.json({ highlights: [], pagination: { limit, skip } });
+    }
 
     const db = await getDb();
 
-    const query: Record<string, string> = {};
+    const query: Record<string, string> = { tenantId };
     if (bookId) query.book_id = bookId;
     if (pageId) query.page_id = pageId;
 
@@ -56,6 +63,7 @@ export const POST = withAuth(async (request: NextRequest, session) => {
     const body = await request.json();
     const { book_id, page_id, page_number, book_title, book_author, text, context, note, color } = body;
     const user_name = session?.user?.name || session?.user?.email || undefined;
+    const { id: tenantId } = getTenantContextFromRequest(request);
 
     if (!book_id || !page_id || !text) {
       return NextResponse.json(
@@ -111,6 +119,7 @@ export const POST = withAuth(async (request: NextRequest, session) => {
       note: note?.trim(),
       color: color || 'yellow',
       user_name: user_name?.trim() || undefined,
+      tenantId: tenantId || undefined,
       created_at: new Date(),
     };
 

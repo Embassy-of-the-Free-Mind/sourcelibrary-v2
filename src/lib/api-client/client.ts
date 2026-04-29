@@ -25,8 +25,13 @@ apiClient.interceptors.request.use(
       config.headers['X-Visitor-ID'] = visitorId;
     }
 
-    // Add custom header (modify as needed)
-    config.headers['X-Tenant-Slug'] = 'collections';
+    // Add tenant slug from current page URL (e.g. /bph/search → 'bph')
+    if (typeof window !== 'undefined') {
+      const slug = window.location.pathname.split('/')[1] || '';
+      if (slug && /^[a-z0-9-]+$/.test(slug)) {
+        config.headers['X-Tenant-Slug'] = slug;
+      }
+    }
 
     // If data is FormData, remove Content-Type header to let browser set it with boundary
     if (config.data instanceof FormData) {
@@ -83,8 +88,13 @@ export async function streamRequest(
     headers.set('X-Visitor-ID', visitorId);
   }
 
-  // Add custom headers
-  headers.set('X-Tenant-Slug', 'collections');
+  // Add tenant slug from current page URL
+  if (typeof window !== 'undefined') {
+    const slug = window.location.pathname.split('/')[1] || '';
+    if (slug && /^[a-z0-9-]+$/.test(slug)) {
+      headers.set('X-Tenant-Slug', slug);
+    }
+  }
 
   // Make the streaming request
   const response = await fetch(url, {

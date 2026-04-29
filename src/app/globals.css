@@ -404,6 +404,9 @@ mark {
 .animate-fade-in {
   animation: fade-in 0.3s ease-out forwards;
 }
+.animate-fade-in-slow {
+  animation: fade-in 0.7s ease-out forwards;
+}
 
 /* Pulse glow animation for loading spinner */
 @keyframes pulse-glow {

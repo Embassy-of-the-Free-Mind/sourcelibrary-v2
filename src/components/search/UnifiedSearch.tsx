@@ -1,7 +1,7 @@
 'use client';
 
 import { useState, useCallback, useRef, useEffect, useMemo } from 'react';
-import { useRouter } from 'next/navigation';
+import { useRouter, usePathname } from 'next/navigation';
 import Link from 'next/link';
 import Image from 'next/image';
 import { Search, Book, Lightbulb, User, MapPin, BookOpen, Loader2, X, ChevronRight, ImageIcon, MessageCircle } from 'lucide-react';
@@ -77,6 +77,7 @@ function findCompletion(input: string, vocab: string[]): string | null {
 
 export default function UnifiedSearch() {
   const router = useRouter();
+  const pathname = usePathname();
   const [query, setQuery] = useState('');
   const [results, setResults] = useState<UnifiedSearchResponse | null>(null);
   const [loading, setLoading] = useState(false);
@@ -86,6 +87,10 @@ export default function UnifiedSearch() {
   const [ghostText, setGhostText] = useState<string | null>(null);
   const containerRef = useRef<HTMLDivElement>(null);
   const inputRef = useRef<HTMLInputElement>(null);
+
+  // Extract tenant prefix from pathname
+  const pathParts = pathname.split('/').filter(Boolean);
+  const tenantPrefix = pathParts[0] && pathParts[0] !== 'search' ? `/${pathParts[0]}` : '';
 
   // Preload vocabulary on first focus
   const handleFocus = useCallback(() => {
@@ -199,19 +204,19 @@ export default function UnifiedSearch() {
       const item = results.index.results[i];
       const bookPath = item.book_slug || item.book_id;
       const href = item.pages?.[0]
-        ? `/book/${bookPath}/guide?page=${item.pages[0]}`
-        : `/book/${bookPath}`;
+        ? `${tenantPrefix}/book/${bookPath}/guide?page=${item.pages[0]}`
+        : `${tenantPrefix}/book/${bookPath}`;
       items.push({ type: 'index', href, id: `index-${item.book_id}-${item.type}-${i}` });
     }
     for (const sem of semanticResults) {
-      items.push({ type: 'book', href: `/book/${sem.book_id}`, id: `semantic-${sem.book_id}` });
+      items.push({ type: 'book', href: `${tenantPrefix}/book/${sem.book_id}`, id: `semantic-${sem.book_id}` });
     }
     for (const img of galleryResults) {
-      items.push({ type: 'gallery', href: `/gallery/image/${img.id}`, id: `gallery-${img.id}` });
+      items.push({ type: 'gallery', href: `${tenantPrefix}/gallery/image/${img.id}`, id: `gallery-${img.id}` });
     }
-    items.push({ type: 'full-search', href: `/search?q=${encodeURIComponent(query)}`, id: 'full-search' });
+    items.push({ type: 'full-search', href: `${tenantPrefix}/search?q=${encodeURIComponent(query)}`, id: 'full-search' });
     return items;
-  }, [results, hasResults, query, galleryResults, semanticResults]);
+  }, [results, hasResults, query, galleryResults, semanticResults, tenantPrefix]);
 
   // Reset active index when results change
   useEffect(() => {
@@ -245,7 +250,7 @@ export default function UnifiedSearch() {
         // No item selected — go to full search page
         e.preventDefault();
         setIsOpen(false);
-        router.push(`/search?q=${encodeURIComponent(query)}`);
+        router.push(`${tenantPrefix}/search?q=${encodeURIComponent(query)}`);
       }
       return;
     }
@@ -536,7 +541,7 @@ export default function UnifiedSearch() {
                         Images ({galleryResults.length})
                       </span>
                       <Link
-                        href={`/gallery?q=${encodeURIComponent(query)}`}
+                        href={`${tenantPrefix}/gallery?q=${encodeURIComponent(query)}`}
                         className="text-xs text-accent-rust hover:text-accent-rust flex items-center gap-0.5"
                         onClick={() => setIsOpen(false)}
                       >
@@ -549,7 +554,7 @@ export default function UnifiedSearch() {
                         <Link
                           key={img.id}
                           id={`search-item-${itemIndex}`}
-                          href={`/gallery/image/${img.id}`}
+                          href={`${tenantPrefix}/gallery/image/${img.id}`}
                           onClick={() => setIsOpen(false)}
                           role="option"
                           aria-selected={activeIndex === itemIndex}

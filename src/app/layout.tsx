@@ -1,12 +1,13 @@
 import type { Metadata } from "next";
 import "./globals.css";
-import GlobalFooter from "@/components/layout/GlobalFooter";
+import ConditionalFooter from "@/components/layout/ConditionalFooter";
 import Providers from "@/components/providers/Providers";
 import PageTracker from "@/components/reader/PageTracker";
 import SiteModeIndicator from "@/components/providers/SiteModeIndicator";
 import ClientToaster from "@/components/providers/ClientToaster";
 import CookieConsent from "@/components/providers/CookieConsent";
 import AnalyticsScripts from "@/components/providers/AnalyticsScripts";
+import EmbedLinkInterceptor from "@/components/embed/EmbedLinkInterceptor";
 
 
 
@@ -97,10 +98,11 @@ export default async function RootLayout({
           Skip to main content
         </a>
         <Providers>
+          <EmbedLinkInterceptor />
           <div id="main-content" className="flex-1">
             {children}
           </div>
-          <GlobalFooter />
+          <ConditionalFooter />
           <SiteModeIndicator />
         </Providers>
         <ClientToaster />

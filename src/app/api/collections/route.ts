@@ -2,6 +2,7 @@ import { NextRequest, NextResponse } from 'next/server';
 import { getDb } from '@/lib/mongodb';
 import { ObjectId } from 'mongodb';
 import { withAuth } from '@/lib/auth-helpers';
+import { getTenantContextFromRequest } from '@/lib/tenant-context';
 
 export const maxDuration = 30;
 
@@ -17,10 +18,17 @@ export async function GET(request: NextRequest) {
     const includeUnpublished = searchParams.get('unpublished') === 'true';
     const includeChildren = searchParams.get('includeChildren') === 'true';
 
+    // Read tenant context resolved by proxy.ts
+    const { slug: tenantSlug, id: tenantId } = getTenantContextFromRequest(request);
+    if (tenantSlug && !tenantId) {
+      return NextResponse.json({ collections: [] });
+    }
+
     const db = await getDb();
     const filter: Record<string, unknown> = {
       collection_type: { $ne: 'visual_art' },
     };
+    if (tenantId) filter.tenantId = tenantId;
     if (!includeChildren) {
       filter.parent = { $exists: false };
     }
@@ -43,7 +51,9 @@ export async function GET(request: NextRequest) {
       .sort({ order: 1 })
       .toArray();
 
-    const cleaned = collections.map(({ _id, ...rest }) => rest);
+    const cleaned = collections.map(({ _id, ...rest }: any) => ({
+      ...rest,
+    }));
 
     return NextResponse.json({ collections: cleaned });
   } catch (error) {

@@ -1,6 +1,6 @@
 import { notFound } from 'next/navigation';
 import { getReadDb } from '@/lib/mongodb';
-import PageEditorPage from '@/app/book/[id]/page/[pageId]/page';
+import PageEditorPage from '@/app/[tenant]/book/[id]/page/[pageId]/page';
 
 export const revalidate = 86400;
 export const preferredRegion = 'fra1';
@@ -20,5 +20,5 @@ export default async function EmbedPageRoute({ params }: { params: Promise<{ slu
   );
   if (!exists) notFound();
 
-  return <PageEditorPage params={Promise.resolve({ id: slug, pageId })} />;
+  return <PageEditorPage params={Promise.resolve({ tenant: 'bph', id: slug, pageId })} />;
 }

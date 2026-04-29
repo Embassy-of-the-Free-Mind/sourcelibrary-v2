@@ -33,6 +33,7 @@ interface BookItem {
   relevance?: number;
   created_at?: string;
   last_translation_at?: string;
+  resource_type?: string;
 }
 
 interface CollectionAllBooksProps {
@@ -100,7 +101,8 @@ export default function CollectionAllBooks({
   collectionType,
   provider,
 }: CollectionAllBooksProps) {
-  const itemLabel = collectionType === 'visual_art' ? 'works' : 'books';
+  const isArt = collectionType === 'visual_art';
+  const itemLabel = isArt ? 'works' : 'books';
   const sizeDefault: ViewMode = total > 200 ? 'list' : 'grid';
 
   const [expanded, setExpanded] = useState(false);
@@ -230,13 +232,13 @@ export default function CollectionAllBooks({
         <div>
           <div className="flex items-baseline gap-4">
             <h2 className="text-2xl sm:text-3xl text-primary font-display">
-              All {collectionType === 'visual_art' ? 'Works' : 'Books'}
+              All {isArt ? 'Works' : 'Books'}
             </h2>
             <Link
-              href="/catalog"
+              href={isArt ? '/artwork' : '/catalog'}
               className="inline-flex items-center gap-1.5 text-xs font-medium px-3 py-1.5 rounded-lg border border-accent-rust/30 text-accent-rust hover:bg-accent-rust hover:text-white transition-colors"
             >
-              Browse Full Catalog
+              {isArt ? 'All Art Collections' : 'Browse Full Catalog'}
               <span>&rarr;</span>
             </Link>
           </div>
@@ -315,8 +317,8 @@ export default function CollectionAllBooks({
               <option value="year_asc">Oldest First</option>
               <option value="year_desc">Newest First</option>
               <option value="title">Title A-Z</option>
-              <option value="author">{collectionType === 'visual_art' ? 'Artist' : 'Author'} A-Z</option>
-              <option value="last_translated">Recently Translated</option>
+              <option value="author">{isArt ? 'Artist' : 'Author'} A-Z</option>
+              {!isArt && <option value="last_translated">Recently Translated</option>}
               <option value="recent">Recently Added</option>
             </select>
 
@@ -346,6 +348,65 @@ export default function CollectionAllBooks({
           loading={loading}
           collectionType={collectionType}
         />
+      ) : isArt ? (
+        /* Art gallery grid — image-forward layout */
+        <div className={`grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-4 xl:grid-cols-5 gap-3 ${loading ? 'opacity-50 pointer-events-none' : ''}`}>
+          {displayBooks.map((book) => {
+            const thumb = getBookThumbnailUrl(book, 'thumb') || book.photo;
+            const title = bookTitle(book);
+            const year = book.year || parseInt(book.published || '', 10) || 0;
+            return (
+              <Link
+                key={book.id}
+                href={`/book/${book.slug || book.id}`}
+                className="group relative aspect-[3/4] rounded-lg overflow-hidden bg-stone-100"
+              >
+                {thumb ? (
+                  /* eslint-disable-next-line @next/next/no-img-element */
+                  <img
+                    src={thumb}
+                    alt={title}
+                    className="absolute inset-0 w-full h-full object-cover group-hover:scale-105 transition-transform duration-500"
+                    loading="lazy"
+                  />
+                ) : (
+                  <div className="absolute inset-0 flex items-center justify-center">
+                    <LayoutGrid className="w-8 h-8 text-muted" />
+                  </div>
+                )}
+                {/* Hover overlay with title/artist */}
+                <div className="absolute inset-0 bg-gradient-to-t from-black/80 via-black/20 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-300" />
+                <div className="absolute inset-x-0 bottom-0 p-3 translate-y-2 group-hover:translate-y-0 opacity-0 group-hover:opacity-100 transition-all duration-300">
+                  <h3
+                    className="text-sm font-semibold text-white leading-tight line-clamp-2 mb-0.5"
+                    style={{ fontFamily: 'var(--font-serif)' }}
+                  >
+                    {title}
+                  </h3>
+                  <p className="text-xs text-white/70 line-clamp-1">
+                    {book.author}{year > 0 ? `, ${year}` : ''}
+                  </p>
+                </div>
+              </Link>
+            );
+          })}
+
+          {/* "See all" card in compact view */}
+          {showSeeAllCard && (
+            <button
+              onClick={handleExpand}
+              className="group relative aspect-[3/4] rounded-lg overflow-hidden bg-stone-100 flex flex-col items-center justify-center gap-2 cursor-pointer hover:bg-stone-200 transition-colors"
+            >
+              <div className="w-10 h-10 rounded-full bg-accent-rust/10 flex items-center justify-center group-hover:bg-accent-rust/15 transition-colors">
+                <ArrowRight className="w-5 h-5 text-accent-rust" />
+              </div>
+              <span className="text-sm font-medium text-primary group-hover:text-accent-rust transition-colors">
+                See all {total.toLocaleString()}
+              </span>
+              <span className="text-xs text-muted">{itemLabel}</span>
+            </button>
+          )}
+        </div>
       ) : (
         <div className={`grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-4 xl:grid-cols-5 gap-4 ${loading ? 'opacity-50 pointer-events-none' : ''}`}>
           {displayBooks.map((book, i) => (
@@ -368,6 +429,7 @@ export default function CollectionAllBooks({
                 translation_percent: book.pages_ocr && book.pages_translated
                   ? Math.round((book.pages_translated / Math.max((book.pages_ocr || 0) - (book.pages_blank || 0), 1)) * 100)
                   : 0,
+                resource_type: book.resource_type,
               }}
               priority={!expanded && i < 4}
             />

@@ -15,19 +15,22 @@ interface CiteButtonProps {
   doi?: string;
   pageNumber?: number;
   editionVersion?: string;
+  /** Tenant slug (e.g. "bph") — produces /bph/book/… URLs instead of /book/… */
+  tenantSlug?: string;
   className?: string;
 }
 
 function formatAccessedDate(): string {
   const d = new Date();
-  const months = ['January','February','March','April','May','June','July','August','September','October','November','December'];
+  const months = ['January', 'February', 'March', 'April', 'May', 'June', 'July', 'August', 'September', 'October', 'November', 'December'];
   return `${months[d.getMonth()]} ${d.getDate()}, ${d.getFullYear()}`;
 }
 
 function generateApa(props: CiteButtonProps): string {
-  const { author, title, displayTitle, year, doi, bookId, pageNumber, editionVersion } = props;
+  const { author, title, displayTitle, year, doi, bookId, pageNumber, editionVersion, tenantSlug } = props;
   const vParam = editionVersion ? `?v=${editionVersion}` : '';
-  const url = `https://sourcelibrary.org/book/${bookId}${vParam}`;
+  const bookPath = tenantSlug ? `/${tenantSlug}/book/${bookId}` : `/book/${bookId}`;
+  const url = `https://sourcelibrary.org${bookPath}${vParam}`;
   const displayName = displayTitle || title;
   const yearStr = year || 'n.d.';
   const authorStr = author || 'Anonymous';
@@ -42,7 +45,7 @@ function generateApa(props: CiteButtonProps): string {
 }
 
 function generateBibtex(props: CiteButtonProps): string {
-  const { author, title, year, doi, bookId, language, pageNumber, editionVersion } = props;
+  const { author, title, year, doi, bookId, language, pageNumber, editionVersion, tenantSlug } = props;
   const authorStr = author || 'Anonymous';
 
   const authorKey = authorStr.split(',')[0].split(' ').pop()?.toLowerCase().replace(/[^a-z]/g, '') || 'unknown';
@@ -63,7 +66,8 @@ function generateBibtex(props: CiteButtonProps): string {
   if (doi) lines.push(`  doi = {${doi}},`);
   if (pageNumber) lines.push(`  pages = {${pageNumber}},`);
   const vParam = editionVersion ? `?v=${editionVersion}` : '';
-  lines.push(`  url = {https://sourcelibrary.org/book/${bookId}${vParam}},`);
+  const bookPath = tenantSlug ? `/${tenantSlug}/book/${bookId}` : `/book/${bookId}`;
+  lines.push(`  url = {https://sourcelibrary.org${bookPath}${vParam}},`);
   lines.push(`  note = {AI-assisted English translation via Source Library}`);
   lines.push(`}`);
   return lines.join('\n');
@@ -81,12 +85,13 @@ export default function CiteButton({
   doi,
   pageNumber,
   editionVersion,
+  tenantSlug,
   className = '',
 }: CiteButtonProps) {
   const [showMenu, setShowMenu] = useState(false);
   const [copiedId, setCopiedId] = useState<string | null>(null);
 
-  const props = { bookId, title, displayTitle, author, year, publisher, placePublished, language, doi, pageNumber, editionVersion };
+  const props = { bookId, title, displayTitle, author, year, publisher, placePublished, language, doi, pageNumber, editionVersion, tenantSlug };
 
   const copyToClipboard = async (text: string, id: string) => {
     await navigator.clipboard.writeText(text);

@@ -21,6 +21,7 @@ interface BookItem {
   read_count?: number;
   is_first_translation?: boolean;
   ft_disposition?: string;
+  resource_type?: string;
 }
 
 type SortKey = 'title' | 'author' | 'year_asc' | 'year_desc' | 'recent' | 'popular' | 'relevance';
@@ -110,7 +111,9 @@ export default function CollectionListView({
         <tbody className="divide-y divide-border-light">
           {books.map((book) => {
             const pct = translationPercent(book);
-            const href = `/book/${book.slug || book.id}`;
+            const href = book.resource_type
+              ? `/artwork/${book.slug || book.id}`
+              : `/book/${book.slug || book.id}`;
             return (
               <tr key={book.id} className="group hover:bg-warm/50 transition-colors">
                 <td className="py-3 pr-4">

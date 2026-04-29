@@ -37,7 +37,14 @@ const DOMAIN_RATE_LIMITS = {
   'digi.ub.uni-heidelberg.de':2,    // Heidelberg University — no explicit policy
   'iiif.qdl.qa':              1,    // Qatar Digital Library — conservative
   'permalinkbnd.bnportugal.gov.pt': 1, // Portugal National Library
-  _default:                   2,    // Unknown domains: 1 req/s
+  'images.eap.bl.uk':         4,    // British Library EAP — open access, no explicit policy
+  'images.metmuseum.org':     4,    // Met Museum — open access
+  'dl.ndl.go.jp':             2,    // NDL Japan IIIF — conservative
+  'tudigit.ulb.tu-darmstadt.de': 2, // TU Darmstadt — no explicit policy
+  'media.getty.edu':           4,    // Getty Museum IIIF — open access
+  'stacks.stanford.edu':       4,   // Stanford Libraries — open access
+  'rmda.kulib.kyoto-u.ac.jp':  2,   // Kyoto University — conservative
+  _default:                   2,    // Unknown domains: 2 req/s
 };
 
 // Token bucket per domain
@@ -244,7 +251,7 @@ async function main() {
   // Exclude Gallica (429s from Hetzner, archived locally via archive-gallica.mjs on Mac).
   // Exclude IA (handled by archive-bulk.mjs via JP2 zip download, much faster).
   // Prioritize providers that are NOT yet fully archived (IIIF, Cambridge, etc.)
-  const PRIORITY_PROVIDERS = ['iiif', 'bsb', 'cambridge', 'vatican', 'loc', 'wellcome', 'heidelberg', 'bl'];
+  const PRIORITY_PROVIDERS = ['iiif', 'bsb', 'cambridge', 'vatican', 'loc', 'wellcome', 'heidelberg', 'bl', 'eap', 'met', 'ndl', 'getty', 'stanford', 'darmstadt'];
   const priorityBooks = await db.collection('books')
     .find(
       {
@@ -277,7 +284,7 @@ async function main() {
 
   // Also include warehouse books from Hetzner-safe providers
   // Priority: likely first translations (non-English) first
-  const HETZNER_SAFE_PROVIDERS = [...PRIORITY_PROVIDERS, 'mdz', 'cmc_kloss', 'bodleian', 'penn_colenda', 'kyoto_rmda', 'ndl', 'bsb'];
+  const HETZNER_SAFE_PROVIDERS = [...PRIORITY_PROVIDERS, 'mdz', 'cmc_kloss', 'bodleian', 'penn_colenda', 'kyoto_rmda', 'bph', 'oraec'];
   const warehouseBooks = await db.collection('books_warehouse')
     .find(
       {

@@ -1,5 +1,7 @@
 import { NextRequest, NextResponse } from 'next/server';
 import { supabase } from '@/lib/supabase';
+import { getTenantContextFromRequest } from '@/lib/tenant-context';
+import { getReadDb } from '@/lib/mongodb';
 
 export const dynamic = 'force-dynamic';
 
@@ -30,6 +32,15 @@ export async function GET(request: NextRequest) {
   if (search.trim()) {
     const url = new URL('/api/books/library', request.url);
     url.search = searchParams.toString();
+    return NextResponse.redirect(url, 307);
+  }
+
+  // Tenant-scoped requests: Supabase has no tenant_id column — proxy to MongoDB
+  const { slug: tenantSlug } = getTenantContextFromRequest(request);
+  if (tenantSlug) {
+    const url = new URL('/api/books/library', request.url);
+    url.search = searchParams.toString();
+    url.searchParams.set('tenant_slug', tenantSlug);
     return NextResponse.redirect(url, 307);
   }
 
@@ -90,8 +101,29 @@ export async function GET(request: NextRequest) {
         : 0,
     }));
 
+    const db = await getReadDb();
+    const ids = books.map((b: any) => b.id).filter(Boolean);
+    const mongoBooks = ids.length > 0
+      ? await db.collection('books').find({ id: { $in: ids } }, { projection: { _id: 0, id: 1, tenantId: 1 }, maxTimeMS: 5000 }).toArray()
+      : [];
+    const tenantIds = [...new Set(mongoBooks.map((b: any) => b.tenantId).filter(Boolean))];
+    const tenants = tenantIds.length > 0
+      ? await db.collection('tenants').find({ id: { $in: tenantIds }, status: { $ne: 'deleted' } }, { projection: { _id: 0, id: 1, slug: 1 }, maxTimeMS: 5000 }).toArray()
+      : [];
+
+    const tenantIdByBookId = new Map(mongoBooks.map((b: any) => [b.id, b.tenantId]));
+    const tenantSlugById = new Map(tenants.map((t: any) => [t.id, t.slug]));
+    const booksWithTenantSlug = books.map((book: any) => {
+      const tenantId = tenantIdByBookId.get(book.id);
+      return {
+        ...book,
+        tenantId: tenantId || null,
+        tenant_slug: tenantId ? tenantSlugById.get(tenantId) || null : null,
+      };
+    });
+
     return NextResponse.json(
-      { books, total: count || 0, skip, limit },
+      { books: booksWithTenantSlug, total: count || 0, skip, limit },
       { headers: { 'Cache-Control': 'public, s-maxage=60, stale-while-revalidate=300' } }
     );
   } catch (error) {

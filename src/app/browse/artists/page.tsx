@@ -1,5 +1,3 @@
-import { redirect } from 'next/navigation';
+import BrowseArtistsPage from '@/app/[tenant]/browse/artists/page';
 
-export default function BrowseArtistsIndex() {
-  redirect('/browse/artists/A');
-}
+export default BrowseArtistsPage;

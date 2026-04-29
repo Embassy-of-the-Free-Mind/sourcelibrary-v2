@@ -106,6 +106,7 @@ export default function ArtworkInfo({ book, collections, prevWork, nextWork, rel
         <ArtworkHero
           imageUrl={displayImage}
           thumbUrl={thumbImage}
+          hiResUrl={archivedFullUrl || commonsFullUrl || ''}
           title={book.title}
           fullResUrl={commonsUrl || commonsFullUrl}
           license={commonsLicense}

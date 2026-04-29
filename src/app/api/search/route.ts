@@ -5,6 +5,7 @@ import type { SearchResult, SearchResponse } from '@/lib/api-client/types/search
 import { buildPageSearchStage } from '@/lib/atlas-search';
 import { searchBookIds } from '@/lib/books-catalog';
 import { semanticBookSearch, semanticPageSearchGlobal } from '@/lib/semantic-search';
+import { getTenantContextFromRequest } from '@/lib/tenant-context';
 
 export const preferredRegion = 'fra1';
 
@@ -60,7 +61,7 @@ export async function GET(request: NextRequest) {
     const searchContent = searchParams.get('search_content') !== 'false'; // Default true — only skip page search if explicitly disabled
     const pagesOnly = searchParams.get('pages_only') === 'true'; // Return only page-level results (for MCP passage search)
     const sortBy = searchParams.get('sort') || 'relevance'; // relevance | date_asc | date_desc | title
-    const limit = Math.min(parseInt(searchParams.get('limit') || '20'), 100);
+    const limit = Math.min(parseInt(searchParams.get('limit') || '20'), 500);
     const offset = parseInt(searchParams.get('offset') || '0');
 
     if (!query || query.length < 2) {
@@ -75,9 +76,16 @@ export async function GET(request: NextRequest) {
     const results: SearchResult[] = [];
     const seenBooks = new Set<string>();
 
+    // Read tenant context resolved by proxy.ts
+    const { slug: tenantSlug, id: tenantId } = getTenantContextFromRequest(request.headers);
+    if (tenantSlug && !tenantId) {
+      return NextResponse.json({ results: [], total: 0 });
+    }
+
     // Helper: build common book-level filters (language, category, year, etc.)
     function buildBookFilters(): Record<string, unknown> {
       const filters: Record<string, unknown> = { visible: true, pages_count: { $gt: 0 } };
+      if (tenantId) filters.tenantId = tenantId;
       if (language) filters.language = language;
       if (category) filters.categories = category;
       if (dateFrom || dateTo) {
@@ -191,48 +199,50 @@ export async function GET(request: NextRequest) {
       })(),
 
       // --- Page content search (aggregation pipeline truncates text for snippets) ---
+      // Wrapped in a timeout race to prevent Atlas Search from blocking the response
       (async () => {
         if (!searchContent && !pagesOnly) return [];
 
-        const pageFilter: Record<string, unknown> = {};
-        if (bookId) {
-          pageFilter.book_id = bookId;
-        } else if (hasBookLevelFilters) {
-          const bookIdFilter: Record<string, unknown> = { visible: true };
-          if (language) bookIdFilter.language = language;
-          if (category) bookIdFilter.categories = category;
-          if (dateFrom || dateTo) {
-            bookIdFilter.published = {};
-            if (dateFrom) (bookIdFilter.published as Record<string, string>).$gte = dateFrom;
-            if (dateTo) (bookIdFilter.published as Record<string, string>).$lte = dateTo;
+        const pageSearchPromise = (async () => {
+          const pageFilter: Record<string, unknown> = {};
+          if (bookId) {
+            pageFilter.book_id = bookId;
+          } else if (hasBookLevelFilters) {
+            const bookIdFilter: Record<string, unknown> = { visible: true };
+            if (tenantId) bookIdFilter.tenantId = tenantId;
+            if (language) bookIdFilter.language = language;
+            if (category) bookIdFilter.categories = category;
+            if (dateFrom || dateTo) {
+              bookIdFilter.published = {};
+              if (dateFrom) (bookIdFilter.published as Record<string, string>).$gte = dateFrom;
+              if (dateTo) (bookIdFilter.published as Record<string, string>).$lte = dateTo;
+            }
+            if (hasDoi === 'true') bookIdFilter.doi = { $exists: true, $ne: null };
+
+            const filteredBooks = await db.collection('books')
+              .find(bookIdFilter)
+              .project({ id: 1 })
+              .toArray();
+            const allowedBookIds = filteredBooks.map(b => b.id);
+            if (allowedBookIds.length > 0) {
+              pageFilter.book_id = { $in: allowedBookIds };
+            }
           }
-          if (hasDoi === 'true') bookIdFilter.doi = { $exists: true, $ne: null };
 
-          const filteredBooks = await db.collection('books')
-            .find(bookIdFilter)
-            .project({ id: 1 })
-            .toArray();
-          const allowedBookIds = filteredBooks.map(b => b.id);
-          if (allowedBookIds.length > 0) {
-            pageFilter.book_id = { $in: allowedBookIds };
-          }
-        }
+          const pageLimit = (bookId || pagesOnly) ? limit : MAX_PAGE_RESULTS;
 
-        const pageLimit = (bookId || pagesOnly) ? limit : MAX_PAGE_RESULTS;
-
-        try {
           // Extract book IDs for Atlas Search filter
-          let searchBookIds: string | string[] | undefined;
+          let filteredBookIds: string | string[] | undefined;
           if (pageFilter.book_id) {
             if (typeof pageFilter.book_id === 'string') {
-              searchBookIds = pageFilter.book_id;
+              filteredBookIds = pageFilter.book_id;
             } else if (typeof pageFilter.book_id === 'object' && '$in' in (pageFilter.book_id as Record<string, unknown>)) {
-              searchBookIds = (pageFilter.book_id as { $in: string[] }).$in;
+              filteredBookIds = (pageFilter.book_id as { $in: string[] }).$in;
             }
           }
 
           return await db.collection('pages').aggregate([
-            buildPageSearchStage(query, searchBookIds),
+            buildPageSearchStage(query, filteredBookIds),
             { $limit: pageLimit },
             {
               $project: {
@@ -240,23 +250,30 @@ export async function GET(request: NextRequest) {
                 page_number: 1,
                 book_id: 1,
                 highlights: { $meta: 'searchHighlights' },
-                // Only fetch full text as fallback if highlights are empty
                 'translation.data': 1,
                 'ocr.data': 1,
               },
             },
-          ], { maxTimeMS: 10000 }).toArray();
-        } catch {
-          // Fallback: skip page search if Atlas Search index unavailable
-          return [];
-        }
+          ], { maxTimeMS: 8000 }).toArray();
+        })();
+
+        // Hard timeout: Atlas Search $search ignores maxTimeMS, so race against a timer
+        return Promise.race([
+          pageSearchPromise,
+          new Promise<any[]>((resolve) => setTimeout(() => {
+            console.warn('[search] Page search timed out after 8s');
+            resolve([]);
+          }, 8000)),
+        ]).catch(() => []);
       })(),
 
       // --- Semantic book search (finds conceptually related books) ---
       (async () => {
         if (bookId || !searchContent) return [];
         try {
-          const books = await semanticBookSearch(query, MAX_PAGE_RESULTS);
+          const books = await semanticBookSearch(query, MAX_PAGE_RESULTS, {
+            language: language || undefined,
+          });
           return books.map(b => ({
             page_id: '',
             book_id: b.book_id,
@@ -300,7 +317,7 @@ export async function GET(request: NextRequest) {
       if (pageBookIds.length > 0) {
         const pageBooks = await db.collection('books')
           .find(
-            { id: { $in: pageBookIds } },
+            { id: { $in: pageBookIds }, ...(tenantId ? { tenantId } : {}) },
             { projection: { id: 1, slug: 1, title: 1, display_title: 1, author: 1, thumbnail: 1, thumbnail_blob: 1, language: 1, published: 1, pages_count: 1, pages_translated: 1, doi: 1, categories: 1, hidden: 1, quality_score: 1, work_id: 1 } }
           )
           .toArray();
@@ -362,71 +379,62 @@ export async function GET(request: NextRequest) {
       }
     }
 
-    // Merge semantic results (conceptual matches that keyword search missed)
+    // Merge semantic book results as BOOK-LEVEL results (not page-level).
+    // Semantic search finds conceptually related books that keyword search missed.
+    // These should rank alongside Supabase trigram hits, not be buried as page entries.
+    const SEMANTIC_SIM_FLOOR = 0.65;
     if (semanticDocs.length > 0) {
-      // Track which pages we already have from Atlas Search
-      const seenPageKeys = new Set(
-        results
-          .filter(r => r.type === 'page')
-          .map(r => `${r.book_id}-${r.page_number}`)
-      );
-
-      // Collect book IDs we need metadata for
+      // Collect unique book IDs from semantic results (skip books already in results)
       const semanticBookIds = [...new Set(
         semanticDocs
-          .filter(s => !seenPageKeys.has(`${s.book_id}-${s.page_number}`))
+          .filter(s => (s.score ?? 0) >= SEMANTIC_SIM_FLOOR && !seenBooks.has(s.book_id))
           .map(s => s.book_id)
       )];
 
-      // Fetch book metadata for semantic results (skip books we already have)
-      const semanticBookMap = new Map<string, any>();
       if (semanticBookIds.length > 0) {
-        const newBookIds = semanticBookIds.filter(id => !seenBooks.has(id));
-        if (newBookIds.length > 0) {
-          const semBooks = await db.collection('books')
-            .find(
-              { id: { $in: newBookIds }, visible: true, pages_count: { $gt: 0 } },
-              { projection: { id: 1, slug: 1, title: 1, display_title: 1, author: 1, thumbnail: 1, thumbnail_blob: 1, language: 1, published: 1, pages_count: 1, pages_translated: 1, doi: 1, categories: 1, quality_score: 1, work_id: 1 } }
-            )
-            .maxTimeMS(3000)
-            .toArray();
-          for (const b of semBooks) semanticBookMap.set(b.id as string, b);
+        const semBooks = await db.collection('books')
+          .find(
+            { id: { $in: semanticBookIds }, visible: true, pages_count: { $gt: 0 } },
+            { projection: { id: 1, slug: 1, title: 1, display_title: 1, author: 1, thumbnail: 1, thumbnail_blob: 1, language: 1, published: 1, pages_count: 1, pages_translated: 1, doi: 1, categories: 1, quality_score: 1, work_id: 1, summary: 1, reading_summary: 1 } }
+          )
+          .maxTimeMS(3000)
+          .toArray();
+
+        // Build a snippet map from semantic results
+        const snippetMap = new Map(semanticDocs.map(s => [s.book_id, s.snippet]));
+
+        for (const book of semBooks) {
+          if (seenBooks.has(book.id as string)) continue;
+          seenBooks.add(book.id as string);
+
+          const summaryText = (book as any).reading_summary?.overview
+            || (typeof (book as any).summary === 'string' ? (book as any).summary : (book as any).summary?.data)
+            || snippetMap.get(book.id as string) || '';
+
+          const semResult: SearchResult = {
+            id: book.id as string,
+            type: 'book',
+            book_id: book.id as string,
+            slug: book.slug as string,
+            title: book.title as string,
+            display_title: book.display_title as string | undefined,
+            author: (book.author as string) || 'Unknown',
+            language: (book.language as string) || 'Unknown',
+            published: (book.published as string) || 'Unknown',
+            page_count: book.pages_count as number,
+            translated_count: book.pages_translated as number,
+            has_doi: !!(book as any).doi,
+            doi: (book as any).doi,
+            categories: book.categories as string[],
+            summary: summaryText ? extractSnippet(summaryText, query) : undefined,
+            snippet_type: summaryText ? 'summary' : undefined,
+            thumbnail: book.thumbnail as string | undefined,
+            thumbnail_blob: book.thumbnail_blob as string | undefined,
+            quality_score: (book as any).quality_score,
+          };
+          if ((book as any).work_id) (semResult as any)._work_id = (book as any).work_id;
+          results.push(semResult);
         }
-      }
-
-      for (const sem of semanticDocs) {
-        const pageKey = `${sem.book_id}-${sem.page_number}`;
-        if (seenPageKeys.has(pageKey)) continue;
-        seenPageKeys.add(pageKey);
-
-        // Use fetched book metadata, or construct minimal from semantic result
-        const book = semanticBookMap.get(sem.book_id);
-        if (!book) continue; // Book not visible or missing
-
-        const semResult: SearchResult = {
-          id: `${sem.book_id}-p${sem.page_number}`,
-          page_id: sem.page_id,
-          type: 'page',
-          book_id: sem.book_id,
-          slug: book.slug,
-          title: book.title || sem.book_title,
-          display_title: book.display_title,
-          author: book.author || sem.book_author || undefined,
-          language: book.language || sem.book_language || undefined,
-          published: book.published,
-          page_count: book.pages_count,
-          translated_count: book.pages_translated,
-          has_doi: !!book.doi,
-          doi: book.doi,
-          categories: book.categories,
-          page_number: sem.page_number,
-          snippet: sem.snippet,
-          snippet_type: 'translation' as const,
-          thumbnail: book.thumbnail,
-          thumbnail_blob: book.thumbnail_blob,
-        };
-        if (book.work_id) (semResult as any)._work_id = book.work_id;
-        results.push(semResult);
       }
     }
 
@@ -517,17 +525,23 @@ export async function GET(request: NextRequest) {
         if (a.type !== b.type) return a.type === 'book' ? -1 : 1;
 
         // 2. Title/author match (strongest signal)
+        // Check both title and display_title, and for multi-word queries
+        // count how many query words appear across title+author fields
+        const queryWords = queryLower.split(/\s+/).filter(w => w.length >= 3);
+
+        const aAllText = `${(a.display_title || '').toLowerCase()} ${a.title.toLowerCase()} ${(a.author || '').toLowerCase()}`;
+        const bAllText = `${(b.display_title || '').toLowerCase()} ${b.title.toLowerCase()} ${(b.author || '').toLowerCase()}`;
+
+        const aWordHits = queryWords.filter(w => aAllText.includes(w)).length;
+        const bWordHits = queryWords.filter(w => bAllText.includes(w)).length;
+        if (aWordHits !== bWordHits) return bWordHits - aWordHits;
+
+        // Exact phrase match in title is stronger than scattered word matches
         const aTitle = (a.display_title || a.title).toLowerCase();
         const bTitle = (b.display_title || b.title).toLowerCase();
-        const aTitleMatch = aTitle.includes(queryLower);
-        const bTitleMatch = bTitle.includes(queryLower);
-        if (aTitleMatch !== bTitleMatch) return aTitleMatch ? -1 : 1;
-
-        const aAuthor = (a.author || '').toLowerCase();
-        const bAuthor = (b.author || '').toLowerCase();
-        const aAuthorMatch = aAuthor.includes(queryLower);
-        const bAuthorMatch = bAuthor.includes(queryLower);
-        if (aAuthorMatch !== bAuthorMatch) return aAuthorMatch ? -1 : 1;
+        const aTitleExact = aTitle.includes(queryLower);
+        const bTitleExact = bTitle.includes(queryLower);
+        if (aTitleExact !== bTitleExact) return aTitleExact ? -1 : 1;
 
         // 3. Original language beats modern English translations
         // A Latin "De Occulta Philosophia" should rank above an English reprint

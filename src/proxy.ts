@@ -1,4 +1,20 @@
 import { NextResponse, NextRequest } from 'next/server';
+import { getDb } from '@/lib/mongodb';
+
+// --- Tenant routing ---
+
+// Paths that live at the root and are never treated as tenant slugs
+const NON_TENANT_PATHS = new Set([
+  'platform', 'auth', 'api', '_next', 'account', 'about', 'privacy',
+  'terms', 'press-release', 'brand', 'roadmap', 'feedback', 'status',
+  'support', 'unauthorized', 'design-options', 'experiments',
+  'ficino-society', 'contribute', 'census', 'oauth', 'developers',
+  'founding-donors', 'libraries', 'blog', '_archived', '.well-known',
+  // Global navigation roots
+  'gallery', 'browse', 'explore', 'librarian', 'podcast', 'search',
+  // Legacy root paths (pages moved to /[tenant]/*) — kept here to 404 cleanly
+  'book', 'collections',
+]);
 
 // Domains that enable the Ficino Society social layer
 const SOCIETY_DOMAINS = [
@@ -157,8 +173,146 @@ const TENANT_SUBDOMAINS: Record<string, string> = {
   // 'ritman.sourcelibrary.org': 'ritman',
 };
 
-export function proxy(request: NextRequest) {
+// --- Embed CORS allowlist ---
+// Domains allowed to call /api/collections/* and /api/books/* cross-origin
+// (used by the public embed.js script on partner Webflow sites).
+// Swap this lookup to a DB query when the tenant system is ready.
+function getAllowedEmbedOrigins(): Set<string> {
+  const raw = process.env.EMBED_ALLOWED_ORIGINS || '';
+  return new Set(
+    raw.split(',').map(s => s.trim().toLowerCase()).filter(Boolean)
+  );
+}
+
+function getCorsHeaders(origin: string): Record<string, string> {
+  return {
+    'Access-Control-Allow-Origin': origin,
+    'Access-Control-Allow-Methods': 'GET, OPTIONS',
+    'Access-Control-Allow-Headers': 'Content-Type',
+    'Access-Control-Max-Age': '86400',
+  };
+}
+
+export async function proxy(request: NextRequest) {
   const { pathname } = request.nextUrl;
+  let cachedDbPromise: ReturnType<typeof getDb> | null = null;
+
+  function getDbCached() {
+    if (!cachedDbPromise) cachedDbPromise = getDb();
+    return cachedDbPromise;
+  }
+
+  async function resolveActiveTenant(slug: string): Promise<{ id: string; slug: string } | null> {
+    if (!slug || NON_TENANT_PATHS.has(slug) || slug.includes('.') || !/^[a-z0-9-]+$/.test(slug)) {
+      return null;
+    }
+    try {
+      const db = await getDb();
+      const tenant = await db.collection('tenants').findOne({
+        $or: [
+          { slug },
+          { aliases: slug },
+          { slug_aliases: slug },
+        ],
+        status: { $ne: 'deleted' },
+      });
+      if (!tenant) return null;
+      return { id: tenant.id as string, slug: tenant.slug as string };
+    } catch {
+      return null;
+    }
+  }
+
+  async function resolveTenantSlugById(tenantId: string): Promise<string | null> {
+    if (!tenantId) return null;
+    try {
+      const db = await getDbCached();
+      const tenant = await db.collection('tenants').findOne(
+        { id: tenantId, status: { $ne: 'deleted' } },
+        { projection: { slug: 1 } }
+      );
+      return (tenant?.slug as string) || null;
+    } catch {
+      return null;
+    }
+  }
+
+  async function resolveTenantByExactSlug(slug: string): Promise<{ id: string; slug: string } | null> {
+    if (!slug) return null;
+    try {
+      const db = await getDbCached();
+      const tenant = await db.collection('tenants').findOne(
+        { slug, status: { $ne: 'deleted' } },
+        { projection: { id: 1, slug: 1 } }
+      );
+      if (!tenant) return null;
+      return { id: tenant.id as string, slug: tenant.slug as string };
+    } catch {
+      return null;
+    }
+  }
+
+  async function resolveTenantForBookSegment(segment: string): Promise<string | null> {
+    try {
+      const db = await getDbCached();
+      const book = await db.collection('books').findOne(
+        { $or: [{ slug: segment }, { id: segment }] },
+        { projection: { tenantId: 1 } }
+      );
+      return book?.tenantId ? await resolveTenantSlugById(book.tenantId as string) : null;
+    } catch {
+      return null;
+    }
+  }
+
+  async function resolveTenantForGalleryImagePath(path: string): Promise<string | null> {
+    const match = path.match(/^\/gallery\/image\/([^/]+)$/);
+    if (!match) return null;
+
+    const imageId = match[1];
+    const idMatch = imageId.match(/^(.+)[:\-](\d+)$/);
+    const pageId = idMatch ? idMatch[1] : null;
+    if (!pageId) return null;
+
+    try {
+      const db = await getDbCached();
+      const page = await db.collection('pages').findOne(
+        { id: pageId },
+        { projection: { tenantId: 1 } }
+      );
+      return page?.tenantId ? await resolveTenantSlugById(page.tenantId as string) : null;
+    } catch {
+      return null;
+    }
+  }
+
+  // --- Embed CORS: allow partner Webflow sites to call collection/book APIs ---
+  const isEmbedRoute =
+    pathname.startsWith('/api/collections') || pathname.startsWith('/api/books');
+
+  if (isEmbedRoute) {
+    const origin = request.headers.get('origin') || '';
+    const originHost = origin.replace(/^https?:\/\//, '').toLowerCase();
+    const allowed = getAllowedEmbedOrigins();
+
+    if (origin && allowed.has(originHost)) {
+      // Handle OPTIONS preflight immediately
+      if (request.method === 'OPTIONS') {
+        return new NextResponse(null, {
+          status: 204,
+          headers: getCorsHeaders(origin),
+        });
+      }
+
+      // Pass through with CORS headers attached
+      const response = NextResponse.next();
+      const cors = getCorsHeaders(origin);
+      for (const [key, value] of Object.entries(cors)) {
+        response.headers.set(key, value);
+      }
+      return response;
+    }
+  }
 
   // Redirect www to non-www (SEO: canonical domain)
   const host = request.headers.get('host') || '';
@@ -194,6 +348,60 @@ export function proxy(request: NextRequest) {
       url.pathname = `/embed/${tenant}`;
     }
     return NextResponse.rewrite(url);
+  }
+
+  // --- Legacy root route compatibility ---
+  // Root routes moved to /{tenant}/... but global surfaces still emit legacy URLs.
+  // Resolve tenant from the resource itself so mixed-tenant cards open correctly.
+  if (pathname.startsWith('/book/')) {
+    const segment = pathname.split('/')[2] || '';
+    const tenantSlug = await resolveTenantForBookSegment(segment)
+      || (await resolveTenantByExactSlug('default'))?.slug
+      || null;
+    if (tenantSlug) {
+      const url = request.nextUrl.clone();
+      url.pathname = `/${tenantSlug}${pathname}`;
+      return NextResponse.redirect(url, 308);
+    }
+  }
+
+  if (pathname.startsWith('/gallery/image/')) {
+    const tenantSlug = await resolveTenantForGalleryImagePath(pathname)
+      || (await resolveTenantByExactSlug('default'))?.slug
+      || null;
+    if (tenantSlug) {
+      const url = request.nextUrl.clone();
+      url.pathname = `/${tenantSlug}${pathname}`;
+      return NextResponse.redirect(url, 308);
+    }
+  }
+
+  // Collections are global routes. Canonicalize legacy tenant-scoped collection
+  // paths (e.g. /bph/collections/astrology) to /collections/astrology.
+  const tenantCollectionMatch = pathname.match(/^\/([^/]+)\/collections(\/.*)?$/);
+  if (tenantCollectionMatch) {
+    const tenantSegment = tenantCollectionMatch[1];
+    const collectionsSuffix = tenantCollectionMatch[2] || '';
+    const directTenant = await resolveActiveTenant(tenantSegment);
+    if (directTenant) {
+      const url = request.nextUrl.clone();
+      url.pathname = `/collections${collectionsSuffix}`;
+      return NextResponse.redirect(url, 308);
+    }
+  }
+
+  // Explore is global-only. Canonicalize tenant-scoped explore paths
+  // (e.g. /bph/explore/map) to /explore/map.
+  const tenantExploreMatch = pathname.match(/^\/([^/]+)\/explore(\/.*)?$/);
+  if (tenantExploreMatch) {
+    const tenantSegment = tenantExploreMatch[1];
+    const exploreSuffix = tenantExploreMatch[2] || '';
+    const directTenant = await resolveActiveTenant(tenantSegment);
+    if (directTenant) {
+      const url = request.nextUrl.clone();
+      url.pathname = `/explore${exploreSuffix}`;
+      return NextResponse.redirect(url, 308);
+    }
   }
 
   // --- Bot enforcement (before any other logic) ---
@@ -287,23 +495,118 @@ export function proxy(request: NextRequest) {
     }
   }
 
-  // Clone the request headers and add our custom header
+  // --- Tenant slug resolution ---
+  let tenantId: string | null = null;
+  let tenantSlug: string | null = null;
+
+  const [, firstSegment] = pathname.split('/');
+  if (firstSegment) {
+    const directTenant = await resolveActiveTenant(firstSegment);
+    if (directTenant) {
+      if (!pathname.startsWith('/api/') && firstSegment !== directTenant.slug) {
+        const url = request.nextUrl.clone();
+        const pathWithoutLeadingSlash = pathname.slice(1);
+        const [, ...restSegments] = pathWithoutLeadingSlash.split('/');
+        url.pathname = `/${[directTenant.slug, ...restSegments].filter(Boolean).join('/')}`;
+        return NextResponse.redirect(url, 308);
+      }
+      tenantId = directTenant.id;
+      tenantSlug = directTenant.slug;
+    } else if (
+      !NON_TENANT_PATHS.has(firstSegment) &&
+      !firstSegment.includes('.') &&
+      /^[a-z0-9-]+$/.test(firstSegment)
+    ) {
+      // Unknown slug — redirect to home
+      return NextResponse.redirect(new URL('/', request.url));
+    }
+  }
+
+  // Root /api/* calls from tenant pages do not include the tenant segment in the pathname.
+  // Infer tenant from referer so legacy root APIs remain tenant-safe during migration.
+  if (!tenantId && pathname.startsWith('/api/')) {
+    const [, apiPrefix, apiTenantSegment] = pathname.split('/');
+
+    // If the API path is /api/{tenant}/..., prefer explicit tenant segment.
+    if (apiPrefix === 'api' && apiTenantSegment) {
+      const pathTenant = await resolveActiveTenant(apiTenantSegment);
+      if (pathTenant) {
+        tenantId = pathTenant.id;
+        tenantSlug = pathTenant.slug;
+      }
+    }
+
+    // Fallback to referer tenant path: /{tenant}/...
+    if (!tenantId) {
+      const referer = request.headers.get('referer');
+      if (referer) {
+        try {
+          const refererUrl = new URL(referer);
+          const [, refererFirstSegment] = refererUrl.pathname.split('/');
+          const refTenant = await resolveActiveTenant(refererFirstSegment || '');
+          if (refTenant) {
+            tenantId = refTenant.id;
+            tenantSlug = refTenant.slug;
+          }
+        } catch {
+          // Ignore malformed referer
+        }
+      }
+    }
+  }
+
+  // Clone the request headers and add our custom headers
   const requestHeaders = new Headers(request.headers);
   requestHeaders.set('x-site-mode', isSociety ? 'society' : 'library');
+  if (tenantId) requestHeaders.set('x-tenant-id', tenantId);
+  if (tenantSlug) requestHeaders.set('x-tenant-slug', tenantSlug);
 
   // Pass the modified headers to the request
   const response = NextResponse.next({
-    request: {
-      headers: requestHeaders,
-    },
+    request: { headers: requestHeaders },
   });
 
   // RSC cache poisoning is handled in next.config.ts headers() via
   // has/missing conditions on the 'rsc' header. Middleware can't reliably
   // override CDN-Cache-Control because Next.js ISR sets it after middleware.
 
+  // --- X-Frame-Options ---
+  // Tenant-scoped paths (/{tenant}/book/*, /{tenant}) and /libraries/*; global paths (/collections/*, /gallery/*, etc.)
+  // are embeddable by allowlisted partner origins (and localhost for dev).
+  // Everything else gets DENY to prevent clickjacking.
+  const isEmbeddablePath =
+    // Legacy root paths (kept for backwards compat during migration)
+    pathname.startsWith('/book/') ||
+    pathname.startsWith('/collections/') ||
+    pathname.startsWith('/libraries/') ||
+    // Tenant-scoped paths: allow all paths under a resolved tenant
+    (tenantSlug && (
+      pathname === `/${tenantSlug}` ||
+      pathname.startsWith(`/${tenantSlug}/`)
+    ));
+
+  if (isEmbeddablePath) {
+    const frameOrigin = request.headers.get('origin') ||
+      (request.headers.get('referer') || '').replace(/^(https?:\/\/[^/]+).*/, '$1');
+    const frameHost = frameOrigin.replace(/^https?:\/\//, '').split('/')[0].toLowerCase();
+    const requestHost = (request.headers.get('host') || '').toLowerCase();
+    const isAllowed =
+      getAllowedEmbedOrigins().has(frameHost) ||
+      frameHost === requestHost; // in-iframe nav (SL → SL same-origin referer)
+
+    if (!isAllowed) {
+      response.headers.set('X-Frame-Options', 'DENY');
+    }
+    // If allowed: no X-Frame-Options header → browser permits the iframe
+  } else {
+    response.headers.set('X-Frame-Options', 'DENY');
+  }
+
   return response;
 }
+
+// Next.js 16 looks for a named `middleware` export (or default) in proxy.ts
+export { proxy as middleware };
 
 export const config = {
   // Match all paths except static files

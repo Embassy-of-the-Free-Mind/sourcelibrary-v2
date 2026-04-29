@@ -1,4 +1,4 @@
-import CollectionDetailPage from '@/app/collections/[id]/page';
+import CollectionDetailPage from '../../../../collections/[id]/page';
 
 export const revalidate = 86400;
 export const dynamicParams = true;

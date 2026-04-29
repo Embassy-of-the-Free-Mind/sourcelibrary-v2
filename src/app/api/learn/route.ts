@@ -1,5 +1,6 @@
 import { NextRequest, NextResponse } from 'next/server';
 import { getReadDb } from '@/lib/mongodb';
+import { getTenantContextFromRequest } from '@/lib/tenant-context';
 
 export const maxDuration = 15;
 export const dynamic = 'force-dynamic';
@@ -225,6 +226,7 @@ export async function GET(request: NextRequest) {
     const count = Math.min(parseInt(searchParams.get('count') || '10'), 50);
     const topic = searchParams.get('topic');
     const mode = searchParams.get('mode') || 'mixed'; // vocab, date, author, tradition, mixed
+    const { id: tenantId } = getTenantContextFromRequest(request);
 
     if (searchParams.get('topics') === 'true') {
       return NextResponse.json({ topics: Object.entries(TOPICS).map(([id, t]) => ({ id, ...t })) });
@@ -237,7 +239,7 @@ export async function GET(request: NextRequest) {
     const topicCollSlugs = topic && TOPICS[topic] ? TOPICS[topic].collections : null;
     if (topicCollSlugs) {
       const topicBooks = await db.collection('books')
-        .find({ collections: { $in: topicCollSlugs }, visible: true, pages_count: { $gt: 0 } })
+        .find({ collections: { $in: topicCollSlugs }, visible: true, pages_count: { $gt: 0 }, ...(tenantId ? { tenantId } : {}) })
         .project({ id: 1 })
         .limit(500)
         .maxTimeMS(10000)
@@ -256,8 +258,7 @@ export async function GET(request: NextRequest) {
       const vocabQuery: Record<string, unknown> = {
         'translation.data': { $regex: '<term>.*?</term>\\s*<(?:note|gloss)>' },
       };
-      if (topicBookIds) vocabQuery.book_id = { $in: topicBookIds };
-
+      if (topicBookIds) vocabQuery.book_id = { $in: topicBookIds };      if (tenantId) vocabQuery.tenantId = tenantId;
       const pages = await db.collection('pages')
         .find(vocabQuery)
         .project({ book_id: 1, page_number: 1, 'translation.data': 1 })
@@ -271,6 +272,7 @@ export async function GET(request: NextRequest) {
           'translation.data': { $regex: '<term>[^<]*[:;][^<]*</term>' },
         };
         if (topicBookIds) inlineQuery.book_id = { $in: topicBookIds };
+        if (tenantId) inlineQuery.tenantId = tenantId;
         const more = await db.collection('pages')
           .find(inlineQuery)
           .project({ book_id: 1, page_number: 1, 'translation.data': 1 })
@@ -351,6 +353,7 @@ export async function GET(request: NextRequest) {
         pages_count: { $gt: 0 },
       };
       if (topicBookIds) bookQuery.id = { $in: topicBookIds };
+      if (tenantId) bookQuery.tenantId = tenantId;
 
       const candidateBooks = await db.collection('books')
         .find(bookQuery)

@@ -106,11 +106,17 @@ function saveAppliedLikesCache(ids: Set<string>) {
   if (typeof window === 'undefined') return;
   try {
     localStorage.setItem(APPLIED_LIKES_KEY, JSON.stringify([...ids]));
-  } catch {}
+  } catch { }
 }
 
 function getImageSrc(item: GalleryItem): string {
   return item.thumbnailUrl || item.extractedUrl || item.imageUrl;
+}
+
+function getTenantApiPath(path: string): string {
+  if (typeof window === 'undefined') return path;
+  const slug = window.location.pathname.split('/')[1] || '';
+  return /^[a-z0-9-]+$/.test(slug) ? `/api/${slug}${path}` : path;
 }
 
 // --- Memoized tile component (win #1) ---
@@ -245,11 +251,10 @@ const ImageTile = memo(function ImageTile({
               e.stopPropagation();
               onExcludeBook(item);
             }}
-            className={`mt-1 text-[9px] px-1.5 py-0.5 rounded transition-colors ${
-              isExcluded
+            className={`mt-1 text-[9px] px-1.5 py-0.5 rounded transition-colors ${isExcluded
                 ? 'bg-amber-500/30 text-amber-300'
                 : 'bg-white/10 text-white/50 hover:bg-amber-500/20 hover:text-amber-300'
-            }`}
+              }`}
           >
             {isExcluded ? 'Excluded from showcase' : 'Exclude book from showcase'}
           </button>
@@ -554,7 +559,7 @@ export default function CurateClient() {
           setCollections(arr.map((c: { slug: string; name: string }) => ({ slug: c.slug, name: c.name })).sort((a: { name: string }, b: { name: string }) => a.name.localeCompare(b.name)));
         }
       })
-      .catch(() => {});
+      .catch(() => { });
 
     const isFirstRun = typeof window !== 'undefined' && localStorage.getItem(APPLIED_LIKES_KEY) === null;
 
@@ -578,7 +583,7 @@ export default function CurateClient() {
           }
         }
       })
-      .catch(() => {});
+      .catch(() => { });
   }, []);
 
   // Initial load + reset on filter change
@@ -649,7 +654,7 @@ export default function CurateClient() {
     setLikeInCache(`image:${imageId}`, !wasLiked);
 
     try {
-      const res = await fetch('/api/likes', {
+      const res = await fetch(getTenantApiPath('/likes'), {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify({ target_type: 'image', target_id: imageId, visitor_id: visitorId }),
@@ -693,11 +698,11 @@ export default function CurateClient() {
           return next;
         });
         setLikeInCache(`image:${imageId}`, false);
-        fetch('/api/likes', {
+        fetch(getTenantApiPath('/likes'), {
           method: 'POST',
           headers: { 'Content-Type': 'application/json' },
           body: JSON.stringify({ target_type: 'image', target_id: imageId, visitor_id: visitorId }),
-        }).catch(() => {});
+        }).catch(() => { });
       }
     }
 
@@ -1197,8 +1202,8 @@ export default function CurateClient() {
           {showLikedOnly
             ? 'No liked images yet.'
             : showDownvotedOnly
-            ? 'No downvoted images yet.'
-            : 'No images found.'}
+              ? 'No downvoted images yet.'
+              : 'No images found.'}
         </div>
       )}
 

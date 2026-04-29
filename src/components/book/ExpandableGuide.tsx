@@ -2,6 +2,7 @@
 
 import { useState, useEffect } from 'react';
 import Link from 'next/link';
+import { usePathname } from 'next/navigation';
 import Image from 'next/image';
 import { BookText, ChevronDown, ChevronUp, Loader2 } from 'lucide-react';
 import { books, gallery } from '@/lib/api-client';
@@ -36,6 +37,12 @@ interface ExpandableGuideProps {
 }
 
 export default function ExpandableGuide({ bookId, detailedSummary }: ExpandableGuideProps) {
+  const pathname = usePathname();
+
+  // Extract tenant prefix from pathname (format: /{tenant}/book/...)
+  const pathParts = pathname.split('/').filter(Boolean);
+  const tenantPrefix = pathParts[0] && pathParts[1] === 'book' ? `/${pathParts[0]}` : '';
+
   const [expanded, setExpanded] = useState(false);
   const [loadingExtras, setLoadingExtras] = useState(false);
   const [sections, setSections] = useState<SectionSummary[]>([]);
@@ -148,7 +155,7 @@ export default function ExpandableGuide({ bookId, detailedSummary }: ExpandableG
                     return (
                       <Link
                         key={imageId}
-                        href={`/gallery/image/${imageId}`}
+                        href={`${tenantPrefix}/gallery/image/${imageId}`}
                         className="group relative aspect-square rounded-lg overflow-hidden hover:shadow-md transition-shadow"
                         style={{ background: 'var(--bg-warm)', border: '1px solid var(--border-light)' }}
                       >
@@ -171,7 +178,7 @@ export default function ExpandableGuide({ bookId, detailedSummary }: ExpandableG
               )}
               <div className="mt-3 text-center">
                 <Link
-                  href={`/gallery?bookId=${bookId}`}
+                  href={`${tenantPrefix}/gallery?bookId=${bookId}`}
                   className="text-xs text-accent-rust hover:text-accent-gold-dark transition-colors"
                 >
                   View all in Gallery &rarr;

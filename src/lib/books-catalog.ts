@@ -32,6 +32,7 @@ export interface CatalogBook {
   image_source_provider: string | null;
   categories: string[];
   collections: string[];
+  resource_type: string | null;
 }
 
 /** Extended book detail from Supabase — includes fields for the /book/[id] page shell. */
@@ -42,7 +43,6 @@ export interface CatalogBookDetail extends CatalogBook {
   place_published: string | null;
   doi: string | null;
   work_id: string | null;
-  resource_type: string | null;
   source_url: string | null;
   provider_name: string | null;
   image_attribution: string | null;
@@ -59,7 +59,7 @@ export interface CatalogBookDetail extends CatalogBook {
   updated_at: string | null;
 }
 
-const BOOK_SELECT = 'id, slug, title, display_title, author, year, language, published, pages_count, pages_ocr, pages_translated, pages_blank, photo, thumbnail, thumbnail_blob, read_count, is_first_translation, quality_score, image_source_provider, categories, collections';
+const BOOK_SELECT = 'id, slug, title, display_title, author, year, language, published, pages_count, pages_ocr, pages_translated, pages_blank, photo, thumbnail, thumbnail_blob, read_count, is_first_translation, quality_score, image_source_provider, categories, collections, resource_type';
 
 export type SortOption = 'popular' | 'title' | 'author' | 'year_asc' | 'year_desc' | 'recent' | 'last_translated' | 'quality';
 
@@ -91,6 +91,8 @@ export async function browseBooks(opts: {
   firstTranslation?: boolean;
   hasTranslation?: boolean;
   hasPages?: boolean;
+  /** Only return items with resource_type set (artworks) */
+  hasResourceType?: boolean;
   yearMin?: number;
   yearMax?: number;
   titlePrefix?: string;
@@ -120,6 +122,7 @@ export async function browseBooks(opts: {
 
   if (opts.hasPages !== false) query = query.gt('pages_count', 0);
   if (opts.hasTranslation) query = query.gt('pages_translated', 0);
+  if (opts.hasResourceType) query = query.not('resource_type', 'is', null);
   if (opts.language) query = query.eq('language', opts.language);
   if (opts.collection) query = query.contains('collections', [opts.collection]);
   if (opts.category) query = query.contains('categories', [opts.category]);
@@ -327,6 +330,7 @@ export async function searchBooksCatalog(
   const safe = sanitizeFilterValue(text);
   const STOPWORDS = new Set(['a', 'an', 'and', 'at', 'by', 'de', 'der', 'des', 'di', 'du', 'el', 'en', 'et', 'for', 'from', 'in', 'la', 'le', 'les', 'of', 'on', 'or', 'the', 'to', 'und', 'von', 'with']);
   const words = safe.trim().split(/\s+/).filter(w => w.length >= 2);
+  const contentWords = words.filter(w => w.length >= 3 && !STOPWORDS.has(w.toLowerCase()));
   const phraseFilters = `title.ilike.%${safe}%,display_title.ilike.%${safe}%,author.ilike.%${safe}%`;
 
   let orFilter = phraseFilters;
@@ -334,8 +338,22 @@ export async function searchBooksCatalog(
     const titleAnds = words.map(w => `title.ilike.%${w}%`).join(',');
     const displayAnds = words.map(w => `display_title.ilike.%${w}%`).join(',');
     orFilter += `,and(${titleAnds}),and(${displayAnds})`;
+
+    // Cross-field AND: author + title words (catches "newton principia")
+    if (contentWords.length >= 2 && contentWords.length <= 3) {
+      for (const w of contentWords) {
+        const others = contentWords.filter(o => o !== w);
+        const titlePart = others.map(o => `title.ilike.%${o}%`).join(',');
+        const displayPart = others.map(o => `display_title.ilike.%${o}%`).join(',');
+        orFilter += `,and(author.ilike.%${w}%,${titlePart})`;
+        orFilter += `,and(author.ilike.%${w}%,${displayPart})`;
+      }
+    }
   } else {
+    // Single word: also match against language and subject_keywords
     orFilter += `,language.ilike.%${safe}%`;
+    // subject_keywords array contains — catches "panchatantra", "alchemy", etc.
+    orFilter += `,subject_keywords.cs.{"${safe}"}`;
   }
 
   let query = supabase
@@ -392,12 +410,24 @@ export async function searchBookIds(
     const displayAnds = words.map(w => `display_title.ilike.%${w}%`).join(',');
     orFilter += `,and(${titleAnds}),and(${displayAnds})`;
 
-    // Cross-field AND removed — language.ilike causes 70s full-table scans.
-    // Semantic search covers cross-field conceptual matches (e.g. "sanskrit alchemy").
+    // Cross-field AND: some words in title + some in author
+    // Catches "newton principia" where "newton" is author and "principia" is in title
+    // Only add if we have 2-3 words (more would be too loose)
+    if (contentWords.length >= 2 && contentWords.length <= 3) {
+      for (const w of contentWords) {
+        const others = contentWords.filter(o => o !== w);
+        const titlePart = others.map(o => `title.ilike.%${o}%`).join(',');
+        const displayPart = others.map(o => `display_title.ilike.%${o}%`).join(',');
+        orFilter += `,and(author.ilike.%${w}%,${titlePart})`;
+        orFilter += `,and(author.ilike.%${w}%,${displayPart})`;
+      }
+    }
   } else {
     // Single word: also match against language (e.g. "Sanskrit", "Arabic")
     // This is fast since it's a single ilike on an indexed field
     orFilter += `,language.ilike.%${safe}%`;
+    // subject_keywords array contains — catches terms like "panchatantra", "alchemy", "metallurgy"
+    orFilter += `,subject_keywords.cs.{"${safe}"}`;
   }
 
   let query = supabase

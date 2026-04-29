@@ -1,0 +1,28 @@
+name: Search Quality
+
+on:
+  pull_request:
+    branches: [main]
+    paths:
+      - 'src/app/api/search/**'
+      - 'src/lib/books-catalog.ts'
+      - 'src/lib/semantic-search.ts'
+      - 'src/lib/atlas-search.ts'
+      - 'src/lib/dedup.ts'
+      - 'src/app/api/books/check-duplicate/**'
+      - 'scripts/eval/search-quality-eval.mjs'
+
+jobs:
+  search-eval:
+    runs-on: ubuntu-latest
+    timeout-minutes: 10
+
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 20
+
+      - name: Run search quality eval against production
+        run: node scripts/eval/search-quality-eval.mjs --base-url https://sourcelibrary.org

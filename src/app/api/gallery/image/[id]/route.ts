@@ -2,6 +2,7 @@ import { NextRequest, NextResponse } from 'next/server';
 import { getDb } from '@/lib/mongodb';
 import { generateGalleryImages } from '@/lib/gallery-image-gen';
 import { getSession } from '@/lib/auth-helpers';
+import { getTenantContextFromRequest, resolveTenantId } from '@/lib/tenant-context';
 import { getPageImageUrl } from '@/lib/utils';
 
 /**
@@ -51,6 +52,25 @@ export async function GET(
   try {
     const { id } = await params;
     const resolution = new URL(request.url).searchParams.get('resolution') || 'standard';
+    const tenantCtx = getTenantContextFromRequest(request);
+    const tenantSlug = tenantCtx.slug;
+    let tenantId = tenantCtx.id;
+    
+    if (!tenantId && tenantSlug) {
+      tenantId = await resolveTenantId(tenantSlug);
+    }
+    
+    if (!tenantId) {
+      return NextResponse.json({ error: 'No tenant context' }, { status: 400 });
+    }
+    
+    const tenantPageFilter = tenantId ? { tenantId } : {};
+    const tenantGalleryFilter = tenantId ? { tenantId } : {};
+    const tenantPath = (path: string) => (tenantSlug ? `/${tenantSlug}${path}` : path);
+    const tenantResponseHeaders = {
+      'Cache-Control': 'private, no-store',
+      'Vary': 'X-Tenant-Slug, X-Tenant-Id',
+    };
 
     // Parse compound ID: pageId:index or pageId-index
     const match = id.match(/^(.+)[:\-](\d+)$/);
@@ -69,7 +89,7 @@ export async function GET(
 
     // Fetch the page with book info
     const page = await db.collection('pages').aggregate([
-      { $match: { id: pageId } },
+      { $match: { id: pageId, ...tenantPageFilter } },
       {
         $lookup: {
           from: 'books',
@@ -84,7 +104,7 @@ export async function GET(
     if (!page.length) {
       // Fallback: try gallery_images collection (handles orphaned pages gracefully)
       const galleryImageId = `${pageId}-${detectionIndex}`;
-      const galleryDoc = await db.collection('gallery_images').findOne({ id: galleryImageId });
+      const galleryDoc = await db.collection('gallery_images').findOne({ id: galleryImageId, ...tenantGalleryFilter });
       if (galleryDoc) {
         return NextResponse.json({
           id,
@@ -110,12 +130,12 @@ export async function GET(
             year: galleryDoc.book_year,
           },
           pageNumber: galleryDoc.page_number,
-          readUrl: `/book/${galleryDoc.book_id}/page/${pageId}`,
-          galleryUrl: `/gallery?bookId=${galleryDoc.book_id}`,
+          readUrl: tenantPath(`/book/${galleryDoc.book_id}/page/${pageId}`),
+          galleryUrl: tenantPath(`/gallery?bookId=${galleryDoc.book_id}`),
           citation: `${galleryDoc.book_author || ''}, "${galleryDoc.book_title || 'Unknown'}", p. ${galleryDoc.page_number}, Source Library`,
           orphaned: true, // Signal to UI that source page is gone
         }, {
-          headers: { 'Cache-Control': 'public, max-age=3600, stale-while-revalidate=86400' },
+          headers: tenantResponseHeaders,
         });
       }
       return NextResponse.json({ error: 'Page not found' }, { status: 404 });
@@ -134,7 +154,7 @@ export async function GET(
       // Stale gallery_images entry — detected_images array shrank after re-extraction.
       // Fall back to gallery_images materialized data (same pattern as missing pages above).
       const galleryImageId = `${pageId}-${detectionIndex}`;
-      const galleryDoc = await db.collection('gallery_images').findOne({ id: galleryImageId });
+      const galleryDoc = await db.collection('gallery_images').findOne({ id: galleryImageId, ...tenantGalleryFilter });
       if (galleryDoc) {
         return NextResponse.json({
           id,
@@ -160,12 +180,12 @@ export async function GET(
             year: pageData.book?.published,
           },
           pageNumber: pageData.page_number,
-          readUrl: `/book/${pageData.book_id}/page/${pageId}`,
-          galleryUrl: `/gallery?bookId=${pageData.book_id}`,
+          readUrl: tenantPath(`/book/${pageData.book_id}/page/${pageId}`),
+          galleryUrl: tenantPath(`/gallery?bookId=${pageData.book_id}`),
           citation: `${pageData.book?.author || ''}, "${pageData.book?.display_title || pageData.book?.title || 'Unknown'}", p. ${pageData.page_number}, Source Library`,
           stale: true, // Signal that detection index is stale
         }, {
-          headers: { 'Cache-Control': 'public, max-age=3600, stale-while-revalidate=86400' },
+          headers: tenantResponseHeaders,
         });
       }
       return NextResponse.json(
@@ -179,7 +199,7 @@ export async function GET(
     // Handle null/undefined detection entries (corrupt data)
     if (!detection) {
       const galleryImageId = `${pageId}-${detectionIndex}`;
-      const galleryDoc = await db.collection('gallery_images').findOne({ id: galleryImageId });
+      const galleryDoc = await db.collection('gallery_images').findOne({ id: galleryImageId, ...tenantGalleryFilter });
       if (galleryDoc) {
         return NextResponse.json({
           id,
@@ -205,12 +225,12 @@ export async function GET(
             year: pageData.book?.published,
           },
           pageNumber: pageData.page_number,
-          readUrl: `/book/${pageData.book?.slug || pageData.book_id}/page/${pageId}`,
-          galleryUrl: `/gallery?bookId=${pageData.book_id}`,
+          readUrl: tenantPath(`/book/${pageData.book?.slug || pageData.book_id}/page/${pageId}`),
+          galleryUrl: tenantPath(`/gallery?bookId=${pageData.book_id}`),
           citation: `${pageData.book?.author || ''}, "${pageData.book?.display_title || pageData.book?.title || 'Unknown'}", p. ${pageData.page_number}, Source Library`,
           corrupt: true,
         }, {
-          headers: { 'Cache-Control': 'public, max-age=3600, stale-while-revalidate=86400' },
+          headers: tenantResponseHeaders,
         });
       }
       return NextResponse.json({ error: 'Detection data is null' }, { status: 404 });
@@ -220,7 +240,7 @@ export async function GET(
     // (gallery_images may have richer data from a previous extraction run)
     if (!detection.description || detection.gallery_quality == null) {
       const galleryImageId = `${pageId}-${detectionIndex}`;
-      const galleryDoc = await db.collection('gallery_images').findOne({ id: galleryImageId });
+      const galleryDoc = await db.collection('gallery_images').findOne({ id: galleryImageId, ...tenantGalleryFilter });
       if (galleryDoc) {
         detection = {
           ...detection,
@@ -329,15 +349,15 @@ export async function GET(
       pageNumber: pageData.page_number,
 
       // Links
-      readUrl: `/book/${pageData.book?.slug || pageData.book_id}/page/${pageId}`,
-      galleryUrl: `/gallery?bookId=${pageData.book_id}`,
+      readUrl: tenantPath(`/book/${pageData.book?.slug || pageData.book_id}/page/${pageId}`),
+      galleryUrl: tenantPath(`/gallery?bookId=${pageData.book_id}`),
 
       // For citation
       citation: buildCitation(pageData, detection)
     };
 
     return NextResponse.json(response, {
-      headers: { 'Cache-Control': 'public, max-age=3600, stale-while-revalidate=86400' },
+      headers: tenantResponseHeaders,
     });
   } catch (error) {
     console.error('Gallery image error:', error);
@@ -361,6 +381,17 @@ export async function PATCH(
   try {
     const { id } = await params;
     const body = await request.json();
+    const tenantCtx = getTenantContextFromRequest(request);
+    const tenantSlug = tenantCtx.slug;
+    let tenantId = tenantCtx.id;
+    if (!tenantId && tenantSlug) {
+      tenantId = await resolveTenantId(tenantSlug);
+    }
+    if (!tenantId) {
+      return NextResponse.json({ error: 'No tenant context' }, { status: 400 });
+    }
+    const tenantPageFilter = tenantId ? { tenantId } : {};
+    const tenantGalleryFilter = tenantId ? { tenantId } : {};
 
     // All writes require authentication
     const session = await getSession();
@@ -447,7 +478,7 @@ export async function PATCH(
     }
 
     const result = await db.collection('pages').updateOne(
-      { id: pageId },
+      { id: pageId, ...tenantPageFilter },
       { $set: updateFields }
     );
 
@@ -461,7 +492,7 @@ export async function PATCH(
     if (bboxChanged || rotationChanged) {
       try {
         // Re-read the page to get current state after update
-        const updatedPage = await db.collection('pages').findOne({ id: pageId });
+        const updatedPage = await db.collection('pages').findOne({ id: pageId, ...tenantPageFilter });
         if (updatedPage) {
           const det = updatedPage.detected_images?.[detectionIndex];
           const sourceUrl = getPageImageUrl(updatedPage);
@@ -476,7 +507,7 @@ export async function PATCH(
             });
             // Save generated URLs back to the detection
             await db.collection('pages').updateOne(
-              { id: pageId },
+              { id: pageId, ...tenantPageFilter },
               {
                 $set: {
                   [`detected_images.${detectionIndex}.extracted_url`]: generated.extractedUrl,
@@ -501,7 +532,7 @@ export async function PATCH(
               if (typeof body.galleryQuality === 'number') gallerySync.gallery_quality = Math.max(0, Math.min(1, body.galleryQuality));
               if (typeof body.rotation === 'number') gallerySync.rotation = body.rotation;
               if (body.bbox) gallerySync.bbox = updateFields[`detected_images.${detectionIndex}.bbox`];
-              await db.collection('gallery_images').updateOne({ id: galleryImageId }, { $set: gallerySync });
+              await db.collection('gallery_images').updateOne({ id: galleryImageId, ...tenantGalleryFilter }, { $set: gallerySync });
             } catch { /* non-fatal */ }
 
             return NextResponse.json({
@@ -524,7 +555,7 @@ export async function PATCH(
 
       // If quality dropped below materialization threshold, remove from gallery
       if (typeof body.galleryQuality === 'number' && body.galleryQuality < 0.5) {
-        await db.collection('gallery_images').deleteOne({ id: galleryImageId });
+        await db.collection('gallery_images').deleteOne({ id: galleryImageId, ...tenantGalleryFilter });
       } else {
         const galleryUpdate: Record<string, unknown> = {};
         if (typeof body.galleryQuality === 'number') {
@@ -540,7 +571,7 @@ export async function PATCH(
         if (Object.keys(galleryUpdate).length > 0) {
           galleryUpdate.updated_at = new Date();
           await db.collection('gallery_images').updateOne(
-            { id: galleryImageId },
+            { id: galleryImageId, ...tenantGalleryFilter },
             { $set: galleryUpdate }
           );
         }

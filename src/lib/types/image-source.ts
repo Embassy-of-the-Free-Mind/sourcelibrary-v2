@@ -43,6 +43,15 @@ export type ImageSourceProvider =
   | 'escorial'       // Real Biblioteca del Monasterio de El Escorial
   | 'bnp'            // Biblioteca Nacional de Portugal
   | 'irht'           // IRHT (CNRS)
+  | 'bdrc'           // Buddhist Digital Resource Center
+  | 'ndl'            // National Diet Library of Japan (alternate key)
+  | 'met'            // Metropolitan Museum of Art
+  | 'oraec'          // Online Resource for Ancient Egyptian Coffin Texts
+  | 'bsb'            // Bayerische Staatsbibliothek (alternate key for mdz)
+  | 'eap'            // British Library Endangered Archives Programme
+  | 'sat_daizokyo'   // SAT Daizokyo Buddhist Text Database
+  | 'contentdm'      // OCLC CONTENTdm
+  | 'ia'             // Internet Archive (alternate key)
   | 'library'
   | 'user_upload'
   | 'other';

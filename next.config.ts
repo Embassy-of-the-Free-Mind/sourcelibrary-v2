@@ -78,7 +78,8 @@ const nextConfig: NextConfig = {
         source: '/(.*)',
         headers: [
           { key: 'X-Content-Type-Options', value: 'nosniff' },
-          { key: 'X-Frame-Options', value: 'DENY' },
+          // X-Frame-Options is handled dynamically in proxy.ts so that
+          // /book/* and /collections/* can be embedded by allowlisted partners.
           { key: 'X-XSS-Protection', value: '1; mode=block' },
           { key: 'Referrer-Policy', value: 'strict-origin-when-cross-origin' },
           { key: 'Permissions-Policy', value: 'camera=(self), microphone=(self), geolocation=()' },
@@ -119,6 +120,14 @@ const nextConfig: NextConfig = {
         source: '/:path*',
         has: [{ type: 'header', key: 'rsc' }],
         headers: [{ key: 'CDN-Cache-Control', value: 'no-store' }],
+      },
+      {
+        // Short TTL for embed scripts so partner sites pick up fixes within minutes.
+        // stale-while-revalidate means no latency hit during revalidation.
+        source: '/embed/:path*',
+        headers: [
+          { key: 'Cache-Control', value: 'public, max-age=300, stale-while-revalidate=3600' },
+        ],
       },
       // CDN-Cache-Control for Cloudflare edge caching.
       // Cloudflare strips this header before sending to browsers —

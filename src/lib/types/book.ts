@@ -20,6 +20,7 @@ export interface CdliWitness {
 export interface Book {
   id: string;
   slug?: string;              // SEO-friendly URL slug (e.g., "atalanta-fugiens-maier")
+  tenantId?: string;
   tenant_id: string;
 
   // Resource type — visual art, manuscripts, etc. Absent = printed_book (default)

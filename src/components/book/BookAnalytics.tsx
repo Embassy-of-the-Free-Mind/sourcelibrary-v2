@@ -20,8 +20,12 @@ export default function BookAnalytics({ bookId, className }: BookAnalyticsProps)
   useEffect(() => {
     // Track the read (fire-and-forget via sendBeacon to avoid blocking hydration)
     try {
+      const tenant = window.location.pathname.split('/')[1] || '';
+      const trackPath = /^[a-z0-9-]+$/.test(tenant)
+        ? `/api/${tenant}/analytics/track`
+        : '/api/analytics/track';
       const blob = new Blob([JSON.stringify({ event: 'book_read', book_id: bookId })], { type: 'application/json' });
-      navigator.sendBeacon('/api/analytics/track', blob);
+      navigator.sendBeacon(trackPath, blob);
     } catch { /* ignore */ }
     // Fetch stats
     analytics.stats(bookId)

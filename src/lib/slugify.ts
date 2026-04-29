@@ -123,8 +123,36 @@ export async function generateUniqueBookSlug(
  * Centralized book URL construction. Use this everywhere instead of
  * manually building `/book/${book.id}`.
  */
-export function bookUrl(book: { slug?: string; id: string }): string {
-  return `/book/${book.slug || book.id}`;
+export function bookUrl(book: { slug?: string; id: string; tenantSlug?: string | null; tenant_slug?: string | null }): string {
+  const path = `/book/${book.slug || book.id}`;
+  const tenantSlug =
+    (book as { tenantSlug?: string | null }).tenantSlug ||
+    (book as { tenant_slug?: string | null }).tenant_slug ||
+    null;
+  return tenantSlug ? `/${tenantSlug}${path}` : path;
+}
+
+/**
+ * Tenant-aware book URL construction.
+ * Use in tenant routes to keep navigation within the tenant path.
+ * Falls back to root URL if no tenant is provided.
+ */
+export function tenantBookUrl(
+  book: { slug?: string; id: string },
+  tenantSlug?: string | null
+): string {
+  const path = `/book/${book.slug || book.id}`;
+  return tenantSlug ? `/${tenantSlug}${path}` : path;
+}
+
+export function collectionUrl(collection: { slug: string }): string {
+  return `/collections/${collection.slug}`;
+}
+
+export function galleryImageUrl(image: { id: string; tenantSlug?: string | null; tenant_slug?: string | null }): string {
+  const path = `/gallery/image/${image.id}`;
+  const tenantSlug = image.tenantSlug || image.tenant_slug || null;
+  return tenantSlug ? `/${tenantSlug}${path}` : path;
 }
 
 /**

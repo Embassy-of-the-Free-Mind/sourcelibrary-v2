@@ -1,6 +1,7 @@
 'use client';
 
 import { useState, useEffect, useRef, useMemo } from 'react';
+import { useParams } from 'next/navigation';
 import { toast } from 'sonner';
 import Logo from '@/components/layout/Logo';
 import RevisionHistory from '@/components/reader/RevisionHistory';
@@ -58,7 +59,7 @@ function hasNonLatinScript(language?: string): boolean {
 // EditSourceBadge removed — source info folded into RevisionHistory trigger
 
 // Inline book search bar for the page reader footer
-function BookSearchBar({ bookId }: { bookId: string }) {
+function BookSearchBar({ bookId, tenantPrefix }: { bookId: string; tenantPrefix?: string }) {
   const [query, setQuery] = useState('');
   const [results, setResults] = useState<Array<{ pageId: string; pageNumber: number; matches: Array<{ field: string; snippet: string }> }>>([]);
   const [isSearching, setIsSearching] = useState(false);
@@ -135,7 +136,7 @@ function BookSearchBar({ bookId }: { bookId: string }) {
               {results.slice(0, 10).map((r) => (
                 <a
                   key={r.pageId}
-                  href={`/book/${bookId}/page/${r.pageId}?highlight=${encodeURIComponent(query.trim())}`}
+                  href={`${tenantPrefix || ''}/book/${bookId}/page/${r.pageId}?highlight=${encodeURIComponent(query.trim())}`}
                   className="block px-3 py-2 hover:bg-stone-50 transition-colors"
                 >
                   <span className="text-xs font-medium" style={{ color: 'var(--text-primary)' }}>Page {r.pageNumber}</span>
@@ -420,6 +421,8 @@ export default function TranslationEditor({
   onSave,
   onRefresh,
 }: TranslationEditorProps) {
+  const params = useParams<{ tenant: string }>();
+  const tenantPrefix = params?.tenant ? `/${params.tenant}` : '';
   const [ocrText, setOcrText] = useState(page.ocr?.data || '');
   const [translationText, setTranslationText] = useState(page.translation?.data || '');
   const [summaryText, setSummaryText] = useState(page.summary?.data || '');
@@ -468,7 +471,7 @@ export default function TranslationEditor({
       }
 
       // Navigate to the original (now unsplit) page or go back to book
-      window.location.href = `/book/${book.id}/split`;
+      window.location.href = `${tenantPrefix}/book/${book.id}/split`;
     } catch (error) {
       console.error('Reset split error:', error);
       toast.error(error instanceof Error ? error.message : 'Failed to reset split. Please try again.');
@@ -859,7 +862,7 @@ export default function TranslationEditor({
             <div className="flex items-center gap-2 sm:gap-3 min-w-0 flex-1">
               <Logo mini />
               <span className="text-sm shrink-0" style={{ color: 'var(--text-muted)' }} aria-hidden="true">/</span>
-              <a href={`/book/${book.id}`} className="min-w-0 hover:opacity-70 transition-opacity">
+              <a href={`${tenantPrefix}/book/${book.id}`} className="min-w-0 hover:opacity-70 transition-opacity">
                 <h1 className="text-sm sm:text-base font-medium truncate" style={{ color: 'var(--text-primary)' }}>
                   {book.display_title || book.title}
                 </h1>
@@ -1083,7 +1086,7 @@ export default function TranslationEditor({
                   author={book.author}
                   year={book.published}
                   page={page.page_number}
-                  url={`https://sourcelibrary.org/book/${(book as any).slug || book.id}?page=${page.page_number}`}
+                  url={`https://sourcelibrary.org${tenantPrefix}/book/${(book as any).slug || book.id}?page=${page.page_number}`}
                   doi={book.doi}
                   className="!p-1.5 !text-stone-500 hover:!text-stone-700 hover:!bg-stone-100 !rounded-full"
                 />
@@ -1098,6 +1101,7 @@ export default function TranslationEditor({
                   language={book.language}
                   doi={book.doi}
                   pageNumber={page.page_number}
+                  tenantSlug={params?.tenant || undefined}
                   className="!p-1.5 !text-stone-500 hover:!text-stone-700 hover:!bg-stone-100 !rounded-full text-sm"
                 />
               </div>
@@ -1630,7 +1634,7 @@ export default function TranslationEditor({
             <span>Produced by <a href="https://sourcelibrary.org" className="hover:underline" style={{ color: 'var(--text-muted)' }}>SourceLibrary.org</a> in Amsterdam, 2026</span>
           </div>
           <div className="px-4 py-1.5" style={{ borderTop: '1px solid var(--border-light)' }}>
-            <BookSearchBar bookId={book.id} />
+            <BookSearchBar bookId={book.id} tenantPrefix={tenantPrefix} />
           </div>
         </div>
 
@@ -1658,7 +1662,7 @@ export default function TranslationEditor({
           <div className="flex items-center gap-2 sm:gap-4 min-w-0 flex-1">
             <Logo mini />
             <span className="text-sm shrink-0" style={{ color: 'var(--text-muted)' }} aria-hidden="true">/</span>
-            <a href={`/book/${book.id}`} className="min-w-0 hover:opacity-70 transition-opacity">
+            <a href={`${tenantPrefix}/book/${book.id}`} className="min-w-0 hover:opacity-70 transition-opacity">
               <h1 className="text-base sm:text-xl font-medium truncate" style={{ color: 'var(--text-primary)' }}>
                 {book.display_title || book.title}
               </h1>

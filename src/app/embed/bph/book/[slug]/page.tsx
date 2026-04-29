@@ -1,7 +1,7 @@
 import { notFound } from 'next/navigation';
 import { getReadDb } from '@/lib/mongodb';
-import BookDetailPage from '@/app/book/[id]/page';
-export { generateMetadata } from '@/app/book/[id]/page';
+import BookDetailPage from '@/app/[tenant]/book/[id]/page';
+export { generateMetadata } from '@/app/[tenant]/book/[id]/page';
 
 export const revalidate = 86400;
 export const preferredRegion = 'fra1';
@@ -23,5 +23,5 @@ export default async function EmbedBookPage({ params }: { params: Promise<{ slug
   );
   if (!exists) notFound();
 
-  return <BookDetailPage params={Promise.resolve({ id: slug })} />;
+  return <BookDetailPage params={Promise.resolve({ tenant: 'bph', id: slug })} />;
 }

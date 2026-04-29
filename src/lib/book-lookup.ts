@@ -21,11 +21,14 @@ export interface BookLookupResult {
  *
  * The `matchedBySlug` flag tells the caller whether to 301 redirect
  * (if false and book has a slug, redirect to the slug URL).
+ *
+ * If tenantId is provided, filters by that tenant for multi-tenant isolation.
  */
 export async function findBookByIdOrSlug(
   db: Db,
   idOrSlug: string,
-  projection?: Document
+  projection?: Document,
+  tenantId?: string
 ): Promise<BookLookupResult | null> {
   const opts = projection ? { projection } : undefined;
 
@@ -43,7 +46,12 @@ export async function findBookByIdOrSlug(
     }
   }
 
-  const book = await db.collection('books').findOne({ $or: orConditions }, opts);
+  const query: Document = { $or: orConditions };
+  if (tenantId) {
+    query.tenantId = tenantId;
+  }
+
+  const book = await db.collection('books').findOne(query, opts);
   if (!book) return null;
 
   const matchedBySlug = book.slug === idOrSlug;

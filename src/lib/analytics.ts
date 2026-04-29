@@ -23,10 +23,21 @@ const config = {
   enabled: typeof window !== 'undefined',
   sampleRate: 1.0, // 100% of events
   maxStoredMetrics: 100,
-  endpoint: '/api/analytics/loading', // Optional: API endpoint for sending metrics
+  endpoint: '/api/analytics/loading',
   batchSize: 10,
   flushIntervalInMilliseconds: 30000, // 30 seconds
 };
+
+function getTenantSlug(): string {
+  if (typeof window === 'undefined') return '';
+  const slug = window.location.pathname.split('/')[1] || '';
+  return /^[a-z0-9-]+$/.test(slug) ? slug : '';
+}
+
+function getLoadingEndpoint(): string {
+  const tenant = getTenantSlug();
+  return tenant ? `/api/${tenant}/analytics/loading` : config.endpoint;
+}
 
 /**
  * Record a loading metric
@@ -206,7 +217,7 @@ export async function flushMetrics(): Promise<void> {
   const batch = metrics.splice(0, config.batchSize);
 
   try {
-    await analytics.flushLoadingMetrics(config.endpoint, batch);    
+    await analytics.flushLoadingMetrics(getLoadingEndpoint(), batch);
   } catch (error) {
     // Re-add metrics on failure
     metrics.unshift(...batch);
@@ -219,13 +230,11 @@ if (typeof window !== 'undefined') {
   // Flush on page unload
   window.addEventListener('beforeunload', () => {
     if (metrics.length > 0 && navigator.sendBeacon) {
-      // TODO: Dynamically get values for visitor ID and tenant slug
-      // Include tenant context in payload since sendBeacon can't send custom headers
       const visitorId = localStorage.getItem('visitor_id');
-      const tenantSlug = 'collections'; // Or read from config/context
+      const tenantSlug = getTenantSlug();
 
       navigator.sendBeacon(
-        config.endpoint,
+        getLoadingEndpoint(),
         JSON.stringify({
           metrics,
           visitor_id: visitorId,

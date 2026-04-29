@@ -27,6 +27,26 @@ import type {
 } from './types/books';
 
 /**
+ * Get the tenant slug from the current page URL
+ */
+function getTenantSlug(): string {
+  if (typeof window === 'undefined') return '';
+  const slug = window.location.pathname.split('/')[1] || '';
+  return slug && /^[a-z0-9-]+$/.test(slug) ? slug : '';
+}
+
+/**
+ * Construct a book API URL, tenant-scoped when available
+ */
+function getBookUrl(path: string): string {
+  const tenant = getTenantSlug();
+  if (tenant) {
+    return `/api/${tenant}/books${path}`;
+  }
+  return `/api/books${path}`;
+}
+
+/**
  * Books API client
  * Handles all book-related operations
  */
@@ -35,7 +55,7 @@ export const books = {
    * Get all books
    */
   list: async (): Promise<BooksListResponse> => {
-    return await apiClient.get('/api/books');
+    return await apiClient.get(getBookUrl(''));
   },
 
   /**
@@ -49,28 +69,28 @@ export const books = {
     if (options?.full) params.set('full', 'true');
     if (options?.pages) params.set('pages', options.pages);
     const query = params.toString() ? `?${params.toString()}` : '';
-    return await apiClient.get(`/api/books/${id}${query}`);
+    return await apiClient.get(getBookUrl(`/${id}${query}`));
   },
 
   /**
    * Create a new book
    */
   create: async (book: Partial<Book>): Promise<Book> => {
-    return await apiClient.post('/api/books', book);
+    return await apiClient.post(getBookUrl(''), book);
   },
 
   /**
    * Update a book
    */
   update: async (id: string, updates: Partial<Book>): Promise<Book> => {
-    return await apiClient.patch(`/api/books/${id}`, updates);
+    return await apiClient.patch(getBookUrl(`/${id}`), updates);
   },
 
   /**
    * Delete a book (soft delete)
    */
   delete: async (id: string): Promise<{ success: boolean }> => {
-    return await apiClient.delete(`/api/books/${id}`);
+    return await apiClient.delete(getBookUrl(`/${id}`));
   },
 
   /**
@@ -120,14 +140,14 @@ export const books = {
    * Get book pages
    */
   pages: async (id: string): Promise<BookPagesResponse> => {
-    return await apiClient.get(`/api/books/${id}/pages`);
+    return await apiClient.get(getBookUrl(`/${id}/pages`));
   },
 
   /**
    * Batch OCR book pages (async with Gemini Batch API)
    */
   batchOcrAsync: async (id: string, request: BatchOcrRequest): Promise<BatchOcrResponse> => {
-    return await apiClient.post(`/api/books/${id}/batch-ocr-async`, request);
+    return await apiClient.post(getBookUrl(`/${id}/batch-ocr-async`), request);
   },
 
   /**
@@ -151,98 +171,98 @@ export const books = {
     error?: string;
   }> => {
     // Use 2-minute timeout for batch operations (fetching images + Gemini submission)
-    return await apiClient.post(`/api/books/${id}/batch-ocr-multi`, request, { timeout: 120000 });
+    return await apiClient.post(getBookUrl(`/${id}/batch-ocr-multi`), request, { timeout: 120000 });
   },
 
   /**
    * Batch translate book pages (async with Gemini Batch API)
    */
   batchTranslateAsync: async (id: string, request: BatchTranslateRequest): Promise<BatchTranslateResponse> => {
-    return await apiClient.post(`/api/books/${id}/batch-translate-async`, request);
+    return await apiClient.post(getBookUrl(`/${id}/batch-translate-async`), request);
   },
 
   /**
    * Reimport book from source (IA, Gallica, etc.)
    */
   reimport: async (id: string, request: BookReimportRequest): Promise<BookReimportResponse> => {
-    return await apiClient.post(`/api/books/${id}/reimport`, request);
+    return await apiClient.post(getBookUrl(`/${id}/reimport`), request);
   },
 
   /**
    * Reset book (clear OCR and translations)
    */
   reset: async (id: string): Promise<{ success: boolean }> => {
-    return await apiClient.post(`/api/books/${id}/reset`);
+    return await apiClient.post(getBookUrl(`/${id}/reset`));
   },
 
   /**
    * Reset OCR only
    */
   resetOcr: async (id: string): Promise<{ success: boolean }> => {
-    return await apiClient.post(`/api/books/${id}/reset-ocr`);
+    return await apiClient.post(getBookUrl(`/${id}/reset-ocr`));
   },
 
   /**
    * Clear OCR from all pages
    */
   clearOcr: async (id: string): Promise<{ success: boolean }> => {
-    return await apiClient.post(`/api/books/${id}/clear-ocr`);
+    return await apiClient.post(getBookUrl(`/${id}/clear-ocr`));
   },
 
   /**
    * Generate book summary
    */
   summarize: async (id: string): Promise<{ summary: string }> => {
-    return await apiClient.post(`/api/books/${id}/summarize`);
+    return await apiClient.post(getBookUrl(`/${id}/summarize`));
   },
 
   /**
    * QA audit a book (checks for translation/OCR formatting issues)
    */
   qa: async (id: string): Promise<BookQAResponse> => {
-    return await apiClient.get(`/api/books/${id}/qa`);
+    return await apiClient.get(getBookUrl(`/${id}/qa`));
   },
 
   /**
    * Identify book in USTC catalog
    */
   identify: async (id: string, request: BookIdentifyRequest): Promise<BookIdentifyResponse> => {
-    return await apiClient.post(`/api/books/${id}/identify`, request);
+    return await apiClient.post(getBookUrl(`/${id}/identify`), request);
   },
 
   /**
    * Check if book needs split detection
    */
   checkNeedsSplit: async (id: string): Promise<{ needs_splitting: boolean | null; confidence: string; reasoning: string }> => {
-    return await apiClient.post(`/api/books/${id}/check-needs-split`);
+    return await apiClient.post(getBookUrl(`/${id}/check-needs-split`));
   },
 
   /**
    * Auto-split book pages using ML
    */
   autoSplitMl: async (id: string): Promise<{ job_id: string }> => {
-    return await apiClient.post(`/api/books/${id}/auto-split-ml`);
+    return await apiClient.post(getBookUrl(`/${id}/auto-split-ml`));
   },
 
   /**
    * Archive images to Vercel Blob
    */
   archiveImages: async (id: string, request: BookArchiveImagesRequest): Promise<BookArchiveImagesResponse> => {
-    return await apiClient.post(`/api/books/${id}/archive-images`, request);
+    return await apiClient.post(getBookUrl(`/${id}/archive-images`), request);
   },
 
   /**
    * Extract chapters from book
    */
   extractChapters: async (id: string): Promise<{ chapters: Array<{ title: string; pageNumber: number; level: number }> }> => {
-    return await apiClient.post(`/api/books/${id}/extract-chapters`);
+    return await apiClient.post(getBookUrl(`/${id}/extract-chapters`));
   },
 
   /**
    * Search within a book
    */
   searchInBook: async (id: string, query: string): Promise<{ results: Array<{ pageId: string; pageNumber: number; snippet: string }> }> => {
-    return await apiClient.get(`/api/books/${id}/search?q=${encodeURIComponent(query)}`);
+    return await apiClient.get(getBookUrl(`/${id}/search?q=${encodeURIComponent(query)}`));
   },
 
   /**
@@ -254,7 +274,7 @@ export const books = {
       params.append('edition_id', edition_id);
     }
     
-    return await streamRequest(`/api/books/${id}/download?${params.toString()}`,
+    return await streamRequest(getBookUrl(`/${id}/download?${params.toString()}`),
       { method: 'GET' }
     );
   },
@@ -276,21 +296,21 @@ export const books = {
       removedCount: number;
     }>;
   }> => {
-    return await apiClient.post(`/api/books/${id}/cleanup`, options || {});
+    return await apiClient.post(getBookUrl(`/${id}/cleanup`), options || {});
   },
 
   /**
    * Fix book data issues
    */
   fix: async (id: string): Promise<{ success: boolean; fixed: string[] }> => {
-    return await apiClient.post(`/api/books/${id}/fix`);
+    return await apiClient.post(getBookUrl(`/${id}/fix`));
   },
 
   /**
    * Reorder book pages
    */
   reorder: async (id: string, pageIds: string[]): Promise<{ success: boolean }> => {
-    return await apiClient.post(`/api/books/${id}/reorder`, { page_ids: pageIds });
+    return await apiClient.post(getBookUrl(`/${id}/reorder`), { page_ids: pageIds });
   },
 
   /**
@@ -298,11 +318,11 @@ export const books = {
    */
   sections: {
     list: async (id: string): Promise<{ sections: Array<any> }> => {
-      return await apiClient.get(`/api/books/${id}/sections`);
+      return await apiClient.get(getBookUrl(`/${id}/sections`));
     },
 
     summarize: async (id: string): Promise<{ sections: Array<any> }> => {
-      return await apiClient.post(`/api/books/${id}/sections/summarize`);
+      return await apiClient.post(getBookUrl(`/${id}/sections/summarize`));
     },
   },
 
@@ -311,11 +331,11 @@ export const books = {
    */
   index: {
     generate: async (id: string): Promise<{ success: boolean }> => {
-      return await apiClient.post(`/api/books/${id}/index`);
+      return await apiClient.post(getBookUrl(`/${id}/index`));
     },
 
     get: async (id: string): Promise<any> => {
-      return await apiClient.get(`/api/books/${id}/index`);
+      return await apiClient.get(getBookUrl(`/${id}/index`));
     },
   },
 
@@ -324,19 +344,19 @@ export const books = {
    */
   editions: {
     list: async (id: string): Promise<{ editions: Array<any> }> => {
-      return await apiClient.get(`/api/books/${id}/editions`);
+      return await apiClient.get(getBookUrl(`/${id}/editions`));
     },
 
     create: async (id: string, edition: any): Promise<any> => {
-      return await apiClient.post(`/api/books/${id}/editions`, edition);
+      return await apiClient.post(getBookUrl(`/${id}/editions`), edition);
     },
 
     get: async (id: string, editionId: string): Promise<any> => {
-      return await apiClient.get(`/api/books/${id}/editions/${editionId}`);
+      return await apiClient.get(getBookUrl(`/${id}/editions/${editionId}`));
     },
 
     update: async (id: string, editionId: string, updates: any): Promise<any> => {
-      return await apiClient.patch(`/api/books/${id}/editions/${editionId}`, updates);
+      return await apiClient.patch(getBookUrl(`/${id}/editions/${editionId}`), updates);
     },
 
     /**
@@ -344,19 +364,19 @@ export const books = {
      * This is different from the update method above which uses the editionId in the path
      */
     updateFields: async (id: string, editionId: string, fields: { doi?: string; doi_url?: string }): Promise<any> => {
-      return await apiClient.patch(`/api/books/${id}/editions`, { edition_id: editionId, ...fields });
+      return await apiClient.patch(getBookUrl(`/${id}/editions`), { edition_id: editionId, ...fields });
     },
 
     delete: async (id: string, editionId: string): Promise<{ success: boolean }> => {
-      return await apiClient.delete(`/api/books/${id}/editions/${editionId}`);
+      return await apiClient.delete(getBookUrl(`/${id}/editions/${editionId}`));
     },
 
     generateFrontMatter: async (id: string): Promise<any> => {
-      return await apiClient.post(`/api/books/${id}/editions/front-matter`);
+      return await apiClient.post(getBookUrl(`/${id}/editions/front-matter`));
     },
 
     mintDoi: async (id: string, editionId: string): Promise<{ doi: string; doi_url?: string; zenodo_id?: string; zenodo_url?: string }> => {
-      return await apiClient.post(`/api/books/${id}/editions/mint-doi`, { edition_id: editionId });
+      return await apiClient.post(getBookUrl(`/${id}/editions/mint-doi`), { edition_id: editionId });
     },
   },
 
@@ -365,11 +385,11 @@ export const books = {
    */
   chat: {
     history: async (id: string): Promise<any> => {
-      return await apiClient.get(`/api/books/${id}/chat`);
+      return await apiClient.get(getBookUrl(`/${id}/chat`));
     },
 
     send: async (id: string, messages: Array<{ role: 'user' | 'assistant'; content: string }>): Promise<{ message: { role: 'assistant'; content: string } }> => {
-      return await apiClient.post(`/api/books/${id}/chat`, { messages });
+      return await apiClient.post(getBookUrl(`/${id}/chat`), { messages });
     },
   },
 
@@ -399,28 +419,28 @@ export const books = {
       last_event: string | null;
     };
   }> => {
-    return await apiClient.get(`/api/books/${id}/history`);
+    return await apiClient.get(getBookUrl(`/${id}/history`));
   },
 
   /**
    * Get a quote from the book
    */
   quote: async (id: string): Promise<{ quote: string; page: number; context: string }> => {
-    return await apiClient.get(`/api/books/${id}/quote`);
+    return await apiClient.get(getBookUrl(`/${id}/quote`));
   },
 
   /**
    * Stitch translations together
    */
   stitchTranslations: async (id: string): Promise<{ success: boolean; stitched_count: number }> => {
-    return await apiClient.post(`/api/books/${id}/stitch-translations`);
+    return await apiClient.post(getBookUrl(`/${id}/stitch-translations`));
   },
 
   /**
    * Import batch of pages
    */
   importBatch: async (id: string, pages: Array<{ page_number: number; photo: string }>): Promise<{ imported: number }> => {
-    return await apiClient.post(`/api/books/${id}/import-batch`, { pages });
+    return await apiClient.post(getBookUrl(`/${id}/import-batch`), { pages });
   },
 
   /**
@@ -436,19 +456,19 @@ export const books = {
    */
   pipeline: {
     get: async (id: string): Promise<any> => {
-      return await apiClient.get(`/api/books/${id}/pipeline`);
+      return await apiClient.get(getBookUrl(`/${id}/pipeline`));
     },
 
     start: async (id: string, config: any): Promise<{ job_id: string }> => {
-      return await apiClient.post(`/api/books/${id}/pipeline`, config);
+      return await apiClient.post(getBookUrl(`/${id}/pipeline`), config);
     },
 
     step: async (id: string, step: string): Promise<any> => {
-      return await apiClient.post(`/api/books/${id}/pipeline/step`, { step });
+      return await apiClient.post(getBookUrl(`/${id}/pipeline/step`), { step });
     },
 
     process: async (id: string): Promise<any> => {
-      return await apiClient.post(`/api/books/${id}/pipeline-stream/process`);
+      return await apiClient.post(getBookUrl(`/${id}/pipeline-stream/process`));
     },
   },
 
@@ -460,7 +480,7 @@ export const books = {
      * Get pipeline status
      */
     get: async (id: string): Promise<Response> => {
-      return await streamRequest(`/api/books/${id}/pipeline-stream`, {
+      return await streamRequest(getBookUrl(`/${id}/pipeline-stream`), {
         method: 'GET',
       });
     },
@@ -469,7 +489,7 @@ export const books = {
      * Start pipeline with streaming progress updates
      */
     start: async (id: string, config: any): Promise<Response> => {
-      return await streamRequest(`/api/books/${id}/pipeline-stream`, {
+      return await streamRequest(getBookUrl(`/${id}/pipeline-stream`), {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify(config),
@@ -480,7 +500,7 @@ export const books = {
      * Process pipeline with streaming updates
      */
     process: async (id: string, config?: any): Promise<Response> => {
-      return await streamRequest(`/api/books/${id}/pipeline-stream/process`, {
+      return await streamRequest(getBookUrl(`/${id}/pipeline-stream/process`), {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify(config || {}),
@@ -491,7 +511,7 @@ export const books = {
      * Cancel pipeline
      */
     cancel: async (id: string): Promise<Response> => {
-      return await streamRequest(`/api/books/${id}/pipeline-stream`, {
+      return await streamRequest(getBookUrl(`/${id}/pipeline-stream`), {
         method: 'DELETE',
       });
     },

@@ -3,6 +3,7 @@ import { supabase } from '@/lib/supabase';
 import { Book } from '@/lib/types';
 import { type CollectionForGrid } from '@/components/book/BookLibrary';
 import { sortCollections, withTimeout } from '@/lib/collections-utils';
+import { bookUrl, tenantBookUrl } from '@/lib/slugify';
 import HeroSection from '@/components/layout/HeroSection';
 import HomePageSchema from '@/components/seo/HomePageSchema';
 import EditorialSpread from '@/components/prototype/EditorialSpread';
@@ -23,6 +24,7 @@ const BOOK_PROJECTION = {
   _id: 0,
   id: { $ifNull: ['$id', { $toString: '$_id' }] },
   slug: 1,
+  tenantId: 1,
   title: 1,
   display_title: 1,
   author: 1,
@@ -39,6 +41,14 @@ const BOOK_PROJECTION = {
 
 // ---------- Data fetching ----------
 
+async function getTenantSlugMap(db: any, tenantIds: string[]): Promise<Map<string, string>> {
+  if (tenantIds.length === 0) return new Map();
+  const tenants = await db.collection('tenants')
+    .find({ id: { $in: tenantIds }, status: { $ne: 'deleted' } }, { projection: { _id: 0, id: 1, slug: 1 }, maxTimeMS: 5000 })
+    .toArray();
+  return new Map(tenants.map((tenant: any) => [tenant.id, tenant.slug]));
+}
+
 async function getFeaturedCollections() {
   const db = await getReadDb();
 
@@ -51,7 +61,7 @@ async function getFeaturedCollections() {
   if (collections.length === 0) return [];
 
   const allSlugs = collections.map(c => c.slug);
-  const bookProjection = { _id: 0, id: { $ifNull: ['$id', { $toString: '$_id' }] }, slug: 1, title: 1, display_title: 1, author: 1, thumbnail: 1, thumbnail_blob: 1, collections: 1 };
+  const bookProjection = { _id: 0, id: { $ifNull: ['$id', { $toString: '$_id' }] }, slug: 1, tenantId: 1, title: 1, display_title: 1, author: 1, thumbnail: 1, thumbnail_blob: 1, collections: 1 };
 
   // Collect curated book IDs from highlighted_books (tier 1 & 2 preferred)
   const highlightedIdsBySlug = new Map<string, string[]>();
@@ -115,6 +125,12 @@ async function getFeaturedCollections() {
   // ---------- Gallery images: read pre-curated data from collection docs ----------
   // Curated by scripts/maintenance/curate-collection-gallery.mjs — no heavy joins needed.
 
+  const tenantIds = [...new Set([
+    ...collections.map((collection: any) => collection.tenantId).filter(Boolean),
+    ...highlightedBooks.map((book: any) => book.tenantId).filter(Boolean),
+  ])];
+  const tenantSlugMap = await getTenantSlugMap(db, tenantIds);
+
   const results = collections.map((collection) => {
     // Prefer curated_gallery images (gallery illustrations) for full-bleed hero
     const gallery = collection.curated_gallery || [];
@@ -131,7 +147,10 @@ async function getFeaturedCollections() {
       heroUrl = typeof hero === 'string' ? hero : ((hero as Record<string, unknown>)?.thumbnail_url || (hero as Record<string, unknown>)?.extracted_url || (hero as Record<string, unknown>)?.image_url || null) as string | null;
     }
 
-    const books = (booksBySlug.get(collection.slug as string) || []).map(({ collections: _c, ...rest }) => rest);
+    const books = (booksBySlug.get(collection.slug as string) || []).map(({ collections: _c, ...rest }) => ({
+      ...rest,
+      tenant_slug: rest.tenantId ? tenantSlugMap.get(rest.tenantId) || null : null,
+    }));
 
     // Fall back to hardcoded hero image if DB doesn't have images
     const fallbackHero = FALLBACK_COLLECTIONS.find(f => f.slug === collection.slug)?.hero_image;
@@ -156,6 +175,9 @@ async function getRemainingCollections(): Promise<CollectionForGrid[]> {
   const db = await getReadDb();
   const docs = await db.collection('collections').find({ parent: { $exists: false }, type: { $ne: 'curated' }, visible: true, 'highlighted_books.0': { $exists: true } }).toArray();
 
+  const tenantIds = [...new Set(docs.map((doc: any) => doc.tenantId).filter(Boolean))];
+  const tenantSlugMap = await getTenantSlugMap(db, tenantIds);
+
   const result = docs.map(({ _id, ...rest }) => {
     const images = rest.featured_images || [];
     const hero = images.find(
@@ -178,6 +200,7 @@ async function getRemainingCollections(): Promise<CollectionForGrid[]> {
       .slice(0, 3);
     return {
       slug: rest.slug,
+      tenant_slug: rest.tenantId ? tenantSlugMap.get(rest.tenantId) || null : null,
       name: rest.name,
       subtitle: rest.subtitle || '',
       description: rest.description || '',
@@ -243,7 +266,14 @@ async function getDiscoverBooks(): Promise<Book[]> {
     { $project: BOOK_PROJECTION },
   ], { maxTimeMS: 8000 }).toArray();
 
-  return JSON.parse(JSON.stringify(books)) as Book[];
+  const tenantIds = [...new Set(books.map((book: any) => book.tenantId).filter(Boolean))];
+  const tenantSlugMap = await getTenantSlugMap(db, tenantIds);
+  const booksWithTenantSlug = books.map((book: any) => ({
+    ...book,
+    tenant_slug: book.tenantId ? tenantSlugMap.get(book.tenantId) || null : null,
+  }));
+
+  return JSON.parse(JSON.stringify(booksWithTenantSlug)) as Book[];
 }
 
 async function getCollectionShowcase() {
@@ -292,14 +322,17 @@ async function getCollectionShowcase() {
   const bookIds = [...new Set(selected.map(img => img.book_id))];
   const booksWithQuotes = await db.collection('books').find(
     { id: { $in: bookIds } },
-    { projection: { id: 1, 'reading_summary.quotes': 1, slug: 1 } },
+    { projection: { id: 1, tenantId: 1, 'reading_summary.quotes': 1, slug: 1 } },
   ).toArray();
+  const tenantIds = [...new Set(booksWithQuotes.map((book: any) => book.tenantId).filter(Boolean))];
+  const tenantSlugMap = await getTenantSlugMap(db, tenantIds);
   const bookMap = new Map(booksWithQuotes.map(b => [b.id, b]));
 
   const items = selected.map((img) => {
     const book = bookMap.get(img.book_id);
     let quote: { text: string; page: number } | undefined;
     const quotes = book?.reading_summary?.quotes;
+    const tenantSlug = book?.tenantId ? tenantSlugMap.get(book.tenantId) || null : null;
     if (quotes && quotes.length > 0) {
       quote = quotes[Math.floor(Math.random() * quotes.length)];
     }
@@ -315,6 +348,7 @@ async function getCollectionShowcase() {
       book_author: img.book_author || '',
       book_year: img.book_year || 0,
       book_slug: book?.slug,
+      tenant_slug: tenantSlug,
       quote,
     };
   });

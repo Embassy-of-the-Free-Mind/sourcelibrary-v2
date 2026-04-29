@@ -1,6 +1,7 @@
 'use client';
 
 import { useState, useMemo } from 'react';
+import { useParams } from 'next/navigation';
 import Link from 'next/link';
 
 interface IndexEntry {
@@ -21,6 +22,8 @@ const MAX_PAGES_INLINE = 8;
 
 export default function BookIndex({ entries, bookSlug, totalPages }: BookIndexProps) {
   const [filter, setFilter] = useState('');
+  const params = useParams<{ tenant: string }>();
+  const tenantPrefix = params?.tenant ? `/${params.tenant}` : '';
 
   const { themes, indexEntries } = useMemo(() => {
     const themeThreshold = Math.max(totalPages * THEME_THRESHOLD, 10);
@@ -99,9 +102,8 @@ export default function BookIndex({ entries, bookSlug, totalPages }: BookIndexPr
         <div className="space-y-1">
           {filtered.map((entry) => (
             <div key={entry.term} className="flex flex-wrap items-baseline gap-x-2 gap-y-0.5 py-1.5 border-b border-stone-50 last:border-0">
-              <span className={`text-sm font-medium ${
-                entry.type === 'vocab' ? 'italic text-stone-600' : 'text-stone-800'
-              }`}>
+              <span className={`text-sm font-medium ${entry.type === 'vocab' ? 'italic text-stone-600' : 'text-stone-800'
+                }`}>
                 {entry.term}
               </span>
               <span className="text-xs text-stone-400">
@@ -109,7 +111,7 @@ export default function BookIndex({ entries, bookSlug, totalPages }: BookIndexPr
                   <span key={p}>
                     {i > 0 && ', '}
                     <Link
-                      href={`/book/${bookSlug}/page-number/${p}`}
+                      href={`${tenantPrefix}/book/${bookSlug}/page-number/${p}`}
                       className="text-accent-rust hover:text-accent-gold-dark hover:underline"
                     >
                       p.&thinsp;{p}

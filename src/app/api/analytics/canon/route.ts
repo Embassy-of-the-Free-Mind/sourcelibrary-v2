@@ -1,12 +1,14 @@
 import { NextResponse } from 'next/server';
+import { NextRequest } from 'next/server';
 import { getReadDb } from '@/lib/mongodb';
+import { getTenantContextFromRequest } from '@/lib/tenant-context';
 import { supabase } from '@/lib/supabase';
 import { withAuth } from '@/lib/auth-helpers';
 
 export const maxDuration = 60;
 
 // In-memory cache (5 minutes)
-let cache: { data: any; ts: number } | null = null;
+let cache: { key: string; data: any; ts: number } | null = null;
 const CACHE_TTL_MS = 5 * 60 * 1000;
 
 /**
@@ -19,10 +21,18 @@ const CACHE_TTL_MS = 5 * 60 * 1000;
  * - Cost per translated page
  * - Pipeline health summary
  */
-export const GET = withAuth(async () => {
+export const GET = withAuth(async (request: NextRequest) => {
   try {
-    if (cache && Date.now() - cache.ts < CACHE_TTL_MS) {
-      return NextResponse.json(cache.data);
+    const { id: tenantId } = getTenantContextFromRequest(request);
+
+    if (!tenantId) {
+      return NextResponse.json({ error: 'Tenant not found' }, { status: 400 });
+    }
+
+    const cacheKey = `canon-${tenantId}`;
+    const cached = cache?.data !== undefined && cache.key === cacheKey && Date.now() - cache.ts < CACHE_TTL_MS ? cache.data : null;
+    if (cached) {
+      return NextResponse.json(cached);
     }
 
     const db = await getReadDb();
@@ -40,7 +50,7 @@ export const GET = withAuth(async () => {
     ] = await Promise.all([
       // 1. Overall totals
       db.collection('books').aggregate([
-        { $match: { visible: true, pages_count: { $gt: 0 } } },
+        { $match: { tenantId, visible: true, pages_count: { $gt: 0 } } },
         {
           $group: {
             _id: null,
@@ -55,6 +65,7 @@ export const GET = withAuth(async () => {
       // 2. Books that are "readable" — >=90% of translatable pages translated
       //    Denominator: pages_ocr - pages_blank (blank pages don't need translation)
       db.collection('books').countDocuments({
+        tenantId,
         visible: true,
         pages_count: { $gt: 0 },
         pages_ocr: { $gte: 1 },
@@ -70,6 +81,7 @@ export const GET = withAuth(async () => {
       db.collection('books').aggregate([
         {
           $match: {
+            tenantId,
             visible: true,
             pages_count: { $gt: 0 },
             is_first_translation: true,
@@ -99,7 +111,7 @@ export const GET = withAuth(async () => {
 
       // 4. Breakdown by original language
       db.collection('books').aggregate([
-        { $match: { visible: true, pages_count: { $gte: 1 } } },
+        { $match: { tenantId, visible: true, pages_count: { $gte: 1 } } },
         {
           $group: {
             _id: { $ifNull: ['$language', 'Unknown'] },
@@ -128,7 +140,7 @@ export const GET = withAuth(async () => {
 
       // 5. Breakdown by collection (top traditions)
       db.collection('books').aggregate([
-        { $match: { visible: true, collections: { $exists: true, $ne: [] } } },
+        { $match: { tenantId, visible: true, collections: { $exists: true, $ne: [] } } },
         { $unwind: '$collections' },
         {
           $group: {
@@ -156,6 +168,7 @@ export const GET = withAuth(async () => {
 
       // 6. Recently completed translations (last 30 days, by pipeline completion)
       db.collection('books').find({
+        tenantId,
         visible: true,
         'pipeline_auto.status': 'complete',
         'pipeline_auto.completed_at': { $gte: new Date(Date.now() - 30 * 24 * 60 * 60 * 1000) },
@@ -267,7 +280,7 @@ export const GET = withAuth(async () => {
       },
     };
 
-    cache = { data, ts: Date.now() };
+    cache = { key: cacheKey, data, ts: Date.now() };
     return NextResponse.json(data);
   } catch (error) {
     console.error('Canon analytics error:', error);

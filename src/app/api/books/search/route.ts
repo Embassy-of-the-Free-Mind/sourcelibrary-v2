@@ -1,6 +1,7 @@
 import { NextRequest, NextResponse } from 'next/server';
 import { getReadDb } from '@/lib/mongodb';
 import { searchBookIds } from '@/lib/books-catalog';
+import { getTenantContextFromRequest } from '@/lib/tenant-context';
 
 export const dynamic = 'force-dynamic';
 
@@ -9,6 +10,19 @@ export async function GET(request: NextRequest) {
   const query = searchParams.get('q');
   const limit = Math.min(100, Math.max(1, parseInt(searchParams.get('limit') || '20')));
   const skip = Math.max(0, parseInt(searchParams.get('skip') || '0'));
+  const tenantContext = getTenantContextFromRequest(request.headers);
+
+  if (tenantContext.slug && !tenantContext.id) {
+    return NextResponse.json({
+      results: [],
+      pagination: {
+        total: 0,
+        limit,
+        skip,
+        hasMore: false,
+      },
+    });
+  }
 
   if (!query) {
     return NextResponse.json({ error: 'Missing query parameter' }, { status: 400 });
@@ -26,8 +40,10 @@ export async function GET(request: NextRequest) {
     let books: Record<string, unknown>[] = [];
     if (pageIds.length > 0) {
       const db = await getReadDb();
+      const filter: Record<string, unknown> = { id: { $in: pageIds } };
+      if (tenantContext.id) filter.tenantId = tenantContext.id;
       books = await db.collection('books').find(
-        { id: { $in: pageIds } },
+        filter,
         { projection: { _id: 1, id: 1, title: 1, display_title: 1, author: 1 } },
       ).maxTimeMS(5000).toArray();
     }

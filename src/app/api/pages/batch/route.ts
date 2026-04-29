@@ -1,5 +1,6 @@
 import { NextRequest, NextResponse } from 'next/server';
 import { getDb } from '@/lib/mongodb';
+import { getTenantContextFromRequest } from '@/lib/tenant-context';
 
 export const preferredRegion = 'fra1';
 
@@ -17,6 +18,11 @@ export async function POST(request: NextRequest) {
   try {
     const body = await request.json();
     const ids: string[] = body.ids;
+    const { id: tenantId } = getTenantContextFromRequest(request);
+
+    if (!tenantId) {
+      return NextResponse.json({ error: 'Unauthorized' }, { status: 403 });
+    }
 
     if (!Array.isArray(ids) || ids.length === 0) {
       return NextResponse.json({ error: 'ids array is required' }, { status: 400 });
@@ -27,7 +33,7 @@ export async function POST(request: NextRequest) {
 
     const db = await getDb();
     const pages = await db.collection('pages').find(
-      { id: { $in: limitedIds } },
+      { id: { $in: limitedIds }, tenantId },
       { projection: { detected_images: 0 } }
     ).toArray();
 
