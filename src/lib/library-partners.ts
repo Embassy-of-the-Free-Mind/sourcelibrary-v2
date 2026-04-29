@@ -106,6 +106,7 @@ export const LIBRARY_PARTNERS: Record<string, LibraryPartner> = {
     url: 'https://diglib.hab.de',
     description: 'The Herzog August Bibliothek in Wolfenbüttel is one of the oldest and most important research libraries in Germany. It holds outstanding collections of medieval and early modern books and manuscripts, with extensive digital facsimiles.',
     color: 'gold',
+    heroImageOverride: 'https://images.sourcelibrary.org/pages/69b51e0dcf111105c42961ed/0003.jpg',
   },
   'vatican-library': {
     slug: 'vatican-library',
@@ -216,6 +217,7 @@ export const LIBRARY_PARTNERS: Record<string, LibraryPartner> = {
     url: 'https://dl.ndl.go.jp',
     description: 'The National Diet Library of Japan is the national library of Japan, providing digital access to rare Japanese books, manuscripts, maps, and prints spanning over a millennium of Japanese literary and scientific tradition.',
     color: 'rust',
+    heroImageOverride: 'https://images.sourcelibrary.org/hero/ndl_japan.jpg',
   },
 
   // --- Other partners ---
@@ -285,6 +287,7 @@ export const LIBRARY_PARTNERS: Record<string, LibraryPartner> = {
     url: 'https://library.harvard.edu/libraries/houghton',
     description: 'The Houghton Library at Harvard University is the primary repository for rare books and manuscripts, housing the Islamic Heritage Project collection, medieval codices, incunabula, and extensive printing history materials.',
     color: 'rust',
+    heroImageOverride: 'https://images.sourcelibrary.org/hero/harvard-houghton.jpg',
   },
   'penn-schoenberg': {
     slug: 'penn-schoenberg',
@@ -294,6 +297,7 @@ export const LIBRARY_PARTNERS: Record<string, LibraryPartner> = {
     url: 'https://colenda.library.upenn.edu',
     description: 'The Lawrence J. Schoenberg Collection at the University of Pennsylvania holds important medieval scientific manuscripts. Penn also hosts OPenn, providing CC0 access to over 51,000 manuscripts from 30+ institutions.',
     color: 'sage',
+    heroImageOverride: 'https://images.sourcelibrary.org/hero/penn_colenda.jpg',
   },
   'huntington': {
     slug: 'huntington',
@@ -312,6 +316,7 @@ export const LIBRARY_PARTNERS: Record<string, LibraryPartner> = {
     url: 'https://www.getty.edu/research',
     description: 'The Getty Research Institute in Los Angeles holds exceptional collections of alchemical manuscripts, emblem books, festival books, and art historical archives from the Renaissance through the early modern period.',
     color: 'violet',
+    heroImageOverride: 'https://images.sourcelibrary.org/hero/getty-florentine.jpg',
   },
   'kyoto': {
     slug: 'kyoto',
@@ -321,6 +326,17 @@ export const LIBRARY_PARTNERS: Record<string, LibraryPartner> = {
     url: 'https://rmda.kulib.kyoto-u.ac.jp',
     description: 'Kyoto University\'s Rare Materials Digital Archive provides access to Japanese rare books, natural history illustrations, architectural plans, and Meiji-era scientific materials from one of Japan\'s leading research universities.',
     color: 'sage',
+    heroImageOverride: 'https://images.sourcelibrary.org/hero/kyoto_rmda.jpg',
+  },
+  'heidelberg': {
+    slug: 'heidelberg',
+    name: 'Heidelberg University Library',
+    shortName: 'Heidelberg',
+    providerKey: 'heidelberg',
+    url: 'https://digi.ub.uni-heidelberg.de',
+    description: 'Heidelberg University Library holds the Codex Manesse and important collections of medieval manuscripts, alchemical texts, and early printed books from one of Germany\'s oldest universities (founded 1386).',
+    color: 'violet',
+    heroImageOverride: 'https://images.sourcelibrary.org/hero/heidelberg.jpg',
   },
   'bdrc': {
     slug: 'bdrc',
