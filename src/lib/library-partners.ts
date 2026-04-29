@@ -446,6 +446,7 @@ export const LIBRARY_PARTNERS: Record<string, LibraryPartner> = {
     url: 'https://www.metmuseum.org',
     description: 'The Metropolitan Museum of Art in New York provides open access to its encyclopedic collection spanning 5,000 years, including Egyptian papyri, Islamic manuscripts, medieval art, and Asian calligraphy.',
     color: 'rust',
+    heroImageOverride: 'https://images.sourcelibrary.org/hero/met-book-of-dead.jpg',
   },
   'ndl': {
     slug: 'ndl',
@@ -455,6 +456,7 @@ export const LIBRARY_PARTNERS: Record<string, LibraryPartner> = {
     url: 'https://dl.ndl.go.jp',
     description: 'The National Diet Library is Japan\'s national library, providing digital access to rare Japanese books, Buddhist manuscripts, woodblock prints, and historical texts spanning over a millennium.',
     color: 'rust',
+    heroImageOverride: 'https://images.sourcelibrary.org/hero/ndl-genji-monogatari.jpg',
   },
   'bsb': {
     slug: 'bsb',
