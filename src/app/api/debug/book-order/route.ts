@@ -1,14 +1,21 @@
-import { NextResponse } from 'next/server';
+import { NextRequest, NextResponse } from 'next/server';
 import { getReadDb } from '@/lib/mongodb';
+import { getTenantContextFromRequest } from '@/lib/tenant-context';
 import { withAuth } from '@/lib/auth-helpers';
 
 export const dynamic = 'force-dynamic';
 
-export const GET = withAuth(async (request, session) => {
+export const GET = withAuth(async (request: NextRequest) => {
   try {
     const db = await getReadDb();
+    const { id: tenantId } = getTenantContextFromRequest(request);
+
+    if (!tenantId) {
+      return NextResponse.json({ books: [] });
+    }
 
     const books = await db.collection('books').aggregate([
+      { $match: { tenantId } },
       {
         $lookup: {
           from: 'pages',

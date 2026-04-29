@@ -3,20 +3,34 @@ import { getDb } from '@/lib/mongodb';
 import { ObjectId } from 'mongodb';
 import { Book } from '@/lib/types';
 import { withAuth } from '@/lib/auth-helpers';
+import { getTenantContextFromRequest } from '@/lib/tenant-context';
 
 export async function GET(request: NextRequest) {
   try {
     const { searchParams } = new URL(request.url);
     const limit = Math.min(parseInt(searchParams.get('limit') || '100', 10), 500);
     const offset = Math.max(parseInt(searchParams.get('offset') || '0', 10), 0);
+    const tenantContext = getTenantContextFromRequest(request.headers);
+
+    if (tenantContext.slug && !tenantContext.id) {
+      return NextResponse.json([], {
+        headers: {
+          'Cache-Control': 'public, s-maxage=60, stale-while-revalidate=120',
+        },
+      });
+    }
 
     const db = await getDb();
+    const query: Record<string, unknown> = { visible: true, pages_count: { $gt: 0 } };
+    if (tenantContext.id) {
+      query.tenantId = tenantContext.id;
+    }
 
     // pages_count is already cached on each book by the sync-page-counts cron.
     // NEVER $lookup to the pages collection (9.5M docs) on a hot path.
     const books = await db.collection('books')
       .find(
-        { visible: true, pages_count: { $gt: 0 } },
+        query,
         {
           projection: {
             _id: 0, id: 1, title: 1, display_title: 1, author: 1, language: 1,
@@ -32,7 +46,20 @@ export async function GET(request: NextRequest) {
       .limit(limit)
       .toArray();
 
-    return NextResponse.json(books, {
+    const tenantIds = [...new Set(books.map((b: any) => b.tenantId).filter(Boolean))];
+    const tenants = tenantIds.length > 0
+      ? await db.collection('tenants').find(
+        { id: { $in: tenantIds }, status: { $ne: 'deleted' } },
+        { projection: { _id: 0, id: 1, slug: 1 }, maxTimeMS: 5000 }
+      ).toArray()
+      : [];
+    const tenantSlugById = new Map(tenants.map((t: any) => [t.id, t.slug]));
+    const booksWithTenantSlug = books.map((book: any) => ({
+      ...book,
+      tenant_slug: book.tenantId ? tenantSlugById.get(book.tenantId) || null : null,
+    }));
+
+    return NextResponse.json(booksWithTenantSlug, {
       headers: {
         'Cache-Control': 'public, s-maxage=300, stale-while-revalidate=600',
       },
@@ -47,6 +74,8 @@ export async function GET(request: NextRequest) {
 export const POST = withAuth(async (request, session) => {
   try {
     const body = await request.json();
+    const tenantContext = getTenantContextFromRequest(request.headers);
+    const tenantId = tenantContext.id || (session.user as any).tenantId || 'default';
     const {
       title,
       display_title,
@@ -69,7 +98,8 @@ export const POST = withAuth(async (request, session) => {
 
     const book: Book = {
       id: bookId,
-      tenant_id: 'default',
+      tenant_id: tenantId,
+      tenantId,
       title,
       display_title: display_title || null,
       author: author || 'Unknown',

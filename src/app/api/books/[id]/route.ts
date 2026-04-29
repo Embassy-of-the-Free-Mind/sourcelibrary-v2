@@ -1,6 +1,7 @@
 import { NextRequest, NextResponse } from 'next/server';
 import { revalidatePath } from 'next/cache';
 import { getDb, getReadDb } from '@/lib/mongodb';
+import { getTenantContextFromRequest } from '@/lib/tenant-context';
 import { ObjectId } from 'mongodb';
 import { logAuditEvent } from '@/lib/audit-logger';
 import { withAdminAuth, withCuratorAuth } from '@/lib/auth-helpers';
@@ -18,6 +19,12 @@ export async function GET(
     const { searchParams } = new URL(request.url);
     const includeFull = searchParams.get('full') === 'true';
     const pagesMode = searchParams.get('pages') || 'default'; // 'nav' for minimal, 'default' for standard
+    const { id: tenantId } = getTenantContextFromRequest(request);
+    
+    if (!tenantId) {
+      return NextResponse.json({ error: 'Book not found' }, { status: 404 });
+    }
+    
     // Use secondary reads for public GETs; admin full-view still reads primary for freshness
     const db = includeFull ? await getDb() : await getReadDb();
 
@@ -28,7 +35,7 @@ export async function GET(
       chapters: 1,
     } : undefined;
 
-    const result = await findBookByIdOrSlug(db, id, bookProjection || undefined);
+    const result = await findBookByIdOrSlug(db, id, bookProjection || undefined, tenantId);
     if (!result) {
       return NextResponse.json({ error: 'Book not found' }, { status: 404 });
     }
@@ -68,7 +75,7 @@ export async function GET(
     const pageOffset = parseInt(searchParams.get('pageOffset') || '0');
     const pageLimit = parseInt(searchParams.get('pageLimit') || '0'); // 0 = all (backwards-compat)
     let cursor = db.collection('pages')
-      .find({ book_id: bookId })
+      .find({ book_id: bookId, tenantId })
       .project(projection)
       .sort({ page_number: 1 });
     if (pageOffset > 0) cursor = cursor.skip(pageOffset);

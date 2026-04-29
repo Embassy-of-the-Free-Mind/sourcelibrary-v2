@@ -1,5 +1,6 @@
 import Image from 'next/image';
 import Link from 'next/link';
+import { bookUrl, galleryImageUrl } from '@/lib/slugify';
 
 interface ShowcaseItem {
   // Gallery image fields
@@ -15,6 +16,7 @@ interface ShowcaseItem {
   book_author: string;
   book_year: number;
   book_slug?: string;
+  tenant_slug?: string | null;
   // Quote from the book
   quote?: {
     text: string;
@@ -42,14 +44,13 @@ export default function FromTheCollection({ items }: FromTheCollectionProps) {
         <div className="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-4 gap-4 lg:gap-5">
           {items.map((item) => {
             const galleryId = `${item.page_id}-${item.detection_index}`;
-            const bookHref = item.book_slug
-              ? `/book/${item.book_slug}`
-              : `/book/${item.book_id}`;
+            const bookHref = bookUrl({ id: item.book_id, slug: item.book_slug, tenant_slug: item.tenant_slug || null });
+            const imageHref = galleryImageUrl({ id: galleryId, tenant_slug: item.tenant_slug || null });
 
             return (
               <div key={galleryId} className="group">
                 {/* Image */}
-                <Link href={`/gallery/image/${galleryId}`}>
+                <Link href={imageHref}>
                   <div className="relative aspect-[3/4] bg-cream rounded-lg overflow-hidden border border-border-light group-hover:shadow-lg transition-all">
                     <Image
                       src={item.thumbnail_url || item.extracted_url || ''}

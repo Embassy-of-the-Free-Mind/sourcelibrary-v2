@@ -4,8 +4,10 @@ import { supabase } from '@/lib/supabase';
 import type { BookSearchFilters } from '@/lib/atlas-search';
 import type { SearchResult } from '@/lib/api-client/types/search';
 import { searchBooksCatalog } from '@/lib/books-catalog';
+import { searchBookIds } from '@/lib/books-catalog';
 import { semanticBookSearch, semanticArtworkSearch } from '@/lib/semantic-search';
 import { checkRateLimit, getClientIp } from '@/lib/rate-limit';
+import { getTenantContextFromRequest } from '@/lib/tenant-context';
 
 // CLIP server on Hetzner for visual text→image search
 const CLIP_URL = process.env.CLIP_URL || 'http://46.224.122.120:3456/clip';
@@ -42,6 +44,7 @@ interface GalleryResult {
 
 interface CollectionResult {
   slug: string;
+  tenant_slug?: string | null;
   name: string;
   description?: string;
   book_count: number;
@@ -58,11 +61,12 @@ interface CollectionResult {
 export async function GET(request: NextRequest) {
   const rl = checkRateLimit({ name: 'search', limit: 60, windowSeconds: 60 }, getClientIp(request));
   if (!rl.allowed) {
-    return NextResponse.json({ error: 'Rate limit exceeded' }, { status: 429, headers: { 'Retry-After': String(rl.retryAfter) } });
+    return NextResponse.json({ error: 'Rate limit exceeded' }, { status: 429 });
   }
 
   try {
     const { searchParams } = new URL(request.url);
+    const tenantContext = getTenantContextFromRequest(request.headers);
     const query = searchParams.get('q') || '';
     const limit = Math.min(parseInt(searchParams.get('limit') || '8'), 12);
     const galleryLimit = Math.min(parseInt(searchParams.get('gallery_limit') || '6'), 12);
@@ -83,6 +87,16 @@ export async function GET(request: NextRequest) {
       });
     }
 
+    if (tenantContext.slug && !tenantContext.id) {
+      return NextResponse.json({
+        query,
+        books: { results: [], total: 0 },
+        index: { results: [], total: 0 },
+        gallery: { results: [], total: 0 },
+        visual: { results: [], total: 0 },
+      });
+    }
+
     const db = await getDb();
     const queryRegex = new RegExp(query.replace(/[.*+?^${}()|[\]\\]/g, '\\$&'), 'i');
 
@@ -92,6 +106,7 @@ export async function GET(request: NextRequest) {
     if (category) searchFilters.category = category;
     if (firstTranslation) searchFilters.isFirstTranslation = true;
     if (hasTranslation) searchFilters.hasTranslation = true;
+    if (tenantContext.id) searchFilters.tenantId = tenantContext.id;
 
     // Run book, index, gallery, and visual search in parallel.
     // Each operation gets a hard timeout — Atlas Search $search doesn't respect maxTimeMS,
@@ -134,16 +149,16 @@ export async function GET(request: NextRequest) {
     const emptyArtworks = { results: [] as ArtworkSearchResult[], total: 0 };
     const emptyCollections = { results: [] as CollectionResult[] };
 
-    const [booksResult, indexResult, galleryResult, visualResult, semanticResultRaw, artworkResult, collectionsResult] = await Promise.all([
+    const [booksResultRaw, indexResult, galleryResult, visualResult, semanticResultRaw, artworkResult, collectionsResult] = await Promise.all([
       withTimeout(searchBooks(query, limit, searchFilters, library), emptyBooks, 'books'),
       withTimeout(
-        searchIndex(db, query, limit).catch((err) => {
+        searchIndex(db, query, limit, tenantContext.id || undefined).catch((err) => {
           console.error('Index search error:', err);
           return emptyIndex;
         }),
         emptyIndex, 'index',
       ),
-      withTimeout(searchGallery(db, query, queryRegex, galleryLimit), emptyGallery, 'gallery'),
+      withTimeout(searchGallery(db, query, queryRegex, galleryLimit, tenantContext.id || undefined), emptyGallery, 'gallery'),
       withTimeout(searchVisual(query, galleryLimit), emptyGallery, 'visual', 5000),
       // Semantic search: book-level discovery via book_embeddings (HNSW, ~17K rows)
       withTimeout(
@@ -209,6 +224,45 @@ export async function GET(request: NextRequest) {
       ),
     ]);
 
+    const resultBookIds = booksResultRaw.results.map((b: any) => b.id).filter(Boolean);
+    const resultBooks = resultBookIds.length > 0
+      ? await db.collection('books').find(
+        { id: { $in: resultBookIds } },
+        { projection: { _id: 0, id: 1, tenantId: 1 }, maxTimeMS: 5000 }
+      ).toArray()
+      : [];
+    const collectionTenantIds = collectionsResult.results.map((c: any) => c.tenantId).filter(Boolean);
+    const tenantIds = [...new Set([
+      ...resultBooks.map((book: any) => book.tenantId).filter(Boolean),
+      ...collectionTenantIds,
+    ])];
+    const tenants = tenantIds.length > 0
+      ? await db.collection('tenants').find(
+        { id: { $in: tenantIds }, status: { $ne: 'deleted' } },
+        { projection: { _id: 0, id: 1, slug: 1 }, maxTimeMS: 5000 }
+      ).toArray()
+      : [];
+    const tenantSlugById = new Map(tenants.map((tenant: any) => [tenant.id, tenant.slug]));
+    const tenantIdByBookId = new Map(resultBooks.map((book: any) => [book.id, book.tenantId]));
+
+    const booksResult = {
+      ...booksResultRaw,
+      results: booksResultRaw.results.map((book: any) => ({
+        ...book,
+        tenant_slug: tenantIdByBookId.get(book.id)
+          ? tenantSlugById.get(tenantIdByBookId.get(book.id)) || null
+          : null,
+      })),
+    };
+
+    const collectionsWithTenantSlug = {
+      ...collectionsResult,
+      results: collectionsResult.results.map((collection: any) => ({
+        ...collection,
+        tenant_slug: collection.tenantId ? tenantSlugById.get(collection.tenantId) || null : null,
+      })),
+    };
+
     // Dedup semantic results: remove books already in keyword results
     const keywordBookIds = new Set(booksResult.results.map((b: any) => b.id));
     const dedupedSemantic = semanticResultRaw.results.filter(s => !keywordBookIds.has(s.book_id));
@@ -222,11 +276,21 @@ export async function GET(request: NextRequest) {
     const SEMANTIC_SIM_FLOOR = 0.65;
     const ARTWORK_SIM_FLOOR = 0.65;
 
-    const filteredVisual = {
-      results: visualResult.results.filter((r: any) => (r.similarity ?? 1) >= VISUAL_SIM_FLOOR),
-      total: 0,
-    };
-    filteredVisual.total = filteredVisual.results.length;
+    // Filter visual results by tenant if needed
+    let filteredVisualResults = visualResult.results.filter((r: any) => (r.similarity ?? 1) >= VISUAL_SIM_FLOOR);
+    if (tenantContext.id && filteredVisualResults.length > 0) {
+      const visualBookIds = [...new Set(filteredVisualResults.map((r: any) => r.bookId).filter(Boolean))];
+      if (visualBookIds.length > 0) {
+        const allowedBooks = await db.collection('books')
+          .find({ id: { $in: visualBookIds }, tenantId: tenantContext.id }, { projection: { id: 1 } })
+          .toArray();
+        const allowedBookIds = new Set(allowedBooks.map((b: any) => b.id));
+        filteredVisualResults = filteredVisualResults.filter((r: any) => allowedBookIds.has(r.bookId));
+      } else {
+        filteredVisualResults = [];
+      }
+    }
+    const filteredVisual = { results: filteredVisualResults, total: filteredVisualResults.length };
 
     const filteredSemantic = {
       results: semanticResult.results.filter(r => r.similarity >= SEMANTIC_SIM_FLOOR),
@@ -259,7 +323,7 @@ export async function GET(request: NextRequest) {
       event: 'search_query',
       query,
       results_count: booksResult.total + indexResult.total + galleryResult.total + filteredVisual.total + filteredSemantic.total + filteredArtworks.total,
-      filters: { language, category, library, source: 'unified' },
+      filters: { language, category, library, source: 'unified', tenantId: tenantContext.id || null },
       timestamp: new Date(),
       ip: request.headers.get('x-forwarded-for')?.split(',')[0]?.trim() || 'unknown',
       created_at: new Date(),
@@ -273,7 +337,7 @@ export async function GET(request: NextRequest) {
       visual: filteredVisual,
       semantic: filteredSemantic,
       artworks: filteredArtworks,
-      collections: collectionsResult,
+      collections: collectionsWithTenantSlug,
     }, {
       headers: {
         'Cache-Control': 'no-store',
@@ -367,10 +431,9 @@ async function searchBooks(
   };
 }
 
-async function searchIndex(db: any, query: string, limit: number) {
+async function searchIndex(db: any, query: string, limit: number, tenantId?: string) {
   // Skip index search for very short queries — autocomplete + fuzzy on 1-2 chars is too loose
   if (query.length < 3) return { results: [] as IndexResult[], total: 0, hasMore: false };
-
   const escapedQuery = query.replace(/[.*+?^${}()|[\]\\]/g, '\\$&');
   const queryRegex = new RegExp(escapedQuery, 'i');
 
@@ -412,9 +475,27 @@ async function searchIndex(db: any, query: string, limit: number) {
   }
 
   // Expand each entity into per-book results (matching the IndexResult shape)
+  let allowedBookIds: Set<string> | null = null;
+  if (tenantId) {
+    const entityBookIds = [...new Set(
+      entities.flatMap((e: any) => (e.books || []).map((b: any) => b.book_id).filter(Boolean)),
+    )];
+    if (entityBookIds.length > 0) {
+      const allowedBooks = await db.collection('books')
+        .find({ id: { $in: entityBookIds }, tenantId }, { projection: { id: 1 } })
+        .toArray();
+      allowedBookIds = new Set(allowedBooks.map((b: any) => b.id));
+    } else {
+      allowedBookIds = new Set();
+    }
+  }
+
   const results: IndexResult[] = [];
   for (const entity of entities) {
     for (const book of (entity.books || []).slice(0, 2)) { // top 2 books per entity
+      if (allowedBookIds && !allowedBookIds.has(book.book_id)) {
+        continue;
+      }
       results.push({
         type: entity.type === 'person' ? 'person' : entity.type === 'place' ? 'place' : 'concept',
         term: entity.name,
@@ -433,6 +514,7 @@ async function searchIndex(db: any, query: string, limit: number) {
     const books = await db.collection('books').find({
       'index.generatedAt': { $exists: true },
       visible: true,
+      ...(tenantId ? { tenantId } : {}),
       $or: [
         { 'index.concepts.term': queryRegex },
         { 'index.people.term': queryRegex },
@@ -487,7 +569,7 @@ async function searchIndex(db: any, query: string, limit: number) {
   return { results, total: results.length, hasMore: results.length >= limit };
 }
 
-async function searchGallery(db: any, query: string, queryRegex: RegExp, limit: number): Promise<{ results: GalleryResult[]; total: number }> {
+async function searchGallery(db: any, query: string, queryRegex: RegExp, limit: number, tenantId?: string): Promise<{ results: GalleryResult[]; total: number }> {
   try {
     let images;
     try {
@@ -506,6 +588,7 @@ async function searchGallery(db: any, query: string, queryRegex: RegExp, limit: 
               minimumShouldMatch: 1,
               filter: [
                 { range: { path: 'gallery_quality', gte: 0.5 } },
+                ...(tenantId ? [{ equals: { path: 'tenantId', value: tenantId } }] : []),
               ],
             },
           },
@@ -518,6 +601,7 @@ async function searchGallery(db: any, query: string, queryRegex: RegExp, limit: 
       images = await db.collection('gallery_images')
         .find(
           {
+            ...(tenantId ? { tenantId } : {}),
             gallery_quality: { $gte: 0.5 },
             extracted_url: { $ne: null },
             $or: [
@@ -624,7 +708,7 @@ async function searchCollections(db: any, queryRegex: RegExp, query: string): Pr
         { slug: queryRegex },
       ],
     })
-    .project({ slug: 1, name: 1, description: 1, book_count: 1, featured_image: 1, featured_images: { $slice: 1 } })
+    .project({ slug: 1, tenantId: 1, name: 1, description: 1, book_count: 1, featured_image: 1, featured_images: { $slice: 1 } })
     .sort({ book_count: -1 })
     .limit(3)
     .maxTimeMS(2000)
@@ -636,6 +720,7 @@ async function searchCollections(db: any, queryRegex: RegExp, query: string): Pr
       const heroUrl = hero?.extracted_url || hero?.thumbnail_url || hero?.image_url;
       return {
         slug: c.slug,
+        tenantId: c.tenantId,
         name: c.name,
         description: c.description?.slice(0, 150),
         book_count: c.book_count,

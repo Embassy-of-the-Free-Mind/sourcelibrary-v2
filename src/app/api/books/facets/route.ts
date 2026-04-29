@@ -1,5 +1,6 @@
 import { NextRequest, NextResponse } from 'next/server';
 import { getReadDb } from '@/lib/mongodb';
+import { getTenantContextFromRequest } from '@/lib/tenant-context';
 import { FACETS, facetDbField } from '@/lib/taxonomy/faceted-vocabulary';
 
 /**
@@ -25,11 +26,17 @@ import { FACETS, facetDbField } from '@/lib/taxonomy/faceted-vocabulary';
 export async function GET(request: NextRequest) {
   const { searchParams } = new URL(request.url);
   const db = await getReadDb();
+  const { id: tenantId } = getTenantContextFromRequest(request);
+
+  if (!tenantId) {
+    return NextResponse.json({ books: [], total: 0 });
+  }
 
   const countsOnly = searchParams.get('counts') === 'true';
 
   // Build MongoDB query from facet filters
   const query: Record<string, unknown> = {
+    tenantId,
     'faceted_tags': { $exists: true },
     visible: true,
     pages_count: { $gt: 0 },

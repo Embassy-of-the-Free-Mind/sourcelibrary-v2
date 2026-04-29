@@ -20,9 +20,10 @@ interface SimilarItem {
 
 interface SimilarImagesProps {
   imageId: string; // pageId-detectionIndex
+  tenant?: string;
 }
 
-export default function SimilarImages({ imageId }: SimilarImagesProps) {
+export default function SimilarImages({ imageId, tenant }: SimilarImagesProps) {
   const [items, setItems] = useState<SimilarItem[]>([]);
   const [loading, setLoading] = useState(true);
   const [method, setMethod] = useState<string>('');
@@ -75,7 +76,7 @@ export default function SimilarImages({ imageId }: SimilarImagesProps) {
           return (
             <Link
               key={id}
-              href={`/gallery/image/${id}`}
+              href={tenant ? `/${tenant}/gallery/image/${id}` : `/gallery/image/${id}`}
               className="group relative aspect-square bg-stone-700 rounded overflow-hidden"
               title={item.description}
             >

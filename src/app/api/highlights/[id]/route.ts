@@ -1,5 +1,6 @@
 import { NextRequest, NextResponse } from 'next/server';
 import { getDb } from '@/lib/mongodb';
+import { getTenantContextFromRequest } from '@/lib/tenant-context';
 import { z } from 'zod';
 import { withAuth } from '@/lib/auth-helpers';
 
@@ -21,9 +22,18 @@ export async function GET(
 ) {
   try {
     const { id } = await params;
+    const { id: tenantId } = getTenantContextFromRequest(request);
+
+    if (!tenantId) {
+      return NextResponse.json(
+        { error: 'Highlight not found' },
+        { status: 404 }
+      );
+    }
+
     const db = await getDb();
 
-    const highlight = await db.collection('highlights').findOne({ id });
+    const highlight = await db.collection('highlights').findOne({ id, tenantId });
 
     if (!highlight) {
       return NextResponse.json(
@@ -46,9 +56,18 @@ export async function GET(
 export const DELETE = withAuth(async (request, session, context) => {
   try {
     const { id } = await context.params;
+    const { id: tenantId } = getTenantContextFromRequest(request);
+
+    if (!tenantId) {
+      return NextResponse.json(
+        { error: 'Highlight not found' },
+        { status: 404 }
+      );
+    }
+
     const db = await getDb();
 
-    const result = await db.collection('highlights').deleteOne({ id });
+    const result = await db.collection('highlights').deleteOne({ id, tenantId });
 
     if (result.deletedCount === 0) {
       return NextResponse.json(
@@ -71,6 +90,15 @@ export const DELETE = withAuth(async (request, session, context) => {
 export const PATCH = withAuth(async (request, session, context) => {
   try {
     const { id } = await context.params;
+    const { id: tenantId } = getTenantContextFromRequest(request);
+
+    if (!tenantId) {
+      return NextResponse.json(
+        { error: 'Highlight not found' },
+        { status: 404 }
+      );
+    }
+
     const rawBody = await request.json();
 
     // Validate request body
@@ -90,7 +118,7 @@ export const PATCH = withAuth(async (request, session, context) => {
     if (color) updateData.color = color;
 
     const result = await db.collection('highlights').updateOne(
-      { id },
+      { id, tenantId },
       { $set: updateData }
     );
 
@@ -101,7 +129,7 @@ export const PATCH = withAuth(async (request, session, context) => {
       );
     }
 
-    const highlight = await db.collection('highlights').findOne({ id });
+    const highlight = await db.collection('highlights').findOne({ id, tenantId });
     return NextResponse.json(highlight);
   } catch (error) {
     console.error('Error updating highlight:', error);

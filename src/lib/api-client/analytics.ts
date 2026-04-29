@@ -12,6 +12,12 @@ import type {
   CanonData,
 } from './types/analytics';
 
+function getTenantSlug(): string {
+  if (typeof window === 'undefined') return '';
+  const slug = window.location.pathname.split('/')[1] || '';
+  return /^[a-z0-9-]+$/.test(slug) ? slug : '';
+}
+
 /**
  * Analytics API client
  * Handles analytics tracking and statistics
@@ -21,7 +27,8 @@ export const analytics = {
    * Get analytics statistics for a book or globally
    */
   stats: async (book_id?: string): Promise<AnalyticsStats> => {
-    const url = book_id ? `/api/analytics/stats?book_id=${book_id}` : '/api/analytics/stats';
+    const tenant = getTenantSlug();
+    const url = book_id ? `/api/${tenant}/analytics/stats?book_id=${book_id}` : `/api/${tenant}/analytics/stats`;
     return await apiClient.get(url);
   },
 
@@ -29,7 +36,8 @@ export const analytics = {
    * Get usage statistics (extended timeout — this endpoint aggregates many collections)
    */
   usage: async (days?: number): Promise<UsageStats> => {
-    const url = days ? `/api/analytics/usage?days=${days}` : '/api/analytics/usage';
+    const tenant = getTenantSlug();
+    const url = days ? `/api/${tenant}/analytics/usage?days=${days}` : `/api/${tenant}/analytics/usage`;
     return await apiClient.get(url, { timeout: 90000 });
   },
 
@@ -37,7 +45,8 @@ export const analytics = {
    * Get loading/performance metrics (extended timeout for aggregation queries)
    */
   loading: async (hours?: number): Promise<PerformanceData> => {
-    const url = hours ? `/api/analytics/loading?hours=${hours}` : '/api/analytics/loading';
+    const tenant = getTenantSlug();
+    const url = hours ? `/api/${tenant}/analytics/loading?hours=${hours}` : `/api/${tenant}/analytics/loading`;
     return await apiClient.get(url, { timeout: 90000 });
   },
 
@@ -45,14 +54,16 @@ export const analytics = {
    * Get traffic data (pageviews, referrers, countries)
    */
   traffic: async (): Promise<TrafficData> => {
-    return await apiClient.get('/api/analytics');
+    const tenant = getTenantSlug();
+    return await apiClient.get(`/api/${tenant}/analytics`);
   },
 
   /**
    * Get search query analytics
    */
   search: async (days?: number): Promise<SearchAnalyticsData> => {
-    const url = days ? `/api/analytics/search?days=${days}` : '/api/analytics/search';
+    const tenant = getTenantSlug();
+    const url = days ? `/api/${tenant}/analytics/search?days=${days}` : `/api/${tenant}/analytics/search`;
     return await apiClient.get(url);
   },
 
@@ -60,7 +71,8 @@ export const analytics = {
    * Get pipeline observability data (snapshots, velocity, cron health, stalls)
    */
   pipeline: async (hours?: number): Promise<PipelineData> => {
-    const url = hours ? `/api/analytics/pipeline?hours=${hours}` : '/api/analytics/pipeline';
+    const tenant = getTenantSlug();
+    const url = hours ? `/api/${tenant}/analytics/pipeline?hours=${hours}` : `/api/${tenant}/analytics/pipeline`;
     return await apiClient.get(url, { timeout: 30000 });
   },
 
@@ -72,7 +84,8 @@ export const analytics = {
     book_id: string;
     page_id?: string;
   }): Promise<{ success: boolean; deduplicated?: boolean }> => {
-    return await apiClient.post('/api/analytics/track', data);
+    const tenant = getTenantSlug();
+    return await apiClient.post(`/api/${tenant}/analytics/track`, data);
   },
 
   /**
@@ -99,7 +112,8 @@ export const analytics = {
    * Get canon metrics (mission-critical: readable books, first translations, coverage)
    */
   canon: async (): Promise<CanonData> => {
-    return await apiClient.get('/api/analytics/canon', { timeout: 60000 });
+    const tenant = getTenantSlug();
+    return await apiClient.get(`/api/${tenant}/analytics/canon`, { timeout: 60000 });
   },
 
   /**

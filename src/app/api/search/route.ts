@@ -5,6 +5,7 @@ import type { SearchResult, SearchResponse } from '@/lib/api-client/types/search
 import { buildPageSearchStage } from '@/lib/atlas-search';
 import { searchBookIds } from '@/lib/books-catalog';
 import { semanticBookSearch, semanticPageSearchGlobal } from '@/lib/semantic-search';
+import { getTenantContextFromRequest } from '@/lib/tenant-context';
 
 export const preferredRegion = 'fra1';
 
@@ -75,9 +76,16 @@ export async function GET(request: NextRequest) {
     const results: SearchResult[] = [];
     const seenBooks = new Set<string>();
 
+    // Read tenant context resolved by proxy.ts
+    const { slug: tenantSlug, id: tenantId } = getTenantContextFromRequest(request.headers);
+    if (tenantSlug && !tenantId) {
+      return NextResponse.json({ results: [], total: 0 });
+    }
+
     // Helper: build common book-level filters (language, category, year, etc.)
     function buildBookFilters(): Record<string, unknown> {
       const filters: Record<string, unknown> = { visible: true, pages_count: { $gt: 0 } };
+      if (tenantId) filters.tenantId = tenantId;
       if (language) filters.language = language;
       if (category) filters.categories = category;
       if (dateFrom || dateTo) {
@@ -201,6 +209,7 @@ export async function GET(request: NextRequest) {
             pageFilter.book_id = bookId;
           } else if (hasBookLevelFilters) {
             const bookIdFilter: Record<string, unknown> = { visible: true };
+            if (tenantId) bookIdFilter.tenantId = tenantId;
             if (language) bookIdFilter.language = language;
             if (category) bookIdFilter.categories = category;
             if (dateFrom || dateTo) {
@@ -308,7 +317,7 @@ export async function GET(request: NextRequest) {
       if (pageBookIds.length > 0) {
         const pageBooks = await db.collection('books')
           .find(
-            { id: { $in: pageBookIds } },
+            { id: { $in: pageBookIds }, ...(tenantId ? { tenantId } : {}) },
             { projection: { id: 1, slug: 1, title: 1, display_title: 1, author: 1, thumbnail: 1, thumbnail_blob: 1, language: 1, published: 1, pages_count: 1, pages_translated: 1, doi: 1, categories: 1, hidden: 1, quality_score: 1, work_id: 1 } }
           )
           .toArray();

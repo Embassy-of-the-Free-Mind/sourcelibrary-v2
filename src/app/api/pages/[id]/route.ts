@@ -1,5 +1,6 @@
 import { NextRequest, NextResponse } from 'next/server';
 import { getDb } from '@/lib/mongodb';
+import { getTenantContextFromRequest } from '@/lib/tenant-context';
 import { z } from 'zod';
 import { logAuditEvent } from '@/lib/audit-logger';
 import { withAuth, withAdminAuth } from '@/lib/auth-helpers';
@@ -37,19 +38,30 @@ export async function GET(
   try {
     const { id } = await params;
     const db = await getDb();
+    const { id: tenantId } = getTenantContextFromRequest(request);
+
+    if (!tenantId) {
+      return NextResponse.json({ error: 'Page not found' }, { status: 404 });
+    }
 
     const { searchParams } = new URL(request.url);
     const full = searchParams.get('full') === 'true';
 
     // Default: exclude detected_images (large array unused by the reader)
     const projection = full ? undefined : { detected_images: 0 };
-    let page = await db.collection('pages').findOne({ id }, projection ? { projection } : undefined);
+    let page = await db.collection('pages').findOne(
+      { id, tenantId },
+      projection ? { projection } : undefined
+    );
 
     // Fallback: try _id lookup (some pages have id != _id due to split page creation)
     if (!page) {
       const { ObjectId } = await import('mongodb');
       if (ObjectId.isValid(id)) {
-        page = await db.collection('pages').findOne({ _id: new ObjectId(id) }, projection ? { projection } : undefined);
+        page = await db.collection('pages').findOne(
+          { _id: new ObjectId(id), tenantId },
+          projection ? { projection } : undefined
+        );
       }
     }
 
@@ -70,6 +82,12 @@ export const PATCH = withAuth(async (request, session, context) => {
   try {
     const { id } = await context.params;
     const db = await getDb();
+    const { id: tenantId } = getTenantContextFromRequest(request);
+
+    if (!tenantId) {
+      return NextResponse.json({ error: 'Unauthorized' }, { status: 403 });
+    }
+
     const rawBody = await request.json();
 
     // Validate request body
@@ -136,7 +154,7 @@ export const PATCH = withAuth(async (request, session, context) => {
 
     // Use findOneAndUpdate to get updated document in a single query
     const updatedPage = await db.collection('pages').findOneAndUpdate(
-      { id },
+      { id, tenantId },
       { $set: updateData, $inc: { edit_count: 1 } },
       { returnDocument: 'after' }
     );
@@ -181,19 +199,24 @@ export const DELETE = withAdminAuth(async (request, session, context) => {
   try {
     const { id } = await context.params;
     const db = await getDb();
+    const { id: tenantId } = getTenantContextFromRequest(request);
+
+    if (!tenantId) {
+      return NextResponse.json({ error: 'Unauthorized' }, { status: 403 });
+    }
 
     // Check if page exists
-    const page = await db.collection('pages').findOne({ id });
+    const page = await db.collection('pages').findOne({ id, tenantId });
     if (!page) {
       return NextResponse.json({ error: 'Page not found' }, { status: 404 });
     }
 
     // Delete the page
-    await db.collection('pages').deleteOne({ id });
+    await db.collection('pages').deleteOne({ id, tenantId });
 
     // Renumber remaining pages for this book - use bulkWrite for speed
     const remainingPages = await db.collection('pages')
-      .find({ book_id: page.book_id })
+      .find({ book_id: page.book_id, tenantId })
       .sort({ page_number: 1 })
       .toArray();
 

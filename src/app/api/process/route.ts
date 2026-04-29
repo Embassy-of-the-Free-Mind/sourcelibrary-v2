@@ -1,5 +1,6 @@
 import { NextRequest, NextResponse } from 'next/server';
 import { getDb } from '@/lib/mongodb';
+import { getTenantContextFromRequest } from '@/lib/tenant-context';
 import { performOCR, performOCRWithBuffer, performTranslation, generateSummary, TokenUsage } from '@/lib/ai';
 import { getOcrPrompt, getTranslationPrompt, getSummaryPrompt, type PromptLookupResult } from '@/lib/prompts';
 import { withAuth } from '@/lib/auth-helpers';
@@ -52,12 +53,17 @@ export const POST = withAuth(async (request: NextRequest) => {
       promptInfo // { ocr?: string, translation?: string, summary?: string } - prompt names
     } = body;
 
+    const { id: tenantId } = getTenantContextFromRequest(request);
+    if (!tenantId) {
+      return NextResponse.json({ error: 'Unauthorized' }, { status: 403 });
+    }
+
     const db = await getDb();
 
     // Get previous page context if provided
     let previousPage: { ocr?: string; translation?: string; summary?: string } | undefined;
     if (previousPageId) {
-      const prevPageDoc = await db.collection('pages').findOne({ id: previousPageId });
+      const prevPageDoc = await db.collection('pages').findOne({ id: previousPageId, tenantId });
       if (prevPageDoc) {
         previousPage = {
           ocr: prevPageDoc.ocr?.data,
@@ -126,7 +132,7 @@ export const POST = withAuth(async (request: NextRequest) => {
       const ocrStart = performance.now();
 
       if (pageId) {
-        const currentPage = await db.collection('pages').findOne({ id: pageId });
+        const currentPage = await db.collection('pages').findOne({ id: pageId, tenantId });
 
         if (currentPage?.cropped_photo) {
           // Use pre-generated cropped image (Vercel Blob URL)
@@ -183,7 +189,7 @@ export const POST = withAuth(async (request: NextRequest) => {
             allowOverwrite: true,
           }).then(blob => {
             db.collection('pages').updateOne(
-              { id: pageId },
+              { id: pageId, tenantId },
               { $set: { cropped_photo: blob.url, updated_at: new Date() } }
             );
             console.log(`[process] Page ${pageId}: Saved cropped_photo for future use`);
@@ -252,11 +258,11 @@ export const POST = withAuth(async (request: NextRequest) => {
         return NextResponse.json({ error: 'ocrText required for translation' }, { status: 400 });
       }
       // Fetch book metadata for translation context
-      const pageDoc = await db.collection('pages').findOne({ id: pageId }, { projection: { book_id: 1 } });
+      const pageDoc = await db.collection('pages').findOne({ id: pageId, tenantId }, { projection: { book_id: 1 } });
       let bookCtx: { title?: string; author?: string; year?: number | string } | undefined;
       if (pageDoc?.book_id) {
         const bookDoc = await db.collection('books').findOne(
-          { $or: [{ _id: pageDoc.book_id }, { id: pageDoc.book_id }] },
+          { tenantId, $or: [{ _id: pageDoc.book_id }, { id: pageDoc.book_id }] },
           { projection: { title: 1, display_title: 1, author: 1, year: 1, published: 1 } }
         );
         if (bookDoc) bookCtx = { title: bookDoc.display_title || bookDoc.title, author: bookDoc.author, year: bookDoc.year || bookDoc.published };
@@ -398,23 +404,24 @@ export const POST = withAuth(async (request: NextRequest) => {
       }
 
       await db.collection('pages').updateOne(
-        { id: pageId },
+        { id: pageId, tenantId },
         { $set: updateData }
       );
 
       // Update book counts if translation was processed
       if (results.translation) {
-        const page = await db.collection('pages').findOne({ id: pageId });
+        const page = await db.collection('pages').findOne({ id: pageId, tenantId });
         if (page?.book_id) {
           const bookId = page.book_id;
           const now = new Date();
           // Fire and forget - count translations for this book
           db.collection('pages').countDocuments({
+            tenantId,
             book_id: bookId,
             'translation.data': { $exists: true, $nin: [null, ''] }
           }).then(translatedCount => {
             db.collection('books').updateOne(
-              { id: bookId },
+              { id: bookId, tenantId },
               { $set: { pages_translated: translatedCount, last_translation_at: now, updated_at: now } }
             );
           }).catch(() => {});
@@ -424,7 +431,7 @@ export const POST = withAuth(async (request: NextRequest) => {
 
     // Log AI usage to gemini_usage (single source of truth)
     if (totalUsage.costUsd > 0) {
-      const page = pageId ? await db.collection('pages').findOne({ id: pageId }) : null;
+      const page = pageId ? await db.collection('pages').findOne({ id: pageId, tenantId }) : null;
       const typeMap: Record<string, 'ocr' | 'translation' | 'summary'> = {
         ocr: 'ocr', translation: 'translation', summary: 'summary', all: 'ocr',
       };

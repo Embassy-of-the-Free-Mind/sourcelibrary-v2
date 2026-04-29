@@ -27,6 +27,9 @@ export interface BatchJob {
   page_ids?: string[];
   page_count?: number;
 
+  // Tenant isolation
+  tenantId?: string;
+
   // Processing metadata
   model?: string;
   language?: string;

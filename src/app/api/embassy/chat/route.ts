@@ -109,17 +109,77 @@ export async function POST(request: NextRequest) {
     });
   }
 
-  // Always stream — the agentic response is inherently step-by-step
+  // Collect full text + sources for DB write
+  let fullText = '';
+  let allSources: SourceCard[] = [];
+
+  const saveAiResponse = async () => {
+    if (!fullText && allSources.length === 0) return;
+    const aiMessageTime = new Date();
+
+    try {
+      await db.collection('embassy_messages').insertOne({
+        threadId: new ObjectId(activeThreadId),
+        authorType: 'ai',
+        authorName: 'The Librarian',
+        content: fullText,
+        sources: allSources.map(s => ({
+          bookId: s.book_id,
+          bookTitle: s.bookTitle,
+          bookAuthor: s.bookAuthor,
+          pageNumber: s.pageNumber,
+          bookSlug: s.bookSlug,
+          snippet: s.snippet,
+          inCollection: s.inCollection,
+        })),
+        createdAt: aiMessageTime,
+      });
+
+      await db.collection('embassy_threads').updateOne(
+        { _id: new ObjectId(activeThreadId) },
+        { $set: { lastMessageAt: aiMessageTime }, $inc: { messageCount: 2 } },
+      );
+    } catch (err) {
+      console.error('[Embassy] Failed to save AI response:', err);
+    }
+  };
+
+  if (!stream) {
+    try {
+      for await (const step of streamAgenticResponse(message, history, activeThreadId)) {
+        if (step.type === 'text') {
+          fullText += step.text || '';
+        } else if (step.type === 'sources') {
+          allSources = step.sources || [];
+        }
+      }
+    } catch (err) {
+      console.error('[Embassy] Agentic response error:', err);
+      return NextResponse.json(
+        { error: 'The Librarian was interrupted. Please try again.' },
+        { status: 500 },
+      );
+    }
+
+    await saveAiResponse();
+
+    return NextResponse.json({
+      threadId: activeThreadId,
+      message: {
+        role: 'assistant',
+        content: fullText,
+        sources: allSources,
+      },
+    });
+  }
+
+  // Stream mode — send step-by-step SSE events
   const encoder = new TextEncoder();
   const { readable, writable } = new TransformStream();
   const writer = writable.getWriter();
 
   const send = (event: Record<string, unknown>) =>
     writer.write(encoder.encode(`data: ${JSON.stringify(event)}\n\n`));
-
-  // Collect full text + sources for DB write
-  let fullText = '';
-  let allSources: SourceCard[] = [];
 
   const pipePromise = (async () => {
     try {
@@ -186,38 +246,17 @@ export async function POST(request: NextRequest) {
     }
   })();
 
-  // Defer DB writes
-  after(async () => {
+  // Defer DB writes; in test/runtime contexts without request scope, fall back gracefully.
+  const deferredSave = async () => {
     await pipePromise;
-    if (!fullText && allSources.length === 0) return;
-    const aiMessageTime = new Date();
+    await saveAiResponse();
+  };
 
-    try {
-      await db.collection('embassy_messages').insertOne({
-        threadId: new ObjectId(activeThreadId),
-        authorType: 'ai',
-        authorName: 'The Librarian',
-        content: fullText,
-        sources: allSources.map(s => ({
-          bookId: s.book_id,
-          bookTitle: s.bookTitle,
-          bookAuthor: s.bookAuthor,
-          pageNumber: s.pageNumber,
-          bookSlug: s.bookSlug,
-          snippet: s.snippet,
-          inCollection: s.inCollection,
-        })),
-        createdAt: aiMessageTime,
-      });
-
-      await db.collection('embassy_threads').updateOne(
-        { _id: new ObjectId(activeThreadId) },
-        { $set: { lastMessageAt: aiMessageTime }, $inc: { messageCount: 2 } },
-      );
-    } catch (err) {
-      console.error('[Embassy] Failed to save AI response:', err);
-    }
-  });
+  try {
+    after(deferredSave);
+  } catch {
+    void deferredSave();
+  }
 
   return new Response(readable, {
     headers: {

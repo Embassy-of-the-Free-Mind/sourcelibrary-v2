@@ -1,5 +1,6 @@
-import { NextResponse } from 'next/server';
+import { NextRequest, NextResponse } from 'next/server';
 import { getDb } from '@/lib/mongodb';
+import { getTenantContextFromRequest } from '@/lib/tenant-context';
 
 export const dynamic = 'force-dynamic';
 export const maxDuration = 30;
@@ -9,8 +10,13 @@ export const maxDuration = 30;
  * Returns current throughput, today's totals, hourly breakdown (24h), and daily breakdown (14d).
  * GET /api/analytics/pipeline-velocity
  */
-export async function GET() {
+export async function GET(request: NextRequest) {
   try {
+    const { id: tenantId } = getTenantContextFromRequest(request);
+    if (!tenantId) {
+      return NextResponse.json({ error: 'Unauthorized' }, { status: 403 });
+    }
+
     const db = await getDb();
     const pages = db.collection('pages');
     const now = new Date();
@@ -30,17 +36,17 @@ export async function GET() {
       dailyCosts,
     ] = await Promise.all([
       // Current velocity (1h)
-      pages.countDocuments({ 'ocr.updated_at': { $gte: oneHourAgo } }),
-      pages.countDocuments({ 'translation.updated_at': { $gte: oneHourAgo } }),
+      pages.countDocuments({ tenantId, 'ocr.updated_at': { $gte: oneHourAgo } }),
+      pages.countDocuments({ tenantId, 'translation.updated_at': { $gte: oneHourAgo } }),
       // 6h for smoother rate
-      pages.countDocuments({ 'ocr.updated_at': { $gte: sixHoursAgo } }),
-      pages.countDocuments({ 'translation.updated_at': { $gte: sixHoursAgo } }),
+      pages.countDocuments({ tenantId, 'ocr.updated_at': { $gte: sixHoursAgo } }),
+      pages.countDocuments({ tenantId, 'translation.updated_at': { $gte: sixHoursAgo } }),
       // Today
-      pages.countDocuments({ 'ocr.updated_at': { $gte: todayStart } }),
-      pages.countDocuments({ 'translation.updated_at': { $gte: todayStart } }),
+      pages.countDocuments({ tenantId, 'ocr.updated_at': { $gte: todayStart } }),
+      pages.countDocuments({ tenantId, 'translation.updated_at': { $gte: todayStart } }),
       // Hourly OCR (24h)
       pages.aggregate([
-        { $match: { 'ocr.updated_at': { $gte: twentyFourHoursAgo } } },
+        { $match: { tenantId, 'ocr.updated_at': { $gte: twentyFourHoursAgo } } },
         { $group: {
           _id: { $dateToString: { format: '%Y-%m-%dT%H', date: '$ocr.updated_at' } },
           count: { $sum: 1 },
@@ -49,7 +55,7 @@ export async function GET() {
       ]).toArray(),
       // Hourly Translation (24h)
       pages.aggregate([
-        { $match: { 'translation.updated_at': { $gte: twentyFourHoursAgo } } },
+        { $match: { tenantId, 'translation.updated_at': { $gte: twentyFourHoursAgo } } },
         { $group: {
           _id: { $dateToString: { format: '%Y-%m-%dT%H', date: '$translation.updated_at' } },
           count: { $sum: 1 },
@@ -58,7 +64,7 @@ export async function GET() {
       ]).toArray(),
       // Daily costs (14d) from pre-aggregated collection
       db.collection('gemini_usage_daily')
-        .find({ date: { $gte: fourteenDaysAgo.toISOString().slice(0, 10) } })
+        .find({ tenantId, date: { $gte: fourteenDaysAgo.toISOString().slice(0, 10) } })
         .sort({ date: 1 })
         .project({ date: 1, totalCost: 1, totalCostWithBatch: 1 })
         .toArray(),
@@ -115,7 +121,7 @@ export async function GET() {
     // 90-day total from daily rollups
     const ninetyDaysAgo = new Date(now.getTime() - 90 * 24 * 60 * 60 * 1000);
     const allCosts = await db.collection('gemini_usage_daily')
-      .find({ date: { $gte: ninetyDaysAgo.toISOString().slice(0, 10) } })
+      .find({ tenantId, date: { $gte: ninetyDaysAgo.toISOString().slice(0, 10) } })
       .project({ totalCost: 1, totalCostWithBatch: 1 })
       .toArray();
     const totalCost90d = allCosts.reduce((s, d) => s + (d.totalCostWithBatch || d.totalCost || 0), 0);

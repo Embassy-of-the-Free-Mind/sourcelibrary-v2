@@ -1,5 +1,6 @@
 import { NextRequest, NextResponse } from 'next/server';
 import { getDb } from '@/lib/mongodb';
+import { getTenantContextFromRequest } from '@/lib/tenant-context';
 import { performOCR } from '@/lib/ai';
 import { getOcrPrompt } from '@/lib/prompts';
 import { DEFAULT_MODEL } from '@/lib/types';
@@ -33,11 +34,12 @@ async function processChunk(
   chunk: BatchOCRRequest['pages'],
   autoSave: boolean,
   db: Awaited<ReturnType<typeof getDb>>,
+  tenantId: string,
   model: string
 ): Promise<BatchResult[]> {
   // Look up pages to get cropped_photo if available
   const pageIds = chunk.map(p => p.pageId);
-  const dbPages = await db.collection('pages').find({ id: { $in: pageIds } }).toArray();
+  const dbPages = await db.collection('pages').find({ id: { $in: pageIds }, tenantId }).toArray();
   const dbPageMap = new Map(dbPages.map(p => [p.id, p]));
 
   const promises = chunk.map(async (page) => {
@@ -78,7 +80,7 @@ async function processChunk(
       if (autoSave && page.pageId) {
         await createRevision(page.pageId, 'ocr');
         await db.collection('pages').updateOne(
-          { id: page.pageId },
+          { id: page.pageId, tenantId },
           {
             $set: {
               ocr: {
@@ -118,6 +120,11 @@ export const POST = withAuth(async (request: NextRequest) => {
   try {
     const body: BatchOCRRequest = await request.json();
     const { pages, autoSave = true, model = DEFAULT_MODEL } = body;
+    const { id: tenantId } = getTenantContextFromRequest(request);
+
+    if (!tenantId) {
+      return NextResponse.json({ error: 'Unauthorized' }, { status: 403 });
+    }
 
     if (!pages || !Array.isArray(pages) || pages.length === 0) {
       return NextResponse.json(
@@ -133,7 +140,7 @@ export const POST = withAuth(async (request: NextRequest) => {
     // Process in chunks of CONCURRENCY_LIMIT
     for (let i = 0; i < pages.length; i += CONCURRENCY_LIMIT) {
       const chunk = pages.slice(i, i + CONCURRENCY_LIMIT);
-      const chunkResults = await processChunk(chunk, autoSave, db, model);
+      const chunkResults = await processChunk(chunk, autoSave, db, tenantId, model);
       allResults.push(...chunkResults);
     }
 

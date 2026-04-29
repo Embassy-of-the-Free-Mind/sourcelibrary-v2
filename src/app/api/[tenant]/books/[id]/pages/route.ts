@@ -1,0 +1,60 @@
+import { NextRequest, NextResponse } from 'next/server';
+import { getDb } from '@/lib/mongodb';
+import { ObjectId } from 'mongodb';
+import { withAuth } from '@/lib/auth-helpers';
+import { resolveTenantId } from '@/lib/tenant-context';
+
+// POST /api/books/[id]/pages - Add pages to a book
+export const POST = withAuth(async (request, session, context) => {
+  try {
+    const { tenant, id: bookId } = await context.params;
+    const body = await request.json();
+    const db = await getDb();
+    const tenantId = await resolveTenantId(tenant);
+
+    if (!tenantId) {
+      return NextResponse.json({ error: 'Book not found' }, { status: 404 });
+    }
+
+    // Check book exists
+    const book = await db.collection('books').findOne({ id: bookId, tenantId });
+    if (!book) {
+      return NextResponse.json({ error: 'Book not found' }, { status: 404 });
+    }
+
+    // Support single page or batch
+    const pages = Array.isArray(body) ? body : [body];
+    const now = new Date();
+
+    // Build all documents upfront
+    const docs = pages.map(pageData => {
+      const pageId = new ObjectId();
+      return {
+        _id: pageId,
+        id: pageId.toHexString(),
+        tenantId,
+        book_id: bookId,
+        page_number: pageData.page_number,
+        photo: pageData.photo,
+        thumbnail: pageData.thumbnail || pageData.photo,
+        photo_original: pageData.photo,
+        // Don't initialize ocr/translation with empty strings -- they cause
+        // false completion in job-completion.ts (see: translation loop bug fix)
+        created_at: now,
+        updated_at: now
+      };
+    });
+
+    // Bulk insert for efficiency
+    await db.collection('pages').insertMany(docs);
+
+    return NextResponse.json({
+      success: true,
+      created: docs.length,
+      pages: docs.map(d => ({ id: d.id, page_number: d.page_number }))
+    });
+  } catch (error) {
+    console.error('Error creating pages:', error);
+    return NextResponse.json({ error: 'Failed to create pages' }, { status: 500 });
+  }
+});

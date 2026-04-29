@@ -1,5 +1,6 @@
 import { NextRequest, NextResponse } from 'next/server';
 import { getDb } from '@/lib/mongodb';
+import { getTenantContextFromRequest } from '@/lib/tenant-context';
 import { anonymizeIp } from '@/lib/anonymize-ip';
 
 /**
@@ -19,6 +20,14 @@ export async function POST(request: NextRequest) {
   try {
     const body = await request.json();
     const { event, book_id, page_id } = body;
+    const { id: tenantId } = getTenantContextFromRequest(request);
+
+    if (!tenantId) {
+      return NextResponse.json(
+        { error: 'Tenant not found' },
+        { status: 400 }
+      );
+    }
 
     if (!event || !book_id) {
       return NextResponse.json(

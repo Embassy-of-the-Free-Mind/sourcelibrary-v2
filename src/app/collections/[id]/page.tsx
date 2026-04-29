@@ -2,7 +2,9 @@ import React from 'react';
 import Link from 'next/link';
 import Image from 'next/image';
 import { Metadata } from 'next';
-import { ArrowLeft, BookOpen } from 'lucide-react';
+import { ArrowLeft, BookOpen, Images, Library } from 'lucide-react';
+import { headers } from 'next/headers';
+import ConditionalSiteHeader from '@/components/layout/ConditionalSiteHeader';
 import SiteHeader from '@/components/layout/SiteHeader';
 import { getReadDb } from '@/lib/mongodb';
 import { notFound } from 'next/navigation';
@@ -11,7 +13,8 @@ import CollectionSchema from '@/components/seo/CollectionSchema';
 import CollectionAllBooks from '@/components/collections/CollectionAllBooks';
 import ExhibitionLayout from '@/components/collections/ExhibitionLayout';
 import SignUpCTA from '@/components/auth/SignUpCTA';
-import { bookUrl } from '@/lib/slugify';
+import { bookUrl, tenantBookUrl } from '@/lib/slugify';
+import EmbedNavigationReporter from '@/components/embed/EmbedNavigationReporter';
 import { bookTitle, sanitizeThumbnail, withTimeout } from '@/lib/collections-utils';
 import { getBookThumbnailUrl } from '@/lib/utils';
 import { firstTranslationBadge } from '@/lib/first-translation-labels';
@@ -176,7 +179,7 @@ function linkBookTitles(
   for (const m of matches) {
     if (m.start > lastIdx) parts.push(text.slice(lastIdx, m.start));
     parts.push(
-      <Link key={m.id + '-' + m.start} href={`/book/${m.id}`} className="text-accent-rust hover:underline italic">
+      <Link key={m.id + '-' + m.start} href={tenantBookUrl({ id: m.id })} className="text-accent-rust hover:underline italic">
         {m.title}
       </Link>
     );
@@ -209,16 +212,18 @@ async function fetchCollectionData(id: string, provider?: string) {
   const isArtCollection = collection.collection_type === 'visual_art';
 
   const filter: Record<string, unknown> = isArtCollection
-    ? { collections: id, resource_type: { $exists: true } }
+    ? {
+      collections: id,
+      resource_type: { $exists: true },
+    }
     : {
-        collections: id,
-        $or: [
-          { visible: true, pages_count: { $gt: 0 }, pages_translated: { $gt: 0 } },
-          { resource_type: { $exists: true } },
-        ],
-      };
-  // Tenant provider filter — restrict to a specific library's books.
-  // Use $and to avoid overwriting an existing $or on the filter.
+      collections: id,
+      $or: [
+        { visible: true, pages_count: { $gt: 0 }, pages_translated: { $gt: 0 } },
+        { resource_type: { $exists: true } },
+      ],
+    };
+  // Provider filter — restrict to a specific library's books.
   if (provider) {
     filter.$and = [
       ...(filter.$and as unknown[] || []),
@@ -255,24 +260,24 @@ async function fetchCollectionData(id: string, provider?: string) {
   // Fetch artworks for mixed collections (book collections that also contain artworks)
   const artworksPromise = !isArtCollection
     ? withTimeout(
-        db.collection('books')
-          .find(
-            { collections: id, resource_type: { $exists: true } },
-            {
-              projection: {
-                _id: 0, id: 1, slug: 1, title: 1, display_title: 1, author: 1, published: 1,
-                resource_type: 1, medium: 1, thumbnail: 1, thumbnail_blob: 1,
-                'enrichment.subject': 1, 'enrichment.genre': 1,
-                commons_width: 1, commons_height: 1,
-              },
-              maxTimeMS: 8000,
+      db.collection('books')
+        .find(
+          { collections: id, resource_type: { $exists: true } },
+          {
+            projection: {
+              _id: 0, id: 1, slug: 1, title: 1, display_title: 1, author: 1, published: 1,
+              resource_type: 1, medium: 1, thumbnail: 1, thumbnail_blob: 1,
+              'enrichment.subject': 1, 'enrichment.genre': 1,
+              commons_width: 1, commons_height: 1,
             },
-          )
-          .sort({ author: 1, title: 1 })
-          .limit(60)
-          .toArray(),
-        8000, [],
-      )
+            maxTimeMS: 8000,
+          },
+        )
+        .sort({ author: 1, title: 1 })
+        .limit(60)
+        .toArray(),
+      8000, [],
+    )
     : Promise.resolve([]);
 
   // Books query: Supabase primary (fast), MongoDB fallback (has collection_scores
@@ -337,14 +342,14 @@ async function fetchCollectionData(id: string, provider?: string) {
     fetchBooksWithFallback(),
     curatedBookIds.length > 0
       ? withTimeout(
-          db.collection('books')
-            .find(
-              { id: { $in: curatedBookIds }, visible: true },
-              { projection: { ...projection, is_first_translation: 1, 'translation_verification.disposition': 1 } },
-            )
-            .toArray(),
-          8000, [],
-        )
+        db.collection('books')
+          .find(
+            { id: { $in: curatedBookIds }, visible: true },
+            { projection: { ...projection, is_first_translation: 1, 'translation_verification.disposition': 1 } },
+          )
+          .toArray(),
+        8000, [],
+      )
       : Promise.resolve([]),
     // Gallery: prefer thematic gallery collection (materialized), then curated, then dynamic query
     withTimeout(
@@ -367,7 +372,10 @@ async function fetchCollectionData(id: string, provider?: string) {
           }
           // Fallback: dynamic query (before thematic collections are seeded)
           const bookDocs = await db.collection('books')
-            .find({ collections: id, visible: true }, { projection: { id: 1 }, maxTimeMS: 5000 })
+            .find(
+              { collections: id, visible: true },
+              { projection: { id: 1 }, maxTimeMS: 5000 }
+            )
             .toArray();
           const bookIds = bookDocs.map(d => d.id);
           if (bookIds.length === 0) return [];
@@ -385,11 +393,14 @@ async function fetchCollectionData(id: string, provider?: string) {
     ),
     mentionedBookIds.length > 0
       ? withTimeout(
-          db.collection('books')
-            .find({ id: { $in: mentionedBookIds }, pages_translated: { $gt: 0 } }, { projection })
-            .toArray(),
-          8000, [],
-        )
+        db.collection('books')
+          .find(
+            { id: { $in: mentionedBookIds }, pages_translated: { $gt: 0 } },
+            { projection }
+          )
+          .toArray(),
+        8000, [],
+      )
       : Promise.resolve([]),
   ]);
 
@@ -579,12 +590,12 @@ export default async function CollectionDetailPage({ params, provider }: Props &
   // Fallback hero: use collection.hero_image or first featured_image when no gallery images
   const fallbackHeroUrl = !heroImages.length
     ? (collection.hero_image as string | undefined)
-      || (() => {
-        const fi = (collection.featured_images as { extracted_url?: string; image_url?: string; thumbnail_url?: string }[] | undefined);
-        const first = fi?.find(img => img.thumbnail_url || img.extracted_url || img.image_url);
-        return first?.thumbnail_url || first?.extracted_url || first?.image_url;
-      })()
-      || null
+    || (() => {
+      const fi = (collection.featured_images as { extracted_url?: string; image_url?: string; thumbnail_url?: string }[] | undefined);
+      const first = fi?.find(img => img.thumbnail_url || img.extracted_url || img.image_url);
+      return first?.thumbnail_url || first?.extracted_url || first?.image_url;
+    })()
+    || null
     : null;
   // For art collections, build artwork preview from the books array (which ARE artworks)
   type ArtPreview = { id: string; slug?: string; title: string; display_title?: string; author?: string; thumbnail?: string; thumbnail_blob?: string; resource_type?: string; enrichment?: { subject?: string }; commons_width?: number; commons_height?: number };
@@ -617,7 +628,8 @@ export default async function CollectionDetailPage({ params, provider }: Props &
 
   return (
     <div className="min-h-screen bg-cream">
-      <SiteHeader variant="dark" />
+      <EmbedNavigationReporter />
+      <ConditionalSiteHeader variant="dark" />
       <CollectionSchema
         slug={id}
         name={collection.name}
@@ -635,12 +647,11 @@ export default async function CollectionDetailPage({ params, provider }: Props &
       {/* Hero Section */}
       <div className="relative bg-dark overflow-hidden">
         {heroImages.length > 0 ? (
-          <div className={`absolute inset-0 grid opacity-30 ${
-            heroImages.length <= 2 ? 'grid-cols-2' :
+          <div className={`absolute inset-0 grid opacity-30 ${heroImages.length <= 2 ? 'grid-cols-2' :
             heroImages.length <= 3 ? 'grid-cols-3' :
-            heroImages.length <= 4 ? 'grid-cols-2 sm:grid-cols-4' :
-            'grid-cols-3 sm:grid-cols-6'
-          }`}>
+              heroImages.length <= 4 ? 'grid-cols-2 sm:grid-cols-4' :
+                'grid-cols-3 sm:grid-cols-6'
+            }`}>
             {heroImages.map((img: { pageId?: string; page_id?: string; detectionIndex?: number; detection_index?: number; thumbnailUrl?: string; thumbnail_url?: string; extractedUrl?: string; extracted_url?: string; imageUrl?: string; image_url?: string }) => {
               const src = img.thumbnail_url || img.thumbnailUrl || img.extracted_url || img.extractedUrl || img.imageUrl || img.image_url;
               const key = `${img.pageId || img.page_id}-${img.detectionIndex ?? img.detection_index}`;
@@ -840,7 +851,7 @@ export default async function CollectionDetailPage({ params, provider }: Props &
           <div className="bg-warm border-b border-border-light">
             <div className="max-w-7xl mx-auto px-6 py-8">
               <Link
-                href={bookUrl({ id: featured.id, slug: featured.slug })}
+                href={tenantBookUrl({ id: featured.id, slug: featured.slug })}
                 className="group flex flex-col sm:flex-row gap-6 sm:gap-8"
               >
                 <div className="w-40 sm:w-48 flex-shrink-0 mx-auto sm:mx-0">
@@ -1015,7 +1026,7 @@ export default async function CollectionDetailPage({ params, provider }: Props &
                   {tier1.slice(1).map((h: CuratedHighlight) => (
                     <Link
                       key={h.book_id}
-                      href={bookUrl({ id: h.id, slug: h.slug })}
+                      href={tenantBookUrl({ id: h.id, slug: h.slug })}
                       className="group flex gap-4 p-4 rounded-xl bg-white border border-border-light hover:border-accent-rust/30 hover:shadow-md transition-all"
                     >
                       <div className="w-20 sm:w-24 flex-shrink-0">
@@ -1068,7 +1079,7 @@ export default async function CollectionDetailPage({ params, provider }: Props &
                   {tier2.map((h: CuratedHighlight) => (
                     <Link
                       key={h.book_id}
-                      href={bookUrl({ id: h.id, slug: h.slug })}
+                      href={tenantBookUrl({ id: h.id, slug: h.slug })}
                       className="group flex gap-3 p-3 rounded-xl bg-white border border-border-light hover:border-accent-rust/30 hover:shadow-md transition-all"
                     >
                       <div className="w-14 flex-shrink-0">
@@ -1120,7 +1131,7 @@ export default async function CollectionDetailPage({ params, provider }: Props &
                   {tier3.map((h: CuratedHighlight) => (
                     <Link
                       key={h.book_id}
-                      href={bookUrl({ id: h.id, slug: h.slug })}
+                      href={tenantBookUrl({ id: h.id, slug: h.slug })}
                       className="group flex items-center gap-3 p-2.5 rounded-lg bg-white border border-border-light hover:border-accent-rust/30 hover:shadow-sm transition-all"
                     >
                       <div className="w-10 flex-shrink-0">

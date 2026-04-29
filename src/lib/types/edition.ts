@@ -21,6 +21,7 @@ export interface Contributor {
 export interface TranslationEdition {
   id: string;                  // UUID
   book_id: string;
+  tenantId?: string;           // Multi-tenant compatibility
 
   // Version info
   version: string;             // Semantic: "1.0.0", "1.1.0", "2.0.0"

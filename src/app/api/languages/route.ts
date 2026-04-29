@@ -1,5 +1,7 @@
-import { NextResponse } from 'next/server';
+import { NextRequest, NextResponse } from 'next/server';
 import { getLanguageCounts } from '@/lib/books-catalog';
+import { getTenantContextFromRequest } from '@/lib/tenant-context';
+import { getReadDb } from '@/lib/mongodb';
 
 export interface LanguageWithCount {
   code: string;
@@ -38,9 +40,31 @@ export function normalizeLanguage(language: string | null | undefined): string {
   return trimmed.charAt(0).toUpperCase() + trimmed.slice(1);
 }
 
-// GET /api/languages — powered by Supabase books_catalog
-export async function GET() {
+// GET /api/languages — powered by Supabase books_catalog (or MongoDB for tenant-scoped)
+export async function GET(request: NextRequest) {
   try {
+    // Tenant-scoped: bypass Supabase (no tenant_id column) and aggregate from MongoDB
+    const { slug: tenantSlug, id: tenantId } = getTenantContextFromRequest(request);
+    if (tenantSlug) {
+      if (!tenantId) return NextResponse.json({ languages: [], total_books: 0 });
+      const db = await getReadDb();
+      const rawLangs = await db.collection('books').distinct('language',
+        { tenantId, visible: true, pages_count: { $gt: 0 } }
+      );
+      const normalizedMap = new Map<string, number>();
+      for (const lang of rawLangs.filter(Boolean)) {
+        const normalized = normalizeLanguage(lang as string);
+        normalizedMap.set(normalized, (normalizedMap.get(normalized) || 0) + 1);
+      }
+      const languages: LanguageWithCount[] = Array.from(normalizedMap.entries())
+        .map(([code, count]) => ({ code, name: code, book_count: count }))
+        .sort((a, b) => b.book_count - a.book_count);
+      return NextResponse.json(
+        { languages, total_books: languages.reduce((s, l) => s + l.book_count, 0) },
+        { headers: { 'Cache-Control': 'no-store' } }
+      );
+    }
+
     const langCounts = await getLanguageCounts({});
 
     // Normalize and aggregate

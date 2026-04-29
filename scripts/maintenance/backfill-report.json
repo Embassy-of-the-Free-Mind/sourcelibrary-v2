@@ -1,0 +1,297 @@
+{
+  "timestamp": "2026-04-27T10:39:51.605Z",
+  "mode": "auto-all",
+  "dryRun": false,
+  "totalTenants": 33,
+  "tenantsProcessed": 32,
+  "summary": {
+    "bph": {
+      "booksMatched": 2346,
+      "booksBackfilled": 29,
+      "pagesTotalScoped": 611227,
+      "pagesBackfilled": 3850,
+      "revisionsBackfilled": 0,
+      "galleryImagesBackfilled": 9872,
+      "collectionsBackfilled": 158
+    },
+    "internet-archive": {
+      "booksMatched": 6759,
+      "booksBackfilled": 6759,
+      "pagesTotalScoped": 2672434,
+      "pagesBackfilled": 2672434,
+      "revisionsBackfilled": 19334,
+      "galleryImagesBackfilled": 63808,
+      "collectionsBackfilled": 158
+    },
+    "gallica": {
+      "booksMatched": 225,
+      "booksBackfilled": 225,
+      "pagesTotalScoped": 71404,
+      "pagesBackfilled": 71404,
+      "revisionsBackfilled": 6526,
+      "galleryImagesBackfilled": 3504,
+      "collectionsBackfilled": 2
+    },
+    "bavarian-state-library": {
+      "booksMatched": 1423,
+      "booksBackfilled": 1423,
+      "pagesTotalScoped": 528778,
+      "pagesBackfilled": 528778,
+      "revisionsBackfilled": 10075,
+      "galleryImagesBackfilled": 2349,
+      "collectionsBackfilled": 0
+    },
+    "bodleian": {
+      "booksMatched": 210,
+      "booksBackfilled": 210,
+      "pagesTotalScoped": 47405,
+      "pagesBackfilled": 47405,
+      "revisionsBackfilled": 1114,
+      "galleryImagesBackfilled": 1062,
+      "collectionsBackfilled": 0
+    },
+    "cambridge": {
+      "booksMatched": 63,
+      "booksBackfilled": 63,
+      "pagesTotalScoped": 21593,
+      "pagesBackfilled": 21593,
+      "revisionsBackfilled": 83,
+      "galleryImagesBackfilled": 124,
+      "collectionsBackfilled": 0
+    },
+    "e-rara": {
+      "booksMatched": 1094,
+      "booksBackfilled": 1094,
+      "pagesTotalScoped": 316367,
+      "pagesBackfilled": 316367,
+      "revisionsBackfilled": 5271,
+      "galleryImagesBackfilled": 1334,
+      "collectionsBackfilled": 0
+    },
+    "wellcome-collection": {
+      "booksMatched": 12,
+      "booksBackfilled": 12,
+      "pagesTotalScoped": 2155,
+      "pagesBackfilled": 2155,
+      "revisionsBackfilled": 8,
+      "galleryImagesBackfilled": 67,
+      "collectionsBackfilled": 0
+    },
+    "hab-wolfenbuettel": {
+      "booksMatched": 0,
+      "booksBackfilled": 0,
+      "pagesTotalScoped": 0,
+      "pagesBackfilled": 0,
+      "revisionsBackfilled": 0,
+      "galleryImagesBackfilled": 0,
+      "collectionsBackfilled": 0
+    },
+    "vatican-library": {
+      "booksMatched": 100,
+      "booksBackfilled": 100,
+      "pagesTotalScoped": 39822,
+      "pagesBackfilled": 39822,
+      "revisionsBackfilled": 298,
+      "galleryImagesBackfilled": 944,
+      "collectionsBackfilled": 0
+    },
+    "google-books": {
+      "booksMatched": 216,
+      "booksBackfilled": 216,
+      "pagesTotalScoped": 107932,
+      "pagesBackfilled": 107932,
+      "revisionsBackfilled": 165,
+      "galleryImagesBackfilled": 132,
+      "collectionsBackfilled": 0
+    },
+    "hathi-trust": {
+      "booksMatched": 0,
+      "booksBackfilled": 0,
+      "pagesTotalScoped": 0,
+      "pagesBackfilled": 0,
+      "revisionsBackfilled": 0,
+      "galleryImagesBackfilled": 0,
+      "collectionsBackfilled": 0
+    },
+    "europeana": {
+      "booksMatched": 0,
+      "booksBackfilled": 0,
+      "pagesTotalScoped": 0,
+      "pagesBackfilled": 0,
+      "revisionsBackfilled": 0,
+      "galleryImagesBackfilled": 0,
+      "collectionsBackfilled": 0
+    },
+    "manchester": {
+      "booksMatched": 210,
+      "booksBackfilled": 210,
+      "pagesTotalScoped": 45781,
+      "pagesBackfilled": 45781,
+      "revisionsBackfilled": 69,
+      "galleryImagesBackfilled": 315,
+      "collectionsBackfilled": 4
+    },
+    "allard-pierson": {
+      "booksMatched": 481,
+      "booksBackfilled": 481,
+      "pagesTotalScoped": 57192,
+      "pagesBackfilled": 57192,
+      "revisionsBackfilled": 77,
+      "galleryImagesBackfilled": 7358,
+      "collectionsBackfilled": 0
+    },
+    "laurenziana": {
+      "booksMatched": 122,
+      "booksBackfilled": 122,
+      "pagesTotalScoped": 48597,
+      "pagesBackfilled": 48597,
+      "revisionsBackfilled": 641,
+      "galleryImagesBackfilled": 82,
+      "collectionsBackfilled": 0
+    },
+    "leiden": {
+      "booksMatched": 49,
+      "booksBackfilled": 49,
+      "pagesTotalScoped": 14102,
+      "pagesBackfilled": 14102,
+      "revisionsBackfilled": 27,
+      "galleryImagesBackfilled": 56,
+      "collectionsBackfilled": 0
+    },
+    "e-codices": {
+      "booksMatched": 27,
+      "booksBackfilled": 27,
+      "pagesTotalScoped": 11137,
+      "pagesBackfilled": 11137,
+      "revisionsBackfilled": 10,
+      "galleryImagesBackfilled": 92,
+      "collectionsBackfilled": 0
+    },
+    "chester-beatty": {
+      "booksMatched": 12,
+      "booksBackfilled": 12,
+      "pagesTotalScoped": 3858,
+      "pagesBackfilled": 3858,
+      "revisionsBackfilled": 0,
+      "galleryImagesBackfilled": 7,
+      "collectionsBackfilled": 0
+    },
+    "ndl-japan": {
+      "booksMatched": 3,
+      "booksBackfilled": 3,
+      "pagesTotalScoped": 117,
+      "pagesBackfilled": 117,
+      "revisionsBackfilled": 0,
+      "galleryImagesBackfilled": 12,
+      "collectionsBackfilled": 0
+    },
+    "kloss-collection": {
+      "booksMatched": 799,
+      "booksBackfilled": 799,
+      "pagesTotalScoped": 22722,
+      "pagesBackfilled": 22722,
+      "revisionsBackfilled": 61,
+      "galleryImagesBackfilled": 136,
+      "collectionsBackfilled": 10
+    },
+    "library-of-congress": {
+      "booksMatched": 41,
+      "booksBackfilled": 41,
+      "pagesTotalScoped": 7600,
+      "pagesBackfilled": 7600,
+      "revisionsBackfilled": 286,
+      "galleryImagesBackfilled": 1166,
+      "collectionsBackfilled": 0
+    },
+    "british-library": {
+      "booksMatched": 15,
+      "booksBackfilled": 15,
+      "pagesTotalScoped": 5212,
+      "pagesBackfilled": 5212,
+      "revisionsBackfilled": 6,
+      "galleryImagesBackfilled": 242,
+      "collectionsBackfilled": 0
+    },
+    "sbb-berlin": {
+      "booksMatched": 0,
+      "booksBackfilled": 0,
+      "pagesTotalScoped": 0,
+      "pagesBackfilled": 0,
+      "revisionsBackfilled": 0,
+      "galleryImagesBackfilled": 0,
+      "collectionsBackfilled": 0
+    },
+    "austrian-national-library": {
+      "booksMatched": 0,
+      "booksBackfilled": 0,
+      "pagesTotalScoped": 0,
+      "pagesBackfilled": 0,
+      "revisionsBackfilled": 0,
+      "galleryImagesBackfilled": 0,
+      "collectionsBackfilled": 0
+    },
+    "yale-beinecke": {
+      "booksMatched": 0,
+      "booksBackfilled": 0,
+      "pagesTotalScoped": 0,
+      "pagesBackfilled": 0,
+      "revisionsBackfilled": 0,
+      "galleryImagesBackfilled": 0,
+      "collectionsBackfilled": 0
+    },
+    "harvard-houghton": {
+      "booksMatched": 0,
+      "booksBackfilled": 0,
+      "pagesTotalScoped": 0,
+      "pagesBackfilled": 0,
+      "revisionsBackfilled": 0,
+      "galleryImagesBackfilled": 0,
+      "collectionsBackfilled": 0
+    },
+    "penn-schoenberg": {
+      "booksMatched": 17,
+      "booksBackfilled": 17,
+      "pagesTotalScoped": 5546,
+      "pagesBackfilled": 5546,
+      "revisionsBackfilled": 161,
+      "galleryImagesBackfilled": 0,
+      "collectionsBackfilled": 0
+    },
+    "huntington": {
+      "booksMatched": 0,
+      "booksBackfilled": 0,
+      "pagesTotalScoped": 0,
+      "pagesBackfilled": 0,
+      "revisionsBackfilled": 0,
+      "galleryImagesBackfilled": 0,
+      "collectionsBackfilled": 0
+    },
+    "getty": {
+      "booksMatched": 0,
+      "booksBackfilled": 0,
+      "pagesTotalScoped": 0,
+      "pagesBackfilled": 0,
+      "revisionsBackfilled": 0,
+      "galleryImagesBackfilled": 0,
+      "collectionsBackfilled": 0
+    },
+    "kyoto": {
+      "booksMatched": 6,
+      "booksBackfilled": 6,
+      "pagesTotalScoped": 918,
+      "pagesBackfilled": 918,
+      "revisionsBackfilled": 298,
+      "galleryImagesBackfilled": 0,
+      "collectionsBackfilled": 0
+    },
+    "default": {
+      "booksMatched": 0,
+      "booksBackfilled": 0,
+      "pagesTotalScoped": 0,
+      "pagesBackfilled": 0,
+      "revisionsBackfilled": 0,
+      "galleryImagesBackfilled": 0,
+      "collectionsBackfilled": 0
+    }
+  }
+}

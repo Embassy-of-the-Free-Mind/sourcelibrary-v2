@@ -1,5 +1,11 @@
 import { apiClient } from './client';
 
+function getTenantSlug(): string {
+  if (typeof window === 'undefined') return '';
+  const slug = window.location.pathname.split('/')[1] || '';
+  return /^[a-z0-9-]+$/.test(slug) ? slug : '';
+}
+
 export interface ReadingHistoryEntry {
   book_id: string;
   first_page_id: string;
@@ -41,6 +47,8 @@ export const readingHistory = {
    */
   record: (bookId: string, pageId: string, pageNumber: number, referrer?: string) => {
     if (typeof navigator === 'undefined' || !navigator.sendBeacon) return;
+    const tenant = getTenantSlug();
+    if (!tenant) return;
 
     const payload = JSON.stringify({
       book_id: bookId,
@@ -49,24 +57,26 @@ export const readingHistory = {
       ...(referrer ? { referrer } : {}),
     });
 
-    navigator.sendBeacon('/api/reading-history', new Blob([payload], { type: 'application/json' }));
+    navigator.sendBeacon(`/api/${tenant}/reading-history`, new Blob([payload], { type: 'application/json' }));
   },
 
   /**
    * List reading history (requires auth)
    */
   list: async (params?: { limit?: number; offset?: number }): Promise<ReadingHistoryResponse> => {
+    const tenant = getTenantSlug();
     const qs = new URLSearchParams();
     if (params?.limit) qs.set('limit', String(params.limit));
     if (params?.offset) qs.set('offset', String(params.offset));
     const query = qs.toString();
-    return await apiClient.get(`/api/reading-history${query ? `?${query}` : ''}`);
+    return await apiClient.get(`/api/${tenant}/reading-history${query ? `?${query}` : ''}`);
   },
 
   /**
    * Clear reading history (one book or all)
    */
   clear: async (bookId?: string): Promise<{ success: boolean; deleted: number }> => {
-    return await apiClient.post('/api/reading-history/clear', bookId ? { book_id: bookId } : {});
+    const tenant = getTenantSlug();
+    return await apiClient.post(`/api/${tenant}/reading-history/clear`, bookId ? { book_id: bookId } : {});
   },
 };

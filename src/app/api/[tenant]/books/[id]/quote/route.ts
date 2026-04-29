@@ -1,0 +1,251 @@
+import { NextRequest, NextResponse } from 'next/server';
+import { getReadDb } from '@/lib/mongodb';
+import { Book, Page, TranslationEdition } from '@/lib/types';
+import { getShortUrl } from '@/lib/shortlinks';
+import { markForExport } from '@/lib/provenance';
+import { isBot, isTrustedBot, botMaxPage } from '@/lib/bot-gate';
+import { resolveTenantId } from '@/lib/tenant-context';
+
+interface RouteContext {
+  params: Promise<{ tenant: string; id: string }>;
+}
+
+interface Citation {
+  inline: string;           // (Drebbel 1628, p. 15)
+  footnote: string;         // Full footnote citation
+  bibliography: string;     // Bibliography entry
+  bibtex: string;           // BibTeX format
+  chicago: string;          // Chicago style
+  mla: string;              // MLA style
+  url: string;              // Direct link to page in Source Library
+  short_url: string;        // Shortlink for sharing (e.g., Twitter)
+  doi_url?: string;         // Clickable DOI URL
+}
+
+interface QuoteResponse {
+  quote: {
+    translation: string;
+    original?: string;
+    page: number;
+    book_id: string;
+    book_title: string;
+    display_title?: string;
+    author: string;
+    published: string;
+    language: string;
+  };
+  citation: Citation;
+  license: {
+    spdx: string;
+    url: string;
+    attribution: string;
+    terms: string;
+  };
+  context?: {
+    previous_page?: string;
+    next_page?: string;
+  };
+}
+
+function formatAccessedDate(): string {
+  const d = new Date();
+  const months = ['January','February','March','April','May','June','July','August','September','October','November','December'];
+  return `${months[d.getMonth()]} ${d.getDate()}, ${d.getFullYear()}`;
+}
+
+function generateCitations(
+  book: Book,
+  pageNumber: number,
+  bookId: string,
+  pageId: string,
+  edition?: TranslationEdition
+): Citation {
+  const year = book.published || 'n.d.';
+  const author = book.author || 'Unknown';
+  const title = book.display_title || book.title;
+  const doi = edition?.doi || book.doi;
+  const doiUrl = doi ? `https://doi.org/${doi}` : undefined;
+  const accessed = formatAccessedDate();
+  const translationYear = edition?.published_at
+    ? new Date(edition.published_at).getFullYear()
+    : new Date().getFullYear();
+
+  // Clean author name (remove extra spaces, handle "Lastname, Firstname")
+  const authorParts = author.split(',').map(s => s.trim());
+  const authorLastFirst = authorParts.length === 2
+    ? `${authorParts[0]}, ${authorParts[1]}`
+    : author;
+  const authorFirstLast = authorParts.length === 2
+    ? `${authorParts[1]} ${authorParts[0]}`
+    : author;
+
+  // Inline citation
+  const inline = `(${authorParts[0]} ${year}, p. ${pageNumber})`;
+
+  // Footnote (Chicago style note)
+  const footnote = `${authorFirstLast}, ${title}, trans. Source Library (${translationYear}), ${pageNumber}${doi ? `. DOI: ${doi}` : ''}.`;
+
+  // Bibliography entry
+  const bibliography = `${authorLastFirst}. ${title}. Translated by Source Library. ${translationYear}.${doi ? ` DOI: ${doi}.` : ` Accessed ${accessed}.`}`;
+
+  // BibTeX
+  const bibtexKey = `${authorParts[0].toLowerCase().replace(/[^a-z]/g, '')}${year}`;
+  const bibtex = `@book{${bibtexKey},
+  author = {${authorLastFirst}},
+  title = {${title}},
+  year = {${year}},
+  translator = {Source Library},
+  note = {Translation published ${translationYear}}${doi ? `,
+  doi = {${doi}},
+  url = {${doiUrl}}` : ''}
+}`;
+
+  // Chicago (Author-Date)
+  const chicago = `${authorLastFirst}. ${year}. ${title}. Translated by Source Library. ${translationYear}.${doi ? ` ${doiUrl}.` : ` Accessed ${accessed}.`}`;
+
+  // MLA
+  const mla = `${authorLastFirst}. ${title}. Translated by Source Library, ${translationYear}.${doi ? ` DOI: ${doi}.` : ''} Accessed ${accessed}.`;
+
+  // Direct URL to page in Source Library (pinned to edition version)
+  const editionVersion = edition?.version;
+  const vParam = editionVersion ? `?v=${editionVersion}` : '';
+  const url = `https://sourcelibrary.org/book/${bookId}/page/${pageId}${vParam}`;
+
+  // Short URL for sharing
+  const short_url = getShortUrl(bookId, pageNumber, pageId);
+
+  return {
+    inline,
+    footnote,
+    bibliography,
+    bibtex,
+    chicago,
+    mla,
+    url,
+    short_url,
+    doi_url: doiUrl,
+  };
+}
+
+// GET /api/books/[id]/quote?page=N - Get a quote from a specific page
+export async function GET(request: NextRequest, context: RouteContext) {
+  try {
+    const { tenant, id: bookId } = await context.params;
+    const { searchParams } = new URL(request.url);
+    const pageNumber = parseInt(searchParams.get('page') || '1');
+    const includeOriginal = searchParams.get('include_original') !== 'false';
+    const includeContext = searchParams.get('include_context') === 'true';
+
+    if (isNaN(pageNumber) || pageNumber < 1) {
+      return NextResponse.json({ error: 'Invalid page number' }, { status: 400 });
+    }
+
+    const db = await getReadDb();
+    const tenantId = await resolveTenantId(tenant);
+
+    if (!tenantId) {
+      return NextResponse.json({ error: 'Book not found' }, { status: 404 });
+    }
+
+    // Get book by id, slug, or _id
+    let book = await db.collection('books').findOne({ id: bookId, tenantId }) as unknown as Book | null;
+    if (!book) {
+      book = await db.collection('books').findOne({ slug: bookId, tenantId }) as unknown as Book | null;
+    }
+    if (!book && /^[a-f0-9]{24}$/i.test(bookId)) {
+      const { ObjectId } = await import('mongodb');
+      book = await db.collection('books').findOne({ _id: new ObjectId(bookId), tenantId }) as unknown as Book | null;
+    }
+    if (!book) {
+      return NextResponse.json({ error: 'Book not found' }, { status: 404 });
+    }
+
+    // Bot page gating: only allow quotes from the first 20% of pages
+    const resolvedBookId = book.id;
+    if (isBot(request) && !(await isTrustedBot(request))) {
+      const maxPage = botMaxPage(book.pages_count || 0);
+      if (pageNumber > maxPage) {
+        return NextResponse.json({
+          error: `Page ${pageNumber} is beyond the bot-accessible range (pages 1–${maxPage}). Install the MCP server for full access: claude mcp add source-library -- npx -y @source-library/mcp-server`,
+          accessible_pages: maxPage,
+          partnership: 'https://sourcelibrary.org/llms.txt',
+        }, { status: 403 });
+      }
+    }
+
+    const page = await db.collection('pages').findOne({
+      book_id: resolvedBookId,
+      tenantId,
+      page_number: pageNumber,
+    }) as unknown as Page | null;
+
+    if (!page) {
+      return NextResponse.json({ error: 'Page not found' }, { status: 404 });
+    }
+
+    if (!page.translation?.data) {
+      return NextResponse.json({
+        error: 'No translation available for this page',
+        page_number: pageNumber,
+      }, { status: 404 });
+    }
+
+    // Get current edition for DOI
+    const editions = (book.editions || []) as TranslationEdition[];
+    const currentEdition = editions.find(e => e.status === 'published');
+
+    // Build response
+    const response: QuoteResponse = {
+      quote: {
+        translation: markForExport(page.translation.data, book.id),
+        page: pageNumber,
+        book_id: book.id,
+        book_title: book.title,
+        display_title: book.display_title,
+        author: book.author,
+        published: book.published,
+        language: book.language,
+      },
+      citation: generateCitations(book, pageNumber, resolvedBookId, page.id, currentEdition),
+      license: {
+        spdx: 'CC-BY-SA-4.0',
+        url: 'https://creativecommons.org/licenses/by-sa/4.0/',
+        attribution: 'Source Library (https://sourcelibrary.org)',
+        terms: 'https://sourcelibrary.org/terms',
+      },
+    };
+
+    // Include original text if requested
+    if (includeOriginal && page.ocr?.data) {
+      response.quote.original = page.ocr.data;
+    }
+
+    // Include context (adjacent pages) if requested
+    if (includeContext) {
+      const [prevPage, nextPage] = await Promise.all([
+        db.collection('pages').findOne({
+          book_id: resolvedBookId,
+          tenantId,
+          page_number: pageNumber - 1,
+        }),
+        db.collection('pages').findOne({
+          book_id: resolvedBookId,
+          tenantId,
+          page_number: pageNumber + 1,
+        }),
+      ]);
+
+      const prevText = (prevPage as unknown as Page | null)?.translation?.data;
+      const nextText = (nextPage as unknown as Page | null)?.translation?.data;
+      response.context = {
+        previous_page: prevText ? markForExport(prevText, book.id) : undefined,
+        next_page: nextText ? markForExport(nextText, book.id) : undefined,
+      };
+    }
+
+    return NextResponse.json(response);
+  } catch (error) {
+    console.error('Error getting quote:', error);
+    return NextResponse.json({ error: 'Failed to get quote' }, { status: 500 });
+  }
+}

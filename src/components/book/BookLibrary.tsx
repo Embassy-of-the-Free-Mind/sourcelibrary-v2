@@ -24,6 +24,7 @@ interface CollectionInfo {
 
 export interface CollectionForGrid {
   slug: string;
+  tenant_slug?: string | null;
   name: string;
   subtitle: string;
   description: string;
