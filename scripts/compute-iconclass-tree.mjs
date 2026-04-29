@@ -35,6 +35,7 @@ async function main() {
   console.log('Aggregating gallery_images iconclass codes...');
   const galleryAgg = await db.collection('gallery_images').aggregate([
     { $match: { 'metadata.iconclass': { $exists: true, $ne: [] } } },
+    { $sort: { gallery_quality: -1 } }, // best images first so $first picks quality thumbnails
     { $unwind: '$metadata.iconclass' },
     {
       $group: {
@@ -69,7 +70,7 @@ async function main() {
     codeMap.set(g._id, {
       gallery_count: g.count,
       artwork_count: 0,
-      thumbnail: g.sample_url || g.sample_extracted || null,
+      thumbnail: g.sample_extracted || g.sample_url || null,
     });
   }
   for (const a of artworkAgg) {
@@ -88,12 +89,12 @@ async function main() {
 
   // Build hierarchy: aggregate counts up to parent codes
   // For each code, compute prefix counts at each level
-  const prefixCounts = new Map(); // prefix -> { count, thumbnail, children: Set }
+  const prefixCounts = new Map(); // prefix -> { count, children: Set }
 
   for (const [code, data] of codeMap) {
     const total = data.gallery_count + data.artwork_count;
 
-    // Add the full code as a leaf
+    // Add the full code as a leaf — gets its own thumbnail
     if (!prefixCounts.has(code)) {
       prefixCounts.set(code, { count: 0, gallery_count: 0, artwork_count: 0, thumbnail: null, children: new Set() });
     }
@@ -103,7 +104,7 @@ async function main() {
     leaf.artwork_count += data.artwork_count;
     if (!leaf.thumbnail && data.thumbnail) leaf.thumbnail = data.thumbnail;
 
-    // Aggregate up to parent prefixes
+    // Aggregate counts up to parent prefixes (but NOT thumbnails)
     for (let len = 1; len < code.length; len++) {
       const prefix = code.slice(0, len);
       if (!prefixCounts.has(prefix)) {
@@ -113,13 +114,31 @@ async function main() {
       node.count += total;
       node.gallery_count += data.gallery_count;
       node.artwork_count += data.artwork_count;
-      if (!node.thumbnail && data.thumbnail) node.thumbnail = data.thumbnail;
+      // Don't propagate thumbnails up — each node picks its own below
 
       // Track immediate children (next level only)
       const childPrefix = code.slice(0, len + 1);
       if (childPrefix.length <= code.length) {
         node.children.add(childPrefix);
       }
+    }
+  }
+
+  // Assign thumbnails bottom-up: only pure prefix nodes (no direct images)
+  // need a thumbnail from their children. Nodes that already have a thumbnail
+  // from the codeMap keep it — this ensures siblings show distinct images.
+  const codesByLength = [...prefixCounts.keys()].sort((a, b) => b.length - a.length);
+  for (const code of codesByLength) {
+    const data = prefixCounts.get(code);
+    if (data.thumbnail) continue; // already has own image, keep it
+    if (data.children.size === 0) continue;
+    // Pure prefix node: pick highest-count child's thumbnail
+    const childThumbs = [...data.children]
+      .map(c => ({ code: c, ...(prefixCounts.get(c) || {}) }))
+      .filter(c => c.thumbnail)
+      .sort((a, b) => (b.count || 0) - (a.count || 0));
+    if (childThumbs.length > 0) {
+      data.thumbnail = childThumbs[0].thumbnail;
     }
   }
 
