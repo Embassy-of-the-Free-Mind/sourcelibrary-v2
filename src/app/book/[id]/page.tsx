@@ -240,10 +240,11 @@ async function getBook(id: string): Promise<{ book: Book; pages: Page[]; totalBo
   // All queries have maxTimeMS to fail fast during DB degradation
   const [fullBookResult, pagesRaw, totalBooks, galleryImagesRaw, galleryImageCount, bookCollectionsRaw] = await Promise.all([
     fullBookPromise,
-    // Drop $ne filter — it prevents use of the {book_id,page_number} compound
-    // index and forces a collection scan. Filter digitizer-inserts in JS instead.
+    // Use page_number >= 0 to skip archived-spread pages (negative numbers).
+    // This uses the {book_id, page_number} compound index efficiently.
+    // Digitizer-inserts are still filtered in JS (rare, no index benefit).
     db.collection('pages')
-      .find({ book_id: bookId }, {
+      .find({ book_id: bookId, page_number: { $gte: 0 } }, {
         projection: {
           _id: 0,
           id: 1,
@@ -267,7 +268,7 @@ async function getBook(id: string): Promise<{ book: Book; pages: Page[]; totalBo
       .sort({ page_number: 1 })
       .limit(110) // slight over-fetch to account for digitizer-inserts filtered below
       .toArray()
-      .then(docs => docs.filter(d => d.page_type !== 'digitizer-insert' && d.page_type !== 'archived-spread' && (d.page_number == null || d.page_number >= 0)).slice(0, 100)),
+      .then(docs => docs.filter(d => d.page_type !== 'digitizer-insert').slice(0, 100)),
     db.collection('books').estimatedDocumentCount().catch(() => 1200),
     // Top 8 gallery images for preview row
     db.collection('gallery_images')

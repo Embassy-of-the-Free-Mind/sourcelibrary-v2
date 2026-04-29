@@ -36,12 +36,12 @@ export default async function PageEditorPage({ params }: PageProps) {
   const [bookResult, navPages] = await Promise.all([
     findBookByIdOrSlug(db, id, BOOK_NAV_PROJECTION),
     db.collection('pages')
-      .find({ book_id: currentPage.book_id as string })
+      .find({ book_id: currentPage.book_id as string, page_number: { $gte: 0 } })
       .project({ _id: 0, id: 1, page_number: 1, split_from: 1, page_type: 1 })
       .sort({ page_number: 1 })
       .maxTimeMS(15000)
       .toArray()
-      .then(pages => pages.filter(p => p.page_type !== 'digitizer-insert' && p.page_type !== 'archived-spread' && (p.page_number == null || p.page_number >= 0)))
+      .then(pages => pages.filter(p => p.page_type !== 'digitizer-insert'))
       .catch((err) => {
         console.error(`[page-nav] Failed to load page list for book ${currentPage.book_id}:`, err.message);
         return [{ id: pageId, page_number: currentPage.page_number }];
