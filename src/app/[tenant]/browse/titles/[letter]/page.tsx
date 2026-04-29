@@ -93,40 +93,39 @@ export default async function BrowseTitlesPage({ params }: PageProps) {
     <>
       <SiteHeader variant="light" breadcrumbs={[{ label: 'Browse', href: base }]} />
       <div className="max-w-6xl mx-auto px-6 md:px-12 py-12 md:py-20">
-      <h1 className="text-3xl md:text-4xl font-display mb-2" style={{ color: 'var(--text-primary)' }}>
-        Titles: {l}
-      </h1>
-      <p className="text-sm mb-8" style={{ color: 'var(--text-muted)' }}>
-        {books.length.toLocaleString('en-US')} {books.length === 1 ? 'book' : 'books'}
-      </p>
-
-      {/* Letter nav */}
-      <div className="flex flex-wrap gap-1.5 mb-10">
-        {LETTERS.map(lt => (
-          <Link
-            key={lt}
-            href={`${base}/titles/${lt}`}
-            className={`w-8 h-8 flex items-center justify-center rounded text-xs font-medium transition-colors ${
-              lt === l ? 'text-white' : 'hover:opacity-70'
-            }`}
-            style={lt === l
-              ? { background: 'var(--text-primary)', color: '#fff' }
-              : { color: 'var(--text-muted)' }
-            }
-          >
-            {lt}
-          </Link>
-        ))}
-      </div>
-
-      {books.length > 0 ? (
-        <BrowseViewToggle books={books} />
-      ) : (
-        <p className="py-12 text-center" style={{ color: 'var(--text-muted)' }}>
-          No books found starting with {l}.
+        <h1 className="text-3xl md:text-4xl font-display mb-2" style={{ color: 'var(--text-primary)' }}>
+          Titles: {l}
+        </h1>
+        <p className="text-sm mb-8" style={{ color: 'var(--text-muted)' }}>
+          {books.length.toLocaleString('en-US')} {books.length === 1 ? 'book' : 'books'}
         </p>
-      )}
-    </div>
+
+        {/* Letter nav */}
+        <div className="flex flex-wrap gap-1.5 mb-10">
+          {LETTERS.map(lt => (
+            <Link
+              key={lt}
+              href={`${base}/titles/${lt}`}
+              className={`w-8 h-8 flex items-center justify-center rounded text-xs font-medium transition-colors ${lt === l ? 'text-white' : 'hover:opacity-70'
+                }`}
+              style={lt === l
+                ? { background: 'var(--text-primary)', color: '#fff' }
+                : { color: 'var(--text-muted)' }
+              }
+            >
+              {lt}
+            </Link>
+          ))}
+        </div>
+
+        {books.length > 0 ? (
+          <BrowseViewToggle books={books} />
+        ) : (
+          <p className="py-12 text-center" style={{ color: 'var(--text-muted)' }}>
+            No books found starting with {l}.
+          </p>
+        )}
+      </div>
     </>
   );
 }

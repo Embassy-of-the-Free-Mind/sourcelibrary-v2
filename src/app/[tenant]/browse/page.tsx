@@ -30,110 +30,110 @@ export default async function BrowsePage() {
     <>
       <SiteHeader variant="light" />
       <div className="max-w-4xl mx-auto px-6 md:px-12 py-12 md:py-20">
-      <h1 className="text-3xl md:text-4xl font-display mb-2" style={{ color: 'var(--text-primary)' }}>
-        Browse the Collection
-      </h1>
-      <p className="text-lg mb-12" style={{ color: 'var(--text-muted)' }}>
-        Pre-built indexes for browsing without search.
-      </p>
-
-      {/* By Title */}
-      <section className="mb-12">
-        <h2 className="text-xl font-display mb-4" style={{ color: 'var(--text-primary)' }}>
-          By Title
-        </h2>
-        <div className="flex flex-wrap gap-2">
-          {LETTERS.map(letter => (
-            <Link
-              key={letter}
-              href={`${base}/titles/${letter}`}
-              className="w-10 h-10 flex items-center justify-center rounded-lg text-sm font-medium transition-colors hover:opacity-80"
-              style={{ background: 'var(--bg-warm)', color: 'var(--text-primary)', border: '1px solid var(--border-light)' }}
-            >
-              {letter}
-            </Link>
-          ))}
-        </div>
-      </section>
-
-      {/* By Author */}
-      <section className="mb-12">
-        <h2 className="text-xl font-display mb-4" style={{ color: 'var(--text-primary)' }}>
-          By Author
-        </h2>
-        <div className="flex flex-wrap gap-2">
-          {LETTERS.map(letter => (
-            <Link
-              key={letter}
-              href={`${base}/authors/${letter}`}
-              className="w-10 h-10 flex items-center justify-center rounded-lg text-sm font-medium transition-colors hover:opacity-80"
-              style={{ background: 'var(--bg-warm)', color: 'var(--text-primary)', border: '1px solid var(--border-light)' }}
-            >
-              {letter}
-            </Link>
-          ))}
-        </div>
-      </section>
-
-      {/* By Artist */}
-      <section className="mb-12">
-        <h2 className="text-xl font-display mb-4" style={{ color: 'var(--text-primary)' }}>
-          By Artist
-        </h2>
-        <p className="text-sm mb-4" style={{ color: 'var(--text-muted)' }}>
-          Painters, engravers, and printmakers in the collection.
+        <h1 className="text-3xl md:text-4xl font-display mb-2" style={{ color: 'var(--text-primary)' }}>
+          Browse the Collection
+        </h1>
+        <p className="text-lg mb-12" style={{ color: 'var(--text-muted)' }}>
+          Pre-built indexes for browsing without search.
         </p>
-        <div className="flex flex-wrap gap-2">
-          {LETTERS.map(letter => (
-            <Link
-              key={letter}
-              href={`${base}/artists/${letter}`}
-              className="w-10 h-10 flex items-center justify-center rounded-lg text-sm font-medium transition-colors hover:opacity-80"
-              style={{ background: 'var(--bg-warm)', color: 'var(--text-primary)', border: '1px solid var(--border-light)' }}
-            >
-              {letter}
-            </Link>
-          ))}
-        </div>
-      </section>
 
-      {/* By Subject */}
-      <section className="mb-12">
-        <h2 className="text-xl font-display mb-4" style={{ color: 'var(--text-primary)' }}>
-          By Subject
-        </h2>
-        <p className="text-sm mb-4" style={{ color: 'var(--text-muted)' }}>
-          Browse illustrations and artworks by visual subject using the Iconclass classification system.
-        </p>
-        <Link
-          href={`${base}/subjects`}
-          className="inline-flex items-center gap-2 rounded-lg px-4 py-3 text-sm font-medium transition-colors hover:opacity-80"
-          style={{ background: 'var(--bg-warm)', color: 'var(--text-primary)', border: '1px solid var(--border-light)' }}
-        >
-          Browse by Subject →
-        </Link>
-      </section>
+        {/* By Title */}
+        <section className="mb-12">
+          <h2 className="text-xl font-display mb-4" style={{ color: 'var(--text-primary)' }}>
+            By Title
+          </h2>
+          <div className="flex flex-wrap gap-2">
+            {LETTERS.map(letter => (
+              <Link
+                key={letter}
+                href={`${base}/titles/${letter}`}
+                className="w-10 h-10 flex items-center justify-center rounded-lg text-sm font-medium transition-colors hover:opacity-80"
+                style={{ background: 'var(--bg-warm)', color: 'var(--text-primary)', border: '1px solid var(--border-light)' }}
+              >
+                {letter}
+              </Link>
+            ))}
+          </div>
+        </section>
 
-      {/* By Period */}
-      <section className="mb-12">
-        <h2 className="text-xl font-display mb-4" style={{ color: 'var(--text-primary)' }}>
-          By Period
-        </h2>
-        <div className="grid grid-cols-2 sm:grid-cols-4 gap-3">
-          {CENTURIES.map(c => (
-            <Link
-              key={c.slug}
-              href={`${base}/years/${c.slug}`}
-              className="rounded-lg p-4 transition-colors hover:opacity-80"
-              style={{ background: 'var(--bg-warm)', border: '1px solid var(--border-light)' }}
-            >
-              <p className="font-medium text-sm" style={{ color: 'var(--text-primary)' }}>{c.label}</p>
-              <p className="text-xs" style={{ color: 'var(--text-muted)' }}>{c.range}</p>
-            </Link>
-          ))}
-        </div>
-      </section>
-    </div>
+        {/* By Author */}
+        <section className="mb-12">
+          <h2 className="text-xl font-display mb-4" style={{ color: 'var(--text-primary)' }}>
+            By Author
+          </h2>
+          <div className="flex flex-wrap gap-2">
+            {LETTERS.map(letter => (
+              <Link
+                key={letter}
+                href={`${base}/authors/${letter}`}
+                className="w-10 h-10 flex items-center justify-center rounded-lg text-sm font-medium transition-colors hover:opacity-80"
+                style={{ background: 'var(--bg-warm)', color: 'var(--text-primary)', border: '1px solid var(--border-light)' }}
+              >
+                {letter}
+              </Link>
+            ))}
+          </div>
+        </section>
+
+        {/* By Artist */}
+        <section className="mb-12">
+          <h2 className="text-xl font-display mb-4" style={{ color: 'var(--text-primary)' }}>
+            By Artist
+          </h2>
+          <p className="text-sm mb-4" style={{ color: 'var(--text-muted)' }}>
+            Painters, engravers, and printmakers in the collection.
+          </p>
+          <div className="flex flex-wrap gap-2">
+            {LETTERS.map(letter => (
+              <Link
+                key={letter}
+                href={`${base}/artists/${letter}`}
+                className="w-10 h-10 flex items-center justify-center rounded-lg text-sm font-medium transition-colors hover:opacity-80"
+                style={{ background: 'var(--bg-warm)', color: 'var(--text-primary)', border: '1px solid var(--border-light)' }}
+              >
+                {letter}
+              </Link>
+            ))}
+          </div>
+        </section>
+
+        {/* By Subject */}
+        <section className="mb-12">
+          <h2 className="text-xl font-display mb-4" style={{ color: 'var(--text-primary)' }}>
+            By Subject
+          </h2>
+          <p className="text-sm mb-4" style={{ color: 'var(--text-muted)' }}>
+            Browse illustrations and artworks by visual subject using the Iconclass classification system.
+          </p>
+          <Link
+            href={`${base}/subjects`}
+            className="inline-flex items-center gap-2 rounded-lg px-4 py-3 text-sm font-medium transition-colors hover:opacity-80"
+            style={{ background: 'var(--bg-warm)', color: 'var(--text-primary)', border: '1px solid var(--border-light)' }}
+          >
+            Browse by Subject →
+          </Link>
+        </section>
+
+        {/* By Period */}
+        <section className="mb-12">
+          <h2 className="text-xl font-display mb-4" style={{ color: 'var(--text-primary)' }}>
+            By Period
+          </h2>
+          <div className="grid grid-cols-2 sm:grid-cols-4 gap-3">
+            {CENTURIES.map(c => (
+              <Link
+                key={c.slug}
+                href={`${base}/years/${c.slug}`}
+                className="rounded-lg p-4 transition-colors hover:opacity-80"
+                style={{ background: 'var(--bg-warm)', border: '1px solid var(--border-light)' }}
+              >
+                <p className="font-medium text-sm" style={{ color: 'var(--text-primary)' }}>{c.label}</p>
+                <p className="text-xs" style={{ color: 'var(--text-muted)' }}>{c.range}</p>
+              </Link>
+            ))}
+          </div>
+        </section>
+      </div>
     </>
   );
 }

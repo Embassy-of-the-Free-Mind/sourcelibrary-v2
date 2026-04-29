@@ -54,56 +54,55 @@ export default async function BrowseArtistsPage({ params }: PageProps) {
     <>
       <SiteHeader variant="light" breadcrumbs={[{ label: 'Browse', href: base }]} />
       <div className="max-w-4xl mx-auto px-6 md:px-12 py-12 md:py-20">
-      <h1 className="text-3xl md:text-4xl font-display mb-2" style={{ color: 'var(--text-primary)' }}>
-        Artists: {l}
-      </h1>
-      <p className="text-sm mb-8" style={{ color: 'var(--text-muted)' }}>
-        {artists.length.toLocaleString('en-US')} {artists.length === 1 ? 'artist' : 'artists'}
-      </p>
-
-      {/* Letter nav */}
-      <div className="flex flex-wrap gap-1.5 mb-10">
-        {LETTERS.map(lt => (
-          <Link
-            key={lt}
-            href={`${base}/artists/${lt}`}
-            className={`w-8 h-8 flex items-center justify-center rounded text-xs font-medium transition-colors ${
-              lt === l ? 'text-white' : 'hover:opacity-70'
-            }`}
-            style={lt === l
-              ? { background: 'var(--text-primary)', color: '#fff' }
-              : { color: 'var(--text-muted)' }
-            }
-          >
-            {lt}
-          </Link>
-        ))}
-      </div>
-
-      {/* Artist list */}
-      <div className="divide-y" style={{ borderColor: 'var(--border-light)' }}>
-        {artists.map(artist => (
-          <Link
-            key={artist.name}
-            href={`/artist/${authorSlug(artist.name)}`}
-            className="flex items-baseline justify-between py-3 hover:opacity-70 transition-opacity"
-          >
-            <p className="font-medium text-sm" style={{ color: 'var(--text-primary)' }}>
-              {artist.name}
-            </p>
-            <p className="text-xs tabular-nums" style={{ color: 'var(--text-muted)' }}>
-              {artist.count} {artist.count === 1 ? 'work' : 'works'}
-            </p>
-          </Link>
-        ))}
-      </div>
-
-      {artists.length === 0 && (
-        <p className="py-12 text-center" style={{ color: 'var(--text-muted)' }}>
-          No artists found starting with {l}.
+        <h1 className="text-3xl md:text-4xl font-display mb-2" style={{ color: 'var(--text-primary)' }}>
+          Artists: {l}
+        </h1>
+        <p className="text-sm mb-8" style={{ color: 'var(--text-muted)' }}>
+          {artists.length.toLocaleString('en-US')} {artists.length === 1 ? 'artist' : 'artists'}
         </p>
-      )}
-    </div>
+
+        {/* Letter nav */}
+        <div className="flex flex-wrap gap-1.5 mb-10">
+          {LETTERS.map(lt => (
+            <Link
+              key={lt}
+              href={`${base}/artists/${lt}`}
+              className={`w-8 h-8 flex items-center justify-center rounded text-xs font-medium transition-colors ${lt === l ? 'text-white' : 'hover:opacity-70'
+                }`}
+              style={lt === l
+                ? { background: 'var(--text-primary)', color: '#fff' }
+                : { color: 'var(--text-muted)' }
+              }
+            >
+              {lt}
+            </Link>
+          ))}
+        </div>
+
+        {/* Artist list */}
+        <div className="divide-y" style={{ borderColor: 'var(--border-light)' }}>
+          {artists.map(artist => (
+            <Link
+              key={artist.name}
+              href={`/artist/${authorSlug(artist.name)}`}
+              className="flex items-baseline justify-between py-3 hover:opacity-70 transition-opacity"
+            >
+              <p className="font-medium text-sm" style={{ color: 'var(--text-primary)' }}>
+                {artist.name}
+              </p>
+              <p className="text-xs tabular-nums" style={{ color: 'var(--text-muted)' }}>
+                {artist.count} {artist.count === 1 ? 'work' : 'works'}
+              </p>
+            </Link>
+          ))}
+        </div>
+
+        {artists.length === 0 && (
+          <p className="py-12 text-center" style={{ color: 'var(--text-muted)' }}>
+            No artists found starting with {l}.
+          </p>
+        )}
+      </div>
     </>
   );
 }
