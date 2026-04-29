@@ -3,6 +3,13 @@
  * Extracted from duplicated code across page components.
  */
 
+// ---------- Art collection filtering ----------
+// Resource types excluded from art collection queries.
+// These are documentary/photographic records, not artworks.
+export const ART_EXCLUDED_RESOURCE_TYPES = [
+  'photograph', 'object', 'sculpture', 'architectural', 'decorative', 'ritual-object',
+];
+
 // ---------- Pinned collection ordering ----------
 
 export const PINNED_COLLECTION_SLUGS = [
