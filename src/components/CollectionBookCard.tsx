@@ -54,7 +54,7 @@ export default function CollectionBookCard({ book, priority = false, bookUrlPref
 
   return (
     <Link
-      href={isArtwork ? `/artwork/${slug}` : bookHref}
+      href={isArtwork && bookUrlPrefix ? `${bookUrlPrefix}/artwork/${slug}` : bookHref}
       className="group block"
     >
       <div className="h-full rounded-xl border border-border-light hover:border-accent-rust/40 hover:shadow-lg transition-[border-color,box-shadow] overflow-hidden bg-white">
