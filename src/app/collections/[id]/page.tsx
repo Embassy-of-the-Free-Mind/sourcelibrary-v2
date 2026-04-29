@@ -247,9 +247,9 @@ async function fetchCollectionData(id: string, provider?: string) {
     .map((m: { book_id: string }) => m.book_id)
     .filter(Boolean);
 
-  // Use cached book_count — sync-page-counts cron updates this every 6h
-  // to reflect only translated books (pages_translated > 0).
-  const total = collection.book_count || 0;
+  // For book collections, use cached book_count (sync-page-counts cron, 6h).
+  // For art collections, count artworks matching the art filter (excludes photos etc).
+  let total = collection.book_count || 0;
 
   // Track gallery collection slug for linking (captured in the gallery query below)
   let galleryCollectionSlug: string | null = null;
@@ -290,14 +290,22 @@ async function fetchCollectionData(id: string, provider?: string) {
         collections: id,
         resource_type: { $exists: true, $nin: ART_EXCLUDED_RESOURCE_TYPES },
       };
-      const docs = await withTimeout(
-        db.collection('books')
-          .find(artFilter, { projection, maxTimeMS: 8000 })
-          .sort({ commons_width: -1 })
-          .limit(COMPACT_LIMIT)
-          .toArray(),
-        15000, [],
-      );
+      const [docs, artCount] = await Promise.all([
+        withTimeout(
+          db.collection('books')
+            .find(artFilter, { projection, maxTimeMS: 8000 })
+            .sort({ commons_width: -1 })
+            .limit(COMPACT_LIMIT)
+            .toArray(),
+          15000, [],
+        ),
+        withTimeout(
+          db.collection('books').countDocuments(artFilter, { maxTimeMS: 8000 }),
+          8000, 0,
+        ),
+      ]);
+      // Override cached book_count with actual artwork count
+      total = artCount || docs.length;
       return docs;
     }
 
