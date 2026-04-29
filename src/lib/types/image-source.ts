@@ -50,6 +50,7 @@ export type ImageSourceProvider =
   | 'bsb'            // Bayerische Staatsbibliothek (alternate key for mdz)
   | 'eap'            // British Library Endangered Archives Programme
   | 'sat_daizokyo'   // SAT Daizokyo Buddhist Text Database
+  | 'tu_darmstadt'   // Technische Universität Darmstadt (ULB)
   | 'contentdm'      // OCLC CONTENTdm
   | 'ia'             // Internet Archive (alternate key)
   | 'library'
