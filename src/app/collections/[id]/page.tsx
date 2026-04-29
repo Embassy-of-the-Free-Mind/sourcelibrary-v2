@@ -13,9 +13,9 @@ import CollectionSchema from '@/components/seo/CollectionSchema';
 import CollectionAllBooks from '@/components/collections/CollectionAllBooks';
 import ExhibitionLayout from '@/components/collections/ExhibitionLayout';
 import SignUpCTA from '@/components/auth/SignUpCTA';
-import { bookUrl, tenantBookUrl } from '@/lib/slugify';
+import { tenantBookUrl } from '@/lib/slugify';
 import EmbedNavigationReporter from '@/components/embed/EmbedNavigationReporter';
-import { bookTitle, sanitizeThumbnail, withTimeout } from '@/lib/collections-utils';
+import { bookTitle, sanitizeThumbnail, withTimeout, ART_EXCLUDED_RESOURCE_TYPES } from '@/lib/collections-utils';
 import { getBookThumbnailUrl } from '@/lib/utils';
 import { firstTranslationBadge } from '@/lib/first-translation-labels';
 import { browseBooks } from '@/lib/books-catalog';
@@ -286,10 +286,9 @@ async function fetchCollectionData(id: string, provider?: string) {
     // Art collections: use MongoDB directly to sort by image resolution.
     // Exclude photographs, modern reproductions, and museum object photos.
     if (isArtCollection) {
-      const EXCLUDED_TYPES = ['photograph', 'object', 'sculpture', 'architectural', 'decorative', 'ritual-object'];
       const artFilter = {
         collections: id,
-        resource_type: { $exists: true, $nin: EXCLUDED_TYPES },
+        resource_type: { $exists: true, $nin: ART_EXCLUDED_RESOURCE_TYPES },
       };
       const docs = await withTimeout(
         db.collection('books')
