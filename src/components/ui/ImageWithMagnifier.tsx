@@ -63,7 +63,18 @@ export default function ImageWithMagnifier({
   };
   const activeSrc = useFallback && fallbackSrc ? fallbackSrc : src;
   const isApiUrl = activeSrc.startsWith('/api/');
-  const displaySrc = thumbnail || (isApiUrl ? activeSrc : getResizedUrl(activeSrc, 400));
+  const initialDisplaySrc = thumbnail || (isApiUrl ? activeSrc : getResizedUrl(activeSrc, 400));
+  // Progressive display: background-load activeSrc, swap in when ready
+  const [hiResDisplayReady, setHiResDisplayReady] = useState(false);
+  const canUpgradeDisplay = !!thumbnail && thumbnail !== activeSrc;
+  useEffect(() => {
+    if (!canUpgradeDisplay) return;
+    setHiResDisplayReady(false);
+    const img = new window.Image();
+    img.onload = () => setHiResDisplayReady(true);
+    img.src = activeSrc;
+  }, [canUpgradeDisplay, activeSrc]);
+  const displaySrc = (hiResDisplayReady && canUpgradeDisplay) ? activeSrc : initialDisplaySrc;
   // Use high-res version for magnifier if available, otherwise use standard src
   const magnifierSrc = highResSrc || activeSrc;
 
