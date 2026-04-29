@@ -115,15 +115,8 @@ export default async function SubjectCategoryPage({ params }: Props) {
   // Build breadcrumb path
   const path = buildIconclassPath(code);
 
-  // Determine if this is a category page (has children) or a leaf (show images)
-  const hasChildren = node && node.children.length > 0;
-  const isLeaf = !hasChildren || (node && node.children.length <= 2 && node.count < 200);
-
-  // For leaf nodes or nodes with few children, also fetch images
-  const images = isLeaf ? await getImagesForCode(db, code) : [];
-
   // For category nodes, get child data
-  const children = hasChildren
+  const children = (node && node.children.length > 0)
     ? node.children
         .map(childCode => ({
           code: childCode,
@@ -134,6 +127,10 @@ export default async function SubjectCategoryPage({ params }: Props) {
         .filter(c => c.count > 0)
         .sort((a, b) => b.count - a.count)
     : [];
+
+  // Show images if leaf node, few children, or all children were filtered out
+  const isLeaf = children.length === 0 || (node && node.children.length <= 2 && node.count < 200);
+  const images = isLeaf ? await getImagesForCode(db, code) : [];
 
   return (
     <>
