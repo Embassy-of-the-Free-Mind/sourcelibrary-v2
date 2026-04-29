@@ -2,7 +2,7 @@ import { Metadata } from 'next';
 import Link from 'next/link';
 import { getReadDb } from '@/lib/mongodb';
 import ContentPageLayout, { ContentHeader } from '@/components/layout/ContentPageLayout';
-import { CenturyChart } from '../[tenant]/data/DataCharts';
+import { CenturyChart } from './DataCharts';
 
 // ISR: rebuild every 10 minutes. The page reads from a pre-computed snapshot
 // so rendering is fast — no heavy Atlas aggregations at request time.
