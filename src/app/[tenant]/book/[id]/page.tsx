@@ -293,10 +293,11 @@ async function getBook(id: string, tenantId?: string): Promise<{ book: Book; pag
   // All queries have maxTimeMS to fail fast during DB degradation
   const [fullBookResult, pagesRaw, totalBooks, galleryImagesRaw, galleryImageCount, bookCollectionsRaw] = await Promise.all([
     fullBookPromise,
-    // Drop $ne filter — it prevents use of the {book_id,page_number} compound
-    // index and forces a collection scan. Filter digitizer-inserts in JS instead.
+    // Use page_number >= 0 to skip archived-spread pages (negative numbers).
+    // This uses the {book_id, page_number} compound index efficiently.
+    // Digitizer-inserts are still filtered in JS (rare, no index benefit).
     db.collection('pages')
-      .find({ book_id: bookId }, {
+      .find({ book_id: bookId, page_number: { $gte: 0 } }, {
         projection: {
           _id: 0,
           id: 1,

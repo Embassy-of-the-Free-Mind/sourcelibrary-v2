@@ -37,7 +37,7 @@ export default async function PageEditorPage({ params }: PageProps) {
   const [bookResult, navPages] = await Promise.all([
     findTenantBookByIdOrSlug(db, tenant, id, BOOK_NAV_PROJECTION),
     db.collection('pages')
-      .find({ book_id: currentPage.book_id as string })
+      .find({ book_id: currentPage.book_id as string, page_number: { $gte: 0 } })
       .project({ _id: 0, id: 1, page_number: 1, split_from: 1, page_type: 1 })
       .sort({ page_number: 1 })
       .maxTimeMS(15000)

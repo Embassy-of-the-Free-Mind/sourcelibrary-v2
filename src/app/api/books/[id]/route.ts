@@ -75,7 +75,7 @@ export async function GET(
     const pageOffset = parseInt(searchParams.get('pageOffset') || '0');
     const pageLimit = parseInt(searchParams.get('pageLimit') || '0'); // 0 = all (backwards-compat)
     let cursor = db.collection('pages')
-      .find({ book_id: bookId, tenantId })
+      .find({ book_id: bookId, tenantId, page_number: { $gte: 0 } })
       .project(projection)
       .sort({ page_number: 1 });
     if (pageOffset > 0) cursor = cursor.skip(pageOffset);
