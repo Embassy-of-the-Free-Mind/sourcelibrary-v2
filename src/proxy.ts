@@ -17,6 +17,9 @@ const NON_TENANT_PATHS = new Set([
   'categories', 'catalog', 'artwork', 'artist',
   // Legacy root paths (pages moved to /[tenant]/*) — kept here to 404 cleanly
   'book', 'collections',
+  // Other root pages
+  'author', 'work', 'connect', 'data', 'read',
+  'research', 'embed', 'shwep',
 ]);
 
 // Domains that enable the Ficino Society social layer
