@@ -25,8 +25,13 @@ export default function UserMenu({ variant = 'default' }: UserMenuProps) {
     return () => document.removeEventListener('mousedown', handleClickOutside);
   }, []);
 
-  // Show sign-in link for anonymous users AND during loading.
-  // This ensures the link is visible in SSR and survives hydration failures.
+  // During loading, render an invisible placeholder the same size as the avatar
+  // to prevent layout shift. SSR also hits this path (no session during SSR).
+  if (status === 'loading') {
+    return <div className="w-8 h-8" />;
+  }
+
+  // Show sign-in link for anonymous users.
   if (!session) {
     const textColor = variant === 'hero' ? 'text-white/80 hover:text-white' : '';
     const textStyle = variant === 'hero' ? {} : { color: 'var(--text-muted)' };

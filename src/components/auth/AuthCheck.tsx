@@ -21,8 +21,10 @@ export function AuthCheck({ children, fallback = null, role }: AuthCheckProps) {
   const { data: session, status } = useSession();
 
   if (status === 'loading') {
-    // Render children invisibly to reserve layout space and prevent jitter
-    return <div style={{ visibility: 'hidden' }}>{children}</div>;
+    // During loading, show fallback (the safe, non-interactive default).
+    // This avoids invisible → visible flash since fallback is visually
+    // identical to the authenticated view (e.g. same cover image, just not clickable).
+    return <>{fallback}</>;
   }
 
   if (!session?.user) {
