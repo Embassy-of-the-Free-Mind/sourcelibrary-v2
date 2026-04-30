@@ -1,7 +1,6 @@
 'use client';
 
 import { useEffect, useRef } from 'react';
-import { useSearchParams } from 'next/navigation';
 
 /**
  * When embedded via embed.js (detected by embed=1 param), intercept
@@ -10,7 +9,6 @@ import { useSearchParams } from 'next/navigation';
  * the host embed script owns all history management.
  */
 export default function EmbedHistoryPatch() {
-    const searchParams = useSearchParams();
     const patchedRef = useRef(false);
 
     useEffect(() => {
@@ -19,12 +17,11 @@ export default function EmbedHistoryPatch() {
         if (patchedRef.current) return; // already patched
 
         // Only activate when embed=1 param is present (from embed.js)
-        const isEmbedded = searchParams.get('embed') === '1';
-        if (!isEmbedded) return;
+        const params = new URLSearchParams(window.location.search);
+        if (params.get('embed') !== '1') return;
 
         patchedRef.current = true;
 
-        const originalPushState = history.pushState.bind(history);
         const originalReplaceState = history.replaceState.bind(history);
 
         // Intercept pushState and convert to replaceState when embedded
@@ -33,7 +30,7 @@ export default function EmbedHistoryPatch() {
         };
 
         // No cleanup - keep patch for entire session
-    }, [searchParams]);
+    }, []);
 
     return null;
 }
