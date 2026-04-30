@@ -51,7 +51,7 @@ async function main() {
 
   console.log('Aggregating artworks iconclass codes...');
   const artworkAgg = await db.collection('books').aggregate([
-    { $match: { 'enrichment.iconclass': { $exists: true, $ne: [] }, resource_type: { $exists: true } } },
+    { $match: { 'enrichment.iconclass': { $exists: true, $ne: [] }, content_type: 'artwork' } },
     { $unwind: '$enrichment.iconclass' },
     {
       $group: {

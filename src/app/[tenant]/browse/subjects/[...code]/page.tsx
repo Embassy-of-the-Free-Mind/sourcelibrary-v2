@@ -51,7 +51,8 @@ async function getIconclassTree(db: any) {
 async function getImagesForCode(db: any, code: string, limit = 48): Promise<GalleryImage[]> {
   const escapedCode = code.replace(/[.*+?^${}()|[\]\\]/g, '\\$&');
 
-  const images = await db.collection('gallery_images')
+  // Fetch gallery illustrations
+  const galleryImages = await db.collection('gallery_images')
     .find(
       { 'metadata.iconclass': { $regex: `^${escapedCode}` } },
       {
@@ -65,7 +66,7 @@ async function getImagesForCode(db: any, code: string, limit = 48): Promise<Gall
     .limit(limit)
     .toArray();
 
-  return images.map((img: any) => ({
+  const results: GalleryImage[] = galleryImages.map((img: any) => ({
     id: img.id || img._id?.toString(),
     extracted_url: img.extracted_url,
     thumbnail_url: img.thumbnail_url,
@@ -75,6 +76,42 @@ async function getImagesForCode(db: any, code: string, limit = 48): Promise<Gall
     book_id: img.book_id,
     book_slug: img.book_slug,
   }));
+
+  // Fill remaining slots with artworks
+  const remaining = limit - results.length;
+  if (remaining > 0) {
+    const artworks = await db.collection('books')
+      .find(
+        {
+          'enrichment.iconclass': { $regex: `^${escapedCode}` },
+          content_type: 'artwork',
+          thumbnail: { $ne: null },
+        },
+        {
+          projection: {
+            id: 1, slug: 1, title: 1, author: 1, thumbnail: 1,
+            'enrichment.description': 1,
+          },
+        },
+      )
+      .limit(remaining)
+      .toArray();
+
+    for (const art of artworks) {
+      results.push({
+        id: art.id || art._id?.toString(),
+        extracted_url: art.thumbnail,
+        thumbnail_url: art.thumbnail,
+        description: art.enrichment?.description || art.title,
+        book_title: art.title,
+        book_author: art.author,
+        book_id: art.id || art._id?.toString(),
+        book_slug: art.slug,
+      });
+    }
+  }
+
+  return results;
 }
 
 export async function generateMetadata({ params }: Props): Promise<Metadata> {
@@ -115,7 +152,7 @@ export default async function SubjectCategoryPage({ params }: Props) {
   // Build breadcrumb path
   const path = buildIconclassPath(code);
 
-  // For category nodes, get child data
+  // For category nodes, get child data (only show children with gallery images)
   const children = (node && node.children.length > 0)
     ? node.children
         .map(childCode => ({
@@ -165,11 +202,6 @@ export default async function SubjectCategoryPage({ params }: Props) {
           <div className="flex items-center gap-4">
             <p style={{ color: 'var(--text-muted)' }}>
               {node ? `${node.count.toLocaleString()} images` : 'No indexed images'}
-              {node && node.gallery_count > 0 && node.artwork_count > 0 && (
-                <span className="text-sm ml-2">
-                  ({node.gallery_count.toLocaleString()} illustrations, {node.artwork_count.toLocaleString()} artworks)
-                </span>
-              )}
             </p>
             <a
               href={`https://iconclass.org/${encodeURIComponent(code)}`}
