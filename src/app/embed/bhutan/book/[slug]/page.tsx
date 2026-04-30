@@ -22,5 +22,5 @@ export default async function BhutanBookPage({ params }: { params: Promise<{ slu
   );
   if (!isBhutan) notFound();
 
-  return <BookDetailPage params={Promise.resolve({ id: slug })} />;
+  return <BookDetailPage params={Promise.resolve({ tenant: 'bhutan', id: slug })} />;
 }
