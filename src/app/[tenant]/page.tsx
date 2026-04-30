@@ -9,6 +9,7 @@ import {
   fetchTenantBphCatalogTotal,
 } from '@/lib/tenant-library-loaders';
 import { getDb } from '@/lib/mongodb';
+import EmbedNavigationReporter from '@/components/embed/EmbedNavigationReporter';
 
 interface Props {
   params: Promise<{ tenant: string }>;
@@ -30,7 +31,8 @@ export default async function TenantRoot({ params, searchParams }: Props) {
   const language = typeof sp.language === 'string' ? sp.language : '';
   const q = typeof sp.q === 'string' ? sp.q : '';
   const offset = parseInt(typeof sp.offset === 'string' ? sp.offset : '0') || 0;
-  const view = typeof sp.view === 'string' ? sp.view : '';
+  const view = (typeof sp.view === 'string' ? sp.view : '') || 'books';
+  const embed = typeof sp.embed === 'string' ? sp.embed === '1' : false;
 
   // Fetch tenant data
   const db = await getDb();
@@ -85,7 +87,13 @@ export default async function TenantRoot({ params, searchParams }: Props) {
     digitizedUbns,
     catalogTotal,
     tenantSlug,
+    embed,
   };
 
-  return <SharedLibraryView {...viewProps} />;
+  return (
+    <>
+      <EmbedNavigationReporter />
+      <SharedLibraryView {...viewProps} />
+    </>
+  );
 }

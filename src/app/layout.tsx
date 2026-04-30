@@ -8,6 +8,8 @@ import ClientToaster from "@/components/providers/ClientToaster";
 import CookieConsent from "@/components/providers/CookieConsent";
 import AnalyticsScripts from "@/components/providers/AnalyticsScripts";
 import EmbedLinkInterceptor from "@/components/embed/EmbedLinkInterceptor";
+import EmbedHostNavigationListener from "@/components/embed/EmbedHostNavigationListener";
+import EmbedHistoryPatch from "@/components/embed/EmbedHistoryPatch";
 
 
 
@@ -99,6 +101,8 @@ export default async function RootLayout({
         </a>
         <Providers>
           <EmbedLinkInterceptor />
+          <EmbedHostNavigationListener />
+          <EmbedHistoryPatch />
           <div id="main-content" className="flex-1">
             {children}
           </div>

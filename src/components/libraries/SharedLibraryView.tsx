@@ -91,6 +91,8 @@ export interface SharedLibraryViewProps {
   catalogTotal?: number;
   /** Optional tenant slug to pass to nested components */
   tenantSlug?: string | null;
+  /** Whether currently embedded via embed script (embed=1 param) */
+  embed?: boolean;
 }
 
 export default function SharedLibraryView({
@@ -111,6 +113,7 @@ export default function SharedLibraryView({
   digitizedUbns = {},
   catalogTotal = 0,
   tenantSlug,
+  embed = false,
 }: SharedLibraryViewProps) {
   const totalPages = Math.ceil(total / PER_PAGE);
   const currentPage = Math.floor(offset / PER_PAGE) + 1;
@@ -165,8 +168,8 @@ export default function SharedLibraryView({
         </div>
       </div>
 
-      {/* Gallery Grid */}
-      {galleryImages.length > 0 && (
+      {/* Gallery Grid - hidden in embed mode on books view */}
+      {galleryImages.length > 0 && !(embed && view === 'books') && (
         <div className="bg-warm border-b border-border-light">
           <div className="max-w-7xl mx-auto px-6 py-6">
             <h2
