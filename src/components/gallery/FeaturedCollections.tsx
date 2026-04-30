@@ -44,7 +44,7 @@ export default function FeaturedCollections({ initialCollections }: FeaturedColl
   return (
     <div className="mb-10">
       <h2 className="text-2xl font-serif text-stone-800 mb-1">Collections</h2>
-      <p className="text-stone-500 text-base mb-5">Curated selections of illustrations from rare alchemical, Hermetic, and philosophical manuscripts.</p>
+      <p className="text-stone-500 text-base mb-5">Curated selections of illustrations from rare historical manuscripts.</p>
 
       <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">
         {shown.map((collection, i) => (
@@ -60,7 +60,6 @@ export default function FeaturedCollections({ initialCollections }: FeaturedColl
                 fill
                 className="object-cover group-hover:scale-105 transition-transform duration-300"
                 sizes="(max-width: 640px) 100vw, (max-width: 1024px) 50vw, 33vw"
-                unoptimized
                 priority={i < 6}
                 loading={i < 6 ? 'eager' : 'lazy'}
                 onError={(e) => { (e.target as HTMLImageElement).style.display = 'none'; }}

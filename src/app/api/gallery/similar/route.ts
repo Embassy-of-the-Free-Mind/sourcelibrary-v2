@@ -27,9 +27,7 @@ export async function GET(request: NextRequest) {
     if (!tenantId && tenantCtx.slug) {
       tenantId = await resolveTenantId(tenantCtx.slug);
     }
-    if (!tenantId) {
-      return NextResponse.json({ error: 'No tenant context' }, { status: 400 });
-    }
+    // Gallery is global — skip tenant filter when no context
 
     if (!id) {
       return NextResponse.json({ error: 'id parameter required' }, { status: 400 });
