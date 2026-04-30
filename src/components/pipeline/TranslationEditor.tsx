@@ -109,6 +109,12 @@ function BookSearchBar({ bookId, tenantPrefix }: { bookId: string; tenantPrefix?
           value={query}
           onChange={(e) => setQuery(e.target.value)}
           onFocus={() => query.trim() && setShowResults(true)}
+          onKeyDown={(e) => {
+            if (e.key === 'Enter' && query.trim()) {
+              e.preventDefault();
+              window.location.href = `${tenantPrefix || ''}/book/${bookId}/search?q=${encodeURIComponent(query.trim())}`;
+            }
+          }}
           placeholder="Search this book..."
           aria-label="Search within this book"
           className="bg-transparent outline-none text-xs w-full"
@@ -1043,7 +1049,7 @@ export default function TranslationEditor({
 
 
               {/* Mode Toggle - admin and inner circle */}
-              <AuthCheck role="inner_circle">
+              <AuthCheck role="inner_circle" fallback={<div className="w-[68px] sm:w-[140px]" />}>
                 <div className="flex items-center rounded-lg p-0.5 sm:p-1" style={{ background: 'var(--bg-warm)' }}>
                   <button
                     onClick={() => setMode('read')}
