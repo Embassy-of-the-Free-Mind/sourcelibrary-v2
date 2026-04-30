@@ -13,6 +13,18 @@ const getCachedTenant = cache(async (slug: string) => {
   return db.collection('tenants').findOne({ id: tenantId });
 });
 
+// Routes that exist at root level and should never match [tenant].
+// Without this, Next.js routes /favorites to [tenant]=favorites,
+// the DB lookup fails, and notFound() fires instead of the root page.
+const ROOT_ONLY_ROUTES = new Set([
+  'favorites', 'reading-history', 'languages', 'timeline',
+  'topics', 'categories', 'about', 'blog', 'connect', 'contribute',
+  'developers', 'libraries', 'privacy', 'terms', 'support',
+  'roadmap', 'status', 'brand', 'press-release', 'founding-donors',
+  'ficino-society', 'feedback', 'unauthorized', 'account',
+  'auth', 'platform', 'admin', 'experiments', 'data',
+]);
+
 export default async function TenantLayout({
   children,
   params,
@@ -21,6 +33,9 @@ export default async function TenantLayout({
   params: Promise<{ tenant: string }>;
 }) {
   const { tenant: slug } = await params;
+
+  // Skip tenant lookup for known root-only routes
+  if (ROOT_ONLY_ROUTES.has(slug)) notFound();
 
   // Use cached lookup instead of headers() to preserve ISR for child pages
   const tenant = await getCachedTenant(slug);
