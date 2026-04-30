@@ -21,7 +21,8 @@ export function AuthCheck({ children, fallback = null, role }: AuthCheckProps) {
   const { data: session, status } = useSession();
 
   if (status === 'loading') {
-    return <>{fallback}</>;
+    // Render children invisibly to reserve layout space and prevent jitter
+    return <div style={{ visibility: 'hidden' }}>{children}</div>;
   }
 
   if (!session?.user) {

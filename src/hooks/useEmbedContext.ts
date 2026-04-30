@@ -1,6 +1,9 @@
 /**
  * Hook to detect if the current page is embedded in an iframe
- * and should use embed-specific styling/layout
+ * and should use embed-specific styling/layout.
+ *
+ * Checks for explicit embed=1 query param (from embed script)
+ * as the primary signal, falling back to iframe detection if needed.
  */
 
 'use client';
@@ -12,7 +15,15 @@ export function useEmbedContext() {
   const [isLoading, setIsLoading] = useState(true);
 
   useEffect(() => {
-    // Detect if inside iframe
+    // Prefer explicit embed=1 param from embed script
+    const params = new URLSearchParams(window.location.search);
+    if (params.get('embed') === '1') {
+      setIsEmbedded(true);
+      setIsLoading(false);
+      return;
+    }
+
+    // Fallback: detect if inside iframe
     const inIframe = typeof window !== 'undefined' && window.self !== window.top;
     setIsEmbedded(inIframe);
     setIsLoading(false);

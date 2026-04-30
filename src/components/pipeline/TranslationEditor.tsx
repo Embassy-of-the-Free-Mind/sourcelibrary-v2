@@ -1,7 +1,7 @@
 'use client';
 
 import { useState, useEffect, useRef, useMemo } from 'react';
-import { useParams } from 'next/navigation';
+import { useParams, useSearchParams } from 'next/navigation';
 import { toast } from 'sonner';
 import Logo from '@/components/layout/Logo';
 import RevisionHistory from '@/components/reader/RevisionHistory';
@@ -59,13 +59,14 @@ function hasNonLatinScript(language?: string): boolean {
 // EditSourceBadge removed — source info folded into RevisionHistory trigger
 
 // Inline book search bar for the page reader footer
-function BookSearchBar({ bookId, tenantPrefix }: { bookId: string; tenantPrefix?: string }) {
+function BookSearchBar({ bookId, tenantPrefix, isEmbedded }: { bookId: string; tenantPrefix?: string; isEmbedded?: boolean }) {
   const [query, setQuery] = useState('');
   const [results, setResults] = useState<Array<{ pageId: string; pageNumber: number; matches: Array<{ field: string; snippet: string }> }>>([]);
   const [isSearching, setIsSearching] = useState(false);
   const [showResults, setShowResults] = useState(false);
   const debounceRef = useRef<NodeJS.Timeout | null>(null);
   const containerRef = useRef<HTMLDivElement>(null);
+  const embedParam = isEmbedded ? '&embed=1' : '';
 
   useEffect(() => {
     if (debounceRef.current) clearTimeout(debounceRef.current);
@@ -109,6 +110,12 @@ function BookSearchBar({ bookId, tenantPrefix }: { bookId: string; tenantPrefix?
           value={query}
           onChange={(e) => setQuery(e.target.value)}
           onFocus={() => query.trim() && setShowResults(true)}
+          onKeyDown={(e) => {
+            if (e.key === 'Enter' && query.trim()) {
+              e.preventDefault();
+              window.location.href = `${tenantPrefix || ''}/book/${bookId}/search?q=${encodeURIComponent(query.trim())}`;
+            }
+          }}
           placeholder="Search this book..."
           aria-label="Search within this book"
           className="bg-transparent outline-none text-xs w-full"
@@ -136,7 +143,7 @@ function BookSearchBar({ bookId, tenantPrefix }: { bookId: string; tenantPrefix?
               {results.slice(0, 10).map((r) => (
                 <a
                   key={r.pageId}
-                  href={`${tenantPrefix || ''}/book/${bookId}/page/${r.pageId}?highlight=${encodeURIComponent(query.trim())}`}
+                  href={`${tenantPrefix || ''}/book/${bookId}/page/${r.pageId}?highlight=${encodeURIComponent(query.trim())}${embedParam}`}
                   className="block px-3 py-2 hover:bg-stone-50 transition-colors"
                 >
                   <span className="text-xs font-medium" style={{ color: 'var(--text-primary)' }}>Page {r.pageNumber}</span>
@@ -422,7 +429,10 @@ export default function TranslationEditor({
   onRefresh,
 }: TranslationEditorProps) {
   const params = useParams<{ tenant: string }>();
+  const searchParams = useSearchParams();
+  const isEmbedded = searchParams.get('embed') === '1';
   const tenantPrefix = params?.tenant ? `/${params.tenant}` : '';
+  const embedSuffix = isEmbedded ? '?embed=1' : '';
   const [ocrText, setOcrText] = useState(page.ocr?.data || '');
   const [translationText, setTranslationText] = useState(page.translation?.data || '');
   const [summaryText, setSummaryText] = useState(page.summary?.data || '');
@@ -557,12 +567,15 @@ export default function TranslationEditor({
   };
 
   // URLs for current page at different quality tiers
-  const pageFullUrl = getImageUrl(page, 'full');       // For magnifier (2400px, cropped if split)
-  const pageDisplayUrl = getImageUrl(page, 'display'); // For main view (1200px)
-  // Native-res: the original archived image for magnifier zoom + fullscreen
+  const pageProxyUrl = getImageUrl(page, 'full');       // 2400px proxy (cropped if split)
+  const pageDisplayUrl = getImageUrl(page, 'display'); // 1200px for initial display
+  // Native-res: the original archived image — best available quality
   const pageNativeUrl = page.split_from_spread
-    ? pageFullUrl // split pages: cropped image IS the full res
-    : (isUsableImageUrl(page.archived_photo) ? page.archived_photo! : pageFullUrl);
+    ? pageProxyUrl // split pages: cropped image IS the full res
+    : (isUsableImageUrl(page.archived_photo) ? page.archived_photo! : pageProxyUrl);
+  // For the main view, use native-res if available (progressive: display → native)
+  // This makes spreads load the full 5000px+ image instead of stopping at 2400px
+  const pageFullUrl = pageNativeUrl || pageProxyUrl;
 
   // CDLI tablet witnesses (for text-only ETCSL books)
   const witnessesWithPhotos = useMemo(
@@ -860,9 +873,10 @@ export default function TranslationEditor({
           {/* Row 1: Back + Title ... Chapter Nav ... Page Navigator */}
           <div className="flex items-center justify-between gap-2 relative">
             <div className="flex items-center gap-2 sm:gap-3 min-w-0 flex-1">
-              <Logo mini />
-              <span className="text-sm shrink-0" style={{ color: 'var(--text-muted)' }} aria-hidden="true">/</span>
-              <a href={`${tenantPrefix}/book/${book.id}`} className="min-w-0 hover:opacity-70 transition-opacity">
+              {/* Hide Source Library branding in embed mode */}
+              {!isEmbedded && <Logo mini />}
+              {!isEmbedded && <span className="text-sm shrink-0" style={{ color: 'var(--text-muted)' }} aria-hidden="true">/</span>}
+              <a href={`${tenantPrefix}/book/${book.id}${embedSuffix}`} className="min-w-0 hover:opacity-70 transition-opacity">
                 <h1 className="text-sm sm:text-base font-medium truncate" style={{ color: 'var(--text-primary)' }}>
                   {book.display_title || book.title}
                 </h1>
@@ -1043,7 +1057,7 @@ export default function TranslationEditor({
 
 
               {/* Mode Toggle - admin and inner circle */}
-              <AuthCheck role="inner_circle">
+              <AuthCheck role="inner_circle" fallback={<div className="w-[68px] sm:w-[140px]" />}>
                 <div className="flex items-center rounded-lg p-0.5 sm:p-1" style={{ background: 'var(--bg-warm)' }}>
                   <button
                     onClick={() => setMode('read')}
@@ -1659,7 +1673,7 @@ export default function TranslationEditor({
             <span>Produced by <a href="https://sourcelibrary.org" className="hover:underline" style={{ color: 'var(--text-muted)' }}>SourceLibrary.org</a> in Amsterdam, 2026</span>
           </div>
           <div className="px-4 py-1.5" style={{ borderTop: '1px solid var(--border-light)' }}>
-            <BookSearchBar bookId={book.id} tenantPrefix={tenantPrefix} />
+            <BookSearchBar bookId={book.id} tenantPrefix={tenantPrefix} isEmbedded={isEmbedded} />
           </div>
         </div>
 
@@ -1685,9 +1699,10 @@ export default function TranslationEditor({
         {/* Row 1: Back, Title, Navigation */}
         <div className="flex items-center justify-between gap-2">
           <div className="flex items-center gap-2 sm:gap-4 min-w-0 flex-1">
-            <Logo mini />
-            <span className="text-sm shrink-0" style={{ color: 'var(--text-muted)' }} aria-hidden="true">/</span>
-            <a href={`${tenantPrefix}/book/${book.id}`} className="min-w-0 hover:opacity-70 transition-opacity">
+            {/* Hide Source Library branding in embed mode */}
+            {!isEmbedded && <Logo mini />}
+            {!isEmbedded && <span className="text-sm shrink-0" style={{ color: 'var(--text-muted)' }} aria-hidden="true">/</span>}
+            <a href={`${tenantPrefix}/book/${book.id}${embedSuffix}`} className="min-w-0 hover:opacity-70 transition-opacity">
               <h1 className="text-base sm:text-xl font-medium truncate" style={{ color: 'var(--text-primary)' }}>
                 {book.display_title || book.title}
               </h1>

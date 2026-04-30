@@ -211,8 +211,13 @@ export default function PageEditorClient({
   // Client-side navigation - update URL and current page
   const handleNavigate = useCallback((newPageId: string) => {
     setCurrentPageId(newPageId);
-    const vSuffix = pinnedVersion ? `?v=${encodeURIComponent(pinnedVersion)}` : '';
-    window.history.pushState(null, '', `${tenantPrefix}/book/${book.id}/page/${newPageId}${vSuffix}`);
+    // Build URL with any existing query params (embed=1, v=version)
+    const currentParams = new URLSearchParams(window.location.search);
+    const newParams = new URLSearchParams();
+    if (currentParams.get('embed') === '1') newParams.set('embed', '1');
+    if (pinnedVersion) newParams.set('v', pinnedVersion);
+    const suffix = newParams.toString() ? `?${newParams.toString()}` : '';
+    window.history.pushState(null, '', `${tenantPrefix}/book/${book.id}/page/${newPageId}${suffix}`);
     // On mobile (< lg breakpoint), scroll to the text panels instead of the top
     // so readers land on the content, not the image
     const isMobile = window.innerWidth < 1024;

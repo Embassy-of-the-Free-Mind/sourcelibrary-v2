@@ -1,5 +1,6 @@
 'use client';
 
+import { useEffect, useState } from 'react';
 import { useSession } from 'next-auth/react';
 import Link from 'next/link';
 
@@ -8,10 +9,19 @@ interface SignUpCTAProps {
 }
 
 export default function SignUpCTA({ variant = 'section' }: SignUpCTAProps) {
-  const { data: session, status } = useSession();
+  const { status } = useSession();
+  const [isEmbedded, setIsEmbedded] = useState(true); // Default to hidden until checked
 
-  // Don't show to authenticated users or while loading
-  if (status !== 'unauthenticated') return null;
+  useEffect(() => {
+    // Check if embedded (via param or iframe detection)
+    const inIframe = typeof window !== 'undefined' && window.self !== window.top;
+    const params = new URLSearchParams(window.location.search);
+    const embedParam = params.get('embed') === '1';
+    setIsEmbedded(embedParam || inIframe);
+  }, []);
+
+  // Don't show when embedded, authenticated, or while loading
+  if (isEmbedded || status !== 'unauthenticated') return null;
 
   // Inline variant — just a small nudge within a larger section
   if (variant === 'inline') {

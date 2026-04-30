@@ -1,9 +1,15 @@
 /**
- * Source Library Embed Script
+ * Source Library Embed Script v2
  *
  * Renders Source Library's actual UI (collections, book detail, page reader)
  * inside a full-screen iframe. No UI duplication — any changes to Source Library
  * automatically propagate to all embedded sites.
+ *
+ * History Management Strategy:
+ * - Browser owns the initial entry (index.html). We NEVER touch it.
+ * - Each iframe navigation (book, page) pushes exactly ONE new entry.
+ * - On popstate, we navigate the iframe to match the URL. No history writes.
+ * - sl-navigate from iframe only pushes when URL actually differs.
  *
  * Usage:
  *   <div id="sl-embed"></div>
@@ -20,7 +26,6 @@
  *   data-library     — library provider key to embed (e.g. "bph", "internet-archive")
  *   data-target      — id of the container div (required)
  *   data-top-offset  — top offset for fixed host nav (default: 0px)
- *   data-height      — optional fallback height override (legacy)
  *   data-scroll-mode — "page" (default, footer reachable) or "iframe" (locked host scroll)
  *   data-base-url    — override API/page base URL (default: https://sourcelibrary.org)
  *
@@ -33,7 +38,6 @@
   var script = document.currentScript ||
     (function () {
       var scripts = document.getElementsByTagName('script');
-      // Find the script by looking for our specific src pattern
       for (var i = scripts.length - 1; i >= 0; i--) {
         var src = scripts[i].src || '';
         if (src.indexOf('embed') !== -1 && src.indexOf('v1.js') !== -1) {
@@ -56,12 +60,34 @@
   var TENANT = script.getAttribute('data-library') || '';
   var TARGET_ID = script.getAttribute('data-target') || 'sl-embed';
   var TOP_OFFSET = script.getAttribute('data-top-offset') || '0px';
-  // var HEIGHT_OVERRIDE = script.getAttribute('data-height') || '';
   var SCROLL_MODE = (script.getAttribute('data-scroll-mode') || 'page').toLowerCase();
-
   if (!TENANT) {
     console.error('[SourceLibrary] data-library is required on the embed script tag.');
     return;
+  }
+
+  // --- Helpers ---
+  function getParam(key) {
+    try { return new URL(window.location.href).searchParams.get(key); }
+    catch (e) { return null; }
+  }
+
+  function makeNavKey(book, page) {
+    return (book || '') + '::' + (page || '');
+  }
+
+  function buildIframeSrc(book, page) {
+    var base = BASE_URL + '/';
+    if (book && page) {
+      return base + TENANT + '/book/' + encodeURIComponent(book) + '/page/' + encodeURIComponent(page) + '?embed=1';
+    }
+    if (book) {
+      return base + TENANT + '/book/' + encodeURIComponent(book) + '?embed=1';
+    }
+    if (COLLECTION) {
+      return base + 'collections/' + encodeURIComponent(COLLECTION) + '?embed=1';
+    }
+    return base + TENANT + '?view=books&embed=1';
   }
 
   // --- CSS ---
@@ -70,90 +96,40 @@
     var style = document.createElement('style');
     style.id = 'sl-embed-styles';
     style.textContent = [
-      // Keep iframe in normal document flow so footer remains below it.
       '#sl-iframe-wrap{position:relative;width:100%;overflow:hidden}',
       '#sl-iframe-wrap iframe{display:block;width:100%;height:100%;border:none;background:#faf8f4}',
-      // Iframe-only mode: lock host scroll to prevent nested iframe/page scrolling.
       'html.sl-embed-lock-scroll,body.sl-embed-lock-scroll{overflow:hidden!important;height:100%!important}',
     ].join('');
     document.head.appendChild(style);
   }
 
   function setHostScrollLocked(locked) {
-    var method = locked ? 'add' : 'remove';
-    document.documentElement.classList[method]('sl-embed-lock-scroll');
-    if (document.body) document.body.classList[method]('sl-embed-lock-scroll');
+    var m = locked ? 'add' : 'remove';
+    document.documentElement.classList[m]('sl-embed-lock-scroll');
+    if (document.body) document.body.classList[m]('sl-embed-lock-scroll');
   }
 
-  function getViewportHeightBelowOffset() {
+  function getViewportHeight() {
     var n = parseFloat(TOP_OFFSET);
     var unit = (TOP_OFFSET || '').replace(String(n), '').trim() || 'px';
-
-    // Best-case: pixel offset can be subtracted from viewport reliably.
     if (!isNaN(n) && unit === 'px') {
-      var px = Math.max(0, Math.round(window.innerHeight - n));
-      return px + 'px';
+      return Math.max(0, Math.round(window.innerHeight - n)) + 'px';
     }
-
-    // Fallback for non-px units (e.g. rem): delegate to CSS calc.
     return 'calc(100vh - ' + TOP_OFFSET + ')';
   }
 
-  function getViewportHeightBelowOffsetPx() {
+  function getViewportHeightPx() {
     var n = parseFloat(TOP_OFFSET);
     var unit = (TOP_OFFSET || '').replace(String(n), '').trim() || 'px';
     if (isNaN(n) || unit !== 'px') return null;
     return Math.max(0, Math.round(window.innerHeight - n));
   }
 
-  function getTopOffsetPx() {
+  function getOffsetPx() {
     var n = parseFloat(TOP_OFFSET);
     var unit = (TOP_OFFSET || '').replace(String(n), '').trim() || 'px';
     if (isNaN(n) || unit !== 'px') return 0;
     return Math.max(0, Math.round(n));
-  }
-
-  // --- URL state helpers ---
-  // Keeps the host page URL in sync with what's loaded inside the iframe,
-  // so links are shareable and the browser back button works.
-
-  function getURLParam(key) {
-    try {
-      return new URL(window.location.href).searchParams.get(key);
-    } catch (e) { return null; }
-  }
-
-  function setURLParams(params) {
-    try {
-      var url = new URL(window.location.href);
-      Object.keys(params).forEach(function (k) {
-        if (params[k] == null) {
-          url.searchParams.delete(k);
-        } else {
-          url.searchParams.set(k, params[k]);
-        }
-      });
-      window.history.pushState(params, '', url.toString());
-    } catch (e) {}
-  }
-
-  // Build the initial iframe src from URL params (for deep linking)
-  // Book paths are tenant-scoped: /{tenant}/book/*; collection paths are global: /collections/*
-  function buildInitialSrc() {
-    var book = getURLParam('book');
-    var page = getURLParam('page');
-
-    if (book && page) {
-      return BASE_URL + '/' + TENANT + '/book/' + encodeURIComponent(book) + '/page/' + encodeURIComponent(page);
-    }
-    if (book) {
-      return BASE_URL + '/' + TENANT + '/book/' + encodeURIComponent(book);
-    }
-    if (COLLECTION) {
-      return BASE_URL + '/collections/' + encodeURIComponent(COLLECTION);
-    }
-    // Default: tenant root (library home page)
-    return BASE_URL + '/' + TENANT;
   }
 
   // --- Render ---
@@ -163,28 +139,13 @@
     var wrap = document.createElement('div');
     wrap.id = 'sl-iframe-wrap';
     wrap.style.marginTop = TOP_OFFSET;
-    wrap.style.height = getViewportHeightBelowOffset();
+    wrap.style.height = getViewportHeight();
 
     var iframe = document.createElement('iframe');
     iframe.id = 'sl-embed-iframe';
-    iframe.src = buildInitialSrc();
+    iframe.src = buildIframeSrc(getParam('book'), getParam('page'));
     iframe.setAttribute('allowfullscreen', '');
     iframe.setAttribute('title', 'Source Library');
-
-    function resetToViewportBaseline() {
-      if (SCROLL_MODE === 'iframe') return;      
-      var baseline = getViewportHeightBelowOffset();
-      iframe.style.height = baseline;
-      wrap.style.height = baseline;
-    }
-
-    function scrollHostToEmbedTop() {
-      var wrapTop = wrap.getBoundingClientRect().top + window.pageYOffset;
-      var target = Math.max(0, Math.round(wrapTop - getTopOffsetPx()));
-      window.scrollTo(0, target);
-    }
-
-    var lastNavKey = String(getURLParam('book') || '') + '::' + String(getURLParam('page') || '');
 
     if (SCROLL_MODE === 'iframe') {
       wrap.style.overscrollBehaviorY = 'contain';
@@ -193,64 +154,140 @@
 
     wrap.appendChild(iframe);
     container.appendChild(wrap);
-
-    // Safety: always clear any stale lock from prior script versions/renders.
     setHostScrollLocked(SCROLL_MODE === 'iframe');
 
-    // If the iframe performs a document navigation, drop stale prior height immediately.
-    iframe.addEventListener('load', function () {
-      resetToViewportBaseline();
-    });
+    // --- State ---
+    // What the host URL currently has (from browser perspective)
+    var hostNavKey = makeNavKey(getParam('book'), getParam('page'));
+    // What the iframe is currently showing (tracked via sl-navigate)
+    var frameNavKey = hostNavKey;
+    // Guard: true while handling popstate to prevent sl-navigate from pushing
+    var isPopstateNav = false;
+    // For forced reloads when client nav fails
+    var reloadCounter = 0;
+    // Track expected history length to detect iframe full navigations
+    var expectedHistoryLength = history.length;
 
-    // --- postMessage listener ---
-    // Source Library pages send navigation events so we can keep
-    // the host page URL in sync (shareability + back button).
+    function resetHeight() {
+      if (SCROLL_MODE === 'iframe') return;
+      var h = getViewportHeight();
+      iframe.style.height = h;
+      wrap.style.height = h;
+    }
+
+    function scrollToTop() {
+      var top = wrap.getBoundingClientRect().top + window.pageYOffset;
+      window.scrollTo(0, Math.max(0, Math.round(top - getOffsetPx())));
+    }
+
+    iframe.addEventListener('load', resetHeight);
+
+    // --- Handle messages from iframe ---
     window.addEventListener('message', function (event) {
-      // Only accept messages from the Source Library origin
       if (event.origin !== BASE_URL) return;
       if (event.source !== iframe.contentWindow) return;
-
       var data = event.data;
       if (!data || !data.type) return;
 
-      // Page mode: auto-grow iframe to content height so host page has one scrollbar.
-      if (SCROLL_MODE !== 'iframe' && data.type === 'sl-resize') {
-        var nextHeight = parseInt(data.height, 10);
-        if (!isNaN(nextHeight) && nextHeight > 0) {
-          var minPx = getViewportHeightBelowOffsetPx();
-          var applied = minPx ? Math.max(minPx, nextHeight) : nextHeight;
-          var px = applied + 'px';
+      // Resize
+      if (data.type === 'sl-resize' && SCROLL_MODE !== 'iframe') {
+        var h = parseInt(data.height, 10);
+        if (!isNaN(h) && h > 0) {
+          var min = getViewportHeightPx();
+          var px = (min ? Math.max(min, h) : h) + 'px';
           iframe.style.height = px;
           wrap.style.height = px;
         }
         return;
       }
 
+      // Navigation report from iframe
       if (data.type !== 'sl-navigate') return;
 
-      // Client-side route transitions can keep previous page height briefly.
-      // Reset to viewport baseline, then let sl-resize grow/shrink to final content.
-      resetToViewportBaseline();
+      var newNavKey = makeNavKey(data.book, data.page);
+      var historyGrewUnexpectedly = history.length > expectedHistoryLength;
 
-      var nextNavKey = String(data.book || '') + '::' + String(data.page || '');
-      if (nextNavKey !== lastNavKey) {
-        scrollHostToEmbedTop();
-        lastNavKey = nextNavKey;
+      // Update frame tracking
+      frameNavKey = newNavKey;
+      resetHeight();
+
+      // If this was triggered by popstate, we're done - don't push history
+      if (isPopstateNav) {
+        isPopstateNav = false;
+        return;
       }
 
-      // Update host URL params without reloading the page
-      setURLParams({
-        book: data.book || null,
-        page: data.page || null,
-      });
+      // Only push if host URL differs from what iframe is now showing
+      if (newNavKey === hostNavKey) {
+        return;
+      }
+
+      // Scroll to top on navigation
+      scrollToTop();
+
+      // Build the new URL
+      var url = new URL(window.location.href);
+      url.searchParams.delete('book');
+      url.searchParams.delete('page');
+      if (data.book) url.searchParams.set('book', data.book);
+      if (data.page) url.searchParams.set('page', data.page);
+
+      // If history grew unexpectedly (iframe did full navigation), use replaceState
+      // instead of pushState to avoid duplicate entries
+      if (historyGrewUnexpectedly) {
+        window.history.replaceState({ book: data.book || null, page: data.page || null }, '', url.toString());
+        hostNavKey = newNavKey;
+      } else {
+        window.history.pushState({ book: data.book || null, page: data.page || null }, '', url.toString());
+        hostNavKey = newNavKey;
+        expectedHistoryLength = history.length;
+      }
     });
 
-    // Browser back/forward: update iframe src to match URL params
+    // --- Handle browser back/forward ---
     window.addEventListener('popstate', function () {
-      var src = buildInitialSrc();
-      if (iframe.src !== src) {
-        iframe.src = src;
+      var book = getParam('book');
+      var page = getParam('page');
+      var targetNavKey = makeNavKey(book, page);
+
+      // Update host tracking
+      hostNavKey = targetNavKey;
+      // Sync expected length - popstate doesn't change length, but resets our expectation
+      expectedHistoryLength = history.length;
+
+      // If iframe already shows this, nothing to do
+      if (targetNavKey === frameNavKey) {
+        return;
       }
+
+      // Set guard so sl-navigate doesn't push when iframe confirms navigation
+      isPopstateNav = true;
+
+      // Scroll to top
+      scrollToTop();
+
+      // Try fast client-side navigation first
+      var src = buildIframeSrc(book, page);
+
+      try {
+        iframe.contentWindow.postMessage({
+          type: 'sl-host-navigate',
+          tenant: TENANT,
+          book: book || null,
+          page: page || null,
+        }, BASE_URL);
+      } catch (e) { /* cross-origin, fallback handles it */ }
+
+      // Fallback: if iframe doesn't respond in 400ms, force reload
+      setTimeout(function () {
+        if (frameNavKey === targetNavKey) {
+          return;
+        }
+        reloadCounter++;
+        iframe.src = src + (src.indexOf('?') === -1 ? '?' : '&') + '_r=' + reloadCounter;
+        frameNavKey = targetNavKey;
+        isPopstateNav = false;
+      }, 400);
     });
   }
 

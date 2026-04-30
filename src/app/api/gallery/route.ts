@@ -99,9 +99,8 @@ export async function GET(request: NextRequest) {
     if (!tenantId && tenantCtx.slug) {
       tenantId = await resolveTenantId(tenantCtx.slug);
     }
-    if (!tenantId) {
-      return NextResponse.json({ error: 'No tenant context' }, { status: 400 });
-    }
+    // Gallery is a global view — skip tenant filter when no context (e.g. /gallery root path)
+    const tenantFilter = tenantId ? { tenantId } : {};
 
     // Visual search mode — uses CLIP image embeddings (text→image)
     const visual = searchParams.get('visual') === 'true';
