@@ -358,7 +358,7 @@ export default function CollectionAllBooks({
             return (
               <Link
                 key={book.id}
-                href={`/book/${book.slug || book.id}`}
+                href={`/artwork/${book.slug || book.id}`}
                 className="group relative aspect-[3/4] rounded-lg overflow-hidden bg-stone-100"
               >
                 {thumb ? (
