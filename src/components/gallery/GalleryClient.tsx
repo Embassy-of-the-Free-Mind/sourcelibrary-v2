@@ -626,7 +626,7 @@ export default function GalleryClient({ initialData, initialCollections, bookCol
               <div className="mb-4">
                 <h2 className="text-2xl font-serif text-stone-800 mb-1">Browse Images</h2>
                 <p className="text-stone-500 text-base">
-                  {data.total.toLocaleString()} illustrations from rare alchemical, Hermetic, and philosophical manuscripts.
+                  {data.total.toLocaleString()} illustrations from rare historical manuscripts.
                 </p>
               </div>
             )}
@@ -727,11 +727,6 @@ function GalleryCard({ item, priority = false, tenantPrefix = '' }: { item: Gall
           )}
         </div>
 
-        {item.type && (
-          <span className="absolute top-1.5 right-1.5 px-1.5 py-0.5 rounded text-[10px] bg-black/60 text-white capitalize">
-            {item.type}
-          </span>
-        )}
       </Link>
 
       <div className="absolute top-1.5 left-1.5 z-10">

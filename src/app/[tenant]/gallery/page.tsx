@@ -216,8 +216,8 @@ async function fetchFeaturedCollections(tenantId: string | null) {
           const gImg = galleryMap.get(col.cover_image_id as string);
           if (gImg) {
             coverImage = {
-              url: (gImg as { extracted_url?: string; thumbnail_url?: string }).extracted_url
-                || (gImg as { thumbnail_url?: string }).thumbnail_url || '',
+              url: (gImg as { thumbnail_url?: string }).thumbnail_url
+                || (gImg as { extracted_url?: string }).extracted_url || '',
               description: (gImg as { description?: string }).description || col.title as string,
             };
           }

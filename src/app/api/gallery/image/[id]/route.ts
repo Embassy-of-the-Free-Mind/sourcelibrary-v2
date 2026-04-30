@@ -60,10 +60,7 @@ export async function GET(
       tenantId = await resolveTenantId(tenantSlug);
     }
     
-    if (!tenantId) {
-      return NextResponse.json({ error: 'No tenant context' }, { status: 400 });
-    }
-    
+    // Gallery is global — skip tenant filter when no context
     const tenantPageFilter = tenantId ? { tenantId } : {};
     const tenantGalleryFilter = tenantId ? { tenantId } : {};
     const tenantPath = (path: string) => (tenantSlug ? `/${tenantSlug}${path}` : path);
@@ -386,9 +383,6 @@ export async function PATCH(
     let tenantId = tenantCtx.id;
     if (!tenantId && tenantSlug) {
       tenantId = await resolveTenantId(tenantSlug);
-    }
-    if (!tenantId) {
-      return NextResponse.json({ error: 'No tenant context' }, { status: 400 });
     }
     const tenantPageFilter = tenantId ? { tenantId } : {};
     const tenantGalleryFilter = tenantId ? { tenantId } : {};
