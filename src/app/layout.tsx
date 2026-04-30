@@ -1,4 +1,5 @@
 import type { Metadata } from "next";
+import { Suspense } from "react";
 import "./globals.css";
 import ConditionalFooter from "@/components/layout/ConditionalFooter";
 import Providers from "@/components/providers/Providers";
@@ -102,7 +103,7 @@ export default async function RootLayout({
         <Providers>
           <EmbedLinkInterceptor />
           <EmbedHostNavigationListener />
-          <EmbedHistoryPatch />
+          <Suspense><EmbedHistoryPatch /></Suspense>
           <div id="main-content" className="flex-1">
             {children}
           </div>
