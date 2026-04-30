@@ -97,11 +97,12 @@ export default function ImageWithMagnifier({
   }, []);
 
   useEffect(() => {
-    // Reset loaded state when src changes
+    // Reset loaded state only on page navigation (src change), not on progressive upgrade
     setIsLoaded(false);
     setFullImageLoaded(false);
     setFullImageDimensions({ width: 0, height: 0 });
     setUseFallback(false);
+    setHiResDisplayReady(false);
 
     // Check if image is already cached/loaded (fixes race condition on initial render)
     // Use a small timeout to let the img element mount first
@@ -114,7 +115,7 @@ export default function ImageWithMagnifier({
     }, 50);
 
     return () => clearTimeout(checkLoaded);
-  }, [src, displaySrc]);
+  }, [src]); // Only reset on src change, not displaySrc — progressive upgrade shouldn't flash
 
   // Calculate rendered image content size (accounting for object-contain)
   const getRenderedImageSize = useCallback(() => {
