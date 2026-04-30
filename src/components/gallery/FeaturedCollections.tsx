@@ -60,6 +60,7 @@ export default function FeaturedCollections({ initialCollections }: FeaturedColl
                 fill
                 className="object-cover group-hover:scale-105 transition-transform duration-300"
                 sizes="(max-width: 640px) 100vw, (max-width: 1024px) 50vw, 33vw"
+                unoptimized
                 priority={i < 6}
                 loading={i < 6 ? 'eager' : 'lazy'}
                 onError={(e) => { (e.target as HTMLImageElement).style.display = 'none'; }}
