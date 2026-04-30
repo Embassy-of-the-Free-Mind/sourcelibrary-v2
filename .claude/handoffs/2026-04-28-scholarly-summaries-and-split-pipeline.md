@@ -62,8 +62,31 @@
 - 3 PRs merged (#1397, #1401, #1404)
 - tmp scripts not committed (by convention)
 
+## PRs shipped
+- #1397: Scholarly summary prompts (merged)
+- #1401: Filter archived-spread pages — JS only (merged, superseded by #1441)
+- #1404: Full-res images in fullscreen viewer (merged)
+- #1441: Filter archived spreads in MongoDB query, not JS — fixes limit(110) consuming all archived pages (merged)
+- #1465: Image dimensions + download link in page reader (merged)
+
+## Lessons learned (the hard way)
+- **tenantId**: split pages must copy book's `tenantId`, not hardcode "default". BPH tenant is `bce03f71-c18d-4460-b8ad-224c817f9aa0`.
+- **_id must match id**: normal pages have `_id === id`. ObjectId, not random hex.
+- **Thumbnails**: must generate real 150px thumbs, not copy display_photo. Page grid is unusable without them.
+- **Cover**: split script must update book thumbnail to a split page, not leave old spread.
+- **Revalidation**: `/bph/book/...` tenant paths need separate revalidation via `/api/admin/revalidate` with explicit paths. The `revalidate-book` endpoint only revalidates non-tenant paths.
+- **Query limit + sort**: `limit(110).sort({page_number:1})` with archived pages (negative numbers) fills the limit before any visible pages. Must filter in query, not JS.
+- **display_photo quality**: 1200px/q80 resize is too lossy for manuscripts. For split pages, use the full-res crop as display_photo.
+
+## Current state
+- **2 books split**: Kabbalah (156p) + German (298p). Both have thumbnails, covers, correct tenantId.
+- **V4 gutter detection**: Otsu binarization + vertical projection profile. Works well on clean books, needs Gemini fallback for hard cases.
+- **V4 audit complete**: 364 clean, 461 warnings, 5 single. Visual review pages generated.
+- **Split script** (`scripts/tmp-split-book-v2.mjs`): updated with V4 detection, 3% overlap, proper page schema (tenantId, thumbnails, dimensions, _id=id).
+
 ## Next steps
-1. Check audit results when complete
-2. Build Phase 3 visual spot-check HTML page
-3. Start batch splitting (Phase 4) after sign-off
-4. Resume scholarly brief backfill
+1. Run the 2 remaining pilot books (Latin, French) with updated script — verify on site
+2. Batch the 364 clean books after pilot verification
+3. Improve detection for 461 warning books (Gemini fallback)
+4. Resume scholarly brief backfill (29/2353 done)
+5. Queue split books for OCR/translation

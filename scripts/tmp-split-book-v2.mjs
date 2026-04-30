@@ -271,8 +271,8 @@ async function main() {
     const now = new Date();
     const basePage = {
       book_id: BOOK_ID,
-      tenant_id: 'default',
-      tenantId: 'default',
+      tenant_id: book.tenant_id || 'default',
+      tenantId: book.tenantId || 'default',
       created_at: now,
       updated_at: now,
       split_from_spread: page.id,
