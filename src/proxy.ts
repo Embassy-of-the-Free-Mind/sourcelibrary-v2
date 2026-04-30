@@ -12,6 +12,9 @@ const NON_TENANT_PATHS = new Set([
   'founding-donors', 'libraries', 'blog', '_archived', '.well-known',
   // Global navigation roots
   'gallery', 'browse', 'explore', 'librarian', 'podcast', 'search',
+  // User pages (standalone, not tenant-scoped)
+  'favorites', 'reading-history', 'timeline', 'topics', 'languages',
+  'categories', 'catalog', 'artwork', 'artist',
   // Legacy root paths (pages moved to /[tenant]/*) — kept here to 404 cleanly
   'book', 'collections',
 ]);
