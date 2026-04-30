@@ -29,8 +29,8 @@ export default function TermsPage() {
         </p>
 
         <p className="text-sm text-muted">
-          <strong>Effective date:</strong> March 15, 2026
-          &middot; Operated by the Embassy of the Free Mind, Amsterdam.
+          <strong>Effective date:</strong> April 30, 2026
+          &middot; Operated by the Embassy of the Free Mind, Amsterdam, the Netherlands.
         </p>
 
         {/* ── Tier 1: Original Texts & Page Images ── */}
@@ -178,6 +178,63 @@ export default function TermsPage() {
           </p>
         </section>
 
+        {/* ── Automated Access & Crawling ── */}
+        <section className="bg-white rounded-xl p-8 border border-border-light">
+          <h2 className="text-2xl text-primary mb-4">
+            Automated Access & Crawling
+          </h2>
+          <p className="text-secondary mb-4">
+            Automated access to Source Library is governed by our{' '}
+            <a href="https://sourcelibrary.org/robots.txt" className="text-accent-rust hover:underline">robots.txt</a>{' '}
+            file, which constitutes a binding directive under these terms. Crawlers that
+            access pages or resources disallowed by robots.txt are accessing the service
+            without authorization.
+          </p>
+          <div className="bg-cream rounded-lg p-6 mb-4">
+            <p className="text-secondary font-medium mb-2">Automated access rules:</p>
+            <ul className="text-secondary space-y-2 list-disc list-inside">
+              <li><strong>Respect robots.txt</strong> &mdash; all automated agents must comply with
+                our robots.txt directives. Disallowed paths are off-limits.</li>
+              <li><strong>Use the API</strong> &mdash; our{' '}
+                <Link href="/developers" className="text-accent-rust hover:underline">REST API and MCP server</Link>
+                {' '}provide structured, efficient access. Do not scrape the website when an API is available.</li>
+              <li><strong>No bulk downloading</strong> &mdash; systematic downloading of page images,
+                artwork, or full-text content via the website (as opposed to the API) is prohibited.</li>
+              <li><strong>Rate limits</strong> &mdash; automated access is subject to rate limiting.
+                Exceeding reasonable limits will result in blocking.</li>
+            </ul>
+          </div>
+          <p className="text-secondary">
+            Violation of these rules may result in permanent blocking and legal action
+            under applicable law, including the EU Database Directive (96/9/EC).
+          </p>
+        </section>
+
+        {/* ── Database Rights ── */}
+        <section className="bg-white rounded-xl p-8 border border-border-light">
+          <h2 className="text-2xl text-primary mb-4">
+            Database Rights
+          </h2>
+          <p className="text-secondary mb-4">
+            Source Library&rsquo;s curated collection &mdash; including its selection, organization,
+            metadata, translations, transcriptions, and image descriptions &mdash; constitutes a
+            database protected under the{' '}
+            <strong>EU Database Directive (96/9/EC)</strong> and Dutch copyright law
+            (<em>Databankenwet</em>). The substantial investment in obtaining, verifying,
+            and presenting these 17,000+ historical texts is protected by sui generis
+            database rights.
+          </p>
+          <p className="text-secondary mb-4">
+            Extraction or re-utilization of a substantial part of the database contents
+            without authorization is prohibited. This includes systematic crawling that
+            captures a significant portion of the collection.
+          </p>
+          <p className="text-secondary">
+            Individual use, research, and API-based access remain freely available under
+            the licenses described above.
+          </p>
+        </section>
+
         {/* ── Acceptable Use ── */}
         <section>
           <h2 className="text-xl text-primary mb-4">
@@ -188,6 +245,8 @@ export default function TermsPage() {
           </p>
           <ul className="text-secondary space-y-1 list-disc list-inside">
             <li>Scrape the website at scale when an API is available</li>
+            <li>Access pages or resources disallowed by robots.txt</li>
+            <li>Bulk download page images, artwork, or full-text content via the website</li>
             <li>Misrepresent AI-generated translations as human translations</li>
             <li>Remove attribution from redistributed content</li>
             <li>Interfere with the service&rsquo;s operation</li>
@@ -214,6 +273,17 @@ export default function TermsPage() {
           <p className="text-secondary">
             We may update these terms from time to time.
             Continued use of the service after changes constitutes acceptance.
+          </p>
+        </section>
+
+        <section>
+          <h2 className="text-xl text-primary mb-4">
+            Governing Law
+          </h2>
+          <p className="text-secondary">
+            These terms are governed by the laws of the Netherlands. Any disputes arising
+            from or relating to these terms or your use of the service shall be subject to
+            the exclusive jurisdiction of the courts of Amsterdam, the Netherlands.
           </p>
         </section>
 
