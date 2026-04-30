@@ -66,6 +66,30 @@ export default function robots(): MetadataRoute.Robots {
         allow: '/blog/',
         disallow: '/',
       },
+      {
+        userAgent: 'Google-Extended',
+        allow: '/blog/',
+        disallow: '/',
+      },
+      {
+        userAgent: 'PerplexityBot',
+        allow: '/blog/',
+        disallow: '/',
+      },
+      {
+        userAgent: 'Amazonbot',
+        allow: '/blog/',
+        disallow: '/',
+      },
+      {
+        userAgent: 'ClaudeBot',
+        disallow: '/',
+      },
+      {
+        userAgent: 'cohere-ai',
+        allow: '/blog/',
+        disallow: '/',
+      },
 
       // AI assistants: welcome to use the API and llms.txt
       // GPTBot, Claude-Web, etc. — access the structured API
@@ -81,7 +105,6 @@ export default function robots(): MetadataRoute.Robots {
       },
       {
         userAgent: 'Anthropic-AI',
-        allow: ['/blog/', '/api/search', '/api/books/', '/api/mcp', '/llms.txt', '/terms', '/developers'],
         disallow: '/',
       },
     ],

@@ -1,0 +1,8 @@
+# Source Library Security Policy
+# https://securitytxt.org/
+
+Contact: mailto:j.d.lomas@tudelft.nl
+Expires: 2027-04-30T00:00:00.000Z
+Preferred-Languages: en
+Canonical: https://sourcelibrary.org/.well-known/security.txt
+Policy: https://sourcelibrary.org/terms
