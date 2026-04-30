@@ -945,7 +945,7 @@ export default async function CollectionDetailPage({ params, provider }: Props &
                 return (
                   <Link
                     key={art.id}
-                    href={`/book/${art.slug || art.id}`}
+                    href={`/artwork/${art.slug || art.id}`}
                     className="group block"
                   >
                     <div className="rounded-lg border border-border-light hover:border-accent-rust/40 hover:shadow-lg transition-[border-color,box-shadow] overflow-hidden bg-white">
