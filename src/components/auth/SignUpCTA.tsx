@@ -2,7 +2,6 @@
 
 import { useEffect, useState } from 'react';
 import { useSession } from 'next-auth/react';
-import { useSearchParams } from 'next/navigation';
 import Link from 'next/link';
 
 interface SignUpCTAProps {
@@ -11,15 +10,15 @@ interface SignUpCTAProps {
 
 export default function SignUpCTA({ variant = 'section' }: SignUpCTAProps) {
   const { status } = useSession();
-  const searchParams = useSearchParams();
-  const embedParam = searchParams.get('embed') === '1';
   const [isEmbedded, setIsEmbedded] = useState(true); // Default to hidden until checked
 
   useEffect(() => {
     // Check if embedded (via param or iframe detection)
     const inIframe = typeof window !== 'undefined' && window.self !== window.top;
+    const params = new URLSearchParams(window.location.search);
+    const embedParam = params.get('embed') === '1';
     setIsEmbedded(embedParam || inIframe);
-  }, [embedParam]);
+  }, []);
 
   // Don't show when embedded, authenticated, or while loading
   if (isEmbedded || status !== 'unauthenticated') return null;
