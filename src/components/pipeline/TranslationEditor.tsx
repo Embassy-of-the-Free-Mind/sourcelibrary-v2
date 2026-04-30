@@ -567,12 +567,15 @@ export default function TranslationEditor({
   };
 
   // URLs for current page at different quality tiers
-  const pageFullUrl = getImageUrl(page, 'full');       // For magnifier (2400px, cropped if split)
-  const pageDisplayUrl = getImageUrl(page, 'display'); // For main view (1200px)
-  // Native-res: the original archived image for fullscreen viewing
+  const pageProxyUrl = getImageUrl(page, 'full');       // 2400px proxy (cropped if split)
+  const pageDisplayUrl = getImageUrl(page, 'display'); // 1200px for initial display
+  // Native-res: the original archived image — best available quality
   const pageNativeUrl = page.split_from_spread
-    ? pageFullUrl // split pages: cropped image IS the full res
-    : (isUsableImageUrl(page.archived_photo) ? page.archived_photo! : pageFullUrl);
+    ? pageProxyUrl // split pages: cropped image IS the full res
+    : (isUsableImageUrl(page.archived_photo) ? page.archived_photo! : pageProxyUrl);
+  // For the main view, use native-res if available (progressive: display → native)
+  // This makes spreads load the full 5000px+ image instead of stopping at 2400px
+  const pageFullUrl = pageNativeUrl || pageProxyUrl;
 
   // CDLI tablet witnesses (for text-only ETCSL books)
   const witnessesWithPhotos = useMemo(
