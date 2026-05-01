@@ -153,12 +153,13 @@ async function getEpisode(threadId: string): Promise<EpisodeData | null> {
         const match = allGalleryImages.find(g =>
           g.book_id === f.source.bookId &&
           pageNumMap.get(g.page_id) === f.source.pageNumber &&
-          g.gallery_quality >= 0.7 &&
+          g.gallery_quality >= 0.75 &&
           (g.thumbnail_url || g.image_url)
         );
         if (match) {
+          // Use full-page image for evidence (displayed large), not small cropped thumb
           image = {
-            url: match.thumbnail_url || match.image_url,
+            url: match.image_url || match.thumbnail_url,
             description: match.description || '',
             quality: match.gallery_quality,
           };
