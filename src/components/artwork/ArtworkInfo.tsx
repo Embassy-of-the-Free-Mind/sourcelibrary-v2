@@ -113,6 +113,7 @@ export default function ArtworkInfo({ book, collections, prevWork, nextWork, rel
           isLandscape={isLandscape}
           prevWork={prevWork}
           nextWork={nextWork}
+          institution={holdingMuseum}
         />
       )}
 
