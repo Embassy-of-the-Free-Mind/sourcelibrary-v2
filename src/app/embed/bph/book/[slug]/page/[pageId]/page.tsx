@@ -2,7 +2,7 @@ import { notFound } from 'next/navigation';
 import { getReadDb } from '@/lib/mongodb';
 import { findBookByIdOrSlug } from '@/lib/book-lookup';
 import type { Book, Page } from '@/lib/types';
-import PageEditorClient from '@/app/[tenant]/book/[id]/page/[pageId]/PageEditorClient';
+import PageEditorClient from '@/components/book/PageEditorClient';
 import EmbedNavigationReporter from '@/components/embed/EmbedNavigationReporter';
 
 export const revalidate = 86400;
