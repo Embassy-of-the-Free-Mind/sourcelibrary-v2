@@ -114,6 +114,10 @@ function extractMetadata(text: string): { cleanText: string; metadata: Extracted
     return '';
   });
 
+  // Strip scan-quality and columns tags (metadata only, not displayed)
+  result = result.replace(/<scan-quality>([\s\S]*?)<\/scan-quality>/gi, '');
+  result = result.replace(/<columns>([\s\S]*?)<\/columns>/gi, '');
+
   // Extract warning (OCR quality issues)
   result = result.replace(/<warning>([\s\S]*?)<\/warning>/gi, (_, warning) => {
     metadata.warning = warning.trim();
