@@ -56,7 +56,7 @@ export interface SemanticBookResult {
 export async function semanticBookSearch(
   query: string,
   limit: number = 20,
-  opts?: { language?: string; yearMin?: number; yearMax?: number; threshold?: number }
+  opts?: { language?: string; yearMin?: number; yearMax?: number; threshold?: number; tenantId?: string }
 ): Promise<SemanticBookResult[]> {
   const queryEmbedding = await getQueryEmbedding(query);
   if (!queryEmbedding) return [];
@@ -68,6 +68,7 @@ export async function semanticBookSearch(
     filter_language: opts?.language ?? null,
     filter_year_min: opts?.yearMin ?? null,
     filter_year_max: opts?.yearMax ?? null,
+    filter_tenant_id: opts?.tenantId ?? null,
   });
 
   if (error) {
@@ -201,6 +202,7 @@ export async function semanticArtworkSearch(
 export async function semanticPageSearchGlobal(
   query: string,
   limit: number = 15,
+  tenantId?: string,
 ): Promise<SemanticPageResult[]> {
   const queryEmbedding = await getQueryEmbedding(query);
   if (!queryEmbedding) return [];
@@ -209,6 +211,7 @@ export async function semanticPageSearchGlobal(
     query_embedding: JSON.stringify(queryEmbedding),
     match_threshold: 0.3,
     match_count: limit,
+    filter_tenant_id: tenantId ?? null,
   });
 
   if (error) {

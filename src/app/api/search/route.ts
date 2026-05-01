@@ -273,6 +273,7 @@ export async function GET(request: NextRequest) {
         try {
           const books = await semanticBookSearch(query, MAX_PAGE_RESULTS, {
             language: language || undefined,
+            tenantId: tenantId || undefined,
           });
           return books.map(b => ({
             page_id: '',
@@ -296,7 +297,7 @@ export async function GET(request: NextRequest) {
       (async () => {
         if (bookId || !searchContent) return [];
         try {
-          return await semanticPageSearchGlobal(query, 15);
+          return await semanticPageSearchGlobal(query, 15, tenantId);
         } catch {
           return [];
         }

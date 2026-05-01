@@ -162,7 +162,7 @@ export async function GET(request: NextRequest) {
       withTimeout(searchVisual(query, galleryLimit), emptyGallery, 'visual', 5000),
       // Semantic search: book-level discovery via book_embeddings (HNSW, ~17K rows)
       withTimeout(
-        semanticBookSearch(query, 12)
+        semanticBookSearch(query, 12, { tenantId: tenantContext.id || undefined })
           .then(books => {
             const results = books.map(b => {
               // Extract clean summary (strip metadata lines like "Topics:", "People:", etc.)

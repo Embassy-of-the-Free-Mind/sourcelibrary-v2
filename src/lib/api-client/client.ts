@@ -1,5 +1,26 @@
 import axios, { AxiosError, AxiosInstance } from 'axios';
 
+// Global routes that are not tenant slugs; keep in sync with proxy routing rules.
+const NON_TENANT_SEGMENTS = new Set([
+  'platform', 'auth', 'api', '_next', 'account', 'about', 'privacy',
+  'terms', 'press-release', 'brand', 'roadmap', 'feedback', 'status',
+  'support', 'unauthorized', 'design-options', 'experiments',
+  'ficino-society', 'contribute', 'census', 'oauth', 'developers',
+  'founding-donors', 'libraries', 'blog', '_archived', '.well-known',
+  'gallery', 'browse', 'explore', 'librarian', 'podcast', 'search',
+  'favorites', 'reading-history', 'timeline', 'topics', 'languages',
+  'categories', 'catalog', 'artwork', 'artist', 'book', 'collections',
+  'author', 'work', 'connect', 'data', 'read', 'research', 'embed', 'shwep',
+]);
+
+function getTenantSlugFromPathname(pathname: string): string | null {
+  const slug = pathname.split('/')[1] || '';
+  if (!slug) return null;
+  if (!/^[a-z0-9-]+$/.test(slug)) return null;
+  if (NON_TENANT_SEGMENTS.has(slug)) return null;
+  return slug;
+}
+
 // Create axios instance with defaults
 export const apiClient: AxiosInstance = axios.create({
   baseURL: process.env.NEXT_PUBLIC_API_URL || '',
@@ -25,10 +46,11 @@ apiClient.interceptors.request.use(
       config.headers['X-Visitor-ID'] = visitorId;
     }
 
-    // Add tenant slug from current page URL (e.g. /bph/search → 'bph')
+    // Add tenant slug from current page URL (e.g. /bph/search → 'bph').
+    // Skip known global root segments like /search, /gallery, etc.
     if (typeof window !== 'undefined') {
-      const slug = window.location.pathname.split('/')[1] || '';
-      if (slug && /^[a-z0-9-]+$/.test(slug)) {
+      const slug = getTenantSlugFromPathname(window.location.pathname);
+      if (slug) {
         config.headers['X-Tenant-Slug'] = slug;
       }
     }
@@ -88,10 +110,10 @@ export async function streamRequest(
     headers.set('X-Visitor-ID', visitorId);
   }
 
-  // Add tenant slug from current page URL
+  // Add tenant slug from current page URL (tenant routes only)
   if (typeof window !== 'undefined') {
-    const slug = window.location.pathname.split('/')[1] || '';
-    if (slug && /^[a-z0-9-]+$/.test(slug)) {
+    const slug = getTenantSlugFromPathname(window.location.pathname);
+    if (slug) {
       headers.set('X-Tenant-Slug', slug);
     }
   }
