@@ -14,7 +14,16 @@ const NON_TENANT_SEGMENTS = new Set([
 ]);
 
 function getTenantSlugFromPathname(pathname: string): string | null {
-  const slug = pathname.split('/')[1] || '';
+  const segments = pathname.split('/').filter(Boolean);
+  // Handle /embed/{tenant}/... paths (tenant subdomains rewrite to /embed/bph/...)
+  if (segments[0] === 'embed' && segments[1]) {
+    const embedTenant = segments[1];
+    if (/^[a-z0-9-]+$/.test(embedTenant) && !NON_TENANT_SEGMENTS.has(embedTenant)) {
+      return embedTenant;
+    }
+    return null;
+  }
+  const slug = segments[0] || '';
   if (!slug) return null;
   if (!/^[a-z0-9-]+$/.test(slug)) return null;
   if (NON_TENANT_SEGMENTS.has(slug)) return null;
