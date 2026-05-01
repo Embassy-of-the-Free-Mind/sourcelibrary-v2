@@ -1,11 +1,17 @@
 'use client';
 
 import { EmbedContext } from '@/lib/EmbedContext';
-import { useSearchParams } from 'next/navigation';
+import { useEffect, useState } from 'react';
 
 export function TenantLayoutWrapper({ children }: { children: React.ReactNode }) {
-    const searchParams = useSearchParams();
-    const embed = searchParams.get('embed') === '1';
+    const [embed, setEmbed] = useState(false);
+
+    useEffect(() => {
+        const inIframe = typeof window !== 'undefined' && window.self !== window.top;
+        const params = new URLSearchParams(window.location.search);
+        const embedParam = params.get('embed') === '1';
+        setEmbed(embedParam || inIframe);
+    }, []);
 
     return (
         <EmbedContext.Provider value={embed}>

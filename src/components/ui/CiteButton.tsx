@@ -3,6 +3,60 @@
 import { useState } from 'react';
 import { Quote, Copy, Check } from 'lucide-react';
 
+function getRuntimeOrigin(): string {
+  if (typeof window !== 'undefined' && window.location?.origin) {
+    return window.location.origin;
+  }
+  return process.env.NEXT_PUBLIC_SITE_URL || 'https://sourcelibrary.org';
+}
+
+function getEmbedHostUrl(): URL | null {
+  if (typeof window === 'undefined') return null;
+  if (window.self === window.top) return null;
+  if (!document.referrer) return null;
+
+  try {
+    const ref = new URL(document.referrer);
+    const params = new URLSearchParams(window.location.search);
+    const hostPathParam = params.get('host_path');
+    const hostPath = hostPathParam || sessionStorage.getItem('sl_embed_host_path') || '';
+
+    if (hostPathParam) {
+      sessionStorage.setItem('sl_embed_host_path', hostPathParam);
+    }
+
+    // Cross-origin referrers often include only origin; restore the real host page pathname.
+    if (hostPath && ref.pathname === '/') {
+      ref.pathname = hostPath.startsWith('/') ? hostPath : `/${hostPath}`;
+    }
+
+    return ref;
+  } catch {
+    return null;
+  }
+}
+
+function buildCitableUrl(props: CiteButtonProps, origin: string): string {
+  const embedHostUrl = getEmbedHostUrl();
+
+  if (embedHostUrl) {
+    embedHostUrl.searchParams.set('book', props.bookId);
+    if (!props.pageNumber) {
+      embedHostUrl.searchParams.delete('page');
+    }
+    if (props.editionVersion) {
+      embedHostUrl.searchParams.set('v', props.editionVersion);
+    } else {
+      embedHostUrl.searchParams.delete('v');
+    }
+    return embedHostUrl.toString();
+  }
+
+  const vParam = props.editionVersion ? `?v=${props.editionVersion}` : '';
+  const bookPath = props.tenantSlug ? `/${props.tenantSlug}/book/${props.bookId}` : `/book/${props.bookId}`;
+  return `${origin}${bookPath}${vParam}`;
+}
+
 interface CiteButtonProps {
   bookId: string;
   title: string;
@@ -26,11 +80,9 @@ function formatAccessedDate(): string {
   return `${months[d.getMonth()]} ${d.getDate()}, ${d.getFullYear()}`;
 }
 
-function generateApa(props: CiteButtonProps): string {
+function generateApa(props: CiteButtonProps, origin: string): string {
   const { author, title, displayTitle, year, doi, bookId, pageNumber, editionVersion, tenantSlug } = props;
-  const vParam = editionVersion ? `?v=${editionVersion}` : '';
-  const bookPath = tenantSlug ? `/${tenantSlug}/book/${bookId}` : `/book/${bookId}`;
-  const url = `https://sourcelibrary.org${bookPath}${vParam}`;
+  const url = buildCitableUrl(props, origin);
   const displayName = displayTitle || title;
   const yearStr = year || 'n.d.';
   const authorStr = author || 'Anonymous';
@@ -44,8 +96,8 @@ function generateApa(props: CiteButtonProps): string {
   return `${authorStr}. (${yearStr}). ${displayName}. Source Library${page}. Retrieved ${accessed}, from ${url}`;
 }
 
-function generateBibtex(props: CiteButtonProps): string {
-  const { author, title, year, doi, bookId, language, pageNumber, editionVersion, tenantSlug } = props;
+function generateBibtex(props: CiteButtonProps, origin: string): string {
+  const { author, title, year, doi, language, pageNumber, editionVersion } = props;
   const authorStr = author || 'Anonymous';
 
   const authorKey = authorStr.split(',')[0].split(' ').pop()?.toLowerCase().replace(/[^a-z]/g, '') || 'unknown';
@@ -65,9 +117,7 @@ function generateBibtex(props: CiteButtonProps): string {
   if (language) lines.push(`  language = {${language}},`);
   if (doi) lines.push(`  doi = {${doi}},`);
   if (pageNumber) lines.push(`  pages = {${pageNumber}},`);
-  const vParam = editionVersion ? `?v=${editionVersion}` : '';
-  const bookPath = tenantSlug ? `/${tenantSlug}/book/${bookId}` : `/book/${bookId}`;
-  lines.push(`  url = {https://sourcelibrary.org${bookPath}${vParam}},`);
+  lines.push(`  url = {${buildCitableUrl(props, origin)}},`);
   lines.push(`  note = {AI-assisted English translation via Source Library}`);
   lines.push(`}`);
   return lines.join('\n');
@@ -90,6 +140,7 @@ export default function CiteButton({
 }: CiteButtonProps) {
   const [showMenu, setShowMenu] = useState(false);
   const [copiedId, setCopiedId] = useState<string | null>(null);
+  const origin = getRuntimeOrigin();
 
   const props = { bookId, title, displayTitle, author, year, publisher, placePublished, language, doi, pageNumber, editionVersion, tenantSlug };
 
@@ -122,7 +173,7 @@ export default function CiteButton({
             {/* APA */}
             <button
               onClick={() => {
-                copyToClipboard(generateApa(props), 'apa');
+                copyToClipboard(generateApa(props, origin), 'apa');
                 setShowMenu(false);
               }}
               className="w-full px-4 sm:px-3 py-3 sm:py-2 text-left text-sm hover:bg-stone-50 flex items-center gap-2 text-stone-700"
@@ -134,7 +185,7 @@ export default function CiteButton({
             {/* BibTeX */}
             <button
               onClick={() => {
-                copyToClipboard(generateBibtex(props), 'bibtex');
+                copyToClipboard(generateBibtex(props, origin), 'bibtex');
                 setShowMenu(false);
               }}
               className="w-full px-4 sm:px-3 py-3 sm:py-2 text-left text-sm hover:bg-stone-50 flex items-center gap-2 text-stone-700"
@@ -146,7 +197,7 @@ export default function CiteButton({
             {/* Preview */}
             <hr className="my-1 border-stone-100" />
             <div className="px-4 sm:px-3 py-2 text-xs text-stone-500 font-mono break-all leading-relaxed">
-              {generateApa(props)}
+              {generateApa(props, origin)}
             </div>
             <div className="sm:hidden h-[env(safe-area-inset-bottom)]" />
           </div>

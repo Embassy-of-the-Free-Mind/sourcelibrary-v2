@@ -76,18 +76,32 @@
     return (book || '') + '::' + (page || '');
   }
 
+  function getHostPathname() {
+    try {
+      var u = new URL(window.location.href);
+      return u.pathname || '/';
+    } catch (e) {
+      return '/';
+    }
+  }
+
+  function withEmbedContext(src) {
+    var sep = src.indexOf('?') === -1 ? '?' : '&';
+    return src + sep + 'host_path=' + encodeURIComponent(getHostPathname());
+  }
+
   function buildIframeSrc(book, page) {
     var base = BASE_URL + '/';
     if (book && page) {
-      return base + TENANT + '/book/' + encodeURIComponent(book) + '/page/' + encodeURIComponent(page) + '?embed=1';
+      return withEmbedContext(base + TENANT + '/book/' + encodeURIComponent(book) + '/page/' + encodeURIComponent(page) + '?embed=1');
     }
     if (book) {
-      return base + TENANT + '/book/' + encodeURIComponent(book) + '?embed=1';
+      return withEmbedContext(base + TENANT + '/book/' + encodeURIComponent(book) + '?embed=1');
     }
     if (COLLECTION) {
-      return base + 'collections/' + encodeURIComponent(COLLECTION) + '?embed=1';
+      return withEmbedContext(base + 'collections/' + encodeURIComponent(COLLECTION) + '?embed=1');
     }
-    return base + TENANT + '?view=books&embed=1';
+    return withEmbedContext(base + TENANT + '?view=books&embed=1');
   }
 
   // --- CSS ---

@@ -1100,12 +1100,37 @@ export default function TranslationEditor({
                   author={book.author}
                   year={book.published}
                   page={page.page_number}
-                  url={`https://sourcelibrary.org${tenantPrefix}/book/${(book as any).slug || book.id}?page=${page.page_number}`}
+                  url={isEmbedded
+                    ? (() => {
+                      try {
+                        const hostUrl = document.referrer ? new URL(document.referrer) : null;
+                        const params = new URLSearchParams(window.location.search);
+                        const hostPathParam = params.get('host_path');
+                        const hostPath = hostPathParam || sessionStorage.getItem('sl_embed_host_path') || '';
+
+                        if (hostPathParam) {
+                          sessionStorage.setItem('sl_embed_host_path', hostPathParam);
+                        }
+
+                        if (hostUrl) {
+                          if (hostPath && hostUrl.pathname === '/') {
+                            hostUrl.pathname = hostPath.startsWith('/') ? hostPath : `/${hostPath}`;
+                          }
+                          hostUrl.searchParams.set('book', (book as any).slug || book.id);
+                          hostUrl.searchParams.set('page', page.id);
+                          return hostUrl.toString();
+                        }
+                      } catch {
+                        // fall through to iframe URL fallback
+                      }
+                      return `${window.location.origin}${tenantPrefix}/book/${(book as any).slug || book.id}/${typeof page.page_number === 'number' ? `page-number/${page.page_number}` : `page/${page.id}`}?embed=1`;
+                    })()
+                    : `${window.location.origin}${tenantPrefix}/book/${(book as any).slug || book.id}/${typeof page.page_number === 'number' ? `page-number/${page.page_number}` : `page/${page.id}`}`}
                   doi={book.doi}
                   className="!p-1.5 !text-stone-500 hover:!text-stone-700 hover:!bg-stone-100 !rounded-full"
                 />
                 <CiteButton
-                  bookId={book.id}
+                  bookId={(book as any).slug || book.id}
                   title={book.title}
                   displayTitle={book.display_title}
                   author={book.author || 'Anonymous'}

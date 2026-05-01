@@ -784,7 +784,7 @@ async function BookInfo({ id, tenantId, tenantSlug, embedPolicy }: { id: string;
                   {/* Utility actions */}
                   <div className="flex items-center gap-1 rounded-lg bg-white/5 px-1 py-0.5">
                     <CiteButton
-                      bookId={book.id}
+                      bookId={book.slug || book.id}
                       title={book.title}
                       displayTitle={book.display_title}
                       author={book.author}
@@ -822,7 +822,7 @@ async function BookInfo({ id, tenantId, tenantSlug, embedPolicy }: { id: string;
                       title={book.display_title || book.title}
                       author={book.author}
                       year={book.published}
-                      bookId={book.id}
+                      bookId={book.slug || book.id}
                       doi={book.doi}
                       label="Share"
                       tenantSlug={tenantSlug || undefined}

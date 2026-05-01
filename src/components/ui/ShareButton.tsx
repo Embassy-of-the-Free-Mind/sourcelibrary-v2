@@ -3,6 +3,39 @@
 import { useState } from 'react';
 import { Share2, Twitter, Link2, Check, MessageCircle, Phone } from 'lucide-react';
 
+function getRuntimeOrigin(): string {
+  if (typeof window !== 'undefined' && window.location?.origin) {
+    return window.location.origin;
+  }
+  return process.env.NEXT_PUBLIC_SITE_URL || 'https://sourcelibrary.org';
+}
+
+function getEmbedHostUrl(): URL | null {
+  if (typeof window === 'undefined') return null;
+  if (window.self === window.top) return null;
+  if (!document.referrer) return null;
+
+  try {
+    const ref = new URL(document.referrer);
+    const params = new URLSearchParams(window.location.search);
+    const hostPathParam = params.get('host_path');
+    const hostPath = hostPathParam || sessionStorage.getItem('sl_embed_host_path') || '';
+
+    if (hostPathParam) {
+      sessionStorage.setItem('sl_embed_host_path', hostPathParam);
+    }
+
+    // Cross-origin referrers often include only origin; restore the real host page pathname.
+    if (hostPath && ref.pathname === '/') {
+      ref.pathname = hostPath.startsWith('/') ? hostPath : `/${hostPath}`;
+    }
+
+    return ref;
+  } catch {
+    return null;
+  }
+}
+
 interface ShareButtonProps {
   // What to share
   text?: string;           // Quote text
@@ -232,14 +265,19 @@ export function QuoteShare({
   /** Tenant slug (e.g. "bph") — scopes the share URL to /{tenant}/book/… */
   tenantSlug?: string;
 }) {
-  const baseUrl = typeof window !== 'undefined'
-    ? window.location.origin
-    : 'https://sourcelibrary.org';
+  const baseUrl = getRuntimeOrigin();
+  const embedHostUrl = getEmbedHostUrl();
 
   const bookPath = tenantSlug ? `/${tenantSlug}/book/${bookId}` : `/book/${bookId}`;
-  const url = page
-    ? `${baseUrl}${bookPath}/page-number/${page}`
-    : `${baseUrl}${bookPath}`;
+  const url = embedHostUrl
+    ? (() => {
+      embedHostUrl.searchParams.set('book', bookId);
+      // Keep existing page query (if present) because the embed host tracks page by internal page id.
+      return embedHostUrl.toString();
+    })()
+    : (page
+      ? `${baseUrl}${bookPath}/page-number/${page}`
+      : `${baseUrl}${bookPath}`);
 
   return (
     <ShareButton
@@ -276,18 +314,24 @@ export function BookShare({
   tenantSlug?: string;
   className?: string;
 }) {
-  const baseUrl = typeof window !== 'undefined'
-    ? window.location.origin
-    : 'https://sourcelibrary.org';
+  const baseUrl = getRuntimeOrigin();
+  const embedHostUrl = getEmbedHostUrl();
 
   const bookPath = tenantSlug ? `/${tenantSlug}/book/${bookId}` : `/book/${bookId}`;
+  const url = embedHostUrl
+    ? (() => {
+      embedHostUrl.searchParams.set('book', bookId);
+      embedHostUrl.searchParams.delete('page');
+      return embedHostUrl.toString();
+    })()
+    : `${baseUrl}${bookPath}`;
 
   return (
     <ShareButton
       title={title}
       author={author}
       year={year}
-      url={`${baseUrl}${bookPath}`}
+      url={url}
       doi={doi}
       variant="icon"
       label={label}
