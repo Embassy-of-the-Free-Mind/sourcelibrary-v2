@@ -128,25 +128,25 @@ export default async function PodcastPage() {
             <p className="text-[#8a8480] font-body">No episodes yet. Research a topic with the Librarian to generate one.</p>
           </div>
         ) : (
-          <div className="space-y-5">
+          <div className="space-y-4">
             {episodes.map((ep, i) => (
               <Link
                 key={`${ep.threadId}-${ep.format}-${i}`}
                 href={`/podcast/${ep.threadId}`}
-                className="block group rounded-xl overflow-hidden border border-[#e8e4dc] hover:border-[#c9a86c] transition-colors bg-white"
+                className="flex group rounded-xl overflow-hidden border border-[#e8e4dc] hover:border-[#c9a86c] transition-colors bg-white"
               >
                 {ep.heroImageUrl && (
-                  <div className="bg-[#1a1612] overflow-hidden">
+                  <div className="flex-shrink-0 w-[180px] md:w-[220px] bg-[#1a1612] overflow-hidden">
                     {/* eslint-disable-next-line @next/next/no-img-element */}
                     <img
-                      src={`/api/image?url=${encodeURIComponent(ep.heroImageUrl)}&w=720&q=80`}
+                      src={`/api/image?url=${encodeURIComponent(ep.heroImageUrl)}&w=440&q=85`}
                       alt=""
-                      className="w-full h-[200px] object-cover opacity-90 group-hover:opacity-100 transition-opacity"
+                      className="w-full h-full object-cover opacity-90 group-hover:opacity-100 transition-opacity"
                       loading="lazy"
                     />
                   </div>
                 )}
-                <div className="p-5">
+                <div className="flex-1 p-5 flex flex-col justify-center min-w-0">
                   <h2
                     className="text-[17px] font-serif text-[#1a1612] leading-snug group-hover:text-[#9e4a3a] transition-colors"
                     style={{ fontWeight: 400 }}

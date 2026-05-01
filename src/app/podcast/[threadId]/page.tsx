@@ -168,7 +168,7 @@ export default async function EpisodePage({ params }: Props) {
           <div className="relative rounded-xl overflow-hidden bg-[#1a1612]">
             {/* eslint-disable-next-line @next/next/no-img-element */}
             <img
-              src={`/api/image?url=${encodeURIComponent(episode.heroImage.url)}&w=960&q=85`}
+              src={`/api/image?url=${encodeURIComponent(episode.heroImage.url)}&w=1440&q=85`}
               alt={episode.heroImage.description}
               className="w-full max-h-[480px] object-contain"
             />
