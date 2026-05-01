@@ -118,6 +118,8 @@ export default function SharedLibraryView({
   const totalPages = Math.ceil(total / PER_PAGE);
   const currentPage = Math.floor(offset / PER_PAGE) + 1;
   const filteredLanguages = languages.filter(l => l.count > 2);
+  const externalPartnerUrl = partner.url?.trim() || '';
+  const hasExternalPartnerUrl = /^https?:\/\//i.test(externalPartnerUrl);
 
   // BPH shows: Selected Books + Catalog by default, full grid on ?view=books
   const showBooksGrid = !isBph || view === 'books';
@@ -154,16 +156,22 @@ export default function SharedLibraryView({
                 <span>{languages.slice(0, 5).map(l => l.lang).join(', ')}</span>
               </>
             )}
-            <span className="w-px h-4 bg-white/20" />
-            <a
-              href={partner.url}
-              target="_blank"
-              rel="noopener noreferrer"
-              className="inline-flex items-center gap-1 text-white/50 hover:text-white/80 transition-colors"
-            >
-              {partner.url.replace('https://', '')}
-              <ExternalLink className="w-3.5 h-3.5" />
-            </a>
+
+            {hasExternalPartnerUrl && (
+              <>
+                {/* //TODO: Hide these two if embedded else show. */}
+                <span className="w-px h-4 bg-white/20" />
+                <a
+                  href={externalPartnerUrl}
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="inline-flex items-center gap-1 text-white/50 hover:text-white/80 transition-colors"
+                >
+                  {externalPartnerUrl.replace(/^https?:\/\//, '')}
+                  <ExternalLink className="w-3.5 h-3.5" />
+                </a>
+              </>
+            )}
           </div>
         </div>
       </div>
@@ -430,14 +438,18 @@ export default function SharedLibraryView({
         <div className="mt-16 pt-8 border-t border-border-light">
           <p className="text-sm text-muted leading-relaxed max-w-3xl">
             All book images and metadata are sourced from{' '}
-            <a
-              href={partner.url}
-              target="_blank"
-              rel="noopener noreferrer"
-              className="text-accent-rust hover:underline"
-            >
-              {partner.name}
-            </a>
+            {hasExternalPartnerUrl ? (
+              <a
+                href={externalPartnerUrl}
+                target="_blank"
+                rel="noopener noreferrer"
+                className="text-accent-rust hover:underline"
+              >
+                {partner.name}
+              </a>
+            ) : (
+              <span className="text-secondary">{partner.name}</span>
+            )}
             . Original provenance is preserved for every page. Source Library provides OCR transcription, translation, and indexing as a scholarly service.
           </p>
         </div>

@@ -10,6 +10,7 @@ import {
 } from '@/lib/tenant-library-loaders';
 import { getDb } from '@/lib/mongodb';
 import EmbedNavigationReporter from '@/components/embed/EmbedNavigationReporter';
+import { getPartnerByProvider, getPartnerBySlug } from '@/lib/library-partners';
 
 interface Props {
   params: Promise<{ tenant: string }>;
@@ -31,7 +32,7 @@ export default async function TenantRoot({ params, searchParams }: Props) {
   const language = typeof sp.language === 'string' ? sp.language : '';
   const q = typeof sp.q === 'string' ? sp.q : '';
   const offset = parseInt(typeof sp.offset === 'string' ? sp.offset : '0') || 0;
-  const view = (typeof sp.view === 'string' ? sp.view : '') || 'books';
+  const view = typeof sp.view === 'string' ? sp.view : '';
   const embed = typeof sp.embed === 'string' ? sp.embed === '1' : false;
 
   // Fetch tenant data
@@ -50,8 +51,16 @@ export default async function TenantRoot({ params, searchParams }: Props) {
 
   const { books, total, topBooks, languages, galleryImages, contributingLibraries } = libraryData;
 
+  // Reuse the same partner metadata source as /libraries/[slug] when possible.
+  const canonicalPartner = getPartnerBySlug(tenant) || (dominantProvider ? getPartnerByProvider(dominantProvider) : undefined);
+  const tenantExternalUrl =
+    (typeof (tenantDoc as any).url === 'string' && (tenantDoc as any).url) ||
+    (typeof (tenantDoc as any).website === 'string' && (tenantDoc as any).website) ||
+    (typeof (tenantDoc as any).homepage === 'string' && (tenantDoc as any).homepage) ||
+    '';
+
   // Check if this tenant is primarily BPH-based
-  const isBph = dominantProvider === 'bph';
+  const isBph = canonicalPartner?.providerKey === 'bph' || dominantProvider === 'bph';
 
   // Fetch BPH-specific data if applicable
   const [digitizedUbns, catalogTotal] = isBph
@@ -66,9 +75,10 @@ export default async function TenantRoot({ params, searchParams }: Props) {
   // Construct props for shared view
   const viewProps: SharedLibraryViewProps = {
     partner: {
-      name: tenantDoc.name,
-      description: tenantDoc.name, // Use tenant name; could extend with description field if added
-      url: '', // Tenant doesn't have an external URL like library partners
+      name: canonicalPartner?.name || tenantDoc.name,
+      description: canonicalPartner?.description || tenantDoc.name,
+      url: canonicalPartner?.url || tenantExternalUrl,
+      providerKey: canonicalPartner?.providerKey,
       slug: tenant,
     },
     books,
