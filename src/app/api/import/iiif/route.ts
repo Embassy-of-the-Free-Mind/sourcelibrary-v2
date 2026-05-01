@@ -6,8 +6,41 @@ import { withCuratorAuth } from '@/lib/auth-helpers';
 import { generateUniqueBookSlug } from '@/lib/slugify';
 import { queuePreviewOcr } from '@/lib/preview-ocr';
 import { normalizeTitle, normalizeAuthor, sourceFingerprint, checkDuplicate } from '@/lib/dedup';
+import type { ImageSourceProvider } from '@/lib/types/image-source';
 
 export const maxDuration = 300;
+
+/** Map IIIF provider names and manifest URL patterns to canonical provider keys */
+const PROVIDER_NAME_TO_KEY: Record<string, ImageSourceProvider> = {
+  'British Library': 'bl',
+  'Harvard Library': 'harvard',
+  'SAT Daizokyo': 'sat_daizokyo',
+  'National Diet Library of Japan': 'ndl_japan',
+  'TU Darmstadt': 'tu_darmstadt',
+  'Vatican Library': 'vatican',
+  'Biblioteca Apostolica Vaticana': 'vatican',
+  'Gallica (BnF)': 'gallica',
+  'Leiden University Library': 'leiden',
+  'John Rylands Library, University of Manchester': 'manchester',
+  'Universitätsbibliothek Heidelberg': 'heidelberg',
+  'Wellcome Collection': 'wellcome',
+  'Allard Pierson, University of Amsterdam': 'allard_pierson',
+  'Biblioteca Medicea Laurenziana': 'laurenziana',
+  'Bodleian Library': 'bodleian',
+  'e-codices': 'e-codices',
+  'Library of Congress': 'loc',
+  'Austrian National Library': 'onb',
+  'Chester Beatty Library': 'chester_beatty',
+  'Cambridge Digital Library': 'cambridge',
+  'IRHT (CNRS)': 'irht',
+  'Bayerische Staatsbibliothek': 'bsb',
+  'Kyoto University Rare Materials Digital Archive': 'kyoto_rmda',
+  'Buddhist Digital Resource Center (BDRC)': 'bdrc',
+  'Metropolitan Museum of Art': 'met',
+  'TU Delft Library': 'tu_delft',
+  'Qatar Digital Library': 'qdl',
+  'Victoria and Albert Museum': 'v_and_a',
+};
 
 // IIIF v2 canvas
 interface IIIFv2Canvas {
@@ -383,6 +416,7 @@ export const POST = withCuratorAuth(async (request, session) => {
       published: published || 'Unknown',
       categories: categories || [],
       ...(work_id ? { work_id } : {}),
+      ...(contributing_library ? { contributing_library } : providerName !== 'IIIF Source' ? { contributing_library: providerName } : {}),
       thumbnail: pageImages[0]?.thumbnail || '',
       pages_count: pageCount,
       pages_ocr: 0,
@@ -392,7 +426,7 @@ export const POST = withCuratorAuth(async (request, session) => {
         dc_source: rawManifestId
       },
       image_source: {
-        provider: bodleianMatch ? 'bodleian' : 'iiif',
+        provider: PROVIDER_NAME_TO_KEY[providerName] || (bodleianMatch ? 'bodleian' : 'iiif'),
         provider_name: providerName,
         source_url: sourceUrl,
         iiif_manifest: manifest_url,

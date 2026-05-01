@@ -72,7 +72,7 @@ function transformBook(book) {
     collections: Array.isArray(book.collections) ? book.collections : [],
     collection_relevance: book.collection_relevance || null,
     image_source_provider: book.image_source?.provider || null,
-    contributing_library: book.image_source?.contributing_library || null,
+    contributing_library: book.contributing_library || book.image_source?.contributing_library || null,
     // Book detail fields (for serving /book/[id] from Supabase)
     summary_text: extractSummaryText(book),
     publisher: book.publisher || null,
@@ -144,6 +144,7 @@ const projection = {
   last_translation_at: 1, updated_at: 1, created_at: 1,
   categories: 1, collections: 1, collection_relevance: 1,
   'image_source.provider': 1,
+  contributing_library: 1,
   'image_source.contributing_library': 1,
   'image_source.source_url': 1,
   'image_source.provider_name': 1,
