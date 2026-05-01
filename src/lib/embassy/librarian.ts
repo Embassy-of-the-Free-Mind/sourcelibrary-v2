@@ -225,7 +225,7 @@ const TOOL_DECLARATIONS: FunctionDeclaration[] = [
   },
   {
     name: 'present_choices',
-    description: 'Present 2-3 research directions for broad or exploratory questions. Use as your FIRST tool call (after sharing a brief conversational response as text) when the topic is wide enough to benefit from user steering. Each option has a short label and a 1-2 sentence description explaining what that research angle covers. The user clicks one or types their own direction.',
+    description: 'Present 2-3 research directions when a topic genuinely branches into different angles. Only use on the first message when choices would help the user pick a direction they haven\'t signaled. Skip this tool if the user\'s question already has clear intent, specific constraints, or an actionable task — just search directly instead. Each option has a short label and a 1-2 sentence description. The user clicks one or types their own direction.',
     parameters: {
       type: Type.OBJECT,
       properties: {
@@ -719,7 +719,7 @@ async function executeTool(
 
 // ── System Prompt ─────────────────────────────────────────────────────
 
-function buildSystemPrompt(notebookContext: string): string {
+function buildSystemPrompt(notebookContext: string, messageIndex: number): string {
   return `You are the Librarian of the Embassy of the Free Mind — a research agent for scholars exploring rare historical texts across the pre-modern intellectual tradition. Your knowledge spans alchemy, Hermetica, Kabbalah, astrology, natural philosophy, Rosicrucianism, Indian philosophy, Sanskrit texts, Egyptian sources, early modern science, demonology, and the broader history of ideas from antiquity through the Enlightenment.
 
 You are warm, knowledgeable, and genuinely enthusiastic about these texts. You speak like a learned scholar who loves sharing discoveries.
@@ -727,6 +727,10 @@ You are warm, knowledgeable, and genuinely enthusiastic about these texts. You s
 ## Your role
 
 You are a research agent, not just a Q&A chatbot. You help users conduct real research across the collection. You accumulate findings, build on prior discoveries, and produce work the user can use.
+
+## Conversation state
+
+This is message #${messageIndex} in the thread.${messageIndex >= 3 ? ' The user has established their direction — skip choices and go straight to research.' : ''}
 
 ## Your approach — conversational first, then deep research
 
@@ -738,7 +742,7 @@ Before searching, think: does this question have genuinely divergent angles wher
 
 The test: imagine the 2-3 choices you'd offer. Would they actually help the user narrow down, or would they just restate what's already obvious from the question? If the user said "list all titles about astrology from 1501-1600" or "what books do you have about dreams?", choices would just be a speed bump — you already know exactly what to search for. But "sanskrit alchemy" genuinely branches into mercury processes, East-West transmission, and tantric dimensions — those are different searches with different results.
 
-On follow-up messages (3+ in a thread), always skip choices — the user has already established their direction.
+On follow-up messages (message #3+), always skip choices — the user has already established their direction. Check "Conversation state" above for the current message number.
 
 When you DO present choices:
 - Your preamble should demonstrate real domain knowledge (not generic "there are several approaches")
@@ -826,7 +830,9 @@ export async function* streamAgenticResponse(
   // Load research notebook if thread exists
   const notebook = threadId ? await loadNotebook(threadId) : null;
   const notebookContext = formatNotebookForPrompt(notebook);
-  const systemPrompt = buildSystemPrompt(notebookContext);
+  // User messages in history = prior user turns. This message is the next one.
+  const messageIndex = history.filter(m => m.role === 'user').length + 1;
+  const systemPrompt = buildSystemPrompt(notebookContext, messageIndex);
 
   const contents: Array<{ role: string; parts: Array<Record<string, unknown>> }> = [
     { role: 'user', parts: [{ text: systemPrompt }] },
