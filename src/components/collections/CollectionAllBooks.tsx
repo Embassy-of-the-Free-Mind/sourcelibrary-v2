@@ -361,8 +361,8 @@ export default function CollectionAllBooks({
           ) : (
           <div className={`grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-4 xl:grid-cols-5 gap-px ${loading ? 'opacity-50 pointer-events-none' : ''}`}>
             {displayBooks.map((book) => {
-              // Use thumbnail (600px thumb) not thumbnail_blob (3840px display) for grid
-              const thumb = book.thumbnail || getBookThumbnailUrl(book, 'thumb') || book.photo;
+              // thumbnail_blob = -thumb.jpg (600px), thumbnail = -full.jpg (confusing naming)
+              const thumb = book.thumbnail_blob || book.thumbnail || book.photo;
               const title = bookTitle(book);
               const year = book.year || parseInt(book.published || '', 10) || 0;
               return (
