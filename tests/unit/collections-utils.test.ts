@@ -72,19 +72,17 @@ describe('sortCollections', () => {
 
     const sorted = sortCollections(collections);
 
-    // First 4 should be pinned in exact order
-    expect(sorted[0].slug).toBe('natural-philosophy');
+    // All 6 are pinned — should appear in PINNED_COLLECTION_SLUGS order
+    expect(sorted[0].slug).toBe('sacred-texts');
     expect(sorted[1].slug).toBe('classical-philosophy');
-    expect(sorted[2].slug).toBe('renaissance-philosophy');
-    expect(sorted[3].slug).toBe('sacred-texts');
-
-    // Remaining should all be present
-    const rest = sorted.slice(4);
-    expect(rest).toHaveLength(2);
-    expect(rest.map(c => c.slug).sort()).toEqual(['alchemy', 'hermetica']);
+    expect(sorted[2].slug).toBe('hermetica');
+    expect(sorted[3].slug).toBe('alchemy');
+    expect(sorted[4].slug).toBe('natural-philosophy');
+    expect(sorted[5].slug).toBe('renaissance-philosophy');
+    expect(sorted).toHaveLength(6);
   });
 
-  it('handles missing pinned collections gracefully', () => {
+  it('handles subset of pinned collections', () => {
     const collections = [
       { slug: 'alchemy', name: 'Alchemy' },
       { slug: 'hermetica', name: 'Hermetica' },
@@ -92,6 +90,8 @@ describe('sortCollections', () => {
 
     const sorted = sortCollections(collections);
     expect(sorted).toHaveLength(2);
-    // No pinned collections found — all go to shuffled rest
+    // Both are pinned — hermetica comes before alchemy in PINNED_COLLECTION_SLUGS
+    expect(sorted[0].slug).toBe('hermetica');
+    expect(sorted[1].slug).toBe('alchemy');
   });
 });
