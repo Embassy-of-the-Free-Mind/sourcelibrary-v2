@@ -329,7 +329,7 @@ export default function SharedLibraryView({
               <div className="flex items-center justify-center gap-4 mt-10 text-sm">
                 {offset > 0 ? (
                   <Link
-                    href={`${basePath}?view=books&sort=${sort}${languageFilter ? `&language=${languageFilter}` : ''}&offset=${Math.max(0, offset - PER_PAGE)}`}
+                    href={`${basePath}?view=books&sort=${sort}${languageFilter ? `&language=${languageFilter}` : ''}&offset=${Math.max(0, offset - PER_PAGE)}${embed ? '&embed=1' : ''}`}
                     className="px-4 py-2 rounded-lg border border-border-light hover:bg-warm transition-colors"
                   >
                     Previous
@@ -344,7 +344,7 @@ export default function SharedLibraryView({
                 </span>
                 {currentPage < totalPages ? (
                   <Link
-                    href={`${basePath}?view=books&sort=${sort}${languageFilter ? `&language=${languageFilter}` : ''}&offset=${offset + PER_PAGE}`}
+                    href={`${basePath}?view=books&sort=${sort}${languageFilter ? `&language=${languageFilter}` : ''}&offset=${offset + PER_PAGE}${embed ? '&embed=1' : ''}`}
                     className="px-4 py-2 rounded-lg border border-border-light hover:bg-warm transition-colors"
                   >
                     Next
