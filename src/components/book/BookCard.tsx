@@ -129,7 +129,7 @@ export default function BookCard({ book, priority = false }: BookCardProps) {
               fill
               quality={85}
               className="object-cover group-hover:scale-105 transition-transform duration-300"
-              sizes="(max-width: 640px) 50vw, (max-width: 1024px) 33vw, 25vw"
+              sizes="(max-width: 640px) 50vw, (max-width: 1024px) 33vw, 20vw"
               onLoad={handleImageLoad}
               onError={() => {
                 if (!useFallback && fallbackUrl) {
@@ -140,6 +140,8 @@ export default function BookCard({ book, priority = false }: BookCardProps) {
               }}
               priority={priority}
               loading={priority ? 'eager' : 'lazy'}
+              placeholder="blur"
+              blurDataURL="data:image/svg+xml;base64,PHN2ZyB3aWR0aD0iMyIgaGVpZ2h0PSI0IiB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciPjxyZWN0IHdpZHRoPSIzIiBoZWlnaHQ9IjQiIGZpbGw9IiNlN2UyZGUiLz48L3N2Zz4="
             />
           ) : (
             <div className="w-full h-full flex items-center justify-center">
