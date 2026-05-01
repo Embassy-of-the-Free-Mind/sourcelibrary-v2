@@ -2,7 +2,7 @@ import { notFound } from 'next/navigation';
 import { getDb } from '@/lib/mongodb';
 import { TenantSessionUpdater } from '@/components/auth/TenantSessionUpdater';
 import { resolveTenantId } from '@/lib/tenant-context';
-import { cache } from 'react';
+import { cache, Suspense } from 'react';
 import EmbedResizeReporter from '@/components/embed/EmbedResizeReporter';
 import { TenantLayoutWrapper } from '@/components/tenant/TenantLayoutWrapper';
 
@@ -75,7 +75,10 @@ export default async function TenantLayout({
       {/* Trigger JWT update with tenant context for role resolution + activate pending memberships */}
       <TenantSessionUpdater tenantSlug={slug} />
       <EmbedResizeReporter />
-      <TenantLayoutWrapper>{children}</TenantLayoutWrapper>
+      {/* Suspense required: TenantLayoutWrapper uses useSearchParams() */}
+      <Suspense>
+        <TenantLayoutWrapper>{children}</TenantLayoutWrapper>
+      </Suspense>
     </>
   );
 }
