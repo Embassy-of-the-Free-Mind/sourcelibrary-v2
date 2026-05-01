@@ -361,7 +361,8 @@ export default function CollectionAllBooks({
           ) : (
           <div className={`grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-4 xl:grid-cols-5 gap-px ${loading ? 'opacity-50 pointer-events-none' : ''}`}>
             {displayBooks.map((book) => {
-              const thumb = getBookThumbnailUrl(book, 'thumb') || book.photo;
+              // Use thumbnail (600px thumb) not thumbnail_blob (3840px display) for grid
+              const thumb = book.thumbnail || getBookThumbnailUrl(book, 'thumb') || book.photo;
               const title = bookTitle(book);
               const year = book.year || parseInt(book.published || '', 10) || 0;
               return (
@@ -376,6 +377,7 @@ export default function CollectionAllBooks({
                       src={thumb}
                       alt={title}
                       className="absolute inset-0 w-full h-full object-cover group-hover:scale-[1.05] transition-transform duration-500"
+                      loading="lazy"
                       decoding="async"
                     />
                   ) : (
