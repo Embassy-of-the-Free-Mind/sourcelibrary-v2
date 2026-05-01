@@ -15,6 +15,7 @@ interface PodcastEpisode {
   format: string;
   findingCount: number;
   generatedAt: string;
+  heroImageUrl: string | null;
 }
 
 async function getEpisodes(): Promise<PodcastEpisode[]> {
@@ -30,12 +31,13 @@ async function getEpisodes(): Promise<PodcastEpisode[]> {
       })
       .sort({ 'podcasts.deep-dive.generatedAt': -1, 'podcast.generatedAt': -1 })
       .limit(50)
-      .project({ _id: 1, title: 1, podcasts: 1, podcast: 1 })
+      .project({ _id: 1, title: 1, podcasts: 1, podcast: 1, heroImage: 1 })
       .toArray();
 
     const episodes: PodcastEpisode[] = [];
 
     for (const thread of threads) {
+      const heroImageUrl = thread.heroImage?.url || null;
       const formats = ['deep-dive', 'brief', 'critique', 'guided-reading'] as const;
       for (const format of formats) {
         const p = thread.podcasts?.[format];
@@ -46,6 +48,7 @@ async function getEpisodes(): Promise<PodcastEpisode[]> {
             format,
             findingCount: p.findingCount || 0,
             generatedAt: p.generatedAt,
+            heroImageUrl,
           });
         }
       }
@@ -56,6 +59,7 @@ async function getEpisodes(): Promise<PodcastEpisode[]> {
           format: 'deep-dive',
           findingCount: thread.podcast.findingCount || 0,
           generatedAt: thread.podcast.generatedAt,
+          heroImageUrl,
         });
       }
     }
@@ -124,22 +128,35 @@ export default async function PodcastPage() {
             <p className="text-[#8a8480] font-body">No episodes yet. Research a topic with the Librarian to generate one.</p>
           </div>
         ) : (
-          <div className="divide-y divide-[#e8e4dc]">
+          <div className="space-y-5">
             {episodes.map((ep, i) => (
               <Link
                 key={`${ep.threadId}-${ep.format}-${i}`}
                 href={`/podcast/${ep.threadId}`}
-                className="block py-5 group"
+                className="block group rounded-xl overflow-hidden border border-[#e8e4dc] hover:border-[#c9a86c] transition-colors bg-white"
               >
-                <h2
-                  className="text-[17px] font-serif text-[#1a1612] leading-snug group-hover:text-[#9e4a3a] transition-colors"
-                  style={{ fontWeight: 400 }}
-                >
-                  {ep.title}
-                </h2>
-                <p className="text-[12px] text-[#8a8480] font-sans mt-1.5">
-                  {FORMAT_LABELS[ep.format] || 'Deep Dive'} &middot; {ep.findingCount} sources &middot; {formatDate(ep.generatedAt)}
-                </p>
+                {ep.heroImageUrl && (
+                  <div className="bg-[#1a1612] overflow-hidden">
+                    {/* eslint-disable-next-line @next/next/no-img-element */}
+                    <img
+                      src={`/api/image?url=${encodeURIComponent(ep.heroImageUrl)}&w=720&q=80`}
+                      alt=""
+                      className="w-full h-[200px] object-cover opacity-90 group-hover:opacity-100 transition-opacity"
+                      loading="lazy"
+                    />
+                  </div>
+                )}
+                <div className="p-5">
+                  <h2
+                    className="text-[17px] font-serif text-[#1a1612] leading-snug group-hover:text-[#9e4a3a] transition-colors"
+                    style={{ fontWeight: 400 }}
+                  >
+                    {ep.title}
+                  </h2>
+                  <p className="text-[12px] text-[#8a8480] font-sans mt-1.5">
+                    {FORMAT_LABELS[ep.format] || 'Deep Dive'} &middot; {ep.findingCount} sources &middot; {formatDate(ep.generatedAt)}
+                  </p>
+                </div>
               </Link>
             ))}
           </div>
