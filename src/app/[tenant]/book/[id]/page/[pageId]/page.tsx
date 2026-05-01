@@ -1,6 +1,7 @@
 import { notFound } from 'next/navigation';
 import { getReadDb } from '@/lib/mongodb';
 import { findTenantBookByIdOrSlug } from '@/lib/tenant-book-lookup';
+import { findBookByIdOrSlug } from '@/lib/book-lookup';
 import type { Book, Page } from '@/lib/types';
 import PageEditorClient from './PageEditorClient';
 import EmbedNavigationReporter from '@/components/embed/EmbedNavigationReporter';
@@ -10,6 +11,7 @@ export const revalidate = 86400;
 
 interface PageProps {
   params: Promise<{ tenant: string; id: string; pageId: string }>;
+  skipTenantScope?: boolean;
 }
 
 // Book projection: only fields needed by the reader
@@ -19,7 +21,7 @@ const BOOK_NAV_PROJECTION = {
   cdli_witnesses: 1, etcsl_id: 1,
 };
 
-export default async function PageEditorPage({ params }: PageProps) {
+export default async function PageEditorPage({ params, skipTenantScope = false }: PageProps) {
   const { tenant, id, pageId } = await params;
   const db = await getReadDb();
 
@@ -35,7 +37,9 @@ export default async function PageEditorPage({ params }: PageProps) {
 
   // Step 2: Book lookup + nav pages in parallel (both can start now)
   const [bookResult, navPages] = await Promise.all([
-    findTenantBookByIdOrSlug(db, tenant, id, BOOK_NAV_PROJECTION),
+    skipTenantScope
+      ? findBookByIdOrSlug(db, id, BOOK_NAV_PROJECTION)
+      : findTenantBookByIdOrSlug(db, tenant, id, BOOK_NAV_PROJECTION),
     db.collection('pages')
       .find({ book_id: currentPage.book_id as string, page_number: { $gte: 0 } })
       .project({ _id: 0, id: 1, page_number: 1, split_from: 1, page_type: 1 })

@@ -20,5 +20,5 @@ export default async function EmbedPageRoute({ params }: { params: Promise<{ slu
   );
   if (!exists) notFound();
 
-  return <PageEditorPage params={Promise.resolve({ tenant: 'bph', id: slug, pageId })} />;
+  return <PageEditorPage params={Promise.resolve({ tenant: 'bph', id: slug, pageId })} skipTenantScope />;
 }
