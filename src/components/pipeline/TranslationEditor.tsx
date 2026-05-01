@@ -431,7 +431,10 @@ export default function TranslationEditor({
   const params = useParams<{ tenant: string }>();
   const searchParams = useSearchParams();
   const isEmbedded = searchParams.get('embed') === '1';
-  const tenantPrefix = params?.tenant ? `/${params.tenant}` : '';
+  // On tenant subdomains (bph.sourcelibrary.org), the proxy adds the tenant prefix,
+  // so links should use /book/... not /bph/book/...
+  const isOnTenantSubdomain = typeof window !== 'undefined' && /^[a-z]+\.sourcelibrary\.org$/.test(window.location.hostname);
+  const tenantPrefix = isOnTenantSubdomain ? '' : (params?.tenant ? `/${params.tenant}` : '');
   const embedSuffix = isEmbedded ? '?embed=1' : '';
   const [ocrText, setOcrText] = useState(page.ocr?.data || '');
   const [translationText, setTranslationText] = useState(page.translation?.data || '');
