@@ -80,8 +80,8 @@ async function saveRevisionBeforeOverwrite(db, pageId, field) {
 const OCR_MODEL_FLASH = 'gemini-3-flash-preview';
 const OCR_MODEL_LITE = 'gemini-3.1-flash-lite-preview';
 function getOcrModelForBook(book) {
-  // A/B tested 2026-03-28: lite produces identical OCR on BPH books (2-4% char diff,
-  // indistinguishable from normal variation). 50% cost savings, 5-7x faster.
+  // BPH books use Flash Preview for higher quality on historical manuscripts
+  if (book?.image_source?.provider === 'bph') return OCR_MODEL_FLASH;
   return OCR_MODEL_LITE;
 }
 const OCR_MODEL = OCR_MODEL_FLASH; // Legacy fallback for recitation retry path
