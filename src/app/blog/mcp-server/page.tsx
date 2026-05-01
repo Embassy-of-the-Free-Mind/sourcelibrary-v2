@@ -5,10 +5,10 @@ import BlogComments from '@/components/blog/BlogComments';
 
 export const metadata: Metadata = {
   title: 'Claude Can Now Read Thousands of Rare Books - Research Notes - Source Library',
-  description: 'We shipped an MCP server that gives Claude direct access to Source Library — thousands of historical texts with translations, a cross-book entity graph, and 50,000+ illustrations. One command to install.',
+  description: 'We shipped an MCP server that gives Claude direct access to Source Library — thousands of historical texts with translations, a cross-book entity graph, and 90,000+ illustrations. One command to install.',
   openGraph: {
     title: 'Claude Can Now Read Thousands of Rare Books',
-    description: 'An MCP server that gives Claude direct access to Source Library — thousands of historical texts with translations, a cross-book entity graph, and 50,000+ illustrations.',
+    description: 'An MCP server that gives Claude direct access to Source Library — thousands of historical texts with translations, a cross-book entity graph, and 90,000+ illustrations.',
     images: [{ url: 'https://3kwioilsplnmnkv8.public.blob.vercel-storage.com/archived/699065973dc2ed39a49f1e71/4.jpg', width: 1200, height: 630 }],
   },
   alternates: {
@@ -47,7 +47,7 @@ export default function McpServerPage() {
         <p className="text-xl text-secondary leading-relaxed mb-8">
           Today we&apos;re releasing an{' '}
           <a href="https://www.npmjs.com/package/@source-library/mcp-server" className="text-accent-rust hover:text-accent-rust underline" target="_blank" rel="noopener noreferrer">MCP server</a>
-          {' '}that gives Claude direct access to Source Library. One command, no API key, and Claude can search, read, and cite thousands of historical texts &mdash; with full English translations, a cross-book entity knowledge graph, and 50,000+ extracted illustrations.
+          {' '}that gives Claude direct access to Source Library. One command, no API key, and Claude can search, read, and cite thousands of historical texts &mdash; with full English translations, a cross-book entity knowledge graph, and 90,000+ extracted illustrations.
         </p>
 
         <div className="bg-stone-900 rounded-xl p-4 mb-8 overflow-x-auto">
@@ -147,7 +147,7 @@ export default function McpServerPage() {
         </div>
 
         <p className="text-secondary leading-relaxed mb-8">
-          Source Library has extracted and catalogued 50,000+ illustrations from its books &mdash; woodcuts, engravings, emblems, frontispieces, diagrams &mdash; each with AI-generated metadata including subject tags, depicted figures, symbols, and museum-style descriptions. Claude can search this gallery, find the images, identify which books they come from, and read the surrounding text to explain their context.
+          Source Library has extracted and catalogued 90,000+ illustrations from its books &mdash; woodcuts, engravings, emblems, frontispieces, diagrams &mdash; each with AI-generated metadata including subject tags, depicted figures, symbols, and museum-style descriptions. Claude can search this gallery, find the images, identify which books they come from, and read the surrounding text to explain their context.
         </p>
 
         <h2 className="text-2xl md:text-3xl text-primary mt-16 mb-6">
@@ -227,7 +227,7 @@ export default function McpServerPage() {
           <div className="bg-white rounded-lg border border-border-light p-5">
             <h4 className="font-semibold text-primary mb-2">Gallery</h4>
             <p className="text-secondary text-sm">
-              <code className="text-accent-rust">search_images</code> across 50,000+ illustrations by subject, symbol, figure, or type.{' '}
+              <code className="text-accent-rust">search_images</code> across 90,000+ illustrations by subject, symbol, figure, or type.{' '}
               <code className="text-accent-rust">get_image</code> and <code className="text-accent-rust">get_book_images</code> for details.
             </p>
           </div>

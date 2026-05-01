@@ -7,7 +7,7 @@ import { getReadDb } from '@/lib/mongodb';
 export const metadata: Metadata = {
   title: 'Pipeline Architecture | Source Library',
   description:
-    'How Source Library processes 4,800+ historical books: Lambda workers, SQS queues, Gemini AI, and a 10-stage pipeline from import to complete.',
+    'How Source Library processes 10,000+ historical books: Lambda workers, SQS queues, Gemini AI, and a 10-stage pipeline from import to complete.',
   alternates: { canonical: '/developers/pipeline' },
 };
 
@@ -148,7 +148,7 @@ export default async function PipelineArchitecturePage() {
       header={
         <ContentHeader
           title="Pipeline Architecture"
-          subtitle="How 4,800+ historical books flow from scanned images to searchable, translated text — the full technical picture."
+          subtitle="How 10,000+ historical books flow from scanned images to searchable, translated text — the full technical picture."
         />
       }
       bg="bg-cream"
@@ -401,7 +401,7 @@ export default async function PipelineArchitecturePage() {
           />
           <MechCard
             title="MCP Server & API"
-            description="The full library is accessible via a Model Context Protocol server (for AI assistants) and a REST API. Seven tools let AI models search books, read translations, and find illustrations across 4,800+ historical texts."
+            description="The full library is accessible via a Model Context Protocol server (for AI assistants) and a REST API. Seven tools let AI models search books, read translations, and find illustrations across 10,000+ historical texts."
           />
         </div>
 

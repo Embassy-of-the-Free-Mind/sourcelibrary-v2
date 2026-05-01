@@ -7,7 +7,7 @@ import { sanitizeThumbnail } from '@/lib/collections-utils';
 
 export const metadata: Metadata = {
   title: 'Visual Art — Source Library',
-  description: 'Over 10,000 works of art cross-referenced with the texts that inspired them — from Egyptian papyri and Tibetan thangka to Renaissance prints and Edo-period woodcuts.',
+  description: 'Over 23,000 works of art cross-referenced with the texts that inspired them — from Egyptian papyri and Tibetan thangka to Renaissance prints and Edo-period woodcuts.',
 };
 
 export const revalidate = false;

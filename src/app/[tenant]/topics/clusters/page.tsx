@@ -8,7 +8,7 @@ export const revalidate = false;
 
 export const metadata: Metadata = {
   title: 'AI-Discovered Topic Clusters | Source Library',
-  description: 'Explore 6,000 historical texts organized into 48 topics discovered by machine learning embedding analysis.',
+  description: 'Explore 10,000 historical texts organized into 48 topics discovered by machine learning embedding analysis.',
   alternates: { canonical: '/topics/clusters' },
 };
 

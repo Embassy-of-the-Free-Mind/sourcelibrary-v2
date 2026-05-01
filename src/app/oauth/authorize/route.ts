@@ -70,9 +70,9 @@ export async function GET(req: Request) {
     <div class="perms">
       <h3>This will allow</h3>
       <ul>
-        <li>Search 5,000+ rare historical texts</li>
+        <li>Search 10,000+ rare historical texts</li>
         <li>Read full book translations</li>
-        <li>Browse 50,000+ historical illustrations</li>
+        <li>Browse 90,000+ historical illustrations</li>
         <li>Get page citations with DOIs</li>
       </ul>
     </div>

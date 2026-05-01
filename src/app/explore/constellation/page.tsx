@@ -8,11 +8,11 @@ export const revalidate = false;
 export const metadata: Metadata = {
   title: 'Constellation — Explore — Source Library',
   description:
-    'Interactive semantic map of 29,000+ books and artworks. Explore how texts cluster by meaning, discover edition families, and navigate the knowledge landscape.',
+    'Interactive semantic map of 33,000+ books and artworks. Explore how texts cluster by meaning, discover edition families, and navigate the knowledge landscape.',
   openGraph: {
     title: 'Constellation — Explore — Source Library',
     description:
-      'A UMAP projection of the entire Source Library — 29,000 books plotted by semantic similarity.',
+      'A UMAP projection of the entire Source Library — 33,000 books plotted by semantic similarity.',
     url: 'https://sourcelibrary.org/explore/constellation',
     siteName: 'Source Library',
     type: 'website',
@@ -25,7 +25,7 @@ export default function ConstellationPage() {
       header={
         <ContentHeader
           title="Constellation"
-          subtitle="29,000 books and artworks plotted by semantic similarity — clusters reveal edition families, thematic neighborhoods, and the shape of the collection"
+          subtitle="33,000 books and artworks plotted by semantic similarity — clusters reveal edition families, thematic neighborhoods, and the shape of the collection"
         >
           <div className="mt-5">
             <ExploreTabBar />

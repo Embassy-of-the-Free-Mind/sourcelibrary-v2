@@ -7,7 +7,7 @@ export const revalidate = 86400;
 
 export const metadata: Metadata = {
   title: 'Connect Source Library to Claude',
-  description: 'Give Claude access to 19,000+ rare historical texts in 30 seconds. Search, read, and cite alchemical, Hermetic, and early scientific works directly in your conversation.',
+  description: 'Give Claude access to 22,000+ rare historical texts in 30 seconds. Search, read, and cite alchemical, Hermetic, and early scientific works directly in your conversation.',
   alternates: { canonical: '/connect' },
 };
 
@@ -17,7 +17,7 @@ export default function ConnectPage() {
       header={
         <ContentHeader
           title="Connect Source Library to Claude"
-          subtitle="Search, read, and cite 19,000+ rare historical texts — directly in your conversation."
+          subtitle="Search, read, and cite 22,000+ rare historical texts — directly in your conversation."
         />
       }
     >
@@ -133,7 +133,7 @@ export default function ConnectPage() {
             <p className="text-stone-700 text-sm italic border-l-2 border-accent-rust/30 pl-3 mb-3">
               &ldquo;Find all alchemical emblems depicting the ouroboros. What texts are they from?&rdquo;
             </p>
-            <p className="text-muted text-xs">Searches 50,000+ cataloged historical illustrations by symbol, subject, or figure</p>
+            <p className="text-muted text-xs">Searches 90,000+ cataloged historical illustrations by symbol, subject, or figure</p>
           </div>
 
           <div className="bg-white rounded-xl border border-border-light p-5">
@@ -155,11 +155,11 @@ export default function ConnectPage() {
 
         <div className="grid grid-cols-2 md:grid-cols-4 gap-4 text-center">
           <div className="bg-white rounded-xl border border-border-light p-5">
-            <p className="text-2xl font-bold text-accent-rust">19,000+</p>
+            <p className="text-2xl font-bold text-accent-rust">22,000+</p>
             <p className="text-sm text-muted mt-1">books</p>
           </div>
           <div className="bg-white rounded-xl border border-border-light p-5">
-            <p className="text-2xl font-bold text-accent-rust">50,000+</p>
+            <p className="text-2xl font-bold text-accent-rust">90,000+</p>
             <p className="text-sm text-muted mt-1">illustrations</p>
           </div>
           <div className="bg-white rounded-xl border border-border-light p-5">

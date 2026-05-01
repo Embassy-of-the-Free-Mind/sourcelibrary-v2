@@ -80,7 +80,7 @@ async function fetchStats() {
       pagesTranslated: agg[0]?.translated || 0,
     };
   } catch {
-    return { totalBooks: 9900, firstTranslations: 5500, pagesTranslated: 2400000 };
+    return { totalBooks: 10675, firstTranslations: 5607, pagesTranslated: 2400000 };
   }
 }
 
