@@ -570,7 +570,7 @@ export default function TranslationEditor({
   const pageProxyUrl = getImageUrl(page, 'full');       // 2400px proxy (cropped if split)
   const pageDisplayUrl = getImageUrl(page, 'display'); // 1200px for initial display
   // Native-res: the original archived image — best available quality
-  const pageNativeUrl = page.split_from_spread
+  const pageNativeUrl = (page.split_from_spread || page.crop)
     ? pageProxyUrl // split pages: cropped image IS the full res
     : (isUsableImageUrl(page.archived_photo) ? page.archived_photo! : pageProxyUrl);
   // For the main view, use native-res if available (progressive: display → native)

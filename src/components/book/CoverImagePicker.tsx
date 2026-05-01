@@ -45,23 +45,15 @@ export default function CoverImagePicker({ bookId, currentThumbnail, currentThum
   }, [isOpen, handleClose]);
 
   const getPageImageUrl = (page: Page) => {
-    // Split-from-spread pages: use photo directly, skip legacy fallback
-    if (page.split_from_spread) return page.photo;
+    // Split pages: use photo directly (the cropped half), skip legacy fallback
+    if (page.split_from_spread || page.crop) return page.photo;
 
     // Prefer pre-generated R2 thumbnail (fast CDN)
     if (page.thumbnail_blob) return page.thumbnail_blob;
 
-    // For split pages, prefer pre-cropped Blob image (avoids proxy overhead)
     const typedPage = page as Page & { archived_photo?: string; cropped_photo?: string };
-    if (page.crop && typedPage.cropped_photo) {
-      return typedPage.cropped_photo;
-    }
-
     const baseUrl = typedPage.archived_photo || page.photo_original || page.photo;
     if (!baseUrl) return null;
-    if (page.crop?.xStart !== undefined && page.crop?.xEnd !== undefined) {
-      return `/api/image?url=${encodeURIComponent(baseUrl)}&w=150&q=60&cx=${page.crop.xStart}&cw=${page.crop.xEnd}`;
-    }
     return `/api/image?url=${encodeURIComponent(baseUrl)}&w=150&q=60`;
   };
 
