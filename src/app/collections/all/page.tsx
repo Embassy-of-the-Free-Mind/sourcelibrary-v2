@@ -2,7 +2,7 @@ import { getReadDb } from '@/lib/mongodb';
 import Link from 'next/link';
 import Image from 'next/image';
 import ContentPageLayout, { ContentHeader } from '@/components/layout/ContentPageLayout';
-// No external slugify imports needed
+import { collectionCountLabel } from '@/lib/collections-utils';
 import type { Metadata } from 'next';
 
 export const revalidate = 86400;
@@ -24,6 +24,7 @@ interface SubCollection {
   tenant_slug?: string | null;
   name: string;
   book_count: number;
+  artwork_count?: number;
   visible: boolean;
   type?: string;
   image?: string;
@@ -34,6 +35,7 @@ interface Wing {
   tenant_slug?: string | null;
   name: string;
   book_count: number;
+  artwork_count?: number;
   image?: string;
   children: SubCollection[];
 }
@@ -53,13 +55,13 @@ async function fetchWings(): Promise<Wing[]> {
     type: { $ne: 'curated' },
     collection_type: { $ne: 'visual_art' },
     visible: true,
-  }).project({ slug: 1, tenantId: 1, name: 1, book_count: 1, featured_images: { $slice: 1 }, _id: 0 }).sort({ name: 1 }).toArray();
+  }).project({ slug: 1, tenantId: 1, name: 1, book_count: 1, artwork_count: 1, featured_images: { $slice: 1 }, _id: 0 }).sort({ name: 1 }).toArray();
 
   // Get all subcollections with their first featured image
   const subs = await db.collection('collections').find({
     parent: { $exists: true },
   }).project({
-    slug: 1, tenantId: 1, name: 1, book_count: 1, parent: 1, visible: 1, type: 1,
+    slug: 1, tenantId: 1, name: 1, book_count: 1, artwork_count: 1, parent: 1, visible: 1, type: 1,
     featured_images: { $slice: 1 }, _id: 0,
   }).toArray();
 
@@ -86,6 +88,7 @@ async function fetchWings(): Promise<Wing[]> {
         tenant_slug: sub.tenantId ? tenantSlugById.get(sub.tenantId) || null : null,
         name: sub.name || sub.slug,
         book_count: sub.book_count || 0,
+        artwork_count: sub.artwork_count || 0,
         visible: sub.visible !== false,
         type: sub.type,
         image: pickImage(sub.featured_images),
@@ -103,6 +106,7 @@ async function fetchWings(): Promise<Wing[]> {
     tenant_slug: w.tenantId ? tenantSlugById.get(w.tenantId) || null : null,
     name: w.name,
     book_count: w.book_count || 0,
+    artwork_count: w.artwork_count || 0,
     image: pickImage(w.featured_images),
     children: childMap.get(w.slug) || [],
   }));
@@ -130,7 +134,7 @@ function CollectionCard({ col }: { col: SubCollection }) {
       <div className="absolute inset-0 bg-gradient-to-t from-[rgba(26,22,18,0.85)] via-[rgba(26,22,18,0.35)] to-transparent" />
       <div className="absolute inset-0 flex flex-col justify-end p-3">
         <p className="text-white/50 text-[10px] mb-0.5">
-          {col.book_count.toLocaleString()} books
+          {collectionCountLabel(col.book_count, col.artwork_count) || 'Empty'}
         </p>
         <h3 className="font-serif text-xs sm:text-sm text-white font-semibold leading-tight line-clamp-2 group-hover:text-accent-gold transition-colors">
           {col.name}
@@ -190,7 +194,7 @@ export default async function AllCollectionsPage() {
                   {wing.name}
                 </h2>
                 <p className="text-white/50 text-sm mt-1">
-                  {wing.book_count.toLocaleString()} books · {wing.children.length} sub-collections
+                  {collectionCountLabel(wing.book_count, wing.artwork_count)} · {wing.children.length} sub-collections
                 </p>
               </div>
             </Link>

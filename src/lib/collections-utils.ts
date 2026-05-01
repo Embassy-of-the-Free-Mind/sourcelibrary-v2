@@ -77,6 +77,23 @@ export function bookTitle(book: { display_title?: string; title: string }): stri
   return (dt && dt !== 'None') ? dt : book.title;
 }
 
+// ---------- Collection count label ----------
+
+/**
+ * Format a human-readable count label for a collection.
+ * Shows "X texts · Y artworks", "X texts", "Y artworks", or empty string.
+ */
+export function collectionCountLabel(bookCount?: number, artworkCount?: number): string {
+  const b = bookCount || 0;
+  const a = artworkCount || 0;
+  if (b > 0 && a > 0) {
+    return `${b.toLocaleString()} texts · ${a.toLocaleString()} artworks`;
+  }
+  if (b > 0) return `${b.toLocaleString()} texts`;
+  if (a > 0) return `${a.toLocaleString()} artworks`;
+  return '';
+}
+
 // ---------- Promise timeout ----------
 
 /** Race a promise against a timeout — returns fallback on timeout or error. */

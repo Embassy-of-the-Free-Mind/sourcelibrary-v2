@@ -10,6 +10,7 @@ import { bookUrl } from '@/lib/slugify';
 import { LIBRARY_PARTNERS } from '@/lib/library-partners';
 import AuthorName from '@/components/AuthorName';
 import { getBookThumbnailUrl } from '@/lib/utils';
+import { collectionCountLabel } from '@/lib/collections-utils';
 
 import { Search, Loader2, ExternalLink, BookOpen, Plus, Check, X, ChevronDown, ChevronUp } from 'lucide-react';
 import { catalog, importBooks, type CatalogResult } from '@/lib/api-client';
@@ -29,6 +30,7 @@ export interface CollectionForGrid {
   subtitle: string;
   description: string;
   book_count: number;
+  artwork_count?: number;
   hero_image: string | null;
   languages?: string[];
 }
@@ -464,7 +466,7 @@ export default function BookLibrary({ initialBooks, totalBooks, languages, colle
                       <div className="absolute inset-0 flex flex-col justify-end p-5 sm:p-6">
                         <div className="flex items-center gap-2 mb-2">
                           <span className="px-2.5 py-0.5 text-xs text-white/80 bg-white/15 backdrop-blur-sm rounded-full">
-                            {col.book_count.toLocaleString()} books
+                            {collectionCountLabel(col.book_count, col.artwork_count)}
                           </span>
                           {topLangs && (
                             <span className="text-xs text-white/50">{topLangs}</span>

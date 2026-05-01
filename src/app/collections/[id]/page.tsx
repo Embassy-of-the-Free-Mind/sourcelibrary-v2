@@ -15,7 +15,7 @@ import ExhibitionLayout from '@/components/collections/ExhibitionLayout';
 import SignUpCTA from '@/components/auth/SignUpCTA';
 import { tenantBookUrl } from '@/lib/slugify';
 import EmbedNavigationReporter from '@/components/embed/EmbedNavigationReporter';
-import { bookTitle, sanitizeThumbnail, withTimeout, ART_EXCLUDED_RESOURCE_TYPES } from '@/lib/collections-utils';
+import { bookTitle, sanitizeThumbnail, withTimeout, collectionCountLabel, ART_EXCLUDED_RESOURCE_TYPES } from '@/lib/collections-utils';
 import { getBookThumbnailUrl } from '@/lib/utils';
 import { firstTranslationBadge } from '@/lib/first-translation-labels';
 import { browseBooks } from '@/lib/books-catalog';
@@ -433,7 +433,7 @@ async function fetchCollectionData(id: string, provider?: string) {
     db.collection('collections')
       .find({ parent: id, visible: true })
       .sort({ book_count: -1 })
-      .project({ slug: 1, name: 1, subtitle: 1, book_count: 1, featured_images: 1 })
+      .project({ slug: 1, name: 1, subtitle: 1, book_count: 1, artwork_count: 1, featured_images: 1 })
       .toArray(),
     8000, [],
   );
@@ -536,7 +536,7 @@ async function fetchCollectionData(id: string, provider?: string) {
     galleryTotalCount,
     exhibition: curationDraft?.curation || null,
     exhibitionBooks,
-    childCollections: childCollections.map(({ _id, ...rest }) => rest) as { slug: string; name: string; subtitle?: string; book_count?: number; featured_images?: { extracted_url?: string; image_url?: string; thumbnail_url?: string }[] }[],
+    childCollections: childCollections.map(({ _id, ...rest }) => rest) as { slug: string; name: string; subtitle?: string; book_count?: number; artwork_count?: number; featured_images?: { extracted_url?: string; image_url?: string; thumbnail_url?: string }[] }[],
     // eslint-disable-next-line @typescript-eslint/no-explicit-any
     artworks: artworks as any[],
   };
@@ -563,6 +563,9 @@ export default async function CollectionDetailPage({ params, provider }: Props &
   const { collection, books, highlights: curatedHighlightsData, galleryImages, total, mentionedBooks, parentCollection, galleryCollectionSlug, galleryTotalCount, exhibition, exhibitionBooks, childCollections, artworks } = data;
   const languages = (collection.languages || []).filter((l: { count: number }) => l.count > 2);
   const isArtCollection = collection.collection_type === 'visual_art';
+  const artworkCount = collection.artwork_count || artworks.length || 0;
+  const bookCount = isArtCollection ? 0 : total;
+  const countLabel = collectionCountLabel(bookCount, artworkCount);
   const itemLabel = isArtCollection ? 'works' : 'books';
 
   // Group curated highlights by tier — cap each to avoid heavy pages crashing mobile Safari
@@ -719,7 +722,7 @@ export default async function CollectionDetailPage({ params, provider }: Props &
               href="#collection-all-books"
               className="hover:text-white/80 transition-colors underline underline-offset-2 decoration-white/30"
             >
-              {total.toLocaleString('en-US')} {itemLabel}
+              {countLabel || `${total.toLocaleString('en-US')} ${itemLabel}`}
             </a>
             {languages.length > 0 && (
               <>
@@ -766,9 +769,9 @@ export default async function CollectionDetailPage({ params, provider }: Props &
                     )}
                     <div className="absolute inset-0 bg-gradient-to-t from-[rgba(26,22,18,0.85)] via-[rgba(26,22,18,0.35)] to-transparent" />
                     <div className="absolute inset-0 flex flex-col justify-end p-3 sm:p-4">
-                      {child.book_count ? (
+                      {(child.book_count || child.artwork_count) ? (
                         <p className="text-white/50 text-xs mb-1 hidden sm:block">
-                          {child.book_count.toLocaleString()} {itemLabel}
+                          {collectionCountLabel(child.book_count, child.artwork_count)}
                         </p>
                       ) : null}
                       <h3 className="font-serif text-sm sm:text-base lg:text-lg text-white font-semibold leading-tight line-clamp-2 group-hover:text-accent-gold transition-colors">

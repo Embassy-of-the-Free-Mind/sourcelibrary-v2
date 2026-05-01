@@ -174,23 +174,30 @@ export async function GET(request: NextRequest) {
       }
     }
 
-    // --- Sync collection book_count caches ---
-    const collections = await db.collection('collections').find({}, { projection: { _id: 1, slug: 1, book_count: 1 } }).toArray();
+    // --- Sync collection book_count + artwork_count caches ---
+    const collections = await db.collection('collections').find({}, { projection: { _id: 1, slug: 1, book_count: 1, artwork_count: 1 } }).toArray();
     let collectionsUpdated = 0;
     const collectionOps = [];
     for (const col of collections) {
-      const liveCount = await db.collection('books').countDocuments({
-        collections: col.slug,
-        status: { $ne: 'deleted' },
-        visible: true,
-        pages_count: { $gt: 0 },
-        pages_translated: { $gt: 0 },
-      });
-      if ((col.book_count || 0) !== liveCount) {
+      const [liveBookCount, liveArtworkCount] = await Promise.all([
+        db.collection('books').countDocuments({
+          collections: col.slug,
+          status: { $ne: 'deleted' },
+          visible: true,
+          pages_count: { $gt: 0 },
+          pages_translated: { $gt: 0 },
+          resource_type: { $exists: false },
+        }),
+        db.collection('books').countDocuments({
+          collections: col.slug,
+          resource_type: { $exists: true },
+        }),
+      ]);
+      if ((col.book_count || 0) !== liveBookCount || (col.artwork_count || 0) !== liveArtworkCount) {
         collectionOps.push({
           updateOne: {
             filter: { _id: col._id },
-            update: { $set: { book_count: liveCount, updated_at: new Date() } },
+            update: { $set: { book_count: liveBookCount, artwork_count: liveArtworkCount, updated_at: new Date() } },
           },
         });
       }

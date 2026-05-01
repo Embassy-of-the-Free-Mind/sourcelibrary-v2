@@ -1,5 +1,6 @@
 import Link from 'next/link';
 import Image from 'next/image';
+import { collectionCountLabel } from '@/lib/collections-utils';
 
 interface FeaturedImage {
   id: string;
@@ -13,6 +14,7 @@ export interface CollectionSummary {
   name: string;
   subtitle: string;
   book_count: number;
+  artwork_count?: number;
   featured_images?: FeaturedImage[];
   languages?: { lang: string; count: number }[];
 }
@@ -53,7 +55,7 @@ function CollectionCard({ col, size }: { col: CollectionSummary; size: 'large' |
       <div className="absolute inset-0 flex flex-col justify-end p-5 sm:p-6">
         <div className="flex items-center gap-2 mb-2">
           <span className="px-2.5 py-0.5 text-xs text-white/80 bg-white/15 backdrop-blur-sm rounded-full">
-            {col.book_count.toLocaleString()} books
+            {collectionCountLabel(col.book_count, col.artwork_count)}
           </span>
           {topLangs && (
             <span className="text-xs text-white/50">
