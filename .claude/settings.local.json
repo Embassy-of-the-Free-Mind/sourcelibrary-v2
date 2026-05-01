@@ -1,7 +1,12 @@
 {
   "permissions": {
     "allow": [
-      "Bash(npx tsc:*)"
+      "Bash(npx tsc:*)",
+      "mcp__claude-conversation-search__search_conversations",
+      "mcp__claude-conversation-search__summarize_session",
+      "mcp__claude-conversation-search__get_session_messages",
+      "mcp__claude-conversation-search__reindex",
+      "mcp__claude-conversation-search__get_messages"
     ]
   }
 }

@@ -3,7 +3,7 @@ import Link from 'next/link';
 import Image from 'next/image';
 import { headers } from 'next/headers';
 import ContentPageLayout, { ContentHeader } from '@/components/layout/ContentPageLayout';
-import { sortCollections, sanitizeThumbnail } from '@/lib/collections-utils';
+import { sortCollections, sanitizeThumbnail, collectionCountLabel } from '@/lib/collections-utils';
 import EraTimeline, { type DecadeBucket } from '@/components/collections/EraTimeline';
 import ShowMorePathways from '@/components/collections/ShowMorePathways';
 import { getTenantContextFromRequest } from '@/lib/tenant-context';
@@ -35,6 +35,7 @@ interface CollectionDoc {
   color: string;
   order: number;
   book_count: number;
+  artwork_count?: number;
   type?: 'category' | 'curated';
   published?: boolean;
   featured_images?: FeaturedImage[];
@@ -201,7 +202,7 @@ function CollectionCard({ col, tenantSlug, priority = false }: { col: Collection
       <div className="absolute inset-0 bg-gradient-to-t from-[rgba(26,22,18,0.85)] via-[rgba(26,22,18,0.35)] to-transparent" />
       <div className="absolute inset-0 flex flex-col justify-end p-3 sm:p-4">
         <p className="text-white/50 text-[11px] mb-1 hidden sm:block">
-          {col.book_count > 0 ? `${col.book_count.toLocaleString()} books` : ''}
+          {collectionCountLabel(col.book_count, col.artwork_count)}
           {col.children_count ? ` · ${col.children_count} sub-collections` : ''}
         </p>
         <h2 className="font-serif text-sm sm:text-base lg:text-lg text-white font-semibold leading-tight line-clamp-2 group-hover:text-accent-gold transition-colors">

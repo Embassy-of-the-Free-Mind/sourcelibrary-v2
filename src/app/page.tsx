@@ -161,6 +161,7 @@ async function getFeaturedCollections() {
         subtitle: (collection.subtitle || '') as string,
         description: (collection.description || '') as string,
         book_count: (collection.book_count || 0) as number,
+        artwork_count: (collection.artwork_count || 0) as number,
         hero_image: (heroUrl || fallbackHero || null) as string | null,
       },
       books: JSON.parse(JSON.stringify(books)),
@@ -205,6 +206,7 @@ async function getRemainingCollections(): Promise<CollectionForGrid[]> {
       subtitle: rest.subtitle || '',
       description: rest.description || '',
       book_count: rest.book_count || 0,
+      artwork_count: rest.artwork_count || 0,
       hero_image: heroUrl as string | null,
       languages,
     };

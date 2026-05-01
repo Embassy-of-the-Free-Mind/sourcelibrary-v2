@@ -26,6 +26,7 @@ export interface Collection {
   color: 'rust' | 'sage' | 'violet' | 'gold';
   order: number;
   book_count: number;
+  artwork_count?: number;
   parent?: string;
   sample_books: CollectionBookRef[];
   highlighted_books?: CuratedHighlight[];
