@@ -31,17 +31,14 @@ const BATCH_SIZE = 100;
 
 function isDigitizerNotice(text) {
   if (!text) return false;
-  // If OCR tagged this as real content, trust it
-  const realTypes = /title-page|text|frontispiece|preface|dedication|colophon|toc|index|front-matter|illustration|map|errata|appendix|diagram|privilege|notes|front-cover/;
+  // Trust the OCR model's page-type tag first
   const pageTypeMatch = text.match(/<page-type>([^<]+)<\/page-type>/);
-  if (pageTypeMatch && realTypes.test(pageTypeMatch[1])) return false;
+  if (pageTypeMatch?.[1] === 'digitizer-insert') return true;
 
-  // Strip <meta> tags — descriptions of stamps/labels are not digitizer notices
-  const start = text.substring(0, 1500).replace(/<meta>[\s\S]*?<\/meta>/g, '');
-  return /google\s+logo|digitized\s+by\s+google|scanned\s+by\s+google|this\s+is\s+a\s+digital\s+copy/i.test(start) ||
-    /preserved\s+for\s+generations\s+on\s+library\s+shelves/i.test(start) ||
-    /inserted\s+by\s+the\s+internet\s+archive|digitization\s+(credit|notice)/i.test(start) ||
-    /not\s+part\s+of\s+the\s+original\s+book|scanner\s+barcode/i.test(start);
+  // Body-text fallback: match full-page Google/IA notices (strip <meta> descriptions first)
+  const bodyText = text.substring(0, 2000).replace(/<meta>[\s\S]*?<\/meta>/g, '');
+  return /this is a digital copy of a book|reproduction of a library book that was digitized|digitized by google as part of an ongoing/i.test(bodyText) ||
+    /inserted by the internet archive/i.test(bodyText);
 }
 
 const client = new MongoClient(process.env.MONGODB_URI, {
