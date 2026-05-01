@@ -352,7 +352,7 @@ export default function CollectionAllBooks({
         /* Art gallery grid — masonry layout with natural aspect ratios */
         <div className={`bg-stone-950 -mx-4 sm:-mx-6 md:-mx-8 px-1 pt-1 pb-4 ${loading ? 'opacity-50 pointer-events-none' : ''}`}>
           <div className="columns-2 sm:columns-3 lg:columns-4 xl:columns-5 gap-1">
-            {displayBooks.map((book) => {
+            {displayBooks.map((book, i) => {
               const thumb = getBookThumbnailUrl(book, 'thumb') || book.photo;
               const title = bookTitle(book);
               const year = book.year || parseInt(book.published || '', 10) || 0;
@@ -368,7 +368,11 @@ export default function CollectionAllBooks({
                       src={thumb}
                       alt={title}
                       className="w-full h-auto block group-hover:opacity-90 transition-opacity duration-300"
-                      loading="lazy"
+                      loading={i < 10 ? 'eager' : 'lazy'}
+                      decoding="async"
+                      fetchPriority={i < 5 ? 'high' : 'auto'}
+                      width={400}
+                      height={500}
                     />
                   ) : (
                     <div className="aspect-[3/4] bg-stone-900 flex items-center justify-center">

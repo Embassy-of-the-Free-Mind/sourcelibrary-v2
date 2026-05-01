@@ -78,7 +78,7 @@ export default function CollectionBookCard({ book, priority = false, bookUrlPref
                 'object-cover group-hover:scale-105 transition-transform duration-300',
                 priority ? 'opacity-100' : (imageLoaded ? 'opacity-100' : 'opacity-0')
               )}
-              sizes="(max-width: 768px) 50vw, (max-width: 1024px) 33vw, 25vw"
+              sizes="(max-width: 768px) 50vw, (max-width: 1024px) 33vw, 20vw"
               onLoad={() => setImageLoaded(true)}
               onError={() => {
                 if (!useFallback && fallbackUrl) {
@@ -89,6 +89,8 @@ export default function CollectionBookCard({ book, priority = false, bookUrlPref
               }}
               priority={priority}
               loading={priority ? 'eager' : 'lazy'}
+              placeholder="blur"
+              blurDataURL="data:image/svg+xml;base64,PHN2ZyB3aWR0aD0iMyIgaGVpZ2h0PSI0IiB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciPjxyZWN0IHdpZHRoPSIzIiBoZWlnaHQ9IjQiIGZpbGw9IiNlN2UyZGUiLz48L3N2Zz4="
             />
           ) : (
             <div className="absolute inset-0 flex items-center justify-center">
