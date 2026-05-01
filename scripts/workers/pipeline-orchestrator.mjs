@@ -374,12 +374,17 @@ function isNonLatin(language) {
 /** Detect Google Books, Internet Archive, or other digitizer notice pages from OCR text. */
 function isDigitizerOcr(ocrData) {
   if (!ocrData) return false;
-  const start = ocrData.substring(0, 1500);
+  // If OCR tagged this as real content, trust it — never override
+  const realTypes = /title-page|text|frontispiece|preface|dedication|colophon|toc|index|front-matter|illustration|map|errata|appendix|diagram|privilege|notes|front-cover/;
+  const pageTypeMatch = ocrData.match(/<page-type>([^<]+)<\/page-type>/);
+  if (pageTypeMatch && realTypes.test(pageTypeMatch[1])) return false;
+
+  // Strip <meta> tags before matching — meta descriptions of stamps/labels are not digitizer notices
+  const start = ocrData.substring(0, 1500).replace(/<meta>[\s\S]*?<\/meta>/g, '');
   return /google\s+logo|digitized\s+by\s+google|scanned\s+by\s+google|this\s+is\s+a\s+digital\s+copy/i.test(start) ||
     /preserved\s+for\s+generations\s+on\s+library\s+shelves/i.test(start) ||
-    /inserted\s+by\s+the\s+internet|internet\s+archive|digitization\s+(credit|notice)/i.test(start) ||
-    /not\s+part\s+of\s+the\s+original\s+book|scanner\s+barcode/i.test(start) ||
-    /ex[\s\-.]?libris|bookplate|library\s+stamp/i.test(start);
+    /inserted\s+by\s+the\s+internet\s+archive|digitization\s+(credit|notice)/i.test(start) ||
+    /not\s+part\s+of\s+the\s+original\s+book|scanner\s+barcode/i.test(start);
 }
 
 // Cover scoring — imported from shared module
