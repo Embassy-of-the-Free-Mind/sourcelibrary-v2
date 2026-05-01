@@ -67,7 +67,6 @@ export async function generateStaticParams() {
 
 interface PageProps {
   params: Promise<{ tenant: string; id: string }>;
-  searchParams?: Promise<Record<string, string | string[] | undefined>>;
 }
 
 // Cached book lookup — deduplicates between generateMetadata and BookInfo
@@ -1041,11 +1040,12 @@ async function BookInfo({ id, tenantId, tenantSlug, embedPolicy }: { id: string;
   );
 }
 
-export default async function BookDetailPage({ params, searchParams }: PageProps) {
+export default async function BookDetailPage({ params }: PageProps) {
   const { id, tenant } = await params;
-  const sp = searchParams ? await searchParams : {};
-  const isEmbedded = typeof sp.embed === 'string' ? sp.embed === '1' : false;
-  const embedPolicy = getEmbedUiPolicy(isEmbedded);
+  // Embed policy is always non-embedded for server-rendered pages.
+  // Client components read embed state from EmbedContext (set in TenantLayoutWrapper).
+  // IMPORTANT: Do NOT add searchParams here — it forces dynamic rendering and breaks ISR.
+  const embedPolicy = getEmbedUiPolicy(false);
   // Use cached tenant lookup instead of headers() to preserve ISR
   const tenantId = await getCachedTenantId(tenant);
   const tenantSlug = tenant;
