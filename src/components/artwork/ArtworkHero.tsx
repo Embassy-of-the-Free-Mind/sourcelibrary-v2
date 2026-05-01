@@ -20,14 +20,22 @@ interface ArtworkHeroProps {
   isLandscape: boolean;
   prevWork?: ArtworkNavItem | null;
   nextWork?: ArtworkNavItem | null;
+  institution?: string;
 }
 
-export default function ArtworkHero({ imageUrl, thumbUrl, hiResUrl, title, fullResUrl, license, isLandscape, prevWork, nextWork }: ArtworkHeroProps) {
-  const [fitHeight, setFitHeight] = useState(false);
+export default function ArtworkHero({ imageUrl, thumbUrl, hiResUrl, title, fullResUrl, license, isLandscape, prevWork, nextWork, institution }: ArtworkHeroProps) {
+  const [fitWidth, setFitWidth] = useState(false);
+  const [showChrome, setShowChrome] = useState(true);
   const hasThumb = !!thumbUrl && thumbUrl !== imageUrl;
   const hasHiRes = !!hiResUrl && hiResUrl !== imageUrl;
-  const [medReady, setMedReady] = useState(!hasThumb); // if no thumb, medium is already the starting point
+  const [medReady, setMedReady] = useState(!hasThumb);
   const [hiResReady, setHiResReady] = useState(false);
+
+  // Auto-hide chrome after 3s
+  useEffect(() => {
+    const timer = setTimeout(() => setShowChrome(false), 3000);
+    return () => clearTimeout(timer);
+  }, []);
 
   // Background-load medium blob
   useEffect(() => {
@@ -45,12 +53,10 @@ export default function ArtworkHero({ imageUrl, thumbUrl, hiResUrl, title, fullR
     img.src = hiResUrl!;
   }, [medReady, hasHiRes, hiResUrl]);
 
-  // Best loaded source — upgrades instantly, no transitions
   const displaySrc = hiResReady && hiResUrl ? hiResUrl
     : medReady ? imageUrl
     : thumbUrl || imageUrl;
 
-  // Best available for magnifier zoom
   const magnifierSrc = hiResReady && hiResUrl ? hiResUrl : imageUrl;
 
   // Keyboard navigation
@@ -66,20 +72,26 @@ export default function ArtworkHero({ imageUrl, thumbUrl, hiResUrl, title, fullR
     return () => window.removeEventListener('keydown', handleKey);
   }, [prevWork, nextWork]);
 
+  const captionText = [institution, license].filter(Boolean).join(' · ');
+
   return (
-    <div className="bg-stone-900 relative">
-      {/* Image container */}
-      <div className={`max-w-[var(--container-wide)] mx-auto ${fitHeight ? 'py-2' : isLandscape ? 'py-4 sm:py-8' : 'py-4 sm:py-8 max-w-3xl'}`}>
+    <div
+      className="bg-black relative group/hero"
+      onMouseEnter={() => setShowChrome(true)}
+      onMouseLeave={() => setShowChrome(false)}
+    >
+      {/* Image container — viewport-height by default, natural proportions */}
+      <div className="flex items-center justify-center" style={{ minHeight: 'calc(100vh - 64px)' }}>
         <div
-          className={`relative mx-auto ${fitHeight ? '' : isLandscape ? 'aspect-[16/10]' : 'aspect-[3/4]'}`}
-          style={fitHeight ? { height: 'calc(100vh - 120px)' } : undefined}
+          className={`relative ${fitWidth ? 'w-full' : 'max-h-[calc(100vh-64px)]'}`}
+          style={fitWidth ? undefined : { maxWidth: '100%' }}
         >
           <ImageWithMagnifier
             src={displaySrc}
             thumbnail={displaySrc}
             highResSrc={magnifierSrc}
             alt={title}
-            className="w-full h-full"
+            className={`${fitWidth ? 'w-full h-auto' : 'max-h-[calc(100vh-64px)] w-auto'} mx-auto`}
             magnifierSize={240}
             zoomLevel={3}
             darkMode
@@ -87,21 +99,21 @@ export default function ArtworkHero({ imageUrl, thumbUrl, hiResUrl, title, fullR
         </div>
       </div>
 
-      {/* Fit-to-height toggle */}
+      {/* Fit toggle — appears on hover */}
       <button
-        onClick={() => setFitHeight(!fitHeight)}
-        className="absolute top-4 right-4 flex items-center gap-1.5 px-2.5 py-1.5 bg-black/60 hover:bg-black/80 text-white text-xs rounded-lg backdrop-blur-sm transition-colors z-10"
-        title={fitHeight ? 'Fit to width' : 'Fit to screen height'}
+        onClick={() => setFitWidth(!fitWidth)}
+        className={`absolute top-4 right-4 flex items-center gap-1.5 px-2.5 py-1.5 bg-black/60 hover:bg-black/80 text-white text-xs rounded-lg backdrop-blur-sm transition-all z-10 ${showChrome ? 'opacity-100' : 'opacity-0'}`}
+        title={fitWidth ? 'Fit to screen' : 'Fit to width'}
       >
-        {fitHeight ? <Minimize className="w-3.5 h-3.5" /> : <Maximize className="w-3.5 h-3.5" />}
-        {fitHeight ? 'Fit width' : 'Fit height'}
+        {fitWidth ? <Minimize className="w-3.5 h-3.5" /> : <Maximize className="w-3.5 h-3.5" />}
+        {fitWidth ? 'Fit screen' : 'Full width'}
       </button>
 
-      {/* Prev/Next navigation */}
+      {/* Prev/Next navigation — appears on hover */}
       {prevWork && (
         <Link
           href={`/artwork/${prevWork.slug}`}
-          className="absolute left-2 top-1/2 -translate-y-1/2 flex items-center gap-1 px-2 py-3 bg-black/40 hover:bg-black/70 text-white rounded-lg backdrop-blur-sm transition-colors z-10 group"
+          className={`absolute left-2 top-1/2 -translate-y-1/2 flex items-center gap-1 px-2 py-3 bg-black/40 hover:bg-black/70 text-white rounded-lg backdrop-blur-sm transition-all z-10 group ${showChrome ? 'opacity-100' : 'opacity-0'}`}
           title={prevWork.title}
         >
           <ChevronLeft className="w-5 h-5" />
@@ -111,7 +123,7 @@ export default function ArtworkHero({ imageUrl, thumbUrl, hiResUrl, title, fullR
       {nextWork && (
         <Link
           href={`/artwork/${nextWork.slug}`}
-          className="absolute right-2 top-1/2 -translate-y-1/2 flex items-center gap-1 px-2 py-3 bg-black/40 hover:bg-black/70 text-white rounded-lg backdrop-blur-sm transition-colors z-10 group"
+          className={`absolute right-2 top-1/2 -translate-y-1/2 flex items-center gap-1 px-2 py-3 bg-black/40 hover:bg-black/70 text-white rounded-lg backdrop-blur-sm transition-all z-10 group ${showChrome ? 'opacity-100' : 'opacity-0'}`}
           title={nextWork.title}
         >
           <span className="hidden sm:block text-xs max-w-[120px] truncate opacity-0 group-hover:opacity-100 transition-opacity">{nextWork.title}</span>
@@ -119,11 +131,11 @@ export default function ArtworkHero({ imageUrl, thumbUrl, hiResUrl, title, fullR
         </Link>
       )}
 
-      {/* Caption bar */}
-      <div className="border-t border-stone-800">
-        <div className="max-w-[var(--container-standard)] mx-auto px-6 md:px-12 py-3 flex items-center justify-between">
-          <p className="text-xs text-stone-500">
-            Wikimedia Commons · {license} · Hover to magnify, click for fullscreen
+      {/* Caption bar — appears on hover */}
+      <div className={`absolute bottom-0 left-0 right-0 transition-all ${showChrome ? 'opacity-100' : 'opacity-0'}`}>
+        <div className="bg-gradient-to-t from-black/80 to-transparent px-6 md:px-12 py-4 flex items-center justify-between">
+          <p className="text-xs text-stone-400">
+            {captionText || 'Hover to magnify'}
           </p>
           <a
             href={fullResUrl}
