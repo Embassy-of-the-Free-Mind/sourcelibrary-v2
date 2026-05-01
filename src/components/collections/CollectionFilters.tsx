@@ -19,11 +19,13 @@ interface CollectionFiltersProps {
   languages: { lang: string; count: number }[];
   /** Override the base path for URL construction (default: /collections/{collectionId}) */
   basePath?: string;
+  /** Optional dedicated search route (e.g. /bph/search). If provided, q navigates there. */
+  searchPath?: string;
   /** Show a search input for filtering within this collection */
   showSearch?: boolean;
 }
 
-export default function CollectionFilters({ collectionId, languages, basePath, showSearch }: CollectionFiltersProps) {
+export default function CollectionFilters({ collectionId, languages, basePath, searchPath, showSearch }: CollectionFiltersProps) {
   const router = useRouter();
   const searchParams = useSearchParams();
 
@@ -35,6 +37,22 @@ export default function CollectionFilters({ collectionId, languages, basePath, s
   const resolvedPath = basePath || `/collections/${collectionId}`;
 
   const updateParams = useCallback((updates: Record<string, string>) => {
+    // Tenant landing pages can opt into canonical search at /[tenant]/search.
+    if (searchPath && updates.q !== undefined) {
+      const nextQuery = updates.q.trim();
+      if (nextQuery) {
+        const searchRouteParams = new URLSearchParams();
+        searchRouteParams.set('q', nextQuery);
+        searchRouteParams.set('mode', 'books');
+        const nextLanguage = updates.language ?? (searchParams.get('language') || '');
+        if (nextLanguage) searchRouteParams.set('language', nextLanguage);
+        const embed = searchParams.get('embed');
+        if (embed === '1') searchRouteParams.set('embed', '1');
+        router.push(`${searchPath}?${searchRouteParams.toString()}`, { scroll: false });
+        return;
+      }
+    }
+
     const params = new URLSearchParams(searchParams.toString());
     for (const [k, v] of Object.entries(updates)) {
       if (v) params.set(k, v);

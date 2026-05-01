@@ -6,6 +6,8 @@
 import { getReadDb } from '@/lib/mongodb';
 import { supabase } from '@/lib/supabase';
 import { ObjectId } from 'mongodb';
+import { searchBookIds } from '@/lib/books-catalog';
+import { buildPageSearchStage } from '@/lib/atlas-search';
 
 const PER_PAGE = 60;
 
@@ -52,19 +54,52 @@ async function browseTenantBooks(opts: BrowseOptions): Promise<BrowseResult> {
     matchConditions.push({ language: opts.language });
   }
 
-  let pipelineStart: Record<string, unknown>[];
-
   if (opts.search && opts.search.trim()) {
-    // For search, could use Atlas Search; for now use text index as fallback
-    pipelineStart = [
-      { $match: { $text: { $search: opts.search } } },
-      { $match: { $and: matchConditions } },
-    ];
-  } else {
-    pipelineStart = [
-      { $match: { $and: matchConditions } },
-    ];
+    // search_content=true parity for in-place /[tenant]?q=:
+    // combine book-level matches with page-content matches, then render books.
+    const [bookLevelIds, pageLevelRows] = await Promise.all([
+      searchBookIds(opts.search, { limit: 5000 }),
+      db.collection('pages').aggregate<{ _id: string }>([
+        buildPageSearchStage(opts.search),
+        { $limit: 300 },
+        { $project: { _id: 0, book_id: 1 } },
+        {
+          $lookup: {
+            from: 'books',
+            let: { bid: '$book_id' },
+            pipeline: [
+              {
+                $match: {
+                  $expr: { $eq: ['$id', '$$bid'] },
+                  tenantId: opts.tenantId,
+                  visible: true,
+                  pages_count: { $gt: 0 },
+                  ...(opts.language ? { language: opts.language } : {}),
+                },
+              },
+              { $project: { _id: 0, id: 1 } },
+            ],
+            as: 'book',
+          },
+        },
+        { $unwind: '$book' },
+        { $group: { _id: '$book.id' } },
+        { $limit: 5000 },
+      ], { maxTimeMS: 8_000 }).toArray().catch(() => []),
+    ]);
+
+    const pageLevelIds = pageLevelRows.map(row => row._id);
+    const matchingIds = [...new Set([...bookLevelIds, ...pageLevelIds])];
+
+    if (matchingIds.length === 0) {
+      return { books: [], total: 0 };
+    }
+    matchConditions.push({ id: { $in: matchingIds } });
   }
+
+  const pipelineStart: Record<string, unknown>[] = [
+    { $match: { $and: matchConditions } },
+  ];
 
   const sortStage: Record<string, 1 | -1> = {
     title: 1,

@@ -1040,8 +1040,8 @@ export default function SearchPage({ defaultLibrary }: { defaultLibrary?: string
                   <button
                     onClick={() => { setCollection(''); setOffset(0); }}
                     className={`px-4 py-2 rounded-full text-sm font-medium transition-colors ${!collection
-                        ? 'bg-accent-rust text-white'
-                        : 'bg-warm text-secondary hover:bg-accent-rust/10 hover:text-accent-rust border border-border-light'
+                      ? 'bg-accent-rust text-white'
+                      : 'bg-warm text-secondary hover:bg-accent-rust/10 hover:text-accent-rust border border-border-light'
                       }`}
                   >
                     All books
