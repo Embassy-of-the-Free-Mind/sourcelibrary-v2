@@ -2,7 +2,7 @@ import { notFound } from 'next/navigation';
 import { getReadDb } from '@/lib/mongodb';
 import { findBookByIdOrSlug } from '@/lib/book-lookup';
 import type { Book, Page } from '@/lib/types';
-import PageEditorClient from '@/components/book/PageEditorClient';
+import EmbedPageReaderWrapper from './EmbedPageReaderWrapper';
 import EmbedNavigationReporter from '@/components/embed/EmbedNavigationReporter';
 
 export const revalidate = 86400;
@@ -17,9 +17,9 @@ const BOOK_NAV_PROJECTION = {
 };
 
 /**
- * BPH embed page reader — self-contained data fetching to avoid
- * cross-route-tree RSC imports. Uses /p/ directory to avoid
- * Next.js page.tsx naming collision.
+ * BPH embed page reader — self-contained data fetching.
+ * Uses a local wrapper with next/dynamic to lazy-load PageEditorClient,
+ * avoiding build-time chunk resolution failures in the embed route tree.
  */
 export default async function EmbedPageRoute({ params }: { params: Promise<{ slug: string; pageId: string }> }) {
   const { slug, pageId } = await params;
@@ -55,10 +55,10 @@ export default async function EmbedPageRoute({ params }: { params: Promise<{ slu
   return (
     <>
       <EmbedNavigationReporter book={book.slug || book.id} page={pageId} />
-      <PageEditorClient
-        initialBook={book}
-        initialPage={serializedPage}
-        initialPageList={serializedNavPages}
+      <EmbedPageReaderWrapper
+        book={book}
+        page={serializedPage}
+        pageList={serializedNavPages}
       />
     </>
   );
