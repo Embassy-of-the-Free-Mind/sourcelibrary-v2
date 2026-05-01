@@ -1,4 +1,3 @@
-import { headers } from 'next/headers';
 import { NextRequest } from 'next/server';
 import { getDb } from '@/lib/mongodb';
 
@@ -12,6 +11,7 @@ export interface TenantContext {
  * Throws if the request was not routed through a tenant path.
  */
 export async function getTenantId(): Promise<string> {
+  const { headers } = await import('next/headers');
   const h = await headers();
   const id = h.get('x-tenant-id');
   if (!id) throw new Error('No tenant context — request not routed through a tenant path');
@@ -23,6 +23,7 @@ export async function getTenantId(): Promise<string> {
  * Throws if the request was not routed through a tenant path.
  */
 export async function getTenantSlug(): Promise<string> {
+  const { headers } = await import('next/headers');
   const h = await headers();
   const slug = h.get('x-tenant-slug');
   if (!slug) throw new Error('No tenant slug in headers');
@@ -37,7 +38,7 @@ export async function getTenantSlug(): Promise<string> {
  * Falls back to x-tenant-slug header from API client interceptor (browser sends it).
  */
 export function getTenantContextFromRequest(
-  requestOrHeaders: NextRequest | Awaited<ReturnType<typeof headers>>
+  requestOrHeaders: NextRequest | Headers
 ): TenantContext {
   // Handle both NextRequest and Headers objects
   // Check for .headers property (NextRequest) vs direct .get method (Headers from next/headers)
