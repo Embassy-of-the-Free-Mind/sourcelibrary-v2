@@ -349,9 +349,9 @@ export default function CollectionAllBooks({
           collectionType={collectionType}
         />
       ) : isArt ? (
-        /* Art gallery grid — Rijksmuseum-inspired, natural aspect ratios, tight packing */
-        <div className={`bg-stone-950 -mx-6 md:-mx-12 px-[2px] py-[2px] ${loading ? 'opacity-50 pointer-events-none' : ''}`}>
-          <div className="columns-2 sm:columns-3 lg:columns-4 xl:columns-5 gap-[2px]">
+        /* Art gallery grid — Rijksmuseum-inspired: uniform cells, tight gaps, dark background */
+        <div className={`bg-stone-950 -mx-6 md:-mx-12 ${loading ? 'opacity-50 pointer-events-none' : ''}`}>
+          <div className="grid grid-cols-3 sm:grid-cols-4 lg:grid-cols-5 xl:grid-cols-6 gap-px">
             {displayBooks.map((book) => {
               const thumb = getBookThumbnailUrl(book, 'thumb') || book.photo;
               const title = bookTitle(book);
@@ -360,26 +360,26 @@ export default function CollectionAllBooks({
                 <Link
                   key={book.id}
                   href={`/artwork/${book.slug || book.id}`}
-                  className="group relative block mb-[2px] overflow-hidden bg-stone-900"
+                  className="group relative aspect-square overflow-hidden bg-stone-900"
                 >
                   {thumb ? (
                     /* eslint-disable-next-line @next/next/no-img-element */
                     <img
                       src={thumb}
                       alt={title}
-                      className="w-full h-auto block group-hover:scale-[1.03] transition-transform duration-500"
+                      className="absolute inset-0 w-full h-full object-cover group-hover:scale-[1.05] transition-transform duration-500"
                       loading="lazy"
                     />
                   ) : (
-                    <div className="aspect-[3/4] flex items-center justify-center">
+                    <div className="absolute inset-0 flex items-center justify-center">
                       <LayoutGrid className="w-8 h-8 text-stone-700" />
                     </div>
                   )}
                   {/* Hover overlay */}
                   <div className="absolute inset-0 bg-gradient-to-t from-black/70 via-transparent to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-300" />
-                  <div className="absolute inset-x-0 bottom-0 p-2.5 translate-y-1 group-hover:translate-y-0 opacity-0 group-hover:opacity-100 transition-all duration-300">
+                  <div className="absolute inset-x-0 bottom-0 p-2 translate-y-1 group-hover:translate-y-0 opacity-0 group-hover:opacity-100 transition-all duration-300">
                     <h3
-                      className="text-xs font-semibold text-white leading-tight line-clamp-2"
+                      className="text-[11px] font-semibold text-white leading-tight line-clamp-2"
                       style={{ fontFamily: 'var(--font-serif)' }}
                     >
                       {title}
