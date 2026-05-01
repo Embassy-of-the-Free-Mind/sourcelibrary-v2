@@ -337,10 +337,11 @@ export async function proxy(request: NextRequest) {
     // Map common paths to embed equivalents
     if (pathname === '/' || pathname === '/search') {
       url.pathname = `/embed/${tenant}`;
+    } else if (pathname.startsWith('/book/') && pathname.includes('/page/')) {
+      // Page reader: rewrite to main site route (embed route tree has build issues)
+      url.pathname = `/default${pathname}`;
     } else if (pathname.startsWith('/book/')) {
-      // Rewrite /book/X/page/Y → /embed/tenant/book/X/p/Y
-      // Uses /p/ because /page/ collides with Next.js page.tsx at the [slug] level
-      url.pathname = `/embed/${tenant}${pathname.replace(/\/page\//, '/p/')}`;
+      url.pathname = `/embed/${tenant}${pathname}`;
     } else if (pathname.startsWith('/collections')) {
       url.pathname = `/embed/${tenant}${pathname}`;
     } else if (pathname === '/catalog') {
