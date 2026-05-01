@@ -3,7 +3,6 @@ import { Metadata } from 'next';
 import { getReadDb } from '@/lib/mongodb';
 import { notFound } from 'next/navigation';
 import Link from 'next/link';
-import { HideWhenEmbedded } from '@/components/embed/HideWhenEmbedded';
 import { Book, Page, TranslationEdition } from '@/lib/types';
 import { findBookByIdOrSlug } from '@/lib/book-lookup';
 import { deduplicateByDHash } from '@/lib/dhash';
@@ -68,6 +67,7 @@ export async function generateStaticParams() {
 
 interface PageProps {
   params: Promise<{ tenant: string; id: string }>;
+  isEmbedded?: boolean;
 }
 
 // Cached book lookup — deduplicates between generateMetadata and BookInfo
@@ -617,7 +617,6 @@ async function BookInfo({ id, tenantId, tenantSlug, embedPolicy }: { id: string;
                   {totalPages} pages
                 </div>
                 {embedPolicy.showGalleryImages && imageCount > 0 && (
-                  <HideWhenEmbedded>
                     <Link
                       href={`/${tenantSlug}/gallery?bookId=${book.id}`}
                       className="flex items-center gap-2 text-accent-gold hover:text-accent-gold transition-colors"
@@ -626,7 +625,6 @@ async function BookInfo({ id, tenantId, tenantSlug, embedPolicy }: { id: string;
                       <Images className="w-4 h-4" />
                       {imageCount} images
                     </Link>
-                  </HideWhenEmbedded>
                 )}
               </div>
 
@@ -696,8 +694,7 @@ async function BookInfo({ id, tenantId, tenantSlug, embedPolicy }: { id: string;
                             .filter((t: string) => t !== 'make_determination')
                             .map((t: string) => t.replace('search_', '').replace(/_/g, ' '))
                             .join(', ')}
-                          {' '}&middot;{' '}
-                          <a href="/blog/first-translation-methodology" className="underline hover:text-stone-500">methodology</a>
+                          {embedPolicy.showExternalLinks && <>{' '}&middot;{' '}<a href="/blog/first-translation-methodology" className="underline hover:text-stone-500">methodology</a></>}
                         </p>
                       )}
                     </div>
@@ -750,7 +747,6 @@ async function BookInfo({ id, tenantId, tenantSlug, embedPolicy }: { id: string;
                 const skipTo = totalPages >= 20 ? 4 : totalPages >= 10 ? 2 : 0;
                 const readPage = firstChapterPage || pages[skipTo] || pages[0];
                 return (
-                  <HideWhenEmbedded>
                     <div className="mt-5">
                       <Link
                         href={`/book/${bookSlug}/page/${readPage.id}`}
@@ -760,7 +756,6 @@ async function BookInfo({ id, tenantId, tenantSlug, embedPolicy }: { id: string;
                         Read This Book
                       </Link>
                     </div>
-                  </HideWhenEmbedded>
                 );
               })()}
 
@@ -844,8 +839,8 @@ async function BookInfo({ id, tenantId, tenantSlug, embedPolicy }: { id: string;
                 book={book}
                 pagesCount={totalPages}
                 hasTranslations={translatedCount > 0}
-                showTranslationMethodologyLink={true}
-                showExternalLinks={true}
+                showTranslationMethodologyLink={embedPolicy.showTranslationMethodologyLink}
+                showExternalLinks={embedPolicy.showExternalLinks}
               >
                 {(book as unknown as { work_id?: string }).work_id && (
                   <Suspense fallback={null}>
@@ -954,7 +949,6 @@ async function BookInfo({ id, tenantId, tenantSlug, embedPolicy }: { id: string;
 
             {/* Gallery Images Preview */}
             {embedPolicy.showGalleryImages && galleryImages.length > 0 && (
-              <HideWhenEmbedded>
                 <div className="card p-6 mt-6">
                   <div className="flex items-center justify-between mb-4">
                     <h2 className="text-lg font-semibold" style={{ color: 'var(--text-primary)' }}>
@@ -994,14 +988,11 @@ async function BookInfo({ id, tenantId, tenantSlug, embedPolicy }: { id: string;
                     })}
                   </div>
                 </div>
-              </HideWhenEmbedded>
             )}
 
             {/* Related Books — pre-computed, zero extra queries */}
             {embedPolicy.showBookRelatedBooks && book.related_books && (book.related_books.direct?.length > 0 || book.related_books.shared?.length > 0) && (
-              <HideWhenEmbedded>
                 <RelatedBooks relatedBooks={book.related_books} />
-              </HideWhenEmbedded>
             )}
           </div>
         );
@@ -1049,20 +1040,16 @@ async function BookInfo({ id, tenantId, tenantSlug, embedPolicy }: { id: string;
   );
 }
 
-export default async function BookDetailPage({ params }: PageProps) {
+export default async function BookDetailPage({ params, isEmbedded = false }: PageProps) {
   const { id, tenant } = await params;
-  // Server always renders full UI. Client components read EmbedContext to hide
-  // features when embedded (ConditionalSiteHeader, SignUpCTA, etc.).
-  // This keeps ISR simple—no searchParams complexity.
-  const embedPolicy = getEmbedUiPolicy(false);
+  const embedPolicy = getEmbedUiPolicy(isEmbedded);
   // Use cached tenant lookup instead of headers() to preserve ISR
   const tenantId = await getCachedTenantId(tenant);
   const tenantSlug = tenant;
 
   return (
     <div className="min-h-screen bg-cream">
-      {/* Header - renders immediately (hidden when embedded) */}
-      <ConditionalSiteHeader variant="light" />
+      {!isEmbedded && <ConditionalSiteHeader variant="light" />}
 
       {/* Book content streams in */}
       <Suspense fallback={
@@ -1076,7 +1063,7 @@ export default async function BookDetailPage({ params }: PageProps) {
       }>
         <BookInfo id={id} tenantId={tenantId} tenantSlug={tenantSlug} embedPolicy={embedPolicy} />
       </Suspense>
-      <SignUpCTA />
+      {!isEmbedded && <SignUpCTA />}
     </div>
   );
 }

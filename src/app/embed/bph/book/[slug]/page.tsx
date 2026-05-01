@@ -23,5 +23,5 @@ export default async function EmbedBookPage({ params }: { params: Promise<{ slug
   );
   if (!exists) notFound();
 
-  return <BookDetailPage params={Promise.resolve({ tenant: 'bph', id: slug })} />;
+  return <BookDetailPage params={Promise.resolve({ tenant: 'bph', id: slug })} isEmbedded />;
 }
