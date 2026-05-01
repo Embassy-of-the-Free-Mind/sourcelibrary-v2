@@ -20,8 +20,8 @@ import { getBookThumbnailUrl } from '@/lib/utils';
 import { firstTranslationBadge } from '@/lib/first-translation-labels';
 import { browseBooks } from '@/lib/books-catalog';
 
-// ISR: rebuild at most once per day
-export const revalidate = 86400;
+// ISR: force dynamic for prototype preview (revert to 86400 before merge)
+export const revalidate = 0;
 export const dynamicParams = true;
 export const maxDuration = 60;
 export async function generateStaticParams() {
