@@ -36,9 +36,14 @@ function extractPageType(text) {
   return match ? match[1].toLowerCase().trim() : null;
 }
 
-/** Check if OCR classified this page as a digitizer insert (trusts the AI model's page-type tag). */
-function isDigitizerPage(pageType) {
-  return pageType === 'digitizer-insert';
+/** Check if this page is a digitizer insert — via OCR tag or body-text fallback. */
+function isDigitizerPage(pageType, ocrText) {
+  if (pageType === 'digitizer-insert') return true;
+  if (!ocrText) return false;
+  // Fallback: match full-page Google/IA notices in body text (not <meta> descriptions)
+  const bodyText = ocrText.replace(/<meta>[\s\S]*?<\/meta>/g, '');
+  return /this is a digital copy of a book|reproduction of a library book that was digitized|digitized by google as part of an ongoing/i.test(bodyText) ||
+    /inserted by the internet archive/i.test(bodyText);
 }
 
 function extractColumns(text) {
@@ -228,12 +233,12 @@ async function processOneJob(db, job) {
           updated_at: now,
         };
         if (isMultiPage) setObj['ocr.pages_per_request'] = job.pages_per_request;
-        // Trust the OCR model's page-type classification
-        if (pageType) {
+        // Trust the OCR model's page-type classification, with body-text fallback
+        if (isDigitizerPage(pageType, text)) {
+          setObj.page_type = 'digitizer-insert';
+          setObj.hidden = true;
+        } else if (pageType) {
           setObj.page_type = pageType;
-          if (isDigitizerPage(pageType)) {
-            setObj.hidden = true;
-          }
         }
         if (columns) setObj.columns = columns;
         if (detectedImages.length > 0) setObj.detected_images = detectedImages;

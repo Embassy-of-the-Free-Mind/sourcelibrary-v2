@@ -185,9 +185,13 @@ function extractPageType(text) {
   return match ? match[1].toLowerCase().trim() : null;
 }
 
-/** Check if OCR classified this page as a digitizer insert (trusts the AI model's page-type tag). */
-function isDigitizerPage(pageType) {
-  return pageType === 'digitizer-insert';
+/** Check if this page is a digitizer insert — via OCR tag or body-text fallback. */
+function isDigitizerPage(pageType, ocrText) {
+  if (pageType === 'digitizer-insert') return true;
+  if (!ocrText) return false;
+  const bodyText = ocrText.replace(/<meta>[\s\S]*?<\/meta>/g, '');
+  return /this is a digital copy of a book|reproduction of a library book that was digitized|digitized by google as part of an ongoing/i.test(bodyText) ||
+    /inserted by the internet archive/i.test(bodyText);
 }
 
 function extractColumns(text) {
@@ -261,7 +265,7 @@ async function processPage(page, promptText, db) {
             source: 'ai',
             prompt_version: TARGET_PROMPT,
           },
-          ...(pageType ? { page_type: pageType, ...(isDigitizerPage(pageType) && { hidden: true }) } : {}),
+          ...(isDigitizerPage(pageType, result.text) ? { page_type: 'digitizer-insert', hidden: true } : pageType ? { page_type: pageType } : {}),
           ...(columns && { columns }),
           ...(detectedImages.length > 0 && { detected_images: detectedImages }),
           updated_at: new Date(),
