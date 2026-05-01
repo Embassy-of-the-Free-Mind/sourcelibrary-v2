@@ -206,7 +206,7 @@ export default function ArtworkInfo({ book, collections, prevWork, nextWork, rel
                 <a href={commonsUrl} target="_blank" rel="noopener noreferrer"
                   className="flex items-center gap-1.5 px-3 py-1.5 text-sm text-stone-300 hover:text-white hover:bg-white/10 rounded-md transition-colors">
                   <ExternalLink className="w-3.5 h-3.5" />
-                  <span className="hidden sm:inline">Commons</span>
+                  <span className="hidden sm:inline">Source</span>
                 </a>
               )}
             </div>
