@@ -301,9 +301,14 @@ export const PATCH = withCuratorAuth(async (request, session, context) => {
       revalidatePath(`/book/${bookSlug}`);
       revalidatePath(`/book/${bookSlug}`, 'layout');
       revalidatePath(`/book/${bookId}`);
+      // Also revalidate tenant-scoped paths (e.g. /bph/book/...)
+      revalidatePath(`/${tenant}/book/${bookSlug}`);
+      revalidatePath(`/${tenant}/book/${bookSlug}`, 'layout');
+      revalidatePath(`/${tenant}/book/${bookId}`);
       // Thumbnail/title changes also affect listing pages (home, collections, search)
       if (changedFields.some(f => ['thumbnail', 'thumbnail_blob', 'title', 'display_title', 'author'].includes(f))) {
         revalidatePath('/', 'layout');
+        revalidatePath(`/${tenant}`, 'layout');
       }
     }
 
