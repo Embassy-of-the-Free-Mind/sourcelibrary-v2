@@ -215,9 +215,11 @@ async function fetchCollectionData(id: string, provider?: string) {
     ? {
       collections: id,
       resource_type: { $exists: true },
+      hidden: { $ne: true },
     }
     : {
       collections: id,
+      hidden: { $ne: true },
       $or: [
         { visible: true, pages_count: { $gt: 0 }, pages_translated: { $gt: 0 } },
         { resource_type: { $exists: true } },
@@ -262,7 +264,7 @@ async function fetchCollectionData(id: string, provider?: string) {
     ? withTimeout(
       db.collection('books')
         .find(
-          { collections: id, resource_type: { $exists: true } },
+          { collections: id, resource_type: { $exists: true }, hidden: { $ne: true } },
           {
             projection: {
               _id: 0, id: 1, slug: 1, title: 1, display_title: 1, author: 1, published: 1,
