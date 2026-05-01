@@ -3,6 +3,7 @@ import { Metadata } from 'next';
 import { getReadDb } from '@/lib/mongodb';
 import { notFound } from 'next/navigation';
 import Link from 'next/link';
+import { HideWhenEmbedded } from '@/components/embed/HideWhenEmbedded';
 import { Book, Page, TranslationEdition } from '@/lib/types';
 import { findBookByIdOrSlug } from '@/lib/book-lookup';
 import { deduplicateByDHash } from '@/lib/dhash';
@@ -616,14 +617,16 @@ async function BookInfo({ id, tenantId, tenantSlug, embedPolicy }: { id: string;
                   {totalPages} pages
                 </div>
                 {embedPolicy.showGalleryImages && imageCount > 0 && (
-                  <Link
-                    href={`/${tenantSlug}/gallery?bookId=${book.id}`}
-                    className="flex items-center gap-2 text-accent-gold hover:text-accent-gold transition-colors"
-                    title="View identified images in gallery"
-                  >
-                    <Images className="w-4 h-4" />
-                    {imageCount} images
-                  </Link>
+                  <HideWhenEmbedded>
+                    <Link
+                      href={`/${tenantSlug}/gallery?bookId=${book.id}`}
+                      className="flex items-center gap-2 text-accent-gold hover:text-accent-gold transition-colors"
+                      title="View identified images in gallery"
+                    >
+                      <Images className="w-4 h-4" />
+                      {imageCount} images
+                    </Link>
+                  </HideWhenEmbedded>
                 )}
               </div>
 
@@ -747,15 +750,17 @@ async function BookInfo({ id, tenantId, tenantSlug, embedPolicy }: { id: string;
                 const skipTo = totalPages >= 20 ? 4 : totalPages >= 10 ? 2 : 0;
                 const readPage = firstChapterPage || pages[skipTo] || pages[0];
                 return (
-                  <div className="mt-5">
-                    <Link
-                      href={`/book/${bookSlug}/page/${readPage.id}`}
-                      className="inline-flex items-center gap-2.5 px-6 py-3 bg-accent-rust hover:bg-accent-rust/90 text-white font-medium rounded-lg transition-colors text-base"
-                    >
-                      <BookOpen className="w-5 h-5" />
-                      Read This Book
-                    </Link>
-                  </div>
+                  <HideWhenEmbedded>
+                    <div className="mt-5">
+                      <Link
+                        href={`/book/${bookSlug}/page/${readPage.id}`}
+                        className="inline-flex items-center gap-2.5 px-6 py-3 bg-accent-rust hover:bg-accent-rust/90 text-white font-medium rounded-lg transition-colors text-base"
+                      >
+                        <BookOpen className="w-5 h-5" />
+                        Read This Book
+                      </Link>
+                    </div>
+                  </HideWhenEmbedded>
                 );
               })()}
 
@@ -839,8 +844,8 @@ async function BookInfo({ id, tenantId, tenantSlug, embedPolicy }: { id: string;
                 book={book}
                 pagesCount={totalPages}
                 hasTranslations={translatedCount > 0}
-                showTranslationMethodologyLink={embedPolicy.showTranslationMethodologyLink}
-                showExternalLinks={embedPolicy.showExternalLinks}
+                showTranslationMethodologyLink={true}
+                showExternalLinks={true}
               >
                 {(book as unknown as { work_id?: string }).work_id && (
                   <Suspense fallback={null}>
@@ -949,50 +954,54 @@ async function BookInfo({ id, tenantId, tenantSlug, embedPolicy }: { id: string;
 
             {/* Gallery Images Preview */}
             {embedPolicy.showGalleryImages && galleryImages.length > 0 && (
-              <div className="card p-6 mt-6">
-                <div className="flex items-center justify-between mb-4">
-                  <h2 className="text-lg font-semibold" style={{ color: 'var(--text-primary)' }}>
-                    Illustrations
-                    <span className="text-sm font-normal text-stone-400 ml-2">{imageCount}</span>
-                  </h2>
-                  <Link
-                    href={`/${tenantSlug}/gallery?bookId=${book.id}`}
-                    className="text-sm text-accent-rust hover:text-accent-gold-dark transition-colors"
-                  >
-                    View All &rarr;
-                  </Link>
+              <HideWhenEmbedded>
+                <div className="card p-6 mt-6">
+                  <div className="flex items-center justify-between mb-4">
+                    <h2 className="text-lg font-semibold" style={{ color: 'var(--text-primary)' }}>
+                      Illustrations
+                      <span className="text-sm font-normal text-stone-400 ml-2">{imageCount}</span>
+                    </h2>
+                    <Link
+                      href={`/${tenantSlug}/gallery?bookId=${book.id}`}
+                      className="text-sm text-accent-rust hover:text-accent-gold-dark transition-colors"
+                    >
+                      View All &rarr;
+                    </Link>
+                  </div>
+                  <div className="flex gap-3 overflow-x-auto pb-2 -mx-1 px-1 scrollbar-thin">
+                    {galleryImages.map((img) => {
+                      const src = img.extracted_url || img.thumbnail_url || img.image_url;
+                      if (!src) return null;
+                      return (
+                        <Link
+                          key={img.id}
+                          href={`/${tenantSlug}/gallery/image/${img.id}`}
+                          className="flex-shrink-0 group"
+                        >
+                          <div className="w-28 h-28 sm:w-36 sm:h-36 rounded-lg overflow-hidden bg-stone-100 border border-stone-200 group-hover:border-accent-rust/40 transition-colors">
+                            <img
+                              src={src}
+                              alt={img.description || 'Illustration'}
+                              className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-300"
+                              loading="lazy"
+                            />
+                          </div>
+                          {img.type && (
+                            <p className="text-[10px] text-stone-400 mt-1 text-center truncate w-28 sm:w-36">{img.type}</p>
+                          )}
+                        </Link>
+                      );
+                    })}
+                  </div>
                 </div>
-                <div className="flex gap-3 overflow-x-auto pb-2 -mx-1 px-1 scrollbar-thin">
-                  {galleryImages.map((img) => {
-                    const src = img.extracted_url || img.thumbnail_url || img.image_url;
-                    if (!src) return null;
-                    return (
-                      <Link
-                        key={img.id}
-                        href={`/${tenantSlug}/gallery/image/${img.id}`}
-                        className="flex-shrink-0 group"
-                      >
-                        <div className="w-28 h-28 sm:w-36 sm:h-36 rounded-lg overflow-hidden bg-stone-100 border border-stone-200 group-hover:border-accent-rust/40 transition-colors">
-                          <img
-                            src={src}
-                            alt={img.description || 'Illustration'}
-                            className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-300"
-                            loading="lazy"
-                          />
-                        </div>
-                        {img.type && (
-                          <p className="text-[10px] text-stone-400 mt-1 text-center truncate w-28 sm:w-36">{img.type}</p>
-                        )}
-                      </Link>
-                    );
-                  })}
-                </div>
-              </div>
+              </HideWhenEmbedded>
             )}
 
             {/* Related Books — pre-computed, zero extra queries */}
             {embedPolicy.showBookRelatedBooks && book.related_books && (book.related_books.direct?.length > 0 || book.related_books.shared?.length > 0) && (
-              <RelatedBooks relatedBooks={book.related_books} />
+              <HideWhenEmbedded>
+                <RelatedBooks relatedBooks={book.related_books} />
+              </HideWhenEmbedded>
             )}
           </div>
         );
@@ -1042,9 +1051,9 @@ async function BookInfo({ id, tenantId, tenantSlug, embedPolicy }: { id: string;
 
 export default async function BookDetailPage({ params }: PageProps) {
   const { id, tenant } = await params;
-  // Embed policy is always non-embedded for server-rendered pages.
-  // Client components read embed state from EmbedContext (set in TenantLayoutWrapper).
-  // IMPORTANT: Do NOT add searchParams here — it forces dynamic rendering and breaks ISR.
+  // Server always renders full UI. Client components read EmbedContext to hide
+  // features when embedded (ConditionalSiteHeader, SignUpCTA, etc.).
+  // This keeps ISR simple—no searchParams complexity.
   const embedPolicy = getEmbedUiPolicy(false);
   // Use cached tenant lookup instead of headers() to preserve ISR
   const tenantId = await getCachedTenantId(tenant);
