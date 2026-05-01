@@ -91,13 +91,18 @@ const SUBJECT_SYNONYMS = {
   'giudizio': 'judgement', 'juicio': 'judgement', 'urteil': 'judgement',
 };
 
-// Common prepositions/articles to strip after synonym replacement
+// Common prepositions/articles/locations to strip after synonym replacement
 const STOP_WORDS = new Set([
   'di', 'del', 'della', 'delle', 'dei', 'degli', 'da', 'con', 'fra', 'tra', 'su', 'per', 'von',
   'of', 'the', 'and', 'with', 'in', 'at', 'by', 'from', 'to', 'on', 'for',
   'de', 'du', 'des', 'et', 'en', 'le', 'la', 'les', 'un', 'une',
   'und', 'mit', 'zu', 'im', 'am', 'an', 'auf', 'aus',
   'ca', 'circa', 'detail', 'dettaglio', 'detalle',
+  // Museum/location names that appear in titles
+  'uffizi', 'galleria', 'gallerie', 'museo', 'museum', 'musee',
+  'florence', 'firenze', 'rome', 'roma', 'london', 'paris', 'berlin', 'madrid',
+  'louvre', 'prado', 'national', 'gallery', 'metropolitan',
+  'degli', 'palazzo', 'chiesa', 'cappella', 'basilica',
 ]);
 
 function canonicalizeTitle(normalized, authorLastName) {
