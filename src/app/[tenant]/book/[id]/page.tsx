@@ -377,24 +377,29 @@ async function getBook(id: string, tenantId?: string): Promise<{ book: Book; pag
   // Infer crop data for uncropped pages in spread books.
   // The crop pipeline skips covers/blanks, leaving them as full spreads.
   // Detect the book's parity convention from existing crops, then fill gaps.
+  // Guards: need 6+ cropped pages AND a decisive parity majority (>75%)
+  // to avoid misfiring on books with sparse or inconsistent crop data.
   const pagesWithCrop = serializedPages.filter(p => p.crop?.xStart !== undefined);
-  if (pagesWithCrop.length > 2) {
-    // Determine convention: do odd pages use left or right half?
+  if (pagesWithCrop.length >= 6) {
     let oddLeft = 0, oddRight = 0;
     for (const p of pagesWithCrop) {
       if (p.page_number % 2 === 1) {
         (p.crop!.xStart as number) > 400 ? oddRight++ : oddLeft++;
       }
     }
-    const oddIsLeft = oddLeft >= oddRight;
+    const oddVotes = oddLeft + oddRight;
+    const majorityPct = oddVotes > 0 ? Math.max(oddLeft, oddRight) / oddVotes : 0;
 
-    for (const p of serializedPages) {
-      if (p.crop || p.split_from_spread) continue;
-      const isOdd = p.page_number % 2 === 1;
-      const useLeft = oddIsLeft ? isOdd : !isOdd;
-      (p as any).crop = useLeft
-        ? { xStart: 0, xEnd: 510 }
-        : { xStart: 490, xEnd: 1000 };
+    if (oddVotes >= 3 && majorityPct >= 0.75) {
+      const oddIsLeft = oddLeft > oddRight;
+      for (const p of serializedPages) {
+        if (p.crop || p.split_from_spread) continue;
+        const isOdd = p.page_number % 2 === 1;
+        const useLeft = oddIsLeft ? isOdd : !isOdd;
+        (p as any).crop = useLeft
+          ? { xStart: 0, xEnd: 510 }
+          : { xStart: 490, xEnd: 1000 };
+      }
     }
   }
 
