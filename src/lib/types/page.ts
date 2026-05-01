@@ -258,7 +258,9 @@ export interface DetectedImage {
  * For split-from-spread pages, uses photo directly (skip legacy fallback).
  */
 export function pageImageUrl(page: Partial<Page>): string {
-  if ((page as any).split_from_spread) return page.photo || '';
+  // Split pages: use photo directly (the cropped half), skip legacy fallback
+  // which would show the full spread via archived_photo/photo_original
+  if ((page as any).split_from_spread || (page as any).crop) return page.photo || '';
   return (page as any).enhanced_photo
     || (page as any).cropped_photo
     || page.archived_photo

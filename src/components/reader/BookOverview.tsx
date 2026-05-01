@@ -34,6 +34,8 @@ function getThumbUrl(page: OverviewPage): string | null {
 }
 
 function getHiresUrl(page: OverviewPage): string | null {
+  // Split pages: use photo directly (the cropped half), not the full spread
+  if (page.split_from_spread || page.crop) return page.photo || null;
   // Best available high-res: archived R2 > display > original > photo
   if (page.archived_photo) return page.archived_photo;
   if (page.display_photo) return page.display_photo;
