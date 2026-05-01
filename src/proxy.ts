@@ -18,7 +18,7 @@ const NON_TENANT_PATHS = new Set([
   // Legacy root paths (pages moved to /[tenant]/*) — kept here to 404 cleanly
   'book', 'collections',
   // Other root pages
-  'author', 'work', 'connect', 'data', 'read',
+  'admin', 'author', 'work', 'connect', 'data', 'read',
   'research', 'embed', 'shwep',
 ]);
 
