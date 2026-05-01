@@ -361,8 +361,13 @@ export default function CollectionAllBooks({
           ) : (
           <div className={`grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-4 xl:grid-cols-5 gap-px ${loading ? 'opacity-50 pointer-events-none' : ''}`}>
             {displayBooks.map((book) => {
-              // thumbnail_blob = -thumb.jpg (600px), thumbnail = -full.jpg (confusing naming)
-              const thumb = book.thumbnail_blob || book.thumbnail || book.photo;
+              // For grid: use smallest available image
+              // thumbnail_blob may be -thumb.jpg (600px) or display size (2000px)
+              // If it's a display-size R2 URL, rewrite to -thumb.jpg variant
+              let thumb = book.thumbnail_blob || book.thumbnail || book.photo || '';
+              if (thumb.includes('images.sourcelibrary.org/artwork/') && !thumb.includes('-thumb.')) {
+                thumb = thumb.replace(/\.jpg$/, '-thumb.jpg');
+              }
               const title = bookTitle(book);
               const year = book.year || parseInt(book.published || '', 10) || 0;
               return (
