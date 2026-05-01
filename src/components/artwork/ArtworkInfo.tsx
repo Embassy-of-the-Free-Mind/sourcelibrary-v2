@@ -116,9 +116,9 @@ export default function ArtworkInfo({ book, collections, prevWork, nextWork, rel
         />
       )}
 
-      {/* Metadata header */}
-      <div className="bg-gradient-to-b from-stone-800 to-stone-900 text-white">
-        <div className="max-w-[var(--container-standard)] mx-auto px-6 md:px-12 py-8 sm:py-10">
+      {/* Metadata header — seamless continuation from dark hero */}
+      <div className="bg-black text-white">
+        <div className="max-w-[var(--container-standard)] mx-auto px-6 md:px-12 py-10 sm:py-14">
           <div className="flex flex-col lg:flex-row lg:items-start lg:justify-between gap-6">
             <div>
               <div className="flex items-center gap-3 mb-3">
