@@ -19,7 +19,7 @@ const NON_TENANT_PATHS = new Set([
   'book', 'collections',
   // Other root pages
   'admin', 'author', 'work', 'connect', 'data', 'read',
-  'research', 'embed', 'shwep',
+  'research', 'embed', 'shwep', 'for-researchers',
 ]);
 
 // Domains that enable the Ficino Society social layer
