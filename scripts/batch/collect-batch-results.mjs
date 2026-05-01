@@ -36,14 +36,9 @@ function extractPageType(text) {
   return match ? match[1].toLowerCase().trim() : null;
 }
 
-/** Detect Google Books, IA, or other digitizer notice pages from OCR text (pages 1-3 only). */
-function isDigitizerNotice(text) {
-  if (!text) return false;
-  const start = text.substring(0, 1500);
-  return /google\s+logo|digitized\s+by\s+google|scanned\s+by\s+google|this\s+is\s+a\s+digital\s+copy/i.test(start) ||
-    /preserved\s+for\s+generations\s+on\s+library\s+shelves/i.test(start) ||
-    /inserted\s+by\s+the\s+internet|internet\s+archive|digitization\s+(credit|notice)/i.test(start) ||
-    /not\s+part\s+of\s+the\s+original\s+book|scanner\s+barcode/i.test(start);
+/** Check if OCR classified this page as a digitizer insert (trusts the AI model's page-type tag). */
+function isDigitizerPage(pageType) {
+  return pageType === 'digitizer-insert';
 }
 
 function extractColumns(text) {
@@ -233,12 +228,12 @@ async function processOneJob(db, job) {
           updated_at: now,
         };
         if (isMultiPage) setObj['ocr.pages_per_request'] = job.pages_per_request;
-        // Auto-detect digitizer notice pages (Google Books, IA inserts)
-        if (isDigitizerNotice(text)) {
-          setObj.page_type = 'digitizer-insert';
-          setObj.hidden = true;
-        } else if (pageType) {
+        // Trust the OCR model's page-type classification
+        if (pageType) {
           setObj.page_type = pageType;
+          if (isDigitizerPage(pageType)) {
+            setObj.hidden = true;
+          }
         }
         if (columns) setObj.columns = columns;
         if (detectedImages.length > 0) setObj.detected_images = detectedImages;
