@@ -103,7 +103,7 @@ export default function CollectionAllBooks({
 }: CollectionAllBooksProps) {
   const isArt = collectionType === 'visual_art';
   const itemLabel = isArt ? 'works' : 'books';
-  const sizeDefault: ViewMode = total > 200 ? 'list' : 'grid';
+  const sizeDefault: ViewMode = isArt ? 'grid' : total > 200 ? 'list' : 'grid';
 
   const [expanded, setExpanded] = useState(false);
   const [allBooks, setAllBooks] = useState<BookItem[]>([]);
