@@ -1,6 +1,6 @@
 'use client';
 
-import { useSession } from 'next-auth/react';
+import { useStableSession } from '@/hooks/useStableSession';
 import { useMemo } from 'react';
 
 const VISITOR_ID_KEY = 'sl_visitor_id';
@@ -31,7 +31,7 @@ export function getVisitorId(): string {
  * Anonymous users get a localStorage-based visitor_id.
  */
 export function useIdentity(): Identity {
-  const { data: session, status } = useSession();
+  const { data: session, status } = useStableSession();
 
   return useMemo(() => {
     if (status === 'loading') {

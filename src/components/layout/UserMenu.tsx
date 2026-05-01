@@ -1,6 +1,7 @@
 'use client';
 
-import { useSession, signOut } from 'next-auth/react';
+import { signOut } from 'next-auth/react';
+import { useStableSession } from '@/hooks/useStableSession';
 import Link from 'next/link';
 import { useState, useRef, useEffect, useCallback } from 'react';
 
@@ -9,7 +10,7 @@ interface UserMenuProps {
 }
 
 export default function UserMenu({ variant = 'default' }: UserMenuProps) {
-  const { data: session, status } = useSession();
+  const { data: session, status } = useStableSession();
   const [isOpen, setIsOpen] = useState(false);
   const [imgError, setImgError] = useState(false);
   const menuRef = useRef<HTMLDivElement>(null);

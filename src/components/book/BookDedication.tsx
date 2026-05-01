@@ -1,7 +1,7 @@
 'use client';
 
 import { useState } from 'react';
-import { useSession } from 'next-auth/react';
+import { useStableSession } from '@/hooks/useStableSession';
 import Link from 'next/link';
 
 interface BookDedicationProps {
@@ -14,7 +14,7 @@ interface BookDedicationProps {
  * Shown on the book page, quiet and permanent — like a donor plaque.
  */
 export default function BookDedication({ bookId, dedication: initialDedication }: BookDedicationProps) {
-  const { data: session } = useSession();
+  const { data: session } = useStableSession();
   const isMember = (session?.user as any)?.membership != null;
   const [dedication, setDedication] = useState(initialDedication);
   const [dedicating, setDedicating] = useState(false);

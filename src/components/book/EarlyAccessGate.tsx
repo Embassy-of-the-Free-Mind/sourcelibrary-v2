@@ -1,6 +1,6 @@
 'use client';
 
-import { useSession } from 'next-auth/react';
+import { useStableSession } from '@/hooks/useStableSession';
 import Link from 'next/link';
 
 interface EarlyAccessGateProps {
@@ -14,7 +14,7 @@ interface EarlyAccessGateProps {
  * explaining that the translation will be publicly available soon.
  */
 export default function EarlyAccessGate({ membersOnlyUntil, children }: EarlyAccessGateProps) {
-  const { data: session } = useSession();
+  const { data: session } = useStableSession();
   const isMember = (session?.user as any)?.membership != null;
 
   const until = new Date(membersOnlyUntil);

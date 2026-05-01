@@ -1,7 +1,7 @@
 'use client';
 
 import { useEffect, useState } from 'react';
-import { useSession } from 'next-auth/react';
+import { useStableSession } from '@/hooks/useStableSession';
 import Link from 'next/link';
 
 interface SignUpCTAProps {
@@ -9,7 +9,7 @@ interface SignUpCTAProps {
 }
 
 export default function SignUpCTA({ variant = 'section' }: SignUpCTAProps) {
-  const { status } = useSession();
+  const { status } = useStableSession();
   const [isEmbedded, setIsEmbedded] = useState(true); // Default to hidden until checked
 
   useEffect(() => {
