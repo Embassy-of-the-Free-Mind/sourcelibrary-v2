@@ -289,6 +289,18 @@ export const PATCH = withCuratorAuth(async (request, session, context) => {
       revalidatePath(`/book/${bookSlug}`);
       revalidatePath(`/book/${bookSlug}`, 'layout');
       revalidatePath(`/book/${bookId}`);
+      // Also revalidate tenant-scoped paths if book belongs to a tenant
+      if (book.tenantId) {
+        const tenant = await db.collection('tenants').findOne(
+          { id: book.tenantId },
+          { projection: { slug: 1 } }
+        );
+        if (tenant?.slug) {
+          revalidatePath(`/${tenant.slug}/book/${bookSlug}`);
+          revalidatePath(`/${tenant.slug}/book/${bookSlug}`, 'layout');
+          revalidatePath(`/${tenant.slug}/book/${bookId}`);
+        }
+      }
       // Thumbnail/title changes also affect listing pages (home, collections, search)
       if (changedFields.some(f => ['thumbnail', 'thumbnail_blob', 'title', 'display_title', 'author'].includes(f))) {
         revalidatePath('/', 'layout');
