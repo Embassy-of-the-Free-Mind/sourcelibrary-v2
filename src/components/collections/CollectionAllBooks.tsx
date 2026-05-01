@@ -376,7 +376,7 @@ export default function CollectionAllBooks({
                       src={thumb}
                       alt={title}
                       className="absolute inset-0 w-full h-full object-cover group-hover:scale-[1.05] transition-transform duration-500"
-                      loading="lazy"
+                      decoding="async"
                     />
                   ) : (
                     <div className="absolute inset-0 flex items-center justify-center">
