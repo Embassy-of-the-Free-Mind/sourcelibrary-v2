@@ -22,7 +22,7 @@ const ROOT_ONLY_ROUTES = new Set([
   'topics', 'categories', 'about', 'blog', 'connect', 'contribute',
   'developers', 'libraries', 'privacy', 'terms', 'support',
   'roadmap', 'status', 'brand', 'press-release', 'founding-donors',
-  'ficino-society', 'feedback', 'unauthorized', 'account',
+  'identify', 'ficino-society', 'feedback', 'unauthorized', 'account',
   'auth', 'platform', 'admin', 'experiments', 'data',
 ]);
 
