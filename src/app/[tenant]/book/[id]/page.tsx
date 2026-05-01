@@ -43,6 +43,7 @@ import { formatAuthor } from '@/lib/utils';
 import AuthorName from '@/components/AuthorName';
 import ConditionalSiteHeader from '@/components/layout/ConditionalSiteHeader';
 import { resolveTenantId } from '@/lib/tenant-context';
+import { getEmbedUiPolicy, type EmbedUiPolicy } from '@/lib/embed-ui-policy';
 
 // Cached tenant ID lookup - avoids headers() which would disable ISR
 const getCachedTenantId = cache(async (slug: string): Promise<string | undefined> => {
@@ -66,6 +67,7 @@ export async function generateStaticParams() {
 
 interface PageProps {
   params: Promise<{ tenant: string; id: string }>;
+  searchParams?: Promise<Record<string, string | string[] | undefined>>;
 }
 
 // Cached book lookup — deduplicates between generateMetadata and BookInfo
@@ -416,7 +418,7 @@ function PagesGridSkeleton() {
 }
 
 // Book info component (streams in via Suspense)
-async function BookInfo({ id, tenantId, tenantSlug }: { id: string; tenantId?: string; tenantSlug: string }) {
+async function BookInfo({ id, tenantId, tenantSlug, embedPolicy }: { id: string; tenantId?: string; tenantSlug: string; embedPolicy: EmbedUiPolicy }) {
   let data;
   try {
     data = await getBook(id, tenantId);
@@ -614,7 +616,7 @@ async function BookInfo({ id, tenantId, tenantSlug }: { id: string; tenantId?: s
                   <FileText className="w-4 h-4" />
                   {totalPages} pages
                 </div>
-                {imageCount > 0 && (
+                {embedPolicy.showGalleryImages && imageCount > 0 && (
                   <Link
                     href={`/${tenantSlug}/gallery?bookId=${book.id}`}
                     className="flex items-center gap-2 text-accent-gold hover:text-accent-gold transition-colors"
@@ -629,15 +631,30 @@ async function BookInfo({ id, tenantId, tenantSlug }: { id: string; tenantId?: s
               {/* Collections */}
               {(book as unknown as { collections?: string[] }).collections && (book as unknown as { collections?: string[] }).collections!.length > 0 && (
                 <div className="flex flex-wrap items-center justify-center sm:justify-start gap-2 mt-3">
-                  {(book as unknown as { collections?: string[] }).collections!.map((slug: string) => (
-                    <Link
-                      key={slug}
-                      href={`/collections/${slug}`}
-                      className="inline-flex items-center gap-1 px-2.5 py-0.5 bg-white/10 hover:bg-white/20 text-stone-300 rounded-full text-xs transition-colors"
-                    >
-                      {slug.replace(/-/g, ' ').replace(/\b\w/g, c => c.toUpperCase())}
-                    </Link>
-                  ))}
+                  {(book as unknown as { collections?: string[] }).collections!.map((slug: string) => {
+                    const label = slug.replace(/-/g, ' ').replace(/\b\w/g, c => c.toUpperCase());
+                    if (!embedPolicy.enableBookCollectionNavigation) {
+                      return (
+                        <span
+                          key={slug}
+                          aria-disabled="true"
+                          className="inline-flex items-center gap-1 px-2.5 py-0.5 bg-white/10 text-stone-300 rounded-full text-xs"
+                        >
+                          {label}
+                        </span>
+                      );
+                    }
+
+                    return (
+                      <Link
+                        key={slug}
+                        href={`/collections/${slug}`}
+                        className="inline-flex items-center gap-1 px-2.5 py-0.5 bg-white/10 hover:bg-white/20 text-stone-300 rounded-full text-xs transition-colors"
+                      >
+                        {label}
+                      </Link>
+                    );
+                  })}
                 </div>
               )}
 
@@ -689,15 +706,29 @@ async function BookInfo({ id, tenantId, tenantSlug }: { id: string; tenantId?: s
               {/* Collections */}
               {bookCollections.length > 0 && (
                 <div className="flex flex-wrap items-center gap-2 mt-3">
-                  {bookCollections.map(col => (
-                    <Link
-                      key={col.slug}
-                      href={`/collections/${col.slug}`}
-                      className="text-xs text-stone-400 hover:text-white bg-white/5 hover:bg-white/10 px-2.5 py-1 rounded-full transition-colors"
-                    >
-                      {col.name}
-                    </Link>
-                  ))}
+                  {bookCollections.map(col => {
+                    if (!embedPolicy.enableBookCollectionNavigation) {
+                      return (
+                        <span
+                          key={col.slug}
+                          aria-disabled="true"
+                          className="text-xs text-stone-400 bg-white/5 px-2.5 py-1 rounded-full"
+                        >
+                          {col.name}
+                        </span>
+                      );
+                    }
+
+                    return (
+                      <Link
+                        key={col.slug}
+                        href={`/collections/${col.slug}`}
+                        className="text-xs text-stone-400 hover:text-white bg-white/5 hover:bg-white/10 px-2.5 py-1 rounded-full transition-colors"
+                      >
+                        {col.name}
+                      </Link>
+                    );
+                  })}
                 </div>
               )}
 
@@ -707,7 +738,7 @@ async function BookInfo({ id, tenantId, tenantSlug }: { id: string; tenantId?: s
               </div>
 
               {/* Read This Book — first chapter > endpaper-skip fallback */}
-              {(() => {
+              {embedPolicy.showBookReadCta && (() => {
                 if (pages.length === 0) return null;
                 const bookSlug = book.slug || book.id;
                 // Prefer first chapter page if available
@@ -805,7 +836,13 @@ async function BookInfo({ id, tenantId, tenantSlug }: { id: string; tenantId?: s
               </div>
 
               {/* Bibliographic Info (includes related editions, attribution) */}
-              <BibliographicInfo book={book} pagesCount={totalPages} hasTranslations={translatedCount > 0}>
+              <BibliographicInfo
+                book={book}
+                pagesCount={totalPages}
+                hasTranslations={translatedCount > 0}
+                showTranslationMethodologyLink={embedPolicy.showTranslationMethodologyLink}
+                showExternalLinks={embedPolicy.showExternalLinks}
+              >
                 {(book as unknown as { work_id?: string }).work_id && (
                   <Suspense fallback={null}>
                     <RelatedEditions bookId={book.id} workId={(book as unknown as { work_id?: string }).work_id!} />
@@ -912,7 +949,7 @@ async function BookInfo({ id, tenantId, tenantSlug }: { id: string; tenantId?: s
             })()}
 
             {/* Gallery Images Preview */}
-            {galleryImages.length > 0 && (
+            {embedPolicy.showGalleryImages && galleryImages.length > 0 && (
               <div className="card p-6 mt-6">
                 <div className="flex items-center justify-between mb-4">
                   <h2 className="text-lg font-semibold" style={{ color: 'var(--text-primary)' }}>
@@ -955,7 +992,7 @@ async function BookInfo({ id, tenantId, tenantSlug }: { id: string; tenantId?: s
             )}
 
             {/* Related Books — pre-computed, zero extra queries */}
-            {book.related_books && (book.related_books.direct?.length > 0 || book.related_books.shared?.length > 0) && (
+            {embedPolicy.showBookRelatedBooks && book.related_books && (book.related_books.direct?.length > 0 || book.related_books.shared?.length > 0) && (
               <RelatedBooks relatedBooks={book.related_books} />
             )}
           </div>
@@ -1004,8 +1041,11 @@ async function BookInfo({ id, tenantId, tenantSlug }: { id: string; tenantId?: s
   );
 }
 
-export default async function BookDetailPage({ params }: PageProps) {
+export default async function BookDetailPage({ params, searchParams }: PageProps) {
   const { id, tenant } = await params;
+  const sp = searchParams ? await searchParams : {};
+  const isEmbedded = typeof sp.embed === 'string' ? sp.embed === '1' : false;
+  const embedPolicy = getEmbedUiPolicy(isEmbedded);
   // Use cached tenant lookup instead of headers() to preserve ISR
   const tenantId = await getCachedTenantId(tenant);
   const tenantSlug = tenant;
@@ -1025,7 +1065,7 @@ export default async function BookDetailPage({ params }: PageProps) {
           </main>
         </>
       }>
-        <BookInfo id={id} tenantId={tenantId} tenantSlug={tenantSlug} />
+        <BookInfo id={id} tenantId={tenantId} tenantSlug={tenantSlug} embedPolicy={embedPolicy} />
       </Suspense>
       <SignUpCTA />
     </div>

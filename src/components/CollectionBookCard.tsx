@@ -7,6 +7,7 @@ import { BookOpen, Calendar, FileText } from 'lucide-react';
 import { cn, getBookThumbnailUrl } from '@/lib/utils';
 import { firstTranslationBadge } from '@/lib/first-translation-labels';
 import AuthorName from '@/components/AuthorName';
+import { useEmbedHref } from '@/lib/EmbedContext';
 
 interface CollectionBook {
   bookId: string;
@@ -42,6 +43,7 @@ export default function CollectionBookCard({ book, priority = false, bookUrlPref
   const [imageLoaded, setImageLoaded] = useState(false);
   const [imageError, setImageError] = useState(false);
   const [useFallback, setUseFallback] = useState(false);
+  const embedHref = useEmbedHref();
 
   const isArtwork = !!book.resource_type;
   const pageCount = book.pages_count || book.pages || 0;
@@ -50,11 +52,12 @@ export default function CollectionBookCard({ book, priority = false, bookUrlPref
   const thumbnailUrl = useFallback && fallbackUrl ? fallbackUrl : primaryUrl;
   const slug = book.slug || book.id || book.bookId;
 
-  const bookHref = `${bookUrlPrefix || ''}/book/${book.slug || book.id || book.bookId}`;
+  const bookHref = embedHref(`${bookUrlPrefix || ''}/book/${book.slug || book.id || book.bookId}`);
+  const artworkHref = embedHref(`${bookUrlPrefix || ''}/artwork/${slug}`);
 
   return (
     <Link
-      href={isArtwork ? `${bookUrlPrefix || ''}/artwork/${slug}` : bookHref}
+      href={isArtwork ? artworkHref : bookHref}
       className="group block"
     >
       <div className="h-full rounded-xl border border-border-light hover:border-accent-rust/40 hover:shadow-lg transition-[border-color,box-shadow] overflow-hidden bg-white">

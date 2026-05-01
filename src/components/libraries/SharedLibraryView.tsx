@@ -1,3 +1,5 @@
+'use client';
+
 /**
  * Shared library detail view component.
  * Used by both /libraries/[slug] and /[tenant] routes to render consistent library-detail UX.
@@ -13,6 +15,8 @@ import CollectionFilters from '@/components/collections/CollectionFilters';
 import { bookTitle } from '@/lib/collections-utils';
 import BphCatalogBrowser from '@/components/libraries/BphCatalogBrowser';
 import { getBookThumbnailUrl } from '@/lib/utils';
+import { getEmbedUiPolicy } from '@/lib/embed-ui-policy';
+import { useEmbed, useEmbedHref } from '@/lib/EmbedContext';
 
 export const PER_PAGE = 60;
 
@@ -91,8 +95,6 @@ export interface SharedLibraryViewProps {
   catalogTotal?: number;
   /** Optional tenant slug to pass to nested components */
   tenantSlug?: string | null;
-  /** Whether currently embedded via embed script (embed=1 param) */
-  embed?: boolean;
 }
 
 export default function SharedLibraryView({
@@ -113,13 +115,15 @@ export default function SharedLibraryView({
   digitizedUbns = {},
   catalogTotal = 0,
   tenantSlug,
-  embed = false,
 }: SharedLibraryViewProps) {
+  const embed = useEmbed();
+  const embedHref = useEmbedHref();
   const totalPages = Math.ceil(total / PER_PAGE);
   const currentPage = Math.floor(offset / PER_PAGE) + 1;
   const filteredLanguages = languages.filter(l => l.count > 2);
   const externalPartnerUrl = partner.url?.trim() || '';
   const hasExternalPartnerUrl = /^https?:\/\//i.test(externalPartnerUrl);
+  const embedPolicy = getEmbedUiPolicy(embed);
 
   // BPH shows: Selected Books + Catalog by default, full grid on ?view=books
   const showBooksGrid = !isBph || view === 'books';
@@ -157,9 +161,8 @@ export default function SharedLibraryView({
               </>
             )}
 
-            {hasExternalPartnerUrl && (
+            {hasExternalPartnerUrl && embedPolicy.showTenantHeroExternalLink && (
               <>
-                {/* //TODO: Hide these two if embedded else show. */}
                 <span className="w-px h-4 bg-white/20" />
                 <a
                   href={externalPartnerUrl}
@@ -176,8 +179,8 @@ export default function SharedLibraryView({
         </div>
       </div>
 
-      {/* Gallery Grid - hidden in embed mode on books view */}
-      {galleryImages.length > 0 && !(embed && view === 'books') && (
+      {/* Gallery Grid - hidden in embed mode */}
+      {galleryImages.length > 0 && embedPolicy.showGalleryImages && (
         <div className="bg-warm border-b border-border-light">
           <div className="max-w-7xl mx-auto px-6 py-6">
             <h2
@@ -194,7 +197,7 @@ export default function SharedLibraryView({
                 return (
                   <Link
                     key={galleryId}
-                    href={`${basePath}/gallery/image/${galleryId}`}
+                    href={embedHref(`${basePath}/gallery/image/${galleryId}`)}
                     className="group relative aspect-square rounded-lg overflow-hidden border border-border-light hover:border-accent-rust/40 transition-all hover:shadow-md"
                     title={img.museumDescription || img.museum_description || img.description || img.bookTitle || img.book_title}
                   >
@@ -220,7 +223,7 @@ export default function SharedLibraryView({
                 );
               })}
               <Link
-                href={`${basePath}/gallery`}
+                href={embedHref(`${basePath}/gallery`)}
                 className="group relative aspect-square rounded-lg overflow-hidden border border-border-light hover:border-accent-rust/40 transition-all hover:shadow-md bg-cream flex items-center justify-center"
               >
                 <div className="text-center px-2">
@@ -324,7 +327,7 @@ export default function SharedLibraryView({
                 <BookOpen className="w-12 h-12 text-muted mx-auto mb-4" />
                 <p className="text-lg text-secondary">No books found matching your filters.</p>
                 <Link
-                  href={basePath}
+                  href={embedHref(basePath)}
                   className="text-sm text-accent-rust hover:underline mt-2 inline-block"
                 >
                   Clear filters
@@ -337,7 +340,7 @@ export default function SharedLibraryView({
               <div className="flex items-center justify-center gap-4 mt-10 text-sm">
                 {offset > 0 ? (
                   <Link
-                    href={`${basePath}?view=books&sort=${sort}${languageFilter ? `&language=${languageFilter}` : ''}&offset=${Math.max(0, offset - PER_PAGE)}${embed ? '&embed=1' : ''}`}
+                    href={embedHref(`${basePath}?view=books&sort=${sort}${languageFilter ? `&language=${languageFilter}` : ''}&offset=${Math.max(0, offset - PER_PAGE)}`)}
                     className="px-4 py-2 rounded-lg border border-border-light hover:bg-warm transition-colors"
                   >
                     Previous
@@ -352,7 +355,7 @@ export default function SharedLibraryView({
                 </span>
                 {currentPage < totalPages ? (
                   <Link
-                    href={`${basePath}?view=books&sort=${sort}${languageFilter ? `&language=${languageFilter}` : ''}&offset=${offset + PER_PAGE}${embed ? '&embed=1' : ''}`}
+                    href={embedHref(`${basePath}?view=books&sort=${sort}${languageFilter ? `&language=${languageFilter}` : ''}&offset=${offset + PER_PAGE}`)}
                     className="px-4 py-2 rounded-lg border border-border-light hover:bg-warm transition-colors"
                   >
                     Next
@@ -404,7 +407,7 @@ export default function SharedLibraryView({
                     />
                   ))}
                   <Link
-                    href={`${basePath}?view=books`}
+                    href={embedHref(`${basePath}?view=books`)}
                     className="group flex flex-col items-center justify-center rounded-lg border border-border-light hover:border-accent-rust/40 transition-all hover:shadow-md bg-cream aspect-[2/3] min-h-[180px]"
                   >
                     <BookOpen className="w-6 h-6 text-muted mb-2 group-hover:text-accent-rust transition-colors" />
@@ -438,7 +441,7 @@ export default function SharedLibraryView({
         <div className="mt-16 pt-8 border-t border-border-light">
           <p className="text-sm text-muted leading-relaxed max-w-3xl">
             All book images and metadata are sourced from{' '}
-            {hasExternalPartnerUrl ? (
+            {hasExternalPartnerUrl && embedPolicy.showExternalLinks ? (
               <a
                 href={externalPartnerUrl}
                 target="_blank"

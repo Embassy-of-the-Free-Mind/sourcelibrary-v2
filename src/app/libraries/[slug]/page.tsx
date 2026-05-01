@@ -13,6 +13,36 @@ interface Props {
   searchParams: Promise<Record<string, string | string[] | undefined>>;
 }
 
+function toStringOrUndefined(value: unknown): string | undefined {
+  return typeof value === 'string' ? value : undefined;
+}
+
+function toNumberOrUndefined(value: unknown): number | undefined {
+  return typeof value === 'number' ? value : undefined;
+}
+
+function sanitizeGalleryImageDoc(doc: Record<string, unknown>): Record<string, unknown> {
+  return {
+    id: toStringOrUndefined(doc.id),
+    pageId: toStringOrUndefined(doc.pageId),
+    page_id: toStringOrUndefined(doc.page_id),
+    detectionIndex: toNumberOrUndefined(doc.detectionIndex),
+    detection_index: toNumberOrUndefined(doc.detection_index),
+    thumbnailUrl: toStringOrUndefined(doc.thumbnailUrl),
+    thumbnail_url: toStringOrUndefined(doc.thumbnail_url),
+    extractedUrl: toStringOrUndefined(doc.extractedUrl),
+    extracted_url: toStringOrUndefined(doc.extracted_url),
+    imageUrl: toStringOrUndefined(doc.imageUrl),
+    image_url: toStringOrUndefined(doc.image_url),
+    museumDescription: toStringOrUndefined(doc.museumDescription),
+    museum_description: toStringOrUndefined(doc.museum_description),
+    description: toStringOrUndefined(doc.description),
+    bookTitle: toStringOrUndefined(doc.bookTitle),
+    book_title: toStringOrUndefined(doc.book_title),
+    type: toStringOrUndefined(doc.type),
+  };
+}
+
 // ---------- Static params ----------
 
 export async function generateStaticParams() {
@@ -97,6 +127,10 @@ async function fetchLibraryData(
     } catch { /* Gallery is optional */ }
   }
 
+  const sanitizedGalleryImages = galleryImages
+    .filter((img): img is Record<string, unknown> => !!img && typeof img === 'object')
+    .map((img) => sanitizeGalleryImageDoc(img));
+
   const { data: contribData } = await supabase
     .from('books_catalog')
     .select('contributing_library')
@@ -122,7 +156,7 @@ async function fetchLibraryData(
     total: booksResult.total,
     topBooks: sampleResult.books.slice(0, 5) as SharedLibraryViewProps['topBooks'],
     languages: languages as SharedLibraryViewProps['languages'],
-    galleryImages: galleryImages as SharedLibraryViewProps['galleryImages'],
+    galleryImages: sanitizedGalleryImages as SharedLibraryViewProps['galleryImages'],
     contributingLibraries,
   };
 }

@@ -4,6 +4,7 @@ import { TenantSessionUpdater } from '@/components/auth/TenantSessionUpdater';
 import { resolveTenantId } from '@/lib/tenant-context';
 import { cache } from 'react';
 import EmbedResizeReporter from '@/components/embed/EmbedResizeReporter';
+import { TenantLayoutWrapper } from '@/components/tenant/TenantLayoutWrapper';
 
 // Cached tenant lookup - avoid DB hit on every page under the tenant layout
 const getCachedTenant = cache(async (slug: string) => {
@@ -74,7 +75,7 @@ export default async function TenantLayout({
       {/* Trigger JWT update with tenant context for role resolution + activate pending memberships */}
       <TenantSessionUpdater tenantSlug={slug} />
       <EmbedResizeReporter />
-      {children}
+      <TenantLayoutWrapper>{children}</TenantLayoutWrapper>
     </>
   );
 }

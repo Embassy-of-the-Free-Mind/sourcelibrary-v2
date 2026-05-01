@@ -111,9 +111,18 @@ interface BibliographicInfoProps {
   pagesCount: number;
   hasTranslations?: boolean;
   children?: React.ReactNode;
+  showTranslationMethodologyLink?: boolean;
+  showExternalLinks?: boolean;
 }
 
-export default function BibliographicInfo({ book, pagesCount, hasTranslations, children }: BibliographicInfoProps) {
+export default function BibliographicInfo({
+  book,
+  pagesCount,
+  hasTranslations,
+  children,
+  showTranslationMethodologyLink = true,
+  showExternalLinks = true,
+}: BibliographicInfoProps) {
   const router = useRouter();
   const [expanded, setExpanded] = useState(false);
   const [copied, setCopied] = useState(false);
@@ -297,16 +306,18 @@ export default function BibliographicInfo({ book, pagesCount, hasTranslations, c
                             {t.publisher && <span className="text-stone-500">, {t.publisher}</span>}
                           </div>
                           {t.catalog_id && t.evidence_source && t.evidence_source !== 'llm_knowledge' ? (
-                            <a
-                              href={getCatalogUrl(t.evidence_source, t.catalog_id)}
-                              target="_blank"
-                              rel="noopener noreferrer"
-                              className="text-accent-gold hover:text-accent-gold/80 text-xs inline-flex items-center gap-1 mt-0.5"
-                            >
-                              View on {getCatalogLabel(t.evidence_source)}
-                              <ExternalLink className="w-3 h-3" />
-                            </a>
-                          ) : t.url ? (
+                            showExternalLinks && (
+                              <a
+                                href={getCatalogUrl(t.evidence_source, t.catalog_id)}
+                                target="_blank"
+                                rel="noopener noreferrer"
+                                className="text-accent-gold hover:text-accent-gold/80 text-xs inline-flex items-center gap-1 mt-0.5"
+                              >
+                                View on {getCatalogLabel(t.evidence_source)}
+                                <ExternalLink className="w-3 h-3" />
+                              </a>
+                            )
+                          ) : t.url && showExternalLinks ? (
                             <a
                               href={t.url}
                               target="_blank"
@@ -347,7 +358,7 @@ export default function BibliographicInfo({ book, pagesCount, hasTranslations, c
                                 {book.translation_verification.translations_found!.map((t, i: number) => (
                                   <p key={i} className="text-stone-400 pl-2">
                                     {t.english_title}{t.translator ? `, trans. ${t.translator}` : ''}{t.pub_year ? ` (${t.pub_year})` : ''}
-                                    {t.url && (
+                                    {t.url && showExternalLinks && (
                                       <>{' '}<a href={t.url} target="_blank" rel="noopener noreferrer" className="text-accent-gold hover:text-accent-gold/80 underline">source</a></>
                                     )}
                                   </p>
@@ -381,7 +392,7 @@ export default function BibliographicInfo({ book, pagesCount, hasTranslations, c
             </div>
 
             {/* USTC with link */}
-            {book.ustc_id && (
+            {book.ustc_id && showExternalLinks && (
               <div className="flex gap-2">
                 <span className="text-stone-500 w-24 flex-shrink-0">USTC:</span>
                 <a
@@ -408,7 +419,7 @@ export default function BibliographicInfo({ book, pagesCount, hasTranslations, c
                 {book.image_source.provider_name && (
                   <div className="flex gap-2">
                     <span className="text-stone-500 w-24 flex-shrink-0">Source:</span>
-                    {book.image_source.source_url ? (
+                    {book.image_source.source_url && showExternalLinks ? (
                       <a
                         href={book.image_source.source_url}
                         target="_blank"
@@ -455,7 +466,7 @@ export default function BibliographicInfo({ book, pagesCount, hasTranslations, c
                     <span className="text-stone-200">{book.image_source.shelfmark}</span>
                   </div>
                 )}
-                {book.image_source.iiif_manifest && (
+                {book.image_source.iiif_manifest && showExternalLinks && (
                   <div className="flex gap-2">
                     <span className="text-stone-500 w-24 flex-shrink-0">IIIF:</span>
                     <a
@@ -480,9 +491,11 @@ export default function BibliographicInfo({ book, pagesCount, hasTranslations, c
                 <span className="text-stone-500 w-24 flex-shrink-0">Translation:</span>
                 <span className="text-stone-200">
                   Source Library AI{' '}
-                  <a href="/about/research" className="text-accent-gold hover:text-accent-gold/80 text-xs ml-1">
-                    How our translations work
-                  </a>
+                  {showTranslationMethodologyLink && (
+                    <a href="/about/research" className="text-accent-gold hover:text-accent-gold/80 text-xs ml-1">
+                      How our translations work
+                    </a>
+                  )}
                 </span>
               </div>
             </div>
