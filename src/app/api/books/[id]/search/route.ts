@@ -23,9 +23,11 @@ function escapeRegex(str: string): string {
 /** Strip XML/HTML tags and clean up formatting artifacts */
 function cleanText(text: string): string {
   return text
-    .replace(/<[^>]+>/g, '')
-    .replace(/\*\*([^*]+)\*\*/g, '$1')
-    .replace(/\s+/g, ' ')
+    .replace(/<[^>]+>/g, '')                    // strip all XML/HTML tags
+    .replace(/\*\*([^*]+)\*\*/g, '$1')          // strip markdown bold
+    .replace(/\*([^*]+)\*/g, '$1')              // strip markdown italic
+    .replace(/original:\s*[^;]+;?\s*/gi, '')    // strip "original: Latin;" annotations
+    .replace(/\s+/g, ' ')                       // collapse whitespace
     .trim();
 }
 
@@ -84,6 +86,9 @@ export async function GET(
     }
 
     const trimmedQuery = query.trim();
+    // Strip surrounding quotes for matching — buildPageSearchStage handles phrase detection internally
+    const isPhrase = /^".*"$/.test(trimmedQuery);
+    const matchQuery = isPhrase ? trimmedQuery.slice(1, -1) : trimmedQuery;
     const db = await getDb();
 
     // Run keyword search and semantic search in parallel
@@ -111,7 +116,7 @@ export async function GET(
           ], { maxTimeMS: 10000 }).toArray();
           usedAtlas = true;
         } catch {
-          const regex = new RegExp(escapeRegex(trimmedQuery), 'i');
+          const regex = new RegExp(escapeRegex(matchQuery), 'i');
           const regexFilter: Record<string, unknown> = {
             book_id: bookId,
             $or: [
@@ -136,18 +141,18 @@ export async function GET(
           if (usedAtlas && Array.isArray(page.highlights) && page.highlights.length > 0) {
             for (const hl of page.highlights as Array<{ path: string; texts: Array<{ value: string; type: string }> }>) {
               const field: 'ocr' | 'translation' = hl.path === 'translation.data' ? 'translation' : 'ocr';
-              const snippet = hl.texts.map(t => t.value).join('');
+              const snippet = cleanText(hl.texts.map(t => t.value).join(''));
               matches.push({ field, snippet, position: 0 });
             }
           } else {
             const ocr = page.ocr as { data?: string } | undefined;
             const translation = page.translation as { data?: string } | undefined;
             if (ocr?.data) {
-              const ocrMatches = generateSnippet(ocr.data, trimmedQuery);
+              const ocrMatches = generateSnippet(ocr.data, matchQuery);
               matches.push(...ocrMatches.map(m => ({ ...m, field: 'ocr' as const })));
             }
             if (translation?.data) {
-              const translationMatches = generateSnippet(translation.data, trimmedQuery);
+              const translationMatches = generateSnippet(translation.data, matchQuery);
               matches.push(...translationMatches.map(m => ({ ...m, field: 'translation' as const })));
             }
           }

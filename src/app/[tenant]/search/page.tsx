@@ -1223,33 +1223,9 @@ export default function SearchPage({ defaultLibrary }: { defaultLibrary?: string
         {noResults && aiResults.length > 0 && (
           <div className="space-y-3">
             <p className="text-sm text-muted">Related results from AI-expanded search:</p>
-            {aiResults.map(result => {
-              const cover = getBookThumbnailUrl({ thumbnail: result.thumbnail, thumbnail_blob: (result as any).thumbnail_blob });
-              const text = result.snippet || result.summary;
-              return (
-                <Link
-                  key={result.id}
-                  href={result.type === 'page' ? `/book/${result.slug || result.book_id}/page-number/${result.page_number}` : `/book/${result.slug || result.book_id}`}
-                  className="flex items-start gap-3 p-4 bg-warm rounded-lg hover:bg-warm-hover transition-colors"
-                >
-                  {cover && (
-                    <Image src={cover} alt="" width={48} height={68} className="rounded shadow-sm flex-shrink-0 object-cover" />
-                  )}
-                  <div className="min-w-0">
-                    <h3 className="font-serif font-medium text-primary text-sm leading-tight">
-                      {result.display_title || result.title}
-                    </h3>
-                    <p className="text-xs text-muted mt-0.5">
-                      {result.author}{result.published ? `, ${result.published}` : ''}
-                      {result.type === 'page' && result.page_number && <span> &middot; p. {result.page_number}</span>}
-                    </p>
-                    {text && (
-                      <p className="text-xs text-secondary mt-1 line-clamp-2">{text}</p>
-                    )}
-                  </div>
-                </Link>
-              );
-            })}
+            {aiResults.map(result => (
+              <RelatedResultCard key={result.id} result={result} tenant={tenant} />
+            ))}
           </div>
         )}
 
@@ -1488,33 +1464,9 @@ export default function SearchPage({ defaultLibrary }: { defaultLibrary?: string
           <section className="mt-12 pt-8 border-t border-border-light">
             <h2 className="text-sm font-medium text-muted uppercase tracking-wide mb-4">Related in the Library</h2>
             <div className="space-y-3">
-              {aiResults.map(result => {
-                const cover = getBookThumbnailUrl({ thumbnail: result.thumbnail, thumbnail_blob: (result as any).thumbnail_blob });
-                const text = result.snippet || result.summary;
-                return (
-                  <Link
-                    key={result.id}
-                    href={result.type === 'page' ? tenantBookUrl({ slug: result.slug, id: result.book_id }, tenant) + `/page-number/${result.page_number}` : tenantBookUrl({ slug: result.slug, id: result.book_id }, tenant)}
-                    className="flex items-start gap-3 p-3 bg-warm rounded-lg hover:bg-warm-hover transition-colors"
-                  >
-                    {cover && (
-                      <Image src={cover} alt="" width={48} height={68} className="rounded shadow-sm flex-shrink-0 object-cover" />
-                    )}
-                    <div className="min-w-0 flex-1">
-                      <h3 className="font-serif font-medium text-primary text-sm leading-tight line-clamp-1">
-                        {result.display_title || result.title}
-                      </h3>
-                      <p className="text-xs text-muted mt-0.5">
-                        {result.author}{result.published ? `, ${result.published}` : ''}
-                        {result.type === 'page' && result.page_number && <span> &middot; p. {result.page_number}</span>}
-                      </p>
-                      {text && (
-                        <p className="text-xs text-secondary mt-1 line-clamp-2">{text}</p>
-                      )}
-                    </div>
-                  </Link>
-                );
-              })}
+              {aiResults.map(result => (
+                <RelatedResultCard key={result.id} result={result} tenant={tenant} />
+              ))}
             </div>
           </section>
         )}
@@ -1766,6 +1718,38 @@ function SemanticResultCard({ result, query }: { result: any; query: string }) {
         </div>
       </Link>
     </div>
+  );
+}
+
+function RelatedResultCard({ result, tenant }: { result: SearchResult; tenant?: string }) {
+  const cover = getBookThumbnailUrl({ thumbnail: result.thumbnail, thumbnail_blob: (result as any).thumbnail_blob });
+  const text = result.snippet || result.summary;
+  const [imgError, setImgError] = useState(false);
+  return (
+    <Link
+      href={result.type === 'page' ? tenantBookUrl({ slug: result.slug, id: result.book_id }, tenant) + `/page-number/${result.page_number}` : tenantBookUrl({ slug: result.slug, id: result.book_id }, tenant)}
+      className="flex items-start gap-3 p-3 bg-warm rounded-lg hover:bg-warm-hover transition-colors"
+    >
+      {cover && !imgError ? (
+        <Image src={cover} alt="" width={48} height={68} className="rounded shadow-sm flex-shrink-0 object-cover" unoptimized onError={() => setImgError(true)} />
+      ) : (
+        <div className="w-[48px] h-[68px] rounded bg-warm-hover flex items-center justify-center flex-shrink-0">
+          <Book className="w-5 h-5 text-border-medium" />
+        </div>
+      )}
+      <div className="min-w-0 flex-1">
+        <h3 className="font-serif font-medium text-primary text-sm leading-tight line-clamp-1">
+          {result.display_title || result.title}
+        </h3>
+        <p className="text-xs text-muted mt-0.5">
+          {result.author}{result.published ? `, ${result.published}` : ''}
+          {result.type === 'page' && result.page_number && <span> &middot; p. {result.page_number}</span>}
+        </p>
+        {text && (
+          <p className="text-xs text-secondary mt-1 line-clamp-2">{text}</p>
+        )}
+      </div>
+    </Link>
   );
 }
 

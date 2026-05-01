@@ -72,6 +72,10 @@ export async function GET(request: NextRequest) {
       }, { status: 400 });
     }
 
+    // Strip surrounding quotes for matching (phrase detection handled by subsystems)
+    const isPhrase = /^".*"$/.test(query.trim());
+    const matchQuery = isPhrase ? query.trim().slice(1, -1) : query;
+
     const db = await getReadDb();
     const results: SearchResult[] = [];
     const seenBooks = new Set<string>();
@@ -137,7 +141,7 @@ export async function GET(request: NextRequest) {
         is_first_translation: !!(typedBook as any).is_first_translation,
         doi: typedBook.doi,
         categories: typedBook.categories,
-        summary: summaryText ? extractSnippet(summaryText, query) : undefined,
+        summary: summaryText ? extractSnippet(summaryText, matchQuery) : undefined,
         snippet_type: summaryText ? 'summary' : undefined,
         thumbnail: (typedBook as any).thumbnail,
         thumbnail_blob: (typedBook as any).thumbnail_blob,
@@ -173,7 +177,7 @@ export async function GET(request: NextRequest) {
         // Only fires when Supabase found nothing (avoids slow regex on common queries)
         if (books.length === 0) {
           const STOPWORDS = new Set(['a', 'an', 'and', 'at', 'by', 'de', 'der', 'des', 'di', 'du', 'el', 'en', 'et', 'for', 'from', 'in', 'la', 'le', 'les', 'of', 'on', 'or', 'the', 'to', 'und', 'von', 'with']);
-          const words = query.trim().split(/\s+/).filter((w: string) => w.length >= 3 && !STOPWORDS.has(w.toLowerCase()));
+          const words = matchQuery.trim().split(/\s+/).filter((w: string) => w.length >= 3 && !STOPWORDS.has(w.toLowerCase()));
           if (words.length >= 2) {
             const wordRegexes = words.map((w: string) => new RegExp(w.replace(/[.*+?^${}()|[\]\\]/g, '\\$&'), 'i'));
             books = await db.collection('books')
@@ -271,7 +275,7 @@ export async function GET(request: NextRequest) {
       (async () => {
         if (bookId || !searchContent) return [];
         try {
-          const books = await semanticBookSearch(query, MAX_PAGE_RESULTS, {
+          const books = await semanticBookSearch(matchQuery, MAX_PAGE_RESULTS, {
             language: language || undefined,
             tenantId: tenantId || undefined,
           });
@@ -297,7 +301,7 @@ export async function GET(request: NextRequest) {
       (async () => {
         if (bookId || !searchContent) return [];
         try {
-          return await semanticPageSearchGlobal(query, 15, tenantId || undefined);
+          return await semanticPageSearchGlobal(matchQuery, 15, tenantId || undefined);
         } catch {
           return [];
         }
@@ -350,7 +354,7 @@ export async function GET(request: NextRequest) {
           const ocrText = page.ocr?.data as string || '';
           const snippetSource = translationText || ocrText;
           snippetType = translationText ? 'translation' : 'ocr';
-          snippet = extractSnippet(snippetSource, query);
+          snippet = extractSnippet(snippetSource, matchQuery);
         }
 
         const pageResult: SearchResult = {
@@ -429,7 +433,7 @@ export async function GET(request: NextRequest) {
             has_doi: !!(book as any).doi,
             doi: (book as any).doi,
             categories: book.categories as string[],
-            summary: summaryText ? extractSnippet(summaryText, query) : undefined,
+            summary: summaryText ? extractSnippet(summaryText, matchQuery) : undefined,
             snippet_type: summaryText ? 'summary' : undefined,
             thumbnail: book.thumbnail as string | undefined,
             thumbnail_blob: book.thumbnail_blob as string | undefined,
@@ -521,7 +525,7 @@ export async function GET(request: NextRequest) {
       // Default: canon-weighted relevance
       // Priority: books > pages, title match, original language, older editions, quality
       const ENGLISH = 'English';
-      const queryLower = query.toLowerCase();
+      const queryLower = matchQuery.toLowerCase();
 
       results.sort((a, b) => {
         // 1. Books before pages

@@ -98,7 +98,10 @@ export async function GET(request: NextRequest) {
     }
 
     const db = await getDb();
-    const queryRegex = new RegExp(query.replace(/[.*+?^${}()|[\]\\]/g, '\\$&'), 'i');
+    // Strip surrounding quotes for regex/semantic matching (phrase detection handled by each subsystem)
+    const isPhrase = /^".*"$/.test(query.trim());
+    const matchQuery = isPhrase ? query.trim().slice(1, -1) : query;
+    const queryRegex = new RegExp(matchQuery.replace(/[.*+?^${}()|[\]\\]/g, '\\$&'), 'i');
 
     // Build Atlas Search filters
     const searchFilters: BookSearchFilters = {};
@@ -152,17 +155,17 @@ export async function GET(request: NextRequest) {
     const [booksResultRaw, indexResult, galleryResult, visualResult, semanticResultRaw, artworkResult, collectionsResult] = await Promise.all([
       withTimeout(searchBooks(query, limit, searchFilters, library), emptyBooks, 'books'),
       withTimeout(
-        searchIndex(db, query, limit, tenantContext.id || undefined).catch((err) => {
+        searchIndex(db, matchQuery, limit, tenantContext.id || undefined).catch((err) => {
           console.error('Index search error:', err);
           return emptyIndex;
         }),
         emptyIndex, 'index',
       ),
-      withTimeout(searchGallery(db, query, queryRegex, galleryLimit, tenantContext.id || undefined), emptyGallery, 'gallery'),
-      withTimeout(searchVisual(query, galleryLimit), emptyGallery, 'visual', 5000),
+      withTimeout(searchGallery(db, matchQuery, queryRegex, galleryLimit, tenantContext.id || undefined), emptyGallery, 'gallery'),
+      withTimeout(searchVisual(matchQuery, galleryLimit), emptyGallery, 'visual', 5000),
       // Semantic search: book-level discovery via book_embeddings (HNSW, ~17K rows)
       withTimeout(
-        semanticBookSearch(query, 12, { tenantId: tenantContext.id || undefined })
+        semanticBookSearch(matchQuery, 12, { tenantId: tenantContext.id || undefined })
           .then(books => {
             const results = books.map(b => {
               // Extract clean summary (strip metadata lines like "Topics:", "People:", etc.)
@@ -200,7 +203,7 @@ export async function GET(request: NextRequest) {
       ),
       // Artwork semantic search: dedicated artwork_embeddings table (3072 dims)
       withTimeout(
-        semanticArtworkSearch(query, 4)
+        semanticArtworkSearch(matchQuery, 4)
           .then(artworks => ({
             results: artworks.map(a => ({
               book_id: a.book_id,
@@ -219,7 +222,7 @@ export async function GET(request: NextRequest) {
       ),
       // Collection search: match collection names/descriptions (~300 docs, fast)
       withTimeout(
-        searchCollections(db, queryRegex, query).catch(() => emptyCollections),
+        searchCollections(db, queryRegex, matchQuery).catch(() => emptyCollections),
         emptyCollections, 'collections', 2000,
       ),
     ]);
@@ -369,7 +372,8 @@ async function searchBooks(
   });
 
   // Canon-weighted reranking: older editions first, original language preferred
-  const queryLower = query.toLowerCase();
+  const stripped = /^".*"$/.test(query.trim()) ? query.trim().slice(1, -1) : query;
+  const queryLower = stripped.toLowerCase();
   books.sort((a: any, b: any) => {
     // 1. Title match (strongest signal)
     const aTitle = (a.display_title || a.title || '').toLowerCase();

@@ -29,8 +29,11 @@ export async function GET(request: NextRequest) {
     return NextResponse.json({ results: [], query: '' });
   }
 
+  // Strip surrounding quotes for semantic search (embedding doesn't need them)
+  const searchQuery = /^".*"$/.test(query) ? query.slice(1, -1) : query;
+
   try {
-    const books = await semanticBookSearch(query, limit, {
+    const books = await semanticBookSearch(searchQuery, limit, {
       language,
       yearMin,
       yearMax,
