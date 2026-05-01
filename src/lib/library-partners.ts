@@ -446,24 +446,6 @@ export const LIBRARY_PARTNERS: Record<string, LibraryPartner> = {
     color: 'rust',
     heroImageOverride: 'https://images.sourcelibrary.org/pages/69e1582bec0a328a49d0a24c/0003.jpg',
   },
-  'sat-daizokyo': {
-    slug: 'sat-daizokyo',
-    name: 'SAT Daizokyo',
-    shortName: 'SAT',
-    providerKey: 'sat_daizokyo',
-    url: 'https://21dzk.l.u-tokyo.ac.jp/SAT/',
-    description: 'The SAT Daizokyo Text Database at the University of Tokyo provides digital access to the Taishō Shinshū Daizōkyō, the standard modern edition of the Chinese Buddhist canon containing over 3,000 texts.',
-    color: 'gold',
-  },
-  'tu-darmstadt': {
-    slug: 'tu-darmstadt',
-    name: 'TU Darmstadt',
-    shortName: 'TU Darmstadt',
-    providerKey: 'tu_darmstadt',
-    url: 'https://tudigit.ulb.tu-darmstadt.de',
-    description: 'The Universitäts- und Landesbibliothek Darmstadt holds important collections of incunabula and early printed books, including scholastic philosophy, natural philosophy, and medieval theological texts.',
-    color: 'sage',
-  },
 };
 
 /** Look up a partner by its URL slug (e.g. "internet-archive") */
