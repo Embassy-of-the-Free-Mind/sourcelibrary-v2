@@ -383,16 +383,16 @@ export default function CollectionAllBooks({
                       <LayoutGrid className="w-8 h-8 text-stone-700" />
                     </div>
                   )}
-                  {/* Hover overlay */}
-                  <div className="absolute inset-0 bg-gradient-to-t from-black/70 via-transparent to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-300" />
-                  <div className="absolute inset-x-0 bottom-0 p-2 translate-y-1 group-hover:translate-y-0 opacity-0 group-hover:opacity-100 transition-all duration-300">
+                  {/* Title overlay — always visible */}
+                  <div className="absolute inset-0 bg-gradient-to-t from-black/70 via-transparent to-transparent" />
+                  <div className="absolute inset-x-0 bottom-0 p-2">
                     <h3
                       className="text-[11px] font-semibold text-white leading-tight line-clamp-2"
                       style={{ fontFamily: 'var(--font-serif)' }}
                     >
                       {title}
                     </h3>
-                    <p className="text-[10px] text-white/60 line-clamp-1 mt-0.5">
+                    <p className="text-[10px] text-white/50 line-clamp-1 mt-0.5">
                       {book.author}{year > 0 ? `, ${year}` : ''}
                     </p>
                   </div>
