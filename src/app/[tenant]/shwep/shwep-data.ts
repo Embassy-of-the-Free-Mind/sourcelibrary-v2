@@ -93,7 +93,7 @@ function getAllMatchedBookIds(): string[] {
   return [...ids];
 }
 
-// Fetch only the books that appear in matches (much faster than loading all 4,800+)
+// Fetch only the books that appear in matches (much faster than loading all 10,000+)
 async function fetchMatchedBooks(db: any): Promise<Map<string, MatchedBook>> {
   const allIds = getAllMatchedBookIds();
   const objectIds = allIds.map(id => {

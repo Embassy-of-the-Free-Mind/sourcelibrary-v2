@@ -222,7 +222,7 @@ const READ_ONLY = { readOnlyHint: true, destructiveHint: false, idempotentHint: 
 const TOOLS: Tool[] = [
   {
     name: 'search_library',
-    description: 'Full-text search across Source Library\'s 19,000+ rare historical books. Searches titles, authors, translations, and OCR text. Returns matching books and page snippets with citation URLs.',
+    description: 'Full-text search across Source Library\'s 22,000+ rare historical books. Searches titles, authors, translations, and OCR text. Returns matching books and page snippets with citation URLs.',
     annotations: { title: 'Search Library', ...READ_ONLY },
     inputSchema: {
       type: 'object' as const,
@@ -324,7 +324,7 @@ const TOOLS: Tool[] = [
   },
   {
     name: 'search_images',
-    description: 'Search 50,000+ historical illustrations, emblems, engravings, diagrams, AND 7,500+ artworks (paintings, prints, sculptures). Filter by type, subject, figure, symbol, year.',
+    description: 'Search 90,000+ historical illustrations, emblems, engravings, diagrams, AND 23,000+ artworks (paintings, prints, sculptures). Filter by type, subject, figure, symbol, year.',
     annotations: { title: 'Search Images', ...READ_ONLY },
     inputSchema: {
       type: 'object' as const,
@@ -401,7 +401,7 @@ function createServer() {
   server.setRequestHandler(ListToolsRequestSchema, async () => ({
     tools: TOOLS,
     _meta: {
-      about: 'Source Library — 19,000+ rare alchemical, Hermetic, and early scientific texts translated into English. The largest AI-ready corpus of pre-modern esoteric knowledge. https://sourcelibrary.org',
+      about: 'Source Library — 22,000+ rare alchemical, Hermetic, and early scientific texts translated into English. The largest AI-ready corpus of pre-modern esoteric knowledge. https://sourcelibrary.org',
     },
   }));
 
@@ -451,7 +451,7 @@ export async function GET() {
   return new Response(JSON.stringify({
     name: 'source-library',
     version: '4.2.0',
-    description: 'Source Library MCP Server — search, read, and cite 19,000+ rare historical texts. Connect via POST to this endpoint.',
+    description: 'Source Library MCP Server — search, read, and cite 22,000+ rare historical texts. Connect via POST to this endpoint.',
     docs: 'https://sourcelibrary.org/developers',
     tools: TOOLS.map(t => t.name),
   }), {

@@ -179,7 +179,7 @@ const TOOL_DECLARATIONS: FunctionDeclaration[] = [
   },
   {
     name: 'search_artworks',
-    description: 'Search 18,000+ standalone artworks (paintings, prints, sculptures, engravings, manuscripts) by subject, artist, period, technique, or visual content. Unlike search_images (which finds illustrations extracted from book pages), this searches museum-quality artworks imported from Met Museum, Wikimedia Commons, Rijksmuseum, etc. Returns artwork title, artist, thumbnail, period, technique, culture, and connections to texts in the library.',
+    description: 'Search 23,000+ standalone artworks (paintings, prints, sculptures, engravings, manuscripts) by subject, artist, period, technique, or visual content. Unlike search_images (which finds illustrations extracted from book pages), this searches museum-quality artworks imported from Met Museum, Wikimedia Commons, Rijksmuseum, etc. Returns artwork title, artist, thumbnail, period, technique, culture, and connections to texts in the library.',
     parameters: {
       type: Type.OBJECT,
       properties: {
@@ -763,7 +763,7 @@ Examples where choices would just slow things down — search directly:
 **Step 4: Deep, focused research.**
 Once you have a direction (from a choice or a specific question), search strategically. The collection includes books in Latin, German, French, Dutch, Hebrew, Sanskrit, Arabic, Greek, and more — nearly all translated into English. **Search in English first.** Use search_collection for keywords, search_semantic for concepts, search_wikipedia for context. When you find something promising, use read_nearby_pages for more context. Follow threads across books.
 
-For visual or symbolic topics (emblems, alchemical apparatus, diagrams, seals, planetary symbols, anatomical illustrations), proactively call search_images (for illustrations extracted from book pages) or search_artworks (for standalone museum artworks — paintings, prints, sculptures from Met, Rijksmuseum, Wikimedia Commons). The collection includes 18,000+ artworks spanning all cultures and periods. search_artworks supports filtering by genre, period, culture, and collection. Use it when users ask about visual art, specific artists, or when showing a painting/print would contextualize a text.
+For visual or symbolic topics (emblems, alchemical apparatus, diagrams, seals, planetary symbols, anatomical illustrations), proactively call search_images (for illustrations extracted from book pages) or search_artworks (for standalone museum artworks — paintings, prints, sculptures from Met, Rijksmuseum, Wikimedia Commons). The collection includes 23,000+ artworks spanning all cultures and periods. search_artworks supports filtering by genre, period, culture, and collection. Use it when users ask about visual art, specific artists, or when showing a painting/print would contextualize a text.
 
 **Step 5: Save and cite with links.**
 Use add_to_notebook for quotes directly relevant to the research question. The notebook persists across messages.

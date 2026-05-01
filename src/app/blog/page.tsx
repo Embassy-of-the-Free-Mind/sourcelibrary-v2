@@ -318,7 +318,7 @@ const posts: BlogPost[] = [
   {
     slug: 'mcp-server',
     title: 'Claude Can Now Read Thousands of Rare Books',
-    subtitle: 'An MCP server giving Claude direct access to Source Library: historical texts, translations, entity graph, and 50,000+ illustrations.',
+    subtitle: 'An MCP server giving Claude direct access to Source Library: historical texts, translations, entity graph, and 90,000+ illustrations.',
     date: '18 February 2026',
     readTime: '8 min read',
     tag: 'Technical',

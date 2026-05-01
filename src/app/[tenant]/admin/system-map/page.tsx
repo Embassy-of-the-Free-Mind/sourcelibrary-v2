@@ -237,7 +237,7 @@ const serviceData: Record<string, ServiceInfo> = {
   mongodb_core: {
     label: 'Core Data', subtitle: 'books · pages · collections', color: '#4db33d', icon: '📚',
     url: 'https://cloud.mongodb.com',
-    summary: 'The heart of the database. The books collection stores metadata for ~5,355 books. The pages collection stores individual page content including OCR text and translations. These two collections are where most reads and writes happen.',
+    summary: 'The heart of the database. The books collection stores metadata for ~22,000 books. The pages collection stores individual page content including OCR text and translations. These two collections are where most reads and writes happen.',
     details: [
       'books: Each document has an id field (string, NOT ObjectId) that is the primary lookup key. ~1,186 legacy books have id !== _id — always use book.id, never _id. Key fields: title, author, slug, language, published, pages_count, pages_ocr, pages_translated, thumbnail, hidden, collections, dublin_core.',
       'pages: Linked to books via book_id (matches book.id). OCR text at ocr.data (string), translation at translation.data (string). Also stores detected_images array, page_type, page_number. This is the highest-volume collection.',
@@ -611,7 +611,7 @@ const serviceData: Record<string, ServiceInfo> = {
   ia: {
     label: 'Internet Archive', subtitle: 'Primary import source', color: '#e17055', icon: '🏛️',
     url: 'https://archive.org',
-    summary: 'The primary source for book imports. Most of the ~5,355 books in Source Library were imported from Internet Archive via their IIIF manifest API. IA provides both the metadata and high-resolution page scan images.',
+    summary: 'The primary source for book imports. Most of the ~22,000 books in Source Library were imported from Internet Archive via their IIIF manifest API. IA provides both the metadata and high-resolution page scan images.',
     details: [
       'Import flow: POST /api/import/ia with an IA identifier (e.g., "liber-de-voluptate"). The importer fetches metadata from archive.org/metadata/{id} and the IIIF manifest from iiif.archive.org/iiif/{id}/manifest.json.',
       'Page images: Extracted from the IIIF manifest canvases. Default resolution: 50% of original (pct:50) to balance quality and storage. Full resolution available on demand.',
