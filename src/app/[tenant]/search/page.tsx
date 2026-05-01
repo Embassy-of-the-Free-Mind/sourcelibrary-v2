@@ -1155,8 +1155,8 @@ export default function SearchPage({ defaultLibrary }: { defaultLibrary?: string
           <div className="py-8"><BookLoader size="xs" /></div>
         )}
 
-        {/* AI narration — streams while search loads */}
-        {query.length >= 3 && (aiStreaming || aiNarration) && (
+        {/* AI narration — only show here when unified view is NOT rendering its own narration block */}
+        {query.length >= 3 && (aiStreaming || aiNarration) && !(viewMode === 'unified' && !loading && (totalResults > 0 || semanticResults.length > 0 || semanticLoading)) && (
           <div className="mb-6 px-4 py-3 bg-warm rounded-lg border border-border-light">
             <p className="text-sm text-secondary italic leading-relaxed"
               dangerouslySetInnerHTML={{

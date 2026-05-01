@@ -382,7 +382,9 @@ export async function GET(request: NextRequest) {
     // Merge semantic book results as BOOK-LEVEL results (not page-level).
     // Semantic search finds conceptually related books that keyword search missed.
     // These should rank alongside Supabase trigram hits, not be buried as page entries.
-    const SEMANTIC_SIM_FLOOR = 0.65;
+    // Lower floor when keyword search found nothing — semantic becomes the primary results.
+    const hasKeywordResults = bookDocs.length > 0 || pageDocs.length > 0;
+    const SEMANTIC_SIM_FLOOR = hasKeywordResults ? 0.65 : 0.55;
     if (semanticDocs.length > 0) {
       // Collect unique book IDs from semantic results (skip books already in results)
       const semanticBookIds = [...new Set(

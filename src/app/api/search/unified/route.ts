@@ -272,9 +272,12 @@ export async function GET(request: NextRequest) {
     // Without this, nonsense queries like "xyznonexistent" return random results
     // because embeddings always find *something* in the vector space.
     // Calibrated 2026-04-23: real queries score 0.67+, nonsense scores 0.57-0.63.
+    // When keyword search returns nothing, lower the semantic floor to surface
+    // conceptual matches as a fallback (e.g. "help" finds charity/assistance books).
+    const hasKeywordResults = booksResultRaw.results.length > 0 || indexResult.results.length > 0;
     const VISUAL_SIM_FLOOR = 0.28;
-    const SEMANTIC_SIM_FLOOR = 0.65;
-    const ARTWORK_SIM_FLOOR = 0.65;
+    const SEMANTIC_SIM_FLOOR = hasKeywordResults ? 0.65 : 0.55;
+    const ARTWORK_SIM_FLOOR = hasKeywordResults ? 0.65 : 0.55;
 
     // Filter visual results by tenant if needed
     let filteredVisualResults = visualResult.results.filter((r: any) => (r.similarity ?? 1) >= VISUAL_SIM_FLOOR);
