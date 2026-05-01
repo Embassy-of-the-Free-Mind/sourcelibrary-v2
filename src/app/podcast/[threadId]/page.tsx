@@ -45,7 +45,7 @@ async function getEpisode(threadId: string): Promise<EpisodeData | null> {
 
     const thread = await db.collection('embassy_threads').findOne(
       { _id: new ObjectId(threadId) },
-      { projection: { title: 1, creatorName: 1, podcasts: 1, podcast: 1 } },
+      { projection: { title: 1, creatorName: 1, podcasts: 1, podcast: 1, heroImage: 1 } },
     );
     if (!thread) return null;
 
@@ -77,9 +77,22 @@ async function getEpisode(threadId: string): Promise<EpisodeData | null> {
         .filter(Boolean),
     )] as string[];
 
-    // Find best gallery image from referenced books
+    // Check for manually set hero image on the thread first
     let heroImage: EpisodeData['heroImage'] = null;
-    if (bookIds.length > 0) {
+    if (thread.heroImage?.url) {
+      const book = thread.heroImage.bookId
+        ? await db.collection('books').findOne({ id: thread.heroImage.bookId }, { projection: { title: 1 } })
+        : null;
+      heroImage = {
+        url: thread.heroImage.url,
+        description: thread.heroImage.description || '',
+        bookId: thread.heroImage.bookId || '',
+        bookTitle: book?.title || '',
+      };
+    }
+
+    // Fall back to best gallery image from referenced books
+    if (!heroImage && bookIds.length > 0) {
       const bestImage = await db.collection('gallery_images')
         .findOne(
           { book_id: { $in: bookIds }, gallery_quality: { $gte: 0.7 } },
