@@ -672,32 +672,18 @@ async function BookInfo({ id, tenantId, tenantSlug, embedPolicy }: { id: string;
                 </div>
               )}
 
-              {/* Collections */}
-              {bookCollections.length > 0 && (
+              {/* Collections — hidden when embedded */}
+              {embedPolicy.enableBookCollectionNavigation && bookCollections.length > 0 && (
                 <div className="flex flex-wrap items-center gap-2 mt-3">
-                  {bookCollections.map(col => {
-                    if (!embedPolicy.enableBookCollectionNavigation) {
-                      return (
-                        <span
-                          key={col.slug}
-                          aria-disabled="true"
-                          className="text-xs text-stone-400 bg-white/5 px-2.5 py-1 rounded-full"
-                        >
-                          {col.name}
-                        </span>
-                      );
-                    }
-
-                    return (
-                      <Link
-                        key={col.slug}
-                        href={`/collections/${col.slug}`}
-                        className="text-xs text-stone-400 hover:text-white bg-white/5 hover:bg-white/10 px-2.5 py-1 rounded-full transition-colors"
-                      >
-                        {col.name}
-                      </Link>
-                    );
-                  })}
+                  {bookCollections.map(col => (
+                    <Link
+                      key={col.slug}
+                      href={`/collections/${col.slug}`}
+                      className="text-xs text-stone-400 hover:text-white bg-white/5 hover:bg-white/10 px-2.5 py-1 rounded-full transition-colors"
+                    >
+                      {col.name}
+                    </Link>
+                  ))}
                 </div>
               )}
 
