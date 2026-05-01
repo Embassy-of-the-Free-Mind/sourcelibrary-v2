@@ -11,6 +11,12 @@ interface Props {
   params: Promise<{ threadId: string }>;
 }
 
+interface GalleryImage {
+  url: string;
+  description: string;
+  quality: number;
+}
+
 interface Finding {
   quote: string;
   note: string;
@@ -21,6 +27,7 @@ interface Finding {
     bookSlug?: string;
     pageNumber?: number;
   };
+  image: GalleryImage | null;
 }
 
 interface SourceBook {
@@ -49,6 +56,7 @@ interface EpisodeData {
   } | null;
   findings: Finding[];
   sourceBooks: SourceBook[];
+  galleryImages: GalleryImage[];
 }
 
 const FORMAT_LABELS: Record<string, string> = {
@@ -57,6 +65,18 @@ const FORMAT_LABELS: Record<string, string> = {
   'critique': 'The Critique',
   'guided-reading': 'Guided Reading',
 };
+
+interface RawFinding {
+  quote: string;
+  note: string;
+  source: {
+    bookId: string;
+    bookTitle: string;
+    bookAuthor: string;
+    bookSlug?: string;
+    pageNumber?: number;
+  };
+}
 
 async function getEpisode(threadId: string): Promise<EpisodeData | null> {
   try {
@@ -83,14 +103,10 @@ async function getEpisode(threadId: string): Promise<EpisodeData | null> {
       { threadId: new ObjectId(threadId) },
       { projection: { findings: 1 } },
     );
-    const findings: Finding[] = (notebook?.findings || []).map((f: Finding) => ({
-      quote: f.quote,
-      note: f.note,
-      source: f.source,
-    }));
+    const rawFindings: RawFinding[] = (notebook?.findings || []);
 
     // Build source books list with thumbnails
-    const bookIds = [...new Set(findings.map(f => f.source?.bookId).filter(Boolean))];
+    const bookIds = [...new Set(rawFindings.map(f => f.source?.bookId).filter(Boolean))];
     let sourceBooks: SourceBook[] = [];
     if (bookIds.length > 0) {
       const bookDocs = await db.collection('books')
@@ -106,10 +122,60 @@ async function getEpisode(threadId: string): Promise<EpisodeData | null> {
           author: b?.author || '',
           slug: b?.slug,
           thumbnail: b?.thumbnail_blob || b?.thumbnail || null,
-          findingCount: findings.filter(f => f.source?.bookId === bid).length,
+          findingCount: rawFindings.filter(f => f.source?.bookId === bid).length,
         };
       }).sort((a, b) => b.findingCount - a.findingCount);
     }
+
+    // Load gallery images for referenced books — for page-level matching and gallery
+    const allGalleryImages = bookIds.length > 0
+      ? await db.collection('gallery_images')
+          .find({ book_id: { $in: bookIds }, gallery_quality: { $gte: 0.5 } })
+          .sort({ gallery_quality: -1 })
+          .project({ thumbnail_url: 1, image_url: 1, description: 1, gallery_quality: 1, page_id: 1, book_id: 1 })
+          .toArray()
+      : [];
+
+    // Load page docs to map page_id -> page_number for matching
+    const pageIds = [...new Set(allGalleryImages.map(g => g.page_id).filter(Boolean))];
+    const pageDocs = pageIds.length > 0
+      ? await db.collection('pages')
+          .find({ _id: { $in: pageIds.map((id: string) => new ObjectId(id)) } })
+          .project({ _id: 1, page_number: 1 })
+          .toArray()
+      : [];
+    const pageNumMap = new Map(pageDocs.map(p => [p._id.toString(), p.page_number as number]));
+
+    // Build findings with matched page images
+    const findings: Finding[] = rawFindings.map((f: RawFinding) => {
+      let image: GalleryImage | null = null;
+      if (f.source?.pageNumber) {
+        // Find gallery image from the same page
+        const match = allGalleryImages.find(g =>
+          g.book_id === f.source.bookId &&
+          pageNumMap.get(g.page_id) === f.source.pageNumber &&
+          (g.thumbnail_url || g.image_url)
+        );
+        if (match) {
+          image = {
+            url: match.thumbnail_url || match.image_url,
+            description: match.description || '',
+            quality: match.gallery_quality,
+          };
+        }
+      }
+      return { quote: f.quote, note: f.note, source: f.source, image };
+    });
+
+    // Top gallery images for the gallery section (cropped thumbnails only, high quality)
+    const galleryImages: GalleryImage[] = allGalleryImages
+      .filter(g => g.thumbnail_url && g.gallery_quality >= 0.7)
+      .slice(0, 12)
+      .map(g => ({
+        url: g.thumbnail_url,
+        description: g.description || '',
+        quality: g.gallery_quality,
+      }));
 
     // Hero image
     let heroImage: EpisodeData['heroImage'] = null;
@@ -125,17 +191,13 @@ async function getEpisode(threadId: string): Promise<EpisodeData | null> {
       };
     }
     if (!heroImage && bookIds.length > 0) {
-      const bestImage = await db.collection('gallery_images')
-        .findOne(
-          { book_id: { $in: bookIds }, thumbnail_url: { $exists: true, $ne: null }, gallery_quality: { $gte: 0.7 } },
-          { sort: { gallery_quality: -1 }, projection: { thumbnail_url: 1, description: 1, book_id: 1 } },
-        );
-      if (bestImage?.thumbnail_url) {
-        const book = await db.collection('books').findOne({ id: bestImage.book_id }, { projection: { title: 1 } });
+      const best = allGalleryImages.find(g => g.thumbnail_url && g.gallery_quality >= 0.7);
+      if (best?.thumbnail_url) {
+        const book = await db.collection('books').findOne({ id: best.book_id }, { projection: { title: 1 } });
         heroImage = {
-          url: bestImage.thumbnail_url,
-          description: bestImage.description || '',
-          bookId: bestImage.book_id,
+          url: best.thumbnail_url,
+          description: best.description || '',
+          bookId: best.book_id,
           bookTitle: book?.title || 'Unknown',
         };
       }
@@ -153,6 +215,7 @@ async function getEpisode(threadId: string): Promise<EpisodeData | null> {
       heroImage,
       findings,
       sourceBooks,
+      galleryImages,
     };
   } catch (err) {
     console.error('[podcast] Failed to load episode:', err);
@@ -257,23 +320,23 @@ export default async function EpisodePage({ params }: Props) {
                 <Link
                   key={book.id}
                   href={`/book/${book.slug || book.id}`}
-                  className="flex items-center gap-3 p-3 rounded-lg hover:bg-[#f5f2ec] transition-colors group"
+                  className="flex items-center gap-4 p-3 rounded-lg hover:bg-[#f5f2ec] transition-colors group"
                 >
                   {book.thumbnail ? (
                     // eslint-disable-next-line @next/next/no-img-element
                     <img
-                      src={`/api/image?url=${encodeURIComponent(book.thumbnail)}&w=80&q=75`}
+                      src={`/api/image?url=${encodeURIComponent(book.thumbnail)}&w=160&q=80`}
                       alt=""
-                      className="w-10 h-14 object-cover rounded flex-shrink-0 bg-[#f0ece4]"
+                      className="w-16 h-22 object-cover rounded flex-shrink-0 bg-[#f0ece4]"
                     />
                   ) : (
-                    <div className="w-10 h-14 rounded flex-shrink-0 bg-[#e8e4dc]" />
+                    <div className="w-16 h-22 rounded flex-shrink-0 bg-[#e8e4dc]" />
                   )}
                   <div className="min-w-0">
-                    <p className="text-[14px] font-serif text-[#1a1612] leading-snug group-hover:text-[#9e4a3a] transition-colors truncate">
+                    <p className="text-[15px] font-serif text-[#1a1612] leading-snug group-hover:text-[#9e4a3a] transition-colors">
                       {book.title}
                     </p>
-                    <p className="text-[11px] text-[#8a8480] font-sans mt-0.5 truncate">
+                    <p className="text-[12px] text-[#8a8480] font-sans mt-0.5">
                       {book.author}
                       {book.findingCount > 1 && ` — ${book.findingCount} passages cited`}
                     </p>
@@ -284,31 +347,71 @@ export default async function EpisodePage({ params }: Props) {
           </div>
         )}
 
+        {/* Illustrations from the sources */}
+        {episode.galleryImages.length > 0 && (
+          <div className="mb-8 pt-8 border-t border-[#e8e4dc]">
+            <h2 className="text-[15px] font-serif text-[#1a1612] mb-4" style={{ fontWeight: 400 }}>
+              Illustrations from the Sources
+            </h2>
+            <div className="grid grid-cols-2 md:grid-cols-3 gap-3">
+              {episode.galleryImages.map((img, i) => (
+                <div key={i} className="rounded-lg overflow-hidden bg-[#1a1612]">
+                  {/* eslint-disable-next-line @next/next/no-img-element */}
+                  <img
+                    src={`/api/image?url=${encodeURIComponent(img.url)}&w=480&q=85`}
+                    alt={img.description}
+                    title={img.description}
+                    className="w-full aspect-square object-contain"
+                    loading="lazy"
+                  />
+                </div>
+              ))}
+            </div>
+          </div>
+        )}
+
         {/* Key findings / evidence */}
         {episode.findings.length > 0 && (
           <div className="mb-8 pt-8 border-t border-[#e8e4dc]">
-            <h2 className="text-[15px] font-serif text-[#1a1612] mb-4" style={{ fontWeight: 400 }}>
+            <h2 className="text-[15px] font-serif text-[#1a1612] mb-6" style={{ fontWeight: 400 }}>
               Key Evidence ({episode.findings.length} passage{episode.findings.length !== 1 ? 's' : ''})
             </h2>
-            <div className="space-y-6">
+            <div className="space-y-8">
               {episode.findings.map((finding, i) => (
-                <div key={i} className="pl-4 border-l-2 border-[#c9a86c]/40">
-                  <blockquote className="text-[14px] font-body text-[#333] leading-relaxed italic">
-                    &ldquo;{finding.quote}&rdquo;
-                  </blockquote>
-                  <p className="text-[12px] text-[#6b6560] font-body mt-2 leading-relaxed">
-                    {finding.note}
-                  </p>
-                  <p className="text-[11px] text-[#8a8480] font-sans mt-1.5">
-                    <Link
-                      href={`/book/${finding.source.bookSlug || finding.source.bookId}${finding.source.pageNumber ? `?page=${finding.source.pageNumber}` : ''}`}
-                      className="text-[#9e4a3a] hover:underline"
-                    >
-                      {finding.source.bookTitle}
-                      {finding.source.pageNumber && `, p. ${finding.source.pageNumber}`}
-                    </Link>
-                    {finding.source.bookAuthor && ` — ${finding.source.bookAuthor}`}
-                  </p>
+                <div key={i}>
+                  {/* Page illustration if available */}
+                  {finding.image && (
+                    <div className="mb-4 rounded-lg overflow-hidden bg-[#1a1612]">
+                      {/* eslint-disable-next-line @next/next/no-img-element */}
+                      <img
+                        src={`/api/image?url=${encodeURIComponent(finding.image.url)}&w=960&q=85`}
+                        alt={finding.image.description}
+                        className="w-full max-h-[400px] object-contain"
+                        loading="lazy"
+                      />
+                      <p className="text-[11px] text-white/60 font-sans px-4 py-2">
+                        {finding.image.description}
+                      </p>
+                    </div>
+                  )}
+                  <div className="pl-4 border-l-2 border-[#c9a86c]/40">
+                    <blockquote className="text-[14px] font-body text-[#333] leading-relaxed italic">
+                      &ldquo;{finding.quote}&rdquo;
+                    </blockquote>
+                    <p className="text-[12px] text-[#6b6560] font-body mt-2 leading-relaxed">
+                      {finding.note}
+                    </p>
+                    <p className="text-[11px] text-[#8a8480] font-sans mt-1.5">
+                      <Link
+                        href={`/book/${finding.source.bookSlug || finding.source.bookId}${finding.source.pageNumber ? `?page=${finding.source.pageNumber}` : ''}`}
+                        className="text-[#9e4a3a] hover:underline"
+                      >
+                        {finding.source.bookTitle}
+                        {finding.source.pageNumber && `, p. ${finding.source.pageNumber}`}
+                      </Link>
+                      {finding.source.bookAuthor && ` — ${finding.source.bookAuthor}`}
+                    </p>
+                  </div>
                 </div>
               ))}
             </div>
