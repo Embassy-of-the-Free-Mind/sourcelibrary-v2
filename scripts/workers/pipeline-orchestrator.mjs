@@ -371,22 +371,6 @@ function isNonLatin(language) {
   return language && NON_LATIN_LANGUAGES.has(language.toLowerCase());
 }
 
-/** Detect Google Books, Internet Archive, or other digitizer notice pages from OCR text. */
-function isDigitizerOcr(ocrData) {
-  if (!ocrData) return false;
-  // If OCR tagged this as real content, trust it — never override
-  const realTypes = /title-page|text|frontispiece|preface|dedication|colophon|toc|index|front-matter|illustration|map|errata|appendix|diagram|privilege|notes|front-cover/;
-  const pageTypeMatch = ocrData.match(/<page-type>([^<]+)<\/page-type>/);
-  if (pageTypeMatch && realTypes.test(pageTypeMatch[1])) return false;
-
-  // Strip <meta> tags before matching — meta descriptions of stamps/labels are not digitizer notices
-  const start = ocrData.substring(0, 1500).replace(/<meta>[\s\S]*?<\/meta>/g, '');
-  return /google\s+logo|digitized\s+by\s+google|scanned\s+by\s+google|this\s+is\s+a\s+digital\s+copy/i.test(start) ||
-    /preserved\s+for\s+generations\s+on\s+library\s+shelves/i.test(start) ||
-    /inserted\s+by\s+the\s+internet\s+archive|digitization\s+(credit|notice)/i.test(start) ||
-    /not\s+part\s+of\s+the\s+original\s+book|scanner\s+barcode/i.test(start);
-}
-
 // Cover scoring — imported from shared module
 import { scorePageForCover } from '../lib/cover-scoring.mjs';
 
@@ -4708,35 +4692,25 @@ Rules:
       for (const book of coverBooks) {
         if (DRY_RUN) continue;
         try {
-          // 1. Hide digitizer notice pages (Google, IA, barcodes) in first & last 5 pages
-          const bookPageCount = (await db.collection('books').findOne(
-            { id: book.id }, { projection: { pages_count: 1 } }
-          ))?.pages_count || 0;
-          const lastPageThreshold = Math.max(6, bookPageCount - 4); // last 5 pages
+          // 1. Hide pages already tagged as digitizer-insert by OCR (trust the model)
           const edgePages = await db.collection('pages').find(
-            { book_id: book.id, $or: [
-              { page_number: { $lte: 5 } },
-              { page_number: { $gte: lastPageThreshold } },
-            ]},
-            { projection: { id: 1, page_number: 1, 'ocr.data': 1, page_type: 1 } }
-          ).sort({ page_number: 1 }).toArray();
+            { book_id: book.id, page_type: 'digitizer-insert', hidden: { $ne: true } },
+            { projection: { id: 1 } }
+          ).toArray();
 
           for (const page of edgePages) {
-            if (isDigitizerOcr(page.ocr?.data) && page.page_type !== 'digitizer-insert') {
-              await db.collection('pages').updateOne(
-                { id: page.id },
-                { $set: {
-                  page_type: 'digitizer-insert',
-                  hidden: true,
-                  updated_at: new Date(),
-                  'field_provenance.page_type': {
-                    source: 'pipeline', method: 'ocr-pattern-match',
-                    confidence: 0.95, date: new Date(),
-                  },
-                }}
-              );
-              pagesHidden++;
-            }
+            await db.collection('pages').updateOne(
+              { id: page.id },
+              { $set: {
+                hidden: true,
+                updated_at: new Date(),
+                'field_provenance.page_type': {
+                  source: 'pipeline', method: 'ocr-tag',
+                  confidence: 1.0, date: new Date(),
+                },
+              }}
+            );
+            pagesHidden++;
           }
 
           // 2. Select best cover (skip if manually set)

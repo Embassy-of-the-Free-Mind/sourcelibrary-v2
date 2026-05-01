@@ -185,13 +185,9 @@ function extractPageType(text) {
   return match ? match[1].toLowerCase().trim() : null;
 }
 
-function isDigitizerNotice(text) {
-  if (!text) return false;
-  const start = text.substring(0, 1500);
-  return /google\s+logo|digitized\s+by\s+google|scanned\s+by\s+google|this\s+is\s+a\s+digital\s+copy/i.test(start) ||
-    /preserved\s+for\s+generations\s+on\s+library\s+shelves/i.test(start) ||
-    /inserted\s+by\s+the\s+internet|internet\s+archive|digitization\s+(credit|notice)/i.test(start) ||
-    /not\s+part\s+of\s+the\s+original\s+book|scanner\s+barcode/i.test(start);
+/** Check if OCR classified this page as a digitizer insert (trusts the AI model's page-type tag). */
+function isDigitizerPage(pageType) {
+  return pageType === 'digitizer-insert';
 }
 
 function extractColumns(text) {
@@ -265,7 +261,7 @@ async function processPage(page, promptText, db) {
             source: 'ai',
             prompt_version: TARGET_PROMPT,
           },
-          ...(isDigitizerNotice(result.text) ? { page_type: 'digitizer-insert', hidden: true } : pageType ? { page_type: pageType } : {}),
+          ...(pageType ? { page_type: pageType, ...(isDigitizerPage(pageType) && { hidden: true }) } : {}),
           ...(columns && { columns }),
           ...(detectedImages.length > 0 && { detected_images: detectedImages }),
           updated_at: new Date(),
