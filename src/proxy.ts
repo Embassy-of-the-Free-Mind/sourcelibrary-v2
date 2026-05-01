@@ -339,7 +339,7 @@ export async function proxy(request: NextRequest) {
       url.pathname = `/embed/${tenant}`;
     } else if (pathname.startsWith('/book/') && pathname.includes('/page/')) {
       // Page reader: rewrite to main site route (embed route tree has Next.js build issues)
-      url.pathname = `/default${pathname}`;
+      url.pathname = `/${tenant}${pathname}`;
     } else if (pathname.startsWith('/book/')) {
       url.pathname = `/embed/${tenant}${pathname}`;
     } else if (pathname.startsWith('/collections')) {
