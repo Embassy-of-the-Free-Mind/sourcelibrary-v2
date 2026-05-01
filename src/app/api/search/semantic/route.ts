@@ -57,7 +57,9 @@ export async function GET(request: NextRequest) {
 
     // Filter out low-similarity results that are effectively random matches.
     // Calibrated 2026-04-23: real queries score 0.67+, nonsense scores 0.57-0.63.
-    const SEMANTIC_SIM_FLOOR = 0.65;
+    // Use a relaxed floor (0.55) since this endpoint is called as a fallback —
+    // the search page only shows these when keyword search returned nothing.
+    const SEMANTIC_SIM_FLOOR = 0.55;
     const enriched = books
       .filter(b => b.similarity >= SEMANTIC_SIM_FLOOR)
       .map(b => ({
