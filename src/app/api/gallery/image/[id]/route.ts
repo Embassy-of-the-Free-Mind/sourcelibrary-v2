@@ -294,8 +294,11 @@ export async function GET(
       highResUrl = `/api/crop-image?${highResCropParams}`;
     }
 
-    // Prefer highest-resolution pre-generated crop, fall back to standard crop, then on-the-fly
-    const croppedUrl = detection.hires_url || detection.extracted_url || cropUrl || imageUrl;
+    // Prefer extracted_url (generated during detection, always from the correct page).
+    // hires_url is higher resolution but may be stale — the hires backfill generates crops
+    // from archived_photo which can be a bleed-through page if the detection landed on the
+    // wrong side of a spread. extracted_url is the authoritative crop.
+    const croppedUrl = detection.extracted_url || detection.hires_url || cropUrl || imageUrl;
 
     // Build the response
     const response = {
