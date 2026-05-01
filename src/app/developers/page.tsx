@@ -59,10 +59,30 @@ export default function DevelopersPage() {
           search, read, quote, and browse 50,000+ illustrations. One command to install.
         </p>
 
+        {/* Remote MCP URL */}
+        <div className="bg-amber-50 border border-amber-200 rounded-xl p-5 mb-8">
+          <h3 className="text-sm font-semibold text-amber-900 mb-1">Remote MCP Server (Streamable HTTP)</h3>
+          <p className="text-amber-800 text-sm mb-3">
+            No install needed &mdash; connect any MCP client directly.
+          </p>
+          <div className="bg-white border border-amber-200 rounded-lg px-4 py-2.5 font-mono text-sm text-primary select-all">
+            https://sourcelibrary.org/api/mcp
+          </div>
+        </div>
+
         <div className="space-y-4 mb-8">
           <div className="bg-white rounded-xl border border-border-light overflow-hidden">
             <div className="bg-stone-100 px-4 py-2 border-b border-border-light">
-              <span className="text-sm font-medium text-stone-700">Claude Code</span>
+              <span className="text-sm font-medium text-stone-700">Claude Code (remote &mdash; no install)</span>
+            </div>
+            <pre className="p-4 text-sm overflow-x-auto bg-stone-900 text-stone-100">
+{`claude mcp add source-library https://sourcelibrary.org/api/mcp`}
+            </pre>
+          </div>
+
+          <div className="bg-white rounded-xl border border-border-light overflow-hidden">
+            <div className="bg-stone-100 px-4 py-2 border-b border-border-light">
+              <span className="text-sm font-medium text-stone-700">Claude Code (local via npm)</span>
             </div>
             <pre className="p-4 text-sm overflow-x-auto bg-stone-900 text-stone-100">
 {`claude mcp add source-library -- npx -y @source-library/mcp-server`}
@@ -80,8 +100,7 @@ export default function DevelopersPage() {
 {`{
   "mcpServers": {
     "source-library": {
-      "command": "npx",
-      "args": ["-y", "@source-library/mcp-server"]
+      "url": "https://sourcelibrary.org/api/mcp"
     }
   }
 }`}
