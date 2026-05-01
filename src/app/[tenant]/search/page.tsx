@@ -77,6 +77,10 @@ export default function SearchPage({ defaultLibrary }: { defaultLibrary?: string
   const [semanticResults, setSemanticResults] = useState<any[]>([]);
   const [semanticLoading, setSemanticLoading] = useState(false);
 
+  // Page-content passage results (for quoted phrase searches)
+  const [passageResults, setPassageResults] = useState<SearchResult[]>([]);
+  const [passageLoading, setPassageLoading] = useState(false);
+
   // Track when the base search has set image results, so AI imgTerms callback
   // doesn't add images that get immediately overwritten by the base search completing.
   const baseImagesSet = useRef(false);
@@ -451,6 +455,22 @@ export default function SearchPage({ defaultLibrary }: { defaultLibrary?: string
           })
           .catch(() => setSemanticResults([]))
           .finally(() => setSemanticLoading(false));
+
+        // For quoted phrases, also search page content to find exact passages
+        const isPhrase = /^".*"$/.test(q.trim());
+        if (isPhrase) {
+          setPassageLoading(true);
+          searchApi.search(q, { limit: 10, search_content: 'true' })
+            .then(data => {
+              // Only keep page-level results (not book-level)
+              const pages = (data.results || []).filter((r: SearchResult) => r.type === 'page');
+              setPassageResults(pages);
+            })
+            .catch(() => setPassageResults([]))
+            .finally(() => setPassageLoading(false));
+        } else {
+          setPassageResults([]);
+        }
       } else if (mode === 'books') {
         const data = await searchApi.search(q, {
           language: language || undefined,
@@ -629,7 +649,7 @@ export default function SearchPage({ defaultLibrary }: { defaultLibrary?: string
 
   // Fuzzy suggestions on zero results
   const totalResults = bookTotal + indexTotal + imageTotal;
-  const noResults = query.length >= 2 && !loading && !semanticLoading && totalResults === 0 && semanticResults.length === 0;
+  const noResults = query.length >= 2 && !loading && !semanticLoading && !passageLoading && totalResults === 0 && semanticResults.length === 0 && passageResults.length === 0;
   useEffect(() => {
     if (!noResults || query.length < 3) { setSuggestion(null); return; }
     let cancelled = false;
@@ -1230,7 +1250,7 @@ export default function SearchPage({ defaultLibrary }: { defaultLibrary?: string
         )}
 
         {/* ==================== UNIFIED VIEW — ADAPTIVE LAYOUT ==================== */}
-        {viewMode === 'unified' && !loading && query.length >= 2 && (totalResults > 0 || semanticResults.length > 0 || semanticLoading) && (() => {
+        {viewMode === 'unified' && !loading && query.length >= 2 && (totalResults > 0 || semanticResults.length > 0 || semanticLoading || passageResults.length > 0 || passageLoading) && (() => {
           const keywordIds = new Set(bookResults.map(b => b.id || (b as any).book_id));
           const uniqueSemantic = semanticResults.filter((sem: any) => !keywordIds.has(sem.book_id));
           const hasBoth = bookResults.length > 0 && uniqueSemantic.length > 0;
@@ -1323,6 +1343,25 @@ export default function SearchPage({ defaultLibrary }: { defaultLibrary?: string
             </>
           );
 
+          const passageSection = (passageResults.length > 0 || passageLoading) && (
+            <>
+              <h2 className="text-xs font-medium text-muted uppercase tracking-wide flex items-center gap-2 mt-6">
+                <span className="w-1.5 h-1.5 rounded-full bg-accent-sage" />
+                Exact passages
+              </h2>
+              {passageLoading ? (
+                <div className="flex items-center gap-2 text-sm text-muted py-3">
+                  <Loader2 className="w-4 h-4 animate-spin" />
+                  Searching page content...
+                </div>
+              ) : (
+                passageResults.map((result, idx) => (
+                  <BookResultCard key={result.id} result={result} query={query} tenant={tenant} autoPassages={idx === 0} mobileCompact />
+                ))
+              )}
+            </>
+          );
+
           const collectionCards = collectionResults.length > 0 && (
             <div className="grid grid-cols-2 sm:grid-cols-3 gap-3">
               {collectionResults.map(col => (
@@ -1333,6 +1372,7 @@ export default function SearchPage({ defaultLibrary }: { defaultLibrary?: string
 
           return (
             <div className="space-y-3">
+              {passageSection}
               {collectionCards}
               {narrationBlock}
               {displayHint === 'images_first' ? (
