@@ -35,6 +35,7 @@ const NAV_COLUMNS = [
   {
     title: 'Participate',
     links: [
+      { label: 'Libraries', href: '/libraries' },
       { label: 'Contribute', href: '/contribute' },
       { label: 'Support', href: '/support' },
       { label: 'Developers', href: '/developers' },

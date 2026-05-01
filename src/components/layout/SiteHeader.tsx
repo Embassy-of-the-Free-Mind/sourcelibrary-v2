@@ -119,15 +119,23 @@ export default function SiteHeader({ variant = 'light', breadcrumbs, sticky, cla
               if (link.children) {
                 return (
                   <div key={link.href} className="relative" ref={dropdownRef}>
-                    <button
-                      onClick={() => setDropdownOpen(dropdownOpen === link.label ? null : link.label)}
-                      className={`text-sm font-sans tracking-wide transition-colors flex items-center gap-0.5 ${
-                        isActive || isCatalogActive ? activeLinkClass : linkClass
-                      }`}
-                    >
-                      {link.label}
-                      <ChevronDown className={`w-3 h-3 transition-transform ${dropdownOpen === link.label ? 'rotate-180' : ''}`} />
-                    </button>
+                    <span className="flex items-center gap-0">
+                      <Link
+                        href={link.href}
+                        className={`text-sm font-sans tracking-wide transition-colors ${
+                          isActive || isCatalogActive ? activeLinkClass : linkClass
+                        }`}
+                      >
+                        {link.label}
+                      </Link>
+                      <button
+                        onClick={() => setDropdownOpen(dropdownOpen === link.label ? null : link.label)}
+                        className={`p-0.5 transition-colors ${isActive || isCatalogActive ? activeLinkClass : linkClass}`}
+                        aria-label={`${link.label} submenu`}
+                      >
+                        <ChevronDown className={`w-3 h-3 transition-transform ${dropdownOpen === link.label ? 'rotate-180' : ''}`} />
+                      </button>
+                    </span>
                     {dropdownOpen === link.label && (
                       <div className="absolute left-0 top-full mt-2 w-36 bg-white rounded-lg shadow-lg border border-border-light py-1.5 z-50">
                         {link.children.map((child) => {
