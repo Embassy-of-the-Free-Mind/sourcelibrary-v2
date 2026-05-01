@@ -1,5 +1,4 @@
 import Link from 'next/link';
-import { BookOpen, Database, Globe, FileText, GraduationCap, Search, Languages, Shield, Code2, Quote } from 'lucide-react';
 import ContentPageLayout, { ContentHeader } from '@/components/layout/ContentPageLayout';
 import AcademicAccessForm from '@/components/researchers/AcademicAccessForm';
 import type { Metadata } from 'next';
@@ -27,6 +26,21 @@ export default function ForResearchersPage() {
     >
       <div className="prose-content max-w-none">
 
+        {/* Application form */}
+        <h2 className="text-2xl md:text-3xl text-primary mt-16 mb-6" id="apply">
+          Apply for Research Access
+        </h2>
+
+        <p className="text-secondary mb-8">
+          The library is free and open to everyone. If you need API access, bulk data exports,
+          or want to discuss a research collaboration, tell us about your work. We respond within
+          a few days.
+        </p>
+
+        <div className="bg-white rounded-xl border border-border-light p-6 md:p-8 mb-16">
+          <AcademicAccessForm />
+        </div>
+
         {/* What's in the collection */}
         <h2 className="text-2xl md:text-3xl text-primary mt-16 mb-6">
           The Collection
@@ -41,9 +55,9 @@ export default function ForResearchersPage() {
         </p>
 
         <div className="grid md:grid-cols-3 gap-4 mb-16">
-          <StatCard number="17,000+" label="Digitized books" icon={<BookOpen className="w-5 h-5" />} />
-          <StatCard number="30+" label="Languages" icon={<Globe className="w-5 h-5" />} />
-          <StatCard number="4M+" label="Pages translated" icon={<Languages className="w-5 h-5" />} />
+          <StatCard number="17,000+" label="Digitized books" />
+          <StatCard number="30+" label="Languages" />
+          <StatCard number="4M+" label="Pages translated" />
         </div>
 
         {/* What researchers get */}
@@ -53,38 +67,26 @@ export default function ForResearchersPage() {
 
         <div className="grid md:grid-cols-2 gap-6 mb-16">
           <OfferCard
-            icon={<FileText className="w-5 h-5 text-blue-600" />}
-            iconBg="bg-blue-100"
             title="Parallel Texts"
             description="Every page is available as the original scan, an OCR transcription in the source language, and an English translation. Switch between views freely. The original is never hidden."
           />
           <OfferCard
-            icon={<Search className="w-5 h-5 text-violet-600" />}
-            iconBg="bg-violet-100"
             title="Full-Text Search"
             description="Semantic search across the entire corpus in English, with results linked to specific pages. Search translations, then verify against the original text."
           />
           <OfferCard
-            icon={<Quote className="w-5 h-5 text-accent-rust" />}
-            iconBg="bg-red-50"
             title="Citable Editions"
             description="Published editions receive DOIs via Zenodo with auto-generated Chicago, MLA, and BibTeX citations. Stable URLs for every page."
           />
           <OfferCard
-            icon={<Code2 className="w-5 h-5 text-green-600" />}
-            iconBg="bg-green-100"
             title="API & MCP Access"
             description="Programmatic access to book metadata, OCR text, translations, and images. An MCP server lets AI assistants query the library directly."
           />
           <OfferCard
-            icon={<Database className="w-5 h-5 text-amber-600" />}
-            iconBg="bg-amber-100"
             title="Bulk Data"
             description="Request corpus exports for computational analysis — full OCR and translation text, metadata, and image annotations in structured formats."
           />
           <OfferCard
-            icon={<Shield className="w-5 h-5 text-stone-600" />}
-            iconBg="bg-stone-100"
             title="Transparent Methodology"
             description="Every translation records the model, prompt version, and date. Quality signals include semantic alignment scores and inline OCR warnings. Nothing is a black box."
           />
@@ -159,38 +161,22 @@ export default function ForResearchersPage() {
         </h2>
 
         <div className="grid md:grid-cols-2 gap-6 mb-16">
-          <UseCaseCard
+          <OfferCard
             title="History of Science & Ideas"
             description="Trace concepts across centuries of natural philosophy, alchemy, and early science. Full-text search across translations lets you find thematic connections across works that were previously locked behind Latin, German, or Arabic."
           />
-          <UseCaseCard
+          <OfferCard
             title="Digital Humanities"
             description="Build corpora for computational text analysis, topic modeling, or network analysis of intellectual communities. Export structured text with metadata via the API."
           />
-          <UseCaseCard
+          <OfferCard
             title="Religious & Theological Studies"
             description="Access Hermetic, Kabbalistic, Rosicrucian, and theological texts in parallel with their originals. Many are first-ever English translations."
           />
-          <UseCaseCard
+          <OfferCard
             title="Book History & Bibliography"
             description="Explore printing history with scans linked to institutional catalogs. Each book tracks its source library, digitizer, and publication metadata."
           />
-        </div>
-
-        {/* Application form */}
-        <h2 className="text-2xl md:text-3xl text-primary mt-16 mb-6" id="apply">
-          <GraduationCap className="w-7 h-7 inline-block mr-2 -mt-1" />
-          Apply for Research Access
-        </h2>
-
-        <p className="text-secondary mb-8">
-          The library is free and open to everyone. If you need API access, bulk data exports,
-          or want to discuss a research collaboration, tell us about your work. We respond within
-          a few days.
-        </p>
-
-        <div className="bg-white rounded-xl border border-border-light p-6 md:p-8 mb-16">
-          <AcademicAccessForm />
         </div>
 
         {/* Related */}
@@ -209,33 +195,16 @@ export default function ForResearchersPage() {
 
 /* ── Subcomponents ── */
 
-function StatCard({ number, label, icon }: { number: string; label: string; icon: React.ReactNode }) {
+function StatCard({ number, label }: { number: string; label: string }) {
   return (
     <div className="bg-white rounded-xl border border-border-light p-5 text-center">
-      <div className="flex justify-center mb-3">
-        <div className="p-2.5 bg-stone-100 rounded-lg text-stone-600">
-          {icon}
-        </div>
-      </div>
       <div className="text-2xl font-semibold text-primary mb-1">{number}</div>
       <div className="text-sm text-secondary">{label}</div>
     </div>
   );
 }
 
-function OfferCard({ icon, iconBg, title, description }: { icon: React.ReactNode; iconBg: string; title: string; description: string }) {
-  return (
-    <div className="bg-white rounded-xl border border-border-light p-5">
-      <div className="flex items-center gap-3 mb-3">
-        <div className={`p-2 rounded-lg ${iconBg}`}>{icon}</div>
-        <h3 className="font-semibold text-primary">{title}</h3>
-      </div>
-      <p className="text-secondary text-[15px] leading-relaxed">{description}</p>
-    </div>
-  );
-}
-
-function UseCaseCard({ title, description }: { title: string; description: string }) {
+function OfferCard({ title, description }: { title: string; description: string }) {
   return (
     <div className="bg-white rounded-xl border border-border-light p-5">
       <h3 className="font-semibold text-primary mb-2">{title}</h3>
