@@ -471,7 +471,7 @@ export default function BookPagesSection({ bookId, bookTitle, pages: initialPage
       // NEVER store /api/image?url= wrappers — they crash Next.js Image during SSR.
       // Split-from-spread pages: use photo directly (no legacy fallback)
       const typedPage = page as Page & { archived_photo?: string; cropped_photo?: string; enhanced_photo?: string };
-      const directUrl = page.split_from_spread
+      const directUrl = (page.split_from_spread || (page as any).crop)
         ? page.photo
         : (typedPage.enhanced_photo || typedPage.cropped_photo || typedPage.archived_photo || page.photo_original || page.photo);
       if (directUrl) {
