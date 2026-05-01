@@ -372,7 +372,32 @@ async function getBook(id: string, tenantId?: string): Promise<{ book: Book; pag
 
   // Serialize MongoDB objects to plain JavaScript objects
   const serializedBook = JSON.parse(JSON.stringify(book));
-  const serializedPages = JSON.parse(JSON.stringify(pagesRaw));
+  const serializedPages = JSON.parse(JSON.stringify(pagesRaw)) as Page[];
+
+  // Infer crop data for uncropped pages in spread books.
+  // The crop pipeline skips covers/blanks, leaving them as full spreads.
+  // Detect the book's parity convention from existing crops, then fill gaps.
+  const pagesWithCrop = serializedPages.filter(p => p.crop?.xStart !== undefined);
+  if (pagesWithCrop.length > 2) {
+    // Determine convention: do odd pages use left or right half?
+    let oddLeft = 0, oddRight = 0;
+    for (const p of pagesWithCrop) {
+      if (p.page_number % 2 === 1) {
+        (p.crop!.xStart as number) > 400 ? oddRight++ : oddLeft++;
+      }
+    }
+    const oddIsLeft = oddLeft >= oddRight;
+
+    for (const p of serializedPages) {
+      if (p.crop || p.split_from_spread) continue;
+      const isOdd = p.page_number % 2 === 1;
+      const useLeft = oddIsLeft ? isOdd : !isOdd;
+      (p as any).crop = useLeft
+        ? { xStart: 0, xEnd: 510 }
+        : { xStart: 490, xEnd: 1000 };
+    }
+  }
+
   const galleryImagesParsed = JSON.parse(JSON.stringify(galleryImagesRaw)) as (GalleryImagePreview & { gallery_quality: number; book_id: string })[];
   const galleryImages = deduplicateByDHash(galleryImagesParsed).slice(0, 8) as GalleryImagePreview[];
   const bookCollections = JSON.parse(JSON.stringify(bookCollectionsRaw)) as BookCollectionPreview[];
