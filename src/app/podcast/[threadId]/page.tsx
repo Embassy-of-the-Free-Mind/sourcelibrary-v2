@@ -1,7 +1,6 @@
 import { connectToDatabase } from '@/lib/mongodb';
 import { ObjectId } from 'mongodb';
 import { notFound } from 'next/navigation';
-import SiteHeader from '@/components/layout/SiteHeader';
 import Link from 'next/link';
 import TranscriptToggle from '../TranscriptToggle';
 
@@ -154,6 +153,7 @@ async function getEpisode(threadId: string): Promise<EpisodeData | null> {
         const match = allGalleryImages.find(g =>
           g.book_id === f.source.bookId &&
           pageNumMap.get(g.page_id) === f.source.pageNumber &&
+          g.gallery_quality >= 0.7 &&
           (g.thumbnail_url || g.image_url)
         );
         if (match) {
@@ -169,8 +169,8 @@ async function getEpisode(threadId: string): Promise<EpisodeData | null> {
 
     // Top gallery images for the gallery section (cropped thumbnails only, high quality)
     const galleryImages: GalleryImage[] = allGalleryImages
-      .filter(g => g.thumbnail_url && g.gallery_quality >= 0.7)
-      .slice(0, 12)
+      .filter(g => g.thumbnail_url && g.gallery_quality >= 0.75)
+      .slice(0, 6)
       .map(g => ({
         url: g.thumbnail_url,
         description: g.description || '',
@@ -245,10 +245,15 @@ export default async function EpisodePage({ params }: Props) {
 
   return (
     <div className="min-h-screen bg-[#fdfcf9]">
-      <SiteHeader variant="light" breadcrumbs={[
-        { label: 'Podcast', href: '/podcast' },
-        { label: episode.title, href: '#' },
-      ]} />
+      <header className="bg-[#fdfcf9] border-b border-[#e8e4dc] py-3">
+        <div className="flex items-center gap-2 px-6 max-w-[960px] mx-auto text-[13px] font-sans text-[#8a8480]">
+          <Link href="/" className="text-[#1a1612] hover:text-[#9e4a3a] transition-colors font-medium tracking-wide">
+            <span className="font-semibold">Source</span><span className="font-light">Library</span>
+          </Link>
+          <span>/</span>
+          <Link href="/podcast" className="hover:text-[#1a1612] transition-colors">Podcast</Link>
+        </div>
+      </header>
 
       {/* Hero image */}
       {episode.heroImage && (
@@ -353,7 +358,7 @@ export default async function EpisodePage({ params }: Props) {
             <h2 className="text-[15px] font-serif text-[#1a1612] mb-4" style={{ fontWeight: 400 }}>
               Illustrations from the Sources
             </h2>
-            <div className="grid grid-cols-2 md:grid-cols-3 gap-3">
+            <div className="grid grid-cols-2 gap-3">
               {episode.galleryImages.map((img, i) => (
                 <div key={i} className="rounded-lg overflow-hidden bg-[#1a1612]">
                   {/* eslint-disable-next-line @next/next/no-img-element */}
