@@ -297,7 +297,7 @@ export async function GET(request: NextRequest) {
       (async () => {
         if (bookId || !searchContent) return [];
         try {
-          return await semanticPageSearchGlobal(query, 15, tenantId);
+          return await semanticPageSearchGlobal(query, 15, tenantId || undefined);
         } catch {
           return [];
         }
