@@ -1,6 +1,6 @@
 'use client';
 
-import { useSession } from 'next-auth/react';
+import { useStableSession } from '@/hooks/useStableSession';
 
 interface AuthCheckProps {
   children: React.ReactNode;
@@ -18,7 +18,7 @@ interface AuthCheckProps {
  * <AuthCheck role="admin">         // Admin-only (whitelist)
  */
 export function AuthCheck({ children, fallback = null, role }: AuthCheckProps) {
-  const { data: session, status } = useSession();
+  const { data: session, status } = useStableSession();
 
   if (status === 'loading') {
     // During loading, show fallback (the safe, non-interactive default).

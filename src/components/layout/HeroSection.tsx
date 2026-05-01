@@ -2,7 +2,8 @@
 
 import { useRef, useState } from 'react';
 import Link from 'next/link';
-import { signIn, useSession } from 'next-auth/react';
+import { signIn } from 'next-auth/react';
+import { useStableSession } from '@/hooks/useStableSession';
 import { recordLoadingMetric } from '@/lib/analytics';
 import UnifiedSearch from '@/components/search/UnifiedSearch';
 import SiteHeader from '@/components/layout/SiteHeader';
@@ -88,7 +89,7 @@ function HeroSignUp() {
 }
 
 export default function HeroSection() {
-  const { status } = useSession();
+  const { status } = useStableSession();
   const hasRecorded = useRef(false);
   const [videoReady, setVideoReady] = useState(false);
 
