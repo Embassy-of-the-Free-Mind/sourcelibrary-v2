@@ -326,15 +326,22 @@ export async function searchBooksCatalog(
 ): Promise<CatalogBookDetail[]> {
   const limit = opts?.limit || 20;
 
+  // Detect quoted phrase: "venus humanitas" → exact phrase only, no word splitting
+  const isPhrase = /^".*"$/.test(text.trim());
+  const searchText = isPhrase ? text.trim().slice(1, -1) : text;
+
   // Build OR filter — same logic as searchBookIds
-  const safe = sanitizeFilterValue(text);
+  const safe = sanitizeFilterValue(searchText);
   const STOPWORDS = new Set(['a', 'an', 'and', 'at', 'by', 'de', 'der', 'des', 'di', 'du', 'el', 'en', 'et', 'for', 'from', 'in', 'la', 'le', 'les', 'of', 'on', 'or', 'the', 'to', 'und', 'von', 'with']);
   const words = safe.trim().split(/\s+/).filter(w => w.length >= 2);
   const contentWords = words.filter(w => w.length >= 3 && !STOPWORDS.has(w.toLowerCase()));
   const phraseFilters = `title.ilike.%${safe}%,display_title.ilike.%${safe}%,author.ilike.%${safe}%`;
 
+  // For quoted phrases, only do exact phrase matching — no word splitting or cross-field matching
   let orFilter = phraseFilters;
-  if (words.length >= 2) {
+  if (isPhrase) {
+    // Exact phrase only — already handled by phraseFilters
+  } else if (words.length >= 2) {
     const titleAnds = words.map(w => `title.ilike.%${w}%`).join(',');
     const displayAnds = words.map(w => `display_title.ilike.%${w}%`).join(',');
     orFilter += `,and(${titleAnds}),and(${displayAnds})`;
@@ -393,9 +400,13 @@ export async function searchBookIds(
 ): Promise<string[]> {
   const limit = opts?.limit || 500;
 
+  // Detect quoted phrase: "venus humanitas" → exact phrase only
+  const isPhrase = /^".*"$/.test(text.trim());
+  const searchText = isPhrase ? text.trim().slice(1, -1) : text;
+
   // Build OR filter: exact phrase match + word-level AND matches
   // "mathematical magick" should match "Mathematicall Magick" by matching each word
-  const safe = sanitizeFilterValue(text);
+  const safe = sanitizeFilterValue(searchText);
   const STOPWORDS = new Set(['a', 'an', 'and', 'at', 'by', 'de', 'der', 'des', 'di', 'du', 'el', 'en', 'et', 'for', 'from', 'in', 'la', 'le', 'les', 'of', 'on', 'or', 'the', 'to', 'und', 'von', 'with']);
   const words = safe.trim().split(/\s+/).filter(w => w.length >= 2);
   const contentWords = words.filter(w => w.length >= 3 && !STOPWORDS.has(w.toLowerCase()));
@@ -403,8 +414,11 @@ export async function searchBookIds(
   // full-table scans and Supabase statement timeouts (no trigram indexes)
   const phraseFilters = `title.ilike.%${safe}%,display_title.ilike.%${safe}%,author.ilike.%${safe}%`;
 
+  // For quoted phrases, only do exact phrase matching
   let orFilter = phraseFilters;
-  if (words.length >= 2) {
+  if (isPhrase) {
+    // Exact phrase only — already handled by phraseFilters
+  } else if (words.length >= 2) {
     // Add word-level AND: title contains ALL words (handles spelling variants)
     const titleAnds = words.map(w => `title.ilike.%${w}%`).join(',');
     const displayAnds = words.map(w => `display_title.ilike.%${w}%`).join(',');
