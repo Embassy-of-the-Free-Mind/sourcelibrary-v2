@@ -567,7 +567,10 @@ const bookUpdate = {
   split_completed: true,
   split_completed_at: new Date(),
   split_note: `v2 gutter-split: ${splitCount} spreads → ${splitCount * 2} pages, ${skipCount} singles kept`,
-  pipeline_status: 'needs_ocr',  // Queue for re-OCR
+  pipeline_status: 'needs_ocr',
+  'pipeline_auto.status': 'archive_complete',  // Reset so orchestrator picks up for OCR
+  'pipeline_auto.split_checked': true,
+  'pipeline_auto.retry_count': 0,
   updated_at: new Date(),
 };
 
