@@ -350,8 +350,16 @@ export default function CollectionAllBooks({
         />
       ) : isArt ? (
         /* Art gallery grid — Rijksmuseum-inspired: uniform cells, tight gaps, dark background */
-        <div className={`bg-stone-950 -mx-6 md:-mx-12 ${loading ? 'opacity-50 pointer-events-none' : ''}`}>
-          <div className="grid grid-cols-3 sm:grid-cols-4 lg:grid-cols-5 xl:grid-cols-6 gap-px">
+        <div className="bg-stone-950 -mx-6 md:-mx-12">
+          {loading && displayBooks.length === 0 ? (
+            /* Loading skeleton — matches grid layout */
+            <div className="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-4 xl:grid-cols-5 gap-px">
+              {Array.from({ length: 24 }).map((_, i) => (
+                <div key={i} className="aspect-square bg-stone-900 animate-pulse" />
+              ))}
+            </div>
+          ) : (
+          <div className={`grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-4 xl:grid-cols-5 gap-px ${loading ? 'opacity-50 pointer-events-none' : ''}`}>
             {displayBooks.map((book) => {
               const thumb = getBookThumbnailUrl(book, 'thumb') || book.photo;
               const title = bookTitle(book);
@@ -392,6 +400,7 @@ export default function CollectionAllBooks({
               );
             })}
           </div>
+          )}
 
           {/* "See all" button */}
           {showSeeAllCard && (

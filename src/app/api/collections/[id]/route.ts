@@ -68,6 +68,7 @@ export async function GET(
           collections: id,
           resource_type: { $exists: true, $nin: ART_EXCLUDED_RESOURCE_TYPES },
           visible: true,
+          hidden: { $ne: true },
         };
         const docs = await db.collection('books')
           .find(artFilter, {
