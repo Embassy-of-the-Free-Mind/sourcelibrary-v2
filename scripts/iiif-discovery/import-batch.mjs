@@ -207,6 +207,7 @@ for (const candidate of candidates) {
         published: candidate.date_text || 'Unknown',
         categories: candidate.categories,
         provider: candidate.provider_name,
+        contributing_library: candidate.origin_library || candidate.provider_name,
       }),
       signal: AbortSignal.timeout(60000),
     });

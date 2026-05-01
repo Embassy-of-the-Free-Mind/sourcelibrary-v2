@@ -99,10 +99,11 @@ async function fetchContributingLibraries(): Promise<ContributingLibrary[]> {
       .range(offset, offset + limit - 1)
   );
 
+  const excludeNames = new Set(['[object Object]', 'IIIF Source', 'null', 'undefined']);
   const counts = new Map<string, number>();
   for (const row of allRows) {
     const name = (row.contributing_library as string || '').trim();
-    if (!name) continue;
+    if (!name || excludeNames.has(name)) continue;
     counts.set(name, (counts.get(name) || 0) + 1);
   }
 
@@ -237,8 +238,8 @@ export default async function LibrariesPage() {
         <div className="relative max-w-[var(--container-wide)] mx-auto px-6">
           <h1 className="font-serif text-4xl md:text-5xl tracking-tight mb-4">Libraries</h1>
           <p className="text-lg md:text-xl text-stone-300 max-w-2xl font-body leading-relaxed">
-            {totalBooks.toLocaleString()} books sourced from {partners.length} digital platforms
-            {totalInstitutions > 0 ? ` and ${totalInstitutions} contributing institutions` : ''} worldwide.
+            {totalBooks.toLocaleString()} books sourced from {partners.length} libraries and archives
+            {totalInstitutions > 0 ? ` across ${totalInstitutions} contributing institutions` : ''} worldwide.
           </p>
         </div>
       </div>
