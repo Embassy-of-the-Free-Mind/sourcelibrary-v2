@@ -291,6 +291,7 @@ async function fetchCollectionData(id: string, provider?: string) {
       const artFilter = {
         collections: id,
         resource_type: { $exists: true, $nin: ART_EXCLUDED_RESOURCE_TYPES },
+        hidden: { $ne: true },
       };
       const [docs, artCount] = await Promise.all([
         withTimeout(
