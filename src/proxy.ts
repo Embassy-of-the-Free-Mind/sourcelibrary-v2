@@ -338,7 +338,9 @@ export async function proxy(request: NextRequest) {
     if (pathname === '/' || pathname === '/search') {
       url.pathname = `/embed/${tenant}`;
     } else if (pathname.startsWith('/book/')) {
-      url.pathname = `/embed/${tenant}${pathname}`;
+      // Rewrite /book/X/page/Y → /embed/tenant/book/X/p/Y
+      // Uses /p/ because /page/ collides with Next.js page.tsx at the [slug] level
+      url.pathname = `/embed/${tenant}${pathname.replace(/\/page\//, '/p/')}`;
     } else if (pathname.startsWith('/collections')) {
       url.pathname = `/embed/${tenant}${pathname}`;
     } else if (pathname === '/catalog') {
