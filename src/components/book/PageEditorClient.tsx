@@ -31,7 +31,8 @@ export default function PageEditorClient({
   const [currentPageId, setCurrentPageId] = useState<string>(initialPage.id);
   const [currentPage, setCurrentPage] = useState<Page>(initialPage);
   const params = useParams<{ tenant: string }>();
-  const tenantPrefix = params?.tenant ? `/${params.tenant}` : '';
+  const isOnTenantSubdomain = typeof window !== 'undefined' && /^[a-z]+\.sourcelibrary\.org$/.test(window.location.hostname);
+  const tenantPrefix = isOnTenantSubdomain ? '' : (params?.tenant ? `/${params.tenant}` : '');
 
   // Version pinning: detect ?v= param for citation-pinned reading
   const [pinnedVersion, setPinnedVersion] = useState<string | null>(null);
