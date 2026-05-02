@@ -56,11 +56,16 @@ async function processOne(db, art) {
 
     const buf = Buffer.from(await res.arrayBuffer());
 
-    // Generate both sizes in parallel
-    // Grid: center-crop to square THEN resize — gives crisp 300x300 for any aspect ratio
+    // Grid: center-crop to square at the image's natural short dimension — no resize
+    const meta = await sharp(buf).metadata();
+    const w = meta.width || 300;
+    const h = meta.height || 300;
+    const side = Math.min(w, h);
+    const left = Math.round((w - side) / 2);
+    const top = Math.round((h - side) / 2);
     const [thumbBuf, gridBuf] = await Promise.all([
       sharp(buf).resize({ width: 600, withoutEnlargement: true }).jpeg({ quality: 80, mozjpeg: true }).toBuffer(),
-      sharp(buf).resize({ width: 300, height: 300, fit: 'cover', position: 'centre' }).jpeg({ quality: 80, mozjpeg: true }).toBuffer(),
+      sharp(buf).extract({ left, top, width: side, height: side }).jpeg({ quality: 80, mozjpeg: true }).toBuffer(),
     ]);
 
     // Upload both
