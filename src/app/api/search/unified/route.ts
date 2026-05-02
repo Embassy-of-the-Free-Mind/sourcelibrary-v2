@@ -154,7 +154,8 @@ export async function GET(request: NextRequest) {
 
     const [booksResultRaw, indexResult, galleryResult, visualResult, semanticResultRaw, artworkResult, collectionsResult] = await Promise.all([
       withTimeout(searchBooks(query, limit, searchFilters, library), emptyBooks, 'books'),
-      withTimeout(
+      // Skip index/entity search for quoted phrases — autocomplete returns loose single-word noise
+      isPhrase ? Promise.resolve(emptyIndex) : withTimeout(
         searchIndex(db, matchQuery, limit, tenantContext.id || undefined).catch((err) => {
           console.error('Index search error:', err);
           return emptyIndex;
