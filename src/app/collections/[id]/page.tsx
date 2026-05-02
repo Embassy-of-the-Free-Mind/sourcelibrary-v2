@@ -311,12 +311,29 @@ async function fetchCollectionData(id: string, provider?: string) {
       return docs;
     }
 
+    // Use MongoDB with collection-specific ranking for the initial display.
+    // book_collection_rank combines relevance, quality, completeness, and engagement.
+    // Falls back to Supabase popular sort if MongoDB fails.
+    try {
+      const docs = await withTimeout(
+        db.collection('books')
+          .find(filter, { projection, maxTimeMS: 8000 })
+          .sort({ [`book_collection_rank.${id}`]: -1, read_count: -1, title: 1 })
+          .limit(COMPACT_LIMIT)
+          .toArray(),
+        15000, [],
+      );
+      if (docs.length > 0) return docs;
+    } catch {
+      // Fall through to Supabase
+    }
+
     try {
       const { books: sbBooks } = await browseBooks({
         collection: id,
         sort: 'popular',
         limit: COMPACT_LIMIT,
-        skipCount: true, // collection.book_count is cached — skip expensive Supabase count
+        skipCount: true,
         hasPages: isArtCollection ? false : undefined,
         hasResourceType: isArtCollection || undefined,
         provider: provider || undefined,
@@ -333,17 +350,7 @@ async function fetchCollectionData(id: string, provider?: string) {
         resource_type: b.resource_type,
       }));
     } catch {
-      // MongoDB fallback — if Supabase is down
-      console.warn(`[Collection ${id}] Supabase books query failed, falling back to MongoDB`);
-      const docs = await withTimeout(
-        db.collection('books')
-          .find(filter, { projection, maxTimeMS: 8000 })
-          .sort({ read_count: -1, title: 1 })
-          .limit(COMPACT_LIMIT)
-          .toArray(),
-        15000, [],
-      );
-      return docs;
+      return [];
     }
   }
 
