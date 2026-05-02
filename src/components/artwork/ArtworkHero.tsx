@@ -76,28 +76,23 @@ export default function ArtworkHero({ imageUrl, thumbUrl, hiResUrl, title, fullR
 
   return (
     <div
-      className="bg-black relative group/hero overflow-hidden"
-      style={{ maxHeight: fitWidth ? 'none' : 'calc(100vh - 64px)' }}
+      className="bg-black relative group/hero"
       onMouseEnter={() => setShowChrome(true)}
       onMouseLeave={() => setShowChrome(false)}
     >
       {/* Image container — viewport-height by default, natural proportions */}
-      <div className="flex items-center justify-center" style={{ minHeight: 'calc(100vh - 64px)' }}>
-        <div
-          className={`relative ${fitWidth ? 'w-full' : 'max-h-[calc(100vh-64px)]'}`}
-          style={fitWidth ? undefined : { maxWidth: '100%' }}
-        >
+      <div className="flex items-center justify-center" style={{ minHeight: fitWidth ? undefined : 'calc(100vh - 64px)' }}>
           <ImageWithMagnifier
             src={displaySrc}
             thumbnail={displaySrc}
             highResSrc={magnifierSrc}
             alt={title}
-            className={`${fitWidth ? 'w-full h-auto' : 'max-h-[calc(100vh-64px)] w-auto'} mx-auto`}
+            className={`${fitWidth ? 'w-full' : ''} mx-auto`}
+            imgClassName={fitWidth ? 'w-full' : 'max-h-[calc(100vh-64px)]'}
             magnifierSize={240}
             zoomLevel={3}
             darkMode
           />
-        </div>
       </div>
 
       {/* Fit toggle — appears on hover */}
