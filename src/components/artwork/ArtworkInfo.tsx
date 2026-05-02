@@ -152,10 +152,19 @@ export default function ArtworkInfo({ book, collections, prevWork, nextWork, rel
               </p>
 
               <div className="flex flex-wrap items-center gap-x-5 gap-y-2 mt-5 text-sm text-stone-400">
-                {book.published && (
+                {/* Show published date, but filter out Wikimedia upload timestamps
+                    (ISO format like "2014-10-22 07:56:19" — not artwork creation dates) */}
+                {book.published && !/^\d{4}-\d{2}-\d{2}/.test(book.published) && (
                   <div className="flex items-center gap-1.5">
                     <Calendar className="w-4 h-4 text-stone-500" />
                     {book.published}
+                  </div>
+                )}
+                {/* Show enrichment period when no real published date */}
+                {(!book.published || /^\d{4}-\d{2}-\d{2}/.test(book.published)) && enrichment?.period && (
+                  <div className="flex items-center gap-1.5">
+                    <Calendar className="w-4 h-4 text-stone-500" />
+                    {enrichment.period}
                   </div>
                 )}
                 {medium && (
@@ -191,7 +200,7 @@ export default function ArtworkInfo({ book, collections, prevWork, nextWork, rel
               <BookShare
                 title={book.display_title || book.title}
                 author={book.author}
-                year={book.published}
+                year={book.published && !/^\d{4}-\d{2}-\d{2}/.test(book.published) ? book.published : enrichment?.period || undefined}
                 bookId={book.id}
                 label="Share"
                 className="text-stone-300 hover:text-white hover:bg-white/10"

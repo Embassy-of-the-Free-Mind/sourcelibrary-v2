@@ -355,7 +355,12 @@ export default function CollectionAllBooks({
             {displayBooks.map((book, i) => {
               const thumb = getBookThumbnailUrl(book, 'thumb') || book.photo;
               const title = bookTitle(book);
-              const year = book.year || parseInt(book.published || '', 10) || 0;
+              // For artworks, book.published is often the Wikimedia upload date (e.g. 2014),
+              // not the creation date. Only use book.year (set by enrichment) for artworks.
+              const isArtwork = !!book.resource_type;
+              const year = isArtwork
+                ? (book.year || 0)
+                : (book.year || parseInt(book.published || '', 10) || 0);
               return (
                 <Link
                   key={book.id}
