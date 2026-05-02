@@ -34,6 +34,8 @@ interface BookItem {
   created_at?: string;
   last_translation_at?: string;
   resource_type?: string;
+  commons_width?: number;
+  commons_height?: number;
 }
 
 interface CollectionAllBooksProps {
@@ -349,9 +351,12 @@ export default function CollectionAllBooks({
           collectionType={collectionType}
         />
       ) : isArt ? (
-        /* Art gallery grid — masonry layout with natural aspect ratios */
+        /* Art gallery grid — CSS grid with fixed row height for row-first loading.
+           CSS columns fill top→bottom per column, so column 2-3 items load after
+           all of column 1 — bad for above-the-fold performance. Grid fills
+           left→right, top→bottom, matching natural DOM/loading order. */
         <div className={`bg-stone-950 -mx-4 sm:-mx-6 md:-mx-8 px-1 pt-1 pb-4 ${loading ? 'opacity-50 pointer-events-none' : ''}`}>
-          <div className="columns-2 sm:columns-3 lg:columns-4 xl:columns-5 gap-1">
+          <div className="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-4 xl:grid-cols-5 gap-1 auto-rows-auto">
             {displayBooks.map((book, i) => {
               const thumb = getBookThumbnailUrl(book, 'thumb') || book.photo;
               const title = bookTitle(book);
@@ -361,29 +366,30 @@ export default function CollectionAllBooks({
               const year = isArtwork
                 ? (book.year || 0)
                 : (book.year || parseInt(book.published || '', 10) || 0);
+              const isPortrait = (book as any).commons_height > (book as any).commons_width;
               return (
                 <Link
                   key={book.id}
                   href={`/artwork/${book.slug || book.id}`}
-                  className="group block break-inside-avoid mb-1 relative overflow-hidden"
+                  className="group block relative"
                 >
-                  {thumb ? (
-                    /* eslint-disable-next-line @next/next/no-img-element */
-                    <img
-                      src={thumb}
-                      alt={title}
-                      className="w-full h-auto block group-hover:opacity-90 transition-opacity duration-300"
-                      loading={i < 10 ? 'eager' : 'lazy'}
-                      decoding="async"
-                      fetchPriority={i < 5 ? 'high' : 'auto'}
-                      width={400}
-                      height={500}
-                    />
-                  ) : (
-                    <div className="aspect-[3/4] bg-stone-900 flex items-center justify-center">
-                      <LayoutGrid className="w-8 h-8 text-stone-700" />
-                    </div>
-                  )}
+                  <div className={`relative ${isPortrait ? 'aspect-[3/4]' : 'aspect-[4/3]'} bg-stone-900`}>
+                    {thumb ? (
+                      /* eslint-disable-next-line @next/next/no-img-element */
+                      <img
+                        src={thumb}
+                        alt={title}
+                        className="absolute inset-0 w-full h-full object-cover group-hover:opacity-90 transition-opacity duration-300"
+                        loading={i < 10 ? 'eager' : 'lazy'}
+                        decoding="async"
+                        fetchPriority={i < 5 ? 'high' : 'auto'}
+                      />
+                    ) : (
+                      <div className="absolute inset-0 flex items-center justify-center">
+                        <LayoutGrid className="w-8 h-8 text-stone-700" />
+                      </div>
+                    )}
+                  </div>
                   <div className="px-1.5 py-1.5 bg-stone-950">
                     <h3
                       className="text-xs font-medium text-stone-300 leading-tight line-clamp-1"
@@ -403,7 +409,7 @@ export default function CollectionAllBooks({
             {showSeeAllCard && (
               <button
                 onClick={handleExpand}
-                className="group block break-inside-avoid mb-1 aspect-[3/4] bg-stone-900 flex flex-col items-center justify-center gap-2 cursor-pointer hover:bg-stone-800 transition-colors"
+                className="group block aspect-[3/4] bg-stone-900 flex flex-col items-center justify-center gap-2 cursor-pointer hover:bg-stone-800 transition-colors"
               >
                 <div className="w-10 h-10 rounded-full bg-white/5 flex items-center justify-center group-hover:bg-white/10 transition-colors">
                   <ArrowRight className="w-5 h-5 text-stone-400" />
