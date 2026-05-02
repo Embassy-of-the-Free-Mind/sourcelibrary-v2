@@ -1,5 +1,5 @@
 import { describe, it, expect } from 'vitest';
-import { normalizeText, isUsableImageUrl, isArchiveFailed, getPageImageUrl } from '@/lib/utils';
+import { normalizeText, isUsableImageUrl, isArchiveFailed, getPageImageUrl, getBookThumbnailUrl } from '@/lib/utils';
 
 describe('normalizeText', () => {
   it('lowercases text', () => {
@@ -107,5 +107,93 @@ describe('getPageImageUrl', () => {
 
   it('returns null when no images available', () => {
     expect(getPageImageUrl({})).toBeNull();
+  });
+});
+
+describe('getBookThumbnailUrl', () => {
+  // Artwork URLs: -thumb vs -full routing
+  it('returns -thumb.jpg for artwork URLs in thumb mode', () => {
+    const book = {
+      thumbnail: 'https://images.sourcelibrary.org/artwork/goltzius-full.jpg',
+      thumbnail_blob: 'https://images.sourcelibrary.org/artwork/goltzius-thumb.jpg',
+    };
+    expect(getBookThumbnailUrl(book, 'thumb')).toBe('https://images.sourcelibrary.org/artwork/goltzius-thumb.jpg');
+  });
+
+  it('returns -full.jpg for artwork URLs in display mode', () => {
+    const book = {
+      thumbnail: 'https://images.sourcelibrary.org/artwork/goltzius-full.jpg',
+      thumbnail_blob: 'https://images.sourcelibrary.org/artwork/goltzius-thumb.jpg',
+    };
+    expect(getBookThumbnailUrl(book, 'display')).toBe('https://images.sourcelibrary.org/artwork/goltzius-full.jpg');
+  });
+
+  it('rewrites artwork -thumb to -full in display mode', () => {
+    const book = {
+      thumbnail: 'https://images.sourcelibrary.org/artwork/durer-thumb.jpg',
+      thumbnail_blob: 'https://images.sourcelibrary.org/artwork/durer-thumb.jpg',
+    };
+    expect(getBookThumbnailUrl(book, 'display')).toBe('https://images.sourcelibrary.org/artwork/durer-full.jpg');
+  });
+
+  it('rewrites artwork -full to -thumb in thumb mode', () => {
+    const book = {
+      thumbnail: 'https://images.sourcelibrary.org/artwork/durer-full.jpg',
+      thumbnail_blob: 'https://images.sourcelibrary.org/artwork/durer-full.jpg',
+    };
+    expect(getBookThumbnailUrl(book, 'thumb')).toBe('https://images.sourcelibrary.org/artwork/durer-thumb.jpg');
+  });
+
+  // Archived book URLs: rewrite to /pages/ with size suffix
+  it('rewrites /archived/ URLs to /pages/ with -thumb suffix', () => {
+    const book = {
+      thumbnail: 'https://images.sourcelibrary.org/archived/abc123/5.jpg',
+      thumbnail_blob: 'https://images.sourcelibrary.org/archived/abc123/5.jpg',
+    };
+    expect(getBookThumbnailUrl(book, 'thumb')).toBe('https://images.sourcelibrary.org/pages/abc123/0005-thumb.jpg');
+  });
+
+  it('rewrites /archived/ URLs to /pages/ display size', () => {
+    const book = {
+      thumbnail: 'https://images.sourcelibrary.org/archived/abc123/5.jpg',
+    };
+    expect(getBookThumbnailUrl(book, 'display')).toBe('https://images.sourcelibrary.org/pages/abc123/0005.jpg');
+  });
+
+  // Wikimedia: rewrite to thumb.php
+  it('rewrites Wikimedia URLs to thumb.php', () => {
+    const book = {
+      thumbnail: 'https://upload.wikimedia.org/wikipedia/commons/a/ab/Image.jpg',
+    };
+    const result = getBookThumbnailUrl(book, 'thumb');
+    expect(result).toContain('thumb.php');
+    expect(result).toContain('w=400');
+  });
+
+  // Artwork URLs without -thumb or -full suffix should pass through
+  it('passes through artwork URLs without size suffix', () => {
+    const book = {
+      thumbnail: 'https://images.sourcelibrary.org/artwork/some-image.jpg',
+      thumbnail_blob: 'https://images.sourcelibrary.org/artwork/some-image.jpg',
+    };
+    // Display: no -thumb to rewrite, passes through
+    expect(getBookThumbnailUrl(book, 'display')).toBe('https://images.sourcelibrary.org/artwork/some-image.jpg');
+    // Thumb: no -full to rewrite, passes through
+    expect(getBookThumbnailUrl(book, 'thumb')).toBe('https://images.sourcelibrary.org/artwork/some-image.jpg');
+  });
+
+  // Default size is 'display'
+  it('defaults to display size', () => {
+    const book = {
+      thumbnail: 'https://images.sourcelibrary.org/artwork/test-full.jpg',
+      thumbnail_blob: 'https://images.sourcelibrary.org/artwork/test-thumb.jpg',
+    };
+    expect(getBookThumbnailUrl(book)).toBe('https://images.sourcelibrary.org/artwork/test-full.jpg');
+  });
+
+  // Null handling
+  it('returns null when no thumbnail', () => {
+    expect(getBookThumbnailUrl({}, 'display')).toBeNull();
+    expect(getBookThumbnailUrl({ thumbnail: null, thumbnail_blob: null }, 'thumb')).toBeNull();
   });
 });
