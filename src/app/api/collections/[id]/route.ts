@@ -78,7 +78,7 @@ export async function GET(
             },
             maxTimeMS: 15000,
           })
-          .sort({ commons_width: -1 })
+          .sort({ [`art_collection_rank.${id}`]: -1, commons_width: -1 })
           .limit(1000)
           .toArray();
         const books = docs.map(b => ({
