@@ -23,9 +23,9 @@ vi.mock('@/lib/auth', () => {
 
 // Mock Gemini (no real AI calls in tests)
 vi.mock('@/lib/embassy/librarian', () => ({
-  generateLibrarianResponse: vi.fn().mockResolvedValue({
-    content: 'The Librarian responds with knowledge about the collection.',
-    sources: [{ book_id: 'b1', bookTitle: 'Test Book', bookAuthor: 'Author', page_number: 1, bookSlug: 'test-book' }],
+  streamAgenticResponse: vi.fn().mockImplementation(async function* () {
+    yield { type: 'text', text: 'The Librarian responds with knowledge about the collection.' };
+    yield { type: 'sources', sources: [{ book_id: 'b1', bookTitle: 'Test Book', bookAuthor: 'Author', pageNumber: 1, bookSlug: 'test-book' }] };
   }),
 }));
 
