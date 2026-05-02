@@ -76,7 +76,8 @@ export default function ArtworkHero({ imageUrl, thumbUrl, hiResUrl, title, fullR
 
   return (
     <div
-      className="bg-black relative group/hero"
+      className="bg-black relative group/hero overflow-hidden"
+      style={{ maxHeight: fitWidth ? 'none' : 'calc(100vh - 64px)' }}
       onMouseEnter={() => setShowChrome(true)}
       onMouseLeave={() => setShowChrome(false)}
     >
