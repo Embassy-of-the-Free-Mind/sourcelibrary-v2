@@ -141,7 +141,23 @@ export async function GET(
           if (usedAtlas && Array.isArray(page.highlights) && page.highlights.length > 0) {
             for (const hl of page.highlights as Array<{ path: string; texts: Array<{ value: string; type: string }> }>) {
               const field: 'ocr' | 'translation' = hl.path === 'translation.data' ? 'translation' : 'ocr';
-              const snippet = cleanText(hl.texts.map(t => t.value).join(''));
+              const raw = cleanText(hl.texts.map(t => t.value).join(''));
+              // Cap highlight length — Atlas Search can return entire page content
+              const MAX_SNIPPET = 300;
+              let snippet = raw;
+              if (raw.length > MAX_SNIPPET) {
+                // Find the highlight hit (marked by type: 'hit') and center around it
+                const hitText = hl.texts.find(t => t.type === 'hit')?.value?.toLowerCase() || matchQuery.toLowerCase();
+                const hitPos = raw.toLowerCase().indexOf(hitText);
+                if (hitPos >= 0) {
+                  const half = Math.floor(MAX_SNIPPET / 2);
+                  const start = Math.max(0, hitPos - half);
+                  const end = Math.min(raw.length, hitPos + hitText.length + half);
+                  snippet = (start > 0 ? '...' : '') + raw.slice(start, end) + (end < raw.length ? '...' : '');
+                } else {
+                  snippet = raw.slice(0, MAX_SNIPPET) + '...';
+                }
+              }
               matches.push({ field, snippet, position: 0 });
             }
           } else {
