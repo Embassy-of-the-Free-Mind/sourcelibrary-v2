@@ -15,6 +15,7 @@ interface ImageWithMagnifierProps {
   fallbackSrc?: string; // Fallback if src fails to load (e.g. on-the-fly crop URL)
   darkMode?: boolean; // Dark skeleton/background for lightbox contexts
   onLoad?: () => void; // Called when the display image finishes loading
+  imgClassName?: string; // Override default img sizing classes (replaces h-full object-contain)
 }
 
 // Magnifier component for zooming into the source image
@@ -32,6 +33,7 @@ export default function ImageWithMagnifier({
   fallbackSrc,
   darkMode = false,
   onLoad,
+  imgClassName,
 }: ImageWithMagnifierProps) {
   const [showMagnifier, setShowMagnifier] = useState(false);
   const [magnifierPosition, setMagnifierPosition] = useState({ x: 0, y: 0 });
@@ -127,8 +129,8 @@ export default function ImageWithMagnifier({
 
     if (!naturalWidth || !naturalHeight) return { width: rect.width, height: rect.height };
 
-    if (scrollable) {
-      // Scrollable: image fills width, no object-contain — element box = content area
+    if (scrollable || imgClassName) {
+      // No object-contain — element box = content area
       return { width: rect.width, height: rect.height };
     }
 
@@ -261,7 +263,7 @@ export default function ImageWithMagnifier({
           src={displaySrc}
           alt={alt}
           loading="eager"
-          className={`w-full max-w-full transition-opacity duration-300 ${isLoaded ? 'opacity-100' : 'opacity-0'} ${isTouchDevice ? 'cursor-pointer' : 'cursor-crosshair'} ${scrollable ? '' : 'h-full object-contain'}`}
+          className={`max-w-full transition-opacity duration-300 ${isLoaded ? 'opacity-100' : 'opacity-0'} ${isTouchDevice ? 'cursor-pointer' : 'cursor-crosshair'} ${imgClassName ? imgClassName : scrollable ? 'w-full' : 'w-full h-full object-contain'}`}
           onLoad={() => {
             // Detect broken/tiny images (e.g. corrupt Blob uploads)
             // Real gallery crops are 300px+ wide; corrupt ones come through ≤150px
