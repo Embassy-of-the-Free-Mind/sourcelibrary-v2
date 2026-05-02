@@ -456,15 +456,39 @@ export default function SearchPage({ defaultLibrary }: { defaultLibrary?: string
           .catch(() => setSemanticResults([]))
           .finally(() => setSemanticLoading(false));
 
-        // For quoted phrases, also search page content to find exact passages
+        // For quoted phrases, also search page content to find exact passages.
+        // Use unquoted query for full-text search (finds pages with both words),
+        // then try phrase search for exact contiguous matches and promote those.
         const isPhrase = /^".*"$/.test(q.trim());
         if (isPhrase) {
+          const unquoted = q.trim().slice(1, -1);
           setPassageLoading(true);
-          searchApi.search(q, { limit: 10, search_content: 'true' })
-            .then(data => {
-              // Only keep page-level results (not book-level)
-              const pages = (data.results || []).filter((r: SearchResult) => r.type === 'page');
+          Promise.all([
+            // Full-text search (both words on same page)
+            searchApi.search(unquoted, { limit: 15, search_content: 'true' }),
+            // Phrase search (exact contiguous match)
+            searchApi.search(q, { limit: 10, search_content: 'true' }).catch(() => ({ results: [] })),
+          ])
+            .then(([fullData, phraseData]) => {
+              const fullResults = fullData.results || [];
+              const phraseIds = new Set((phraseData.results || []).map((r: SearchResult) => r.id));
+              // Mark phrase matches, then sort them first
+              const pages = fullResults
+                .filter((r: SearchResult) => r.type === 'page')
+                .sort((a: SearchResult, b: SearchResult) => {
+                  const aPhrase = phraseIds.has(a.id) ? 1 : 0;
+                  const bPhrase = phraseIds.has(b.id) ? 1 : 0;
+                  return bPhrase - aPhrase;
+                });
               setPassageResults(pages);
+              // Backfill book results if unified found none
+              if (bookResults.length === 0) {
+                const books = fullResults.filter((r: SearchResult) => r.type === 'book');
+                if (books.length > 0) {
+                  setBookResults(books);
+                  setBookTotal(books.length);
+                }
+              }
             })
             .catch(() => setPassageResults([]))
             .finally(() => setPassageLoading(false));
@@ -1347,7 +1371,7 @@ export default function SearchPage({ defaultLibrary }: { defaultLibrary?: string
             <>
               <h2 className="text-xs font-medium text-muted uppercase tracking-wide flex items-center gap-2 mt-6">
                 <span className="w-1.5 h-1.5 rounded-full bg-accent-sage" />
-                Exact passages
+                Passages
               </h2>
               {passageLoading ? (
                 <div className="flex items-center gap-2 text-sm text-muted py-3">
