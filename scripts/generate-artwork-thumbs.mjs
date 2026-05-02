@@ -31,18 +31,13 @@ const s3 = new S3Client({
 });
 
 async function processOne(db, art) {
-  // Prefer the largest available R2 image as source for best crop quality
-  // thumbnail often points to -full.jpg (confusing naming), thumbnail_blob to -thumb.jpg
   const candidates = [art.thumbnail, art.thumbnail_blob].filter(u => u?.includes('images.sourcelibrary.org'));
   if (!candidates.length) return 'skip';
-  // Pick the one that looks largest (prefer no -thumb suffix)
-  const displayUrl = candidates.find(u => !u.includes('-thumb.')) || candidates[0];
 
-  // Derive base key (strip -thumb, -full, -grid suffixes)
-  const baseUrl = displayUrl
-    .replace(/-thumb\.jpg$/, '.jpg')
-    .replace(/-full\.jpg$/, '.jpg')
-    .replace(/-grid\.jpg$/, '.jpg');
+  // Try largest first: base URL (no suffix) > -full > whatever exists
+  const anyUrl = candidates[0];
+  const baseUrl = anyUrl.replace(/-thumb\.jpg$/, '.jpg').replace(/-full\.jpg$/, '.jpg').replace(/-grid\.jpg$/, '.jpg');
+  const tryUrls = [...new Set([baseUrl, baseUrl.replace(/\.jpg$/, '-full.jpg'), ...candidates])];
 
   const thumbUrl = baseUrl.replace(/\.jpg$/, '-thumb.jpg');
   const gridUrl = baseUrl.replace(/\.jpg$/, '-grid.jpg');
@@ -50,9 +45,13 @@ async function processOne(db, art) {
   const gridKey = gridUrl.replace('https://images.sourcelibrary.org/', '');
 
   try {
-    // Download source image
-    const res = await fetch(displayUrl, { signal: AbortSignal.timeout(30000) });
-    if (!res.ok) return 'http-' + res.status;
+    // Try each URL until one works, preferring largest
+    let res;
+    for (const url of tryUrls) {
+      res = await fetch(url, { signal: AbortSignal.timeout(15000) });
+      if (res.ok) break;
+    }
+    if (!res?.ok) return 'http-fail';
 
     const buf = Buffer.from(await res.arrayBuffer());
 
