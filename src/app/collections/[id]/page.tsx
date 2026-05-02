@@ -296,7 +296,7 @@ async function fetchCollectionData(id: string, provider?: string) {
         withTimeout(
           db.collection('books')
             .find(artFilter, { projection, maxTimeMS: 8000 })
-            .sort({ commons_width: -1 })
+            .sort({ [`art_collection_rank.${id}`]: -1, commons_width: -1 })
             .limit(COMPACT_LIMIT)
             .toArray(),
           15000, [],
