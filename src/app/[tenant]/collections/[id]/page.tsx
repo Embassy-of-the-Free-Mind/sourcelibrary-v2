@@ -702,7 +702,7 @@ export default async function CollectionDetailPage({ params, provider }: Props &
         ) : artworkPreviewImages.length > 0 ? (
           <div className="absolute inset-0 grid grid-cols-3 sm:grid-cols-6 opacity-30">
             {artworkPreviewImages.slice(0, 6).map((art) => {
-              const src = getBookThumbnailUrl(art);
+              const src = getBookThumbnailUrl(art, 'thumb');
               if (!src) return null;
               return (
                 <div key={art.id} className="relative overflow-hidden">

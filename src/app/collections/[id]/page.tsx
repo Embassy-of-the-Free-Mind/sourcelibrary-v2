@@ -943,7 +943,7 @@ export default async function CollectionDetailPage({ params, provider }: Props &
             </p>
             <div className="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-4 xl:grid-cols-5 gap-4">
               {artworks.slice(0, 15).map((art: { id: string; slug?: string; title: string; display_title?: string; author?: string; published?: string; resource_type?: string; medium?: string; thumbnail?: string; thumbnail_blob?: string; enrichment?: { subject?: string; genre?: string }; commons_width?: number; commons_height?: number }) => {
-                const thumb = getBookThumbnailUrl(art);
+                const thumb = getBookThumbnailUrl(art, 'thumb');
                 const isPortrait = (art.commons_height || 0) > (art.commons_width || 0);
                 return (
                   <Link

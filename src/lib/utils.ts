@@ -62,9 +62,14 @@ export function getBookThumbnailUrl(
 
   if (!raw.includes('images.sourcelibrary.org/')) return raw;
 
-  // Artwork URLs: many -thumb.jpg variants were never generated, so always
-  // normalize to -full.jpg (the only version guaranteed to exist).
+  // Artwork URLs: use thumb variants for 'thumb' size, full for 'display'.
   if (raw.includes('/artwork/')) {
+    if (size === 'thumb') {
+      // Prefer -thumb.jpg for card grids
+      if (raw.endsWith('-full.jpg')) return raw.replace(/-full\.jpg$/, '-thumb.jpg');
+      return raw;
+    }
+    // Display size: prefer -full.jpg
     if (raw.endsWith('-thumb.jpg')) return raw.replace(/-thumb\.jpg$/, '-full.jpg');
     return raw;
   }
