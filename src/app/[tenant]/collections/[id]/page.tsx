@@ -563,7 +563,7 @@ async function fetchCollectionData(id: string, tenantId: string | null, provider
     galleryTotalCount,
     exhibition: curationDraft?.curation || null,
     exhibitionBooks,
-    childCollections: childCollections.map(({ _id, ...rest }) => rest) as { slug: string; name: string; subtitle?: string; book_count?: number; featured_images?: { extracted_url?: string; image_url?: string; thumbnail_url?: string }[] }[],
+    childCollections: childCollections.map(({ _id, ...rest }) => rest) as { slug: string; name: string; subtitle?: string; book_count?: number; featured_images?: ({ extracted_url?: string; image_url?: string; thumbnail_url?: string } | string)[] }[],
     // eslint-disable-next-line @typescript-eslint/no-explicit-any
     artworks: artworks as any[],
   };
@@ -768,12 +768,17 @@ export default async function CollectionDetailPage({ params, provider }: Props &
             </h2>
             <div className="grid gap-4 grid-cols-2 lg:grid-cols-4">
               {childCollections.map((child) => {
-                const hero = child.featured_images?.find(
-                  (img) => img.thumbnail_url || img.extracted_url
-                ) || child.featured_images?.find(
-                  (img) => img.image_url
-                );
-                const heroUrl = hero?.thumbnail_url || hero?.extracted_url || hero?.image_url;
+                const fi = child.featured_images;
+                let heroUrl: string | undefined;
+                if (fi?.length) {
+                  const first = fi[0];
+                  if (typeof first === 'string') { heroUrl = first; }
+                  else {
+                    const hero = fi.find((img) => typeof img !== 'string' && (img.thumbnail_url || img.extracted_url))
+                      || fi.find((img) => typeof img !== 'string' && img.image_url);
+                    if (hero && typeof hero !== 'string') heroUrl = hero.thumbnail_url || hero.extracted_url || hero.image_url;
+                  }
+                }
                 return (
                   <Link
                     key={child.slug}
@@ -787,7 +792,6 @@ export default async function CollectionDetailPage({ params, provider }: Props &
                         fill
                         sizes="(max-width: 640px) 50vw, 25vw"
                         className="object-cover transition-transform duration-500 ease-out group-hover:scale-105"
-                        unoptimized
                       />
                     ) : (
                       <div className="absolute inset-0 bg-gradient-to-br from-[#3d3529] to-[#2a2318]" />

@@ -169,10 +169,11 @@ async function fetchTimelineDecades(): Promise<{ decades: DecadeBucket[]; total:
 /** Pick the best image URL for a card: prefer small thumbnails, fall back to extracted, then raw page. */
 function pickCardImage(images: FeaturedImage[] | undefined): string | undefined {
   if (!images?.length) return undefined;
-  // Find first image that has any usable URL
   for (const img of images) {
+    // Guard against raw strings stored instead of objects
+    if (typeof img === 'string') return img;
     const url = img.thumbnail_url || img.extracted_url || img.image_url;
-    if (url) return img.thumbnail_url || img.extracted_url || img.image_url;
+    if (url) return url;
   }
   return undefined;
 }

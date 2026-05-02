@@ -176,12 +176,17 @@ async function run() {
         pending.push({
           slug: col.slug,
           name: col.name,
-          images: booksWithThumbs.map(b => ({
-            image_url: b.thumbnail,
-            book_id: b.id,
-            book_title: b.title,
-            type: 'thumbnail-fallback',
-          })),
+          images: booksWithThumbs.map(b => {
+            const isR2 = b.thumbnail?.includes('images.sourcelibrary.org');
+            return {
+              // Set thumbnail_url for R2 sources so pickCardImage finds it immediately
+              ...(isR2 ? { thumbnail_url: b.thumbnail } : {}),
+              image_url: b.thumbnail,
+              book_id: b.id,
+              book_title: b.title,
+              type: 'thumbnail-fallback',
+            };
+          }),
         });
         console.log(`  ${col.name}: ${booksWithThumbs.length} fallback thumbnails`);
         populated++;
