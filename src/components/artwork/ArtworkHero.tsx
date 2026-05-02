@@ -82,21 +82,21 @@ export default function ArtworkHero({ imageUrl, thumbUrl, hiResUrl, title, fullR
       onMouseMove={handleMouseMove}
       onMouseLeave={() => setShowChrome(false)}
     >
-      {/* Image container — fills viewport height by default, no padding */}
+      {/* Image container — landscape fills width, portrait fills height */}
       <div
-        className={fitWidth ? 'w-full' : 'flex items-center justify-center'}
-        style={fitWidth ? undefined : { height: 'calc(100vh - 64px)' }}
+        className={fitWidth ? 'w-full' : isLandscape ? 'w-full flex items-center justify-center' : 'flex items-center justify-center'}
+        style={fitWidth ? undefined : isLandscape ? { minHeight: '40vh' } : { height: 'calc(100vh - 64px)' }}
       >
         <div
-          className={`relative ${fitWidth ? 'w-full' : 'h-full'}`}
-          style={fitWidth ? undefined : { maxHeight: 'calc(100vh - 64px)' }}
+          className={`relative ${fitWidth ? 'w-full' : isLandscape ? 'w-full' : 'h-full'}`}
+          style={fitWidth ? undefined : isLandscape ? undefined : { maxHeight: 'calc(100vh - 64px)' }}
         >
           <ImageWithMagnifier
             src={displaySrc}
             thumbnail={displaySrc}
             highResSrc={magnifierSrc}
             alt={title}
-            className={fitWidth ? 'w-full h-auto' : 'h-full w-auto mx-auto'}
+            className={fitWidth ? 'w-full h-auto' : isLandscape ? 'w-full h-auto' : 'h-full w-auto mx-auto'}
             magnifierSize={240}
             zoomLevel={3}
             darkMode

@@ -31,8 +31,12 @@ const s3 = new S3Client({
 });
 
 async function processOne(db, art) {
-  const displayUrl = art.thumbnail_blob || art.thumbnail;
-  if (!displayUrl || !displayUrl.includes('images.sourcelibrary.org')) return 'skip';
+  // Prefer the largest available R2 image as source for best crop quality
+  // thumbnail often points to -full.jpg (confusing naming), thumbnail_blob to -thumb.jpg
+  const candidates = [art.thumbnail, art.thumbnail_blob].filter(u => u?.includes('images.sourcelibrary.org'));
+  if (!candidates.length) return 'skip';
+  // Pick the one that looks largest (prefer no -thumb suffix)
+  const displayUrl = candidates.find(u => !u.includes('-thumb.')) || candidates[0];
 
   // Derive base key (strip -thumb, -full, -grid suffixes)
   const baseUrl = displayUrl
@@ -53,9 +57,10 @@ async function processOne(db, art) {
     const buf = Buffer.from(await res.arrayBuffer());
 
     // Generate both sizes in parallel
+    // Grid: center-crop to square THEN resize — gives crisp 300x300 for any aspect ratio
     const [thumbBuf, gridBuf] = await Promise.all([
       sharp(buf).resize({ width: 600, withoutEnlargement: true }).jpeg({ quality: 80, mozjpeg: true }).toBuffer(),
-      sharp(buf).resize({ width: 300, withoutEnlargement: true }).jpeg({ quality: 75, mozjpeg: true }).toBuffer(),
+      sharp(buf).resize({ width: 300, height: 300, fit: 'cover', position: 'centre' }).jpeg({ quality: 80, mozjpeg: true }).toBuffer(),
     ]);
 
     // Upload both
@@ -90,11 +95,13 @@ async function main() {
 
   console.log(DRY_RUN ? '=== DRY RUN ===' : '=== LIVE RUN ===');
 
-  // Find artworks missing grid thumbnails
+  // Find artworks needing grid thumbnails (regenerate all with --regen flag)
+  const REGEN = process.argv.includes('--regen');
+  const gridFilter = REGEN ? {} : { grid_thumbnail: { $exists: false } };
   const arts = await db.collection('books').find(
     {
       resource_type: { $exists: true },
-      grid_thumbnail: { $exists: false },
+      ...gridFilter,
       $or: [
         { thumbnail_blob: { $regex: /images\.sourcelibrary\.org/ } },
         { thumbnail: { $regex: /images\.sourcelibrary\.org/ } },
