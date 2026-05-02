@@ -214,13 +214,14 @@ async function fetchCollectionData(id: string, provider?: string) {
   const filter: Record<string, unknown> = isArtCollection
     ? {
       collections: id,
-      resource_type: { $exists: true },
+      resource_type: { $exists: true, $nin: ART_EXCLUDED_RESOURCE_TYPES },
+      hidden: { $ne: true },
     }
     : {
       collections: id,
       $or: [
         { visible: true, pages_count: { $gt: 0 }, pages_translated: { $gt: 0 } },
-        { resource_type: { $exists: true } },
+        { resource_type: { $exists: true }, hidden: { $ne: true } },
       ],
     };
   // Provider filter — restrict to a specific library's books.
@@ -262,7 +263,7 @@ async function fetchCollectionData(id: string, provider?: string) {
     ? withTimeout(
       db.collection('books')
         .find(
-          { collections: id, resource_type: { $exists: true } },
+          { collections: id, resource_type: { $exists: true }, hidden: { $ne: true } },
           {
             projection: {
               _id: 0, id: 1, slug: 1, title: 1, display_title: 1, author: 1, published: 1,
@@ -289,6 +290,7 @@ async function fetchCollectionData(id: string, provider?: string) {
       const artFilter = {
         collections: id,
         resource_type: { $exists: true, $nin: ART_EXCLUDED_RESOURCE_TYPES },
+        hidden: { $ne: true },
       };
       const [docs, artCount] = await Promise.all([
         withTimeout(
@@ -762,7 +764,7 @@ export default async function CollectionDetailPage({ params, provider }: Props &
                         fill
                         sizes="(max-width: 640px) 50vw, 25vw"
                         className="object-cover transition-transform duration-500 ease-out group-hover:scale-105"
-                        unoptimized
+                        unoptimized={heroUrl.includes('images.sourcelibrary.org')}
                       />
                     ) : (
                       <div className="absolute inset-0 bg-gradient-to-br from-[#3d3529] to-[#2a2318]" />
@@ -823,7 +825,7 @@ export default async function CollectionDetailPage({ params, provider }: Props &
                         fill
                         className="object-cover group-hover:scale-105 transition-transform duration-300"
                         sizes="(min-width: 1024px) 200px, (min-width: 640px) 160px, 120px"
-                        unoptimized
+                        unoptimized={thumb.includes('images.sourcelibrary.org')}
                       />
                     )}
                     <div className="absolute inset-x-0 bottom-0 bg-gradient-to-t from-black/70 to-transparent p-2 pt-6 opacity-0 group-hover:opacity-100 transition-opacity">

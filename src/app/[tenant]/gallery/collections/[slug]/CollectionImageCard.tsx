@@ -21,6 +21,9 @@ export interface CollectionImageProps {
 export default function CollectionImageCard({ item, priority = false }: { item: CollectionImageProps; priority?: boolean }) {
   const [imageError, setImageError] = useState(false);
   const displayUrl = item.thumbnailUrl || item.extractedUrl || item.imageUrl;
+  // Only bypass Next.js optimization for pre-generated R2 thumbnails (already small).
+  // Fallback URLs (extractedUrl, imageUrl) can be 2MB+ and need optimization.
+  const isPreGenerated = !!item.thumbnailUrl;
 
   return (
     <div className="relative group bg-white rounded-lg shadow-sm overflow-hidden hover:shadow-md transition-all hover:-translate-y-0.5">
@@ -34,7 +37,7 @@ export default function CollectionImageCard({ item, priority = false }: { item: 
               className="object-contain group-hover:scale-105 transition-transform duration-300"
               sizes="(max-width: 640px) 50vw, (max-width: 768px) 33vw, (max-width: 1024px) 25vw, 16vw"
               onError={() => setImageError(true)}
-              unoptimized
+              unoptimized={isPreGenerated}
               priority={priority}
               loading={priority ? 'eager' : 'lazy'}
             />
