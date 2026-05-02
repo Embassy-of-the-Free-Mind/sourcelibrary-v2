@@ -136,6 +136,23 @@ async function fetchImageBase64(url) {
   const resp = await fetch(url);
   if (!resp.ok) throw new Error(`Failed to fetch image: ${resp.status}`);
   const buf = Buffer.from(await resp.arrayBuffer());
+
+  // Downscale large images to avoid Gemini API limits (~4MB base64 safe)
+  // sharp is optional — if not available, send raw and let Gemini handle it
+  const MAX_BYTES = 3 * 1024 * 1024; // 3MB
+  if (buf.length > MAX_BYTES) {
+    try {
+      const sharp = (await import('sharp')).default;
+      const resized = await sharp(buf)
+        .resize({ width: 1600, withoutEnlargement: true })
+        .jpeg({ quality: 80 })
+        .toBuffer();
+      return resized.toString('base64');
+    } catch {
+      // sharp not available — truncate won't work, just try raw
+      return buf.toString('base64');
+    }
+  }
   return buf.toString('base64');
 }
 
@@ -183,8 +200,13 @@ async function main() {
   const db = client.db('bookstore');
   const books = db.collection('books');
 
-  // Build query — resource_type_sparse index makes this fast
-  const query = { resource_type: { $exists: true } };
+  // Build query — only visible, non-deleted artworks
+  const query = {
+    resource_type: { $exists: true },
+    content_type: 'artwork',
+    visible: true,
+    deleted: { $ne: true },
+  };
   if (!RE_ENRICH) query.enrichment = { $exists: false };
   if (ARTIST_FILTER) query.author = ARTIST_FILTER;
   if (SLUG_FILTER) query.slug = SLUG_FILTER;
@@ -196,28 +218,40 @@ async function main() {
     display_title: 1, 'enrichment.ulan_artist': 1,
   };
 
-  // Use cursor-based iteration to avoid loading all docs into memory
-  // Atlas is slow on large .toArray() calls
-  let cursor;
-  if (!ARTIST_FILTER && DRY_RUN) {
-    // In dry-run mode, sample randomly for diversity
-    const sampled = await books.aggregate([
-      { $match: query },
-      { $sample: { size: LIMIT } },
-      { $project: projection },
-    ]).toArray();
-    cursor = { [Symbol.asyncIterator]: async function*() { for (const d of sampled) yield d; }, count: sampled.length };
-  } else {
-    cursor = books.find(query, { projection }).limit(LIMIT);
-    cursor.count = LIMIT; // approximate
-  }
-
+  // Use batched skip/limit to avoid cursor timeouts on long-running enrichment
   console.log(`${DRY_RUN ? 'DRY RUN — ' : ''}Processing up to ${LIMIT} artworks...`);
 
   let success = 0, errors = 0, totalTokens = 0, processed = 0;
   const results = [];
+  const BATCH_SIZE = 100;
 
-  for await (const art of cursor) {
+  // Fetch artworks in batches to avoid MongoDB cursor timeout
+  async function* batchIterator() {
+    let skip = 0;
+    while (skip < LIMIT) {
+      const batchLimit = Math.min(BATCH_SIZE, LIMIT - skip);
+      let batch;
+      if (!ARTIST_FILTER && DRY_RUN && skip === 0) {
+        batch = await books.aggregate([
+          { $match: query },
+          { $sample: { size: batchLimit } },
+          { $project: projection },
+        ]).toArray();
+      } else {
+        batch = await books.find(query, { projection })
+          .sort({ _id: 1 })
+          .skip(skip)
+          .limit(batchLimit)
+          .toArray();
+      }
+      if (batch.length === 0) break;
+      for (const doc of batch) yield doc;
+      skip += batch.length;
+      if (batch.length < batchLimit) break;
+    }
+  }
+
+  for await (const art of batchIterator()) {
     processed++;
     const label = `[${processed}] ${art.author} — ${art.title?.substring(0, 50)}`;
 
