@@ -2,176 +2,149 @@
 
 ## Overview
 
-Full-text search across books, pages, and book indexes. Uses MongoDB Atlas Search (Lucene-based) with regex fallback for robustness.
+Multi-lane search across books, pages, indexes, images, and artworks. Combines keyword matching (Supabase trigrams, MongoDB Atlas Search) with vector semantic search (Gemini embeddings, Supabase HNSW) and CLIP visual search.
+
+## Architecture: 7 Search Lanes
+
+The unified search (`/api/search/unified`) fires all lanes in parallel with per-lane timeouts:
+
+| Lane | Source | What it finds |
+|------|--------|---------------|
+| **Books** | Supabase `books_catalog` (trigram GIN) | Title/author matches |
+| **Index** | MongoDB `entities` (Atlas Search autocomplete) | Concepts, people, places in book indexes |
+| **Gallery** | MongoDB `gallery_images` (Atlas Search) | Extracted illustrations by description |
+| **Visual** | Hetzner CLIP server → Supabase `clip_embeddings` | Images by visual similarity to text |
+| **Semantic** | Gemini embedding → Supabase `book_embeddings` (HNSW) | Conceptually related books |
+| **Artworks** | Gemini embedding → Supabase `artwork_embeddings` | Artwork by semantic similarity |
+| **Collections** | MongoDB `collections` (regex) | Collection name/description matches |
+
+### Similarity Floors
+
+Vector search always returns *something* — nonsense queries still get nearest neighbors. Floors prevent random results:
+
+- **Semantic/Artwork**: 0.65 when keyword results exist, 0.55 as fallback
+- **Visual (CLIP)**: 0.28
+- Calibrated 2026-04-23: real queries score 0.67+, nonsense scores 0.57-0.63
 
 ## Routes
 
-| Route | Purpose | Index used |
-|-------|---------|-----------|
-| `GET /api/search` | Global search (books + page content) | `books_search` (Atlas), `pages_search` (Atlas) |
-| `GET /api/search/unified` | Homepage dropdown (books + index entries) | `books_search` (Atlas), `books_index_generated_idx` |
-| `GET /api/search/index` | Index-only search (concepts, people, places, quotes) | `books_index_generated_idx` |
-| `GET /api/books/[id]/search` | Within-book page search | `pages_text_idx` |
+| Route | Purpose | Primary index |
+|-------|---------|---------------|
+| `GET /api/search/unified` | All tab — 7-lane parallel search | Multiple (see above) |
+| `GET /api/search` | Books tab — full book + page content search | Supabase trigram + Atlas Search `pages_search` |
+| `GET /api/search/semantic` | Standalone semantic book search | Gemini embedding → Supabase HNSW |
+| `GET /api/search/index` | Index-only search | Atlas Search `entities_search` |
+| `GET /api/books/[id]/search` | Within-book page search | Atlas Search `pages_search` + semantic |
+| `GET /api/search/visual` | CLIP text→image search | Hetzner CLIP → Supabase |
+| `GET /api/search/ai-expand` | AI narration + term expansion (streaming) | Gemini LLM |
 
-## Atlas Search Indexes (Lucene-based)
+## Quoted Phrase Search (2026-05-02)
 
-Replaced `$text` indexes with Atlas Search for relevance-ranked compound queries. Helper functions in `src/lib/atlas-search.ts`.
+When a query is wrapped in double quotes (e.g. `"venus humanitas"`):
+
+### Behavior per lane
+- **Atlas Search** (`buildPageSearchStage`): Uses `phrase` operator instead of `text` — requires words to be adjacent
+- **Supabase** (`searchBooksCatalog`, `searchBookIds`): Strips quotes, does exact phrase `ilike` only — no word splitting or cross-field matching
+- **Index/entity search**: Skipped entirely (autocomplete returns loose single-word noise)
+- **Semantic/visual/artwork**: Quotes stripped before embedding (embeddings don't need them)
+- **Regex fallback**: Quotes stripped before regex construction
+
+### Passages in All tab
+For quoted phrases, the search page fires a parallel page-content search (`/api/search` with `search_content=true`) alongside the unified search. This surfaces specific passages where the phrase appears in book text, shown as a "Passages" section at the top of results. If no book-title matches exist, book results from the full-text search are backfilled into the unified view.
+
+The implementation uses two parallel calls: an unquoted full-text search (finds pages with both words anywhere) and a quoted phrase search (finds exact contiguous matches). Exact matches are promoted to the top.
+
+### Key files
+- `src/lib/atlas-search.ts` — `buildPageSearchStage()` detects `"..."` pattern
+- `src/lib/books-catalog.ts` — `searchBooksCatalog()` and `searchBookIds()` detect and strip quotes
+- `src/app/api/search/unified/route.ts` — `isPhrase` flag, `matchQuery` for all lanes
+- `src/app/api/search/route.ts` — `isPhrase`/`matchQuery` for global search
+- `src/app/api/books/[id]/search/route.ts` — `isPhrase`/`matchQuery` for within-book search
+- `src/app/[tenant]/search/page.tsx` — `passageResults` state, parallel search for quoted queries
+
+## Atlas Search Indexes
 
 ### `books_search` on `books` collection
 - **Text fields** (lucene.standard): `title` (boost 10), `display_title` (boost 10), `author` (boost 5), `reading_summary.overview` (boost 1)
 - **Filter fields** (token): `language`, `categories`
 - **Boolean fields**: `hidden`, `is_first_translation`
 - **Number fields**: `year`, `pages_translated`
-- Uses `compound` query with `should` (text search), `filter` (structured filters), `mustNot` (hidden exclusion)
 
 ### `pages_search` on `pages` collection
 - **Text fields** (lucene.standard): `translation.data` (boost 2), `ocr.data` (boost 1)
 - **Filter fields** (token): `book_id`, `id`
 - **Number fields**: `page_number`
-- `book_id` filter is inside the Lucene index, so compound queries filter at search time (not post-filter)
+- Highlights: `maxCharsToExamine: 100000`, `maxNumPassages: 2`
 
-### Legacy `$text` Indexes (kept as fallback)
+### `entities_search` on `entities` collection
+- **Autocomplete fields**: `name`, `aliases`
+- **Score boost**: `book_count` (popular entities rank higher)
 
-Both text indexes still exist and are used by regex fallback paths. Can be dropped after Atlas Search is confirmed stable.
+### `gallery_search` on `gallery_images` collection
+- **Autocomplete**: `description` (boost 3)
+- **Text**: `museum_description` (boost 2), `metadata.subjects`, `metadata.figures`
+- **Filter**: `gallery_quality >= 0.5`
 
-- `books_text_idx`: `title` (weight 10), `display_title` (weight 10), `author` (weight 5), `reading_summary.overview` (weight 1). `default_language: 'none'`, `language_override: '_text_lang'`
-- `pages_text_idx`: `translation.data` (weight 2), `ocr.data` (weight 1). Same language settings.
+## Snippet Handling
 
-Both defined in `src/app/api/admin/ensure-indexes/route.ts`.
+### XML/markup stripping
+All search snippets pass through `cleanText()` which strips:
+- XML/HTML tags (`<note>`, `</note>`, etc.)
+- Markdown bold (`**text**`) and italic (`*text*`)
+- "original: Latin;" annotations
+- Excess whitespace
 
-## Search Strategy
+### Snippet length cap
+Atlas Search highlights can return entire page content. Within-book search caps highlights to 300 chars centered on the match position. Falls back to truncating from the start if no match position is found.
 
-Book and page search routes use **Atlas Search primary + regex fallback**:
-1. Try `$search` aggregation with Atlas Search compound queries (relevance-ranked by Lucene `searchScore`)
-2. If `$search` fails (e.g., index still building), fall back to regex on key fields
-3. All `$search` aggregations have `maxTimeMS` to prevent hanging during index rebuilds
+### Image error handling
+Search result cards use `onError` handlers with Book icon fallbacks for broken thumbnails. The `RelatedResultCard`, `SemanticResultCard`, and `BookResultCard` components all handle image load failures gracefully.
 
-Within-book search (`/api/books/[id]/search`) still uses `$text` index.
+## Smoke Tests
 
-This handles edge cases like index rebuilds or new deployments gracefully.
+15 tests covering all search endpoints. Run with:
 
-## Global Search (`/api/search`)
+```
+npx vitest run -c vitest.smoke.config.ts
+```
 
-**Parameters:**
-| Param | Type | Default | Description |
-|-------|------|---------|-------------|
-| `q` | string | required | Query (min 2 chars) |
-| `language` | string | — | Filter by book language |
-| `category` | string | — | Filter by category ID |
-| `year` | int | — | Exact year filter (numeric) |
-| `year_from` | int | — | Year range start |
-| `year_to` | int | — | Year range end |
-| `has_doi` | "true" | — | Only books with DOIs |
-| `has_translation` | "true" | — | Only books with translations |
-| `book_id` | string | — | Search within specific book |
-| `search_content` | "false" | "true" | Skip page content search |
-| `sort` | string | "relevance" | `relevance`, `date_asc`, `date_desc`, `title` |
-| `limit` | int | 20 | Max results (capped at 100) |
-| `offset` | int | 0 | Pagination offset |
+Tests verify: quoted phrase handling, XML stripping, snippet length caps, thumbnail enrichment, index noise suppression, and response shapes.
 
-**Sort behavior:**
-- `relevance` — books first, title matches prioritized, then `textScore`
-- `date_asc` / `date_desc` — by year extracted from `published` field
-- `title` — alphabetical on `display_title || title`
+File: `tests/smoke/search.test.ts`
 
-**Year filtering:** Uses numeric `year` field with `$gte/$lte` (not regex on string `published`). Requires `books_year_idx`.
+## UI Components
 
-**Nearby results:** When filtering by exact `year`, returns books within ±5 years as a `nearby` array, sorted by distance from target year.
+| Component | File | Purpose |
+|-----------|------|---------|
+| `SearchPage` | `src/app/[tenant]/search/page.tsx` | Full search page with All/Books/Index/Images tabs |
+| `UnifiedSearch` | `src/components/search/UnifiedSearch.tsx` | Homepage dropdown with typeahead |
+| `BookResultCard` | (in SearchPage) | Book/page result with auto-passage expansion |
+| `SemanticResultCard` | (in SearchPage) | Semantic match with thumbnail + similarity hint |
+| `RelatedResultCard` | (in SearchPage) | AI-expanded related result with error-handled image |
+| `IndexResultCard` | (in SearchPage) | Entity result with type badge and page refs |
+| `ImageResultCard` | (in SearchPage) | Gallery/visual/artwork image card |
+| `SearchCollectionCard` | (in SearchPage) | Collection match card |
+| `HighlightedText` | `src/components/search/HighlightedText.tsx` | Query term highlighting in results |
+| `BookSearchResults` | `src/app/[tenant]/book/[id]/search/BookSearchResults.tsx` | Within-book search UI |
 
-**Response includes:** `query`, `total`, `offset`, `limit`, `sort`, `results[]`, `filters{}`, optionally `nearby[]` and `nearby_range`.
+## Search Page View Modes
 
-## Unified Search (`/api/search/unified`)
+- **unified** (All tab): Shows all lanes — collections, books, semantic, index, images, passages (for quoted queries)
+- **books**: Full `/api/search` with page content, pagination, sort
+- **index**: Entity search with type filters
+- **images**: Gallery browser with pagination
 
-Fast search for the homepage dropdown. Runs book search and index search in parallel.
+### AI-Assisted Search
+The search page streams AI narration via `/api/search/ai-expand` which returns:
+- **Narration**: Brief contextual explanation of the query
+- **Expanded terms**: Related search terms as clickable pills
+- **Image terms**: Targeted gallery search terms
+- **Display hint**: `images_first`, `books_first`, or `not_in_collection`
 
-- Books: `$text` with `textScore`, limited to 5 results
-- Index: scans all books with `index.generatedAt`, matches normalized terms in concepts/people/places/keywords
-- **Alias expansion:** Before index matching, queries `entities` collection for name/alias matches and expands search terms to include all forms (e.g. "hermes" also matches "Hermes Trismegistus" and all aliases)
-
-Returns `{ books: { results, total }, index: { results, total } }`.
-
-## Within-Book Search (`/api/books/[id]/search`)
-
-Searches page content within a single book. Uses `$text` on `pages_text_idx` with `book_id` filter. Hard-capped at 50 results.
-
-## Index Search (`/api/search/index`)
-
-Searches AI-generated book indexes for concepts, people, places, keywords, and quotes.
-
-**Parameters:**
-| Param | Type | Default | Description |
-|-------|------|---------|-------------|
-| `q` | string | required | Query (min 2 chars) |
-| `type` | string | — | Filter by type: concept, person, place, keyword, quote |
-| `book_id` | string | — | Search within specific book |
-| `aggregate` | "true" | — | Cross-book aggregation via entities collection |
-| `limit` | int | 20 | Max results (capped at 100) |
-
-**Aggregated mode** (`aggregate=true`):
-- Queries `entities` collection instead of scanning individual book indexes
-- Matches on `name` and `aliases` (regex, case-insensitive)
-- Returns enriched results with `book_count`, `total_mentions`, `description`, `aliases`, `books[]`
-- Sorted by `book_count` desc
-- Types: `AggregatedIndexResult` / `AggregatedIndexSearchResponse` in `src/lib/api-client/types/search.ts`
-
-**Per-book mode** (default):
-- Scans all books with `index.generatedAt`, matches normalized terms
-- Uses `expandSearchTerms()` for alias expansion via entities collection
-- Returns per-book results with type, term, book info, page references
-
-## UI
-
-**Page:** `src/app/search/page.tsx`
-**Client:** `src/lib/api-client/search.ts`
-**Types:** `src/lib/api-client/types/search.ts`
-
-### Search Page Features
-- Two modes: "Books & Pages" and "Index (Concepts, People, Quotes)"
-- Sort dropdown (Relevance / Newest / Oldest / Title A-Z)
-- Pagination (prev/next, 20 per page)
-- Filter panel: language, category, date range, DOI, translation
-- Results grouped by category
-- Index results with type badges and page references
-- **Aggregation toggle** in index mode: "Grouped across books" (default) vs "Per-book results"
-- **Popular queries** shown on empty search state as clickable pills (fetched from analytics)
-
-### Homepage Dropdown (`UnifiedSearch`)
-**Component:** `src/components/search/UnifiedSearch.tsx`
-
-- Instant search with debounced API calls to `/api/search/unified`
-- **Keyboard navigation:** ArrowDown/ArrowUp/Enter with visual highlight, ARIA listbox attributes
-- **Popular queries:** Shown when input is focused but empty (top queries from `/api/analytics/search`)
-- Results grouped into books and index entries with "See all results" link
-
-### Search from Reader (`HighlightSelection`)
-**Component:** `src/components/annotations/HighlightSelection.tsx`
-
-- Search icon in text selection popup opens `/search?q={selectedText}` in new tab
-- Truncates selection to 100 chars for URL
-
-### Within-Book Index Panel (`BookIndexPanel`)
-**Component:** `src/components/book/BookIndexPanel.tsx`
-
-Client component on book detail pages with two states:
-- **Collapsed** (default): Tag cloud with 15-per-type limit for people/places/concepts, "Browse full index" button
-- **Expanded:** Search/filter input, type tabs (All/People/Places/Concepts/Keywords/Vocabulary) with count badges, alphabetical entries with encyclopedia links and page number links
-
-Uses `normalizeText()` for diacritics-insensitive client-side filtering. Index data passed from server component — no additional API call.
-
-## Semantic Search (Entity Aliases)
-
-Both `/api/search/unified` and `/api/search/index` expand search terms via the `entities` collection before matching:
-
-1. Query `entities` for documents where `name` or `aliases` match the search term (regex, case-insensitive)
-2. If found, expand search terms to include canonical name + all aliases
-3. Match against all expanded terms using `normalizeText()` for diacritics-insensitive comparison
-
-Requires `{ aliases: 1 }` index on `entities` collection (defined in `ensure-indexes` route).
-
-Coverage depends on how well-populated `entities.aliases` is — the feature works immediately with whatever aliases exist and improves as more are added.
+Results from expanded terms appear in the "Related in the Library" section.
 
 ## Analytics
 
-Search queries logged to `analytics_events` collection with `event: 'search_query'` from all three search routes. Schema: `{ event, query, results_count, filters, timestamp, ip, created_at }`.
+Search queries logged to `analytics_events` with `event: 'search_query'`. Fields: `query`, `results_count`, `filters` (including `source`: unified/global/book_search), `timestamp`, `ip`.
 
-**Dashboard:** `GET /api/analytics/search?days=30` — top queries, zero-result queries (content gaps), volume by source/day. Visible on the Search tab at `/analytics`.
+Dashboard: `GET /api/analytics/search?days=30` — top queries, zero-result queries, volume by source/day.
