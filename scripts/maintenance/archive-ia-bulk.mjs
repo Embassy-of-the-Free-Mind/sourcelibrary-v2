@@ -1,14 +1,12 @@
 #!/usr/bin/env node
 /**
- * Bulk IA image archiver using JP2 zip downloads.
+ * Bulk IA image archiver using per-page IIIF downloads.
  *
- * Instead of hitting IA's IIIF endpoint once per page (server-side rendering),
- * downloads the pre-built _jp2.zip per book (1 static file), extracts pages,
- * converts JP2 → JPEG, and uploads to R2.
+ * Fetches each page directly from its IIIF URL (stored in photo_original),
+ * converts to JPEG, and uploads to R2. This avoids the archive drift problem
+ * caused by JP2 zip extraction ordering not matching IIIF leaf numbers.
  *
- * ~3,500 IA books × 1 zip download each vs ~1M individual IIIF requests.
- *
- * Requires: opj_decompress (apt-get install libopenjp2-tools), sharp, @aws-sdk/client-s3
+ * Requires: sharp, @aws-sdk/client-s3
  *
  * Usage:
  *   node scripts/maintenance/archive-ia-bulk.mjs                     # all IA books
@@ -56,9 +54,7 @@ const R2_PUBLIC_URL = process.env.R2_PUBLIC_URL || 'https://images.sourcelibrary
 if (!MONGODB_URI) { console.error('Missing MONGODB_URI'); process.exit(1); }
 if (!R2_ACCOUNT_ID) { console.error('Missing R2_ACCOUNT_ID'); process.exit(1); }
 
-// Verify opj_decompress is available
-try { execSync('which opj_decompress', { stdio: 'pipe' }); }
-catch { console.error('opj_decompress not found. Install: apt-get install libopenjp2-tools'); process.exit(1); }
+// opj_decompress no longer needed — we fetch JPEG directly from IIIF
 
 const USER_AGENT = 'SourceLibrary/1.0 (https://sourcelibrary.org; derek@ancientwisdomtrust.org)';
 
@@ -216,7 +212,52 @@ async function jp2ToJpeg(jp2Path) {
 }
 
 /**
- * Process a single IA book: download zip, extract, convert, upload.
+ * Fetch an image from a URL, resize if needed, return JPEG buffer.
+ * Handles full-res IIIF URLs by requesting a capped size.
+ */
+async function fetchPageImage(photoUrl, iaId) {
+  // For IA IIIF URLs, request a capped size instead of full resolution
+  // Original: /page/n0/full/pct:50/0/default.jpg
+  // Capped:   /page/n0/full/!3000,3000/0/default.jpg
+  let url = photoUrl;
+  if (url.includes('archive.org') && url.includes('/page/')) {
+    url = url.replace(/\/full\/[^/]+\//, `/full/!${MAX_DIMENSION},${MAX_DIMENSION}/`);
+  }
+
+  const controller = new AbortController();
+  const timeoutId = setTimeout(() => controller.abort(), 60000);
+  try {
+    const res = await fetch(url, {
+      signal: controller.signal,
+      headers: { 'User-Agent': USER_AGENT },
+    });
+    clearTimeout(timeoutId);
+    if (!res.ok) throw new Error(`HTTP ${res.status} fetching ${url}`);
+    const buf = Buffer.from(await res.arrayBuffer());
+    stats.bytesDownloaded += buf.length;
+
+    // Convert to JPEG at target quality (input might be any format)
+    let sharpInst = sharp(buf);
+    const meta = await sharpInst.metadata();
+    if (meta.width > MAX_DIMENSION || meta.height > MAX_DIMENSION) {
+      sharpInst = sharp(buf).resize(MAX_DIMENSION, MAX_DIMENSION, { fit: 'inside', withoutEnlargement: true });
+    }
+    return await sharpInst.jpeg({ quality: JPEG_QUALITY }).toBuffer();
+  } catch (err) {
+    clearTimeout(timeoutId);
+    throw err;
+  }
+}
+
+/**
+ * Process a single IA book: fetch each page from its IIIF URL, upload to R2.
+ *
+ * Previous approach downloaded _jp2.zip and mapped by leaf index, but IA's IIIF
+ * manifest can reorder pages relative to JP2 filenames (plates, fold-outs, etc.),
+ * causing ~33% of books to have drifted page images.
+ *
+ * New approach: fetch each page directly from its photo_original IIIF URL.
+ * Correct by construction — no mapping needed.
  */
 async function processBook(book, db) {
   const iaId = book.ia_identifier || book.image_source?.identifier;
@@ -233,153 +274,73 @@ async function processBook(book, db) {
 
   if (pages.length === 0) { stats.booksSkipped++; return; }
 
-  // Also get all pages to build the leaf-number mapping
-  const allPages = await db.collection('pages')
-    .find(
-      { book_id: book.id },
-      { projection: { _id: 1, id: 1, book_id: 1, page_number: 1, photo: 1, photo_original: 1 } }
-    )
-    .sort({ page_number: 1 })
-    .toArray();
+  const totalPages = book.pages_count || pages.length;
+  console.log(`  [IIIF] ${book.title?.slice(0, 50)} — ${pages.length}/${totalPages} pages to archive`);
 
-  const tmpDir = fs.mkdtempSync(path.join(os.tmpdir(), `sl-ia-${iaId.slice(0, 20)}-`));
+  // Filter to pages with valid IA IIIF URLs
+  const workItems = pages.filter(p => {
+    const url = p.photo_original || p.photo || '';
+    return url.includes('archive.org') || url.includes('/page/');
+  });
 
-  try {
-    // Resolve download URL
-    const download = await resolveDownloadUrl(iaId);
-    if (!download) {
-      console.log(`  [SKIP] ${book.title?.slice(0, 50)} — no JP2 zip or PDF found`);
-      stats.booksSkipped++;
-      return;
-    }
+  if (workItems.length === 0) {
+    console.log(`    [SKIP] No IA IIIF URLs found`);
+    stats.booksSkipped++;
+    return;
+  }
 
-    const sizeMb = download.size ? `${(download.size / (1024 * 1024)).toFixed(0)}MB` : '?MB';
-    console.log(`  [${download.format.toUpperCase()}] ${book.title?.slice(0, 50)} — ${pages.length}/${allPages.length} pages, ${sizeMb} download`);
+  // Process pages with parallel workers
+  let workIdx = 0;
+  let archived = 0;
+  let failed = 0;
 
-    // Download
-    const downloadPath = path.join(tmpDir, `book.${download.format === 'jp2' ? 'zip' : 'pdf'}`);
-    const downloadSize = await downloadToFile(download.url, downloadPath);
-    stats.bytesDownloaded += downloadSize;
+  async function pageWorker() {
+    while (workIdx < workItems.length) {
+      const idx = workIdx++;
+      if (idx >= workItems.length) break;
+      const page = workItems[idx];
+      const photoUrl = page.photo_original || page.photo;
 
-    // Extract/split pages
-    let pageFiles; // sorted array of file paths
-    if (download.format === 'jp2') {
-      pageFiles = extractJp2Zip(downloadPath, tmpDir);
-      fs.unlinkSync(downloadPath); // free disk
-    } else {
-      // PDF fallback — use pdftoppm
-      const outPrefix = path.join(tmpDir, 'page');
-      execSync(`pdftoppm -jpeg -r 200 "${downloadPath}" "${outPrefix}"`, { timeout: 600000, stdio: 'pipe' });
-      fs.unlinkSync(downloadPath);
-      pageFiles = fs.readdirSync(tmpDir)
-        .filter(f => f.startsWith('page-') && f.endsWith('.jpg'))
-        .sort()
-        .map(f => path.join(tmpDir, f));
-    }
+      try {
+        const jpegBuffer = await fetchPageImage(photoUrl, iaId);
 
-    if (pageFiles.length === 0) {
-      console.log(`    [WARN] No page files extracted`);
-      stats.booksFailed++;
-      return;
-    }
+        // Upload to R2
+        const key = `archived/${page.book_id}/${page.page_number}.jpg`;
+        const url = await uploadToR2(key, jpegBuffer);
+        stats.bytesUploaded += jpegBuffer.length;
 
-    console.log(`    ${pageFiles.length} ${download.format} files extracted (first: ${path.basename(pageFiles[0])}, last: ${path.basename(pageFiles[pageFiles.length - 1])})`);
+        // Generate thumbnail
+        let thumbnailUrl;
+        if (!SKIP_THUMBNAILS) {
+          const thumbBuffer = await sharp(jpegBuffer).resize(150, 150, { fit: 'inside' }).jpeg({ quality: 70 }).toBuffer();
+          const thumbKey = `thumbnails/${page.book_id}/${page.page_number}.jpg`;
+          thumbnailUrl = await uploadToR2(thumbKey, thumbBuffer);
+          stats.bytesUploaded += thumbBuffer.length;
+        }
 
-    // Build work queue: map pages to their source files
-    const needsArchiveIds = new Set(pages.map(p => (p.id || p._id.toString())));
-    const workItems = [];
+        // Update MongoDB
+        const update = { $set: { archived_photo: url } };
+        if (thumbnailUrl) update.$set.thumbnail_blob = thumbnailUrl;
+        await db.collection('pages').updateOne({ _id: page._id }, update);
 
-    for (const page of allPages) {
-      const pageId = page.id || page._id.toString();
-      if (!needsArchiveIds.has(pageId)) continue;
-
-      const photoUrl = page.photo_original || page.photo || '';
-      const leafMatch = photoUrl.match(/\/page\/n(\d+)/);
-      if (!leafMatch) continue;
-
-      const leafNum = parseInt(leafMatch[1]);
-      if (leafNum >= pageFiles.length) continue;
-
-      const srcFile = pageFiles[leafNum];
-      if (!fs.existsSync(srcFile)) {
-        console.log(`    [WARN] Missing file for leaf ${leafNum}: ${srcFile}`);
-        continue;
-      }
-      workItems.push({ page, srcFile, format: download.format });
-    }
-
-    // Process pages with parallel workers
-    let workIdx = 0;
-    let archived = 0;
-    let failed = 0;
-
-    async function pageWorker() {
-      while (workIdx < workItems.length) {
-        const idx = workIdx++;
-        if (idx >= workItems.length) break;
-        const { page, srcFile, format } = workItems[idx];
-
-        try {
-          let jpegBuffer;
-          if (format === 'jp2') {
-            jpegBuffer = await jp2ToJpeg(srcFile);
-          } else {
-            let sharpInst = sharp(srcFile);
-            const meta = await sharpInst.metadata();
-            if (meta.width > MAX_DIMENSION || meta.height > MAX_DIMENSION) {
-              sharpInst = sharp(srcFile).resize(MAX_DIMENSION, MAX_DIMENSION, { fit: 'inside', withoutEnlargement: true });
-            }
-            jpegBuffer = await sharpInst.jpeg({ quality: JPEG_QUALITY }).toBuffer();
-          }
-
-          // Upload to R2
-          const key = `archived/${page.book_id}/${page.page_number}.jpg`;
-          const url = await uploadToR2(key, jpegBuffer);
-          stats.bytesUploaded += jpegBuffer.length;
-
-          // Generate thumbnail
-          let thumbnailUrl;
-          if (!SKIP_THUMBNAILS) {
-            const thumbBuffer = await sharp(jpegBuffer).resize(150, 150, { fit: 'inside' }).jpeg({ quality: 70 }).toBuffer();
-            const thumbKey = `thumbnails/${page.book_id}/${page.page_number}.jpg`;
-            thumbnailUrl = await uploadToR2(thumbKey, thumbBuffer);
-            stats.bytesUploaded += thumbBuffer.length;
-          }
-
-          // Update MongoDB
-          const update = { $set: { archived_photo: url } };
-          if (thumbnailUrl) update.$set.thumbnail_blob = thumbnailUrl;
-          await db.collection('pages').updateOne({ _id: page._id }, update);
-
-          archived++;
-        } catch (err) {
-          failed++;
-          if (failed <= 5) {
-            const exists = fs.existsSync(srcFile);
-            const size = exists ? fs.statSync(srcFile).size : 0;
-            const head = exists ? fs.readFileSync(srcFile).slice(0, 16).toString('hex') : 'N/A';
-            console.log(`    [FAIL] page ${page.page_number} (${path.basename(srcFile)}, exists=${exists}, size=${size}, magic=${head}): ${err.stderr?.slice(0, 150) || err.message?.slice(0, 120)}`);
-          }
+        archived++;
+      } catch (err) {
+        failed++;
+        if (failed <= 5) {
+          console.log(`    [FAIL] page ${page.page_number}: ${err.message?.slice(0, 120)}`);
         }
       }
     }
-
-    const numWorkers = Math.min(PAGE_CONCURRENCY, workItems.length);
-    await Promise.all(Array.from({ length: numWorkers }, () => pageWorker()));
-
-    stats.pagesArchived += archived;
-    stats.pagesFailed += failed;
-    stats.booksProcessed++;
-
-    console.log(`    ${archived} archived, ${failed} failed (${numWorkers} workers)`);
-
-  } catch (err) {
-    console.log(`  [ERROR] ${book.title?.slice(0, 50)}: ${err.message?.slice(0, 100)}`);
-    stats.booksFailed++;
-  } finally {
-    // Clean up temp dir
-    try { fs.rmSync(tmpDir, { recursive: true, force: true }); } catch {}
   }
+
+  const numWorkers = Math.min(PAGE_CONCURRENCY, workItems.length);
+  await Promise.all(Array.from({ length: numWorkers }, () => pageWorker()));
+
+  stats.pagesArchived += archived;
+  stats.pagesFailed += failed;
+  stats.booksProcessed++;
+
+  console.log(`    ${archived} archived, ${failed} failed (${numWorkers} workers)`);
 }
 
 async function main() {
