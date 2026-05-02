@@ -18,7 +18,14 @@ interface ArtCollection {
   subtitle?: string;
   color?: string;
   book_count: number;
-  featured_images?: { extracted_url?: string; thumbnail_url?: string; image_url?: string }[];
+  featured_images?: ({ extracted_url?: string; thumbnail_url?: string; image_url?: string } | string)[];
+}
+
+function pickArtCardImage(images: ArtCollection['featured_images']): string | undefined {
+  if (!images?.length) return undefined;
+  const first = images[0];
+  if (typeof first === 'string') return first;
+  return first.thumbnail_url || first.extracted_url || first.image_url;
 }
 
 async function getData() {
@@ -52,7 +59,7 @@ export default async function ArtworkLandingPage() {
         <div className="absolute inset-0 opacity-[0.06]">
           <div className="grid grid-cols-4 h-full">
             {collections.slice(0, 4).map((col) => {
-              const img = sanitizeThumbnail(col.featured_images?.[0]?.thumbnail_url || col.featured_images?.[0]?.extracted_url || '');
+              const img = sanitizeThumbnail(pickArtCardImage(col.featured_images) || '');
               return img ? (
                 <div key={col.slug} className="relative">
                   <Image src={img as string} alt="" fill className="object-cover" sizes="25vw" />
@@ -85,7 +92,7 @@ export default async function ArtworkLandingPage() {
         <div className="max-w-[var(--container-standard)] mx-auto px-6 md:px-12 pt-16 pb-4">
           <div className="grid grid-cols-1 lg:grid-cols-3 gap-6">
             {featured.map((col, i) => {
-              const img = sanitizeThumbnail(col.featured_images?.[0]?.thumbnail_url || col.featured_images?.[0]?.extracted_url || col.featured_images?.[0]?.image_url || '');
+              const img = sanitizeThumbnail(pickArtCardImage(col.featured_images) || '');
               return (
                 <Link
                   key={col.slug}
@@ -123,7 +130,7 @@ export default async function ArtworkLandingPage() {
         <div className="max-w-[var(--container-standard)] mx-auto px-6 md:px-12 py-12">
           <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-5">
             {remaining.map((col) => {
-              const img = sanitizeThumbnail(col.featured_images?.[0]?.thumbnail_url || col.featured_images?.[0]?.extracted_url || col.featured_images?.[0]?.image_url || '');
+              const img = sanitizeThumbnail(pickArtCardImage(col.featured_images) || '');
               return (
                 <Link
                   key={col.slug}
