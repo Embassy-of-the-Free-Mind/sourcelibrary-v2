@@ -60,7 +60,7 @@ export async function GET(
   lines.push('');
   for (let i = 0; i < notebook.findings.length; i++) {
     const f = notebook.findings[i];
-    const url = `https://sourcelibrary.org/book/${f.source.bookSlug || f.source.bookId}?page=${f.source.pageNumber}`;
+    const url = `https://sourcelibrary.org/book/${f.source.bookSlug || f.source.bookId}/page-number/${f.source.pageNumber}`;
     lines.push(`### ${i + 1}. ${f.source.bookTitle}`);
     lines.push(`**${f.source.bookAuthor}** · [Page ${f.source.pageNumber}](${url})`);
     lines.push('');

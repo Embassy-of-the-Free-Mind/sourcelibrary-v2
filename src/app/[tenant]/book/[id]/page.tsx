@@ -121,7 +121,7 @@ function getBookTenantId(book: Record<string, unknown> | Book): string | undefin
 }
 
 // Lightweight book fetch for metadata — reuses cached lookup
-async function getBookForMetadata(id: string, tenantId?: string | null): Promise<Book | null> {
+async function getBookForMetadata(id: string, tenantId?: string | null, tenantSlug?: string): Promise<Book | null> {
   const result = await getCachedBookLookup(id);
   if (result && tenantId) {
     const db = await getReadDb();
@@ -135,7 +135,7 @@ async function getBookForMetadata(id: string, tenantId?: string | null): Promise
       'index.places': 0,
       'index.concepts': 0,
       'index.keyTerms': 0,
-    }, tenantId);
+    }, tenantId, tenantSlug);
     return scoped ? (scoped.book as unknown as Book) : null;
   }
   return result ? (result.book as unknown as Book) : null;
@@ -148,7 +148,7 @@ export async function generateMetadata({ params }: PageProps): Promise<Metadata>
   const tenantId = await getCachedTenantId(tenant);
   let book: Book | null;
   try {
-    book = await getBookForMetadata(id, tenantId);
+    book = await getBookForMetadata(id, tenantId, tenant);
   } catch {
     return { title: 'Source Library', robots: { index: false, follow: false } };
   }
@@ -239,7 +239,7 @@ export async function generateMetadata({ params }: PageProps): Promise<Metadata>
 interface GalleryImagePreview { id: string; extracted_url?: string; thumbnail_url?: string; image_url?: string; description?: string; type?: string; page_number?: number; gallery_quality?: number; dhash?: string; book_id?: string }
 interface BookCollectionPreview { slug: string; name: string; subtitle?: string; color?: string; book_count?: number; featured_images?: Array<{ extracted_url?: string; thumbnail_url?: string; image_url?: string }> }
 
-async function getBook(id: string, tenantId?: string): Promise<{ book: Book; pages: Page[]; totalBooks: number; galleryImages: GalleryImagePreview[]; galleryImageCount: number; bookCollections: BookCollectionPreview[]; matchedBySlug: boolean } | null> {
+async function getBook(id: string, tenantId?: string, tenantSlug?: string): Promise<{ book: Book; pages: Page[]; totalBooks: number; galleryImages: GalleryImagePreview[]; galleryImageCount: number; bookCollections: BookCollectionPreview[]; matchedBySlug: boolean } | null> {
   // Reuse the cached book lookup (shared with generateMetadata — saves a full DB round trip)
   // When Supabase serves the lookup (<50ms), we get the bookId instantly and can start
   // ALL Atlas queries in parallel — including a full book refetch for fields not in the catalog.
@@ -261,7 +261,7 @@ async function getBook(id: string, tenantId?: string): Promise<{ book: Book; pag
       'index.places': 0,
       'index.concepts': 0,
       'index.keyTerms': 0,
-    }, tenantId);
+    }, tenantId, tenantSlug);
     if (!scoped) return null;
     effectiveResult = {
       book: scoped.book as Record<string, unknown>,
@@ -451,7 +451,7 @@ function PagesGridSkeleton() {
 async function BookInfo({ id, tenantId, tenantSlug, embedPolicy }: { id: string; tenantId?: string; tenantSlug: string; embedPolicy: EmbedUiPolicy }) {
   let data;
   try {
-    data = await getBook(id, tenantId);
+    data = await getBook(id, tenantId, tenantSlug);
   } catch (err) {
     console.error('[Book page] getBook failed:', err instanceof Error ? err.message : err);
     // Return a friendly message instead of crashing the Suspense boundary

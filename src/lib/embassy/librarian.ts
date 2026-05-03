@@ -107,7 +107,7 @@ function formatNotebookForPrompt(notebook: ResearchNotebook | null): string {
 
   for (let i = 0; i < notebook.findings.length; i++) {
     const f = notebook.findings[i];
-    const url = `https://sourcelibrary.org/book/${f.source.bookSlug || f.source.bookId}?page=${f.source.pageNumber}`;
+    const url = `https://sourcelibrary.org/book/${f.source.bookSlug || f.source.bookId}/page-number/${f.source.pageNumber}`;
     text += `${i + 1}. "${f.quote.slice(0, 200)}${f.quote.length > 200 ? '...' : ''}" — *${f.source.bookTitle}* by ${f.source.bookAuthor}, [Page ${f.source.pageNumber}](${url})\n`;
     if (f.note) text += `   *Note:* ${f.note}\n`;
   }
@@ -527,7 +527,7 @@ async function executeTool(
       if (data.passages.length > 0) {
         context += '\nPassages found:\n';
         for (const p of data.passages) {
-          const url = `https://sourcelibrary.org/book/${p.bookSlug || p.book_id}?page=${p.page_number}`;
+          const url = `https://sourcelibrary.org/book/${p.bookSlug || p.book_id}/page-number/${p.page_number}`;
           context += `\n--- ${p.bookTitle} by ${p.bookAuthor}, Page ${p.page_number} (${url}) ---\n${p.text}\n`;
         }
       }
@@ -552,7 +552,7 @@ async function executeTool(
       let context = results.length > 0 ? 'Semantic search results:\n' : 'No semantic matches found.';
       for (const r of results) {
         const url = r.bookSlug
-          ? `https://sourcelibrary.org/book/${r.bookSlug}${r.page_number ? `?page=${r.page_number}` : ''}`
+          ? `https://sourcelibrary.org/book/${r.bookSlug}${r.page_number ? `/page-number/${r.page_number}` : ''}`
           : '';
         context += `\n--- ${r.bookTitle} by ${r.bookAuthor}, Page ${r.page_number}${url ? ` (${url})` : ''} ---\n${r.snippet}\n`;
       }

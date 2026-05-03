@@ -399,7 +399,7 @@ function VoiceAgentInner() {
                 <div className="space-y-2 max-h-[60vh] overflow-y-auto">
                   {sources.map((s, i) => (
                     <div key={`${s.bookId}-${s.pageNumber}-${i}`} className="bg-white rounded-lg border border-[#e8e4dc] p-4 hover:border-[#c9a86c]/40 transition-all shadow-sm">
-                      <Link href={`/book/${s.slug || s.bookId}${s.pageNumber ? `?page=${s.pageNumber}` : ''}`} target="_blank" className="block">
+                      <Link href={`/book/${s.slug || s.bookId}${s.pageNumber ? `/page-number/${s.pageNumber}` : ''}`} target="_blank" className="block">
                         <p className="text-sm text-[#2c2824] font-display leading-tight">{s.title}</p>
                         <p className="text-xs text-[#8a8480] mt-0.5 font-sans">{s.author}{s.pageNumber ? ` · p. ${s.pageNumber}` : ''}</p>
                         {s.snippet && <p className="text-xs text-[#8a8480] mt-1.5 line-clamp-2 font-sans leading-relaxed">{s.snippet}</p>}

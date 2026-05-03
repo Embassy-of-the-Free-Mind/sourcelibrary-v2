@@ -35,7 +35,7 @@ export async function GET(
       chapters: 1,
     } : undefined;
 
-    const result = await findBookByIdOrSlug(db, id, bookProjection || undefined, tenantId);
+    const result = await findBookByIdOrSlug(db, id, bookProjection || undefined, tenantId, tenant);
     if (!result) {
       return NextResponse.json({ error: 'Book not found' }, { status: 404 });
     }
