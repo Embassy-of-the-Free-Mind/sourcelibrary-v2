@@ -19,12 +19,12 @@ export async function GET(
     const { searchParams } = new URL(request.url);
     const includeFull = searchParams.get('full') === 'true';
     const pagesMode = searchParams.get('pages') || 'default'; // 'nav' for minimal, 'default' for standard
-    const { id: tenantId } = getTenantContextFromRequest(request);
-    
+    const { id: tenantId, slug: tenantSlug } = getTenantContextFromRequest(request);
+
     if (!tenantId) {
       return NextResponse.json({ error: 'Book not found' }, { status: 404 });
     }
-    
+
     // Use secondary reads for public GETs; admin full-view still reads primary for freshness
     const db = includeFull ? await getDb() : await getReadDb();
 
@@ -35,7 +35,7 @@ export async function GET(
       chapters: 1,
     } : undefined;
 
-    const result = await findBookByIdOrSlug(db, id, bookProjection || undefined, tenantId);
+    const result = await findBookByIdOrSlug(db, id, bookProjection || undefined, tenantId, tenantSlug ?? undefined);
     if (!result) {
       return NextResponse.json({ error: 'Book not found' }, { status: 404 });
     }

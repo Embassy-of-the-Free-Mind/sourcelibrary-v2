@@ -146,7 +146,7 @@ function SourceCardRow({ sources, tenant }: { sources: SourceCard[]; tenant?: st
   return (
     <div className="mt-3 flex gap-2 overflow-x-auto pb-1 -mx-1 px-1">
       {sources.map((s, i) => {
-        const url = tenantBookUrl({ slug: s.bookSlug, id: s.bookId }, tenant) + (s.pageNumber ? `?page=${s.pageNumber}` : '');
+        const url = tenantBookUrl({ slug: s.bookSlug, id: s.bookId }, tenant) + (s.pageNumber ? `/page-number/${s.pageNumber}` : '');
         return (
           <Link
             key={`${s.bookId}-${s.pageNumber}-${i}`}

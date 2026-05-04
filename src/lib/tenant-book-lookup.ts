@@ -14,5 +14,5 @@ export async function findTenantBookByIdOrSlug(
 ): Promise<BookLookupResult | null> {
   const tenantId = await resolveTenantId(tenantSlug);
   if (!tenantId) return null;
-  return findBookByIdOrSlug(db, idOrSlug, projection, tenantId);
+  return findBookByIdOrSlug(db, idOrSlug, projection, tenantId, tenantSlug);
 }
