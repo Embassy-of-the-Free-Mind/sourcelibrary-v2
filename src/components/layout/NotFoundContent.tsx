@@ -66,6 +66,15 @@ export default function NotFoundContent() {
 
   useEffect(() => {
     setQuote(QUOTES[Math.floor(Math.random() * QUOTES.length)]);
+
+    // Auto-report the 404 — fire and forget
+    const url = window.location.pathname + window.location.search;
+    const referrer = document.referrer || undefined;
+    fetch('/api/analytics/not-found', {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify({ url, referrer }),
+    }).catch(() => {});
   }, []);
 
   const handleSearch = (e: React.FormEvent) => {
