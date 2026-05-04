@@ -11,6 +11,7 @@ function normalizeRole(role: unknown): Role {
     return role;
   }
   // Backward compatibility with older role labels.
+  if (role === 'inner_circle' || role === 'curator') return 'editor';
   if (role === 'user') return 'reader';
   return 'reader';
 }
