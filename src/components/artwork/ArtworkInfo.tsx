@@ -68,8 +68,8 @@ interface ArtworkInfoProps {
 }
 
 export default function ArtworkInfo({ book, collections, prevWork, nextWork, relatedBooks = [] }: ArtworkInfoProps) {
-  const displayImage = (book as any).thumbnail_blob || book.thumbnail || '';
-  const thumbImage = book.thumbnail || '';
+  const displayImage = book.thumbnail || (book as any).thumbnail_blob || '';
+  const thumbImage = (book as any).thumbnail_blob || '';
   const commonsUrl = (book as any).commons_url || '';
   const commonsFullUrl = (book as any).commons_full_url || '';
   const commonsLicense = (book as any).commons_license || 'Public domain';
