@@ -15,6 +15,14 @@ import { MongoClient } from 'mongodb';
 
 const R2_DOMAIN = 'images.sourcelibrary.org';
 
+// Known external museum domains to flag
+const MUSEUM_DOMAINS = [
+  'artic.edu',
+  'images.metmuseum.org',
+  'openaccess-api.clevelandart.org',
+  'openaccess-cdn.clevelandart.org',
+];
+
 // Allowed external patterns (data URIs, placeholders, etc.)
 const ALLOWED_PATTERNS = [
   'data:image/',
