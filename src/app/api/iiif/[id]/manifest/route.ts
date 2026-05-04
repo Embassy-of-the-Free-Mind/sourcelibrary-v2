@@ -122,8 +122,8 @@ export async function GET(
             photo: 1,
             photo_original: 1,
             archived_photo: 1,
-            thumbnail_blob: 1,
-            thumbnail: 1,
+            thumbnail_blob: 1, image_thumb: 1,
+            thumbnail: 1, image_display: 1,
             'ocr.language': 1,
             hasOcr: {
               $and: [

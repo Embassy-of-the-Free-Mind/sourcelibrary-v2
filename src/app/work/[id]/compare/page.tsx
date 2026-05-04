@@ -60,8 +60,8 @@ async function getEditionsForCompare(workId: string): Promise<EditionForCompare[
           pages_count: 1,
           pages_translated: 1,
           chapters: 1,
-          thumbnail: 1,
-          thumbnail_blob: 1,
+          thumbnail: 1, image_display: 1,
+          thumbnail_blob: 1, image_thumb: 1,
         },
         sort: { published: 1 },
       }

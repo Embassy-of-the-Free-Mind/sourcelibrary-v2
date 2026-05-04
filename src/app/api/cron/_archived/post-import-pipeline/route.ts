@@ -124,7 +124,7 @@ async function fixStaleThumbnail(
 ) {
   const book = await db.collection('books').findOne(
     { id: bookId },
-    { projection: { thumbnail: 1, thumbnail_source: 1 } }
+    { projection: { thumbnail: 1, image_display: 1, thumbnail_source: 1 } }
   );
   if (book?.thumbnail_source === 'manual') return;
   if (!book?.thumbnail?.includes('/uploads/')) return;
@@ -136,7 +136,7 @@ async function fixStaleThumbnail(
   if (hasCroppedPages === 0) return;
 
   const croppedFilter = { book_id: bookId, cropped_photo: { $exists: true, $ne: '' } };
-  const thumbProj = { page_number: 1, cropped_photo: 1, thumbnail_blob: 1, 'ocr.data': 1 };
+  const thumbProj = { page_number: 1, cropped_photo: 1, thumbnail_blob: 1, image_thumb: 1, 'ocr.data': 1 };
 
   // Try title-page, frontispiece, then first non-blank page — skip ex libris pages
   // Exception: ex libris on title pages is acceptable (library stamps on title pages are common and fine)
@@ -183,7 +183,7 @@ async function upgradeThumbnailFromPageType(
 ) {
   const book = await db.collection('books').findOne(
     { id: bookId },
-    { projection: { thumbnail: 1, thumbnail_source: 1 } }
+    { projection: { thumbnail: 1, image_display: 1, thumbnail_source: 1 } }
   );
   if (!book?.thumbnail) return;
 
@@ -205,7 +205,7 @@ async function upgradeThumbnailFromPageType(
   // If current thumbnail is already a frontispiece and NOT ex libris, nothing to do
   if (currentPage?.page_type === 'frontispiece' && !isExLibrisPage(currentPage.ocr?.data)) return;
 
-  const proj = { page_number: 1, page_type: 1, cropped_photo: 1, archived_photo: 1, photo: 1, photo_original: 1, thumbnail_blob: 1, 'ocr.data': 1 };
+  const proj = { page_number: 1, page_type: 1, cropped_photo: 1, archived_photo: 1, photo: 1, photo_original: 1, thumbnail_blob: 1, image_thumb: 1, 'ocr.data': 1 };
 
   // Priority 1: frontispiece (within first 50 pages), skip ex libris
   const frontispieces = await db.collection('pages').find(
@@ -300,7 +300,7 @@ async function upgradeThumbnailFromGallery(
 ) {
   const book = await db.collection('books').findOne(
     { id: bookId },
-    { projection: { thumbnail: 1, thumbnail_source: 1 } }
+    { projection: { thumbnail: 1, image_display: 1, thumbnail_source: 1 } }
   );
   if (!book?.thumbnail) return;
   if (book.thumbnail_source === 'manual') return;

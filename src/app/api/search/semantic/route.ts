@@ -47,7 +47,7 @@ export async function GET(request: NextRequest) {
         const db = await getDb();
         const mongoBooks = await db.collection('books').find(
           { id: { $in: bookIds } },
-          { projection: { id: 1, _id: 1, thumbnail: 1, thumbnail_blob: 1, slug: 1 } }
+          { projection: { id: 1, _id: 1, thumbnail: 1, thumbnail_blob: 1, image_display: 1, image_thumb: 1, slug: 1 } }
         ).toArray();
         for (const mb of mongoBooks) {
           const bid = mb.id || mb._id?.toString();

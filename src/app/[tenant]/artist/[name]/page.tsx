@@ -96,7 +96,7 @@ interface ArtistPageProps {
 
 const BOOK_PROJECTION = {
   _id: 0, id: 1, slug: 1, title: 1, display_title: 1, author: 1,
-  author_entity_id: 1, language: 1, published: 1, thumbnail: 1, thumbnail_blob: 1,
+  author_entity_id: 1, language: 1, published: 1, thumbnail: 1, thumbnail_blob: 1, image_display: 1, image_thumb: 1,
   pages_count: 1, year: 1, resource_type: 1, source_url: 1,
 };
 

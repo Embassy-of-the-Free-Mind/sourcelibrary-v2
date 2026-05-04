@@ -98,8 +98,8 @@ export async function GET(request: NextRequest) {
       year: 1,
       pages_count: 1,
       pages_translated: 1,
-      thumbnail: 1,
-      thumbnail_blob: 1,
+      thumbnail: 1, image_display: 1,
+      thumbnail_blob: 1, image_thumb: 1,
       categories: 1,
       'dublin_core.dc_source': 1,
     };
