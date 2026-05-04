@@ -127,15 +127,23 @@ https://images.sourcelibrary.org/artwork/{slug-without-art-prefix}-full.jpg
 set -a; source .env.production.local; set +a; node scripts/lint-external-images.mjs
 ```
 
-## Proposed Field Rename (Issue #1588)
+## Field Rename (Issue #1588) — In Progress
 
-Current naming is confusing (`thumbnail` means different things for books vs artworks). Proposed new fields:
+Current naming is confusing (`thumbnail` means different things for books vs artworks). New canonical fields:
 
 | New Field | Meaning | R2 Suffix |
 |-----------|---------|-----------|
 | `image_display` | Primary display (1200px) | `.jpg` |
 | `image_thumb` | Small preview (150px) | `-thumb.jpg` |
-| `image_full` | Highest resolution | `-full.jpg` |
-| `image_source_url` | Where we got it | n/a |
+| `image_full` | Highest resolution (artworks only) | `-full.jpg` |
+| `image_source_url` | Where we got it (provenance) | n/a |
 
-Migration: write new fields alongside old, update code refs, then drop old. Not yet implemented.
+### Migration Status
+- [x] Types define new fields (old marked `@deprecated`)
+- [x] `getBookThumbnailUrl()` prefers new fields, falls back to old
+- [x] All writers dual-write both field sets
+- [x] All DB projections include new fields
+- [x] Backfill script: `scripts/migration/backfill-image-fields.mjs`
+- [ ] Run backfill on production
+- [ ] Verify all pages render correctly with new fields
+- [ ] Drop legacy fields (separate PR after soak period)
