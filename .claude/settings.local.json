@@ -6,7 +6,11 @@
       "mcp__claude-conversation-search__summarize_session",
       "mcp__claude-conversation-search__get_session_messages",
       "mcp__claude-conversation-search__reindex",
-      "mcp__claude-conversation-search__get_messages"
+      "mcp__claude-conversation-search__get_messages",
+      "mcp__claude_ai_Source_Library__search_translations",
+      "mcp__claude_ai_Source_Library__search_within_book",
+      "mcp__claude_ai_Source_Library__search_library",
+      "mcp__claude_ai_Source_Library__get_book_text"
     ]
   }
 }
