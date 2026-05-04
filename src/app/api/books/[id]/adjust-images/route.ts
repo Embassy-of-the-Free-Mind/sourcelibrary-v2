@@ -105,6 +105,7 @@ export const POST = withAuth(async (request, session, context) => {
             };
             if (thumbnailUrl) {
               updateFields.thumbnail_blob = thumbnailUrl;
+              updateFields.image_thumb = thumbnailUrl;
             }
 
             await db.collection('pages').updateOne(

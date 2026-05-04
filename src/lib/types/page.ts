@@ -62,7 +62,8 @@ export interface Page {
   archived_photo?: string;      // Full-res archived JPEG in R2
   enhanced_photo?: string;      // Contrast/brightness-enhanced copy of archived_photo in R2
   display_photo?: string;       // 1200px display-size JPEG in R2 (with provenance marks baked in)
-  thumbnail_blob?: string;      // Pre-generated 150px JPEG thumbnail in R2
+  thumbnail_blob?: string;      // @deprecated Use image_thumb. Pre-generated 150px JPEG thumbnail in R2
+  image_thumb?: string;          // 150px JPEG thumbnail in R2 (canonical field, replaces thumbnail_blob)
   crop?: CropData;              // Crop coordinates used
   split_from?: string;          // ID of parent page if this was split from another
   split_detection?: {           // Pixel analysis result

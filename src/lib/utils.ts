@@ -39,14 +39,13 @@ export function isUsableImageUrl(url: string | undefined | null): url is string 
  *   - Use 'thumb' for tiny previews (<100px, search results, list rows)
  */
 export function getBookThumbnailUrl(
-  book: { thumbnail?: string | null; thumbnail_blob?: string | null },
+  book: { thumbnail?: string | null; thumbnail_blob?: string | null; image_display?: string | null; image_thumb?: string | null },
   size: 'display' | 'thumb' = 'display'
 ): string | null {
-  // For display size, prefer the archived page image (higher res) over the tiny blob thumbnail.
-  // For thumb size, prefer the blob (small, fast).
+  // Prefer canonical image_* fields, fall back to legacy thumbnail/thumbnail_blob
   const raw = size === 'display'
-    ? (book.thumbnail || book.thumbnail_blob || null)
-    : (book.thumbnail_blob || book.thumbnail || null);
+    ? (book.image_display || book.thumbnail || book.thumbnail_blob || null)
+    : (book.image_thumb || book.thumbnail_blob || book.thumbnail || null);
   if (!raw) return null;
 
   // Wikimedia Commons: rewrite to thumb.php for CDN-cached resized images.
