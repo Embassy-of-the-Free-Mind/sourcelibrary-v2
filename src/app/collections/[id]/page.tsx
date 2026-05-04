@@ -938,6 +938,30 @@ export default async function CollectionDetailPage({ params, provider }: Props &
         </div>
       )}
 
+      {/* Hero illustration — visible version of the hero background image with caption and link */}
+      {collection.hero_image && collection.hero_image_attribution && (
+        <div className="bg-warm border-b border-border-light">
+          <div className="max-w-7xl mx-auto px-6 py-8">
+            <Link
+              href={tenantBookUrl({ id: (collection.hero_image_attribution as { book_id?: string }).book_id || '', slug: undefined })}
+              className="group block max-w-4xl"
+            >
+              <div className="rounded-lg overflow-hidden border border-border-light group-hover:border-accent-rust/40 transition-all group-hover:shadow-lg">
+                {/* eslint-disable-next-line @next/next/no-img-element */}
+                <img
+                  src={collection.hero_image as string}
+                  alt={(collection.hero_image_attribution as { title?: string }).title || ''}
+                  className="w-full group-hover:scale-[1.02] transition-transform duration-500"
+                />
+              </div>
+              <p className="mt-3 text-sm text-muted group-hover:text-accent-rust transition-colors">
+                {(collection.hero_image_attribution as { title?: string }).title}
+              </p>
+            </Link>
+          </div>
+        </div>
+      )}
+
       {/* Exhibition Layout */}
       {exhibition?.layout && (
         <div className="bg-warm border-b border-border-light">
