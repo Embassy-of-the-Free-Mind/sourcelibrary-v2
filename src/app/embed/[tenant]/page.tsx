@@ -1,0 +1,97 @@
+import { notFound } from 'next/navigation';
+import SharedLibraryView, { type SharedLibraryViewProps } from '@/components/libraries/SharedLibraryView';
+import {
+    fetchTenantLibraryData,
+    getTenantDominantProvider,
+    fetchTenantBphDigitizedMap,
+    fetchTenantBphCatalogTotal,
+} from '@/lib/tenant-library-loaders';
+import { getDb } from '@/lib/mongodb';
+import { resolveTenantId } from '@/lib/tenant-context';
+import EmbedNavigationReporter from '@/components/embed/EmbedNavigationReporter';
+import { getPartnerByProvider, getPartnerBySlug } from '@/lib/library-partners';
+
+interface Props {
+    params: Promise<{ tenant: string }>;
+    searchParams: Promise<Record<string, string | string[] | undefined>>;
+}
+
+function getOptionalStringField(value: unknown): string {
+    return typeof value === 'string' ? value : '';
+}
+
+export default async function EmbedTenantRoot({ params, searchParams }: Props) {
+    const { tenant } = await params;
+    const tenantId = await resolveTenantId(tenant);
+    if (!tenantId) notFound();
+
+    const sp = await searchParams;
+    const sort = (typeof sp.sort === 'string' ? sp.sort : '') || 'popular';
+    const language = typeof sp.language === 'string' ? sp.language : '';
+    const q = typeof sp.q === 'string' ? sp.q : '';
+    const offset = parseInt(typeof sp.offset === 'string' ? sp.offset : '0', 10) || 0;
+    const view = typeof sp.view === 'string' ? sp.view : 'books';
+
+    const db = await getDb();
+    const tenantDoc = await db.collection('tenants').findOne({ id: tenantId });
+    if (!tenantDoc) notFound();
+
+    const [libraryData, dominantProvider] = await Promise.all([
+        fetchTenantLibraryData(tenantId, sort, language, offset, q || undefined),
+        getTenantDominantProvider(tenantId),
+    ]);
+
+    const { books, total, topBooks, languages, galleryImages, contributingLibraries } = libraryData;
+
+    const canonicalPartner = getPartnerBySlug(tenant) || (dominantProvider ? getPartnerByProvider(dominantProvider) : undefined);
+    const tenantRecord = tenantDoc as Record<string, unknown>;
+    const tenantExternalUrl =
+        getOptionalStringField(tenantRecord.url) ||
+        getOptionalStringField(tenantRecord.website) ||
+        getOptionalStringField(tenantRecord.homepage) ||
+        '';
+
+    const isBph = canonicalPartner?.providerKey === 'bph' || dominantProvider === 'bph';
+    const [digitizedUbns, catalogTotal] = isBph
+        ? await Promise.all([
+            fetchTenantBphDigitizedMap(tenantId),
+            fetchTenantBphCatalogTotal(tenantId),
+        ])
+        : [{} as Record<string, { id: string; slug: string }>, 0];
+
+    const basePath = `/embed/${tenant}`;
+
+    const viewProps: SharedLibraryViewProps = {
+        partner: {
+            name: canonicalPartner?.name || tenantDoc.name,
+            description: canonicalPartner?.description || tenantDoc.name,
+            url: canonicalPartner?.url || tenantExternalUrl,
+            providerKey: canonicalPartner?.providerKey,
+            slug: tenant,
+        },
+        books,
+        total,
+        topBooks,
+        languages,
+        galleryImages,
+        contributingLibraries,
+        basePath,
+        sort,
+        language,
+        q,
+        offset,
+        view,
+        isBph,
+        digitizedUbns,
+        catalogTotal,
+        tenantSlug: tenant,
+        forceEmbedded: true,
+    };
+
+    return (
+        <>
+            <EmbedNavigationReporter />
+            <SharedLibraryView {...viewProps} />
+        </>
+    );
+}

@@ -1,7 +1,7 @@
 'use client';
 
 import { useEffect, useState, useCallback, useRef, Suspense } from 'react';
-import { useParams } from 'next/navigation';
+import { useParams, usePathname } from 'next/navigation';
 import TranslationEditor from '@/components/pipeline/TranslationEditor';
 import VersionBanner from '@/components/ui/VersionBanner';
 import { useLoadingMetrics } from '@/hooks/useLoadingMetrics';
@@ -31,8 +31,10 @@ export default function PageEditorClient({
   const [currentPageId, setCurrentPageId] = useState<string>(initialPage.id);
   const [currentPage, setCurrentPage] = useState<Page>(initialPage);
   const params = useParams<{ tenant: string }>();
+  const pathname = usePathname();
   const isOnTenantSubdomain = typeof window !== 'undefined' && /^[a-z]+\.sourcelibrary\.org$/.test(window.location.hostname);
-  const tenantPrefix = isOnTenantSubdomain ? '' : (params?.tenant ? `/${params.tenant}` : '');
+  const isOnEmbedRoute = pathname?.startsWith('/embed/');
+  const tenantPrefix = isOnTenantSubdomain ? '' : (params?.tenant ? `${isOnEmbedRoute ? '/embed' : ''}/${params.tenant}` : '');
 
   // Version pinning: detect ?v= param for citation-pinned reading
   const [pinnedVersion, setPinnedVersion] = useState<string | null>(null);
@@ -212,10 +214,8 @@ export default function PageEditorClient({
   // Client-side navigation - update URL and current page
   const handleNavigate = useCallback((newPageId: string) => {
     setCurrentPageId(newPageId);
-    // Build URL with any existing query params (embed=1, v=version)
-    const currentParams = new URLSearchParams(window.location.search);
+    // Build URL with supported query params (version pinning)
     const newParams = new URLSearchParams();
-    if (currentParams.get('embed') === '1') newParams.set('embed', '1');
     if (pinnedVersion) newParams.set('v', pinnedVersion);
     const suffix = newParams.toString() ? `?${newParams.toString()}` : '';
     window.history.pushState(null, '', `${tenantPrefix}/book/${book.id}/page/${newPageId}${suffix}`);
@@ -237,7 +237,7 @@ export default function PageEditorClient({
         '*'
       );
     }
-  }, [book.id, book.slug, pinnedVersion]);
+  }, [book.id, book.slug, pinnedVersion, tenantPrefix]);
 
   const currentIndex = pageList.findIndex(p => p.id === currentPageId);
 

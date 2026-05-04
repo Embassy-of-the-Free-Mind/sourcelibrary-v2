@@ -3,7 +3,7 @@
 import { useEffect, useRef } from 'react';
 
 /**
- * When embedded via embed.js (detected by embed=1 param), intercept
+ * When embedded via embed.js (/embed route), intercept
  * history.pushState and convert it to replaceState. This prevents the
  * iframe's Next.js router from creating duplicate history entries —
  * the host embed script owns all history management.
@@ -16,9 +16,9 @@ export default function EmbedHistoryPatch() {
         if (window.self === window.top) return; // not in iframe
         if (patchedRef.current) return; // already patched
 
-        // Only activate when embed=1 param is present (from embed.js)
-        const params = new URLSearchParams(window.location.search);
-        if (params.get('embed') !== '1') return;
+        // Activate on canonical /embed routes.
+        const onEmbedRoute = window.location.pathname.startsWith('/embed/');
+        if (!onEmbedRoute) return;
 
         patchedRef.current = true;
 

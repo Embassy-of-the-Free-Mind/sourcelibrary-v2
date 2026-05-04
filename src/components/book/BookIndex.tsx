@@ -14,13 +14,14 @@ interface BookIndexProps {
   entries: IndexEntry[];
   bookSlug: string;
   totalPages: number;
+  isEmbedded?: boolean;
 }
 
 const THEME_THRESHOLD = 0.15; // >15% of pages = theme
 const MAX_INDEX_VISIBLE = 40;
 const MAX_PAGES_INLINE = 8;
 
-export default function BookIndex({ entries, bookSlug, totalPages }: BookIndexProps) {
+export default function BookIndex({ entries, bookSlug, totalPages, isEmbedded = false }: BookIndexProps) {
   const [filter, setFilter] = useState('');
   const params = useParams<{ tenant: string }>();
   const tenantPrefix = params?.tenant ? `/${params.tenant}` : '';
@@ -110,12 +111,18 @@ export default function BookIndex({ entries, bookSlug, totalPages }: BookIndexPr
                 {entry.pages.slice(0, MAX_PAGES_INLINE).map((p, i) => (
                   <span key={p}>
                     {i > 0 && ', '}
-                    <Link
-                      href={`${tenantPrefix}/book/${bookSlug}/page-number/${p}`}
-                      className="text-accent-rust hover:text-accent-gold-dark hover:underline"
-                    >
-                      p.&thinsp;{p}
-                    </Link>
+                    {isEmbedded ? (
+                      <span className="text-accent-rust">
+                        p.&thinsp;{p}
+                      </span>
+                    ) : (
+                      <Link
+                        href={`${tenantPrefix}/book/${bookSlug}/page-number/${p}`}
+                        className="text-accent-rust hover:text-accent-gold-dark hover:underline"
+                      >
+                        p.&thinsp;{p}
+                      </Link>
+                    )}
                   </span>
                 ))}
                 {entry.pages.length > MAX_PAGES_INLINE && (

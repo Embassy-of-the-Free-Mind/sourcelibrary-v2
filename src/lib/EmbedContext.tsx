@@ -4,7 +4,7 @@ import { createContext, useContext } from 'react';
 
 /**
  * EmbedContext indicates whether the page is being displayed in embedded mode.
- * When true, internal navigation should preserve ?embed=1 query parameter.
+ * When true, internal navigation should preserve /embed namespace.
  */
 export const EmbedContext = createContext<boolean>(false);
 
@@ -23,11 +23,17 @@ export function withQueryParam(href: string, key: string, value: string): string
     return hash ? `${withQuery}#${hash}` : withQuery;
 }
 
+function withEmbedNamespace(href: string): string {
+    if (!href || /^https?:\/\//i.test(href) || href.startsWith('/embed/')) return href;
+    if (!href.startsWith('/')) return href;
+    return `/embed${href}`;
+}
+
 export function useEmbedHref(): (href: string) => string {
     const embed = useEmbed();
 
     return (href: string) => {
         if (!embed) return href;
-        return withQueryParam(href, 'embed', '1');
+        return withEmbedNamespace(href);
     };
 }

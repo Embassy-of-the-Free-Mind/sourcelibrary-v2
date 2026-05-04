@@ -95,6 +95,8 @@ export interface SharedLibraryViewProps {
   catalogTotal?: number;
   /** Optional tenant slug to pass to nested components */
   tenantSlug?: string | null;
+  /** Force embed behavior from the server (used by /embed routes) */
+  forceEmbedded?: boolean;
 }
 
 export default function SharedLibraryView({
@@ -115,8 +117,10 @@ export default function SharedLibraryView({
   digitizedUbns = {},
   catalogTotal = 0,
   tenantSlug,
+  forceEmbedded = false,
 }: SharedLibraryViewProps) {
-  const embed = useEmbed();
+  const embedFromContext = useEmbed();
+  const embed = forceEmbedded || embedFromContext;
   const embedHref = useEmbedHref();
   const totalPages = Math.ceil(total / PER_PAGE);
   const currentPage = Math.floor(offset / PER_PAGE) + 1;
@@ -130,7 +134,7 @@ export default function SharedLibraryView({
 
   return (
     <div className="min-h-screen bg-cream">
-      <ConditionalSiteHeader variant="dark" />
+      {!embed && <ConditionalSiteHeader variant="dark" />}
       {/* Hero Section */}
       <div className="relative bg-dark overflow-hidden">
         <div className="absolute inset-0 bg-gradient-to-b from-black/70 via-black/40 to-transparent" />
