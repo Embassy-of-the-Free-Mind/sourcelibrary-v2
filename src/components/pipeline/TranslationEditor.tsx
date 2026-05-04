@@ -1,7 +1,7 @@
 'use client';
 
 import { useState, useEffect, useRef, useMemo } from 'react';
-import { useParams, useSearchParams } from 'next/navigation';
+import { useParams, usePathname } from 'next/navigation';
 import { toast } from 'sonner';
 import Logo from '@/components/layout/Logo';
 import RevisionHistory from '@/components/reader/RevisionHistory';
@@ -41,6 +41,7 @@ import type { Page, Book, Prompt, ContentSource } from '@/lib/types';
 import { GEMINI_MODELS, DEFAULT_MODEL } from '@/lib/types';
 import { AuthCheck } from '../auth/AuthCheck';
 import TranslationFeedbackPrompt from '@/components/feedback/TranslationFeedbackPrompt';
+import { useIsEmbedded } from '@/hooks/useEmbedContext';
 
 // Languages that use non-Latin scripts and benefit from transliteration
 const NON_LATIN_LANGUAGES = new Set([
@@ -59,14 +60,13 @@ function hasNonLatinScript(language?: string): boolean {
 // EditSourceBadge removed — source info folded into RevisionHistory trigger
 
 // Inline book search bar for the page reader footer
-function BookSearchBar({ bookId, tenantPrefix, isEmbedded }: { bookId: string; tenantPrefix?: string; isEmbedded?: boolean }) {
+function BookSearchBar({ bookId, tenantPrefix }: { bookId: string; tenantPrefix?: string }) {
   const [query, setQuery] = useState('');
   const [results, setResults] = useState<Array<{ pageId: string; pageNumber: number; matches: Array<{ field: string; snippet: string }> }>>([]);
   const [isSearching, setIsSearching] = useState(false);
   const [showResults, setShowResults] = useState(false);
   const debounceRef = useRef<NodeJS.Timeout | null>(null);
   const containerRef = useRef<HTMLDivElement>(null);
-  const embedParam = isEmbedded ? '&embed=1' : '';
 
   useEffect(() => {
     if (debounceRef.current) clearTimeout(debounceRef.current);
@@ -143,7 +143,7 @@ function BookSearchBar({ bookId, tenantPrefix, isEmbedded }: { bookId: string; t
               {results.slice(0, 10).map((r) => (
                 <a
                   key={r.pageId}
-                  href={`${tenantPrefix || ''}/book/${bookId}/page/${r.pageId}?highlight=${encodeURIComponent(query.trim())}${embedParam}`}
+                  href={`${tenantPrefix || ''}/book/${bookId}/page/${r.pageId}?highlight=${encodeURIComponent(query.trim())}`}
                   className="block px-3 py-2 hover:bg-stone-50 transition-colors"
                 >
                   <span className="text-xs font-medium" style={{ color: 'var(--text-primary)' }}>Page {r.pageNumber}</span>
@@ -429,13 +429,16 @@ export default function TranslationEditor({
   onRefresh,
 }: TranslationEditorProps) {
   const params = useParams<{ tenant: string }>();
-  const searchParams = useSearchParams();
-  const isEmbedded = searchParams.get('embed') === '1';
+  const pathname = usePathname();
+  const isEmbedded = useIsEmbedded();
   // On tenant subdomains (bph.sourcelibrary.org), the proxy adds the tenant prefix,
   // so links should use /book/... not /bph/book/...
   const isOnTenantSubdomain = typeof window !== 'undefined' && /^[a-z]+\.sourcelibrary\.org$/.test(window.location.hostname);
-  const tenantPrefix = isOnTenantSubdomain ? '' : (params?.tenant ? `/${params.tenant}` : '');
-  const embedSuffix = isEmbedded ? '?embed=1' : '';
+  const isOnEmbedRoute = pathname?.startsWith('/embed/');
+  const tenantPrefix = isOnTenantSubdomain ? '' : (params?.tenant ? `${isOnEmbedRoute ? '/embed' : ''}/${params.tenant}` : '');
+  const bookSlugOrId = book.slug || book.id;
+  const bookMetadata = book as Book & { metadata?: { scriptType?: string } };
+  const hasRashiScript = !!bookMetadata.metadata?.scriptType?.toLowerCase().includes('rashi');
   const [ocrText, setOcrText] = useState(page.ocr?.data || '');
   const [translationText, setTranslationText] = useState(page.translation?.data || '');
   const [summaryText, setSummaryText] = useState(page.summary?.data || '');
@@ -879,7 +882,7 @@ export default function TranslationEditor({
               {/* Hide Source Library branding in embed mode */}
               {!isEmbedded && <Logo mini />}
               {!isEmbedded && <span className="text-sm shrink-0" style={{ color: 'var(--text-muted)' }} aria-hidden="true">/</span>}
-              <a href={`${tenantPrefix}/book/${book.id}${embedSuffix}`} className="min-w-0 hover:opacity-70 transition-opacity">
+              <a href={`${tenantPrefix}/book/${book.id}`} className="min-w-0 hover:opacity-70 transition-opacity">
                 <h1 className="text-sm sm:text-base font-medium truncate" style={{ color: 'var(--text-primary)' }}>
                   {book.display_title || book.title}
                 </h1>
@@ -1107,33 +1110,39 @@ export default function TranslationEditor({
                     ? (() => {
                       try {
                         const hostUrl = document.referrer ? new URL(document.referrer) : null;
-                        const params = new URLSearchParams(window.location.search);
+                        const params = new URLSearchParams(typeof window !== 'undefined' ? window.location.search : '');
                         const hostPathParam = params.get('host_path');
-                        const hostPath = hostPathParam || sessionStorage.getItem('sl_embed_host_path') || '';
+                        const hostPath = hostPathParam || (typeof window !== 'undefined' ? sessionStorage.getItem('sl_embed_host_path') : null) || '';
 
                         if (hostPathParam) {
-                          sessionStorage.setItem('sl_embed_host_path', hostPathParam);
+                          if (typeof window !== 'undefined') {
+                            sessionStorage.setItem('sl_embed_host_path', hostPathParam);
+                          }
                         }
 
                         if (hostUrl) {
                           if (hostPath && hostUrl.pathname === '/') {
                             hostUrl.pathname = hostPath.startsWith('/') ? hostPath : `/${hostPath}`;
                           }
-                          hostUrl.searchParams.set('book', (book as any).slug || book.id);
+                          hostUrl.searchParams.set('book', bookSlugOrId);
                           hostUrl.searchParams.set('page', page.id);
                           return hostUrl.toString();
                         }
                       } catch {
                         // fall through to iframe URL fallback
                       }
-                      return `${window.location.origin}${tenantPrefix}/book/${(book as any).slug || book.id}/${typeof page.page_number === 'number' ? `page-number/${page.page_number}` : `page/${page.id}`}?embed=1`;
+                      const origin = typeof window !== 'undefined' ? window.location.origin : '';
+                      return `${origin}${tenantPrefix}/book/${bookSlugOrId}/${typeof page.page_number === 'number' ? `page-number/${page.page_number}` : `page/${page.id}`}`;
                     })()
-                    : `${window.location.origin}${tenantPrefix}/book/${(book as any).slug || book.id}/${typeof page.page_number === 'number' ? `page-number/${page.page_number}` : `page/${page.id}`}`}
+                    : (() => {
+                      const origin = typeof window !== 'undefined' ? window.location.origin : '';
+                      return `${origin}${tenantPrefix}/book/${bookSlugOrId}/${typeof page.page_number === 'number' ? `page-number/${page.page_number}` : `page/${page.id}`}`;
+                    })()}
                   doi={book.doi}
                   className="!p-1.5 !text-stone-500 hover:!text-stone-700 hover:!bg-stone-100 !rounded-full"
                 />
                 <CiteButton
-                  bookId={(book as any).slug || book.id}
+                  bookId={bookSlugOrId}
                   title={book.title}
                   displayTitle={book.display_title}
                   author={book.author || 'Anonymous'}
@@ -1152,7 +1161,7 @@ export default function TranslationEditor({
         </header>
 
         {/* Rashi script quality warning */}
-        {(book as any).metadata?.scriptType?.toLowerCase().includes('rashi') && (
+        {hasRashiScript && (
           <div className="px-4 py-2 bg-amber-50 border-b border-amber-200 text-sm text-amber-800 flex items-center gap-2">
             <span className="font-bold flex-shrink-0">⚠</span>
             <span><span className="font-medium">Rashi script</span> — current AI models struggle with this typeface. OCR and translation quality is low.</span>
@@ -1701,7 +1710,7 @@ export default function TranslationEditor({
             <span>Produced by <a href="https://sourcelibrary.org" className="hover:underline" style={{ color: 'var(--text-muted)' }}>SourceLibrary.org</a> in Amsterdam, 2026</span>
           </div>
           <div className="px-4 py-1.5" style={{ borderTop: '1px solid var(--border-light)' }}>
-            <BookSearchBar bookId={book.id} tenantPrefix={tenantPrefix} isEmbedded={isEmbedded} />
+            <BookSearchBar bookId={book.id} tenantPrefix={tenantPrefix} />
           </div>
         </div>
 
@@ -1730,7 +1739,7 @@ export default function TranslationEditor({
             {/* Hide Source Library branding in embed mode */}
             {!isEmbedded && <Logo mini />}
             {!isEmbedded && <span className="text-sm shrink-0" style={{ color: 'var(--text-muted)' }} aria-hidden="true">/</span>}
-            <a href={`${tenantPrefix}/book/${book.id}${embedSuffix}`} className="min-w-0 hover:opacity-70 transition-opacity">
+            <a href={`${tenantPrefix}/book/${book.id}`} className="min-w-0 hover:opacity-70 transition-opacity">
               <h1 className="text-base sm:text-xl font-medium truncate" style={{ color: 'var(--text-primary)' }}>
                 {book.display_title || book.title}
               </h1>
@@ -1884,7 +1893,7 @@ export default function TranslationEditor({
       </header>
 
       {/* Rashi script quality warning */}
-      {(book as any).metadata?.scriptType?.toLowerCase().includes('rashi') && (
+      {hasRashiScript && (
         <div className="px-4 py-2 bg-amber-50 border-b border-amber-200 text-sm text-amber-800 flex items-center gap-2">
           <span className="font-bold flex-shrink-0">⚠</span>
           <span><span className="font-medium">Rashi script</span> — current AI models struggle with this typeface. OCR and translation quality is low.</span>

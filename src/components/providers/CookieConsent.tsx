@@ -3,29 +3,21 @@
 import { useEffect, useState } from 'react';
 import Link from 'next/link';
 import { getConsent, setConsent, type ConsentState } from '@/lib/consent';
+import { useIsEmbedded } from '@/hooks/useEmbedContext';
 
 /**
  * Minimal cookie consent banner — thin bar at the bottom of the screen.
  * Appears once, stores choice in localStorage.
  * No dark patterns, no "manage 47 categories." Just accept or decline.
  *
- * Hidden when embedded via embed script (embed=1 param).
+ * Hidden when displayed in embed mode.
  */
 export default function CookieConsent() {
   const [visible, setVisible] = useState(false);
+  const isEmbedded = useIsEmbedded();
 
   useEffect(() => {
-    // Check if embedded (via param or iframe detection)
-    const params = new URLSearchParams(window.location.search);
-    const embedParam = params.get('embed') === '1';
-    const inIframe = typeof window !== 'undefined' && window.self !== window.top;
-    const isEmbedded = embedParam || inIframe;
-
-    // Hide entirely when embedded
-    if (isEmbedded) {
-      setVisible(false);
-      return;
-    }
+    if (isEmbedded) return;
 
     // Only show if user hasn't made a choice yet
     if (getConsent() === null) {
@@ -33,7 +25,7 @@ export default function CookieConsent() {
       const timer = setTimeout(() => setVisible(true), 800);
       return () => clearTimeout(timer);
     }
-  }, []);
+  }, [isEmbedded]);
 
   // Also listen for consent changes (e.g. from cookie settings link)
   useEffect(() => {
@@ -59,7 +51,7 @@ export default function CookieConsent() {
     setVisible(false);
   }
 
-  if (!visible) return null;
+  if (isEmbedded || !visible) return null;
 
   return (
     <div

@@ -46,8 +46,6 @@ export default function CollectionFilters({ collectionId, languages, basePath, s
         searchRouteParams.set('mode', 'books');
         const nextLanguage = updates.language ?? (searchParams.get('language') || '');
         if (nextLanguage) searchRouteParams.set('language', nextLanguage);
-        const embed = searchParams.get('embed');
-        if (embed === '1') searchRouteParams.set('embed', '1');
         router.push(`${searchPath}?${searchRouteParams.toString()}`, { scroll: false });
         return;
       }
@@ -60,7 +58,7 @@ export default function CollectionFilters({ collectionId, languages, basePath, s
     }
     if (updates.sort || updates.language || updates.q !== undefined) params.delete('offset');
     router.push(`${resolvedPath}?${params.toString()}`, { scroll: false });
-  }, [searchParams, router, resolvedPath]);
+  }, [searchParams, router, resolvedPath, searchPath]);
 
   const debouncedSearch = useDebouncedCallback((value: string) => {
     updateParams({ q: value });

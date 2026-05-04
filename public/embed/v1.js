@@ -93,15 +93,15 @@
   function buildIframeSrc(book, page) {
     var base = BASE_URL + '/';
     if (book && page) {
-      return withEmbedContext(base + TENANT + '/book/' + encodeURIComponent(book) + '/page/' + encodeURIComponent(page) + '?embed=1');
+      return withEmbedContext(base + 'embed/' + TENANT + '/book/' + encodeURIComponent(book) + '/page/' + encodeURIComponent(page));
     }
     if (book) {
-      return withEmbedContext(base + TENANT + '/book/' + encodeURIComponent(book) + '?embed=1');
+      return withEmbedContext(base + 'embed/' + TENANT + '/book/' + encodeURIComponent(book));
     }
     if (COLLECTION) {
-      return withEmbedContext(base + 'collections/' + encodeURIComponent(COLLECTION) + '?embed=1');
+      return withEmbedContext(base + 'embed/' + TENANT + '/collections/' + encodeURIComponent(COLLECTION));
     }
-    return withEmbedContext(base + TENANT + '?view=books&embed=1');
+    return withEmbedContext(base + 'embed/' + TENANT);
   }
 
   // --- CSS ---

@@ -338,14 +338,18 @@ export async function proxy(request: NextRequest) {
     if (pathname === '/' || pathname === '/search') {
       url.pathname = `/embed/${tenant}`;
     } else if (pathname.startsWith('/book/') && (pathname.includes('/page/') || pathname.includes('/page-number/'))) {
-      // Page reader + page-number: rewrite to main site [tenant] route
-      url.pathname = `/${tenant}${pathname}`;
+      // Page reader + page-number: keep traffic in embed namespace
+      url.pathname = `/embed/${tenant}${pathname}`;
     } else if (pathname.startsWith('/book/')) {
       url.pathname = `/embed/${tenant}${pathname}`;
     } else if (pathname.startsWith('/collections')) {
-      url.pathname = `/embed/${tenant}${pathname}`;
+      if (pathname === '/collections') {
+        url.pathname = `/embed/${tenant}`;
+      } else {
+        url.pathname = `/embed/${tenant}${pathname}`;
+      }
     } else if (pathname === '/catalog') {
-      url.pathname = `/embed/${tenant}/catalog`;
+      url.pathname = `/embed/${tenant}`;
     } else if (pathname.startsWith('/gallery')) {
       // Gallery doesn't have tenant-specific embeds — redirect to main site
       const mainUrl = request.nextUrl.clone();

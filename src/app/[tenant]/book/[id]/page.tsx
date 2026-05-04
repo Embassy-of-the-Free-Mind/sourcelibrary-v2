@@ -621,6 +621,19 @@ async function BookInfo({ id, tenantId, tenantSlug, embedPolicy }: { id: string;
                     {book.language}
                   </div>
                 )}
+                {(book as unknown as { subject_keywords?: string[] }).subject_keywords && (book as unknown as { subject_keywords?: string[] }).subject_keywords!.length > 0 && (
+                  <div className="flex flex-wrap gap-1.5">
+                    {(book as unknown as { subject_keywords?: string[] }).subject_keywords!.slice(0, 5).map((tag: string) => (
+                      <span
+                        key={tag}
+                        className="px-2 py-0.5 text-xs bg-stone-700/50 text-stone-300 rounded-full"
+                        title={tag}
+                      >
+                        {tag}
+                      </span>
+                    ))}
+                  </div>
+                )}
                 {(book.published || book.source_work_dates?.length) && (
                   <div className="flex items-center gap-2">
                     <Calendar className="w-4 h-4" />
@@ -647,14 +660,14 @@ async function BookInfo({ id, tenantId, tenantSlug, embedPolicy }: { id: string;
                   {totalPages} pages
                 </div>
                 {embedPolicy.showGalleryImages && imageCount > 0 && (
-                    <Link
-                      href={`/${tenantSlug}/gallery?bookId=${book.id}`}
-                      className="flex items-center gap-2 text-accent-gold hover:text-accent-gold transition-colors"
-                      title="View identified images in gallery"
-                    >
-                      <Images className="w-4 h-4" />
-                      {imageCount} images
-                    </Link>
+                  <Link
+                    href={`/${tenantSlug}/gallery?bookId=${book.id}`}
+                    className="flex items-center gap-2 text-accent-gold hover:text-accent-gold transition-colors"
+                    title="View identified images in gallery"
+                  >
+                    <Images className="w-4 h-4" />
+                    {imageCount} images
+                  </Link>
                 )}
               </div>
 
@@ -702,18 +715,27 @@ async function BookInfo({ id, tenantId, tenantSlug, embedPolicy }: { id: string;
                 </div>
               )}
 
-              {/* Collections — hidden when embedded */}
-              {embedPolicy.enableBookCollectionNavigation && bookCollections.length > 0 && (
+              {/* Collections — visible in both modes, clickable only when not embedded */}
+              {bookCollections.length > 0 && (
                 <div className="flex flex-wrap items-center gap-2 mt-3">
-                  {bookCollections.map(col => (
-                    <Link
-                      key={col.slug}
-                      href={`/collections/${col.slug}`}
-                      className="text-xs text-stone-400 hover:text-white bg-white/5 hover:bg-white/10 px-2.5 py-1 rounded-full transition-colors"
-                    >
-                      {col.name}
-                    </Link>
-                  ))}
+                  {bookCollections.map(col =>
+                    embedPolicy.enableBookCollectionNavigation ? (
+                      <Link
+                        key={col.slug}
+                        href={`/collections/${col.slug}`}
+                        className="text-xs text-stone-400 hover:text-white bg-white/5 hover:bg-white/10 px-2.5 py-1 rounded-full transition-colors"
+                      >
+                        {col.name}
+                      </Link>
+                    ) : (
+                      <span
+                        key={col.slug}
+                        className="text-xs text-stone-400 bg-white/5 px-2.5 py-1 rounded-full"
+                      >
+                        {col.name}
+                      </span>
+                    )
+                  )}
                 </div>
               )}
 
@@ -733,15 +755,15 @@ async function BookInfo({ id, tenantId, tenantSlug, embedPolicy }: { id: string;
                 const skipTo = totalPages >= 20 ? 4 : totalPages >= 10 ? 2 : 0;
                 const readPage = firstChapterPage || pages[skipTo] || pages[0];
                 return (
-                    <div className="mt-5">
-                      <Link
-                        href={`/book/${bookSlug}/page/${readPage.id}`}
-                        className="inline-flex items-center gap-2.5 px-6 py-3 bg-accent-rust hover:bg-accent-rust/90 text-white font-medium rounded-lg transition-colors text-base"
-                      >
-                        <BookOpen className="w-5 h-5" />
-                        Read This Book
-                      </Link>
-                    </div>
+                  <div className="mt-5">
+                    <Link
+                      href={`/book/${bookSlug}/page/${readPage.id}`}
+                      className="inline-flex items-center gap-2.5 px-6 py-3 bg-accent-rust hover:bg-accent-rust/90 text-white font-medium rounded-lg transition-colors text-base"
+                    >
+                      <BookOpen className="w-5 h-5" />
+                      Read This Book
+                    </Link>
+                  </div>
                 );
               })()}
 
@@ -929,56 +951,57 @@ async function BookInfo({ id, tenantId, tenantSlug, embedPolicy }: { id: string;
                   entries={entries}
                   bookSlug={book.slug || book.id}
                   totalPages={pages.length}
+                  isEmbedded={!embedPolicy.enableBookIndexNavigation}
                 />
               );
             })()}
 
             {/* Gallery Images Preview */}
             {embedPolicy.showGalleryImages && galleryImages.length > 0 && (
-                <div className="card p-6 mt-6">
-                  <div className="flex items-center justify-between mb-4">
-                    <h2 className="text-lg font-semibold" style={{ color: 'var(--text-primary)' }}>
-                      Illustrations
-                      <span className="text-sm font-normal text-stone-400 ml-2">{imageCount}</span>
-                    </h2>
-                    <Link
-                      href={`/${tenantSlug}/gallery?bookId=${book.id}`}
-                      className="text-sm text-accent-rust hover:text-accent-gold-dark transition-colors"
-                    >
-                      View All &rarr;
-                    </Link>
-                  </div>
-                  <div className="flex gap-3 overflow-x-auto pb-2 -mx-1 px-1 scrollbar-thin">
-                    {galleryImages.map((img) => {
-                      const src = img.extracted_url || img.thumbnail_url || img.image_url;
-                      if (!src) return null;
-                      return (
-                        <Link
-                          key={img.id}
-                          href={`/${tenantSlug}/gallery/image/${img.id}`}
-                          className="flex-shrink-0 group"
-                        >
-                          <div className="w-28 h-28 sm:w-36 sm:h-36 rounded-lg overflow-hidden bg-stone-100 border border-stone-200 group-hover:border-accent-rust/40 transition-colors">
-                            <img
-                              src={src}
-                              alt={img.description || 'Illustration'}
-                              className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-300"
-                              loading="lazy"
-                            />
-                          </div>
-                          {img.type && (
-                            <p className="text-[10px] text-stone-400 mt-1 text-center truncate w-28 sm:w-36">{img.type}</p>
-                          )}
-                        </Link>
-                      );
-                    })}
-                  </div>
+              <div className="card p-6 mt-6">
+                <div className="flex items-center justify-between mb-4">
+                  <h2 className="text-lg font-semibold" style={{ color: 'var(--text-primary)' }}>
+                    Illustrations
+                    <span className="text-sm font-normal text-stone-400 ml-2">{imageCount}</span>
+                  </h2>
+                  <Link
+                    href={`/${tenantSlug}/gallery?bookId=${book.id}`}
+                    className="text-sm text-accent-rust hover:text-accent-gold-dark transition-colors"
+                  >
+                    View All &rarr;
+                  </Link>
                 </div>
+                <div className="flex gap-3 overflow-x-auto pb-2 -mx-1 px-1 scrollbar-thin">
+                  {galleryImages.map((img) => {
+                    const src = img.extracted_url || img.thumbnail_url || img.image_url;
+                    if (!src) return null;
+                    return (
+                      <Link
+                        key={img.id}
+                        href={`/${tenantSlug}/gallery/image/${img.id}`}
+                        className="flex-shrink-0 group"
+                      >
+                        <div className="w-28 h-28 sm:w-36 sm:h-36 rounded-lg overflow-hidden bg-stone-100 border border-stone-200 group-hover:border-accent-rust/40 transition-colors">
+                          <img
+                            src={src}
+                            alt={img.description || 'Illustration'}
+                            className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-300"
+                            loading="lazy"
+                          />
+                        </div>
+                        {img.type && (
+                          <p className="text-[10px] text-stone-400 mt-1 text-center truncate w-28 sm:w-36">{img.type}</p>
+                        )}
+                      </Link>
+                    );
+                  })}
+                </div>
+              </div>
             )}
 
             {/* Related Books — pre-computed, zero extra queries */}
             {embedPolicy.showBookRelatedBooks && book.related_books && (book.related_books.direct?.length > 0 || book.related_books.shared?.length > 0) && (
-                <RelatedBooks relatedBooks={book.related_books} />
+              <RelatedBooks relatedBooks={book.related_books} />
             )}
           </div>
         );
@@ -1034,7 +1057,7 @@ export default async function BookDetailPage({ params, isEmbedded = false }: Pag
   const tenantSlug = tenant;
 
   return (
-    <div className="min-h-screen bg-cream">
+    <div className={isEmbedded ? "" : "min-h-screen bg-cream"}>
       {!isEmbedded && <ConditionalSiteHeader variant="light" />}
 
       {/* Book content streams in */}

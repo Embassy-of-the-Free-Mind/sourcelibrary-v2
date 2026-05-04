@@ -32,11 +32,11 @@ export default function EmbedHostNavigationListener() {
 
             let target = '';
             if (book && page) {
-                target = '/' + tenant + '/book/' + book + '/page/' + page + '?embed=1';
+                target = '/embed/' + tenant + '/book/' + book + '/page/' + page;
             } else if (book) {
-                target = '/' + tenant + '/book/' + book + '?embed=1';
+                target = '/embed/' + tenant + '/book/' + book;
             } else {
-                target = '/' + tenant + '?view=books&embed=1';
+                target = '/embed/' + tenant;
             }
 
             const current = window.location.pathname + window.location.search;
