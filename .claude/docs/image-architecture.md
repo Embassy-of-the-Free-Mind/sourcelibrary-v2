@@ -31,13 +31,15 @@ thumb (150px, instant) → display (1200px, ~200ms) → full (original, on-deman
 
 ### Artworks
 ```
-thumbnail_blob (150px, instant) → thumbnail (1200px+, ~1s) → archived_full_url (original, background for magnifier)
+thumbnail_blob / -thumb.jpg (600px, instant) → thumbnail / .jpg (~2000px, ~1s) → -full.jpg (original, magnifier)
 ```
 
+R2 files per artwork: `artwork/{slug}-thumb.jpg`, `artwork/{slug}.jpg`, `artwork/{slug}-full.jpg`
+
 The `ArtworkHero` component loads all three progressively:
-1. Shows `thumbnail_blob` immediately
-2. Background-loads `thumbnail` (display size), swaps on ready
-3. Background-loads hi-res (`archived_full_url` or derived R2 URL), swaps for magnifier
+1. Shows `-thumb.jpg` (600px) immediately
+2. Background-loads `.jpg` (display ~2000px), swaps on ready
+3. Background-loads `-full.jpg` (original), swaps for magnifier zoom
 
 ### Gallery Images
 ```
