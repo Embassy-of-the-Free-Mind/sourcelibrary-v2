@@ -94,7 +94,12 @@ export default function ArtworkInfo({ book, collections, prevWork, nextWork, rel
   const enrichFigures = enrichment?.figures_depicted || [];
   const enrichSymbols = enrichment?.symbols || [];
   const enrichIconclass = enrichment?.iconclass || [];
-  const archivedFullUrl = (book as any).archived_full_url || '';
+  // Derive R2 full-res URL from slug when archived_full_url isn't set but thumbnail is on R2
+  const archivedFullUrlRaw = (book as any).archived_full_url || '';
+  const archivedFullUrl = archivedFullUrlRaw
+    || (book.slug && displayImage.includes('images.sourcelibrary.org/artwork/')
+      ? `https://images.sourcelibrary.org/artwork/${book.slug.replace(/^art-/, '')}-full.jpg`
+      : '');
   const fullWidth = (book as any).full_width || commonsWidth;
   const fullHeight = (book as any).full_height || commonsHeight;
   const sourceBook = (book as any).source_book as { id: string; slug: string; title: string } | undefined;
@@ -108,7 +113,7 @@ export default function ArtworkInfo({ book, collections, prevWork, nextWork, rel
           thumbUrl={thumbImage}
           hiResUrl={archivedFullUrl || commonsFullUrl || ''}
           title={book.title}
-          fullResUrl={commonsUrl || commonsFullUrl}
+          fullResUrl={archivedFullUrl || commonsUrl || commonsFullUrl}
           license={commonsLicense}
           isLandscape={isLandscape}
           prevWork={prevWork}
