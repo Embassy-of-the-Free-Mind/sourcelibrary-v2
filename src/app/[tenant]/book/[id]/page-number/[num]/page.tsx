@@ -35,5 +35,5 @@ export default async function PageNumberRedirect({ params }: Props) {
   }
 
   const pageId = page.id || page._id?.toString();
-  redirect(`/${tenant}/book/${bookSlug}/page/${pageId}`);
+  redirect(`/book/${bookSlug}/page/${pageId}`);
 }

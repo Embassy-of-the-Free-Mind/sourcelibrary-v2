@@ -1,7 +1,7 @@
 'use client';
 
 import { useEffect, useRef, useState, useCallback, useMemo } from 'react';
-import { useRouter, useParams } from 'next/navigation';
+import { useRouter } from 'next/navigation';
 
 interface OverviewPage {
   id: string;
@@ -60,8 +60,7 @@ export default function BookOverview({ bookId, bookSlug, bookTitle, pages }: Boo
   const canvasRef = useRef<HTMLCanvasElement>(null);
   const containerRef = useRef<HTMLDivElement>(null);
   const router = useRouter();
-  const params = useParams<{ tenant: string }>();
-  const tenantPrefix = params?.tenant ? `/${params.tenant}` : '';
+  // Book URLs are tenant-agnostic — the proxy resolves the tenant. No prefix here.
 
   // Camera state (not React state — updated every frame)
   const camRef = useRef({ x: 0, y: 0, zoom: 1 });
@@ -347,7 +346,7 @@ export default function BookOverview({ bookId, bookSlug, bookTitle, pages }: Boo
           const idx = hitTest(sx, sy);
           if (idx >= 0) {
             const page = pagesWithImages[idx];
-            const bookPath = `${tenantPrefix}/book/${bookSlug || bookId}`;
+            const bookPath = `/book/${bookSlug || bookId}`;
             router.push(`${bookPath}/page/${page.id}`);
           }
         }
@@ -411,7 +410,7 @@ export default function BookOverview({ bookId, bookSlug, bookTitle, pages }: Boo
           const idx = hitTest(sx, sy);
           if (idx >= 0) {
             const page = pagesWithImages[idx];
-            const bookPath = `${tenantPrefix}/book/${bookSlug || bookId}`;
+            const bookPath = `/book/${bookSlug || bookId}`;
             router.push(`${bookPath}/page/${page.id}`);
           }
         }
@@ -469,7 +468,7 @@ export default function BookOverview({ bookId, bookSlug, bookTitle, pages }: Boo
     dirtyRef.current = true;
   };
 
-  const bookPath = `${tenantPrefix}/book/${bookSlug || bookId}`;
+  const bookPath = `/book/${bookSlug || bookId}`;
 
   return (
     <div ref={containerRef} className="relative w-full h-[calc(100vh-56px)] bg-[#0a0a0a]">

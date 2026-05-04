@@ -120,29 +120,26 @@ export async function generateUniqueBookSlug(
 }
 
 /**
- * Centralized book URL construction. Use this everywhere instead of
- * manually building `/book/${book.id}`.
+ * Centralized book URL construction. Always returns /book/{slug-or-id}.
+ *
+ * Book URLs are tenant-agnostic: the tenant slug never appears in the address
+ * bar. The proxy resolves the tenant internally from the book itself and
+ * rewrites the request to the [tenant]/book/[id] route. Tenant fields on the
+ * input are accepted (and ignored) for call-site compatibility.
  */
 export function bookUrl(book: { slug?: string; id: string; tenantSlug?: string | null; tenant_slug?: string | null }): string {
-  const path = `/book/${book.slug || book.id}`;
-  const tenantSlug =
-    (book as { tenantSlug?: string | null }).tenantSlug ||
-    (book as { tenant_slug?: string | null }).tenant_slug ||
-    null;
-  return tenantSlug ? `/${tenantSlug}${path}` : path;
+  return `/book/${book.slug || book.id}`;
 }
 
 /**
- * Tenant-aware book URL construction.
- * Use in tenant routes to keep navigation within the tenant path.
- * Falls back to root URL if no tenant is provided.
+ * Alias of bookUrl() that accepts a tenantSlug for call-site compatibility.
+ * The tenantSlug argument is intentionally ignored — see bookUrl().
  */
 export function tenantBookUrl(
   book: { slug?: string; id: string },
-  tenantSlug?: string | null
+  _tenantSlug?: string | null
 ): string {
-  const path = `/book/${book.slug || book.id}`;
-  return tenantSlug ? `/${tenantSlug}${path}` : path;
+  return `/book/${book.slug || book.id}`;
 }
 
 export function collectionUrl(collection: { slug: string }): string {
