@@ -21,6 +21,7 @@ const EXTERNAL_PATTERNS = [
   'artic.edu',
   'images.metmuseum.org',
   'openaccess-api.clevelandart.org',
+  'openaccess-cdn.clevelandart.org',
 ];
 
 const UA = 'SourceLibrary/1.0 (https://sourcelibrary.org; derek@sourcelibrary.org) bot';
