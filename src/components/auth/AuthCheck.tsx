@@ -32,12 +32,14 @@ export function AuthCheck({ children, fallback = null, role }: AuthCheckProps) {
   }
 
   const userRole = (session.user as any).role;
+  const ROLE_LEVEL: Record<string, number> = { reader: 1, inner_circle: 2, editor: 2, admin: 3, superadmin: 4 };
+  const level = ROLE_LEVEL[userRole] ?? 0;
 
-  if (role === 'admin' && userRole !== 'admin') {
+  if (role === 'admin' && level < 3) {
     return <>{fallback}</>;
   }
 
-  if (role === 'inner_circle' && userRole !== 'admin' && userRole !== 'inner_circle') {
+  if (role === 'inner_circle' && level < 2) {
     return <>{fallback}</>;
   }
 
