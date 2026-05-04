@@ -2,7 +2,7 @@ import React from 'react';
 import Link from 'next/link';
 import Image from 'next/image';
 import { Metadata } from 'next';
-import { ArrowLeft, BookOpen, Images, Library } from 'lucide-react';
+import { ArrowLeft, BookOpen, Images, Library, Sparkles } from 'lucide-react';
 import { headers } from 'next/headers';
 import ConditionalSiteHeader from '@/components/layout/ConditionalSiteHeader';
 import SiteHeader from '@/components/layout/SiteHeader';
@@ -665,7 +665,12 @@ export default async function CollectionDetailPage({ params, provider }: Props &
       />
       {/* Hero Section */}
       <div className="relative bg-dark overflow-hidden">
-        {heroImages.length > 0 ? (
+        {collection.hero_image ? (
+          <div className="absolute inset-0 opacity-40">
+            {/* eslint-disable-next-line @next/next/no-img-element */}
+            <img src={collection.hero_image as string} alt="" className="absolute inset-0 w-full h-full object-cover" />
+          </div>
+        ) : heroImages.length > 0 ? (
           <div className={`absolute inset-0 grid opacity-30 ${heroImages.length <= 2 ? 'grid-cols-2' :
             heroImages.length <= 3 ? 'grid-cols-3' :
               heroImages.length <= 4 ? 'grid-cols-2 sm:grid-cols-4' :
@@ -918,7 +923,24 @@ export default async function CollectionDetailPage({ params, provider }: Props &
         );
       })()}
 
-      {/* Exhibition Layout — renders curated components ABOVE gallery when available */}
+      {/* Exhibition hook — rendered outside the warm wrapper so it flows seamlessly from the dark hero */}
+      {exhibition?.layout && exhibition.layout[0]?.component === 'hook' && (
+        <div className="bg-dark text-white px-6 py-8 sm:py-10">
+          <div className="max-w-4xl mx-auto text-center">
+            <Sparkles className="w-5 h-5 text-accent-gold mx-auto mb-3 opacity-60" />
+            <p className="text-lg sm:text-xl md:text-2xl font-display leading-relaxed text-white/90 italic">
+              &ldquo;{exhibition.layout[0].text}&rdquo;
+            </p>
+            {exhibition.layout[0].attribution && (
+              <p className="mt-4 text-sm text-white/60 font-body">
+                — {exhibition.layout[0].attribution}
+              </p>
+            )}
+          </div>
+        </div>
+      )}
+
+      {/* Exhibition Layout — remaining components */}
       {exhibition?.layout && (
         <div className="bg-warm border-b border-border-light">
           <div className="max-w-7xl mx-auto px-6 py-10">
@@ -926,7 +948,7 @@ export default async function CollectionDetailPage({ params, provider }: Props &
               <p className="text-lg text-muted italic mb-6 font-display">{exhibition.subtitle}</p>
             )}
             <ExhibitionLayout
-              layout={exhibition.layout}
+              layout={exhibition.layout[0]?.component === 'hook' ? exhibition.layout.slice(1) : exhibition.layout}
               books={exhibitionBooks as any[]}
               images={galleryImages}
               collectionSlug={id}
