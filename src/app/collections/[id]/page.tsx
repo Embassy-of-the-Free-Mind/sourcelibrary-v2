@@ -2,7 +2,7 @@ import React from 'react';
 import Link from 'next/link';
 import Image from 'next/image';
 import { Metadata } from 'next';
-import { ArrowLeft, BookOpen, Images, Library, Sparkles } from 'lucide-react';
+import { ArrowLeft, BookOpen, Images, Library } from 'lucide-react';
 import { headers } from 'next/headers';
 import ConditionalSiteHeader from '@/components/layout/ConditionalSiteHeader';
 import SiteHeader from '@/components/layout/SiteHeader';
@@ -923,24 +923,22 @@ export default async function CollectionDetailPage({ params, provider }: Props &
         );
       })()}
 
-      {/* Exhibition hook — rendered outside the warm wrapper so it flows seamlessly from the dark hero */}
-      {exhibition?.layout && exhibition.layout[0]?.component === 'hook' && (
-        <div className="bg-dark text-white px-6 py-8 sm:py-10">
-          <div className="max-w-4xl mx-auto text-center">
-            <Sparkles className="w-5 h-5 text-accent-gold mx-auto mb-3 opacity-60" />
-            <p className="text-lg sm:text-xl md:text-2xl font-display leading-relaxed text-white/90 italic">
-              &ldquo;{exhibition.layout[0].text}&rdquo;
-            </p>
-            {exhibition.layout[0].attribution && (
-              <p className="mt-4 text-sm text-white/60 font-body">
-                — {exhibition.layout[0].attribution}
-              </p>
-            )}
+      {/* Overview description — always shown so visitors know what this collection is */}
+      {(collection.expanded_description || collection.description) && (
+        <div className="bg-warm border-b border-border-light">
+          <div className="max-w-7xl mx-auto px-6 py-8">
+            <div className="max-w-4xl">
+              {(collection.expanded_description || collection.description)!.split('\n\n').map((para: string, i: number) => (
+                <p key={i} className="text-secondary text-lg leading-relaxed mb-4 last:mb-0 font-body">
+                  {linkBookTitles(para, allBooksForLinking, explicitMentions)}
+                </p>
+              ))}
+            </div>
           </div>
         </div>
       )}
 
-      {/* Exhibition Layout — remaining components */}
+      {/* Exhibition Layout */}
       {exhibition?.layout && (
         <div className="bg-warm border-b border-border-light">
           <div className="max-w-7xl mx-auto px-6 py-10">
@@ -948,7 +946,7 @@ export default async function CollectionDetailPage({ params, provider }: Props &
               <p className="text-lg text-muted italic mb-6 font-display">{exhibition.subtitle}</p>
             )}
             <ExhibitionLayout
-              layout={exhibition.layout[0]?.component === 'hook' ? exhibition.layout.slice(1) : exhibition.layout}
+              layout={exhibition.layout}
               books={exhibitionBooks as any[]}
               images={galleryImages}
               collectionSlug={id}
@@ -1039,20 +1037,7 @@ export default async function CollectionDetailPage({ params, provider }: Props &
         </div>
       )}
 
-      {/* Overview description */}
-      {!exhibition?.layout && (collection.expanded_description || collection.description) && (
-        <div className="bg-warm border-b border-border-light">
-          <div className="max-w-7xl mx-auto px-6 py-8">
-            <div className="max-w-4xl">
-              {(collection.expanded_description || collection.description)!.split('\n\n').map((para: string, i: number) => (
-                <p key={i} className="text-secondary text-lg leading-relaxed mb-4 last:mb-0 font-body">
-                  {linkBookTitles(para, allBooksForLinking, explicitMentions)}
-                </p>
-              ))}
-            </div>
-          </div>
-        </div>
-      )}
+      {/* Overview description moved above exhibition layout */}
 
       <div className="max-w-7xl mx-auto px-6 py-10">
 
