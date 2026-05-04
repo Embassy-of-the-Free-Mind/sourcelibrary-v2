@@ -87,6 +87,8 @@ async function getFeaturedCollection(): Promise<FeaturedCollectionItem | null> {
     author: 1,
     thumbnail: 1,
     thumbnail_blob: 1,
+    image_display: 1,
+    image_thumb: 1,
   };
 
   // Get highlighted books first
@@ -203,7 +205,7 @@ async function getMultipleFeaturedCollections(): Promise<FeaturedCollectionItem[
   const bookProjection = {
     _id: 0,
     id: { $ifNull: ['$id', { $toString: '$_id' }] },
-    slug: 1, title: 1, display_title: 1, author: 1, thumbnail: 1, thumbnail_blob: 1,
+    slug: 1, title: 1, display_title: 1, author: 1, thumbnail: 1, thumbnail_blob: 1, image_display: 1, image_thumb: 1,
   };
 
   const results: FeaturedCollectionItem[] = [];

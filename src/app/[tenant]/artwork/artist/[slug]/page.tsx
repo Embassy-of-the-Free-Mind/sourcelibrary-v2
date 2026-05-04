@@ -39,7 +39,7 @@ async function getArtist(slug: string) {
         { author: authorRegex, resource_type: { $exists: true } },
         { projection: {
           slug: 1, title: 1, display_title: 1, author: 1, published: 1,
-          resource_type: 1, medium: 1, thumbnail: 1, thumbnail_blob: 1,
+          resource_type: 1, medium: 1, thumbnail: 1, thumbnail_blob: 1, image_display: 1, image_thumb: 1,
           commons_width: 1, commons_height: 1, attribution_note: 1,
         }},
       )
@@ -50,7 +50,7 @@ async function getArtist(slug: string) {
         { author: authorRegex, resource_type: { $exists: false }, visible: true },
         { projection: {
           slug: 1, title: 1, display_title: 1, author: 1, published: 1,
-          language: 1, thumbnail: 1, thumbnail_blob: 1, pages_translated: 1,
+          language: 1, thumbnail: 1, thumbnail_blob: 1, image_display: 1, image_thumb: 1, pages_translated: 1,
         }},
       )
       .sort({ published: 1 })
@@ -69,7 +69,7 @@ async function getArtist(slug: string) {
           { author: { $regex: `^${reversedEscaped}$`, $options: 'i' }, resource_type: { $exists: false }, visible: true },
           { projection: {
             slug: 1, title: 1, display_title: 1, author: 1, published: 1,
-            language: 1, thumbnail: 1, thumbnail_blob: 1, pages_translated: 1,
+            language: 1, thumbnail: 1, thumbnail_blob: 1, image_display: 1, image_thumb: 1, pages_translated: 1,
           }},
         )
         .sort({ published: 1 })

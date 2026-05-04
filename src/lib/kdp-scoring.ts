@@ -211,7 +211,7 @@ export async function scoreBooksKdp(
       id: 1, title: 1, display_title: 1, quality_score: 1,
       pages_translated: 1, pages_count: 1, read_count: 1,
       is_first_translation: 1, reading_summary: 1, index: 1,
-      chapters: 1, thumbnail: 1, thumbnail_blob: 1,
+      chapters: 1, thumbnail: 1, thumbnail_blob: 1, image_display: 1, image_thumb: 1,
     }
   }).toArray() as unknown as BookDoc[];
 

@@ -110,7 +110,7 @@ async function getEpisode(threadId: string): Promise<EpisodeData | null> {
     if (bookIds.length > 0) {
       const bookDocs = await db.collection('books')
         .find({ id: { $in: bookIds } })
-        .project({ id: 1, title: 1, author: 1, slug: 1, thumbnail: 1, thumbnail_blob: 1 })
+        .project({ id: 1, title: 1, author: 1, slug: 1, thumbnail: 1, thumbnail_blob: 1, image_display: 1, image_thumb: 1 })
         .toArray();
       const bookMap = new Map(bookDocs.map(b => [b.id, b]));
       sourceBooks = bookIds.map(bid => {

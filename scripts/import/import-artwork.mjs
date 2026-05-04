@@ -399,6 +399,8 @@ async function createArtworkDoc(db, artwork, entry) {
     published: artwork.date || 'Unknown',
     ...(year ? { year } : {}),
     thumbnail: artwork.url,
+    image_display: artwork.url,
+    image_source_url: artwork.url,
     pageCount: 1,
     pages_count: 1,
     pages_ocr: 0,

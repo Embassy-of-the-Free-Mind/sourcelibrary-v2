@@ -47,8 +47,14 @@ export interface Book {
   format?: string;            // Book format (folio, quarto, octavo, etc.)
 
   // Display and categorization
-  thumbnail?: string;          // Original IIIF URL (from import)
-  thumbnail_blob?: string;     // Vercel Blob CDN URL (fast, pre-generated)
+  thumbnail?: string;          // @deprecated Use image_display. Cover/display image (~1200px for books, full-res for artworks)
+  thumbnail_blob?: string;     // @deprecated Use image_thumb. Small preview (150px)
+
+  // Canonical image fields (migration in progress — prefer these over thumbnail/thumbnail_blob)
+  image_display?: string;      // Primary display image (1200px) — R2 URL
+  image_thumb?: string;        // Small preview (150px) — R2 URL
+  image_full?: string;         // Highest resolution available (artworks only) — R2 URL
+  image_source_url?: string;   // Original source URL (Wikimedia, IA, etc.) — provenance only, never displayed
   categories?: string[];
   faceted_tags?: FacetedTags;
   pages_count?: number;

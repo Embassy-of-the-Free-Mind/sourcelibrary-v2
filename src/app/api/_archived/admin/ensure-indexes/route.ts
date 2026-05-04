@@ -427,7 +427,7 @@ export const POST = withAuth(async (request, session) => {
     // Pages - thumbnail lookup (find pages needing thumbnails, filter by thumbnail status)
     try {
       await db.collection('pages').createIndex(
-        { thumbnail_blob: 1, archived_photo: 1 },
+        { thumbnail_blob: 1, image_thumb: 1, archived_photo: 1 },
         { name: 'pages_thumbnail_archived_idx', background: true }
       );
       results['pages.pages_thumbnail_archived_idx'] = 'created';

@@ -66,6 +66,7 @@ export default function CoverImagePicker({ bookId, currentThumbnail, currentThum
 
       if (page.thumbnail_blob) {
         updates.thumbnail_blob = page.thumbnail_blob;
+        updates.image_thumb = page.thumbnail_blob; // canonical field
       }
 
       // For the main thumbnail, prefer cropped_photo (split pages) > archived_photo > direct source URL.
@@ -76,6 +77,7 @@ export default function CoverImagePicker({ bookId, currentThumbnail, currentThum
         : (typedPageWithCrop.enhanced_photo || typedPageWithCrop.cropped_photo || typedPage.archived_photo || page.photo_original || page.photo);
       if (directUrl) {
         updates.thumbnail = directUrl;
+        updates.image_display = directUrl; // canonical field
       }
 
       updates.thumbnail_source = 'manual';

@@ -18,7 +18,7 @@ export const GET = withAdminAuth(async (request: NextRequest, session, { params 
 
     const book = await db.collection('books').findOne(
       { id: publication.book_id },
-      { projection: { id: 1, title: 1, display_title: 1, author: 1, language: 1, published: 1, slug: 1, thumbnail_blob: 1, thumbnail: 1, pages_count: 1 } }
+      { projection: { id: 1, title: 1, display_title: 1, author: 1, language: 1, published: 1, slug: 1, thumbnail_blob: 1, thumbnail: 1, image_display: 1, image_thumb: 1, pages_count: 1 } }
     );
 
     // Fetch 3 translation samples: beginning, middle, end
@@ -88,7 +88,7 @@ export const PATCH = withAdminAuth(async (request: NextRequest, session, { param
       if (publication) {
         const book = await db.collection('books').findOne(
           { id: publication.book_id },
-          { projection: { quality_score: 1, pages_count: 1, reading_summary: 1, index: 1, chapters: 1, thumbnail: 1, thumbnail_blob: 1 } }
+          { projection: { quality_score: 1, pages_count: 1, reading_summary: 1, index: 1, chapters: 1, thumbnail: 1, thumbnail_blob: 1, image_display: 1, image_thumb: 1 } }
         );
         if (book) {
           update.quality_flags = await computeQualityFlags(

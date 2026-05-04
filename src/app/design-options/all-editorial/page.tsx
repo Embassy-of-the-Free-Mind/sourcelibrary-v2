@@ -45,7 +45,7 @@ async function getAllCollectionsWithBooks(): Promise<CollectionWithBooks[]> {
   const bookProjection = {
     _id: 0,
     id: { $ifNull: ['$id', { $toString: '$_id' }] },
-    slug: 1, title: 1, display_title: 1, author: 1, thumbnail: 1, thumbnail_blob: 1,
+    slug: 1, title: 1, display_title: 1, author: 1, thumbnail: 1, thumbnail_blob: 1, image_display: 1, image_thumb: 1,
   };
 
   // Track used hero image URLs to avoid duplicates across collections

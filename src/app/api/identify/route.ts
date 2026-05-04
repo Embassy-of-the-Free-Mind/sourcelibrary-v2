@@ -348,7 +348,7 @@ Return JSON only:
         .find(nameQuery, {
           projection: {
             _id: 0, id: 1, slug: 1, title: 1, display_title: 1, english_title: 1,
-            author: 1, published: 1, thumbnail: 1, thumbnail_blob: 1, resource_type: 1,
+            author: 1, published: 1, thumbnail: 1, thumbnail_blob: 1, image_display: 1, image_thumb: 1, resource_type: 1,
             commons_full_url: 1, archived_full_url: 1,
             commons_title: 1, 'enrichment.subject': 1, 'enrichment.inscriptions': 1,
           },
@@ -430,7 +430,7 @@ Return JSON only:
             {
               projection: {
                 _id: 0, id: 1, slug: 1, title: 1, display_title: 1, author: 1,
-                published: 1, thumbnail: 1, thumbnail_blob: 1, resource_type: 1,
+                published: 1, thumbnail: 1, thumbnail_blob: 1, image_display: 1, image_thumb: 1, resource_type: 1,
                 'enrichment.subject': 1,
               },
               maxTimeMS: 8000,

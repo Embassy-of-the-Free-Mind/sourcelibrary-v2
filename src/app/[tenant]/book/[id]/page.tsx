@@ -310,6 +310,8 @@ async function getBook(id: string, tenantId?: string, tenantSlug?: string): Prom
           cropped_photo: 1,
           thumbnail: 1,
           thumbnail_blob: 1,
+          image_display: 1,
+          image_thumb: 1,
           crop: 1,
           'ocr.updated_at': 1,
           'translation.updated_at': 1,
@@ -498,7 +500,7 @@ async function BookInfo({ id, tenantId, tenantSlug, embedPolicy }: { id: string;
       relatedBooksByAuthor = await artDb.collection('books')
         .find(
           { author: authorName, content_type: { $ne: 'artwork' }, pages_count: { $gt: 0 } },
-          { projection: { id: 1, slug: 1, title: 1, thumbnail: 1, thumbnail_blob: 1 }, maxTimeMS: 3000 },
+          { projection: { id: 1, slug: 1, title: 1, thumbnail: 1, thumbnail_blob: 1, image_display: 1, image_thumb: 1 }, maxTimeMS: 3000 },
         )
         .limit(6)
         .toArray()

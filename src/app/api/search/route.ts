@@ -161,7 +161,7 @@ export async function GET(request: NextRequest) {
         if (bookId || pagesOnly) return [];
         const matchingIds = await searchBookIds(query, { limit: limit * 2 });
         const bookFilters = buildBookFilters();
-        const bookProjection = { id: 1, slug: 1, title: 1, display_title: 1, author: 1, thumbnail: 1, thumbnail_blob: 1, language: 1, published: 1, pages_count: 1, pages_translated: 1, doi: 1, categories: 1, is_first_translation: 1, quality_score: 1, summary: 1, reading_summary: 1, work_id: 1 };
+        const bookProjection = { id: 1, slug: 1, title: 1, display_title: 1, author: 1, thumbnail: 1, thumbnail_blob: 1, image_display: 1, image_thumb: 1, language: 1, published: 1, pages_count: 1, pages_translated: 1, doi: 1, categories: 1, is_first_translation: 1, quality_score: 1, summary: 1, reading_summary: 1, work_id: 1 };
 
         let books: any[] = [];
         if (matchingIds.length > 0) {
@@ -323,7 +323,7 @@ export async function GET(request: NextRequest) {
         const pageBooks = await db.collection('books')
           .find(
             { id: { $in: pageBookIds }, ...(tenantId ? { tenantId } : {}) },
-            { projection: { id: 1, slug: 1, title: 1, display_title: 1, author: 1, thumbnail: 1, thumbnail_blob: 1, language: 1, published: 1, pages_count: 1, pages_translated: 1, doi: 1, categories: 1, hidden: 1, quality_score: 1, work_id: 1 } }
+            { projection: { id: 1, slug: 1, title: 1, display_title: 1, author: 1, thumbnail: 1, thumbnail_blob: 1, image_display: 1, image_thumb: 1, language: 1, published: 1, pages_count: 1, pages_translated: 1, doi: 1, categories: 1, hidden: 1, quality_score: 1, work_id: 1 } }
           )
           .toArray();
         for (const b of pageBooks) {
@@ -402,7 +402,7 @@ export async function GET(request: NextRequest) {
         const semBooks = await db.collection('books')
           .find(
             { id: { $in: semanticBookIds }, visible: true, pages_count: { $gt: 0 } },
-            { projection: { id: 1, slug: 1, title: 1, display_title: 1, author: 1, thumbnail: 1, thumbnail_blob: 1, language: 1, published: 1, pages_count: 1, pages_translated: 1, doi: 1, categories: 1, quality_score: 1, work_id: 1, summary: 1, reading_summary: 1 } }
+            { projection: { id: 1, slug: 1, title: 1, display_title: 1, author: 1, thumbnail: 1, thumbnail_blob: 1, image_display: 1, image_thumb: 1, language: 1, published: 1, pages_count: 1, pages_translated: 1, doi: 1, categories: 1, quality_score: 1, work_id: 1, summary: 1, reading_summary: 1 } }
           )
           .maxTimeMS(3000)
           .toArray();
@@ -465,7 +465,7 @@ export async function GET(request: NextRequest) {
         const semPageBooks = await db.collection('books')
           .find(
             { id: { $in: pageBookIds }, visible: true, pages_count: { $gt: 0 } },
-            { projection: { id: 1, slug: 1, title: 1, display_title: 1, author: 1, thumbnail: 1, thumbnail_blob: 1, language: 1, published: 1, pages_count: 1, pages_translated: 1, doi: 1, categories: 1, quality_score: 1, work_id: 1 } }
+            { projection: { id: 1, slug: 1, title: 1, display_title: 1, author: 1, thumbnail: 1, thumbnail_blob: 1, image_display: 1, image_thumb: 1, language: 1, published: 1, pages_count: 1, pages_translated: 1, doi: 1, categories: 1, quality_score: 1, work_id: 1 } }
           )
           .maxTimeMS(3000)
           .toArray();

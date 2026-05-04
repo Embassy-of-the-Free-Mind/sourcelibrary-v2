@@ -248,7 +248,7 @@ async function fetchCollectionData(id: string, tenantId: string | null, provider
   const projection = {
     _id: 0, id: 1, slug: 1, title: 1, display_title: 1, author: 1, year: 1,
     language: 1, pages_count: 1, pages_ocr: 1, pages_translated: 1, pages_blank: 1,
-    photo: 1, categories: 1, thumbnail: 1, thumbnail_blob: 1, published: 1, read_count: 1,
+    photo: 1, categories: 1, thumbnail: 1, thumbnail_blob: 1, image_display: 1, image_thumb: 1, published: 1, read_count: 1,
     resource_type: 1, commons_width: 1, commons_height: 1,
     is_first_translation: 1, ft_disposition: 1,
   };
@@ -280,7 +280,7 @@ async function fetchCollectionData(id: string, tenantId: string | null, provider
           {
             projection: {
               _id: 0, id: 1, slug: 1, title: 1, display_title: 1, author: 1, published: 1,
-              resource_type: 1, medium: 1, thumbnail: 1, thumbnail_blob: 1,
+              resource_type: 1, medium: 1, thumbnail: 1, thumbnail_blob: 1, image_display: 1, image_thumb: 1,
               'enrichment.subject': 1, 'enrichment.genre': 1,
               commons_width: 1, commons_height: 1,
             },
@@ -537,7 +537,7 @@ async function fetchCollectionData(id: string, tenantId: string | null, provider
       const exBooks = await withTimeout(
         db.collection('books').find(
           { id: { $in: [...allBookIds] }, visible: true },
-          { projection: { id: 1, slug: 1, title: 1, display_title: 1, author: 1, year: 1, language: 1, thumbnail: 1, thumbnail_blob: 1, is_first_translation: 1, 'translation_verification.disposition': 1 } },
+          { projection: { id: 1, slug: 1, title: 1, display_title: 1, author: 1, year: 1, language: 1, thumbnail: 1, thumbnail_blob: 1, image_display: 1, image_thumb: 1, is_first_translation: 1, 'translation_verification.disposition': 1 } },
         ).toArray(),
         8000, [],
       );

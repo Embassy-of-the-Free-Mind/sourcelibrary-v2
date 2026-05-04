@@ -382,7 +382,7 @@ export async function scoreBookPriority(
         categories: 1, language: 1, pages_count: 1, pages_ocr: 1,
         pages_translated: 1, wikidata_id: 1, wikidata_match: 1,
         read_count: 1, is_first_translation: 1, quality_score: 1,
-        ustc_id: 1, image_source: 1, thumbnail: 1, thumbnail_blob: 1,
+        ustc_id: 1, image_source: 1, thumbnail: 1, thumbnail_blob: 1, image_display: 1, image_thumb: 1,
       },
     },
   );
@@ -425,7 +425,7 @@ export async function scoreBooksProcessingPriority(
     id: 1, categories: 1, language: 1, pages_count: 1, pages_ocr: 1,
     pages_translated: 1, wikidata_id: 1, wikidata_match: 1,
     read_count: 1, is_first_translation: 1, quality_score: 1,
-    ustc_id: 1, image_source: 1, thumbnail: 1, thumbnail_blob: 1,
+    ustc_id: 1, image_source: 1, thumbnail: 1, thumbnail_blob: 1, image_display: 1, image_thumb: 1,
   };
 
   // Batch gallery image counts

@@ -221,7 +221,7 @@ export const PATCH = withAdminAuth(async (request, session) => {
       // Find all books without image_source
       const books = await db.collection('books')
         .find({ image_source: { $exists: false } })
-        .project({ id: 1, title: 1, thumbnail: 1, ia_identifier: 1 })
+        .project({ id: 1, title: 1, thumbnail: 1, image_display: 1, ia_identifier: 1 })
         .toArray();
 
       if (books.length === 0) {

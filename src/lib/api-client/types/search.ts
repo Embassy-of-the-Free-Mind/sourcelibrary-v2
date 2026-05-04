@@ -27,6 +27,8 @@ export interface SearchResult {
   snippet_type?: 'translation' | 'ocr' | 'summary';
   thumbnail?: string;
   thumbnail_blob?: string;
+  image_display?: string;
+  image_thumb?: string;
   quality_score?: number;
 }
 

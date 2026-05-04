@@ -89,7 +89,7 @@ async function getImagesForCode(db: any, code: string, limit = 48): Promise<Gall
         },
         {
           projection: {
-            id: 1, slug: 1, title: 1, author: 1, thumbnail: 1,
+            id: 1, slug: 1, title: 1, author: 1, thumbnail: 1, image_display: 1,
             'enrichment.description': 1,
           },
         },

@@ -32,7 +32,7 @@ export const GET = withAdminAuth(async (request, session) => {
         title: 1,
         author: 1,
         published: 1,
-        thumbnail: 1,
+        thumbnail: 1, image_display: 1,
         ia_identifier: 1,
       })
       .limit(limit)
