@@ -584,13 +584,11 @@ export async function proxy(request: NextRequest) {
   // override CDN-Cache-Control because Next.js ISR sets it after middleware.
 
   // --- X-Frame-Options ---
-  // Tenant-scoped paths (/{tenant}/book/*, /{tenant}) and /libraries/*; global paths (/collections/*, /gallery/*, etc.)
-  // are embeddable by allowlisted partner origins (and localhost for dev).
+  // Allow framing only for explicit embed namespace and tenant-scoped paths.
   // Everything else gets DENY to prevent clickjacking.
   const isEmbeddablePath =
-    // Legacy root paths (kept for backwards compat during migration)
-    pathname.startsWith('/book/') ||
-    pathname.startsWith('/collections/') ||
+    pathname === '/embed' ||
+    pathname.startsWith('/embed/') ||
     pathname.startsWith('/libraries/') ||
     // Tenant-scoped paths: allow all paths under a resolved tenant
     (tenantSlug && (
