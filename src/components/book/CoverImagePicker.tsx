@@ -1,11 +1,12 @@
 'use client';
 
-import { useState, useEffect, useCallback } from 'react';
+import { useState, useEffect, useCallback, useMemo } from 'react';
 import { useRouter } from 'next/navigation';
 import Image from 'next/image';
 import { BookOpen, X, Check, Loader2 } from 'lucide-react';
 import { books } from '@/lib/api-client';
 import type { Page } from '@/lib/types';
+import { getCoverImageCandidates } from '@/lib/utils';
 import { AuthCheck } from '../auth/AuthCheck';
 
 interface CoverImagePickerProps {
@@ -20,17 +21,25 @@ export default function CoverImagePicker({ bookId, currentThumbnail, currentThum
   const router = useRouter();
   const [isOpen, setIsOpen] = useState(false);
   const [saving, setSaving] = useState<string | null>(null);
-  const [displayThumbnail, setDisplayThumbnail] = useState(currentThumbnail || currentThumbnailBlob);
-  const [thumbnailError, setThumbnailError] = useState(false);
+  const candidates = useMemo(
+    () =>
+      getCoverImageCandidates(
+        { thumbnail: currentThumbnail, thumbnail_blob: currentThumbnailBlob },
+        pages as Record<string, unknown>[],
+      ),
+    [currentThumbnail, currentThumbnailBlob, pages],
+  );
+  const [candidateIndex, setCandidateIndex] = useState(0);
+  const displayThumbnail =
+    candidateIndex < candidates.length ? candidates[candidateIndex] : undefined;
+  const pageIdsKey = useMemo(() => pages.map((p) => p.id).join(','), [pages]);
 
-  // If the primary thumbnail fails, fall back to thumbnail_blob
+  useEffect(() => {
+    setCandidateIndex(0);
+  }, [currentThumbnail, currentThumbnailBlob, pageIdsKey]);
+
   const handleThumbnailError = () => {
-    if (!thumbnailError && currentThumbnailBlob && displayThumbnail !== currentThumbnailBlob) {
-      setDisplayThumbnail(currentThumbnailBlob);
-      setThumbnailError(true);
-    } else {
-      setThumbnailError(true);
-    }
+    setCandidateIndex((i) => Math.min(i + 1, candidates.length));
   };
 
   // Handle Escape key to close
@@ -80,7 +89,6 @@ export default function CoverImagePicker({ bookId, currentThumbnail, currentThum
 
       updates.thumbnail_source = 'manual';
       await books.update(bookId, updates);
-      setDisplayThumbnail((updates.thumbnail || updates.thumbnail_blob) as string);
       setIsOpen(false);
       router.refresh();
     } catch (error) {
@@ -97,7 +105,7 @@ export default function CoverImagePicker({ bookId, currentThumbnail, currentThum
         fallback={
           // Non-authenticated users see the cover image but cannot click
           <div className="w-32 sm:w-48 aspect-[3/4] relative rounded-lg overflow-hidden shadow-xl bg-stone-700">
-            {displayThumbnail && !thumbnailError ? (
+            {displayThumbnail ? (
               <Image
                 src={displayThumbnail}
                 alt={bookTitle}
@@ -121,7 +129,7 @@ export default function CoverImagePicker({ bookId, currentThumbnail, currentThum
           className="w-32 sm:w-48 aspect-[3/4] relative rounded-lg overflow-hidden shadow-xl bg-stone-700 cursor-pointer group"
           title="Click to change cover image"
         >
-          {displayThumbnail && !thumbnailError ? (
+          {displayThumbnail ? (
             <Image
               src={displayThumbnail}
               alt={bookTitle}
