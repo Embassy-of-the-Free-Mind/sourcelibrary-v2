@@ -71,7 +71,7 @@ export async function generateMetadata({ params }: LayoutProps): Promise<Metadat
 
   // Always use slug for canonical URL, even if accessed via hex ObjectId
   const bookPath = (book as unknown as { slug?: string }).slug || id;
-  const pageUrl = `/${tenant}/book/${bookPath}/page/${pageId}`;
+  const pageUrl = `/book/${bookPath}/page/${pageId}`;
 
   return {
     title: `${title} - Source Library`,

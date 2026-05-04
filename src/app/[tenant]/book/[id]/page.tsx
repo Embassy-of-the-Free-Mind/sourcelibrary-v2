@@ -172,7 +172,7 @@ export async function generateMetadata({ params }: PageProps): Promise<Metadata>
   if (description.length > 155) {
     description = `${title} by ${author}${year}`.slice(0, 152) + '...';
   }
-  const bookUrl = tenant ? `/${tenant}/book/${book.slug || book.id}` : `/book/${book.slug || book.id}`;
+  const bookUrl = `/book/${book.slug || book.id}`;
 
   // Get publication date for OG tags
   const currentEdition = (book.editions as TranslationEdition[] | undefined)?.find(e => e.status === 'published') || (book.editions as TranslationEdition[] | undefined)?.find(e => e.status === 'draft');
@@ -1024,7 +1024,7 @@ async function BookInfo({ id, tenantId, tenantSlug, embedPolicy }: { id: string;
               Pages
             </h2>
             <Link
-              href={`/${tenantSlug}/book/${book.slug || book.id}/overview`}
+              href={`/book/${book.slug || book.id}/overview`}
               className="text-sm text-stone-400 hover:text-accent-gold transition-colors flex items-center gap-1.5"
             >
               <svg width="14" height="14" viewBox="0 0 14 14" fill="none" className="opacity-70">

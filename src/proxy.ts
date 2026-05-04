@@ -363,17 +363,17 @@ export async function proxy(request: NextRequest) {
     return NextResponse.rewrite(url);
   }
 
-  // --- Legacy root route compatibility ---
-  // Root routes moved to /{tenant}/... but global surfaces still emit legacy URLs.
-  // Resolve tenant from the resource itself so mixed-tenant cards open correctly.
-  if (pathname.startsWith('/book/')) {
-    const segment = pathname.split('/')[2] || '';
-    const tenantSlug = await resolveTenantForBookSegment(segment)
-      || (await resolveTenantByExactSlug('default'))?.slug
-      || null;
-    if (tenantSlug) {
+  // --- Canonical book URLs ---
+  // Book URLs are tenant-agnostic: always /book/{slug} (no tenant prefix).
+  // Strip any leading /{tenant} from book paths so old links canonicalize.
+  const tenantBookMatch = pathname.match(/^\/([^/]+)(\/book(?:\/.*)?)$/);
+  if (tenantBookMatch) {
+    const tenantSegment = tenantBookMatch[1];
+    const bookSuffix = tenantBookMatch[2];
+    const directTenant = await resolveActiveTenant(tenantSegment);
+    if (directTenant) {
       const url = request.nextUrl.clone();
-      url.pathname = `/${tenantSlug}${pathname}`;
+      url.pathname = bookSuffix;
       return NextResponse.redirect(url, 308);
     }
   }
@@ -458,6 +458,22 @@ export async function proxy(request: NextRequest) {
       const url = request.nextUrl.clone();
       url.pathname = '/api/redirect/book-slug';
       url.searchParams.set('id', segment);
+      return NextResponse.rewrite(url);
+    }
+  }
+
+  // Internal tenant routing for /book/...:
+  // The route lives at [tenant]/book/[id] (3+ segments), but the public URL is
+  // /book/{id}. Rewrite (don't redirect) so the URL stays clean — no tenant
+  // prefix ever appears in the address bar.
+  if (pathname.startsWith('/book/')) {
+    const segment = pathname.split('/')[2] || '';
+    const tenantSlug = await resolveTenantForBookSegment(segment)
+      || (await resolveTenantByExactSlug('default'))?.slug
+      || null;
+    if (tenantSlug) {
+      const url = request.nextUrl.clone();
+      url.pathname = `/${tenantSlug}${pathname}`;
       return NextResponse.rewrite(url);
     }
   }
