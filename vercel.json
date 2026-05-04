@@ -29,6 +29,10 @@
     {
       "path": "/api/health/auth",
       "schedule": "*/10 * * * *"
+    },
+    {
+      "path": "/api/cron/collection-health",
+      "schedule": "0 3 * * *"
     }
   ]
 }
