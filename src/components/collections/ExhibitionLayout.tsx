@@ -132,14 +132,19 @@ function linkBookNames(text: string, books: BookRef[]): React.ReactNode {
 
 // ─── Component: Hook ────────────────────────────────────────────
 
-function HookBlock({ text }: { text: string }) {
+function HookBlock({ text, attribution }: { text: string; attribution?: string }) {
   return (
     <div className="bg-dark text-white px-6 py-8 sm:py-10 -mx-6 sm:-mx-8">
       <div className="max-w-4xl mx-auto text-center">
         <Sparkles className="w-5 h-5 text-accent-gold mx-auto mb-3 opacity-60" />
-        <p className="text-lg sm:text-xl md:text-2xl font-display leading-relaxed text-white/90">
-          {text}
+        <p className="text-lg sm:text-xl md:text-2xl font-display leading-relaxed text-white/90 italic">
+          &ldquo;{text}&rdquo;
         </p>
+        {attribution && (
+          <p className="mt-4 text-sm text-white/60 font-body">
+            — {attribution}
+          </p>
+        )}
       </div>
     </div>
   );
@@ -685,7 +690,7 @@ export default function ExhibitionLayout({ layout, books, images, collectionSlug
       {layout.map((block, i) => {
         switch (block.component) {
           case 'hook':
-            return <HookBlock key={i} text={block.text} />;
+            return <HookBlock key={i} text={block.text} attribution={block.attribution} />;
 
           case 'stats':
             return null; // Stats block removed — too noisy for collection pages
