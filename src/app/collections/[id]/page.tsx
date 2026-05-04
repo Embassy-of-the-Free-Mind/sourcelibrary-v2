@@ -666,9 +666,9 @@ export default async function CollectionDetailPage({ params, provider }: Props &
       {/* Hero Section */}
       <div className="relative bg-dark overflow-hidden">
         {collection.hero_image ? (
-          <div className="absolute inset-0 opacity-40">
+          <div className="absolute inset-0 opacity-50">
             {/* eslint-disable-next-line @next/next/no-img-element */}
-            <img src={collection.hero_image as string} alt="" className="absolute inset-0 w-full h-full object-cover" />
+            <img src={collection.hero_image as string} alt="" className="absolute inset-0 w-full h-full object-cover" style={{ objectPosition: 'center 30%' }} />
           </div>
         ) : heroImages.length > 0 ? (
           <div className={`absolute inset-0 grid opacity-30 ${heroImages.length <= 2 ? 'grid-cols-2' :
