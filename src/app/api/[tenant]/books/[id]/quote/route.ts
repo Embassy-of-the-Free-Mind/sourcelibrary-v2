@@ -1,7 +1,7 @@
 import { NextRequest, NextResponse } from 'next/server';
 import { getReadDb } from '@/lib/mongodb';
 import { Book, Page, TranslationEdition } from '@/lib/types';
-import { getShortUrl } from '@/lib/shortlinks';
+import { getShortUrl, getRequestBaseUrl } from '@/lib/shortlinks';
 import { markForExport } from '@/lib/provenance';
 import { isBot, isTrustedBot, botMaxPage } from '@/lib/bot-gate';
 import { resolveTenantId } from '@/lib/tenant-context';
@@ -58,6 +58,7 @@ function generateCitations(
   pageNumber: number,
   bookId: string,
   pageId: string,
+  baseUrl: string,
   edition?: TranslationEdition
 ): Citation {
   const year = book.published || 'n.d.';
@@ -106,13 +107,15 @@ function generateCitations(
   // MLA
   const mla = `${authorLastFirst}. ${title}. Translated by Source Library, ${translationYear}.${doi ? ` DOI: ${doi}.` : ''} Accessed ${accessed}.`;
 
-  // Direct URL to page in Source Library (pinned to edition version)
+  // Direct URL to page in Source Library (pinned to edition version).
+  // baseUrl is the request host so citations rendered on tenant subdomains
+  // (e.g. bph.sourcelibrary.org) link back to the same subdomain.
   const editionVersion = edition?.version;
   const vParam = editionVersion ? `?v=${editionVersion}` : '';
-  const url = `https://sourcelibrary.org/book/${bookId}/page/${pageId}${vParam}`;
+  const url = `${baseUrl}/book/${bookId}/page/${pageId}${vParam}`;
 
   // Short URL for sharing
-  const short_url = getShortUrl(bookId, pageNumber, pageId);
+  const short_url = getShortUrl(bookId, pageNumber, pageId, baseUrl);
 
   return {
     inline,
@@ -206,7 +209,7 @@ export async function GET(request: NextRequest, context: RouteContext) {
         published: book.published,
         language: book.language,
       },
-      citation: generateCitations(book, pageNumber, resolvedBookId, page.id, currentEdition),
+      citation: generateCitations(book, pageNumber, resolvedBookId, page.id, getRequestBaseUrl(request.headers), currentEdition),
       license: {
         spdx: 'CC-BY-SA-4.0',
         url: 'https://creativecommons.org/licenses/by-sa/4.0/',

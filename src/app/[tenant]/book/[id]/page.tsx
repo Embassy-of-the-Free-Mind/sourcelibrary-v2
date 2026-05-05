@@ -512,6 +512,7 @@ async function BookInfo({ id, tenantId, tenantSlug, embedPolicy }: { id: string;
         book={book}
         collections={bookCollections}
         relatedBooks={relatedBooksByAuthor}
+        isEmbedded={!embedPolicy.showAuthorCrossReference}
       />
     );
   }
@@ -816,15 +817,17 @@ async function BookInfo({ id, tenantId, tenantSlug, embedPolicy }: { id: string;
                 showTranslationMethodologyLink={embedPolicy.showTranslationMethodologyLink}
                 showExternalLinks={embedPolicy.showExternalLinks}
               >
-                {(book as unknown as { work_id?: string }).work_id && (
+                {embedPolicy.showRelatedEditions && (book as unknown as { work_id?: string }).work_id && (
                   <Suspense fallback={null}>
                     <RelatedEditions bookId={book.id} workId={(book as unknown as { work_id?: string }).work_id!} />
                   </Suspense>
                 )}
               </BibliographicInfo>
 
-              {/* Cross-reference: artworks by this author (pre-computed) */}
-              {(book as any).author_cross_ref && (
+              {/* Cross-reference: artworks by this author (pre-computed).
+                  Hidden in embed mode — the pre-computed data is not tenant-filtered,
+                  so it can include artworks/books from other tenants. */}
+              {embedPolicy.showAuthorCrossReference && (book as any).author_cross_ref && (
                 <AuthorCrossReference
                   author={book.author}
                   crossRef={(book as any).author_cross_ref}

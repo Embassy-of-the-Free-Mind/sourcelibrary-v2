@@ -65,9 +65,11 @@ interface ArtworkInfoProps {
   prevWork?: ArtworkNavItem | null;
   nextWork?: ArtworkNavItem | null;
   relatedBooks?: RelatedBookPreview[];
+  /** When true, hide cross-tenant widgets (AuthorCrossReference renders unfiltered global data). */
+  isEmbedded?: boolean;
 }
 
-export default function ArtworkInfo({ book, collections, prevWork, nextWork, relatedBooks = [] }: ArtworkInfoProps) {
+export default function ArtworkInfo({ book, collections, prevWork, nextWork, relatedBooks = [], isEmbedded = false }: ArtworkInfoProps) {
   const displayImage = book.thumbnail || (book as any).thumbnail_blob || '';
   const thumbImage = (book as any).thumbnail_blob || '';
   const commonsUrl = (book as any).commons_url || '';
@@ -401,8 +403,9 @@ export default function ArtworkInfo({ book, collections, prevWork, nextWork, rel
           </div>
         )}
 
-        {/* Cross-reference: books by this author (pre-computed) */}
-        {(book as any).author_cross_ref && (
+        {/* Cross-reference: books by this author (pre-computed).
+            Hidden in embed mode — author_cross_ref is computed across all tenants. */}
+        {!isEmbedded && (book as any).author_cross_ref && (
           <AuthorCrossReference
             author={book.author}
             crossRef={(book as any).author_cross_ref}

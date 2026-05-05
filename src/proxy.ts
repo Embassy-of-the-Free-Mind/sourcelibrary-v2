@@ -356,16 +356,22 @@ export async function proxy(request: NextRequest) {
       // Catalog entry detail (e.g. /catalog/12345 for UBN-keyed BPH works)
       url.pathname = `/embed/${tenant}${pathname}`;
     } else if (pathname.startsWith('/gallery')) {
-      // Gallery doesn't have tenant-specific embeds — redirect to main site
-      const mainUrl = request.nextUrl.clone();
-      mainUrl.host = 'sourcelibrary.org';
-      mainUrl.port = '';
-      return NextResponse.redirect(mainUrl, 302);
+      // Keep gallery traffic inside the tenant subdomain — never redirect out
+      // to sourcelibrary.org (BPH lockdown invariant).
+      url.pathname = `/embed/${tenant}${pathname}`;
     } else {
       // All other paths on tenant subdomain → embed root (filtered search)
       url.pathname = `/embed/${tenant}`;
     }
-    return NextResponse.rewrite(url);
+    // Resolve and forward the tenant id so embed pages that read tenant context
+    // from headers (e.g. /[tenant]/gallery/page.tsx, re-exported under
+    // /embed/[tenant]/gallery) see the tenant. Pages that already read the
+    // tenant slug from URL params are unaffected.
+    const subdomainTenant = await resolveTenantByExactSlug(tenant);
+    const subdomainHeaders = new Headers(request.headers);
+    subdomainHeaders.set('x-tenant-slug', tenant);
+    if (subdomainTenant?.id) subdomainHeaders.set('x-tenant-id', subdomainTenant.id);
+    return NextResponse.rewrite(url, { request: { headers: subdomainHeaders } });
   }
 
   // --- Canonical book URLs ---

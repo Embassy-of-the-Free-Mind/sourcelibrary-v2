@@ -225,10 +225,17 @@ async function fetchCollectionData(id: string, provider?: string) {
       ],
     };
   // Provider filter — restrict to a specific library's books.
-  if (provider) {
+  // Used by tenant subdomains (e.g. bph.sourcelibrary.org) to scope every
+  // book listing on the page to that library. The same clause is reused below
+  // for all secondary lookups (highlights, mentions, exhibition, artworks)
+  // so a single page never mixes content from multiple libraries.
+  const providerClause = provider
+    ? { $or: [{ held_by: provider }, { 'image_source.provider': provider }] }
+    : null;
+  if (providerClause) {
     filter.$and = [
       ...(filter.$and as unknown[] || []),
-      { $or: [{ held_by: provider }, { 'image_source.provider': provider }] },
+      providerClause,
     ];
   }
 
@@ -263,7 +270,12 @@ async function fetchCollectionData(id: string, provider?: string) {
     ? withTimeout(
       db.collection('books')
         .find(
-          { collections: id, resource_type: { $exists: true }, hidden: { $ne: true } },
+          {
+            collections: id,
+            resource_type: { $exists: true },
+            hidden: { $ne: true },
+            ...(providerClause ? { $and: [providerClause] } : {}),
+          },
           {
             projection: {
               _id: 0, id: 1, slug: 1, title: 1, display_title: 1, author: 1, published: 1,
@@ -360,7 +372,11 @@ async function fetchCollectionData(id: string, provider?: string) {
       ? withTimeout(
         db.collection('books')
           .find(
-            { id: { $in: curatedBookIds }, visible: true },
+            {
+              id: { $in: curatedBookIds },
+              visible: true,
+              ...(providerClause ? { $and: [providerClause] } : {}),
+            },
             { projection: { ...projection, is_first_translation: 1, 'translation_verification.disposition': 1 } },
           )
           .toArray(),
@@ -389,7 +405,11 @@ async function fetchCollectionData(id: string, provider?: string) {
           // Fallback: dynamic query (before thematic collections are seeded)
           const bookDocs = await db.collection('books')
             .find(
-              { collections: id, visible: true },
+              {
+                collections: id,
+                visible: true,
+                ...(providerClause ? { $and: [providerClause] } : {}),
+              },
               { projection: { id: 1 }, maxTimeMS: 5000 }
             )
             .toArray();
@@ -411,7 +431,11 @@ async function fetchCollectionData(id: string, provider?: string) {
       ? withTimeout(
         db.collection('books')
           .find(
-            { id: { $in: mentionedBookIds }, pages_translated: { $gt: 0 } },
+            {
+              id: { $in: mentionedBookIds },
+              pages_translated: { $gt: 0 },
+              ...(providerClause ? { $and: [providerClause] } : {}),
+            },
             { projection }
           )
           .toArray(),
@@ -518,7 +542,11 @@ async function fetchCollectionData(id: string, provider?: string) {
     if (allBookIds.size > 0) {
       const exBooks = await withTimeout(
         db.collection('books').find(
-          { id: { $in: [...allBookIds] }, visible: true },
+          {
+            id: { $in: [...allBookIds] },
+            visible: true,
+            ...(providerClause ? { $and: [providerClause] } : {}),
+          },
           { projection: { id: 1, slug: 1, title: 1, display_title: 1, author: 1, year: 1, language: 1, thumbnail: 1, thumbnail_blob: 1, image_display: 1, image_thumb: 1, is_first_translation: 1, 'translation_verification.disposition': 1 } },
         ).toArray(),
         8000, [],

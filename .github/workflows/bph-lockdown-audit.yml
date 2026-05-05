@@ -1,0 +1,50 @@
+name: BPH lockdown audit
+
+# Crawls the live BPH tenant subdomain and asserts no anchor or one-hop
+# redirect escapes off-host. Runs nightly against production and on demand.
+#
+# Not a PR check: the audit asserts an end-to-end property of the deployed
+# bph.sourcelibrary.org host. Vercel preview deploys don't carry the `bph.`
+# subdomain that proxy.ts keys on, so PR-time runs would either test prod
+# (the wrong target — by definition prod still has any pre-merge leaks) or
+# silently skip. The nightly run is the meaningful guard, and developers
+# touching routing/URL surfaces should `gh workflow run "BPH lockdown audit"`
+# before merging.
+
+on:
+  schedule:
+    # 14:00 UTC daily — production sanity check
+    - cron: '0 14 * * *'
+  workflow_dispatch:
+    inputs:
+      target:
+        description: 'Tenant subdomain URL to audit'
+        required: false
+        default: 'https://bph.sourcelibrary.org'
+
+jobs:
+  audit:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: actions/setup-node@v4
+        with:
+          node-version: '20'
+
+      - name: Resolve target URL
+        id: target
+        run: |
+          if [ "${{ github.event_name }}" = "workflow_dispatch" ]; then
+            URL="${{ github.event.inputs.target }}"
+          else
+            URL="https://bph.sourcelibrary.org"
+          fi
+          echo "url=$URL" >> "$GITHUB_OUTPUT"
+          echo "Auditing: $URL"
+
+      - name: Run BPH leak audit
+        env:
+          BPH_AUDIT_DEPTH: '3'
+          BPH_AUDIT_MAX: '80'
+        run: node scripts/audit-bph-leaks.mjs "${{ steps.target.outputs.url }}"
