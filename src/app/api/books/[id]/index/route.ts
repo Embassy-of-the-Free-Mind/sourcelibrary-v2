@@ -3,6 +3,7 @@ import { getDb } from '@/lib/mongodb';
 import { GoogleGenerativeAI } from '@google/generative-ai';
 import { logGeminiCall } from '@/lib/gemini-logger';
 import { getTriggerSource } from '@/lib/cron-auth';
+import { createBookRevisions } from '@/lib/book-revisions';
 import { withAuth } from '@/lib/auth-helpers';
 import { loadAliasResolver } from '@/lib/entity-aliases';
 import { getChapterTexts, type ChapterText } from '@/lib/chapter-text';
@@ -1288,7 +1289,9 @@ export async function GET(
         data: bookSummary.brief,
         generated_at: new Date(),
         page_coverage: Math.round((pageSummaries.length / pages.length) * 100),
-        model: 'gemini-3.1-flash-lite-preview'
+        model: 'gemini-3.1-flash-lite-preview',
+        prompt_version: INDEX_PROMPT_VERSION,
+        source: 'ai',
       };
       // Also save as reading_summary (expected by pipeline, docs, and downstream checks)
       updateData.reading_summary = {
@@ -1297,9 +1300,15 @@ export async function GET(
         themes: batchExtractions.flatMap(b => b.themes).filter((v, i, a) => a.indexOf(v) === i).slice(0, 20),
         quotes: groundedBatchQuotes.slice(0, 15),
         generated_at: new Date(),
-        model: 'gemini-3.1-flash-lite-preview'
+        model: 'gemini-3.1-flash-lite-preview',
+        prompt_version: INDEX_PROMPT_VERSION,
+        source: 'ai',
       };
     }
+
+    // Snapshot prior index/summary/reading_summary before overwriting so we
+    // never silently lose a regeneration.
+    await createBookRevisions(id, ['index', 'summary', 'reading_summary']);
 
     await db.collection('books').updateOne(
       { id },
@@ -1327,10 +1336,14 @@ export const POST = withAuth(async (request, session, context) => {
     const { id } = await context.params;
     const db = await getDb();
 
+    // Snapshot prior index/summary/reading_summary so the user can recover
+    // them via /admin/book-revisions even after the cache is cleared.
+    await createBookRevisions(id, ['index', 'summary', 'reading_summary']);
+
     // Clear cached index and summary
     await db.collection('books').updateOne(
       { id },
-      { $unset: { index: '', summary: '' } }
+      { $unset: { index: '', summary: '', reading_summary: '' } }
     );
 
     // Return success - client will call GET to generate fresh
