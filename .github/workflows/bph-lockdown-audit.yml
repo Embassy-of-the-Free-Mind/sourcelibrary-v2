@@ -1,0 +1,82 @@
+name: BPH lockdown audit
+
+# Crawls the BPH tenant subdomain and asserts no anchor or one-hop redirect
+# escapes off-host. Runs on PRs that touch the routing/URL-building surface
+# (proxy, embed routes, tenant routes, link-emitting libs) and nightly against
+# production.
+#
+# Why these paths: the lockdown invariant is enforced at the proxy + URL
+# generation layer. A change anywhere else is unlikely to leak; a change in
+# any of these files might.
+
+on:
+  pull_request:
+    paths:
+      - 'src/proxy.ts'
+      - 'src/app/embed/**'
+      - 'src/app/[tenant]/**'
+      - 'src/lib/shortlinks.ts'
+      - 'src/lib/embed-ui-policy.ts'
+      - 'src/lib/slugify.ts'
+      - 'src/components/book/Related*.tsx'
+      - 'src/components/book/AuthorCrossReference.tsx'
+      - 'scripts/audit-bph-leaks.mjs'
+  schedule:
+    # 14:00 UTC daily — production sanity check
+    - cron: '0 14 * * *'
+  workflow_dispatch:
+    inputs:
+      target:
+        description: 'Tenant subdomain URL to audit'
+        required: false
+        default: 'https://bph.sourcelibrary.org'
+
+jobs:
+  audit:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: actions/setup-node@v4
+        with:
+          node-version: '20'
+
+      - name: Resolve target URL
+        id: target
+        run: |
+          if [ "${{ github.event_name }}" = "pull_request" ]; then
+            # On PRs, audit the Vercel preview deploy. Falls back to prod if the
+            # preview URL secret isn't wired up — that still catches anchor leaks
+            # on the live site for any PR that ships before this guard does.
+            URL="${{ secrets.VERCEL_PREVIEW_BPH_URL }}"
+            if [ -z "$URL" ]; then URL="https://bph.sourcelibrary.org"; fi
+          elif [ "${{ github.event_name }}" = "workflow_dispatch" ]; then
+            URL="${{ github.event.inputs.target }}"
+          else
+            URL="https://bph.sourcelibrary.org"
+          fi
+          echo "url=$URL" >> "$GITHUB_OUTPUT"
+          echo "Auditing: $URL"
+
+      - name: Wait for Vercel preview (PRs only)
+        if: github.event_name == 'pull_request'
+        # Vercel comments on the PR with the preview URL once the build is done.
+        # 90s is enough for most builds to finish; the audit will retry below if
+        # the URL isn't reachable yet.
+        run: sleep 90
+
+      - name: Run BPH leak audit
+        env:
+          BPH_AUDIT_DEPTH: '3'
+          BPH_AUDIT_MAX: '80'
+        run: |
+          # Up to 3 attempts — preview URLs sometimes 404 right after deploy.
+          for attempt in 1 2 3; do
+            if node scripts/audit-bph-leaks.mjs "${{ steps.target.outputs.url }}"; then
+              exit 0
+            fi
+            echo "Attempt $attempt failed; retrying in 30s"
+            sleep 30
+          done
+          echo "BPH lockdown audit failed after 3 attempts"
+          exit 1
