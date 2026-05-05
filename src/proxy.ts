@@ -349,7 +349,9 @@ export async function proxy(request: NextRequest) {
         url.pathname = `/embed/${tenant}${pathname}`;
       }
     } else if (pathname === '/catalog') {
+      // Catalog page on tenant subdomain — show the full library catalog (e.g. all 28k BPH works)
       url.pathname = `/embed/${tenant}`;
+      url.searchParams.set('view', 'catalog');
     } else if (pathname.startsWith('/gallery')) {
       // Gallery doesn't have tenant-specific embeds — redirect to main site
       const mainUrl = request.nextUrl.clone();
