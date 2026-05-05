@@ -96,6 +96,7 @@ async function fetchLibraryData(
       sort: (sort as 'popular' | 'title' | 'year_asc' | 'year_desc' | 'recent') || 'popular',
       offset,
       limit: PER_PAGE_LOCAL,
+      exactCount: true,
     }),
     getLanguageCounts({ provider: providerKey }),
     browseBooks({ provider: providerKey, hasTranslation: true, sort: 'popular', limit: 50 }),
