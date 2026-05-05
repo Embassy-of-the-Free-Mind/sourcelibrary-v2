@@ -128,7 +128,7 @@ export async function GET(request: NextRequest) {
       year: book.year,
       pages_count: book.pages_count,
       pages_translated: book.pages_translated || 0,
-      thumbnail: book.thumbnail_blob || book.thumbnail,
+      thumbnail: book.image_thumb || book.image_display || book.thumbnail_blob || book.thumbnail,
       catalogue_number: book.dublin_core?.dc_source || null,
       categories: book.categories || [],
       url: `/book/${book.slug || book.id}`,

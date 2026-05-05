@@ -6,6 +6,7 @@ import Image from 'next/image';
 import { BookOpen, X, Check, Loader2 } from 'lucide-react';
 import { books } from '@/lib/api-client';
 import type { Page } from '@/lib/types';
+import { buildCoverUpdate } from '@/lib/cover-fields';
 import { AuthCheck } from '../auth/AuthCheck';
 
 interface CoverImagePickerProps {
@@ -60,29 +61,18 @@ export default function CoverImagePicker({ bookId, currentThumbnail, currentThum
   const selectCover = async (page: Page) => {
     setSaving(page.id);
     try {
-      // Prefer Blob URLs for fast loading; fall back to /api/image proxy
-      const typedPage = page as Page & { archived_photo?: string };
-      const updates: Record<string, unknown> = {};
-
-      if (page.thumbnail_blob) {
-        updates.thumbnail_blob = page.thumbnail_blob;
-        updates.image_thumb = page.thumbnail_blob; // canonical field
+      const update = buildCoverUpdate(page, {
+        source: 'manual',
+        actor: 'admin',
+        method: 'cover-picker-ui',
+        confidence: 1,
+      });
+      if (!update) {
+        console.error('Cover Picker: page has no usable image URL', page);
+        return;
       }
-
-      // For the main thumbnail, prefer cropped_photo (split pages) > archived_photo > direct source URL.
-      // NEVER store /api/image?url= wrappers — they crash Next.js Image during SSR.
-      const typedPageWithCrop = page as Page & { archived_photo?: string; cropped_photo?: string; enhanced_photo?: string };
-      const directUrl = (page.split_from_spread || page.crop)
-        ? page.photo
-        : (typedPageWithCrop.enhanced_photo || typedPageWithCrop.cropped_photo || typedPage.archived_photo || page.photo_original || page.photo);
-      if (directUrl) {
-        updates.thumbnail = directUrl;
-        updates.image_display = directUrl; // canonical field
-      }
-
-      updates.thumbnail_source = 'manual';
-      await books.update(bookId, updates);
-      setDisplayThumbnail((updates.thumbnail || updates.thumbnail_blob) as string);
+      await books.update(bookId, update as unknown as Record<string, unknown>);
+      setDisplayThumbnail(update.image_display);
       setIsOpen(false);
       router.refresh();
     } catch (error) {
