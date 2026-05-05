@@ -135,6 +135,13 @@ export default function CollectionBookCard({ book, priority = false, bookUrlPref
                     {book.year}
                   </span>
                 );
+              } else if (book.published) {
+                chips.push(
+                  <span key="year" className="flex items-center gap-1">
+                    <Calendar className="w-3 h-3" />
+                    {book.published}
+                  </span>
+                );
               }
               if (isArtwork) {
                 if (book.resource_type) {
