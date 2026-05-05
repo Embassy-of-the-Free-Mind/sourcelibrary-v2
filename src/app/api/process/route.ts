@@ -345,13 +345,17 @@ export const POST = withAuth(async (request: NextRequest) => {
       const updateData: Record<string, unknown> = { updated_at: new Date() };
 
       if (results.ocr && promptRefs.ocr) {
+        const ocrPromptRef = promptRefs.ocr.reference;
         updateData['ocr'] = {
           data: results.ocr,
           content_hash: contentHash(results.ocr),
           language: language || 'Latin',
           model,
-          prompt: promptRefs.ocr.reference,
-          prompt_version: PROMPT_VERSION,
+          prompt: ocrPromptRef,
+          prompt_version: String(ocrPromptRef.version) || PROMPT_VERSION,
+          prompt_id: ocrPromptRef.id,
+          prompt_name: ocrPromptRef.name,
+          ...(ocrPromptRef.content_hash && { prompt_hash: ocrPromptRef.content_hash }),
           updated_at: new Date(),
           source: 'ai',
           input_tokens: metadata.ocr?.inputTokens,
@@ -371,12 +375,17 @@ export const POST = withAuth(async (request: NextRequest) => {
       }
 
       if (results.translation && promptRefs.translation) {
+        const translationPromptRef = promptRefs.translation.reference;
         updateData['translation'] = {
           data: results.translation,
           content_hash: contentHash(results.translation),
           language: targetLanguage,
           model,
-          prompt: promptRefs.translation.reference,
+          prompt: translationPromptRef,
+          prompt_version: String(translationPromptRef.version) || PROMPT_VERSION,
+          prompt_id: translationPromptRef.id,
+          prompt_name: translationPromptRef.name,
+          ...(translationPromptRef.content_hash && { prompt_hash: translationPromptRef.content_hash }),
           updated_at: new Date(),
           source: 'ai',  // Mark as AI-generated
           // Processing metadata

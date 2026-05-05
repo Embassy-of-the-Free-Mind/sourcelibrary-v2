@@ -216,6 +216,13 @@ export const POST = withAuth(async (request, session, context) => {
     // Get the main OCR prompt with language substituted
     const ocrPromptResult = await getOcrPrompt();
     const prompt = ocrPromptResult.text;
+    const promptRef = ocrPromptResult.reference;
+    const promptProvenance = {
+      prompt_id: promptRef.id,
+      prompt_name: promptRef.name,
+      prompt_version: String(promptRef.version),
+      prompt_hash: promptRef.content_hash,
+    };
 
     // Step 1: Validate image URLs and fetch images (parallel with concurrency limit)
     const preparedPages: Array<{ id: string; pageNumber: number; image: { data: string; mimeType: string } }> = [];
@@ -364,7 +371,7 @@ export const POST = withAuth(async (request, session, context) => {
         model,
         language,
         force,
-        prompt_version: PROMPT_VERSION,
+        ...promptProvenance,
         page_ids: allPageIds,
         page_count: allPageIds.length,
         pages_per_request: effectivePPR,
@@ -460,7 +467,7 @@ export const POST = withAuth(async (request, session, context) => {
         model,
         language,
         force,
-        prompt_version: PROMPT_VERSION,
+        ...promptProvenance,
         page_ids: child.batchPageIds,
         page_count: child.batchPageIds.length,
         pages_per_request: effectivePPR,
@@ -480,7 +487,7 @@ export const POST = withAuth(async (request, session, context) => {
       model,
       language,
       force,
-      prompt_version: PROMPT_VERSION,
+      ...promptProvenance,
       page_ids: allPageIds,
       page_count: allPageIds.length,
       total_pages: allPageIds.length,
@@ -685,6 +692,8 @@ export const GET = withAuth(async (request, session, context) => {
                   'ocr.language': jobDoc.language,
                   'ocr.source': 'batch_api',
                   'ocr.prompt_version': jobDoc.prompt_version || PROMPT_VERSION,
+                  'ocr.prompt_id': jobDoc.prompt_id,
+                  'ocr.prompt_hash': jobDoc.prompt_hash,
                   'ocr.prompt_name': jobDoc.prompt_name || 'Standard OCR',
                   'ocr.batch_job_id': jobDoc.job_name,
                   ...(jobDoc.pages_per_request > 1 && { 'ocr.pages_per_request': jobDoc.pages_per_request }),

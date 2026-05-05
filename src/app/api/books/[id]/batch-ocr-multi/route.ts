@@ -126,6 +126,7 @@ export const POST = withAuth(async (request, session, context) => {
     // Get OCR prompt
     const promptResult = await getOcrPrompt();
     const prompt = promptResult.text;
+    const promptRef = promptResult.reference;
 
     // Phase 1: Submit ALL chunks to Gemini first (no DB writes yet).
     // This prevents orphan parent records if Gemini submission fails (e.g. quota exhaustion).
@@ -221,7 +222,10 @@ export const POST = withAuth(async (request, session, context) => {
         status: pendingStatus,
         model: DEFAULT_BATCH_MODEL,
         language,
-        prompt_version: PROMPT_VERSION,
+        prompt_id: promptRef.id,
+        prompt_name: promptRef.name,
+        prompt_version: String(promptRef.version),
+        prompt_hash: promptRef.content_hash,
         force: overwriteMode,
         created_at: now,
         updated_at: now,

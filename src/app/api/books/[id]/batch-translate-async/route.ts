@@ -113,6 +113,13 @@ export const POST = withAuth(async (request, session, context) => {
     const isEnglish = sourceLanguage.toLowerCase() === 'english';
     const promptResult = await getTranslationPrompt(sourceLanguage, targetLanguage);
     const basePrompt = promptResult.text;
+    const promptRef = promptResult.reference;
+    const promptProvenance = {
+      prompt_id: promptRef.id,
+      prompt_name: promptRef.name,
+      prompt_version: String(promptRef.version),
+      prompt_hash: promptRef.content_hash,
+    };
 
     for (const page of pagesToProcess) {
       const ocrText = page.ocr?.data;
@@ -190,7 +197,7 @@ export const POST = withAuth(async (request, session, context) => {
       target_language: targetLanguage,
       force,
       stale_only: staleOnly,
-      prompt_version: PROMPT_VERSION,
+      ...promptProvenance,
       page_ids: batchRequests.map(r => r.key),
       page_count: batchRequests.length,
       status: batchJob.state,
@@ -327,6 +334,9 @@ export const GET = withAuth(async (request, session, context) => {
                     target_language: jobDoc.target_language,
                     source: 'batch_api',
                     prompt_version: jobDoc.prompt_version || PROMPT_VERSION,
+                    ...(jobDoc.prompt_id && { prompt_id: jobDoc.prompt_id }),
+                    ...(jobDoc.prompt_hash && { prompt_hash: jobDoc.prompt_hash }),
+                    ...(jobDoc.prompt_name && { prompt_name: jobDoc.prompt_name }),
                   },
                   updated_at: new Date()
                 }
