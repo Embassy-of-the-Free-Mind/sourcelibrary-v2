@@ -442,7 +442,7 @@ export default function BphCatalogBrowser({ basePath, digitizedUbns, tenantSlug,
                           className="inline-flex items-center gap-1 mt-1 text-xs text-accent-rust hover:underline"
                         >
                           <BookMarked className="w-3 h-3" />
-                          Read on Source Library
+                          Digitized copy
                         </a>
                       )}
                       {/* Mobile: show author + place inline */}
