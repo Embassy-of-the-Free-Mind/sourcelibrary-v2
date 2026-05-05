@@ -8,7 +8,7 @@
  * via the Hetzner supabase-sync cron.
  */
 
-import { supabase, sanitizeFilterValue } from '@/lib/supabase';
+import { supabase, supabaseAdmin, sanitizeFilterValue } from '@/lib/supabase';
 
 export interface CatalogBook {
   id: string;
@@ -540,4 +540,43 @@ export async function getBookDetail(idOrSlug: string): Promise<{ book: CatalogBo
   }
 
   return null;
+}
+
+/**
+ * Mirror a subset of changed book fields to Supabase books_catalog immediately.
+ * Used by /api/books/[id] PATCH so cover/title/author edits surface in <1s
+ * instead of waiting up to 5 min for the Hetzner sync cron.
+ *
+ * Only mirrors fields that exist in books_catalog. Silently no-ops if no
+ * mirrored fields changed, or if supabaseAdmin is unavailable (e.g., local
+ * dev without service-role key).
+ */
+const CATALOG_MIRROR_FIELDS = [
+  'title', 'display_title', 'author', 'thumbnail', 'thumbnail_blob',
+  'language', 'published', 'categories', 'publisher', 'place_published', 'doi',
+] as const;
+
+export async function mirrorBookToCatalog(
+  bookId: string,
+  updates: Record<string, unknown>,
+): Promise<void> {
+  if (!supabaseAdmin) return;
+
+  const mirrored: Record<string, unknown> = {};
+  for (const field of CATALOG_MIRROR_FIELDS) {
+    if (field in updates) mirrored[field] = updates[field];
+  }
+  if (Object.keys(mirrored).length === 0) return;
+
+  mirrored.updated_at = new Date().toISOString();
+
+  const { error } = await supabaseAdmin
+    .from('books_catalog')
+    .update(mirrored)
+    .eq('id', bookId);
+
+  if (error) {
+    // Non-fatal — the next cron sync will pick up the change.
+    console.warn(`[books-catalog mirror] failed for ${bookId}:`, error.message);
+  }
 }

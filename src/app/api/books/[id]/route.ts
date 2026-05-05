@@ -7,6 +7,7 @@ import { logAuditEvent } from '@/lib/audit-logger';
 import { withAdminAuth, withCuratorAuth } from '@/lib/auth-helpers';
 import { logMetadataChange, diffBookFields } from '@/lib/book-changelog';
 import { findBookByIdOrSlug } from '@/lib/book-lookup';
+import { mirrorBookToCatalog } from '@/lib/books-catalog';
 
 export const preferredRegion = 'fra1';
 
@@ -260,6 +261,10 @@ export const PATCH = withCuratorAuth(async (request, session, context) => {
 
     const bookId = book.id || book._id.toString();
     const changedFields = Object.keys(updates).filter(k => k !== 'updated_at');
+
+    // Mirror to Supabase books_catalog so cover/title/author edits surface
+    // immediately instead of waiting for the 5-min Hetzner sync cron.
+    await mirrorBookToCatalog(bookId, updates);
     if (changedFields.length > 0) {
       logAuditEvent({
         action: 'book_metadata_updated',
