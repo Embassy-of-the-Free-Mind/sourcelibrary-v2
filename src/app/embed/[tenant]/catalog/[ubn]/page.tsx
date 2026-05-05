@@ -12,6 +12,12 @@ interface Props {
   params: Promise<{ tenant: string; ubn: string }>;
 }
 
+interface FieldProvenance {
+  source: string;
+  evidence?: string;
+  derived_at?: string;
+}
+
 interface BphWorkRow {
   ubn: string;
   title: string | null;
@@ -39,6 +45,7 @@ interface BphWorkRow {
   remarks: string | null;
   number_of_copies: number | null;
   object_size_cm: string | null;
+  bibliographic_format: string | null;
   binding: string | null;
   bound_with: string | null;
   provenance: string | null;
@@ -46,6 +53,7 @@ interface BphWorkRow {
   ustc_sn: string | null;
   sl_book_id: string | null;
   sl_book_slug: string | null;
+  field_provenance: Record<string, FieldProvenance> | null;
 }
 
 interface SlBook {
@@ -77,8 +85,10 @@ async function fetchWork(ubn: string): Promise<BphWorkRow | null> {
       place, printer, publisher, variant_printer, variant_publisher,
       year, shelf_mark, state_shelf_mark, present_location,
       keywords, language, series_title, volume_title,
-      bibliography, remarks, number_of_copies, object_size_cm, binding, bound_with,
-      provenance, ia_identifier, ustc_sn, sl_book_id, sl_book_slug
+      bibliography, remarks, number_of_copies, object_size_cm, bibliographic_format,
+      binding, bound_with,
+      provenance, ia_identifier, ustc_sn, sl_book_id, sl_book_slug,
+      field_provenance
     `)
     .eq('ubn', ubn)
     .maybeSingle();
@@ -297,6 +307,23 @@ export default async function CatalogEntryPage({ params }: Props) {
 
         <Section title="Physical">
           <Field label="Object size" value={work.object_size_cm} />
+          {work.bibliographic_format && (
+            <FieldRaw label="Format">
+              <span className="text-primary capitalize">{work.bibliographic_format}</span>
+              {work.field_provenance?.bibliographic_format?.source === 'derived_from_size' && (
+                <span
+                  className="ml-2 text-xs text-muted italic"
+                  title={
+                    work.field_provenance.bibliographic_format.evidence
+                      ? `Estimated — ${work.field_provenance.bibliographic_format.evidence}. Signature collation needed for an authoritative determination.`
+                      : 'Estimated from object size — signature collation needed for an authoritative determination.'
+                  }
+                >
+                  estimated from size
+                </span>
+              )}
+            </FieldRaw>
+          )}
           <Field label="Number of copies held" value={work.number_of_copies != null ? String(work.number_of_copies) : null} />
           <Field label="Binding" value={work.binding} />
           <Field label="Bound with" value={work.bound_with} />
