@@ -3,6 +3,7 @@ import { getDb } from '@/lib/mongodb';
 import { withAdminAuth } from '@/lib/auth-helpers';
 import { QUEUE_URLS, getQueueDepth } from '@/lib/sqs-client';
 import { getSupabaseSyncHealth } from '@/lib/supabase-health';
+import { supabaseAdmin } from '@/lib/supabase';
 
 export const maxDuration = 30;
 
@@ -101,13 +102,34 @@ export const GET = withAdminAuth(async () => {
     ]).toArray(),
 
     // Error rate (last 1h): success vs failed
-    db.collection('gemini_usage').aggregate([
-      { $match: { timestamp: { $gte: oneHourAgo } } },
-      { $group: {
-        _id: '$status',
-        count: { $sum: 1 },
-      }},
-    ]).toArray(),
+    // Read from Supabase (primary store since 2026-04-10, issue #567 Phase 3).
+    // MongoDB gemini_usage is a near-empty stub now.
+    (async () => {
+      if (supabaseAdmin) {
+        const { data, error } = await supabaseAdmin
+          .from('gemini_usage')
+          .select('status')
+          .gte('timestamp', oneHourAgo.toISOString())
+          .limit(50000);
+        if (error) {
+          console.warn('[admin/health] Supabase error_rate query failed:', error.message);
+          return [] as Array<{ _id: string; count: number }>;
+        }
+        const counts = new Map<string, number>();
+        for (const row of data || []) {
+          const key = row.status || 'unknown';
+          counts.set(key, (counts.get(key) || 0) + 1);
+        }
+        return Array.from(counts.entries()).map(([_id, count]) => ({ _id, count }));
+      }
+      return db.collection('gemini_usage').aggregate([
+        { $match: { timestamp: { $gte: oneHourAgo } } },
+        { $group: {
+          _id: '$status',
+          count: { $sum: 1 },
+        }},
+      ]).toArray() as Promise<Array<{ _id: string; count: number }>>;
+    })(),
 
     // Pipeline stalls: books stuck in a transitional state for 4+ hours
     db.collection('books').aggregate([

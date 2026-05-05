@@ -2,6 +2,7 @@ import { NextResponse } from 'next/server';
 import { getDb } from '@/lib/mongodb';
 import type { ProcessingRow } from '@/lib/api-client/types/analytics';
 import { withAdminAuth } from '@/lib/auth-helpers';
+import { supabaseAdmin } from '@/lib/supabase';
 
 export const maxDuration = 60;
 
@@ -201,52 +202,138 @@ async function getBookRows(db: any, stepFilter: string, searchBookIds: string[] 
   return rows;
 }
 
+interface AiAggResult {
+  _id: { book_id: string; type: string };
+  book_title: string | null;
+  model: string | null;
+  prompt_version: string | null;
+  mode: string | null;
+  date_start: string | Date | null;
+  date_end: string | Date | null;
+  page_count: number;
+  cost_usd: number;
+  success_count: number;
+  failed_count: number;
+}
+
+interface UsageRowRaw {
+  book_id: string | null;
+  book_title: string | null;
+  type: string | null;
+  status: string | null;
+  model: string | null;
+  prompt_version: string | null;
+  mode: string | null;
+  cost_usd: number | null;
+  timestamp: string | Date;
+}
+
 async function getAiRows(db: any, stepFilter: string, searchBookIds: string[] | null): Promise<ProcessingRow[]> {
-  const matchStage: any = {
-    status: { $in: ['success', 'failed'] },
-  };
+  // Read raw rows from Supabase (primary store since 2026-04-10, issue #567 Phase 3)
+  // and aggregate in JS — PostgREST has no GROUP BY equivalent. MongoDB
+  // gemini_usage is a near-empty stub now and only used as a build-time fallback.
+  let rows: UsageRowRaw[] = [];
 
-  if (stepFilter) {
-    matchStage.type = stepFilter;
+  if (supabaseAdmin) {
+    let query = supabaseAdmin
+      .from('gemini_usage')
+      .select('book_id, book_title, type, status, model, prompt_version, mode, cost_usd, timestamp')
+      .in('status', ['success', 'failed'])
+      .limit(50000);
+    if (stepFilter) query = query.eq('type', stepFilter);
+    if (searchBookIds) query = query.in('book_id', searchBookIds);
+    const { data, error } = await query;
+    if (error) {
+      console.warn('[processing-overview] Supabase usage query failed:', error.message);
+    } else {
+      rows = (data || []) as UsageRowRaw[];
+    }
+  } else {
+    const matchStage: any = { status: { $in: ['success', 'failed'] } };
+    if (stepFilter) matchStage.type = stepFilter;
+    if (searchBookIds) matchStage.book_id = { $in: searchBookIds };
+    const docs = await db.collection('gemini_usage')
+      .find(matchStage, {
+        projection: {
+          book_id: 1, book_title: 1, type: 1, status: 1, model: 1,
+          prompt_version: 1, mode: 1, cost_usd: 1, timestamp: 1,
+        },
+      })
+      .limit(50000)
+      .toArray();
+    rows = docs.map((d: any) => ({
+      book_id: d.book_id ?? null,
+      book_title: d.book_title ?? null,
+      type: d.type ?? null,
+      status: d.status ?? null,
+      model: d.model ?? null,
+      prompt_version: d.prompt_version ?? null,
+      mode: d.mode ?? null,
+      cost_usd: d.cost_usd ?? null,
+      timestamp: d.timestamp,
+    }));
   }
 
-  if (searchBookIds) {
-    matchStage.book_id = { $in: searchBookIds };
+  // Aggregate by (book_id, type). Track latest by timestamp so $last semantics
+  // for book_title/model/prompt_version/mode are preserved.
+  const groups = new Map<string, AiAggResult & { _latest_ts: number }>();
+  for (const r of rows) {
+    if (!r.book_id || !r.type) continue;
+    const key = `${r.book_id}|${r.type}`;
+    const ts = new Date(r.timestamp).getTime();
+    const isSuccess = r.status === 'success';
+    const isFailed = r.status === 'failed';
+    const existing = groups.get(key);
+    if (existing) {
+      existing.page_count += 1;
+      existing.cost_usd += r.cost_usd ?? 0;
+      if (isSuccess) existing.success_count += 1;
+      if (isFailed) existing.failed_count += 1;
+      if (!existing.date_start || ts < new Date(existing.date_start).getTime()) {
+        existing.date_start = r.timestamp;
+      }
+      if (!existing.date_end || ts > new Date(existing.date_end).getTime()) {
+        existing.date_end = r.timestamp;
+      }
+      if (ts >= existing._latest_ts) {
+        existing._latest_ts = ts;
+        existing.book_title = r.book_title;
+        existing.model = r.model;
+        existing.prompt_version = r.prompt_version;
+        existing.mode = r.mode;
+      }
+    } else {
+      groups.set(key, {
+        _id: { book_id: r.book_id, type: r.type },
+        book_title: r.book_title,
+        model: r.model,
+        prompt_version: r.prompt_version,
+        mode: r.mode,
+        date_start: r.timestamp,
+        date_end: r.timestamp,
+        page_count: 1,
+        cost_usd: r.cost_usd ?? 0,
+        success_count: isSuccess ? 1 : 0,
+        failed_count: isFailed ? 1 : 0,
+        _latest_ts: ts,
+      });
+    }
   }
 
-  const pipeline = [
-    { $match: matchStage },
-    {
-      $group: {
-        _id: { book_id: '$book_id', type: '$type' },
-        book_title: { $last: '$book_title' },
-        model: { $last: '$model' },
-        prompt_version: { $last: '$prompt_version' },
-        mode: { $last: '$mode' },
-        date_start: { $min: '$timestamp' },
-        date_end: { $max: '$timestamp' },
-        page_count: { $sum: 1 },
-        cost_usd: { $sum: { $ifNull: ['$cost_usd', 0] } },
-        success_count: {
-          $sum: { $cond: [{ $eq: ['$status', 'success'] }, 1, 0] },
-        },
-        failed_count: {
-          $sum: { $cond: [{ $eq: ['$status', 'failed'] }, 1, 0] },
-        },
-      },
-    },
-    { $sort: { date_start: -1 as const } },
-  ];
-
-  const results = await db.collection('gemini_usage').aggregate(pipeline).toArray();
+  const results: AiAggResult[] = Array.from(groups.values())
+    .sort((a, b) => {
+      const aTs = a.date_start ? new Date(a.date_start).getTime() : 0;
+      const bTs = b.date_start ? new Date(b.date_start).getTime() : 0;
+      return bTs - aTs;
+    });
 
   const missingTitleIds = [...new Set(
     results
-      .filter((r: any) => !r.book_title)
-      .map((r: any) => r._id.book_id)
+      .filter(r => !r.book_title)
+      .map(r => r._id.book_id)
   )];
 
-  let titleMap: Record<string, string> = {};
+  const titleMap: Record<string, string> = {};
   if (missingTitleIds.length > 0) {
     const books = await db.collection('books')
       .find({ id: { $in: missingTitleIds } }, { projection: { id: 1, title: 1, display_title: 1 } })
@@ -256,13 +343,13 @@ async function getAiRows(db: any, stepFilter: string, searchBookIds: string[] | 
     }
   }
 
-  return results.map((r: any) => ({
+  return results.map(r => ({
     book_id: r._id.book_id,
     book_title: r.book_title || titleMap[r._id.book_id] || 'Unknown',
     step: r._id.type as ProcessingRow['step'],
-    model: r.model,
-    prompt_version: r.prompt_version,
-    mode: r.mode,
+    model: r.model || undefined,
+    prompt_version: r.prompt_version || undefined,
+    mode: (r.mode === 'realtime' || r.mode === 'batch') ? r.mode : undefined,
     date_start: r.date_start ? new Date(r.date_start).toISOString() : new Date().toISOString(),
     date_end: r.date_end ? new Date(r.date_end).toISOString() : undefined,
     pages: r.page_count || 0,
