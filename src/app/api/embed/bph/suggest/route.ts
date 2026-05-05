@@ -64,7 +64,7 @@ export async function GET(request: NextRequest) {
       author: b.author,
       language: b.language,
       published: b.published,
-      thumbnail: b.thumbnail_blob || b.thumbnail,
+      thumbnail: b.image_thumb || b.image_display || b.thumbnail_blob || b.thumbnail,
     }));
 
     return NextResponse.json({ suggestions }, { headers: CORS_HEADERS });

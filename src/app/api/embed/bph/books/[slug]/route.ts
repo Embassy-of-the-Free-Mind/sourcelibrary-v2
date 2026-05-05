@@ -78,7 +78,7 @@ export async function GET(
       pages_count: book.pages_count,
       pages_translated: book.pages_translated || 0,
       pages_ocr: book.pages_ocr || 0,
-      thumbnail: book.thumbnail_blob || book.thumbnail,
+      thumbnail: book.image_thumb || book.image_display || book.thumbnail_blob || book.thumbnail,
       catalogue_number: book.dublin_core?.dc_source || null,
       description: book.dublin_core?.dc_description || null,
       summary: summaryText,

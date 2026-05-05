@@ -68,7 +68,7 @@ export async function GET(request: NextRequest) {
       year: b.year,
       pages_count: b.pages_count,
       pages_translated: b.pages_translated || 0,
-      thumbnail: b.thumbnail_blob || b.thumbnail,
+      thumbnail: b.image_thumb || b.image_display || b.thumbnail_blob || b.thumbnail,
       is_first_translation: b.is_first_translation || false,
       summary: b.reading_summary?.overview || null,
       categories: b.categories || [],
