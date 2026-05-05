@@ -448,9 +448,20 @@ export const LIBRARY_PARTNERS: Record<string, LibraryPartner> = {
   },
 };
 
-/** Look up a partner by its URL slug (e.g. "internet-archive") */
+/**
+ * Short-slug aliases mapping convenient short codes (e.g. "bph") to the
+ * canonical long slug. Keeps URLs like /libraries/bph working alongside
+ * the canonical /libraries/bibliotheca-philosophica-hermetica.
+ */
+const PARTNER_SLUG_ALIASES: Record<string, string> = {
+  'bph': 'bibliotheca-philosophica-hermetica',
+};
+
+/** Look up a partner by its URL slug (e.g. "internet-archive" or "bph") */
 export function getPartnerBySlug(slug: string): LibraryPartner | undefined {
-  return LIBRARY_PARTNERS[slug];
+  if (LIBRARY_PARTNERS[slug]) return LIBRARY_PARTNERS[slug];
+  const aliasTarget = PARTNER_SLUG_ALIASES[slug];
+  return aliasTarget ? LIBRARY_PARTNERS[aliasTarget] : undefined;
 }
 
 /** Look up a partner by its `image_source.provider` value (e.g. "internet_archive") */
