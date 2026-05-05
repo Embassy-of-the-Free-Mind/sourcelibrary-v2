@@ -430,7 +430,7 @@ export default function BphCatalogBrowser({ basePath, digitizedUbns, tenantSlug,
                     <td className="px-3 py-2 align-top">
                       <div className="font-medium text-primary leading-snug">
                         <a
-                          href={digitized ? tenantBookUrl({ id: digitized.id, slug: digitized.slug }, tenantSlug) : detailUrl(w.ubn)}
+                          href={detailUrl(w.ubn)}
                           className="hover:text-accent-rust transition-colors"
                         >
                           {displayTitle}
